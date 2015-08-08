@@ -1,0 +1,26 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --read-only=tmpreadonly\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "touch tmpreadonly;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Read-only file system"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"home"
+}
+sleep 1
+
+puts "\n"
+

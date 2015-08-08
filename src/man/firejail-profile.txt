@@ -1,0 +1,181 @@
+.TH man 5 "MONTH YEAR" "VERSION" "firejail profiles man page"
+.SH NAME
+profile \- Profile file syntax for Firejail
+
+.SH USAGE
+.TP
+firejail \-\-profile=filename.profile
+
+.SH DESCRIPTION
+Several Firejail command line configuration options can be passed to the program using
+profile files. Default Firejail profile files are stored in /etc/firejail
+directory and ~/.config/firejail directory.
+
+.SH Scripting
+Include and comment support:
+
+.TP
+\f\include other.profile
+Include other.profile file.
+.TP
+# this is a comment
+
+.SH Filesystem
+These profile entries define a chroot filesystem built on top of the existing
+host filesystem. Each line describes a file element that is removed from
+the filesystem (\fBblacklist\fR), a read-only file or directory (\fBread-only\fR),
+a tmpfs mounted on top of an existing directory (\fBtmpfs\fR),
+or mount-bind a directory  or file on top of another directory or file (\fBbind\fR).
+Use \fBprivate\fR to set private mode.
+File globbing is supported, and PATH and HOME directories are searched.
+Examples:
+.TP
+\f\blacklist /usr/bin
+Remove /usr/bin directory.
+.TP
+\f\blacklist /etc/password
+Remove /etc/password file.
+.TP
+\f\read-only /etc/password
+Read-only /etc/password file.
+.TP
+tmpfs /etc
+Mount an empty tmpfs filesystem on top of /etc directory.
+.TP
+bind /root/config/ssh,/etc/ssh
+Mount-bind /root/config/ssh on /etc/ssh.
+.TP
+\f\blacklist /usr/bin/gcc*
+Remove all gcc files in /usr/bin (file globbing).
+.TP
+\f\blacklist ${PATH}/ifconfig
+Remove ifconfig command from the regular path directories.
+.TP
+\f\blacklist ${HOME}/.ssh
+Remove .ssh directory from user home directory.
+.TP
+\f\private
+Mount new /root and /home/user directories in temporary
+filesystems. All modifications are discarded when the sandbox is
+closed.
+.TP
+\f\private directory
+Use directory as user home.
+.TP
+\f\private.keep file,directory
+Build a new user home in a temporary
+filesystem, and copy the files and directories in the list in the
+new home. All modifications are discarded when the sandbox is
+closed.
+.TP
+\f\private-dev
+Create a new /dev directory. Only null, full, zero, tty, pts, ptmx, random, urandom and shm devices are available.
+
+.SH Filters
+\fBcaps\fR and \fBseccomp\fR enable Linux capabilities and seccomp filters. Examples:
+
+.TP
+caps
+Enable default Linux capabilities filter.
+.TP
+caps.drop all
+Blacklist all Linux capabilities.
+.TP
+caps.drop capability,capability,capability
+Blacklist Linux capabilities filter.
+.TP
+caps.drop capability,capability,capability
+Whitelist Linux capabilities filter.
+.TP
+\f\seccomp
+Enable default seccomp filter.
+.TP
+\f\seccomp syscall,syscall,syscall
+Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter.
+.TP
+\f\seccomp.drop syscall,syscall,syscall
+Enable seccomp filter and blacklist  the system calls in the list.
+.TP
+\f\seccomp.keep syscall,syscall,syscall
+Enable seccomp filter and whitelist the system calls in the list.
+
+
+.SH User Namespace
+Use \fBnoroot\fR to enable an user namespace. The namespace has only one user, the current user.
+There is no root account defined in the namespace.
+
+.TP
+noroot
+Enable an user namespace without root user defined.
+
+
+.SH Resource limits
+These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
+The limits can be modified inside the sandbox using the regular \fBulimt\fR command. Examples:
+
+.TP
+\f\rlimit-fsize 1024
+Set the maximum file size that can be created by a process to 1024 bytes.
+.TP
+\f\rlimit-nproc 1000
+Set the maximum number of processes that can be created for the real user ID of the calling process to 1000.
+.TP
+\f\rlimit-nofile 500
+Set the maximum number of files that can be opened by a process to 500.
+.TP
+\f\rlimit-sigpending 200
+Set the maximum number of processes that can be created for the real user ID of the calling process to 200.
+
+.SH CPU Affinity
+Set the CPU cores available for this sandbox. Examples:
+
+.TP
+cpu 1,2,3
+Use only CPU cores 0, 1 and 2.
+
+.SH Control Groups
+Place the sandbox in an existing control group specified by the full path of the task file. Example:
+
+.TP
+cgroup /sys/fs/cgroup/g1/tasks
+The sandbox is placed in g1 control group.
+
+.SH User Environment
+
+.TP
+nogroups
+Disable supplementary user groups
+.TP
+shell none
+Run the program directly, without a shell.
+
+.SH Networking
+Networking features available in profile files.
+
+.TP
+netfilter
+If a new network namespace is created, enabled default network filter.
+
+.TP
+netfilter filename
+If a new network namespace is created, enabled the network filter in filename.
+
+.TP
+dns address
+Set a DNS server for the sandbox. Up to three DNS servers can be defined.
+
+
+.SH FILES
+/etc/firejail/filename.profile, $HOME/.config/firejail/filename.profile
+
+.SH LICENSE
+Firejail is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+.PP
+Homepage: http://firejail.sourceforge.net
+.SH SEE ALSO
+\&\flfirejail\fR\|(1),
+\&\flfiremon\fR\|(1),
+\&\flfirejail-login\fR\|(5)
+
+
+

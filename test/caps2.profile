@@ -1,0 +1,1 @@
+caps.keep chown,kill

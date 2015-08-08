@@ -1,0 +1,36 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --profile=rlimit.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "cat /proc/self/limits; pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Max file size             1024                 1024"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"Max processes             1000                 1000"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.3\n";exit}
+	"Max open files            500                  500"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.4\n";exit}
+	"Max pending signals       200                  200"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.5\n";exit}
+	"home"
+}
+sleep 1
+puts "\n"

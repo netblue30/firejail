@@ -1,0 +1,42 @@
+#!/bin/bash
+
+brctl addbr br0
+ifconfig br0 10.10.20.1/29 up
+# NAT masquerade
+iptables -t nat -A POSTROUTING -o eth0 -s 10.10.20.0/29 -j MASQUERADE
+# port forwarding
+# iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to 10.10.20.2:80
+	
+brctl addbr br1
+ifconfig br1 10.10.30.1/24 up
+brctl addbr br2
+ifconfig br2 10.10.40.1/24 up
+brctl addbr br3
+ifconfig br3 10.10.50.1/24 up
+brctl addbr br4
+ifconfig br4 10.10.60.1/24 up
+
+
+# build a very small chroot
+ROOTDIR="/tmp/chroot"			# default chroot directory
+DEFAULT_FILES="/bin/bash /bin/sh "	# basic chroot files
+DEFAULT_FILES+="/etc/passwd /etc/nsswitch.conf /etc/group "
+DEFAULT_FILES+=`find /lib -name libnss*`	# files required by glibc
+DEFAULT_FILES+=" /bin/ls /bin/cat /bin/ps /usr/bin/id /usr/bin/whoami /usr/bin/wc /usr/bin/wget"
+
+rm -fr $ROOTDIR
+mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,var/lock,proc}
+SORTED=`for FILE in $* $DEFAULT_FILES; do echo " $FILE "; ldd $FILE | grep -v dynamic | cut -d " " -f 3; done | sort -u`
+for FILE in $SORTED
+do
+	cp --parents $FILE $ROOTDIR
+done
+cp --parents /lib64/ld-linux-x86-64.so.2 $ROOTDIR
+cp --parents /lib/ld-linux.so.2 $ROOTDIR
+
+cd $ROOTDIR; find .
+mkdir -p usr/lib/firejail/
+cp /usr/lib/firejail/libtrace.so usr/lib/firejail/.
+
+
+echo "To enter the chroot directory run: firejail --chroot=$ROOTDIR"

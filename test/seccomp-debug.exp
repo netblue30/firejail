@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --seccomp --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Blacklisting syscall"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"open_by_handle_at"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"BLACKLIST"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"open_by_handle_at"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+send -- "exit\r"
+sleep 1
+puts "\n"

@@ -1,0 +1,86 @@
+# bash completion for firejail                            -*- shell-script -*-
+#********************************************************************
+# Script based on completions/configure script in bash-completion package in
+# Debian. The original package is release under GPL v2 license, the webpage is
+# http://bash-completion.alioth.debian.org
+#*******************************************************************
+
+__interfaces(){
+    cut -f 1 -d ':' /proc/net/dev | tail -n +3 | grep -v lo | xargs
+}
+
+
+_firejail()
+{
+    local cur prev words cword split
+    _init_completion -s || return
+
+    case $prev in
+        --help|--version|-debug-caps|--debug-syscalls|--list|--tree|--top|--join|--shutdown)
+            return 0
+            ;;
+        --profile)
+            _filedir
+            return 0
+            ;;
+        --chroot)
+            _filedir -d
+            return 0
+            ;;
+        --cgroup)
+            _filedir -d
+            return 0
+            ;;
+        --tmpfs)
+            _filedir
+            return 0
+            ;;
+        --blacklist)
+            _filedir
+            return 0
+            ;;
+        --read-only)
+            _filedir
+            return 0
+            ;;
+        --bind)
+            _filedir
+            return 0
+            ;;
+        --private)
+            _filedir
+            return 0
+            ;;
+        --shell)
+            _filedir
+            return 0
+            ;;
+         --net)
+         	comps=$(__interfaces)
+            COMPREPLY=( $(compgen -W '$comps' -- "$cur") )
+            return 0
+         	;;
+    esac
+
+    $split && return 0
+
+    # if $COMP_CONFIGURE_HINTS is not null, then completions of the form
+    # --option=SETTING will include 'SETTING' as a contextual hint
+    [[ "$cur" != -* ]] && _filedir && return 0
+
+    if [[ -n $COMP_CONFIGURE_HINTS ]]; then
+        COMPREPLY=( $( compgen -W "$( $1 --help 2>&1 | \
+            awk '/^  --[A-Za-z]/ { print $1; \
+            if ($2 ~ /--[A-Za-z]/) print $2 }' | sed -e 's/[[,].*//g' )" \
+            -- "$cur" ) )
+        [[ $COMPREPLY == *=* ]] && compopt -o nospace
+    else
+        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
+    fi
+
+} &&
+complete -F _firejail firejail
+
+
+

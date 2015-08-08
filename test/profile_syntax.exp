@@ -1,0 +1,69 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --profile=test.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+
+sleep 2
+send -- "ls /sbin\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"cannot open"
+}
+
+sleep 1
+send -- "ls /usr/sbin\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"cannot open"
+}
+
+sleep 1
+send -- "ls -l /etc/shadow\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"root root 0"
+}
+
+sleep 1
+send -- "rmdir;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Permission denied"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"home"
+}
+
+sleep 1
+send -- "mount;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"Permission denied"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"home"
+}
+
+sleep 1
+send -- "umount;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"Permission denied"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"home"
+}
+send -- "exit\r"
+
+sleep 1
+puts "\n"

@@ -1,0 +1,214 @@
+/*
+ * Copyright (C) 2014, 2015 netblue30 (netblue30@yahoo.com)
+ *
+ * This file is part of firejail project
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+#include "firemon.h"
+#include <termios.h>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#define MAXBUF 4096
+
+static char *get_header(void) {
+	char *rv;
+	if (asprintf(&rv, "%-5.5s %-9.9s %-10.10s %-10.10s %s",
+		"PID", "User", "RX(KB/s)", "TX(KB/s)", "Command") == -1)
+		errExit("asprintf");
+	
+	return rv;
+}
+
+void get_stats(int parent) {
+	// find the first child
+	int child = -1;
+	for (child = parent + 1; child < max_pids; child++) {
+		if (pids[child].parent == parent)
+			break;
+	}
+
+	if (child == -1)
+		goto errexit;
+
+	// open /proc/child/net/dev file and read rx and tx
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/net/dev", child) == -1)
+		errExit("asprintf");
+	FILE *fp = fopen(fname, "r");
+	if (!fp) {
+		free(fname);
+		goto errexit;
+	}
+	
+	char buf[MAXBUF];
+	long long unsigned rx = 0;
+	long long unsigned tx = 0;
+	while (fgets(buf, MAXBUF, fp)) {
+		if (strncmp(buf, "Inter", 5) == 0)
+			continue;
+		if (strncmp(buf, " face", 5) == 0)
+			continue;
+		
+		char *ptr = buf;
+		while (*ptr != '\0' && *ptr != ':') {
+			ptr++;
+		}
+		
+		if (*ptr == '\0') {
+			fclose(fp);
+			free(fname);
+			goto errexit;
+		}
+		ptr++;
+		
+		long long unsigned rxval;
+		long long unsigned txval;
+		unsigned a, b, c, d, e, f, g;
+		sscanf(ptr, "%llu %u %u %u %u %u %u %u %llu",
+			&rxval, &a, &b, &c, &d, &e, &f, &g, &txval);
+		rx += rxval;
+		tx += txval;
+	}
+
+	// store data
+	pids[parent].rx_delta = rx - pids[parent].rx;
+	pids[parent].rx = rx;
+	pids[parent].tx_delta = tx - pids[parent].tx;
+	pids[parent].tx = tx;
+
+
+	free(fname);
+	fclose(fp);
+	return;
+
+errexit:		
+	pids[parent].rx = 0;
+	pids[parent].tx = 0;
+	pids[parent].rx_delta = 0;
+	pids[parent].tx_delta = 0;
+}
+
+
+static void print_proc(int index, int itv, int col) {
+	// command
+	char *cmd = pid_proc_cmdline(index);
+	char *ptrcmd;
+	if (cmd == NULL) {
+		if (pids[index].zombie)
+			ptrcmd = "(zombie)";
+		else
+			ptrcmd = "";
+	}
+	else
+		ptrcmd = cmd;
+	// if the command doesn't have a --net= option, don't print
+	if (strstr(ptrcmd, "--net=") == NULL) {
+		if (cmd)
+			free(cmd);
+		return;
+	}
+
+	// pid
+	char pidstr[10];
+	snprintf(pidstr, 10, "%u", index);
+
+	// user
+	char *user = pid_get_user_name(pids[index].uid);
+	char *ptruser;
+	if (user)
+		ptruser = user;
+	else
+		ptruser = "";
+		
+
+	float rx_kbps = ((float) pids[index].rx_delta / 1000) / itv;
+	char ptrrx[15];
+	sprintf(ptrrx, "%.03f", rx_kbps);
+	
+	float tx_kbps = ((float) pids[index].tx_delta / 1000) / itv;
+	char ptrtx[15];
+	sprintf(ptrtx, "%.03f", tx_kbps);
+	
+	char buf[1024 + 1];
+	snprintf(buf, 1024, "%-5.5s %-9.9s %-10.10s %-10.10s %s",
+		pidstr, ptruser, ptrrx, ptrtx, ptrcmd);
+	if (col < 1024)
+		buf[col] = '\0';
+	printf("%s\n", buf);
+	
+	if (cmd)
+		free(cmd);
+	if (user)
+		free(user);
+	
+}
+
+void netstats(void) {
+	if (getuid() == 0)
+		firemon_drop_privs();
+	
+	pid_read(0);	// include all processes
+	
+	printf("Displaying network statistics only for sandboxes using a new network namespace.\n");
+	
+	// print processes
+	while (1) {
+		// set pid table
+		int i;
+		int itv = 5; 	// 5 second  interval
+		pid_read(0);	// todo: preserve the last calculation if any, so we don't have to do get_stats()
+
+		// start rx/tx measurements
+		for (i = 0; i < max_pids; i++) {
+			if (pids[i].level == 1)
+				get_stats(i);
+		}
+		
+		// wait 5 seconds
+		firemon_sleep(itv);
+		
+		// grab screen size
+		struct winsize sz;
+		int row = 24;
+		int col = 80;
+		if (!ioctl(0, TIOCGWINSZ, &sz)) {
+			col = sz.ws_col;
+			row = sz.ws_row;
+		}
+		
+		// start printing
+		firemon_clrscr();
+		char *header = get_header();
+		if (strlen(header) > col)
+			header[col] = '\0';
+		printf("%s\n", header);
+		if (row > 0)
+			row--;
+		free(header);
+
+		// start rx/tx measurements
+		for (i = 0; i < max_pids; i++) {
+			if (pids[i].level == 1) {
+				get_stats(i);
+				print_proc(i, itv, col);
+			}
+		}
+	}
+}
+

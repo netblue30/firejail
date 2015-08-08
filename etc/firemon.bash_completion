@@ -1,0 +1,39 @@
+# bash completion for firemon                          -*- shell-script -*-
+#********************************************************************
+# Script based on completions/configure script in bash-completion package in
+# Debian. The original package is release under GPL v2 license, the webpage is
+# http://bash-completion.alioth.debian.org
+#*******************************************************************
+
+_firemon()
+{
+    local cur prev words cword split
+    _init_completion -s || return
+
+    case $prev in
+        --help|--version)
+            return
+            ;;
+    esac
+
+    $split && return 0
+
+    # if $COMP_CONFIGURE_HINTS is not null, then completions of the form
+    # --option=SETTING will include 'SETTING' as a contextual hint
+    [[ "$cur" != -* ]] && return 0
+
+    if [[ -n $COMP_CONFIGURE_HINTS ]]; then
+        COMPREPLY=( $( compgen -W "$( $1 --help 2>&1 | \
+            awk '/^  --[A-Za-z]/ { print $1; \
+            if ($2 ~ /--[A-Za-z]/) print $2 }' | sed -e 's/[[,].*//g' )" \
+            -- "$cur" ) )
+        [[ $COMPREPLY == *=* ]] && compopt -o nospace
+    else
+        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
+    fi
+} &&
+complete -F _firemon firemon
+
+
+

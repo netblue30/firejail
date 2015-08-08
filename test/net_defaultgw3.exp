@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# check ip address
+send -- "firejail --net=br0 --net=br1 --defaultgw=10.10.95.89\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"default gateway 10.10.95.89 is not in the range of any network"
+}
+
+sleep 1
+
+puts "\n"
+

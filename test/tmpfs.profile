@@ -1,0 +1,1 @@
+tmpfs /tmp/firejailtestdir

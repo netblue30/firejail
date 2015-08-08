@@ -1,0 +1,64 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "rm -f /tmp/firejail-overlay-test;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"home"
+}
+
+send -- "ls > /tmp/firejail-overlay-test;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"home"
+}
+
+send -- "firejail --overlay\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "echo xyzxyzxyz > /tmp/firejail-overlay-test;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"home"
+}
+sleep 1
+
+send -- "cat  /tmp/firejail-overlay-test;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"xyzxyzxyz"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"home"
+}
+sleep 1
+
+send -- "exit\r"
+sleep 2
+
+send -- "cat  /tmp/firejail-overlay-test;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"xyzxyzxyz" {puts "TESTING ERROR 5.1\n";exit}
+	"home"
+}
+
+sleep 1
+send -- "rm -f /tmp/firejail-overlay-test;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"home"
+}
+
+
+sleep 1
+puts "\n"
+

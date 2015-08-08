@@ -1,0 +1,1 @@
+seccomp chmod,fchmod,fchmodat

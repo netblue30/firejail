@@ -1,0 +1,25 @@
+PREFIX=@prefix@
+VERSION=@PACKAGE_VERSION@
+NAME=@PACKAGE_NAME@
+
+H_FILE_LIST       = $(wildcard *.[h])
+C_FILE_LIST       = $(wildcard *.c)
+OBJS = $(C_FILE_LIST:.c=.o)
+BINOBJS =  $(foreach file, $(OBJS), $file)
+CFLAGS += -ggdb -O2 -DVERSION='"$(VERSION)"' -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIC -Wformat -Wformat-security
+LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now 
+
+all: libtrace.so
+
+%.o : %.c $(H_FILE_LIST)
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+# gcc -shared -fPIC -ldl traceopen.c -o traceopen.so
+libtrace.so: $(OBJS)
+	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
+
+
+clean:; rm -f $(OBJS) libtrace.so
+
+distclean: clean
+	rm -fr Makefile

@@ -1,0 +1,33 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls /home;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"bingo"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"home"
+}
+sleep 1
+
+send -- "ls /home/bingo;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"cannot open directory"
+}
+sleep 1
+
+puts "\n"
+

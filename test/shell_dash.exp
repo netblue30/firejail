@@ -1,0 +1,41 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --private --shell=/bin/dash\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+#send -- "ls -al;pwd\r"
+#expect {
+#	timeout {puts "TESTING ERROR 1\n";exit}
+#	".zshrc"
+#}
+#expect {
+#	timeout {puts "TESTING ERROR 1.1\n";exit}
+#	"home"
+#}
+
+send -- "env | grep SHELL;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"SHELL"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.1\n";exit}
+	"/bin/dash"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.2\n";exit}
+	"home"
+}
+send -- "exit\r"
+sleep 1
+
+puts "\n"
+

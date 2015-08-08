@@ -1,0 +1,71 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --net=br0 sleep 20 &\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+send -- "firejail --net=br0 sleep 20 &\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+send -- "firejail --net=br0 sleep 20 &\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+send -- "firejail --net=br0 sleep 20 &\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+send -- "firejail --net=br0 sleep 20 &\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+
+# will fail
+send -- "firejail --net=br0 sleep 20 &\r"
+expect {
+	timeout {puts "TESTING ERROR 5n";exit}
+	"cannot assign an IP address"
+}
+
+send -- "firejail --net=br0 sleep 20 &\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"cannot assign an IP address"
+}
+
+# check firejail --list
+send -- "firejail --list\r"
+expect {
+	timeout {puts "TESTING ERROR 7.1\n";exit}
+	"sleep 20"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.2\n";exit}
+	"sleep 20"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.3\n";exit}
+	"sleep 20"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.4\n";exit}
+	"sleep 20"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.5\n";exit}
+	"sleep 20"
+}
+
+# wait for snadboxes to be shutdown
+sleep 30
+puts "\n"

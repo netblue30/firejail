@@ -1,0 +1,48 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# firefox
+send -- "firejail --profile=/etc/firejail/firefox.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+send -- "exit\r"
+sleep 1
+
+# iceweasel
+send -- "firejail --profile=/etc/firejail/iceweasel.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+send -- "exit\r"
+sleep 1
+
+# evince
+send -- "firejail --profile=/etc/firejail/evince.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+sleep 1
+send -- "exit\r"
+sleep 1
+
+# midori
+send -- "firejail --profile=/etc/firejail/midori.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+sleep 1
+send -- "exit\r"
+sleep 1
+
+
+puts "\n"

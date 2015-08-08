@@ -1,0 +1,87 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# testing read-write /var/lock
+send -- "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "echo mytest > /var/lock/ttt;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"home"
+}
+
+send -- "cat /var/lock/ttt;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 2.1\n";exit}
+	"mytest"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"home"
+}
+
+send -- "rm /var/lock/ttt;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"home"
+}
+
+send -- "cat /var/lock/ttt;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"mytest" {puts "TESTING ERROR 4.1\n";exit}
+	"home"
+}
+
+sleep 1
+send -- "exit\r"
+sleep 1
+
+# redo the test with --private
+send -- "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "echo mytest > /var/lock/ttt;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"home"
+}
+
+send -- "cat /var/lock/ttt;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 12.1\n";exit}
+	"mytest"
+}
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"home"
+}
+
+send -- "rm /var/lock/ttt;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"home"
+}
+
+send -- "cat /var/lock/ttt;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	"mytest" {puts "TESTING ERROR 14.1\n";exit}
+	"home"
+}
+
+sleep 1
+
+puts "\n"

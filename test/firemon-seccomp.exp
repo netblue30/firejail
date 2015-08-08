@@ -1,0 +1,45 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --name=bingo1 --seccomp\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+spawn $env(SHELL)
+send --  "firejail --name=bingo2\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+
+
+
+spawn $env(SHELL)
+send -- "firemon --seccomp\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"bingo1"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Seccomp:	2"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"bingo2"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Seccomp:	0"
+}
+sleep 1
+
+puts "\n"

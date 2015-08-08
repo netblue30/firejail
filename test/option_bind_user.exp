@@ -1,0 +1,15 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --bind=/tmp/chroot,mntpoint\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"bind option is available only if running as root"
+}
+sleep 1
+
+puts "\n"
+

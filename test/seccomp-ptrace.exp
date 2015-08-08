@@ -1,0 +1,23 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --seccomp\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+send -- "strace ls\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Bad system call" {puts "version 1\n";}
+	" unexpected signal 31" {puts "version 2\n"}
+}
+
+send -- "exit\r"
+sleep 1
+puts "\n"

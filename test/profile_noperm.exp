@@ -1,0 +1,13 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --profile=/etc/shadow\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"cannot access profile"
+}
+sleep 1
+puts "\n"

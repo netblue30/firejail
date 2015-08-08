@@ -1,0 +1,69 @@
+#!/usr/bin/expect -f
+
+set timeout 30
+spawn $env(SHELL)
+match_max 100000
+
+# no chroot
+send -- "firejail --trace --dns=208.67.222.222 wget -q debian.org\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"1:wget:connect 208.67.222.222:53"
+}
+sleep 1
+
+send -- "rm index.html\r"
+sleep 1
+
+# with chroot
+send -- "firejail --chroot=/tmp/chroot --trace --dns=208.67.222.222 wget -q debian.org\r"
+expect {
+	timeout {puts "TESTING ERROR 2.1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.2\n";exit}
+	"1:wget:connect 208.67.222.222:53"
+}
+sleep 1
+
+send -- "rm index.html\r"
+sleep 1
+
+# net eth0
+send -- "firejail --net=eth0 --trace --dns=208.67.222.222 wget -q debian.org\r"
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.2\n";exit}
+	"1:wget:connect 208.67.222.222:53"
+}
+sleep 1
+
+send -- "rm index.html\r"
+sleep 1
+
+# net eth0 and chroot
+send -- "firejail --net=eth0 --chroot=/tmp/chroot --trace --dns=208.67.222.222 wget -q debian.org\r"
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.2\n";exit}
+	"1:wget:connect 208.67.222.222:53"
+}
+sleep 1
+
+send -- "rm index.html\r"
+sleep 1
+
+
+puts "\n"
+

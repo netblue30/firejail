@@ -1,0 +1,107 @@
+.TH man 1 "MONTH YEAR" "VERSION" "firemon man page"
+.SH NAME
+Firemon \- Monitoring program for processes started in a Firejail sandbox.
+.SH SYNOPSIS
+firemon [OPTIONS] [PID]
+.SH DESCRIPTION
+Firemon monitors programs started in a Firejail sandbox.
+Without a PID specified, all processes started by Firejail are monitored. Descendants of
+these processes are also being monitored.
+.SH OPTIONS
+.TP
+\fB\-\-arp
+Print ARP table for each sandbox.
+.TP
+\fB\-\-caps
+Print capabilities configuration for each sandbox.
+.TP
+\fB\-\-cgroup
+Print control group information for each sandbox.
+.TP
+\fB\-\-cpu
+Print CPU affinity for each sandbox.
+.TP
+\fB\-?\fR, \fB\-\-help\fR
+Print options end exit.
+.TP
+\fB\-\-interface
+Print network interface information for each sandbox.
+.TP
+\fB\-\-list
+List all sandboxes.
+.TP
+\fB\-\-name=name
+Print information only about named sandbox.
+.TP
+\fB\-\-netstats
+Monitor network statistics for sandboxes creating a new network namespace.
+.TP
+\fB\-\-route
+Print route table for each sandbox.
+.TP
+\fB\-\-seccomp
+Print seccomp configuration for each sandbox.
+.TP
+\fB\-\-top
+Monitor the most CPU-intensive sandboxes.
+.TP
+\fB\-\-tree
+Print a tree of all sandboxed processes.
+.TP
+\fB\-\-version
+Print program version and exit.
+
+.PP
+Option \-\-list prints a list of all sandboxes. The format
+for each entry is as follows:
+
+	PID:USER:Command
+
+Option \-\-tree prints the tree of processes running in the sandbox. The format
+for each process entry is as follows:
+
+	PID:USER:Command
+
+Option \-\-top is similar to the UNIX top command, however it applies only to
+sandboxes. Listed below are the available fields (columns) in alphabetical
+order:
+
+.TP
+Command
+Command used to start the sandbox.
+.TP
+CPU%
+CPU usage, the sandbox share of the elapsed CPU time since the
+last screen update
+.TP
+PID
+Unique process ID for the task controlling the sandbox.
+.TP
+Prcs
+Number of processes running in sandbox, including the controlling process.
+.TP
+RES
+Resident Memory Size (KiB), sandbox non-swapped physical memory.
+It is a sum of the RES values for all processes running in the sandbox.
+.TP
+SHR
+Shared Memory Size (KiB), it reflects memory shared with other
+processes. It is a sum of the SHR values for all processes running
+in the sandbox, including the controlling process.
+.TP
+Uptime
+Sandbox running time in hours:minutes:seconds format.
+.TP
+User
+The owner of the sandbox.
+
+.SH LICENSE
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+.PP
+Homepage: http://firejail.sourceforge.net
+.SH SEE ALSO
+\&\flfirejail\fR\|(1),
+\&\flfirejail-profile\fR\|(5),
+\&\flfirejail-login\fR\|(5)
+
+

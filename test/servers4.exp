@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "sudo ls; sudo whoami; sudo pwd\r"
+expect {
+	timeout {puts "TESTING ERROR: you need to root run this test as root\n";exit}
+	"root"
+}
+
+send --  "firejail --net=br0 --ip=10.10.20.5 --seccomp\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+send -- "/etc/init.d/isc-dhcp-server start\r"
+sleep 5
+
+
+send -- "ps aux; pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"dhcpd"
+}
+
+send -- "exit\r"
+sleep 1
+puts "\n"

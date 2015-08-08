@@ -1,0 +1,30 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --name=svntesting\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 3
+
+spawn $env(SHELL)
+send --  "firejail --shutdown=svntesting;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"home"
+}
+sleep 1
+
+send --  "firejail --list;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"svntesting" {puts "TESTING ERROR 6\n";exit}
+	"home"
+}
+sleep 1
+
+puts "\n"

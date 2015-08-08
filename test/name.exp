@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --name=baluba\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ping -c 3 baluba;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"3 packets transmitted, 3 received"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"home"
+}
+sleep 1
+
+puts "\n"

@@ -1,0 +1,41 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# check ip address
+send -- "firejail --net=br0 --ip=none\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"eth0" {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+send -- "bash\r"
+sleep 1
+
+# no default gateway configured
+send -- "netstat -rn;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"0.0.0.0" {puts "TESTING ERROR 3\n";exit}
+	"eth0" {puts "TESTING ERROR 4\n";exit}
+	"home"
+}
+sleep 1
+
+# eth0 configured
+send -- "/sbin/ifconfig;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"eth0"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"home"
+}
+sleep 1
+
+puts "\n"
+

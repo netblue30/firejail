@@ -1,0 +1,88 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# check default netfilter on br0
+send -- "firejail --debug --net=br0 --ip=10.10.20.5 --netfilter\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Installing network filter"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Chain INPUT (policy DROP"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"ACCEPT     all  --  any    any     anywhere"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"ACCEPT     icmp --  any    any     anywhere"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+sleep 2
+send -- "exit\r"
+sleep 1
+
+# check default netfilter no new network
+send -- "firejail --debug --netfilter\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Installing network filter" {puts "TESTING ERROR 5.1\n";exit}
+	"Chain INPUT (policy DROP" {puts "TESTING ERROR 5.1\n";exit}
+	"ACCEPT     all  --  any    any     anywhere" {puts "TESTING ERROR 5.1\n";exit}
+	"ACCEPT     icmp --  any    any     anywhere" {puts "TESTING ERROR 5.1\n";exit}
+	"Child process initialized"
+}
+sleep 2
+send -- "exit\r"
+sleep 1
+
+# check file filter netfilter on br0
+send -- "firejail --debug --net=br0 --ip=10.10.20.5 --netfilter=netfilter.filter\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"Installing network filter"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.1\n";exit}
+	"Child process initialized"
+}
+sleep 2
+send -- "ping -c 1 -w 3 10.10.20.1\r"
+expect {
+	timeout {puts "TESTING ERROR 6.2\n";exit}
+	"0 received, 100% packet loss"
+}
+
+send -- "exit\r"
+sleep 1
+
+# check profile netfilter on br0
+send -- "firejail --debug --net=br0 --ip=10.10.20.5 --profile=netfilter.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"Installing network filter"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.1\n";exit}
+	"Child process initialized"
+}
+sleep 2
+send -- "ping -c 1 -w 3 10.10.20.1\r"
+expect {
+	timeout {puts "TESTING ERROR 7.2\n";exit}
+	"0 received, 100% packet loss"
+}
+
+send -- "exit\r"
+sleep 1
+
+puts "\n"
+

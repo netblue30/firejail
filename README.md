@@ -9,3 +9,4 @@ The sandbox is lightweight, the overhead is low. There are no complicated config
     $ firejail vlc                # starting VideoLAN Client
     $ sudo firejail "/etc/init.d/nginx start && sleep inf"
 
+Project webpage: https://l3net.wordpress.com/projects/firejail/

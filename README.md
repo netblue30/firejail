@@ -10,6 +10,9 @@ The sandbox is lightweight, the overhead is low. There are no complicated config
     $ sudo firejail "/etc/init.d/nginx start && sleep inf"
 
 Project webpage: https://l3net.wordpress.com/projects/firejail/
+
 Download and Installation: https://l3net.wordpress.com/projects/firejail/firejail-download-and-install/
+
 Features: https://l3net.wordpress.com/projects/firejail/firejail-features/
+
 Usage: https://l3net.wordpress.com/projects/firejail/firejail-usage/

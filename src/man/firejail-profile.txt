@@ -1,4 +1,4 @@
-.TH man 5 "MONTH YEAR" "VERSION" "firejail profiles man page"
+.TH FIREJAIL-PROFILE 5 "MONTH YEAR" "VERSION" "firejail profiles man page"
 .SH NAME
 profile \- Profile file syntax for Firejail
 
@@ -15,8 +15,19 @@ directory and ~/.config/firejail directory.
 Include and comment support:
 
 .TP
-\f\include other.profile
-Include other.profile file.
+\f\include other.profile exclude-token
+Include other.profile file. exclued-token disables blacklist commands in other.profile
+if exclude-token word is found in the name section of blacklist command.
+exclude-tyoken is optional.
+
+Example: "include /etc/firejail/disable-common.inc .filezilla"
+loads disable-common.inc file disables "blacklist ${HOME}/.filezilla" command in this file.
+
+other.profile file name can be prefixed with ${HOME}. This will force Firejail to look for the
+file in user home directory.
+
+Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1" file.
+
 .TP
 # this is a comment
 
@@ -81,14 +92,17 @@ Enable default Linux capabilities filter.
 caps.drop all
 Blacklist all Linux capabilities.
 .TP
-caps.drop capability,capability,capability
+caps.keep capability,capability,capability
 Blacklist Linux capabilities filter.
 .TP
 caps.drop capability,capability,capability
 Whitelist Linux capabilities filter.
 .TP
 \f\seccomp
-Enable default seccomp filter.
+Enable default seccomp filter.  The default list is as follows:
+mount, umount2, ptrace, kexec_load, open_by_handle_at, init_module, finit_module, delete_module,
+iopl, ioperm, swapon, swapoff, mknode, syslog, process_vm_readv and process_vm_writev,
+sysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie, perf_event_open, fanotify_init and kcmp.
 .TP
 \f\seccomp syscall,syscall,syscall
 Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter.

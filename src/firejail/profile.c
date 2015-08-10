@@ -415,9 +415,18 @@ void profile_read(const char *fname, const char *skip1, const char *skip2) {
 				p++;
 			}
 			
+			// expand ${HOME}/ in front of the new profile file
+			char *newprofile2 = NULL;
+			if (strncmp(newprofile, "${HOME}", 7) == 0) {
+				if (asprintf(&newprofile2, "%s%s", cfg.homedir, newprofile + 7) == -1)
+					errExit("asprintf");
+			}				
+			
 			// recursivity
-			profile_read(newprofile, newskip1, newskip2);
+			profile_read((newprofile2)? newprofile2:newprofile, newskip1, newskip2);
 			include_level--;
+			if (newprofile2)
+				free(newprofile2);
 			free(ptr);
 			continue;
 		}

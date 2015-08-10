@@ -18,3 +18,5 @@ Download and Installation: https://l3net.wordpress.com/projects/firejail/firejai
 Features: https://l3net.wordpress.com/projects/firejail/firejail-features/
 
 Usage: https://l3net.wordpress.com/projects/firejail/firejail-usage/
+
+FAQ: https://l3net.wordpress.com/projects/firejail/firejail-faq/

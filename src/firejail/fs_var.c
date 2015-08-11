@@ -294,12 +294,14 @@ void fs_var_lock(void) {
 }
 
 void fs_var_tmp(void) {
-
-	if (!is_link("/var/tmp")) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/tmp\n");
-		if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-			errExit("mounting /var/tmp");
+	struct stat s;
+	if (stat("/var/tmp", &s) == 0) {
+		if (!is_link("/var/tmp")) {
+			if (arg_debug)
+				printf("Mounting tmpfs on /var/tmp\n");
+			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+				errExit("mounting /var/tmp");
+		}
 	}
 	else {
 		fprintf(stderr, "Warning: /var/tmp not mounted\n");

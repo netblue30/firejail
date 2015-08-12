@@ -28,6 +28,7 @@
 #define MNT_DIR	"/tmp/firejail/mnt"
 #define OVERLAY_DIR	"/tmp/firejail/overlay"
 #define HOME_DIR	"/tmp/firejail/mnt/home"
+#define ETC_DIR	"/tmp/firejail/mnt/etc"
 #define MAX_INCLUDE_LEVEL 6
 
 // main.c
@@ -67,6 +68,7 @@ typedef struct config_t {
 	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory
 	char *home_private_keep;	// keep list for private home directory
+	char *etc_private_keep;	// keep list for private etc directory
 	char *cwd;		// current working directory
 
 	// networking
@@ -140,6 +142,7 @@ extern char *arg_netfilter_file;	// netfilter file
 extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
+extern int arg_private_etc;	// private etc directory
 extern int arg_scan;		// arp-scan all interfaces
 
 extern int parent_to_child_fds[2];
@@ -350,5 +353,8 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 void network_shm_del_file(pid_t pid);
 void network_shm_set_file(pid_t pid);
 
+// fs_etc.c
+void fs_check_etc_list(void);
+void fs_private_etc_list(void);
 
 #endif

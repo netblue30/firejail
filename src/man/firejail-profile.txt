@@ -81,6 +81,11 @@ closed.
 .TP
 \f\private-dev
 Create a new /dev directory. Only null, full, zero, tty, pts, ptmx, random, urandom and shm devices are available.
+.TP
+\f\private-etc file,directory
+Build a new /etc in a temporary
+filesystem, and copy the files and directories in the list.
+All modifications are discarded when the sandbox is closed.
 
 .SH Filters
 \fBcaps\fR and \fBseccomp\fR enable Linux capabilities and seccomp filters. Examples:

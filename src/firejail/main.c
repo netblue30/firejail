@@ -81,6 +81,7 @@ char *arg_netfilter_file = NULL;			// netfilter file
 int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
+int arg_private_etc = 0;			// private etc directory
 int arg_scan = 0;				// arp-scan all interfaces
 
 int parent_to_child_fds[2];
@@ -698,6 +699,12 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--private-dev") == 0) {
 			arg_private_dev = 1;
+		}
+		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
+			// extract private etc dirname
+			cfg.etc_private_keep = argv[i] + 14;
+			fs_check_etc_list();
+			arg_private_etc = 1;
 		}
 			
 

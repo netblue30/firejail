@@ -273,7 +273,7 @@ static void check_dir_or_file(const char *name) {
 	if (asprintf(&fname, "%s/%s", cfg.homedir, name) == -1)
 		errExit("asprintf");
 	if (arg_debug)
-		printf("***************Checking %s\n", fname);		
+		printf("Checking %s\n", fname);		
 	if (stat(fname, &s) == -1) {
 		fprintf(stderr, "Error: file %s not found.\n", fname);
 		exit(1);

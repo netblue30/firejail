@@ -670,6 +670,19 @@ full  null  ptmx  pts  random  shm  tty  urandom  zero
 .br
 $
 .TP
+\fB\-\-private-etc=file,directory
+Build a new /etc in a temporary
+filesystem, and copy the files and directories in the list.
+All modifications are discarded when the sandbox is closed.
+.br
+
+.br
+Example:
+.br
+$ firejail --private-etc=group,hostname,localtime, \\
+.br
+nsswitch.conf,passwd,resolv.conf
+.TP
 \fB\-\-profile=filename
 Load a custom profile from filename. For filename use an absolute path or a path relative to the current path.
 For more information, see PROFILES section below.

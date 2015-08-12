@@ -227,11 +227,19 @@ int profile_check_line(char *ptr, int lineno) {
 		return 0;
 	}
 
-	// private list of files and directories
+	// private home list of files and directories
 	if (strncmp(ptr, "private.keep ", 13) == 0) {
 		cfg.home_private_keep = ptr + 13;
 		fs_check_home_list();
 		arg_private = 1;
+		return 0;
+	}
+	
+	// private /etc list of files and directories
+	if (strncmp(ptr, "private-etc ", 12) == 0) {
+		cfg.etc_private_keep = ptr + 12;
+		fs_check_etc_list();
+		arg_private_etc = 1;
 		return 0;
 	}
 

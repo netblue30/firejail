@@ -67,9 +67,9 @@ void netfilter(const char *fname) {
 		}
 
 		filter = malloc(s.st_size + 1);	  // + '\0'
-		memset(filter, 0, s.st_size + 1);
 		if (!filter)
 			errExit("malloc");
+		memset(filter, 0, s.st_size + 1);
 
 		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "r");

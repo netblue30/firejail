@@ -302,10 +302,10 @@ static void check_dir_or_file(const char *name) {
 	exit(1);
 }
 
-// check directory linst specified by user (--private.keep option) - exit if it fails
+// check directory list specified by user (--private-home option) - exit if it fails
 void fs_check_home_list(void) {
 	if (strstr(cfg.home_private_keep, "..")) {
-		fprintf(stderr, "Error: invalid private.keep list\n");
+		fprintf(stderr, "Error: invalid private-home list\n");
 		exit(1);
 	}
 	
@@ -385,7 +385,7 @@ static void duplicate(char *fname) {
 }
 
 
-// private mode (--private.keep=list):
+// private mode (--private-home=list):
 // 	mount homedir on top of /home/user,
 // 	tmpfs on top of  /root in nonroot mode,
 // 	tmpfs on top of /tmp in root mode,

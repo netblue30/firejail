@@ -228,7 +228,8 @@ int profile_check_line(char *ptr, int lineno) {
 	}
 
 	// private home list of files and directories
-	if (strncmp(ptr, "private.keep ", 13) == 0) {
+	if ((strncmp(ptr, "private.keep ", 13) == 0)
+	 || (strncmp(ptr, "private-home ", 13) == 0)) {
 		cfg.home_private_keep = ptr + 13;
 		fs_check_home_list();
 		arg_private = 1;

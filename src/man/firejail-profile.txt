@@ -73,7 +73,7 @@ closed.
 \f\private directory
 Use directory as user home.
 .TP
-\f\private.keep file,directory
+\f\private-home file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
 new home. All modifications are discarded when the sandbox is

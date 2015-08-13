@@ -282,9 +282,9 @@ void fs_private_dev(void);
 void fs_private(void);
 // private mode (--private=homedir)
 void fs_private_homedir(void);
-// private mode (--private.keep=list)
+// private mode (--private-home=list)
 void fs_private_home_list(void);
-// check directory linst specified by user (--private.keep option) - exit if it fails
+// check directory list specified by user (--private-home option) - exit if it fails
 void fs_check_home_list(void);
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void);

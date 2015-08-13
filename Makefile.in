@@ -86,6 +86,7 @@ install: all
 	install -c -m 0644 etc/disable-mgmt.inc $(DESTDIR)/etc/firejail/.
 	install -c -m 0644 etc/disable-secret.inc $(DESTDIR)/etc/firejail/.
 	install -c -m 0644 etc/disable-common.inc $(DESTDIR)/etc/firejail/.
+	install -c -m 0644 etc/disable-history.inc $(DESTDIR)/etc/firejail/.
 	install -c -m 0644 etc/dropbox.profile $(DESTDIR)/etc/firejail/.
 	install -c -m 0644 etc/opera.profile $(DESTDIR)/etc/firejail/.
 	install -c -m 0644 etc/thunderbird.profile $(DESTDIR)/etc/firejail/.

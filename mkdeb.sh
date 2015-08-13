@@ -77,6 +77,7 @@ cp etc/pidgin.profile debian/etc/firejail/.
 cp etc/filezilla.profile debian/etc/firejail/.
 cp etc/empathy.profile debian/etc/firejail/.
 cp etc/disable-common.inc debian/etc/firejail/.
+cp etc/disable-history.inc debian/etc/firejail/.
 cp etc/deadbeef.profile debian/etc/firejail/.
 cp etc/icecat.profile debian/etc/firejail/.
 cp platform/debian/conffiles $DEBIAN_CTRL_DIR/.

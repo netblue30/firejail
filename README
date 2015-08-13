@@ -24,5 +24,9 @@ Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>
 	- src/lib/libnetlink.c extracted from iproute2 software package
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)
 	- ARM support (ticket 17)
+dewbasaur (https://github.com/dewbasaur)
+	- block access to history files (issue 16)
+Peter Millerchip (https://github.com/pmillerchip)
+	- memory allocation fix (issue 13)
 
 Copyright (C) 2014, 2015 Firejail Authors

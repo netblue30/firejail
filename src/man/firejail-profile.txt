@@ -16,9 +16,9 @@ Include and comment support:
 
 .TP
 \f\include other.profile exclude-token
-Include other.profile file. exclued-token disables blacklist commands in other.profile
+Include other.profile file. exclude-token disables blacklist commands in other.profile
 if exclude-token word is found in the name section of blacklist command.
-exclude-tyoken is optional.
+exclude-token is optional.
 
 Example: "include /etc/firejail/disable-common.inc .filezilla"
 loads disable-common.inc file disables "blacklist ${HOME}/.filezilla" command in this file.

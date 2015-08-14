@@ -59,7 +59,7 @@ arg checking:
 	- check same owner
 	- unit test
 	
-9. --private.keep=filelist
+9. --private-home=filelist
 	- supported in profiles
 	- checking no ".."
 	- checking file found

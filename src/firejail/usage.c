@@ -148,7 +148,7 @@ void usage(void) {
 	printf("\t\tfilesystems. All modifications are discarded when the sandbox is\n");
 	printf("\t\tclosed.\n\n");
 	printf("\t--private=directory - use directory as user home.\n\n");
-	printf("\t--private.keep=file,directory - build a new user home in a temporary\n");
+	printf("\t--private-home=file,directory - build a new user home in a temporary\n");
 	printf("\t\tfilesystem, and copy the files and directories in the list in\n");
 	printf("\t\tthe new home. All modifications are discarded when the sandbox\n");
 	printf("\t\tis closed.\n\n");

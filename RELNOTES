@@ -1,8 +1,10 @@
 firejail (0.9.29) baseline; urgency=low
   * added a disable-history.inc profile as a result of Firefox PDF.js exploit;
     disable-history.inc included in all default profiles
+  * Firefox PDF.js exploit (CVE-2015-4495) fixes
   * added --private-etc option
   * support ${HOME} token in include directive in profile files
+  * --private.keep is transitioned to --private-home
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sat, 12 Aug 2015 20:25:00 -0500
 

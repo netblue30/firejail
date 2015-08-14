@@ -26,7 +26,10 @@ G4JC (http://sourceforge.net/u/gaming4jc/profile/)
 	- ARM support (ticket 17)
 dewbasaur (https://github.com/dewbasaur)
 	- block access to history files (issue 16)
+	- Firefox PDF.js exploit (CVE-2015-4495) fixes (issue 17)
 Peter Millerchip (https://github.com/pmillerchip)
 	- memory allocation fix (issue 13)
+	- --private.keep to --private-home transition (issue 21)
+	- lots of other fixes (issue 19, 20)
 
 Copyright (C) 2014, 2015 Firejail Authors

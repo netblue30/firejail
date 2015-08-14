@@ -11,9 +11,12 @@ blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla
 
-# Instant Messaging
+# Instant Messaging / IRC
 blacklist ${HOME}/.purple
+blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.config/psi+
+blacklist ${HOME}/.config/xchat
+blacklist ${HOME}/.config/hexchat
 
 # VNC
 blacklist ${HOME}/.remmina

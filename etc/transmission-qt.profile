@@ -1,10 +1,3 @@
-# transmission-qt profile
-include /etc/firejail/disable-mgmt.inc
-include /etc/firejail/disable-secret.inc
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-history.inc
-caps.drop all
-seccomp
-netfilter
-noroot
+# Alias for transmission-gtk profile
+include /etc/firejail/transmission-gtk.profile
 

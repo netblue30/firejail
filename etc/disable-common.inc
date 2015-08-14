@@ -13,6 +13,7 @@ blacklist ${HOME}/.config/filezilla
 
 # Instant Messaging
 blacklist ${HOME}/.purple
+blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.config/psi+
 
 # VNC

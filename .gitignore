@@ -1,0 +1,14 @@
+*.o
+*.so
+*~
+Makefile
+config.log
+config.status
+firejail-login.5
+firejail-profile.5
+firejail.1
+firemon.1
+src/firejail/firejail
+src/firemon/firemon
+src/ftee/ftee
+

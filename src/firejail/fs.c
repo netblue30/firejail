@@ -137,14 +137,16 @@ static void disable_file(OPERATION op, const char *filename, const char *emptydi
 	// Resolve all symlinks
 	char* fname = realpath(filename, NULL);
 	if (fname == NULL) {
-		printf("Warning: %s is an invalid file, skipping...\n", filename);
+		if (arg_debug)
+			printf("Warning: %s is an invalid file, skipping...\n", filename);
 		return;
 	}
 	
 	// if the file is not present, do nothing
 	struct stat s;
 	if (stat(fname, &s) == -1) {
-		printf("Warning: %s does not exist, skipping...\n", fname);
+		if (arg_debug)
+			printf("Warning: %s does not exist, skipping...\n", fname);
 		free(fname);
 		return;
 	}

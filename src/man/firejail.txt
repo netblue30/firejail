@@ -734,7 +734,7 @@ sysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie, perf_event_open, fanotif
 .br
 Example:
 .br
-$ firejail \-\-sccomp
+$ firejail \-\-seccomp
 .TP
 \fB\-\-seccomp=syscall,syscall,syscall
 Enable seccomp filter, blacklist the default list and the syscalls specified by the command.

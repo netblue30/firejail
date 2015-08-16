@@ -172,30 +172,6 @@ int copy_file(const char *srcname, const char *destname) {
 	return 0;
 }
 
-
-char *get_link(const char *fname) {
-	assert(fname);
-	struct stat sb;
-	char *linkname;
-	ssize_t r;
-
-	if (lstat(fname, &sb) == -1)
-		return NULL;
-
-	linkname = malloc(sb.st_size + 1);
-	if (linkname == NULL)
-		return NULL;
-	memset(linkname, 0, sb.st_size + 1);
-
-	r = readlink(fname, linkname, sb.st_size + 1);
-	if (r < 0) {
-		free(linkname);
-		return NULL;
-	}
-	return linkname;
-}
-
-
 // return 1 if the file is a directory
 int is_dir(const char *fname) {
 	assert(fname);

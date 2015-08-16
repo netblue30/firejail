@@ -251,7 +251,6 @@ void logmsg(const char *msg);
 void logargs(int argc, char **argv) ;
 void logerr(const char *msg);
 int copy_file(const char *srcname, const char *destname);
-char *get_link(const char *fname);
 int is_dir(const char *fname);
 int is_link(const char *fname);
 char *line_remove_spaces(const char *buf);

@@ -98,7 +98,7 @@ void ifbw_remove(IFBW *r) {
 	return;
 }
 
-int fibw_count(viod) {
+int fibw_count(void) {
 	int rv = 0;
 	IFBW *ptr = ifbw;
 

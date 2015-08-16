@@ -152,27 +152,24 @@ static char *create_empty_file(void) {
 	return RO_FILE;
 }
 
-static void disable_file(OPERATION op, const char *fname, const char *emptydir, const char *emptyfile) {
-	assert(fname);
+static void disable_file(OPERATION op, const char *filename, const char *emptydir, const char *emptyfile) {
+	assert(filename);
 	assert(emptydir);
 	assert(emptyfile);
 	assert(op <OPERATION_MAX);
-
-	// if the file is a link, follow the link
-	char *lnk = NULL;
-	if (is_link(fname)) {
-		lnk = get_link(fname);
-		if (lnk)
-			fname = lnk;
-		else
-			fprintf(stderr, "Warning: cannot follow link %s, skipping...\n", fname);
+	
+	// Resolve all symlinks
+	char* fname = realpath(filename, NULL);
+	if (fname == NULL) {
+		printf("Warning: %s is an invalid file, skipping...\n", filename);
+		return;
 	}
 	
 	// if the file is not present, do nothing
 	struct stat s;
 	if (stat(fname, &s) == -1) {
-		if (lnk)
-			free(lnk);
+		printf("Warning: %s does not exist, skipping...\n", fname);
+		free(fname);
 		return;
 	}
 
@@ -211,8 +208,7 @@ static void disable_file(OPERATION op, const char *fname, const char *emptydir, 
 	else
 		assert(0);
 
-	if (lnk)
-		free(lnk);
+	free(fname);
 }
 
 static void globbing(OPERATION op, const char *fname, const char *emptydir, const char *emptyfile) {

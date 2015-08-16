@@ -3,3 +3,4 @@
 2. Support ~ in --blacklist filenames, maybe in some other options. Example
 $ firejail --blacklist=~/.ssh
 
+3. Support filenames with spaces in blacklist option.

@@ -16,20 +16,22 @@ Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
 Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
-	- user namespace implementation, ticket 10
-Reiner Herrmann - a number of build patches, man page fixes (tickets 11, 12, 13, 19)
+	- user namespace implementation
+Reiner Herrmann - a number of build patches, man page fixes, Debian integration
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
-	- Patch to output "Reading profile" to stderr instead of stdout (ticket 15)
-Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>
+	- Patch to output "Reading profile" to stderr instead of stdout
+Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
 	- src/lib/libnetlink.c extracted from iproute2 software package
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)
-	- ARM support (ticket 17)
+	- ARM support
 dewbasaur (https://github.com/dewbasaur)
-	- block access to history files (issue 16)
-	- Firefox PDF.js exploit (CVE-2015-4495) fixes (issue 17)
+	- block access to history files
+	- Firefox PDF.js exploit (CVE-2015-4495) fixes
 Peter Millerchip (https://github.com/pmillerchip)
-	- memory allocation fix (issue 13)
-	- --private.keep to --private-home transition (issue 21)
-	- lots of other fixes (issue 19, 20)
+	- memory allocation fix
+	- --private.keep to --private-home transition
+	- lots of other fixes
+Michael Haas (https://github.com/mhaas)
+	- bugfixes
 
 Copyright (C) 2014, 2015 Firejail Authors

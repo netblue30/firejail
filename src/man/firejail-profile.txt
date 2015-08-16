@@ -130,7 +130,7 @@ Enable an user namespace without root user defined.
 
 .SH Resource limits
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
-The limits can be modified inside the sandbox using the regular \fBulimt\fR command. Examples:
+The limits can be modified inside the sandbox using the regular \fBulimit\fR command. Examples:
 
 .TP
 \f\rlimit-fsize 1024

@@ -52,7 +52,8 @@ int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_debug = 0;				// print debug messages
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
-int arg_overlay = 0;				// --overlay
+int arg_overlay = 0;				// overlay option
+int arg_overlay_keep = 0;			// place overlay diff directory in ~/.firejail
 int arg_zsh = 0;				// use zsh as default shell
 int arg_csh = 0;				// use csh as default shell
 
@@ -620,6 +621,38 @@ int main(int argc, char **argv) {
 			profile_add(line);
 		}
 		else if (strcmp(argv[i], "--overlay") == 0) {
+			if (cfg.chrootdir) {
+				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+				exit(1);
+			}
+			arg_overlay = 1;
+			arg_overlay_keep = 1;
+			
+			// create ~/.firejail directory
+			char *dirname;
+			if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
+				errExit("asprintf");
+			struct stat s;
+			if (stat(dirname, &s) == -1) {
+				if (mkdir(dirname, S_IRWXU | S_IRWXG | S_IRWXO))
+					errExit("mkdir");
+				if (chown(dirname, getuid(), getgid()) < 0)
+					errExit("chown");
+				if (chmod(dirname, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+					errExit("chmod");
+			}
+			free(dirname);
+			
+			// check overlay directory
+			if (asprintf(&dirname, "%s/.firejail/%d", cfg.homedir, getpid()) == -1)
+				errExit("asprintf");
+			if (stat(dirname, &s) == 0) {
+				fprintf(stderr, "Error: overlay directory already exists: %s\n", dirname);
+				exit(1);
+			}
+			cfg.overlay_dir = dirname;
+		}
+		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);

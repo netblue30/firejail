@@ -140,9 +140,19 @@ void usage(void) {
 	printf("\t\tlogfile, and keep the size of the file under 500KB using log\n");
 	printf("\t\trotation. Five files with prefixes .1 to .5 are used in\n");
 	printf("\t\trotation.\n\n");
+	
 	printf("\t--overlay - mount a filesystem overlay on top of the current filesystem.\n");
-	printf("\t\t(OverlayFS support is required in Linux kernel for this option\n");
-	printf("\t\tto work)\n\n");   
+	printf("\t\tThe upper filesystem layer is persistent, and stored in\n");
+	printf("\t\t$HOME/.firejail directory. (OverlayFS support is required in\n");
+	printf("\t\tLinux kernel for this option to work). \n\n");   
+
+	printf("\t--overlay-tmpfs - mount a filesystem overlay on top of the current\n");
+	printf("\t\tfilesystem. The upper layer is stored in a tmpfs filesystem,\n");
+	printf("\t\tand it is discarded when the sandbox is closed. (OverlayFS\n");
+	printf("\t\tsupport is required in Linux kernel for this option to work).\n\n");   
+
+
+
 	 
 	printf("\t--private - mount new /root and /home/user directories in temporary\n");
 	printf("\t\tfilesystems. All modifications are discarded when the sandbox is\n");

@@ -26,7 +26,6 @@
 #define RO_DIR	"/tmp/firejail/firejail.ro.dir"
 #define RO_FILE	"/tmp/firejail/firejail.ro.file"
 #define MNT_DIR	"/tmp/firejail/mnt"
-#define OVERLAY_DIR	"/tmp/firejail/overlay"
 #define HOME_DIR	"/tmp/firejail/mnt/home"
 #define ETC_DIR	"/tmp/firejail/mnt/etc"
 #define MAX_INCLUDE_LEVEL 6
@@ -70,6 +69,7 @@ typedef struct config_t {
 	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
 	char *cwd;		// current working directory
+	char *overlay_dir;
 
 	// networking
 	char *hostname;
@@ -109,11 +109,13 @@ static inline int any_bridge_configured(void) {
 	else
 		return 0;
 }
+
 extern int arg_private;		// mount private /home and /tmp directory
 extern int arg_debug;		// print debug messages
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
-extern int arg_overlay;		// --overlay
+extern int arg_overlay;		// overlay option
+extern int arg_overlay_keep;	// place overlay diff directory in ~/.firejail
 extern int arg_zsh;		// use zsh as default shell
 extern int arg_csh;		// use csh as default shell
 
@@ -358,3 +360,4 @@ void fs_check_etc_list(void);
 void fs_private_etc_list(void);
 
 #endif
+

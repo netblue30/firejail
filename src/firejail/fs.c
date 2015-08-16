@@ -82,30 +82,6 @@ void fs_build_mnt_dir(void) {
 	}
 }
 
-// build /tmp/firejail/overlay directory
-void fs_build_overlay_dir(void) {
-	struct stat s;
-	fs_build_firejail_dir();
-	
-	// create /tmp/firejail directory
-	if (stat(OVERLAY_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", MNT_DIR);
-		/* coverity[toctou] */
-		int rv = mkdir(OVERLAY_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
-		if (rv == -1)
-			errExit("mkdir");	
-		if (chown(OVERLAY_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(OVERLAY_DIR, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
-			errExit("chmod");
-	}
-}
-
-
-
-
-
 //***********************************************
 // process profile file
 //***********************************************
@@ -629,8 +605,25 @@ void fs_overlayfs(void) {
 	if (chmod(oroot, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
 		errExit("chmod");
 
+	char *basedir = MNT_DIR;
+	if (arg_overlay_keep) {
+		// check the directory exists
+		struct stat s;
+		if (stat("/myoverlay", &s) == -1) {
+			fprintf(stderr, "Error: overlay directory should already exist\n");
+			exit(1);
+		}
+
+		// set base for working and diff directories
+		basedir = cfg.overlay_dir;
+		if (mkdir(basedir, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
+			fprintf(stderr, "Error: cannot create overlay directory\n");
+			exit(1);
+		}
+	}
+
 	char *odiff;
-	if(asprintf(&odiff, "%s/odiff", MNT_DIR) == -1)
+	if(asprintf(&odiff, "%s/odiff", basedir) == -1)
 		errExit("asprintf");
 	if (mkdir(odiff, S_IRWXU | S_IRWXG | S_IRWXO))
 		errExit("mkdir");
@@ -638,9 +631,9 @@ void fs_overlayfs(void) {
 		errExit("chown");
 	if (chmod(odiff, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
 		errExit("chmod");
-
+	
 	char *owork;
-	if(asprintf(&owork, "%s/owork", MNT_DIR) == -1)
+	if(asprintf(&owork, "%s/owork", basedir) == -1)
 		errExit("asprintf");
 	if (mkdir(owork, S_IRWXU | S_IRWXG | S_IRWXO))
 		errExit("mkdir");
@@ -648,12 +641,16 @@ void fs_overlayfs(void) {
 		errExit("chown");
 	if (chmod(owork, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
 		errExit("chmod");
-
+	
 	// mount overlayfs
 	if (arg_debug)
 		printf("Mounting OverlayFS\n");
 	char *option;
 	if (oldkernel) { // old Ubuntu/OpenSUSE kernels
+		if (arg_overlay_keep) {
+			fprintf(stderr, "Error: option --overlay= not available for kernels older than 3.18\n");
+			exit(1);
+		}
 		if (asprintf(&option, "lowerdir=/,upperdir=%s", odiff) == -1)
 			errExit("asprintf");
 		if (mount("overlayfs", oroot, "overlayfs", MS_MGC_VAL, option) < 0)
@@ -662,10 +659,12 @@ void fs_overlayfs(void) {
 	else { // kernel 3.18 or newer
 		if (asprintf(&option, "lowerdir=/,upperdir=%s,workdir=%s", odiff, owork) == -1)
 			errExit("asprintf");
+//printf("option #%s#\n", option);			
 		if (mount("overlay", oroot, "overlay", MS_MGC_VAL, option) < 0)
 			errExit("mounting overlayfs");
 	}
-
+	printf("OverlayFS configured in %s directory\n", basedir);
+	
 	// mount-bind dev directory
 	if (arg_debug)
 		printf("Mounting /dev\n");

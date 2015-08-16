@@ -131,7 +131,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
 			}
 			
 			// parse the incomming packet
-			if (len < 14 + sizeof(ArpHdr))
+			if ((unsigned int) len < 14 + sizeof(ArpHdr))
 				continue;
 			if (frame[12] != (ETH_P_ARP / 256) || frame[13] != (ETH_P_ARP % 256))
 				continue;
@@ -331,7 +331,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 
 	// wait not more than one second for an answer
 	int header_printed = 0;
-	int last_ip = 0;
+	uint32_t last_ip = 0;
 	struct timeval ts;
 	ts.tv_sec = 2; // 2 seconds receive timeout
 	ts.tv_usec = 0;
@@ -410,7 +410,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 			}
 
 			// parse the incomming packet
-			if (len < 14 + sizeof(ArpHdr))
+			if ((unsigned int) len < 14 + sizeof(ArpHdr))
 				continue;
 
 			// look only at ARP packets

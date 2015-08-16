@@ -240,7 +240,7 @@ void dbg_test_dir(const char *dir) {
 		if (is_dir(dir))
 			printf("%s is a directory\n", dir);
 		if (is_link(dir)) {
-			char *lnk = get_link(dir);
+			char *lnk = realpath(dir, NULL);
 			if (lnk) {
 				printf("%s is a symbolic link to %s\n", dir, lnk);
 				free(lnk);
@@ -259,30 +259,20 @@ void fs_var_lock(void) {
 			errExit("mounting /lock");
 	}
 	else {
-		char *lnk = get_link("/var/lock");
+		char *lnk = realpath("/var/lock", NULL);
 		if (lnk) {
-			// convert a link such as "../shm" into "/shm"
-			char *lnk2 = lnk;
-			int cnt = 0;
-			while (strncmp(lnk2, "../", 3) == 0) {
-				cnt++;
-				lnk2 = lnk2 + 3;
-			}
-			if (cnt != 0)
-				lnk2 = lnk + (cnt - 1) * 3 + 2;
-
-			if (!is_dir(lnk2)) {
+			if (!is_dir(lnk)) {
 				// create directory
-				if (mkdir(lnk2, S_IRWXU|S_IRWXG|S_IRWXO))
+				if (mkdir(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
 					errExit("mkdir");
-				if (chown(lnk2, 0, 0))
+				if (chown(lnk, 0, 0))
 					errExit("chown");
-				if (chmod(lnk2, S_IRWXU|S_IRWXG|S_IRWXO))
+				if (chmod(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
 					errExit("chmod");
 			}
 			if (arg_debug)
-				printf("Mounting tmpfs on %s on behalf of /var/lock\n", lnk2);
-			if (mount("tmpfs", lnk2, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+				printf("Mounting tmpfs on %s on behalf of /var/lock\n", lnk);
+			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 				errExit("mounting /var/lock");
 			free(lnk);
 		}

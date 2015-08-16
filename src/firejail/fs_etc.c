@@ -88,8 +88,6 @@ void fs_private_etc_list(void) {
 	char *private_list = cfg.etc_private_keep;
 	assert(private_list);
 	
-	uid_t u = getuid();
-	gid_t g = getgid();
 	struct stat s;
 	if (stat("/etc", &s) == -1) {
 		fprintf(stderr, "Error: cannot find user /etc directory\n");

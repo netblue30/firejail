@@ -190,7 +190,7 @@ void usage(void) {
 	printf("\t\tlist. The default list is as follows: mount, umount2,\n");
 	printf("\t\tptrace, kexec_load, open_by_handle_at, init_module,\n");
 	printf("\t\tfinit_module, delete_module, iopl, ioperm, swapon, swapoff,\n");
-	printf("\t\tmknode, syslog, process_vm_readv and process_vm_writev\n");
+	printf("\t\tsyslog, process_vm_readv and process_vm_writev\n");
 	printf("\t\tsysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie,\n");
 	printf("\t\tperf_event_open, fanotify_init and kcmp.\n\n");
 	

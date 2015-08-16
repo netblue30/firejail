@@ -452,9 +452,11 @@ int seccomp_filter_drop(void) {
 #ifdef SYS_process_vm_writev		
 		filter_add_blacklist(SYS_process_vm_writev);
 #endif
-#ifdef SYS_mknod		
-		filter_add_blacklist(SYS_mknod);
-#endif
+
+// mknod removed in 0.9.29
+//#ifdef SYS_mknod		
+//		filter_add_blacklist(SYS_mknod);
+//#endif
 		
 		// new syscalls in 0.9,23		
 #ifdef SYS_sysfs		

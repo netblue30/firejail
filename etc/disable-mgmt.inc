@@ -10,3 +10,7 @@ blacklist ${PATH}/su
 blacklist ${PATH}/sudo
 blacklist ${PATH}/xinput
 blacklist ${PATH}/strace
+
+# Prevent manipulation of firejail configuration
+blacklist /etc/firejail
+blacklist ${HOME}/.config/firejail

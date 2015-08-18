@@ -430,6 +430,10 @@ void profile_read(const char *fname, const char *skip1, const char *skip2) {
 				if (asprintf(&newprofile2, "%s%s", cfg.homedir, newprofile + 7) == -1)
 					errExit("asprintf");
 			}				
+			else if (strncmp(newprofile, "~/", 2) == 0) {
+				if (asprintf(&newprofile2, "%s%s", cfg.homedir, newprofile + 1) == -1)
+					errExit("asprintf");
+			}				
 			
 			// recursivity
 			profile_read((newprofile2)? newprofile2:newprofile, newskip1, newskip2);

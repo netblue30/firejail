@@ -1,6 +1,3 @@
 1. Deal with .purple directory. It holds the confiig files for pidgin
 
-2. Support ~ in --blacklist filenames, maybe in some other options. Example
-$ firejail --blacklist=~/.ssh
-
-3. Support filenames with spaces in blacklist option.
+2. Support filenames with spaces in blacklist option.

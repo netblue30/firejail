@@ -437,7 +437,7 @@ int sandbox(void* sandbox_arg) {
 
 		if (!arg_command)
 			printf("Child process initialized\n");
-		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index + 1]);
+		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 	}
 	//****************************************
 	// start the program using a shell

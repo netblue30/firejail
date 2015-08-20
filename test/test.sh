@@ -4,6 +4,14 @@
 
 ./fscheck.sh
 
+echo "TESTING: private-etc"
+./private-etc.exp
+
+mkdir dir\ with\ space
+echo "TESTING: blacklist"
+./blacklist.exp
+rm -fr dir\ with\ space
+
 echo "TESTING: version"
 ./option_version.exp
 

@@ -15,6 +15,12 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Peter Millerchip (https://github.com/pmillerchip)
+	- memory allocation fix
+	- --private.keep to --private-home transition
+	- support for files and directories starting with ~ in blacklist option
+	- support for files and directories with spaces in blacklist option
+	- lots of other fixes
 Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
 	- user namespace implementation
 Reiner Herrmann - a number of build patches, man page fixes, Debian integration
@@ -27,10 +33,6 @@ G4JC (http://sourceforge.net/u/gaming4jc/profile/)
 dewbasaur (https://github.com/dewbasaur)
 	- block access to history files
 	- Firefox PDF.js exploit (CVE-2015-4495) fixes
-Peter Millerchip (https://github.com/pmillerchip)
-	- memory allocation fix
-	- --private.keep to --private-home transition
-	- lots of other fixes
 Michael Haas (https://github.com/mhaas)
 	- bugfixes
 mjudtmann (https://github.com/mjudtmann)

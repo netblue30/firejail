@@ -1,0 +1,46 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# directory with ~
+send -- "firejail --private-etc=passwd,group,resolv.conf,bash_completion.d,timezone\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"bash_completion.d"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"group"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"passwd"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"resolv.conf"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"timezone"
+}
+
+send -- "ls -al /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"shadow" {puts "TESTING ERROR 8\n";exit}
+	"timezone"
+}
+
+sleep 1
+puts "\n"
+

@@ -199,7 +199,7 @@ static void globbing(OPERATION op, const char *fname, const char *emptydir, cons
 		glob_t globbuf;
 		globbuf.gl_offs = 0;
 		glob(fname, GLOB_DOOFFS, NULL, &globbuf);
-		int i;
+		unsigned int i;
 		for (i = 0; i < globbuf.gl_pathc; i++) {
 			assert(globbuf.gl_pathv[i]);
 			disable_file(op, globbuf.gl_pathv[i], emptydir, emptyfile);

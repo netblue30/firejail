@@ -391,7 +391,8 @@ void extract_command_name(const char *str) {
 
 
 void update_map(char *mapping, char *map_file) {
-	int fd, j;
+	int fd;
+	size_t j;
 	size_t map_len;				  /* Length of 'mapping' */
 
 	/* Replace commas in mapping string with newlines */
@@ -407,7 +408,7 @@ void update_map(char *mapping, char *map_file) {
 		exit(EXIT_FAILURE);
 	}
 
-	if (write(fd, mapping, map_len) != map_len) {
+	if (write(fd, mapping, map_len) != (ssize_t)map_len) {
 		fprintf(stderr, "Error: cannot write to %s: %s\n", map_file, strerror(errno));
 		exit(EXIT_FAILURE);
 	}

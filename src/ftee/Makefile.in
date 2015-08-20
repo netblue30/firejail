@@ -8,7 +8,7 @@ H_FILE_LIST       = $(wildcard *.[h])
 C_FILE_LIST       = $(wildcard *.c)
 OBJS = $(C_FILE_LIST:.c=.o)
 BINOBJS =  $(foreach file, $(OBJS), $file)
-CFLAGS += -ggdb -O2 -DVERSION='"$(VERSION)"' -DPREFIX='"$(PREFIX)"' -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security
+CFLAGS += -ggdb -W -Wall -Werror -O2 -DVERSION='"$(VERSION)"' -DPREFIX='"$(PREFIX)"' -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security
 LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
 
 %.o : %.c $(H_FILE_LIST)

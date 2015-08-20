@@ -42,7 +42,10 @@ static char *get_header(void) {
 // recursivity!!!
 static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigned *stime, unsigned itv, float *cpu, int *cnt) {
 	char *rv = NULL;
-	
+
+	// Remove unused parameter warning
+	(void)parent;
+
 	char procdir[20];
 	snprintf(procdir, 20, "/proc/%u", index);
 	struct stat s;
@@ -68,7 +71,7 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 	
 	int i;
 	for (i = index + 1; i < max_pids; i++) {
-		if (pids[i].parent == index)
+		if (pids[i].parent == (pid_t)index)
 			print_top(i, index, utime, stime, itv, cpu, cnt);
 	}
 
@@ -213,7 +216,7 @@ void head_print(int col, int row) {
 		if (current >= row)
 			break;
 			
-		if (strlen(ptr->line) > col)
+		if (strlen(ptr->line) > (size_t)col)
 			ptr->line[col] = '\0';
 			
 		if (ptr->next == NULL || current == (row - 1)) {
@@ -264,7 +267,7 @@ void top(void) {
 		// start printing
 		firemon_clrscr();
 		char *header = get_header();
-		if (strlen(header) > col)
+		if (strlen(header) > (size_t)col)
 			header[col] = '\0';
 		printf("%s\n", header);
 		if (row > 0)

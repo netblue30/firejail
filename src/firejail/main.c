@@ -175,7 +175,7 @@ static inline Bridge *last_bridge_configured(void) {
 static int read_pid(char *str, pid_t *pid) {
 	char *endptr;
 	errno = 0;
-	pid_t pidtmp = strtol(str, &endptr, 10);
+	long int pidtmp = strtol(str, &endptr, 10);
 	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
 		|| (errno != 0 && pidtmp == 0)) {
 		return 1;
@@ -183,7 +183,7 @@ static int read_pid(char *str, pid_t *pid) {
 	if (endptr == str) {
 		return 1;
 	}
-	*pid = pidtmp;
+	*pid = (pid_t)pidtmp;
 	return 0;
 }
 

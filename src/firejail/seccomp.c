@@ -337,7 +337,7 @@ static void write_seccomp_file(void) {
 		printf("Save seccomp filter, size %lu bytes\n", sfilter_index * sizeof(struct sock_filter));
 	errno = 0;
 	ssize_t sz = write(fd, sfilter, sfilter_index * sizeof(struct sock_filter));
-	if (sz != (sfilter_index * sizeof(struct sock_filter))) {
+	if (sz != (ssize_t)(sfilter_index * sizeof(struct sock_filter))) {
 		fprintf(stderr, "Error: cannot save seccomp filter\n");
 		exit(1);
 	}

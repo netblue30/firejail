@@ -30,7 +30,7 @@ firejail-profile.5: src/man/firejail-profile.txt
 firejail-login.5: src/man/firejail-login.txt
 	./mkman.sh $(VERSION) src/man/firejail-login.txt firejail-login.5
 
-clean:;
+clean:
 	for dir in $(APPS); do \
 		$(MAKE) -C $$dir clean; \
 	done
@@ -123,10 +123,10 @@ install: all
 	rm -f firejail.1.gz firemon.1.gz firejail-profile.5.gz firejail-login.5.gz
 	# bash completion
 	mkdir -p $(DESTDIR)/$(PREFIX)/share/bash-completion/completions
-	install -c -m 0644 etc/firejail.bash_completion $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/firejail
-	install -c -m 0644 etc/firemon.bash_completion $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/firemon
+	install -c -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/firejail
+	install -c -m 0644 src/bash_completion/firemon.bash_completion $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/firemon
 
-uninstall:;
+uninstall:
 	rm -f $(DESTDIR)/$(PREFIX)/bin/firejail
 	rm -f $(DESTDIR)/$(PREFIX)/bin/firemon
 	rm -fr $(DESTDIR)/$(PREFIX)/lib/firejail

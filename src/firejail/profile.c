@@ -69,7 +69,7 @@ static void check_file_name(char *ptr, int lineno) {
 
 	int len = strlen(ptr);
 	// file globbing ('*') is allowed
-	if (strcspn(ptr, "\\&!?\"'<>%^(){}[];,") != len) {
+	if (strcspn(ptr, "\\&!?\"'<>%^(){}[];,") != (size_t)len) {
 		if (lineno == 0)
 			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
 		else

@@ -79,7 +79,7 @@ void netfilter(const char *fname) {
 		}
 
 		size_t sz = fread(filter, 1, s.st_size, fp);
-		if (sz != s.st_size) {
+		if ((off_t)sz != s.st_size) {
 			fprintf(stderr, "Error: cannot read network filter file\n");
 			exit(1);
 		}

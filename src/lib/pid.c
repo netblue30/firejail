@@ -222,15 +222,18 @@ static void print_elem(unsigned index, int nowrap) {
 // recursivity!!!
 void pid_print_tree(unsigned index, unsigned parent, int nowrap) {
 	print_elem(index, nowrap);
+
+	// Remove unused parameter warning
+	(void)parent;
 	
-	int i;
-	for (i = index + 1; i < max_pids; i++) {
-		if (pids[i].parent == index)
+	unsigned i;
+	for (i = index + 1; i < (unsigned)max_pids; i++) {
+		if (pids[i].parent == (pid_t)index)
 			pid_print_tree(i, index, nowrap);
 	}
 
 	for (i = 0; i < index; i++) {
-		if (pids[i].parent == index)
+		if (pids[i].parent == (pid_t)index)
 			pid_print_tree(i, index, nowrap);
 	}
 }
@@ -245,6 +248,9 @@ void pid_store_cpu(unsigned index, unsigned parent, unsigned *utime, unsigned *s
 		*utime = 0;
 		*stime = 0;
 	}
+
+	// Remove unused parameter warning
+	(void)parent;
 	
 	unsigned utmp = 0;
 	unsigned stmp = 0;
@@ -252,9 +258,9 @@ void pid_store_cpu(unsigned index, unsigned parent, unsigned *utime, unsigned *s
 	*utime += utmp;
 	*stime += stmp;
 	
-	int i;
-	for (i = index + 1; i < max_pids; i++) {
-		if (pids[i].parent == index)
+	unsigned i;
+	for (i = index + 1; i < (unsigned)max_pids; i++) {
+		if (pids[i].parent == (pid_t)index)
 			pid_store_cpu(i, index, utime, stime);
 	}
 

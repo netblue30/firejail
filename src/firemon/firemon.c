@@ -40,6 +40,9 @@ static struct termios twait;	// no wait on key press
 static int terminal_set = 0;
 
 static void my_handler(int s){
+	// Remove unused parameter warning
+	(void)s;
+
 	if (terminal_set)
 		tcsetattr(0, TCSANOW, &tlocal);
 	exit(0); 

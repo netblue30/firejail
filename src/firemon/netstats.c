@@ -195,7 +195,7 @@ void netstats(void) {
 		// start printing
 		firemon_clrscr();
 		char *header = get_header();
-		if (strlen(header) > col)
+		if (strlen(header) > (size_t)col)
 			header[col] = '\0';
 		printf("%s\n", header);
 		if (row > 0)

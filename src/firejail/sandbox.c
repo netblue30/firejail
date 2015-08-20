@@ -130,6 +130,9 @@ static void chk_chroot(void) {
 }
 
 int sandbox(void* sandbox_arg) {
+	// Get rid of unused parameter warning
+	(void)sandbox_arg;
+
 	pid_t child_pid = getpid();
 	if (arg_debug)
 		printf("Initializing child process\n");	

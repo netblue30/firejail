@@ -628,6 +628,7 @@ HAVE_SECCOMP_H
 EGREP
 GREP
 CPP
+HAVE_FATAL_WARNINGS
 HAVE_BIND
 HAVE_CHROOT
 HAVE_SECCOMP
@@ -686,6 +687,7 @@ enable_option_checking
 enable_seccomp
 enable_chroot
 enable_bind
+enable_fatal_warnings
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1308,6 +1310,7 @@ Optional Features:
   --disable-seccomp       Disable seccomp
   --disable-chroot        Disable chroot
   --disable-bind          Disable bind
+  --enable-fatal-warnings -W -Wall -Werror
 
 Some influential environment variables:
   CC          C compiler command
@@ -3084,6 +3087,18 @@ if test "x$enable_bind" != "xno"; then :
 
 fi
 
+HAVE_FATAL_WARNINGS=""
+# Check whether --enable-fatal_warnings was given.
+if test "${enable_fatal_warnings+set}" = set; then :
+  enableval=$enable_fatal_warnings;
+fi
+
+if test "x$enable_fatal_warnings" = "xyes"; then :
+
+	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
+
+
+fi
 
 # checking pthread library
 
@@ -4720,4 +4735,5 @@ echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
+echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo

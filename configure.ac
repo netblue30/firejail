@@ -33,6 +33,13 @@ AS_IF([test "x$enable_bind" != "xno"], [
 	AC_SUBST(HAVE_BIND)
 ])
 
+HAVE_FATAL_WARNINGS=""
+AC_ARG_ENABLE([fatal_warnings],
+    AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror]))
+AS_IF([test "x$enable_fatal_warnings" = "xyes"], [
+	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
+	AC_SUBST(HAVE_FATAL_WARNINGS)
+])
 
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
@@ -49,4 +56,5 @@ echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
+echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo

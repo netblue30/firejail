@@ -97,6 +97,10 @@ Blacklist directory or file.
 Example:
 .br
 $ firejail \-\-blacklist=/sbin \-\-blacklist=/usr/sbin
+.br
+$ firejail \-\-blacklist=~/.mozilla
+.br
+$ firejail "\-\-blacklist=My Virtual Machines"
 .TP
 \fB\-c
 Execute command and exit.

@@ -5,8 +5,11 @@ firejail (0.9.29) baseline; urgency=low
   * added --private-etc option
   * support ${HOME} token in include directive in profile files
   * --private.keep is transitioned to --private-home
+  * support ~ and blanks in blacklist option
+  * support "net none" command in profile files
+  * added "net none" to Evince PDF viewer
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Sat, 12 Aug 2015 20:25:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sat, 22 Aug 2015 20:25:00 -0500
 
 firejail (0.9.28) baseline; urgency=low
   * network scanning, --scan option

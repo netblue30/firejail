@@ -5,5 +5,5 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-history.inc
 caps.drop all
 seccomp
-netfilter
+net none
 noroot

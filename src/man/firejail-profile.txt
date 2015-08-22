@@ -180,6 +180,13 @@ netfilter filename
 If a new network namespace is created, enabled the network filter in filename.
 
 .TP
+net none
+Enable  a new, unconnected network namespace. The only interface
+available in the new namespace is a new loopback interface (lo).
+Use  this  option  to deny network access to programs that don't
+really need network access.
+
+.TP
 dns address
 Set a DNS server for the sandbox. Up to three DNS servers can be defined.
 

@@ -1,6 +1,7 @@
 PREFIX=@prefix@
 VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
+HAVE_FATAL_WARNINGS=@HAVE_FATAL_WARNINGS@
 
 H_FILE_LIST       = $(wildcard *.[h])
 C_FILE_LIST       = $(wildcard *.c)

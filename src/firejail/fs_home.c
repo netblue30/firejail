@@ -269,9 +269,19 @@ void fs_private(void) {
 static void check_dir_or_file(const char *name) {
 	assert(name);
 	struct stat s;
-	char *fname;
-	if (asprintf(&fname, "%s/%s", cfg.homedir, name) == -1)
-		errExit("asprintf");
+	char *fname = expand_home(name, cfg.homedir);
+	if (!fname) {
+		fprintf(stderr, "Error: file %s not found.\n", name);
+		exit(1);
+	}
+	if (fname[0] != '/') {
+		// If it doesn't start with '/', it must be relative to homedir
+		char* tmp;
+		if (asprintf(&tmp, "%s/%s", cfg.homedir, fname) == -1)
+			errExit("asprintf");
+		free(fname);
+		fname = tmp;
+	}
 	if (arg_debug)
 		printf("Checking %s\n", fname);		
 	if (stat(fname, &s) == -1) {
@@ -323,15 +333,15 @@ void fs_check_home_list(void) {
 
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void) {
-	// if the directory starts with ~, expand the home directory
-	if (*cfg.home_private == '~') {
-		char *tmp;
-		if (asprintf(&tmp, "%s%s", cfg.homedir, cfg.home_private + 1) == -1)
-			errExit("asprintf");
-		cfg.home_private = tmp;
-	}
+	// Expand the home directory
+	char *tmp = expand_home(cfg.home_private, cfg.homedir);
+	cfg.home_private = realpath(tmp, NULL);
+	free(tmp);
 	
-	if (!is_dir(cfg.home_private) || is_link(cfg.home_private) || strstr(cfg.home_private, "..")) {
+	if (!cfg.home_private
+	 || !is_dir(cfg.home_private)
+	 || is_link(cfg.home_private)
+	 || strstr(cfg.home_private, "..")) {
 		fprintf(stderr, "Error: invalid private directory\n");
 		exit(1);
 	}
@@ -371,11 +381,25 @@ static int mkpath(char* file_path, mode_t mode) {
 }
 #endif
 
-static void duplicate(char *fname) {
+static void duplicate(char *name) {
 	char *cmd;
+	
+	char *fname = expand_home(name, cfg.homedir);
+	if (!fname) {
+		fprintf(stderr, "Error: file %s not found.\n", name);
+		exit(1);
+	}
+	if (fname[0] != '/') {
+		// If it doesn't start with '/', it must be relative to homedir
+		char* tmp;
+		if (asprintf(&tmp, "%s/%s", cfg.homedir, fname) == -1)
+			errExit("asprintf");
+		free(fname);
+		fname = tmp;
+	}
 
 	// copy the file
-	if (asprintf(&cmd, "cp -a --parents %s/%s %s", cfg.homedir, fname, HOME_DIR) == -1)
+	if (asprintf(&cmd, "cp -a --parents %s %s", fname, HOME_DIR) == -1)
 		errExit("asprintf");
 	if (arg_debug)
 		printf("%s\n", cmd);

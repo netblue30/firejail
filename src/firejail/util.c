@@ -455,3 +455,30 @@ void notify_other(int fd) {
 	fflush(stream);
 	fclose(stream);
 }
+
+// This function takes a pathname supplied by the user and expands '~' and
+// '${HOME}' at the start, to refer to a path relative to the user's home
+// directory (supplied).
+// The return value is allocated using malloc and must be freed by the caller.
+// The function returns NULL if there are any errors.
+char *expand_home(const char *path, const char* homedir)
+{
+	assert(path);
+	assert(homedir);
+	
+	// Replace home macro
+	char *new_name = NULL;
+	if (strncmp(path, "${HOME}", 7) == 0) {
+		if (asprintf(&new_name, "%s%s", homedir, path + 7) == -1)
+			errExit("asprintf");
+		return new_name;
+	}
+	else if (strncmp(path, "~/", 2) == 0) {
+		if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
+			errExit("asprintf");
+		return new_name;
+	}
+	
+	return strdup(path);
+}
+

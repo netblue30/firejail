@@ -1,1 +1,1 @@
-private.keep .mozilla,.config/firejail
+private-home .mozilla,.config/firejail

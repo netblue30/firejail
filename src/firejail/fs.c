@@ -291,17 +291,8 @@ void fs_blacklist(const char *homedir) {
 		}
 
 		// replace home macro in blacklist array
-		char *new_name = NULL;
-		if (strncmp(ptr, "${HOME}", 7) == 0) {
-			if (asprintf(&new_name, "%s%s", homedir, ptr + 7) == -1)
-				errExit("asprintf");
-			ptr = new_name;
-		}
-		else if (strncmp(ptr, "~/", 2) == 0) {
-			if (asprintf(&new_name, "%s%s", homedir, ptr + 1) == -1)
-				errExit("asprintf");
-			ptr = new_name;
-		}
+		char *new_name = expand_home(ptr, homedir);
+		ptr = new_name;
 
 		// expand path macro - look for the file in /bin, /usr/bin, /sbin and  /usr/sbin directories
 		if (strncmp(ptr, "${PATH}", 7) == 0) {

@@ -263,6 +263,7 @@ void check_private_dir(void);
 void update_map(char *mapping, char *map_file);
 void wait_for_other(int fd);
 void notify_other(int fd);
+char *expand_home(const char *path, const char* homedir);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

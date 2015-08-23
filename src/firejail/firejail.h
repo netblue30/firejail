@@ -358,5 +358,9 @@ void network_shm_set_file(pid_t pid);
 void fs_check_etc_list(void);
 void fs_private_etc_list(void);
 
+// no_sandbox.c
+int check_kernel_procs(void);
+void run_no_sandbox(int argc, char **argv);
+
 #endif
 

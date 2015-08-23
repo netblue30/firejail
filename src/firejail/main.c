@@ -242,12 +242,18 @@ int main(int argc, char **argv) {
 	int arg_ipc = 0;
 	int arg_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
+	
+	// if a sandbox is already running, start the program directly without sandboxing
+	if (check_kernel_procs() == 0) {
+		run_no_sandbox(argc, argv);
+		// it will never get here!
+		assert(0);
+	}
 
 	// initialize globals
 	init_cfg();
 	cfg.original_argv = argv;
 	cfg.original_argc = argc;
-	
 
 	// initialize random number generator
 	sandbox_pid = getpid();
@@ -276,7 +282,7 @@ int main(int argc, char **argv) {
 		// check --output option and execute it;
 		check_output(argc, argv); // the function will not return if --output option was found
 	}
-		
+	
 	// parse arguments
 	for (i = 1; i < argc; i++) {
 		//*************************************

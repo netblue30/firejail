@@ -78,6 +78,9 @@ void usage(void) {
 	printf("\t\tby name.\n\n");
 	printf("\t--dns.print=pid - print DNS configuration of the sandbox identified.\n");
 	printf("\t\tby PID.\n\n");
+	
+	printf("\t--env=name=value - set environment variable in the new sandbox\n");
+	
 	printf("\t--help, -? - this help screen.\n\n");
 	printf("\t--ip=address - set interface IP address.\n\n");
 	printf("\t--ip=none - no IP address and no default gateway address are configured\n");
@@ -275,7 +278,7 @@ void usage(void) {
 	printf("\tPrcs - number of processes running in sandbox, including the controlling\n");
 	printf("\t       process.\n");
 	printf("\tRES - Resident Memory Size (KiB), sandbox non-swapped physical memory.\n");
-	printf("\t      It is a sum of the RES values for all processes running in the\n");
+	printf("\t      It is a sum of the RES valprivate-etcues for all processes running in the\n");
 	printf("\t      sandbox.\n");
 	printf("\tSHR - Shared Memory Size (KiB), it reflects memory shared with other\n");
 	printf("\t      processes. It is a sum of the SHR values for all processes running\n");

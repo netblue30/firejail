@@ -137,6 +137,11 @@ int profile_check_line(char *ptr, int lineno) {
 		return 0;
 	}
 	
+	if (strncmp(ptr, "env ", 4) == 0) {
+		env_store(ptr + 4);
+		return 0;
+	}
+	
 	// seccomp drop list on top of default list
 	if (strncmp(ptr, "seccomp ", 8) == 0) {
 		arg_seccomp = 1;

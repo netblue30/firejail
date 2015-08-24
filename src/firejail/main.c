@@ -764,6 +764,8 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--noroot") == 0) {
 			check_user_namespace();
 		}
+		else if (strncmp(argv[i], "--env=", 6) == 0)
+			env_store(argv[i] + 6);
 		
 		//*************************************
 		// network

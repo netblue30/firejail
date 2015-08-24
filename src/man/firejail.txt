@@ -299,6 +299,16 @@ $ firejail \-\-list
 $ firejail \-\-dns.print=3272
 
 .TP
+\fB\-\-env=name=value
+Set environment variable in the new sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-env=LD_LIBRARY_PATH=/opt/test/lib
+
+.TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.
 .TP

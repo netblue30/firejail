@@ -4,6 +4,9 @@
 
 ./fscheck.sh
 
+echo "TESTING: environment variables"
+./env.exp
+
 echo "TESTING: private-etc"
 ./private-etc.exp
 

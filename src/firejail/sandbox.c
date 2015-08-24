@@ -359,7 +359,8 @@ int sandbox(void* sandbox_arg) {
 	//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
 	if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
 		errExit("setenv");
-		
+	// set user-supplied environment variables
+	env_apply();
 
 	// set capabilities
 	if (!arg_noroot)

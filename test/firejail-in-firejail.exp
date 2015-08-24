@@ -14,24 +14,8 @@ sleep 1
 send --  "firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	"Warning: an existing sandbox was detected"
 }
 sleep 1
-
-send --  "firejail\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
-}
-sleep 1
-puts "\n"
-
-send -- "exit\r"
-sleep 1
-send -- "exit\r"
-sleep 1
-send -- "exit\r"
-sleep 1
-
 
 puts "\n"

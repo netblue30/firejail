@@ -363,5 +363,9 @@ void fs_private_etc_list(void);
 int check_kernel_procs(void);
 void run_no_sandbox(int argc, char **argv);
 
+// env.c
+void env_store(const char *str);
+void env_apply(void);
+
 #endif
 

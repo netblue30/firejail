@@ -162,6 +162,18 @@ The sandbox is placed in g1 control group.
 .SH User Environment
 
 .TP
+env LD_LIBRARY_PATH=/opt/test/lib
+Set environment variable.
+.br
+Examples:
+.br
+
+.br
+env LD_LIBRARY_PATH=/opt/test/lib
+.br
+env CFLAGS="-W -Wall -Werror"
+
+.TP
 nogroups
 Disable supplementary user groups
 .TP

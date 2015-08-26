@@ -278,7 +278,7 @@ void usage(void) {
 	printf("\tPrcs - number of processes running in sandbox, including the controlling\n");
 	printf("\t       process.\n");
 	printf("\tRES - Resident Memory Size (KiB), sandbox non-swapped physical memory.\n");
-	printf("\t      It is a sum of the RES valprivate-etcues for all processes running in the\n");
+	printf("\t      It is a sum of the RES values for all processes running in the\n");
 	printf("\t      sandbox.\n");
 	printf("\tSHR - Shared Memory Size (KiB), it reflects memory shared with other\n");
 	printf("\t      processes. It is a sum of the SHR values for all processes running\n");

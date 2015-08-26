@@ -605,13 +605,6 @@ void fs_overlayfs(void) {
 
 	char *basedir = MNT_DIR;
 	if (arg_overlay_keep) {
-		// check the directory exists
-		struct stat s;
-		if (stat("/myoverlay", &s) == -1) {
-			fprintf(stderr, "Error: overlay directory should already exist\n");
-			exit(1);
-		}
-
 		// set base for working and diff directories
 		basedir = cfg.overlay_dir;
 		if (mkdir(basedir, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {

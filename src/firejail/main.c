@@ -232,6 +232,163 @@ void check_user_namespace(void) {
 	}
 }
 
+// exit commands
+static void run_cmd_and_exit(int i, int argc, char **argv) {
+	//*************************************
+	// basic arguments
+	//*************************************
+	if (strcmp(argv[i], "--help") == 0 ||
+	    strcmp(argv[i], "-?") == 0) {
+		usage();
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--version") == 0) {
+		printf("firejail version %s\n", VERSION);
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
+		logargs(argc, argv);
+		
+		// extract the command
+		if ((i + 1) == argc) {
+			fprintf(stderr, "Error: command expected after --bandwidth option\n");
+			exit(1);
+		}
+		char *cmd = argv[i + 1];
+		if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
+			fprintf(stderr, "Error: invalid --bandwidth command\n");
+			exit(1);
+		}
+
+		// extract network name
+		char *dev = NULL;
+		int down = 0;
+		int up = 0;
+		if (strcmp(cmd, "set") == 0 || strcmp(cmd, "clear") == 0) {
+			// extract device name
+			if ((i + 2) == argc) {
+				fprintf(stderr, "Error: network name expected after --bandwidth %s option\n", cmd);
+				exit(1);
+			}
+			dev = argv[i + 2];
+
+			// check device name
+			if (if_nametoindex(dev) == 0) {
+				fprintf(stderr, "Error: network device %s not found\n", dev);
+				exit(1);
+			}
+
+			// extract bandwidth
+			if (strcmp(cmd, "set") == 0) {
+				if ((i + 4) >= argc) {
+					fprintf(stderr, "Error: invalid --bandwidth set command\n");
+					exit(1);
+				}
+				
+				down = atoi(argv[i + 3]);
+				if (down < 0) {
+					fprintf(stderr, "Error: invalid download speed\n");
+					exit(1);
+				}
+				up = atoi(argv[i + 4]);
+				if (up < 0) {
+					fprintf(stderr, "Error: invalid upload speed\n");
+					exit(1);
+				}
+			}
+		}	
+		
+		// extract pid or sandbox name
+		pid_t pid;
+		if (read_pid(argv[i] + 12, &pid) == 0)
+			bandwidth_pid(pid, cmd, dev, down, up);
+		else
+				bandwidth_name(argv[i] + 12, cmd, dev, down, up);
+		exit(0);
+	}
+
+	//*************************************
+	// independent commands - the program will exit!
+	//*************************************
+#ifdef HAVE_SECCOMP
+	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
+		syscall_print();
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
+		// join sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 16, &pid) == 0)		
+			seccomp_print_filter(pid);
+		else
+			seccomp_print_filter_name(argv[i] + 16);
+		exit(0);
+	}
+#endif
+	else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
+		// join sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 13, &pid) == 0)		
+			caps_print_filter(pid);
+		else
+			caps_print_filter_name(argv[i] + 13);
+		exit(0);
+	}
+
+	else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
+		// join sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 12, &pid) == 0)		
+			net_dns_print(pid);
+		else
+			net_dns_print_name(argv[i] + 12);
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--debug-caps") == 0) {
+		caps_print();
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--list") == 0) {
+		list();
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--tree") == 0) {
+		tree();
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--top") == 0) {
+		top();
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--netstats") == 0) {
+		netstats();
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--join=", 7) == 0) {
+		logargs(argc, argv);
+		
+		// join sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 7, &pid) == 0)		
+			join(pid, cfg.homedir, argc, argv, i + 1);
+		else
+			join_name(argv[i] + 7, cfg.homedir, argc, argv, i + 1);
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--shutdown=", 11) == 0) {
+		logargs(argc, argv);
+		
+		// shutdown sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 11, &pid) == 0)
+			shut(pid);
+		else
+			shut_name(argv[i] + 11);
+		exit(0);
+	}
+
+}
+
 //*******************************************
 // Main program
 //*******************************************
@@ -243,13 +400,6 @@ int main(int argc, char **argv) {
 	int arg_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	
-	// if a sandbox is already running, start the program directly without sandboxing
-	if (check_kernel_procs() == 0) {
-		run_no_sandbox(argc, argv);
-		// it will never get here!
-		assert(0);
-	}
-
 	// initialize globals
 	init_cfg();
 	cfg.original_argv = argv;
@@ -285,173 +435,10 @@ int main(int argc, char **argv) {
 	
 	// parse arguments
 	for (i = 1; i < argc; i++) {
-		//*************************************
-		// basic arguments
-		//*************************************
-		if (strcmp(argv[i], "--help") == 0 ||
-		strcmp(argv[i], "-?") == 0) {
-			usage();
-			exit(0);
-		}
-		else if (strcmp(argv[i], "--version") == 0) {
-			printf("firejail version %s\n", VERSION);
-			exit(0);
-		}
-		else if (strcmp(argv[i], "--debug") == 0)
+		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
+		
+		if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
-
-		else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
-			logargs(argc, argv);
-			
-			// extract the command
-			if ((i + 1) == argc) {
-				fprintf(stderr, "Error: command expected after --bandwidth option\n");
-				exit(1);
-			}
-			char *cmd = argv[i + 1];
-			if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
-				fprintf(stderr, "Error: invalid --bandwidth command\n");
-				exit(1);
-			}
-
-			// extract network name
-			char *dev = NULL;
-			int down = 0;
-			int up = 0;
-			if (strcmp(cmd, "set") == 0 || strcmp(cmd, "clear") == 0) {
-				// extract device name
-				if ((i + 2) == argc) {
-					fprintf(stderr, "Error: network name expected after --bandwidth %s option\n", cmd);
-					exit(1);
-				}
-				dev = argv[i + 2];
-
-				// check device name
-				if (if_nametoindex(dev) == 0) {
-					fprintf(stderr, "Error: network device %s not found\n", dev);
-					exit(1);
-				}
-
-				// extract bandwidth
-				if (strcmp(cmd, "set") == 0) {
-					if ((i + 4) >= argc) {
-						fprintf(stderr, "Error: invalid --bandwidth set command\n");
-						exit(1);
-					}
-					
-					down = atoi(argv[i + 3]);
-					if (down < 0) {
-						fprintf(stderr, "Error: invalid download speed\n");
-						exit(1);
-					}
-					up = atoi(argv[i + 4]);
-					if (up < 0) {
-						fprintf(stderr, "Error: invalid upload speed\n");
-						exit(1);
-					}
-				}
-			}	
-			
-			// extract pid or sandbox name
-			pid_t pid;
-			if (read_pid(argv[i] + 12, &pid) == 0)
-				bandwidth_pid(pid, cmd, dev, down, up);
-			else
- 				bandwidth_name(argv[i] + 12, cmd, dev, down, up);
- 			
- 			// it will never get here
- 			exit(0);
-		}
-
-		//*************************************
-		// independent commands - the program will exit!
-		//*************************************
-#ifdef HAVE_SECCOMP
-		else if (strcmp(argv[i], "--debug-syscalls") == 0) {
-			syscall_print();
-			exit(0);
-		}
-		else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
-			// join sandbox by pid or by name
-			pid_t pid;
-			if (read_pid(argv[i] + 16, &pid) == 0)		
-				seccomp_print_filter(pid);
-			else
-				seccomp_print_filter_name(argv[i] + 16);
-				
-			// it will never get here!!!
-			exit(0);
-		}
-#endif
-		else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
-			// join sandbox by pid or by name
-			pid_t pid;
-			if (read_pid(argv[i] + 13, &pid) == 0)		
-				caps_print_filter(pid);
-			else
-				caps_print_filter_name(argv[i] + 13);
-				
-			// it will never get here!!!
-			exit(0);
-		}
-	
-		else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
-			// join sandbox by pid or by name
-			pid_t pid;
-			if (read_pid(argv[i] + 12, &pid) == 0)		
-				net_dns_print(pid);
-			else
-				net_dns_print_name(argv[i] + 12);
-				
-			// it will never get here!!!
-			exit(0);
-		}
-		else if (strcmp(argv[i], "--debug-caps") == 0) {
-			caps_print();
-			exit(0);
-		}
-		else if (strcmp(argv[i], "--list") == 0) {
-			list();
-			exit(0);
-		}
-		else if (strcmp(argv[i], "--tree") == 0) {
-			tree();
-			exit(0);
-		}
-		else if (strcmp(argv[i], "--top") == 0) {
-			top();
-			exit(0);
-		}
-		else if (strcmp(argv[i], "--netstats") == 0) {
-			netstats();
-			exit(0);
-		}
-		else if (strncmp(argv[i], "--join=", 7) == 0) {
-			logargs(argc, argv);
-			
-			// join sandbox by pid or by name
-			pid_t pid;
-			if (read_pid(argv[i] + 7, &pid) == 0)		
-				join(pid, cfg.homedir, argc, argv, i + 1);
-			else
-				join_name(argv[i] + 7, cfg.homedir, argc, argv, i + 1);
-				
-			// it will never get here!!!
-			exit(0);
-		}
-		else if (strncmp(argv[i], "--shutdown=", 11) == 0) {
-			logargs(argc, argv);
-			
-			// shutdown sandbox by pid or by name
-			pid_t pid;
-			if (read_pid(argv[i] + 11, &pid) == 0)
-				shut(pid);
-			else
-				shut_name(argv[i] + 11);
-
-			// it will never get here!!!
-			exit(0);
-		}
 		
 		//*************************************
 		// filtering
@@ -996,6 +983,13 @@ int main(int argc, char **argv) {
 			cfg.original_program_index = i;
 			break;
 		}
+	}
+
+	// if a sandbox is already running, start the program directly without sandboxing
+	if (check_kernel_procs() == 0) {
+		run_no_sandbox(argc, argv);
+		// it will never get here!
+		assert(0);
 	}
 
 	// check network configuration options - it will exit if anything went wrong

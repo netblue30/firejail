@@ -1,2 +1,28 @@
 1. Deal with .purple directory. It holds the confiig files for pidgin
 
+2. Startup warnings on Arch Linux:
+
+(all fine here)
+$ ./firejail
+Parent pid 2495, child pid 2496
+Child process initialized
+$
+
+(warnings)
+$ ./firejail --overlay
+Parent pid 2500, child pid 2501
+OverlayFS configured in /home/ablive/.firejail/2500 directory
+Warning: /var/lock not mounted
+Warning: cannot find /var/run/utmp
+Warning: failed to unmount /sys
+Child process initialized
+$ 
+
+(warnings)
+$ ./firejail --chroot=/media/mylinux
+Parent pid 2503, child pid 2504
+Warning: cannot find /var/run/utmp
+Dropping all Linux capabilities and enforcing default seccomp filter
+Warning: failed to unmount /sys
+Child process initialized
+$

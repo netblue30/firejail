@@ -1089,20 +1089,18 @@ int main(int argc, char **argv) {
 	// use generic.profile as the default
 	if (!custom_profile && !arg_noprofile) {
 		if (arg_debug)
-			printf("Attempting to find generic.profile...");
+			printf("Attempting to find %s.profile...",GENERIC_PROFILE_NAME);
 
 		// look for the profile in ~/.config/firejail directory
 		char *usercfgdir;
 		if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
 			errExit("asprintf");
-		int rv = profile_find(GENERIC_PROFILE_NAME, usercfgdir);
+		custom_profile = profile_find(GENERIC_PROFILE_NAME, usercfgdir);
 		free(usercfgdir);
-		custom_profile = rv;
 
 		if (!custom_profile) {
 			// look for the profile in /etc/firejail directory
-			int rv = profile_find(GENERIC_PROFILE_NAME, "/etc/firejail");
-			custom_profile = rv;
+			custom_profile = profile_find(GENERIC_PROFILE_NAME, "/etc/firejail");
 		}
 	}
 

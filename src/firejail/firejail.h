@@ -28,6 +28,7 @@
 #define MNT_DIR	"/tmp/firejail/mnt"
 #define HOME_DIR	"/tmp/firejail/mnt/home"
 #define ETC_DIR	"/tmp/firejail/mnt/etc"
+#define GENERIC_PROFILE_NAME	"generic"
 #define MAX_INCLUDE_LEVEL 6
 
 // main.c

@@ -565,6 +565,37 @@ uid=1000(netblue) gid=1000(netblue) groups=1000(netblue)
 $
 
 .TP
+\fB\-\-noprofile
+Do not use a profile.  Profile priority is use the one
+specified on the command line, next try to find one that
+matches the command name, and lastly use generic.profile.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noprofile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+$ exit
+.br
+.br
+parent is shutting down, bye...
+.br
+$ firejail
+.br
+Reading profile /etc/firejail/generic.profile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+$ 
+
+.TP
 \fB\-\-noroot
 Install a user namespace with a single user - the current user.
 root user does not exist in the new namespace. This option

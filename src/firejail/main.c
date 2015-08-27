@@ -399,6 +399,7 @@ int main(int argc, char **argv) {
 	int arg_ipc = 0;
 	int arg_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
+	int arg_noprofile = 0; // use generic.profile if none other found/specified
 	
 	// initialize globals
 	init_cfg();
@@ -653,6 +654,10 @@ int main(int argc, char **argv) {
 			arg_overlay = 1;
 		}
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
+			if (arg_noprofile) {
+				fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");
+				exit(1);
+			}
 			// multiple profile files are allowed!
 			char *ptr = argv[i] + 10;
 			if (is_dir(ptr) || is_link(ptr) || strstr(ptr, "..")) {
@@ -668,6 +673,13 @@ int main(int argc, char **argv) {
 
 			profile_read(argv[i] + 10, NULL, NULL);
 			custom_profile = 1;
+		}
+		else if (strcmp(argv[i], "--noprofile") == 0) {
+			if (custom_profile) {
+				fprintf(stderr, "Error: --profile and --noprofile options are mutually exclusive\n");
+				exit(1);
+			}
+			arg_noprofile = 1;
 		}
 #ifdef HAVE_CHROOT		
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
@@ -1054,7 +1066,7 @@ int main(int argc, char **argv) {
 	}
 	
 	// load the profile
-	{
+	if (!arg_noprofile) {
 		assert(cfg.command_name);
 		if (arg_debug)
 			printf("Command name #%s#\n", cfg.command_name);		
@@ -1070,6 +1082,26 @@ int main(int argc, char **argv) {
 		if (!custom_profile) {
 			// look for a user profile in /etc/firejail directory
 			int rv = profile_find(cfg.command_name, "/etc/firejail");
+			custom_profile = rv;
+		}
+	}
+
+	// use generic.profile as the default
+	if (!custom_profile && !arg_noprofile) {
+		if (arg_debug)
+			printf("Attempting to find generic.profile...");
+
+		// look for the profile in ~/.config/firejail directory
+		char *usercfgdir;
+		if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		int rv = profile_find(GENERIC_PROFILE_NAME, usercfgdir);
+		free(usercfgdir);
+		custom_profile = rv;
+
+		if (!custom_profile) {
+			// look for the profile in /etc/firejail directory
+			int rv = profile_find(GENERIC_PROFILE_NAME, "/etc/firejail");
 			custom_profile = rv;
 		}
 	}

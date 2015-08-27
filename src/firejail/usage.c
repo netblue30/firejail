@@ -134,6 +134,10 @@ void usage(void) {
 	printf("\t\tsupplementary groups are enabled for the user starting the\n");
 	printf("\t\tsandbox. For root user supplementary groups are always\n");
 	printf("\t\tdisabled.\n\n");
+
+	printf("\t--noprofile - do not use a profile.  Profile priority is use the one\n");
+	printf("\t\tspecified on the command line, next try to find one that\n");
+	printf("\t\tmatches the command name, and lastly use %s.profile.\n\n",GENERIC_PROFILE_NAME);
 	
 	printf("\t--noroot - install a user namespace with a single user - the current\n");
 	printf("\t\tuser. root user does not exist in the new namespace. This option\n");

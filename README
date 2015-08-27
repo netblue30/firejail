@@ -37,5 +37,7 @@ Michael Haas (https://github.com/mhaas)
 	- bugfixes
 mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
+iiotx (https://github.com/iiotx)
+	- use generci.profile by default
 
 Copyright (C) 2014, 2015 Firejail Authors

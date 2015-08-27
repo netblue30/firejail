@@ -5,7 +5,7 @@ spawn $env(SHELL)
 match_max 100000
 
 # check ip address
-send -- "firejail --net=br1 --ip=none --defaultgw=10.10.30.78\r"
+send -- "firejail --noprofile --net=br1 --ip=none --defaultgw=10.10.30.78\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"eth0" {puts "TESTING ERROR 1\n";exit}
@@ -35,7 +35,7 @@ expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"home"
 }
-sleep 1
+after 100
 
-puts "\n"
+puts "all done\n"
 

@@ -1065,11 +1065,12 @@ int main(int argc, char **argv) {
 		}
 	}
 	
+	assert(cfg.command_name);
+	if (arg_debug)
+		printf("Command name #%s#\n", cfg.command_name);
+				
 	// load the profile
 	if (!arg_noprofile) {
-		assert(cfg.command_name);
-		if (arg_debug)
-			printf("Command name #%s#\n", cfg.command_name);		
 		if (!custom_profile) {
 			// look for a profile in ~/.config/firejail directory
 			char *usercfgdir;

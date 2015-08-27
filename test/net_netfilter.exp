@@ -5,7 +5,7 @@ spawn $env(SHELL)
 match_max 100000
 
 # check default netfilter on br0
-send -- "firejail --debug --net=br0 --ip=10.10.20.5 --netfilter\r"
+send -- "firejail --debug --noprofile --net=br0 --ip=10.10.20.5 --netfilter\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Installing network filter"
@@ -31,7 +31,7 @@ send -- "exit\r"
 sleep 1
 
 # check default netfilter no new network
-send -- "firejail --debug --netfilter\r"
+send -- "firejail --debug --noprofile --netfilter\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"Installing network filter" {puts "TESTING ERROR 5.1\n";exit}
@@ -45,7 +45,7 @@ send -- "exit\r"
 sleep 1
 
 # check file filter netfilter on br0
-send -- "firejail --debug --net=br0 --ip=10.10.20.5 --netfilter=netfilter.filter\r"
+send -- "firejail --debug --noprofile --net=br0 --ip=10.10.20.5 --netfilter=netfilter.filter\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"Installing network filter"
@@ -82,7 +82,7 @@ expect {
 }
 
 send -- "exit\r"
-sleep 1
+after 100
 
-puts "\n"
+puts "all done\n"
 

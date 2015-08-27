@@ -9,6 +9,7 @@ firejail (0.9.29) baseline; urgency=low
   * support ~ and blanks in blacklist option
   * support "net none" command in profile files
   * added "net none" to Evince PDF viewer
+  * using /etc/firejail/generic.profile by default
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Aug 2015 20:25:00 -0500
 

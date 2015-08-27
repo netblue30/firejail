@@ -36,6 +36,9 @@ int check_kernel_procs(void) {
 	};
 	int i;
 
+	if (arg_debug)
+		printf("Looking for kernel processes\n");
+
 	// look at the first 10 processes
 	// if a kernel process is found, return 1
 	for (i = 1; i <= 10; i++) { 
@@ -73,6 +76,8 @@ int check_kernel_procs(void) {
 		int j = 0;
 		while (kern_proc[j] != NULL) {
 			if (strncmp(buf, kern_proc[j], strlen(kern_proc[j])) == 0) {
+				if (arg_debug)
+					printf("Found %s process, we are not running in a sandbox\n", buf);
 				fclose(fp);
 				free(fname);
 				return 1;
@@ -83,6 +88,9 @@ int check_kernel_procs(void) {
 		fclose(fp);
 		free(fname);
 	}
+
+	if (arg_debug)
+		printf("No kernel processes found, we are already running in a sandbox\n");
 
 	return 0;
 }

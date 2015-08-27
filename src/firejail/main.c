@@ -999,7 +999,7 @@ int main(int argc, char **argv) {
 
 	// if a sandbox is already running, start the program directly without sandboxing
 	int rv = check_kernel_procs();
-	if (rv) {
+	if (rv == 0) {
 		run_no_sandbox(argc, argv);
 		// it will never get here!
 		assert(0);

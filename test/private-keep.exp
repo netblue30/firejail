@@ -5,7 +5,7 @@ spawn $env(SHELL)
 match_max 100000
 
 #**************************************************************
-send -- "firejail --private-home=.mozilla,.config/firejail\r"
+send -- "firejail --noprofile --private-home=.mozilla,.config/firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -73,7 +73,7 @@ sleep 2
 
 
 #**************************************************************
-send -- "firejail --private-home=~/.mozilla,~/.config/firejail\r"
+send -- "firejail --noprofile --private-home=~/.mozilla,~/.config/firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
@@ -107,40 +107,7 @@ sleep 2
 
 
 #**************************************************************
-send -- "firejail --private-home=~/.mozilla,~/.config/firejail\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
-}
-sleep 1
-
-send -- "ls -al\r"
-expect {
-	timeout {puts "TESTING ERROR 2.1\n";exit}
-	".config"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.2\n";exit}
-	".mozilla"
-}
-sleep 1
-
-send -- "find .config\r"
-expect {
-	timeout {puts "TESTING ERROR 2.3\n";exit}
-	".config"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.4\n";exit}
-	".config/firejail"
-}
-sleep 1
-puts "\n"
-send -- "exit\r"
-sleep 2
-
-#**************************************************************
-send -- "firejail --private-home=/home/netblue/.mozilla,/home/netblue/.config/firejail\r"
+send -- "firejail --noprofile --private-home=~/.mozilla,~/.config/firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
@@ -173,18 +140,53 @@ send -- "exit\r"
 sleep 2
 
 #**************************************************************
-send -- "firejail --private-home=/home/netblue/../netblue/.mozilla,/home/netblue/.config/firejail\r"
+send -- "firejail --noprofile --private-home=/home/netblue/.mozilla,/home/netblue/.config/firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al\r"
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	".config"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.2\n";exit}
+	".mozilla"
+}
+sleep 1
+
+send -- "find .config\r"
+expect {
+	timeout {puts "TESTING ERROR 4.3\n";exit}
+	".config"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.4\n";exit}
+	".config/firejail"
+}
+sleep 1
+puts "\n"
+send -- "exit\r"
+sleep 2
+
+#**************************************************************
+send -- "firejail --noprofile --private-home=/home/netblue/../netblue/.mozilla,/home/netblue/.config/firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"Error: invalid private-home list"
 }
 sleep 1
 
 #**************************************************************
-send -- "firejail --private-home=/root\r"
+send -- "firejail --noprofile --private-home=/root\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
+	timeout {puts "TESTING ERROR 6\n";exit}
 	"Error: only files or directories created by the current user are allowed"
 }
 sleep 1
+
+puts "all done\n"
 

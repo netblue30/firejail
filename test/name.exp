@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --name=baluba\r"
+send --  "firejail --name=baluba --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
@@ -22,4 +22,4 @@ expect {
 }
 sleep 1
 
-puts "\n"
+puts "all done\n"

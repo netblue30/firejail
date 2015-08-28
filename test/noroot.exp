@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --debug --noroot --caps.drop=all --seccomp --cpu=0,1 --name=noroot-sandbox\r"
+send -- "firejail --debug --noprofile --noroot --caps.drop=all --seccomp --cpu=0,1 --name=noroot-sandbox\r"
 expect {
 	timeout {puts "TESTING ERROR 0.1\n";exit}
 	"Child process initialized"
@@ -75,7 +75,7 @@ send -- "exit\r"
 sleep 2
 
 
-send -- "firejail --noroot\r"
+send -- "firejail --noroot --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"Child process initialized"
@@ -96,7 +96,7 @@ puts "\n"
 send -- "exit\r"
 sleep 2
 
-send -- "firejail --name=test --noroot\r"
+send -- "firejail --name=test --noroot --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
 	"Child process initialized"
@@ -121,4 +121,4 @@ expect {
 	"effective uid is not 0, is sudo installed setuid root?" { puts "OK\n";}
 	"sudo must be owned by uid 0 and have the setuid bit set" { puts "OK\n";}
 }
-puts "\n"
+puts "all done\n"

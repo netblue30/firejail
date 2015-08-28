@@ -26,3 +26,5 @@ Dropping all Linux capabilities and enforcing default seccomp filter
 Warning: failed to unmount /sys
 Child process initialized
 $
+
+3. default.profile createing problems for  --chroot, --private-home

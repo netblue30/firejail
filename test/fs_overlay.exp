@@ -16,7 +16,7 @@ expect {
 	"home"
 }
 
-send -- "firejail --overlay\r"
+send -- "firejail --noprofile --overlay\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
@@ -60,5 +60,5 @@ expect {
 
 
 sleep 1
-puts "\n"
+puts "all done \n"
 

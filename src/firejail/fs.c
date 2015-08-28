@@ -44,10 +44,8 @@ void fs_build_firejail_dir(void) {
 	}
 	else { // check /tmp/firejail directory belongs to root end exit if doesn't!
 		if (s.st_uid != 0 || s.st_gid != 0) {
-			if (firejail_in_firejail == 0) {
-				fprintf(stderr, "Error: non-root %s directory, exiting...\n", FIREJAIL_DIR);
-				exit(1);
-			}
+			fprintf(stderr, "Error: non-root %s directory, exiting...\n", FIREJAIL_DIR);
+			exit(1);
 		}
 	}
 }

@@ -16,9 +16,13 @@ echo "TESTING: blacklist"
 rm -fr dir\ with\ space
 
 ln -s auto auto2
+ln -s /bin auto3
+ln -s /usr/bin auto4
 echo "TESTING: blacklist directory link"
 ./blacklist-link.exp
 rm -fr auto2
+rm -fr auto3
+rm -fr auto4
 
 
 echo "TESTING: version"

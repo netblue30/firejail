@@ -153,15 +153,20 @@ static void disable_file(OPERATION op, const char *filename, const char *emptydi
 
 	// modify the file
 	if (op == BLACKLIST_FILE) {
-		if (arg_debug)
-			printf("Disable %s\n", fname);
-		if (S_ISDIR(s.st_mode)) {
-			if (mount(emptydir, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable file");
-		}
+		// some distros put all executables under /usr/bin and make /bin a symbolic link
+		if (is_link(filename) && S_ISDIR(s.st_mode))
+			fprintf(stderr, "Warning: %s directory link was not blacklisted\n", filename);
 		else {
-			if (mount(emptyfile, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable file");
+			if (arg_debug)
+				printf("Disable %s\n", fname);
+			if (S_ISDIR(s.st_mode)) {
+				if (mount(emptydir, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+					errExit("disable file");
+			}
+			else {
+				if (mount(emptyfile, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+					errExit("disable file");
+			}
 		}
 	}
 	else if (op == MOUNT_READONLY) {

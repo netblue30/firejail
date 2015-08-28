@@ -1,0 +1,50 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# blacklist a directory symlink
+send -- "firejail --blacklist=auto2\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"directory link was not blacklisted"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "file auto2\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"symbolic link to"
+}
+send -- "exit\r"
+sleep 1
+
+# blacklist a directory symlink from a profile file
+send -- "firejail --profile=blacklist3.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"directory link was not blacklisted"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "file auto2\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"symbolic link to"
+}
+send -- "exit\r"
+sleep 1
+
+
+
+puts "all done\n"
+

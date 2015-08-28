@@ -15,6 +15,12 @@ echo "TESTING: blacklist"
 ./blacklist.exp
 rm -fr dir\ with\ space
 
+ln -s auto auto2
+echo "TESTING: blacklist directory link"
+./blacklist-link.exp
+rm -fr auto2
+
+
 echo "TESTING: version"
 ./option_version.exp
 

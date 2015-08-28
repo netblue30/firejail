@@ -151,6 +151,7 @@ extern int arg_scan;		// arp-scan all interfaces
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
 extern pid_t sandbox_pid;
+extern int firejail_in_firejail;
 
 
 

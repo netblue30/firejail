@@ -92,6 +92,7 @@ char *fullargv[MAX_ARGS];			// expanded argv for restricted shell
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
+int firejail_in_firejail = 0;			// firejail started in a firejail sandbox
 
 static void myexit(int rv) {
 	logmsg("exiting...");
@@ -127,8 +128,10 @@ static void my_handler(int s){
 static void extract_user_data(void) {
 	// check suid
 	if (geteuid()) {
-		fprintf(stderr, "Error: the sandbox is not setuid root\n");
-		exit(1);
+		if (firejail_in_firejail == 0) {
+			fprintf(stderr, "Error: the sandbox is not setuid root\n");
+			exit(1);
+		}
 	}
 
 	struct passwd *pw = getpwuid(getuid());
@@ -400,6 +403,14 @@ int main(int argc, char **argv) {
 	int arg_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_noprofile = 0; // use generic.profile if none other found/specified
+
+	// check if we already have a sandbox running
+	int rv = check_kernel_procs();
+	if (rv == 0)
+		firejail_in_firejail = 1;
+
+
+
 	
 	// initialize globals
 	init_cfg();
@@ -998,8 +1009,7 @@ int main(int argc, char **argv) {
 	}
 
 	// if a sandbox is already running, start the program directly without sandboxing
-	int rv = check_kernel_procs();
-	if (rv == 0) {
+	if (firejail_in_firejail) {
 		run_no_sandbox(argc, argv);
 		// it will never get here!
 		assert(0);

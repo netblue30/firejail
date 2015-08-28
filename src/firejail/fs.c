@@ -377,49 +377,6 @@ void fs_proc_sys_dev_boot(void) {
 //	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
 //		errExit("mounting /sys");
 
-
-	// mounting firejail kernel module files
-	if (stat("/proc/firejail-uptime", &s) == 0) {
-		errno = 0;
-		FILE *fp = fopen("/proc/firejail", "w");
-		int cnt = 0;
-		while (errno == EBUSY && cnt < 10) {
-			if (!fp) {
-				int s = random();
-				s /= 200000;
-				usleep(s);
-				fp = fopen("/proc/firejail", "w");
-			}
-			else
-				break;
-		}
-		if (!fp) {
-			fprintf(stderr, "Error: cannot register sandbox with firejail-lkm\n");
-			exit(1);
-		}	
-		if (fp) {
-			// registration
-			fprintf(fp, "register\n");
-			fflush(0);
-			// filtering x11 connect calls
-			if (arg_nox11) {
-				fprintf(fp, "no connect unix /tmp/.X11\n");
-				fflush(0);
-				printf("X11 access disabled\n");
-			}
-			if (arg_nodbus) {
-				fprintf(fp, "no connect unix /var/run/dbus/system_bus_socket\n");
-				fflush(0);
-				fprintf(fp, "no connect unix /tmp/dbus\n");
-				fflush(0);
-				printf("D-Bus access disabled\n");
-			}
-			fclose(fp);
-			if (mount("/proc/firejail-uptime", "/proc/uptime", NULL, MS_BIND|MS_REC, NULL) < 0)
-				fprintf(stderr, "Warning: cannot mount /proc/firejail-uptime\n");
-		}
-	}
-
 	// Disable SysRq
 	// a linux box can be shut down easily using the following commands (as root):
 	// # echo 1 > /proc/sys/kernel/sysrq

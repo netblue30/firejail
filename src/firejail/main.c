@@ -73,8 +73,6 @@ int arg_rlimit_nofile = 0;			// rlimit nofile
 int arg_rlimit_nproc = 0;			// rlimit nproc
 int arg_rlimit_fsize = 0;				// rlimit fsize
 int arg_rlimit_sigpending = 0;			// rlimit fsize
-int arg_nox11 = 0;				// kill the program if x11 unix domain socket is accessed
-int arg_nodbus = 0;				// kill the program if D-Bus is accessed
 int arg_nogroups = 0;				// disable supplementary groups
 int arg_noroot = 0;				// create a new user namespace and disable root user
 int arg_netfilter;				// enable netfilter
@@ -99,18 +97,6 @@ static void myexit(int rv) {
 	if (!arg_command)
 		printf("\nparent is shutting down, bye...\n");
 	
-	struct stat s;
-	if (stat("/proc/firejail", &s) == 0) {
-		/* coverity[toctou] */
-		FILE *fp = fopen("/proc/firejail", "w");
-		if (fp) {
-			// deregistration
-			fprintf(fp, "release\n");
-			fflush(0);
-			fclose(fp);
-		}
-	}
-
 	// delete sandbox files in shared memory
 	bandwidth_shm_del_file(sandbox_pid);		// bandwidht file
 	network_shm_del_file(sandbox_pid);		// network map file
@@ -556,26 +542,6 @@ int main(int argc, char **argv) {
 			arg_ipc = 1;
 		else if (strncmp(argv[i], "--cpu=", 6) == 0)
 			read_cpu_list(argv[i] + 6);
-		else if (strcmp(argv[i], "--nox11") == 0) {
-			// check if firejail lkm is present
-			struct stat s;
-			if (stat("/proc/firejail", &s) < 0) {
-				fprintf(stderr, "Error: firejail Linux kernel module not found. The module"
-					" is required for --nox11 option to work.\n");
-				exit(1);
-			}
-			arg_nox11 = 1;
-		}
-		else if (strcmp(argv[i], "--nodbus") == 0) {
-			// check if firejail lkm is present
-			struct stat s;
-			if (stat("/proc/firejail", &s) < 0) {
-				fprintf(stderr, "Error: firejail Linux kernel module not found. The module"
-					" is required for --nodbus option to work.\n");
-				exit(1);
-			}
-			arg_nodbus = 1;
-		}
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
 			if (arg_cgroup) {
 				fprintf(stderr, "Error: only a cgroup can be defined\n");

@@ -197,24 +197,28 @@ static void disable_file(OPERATION op, const char *filename, const char *emptydi
 	free(fname);
 }
 
-static void globbing(OPERATION op, const char *fname, const char *emptydir, const char *emptyfile) {
-	assert(fname);
+// Treat pattern as a shell glob pattern and blacklist matching files
+static void globbing(OPERATION op, const char *pattern, const char *emptydir, const char *emptyfile) {
+	assert(pattern);
 	assert(emptydir);
 	assert(emptyfile);
 
-	// filename globbing: expand * macro and continue processing for every single file
-	if (strchr(fname, '*')) {
-		glob_t globbuf;
-		globbuf.gl_offs = 0;
-		glob(fname, GLOB_DOOFFS, NULL, &globbuf);
-		unsigned int i;
-		for (i = 0; i < globbuf.gl_pathc; i++) {
-			assert(globbuf.gl_pathv[i]);
-			disable_file(op, globbuf.gl_pathv[i], emptydir, emptyfile);
-		}
+	glob_t globbuf;
+	// Profiles contain blacklists for files that might not exist on a user's machine.
+	// GLOB_NOCHECK makes that okay.
+	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT, NULL, &globbuf);
+	if (globerr) {
+		fprintf(stderr, "Error: failed to glob pattern %s\n", pattern);
+		return;
 	}
-	else
-		disable_file(op, fname, emptydir, emptyfile);
+
+	size_t i;
+	for (i = 0; i < globbuf.gl_pathc; i++) {
+		char* match = globbuf.gl_pathv[i];
+		assert(match);
+		disable_file(op, match, emptydir, emptyfile);
+	}
+	globfree(&globbuf);
 }
 
 static void expand_path(OPERATION op, const char *path, const char *fname, const char *emptydir, const char *emptyfile) {

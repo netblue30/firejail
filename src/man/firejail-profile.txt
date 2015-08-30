@@ -1,6 +1,6 @@
 .TH FIREJAIL-PROFILE 5 "MONTH YEAR" "VERSION" "firejail profiles man page"
 .SH NAME
-profile \- Profile file syntax for Firejail
+profile \- Security profile file syntax for Firejail
 
 .SH USAGE
 .TP
@@ -8,8 +8,56 @@ firejail \-\-profile=filename.profile
 
 .SH DESCRIPTION
 Several Firejail command line configuration options can be passed to the program using
-profile files. Default Firejail profile files are stored in /etc/firejail
-directory and ~/.config/firejail directory.
+profile files. 
+Firejail chooses a security profile in the following order:
+
+1. If a profile is provided by the user with --profile option, the profile is loaded.
+Example:
+.PP
+.RS
+$ firejail --profile=/home/netblue/icecat.profile icecat
+.RE
+
+2. If a profile file with the same name as the application is present in ~/.config/firejail directory or
+in /etc/firejail, the profile is loaded. ~/.config/firejail takes precedence over /etc/firejail. Example:
+.PP
+.RS
+$ firejail icecat
+.br
+Command name #icecat#
+.br
+.br
+Found icecat profile in /home/netblue/.config/firejail directory
+.br
+Reading profile /home/netblue/.config/firejail/icecat.profile
+.br
+[...]
+.RE
+
+3. Use the default profile in /etc/firejail/generic.profile. This can be disabled with --noprofile. Example:
+.PP
+.RS
+$ firejail \-\-noprofile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+$ exit
+.br
+.br
+parent is shutting down, bye...
+.br
+$ firejail
+.br
+Reading profile /etc/firejail/generic.profile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+$ 
+.RE
 
 .SH Scripting
 Include and comment support:

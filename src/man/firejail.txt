@@ -39,15 +39,24 @@ and it is integrated with Linux Control Groups.
 Written in C with virtually no dependencies, the software runs on any Linux computer with a 3.x kernel version
 or newer.
 It can sandbox any type of processes: servers, graphical applications, and even user login sessions. 
-The software includes sandbox profiles for a number of more common
+.PP
+Firejail allows the user to manage application security using security profiles.
+Each profile defines a set of permissions for a specific application or group
+of applications. The software includes security profiles for a number of more common
 Linux programs, such as Mozilla Firefox, Chromium, VLC, Transmission etc.
+
 .SH USAGE
 Without any options, the sandbox consists of a chroot filesystem build in a new mount namespace,
 and new PID and UTS namespaces. IPC, network and user namespaces can be added using the command line options.
 The default Firejail filesystem is based on the host filesystem with the main directories mounted read-only.
 Only /home, /tmp and /var directories are writable.
 .PP
-If no program is specified as an argument, /bin/bash is started by default.
+As it starts up, Firejail tries to find a security profile based on the name of the application.
+If an appropriate profile is not found, Firejail will use the default profile stored in /etc/firejail/default.profile.
+The default security profile is quite restrictive. In case the application doesn't work, use --noprofile option 
+to disable it. For more information, please see SECURITY PROFILES section.
+.PP
+If a program argument is not specified, Firejail starts /bin/bash shell.
 Examples:
 .PP
 $ firejail [OPTIONS]                # starting a /bin/bash shell
@@ -56,7 +65,7 @@ $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 .PP
 Multiple commands can be run in sandbox using regular bash logic operators:
 .PP
-$ sudo firejail [OPTIONS] "/etc/init.d/nginx start && sleep inf"
+# sudo firejail [OPTIONS] "/etc/init.d/nginx start && sleep inf"
 .PP
 In the previous example, "sleep inf" command is required in order to keep the session open for the daemon program.
 
@@ -195,7 +204,7 @@ Example:
 .TP
 \fB\-\-chroot=dirname
 Chroot the sandbox into a root filesystem. If the sandbox is started as a
-regular user, default seccomp and capabilities filters are eanbled.
+regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -566,9 +575,7 @@ $
 
 .TP
 \fB\-\-noprofile
-Do not use a profile.  Profile priority is use the one
-specified on the command line, next try to find one that
-matches the command name, and lastly use generic.profile.
+Do not use a profile. 
 .br
 
 .br
@@ -633,7 +640,7 @@ $ firejail \-\-output=sandboxlog /bin/bash
 .br
 $ ls -l sandboxlog*
 .br
--rw-r--r-- 1 netblue netblue 333890 Jun  2 07:48 sadnboxlog
+-rw-r--r-- 1 netblue netblue 333890 Jun  2 07:48 sandboxlog
 .br
 -rw-r--r-- 1 netblue netblue 511488 Jun  2 07:48 sandboxlog.1
 .br
@@ -744,8 +751,8 @@ $ firejail --private-etc=group,hostname,localtime, \\
 nsswitch.conf,passwd,resolv.conf
 .TP
 \fB\-\-profile=filename
-Load a custom profile from filename. For filename use an absolute path or a path relative to the current path.
-For more information, see PROFILES section below.
+Load a custom security profile from filename. For filename use an absolute path or a path relative to the current path.
+For more information, see SECURITY PROFILES section below.
 .br
 
 .br
@@ -1088,7 +1095,7 @@ Use /usr/bin/zsh as default user shell.
 .br
 Example:
 .br
-$ firejakil \-\-zsh
+$ firejail \-\-zsh
 .SH TRAFFIC SHAPING
 Network bandwidth is an expensive resource shared among all sandboxes running on a system.
 Traffic shaping allows the user to increase network performance by controlling
@@ -1186,20 +1193,19 @@ Sandbox running time in hours:minutes:seconds format.
 User
 The owner of the sandbox.
 
-.SH PROFILES
+.SH SECURITY PROFILES
 Several command line configuration options can be passed to the program using
-profile files. Firejail supports user specified profile files and automatic profile files,
-as follows:
+profile files. Firejail chooses a security profile in the following order:
 
-1. Load a specific profile file from a full path, or a path relative to the current directory.
+1. If a profile is provided by the user with --profile option, the profile is loaded.
 Example:
 .PP
 .RS
 $ firejail --profile=/home/netblue/icecat.profile icecat
 .RE
 
-2. Load a default profile file automatically from ~/.config/firejail or from /etc/firejail, based 
-on the name of the executable started in the sandbox. Example:
+2. If a profile file with the same name as the application is present in ~/.config/firejail directory or
+in /etc/firejail, the profile is loaded. ~/.config/firejail takes precedence over /etc/firejail. Example:
 .PP
 .RS
 $ firejail icecat
@@ -1212,6 +1218,31 @@ Found icecat profile in /home/netblue/.config/firejail directory
 Reading profile /home/netblue/.config/firejail/icecat.profile
 .br
 [...]
+.RE
+
+3. Use the default profile in /etc/firejail/generic.profile
+.PP
+.RS
+$ firejail \-\-noprofile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+$ exit
+.br
+.br
+parent is shutting down, bye...
+.br
+$ firejail
+.br
+Reading profile /etc/firejail/generic.profile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+$ 
 .RE
 
 See man 5 firejail-profile for profile file syntax information.

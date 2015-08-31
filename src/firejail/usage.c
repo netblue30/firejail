@@ -137,8 +137,10 @@ void usage(void) {
 
 	printf("\t--noprofile - do not use a profile.  Profile priority is use the one\n");
 	printf("\t\tspecified on the command line, next try to find one that\n");
-	printf("\t\tmatches the command name, and lastly use %s.profile.\n\n",GENERIC_PROFILE_NAME);
-	
+	printf("\t\tmatches the command name, and lastly use %s.profile\n", DEFAULT_USER_PROFILE);
+	printf("\t\tif running as regular user or %s.profile if running as\n", DEFAULT_ROOT_PROFILE);
+	printf("\t\troot.\n\n");
+		 	
 	printf("\t--noroot - install a user namespace with a single user - the current\n");
 	printf("\t\tuser. root user does not exist in the new namespace. This option\n");
 	printf("\t\tis not supported for --chroot and --overlay configurations.\n\n");

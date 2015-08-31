@@ -1058,20 +1058,26 @@ printf("here %s:%d\n", __FILE__, __LINE__);
 
 	// use generic.profile as the default
 	if (!custom_profile && !arg_noprofile) {
+		char *profile_name = DEFAULT_USER_PROFILE;
+		if (getuid() == 0)
+			profile_name = DEFAULT_ROOT_PROFILE;
 		if (arg_debug)
-			printf("Attempting to find %s.profile...",GENERIC_PROFILE_NAME);
+			printf("Attempting to find %s.profile...", profile_name);
 
 		// look for the profile in ~/.config/firejail directory
 		char *usercfgdir;
 		if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
 			errExit("asprintf");
-		custom_profile = profile_find(GENERIC_PROFILE_NAME, usercfgdir);
+		custom_profile = profile_find(profile_name, usercfgdir);
 		free(usercfgdir);
 
 		if (!custom_profile) {
 			// look for the profile in /etc/firejail directory
-			custom_profile = profile_find(GENERIC_PROFILE_NAME, "/etc/firejail");
+			custom_profile = profile_find(profile_name, "/etc/firejail");
 		}
+		
+		if (custom_profile)
+			printf("Note: %s profile can be disabled by --noprofile option.\n", profile_name);
 	}
 
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!

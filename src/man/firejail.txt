@@ -52,8 +52,8 @@ The default Firejail filesystem is based on the host filesystem with the main di
 Only /home, /tmp and /var directories are writable.
 .PP
 As it starts up, Firejail tries to find a security profile based on the name of the application.
-If an appropriate profile is not found, Firejail will use the default profile stored in /etc/firejail/default.profile.
-The default security profile is quite restrictive. In case the application doesn't work, use --noprofile option 
+If an appropriate profile is not found, Firejail will use a default profile.
+The default profile is quite restrictive. In case the application doesn't work, use --noprofile option 
 to disable it. For more information, please see SECURITY PROFILES section.
 .PP
 If a program argument is not specified, Firejail starts /bin/bash shell.
@@ -575,22 +575,11 @@ $
 
 .TP
 \fB\-\-noprofile
-Do not use a profile. 
+Do not use a security profile. 
 .br
 
 .br
 Example:
-.br
-$ firejail \-\-noprofile
-.br
-Parent pid 8553, child pid 8554
-.br
-Child process initialized
-.br
-$ exit
-.br
-.br
-parent is shutting down, bye...
 .br
 $ firejail
 .br
@@ -600,7 +589,17 @@ Parent pid 8553, child pid 8554
 .br
 Child process initialized
 .br
-$ 
+[...] 
+.br
+
+.br
+$ firejail \-\-noprofile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+[...]
 
 .TP
 \fB\-\-noroot
@@ -1194,14 +1193,18 @@ User
 The owner of the sandbox.
 
 .SH SECURITY PROFILES
-Several command line configuration options can be passed to the program using
-profile files. Firejail chooses a security profile in the following order:
+Several command line options can be passed to the program using
+profile files. Firejail chooses the profile file as follows:
 
-1. If a profile is provided by the user with --profile option, the profile is loaded.
+1. If a profile file is provided by the user with --profile option, the profile file is loaded.
 Example:
 .PP
 .RS
 $ firejail --profile=/home/netblue/icecat.profile icecat
+.br
+Reading profile /home/netblue/icecat.profile
+.br
+[...]
 .RE
 
 2. If a profile file with the same name as the application is present in ~/.config/firejail directory or
@@ -1212,7 +1215,6 @@ $ firejail icecat
 .br
 Command name #icecat#
 .br
-.br
 Found icecat profile in /home/netblue/.config/firejail directory
 .br
 Reading profile /home/netblue/.config/firejail/icecat.profile
@@ -1220,20 +1222,12 @@ Reading profile /home/netblue/.config/firejail/icecat.profile
 [...]
 .RE
 
-3. Use the default profile in /etc/firejail/generic.profile
+3. Use a default.profile file if the sandbox
+is started by a regular user, or a server.profile file if the sandbox
+is started by root. Firejail looks for these files in ~/.config/firejail directory, followed by /etc/firejail directory.
+To disable default profile loading, use --noroot command option. Example:
 .PP
 .RS
-$ firejail \-\-noprofile
-.br
-Parent pid 8553, child pid 8554
-.br
-Child process initialized
-.br
-$ exit
-.br
-.br
-parent is shutting down, bye...
-.br
 $ firejail
 .br
 Reading profile /etc/firejail/generic.profile
@@ -1242,7 +1236,17 @@ Parent pid 8553, child pid 8554
 .br
 Child process initialized
 .br
-$ 
+[...] 
+.br
+
+.br
+$ firejail \-\-noprofile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+[...]
 .RE
 
 See man 5 firejail-profile for profile file syntax information.

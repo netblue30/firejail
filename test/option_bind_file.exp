@@ -16,10 +16,6 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"hello"
 }
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"home"
-}
 sleep 1
 
 puts "\n"

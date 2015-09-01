@@ -334,6 +334,8 @@ int profile_check_line(char *ptr, int lineno) {
 	// rest of filesystem
 	if (strncmp(ptr, "blacklist ", 10) == 0)
 		ptr += 10;
+	else if (strncmp(ptr, "noblacklist ", 12) == 0)
+		ptr += 12;
 	else if (strncmp(ptr, "read-only ", 10) == 0)
 		ptr += 10;
 	else if (strncmp(ptr, "tmpfs ", 6) == 0)

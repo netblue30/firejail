@@ -21,6 +21,7 @@
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <linux/limits.h>
+#include <fnmatch.h>
 #include <glob.h>
 #include <dirent.h>
 #include <fcntl.h>
@@ -198,7 +199,7 @@ static void disable_file(OPERATION op, const char *filename, const char *emptydi
 }
 
 // Treat pattern as a shell glob pattern and blacklist matching files
-static void globbing(OPERATION op, const char *pattern, const char *emptydir, const char *emptyfile) {
+static void globbing(OPERATION op, const char *pattern, const char *noblacklist[], size_t noblacklist_len, const char *emptydir, const char *emptyfile) {
 	assert(pattern);
 	assert(emptydir);
 	assert(emptyfile);
@@ -209,27 +210,32 @@ static void globbing(OPERATION op, const char *pattern, const char *emptydir, co
 	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT, NULL, &globbuf);
 	if (globerr) {
 		fprintf(stderr, "Error: failed to glob pattern %s\n", pattern);
-		return;
+		exit(1);
 	}
 
-	size_t i;
+	size_t i, j;
 	for (i = 0; i < globbuf.gl_pathc; i++) {
-		char* match = globbuf.gl_pathv[i];
-		assert(match);
-		disable_file(op, match, emptydir, emptyfile);
+		char* path = globbuf.gl_pathv[i];
+		assert(path);
+		// noblacklist is expected to be short in normal cases, so stupid and correct brute force is okay
+		bool okay_to_blacklist = true;
+		for (j = 0; j < noblacklist_len; j++) {
+			int result = fnmatch(noblacklist[j], path, FNM_PATHNAME);
+			if (result == FNM_NOMATCH)
+				continue;
+			else if (result == 0) {
+				okay_to_blacklist = false;
+				break;
+			}
+			else {
+				fprintf(stderr, "Error: failed to compare path %s with pattern %s\n", path, noblacklist[j]);
+				exit(1);
+			}
+		}
+		if (okay_to_blacklist)
+			disable_file(op, path, emptydir, emptyfile);
 	}
 	globfree(&globbuf);
-}
-
-static void expand_path(OPERATION op, const char *path, const char *fname, const char *emptydir, const char *emptyfile) {
-	assert(path);
-	assert(fname);
-	assert(emptydir);
-	assert(emptyfile);
-	char newname[strlen(path) + strlen(fname) + 1];
-	sprintf(newname, "%s%s", path, fname);
-
-	globbing(op, newname, emptydir, emptyfile);
 }
 
 // blacklist files or directoies by mounting empty files on top of them
@@ -240,6 +246,12 @@ void fs_blacklist(const char *homedir) {
 		
 	char *emptydir = create_empty_dir();
 	char *emptyfile = create_empty_file();
+
+	// a statically allocated buffer works for all current needs
+	// TODO: if dynamic allocation is ever needed, we should probably add
+	// libraries that make it easy to do without introducing security bugs
+	char *noblacklist[32];
+	size_t noblacklist_c = 0;
 
 	while (entry) {
 		OPERATION op = OPERATION_MAX;
@@ -283,6 +295,18 @@ void fs_blacklist(const char *homedir) {
 			continue;
 		}
 
+		// Process noblacklist command
+		if (strncmp(entry->data, "noblacklist ", 12) == 0) {
+			if (noblacklist_c >= sizeof(noblacklist) / sizeof(noblacklist[0])) {
+				fputs("Error: out of memory for noblacklist entries\n", stderr);
+				exit(1);
+			}
+			else
+				noblacklist[noblacklist_c++] = expand_home(entry->data + 12, homedir);
+			entry = entry->next;
+			continue;
+		}
+
 		// process blacklist command
 		if (strncmp(entry->data, "blacklist ", 10) == 0)  {
 			ptr = entry->data + 10;
@@ -307,19 +331,27 @@ void fs_blacklist(const char *homedir) {
 		ptr = new_name;
 
 		// expand path macro - look for the file in /bin, /usr/bin, /sbin and  /usr/sbin directories
+		// TODO: should we look for more bin paths?
 		if (strncmp(ptr, "${PATH}", 7) == 0) {
-			expand_path(op, "/bin", ptr + 7, emptydir, emptyfile);
-			expand_path(op, "/sbin", ptr + 7, emptydir, emptyfile);
-			expand_path(op, "/usr/bin", ptr + 7, emptydir, emptyfile);
-			expand_path(op, "/usr/sbin", ptr + 7, emptydir, emptyfile);
+			char *fname = ptr + 7;
+			size_t fname_len = strlen(fname);
+			char **path, *paths[] = {"/bin", "/sbin", "/usr/bin", "/usr/sbin", NULL};
+			for (path = &paths[0]; *path; path++) {
+				char newname[strlen(*path) + fname_len + 1];
+				sprintf(newname, "%s%s", *path, fname);
+				globbing(op, newname, (const char**)noblacklist, noblacklist_c, emptydir, emptyfile);
+			}
 		}
 		else
-			globbing(op, ptr, emptydir, emptyfile);
+			globbing(op, ptr, (const char**)noblacklist, noblacklist_c, emptydir, emptyfile);
 
 		if (new_name)
 			free(new_name);
 		entry = entry->next;
 	}
+
+	size_t i;
+	for (i = 0; i < noblacklist_c; i++) free(noblacklist[i]);
 }
 
 //***********************************************

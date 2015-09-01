@@ -179,6 +179,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// configure filesystem
 	//****************************
+	
 #ifdef HAVE_CHROOT		
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
@@ -267,6 +268,8 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	if (arg_nonetwork) {
 		net_if_up("lo");
+		if (arg_debug)
+			printf("Network namespace enabled, only loopback interface available\n");
 	}
 	else if (any_bridge_configured()) {
 		// configure lo and eth0...eth3
@@ -397,7 +400,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
-			fprintf(stderr, "Warning: cannot mount a new user namespace\n");
+			fprintf(stderr, "Error: cannot mount a new user namespace\n");
 			perror("unshare");
 			drop_privs(arg_nogroups);
 		}

@@ -27,4 +27,5 @@ Warning: failed to unmount /sys
 Child process initialized
 $
 
-3. default.profile creating problems for  --chroot, --private-home
+3. default.profile creating problems for  --chroot, --overlay, --private-home
+

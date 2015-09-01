@@ -179,8 +179,8 @@ static void filter_init(void) {
 		return;
 	}
 
-	if (arg_debug)
-		printf("Initialize seccomp filter\n");	
+//	if (arg_debug)
+//		printf("Initialize seccomp filter\n");	
 	// allocate a filter of SECSIZE
 	sfilter = malloc(sizeof(struct sock_filter) * SECSIZE);
 	if (!sfilter)
@@ -220,8 +220,8 @@ static void filter_add_whitelist(int syscall) {
 	assert(sfilter);
 	assert(sfilter_alloc_size);
 	assert(sfilter_index);
-	if (arg_debug)
-		printf("Whitelisting syscall %d %s\n", syscall, syscall_find_nr(syscall));
+//	if (arg_debug)
+//		printf("Whitelisting syscall %d %s\n", syscall, syscall_find_nr(syscall));
 	
 	if ((sfilter_index + 2) > sfilter_alloc_size)
 		filter_realloc();
@@ -246,8 +246,8 @@ static void filter_add_blacklist(int syscall) {
 	assert(sfilter);
 	assert(sfilter_alloc_size);
 	assert(sfilter_index);
-	if (arg_debug)
-		printf("Blacklisting syscall %d %s\n", syscall, syscall_find_nr(syscall));
+//	if (arg_debug)
+//		printf("Blacklisting syscall %d %s\n", syscall, syscall_find_nr(syscall));
 	
 	if ((sfilter_index + 2) > sfilter_alloc_size)
 		filter_realloc();
@@ -272,8 +272,8 @@ static void filter_end_blacklist(void) {
 	assert(sfilter);
 	assert(sfilter_alloc_size);
 	assert(sfilter_index);
-	if (arg_debug)
-		printf("Ending syscall filter\n");
+//	if (arg_debug)
+//		printf("Ending syscall filter\n");
 
 	if ((sfilter_index + 2) > sfilter_alloc_size)
 		filter_realloc();

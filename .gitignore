@@ -1,6 +1,7 @@
 *.o
 *.so
 *~
+*.swp
 Makefile
 config.log
 config.status
@@ -11,4 +12,4 @@ firemon.1
 src/firejail/firejail
 src/firemon/firemon
 src/ftee/ftee
-
+src/tags

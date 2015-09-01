@@ -246,7 +246,7 @@ void fs_blacklist(const char *homedir) {
 		char *ptr;
 
 		// process blacklist command
-		if (strncmp(entry->data, "bind", 4) == 0)  {
+		if (strncmp(entry->data, "bind ", 5) == 0)  {
 			char *dname1 = entry->data + 5;
 			char *dname2 = split_comma(dname1);
 			if (dname2 == NULL) {
@@ -284,15 +284,15 @@ void fs_blacklist(const char *homedir) {
 		}
 
 		// process blacklist command
-		if (strncmp(entry->data, "blacklist", 9) == 0)  {
+		if (strncmp(entry->data, "blacklist ", 10) == 0)  {
 			ptr = entry->data + 10;
 			op = BLACKLIST_FILE;
 		}
-		else if (strncmp(entry->data, "read-only", 9) == 0) {
+		else if (strncmp(entry->data, "read-only ", 10) == 0) {
 			ptr = entry->data + 10;
 			op = MOUNT_READONLY;
 		}			
-		else if (strncmp(entry->data, "tmpfs", 5) == 0) {
+		else if (strncmp(entry->data, "tmpfs ", 6) == 0) {
 			ptr = entry->data + 6;
 			op = MOUNT_TMPFS;
 		}			

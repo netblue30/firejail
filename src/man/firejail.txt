@@ -705,6 +705,10 @@ Example:
 $ firejail \-\-private=/home/netblue/firefox-home firefox
 
 .TP
+\fB\-\-private-keep=file,directory
+This option is deprecated, use private-home instead
+
+.TP
 \fB\-\-private-home=file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the

@@ -27,5 +27,8 @@ Warning: failed to unmount /sys
 Child process initialized
 $
 
-3. default.profile creating problems for  --chroot, --overlay, --private-home
+3. Remove private.keep in 0.9.34 release (deprecated in 0.9.30)
+
+4. Remove exclude-token from profile include in 0.9.34 (deprecated in 0.9.30)
+
 

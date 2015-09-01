@@ -7,11 +7,7 @@ match_max 100000
 send --  "firejail --seccomp --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Blacklisting syscall"
-}
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"open_by_handle_at"
+	"SECCOMP Filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
@@ -28,5 +24,5 @@ expect {
 sleep 2
 
 send -- "exit\r"
-sleep 1
-puts "\n"
+after 100
+puts "all done\n"

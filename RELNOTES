@@ -8,8 +8,8 @@ firejail (0.9.29) baseline; urgency=low
   * --private.keep is transitioned to --private-home
   * support ~ and blanks in blacklist option
   * support "net none" command in profile files
-  * added "net none" to Evince PDF viewer
-  * using /etc/firejail/generic.profile by default
+  * using /etc/firejail/generic.profile by default for user sessions
+  * using /etc/firejail/server.profile by default for root sessions
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Aug 2015 20:25:00 -0500
 

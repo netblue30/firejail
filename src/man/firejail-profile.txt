@@ -80,6 +80,8 @@ file in user home directory.
 
 Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1" file.
 
+Note: exclude-token is deprecated, use noblacklist command instead.
+
 .TP
 # this is a comment
 

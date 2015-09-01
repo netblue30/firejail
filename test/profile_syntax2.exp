@@ -28,11 +28,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Initialize seccomp filter"
+	"SECCOMP Filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Blacklisting syscall"
+	"BLACKLIST"
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}

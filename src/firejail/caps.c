@@ -377,7 +377,7 @@ static uint64_t extract_caps(int pid) {
 	
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
-		if (strncmp(buf, "CapBnd:", 7) == 0) {
+		if (strncmp(buf, "CapBnd:\t", 8) == 0) {
 			char *ptr = buf + 8;
 			unsigned long long val;
 			sscanf(ptr, "%llx", &val);

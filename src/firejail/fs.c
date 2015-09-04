@@ -215,8 +215,12 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 
 	size_t i, j;
 	for (i = 0; i < globbuf.gl_pathc; i++) {
-		char* path = globbuf.gl_pathv[i];
+		char *path = globbuf.gl_pathv[i];
 		assert(path);
+		// /home/me/.* can glob to /home/me/.. which would blacklist /home/
+		const char *base = gnu_basename(path);
+		if (strcmp(base, ".") == 0 || strcmp(base, "..") == 0)
+			continue;
 		// noblacklist is expected to be short in normal cases, so stupid and correct brute force is okay
 		bool okay_to_blacklist = true;
 		for (j = 0; j < noblacklist_len; j++) {

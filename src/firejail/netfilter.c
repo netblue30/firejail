@@ -87,7 +87,7 @@ void netfilter(const char *fname) {
 		allocated = 1;
 	}
 
-	// mount a tempfs on top of /tmp directory
+	// temporarily mount a tempfs on top of /tmp directory
 	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting /tmp");
 

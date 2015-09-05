@@ -1084,7 +1084,7 @@ int main(int argc, char **argv) {
 			}
 			
 			if (custom_profile)
-				printf("\n** Note: %s profile can be disabled by --noprofile option **\n\n", profile_name);
+				printf("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 		}
 	}
 

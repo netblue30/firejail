@@ -309,7 +309,7 @@ int caps_default_filter(void) {
 
 void caps_drop_all(void) {
 	if (arg_debug)
-		printf("Droping all capabilities\n");
+		printf("Dropping all capabilities\n");
 
 	unsigned long cap;
 	for (cap=0; cap <= 63; cap++) {

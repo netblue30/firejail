@@ -9,6 +9,8 @@ blacklist ${PATH}/fusermount
 blacklist ${PATH}/su
 blacklist ${PATH}/sudo
 blacklist ${PATH}/xinput
+blacklist ${PATH}/evtest
+blacklist ${PATH}/xev
 blacklist ${PATH}/strace
 
 # Prevent manipulation of firejail configuration

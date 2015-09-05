@@ -203,12 +203,6 @@ void fs_private_homedir(void) {
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
-
-		// mask /tmp only in root mode; KDE keeps all kind of sockets in /tmp!
-		if (arg_debug)
-			printf("Mounting a new /tmp directory\n");
-		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-			errExit("mounting tmp directory");
 	}
 	
 
@@ -252,13 +246,6 @@ void fs_private(void) {
 			errExit("mkdir");
 		if (chown(homedir, u, g) < 0)
 			errExit("chown");
-	}
-	else {
-		// mask tmp only in root mode; KDE keeps all kind of sockets in /tmp!
-		if (arg_debug)
-			printf("Mounting a new /tmp directory\n");
-		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-			errExit("mounting tmp directory");
 	}
 	
 	skel(homedir, u, g);
@@ -502,12 +489,6 @@ void fs_private_home_list(void) {
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
-
-		// mask /tmp only in root mode; KDE keeps all kind of sockets in /tmp!
-		if (arg_debug)
-			printf("Mounting a new /tmp directory\n");
-		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-			errExit("mounting tmp directory");
 	}
 
 	skel(homedir, u, g);

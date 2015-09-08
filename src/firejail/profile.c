@@ -336,6 +336,10 @@ int profile_check_line(char *ptr, int lineno) {
 		ptr += 10;
 	else if (strncmp(ptr, "noblacklist ", 12) == 0)
 		ptr += 12;
+	else if (strncmp(ptr, "whitelist ", 10) == 0) {
+		arg_whitelist = 1;
+		ptr += 10;
+	}
 	else if (strncmp(ptr, "read-only ", 10) == 0)
 		ptr += 10;
 	else if (strncmp(ptr, "tmpfs ", 6) == 0)

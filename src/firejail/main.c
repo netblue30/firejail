@@ -82,6 +82,7 @@ int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
 int arg_private_etc = 0;			// private etc directory
 int arg_scan = 0;				// arp-scan all interfaces
+int arg_whitelist = 0;				// whitelist commad
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -576,6 +577,14 @@ int main(int argc, char **argv) {
 		else if (strncmp(argv[i], "--blacklist=", 12) == 0) {
 			char *line;
 			if (asprintf(&line, "blacklist %s", argv[i] + 12) == -1)
+				errExit("asprintf");
+			
+			profile_check_line(line, 0);	// will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
+			char *line;
+			if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
 				errExit("asprintf");
 			
 			profile_check_line(line, 0);	// will exit if something wrong

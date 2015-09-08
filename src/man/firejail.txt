@@ -109,7 +109,7 @@ $ firejail \-\-blacklist=/sbin \-\-blacklist=/usr/sbin
 .br
 $ firejail \-\-blacklist=~/.mozilla
 .br
-$ firejail "\-\-blacklist=My Virtual Machines"
+$ firejail "\-\-blacklist=/home/username/My Virtual Machines"
 .TP
 \fB\-c
 Execute command and exit.
@@ -1090,6 +1090,17 @@ Example:
 $ firejail \-\-version
 .br
 firejail version 0.9.27
+.TP
+\fB\-\-whitelist=dirname_or_filename
+Whitelist directory or file. Only files in user home directory are accepted.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-whitelist=~/.mozilla \-\-whitelist=~/Downloads
+.br
+$ firejail "\-\-whitelist=/home/username/My Virtual Machines"
 .TP
 \fB\-\-zsh
 Use /usr/bin/zsh as default user shell.

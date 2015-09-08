@@ -232,8 +232,14 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// apply the profile file
 	//****************************
-	if (cfg.profile)
-		fs_blacklist(cfg.homedir);
+	if (cfg.profile) {
+		// apply all whitelist commands ... 
+		if (arg_whitelist)
+			fs_whitelist();
+
+		// ... followed by blacklist commands
+		fs_blacklist();
+	}
 	
 	//****************************
 	// private mode

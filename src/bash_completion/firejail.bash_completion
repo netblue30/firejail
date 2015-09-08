@@ -39,7 +39,11 @@ _firejail()
             _filedir
             return 0
             ;;
-        --read-only)
+        --whitelist)
+            _filedir
+            return 0
+            ;;
+       --read-only)
             _filedir
             return 0
             ;;

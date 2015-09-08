@@ -16,9 +16,11 @@ Example:
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
 /etc/password file for each user that needs to be restricted. Alternatively,
-you can specify /usr/bin/firejail  in adduser command:
+you can specify /usr/bin/firejail  using adduser or usermod commands:
 
 adduser \-\-shell /usr/bin/firejail username
+.br
+usermod \-\-shell /usr/bin/firejail username
 
 .SH FILES
 /etc/firejail/login.users

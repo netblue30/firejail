@@ -159,7 +159,6 @@ static void copy_xauthority(void) {
 // private mode (--private=homedir):
 // 	mount homedir on top of /home/user,
 // 	tmpfs on top of  /root in nonroot mode,
-// 	tmpfs on top of /tmp in root mode,
 // 	set skel files,
 // 	restore .Xauthority
 void fs_private_homedir(void) {
@@ -214,7 +213,6 @@ void fs_private_homedir(void) {
 // private mode (--private):
 //	mount tmpfs over /home/user,
 // 	tmpfs on top of  /root in nonroot mode,
-// 	tmpfs on top of /tmp in root mode
 // 	set skel files,
 // 	restore .Xauthority
 void fs_private(void) {
@@ -353,20 +351,6 @@ void fs_check_private_dir(void) {
 	}
 }
 
-#if 0
-static int mkpath(char* file_path, mode_t mode) {
-	assert(file_path && *file_path);
-	char* p;
-	for (p=strchr(file_path+1, '/'); p; p=strchr(p+1, '/')) {
-		*p='\0';
-		if (mkdir(file_path, mode)==-1) {
-			if (errno!=EEXIST) { *p='/'; return -1; }
-		}
-		*p='/';
-	}
-	return 0;
-}
-#endif
 
 static void duplicate(char *name) {
 	char *cmd;

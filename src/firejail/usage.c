@@ -227,6 +227,7 @@ void usage(void) {
 	printf("\t--trace - trace open, access and connect system calls.\n\n");
 	printf("\t--tree - print a tree of all sandboxed processes.\n\n");
 	printf("\t--version - print program version and exit.\n\n");
+	printf("\t--whitelist=dirname_or_filename - whitelist directory or file.\n\n");
 	printf("\t--zsh - use /usr/bin/zsh as default shell.\n\n");
 	printf("\n");
 	printf("\n");

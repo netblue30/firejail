@@ -28,6 +28,7 @@
 #define MNT_DIR	"/tmp/firejail/mnt"
 #define HOME_DIR	"/tmp/firejail/mnt/home"
 #define ETC_DIR	"/tmp/firejail/mnt/etc"
+#define WHITELIST_HOME_DIR	"/tmp/firejail/mnt/whome"
 #define DEFAULT_USER_PROFILE	"generic"
 #define DEFAULT_ROOT_PROFILE	"server"
 #define MAX_INCLUDE_LEVEL 6
@@ -146,6 +147,7 @@ extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
 extern int arg_private_etc;	// private etc directory
 extern int arg_scan;		// arp-scan all interfaces
+extern int arg_whitelist;	// whitelist commad
 
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
@@ -186,8 +188,7 @@ void fs_build_firejail_dir(void);
 // build /tmp/firejail/mnt directory
 void fs_build_mnt_dir(void);
 // blacklist files or directoies by mounting empty files on top of them
-void fs_blacklist(const char *homedir);
-//void fs_blacklist(char **blacklist, const char *homedir);
+void fs_blacklist(void);
 // remount a directory read-only
 void fs_rdonly(const char *dir);
 // mount /proc and /sys directories
@@ -365,6 +366,8 @@ void run_no_sandbox(int argc, char **argv);
 // env.c
 void env_store(const char *str);
 void env_apply(void);
+
+// fs_whitelist.c
 
 #endif
 

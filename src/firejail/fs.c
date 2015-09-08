@@ -242,8 +242,11 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 	globfree(&globbuf);
 }
 
+
 // blacklist files or directoies by mounting empty files on top of them
-void fs_blacklist(const char *homedir) {
+void fs_blacklist(void) {
+	char *homedir = cfg.homedir;
+	assert(homedir);
 	ProfileEntry *entry = cfg.profile;
 	if (!entry)
 		return;
@@ -261,7 +264,13 @@ void fs_blacklist(const char *homedir) {
 		OPERATION op = OPERATION_MAX;
 		char *ptr;
 
-		// process blacklist command
+		// whitelist commands handled by fs_whitelist()
+		if (strncmp(entry->data, "whitelist ", 10) == 0 || *entry->data == '\0') {
+			entry = entry->next;
+			continue;
+		}
+
+		// process bind command
 		if (strncmp(entry->data, "bind ", 5) == 0)  {
 			char *dname1 = entry->data + 5;
 			char *dname2 = split_comma(dname1);

@@ -1,17 +1,19 @@
-firejail (0.9.29) baseline; urgency=low
+firejail (0.9.30-rc1) baseline; urgency=low
   * added a disable-history.inc profile as a result of Firefox PDF.js exploit;
     disable-history.inc included in all default profiles
   * Firefox PDF.js exploit (CVE-2015-4495) fixes
   * added --private-etc option
   * added --env option
+  * added --whitelist option
   * support ${HOME} token in include directive in profile files
   * --private.keep is transitioned to --private-home
   * support ~ and blanks in blacklist option
   * support "net none" command in profile files
   * using /etc/firejail/generic.profile by default for user sessions
   * using /etc/firejail/server.profile by default for root sessions
+  * added build --enable-fatal-warnings configure option
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Mon, 24 Aug 2015 20:25:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Wed, 9 Sept 2015 08:00:00 -0500
 
 firejail (0.9.28) baseline; urgency=low
   * network scanning, --scan option

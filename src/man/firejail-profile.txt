@@ -10,7 +10,7 @@ firejail \-\-profile=filename.profile
 Several command line options can be passed to the program using
 profile files. Firejail chooses the profile file as follows:
 
-1. If a profile file is provided by the user with --profile option, the profile file is loaded.
+1. If a profile file is provided by the user with \-\-profile option, the profile file is loaded.
 Example:
 .PP
 .RS
@@ -120,7 +120,7 @@ Remove ifconfig command from the regular path directories.
 \f\blacklist ${HOME}/.ssh
 Remove .ssh directory from user home directory.
 .TP
-\f\ noblacklist ${HOME}/config/evince
+\f\noblacklist ${HOME}/config/evince
 Prevent any new blacklist commands from blacklisting
 config/evince in the user home directory. Useful for defining
 exceptions before including a large blacklist from a file. Note
@@ -149,6 +149,11 @@ Create a new /dev directory. Only null, full, zero, tty, pts, ptmx, random, uran
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
 All modifications are discarded when the sandbox is closed.
+.TP
+\f\whitelist file_or_directory
+Build a new user home in a temporary filesystem, and mount-bind file_or_directory.
+The modifications to file_or_directory are persistent, everything else is discarded
+when the sandbox is closed.
 
 .SH Filters
 \fBcaps\fR and \fBseccomp\fR enable Linux capabilities and seccomp filters. Examples:

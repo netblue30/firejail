@@ -368,6 +368,7 @@ void env_store(const char *str);
 void env_apply(void);
 
 // fs_whitelist.c
+void fs_whitelist(void);
 
 #endif
 

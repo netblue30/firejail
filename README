@@ -2,14 +2,17 @@ Firejail  is  a  SUID sandbox program that reduces the risk of security
 breaches by restricting the running environment of  untrusted  applications
 using Linux namespaces and seccomp-bpf. It includes sandbox profiles for
 Iceweasel/Mozilla Firefox, Chromium, Midori, Opera, Evince, Transmission,
-VLC, Audoacious, Clementine, Rhythmbox, Totem, Deluge and qBittorrent.
+VLC, Audoacious, Clementine, Rhythmbox, Totem, Deluge, qBittorrent.
+DeaDBeeF, Dropbox, Empathy, FileZilla, IceCat, Thunderbird/Icedove,
+Pidgin, Quassel and XChat.
 
 Firejail also expands the restricted shell facility found  in  bash  by adding 
 Linux  namespace support. It supports sandboxing specific users upon login.
 
 Download: http://sourceforge.net/projects/firejail/files/
 Build and install: ./configure && make && sudo make install
-Documentation and support: http://firejail.sourceforge.net
+Documentation and support: https://l3net.wordpress.com/projects/firejail/
+Development: https://github.com/netblue30/firejail
 License: GPL v2
 
 Firejail Authors:
@@ -30,8 +33,6 @@ Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
 Reiner Herrmann - a number of build patches, man page fixes, Debian integration
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
-Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
-	- src/lib/libnetlink.c extracted from iproute2 software package
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)
 	- ARM support
 dewbasaur (https://github.com/dewbasaur)
@@ -43,5 +44,7 @@ mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
 iiotx (https://github.com/iiotx)
 	- use generci.profile by default
+Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
+	- src/lib/libnetlink.c extracted from iproute2 software package
 	
 Copyright (C) 2014, 2015 Firejail Authors

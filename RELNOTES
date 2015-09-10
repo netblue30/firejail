@@ -12,6 +12,8 @@ firejail (0.9.30-rc1) baseline; urgency=low
   * using /etc/firejail/generic.profile by default for user sessions
   * using /etc/firejail/server.profile by default for root sessions
   * added build --enable-fatal-warnings configure option
+  * added persistence to --overlay option
+  * added --overlay-tmpfs option
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Wed, 9 Sept 2015 08:00:00 -0500
 

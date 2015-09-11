@@ -377,6 +377,7 @@ static void duplicate(char *name) {
 	if (system(cmd))
 		errExit("system cp -a --parents");
 	free(cmd);
+	free(fname);
 }
 
 

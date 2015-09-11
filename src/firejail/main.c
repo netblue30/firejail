@@ -612,6 +612,7 @@ int main(int argc, char **argv) {
 				errExit("asprintf");
 			struct stat s;
 			if (stat(dirname, &s) == -1) {
+				/* coverity[toctou] */
 				if (mkdir(dirname, S_IRWXU | S_IRWXG | S_IRWXO))
 					errExit("mkdir");
 				if (chown(dirname, getuid(), getgid()) < 0)

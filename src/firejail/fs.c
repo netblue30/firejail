@@ -345,18 +345,20 @@ void fs_blacklist(void) {
 
 		// expand path macro - look for the file in /bin, /usr/bin, /sbin and  /usr/sbin directories
 		// TODO: should we look for more bin paths?
-		if (strncmp(ptr, "${PATH}", 7) == 0) {
-			char *fname = ptr + 7;
-			size_t fname_len = strlen(fname);
-			char **path, *paths[] = {"/bin", "/sbin", "/usr/bin", "/usr/sbin", NULL};
-			for (path = &paths[0]; *path; path++) {
-				char newname[strlen(*path) + fname_len + 1];
-				sprintf(newname, "%s%s", *path, fname);
-				globbing(op, newname, (const char**)noblacklist, noblacklist_c, emptydir, emptyfile);
+		if (ptr) {
+			if (strncmp(ptr, "${PATH}", 7) == 0) {
+				char *fname = ptr + 7;
+				size_t fname_len = strlen(fname);
+				char **path, *paths[] = {"/bin", "/sbin", "/usr/bin", "/usr/sbin", NULL};
+				for (path = &paths[0]; *path; path++) {
+					char newname[strlen(*path) + fname_len + 1];
+					sprintf(newname, "%s%s", *path, fname);
+					globbing(op, newname, (const char**)noblacklist, noblacklist_c, emptydir, emptyfile);
+				}
 			}
+			else
+				globbing(op, ptr, (const char**)noblacklist, noblacklist_c, emptydir, emptyfile);
 		}
-		else
-			globbing(op, ptr, (const char**)noblacklist, noblacklist_c, emptydir, emptyfile);
 
 		if (new_name)
 			free(new_name);

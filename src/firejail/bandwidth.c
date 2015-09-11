@@ -260,15 +260,19 @@ void shm_write_bandwidth_file(pid_t pid) {
 	if (fp) {
 		IFBW *ptr = ifbw;
 		while (ptr) {
-			fprintf(fp, "%s\n", ptr->txt);
+			if (fprintf(fp, "%s\n", ptr->txt) < 0)
+				goto errout;
 			ptr = ptr->next;
 		}
 		fclose(fp);
 	}
-	else {
-		fprintf(stderr, "Error: cannot write bandwidht file %s\n", fname);
-		exit(1);
-	}
+	else
+		goto errout;
+	return;
+
+errout:
+	fprintf(stderr, "Error: cannot write bandwidht file %s\n", fname);
+	exit(1);
 }
 
 //***********************************

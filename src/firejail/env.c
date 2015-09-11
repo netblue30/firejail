@@ -72,7 +72,8 @@ void env_apply(void) {
 	Env *env = envlist;
 	
 	while (env) {
-		setenv(env->name, env->value, 1);
+		if (setenv(env->name, env->value, 1) < 0)
+			errExit("setenv");
 		env = env->next;
 	}
 }

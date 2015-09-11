@@ -34,17 +34,22 @@ void save_cgroup(void) {
 	if (fp) {
 		fprintf(fp, "%s", cfg.cgroup);
 		fflush(0);
-		fclose(fp);
+		if (fclose(fp))
+			goto errout;
 		if (chown(fname, 0, 0) < 0)
 			errExit("chown");
 	}
-	else {
-		fprintf(stderr, "Error: cannot save cgroup\n");
-		free(fname);
-		exit(1);
-	}
+	else
+		goto errout;
 	
 	free(fname);
+	return;
+
+errout:
+	fprintf(stderr, "Error: cannot save cgroup\n");
+	free(fname);
+	exit(1);
+
 }
 
 void load_cgroup(const char *fname) {

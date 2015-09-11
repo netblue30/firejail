@@ -52,6 +52,7 @@ int check_kernel_procs(void) {
 		}
 		
 		// open file
+		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
 			fprintf(stderr, "Warning: cannot open %s\n", fname);

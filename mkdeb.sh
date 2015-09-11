@@ -20,7 +20,7 @@ tar -xjvf $CODE_ARCHIVE
 mkdir -p $INSTALL_DIR
 cd $CODE_DIR
 ./configure --prefix=$INSTALL_DIR
-make && make install
+make && make install-strip
 
 # second compilation - the path to libtrace.so is hardcoded in firejail executable
 # pointing according to --prefix=$INSTALL_DIR. We need it to point to /usr/lib 

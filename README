@@ -44,6 +44,8 @@ mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
 iiotx (https://github.com/iiotx)
 	- use generci.profile by default
+pstn (https://github.com/pstn)
+	- added install-strip, make install without strip
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
 	- src/lib/libnetlink.c extracted from iproute2 software package
 	

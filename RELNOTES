@@ -1,4 +1,4 @@
-firejail (0.9.30-rc1) baseline; urgency=low
+firejail (0.9.30) baseline; urgency=low
   * added a disable-history.inc profile as a result of Firefox PDF.js exploit;
     disable-history.inc included in all default profiles
   * Firefox PDF.js exploit (CVE-2015-4495) fixes
@@ -14,9 +14,9 @@ firejail (0.9.30-rc1) baseline; urgency=low
   * added build --enable-fatal-warnings configure option
   * added persistence to --overlay option
   * added --overlay-tmpfs option
-  * make install renamed make install-strip
+  * make install-strip implemented, make install renamed
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Wed, 9 Sept 2015 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Mon, 14 Sept 2015 08:00:00 -0500
 
 firejail (0.9.28) baseline; urgency=low
   * network scanning, --scan option

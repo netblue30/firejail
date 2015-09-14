@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.26"
+VERSION="0.9.30"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -19,6 +19,7 @@ install -m 755 /usr/bin/firemon firejail-$VERSION/usr/bin/.
 mkdir -p  firejail-$VERSION/usr/lib/firejail
 install -m 644 /usr/lib/firejail/libtrace.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/ftee  firejail-$VERSION/usr/lib/firejail/.
+install -m 755 /usr/lib/firejail/fshaper.sh  firejail-$VERSION/usr/lib/firejail/.
 
 mkdir -p firejail-$VERSION/usr/share/man/man1
 install -m 644 /usr/share/man/man1/firejail.1.gz firejail-$VERSION/usr/share/man/man1/.
@@ -26,6 +27,7 @@ install -m 644 /usr/share/man/man1/firemon.1.gz firejail-$VERSION/usr/share/man/
 
 mkdir -p firejail-$VERSION/usr/share/man/man5
 install -m 644 /usr/share/man/man5/firejail-profile.5.gz firejail-$VERSION/usr/share/man/man5/.
+install -m 644 /usr/share/man/man5/firejail-login.5.gz firejail-$VERSION/usr/share/man/man5/.
 
 mkdir -p firejail-$VERSION/usr/share/doc/packages/firejail
 install -m 644 /usr/share/doc/firejail/COPYING firejail-$VERSION/usr/share/doc/packages/firejail/.
@@ -33,9 +35,17 @@ install -m 644 /usr/share/doc/firejail/README firejail-$VERSION/usr/share/doc/pa
 install -m 644 /usr/share/doc/firejail/RELNOTES firejail-$VERSION/usr/share/doc/packages/firejail/.
 
 mkdir -p firejail-$VERSION/etc/firejail
+install -m 644 /etc/firejail/xchat.profile firejail-$VERSION/etc/firejail/xchat.profile
+install -m 644 /etc/firejail/server.profile firejail-$VERSION/etc/firejail/server.profile
+install -m 644 /etc/firejail/quassel.profile firejail-$VERSION/etc/firejail/quassel.profile
+install -m 644 /etc/firejail/pidgin.profile firejail-$VERSION/etc/firejail/pidgin.profile
+install -m 644 /etc/firejail/icecat.profile firejail-$VERSION/etc/firejail/icecat.profile
+install -m 644 /etc/firejail/filezilla.profile firejail-$VERSION/etc/firejail/filezilla.profile
 install -m 644 /etc/firejail/chromium-browser.profile firejail-$VERSION/etc/firejail/chromium-browser.profile
 install -m 644 /etc/firejail/chromium.profile firejail-$VERSION/etc/firejail/chromium.profile
 install -m 644 /etc/firejail/dropbox.profile firejail-$VERSION/etc/firejail/dropbox.profile
+install -m 644 /etc/firejail/disable-common.inc firejail-$VERSION/etc/firejail/disable-common.inc
+install -m 644 /etc/firejail/disable-history.inc firejail-$VERSION/etc/firejail/disable-history.inc
 install -m 644 /etc/firejail/disable-secret.inc firejail-$VERSION/etc/firejail/disable-secret.inc
 install -m 644 /etc/firejail/disable-mgmt.inc firejail-$VERSION/etc/firejail/disable-mgmt.inc
 install -m 644 /etc/firejail/evince.profile firejail-$VERSION/etc/firejail/evince.profile
@@ -57,9 +67,13 @@ install -m 644 /etc/firejail/deluge.profile firejail-$VERSION/etc/firejail/delug
 install -m 644 /etc/firejail/qbittorrent.profile firejail-$VERSION/etc/firejail/qbittorrent.profile
 install -m 644 /etc/firejail/generic.profile firejail-$VERSION/etc/firejail/generic.profile
 install -m 644 /etc/firejail/login.users firejail-$VERSION/etc/firejail/login.users
+install -m 644 /etc/firejail/deadbeef.profile firejail-$VERSION/etc/firejail/deadbeef.profile
+install -m 644 /etc/firejail/empathy.profile firejail-$VERSION/etc/firejail/empathy.profile
+
 
 mkdir -p firejail-$VERSION/usr/share/bash-completion/completions
 install -m 644 /usr/share/bash-completion/completions/firejail  firejail-$VERSION/usr/share/bash-completion/completions/.
+install -m 644 /usr/share/bash-completion/completions/firemon  firejail-$VERSION/usr/share/bash-completion/completions/.
 
 echo "building tar.gz archive"
 tar -czvf firejail-$VERSION.tar.gz firejail-$VERSION
@@ -130,23 +144,72 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}/deluge.profile
 %config(noreplace) %{_sysconfdir}/%{name}/qbittorrent.profile
 %config(noreplace) %{_sysconfdir}/%{name}/generic.profile
+%config(noreplace) %{_sysconfdir}/%{name}/deadbeef.profile
+%config(noreplace) %{_sysconfdir}/%{name}/disable-common.inc
+%config(noreplace) %{_sysconfdir}/%{name}/disable-history.inc
+%config(noreplace) %{_sysconfdir}/%{name}/empathy.profile
+%config(noreplace) %{_sysconfdir}/%{name}/filezilla.profile
+%config(noreplace) %{_sysconfdir}/%{name}/icecat.profile
+%config(noreplace) %{_sysconfdir}/%{name}/pidgin.profile
+%config(noreplace) %{_sysconfdir}/%{name}/quassel.profile
+%config(noreplace) %{_sysconfdir}/%{name}/server.profile
+%config(noreplace) %{_sysconfdir}/%{name}/xchat.profile
 
 /usr/bin/firejail
 /usr/bin/firemon
 /usr/lib/firejail/libtrace.so
 /usr/lib/firejail/ftee
+/usr/lib/firejail/fshaper.sh
 /usr/share/doc/packages/firejail/COPYING
 /usr/share/doc/packages/firejail/README
 /usr/share/doc/packages/firejail/RELNOTES
 /usr/share/man/man1/firejail.1.gz
 /usr/share/man/man1/firemon.1.gz
 /usr/share/man/man5/firejail-profile.5.gz
+/usr/share/man/man5/firejail-login.5.gz
 /usr/share/bash-completion/completions/firejail
+/usr/share/bash-completion/completions/firemon
  
 %post
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Mon Sep 14 2015 netblue30 <netblue30@yahoo.com> 0.9.30-1
+ - added a disable-history.inc profile as a result of Firefox PDF.js exploit;
+   disable-history.inc included in all default profiles
+ - Firefox PDF.js exploit (CVE-2015-4495) fixes
+ - added --private-etc option
+ - added --env option
+ - added --whitelist option
+ - support ${HOME} token in include directive in profile files
+ - --private.keep is transitioned to --private-home
+ - support ~ and blanks in blacklist option
+ - support "net none" command in profile files
+ - using /etc/firejail/generic.profile by default for user sessions
+ - using /etc/firejail/server.profile by default for root sessions
+ - added build --enable-fatal-warnings configure option
+ - added persistence to --overlay option
+ - added --overlay-tmpfs option
+ - make install-strip implemented, make install renamed
+ - bugfixes
+
+* Sat Aug 1 2015 netblue30 <netblue30@yahoo.com> 0.9.28-1
+ - network scanning, --scan option
+ - interface MAC address support, --mac option
+ - IP address range, --iprange option
+ - traffic shaping, --bandwidth option
+ - reworked printing of network status at startup
+ - man pages rework
+ - added firejail-login man page
+ - added GNU Icecat, FileZilla, Pidgin, XChat, Empathy, DeaDBeeF default
+   profiles
+ - added an /etc/firejail/disable-common.inc file to hold common directory
+   blacklists
+ - blacklist Opera and Chrome/Chromium config directories in profile files
+ - support noroot option for profile files
+ - enabled noroot in default profile files
+ - bugfixes
+
 * Thu Apr 30 2015 netblue30 <netblue30@yahoo.com> 0.9.26-1
  - private dev directory
  - private.keep option for whitelisting home files in a new private directory

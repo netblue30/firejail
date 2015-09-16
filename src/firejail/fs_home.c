@@ -370,7 +370,7 @@ static void duplicate(char *name) {
 	}
 
 	// copy the file
-	if (asprintf(&cmd, "cp -a --parents %s %s", fname, HOME_DIR) == -1)
+	if (asprintf(&cmd, "cp -a --parents \"%s\" %s", fname, HOME_DIR) == -1)
 		errExit("asprintf");
 	if (arg_debug)
 		printf("%s\n", cmd);

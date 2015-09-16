@@ -1,4 +1,11 @@
-firejail (0.9.30) baseline; urgency=low
+ffirejail (0.9.31) baseline; urgency=low
+  * disable X11 autostart folders in default profiles
+  * disable subversion and git config files in home directory
+  * added FBReader default profile
+ -- netblue30 <netblue30@yahoo.com>  current development
+
+
+irejail (0.9.30) baseline; urgency=low
   * added a disable-history.inc profile as a result of Firefox PDF.js exploit;
     disable-history.inc included in all default profiles
   * Firefox PDF.js exploit (CVE-2015-4495) fixes

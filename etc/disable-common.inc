@@ -20,3 +20,23 @@ blacklist ${HOME}/.remmina
 
 # Other
 blacklist ${HOME}/.tconn
+blacklist ${HOME}/.FBReader
+
+# X11 session autostart
+blacklist ${HOME}/.xinitrc
+blacklist ${HOME}/.xprofile
+blacklist ${HOME}/.config/autostart
+blacklist /etc/xdg/autostart
+blacklist ${HOME}/.kde4/Autostart
+blacklist ${HOME}/.kde/Autostart
+blacklist ${HOME}/.config/plasma-workspace/shutdown
+blacklist ${HOME}/.config/plasma-workspace/env
+blacklist ${HOME}/.config/lxsession/LXDE/autostart
+blacklist ${HOME}/.fluxbox/startup
+blacklist ${HOME}/.config/openbox/autostart
+blacklist ${HOME}/.config/openbox/environment
+
+# git, subversion
+blacklist ${HOME}/.subversion
+blacklist ${HOME}/.gitconfig
+blacklist ${HOME}/.git-credential-cache

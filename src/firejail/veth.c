@@ -136,8 +136,14 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	req.n.nlmsg_type = RTM_NEWLINK;
 	req.i.ifi_family = 0;
 	
-	// we start with the parent
-	int parent_ifindex = 2;
+	// find parent ifindex
+	int parent_ifindex = if_nametoindex(parent);
+	if (parent_ifindex <= 0) {
+		fprintf(stderr, "Error: cannot find network device %s\n", parent);
+		exit(1);
+	}			
+
+	// add parent
 	addattr_l(&req.n, sizeof(req), IFLA_LINK, &parent_ifindex, 4);
 
 	// add new interface name
@@ -172,6 +178,7 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 
 	return 0;
 }
+
 
 /*
 int main(int argc, char **argv) {

@@ -10,6 +10,7 @@ blacklist ${HOME}/.config/chromium
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla
+blacklist ${HOME}/.local/share/systemd
 
 # Instant Messaging
 blacklist ${HOME}/.purple
@@ -28,6 +29,7 @@ blacklist ${HOME}/.xprofile
 blacklist ${HOME}/.config/autostart
 blacklist /etc/xdg/autostart
 blacklist ${HOME}/.kde4/Autostart
+blacklist ${HOME}/.kde4/share/autostart
 blacklist ${HOME}/.kde/Autostart
 blacklist ${HOME}/.config/plasma-workspace/shutdown
 blacklist ${HOME}/.config/plasma-workspace/env
@@ -40,3 +42,14 @@ blacklist ${HOME}/.config/openbox/environment
 blacklist ${HOME}/.subversion
 blacklist ${HOME}/.gitconfig
 blacklist ${HOME}/.git-credential-cache
+
+# var
+blacklist /var/spool/cron
+blacklist /var/spool/anacron
+
+# etc
+blacklist /etc/cron.*
+blacklist /etc/profile.d
+blacklist /etc/rc.local
+blacklist /etc/anacrontab
+

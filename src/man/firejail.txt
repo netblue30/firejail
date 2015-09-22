@@ -320,6 +320,18 @@ $ firejail \-\-env=LD_LIBRARY_PATH=/opt/test/lib
 .TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.
+
+
+.TP
+\fB\-\-interface=interface
+Move interface in a new network namespace. Up to four --interface options can be sepcified.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-interface=eth1 \-\-interface=eth0.vlan100
+
 .TP
 \fB\-\-ip=address
 Assign IP addresses to the last network interface defined by a \-\-net option. A

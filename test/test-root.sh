@@ -2,6 +2,9 @@
 
 ./chk_config.exp
 
+echo "TESTING: network interfaces"
+./net_interface.exp
+
 echo "TESTING: servers rsyslogd, sshd, nginx"
 ./servers.exp
 

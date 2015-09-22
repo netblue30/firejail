@@ -754,6 +754,45 @@ int main(int argc, char **argv) {
 		//*************************************
 		// network
 		//*************************************
+		else if (strncmp(argv[i], "--interface=", 12) == 0) {
+			// checks
+			if (arg_nonetwork) {
+				fprintf(stderr, "Error: --network=none and --interface are incompatible\n");
+				exit(1);
+			}
+			if (strcmp(argv[i] + 12, "lo") == 0) {
+				fprintf(stderr, "Error: cannot use lo device in --interface command\n");
+				exit(1);
+			}
+			int ifindex = if_nametoindex(argv[i] + 12);
+			if (ifindex <= 0) {
+				fprintf(stderr, "Error: cannot find interface %s\n", argv[i] + 12);
+				exit(1);
+			}
+			
+			Interface *intf;
+			if (cfg.interface0.configured == 0)
+				intf = &cfg.interface0;
+			else if (cfg.interface1.configured == 0)
+				intf = &cfg.interface1;
+			else if (cfg.interface2.configured == 0)
+				intf = &cfg.interface2;
+			else if (cfg.interface3.configured == 0)
+				intf = &cfg.interface3;
+			else {
+				fprintf(stderr, "Error: maximum 4 interfaces are allowed\n");
+				return 1;
+			}
+			
+			intf->dev = strdup(argv[i] + 12);
+			if (!intf->dev)
+				errExit("strdup");
+			
+			if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac)) {
+				fprintf(stderr, "Warning:  interface %s is not configured\n", intf->dev);
+			}
+			intf->configured = 1;
+		}
 		else if (strncmp(argv[i], "--net=", 6) == 0) {
 			if (strcmp(argv[i] + 6, "none") == 0) {
 				arg_nonetwork  = 1;
@@ -761,6 +800,10 @@ int main(int argc, char **argv) {
 				cfg.bridge1.configured = 0;
 				cfg.bridge2.configured = 0;
 				cfg.bridge3.configured = 0;
+				cfg.interface0.configured = 0;
+				cfg.interface1.configured = 0;
+				cfg.interface2.configured = 0;
+				cfg.interface3.configured = 0;
 				continue;
 			}
 			if (strcmp(argv[i] + 6, "lo") == 0) {
@@ -778,7 +821,7 @@ int main(int argc, char **argv) {
 			else if (cfg.bridge3.configured == 0)
 				br = &cfg.bridge3;
 			else {
-				fprintf(stderr, "Error: maximum 4 network devices allowed\n");
+				fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
 				return 1;
 			}
 			net_configure_bridge(br, argv[i] + 6);
@@ -1130,7 +1173,7 @@ int main(int argc, char **argv) {
 	if (getuid() == 0 || arg_ipc)
 		flags |= CLONE_NEWIPC;
 	
-	if (any_bridge_configured() || arg_nonetwork) {
+	if (any_bridge_configured() || any_interface_configured() || arg_nonetwork) {
 		flags |= CLONE_NEWNET;
 	}
 	else if (arg_debug)
@@ -1151,34 +1194,49 @@ int main(int argc, char **argv) {
 	}
 	
 	
-
-	// create veth pair or macvlan device
-	if (cfg.bridge0.configured && !arg_nonetwork) {
-		if (cfg.bridge0.macvlan == 0)
-			net_configure_veth_pair(&cfg.bridge0, "eth0", child);
-		else
-			net_create_macvlan(cfg.bridge0.devsandbox, cfg.bridge0.dev, child);
-	}
+	if (!arg_nonetwork) {
+		// create veth pair or macvlan device
+		if (cfg.bridge0.configured) {
+			if (cfg.bridge0.macvlan == 0)
+				net_configure_veth_pair(&cfg.bridge0, "eth0", child);
+			else
+				net_create_macvlan(cfg.bridge0.devsandbox, cfg.bridge0.dev, child);
+		}
+		
+		if (cfg.bridge1.configured) {
+			if (cfg.bridge1.macvlan == 0)
+				net_configure_veth_pair(&cfg.bridge1, "eth1", child);
+			else
+				net_create_macvlan(cfg.bridge1.devsandbox, cfg.bridge1.dev, child);
+		}
+		
+		if (cfg.bridge2.configured) {
+			if (cfg.bridge2.macvlan == 0)
+				net_configure_veth_pair(&cfg.bridge2, "eth2", child);
+			else
+				net_create_macvlan(cfg.bridge2.devsandbox, cfg.bridge2.dev, child);
+		}
+		
+		if (cfg.bridge3.configured) {
+			if (cfg.bridge3.macvlan == 0)
+				net_configure_veth_pair(&cfg.bridge3, "eth3", child);
+			else
+				net_create_macvlan(cfg.bridge3.devsandbox, cfg.bridge3.dev, child);
+		}
 	
-	if (cfg.bridge1.configured && !arg_nonetwork) {
-		if (cfg.bridge1.macvlan == 0)
-			net_configure_veth_pair(&cfg.bridge1, "eth1", child);
-		else
-			net_create_macvlan(cfg.bridge1.devsandbox, cfg.bridge1.dev, child);
-	}
-	
-	if (cfg.bridge2.configured && !arg_nonetwork) {
-		if (cfg.bridge2.macvlan == 0)
-			net_configure_veth_pair(&cfg.bridge2, "eth2", child);
-		else
-			net_create_macvlan(cfg.bridge2.devsandbox, cfg.bridge2.dev, child);
-	}
-	
-	if (cfg.bridge3.configured && !arg_nonetwork) {
-		if (cfg.bridge3.macvlan == 0)
-			net_configure_veth_pair(&cfg.bridge3, "eth3", child);
-		else
-			net_create_macvlan(cfg.bridge3.devsandbox, cfg.bridge3.dev, child);
+		// move interfaces in sandbox
+		if (cfg.interface0.configured) {
+			net_move_interface(cfg.interface0.dev, child);
+		}
+		if (cfg.interface1.configured) {
+			net_move_interface(cfg.interface1.dev, child);
+		}
+		if (cfg.interface2.configured) {
+			net_move_interface(cfg.interface2.dev, child);
+		}
+		if (cfg.interface3.configured) {
+			net_move_interface(cfg.interface3.dev, child);
+		}
 	}
 
  	// close each end of the unused pipes

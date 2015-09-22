@@ -179,6 +179,44 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	return 0;
 }
 
+// move the interface dev in namespace of program pid
+// when the interface is moved, netlink does not preserve interface configuration
+int net_move_interface(const char *dev, unsigned pid) {
+	int len;
+	struct iplink_req req;
+	if (arg_debug)
+		printf("move device %s inside the namespace\n", dev);
+	assert(dev);
+
+	if (rtnl_open(&rth, 0) < 0) {
+		fprintf(stderr, "cannot open netlink\n");
+		exit(1);
+	}
+
+	memset(&req, 0, sizeof(req));
+
+	req.n.nlmsg_len = NLMSG_LENGTH(sizeof(struct ifinfomsg));
+	req.n.nlmsg_flags = NLM_F_REQUEST;
+	req.n.nlmsg_type = RTM_NEWLINK;
+	req.i.ifi_family = 0;
+	
+	// find ifindex
+	int ifindex = if_nametoindex(dev);
+	if (ifindex <= 0) {
+		fprintf(stderr, "Error: cannot find interface %s\n", dev);
+		exit(1);
+	}
+	req.i.ifi_index = ifindex;
+				
+	// place the interface in child namespace
+	addattr_l (&req.n, sizeof(req), IFLA_NET_NS_PID, &pid, 4);
+
+	// send message
+	if (rtnl_talk(&rth, &req.n, 0, 0, NULL) < 0)
+		exit(2);
+
+	return 0;
+}
 
 /*
 int main(int argc, char **argv) {

@@ -55,6 +55,16 @@ typedef struct bridge_t {
 	uint8_t scan;		// set by --scan
 }  Bridge;
 
+typedef struct interface_t {
+	char *dev;
+	uint32_t ip;
+	uint32_t mask;
+	uint8_t mac[6];
+	// todo: add mtu
+	
+	uint8_t configured;
+} Interface;
+
 typedef struct profile_entry_t {
 	struct profile_entry_t *next;
 	char *data;
@@ -81,6 +91,10 @@ typedef struct config_t {
 	Bridge bridge1;
 	Bridge bridge2;
 	Bridge bridge3;
+	Interface interface0;
+	Interface interface1;
+	Interface interface2;
+	Interface interface3;
 	uint32_t dns1;	// up to 3 IP addresses for dns servers
 	uint32_t dns2;
 	uint32_t dns3;
@@ -107,7 +121,14 @@ typedef struct config_t {
 extern Config cfg;
 
 static inline int any_bridge_configured(void) {
-	if (cfg.bridge3.configured || cfg.bridge2.configured || cfg.bridge1.configured || cfg.bridge0.configured)
+	if (cfg.bridge0.configured || cfg.bridge1.configured || cfg.bridge2.configured || cfg.bridge3.configured)
+		return 1;
+	else
+		return 0;
+}
+
+static inline int any_interface_configured(void) {
+	if (cfg.interface0.configured || cfg.interface1.configured || cfg.interface2.configured || cfg.interface3.configured)
 		return 1;
 	else
 		return 0;
@@ -243,6 +264,7 @@ void arp_scan(const char *dev, uint32_t srcaddr, uint32_t srcmask);
 // veth.c
 int net_create_veth(const char *dev, const char *nsdev, unsigned pid);
 int net_create_macvlan(const char *dev, const char *parent, unsigned pid);
+int net_move_interface(const char *dev, unsigned pid);
 
 // util.c
 void drop_privs(int nogroups);

@@ -277,7 +277,7 @@ int sandbox(void* sandbox_arg) {
 		if (arg_debug)
 			printf("Network namespace enabled, only loopback interface available\n");
 	}
-	else if (any_bridge_configured()) {
+	else if (any_bridge_configured() || any_interface_configured()) {
 		// configure lo and eth0...eth3
 		net_if_up("lo");
 		
@@ -303,6 +303,32 @@ int sandbox(void* sandbox_arg) {
 			if (net_add_route(0, 0, cfg.defaultgw))
 				fprintf(stderr, "Warning: cannot configure default route\n");
 		}
+		
+		// enable interfaces
+		if (cfg.interface0.configured && cfg.interface0.ip) {
+			if (arg_debug)
+				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
+			net_if_ip(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask);
+			net_if_up(cfg.interface0.dev);
+		}			
+		if (cfg.interface1.configured && cfg.interface1.ip) {
+			if (arg_debug)
+				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
+			net_if_ip(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask);
+			net_if_up(cfg.interface1.dev);
+		}			
+		if (cfg.interface2.configured && cfg.interface2.ip) {
+			if (arg_debug)
+				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
+			net_if_ip(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask);
+			net_if_up(cfg.interface2.dev);
+		}			
+		if (cfg.interface3.configured && cfg.interface3.ip) {
+			if (arg_debug)
+				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
+			net_if_ip(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask);
+			net_if_up(cfg.interface3.dev);
+		}			
 			
 		if (arg_debug)
 			printf("Network namespace enabled\n");
@@ -312,9 +338,9 @@ int sandbox(void* sandbox_arg) {
 	fs_resolvconf();
 
 	// print network configuration
-	if (any_bridge_configured() || cfg.defaultgw || cfg.dns1) {
+	if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
 		printf("\n");
-		if (any_bridge_configured())
+		if (any_bridge_configured() || any_interface_configured())
 			net_ifprint();
 		if (cfg.defaultgw != 0)
 			printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));

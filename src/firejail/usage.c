@@ -82,6 +82,10 @@ void usage(void) {
 	printf("\t--env=name=value - set environment variable in the new sandbox\n");
 	
 	printf("\t--help, -? - this help screen.\n\n");
+	
+	printf("\t--interface=name - move interface in a new network namespace. Up to\n");
+	printf("\t\tfour --interface options can be sepcified.\n\n");
+	
 	printf("\t--ip=address - set interface IP address.\n\n");
 	printf("\t--ip=none - no IP address and no default gateway address are configured\n");
 	printf("\t\tin the new network namespace. Use this option in case you intend\n");

@@ -1,0 +1,88 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "ip link add link eth0 name eth0.100 type vlan id 100\r"
+sleep 1
+send -- "ip link add link eth0 name eth0.101 type vlan id 101\r"
+sleep 1
+send -- "ip link add link eth0 name eth0.102 type vlan id 102\r"
+sleep 1
+send -- "ip link add link eth0 name eth0.103 type vlan id 103\r"
+sleep 1
+send -- "ip link add link eth0 name eth0.104 type vlan id 104\r"
+sleep 1
+puts "\n"
+
+send -- "/sbin/ifconfig eth0.100 10.200.0.1/24\r"
+sleep 1
+send -- "/sbin/ifconfig eth0.101 10.200.1.1/24\r"
+sleep 1
+send -- "/sbin/ifconfig eth0.102 10.200.2.1/24\r"
+sleep 1
+send -- "/sbin/ifconfig eth0.103 10.200.3.1/24\r"
+sleep 1
+send -- "/sbin/ifconfig eth0.104 10.200.4.1/24\r"
+sleep 1
+puts "\n"
+
+
+
+send -- "firejail --noprofile --interface=eth0.100 --interface=eth0.101 --interface=eth0.102 --interface=eth0.103 --interface=eth0.104\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"maximum 4 interfaces are allowed"
+}
+sleep 1
+
+send -- "firejail --noprofile --interface=eth0.100 --interface=eth0.101 --interface=eth0.102 --interface=eth0.103\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"eth0.100"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"UP"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"eth0.101"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.2\n";exit}
+	"UP"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"eth0.102"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"UP"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"eth0.103"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"UP"
+}
+sleep 1
+send -- "exit\r"
+sleep 1
+
+send -- "firejail --noprofile --interface=eth0.104\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"eth0.104"
+}
+expect {
+	timeout {puts "TESTING ERROR 5.1\n";exit}
+	"UP"
+}
+
+puts "all done\n"
+

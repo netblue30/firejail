@@ -147,6 +147,7 @@ extern int arg_seccomp;	// enable default seccomp filter
 extern char *arg_seccomp_list;//  optional seccomp list on top of default filter
 extern char *arg_seccomp_list_drop;		// seccomp drop list
 extern char *arg_seccomp_list_keep;		// seccomp keep list
+extern char **arg_seccomp_list_errno;		// seccomp errno[nr] lists
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list
@@ -335,7 +336,7 @@ void caps_print_filter_name(const char *name);
 // syscall.c
 const char *syscall_find_nr(int nr);
 // return -1 if error, 0 if no error
-int syscall_check_list(const char *slist, void (*callback)(int));
+int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg), int arg);
 // print all available syscalls
 void syscall_print(void);
 
@@ -391,6 +392,12 @@ void env_apply(void);
 
 // fs_whitelist.c
 void fs_whitelist(void);
+
+// errno.c
+int errno_highest_errno(void);
+int errno_find_name(const char *name);
+char *errno_find_nr(int nr);
+void errno_print(void);
 
 #endif
 

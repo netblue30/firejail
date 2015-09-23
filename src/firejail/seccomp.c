@@ -109,6 +109,10 @@ struct seccomp_data {
 	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 0, 1), \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
+#define ERRNO(syscall_nr, nr) \
+	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 0, 1), \
+	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ERRNO | nr)
+
 #define RETURN_ALLOW \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
@@ -155,6 +159,11 @@ void filter_debug(void) {
 		}
 		else if (*ptr	== 0x15 && *(ptr +14) == 0 && *(ptr + 15) == 0) {
 			printf("  BLACKLIST %d %s\n", *nr, syscall_find_nr(*nr));
+			i += 2;
+		}
+		else if (*ptr	== 0x15 && *(ptr +14) == 0x5 && *(ptr + 15) == 0) {
+			int err = *(ptr + 13) << 8 | *(ptr + 12);
+			printf("  ERRNO %d %s %d %s\n", *nr, syscall_find_nr(*nr), err, errno_find_nr(err));
 			i += 2;
 		}
 		else if (*ptr == 0x06 && *(ptr +6) == 0 && *(ptr + 7) == 0 ) {
@@ -216,7 +225,7 @@ static void filter_realloc(void) {
 	sfilter_alloc_size += SECSIZE;
 }
 
-static void filter_add_whitelist(int syscall) {
+static void filter_add_whitelist(int syscall, int arg) {
 	assert(sfilter);
 	assert(sfilter_alloc_size);
 	assert(sfilter_index);
@@ -242,7 +251,7 @@ static void filter_add_whitelist(int syscall) {
 	sfilter_index += sizeof(filter) / sizeof(struct sock_filter);	
 }
 
-static void filter_add_blacklist(int syscall) {
+static void filter_add_blacklist(int syscall, int arg) {
 	assert(sfilter);
 	assert(sfilter_alloc_size);
 	assert(sfilter_index);
@@ -266,6 +275,32 @@ static void filter_add_blacklist(int syscall) {
 #endif
 	memcpy(&sfilter[sfilter_index], filter, sizeof(filter));
 	sfilter_index += sizeof(filter) / sizeof(struct sock_filter);	
+}
+
+static void filter_add_errno(int syscall, int arg) {
+	assert(sfilter);
+	assert(sfilter_alloc_size);
+	assert(sfilter_index);
+//	if (arg_debug)
+//		printf("Errno syscall %d %d %s\n", syscall, arg, syscall_find_nr(syscall));
+
+	if ((sfilter_index + 2) > sfilter_alloc_size)
+		filter_realloc();
+
+	struct sock_filter filter[] = {
+		ERRNO(syscall, arg)
+	};
+#if 0
+{
+	int i;
+	unsigned char *ptr = (unsigned char *) &filter[0];
+	for (i = 0; i < sizeof(filter); i++, ptr++)
+		printf("%x, ", (*ptr) & 0xff);
+	printf("\n");
+}
+#endif
+	memcpy(&sfilter[sfilter_index], filter, sizeof(filter));
+	sfilter_index += sizeof(filter) / sizeof(struct sock_filter);
 }
 
 static void filter_end_blacklist(void) {
@@ -405,96 +440,96 @@ int seccomp_filter_drop(void) {
 	// default seccomp
 	if (arg_seccomp_list_drop == NULL) {
 #ifdef SYS_mount		
-		filter_add_blacklist(SYS_mount);
+		filter_add_blacklist(SYS_mount, 0);
 #endif
 #ifdef SYS_umount2		
-		filter_add_blacklist(SYS_umount2);
+		filter_add_blacklist(SYS_umount2, 0);
 #endif
 #ifdef SYS_ptrace 		
-		filter_add_blacklist(SYS_ptrace);
+		filter_add_blacklist(SYS_ptrace, 0);
 #endif
 #ifdef SYS_kexec_load		
-		filter_add_blacklist(SYS_kexec_load);
+		filter_add_blacklist(SYS_kexec_load, 0);
 #endif
 #ifdef SYS_open_by_handle_at		
-		filter_add_blacklist(SYS_open_by_handle_at);
+		filter_add_blacklist(SYS_open_by_handle_at, 0);
 #endif
 #ifdef SYS_init_module		
-		filter_add_blacklist(SYS_init_module);
+		filter_add_blacklist(SYS_init_module, 0);
 #endif
 #ifdef SYS_finit_module // introduced in 2013
-		filter_add_blacklist(SYS_finit_module);
+		filter_add_blacklist(SYS_finit_module, 0);
 #endif
 #ifdef SYS_delete_module		
-		filter_add_blacklist(SYS_delete_module);
+		filter_add_blacklist(SYS_delete_module, 0);
 #endif
 #ifdef SYS_iopl		
-		filter_add_blacklist(SYS_iopl);
+		filter_add_blacklist(SYS_iopl, 0);
 #endif
 #ifdef 	SYS_ioperm	
-		filter_add_blacklist(SYS_ioperm);
+		filter_add_blacklist(SYS_ioperm, 0);
 #endif
 #ifdef SYS_ni_syscall // new io permisions call on arm devices
-		filter_add_blacklist(SYS_ni_syscall);
+		filter_add_blacklist(SYS_ni_syscall, 0);
 #endif
 #ifdef SYS_swapon		
-		filter_add_blacklist(SYS_swapon);
+		filter_add_blacklist(SYS_swapon, 0);
 #endif
 #ifdef SYS_swapoff		
-		filter_add_blacklist(SYS_swapoff);
+		filter_add_blacklist(SYS_swapoff, 0);
 #endif
 #ifdef SYS_syslog		
-		filter_add_blacklist(SYS_syslog);
+		filter_add_blacklist(SYS_syslog, 0);
 #endif
 #ifdef SYS_process_vm_readv		
-		filter_add_blacklist(SYS_process_vm_readv);
+		filter_add_blacklist(SYS_process_vm_readv, 0);
 #endif
 #ifdef SYS_process_vm_writev		
-		filter_add_blacklist(SYS_process_vm_writev);
+		filter_add_blacklist(SYS_process_vm_writev, 0);
 #endif
 
 // mknod removed in 0.9.29
 //#ifdef SYS_mknod		
-//		filter_add_blacklist(SYS_mknod);
+//		filter_add_blacklist(SYS_mknod, 0);
 //#endif
 		
 		// new syscalls in 0.9,23		
 #ifdef SYS_sysfs		
-		filter_add_blacklist(SYS_sysfs);
+		filter_add_blacklist(SYS_sysfs, 0);
 #endif
 #ifdef SYS__sysctl	
-		filter_add_blacklist(SYS__sysctl);
+		filter_add_blacklist(SYS__sysctl, 0);
 #endif
 #ifdef SYS_adjtimex		
-		filter_add_blacklist(SYS_adjtimex);
+		filter_add_blacklist(SYS_adjtimex, 0);
 #endif
 #ifdef 	SYS_clock_adjtime	
-		filter_add_blacklist(SYS_clock_adjtime);
+		filter_add_blacklist(SYS_clock_adjtime, 0);
 #endif
 #ifdef SYS_lookup_dcookie		
-		filter_add_blacklist(SYS_lookup_dcookie);
+		filter_add_blacklist(SYS_lookup_dcookie, 0);
 #endif
 #ifdef 	SYS_perf_event_open	
-		filter_add_blacklist(SYS_perf_event_open);
+		filter_add_blacklist(SYS_perf_event_open, 0);
 #endif
 #ifdef	SYS_fanotify_init 	
-		filter_add_blacklist(SYS_fanotify_init);
+		filter_add_blacklist(SYS_fanotify_init, 0);
 #endif
 #ifdef SYS_kcmp
-		filter_add_blacklist(SYS_kcmp);
+		filter_add_blacklist(SYS_kcmp, 0);
 #endif
 	}
 
 	// default seccomp filter with additional drop list
 	if (arg_seccomp_list && arg_seccomp_list_drop == NULL) {
-		if (syscall_check_list(arg_seccomp_list, filter_add_blacklist)) {
+		if (syscall_check_list(arg_seccomp_list, filter_add_blacklist, 0)) {
 			fprintf(stderr, "Error: cannot load seccomp filter\n");
 			exit(1);
 		}
 	}
 	// drop list
 	else if (arg_seccomp_list == NULL && arg_seccomp_list_drop) {
-		if (syscall_check_list(arg_seccomp_list_drop, filter_add_blacklist)) {
+		if (syscall_check_list(arg_seccomp_list_drop, filter_add_blacklist, 0)) {
 			fprintf(stderr, "Error: cannot load seccomp filter\n");
 			exit(1);
 		}
@@ -531,14 +566,14 @@ int seccomp_filter_keep(void) {
 	filter_init();
 
 	// these 4 syscalls are used by firejail after the seccomp filter is initialized
-	filter_add_whitelist(SYS_setuid);
-	filter_add_whitelist(SYS_setgid);
-	filter_add_whitelist(SYS_setgroups);
-	filter_add_whitelist(SYS_dup);
+	filter_add_whitelist(SYS_setuid, 0);
+	filter_add_whitelist(SYS_setgid, 0);
+	filter_add_whitelist(SYS_setgroups, 0);
+	filter_add_whitelist(SYS_dup, 0);
 	
 	// apply keep list
 	if (arg_seccomp_list_keep) {
-		if (syscall_check_list(arg_seccomp_list_keep, filter_add_whitelist)) {
+		if (syscall_check_list(arg_seccomp_list_keep, filter_add_whitelist, 0)) {
 			fprintf(stderr, "Error: cannot load seccomp filter\n");
 			exit(1);
 		}
@@ -566,6 +601,47 @@ int seccomp_filter_keep(void) {
 		printf("seccomp enabled\n");
 	}
 	
+	return 0;
+}
+
+// errno filter for seccomp option
+int seccomp_filter_errno(void) {
+	int i;
+	int higest_errno = errno_highest_nr();
+	filter_init();
+
+	// apply errno list
+
+	for (i = 0; i < higest_errno; i++) {
+		if (arg_seccomp_list_errno[i]) {
+			if (syscall_check_list(arg_seccomp_list_errno[i], filter_add_errno, i)) {
+				fprintf(stderr, "Error: cannot load seccomp filter\n");
+				exit(1);
+			}
+		}
+	}
+
+	filter_end_blacklist();
+	if (arg_debug)
+		filter_debug();
+
+	// save seccomp filter in  /tmp/firejail/mnt/seccomp
+	// in order to use it in --join operations
+	write_seccomp_file();
+
+	struct sock_fprog prog = {
+		.len = sfilter_index,
+		.filter = sfilter,
+	};
+
+	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
+		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		return 1;
+	}
+	else if (arg_debug) {
+		printf("seccomp enabled\n");
+	}
+
 	return 0;
 }
 

@@ -845,6 +845,15 @@ Example:
 .br
 $ firejail \-\-shell=none \-\-seccomp.keep=poll,select,[...] transmission-gtk
 .TP
+\fB\-\-seccomp.<errno>=syscall,syscall,syscall
+Enable seccomp filter, and return errno for the syscalls specified by the command.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-shell=none \-\-seccomp.einval=kill kill 1
+.TP
 \fB\-\-seccomp.print=name
 Print the seccomp filter for the sandbox started using \-\-name option.
 .br

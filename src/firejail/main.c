@@ -61,6 +61,7 @@ int arg_seccomp = 0;				// enable default seccomp filter
 char *arg_seccomp_list = NULL;		// optional seccomp list on top of default filter
 char *arg_seccomp_list_drop = NULL;		// seccomp drop list
 char *arg_seccomp_list_keep = NULL;		// seccomp keep list
+char **arg_seccomp_list_errno = NULL;		// seccomp errno[nr] lists
 
 int arg_caps_default_filter = 0;			// enable default capabilities filter
 int arg_caps_drop = 0;				// drop list
@@ -302,6 +303,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		syscall_print();
 		exit(0);
 	}
+	else if (strcmp(argv[i], "--debug-errnos") == 0) {
+		errno_print();
+		exit(0);
+	}
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;
@@ -387,6 +392,7 @@ int main(int argc, char **argv) {
 	int arg_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_noprofile = 0; // use generic.profile if none other found/specified
+	int highest_errno = errno_highest_nr();
 
 	// check if we already have a sandbox running
 	int rv = check_kernel_procs();
@@ -477,6 +483,34 @@ int main(int argc, char **argv) {
 			arg_seccomp_list_keep = strdup(argv[i] + 15);
 			if (!arg_seccomp_list_keep)
 				errExit("strdup");
+		}
+		else if (strncmp(argv[i], "--seccomp.e", 11) == 0 && strchr(argv[i], '=')) {
+			if (arg_seccomp && !arg_seccomp_list_errno) {
+				fprintf(stderr, "Error: seccomp already enabled\n");
+				exit(1);
+			}
+			char *eq = strchr(argv[i], '=');
+			char *errnoname = strndup(argv[i] + 10, eq - (argv[i] + 10));
+			int nr = errno_find_name(errnoname);
+			if (nr == -1) {
+				fprintf(stderr, "Error: unknown errno %s\n", errnoname);
+				free(errnoname);
+				exit(1);
+			}
+
+			if (!arg_seccomp_list_errno)
+				arg_seccomp_list_errno = calloc(highest_errno+1, sizeof(arg_seccomp_list_errno[0]));
+
+			if (arg_seccomp_list_errno[nr]) {
+				fprintf(stderr, "Error: errno %s already configured\n", errnoname);
+				free(errnoname);
+				exit(1);
+			}
+			arg_seccomp = 1;
+			arg_seccomp_list_errno[nr] = strdup(eq+1);
+			if (!arg_seccomp_list_errno[nr])
+				errExit("strdup");
+			free(errnoname);
 		}
 #endif		
 		else if (strcmp(argv[i], "--caps") == 0)
@@ -1288,6 +1322,15 @@ int main(int argc, char **argv) {
 	
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
+
+	// free globals
+	if (arg_seccomp_list_errno) {
+		for (i = 0; i < highest_errno; i++)
+			free(arg_seccomp_list_errno[i]);
+		free(arg_seccomp_list_errno);
+	}
+
 	myexit(0);
+
 	return 0;
 }

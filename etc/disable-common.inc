@@ -38,6 +38,10 @@ blacklist ${HOME}/.fluxbox/startup
 blacklist ${HOME}/.config/openbox/autostart
 blacklist ${HOME}/.config/openbox/environment
 
+# VirtualBox
+blacklist ${HOME}/.VirtualBox
+blacklist ${HOME}/VirtualBox VMs
+
 # git, subversion
 blacklist ${HOME}/.subversion
 blacklist ${HOME}/.gitconfig

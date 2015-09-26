@@ -261,6 +261,9 @@ fi
 echo "TESTING: seccomp debug"
 ./seccomp-debug.exp
 
+echo "TESTING: seccomp errno"
+./seccomp-errno.exp
+
 echo "TESTING: seccomp su"
 ./seccomp-su.exp
 

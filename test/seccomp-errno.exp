@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "touch seccomp-test-file\r"
+sleep 1
+
+send --  "firejail --seccomp.enoent=unlinkat rm seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"No such file or directory"
+}
+
+sleep 1
+
+send --  "firejail --seccomp.enoent=unlinkat --debug rm seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"ERRNO 263 unlinkat 2 ENOENT"
+}
+
+sleep 1
+
+send -- "rm seccomp-test-file\r"
+sleep 1
+puts "all done\n"

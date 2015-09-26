@@ -850,9 +850,22 @@ Enable seccomp filter, and return errno for the syscalls specified by the comman
 .br
 
 .br
-Example:
+Example: a Bash shell where deleting files is disabled
 .br
-$ firejail \-\-shell=none \-\-seccomp.einval=kill kill 1
+
+.br
+$ firejail --seccomp.eperm=unlinkat
+.br
+Parent pid 10662, child pid 10663
+.br
+Child process initialized
+.br
+$ touch testfile
+.br
+$ rm testfile
+.br
+rm: cannot remove `testfile': Operation not permitted
+
 .TP
 \fB\-\-seccomp.print=name
 Print the seccomp filter for the sandbox started using \-\-name option.

@@ -4889,7 +4889,7 @@ static int syscall_find_name(const char *name) {
 }
 
 // return 1 if error, 0 if OK
-int syscall_check_list(const char *slist, void (*callback)(int)) {
+int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg), int arg) {
 	// don't allow empty lists
 	if (slist == NULL || *slist == '\0') {
 		fprintf(stderr, "Error: empty syscall lists are not allowed\n");
@@ -4912,7 +4912,7 @@ int syscall_check_list(const char *slist, void (*callback)(int)) {
 			if (nr == -1)
 				fprintf(stderr, "Warning: syscall %s not found\n", start);
 			else if (callback != NULL)
-				callback(nr);
+				callback(nr, arg);
 				
 			start = ptr + 1;
 		}
@@ -4923,7 +4923,7 @@ int syscall_check_list(const char *slist, void (*callback)(int)) {
 		if (nr == -1)
 			fprintf(stderr, "Warning: syscall %s not found\n", start);
 		else if (callback != NULL)
-			callback(nr);
+			callback(nr, arg);
 	}
 	
 	free(str);

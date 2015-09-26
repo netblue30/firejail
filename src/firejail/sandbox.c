@@ -410,6 +410,8 @@ int sandbox(void* sandbox_arg) {
 	if (arg_seccomp == 1) {
 		if (arg_seccomp_list_keep)
 			seccomp_filter_keep(); // this will also save the fmyilter to MNT_DIR/seccomp file
+		else if (arg_seccomp_list_errno)
+			seccomp_filter_errno(); // this will also save the filter to MNT_DIR/seccomp file
 		else
 			seccomp_filter_drop(); // this will also save the filter to MNT_DIR/seccomp file
 	}

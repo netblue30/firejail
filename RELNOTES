@@ -2,6 +2,7 @@ firejail (0.9.31) baseline; urgency=low
   * lots of security profile changes
   * added FBReader default profile
   * added --interface option
+  * added seccomp errno support
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  current development
 

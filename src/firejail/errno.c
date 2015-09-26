@@ -21,7 +21,7 @@
 #ifdef HAVE_SECCOMP
 #include "firejail.h"
 #include <errno.h>
-#include <attr/xattr.h>
+//#include <attr/xattr.h>
 
 typedef struct {
 	char *name;
@@ -166,7 +166,9 @@ static ErrnoEntry errnolist[] = {
 	"ERFKILL", ERFKILL,
 	"EHWPOISON", EHWPOISON,
 	"ENOTSUP", ENOTSUP,
+#ifdef 	ENOATTR
 	"ENOATTR", ENOATTR,
+#endif	
 };
 
 int errno_highest_nr(void) {

@@ -48,6 +48,7 @@
 #include "firejail.h"
 #include "../include/libnetlink.h"
 #include <linux/veth.h>
+#include <net/if.h>
 
 struct iplink_req
 {
@@ -182,7 +183,6 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 // move the interface dev in namespace of program pid
 // when the interface is moved, netlink does not preserve interface configuration
 int net_move_interface(const char *dev, unsigned pid) {
-	int len;
 	struct iplink_req req;
 	if (arg_debug)
 		printf("move device %s inside the namespace\n", dev);

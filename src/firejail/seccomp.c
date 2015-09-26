@@ -226,6 +226,7 @@ static void filter_realloc(void) {
 }
 
 static void filter_add_whitelist(int syscall, int arg) {
+	(void) arg;
 	assert(sfilter);
 	assert(sfilter_alloc_size);
 	assert(sfilter_index);
@@ -252,6 +253,7 @@ static void filter_add_whitelist(int syscall, int arg) {
 }
 
 static void filter_add_blacklist(int syscall, int arg) {
+	(void) arg;
 	assert(sfilter);
 	assert(sfilter_alloc_size);
 	assert(sfilter_index);

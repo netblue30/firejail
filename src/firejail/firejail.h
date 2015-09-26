@@ -321,6 +321,7 @@ int seccomp_filter_keep(void);
 void seccomp_set(void);
 void seccomp_print_filter_name(const char *name);
 void seccomp_print_filter(pid_t pid);
+int seccomp_filter_errno(void);
 
 // caps.c
 int caps_default_filter(void);
@@ -394,7 +395,7 @@ void env_apply(void);
 void fs_whitelist(void);
 
 // errno.c
-int errno_highest_errno(void);
+int errno_highest_nr(void);
 int errno_find_name(const char *name);
 char *errno_find_nr(int nr);
 void errno_print(void);

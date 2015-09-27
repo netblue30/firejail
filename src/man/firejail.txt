@@ -23,9 +23,7 @@ firejail {\-\-list | \-\-netstats | \-\-top | \-\-tree}
 Miscellaneous:
 .PP
 .RS
-firejail {\-? | \-\-debug-caps | \-\-debug-syscalls | \-\-help |
-.br
-\-\-version}
+firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-help | \-\-version}
 .RE
 .SH DESCRIPTION
 Firejail is a SUID sandbox program that reduces the risk of security breaches by
@@ -240,15 +238,7 @@ Print debug messages.
 Example:
 .br
 $ firejail \-\-debug firefox
-.TP
-\fB\-\-debug-syscalls
-Print all recognized system calls in the current Firejail software build and exit.
-.br
 
-.br
-Example:
-.br
-$ firejail \-\-debug-syscalls
 .TP
 \fB\-\-debug-caps
 Print all recognized capabilities in the current Firejail software build and exit.
@@ -258,6 +248,24 @@ Print all recognized capabilities in the current Firejail software build and exi
 Example:
 .br
 $ firejail \-\-debug-caps
+.TP
+\fB\-\-debug-errnos
+Print all recognized error numbers in the current Firejail software build and exit.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-debug-errnos
+.TP
+\fB\-\-debug-syscalls
+Print all recognized system calls in the current Firejail software build and exit.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-debug-syscalls
 .TP
 \fB\-\-defaultgw=address
 Use this address as default gateway in the new network namespace.

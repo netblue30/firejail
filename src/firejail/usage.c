@@ -66,9 +66,11 @@ void usage(void) {
 	printf("\t\tExample: cpu=0,1,2\n\n");
 	printf("\t--csh - use /bin/csh as default shell.\n\n");
 	printf("\t--debug - print sandbox debug messages.\n\n");
-	printf("\t--debug-syscalls - print all recognized system calls in the current\n");
-	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--debug-caps - print all recognized capabilities in the current\n");
+	printf("\t\tFirejail software build and exit.\n\n");
+	printf("\t--debug-errnos - print all recognized error numbres in the current\n");
+	printf("\t\tFirejail software build and exit.\n\n");
+	printf("\t--debug-syscalls - print all recognized system calls in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--defaultgw=address - use this address as default gateway in the new\n");
 	printf("\t\tnetwork namespace.\n\n");
@@ -215,6 +217,9 @@ void usage(void) {
 	
 	printf("\t--seccomp.keep=syscall,syscall,syscall - enable seccomp filter, and\n");
 	printf("\t\twhitelist the syscalls specified by the command.\n\n");
+	
+	printf("\t--seccomp.<errno>=syscall,syscall,syscall - enable seccomp filter, and\n");
+	printf("\t\treturn errno for the syscalls specified by the command.\n\n");
 	
 	printf("\t--seccomp.print=name - print the seccomp filter for the sandbox\n");
 	printf("\t\tidentified by name.\n\n");

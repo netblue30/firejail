@@ -50,6 +50,14 @@ blacklist ${HOME}/.git-credential-cache
 # var
 blacklist /var/spool/cron
 blacklist /var/spool/anacron
+blacklist /var/run/acpid.socket
+blacklist /var/run/minissdpd.sock
+blacklist /var/run/rpcbind.sock
+blacklist /var/run/mysqld/mysqld.sock
+blacklist /var/run/mysql/mysqld.sock
+blacklist /var/lib/mysqld/mysql.sock
+blacklist /var/lib/mysql/mysql.sock
+blacklist /var/run/docker.sock
 
 # etc
 blacklist /etc/cron.*

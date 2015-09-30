@@ -32,6 +32,8 @@ Usage: https://l3net.wordpress.com/projects/firejail/firejail-usage/
 
 FAQ: https://l3net.wordpress.com/projects/firejail/firejail-faq/
 
+
+
 ## Known Problems
 
 ### PulseAudio 7.0
@@ -42,7 +44,7 @@ The issue is still under investigation. There are two workarounds so far:
 
 *   Running ALSA
 
-    By default, if Firefox doesn't manage to connect to PulseAudio, it will connect directly to ALSA.
+    By default, if Firefox fails to connect to PulseAudio, it will connect directly to ALSA.
     Also by default, ALSA comes wit the sound volume down. You would need to install *alsamixer*
     (*alsa-utils* package) or *gnome-alsamixer*, run it and crank up the volume (both Master and PCM).
  

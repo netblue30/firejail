@@ -46,9 +46,8 @@ The issue is still under investigation. There are two workarounds so far:
     Also by default, ALSA comes wit the sound volume down. You would need to install *alsamixer*
     (*alsa-utils* package) or *gnome-alsamixer*, run it and crank up the volume (both Master and PCM).
  
- 
- *  Disable srbchannel mechanism in PulseAudio
- `````
+*  Disable srbchannel mechanism in PulseAudio
+`````
 $ mkdir -p ~/.config/pulse
 $ cd ~/.config/pulse
 $ cp /etc/pulse/client.conf .

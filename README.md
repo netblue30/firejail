@@ -45,8 +45,8 @@ The issue is still under investigation. There are two workarounds so far:
 *   Running ALSA
 
     By default, if Firefox fails to connect to PulseAudio, it will connect directly to ALSA.
-    Also by default, ALSA comes wit the sound volume down. You would need to install *alsamixer*
-    (*alsa-utils* package) or *gnome-alsamixer*, run it and crank up the volume (both Master and PCM).
+    Also by default, ALSA comes with the sound volume down. You would need to install *alsamixer*
+    (*alsa-utils* package) or *gnome-alsamixer*, run it, and crank up the volume (both Master and PCM).
  
 *  Disable srbchannel mechanism in PulseAudio
 `````

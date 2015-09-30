@@ -36,7 +36,7 @@ FAQ: https://l3net.wordpress.com/projects/firejail/firejail-faq/
 
 ### PulseAudio 7.0
 
-The srbchannel IPC mechanism  introduced in PulseAudio6.0 was enabled by default in 7.0 release.
+The srbchannel IPC mechanism  introduced in 6.0, was enabled by default in release 7.0.
 Arch Linux users are reporting sound problems when running applications in Firejail sandbox.
 The issue is still under investigation. There are two workarounds so far:
 
@@ -46,6 +46,7 @@ The issue is still under investigation. There are two workarounds so far:
     Also by default, ALSA comes wit the sound volume down. You would need to install *alsamixer*
     (*alsa-utils* package) or *gnome-alsamixer*, run it and crank up the volume (both Master and PCM).
  
+ 
  *  Disable srbchannel mechanism in PulseAudio
  `````
 $ mkdir -p ~/.config/pulse
@@ -53,6 +54,7 @@ $ cd ~/.config/pulse
 $ cp /etc/pulse/client.conf .
 $ echo "enable-shm = no" >> client.conf
 `````
+
 
 If you are still having problems, join the discussion here: https://github.com/netblue30/firejail/issues/69
 

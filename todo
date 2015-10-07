@@ -43,3 +43,5 @@ make[1]: *** [seccomp.o] Error 1
 
 6. Debian 32bit - multiple problems with the testing utility
 
+7. Add IRC clients: KVIrc (KDE), BitchX (CLI), Smuxi, Konversation (KDE), HexChat, Irssi (CLI), WeeChat (CLI)
+RSS: Liferea, akregator (KDE), newsbeuter (CLI), rawdog, 

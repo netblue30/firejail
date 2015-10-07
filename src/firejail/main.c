@@ -822,7 +822,7 @@ int main(int argc, char **argv) {
 			if (!intf->dev)
 				errExit("strdup");
 			
-			if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac)) {
+			if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac, &intf->mtu)) {
 				fprintf(stderr, "Warning:  interface %s is not configured\n", intf->dev);
 			}
 			intf->configured = 1;
@@ -914,6 +914,22 @@ int main(int argc, char **argv) {
 			// read the address
 			if (atomac(argv[i] + 6, br->macsandbox)) {
 				fprintf(stderr, "Error: invalid MAC address\n");
+				return 1;
+			}
+		}
+		else if (strncmp(argv[i], "--mtu=", 6) == 0) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				return 1;
+			}
+			if (br->mtu) {
+				fprintf(stderr, "Error: cannot configure mtu twice for the same interface\n");
+				return 1;
+			}
+
+			if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 68 || br->mtu > 9198) {
+				fprintf(stderr, "Error: invalid mtu value\n");
 				return 1;
 			}
 		}
@@ -1231,8 +1247,9 @@ int main(int argc, char **argv) {
 	if (!arg_nonetwork) {
 		// create veth pair or macvlan device
 		if (cfg.bridge0.configured) {
-			if (cfg.bridge0.macvlan == 0)
+			if (cfg.bridge0.macvlan == 0) {
 				net_configure_veth_pair(&cfg.bridge0, "eth0", child);
+			}
 			else
 				net_create_macvlan(cfg.bridge0.devsandbox, cfg.bridge0.dev, child);
 		}

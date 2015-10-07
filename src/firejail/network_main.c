@@ -56,7 +56,7 @@ void net_configure_bridge(Bridge *br, char *dev_name) {
 		}
 	}
 
-	if (net_get_if_addr(br->dev, &br->ip, &br->mask, br->mac)) {
+	if (net_get_if_addr(br->dev, &br->ip, &br->mask, br->mac, &br->mtu)) {
 		fprintf(stderr, "Error: interface %s is not configured\n", br->dev);
 		exit(1);
 	}

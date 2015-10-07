@@ -93,12 +93,63 @@ void net_ifprint(void) {
 	freeifaddrs(ifaddr);
 }
 
+int net_get_mtu(const char *ifname) {
+	int mtu = 0;
+	if (strlen(ifname) > IFNAMSIZ) {
+		fprintf(stderr, "Error: invalid network device name %s\n", ifname);
+		exit(1);
+	}
+
+	int s;
+	struct ifreq ifr;
+
+	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+		errExit("socket");
+
+	ifr.ifr_addr.sa_family = AF_INET;
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	if (ioctl(s, SIOCGIFMTU, (caddr_t)&ifr) == 0)
+		mtu = ifr.ifr_mtu;
+	if (arg_debug)
+		printf("MTU of %s is %d.\n", ifname, ifr.ifr_mtu);
+	close(s);
+	
+	
+	return mtu;
+}
+
+void net_set_mtu(const char *ifname, int mtu) {
+	if (strlen(ifname) > IFNAMSIZ) {
+		fprintf(stderr, "Error: invalid network device name %s\n", ifname);
+		exit(1);
+	}
+
+	if (arg_debug)
+		printf("set interface %s MTU %d.\n", ifname, mtu);
+
+	int s;
+	struct ifreq ifr;
+
+	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+		errExit("socket");
+
+	ifr.ifr_addr.sa_family = AF_INET;
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	ifr.ifr_mtu = mtu;
+	if (ioctl(s, SIOCSIFMTU, (caddr_t)&ifr) == 0)
+		mtu = ifr.ifr_mtu;
+	close(s);
+}
 
 // return -1 if the interface was not found; if the interface was found retrn 0 and fill in IP address and mask
-int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6]) {
+int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu) {
 	assert(bridge);
 	assert(ip);
 	assert(mask);
+	
+	if (arg_debug)
+		printf("get interface %s configuration\n", bridge);
+		
 	int rv = -1;
 	struct ifaddrs *ifaddr, *ifa;
 
@@ -117,8 +168,10 @@ int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t ma
 			*mask = ntohl(si->sin_addr.s_addr);
 			si = (struct sockaddr_in *) ifa->ifa_addr;
 			*ip = ntohl(si->sin_addr.s_addr);
-			if (strcmp(ifa->ifa_name, "lo") != 0)
+			if (strcmp(ifa->ifa_name, "lo") != 0) {
 				net_get_mac(ifa->ifa_name, mac);
+				*mtu = net_get_mtu(bridge);
+			}
 			
 			rv = 0;
 			break;
@@ -186,11 +239,13 @@ void net_if_up(const char *ifname) {
 }
 
 // configure interface
-void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask) {
+void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu) {
 	if (strlen(ifname) > IFNAMSIZ) {
 		fprintf(stderr, "Error: invalid network device name %s\n", ifname);
 		exit(1);
 	}
+	if (arg_debug)
+		printf("configure interface %s\n", ifname);
 
 	int sock = socket(AF_INET,SOCK_DGRAM,0);
 	if (sock < 0)
@@ -210,6 +265,15 @@ void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask) {
 	if (ip != 0) {
 		((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr =  htonl(mask);
 		if (ioctl( sock, SIOCSIFNETMASK, &ifr ) < 0) {
+			close(sock);
+			errExit("ioctl");
+		}
+	}
+	
+	// configure mtu
+	if (mtu > 0) {
+		ifr.ifr_mtu = mtu;
+		if (ioctl( sock, SIOCSIFMTU, &ifr ) < 0) {
 			close(sock);
 			errExit("ioctl");
 		}
@@ -264,6 +328,11 @@ void net_bridge_add_interface(const char *bridge, const char *dev) {
 		exit(1);
 	}
 
+	// somehow adding the interface to the bridge resets MTU on bridge device!!!
+	// workaround: restore MTU on the bridge device
+	// todo: put a real fix in
+	int mtu1 = net_get_mtu(bridge);
+
 	struct ifreq ifr;
 	int err;
 	int ifindex = if_nametoindex(dev);
@@ -290,6 +359,13 @@ void net_bridge_add_interface(const char *bridge, const char *dev) {
 	}
 	(void) err;
 	close(sock);
+
+	int mtu2 = net_get_mtu(bridge);
+	if (mtu1 != mtu2) {
+		if (arg_debug)
+			printf("Restoring MTU for %s\n", bridge);
+		net_set_mtu(bridge, mtu1);
+	}
 }
 
 #define BUFSIZE 1024

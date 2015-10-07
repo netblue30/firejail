@@ -84,7 +84,7 @@ static void sandbox_if_up(Bridge *br) {
 		assert(br->ipsandbox);
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
-		net_if_ip(dev, br->ipsandbox, br->mask);
+		net_if_ip(dev, br->ipsandbox, br->mask, br->mtu);
 		net_if_up(dev);
 	}
 	else if (br->arg_ip_none == 0 && br->macvlan == 1) {
@@ -107,7 +107,7 @@ static void sandbox_if_up(Bridge *br) {
 			
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
-		net_if_ip(dev, br->ipsandbox, br->mask);
+		net_if_ip(dev, br->ipsandbox, br->mask, br->mtu);
 		net_if_up(dev);
 	}
 }
@@ -308,25 +308,25 @@ int sandbox(void* sandbox_arg) {
 		if (cfg.interface0.configured && cfg.interface0.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
-			net_if_ip(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask);
+			net_if_ip(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
 			net_if_up(cfg.interface0.dev);
 		}			
 		if (cfg.interface1.configured && cfg.interface1.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
-			net_if_ip(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask);
+			net_if_ip(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
 			net_if_up(cfg.interface1.dev);
 		}			
 		if (cfg.interface2.configured && cfg.interface2.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
-			net_if_ip(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask);
+			net_if_ip(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
 			net_if_up(cfg.interface2.dev);
 		}			
 		if (cfg.interface3.configured && cfg.interface3.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
-			net_if_ip(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask);
+			net_if_ip(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);
 			net_if_up(cfg.interface3.dev);
 		}			
 			

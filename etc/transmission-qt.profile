@@ -8,7 +8,7 @@ blacklist ${HOME}/.lastpass
 blacklist ${HOME}/.keepassx
 blacklist ${HOME}/.password-store
 blacklist ${HOME}/.wine
-aps.drop all
+caps.drop all
 seccomp
 netfilter
 noroot

@@ -431,6 +431,30 @@ void fs_proc_sys_dev_boot(void) {
 	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
 		fprintf(stderr, "Warning: failed to mount /sys\n");
 
+
+	if (arg_debug)
+		printf("Disable /sys/firmware directory\n");
+	if (mount("tmpfs", "/sys/firmware", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("disable /sys/firmware directory");
+	if (arg_debug)
+		printf("Disable /sys/hypervisor directory\n");
+	if (mount("tmpfs", "/sys/hypervisor", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("disable /sys/hypervisor directory");
+	if (arg_debug)
+		printf("Disable /sys/fs directory\n");
+	if (mount("tmpfs", "/sys/fs", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("disable /sys/fs directory");
+	if (arg_debug)
+		printf("Disable /sys/module directory\n");
+	if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("disable /sys/module directory");
+	if (arg_debug)
+		printf("Disable /sys/power directory\n");
+	if (mount("tmpfs", "/sys/power", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("disable /sys/power directory");
+
+
+
 //	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
 //		errExit("mounting /sys");
 

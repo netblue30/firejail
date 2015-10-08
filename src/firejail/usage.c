@@ -100,6 +100,7 @@ void usage(void) {
 	printf("\t--join=pid - join the sandbox identified by PID.\n\n");
 	printf("\t--list - list all sandboxes.\n\n");
 	printf("\t--mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n\n");
+	printf("\t--mtu=number - set interface MTU.\n\n");
 	printf("\t--name=name - set sandbox hostname.\n\n");
 	printf("\t--net=bridgename - enable network namespaces and connect to this bridge\n");
 	printf("\t\tdevice. Unless specified with option --ip and --defaultgw, an\n");

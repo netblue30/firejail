@@ -443,6 +443,16 @@ Example:
 $ firejail \-\-net=eth0 \-\-mac=00:11:22:33:44:55 firefox
 
 .TP
+\fB\-\-mtu=number
+Assign a MTU value to the last network interface defined by a \-\-net option.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=eth0 \-\-mtu=1492
+
+.TP
 \fB\-\-name=name
 Set sandbox hostname. Several options, such as \-\-join and \-\-shutdown, can use
 this name to identify a sandbox.

@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+greigdp (https://github.com/greigdp)
+	- add Spotify profile
 Mattias Wadman (https://github.com/wader)
 	- seccomp errno filter support
 Peter Millerchip (https://github.com/pmillerchip)

@@ -1,8 +1,10 @@
 firejail (0.9.31) baseline; urgency=low
-  * lots of security profile changes
-  * added FBReader default profile
   * added --interface option
+  * added --mtu option
   * added seccomp errno support
+  * added FBReader default profile
+  * added Spotify default profile
+  * lots of default security profile changes
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  current development
 

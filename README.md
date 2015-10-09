@@ -38,9 +38,13 @@ FAQ: https://l3net.wordpress.com/projects/firejail/firejail-faq/
 
 ### PulseAudio 7.0
 
-The srbchannel IPC mechanism  introduced in 6.0, was enabled by default in release 7.0.
+The srbchannel IPC mechanism  introduced in PulseAudio 6.0, was enabled by default in release 7.0.
 Arch Linux users are reporting sound problems when running applications in Firejail sandbox.
-The issue is still under investigation. There are two workarounds so far:
+A preliminary fix was introduced on master branch. The fix disables PulseAudio shared memory functionality
+in the sandbox. If you are seeing any problems,
+please let us know here: https://github.com/netblue30/firejail/issues/69
+
+If you are unable to update your Firejail install to the latest development version, there are two workarounds:
 
 *   Running ALSA
 
@@ -56,7 +60,5 @@ $ cp /etc/pulse/client.conf .
 $ echo "enable-shm = no" >> client.conf
 `````
 
-
-If you are still having problems, join the discussion here: https://github.com/netblue30/firejail/issues/69
 
 

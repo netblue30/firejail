@@ -401,5 +401,8 @@ int errno_find_name(const char *name);
 char *errno_find_nr(int nr);
 void errno_print(void);
 
+// pulseaudio.c
+void pulseaudio_init(void);
+
 #endif
 

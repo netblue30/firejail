@@ -2,14 +2,18 @@ all: apps firejail.1 firemon.1 firejail-profile.5 firejail-login.5
 MYLIBS = src/lib
 APPS = src/firejail src/firemon src/libtrace src/ftee
 
-datarootdir=@datarootdir@
-PREFIX=@prefix@
 prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+libdir=@libdir@
+datarootdir=@datarootdir@
+mandir=@mandir@
+sysconfdir=@sysconfdir@
+
 VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
-
 
 .PHONY: mylibs $(MYLIBS)
 mylibs: $(MYLIBS)
@@ -50,58 +54,58 @@ distclean: clean
 
 realinstall:
 	# firejail executable
-	mkdir -p $(DESTDIR)/$(PREFIX)/bin
-	install -c -m 0755 src/firejail/firejail $(DESTDIR)/$(PREFIX)/bin/.
-	chmod u+s $(DESTDIR)/$(PREFIX)/bin/firejail
+	mkdir -p $(DESTDIR)/$(bindir)
+	install -c -m 0755 src/firejail/firejail $(DESTDIR)/$(bindir)/.
+	chmod u+s $(DESTDIR)/$(bindir)/firejail
 	# firemon executable
-	install -c -m 0755 src/firemon/firemon $(DESTDIR)/$(PREFIX)/bin/.
+	install -c -m 0755 src/firemon/firemon $(DESTDIR)/$(bindir)/.
 	# libraries and plugins
-	mkdir -p $(DESTDIR)/$(PREFIX)/lib/firejail
-	install -c -m 0644 src/libtrace/libtrace.so $(DESTDIR)/$(PREFIX)/lib/firejail/.
-	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(PREFIX)/lib/firejail/.
-	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(PREFIX)/lib/firejail/.
+	mkdir -p $(DESTDIR)/$(libdir)/firejail
+	install -c -m 0644 src/libtrace/libtrace.so $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	mkdir -p $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 README $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 RELNOTES $(DESTDIR)/$(DOCDIR)/.
 	# etc files
-	mkdir -p $(DESTDIR)/etc/firejail
-	install -c -m 0644 etc/audacious.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/clementine.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/gnome-mplayer.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/rhythmbox.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/totem.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/firefox.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/icedove.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/iceweasel.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/midori.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/evince.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/chromium-browser.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/chromium.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/disable-mgmt.inc $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/disable-secret.inc $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/disable-common.inc $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/disable-history.inc $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/dropbox.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/opera.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/thunderbird.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/transmission-gtk.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/transmission-qt.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/vlc.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/deluge.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/qbittorrent.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/generic.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/pidgin.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/xchat.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/empathy.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/server.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/icecat.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/quassel.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/deadbeef.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/filezilla.profile $(DESTDIR)/etc/firejail/.
-	install -c -m 0644 etc/fbreader.profile $(DESTDIR)/etc/firejail/.
-	bash -c "if [ ! -f /etc/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/etc/firejail/.; fi;"
+	mkdir -p $(DESTDIR)/$(sysconfdir)/firejail
+	install -c -m 0644 etc/audacious.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/clementine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/gnome-mplayer.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/rhythmbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/totem.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/firefox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/icedove.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/iceweasel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/midori.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/evince.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/chromium-browser.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/chromium.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/disable-mgmt.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/disable-secret.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/disable-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/disable-history.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/dropbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/opera.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/thunderbird.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/transmission-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/transmission-qt.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/vlc.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/deluge.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/qbittorrent.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/generic.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/pidgin.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/xchat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/empathy.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/server.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/icecat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/quassel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/deadbeef.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/filezilla.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/fbreader.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	bash -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	# man pages
 	rm -f firejail.1.gz
 	gzip -9n firejail.1
@@ -111,17 +115,17 @@ realinstall:
 	gzip -9n firejail-profile.5
 	rm -f firejail-login.5.gz
 	gzip -9n firejail-login.5
-	mkdir -p $(DESTDIR)/$(PREFIX)/share/man/man1
-	install -c -m 0644 firejail.1.gz $(DESTDIR)/$(PREFIX)/share/man/man1/.	
-	install -c -m 0644 firemon.1.gz $(DESTDIR)/$(PREFIX)/share/man/man1/.	
-	mkdir -p $(DESTDIR)/$(PREFIX)/share/man/man5
-	install -c -m 0644 firejail-profile.5.gz $(DESTDIR)/$(PREFIX)/share/man/man5/.	
-	install -c -m 0644 firejail-login.5.gz $(DESTDIR)/$(PREFIX)/share/man/man5/.	
+	mkdir -p $(DESTDIR)/$(mandir)/man1
+	install -c -m 0644 firejail.1.gz $(DESTDIR)/$(mandir)/man1/.
+	install -c -m 0644 firemon.1.gz $(DESTDIR)/$(mandir)/man1/.
+	mkdir -p $(DESTDIR)/$(mandir)/man5
+	install -c -m 0644 firejail-profile.5.gz $(DESTDIR)/$(mandir)/man5/.
+	install -c -m 0644 firejail-login.5.gz $(DESTDIR)/$(mandir)/man5/.
 	rm -f firejail.1.gz firemon.1.gz firejail-profile.5.gz firejail-login.5.gz
 	# bash completion
-	mkdir -p $(DESTDIR)/$(PREFIX)/share/bash-completion/completions
-	install -c -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/firejail
-	install -c -m 0644 src/bash_completion/firemon.bash_completion $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/firemon
+	mkdir -p $(DESTDIR)/$(datarootdir)/bash-completion/completions
+	install -c -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)/$(datarootdir)/bash-completion/completions/firejail
+	install -c -m 0644 src/bash_completion/firemon.bash_completion $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 
 
 install: all
@@ -135,16 +139,16 @@ install-strip: all
 	$(MAKE) realinstall
 
 uninstall:
-	rm -f $(DESTDIR)/$(PREFIX)/bin/firejail
-	rm -f $(DESTDIR)/$(PREFIX)/bin/firemon
-	rm -fr $(DESTDIR)/$(PREFIX)/lib/firejail
-	rm -fr $(DESTDIR)/$(PREFIX)/share/doc/firejail
-	rm -f $(DESTDIR)/$(PREFIX)/share/man/man1/firejail.1*
-	rm -f $(DESTDIR)/$(PREFIX)/share/man/man1/firemon.1*
-	rm -f $(DESTDIR)/$(PREFIX)/share/man/man5/firejail-profile.5*
-	rm -f $(DESTDIR)/$(PREFIX)/share/man/man5/firejail-login.5*
-	rm -f $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/firejail
-	rm -f $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/firemon
+	rm -f $(DESTDIR)/$(bindir)/firejail
+	rm -f $(DESTDIR)/$(bindir)/firemon
+	rm -fr $(DESTDIR)/$(libdir)/firejail
+	rm -fr $(DESTDIR)/$(datarootdir)/doc/firejail
+	rm -f $(DESTDIR)/$(mandir)/man1/firejail.1*
+	rm -f $(DESTDIR)/$(mandir)/man1/firemon.1*
+	rm -f $(DESTDIR)/$(mandir)/man5/firejail-profile.5*
+	rm -f $(DESTDIR)/$(mandir)/man5/firejail-login.5*
+	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firejail
+	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	
 dist:
 	make distclean

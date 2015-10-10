@@ -28,6 +28,7 @@
 #define MNT_DIR	"/tmp/firejail/mnt"
 #define HOME_DIR	"/tmp/firejail/mnt/home"
 #define ETC_DIR	"/tmp/firejail/mnt/etc"
+#define BIN_DIR	"/tmp/firejail/mnt/bin"
 #define WHITELIST_HOME_DIR	"/tmp/firejail/mnt/whome"
 #define DEFAULT_USER_PROFILE	"generic"
 #define DEFAULT_ROOT_PROFILE	"server"
@@ -82,6 +83,7 @@ typedef struct config_t {
 	char *home_private;	// private home directory
 	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
+	char *bin_private_keep;	// keep list for private etc directory
 	char *cwd;		// current working directory
 	char *overlay_dir;
 
@@ -169,6 +171,7 @@ extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
 extern int arg_private_etc;	// private etc directory
+extern int arg_private_bin;	// private bin directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 

@@ -257,6 +257,8 @@ int sandbox(void* sandbox_arg) {
 		fs_private_dev();
 	if (arg_private_etc)
 		fs_private_etc_list();
+	if (arg_private_bin)
+		fs_private_bin_list();
 	
 	//****************************
 	// install trace

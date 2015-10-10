@@ -82,6 +82,7 @@ int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
 int arg_private_etc = 0;			// private etc directory
+int arg_private_bin = 0;			// private bin directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
 
@@ -764,6 +765,12 @@ int main(int argc, char **argv) {
 			fs_check_etc_list();
 			arg_private_etc = 1;
 		}
+		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
+			// extract private etc dirname
+			cfg.bin_private_keep = argv[i] + 14;
+			fs_check_bin_list();
+			arg_private_bin = 1;
+		}
 			
 
 
@@ -1029,7 +1036,7 @@ int main(int argc, char **argv) {
 			}
 			cfg.shell = argv[i] + 8;
 
-			if (is_dir(cfg.shell) || is_link(cfg.shell) || strstr(cfg.shell, "..")) {
+			if (is_dir(cfg.shell) || strstr(cfg.shell, "..")) {
 				fprintf(stderr, "Error: invalid shell\n");
 				exit(1);
 			}

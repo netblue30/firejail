@@ -93,7 +93,7 @@ Release: 1
 License: GPL+
 Group: Development/Tools
 SOURCE0 : %{name}-%{version}.tar.gz
-URL: http://firejail.sourceforege.net
+URL: http://github.com/netblue30/firejail
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 

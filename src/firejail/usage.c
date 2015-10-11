@@ -342,6 +342,6 @@ void usage(void) {
 	printf("          list all running sandboxes\n");
 	printf("\n");
 	printf("License GPL version 2 or later\n");
-	printf("Homepage: http://firejail.sourceforge.net\n");
+	printf("Homepage: http://github.com/netblue30/firejail\n");
 	printf("\n");
 }

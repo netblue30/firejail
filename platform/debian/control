@@ -6,7 +6,7 @@ Installed-Size: 272
 Depends: libc6
 Section: admin
 Priority: extra
-Homepage: http://firejail.sourceforge.net
+Homepage: http://github.com/netblue30/firejail
 Description: Linux namepaces sandbox program.
  Firejail  is  a  SUID sandbox program that reduces the risk of security
  breaches by restricting the running environment of untrusted applications

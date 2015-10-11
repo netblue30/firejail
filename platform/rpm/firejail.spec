@@ -1,71 +1,12 @@
-#!/bin/bash
-#
-# Usage: ./mkrpm.sh
-#        ./mkrpm.sh /path/to/firejail-0.9.30.tar.gz
-#
-# Script builds rpm in a temporary directory and places the built rpm in the
-# current working directory.
-
-
-source=$1
-
-create_tmp_dir() {
-    tmpdir=$(mktemp -d)
-    mkdir -p ${tmpdir}/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-}
-
-
-# copy or download source
-if [[ $source ]]; then
-
-    # check file exists
-    if [[ ! -f $source ]]; then
-        echo "$source does not exist!"
-        exit 1
-    fi
-
-    name=$(awk '/Name:/ {print $2}' firejail.spec)
-    version=$(awk '/Version:/ {print $2}' firejail.spec)
-    expected_filename="${name}-${version}.tar.gz"
-
-    # ensure file name matches spec file expets
-    if [[ $(basename $source) != $expected_filename ]]; then
-        echo "source ($source) does not match expected filename ($(basename $expected_filename))"
-        exit 1
-    fi
-
-    create_tmp_dir
-    cp ${source} ${tmpdir}/SOURCES
-else
-  create_tmp_dir
-  if ! spectool -C ${tmpdir}/SOURCES -g firejail.spec; then
-    echo "Failed to fetch firejail source code"
-    exit 1
-  fi
-fi
-
-cp ./firejail.spec "${tmpdir}/SPECS/firejail.spec"
-
-<<<<<<< HEAD
-echo "building tar.gz archive"
-tar -czvf firejail-$VERSION.tar.gz firejail-$VERSION
-
-cp firejail-$VERSION.tar.gz SOURCES/.
-
-echo "building config spec"
-cat <<EOF > SPECS/firejail.spec
-%define        __spec_install_post %{nil}
-%define          debug_package %{nil}
-%define        __os_install_post %{_dbpath}/brp-compress
-
-Summary: Linux namepaces sandbox program
 Name: firejail
-Version: $VERSION
+Version: 0.9.30
 Release: 1
+Summary: Linux namepaces sandbox program
+
 License: GPL+
 Group: Development/Tools
-SOURCE0 : %{name}-%{version}.tar.gz
-URL: http://github.com/netblue30/firejail
+Source0: https://github.com/netblue30/firejail/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+URL: http://firejail.sourceforege.net
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -78,72 +19,33 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %setup -q
 
 %build
+%configure
+make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
-mkdir -p  %{buildroot}
-
-cp -a * %{buildroot}
-
+%make_install
 
 %clean
 rm -rf %{buildroot}
 
 
 %files
-%defattr(-,root,root,-)
-%config(noreplace) %{_sysconfdir}/%{name}/chromium-browser.profile
-%config(noreplace) %{_sysconfdir}/%{name}/chromium.profile
-%config(noreplace) %{_sysconfdir}/%{name}/disable-mgmt.inc
-%config(noreplace) %{_sysconfdir}/%{name}/disable-secret.inc
-%config(noreplace) %{_sysconfdir}/%{name}/dropbox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/evince.profile
-%config(noreplace) %{_sysconfdir}/%{name}/firefox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/icedove.profile
-%config(noreplace) %{_sysconfdir}/%{name}/iceweasel.profile
-%config(noreplace) %{_sysconfdir}/%{name}/login.users
-%config(noreplace) %{_sysconfdir}/%{name}/midori.profile
-%config(noreplace) %{_sysconfdir}/%{name}/opera.profile
-%config(noreplace) %{_sysconfdir}/%{name}/thunderbird.profile
-%config(noreplace) %{_sysconfdir}/%{name}/transmission-gtk.profile
-%config(noreplace) %{_sysconfdir}/%{name}/transmission-qt.profile
-%config(noreplace) %{_sysconfdir}/%{name}/vlc.profile
-%config(noreplace) %{_sysconfdir}/%{name}/audacious.profile
-%config(noreplace) %{_sysconfdir}/%{name}/clementine.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gnome-mplayer.profile
-%config(noreplace) %{_sysconfdir}/%{name}/rhythmbox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/totem.profile
-%config(noreplace) %{_sysconfdir}/%{name}/deluge.profile
-%config(noreplace) %{_sysconfdir}/%{name}/qbittorrent.profile
-%config(noreplace) %{_sysconfdir}/%{name}/generic.profile
-%config(noreplace) %{_sysconfdir}/%{name}/deadbeef.profile
-%config(noreplace) %{_sysconfdir}/%{name}/disable-common.inc
-%config(noreplace) %{_sysconfdir}/%{name}/disable-history.inc
-%config(noreplace) %{_sysconfdir}/%{name}/empathy.profile
-%config(noreplace) %{_sysconfdir}/%{name}/filezilla.profile
-%config(noreplace) %{_sysconfdir}/%{name}/icecat.profile
-%config(noreplace) %{_sysconfdir}/%{name}/pidgin.profile
-%config(noreplace) %{_sysconfdir}/%{name}/quassel.profile
-%config(noreplace) %{_sysconfdir}/%{name}/server.profile
-%config(noreplace) %{_sysconfdir}/%{name}/xchat.profile
-
-/usr/bin/firejail
-/usr/bin/firemon
-/usr/lib/firejail/libtrace.so
-/usr/lib/firejail/ftee
-/usr/lib/firejail/fshaper.sh
-/usr/share/doc/packages/firejail/COPYING
-/usr/share/doc/packages/firejail/README
-/usr/share/doc/packages/firejail/RELNOTES
-/usr/share/man/man1/firejail.1.gz
-/usr/share/man/man1/firemon.1.gz
-/usr/share/man/man5/firejail-profile.5.gz
-/usr/share/man/man5/firejail-login.5.gz
-/usr/share/bash-completion/completions/firejail
-/usr/share/bash-completion/completions/firemon
- 
-%post
-chmod u+s /usr/bin/firejail
+%doc
+%defattr(-, root, root, -)
+%attr(4755, -, -) %{_bindir}/firejail
+%{_bindir}/firemon
+%{_libdir}/firejail/ftee
+%{_libdir}/firejail/fshaper.sh
+%{_libdir}/firejail/libtrace.so
+%{_datarootdir}/bash-completion/completions/firejail
+%{_datarootdir}/bash-completion/completions/firemon
+%{_docdir}/firejail
+%{_mandir}/man1/firejail.1.gz
+%{_mandir}/man1/firemon.1.gz
+%{_mandir}/man5/firejail-login.5.gz
+%{_mandir}/man5/firejail-profile.5.gz
+%config %{_sysconfdir}/firejail
 
 %changelog
 * Mon Sep 14 2015 netblue30 <netblue30@yahoo.com> 0.9.30-1
@@ -280,17 +182,3 @@ chmod u+s /usr/bin/firejail
  - Added support for CentOS 7
  - bugfixes
 
-EOF
-
-echo "building rpm"
-rpmbuild -ba SPECS/firejail.spec
-rpm -qpl RPMS/x86_64/firejail-$VERSION-1.x86_64.rpm
-cd ..
-rm -f firejail-$VERSION-1.x86_64.rpm
-cp rpmbuild/RPMS/x86_64/firejail-$VERSION-1.x86_64.rpm .
-=======
-rpmbuild --define "_topdir ${tmpdir}" -ba "${tmpdir}/SPECS/firejail.spec"
->>>>>>> d69c2f8a62fca967460265dedd5afa62592264dd
-
-cp ${tmpdir}/RPMS/x86_64/firejail-*-1.x86_64.rpm .
-rm -rf "${tmpdir}"

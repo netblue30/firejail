@@ -1,0 +1,71 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --private-bin=bash,ls,sh\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al /bin\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"bash"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"ls"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"sh"
+}
+
+send -- "ls -al /bin\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"ping" {puts "TESTING ERROR 6\n";exit}
+	"sh"
+}
+send -- "exit\r"
+sleep 1
+
+send -- "firejail --profile=private-bin.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al /bin\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"bash"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"ls"
+}
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"sh"
+}
+
+send -- "ls -al /bin\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"ping" {puts "TESTING ERROR 6\n";exit}
+	"sh"
+}
+send -- "exit\r"
+
+
+
+
+sleep 1
+puts "\nall done\n"
+

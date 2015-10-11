@@ -257,6 +257,14 @@ int profile_check_line(char *ptr, int lineno) {
 		return 0;
 	}
 
+	// private /bin list of files
+	if (strncmp(ptr, "private-bin ", 12) == 0) {
+		cfg.bin_private_keep = ptr + 12;
+		fs_check_bin_list();
+		arg_private_bin = 1;
+		return 0;
+	}
+
 	// filesystem bind
 	if (strncmp(ptr, "bind ", 5) == 0) {
 		if (getuid() != 0) {

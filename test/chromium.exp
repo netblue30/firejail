@@ -4,10 +4,10 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail chromium-browser www.gentoo.org\r"
+send -- "firejail chromium www.gentoo.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/chromium-browser.profile"
+	"Reading profile /etc/firejail/chromium.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -23,7 +23,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"chromium-browser"
+	"chromium"
 }
 sleep 1
 
@@ -38,7 +38,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	":firejail chromium-browser"
+	":firejail chromium"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
@@ -52,7 +52,7 @@ sleep 1
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail chromium-browser"
+	":firejail chromium"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

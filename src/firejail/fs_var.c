@@ -146,7 +146,7 @@ void fs_var_log(void) {
 			errExit("chmod");
 	}
 	else
-		fprintf(stderr, "Warning: cannot mount tmpfs in top of /var/log\n");
+		fprintf(stderr, "Warning: cannot mount tmpfs on top of /var/log\n");
 }
 
 void fs_var_lib(void) {

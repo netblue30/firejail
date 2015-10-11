@@ -435,23 +435,23 @@ void fs_proc_sys_dev_boot(void) {
 	if (arg_debug)
 		printf("Disable /sys/firmware directory\n");
 	if (mount("tmpfs", "/sys/firmware", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("disable /sys/firmware directory");
+		fprintf(stderr, "Warning: cannot disable /sys/firmware directory\n");
 	if (arg_debug)
 		printf("Disable /sys/hypervisor directory\n");
 	if (mount("tmpfs", "/sys/hypervisor", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("disable /sys/hypervisor directory");
+		fprintf(stderr, "Warning: cannot disable /sys/hypervisor directory\n");
 	if (arg_debug)
 		printf("Disable /sys/fs directory\n");
 	if (mount("tmpfs", "/sys/fs", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("disable /sys/fs directory");
+		fprintf(stderr, "Warning: cannot disable /sys/fs directory\n");
 	if (arg_debug)
 		printf("Disable /sys/module directory\n");
 	if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("disable /sys/module directory");
+		fprintf(stderr, "Warning: cannot disable /sys/module directory\n");
 	if (arg_debug)
 		printf("Disable /sys/power directory\n");
 	if (mount("tmpfs", "/sys/power", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("disable /sys/power directory");
+		fprintf(stderr, "Warning: cannot disable /sys/power directory\n");
 
 
 

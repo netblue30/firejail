@@ -18,9 +18,15 @@ echo "TESTING: environment variables"
 echo "TESTING: private-etc"
 ./private-etc.exp
 
+echo "TESTING: private-bin"
+./private-bin.exp
+
+sleep 1
+rm -fr dir\ with\ space
 mkdir dir\ with\ space
 echo "TESTING: blacklist"
 ./blacklist.exp
+sleep 1
 rm -fr dir\ with\ space
 
 ln -s auto auto2
@@ -155,7 +161,7 @@ else
 	echo "TESTING: midori not found"
 fi
 
-which chromium-browser
+which chromium
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: chromium"
@@ -278,10 +284,10 @@ echo "TESTING: seccomp su"
 echo "TESTING: seccomp ptrace"
 ./seccomp-ptrace.exp
 
-echo "TESTING: seccomp chmod (seccomp lists)"
+echo "TESTING: seccomp chmod - seccomp lists"
 ./seccomp-chmod.exp
 
-echo "TESTING: seccomp chmod profile (seccomp lists)"
+echo "TESTING: seccomp chmod profile - seccomp lists"
 ./seccomp-chmod-profile.exp
 
 echo "TESTING: seccomp empty"

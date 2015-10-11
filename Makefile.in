@@ -8,7 +8,9 @@ bindir=@bindir@
 libdir=@libdir@
 datarootdir=@datarootdir@
 mandir=@mandir@
-sysconfdir=@sysconfdir@
+# todo: fix sysconfdir
+# sysconfdir=@sysconfdir@ 
+sysconfdir=/etc
 
 VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@

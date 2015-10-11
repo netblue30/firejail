@@ -8,6 +8,5 @@ caps.drop all
 seccomp
 netfilter
 noroot
-shell none
 
 

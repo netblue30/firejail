@@ -44,9 +44,9 @@ static char *check_dir_or_file(const char *name) {
 			errExit("asprintf");
 		if (arg_debug)
 			printf("Checking %s/%s\n", paths[i], name);		
-		if (stat(fname, &s) == 0)
+		if (stat(fname, &s) == 0 && !S_ISDIR(s.st_mode)) // do not allow directories
 			break; // file found
-			
+		
 		free(fname);
 		fname = NULL;
 		i++;
@@ -99,7 +99,6 @@ void fs_check_bin_list(void) {
 		else
 			notfound = 1;
 	}
-printf("here %d: newlist #%s#\n", __LINE__, newlist);
 	
 	if (*newlist == '\0') {
 		fprintf(stderr, "Warning: no --private-bin list executable found, option disabled\n");

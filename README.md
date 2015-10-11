@@ -44,7 +44,7 @@ A preliminary fix was introduced on master branch. The fix disables PulseAudio s
 inside the sandbox. If you are seeing any problems,
 please let us know here: https://github.com/netblue30/firejail/issues/69
 
-If you are unable to update Firejail, or if you want to continue using the lates released version, these are some workarounds:
+If you are unable to update Firejail, or if you want to continue using the latest released version, these are some workarounds:
 
 *   Running ALSA
 

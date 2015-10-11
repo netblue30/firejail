@@ -83,7 +83,7 @@ typedef struct config_t {
 	char *home_private;	// private home directory
 	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
-	char *bin_private_keep;	// keep list for private etc directory
+	char *bin_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *overlay_dir;
 

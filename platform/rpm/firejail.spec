@@ -6,7 +6,7 @@ Summary: Linux namepaces sandbox program
 License: GPL+
 Group: Development/Tools
 Source0: https://github.com/netblue30/firejail/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-URL: http://firejail.sourceforege.net
+URL: http://github.com/netblue30/firejail
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 

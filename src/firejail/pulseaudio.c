@@ -23,15 +23,17 @@
 #include <sys/mount.h>
 #include <dirent.h>
 
-static void disable_file(const char *file) {
+static void disable_file(const char *path, const char *file) {
 	assert(file);
+	assert(path);
 	
 	struct stat s;
 	char *fname;
-	if (asprintf(&fname, "/tmp/%s", file) == -1)
+	if (asprintf(&fname, "%s/%s", path, file) == -1)
 		errExit("asprintf");
 	if (stat(fname, &s) == -1)
-		return;
+		goto doexit;
+		
 	if (S_ISDIR(s.st_mode)) {
 		if (mount(RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
@@ -40,6 +42,9 @@ static void disable_file(const char *file) {
 		if (mount(RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
 	}
+
+doexit:
+	free(fname);
 }
 
 // disable pulseaudio socket
@@ -61,8 +66,8 @@ void pulseaudio_disable(void) {
 	while ((entry = readdir(dir))) {
 		if (strncmp(entry->d_name, "pulse-", 6) == 0) {
 			if (arg_debug)
-				printf("Disable %s\n", entry->d_name);
-			disable_file(entry->d_name);
+				printf("Disable /tmp/%s\n", entry->d_name);
+			disable_file("/tmp", entry->d_name);
 		}
 	}
 
@@ -74,9 +79,10 @@ void pulseaudio_disable(void) {
 	char *name = getenv("XDG_RUNTIME_DIR");
 	if (name) {
 		if (arg_debug)
-			printf("Disable %s\n", name);
-		disable_file(name);
+			printf("Disable %s/pulse/native\n", name);
+		disable_file(name, "pulse/native");
 	}
+	
 }
 
 
@@ -109,7 +115,7 @@ void pulseaudio_init(void) {
 	FILE *fp = fopen(pulsecfg, "a+");
 	if (!fp)
 		errExit("fopen");
-	fprintf(fp, "\nenable-shm = no\n");
+	fprintf(fp, "%s", "\nenable-shm = no\n");
 	fclose(fp);
 	if (chmod(pulsecfg, 0644) == -1)
 		errExit("chmod");

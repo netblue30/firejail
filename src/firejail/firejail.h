@@ -174,6 +174,7 @@ extern int arg_private_etc;	// private etc directory
 extern int arg_private_bin;	// private bin directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
+extern int arg_nosound;	// disable sound
 
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
@@ -406,6 +407,7 @@ void errno_print(void);
 
 // pulseaudio.c
 void pulseaudio_init(void);
+void pulseaudio_disable(void);
 
 // fs_bin.c
 void fs_check_bin_list(void);

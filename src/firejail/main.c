@@ -85,6 +85,7 @@ int arg_private_etc = 0;			// private etc directory
 int arg_private_bin = 0;			// private bin directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
+int arg_nosound = 0;				// disable sound
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -791,7 +792,11 @@ int main(int argc, char **argv) {
 		}
 		else if (strncmp(argv[i], "--env=", 6) == 0)
 			env_store(argv[i] + 6);
-		
+		else if (strncmp(argv[i], "--nosound", 9) == 0) {
+			arg_nosound = 1;
+			arg_private_dev = 1;
+		}
+				
 		//*************************************
 		// network
 		//*************************************

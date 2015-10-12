@@ -21,8 +21,66 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
+#include <dirent.h>
 
-// disable shm in pulse audio
+static void disable_file(const char *file) {
+	assert(file);
+	
+	struct stat s;
+	char *fname;
+	if (asprintf(&fname, "/tmp/%s", file) == -1)
+		errExit("asprintf");
+	if (stat(fname, &s) == -1)
+		return;
+	if (S_ISDIR(s.st_mode)) {
+		if (mount(RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+			errExit("disable file");
+	}
+	else {
+		if (mount(RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+			errExit("disable file");
+	}
+}
+
+// disable pulseaudio socket
+void pulseaudio_disable(void) {
+	//**************************************
+	// blacklist any pulse* directory in /tmp directory
+	//**************************************
+	DIR *dir;
+	if (!(dir = opendir("/tmp"))) {
+		// sleep 2 seconds and try again
+		sleep(2);
+		if (!(dir = opendir("/tmp"))) {
+			fprintf(stderr, "Warning: cannot open /tmp directory. PulseAudio sockets not disabled\n");
+			return;
+		}
+	}
+
+	struct dirent *entry;
+	while ((entry = readdir(dir))) {
+		if (strncmp(entry->d_name, "pulse-", 6) == 0) {
+			if (arg_debug)
+				printf("Disable %s\n", entry->d_name);
+			disable_file(entry->d_name);
+		}
+	}
+
+	closedir(dir);
+
+	//**************************************
+	// blacklist XDG_RUNTIME_DIR
+	//**************************************
+	char *name = getenv("XDG_RUNTIME_DIR");
+	if (name) {
+		if (arg_debug)
+			printf("Disable %s\n", name);
+		disable_file(name);
+	}
+}
+
+
+// disable shm in pulseaudio
 void pulseaudio_init(void) {
 	struct stat s;
 	

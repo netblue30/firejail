@@ -167,13 +167,15 @@ void usage(void) {
 	printf("\t\tand it is discarded when the sandbox is closed. (OverlayFS\n");
 	printf("\t\tsupport is required in Linux kernel for this option to work).\n\n");   
 
-
-
-	 
 	printf("\t--private - mount new /root and /home/user directories in temporary\n");
 	printf("\t\tfilesystems. All modifications are discarded when the sandbox is\n");
 	printf("\t\tclosed.\n\n");
 	printf("\t--private=directory - use directory as user home.\n\n");
+
+	printf("\t--private-bin=file,file - build a new /bin in a temporary filesystem,\n");
+	printf("\t\tand copy the programs in the list. The same directory is\n");
+	printf("\t\talso bind-mounted over /sbin, /usr/bin and /usr/sbin.\n\n");
+
 	printf("\t--private-home=file,directory - build a new user home in a temporary\n");
 	printf("\t\tfilesystem, and copy the files and directories in the list in\n");
 	printf("\t\tthe new home. All modifications are discarded when the sandbox\n");

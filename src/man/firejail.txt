@@ -735,6 +735,25 @@ Example:
 $ firejail \-\-private=/home/netblue/firefox-home firefox
 
 .TP
+\fB\-\-private-bin=file,file
+Build a new /bin in a temporary filesystem, and copy the programs in the list.
+The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-private-bin=bash,sed,ls,cat
+.br
+Parent pid 20841, child pid 20842
+.br
+Child process initialized
+.br
+$ ls /bin
+.br
+bash  cat  ls  sed
+
+.TP
 \fB\-\-private-keep=file,directory
 This option is deprecated, use private-home instead
 

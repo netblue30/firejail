@@ -133,6 +133,10 @@ Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is
 closed.
 .TP
+\f\private-bin file,file
+Build a new /bin in a temporary filesystem, and copy the programs in the list.
+The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
+.TP
 \f\private directory
 Use directory as user home.
 .TP

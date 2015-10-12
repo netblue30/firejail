@@ -1,6 +1,7 @@
 firejail (0.9.31) baseline; urgency=low
   * added --interface option
   * added --mtu option
+  * added --private-bin option
   * added seccomp errno support
   * added FBReader default profile
   * added Spotify default profile

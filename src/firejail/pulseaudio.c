@@ -45,14 +45,14 @@ static void disable_file(const char *file) {
 // disable pulseaudio socket
 void pulseaudio_disable(void) {
 	//**************************************
-	// blacklist any pulse* directory in /tmp directory
+	// blacklist any pulse* file in /tmp directory
 	//**************************************
 	DIR *dir;
 	if (!(dir = opendir("/tmp"))) {
 		// sleep 2 seconds and try again
 		sleep(2);
 		if (!(dir = opendir("/tmp"))) {
-			fprintf(stderr, "Warning: cannot open /tmp directory. PulseAudio sockets not disabled\n");
+			fprintf(stderr, "Warning: cannot open /tmp directory. PulseAudio sockets are not disabled\n");
 			return;
 		}
 	}

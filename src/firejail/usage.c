@@ -151,7 +151,9 @@ void usage(void) {
 	printf("\t--noroot - install a user namespace with a single user - the current\n");
 	printf("\t\tuser. root user does not exist in the new namespace. This option\n");
 	printf("\t\tis not supported for --chroot and --overlay configurations.\n\n");
-	
+
+	printf("\t--nosound - disable sound system\n\n");
+		
 	printf("\t--output=logfile - stdout logging and log rotation. Copy stdout to\n");
 	printf("\t\tlogfile, and keep the size of the file under 500KB using log\n");
 	printf("\t\trotation. Five files with prefixes .1 to .5 are used in\n");

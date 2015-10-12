@@ -34,6 +34,9 @@ static void disable_file(const char *path, const char *file) {
 	if (stat(fname, &s) == -1)
 		goto doexit;
 		
+	if (arg_debug)
+		printf("Disable%s\n", fname);
+		
 	if (S_ISDIR(s.st_mode)) {
 		if (mount(RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
@@ -49,9 +52,10 @@ doexit:
 
 // disable pulseaudio socket
 void pulseaudio_disable(void) {
-	//**************************************
+	// blacklist user config directory
+	disable_file(cfg.homedir, ".config/pulse");
+
 	// blacklist any pulse* file in /tmp directory
-	//**************************************
 	DIR *dir;
 	if (!(dir = opendir("/tmp"))) {
 		// sleep 2 seconds and try again
@@ -65,24 +69,16 @@ void pulseaudio_disable(void) {
 	struct dirent *entry;
 	while ((entry = readdir(dir))) {
 		if (strncmp(entry->d_name, "pulse-", 6) == 0) {
-			if (arg_debug)
-				printf("Disable /tmp/%s\n", entry->d_name);
 			disable_file("/tmp", entry->d_name);
 		}
 	}
 
 	closedir(dir);
 
-	//**************************************
 	// blacklist XDG_RUNTIME_DIR
-	//**************************************
 	char *name = getenv("XDG_RUNTIME_DIR");
-	if (name) {
-		if (arg_debug)
-			printf("Disable %s/pulse/native\n", name);
+	if (name)
 		disable_file(name, "pulse/native");
-	}
-	
 }
 
 

@@ -654,6 +654,17 @@ $ ping google.com
 ping: icmp open socket: Operation not permitted
 .br
 $
+
+.TP
+\fB\-\-nosound
+Disable sound system.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-nosound firefox
+
 .TP
 \fB\-\-output=logfile
 stdout logging and log rotation. Copy stdout to logfile, and keep the size of the file under 500KB using log

@@ -90,7 +90,9 @@ void pulseaudio_init(void) {
 	if (stat("/etc/pulse/client.conf", &s) == -1)
 		return;
 
-	// crate the new user pulseaudio directory
+	 
+ 	// create the new user pulseaudio directory
+	 fs_build_mnt_dir();
 	char *pulsedir;
 	if (asprintf(&pulsedir, "%s/pulse", MNT_DIR) == -1)
 		errExit("asprintf");

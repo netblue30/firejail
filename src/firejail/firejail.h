@@ -29,6 +29,7 @@
 #define HOME_DIR	"/tmp/firejail/mnt/home"
 #define ETC_DIR	"/tmp/firejail/mnt/etc"
 #define BIN_DIR	"/tmp/firejail/mnt/bin"
+#define DRI_DIR	"/tmp/firejail/mnt/dri"
 #define WHITELIST_HOME_DIR	"/tmp/firejail/mnt/whome"
 #define DEFAULT_USER_PROFILE	"generic"
 #define DEFAULT_ROOT_PROFILE	"server"

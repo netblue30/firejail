@@ -65,18 +65,45 @@ void fs_private_dev(void){
 	// install a new /dev directory
 	if (arg_debug)
 		printf("Mounting tmpfs on /dev\n");
+
+	// create DRI_DIR
+	fs_build_mnt_dir();
+	int rv = mkdir(DRI_DIR, 0755);
+	if (rv == -1)
+		errExit("mkdir");
+	if (chown(DRI_DIR, 0, 0) < 0)
+		errExit("chown");
+	if (chmod(DRI_DIR, 0755) < 0)
+		errExit("chmod");
+
+	// keep a copy of /dev/dri under DRI_DIR
+	if (mount("/dev/dri", DRI_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /dev");
+
+	// mount tmpfs on top of /dev
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+		errExit("mounting /dev");
+
+	// bring back the /dev/dri directory
+	rv = mkdir("/dev/dri", 0755);
+	if (rv == -1)
+		errExit("mkdir");
+	if (chown("/dev/dri", 0, 0) < 0)
+		errExit("chown");
+	if (chmod("/dev/dri",0755) < 0)
+		errExit("chmod");
+	if (mount(DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting /dev");
 	
 	// create /dev/shm
 	if (arg_debug)
 		printf("Create /dev/shm directory\n");
-	int rv = mkdir("/dev/shm", S_IRWXU | S_IRWXG | S_IRWXO);
+	rv = mkdir("/dev/shm", 0777);
 	if (rv == -1)
 		errExit("mkdir");
 	if (chown("/dev/shm", 0, 0) < 0)
 		errExit("chown");
-	if (chmod("/dev/shm", S_IRWXU | S_IRWXG | S_IRWXO) < 0)
+	if (chmod("/dev/shm", 0777) < 0)
 		errExit("chmod");
 
 	// create devices
@@ -131,11 +158,11 @@ void fs_dev_shm(void) {
 		if (lnk) {
 			if (!is_dir(lnk)) {
 				// create directory
-				if (mkdir(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
+				if (mkdir(lnk, 0777))
 					errExit("mkdir");
 				if (chown(lnk, 0, 0))
 					errExit("chown");
-				if (chmod(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
+				if (chmod(lnk, 0777))
 					errExit("chmod");
 			}
 			if (arg_debug)

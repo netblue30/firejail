@@ -80,6 +80,8 @@ cp etc/disable-common.inc debian/etc/firejail/.
 cp etc/disable-history.inc debian/etc/firejail/.
 cp etc/deadbeef.profile debian/etc/firejail/.
 cp etc/icecat.profile debian/etc/firejail/.
+cp etc/fbreader.profile debian/etc/firejail/.
+cp etc/spotify.profile debian/etc/firejail/.
 cp platform/debian/conffiles $DEBIAN_CTRL_DIR/.
 find ./debian -type d | xargs chmod 755
 dpkg-deb --build debian

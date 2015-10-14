@@ -32,3 +32,5 @@
 /etc/firejail/disable-history.inc
 /etc/firejail/deadbeef.profile
 /etc/firejail/icecat.profile
+/etc/firejail/fbreader.profile
+/etc/firejail/spotify.profile

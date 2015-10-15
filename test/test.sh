@@ -206,6 +206,36 @@ else
 	echo "TESTING: evince not found"
 fi
 
+which icedove
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: icedove"
+	./icedove.exp
+else
+	echo "TESTING: icedove not found"
+fi
+
+which vlc
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: vlc"
+	./vlc.exp
+else
+	echo "TESTING: vlc not found"
+fi
+
+which fbreader
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: fbreader"
+	./vlc.exp
+else
+	echo "TESTING: fbreader not found"
+fi
+
+
+
+
 echo "TESTING: PID"
 ./pid.exp
 

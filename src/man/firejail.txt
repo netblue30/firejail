@@ -823,6 +823,9 @@ Example:
 .br
 $ firejail \-\-profile=myprofile
 .TP
+\fB\-\-quiet
+Turn off Firejail's output.
+.TP
 \fB\-\-read-only=dirname_or_filename
 Set directory or file read-only.
 .br

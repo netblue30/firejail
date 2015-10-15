@@ -413,7 +413,8 @@ void profile_read(const char *fname, const char *skip1, const char *skip2) {
 		exit(1);
 	}
 
-	fprintf(stderr, "Reading profile %s\n", fname);
+	if (!arg_quiet)
+		fprintf(stderr, "Reading profile %s\n", fname);
 
 	// read the file line by line
 	char buf[MAX_READ + 1];

@@ -191,6 +191,7 @@ void usage(void) {
 	printf("\t\tAll modifications are discarded when the sandbox is closed.\n\n");
 	
 	printf("\t--profile=filename - use a custom profile.\n\n");
+	printf("\t--quiet - turn off Firejail's output.\n\n");
 	printf("\t--read-only=dirname_or_filename - set directory or file read-only.\n\n");
 	printf("\t--rlimit-fsize=number - set the maximum file size that can be created\n");
 	printf("\t\tby a process.\n\n");

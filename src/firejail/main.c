@@ -86,6 +86,7 @@ int arg_private_bin = 0;			// private bin directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
 int arg_nosound = 0;				// disable sound
+int arg_quiet = 0;				// no output for scripting
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -97,7 +98,7 @@ pid_t sandbox_pid;
 
 static void myexit(int rv) {
 	logmsg("exiting...");
-	if (!arg_command)
+	if (!arg_command && !arg_quiet)
 		printf("\nparent is shutting down, bye...\n");
 	
 	// delete sandbox files in shared memory
@@ -108,7 +109,8 @@ static void myexit(int rv) {
 }
 
 static void my_handler(int s){
-	printf("\nSignal %d caught, shutting down the child process\n", s);
+	if (!arg_quiet)
+		printf("\nSignal %d caught, shutting down the child process\n", s);
 	logsignal(s);
 	kill(child, SIGKILL);
 	myexit(1);
@@ -444,6 +446,8 @@ int main(int argc, char **argv) {
 		
 		if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
+		else if (strcmp(argv[i], "--quiet") == 0)
+			arg_quiet = 1;
 		
 		//*************************************
 		// filtering
@@ -1198,7 +1202,7 @@ int main(int argc, char **argv) {
 				custom_profile = profile_find(profile_name, "/etc/firejail");
 			}
 			
-			if (custom_profile)
+			if (custom_profile && !arg_quiet)
 				printf("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 		}
 	}
@@ -1248,7 +1252,7 @@ int main(int argc, char **argv) {
 	if (child == -1)
 		errExit("clone");
 
-	if (!arg_command) {
+	if (!arg_command && !arg_quiet) {
 		printf("Parent pid %u, child pid %u\n", sandbox_pid, child);
 		// print the path of the new log directory
 		if (getuid() == 0) // only for root

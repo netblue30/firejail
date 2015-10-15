@@ -176,6 +176,7 @@ extern int arg_private_bin;	// private bin directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
+extern int arg_quiet;		// no output for scripting
 
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];

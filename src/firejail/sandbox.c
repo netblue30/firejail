@@ -205,7 +205,8 @@ int sandbox(void* sandbox_arg) {
 			// drop all supplementary groups; /etc/group file inside chroot
 			// is controlled by a regular usr
 			arg_nogroups = 1;
-			printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
+			if (!arg_quiet)
+				printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
 		}
 						
 		//****************************
@@ -348,22 +349,22 @@ int sandbox(void* sandbox_arg) {
 	fs_resolvconf();
 
 	// print network configuration
-	if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
-		printf("\n");
-		if (any_bridge_configured() || any_interface_configured())
-			net_ifprint();
-		if (cfg.defaultgw != 0)
-			printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
-		if (cfg.dns1 != 0)
-			printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
-		if (cfg.dns2 != 0)
-			printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
-		if (cfg.dns3 != 0)
-			printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
-		printf("\n");
+	if (!arg_quiet) {
+		if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
+			printf("\n");
+			if (any_bridge_configured() || any_interface_configured())
+				net_ifprint();
+			if (cfg.defaultgw != 0)
+				printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+			if (cfg.dns1 != 0)
+				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
+			if (cfg.dns2 != 0)
+				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
+			if (cfg.dns3 != 0)
+				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
+			printf("\n");
+		}
 	}
-	
-	
 
 	//****************************
 	// start executable
@@ -483,7 +484,7 @@ int sandbox(void* sandbox_arg) {
 			}
 		}
 
-		if (!arg_command)
+		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 	}
@@ -532,7 +533,7 @@ int sandbox(void* sandbox_arg) {
 			}
 		}
 		
-		if (!arg_command)
+		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
 		execvp(sh, arg);
 	}

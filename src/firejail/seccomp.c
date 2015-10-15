@@ -490,7 +490,7 @@ int seccomp_filter_drop(void) {
 		filter_add_blacklist(SYS_process_vm_writev, 0);
 #endif
 
-// mknod removed in 0.9.29
+// mknod removed in 0.9.29 - it brakes Zotero extension
 //#ifdef SYS_mknod		
 //		filter_add_blacklist(SYS_mknod, 0);
 //#endif
@@ -520,6 +520,87 @@ int seccomp_filter_drop(void) {
 #ifdef SYS_kcmp
 		filter_add_blacklist(SYS_kcmp, 0);
 #endif
+
+// 0.9.32
+#ifdef SYS_add_key
+		filter_add_blacklist(SYS_add_key, 0);
+#endif
+#ifdef SYS_request_key
+		filter_add_blacklist(SYS_request_key, 0);
+#endif
+#ifdef SYS_keyctl
+		filter_add_blacklist(SYS_keyctl, 0);
+#endif
+#ifdef SYS_uselib
+		filter_add_blacklist(SYS_uselib, 0);
+#endif
+#ifdef SYS_acct
+		filter_add_blacklist(SYS_acct, 0);
+#endif
+#ifdef SYS_modify_ldt
+		filter_add_blacklist(SYS_modify_ldt, 0);
+#endif
+	//#ifdef SYS_unshare
+	//		filter_add_blacklist(SYS_unshare, 0);
+	//#endif
+#ifdef SYS_pivot_root
+		filter_add_blacklist(SYS_pivot_root, 0);
+#endif
+	//#ifdef SYS_quotactl
+	//		filter_add_blacklist(SYS_quotactl, 0);
+	//#endif
+#ifdef SYS_io_setup
+		filter_add_blacklist(SYS_io_setup, 0);
+#endif
+#ifdef SYS_io_destroy
+		filter_add_blacklist(SYS_io_destroy, 0);
+#endif
+#ifdef SYS_io_getevents
+		filter_add_blacklist(SYS_io_getevents, 0);
+#endif
+#ifdef SYS_io_submit
+		filter_add_blacklist(SYS_io_submit, 0);
+#endif
+#ifdef SYS_io_cancel
+		filter_add_blacklist(SYS_io_cancel, 0);
+#endif
+#ifdef SYS_remap_file_pages
+		filter_add_blacklist(SYS_remap_file_pages, 0);
+#endif
+#ifdef SYS_mbind
+		filter_add_blacklist(SYS_mbind, 0);
+#endif
+#ifdef SYS_get_mempolicy
+		filter_add_blacklist(SYS_get_mempolicy, 0);
+#endif
+#ifdef SYS_set_mempolicy
+		filter_add_blacklist(SYS_set_mempolicy, 0);
+#endif
+#ifdef SYS_migrate_pages
+		filter_add_blacklist(SYS_migrate_pages, 0);
+#endif
+#ifdef SYS_move_pages
+		filter_add_blacklist(SYS_move_pages, 0);
+#endif
+#ifdef SYS_vmsplice
+		filter_add_blacklist(SYS_vmsplice, 0);
+#endif
+	//#ifdef SYS_set_robust_list
+	//		filter_add_blacklist(SYS_set_robust_list, 0);
+	//#endif
+	//#ifdef SYS_get_robust_list
+	//		filter_add_blacklist(SYS_get_robust_list, 0);
+	//#endif
+#ifdef SYS_perf_event_open
+		filter_add_blacklist(SYS_perf_event_open, 0);
+#endif
+
+ // CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(clone), 1,
+ //     SCMP_A0(SCMP_CMP_MASKED_EQ, CLONE_NEWUSER, CLONE_NEWUSER)));
+
+// 32bit
+//		filter_add_blacklist(SYS_personality, 0); // test wine
+//		filter_add_blacklist(SYS_set_thread_area, 0); // test wine
 	}
 
 	// default seccomp filter with additional drop list

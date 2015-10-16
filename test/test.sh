@@ -228,10 +228,29 @@ which fbreader
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: fbreader"
-	./vlc.exp
+	./fbreader.exp
 else
 	echo "TESTING: fbreader not found"
 fi
+
+which deluge
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: deluge"
+	./deluge.exp
+else
+	echo "TESTING: deluge not found"
+fi
+
+which gnome-mplayer
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: gnome-mplayer"
+	./gnome-mplayer.exp
+else
+	echo "TESTING: gnome-mplayer not found"
+fi
+
 
 
 

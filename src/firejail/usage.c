@@ -213,7 +213,11 @@ void usage(void) {
 	printf("\t\tfinit_module, delete_module, iopl, ioperm, swapon, swapoff,\n");
 	printf("\t\tsyslog, process_vm_readv and process_vm_writev\n");
 	printf("\t\tsysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie,\n");
-	printf("\t\tperf_event_open, fanotify_init and kcmp.\n\n");
+	printf("\t\tperf_event_open, fanotify_init, kcmp, add_key, request_key,\n");
+	printf("\t\tkeyctl, uselib, acct, modify_ldt, pivot_root, io_setup,\n");
+	printf("\t\tio_destroy, io_getevents, io_submit, io_cancel,\n");
+	printf("\t\tremap_file_pages, mbind, get_mempolicy, set_mempolicy,\n");
+	printf("\t\tmigrate_pages, move_pages, vmsplice, and perf_event_open.\n\n");
 	
 	printf("\t--seccomp=syscall,syscall,syscall - enable seccomp filter, blacklist the\n");
 	printf("\t\tdefault syscall list and the syscalls specified by the command.\n\n");

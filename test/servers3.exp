@@ -26,6 +26,21 @@ expect {
 	"apache"
 }
 
+send -- "rm index.html\r"
+sleep 1
+send -- "wget 0\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"saved"
+}
+send -- "cat index.html\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"This is the default web page for this server"
+}
+
+
+
 send -- "exit\r"
 sleep 1
-puts "\n"
+puts "\nall done\n"

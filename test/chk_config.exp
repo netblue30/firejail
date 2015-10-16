@@ -80,7 +80,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"home"
+	"home" {puts "regular user\n"}
+	"root" {puts "root user\n"}
 }
 
 

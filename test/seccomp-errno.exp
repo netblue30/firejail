@@ -17,7 +17,7 @@ sleep 1
 send --  "firejail --seccomp.enoent=unlinkat --debug rm seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"ERRNO 263 unlinkat 2 ENOENT"
+	"unlinkat 2 ENOENT"
 }
 sleep 1
 

@@ -11,7 +11,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"1:bash:open /dev/tty"
+	"1:bash:open /dev/tty" {puts "64bit\n"}
+	"1:bash:open64 /dev/tty" {puts "32bit\n"}
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
@@ -24,4 +25,4 @@ expect {
 
 sleep 1
 
-puts "all done\n"
+puts "\nall done\n"

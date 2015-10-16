@@ -31,65 +31,10 @@ $
 
 4. Remove exclude-token from profile include in 0.9.34 (deprecated in 0.9.30)
 
-5. Debian 32bit compile with --enable-fatal-warnings
-make[1]: Entering directory `/home/netblue/work/firejail-0.9.30/src/firejail'
-cc -ggdb -W -Wall -Werror -O2 -DVERSION='"0.9.30"' -DPREFIX='"/usr"' -DHAVE_SECCOMP  -DHAVE_CHROOT -DHAVE_BIND -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security  -c seccomp.c -o seccomp.o
-seccomp.c: In function ‘write_seccomp_file’:
-seccomp.c:337:81: error: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 2 has type ‘unsigned int’ [-Werror=format]
-seccomp.c: In function ‘read_seccomp_file’:
-seccomp.c:391:81: error: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 2 has type ‘unsigned int’ [-Werror=format]
-cc1: all warnings being treated as errors
-make[1]: *** [seccomp.o] Error 1
-
-6. Debian 32bit - multiple problems with the testing utility
-
-7. Add IRC clients: KVIrc (KDE), BitchX (CLI), Smuxi, Konversation (KDE), HexChat, Irssi (CLI), WeeChat (CLI)
+5. Add IRC clients: KVIrc (KDE), BitchX (CLI), Smuxi, Konversation (KDE), HexChat, Irssi (CLI), WeeChat (CLI)
 RSS: Liferea, akregator (KDE), newsbeuter (CLI), rawdog, 
 
-8. To investigate
-void SupervisorMain::setupSeccomp() {
-  // Install a rudimentary seccomp blacklist.
-  // TODO(security): Change this to a whitelist.
-
-  scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_ALLOW);
-  if (ctx == nullptr)
-    KJ_FAIL_SYSCALL("seccomp_init", 0);  // No real error code
-  KJ_DEFER(seccomp_release(ctx));
-
-#define CHECK_SECCOMP(call)                   \
-  do {                                        \
-    if (auto result = (call)) {               \
-      KJ_FAIL_SYSCALL(#call, -result);        \
-    }                                         \
-  } while (0)
-
-  // Native code only for now, so there are no seccomp_arch_add calls.
-
-  // Redundant, but this is standard and harmless.
-  CHECK_SECCOMP(seccomp_attr_set(ctx, SCMP_FLTATR_CTL_NNP, 1));
-
-  // It's easy to inadvertently issue an x32 syscall (e.g. syscall(-1)).  Such syscalls
-  // should fail, but there's no need to kill the issuer.
-  CHECK_SECCOMP(seccomp_attr_set(ctx, SCMP_FLTATR_ACT_BADARCH, SCMP_ACT_ERRNO(ENOSYS)));
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"  // SCMP_* macros produce these
-  // Disable some things that seem scary.
-  if (!devmode) {
-    // ptrace is scary
-    CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(ptrace), 0));
-  } else {
-    // Try to be somewhat safe with ptrace in dev mode.  Note that the ability to modify
-    // orig_ax using ptrace allows a complete seccomp bypass.
-    CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(ptrace), 1,
-      SCMP_A0(SCMP_CMP_EQ, PTRACE_POKEUSER)));
-    CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(ptrace), 1,
-      SCMP_A0(SCMP_CMP_EQ, PTRACE_SETREGS)));
-    CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(ptrace), 1,
-      SCMP_A0(SCMP_CMP_EQ, PTRACE_SETFPREGS)));
-    CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(ptrace), 1,
-      SCMP_A0(SCMP_CMP_EQ, PTRACE_SETREGSET)));
-  }
+6. To investigate
 
   // Restrict the set of allowable network protocol families
   CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
@@ -118,64 +63,3 @@ void SupervisorMain::setupSeccomp() {
      SCMP_A0(SCMP_CMP_EQ, AF_SECURITY)));
   CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
      SCMP_A0(SCMP_CMP_EQ, AF_KEY)));
-#pragma GCC diagnostic pop
-
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(add_key), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(request_key), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(keyctl), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(syslog), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(uselib), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(personality), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(acct), 0));
-
-  // 16-bit code is unnecessary in the sandbox, and modify_ldt is a historic source
-  // of interesting information leaks.
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(modify_ldt), 0));
-
-  // Despite existing at a 64-bit syscall, set_thread_area is only useful
-  // for 32-bit programs.  64-bit programs use arch_prctl instead.
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(set_thread_area), 0));
-
-  // Disable namespaces. Nested sandboxing could be useful but the attack surface is large.
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(unshare), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(mount), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(pivot_root), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(quotactl), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(clone), 1,
-      SCMP_A0(SCMP_CMP_MASKED_EQ, CLONE_NEWUSER, CLONE_NEWUSER)));
-
-  // AIO is scary.
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(io_setup), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(io_destroy), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(io_getevents), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(io_submit), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(io_cancel), 0));
-
-  // Scary vm syscalls
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(remap_file_pages), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(mbind), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(get_mempolicy), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(set_mempolicy), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(migrate_pages), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(move_pages), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(vmsplice), 0));
-
-  // Scary futex operations
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(set_robust_list), 0));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(get_robust_list), 0));
-
-  // Utterly terrifying profiling operations
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(ENOSYS), SCMP_SYS(perf_event_open), 0));
-
-  // TOOD(someday): See if we can get away with turning off mincore, madvise, sysinfo etc.
-
-  // TODO(someday): Turn off POSIX message queues and other such esoteric features.
-
-  if (seccompDumpPfc) {
-    seccomp_export_pfc(ctx, 1);
-  }
-
-  CHECK_SECCOMP(seccomp_load(ctx));
-
-#undef CHECK_SECCOMP
-}

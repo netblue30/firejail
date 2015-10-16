@@ -62,38 +62,49 @@ errexit:
 }
 
 void fs_private_dev(void){
+	int rv;
 	// install a new /dev directory
 	if (arg_debug)
 		printf("Mounting tmpfs on /dev\n");
 
+	int have_dri = 0;
+	struct stat s;
+	if (stat("/dev/dri", &s) == 0)
+		have_dri = 1;
+
 	// create DRI_DIR
 	fs_build_mnt_dir();
-	int rv = mkdir(DRI_DIR, 0755);
-	if (rv == -1)
-		errExit("mkdir");
-	if (chown(DRI_DIR, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(DRI_DIR, 0755) < 0)
-		errExit("chmod");
-
-	// keep a copy of /dev/dri under DRI_DIR
-	if (mount("/dev/dri", DRI_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mounting /dev");
-
+	
+	if (have_dri) {
+		rv = mkdir(DRI_DIR, 0755);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown(DRI_DIR, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(DRI_DIR, 0755) < 0)
+			errExit("chmod");
+	
+		// keep a copy of /dev/dri under DRI_DIR
+		if (mount("/dev/dri", DRI_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting /dev/dri");
+	}
+	
 	// mount tmpfs on top of /dev
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 		errExit("mounting /dev");
 
 	// bring back the /dev/dri directory
-	rv = mkdir("/dev/dri", 0755);
-	if (rv == -1)
-		errExit("mkdir");
-	if (chown("/dev/dri", 0, 0) < 0)
-		errExit("chown");
-	if (chmod("/dev/dri",0755) < 0)
-		errExit("chmod");
-	if (mount(DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mounting /dev");
+	if (have_dri) {
+		rv = mkdir("/dev/dri", 0755);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown("/dev/dri", 0, 0) < 0)
+			errExit("chown");
+		if (chmod("/dev/dri",0755) < 0)
+			errExit("chmod");
+		if (mount(DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting /dev");
+	}
 	
 	// create /dev/shm
 	if (arg_debug)

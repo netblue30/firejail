@@ -371,7 +371,7 @@ static void write_seccomp_file(void) {
 		errExit("open");
 
 	if (arg_debug)
-		printf("Save seccomp filter, size %lu bytes\n", sfilter_index * sizeof(struct sock_filter));
+		printf("Save seccomp filter, size %u bytes\n", (unsigned) (sfilter_index * sizeof(struct sock_filter)));
 	errno = 0;
 	ssize_t sz = write(fd, sfilter, sfilter_index * sizeof(struct sock_filter));
 	if (sz != (ssize_t)(sfilter_index * sizeof(struct sock_filter))) {
@@ -425,7 +425,7 @@ static void read_seccomp_file(char *file_name) {
 	sfilter_index = sz / sizeof(struct sock_filter);
 
 	if (arg_debug)
-		printf("Read seccomp filter, size %lu bytes\n", sfilter_index * sizeof(struct sock_filter));
+		printf("Read seccomp filter, size %u bytes\n", (unsigned) (sfilter_index * sizeof(struct sock_filter)));
 
 	close(fd);
 	free(fname);

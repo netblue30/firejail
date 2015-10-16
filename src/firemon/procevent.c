@@ -167,7 +167,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 		}
 
 		for (nlmsghdr = (struct nlmsghdr *)buf;
-			NLMSG_OK (nlmsghdr, len);
+			NLMSG_OK (nlmsghdr, (unsigned) len);
 			nlmsghdr = NLMSG_NEXT (nlmsghdr, len)) {
 
 			struct cn_msg *cn_msg;

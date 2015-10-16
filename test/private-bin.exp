@@ -11,7 +11,7 @@ expect {
 }
 sleep 1
 
-send -- "ls -al /bin\r"
+send -- "ls /bin\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"bash"
@@ -25,7 +25,7 @@ expect {
 	"sh"
 }
 
-send -- "ls -al /bin\r"
+send -- "ls /bin\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"ping" {puts "TESTING ERROR 6\n";exit}
@@ -41,7 +41,7 @@ expect {
 }
 sleep 1
 
-send -- "ls -al /bin\r"
+send -- "ls /bin\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"bash"
@@ -55,7 +55,7 @@ expect {
 	"sh"
 }
 
-send -- "ls -al /bin\r"
+send -- "ls /bin\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"ping" {puts "TESTING ERROR 6\n";exit}

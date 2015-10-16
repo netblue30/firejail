@@ -20,7 +20,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"1:bash:access /etc/terminfo/x/xterm"
+	"1:bash:access /etc/terminfo/x/xterm" {puts "debian\n"}
+	"1:bash:access /usr/share/terminfo/x/xterm" {puts "arch\n"}
 }
 
 sleep 1

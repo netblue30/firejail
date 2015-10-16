@@ -63,3 +63,11 @@ RSS: Liferea, akregator (KDE), newsbeuter (CLI), rawdog,
      SCMP_A0(SCMP_CMP_EQ, AF_SECURITY)));
   CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
      SCMP_A0(SCMP_CMP_EQ, AF_KEY)));
+
+7. Tests not working on Arch:
+profile_syntax.exp (profile syntax)
+fs_chroot.exp (chroot as user)
+private-etc.exp
+
+
+

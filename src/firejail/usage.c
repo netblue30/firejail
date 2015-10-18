@@ -320,7 +320,7 @@ void usage(void) {
 	printf("man 5 firejail-profile for more information.\n\n");
 	printf("\n");
 	printf("Restricted shell\n\n");
-	printf("To  configure a restricted shell, replace /bin/bash with /usr/bin/firejail i\n");
+	printf("To  configure a restricted shell, replace /bin/bash with /usr/bin/firejail in\n");
 	printf("/etc/password file for each user that needs to  be  restricted.\n");
 	printf("Alternatively, you can specify /usr/bin/firejail  in adduser command:\n\n");
 	printf("   adduser --shell /usr/bin/firejail username\n\n");

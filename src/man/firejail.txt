@@ -331,6 +331,16 @@ Print options end exit.
 
 
 .TP
+\fB\-\-hostname=name
+Set sandbox hostname.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-hostname=officepc firefox
+
+.TP
 \fB\-\-interface=interface
 Move interface in a new network namespace. Up to four --interface options can be sepcified.
 .br
@@ -454,7 +464,7 @@ $ firejail \-\-net=eth0 \-\-mtu=1492
 
 .TP
 \fB\-\-name=name
-Set sandbox hostname. Several options, such as \-\-join and \-\-shutdown, can use
+Set sandbox name. Several options, such as \-\-join and \-\-shutdown, can use
 this name to identify a sandbox.
 .br
 

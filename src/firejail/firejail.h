@@ -89,7 +89,8 @@ typedef struct config_t {
 	char *overlay_dir;
 
 	// networking
-	char *hostname;
+	char *name;		// sandbox name
+	char *hostname;	// host name
 	uint32_t defaultgw;	// default gateway
 	Bridge bridge0;
 	Bridge bridge1;

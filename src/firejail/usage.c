@@ -84,6 +84,7 @@ void usage(void) {
 	printf("\t--env=name=value - set environment variable in the new sandbox\n");
 	
 	printf("\t--help, -? - this help screen.\n\n");
+	printf("\t--hostname=name - set sandbox hostname.\n\n");
 	
 	printf("\t--interface=name - move interface in a new network namespace. Up to\n");
 	printf("\t\tfour --interface options can be sepcified.\n\n");
@@ -101,7 +102,7 @@ void usage(void) {
 	printf("\t--list - list all sandboxes.\n\n");
 	printf("\t--mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n\n");
 	printf("\t--mtu=number - set interface MTU.\n\n");
-	printf("\t--name=name - set sandbox hostname.\n\n");
+	printf("\t--name=name - set sandbox name.\n\n");
 	printf("\t--net=bridgename - enable network namespaces and connect to this bridge\n");
 	printf("\t\tdevice. Unless specified with option --ip and --defaultgw, an\n");
 	printf("\t\tIP address and a default gateway will be assigned automatically\n");

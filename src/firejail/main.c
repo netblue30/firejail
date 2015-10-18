@@ -783,9 +783,16 @@ int main(int argc, char **argv) {
 		// hostname, etc
 		//*************************************
 		else if (strncmp(argv[i], "--name=", 7) == 0) {
-			cfg.hostname = argv[i] + 7;
-			if (strlen(cfg.hostname) == 0) {
+			cfg.name = argv[i] + 7;
+			if (strlen(cfg.name) == 0) {
 				fprintf(stderr, "Error: please provide a name for sandbox\n");
+				return 1;
+			}
+		}
+		else if (strncmp(argv[i], "--hostname=", 11) == 0) {
+			cfg.hostname = argv[i] + 11;
+			if (strlen(cfg.hostname) == 0) {
+				fprintf(stderr, "Error: please provide a hostname for sandbox\n");
 				return 1;
 			}
 		}

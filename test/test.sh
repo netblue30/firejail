@@ -125,9 +125,6 @@ ls -al > tmpreadonly
 sleep 5
 rm -f tmpreadonly
 
-echo "TESTING: name"
-./name.exp
-
 echo "TESTING: zsh"
 ./shell_zsh.exp
 
@@ -354,6 +351,9 @@ echo "TESTING: read/write /var/lock"
 echo "TESTING: read/write /dev/shm"
 ./fs_dev_shm.exp
 
+echo "TESTING: quiet"
+./quiet.exp
+
 echo "TESTING: local network"
 ./net_local.exp
 
@@ -365,6 +365,12 @@ echo "TESTING: network IP"
 
 echo "TESTING: network MAC"
 ./net_mac.exp
+
+echo "TESTING: network MTU"
+./net_mtu.exp
+
+echo "TESTING: network hostname"
+./hostname.exp
 
 echo "TESTING: network bad IP"
 ./net_badip.exp

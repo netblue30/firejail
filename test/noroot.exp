@@ -51,13 +51,6 @@ expect {
 }
 puts "\n"
 
-send -- "cat /etc/hostname\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"noroot-sandbox"
-}
-puts "\n"
-
 send -- "ping 0\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}

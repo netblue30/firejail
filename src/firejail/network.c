@@ -106,6 +106,7 @@ int net_get_mtu(const char *ifname) {
 	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
 		errExit("socket");
 
+	memset(&ifr, 0, sizeof(ifr));
 	ifr.ifr_addr.sa_family = AF_INET;
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	if (ioctl(s, SIOCGIFMTU, (caddr_t)&ifr) == 0)
@@ -133,6 +134,7 @@ void net_set_mtu(const char *ifname, int mtu) {
 	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
 		errExit("socket");
 
+	memset(&ifr, 0, sizeof(ifr));
 	ifr.ifr_addr.sa_family = AF_INET;
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	ifr.ifr_mtu = mtu;

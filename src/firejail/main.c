@@ -946,10 +946,6 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: no network device configured\n");
 				return 1;
 			}
-			if (br->mtu) {
-				fprintf(stderr, "Error: cannot configure mtu twice for the same interface\n");
-				return 1;
-			}
 
 			if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 68 || br->mtu > 9198) {
 				fprintf(stderr, "Error: invalid mtu value\n");

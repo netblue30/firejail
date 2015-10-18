@@ -76,6 +76,7 @@ void fs_private_dev(void){
 	fs_build_mnt_dir();
 	
 	if (have_dri) {
+		/* coverity[toctou] */
 		rv = mkdir(DRI_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");

@@ -7,4 +7,5 @@ include /etc/firejail/disable-history.inc
 caps.drop all
 seccomp
 netfilter
+shell none
 

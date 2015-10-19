@@ -6,5 +6,6 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-history.inc
 netfilter
 noroot
+shell none
 
 

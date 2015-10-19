@@ -69,5 +69,18 @@ profile_syntax.exp (profile syntax)
 fs_chroot.exp (chroot as user)
 private-etc.exp
 
+8. Disable /dev/tcp in bash. Compiled time: --enable-net-redirections, --disable-net-redirections
+ksh and zsh seem to have it.
 
+Tests:
+a)
+cat </dev/tcp/time.nist.gov/13
+
+b)
+exec 3<>/dev/tcp/www.google.com/80
+echo -e "GET / HTTP/1.1\r\nhost: http://www.google.com\r\nConnection: close\r\n\r\n" >&3
+cat <&3
+
+c) A list of attacks
+http://www.lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
 

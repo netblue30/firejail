@@ -295,6 +295,7 @@ void wait_for_other(int fd);
 void notify_other(int fd);
 char *expand_home(const char *path, const char* homedir);
 const char *gnu_basename(const char *path);
+uid_t pid_get_uid(pid_t pid);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

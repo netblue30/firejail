@@ -60,13 +60,8 @@ void shut(pid_t pid) {
 	// check privileges for non-root users
 	uid_t uid = getuid();
 	if (uid != 0) {
-		struct stat s;
-		char *dir;
-		if (asprintf(&dir, "/proc/%u/ns", pid) == -1)
-			errExit("asprintf");
-		if (stat(dir, &s) < 0)
-			errExit("stat");
-		if (s.st_uid != uid) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
 			fprintf(stderr, "Error: permission is denied to shutdown a sandbox created by a different user.\n");
 			exit(1);
 		}

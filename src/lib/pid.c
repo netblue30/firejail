@@ -137,7 +137,7 @@ char *pid_get_user_name(uid_t uid) {
 uid_t pid_get_uid(pid_t pid) {
 	uid_t rv = 0;
 	
-	// open stat file
+	// open statua file
 	char *file;
 	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
 		perror("asprintf");
@@ -149,7 +149,7 @@ uid_t pid_get_uid(pid_t pid) {
 		return 0;
 	}
 
-	// look for firejail executable name
+	// extract uid
 	char buf[PIDS_BUFLEN];
 	while (fgets(buf, PIDS_BUFLEN - 1, fp)) {
 		if (strncmp(buf, "Uid:", 4) == 0) {

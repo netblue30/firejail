@@ -26,6 +26,7 @@
 #define RO_DIR	"/tmp/firejail/firejail.ro.dir"
 #define RO_FILE	"/tmp/firejail/firejail.ro.file"
 #define MNT_DIR	"/tmp/firejail/mnt"
+#define CP_COMMAND	"/tmp/firejail/mnt/cp"
 #define HOME_DIR	"/tmp/firejail/mnt/home"
 #define ETC_DIR	"/tmp/firejail/mnt/etc"
 #define BIN_DIR	"/tmp/firejail/mnt/bin"
@@ -217,6 +218,10 @@ int net_get_mac(const char *ifname, unsigned char mac[6]);
 void fs_build_firejail_dir(void);
 // build /tmp/firejail/mnt directory
 void fs_build_mnt_dir(void);
+// grab a copy of cp command
+void fs_build_cp_command(void);
+// delete the temporary cp command
+void fs_delete_cp_command(void) ;
 // blacklist files or directoies by mounting empty files on top of them
 void fs_blacklist(void);
 // remount a directory read-only

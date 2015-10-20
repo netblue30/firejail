@@ -76,7 +76,7 @@ static void duplicate(char *fname) {
 	char *cmd;
 
 	// copy the file
-	if (asprintf(&cmd, "cp -a --parents /etc/%s %s", fname, MNT_DIR) == -1)
+	if (asprintf(&cmd, "%s -a --parents /etc/%s %s", CP_COMMAND, fname, MNT_DIR) == -1)
 		errExit("asprintf");
 	if (arg_debug)
 		printf("%s\n", cmd);

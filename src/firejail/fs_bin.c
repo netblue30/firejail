@@ -137,7 +137,7 @@ static void duplicate(char *fname) {
 	char *actual_path = realpath(full_path, NULL);
 	if (actual_path) {
 		// copy the file
-		if (asprintf(&cmd, "cp -a %s %s/%s", actual_path, BIN_DIR, fname) == -1)
+		if (asprintf(&cmd, "%s -a %s %s/%s", CP_COMMAND, actual_path, BIN_DIR, fname) == -1)
 			errExit("asprintf");
 		if (arg_debug)
 			printf("%s\n", cmd);

@@ -83,6 +83,37 @@ void fs_build_mnt_dir(void) {
 	}
 }
 
+// grab a copy of cp command
+void fs_build_cp_command(void) {
+	struct stat s;
+	fs_build_mnt_dir();
+	if (stat(CP_COMMAND, &s)) {
+		char* fname = realpath("/bin/cp", NULL);
+		if (fname == NULL) {
+			fprintf(stderr, "Error: /bin/cp not found\n");
+			exit(1);
+		}
+		if (stat(fname, &s)) {
+			fprintf(stderr, "Error: /bin/cp not found\n");
+			exit(1);
+		}
+		int rv = copy_file(fname, CP_COMMAND);
+		if (rv) {
+			fprintf(stderr, "Error: cannot access /bin/cp\n");
+			exit(1);
+		}
+		if (chmod(CP_COMMAND, 0755))
+			errExit("chmod");
+			
+		free(fname);
+	}
+}
+
+// delete the temporary cp command
+void fs_delete_cp_command(void) {
+	unlink(CP_COMMAND);
+}
+
 //***********************************************
 // process profile file
 //***********************************************

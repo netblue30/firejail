@@ -170,6 +170,8 @@ int sandbox(void* sandbox_arg) {
 		netfilter(arg_netfilter_file);
 	}
 
+	fs_build_cp_command();
+	
 	//****************************
 	// trace pre-install
 	//****************************
@@ -365,6 +367,8 @@ int sandbox(void* sandbox_arg) {
 			printf("\n");
 		}
 	}
+	
+	fs_delete_cp_command();
 
 	//****************************
 	// start executable

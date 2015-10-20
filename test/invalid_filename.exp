@@ -1,0 +1,236 @@
+#!/usr/bin/expect -f
+
+#invalid_filename checks:
+#
+#--bind (two files) - profile.c - Note: The test is not implemented here, need to be root to test it
+#--blacklist - profile.c
+#--cgroup - cgroup.c
+#--chroot - main.c
+#--netfilter - netfilter.c
+#--output - output.c
+#--private - fs_home.c
+#--privte-bin (list) - fs_bin.c
+#--private-keep/--private-home (list) - fs_home.c
+#--private-etc (list) - fs_etc.c
+#--profile - main.c
+#--read_only - profile.c
+#--shell - main.c
+#--tmpfs - profile.c
+#--white-list
+
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --debug --noprofile --blacklist=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --noprofile --cgroup=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 2.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --noprofile --chroot=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --noprofile --netfilter=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --noprofile --output=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 5.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 5.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --noprofile --private=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 6.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --noprofile --private-bin=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 7.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --noprofile --private-home=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 8.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+
+send -- "firejail --debug --noprofile --private-etc=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 9.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 9.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 9.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --profile=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 10.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 10.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 10.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --read-only=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 11.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 11.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 11.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --shell=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 12.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 12.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 12.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --tmpfs=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 13.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 13.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 13.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --debug --whitelist=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 14.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 14.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 14.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+
+
+puts "\nall done\n"
+

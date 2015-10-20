@@ -12,6 +12,9 @@ done
 
 ./fscheck.sh
 
+echo "TESTING: invalid filename"
+./invalid_filename.exp
+
 echo "TESTING: environment variables"
 ./env.exp
 
@@ -275,9 +278,6 @@ echo "TESTING: profile read-only"
 
 echo "TESTING: profile tmpfs"
 ./profile_tmpfs.exp
-
-echo "TESTING: profile applications"
-./profile_apps.exp
 
 echo "TESTING: private"
 ./private.exp `whoami`

@@ -35,6 +35,8 @@ static char *paths[] = {
 // return 1 if found, 0 if not found
 static char *check_dir_or_file(const char *name) {
 	assert(name);
+	invalid_filename(name);
+	
 	struct stat s;
 	char *fname = NULL;
 	
@@ -52,8 +54,10 @@ static char *check_dir_or_file(const char *name) {
 		i++;
 	}
 
-	if (!fname)
+	if (!fname) {
+		fprintf(stderr, "Warning: file %s not found\n", name);
 		return NULL;
+	}
 	
 	free(fname);
 	return paths[i];

@@ -254,6 +254,10 @@ void fs_private(void) {
 static void check_dir_or_file(const char *name) {
 	assert(name);
 	struct stat s;
+	
+	invalid_filename(name);
+	
+	
 	char *fname = expand_home(name, cfg.homedir);
 	if (!fname) {
 		fprintf(stderr, "Error: file %s not found.\n", name);
@@ -318,6 +322,8 @@ void fs_check_home_list(void) {
 
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void) {
+	invalid_filename(cfg.home_private);
+	
 	// Expand the home directory
 	char *tmp = expand_home(cfg.home_private, cfg.homedir);
 	cfg.home_private = realpath(tmp, NULL);

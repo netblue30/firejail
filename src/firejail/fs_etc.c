@@ -26,6 +26,8 @@
 
 static void check_dir_or_file(const char *name) {
 	assert(name);
+	invalid_filename(name);
+	
 	struct stat s;
 	char *fname;
 	if (asprintf(&fname, "/etc/%s", name) == -1)

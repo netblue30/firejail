@@ -4,20 +4,24 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --debug /usr/bin/firefox www.gentoo.org\r"
+send -- "firejail --debug ls -al\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/firefox.profile"
+	"Reading profile /etc/firejail/generic.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Starting /usr/bin/firefox"
+	"Starting ls -al"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
 }
-sleep 5
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"parent is shutting down, bye"
+}
+sleep 1
 
-puts "\n"
+puts "\nall done\n"
 

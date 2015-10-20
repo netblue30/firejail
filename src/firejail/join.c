@@ -306,10 +306,25 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
 			errExit("setenv");
 
-		// run icmdline trough /bin/bash
-		if (cfg.command_line == NULL)
-			// replace the process with a regular bash session
-			execlp("/bin/bash", "/bin/bash", NULL);
+		// run cmdline trough /bin/bash
+		if (cfg.command_line == NULL) {
+			struct stat s;
+
+			// replace the process with a shell
+			if (stat("/bin/bash", &s) == 0)
+				execlp("/bin/bash", "/bin/bash", NULL);
+			else if (stat("/usr/bin/zsh", &s) == 0)
+				execlp("/usr/bin/zsh", "/usr/bin/zsh", NULL);
+			else if (stat("/bin/csh", &s) == 0)
+				execlp("/bin/csh", "/bin/csh", NULL);
+			else if (stat("/bin/sh", &s) == 0)
+				execlp("/bin/sh", "/bin/sh", NULL);
+			
+			// no shell found, print an error and exit
+			fprintf(stderr, "Error: no POSIX shell found\n");
+			sleep(5);
+			exit(1);
+		}
 		else {
 			// run the command supplied by the user
 			int cwd = 0;

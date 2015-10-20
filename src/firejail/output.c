@@ -31,6 +31,7 @@ void check_output(int argc, char **argv) {
 	for (i = 1; i < argc; i++) {
 		if (strncmp(argv[i], "--output=", 9) == 0) {
 			found = 1;
+			invalid_filename(argv[i] + 9);
 			outfile = argv[i] + 9;
 
 			// do not accept directories, links, and files with ".."

@@ -586,6 +586,7 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: only a cgroup can be defined\n");
 				exit(1);
 			}
+			
 			arg_cgroup = 1;
 			cfg.cgroup = strdup(argv[i] + 9);
 			if (!cfg.cgroup)
@@ -683,6 +684,8 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");
 				exit(1);
 			}
+			invalid_filename(argv[i] + 10);
+			
 			// multiple profile files are allowed!
 			char *ptr = argv[i] + 10;
 			if (is_dir(ptr) || is_link(ptr) || strstr(ptr, "..")) {
@@ -712,6 +715,7 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
+			invalid_filename(argv[i] + 9);
 			
 			// extract chroot dirname
 			cfg.chrootdir = argv[i] + 9;
@@ -1042,6 +1046,8 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --shell=none was already specified.\n");
 				return 1;
 			}
+			invalid_filename(argv[i] + 8);
+			
 			if (arg_csh || arg_zsh || cfg.shell) {
 				fprintf(stderr, "Error: only one user shell can be specified\n");
 				return 1;

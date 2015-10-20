@@ -39,6 +39,8 @@ static char *client_filter =
 "COMMIT\n";
 
 void check_netfilter_file(const char *fname) {
+	invalid_filename(fname);
+	
 	if (is_dir(fname) || is_link(fname) || strstr(fname, "..")) {
 		fprintf(stderr, "Error: invalid network filter file\n");
 		exit(1);

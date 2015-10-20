@@ -78,6 +78,8 @@ errout:
 
 
 void set_cgroup(const char *path) {
+	invalid_filename(path);
+	
 	// path starts with /sys/fs/cgroup
 	if (strncmp(path, "/sys/fs/cgroup", 14) != 0)
 		goto errout;

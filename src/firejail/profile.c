@@ -61,23 +61,6 @@ int profile_find(const char *name, const char *dir) {
 //***************************************************
 // run-time profiles
 //***************************************************
-static void check_file_name(char *ptr, int lineno) {
-	if (strncmp(ptr, "${HOME}", 7) == 0)
-		ptr += 7;
-	else if (strncmp(ptr, "${PATH}", 7) == 0)
-		ptr += 7;
-
-	int len = strlen(ptr);
-	// file globbing ('*') is allowed
-	if (strcspn(ptr, "\\&!?\"'<>%^(){}[];,") != (size_t)len) {
-		if (lineno == 0)
-			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
-		else
-			fprintf(stderr, "Error: line %d in the custom profile is invalid\n", lineno);
-		exit(1);
-	}
-}
-
 
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
@@ -281,8 +264,8 @@ int profile_check_line(char *ptr, int lineno) {
 		}
 		
 		// check directories
-		check_file_name(dname1, lineno);
-		check_file_name(dname2, lineno);
+		invalid_filename(dname1);
+		invalid_filename(dname2);
 		if (strstr(dname1, "..") || strstr(dname2, "..")) {
 			fprintf(stderr, "Error: invalid file name.\n");
 			exit(1);
@@ -361,7 +344,7 @@ int profile_check_line(char *ptr, int lineno) {
 	}
 
 	// some characters just don't belong in filenames
-	check_file_name(ptr, lineno);
+	invalid_filename(ptr);
 	if (strstr(ptr, "..")) {
 		if (lineno == 0)
 			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);

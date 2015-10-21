@@ -1,4 +1,4 @@
-firejail (0.9.31) baseline; urgency=low
+firejail (0.9.32) baseline; urgency=low
   * added --interface option
   * added --mtu option
   * added --private-bin option
@@ -9,8 +9,9 @@ firejail (0.9.31) baseline; urgency=low
   * added FBReader default profile
   * added Spotify default profile
   * lots of default security profile changes
+  * fixed a security problem on multi-user systems
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Mon, 12 Oct 2015 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Wed, 21 Oct 2015 08:00:00 -0500
 
 
 firejail (0.9.30) baseline; urgency=low

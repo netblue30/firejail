@@ -97,8 +97,7 @@ void pulseaudio_init(void) {
 	if (asprintf(&pulsedir, "%s/pulse", MNT_DIR) == -1)
 		errExit("asprintf");
 	int rv = mkdir(pulsedir, S_IRWXU | S_IRWXG | S_IRWXO);
-	if (rv == -1)
-		errExit("mkdir");
+	(void) rv; // in --chroot mode the directory canalready be there
 	if (chown(pulsedir, getuid(), getgid()) < 0)
 		errExit("chown");
 	if (chmod(pulsedir, 0700) < 0)

@@ -396,7 +396,9 @@ int main(int argc, char **argv) {
 	int arg_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_noprofile = 0; // use generic.profile if none other found/specified
+#ifdef HAVE_SECCOMP
 	int highest_errno = errno_highest_nr();
+#endif
 
 	// check if we already have a sandbox running
 	int rv = check_kernel_procs();
@@ -1366,11 +1368,13 @@ int main(int argc, char **argv) {
 	waitpid(child, NULL, 0);
 
 	// free globals
+#ifdef HAVE_SECCOMP
 	if (arg_seccomp_list_errno) {
 		for (i = 0; i < highest_errno; i++)
 			free(arg_seccomp_list_errno[i]);
 		free(arg_seccomp_list_errno);
 	}
+#endif
 
 	myexit(0);
 

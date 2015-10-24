@@ -44,6 +44,7 @@ fakeroot dpkg-deb --build debian
 lintian debian.deb
 mv debian.deb ../firejail_$2_1_amd64.deb
 echo "if building a 32bit package, rename the deb file manually"
+cd ..
 rm -fr $CODE_DIR
 
 

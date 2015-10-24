@@ -34,35 +34,7 @@ $
 5. Add IRC clients: KVIrc (KDE), BitchX (CLI), Smuxi, Konversation (KDE), HexChat, Irssi (CLI), WeeChat (CLI)
 RSS: Liferea, akregator (KDE), newsbeuter (CLI), rawdog, 
 
-6. To investigate
-
-  // Restrict the set of allowable network protocol families
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_GE, AF_NETLINK + 1)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_AX25)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_IPX)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_APPLETALK)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_NETROM)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_BRIDGE)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_ATMPVC)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_X25)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_ROSE)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_DECnet)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_NETBEUI)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_SECURITY)));
-  CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EAFNOSUPPORT), SCMP_SYS(socket), 1,
-     SCMP_A0(SCMP_CMP_EQ, AF_KEY)));
+6. add kexec_file_load to default seccomp filter
 
 7. Tests not working on Arch:
 profile_syntax.exp (profile syntax)
@@ -83,4 +55,12 @@ cat <&3
 
 c) A list of attacks
 http://www.lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
+
+9. protocol filter: AF_UNIX, AF_INET, AF_INET6, AF_NETLINK, AF_PACKET
+
+ // Create a raw IP socket with UDP protocol
+sd = socket(PF_INET, SOCK_RAW, IPPROTO_UDP);
+
+// open a raw ethernet socket
+s = socket(AF_PACKET, SOCK_DGRAM, htons(ETHERTYPE_IP));
 

@@ -109,7 +109,7 @@ struct seccomp_data {
 	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 0, 1), \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
-#define ERRNO(syscall_nr, nr) \
+#define BLACKLIST_ERRNO(syscall_nr, nr) \
 	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 0, 1), \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ERRNO | nr)
 
@@ -290,7 +290,7 @@ static void filter_add_errno(int syscall, int arg) {
 		filter_realloc();
 
 	struct sock_filter filter[] = {
-		ERRNO(syscall, arg)
+		BLACKLIST_ERRNO(syscall, arg)
 	};
 #if 0
 {

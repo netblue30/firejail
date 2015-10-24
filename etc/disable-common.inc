@@ -4,6 +4,7 @@ blacklist ${HOME}/.macromedia
 blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.thunderbird
+blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/chromium
@@ -13,8 +14,18 @@ blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.local/share/systemd
 
 # Instant Messaging
+blacklist ${HOME}/.config/hexchat
+blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.config/psi+
+blacklist ${HOME}/.retroshare
+blacklist ${HOME}/.weechat
+blacklist ${HOME}/.config/xchat
+
+# Cryptocoins
+blacklist ${HOME}/.*coin
+blacklist ${HOME}/.electrum*
+blacklist ${HOME}/wallet.dat
 
 # VNC
 blacklist ${HOME}/.remmina

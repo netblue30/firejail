@@ -36,7 +36,7 @@ FAQ: https://l3net.wordpress.com/projects/firejail/firejail-faq/
 
 ## New features in the development version
 
-### Enable whitelists in Firefox default profile
+### Whitelisting in default Firefox profile
 
 The next release will bring in default whitelisting for Firefox files and folders under /home/user.
 If you start the sandbox without any other options, this is what you'll get:
@@ -58,3 +58,10 @@ I intend to bring in all files and directories used by Firefox addons and plugin
 [Zotero](https://www.zotero.org/download/) and
 [LastPass](https://addons.mozilla.org/en-US/firefox/addon/lastpass-password-manager/).
 If you're using a anything else, please let me know.
+
+### --ignore option
+
+Ignore commands in profile files. Example:
+`````
+$ firejail --ignore=seccomp wine
+`````

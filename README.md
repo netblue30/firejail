@@ -34,34 +34,27 @@ FAQ: https://l3net.wordpress.com/projects/firejail/firejail-faq/
 
 
 
-## Known Problems
+## New features in the development version
 
-### PulseAudio 7.0
+### Enable whitelists in Firefox default profile
 
-The srbchannel IPC mechanism, introduced in PulseAudio 6.0, was enabled by default in release 7.0.
-Arch Linux users are reporting sound problems when running applications in Firejail sandbox.
-A preliminary fix was introduced on master branch. The fix is available in release 0.9.32, and disables PulseAudio shared memory functionality
-inside the sandbox. If you are seeing any problems,
-please let us know here: https://github.com/netblue30/firejail/issues/69
+The next release will bring in default whitelisting for Firefox files and folders under /home/user.
+If you start the sandbox without any other options, this is what you'll get:
 
-If you are unable to update Firejail, or if you want to continue using the latest released version, these are some workarounds:
+![Whitelisted home directory](firefox-whitelist.png?raw=true)
 
-*   Running ALSA
+The code is located in etc/firefox.inc file:
 
-    By default, if Firefox fails to connect to PulseAudio, it will connect directly to ALSA.
-    Also by default, ALSA comes with the sound volume down. You would need to install *alsamixer*
-    (*alsa-utils* package) or *gnome-alsamixer*, run it, and crank up the volume (both Master and PCM).
- 
-*  Disable shm functionality in PulseAudio
 `````
-$ mkdir -p ~/.config/pulse
-$ cd ~/.config/pulse
-$ cp /etc/pulse/client.conf .
-$ echo "enable-shm = no" >> client.conf
+whitelist ~/.mozilla
+whitelist ~/Downloads
+whitelist ~/dwhelper
+whitelist ~/.zotero
+whitelist ~/.lastpass
 `````
-* Disable srbchannel IPC mechanism in version 7.0
 
-    Edit /etc/pulse/default.pa – change the line "load-module module-native-protocol-unix"
-    to "load-module module-native-protocol-unix srbchannel=no" and restart PulseAudio daemon.
-
-
+I intend to bring in all files and directories used by Firefox addons and plugins. So far I have
+[Video DownloadHelper](https://addons.mozilla.org/en-US/firefox/addon/video-downloadhelper/),
+[Zotero](https://www.zotero.org/download/) and
+[LastPass](https://addons.mozilla.org/en-US/firefox/addon/lastpass-password-manager/).
+If you're using a anything else, please let me know.

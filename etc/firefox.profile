@@ -9,6 +9,12 @@ seccomp
 netfilter
 noroot
 shell none
+whitelist ~/.mozilla
+whitelist ~/Downloads
+whitelist ~/dwhelper
+whitelist ~/.zotero
+whitelist ~/.lastpass
+
 
 
 

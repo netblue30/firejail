@@ -341,6 +341,16 @@ Example:
 $ firejail \-\-hostname=officepc firefox
 
 .TP
+\fB\-\-ignore=command
+Ignore command in profile file.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-ignore=shell --ignore=seccomp firefox
+
+.TP
 \fB\-\-interface=interface
 Move interface in a new network namespace. Up to four --interface options can be sepcified.
 .br

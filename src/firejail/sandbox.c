@@ -476,7 +476,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noroot) {
 		set_caps();
 		if (arg_debug)
-			printf("User namespace (noroot) installed\n");
+			printf("noroot user namespace installed\n");
 	}
 
 

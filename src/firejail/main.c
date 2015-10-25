@@ -711,6 +711,26 @@ int main(int argc, char **argv) {
 			}
 			arg_noprofile = 1;
 		}
+		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
+			char *ptr = argv[i] + 9;
+			if (*(argv[i] + 9) == '\0') {
+				fprintf(stderr, "Error: invalid ignore option\n");
+				exit(1);
+			}
+			
+			// find an empty entry in profile_ignore array
+			int j;
+			for (j = 0; j < MAX_PROFILE_IGNORE; j++) {
+				if (cfg.profile_ignore[j] == NULL) 
+					break;
+			}
+			if (j >= MAX_PROFILE_IGNORE) {
+				fprintf(stderr, "Error: maximum %d --ignore options are permitted\n", MAX_PROFILE_IGNORE);
+				exit(1);
+			}
+			// ... and configure it
+			cfg.profile_ignore[j] = argv[i] + 9;
+		}
 #ifdef HAVE_CHROOT		
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
 			if (arg_overlay) {

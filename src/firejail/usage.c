@@ -85,7 +85,7 @@ void usage(void) {
 	
 	printf("\t--help, -? - this help screen.\n\n");
 	printf("\t--hostname=name - set sandbox hostname.\n\n");
-	
+	printf("\t--ignore=command - ignore command in profile files.\n\n");
 	printf("\t--interface=name - move interface in a new network namespace. Up to\n");
 	printf("\t\tfour --interface options can be sepcified.\n\n");
 	

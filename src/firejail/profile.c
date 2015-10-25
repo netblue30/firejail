@@ -66,6 +66,16 @@ int profile_find(const char *name, const char *dir) {
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
 int profile_check_line(char *ptr, int lineno) {
+	// check ignore list
+	int i;
+	for (i = 0; i < MAX_PROFILE_IGNORE; i++) {
+		if (cfg.profile_ignore[i] == NULL)
+			break;
+		
+		if (strncmp(ptr, cfg.profile_ignore[i], strlen(cfg.profile_ignore[i])) == 0)
+			return 0;	// ignore line
+	}
+
 	// seccomp, caps, private, user namespace
 	if (strcmp(ptr, "noroot") == 0) {
 		check_user_namespace();

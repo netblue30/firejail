@@ -18,7 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #define _GNU_SOURCE
+#ifdef HAVE_MUSL_LIBC
+#include "musl_defs.h"
+#else
 #include <stdio.h>
+#endif
 #include <stdlib.h>
 #include <string.h>
 #include <dlfcn.h>
@@ -28,7 +32,9 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/un.h>
+#ifndef HAVE_MUSL_LIBC
 #include <sys/stat.h>
+#endif
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
@@ -414,9 +420,17 @@ int stat(const char *pathname, struct stat *buf) {
 	return rv;
 }
 
+#ifdef HAVE_MUSL_LIBC
+typedef int (*orig_stat64_t)(const char *pathname, struct stat *buf);
+#else
 typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
+#endif
 static orig_stat64_t orig_stat64 = NULL;
+#ifdef HAVE_MUSL_LIBC
+int stat64(const char *pathname, struct stat *buf) {
+#else
 int stat64(const char *pathname, struct stat64 *buf) {
+#endif
 	if (!orig_stat)
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat");
 			

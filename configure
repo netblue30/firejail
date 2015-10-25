@@ -628,6 +628,7 @@ HAVE_SECCOMP_H
 EGREP
 GREP
 CPP
+HAVE_MUSL_LIBC
 HAVE_FATAL_WARNINGS
 HAVE_BIND
 HAVE_CHROOT
@@ -688,6 +689,7 @@ enable_seccomp
 enable_chroot
 enable_bind
 enable_fatal_warnings
+enable_musl_libc
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1307,10 +1309,11 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --disable-seccomp       Disable seccomp
-  --disable-chroot        Disable chroot
-  --disable-bind          Disable bind
+  --disable-seccomp       disable seccomp
+  --disable-chroot        disable chroot
+  --disable-bind          disable bind
   --enable-fatal-warnings -W -Wall -Werror
+  --enable-musl-libc      ugly hack to allow compilation with musl libc
 
 Some influential environment variables:
   CC          C compiler command
@@ -3100,6 +3103,19 @@ if test "x$enable_fatal_warnings" = "xyes"; then :
 
 fi
 
+HAVE_MUSL_LIBC=""
+# Check whether --enable-musl_libc was given.
+if test "${enable_musl_libc+set}" = set; then :
+  enableval=$enable_musl_libc;
+fi
+
+if test "x$enable_musl_libc" = "xyes"; then :
+
+	HAVE_MUSL_LIBC="-DHAVE_MUSL_LIBC"
+
+
+fi
+
 # checking pthread library
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
@@ -4736,4 +4752,5 @@ echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
+echo "   musl libc: $HAVE_MUSL_LIBC"
 echo

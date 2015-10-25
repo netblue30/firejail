@@ -11,7 +11,7 @@ AC_PROG_RANLIB
 
 HAVE_SECCOMP=""
 AC_ARG_ENABLE([seccomp],
-    AS_HELP_STRING([--disable-seccomp], [disable seccomp]))
+    AS_HELP_STRING([--disable-seccomp], [Disable seccomp]))
 AS_IF([test "x$enable_seccomp" != "xno"], [
 	HAVE_SECCOMP="-DHAVE_SECCOMP"
 	AC_SUBST(HAVE_SECCOMP)
@@ -19,7 +19,7 @@ AS_IF([test "x$enable_seccomp" != "xno"], [
 
 HAVE_CHROOT=""
 AC_ARG_ENABLE([chroot],
-    AS_HELP_STRING([--disable-chroot], [disable chroot]))
+    AS_HELP_STRING([--disable-chroot], [Disable chroot]))
 AS_IF([test "x$enable_chroot" != "xno"], [
 	HAVE_CHROOT="-DHAVE_CHROOT"
 	AC_SUBST(HAVE_CHROOT)
@@ -27,7 +27,7 @@ AS_IF([test "x$enable_chroot" != "xno"], [
 
 HAVE_BIND=""
 AC_ARG_ENABLE([bind],
-    AS_HELP_STRING([--disable-bind], [disable bind]))
+    AS_HELP_STRING([--disable-bind], [Disable bind]))
 AS_IF([test "x$enable_bind" != "xno"], [
 	HAVE_BIND="-DHAVE_BIND"
 	AC_SUBST(HAVE_BIND)
@@ -39,14 +39,6 @@ AC_ARG_ENABLE([fatal_warnings],
 AS_IF([test "x$enable_fatal_warnings" = "xyes"], [
 	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
 	AC_SUBST(HAVE_FATAL_WARNINGS)
-])
-
-HAVE_MUSL_LIBC=""
-AC_ARG_ENABLE([musl_libc],
-    AS_HELP_STRING([--enable-musl-libc], [ugly hack to allow compilation with musl libc]))
-AS_IF([test "x$enable_musl_libc" = "xyes"], [
-	HAVE_MUSL_LIBC="-DHAVE_MUSL_LIBC"
-	AC_SUBST(HAVE_MUSL_LIBC)
 ])
 
 # checking pthread library
@@ -65,5 +57,4 @@ echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
-echo "   musl libc: $HAVE_MUSL_LIBC"
 echo

@@ -18,11 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #define _GNU_SOURCE
-#ifdef HAVE_MUSL_LIBC
-#include "musl_defs.h"
-#else
 #include <stdio.h>
-#endif
 #include <stdlib.h>
 #include <string.h>
 #include <dlfcn.h>
@@ -32,9 +28,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/un.h>
-#ifndef HAVE_MUSL_LIBC
 #include <sys/stat.h>
-#endif
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
@@ -318,6 +312,7 @@ FILE *fopen(const char *pathname, const char *mode) {
 	return rv;
 }
 
+#ifdef __GLIBC__
 FILE *fopen64(const char *pathname, const char *mode) {
 	if (!orig_fopen64)
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
@@ -326,6 +321,7 @@ FILE *fopen64(const char *pathname, const char *mode) {
 	printf("%u:%s:fopen64 %s\n", pid(), name(), pathname);
 	return rv;
 }
+#endif /* __GLIBC__ */
 
 
 // freopen
@@ -340,6 +336,7 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 	return rv;
 }
 
+#ifdef __GLIBC__
 typedef FILE *(*orig_freopen64_t)(const char *pathname, const char *mode, FILE *stream);
 static orig_freopen64_t orig_freopen64 = NULL;
 FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
@@ -350,6 +347,7 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 	printf("%u:%s:freopen64 %s\n", pid(), name(), pathname);
 	return rv;
 }
+#endif /* __GLIBC__ */
 
 // unlink
 typedef int (*orig_unlink_t)(const char *pathname);
@@ -420,17 +418,10 @@ int stat(const char *pathname, struct stat *buf) {
 	return rv;
 }
 
-#ifdef HAVE_MUSL_LIBC
-typedef int (*orig_stat64_t)(const char *pathname, struct stat *buf);
-#else
+#ifdef __GLIBC__
 typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
-#endif
 static orig_stat64_t orig_stat64 = NULL;
-#ifdef HAVE_MUSL_LIBC
-int stat64(const char *pathname, struct stat *buf) {
-#else
 int stat64(const char *pathname, struct stat64 *buf) {
-#endif
 	if (!orig_stat)
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat");
 			
@@ -438,6 +429,7 @@ int stat64(const char *pathname, struct stat64 *buf) {
 	printf("%u:%s:stat %s\n", pid(), name(), pathname);
 	return rv;
 }
+#endif /* __GLIBC__ */
 
 
 // access

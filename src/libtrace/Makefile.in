@@ -2,13 +2,12 @@ PREFIX=@prefix@
 VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 HAVE_FATAL_WARNINGS=@HAVE_FATAL_WARNINGS@
-HAVE_MUSL_LIBC=@HAVE_MUSL_LIBC@
 
 H_FILE_LIST       = $(wildcard *.[h])
 C_FILE_LIST       = $(wildcard *.c)
 OBJS = $(C_FILE_LIST:.c=.o)
 BINOBJS =  $(foreach file, $(OBJS), $file)
-CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' $(HAVE_MUSL_LIBC) -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIC -Wformat -Wformat-security
+CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIC -Wformat -Wformat-security
 LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now 
 
 all: libtrace.so

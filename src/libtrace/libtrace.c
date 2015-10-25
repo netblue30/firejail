@@ -312,6 +312,7 @@ FILE *fopen(const char *pathname, const char *mode) {
 	return rv;
 }
 
+#ifdef __GLIBC__
 FILE *fopen64(const char *pathname, const char *mode) {
 	if (!orig_fopen64)
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
@@ -320,6 +321,7 @@ FILE *fopen64(const char *pathname, const char *mode) {
 	printf("%u:%s:fopen64 %s\n", pid(), name(), pathname);
 	return rv;
 }
+#endif /* __GLIBC__ */
 
 
 // freopen
@@ -334,6 +336,7 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 	return rv;
 }
 
+#ifdef __GLIBC__
 typedef FILE *(*orig_freopen64_t)(const char *pathname, const char *mode, FILE *stream);
 static orig_freopen64_t orig_freopen64 = NULL;
 FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
@@ -344,6 +347,7 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 	printf("%u:%s:freopen64 %s\n", pid(), name(), pathname);
 	return rv;
 }
+#endif /* __GLIBC__ */
 
 // unlink
 typedef int (*orig_unlink_t)(const char *pathname);
@@ -414,6 +418,7 @@ int stat(const char *pathname, struct stat *buf) {
 	return rv;
 }
 
+#ifdef __GLIBC__
 typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
 static orig_stat64_t orig_stat64 = NULL;
 int stat64(const char *pathname, struct stat64 *buf) {
@@ -424,6 +429,7 @@ int stat64(const char *pathname, struct stat64 *buf) {
 	printf("%u:%s:stat %s\n", pid(), name(), pathname);
 	return rv;
 }
+#endif /* __GLIBC__ */
 
 
 // access

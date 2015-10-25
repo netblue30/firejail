@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Duncan Overbruck (https://github.com/Duncaen)
+	- musl libc fix
 andrew160 (https://github.com/andrew160)
 	- profile fixes
 Loïc Damien (https://github.com/dzamlo)

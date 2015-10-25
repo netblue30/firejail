@@ -1307,9 +1307,9 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --disable-seccomp       Disable seccomp
-  --disable-chroot        Disable chroot
-  --disable-bind          Disable bind
+  --disable-seccomp       disable seccomp
+  --disable-chroot        disable chroot
+  --disable-bind          disable bind
   --enable-fatal-warnings -W -Wall -Werror
 
 Some influential environment variables:

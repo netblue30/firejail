@@ -11,7 +11,7 @@ AC_PROG_RANLIB
 
 HAVE_SECCOMP=""
 AC_ARG_ENABLE([seccomp],
-    AS_HELP_STRING([--disable-seccomp], [Disable seccomp]))
+    AS_HELP_STRING([--disable-seccomp], [disable seccomp]))
 AS_IF([test "x$enable_seccomp" != "xno"], [
 	HAVE_SECCOMP="-DHAVE_SECCOMP"
 	AC_SUBST(HAVE_SECCOMP)
@@ -19,7 +19,7 @@ AS_IF([test "x$enable_seccomp" != "xno"], [
 
 HAVE_CHROOT=""
 AC_ARG_ENABLE([chroot],
-    AS_HELP_STRING([--disable-chroot], [Disable chroot]))
+    AS_HELP_STRING([--disable-chroot], [disable chroot]))
 AS_IF([test "x$enable_chroot" != "xno"], [
 	HAVE_CHROOT="-DHAVE_CHROOT"
 	AC_SUBST(HAVE_CHROOT)
@@ -27,7 +27,7 @@ AS_IF([test "x$enable_chroot" != "xno"], [
 
 HAVE_BIND=""
 AC_ARG_ENABLE([bind],
-    AS_HELP_STRING([--disable-bind], [Disable bind]))
+    AS_HELP_STRING([--disable-bind], [disable bind]))
 AS_IF([test "x$enable_bind" != "xno"], [
 	HAVE_BIND="-DHAVE_BIND"
 	AC_SUBST(HAVE_BIND)

@@ -237,9 +237,14 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	if (cfg.profile) {
 		// apply all whitelist commands ... 
-		if (arg_whitelist)
-			fs_whitelist();
-
+		if (arg_whitelist) {
+			// whitelist commands are disabled if --private or --private-home option is present
+			if (arg_private == 0)
+				fs_whitelist();
+			else
+				fprintf(stderr, "Warning: whitelists disabled by private or private-home\n");
+		}
+		
 		// ... followed by blacklist commands
 		fs_blacklist();
 	}

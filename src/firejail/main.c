@@ -712,7 +712,11 @@ int main(int argc, char **argv) {
 			arg_noprofile = 1;
 		}
 		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
-			char *ptr = argv[i] + 9;
+			if (custom_profile) {
+				fprintf(stderr, "Error: please use --profile after --include\n");
+				exit(1);
+			}
+
 			if (*(argv[i] + 9) == '\0') {
 				fprintf(stderr, "Error: invalid ignore option\n");
 				exit(1);

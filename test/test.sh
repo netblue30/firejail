@@ -18,6 +18,9 @@ echo "TESTING: invalid filename"
 echo "TESTING: environment variables"
 ./env.exp
 
+echo "TESTING: ignore command"
+./ignore.exp
+
 echo "TESTING: private-etc"
 ./private-etc.exp
 

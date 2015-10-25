@@ -1,0 +1,3 @@
+private
+seccomp
+shell none

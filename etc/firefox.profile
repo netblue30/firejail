@@ -8,7 +8,6 @@ caps.drop all
 seccomp
 netfilter
 noroot
-shell none
 whitelist ~/.mozilla
 whitelist ~/Downloads
 whitelist ~/dwhelper

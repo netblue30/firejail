@@ -81,7 +81,7 @@ typedef struct config_t {
 	
 	// filesystem
 	ProfileEntry *profile;
-#define MAX_PROFILE_IGNORE 16	
+#define MAX_PROFILE_IGNORE 32	
 	char *profile_ignore[MAX_PROFILE_IGNORE];
 	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory

@@ -75,6 +75,27 @@ int profile_check_line(char *ptr, int lineno) {
 		if (strncmp(ptr, cfg.profile_ignore[i], strlen(cfg.profile_ignore[i])) == 0)
 			return 0;	// ignore line
 	}
+	
+	if (strncmp(ptr, "ignore ", 7) == 0) {
+		char *str = strdup(ptr + 7);
+		if (*str == '\0') {
+			fprintf(stderr, "Error: invalid ignore option\n");
+			exit(1);
+		}
+		// find an empty entry in profile_ignore array
+		int j;
+		for (j = 0; j < MAX_PROFILE_IGNORE; j++) {
+			if (cfg.profile_ignore[j] == NULL) 
+				break;
+		}
+		if (j >= MAX_PROFILE_IGNORE) {
+			fprintf(stderr, "Error: maximum %d --ignore options are permitted\n", MAX_PROFILE_IGNORE);
+			exit(1);
+		}
+		// ... and configure it
+		cfg.profile_ignore[j] = str;
+		return 0;
+	}
 
 	// seccomp, caps, private, user namespace
 	if (strcmp(ptr, "noroot") == 0) {

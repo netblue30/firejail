@@ -64,7 +64,10 @@ Child process initialized
 .RE
 
 .SH Scripting
-Include and comment support:
+Scripting commands:
+
+.TP
+# this is a comment
 
 .TP
 \f\include other.profile exclude-token
@@ -83,13 +86,21 @@ Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1"
 Note: exclude-token is deprecated, use noblacklist command instead.
 
 .TP
-# this is a comment
+\f\noblacklist file_name
+If the file name matches file_name, the file will not be blacklisted in any blacklist commands that follow.
+
+Example: "noblacklist ${HOME}/.mozilla"
+
+.TP
+\f\ignore command
+Ignore command.
+
+Example: "ignore seccomp"
 
 .SH Filesystem
 These profile entries define a chroot filesystem built on top of the existing
 host filesystem. Each line describes a file element that is removed from
 the filesystem (\fBblacklist\fR), a read-only file or directory (\fBread-only\fR),
-a filter for finer control of blacklisting (\fBnoblacklist\fR),
 a tmpfs mounted on top of an existing directory (\fBtmpfs\fR),
 or mount-bind a directory  or file on top of another directory or file (\fBbind\fR).
 Use \fBprivate\fR to set private mode.

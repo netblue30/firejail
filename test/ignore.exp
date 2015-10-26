@@ -33,6 +33,15 @@ expect {
 	"4"
 }
 sleep 1
+send -- "exit\r"
+sleep 1
+
+send -- "firejail --debug --profile=ignore2.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	BLACKLIST {puts "TESTING ERROR 6\n";exit}
+	"Child process initialized"
+}
 
 
 puts "\nall done\n"

@@ -1,0 +1,3 @@
+ignore seccomp
+private
+seccomp

@@ -88,7 +88,7 @@ void check_output(int argc, char **argv) {
 			continue;
 		ptr += sprintf(ptr, "%s ", argv[i]);
 	}
-	sprintf(ptr, "| %s/lib/firejail/ftee %s", PREFIX, outfile);
+	sprintf(ptr, "| %s/firejail/ftee %s", LIBDIR, outfile);
 
 	// run command
 	char *a[4];

@@ -308,12 +308,25 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
-		// join sandbox by pid or by name
+		// print seccomp filter for a sandbox specified by pid or by name
 		pid_t pid;
 		if (read_pid(argv[i] + 16, &pid) == 0)		
 			seccomp_print_filter(pid);
 		else
 			seccomp_print_filter_name(argv[i] + 16);
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--debug-protocols") == 0) {
+		protocol_list();
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
+		// print seccomp filter for a sandbox specified by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 17, &pid) == 0)		
+			protocol_print_filter(pid);
+		else
+			protocol_print_filter_name(argv[i] + 17);
 		exit(0);
 	}
 #endif
@@ -451,6 +464,8 @@ int main(int argc, char **argv) {
 		// filtering
 		//*************************************
 #ifdef HAVE_SECCOMP
+		else if (strncmp(argv[i], "--protocol=", 11) == 0) 
+			protocol_store(argv[i] + 11);
 		else if (strcmp(argv[i], "--seccomp") == 0) {
 			if (arg_seccomp) {
 				fprintf(stderr, "Error: seccomp already enabled\n");

@@ -109,9 +109,10 @@ typedef struct config_t {
 
 	// seccomp
 	char *seccomp_list;//  optional seccomp list on top of default filter
-	char *seccomp_list_drop;		// seccomp drop list
-	char *seccomp_list_keep;		// seccomp keep list
-	char **seccomp_list_errno;		// seccomp errno[nr] lists
+	char *seccomp_list_drop;	// seccomp drop list
+	char *seccomp_list_keep;	// seccomp keep list
+	char **seccomp_list_errno;	// seccomp errno[nr] lists
+	char *protocol;			// protocol list
 
 	// rlimits
 	unsigned rlimit_nofile;
@@ -357,7 +358,7 @@ void caps_print_filter_name(const char *name);
 const char *syscall_find_nr(int nr);
 // return -1 if error, 0 if no error
 int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg), int arg);
-// print all available syscalls
+// print all available syscallsseccomp
 void syscall_print(void);
 
 // fs_trace.c
@@ -427,5 +428,11 @@ void pulseaudio_disable(void);
 void fs_check_bin_list(void);
 void fs_private_bin_list(void);
 
+// protocol.c
+void protocol_list();
+void protocol_print_filter_name(const char *name);
+void protocol_print_filter(pid_t pid);
+void protocol_store(const char *prlist);
+void protocol_filter(void);
 #endif
 

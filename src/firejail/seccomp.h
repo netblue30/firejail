@@ -92,14 +92,25 @@ struct seccomp_data {
 # define ARCH_NR	0
 #endif
 
-
 #define VALIDATE_ARCHITECTURE \
+     BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
+     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
+     BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
+
+#define VALIDATE_ARCHITECTURE_32_64 \
      BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
      BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
      BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
 #define EXAMINE_SYSCALL BPF_STMT(BPF_LD+BPF_W+BPF_ABS,	\
 		 (offsetof(struct seccomp_data, nr)))
+
+#define EXAMINE_ARGUMENT(nr) BPF_STMT(BPF_LD+BPF_W+BPF_ABS,	\
+		 (offsetof(struct seccomp_data, args[nr])))
+
+#define ONLY(syscall_nr)	\
+	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 1, 0),	\
+	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
 #define BLACKLIST(syscall_nr)	\
 	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 0, 1),	\
@@ -115,6 +126,9 @@ struct seccomp_data {
 
 #define RETURN_ALLOW \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
+
+#define RETURN_ERRNO(nr) \
+	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ERRNO | nr)
 
 #define KILL_PROCESS \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_KILL)

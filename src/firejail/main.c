@@ -58,10 +58,6 @@ int arg_zsh = 0;				// use zsh as default shell
 int arg_csh = 0;				// use csh as default shell
 
 int arg_seccomp = 0;				// enable default seccomp filter
-char *arg_seccomp_list = NULL;		// optional seccomp list on top of default filter
-char *arg_seccomp_list_drop = NULL;		// seccomp drop list
-char *arg_seccomp_list_keep = NULL;		// seccomp keep list
-char **arg_seccomp_list_errno = NULL;		// seccomp errno[nr] lists
 
 int arg_caps_default_filter = 0;			// enable default capabilities filter
 int arg_caps_drop = 0;				// drop list
@@ -468,8 +464,8 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			arg_seccomp = 1;
-			arg_seccomp_list = strdup(argv[i] + 10);
-			if (!arg_seccomp_list)
+			cfg.seccomp_list = strdup(argv[i] + 10);
+			if (!cfg.seccomp_list)
 				errExit("strdup");
 		}
 		else if (strncmp(argv[i], "--seccomp.drop=", 15) == 0) {
@@ -478,8 +474,8 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			arg_seccomp = 1;
-			arg_seccomp_list_drop = strdup(argv[i] + 15);
-			if (!arg_seccomp_list_drop)
+			cfg.seccomp_list_drop = strdup(argv[i] + 15);
+			if (!cfg.seccomp_list_drop)
 				errExit("strdup");
 		}
 		else if (strncmp(argv[i], "--seccomp.keep=", 15) == 0) {
@@ -488,12 +484,12 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			arg_seccomp = 1;
-			arg_seccomp_list_keep = strdup(argv[i] + 15);
-			if (!arg_seccomp_list_keep)
+			cfg.seccomp_list_keep = strdup(argv[i] + 15);
+			if (!cfg.seccomp_list_keep)
 				errExit("strdup");
 		}
 		else if (strncmp(argv[i], "--seccomp.e", 11) == 0 && strchr(argv[i], '=')) {
-			if (arg_seccomp && !arg_seccomp_list_errno) {
+			if (arg_seccomp && !cfg.seccomp_list_errno) {
 				fprintf(stderr, "Error: seccomp already enabled\n");
 				exit(1);
 			}
@@ -506,17 +502,17 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 
-			if (!arg_seccomp_list_errno)
-				arg_seccomp_list_errno = calloc(highest_errno+1, sizeof(arg_seccomp_list_errno[0]));
+			if (!cfg.seccomp_list_errno)
+				cfg.seccomp_list_errno = calloc(highest_errno+1, sizeof(cfg.seccomp_list_errno[0]));
 
-			if (arg_seccomp_list_errno[nr]) {
+			if (cfg.seccomp_list_errno[nr]) {
 				fprintf(stderr, "Error: errno %s already configured\n", errnoname);
 				free(errnoname);
 				exit(1);
 			}
 			arg_seccomp = 1;
-			arg_seccomp_list_errno[nr] = strdup(eq+1);
-			if (!arg_seccomp_list_errno[nr])
+			cfg.seccomp_list_errno[nr] = strdup(eq+1);
+			if (!cfg.seccomp_list_errno[nr])
 				errExit("strdup");
 			free(errnoname);
 		}
@@ -1393,10 +1389,10 @@ int main(int argc, char **argv) {
 
 	// free globals
 #ifdef HAVE_SECCOMP
-	if (arg_seccomp_list_errno) {
+	if (cfg.seccomp_list_errno) {
 		for (i = 0; i < highest_errno; i++)
-			free(arg_seccomp_list_errno[i]);
-		free(arg_seccomp_list_errno);
+			free(cfg.seccomp_list_errno[i]);
+		free(cfg.seccomp_list_errno);
 	}
 #endif
 

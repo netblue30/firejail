@@ -160,8 +160,8 @@ int profile_check_line(char *ptr, int lineno) {
 	if (strncmp(ptr, "seccomp ", 8) == 0) {
 		arg_seccomp = 1;
 #ifdef HAVE_SECCOMP
-		arg_seccomp_list = strdup(ptr + 8);
-		if (!arg_seccomp_list)
+		cfg.seccomp_list = strdup(ptr + 8);
+		if (!cfg.seccomp_list)
 			errExit("strdup");
 #endif
 		return 0;
@@ -171,8 +171,8 @@ int profile_check_line(char *ptr, int lineno) {
 	if (strncmp(ptr, "seccomp.drop ", 13) == 0) {
 		arg_seccomp = 1;
 #ifdef HAVE_SECCOMP
-		arg_seccomp_list_drop = strdup(ptr + 13);
-		if (!arg_seccomp_list_drop)
+		cfg.seccomp_list_drop = strdup(ptr + 13);
+		if (!cfg.seccomp_list_drop)
 			errExit("strdup");
 #endif
 		return 0;
@@ -182,8 +182,8 @@ int profile_check_line(char *ptr, int lineno) {
 	if (strncmp(ptr, "seccomp.keep ", 13) == 0) {
 		arg_seccomp = 1;
 #ifdef HAVE_SECCOMP
-		arg_seccomp_list_keep= strdup(ptr + 13);
-		if (!arg_seccomp_list_keep)
+		cfg.seccomp_list_keep= strdup(ptr + 13);
+		if (!cfg.seccomp_list_keep)
 			errExit("strdup");
 #endif
 		return 0;

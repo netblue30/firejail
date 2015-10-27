@@ -343,7 +343,7 @@ int seccomp_filter_drop(void) {
 	filter_init();
 	
 	// default seccomp
-	if (arg_seccomp_list_drop == NULL) {
+	if (cfg.seccomp_list_drop == NULL) {
 #ifdef SYS_mount		
 		filter_add_blacklist(SYS_mount, 0);
 #endif
@@ -507,15 +507,15 @@ int seccomp_filter_drop(void) {
 	}
 
 	// default seccomp filter with additional drop list
-	if (arg_seccomp_list && arg_seccomp_list_drop == NULL) {
-		if (syscall_check_list(arg_seccomp_list, filter_add_blacklist, 0)) {
+	if (cfg.seccomp_list && cfg.seccomp_list_drop == NULL) {
+		if (syscall_check_list(cfg.seccomp_list, filter_add_blacklist, 0)) {
 			fprintf(stderr, "Error: cannot load seccomp filter\n");
 			exit(1);
 		}
 	}
 	// drop list
-	else if (arg_seccomp_list == NULL && arg_seccomp_list_drop) {
-		if (syscall_check_list(arg_seccomp_list_drop, filter_add_blacklist, 0)) {
+	else if (cfg.seccomp_list == NULL && cfg.seccomp_list_drop) {
+		if (syscall_check_list(cfg.seccomp_list_drop, filter_add_blacklist, 0)) {
 			fprintf(stderr, "Error: cannot load seccomp filter\n");
 			exit(1);
 		}
@@ -558,8 +558,8 @@ int seccomp_filter_keep(void) {
 	filter_add_whitelist(SYS_dup, 0);
 	
 	// apply keep list
-	if (arg_seccomp_list_keep) {
-		if (syscall_check_list(arg_seccomp_list_keep, filter_add_whitelist, 0)) {
+	if (cfg.seccomp_list_keep) {
+		if (syscall_check_list(cfg.seccomp_list_keep, filter_add_whitelist, 0)) {
 			fprintf(stderr, "Error: cannot load seccomp filter\n");
 			exit(1);
 		}
@@ -599,8 +599,8 @@ int seccomp_filter_errno(void) {
 	// apply errno list
 
 	for (i = 0; i < higest_errno; i++) {
-		if (arg_seccomp_list_errno[i]) {
-			if (syscall_check_list(arg_seccomp_list_errno[i], filter_add_errno, i)) {
+		if (cfg.seccomp_list_errno[i]) {
+			if (syscall_check_list(cfg.seccomp_list_errno[i], filter_add_errno, i)) {
 				fprintf(stderr, "Error: cannot load seccomp filter\n");
 				exit(1);
 			}

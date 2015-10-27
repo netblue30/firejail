@@ -107,6 +107,12 @@ typedef struct config_t {
 	uint32_t dns2;
 	uint32_t dns3;
 
+	// seccomp
+	char *seccomp_list;//  optional seccomp list on top of default filter
+	char *seccomp_list_drop;		// seccomp drop list
+	char *seccomp_list_keep;		// seccomp keep list
+	char **seccomp_list_errno;		// seccomp errno[nr] lists
+
 	// rlimits
 	unsigned rlimit_nofile;
 	unsigned rlimit_nproc;
@@ -152,10 +158,6 @@ extern int arg_zsh;		// use zsh as default shell
 extern int arg_csh;		// use csh as default shell
 
 extern int arg_seccomp;	// enable default seccomp filter
-extern char *arg_seccomp_list;//  optional seccomp list on top of default filter
-extern char *arg_seccomp_list_drop;		// seccomp drop list
-extern char *arg_seccomp_list_keep;		// seccomp keep list
-extern char **arg_seccomp_list_errno;		// seccomp errno[nr] lists
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list

@@ -190,13 +190,13 @@ int sandbox(void* sandbox_arg) {
 			// force default seccomp inside the chroot, no keep or drop list
 			// the list build on top of the default drop list is kept intact
 			arg_seccomp = 1;
-			if (arg_seccomp_list_drop) {
-				free(arg_seccomp_list_drop);
-				arg_seccomp_list_drop = NULL;
+			if (cfg.seccomp_list_drop) {
+				free(cfg.seccomp_list_drop);
+				cfg.seccomp_list_drop = NULL;
 			}
-			if (arg_seccomp_list_keep) {
-				free(arg_seccomp_list_keep);
-				arg_seccomp_list_keep = NULL;
+			if (cfg.seccomp_list_keep) {
+				free(cfg.seccomp_list_keep);
+				cfg.seccomp_list_keep = NULL;
 			}
 			
 			// disable all capabilities
@@ -428,9 +428,9 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_SECCOMP
 	// if a keep list is available, disregard the drop list
 	if (arg_seccomp == 1) {
-		if (arg_seccomp_list_keep)
+		if (cfg.seccomp_list_keep)
 			seccomp_filter_keep(); // this will also save the fmyilter to MNT_DIR/seccomp file
-		else if (arg_seccomp_list_errno)
+		else if (cfg.seccomp_list_errno)
 			seccomp_filter_errno(); // this will also save the filter to MNT_DIR/seccomp file
 		else
 			seccomp_filter_drop(); // this will also save the filter to MNT_DIR/seccomp file

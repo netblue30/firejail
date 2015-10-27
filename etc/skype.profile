@@ -1,4 +1,4 @@
-# Steam profile (applies to games/apps launched from Steam as well)
+# Skype profile
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.local/share/steam
 include /etc/firejail/disable-mgmt.inc

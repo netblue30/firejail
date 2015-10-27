@@ -13,6 +13,8 @@ whitelist ~/Downloads
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.lastpass
+whitelist ~/.gtkrc-2.0
+
 
 
 

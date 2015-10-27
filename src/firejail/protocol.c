@@ -85,13 +85,23 @@ void protocol_list(void) {
 // --protocol.print
 void protocol_print_filter_name(const char *name) {
 	(void) name;
+#ifdef SYS_socket
 //todo
+#else
+	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+	return;
+#endif
 }
 
 // --protocol.print
 void protocol_print_filter(pid_t pid) {
 	(void) pid;
+#ifdef SYS_socket
 //todo
+#else
+        fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+        return;
+#endif  
 }
 
 // check protocol list and store it in cfg structure
@@ -129,9 +139,13 @@ errout:
 // install protocol filter
 void protocol_filter(void) {
 	assert(cfg.protocol);
-	
+
+#ifndef SYS_socket
+	(void) find_protocol_domain;
+        fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+        return;
+#else
 	// build the filter
-	
 	struct sock_filter filter[32];	// big enough
 	memset(&filter[0], 0, sizeof(filter));
 	uint8_t *ptr = (uint8_t *) &filter[0];
@@ -217,7 +231,7 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 #endif	
 
 	// install filter
-	unsigned short entries = (unsigned short) ((uint64_t) ptr - (uint64_t) (filter)) / (unsigned) sizeof(struct sock_filter);
+	unsigned short entries = (unsigned short) ((uintptr_t) ptr - (uintptr_t) (filter)) / (unsigned) sizeof(struct sock_filter);
 	struct sock_fprog prog = {
 		.len = entries,
 		.filter = filter,
@@ -230,11 +244,7 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 	else if (arg_debug) {
 		printf("seccomp protocol filter enabled\n");
 	}
-
-#if defined(__x86_64__)
-	
-#endif
-	
+#endif // SYS_socket	
 }
 
-#endif
+#endif // HAVE_SECCOMP

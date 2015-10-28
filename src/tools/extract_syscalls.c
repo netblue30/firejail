@@ -18,14 +18,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include <stdio.h>
-#include <stdlib.h>6
+#include <stdlib.h>
 #include <string.h>
 
 #define BUFMAX 4096
 
 int main(int argc, char **argv) {
 	if (argc != 2) {
-		printf("usage: %s /media/ubuntu/usr/include/x86_64-linux-gnu/bits/syscall.h\n", argv[0]);
+		printf("usage: %s /usr/include/x86_64-linux-gnu/bits/syscall.h\n", argv[0]);
 		return 1;
 	}
 	
@@ -48,6 +48,8 @@ int main(int argc, char **argv) {
 			*end = '\0';
 		
 		// parsing
+		if (strncmp(start, "# error", 7) == 0)
+			continue;
 		if (strncmp(start, "#endif", 6) == 0)
 			printf("%s\n", start);
 		if (strncmp(start, "#endif", 6) == 0)

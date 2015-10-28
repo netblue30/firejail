@@ -356,6 +356,9 @@ int seccomp_filter_drop(void) {
 #ifdef SYS_kexec_load		
 		filter_add_blacklist(SYS_kexec_load, 0);
 #endif
+#ifdef SYS_kexec_file_load		
+		filter_add_blacklist(SYS_kexec_file_load, 0);
+#endif
 #ifdef SYS_open_by_handle_at		
 		filter_add_blacklist(SYS_open_by_handle_at, 0);
 #endif
@@ -494,9 +497,6 @@ int seccomp_filter_drop(void) {
 	//#ifdef SYS_get_robust_list
 	//		filter_add_blacklist(SYS_get_robust_list, 0);
 	//#endif
-#ifdef SYS_perf_event_open
-		filter_add_blacklist(SYS_perf_event_open, 0);
-#endif
 
  // CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(clone), 1,
  //     SCMP_A0(SCMP_CMP_MASKED_EQ, CLONE_NEWUSER, CLONE_NEWUSER)));

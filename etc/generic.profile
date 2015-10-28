@@ -11,6 +11,7 @@ blacklist ${HOME}/.keepassx
 blacklist ${HOME}/.password-store
 caps.drop all
 seccomp
+protocol unix,inet,inet6
 netfilter
 noroot
 

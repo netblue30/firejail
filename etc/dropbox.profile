@@ -10,4 +10,5 @@ blacklist ${HOME}/.password-store
 blacklist ${HOME}/.wine
 caps
 seccomp
+protocol unix,inet,inet6
 noroot

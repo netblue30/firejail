@@ -82,4 +82,9 @@ Recognized values: unix, inet, inet6, netlink and packet. Example:
 $ firejail --protocol=unix,inet,inet6 firefox
 `````
 
+### New security profiles
+
+Steam, Skype, Wine
+
+
 

@@ -16,7 +16,3 @@ whitelist ~/.lastpass
 whitelist ~/.gtkrc-2.0
 whitelist ~/.vimperatorrc
 whitelist ~/.vimperator
-
-
-
-

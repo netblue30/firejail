@@ -23,7 +23,7 @@ firejail {\-\-list | \-\-netstats | \-\-top | \-\-tree}
 Miscellaneous:
 .PP
 .RS
-firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-help | \-\-version}
+firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-debug-protocols | \-\-help | \-\-version}
 .RE
 .SH DESCRIPTION
 Firejail is a SUID sandbox program that reduces the risk of security breaches by
@@ -257,6 +257,15 @@ Print all recognized error numbers in the current Firejail software build and ex
 Example:
 .br
 $ firejail \-\-debug-errnos
+.TP
+\fB\-\-debug-protocols
+Print all recognized protocols in the current Firejail software build and exit.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-debug-protocols
 .TP
 \fB\-\-debug-syscalls
 Print all recognized system calls in the current Firejail software build and exit.
@@ -842,6 +851,17 @@ For more information, see SECURITY PROFILES section below.
 Example:
 .br
 $ firejail \-\-profile=myprofile
+
+.TP
+\fB\-\-protocol=protocol,protocol,protocol
+Enable protocol filter. The filter is based on seccomp and the first argument to socket system call.
+Recognized values: unix, inet, inet6, netlink and packet.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-protocol=unix,inet,inet6 firefox
 .TP
 \fB\-\-quiet
 Turn off Firejail's output.

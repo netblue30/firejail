@@ -51,13 +51,21 @@ whitelist ~/Downloads
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.lastpass
+whitelist ~/.gtkrc-2.0
+whitelist ~/.vimperatorrc
+whitelist ~/.vimperator
 `````
 
 I intend to bring in all files and directories used by Firefox addons and plugins. So far I have
 [Video DownloadHelper](https://addons.mozilla.org/en-US/firefox/addon/video-downloadhelper/),
-[Zotero](https://www.zotero.org/download/) and
-[LastPass](https://addons.mozilla.org/en-US/firefox/addon/lastpass-password-manager/).
+[Zotero](https://www.zotero.org/download/) 
+[LastPass](https://addons.mozilla.org/en-US/firefox/addon/lastpass-password-manager/),
+and [Vimperator](https://addons.mozilla.org/en-US/firefox/addon/vimperator/)
 If you're using a anything else, please let me know.
+
+### Whitelisting in default Cromium profile
+
+![Whitelisted home directory](chromium-whitelist.png?raw=true)
 
 ### --ignore option
 
@@ -65,3 +73,13 @@ Ignore commands in profile files. Example:
 `````
 $ firejail --ignore=seccomp wine
 `````
+
+### --protocol option
+
+Enable protocol filter. The filter is based on seccomp and the first argument to socket system call.
+Recognized values: unix, inet, inet6, netlink and packet. Example:
+`````
+$ firejail --protocol=unix,inet,inet6 firefox
+`````
+
+

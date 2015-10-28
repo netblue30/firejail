@@ -74,6 +74,11 @@ static struct sock_filter *find_protocol_domain(const char *p) {
 
 // --debug-protocols
 void protocol_list(void) {
+#ifndef SYS_socket
+	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+	return;
+#endif
+
 	int i = 0;
 	while (protocol[i] != NULL) {
 		printf("%s, ", protocol[i]);

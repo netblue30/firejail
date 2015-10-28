@@ -70,6 +70,8 @@ void usage(void) {
 	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--debug-errnos - print all recognized error numbres in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
+	printf("\t--debug-protocols - print all recognized protocols in the current\n");
+	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--debug-syscalls - print all recognized system calls in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--defaultgw=address - use this address as default gateway in the new\n");
@@ -192,6 +194,10 @@ void usage(void) {
 	printf("\t\tAll modifications are discarded when the sandbox is closed.\n\n");
 	
 	printf("\t--profile=filename - use a custom profile.\n\n");
+	
+	printf("\t--protocol=protocol,protocol,protocol - enable protocol filter.\n");
+	printf("\t\tProtocol values: unix, inet, inet6, netlink, packet.\n\n");
+	
 	printf("\t--quiet - turn off Firejail's output.\n\n");
 	printf("\t--read-only=dirname_or_filename - set directory or file read-only.\n\n");
 	printf("\t--rlimit-fsize=number - set the maximum file size that can be created\n");
@@ -218,7 +224,8 @@ void usage(void) {
 	printf("\t\tkeyctl, uselib, acct, modify_ldt, pivot_root, io_setup,\n");
 	printf("\t\tio_destroy, io_getevents, io_submit, io_cancel,\n");
 	printf("\t\tremap_file_pages, mbind, get_mempolicy, set_mempolicy,\n");
-	printf("\t\tmigrate_pages, move_pages, vmsplice, and perf_event_open.\n\n");
+	printf("\t\tmigrate_pages, move_pages, vmsplice, perf_event_open and\n");
+	printf("\t\tkexec_file_load.\n\n");
 	
 	printf("\t--seccomp=syscall,syscall,syscall - enable seccomp filter, blacklist the\n");
 	printf("\t\tdefault syscall list and the syscalls specified by the command.\n\n");

@@ -1,0 +1,184 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --noprofile --protocol=unix ../src/tools/syscall_test socket\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"socket AF_INET"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.3\n";exit}
+	"socket AF_INET6"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.4\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.5\n";exit}
+	"socket AF_NETLINK"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.6\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.7\n";exit}
+	"socket AF_UNIX"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.8\n";exit}
+	"socket AF_PACKETX"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.9\n";exit}
+	"Operation not supported"
+}
+sleep 1
+
+send -- "firejail --noprofile --protocol=inet6,packet ../src/tools/syscall_test socket\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.1\n";exit}
+	"socket AF_INET"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.2\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.3\n";exit}
+	"socket AF_INET6"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.4\n";exit}
+	"socket AF_NETLINK"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.5\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.6\n";exit}
+	"socket AF_UNIX"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.7\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.8\n";exit}
+	"socket AF_PACKETX"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.9\n";exit}
+	"after socket"
+}
+sleep 1
+
+# profile testing
+send -- "firejail --profile=protocol1.profile ../src/tools/syscall_test socket\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"socket AF_INET"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.2\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.3\n";exit}
+	"socket AF_INET6"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.4\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.5\n";exit}
+	"socket AF_NETLINK"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.6\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.7\n";exit}
+	"socket AF_UNIX"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.8\n";exit}
+	"socket AF_PACKETX"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.9\n";exit}
+	"Operation not supported"
+}
+sleep 1
+
+send -- "firejail --profile=protocol2.profile ../src/tools/syscall_test socket\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"socket AF_INET"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.2\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.3\n";exit}
+	"socket AF_INET6"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.4\n";exit}
+	"socket AF_NETLINK"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.5\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.6\n";exit}
+	"socket AF_UNIX"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.7\n";exit}
+	"Operation not supported"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.8\n";exit}
+	"socket AF_PACKETX"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.9\n";exit}
+	"after socket"
+}
+sleep 1
+
+
+
+
+
+puts "\nall done\n"

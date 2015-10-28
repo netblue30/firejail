@@ -58,7 +58,7 @@ whitelist ~/.vimperator
 
 I intend to bring in all files and directories used by Firefox addons and plugins. So far I have
 [Video DownloadHelper](https://addons.mozilla.org/en-US/firefox/addon/video-downloadhelper/),
-[Zotero](https://www.zotero.org/download/) 
+[Zotero](https://www.zotero.org/download/), 
 [LastPass](https://addons.mozilla.org/en-US/firefox/addon/lastpass-password-manager/),
 and [Vimperator](https://addons.mozilla.org/en-US/firefox/addon/vimperator/)
 If you're using a anything else, please let me know.

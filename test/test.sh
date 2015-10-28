@@ -12,6 +12,9 @@ done
 
 ./fscheck.sh
 
+echo "TESTING: protocol"
+./protocol.exp
+
 echo "TESTING: invalid filename"
 ./invalid_filename.exp
 

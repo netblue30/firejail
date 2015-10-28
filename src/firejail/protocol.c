@@ -177,9 +177,9 @@ printf("entries %u\n", (unsigned) (sizeof(filter_start) / sizeof(struct sock_fil
 	}
 	printf("\n");
 }
+printf("whitelist_len %u, struct sock_filter len %u\n", whitelist_len, (unsigned) sizeof(struct sock_filter));
 #endif
 
-printf("whitelist_len %u, struct sock_filter len %u\n", whitelist_len, (unsigned) sizeof(struct sock_filter));
 
 	// parse list and add commands
 	char *tmplist = strdup(cfg.protocol);

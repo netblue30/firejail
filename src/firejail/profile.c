@@ -151,6 +151,11 @@ int profile_check_line(char *ptr, int lineno) {
 		return 0;
 	}
 	
+	if (strncmp(ptr, "protocol ", 9) == 0) {
+		protocol_store(ptr + 9);
+		return 0;
+	}
+	
 	if (strncmp(ptr, "env ", 4) == 0) {
 		env_store(ptr + 4);
 		return 0;

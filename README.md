@@ -63,7 +63,7 @@ I intend to bring in all files and directories used by Firefox addons and plugin
 and [Vimperator](https://addons.mozilla.org/en-US/firefox/addon/vimperator/)
 If you're using a anything else, please let me know.
 
-### Whitelisting in default Cromium profile
+### Whitelisting in default Chromium profile
 
 ![Whitelisted home directory](chromium-whitelist.png?raw=true)
 
@@ -76,15 +76,29 @@ $ firejail --ignore=seccomp wine
 
 ### --protocol option
 
-Enable protocol filter. The filter is based on seccomp and the first argument to socket system call.
-Recognized values: unix, inet, inet6, netlink and packet. Example:
+Enable protocol filter. It is based on seccomp and it filters the first argument to socket system call.
+If the value is not recognized, seccomp will kill the process.
+Recognized values: unix, inet, inet6, netlink and packet.
+
+"unix" describes the regular Unix socket connections,
+and "inet" and "inet6" are the regular IPv4 and IPv6 traffic. Most GUI applications need "unix,inet,inet6". "netlink" is the protocol
+used to talk to Linux kernel. You'll only need this for applications such as [iproute2](http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2) for
+system administration, and "packet" is used by sniffers to talk directly with the Ethernet layer.
+
+Example:
 `````
-$ firejail --protocol=unix,inet,inet6 firefox
+$ firejail --protocol=unix,inet,inet6
 `````
+
+Protocol filter is enabled in all default security profiles for GUI applications ("protocol unix,inet,inet6").
+
+### Dual i386/amd64 seccomp filter
+
+--seccomp option now installs a dual i386/amd64 default filter.
+32bit applications, such as Skype, running on regular 64bit computers, are protected by i386 seccomp filter.
 
 ### New security profiles
 
-Steam, Skype, Wine
-
+Steam, Skype, Wine. The dual seccomp filter is enabled by default for these applications.
 
 

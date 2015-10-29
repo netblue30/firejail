@@ -80,15 +80,15 @@ Enable protocol filter. It is based on seccomp and it filters the first argument
 If the value is not recognized, seccomp will kill the process.
 Valid values: unix, inet, inet6, netlink and packet.
 
-"unix" describes the regular Unix socket connections,
-and "inet" and "inet6" describe the regular IPv4 and IPv6 traffic. Most GUI applications need "unix,inet,inet6". "netlink" is the protocol
-used to talk to Linux kernel. You'll only need this for applications such as [iproute2](http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2) for
-system administration, and "packet" is used by sniffers to talk directly with the Ethernet layer.
-
 Example:
 `````
 $ firejail --protocol=unix,inet,inet6
 `````
+
+"unix" describes the regular Unix socket connections,
+and "inet" and "inet6" describe the regular IPv4 and IPv6 traffic. Most GUI applications need "unix,inet,inet6". "netlink" is the protocol
+used to talk to Linux kernel. You'll only need this for applications such as [iproute2](http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2)
+used in system administration, and "packet" is used by sniffers to talk directly with the Ethernet layer.
 
 Protocol filter is enabled in all default security profiles for GUI applications ("protocol unix,inet,inet6").
 

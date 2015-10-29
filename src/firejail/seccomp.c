@@ -337,6 +337,69 @@ static void read_seccomp_file(char *file_name) {
 		filter_debug();
 }
 
+// i386t filter installed on amd64 architectures
+void seccomp_filter_32(void) {
+	// hardcoded syscall values
+	struct sock_filter filter[] = {
+		VALIDATE_ARCHITECTURE_32,
+		EXAMINE_SYSCALL,
+		BLACKLIST(21), // mount
+		BLACKLIST(52), // umount2
+		BLACKLIST(26), // ptrace
+		BLACKLIST(283), // kexec_load
+		BLACKLIST(342), // open_by_handle_at
+		BLACKLIST(128), // init_module
+		BLACKLIST(350), // finit_module
+		BLACKLIST(129), // delete_module
+		BLACKLIST(110), // iopl
+		BLACKLIST(101), // ioperm
+		BLACKLIST(87), // swapon
+		BLACKLIST(115), // swapoff
+		BLACKLIST(103), // syslog
+		BLACKLIST(347), // process_vm_readv
+		BLACKLIST(348), // process_vm_writev
+		BLACKLIST(135), // sysfs
+		BLACKLIST(149), // _sysctl
+		BLACKLIST(124), // adjtimex
+		BLACKLIST(343), // clock_adjtime
+		BLACKLIST(253), // lookup_dcookie
+		BLACKLIST(336), // perf_event_open
+		BLACKLIST(338), // fanotify_init
+		BLACKLIST(349), // kcmp
+		BLACKLIST(286), // add_key
+		BLACKLIST(287), // request_key
+		BLACKLIST(288), // keyctl
+		BLACKLIST(86), // uselib
+		BLACKLIST(51), // acct
+		BLACKLIST(123), // modify_ldt
+		BLACKLIST(217), // pivot_root
+		BLACKLIST(245), // io_setup
+		BLACKLIST(246), // io_destroy
+		BLACKLIST(247), // io_getevents
+		BLACKLIST(248), // io_submit
+		BLACKLIST(249), // io_cancel
+		BLACKLIST(257), // remap_file_pages
+		BLACKLIST(274), // mbind
+		BLACKLIST(275), // get_mempolicy
+		BLACKLIST(276), // set_mempolicy
+		BLACKLIST(294), // migrate_pages
+		BLACKLIST(317), // move_pages
+		BLACKLIST(316), // vmsplice
+		RETURN_ALLOW
+	};
+
+	struct sock_fprog prog = {
+		.len = (unsigned short)(sizeof(filter) / sizeof(filter[0])),
+		.filter = filter,
+	};
+
+	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
+		;
+	}
+	else if (arg_debug) {
+		printf("dual i386/amd64 seccomp filter\n");
+	}
+}
 
 // drop filter for seccomp option
 int seccomp_filter_drop(void) {
@@ -344,6 +407,10 @@ int seccomp_filter_drop(void) {
 	
 	// default seccomp
 	if (cfg.seccomp_list_drop == NULL) {
+#if defined(__x86_64__)
+		seccomp_filter_32();
+#endif
+
 #ifdef SYS_mount		
 		filter_add_blacklist(SYS_mount, 0);
 #endif

@@ -18,6 +18,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+/*
+	struct sock_filter filter[] = {
+		VALIDATE_ARCHITECTURE,
+		EXAMINE_SYSCALL,
+		ONLY(SYS_socket),
+		EXAMINE_ARGUMENT(0), // allow only AF_INET and AF_INET6, drop everything else
+		WHITELIST(AF_INET),
+		WHITELIST(AF_INET6),
+		WHITELIST(AF_PACKET),
+		RETURN_ERRNO(ENOTSUP)
+	};
+	struct sock_fprog prog = {
+		.len = (unsigned short)(sizeof(filter) / sizeof(filter[0])),
+		.filter = filter,
+	};
+
+
+	if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
+		perror("prctl(NO_NEW_PRIVS)");
+		return 1;
+	}
+	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog)) {
+		perror("prctl");
+		return 1;
+	}
+*/
+
 #ifdef HAVE_SECCOMP
 #include "firejail.h"
 #include "seccomp.h"

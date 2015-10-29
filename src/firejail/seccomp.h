@@ -29,26 +29,34 @@
 		BLACKLIST(SYS_kexec_load), // loading a different kernel
 		BLACKLIST(SYS_open_by_handle_at), // open by handle
 		BLACKLIST(SYS_init_module), // kernel module handling
-#ifdef SYS_finit_module // introduced in 2013
 		BLACKLIST(SYS_finit_module),
-#endif
 		BLACKLIST(SYS_delete_module),
 		BLACKLIST(SYS_iopl), // io permisions
-#ifdef SYS_ioperm
 		BLACKLIST(SYS_ioperm),
-#endif
-SYS_iopl
 		BLACKLIST(SYS_iopl), // io permisions
-#endif
-#ifdef SYS_ni_syscall), // new io permisions call on arm devices
 		BLACKLIST(SYS_ni_syscall),
-#endif
 		BLACKLIST(SYS_swapon), // swap on/off
 		BLACKLIST(SYS_swapoff),
 		BLACKLIST(SYS_syslog), // kernel printk control
 		RETURN_ALLOW
 	};
+
+	struct sock_fprog prog = {
+		.len = (unsigned short)(sizeof(filter) / sizeof(filter[0])),
+		.filter = filter,
+	};
+
+
+	if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
+		perror("prctl(NO_NEW_PRIVS)");
+		return 1;
+	}
+	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog)) {
+		perror("prctl");
+		return 1;
+	}
 */
+
 #ifndef SECCOMP_H
 #define SECCOMP_H
 #include <errno.h>
@@ -97,9 +105,9 @@ struct seccomp_data {
      BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
      BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
-#define VALIDATE_ARCHITECTURE_32_64 \
+#define VALIDATE_ARCHITECTURE_32 \
      BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
-     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
+     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, AUDIT_ARCH_I386, 1, 0), \
      BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
 #define EXAMINE_SYSCALL BPF_STMT(BPF_LD+BPF_W+BPF_ABS,	\

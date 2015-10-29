@@ -5,10 +5,11 @@
 #include <sys/socket.h>
 #include <linux/netlink.h>
 #include <net/ethernet.h>
+#include <sys/mount.h>
 
 int main(int argc, char **argv) {
 	if (argc != 2) {
-		printf("Usage: test [sleep|socket|mkdir]\n");
+		printf("Usage: test [sleep|socket|mkdir|mount]\n");
 		return 1;
 	}
 
@@ -61,6 +62,13 @@ int main(int argc, char **argv) {
 		printf("before mkdir\n");
 		mkdir("tmp", 0777);
 		printf("after mkdir\n");
+	}
+	else if (strcmp(argv[1], "mount") == 0) {
+		printf("before mount\n");
+		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0) {
+			perror("mount");
+		}
+		printf("after mount\n");
 	}
 	else {
 		fprintf(stderr, "Error: invalid argument\n");

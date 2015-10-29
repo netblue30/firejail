@@ -348,6 +348,9 @@ echo "TESTING: seccomp empty"
 echo "TESTING: seccomp bad empty"
 ./seccomp-bad-empty.exp
 
+echo "TESTING: seccomp dual filter"
+./seccomp-dualfilter.exp
+
 echo "TESTING: read/write /var/tmp"
 ./fs_var_tmp.exp
 

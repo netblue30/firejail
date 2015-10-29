@@ -1,0 +1,38 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail ../src/tools/syscall_test mount\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"before mount"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"after mount" {puts "TESTING ERROR 2.1\n";exit}
+	"parent is shutting down"
+}
+sleep 1
+
+send -- "firejail ../src/tools/syscall_test32 mount\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"before mount"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"after mount" {puts "TESTING ERROR 5.1\n";exit}
+	"parent is shutting down"
+}
+
+puts "\nall done\n"

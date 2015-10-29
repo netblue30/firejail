@@ -1,8 +1,10 @@
-firejail (0.9.33) baseline; urgency=low
+firejail (0.9.34-rc1) baseline; urgency=low
   * added --ignore option
-  * added Steam and Skype profiles
+  * added --protocol option
+  * support dual i386/amd64 seccomp filters
+  * added Steam, Skype and Wine profiles
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  current development
+ -- netblue30 <netblue30@yahoo.com>  Thu, 29 Oct 2015 08:00:00 -0500
 
 firejail (0.9.32) baseline; urgency=low
   * added --interface option

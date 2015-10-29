@@ -34,3 +34,6 @@
 /etc/firejail/icecat.profile
 /etc/firejail/fbreader.profile
 /etc/firejail/spotify.profile
+/etc/firejail/skype.profile
+/etc/firejail/steam.profile
+/etc/firejail/wine.profile

@@ -88,7 +88,6 @@ realinstall:
 	install -c -m 0644 etc/disable-mgmt.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 etc/disable-secret.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 etc/disable-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/disable-history.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 etc/dropbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 etc/opera.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 etc/thunderbird.profile $(DESTDIR)/$(sysconfdir)/firejail/.

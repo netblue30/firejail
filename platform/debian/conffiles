@@ -29,7 +29,6 @@
 /etc/firejail/filezilla.profile
 /etc/firejail/empathy.profile
 /etc/firejail/disable-common.inc
-/etc/firejail/disable-history.inc
 /etc/firejail/deadbeef.profile
 /etc/firejail/icecat.profile
 /etc/firejail/fbreader.profile

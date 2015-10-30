@@ -76,3 +76,36 @@ blacklist /etc/profile.d
 blacklist /etc/rc.local
 blacklist /etc/anacrontab
 
+# General startup files
+read-only ${HOME}/.xinitrc
+read-only ${HOME}/.xserverrc
+read-only ${HOME}/.profile
+
+# Shell startup files
+read-only ${HOME}/.bash_login
+read-only ${HOME}/.bashrc
+read-only ${HOME}/.bash_profile
+read-only ${HOME}/.bash_logout
+read-only ${HOME}/.zshrc
+read-only ${HOME}/.zlogin
+read-only ${HOME}/.zprofile
+read-only ${HOME}/.zlogout
+read-only ${HOME}/.zsh_files
+read-only ${HOME}/.tcshrc
+read-only ${HOME}/.cshrc
+read-only ${HOME}/.csh_files
+
+# Initialization files that allow arbitrary command execution
+read-only ${HOME}/.mailcap
+read-only ${HOME}/.exrc
+read-only ${HOME}/.vimrc
+read-only ${HOME}/.vim
+read-only ${HOME}/.emacs
+read-only ${HOME}/.tmux.conf
+read-only ${HOME}/.iscreenrc
+read-only ${HOME}/.muttrc
+read-only ${HOME}/.xmonad
+
+# The user ~/bin directory can override commands such as ls
+read-only ${HOME}/bin
+

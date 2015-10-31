@@ -64,7 +64,7 @@ I intend to bring in all files and directories used by Firefox addons and plugin
 [LastPass](https://addons.mozilla.org/en-US/firefox/addon/lastpass-password-manager/),
 [Vimperator](https://addons.mozilla.org/en-US/firefox/addon/vimperator/)
 and [Pentadactyl](http://5digits.org/pentadactyl/)
-If you're using a anything else, please let me know.
+If you're using anything else, please let me know.
 
 ### Whitelisting in default Chromium profile
 

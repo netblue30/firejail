@@ -56,6 +56,7 @@ blacklist ${HOME}/.config/openbox/environment
 # VirtualBox
 blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/VirtualBox VMs
+blacklist ${HOME}/.config/VirtualBox
 
 # git, subversion
 blacklist ${HOME}/.subversion

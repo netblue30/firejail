@@ -54,13 +54,16 @@ whitelist ~/.lastpass
 whitelist ~/.gtkrc-2.0
 whitelist ~/.vimperatorrc
 whitelist ~/.vimperator
+whitelist ~/.pentadactylrc
+whitelist ~/.pentadactyl
 `````
 
 I intend to bring in all files and directories used by Firefox addons and plugins. So far I have
 [Video DownloadHelper](https://addons.mozilla.org/en-US/firefox/addon/video-downloadhelper/),
 [Zotero](https://www.zotero.org/download/), 
 [LastPass](https://addons.mozilla.org/en-US/firefox/addon/lastpass-password-manager/),
-and [Vimperator](https://addons.mozilla.org/en-US/firefox/addon/vimperator/)
+[Vimperator](https://addons.mozilla.org/en-US/firefox/addon/vimperator/)
+and [Pentadactyl](http://5digits.org/pentadactyl/)
 If you're using a anything else, please let me know.
 
 ### Whitelisting in default Chromium profile

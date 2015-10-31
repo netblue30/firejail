@@ -225,7 +225,7 @@ void usage(void) {
 	printf("\t\tio_destroy, io_getevents, io_submit, io_cancel,\n");
 	printf("\t\tremap_file_pages, mbind, get_mempolicy, set_mempolicy,\n");
 	printf("\t\tmigrate_pages, move_pages, vmsplice, perf_event_open and\n");
-	printf("\t\tkexec_file_load.\n\n");
+	printf("\t\tkexec_file_load, chroot.\n\n");
 	
 	printf("\t--seccomp=syscall,syscall,syscall - enable seccomp filter, blacklist the\n");
 	printf("\t\tdefault syscall list and the syscalls specified by the command.\n\n");

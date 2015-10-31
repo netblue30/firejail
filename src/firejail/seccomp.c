@@ -385,6 +385,7 @@ void seccomp_filter_32(void) {
 		BLACKLIST(294), // migrate_pages
 		BLACKLIST(317), // move_pages
 		BLACKLIST(316), // vmsplice
+		BLACKLIST(61),  // chroot
 		RETURN_ALLOW
 	};
 
@@ -557,6 +558,9 @@ int seccomp_filter_drop(void) {
 #endif
 #ifdef SYS_vmsplice
 		filter_add_blacklist(SYS_vmsplice, 0);
+#endif
+#ifdef SYS_chroot
+		filter_add_blacklist(SYS_chroot, 0);
 #endif
 	//#ifdef SYS_set_robust_list
 	//		filter_add_blacklist(SYS_set_robust_list, 0);

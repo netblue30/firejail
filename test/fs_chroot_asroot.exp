@@ -29,6 +29,28 @@ expect {
 	"home"
 }
 
+send -- "umount /boot; pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 0.4\n";exit}
+	"Bad system call"
+}
+expect {
+	timeout {puts "TESTING ERROR 0.5\n";exit}
+	"home"
+}
+
+send -- "/unchroot; pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 0.6\n";exit}
+	"Bad system call"
+}
+expect {
+	timeout {puts "TESTING ERROR 0.7\n";exit}
+	"home"
+}
+
+
+
 
 
 send -- "ps aux; pwd\r"
@@ -61,6 +83,8 @@ expect {
 	"home"
 }
 sleep 1
+
+
 
 
 puts "all done\n"

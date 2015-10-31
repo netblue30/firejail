@@ -905,7 +905,7 @@ sysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie, perf_event_open, fanotif
 add_key, request_key, keyctl, uselib, acct, modify_ldt, pivot_root, io_setup,
 io_destroy, io_getevents, io_submit, io_cancel,
 remap_file_pages, mbind, get_mempolicy, set_mempolicy,
-migrate_pages, move_pages, vmsplice, and perf_event_open.
+migrate_pages, move_pages, vmsplice, perf_event_open and chroot.
 .br
 
 .br

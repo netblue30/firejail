@@ -1226,8 +1226,8 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "Warning: default profile disabled by --chroot option\n");
 		else if (arg_overlay)
 			fprintf(stderr, "Warning: default profile disabled by --overlay option\n");
-		else if (cfg.home_private_keep)
-			fprintf(stderr, "Warning: default profile disabled by --private-home option\n");
+//		else if (cfg.home_private_keep)
+//			fprintf(stderr, "Warning: default profile disabled by --private-home option\n");
 		else {
 			// try to load a default profile
 			char *profile_name = DEFAULT_USER_PROFILE;

@@ -22,7 +22,7 @@ ROOTDIR="/tmp/chroot"			# default chroot directory
 DEFAULT_FILES="/bin/bash /bin/sh "	# basic chroot files
 DEFAULT_FILES+="/etc/passwd /etc/nsswitch.conf /etc/group "
 DEFAULT_FILES+=`find /lib -name libnss*`	# files required by glibc
-DEFAULT_FILES+=" /bin/ls /bin/cat /bin/ps /usr/bin/id /usr/bin/whoami /usr/bin/wc /usr/bin/wget"
+DEFAULT_FILES+=" /bin/ls /bin/cat /bin/ps /usr/bin/id /usr/bin/whoami /usr/bin/wc /usr/bin/wget /bin/umount"
 
 rm -fr $ROOTDIR
 mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,var/lock,proc}
@@ -33,6 +33,8 @@ do
 done
 cp --parents /lib64/ld-linux-x86-64.so.2 $ROOTDIR
 cp --parents /lib/ld-linux.so.2 $ROOTDIR
+cp ../src/tools/unchroot $ROOTDIR/.
+touch $ROOTDIR/this-is-my-chroot
 
 cd $ROOTDIR; find .
 mkdir -p usr/lib/firejail/

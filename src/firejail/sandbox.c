@@ -210,6 +210,8 @@ int sandbox(void* sandbox_arg) {
 			if (!arg_quiet)
 				printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
 		}
+		else
+			arg_seccomp = 1;
 						
 		//****************************
 		// trace pre-install, this time inside chroot

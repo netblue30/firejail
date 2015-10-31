@@ -5,6 +5,9 @@
 echo "TESTING: network interfaces"
 ./net_interface.exp
 
+echo "TESTING: chroot"
+./fs_chroot_asroot.exp
+
 echo "TESTING: servers rsyslogd, sshd, nginx"
 ./servers.exp
 
@@ -45,9 +48,6 @@ echo "TESTING: bind file"
 echo hello > tmpfile
 ./option_bind_file.exp
 rm -f tmpfile
-
-echo "TESTING: chroot"
-./fs_chroot.exp
 
 echo "TESTING: firemon --interface"
 ./firemon-interface.exp

@@ -2,6 +2,7 @@
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 
 # Whitelist the folders needed by Spotify - This is more restrictive 
 # than a blacklist though, but this is all spotify requires for 

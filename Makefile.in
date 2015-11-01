@@ -110,6 +110,7 @@ realinstall:
 	install -c -m 0644 etc/steam.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 etc/skype.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 etc/wine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 etc/disable-devel.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	bash -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	# man pages
 	rm -f firejail.1.gz

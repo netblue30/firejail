@@ -36,3 +36,4 @@
 /etc/firejail/skype.profile
 /etc/firejail/steam.profile
 /etc/firejail/wine.profile
+/etc/firejail/disable-devel.inc

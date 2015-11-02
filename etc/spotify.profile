@@ -10,11 +10,16 @@ include /etc/firejail/disable-devel.inc
 whitelist ${HOME}/.config/spotify
 whitelist ${HOME}/.local/share/spotify
 whitelist ${HOME}/.cache/spotify
-# Whitelist the pulseaudio config, to allow PulseAudio workaround (Issue #69)
-whitelist ${HOME}/.config/pulse
 
 caps.drop all
 seccomp
 protocol unix,inet,inet6
 netfilter
 noroot
+
+# common
+whitelist ~/.fonts
+whitelist ~/.fonts.d
+whitelist ~/.fontconfig
+whitelist ~/.fonts.conf
+whitelist ~/.fonts.conf.d

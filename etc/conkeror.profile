@@ -19,4 +19,10 @@ whitelist ~/.vimperator
 whitelist ~/.pentadactylrc
 whitelist ~/.pentadactyl
 whitelist ~/.conkerorrc
+
+# common
 whitelist ~/.fonts
+whitelist ~/.fonts.d
+whitelist ~/.fontconfig
+whitelist ~/.fonts.conf
+whitelist ~/.fonts.conf.d

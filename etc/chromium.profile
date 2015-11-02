@@ -7,3 +7,10 @@ include /etc/firejail/disable-devel.inc
 netfilter
 whitelist ~/Downloads
 whitelist ~/.config/chromium
+
+# common
+whitelist ~/.fonts
+whitelist ~/.fonts.d
+whitelist ~/.fontconfig
+whitelist ~/.fonts.conf
+whitelist ~/.fonts.conf.d

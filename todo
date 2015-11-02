@@ -54,3 +54,11 @@ cat <&3
 c) A list of attacks
 http://www.lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
 
+8. SELinux
+
+Firefox selinux disabled (RedHat): http://danwalsh.livejournal.com/72697.html
+Firefox selinux enabled (Gentoo hardened): http://blog.siphos.be/2015/08/why-we-do-confine-firefox/
+"desktops are notoriously difficult to use a mandatory access control system on"
+
+9. blacklist .muttrc, contains passwords in clear text
+

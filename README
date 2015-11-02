@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+emacsomancer (https://github.com/emacsomancer)
+	- added profile for Conkeror browser
 Daan Bakker (https://github.com/dbakker)
 	- protect shell startup files
 Duncan Overbruck (https://github.com/Duncaen)

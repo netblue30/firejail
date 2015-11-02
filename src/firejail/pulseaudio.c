@@ -86,11 +86,9 @@ void pulseaudio_disable(void) {
 void pulseaudio_init(void) {
 	struct stat s;
 	
-printf("here %d\n", __LINE__);
 	// do we have pulseaudio in the system?
 	if (stat("/etc/pulse/client.conf", &s) == -1)
 		return;
-printf("here %d\n", __LINE__);
 	 
  	// create the new user pulseaudio directory
 	 fs_build_mnt_dir();

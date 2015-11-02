@@ -21,20 +21,33 @@
 #define FIREJAIL_H
 #include "../include/common.h"
 
-#define USELOCK
+// filesystem
 #define FIREJAIL_DIR	"/tmp/firejail"
+#define NETWORK_LOCK_FILE	"/tmp/firejail/firejail.lock"
 #define RO_DIR	"/tmp/firejail/firejail.ro.dir"
 #define RO_FILE	"/tmp/firejail/firejail.ro.file"
-#define MNT_DIR	"/tmp/firejail/mnt"
+#define MNT_DIR	"/tmp/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
+#define SECCOMP_CFG	"/tmp/firejail/mnt/seccomp"
+#define CGROUP_CFG	"/tmp/firejail/mnt/cgroup"
+#define CPU_CFG	"/tmp/firejail/mnt/cpu"
+#define GROUPS_CFG	"/tmp/firejail/mnt/groups"
 #define CP_COMMAND	"/tmp/firejail/mnt/cp"
 #define HOME_DIR	"/tmp/firejail/mnt/home"
 #define ETC_DIR	"/tmp/firejail/mnt/etc"
 #define BIN_DIR	"/tmp/firejail/mnt/bin"
 #define DRI_DIR	"/tmp/firejail/mnt/dri"
+#define PULSE_DIR	"/tmp/firejail/mnt/pulse"
 #define WHITELIST_HOME_DIR	"/tmp/firejail/mnt/whome"
+#define XAUTHORITY_FILE	"/tmp/firejail/mnt/.Xauthority"
+#define HOSTNAME_FILE	"/tmp/firejail/mnt/hostname"
+#define RESOLVCONF_FILE	"/tmp/firejail/mnt/resolv.conf"
+#define LDPRELOAD_FILE	"/tmp/firejail/mnt/ld.so.preload"
+#define UTMP_FILE		"/tmp/firejail/mnt/utmp"
+
+// profiles
 #define DEFAULT_USER_PROFILE	"generic"
 #define DEFAULT_ROOT_PROFILE	"server"
-#define MAX_INCLUDE_LEVEL 6
+#define MAX_INCLUDE_LEVEL 6		// include levels in profile files
 
 // main.c
 typedef struct bridge_t {

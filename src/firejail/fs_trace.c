@@ -52,23 +52,21 @@ void fs_trace(void) {
 	// create the new ld.so.preload file and mount-bind it
 	if (arg_debug)
 		printf("Create the new ld.so.preload file\n");
-	char *preload;
-	if (asprintf(&preload, "%s/ld.so.preload", MNT_DIR) == -1)
-		errExit("asprintf");
-	FILE *fp = fopen(preload, "w");
+
+	FILE *fp = fopen(LDPRELOAD_FILE, "w");
 	if (!fp)
 		errExit("fopen");
 	fprintf(fp, "%s/firejail/libtrace.so\n", LIBDIR);
 	fclose(fp);
-	if (chown(preload, 0, 0) < 0)
+	if (chown(LDPRELOAD_FILE, 0, 0) < 0)
 		errExit("chown");
-	if (chmod(preload, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
+	if (chmod(LDPRELOAD_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
 		errExit("chmod");
 	
 	// mount the new preload file
 	if (arg_debug)
 		printf("Mount the new ld.so.preload file\n");
-	if (mount(preload, "/etc/ld.so.preload", NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(LDPRELOAD_FILE, "/etc/ld.so.preload", NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind ls.so.preload");
 }
 

@@ -317,10 +317,8 @@ void fs_var_utmp(void) {
 	// create a new utmp file
 	if (arg_debug)
 		printf("Create the new utmp file\n");
-	char *utmp;
-	if (asprintf(&utmp, "%s/utmp", MNT_DIR) == -1)
-		errExit("asprintf");
-	FILE *fp = fopen(utmp, "w");
+
+	FILE *fp = fopen(UTMP_FILE, "w");
 	if (!fp)
 		errExit("fopen");
 		
@@ -339,42 +337,16 @@ void fs_var_utmp(void) {
 	// save new utmp file
 	fwrite(&u_boot, sizeof(u_boot), 1, fp);
 	fclose(fp);
-	if (chown(utmp, 0, utmp_group) < 0)
+	if (chown(UTMP_FILE, 0, utmp_group) < 0)
 		errExit("chown");
-	if (chmod(utmp, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH ) < 0)
+	if (chmod(UTMP_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH ) < 0)
 		errExit("chmod");
 	
 	// mount the new utmp file
 	if (arg_debug)
 		printf("Mount the new utmp file\n");
-	if (mount(utmp, "/var/run/utmp", NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(UTMP_FILE, "/var/run/utmp", NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind utmp");
 }
 
 
-#if 0
-Testing servers:
-
-brctl addbr br0
-ifconfig br0 10.10.20.1/24
-
-apt-get install snmpd
-insserv -r snmpd
-sudo firejail --net=br0 --ip=10.10.20.10 "/etc/init.d/rsyslog start; /etc/init.d/ssh start; /etc/init.d/snmpd start; sleep inf"
-
-apt-get install apache2
-insserv -r apache2
-sudo firejail --net=br0 --ip=10.10.20.10 "/etc/init.d/rsyslog start; /etc/init.d/ssh start; /etc/init.d/apache2 start; sleep inf"
-
-apt-get install nginx
-insserv -r nginx
-sudo firejail --net=br0 --ip=10.10.20.10 "/etc/init.d/rsyslog start; /etc/init.d/ssh start; /etc/init.d/nginx start; sleep inf"
-
-apt-get install lighttpd
-insserv -r lighttpd
-sudo firejail --net=br0 --ip=10.10.20.10 "/etc/init.d/rsyslog start; /etc/init.d/ssh start; /etc/init.d/lighttpd start; sleep inf"
-
-apt-get install isc-dhcp-server
-insserv -r isc-dhcp-server
-sudo firejail --net=br0 --ip=10.10.20.10 "/etc/init.d/rsyslog start; /etc/init.d/ssh start; /etc/init.d/isc-dhcp-server start; sleep inf"
-#endif

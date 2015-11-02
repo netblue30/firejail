@@ -86,26 +86,24 @@ void pulseaudio_disable(void) {
 void pulseaudio_init(void) {
 	struct stat s;
 	
+printf("here %d\n", __LINE__);
 	// do we have pulseaudio in the system?
 	if (stat("/etc/pulse/client.conf", &s) == -1)
 		return;
-
+printf("here %d\n", __LINE__);
 	 
  	// create the new user pulseaudio directory
 	 fs_build_mnt_dir();
-	char *pulsedir;
-	if (asprintf(&pulsedir, "%s/pulse", MNT_DIR) == -1)
-		errExit("asprintf");
-	int rv = mkdir(pulsedir, S_IRWXU | S_IRWXG | S_IRWXO);
+	int rv = mkdir(PULSE_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 	(void) rv; // in --chroot mode the directory canalready be there
-	if (chown(pulsedir, getuid(), getgid()) < 0)
+	if (chown(PULSE_DIR, getuid(), getgid()) < 0)
 		errExit("chown");
-	if (chmod(pulsedir, 0700) < 0)
+	if (chmod(PULSE_DIR, 0700) < 0)
 		errExit("chmod");
 
 	// create the new client.conf file
 	char *pulsecfg = NULL;
-	if (asprintf(&pulsecfg, "%s/client.conf", pulsedir) == -1)
+	if (asprintf(&pulsecfg, "%s/client.conf", PULSE_DIR) == -1)
 		errExit("asprintf");
 	if (copy_file("/etc/pulse/client.conf", pulsecfg))
 		errExit("copy_file");
@@ -119,12 +117,9 @@ void pulseaudio_init(void) {
 	if (chown(pulsecfg, getuid(), getgid()) == -1)
 		errExit("chown");
 
-
 	// set environment
 	if (setenv("PULSE_CLIENTCONFIG", pulsecfg, 1) < 0)
 		errExit("setenv");
 	
-
 	free(pulsecfg);
-	free(pulsedir);		
 }

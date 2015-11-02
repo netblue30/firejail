@@ -46,23 +46,18 @@ void save_nogroups(void) {
 	if (arg_nogroups == 0)
 		return;
 
-	char *fname;
-	if (asprintf(&fname, "%s/groups", MNT_DIR) == -1)
-		errExit("asprintf");
-	FILE *fp = fopen(fname, "w");
+	FILE *fp = fopen(GROUPS_CFG, "w");
 	if (fp) {
 		fprintf(fp, "\n");
 		fclose(fp);
-		if (chown(fname, 0, 0) < 0)
+		if (chown(GROUPS_CFG, 0, 0) < 0)
 			errExit("chown");
 	}
 	else {
 		fprintf(stderr, "Error: cannot save nogroups state\n");
-		free(fname);
 		exit(1);
 	}
 	
-	free(fname);
 }
 
 static void sandbox_if_up(Bridge *br) {
@@ -436,21 +431,21 @@ int sandbox(void* sandbox_arg) {
 	// if a keep list is available, disregard the drop list
 	if (arg_seccomp == 1) {
 		if (cfg.seccomp_list_keep)
-			seccomp_filter_keep(); // this will also save the fmyilter to MNT_DIR/seccomp file
+			seccomp_filter_keep();
 		else if (cfg.seccomp_list_errno)
-			seccomp_filter_errno(); // this will also save the filter to MNT_DIR/seccomp file
+			seccomp_filter_errno(); 
 		else
-			seccomp_filter_drop(); // this will also save the filter to MNT_DIR/seccomp file
+			seccomp_filter_drop();
 	}
 #endif
 
 	// set cpu affinity
 	if (cfg.cpus) {
-		save_cpu(); // save cpu affinity mask to MNT_DIR/cpu file
+		save_cpu(); // save cpu affinity mask to CPU_CFG file
 		set_cpu_affinity();
 	}
 	
-	// save cgroup in MNT_DIR/cgroup file
+	// save cgroup in CGROUP_CFG file
 	if (cfg.cgroup)
 		save_cgroup();
 

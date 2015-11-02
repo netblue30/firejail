@@ -75,7 +75,7 @@ void fs_check_etc_list(void) {
 static void duplicate(char *fname) {
 	char *cmd;
 
-	// copy the file
+	// copy the file - this code assumes ETC_DIR is actually MNT_DIR/etc
 	if (asprintf(&cmd, "%s -a --parents /etc/%s %s", CP_COMMAND, fname, MNT_DIR) == -1)
 		errExit("asprintf");
 	if (arg_debug)
@@ -113,7 +113,7 @@ void fs_private_etc_list(void) {
 		errExit("fork");
 	if (child == 0) {
 		if (arg_debug)
-			printf("Copying files in the new home:\n");
+			printf("Copying files in the new etc directory:\n");
 
 		// elevate privileges - files in the new /etc directory belong to root
 		if (setreuid(0, 0) < 0)

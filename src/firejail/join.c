@@ -69,7 +69,7 @@ static void extract_command(int argc, char **argv, int index) {
 
 static void extract_nogroups(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s/groups", pid, MNT_DIR) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, GROUPS_CFG) == -1)
 		errExit("asprintf");
 		
 	struct stat s;
@@ -82,28 +82,28 @@ static void extract_nogroups(pid_t pid) {
 
 static void extract_cpu(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s/cpu", pid, MNT_DIR) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, CPU_CFG) == -1)
 		errExit("asprintf");
 		
 	struct stat s;
 	if (stat(fname, &s) == -1)
 		return;
 	
-	// there is a cpu file in MNT_DIR; load the information from the file
+	// there is a CPU_CFG file, load it!
 	load_cpu(fname);
 	free(fname);
 }
 
 static void extract_cgroup(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s/cgroup", pid, MNT_DIR) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, CGROUP_CFG) == -1)
 		errExit("asprintf");
 		
 	struct stat s;
 	if (stat(fname, &s) == -1)
 		return;
 	
-	// there is a cgroup file in MNT_DIR; load the information from the file
+	// there is a cgroup file CGROUP_CFG, load it!
 	load_cgroup(fname);
 	free(fname);
 }

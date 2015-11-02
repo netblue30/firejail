@@ -71,23 +71,17 @@ void save_cpu(void) {
 	if (cfg.cpus == 0)
 		return;
 
-	char *fname;
-	if (asprintf(&fname, "%s/cpu", MNT_DIR) == -1)
-		errExit("asprintf");
-	FILE *fp = fopen(fname, "w");
+	FILE *fp = fopen(CPU_CFG, "w");
 	if (fp) {
 		fprintf(fp, "%x\n", cfg.cpus);
 		fclose(fp);
-		if (chown(fname, 0, 0) < 0)
+		if (chown(CPU_CFG, 0, 0) < 0)
 			errExit("chown");
 	}
 	else {
 		fprintf(stderr, "Error: cannot save cpu affinity mask\n");
-		free(fname);
 		exit(1);
 	}
-	
-	free(fname);
 }
 
 void load_cpu(const char *fname) {

@@ -33,49 +33,40 @@ void fs_hostname(const char *hostname) {
 	if (stat("/etc/hostname", &s) == 0) {
 		if (arg_debug)
 			printf("Creating a new /etc/hostname file\n");
-		char *fhost;
-		if (asprintf(&fhost, "%s/hostname", MNT_DIR) == -1)
-			errExit("asprintf");
-		FILE *fp = fopen(fhost, "w");
+
+		FILE *fp = fopen(HOSTNAME_FILE, "w");
 		if (!fp) {
-			fprintf(stderr, "Error: cannot create %s\n", fhost);
-			free(fhost);
+			fprintf(stderr, "Error: cannot create %s\n", HOSTNAME_FILE);
 			exit(1);
 		}
 		fprintf(fp, "%s\n", hostname);
 		fclose(fp);
 		
 		// mode and owner
-		if (chown(fhost, 0, 0) < 0)
+		if (chown(HOSTNAME_FILE, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(fhost, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
+		if (chmod(HOSTNAME_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
 			errExit("chmod");
 		
 		// bind-mount the file on top of /etc/hostname
-		if (mount(fhost, "/etc/hostname", NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount(HOSTNAME_FILE, "/etc/hostname", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind /etc/hostname");
-		free(fhost);
 	}
 	
 	// create a new /etc/hosts
 	if (stat("/etc/hosts", &s) == 0) {
 		if (arg_debug)
 			printf("Creating a new /etc/hosts file\n");
-		char *fhost;
-		if (asprintf(&fhost, "%s/hosts", MNT_DIR) == -1)
-			errExit("asprintf");
 		// copy /etc/host into our new file, and modify it on the fly
 		/* coverity[toctou] */
 		FILE *fp1 = fopen("/etc/hosts", "r");
 		if (!fp1) {
 			fprintf(stderr, "Error: cannot open /etc/hosts\n");
-			free(fhost);
 			exit(1);
 		}
-		FILE *fp2 = fopen(fhost, "w");
+		FILE *fp2 = fopen(HOSTNAME_FILE, "w");
 		if (!fp2) {
-			fprintf(stderr, "Error: cannot create %s\n", fhost);
-			free(fhost);
+			fprintf(stderr, "Error: cannot create %s\n", HOSTNAME_FILE);
 			exit(1);
 		}
 		
@@ -96,15 +87,14 @@ void fs_hostname(const char *hostname) {
 		fclose(fp2);
 		
 		// mode and owner
-		if (chown(fhost, 0, 0) < 0)
+		if (chown(HOSTNAME_FILE, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(fhost, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
+		if (chmod(HOSTNAME_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
 			errExit("chmod");
 		
 		// bind-mount the file on top of /etc/hostname
-		if (mount(fhost, "/etc/hosts", NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount(HOSTNAME_FILE, "/etc/hosts", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind /etc/hosts");
-		free(fhost);
 	}
 }
 
@@ -119,13 +109,9 @@ void fs_resolvconf(void) {
 	if (stat("/etc/resolv.conf", &s) == 0) {
 		if (arg_debug)
 			printf("Creating a new /etc/resolv.conf file\n");
-		char *fname;
-		if (asprintf(&fname, "%s/resolv.conf", MNT_DIR) == -1)
-			errExit("asprintf");
-		FILE *fp = fopen(fname, "w");
+		FILE *fp = fopen(RESOLVCONF_FILE, "w");
 		if (!fp) {
-			fprintf(stderr, "Error: cannot create %s\n", fname);
-			free(fname);
+			fprintf(stderr, "Error: cannot create %s\n", RESOLVCONF_FILE);
 			exit(1);
 		}
 		
@@ -138,15 +124,14 @@ void fs_resolvconf(void) {
 		fclose(fp);
 		
 		// mode and owner
-		if (chown(fname, 0, 0) < 0)
+		if (chown(RESOLVCONF_FILE, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(fname, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
+		if (chmod(RESOLVCONF_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
 			errExit("chmod");
 		
 		// bind-mount the file on top of /etc/hostname
-		if (mount(fname, "/etc/resolv.conf", NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount(RESOLVCONF_FILE, "/etc/resolv.conf", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind /etc/resolv.conf");
-		free(fname);
 	}
 	else {
 		fprintf(stderr, "Error: cannot set DNS servers, /etc/resolv.conf file is missing\n");

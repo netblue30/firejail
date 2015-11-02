@@ -109,14 +109,12 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 }
 
 static int store_xauthority(void) {
-	// put a copy of .Xauthority in MNT_DIR
+	// put a copy of .Xauthority in XAUTHORITY_FILE
 	fs_build_mnt_dir();
 
 	char *src;
-	char *dest;
+	char *dest = XAUTHORITY_FILE;
 	if (asprintf(&src, "%s/.Xauthority", cfg.homedir) == -1)
-		errExit("asprintf");
-	if (asprintf(&dest, "%s/.Xauthority", MNT_DIR) == -1)
 		errExit("asprintf");
 	
 	struct stat s;
@@ -133,14 +131,10 @@ static int store_xauthority(void) {
 }
 
 static void copy_xauthority(void) {
-	// put a copy of .Xauthority in MNT_DIR
-	fs_build_mnt_dir();
-
-	char *src;
+	// copy XAUTHORITY_FILE in the new home directory
+	char *src = XAUTHORITY_FILE ;
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
-		errExit("asprintf");
-	if (asprintf(&src, "%s/.Xauthority", MNT_DIR) == -1)
 		errExit("asprintf");
 	int rv = copy_file(src, dest);
 	if (rv)

@@ -26,30 +26,23 @@ void save_cgroup(void) {
 	if (cfg.cgroup == NULL)
 		return;
 	
-	char *fname;
-	if (asprintf(&fname, "%s/cgroup", MNT_DIR) == -1)
-		errExit(fname);
-	
-	FILE *fp = fopen(fname, "w");
+	FILE *fp = fopen(CGROUP_CFG, "w");
 	if (fp) {
 		fprintf(fp, "%s", cfg.cgroup);
 		fflush(0);
 		if (fclose(fp))
 			goto errout;
-		if (chown(fname, 0, 0) < 0)
+		if (chown(CGROUP_CFG, 0, 0) < 0)
 			errExit("chown");
 	}
 	else
 		goto errout;
 	
-	free(fname);
 	return;
 
 errout:
 	fprintf(stderr, "Error: cannot save cgroup\n");
-	free(fname);
 	exit(1);
-
 }
 
 void load_cgroup(const char *fname) {

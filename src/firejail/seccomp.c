@@ -266,10 +266,7 @@ static void write_seccomp_file(void) {
 	fs_build_mnt_dir();
 	assert(sfilter);
 
-	char *fname;
-	if (asprintf(&fname, "%s/seccomp", MNT_DIR) == -1)
-		errExit("asprintf");
-	int fd = open(fname, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
+	int fd = open(SECCOMP_CFG, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 		errExit("open");
 
@@ -282,23 +279,14 @@ static void write_seccomp_file(void) {
 		exit(1);
 	}
 	close(fd);
-	if (chown(fname, 0, 0) < 0)
+	if (chown(SECCOMP_CFG, 0, 0) < 0)
 		errExit("chown");
-	free(fname);
 }
 
 // read seccomp filter from /tmp/firejail/mnt/seccomp
-static void read_seccomp_file(char *file_name) {
+static void read_seccomp_file(const char *fname) {
 	assert(sfilter == NULL && sfilter_index == 0);
 
-	char *fname;
-	if (file_name)
-		fname = file_name;
-	else {
-		if (asprintf(&fname, "%s/seccomp", MNT_DIR) == -1)
-			errExit("asprintf");
-	}
-		
 	// check file
 	struct stat s;
 	if (stat(fname, &s) == -1) {
@@ -331,7 +319,6 @@ static void read_seccomp_file(char *file_name) {
 		printf("Read seccomp filter, size %u bytes\n", (unsigned) (sfilter_index * sizeof(struct sock_filter)));
 
 	close(fd);
-	free(fname);
 	
 	if (arg_debug)
 		filter_debug();
@@ -706,7 +693,7 @@ int seccomp_filter_errno(void) {
 
 void seccomp_set(void) {
 	// read seccomp filter from  /tmp/firejail/mnt/seccomp
-	read_seccomp_file(NULL);
+	read_seccomp_file(SECCOMP_CFG);
 	
 	// apply filter
 	struct sock_fprog prog = {
@@ -767,7 +754,7 @@ void seccomp_print_filter(pid_t pid) {
 
 	// find the seccomp filter
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root/tmp/firejail/mnt/seccomp", pid) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, SECCOMP_CFG) == -1)
 		errExit("asprintf");
 
 	struct stat s;
@@ -780,6 +767,7 @@ void seccomp_print_filter(pid_t pid) {
 	read_seccomp_file(fname);
 	drop_privs(1);
 	filter_debug();
+	free(fname);
 
 	exit(0);
 }

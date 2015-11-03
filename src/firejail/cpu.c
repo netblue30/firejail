@@ -75,6 +75,8 @@ void save_cpu(void) {
 	if (fp) {
 		fprintf(fp, "%x\n", cfg.cpus);
 		fclose(fp);
+		if (chmod(CPU_CFG, 0600) < 0)
+			errExit("chmod");
 		if (chown(CPU_CFG, 0, 0) < 0)
 			errExit("chown");
 	}
@@ -126,7 +128,7 @@ void set_cpu_affinity(void) {
         		fprintf(stderr, "   ");
         		perror("sched_getaffinity");
         	}
-        	else {
+        	else if (arg_debug) {
 	        	if (CPU_EQUAL(&mask, &mask2))
         			printf("CPU affinity set\n");
 		else

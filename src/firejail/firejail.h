@@ -31,6 +31,7 @@
 #define CGROUP_CFG	"/tmp/firejail/mnt/cgroup"
 #define CPU_CFG	"/tmp/firejail/mnt/cpu"
 #define GROUPS_CFG	"/tmp/firejail/mnt/groups"
+#define PROTOCOL_CFG	"/tmp/firejail/mnt/protocol"
 #define CP_COMMAND	"/tmp/firejail/mnt/cp"
 #define HOME_DIR	"/tmp/firejail/mnt/home"
 #define ETC_DIR	"/tmp/firejail/mnt/etc"
@@ -447,5 +448,7 @@ void protocol_print_filter_name(const char *name);
 void protocol_print_filter(pid_t pid);
 void protocol_store(const char *prlist);
 void protocol_filter(void);
+void protocol_filter_save(void);
+void protocol_filter_load(const char *fname);
 #endif
 

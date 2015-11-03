@@ -144,7 +144,7 @@ static void extract_caps_seccomp(pid_t pid) {
 	free(file);
 }
 
-void extract_user_namespace(pid_t pid) {
+static void extract_user_namespace(pid_t pid) {
 	// test user namespaces available in the kernel
 	struct stat s1;
 	struct stat s2;
@@ -280,9 +280,16 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 		if (apply_caps == 1)
 			caps_set(caps);
 #ifdef HAVE_SECCOMP
+		// set protocol filter
+		protocol_filter_load(PROTOCOL_CFG);
+		if (cfg.protocol) {
+			protocol_filter();
+		}
+				
 		// set seccomp filter
 		if (apply_seccomp == 1)
 			seccomp_set();
+		
 #endif
 		
 		// fix qt 4.8

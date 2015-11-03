@@ -385,7 +385,7 @@ void seccomp_filter_32(void) {
 		;
 	}
 	else if (arg_debug) {
-		printf("dual i386/amd64 seccomp filter\n");
+		printf("Dual i386/amd64 seccomp filter configured\n");
 	}
 }
 
@@ -597,9 +597,6 @@ int seccomp_filter_drop(void) {
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
 		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return 1;
-	}
-	else if (arg_debug) {
-		printf("seccomp enabled\n");
 	}
 	
 	return 0;

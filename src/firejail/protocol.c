@@ -114,27 +114,6 @@ void protocol_list(void) {
 	printf("\n");
 }
 
-// --protocol.print
-void protocol_print_filter_name(const char *name) {
-	(void) name;
-#ifdef SYS_socket
-//todo
-#else
-	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
-	return;
-#endif
-}
-
-// --protocol.print
-void protocol_print_filter(pid_t pid) {
-	(void) pid;
-#ifdef SYS_socket
-//todo
-#else
-        fprintf(stderr, "Warning: --protocol not supported on this platform\n");
-        return;
-#endif  
-}
 
 // check protocol list and store it in cfg structure
 void protocol_store(const char *prlist) {
@@ -171,6 +150,8 @@ errout:
 // install protocol filter
 void protocol_filter(void) {
 	assert(cfg.protocol);
+	if (arg_debug)
+		printf("Set protocol filter: %s\n", cfg.protocol);
 
 #ifndef SYS_socket
 	(void) find_protocol_domain;
@@ -273,10 +254,126 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return;
 	}
-	else if (arg_debug) {
-		printf("seccomp protocol filter enabled\n");
-	}
 #endif // SYS_socket	
 }
+
+void protocol_filter_save(void) {
+	// save protocol filter configuration in PROTOCOL_CFG
+	fs_build_mnt_dir();
+
+	FILE *fp = fopen(PROTOCOL_CFG, "w");
+	if (!fp)
+		errExit("fopen");
+	fprintf(fp, "%s\n", cfg.protocol);
+	fclose(fp);
+
+	if (chmod(PROTOCOL_CFG, 0600) < 0)
+		errExit("chmod");
+
+	if (chown(PROTOCOL_CFG, 0, 0) < 0)
+		errExit("chown");
+
+}
+
+void protocol_filter_load(const char *fname) {
+	assert(fname);
+	
+	// read protocol filter configuration from PROTOCOL_CFG
+	FILE *fp = fopen(fname, "r");
+	if (!fp)
+		return;
+
+	const int MAXBUF = 4098;
+	char buf[MAXBUF];
+	if (fgets(buf, MAXBUF, fp) == NULL) {
+		// empty file
+		fclose(fp);
+		return;
+	}
+	fclose(fp);
+	
+	char *ptr = strchr(buf, '\n');
+	if (ptr)
+		*ptr = '\0';
+	cfg.protocol = strdup(buf);
+	if (!cfg.protocol)
+		errExit("strdup");
+}
+
+
+// --protocol.print
+void protocol_print_filter_name(const char *name) {
+	(void) name;
+#ifdef SYS_socket
+	if (!name || strlen(name) == 0) {
+		fprintf(stderr, "Error: invalid sandbox name\n");
+		exit(1);
+	}
+	pid_t pid;
+	if (name2pid(name, &pid)) {
+		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
+		exit(1);
+	}
+
+	protocol_print_filter(pid);
+#else
+	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+	return;
+#endif
+}
+
+// --protocol.print
+void protocol_print_filter(pid_t pid) {
+	(void) pid;
+#ifdef SYS_socket
+	// if the pid is that of a firejail  process, use the pid of the first child process
+	char *comm = pid_proc_comm(pid);
+	if (comm) {
+		// remove \n
+		char *ptr = strchr(comm, '\n');
+		if (ptr)
+			*ptr = '\0';
+		if (strcmp(comm, "firejail") == 0) {
+			pid_t child;
+			if (find_child(pid, &child) == 0) {
+				pid = child;
+			}
+		}
+		free(comm);
+	}
+
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission denied.\n");
+			exit(1);
+		}
+	}
+
+	// find the seccomp filter
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/root%s", pid, PROTOCOL_CFG) == -1)
+		errExit("asprintf");
+
+	struct stat s;
+	if (stat(fname, &s) == -1) {
+		printf("Cannot access seccomp filter.\n");
+		exit(1);
+	}
+
+	// read and print the filter
+	protocol_filter_load(fname);
+	free(fname);
+	if (cfg.protocol)
+		printf("%s\n", cfg.protocol);
+	exit(0);
+#else
+        fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+        return;
+#endif  
+}
+
 
 #endif // HAVE_SECCOMP

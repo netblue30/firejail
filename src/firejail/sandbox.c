@@ -425,7 +425,8 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_SECCOMP
 	// install protocol filter
 	if (cfg.protocol) {
-		protocol_filter();		
+		protocol_filter();	// install filter	
+		protocol_filter_save();	// save filter in PROTOCOL_CFG
 	}
 
 	// if a keep list is available, disregard the drop list

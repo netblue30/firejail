@@ -18,6 +18,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 #include "firejail.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <dirent.h>
 
 typedef struct env_t {
 	struct env_t *next;
@@ -29,6 +33,85 @@ static Env *envlist = NULL;
 static void env_add(Env *env) {
 	env->next = envlist;
 	envlist = env;
+}
+
+// load IBUS env variables
+void env_ibus_load(void) {
+	// check ~/.config/ibus/bus directory
+	char *dirname;
+	if (asprintf(&dirname, "%s/.config/ibus/bus", cfg.homedir) == -1)
+		errExit("asprintf");
+
+	struct stat s;
+	if (stat(dirname, &s) == -1)
+		return;
+
+	// find the file
+	DIR *dir = opendir(dirname);
+	if (!dir) {
+		free(dirname);
+		return;
+	}
+
+	struct dirent *entry;
+	while ((entry = readdir(dir)) != NULL) {
+		// check the file name ends in "unix-0"
+		char *ptr = strstr(entry->d_name, "unix-0");
+		if (!ptr)
+			continue;
+		if (strlen(ptr) != 6)
+			continue;
+		
+		// open the file
+		char *fname;
+		if (asprintf(&fname, "%s/%s", dirname, entry->d_name) == -1)
+			errExit("asprintf");
+		FILE *fp = fopen(fname, "r");
+		free(fname);
+		if (!fp)
+			continue;
+			
+		// read the file
+		const int maxline = 4096;
+		char buf[maxline];
+		while (fgets(buf, maxline, fp)) {
+			if (strncmp(buf, "IBUS_", 5) != 0)
+				continue;
+			char *ptr = strchr(buf, '=');
+			if (!ptr)
+				continue;
+			ptr = strchr(buf, '\n');
+			if (ptr)
+				*ptr = '\0';
+			if (arg_debug)
+				printf("%s\n", buf);
+			env_store(buf);
+		}
+
+		fclose(fp);
+	}
+
+	free(dirname);
+}
+
+
+// default sandbox env variables
+void env_defaults(void) {
+	// fix qt 4.8
+	if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
+		errExit("setenv");
+	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
+		errExit("setenv");
+	if (arg_zsh && setenv("SHELL", "/usr/bin/zsh", 1) < 0)
+		errExit("setenv");
+	if (arg_csh && setenv("SHELL", "/bin/csh", 1) < 0)
+		errExit("setenv");
+	if (cfg.shell && setenv("SHELL", cfg.shell, 1) < 0)
+		errExit("setenv");
+	// set prompt color to green
+	//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
+	if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
+		errExit("setenv");
 }
 
 // parse and store the environment setting 

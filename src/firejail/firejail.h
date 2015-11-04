@@ -424,6 +424,8 @@ void run_no_sandbox(int argc, char **argv);
 // env.c
 void env_store(const char *str);
 void env_apply(void);
+void env_defaults(void);
+void env_ibus_load(void);
 
 // fs_whitelist.c
 void fs_whitelist(void);

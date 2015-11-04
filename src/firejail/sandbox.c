@@ -159,17 +159,19 @@ int sandbox(void* sandbox_arg) {
 	}
 	
 	//****************************
-	// netfilter
+	// netfilter etc.
 	//****************************
 	if (arg_netfilter && any_bridge_configured()) { // assuming by default the client filter
 		netfilter(arg_netfilter_file);
 	}
 
+	// load IBUS env variables
+	env_ibus_load();
+	
+	// grab a copy of cp command
 	fs_build_cp_command();
 	
-	//****************************
 	// trace pre-install
-	//****************************
 	if (arg_trace)
 		fs_trace_preload();
 
@@ -396,21 +398,8 @@ int sandbox(void* sandbox_arg) {
 	}
 	
 	// set environment
-	// fix qt 4.8
-	if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
-		errExit("setenv");
-	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
-		errExit("setenv");
-	if (arg_zsh && setenv("SHELL", "/usr/bin/zsh", 1) < 0)
-		errExit("setenv");
-	if (arg_csh && setenv("SHELL", "/bin/csh", 1) < 0)
-		errExit("setenv");
-	if (cfg.shell && setenv("SHELL", cfg.shell, 1) < 0)
-		errExit("setenv");
-	// set prompt color to green
-	//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
-	if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
-		errExit("setenv");
+	env_defaults();
+	
 	// set user-supplied environment variables
 	env_apply();
 

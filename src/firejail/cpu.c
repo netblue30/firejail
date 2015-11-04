@@ -19,6 +19,8 @@
 */
 #include "firejail.h"
 #include <sched.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
 // converts a numeric cpu value in the corresponding bit mask
 static void set_cpu(const char *str) {

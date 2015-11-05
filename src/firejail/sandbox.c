@@ -166,7 +166,11 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	// load IBUS env variables
-	env_ibus_load();
+	if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {
+		// do nothing - there are problems with ibus version 1.5.11
+	}
+	else
+		env_ibus_load();
 	
 	// grab a copy of cp command
 	fs_build_cp_command();
@@ -285,7 +289,7 @@ int sandbox(void* sandbox_arg) {
 		pulseaudio_disable();
 	else
 		pulseaudio_init();
-	
+
 	//****************************
 	// networking
 	//****************************

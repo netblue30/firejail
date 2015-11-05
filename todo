@@ -62,3 +62,11 @@ Firefox selinux enabled (Gentoo hardened): http://blog.siphos.be/2015/08/why-we-
 
 9. blacklist .muttrc, contains passwords in clear text
 
+10. abstract unix socket bridge, example for ibus:
+
+before the sandbox is started
+socat UNIX-LISTEN:/tmp/mysoc,fork ABSTRACT-CONNECT:/tmp/dbus-awBoQTCc &
+
+in sandbox
+socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
+

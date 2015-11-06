@@ -151,10 +151,12 @@ int profile_check_line(char *ptr, int lineno) {
 		return 0;
 	}
 	
+#ifdef HAVE_SECCOMP
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 		protocol_store(ptr + 9);
 		return 0;
 	}
+#endif
 	
 	if (strncmp(ptr, "env ", 4) == 0) {
 		env_store(ptr + 4);

@@ -2,7 +2,7 @@ firejail (0.9.34-rc1) baseline; urgency=low
   * added --ignore option
   * added --protocol option
   * support dual i386/amd64 seccomp filters
-  * IBus support
+  * added Google Chrome profile
   * added Steam, Skype, Wine and Conkeror profiles
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Thu, 29 Oct 2015 08:00:00 -0500

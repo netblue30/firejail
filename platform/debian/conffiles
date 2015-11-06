@@ -1,6 +1,7 @@
 /etc/firejail/evince.profile
 /etc/firejail/disable-secret.inc
 /etc/firejail/chromium.profile
+/etc/firejail/google-chrome.profile
 /etc/firejail/midori.profile
 /etc/firejail/icedove.profile
 /etc/firejail/iceweasel.profile

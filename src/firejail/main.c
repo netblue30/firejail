@@ -244,7 +244,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		}
 		char *cmd = argv[i + 1];
 		if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
-			fprintf(stderr, "Error: invalid --bandwidth command\n");
+			fprintf(stderr, "Error: invalid --bandwidth command.\nValid commands: set, clear, status.\n");
 			exit(1);
 		}
 

@@ -96,6 +96,7 @@ void fs_private_dev(void){
 
 	// bring back the /dev/dri directory
 	if (have_dri) {
+		/* coverity[toctou] */
 		rv = mkdir("/dev/dri", 0755);
 		if (rv == -1)
 			errExit("mkdir");

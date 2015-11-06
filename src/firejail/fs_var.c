@@ -318,6 +318,7 @@ void fs_var_utmp(void) {
 	if (arg_debug)
 		printf("Create the new utmp file\n");
 
+	/* coverity[toctou] */
 	FILE *fp = fopen(UTMP_FILE, "w");
 	if (!fp)
 		errExit("fopen");

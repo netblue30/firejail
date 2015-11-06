@@ -102,6 +102,7 @@ void fs_build_cp_command(void) {
 			fprintf(stderr, "Error: cannot access /bin/cp\n");
 			exit(1);
 		}
+		/* coverity[toctou] */
 		if (chmod(CP_COMMAND, 0755))
 			errExit("chmod");
 			

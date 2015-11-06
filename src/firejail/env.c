@@ -47,6 +47,7 @@ void env_ibus_load(void) {
 		return;
 
 	// find the file
+	/* coverity[toctou] */
 	DIR *dir = opendir(dirname);
 	if (!dir) {
 		free(dirname);
@@ -92,6 +93,7 @@ void env_ibus_load(void) {
 	}
 
 	free(dirname);
+	closedir(dir);
 }
 
 

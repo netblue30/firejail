@@ -72,6 +72,7 @@ socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
 
 11. autotest for config options:
 
+./configure --enable-fatal-warnings --prefix=/usr
 ./configure --enable-fatal-warnings --disable-seccomp --prefix=/usr
 ./configure --enable-fatal-warnings --disable-chroot --prefix=/usr
 ./configure --enable-fatal-warnings --disable-bind --prefix=/usr

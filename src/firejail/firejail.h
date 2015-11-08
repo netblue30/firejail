@@ -22,28 +22,28 @@
 #include "../include/common.h"
 
 // filesystem
-#define FIREJAIL_DIR	"/tmp/firejail"
-#define NETWORK_LOCK_FILE	"/tmp/firejail/firejail.lock"
-#define RO_DIR	"/tmp/firejail/firejail.ro.dir"
-#define RO_FILE	"/tmp/firejail/firejail.ro.file"
-#define MNT_DIR	"/tmp/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
-#define SECCOMP_CFG	"/tmp/firejail/mnt/seccomp"
-#define CGROUP_CFG	"/tmp/firejail/mnt/cgroup"
-#define CPU_CFG	"/tmp/firejail/mnt/cpu"
-#define GROUPS_CFG	"/tmp/firejail/mnt/groups"
-#define PROTOCOL_CFG	"/tmp/firejail/mnt/protocol"
-#define CP_COMMAND	"/tmp/firejail/mnt/cp"
-#define HOME_DIR	"/tmp/firejail/mnt/home"
-#define ETC_DIR	"/tmp/firejail/mnt/etc"
-#define BIN_DIR	"/tmp/firejail/mnt/bin"
-#define DRI_DIR	"/tmp/firejail/mnt/dri"
-#define PULSE_DIR	"/tmp/firejail/mnt/pulse"
-#define WHITELIST_HOME_DIR	"/tmp/firejail/mnt/whome"
-#define XAUTHORITY_FILE	"/tmp/firejail/mnt/.Xauthority"
-#define HOSTNAME_FILE	"/tmp/firejail/mnt/hostname"
-#define RESOLVCONF_FILE	"/tmp/firejail/mnt/resolv.conf"
-#define LDPRELOAD_FILE	"/tmp/firejail/mnt/ld.so.preload"
-#define UTMP_FILE		"/tmp/firejail/mnt/utmp"
+#define FIREJAIL_DIR	"/run/firejail"
+#define NETWORK_LOCK_FILE	"/run/firejail/firejail.lock"
+#define RO_DIR	"/run/firejail/firejail.ro.dir"
+#define RO_FILE	"/run/firejail/firejail.ro.file"
+#define MNT_DIR	"/run/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
+#define SECCOMP_CFG	"/run/firejail/mnt/seccomp"
+#define CGROUP_CFG	"/run/firejail/mnt/cgroup"
+#define CPU_CFG	"/run/firejail/mnt/cpu"
+#define GROUPS_CFG	"/run/firejail/mnt/groups"
+#define PROTOCOL_CFG	"/run/firejail/mnt/protocol"
+#define CP_COMMAND	"/run/firejail/mnt/cp"
+#define HOME_DIR	"/run/firejail/mnt/home"
+#define ETC_DIR	"/run/firejail/mnt/etc"
+#define BIN_DIR	"/run/firejail/mnt/bin"
+#define DRI_DIR	"/run/firejail/mnt/dri"
+#define PULSE_DIR	"/run/firejail/mnt/pulse"
+#define WHITELIST_HOME_DIR	"/run/firejail/mnt/whome"
+#define XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
+#define HOSTNAME_FILE	"/run/firejail/mnt/hostname"
+#define RESOLVCONF_FILE	"/run/firejail/mnt/resolv.conf"
+#define LDPRELOAD_FILE	"/run/firejail/mnt/ld.so.preload"
+#define UTMP_FILE		"/run/firejail/mnt/utmp"
 
 // profiles
 #define DEFAULT_USER_PROFILE	"generic"
@@ -163,7 +163,7 @@ static inline int any_interface_configured(void) {
 		return 0;
 }
 
-extern int arg_private;		// mount private /home and /tmp directory
+extern int arg_private;		// mount private /home
 extern int arg_debug;		// print debug messages
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
@@ -233,9 +233,9 @@ int net_config_mac(const char *ifname, const unsigned char mac[6]);
 int net_get_mac(const char *ifname, unsigned char mac[6]);
 
 // fs.c
-// build /tmp/firejail directory
+// build /run/firejail directory
 void fs_build_firejail_dir(void);
-// build /tmp/firejail/mnt directory
+// build /run/firejail/mnt directory
 void fs_build_mnt_dir(void);
 // grab a copy of cp command
 void fs_build_cp_command(void);

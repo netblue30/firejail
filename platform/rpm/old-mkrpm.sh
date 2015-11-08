@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.32"
+VERSION="0.9.34"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -45,7 +45,6 @@ install -m 644 /etc/firejail/chromium-browser.profile firejail-$VERSION/etc/fire
 install -m 644 /etc/firejail/chromium.profile firejail-$VERSION/etc/firejail/chromium.profile
 install -m 644 /etc/firejail/dropbox.profile firejail-$VERSION/etc/firejail/dropbox.profile
 install -m 644 /etc/firejail/disable-common.inc firejail-$VERSION/etc/firejail/disable-common.inc
-install -m 644 /etc/firejail/disable-history.inc firejail-$VERSION/etc/firejail/disable-history.inc
 install -m 644 /etc/firejail/disable-secret.inc firejail-$VERSION/etc/firejail/disable-secret.inc
 install -m 644 /etc/firejail/disable-mgmt.inc firejail-$VERSION/etc/firejail/disable-mgmt.inc
 install -m 644 /etc/firejail/evince.profile firejail-$VERSION/etc/firejail/evince.profile
@@ -71,6 +70,11 @@ install -m 644 /etc/firejail/deadbeef.profile firejail-$VERSION/etc/firejail/dea
 install -m 644 /etc/firejail/empathy.profile firejail-$VERSION/etc/firejail/empathy.profile
 install -m 644 /etc/firejail/fbreader.profile firejail-$VERSION/etc/firejail/fbreader.profile
 install -m 644 /etc/firejail/spotify.profile firejail-$VERSION/etc/firejail/spotify.profile
+install -m 644 /etc/firejail/google-chrome.profile firejail-$VERSION/etc/firejail/google-chrome.profile
+install -m 644 /etc/firejail/skype.profile firejail-$VERSION/etc/firejail/skype.profile
+install -m 644 /etc/firejail/steam.profile firejail-$VERSION/etc/firejail/steam.profile
+install -m 644 /etc/firejail/wine.profile firejail-$VERSION/etc/firejail/wine.profile
+install -m 644 /etc/firejail/disable-devel.inc firejail-$VERSION/etc/firejail/disable-devel.inc
 
 
 mkdir -p firejail-$VERSION/usr/share/bash-completion/completions
@@ -148,7 +152,6 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}/generic.profile
 %config(noreplace) %{_sysconfdir}/%{name}/deadbeef.profile
 %config(noreplace) %{_sysconfdir}/%{name}/disable-common.inc
-%config(noreplace) %{_sysconfdir}/%{name}/disable-history.inc
 %config(noreplace) %{_sysconfdir}/%{name}/empathy.profile
 %config(noreplace) %{_sysconfdir}/%{name}/filezilla.profile
 %config(noreplace) %{_sysconfdir}/%{name}/icecat.profile
@@ -158,6 +161,11 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}/xchat.profile
 %config(noreplace) %{_sysconfdir}/%{name}/fbreader.profile
 %config(noreplace) %{_sysconfdir}/%{name}/spotify.profile
+%config(noreplace) %{_sysconfdir}/%{name}/google-chrome.profile
+%config(noreplace) %{_sysconfdir}/%{name}/skype.profile
+%config(noreplace) %{_sysconfdir}/%{name}/steam.profile
+%config(noreplace) %{_sysconfdir}/%{name}/wine.profile
+%config(noreplace) %{_sysconfdir}/%{name}/disable-devel.inc
 
 /usr/bin/firejail
 /usr/bin/firemon
@@ -178,6 +186,14 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Sat Nov 7 2015 netblue30 <netblue30@yahoo.com> 0.9.34-1
+ - added --ignore option
+ - added --protocol option
+ - support dual i386/amd64 seccomp filters
+ - added Google Chrome profile
+ - added Steam, Skype, Wine and Conkeror profiles
+ - bugfixes
+
 * Wed Oct 21 2015 netblue30 <netblue30@yahoo.com> 0.9.32-1
  - added --interface option
  - added --mtu option

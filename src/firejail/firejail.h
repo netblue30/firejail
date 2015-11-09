@@ -38,6 +38,7 @@
 #define BIN_DIR	"/run/firejail/mnt/bin"
 #define DRI_DIR	"/run/firejail/mnt/dri"
 #define PULSE_DIR	"/run/firejail/mnt/pulse"
+#define DEVLOG_FILE	"/run/firejail/mnt/devlog"
 #define WHITELIST_HOME_DIR	"/run/firejail/mnt/whome"
 #define XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
 #define HOSTNAME_FILE	"/run/firejail/mnt/hostname"

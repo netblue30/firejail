@@ -74,7 +74,6 @@ void fs_private_dev(void){
 
 	// create DRI_DIR
 	fs_build_mnt_dir();
-	
 	if (have_dri) {
 		/* coverity[toctou] */
 		rv = mkdir(DRI_DIR, 0755);
@@ -90,9 +89,35 @@ void fs_private_dev(void){
 			errExit("mounting /dev/dri");
 	}
 	
+	// restore /dev/log
+	int have_devlog = 0;
+	if (stat("/dev/log", &s) == 0) {
+		have_devlog = 1;
+		FILE *fp = fopen(DEVLOG_FILE, "w");
+		if (!fp)
+			have_devlog = 0;
+		else {
+			fprintf(fp, "\n");
+			fclose(fp);
+			if (mount("/dev/log", DEVLOG_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mounting /dev/log");
+		}
+	}
+
 	// mount tmpfs on top of /dev
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 		errExit("mounting /dev");
+
+	// bring back /dev/log
+	if (have_devlog) {
+		FILE *fp = fopen("/dev/log", "w");
+		if (fp) {
+			fprintf(fp, "\n");
+			fclose(fp);
+			if (mount(DEVLOG_FILE, "/dev/log", NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mounting /dev/log");
+		}
+	}		
 
 	// bring back the /dev/dri directory
 	if (have_dri) {
@@ -105,7 +130,7 @@ void fs_private_dev(void){
 		if (chmod("/dev/dri",0755) < 0)
 			errExit("chmod");
 		if (mount(DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /dev");
+			errExit("mounting /dev/dri");
 	}
 	
 	// create /dev/shm

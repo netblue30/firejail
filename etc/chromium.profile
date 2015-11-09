@@ -10,6 +10,7 @@ include /etc/firejail/disable-common.inc
 
 netfilter
 whitelist ~/Downloads
+whitelist ~/Загрузки
 whitelist ~/.config/chromium
 
 # common

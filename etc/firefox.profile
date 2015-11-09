@@ -11,6 +11,7 @@ netfilter
 noroot
 whitelist ~/.mozilla
 whitelist ~/Downloads
+whitelist ~/Загрузки
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.lastpass

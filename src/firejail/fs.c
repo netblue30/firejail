@@ -27,6 +27,35 @@
 #include <fcntl.h>
 #include <errno.h>
 
+static void create_empty_dir(void) {
+	struct stat s;
+	
+	if (stat(RO_DIR, &s)) {
+		/* coverity[toctou] */
+		int rv = mkdir(RO_DIR, S_IRUSR | S_IXUSR);
+		if (rv == -1)
+			errExit("mkdir");	
+		if (chown(RO_DIR, 0, 0) < 0)
+			errExit("chown");
+	}
+}
+
+static void create_empty_file(void) {
+	struct stat s;
+
+	if (stat(RO_FILE, &s)) {
+		/* coverity[toctou] */
+		FILE *fp = fopen(RO_FILE, "w");
+		if (!fp)
+			errExit("fopen");
+		fclose(fp);
+		if (chown(RO_FILE, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(RO_FILE, S_IRUSR) < 0)
+			errExit("chown");
+	}
+}
+
 // build /tmp/firejail directory
 void fs_build_firejail_dir(void) {
 	struct stat s;
@@ -49,6 +78,9 @@ void fs_build_firejail_dir(void) {
 			exit(1);
 		}
 	}
+	
+	create_empty_dir();
+	create_empty_file();
 }
 
 
@@ -126,46 +158,15 @@ typedef enum {
 } OPERATION;
 
 
-static char *create_empty_dir(void) {
-	struct stat s;
-	fs_build_firejail_dir();
-	
-	if (stat(RO_DIR, &s)) {
-		/* coverity[toctou] */
-		int rv = mkdir(RO_DIR, S_IRUSR | S_IXUSR);
-		if (rv == -1)
-			errExit("mkdir");	
-		if (chown(RO_DIR, 0, 0) < 0)
-			errExit("chown");
-	}
-	
-	return RO_DIR;
-}
 
-static char *create_empty_file(void) {
-	struct stat s;
-	fs_build_firejail_dir();
 
-	if (stat(RO_FILE, &s)) {
-		/* coverity[toctou] */
-		FILE *fp = fopen(RO_FILE, "w");
-		if (!fp)
-			errExit("fopen");
-		fclose(fp);
-		if (chown(RO_FILE, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RO_FILE, S_IRUSR) < 0)
-			errExit("chown");
-	}
-	
-	return RO_FILE;
-}
-
-static void disable_file(OPERATION op, const char *filename, const char *emptydir, const char *emptyfile) {
+static void disable_file(OPERATION op, const char *filename) {
 	assert(filename);
-	assert(emptydir);
-	assert(emptyfile);
 	assert(op <OPERATION_MAX);
+	
+	
+	// rebuild /run/firejail directory in case tmpfs was mounted on top of /run
+	fs_build_firejail_dir();
 	
 	// Resolve all symlinks
 	char* fname = realpath(filename, NULL);
@@ -196,11 +197,11 @@ static void disable_file(OPERATION op, const char *filename, const char *emptydi
 			if (arg_debug)
 				printf("Disable %s\n", fname);
 			if (S_ISDIR(s.st_mode)) {
-				if (mount(emptydir, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				if (mount(RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 					errExit("disable file");
 			}
 			else {
-				if (mount(emptyfile, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				if (mount(RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 					errExit("disable file");
 			}
 		}
@@ -231,10 +232,8 @@ static void disable_file(OPERATION op, const char *filename, const char *emptydi
 }
 
 // Treat pattern as a shell glob pattern and blacklist matching files
-static void globbing(OPERATION op, const char *pattern, const char *noblacklist[], size_t noblacklist_len, const char *emptydir, const char *emptyfile) {
+static void globbing(OPERATION op, const char *pattern, const char *noblacklist[], size_t noblacklist_len) {
 	assert(pattern);
-	assert(emptydir);
-	assert(emptyfile);
 
 	glob_t globbuf;
 	// Profiles contain blacklists for files that might not exist on a user's machine.
@@ -269,7 +268,7 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 			}
 		}
 		if (okay_to_blacklist)
-			disable_file(op, path, emptydir, emptyfile);
+			disable_file(op, path);
 	}
 	globfree(&globbuf);
 }
@@ -283,9 +282,6 @@ void fs_blacklist(void) {
 	if (!entry)
 		return;
 		
-	char *emptydir = create_empty_dir();
-	char *emptyfile = create_empty_file();
-
 	// a statically allocated buffer works for all current needs
 	// TODO: if dynamic allocation is ever needed, we should probably add
 	// libraries that make it easy to do without introducing security bugs
@@ -385,11 +381,11 @@ void fs_blacklist(void) {
 				for (path = &paths[0]; *path; path++) {
 					char newname[strlen(*path) + fname_len + 1];
 					sprintf(newname, "%s%s", *path, fname);
-					globbing(op, newname, (const char**)noblacklist, noblacklist_c, emptydir, emptyfile);
+					globbing(op, newname, (const char**)noblacklist, noblacklist_c);
 				}
 			}
 			else
-				globbing(op, ptr, (const char**)noblacklist, noblacklist_c, emptydir, emptyfile);
+				globbing(op, ptr, (const char**)noblacklist, noblacklist_c);
 		}
 
 		if (new_name)
@@ -516,10 +512,10 @@ void fs_proc_sys_dev_boot(void) {
 	fs_rdonly_noexit("/proc/bus");
 	
 	// disable /proc/kcore
-	disable_file(BLACKLIST_FILE, "/proc/kcore", "not used", "/dev/null");
+	disable_file(BLACKLIST_FILE, "/proc/kcore");
 
 	// disable /proc/kallsyms
-	disable_file(BLACKLIST_FILE, "/proc/kallsyms", "not used", "/dev/null");
+	disable_file(BLACKLIST_FILE, "/proc/kallsyms");
 	
 	// disable /boot
 	if (stat("/boot", &s) == 0) {
@@ -531,7 +527,7 @@ void fs_proc_sys_dev_boot(void) {
 	
 	// disable /dev/port
 	if (stat("/dev/port", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/dev/port", "not used", "/dev/null");
+		disable_file(BLACKLIST_FILE, "/dev/port");
 	}
 }
 
@@ -542,7 +538,6 @@ static void sanitize_home(void) {
 	if (d == NULL)
 		return;
 
-	char *emptydir = create_empty_dir();
 	while ((dir = readdir(d))) {
 		if(strcmp(dir->d_name, "." ) == 0 || strcmp(dir->d_name, ".." ) == 0)
 			continue;
@@ -570,7 +565,7 @@ static void sanitize_home(void) {
 //				name);
 			
 			// disable directory
-			disable_file(BLACKLIST_FILE, name, emptydir, "not used");
+			disable_file(BLACKLIST_FILE, name);
 			free(name);
 		}			
 	}

@@ -140,6 +140,8 @@ void usage(void) {
 
 	printf("\t--netstats - monitor network statistics for sandboxes creating a new\n");
 	printf("\t\tnetwork namespace.\n\n");
+	printf("\t--noblacklist=dirname_or_filename - disable blacklist for directory\n");
+	printf("\t\tor file.\n\n");
 	printf("\t--nogroups - disable supplementary groups. Without this option,\n");
 	printf("\t\tsupplementary groups are enabled for the user starting the\n");
 	printf("\t\tsandbox. For root user supplementary groups are always\n");

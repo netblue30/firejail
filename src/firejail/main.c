@@ -636,6 +636,14 @@ int main(int argc, char **argv) {
 			profile_check_line(line, 0);	// will exit if something wrong
 			profile_add(line);
 		}
+		else if (strncmp(argv[i], "--noblacklist=", 14) == 0) {
+			char *line;
+			if (asprintf(&line, "noblacklist %s", argv[i] + 14) == -1)
+				errExit("asprintf");
+			
+			profile_check_line(line, 0);	// will exit if something wrong
+			profile_add(line);
+		}
 		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
 			char *line;
 			if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)

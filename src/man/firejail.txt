@@ -608,6 +608,30 @@ PID  User    RX(KB/s) TX(KB/s) Command
 
 
 .TP
+\fB\-\-noblacklist=dirname_or_filename
+Disable blacklist for this directory or file.
+.br
+
+.br
+Example:
+.br
+$ firejail
+.br
+$ nc dict.org 2628
+.br
+bash: /bin/nc: Permission denied
+.br
+$ exit
+.br
+
+.br
+$ firejail --noblacklist=/bin/nc
+.br
+$ nc dict.org 2628
+.br
+220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
+.br
+.TP
 \fB\-\-nogroups
 Disable supplementary groups. Without this option, supplementary groups are enabled for the user starting the
 sandbox. For root user supplementary groups are always disabled.

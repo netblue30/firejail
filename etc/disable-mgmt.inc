@@ -12,6 +12,7 @@ blacklist ${PATH}/xinput
 blacklist ${PATH}/evtest
 blacklist ${PATH}/xev
 blacklist ${PATH}/strace
+blacklist ${PATH}/nc
 
 # Prevent manipulation of firejail configuration
 blacklist /etc/firejail

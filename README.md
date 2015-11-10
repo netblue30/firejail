@@ -63,3 +63,18 @@ If you are using a plugin or extension that requires other directories, please o
 ### New security profiles:
 New profiles introduced in this version: unbound, dnscrypt-proxy
 
+### --noblacklist
+`````
+      --noblacklist=dirname_or_filename
+              Disable blacklist for this directory or file.
+
+              Example:
+              $ firejail
+              $ nc dict.org 2628
+              bash: /bin/nc: Permission denied
+              $ exit
+
+              $ firejail --noblacklist=/bin/nc
+              $ nc dict.org 2628
+              220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
+`````

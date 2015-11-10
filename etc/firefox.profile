@@ -17,6 +17,7 @@ whitelist ~/.zotero
 whitelist ~/.lastpass
 whitelist ~/.gtkrc-2.0
 whitelist ~/.config/gtk-3.0
+whitelist ~/.themes/
 whitelist ~/.vimperatorrc
 whitelist ~/.vimperator
 whitelist ~/.pentadactylrc

@@ -32,5 +32,34 @@ Usage: https://l3net.wordpress.com/projects/firejail/firejail-usage/
 
 FAQ: https://l3net.wordpress.com/projects/firejail/firejail-faq/
 
+## Development version 0.9.35
 
+### Firefox whitelists:
+
+The current whitelist of files and directories for Firefox is as follows:
+`````
+whitelist ~/.mozilla (0.9.34)
+whitelist ~/Downloads (0.9.34)
+whitelist ~/Загрузки (new in 0.9.35)
+whitelist ~/dwhelper (0.9.34)
+whitelist ~/.zotero (0.9.34)
+whitelist ~/.lastpass (0.9.34)
+whitelist ~/.gtkrc-2.0 (0.9.34)
+whitelist ~/.config/gtk-3.0 (new in 0.9.35)
+whitelist ~/.vimperatorrc (0.9.34)
+whitelist ~/.vimperator (0.9.34)
+whitelist ~/.pentadactylrc (0.9.34)
+whitelist ~/.pentadactyl (0.9.34)
+
+# common
+whitelist ~/.fonts (0.9.34)
+whitelist ~/.fonts.d (0.9.34)
+whitelist ~/.fontconfig (0.9.34)
+whitelist ~/.fonts.conf (0.9.34)
+whitelist ~/.fonts.conf.d (0.9.34)
+`````
+If you are using a plugin or extension that requires other directories, please open a new issue: https://github.com/netblue30/firejail/issues
+
+### New security profiles:
+New profiles introduced in this version: unbound, dnscrypt-proxy
 

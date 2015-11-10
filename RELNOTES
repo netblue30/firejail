@@ -1,4 +1,9 @@
 firejail (0.9.34) baseline; urgency=low
+  * added  unbound and dnscrypt-proxy profiles
+  * bugfixes
+ -- netblue30 <netblue30@yahoo.com>  ongoing development
+
+firejail (0.9.34) baseline; urgency=low
   * added --ignore option
   * added --protocol option
   * support dual i386/amd64 seccomp filters

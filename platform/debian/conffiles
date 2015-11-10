@@ -39,3 +39,5 @@
 /etc/firejail/wine.profile
 /etc/firejail/disable-devel.inc
 /etc/firejail/conkeror.profile
+/etc/firejail/unbound.profile
+/etc/firejail/dnscrypt-proxy.profile

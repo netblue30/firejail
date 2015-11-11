@@ -143,9 +143,16 @@ void fs_whitelist(void) {
 		}
 
 		char *new_name = expand_home(entry->data + 10, cfg.homedir);
+
 		assert(new_name);
 		char *fname = realpath(new_name, NULL);
-		free(new_name);
+
+		// mark symbolic links
+		if (is_link(new_name))
+			entry->link = new_name;
+		else
+			free(new_name);
+
 		if (fname) {
 			// change file name in entry->data
 			if (strcmp(fname, entry->data + 10) != 0) {
@@ -194,7 +201,21 @@ void fs_whitelist(void) {
 			continue;
 		}
 
+		// whitelist the real file
 		whitelist_path(entry->data + 10);
+
+		// create the link if any
+		if (entry->link) {
+			// if the link is already there, do not bother
+			struct stat s;
+			if (stat(entry->link, &s) != 0) {
+				int rv = symlink(entry->data + 10, entry->link);
+				if (rv)
+					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
+				else if (arg_debug)
+					printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+			}
+		}
 
 		entry = entry->next;
 	}

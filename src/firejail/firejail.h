@@ -86,7 +86,8 @@ typedef struct interface_t {
 
 typedef struct profile_entry_t {
 	struct profile_entry_t *next;
-	char *data;
+	char *data;	// expanded name of the file
+	char *link;	// link name - set if the file is a link
 }ProfileEntry;
 
 typedef struct config_t {

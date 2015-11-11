@@ -25,6 +25,7 @@ blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.retroshare
 blacklist ${HOME}/.weechat
 blacklist ${HOME}/.config/xchat
+blacklist ${HOME}/.Skype
 
 # Cryptocoins
 blacklist ${HOME}/.*coin

@@ -41,3 +41,4 @@
 /etc/firejail/conkeror.profile
 /etc/firejail/unbound.profile
 /etc/firejail/dnscrypt-proxy.profile
+etc/whitelist-common.inc

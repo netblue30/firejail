@@ -64,7 +64,6 @@ static void whitelist_path(ProfileEntry *entry) {
 	char *wfile;
 	
 	if (entry->home_dir) {
-printf("here %d\n", __LINE__);
 		fname = path + strlen(cfg.homedir);
 		if (*fname == '\0') {
 			fprintf(stderr, "Error: file %s is not in user home directory, exiting...\n", path);
@@ -75,7 +74,6 @@ printf("here %d\n", __LINE__);
 			errExit("asprintf");
 	}
 	else if (entry->tmp_dir) {
-printf("here %d\n", __LINE__);
 		fname = path + 4; // strlen("/tmp")
 		if (*fname == '\0') {
 			fprintf(stderr, "Error: file %s is not in /tmp directory, exiting...\n", path);
@@ -87,9 +85,6 @@ printf("here %d\n", __LINE__);
 	}
 
 	// check if the file exists
-printf("here %d %s\n", __LINE__, wfile);	
-system("ls -l /run/firejail/mnt/orig-tmp");
-
 	struct stat s;
 	if (stat(wfile, &s) == 0) {
 		if (arg_debug)

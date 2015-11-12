@@ -8,6 +8,7 @@ blacklist /usr/bin/c9*
 blacklist /usr/bin/c8*
 blacklist /usr/bin/c++*
 blacklist /usr/bin/ld
+blacklist /usr/bin/gdb
 
 # Valgrind
 blacklist /usr/bin/valgrind*

@@ -9,3 +9,4 @@ blacklist ${HOME}/.gnupg
 blacklist ${HOME}/.local/share/recently-used.xbel
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.key
+blacklist /etc/shadow

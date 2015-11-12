@@ -398,6 +398,7 @@ void profile_add(char *str) {
 	ProfileEntry *prf = malloc(sizeof(ProfileEntry));
 	if (!prf)
 		errExit("malloc");
+	memset(prf, 0, sizeof(ProfileEntry));
 	prf->next = NULL;
 	prf->data = str;	
 

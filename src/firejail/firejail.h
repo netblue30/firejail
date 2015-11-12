@@ -39,7 +39,8 @@
 #define DRI_DIR	"/run/firejail/mnt/dri"
 #define PULSE_DIR	"/run/firejail/mnt/pulse"
 #define DEVLOG_FILE	"/run/firejail/mnt/devlog"
-#define WHITELIST_HOME_DIR	"/run/firejail/mnt/whome"
+#define WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"
+#define WHITELIST_TMP_DIR	"/run/firejail/mnt/orig-tmp"
 #define XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
 #define HOSTNAME_FILE	"/run/firejail/mnt/hostname"
 #define RESOLVCONF_FILE	"/run/firejail/mnt/resolv.conf"
@@ -86,8 +87,12 @@ typedef struct interface_t {
 
 typedef struct profile_entry_t {
 	struct profile_entry_t *next;
-	char *data;	// expanded name of the file
+	char *data;	// command
+	
+	// whitelist command parameters
 	char *link;	// link name - set if the file is a link
+	unsigned home_dir:1;	// whitelist in /home/user directory
+	unsigned tmp_dir:1;	// whitelist in /tmp directory
 }ProfileEntry;
 
 typedef struct config_t {

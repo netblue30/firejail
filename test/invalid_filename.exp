@@ -10,7 +10,7 @@
 #--output - output.c
 #--private - fs_home.c
 #--privte-bin (list) - fs_bin.c
-#--private-keep/--private-home (list) - fs_home.c
+#--private-home (list) - fs_home.c
 #--private-etc (list) - fs_etc.c
 #--profile - main.c
 #--read_only - profile.c

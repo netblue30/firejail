@@ -5,7 +5,7 @@ spawn $env(SHELL)
 match_max 100000
 
 # dir
-#send -- "firejail --net=br0 --private.keep=fscheck-dir\r"
+#send -- "firejail --net=br0 --private-home=fscheck-dir\r"
 #expect {
 #	timeout {puts "TESTING ERROR 0\n";exit}
 #	"Error"
@@ -13,7 +13,7 @@ match_max 100000
 #after 100
 
 # ..
-send -- "firejail --net=br0 --private.keep=../test/fscheck-dir\r"
+send -- "firejail --net=br0 --private-home=../test/fscheck-dir\r"
 expect {
 	timeout {puts "TESTING ERROR 0.1\n";exit}
 	"Error"
@@ -21,7 +21,7 @@ expect {
 after 100
 
 # dir link
-send -- "firejail --net=br0 --private.keep=fscheck-dir-link\r"
+send -- "firejail --net=br0 --private-home=fscheck-dir-link\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Error"
@@ -29,7 +29,7 @@ expect {
 after 100
 
 # ..
-send -- "firejail --net=br0 --private.keep=../test/fscheck-dir-link\r"
+send -- "firejail --net=br0 --private-home=../test/fscheck-dir-link\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
 	"Error"
@@ -37,7 +37,7 @@ expect {
 after 100
 
 # file link
-send -- "firejail --net=br0 --private.keep=fscheck-file-link\r"
+send -- "firejail --net=br0 --private-home=fscheck-file-link\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Error"
@@ -45,7 +45,7 @@ expect {
 after 100
 
 # file 
-#send -- "firejail --net=br0 --private.keep=fscheck-file\r"
+#send -- "firejail --net=br0 --private-home=fscheck-file\r"
 #expect {
 #	timeout {puts "TESTING ERROR 2.1\n";exit}
 #	"Error"
@@ -53,7 +53,7 @@ after 100
 #after 100
 
 # ..
-send -- "firejail --net=br0 --private.keep=../test/fscheck-file\r"
+send -- "firejail --net=br0 --private-home=../test/fscheck-file\r"
 expect {
 	timeout {puts "TESTING ERROR 2.2\n";exit}
 	"Error"
@@ -61,7 +61,7 @@ expect {
 after 100
 
 # no dir
-send -- "firejail --net=br0 --private.keep=../test/nodir\r"
+send -- "firejail --net=br0 --private-home=../test/nodir\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"Error"
@@ -69,7 +69,7 @@ expect {
 after 100
 
 # no file
-send -- "firejail --net=br0 --private.keep=../test/nofile\r"
+send -- "firejail --net=br0 --private-home=../test/nofile\r"
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
 	"Error"

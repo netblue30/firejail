@@ -798,8 +798,7 @@ int main(int argc, char **argv) {
 			fs_check_private_dir();
 			arg_private = 1;
 		}
-		else if ((strncmp(argv[i], "--private.keep=", 15) == 0)
-		      || (strncmp(argv[i], "--private-home=", 15) == 0)) {
+		else if (strncmp(argv[i], "--private-home=", 15) == 0) {
 			if (cfg.home_private) {
 				fprintf(stderr, "Error: a private home directory was already defined with --private option.\n");
 				exit(1);

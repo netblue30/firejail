@@ -12,6 +12,7 @@ noroot
 whitelist ~/.mozilla
 whitelist ~/Downloads
 whitelist ~/Загрузки
+whitelist ~/.cache/mozilla/firefox
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.lastpass

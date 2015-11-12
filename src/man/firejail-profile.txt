@@ -70,20 +70,15 @@ Scripting commands:
 # this is a comment
 
 .TP
-\f\include other.profile exclude-token
-Include other.profile file. exclude-token disables blacklist commands in other.profile
-if exclude-token word is found in the name section of blacklist command.
-exclude-token is optional.
+\f\include other.profile
+Include other.profile file.
 
-Example: "include /etc/firejail/disable-common.inc .filezilla"
-loads disable-common.inc file disables "blacklist ${HOME}/.filezilla" command in this file.
+Example: "include /etc/firejail/disable-common.inc"
 
 other.profile file name can be prefixed with ${HOME}. This will force Firejail to look for the
 file in user home directory.
 
 Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1" file.
-
-Note: exclude-token is deprecated, use noblacklist command instead.
 
 .TP
 \f\noblacklist file_name

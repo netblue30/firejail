@@ -720,7 +720,7 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 
-			profile_read(argv[i] + 10, NULL, NULL);
+			profile_read(argv[i] + 10);
 			custom_profile = 1;
 		}
 		else if (strcmp(argv[i], "--noprofile") == 0) {

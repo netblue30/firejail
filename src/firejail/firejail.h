@@ -266,7 +266,7 @@ int fs_check_chroot_dir(const char *rootdir);
 // find and read the profile specified by name from dir directory
 int profile_find(const char *name, const char *dir);
 // read a profile file
-void profile_read(const char *fname, const char *skip1, const char *skip2);
+void profile_read(const char *fname);
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function

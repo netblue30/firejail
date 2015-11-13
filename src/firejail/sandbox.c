@@ -25,6 +25,8 @@
 #include <sys/prctl.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 #include <sched.h>
 #ifndef CLONE_NEWUSER
@@ -123,6 +125,119 @@ static void chk_chroot(void) {
 	fprintf(stderr, "Error: cannot mount filesystem as slave\n");
 	exit(1);
 }
+
+static void monitor_application(pid_t app_pid) {
+	while (app_pid) {
+		sleep(1);
+		
+		int status;
+		unsigned rv = waitpid(app_pid, &status, 0);
+		if (arg_debug)
+			printf("Sandbox monitor: waitpid %u retval %d status %d\n", app_pid, rv, status);
+
+		DIR *dir;
+		if (!(dir = opendir("/proc"))) {
+			// sleep 2 seconds and try again
+			sleep(2);
+			if (!(dir = opendir("/proc"))) {
+				fprintf(stderr, "Error: cannot open /proc directory\n");
+				exit(1);
+			}
+		}
+
+		struct dirent *entry;
+		app_pid = 0;
+		while ((entry = readdir(dir)) != NULL) {
+			char *end;
+			unsigned pid;
+			if (sscanf(entry->d_name, "%u", &pid) != 1)
+				continue;
+			if (pid == 1)
+				continue;
+			app_pid = pid;
+			break;
+		}
+		closedir(dir);
+
+		if (app_pid != 0 && arg_debug)
+			printf("Sandbox monitor: monitoring %u\n", app_pid);
+	}
+}
+
+
+static void start_application(void) {
+	//****************************************
+	// start the program without using a shell
+	//****************************************
+	if (arg_shell_none) {
+		if (arg_debug) {
+			int i;
+			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
+				if (cfg.original_argv[i] == NULL)
+					break;
+				printf("execvp argument %d: %s\n", i - cfg.original_program_index, cfg.original_argv[i]);
+			}
+		}
+
+		if (!arg_command && !arg_quiet)
+			printf("Child process initialized\n");
+		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
+	}
+	//****************************************
+	// start the program using a shell
+	//****************************************
+	else {
+		// choose the shell requested by the user, or use bash as default
+		char *sh;
+		if (cfg.shell)
+	 		sh = cfg.shell;
+		else if (arg_zsh)
+			sh = "/usr/bin/zsh";
+		else if (arg_csh)
+			sh = "/bin/csh";
+		else
+			sh = "/bin/bash";
+			
+		char *arg[5];
+		int index = 0;
+		arg[index++] = sh;
+		arg[index++] = "-c";
+		assert(cfg.command_line);
+		if (arg_debug)
+			printf("Starting %s\n", cfg.command_line);
+		if (arg_doubledash) 
+			arg[index++] = "--";
+		arg[index++] = cfg.command_line;
+		arg[index] = NULL;
+		assert(index < 5);
+		
+		if (arg_debug) {
+			char *msg;
+			if (asprintf(&msg, "sandbox %d, execvp into %s", sandbox_pid, cfg.command_line) == -1)
+				errExit("asprintf");
+			logmsg(msg);
+			free(msg);
+		}
+		
+		if (arg_debug) {
+			int i;
+			for (i = 0; i < 5; i++) {
+				if (arg[i] == NULL)
+					break;
+				printf("execvp argument %d: %s\n", i, arg[i]);
+			}
+		}
+		
+		if (!arg_command && !arg_quiet)
+			printf("Child process initialized\n");
+		execvp(sh, arg);
+	}
+	
+	perror("execvp");
+	exit(1); // it should never get here!!!
+}
+
+
 
 int sandbox(void* sandbox_arg) {
 	// Get rid of unused parameter warning
@@ -379,7 +494,7 @@ int sandbox(void* sandbox_arg) {
 	fs_delete_cp_command();
 
 	//****************************
-	// start executable
+	// set application environment
 	//****************************
 	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 	int cwd = 0;
@@ -407,6 +522,9 @@ int sandbox(void* sandbox_arg) {
 	// set user-supplied environment variables
 	env_apply();
 
+	//****************************
+	// set security filters
+	//****************************
 	// set capabilities
 	if (!arg_noroot)
 		set_caps();
@@ -477,73 +595,18 @@ int sandbox(void* sandbox_arg) {
 
 
 	//****************************************
-	// start the program without using a shell
+	// fork the application and monitor it
 	//****************************************
-	if (arg_shell_none) {
-		if (arg_debug) {
-			int i;
-			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
-				if (cfg.original_argv[i] == NULL)
-					break;
-				printf("execvp argument %d: %s\n", i - cfg.original_program_index, cfg.original_argv[i]);
-			}
-		}
+	pid_t app_pid = fork();
+	if (app_pid == -1)
+		errExit("fork");
+		
+	if (app_pid == 0) {
+		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
+		start_application();	// start app
+	}
 
-		if (!arg_command && !arg_quiet)
-			printf("Child process initialized\n");
-		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
-	}
-	//****************************************
-	// start the program using a shell
-	//****************************************
-	else {
-		// choose the shell requested by the user, or use bash as default
-		char *sh;
-		if (cfg.shell)
-	 		sh = cfg.shell;
-		else if (arg_zsh)
-			sh = "/usr/bin/zsh";
-		else if (arg_csh)
-			sh = "/bin/csh";
-		else
-			sh = "/bin/bash";
-			
-		char *arg[5];
-		int index = 0;
-		arg[index++] = sh;
-		arg[index++] = "-c";
-		assert(cfg.command_line);
-		if (arg_debug)
-			printf("Starting %s\n", cfg.command_line);
-		if (arg_doubledash) 
-			arg[index++] = "--";
-		arg[index++] = cfg.command_line;
-		arg[index] = NULL;
-		assert(index < 5);
-		
-		if (arg_debug) {
-			char *msg;
-			if (asprintf(&msg, "sandbox %d, execvp into %s", sandbox_pid, cfg.command_line) == -1)
-				errExit("asprintf");
-			logmsg(msg);
-			free(msg);
-		}
-		
-		if (arg_debug) {
-			int i;
-			for (i = 0; i < 5; i++) {
-				if (arg[i] == NULL)
-					break;
-				printf("execvp argument %d: %s\n", i, arg[i]);
-			}
-		}
-		
-		if (!arg_command && !arg_quiet)
-			printf("Child process initialized\n");
-		execvp(sh, arg);
-	}
+	monitor_application(app_pid);	// monitor application
 	
-
-	perror("execvp");
 	return 0;
 }

@@ -30,7 +30,7 @@ sleep 1
 send -- "ps aux | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"4"
+	"5"
 }
 sleep 1
 send -- "exit\r"

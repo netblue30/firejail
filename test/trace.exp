@@ -11,7 +11,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"1:mkdir:mkdir ttt"
+	"mkdir:mkdir ttt"
 }
 sleep 1
 
@@ -22,7 +22,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"1:rmdir:rmdir ttt"
+	"rmdir:rmdir ttt"
 }
 sleep 1
 
@@ -33,8 +33,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"1:touch:open ttt" {puts "OK\n";}
-	"1:touch:open64 ttt" {puts "OK\n";}
+	"touch:open ttt" {puts "OK\n";}
+	"touch:open64 ttt" {puts "OK\n";}
 }
 sleep 1
 
@@ -45,7 +45,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"1:rm:unlinkat ttt"
+	"rm:unlinkat ttt"
 }
 sleep 1
 
@@ -56,26 +56,26 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 8.2\n";exit}
-	"1:bash:open /dev/tty" {puts "OK\n";}
-	"1:bash:open64 /dev/tty" {puts "OK\n";}
+	"bash:open /dev/tty" {puts "OK\n";}
+	"bash:open64 /dev/tty" {puts "OK\n";}
 }
 expect {
 	timeout {puts "TESTING ERROR 8.3\n";exit}
-	"1:wget:fopen64 /etc/wgetrc" {puts "OK\n";}
-	"1:wget:fopen /etc/wgetrc"  {puts "OK\n";}
+	"wget:fopen64 /etc/wgetrc" {puts "OK\n";}
+	"wget:fopen /etc/wgetrc"  {puts "OK\n";}
 }
 expect {
 	timeout {puts "TESTING ERROR 8.4\n";exit}
-	"1:wget:fopen /etc/hosts"
+	"wget:fopen /etc/hosts"
 }
 expect {
 	timeout {puts "TESTING ERROR 8.5\n";exit}
-	"1:wget:connect"
+	"wget:connect"
 }
 expect {
 	timeout {puts "TESTING ERROR 8.6\n";exit}
-	"1:wget:fopen64 index.html" {puts "OK\n";}
-	"1:wget:fopen index.html" {puts "OK\n";}
+	"wget:fopen64 index.html" {puts "OK\n";}
+	"wget:fopen index.html" {puts "OK\n";}
 }
 sleep 1
 
@@ -86,10 +86,9 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"1:rm:unlinkat index.html"
+	"rm:unlinkat index.html"
 }
 sleep 1
 
 
 puts "\nall done\n"
-

@@ -11,17 +11,17 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"1:bash:open /dev/tty" {puts "64bit\n"}
-	"1:bash:open64 /dev/tty" {puts "32bit\n"}
+	"bash:open /dev/tty" {puts "64bit\n"}
+	"bash:open64 /dev/tty" {puts "32bit\n"}
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"1:bash:fopen /etc/passwd"
+	"bash:fopen /etc/passwd"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"1:bash:access /etc/terminfo/x/xterm" {puts "debian\n"}
-	"1:bash:access /usr/share/terminfo/x/xterm" {puts "arch\n"}
+	"bash:access /etc/terminfo/x/xterm" {puts "debian\n"}
+	"bash:access /usr/share/terminfo/x/xterm" {puts "arch\n"}
 }
 
 sleep 1

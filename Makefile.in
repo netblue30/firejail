@@ -8,9 +8,7 @@ bindir=@bindir@
 libdir=@libdir@
 datarootdir=@datarootdir@
 mandir=@mandir@
-# todo: fix sysconfdir
-# sysconfdir=@sysconfdir@ 
-sysconfdir=/etc
+sysconfdir=@sysconfdir@
 
 VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
@@ -72,51 +70,53 @@ realinstall:
 	install -c -m 0644 README $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 RELNOTES $(DESTDIR)/$(DOCDIR)/.
 	# etc files
+	./mketc.sh $(sysconfdir)
 	mkdir -p $(DESTDIR)/$(sysconfdir)/firejail
-	install -c -m 0644 etc/audacious.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/clementine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/gnome-mplayer.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/rhythmbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/totem.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/firefox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/icedove.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/iceweasel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/midori.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/evince.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/chromium-browser.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/chromium.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/google-chrome.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/disable-mgmt.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/disable-secret.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/disable-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/dropbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/opera.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/thunderbird.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/transmission-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/transmission-qt.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/vlc.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/deluge.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/qbittorrent.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/generic.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/pidgin.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/xchat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/empathy.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/server.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/icecat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/quassel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/deadbeef.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/filezilla.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/fbreader.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/spotify.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/steam.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/skype.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/wine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/disable-devel.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/conkeror.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/unbound.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/dnscrypt-proxy.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 etc/whitelist-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/audacious.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/clementine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/gnome-mplayer.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/rhythmbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/totem.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/firefox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/icedove.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/iceweasel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/midori.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/evince.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/chromium-browser.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/chromium.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/google-chrome.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/disable-mgmt.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/disable-secret.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/disable-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/dropbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/opera.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/thunderbird.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/transmission-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/transmission-qt.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/vlc.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/deluge.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/qbittorrent.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/generic.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/pidgin.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/xchat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/empathy.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/server.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/icecat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/quassel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/deadbeef.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/filezilla.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/fbreader.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/spotify.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/steam.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/skype.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/wine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/disable-devel.inc $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/conkeror.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/unbound.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/dnscrypt-proxy.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/whitelist-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	bash -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
+	rm -fr .etc
 	# man pages
 	rm -f firejail.1.gz
 	gzip -9n firejail.1

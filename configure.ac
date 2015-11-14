@@ -47,14 +47,22 @@ AC_CHECK_HEADER(pthread.h,,AC_MSG_ERROR([*** POSIX thread support not installed 
 AC_CHECK_HEADER([linux/seccomp.h], HAVE_SECCOMP_H="-DHAVE_SECCOMP_H", HAVE_SECCOMP_H="")
 AC_SUBST(HAVE_SECCOMP_H)
 
+# set sysconfdir
+if test "$prefix" = /usr; then
+	sysconfdir="/etc"
+fi
+
 AC_OUTPUT(Makefile src/lib/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/ftee/Makefile)
 
 echo
 echo "Configuration options:"
 echo "   prefix: $prefix"
+echo "   sysconfdir: $sysconfdir"
 echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo
+
+

@@ -27,7 +27,11 @@ int restricted_shell(const char *user) {
 	assert(user);
 
 	// open profile file:
-	FILE *fp = fopen("/etc/firejail/login.users", "r");
+	char *fname;
+	if (asprintf(&fname, "%s/login.users", SYSCONFDIR) == -1)
+		errExit("asprintf");
+	FILE *fp = fopen(fname, "r");
+	free(fname);
 	if (fp == NULL)
 		return 0;
 

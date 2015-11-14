@@ -3558,6 +3558,11 @@ fi
 
 
 
+# set sysconfdir
+if test "$prefix" = /usr; then
+	sysconfdir="/etc"
+fi
+
 ac_config_files="$ac_config_files Makefile src/lib/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/ftee/Makefile"
 
 cat >confcache <<\_ACEOF
@@ -4731,9 +4736,12 @@ fi
 echo
 echo "Configuration options:"
 echo "   prefix: $prefix"
+echo "   sysconfdir: $sysconfdir"
 echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo
+
+

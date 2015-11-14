@@ -1222,7 +1222,7 @@ int main(int argc, char **argv) {
 		}
 		if (!custom_profile) {
 			// look for a user profile in /etc/firejail directory
-			int rv = profile_find(cfg.command_name, "/etc/firejail");
+			int rv = profile_find(cfg.command_name, SYSCONFDIR);
 			custom_profile = rv;
 		}
 	}
@@ -1252,7 +1252,7 @@ int main(int argc, char **argv) {
 	
 			if (!custom_profile) {
 				// look for the profile in /etc/firejail directory
-				custom_profile = profile_find(profile_name, "/etc/firejail");
+				custom_profile = profile_find(profile_name, SYSCONFDIR);
 			}
 			
 			if (custom_profile && !arg_quiet)

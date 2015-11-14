@@ -429,7 +429,7 @@ void profile_read(const char *fname) {
 	// open profile file:
 	FILE *fp = fopen(fname, "r");
 	if (fp == NULL) {
-		fprintf(stderr, "Error: cannot open profile file\n");
+		fprintf(stderr, "Error: cannot open profile file %s\n", fname);
 		exit(1);
 	}
 

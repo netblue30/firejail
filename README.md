@@ -49,6 +49,8 @@ whitelist ~/.vimperatorrc (0.9.34)
 whitelist ~/.vimperator (0.9.34)
 whitelist ~/.pentadactylrc (0.9.34)
 whitelist ~/.pentadactyl (0.9.34)
+whitelist ~/.config/gnome-mplayer (new in 0.9.35)
+whitelist ~/.cache/gnome-mplayer/plugin (new in 0.9.35)
 include /etc/firejail/whitelist-common.inc
 `````
 /etc/firejail/whitelist-common.inc

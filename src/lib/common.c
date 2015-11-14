@@ -178,8 +178,8 @@ char *pid_proc_cmdline(const pid_t pid) {
 	for (i = 0; i < len; i++) {
 		if (buffer[i] == '\0')
 			buffer[i] = ' ';
-		if (buffer[i] >= 0x80) // execv in progress!!!
-			return NULL;
+//		if (buffer[i] >= 0x80) // execv in progress!!!
+//			return NULL;
 	}
 
 	// return a malloc copy of the command line

@@ -83,6 +83,36 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	else if (entry->media_dir) {
+		fname = path + 6; // strlen("/media")
+		if (*fname == '\0') {
+			fprintf(stderr, "Error: file %s is not in /media directory, exiting...\n", path);
+			exit(1);
+		}
+	
+		if (asprintf(&wfile, "%s/%s", WHITELIST_MEDIA_DIR, fname) == -1)
+			errExit("asprintf");
+	}
+	else if (entry->var_dir) {
+		fname = path + 4; // strlen("/var")
+		if (*fname == '\0') {
+			fprintf(stderr, "Error: file %s is not in /var directory, exiting...\n", path);
+			exit(1);
+		}
+	
+		if (asprintf(&wfile, "%s/%s", WHITELIST_VAR_DIR, fname) == -1)
+			errExit("asprintf");
+	}
+	else if (entry->dev_dir) {
+		fname = path + 4; // strlen("/dev")
+		if (*fname == '\0') {
+			fprintf(stderr, "Error: file %s is not in /dev directory, exiting...\n", path);
+			exit(1);
+		}
+	
+		if (asprintf(&wfile, "%s/%s", WHITELIST_DEV_DIR, fname) == -1)
+			errExit("asprintf");
+	}
 
 	// check if the file exists
 	struct stat s;
@@ -145,6 +175,9 @@ void fs_whitelist(void) {
 	char *new_name = NULL;
 	int home_dir = 0;	// /home/user directory flag
 	int tmp_dir = 0;	// /tmp directory flag
+	int media_dir = 0;	// /media directory flag
+	int var_dir = 0;		// /var directory flag
+	int dev_dir = 0;		// /dev directory flag
 
 	// verify whitelist files, extract symbolic links, etc.
 	while (entry) {
@@ -173,7 +206,7 @@ void fs_whitelist(void) {
 		if (*new_name != '/')
 			goto errexit;
 
-		// check for home directory or tmp directory
+		// check for supported directories
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			entry->home_dir = 1;
 			home_dir = 1;
@@ -186,6 +219,27 @@ void fs_whitelist(void) {
 			tmp_dir = 1;
 			// both path and absolute path are under /tmp
 			if (strncmp(fname, "/tmp/", 5) != 0)
+				goto errexit;
+		}
+		else if (strncmp(new_name, "/media/", 7) == 0) {
+			entry->media_dir = 1;
+			media_dir = 1;
+			// both path and absolute path are under /media
+			if (strncmp(fname, "/media/", 7) != 0)
+				goto errexit;
+		}
+		else if (strncmp(new_name, "/var/", 5) == 0) {
+			entry->var_dir = 1;
+			var_dir = 1;
+			// both path and absolute path are under /var
+			if (strncmp(fname, "/var/", 5) != 0)
+				goto errexit;
+		}
+		else if (strncmp(new_name, "/dev/", 5) == 0) {
+			entry->dev_dir = 1;
+			dev_dir = 1;
+			// both path and absolute path are under /dev
+			if (strncmp(fname, "/dev/", 5) != 0)
 				goto errexit;
 		}
 		else
@@ -249,7 +303,70 @@ void fs_whitelist(void) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /tmp directory\n");
 		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-			errExit("mounting tmpfs on /tmpt");
+			errExit("mounting tmpfs on /tmp");
+	}
+	
+	// /media mountpoint
+	if (media_dir) {
+		// keep a copy of real /media directory in WHITELIST_MEDIA_DIR
+		int rv = mkdir(WHITELIST_MEDIA_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown(WHITELIST_MEDIA_DIR, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(WHITELIST_MEDIA_DIR, 0755) < 0)
+			errExit("chmod");
+	
+		if (mount("/media", WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount bind");
+	
+		// mount tmpfs on /media
+		if (arg_debug)
+			printf("Mounting tmpfs on /media directory\n");
+		if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mounting tmpfs on /media");
+	}
+
+	// /media mountpoint
+	if (var_dir) {
+		// keep a copy of real /var directory in WHITELIST_VAR_DIR
+		int rv = mkdir(WHITELIST_VAR_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown(WHITELIST_VAR_DIR, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(WHITELIST_VAR_DIR, 0755) < 0)
+			errExit("chmod");
+	
+		if (mount("/var", WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount bind");
+	
+		// mount tmpfs on /var
+		if (arg_debug)
+			printf("Mounting tmpfs on /var directory\n");
+		if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mounting tmpfs on /var");
+	}
+
+	// /dev mountpoint
+	if (dev_dir) {
+		// keep a copy of real /dev directory in WHITELIST_DEV_DIR
+		int rv = mkdir(WHITELIST_DEV_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown(WHITELIST_DEV_DIR, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(WHITELIST_DEV_DIR, 0755) < 0)
+			errExit("chmod");
+	
+		if (mount("/dev", WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount bind");
+	
+		// mount tmpfs on /var
+		if (arg_debug)
+			printf("Mounting tmpfs on /dev directory\n");
+		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mounting tmpfs on /dev");
 	}
 
 	// go through profile rules again, and interpret whitelist commands

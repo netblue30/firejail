@@ -39,8 +39,13 @@
 #define DRI_DIR	"/run/firejail/mnt/dri"
 #define PULSE_DIR	"/run/firejail/mnt/pulse"
 #define DEVLOG_FILE	"/run/firejail/mnt/devlog"
+
 #define WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"
 #define WHITELIST_TMP_DIR	"/run/firejail/mnt/orig-tmp"
+#define WHITELIST_MEDIA_DIR	"/run/firejail/mnt/orig-media"
+#define WHITELIST_VAR_DIR	"/run/firejail/mnt/orig-var"
+#define WHITELIST_DEV_DIR	"/run/firejail/mnt/orig-dev"
+
 #define XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
 #define HOSTNAME_FILE	"/run/firejail/mnt/hostname"
 #define RESOLVCONF_FILE	"/run/firejail/mnt/resolv.conf"
@@ -93,6 +98,9 @@ typedef struct profile_entry_t {
 	char *link;	// link name - set if the file is a link
 	unsigned home_dir:1;	// whitelist in /home/user directory
 	unsigned tmp_dir:1;	// whitelist in /tmp directory
+	unsigned media_dir:1;	// whitelist in /media directory
+	unsigned var_dir:1;	// whitelist in /var directory
+	unsigned dev_dir:1;	// whitelist in /tmp directory
 }ProfileEntry;
 
 typedef struct config_t {

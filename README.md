@@ -84,3 +84,7 @@ New profiles introduced in this version: unbound, dnscrypt-proxy
               $ nc dict.org 2628
               220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
 `````
+
+### --whitelist
+
+Whitelist command accepts files in user home, /dev, /media, /var, and /tmp directories.

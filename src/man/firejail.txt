@@ -1241,13 +1241,15 @@ $ firejail \-\-version
 firejail version 0.9.27
 .TP
 \fB\-\-whitelist=dirname_or_filename
-Whitelist directory or file. Only files in user home directory are accepted.
+Whitelist directory or file. This feature is implemented only for user home, /dev, /media, /var, and /tmp directories.
 .br
 
 .br
 Example:
 .br
 $ firejail \-\-whitelist=~/.mozilla \-\-whitelist=~/Downloads
+.br
+$ firejail \-\-whitelist=/tmp/.X11-unix --whitelist=/dev/null
 .br
 $ firejail "\-\-whitelist=/home/username/My Virtual Machines"
 .TP

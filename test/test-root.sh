@@ -35,6 +35,12 @@ then
 	./servers5.exp
 fi
 
+if [ -f /etc/init.d/nginx ]
+then
+	echo "TESTING: servers nginx, private-dev"
+	./servers6.exp
+fi
+
 echo "TESTING: /proc/sysrq-trigger reset disabled"
 ./sysrq-trigger.exp
 

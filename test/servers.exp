@@ -18,7 +18,7 @@ expect {
 sleep 2
 
 
-send -- "/etc/init.d/rsyslog start;sleep 1;/etc/init.d/ssh start;sleep 1;/etc/init.d/nginx start\r"
+send -- "/etc/init.d/rsyslog start;sleep 1;/etc/init.d/ssh start\r"
 sleep 3
 
 send -- "ps aux; pwd\r"
@@ -29,10 +29,6 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"sshd"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"nginx"
 }
 
 send -- "exit\r"

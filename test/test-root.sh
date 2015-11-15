@@ -29,6 +29,12 @@ then
 	./servers4.exp
 fi
 
+if [ -f /etc/init.d/unbound ]
+then
+	echo "TESTING: servers unbound, private-dev"
+	./servers5.exp
+fi
+
 echo "TESTING: /proc/sysrq-trigger reset disabled"
 ./sysrq-trigger.exp
 

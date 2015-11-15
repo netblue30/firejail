@@ -76,7 +76,7 @@ sleep 1
 send -- "ps aux |wc -l; pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"5"
+	"6"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}

@@ -258,7 +258,7 @@ char *line_remove_spaces(const char *buf) {
 	}
 
 	// strip last blank character if any
-	if (*(ptr2 - 1) == ' ')
+	if (ptr2 > rv && *(ptr2 - 1) == ' ')
 		--ptr2;
 	*ptr2 = '\0';
 	//	if (arg_debug)

@@ -61,7 +61,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	char *path = entry->data + 10;
 	assert(path);
 	const char *fname;
-	char *wfile;
+	char *wfile = NULL;
 	
 	if (entry->home_dir) {
 		fname = path + strlen(cfg.homedir);
@@ -86,7 +86,7 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	// check if the file exists
 	struct stat s;
-	if (stat(wfile, &s) == 0) {
+	if (wfile && stat(wfile, &s) == 0) {
 		if (arg_debug)
 			printf("Whitelisting %s\n", path);
 	}

@@ -148,7 +148,6 @@ static void monitor_application(pid_t app_pid) {
 		struct dirent *entry;
 		app_pid = 0;
 		while ((entry = readdir(dir)) != NULL) {
-			char *end;
 			unsigned pid;
 			if (sscanf(entry->d_name, "%u", &pid) != 1)
 				continue;

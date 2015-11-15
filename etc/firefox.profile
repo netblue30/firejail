@@ -6,7 +6,7 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 caps.drop all
 seccomp
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 netfilter
 noroot
 whitelist ~/.mozilla

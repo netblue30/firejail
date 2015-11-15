@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 
-set timeout 10
+set timeout 5
 spawn $env(SHELL)
 match_max 100000
 
@@ -10,22 +10,48 @@ expect {
 	"root"
 }
 
-send --  "firejail --net=br0 --ip=10.10.20.5--seccomp\r"
+send -- "pkill snmpd\r"
+sleep 2
+
+
+send -- "firejail --name=snmpd /etc/init.d/snmpd start\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 sleep 2
 
-send -- "/etc/init.d/snmpd start"
+spawn $env(SHELL)
+send -- "firejail --tree\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"snmp:/usr/sbin/snmpd"
+}
 sleep 2
 
-send -- "ps aux; pwd\r"
+send -- "tail /var/log/syslog\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"snmpd"
 }
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"NET-SNMP version"
+}
 
-send -- "exit\r"
-sleep 1
-puts "\n"
+send -- "firejail --join=snmpd\r"
+sleep 2
+
+send -- "ls /dev\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"tty0" {puts "TESTING ERROR 6\n";exit}
+	"ttyS0" {puts "TESTING ERROR 6\n";exit}
+	"audio" {puts "TESTING ERROR 6\n";exit}
+	"ppp" {puts "TESTING ERROR 6\n";exit}
+	"log"
+}
+sleep 2
+
+sleep 2
+puts "\nall done\n"

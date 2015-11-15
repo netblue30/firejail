@@ -13,19 +13,19 @@ echo "TESTING: servers rsyslogd, sshd, nginx"
 
 if [ -f /etc/init.d/snmpd ]
 then
-	echo "TESTING: servers snmpd"
+	echo "TESTING: servers snmpd, private-dev"
 	./servers2.exp
 fi
 
 if [ -f /etc/init.d/apache2 ]
 then
-	echo "TESTING: servers apache2"
+	echo "TESTING: servers apache2, private-dev"
 	./servers3.exp
 fi
 
 if [ -f /etc/init.d/isc-dhcp-server ]
 then
-	echo "TESTING: servers isc dhcp server"
+	echo "TESTING: servers isc dhcp server, private-dev"
 	./servers4.exp
 fi
 

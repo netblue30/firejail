@@ -48,6 +48,7 @@ expect {
 	"tty0" {puts "TESTING ERROR 6\n";exit}
 	"ttyS0" {puts "TESTING ERROR 6\n";exit}
 	"audio" {puts "TESTING ERROR 6\n";exit}
+	"ppp" {puts "TESTING ERROR 6\n";exit}
 	"log"
 }
 sleep 2

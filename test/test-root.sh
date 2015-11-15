@@ -8,9 +8,6 @@ echo "TESTING: network interfaces"
 echo "TESTING: chroot"
 ./fs_chroot_asroot.exp
 
-echo "TESTING: servers rsyslogd, sshd, nginx"
-./servers.exp
-
 if [ -f /etc/init.d/snmpd ]
 then
 	echo "TESTING: servers snmpd, private-dev"

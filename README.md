@@ -55,14 +55,21 @@ include /etc/firejail/whitelist-common.inc
 `````
 /etc/firejail/whitelist-common.inc
 `````
+whitelist ~/.config/mimeapps.list (new in 0.9.35)
+whitelist ~/.icons (new in 0.9.35)
+
+# fonts
 whitelist ~/.fonts (0.9.34)
 whitelist ~/.fonts.d (0.9.34)
 whitelist ~/.fontconfig (0.9.34)
 whitelist ~/.fonts.conf (0.9.34)
 whitelist ~/.fonts.conf.d (0.9.34)
+
+# gtk
+whitelist ~/.gtkrc (new in 0.9.35)
 whitelist ~/.gtkrc-2.0 (0.9.34)
 whitelist ~/.config/gtk-3.0 (new in 0.9.35)
-whitelist ~/.themes/ (new in 0.9.35)
+whitelist ~/.themes (new in 0.9.35)
 `````
 If you are using a plugin or extension that requires other directories, please open a new issue: https://github.com/netblue30/firejail/issues
 

@@ -196,8 +196,13 @@ void fs_whitelist(void) {
 		char *fname = realpath(new_name, NULL);
 		if (!fname) {
 			// file not found, blank the entry in the list and continue
-			if (arg_debug)
+			if (arg_debug) {
 				printf("Removed whitelist path: %s\n", entry->data);
+				printf("\texpanded: %s\n", new_name);
+				printf("\treal path: (null)\n");
+				printf("\t");fflush(0);
+				perror("realpath");
+			}
 			*entry->data = '\0';
 			continue;
 		}

@@ -387,6 +387,9 @@ void fs_whitelist(void) {
 			// if the link is already there, do not bother
 			struct stat s;
 			if (stat(entry->link, &s) != 0) {
+				// create the path if necessary
+				mkpath(entry->link, 0755);
+
 				int rv = symlink(entry->data + 10, entry->link);
 				if (rv)
 					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);

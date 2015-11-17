@@ -157,13 +157,16 @@ typedef enum {
 	OPERATION_MAX
 } OPERATION;
 
-
-
+typedef enum {
+	UNSUCCESSFUL,
+	SUCCESSFUL
+} LAST_DISABLE_OPERATION;
+LAST_DISABLE_OPERATION last_disable = UNSUCCESSFUL;
 
 static void disable_file(OPERATION op, const char *filename) {
 	assert(filename);
 	assert(op <OPERATION_MAX);
-	
+	last_disable = UNSUCCESSFUL;
 	
 	// rebuild /run/firejail directory in case tmpfs was mounted on top of /run
 	fs_build_firejail_dir();
@@ -204,12 +207,14 @@ static void disable_file(OPERATION op, const char *filename) {
 				if (mount(RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 					errExit("disable file");
 			}
+			last_disable = SUCCESSFUL;
 		}
 	}
 	else if (op == MOUNT_READONLY) {
 		if (arg_debug)
 			printf("Mounting read-only %s\n", fname);
 		fs_rdonly(fname);
+// todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_TMPFS) {
 		if (S_ISDIR(s.st_mode)) {
@@ -221,6 +226,7 @@ static void disable_file(OPERATION op, const char *filename) {
 			/* coverity[toctou] */
 			if (chown(fname, s.st_uid, s.st_gid) == -1)
 				errExit("mounting tmpfs chmod");
+			last_disable = SUCCESSFUL;
 		}
 		else
 			printf("Warning: %s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
@@ -382,6 +388,8 @@ void fs_blacklist(void) {
 					char newname[strlen(*path) + fname_len + 1];
 					sprintf(newname, "%s%s", *path, fname);
 					globbing(op, newname, (const char**)noblacklist, noblacklist_c);
+					if  (last_disable == SUCCESSFUL)
+						break;
 				}
 			}
 			else

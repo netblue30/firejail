@@ -213,6 +213,15 @@ void fs_whitelist(void) {
 
 		// check for supported directories
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
+			// whitelisting home directory is disabled if --private or --private-home option is present
+			if (arg_private) {
+				if (arg_debug)
+					printf("Removed whitelist path %s, --private option is present\n", entry->data);
+
+				*entry->data = '\0';
+				continue;
+			}
+
 			entry->home_dir = 1;
 			home_dir = 1;
 			// both path and absolute path are under /home
@@ -271,6 +280,7 @@ void fs_whitelist(void) {
 		
 	// create mount points
 	fs_build_mnt_dir();
+	
 
 	// /home/user
 	if (home_dir) {

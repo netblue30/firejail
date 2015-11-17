@@ -30,6 +30,9 @@ echo "TESTING: private-etc"
 echo "TESTING: private-bin"
 ./private-bin.exp
 
+echo "TESTING: private whitelist"
+./private-whitelist.exp
+
 sleep 1
 rm -fr dir\ with\ space
 mkdir dir\ with\ space

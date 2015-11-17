@@ -2,6 +2,8 @@
 
 whitelist ~/.config/mimeapps.list
 whitelist ~/.icons
+whitelist ~/.config/user-dirs.dirs
+read-only ~/.config/user-dirs.dirs
 
 # fonts
 whitelist ~/.fonts

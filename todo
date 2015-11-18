@@ -75,6 +75,3 @@ socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
 
 12. help and man for all protocol commands
 
-13. add /dev/log to private dev in help and man
-
-14. unbound testing

@@ -188,8 +188,9 @@ void usage(void) {
 	printf("\t\tthe new home. All modifications are discarded when the sandbox\n");
 	printf("\t\tis closed.\n\n");
 
-	printf("\t--private-dev - create a new /dev directory. Only null, full, zero, tty,\n");
-	printf("\t\tpst, ptms, random, urandom and shm devices are available.\n\n");
+	printf("\t--private-dev - create a new /dev directory. Only dri, null, full, zero,\n");
+	printf("\t\ttty, pst, ptms, random, urandom, log and shm devices are\n");
+	printf("\t\tavailable.\n\n");
 
 	printf("\t--private-etc=file,directory - build a new /etc in a temporary\n");
 	printf("\t\tfilesystem, and copy the files and directories in the list.\n");

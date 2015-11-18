@@ -1188,11 +1188,12 @@ int main(int argc, char **argv) {
 	}
 	else {
 		// calculate the length of the command
+		// TODO: escape the '"' characters, and possibly others like '\' and '!' if they can cause problems
 		int i;
 		int len = 0;
 		int argcnt = argc - prog_index;
 		for (i = 0; i < argcnt; i++)
-			len += strlen(argv[i + prog_index]) + 1; // + ' '
+			len += strlen(argv[i + prog_index]) + 3; // + ' ' + 2 '"'
 
 		// build the string
 		cfg.command_line = malloc(len + 1); // + '\0'
@@ -1200,7 +1201,7 @@ int main(int argc, char **argv) {
 			errExit("malloc");
 		char *ptr = cfg.command_line;
 		for (i = 0; i < argcnt; i++) {
-			sprintf(ptr, "%s ", argv[i + prog_index]);
+			sprintf(ptr, "\"%s\" ", argv[i + prog_index]);
 			ptr += strlen(ptr);
 		}
 	}

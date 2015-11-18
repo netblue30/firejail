@@ -70,7 +70,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			exit(1);
 		}
 	
-		if (asprintf(&wfile, "%s/%s", WHITELIST_HOME_DIR, fname) == -1)
+		if (asprintf(&wfile, "%s/%s", WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->tmp_dir) {
@@ -284,16 +284,16 @@ void fs_whitelist(void) {
 
 	// /home/user
 	if (home_dir) {
-		// keep a copy of real home dir in WHITELIST_HOME_DIR
-		int rv = mkdir(WHITELIST_HOME_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		// keep a copy of real home dir in WHITELIST_HOME_USER_DIR
+		int rv = mkdir(WHITELIST_HOME_USER_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(WHITELIST_HOME_DIR, getuid(), getgid()) < 0)
+		if (chown(WHITELIST_HOME_USER_DIR, getuid(), getgid()) < 0)
 			errExit("chown");
-		if (chmod(WHITELIST_HOME_DIR, 0755) < 0)
+		if (chmod(WHITELIST_HOME_USER_DIR, 0755) < 0)
 			errExit("chmod");
 	
-		if (mount(cfg.homedir, WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount(cfg.homedir, WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
 		// mount a tmpfs and initialize /home/user
@@ -418,7 +418,7 @@ void fs_whitelist(void) {
 
 	// mask the real home directory, currently mounted on WHITELIST_HOME_DIR
 	if (home_dir) {
-		if (mount("tmpfs", WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", WHITELIST_HOME_USER_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 	}
 	

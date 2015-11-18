@@ -40,7 +40,8 @@
 #define PULSE_DIR	"/run/firejail/mnt/pulse"
 #define DEVLOG_FILE	"/run/firejail/mnt/devlog"
 
-#define WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"
+#define WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"	// default home directory masking
+#define WHITELIST_HOME_USER_DIR	"/run/firejail/mnt/orig-home-user"	// home directory whitelisting
 #define WHITELIST_TMP_DIR	"/run/firejail/mnt/orig-tmp"
 #define WHITELIST_MEDIA_DIR	"/run/firejail/mnt/orig-media"
 #define WHITELIST_VAR_DIR	"/run/firejail/mnt/orig-var"

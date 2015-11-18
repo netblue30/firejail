@@ -540,50 +540,48 @@ void fs_proc_sys_dev_boot(void) {
 }
 
 static void sanitize_home(void) {
-	// extract current /home directory data
-	struct dirent *dir;
-	DIR *d = opendir("/home");
-	if (d == NULL)
+	assert(getuid() != 0);	// this code works only for regular users
+	
+	if (arg_debug)
+		printf("Cleaning /home directory\n");
+	
+	struct stat s;
+	if (stat(cfg.homedir, &s) == -1) {
+		// cannot find home directory, just return
+		fprintf(stderr, "Warning: cannot find home directory\n");
 		return;
-
-	while ((dir = readdir(d))) {
-		if(strcmp(dir->d_name, "." ) == 0 || strcmp(dir->d_name, ".." ) == 0)
-			continue;
-
-		if (dir->d_type == DT_DIR ) {
-			// get properties
-			struct stat s;
-			char *name;
-			if (asprintf(&name, "/home/%s", dir->d_name) == -1)
-				continue;
-			if (stat(name, &s) == -1)
-				continue;
-			if (S_ISLNK(s.st_mode)) {
-				free(name);
-				continue;
-			}
-			
-			if (strcmp(name, cfg.homedir) == 0)
-				continue;
-
-//			printf("directory %u %u:%u #%s#\n",
-//				s.st_mode,
-//				s.st_uid,
-//				s.st_gid,
-//				name);
-			
-			// disable directory
-			disable_file(BLACKLIST_FILE, name);
-			free(name);
-		}			
 	}
-	closedir(d);
+	
+	fs_build_mnt_dir();
+	if (mkdir(WHITELIST_HOME_DIR, 0755) == -1)
+		errExit("mkdir");
+
+	// keep a copy of the user home directory
+	if (mount(cfg.homedir, WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind");
+
+	// mount tmpfs in the new home
+	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("mount tmpfs");
+
+	// create user home directory
+	if (mkdir(cfg.homedir, 0755) == -1)
+		errExit("mkdir");
+
+	// set mode and ownership
+	if (chown(cfg.homedir, s.st_uid, s.st_gid) == -1)
+		errExit("chown");
+	if (chmod(cfg.homedir, s.st_mode) == -1)
+		errExit("chmod");
+
+	// mount user home directory
+	if (mount(WHITELIST_HOME_DIR, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind");
+
+	// mask home dir under /run
+	if (mount("tmpfs", WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("mount tmpfs");
 }
-
-
-
-
-
 
 // build a basic read-only filesystem
 void fs_basic_fs(void) {

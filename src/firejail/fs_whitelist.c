@@ -27,14 +27,25 @@
 #include <fcntl.h>
 #include <errno.h>
 
-static int mkpath(const char* path, mode_t mode) {
+static int mkpath(const char* path) {
 	assert(path && *path);
 	
+	// create directories with a 0755 mode
+	mode_t mode = 0755;
+	
+	// create directories with uid/gid as root or as current user if inside home directory
+	uid_t uid = getuid();
+	gid_t gid = getgid();
+	if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) != 0) {
+		uid = 0;
+		gid = 0;
+	}
+
 	// work on a copy of the path
 	char *file_path = strdup(path);
 	if (!file_path)
 		errExit("strdup");
-	
+
 	char* p;
 	for (p=strchr(file_path+1, '/'); p; p=strchr(p+1, '/')) {
 		*p='\0';
@@ -46,7 +57,10 @@ static int mkpath(const char* path, mode_t mode) {
 			}
 		}
 		else {
-// TODO: set correct directory mode and properties
+			if (chmod(file_path, mode) == -1)
+				errExit("chmod");
+			if (chown(file_path, uid, gid) == -1)
+				errExit("chown");
 		}			
 
 		*p='/';
@@ -128,7 +142,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	
 	// create the path if necessary
-	mkpath(path, 0755);
+	mkpath(path);
 
 	// process directory
 	if (S_ISDIR(s.st_mode)) {	
@@ -403,7 +417,7 @@ void fs_whitelist(void) {
 			struct stat s;
 			if (stat(entry->link, &s) != 0) {
 				// create the path if necessary
-				mkpath(entry->link, 0755);
+				mkpath(entry->link);
 
 				int rv = symlink(entry->data + 10, entry->link);
 				if (rv)

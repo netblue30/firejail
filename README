@@ -20,6 +20,7 @@ Firejail Authors:
 netblue30 (netblue30@yahoo.com)
 Bruno Nova (https://github.com/brunonova)
 	-- whitelist fix
+	- bash arguments fix
 Matt Parnell (https://github.com/ilikenwf)
 	- whitelisting for core firefox related functionality
 Andrey Alekseenko (https://github.com/al42and)

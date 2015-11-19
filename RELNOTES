@@ -1,7 +1,9 @@
-firejail (0.9.34) baseline; urgency=low
+firejail (0.9.35) baseline; urgency=low
   * added  unbound and dnscrypt-proxy profiles
   * added --noblacklist option
   * whitelist command enhancements
+  * prevent leaking user information by modifying /home directory,
+          /etc/passwd and /etc/group
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  ongoing development
 

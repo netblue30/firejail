@@ -52,6 +52,8 @@
 #define RESOLVCONF_FILE	"/run/firejail/mnt/resolv.conf"
 #define LDPRELOAD_FILE	"/run/firejail/mnt/ld.so.preload"
 #define UTMP_FILE		"/run/firejail/mnt/utmp"
+#define PASSWD_FILE		"/run/firejail/mnt/passwd"
+#define GROUP_FILE		"/run/firejail/mnt/group"
 
 // profiles
 #define DEFAULT_USER_PROFILE	"generic"
@@ -468,5 +470,10 @@ void protocol_store(const char *prlist);
 void protocol_filter(void);
 void protocol_filter_save(void);
 void protocol_filter_load(const char *fname);
+
+// restrict_users.c
+void restrict_users(void);
+
+
 #endif
 

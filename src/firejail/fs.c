@@ -539,49 +539,6 @@ void fs_proc_sys_dev_boot(void) {
 	}
 }
 
-static void sanitize_home(void) {
-	assert(getuid() != 0);	// this code works only for regular users
-	
-	if (arg_debug)
-		printf("Cleaning /home directory\n");
-	
-	struct stat s;
-	if (stat(cfg.homedir, &s) == -1) {
-		// cannot find home directory, just return
-		fprintf(stderr, "Warning: cannot find home directory\n");
-		return;
-	}
-	
-	fs_build_mnt_dir();
-	if (mkdir(WHITELIST_HOME_DIR, 0755) == -1)
-		errExit("mkdir");
-
-	// keep a copy of the user home directory
-	if (mount(cfg.homedir, WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-
-	// mount tmpfs in the new home
-	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("mount tmpfs");
-
-	// create user home directory
-	if (mkdir(cfg.homedir, 0755) == -1)
-		errExit("mkdir");
-
-	// set mode and ownership
-	if (chown(cfg.homedir, s.st_uid, s.st_gid) == -1)
-		errExit("chown");
-	if (chmod(cfg.homedir, s.st_mode) == -1)
-		errExit("chmod");
-
-	// mount user home directory
-	if (mount(WHITELIST_HOME_DIR, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-
-	// mask home dir under /run
-	if (mount("tmpfs", WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("mount tmpfs");
-}
 
 // build a basic read-only filesystem
 void fs_basic_fs(void) {
@@ -605,9 +562,8 @@ void fs_basic_fs(void) {
 	fs_var_cache();
 	fs_var_utmp();
 
-	// only in user mode
-	if (getuid())
-		sanitize_home();
+	// don't leak user information
+	restrict_users();
 }
 
 
@@ -751,9 +707,8 @@ void fs_overlayfs(void) {
 	fs_var_cache();
 	fs_var_utmp();
 
-	// only in user mode
-	if (getuid())
-		sanitize_home();
+	// don't leak user information
+	restrict_users();
 
 	// cleanup and exit
 	free(option);
@@ -874,10 +829,8 @@ void fs_chroot(const char *rootdir) {
 	fs_var_cache();
 	fs_var_utmp();
 
-	// only in user mode
-	if (getuid())
-		sanitize_home();
-	
+	// don't leak user information
+	restrict_users();
 }
 #endif
 

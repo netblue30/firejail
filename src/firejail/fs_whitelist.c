@@ -30,6 +30,8 @@
 static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
 	
+	mode |= 0111;
+	
 	// create directories with uid/gid as root or as current user if inside home directory
 	uid_t uid = getuid();
 	gid_t gid = getgid();

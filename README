@@ -18,8 +18,10 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+avoidr (https://github.com/avoidr)
+	- whitelist fix
 Bruno Nova (https://github.com/brunonova)
-	-- whitelist fix
+	- whitelist fix
 	- bash arguments fix
 Matt Parnell (https://github.com/ilikenwf)
 	- whitelisting for core firefox related functionality

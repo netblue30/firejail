@@ -21,7 +21,7 @@ sleep 1
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --private\r"
+send -- "firejail --private --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"

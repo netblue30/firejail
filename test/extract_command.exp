@@ -10,10 +10,6 @@ expect {
 	"Reading profile /etc/firejail/generic.profile"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"Starting ls -al"
-}
-expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
 }

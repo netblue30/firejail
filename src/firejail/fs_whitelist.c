@@ -27,11 +27,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
-static int mkpath(const char* path) {
+static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
-	
-	// create directories with a 0755 mode
-	mode_t mode = 0755;
 	
 	// create directories with uid/gid as root or as current user if inside home directory
 	uid_t uid = getuid();
@@ -142,7 +139,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	
 	// create the path if necessary
-	mkpath(path);
+	mkpath(path, s.st_mode);
 
 	// process directory
 	if (S_ISDIR(s.st_mode)) {	
@@ -417,7 +414,7 @@ void fs_whitelist(void) {
 			struct stat s;
 			if (stat(entry->link, &s) != 0) {
 				// create the path if necessary
-				mkpath(entry->link);
+				mkpath(entry->link, s.st_mode);
 
 				int rv = symlink(entry->data + 10, entry->link);
 				if (rv)

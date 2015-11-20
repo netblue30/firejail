@@ -587,9 +587,30 @@ New network namespaces are created using \-\-net option. If a new network namesp
 .br
 
 .br
+The following filters are available in /etc/firejail directory:
+.br
+
+.br
+.B webserver.net
+is a webserver filter that allows access only to TCP ports 80 and 443.
 Example:
 .br
-$ firejail \-\-net=eth0 \-\-netfilter=myfile firefox
+
+.br
+$ firejail --netfilter=/etc/firejail/webserver.net --net=eth0 \\
+.br
+/etc/init.d/apache2 start
+.br
+
+.br
+.B nolocal.net
+is a client filter that disable access to local network. Example:
+.br
+
+.br
+$ firejail --netfilter=/etc/firejail/nolocal.net \\
+.br
+--net=eth0 firefox
 .TP
 \fB\-\-netstats
 Monitor network namespace statistics, see MONITORING section for more details.
@@ -597,6 +618,8 @@ Monitor network namespace statistics, see MONITORING section for more details.
 
 .br
 Example:
+.br
+
 .br
 $ firejail \-\-netstats
 .br

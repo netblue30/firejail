@@ -1,0 +1,25 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+###################################################################
+# Client filter rejecting local network traffic, with the exception of DNS traffic
+#
+# Usage:
+#     firejail --net=eth0 --netfilter=/etc/firejail/nolocal.net firefox
+#
+###################################################################
+
+
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT
+-A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+-A OUTPUT -p udp --dport 53 -j ACCEPT
+-A OUTPUT -d 192.168.0.0/16 -j DROP
+-A OUTPUT -d 10.0.0.0/8 -j DROP
+-A OUTPUT -d 172.16.0.0/12 -j DROP
+COMMIT

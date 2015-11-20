@@ -16,3 +16,9 @@ for file in $FILES
 do
 	sed "s/\/etc/$result/g" $file > .$file
 done
+
+FILES=`ls etc/*.net`
+for file in $FILES
+do
+	sed "s/\/etc/$result/g" $file > .$file
+done

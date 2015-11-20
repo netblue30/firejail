@@ -1,0 +1,30 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+
+###################################################################
+# Simple webserver filter
+#
+# Usage:
+#   firejail --net=eth0 --ip=192.168.1.105 --netfilter=/etc/firejail/webserver.net /etc/init.d/apache2 start
+#   firejail --net=eth0 --ip=192.168.1.105 --netfilter=/etc/firejail/webserver.net /etc/init.d/nginx start
+#
+###################################################################
+
+# allow webserver traffic
+-A INPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+-A INPUT -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+
+# allow incoming ping
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+-A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
+
+# allow outgoing DNS
+-A OUTPUT -p udp --dport 53 -j ACCEPT
+-A INPUT -p udp --sport 53 -j ACCEPT
+
+COMMIT
+

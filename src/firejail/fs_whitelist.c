@@ -126,6 +126,16 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", WHITELIST_DEV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	else if (entry->opt_dir) {
+		fname = path + 4; // strlen("/opt")
+		if (*fname == '\0') {
+			fprintf(stderr, "Error: file %s is not in /opt directory, exiting...\n", path);
+			exit(1);
+		}
+	
+		if (asprintf(&wfile, "%s/%s", WHITELIST_OPT_DIR, fname) == -1)
+			errExit("asprintf");
+	}
 
 	// check if the file exists
 	struct stat s;
@@ -191,6 +201,7 @@ void fs_whitelist(void) {
 	int media_dir = 0;	// /media directory flag
 	int var_dir = 0;		// /var directory flag
 	int dev_dir = 0;		// /dev directory flag
+	int opt_dir = 0;		// /opt directory flag
 
 	// verify whitelist files, extract symbolic links, etc.
 	while (entry) {
@@ -267,6 +278,13 @@ void fs_whitelist(void) {
 			dev_dir = 1;
 			// both path and absolute path are under /dev
 			if (strncmp(fname, "/dev/", 5) != 0)
+				goto errexit;
+		}
+		else if (strncmp(new_name, "/opt/", 5) == 0) {
+			entry->opt_dir = 1;
+			opt_dir = 1;
+			// both path and absolute path are under /dev
+			if (strncmp(fname, "/opt/", 5) != 0)
 				goto errexit;
 		}
 		else
@@ -390,11 +408,32 @@ void fs_whitelist(void) {
 		if (mount("/dev", WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
-		// mount tmpfs on /var
+		// mount tmpfs on /dev
 		if (arg_debug)
 			printf("Mounting tmpfs on /dev directory\n");
 		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /dev");
+	}
+
+	// /opt mountpoint
+	if (opt_dir) {
+		// keep a copy of real /opt directory in WHITELIST_DEV_DIR
+		int rv = mkdir(WHITELIST_OPT_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown(WHITELIST_OPT_DIR, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(WHITELIST_OPT_DIR, 0755) < 0)
+			errExit("chmod");
+	
+		if (mount("/opt", WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount bind");
+	
+		// mount tmpfs on /opt
+		if (arg_debug)
+			printf("Mounting tmpfs on /opt directory\n");
+		if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mounting tmpfs on /opt");
 	}
 
 	// go through profile rules again, and interpret whitelist commands

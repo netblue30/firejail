@@ -1291,7 +1291,7 @@ $ firejail \-\-version
 firejail version 0.9.27
 .TP
 \fB\-\-whitelist=dirname_or_filename
-Whitelist directory or file. This feature is implemented only for user home, /dev, /media, /var, and /tmp directories.
+Whitelist directory or file. This feature is implemented only for user home, /dev, /media, /opt, /var, and /tmp directories.
 .br
 
 .br

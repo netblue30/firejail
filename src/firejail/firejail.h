@@ -46,6 +46,7 @@
 #define WHITELIST_MEDIA_DIR	"/run/firejail/mnt/orig-media"
 #define WHITELIST_VAR_DIR	"/run/firejail/mnt/orig-var"
 #define WHITELIST_DEV_DIR	"/run/firejail/mnt/orig-dev"
+#define WHITELIST_OPT_DIR	"/run/firejail/mnt/orig-opt"
 
 #define XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
 #define HOSTNAME_FILE	"/run/firejail/mnt/hostname"
@@ -103,7 +104,8 @@ typedef struct profile_entry_t {
 	unsigned tmp_dir:1;	// whitelist in /tmp directory
 	unsigned media_dir:1;	// whitelist in /media directory
 	unsigned var_dir:1;	// whitelist in /var directory
-	unsigned dev_dir:1;	// whitelist in /tmp directory
+	unsigned dev_dir:1;	// whitelist in /dev directory
+	unsigned opt_dir:1;	// whitelist in /opt directory
 }ProfileEntry;
 
 typedef struct config_t {

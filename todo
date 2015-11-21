@@ -73,5 +73,4 @@ socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
 ./configure --enable-fatal-warnings --disable-chroot --prefix=/usr
 ./configure --enable-fatal-warnings --disable-bind --prefix=/usr
 
-12. help and man for all protocol commands
 

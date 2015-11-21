@@ -200,6 +200,10 @@ void usage(void) {
 	
 	printf("\t--protocol=protocol,protocol,protocol - enable protocol filter.\n");
 	printf("\t\tProtocol values: unix, inet, inet6, netlink, packet.\n\n");
+	printf("\t--protocol.print=name - print the protocol filter for the sandbox\n");
+	printf("\t\tidentified by name.\n\n");
+	printf("\t--protocol.print=pid - print the protocol filter for the sandbox\n");
+	printf("\t\tidentified by PID.\n\n");
 	
 	printf("\t--quiet - turn off Firejail's output.\n\n");
 	printf("\t--read-only=dirname_or_filename - set directory or file read-only.\n\n");
@@ -343,10 +347,6 @@ void usage(void) {
 	printf("          start a regular /bin/bash session in sandbox\n");
 	printf("   $ firejail firefox\n");
 	printf("          start Mozilla Firefox\n");
-	printf("   $ firejail --seccomp firefox\n");
-	printf("          start Mozilla Firefox in a seccomp sandbox\n");
-	printf("   $ firejail --caps firefox\n");
-	printf("          start Mozilla Firefox in a Linux capabilities sandbox\n");
 	printf("   $ firejail --debug firefox\n");
 	printf("          debug Firefox sandbox\n");
 	printf("   $ firejail --private\n");

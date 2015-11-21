@@ -61,11 +61,7 @@ $ firejail [OPTIONS]                # starting a /bin/bash shell
 .PP
 $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 .PP
-Multiple commands can be run in sandbox using regular bash logic operators:
-.PP
-# sudo firejail [OPTIONS] "/etc/init.d/nginx start && sleep inf"
-.PP
-In the previous example, "sleep inf" command is required in order to keep the session open for the daemon program.
+# sudo firejail [OPTIONS] /etc/init.d/nginx start
 
 .SH OPTIONS
 .TP
@@ -906,6 +902,37 @@ Example:
 .br
 $ firejail \-\-protocol=unix,inet,inet6 firefox
 .TP
+\fB\-\-protocol.print=name
+Print the protocol filter for the sandbox identified by name.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-name=mybrowser firefox &
+.br
+[...]
+.br
+$ firejail \-\-print.print=mybrowser
+.br
+unix,inet,inet6,netlink
+
+.TP
+\fB\-\-protocol.print=pid
+Print the protocol filter for a sandbox identified by PID.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-list
+.br
+3272:netblue:firejail \-\-private firefox
+.br
+$ firejail \-\-protocol.print=3272
+.br
+unix,inet,inet6,netlink
+.TP
 \fB\-\-quiet
 Turn off Firejail's output.
 .TP
@@ -1411,10 +1438,10 @@ Reading profile /home/netblue/.config/firejail/icecat.profile
 [...]
 .RE
 
-3. Use a default.profile file if the sandbox
-is started by a regular user, or a server.profile file if the sandbox
+3. Use default.profile file if the sandbox
+is started by a regular user, or server.profile file if the sandbox
 is started by root. Firejail looks for these files in ~/.config/firejail directory, followed by /etc/firejail directory.
-To disable default profile loading, use --noroot command option. Example:
+To disable default profile loading, use --noprofile command option. Example:
 .PP
 .RS
 $ firejail
@@ -1456,12 +1483,6 @@ Start a regular /bin/bash session in sandbox.
 .TP
 \f\firejail firefox
 Start Mozilla Firefox.
-.TP
-\f\firejail \-\-seccomp firefox
-Start Mozilla Firefox in a seccomp sandbox.
-.TP
-\f\firejail \-\-caps firefox
-Start Mozilla Firefox in a Linux capabilities sandbox.
 .TP
 \f\firejail \-\-debug firefox
 Debug Firefox sandbox.

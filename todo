@@ -1,4 +1,4 @@
-1. Deal with .purple directory. It holds the confiig files for pidgin
+1. Getting "Warning: failed to unmount /sys" on --chroot and --overlay
 
 2. Startup warnings on Arch Linux:
 
@@ -75,3 +75,22 @@ socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
 
 12. do not allow symlinks for --bind
 
+13. While using --net=eth0 assign the name of the interface inside the sandbox as eth0
+
+14. check chroot does not allow on symlinks
+15. do not attempt to mount /sys if unmount fails
+
+$ firejail --noprofile --chroot=/tmp/chroot
+Parent pid 13915, child pid 13916
+Warning: cannot mount tmpfs on top of /var/log
+Warning: cannot find /var/run/utmp
+Warning: cannot find home directory
+Dropping all Linux capabilities and enforcing default seccomp filter
+Warning: failed to unmount /sys
+Warning: failed to mount /sys
+Warning: cannot disable /sys/firmware directory
+Warning: cannot disable /sys/hypervisor directory
+Warning: cannot disable /sys/fs directory
+Warning: cannot disable /sys/module directory
+Warning: cannot disable /sys/power directory
+Child process initialized

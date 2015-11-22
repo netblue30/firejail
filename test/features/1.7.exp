@@ -1,0 +1,71 @@
+#!/usr/bin/expect -f
+#
+# new /var/tmp
+#
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+#
+# N
+#
+send -- "touch /var/tmp/somefile\r"
+sleep 1
+send -- "firejail --noprofile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l /var/tmp/somefile | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"0"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+#
+# O
+#
+send -- "firejail --noprofile --overlay\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l /var/tmp/somefile | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"0"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+#
+# C
+#
+send -- "firejail --noprofile --chroot=/tmp/chroot\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l /var/tmp/somefile | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"0"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+puts "\nall done\n"

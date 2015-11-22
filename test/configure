@@ -22,10 +22,12 @@ ROOTDIR="/tmp/chroot"			# default chroot directory
 DEFAULT_FILES="/bin/bash /bin/sh "	# basic chroot files
 DEFAULT_FILES+="/etc/passwd /etc/nsswitch.conf /etc/group "
 DEFAULT_FILES+=`find /lib -name libnss*`	# files required by glibc
-DEFAULT_FILES+=" /bin/ls /bin/cat /bin/ps /usr/bin/id /usr/bin/whoami /usr/bin/wc /usr/bin/wget /bin/umount"
+DEFAULT_FILES+=" /bin/cp /bin/ls /bin/cat /bin/ps /bin/grep /usr/bin/id /usr/bin/whoami /usr/bin/wc /usr/bin/wget /bin/umount"
 
 rm -fr $ROOTDIR
-mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,var/lock,proc}
+mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,var/lock,var/log,proc}
+touch $ROOTDIR/var/log/syslog
+touch $ROOTDIR/var/tmp/somefile
 SORTED=`for FILE in $* $DEFAULT_FILES; do echo " $FILE "; ldd $FILE | grep -v dynamic | cut -d " " -f 3; done | sort -u`
 for FILE in $SORTED
 do

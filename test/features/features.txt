@@ -32,12 +32,14 @@ C - chroot filesystem
 	-N, O, C
 
 1.8 disable /etc/firejail and ~/.config/firejail
+	-N, O, C
 
+1.9 mount namespace
 
 
 2. Networking features
 
-2.1 Hostname (use --hostname=bing, do a ping and cat /etc/hostname)
+2.1 Hostname (use --hostname=bingo, do a ping and cat /etc/hostname)
 	- N, O, C
 	- ping disabled for C by default seccomp filter, use "getent hosts bingo"
 

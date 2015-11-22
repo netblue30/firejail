@@ -10,6 +10,9 @@ echo "TESTING: 1.1 new /boot"
 echo "TESTING: 1.2 new /proc"
 ./1.2.exp
 
+echo "TESTING: 1.4 mask other users"
+./1.4.exp
+
 echo "TESTING: 1.5 PID namespace"
 ./1.5.exp
 

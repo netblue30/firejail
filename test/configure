@@ -28,6 +28,9 @@ rm -fr $ROOTDIR
 mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,var/lock,var/log,proc}
 mkdir -p $ROOTDIR/etc/firejail
 mkdir -p $ROOTDIR/home/netblue/.config/firejail
+mkdir $ROOTDIR/home/someotheruser
+cp /etc/passwd $ROOTDIR/etc/.
+cp /etc/group $ROOTDIR/etc/.
 touch $ROOTDIR/var/log/syslog
 touch $ROOTDIR/var/tmp/somefile
 SORTED=`for FILE in $* $DEFAULT_FILES; do echo " $FILE "; ldd $FILE | grep -v dynamic | cut -d " " -f 3; done | sort -u`

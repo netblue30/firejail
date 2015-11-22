@@ -533,17 +533,15 @@ void fs_proc_sys_dev_boot(void) {
 	// disable /boot
 	if (stat("/boot", &s) == 0) {
 		if (arg_debug)
-			printf("Mounting a new /boot directory\n");
-		if (mount("tmpfs", "/boot", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-			errExit("mounting /boot directory");
+			printf("Disable /boot directory\n");
+		disable_file(BLACKLIST_FILE, "/boot");
 	}
 	
 	// disable /selinux
 	if (stat("/selinux", &s) == 0) {
 		if (arg_debug)
-			printf("Mounting a new /selinux directory\n");
-		if (mount("tmpfs", "/selinux", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-			errExit("mounting /selinux directory");
+			printf("Disable /selinux directory\n");
+		disable_file(BLACKLIST_FILE, "/selinux");
 	}
 	
 	// disable /dev/port

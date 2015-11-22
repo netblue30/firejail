@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 #
-# new /boot
+# disable /boot
 #
 
 set timeout 10
@@ -17,10 +17,10 @@ expect {
 }
 sleep 1
 
-send -- "ls -l /boot | wc -l\r"
+send -- "ls -l /boot\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"1"
+	"Permission denied"
 }
 after 100
 send -- "exit\r"
@@ -37,10 +37,10 @@ expect {
 }
 sleep 1
 
-send -- "ls -l /boot | wc -l\r"
+send -- "ls -l /boot\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"1"
+	"Permission denied"
 }
 after 100
 send -- "exit\r"
@@ -56,10 +56,10 @@ expect {
 }
 sleep 1
 
-send -- "ls -l /boot | wc -l\r"
+send -- "ls -l /boot\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"1"
+	"Permission denied"
 }
 after 100
 send -- "exit\r"

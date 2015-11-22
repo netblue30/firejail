@@ -8,7 +8,7 @@ C - chroot filesystem
 
 1. Default features (tesing with --noprofile)
 
-1.1 new /boot
+1.1 disable /boot
 	- N, O, C
 
 1.2 new /proc
@@ -35,6 +35,10 @@ C - chroot filesystem
 	-N, O, C
 
 1.9 mount namespace
+
+1.10 disable /selinux
+	- N, O, C
+
 
 
 2. Networking features

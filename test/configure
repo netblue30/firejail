@@ -29,6 +29,8 @@ mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,v
 mkdir -p $ROOTDIR/etc/firejail
 mkdir -p $ROOTDIR/home/netblue/.config/firejail
 mkdir $ROOTDIR/home/someotheruser
+mkdir $ROOTDIR/boot
+mkdir $ROOTDIR/selinux
 cp /etc/passwd $ROOTDIR/etc/.
 cp /etc/group $ROOTDIR/etc/.
 touch $ROOTDIR/var/log/syslog

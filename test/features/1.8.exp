@@ -10,7 +10,6 @@ match_max 100000
 #
 # N
 #
-send -- "touch /var/tmp/somefile\r"
 sleep 1
 send -- "firejail --noprofile\r"
 expect {
@@ -19,10 +18,16 @@ expect {
 }
 sleep 1
 
-send -- "ls -l /var/tmp/somefile | wc -l\r"
+send -- "ls /etc/firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"0"
+	"Permission denied"
+}
+after 100
+send -- "ls ~/.config/firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Permission denied"
 }
 after 100
 send -- "exit\r"
@@ -38,13 +43,19 @@ expect {
 	"Child process initialized"
 }
 sleep 1
-
-send -- "ls -l /var/tmp/somefile | wc -l\r"
+send -- "ls /etc/firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"0"
+	"Permission denied"
 }
 after 100
+send -- "ls ~/.config/firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"Permission denied"
+}
+after 100
+
 send -- "exit\r"
 sleep 1
 
@@ -53,15 +64,20 @@ sleep 1
 #
 send -- "firejail --noprofile --chroot=/tmp/chroot\r"
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized"
 }
 sleep 1
-
-send -- "ls -l /var/tmp/somefile | wc -l\r"
+send -- "ls /etc/firejail\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"0"
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Permission denied"
+}
+after 100
+send -- "ls ~/.config/firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 5.1\n";exit}
+	"Permission denied"
 }
 after 100
 send -- "exit\r"

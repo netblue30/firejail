@@ -14,6 +14,3 @@ blacklist ${PATH}/xev
 blacklist ${PATH}/strace
 blacklist ${PATH}/nc
 
-# Prevent manipulation of firejail configuration
-blacklist /etc/firejail
-blacklist ${HOME}/.config/firejail

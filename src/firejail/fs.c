@@ -552,6 +552,19 @@ void fs_proc_sys_dev_boot(void) {
 	}
 }
 
+// disable firejail configuration in /etc/firejail and in ~/.config/firejail
+static void disable_firejail_config(void) {
+	struct stat s;
+	if (stat("/etc/firejail", &s) == 0)
+		disable_file(BLACKLIST_FILE, "/etc/firejail");
+	
+	char *fname;
+	if (asprintf(&fname, "%s/.config/firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+	disable_file(BLACKLIST_FILE, fname);
+	free(fname);
+}
+
 
 // build a basic read-only filesystem
 void fs_basic_fs(void) {
@@ -577,6 +590,8 @@ void fs_basic_fs(void) {
 
 	// don't leak user information
 	restrict_users();
+	
+	disable_firejail_config();
 }
 
 
@@ -723,6 +738,8 @@ void fs_overlayfs(void) {
 	// don't leak user information
 	restrict_users();
 
+	disable_firejail_config();
+
 	// cleanup and exit
 	free(option);
 	free(oroot);
@@ -846,6 +863,8 @@ void fs_chroot(const char *rootdir) {
 
 	// don't leak user information
 	restrict_users();
+
+	disable_firejail_config();
 }
 #endif
 

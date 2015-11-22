@@ -51,14 +51,14 @@ sleep 1
 #
 send -- "firejail --noprofile --chroot=/tmp/chroot\r"
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
 send -- "ps aux | wc -l \r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"5"
 }
 after 100

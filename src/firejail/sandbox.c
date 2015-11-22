@@ -300,6 +300,9 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_CHROOT		
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
+		// redo cp command
+		fs_build_cp_command();
+		
 		// force caps and seccomp if not started as root
 		if (getuid() != 0) {
 			// force default seccomp inside the chroot, no keep or drop list
@@ -336,7 +339,7 @@ int sandbox(void* sandbox_arg) {
 	}
 	else 
 #endif		
-	if (arg_overlay)
+	if (arg_overlay)	
 		fs_overlayfs();
 	else
 		fs_basic_fs();

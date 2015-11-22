@@ -10,3 +10,9 @@ blacklist ${HOME}/.local/share/recently-used.xbel
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.key
 blacklist /etc/shadow
+blacklist /etc/gshadow
+blacklist /etc/passwd-
+blacklist /etc/group-
+blacklist /etc/shadow-
+blacklist /etc/gshadow-
+blacklist /etc/ssh

@@ -56,7 +56,7 @@ static void create_empty_file(void) {
 	}
 }
 
-// build /tmp/firejail directory
+// build /run/firejail directory
 void fs_build_firejail_dir(void) {
 	struct stat s;
 
@@ -86,11 +86,16 @@ void fs_build_firejail_dir(void) {
 
 // build /tmp/firejail/mnt directory
 static int tmpfs_mounted = 0;
+static void fs_build_remount_mnt_dir(void) {
+	tmpfs_mounted = 0;
+	fs_build_mnt_dir();
+}
+
 void fs_build_mnt_dir(void) {
 	struct stat s;
 	fs_build_firejail_dir();
 	
-	// create /tmp/firejail directory
+	// create /run/firejail/mnt directory
 	if (stat(MNT_DIR, &s)) {
 		if (arg_debug)
 			printf("Creating %s directory\n", MNT_DIR);
@@ -106,7 +111,7 @@ void fs_build_mnt_dir(void) {
 
 	// ... and mount tmpfs on top of it
 	if (!tmpfs_mounted) {
-		// mount tmpfs on top of /tmp/firejail/mnt
+		// mount tmpfs on top of /run/firejail/mnt
 		if (arg_debug)
 			printf("Mounting tmpfs on %s directory\n", MNT_DIR);
 		if (mount("tmpfs", MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
@@ -533,6 +538,14 @@ void fs_proc_sys_dev_boot(void) {
 			errExit("mounting /boot directory");
 	}
 	
+	// disable /selinux
+	if (stat("/selinux", &s) == 0) {
+		if (arg_debug)
+			printf("Mounting a new /selinux directory\n");
+		if (mount("tmpfs", "/selinux", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+			errExit("mounting /selinux directory");
+	}
+	
 	// disable /dev/port
 	if (stat("/dev/port", &s) == 0) {
 		disable_file(BLACKLIST_FILE, "/dev/port");
@@ -818,6 +831,8 @@ void fs_chroot(const char *rootdir) {
 		printf("Chrooting into %s\n", rootdir);
 	if (chroot(rootdir) < 0)
 		errExit("chroot");
+	// mount a new tmpfs in /run/firejail/mnt - the old one was lost in chroot
+	fs_build_remount_mnt_dir();
 		
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	if (!arg_private_dev)

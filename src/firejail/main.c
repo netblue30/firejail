@@ -1285,6 +1285,15 @@ int main(int argc, char **argv) {
  	if (pipe(child_to_parent_fds) < 0)
 		errExit("pipe");
 
+	if (arg_noroot && arg_overlay) {
+		fprintf(stderr, "Warning: --overlay and --noroot are mutually exclusive, noroot disabled\n");
+		arg_noroot = 0;
+	}
+	else if (arg_noroot && cfg.chrootdir) {
+		fprintf(stderr, "Warning: --overlay and --chroot are mutually exclusive, noroot disabled\n");
+		arg_noroot = 0;
+	}
+
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;
 	

@@ -293,7 +293,6 @@ static void sanitize_group(void) {
 		if ((gid_t) gid != mygid) {
 			continue; // skip line
 		}
-		fprintf(fpout, "%s", buf);
 		if (copy_line(fpout, buf, ptr))
 			goto errout;
 	}

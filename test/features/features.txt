@@ -59,7 +59,9 @@ C - chroot filesystem
 	- ping disabled for C by default seccomp filter - transfer test not implemented for C
 	- test --ip: N, O, C
 
-2.5 Default gw (--noprofile --net=eth0 --defaultgw=192.168.1.10, run netstat -rn)
+2.5 interface
+
+2.6 Default gw (--noprofile --net=eth0 --defaultgw=192.168.1.10, run netstat -rn)
 	- N, O, C
 
 

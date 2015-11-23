@@ -15,6 +15,12 @@ brctl addbr br3
 ifconfig br3 10.10.50.1/24 up
 brctl addbr br4
 ifconfig br4 10.10.60.1/24 up
+ip link add link eth0 name eth0.5 type vlan id 5
+/sbin/ifconfig eth0.5 10.10.205.10/24 up
+ip link add link eth0 name eth0.6 type vlan id 6
+/sbin/ifconfig eth0.6 10.10.206.10/24 up
+ip link add link eth0 name eth0.7 type vlan id 7
+/sbin/ifconfig eth0.7 10.10.207.10/24 up
 
 
 # build a very small chroot

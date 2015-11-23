@@ -175,9 +175,19 @@ void net_check_cfg(void) {
 	if (cfg.bridge3.configured)
 		net_configured++;
 
-	// --defaultgw requires a network
-	if (cfg.defaultgw && net_configured == 0) {
-		fprintf(stderr, "Error: option --defaultgw requires at least one network to be configured\n");
+	int if_configured = 0;
+	if (cfg.interface0.configured)
+		if_configured++;
+	if (cfg.interface1.configured)
+		if_configured++;
+	if (cfg.interface2.configured)
+		if_configured++;
+	if (cfg.interface3.configured)
+		if_configured++;
+
+	// --defaultgw requires a network or an interface
+	if (cfg.defaultgw && net_configured == 0 && if_configured == 0) {
+		fprintf(stderr, "Error: option --defaultgw requires at least one network or one interface to be configured\n");
 		exit(1);
 	}
 

@@ -43,7 +43,7 @@ C - chroot filesystem
 
 2. Networking features
 
-2.1 Hostname (use --hostname=bingo, do a ping and cat /etc/hostname)
+2.1 Hostname (use --hostname=newhostname, do a ping and cat /etc/hostname)
 	- N, O, C
 	- ping disabled for C by default seccomp filter, use "getent hosts bingo"
 
@@ -52,15 +52,14 @@ C - chroot filesystem
 
 2.3 mac-vlan (use --net=eth0 and --noprofile; run ifconfig and dig google.com)
 	- N, O, C
+	- test --ip: N, O, C
 
 2.4 bridge (use --net=br0 and --noprofile; run ifconfig, netstat -rn, ping default gw)
 	- N, O, C
-	- ping disabled for C by default seccomp filter
+	- ping disabled for C by default seccomp filter - transfer test not implemented for C
+	- test --ip: N, O, C
 
-2.5 IP address (--noprofile --net=eth0 --ip=192.168.1.226 --net=br0 --ip=10.10.20.3, run ifconfig and netstat -rn)
-	- N, O, C
-	
-2.6 Default gw (--noprofile --net=eth0 --defaultgw=192.168.1.10, run netstat -rn)
+2.5 Default gw (--noprofile --net=eth0 --defaultgw=192.168.1.10, run netstat -rn)
 	- N, O, C
 
 

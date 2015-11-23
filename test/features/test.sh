@@ -28,3 +28,15 @@ echo "TESTING: 1.8 disable /etc/firejail and ~/.config/firejail"
 echo "TESTING: 1.10 disable /selinux"
 ./1.10.exp
 
+
+echo "TESTING: 2.1 hostname"
+./2.1.exp
+
+echo "TESTING: 2.2 DNS"
+./2.2.exp
+
+echo "TESTING: 2.3 mac-vlan"
+./2.3.exp
+
+echo "TESTING: 2.4 bridge"
+./2.4.exp

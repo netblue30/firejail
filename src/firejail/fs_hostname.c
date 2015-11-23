@@ -71,6 +71,7 @@ void fs_hostname(const char *hostname) {
 		}
 		
 		char buf[4096];
+		int done = 0;
 		while (fgets(buf, sizeof(buf), fp1)) {
 			// remove '\n'
 			char *ptr = strchr(buf, '\n');
@@ -78,8 +79,10 @@ void fs_hostname(const char *hostname) {
 				*ptr = '\0';
 				
 			// copy line
-			if (strstr(buf, "127.0.0.1"))
+			if (strstr(buf, "127.0.0.1") && done == 0) {
+				done = 1;
 				fprintf(fp2, "%s %s\n", buf, hostname);
+			}
 			else
 				fprintf(fp2, "%s\n", buf);
 		}

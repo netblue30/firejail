@@ -94,3 +94,5 @@ Warning: cannot disable /sys/fs directory
 Warning: cannot disable /sys/module directory
 Warning: cannot disable /sys/power directory
 Child process initialized
+
+16. add support for --ip, --iprange, --mac and --mtu for --interface option

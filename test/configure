@@ -28,12 +28,14 @@ ROOTDIR="/tmp/chroot"			# default chroot directory
 DEFAULT_FILES="/bin/bash /bin/sh "	# basic chroot files
 DEFAULT_FILES+="/etc/passwd /etc/nsswitch.conf /etc/group "
 DEFAULT_FILES+=`find /lib -name libnss*`	# files required by glibc
-DEFAULT_FILES+=" /bin/cp /bin/ls /bin/cat /bin/ps /bin/netstat /bin/ping /sbin/ifconfig /bin/hostname /bin/grep /usr/bin/dig /usr/bin/openssl /usr/bin/id /usr/bin/getent /usr/bin/whoami /usr/bin/wc /usr/bin/wget /bin/umount"
+DEFAULT_FILES+=" /bin/cp /bin/ls /bin/cat /bin/ps /bin/netstat /bin/ping /sbin/ifconfig /usr/bin/touch /bin/hostname /bin/grep /usr/bin/dig /usr/bin/openssl /usr/bin/id /usr/bin/getent /usr/bin/whoami /usr/bin/wc /usr/bin/wget /bin/umount"
 
 rm -fr $ROOTDIR
 mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,var/lock,var/log,proc}
 mkdir -p $ROOTDIR/etc/firejail
 mkdir -p $ROOTDIR/home/netblue/.config/firejail
+chown netblue:netblue $ROOTDIR/home/netblue
+chown netblue:netblue $ROOTDIR/home/netblue/.config
 mkdir $ROOTDIR/home/someotheruser
 mkdir $ROOTDIR/boot
 mkdir $ROOTDIR/selinux

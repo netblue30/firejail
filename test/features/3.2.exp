@@ -1,0 +1,72 @@
+#!/usr/bin/expect -f
+#
+# disable /boot
+#
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+#
+# N
+#
+send -- "rm -f ~/.config/firejail-test-file\r"
+sleep 1
+send -- "firejail --noprofile --read-only=/home/netblue/.config\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "touch ~/.config/firejail-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Read-only file system"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+#
+# O
+#
+send -- "firejail --noprofile --overlay --read-only=/home/netblue/.config\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "touch ~/.config/firejail-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Read-only file system"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+#
+# C
+#
+send -- "rm -f /tmp/chroot/home/netblue/.config/firejail-test-file\r"
+sleep 1
+send -- "firejail --noprofile --chroot=/tmp/chroot --read-only=/home/netblue/.config\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "touch ~/.config/firejail-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Read-only file system"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+puts "\nall done\n"

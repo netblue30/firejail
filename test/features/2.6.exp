@@ -1,0 +1,68 @@
+#!/usr/bin/expect -f
+#
+# default gateway
+#
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+#
+# N
+#
+send -- "firejail --noprofile --net=eth0 --defaultgw=192.168.1.10\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "netstat -rn\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"0.0.0.0         192.168.1.10"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+#
+# O
+#
+send -- "firejail --noprofile --overlay --net=eth0 --defaultgw=192.168.1.10\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "netstat -rn\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"0.0.0.0         192.168.1.10"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+#
+# C
+#
+send -- "firejail --noprofile --chroot=/tmp/chroot --net=eth0 --defaultgw=192.168.1.10\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "netstat -rn\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"0.0.0.0         192.168.1.10"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+puts "\nall done\n"

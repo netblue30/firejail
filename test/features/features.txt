@@ -60,6 +60,7 @@ C - chroot filesystem
 	- test --ip: N, O, C
 
 2.5 interface
+	- N, O, C
 
 2.6 Default gw (--noprofile --net=eth0 --defaultgw=192.168.1.10, run netstat -rn)
 	- N, O, C
@@ -68,4 +69,5 @@ C - chroot filesystem
 
 3. Filesystem features (use --noprofile)
 
+3.1 tmpfs
 	

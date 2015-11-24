@@ -23,6 +23,12 @@ expect {
 	"bingo"
 }
 after 100
+send -- "cat /etc/hostname\r"
+expect {
+	timeout {puts "TESTING ERROR 1.0\n";exit}
+	"bingo"
+}
+after 100
 send -- "getent hosts bingo\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
@@ -53,6 +59,12 @@ expect {
 	"bingo"
 }
 after 100
+send -- "cat /etc/hostname\r"
+expect {
+	timeout {puts "TESTING ERROR 3.0\n";exit}
+	"bingo"
+}
+after 100
 send -- "getent hosts bingo\r"
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
@@ -79,6 +91,12 @@ sleep 1
 send -- "hostname\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
+	"bingo"
+}
+after 100
+send -- "cat /etc/hostname\r"
+expect {
+	timeout {puts "TESTING ERROR 5.0\n";exit}
 	"bingo"
 }
 after 100

@@ -56,7 +56,7 @@ expect {
 after 100
 
 send -- "exit\r"
-sleep 1
+sleep 3
 
 send -- "firejail --noprofile --net=eth0 --ip=192.168.1.244\r"
 expect {
@@ -104,7 +104,7 @@ expect {
 after 100
 
 send -- "exit\r"
-sleep 1
+sleep 3
 
 #
 # O
@@ -155,7 +155,7 @@ expect {
 after 100
 
 send -- "exit\r"
-sleep 1
+sleep 3
 
 send -- "firejail --noprofile  --net=eth0 --ip=192.168.1.244 --overlay\r"
 expect {
@@ -203,7 +203,7 @@ expect {
 after 100
 
 send -- "exit\r"
-sleep 1
+sleep 3
 
 
 #
@@ -255,7 +255,7 @@ expect {
 after 100
 
 send -- "exit\r"
-sleep 1
+sleep 3
 
 send -- "firejail --noprofile --net=eth0 --ip=192.168.1.244 --chroot=/tmp/chroot\r"
 expect {

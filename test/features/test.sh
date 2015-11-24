@@ -44,3 +44,19 @@ echo "TESTING: 2.4 bridge"
 
 echo "TESTING: 2.5 interface"
 ./2.5.exp
+
+echo "TESTING: 2.6 Default gateway"
+./2.6.exp
+
+echo "TESTING: 3.1 tmpfs"
+./3.1.exp
+
+echo "TESTING: 3.2 read-only"
+./3.2.exp
+
+echo "TESTING: 3.3 blacklist"
+./3.3.exp
+
+echo "TESTING: 3.4 whitelist"
+./3.4.exp
+

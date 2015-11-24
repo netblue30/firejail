@@ -71,4 +71,5 @@ C - chroot filesystem
 
 3.1 tmpfs
 3.2 read-only
-	
+3.3 blacklist
+3.4 whitelist

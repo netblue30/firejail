@@ -1,0 +1,69 @@
+#!/usr/bin/expect -f
+#
+# whitelist
+#
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+#
+# N
+#
+send -- "firejail --noprofile --whitelist=/home/netblue/.config\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al ~/. | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"6"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+#
+# O
+#
+send -- "firejail --noprofile --overlay --whitelist=/home/netblue/.config\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al ~/. | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"6"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+#
+# C
+#
+send -- "firejail --noprofile --chroot=/tmp/chroot --whitelist=/home/netblue/.config\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al ~/. | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"6"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+puts "\nall done\n"

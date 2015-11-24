@@ -36,6 +36,8 @@ mkdir -p $ROOTDIR/etc/firejail
 mkdir -p $ROOTDIR/home/netblue/.config/firejail
 chown netblue:netblue $ROOTDIR/home/netblue
 chown netblue:netblue $ROOTDIR/home/netblue/.config
+cp /home/netblue/.Xauthority $ROOTDIR/home/netblue/.
+cp -a /etc/skel $ROOTDIR/etc/.
 mkdir $ROOTDIR/home/someotheruser
 mkdir $ROOTDIR/boot
 mkdir $ROOTDIR/selinux

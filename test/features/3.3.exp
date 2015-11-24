@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 #
-# read-only
+# blacklist
 #
 
 set timeout 10
@@ -10,38 +10,37 @@ match_max 100000
 #
 # N
 #
-send -- "rm -f ~/.config/firejail-test-file\r"
-sleep 1
-send -- "firejail --noprofile --read-only=/home/netblue/.config\r"
+send -- "firejail --noprofile --blacklist=/home/netblue/.config\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "touch ~/.config/firejail-test-file\r"
+send -- "cd ~/.config\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Read-only file system"
+	"Permission denied"
 }
 after 100
 send -- "exit\r"
 sleep 1
 
+
 #
 # O
 #
-send -- "firejail --noprofile --overlay --read-only=/home/netblue/.config\r"
+send -- "firejail --noprofile --overlay --blacklist=/home/netblue/.config\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "touch ~/.config/firejail-test-file\r"
+send -- "cd ~/.config\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Read-only file system"
+	"Permission denied"
 }
 after 100
 send -- "exit\r"
@@ -50,19 +49,17 @@ sleep 1
 #
 # C
 #
-send -- "rm -f /tmp/chroot/home/netblue/.config/firejail-test-file\r"
-sleep 1
-send -- "firejail --noprofile --chroot=/tmp/chroot --read-only=/home/netblue/.config\r"
+send -- "firejail --noprofile --chroot=/tmp/chroot --blacklist=/home/netblue/.config\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "touch ~/.config/firejail-test-file\r"
+send -- "cd ~/.config\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Read-only file system"
+	"Permission denied"
 }
 after 100
 send -- "exit\r"

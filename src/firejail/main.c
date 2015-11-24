@@ -1263,7 +1263,7 @@ int main(int argc, char **argv) {
 
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
-		lockfd = open(NETWORK_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+		lockfd = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
 		if (lockfd != -1) {
 			int rv = fchown(lockfd, 0, 0);
 			(void) rv;

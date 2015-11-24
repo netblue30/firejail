@@ -261,16 +261,16 @@ void protocol_filter_save(void) {
 	// save protocol filter configuration in PROTOCOL_CFG
 	fs_build_mnt_dir();
 
-	FILE *fp = fopen(PROTOCOL_CFG, "w");
+	FILE *fp = fopen(RUN_PROTOCOL_CFG, "w");
 	if (!fp)
 		errExit("fopen");
 	fprintf(fp, "%s\n", cfg.protocol);
 	fclose(fp);
 
-	if (chmod(PROTOCOL_CFG, 0600) < 0)
+	if (chmod(RUN_PROTOCOL_CFG, 0600) < 0)
 		errExit("chmod");
 
-	if (chown(PROTOCOL_CFG, 0, 0) < 0)
+	if (chown(RUN_PROTOCOL_CFG, 0, 0) < 0)
 		errExit("chown");
 
 }
@@ -354,7 +354,7 @@ void protocol_print_filter(pid_t pid) {
 
 	// find the seccomp filter
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, PROTOCOL_CFG) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_PROTOCOL_CFG) == -1)
 		errExit("asprintf");
 
 	struct stat s;

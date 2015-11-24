@@ -137,7 +137,7 @@ static void duplicate(char *fname) {
 	char *actual_path = realpath(full_path, NULL);
 	if (actual_path) {
 		// copy the file
-		if (asprintf(&cmd, "%s -a %s %s/%s", CP_COMMAND, actual_path, BIN_DIR, fname) == -1)
+		if (asprintf(&cmd, "%s -a %s %s/%s", RUN_CP_COMMAND, actual_path, RUN_BIN_DIR, fname) == -1)
 			errExit("asprintf");
 		if (arg_debug)
 			printf("%s\n", cmd);
@@ -168,12 +168,12 @@ void fs_private_bin_list(void) {
 
 	// create /tmp/firejail/mnt/bin directory
 	fs_build_mnt_dir();
-	int rv = mkdir(BIN_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+	int rv = mkdir(RUN_BIN_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 	if (rv == -1)
 		errExit("mkdir");
-	if (chown(BIN_DIR, 0, 0) < 0)
+	if (chown(RUN_BIN_DIR, 0, 0) < 0)
 		errExit("chown");
-	if (chmod(BIN_DIR, 0755) < 0)
+	if (chmod(RUN_BIN_DIR, 0755) < 0)
 		errExit("chmod");
 	
 	// copy the list of files in the new etc directory
@@ -211,8 +211,8 @@ void fs_private_bin_list(void) {
 	i = 0;
 	while (paths[i]) {
 		if (arg_debug)
-			printf("Mount-bind %s on top of %s\n", BIN_DIR, paths[i]);
-		if (mount(BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
+			printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
+		if (mount(RUN_BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 		i++;
 	}

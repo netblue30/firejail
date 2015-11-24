@@ -83,7 +83,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			exit(1);
 		}
 	
-		if (asprintf(&wfile, "%s/%s", WHITELIST_HOME_USER_DIR, fname) == -1)
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->tmp_dir) {
@@ -93,7 +93,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			exit(1);
 		}
 	
-		if (asprintf(&wfile, "%s/%s", WHITELIST_TMP_DIR, fname) == -1)
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->media_dir) {
@@ -103,7 +103,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			exit(1);
 		}
 	
-		if (asprintf(&wfile, "%s/%s", WHITELIST_MEDIA_DIR, fname) == -1)
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MEDIA_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->var_dir) {
@@ -113,7 +113,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			exit(1);
 		}
 	
-		if (asprintf(&wfile, "%s/%s", WHITELIST_VAR_DIR, fname) == -1)
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_VAR_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->dev_dir) {
@@ -123,7 +123,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			exit(1);
 		}
 	
-		if (asprintf(&wfile, "%s/%s", WHITELIST_DEV_DIR, fname) == -1)
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_DEV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->opt_dir) {
@@ -133,7 +133,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			exit(1);
 		}
 	
-		if (asprintf(&wfile, "%s/%s", WHITELIST_OPT_DIR, fname) == -1)
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_OPT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 
@@ -315,16 +315,16 @@ void fs_whitelist(void) {
 
 	// /home/user
 	if (home_dir) {
-		// keep a copy of real home dir in WHITELIST_HOME_USER_DIR
-		int rv = mkdir(WHITELIST_HOME_USER_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
+		int rv = mkdir(RUN_WHITELIST_HOME_USER_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(WHITELIST_HOME_USER_DIR, getuid(), getgid()) < 0)
+		if (chown(RUN_WHITELIST_HOME_USER_DIR, getuid(), getgid()) < 0)
 			errExit("chown");
-		if (chmod(WHITELIST_HOME_USER_DIR, 0755) < 0)
+		if (chmod(RUN_WHITELIST_HOME_USER_DIR, 0755) < 0)
 			errExit("chmod");
 	
-		if (mount(cfg.homedir, WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
 		// mount a tmpfs and initialize /home/user
@@ -334,15 +334,15 @@ void fs_whitelist(void) {
 	// /tmp mountpoint
 	if (tmp_dir) {
 		// keep a copy of real /tmp directory in WHITELIST_TMP_DIR
-		int rv = mkdir(WHITELIST_TMP_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_WHITELIST_TMP_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(WHITELIST_TMP_DIR, 0, 0) < 0)
+		if (chown(RUN_WHITELIST_TMP_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(WHITELIST_TMP_DIR, 0777) < 0)
+		if (chmod(RUN_WHITELIST_TMP_DIR, 0777) < 0)
 			errExit("chmod");
 	
-		if (mount("/tmp", WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
 		// mount tmpfs on /tmp
@@ -354,16 +354,16 @@ void fs_whitelist(void) {
 	
 	// /media mountpoint
 	if (media_dir) {
-		// keep a copy of real /media directory in WHITELIST_MEDIA_DIR
-		int rv = mkdir(WHITELIST_MEDIA_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		// keep a copy of real /media directory in RUN_WHITELIST_MEDIA_DIR
+		int rv = mkdir(RUN_WHITELIST_MEDIA_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(WHITELIST_MEDIA_DIR, 0, 0) < 0)
+		if (chown(RUN_WHITELIST_MEDIA_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(WHITELIST_MEDIA_DIR, 0755) < 0)
+		if (chmod(RUN_WHITELIST_MEDIA_DIR, 0755) < 0)
 			errExit("chmod");
 	
-		if (mount("/media", WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount("/media", RUN_WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
 		// mount tmpfs on /media
@@ -375,16 +375,16 @@ void fs_whitelist(void) {
 
 	// /media mountpoint
 	if (var_dir) {
-		// keep a copy of real /var directory in WHITELIST_VAR_DIR
-		int rv = mkdir(WHITELIST_VAR_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		// keep a copy of real /var directory in RUN_WHITELIST_VAR_DIR
+		int rv = mkdir(RUN_WHITELIST_VAR_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(WHITELIST_VAR_DIR, 0, 0) < 0)
+		if (chown(RUN_WHITELIST_VAR_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(WHITELIST_VAR_DIR, 0755) < 0)
+		if (chmod(RUN_WHITELIST_VAR_DIR, 0755) < 0)
 			errExit("chmod");
 	
-		if (mount("/var", WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount("/var", RUN_WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
 		// mount tmpfs on /var
@@ -396,16 +396,16 @@ void fs_whitelist(void) {
 
 	// /dev mountpoint
 	if (dev_dir) {
-		// keep a copy of real /dev directory in WHITELIST_DEV_DIR
-		int rv = mkdir(WHITELIST_DEV_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		// keep a copy of real /dev directory in RUN_WHITELIST_DEV_DIR
+		int rv = mkdir(RUN_WHITELIST_DEV_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(WHITELIST_DEV_DIR, 0, 0) < 0)
+		if (chown(RUN_WHITELIST_DEV_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(WHITELIST_DEV_DIR, 0755) < 0)
+		if (chmod(RUN_WHITELIST_DEV_DIR, 0755) < 0)
 			errExit("chmod");
 	
-		if (mount("/dev", WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
 		// mount tmpfs on /dev
@@ -417,16 +417,16 @@ void fs_whitelist(void) {
 
 	// /opt mountpoint
 	if (opt_dir) {
-		// keep a copy of real /opt directory in WHITELIST_DEV_DIR
-		int rv = mkdir(WHITELIST_OPT_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		// keep a copy of real /opt directory in RUN_WHITELIST_DEV_DIR
+		int rv = mkdir(RUN_WHITELIST_OPT_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(WHITELIST_OPT_DIR, 0, 0) < 0)
+		if (chown(RUN_WHITELIST_OPT_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(WHITELIST_OPT_DIR, 0755) < 0)
+		if (chmod(RUN_WHITELIST_OPT_DIR, 0755) < 0)
 			errExit("chmod");
 	
-		if (mount("/opt", WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount("/opt", RUN_WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
 		// mount tmpfs on /opt
@@ -468,15 +468,15 @@ void fs_whitelist(void) {
 		entry = entry->next;
 	}
 
-	// mask the real home directory, currently mounted on WHITELIST_HOME_DIR
+	// mask the real home directory, currently mounted on RUN_WHITELIST_HOME_DIR
 	if (home_dir) {
-		if (mount("tmpfs", WHITELIST_HOME_USER_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_HOME_USER_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 	}
 	
-	// mask the real /tmp directory, currently mounted on WHITELIST_TMP_DIR
+	// mask the real /tmp directory, currently mounted on RUN_WHITELIST_TMP_DIR
 	if (tmp_dir) {
-		if (mount("tmpfs", WHITELIST_TMP_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_TMP_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 	}
 

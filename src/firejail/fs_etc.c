@@ -76,7 +76,7 @@ static void duplicate(char *fname) {
 	char *cmd;
 
 	// copy the file - this code assumes ETC_DIR is actually MNT_DIR/etc
-	if (asprintf(&cmd, "%s -a --parents /etc/%s %s", CP_COMMAND, fname, MNT_DIR) == -1)
+	if (asprintf(&cmd, "%s -a --parents /etc/%s %s", RUN_CP_COMMAND, fname, RUN_MNT_DIR) == -1)
 		errExit("asprintf");
 	if (arg_debug)
 		printf("%s\n", cmd);
@@ -98,12 +98,12 @@ void fs_private_etc_list(void) {
 
 	// create /tmp/firejail/mnt/etc directory
 	fs_build_mnt_dir();
-	int rv = mkdir(ETC_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+	int rv = mkdir(RUN_ETC_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 	if (rv == -1)
 		errExit("mkdir");
-	if (chown(ETC_DIR, 0, 0) < 0)
+	if (chown(RUN_ETC_DIR, 0, 0) < 0)
 		errExit("chown");
-	if (chmod(ETC_DIR, 0755) < 0)
+	if (chmod(RUN_ETC_DIR, 0755) < 0)
 		errExit("chmod");
 	
 	// copy the list of files in the new etc directory
@@ -138,8 +138,8 @@ void fs_private_etc_list(void) {
 	waitpid(child, NULL, 0);
 
 	if (arg_debug)
-		printf("Mount-bind %s on top of /etc\n", ETC_DIR);
-	if (mount(ETC_DIR, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)
+		printf("Mount-bind %s on top of /etc\n", RUN_ETC_DIR);
+	if (mount(RUN_ETC_DIR, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 
 }

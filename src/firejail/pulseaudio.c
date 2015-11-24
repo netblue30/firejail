@@ -38,11 +38,11 @@ static void disable_file(const char *path, const char *file) {
 		printf("Disable%s\n", fname);
 		
 	if (S_ISDIR(s.st_mode)) {
-		if (mount(RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+		if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
 	}
 	else {
-		if (mount(RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+		if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
 	}
 
@@ -92,16 +92,16 @@ void pulseaudio_init(void) {
 	 
  	// create the new user pulseaudio directory
 	 fs_build_mnt_dir();
-	int rv = mkdir(PULSE_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+	int rv = mkdir(RUN_PULSE_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 	(void) rv; // in --chroot mode the directory canalready be there
-	if (chown(PULSE_DIR, getuid(), getgid()) < 0)
+	if (chown(RUN_PULSE_DIR, getuid(), getgid()) < 0)
 		errExit("chown");
-	if (chmod(PULSE_DIR, 0700) < 0)
+	if (chmod(RUN_PULSE_DIR, 0700) < 0)
 		errExit("chmod");
 
 	// create the new client.conf file
 	char *pulsecfg = NULL;
-	if (asprintf(&pulsecfg, "%s/client.conf", PULSE_DIR) == -1)
+	if (asprintf(&pulsecfg, "%s/client.conf", RUN_PULSE_DIR) == -1)
 		errExit("asprintf");
 	if (copy_file("/etc/pulse/client.conf", pulsecfg))
 		errExit("copy_file");

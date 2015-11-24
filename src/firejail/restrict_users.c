@@ -73,11 +73,11 @@ static void sanitize_home(void) {
 	}
 	
 	fs_build_mnt_dir();
-	if (mkdir(WHITELIST_HOME_DIR, 0755) == -1)
+	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
 		errExit("mkdir");
 
 	// keep a copy of the user home directory
-	if (mount(cfg.homedir, WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(cfg.homedir, RUN_WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 
 	// mount tmpfs in the new home
@@ -95,11 +95,11 @@ static void sanitize_home(void) {
 		errExit("chmod");
 
 	// mount user home directory
-	if (mount(WHITELIST_HOME_DIR, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(RUN_WHITELIST_HOME_DIR, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 
 	// mask home dir under /run
-	if (mount("tmpfs", WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", RUN_WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
 }
 
@@ -118,7 +118,7 @@ static void sanitize_passwd(void) {
 	fpin = fopen("/etc/passwd", "r");
 	if (!fpin)
 		goto errout;
-	fpout = fopen(PASSWD_FILE, "w");
+	fpout = fopen(RUN_PASSWD_FILE, "w");
 	if (!fpout)
 		goto errout;
 	
@@ -172,13 +172,13 @@ static void sanitize_passwd(void) {
 	}
 	fclose(fpin);
 	fclose(fpout);
-	if (chown(PASSWD_FILE, 0, 0) == -1)
+	if (chown(RUN_PASSWD_FILE, 0, 0) == -1)
 		errExit("chown");
-	if (chmod(PASSWD_FILE, 0644) == -1)
+	if (chmod(RUN_PASSWD_FILE, 0644) == -1)
 		errExit("chmod");
 		
 	// mount-bind tne new password file
-	if (mount(PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
+	if (mount(RUN_PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
 	
 	return;	
@@ -249,7 +249,7 @@ static void sanitize_group(void) {
 	fpin = fopen("/etc/group", "r");
 	if (!fpin)
 		goto errout;
-	fpout = fopen(GROUP_FILE, "w");
+	fpout = fopen(RUN_GROUP_FILE, "w");
 	if (!fpout)
 		goto errout;
 	
@@ -298,13 +298,13 @@ static void sanitize_group(void) {
 	}
 	fclose(fpin);
 	fclose(fpout);
-	if (chown(GROUP_FILE, 0, 0) == -1)
+	if (chown(RUN_GROUP_FILE, 0, 0) == -1)
 		errExit("chown");
-	if (chmod(GROUP_FILE, 0644) == -1)
+	if (chmod(RUN_GROUP_FILE, 0644) == -1)
 		errExit("chmod");
 		
 	// mount-bind tne new group file
-	if (mount(GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
+	if (mount(RUN_GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
 	
 	return;	

@@ -266,7 +266,7 @@ static void write_seccomp_file(void) {
 	fs_build_mnt_dir();
 	assert(sfilter);
 
-	int fd = open(SECCOMP_CFG, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
+	int fd = open(RUN_SECCOMP_CFG, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 		errExit("open");
 
@@ -279,7 +279,7 @@ static void write_seccomp_file(void) {
 		exit(1);
 	}
 	close(fd);
-	if (chown(SECCOMP_CFG, 0, 0) < 0)
+	if (chown(RUN_SECCOMP_CFG, 0, 0) < 0)
 		errExit("chown");
 }
 
@@ -690,7 +690,7 @@ int seccomp_filter_errno(void) {
 
 void seccomp_set(void) {
 	// read seccomp filter from  /tmp/firejail/mnt/seccomp
-	read_seccomp_file(SECCOMP_CFG);
+	read_seccomp_file(RUN_SECCOMP_CFG);
 	
 	// apply filter
 	struct sock_fprog prog = {
@@ -751,7 +751,7 @@ void seccomp_print_filter(pid_t pid) {
 
 	// find the seccomp filter
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, SECCOMP_CFG) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_SECCOMP_CFG) == -1)
 		errExit("asprintf");
 
 	struct stat s;

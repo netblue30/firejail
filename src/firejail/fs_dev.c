@@ -76,16 +76,16 @@ void fs_private_dev(void){
 	fs_build_mnt_dir();
 	if (have_dri) {
 		/* coverity[toctou] */
-		rv = mkdir(DRI_DIR, 0755);
+		rv = mkdir(RUN_DRI_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(DRI_DIR, 0, 0) < 0)
+		if (chown(RUN_DRI_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(DRI_DIR, 0755) < 0)
+		if (chmod(RUN_DRI_DIR, 0755) < 0)
 			errExit("chmod");
 	
 		// keep a copy of /dev/dri under DRI_DIR
-		if (mount("/dev/dri", DRI_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount("/dev/dri", RUN_DRI_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /dev/dri");
 	}
 	
@@ -93,13 +93,13 @@ void fs_private_dev(void){
 	int have_devlog = 0;
 	if (stat("/dev/log", &s) == 0) {
 		have_devlog = 1;
-		FILE *fp = fopen(DEVLOG_FILE, "w");
+		FILE *fp = fopen(RUN_DEVLOG_FILE, "w");
 		if (!fp)
 			have_devlog = 0;
 		else {
 			fprintf(fp, "\n");
 			fclose(fp);
-			if (mount("/dev/log", DEVLOG_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)
+			if (mount("/dev/log", RUN_DEVLOG_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mounting /dev/log");
 		}
 	}
@@ -114,7 +114,7 @@ void fs_private_dev(void){
 		if (fp) {
 			fprintf(fp, "\n");
 			fclose(fp);
-			if (mount(DEVLOG_FILE, "/dev/log", NULL, MS_BIND|MS_REC, NULL) < 0)
+			if (mount(RUN_DEVLOG_FILE, "/dev/log", NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mounting /dev/log");
 		}
 	}		
@@ -129,7 +129,7 @@ void fs_private_dev(void){
 			errExit("chown");
 		if (chmod("/dev/dri",0755) < 0)
 			errExit("chmod");
-		if (mount(DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount(RUN_DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /dev/dri");
 	}
 	

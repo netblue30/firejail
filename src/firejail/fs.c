@@ -30,12 +30,12 @@
 static void create_empty_dir(void) {
 	struct stat s;
 	
-	if (stat(RO_DIR, &s)) {
+	if (stat(RUN_RO_DIR, &s)) {
 		/* coverity[toctou] */
-		int rv = mkdir(RO_DIR, S_IRUSR | S_IXUSR);
+		int rv = mkdir(RUN_RO_DIR, S_IRUSR | S_IXUSR);
 		if (rv == -1)
 			errExit("mkdir");	
-		if (chown(RO_DIR, 0, 0) < 0)
+		if (chown(RUN_RO_DIR, 0, 0) < 0)
 			errExit("chown");
 	}
 }
@@ -43,15 +43,15 @@ static void create_empty_dir(void) {
 static void create_empty_file(void) {
 	struct stat s;
 
-	if (stat(RO_FILE, &s)) {
+	if (stat(RUN_RO_FILE, &s)) {
 		/* coverity[toctou] */
-		FILE *fp = fopen(RO_FILE, "w");
+		FILE *fp = fopen(RUN_RO_FILE, "w");
 		if (!fp)
 			errExit("fopen");
 		fclose(fp);
-		if (chown(RO_FILE, 0, 0) < 0)
+		if (chown(RUN_RO_FILE, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(RO_FILE, S_IRUSR) < 0)
+		if (chmod(RUN_RO_FILE, S_IRUSR) < 0)
 			errExit("chown");
 	}
 }
@@ -60,21 +60,21 @@ static void create_empty_file(void) {
 void fs_build_firejail_dir(void) {
 	struct stat s;
 
-	if (stat(FIREJAIL_DIR, &s)) {
+	if (stat(RUN_FIREJAIL_DIR, &s)) {
 		if (arg_debug)
-			printf("Creating %s directory\n", FIREJAIL_DIR);
+			printf("Creating %s directory\n", RUN_FIREJAIL_DIR);
 		/* coverity[toctou] */
-		int rv = mkdir(FIREJAIL_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_FIREJAIL_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(FIREJAIL_DIR, 0, 0) < 0)
+		if (chown(RUN_FIREJAIL_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(FIREJAIL_DIR, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+		if (chmod(RUN_FIREJAIL_DIR, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
 			errExit("chmod");
 	}
 	else { // check /tmp/firejail directory belongs to root end exit if doesn't!
 		if (s.st_uid != 0 || s.st_gid != 0) {
-			fprintf(stderr, "Error: non-root %s directory, exiting...\n", FIREJAIL_DIR);
+			fprintf(stderr, "Error: non-root %s directory, exiting...\n", RUN_FIREJAIL_DIR);
 			exit(1);
 		}
 	}
@@ -96,16 +96,16 @@ void fs_build_mnt_dir(void) {
 	fs_build_firejail_dir();
 	
 	// create /run/firejail/mnt directory
-	if (stat(MNT_DIR, &s)) {
+	if (stat(RUN_MNT_DIR, &s)) {
 		if (arg_debug)
-			printf("Creating %s directory\n", MNT_DIR);
+			printf("Creating %s directory\n", RUN_MNT_DIR);
 		/* coverity[toctou] */
-		int rv = mkdir(MNT_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_MNT_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(MNT_DIR, 0, 0) < 0)
+		if (chown(RUN_MNT_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(MNT_DIR, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+		if (chmod(RUN_MNT_DIR, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
 			errExit("chmod");
 	}
 
@@ -113,8 +113,8 @@ void fs_build_mnt_dir(void) {
 	if (!tmpfs_mounted) {
 		// mount tmpfs on top of /run/firejail/mnt
 		if (arg_debug)
-			printf("Mounting tmpfs on %s directory\n", MNT_DIR);
-		if (mount("tmpfs", MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			printf("Mounting tmpfs on %s directory\n", RUN_MNT_DIR);
+		if (mount("tmpfs", RUN_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /tmp/firejail/mnt");
 		tmpfs_mounted = 1;
 	}
@@ -124,7 +124,7 @@ void fs_build_mnt_dir(void) {
 void fs_build_cp_command(void) {
 	struct stat s;
 	fs_build_mnt_dir();
-	if (stat(CP_COMMAND, &s)) {
+	if (stat(RUN_CP_COMMAND, &s)) {
 		char* fname = realpath("/bin/cp", NULL);
 		if (fname == NULL) {
 			fprintf(stderr, "Error: /bin/cp not found\n");
@@ -134,13 +134,13 @@ void fs_build_cp_command(void) {
 			fprintf(stderr, "Error: /bin/cp not found\n");
 			exit(1);
 		}
-		int rv = copy_file(fname, CP_COMMAND);
+		int rv = copy_file(fname, RUN_CP_COMMAND);
 		if (rv) {
 			fprintf(stderr, "Error: cannot access /bin/cp\n");
 			exit(1);
 		}
 		/* coverity[toctou] */
-		if (chmod(CP_COMMAND, 0755))
+		if (chmod(RUN_CP_COMMAND, 0755))
 			errExit("chmod");
 			
 		free(fname);
@@ -149,7 +149,7 @@ void fs_build_cp_command(void) {
 
 // delete the temporary cp command
 void fs_delete_cp_command(void) {
-	unlink(CP_COMMAND);
+	unlink(RUN_CP_COMMAND);
 }
 
 //***********************************************
@@ -205,11 +205,11 @@ static void disable_file(OPERATION op, const char *filename) {
 			if (arg_debug)
 				printf("Disable %s\n", fname);
 			if (S_ISDIR(s.st_mode)) {
-				if (mount(RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 					errExit("disable file");
 			}
 			else {
-				if (mount(RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 					errExit("disable file");
 			}
 			last_disable = SUCCESSFUL;
@@ -649,7 +649,7 @@ void fs_overlayfs(void) {
 	fs_build_mnt_dir();
 
 	char *oroot;
-	if(asprintf(&oroot, "%s/oroot", MNT_DIR) == -1)
+	if(asprintf(&oroot, "%s/oroot", RUN_MNT_DIR) == -1)
 		errExit("asprintf");
 	if (mkdir(oroot, S_IRWXU | S_IRWXG | S_IRWXO))
 		errExit("mkdir");
@@ -658,7 +658,7 @@ void fs_overlayfs(void) {
 	if (chmod(oroot, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
 		errExit("chmod");
 
-	char *basedir = MNT_DIR;
+	char *basedir = RUN_MNT_DIR;
 	if (arg_overlay_keep) {
 		// set base for working and diff directories
 		basedir = cfg.overlay_dir;

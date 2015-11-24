@@ -73,13 +73,13 @@ void save_cpu(void) {
 	if (cfg.cpus == 0)
 		return;
 
-	FILE *fp = fopen(CPU_CFG, "w");
+	FILE *fp = fopen(RUN_CPU_CFG, "w");
 	if (fp) {
 		fprintf(fp, "%x\n", cfg.cpus);
 		fclose(fp);
-		if (chmod(CPU_CFG, 0600) < 0)
+		if (chmod(RUN_CPU_CFG, 0600) < 0)
 			errExit("chmod");
-		if (chown(CPU_CFG, 0, 0) < 0)
+		if (chown(RUN_CPU_CFG, 0, 0) < 0)
 			errExit("chown");
 	}
 	else {

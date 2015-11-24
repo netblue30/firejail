@@ -26,13 +26,13 @@ void save_cgroup(void) {
 	if (cfg.cgroup == NULL)
 		return;
 	
-	FILE *fp = fopen(CGROUP_CFG, "w");
+	FILE *fp = fopen(RUN_CGROUP_CFG, "w");
 	if (fp) {
 		fprintf(fp, "%s", cfg.cgroup);
 		fflush(0);
 		if (fclose(fp))
 			goto errout;
-		if (chown(CGROUP_CFG, 0, 0) < 0)
+		if (chown(RUN_CGROUP_CFG, 0, 0) < 0)
 			errExit("chown");
 	}
 	else

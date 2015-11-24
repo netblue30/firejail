@@ -113,7 +113,7 @@ static int store_xauthority(void) {
 	fs_build_mnt_dir();
 
 	char *src;
-	char *dest = XAUTHORITY_FILE;
+	char *dest = RUN_XAUTHORITY_FILE;
 	if (asprintf(&src, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
 	
@@ -132,7 +132,7 @@ static int store_xauthority(void) {
 
 static void copy_xauthority(void) {
 	// copy XAUTHORITY_FILE in the new home directory
-	char *src = XAUTHORITY_FILE ;
+	char *src = RUN_XAUTHORITY_FILE ;
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
@@ -370,7 +370,7 @@ static void duplicate(char *name) {
 	}
 
 	// copy the file
-	if (asprintf(&cmd, "%s -a --parents \"%s\" %s", CP_COMMAND, fname, HOME_DIR) == -1)
+	if (asprintf(&cmd, "%s -a --parents \"%s\" %s", RUN_CP_COMMAND, fname, RUN_HOME_DIR) == -1)
 		errExit("asprintf");
 	if (arg_debug)
 		printf("%s\n", cmd);
@@ -405,12 +405,12 @@ void fs_private_home_list(void) {
 
 	// create /tmp/firejail/mnt/home directory
 	fs_build_mnt_dir();
-	int rv = mkdir(HOME_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+	int rv = mkdir(RUN_HOME_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
 	if (rv == -1)
 		errExit("mkdir");
-	if (chown(HOME_DIR, u, g) < 0)
+	if (chown(RUN_HOME_DIR, u, g) < 0)
 		errExit("chown");
-	if (chmod(HOME_DIR, 0755) < 0)
+	if (chmod(RUN_HOME_DIR, 0755) < 0)
 		errExit("chmod");
 	
 	// copy the list of files in the new home directory
@@ -448,7 +448,7 @@ void fs_private_home_list(void) {
 
 	// mount bind private_homedir on top of homedir
 	char *newhome;
-	if (asprintf(&newhome, "%s%s", HOME_DIR, cfg.homedir) == -1)
+	if (asprintf(&newhome, "%s%s", RUN_HOME_DIR, cfg.homedir) == -1)
 		errExit("asprintf");
 
 	if (arg_debug)

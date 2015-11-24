@@ -69,7 +69,7 @@ static void extract_command(int argc, char **argv, int index) {
 
 static void extract_nogroups(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, GROUPS_CFG) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_GROUPS_CFG) == -1)
 		errExit("asprintf");
 		
 	struct stat s;
@@ -82,7 +82,7 @@ static void extract_nogroups(pid_t pid) {
 
 static void extract_cpu(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, CPU_CFG) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CPU_CFG) == -1)
 		errExit("asprintf");
 		
 	struct stat s;
@@ -96,7 +96,7 @@ static void extract_cpu(pid_t pid) {
 
 static void extract_cgroup(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, CGROUP_CFG) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CGROUP_CFG) == -1)
 		errExit("asprintf");
 		
 	struct stat s;
@@ -281,7 +281,7 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 			caps_set(caps);
 #ifdef HAVE_SECCOMP
 		// set protocol filter
-		protocol_filter_load(PROTOCOL_CFG);
+		protocol_filter_load(RUN_PROTOCOL_CFG);
 		if (cfg.protocol) {
 			protocol_filter();
 		}

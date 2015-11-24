@@ -48,11 +48,11 @@ void save_nogroups(void) {
 	if (arg_nogroups == 0)
 		return;
 
-	FILE *fp = fopen(GROUPS_CFG, "w");
+	FILE *fp = fopen(RUN_GROUPS_CFG, "w");
 	if (fp) {
 		fprintf(fp, "\n");
 		fclose(fp);
-		if (chown(GROUPS_CFG, 0, 0) < 0)
+		if (chown(RUN_GROUPS_CFG, 0, 0) < 0)
 			errExit("chown");
 	}
 	else {

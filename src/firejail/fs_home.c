@@ -233,9 +233,12 @@ void fs_private(void) {
 		// create /home/user
 		if (arg_debug)
 			printf("Create a new user directory\n");
-		int rv = mkdir(homedir, S_IRWXU);
-		if (rv == -1)
-			errExit("mkdir");
+		if (mkdir(homedir, S_IRWXU) == -1) {
+			if (mkpath_as_root(homedir) == -1)
+				errExit("mkpath");
+			if (mkdir(homedir, S_IRWXU) == -1)
+				errExit("mkdir");
+		}
 		if (chown(homedir, u, g) < 0)
 			errExit("chown");
 	}
@@ -346,7 +349,7 @@ void fs_check_private_dir(void) {
 		exit(1);
 	}
 	if (s1.st_uid != s2.st_uid) {
-		printf("Error: the two home directories must have the same owner\n");
+		printf("Error: --private directory should be owned by the current user\n");
 		exit(1);
 	}
 }

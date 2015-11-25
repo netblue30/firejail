@@ -55,7 +55,7 @@ static char *check_dir_or_file(const char *name) {
 	}
 
 	if (!fname) {
-		fprintf(stderr, "Warning: file %s not found\n", name);
+//		fprintf(stderr, "Warning: file %s not found\n", name);
 		return NULL;
 	}
 	

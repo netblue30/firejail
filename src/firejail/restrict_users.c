@@ -120,7 +120,7 @@ static void sanitize_home(void) {
 
 	// create user home directory
 	if (mkdir(cfg.homedir, 0755) == -1) {
-		if (mkpath(cfg.homedir))
+		if (mkpath_as_root(cfg.homedir))
 			errExit("mkpath");
 		if (mkdir(cfg.homedir, 0755) == -1)
 			errExit("mkdir");

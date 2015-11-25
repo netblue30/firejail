@@ -75,7 +75,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	assert(path);
 	const char *fname;
 	char *wfile = NULL;
-	
+
 	if (entry->home_dir) {
 		fname = path + strlen(cfg.homedir);
 		if (*fname == '\0') {

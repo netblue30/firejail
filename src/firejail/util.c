@@ -75,6 +75,40 @@ void drop_privs(int nogroups) {
 }
 
 
+int mkpath_as_root(const char* path) {
+	assert(path && *path);
+	
+	// work on a copy of the path
+	char *file_path = strdup(path);
+	if (!file_path)
+		errExit("strdup");
+
+	char* p;
+	for (p=strchr(file_path+1, '/'); p; p=strchr(p+1, '/')) {
+		*p='\0';
+		if (mkdir(file_path, 0755)==-1) {
+			if (errno != EEXIST) {
+				*p='/';
+				free(file_path);
+				return -1;
+			}
+		}
+		else {
+			if (chmod(file_path, 0755) == -1)
+				errExit("chmod");
+			if (chown(file_path, 0, 0) == -1)
+				errExit("chown");
+		}			
+
+		*p='/';
+	}
+	
+	free(file_path);
+	return 0;
+}
+
+
+
 void logsignal(int s) {
 	if (!arg_debug)
 		return;

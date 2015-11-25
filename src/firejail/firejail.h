@@ -322,6 +322,7 @@ int net_move_interface(const char *dev, unsigned pid);
 
 // util.c
 void drop_privs(int nogroups);
+int mkpath_as_root(const char* path);
 void extract_command_name(const char *str);
 void logsignal(int s);
 void logmsg(const char *msg);

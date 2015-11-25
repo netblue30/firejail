@@ -59,6 +59,40 @@ static USER_LIST *ulist_find(const char *user) {
 	return NULL;
 }
 
+static int mkpath(const char* path) {
+	assert(path && *path);
+	
+	// work on a copy of the path
+	char *file_path = strdup(path);
+	if (!file_path)
+		errExit("strdup");
+
+	char* p;
+	for (p=strchr(file_path+1, '/'); p; p=strchr(p+1, '/')) {
+		*p='\0';
+		if (mkdir(file_path, 0755)==-1) {
+			if (errno != EEXIST) {
+				*p='/';
+				free(file_path);
+				return -1;
+			}
+		}
+		else {
+			if (chmod(file_path, 0755) == -1)
+				errExit("chmod");
+			if (chown(file_path, 0, 0) == -1)
+				errExit("chown");
+		}			
+
+		*p='/';
+	}
+	
+	free(file_path);
+	return 0;
+}
+
+
+
 static void sanitize_home(void) {
 	assert(getuid() != 0);	// this code works only for regular users
 	
@@ -85,9 +119,13 @@ static void sanitize_home(void) {
 		errExit("mount tmpfs");
 
 	// create user home directory
-	if (mkdir(cfg.homedir, 0755) == -1)
-		errExit("mkdir");
-
+	if (mkdir(cfg.homedir, 0755) == -1) {
+		if (mkpath(cfg.homedir))
+			errExit("mkpath");
+		if (mkdir(cfg.homedir, 0755) == -1)
+			errExit("mkdir");
+	}
+	
 	// set mode and ownership
 	if (chown(cfg.homedir, s.st_uid, s.st_gid) == -1)
 		errExit("chown");
@@ -320,7 +358,16 @@ errout:
 void restrict_users(void) {
 	// only in user mode
 	if (getuid()) {
-		sanitize_home();
+		if (strncmp(cfg.homedir, "/home/", 6) == 0) {
+			// user has the home directory under /home
+			sanitize_home();
+		}
+		else {
+			// user has the home diercotry outside /home
+			// mount tmpfs on top of /home in order to hide it
+			if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mount tmpfs");
+		}
 		sanitize_passwd();
 		sanitize_group();
 	}

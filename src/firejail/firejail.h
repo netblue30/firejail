@@ -186,6 +186,7 @@ static inline int any_interface_configured(void) {
 
 extern int arg_private;		// mount private /home
 extern int arg_debug;		// print debug messages
+extern int arg_debug_check_filename;		// print debug messages for invalid_filename()
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
 extern int arg_overlay;		// overlay option

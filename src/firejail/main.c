@@ -50,6 +50,7 @@ static char child_stack[STACK_SIZE];		// space for child's stack
 Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_debug = 0;				// print debug messages
+int arg_debug_check_filename;		// print debug messages for invalid_filename()
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 int arg_overlay = 0;				// overlay option
@@ -457,6 +458,10 @@ int main(int argc, char **argv) {
 		
 		if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
+		else if (strcmp(argv[i], "--debug-check-filename") == 0) {
+			arg_debug = 1;
+			arg_debug_check_filename = 1;
+		}
 		else if (strcmp(argv[i], "--quiet") == 0)
 			arg_quiet = 1;
 		

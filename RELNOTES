@@ -9,6 +9,7 @@ firejail (0.9.35) baseline; urgency=low
   * manipulation of firejail configuration disabled by default
   * added automated feature testing framework
   * alow default gateway configuration for --interface option
+  * --debug enhancements
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  ongoing development
 

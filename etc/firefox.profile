@@ -9,9 +9,8 @@ seccomp
 protocol unix,inet,inet6,netlink
 netfilter
 noroot
+whitelist ${DOWNLOADS}
 whitelist ~/.mozilla
-whitelist ~/Downloads
-whitelist ~/Загрузки
 whitelist ~/.cache/mozilla/firefox
 whitelist ~/dwhelper
 whitelist ~/.zotero

@@ -27,11 +27,84 @@
 #include <fcntl.h>
 #include <errno.h>
 
+static char *dentry[] = {
+	"Downloads",
+	"Загрузки",
+	"Téléchargement",
+	NULL
+};
+
+#define MAXBUF 4098
+static char *resolve_downloads(void) {
+	char *fname;
+	struct stat s;
+
+	// try a well known download directory name
+	int i = 0;
+	while (dentry[i] != NULL) {
+		if (asprintf(&fname, "%s/%s", cfg.homedir, dentry[i]) == -1)
+			errExit("asprintf");
+		
+		if (stat(fname, &s) == 0) {
+			free(fname);
+			if (arg_debug)
+				printf("Downloads directory resolved as \"Downloads\"\n");
+			
+			char *rv;
+			if (asprintf(&rv, "whitelist ~/%s", dentry[i]) == -1)
+				errExit("asprintf");
+			return rv;
+		}
+		free(fname);
+		i++;
+	}
+
+	// try a name form ~/.config/user-dirs.dirs
+	if (asprintf(&fname, "%s/.config/user-dirs.dirs", cfg.homedir) == -1)
+		errExit("asprintf");
+	FILE *fp = fopen(fname, "r");
+	if (!fp) {
+		free(fname);
+		return NULL;
+	}		
+	free(fname);
+	
+	// extract downloads directory
+	char buf[MAXBUF];
+	while (fgets(buf, MAXBUF, fp)) {
+		char *ptr = buf;
+		
+		// skip blanks
+		while (*ptr == ' ' || *ptr == '\t')
+			ptr++;
+		if (*ptr == '\0' || *ptr == '\n' || *ptr == '#')
+			continue;
+
+		if (strncmp(ptr, "XDG_DOWNLOAD_DIR=\"$HOME/", 24) == 0) {
+			char *ptr1 = strchr(ptr + 24, '"');
+			if (ptr1) {
+				*ptr1 = '\0';
+				fclose(fp);
+				if (arg_debug)
+					printf("Downloads directory resolved as \"%s\"\n", ptr + 24);
+				
+				char *rv;
+				if (asprintf(&rv, "whitelist ~/%s", ptr + 24) == -1)
+					errExit("asprintf");
+				return rv;
+			}
+		}
+	}
+	fclose(fp);
+	
+	return NULL;
+}
+
 static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
 	
 	mode |= 0111;
-	
+
 	// create directories with uid/gid as root or as current user if inside home directory
 	uid_t uid = getuid();
 	gid_t gid = getgid();
@@ -209,6 +282,25 @@ void fs_whitelist(void) {
 		if (strncmp(entry->data, "whitelist ", 10)) {
 			entry = entry->next;
 			continue;
+		}
+
+		// resolve ${DOWNLOADS}
+		if (strcmp(entry->data + 10, "${DOWNLOADS}") == 0) {
+			char *tmp = resolve_downloads();
+			if (tmp)
+				entry->data = tmp;
+			else {
+				*entry->data = '\0';
+				fprintf(stderr, "***\n");
+				fprintf(stderr, "*** Error: cannot whitelist Downloads directory\n");
+				fprintf(stderr, "***\n");
+				fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
+				fprintf(stderr, "*** Please contact the developer. Workaround:\n");
+				fprintf(stderr, "***\n");
+				fprintf(stderr, "***       firejail --ignore=whitelist program-name\n");
+				fprintf(stderr, "***\n");
+				continue;
+			}
 		}
 
 		// replace ~/ or ${HOME} into /home/username

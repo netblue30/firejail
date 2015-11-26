@@ -737,7 +737,7 @@ int main(int argc, char **argv) {
 		}
 		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
 			if (custom_profile) {
-				fprintf(stderr, "Error: please use --profile after --include\n");
+				fprintf(stderr, "Error: please use --profile after --ignore\n");
 				exit(1);
 			}
 

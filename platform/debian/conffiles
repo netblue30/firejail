@@ -44,3 +44,4 @@
 /etc/firejail/whitelist-common.inc
 /etc/firejail/nolocal.net
 /etc/firejail/webserver.net
+/etc/firejail/bitlbee.profile

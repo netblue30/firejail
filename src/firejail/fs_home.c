@@ -44,6 +44,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			if (copy_file("/etc/skel/.zshrc", fname) == 0) {
 				if (chown(fname, u, g) == -1)
 					errExit("chown");
+				fs_logger("clone /etc/skel/.zshrc");
 			}
 		}
 		else { // 
@@ -55,6 +56,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 					errExit("chown");
 				if (chmod(fname, S_IRUSR | S_IWUSR) < 0)
 					errExit("chown");
+				fs_logger2("touch", fname);
 			}
 		}
 		free(fname);
@@ -72,6 +74,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			if (copy_file("/etc/skel/.cshrc", fname) == 0) {
 				if (chown(fname, u, g) == -1)
 					errExit("chown");
+				fs_logger("clone /etc/skel/.cshrc");
 			}
 		}
 		else { // 
@@ -84,6 +87,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 					errExit("chown");
 				if (chmod(fname, S_IRUSR | S_IWUSR) < 0)
 					errExit("chown");
+				fs_logger2("touch", fname);
 			}
 		}
 		free(fname);
@@ -102,6 +106,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 				/* coverity[toctou] */
 				if (chown(fname, u, g) == -1)
 					errExit("chown");
+				fs_logger("clone /etc/skel/.bashrc");
 			}
 		}
 		free(fname);
@@ -139,6 +144,7 @@ static void copy_xauthority(void) {
 	int rv = copy_file(src, dest);
 	if (rv)
 		fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
+	fs_logger2("clone", dest);
 
 	// set permissions and ownership
 	if (chown(dest, getuid(), getgid()) < 0)
@@ -177,6 +183,7 @@ void fs_private_homedir(void) {
 		printf("Mount-bind %s on top of %s\n", private_homedir, homedir);
 	if (mount(private_homedir, homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	fs_logger3("mount-bind", private_homedir, cfg.homedir);
 // preserve mode and ownership
 //	if (chown(homedir, s.st_uid, s.st_gid) == -1)
 //		errExit("mount-bind chown");
@@ -189,6 +196,7 @@ void fs_private_homedir(void) {
 			printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
 			errExit("mounting home directory");
+		fs_logger("mount tmpfs on /root");
 	}
 	else {
 		// mask /home
@@ -196,6 +204,7 @@ void fs_private_homedir(void) {
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
+		fs_logger("mount tmpfs on /home");
 	}
 	
 
@@ -222,12 +231,14 @@ void fs_private(void) {
 		printf("Mounting a new /home directory\n");
 	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting home directory");
+	fs_logger("mount tmpfs on /home");
 
 	// mask /root
 	if (arg_debug)
 		printf("Mounting a new /root directory\n");
 	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
 		errExit("mounting home directory");
+	fs_logger("mount tmpfs on /root");
 
 	if (u != 0) {
 		// create /home/user
@@ -241,6 +252,7 @@ void fs_private(void) {
 		}
 		if (chown(homedir, u, g) < 0)
 			errExit("chown");
+		fs_logger2("mkdir", homedir);
 	}
 	
 	skel(homedir, u, g);
@@ -379,6 +391,7 @@ static void duplicate(char *name) {
 		printf("%s\n", cmd);
 	if (system(cmd))
 		errExit("system cp -a --parents");
+	fs_logger2("clone", fname);
 	free(cmd);
 	free(fname);
 }
@@ -415,9 +428,11 @@ void fs_private_home_list(void) {
 		errExit("chown");
 	if (chmod(RUN_HOME_DIR, 0755) < 0)
 		errExit("chmod");
+
 	
 	// copy the list of files in the new home directory
 	// using a new child process without root privileges
+	fs_logger_print();	// save the current log
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -437,13 +452,14 @@ void fs_private_home_list(void) {
 		char *dlist = strdup(cfg.home_private_keep);
 		if (!dlist)
 			errExit("strdup");
-	
+		
 		char *ptr = strtok(dlist, ",");
 		duplicate(ptr);
 	
 		while ((ptr = strtok(NULL, ",")) != NULL)
 			duplicate(ptr);
 		free(dlist);	
+		fs_logger_print();
 		exit(0);
 	}
 	// wait for the child to finish
@@ -458,6 +474,7 @@ void fs_private_home_list(void) {
 		printf("Mount-bind %s on top of %s\n", newhome, homedir);
 	if (mount(newhome, homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	fs_logger2("mount", homedir);
 // preserve mode and ownership
 //	if (chown(homedir, s.st_uid, s.st_gid) == -1)
 //		errExit("mount-bind chown");
@@ -470,6 +487,7 @@ void fs_private_home_list(void) {
 			printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
 			errExit("mounting home directory");
+		fs_logger("mount tmpfs on /root");
 	}
 	else {
 		// mask /home
@@ -477,6 +495,7 @@ void fs_private_home_list(void) {
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
+		fs_logger("mount tmpfs on /home");
 	}
 
 	skel(homedir, u, g);

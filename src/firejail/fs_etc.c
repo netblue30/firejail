@@ -83,6 +83,7 @@ static void duplicate(char *fname) {
 	if (system(cmd))
 		errExit("system cp -a --parents");
 	free(cmd);
+	fs_logger2("clone", fname);
 }
 
 
@@ -108,6 +109,7 @@ void fs_private_etc_list(void) {
 	
 	// copy the list of files in the new etc directory
 	// using a new child process without root privileges
+	fs_logger_print();	// save the current log
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -126,12 +128,14 @@ void fs_private_etc_list(void) {
 		if (!dlist)
 			errExit("strdup");
 	
+
 		char *ptr = strtok(dlist, ",");
 		duplicate(ptr);
 	
 		while ((ptr = strtok(NULL, ",")) != NULL)
 			duplicate(ptr);
 		free(dlist);	
+		fs_logger_print();
 		exit(0);
 	}
 	// wait for the child to finish
@@ -141,6 +145,6 @@ void fs_private_etc_list(void) {
 		printf("Mount-bind %s on top of /etc\n", RUN_ETC_DIR);
 	if (mount(RUN_ETC_DIR, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
-
+	fs_logger("mount /etc");
 }
 

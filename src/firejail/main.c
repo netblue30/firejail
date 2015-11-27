@@ -340,7 +340,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			caps_print_filter_name(argv[i] + 13);
 		exit(0);
 	}
-
+	else if (strncmp(argv[i], "--fs.print=", 11) == 0) {
+		// join sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 11, &pid) == 0)		
+			fs_logger_print_log(pid);
+		else
+			fs_logger_print_log_name(argv[i] + 11);
+		exit(0);
+	}
 	else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;

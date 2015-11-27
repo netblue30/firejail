@@ -56,6 +56,7 @@
 #define RUN_UTMP_FILE		"/run/firejail/mnt/utmp"
 #define RUN_PASSWD_FILE		"/run/firejail/mnt/passwd"
 #define RUN_GROUP_FILE		"/run/firejail/mnt/group"
+#define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
 
 // profiles
 #define DEFAULT_USER_PROFILE	"generic"
@@ -479,6 +480,14 @@ void protocol_filter_load(const char *fname);
 // restrict_users.c
 void restrict_users(void);
 
+// fs_logger.c
+void fs_logger(const char *msg);
+void fs_logger2(const char *msg1, const char *msg2);
+void fs_logger3(const char *msg1, const char *msg2, const char *msg3);
+void fs_logger_print(void);
+void fs_logger_change_owner(void);
+void fs_logger_print_log_name(const char *name);
+void fs_logger_print_log(pid_t pid);
 
 #endif
 

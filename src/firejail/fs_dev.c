@@ -107,6 +107,7 @@ void fs_private_dev(void){
 	// mount tmpfs on top of /dev
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 		errExit("mounting /dev");
+	fs_logger("mount tmpfs on /dev");
 
 	// bring back /dev/log
 	if (have_devlog) {
@@ -116,6 +117,7 @@ void fs_private_dev(void){
 			fclose(fp);
 			if (mount(RUN_DEVLOG_FILE, "/dev/log", NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mounting /dev/log");
+			fs_logger("clone /dev/log");
 		}
 	}		
 
@@ -131,6 +133,7 @@ void fs_private_dev(void){
 			errExit("chmod");
 		if (mount(RUN_DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /dev/dri");
+		fs_logger("clone /dev/dri");
 	}
 	
 	// create /dev/shm
@@ -143,14 +146,21 @@ void fs_private_dev(void){
 		errExit("chown");
 	if (chmod("/dev/shm", 0777) < 0)
 		errExit("chmod");
+	fs_logger("mkdir /dev/shm");
 
 	// create devices
 	create_char_dev("/dev/zero", 0666, 1, 5); // mknod -m 666 /dev/zero c 1 5
+	fs_logger("mknod /dev/zero");
 	create_char_dev("/dev/null", 0666, 1, 3); // mknod -m 666 /dev/null c 1 3
+	fs_logger("mknod /dev/null");
 	create_char_dev("/dev/full", 0666, 1, 7); // mknod -m 666 /dev/full c 1 7
+	fs_logger("mknod /dev/full");
 	create_char_dev("/dev/random", 0666, 1, 8); // Mknod -m 666 /dev/random c 1 8
+	fs_logger("mknod /dev/random");
 	create_char_dev("/dev/urandom", 0666, 1, 9); // mknod -m 666 /dev/urandom c 1 9
+	fs_logger("mknod /dev/urandom");
 	create_char_dev("/dev/tty", 0666,  5, 0); // mknod -m 666 /dev/tty c 5 0
+	fs_logger("mknod /dev/tty");
 #if 0
 	create_dev("/dev/tty0", "mknod -m 666 /dev/tty0 c 4 0");
 	create_dev("/dev/console", "mknod -m 622 /dev/console c 5 1");
@@ -164,11 +174,14 @@ void fs_private_dev(void){
 		errExit("chown");
 	if (chmod("/dev/pts", 0755) < 0)
 		errExit("chmod");
+	fs_logger("mkdir /dev/pts");
 	create_char_dev("/dev/pts/ptmx", 0666, 5, 2); //"mknod -m 666 /dev/pts/ptmx c 5 2");
+	fs_logger("mknod /dev/pts/ptmx");
 	create_link("/dev/pts/ptmx", "/dev/ptmx");
 	// mount -vt devpts -o newinstance -o ptmxmode=0666 devpts //dev/pts
 	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  "newinstance,ptmxmode=0666") < 0)
 		errExit("mounting /dev/pts");
+	fs_logger("mount devpts");
 
 #if 0
 	// stdin, stdout, stderr
@@ -190,6 +203,7 @@ void fs_dev_shm(void) {
 			printf("Mounting tmpfs on /dev/shm\n");
 		if (mount("tmpfs", "/dev/shm", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 			errExit("mounting /dev/shm");
+		fs_logger("mount tmpfs on /dev/shm");
 	}
 	else {
 		char *lnk = realpath("/dev/shm", NULL);
@@ -207,6 +221,7 @@ void fs_dev_shm(void) {
 				printf("Mounting tmpfs on %s on behalf of /dev/shm\n", lnk);
 			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 				errExit("mounting /var/tmp");
+			fs_logger3("mount tmpfs on", lnk, "on behalf of /dev/shm");
 			free(lnk);
 		}
 		else {

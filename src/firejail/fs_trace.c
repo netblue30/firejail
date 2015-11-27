@@ -42,6 +42,7 @@ void fs_trace_preload(void) {
 			errExit("chown");
 		if (chmod("/etc/ld.so.preload", S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
 			errExit("chmod");
+		fs_logger("touch /etc/ls.so.preload");
 	}
 }
 
@@ -68,6 +69,7 @@ void fs_trace(void) {
 		printf("Mount the new ld.so.preload file\n");
 	if (mount(RUN_LDPRELOAD_FILE, "/etc/ld.so.preload", NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind ls.so.preload");
+	fs_logger("create /etc/ls.so.preload");
 }
 
 		

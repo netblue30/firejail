@@ -213,6 +213,7 @@ static void disable_file(OPERATION op, const char *filename) {
 					errExit("disable file");
 			}
 			last_disable = SUCCESSFUL;
+			fs_logger2("blacklist", fname);
 		}
 	}
 	else if (op == MOUNT_READONLY) {
@@ -232,6 +233,7 @@ static void disable_file(OPERATION op, const char *filename) {
 			if (chown(fname, s.st_uid, s.st_gid) == -1)
 				errExit("mounting tmpfs chmod");
 			last_disable = SUCCESSFUL;
+			fs_logger2("mount tmpfs on", fname);
 		}
 		else
 			printf("Warning: %s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
@@ -427,6 +429,7 @@ void fs_rdonly(const char *dir) {
 		// mount --bind -o remount,ro /bin
 		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
 			errExit("mount read-only");
+		fs_logger2("read-only", dir);
 	}
 }
 void fs_rdonly_noexit(const char *dir) {
@@ -444,6 +447,8 @@ void fs_rdonly_noexit(const char *dir) {
 			merr = 1;
 		if (merr)
 			fprintf(stderr, "Warning: cannot mount %s read-only\n", dir); 
+		else
+			fs_logger2("read-only", dir);
 	}
 }
 
@@ -455,6 +460,7 @@ void fs_proc_sys_dev_boot(void) {
 		printf("Remounting /proc and /proc/sys filesystems\n");
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mounting /proc");
+	fs_logger("remount /proc");
 
 	// remount /proc/sys readonly
 	if (mount("/proc/sys", "/proc/sys", NULL, MS_BIND | MS_REC, NULL) < 0)
@@ -462,6 +468,7 @@ void fs_proc_sys_dev_boot(void) {
 
 	if (mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_REC, NULL) < 0)
 		errExit("mounting /proc/sys");
+	fs_logger("read-only /proc/sys");
 
 
 	/* Mount a version of /sys that describes the network namespace */
@@ -471,28 +478,45 @@ void fs_proc_sys_dev_boot(void) {
 		fprintf(stderr, "Warning: failed to unmount /sys\n");
 	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
 		fprintf(stderr, "Warning: failed to mount /sys\n");
+	else
+		fs_logger("remount /sys");
+		
 
 
 	if (arg_debug)
 		printf("Disable /sys/firmware directory\n");
 	if (mount("tmpfs", "/sys/firmware", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		fprintf(stderr, "Warning: cannot disable /sys/firmware directory\n");
+	else
+		fs_logger("mount tmpfs on /sys/firmware");
+		
 	if (arg_debug)
 		printf("Disable /sys/hypervisor directory\n");
 	if (mount("tmpfs", "/sys/hypervisor", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		fprintf(stderr, "Warning: cannot disable /sys/hypervisor directory\n");
+	else
+		fs_logger("mount tmpfs on /sys/hypervisor");
+
 	if (arg_debug)
 		printf("Disable /sys/fs directory\n");
 	if (mount("tmpfs", "/sys/fs", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		fprintf(stderr, "Warning: cannot disable /sys/fs directory\n");
+	else
+		fs_logger("mount tmpfs on /sys/fs");
+
 	if (arg_debug)
 		printf("Disable /sys/module directory\n");
 	if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		fprintf(stderr, "Warning: cannot disable /sys/module directory\n");
+	else
+		fs_logger("mount tmpfs on /sys/module");
+
 	if (arg_debug)
 		printf("Disable /sys/power directory\n");
 	if (mount("tmpfs", "/sys/power", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		fprintf(stderr, "Warning: cannot disable /sys/power directory\n");
+	else
+		fs_logger("mount tmpfs on /sys/power");
 
 
 

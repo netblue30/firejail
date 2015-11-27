@@ -83,7 +83,11 @@ void usage(void) {
 	printf("\t--dns.print=pid - print DNS configuration of the sandbox identified.\n");
 	printf("\t\tby PID.\n\n");
 	
-	printf("\t--env=name=value - set environment variable in the new sandbox\n");
+	printf("\t--env=name=value - set environment variable in the new sandbox\n\n");
+	printf("\t--fs.print=name - print the filesystem log for the sandbox identified\n");
+	printf("\t\tby name.\n\n");
+	printf("\t--fs.print=pid - print the filesystem log  for the sandbox identified\n");
+	printf("\t\tby PID.\n\n");
 	
 	printf("\t--help, -? - this help screen.\n\n");
 	printf("\t--hostname=name - set sandbox hostname.\n\n");

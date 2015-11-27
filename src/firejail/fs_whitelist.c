@@ -119,6 +119,7 @@ static int mkpath(const char* path, mode_t mode) {
 		errExit("strdup");
 
 	char* p;
+	int done = 0;
 	for (p=strchr(file_path+1, '/'); p; p=strchr(p+1, '/')) {
 		*p='\0';
 		if (mkdir(file_path, mode)==-1) {
@@ -133,10 +134,13 @@ static int mkpath(const char* path, mode_t mode) {
 				errExit("chmod");
 			if (chown(file_path, uid, gid) == -1)
 				errExit("chown");
+			done = 1;
 		}			
 
 		*p='/';
 	}
+	if (done)
+		fs_logger2("mkpath", path);
 	
 	free(file_path);
 	return 0;
@@ -225,6 +229,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	
 	// create the path if necessary
 	mkpath(path, s.st_mode);
+	fs_logger2("whitelist", path);
 
 	// process directory
 	if (S_ISDIR(s.st_mode)) {	
@@ -442,6 +447,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /tmp directory\n");
 		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 			errExit("mounting tmpfs on /tmp");
+		fs_logger("mount tmpfs on /tmp");
 	}
 	
 	// /media mountpoint
@@ -463,9 +469,10 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /media directory\n");
 		if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /media");
+		fs_logger("mount tmpfs on /media");
 	}
 
-	// /media mountpoint
+	// /var mountpoint
 	if (var_dir) {
 		// keep a copy of real /var directory in RUN_WHITELIST_VAR_DIR
 		int rv = mkdir(RUN_WHITELIST_VAR_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
@@ -484,6 +491,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /var directory\n");
 		if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /var");
+		fs_logger("mount tmpfs on /var");
 	}
 
 	// /dev mountpoint
@@ -505,6 +513,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /dev directory\n");
 		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /dev");
+		fs_logger("mount tmpfs on /dev");
 	}
 
 	// /opt mountpoint
@@ -526,6 +535,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /opt directory\n");
 		if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /opt");
+		fs_logger("mount tmpfs on /opt");
 	}
 
 	// go through profile rules again, and interpret whitelist commands

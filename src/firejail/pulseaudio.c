@@ -45,6 +45,7 @@ static void disable_file(const char *path, const char *file) {
 		if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
 	}
+	fs_logger2("blacklist", fname);
 
 doexit:
 	free(fname);

@@ -59,40 +59,6 @@ static USER_LIST *ulist_find(const char *user) {
 	return NULL;
 }
 
-static int mkpath(const char* path) {
-	assert(path && *path);
-	
-	// work on a copy of the path
-	char *file_path = strdup(path);
-	if (!file_path)
-		errExit("strdup");
-
-	char* p;
-	for (p=strchr(file_path+1, '/'); p; p=strchr(p+1, '/')) {
-		*p='\0';
-		if (mkdir(file_path, 0755)==-1) {
-			if (errno != EEXIST) {
-				*p='/';
-				free(file_path);
-				return -1;
-			}
-		}
-		else {
-			if (chmod(file_path, 0755) == -1)
-				errExit("chmod");
-			if (chown(file_path, 0, 0) == -1)
-				errExit("chown");
-		}			
-
-		*p='/';
-	}
-	
-	free(file_path);
-	return 0;
-}
-
-
-
 static void sanitize_home(void) {
 	assert(getuid() != 0);	// this code works only for regular users
 	
@@ -117,6 +83,7 @@ static void sanitize_home(void) {
 	// mount tmpfs in the new home
 	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
+	fs_logger("mount tmpfs on /home");
 
 	// create user home directory
 	if (mkdir(cfg.homedir, 0755) == -1) {
@@ -125,6 +92,7 @@ static void sanitize_home(void) {
 		if (mkdir(cfg.homedir, 0755) == -1)
 			errExit("mkdir");
 	}
+	fs_logger2("mkdir", cfg.homedir);
 	
 	// set mode and ownership
 	if (chown(cfg.homedir, s.st_uid, s.st_gid) == -1)
@@ -218,6 +186,7 @@ static void sanitize_passwd(void) {
 	// mount-bind tne new password file
 	if (mount(RUN_PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
+	fs_logger("create /etc/passwd");
 	
 	return;	
 	
@@ -344,6 +313,7 @@ static void sanitize_group(void) {
 	// mount-bind tne new group file
 	if (mount(RUN_GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
+	fs_logger("create /etc/group");
 	
 	return;	
 	
@@ -367,6 +337,7 @@ void restrict_users(void) {
 			// mount tmpfs on top of /home in order to hide it
 			if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mount tmpfs");
+			fs_logger("mount tmpfs on /home");
 		}
 		sanitize_passwd();
 		sanitize_group();

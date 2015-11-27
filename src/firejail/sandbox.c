@@ -271,6 +271,7 @@ int sandbox(void* sandbox_arg) {
 	if (mount(NULL, "/", NULL, MS_SLAVE | MS_REC, NULL) < 0) {
 		chk_chroot();
 	}
+	fs_logger("install mount namespace");
 	
 	//****************************
 	// netfilter etc.
@@ -400,7 +401,7 @@ int sandbox(void* sandbox_arg) {
 		pulseaudio_disable();
 	else
 		pulseaudio_init();
-
+	
 	//****************************
 	// networking
 	//****************************
@@ -468,6 +469,8 @@ int sandbox(void* sandbox_arg) {
 	
 	// if any dns server is configured, it is time to set it now
 	fs_resolvconf();
+	fs_logger_print();
+	fs_logger_change_owner();
 
 	// print network configuration
 	if (!arg_quiet) {

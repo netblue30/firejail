@@ -139,3 +139,11 @@ drwxr-xr-x 3   65534   65534   60 Nov 25 08:09 ..
 -rw-r--r-- 1 netblue netblue 3392 Nov 25 08:09 .bashrc
 dr-x------ 2   65534   65534   40 Nov 24 17:53 .mozilla
 -rw------- 1 netblue netblue   51 Nov 25 08:09 .Xauthority
+
+
+19. move from tmpfs to blacklist
+mount tmpfs on /sys/firmware
+mount tmpfs on /sys/hypervisor
+mount tmpfs on /sys/fs
+mount tmpfs on /sys/module
+mount tmpfs on /sys/power

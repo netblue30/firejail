@@ -338,6 +338,35 @@ Example:
 $ firejail \-\-env=LD_LIBRARY_PATH=/opt/test/lib
 
 .TP
+\fB\-\-fs.print=name
+Print the filesystem log for the sandbox identified by name.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-name=mygame \-\-caps.drop=all warzone2100 &
+.br
+[...]
+.br
+$ firejail \-\-fs.print=mygame
+
+.TP
+\fB\-\-fs.print=pid
+Print the filesystem log for a sandbox identified by PID.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-list
+.br
+3272:netblue:firejail \-\-private firefox
+.br
+$ firejail \-\-fs.print=3272
+
+
+.TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.
 

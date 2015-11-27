@@ -51,6 +51,7 @@ void fs_hostname(const char *hostname) {
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_HOSTNAME_FILE, "/etc/hostname", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind /etc/hostname");
+		fs_logger("create /etc/hostname");
 	}
 	
 	// create a new /etc/hosts
@@ -98,13 +99,14 @@ void fs_hostname(const char *hostname) {
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_HOSTS_FILE, "/etc/hosts", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind /etc/hosts");
+		fs_logger("create /etc/hosts");
 	}
 }
 
 void fs_resolvconf(void) {
 	if (cfg.dns1 == 0)
 		return;
-		
+
 	struct stat s;
 	fs_build_mnt_dir();
 	
@@ -135,6 +137,7 @@ void fs_resolvconf(void) {
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_RESOLVCONF_FILE, "/etc/resolv.conf", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind /etc/resolv.conf");
+		fs_logger("create /etc/resolv.conf");
 	}
 	else {
 		fprintf(stderr, "Error: cannot set DNS servers, /etc/resolv.conf file is missing\n");

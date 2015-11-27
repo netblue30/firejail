@@ -143,6 +143,7 @@ static void duplicate(char *fname) {
 			printf("%s\n", cmd);
 		if (system(cmd))
 			errExit("system cp -a");
+		fs_logger2("clone", fname);
 		free(cmd);
 		free(actual_path);
 	}
@@ -176,8 +177,10 @@ void fs_private_bin_list(void) {
 	if (chmod(RUN_BIN_DIR, 0755) < 0)
 		errExit("chmod");
 	
+	
 	// copy the list of files in the new etc directory
 	// using a new child process without root privileges
+	fs_logger_print();	// save the current log
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -196,12 +199,14 @@ void fs_private_bin_list(void) {
 		if (!dlist)
 			errExit("strdup");
 	
+	
 		char *ptr = strtok(dlist, ",");
 		duplicate(ptr);
 	
 		while ((ptr = strtok(NULL, ",")) != NULL)
 			duplicate(ptr);
 		free(dlist);	
+		fs_logger_print();
 		exit(0);
 	}
 	// wait for the child to finish
@@ -214,6 +219,7 @@ void fs_private_bin_list(void) {
 			printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
 		if (mount(RUN_BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
+		fs_logger2("mount", paths[i]);
 		i++;
 	}
 }

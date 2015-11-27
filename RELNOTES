@@ -1,5 +1,5 @@
 firejail (0.9.35) baseline; urgency=low
-  * added  unbound and dnscrypt-proxy profiles
+  * added  unbound, dnscrypt-proxy, and BitlBee profiles
   * added --noblacklist option
   * whitelist command enhancements
   * prevent leaking user information by modifying /home directory,

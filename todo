@@ -147,3 +147,6 @@ mount tmpfs on /sys/hypervisor
 mount tmpfs on /sys/fs
 mount tmpfs on /sys/module
 mount tmpfs on /sys/power
+
+20. Try --overlay on a Ubuntu 14.04 32bit.Without adding --dns, there will be no network connectivity - see issue 151
+

@@ -1214,7 +1214,13 @@ int main(int argc, char **argv) {
 			errExit("malloc");
 		char *ptr = cfg.command_line;
 		for (i = 0; i < argcnt; i++) {
-			sprintf(ptr, "\"%s\" ", argv[i + prog_index]);
+			// detect bash commands
+			if (strstr(argv[i + prog_index], "&&") || strstr(argv[i + prog_index], "||")) {
+				sprintf(ptr, "%s ", argv[i + prog_index]);
+			}
+			else {
+				sprintf(ptr, "\"%s\" ", argv[i + prog_index]);
+			}
 			ptr += strlen(ptr);
 		}
 	}

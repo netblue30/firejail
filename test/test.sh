@@ -287,14 +287,14 @@ else
 	echo "TESTING: weechat not found"
 fi
 
-#which wine
-#if [ "$?" -eq 0 ];
-#then
-#	echo "TESTING: wine"
-#	./wine.exp
-#else
-#	echo "TESTING: wine not found"
-#fi
+which wine
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: wine"
+	./wine.exp
+else
+	echo "TESTING: wine not found"
+fi
 
 
 

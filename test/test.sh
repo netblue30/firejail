@@ -260,6 +260,41 @@ else
 	echo "TESTING: gnome-mplayer not found"
 fi
 
+which xchat
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: xchat"
+	./xchat.exp
+else
+	echo "TESTING: xchat not found"
+fi
+
+which hexchat
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: hexchat"
+	./hexchat.exp
+else
+	echo "TESTING: hexchat not found"
+fi
+
+which weechat-curses
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: weechat"
+	./weechat.exp
+else
+	echo "TESTING: weechat not found"
+fi
+
+#which wine
+#if [ "$?" -eq 0 ];
+#then
+#	echo "TESTING: wine"
+#	./wine.exp
+#else
+#	echo "TESTING: wine not found"
+#fi
 
 
 

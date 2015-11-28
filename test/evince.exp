@@ -13,7 +13,7 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
 }
-sleep 10
+sleep 3
 
 spawn $env(SHELL)
 send -- "firejail --list\r"

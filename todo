@@ -150,3 +150,15 @@ mount tmpfs on /sys/power
 
 20. Try --overlay on a Ubuntu 14.04 32bit.Without adding --dns, there will be no network connectivity - see issue 151
 
+21. Check this out:
+
+I was messing around with my fstab, and found out that firejail can't have /usr/bin mounted in read-only.
+ Here's what my fstab looks like now:
+ 
+/dev/mapper/asdf-home /home ext4 nosuid,noatime,nodev 0 2
+/dev/mapper/asdf-opt /opt ext4 discard,noatime,nosuid 0 2
+/dev/mapper/asdf-usr--bin /usr/bin ext4 defaults,nosuid,noatime,rw 0 2
+/dev/mapper/asdf-usr--local /usr/local ext4 defaults,nosuid,noatime,ro 0 2
+/dev/mapper/asdf-usr--sbin /usr/sbin ext4 defaults,nosuid,,noatime,ro 0 2
+/dev/mapper/asdf-var /var ext4 discard,noatime,nodev,nosuid 0 2
+tmpfs /tmp tmpfs noatime,nosuid,nodev,size=2G 0 1

@@ -4,10 +4,10 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail vlc\r"
+send -- "firejail xchat\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/vlc.profile"
+	"Reading profile /etc/firejail/xchat.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -23,10 +23,9 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"vlc"
+	"xchat"
 }
 sleep 1
-
 send -- "firejail --name=blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -38,7 +37,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	":firejail vlc"
+	" xchat"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -52,7 +51,7 @@ sleep 1
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail vlc"
+	" xchat"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
@@ -68,5 +67,5 @@ expect {
 }
 sleep 1
 
-puts "\nall done\n"
+puts "\n"
 

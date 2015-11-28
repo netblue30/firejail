@@ -46,3 +46,5 @@
 /etc/firejail/webserver.net
 /etc/firejail/bitlbee.profile
 /etc/firejail/weechat.profile
+/etc/firejail/weechat-curses.profile
+/etc/firejail/hexchat.profile

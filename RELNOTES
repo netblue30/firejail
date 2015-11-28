@@ -1,5 +1,5 @@
 firejail (0.9.35) baseline; urgency=low
-  * added  unbound, dnscrypt-proxy, BitlBee, and WeeChat profiles
+  * added  unbound, dnscrypt-proxy, BitlBee, HexChat and WeeChat profiles
   * added --noblacklist option
   * whitelist command enhancements
   * prevent leaking user information by modifying /home directory,

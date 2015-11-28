@@ -38,6 +38,7 @@ blacklist ${HOME}/.remmina
 # Other
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.FBReader
+blacklist ${HOME}/.wine
 
 # X11 session autostart
 blacklist ${HOME}/.xinitrc

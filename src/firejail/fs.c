@@ -482,42 +482,25 @@ void fs_proc_sys_dev_boot(void) {
 		
 
 
-	if (arg_debug)
-		printf("Disable /sys/firmware directory\n");
-	if (mount("tmpfs", "/sys/firmware", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		fprintf(stderr, "Warning: cannot disable /sys/firmware directory\n");
-	else
-		fs_logger("mount tmpfs on /sys/firmware");
+	if (stat("/sys/firmware", &s) == 0) {
+		disable_file(BLACKLIST_FILE, "/sys/firmware");
+	}
 		
-	if (arg_debug)
-		printf("Disable /sys/hypervisor directory\n");
-	if (mount("tmpfs", "/sys/hypervisor", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		fprintf(stderr, "Warning: cannot disable /sys/hypervisor directory\n");
-	else
-		fs_logger("mount tmpfs on /sys/hypervisor");
+	if (stat("/sys/hypervisor", &s) == 0) {
+		disable_file(BLACKLIST_FILE, "/sys/hypervisor");
+	}
 
-	if (arg_debug)
-		printf("Disable /sys/fs directory\n");
-	if (mount("tmpfs", "/sys/fs", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		fprintf(stderr, "Warning: cannot disable /sys/fs directory\n");
-	else
-		fs_logger("mount tmpfs on /sys/fs");
+	if (stat("/sys/fs", &s) == 0) {
+		disable_file(BLACKLIST_FILE, "/sys/fs");
+	}
 
-	if (arg_debug)
-		printf("Disable /sys/module directory\n");
-	if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		fprintf(stderr, "Warning: cannot disable /sys/module directory\n");
-	else
-		fs_logger("mount tmpfs on /sys/module");
+	if (stat("/sys/module", &s) == 0) {
+		disable_file(BLACKLIST_FILE, "/sys/module");
+	}
 
-	if (arg_debug)
-		printf("Disable /sys/power directory\n");
-	if (mount("tmpfs", "/sys/power", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		fprintf(stderr, "Warning: cannot disable /sys/power directory\n");
-	else
-		fs_logger("mount tmpfs on /sys/power");
-
-
+	if (stat("/sys/power", &s) == 0) {
+		disable_file(BLACKLIST_FILE, "/sys/power");
+	}
 
 //	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
 //		errExit("mounting /sys");

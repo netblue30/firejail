@@ -385,7 +385,6 @@ void fs_blacklist(void) {
 		ptr = new_name;
 
 		// expand path macro - look for the file in /bin, /usr/bin, /sbin and  /usr/sbin directories
-		// TODO: should we look for more bin paths?
 		if (ptr) {
 			if (strncmp(ptr, "${PATH}", 7) == 0) {
 				char *fname = ptr + 7;

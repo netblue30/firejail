@@ -172,7 +172,7 @@ void netstats(void) {
 		// set pid table
 		int i;
 		int itv = 5; 	// 5 second  interval
-		pid_read(0);	// todo: preserve the last calculation if any, so we don't have to do get_stats()
+		pid_read(0);
 
 		// start rx/tx measurements
 		for (i = 0; i < max_pids; i++) {

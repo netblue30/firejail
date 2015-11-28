@@ -1201,7 +1201,6 @@ int main(int argc, char **argv) {
 	}
 	else {
 		// calculate the length of the command
-		// TODO: escape the '"' characters, and possibly others like '\' and '!' if they can cause problems
 		int i;
 		int len = 0;
 		int argcnt = argc - prog_index;

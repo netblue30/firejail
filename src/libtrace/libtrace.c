@@ -511,7 +511,7 @@ int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 	return rv;
 }
 
-#if 0 //todo: fix compilation problems
+#if 0
 typedef int (*orig_accept_t)(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 static orig_accept_t orig_accept = NULL;
 int accept(int sockfd, struct sockaddr *addr, socklen_t addrlen) {

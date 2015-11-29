@@ -10,6 +10,12 @@ blacklist /usr/bin/c++*
 blacklist /usr/bin/ld
 blacklist /usr/bin/gdb
 
+# clang/llvm
+blacklist /usr/bin/clang*
+blacklist /usr/bin/llvm*
+blacklist /usb/bin/lldb*
+blacklist /usr/lib/llvm*
+
 # Valgrind
 blacklist /usr/bin/valgrind*
 blacklist /usr/lib/valgrind

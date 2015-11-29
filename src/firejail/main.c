@@ -765,7 +765,8 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			// ... and configure it
-			cfg.profile_ignore[j] = argv[i] + 9;
+			else
+				cfg.profile_ignore[j] = argv[i] + 9;
 		}
 #ifdef HAVE_CHROOT		
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {

@@ -93,7 +93,9 @@ int profile_check_line(char *ptr, int lineno) {
 			exit(1);
 		}
 		// ... and configure it
-		cfg.profile_ignore[j] = str;
+		else 
+			cfg.profile_ignore[j] = str;
+
 		return 0;
 	}
 

@@ -121,6 +121,7 @@ static void sanitize_passwd(void) {
 	fs_build_mnt_dir();
 
 	// open files
+	/* coverity[toctou] */
 	fpin = fopen("/etc/passwd", "r");
 	if (!fpin)
 		goto errout;
@@ -253,6 +254,7 @@ static void sanitize_group(void) {
 	fs_build_mnt_dir();
 
 	// open files
+	/* coverity[toctou] */
 	fpin = fopen("/etc/group", "r");
 	if (!fpin)
 		goto errout;

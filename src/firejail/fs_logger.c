@@ -163,6 +163,7 @@ void fs_logger_print_log(pid_t pid) {
 		exit(1);
 	}
 
+	/* coverity[toctou] */
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
 		printf("Cannot open filesystem log.\n");

@@ -582,6 +582,9 @@ void fs_whitelist(void) {
 			errExit("mount tmpfs");
 	}
 
+	if (new_name)
+		free(new_name);
+		
 	return;
 
 errexit:

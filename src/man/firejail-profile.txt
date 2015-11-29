@@ -105,11 +105,11 @@ Examples:
 \f\blacklist /usr/bin
 Remove /usr/bin directory.
 .TP
-\f\blacklist /etc/password
-Remove /etc/password file.
+\f\blacklist /etc/passwd
+Remove /etc/passwd file.
 .TP
-\f\read-only /etc/password
-Read-only /etc/password file.
+\f\read-only /etc/passwd
+Read-only /etc/passwd file.
 .TP
 tmpfs /etc
 Mount an empty tmpfs filesystem on top of /etc directory.
@@ -175,11 +175,11 @@ Enable default Linux capabilities filter.
 caps.drop all
 Blacklist all Linux capabilities.
 .TP
-caps.keep capability,capability,capability
-Blacklist Linux capabilities filter.
-.TP
 caps.drop capability,capability,capability
-Whitelist Linux capabilities filter.
+Blacklist given Linux capabilities.
+.TP
+caps.keep capability,capability,capability
+Whitelist given Linux capabilities.
 .TP
 \f\seccomp
 Enable default seccomp filter.  The default list is as follows:

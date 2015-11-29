@@ -221,6 +221,12 @@ int profile_check_line(char *ptr, int lineno) {
 			exit(1);
 		return 0;
 	}
+
+	// hostname
+	if (strncmp(ptr, "hostname ", 9) == 0) {
+		cfg.hostname = ptr + 9;
+		return 0;
+	}
 	
 	// dns
 	if (strncmp(ptr, "dns ", 4) == 0) {

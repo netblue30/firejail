@@ -390,8 +390,10 @@ void fs_whitelist(void) {
 		// mark symbolic links
 		if (is_link(new_name))
 			entry->link = new_name;
-		else
+		else {
 			free(new_name);
+			new_name = NULL;
+		}
 
 		// change file name in entry->data
 		if (strcmp(fname, entry->data + 10) != 0) {

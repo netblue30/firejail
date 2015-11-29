@@ -138,8 +138,8 @@ void net_set_mtu(const char *ifname, int mtu) {
 	ifr.ifr_addr.sa_family = AF_INET;
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	ifr.ifr_mtu = mtu;
-	if (ioctl(s, SIOCSIFMTU, (caddr_t)&ifr) == 0)
-		mtu = ifr.ifr_mtu;
+	if (ioctl(s, SIOCSIFMTU, (caddr_t)&ifr) != 0)
+		fprintf(stderr, "Warning: cannot set mtu for interface %s\n", ifname);
 	close(s);
 }
 

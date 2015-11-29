@@ -490,9 +490,9 @@ int socket(int domain, int type, int protocol) {
 
 	str = translate(socket_protocol, protocol);
 	if (str == NULL)
-		ptr += sprintf(ptr, "%d", protocol);
+		sprintf(ptr, "%d", protocol);
 	else
-		ptr += sprintf(ptr, "%s", str);
+		sprintf(ptr, "%s", str);
 
 	printf("%s\n", buf);
 	return rv;

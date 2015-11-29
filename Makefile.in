@@ -184,3 +184,9 @@ deb: dist
 extras: all
 	$(MAKE) -C extras/firetools
 	
+cppcheck: clean
+	cppcheck --force .
+
+scan-build: clean
+	scan-build make
+

@@ -47,7 +47,7 @@ Linux programs, such as Mozilla Firefox, Chromium, VLC, Transmission etc.
 Without any options, the sandbox consists of a chroot filesystem build in a new mount namespace,
 and new PID and UTS namespaces. IPC, network and user namespaces can be added using the command line options.
 The default Firejail filesystem is based on the host filesystem with the main directories mounted read-only.
-Only /home, /tmp and /var directories are writable.
+Only /home and /tmp are writable.
 .PP
 As it starts up, Firejail tries to find a security profile based on the name of the application.
 If an appropriate profile is not found, Firejail will use a default profile.

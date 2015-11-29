@@ -280,6 +280,10 @@ really need network access.
 dns address
 Set a DNS server for the sandbox. Up to three DNS servers can be defined.
 
+.TP
+hostname name
+Set a hostname for the sandbox.
+
 
 .SH FILES
 /etc/firejail/filename.profile, $HOME/.config/firejail/filename.profile

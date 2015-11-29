@@ -13,4 +13,4 @@ blacklist ${PATH}/evtest
 blacklist ${PATH}/xev
 blacklist ${PATH}/strace
 blacklist ${PATH}/nc
-
+blacklist ${PATH}/ncat

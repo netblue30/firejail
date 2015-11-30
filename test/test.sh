@@ -179,6 +179,15 @@ else
 	echo "TESTING: chromium not found"
 fi
 
+which google-chrome
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: google-chrome"
+	./chromium.exp
+else
+	echo "TESTING: google-chrome not found"
+fi
+
 which opera
 if [ "$?" -eq 0 ];
 then

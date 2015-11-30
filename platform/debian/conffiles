@@ -48,3 +48,4 @@
 /etc/firejail/weechat.profile
 /etc/firejail/weechat-curses.profile
 /etc/firejail/hexchat.profile
+/etc/firejail/rtorrent.profile

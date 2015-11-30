@@ -19,7 +19,8 @@ Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
 avoidr (https://github.com/avoidr)
-	- blacklist ncat
+	- blacklist ncat, manpage fixes,
+	- hostname support in profile file
 Peter Hogg (https://github.com/pigmonkey)
 	- WeeChat profile
 rogshdo (https://github.com/rogshdo)

@@ -86,6 +86,7 @@ realinstall:
 	install -c -m 0644 .etc/chromium.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/google-chrome.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/google-chrome-stable.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/google-chrome-beta.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/disable-mgmt.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/disable-secret.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/disable-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.

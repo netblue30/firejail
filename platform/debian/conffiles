@@ -4,6 +4,7 @@
 /etc/firejail/chromium-browser.profile
 /etc/firejail/google-chrome.profile
 /etc/firejail/google-chrome-stable.profile
+/etc/firejail/google-chrome-beta.profile
 /etc/firejail/midori.profile
 /etc/firejail/icedove.profile
 /etc/firejail/iceweasel.profile

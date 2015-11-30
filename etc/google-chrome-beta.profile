@@ -1,3 +1,4 @@
 # Chromium browser profile
-include /etc/firejail/chromium.profile
-
+noblacklist ${HOME}/.config/google-chrome-beta
+whitelist ~/.config/google-chrome-beta
+include /etc/firejail/chromium-common.profile

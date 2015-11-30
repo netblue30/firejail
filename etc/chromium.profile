@@ -1,6 +1,7 @@
 # Chromium browser profile
 noblacklist ${HOME}/.config/chromium
 noblacklist ${HOME}/.config/google-chrome
+noblacklist ${HOME}/.config/google-chrome-beta
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
@@ -13,5 +14,6 @@ netfilter
 whitelist ${DOWNLOADS}
 whitelist ~/.config/chromium
 whitelist ~/.config/google-chrome
+whitelist ~/.config/google-chrome-beta
 include /etc/firejail/whitelist-common.inc
 

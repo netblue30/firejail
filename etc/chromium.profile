@@ -2,6 +2,7 @@
 noblacklist ${HOME}/.config/chromium
 noblacklist ${HOME}/.config/google-chrome
 noblacklist ${HOME}/.config/google-chrome-beta
+noblacklist ${HOME}/.config/google-chrome-unstable
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
@@ -15,5 +16,6 @@ whitelist ${DOWNLOADS}
 whitelist ~/.config/chromium
 whitelist ~/.config/google-chrome
 whitelist ~/.config/google-chrome-beta
+whitelist ~/.config/google-chrome-unstable
 include /etc/firejail/whitelist-common.inc
 

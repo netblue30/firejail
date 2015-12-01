@@ -93,6 +93,7 @@ realinstall:
 	install -c -m 0644 .etc/disable-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/dropbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/opera.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/opera-beta.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/thunderbird.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/transmission-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/transmission-qt.profile $(DESTDIR)/$(sysconfdir)/firejail/.

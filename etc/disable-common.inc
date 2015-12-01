@@ -11,8 +11,11 @@ blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/opera
+blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/chromium
 blacklist ${HOME}/.config/google-chrome
+blacklist ${HOME}/.config/google-chrome-beta
+blacklist ${HOME}/.config/google-chrome-unstable
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.local/share/systemd

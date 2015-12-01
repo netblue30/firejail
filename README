@@ -27,6 +27,7 @@ avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- blacklist ncat, manpage fixes,
 	- hostname support in profile file
+	- Google Chrome profile rework
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix

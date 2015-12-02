@@ -15,12 +15,12 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Disable /bin/rmdir" {puts "Most Linux platforms\n"}
-        "Disable /usr/bin/rmdir" { puts "OpenSUSE platform\n"}
+	"Mounting a new /home directory"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Mounting a new /home directory"
+	"Disable /bin/rmdir" {puts "Most Linux platforms\n"}
+	"Disable /usr/bin/rmdir" { puts "OpenSUSE platform\n"}
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -44,4 +44,4 @@ expect {
 }
 
 sleep 1
-puts "\n"
+puts "\nall done\n"

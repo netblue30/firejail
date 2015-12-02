@@ -265,12 +265,19 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	//****************************
-	// mount namespace
+	// mount namespace and log filesystem type
 	//****************************
 	// mount events are not forwarded between the host the sandbox
 	if (mount(NULL, "/", NULL, MS_SLAVE | MS_REC, NULL) < 0) {
 		chk_chroot();
 	}
+	// log filesystem type
+	if (cfg.chrootdir)
+		fs_logger("chroot filesystem");
+	else if (arg_overlay)	
+		fs_logger("overlay filesystem");
+	else
+		fs_logger("local filesystem");
 	fs_logger("install mount namespace");
 	
 	//****************************
@@ -297,7 +304,6 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// configure filesystem
 	//****************************
-	
 #ifdef HAVE_CHROOT		
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
@@ -354,17 +360,6 @@ int sandbox(void* sandbox_arg) {
 	}
 	
 	//****************************
-	// apply the profile file
-	//****************************
-	if (cfg.profile) {
-		// apply all whitelist commands ... 
-		fs_whitelist();
-		
-		// ... followed by blacklist commands
-		fs_blacklist();
-	}
-	
-	//****************************
 	// private mode
 	//****************************
 	if (arg_private) {
@@ -382,6 +377,17 @@ int sandbox(void* sandbox_arg) {
 		fs_private_etc_list();
 	if (arg_private_bin)
 		fs_private_bin_list();
+	
+	//****************************
+	// apply the profile file
+	//****************************
+	if (cfg.profile) {
+		// apply all whitelist commands ... 
+		fs_whitelist();
+		
+		// ... followed by blacklist commands
+		fs_blacklist();
+	}
 	
 	//****************************
 	// install trace

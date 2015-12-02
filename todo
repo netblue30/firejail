@@ -144,3 +144,24 @@ dr-x------ 2   65534   65534   40 Nov 24 17:53 .mozilla
 19. Try --overlay on a Ubuntu 14.04 32bit.Without adding --dns, there will be no network connectivity - see issue 151
 
 20. blacklist ~/.cache in disable-common.inc???
+
+21. restrict chars in filenames
+
+try to open url-encoded filenames
+
+const char badChars[] = "-\n\r ,;'\\<\""; 
+(https://www.securecoding.cert.org/confluence/display/c/MSC09-C.+Character+encoding%3A+Use+subset+of+ASCII+for+safety)
+
+strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "=", "+", "[", "{", "]",
+                       "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;",
+                       "—", "–", ",", "<", ".", ">", "/", "?");
+(https://github.com/vito/chyrp/blob/35c646dda657300b345a233ab10eaca7ccd4ec10/includes/helpers.php#L516)
+
+$special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
+(wordpress)
+
+rework the calls to invalid_filename(), depending if globing is allowed or not, include * in the list for non-globing files
+
+The POSIX standard defines what a “portable filename” is. This turns out to be just A-Z, a-z, 0-9, <period>, <underscore>, and <hyphen>
+http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_276
+

@@ -228,26 +228,26 @@ static char *translate(XTable *table, int val) {
 	return NULL;
 }
 
-static void print_sockaddr(const char *call, const struct sockaddr *addr) {
+static void print_sockaddr(const char *call, const struct sockaddr *addr, int rv) {
 	if (addr->sa_family == AF_INET) {
 		struct sockaddr_in *a = (struct sockaddr_in *) addr;
-		printf("%u:%s:%s %s:%u\n", pid(), name(), call, inet_ntoa(a->sin_addr), ntohs(a->sin_port));
+		printf("%u:%s:%s %s port %u:%d\n", pid(), name(), call, inet_ntoa(a->sin_addr), ntohs(a->sin_port), rv);
 	}
 	else if (addr->sa_family == AF_INET6) {
 		struct sockaddr_in6 *a = (struct sockaddr_in6 *) addr;
 		char str[INET6_ADDRSTRLEN];
 		inet_ntop(AF_INET6, &(a->sin6_addr), str, INET6_ADDRSTRLEN);
-		printf("%u:%s:%s %s\n", pid(), name(), call, str);
+		printf("%u:%s:%s %s:%d\n", pid(), name(), call, str, rv);
 	}
 	else if (addr->sa_family == AF_UNIX) {
 		struct sockaddr_un *a = (struct sockaddr_un *) addr;
 		if (a->sun_path[0])
-			printf("%u:%s:%s %s\n", pid(), name(), call, a->sun_path);
+			printf("%u:%s:%s %s:%d\n", pid(), name(), call, a->sun_path, rv);
 		else
-			printf("%u:%s:%s @%s\n", pid(), name(), call, a->sun_path + 1);
+			printf("%u:%s:%s @%s:%d\n", pid(), name(), call, a->sun_path + 1, rv);
 	}
 	else {
-		printf("%u:%s:%s family %d\n", pid(), name(), call, addr->sa_family);
+		printf("%u:%s:%s family %d:%d\n", pid(), name(), call, addr->sa_family, rv);
 	}
 }
 
@@ -263,7 +263,7 @@ int open(const char *pathname, int flags, mode_t mode) {
 		orig_open = (orig_open_t)dlsym(RTLD_NEXT, "open");
 		
 	int rv = orig_open(pathname, flags, mode);
-	printf("%u:%s:open %s\n", pid(), name(), pathname);
+	printf("%u:%s:open %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -274,7 +274,7 @@ int open64(const char *pathname, int flags, mode_t mode) {
 		orig_open64 = (orig_open64_t)dlsym(RTLD_NEXT, "open64");
 		
 	int rv = orig_open64(pathname, flags, mode);
-	printf("%u:%s:open64 %s\n", pid(), name(), pathname);
+	printf("%u:%s:open64 %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -286,7 +286,7 @@ int openat(int dirfd, const char *pathname, int flags, mode_t mode) {
 		orig_openat = (orig_openat_t)dlsym(RTLD_NEXT, "openat");
 		
 	int rv = orig_openat(dirfd, pathname, flags, mode);
-	printf("%u:%s:openat %s\n", pid(), name(), pathname);
+	printf("%u:%s:openat %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -297,7 +297,7 @@ int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 		orig_openat64 = (orig_openat64_t)dlsym(RTLD_NEXT, "openat64");
 		
 	int rv = orig_openat64(dirfd, pathname, flags, mode);
-	printf("%u:%s:openat64 %s\n", pid(), name(), pathname);
+	printf("%u:%s:openat64 %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -308,7 +308,7 @@ FILE *fopen(const char *pathname, const char *mode) {
 		orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
 		
 	FILE *rv = orig_fopen(pathname, mode);
-	printf("%u:%s:fopen %s\n", pid(), name(), pathname);
+	printf("%u:%s:fopen %s:%p\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -318,7 +318,7 @@ FILE *fopen64(const char *pathname, const char *mode) {
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
 		
 	FILE *rv = orig_fopen64(pathname, mode);
-	printf("%u:%s:fopen64 %s\n", pid(), name(), pathname);
+	printf("%u:%s:fopen64 %s:%p\n", pid(), name(), pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -332,7 +332,7 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 		orig_freopen = (orig_freopen_t)dlsym(RTLD_NEXT, "freopen");
 		
 	FILE *rv = orig_freopen(pathname, mode, stream);
-	printf("%u:%s:freopen %s\n", pid(), name(), pathname);
+	printf("%u:%s:freopen %s:%p\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -344,7 +344,7 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 		orig_freopen64 = (orig_freopen64_t)dlsym(RTLD_NEXT, "freopen64");
 		
 	FILE *rv = orig_freopen64(pathname, mode, stream);
-	printf("%u:%s:freopen64 %s\n", pid(), name(), pathname);
+	printf("%u:%s:freopen64 %s:%p\n", pid(), name(), pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -357,7 +357,7 @@ int unlink(const char *pathname) {
 		orig_unlink = (orig_unlink_t)dlsym(RTLD_NEXT, "unlink");
 		
 	int rv = orig_unlink(pathname);
-	printf("%u:%s:unlink %s\n", pid(), name(), pathname);
+	printf("%u:%s:unlink %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -368,7 +368,7 @@ int unlinkat(int dirfd, const char *pathname, int flags) {
 		orig_unlinkat = (orig_unlinkat_t)dlsym(RTLD_NEXT, "unlinkat");
 		
 	int rv = orig_unlinkat(dirfd, pathname, flags);
-	printf("%u:%s:unlinkat %s\n", pid(), name(), pathname);
+	printf("%u:%s:unlinkat %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -380,7 +380,7 @@ int mkdir(const char *pathname, mode_t mode) {
 		orig_mkdir = (orig_mkdir_t)dlsym(RTLD_NEXT, "mkdir");
 		
 	int rv = orig_mkdir(pathname, mode);
-	printf("%u:%s:mkdir %s\n", pid(), name(), pathname);
+	printf("%u:%s:mkdir %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -391,7 +391,7 @@ int mkdirat(int dirfd, const char *pathname, mode_t mode) {
 		orig_mkdirat = (orig_mkdirat_t)dlsym(RTLD_NEXT, "mkdirat");
 		
 	int rv = orig_mkdirat(dirfd, pathname, mode);
-	printf("%u:%s:mkdirat %s\n", pid(), name(), pathname);
+	printf("%u:%s:mkdirat %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -402,7 +402,7 @@ int rmdir(const char *pathname) {
 		orig_rmdir = (orig_rmdir_t)dlsym(RTLD_NEXT, "rmdir");
 		
 	int rv = orig_rmdir(pathname);
-	printf("%u:%s:rmdir %s\n", pid(), name(), pathname);
+	printf("%u:%s:rmdir %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -414,7 +414,7 @@ int stat(const char *pathname, struct stat *buf) {
 		orig_stat = (orig_stat_t)dlsym(RTLD_NEXT, "stat");
 			
 	int rv = orig_stat(pathname, buf);
-	printf("%u:%s:stat %s\n", pid(), name(), pathname);
+	printf("%u:%s:stat %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -426,7 +426,7 @@ int stat64(const char *pathname, struct stat64 *buf) {
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat");
 			
 	int rv = orig_stat64(pathname, buf);
-	printf("%u:%s:stat %s\n", pid(), name(), pathname);
+	printf("%u:%s:stat %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -440,7 +440,7 @@ int access(const char *pathname, int mode) {
 		orig_access = (orig_access_t)dlsym(RTLD_NEXT, "access");
 			
 	int rv = orig_access(pathname, mode);
-	printf("%u:%s:access %s\n", pid(), name(), pathname);
+	printf("%u:%s:access %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 
@@ -453,7 +453,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 		orig_connect = (orig_connect_t)dlsym(RTLD_NEXT, "connect");
 			
  	int rv = orig_connect(sockfd, addr, addrlen);
-	print_sockaddr("connect", addr);
+	print_sockaddr("connect", addr, rv);
 
 	return rv;
 }
@@ -494,7 +494,7 @@ int socket(int domain, int type, int protocol) {
 	else
 		sprintf(ptr, "%s", str);
 
-	printf("%s\n", buf);
+	printf("%s:%d\n", buf, rv);
 	return rv;
 }
 
@@ -506,7 +506,7 @@ int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 		orig_bind = (orig_bind_t)dlsym(RTLD_NEXT, "bind");
 			
 	int rv = orig_bind(sockfd, addr, addrlen);
-	print_sockaddr("bind", addr);
+	print_sockaddr("bind", addr, rv);
 
 	return rv;
 }
@@ -519,7 +519,7 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t addrlen) {
 		orig_accept = (orig_accept_t)dlsym(RTLD_NEXT, "accept");
 			
 	int rv = orig_accept(sockfd, addr,  addrlen);
-	print_sockaddr("accept", addr);
+	print_sockaddr("accept", addr, rv);
 
 	return rv;
 }
@@ -532,7 +532,7 @@ int system(const char *command) {
 		orig_system = (orig_system_t)dlsym(RTLD_NEXT, "system");
 			
 	int rv = orig_system(command);
-	printf("%u:%s:system %s\n", pid(), name(), command);
+	printf("%u:%s:system %s:%d\n", pid(), name(), command, rv);
 
 	return rv;
 }
@@ -544,7 +544,7 @@ int setuid(uid_t uid) {
 		orig_setuid = (orig_setuid_t)dlsym(RTLD_NEXT, "setuid");
 			
 	int rv = orig_setuid(uid);
-	printf("%u:%s:setuid %d\n", pid(), name(), uid);
+	printf("%u:%s:setuid %d:%d\n", pid(), name(), uid, rv);
 
 	return rv;
 }
@@ -556,7 +556,7 @@ int setgid(gid_t gid) {
 		orig_setgid = (orig_setgid_t)dlsym(RTLD_NEXT, "setgid");
 			
 	int rv = orig_setgid(gid);
-	printf("%u:%s:setgid %d\n", pid(), name(), gid);
+	printf("%u:%s:setgid %d:%d\n", pid(), name(), gid, rv);
 
 	return rv;
 }
@@ -568,7 +568,7 @@ int setfsuid(uid_t uid) {
 		orig_setfsuid = (orig_setfsuid_t)dlsym(RTLD_NEXT, "setfsuid");
 			
 	int rv = orig_setfsuid(uid);
-	printf("%u:%s:setfsuid %d\n", pid(), name(), uid);
+	printf("%u:%s:setfsuid %d:%d\n", pid(), name(), uid, rv);
 
 	return rv;
 }
@@ -580,7 +580,7 @@ int setfsgid(gid_t gid) {
 		orig_setfsgid = (orig_setfsgid_t)dlsym(RTLD_NEXT, "setfsgid");
 			
 	int rv = orig_setfsgid(gid);
-	printf("%u:%s:setfsgid %d\n", pid(), name(), gid);
+	printf("%u:%s:setfsgid %d:%d\n", pid(), name(), gid, rv);
 
 	return rv;
 }
@@ -592,7 +592,7 @@ int setreuid(uid_t ruid, uid_t euid) {
 		orig_setreuid = (orig_setreuid_t)dlsym(RTLD_NEXT, "setreuid");
 			
 	int rv = orig_setreuid(ruid, euid);
-	printf("%u:%s:setreuid %d %d\n", pid(), name(), ruid, euid);
+	printf("%u:%s:setreuid %d %d:%d\n", pid(), name(), ruid, euid, rv);
 
 	return rv;
 }
@@ -604,7 +604,7 @@ int setregid(gid_t rgid, gid_t egid) {
 		orig_setregid = (orig_setregid_t)dlsym(RTLD_NEXT, "setregid");
 			
 	int rv = orig_setregid(rgid, egid);
-	printf("%u:%s:setregid %d %d\n", pid(), name(), rgid, egid);
+	printf("%u:%s:setregid %d %d:%d\n", pid(), name(), rgid, egid, rv);
 
 	return rv;
 }
@@ -616,7 +616,7 @@ int setresuid(uid_t ruid, uid_t euid, uid_t suid) {
 		orig_setresuid = (orig_setresuid_t)dlsym(RTLD_NEXT, "setresuid");
 			
 	int rv = orig_setresuid(ruid, euid, suid);
-	printf("%u:%s:setresuid %d %d %d\n", pid(), name(), ruid, euid, suid);
+	printf("%u:%s:setresuid %d %d %d:%d\n", pid(), name(), ruid, euid, suid, rv);
 
 	return rv;
 }
@@ -628,7 +628,7 @@ int setresgid(gid_t rgid, gid_t egid, gid_t sgid) {
 		orig_setresgid = (orig_setresgid_t)dlsym(RTLD_NEXT, "setresgid");
 			
 	int rv = orig_setresgid(rgid, egid, sgid);
-	printf("%u:%s:setresgid %d %d %d\n", pid(), name(), rgid, egid, sgid);
+	printf("%u:%s:setresgid %d %d %d:%d\n", pid(), name(), rgid, egid, sgid, rv);
 
 	return rv;
 }

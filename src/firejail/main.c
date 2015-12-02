@@ -1309,7 +1309,7 @@ int main(int argc, char **argv) {
 		arg_noroot = 0;
 	}
 	else if (arg_noroot && cfg.chrootdir) {
-		fprintf(stderr, "Warning: --overlay and --chroot are mutually exclusive, noroot disabled\n");
+		fprintf(stderr, "Warning: --chroot and --noroot are mutually exclusive, noroot disabled\n");
 		arg_noroot = 0;
 	}
 

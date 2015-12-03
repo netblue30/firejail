@@ -29,6 +29,7 @@
 #include <arpa/inet.h>
 #include <sys/un.h>
 #include <sys/stat.h>
+#include <dirent.h>
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
@@ -431,6 +432,17 @@ int stat64(const char *pathname, struct stat64 *buf) {
 }
 #endif /* __GLIBC__ */
 
+// opendir
+typedef DIR *(*orig_opendir_t)(const char *pathname);
+static orig_opendir_t orig_opendir = NULL;
+DIR *opendir(const char *pathname) {
+	if (!orig_opendir)
+		orig_opendir = (orig_opendir_t)dlsym(RTLD_NEXT, "opendir");
+			
+	DIR *rv = orig_opendir(pathname);
+	printf("%u:%s:opendir %s:%p\n", pid(), name(), pathname, rv);
+	return rv;
+}
 
 // access
 typedef int (*orig_access_t)(const char *pathname, int mode);

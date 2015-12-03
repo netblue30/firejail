@@ -1296,6 +1296,9 @@ Child process initialized
 .br
 parent is shutting down, bye...
 .TP
+\fB\-\-tracelog
+Add a log message in syslog for every access to blacklisted files or directories.
+.TP
 \fB\-\-tree
 Print a tree of all sandboxed processes, see MONITORING section for more details.
 .br

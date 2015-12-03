@@ -237,7 +237,7 @@ void fs_private(void) {
 	if (arg_debug)
 		printf("Mounting a new /root directory\n");
 	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
-		errExit("mounting home directory");
+		errExit("mounting root directory");
 	fs_logger("mount tmpfs on /root");
 
 	if (u != 0) {

@@ -95,3 +95,19 @@ New profiles introduced in this version: unbound, dnscrypt-proxy
 ### --whitelist
 
 Whitelist command accepts files in user home, /dev, /media, /var, and /tmp directories.
+
+### --tracelog
+
+Tracelog command enables auditing blacklisted files and directories. A message
+is sent to syslog in case the file or the directory is accessed. Example:
+`````
+$ firejail --tracelog firefox
+`````
+Syslog example:
+`````
+$ sudo tail -f /var/log/syslog
+[...]
+Dec  3 11:43:25 debian firejail[70]: blacklist violation - sandbox 26370, exe iceweasel, syscall open64, path /etc/shadow
+Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe iceweasel, syscall opendir, path /boot
+[...]
+`````

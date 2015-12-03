@@ -157,6 +157,7 @@ void fs_delete_cp_command(void) {
 //***********************************************
 typedef enum {
 	BLACKLIST_FILE,
+	BLACKLIST_NOLOG,
 	MOUNT_READONLY,
 	MOUNT_TMPFS,
 	OPERATION_MAX
@@ -194,7 +195,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	}
 
 	// modify the file
-	if (op == BLACKLIST_FILE) {
+	if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
 		// some distros put all executables under /usr/bin and make /bin a symbolic link
 		if ((strcmp(fname, "/bin") == 0 || strcmp(fname, "/usr/bin") == 0) &&
 		      is_link(filename) &&
@@ -213,7 +214,10 @@ static void disable_file(OPERATION op, const char *filename) {
 					errExit("disable file");
 			}
 			last_disable = SUCCESSFUL;
-			fs_logger2("blacklist", fname);
+			if (op == BLACKLIST_FILE)
+				fs_logger2("blacklist", fname);
+			else
+				fs_logger2("blacklist-nolog", fname);
 		}
 	}
 	else if (op == MOUNT_READONLY) {
@@ -282,6 +286,8 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 		}
 		if (okay_to_blacklist)
 			disable_file(op, path);
+		else if (arg_debug)
+			printf("Not blacklist %s\n", path);
 	}
 	globfree(&globbuf);
 }
@@ -365,6 +371,10 @@ void fs_blacklist(void) {
 		if (strncmp(entry->data, "blacklist ", 10) == 0)  {
 			ptr = entry->data + 10;
 			op = BLACKLIST_FILE;
+		}
+		else if (strncmp(entry->data, "blacklist-nolog ", 16) == 0)  {
+			ptr = entry->data + 16;
+			op = BLACKLIST_NOLOG;
 		}
 		else if (strncmp(entry->data, "read-only ", 10) == 0) {
 			ptr = entry->data + 10;

@@ -1,11 +1,11 @@
 # History files in $HOME
-blacklist ${HOME}/.history
-blacklist ${HOME}/.*_history
+blacklist-nolog ${HOME}/.history
+blacklist-nolog ${HOME}/.*_history
 
 # HTTP / FTP / Mail
-blacklist ${HOME}/.adobe
-blacklist ${HOME}/.macromedia
-blacklist ${HOME}/.mozilla
+blacklist-nolog ${HOME}/.adobe
+blacklist-nolog ${HOME}/.macromedia
+blacklist-nolog ${HOME}/.mozilla
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.sylpheed-2.0

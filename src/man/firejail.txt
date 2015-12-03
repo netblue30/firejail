@@ -1297,7 +1297,28 @@ Child process initialized
 parent is shutting down, bye...
 .TP
 \fB\-\-tracelog
-Add a log message in syslog for every access to blacklisted files or directories.
+This option enables auditing blacklisted files and directories. A message
+is sent to syslog in case the file or the directory is accessed. 
+.br
+
+.br
+Example:
+.br
+$ firejail --tracelog firefox
+.br
+
+.br
+Sample messages:
+.br
+$ sudo tail -f /var/log/syslog
+.br
+[...]
+.br
+Dec  3 11:43:25 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox, syscall open64, path /etc/shadow
+.br
+Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox, syscall opendir, path /boot
+.br
+[...]
 .TP
 \fB\-\-tree
 Print a tree of all sandboxed processes, see MONITORING section for more details.

@@ -263,8 +263,8 @@ void usage(void) {
 	printf("\t--tmpfs=dirname - mount a tmpfs filesystem on directory dirname.\n\n");
 	printf("\t--top - monitor the most CPU-intensive sandboxes.\n\n");
 	printf("\t--trace - trace open, access and connect system calls.\n\n");
-	printf("\t--tracelog - add a log message in syslog for every access to blacklisted\n");
-	printf("\t\tfiles or directories.\n\n");
+	printf("\t--tracelog - add a syslog message for every access to files or\n");
+	printf("\t\tdirectoires blacklisted by the security profile.\n\n");
 	printf("\t--tree - print a tree of all sandboxed processes.\n\n");
 	printf("\t--version - print program version and exit.\n\n");
 	printf("\t--whitelist=dirname_or_filename - whitelist directory or file.\n\n");

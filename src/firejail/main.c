@@ -67,6 +67,7 @@ int arg_caps_keep = 0;			// keep list
 char *arg_caps_list = NULL;			// optional caps list
 
 int arg_trace = 0;				// syscall tracing support
+int arg_tracelog = 0;				// blacklist tracing support
 int arg_rlimit_nofile = 0;			// rlimit nofile
 int arg_rlimit_nproc = 0;			// rlimit nproc
 int arg_rlimit_fsize = 0;				// rlimit fsize
@@ -571,6 +572,8 @@ int main(int argc, char **argv) {
 
 		else if (strcmp(argv[i], "--trace") == 0)
 			arg_trace = 1;
+		else if (strcmp(argv[i], "--tracelog") == 0)
+			arg_tracelog = 1;
 		else if (strncmp(argv[i], "--rlimit-nofile=", 16) == 0) {
 			if (not_unsigned(argv[i] + 16)) {
 				fprintf(stderr, "Error: invalid rlimt nofile\n");

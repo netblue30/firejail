@@ -265,19 +265,26 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	//****************************
-	// mount namespace and log filesystem type
+	// mount namespace
 	//****************************
 	// mount events are not forwarded between the host the sandbox
 	if (mount(NULL, "/", NULL, MS_SLAVE | MS_REC, NULL) < 0) {
 		chk_chroot();
 	}
-	// log filesystem type
+	
+	
+	//****************************
+	// log sandbox data
+	//****************************
+	fs_logger2int("sandbox pid:", (int) sandbox_pid);
+	if (cfg.name)
+		fs_logger2("sandbox name:", cfg.name);
 	if (cfg.chrootdir)
-		fs_logger("chroot filesystem");
+		fs_logger("sandbox filesystem: chroot");
 	else if (arg_overlay)	
-		fs_logger("overlay filesystem");
+		fs_logger("sandbox filesystem: overlay");
 	else
-		fs_logger("local filesystem");
+		fs_logger("sandbox filesystem: local");
 	fs_logger("install mount namespace");
 	
 	//****************************
@@ -298,7 +305,7 @@ int sandbox(void* sandbox_arg) {
 	fs_build_cp_command();
 	
 	// trace pre-install
-	if (arg_trace)
+	if (arg_trace || arg_tracelog)
 		fs_trace_preload();
 
 	//****************************
@@ -341,7 +348,7 @@ int sandbox(void* sandbox_arg) {
 		//****************************
 		// trace pre-install, this time inside chroot
 		//****************************
-		if (arg_trace)
+		if (arg_trace || arg_tracelog)
 			fs_trace_preload();
 	}
 	else 
@@ -392,7 +399,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// install trace
 	//****************************
-	if (arg_trace)
+	if (arg_trace || arg_tracelog)
 		fs_trace();
 		
 	//****************************

@@ -57,7 +57,13 @@ void fs_trace(void) {
 	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "w");
 	if (!fp)
 		errExit("fopen");
-	fprintf(fp, "%s/firejail/libtrace.so\n", LIBDIR);
+	if (arg_trace)
+		fprintf(fp, "%s/firejail/libtrace.so\n", LIBDIR);
+	else if (arg_tracelog)
+		fprintf(fp, "%s/firejail/libtracelog.so\n", LIBDIR);
+	else
+		assert(0);
+		
 	fclose(fp);
 	if (chown(RUN_LDPRELOAD_FILE, 0, 0) < 0)
 		errExit("chown");

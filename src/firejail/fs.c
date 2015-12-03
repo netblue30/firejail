@@ -480,8 +480,6 @@ void fs_proc_sys_dev_boot(void) {
 	else
 		fs_logger("remount /sys");
 		
-
-
 	if (stat("/sys/firmware", &s) == 0) {
 		disable_file(BLACKLIST_FILE, "/sys/firmware");
 	}
@@ -587,11 +585,12 @@ static void disable_firejail_config(void) {
 // build a basic read-only filesystem
 void fs_basic_fs(void) {
 	if (arg_debug)
-		printf("Mounting read-only /bin, /sbin, /lib, /lib64, /usr, /etc, /var\n");
+		printf("Mounting read-only /bin, /sbin, /lib, /lib32, /lib64, /usr, /etc, /var\n");
 	fs_rdonly("/bin");
 	fs_rdonly("/sbin");
 	fs_rdonly("/lib");
 	fs_rdonly("/lib64");
+	fs_rdonly("/lib32");
 	fs_rdonly("/usr");
 	fs_rdonly("/etc");
 	fs_rdonly("/var");

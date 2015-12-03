@@ -423,7 +423,7 @@ typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
 static orig_stat64_t orig_stat64 = NULL;
 int stat64(const char *pathname, struct stat64 *buf) {
 	if (!orig_stat)
-		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat");
+		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
 			
 	int rv = orig_stat64(pathname, buf);
 	printf("%u:%s:stat %s:%d\n", pid(), name(), pathname, rv);

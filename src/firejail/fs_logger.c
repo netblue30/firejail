@@ -70,6 +70,15 @@ void fs_logger2(const char *msg1, const char *msg2) {
 	insertmsg(ptr);
 }
 
+void fs_logger2int(const char *msg1, int d) {
+	FsMsg *ptr = newmsg();
+	char *str;
+	if (asprintf(&str, "%s %d", msg1, d) == -1)
+		errExit("asprintf");
+	ptr->msg = str;
+	insertmsg(ptr);
+}
+
 void fs_logger3(const char *msg1, const char *msg2, const char *msg3) {
 	FsMsg *ptr = newmsg();
 	char *str;
@@ -91,7 +100,7 @@ void fs_logger_print(void) {
 	
 	int rv = chown(RUN_FSLOGGER_FILE, getuid(), getgid());
 	(void) rv; // best effort!
-	rv = chmod(RUN_FSLOGGER_FILE, 0600);
+	rv = chmod(RUN_FSLOGGER_FILE, 0644);
 	(void) rv; // best effort!
 	
 	FsMsg *ptr = head;

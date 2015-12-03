@@ -204,6 +204,7 @@ extern int arg_caps_keep;		// keep list
 extern char *arg_caps_list;		// optional caps list
 
 extern int arg_trace;		// syscall tracing support
+extern int arg_tracelog;	// blacklist tracing support
 extern int arg_rlimit_nofile;	// rlimit nofile
 extern int arg_rlimit_nproc;	// rlimit nproc
 extern int arg_rlimit_fsize;	// rlimit fsize
@@ -483,6 +484,7 @@ void restrict_users(void);
 // fs_logger.c
 void fs_logger(const char *msg);
 void fs_logger2(const char *msg1, const char *msg2);
+void fs_logger2int(const char *msg1, int d);
 void fs_logger3(const char *msg1, const char *msg2, const char *msg3);
 void fs_logger_print(void);
 void fs_logger_change_owner(void);

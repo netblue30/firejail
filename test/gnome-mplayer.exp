@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail gnome-mplayer\r"
+send -- "firejail --tracelog gnome-mplayer\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/gnome-mplayer.profile"

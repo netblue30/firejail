@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail vlc\r"
+send -- "firejail --tracelog vlc\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/vlc.profile"
@@ -38,7 +38,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	":firejail vlc"
+	":firejail --tracelog vlc"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -52,7 +52,7 @@ sleep 1
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail vlc"
+	":firejail --tracelog vlc"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

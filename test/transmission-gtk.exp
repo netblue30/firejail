@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail transmission-gtk\r"
+send -- "firejail --tracelog transmission-gtk\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
@@ -34,7 +34,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	":firejail transmission-gtk"
+	":firejail --tracelog transmission-gtk"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -48,7 +48,7 @@ sleep 1
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail transmission-gtk"
+	":firejail --tracelog transmission-gtk"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
@@ -64,5 +64,5 @@ expect {
 }
 sleep 1
 
-puts "\n"
+puts "\nall done\n"
 

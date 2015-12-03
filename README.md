@@ -107,7 +107,9 @@ Syslog example:
 `````
 $ sudo tail -f /var/log/syslog
 [...]
-Dec  3 11:43:25 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox, syscall open64, path /etc/shadow
-Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox, syscall opendir, path /boot
+Dec  3 11:43:25 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox,
+   syscall open64, path /etc/shadow
+Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox,
+   syscall opendir, path /boot
 [...]
 `````

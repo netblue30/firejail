@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail icedove\r"
+send -- "firejail --tracelog icedove\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/icedove.profile"
@@ -13,7 +13,7 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
 }
-sleep 10
+sleep 5
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
@@ -38,7 +38,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	":firejail icedove"
+	":firejail --tracelog icedove"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -52,7 +52,7 @@ sleep 1
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail icedove"
+	":firejail --tracelog icedove"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

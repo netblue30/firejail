@@ -132,5 +132,5 @@ $ sed -i "s/\/etc\/firejail/\/home\/netblue\/myprofiles/g" *.inc
 `````
 Start Firejail using the new path:
 `````
-$ firejail --profile-path=~/myprofile
+$ firejail --profile-path=~/myprofiles
 `````

@@ -305,7 +305,7 @@ Start Firejail using the new path:
 .br
 
 .br
-$ firejail --profile-path=~/myprofile
+$ firejail --profile-path=~/myprofiles
 
 .SH FILES
 /etc/firejail/filename.profile, $HOME/.config/firejail/filename.profile

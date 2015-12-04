@@ -32,7 +32,7 @@
 #include <syslog.h>
 #include <dirent.h>
 
-
+//#define DEBUG
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
@@ -48,7 +48,19 @@ typedef struct list_elem_t {
 	char *path;
 } ListElem;
 
-static ListElem *storage;
+#define HMASK 0x0ff
+ListElem *storage[HMASK + 1];
+
+// djb2 
+static inline uint32_t hash(const char *str) {
+	uint32_t hash = 5381;
+	int c;
+
+	while ((c = *str++) != '\0')
+		hash = ((hash << 5) + hash) + c; // hash * 33 + c; another variant would be hash * 33 ^ c
+
+	return hash & HMASK;
+}
 
 static storage_add(const char *str) {
 	ListElem *ptr = malloc(sizeof(ListElem));
@@ -61,8 +73,11 @@ static storage_add(const char *str) {
 		fprintf(stderr, "Error: cannot allocate memory\n");
 		return;
 	}
-	ptr->next = storage;
-	storage = ptr;
+	
+	// insert it into the hash table
+	uint32_t h = hash(ptr->path);
+	ptr->next = storage[h];
+	storage[h] = ptr;
 }
 
 static char *storage_find(const char *str) {
@@ -74,7 +89,8 @@ static char *storage_find(const char *str) {
 		allocated = 1;
 	}
 
-	ListElem *ptr = storage;
+	uint32_t h = hash(tofind);
+	ListElem *ptr = storage[h];
 	while (ptr) {
 		if (strcmp(tofind, ptr->path) == 0) {
 			if (allocated)
@@ -88,6 +104,7 @@ static char *storage_find(const char *str) {
 		free((char *) tofind);
 	return NULL;
 }
+
 
 //
 // load blacklistst form /run/firejail/mnt/fslogger
@@ -134,7 +151,25 @@ void load_blacklist(void) {
 	}
 	fclose(fp);
 	blacklist_loaded = 1;
+#ifdef DEBUG	
 	printf("Monitoring %d blacklists\n", cnt);
+	{
+		int i;
+		for (i = 0; i <= HMASK; i++) {
+			int cnt = 0;
+			ListElem *ptr = storage[i];
+			while (ptr) {
+				cnt++;
+				ptr = ptr->next;
+			}
+			
+			if ((i % 16) == 0)
+				printf("\n");
+			printf("%02d ", cnt);
+		}
+		printf("\n");
+	}
+#endif
 }
 
 
@@ -216,7 +251,7 @@ int open(const char *pathname, int flags, mode_t mode) {
 	if (!orig_open)
 		orig_open = (orig_open_t)dlsym(RTLD_NEXT, "open");
 	
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_open(pathname, flags, mode);
@@ -230,7 +265,7 @@ static orig_open64_t orig_open64 = NULL;
 int open64(const char *pathname, int flags, mode_t mode) {
 	if (!orig_open64)
 		orig_open64 = (orig_open64_t)dlsym(RTLD_NEXT, "open64");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_open64(pathname, flags, mode);
@@ -245,7 +280,7 @@ static orig_openat_t orig_openat = NULL;
 int openat(int dirfd, const char *pathname, int flags, mode_t mode) {
 	if (!orig_openat)
 		orig_openat = (orig_openat_t)dlsym(RTLD_NEXT, "openat");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_openat(dirfd, pathname, flags, mode);
@@ -259,7 +294,7 @@ static orig_openat64_t orig_openat64 = NULL;
 int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 	if (!orig_openat64)
 		orig_openat64 = (orig_openat64_t)dlsym(RTLD_NEXT, "openat64");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_openat64(dirfd, pathname, flags, mode);
@@ -273,7 +308,7 @@ int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 FILE *fopen(const char *pathname, const char *mode) {
 	if (!orig_fopen)
 		orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	FILE *rv = orig_fopen(pathname, mode);
@@ -286,7 +321,7 @@ FILE *fopen(const char *pathname, const char *mode) {
 FILE *fopen64(const char *pathname, const char *mode) {
 	if (!orig_fopen64)
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	FILE *rv = orig_fopen64(pathname, mode);
@@ -303,7 +338,7 @@ static orig_freopen_t orig_freopen = NULL;
 FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 	if (!orig_freopen)
 		orig_freopen = (orig_freopen_t)dlsym(RTLD_NEXT, "freopen");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	FILE *rv = orig_freopen(pathname, mode, stream);
@@ -318,7 +353,7 @@ static orig_freopen64_t orig_freopen64 = NULL;
 FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 	if (!orig_freopen64)
 		orig_freopen64 = (orig_freopen64_t)dlsym(RTLD_NEXT, "freopen64");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	FILE *rv = orig_freopen64(pathname, mode, stream);
@@ -334,7 +369,7 @@ static orig_unlink_t orig_unlink = NULL;
 int unlink(const char *pathname) {
 	if (!orig_unlink)
 		orig_unlink = (orig_unlink_t)dlsym(RTLD_NEXT, "unlink");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_unlink(pathname);
@@ -348,7 +383,7 @@ static orig_unlinkat_t orig_unlinkat = NULL;
 int unlinkat(int dirfd, const char *pathname, int flags) {
 	if (!orig_unlinkat)
 		orig_unlinkat = (orig_unlinkat_t)dlsym(RTLD_NEXT, "unlinkat");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_unlinkat(dirfd, pathname, flags);
@@ -363,7 +398,7 @@ static orig_mkdir_t orig_mkdir = NULL;
 int mkdir(const char *pathname, mode_t mode) {
 	if (!orig_mkdir)
 		orig_mkdir = (orig_mkdir_t)dlsym(RTLD_NEXT, "mkdir");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_mkdir(pathname, mode);
@@ -377,7 +412,7 @@ static orig_mkdirat_t orig_mkdirat = NULL;
 int mkdirat(int dirfd, const char *pathname, mode_t mode) {
 	if (!orig_mkdirat)
 		orig_mkdirat = (orig_mkdirat_t)dlsym(RTLD_NEXT, "mkdirat");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_mkdirat(dirfd, pathname, mode);
@@ -391,7 +426,7 @@ static orig_rmdir_t orig_rmdir = NULL;
 int rmdir(const char *pathname) {
 	if (!orig_rmdir)
 		orig_rmdir = (orig_rmdir_t)dlsym(RTLD_NEXT, "rmdir");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 		
 	int rv = orig_rmdir(pathname);
@@ -406,7 +441,7 @@ static orig_stat_t orig_stat = NULL;
 int stat(const char *pathname, struct stat *buf) {
 	if (!orig_stat)
 		orig_stat = (orig_stat_t)dlsym(RTLD_NEXT, "stat");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 			
 	int rv = orig_stat(pathname, buf);
@@ -421,7 +456,7 @@ static orig_stat64_t orig_stat64 = NULL;
 int stat64(const char *pathname, struct stat64 *buf) {
 	if (!orig_stat)
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 			
 	int rv = orig_stat64(pathname, buf);
@@ -436,7 +471,7 @@ static orig_lstat_t orig_lstat = NULL;
 int lstat(const char *pathname, struct stat *buf) {
 	if (!orig_lstat)
 		orig_lstat = (orig_lstat_t)dlsym(RTLD_NEXT, "lstat");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 			
 	int rv = orig_lstat(pathname, buf);
@@ -451,7 +486,7 @@ static orig_lstat64_t orig_lstat64 = NULL;
 int lstat64(const char *pathname, struct stat64 *buf) {
 	if (!orig_lstat)
 		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 			
 	int rv = orig_lstat64(pathname, buf);
@@ -467,7 +502,7 @@ static orig_access_t orig_access = NULL;
 int access(const char *pathname, int mode) {
 	if (!orig_access)
 		orig_access = (orig_access_t)dlsym(RTLD_NEXT, "access");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 			
 	int rv = orig_access(pathname, mode);
@@ -482,7 +517,7 @@ static orig_opendir_t orig_opendir = NULL;
 DIR *opendir(const char *pathname) {
 	if (!orig_opendir)
 		orig_opendir = (orig_opendir_t)dlsym(RTLD_NEXT, "opendir");
-	if (!storage)
+	if (!blacklist_loaded)
 		load_blacklist();
 			
 	DIR *rv = orig_opendir(pathname);

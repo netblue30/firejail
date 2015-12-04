@@ -113,3 +113,24 @@ Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe fi
    syscall opendir, path /boot
 [...]
 `````
+
+### --profile-path
+For  various reasons some users might want to keep the profile files in
+a different directory.  Using --profile-path command line option,
+Firejail can be instructed to look for profiles into this directory.
+
+This  is  an  example of relocating the profile files into a new directory,
+/home/netblue/myprofiles. Start by creating the new directory and
+copy all the profile files in:
+`````
+$ mkdir ~/myprofiles && cd ~/myprofiles && cp /etc/firejail/* .
+`````
+Using sed utility, modify the absolute paths for include commands:
+`````
+$ sed -i "s/\/etc\/firejail/\/home\/netblue\/myprofiles/g" *.profile
+$ sed -i "s/\/etc\/firejail/\/home\/netblue\/myprofiles/g" *.inc
+`````
+Start Firejail using the new path:
+`````
+$ firejail --profile-path=~/myprofile
+`````

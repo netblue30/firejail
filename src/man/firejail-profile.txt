@@ -81,7 +81,7 @@ file in user home directory.
 Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1" file.
 
 .TP
-\f\noblacklist file_name
+\f\ noblacklist file_name
 If the file name matches file_name, the file will not be blacklisted in any blacklist commands that follow.
 
 Example: "noblacklist ${HOME}/.mozilla"
@@ -102,37 +102,31 @@ Use \fBprivate\fR to set private mode.
 File globbing is supported, and PATH and HOME directories are searched.
 Examples:
 .TP
-\f\blacklist /usr/bin
-Remove /usr/bin directory.
+\f\blacklist file_or_directory
+Blacklist directory or file. Examples:
+.br
+
+.br
+blacklist /usr/bin
+.br
+blacklist /usr/bin/gcc*
+.br
+blacklist ${PATH}/ifconfig
+.br
+blacklist ${HOME}/.ssh
+
 .TP
-\f\blacklist /etc/passwd
-Remove /etc/passwd file.
+\f\read-only file_or_directory
+Make directory or file read-only.
 .TP
-\f\read-only /etc/passwd
-Read-only /etc/passwd file.
+\f\ tmpfs directory
+Mount an empty tmpfs filesystem on top of directory.
 .TP
-tmpfs /etc
-Mount an empty tmpfs filesystem on top of /etc directory.
+\f\bind directory1,directory2
+Mount-bind directory1 on top of directory2. This option is only available when running as root.
 .TP
-bind /root/config/ssh,/etc/ssh
-Mount-bind /root/config/ssh on /etc/ssh.
-.TP
-\f\blacklist /usr/bin/gcc*
-Remove all gcc files in /usr/bin (file globbing).
-.TP
-\f\blacklist ${PATH}/ifconfig
-Remove ifconfig command from the regular path directories.
-.TP
-\f\blacklist ${HOME}/.ssh
-Remove .ssh directory from user home directory.
-.TP
-\f\noblacklist ${HOME}/config/evince
-Prevent any new blacklist commands from blacklisting
-config/evince in the user home directory. Useful for defining
-exceptions before including a large blacklist from a file. Note
-that blacklisting ${HOME}/config can still make
-${HOME}/config/evince effectively unreachable through filesystem
-traversal.
+\f\bind file1,file2
+Mount-bind file1 on top of file2. This option is only available when running as root.
 .TP
 \f\private
 Mount new /root and /home/user directories in temporary
@@ -153,7 +147,7 @@ new home. All modifications are discarded when the sandbox is
 closed.
 .TP
 \f\private-dev
-Create a new /dev directory. Only null, full, zero, tty, pts, ptmx, random, urandom and shm devices are available.
+Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, urandom, log and shm devices are available.
 .TP
 \f\private-etc file,directory
 Build a new /etc in a temporary
@@ -240,10 +234,8 @@ The sandbox is placed in g1 control group.
 .SH User Environment
 
 .TP
-env LD_LIBRARY_PATH=/opt/test/lib
-Set environment variable.
-.br
-Examples:
+env name=value
+Set environment variable. Examples:
 .br
 
 .br
@@ -284,6 +276,36 @@ Set a DNS server for the sandbox. Up to three DNS servers can be defined.
 hostname name
 Set a hostname for the sandbox.
 
+.SH RELOCATING PROFILES
+For various reasons some users might want to keep the profile files in a different directory.
+Using \fB--profile-path\fR command line option, Firejail can be instructed to look for profiles
+into this directory.
+
+This is an example of relocating the profile files into a new
+directory, /home/netblue/myprofiles. Start by creating the new directory and copy all
+the profile files in:
+.br
+
+.br
+$ mkdir ~/myprofiles && cd ~/myprofiles && cp /etc/firejail/* .
+.br
+
+.br
+Using \fBsed\fR utility, modify the absolute paths for \fBinclude\fR commands:
+.br
+
+.br
+$ sed -i "s/\\/etc\\/firejail/\\/home\\/netblue\\/myprofiles/g" *.profile
+.br
+$ sed -i "s/\\/etc\\/firejail/\\/home\\/netblue\\/myprofiles/g" *.inc
+.br
+
+.br
+Start Firejail using the new path:
+.br
+
+.br
+$ firejail --profile-path=~/myprofile
 
 .SH FILES
 /etc/firejail/filename.profile, $HOME/.config/firejail/filename.profile

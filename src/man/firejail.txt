@@ -52,7 +52,7 @@ Only /home and /tmp are writable.
 As it starts up, Firejail tries to find a security profile based on the name of the application.
 If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option 
-to disable it. For more information, please see SECURITY PROFILES section.
+to disable it. For more information, please see \fBSECURITY PROFILES\fR section.
 .PP
 If a program argument is not specified, Firejail starts /bin/bash shell.
 Examples:
@@ -69,10 +69,10 @@ $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 Signal the end of options and disables further option processing.
 .TP
 \fB\-\-bandwidth=name
-Set bandwidth limits for the sandbox identified by name, see TRAFFIC SHAPING section for more details.
+Set bandwidth limits for the sandbox identified by name, see \fBTRAFFIC SHAPING\fR section for more details.
 .TP
 \fB\-\-bandwidth=pid
-Set bandwidth limits for the sandbox identified by PID, see TRAFFIC SHAPING section for more details.
+Set bandwidth limits for the sandbox identified by PID, see \fBTRAFFIC SHAPING\fR section for more details.
 .TP
 \fB\-\-bind=dirname1,dirname2
 Mount-bind dirname1 on top of dirname2. This option is only available when running the sandbox as root.
@@ -478,7 +478,7 @@ $ firejail \-\-join=3272
 
 .TP
 \fB\-\-list
-List all sandboxes, see MONITORING section for more details.
+List all sandboxes, see \fBMONITORING\fR section for more details.
 .br
 
 .br
@@ -645,7 +645,7 @@ $ firejail --netfilter=/etc/firejail/nolocal.net \\
 --net=eth0 firefox
 .TP
 \fB\-\-netstats
-Monitor network namespace statistics, see MONITORING section for more details.
+Monitor network namespace statistics, see \fBMONITORING\fR section for more details.
 .br
 
 .br
@@ -919,13 +919,27 @@ nsswitch.conf,passwd,resolv.conf
 .TP
 \fB\-\-profile=filename
 Load a custom security profile from filename. For filename use an absolute path or a path relative to the current path.
-For more information, see SECURITY PROFILES section below.
+For more information, see \fBSECURITY PROFILES\fR section below.
 .br
 
 .br
 Example:
 .br
 $ firejail \-\-profile=myprofile
+
+.TP
+\fB\-\-profile-path=directory
+Use this directory to look for profile files. Use an absolute path or a path in the home directory starting with ~/.
+For more information, see \fBSECURITY PROFILES\fR section below and \fBRELOCATING PROFILE FILES\fR in
+\fBman 5 firejail-profile\fR.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-profile-path=~/myprofiles
+.br
+$ firejail \-\-profile-path=/home/netblue/myprofiles
 
 .TP
 \fB\-\-protocol=protocol,protocol,protocol
@@ -1255,7 +1269,7 @@ Example:
 $ firejail \-\-tmpfs=/var
 .TP
 \fB\-\-top
-Monitor the most CPU-intensive sandboxes, see MONITORING section for more details.
+Monitor the most CPU-intensive sandboxes, see \fBMONITORING\fR section for more details.
 .br
 
 .br
@@ -1321,7 +1335,7 @@ Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe fi
 [...]
 .TP
 \fB\-\-tree
-Print a tree of all sandboxed processes, see MONITORING section for more details.
+Print a tree of all sandboxed processes, see \fBMONITORING\fR section for more details.
 .br
 
 .br

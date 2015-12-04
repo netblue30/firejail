@@ -201,6 +201,7 @@ void usage(void) {
 	printf("\t\tAll modifications are discarded when the sandbox is closed.\n\n");
 	
 	printf("\t--profile=filename - use a custom profile.\n\n");
+	printf("\t--profile-path=directory - use this directory to look for profile files.\n\n");
 	
 	printf("\t--protocol=protocol,protocol,protocol - enable protocol filter.\n");
 	printf("\t\tProtocol values: unix, inet, inet6, netlink, packet.\n\n");

@@ -8,16 +8,19 @@ firejail (0.9.35) baseline; urgency=low
   * Opera profile rework
   * added opera-beta profile
   * added --noblacklist option
+  * added --profile-path option
   * whitelist command enhancements
   * prevent user name enumeration
   * added /etc/firejail/nolocal.net network filter
   * added /etc/firejail/webserver.net network filter
-  * manipulation of firejail configuration disabled by default
-  * added automated feature testing framework
+  * blacklisting firejail configuration by default
   * alow default gateway configuration for --interface option
   * --debug enhancements
   * filesystem log
-  * libtrace enhancements
+  * libtrace enhancements, tracing opendir call
+  * added --tracelog option
+  * added "hostname" command to profile files
+  * added automated feature testing framework
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  ongoing development
 

@@ -48,7 +48,7 @@ static char *resolve_downloads(void) {
 		if (stat(fname, &s) == 0) {
 			free(fname);
 			if (arg_debug)
-				printf("Downloads directory resolved as \"Downloads\"\n");
+				printf("Downloads directory resolved as \"%s\"\n", fname);
 			
 			char *rv;
 			if (asprintf(&rv, "whitelist ~/%s", dentry[i]) == -1)
@@ -81,17 +81,44 @@ static char *resolve_downloads(void) {
 			continue;
 
 		if (strncmp(ptr, "XDG_DOWNLOAD_DIR=\"$HOME/", 24) == 0) {
-			char *ptr1 = strchr(ptr + 24, '"');
-			if (ptr1) {
-				*ptr1 = '\0';
+			char *ptr1 = ptr + 24;
+			char *ptr2 = strchr(ptr1, '"');
+			if (ptr2) {
 				fclose(fp);
+				*ptr2 = '\0';
 				if (arg_debug)
-					printf("Downloads directory resolved as \"%s\"\n", ptr + 24);
+					printf("extracted %s from ~/.config/user-dirs.dirs\n", ptr1);
+				if (strlen(ptr1) != 0) {
+					if (arg_debug)
+						printf("Downloads directory resolved as \"%s\"\n", ptr1);
 				
-				char *rv;
-				if (asprintf(&rv, "whitelist ~/%s", ptr + 24) == -1)
-					errExit("asprintf");
-				return rv;
+					if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
+						errExit("asprintf");
+					
+					if (stat(fname, &s) == -1) {
+						fprintf(stderr, "***\n");
+						fprintf(stderr, "*** Error: directory %s not found.\n", fname);
+						fprintf(stderr, "*** \tThis directory is configured in ~/.config/user-dirs.dirs.\n");
+						fprintf(stderr, "*** \tPlease create a Downloads directory.\n");
+						fprintf(stderr, "***\n");
+						free(fname);
+						return NULL;
+					}
+				
+					char *rv;
+					if (asprintf(&rv, "whitelist ~/%s", ptr + 24) == -1)
+						errExit("asprintf");
+					return rv;
+				}
+				else {
+					fprintf(stderr, "***\n");
+					fprintf(stderr, "*** Error: invalid XDG_DOWNLOAD_DIR entry in ~/.config/user-dirs.dirs.\n");
+					fprintf(stderr, "*** \tPlease specify a valid Downloads directory, example:\n");
+					fprintf(stderr, "***\n");
+					fprintf(stderr, "***\t\tXDG_DOWNLOAD_DIR=\"$HOME/Downloads\"\n");
+					fprintf(stderr, "***\n");
+					return NULL;
+				}
 			}
 		}
 	}
@@ -297,12 +324,9 @@ void fs_whitelist(void) {
 			else {
 				*entry->data = '\0';
 				fprintf(stderr, "***\n");
-				fprintf(stderr, "*** Error: cannot whitelist Downloads directory\n");
-				fprintf(stderr, "***\n");
-				fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
-				fprintf(stderr, "*** Please contact the developer. Workaround:\n");
-				fprintf(stderr, "***\n");
-				fprintf(stderr, "***       firejail --ignore=whitelist program-name\n");
+				fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
+				fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
+				fprintf(stderr, "*** \tPlease create a proper Downloads directory for your application.\n");
 				fprintf(stderr, "***\n");
 				continue;
 			}

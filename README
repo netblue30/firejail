@@ -25,6 +25,7 @@ rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 avoidr (https://github.com/avoidr)
 	- whitelist fix
+	- recently-used.xbel fix
 	- blacklist ncat, manpage fixes,
 	- hostname support in profile file
 	- Google Chrome profile rework

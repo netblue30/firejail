@@ -747,7 +747,6 @@ int main(int argc, char **argv) {
 			}
 			custom_profile_dir = expand_home(argv[i] + 15, cfg.homedir);
 			invalid_filename(custom_profile_dir);
-			char *ptr = argv[i] + 15;
 			if (!is_dir(custom_profile_dir) || is_link(custom_profile_dir) || strstr(custom_profile_dir, "..")) {
 				fprintf(stderr, "Error: invalid profile path\n");
 				exit(1);

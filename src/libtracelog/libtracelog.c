@@ -62,7 +62,7 @@ static inline uint32_t hash(const char *str) {
 	return hash & HMASK;
 }
 
-static storage_add(const char *str) {
+static void storage_add(const char *str) {
 	ListElem *ptr = malloc(sizeof(ListElem));
 	if (!ptr) {
 		fprintf(stderr, "Error: cannot allocate memory\n");

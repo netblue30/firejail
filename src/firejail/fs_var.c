@@ -335,7 +335,7 @@ void fs_var_utmp(void) {
 		printf("Create the new utmp file\n");
 
 	/* coverity[toctou] */
-	FILE *fp = fopen(UTMP_FILE, "w");
+	FILE *fp = fopen(RUN_UTMP_FILE, "w");
 	if (!fp)
 		errExit("fopen");
 		
@@ -354,15 +354,15 @@ void fs_var_utmp(void) {
 	// save new utmp file
 	fwrite(&u_boot, sizeof(u_boot), 1, fp);
 	fclose(fp);
-	if (chown(UTMP_FILE, 0, utmp_group) < 0)
+	if (chown(RUN_UTMP_FILE, 0, utmp_group) < 0)
 		errExit("chown");
-	if (chmod(UTMP_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH ) < 0)
+	if (chmod(RUN_UTMP_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH ) < 0)
 		errExit("chmod");
 	
 	// mount the new utmp file
 	if (arg_debug)
 		printf("Mount the new utmp file\n");
-	if (mount(UTMP_FILE, "/var/run/utmp", NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(RUN_UTMP_FILE, "/var/run/utmp", NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind utmp");
 	fs_logger("create /var/run/utmp");
 }

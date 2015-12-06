@@ -113,6 +113,7 @@ Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe fi
    syscall opendir, path /boot
 [...]
 `````
+Tracelog is enabled by default in several profile files.
 
 ### --profile-path
 For  various reasons some users might want to keep the profile files in

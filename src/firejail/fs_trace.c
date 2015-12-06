@@ -59,8 +59,11 @@ void fs_trace(void) {
 		errExit("fopen");
 	if (arg_trace)
 		fprintf(fp, "%s/firejail/libtrace.so\n", LIBDIR);
-	else if (arg_tracelog)
+	else if (arg_tracelog) {
 		fprintf(fp, "%s/firejail/libtracelog.so\n", LIBDIR);
+		if (!arg_quiet)
+			printf("Blacklist violations are logged to syslog\n");
+	}	
 	else
 		assert(0);
 		

@@ -120,6 +120,10 @@ int profile_check_line(char *ptr, int lineno) {
 		arg_shell_none = 1;
 		return 0;
 	}	
+	else if (strcmp(ptr, "tracelog") == 0) {
+		arg_tracelog = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "private") == 0) {
 		arg_private = 1;
 		return 0;

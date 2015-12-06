@@ -8,6 +8,7 @@ caps.drop all
 seccomp
 protocol unix,inet,inet6,netlink
 netfilter
+tracelog
 noroot
 whitelist ${DOWNLOADS}
 whitelist ~/.mozilla

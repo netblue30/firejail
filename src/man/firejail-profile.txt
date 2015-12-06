@@ -158,7 +158,9 @@ All modifications are discarded when the sandbox is closed.
 Build a new user home in a temporary filesystem, and mount-bind file_or_directory.
 The modifications to file_or_directory are persistent, everything else is discarded
 when the sandbox is closed.
-
+.TP
+\f\ tracelog
+Blacklist violations logged to syslog.
 .SH Filters
 \fBcaps\fR and \fBseccomp\fR enable Linux capabilities and seccomp filters. Examples:
 

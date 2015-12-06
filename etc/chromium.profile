@@ -9,6 +9,7 @@ include /etc/firejail/disable-common.inc
 #
 
 netfilter
+tracelog
 whitelist ${DOWNLOADS}
 whitelist ~/.config/chromium
 whitelist ~/.cache/chromium

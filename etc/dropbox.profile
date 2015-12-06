@@ -11,3 +11,5 @@ caps
 seccomp
 protocol unix,inet,inet6
 noroot
+tracelog
+

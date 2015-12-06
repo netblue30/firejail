@@ -1,6 +1,6 @@
 firejail (0.9.35) baseline; urgency=low
-  * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat
-     and rtorrent profiles
+  * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,
+     parole and rtorrent profiles
   * Google Chrome profile rework
   * added google-chrome-stable profile
   * added google-chrome-beta profile

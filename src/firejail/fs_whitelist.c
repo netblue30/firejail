@@ -46,13 +46,13 @@ static char *resolve_downloads(void) {
 			errExit("asprintf");
 		
 		if (stat(fname, &s) == 0) {
-			free(fname);
 			if (arg_debug)
 				printf("Downloads directory resolved as \"%s\"\n", fname);
 			
 			char *rv;
 			if (asprintf(&rv, "whitelist ~/%s", dentry[i]) == -1)
 				errExit("asprintf");
+			free(fname);
 			return rv;
 		}
 		free(fname);

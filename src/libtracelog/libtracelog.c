@@ -71,6 +71,7 @@ static void storage_add(const char *str) {
 	ptr->path = strdup(str);
 	if (!ptr->path) {
 		fprintf(stderr, "Error: cannot allocate memory\n");
+		free(ptr);
 		return;
 	}
 	

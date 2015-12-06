@@ -127,6 +127,7 @@ realinstall:
 	install -c -m 0644 .etc/weechat-curses.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/hexchat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/rtorrent.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/parole.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	bash -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc
 	# man pages

@@ -32,7 +32,7 @@
 #include <syslog.h>
 #include <dirent.h>
 
-#define DEBUG
+//#define DEBUG
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);

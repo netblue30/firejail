@@ -20,6 +20,7 @@ whitelist ~/.vimperatorrc
 whitelist ~/.vimperator
 whitelist ~/.pentadactylrc
 whitelist ~/.pentadactyl
+whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
 include /etc/firejail/whitelist-common.inc

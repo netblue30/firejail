@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Rahiel Kasim (https://github.com/rahiel)
+	- whitelist keysnail config for firefox
 Peter Hogg (https://github.com/pigmonkey)
 	- WeeChat profile
 	- rtorrent profile

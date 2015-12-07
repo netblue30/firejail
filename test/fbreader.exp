@@ -38,7 +38,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	":firejailfbreader"
+	":firejail fbreader"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}

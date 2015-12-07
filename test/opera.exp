@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --tracelog opera www.gentoo.org\r"
+send -- "firejail opera www.gentoo.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/opera.profile"

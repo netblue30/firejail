@@ -5,7 +5,6 @@ include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 netfilter
-tracelog
 whitelist ~/.config/opera-beta
 whitelist ${DOWNLOADS}
 whitelist ~/.cache/opera-beta

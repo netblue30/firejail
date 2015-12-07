@@ -4,10 +4,10 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --tracelog google-chrome www.gentoo.org\r"
+send -- "firejail google-chrome www.gentoo.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/chromium.profile"
+	"Reading profile /etc/firejail/google-chrome.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

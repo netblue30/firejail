@@ -7,7 +7,6 @@ caps.drop all
 seccomp
 protocol unix,inet,inet6
 netfilter
-tracelog
 noroot
 whitelist ~/.conkeror.mozdev.org
 whitelist ~/Downloads

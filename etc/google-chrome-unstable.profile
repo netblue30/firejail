@@ -9,7 +9,6 @@ include /etc/firejail/disable-common.inc
 #
 
 netfilter
-tracelog
 whitelist ${DOWNLOADS}
 whitelist ~/.config/google-chrome-unstable
 whitelist ~/.cache/google-chrome-unstable

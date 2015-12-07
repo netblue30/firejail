@@ -6,7 +6,6 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 caps.drop all
 netfilter
-tracelog
 noroot
 seccomp
 protocol unix,inet,inet6

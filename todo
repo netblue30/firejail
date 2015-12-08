@@ -165,3 +165,6 @@ rework the calls to invalid_filename(), depending if globing is allowed or not, 
 The POSIX standard defines what a “portable filename” is. This turns out to be just A-Z, a-z, 0-9, <period>, <underscore>, and <hyphen>
 http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_276
 
+22. Fix manpage:
+W: firejail: manpage-has-errors-from-man usr/share/man/man5/firejail-profile.5.gz 84: `\ ' is not allowed in an escape name
+if building a 32bit package, rename the deb file manually

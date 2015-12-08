@@ -1,4 +1,4 @@
-firejail (0.9.35) baseline; urgency=low
+firejail (0.9.36-rc1) baseline; urgency=low
   * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,
      parole and rtorrent profiles
   * Google Chrome profile rework
@@ -22,7 +22,7 @@ firejail (0.9.35) baseline; urgency=low
   * added "hostname" command to profile files
   * added automated feature testing framework
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  ongoing development
+ -- netblue30 <netblue30@yahoo.com>  Tue, 8 Nov 2015 09:00:00 -0500
 
 firejail (0.9.34) baseline; urgency=low
   * added --ignore option

@@ -24,3 +24,9 @@ whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
 include /etc/firejail/whitelist-common.inc
+whitelist /tmp/.X11-unix
+
+# experimental features
+#private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
+
+

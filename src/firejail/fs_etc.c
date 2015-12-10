@@ -24,7 +24,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void check_dir_or_file(const char *name) {
+// return 0 if file not found, 1 if found
+static int check_dir_or_file(const char *name) {
 	assert(name);
 	invalid_filename(name);
 	
@@ -35,19 +36,20 @@ static void check_dir_or_file(const char *name) {
 	if (arg_debug)
 		printf("Checking %s\n", fname);		
 	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error: file %s not found.\n", fname);
-		exit(1);
+		if (arg_debug)
+			printf("Warning: file %s not found.\n", fname);
+		return 0;
 	}
 	
 	// dir or regular file
 	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode)) {
 		free(fname);
-		return;
+		return 1;
 	}
 
 	if (!is_link(fname)) {
 		free(fname);
-		return;
+		return 1;
 	}
 	
 	fprintf(stderr, "Error: invalid file type, %s.\n", fname);
@@ -63,11 +65,23 @@ void fs_check_etc_list(void) {
 	char *dlist = strdup(cfg.etc_private_keep);
 	if (!dlist)
 		errExit("strdup");
+	
+	// build a new list only with the files found
+	char *newlist = malloc(strlen(cfg.etc_private_keep) + 1);
+	if (!newlist)
+		errExit("malloc");
+	*newlist = '\0';
 
 	char *ptr = strtok(dlist, ",");
-	check_dir_or_file(ptr);
-	while ((ptr = strtok(NULL, ",")) != NULL)
-		check_dir_or_file(ptr);
+	if (check_dir_or_file(ptr))
+		strcat(newlist, ptr);
+	while ((ptr = strtok(NULL, ",")) != NULL) {
+		if (check_dir_or_file(ptr)) {
+			strcat(newlist, ",");
+			strcat(newlist, ptr);
+		}
+	}
+	cfg.etc_private_keep = newlist;
 	
 	free(dlist);
 }

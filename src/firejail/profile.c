@@ -285,7 +285,13 @@ int profile_check_line(char *ptr, int lineno) {
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
 		cfg.etc_private_keep = ptr + 12;
 		fs_check_etc_list();
-		arg_private_etc = 1;
+		if (*cfg.etc_private_keep != '\0')
+			arg_private_etc = 1;
+		else {
+			arg_private_etc = 0;
+			fprintf(stderr, "Warning: private-etc disabled, no file found\n");
+		}
+		
 		return 0;
 	}
 

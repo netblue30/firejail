@@ -831,6 +831,10 @@ int main(int argc, char **argv) {
 			
 			// extract private home dirname
 			cfg.home_private = argv[i] + 10;
+			if (*cfg.home_private == '\0') {
+				fprintf(stderr, "Error: invalid private option\n");
+				exit(1);
+			}
 			fs_check_private_dir();
 			arg_private = 1;
 		}
@@ -842,6 +846,10 @@ int main(int argc, char **argv) {
 			
 			// extract private home dirname
 			cfg.home_private_keep = argv[i] + 15;
+			if (*cfg.home_private_keep == '\0') {
+				fprintf(stderr, "Error: invalid private-home option\n");
+				exit(1);
+			}
 			fs_check_home_list();
 			arg_private = 1;
 		}
@@ -851,12 +859,25 @@ int main(int argc, char **argv) {
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
 			// extract private etc dirname
 			cfg.etc_private_keep = argv[i] + 14;
+			if (*cfg.etc_private_keep == '\0') {
+				fprintf(stderr, "Error: invalid private-etc option\n");
+				exit(1);
+			}
 			fs_check_etc_list();
-			arg_private_etc = 1;
+			if (*cfg.etc_private_keep != '\0')
+				arg_private_etc = 1;
+			else {
+				arg_private_etc = 0;
+				fprintf(stderr, "Warning: private-etc disabled, no file found\n");
+			}
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			// extract private etc dirname
 			cfg.bin_private_keep = argv[i] + 14;
+			if (*cfg.bin_private_keep == '\0') {
+				fprintf(stderr, "Error: invalid private-bin option\n");
+				exit(1);
+			}
 			fs_check_bin_list();
 			arg_private_bin = 1;
 		}

@@ -380,8 +380,12 @@ int sandbox(void* sandbox_arg) {
 	
 	if (arg_private_dev)
 		fs_private_dev();
-	if (arg_private_etc)
+	if (arg_private_etc) {
 		fs_private_etc_list();
+		// create /etc/ld.so.preload file again
+		if (arg_trace || arg_tracelog)
+			fs_trace_preload();
+	}
 	if (arg_private_bin)
 		fs_private_bin_list();
 	

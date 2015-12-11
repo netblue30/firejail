@@ -205,6 +205,13 @@ static void disable_file(OPERATION op, const char *filename) {
 		else {
 			if (arg_debug)
 				printf("Disable %s\n", fname);
+			else if (arg_debug_blacklists) {
+				printf("Disable %s", fname);
+				if (op == BLACKLIST_FILE)
+					printf("\n");
+				else
+					printf(" - no logging\n");
+			}
 			if (S_ISDIR(s.st_mode)) {
 				if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 					errExit("disable file");

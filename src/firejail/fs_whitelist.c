@@ -46,7 +46,7 @@ static char *resolve_downloads(void) {
 			errExit("asprintf");
 		
 		if (stat(fname, &s) == 0) {
-			if (arg_debug)
+			if (arg_debug || arg_debug_whitelists)
 				printf("Downloads directory resolved as \"%s\"\n", fname);
 			
 			char *rv;
@@ -86,10 +86,10 @@ static char *resolve_downloads(void) {
 			if (ptr2) {
 				fclose(fp);
 				*ptr2 = '\0';
-				if (arg_debug)
+				if (arg_debug || arg_debug_whitelists)
 					printf("extracted %s from ~/.config/user-dirs.dirs\n", ptr1);
 				if (strlen(ptr1) != 0) {
-					if (arg_debug)
+					if (arg_debug || arg_debug_whitelists)
 						printf("Downloads directory resolved as \"%s\"\n", ptr1);
 				
 					if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
@@ -244,11 +244,11 @@ static void whitelist_path(ProfileEntry *entry) {
 	// check if the file exists
 	struct stat s;
 	if (wfile && stat(wfile, &s) == 0) {
-		if (arg_debug)
+		if (arg_debug || arg_debug_whitelists)
 			printf("Whitelisting %s\n", path);
 	}
 	else {
-		if (arg_debug) {
+		if (arg_debug || arg_debug_whitelists) {
 			fprintf(stderr, "Warning: %s is an invalid file, skipping...\n", path);
 		}
 		return;
@@ -341,7 +341,7 @@ void fs_whitelist(void) {
 		char *fname = realpath(new_name, NULL);
 		if (!fname) {
 			// file not found, blank the entry in the list and continue
-			if (arg_debug) {
+			if (arg_debug || arg_debug_whitelists) {
 				printf("Removed whitelist path: %s\n", entry->data);
 				printf("\texpanded: %s\n", new_name);
 				printf("\treal path: (null)\n");
@@ -360,7 +360,7 @@ void fs_whitelist(void) {
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			// whitelisting home directory is disabled if --private or --private-home option is present
 			if (arg_private) {
-				if (arg_debug)
+				if (arg_debug || arg_debug_whitelists)
 					printf("Removed whitelist path %s, --private option is present\n", entry->data);
 
 				*entry->data = '\0';
@@ -425,7 +425,7 @@ void fs_whitelist(void) {
 			if (asprintf(&newdata, "whitelist %s", fname) == -1)
 				errExit("asprintf");
 			entry->data = newdata;
-			if (arg_debug)
+			if (arg_debug || arg_debug_whitelists)
 				printf("Replaced whitelist path: %s\n", entry->data);
 		}
 		free(fname);
@@ -469,7 +469,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 	
 		// mount tmpfs on /tmp
-		if (arg_debug)
+		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /tmp directory\n");
 		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 			errExit("mounting tmpfs on /tmp");
@@ -491,7 +491,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 	
 		// mount tmpfs on /media
-		if (arg_debug)
+		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /media directory\n");
 		if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /media");
@@ -513,7 +513,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 	
 		// mount tmpfs on /var
-		if (arg_debug)
+		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /var directory\n");
 		if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /var");
@@ -535,7 +535,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 	
 		// mount tmpfs on /dev
-		if (arg_debug)
+		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /dev directory\n");
 		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /dev");
@@ -557,7 +557,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 	
 		// mount tmpfs on /opt
-		if (arg_debug)
+		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /opt directory\n");
 		if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /opt");
@@ -588,7 +588,7 @@ void fs_whitelist(void) {
 				int rv = symlink(entry->data + 10, entry->link);
 				if (rv)
 					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
-				else if (arg_debug)
+				else if (arg_debug || arg_debug_whitelists)
 					printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
 			}
 		}

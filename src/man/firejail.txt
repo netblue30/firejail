@@ -243,6 +243,16 @@ Example:
 $ firejail \-\-debug firefox
 
 .TP
+\fB\-\-debug-blackilsts\fR
+Debug blacklisting.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-debug-blacklists firefox
+
+.TP
 \fB\-\-debug-caps
 Print all recognized capabilities in the current Firejail software build and exit.
 .br
@@ -251,6 +261,16 @@ Print all recognized capabilities in the current Firejail software build and exi
 Example:
 .br
 $ firejail \-\-debug-caps
+.TP
+\fB\-\-debug-check-filename\fR
+Debug filename checking.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-debug-check-filename firefox
+
 .TP
 \fB\-\-debug-errnos
 Print all recognized error numbers in the current Firejail software build and exit.
@@ -278,6 +298,16 @@ Print all recognized system calls in the current Firejail software build and exi
 Example:
 .br
 $ firejail \-\-debug-syscalls
+.TP
+\fB\-\-debug-whitelsts\fR
+Debug whitelisting.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-debug-whitelists firefox
+
 .TP
 \fB\-\-defaultgw=address
 Use this address as default gateway in the new network namespace.

@@ -65,15 +65,22 @@ void usage(void) {
 	printf("\t--cpu=cpu-number,cpu-number - set cpu affinity.\n");
 	printf("\t\tExample: cpu=0,1,2\n\n");
 	printf("\t--csh - use /bin/csh as default shell.\n\n");
+
 	printf("\t--debug - print sandbox debug messages.\n\n");
+	printf("\t--debug-blacklists - debug blacklisting.\n\n");
 	printf("\t--debug-caps - print all recognized capabilities in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
+	printf("\t--debug-check-filename - debug filename checking.\n\n");
 	printf("\t--debug-errnos - print all recognized error numbres in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--debug-protocols - print all recognized protocols in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--debug-syscalls - print all recognized system calls in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
+	printf("\t--debug-whitelists - debug whitelisting.\n\n");
+
+
+
 	printf("\t--defaultgw=address - use this address as default gateway in the new\n");
 	printf("\t\tnetwork namespace.\n\n");
 	printf("\t--dns=address - set a DNS server for the sandbox. Up to three DNS\n");

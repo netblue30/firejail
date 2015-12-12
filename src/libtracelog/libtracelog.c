@@ -66,6 +66,13 @@ static void storage_add(const char *str) {
 #ifdef DEBUG
 	printf("add %s\n", str);
 #endif
+	if (!str) {
+#ifdef DEBUG
+		printf("null pointer passed to storage_add\n");
+#endif			
+		return;
+	}
+	
 	ListElem *ptr = malloc(sizeof(ListElem));
 	if (!ptr) {
 		fprintf(stderr, "Error: cannot allocate memory\n");
@@ -88,6 +95,12 @@ static char *storage_find(const char *str) {
 #ifdef DEBUG
 	printf("storage find %s\n", str);
 #endif
+	if (!str) {
+#ifdef DEBUG
+		printf("null pointer passed to storage_find\n");
+#endif			
+		return NULL;
+	}
 	const char *tofind = str;
 	int allocated = 0;
 
@@ -193,6 +206,13 @@ void load_blacklist(void) {
 
 
 static void sendlog(const char *name, const char *call, const char *path) {
+	if (!name || !call || !path) {
+#ifdef DEBUG
+		printf("null pointer passed to sendlog\n");
+#endif
+		return;
+	}		
+		
 	openlog ("firejail", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 	if (sandbox_pid_str && sandbox_name_str)
 		syslog (LOG_INFO, "blacklist violation - sandbox %s, name %s, exe %s, syscall %s, path %s",
@@ -268,7 +288,7 @@ typedef int (*orig_open_t)(const char *pathname, int flags, mode_t mode);
 static orig_open_t orig_open = NULL;
 int open(const char *pathname, int flags, mode_t mode) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_open)
 		orig_open = (orig_open_t)dlsym(RTLD_NEXT, "open");
@@ -310,7 +330,7 @@ typedef int (*orig_openat_t)(int dirfd, const char *pathname, int flags, mode_t 
 static orig_openat_t orig_openat = NULL;
 int openat(int dirfd, const char *pathname, int flags, mode_t mode) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_openat)
 		orig_openat = (orig_openat_t)dlsym(RTLD_NEXT, "openat");
@@ -327,7 +347,7 @@ typedef int (*orig_openat64_t)(int dirfd, const char *pathname, int flags, mode_
 static orig_openat64_t orig_openat64 = NULL;
 int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_openat64)
 		orig_openat64 = (orig_openat64_t)dlsym(RTLD_NEXT, "openat64");
@@ -344,7 +364,7 @@ int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 // fopen
 FILE *fopen(const char *pathname, const char *mode) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_fopen)
 		orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
@@ -360,7 +380,7 @@ FILE *fopen(const char *pathname, const char *mode) {
 #ifdef __GLIBC__
 FILE *fopen64(const char *pathname, const char *mode) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_fopen64)
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
@@ -380,7 +400,7 @@ typedef FILE *(*orig_freopen_t)(const char *pathname, const char *mode, FILE *st
 static orig_freopen_t orig_freopen = NULL;
 FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_freopen)
 		orig_freopen = (orig_freopen_t)dlsym(RTLD_NEXT, "freopen");
@@ -398,7 +418,7 @@ typedef FILE *(*orig_freopen64_t)(const char *pathname, const char *mode, FILE *
 static orig_freopen64_t orig_freopen64 = NULL;
 FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_freopen64)
 		orig_freopen64 = (orig_freopen64_t)dlsym(RTLD_NEXT, "freopen64");
@@ -417,7 +437,7 @@ typedef int (*orig_unlink_t)(const char *pathname);
 static orig_unlink_t orig_unlink = NULL;
 int unlink(const char *pathname) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_unlink)
 		orig_unlink = (orig_unlink_t)dlsym(RTLD_NEXT, "unlink");
@@ -434,7 +454,7 @@ typedef int (*orig_unlinkat_t)(int dirfd, const char *pathname, int flags);
 static orig_unlinkat_t orig_unlinkat = NULL;
 int unlinkat(int dirfd, const char *pathname, int flags) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_unlinkat)
 		orig_unlinkat = (orig_unlinkat_t)dlsym(RTLD_NEXT, "unlinkat");
@@ -452,7 +472,7 @@ typedef int (*orig_mkdir_t)(const char *pathname, mode_t mode);
 static orig_mkdir_t orig_mkdir = NULL;
 int mkdir(const char *pathname, mode_t mode) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_mkdir)
 		orig_mkdir = (orig_mkdir_t)dlsym(RTLD_NEXT, "mkdir");
@@ -469,7 +489,7 @@ typedef int (*orig_mkdirat_t)(int dirfd, const char *pathname, mode_t mode);
 static orig_mkdirat_t orig_mkdirat = NULL;
 int mkdirat(int dirfd, const char *pathname, mode_t mode) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_mkdirat)
 		orig_mkdirat = (orig_mkdirat_t)dlsym(RTLD_NEXT, "mkdirat");
@@ -486,7 +506,7 @@ typedef int (*orig_rmdir_t)(const char *pathname);
 static orig_rmdir_t orig_rmdir = NULL;
 int rmdir(const char *pathname) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_rmdir)
 		orig_rmdir = (orig_rmdir_t)dlsym(RTLD_NEXT, "rmdir");
@@ -504,7 +524,7 @@ typedef int (*orig_stat_t)(const char *pathname, struct stat *buf);
 static orig_stat_t orig_stat = NULL;
 int stat(const char *pathname, struct stat *buf) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_stat)
 		orig_stat = (orig_stat_t)dlsym(RTLD_NEXT, "stat");
@@ -522,7 +542,7 @@ typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
 static orig_stat64_t orig_stat64 = NULL;
 int stat64(const char *pathname, struct stat64 *buf) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_stat)
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
@@ -540,7 +560,7 @@ typedef int (*orig_lstat_t)(const char *pathname, struct stat *buf);
 static orig_lstat_t orig_lstat = NULL;
 int lstat(const char *pathname, struct stat *buf) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_lstat)
 		orig_lstat = (orig_lstat_t)dlsym(RTLD_NEXT, "lstat");
@@ -558,7 +578,7 @@ typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *buf);
 static orig_lstat64_t orig_lstat64 = NULL;
 int lstat64(const char *pathname, struct stat64 *buf) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_lstat)
 		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
@@ -577,7 +597,7 @@ typedef int (*orig_access_t)(const char *pathname, int mode);
 static orig_access_t orig_access = NULL;
 int access(const char *pathname, int mode) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s, %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_access)
 		orig_access = (orig_access_t)dlsym(RTLD_NEXT, "access");
@@ -595,7 +615,7 @@ typedef DIR *(*orig_opendir_t)(const char *pathname);
 static orig_opendir_t orig_opendir = NULL;
 DIR *opendir(const char *pathname) {
 #ifdef DEBUG
-	printf("%s\n", __FUNCTION__);
+	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
 	if (!orig_opendir)
 		orig_opendir = (orig_opendir_t)dlsym(RTLD_NEXT, "opendir");

@@ -13,4 +13,5 @@ seccomp
 protocol unix,inet,inet6
 netfilter
 noroot
+tracelog
 

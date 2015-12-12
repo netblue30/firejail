@@ -10,7 +10,7 @@ firejail \-\-profile=filename.profile
 Several command line options can be passed to the program using
 profile files. Firejail chooses the profile file as follows:
 
-1. If a profile file is provided by the user with \-\-profile option, the profile file is loaded.
+\fB1.\fR If a profile file is provided by the user with \-\-profile option, the profile file is loaded.
 Example:
 .PP
 .RS
@@ -21,7 +21,7 @@ Reading profile /home/netblue/icecat.profile
 [...]
 .RE
 
-2. If a profile file with the same name as the application is present in ~/.config/firejail directory or
+\fB2.\fR If a profile file with the same name as the application is present in ~/.config/firejail directory or
 in /etc/firejail, the profile is loaded. ~/.config/firejail takes precedence over /etc/firejail. Example:
 .PP
 .RS
@@ -36,7 +36,7 @@ Reading profile /home/netblue/.config/firejail/icecat.profile
 [...]
 .RE
 
-3. Use a default.profile file if the sandbox
+\fB3.\fR Use a default.profile file if the sandbox
 is started by a regular user, or a server.profile file if the sandbox
 is started by root. Firejail looks for these files in ~/.config/firejail directory, followed by /etc/firejail directory.
 To disable default profile loading, use --noroot command option. Example:
@@ -67,10 +67,10 @@ Child process initialized
 Scripting commands:
 
 .TP
-# this is a comment
+\fB# this is a comment
 
 .TP
-\f\include other.profile
+\fBinclude other.profile
 Include other.profile file.
 
 Example: "include /etc/firejail/disable-common.inc"
@@ -81,13 +81,13 @@ file in user home directory.
 Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1" file.
 
 .TP
-\f\ noblacklist file_name
+\fBnoblacklist file_name
 If the file name matches file_name, the file will not be blacklisted in any blacklist commands that follow.
 
 Example: "noblacklist ${HOME}/.mozilla"
 
 .TP
-\f\ignore command
+\fBignore command
 Ignore command.
 
 Example: "ignore seccomp"
@@ -102,7 +102,7 @@ Use \fBprivate\fR to set private mode.
 File globbing is supported, and PATH and HOME directories are searched.
 Examples:
 .TP
-\f\blacklist file_or_directory
+\fBblacklist file_or_directory
 Blacklist directory or file. Examples:
 .br
 
@@ -116,118 +116,117 @@ blacklist ${PATH}/ifconfig
 blacklist ${HOME}/.ssh
 
 .TP
-\f\read-only file_or_directory
+\fBread-only file_or_directory
 Make directory or file read-only.
 .TP
-\f\ tmpfs directory
+\fBtmpfs directory
 Mount an empty tmpfs filesystem on top of directory.
 .TP
-\f\bind directory1,directory2
+\fBbind directory1,directory2
 Mount-bind directory1 on top of directory2. This option is only available when running as root.
 .TP
-\f\bind file1,file2
+\fBbind file1,file2
 Mount-bind file1 on top of file2. This option is only available when running as root.
 .TP
-\f\private
+\fBprivate
 Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is
 closed.
 .TP
-\f\private-bin file,file
+\fBprivate-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
 The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
 .TP
-\f\private directory
+\fBprivate directory
 Use directory as user home.
 .TP
-\f\private-home file,directory
+\fBprivate-home file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
 new home. All modifications are discarded when the sandbox is
 closed.
 .TP
-\f\private-dev
+\fBprivate-dev
 Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, urandom, log and shm devices are available.
 .TP
-\f\private-etc file,directory
+\fBprivate-etc file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
 All modifications are discarded when the sandbox is closed.
 .TP
-\f\whitelist file_or_directory
+\fBwhitelist file_or_directory
 Build a new user home in a temporary filesystem, and mount-bind file_or_directory.
 The modifications to file_or_directory are persistent, everything else is discarded
 when the sandbox is closed.
 .TP
-\f\ tracelog
+\fBtracelog
 Blacklist violations logged to syslog.
-.SH Filters
-\fBcaps\fR and \fBseccomp\fR enable Linux capabilities and seccomp filters. Examples:
+.SH Security filters
+The following security filters are currently implemented:
 
 .TP
-caps
+\fBcaps
 Enable default Linux capabilities filter.
 .TP
-caps.drop all
+\fBcaps.drop all
 Blacklist all Linux capabilities.
 .TP
-caps.drop capability,capability,capability
+\fBcaps.drop capability,capability,capability
 Blacklist given Linux capabilities.
 .TP
-caps.keep capability,capability,capability
+\fBcaps.keep capability,capability,capability
 Whitelist given Linux capabilities.
 .TP
-\f\seccomp
+\fBprotocol protocol1,protocol2,protocol3
+Enable protocol filter. The filter is based on seccomp and  checks the
+first argument to socket system call. Recognized values: \fBunix\fR,
+\fBinet\fR, \fBinet6\fR, \fBnetlink\fR and \fBpacket\fR.
+.TP
+\fBseccomp
 Enable default seccomp filter.  The default list is as follows:
 mount, umount2, ptrace, kexec_load, open_by_handle_at, init_module, finit_module, delete_module,
 iopl, ioperm, swapon, swapoff, syslog, process_vm_readv and process_vm_writev,
 sysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie, perf_event_open, fanotify_init and kcmp.
 .TP
-\f\seccomp syscall,syscall,syscall
+\fBseccomp syscall,syscall,syscall
 Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter.
 .TP
-\f\seccomp.drop syscall,syscall,syscall
+\fBseccomp.drop syscall,syscall,syscall
 Enable seccomp filter and blacklist  the system calls in the list.
 .TP
-\f\seccomp.keep syscall,syscall,syscall
+\fBseccomp.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list.
-
-
-.SH User Namespace
-Use \fBnoroot\fR to enable an user namespace. The namespace has only one user, the current user.
-There is no root account defined in the namespace.
-
 .TP
-noroot
-Enable an user namespace without root user defined.
-
+\fBnoroot
+Use this command  to enable an user namespace. The namespace has only one user, the current user.
+There is no root account (uid 0) defined in the namespace.
 
 .SH Resource limits
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
-The limits can be modified inside the sandbox using the regular \fBulimit\fR command. Examples:
+The limits can be modified inside the sandbox using the regular \fBulimit\fR command. Example:
 
 .TP
-\f\rlimit-fsize 1024
+\fBrlimit-fsize 1024
 Set the maximum file size that can be created by a process to 1024 bytes.
 .TP
-\f\rlimit-nproc 1000
+\fBrlimit-nproc 1000
 Set the maximum number of processes that can be created for the real user ID of the calling process to 1000.
 .TP
-\f\rlimit-nofile 500
+\fBrlimit-nofile 500
 Set the maximum number of files that can be opened by a process to 500.
 .TP
-\f\rlimit-sigpending 200
+\fBrlimit-sigpending 200
 Set the maximum number of processes that can be created for the real user ID of the calling process to 200.
 
 .SH CPU Affinity
-Set the CPU cores available for this sandbox. Examples:
+Set the CPU cores available for this sandbox using \fBcpu\fR command. Examples:
 
 .TP
 cpu 1,2,3
 Use only CPU cores 0, 1 and 2.
 
 .SH Control Groups
-Place the sandbox in an existing control group specified by the full path of the task file. Example:
+Place the sandbox in an existing control group specified by the full path of the task file using \fBcgroup\fR. Example:
 
 .TP
 cgroup /sys/fs/cgroup/g1/tasks
@@ -236,7 +235,7 @@ The sandbox is placed in g1 control group.
 .SH User Environment
 
 .TP
-env name=value
+\fBenv name=value
 Set environment variable. Examples:
 .br
 
@@ -246,36 +245,36 @@ env LD_LIBRARY_PATH=/opt/test/lib
 env CFLAGS="-W -Wall -Werror"
 
 .TP
-nogroups
+\fBnogroups
 Disable supplementary user groups
 .TP
-shell none
+\fBshell none
 Run the program directly, without a shell.
 
 .SH Networking
 Networking features available in profile files.
 
 .TP
-netfilter
+\fBnetfilter
 If a new network namespace is created, enabled default network filter.
 
 .TP
-netfilter filename
+\fBnetfilter filename
 If a new network namespace is created, enabled the network filter in filename.
 
 .TP
-net none
+\fBnet none
 Enable  a new, unconnected network namespace. The only interface
 available in the new namespace is a new loopback interface (lo).
 Use  this  option  to deny network access to programs that don't
 really need network access.
 
 .TP
-dns address
+\fBdns address
 Set a DNS server for the sandbox. Up to three DNS servers can be defined.
 
 .TP
-hostname name
+\fBhostname name
 Set a hostname for the sandbox.
 
 .SH RELOCATING PROFILES

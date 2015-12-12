@@ -114,11 +114,3 @@ rework the calls to invalid_filename(), depending if globing is allowed or not, 
 The POSIX standard defines what a “portable filename” is. This turns out to be just A-Z, a-z, 0-9, <period>, <underscore>, and <hyphen>
 http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_276
 
-22. Fix manpage:
-W: firejail: manpage-has-errors-from-man usr/share/man/man5/firejail-profile.5.gz 84: `\ ' is not allowed in an escape name
-if building a 32bit package, rename the deb file manually
-
-23. transmission-gtk when using tracelog:
-
-Dec 12 07:32:36 debian kernel: [ 1564.772297] transmission-gt[3680]: segfault at 0 ip 00007f44ba515348 
-sp 00007ffee7154288 error 4 in libc-2.13.so[7f44ba400000+

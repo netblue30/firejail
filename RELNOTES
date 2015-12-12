@@ -14,7 +14,7 @@ firejail (0.9.36-rc1) baseline; urgency=low
   * added /etc/firejail/nolocal.net network filter
   * added /etc/firejail/webserver.net network filter
   * blacklisting firejail configuration by default
-  * alow default gateway configuration for --interface option
+  * allow default gateway configuration for --interface option
   * --debug enhancements: --debug-check-filenames, --debug-blacklists,
     --debug-whitelists
   * filesystem log

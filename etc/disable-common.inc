@@ -5,7 +5,7 @@ blacklist-nolog ${HOME}/.*_history
 # HTTP / FTP / Mail
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.macromedia
-blacklist-nolog ${HOME}/.mozilla
+blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.sylpheed-2.0

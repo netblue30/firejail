@@ -77,7 +77,6 @@ socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
 
 13. While using --net=eth0 assign the name of the interface inside the sandbox as eth0
 
-14. check chroot does not allow on symlinks
 15. do not attempt to mount /sys if unmount fails
 
 $ firejail --noprofile --chroot=/tmp/chroot
@@ -98,52 +97,9 @@ Child process initialized
 16. add support for --ip, --iprange, --mac and --mtu for --interface option
 
 17. private-home clashing with blacklist
-$ firejail --private-home=.mozilla
-Reading profile /etc/firejail/generic.profile
-Reading profile /etc/firejail/disable-mgmt.inc
-Reading profile /etc/firejail/disable-secret.inc
-Reading profile /etc/firejail/disable-common.inc
-
-** Note: you can use --noprofile to disable generic.profile **
-
-Parent pid 8193, child pid 8194
-/run/firejail/mnt/cp: cannot access `/home/netblue/.mozilla': Permission denied
-Error system cp -a --parents:duplicate(381): No such file or directory
-Child process initialized
-$ ls -la
-total 4
-drwx------ 3 test  test   100 Nov 25 07:59 .
-drwxr-xr-x 3 65534 65534   60 Nov 25 07:59 ..
--rw-r--r-- 1 test  test  3392 Nov 25 07:59 .bashrc
-dr-x------ 2 65534 65534   40 Nov 24 17:53 .mozilla
--rw------- 1 test  test     0 Nov 25 07:59 .Xauthority
-
-
-
-
-18. whitelist clashing with blacklist
-$ firejail --whitelist=~/.mozilla
-Reading profile /etc/firejail/generic.profile
-Reading profile /etc/firejail/disable-mgmt.inc
-Reading profile /etc/firejail/disable-secret.inc
-Reading profile /etc/firejail/disable-common.inc
-
-** Note: you can use --noprofile to disable generic.profile **
-
-Parent pid 9440, child pid 9441
-Child process initialized
-$ ls -al
-total 8
-drwx------ 3 netblue netblue  100 Nov 25 08:09 .
-drwxr-xr-x 3   65534   65534   60 Nov 25 08:09 ..
--rw-r--r-- 1 netblue netblue 3392 Nov 25 08:09 .bashrc
-dr-x------ 2   65534   65534   40 Nov 24 17:53 .mozilla
--rw------- 1 netblue netblue   51 Nov 25 08:09 .Xauthority
-
+whitelist clashing with blacklist
 
 19. Try --overlay on a Ubuntu 14.04 32bit.Without adding --dns, there will be no network connectivity - see issue 151
-
-20. blacklist ~/.cache in disable-common.inc???
 
 21. restrict chars in filenames
 

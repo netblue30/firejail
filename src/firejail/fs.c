@@ -86,10 +86,12 @@ void fs_build_firejail_dir(void) {
 
 // build /tmp/firejail/mnt directory
 static int tmpfs_mounted = 0;
+#ifdef HAVE_CHROOT		
 static void fs_build_remount_mnt_dir(void) {
 	tmpfs_mounted = 0;
 	fs_build_mnt_dir();
 }
+#endif
 
 void fs_build_mnt_dir(void) {
 	struct stat s;

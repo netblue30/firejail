@@ -5,8 +5,8 @@ VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 HAVE_FATAL_WARNINGS=@HAVE_FATAL_WARNINGS@
 
-H_FILE_LIST       = $(wildcard *.[h])
-C_FILE_LIST       = $(wildcard *.c)
+H_FILE_LIST       = $(sort $(wildcard *.[h]))
+C_FILE_LIST       = $(sort $(wildcard *.c))
 OBJS = $(C_FILE_LIST:.c=.o)
 BINOBJS =  $(foreach file, $(OBJS), $file)
 CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -DPREFIX='"$(PREFIX)"' -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security

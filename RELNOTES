@@ -22,6 +22,7 @@ firejail (0.9.36-rc1) baseline; urgency=low
   * added --tracelog option
   * added "hostname" command to profile files
   * added automated feature testing framework
+  * Debian reproductible build
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Tue, 8 Nov 2015 09:00:00 -0500
 

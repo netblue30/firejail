@@ -136,6 +136,6 @@ Start Firejail using the new path:
 $ firejail --profile-path=~/myprofiles
 `````
 
-### Debian reproductible build
+### Debian reproducible build
 
 ### Added "name" and "hostname" command support in profile files

@@ -74,7 +74,7 @@ Reiner Herrmann
 	- man page fixes
 	- Debian and Ubuntu integration
 	- clang-analyzer fixes
-	- Debian reproductible build
+	- Debian reproducible build
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)

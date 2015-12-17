@@ -233,6 +233,13 @@ cgroup /sys/fs/cgroup/g1/tasks
 The sandbox is placed in g1 control group.
 
 .SH User Environment
+.TP
+\fBname sandboxname
+Set sandbox name. Example:
+.br
+
+.br
+name browser
 
 .TP
 \fBenv name=value

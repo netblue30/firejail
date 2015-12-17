@@ -137,3 +137,5 @@ $ firejail --profile-path=~/myprofiles
 `````
 
 ### Debian reproductible build
+
+### Added "name" and "hostname" command support in profile files

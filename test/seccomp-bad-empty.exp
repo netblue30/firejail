@@ -25,14 +25,14 @@ expect {
 send --  "firejail --profile=seccomp-bad-empty.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Error: line 1 in the custom profile is invalid"
+	"Error: line 1 in seccomp-bad-empty.profile is invalid"
 }
 
 send --  "firejail --profile=seccomp-bad-empty2.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"Error: line 1 in the custom profile is invalid"
+	"Error: line 1 in seccomp-bad-empty2.profile is invalid"
 }
 sleep 1
-puts "\n"
+puts "\nall done\n"
 

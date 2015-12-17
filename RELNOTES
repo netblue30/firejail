@@ -20,6 +20,7 @@ firejail (0.9.36-rc1) baseline; urgency=low
   * filesystem log
   * libtrace enhancements, tracing opendir call
   * added --tracelog option
+  * added "name" command to profile files
   * added "hostname" command to profile files
   * added automated feature testing framework
   * Debian reproductible build

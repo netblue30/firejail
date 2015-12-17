@@ -276,9 +276,9 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// log sandbox data
 	//****************************
-	fs_logger2int("sandbox pid:", (int) sandbox_pid);
 	if (cfg.name)
 		fs_logger2("sandbox name:", cfg.name);
+	fs_logger2int("sandbox pid:", (int) sandbox_pid);
 	if (cfg.chrootdir)
 		fs_logger("sandbox filesystem: chroot");
 	else if (arg_overlay)	

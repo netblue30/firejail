@@ -31,6 +31,7 @@
 #include <dirent.h>
 #include <string.h>
 #include "../include/common.h"
+#define BUFLEN 4096
 
 int join_namespace(pid_t pid, char *type) {
 	char *path;
@@ -100,6 +101,32 @@ int name2pid(const char *name, pid_t *pid) {
 			char *start = ptr;
 			if (!ptr) {
 				free(cmd);
+				
+				// extract name for /run/mnt/firejail/fslogger file
+				char *fname;
+				if (asprintf(&fname, "/proc/%d/root/run/firejail/mnt/fslogger", newpid) == -1)
+					errExit("asprintf");
+
+				struct stat s;
+				if (stat(fname, &s) == 0) {
+					FILE *fp = fopen(fname, "r");
+					if (fp) {
+						char buf[BUFLEN];
+						if (fgets(buf, BUFLEN, fp)) {
+							if (strncmp(buf, "sandbox name: ", 14) == 0) {
+								char *ptr2 = buf + 14;
+								if (strncmp(name, ptr2, strlen(name)) == 0) {
+									fclose(fp);
+									*pid = newpid;
+									closedir(dir);
+									return 0;
+								}
+							}
+						}
+						fclose(fp);
+					}
+				}	
+				
 				continue;
 			}
 			while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
@@ -119,7 +146,6 @@ int name2pid(const char *name, pid_t *pid) {
 	return 1;
 }
 
-#define BUFLEN 4096
 char *pid_proc_comm(const pid_t pid) {
 	// open /proc/pid/cmdline file
 	char *fname;

@@ -98,8 +98,11 @@ echo "TESTING: join"
 echo "TESTING: join profile"
 ./option-join-profile.exp
 
-echo "TESTING: firejail in firejail"
+echo "TESTING: firejail in firejail - single sandbox"
 ./firejail-in-firejail.exp
+
+echo "TESTING: firejail in firejail - force new sandbox"
+./firejail-in-firejail2.exp
 
 echo "TESTING: chroot overlay"
 ./option_chroot_overlay.exp

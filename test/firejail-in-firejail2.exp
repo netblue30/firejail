@@ -4,17 +4,17 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail\r"
+send --  "firejail --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send --  "firejail\r"
+send --  "firejail --force\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Warning: an existing sandbox was detected"
+	"Child process initialized"
 }
 sleep 1
 

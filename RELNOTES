@@ -9,6 +9,7 @@ firejail (0.9.36-rc1) baseline; urgency=low
   * added opera-beta profile
   * added --noblacklist option
   * added --profile-path option
+  * added --force option
   * whitelist command enhancements
   * prevent user name enumeration
   * added /etc/firejail/nolocal.net network filter

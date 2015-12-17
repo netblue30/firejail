@@ -425,10 +425,21 @@ int main(int argc, char **argv) {
 	// check if we already have a sandbox running
 	int rv = check_kernel_procs();
 	if (rv == 0) {
-		// start the program directly without sandboxing
-		run_no_sandbox(argc, argv);
-		// it will never get here!
-		assert(0);
+		// if --force option is passed to the program, disregard the existing sandbox
+		int found = 0;
+		for (i = 1; i < argc; i++) {
+			if (strcmp(argv[i], "--force") == 0) {
+				found = 1;
+				break;
+			}
+		}
+		
+		if (found == 0) {
+			// start the program directly without sandboxing
+			run_no_sandbox(argc, argv);
+			// it will never get here!
+			assert(0);
+		}
 	}
 
 	// initialize globals
@@ -478,6 +489,8 @@ int main(int argc, char **argv) {
 			arg_debug_whitelists = 1;
 		else if (strcmp(argv[i], "--quiet") == 0)
 			arg_quiet = 1;
+		else if (strcmp(argv[i], "--force") == 0)
+			;
 		
 		//*************************************
 		// filtering

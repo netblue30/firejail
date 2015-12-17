@@ -65,7 +65,7 @@ int profile_find(const char *name, const char *dir) {
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
-int profile_check_line(char *ptr, int lineno) {
+int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// check ignore list
 	int i;
 	for (i = 0; i < MAX_PROFILE_IGNORE; i++) {
@@ -99,8 +99,17 @@ int profile_check_line(char *ptr, int lineno) {
 		return 0;
 	}
 
+	// sandbox name
+	if (strncmp(ptr, "name ", 5) == 0) {
+		cfg.name = ptr + 5;
+		if (strlen(cfg.name) == 0) {
+			fprintf(stderr, "Error: invalid sandbox name\n");
+			exit(1);
+		}
+		return 0;
+	}
 	// seccomp, caps, private, user namespace
-	if (strcmp(ptr, "noroot") == 0) {
+	else if (strcmp(ptr, "noroot") == 0) {
 		check_user_namespace();
 		return 0;
 	}
@@ -395,6 +404,8 @@ int profile_check_line(char *ptr, int lineno) {
 	else {
 		if (lineno == 0)
 			fprintf(stderr, "Error: \"%s\" as a command line option is invalid\n", ptr);
+		else if (fname != NULL)
+			fprintf(stderr, "Error: line %d in %s is invalid\n", lineno, fname);
 		else
 			fprintf(stderr, "Error: line %d in the custom profile is invalid\n", lineno);
 		exit(1);
@@ -405,6 +416,8 @@ int profile_check_line(char *ptr, int lineno) {
 	if (strstr(ptr, "..")) {
 		if (lineno == 0)
 			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
+		else if (fname != NULL)
+			fprintf(stderr, "Error: line %d in %s is invalid\n", lineno, fname);
 		else
 			fprintf(stderr, "Error: line %d in the custom profile is invalid\n", lineno);
 		exit(1);
@@ -492,7 +505,7 @@ void profile_read(const char *fname) {
 		}
 		
 		// verify syntax, exit in case of error
-		if (profile_check_line(ptr, lineno))
+		if (profile_check_line(ptr, lineno, fname))
 			profile_add(ptr);
 	}
 	fclose(fp);

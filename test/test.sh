@@ -95,6 +95,9 @@ echo "TESTING: shutdown"
 echo "TESTING: join"
 ./option-join.exp
 
+echo "TESTING: join profile"
+./option-join-profile.exp
+
 echo "TESTING: firejail in firejail"
 ./firejail-in-firejail.exp
 

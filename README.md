@@ -20,61 +20,25 @@ prefix your command with “firejail”:
 $ firejail firefox            # starting Mozilla Firefox
 $ firejail transmission-gtk   # starting Transmission BitTorrent 
 $ firejail vlc                # starting VideoLAN Client
-$ sudo firejail "/etc/init.d/nginx start && sleep inf"
+$ sudo firejail /etc/init.d/nginx start
 `````
-Project webpage: https://l3net.wordpress.com/projects/firejail/
+Project webpage: https://firejail.wordpress.com/
 
-Download and Installation: https://l3net.wordpress.com/projects/firejail/firejail-download-and-install/
+Download and Installation: https://firejail.wordpress.com/download-2/
 
-Features: https://l3net.wordpress.com/projects/firejail/firejail-features/
+Features: https://firejail.wordpress.com/features-3/
 
-Usage: https://l3net.wordpress.com/projects/firejail/firejail-usage/
+Documentation: https://firejail.wordpress.com/documentation-2/
 
-FAQ: https://l3net.wordpress.com/projects/firejail/firejail-faq/
+FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 ## Development version 0.9.35
 
-### Firefox whitelists:
-
-The current whitelist of files and directories for Firefox is as follows:
-`````
-whitelist ~/.mozilla (0.9.34)
-whitelist ~/Downloads (0.9.34)
-whitelist ~/Загрузки (new in 0.9.35)
-whitelist ~/dwhelper (0.9.34)
-whitelist ~/.cache/mozilla/firefox (new in 0.9.35)
-whitelist ~/.zotero (0.9.34)
-whitelist ~/.lastpass (0.9.34)
-whitelist ~/.vimperatorrc (0.9.34)
-whitelist ~/.vimperator (0.9.34)
-whitelist ~/.pentadactylrc (0.9.34)
-whitelist ~/.pentadactyl (0.9.34)
-whitelist ~/.config/gnome-mplayer (new in 0.9.35)
-whitelist ~/.cache/gnome-mplayer/plugin (new in 0.9.35)
-include /etc/firejail/whitelist-common.inc
-`````
-/etc/firejail/whitelist-common.inc
-`````
-whitelist ~/.config/mimeapps.list (new in 0.9.35)
-whitelist ~/.icons (new in 0.9.35)
-
-# fonts
-whitelist ~/.fonts (0.9.34)
-whitelist ~/.fonts.d (0.9.34)
-whitelist ~/.fontconfig (0.9.34)
-whitelist ~/.fonts.conf (0.9.34)
-whitelist ~/.fonts.conf.d (0.9.34)
-
-# gtk
-whitelist ~/.gtkrc (new in 0.9.35)
-whitelist ~/.gtkrc-2.0 (0.9.34)
-whitelist ~/.config/gtk-3.0 (new in 0.9.35)
-whitelist ~/.themes (new in 0.9.35)
-`````
-If you are using a plugin or extension that requires other directories, please open a new issue: https://github.com/netblue30/firejail/issues
+### The project has moved to a new home: https://firejail.wordpress.com/
 
 ### New security profiles:
-New profiles introduced in this version: unbound, dnscrypt-proxy
+New profiles introduced in this version: unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,
+google-chrome-stable, google-chrome-beta, google-chrome-unstable, opera-beta
 
 ### --noblacklist
 `````
@@ -135,6 +99,11 @@ Start Firejail using the new path:
 `````
 $ firejail --profile-path=~/myprofiles
 `````
+
+### --force
+
+This option allows the user to start a sandbox inside an existing sandbox. It is mainly used for running
+Firejail inside a Docker container.
 
 ### Debian reproducible build
 

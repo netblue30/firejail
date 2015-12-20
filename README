@@ -47,6 +47,7 @@ Daan Bakker (https://github.com/dbakker)
 	- protect shell startup files
 Duncan Overbruck (https://github.com/Duncaen)
 	- musl libc fix
+	- utmp fix
 andrew160 (https://github.com/andrew160)
 	- profile fixes
 Loïc Damien (https://github.com/dzamlo)

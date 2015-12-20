@@ -320,7 +320,7 @@ void fs_var_utmp(void) {
 
 	// extract utmp group id
 	gid_t utmp_group = 0;
-	if (stat("/var/run/utmp", &s) == 0)
+	if (stat(UTMP_FILE, &s) == 0)
 		utmp_group = s.st_gid;
 	else {
 		fprintf(stderr, "Warning: cannot find /var/run/utmp\n");
@@ -362,9 +362,7 @@ void fs_var_utmp(void) {
 	// mount the new utmp file
 	if (arg_debug)
 		printf("Mount the new utmp file\n");
-	if (mount(RUN_UTMP_FILE, "/var/run/utmp", NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(RUN_UTMP_FILE, UTMP_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind utmp");
 	fs_logger("create /var/run/utmp");
 }
-
-

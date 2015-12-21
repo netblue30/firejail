@@ -1221,6 +1221,10 @@ int main(int argc, char **argv) {
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
 	
+	// check trace configuration
+	if (arg_trace && arg_tracelog)
+		fprintf(stderr, "Warning: --trace and --tracelog are mutually exclusive; --tracelog disabled\n");
+	
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
 		if (arg_overlay) {

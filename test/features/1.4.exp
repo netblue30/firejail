@@ -77,33 +77,35 @@ if { $overlay == "overlay" } {
 #
 # C
 #
-send -- "firejail --noprofile --chroot=/tmp/chroot\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+if { $chroot == "chroot" } {
+	send -- "firejail --noprofile --chroot=/tmp/chroot\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "ls -l /home | wc -l\r"
+	expect {
+		timeout {puts "TESTING ERROR 5\n";exit}
+		"2"
+	}
+	after 100
+	send -- "cat /etc/passwd | grep 1001 | wc -l\r"
+	expect {
+		timeout {puts "TESTING ERROR 5.1\n";exit}
+		"0"
+	}
+	after 100
+	send -- "cat /etc/group | grep 1001 | wc -l\r"
+	expect {
+		timeout {puts "TESTING ERROR 5.2\n";exit}
+		"0"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "ls -l /home | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"2"
-}
-after 100
-send -- "cat /etc/passwd | grep 1001 | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 5.1\n";exit}
-	"0"
-}
-after 100
-send -- "cat /etc/group | grep 1001 | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 5.2\n";exit}
-	"0"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 
 puts "\nall done\n"

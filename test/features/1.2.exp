@@ -100,45 +100,47 @@ if { $overlay == "overlay" } {
 #
 # C
 #
-send -- "firejail --noprofile --chroot=/tmp/chroot\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+if { $chroot == "chroot" } {
+	send -- "firejail --noprofile --chroot=/tmp/chroot\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "cat /proc/mounts | grep proc\r"
+	expect {
+		timeout {puts "TESTING ERROR 5.1\n";exit}
+		"proc /proc proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5.2\n";exit}
+		"proc /proc proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5.3\n";exit}
+		"proc /proc/sys proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5.4\n";exit}
+		"proc /proc/sysrq-trigger proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5.5\n";exit}
+		"proc /proc/sys/kernel/hotplug"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5.6\n";exit}
+		"proc /proc/irq proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5.7\n";exit}
+		"proc /proc/bus proc"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "cat /proc/mounts | grep proc\r"
-expect {
-	timeout {puts "TESTING ERROR 5.1\n";exit}
-	"proc /proc proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.2\n";exit}
-	"proc /proc proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.3\n";exit}
-	"proc /proc/sys proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.4\n";exit}
-	"proc /proc/sysrq-trigger proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.5\n";exit}
-	"proc /proc/sys/kernel/hotplug"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.6\n";exit}
-	"proc /proc/irq proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.7\n";exit}
-	"proc /proc/bus proc"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 
 puts "\nall done\n"

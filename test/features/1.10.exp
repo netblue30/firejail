@@ -54,22 +54,24 @@ if { $overlay == "overlay" } {
 #
 # C
 #
-send -- "firejail --noprofile --chroot=/tmp/chroot\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+if { $chroot == "chroot" } {
+	send -- "firejail --noprofile --chroot=/tmp/chroot\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "ls -l /selinux\r"
+	expect {
+		timeout {puts "TESTING ERROR 5\n";exit}
+		"Permission denied" {puts "denied\n"}
+		"No such file or directory" {puts "no file\n"}
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "ls -l /selinux\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"Permission denied" {puts "denied\n"}
-	"No such file or directory" {puts "no file\n"}
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 
 puts "\nall done\n"

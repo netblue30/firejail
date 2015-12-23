@@ -84,37 +84,39 @@ if { $overlay == "overlay" } {
 #
 # C
 #
-send -- "firejail --noprofile --hostname=bingo --chroot=/tmp/chroot\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+if { $chroot == "chroot" } {
+	send -- "firejail --noprofile --hostname=bingo --chroot=/tmp/chroot\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "hostname\r"
+	expect {
+		timeout {puts "TESTING ERROR 5\n";exit}
+		"bingo"
+	}
+	after 100
+	send -- "cat /etc/hostname\r"
+	expect {
+		timeout {puts "TESTING ERROR 5.0\n";exit}
+		"bingo"
+	}
+	after 100
+	send -- "getent hosts bingo\r"
+	expect {
+		timeout {puts "TESTING ERROR 5.1\n";exit}
+		"127.0.0.1"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5.2\n";exit}
+		"bingo"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "hostname\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"bingo"
-}
-after 100
-send -- "cat /etc/hostname\r"
-expect {
-	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"bingo"
-}
-after 100
-send -- "getent hosts bingo\r"
-expect {
-	timeout {puts "TESTING ERROR 5.1\n";exit}
-	"127.0.0.1"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.2\n";exit}
-	"bingo"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 
 puts "\nall done\n"

@@ -7,6 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 set overlay [lindex $argv 0]
+set chroot [lindex $argv 1]
 
 #
 # N
@@ -52,21 +53,23 @@ if { $overlay == "overlay" } {
 #
 # C
 #
-send -- "firejail --noprofile --chroot=/tmp/chroot\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+if { $chroot == "chroot" } {
+	send -- "firejail --noprofile --chroot=/tmp/chroot\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "ls -l /boot\r"
+	expect {
+		timeout {puts "TESTING ERROR 5\n";exit}
+		"Permission denied"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "ls -l /boot\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"Permission denied"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 
 puts "\nall done\n"

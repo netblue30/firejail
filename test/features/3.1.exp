@@ -53,23 +53,25 @@ if { $overlay == "overlay" } {
 #
 # C
 #
-send -- "touch /tmp/chroot/home/netblue/.config/firejail-test-file\r"
-sleep 1
-send -- "firejail --noprofile --chroot=/tmp/chroot --tmpfs=/home/netblue/.config\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+if { $chroot == "chroot" } {
+	send -- "touch /tmp/chroot/home/netblue/.config/firejail-test-file\r"
+	sleep 1
+	send -- "firejail --noprofile --chroot=/tmp/chroot --tmpfs=/home/netblue/.config\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "ls ~/.config | wc -l\r"
+	expect {
+		timeout {puts "TESTING ERROR 5\n";exit}
+		"0"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "ls ~/.config | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"0"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 
 puts "\nall done\n"

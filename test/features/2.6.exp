@@ -51,21 +51,22 @@ if { $overlay == "overlay" } {
 #
 # C
 #
-send -- "firejail --noprofile --chroot=/tmp/chroot --net=eth0 --defaultgw=192.168.1.10\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+if { $chroot == "chroot" } {
+	send -- "firejail --noprofile --chroot=/tmp/chroot --net=eth0 --defaultgw=192.168.1.10\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "netstat -rn\r"
+	expect {
+		timeout {puts "TESTING ERROR 5\n";exit}
+		"0.0.0.0         192.168.1.10"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "netstat -rn\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"0.0.0.0         192.168.1.10"
-}
-after 100
-send -- "exit\r"
-sleep 1
-
 
 puts "\nall done\n"

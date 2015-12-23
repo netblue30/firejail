@@ -72,6 +72,6 @@ void usage(void) {
 	printf("\tUser - The owner of the sandbox.\n");
 	printf("\n");
 	printf("License GPL version 2 or later\n");
-	printf("Homepage: http://github.com/netblue30/firejail\n");
+	printf("Homepage: http://firejail.wordpress.com\n");
 	printf("\n");
 }

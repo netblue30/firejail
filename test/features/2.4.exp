@@ -8,6 +8,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 set overlay [lindex $argv 0]
+set chroot [lindex $argv 1]
 
 #
 # N

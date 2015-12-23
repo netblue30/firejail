@@ -6,6 +6,7 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set overlay [lindex $argv 0]
 
 #
 # N
@@ -54,45 +55,47 @@ sleep 1
 #
 # O
 #
-send -- "firejail --noprofile --overlay\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile --overlay\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "cat /proc/mounts | grep proc\r"
+	expect {
+		timeout {puts "TESTING ERROR 3.1\n";exit}
+		"proc /proc proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.2\n";exit}
+		"proc /proc proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.3\n";exit}
+		"proc /proc/sys proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.4\n";exit}
+		"proc /proc/sysrq-trigger proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.5\n";exit}
+		"proc /proc/sys/kernel/hotplug"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.6\n";exit}
+		"proc /proc/irq proc"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.7\n";exit}
+		"proc /proc/bus proc"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "cat /proc/mounts | grep proc\r"
-expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"proc /proc proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.2\n";exit}
-	"proc /proc proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.3\n";exit}
-	"proc /proc/sys proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.4\n";exit}
-	"proc /proc/sysrq-trigger proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.5\n";exit}
-	"proc /proc/sys/kernel/hotplug"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.6\n";exit}
-	"proc /proc/irq proc"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.7\n";exit}
-	"proc /proc/bus proc"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 #
 # C

@@ -6,6 +6,7 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set overlay [lindex $argv 0]
 
 #
 # N
@@ -20,7 +21,8 @@ sleep 1
 send -- "ls -l /selinux\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Permission denied"
+	"Permission denied" {puts "denied\n"}
+	"No such file or directory" {puts "no file\n"}
 }
 after 100
 send -- "exit\r"
@@ -30,21 +32,24 @@ sleep 1
 #
 # O
 #
-send -- "firejail --noprofile --overlay\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile --overlay\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "ls -l /selinux\r"
+	expect {
+		timeout {puts "TESTING ERROR 3\n";exit}
+		"Permission denied" {puts "denied\n"}
+		"No such file or directory" {puts "no file\n"}
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "ls -l /selinux\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"Permission denied"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 #
 # C
@@ -59,7 +64,8 @@ sleep 1
 send -- "ls -l /selinux\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Permission denied"
+	"Permission denied" {puts "denied\n"}
+	"No such file or directory" {puts "no file\n"}
 }
 after 100
 send -- "exit\r"

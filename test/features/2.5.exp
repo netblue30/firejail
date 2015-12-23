@@ -6,6 +6,7 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set overlay [lindex $argv 0]
 
 #
 # N
@@ -41,33 +42,35 @@ sleep 1
 #
 # O
 #
-send -- "firejail --noprofile --overlay --interface=eth0.6\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile --overlay --interface=eth0.6\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "/sbin/ifconfig\r"
+	expect {
+		timeout {puts "TESTING ERROR 3.4\n";exit}
+		"eth0.6"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.5n";exit}
+		"Link"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.6\n";exit}
+		"10.10.206.10"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.7\n";exit}
+		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "/sbin/ifconfig\r"
-expect {
-	timeout {puts "TESTING ERROR 3.4\n";exit}
-	"eth0.6"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.5n";exit}
-	"Link"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.6\n";exit}
-	"10.10.206.10"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.7\n";exit}
-	"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 #
 # C

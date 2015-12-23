@@ -114,3 +114,4 @@ rework the calls to invalid_filename(), depending if globing is allowed or not, 
 The POSIX standard defines what a “portable filename” is. This turns out to be just A-Z, a-z, 0-9, <period>, <underscore>, and <hyphen>
 http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_276
 
+22. --shutdown does not clear sandboxes started with --join on Debian jessie

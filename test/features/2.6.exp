@@ -6,6 +6,7 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set overlay [lindex $argv 0]
 
 #
 # N
@@ -29,21 +30,23 @@ sleep 1
 #
 # O
 #
-send -- "firejail --noprofile --overlay --net=eth0 --defaultgw=192.168.1.10\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile --overlay --net=eth0 --defaultgw=192.168.1.10\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "netstat -rn\r"
+	expect {
+		timeout {puts "TESTING ERROR 3\n";exit}
+		"0.0.0.0         192.168.1.10"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "netstat -rn\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"0.0.0.0         192.168.1.10"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 #
 # C

@@ -26,7 +26,7 @@ expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"home"
 }
-sleep 1
+sleep 5
 
 send --  "firejail --list;pwd\r"
 expect {

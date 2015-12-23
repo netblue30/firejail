@@ -6,6 +6,7 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set overlay [lindex $argv 0]
 
 #
 # N
@@ -32,21 +33,23 @@ sleep 1
 #
 # O
 #
-send -- "firejail --noprofile --overlay\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile --overlay\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "ls -l /var/tmp/somefile | wc -l\r"
+	expect {
+		timeout {puts "TESTING ERROR 3\n";exit}
+		"0"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "ls -l /var/tmp/somefile | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"0"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 #
 # C

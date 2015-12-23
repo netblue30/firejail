@@ -6,6 +6,7 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set overlay [lindex $argv 0]
 
 #
 # N
@@ -31,21 +32,23 @@ sleep 1
 #
 # O
 #
-send -- "firejail --noprofile --overlay --read-only=/home/netblue/.config\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile --overlay --read-only=/home/netblue/.config\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "touch ~/.config/firejail-test-file\r"
+	expect {
+		timeout {puts "TESTING ERROR 3\n";exit}
+		"Read-only file system"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "touch ~/.config/firejail-test-file\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"Read-only file system"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 #
 # C

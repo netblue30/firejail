@@ -6,11 +6,12 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set overlay [lindex $argv 0]
 
 #
 # N
 #
-send -- "firejail --noprofile --net=eth0\r"
+send -- "firejail --noprofile --net=eth0 --dns=8.8.8.8 --dns=8.8.4.4\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -54,7 +55,7 @@ after 100
 send -- "exit\r"
 sleep 3
 
-send -- "firejail --noprofile --net=eth0 --ip=192.168.1.244\r"
+send -- "firejail --noprofile --net=eth0 --ip=192.168.1.244 --dns=8.8.8.8 --dns=8.8.4.4\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -101,99 +102,101 @@ sleep 3
 #
 # O
 #
-send -- "firejail --noprofile  --net=eth0 --overlay\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile  --net=eth0 --overlay --dns=8.8.8.8 --dns=8.8.4.4\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "dig google.com\r"
+	expect {
+		timeout {puts "TESTING ERROR 3\n";exit}
+		"ANSWER SECTION"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.1\n";exit}
+		"google.com"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.3\n";exit}
+		"SERVER"
+	}
+	after 100
+	
+	send -- "/sbin/ifconfig\r"
+	expect {
+		timeout {puts "TESTING ERROR 3.4\n";exit}
+		"eth0"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.5\n";exit}
+		"Link"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.6\n";exit}
+		"192.168.1"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.7\n";exit}
+		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
+	}
+	after 100
+	
+	send -- "exit\r"
+	sleep 3
+	
+	send -- "firejail --noprofile  --net=eth0 --ip=192.168.1.244 --overlay --dns=8.8.8.8 --dns=8.8.4.4\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "dig google.com\r"
+	expect {
+		timeout {puts "TESTING ERROR 3\n";exit}
+		"ANSWER SECTION"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.1\n";exit}
+		"google.com"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.3\n";exit}
+		"SERVER"
+	}
+	after 100
+	
+	send -- "/sbin/ifconfig\r"
+	expect {
+		timeout {puts "TESTING ERROR 3.4\n";exit}
+		"eth0"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.5\n";exit}
+		"Link"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.6\n";exit}
+		"192.168.1.244"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.7\n";exit}
+		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
+	}
+	after 100
+	
+	send -- "exit\r"
+	sleep 3
 }
-sleep 1
-
-send -- "dig google.com\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"ANSWER SECTION"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"google.com"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.3\n";exit}
-	"SERVER"
-}
-after 100
-
-send -- "/sbin/ifconfig\r"
-expect {
-	timeout {puts "TESTING ERROR 3.4\n";exit}
-	"eth0"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.5\n";exit}
-	"Link"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.6\n";exit}
-	"192.168.1"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.7\n";exit}
-	"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
-}
-after 100
-
-send -- "exit\r"
-sleep 3
-
-send -- "firejail --noprofile  --net=eth0 --ip=192.168.1.244 --overlay\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
-}
-sleep 1
-
-send -- "dig google.com\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"ANSWER SECTION"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"google.com"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.3\n";exit}
-	"SERVER"
-}
-after 100
-
-send -- "/sbin/ifconfig\r"
-expect {
-	timeout {puts "TESTING ERROR 3.4\n";exit}
-	"eth0"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.5\n";exit}
-	"Link"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.6\n";exit}
-	"192.168.1.244"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.7\n";exit}
-	"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
-}
-after 100
-
-send -- "exit\r"
-sleep 3
 
 
 #
 # C
 #
-send -- "firejail --noprofile --net=eth0 --chroot=/tmp/chroot\r"
+send -- "firejail --noprofile --net=eth0 --chroot=/tmp/chroot --dns=8.8.8.8 --dns=8.8.4.4\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized"
@@ -237,7 +240,7 @@ after 100
 send -- "exit\r"
 sleep 3
 
-send -- "firejail --noprofile --net=eth0 --ip=192.168.1.244 --chroot=/tmp/chroot\r"
+send -- "firejail --noprofile --net=eth0 --ip=192.168.1.244 --chroot=/tmp/chroot --dns=8.8.8.8 --dns=8.8.4.4\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized"

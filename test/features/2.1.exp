@@ -6,6 +6,7 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set overlay [lindex $argv 0]
 
 #
 # N
@@ -46,37 +47,39 @@ sleep 1
 #
 # O
 #
-send -- "firejail --noprofile --hostname=bingo --overlay\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile --hostname=bingo --overlay\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "hostname\r"
+	expect {
+		timeout {puts "TESTING ERROR 3\n";exit}
+		"bingo"
+	}
+	after 100
+	send -- "cat /etc/hostname\r"
+	expect {
+		timeout {puts "TESTING ERROR 3.0\n";exit}
+		"bingo"
+	}
+	after 100
+	send -- "getent hosts bingo\r"
+	expect {
+		timeout {puts "TESTING ERROR 3.1\n";exit}
+		"127.0.0.1"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.2\n";exit}
+		"bingo"
+	}
+	after 100
+	send -- "exit\r"
+	sleep 1
 }
-sleep 1
-
-send -- "hostname\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"bingo"
-}
-after 100
-send -- "cat /etc/hostname\r"
-expect {
-	timeout {puts "TESTING ERROR 3.0\n";exit}
-	"bingo"
-}
-after 100
-send -- "getent hosts bingo\r"
-expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"127.0.0.1"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.2\n";exit}
-	"bingo"
-}
-after 100
-send -- "exit\r"
-sleep 1
 
 #
 # C

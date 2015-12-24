@@ -19,7 +19,8 @@ expect {
 send -- "firejail --noprofile --overlay\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	"not available for kernels older than 3.18" {puts "\nTESTING: overlayfs not available\n"; exit}
+	"Child process initialized" {puts "found\n"}
 }
 sleep 1
 

@@ -14,6 +14,7 @@ sleep 2
 send -- "cat /sbin/iptables\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
+	"No such file" {puts "\nTESTING /sbin/iptables not found\n"}
 	"Permission denied"
 }
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.34"
+VERSION="0.9.36"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -18,6 +18,7 @@ install -m 755 /usr/bin/firemon firejail-$VERSION/usr/bin/.
 
 mkdir -p  firejail-$VERSION/usr/lib/firejail
 install -m 644 /usr/lib/firejail/libtrace.so  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/libtracelog.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/ftee  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/fshaper.sh  firejail-$VERSION/usr/lib/firejail/.
 
@@ -76,6 +77,22 @@ install -m 644 /etc/firejail/steam.profile firejail-$VERSION/etc/firejail/steam.
 install -m 644 /etc/firejail/wine.profile firejail-$VERSION/etc/firejail/wine.profile
 install -m 644 /etc/firejail/disable-devel.inc firejail-$VERSION/etc/firejail/disable-devel.inc
 
+install -m 644 /etc/firejail/bitlbee.profile firejail-$VERSION/etc/firejail/bitlbee.profile
+install -m 644 /etc/firejail/conkeror.profile firejail-$VERSION/etc/firejail/conkeror.profile
+install -m 644 /etc/firejail/google-chrome-beta.profile firejail-$VERSION/etc/firejail/google-chrome-beta.profile
+install -m 644 /etc/firejail/google-chrome-stable.profile firejail-$VERSION/etc/firejail/google-chrome-stable.profile
+install -m 644 /etc/firejail/google-chrome-unstable.profile firejail-$VERSION/etc/firejail/google-chrome-unstable.profile
+install -m 644 /etc/firejail/hexchat.profile firejail-$VERSION/etc/firejail/hexchat.profile
+install -m 644 /etc/firejail/konqueror.profile firejail-$VERSION/etc/firejail/konqueror.profile
+install -m 644 /etc/firejail/nolocal.net firejail-$VERSION/etc/firejail/nolocal.net
+install -m 644 /etc/firejail/opera-beta.profile firejail-$VERSION/etc/firejail/opera-beta.profile
+install -m 644 /etc/firejail/parole.profile firejail-$VERSION/etc/firejail/parole.profile
+install -m 644 /etc/firejail/rtorrent.profile firejail-$VERSION/etc/firejail/rtorrent.profile
+install -m 644 /etc/firejail/unbound.profile firejail-$VERSION/etc/firejail/unbound.profile
+install -m 644 /etc/firejail/webserver.net firejail-$VERSION/etc/firejail/webserver.net
+install -m 644 /etc/firejail/weechat-curses.profile firejail-$VERSION/etc/firejail/weechat-curses.profile
+install -m 644 /etc/firejail/weechat.profile firejail-$VERSION/etc/firejail/weechat.profile
+install -m 644 /etc/firejail/whitelist-common.inc firejail-$VERSION/etc/firejail/whitelist-common.inc
 
 mkdir -p firejail-$VERSION/usr/share/bash-completion/completions
 install -m 644 /usr/share/bash-completion/completions/firejail  firejail-$VERSION/usr/share/bash-completion/completions/.
@@ -99,7 +116,7 @@ Release: 1
 License: GPL+
 Group: Development/Tools
 SOURCE0 : %{name}-%{version}.tar.gz
-URL: http://firejail.sourceforege.net
+URL: http://firejail.wordpress.com
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -166,10 +183,27 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}/steam.profile
 %config(noreplace) %{_sysconfdir}/%{name}/wine.profile
 %config(noreplace) %{_sysconfdir}/%{name}/disable-devel.inc
+%config(noreplace) %{_sysconfdir}/%{name}/bitlbee.profile
+%config(noreplace) %{_sysconfdir}/%{name}/conkeror.profile
+%config(noreplace) %{_sysconfdir}/%{name}/google-chrome-beta.profile
+%config(noreplace) %{_sysconfdir}/%{name}/google-chrome-stable.profile
+%config(noreplace) %{_sysconfdir}/%{name}/google-chrome-unstable.profile
+%config(noreplace) %{_sysconfdir}/%{name}/hexchat.profile
+%config(noreplace) %{_sysconfdir}/%{name}/konqueror.profile
+%config(noreplace) %{_sysconfdir}/%{name}/nolocal.net
+%config(noreplace) %{_sysconfdir}/%{name}/opera-beta.profile
+%config(noreplace) %{_sysconfdir}/%{name}/parole.profile
+%config(noreplace) %{_sysconfdir}/%{name}/rtorrent.profile
+%config(noreplace) %{_sysconfdir}/%{name}/unbound.profile
+%config(noreplace) %{_sysconfdir}/%{name}/webserver.net
+%config(noreplace) %{_sysconfdir}/%{name}/weechat-curses.profile
+%config(noreplace) %{_sysconfdir}/%{name}/weechat.profile
+%config(noreplace) %{_sysconfdir}/%{name}/whitelist-common.inc
 
 /usr/bin/firejail
 /usr/bin/firemon
 /usr/lib/firejail/libtrace.so
+/usr/lib/firejail/libtracelog.so
 /usr/lib/firejail/ftee
 /usr/lib/firejail/fshaper.sh
 /usr/share/doc/packages/firejail/COPYING
@@ -186,6 +220,36 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Thu Dec 24 2015 netblue30 <netblue30@yahoo.com> 0.9.36-1
+ - added  unbound, dnscrypt-proxy, BitlBee, HexChat profiles
+ - added WeeChat, parole and rtorrent profiles
+ - Google Chrome profile rework
+ - added google-chrome-stable profile
+ - added google-chrome-beta profile
+ - added google-chrome-unstable profile
+ - Opera profile rework
+ - added opera-beta profile
+ - added --noblacklist option
+ - added --profile-path option
+ - added --force option
+ - whitelist command enhancements
+ - prevent user name enumeration
+ - added /etc/firejail/nolocal.net network filter
+ - added /etc/firejail/webserver.net network filter
+ - blacklisting firejail configuration by default
+ - allow default gateway configuration for --interface option
+ - --debug enhancements: --debug-check-filenames
+ - --debug enhancements:--debug-blacklists
+ - --debug enhancements: --debug-whitelists
+ - filesystem log
+ - libtrace enhancements, tracing opendir call
+ - added --tracelog option
+ - added "name" command to profile files
+ - added "hostname" command to profile files
+ - added automated feature testing framework
+ - Debian reproducible build
+ - bugfixes
+
 * Sat Nov 7 2015 netblue30 <netblue30@yahoo.com> 0.9.34-1
  - added --ignore option
  - added --protocol option

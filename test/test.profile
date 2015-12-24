@@ -1,5 +1,4 @@
-   blacklist /sbin
-blacklist /usr/sbin
+   blacklist /sbin/iptables
 blacklist		 /etc/shadow
 	blacklist		/bin/rmdir
 blacklist ${PATH}/umount

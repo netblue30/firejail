@@ -5,7 +5,7 @@ spawn $env(SHELL)
 match_max 100000
 
 # directory with ~
-send -- "firejail --private-etc=passwd,group,resolv.conf,bash_completion.d,timezone\r"
+send -- "firejail --private-etc=passwd,group,resolv.conf,X11\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
@@ -13,10 +13,6 @@ expect {
 sleep 1
 
 send -- "ls -al /etc\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"bash_completion.d"
-}
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"group"
@@ -31,16 +27,16 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"timezone"
+	"X11"
 }
 
 send -- "ls -al /etc\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
 	"shadow" {puts "TESTING ERROR 8\n";exit}
-	"timezone"
+	"X11"
 }
 
 sleep 1
-puts "\n"
+puts "\nall done\n"
 

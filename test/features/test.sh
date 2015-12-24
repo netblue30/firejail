@@ -1,6 +1,7 @@
 #!/bin/bash
 OVERLAY="overlay"
 CHROOT="chroot"
+NETWORK="network"
 
 while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
     case "$1" in
@@ -10,8 +11,11 @@ while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
     --nochroot)
     	CHROOT="none"
 	;;
+    --nonetwork)
+        NETWORK="none"
+        ;;
     --help)
-    	echo "./test.sh [--nooverlay|--nochroot|--help] | grep TESTING"
+    	echo "./test.sh [--nooverlay|--nochroot|--nonetwork|--help] | grep TESTING"
     	exit
     	;;
     esac
@@ -55,23 +59,26 @@ echo "TESTING: 1.10 disable /selinux"
 ####################
 # networking features
 ####################
-echo "TESTING: 2.1 hostname"
-./2.1.exp $OVERLAY $CHROOT
+if [ $NETWORK == "network" ]
+then
+	echo "TESTING: 2.1 hostname"
+	./2.1.exp $OVERLAY $CHROOT
 
-echo "TESTING: 2.2 DNS"
-./2.2.exp $OVERLAY $CHROOT
+	echo "TESTING: 2.2 DNS"
+	./2.2.exp $OVERLAY $CHROOT
 
-echo "TESTING: 2.3 mac-vlan"
-./2.3.exp $OVERLAY $CHROOT
+	echo "TESTING: 2.3 mac-vlan"
+	./2.3.exp $OVERLAY $CHROOT
 
-echo "TESTING: 2.4 bridge"
-./2.4.exp $OVERLAY $CHROOT
+	echo "TESTING: 2.4 bridge"
+	./2.4.exp $OVERLAY $CHROOT
 
-echo "TESTING: 2.5 interface"
-./2.5.exp $OVERLAY $CHROOT
+	echo "TESTING: 2.5 interface"
+	./2.5.exp $OVERLAY $CHROOT
 
-echo "TESTING: 2.6 Default gateway"
-./2.6.exp $OVERLAY $CHROOT
+	echo "TESTING: 2.6 Default gateway"
+	./2.6.exp $OVERLAY $CHROOT
+fi
 
 ####################
 # filesystem features

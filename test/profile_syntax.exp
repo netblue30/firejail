@@ -11,17 +11,10 @@ expect {
 }
 
 sleep 2
-send -- "ls /sbin\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"cannot open"
-}
-
-sleep 1
-send -- "ls /usr/sbin\r"
+send -- "cat /sbin/iptables\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"cannot open"
+	"Permission denied"
 }
 
 sleep 1

@@ -36,10 +36,10 @@ expect {
 	timeout {puts "TESTING ERROR 1.4\n";exit}
 	"proc /proc/sysrq-trigger proc"
 }
-expect {
-	timeout {puts "TESTING ERROR 1.5\n";exit}
-	"proc /proc/sys/kernel/hotplug"
-}
+#expect {
+#	timeout {puts "TESTING ERROR 1.5\n";exit}
+#	"proc /proc/sys/kernel/hotplug"
+#}
 expect {
 	timeout {puts "TESTING ERROR 1.6\n";exit}
 	"proc /proc/irq proc"
@@ -69,10 +69,10 @@ if { $overlay == "overlay" } {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
 		"proc /proc proc"
 	}
-	expect {
-		timeout {puts "TESTING ERROR 3.2\n";exit}
-		"proc /proc proc"
-	}
+#	expect {
+#		timeout {puts "TESTING ERROR 3.2\n";exit}
+#		"proc /proc proc"
+#	}
 	expect {
 		timeout {puts "TESTING ERROR 3.3\n";exit}
 		"proc /proc/sys proc"
@@ -81,10 +81,10 @@ if { $overlay == "overlay" } {
 		timeout {puts "TESTING ERROR 3.4\n";exit}
 		"proc /proc/sysrq-trigger proc"
 	}
-	expect {
-		timeout {puts "TESTING ERROR 3.5\n";exit}
-		"proc /proc/sys/kernel/hotplug"
-	}
+#	expect {
+#		timeout {puts "TESTING ERROR 3.5\n";exit}
+#		"proc /proc/sys/kernel/hotplug"
+#	}
 	expect {
 		timeout {puts "TESTING ERROR 3.6\n";exit}
 		"proc /proc/irq proc"

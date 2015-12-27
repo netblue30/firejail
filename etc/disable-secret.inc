@@ -15,4 +15,9 @@ blacklist /etc/passwd-
 blacklist /etc/group-
 blacklist /etc/shadow-
 blacklist /etc/gshadow-
+blacklist /etc/passwd+
+blacklist /etc/group+
+blacklist /etc/shadow+
+blacklist /etc/gshadow+
 blacklist /etc/ssh
+blacklist /var/backup

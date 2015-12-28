@@ -26,7 +26,7 @@ firejail (0.9.36-rc1) baseline; urgency=low
   * added automated feature testing framework
   * Debian reproducible build
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Tue, 8 Nov 2015 09:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 27 Dec 2015 09:00:00 -0500
 
 firejail (0.9.34) baseline; urgency=low
   * added --ignore option

@@ -1,3 +1,8 @@
+firejail (0.9.37) baseline; urgency=low
+  * development version
+  * security profiles fixes
+-- netblue30 <netblue30@yahoo.com>
+
 firejail (0.9.36) baseline; urgency=low
   * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,
      parole and rtorrent profiles

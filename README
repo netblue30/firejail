@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+jrabe (https://github.com/jrabe)
+	- disallow access to kdbx files
 Veeti Paananen (https://github.com/veeti)
 	- fixed Spotify profile
 Rahiel Kasim (https://github.com/rahiel)

@@ -32,3 +32,5 @@ Documentation: https://firejail.wordpress.com/documentation-2/
 
 FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
+Current development version: 0.9.37
+

@@ -310,11 +310,12 @@ void fs_blacklist(void) {
 	if (!entry)
 		return;
 		
-	// a statically allocated buffer works for all current needs
-	// TODO: if dynamic allocation is ever needed, we should probably add
-	// libraries that make it easy to do without introducing security bugs
-	char *noblacklist[32];
 	size_t noblacklist_c = 0;
+	size_t noblacklist_m = 32;
+	char **noblacklist = calloc(noblacklist_m, sizeof(*noblacklist));
+
+	if (noblacklist == NULL)
+		errExit("failed allocating memory for noblacklist entries");
 
 	while (entry) {
 		OPERATION op = OPERATION_MAX;
@@ -366,9 +367,11 @@ void fs_blacklist(void) {
 
 		// Process noblacklist command
 		if (strncmp(entry->data, "noblacklist ", 12) == 0) {
-			if (noblacklist_c >= sizeof(noblacklist) / sizeof(noblacklist[0])) {
-				fputs("Error: out of memory for noblacklist entries\n", stderr);
-				exit(1);
+			if (noblacklist_c >= noblacklist_m) {
+                                noblacklist_m *= 2;
+                                noblacklist = realloc(noblacklist, sizeof(*noblacklist) * noblacklist_m);
+                                if (noblacklist == NULL)
+                                        errExit("failed increasing memory for noblacklist entries");
 			}
 			else
 				noblacklist[noblacklist_c++] = expand_home(entry->data + 12, homedir);
@@ -428,6 +431,7 @@ void fs_blacklist(void) {
 
 	size_t i;
 	for (i = 0; i < noblacklist_c; i++) free(noblacklist[i]);
+        free(noblacklist);
 }
 
 //***********************************************

@@ -240,6 +240,40 @@ void net_if_up(const char *ifname) {
 	close(sock);
 }
 
+// bring interface up
+void net_if_down(const char *ifname) {
+	if (strlen(ifname) > IFNAMSIZ) {
+		fprintf(stderr, "Error: invalid network device name %s\n", ifname);
+		exit(1);
+	}
+	
+	int sock = socket(AF_INET,SOCK_DGRAM,0);
+	if (sock < 0)
+		errExit("socket");
+
+	// get the existing interface flags
+	struct ifreq ifr;
+	memset(&ifr, 0, sizeof(ifr));
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	ifr.ifr_addr.sa_family = AF_INET;
+
+	// read the existing flags
+	if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0) {
+		close(sock);
+		errExit("ioctl");
+	}
+
+	ifr.ifr_flags &= ~IFF_UP;
+
+	// set the new flags
+	if (ioctl( sock, SIOCSIFFLAGS, &ifr ) < 0) {
+		close(sock);
+		errExit("ioctl");
+	}
+
+	close(sock);
+}
+
 // configure interface
 void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu) {
 	if (strlen(ifname) > IFNAMSIZ) {

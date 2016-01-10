@@ -249,6 +249,7 @@ void net_dns_print(pid_t pid);
 
 // network.c
 void net_if_up(const char *ifname);
+void net_if_down(const char *ifname);
 void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
 int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);

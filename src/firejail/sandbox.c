@@ -161,6 +161,32 @@ static void monitor_application(pid_t app_pid) {
 		if (app_pid != 0 && arg_debug)
 			printf("Sandbox monitor: monitoring %u\n", app_pid);
 	}
+
+#if 0
+// todo: find a way to shut down interfaces before closing the namespace
+// the problem is we don't have enough privileges to shutdown interfaces in this momen
+	// shut down bridge/macvlan interfaces
+	if (any_bridge_configured()) {
+		
+		if (cfg.bridge0.configured) {
+			printf("Shutting down %s\n", cfg.bridge0.devsandbox);
+			net_if_down( cfg.bridge0.devsandbox);
+		}
+		if (cfg.bridge1.configured) {
+			printf("Shutting down %s\n", cfg.bridge1.devsandbox);
+			net_if_down( cfg.bridge1.devsandbox);
+		}
+		if (cfg.bridge2.configured) {
+			printf("Shutting down %s\n", cfg.bridge2.devsandbox);
+			net_if_down( cfg.bridge2.devsandbox);
+		}
+		if (cfg.bridge3.configured) {
+			printf("Shutting down %s\n", cfg.bridge3.devsandbox);
+			net_if_down( cfg.bridge3.devsandbox);
+		}
+		usleep(20000);	// 20 ms sleep
+	}	
+#endif	
 }
 
 

@@ -121,11 +121,11 @@ void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child) {
 		errExit("asprintf");
 	net_create_veth(dev, ifname, child);
 
-	// bring up the interface
-	net_if_up(dev);
-
 	// add interface to the bridge
 	net_bridge_add_interface(br->dev, dev);
+
+	// bring up the interface
+	net_if_up(dev);
 
 	char *msg;
 	if (asprintf(&msg, "%d.%d.%d.%d address assigned to sandbox", PRINT_IP(br->ipsandbox)) == -1)

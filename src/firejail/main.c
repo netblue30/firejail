@@ -1069,7 +1069,7 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 
-			if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 68 || br->mtu > 9198) {
+			if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
 				fprintf(stderr, "Error: invalid mtu value\n");
 				return 1;
 			}

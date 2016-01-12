@@ -107,6 +107,9 @@ static void sandbox_if_up(Bridge *br) {
 		net_if_ip(dev, br->ipsandbox, br->mask, br->mtu);
 		net_if_up(dev);
 	}
+	
+	if (br->ip6sandbox)
+		 net_if_ip6(dev, br->ip6sandbox);
 }
 
 static void chk_chroot(void) {

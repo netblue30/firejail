@@ -1095,6 +1095,27 @@ int main(int argc, char **argv) {
 				}
 			}
 		}
+		else if (strncmp(argv[i], "--ip6=", 6) == 0) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				return 1;
+			}
+			if (br->arg_ip_none || br->ip6sandbox) {
+				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+				return 1;
+			}
+
+			// configure this IP address for the last bridge defined
+			// todo: verify ipv6 syntax
+			br->ip6sandbox = argv[i] + 6;
+//				if (atoip(argv[i] + 5, &br->ipsandbox)) {
+//					fprintf(stderr, "Error: invalid IP address\n");
+//					return 1;
+//				}
+		}
+
+
 		else if (strncmp(argv[i], "--defaultgw=", 12) == 0) {
 			if (atoip(argv[i] + 12, &cfg.defaultgw)) {
 				fprintf(stderr, "Error: invalid IP address\n");

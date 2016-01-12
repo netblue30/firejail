@@ -274,7 +274,75 @@ void net_if_down(const char *ifname) {
 	close(sock);
 }
 
-// configure interface
+struct ifreq6 {
+	struct in6_addr ifr6_addr;
+	uint32_t ifr6_prefixlen;
+	unsigned int ifr6_ifindex;
+};
+// configure interface ipv6 address
+// ex: firejail --net=eth0 --ip6=2001:0db8:0:f101::1/64
+void net_if_ip6(const char *ifname, const char *addr6) {
+	if (strchr(addr6, ':') == NULL) {
+		fprintf(stderr, "Error: invalid IPv6 address %s\n", addr6);
+		exit(1);
+	}
+	
+	// extract prefix
+	unsigned long prefix;
+	char *ptr;
+	if ((ptr = strchr(addr6, '/'))) {
+		prefix = atol(ptr + 1);
+		if ((prefix < 0) || (prefix > 128)) {
+			fprintf(stderr, "Error: invalid prefix for IPv6 address %s\n", addr6);
+			exit(1);
+		}
+		*ptr = '\0';	// mark the end of the address
+	}
+	else
+		prefix = 128;
+
+	// extract address
+	struct sockaddr_in6 sin6;
+	memset(&sin6, 0, sizeof(sin6));
+	sin6.sin6_family = AF_INET6;
+	int rv = inet_pton(AF_INET6, addr6, sin6.sin6_addr.s6_addr);
+	if (rv <= 0) {
+		fprintf(stderr, "Error: invalid IPv6 address %s\n", addr6);
+		exit(1);
+	}
+
+	// open socket
+	int sock = socket(PF_INET6, SOCK_DGRAM, IPPROTO_IP);
+	if (sock < 0) {
+		fprintf(stderr, "Error: IPv6 is not supported on this system\n");
+		exit(1);
+	}
+
+	// find interface index
+	struct ifreq ifr;
+	memset(&ifr, 0, sizeof(ifr));
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	ifr.ifr_addr.sa_family = AF_INET;
+	if (ioctl(sock, SIOGIFINDEX, &ifr) < 0) {
+		perror("ioctl SIOGIFINDEX");
+		exit(1);
+	}
+
+	// configure address
+	struct ifreq6 ifr6;
+	memset(&ifr6, 0, sizeof(ifr6));
+	ifr6.ifr6_prefixlen = prefix;
+	ifr6.ifr6_ifindex = ifr.ifr_ifindex;
+	memcpy((char *) &ifr6.ifr6_addr, (char *) &sin6.sin6_addr, sizeof(struct in6_addr));
+	if (ioctl(sock, SIOCSIFADDR, &ifr6) < 0) {
+		perror("ioctl SIOCSIFADDR");
+		exit(1);
+	}
+	
+	close(sock);
+}
+
+// configure interface ipv4 address
 void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu) {
 	if (strlen(ifname) > IFNAMSIZ) {
 		fprintf(stderr, "Error: invalid network device name %s\n", ifname);

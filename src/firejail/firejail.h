@@ -75,6 +75,7 @@ typedef struct bridge_t {
 	// inside the sandbox
 	char *devsandbox;	// name of the device inside the sandbox
 	uint32_t ipsandbox;	// ip address inside the sandbox
+	char *ip6sandbox;	// ipv6 address inside the sandbox
 	uint8_t macsandbox[6]; // mac address inside the sandbox
 	uint32_t iprange_start;// iprange arp scan start range
 	uint32_t iprange_end;	// iprange arp scan end range
@@ -251,6 +252,7 @@ void net_dns_print(pid_t pid);
 void net_if_up(const char *ifname);
 void net_if_down(const char *ifname);
 void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
+void net_if_ip6(const char *ifname, const char *addr6);
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
 int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
 void net_ifprint(void);

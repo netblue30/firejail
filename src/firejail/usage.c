@@ -106,6 +106,7 @@ void usage(void) {
 	printf("\t--ip=none - no IP address and no default gateway address are configured\n");
 	printf("\t\tin the new network namespace. Use this option in case you intend\n");
 	printf("\t\tto start an external DHCP client in the sandbox.\n\n");
+	printf("\t--ip6=address - set interface IPv6 address.\n\n");
 	printf("\t--iprange=address,address - configure an IP address in this range\n\n");
 	printf("\t--ipc-namespace - enable a new IPC namespace if the sandbox was started\n");
 	printf("\t\tas a regular user. IPC namespace is enabled by default only if\n");

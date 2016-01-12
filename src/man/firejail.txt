@@ -462,6 +462,16 @@ Example:
 $ firejail \-\-net=eth0 \-\-\ip=none
 
 .TP
+\fB\-\-ip6=address
+Assign IPv6 addresses to the last network interface defined by a \-\-net option.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=eth0 \-\-ip6=2001:0db8:0:f101::1/64 firefox
+
+.TP
 \fB\-\-iprange=address,address
 Assign an IP address in the provided range to the last network interface defined by a \-\-net option. A
 default gateway is assigned by default.

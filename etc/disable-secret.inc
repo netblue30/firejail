@@ -6,7 +6,6 @@ blacklist ${HOME}/kde4/share/apps/kwallet
 blacklist ${HOME}/kde/share/apps/kwallet
 blacklist ${HOME}/.netrc
 blacklist ${HOME}/.gnupg
-blacklist-nolog ${HOME}/.local/share/recently-used.xbel*
 blacklist ${HOME}/*.kdbx
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.key

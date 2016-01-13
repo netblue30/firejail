@@ -149,6 +149,9 @@ void usage(void) {
 	printf("\t--netfilter=filename - enable the network filter specified by\n");
 	printf("\t\tfilename in the new network namespace. The filter file format\n");
 	printf("\t\tis the format of iptables-save and iptable-restore commands.\n\n");
+	printf("\t--netfilter6=filename - enable the IPv6 network filter specified by\n");
+	printf("\t\tfilename in the new network namespace. The filter file format\n");
+	printf("\t\tis the format of ip6tables-save and ip6table-restore commands.\n\n");
 
 	printf("\t--netstats - monitor network statistics for sandboxes creating a new\n");
 	printf("\t\tnetwork namespace.\n\n");

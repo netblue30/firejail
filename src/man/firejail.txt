@@ -691,6 +691,12 @@ $ firejail --netfilter=/etc/firejail/nolocal.net \\
 .br
 --net=eth0 firefox
 .TP
+\fB\-\-netfilter6=filename
+Enable the IPv6 network filter specified by filename in the new network namespace. The filter file format
+is the format of ip6tables-save and ip6table-restore commands.
+New network namespaces are created using \-\-net option. If a new network namespaces is not created,
+\-\-netfilter6 option does nothing.
+.TP
 \fB\-\-netstats
 Monitor network namespace statistics, see \fBMONITORING\fR section for more details.
 .br

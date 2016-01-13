@@ -64,7 +64,7 @@ void netfilter(const char *fname) {
 		// buffer the filter
 		struct stat s;
 		if (stat(fname, &s) == -1) {
-			fprintf(stderr, "Error: cannot find network filter file\n");
+			fprintf(stderr, "Error: cannot find network filter file %s\n", fname);
 			exit(1);
 		}
 
@@ -76,13 +76,13 @@ void netfilter(const char *fname) {
 		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
-			fprintf(stderr, "Error: cannot open network filter file\n");
+			fprintf(stderr, "Error: cannot open network filter file %s\n", fname);
 			exit(1);
 		}
 
 		size_t sz = fread(filter, 1, s.st_size, fp);
 		if ((off_t)sz != s.st_size) {
-			fprintf(stderr, "Error: cannot read network filter file\n");
+			fprintf(stderr, "Error: cannot read network filter file %s\n", fname);
 			exit(1);
 		}
 		fclose(fp);
@@ -163,4 +163,109 @@ doexit:
 
 	if (allocated)
 		free(filter);
+}
+
+void netfilter6(const char *fname) {
+	if (fname == NULL)
+		return;
+		
+	char *filter;
+
+	// buffer the filter
+	struct stat s;
+	if (stat(fname, &s) == -1) {
+		fprintf(stderr, "Error: cannot find network filter file %s\n", fname);
+		exit(1);
+	}
+
+	filter = malloc(s.st_size + 1);	  // + '\0'
+	if (!filter)
+		errExit("malloc");
+	memset(filter, 0, s.st_size + 1);
+
+	/* coverity[toctou] */
+	FILE *fp = fopen(fname, "r");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open network filter file %s\n", fname);
+		exit(1);
+	}
+
+	size_t sz = fread(filter, 1, s.st_size, fp);
+	if ((off_t)sz != s.st_size) {
+		fprintf(stderr, "Error: cannot read network filter file %s\n", fname);
+		exit(1);
+	}
+	fclose(fp);
+
+	// temporarily mount a tempfs on top of /tmp directory
+	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("mounting /tmp");
+
+	// create the filter file
+	fp = fopen("/tmp/netfilter6", "w");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open /tmp/netfilter6 file\n");
+		exit(1);
+	}
+	fprintf(fp, "%s\n", filter);
+	fclose(fp);
+
+	// find iptables command
+	char *ip6tables = NULL;
+	char *ip6tables_restore = NULL;
+	if (stat("/sbin/ip6tables", &s) == 0) {
+		ip6tables = "/sbin/ip6tables";
+		ip6tables_restore = "/sbin/ip6tables-restore";
+	}
+	else if (stat("/usr/sbin/ip6tables", &s) == 0) {
+		ip6tables = "/usr/sbin/ip6tables";
+		ip6tables_restore = "/usr/sbin/ip6tables-restore";
+	}
+	if (ip6tables == NULL || ip6tables_restore == NULL) {
+		fprintf(stderr, "Error: ip6tables command not found\n");
+		goto doexit;
+	}
+
+	// push filter
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		if (arg_debug)
+			printf("Installing network filter:\n%s\n", filter);
+
+		int fd;
+		if((fd = open("/tmp/netfilter6", O_RDONLY)) == -1) {
+			fprintf(stderr,"Error: cannot open /tmp/netfilter6\n");
+			exit(1);
+		}
+		dup2(fd,STDIN_FILENO);
+		close(fd);
+
+		// wipe out environment variables
+		environ = NULL;
+		execl(ip6tables_restore, ip6tables_restore, NULL);
+		// it will never get here!!!
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+
+	// debug
+	if (arg_debug) {
+		child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			environ = NULL;
+			execl(ip6tables, ip6tables, "-vL", NULL);
+			// it will never get here!!!
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+	}
+
+doexit:
+	// unmount /tmp
+	umount("/tmp");
+	free(filter);
 }

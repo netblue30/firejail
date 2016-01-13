@@ -77,7 +77,9 @@ int arg_rlimit_sigpending = 0;			// rlimit fsize
 int arg_nogroups = 0;				// disable supplementary groups
 int arg_noroot = 0;				// create a new user namespace and disable root user
 int arg_netfilter;				// enable netfilter
+int arg_netfilter6;				// enable netfilter6
 char *arg_netfilter_file = NULL;			// netfilter file
+char *arg_netfilter6_file = NULL;		// netfilter6 file
 int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
@@ -1146,6 +1148,11 @@ int main(int argc, char **argv) {
 			arg_netfilter = 1;
 			arg_netfilter_file = argv[i] + 12;
 			check_netfilter_file(arg_netfilter_file);
+		}
+		else if (strncmp(argv[i], "--netfilter6=", 13) == 0) {
+			arg_netfilter6 = 1;
+			arg_netfilter6_file = argv[i] + 13;
+			check_netfilter_file(arg_netfilter6_file);
 		}
 
 		//*************************************

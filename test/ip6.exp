@@ -1,0 +1,46 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --debug --noprofile --net=eth0 --ip6=2001:0db8:0:f101::1/64 --netfilter6=ipv6.net\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Installing network filter"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"DROP"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"DROP"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"2001:db8:1f0a:3ec::2/128"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+send -- "/sbin/ifconfig\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"inet6 addr"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"2001:db8:0:f101::1/64"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Scope:Global"
+}
+
+
+puts "\nall done\n"
+

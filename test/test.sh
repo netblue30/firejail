@@ -256,6 +256,9 @@ echo "TESTING: read/write /dev/shm"
 echo "TESTING: quiet"
 ./quiet.exp
 
+echo "TESTING: IPv6 support"
+./ip6.exp
+
 echo "TESTING: local network"
 ./net_local.exp
 

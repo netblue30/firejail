@@ -215,7 +215,9 @@ extern int arg_rlimit_sigpending;// rlimit sigpending
 extern int arg_nogroups;	// disable supplementary groups
 extern int arg_noroot;		// create a new user namespace and disable root user
 extern int arg_netfilter;	// enable netfilter
+extern int arg_netfilter6;	// enable netfilter6
 extern char *arg_netfilter_file;	// netfilter file
+extern char *arg_netfilter6_file;	// netfilter file
 extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory

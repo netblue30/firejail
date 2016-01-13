@@ -157,6 +157,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		check_netfilter_file(arg_netfilter_file);
 		return 0;
 	}
+	else if (strncmp(ptr, "netfilter6 ", 11) == 0) {
+		arg_netfilter6 = 1;
+		arg_netfilter6_file = strdup(ptr + 11);
+		if (!arg_netfilter6_file)
+			errExit("strdup");
+		check_netfilter_file(arg_netfilter6_file);
+		return 0;
+	}
 	else if (strcmp(ptr, "net none") == 0) {
 		arg_nonetwork  = 1;
 		cfg.bridge0.configured = 0;

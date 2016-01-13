@@ -322,6 +322,9 @@ int sandbox(void* sandbox_arg) {
 	if (arg_netfilter && any_bridge_configured()) { // assuming by default the client filter
 		netfilter(arg_netfilter_file);
 	}
+	if (arg_netfilter6 && any_bridge_configured()) { // assuming by default the client filter
+		netfilter6(arg_netfilter6_file);
+	}
 
 	// load IBUS env variables
 	if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {

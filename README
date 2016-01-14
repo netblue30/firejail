@@ -105,4 +105,4 @@ pstn (https://github.com/pstn)
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
 	- src/lib/libnetlink.c extracted from iproute2 software package
 	
-Copyright (C) 2014, 2015 Firejail Authors
+Copyright (C) 2014-2016 Firejail Authors

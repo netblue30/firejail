@@ -1,6 +1,7 @@
 # system directories	
 blacklist /sbin
 blacklist /usr/sbin
+blacklist /usr/local/sbin
 
 # system management
 blacklist ${PATH}/umount

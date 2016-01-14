@@ -32,5 +32,27 @@ Documentation: https://firejail.wordpress.com/documentation-2/
 
 FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
-Current development version: 0.9.37
+# Current development version: 0.9.37
+
+## IPv6 support:
+`````
+      --ip6=address
+              Assign IPv6 addresses to the last network interface defined by a
+              --net option.
+
+              Example:
+              $ firejail --net=eth0 --ip6=2001:0db8:0:f101::1/64 firefox
+
+       --netfilter6=filename
+              Enable the IPv6 network filter specified by filename in the  new
+              network  namespace.  The  filter  file  format  is the format of
+              ip6tables-save  and  ip6table-restore  commands.   New   network
+              namespaces  are  created  using  --net  option. If a new network
+              namespaces is not created, --netfilter6 option does nothing.
+
+`````
+
+## New profiles: KMail
+
+
 

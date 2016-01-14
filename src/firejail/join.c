@@ -236,16 +236,26 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 		set_cgroup(cfg.cgroup);
 		
 	// join namespaces
-	if (join_namespace(pid, "ipc"))
-		exit(1);
-	if (join_namespace(pid, "net"))
-		exit(1);
-	if (join_namespace(pid, "pid"))
-		exit(1);
-	if (join_namespace(pid, "uts"))
-		exit(1);
-	if (join_namespace(pid, "mnt"))
-		exit(1);
+	if (arg_join_network) {
+		if (join_namespace(pid, "net"))
+			exit(1);
+	}
+	else if (arg_join_filesystem) {
+		if (join_namespace(pid, "mnt"))
+			exit(1);
+	}
+	else {
+		if (join_namespace(pid, "ipc"))
+			exit(1);
+		if (join_namespace(pid, "net"))
+			exit(1);
+		if (join_namespace(pid, "pid"))
+			exit(1);
+		if (join_namespace(pid, "uts"))
+			exit(1);
+		if (join_namespace(pid, "mnt"))
+			exit(1);
+	}
 
 	pid_t child = fork();
 	if (child < 0)
@@ -256,9 +266,12 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 		if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)
 			errExit("asprintf");
 			
-		int rv = chroot(rootdir); // this will fail for processes in sandboxes not started with --chroot option
-		if (rv == 0)
-			printf("changing root to %s\n", rootdir);
+		int rv;
+		if (!arg_join_network) {
+			rv = chroot(rootdir); // this will fail for processes in sandboxes not started with --chroot option
+			if (rv == 0)
+				printf("changing root to %s\n", rootdir);
+		}
 		
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		if (chdir("/") < 0)

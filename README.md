@@ -52,6 +52,43 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 `````
 
+## join command enhancements
+'''''
+       --join-filesystem=name
+              Join the mount namespace of the sandbox identified by  name.  By
+              default  a /bin/bash shell is started after joining the sandbox.
+              If a program is specified, the program is run  in  the  sandbox.
+              This  command is available only to root user.  Security filters,
+              cgroups and cpus configurations are not applied to  the  process
+              joining the sandbox.
+
+       --join-filesystem=pid
+              Join  the  mount  namespace of the sandbox identified by process
+              ID. By default a /bin/bash shell is started  after  joining  the
+              sandbox.   If  a program is specified, the program is run in the
+              sandbox. This command is available only to root user.   Security
+              filters,  cgroups and cpus configurations are not applied to the
+              process joining the sandbox.
+
+      --join-network=name
+              Join the network namespace of the sandbox identified by name. By
+              default  a /bin/bash shell is started after joining the sandbox.
+              If a program is specified, the program is run  in  the  sandbox.
+              This  command is available only to root user.  Security filters,
+              cgroups and cpus configurations are not applied to  the  process
+              joining the sandbox.
+
+       --join-network=pid
+              Join  the network namespace of the sandbox identified by process
+              ID. By default a /bin/bash shell is started  after  joining  the
+              sandbox.   If  a program is specified, the program is run in the
+              sandbox. This command is available only to root user.   Security
+              filters,  cgroups and cpus configurations are not applied to the
+              process joining the sandbox.
+
+'''''
+
+
 ## New profiles: KMail
 
 

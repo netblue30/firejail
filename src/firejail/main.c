@@ -89,6 +89,9 @@ int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
 int arg_nosound = 0;				// disable sound
 int arg_quiet = 0;				// no output for scripting
+int arg_join_network = 0;			// join only the network namespace
+int arg_join_filesystem = 0;			// join only the mount namespace
+
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -392,6 +395,38 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			join(pid, cfg.homedir, argc, argv, i + 1);
 		else
 			join_name(argv[i] + 7, cfg.homedir, argc, argv, i + 1);
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
+		logargs(argc, argv);
+		arg_join_network = 1;
+		if (getuid() != 0) {
+			fprintf(stderr, "Error: --join-network is only available to root user\n");
+			exit(1);
+		}
+		
+		// join sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 15, &pid) == 0)		
+			join(pid, cfg.homedir, argc, argv, i + 1);
+		else
+			join_name(argv[i] + 15, cfg.homedir, argc, argv, i + 1);
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--join-filesystem=", 18) == 0) {
+		logargs(argc, argv);
+		arg_join_filesystem = 1;
+		if (getuid() != 0) {
+			fprintf(stderr, "Error: --join-filesystem is only available to root user\n");
+			exit(1);
+		}
+		
+		// join sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 18, &pid) == 0)		
+			join(pid, cfg.homedir, argc, argv, i + 1);
+		else
+			join_name(argv[i] + 18, cfg.homedir, argc, argv, i + 1);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--shutdown=", 11) == 0) {

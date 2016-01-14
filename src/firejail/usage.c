@@ -113,6 +113,14 @@ void usage(void) {
 	printf("\t\tthe sandbox is started as root.\n\n");
 	printf("\t--join=name - join the sandbox identified by name.\n\n");
 	printf("\t--join=pid - join the sandbox identified by PID.\n\n");
+	printf("\t--join-filesystem=name - join the mount namespace of the sandbox\n");
+	printf("\t\tidentified by name.\n\n");
+	printf("\t--join-filesystem=pid - join the mount namespace of the sandbox\n");
+	printf("\t\tidentified by PID.\n\n");
+	printf("\t--join-network=name - join the network namespace of the sandbox\n");
+	printf("\t\tidentified by name.\n\n");
+	printf("\t--join-network=pid - join the network namespace of the sandbox\n");
+	printf("\t\tidentified by PID.\n\n");
 	printf("\t--list - list all sandboxes.\n\n");
 	printf("\t--mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n\n");
 	printf("\t--mtu=number - set interface MTU.\n\n");

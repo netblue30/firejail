@@ -198,4 +198,5 @@ cppcheck: clean
 
 scan-build: clean
 	scan-build make
+asc:; ./mkasc.sh $(VERSION)
 

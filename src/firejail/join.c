@@ -232,7 +232,7 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 	}
 	
 	// set cgroup
-	if (cfg.cgroup)
+	if (cfg.cgroup)	// not available for uid 0
 		set_cgroup(cfg.cgroup);
 		
 	// join namespaces
@@ -273,21 +273,22 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 		}
 		
 		// set cpu affinity
-		if (cfg.cpus)
+		if (cfg.cpus)	// not available for uid 0
 			set_cpu_affinity();
 					
 		// set caps filter
-		if (apply_caps == 1)
+		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
 #ifdef HAVE_SECCOMP
 		// set protocol filter
-		protocol_filter_load(RUN_PROTOCOL_CFG);
-		if (cfg.protocol) {
+		if (getuid() != 0)
+			protocol_filter_load(RUN_PROTOCOL_CFG);
+		if (cfg.protocol) {	// not available for uid 0
 			protocol_filter();
 		}
 				
 		// set seccomp filter
-		if (apply_seccomp == 1)
+		if (apply_seccomp == 1)	// not available for uid 0
 			seccomp_set();
 		
 #endif
@@ -299,14 +300,14 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 			errExit("setenv");
 
 		// mount user namespace or drop privileges
-		if (arg_noroot) {
+		if (arg_noroot) {	// not available for uid 0
 			if (arg_debug)
 				printf("Joining user namespace\n");
 			if (join_namespace(1, "user"))
 				exit(1);
 		}
 		else 
-			drop_privs(arg_nogroups);
+			drop_privs(arg_nogroups);	// nogroups not available for uid 0
 
 		// set prompt color to green
 		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '

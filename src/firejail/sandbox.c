@@ -131,8 +131,8 @@ static void chk_chroot(void) {
 
 static void monitor_application(pid_t app_pid) {
 	while (app_pid) {
-		sleep(1);
-		
+		usleep(20000);
+
 		int status;
 		unsigned rv = waitpid(app_pid, &status, 0);
 		if (arg_debug)

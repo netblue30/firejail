@@ -398,9 +398,29 @@ int find_child(pid_t parent, pid_t *child) {
 
 
 
-void extract_command_name(const char *str) {
-	assert(str);
-	cfg.command_name = strdup(str);
+void extract_command_name(int index, char **argv) {
+	assert(argv);
+	assert(argv[index]);
+
+
+	// configure command index
+	cfg.original_program_index = index;
+
+	char *str = strdup(argv[index]);
+	if (!str)
+		errExit("strdup");
+
+	// if we have a symbolic link, use the real path to extract the name
+	if (is_link(argv[index])) {
+		char*newname = realpath(argv[index], NULL);
+		if (newname) {
+			free(str);
+			str = newname;
+		}
+	}
+
+	// configure command name
+	cfg.command_name = str;
 	if (!cfg.command_name)
 		errExit("strdup");
 

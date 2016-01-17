@@ -1265,9 +1265,8 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: program name not found\n");
 				exit(1);
 			}
-			extract_command_name(argv[i]);
+			extract_command_name(i, argv);
 			prog_index = i;
-			cfg.original_program_index = i;
 			break;
 		}
 		else {
@@ -1278,9 +1277,8 @@ int main(int argc, char **argv) {
 			}
 			
 			// we have a program name coming
-			extract_command_name(argv[i]);
+			extract_command_name(i, argv);
 			prog_index = i;
-			cfg.original_program_index = i;
 			break;
 		}
 	}

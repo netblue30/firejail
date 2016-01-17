@@ -11,6 +11,7 @@ whitelist ~/.fonts.d
 whitelist ~/.fontconfig
 whitelist ~/.fonts.conf
 whitelist ~/.fonts.conf.d
+whitelist ~/.config/fontconfig
 
 # gtk
 whitelist ~/.gtkrc

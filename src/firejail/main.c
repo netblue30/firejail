@@ -459,6 +459,10 @@ int main(int argc, char **argv) {
 	int highest_errno = errno_highest_nr();
 #endif
 
+	// check argv[0] symlink wrapper
+	run_symlink(argc, argv);
+
+
 	// check if we already have a sandbox running
 	int rv = check_kernel_procs();
 	if (rv == 0) {

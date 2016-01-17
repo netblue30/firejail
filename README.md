@@ -34,6 +34,37 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 # Current development version: 0.9.37
 
+## Symlink invocation
+
+This is a small thing, but very convenient. Make a symbolic link (ln -s) to /usr/bin/firejail under
+the name of the program you want to run, and put the link in the first $PATH position (for
+example in /usr/local/bin). Example:
+`````
+$ which -a transmission-gtk 
+/usr/bin/transmission-gtk
+
+$ sudo ln -s /usr/bin/firejail /usr/local/bin/transmission-gtk
+
+$ which -a transmission-gtk 
+/usr/local/bin/transmission-gtk
+/usr/bin/transmission-gtk
+`````
+We have in this moment two entries in $PATH for transmission. The first one is a symlink to firejail.
+The second one is the real program. Starting transmission in this moment, invokes "firejail transmission-gtk"
+`````
+$ transmission-gtk
+Redirecting symlink to /usr/bin/transmission-gtk
+Reading profile /etc/firejail/transmission-gtk.profile
+Reading profile /etc/firejail/disable-mgmt.inc
+Reading profile /etc/firejail/disable-secret.inc
+Reading profile /etc/firejail/disable-common.inc
+Reading profile /etc/firejail/disable-devel.inc
+Parent pid 19343, child pid 19344
+Blacklist violations are logged to syslog
+Child process initialized
+`````
+
+
 ## IPv6 support:
 `````
       --ip6=address

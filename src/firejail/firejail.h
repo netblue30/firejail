@@ -500,5 +500,8 @@ void fs_logger_change_owner(void);
 void fs_logger_print_log_name(const char *name);
 void fs_logger_print_log(pid_t pid);
 
+// run_symlink.c
+void run_symlink(int argc, char **argv);
+
 #endif
 

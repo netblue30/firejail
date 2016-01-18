@@ -67,6 +67,12 @@ Child process initialized
 Scripting commands:
 
 .TP
+\fBFile and directory names
+File and directory names containing spaces are supported. The space character ' ' should not be escaped.
+
+Example: "blacklist ~/My Virtual Machines"
+
+.TP
 \fB# this is a comment
 
 .TP

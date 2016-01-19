@@ -335,6 +335,8 @@ void fs_whitelist(void) {
 		// replace ~/ or ${HOME} into /home/username
 		new_name = expand_home(entry->data + 10, cfg.homedir);
 		assert(new_name);
+		if (arg_debug)
+			fprintf(stderr, "Debug %d: new_name #%s#\n", __LINE__, new_name);
 
 		// extract the absolute path of the file
 		// realpath function will fail with ENOENT if the file is not found
@@ -353,8 +355,11 @@ void fs_whitelist(void) {
 		}
 		
 		// valid path referenced to filesystem root
-		if (*new_name != '/')
+		if (*new_name != '/') {
+			if (arg_debug)
+				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
+		}
 
 		// check for supported directories
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
@@ -370,46 +375,68 @@ void fs_whitelist(void) {
 			entry->home_dir = 1;
 			home_dir = 1;
 			// both path and absolute path are under /home
-			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0)
+			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0) {
+				if (arg_debug)
+					fprintf(stderr, "Debug %d: fname #%s#, cfg.homedir #%s#\n",
+						__LINE__, fname, cfg.homedir);
 				goto errexit;
+			}
 		}
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {
 			entry->tmp_dir = 1;
 			tmp_dir = 1;
 			// both path and absolute path are under /tmp
-			if (strncmp(fname, "/tmp/", 5) != 0)
+			if (strncmp(fname, "/tmp/", 5) != 0) {
+				if (arg_debug)
+					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
+			}
 		}
 		else if (strncmp(new_name, "/media/", 7) == 0) {
 			entry->media_dir = 1;
 			media_dir = 1;
 			// both path and absolute path are under /media
-			if (strncmp(fname, "/media/", 7) != 0)
+			if (strncmp(fname, "/media/", 7) != 0) {
+				if (arg_debug)
+					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
+			}
 		}
 		else if (strncmp(new_name, "/var/", 5) == 0) {
 			entry->var_dir = 1;
 			var_dir = 1;
 			// both path and absolute path are under /var
-			if (strncmp(fname, "/var/", 5) != 0)
+			if (strncmp(fname, "/var/", 5) != 0) {
+				if (arg_debug)
+					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
+			}
 		}
 		else if (strncmp(new_name, "/dev/", 5) == 0) {
 			entry->dev_dir = 1;
 			dev_dir = 1;
 			// both path and absolute path are under /dev
-			if (strncmp(fname, "/dev/", 5) != 0)
+			if (strncmp(fname, "/dev/", 5) != 0) {
+				if (arg_debug)
+					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
+			}
 		}
 		else if (strncmp(new_name, "/opt/", 5) == 0) {
 			entry->opt_dir = 1;
 			opt_dir = 1;
 			// both path and absolute path are under /dev
-			if (strncmp(fname, "/opt/", 5) != 0)
+			if (strncmp(fname, "/opt/", 5) != 0) {
+				if (arg_debug)
+					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
+			}
 		}
-		else
+		else {
+			if (arg_debug)
+				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
+		}
 
 		// mark symbolic links
 		if (is_link(new_name))

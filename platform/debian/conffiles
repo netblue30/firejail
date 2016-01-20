@@ -55,3 +55,6 @@
 /etc/firejail/rtorrent.profile
 /etc/firejail/parole.profile
 /etc/firejail/kmail.profile
+/etc/firejail/seamonkey.profile
+/etc/firejail/seamonkey-bin.profile
+

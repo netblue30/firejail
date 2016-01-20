@@ -1,0 +1,2 @@
+# Firejail binary should be setuid
+firejail binary: setuid-binary usr/bin/firejail 4755 root/root

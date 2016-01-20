@@ -36,6 +36,8 @@ cp platform/debian/copyright $INSTALL_DIR/usr/share/doc/firejail/.
 mkdir -p $DEBIAN_CTRL_DIR
 sed "s/FIREJAILVER/$2/g"  platform/debian/control > $DEBIAN_CTRL_DIR/control
 
+mkdir -p $INSTALL_DIR/usr/share/lintian/overrides/
+cp platform/debian/firejail.lintian-overrides $INSTALL_DIR/usr/share/lintian/overrides/firejail
 
 cp platform/debian/conffiles $DEBIAN_CTRL_DIR/.
 find $INSTALL_DIR  -type d | xargs chmod 755

@@ -437,6 +437,7 @@ void check_output(int argc, char **argv);
 // netfilter.c
 void check_netfilter_file(const char *fname);
 void netfilter(const char *fname);
+void netfilter6(const char *fname);
 
 // bandwidth.c
 void shm_create_firejail_dir(void);

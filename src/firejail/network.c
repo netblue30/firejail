@@ -292,7 +292,7 @@ void net_if_ip6(const char *ifname, const char *addr6) {
 	char *ptr;
 	if ((ptr = strchr(addr6, '/'))) {
 		prefix = atol(ptr + 1);
-		if ((prefix < 0) || (prefix > 128)) {
+		if (prefix > 128) {
 			fprintf(stderr, "Error: invalid prefix for IPv6 address %s\n", addr6);
 			exit(1);
 		}

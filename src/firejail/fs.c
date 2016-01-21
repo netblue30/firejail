@@ -181,9 +181,38 @@ static void disable_file(OPERATION op, const char *filename) {
 	
 	// Resolve all symlinks
 	char* fname = realpath(filename, NULL);
-	if (fname == NULL) {
+	if (fname == NULL && errno != EACCES) {
 		if (arg_debug)
 			printf("Warning: %s is an invalid file, skipping...\n", filename);
+		return;
+	}
+	if (fname == NULL && errno == EACCES) {
+		if (arg_debug)
+			printf("Debug: no access to file %s, forcing mount\n", filename);
+		// realpath and stat funtions will fail on FUSE filesystems
+		// they don't seem to like a uid of 0
+		// force mounting
+		int rv = mount(RUN_RO_DIR, filename, "none", MS_BIND, "mode=400,gid=0");
+		if (rv == 0)
+			last_disable = SUCCESSFUL;
+		else {
+			rv = mount(RUN_RO_FILE, filename, "none", MS_BIND, "mode=400,gid=0");
+			if (rv == 0)
+				last_disable = SUCCESSFUL;
+		}
+		if (last_disable == SUCCESSFUL) {
+			if (arg_debug)
+				printf("Disable %s\n", filename);
+			if (op == BLACKLIST_FILE)
+				fs_logger2("blacklist", filename);
+			else
+				fs_logger2("blacklist-nolog", filename);
+		}
+		else {
+			if (arg_debug)
+				printf("Warning: %s is an invalid file, skipping...\n", filename);
+		}
+				
 		return;
 	}
 	

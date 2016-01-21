@@ -262,9 +262,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	if (S_ISDIR(s.st_mode)) {	
 		// create directory
 		int rv = mkdir(path, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		
+		(void) rv;
 	}
 	
 	// process regular file

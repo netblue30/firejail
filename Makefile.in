@@ -131,6 +131,7 @@ realinstall:
 	install -c -m 0644 .etc/kmail.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/seamonkey.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/seamonkey-bin.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/telegram.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	bash -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc
 	# man pages

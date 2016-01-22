@@ -115,3 +115,9 @@ The POSIX standard defines what a “portable filename” is. This turns out to 
 http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_276
 
 22. --shutdown does not clear sandboxes started with --join on Debian jessie
+
+23. to document:
+
+http://lwn.net/Articles/414813/
+echo 1 > /proc/sys/kernel/dmesg_restrict
+

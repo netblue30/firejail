@@ -135,6 +135,28 @@ static int store_xauthority(void) {
 	return 0;
 }
 
+static int store_asoundrc(void) {
+	// put a copy of .Xauthority in XAUTHORITY_FILE
+	fs_build_mnt_dir();
+
+	char *src;
+	char *dest = RUN_ASOUNDRC_FILE;
+	if (asprintf(&src, "%s/.asoundrc", cfg.homedir) == -1)
+		errExit("asprintf");
+	
+	struct stat s;
+	if (stat(src, &s) == 0) {	
+		int rv = copy_file(src, dest);
+		if (rv) {
+			fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
+			return 0;
+		}
+		return 1; // file copied
+	}
+	
+	return 0;
+}
+
 static void copy_xauthority(void) {
 	// copy XAUTHORITY_FILE in the new home directory
 	char *src = RUN_XAUTHORITY_FILE ;
@@ -144,13 +166,38 @@ static void copy_xauthority(void) {
 	int rv = copy_file(src, dest);
 	if (rv)
 		fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
-	fs_logger2("clone", dest);
+	else {
+		fs_logger2("clone", dest);
+	
+		// set permissions and ownership
+		if (chown(dest, getuid(), getgid()) < 0)
+			errExit("chown");
+		if (chmod(dest, S_IRUSR | S_IWUSR) < 0)
+			errExit("chmod");
+	}
+	
+	// delete the temporary file
+	unlink(src);
+}
 
-	// set permissions and ownership
-	if (chown(dest, getuid(), getgid()) < 0)
-		errExit("chown");
-	if (chmod(dest, S_IRUSR | S_IWUSR) < 0)
-		errExit("chmod");
+static void copy_asoundrc(void) {
+	// copy XAUTHORITY_FILE in the new home directory
+	char *src = RUN_ASOUNDRC_FILE ;
+	char *dest;
+	if (asprintf(&dest, "%s/.asoundrc", cfg.homedir) == -1)
+		errExit("asprintf");
+	int rv = copy_file(src, dest);
+	if (rv)
+		fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
+	else {
+		fs_logger2("clone", dest);
+	
+		// set permissions and ownership
+		if (chown(dest, getuid(), getgid()) < 0)
+			errExit("chown");
+		if (chmod(dest, S_IRUSR | S_IWUSR) < 0)
+			errExit("chmod");
+	}
 
 	// delete the temporary file
 	unlink(src);
@@ -168,6 +215,7 @@ void fs_private_homedir(void) {
 	assert(private_homedir);
 	
 	int xflag = store_xauthority();
+	int aflag = store_asoundrc();
 	
 	uid_t u = getuid();
 	gid_t g = getgid();
@@ -211,6 +259,8 @@ void fs_private_homedir(void) {
 	skel(homedir, u, g);
 	if (xflag)
 		copy_xauthority();
+	if (aflag)
+		copy_asoundrc();
 }
 
 // private mode (--private):
@@ -225,6 +275,7 @@ void fs_private(void) {
 	gid_t g = getgid();
 
 	int xflag = store_xauthority();
+	int aflag = store_asoundrc();
 
 	// mask /home
 	if (arg_debug)
@@ -258,6 +309,8 @@ void fs_private(void) {
 	skel(homedir, u, g);
 	if (xflag)
 		copy_xauthority();
+	if (aflag)
+		copy_asoundrc();
 }
 
 static void check_dir_or_file(const char *name) {
@@ -410,6 +463,7 @@ void fs_private_home_list(void) {
 	assert(private_list);
 	
 	int xflag = store_xauthority();
+	int aflag = store_asoundrc();
 	
 	uid_t u = getuid();
 	gid_t g = getgid();
@@ -501,6 +555,7 @@ void fs_private_home_list(void) {
 	skel(homedir, u, g);
 	if (xflag)
 		copy_xauthority();
-
+	if (aflag)
+		copy_asoundrc();
 }
 

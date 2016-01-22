@@ -49,6 +49,7 @@
 #define RUN_WHITELIST_OPT_DIR	"/run/firejail/mnt/orig-opt"
 
 #define RUN_XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
+#define RUN_ASOUNDRC_FILE	"/run/firejail/mnt/.asoundrc"
 #define RUN_HOSTNAME_FILE	"/run/firejail/mnt/hostname"
 #define RUN_HOSTS_FILE	"/run/firejail/mnt/hosts"
 #define RUN_RESOLVCONF_FILE	"/run/firejail/mnt/resolv.conf"

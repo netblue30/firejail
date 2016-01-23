@@ -42,7 +42,11 @@ void run_symlink(int argc, char **argv) {
 	char *path = strdup(p);
 	if (!path)
 		errExit("strdup");
-	
+
+	char *selfpath = realpath("/proc/self/exe", NULL);
+	if (!selfpath)
+		errExit("realpath");
+
 	// look in path for our program
 	char *tok = strtok(path, ":");
 	int found = 0;
@@ -53,21 +57,30 @@ void run_symlink(int argc, char **argv) {
 
 		struct stat s;
 		if (stat(name, &s) == 0) {
-			if (!is_link(name)) {
+			char* rp = realpath(name, NULL);
+			if (!rp)
+				errExit("realpath");
+
+			if (strcmp(selfpath, rp) != 0) {
 				program = strdup(name);
 				found = 1;
+				free(rp);
 				break;
 			}
+
+			free(rp);
 		}
-		
+
 		free(name);
 		tok = strtok(NULL, ":");
-	}	
+	}
 	if (!found) {
 		fprintf(stderr, "Error: cannot find the program in the path\n");
 		exit(1);
 	}
-		
+
+	free(selfpath);
+
 
 	// start the argv[0] program in a new sandbox
 	char *firejail;

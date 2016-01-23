@@ -86,6 +86,9 @@ rm -f index.html*
 echo "TESTING: extract command"
 ./extract_command.exp
 
+echo "TESTING: kmsg access"
+./kmsg.exp
+
 echo "TESTING: rlimit"
 ./option_rlimit.exp
 

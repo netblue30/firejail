@@ -604,6 +604,18 @@ void fs_proc_sys_dev_boot(void) {
 	if (stat("/dev/port", &s) == 0) {
 		disable_file(BLACKLIST_FILE, "/dev/port");
 	}
+	
+	if (getuid() != 0) {
+		// disable /dev/kmsg
+		if (stat("/dev/kmsg", &s) == 0) {
+			disable_file(BLACKLIST_FILE, "/dev/kmsg");
+		}
+		
+		// disable /proc/kmsg
+		if (stat("/proc/kmsg", &s) == 0) {
+			disable_file(BLACKLIST_FILE, "/proc/kmsg");
+		}
+	}
 }
 
 // disable firejail configuration in /etc/firejail and in ~/.config/firejail

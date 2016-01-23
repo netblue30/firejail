@@ -119,7 +119,3 @@ read-only ${HOME}/.xmonad
 # The user ~/bin directory can override commands such as ls
 read-only ${HOME}/bin
 
-# syslog
-blacklist /dev/kmsg
-blacklist /proc/kmsg
-

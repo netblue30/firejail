@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+curiosity-seeker (https://github.com/curiosity-seeker)
+	- tightening unbound and dnscrypt-proxy profiles
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 Bader Zaidan (https://github.com/BaderSZ)

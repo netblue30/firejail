@@ -505,5 +505,8 @@ void fs_logger_print_log(pid_t pid);
 // run_symlink.c
 void run_symlink(int argc, char **argv);
 
+// user.c
+void check_user(int argc, char **argv);
+
 #endif
 

@@ -6,6 +6,7 @@ firejail (0.9.37) baseline; urgency=low
   * added KMail, Seamonkey, Telegram profiles
   * --join command enhancement (--join-network, --join-filesystem)
   * symlink invocation
+  * --user command
  -- netblue30 <netblue30@yahoo.com>  Tue,  5 Jan 2016 08:00:00 -0500
 
 firejail (0.9.36) baseline; urgency=low

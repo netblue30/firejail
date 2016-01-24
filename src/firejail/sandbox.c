@@ -134,7 +134,11 @@ static void monitor_application(pid_t app_pid) {
 		usleep(20000);
 
 		int status;
-		unsigned rv = waitpid(app_pid, &status, 0);
+		unsigned rv;
+		do {
+			rv = waitpid(-1, &status, 0);
+		}
+		while(rv != app_pid);
 		if (arg_debug)
 			printf("Sandbox monitor: waitpid %u retval %d status %d\n", app_pid, rv, status);
 

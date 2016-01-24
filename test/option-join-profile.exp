@@ -12,16 +12,16 @@ expect {
 sleep 3
 
 spawn $env(SHELL)
-send --  "firejail --join=svntesting;pwd\r"
+send --  "firejail --join=jointesting;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Switching to pid"
 }
-sleep 1
+sleep 3
 
 
 spawn $env(SHELL)
-send --  "firejail --shutdown=svntesting;pwd\r"
+send --  "firejail --shutdown=jointesting;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"home"
@@ -31,7 +31,7 @@ sleep 5
 send --  "firejail --list;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"svntesting" {puts "TESTING ERROR 5\n";exit}
+	"jointesting" {puts "TESTING ERROR 5\n";exit}
 	"home"
 }
 sleep 1

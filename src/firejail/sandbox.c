@@ -134,9 +134,11 @@ static void monitor_application(pid_t app_pid) {
 		usleep(20000);
 
 		int status;
-		unsigned rv;
+		pid_t rv;
 		do {
 			rv = waitpid(-1, &status, 0);
+			if (rv == -1)
+				break;
 		}
 		while(rv != app_pid);
 		if (arg_debug)

@@ -272,6 +272,7 @@ echo "TESTING: network IP"
 ./net_ip.exp
 
 echo "TESTING: network MAC"
+sleep 2
 ./net_mac.exp
 
 echo "TESTING: network MTU"

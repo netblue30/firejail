@@ -37,12 +37,12 @@ expect {
 after 100
 
 # file link
-send -- "firejail --net=br0 --shell=fscheck-file-link\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Error"
-}
-after 100
+#send -- "firejail --net=br0 --shell=fscheck-file-link\r"
+#expect {
+#	timeout {puts "TESTING ERROR 4\n";exit}
+#	"Error"
+#}
+#after 100
 
 # ..
 send -- "firejail --net=br0 --shell=../test/fscheck-file-link\r"

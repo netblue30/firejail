@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --name=svntesting\r"
+send --  "firejail --name=shutdowntesting\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -12,7 +12,7 @@ expect {
 sleep 3
 
 spawn $env(SHELL)
-send --  "firejail --shutdown=svntesting;pwd\r"
+send --  "firejail --shutdown=shutdowntesting;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"home"
@@ -22,9 +22,9 @@ sleep 1
 send --  "firejail --list;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"svntesting" {puts "TESTING ERROR 6\n";exit}
+	"shutdowntesting" {puts "TESTING ERROR 6\n";exit}
 	"home"
 }
 sleep 1
 
-puts "\n"
+puts "\nalldone\n"

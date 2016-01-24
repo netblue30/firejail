@@ -14,30 +14,26 @@ expect {
 	"DROP"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"DROP"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"2001:db8:1f0a:3ec::2"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"2001:db8:1f0a:3ec::2/128"
-}
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
 }
 sleep 2
 
 send -- "/sbin/ifconfig\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"inet6 addr"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"2001:db8:0:f101::1/64"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 6\n";exit}
 	"Scope:Global"
 }
 

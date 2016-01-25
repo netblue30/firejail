@@ -417,8 +417,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	else if (strncmp(ptr, "read-only ", 10) == 0)
 		ptr += 10;
-	else if (strncmp(ptr, "tmpfs ", 6) == 0)
+	else if (strncmp(ptr, "tmpfs ", 6) == 0) {
+		if (getuid() != 0) {
+			fprintf(stderr, "Error: tmpfs available only when running the sandbox as root\n");
+			exit(1);
+		}
 		ptr += 6;
+	}
 	else {
 		if (lineno == 0)
 			fprintf(stderr, "Error: \"%s\" as a command line option is invalid\n", ptr);

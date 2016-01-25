@@ -1348,13 +1348,13 @@ $ firejail \-\-list
 $ firejail \-\-shutdown=3272
 .TP
 \fB\-\-tmpfs=dirname
-Mount a tmpfs filesystem on directory dirname.
+Mount a tmpfs filesystem on directory dirname. This option is available only when running the sandbox as root.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-tmpfs=/var
+# firejail \-\-tmpfs=/var
 .TP
 \fB\-\-top
 Monitor the most CPU-intensive sandboxes, see \fBMONITORING\fR section for more details.

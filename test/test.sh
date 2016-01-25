@@ -110,9 +110,6 @@ echo "TESTING: firejail in firejail - force new sandbox"
 echo "TESTING: chroot overlay"
 ./option_chroot_overlay.exp
 
-echo "TESTING: tmpfs"
-./option_tmpfs.exp
-
 echo "TESTING: blacklist directory"
 ./option_blacklist.exp
 

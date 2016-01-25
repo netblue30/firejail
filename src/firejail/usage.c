@@ -291,7 +291,8 @@ void usage(void) {
 	printf("\t--shell=program - set default user shell.\n\n");
 	printf("\t--shutdown=name - shutdown the sandbox identified by name.\n\n");
 	printf("\t--shutdown=pid - shutdown the sandbox identified by PID.\n\n");
-	printf("\t--tmpfs=dirname - mount a tmpfs filesystem on directory dirname.\n\n");
+	printf("\t--tmpfs=dirname - mount a tmpfs filesystem on directory dirname.\n");
+	printf("\t\tThis option is available only when running the sandbox as root.\n\n");
 	printf("\t--top - monitor the most CPU-intensive sandboxes.\n\n");
 	printf("\t--trace - trace open, access and connect system calls.\n\n");
 	printf("\t--tracelog - add a syslog message for every access to files or\n");

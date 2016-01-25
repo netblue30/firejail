@@ -18,9 +18,27 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"home"
+	"/root"
 }
 sleep 1
+send -- "exit\r"
+sleep 2
 
-puts "\n"
+send -- "firejail --debug-check-filename --tmpfs=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 13.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 13.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 13.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+
+puts "\nalldone\n"
 

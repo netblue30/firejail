@@ -200,20 +200,6 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --tmpfs=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 13.1\n";exit}
-	"Checking filename bla&&bla"
-}
-expect {
-	timeout {puts "TESTING ERROR 13.2\n";exit}
-	"Error:"
-}
-expect {
-	timeout {puts "TESTING ERROR 13.3\n";exit}
-	"is an invalid filename"
-}
-after 100
 
 send -- "firejail --debug-check-filename --whitelist=\"bla&&bla\"\r"
 expect {

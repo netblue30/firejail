@@ -2,6 +2,9 @@
 
 ./chk_config.exp
 
+echo "TESTING: tmpfs"
+./option_tmpfs.exp
+
 echo "TESTING: network interfaces"
 ./net_interface.exp
 

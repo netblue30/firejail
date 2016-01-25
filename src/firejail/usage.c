@@ -34,10 +34,12 @@ void usage(void) {
 	printf("\n");
 	printf("Options:\n\n");
 	printf("\t-- - signal the end of options and disables further option processing.\n\n");
+#ifdef HAVE_NETWORK	
 	printf("\t--bandwidth=name - set  bandwidth  limits  for  the sandbox identified\n");
 	printf("\t\tby name, see Traffic Shaping section for more details.\n\n");
 	printf("\t--bandwidth=pid - set  bandwidth  limits  for  the sandbox identified\n");
 	printf("\t\tby PID, see Traffic Shaping section for more details.\n\n");
+#endif
 #ifdef HAVE_BIND		
 	printf("\t--bind=dirname1,dirname2 - mount-bind dirname1 on top of dirname2.\n\n");
 	printf("\t--bind=filename1,dirname2 - mount-bind filename1 on top of filename2.\n\n");
@@ -81,8 +83,10 @@ void usage(void) {
 
 
 
+#ifdef HAVE_NETWORK	
 	printf("\t--defaultgw=address - use this address as default gateway in the new\n");
 	printf("\t\tnetwork namespace.\n\n");
+#endif
 	printf("\t--dns=address - set a DNS server for the sandbox. Up to three DNS\n");
 	printf("\t\tservers can be defined.\n\n");
 	printf("\t--dns.print=name - print DNS configuration for the sandbox identified\n");
@@ -99,15 +103,16 @@ void usage(void) {
 	printf("\t--help, -? - this help screen.\n\n");
 	printf("\t--hostname=name - set sandbox hostname.\n\n");
 	printf("\t--ignore=command - ignore command in profile files.\n\n");
+#ifdef HAVE_NETWORK	
 	printf("\t--interface=name - move interface in a new network namespace. Up to\n");
 	printf("\t\tfour --interface options can be sepcified.\n\n");
-	
 	printf("\t--ip=address - set interface IP address.\n\n");
 	printf("\t--ip=none - no IP address and no default gateway address are configured\n");
 	printf("\t\tin the new network namespace. Use this option in case you intend\n");
 	printf("\t\tto start an external DHCP client in the sandbox.\n\n");
 	printf("\t--ip6=address - set interface IPv6 address.\n\n");
 	printf("\t--iprange=address,address - configure an IP address in this range\n\n");
+#endif
 	printf("\t--ipc-namespace - enable a new IPC namespace if the sandbox was started\n");
 	printf("\t\tas a regular user. IPC namespace is enabled by default only if\n");
 	printf("\t\tthe sandbox is started as root.\n\n");
@@ -117,14 +122,19 @@ void usage(void) {
 	printf("\t\tidentified by name.\n\n");
 	printf("\t--join-filesystem=pid - join the mount namespace of the sandbox\n");
 	printf("\t\tidentified by PID.\n\n");
+#ifdef HAVE_NETWORK	
 	printf("\t--join-network=name - join the network namespace of the sandbox\n");
 	printf("\t\tidentified by name.\n\n");
 	printf("\t--join-network=pid - join the network namespace of the sandbox\n");
 	printf("\t\tidentified by PID.\n\n");
+#endif
 	printf("\t--list - list all sandboxes.\n\n");
+#ifdef HAVE_NETWORK	
 	printf("\t--mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n\n");
 	printf("\t--mtu=number - set interface MTU.\n\n");
+#endif
 	printf("\t--name=name - set sandbox name.\n\n");
+#ifdef HAVE_NETWORK	
 	printf("\t--net=bridgename - enable network namespaces and connect to this bridge\n");
 	printf("\t\tdevice. Unless specified with option --ip and --defaultgw, an\n");
 	printf("\t\tIP address and a default gateway will be assigned automatically\n");
@@ -163,6 +173,7 @@ void usage(void) {
 
 	printf("\t--netstats - monitor network statistics for sandboxes creating a new\n");
 	printf("\t\tnetwork namespace.\n\n");
+#endif
 	printf("\t--noblacklist=dirname_or_filename - disable blacklist for directory\n");
 	printf("\t\tor file.\n\n");
 	printf("\t--nogroups - disable supplementary groups. Without this option,\n");
@@ -175,11 +186,11 @@ void usage(void) {
 	printf("\t\tmatches the command name, and lastly use %s.profile\n", DEFAULT_USER_PROFILE);
 	printf("\t\tif running as regular user or %s.profile if running as\n", DEFAULT_ROOT_PROFILE);
 	printf("\t\troot.\n\n");
-		 	
+#ifdef HAVE_USERNS		 	
 	printf("\t--noroot - install a user namespace with a single user - the current\n");
 	printf("\t\tuser. root user does not exist in the new namespace. This option\n");
 	printf("\t\tis not supported for --chroot and --overlay configurations.\n\n");
-
+#endif
 	printf("\t--nosound - disable sound system\n\n");
 		
 	printf("\t--output=logfile - stdout logging and log rotation. Copy stdout to\n");
@@ -239,11 +250,11 @@ void usage(void) {
 	printf("\t\tcreated for the real user ID of the calling process.\n\n");
 	printf("\t--rlimit-sigpending=number - set the maximum number of pending signals\n");
 	printf("\t\tfor a process.\n\n");
-
+#ifdef HAVE_NETWORK	
 	printf("\t--scan - ARP-scan all the networks from inside a network namespace.\n");
 	printf("\t\tThis makes it possible to detect macvlan kernel device drivers\n");
 	printf("\t\trunning on the current host.\n\n");
-	
+#endif	
 #ifdef HAVE_SECCOMP
 	printf("\t--seccomp - enable seccomp filter and blacklist the syscalls in the\n");
 	printf("\t\tlist. The default list is as follows: mount, umount2,\n");
@@ -294,6 +305,7 @@ void usage(void) {
 	printf("\n");
 
 
+#ifdef HAVE_NETWORK	
 	printf("Traffic Shaping\n\n");
 	
 	printf("Network bandwidth is an expensive resource shared among  all  sandboxes\n");
@@ -323,7 +335,7 @@ void usage(void) {
             printf("\t$ firejail --bandwidth=mybrowser clear eth0\n");
 	printf("\n");
 	printf("\n");
-
+#endif
 
 
 	printf("Monitoring\n\n");

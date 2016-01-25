@@ -208,7 +208,7 @@ static void check_network(Bridge *br) {
 	}
 }
 
-
+#ifdef HAVE_USERNS
 void check_user_namespace(void) {
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: --noroot option cannot be used when starting the sandbox as root.\n");
@@ -228,6 +228,7 @@ void check_user_namespace(void) {
 		arg_noroot = 0;
 	}
 }
+#endif
 
 // exit commands
 static void run_cmd_and_exit(int i, int argc, char **argv) {
@@ -243,6 +244,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		printf("firejail version %s\n", VERSION);
 		exit(0);
 	}
+#ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		logargs(argc, argv);
 		
@@ -303,7 +305,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			bandwidth_name(argv[i] + 12, cmd, dev, down, up);
 		exit(0);
 	}
-
+#endif
 	//*************************************
 	// independent commands - the program will exit!
 	//*************************************
@@ -382,10 +384,12 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		top();
 		exit(0);
 	}
+#ifdef HAVE_NETWORK	
 	else if (strcmp(argv[i], "--netstats") == 0) {
 		netstats();
 		exit(0);
 	}
+#endif	
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
 		logargs(argc, argv);
 		
@@ -397,6 +401,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			join_name(argv[i] + 7, cfg.homedir, argc, argv, i + 1);
 		exit(0);
 	}
+#ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
 		logargs(argc, argv);
 		arg_join_network = 1;
@@ -413,6 +418,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			join_name(argv[i] + 15, cfg.homedir, argc, argv, i + 1);
 		exit(0);
 	}
+#endif
 	else if (strncmp(argv[i], "--join-filesystem=", 18) == 0) {
 		logargs(argc, argv);
 		arg_join_filesystem = 1;
@@ -962,9 +968,11 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--nogroups") == 0)
 			arg_nogroups = 1;
+#ifdef HAVE_USERNS
 		else if (strcmp(argv[i], "--noroot") == 0) {
 			check_user_namespace();
 		}
+#endif
 		else if (strncmp(argv[i], "--env=", 6) == 0)
 			env_store(argv[i] + 6);
 		else if (strncmp(argv[i], "--nosound", 9) == 0) {
@@ -975,6 +983,7 @@ int main(int argc, char **argv) {
 		//*************************************
 		// network
 		//*************************************
+#ifdef HAVE_NETWORK	
 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
 			// checks
 			if (arg_nonetwork) {
@@ -1164,6 +1173,7 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
+#endif		
 		else if (strncmp(argv[i], "--dns=", 6) == 0) {
 			uint32_t dns;
 			if (atoip(argv[i] + 6, &dns)) {
@@ -1182,6 +1192,7 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
+#ifdef HAVE_NETWORK
 		else if (strcmp(argv[i], "--netfilter") == 0)
 			arg_netfilter = 1;
 		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
@@ -1194,7 +1205,7 @@ int main(int argc, char **argv) {
 			arg_netfilter6_file = argv[i] + 13;
 			check_netfilter_file(arg_netfilter6_file);
 		}
-
+#endif
 		//*************************************
 		// command
 		//*************************************

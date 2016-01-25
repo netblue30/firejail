@@ -110,7 +110,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	// seccomp, caps, private, user namespace
 	else if (strcmp(ptr, "noroot") == 0) {
+#if HAVE_USERNS
 		check_user_namespace();
+#endif
 		return 0;
 	}
 	else if (strcmp(ptr, "seccomp") == 0) {
@@ -146,31 +148,39 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "netfilter") == 0) {
+#ifdef HAVE_NETWORK
 		arg_netfilter = 1;
+#endif
 		return 0;
 	}
 	else if (strncmp(ptr, "netfilter ", 10) == 0) {
+#ifdef HAVE_NETWORK
 		arg_netfilter = 1;
 		arg_netfilter_file = strdup(ptr + 10);
 		if (!arg_netfilter_file)
 			errExit("strdup");
 		check_netfilter_file(arg_netfilter_file);
+#endif
 		return 0;
 	}
 	else if (strncmp(ptr, "netfilter6 ", 11) == 0) {
+#ifdef HAVE_NETWORK
 		arg_netfilter6 = 1;
 		arg_netfilter6_file = strdup(ptr + 11);
 		if (!arg_netfilter6_file)
 			errExit("strdup");
 		check_netfilter_file(arg_netfilter6_file);
+#endif
 		return 0;
 	}
 	else if (strcmp(ptr, "net none") == 0) {
+#ifdef HAVE_NETWORK
 		arg_nonetwork  = 1;
 		cfg.bridge0.configured = 0;
 		cfg.bridge1.configured = 0;
 		cfg.bridge2.configured = 0;
 		cfg.bridge3.configured = 0;
+#endif
 		return 0;
 	}
 	

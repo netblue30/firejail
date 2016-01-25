@@ -4,6 +4,8 @@ arr[1]="TEST 1: standard compilation"
 arr[2]="TEST 2: compile seccomp disabled"
 arr[3]="TEST 3: compile chroot disabled"
 arr[4]="TEST 4: compile bind disabled"
+arr[5]="TEST 5: compile user namespace disabled"
+arr[6]="TEST 6: compile network disabled"
 
 
 # remove previous reports and output file
@@ -28,7 +30,7 @@ while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
     	exit
 	;;
     --help)
-    	echo "./autotest.sh [--clean|--help]"
+    	echo "./compile.sh [--clean|--help]"
     	exit
     	;;
     esac
@@ -96,10 +98,10 @@ rm output-configure output-make
 #*****************************************************************
 # TEST 4
 #*****************************************************************
-# - disable bindconfiguration
+# - disable bind configuration
 # - check compilation
 #*****************************************************************
-print_title "${arr[3]}"
+print_title "${arr[4]}"
 # seccomp
 cd firejail
 make distclean
@@ -108,6 +110,40 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test4
 grep Error output-configure output-make >> ./report-test4
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 5
+#*****************************************************************
+# - disable user namespace configuration
+# - check compilation
+#*****************************************************************
+print_title "${arr[5]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-userns  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test5
+grep Error output-configure output-make >> ./report-test5
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 6
+#*****************************************************************
+# - disable user namespace configuration
+# - check compilation
+#*****************************************************************
+print_title "${arr[6]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-network  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test6
+grep Error output-configure output-make >> ./report-test6
 rm output-configure output-make
 
 
@@ -129,3 +165,5 @@ echo ${arr[1]}
 echo ${arr[2]}
 echo ${arr[3]}
 echo ${arr[4]}
+echo ${arr[5]}
+echo ${arr[6]}

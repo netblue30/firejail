@@ -54,8 +54,14 @@ void shut(pid_t pid) {
 				printf("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
 			}
 		}
+		else {
+			fprintf(stderr, "Error: this is not a firejail sandbox\n");
+			exit(1);
+		}
 		free(comm);
 	}
+	else
+		errExit("/proc/PID/comm");
 
 	// check privileges for non-root users
 	uid_t uid = getuid();

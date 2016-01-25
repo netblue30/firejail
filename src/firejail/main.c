@@ -300,7 +300,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		if (read_pid(argv[i] + 12, &pid) == 0)
 			bandwidth_pid(pid, cmd, dev, down, up);
 		else
-				bandwidth_name(argv[i] + 12, cmd, dev, down, up);
+			bandwidth_name(argv[i] + 12, cmd, dev, down, up);
 		exit(0);
 	}
 

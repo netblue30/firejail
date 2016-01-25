@@ -1,13 +1,11 @@
-firejail (0.9.37) baseline; urgency=low
-  * development version
-  * security profiles fixes
-  * dynamic allocation of noblacklist buffer
-  * --ip6 option - IPv6 support
-  * added KMail, Seamonkey, Telegram profiles
+firejail (0.9.38) baseline; urgency=low
+  * IPv6 support (--ip6 and --netfilter6)
   * --join command enhancement (--join-network, --join-filesystem)
-  * symlink invocation
   * --user command
- -- netblue30 <netblue30@yahoo.com>  Tue,  5 Jan 2016 08:00:00 -0500
+  * symlink invocation
+  * added KMail, Seamonkey, Telegram profiles
+  * bugfixes
+ -- netblue30 <netblue30@yahoo.com>  Sun,  24 Jan 2016 20:00:00 -0500
 
 firejail (0.9.36) baseline; urgency=low
   * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,

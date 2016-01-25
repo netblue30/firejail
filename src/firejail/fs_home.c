@@ -41,6 +41,10 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0)
 			return;
 		if (stat("/etc/skel/.zshrc", &s) == 0) {
+			if (is_link("/etc/skel/.zshrc")) {
+				fprintf(stderr, "Error: invalid /etc/skel/.zshrc file\n");
+				exit(1);
+			}
 			if (copy_file("/etc/skel/.zshrc", fname) == 0) {
 				if (chown(fname, u, g) == -1)
 					errExit("chown");
@@ -71,6 +75,10 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0)
 			return;
 		if (stat("/etc/skel/.cshrc", &s) == 0) {
+			if (is_link("/etc/skel/.cshrc")) {
+				fprintf(stderr, "Error: invalid /etc/skel/.cshrc file\n");
+				exit(1);
+			}
 			if (copy_file("/etc/skel/.cshrc", fname) == 0) {
 				if (chown(fname, u, g) == -1)
 					errExit("chown");
@@ -102,6 +110,10 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0)
 			return;
 		if (stat("/etc/skel/.bashrc", &s) == 0) {
+			if (is_link("/etc/skel/.bashrc")) {
+				fprintf(stderr, "Error: invalid /etc/skel/.bashrc file\n");
+				exit(1);
+			}
 			if (copy_file("/etc/skel/.bashrc", fname) == 0) {
 				/* coverity[toctou] */
 				if (chown(fname, u, g) == -1)
@@ -123,7 +135,12 @@ static int store_xauthority(void) {
 		errExit("asprintf");
 	
 	struct stat s;
-	if (stat(src, &s) == 0) {	
+	if (stat(src, &s) == 0) {
+		if (is_link(src)) {
+			fprintf(stderr, "Error: invalid .Xauthority file\n");
+			exit(1);
+		}
+			
 		int rv = copy_file(src, dest);
 		if (rv) {
 			fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
@@ -146,6 +163,11 @@ static int store_asoundrc(void) {
 	
 	struct stat s;
 	if (stat(src, &s) == 0) {	
+		if (is_link(src)) {
+			fprintf(stderr, "Error: invalid .asoundrc file\n");
+			exit(1);
+		}
+
 		int rv = copy_file(src, dest);
 		if (rv) {
 			fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");

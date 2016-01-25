@@ -136,12 +136,18 @@ void fs_build_cp_command(void) {
 			fprintf(stderr, "Error: /bin/cp not found\n");
 			exit(1);
 		}
+		if (is_link(fname)) {
+			fprintf(stderr, "Error: invalid /bin/cp file\n");
+			exit(1);
+		}
 		int rv = copy_file(fname, RUN_CP_COMMAND);
 		if (rv) {
 			fprintf(stderr, "Error: cannot access /bin/cp\n");
 			exit(1);
 		}
 		/* coverity[toctou] */
+		if (chown(RUN_CP_COMMAND, 0, 0))
+			errExit("chown");
 		if (chmod(RUN_CP_COMMAND, 0755))
 			errExit("chmod");
 			
@@ -921,6 +927,10 @@ void fs_chroot(const char *rootdir) {
 		errExit("asprintf");
 	if (arg_debug)
 		printf("Updating /etc/resolv.conf in %s\n", fname);
+	if (is_link(fname)) {
+		fprintf(stderr, "Error: invalid %s file\n", fname);
+		exit(1);
+	}
 	if (copy_file("/etc/resolv.conf", fname) == -1)
 		fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
 		

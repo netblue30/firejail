@@ -115,6 +115,10 @@ static void sanitize_passwd(void) {
 		return;
 	if (arg_debug)
 		printf("Sanitizing /etc/passwd\n");
+	if (is_link("/etc/passwd")) {
+		fprintf(stderr, "Error: invalid /etc/passwd\n");
+		exit(1);
+	}
 
 	FILE *fpin = NULL;
 	FILE *fpout = NULL;
@@ -248,6 +252,10 @@ static void sanitize_group(void) {
 		return;
 	if (arg_debug)
 		printf("Sanitizing /etc/group\n");
+	if (is_link("/etc/group")) {
+		fprintf(stderr, "Error: invalid /etc/group\n");
+		exit(1);
+	}
 
 	FILE *fpin = NULL;
 	FILE *fpout = NULL;

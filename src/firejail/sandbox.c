@@ -426,6 +426,8 @@ int sandbox(void* sandbox_arg) {
 	}
 	if (arg_private_bin)
 		fs_private_bin_list();
+	if (arg_private_tmp)
+		fs_private_tmp();
 	
 	//****************************
 	// apply the profile file

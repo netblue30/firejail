@@ -139,12 +139,12 @@ Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is
 closed.
 .TP
+\fBprivate directory
+Use directory as user home.
+.TP
 \fBprivate-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
 The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
-.TP
-\fBprivate directory
-Use directory as user home.
 .TP
 \fBprivate-home file,directory
 Build a new user home in a temporary
@@ -159,6 +159,9 @@ Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random,
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
 All modifications are discarded when the sandbox is closed.
+.TP
+\fBprivate-tmp
+Mount an empty temporary filesystem on top of /tmp directory.
 .TP
 \fBwhitelist file_or_directory
 Build a new user home in a temporary filesystem, and mount-bind file_or_directory.

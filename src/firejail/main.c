@@ -85,6 +85,7 @@ int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
 int arg_private_etc = 0;			// private etc directory
 int arg_private_bin = 0;			// private bin directory
+int arg_private_tmp = 0;			// private tmp directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
 int arg_nosound = 0;				// disable sound
@@ -922,7 +923,7 @@ int main(int argc, char **argv) {
 			arg_private_dev = 1;
 		}
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
-			// extract private etc dirname
+			// extract private etc list
 			cfg.etc_private_keep = argv[i] + 14;
 			if (*cfg.etc_private_keep == '\0') {
 				fprintf(stderr, "Error: invalid private-etc option\n");
@@ -937,7 +938,7 @@ int main(int argc, char **argv) {
 			}
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
-			// extract private etc dirname
+			// extract private bin list
 			cfg.bin_private_keep = argv[i] + 14;
 			if (*cfg.bin_private_keep == '\0') {
 				fprintf(stderr, "Error: invalid private-bin option\n");
@@ -946,8 +947,9 @@ int main(int argc, char **argv) {
 			fs_check_bin_list();
 			arg_private_bin = 1;
 		}
-			
-
+		else if (strcmp(argv[i], "--private-tmp") == 0) {
+			arg_private_tmp = 1;
+		}
 
 		//*************************************
 		// hostname, etc

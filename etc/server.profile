@@ -5,5 +5,6 @@ noblacklist /usr/sbin
 include /etc/firejail/disable-mgmt.inc
 private
 private-dev
+private-tmp
 seccomp
 

@@ -224,6 +224,7 @@ extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
 extern int arg_private_etc;	// private etc directory
 extern int arg_private_bin;	// private bin directory
+extern int arg_private_tmp;	// private tmp directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
@@ -288,6 +289,7 @@ void fs_overlayfs(void);
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir);
 int fs_check_chroot_dir(const char *rootdir);
+void fs_private_tmp(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory

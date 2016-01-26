@@ -230,6 +230,8 @@ void usage(void) {
 	printf("\t\tfilesystem, and copy the files and directories in the list.\n");
 	printf("\t\tAll modifications are discarded when the sandbox is closed.\n\n");
 	
+	printf("\t--private-tmp - mount a tmpfs on top of /tmp directory\n\n");
+	
 	printf("\t--profile=filename - use a custom profile.\n\n");
 	printf("\t--profile-path=directory - use this directory to look for profile files.\n\n");
 	

@@ -1004,6 +1004,17 @@ Example:
 $ firejail --private-etc=group,hostname,localtime, \\
 .br
 nsswitch.conf,passwd,resolv.conf
+
+.TP
+\fB\-\-private-tmp
+Mount an empty temporary filesystem on top of /tmp directory.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-private-tmp
+
 .TP
 \fB\-\-profile=filename
 Load a custom security profile from filename. For filename use an absolute path or a path relative to the current path.

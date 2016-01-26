@@ -5,6 +5,9 @@
 echo "TESTING: tmpfs"
 ./option_tmpfs.exp
 
+echo "TESTING: profile tmpfs"
+./profile_tmpfs.exp
+
 echo "TESTING: network interfaces"
 ./net_interface.exp
 
@@ -19,7 +22,7 @@ fi
 
 if [ -f /etc/init.d/apache2 ]
 then
-	echo "TESTING: servers apache2, private-dev"
+	echo "TESTING: servers apache2, private-dev, private-tmp"
 	./servers3.exp
 fi
 
@@ -31,13 +34,13 @@ fi
 
 if [ -f /etc/init.d/unbound ]
 then
-	echo "TESTING: servers unbound, private-dev"
+	echo "TESTING: servers unbound, private-dev, private-tmp"
 	./servers5.exp
 fi
 
 if [ -f /etc/init.d/nginx ]
 then
-	echo "TESTING: servers nginx, private-dev"
+	echo "TESTING: servers nginx, private-dev, private-tmp"
 	./servers6.exp
 fi
 

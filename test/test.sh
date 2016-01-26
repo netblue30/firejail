@@ -175,9 +175,6 @@ echo "TESTING: profile rlimit"
 echo "TESTING: profile read-only"
 ./profile_readonly.exp
 
-echo "TESTING: profile tmpfs"
-./profile_tmpfs.exp
-
 echo "TESTING: private"
 ./private.exp `whoami`
 

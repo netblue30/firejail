@@ -45,7 +45,7 @@ expect {
 send -- "cat index.html\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"This is the default web page for this server"
+	"DOCTYPE html PUBLIC"
 }
 
 sleep 1
@@ -62,6 +62,13 @@ expect {
 	"audio" {puts "TESTING ERROR 6\n";exit}
 	"ppp" {puts "TESTING ERROR 6\n";exit}
 	"log"
+}
+sleep 1
+send -- "ls -al /tmp;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"X11-unix" {puts "TESTING ERROR 11\n";exit}
+	"/root"
 }
 sleep 2
 

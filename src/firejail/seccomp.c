@@ -390,7 +390,7 @@ void seccomp_filter_32(void) {
 }
 
 // drop filter for seccomp option
-int seccomp_filter_drop(void) {
+int seccomp_filter_drop(int enforce_seccomp) {
 	filter_init();
 	
 	// default seccomp
@@ -595,7 +595,13 @@ int seccomp_filter_drop(void) {
 	};
 
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		if (enforce_seccomp) {
+			fprintf(stderr, "Error: a seccomp-enabled Linux kernel is required, exiting...\n");
+			exit(1);
+		}
+		else
+			fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+
 		return 1;
 	}
 	

@@ -387,7 +387,7 @@ void fs_check_private_dir(void);
 
 
 // seccomp.c
-int seccomp_filter_drop(void);
+int seccomp_filter_drop(int enforce_seccomp);
 int seccomp_filter_keep(void);
 void seccomp_set(void);
 void seccomp_print_filter_name(const char *name);

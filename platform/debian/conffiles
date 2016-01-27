@@ -60,4 +60,4 @@
 /etc/firejail/telegram.profile
 /etc/firejail/mathematica.profile
 /etc/firejail/Mathematica.profile
-
+/etc/firejail/uget-gtk.profile

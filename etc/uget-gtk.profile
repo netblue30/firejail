@@ -11,3 +11,4 @@ netfilter
 noroot
 whitelist ${DOWNLOADS}
 whitelist ~/.config/uGet
+include /etc/firejail/whitelist-common.inc

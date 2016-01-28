@@ -119,6 +119,11 @@ void protocol_list(void) {
 void protocol_store(const char *prlist) {
 	assert(prlist);
 	
+	if (cfg.protocol) {
+		fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", prlist);
+		return;
+	}
+	
 	// temporary list
 	char *tmplist = strdup(prlist);
 	if (!tmplist)

@@ -268,7 +268,7 @@ void fs_var_lock(void) {
 	if (is_dir("/var/lock")) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lock\n");
-		if (mount("tmpfs", "/var/lock", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+		if (mount("tmpfs", "/var/lock", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting /lock");
 		fs_logger("mount tmpfs on /var/lock");
 	}
@@ -286,7 +286,7 @@ void fs_var_lock(void) {
 			}
 			if (arg_debug)
 				printf("Mounting tmpfs on %s on behalf of /var/lock\n", lnk);
-			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/lock");
 			free(lnk);
 			fs_logger("mount tmpfs on /var/lock");
@@ -304,7 +304,7 @@ void fs_var_tmp(void) {
 		if (!is_link("/var/tmp")) {
 			if (arg_debug)
 				printf("Mounting tmpfs on /var/tmp\n");
-			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/tmp");
 			fs_logger("mount tmpfs on /var/tmp");
 		}

@@ -3,6 +3,7 @@ firejail (0.9.37) baseline; urgency=low
   * --join command enhancement (--join-network, --join-filesystem)
   * added --user command
   * added --disable-network and --disable-userns compile time flags
+  * Centos 6 support
   * symlink invocation
   * added KMail, Seamonkey, Telegram, Mathematica, uGet profiles
   * --chroot in user mode allowed only if seccomp support is available
@@ -11,7 +12,7 @@ firejail (0.9.37) baseline; urgency=low
   * --tmpfs option allowed only running as root
   * added --private-tmp option
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Sun,  24 Jan 2016 20:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Fri,  29 Jan 2016 20:00:00 -0500
 
 firejail (0.9.36) baseline; urgency=low
   * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,

@@ -105,7 +105,7 @@ void fs_private_dev(void){
 	}
 
 	// mount tmpfs on top of /dev
-	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
 	fs_logger("mount tmpfs on /dev");
 
@@ -139,12 +139,12 @@ void fs_private_dev(void){
 	// create /dev/shm
 	if (arg_debug)
 		printf("Create /dev/shm directory\n");
-	rv = mkdir("/dev/shm", 0777);
+	rv = mkdir("/dev/shm", 01777);
 	if (rv == -1)
 		errExit("mkdir");
 	if (chown("/dev/shm", 0, 0) < 0)
 		errExit("chown");
-	if (chmod("/dev/shm", 0777) < 0)
+	if (chmod("/dev/shm", 01777) < 0)
 		errExit("chmod");
 	fs_logger("mkdir /dev/shm");
 
@@ -201,7 +201,7 @@ void fs_dev_shm(void) {
 	if (is_dir("/dev/shm")) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /dev/shm\n");
-		if (mount("tmpfs", "/dev/shm", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+		if (mount("tmpfs", "/dev/shm", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting /dev/shm");
 		fs_logger("mount tmpfs on /dev/shm");
 	}
@@ -210,16 +210,16 @@ void fs_dev_shm(void) {
 		if (lnk) {
 			if (!is_dir(lnk)) {
 				// create directory
-				if (mkdir(lnk, 0777))
+				if (mkdir(lnk, 01777))
 					errExit("mkdir");
 				if (chown(lnk, 0, 0))
 					errExit("chown");
-				if (chmod(lnk, 0777))
+				if (chmod(lnk, 01777))
 					errExit("chmod");
 			}
 			if (arg_debug)
 				printf("Mounting tmpfs on %s on behalf of /dev/shm\n", lnk);
-			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/tmp");
 			fs_logger3("mount tmpfs on", lnk, "on behalf of /dev/shm");
 			free(lnk);

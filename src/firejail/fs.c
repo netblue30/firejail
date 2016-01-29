@@ -963,7 +963,7 @@ void fs_private_tmp(void) {
 	// mount tmpfs on top of /run/firejail/mnt
 	if (arg_debug)
 		printf("Mounting tmpfs on /tmp directory\n");
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 		errExit("mounting /tmp/firejail/mnt");
 }
 

@@ -289,10 +289,12 @@ int caps_default_filter(void) {
 	else if (arg_debug)
 		printf("Drop CAP_SYS_TTY_CONFIG\n");
 
+#ifdef CAP_SYSLOG
 	if (prctl(PR_CAPBSET_DROP, CAP_SYSLOG, 0, 0, 0) && arg_debug)
 		fprintf(stderr, "Warning: cannot drop CAP_SYSLOG");
 	else if (arg_debug)
 		printf("Drop CAP_SYSLOG\n");
+#endif
 
 	if (prctl(PR_CAPBSET_DROP, CAP_MKNOD, 0, 0, 0) && arg_debug)
 		fprintf(stderr, "Warning: cannot drop CAP_MKNOD");

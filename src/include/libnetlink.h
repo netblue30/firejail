@@ -24,6 +24,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <asm/types.h>
+#include <sys/socket.h>
 #include <linux/netlink.h>
 #include <linux/rtnetlink.h>
 #include <linux/if_link.h>

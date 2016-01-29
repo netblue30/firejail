@@ -114,6 +114,7 @@ read-only ${HOME}/.emacs
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.iscreenrc
 read-only ${HOME}/.muttrc
+read-only ${HOME}/.mutt/muttrc
 read-only ${HOME}/.xmonad
 
 # The user ~/bin directory can override commands such as ls

@@ -77,7 +77,7 @@ void usage(void) {
 	printf("\t--debug-caps - print all recognized capabilities in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--debug-check-filename - debug filename checking.\n\n");
-	printf("\t--debug-errnos - print all recognized error numbres in the current\n");
+	printf("\t--debug-errnos - print all recognized error numbers in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
 	printf("\t--debug-protocols - print all recognized protocols in the current\n");
 	printf("\t\tFirejail software build and exit.\n\n");
@@ -109,7 +109,7 @@ void usage(void) {
 	printf("\t--ignore=command - ignore command in profile files.\n\n");
 #ifdef HAVE_NETWORK	
 	printf("\t--interface=name - move interface in a new network namespace. Up to\n");
-	printf("\t\tfour --interface options can be sepcified.\n\n");
+	printf("\t\tfour --interface options can be specified.\n\n");
 	printf("\t--ip=address - set interface IP address.\n\n");
 	printf("\t--ip=none - no IP address and no default gateway address are configured\n");
 	printf("\t\tin the new network namespace. Use this option in case you intend\n");
@@ -227,7 +227,7 @@ void usage(void) {
 	printf("\t\tis closed.\n\n");
 
 	printf("\t--private-dev - create a new /dev directory. Only dri, null, full, zero,\n");
-	printf("\t\ttty, pst, ptms, random, urandom, log and shm devices are\n");
+	printf("\t\tty, pst, ptms, random, urandom, log and shm devices are\n");
 	printf("\t\tavailable.\n\n");
 
 	printf("\t--private-etc=file,directory - build a new /etc in a temporary\n");

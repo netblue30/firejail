@@ -173,7 +173,7 @@ static void monitor_application(pid_t app_pid) {
 
 #if 0
 // todo: find a way to shut down interfaces before closing the namespace
-// the problem is we don't have enough privileges to shutdown interfaces in this momen
+// the problem is we don't have enough privileges to shutdown interfaces in this moment
 	// shut down bridge/macvlan interfaces
 	if (any_bridge_configured()) {
 		

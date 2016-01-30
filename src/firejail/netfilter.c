@@ -30,7 +30,7 @@ static char *client_filter =
 ":FORWARD DROP [0:0]\n"
 ":OUTPUT ACCEPT [0:0]\n"
 "-A INPUT -i lo -j ACCEPT\n"
-"# echo replay is handled by -m state RELEATED/ESTABLISHED below\n"
+"# echo replay is handled by -m state RELATED/ESTABLISHED below\n"
 "#-A INPUT -p icmp --icmp-type echo-reply -j ACCEPT\n"
 "-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT\n"
 "-A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT\n"

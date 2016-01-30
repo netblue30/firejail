@@ -271,7 +271,7 @@ void shm_write_bandwidth_file(pid_t pid) {
 	return;
 
 errout:
-	fprintf(stderr, "Error: cannot write bandwidht file %s\n", fname);
+	fprintf(stderr, "Error: cannot write bandwidth file %s\n", fname);
 	exit(1);
 }
 
@@ -413,7 +413,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 			errExit("asprintf");
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
-			fprintf(stderr, "Error: cannot read netowk map filel %s\n", fname);
+			fprintf(stderr, "Error: cannot read network map file %s\n", fname);
 			exit(1);
 		}
 		

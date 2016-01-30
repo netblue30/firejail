@@ -31,9 +31,9 @@
 		BLACKLIST(SYS_init_module), // kernel module handling
 		BLACKLIST(SYS_finit_module),
 		BLACKLIST(SYS_delete_module),
-		BLACKLIST(SYS_iopl), // io permisions
+		BLACKLIST(SYS_iopl), // io permissions
 		BLACKLIST(SYS_ioperm),
-		BLACKLIST(SYS_iopl), // io permisions
+		BLACKLIST(SYS_iopl), // io permissions
 		BLACKLIST(SYS_ni_syscall),
 		BLACKLIST(SYS_swapon), // swap on/off
 		BLACKLIST(SYS_swapoff),

@@ -345,7 +345,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		char *dname1 = ptr + 5;
 		char *dname2 = split_comma(dname1); // this inserts a '0 to separate the two dierctories
 		if (dname2 == NULL) {
-			fprintf(stderr, "Error: mising second directory for bind\n");
+			fprintf(stderr, "Error: missing second directory for bind\n");
 			exit(1);
 		}
 		

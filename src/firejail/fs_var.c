@@ -110,7 +110,7 @@ static void build_dirs(void) {
 void fs_var_log(void) {
 	build_list("/var/log");
 	
-	// create /var/log if it does't exit
+	// create /var/log if it doesn't exit
 	if (is_dir("/var/log")) {
 		// extract group id for /var/log/wtmp
 		struct stat s;
@@ -184,7 +184,7 @@ void fs_var_lib(void) {
 			printf("Mounting tmpfs on /var/lib/nginx\n");
 		if (mount("tmpfs", "/var/lib/nginx", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/nginx");
-		fs_logger("mount tmpfs on /var/lib/nignx");
+		fs_logger("mount tmpfs on /var/lib/nginx");
 	}			
 
 	// net-snmp multiserver

@@ -64,7 +64,7 @@ void load_cgroup(const char *fname) {
 		return;
 	}
 errout:
-	fprintf(stderr, "Warrning: cannot load control group\n");
+	fprintf(stderr, "Warning: cannot load control group\n");
 	if (fp)
 		fclose(fp);
 }

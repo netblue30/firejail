@@ -108,7 +108,7 @@ static void myexit(int rv) {
 		printf("\nparent is shutting down, bye...\n");
 	
 	// delete sandbox files in shared memory
-	bandwidth_shm_del_file(sandbox_pid);		// bandwidht file
+	bandwidth_shm_del_file(sandbox_pid);		// bandwidth file
 	network_shm_del_file(sandbox_pid);		// network map file
 	
 	exit(rv); 

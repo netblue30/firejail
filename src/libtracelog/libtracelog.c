@@ -139,7 +139,7 @@ static char *storage_find(const char *str) {
 
 
 //
-// load blacklistst form /run/firejail/mnt/fslogger
+// load blacklist form /run/firejail/mnt/fslogger
 //
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
 #define MAXBUF 4096

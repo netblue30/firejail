@@ -430,7 +430,7 @@ $ firejail \-\-ignore=shell --ignore=seccomp firefox
 
 .TP
 \fB\-\-interface=interface
-Move interface in a new network namespace. Up to four --interface options can be sepcified.
+Move interface in a new network namespace. Up to four --interface options can be specified.
 .br
 
 .br
@@ -1196,7 +1196,7 @@ SECCOMP Filter:
 .br
   VALIDATE_ARCHITECTURE
 .br
-  EXAMINE_SYSCAL
+  EXAMINE_SYSCALL
 .br
   BLACKLIST 165 mount
 .br

@@ -87,7 +87,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
 	memcpy(hdr.sender_ip, (uint8_t *)&srcaddr, 4);
 	memcpy(hdr.target_ip, (uint8_t *)&destaddr, 4);
 
-	// buiild ethernet frame
+	// build ethernet frame
 	uint8_t frame[ETH_FRAME_LEN]; // includes eht header, vlan, and crc
 	memset(frame, 0, sizeof(frame));
 	frame[0] = frame[1] = frame[2] = frame[3] = frame[4] = frame[5] = 0xff;
@@ -130,7 +130,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
 				return -1;
 			}
 			
-			// parse the incomming packet
+			// parse the incoming packet
 			if ((unsigned int) len < 14 + sizeof(ArpHdr))
 				continue;
 			if (frame[12] != (ETH_P_ARP / 256) || frame[13] != (ETH_P_ARP % 256))
@@ -384,7 +384,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 			uint32_t dst = htonl(dest);
 			memcpy(hdr.target_ip, (uint8_t *)&dst, 4);
 		
-			// buiild ethernet frame
+			// build ethernet frame
 			uint8_t frame[ETH_FRAME_LEN]; // includes eht header, vlan, and crc
 			memset(frame, 0, sizeof(frame));
 			frame[0] = frame[1] = frame[2] = frame[3] = frame[4] = frame[5] = 0xff;
@@ -409,7 +409,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 				perror("recvfrom");
 			}
 
-			// parse the incomming packet
+			// parse the incoming packet
 			if ((unsigned int) len < 14 + sizeof(ArpHdr))
 				continue;
 

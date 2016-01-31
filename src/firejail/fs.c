@@ -64,12 +64,12 @@ void fs_build_firejail_dir(void) {
 		if (arg_debug)
 			printf("Creating %s directory\n", RUN_FIREJAIL_DIR);
 		/* coverity[toctou] */
-		int rv = mkdir(RUN_FIREJAIL_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_FIREJAIL_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown(RUN_FIREJAIL_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(RUN_FIREJAIL_DIR, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+		if (chmod(RUN_FIREJAIL_DIR, 0755) < 0)
 			errExit("chmod");
 	}
 	else { // check /tmp/firejail directory belongs to root end exit if doesn't!
@@ -102,12 +102,12 @@ void fs_build_mnt_dir(void) {
 		if (arg_debug)
 			printf("Creating %s directory\n", RUN_MNT_DIR);
 		/* coverity[toctou] */
-		int rv = mkdir(RUN_MNT_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_MNT_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown(RUN_MNT_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(RUN_MNT_DIR, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+		if (chmod(RUN_MNT_DIR, 0755) < 0)
 			errExit("chmod");
 	}
 
@@ -740,18 +740,18 @@ void fs_overlayfs(void) {
 	char *oroot;
 	if(asprintf(&oroot, "%s/oroot", RUN_MNT_DIR) == -1)
 		errExit("asprintf");
-	if (mkdir(oroot, S_IRWXU | S_IRWXG | S_IRWXO))
+	if (mkdir(oroot, 0755))
 		errExit("mkdir");
 	if (chown(oroot, 0, 0) < 0)
 		errExit("chown");
-	if (chmod(oroot, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+	if (chmod(oroot, 0755) < 0)
 		errExit("chmod");
 
 	char *basedir = RUN_MNT_DIR;
 	if (arg_overlay_keep) {
 		// set base for working and diff directories
 		basedir = cfg.overlay_dir;
-		if (mkdir(basedir, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
+		if (mkdir(basedir, 0755) != 0) {
 			fprintf(stderr, "Error: cannot create overlay directory\n");
 			exit(1);
 		}
@@ -760,21 +760,21 @@ void fs_overlayfs(void) {
 	char *odiff;
 	if(asprintf(&odiff, "%s/odiff", basedir) == -1)
 		errExit("asprintf");
-	if (mkdir(odiff, S_IRWXU | S_IRWXG | S_IRWXO))
+	if (mkdir(odiff, 0755))
 		errExit("mkdir");
 	if (chown(odiff, 0, 0) < 0)
 		errExit("chown");
-	if (chmod(odiff, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+	if (chmod(odiff, 0755) < 0)
 		errExit("chmod");
 	
 	char *owork;
 	if(asprintf(&owork, "%s/owork", basedir) == -1)
 		errExit("asprintf");
-	if (mkdir(owork, S_IRWXU | S_IRWXG | S_IRWXO))
+	if (mkdir(owork, 0755))
 		errExit("mkdir");
 	if (chown(owork, 0, 0) < 0)
 		errExit("chown");
-	if (chmod(owork, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+	if (chmod(owork, 0755) < 0)
 		errExit("chmod");
 	
 	// mount overlayfs
@@ -913,7 +913,7 @@ void fs_chroot(const char *rootdir) {
 	if (asprintf(&rundir, "%s/run", rootdir) == -1)
 		errExit("asprintf");
 	if (!is_dir(rundir)) {
-		int rv = mkdir(rundir, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(rundir, 0755);
 		(void) rv;
 		rv = chown(rundir, 0, 0);
 		(void) rv;

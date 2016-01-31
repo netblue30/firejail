@@ -464,7 +464,7 @@ void fs_whitelist(void) {
 	// /home/user
 	if (home_dir) {
 		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
-		int rv = mkdir(RUN_WHITELIST_HOME_USER_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_WHITELIST_HOME_USER_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown(RUN_WHITELIST_HOME_USER_DIR, getuid(), getgid()) < 0)
@@ -482,12 +482,12 @@ void fs_whitelist(void) {
 	// /tmp mountpoint
 	if (tmp_dir) {
 		// keep a copy of real /tmp directory in WHITELIST_TMP_DIR
-		int rv = mkdir(RUN_WHITELIST_TMP_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_WHITELIST_TMP_DIR, 1777);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown(RUN_WHITELIST_TMP_DIR, 0, 0) < 0)
 			errExit("chown");
-		if (chmod(RUN_WHITELIST_TMP_DIR, 0777) < 0)
+		if (chmod(RUN_WHITELIST_TMP_DIR, 1777) < 0)
 			errExit("chmod");
 	
 		if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
@@ -496,7 +496,7 @@ void fs_whitelist(void) {
 		// mount tmpfs on /tmp
 		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /tmp directory\n");
-		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting tmpfs on /tmp");
 		fs_logger("mount tmpfs on /tmp");
 	}
@@ -504,7 +504,7 @@ void fs_whitelist(void) {
 	// /media mountpoint
 	if (media_dir) {
 		// keep a copy of real /media directory in RUN_WHITELIST_MEDIA_DIR
-		int rv = mkdir(RUN_WHITELIST_MEDIA_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_WHITELIST_MEDIA_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown(RUN_WHITELIST_MEDIA_DIR, 0, 0) < 0)
@@ -526,7 +526,7 @@ void fs_whitelist(void) {
 	// /var mountpoint
 	if (var_dir) {
 		// keep a copy of real /var directory in RUN_WHITELIST_VAR_DIR
-		int rv = mkdir(RUN_WHITELIST_VAR_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_WHITELIST_VAR_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown(RUN_WHITELIST_VAR_DIR, 0, 0) < 0)
@@ -548,7 +548,7 @@ void fs_whitelist(void) {
 	// /dev mountpoint
 	if (dev_dir) {
 		// keep a copy of real /dev directory in RUN_WHITELIST_DEV_DIR
-		int rv = mkdir(RUN_WHITELIST_DEV_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir(RUN_WHITELIST_DEV_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown(RUN_WHITELIST_DEV_DIR, 0, 0) < 0)
@@ -556,7 +556,7 @@ void fs_whitelist(void) {
 		if (chmod(RUN_WHITELIST_DEV_DIR, 0755) < 0)
 			errExit("chmod");
 	
-		if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount bind");
 	
 		// mount tmpfs on /dev
@@ -569,8 +569,8 @@ void fs_whitelist(void) {
 
 	// /opt mountpoint
 	if (opt_dir) {
-		// keep a copy of real /opt directory in RUN_WHITELIST_DEV_DIR
-		int rv = mkdir(RUN_WHITELIST_OPT_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+		// keep a copy of real /opt directory in RUN_WHITELIST_OPT_DIR
+		int rv = mkdir(RUN_WHITELIST_OPT_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown(RUN_WHITELIST_OPT_DIR, 0, 0) < 0)

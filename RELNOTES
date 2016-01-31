@@ -5,7 +5,8 @@ firejail (0.9.38-rc1) baseline; urgency=low
   * added --disable-network and --disable-userns compile time flags
   * Centos 6 support
   * symlink invocation
-  * added KMail, Seamonkey, Telegram, Mathematica, uGet profiles
+  * added KMail, Seamonkey, Telegram, Mathematica, uGet,
+  *   and mupen64plus profiles
   * --chroot in user mode allowed only if seccomp support is available
   *   in current Linux kernel
   * the first protocol list installed takes precedence

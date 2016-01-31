@@ -93,8 +93,8 @@ void pulseaudio_init(void) {
 	 
  	// create the new user pulseaudio directory
 	 fs_build_mnt_dir();
-	int rv = mkdir(RUN_PULSE_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
-	(void) rv; // in --chroot mode the directory canalready be there
+	int rv = mkdir(RUN_PULSE_DIR, 0700);
+	(void) rv; // in --chroot mode the directory can already be there
 	if (chown(RUN_PULSE_DIR, getuid(), getgid()) < 0)
 		errExit("chown");
 	if (chmod(RUN_PULSE_DIR, 0700) < 0)

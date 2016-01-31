@@ -232,14 +232,14 @@ void fs_var_cache(void) {
 			gid = p->pw_gid;
 		}
 		
-		int rv = mkdir("/var/cache/lighttpd/compress", S_IRWXU | S_IRWXG | S_IRWXO);
+		int rv = mkdir("/var/cache/lighttpd/compress", 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown("/var/cache/lighttpd/compress", uid, gid) < 0)
 			errExit("chown");
 		fs_logger("mkdir /var/cache/lighttpd/compress");
 
-		rv = mkdir("/var/cache/lighttpd/uploads", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+		rv = mkdir("/var/cache/lighttpd/uploads", 0755);
 		if (rv == -1)
 			errExit("mkdir");
 		if (chown("/var/cache/lighttpd/uploads", uid, gid) < 0)

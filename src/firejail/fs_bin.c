@@ -169,7 +169,7 @@ void fs_private_bin_list(void) {
 
 	// create /tmp/firejail/mnt/bin directory
 	fs_build_mnt_dir();
-	int rv = mkdir(RUN_BIN_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+	int rv = mkdir(RUN_BIN_DIR, 0755);
 	if (rv == -1)
 		errExit("mkdir");
 	if (chown(RUN_BIN_DIR, 0, 0) < 0)

@@ -759,11 +759,11 @@ int main(int argc, char **argv) {
 			struct stat s;
 			if (stat(dirname, &s) == -1) {
 				/* coverity[toctou] */
-				if (mkdir(dirname, S_IRWXU | S_IRWXG | S_IRWXO))
+				if (mkdir(dirname, 0700))
 					errExit("mkdir");
 				if (chown(dirname, getuid(), getgid()) < 0)
 					errExit("chown");
-				if (chmod(dirname, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+				if (chmod(dirname, 0700) < 0)
 					errExit("chmod");
 			}
 			free(dirname);

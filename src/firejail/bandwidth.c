@@ -118,7 +118,7 @@ void shm_create_firejail_dir(void) {
 	struct stat s;
 	if (stat("/dev/shm/firejail", &s) == -1) {
 		/* coverity[toctou] */
-		if (mkdir("/dev/shm/firejail", 0777) == -1)
+		if (mkdir("/dev/shm/firejail", 0644) == -1)
 			errExit("mkdir");
 		if (chown("/dev/shm/firejail", 0, 0) == -1)
 			errExit("chown");

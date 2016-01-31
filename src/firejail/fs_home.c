@@ -497,7 +497,7 @@ void fs_private_home_list(void) {
 
 	// create /tmp/firejail/mnt/home directory
 	fs_build_mnt_dir();
-	int rv = mkdir(RUN_HOME_DIR, S_IRWXU | S_IRWXG | S_IRWXO);
+	int rv = mkdir(RUN_HOME_DIR, 0755);
 	if (rv == -1)
 		errExit("mkdir");
 	if (chown(RUN_HOME_DIR, u, g) < 0)

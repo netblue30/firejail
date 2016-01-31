@@ -466,8 +466,9 @@ int main(int argc, char **argv) {
 	int highest_errno = errno_highest_nr();
 #endif
 
-	// check argv[0] symlink wrapper
-	run_symlink(argc, argv);
+	// check argv[0] symlink wrapper if this is not a login shell
+	if (*argv[0] != '-')
+		run_symlink(argc, argv);
 
 
 	// check if we already have a sandbox running

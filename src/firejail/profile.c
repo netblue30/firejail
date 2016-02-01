@@ -304,14 +304,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	// private home list of files and directories
-	if (strncmp(ptr, "private-home ", 13) == 0) {
-		cfg.home_private_keep = ptr + 13;
-		fs_check_home_list();
-		arg_private = 1;
-		return 0;
-	}
-	
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
 		cfg.etc_private_keep = ptr + 12;

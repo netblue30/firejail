@@ -961,18 +961,6 @@ $ ls /bin
 bash  cat  ls  sed
 
 .TP
-\fB\-\-private-home=file,directory
-Build a new user home in a temporary
-filesystem, and copy the files and directories in the list in the
-new home. All modifications are discarded when the sandbox is
-closed.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-private-home=.mozilla firefox
-.TP
 \fB\-\-private-dev
 Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, urandom, log and shm devices are available.
 .br

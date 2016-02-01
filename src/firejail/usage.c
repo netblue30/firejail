@@ -221,11 +221,6 @@ void usage(void) {
 	printf("\t\tand copy the programs in the list. The same directory is\n");
 	printf("\t\talso bind-mounted over /sbin, /usr/bin and /usr/sbin.\n\n");
 
-	printf("\t--private-home=file,directory - build a new user home in a temporary\n");
-	printf("\t\tfilesystem, and copy the files and directories in the list in\n");
-	printf("\t\tthe new home. All modifications are discarded when the sandbox\n");
-	printf("\t\tis closed.\n\n");
-
 	printf("\t--private-dev - create a new /dev directory. Only dri, null, full, zero,\n");
 	printf("\t\tty, pst, ptms, random, urandom, log and shm devices are\n");
 	printf("\t\tavailable.\n\n");

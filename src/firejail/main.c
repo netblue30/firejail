@@ -891,11 +891,6 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--private") == 0)
 			arg_private = 1;
 		else if (strncmp(argv[i], "--private=", 10) == 0) {
-			if (cfg.home_private_keep) {
-				fprintf(stderr, "Error: a private list of files was already defined with --private-home option.\n");
-				exit(1);
-			}
-			
 			// extract private home dirname
 			cfg.home_private = argv[i] + 10;
 			if (*cfg.home_private == '\0') {
@@ -903,21 +898,6 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			fs_check_private_dir();
-			arg_private = 1;
-		}
-		else if (strncmp(argv[i], "--private-home=", 15) == 0) {
-			if (cfg.home_private) {
-				fprintf(stderr, "Error: a private home directory was already defined with --private option.\n");
-				exit(1);
-			}
-			
-			// extract private home dirname
-			cfg.home_private_keep = argv[i] + 15;
-			if (*cfg.home_private_keep == '\0') {
-				fprintf(stderr, "Error: invalid private-home option\n");
-				exit(1);
-			}
-			fs_check_home_list();
 			arg_private = 1;
 		}
 		else if (strcmp(argv[i], "--private-dev") == 0) {

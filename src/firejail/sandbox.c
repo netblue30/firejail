@@ -412,8 +412,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private) {
 		if (cfg.home_private)	// --private=
 			fs_private_homedir();
-		else if (cfg.home_private_keep) // --private-home=
-			fs_private_home_list();
 		else // --private
 			fs_private();
 	}

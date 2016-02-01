@@ -123,7 +123,6 @@ typedef struct config_t {
 	char *profile_ignore[MAX_PROFILE_IGNORE];
 	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory
-	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
 	char *bin_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
@@ -378,10 +377,6 @@ void fs_private_dev(void);
 void fs_private(void);
 // private mode (--private=homedir)
 void fs_private_homedir(void);
-// private mode (--private-home=list)
-void fs_private_home_list(void);
-// check directory list specified by user (--private-home option) - exit if it fails
-void fs_check_home_list(void);
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void);
 

@@ -349,7 +349,9 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// configure filesystem
 	//****************************
+#ifdef HAVE_SECCOMP
 	int enforce_seccomp = 0;
+#endif
 #ifdef HAVE_CHROOT		
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
@@ -361,7 +363,9 @@ int sandbox(void* sandbox_arg) {
 			// force default seccomp inside the chroot, no keep or drop list
 			// the list build on top of the default drop list is kept intact
 			arg_seccomp = 1;
+#ifdef HAVE_SECCOMP
 			enforce_seccomp = 1;
+#endif
 			if (cfg.seccomp_list_drop) {
 				free(cfg.seccomp_list_drop);
 				cfg.seccomp_list_drop = NULL;

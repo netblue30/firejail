@@ -1,4 +1,4 @@
-firejail (0.9.38-rc1) baseline; urgency=low
+firejail (0.9.38) baseline; urgency=low
   * IPv6 support (--ip6 and --netfilter6)
   * --join command enhancement (--join-network, --join-filesystem)
   * added --user command
@@ -9,11 +9,12 @@ firejail (0.9.38-rc1) baseline; urgency=low
   *   and mupen64plus profiles
   * --chroot in user mode allowed only if seccomp support is available
   *   in current Linux kernel
+  * deprecated --private-home feature
   * the first protocol list installed takes precedence
   * --tmpfs option allowed only running as root
   * added --private-tmp option
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Fri, 29 Jan 2016 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Mon, 2 Feb 2016 10:00:00 -0500
 
 firejail (0.9.36) baseline; urgency=low
   * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,

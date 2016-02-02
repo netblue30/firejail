@@ -52,6 +52,7 @@ C - chroot filesystem
 	- O, C not working - todo
 3.9 whitelist dev
 3.10 whitelist tmp
+	- O not working on Arch Linux
 
 
 

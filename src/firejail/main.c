@@ -766,6 +766,11 @@ int main(int argc, char **argv) {
 				if (chmod(dirname, 0700) < 0)
 					errExit("chmod");
 			}
+			else if (is_link(dirname)) {
+				fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+				exit(1);
+			}
+			
 			free(dirname);
 			
 			// check overlay directory

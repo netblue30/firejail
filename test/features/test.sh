@@ -95,3 +95,9 @@ echo "TESTING: 3.3 blacklist"
 echo "TESTING: 3.4 whitelist"
 ./3.4.exp $OVERLAY $CHROOT
 
+echo "TESTING: 3.5 private-dev"
+./3.5.exp $OVERLAY $CHROOT
+
+echo "TESTING: 3.6 private-etc"
+./3.6.exp notworking-todo $CHROOT
+

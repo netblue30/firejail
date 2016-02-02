@@ -1,0 +1,77 @@
+#!/usr/bin/expect -f
+#
+# private-dev
+#
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+set overlay [lindex $argv 0]
+set chroot [lindex $argv 1]
+
+#
+# N
+#
+send -- "firejail --noprofile --private-dev\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al /dev | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"14"
+}
+
+after 100
+send -- "exit\r"
+sleep 1
+
+#
+# O
+#
+if { $overlay == "overlay" } {
+	send -- "firejail --noprofile --overlay --private-dev\r"
+	expect {
+		timeout {puts "TESTING ERROR 2\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "ls -al /dev | wc -l\r"
+	expect {
+		timeout {puts "TESTING ERROR 3.1\n";exit}
+		"13"
+	}
+	
+	after 100
+	send -- "exit\r"
+	sleep 1
+}
+
+#
+# C
+#
+if { $chroot == "chroot" } {
+	send -- "firejail --noprofile --chroot=/tmp/chroot --private-dev\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"Child process initialized"
+	}
+	sleep 1
+	
+	send -- "ls -al /dev | wc -l\r"
+	expect {
+		timeout {puts "TESTING ERROR 5.1\n";exit}
+		"13"
+	}
+	
+	after 100
+	send -- "exit\r"
+	sleep 1
+}
+
+
+puts "\nall done\n"

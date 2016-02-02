@@ -83,7 +83,7 @@ fi
 ####################
 # filesystem features
 ####################
-echo "TESTING: 3.1 tmpfs"
+echo "TESTING: 3.1 private"
 ./3.1.exp $OVERLAY $CHROOT
 
 echo "TESTING: 3.2 read-only"

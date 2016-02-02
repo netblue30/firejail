@@ -69,10 +69,6 @@ if { $overlay == "overlay" } {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
 		"proc /proc proc"
 	}
-#	expect {
-#		timeout {puts "TESTING ERROR 3.2\n";exit}
-#		"proc /proc proc"
-#	}
 	expect {
 		timeout {puts "TESTING ERROR 3.3\n";exit}
 		"proc /proc/sys proc"
@@ -115,10 +111,6 @@ if { $chroot == "chroot" } {
 		"proc /proc proc"
 	}
 	expect {
-		timeout {puts "TESTING ERROR 5.2\n";exit}
-		"proc /proc proc"
-	}
-	expect {
 		timeout {puts "TESTING ERROR 5.3\n";exit}
 		"proc /proc/sys proc"
 	}
@@ -126,10 +118,10 @@ if { $chroot == "chroot" } {
 		timeout {puts "TESTING ERROR 5.4\n";exit}
 		"proc /proc/sysrq-trigger proc"
 	}
-	expect {
-		timeout {puts "TESTING ERROR 5.5\n";exit}
-		"proc /proc/sys/kernel/hotplug"
-	}
+#	expect {
+#		timeout {puts "TESTING ERROR 5.5\n";exit}
+#		"proc /proc/sys/kernel/hotplug"
+#	}
 	expect {
 		timeout {puts "TESTING ERROR 5.6\n";exit}
 		"proc /proc/irq proc"

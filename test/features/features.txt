@@ -50,6 +50,8 @@ C - chroot filesystem
 3.7 private-tmp
 3.8 private-bin
 	- O, C not working - todo
+3.9 whitelist dev
+3.10 whitelist tmp
 
 
 

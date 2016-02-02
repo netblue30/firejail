@@ -92,7 +92,7 @@ echo "TESTING: 3.2 read-only"
 echo "TESTING: 3.3 blacklist"
 ./3.3.exp $OVERLAY $CHROOT
 
-echo "TESTING: 3.4 whitelist"
+echo "TESTING: 3.4 whitelist home"
 ./3.4.exp $OVERLAY $CHROOT
 
 echo "TESTING: 3.5 private-dev"
@@ -105,4 +105,11 @@ echo "TESTING: 3.7 private-tmp"
 ./3.7.exp $OVERLAY $CHROOT
 
 echo "TESTING: 3.8 private-bin"
-./3.6.exp notworking notworking
+./3.8.exp notworking notworking
+
+echo "TESTING: 3.9 whitelist dev"
+./3.9.exp $OVERLAY $CHROOT
+
+echo "TESTING: 3.10 whitelist tmp"
+./3.10.exp $OVERLAY $CHROOT
+

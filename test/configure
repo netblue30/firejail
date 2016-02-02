@@ -32,6 +32,7 @@ DEFAULT_FILES+=" /bin/cp /bin/ls /bin/cat /bin/ps /bin/netstat /bin/ping /sbin/i
 
 rm -fr $ROOTDIR
 mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,var/lock,var/log,proc}
+chmod 777 $ROOTDIR/tmp
 mkdir -p $ROOTDIR/etc/firejail
 mkdir -p $ROOTDIR/home/netblue/.config/firejail
 chown netblue:netblue $ROOTDIR/home/netblue

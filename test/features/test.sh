@@ -99,5 +99,10 @@ echo "TESTING: 3.5 private-dev"
 ./3.5.exp $OVERLAY $CHROOT
 
 echo "TESTING: 3.6 private-etc"
-./3.6.exp notworking-todo $CHROOT
+./3.6.exp notworking $CHROOT
 
+echo "TESTING: 3.7 private-tmp"
+./3.7.exp $OVERLAY $CHROOT
+
+echo "TESTING: 3.8 private-bin"
+./3.6.exp notworking notworking

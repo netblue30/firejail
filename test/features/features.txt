@@ -46,6 +46,11 @@ C - chroot filesystem
 3.5 private-dev
 	- O, C - somehow /dev/log is missing
 3.6 private-etc
-	- O not working
+	- O not working - todo
+3.7 private-tmp
+3.8 private-bin
+	- O, C not working - todo
+
+
 
 	

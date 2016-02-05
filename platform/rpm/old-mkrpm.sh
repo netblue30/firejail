@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.36"
+VERSION="0.9.38"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -83,7 +83,6 @@ install -m 644 /etc/firejail/google-chrome-beta.profile firejail-$VERSION/etc/fi
 install -m 644 /etc/firejail/google-chrome-stable.profile firejail-$VERSION/etc/firejail/google-chrome-stable.profile
 install -m 644 /etc/firejail/google-chrome-unstable.profile firejail-$VERSION/etc/firejail/google-chrome-unstable.profile
 install -m 644 /etc/firejail/hexchat.profile firejail-$VERSION/etc/firejail/hexchat.profile
-install -m 644 /etc/firejail/konqueror.profile firejail-$VERSION/etc/firejail/konqueror.profile
 install -m 644 /etc/firejail/nolocal.net firejail-$VERSION/etc/firejail/nolocal.net
 install -m 644 /etc/firejail/opera-beta.profile firejail-$VERSION/etc/firejail/opera-beta.profile
 install -m 644 /etc/firejail/parole.profile firejail-$VERSION/etc/firejail/parole.profile
@@ -93,6 +92,16 @@ install -m 644 /etc/firejail/webserver.net firejail-$VERSION/etc/firejail/webser
 install -m 644 /etc/firejail/weechat-curses.profile firejail-$VERSION/etc/firejail/weechat-curses.profile
 install -m 644 /etc/firejail/weechat.profile firejail-$VERSION/etc/firejail/weechat.profile
 install -m 644 /etc/firejail/whitelist-common.inc firejail-$VERSION/etc/firejail/whitelist-common.inc
+
+install -m 644 /etc/firejail/kmail.profile firejail-$VERSION/etc/firejail/kmail.profile
+install -m 644 /etc/firejail/seamonkey.profile firejail-$VERSION/etc/firejail/seamonkey.profile
+install -m 644 /etc/firejail/seamonkey-bin.profile firejail-$VERSION/etc/firejail/seamonkey-bin.profile
+install -m 644 /etc/firejail/telegram.profile firejail-$VERSION/etc/firejail/telegram.profile
+install -m 644 /etc/firejail/mathematica.profile firejail-$VERSION/etc/firejail/mathematica.profile
+install -m 644 /etc/firejail/Mathematica.profile firejail-$VERSION/etc/firejail/Mathematica.profile
+install -m 644 /etc/firejail/uget-gtk.profile firejail-$VERSION/etc/firejail/uget-gtk.profile
+install -m 644 /etc/firejail/mupen64plus.profile firejail-$VERSION/etc/firejail/mupen64plus.profile
+
 
 mkdir -p firejail-$VERSION/usr/share/bash-completion/completions
 install -m 644 /usr/share/bash-completion/completions/firejail  firejail-$VERSION/usr/share/bash-completion/completions/.
@@ -189,7 +198,6 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}/google-chrome-stable.profile
 %config(noreplace) %{_sysconfdir}/%{name}/google-chrome-unstable.profile
 %config(noreplace) %{_sysconfdir}/%{name}/hexchat.profile
-%config(noreplace) %{_sysconfdir}/%{name}/konqueror.profile
 %config(noreplace) %{_sysconfdir}/%{name}/nolocal.net
 %config(noreplace) %{_sysconfdir}/%{name}/opera-beta.profile
 %config(noreplace) %{_sysconfdir}/%{name}/parole.profile
@@ -199,6 +207,14 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}/weechat-curses.profile
 %config(noreplace) %{_sysconfdir}/%{name}/weechat.profile
 %config(noreplace) %{_sysconfdir}/%{name}/whitelist-common.inc
+%config(noreplace) %{_sysconfdir}/%{name}/kmail.profile
+%config(noreplace) %{_sysconfdir}/%{name}/seamonkey.profile
+%config(noreplace) %{_sysconfdir}/%{name}/seamonkey-bin.profile
+%config(noreplace) %{_sysconfdir}/%{name}/telegram.profile
+%config(noreplace) %{_sysconfdir}/%{name}/mathematica.profile
+%config(noreplace) %{_sysconfdir}/%{name}/Mathematica.profile
+%config(noreplace) %{_sysconfdir}/%{name}/uget-gtk.profile
+%config(noreplace) %{_sysconfdir}/%{name}/mupen64plus.profile
 
 /usr/bin/firejail
 /usr/bin/firemon
@@ -220,6 +236,23 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Wed Feb 3 2016  netblue30 <netblue30@yahoo.com> 0.9.38-1
+ - IPv6 support (--ip6 and --netfilter6)
+ - --join command enhancement (--join-network, --join-filesystem)
+ - added --user command
+ - added --disable-network and --disable-userns compile time flags
+ - Centos 6 support
+ - symlink invocation
+ - added KMail, Seamonkey, Telegram, Mathematica, uGet,
+     and mupen64plus profiles
+ -  --chroot in user mode allowed only if seccomp support is available
+     in current Linux kernel
+ - deprecated --private-home feature
+ - the first protocol list installed takes precedence
+ - --tmpfs option allowed only running as root
+ - added --private-tmp option
+ - bugfixes
+
 * Thu Dec 24 2015 netblue30 <netblue30@yahoo.com> 0.9.36-1
  - added  unbound, dnscrypt-proxy, BitlBee, HexChat profiles
  - added WeeChat, parole and rtorrent profiles

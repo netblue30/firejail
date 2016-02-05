@@ -14,7 +14,7 @@ firejail (0.9.38) baseline; urgency=low
   * --tmpfs option allowed only running as root
   * added --private-tmp option
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Mon, 2 Feb 2016 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Tue, 2 Feb 2016 10:00:00 -0500
 
 firejail (0.9.36) baseline; urgency=low
   * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,

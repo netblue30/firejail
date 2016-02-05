@@ -43,16 +43,19 @@ C - chroot filesystem
 3.2 read-only
 3.3 blacklist
 3.4 whitelist home
+	- N braking on Fedora
 3.5 private-dev
 	- O, C - somehow /dev/log is missing
+	- N - problems on Debian wheezy 32-bit, Fedora
 3.6 private-etc
 	- O not working - todo
 3.7 private-tmp
 3.8 private-bin
 	- O, C not working - todo
 3.9 whitelist dev
+	- N not working on Debian wheezy (32-bit and 64-bit) - todo
 3.10 whitelist tmp
-	- O not working on Arch Linux
+	- O not working on Arch Linux - todo
 
 
 

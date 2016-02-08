@@ -373,6 +373,10 @@ void seccomp_filter_32(void) {
 		BLACKLIST(317), // move_pages
 		BLACKLIST(316), // vmsplice
 		BLACKLIST(61),  // chroot
+		BLACKLIST(243), // set_thread_area
+		BLACKLIST(88), // reboot
+		BLACKLIST(169), // nfsservctl
+		BLACKLIST(130), // get_kernel_syms
 		RETURN_ALLOW
 	};
 
@@ -562,6 +566,23 @@ int seccomp_filter_drop(int enforce_seccomp) {
 // 32bit
 //		filter_add_blacklist(SYS_personality, 0); // test wine
 //		filter_add_blacklist(SYS_set_thread_area, 0); // test wine
+
+// 0.9.39
+#ifdef SYS_set_thread_area
+		filter_add_blacklist(SYS_set_thread_area, 0);
+#endif
+#ifdef SYS_tuxcall
+		filter_add_blacklist(SYS_tuxcall, 0);
+#endif
+#ifdef SYS_reboot
+		filter_add_blacklist(SYS_reboot, 0);
+#endif
+#ifdef SYS_nfsservctl
+		filter_add_blacklist(SYS_nfsservctl, 0);
+#endif
+#ifdef SYS_get_kernel_syms
+		filter_add_blacklist(SYS_get_kernel_syms, 0);
+#endif
 	}
 
 	// default seccomp filter with additional drop list

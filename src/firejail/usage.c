@@ -257,18 +257,7 @@ void usage(void) {
 	printf("\t\trunning on the current host.\n\n");
 #endif	
 #ifdef HAVE_SECCOMP
-	printf("\t--seccomp - enable seccomp filter and blacklist the syscalls in the\n");
-	printf("\t\tlist. The default list is as follows: mount, umount2,\n");
-	printf("\t\tptrace, kexec_load, open_by_handle_at, init_module,\n");
-	printf("\t\tfinit_module, delete_module, iopl, ioperm, swapon, swapoff,\n");
-	printf("\t\tsyslog, process_vm_readv and process_vm_writev\n");
-	printf("\t\tsysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie,\n");
-	printf("\t\tperf_event_open, fanotify_init, kcmp, add_key, request_key,\n");
-	printf("\t\tkeyctl, uselib, acct, modify_ldt, pivot_root, io_setup,\n");
-	printf("\t\tio_destroy, io_getevents, io_submit, io_cancel,\n");
-	printf("\t\tremap_file_pages, mbind, get_mempolicy, set_mempolicy,\n");
-	printf("\t\tmigrate_pages, move_pages, vmsplice, perf_event_open and\n");
-	printf("\t\tkexec_file_load, chroot.\n\n");
+	printf("\t--seccomp - enable seccomp filter and apply the default blacklist.\n\n");
 	
 	printf("\t--seccomp=syscall,syscall,syscall - enable seccomp filter, blacklist the\n");
 	printf("\t\tdefault syscall list and the syscalls specified by the command.\n\n");

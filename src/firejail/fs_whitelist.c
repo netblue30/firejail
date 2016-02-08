@@ -359,8 +359,10 @@ void fs_whitelist(void) {
 			*entry->data = '\0';
 
 			// if 1 the file was not found; mount an empty directory
-			if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0)
-				home_dir = 1;
+			if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
+				if(!arg_private)
+					home_dir = 1;
+			}
 			else if (strncmp(new_name, "/tmp/", 5) == 0)
 				tmp_dir = 1;
 			else if (strncmp(new_name, "/media/", 7) == 0)

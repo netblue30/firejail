@@ -34,7 +34,7 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 # Current development version: 0.9.39
 
-## Default seccomp blacklist filter update
+## Default seccomp filter update
 
 Currently 50 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).
 

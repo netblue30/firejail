@@ -336,6 +336,14 @@ void fs_whitelist(void) {
 		if (arg_debug)
 			fprintf(stderr, "Debug %d: new_name #%s#\n", __LINE__, new_name);
 
+		// valid path referenced to filesystem root
+		if (*new_name != '/') {
+			if (arg_debug)
+				fprintf(stderr, "Debug %d: \n", __LINE__);
+			goto errexit;
+		}
+
+
 		// extract the absolute path of the file
 		// realpath function will fail with ENOENT if the file is not found
 		char *fname = realpath(new_name, NULL);
@@ -349,19 +357,27 @@ void fs_whitelist(void) {
 				perror("realpath");
 			}
 			*entry->data = '\0';
+
+			// if 1 the file was not found; mount an empty directory
+			if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0)
+				home_dir = 1;
+			else if (strncmp(new_name, "/tmp/", 5) == 0)
+				tmp_dir = 1;
+			else if (strncmp(new_name, "/media/", 7) == 0)
+				media_dir = 1;
+			else if (strncmp(new_name, "/var/", 5) == 0)
+				var_dir = 1;
+			else if (strncmp(new_name, "/dev/", 5) == 0)
+				dev_dir = 1;
+			else if (strncmp(new_name, "/opt/", 5) == 0)
+				opt_dir = 1;
+
 			continue;
 		}
 		
-		// valid path referenced to filesystem root
-		if (*new_name != '/') {
-			if (arg_debug)
-				fprintf(stderr, "Debug %d: \n", __LINE__);
-			goto errexit;
-		}
-
 		// check for supported directories
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
-			// whitelisting home directory is disabled if --private or --private-home option is present
+			// whitelisting home directory is disabled if --private option is present
 			if (arg_private) {
 				if (arg_debug || arg_debug_whitelists)
 					printf("Removed whitelist path %s, --private option is present\n", entry->data);

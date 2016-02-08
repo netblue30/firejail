@@ -15,6 +15,9 @@ echo "TESTING: invalid filename"
 echo "TESTING: environment variables"
 ./env.exp
 
+echo "TESTING: whitelist empty"
+./whitelist-empty.exp
+
 echo "TESTING: ignore command"
 ./ignore.exp
 

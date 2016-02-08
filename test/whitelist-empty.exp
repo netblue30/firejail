@@ -1,0 +1,50 @@
+#!/usr/bin/expect -f
+
+set timeout 30
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --whitelist=~/blablabla --whitelist=/tmp/blablabla --whitelist=/media/blablabla --whitelist=/var/blablabla --whitelist=/dev/blablabla --whitelist=/opt/blablabla\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l ~/ | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"0"
+}
+
+send -- "ls -l /tmp | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"0"
+}
+
+send -- "ls -l /media | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"0"
+}
+
+send -- "ls -l /var | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"0"
+}
+
+send -- "ls -l /dev | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"0"
+}
+send -- "ls -l /opt | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"0"
+}
+
+
+puts "\nall done\n"

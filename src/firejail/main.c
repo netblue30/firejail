@@ -1315,18 +1315,22 @@ int main(int argc, char **argv) {
 	// build the sandbox command
 	if (prog_index == -1 && arg_zsh) {
 		cfg.command_line = "/usr/bin/zsh";
+		cfg.window_title = "/usr/bin/zsh";
 		cfg.command_name = "zsh";
 	}
 	else if (prog_index == -1 && arg_csh) {
 		cfg.command_line = "/bin/csh";
+		cfg.window_title = "/bin/csh";
 		cfg.command_name = "csh";
 	}
 	else if (prog_index == -1 && cfg.shell) {
 		cfg.command_line = cfg.shell;
+		cfg.window_title = cfg.shell;
 		cfg.command_name = cfg.shell;
 	}
 	else if (prog_index == -1) {
 		cfg.command_line = "/bin/bash";
+		cfg.window_title = "/bin/bash";
 		cfg.command_name = "bash";
 	}
 	else {
@@ -1341,16 +1345,24 @@ int main(int argc, char **argv) {
 		cfg.command_line = malloc(len + 1); // + '\0'
 		if (!cfg.command_line)
 			errExit("malloc");
-		char *ptr = cfg.command_line;
+		cfg.window_title = malloc(len + 1); // + '\0'
+		if (!cfg.window_title)
+			errExit("malloc");
+
+		char *ptr1 = cfg.command_line;
+		char *ptr2 = cfg.window_title;
 		for (i = 0; i < argcnt; i++) {
 			// detect bash commands
 			if (strstr(argv[i + prog_index], "&&") || strstr(argv[i + prog_index], "||")) {
-				sprintf(ptr, "%s ", argv[i + prog_index]);
+				sprintf(ptr1, "%s ", argv[i + prog_index]);
 			}
 			else {
-				sprintf(ptr, "\"%s\" ", argv[i + prog_index]);
+				sprintf(ptr1, "\"%s\" ", argv[i + prog_index]);
 			}
-			ptr += strlen(ptr);
+			sprintf(ptr2, "%s ", argv[i + prog_index]);
+
+			ptr1 += strlen(ptr1);
+			ptr2 += strlen(ptr2);
 		}
 	}
 	

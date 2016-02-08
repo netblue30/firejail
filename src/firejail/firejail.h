@@ -164,6 +164,7 @@ typedef struct config_t {
 
 	// command line
 	char *command_line;
+	char *window_title;
 	char *command_name;
 	char *shell;
 	char **original_argv;

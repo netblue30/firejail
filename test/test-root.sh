@@ -72,3 +72,10 @@ then
 	echo "TESTING: firemon --cgroup"
 	./firemon-cgroup.exp
 fi
+
+echo "TESTING: chroot resolv.conf"
+rm -f tmpfile
+touch tmpfile
+ln -s tmp /tmp/chroot/etc/resolv.conf
+./chroot-resolvconf.exp
+rm -f tmpfile

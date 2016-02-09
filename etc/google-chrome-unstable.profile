@@ -12,5 +12,6 @@ netfilter
 whitelist ${DOWNLOADS}
 whitelist ~/.config/google-chrome-unstable
 whitelist ~/.cache/google-chrome-unstable
+whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 

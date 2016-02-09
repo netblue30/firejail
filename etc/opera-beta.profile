@@ -8,6 +8,7 @@ netfilter
 whitelist ~/.config/opera-beta
 whitelist ${DOWNLOADS}
 whitelist ~/.cache/opera-beta
+whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 
 

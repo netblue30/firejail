@@ -12,5 +12,6 @@ netfilter
 whitelist ${DOWNLOADS}
 whitelist ~/.config/google-chrome-beta
 whitelist ~/.cache/google-chrome-beta
+whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 

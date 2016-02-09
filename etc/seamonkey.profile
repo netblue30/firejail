@@ -23,6 +23,7 @@ whitelist ~/.pentadactyl
 whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
+whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 
 # experimental features

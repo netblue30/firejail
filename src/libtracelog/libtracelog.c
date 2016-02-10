@@ -91,6 +91,9 @@ static void storage_add(const char *str) {
 	storage[h] = ptr;
 }
 
+char* cwd = NULL; // global variable for keeping current working directory
+typedef int (*orig_chdir_t)(const char *pathname);
+static orig_chdir_t orig_chdir = NULL;
 static char *storage_find(const char *str) {
 #ifdef DEBUG
 	printf("storage find %s\n", str);
@@ -98,18 +101,27 @@ static char *storage_find(const char *str) {
 	if (!str) {
 #ifdef DEBUG
 		printf("null pointer passed to storage_find\n");
-#endif			
+#endif
 		return NULL;
 	}
 	const char *tofind = str;
 	int allocated = 0;
 
-	if (strstr(str, "..") || strstr(str, "/./")) {
+	if (strstr(str, "..") || strstr(str, "/./") || strstr(str, "//") || str[0]!='/') {
+		if (!orig_chdir)
+			orig_chdir = (orig_chdir_t)dlsym(RTLD_NEXT, "chdir");
+		if (!orig_chdir(cwd)) {
+#ifdef DEBUG
+			printf("chdir failed\n");
+#endif
+			return NULL;
+		}
+
 		tofind = realpath(str, NULL);
 		if (!tofind) {
 #ifdef DEBUG
 			printf("realpath failed\n");
-#endif			
+#endif
 			return NULL;
 		}
 		allocated = 1;
@@ -296,9 +308,9 @@ int open(const char *pathname, int flags, mode_t mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_open(pathname, flags, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_open(pathname, flags, mode);
 	return rv;
 }
 
@@ -317,9 +329,9 @@ int open64(const char *pathname, int flags, mode_t mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_open64(pathname, flags, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_open64(pathname, flags, mode);
 	return rv;
 }
 //#endif
@@ -337,9 +349,9 @@ int openat(int dirfd, const char *pathname, int flags, mode_t mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_openat(dirfd, pathname, flags, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_openat(dirfd, pathname, flags, mode);
 	return rv;
 }
 
@@ -354,9 +366,9 @@ int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_openat64(dirfd, pathname, flags, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_openat64(dirfd, pathname, flags, mode);
 	return rv;
 }
 
@@ -371,9 +383,9 @@ FILE *fopen(const char *pathname, const char *mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	FILE *rv = orig_fopen(pathname, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	FILE *rv = orig_fopen(pathname, mode);
 	return rv;
 }
 
@@ -387,9 +399,9 @@ FILE *fopen64(const char *pathname, const char *mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	FILE *rv = orig_fopen64(pathname, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	FILE *rv = orig_fopen64(pathname, mode);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -407,9 +419,9 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	FILE *rv = orig_freopen(pathname, mode, stream);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	FILE *rv = orig_freopen(pathname, mode, stream);
 	return rv;
 }
 
@@ -425,9 +437,9 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	FILE *rv = orig_freopen64(pathname, mode, stream);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	FILE *rv = orig_freopen64(pathname, mode, stream);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -444,9 +456,9 @@ int unlink(const char *pathname) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_unlink(pathname);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_unlink(pathname);
 	return rv;
 }
 
@@ -461,9 +473,9 @@ int unlinkat(int dirfd, const char *pathname, int flags) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_unlinkat(dirfd, pathname, flags);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_unlinkat(dirfd, pathname, flags);
 	return rv;
 }
 
@@ -479,9 +491,9 @@ int mkdir(const char *pathname, mode_t mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_mkdir(pathname, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_mkdir(pathname, mode);
 	return rv;
 }
 
@@ -496,9 +508,9 @@ int mkdirat(int dirfd, const char *pathname, mode_t mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_mkdirat(dirfd, pathname, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_mkdirat(dirfd, pathname, mode);
 	return rv;
 }
 
@@ -513,9 +525,9 @@ int rmdir(const char *pathname) {
 	if (!blacklist_loaded)
 		load_blacklist();
 		
-	int rv = orig_rmdir(pathname);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_rmdir(pathname);
 	return rv;
 }
 
@@ -531,9 +543,9 @@ int stat(const char *pathname, struct stat *buf) {
 	if (!blacklist_loaded)
 		load_blacklist();
 			
-	int rv = orig_stat(pathname, buf);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_stat(pathname, buf);
 	return rv;
 }
 
@@ -549,9 +561,9 @@ int stat64(const char *pathname, struct stat64 *buf) {
 	if (!blacklist_loaded)
 		load_blacklist();
 			
-	int rv = orig_stat64(pathname, buf);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_stat64(pathname, buf);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -567,9 +579,9 @@ int lstat(const char *pathname, struct stat *buf) {
 	if (!blacklist_loaded)
 		load_blacklist();
 			
-	int rv = orig_lstat(pathname, buf);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_lstat(pathname, buf);
 	return rv;
 }
 
@@ -585,9 +597,9 @@ int lstat64(const char *pathname, struct stat64 *buf) {
 	if (!blacklist_loaded)
 		load_blacklist();
 			
-	int rv = orig_lstat64(pathname, buf);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_lstat64(pathname, buf);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -604,9 +616,9 @@ int access(const char *pathname, int mode) {
 	if (!blacklist_loaded)
 		load_blacklist();
 			
-	int rv = orig_access(pathname, mode);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	int rv = orig_access(pathname, mode);
 	return rv;
 }
 
@@ -622,10 +634,31 @@ DIR *opendir(const char *pathname) {
 	if (!blacklist_loaded)
 		load_blacklist();
 			
-	DIR *rv = orig_opendir(pathname);
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
+	DIR *rv = orig_opendir(pathname);
 	return rv;
 }
 
+// chdir
+// definition of orig_chdir placed before storage_find function
+//typedef int (*orig_chdir_t)(const char *pathname);
+//static orig_chdir_t orig_chdir = NULL;
+int chdir(const char *pathname) {
+#ifdef DEBUG
+	printf("%s %s\n", __FUNCTION__, pathname);
+#endif
+	if (!orig_chdir)
+		orig_chdir = (orig_chdir_t)dlsym(RTLD_NEXT, "chdir");
+	if (!blacklist_loaded)
+		load_blacklist();
 
+	if (storage_find(pathname))
+		sendlog(name(), __FUNCTION__, pathname);
+
+	free(cwd);
+	cwd = strdup(pathname);
+
+	int rv = orig_chdir(pathname);
+	return rv;
+}

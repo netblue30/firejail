@@ -38,3 +38,29 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 Currently 50 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).
 
+## STUN/WebRTC disabled in default netfilter configuration
+
+The  current netfilter configuration looks like this:
+`````
+             *filter
+              :INPUT DROP [0:0]
+              :FORWARD DROP [0:0]
+              :OUTPUT ACCEPT [0:0]
+              -A INPUT -i lo -j ACCEPT
+              -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+              # allow ping
+              -A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT
+              -A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT
+              -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+              # drop STUN (WebRTC) requests
+              -A OUTPUT -p udp --dport 3478 -j DROP
+              -A OUTPUT -p udp --dport 3479 -j DROP
+              -A OUTPUT -p tcp --dport 3478 -j DROP
+              -A OUTPUT -p tcp --dport 3479 -j DROP
+              COMMIT
+`````
+
+The filter is loaded by default for Firefox if a network namespace is configured:
+`````
+$ firejail --net=eth0 firefox
+`````

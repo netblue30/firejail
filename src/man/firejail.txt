@@ -679,11 +679,23 @@ The default filter is as follows:
 .br
 \-A INPUT \-m state \-\-state RELATED,ESTABLISHED \-j ACCEPT
 .br
+# allow ping
+.br
 \-A INPUT \-p icmp \-\-icmp-type destination-unreachable \-j ACCEPT
 .br
 \-A INPUT \-p icmp \-\-icmp-type time-exceeded \-j ACCEPT
 .br
 \-A INPUT \-p icmp \-\-icmp-type echo-request \-j ACCEPT
+.br
+# drop STUN (WebRTC) requests
+.br
+-A OUTPUT -p udp --dport 3478 -j DROP
+.br
+-A OUTPUT -p udp --dport 3479 -j DROP
+.br
+-A OUTPUT -p tcp --dport 3478 -j DROP
+.br
+-A OUTPUT -p tcp --dport 3479 -j DROP
 .br
 COMMIT
 .br

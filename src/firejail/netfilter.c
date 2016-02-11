@@ -30,12 +30,17 @@ static char *client_filter =
 ":FORWARD DROP [0:0]\n"
 ":OUTPUT ACCEPT [0:0]\n"
 "-A INPUT -i lo -j ACCEPT\n"
+"-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT\n"
 "# echo replay is handled by -m state RELATED/ESTABLISHED below\n"
 "#-A INPUT -p icmp --icmp-type echo-reply -j ACCEPT\n"
-"-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT\n"
 "-A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT\n"
 "-A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT\n"
 "-A INPUT -p icmp --icmp-type echo-request -j ACCEPT \n"
+"# disable STUN\n"
+"-A OUTPUT -p udp --dport 3478 -j DROP\n"
+"-A OUTPUT -p udp --dport 3479 -j DROP\n"
+"-A OUTPUT -p tcp --dport 3478 -j DROP\n"
+"-A OUTPUT -p tcp --dport 3479 -j DROP\n"
 "COMMIT\n";
 
 void check_netfilter_file(const char *fname) {

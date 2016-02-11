@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 # based on http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
 # a code archive should already be available
 
 TOP=`pwd`
 CODE_ARCHIVE="$1-$2.tar.bz2"
 CODE_DIR="$1-$2"
-INSTALL_DIR+="$CODE_DIR/debian"
-DEBIAN_CTRL_DIR+="$CODE_DIR/debian/DEBIAN"
+INSTALL_DIR="${INSTALL_DIR}${CODE_DIR}/debian"
+DEBIAN_CTRL_DIR="${DEBIAN_CTRL_DIR}${CODE_DIR}/debian/DEBIAN"
 
 echo "*****************************************"
 echo "code archive: $CODE_ARCHIVE"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 rm -fr .etc
 mkdir .etc
 

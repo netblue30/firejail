@@ -69,3 +69,13 @@ The filter is loaded by default for Firefox if a network namespace is configured
 `````
 $ firejail --net=eth0 firefox
 `````
+
+## Set sandbox nice value
+`````
+      --nice=value
+              Set nice value for all processes running inside the sandbox.
+
+              Example:
+              $ firejail --nice=-5 firefox
+`````
+

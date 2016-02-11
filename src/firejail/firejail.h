@@ -157,8 +157,9 @@ typedef struct config_t {
 	unsigned rlimit_fsize;
 	unsigned rlimit_sigpending;
 	
-	// cpu affinity and control groups
+	// cpu affinity, nice and control groups
 	uint32_t cpus;
+	int nice;
 	char *cgroup;
 	
 
@@ -231,6 +232,7 @@ extern int arg_nosound;	// disable sound
 extern int arg_quiet;		// no output for scripting
 extern int arg_join_network;	// join only the network namespace
 extern int arg_join_filesystem;	// join only the mount namespace
+extern int arg_nice;		// nice value configured
 
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];

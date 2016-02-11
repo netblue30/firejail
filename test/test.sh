@@ -6,6 +6,9 @@
 
 ./fscheck.sh
 
+echo "TESTING: nice"
+./nice.exp
+
 echo "TESTING: protocol"
 ./protocol.exp
 

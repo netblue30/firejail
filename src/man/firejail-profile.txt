@@ -228,6 +228,10 @@ Set the CPU cores available for this sandbox using \fBcpu\fR command. Examples:
 cpu 1,2,3
 Use only CPU cores 0, 1 and 2.
 
+.TP
+nice -5
+Set a nice value of -5 to all processes running inside the sandbox.
+
 .SH Control Groups
 Place the sandbox in an existing control group specified by the full path of the task file using \fBcgroup\fR. Example:
 

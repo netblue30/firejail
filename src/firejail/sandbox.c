@@ -27,6 +27,7 @@
 #include <sys/resource.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <errno.h>
 
 #include <sched.h>
 #ifndef CLONE_NEWUSER
@@ -582,6 +583,18 @@ int sandbox(void* sandbox_arg) {
 	// set user-supplied environment variables
 	env_apply();
 
+	// set nice
+	if (arg_nice) {
+		errno = 0;
+		int rv = nice(cfg.nice);
+		(void) rv;
+printf("nice rv %d\n", rv);		
+		if (errno) {
+			fprintf(stderr, "Warning: cannot set nice value\n");
+			errno = 0;
+		}
+	}
+	
 	//****************************
 	// set security filters
 	//****************************

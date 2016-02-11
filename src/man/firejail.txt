@@ -761,6 +761,16 @@ PID  User    RX(KB/s) TX(KB/s) Command
 .br
 7383 netblue 9.045    0.112    firejail \-\-net=eth0 transmission
 
+.TP
+\fB\-\-nice=value
+Set nice value for all processes running inside the sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail --nice=-5 firefox
+
 
 .TP
 \fB\-\-noblacklist=dirname_or_filename

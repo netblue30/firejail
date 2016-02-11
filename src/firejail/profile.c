@@ -290,6 +290,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
+	// nice value
+	if (strncmp(ptr, "nice ", 4) == 0) {
+		cfg.nice = atoi(ptr + 5);
+		arg_nice = 1;
+		return 0;
+	}
+
 	// cgroup
 	if (strncmp(ptr, "cgroup ", 7) == 0) {
 		set_cgroup(ptr + 7);

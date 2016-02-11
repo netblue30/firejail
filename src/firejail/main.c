@@ -92,7 +92,7 @@ int arg_nosound = 0;				// disable sound
 int arg_quiet = 0;				// no output for scripting
 int arg_join_network = 0;			// join only the network namespace
 int arg_join_filesystem = 0;			// join only the mount namespace
-
+int arg_nice = 0;				// nice value configured
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -678,6 +678,10 @@ int main(int argc, char **argv) {
 			arg_ipc = 1;
 		else if (strncmp(argv[i], "--cpu=", 6) == 0)
 			read_cpu_list(argv[i] + 6);
+		else if (strncmp(argv[i], "--nice=", 7) == 0) {
+			cfg.nice = atoi(argv[i] + 7);
+			arg_nice = 1;
+		}
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
 			if (arg_cgroup) {
 				fprintf(stderr, "Error: only a cgroup can be defined\n");

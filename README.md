@@ -31,7 +31,10 @@ Features: https://firejail.wordpress.com/features-3/
 Documentation: https://firejail.wordpress.com/documentation-2/
 
 FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
+`````
 
+
+`````
 # Current development version: 0.9.39
 
 ## Default seccomp filter update
@@ -40,7 +43,7 @@ Currently 50 syscalls are blacklisted by default, out of a total of 318 calls (A
 
 ## STUN/WebRTC disabled in default netfilter configuration
 
-The  current netfilter configuration looks like this:
+The  current netfilter configuration (--netfilter option) looks like this:
 `````
              *filter
               :INPUT DROP [0:0]

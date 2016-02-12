@@ -324,7 +324,7 @@ static void read_seccomp_file(const char *fname) {
 		filter_debug();
 }
 
-// i386t filter installed on amd64 architectures
+// i386 filter installed on amd64 architectures
 void seccomp_filter_32(void) {
 	// hardcoded syscall values
 	struct sock_filter filter[] = {
@@ -373,7 +373,6 @@ void seccomp_filter_32(void) {
 		BLACKLIST(317), // move_pages
 		BLACKLIST(316), // vmsplice
 		BLACKLIST(61),  // chroot
-		BLACKLIST(243), // set_thread_area
 		BLACKLIST(88), // reboot
 		BLACKLIST(169), // nfsservctl
 		BLACKLIST(130), // get_kernel_syms
@@ -393,6 +392,76 @@ void seccomp_filter_32(void) {
 	}
 }
 
+// amd64 filter installed on i386 architectures
+void seccomp_filter_64(void) {
+	// hardcoded syscall values
+	struct sock_filter filter[] = {
+		VALIDATE_ARCHITECTURE_64,
+		EXAMINE_SYSCALL,
+		BLACKLIST(165), // mount
+		BLACKLIST(166), // umount2
+		BLACKLIST(101), // ptrace
+		BLACKLIST(246), // kexec_load
+		BLACKLIST(304), // open_by_handle_at
+		BLACKLIST(175), // init_module
+		BLACKLIST(313), // finit_module
+		BLACKLIST(176), // delete_module
+		BLACKLIST(172), // iopl
+		BLACKLIST(173), // ioperm
+		BLACKLIST(167), // swapon
+		BLACKLIST(168), // swapoff
+		BLACKLIST(103), // syslog
+		BLACKLIST(310), // process_vm_readv
+		BLACKLIST(311), // process_vm_writev
+		BLACKLIST(139), // sysfs
+		BLACKLIST(156), // _sysctl
+		BLACKLIST(159), // adjtimex
+		BLACKLIST(305), // clock_adjtime
+		BLACKLIST(212), // lookup_dcookie
+		BLACKLIST(298), // perf_event_open
+		BLACKLIST(300), // fanotify_init
+		BLACKLIST(312), // kcmp
+		BLACKLIST(248), // add_key
+		BLACKLIST(249), // request_key
+		BLACKLIST(250), // keyctl
+		BLACKLIST(134), // uselib
+		BLACKLIST(163), // acct
+		BLACKLIST(154), // modify_ldt
+		BLACKLIST(155), // pivot_root
+		BLACKLIST(206), // io_setup
+		BLACKLIST(207), // io_destroy
+		BLACKLIST(208), // io_getevents
+		BLACKLIST(209), // io_submit
+		BLACKLIST(210), // io_cancel
+		BLACKLIST(216), // remap_file_pages
+		BLACKLIST(237), // mbind
+		BLACKLIST(239), // get_mempolicy
+		BLACKLIST(238), // set_mempolicy
+		BLACKLIST(256), // migrate_pages
+		BLACKLIST(279), // move_pages
+		BLACKLIST(278), // vmsplice
+		BLACKLIST(161), // chroot
+		BLACKLIST(184), // tuxcall
+		BLACKLIST(169), // reboot
+		BLACKLIST(180), // nfsservctl
+		BLACKLIST(177), // get_kernel_syms
+		RETURN_ALLOW
+	};
+
+	struct sock_fprog prog = {
+		.len = (unsigned short)(sizeof(filter) / sizeof(filter[0])),
+		.filter = filter,
+	};
+
+	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
+		;
+	}
+	else if (arg_debug) {
+		printf("Dual i386/amd64 seccomp filter configured\n");
+	}
+}
+
+
 // drop filter for seccomp option
 int seccomp_filter_drop(int enforce_seccomp) {
 	filter_init();
@@ -401,6 +470,9 @@ int seccomp_filter_drop(int enforce_seccomp) {
 	if (cfg.seccomp_list_drop == NULL) {
 #if defined(__x86_64__)
 		seccomp_filter_32();
+#endif
+#if defined(__i386__)
+		seccomp_filter_64();
 #endif
 
 #ifdef SYS_mount		
@@ -563,14 +635,7 @@ int seccomp_filter_drop(int enforce_seccomp) {
  // CHECK_SECCOMP(seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(clone), 1,
  //     SCMP_A0(SCMP_CMP_MASKED_EQ, CLONE_NEWUSER, CLONE_NEWUSER)));
 
-// 32bit
-//		filter_add_blacklist(SYS_personality, 0); // test wine
-//		filter_add_blacklist(SYS_set_thread_area, 0); // test wine
-
 // 0.9.39
-#ifdef SYS_set_thread_area
-		filter_add_blacklist(SYS_set_thread_area, 0);
-#endif
 #ifdef SYS_tuxcall
 		filter_add_blacklist(SYS_tuxcall, 0);
 #endif

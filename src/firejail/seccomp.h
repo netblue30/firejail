@@ -105,6 +105,11 @@ struct seccomp_data {
      BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
      BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
+#define VALIDATE_ARCHITECTURE_64 \
+     BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
+     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, AUDIT_ARCH_X86_64, 1, 0), \
+     BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
+
 #define VALIDATE_ARCHITECTURE_32 \
      BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
      BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, AUDIT_ARCH_I386, 1, 0), \

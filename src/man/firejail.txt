@@ -1135,8 +1135,13 @@ add_key, request_key, keyctl, uselib, acct, modify_ldt, pivot_root, io_setup,
 io_destroy, io_getevents, io_submit, io_cancel,
 remap_file_pages, mbind, get_mempolicy, set_mempolicy,
 migrate_pages, move_pages, vmsplice, perf_event_open, chroot,
-set_thread_area, tuxcall, reboot, mfsservctl and get_kernel_syms. When running on AMD64 architecture,
-an equivalent 32-bit seccomp filter is also installed.
+tuxcall, reboot, mfsservctl and get_kernel_syms.
+.br
+
+.br
+System architecture is not strictly imposed. The filter is applied
+at run time only if the correct architecture was detected. For the case of I386 and AMD64
+both 32-bit and 64-bit filters are installed.
 .br
 
 .br

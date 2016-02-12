@@ -125,10 +125,3 @@ read-only ${HOME}/.xscreensaver
 # The user ~/bin directory can override commands such as ls
 read-only ${HOME}/bin
 
-# disable terminals running as server
-blacklist ${PATH}/lxterminal
-blacklist ${PATH}/gnome-terminal
-blacklist ${PATH}/gnome-terminal.wrapper
-blacklist ${PATH}/xfce4-terminal
-blacklist ${PATH}/xfce4-terminal.wrapper
-blacklist ${PATH}/konsole

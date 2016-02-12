@@ -3,6 +3,7 @@ noblacklist ${HOME}/.config/google-chrome
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-terminals.inc
 
 # chromium is distributed with a perl script on Arch
 # include /etc/firejail/disable-devel.inc

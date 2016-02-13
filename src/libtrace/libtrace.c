@@ -229,26 +229,26 @@ static char *translate(XTable *table, int val) {
 	return NULL;
 }
 
-static void print_sockaddr(const char *call, const struct sockaddr *addr, int rv) {
+static void print_sockaddr(int sockfd, const char *call, const struct sockaddr *addr, int rv) {
 	if (addr->sa_family == AF_INET) {
 		struct sockaddr_in *a = (struct sockaddr_in *) addr;
-		printf("%u:%s:%s %s port %u:%d\n", pid(), name(), call, inet_ntoa(a->sin_addr), ntohs(a->sin_port), rv);
+		printf("%u:%s:%s %d %s port %u:%d\n", pid(), name(), call, sockfd, inet_ntoa(a->sin_addr), ntohs(a->sin_port), rv);
 	}
 	else if (addr->sa_family == AF_INET6) {
 		struct sockaddr_in6 *a = (struct sockaddr_in6 *) addr;
 		char str[INET6_ADDRSTRLEN];
 		inet_ntop(AF_INET6, &(a->sin6_addr), str, INET6_ADDRSTRLEN);
-		printf("%u:%s:%s %s:%d\n", pid(), name(), call, str, rv);
+		printf("%u:%s:%s %d %s:%d\n", pid(), name(), call, sockfd, str, rv);
 	}
 	else if (addr->sa_family == AF_UNIX) {
 		struct sockaddr_un *a = (struct sockaddr_un *) addr;
 		if (a->sun_path[0])
-			printf("%u:%s:%s %s:%d\n", pid(), name(), call, a->sun_path, rv);
+			printf("%u:%s:%s %d %s:%d\n", pid(), name(), call, sockfd, a->sun_path, rv);
 		else
-			printf("%u:%s:%s @%s:%d\n", pid(), name(), call, a->sun_path + 1, rv);
+			printf("%u:%s:%s %d @%s:%d\n", pid(), name(), call, sockfd, a->sun_path + 1, rv);
 	}
 	else {
-		printf("%u:%s:%s family %d:%d\n", pid(), name(), call, addr->sa_family, rv);
+		printf("%u:%s:%s %d family %d:%d\n", pid(), name(), call, sockfd, addr->sa_family, rv);
 	}
 }
 
@@ -465,7 +465,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 		orig_connect = (orig_connect_t)dlsym(RTLD_NEXT, "connect");
 			
  	int rv = orig_connect(sockfd, addr, addrlen);
-	print_sockaddr("connect", addr, rv);
+	print_sockaddr(sockfd, "connect", addr, rv);
 
 	return rv;
 }
@@ -522,7 +522,7 @@ int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 		orig_bind = (orig_bind_t)dlsym(RTLD_NEXT, "bind");
 			
 	int rv = orig_bind(sockfd, addr, addrlen);
-	print_sockaddr("bind", addr, rv);
+	print_sockaddr(sockfd, "bind", addr, rv);
 
 	return rv;
 }
@@ -535,7 +535,7 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t addrlen) {
 		orig_accept = (orig_accept_t)dlsym(RTLD_NEXT, "accept");
 			
 	int rv = orig_accept(sockfd, addr,  addrlen);
-	print_sockaddr("accept", addr, rv);
+	print_sockaddr(sockfd, "accept", addr, rv);
 
 	return rv;
 }

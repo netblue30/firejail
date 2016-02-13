@@ -500,11 +500,15 @@ int socket(int domain, int type, int protocol) {
 	else
 		ptr += sprintf(ptr, "%s ", str);
 
-	str = translate(socket_protocol, protocol);
-	if (str == NULL)
-		sprintf(ptr, "%d", protocol);
-	else
-		sprintf(ptr, "%s", str);
+	if (domain == AF_LOCAL)
+		sprintf(ptr, "0");
+	else {
+		str = translate(socket_protocol, protocol);
+		if (str == NULL)
+			sprintf(ptr, "%d", protocol);
+		else
+			sprintf(ptr, "%s", str);
+	}
 
 	printf("%s:%d\n", buf, rv);
 	return rv;

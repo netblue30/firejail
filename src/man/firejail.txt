@@ -1491,6 +1491,8 @@ firejail version 0.9.27
 .TP
 \fB\-\-whitelist=dirname_or_filename
 Whitelist directory or file. This feature is implemented only for user home, /dev, /media, /opt, /var, and /tmp directories.
+When whitlisting symbolic links, both the link and the real file should be in the same top directory
+(home user, /media, /var etc.)
 .br
 
 .br

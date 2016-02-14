@@ -533,6 +533,8 @@ void profile_read(const char *fname) {
 		// verify syntax, exit in case of error
 		if (profile_check_line(ptr, lineno, fname))
 			profile_add(ptr);
+		else
+			free(ptr);
 	}
 	fclose(fp);
 }

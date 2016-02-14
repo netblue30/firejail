@@ -1598,6 +1598,16 @@ int main(int argc, char **argv) {
 		free(cfg.seccomp_list_errno);
 	}
 #endif
+	if (cfg.profile) {
+		ProfileEntry *prf = cfg.profile;
+		while (prf != NULL) {
+			ProfileEntry *next = prf->next;
+			free(prf->data);
+			free(prf->link);
+			free(prf);
+			prf = next;
+		}
+	}
 
 	myexit(0);
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "Calculationg SHA256 for all files in /transfer - firejail version $1"
 

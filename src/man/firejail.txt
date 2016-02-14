@@ -1053,7 +1053,7 @@ $ firejail \-\-profile-path=/home/netblue/myprofiles
 .TP
 \fB\-\-protocol=protocol,protocol,protocol
 Enable protocol filter. The filter is based on seccomp and checks the first argument to socket system call.
-Recognized values: unix, inet, inet6, netlink and packet.
+Recognized values: unix, inet, inet6, netlink and packet. This option is not supported for i386 architecture.
 .br
 
 .br

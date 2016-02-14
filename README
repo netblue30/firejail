@@ -26,6 +26,7 @@ Martin Carpenter (https://github.com/mcarpenter)
 Aleksey Manevich (https://github.com/manevich)
 	- several profile fixes
 	- fix problem with relative path in storage_find function
+	- fix build for systems without bash
 pszxzsd (https://github.com/pszxzsd)
 	-uGet profile
 Rahiel Kasim (https://github.com/rahiel)

@@ -41,7 +41,7 @@ clean:
 	for dir in $(MYLIBS); do \
 		$(MAKE) -C $$dir clean; \
 	done
-	rm -f firejail.1 firejail.1.gz firemon.1 firemon.1.gz firejail-profile.5 firejail-profile.5.gz firejail-login.5 firejail-login.5.gz
+	rm -f firejail.1 firejail.1.gz firemon.1 firemon.1.gz firejail-profile.5 firejail-profile.5.gz firejail-login.5 firejail-login.5.gz firejail*.rpm
 
 distclean: clean
 	for dir in $(APPS); do \

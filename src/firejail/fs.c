@@ -60,6 +60,20 @@ static void create_empty_file(void) {
 void fs_build_firejail_dir(void) {
 	struct stat s;
 
+	// CentOS 6 doesn't have /run directory
+	if (stat(RUN_FIREJAIL_BASEDIR, &s)) {
+		if (arg_debug)
+			printf("Creating %s directory\n", RUN_FIREJAIL_BASEDIR);
+		/* coverity[toctou] */
+		int rv = mkdir(RUN_FIREJAIL_BASEDIR, 0755);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown(RUN_FIREJAIL_BASEDIR, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(RUN_FIREJAIL_BASEDIR, 0755) < 0)
+			errExit("chmod");
+	}
+
 	if (stat(RUN_FIREJAIL_DIR, &s)) {
 		if (arg_debug)
 			printf("Creating %s directory\n", RUN_FIREJAIL_DIR);

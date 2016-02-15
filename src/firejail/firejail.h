@@ -22,6 +22,7 @@
 #include "../include/common.h"
 
 // filesystem
+#define RUN_FIREJAIL_BASEDIR	"/run"
 #define RUN_FIREJAIL_DIR	"/run/firejail"
 #define RUN_NETWORK_LOCK_FILE	"/run/firejail/firejail.lock"
 #define RUN_RO_DIR	"/run/firejail/firejail.ro.dir"

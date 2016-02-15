@@ -1,5 +1,5 @@
-Name: firejail
-Version: 0.9.30
+Name: __NAME__
+Version: __VERSION__
 Release: 1
 Summary: Linux namepaces sandbox program
 
@@ -32,18 +32,18 @@ rm -rf %{buildroot}
 %files
 %doc
 %defattr(-, root, root, -)
-%attr(4755, -, -) %{_bindir}/firejail
+%attr(4755, -, -) %{_bindir}/__NAME__
 %{_bindir}/firemon
-%{_libdir}/firejail/ftee
-%{_libdir}/firejail/fshaper.sh
-%{_libdir}/firejail/libtrace.so
-%{_libdir}/firejail/libtracelog.so
-%{_datarootdir}/bash-completion/completions/firejail
+%{_libdir}/__NAME__/ftee
+%{_libdir}/__NAME__/fshaper.sh
+%{_libdir}/__NAME__/libtrace.so
+%{_libdir}/__NAME__/libtracelog.so
+%{_datarootdir}/bash-completion/completions/__NAME__
 %{_datarootdir}/bash-completion/completions/firemon
-%{_docdir}/firejail
-%{_mandir}/man1/firejail.1.gz
+%{_docdir}/__NAME__
+%{_mandir}/man1/__NAME__.1.gz
 %{_mandir}/man1/firemon.1.gz
-%{_mandir}/man5/firejail-login.5.gz
-%{_mandir}/man5/firejail-profile.5.gz
-%config %{_sysconfdir}/firejail
+%{_mandir}/man5/__NAME__-login.5.gz
+%{_mandir}/man5/__NAME__-profile.5.gz
+%config %{_sysconfdir}/__NAME__
 

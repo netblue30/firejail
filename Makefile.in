@@ -199,6 +199,10 @@ dist:
 deb: dist
 	./mkdeb.sh $(NAME) $(VERSION)
 
+.PHONY: rpms
+rpms:
+	./platform/rpm/mkrpm.sh $(NAME) $(VERSION)
+
 extras: all
 	$(MAKE) -C extras/firetools
 	

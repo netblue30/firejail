@@ -110,6 +110,7 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}/vlc.profile
 %config(noreplace) %{_sysconfdir}/%{name}/audacious.profile
 %config(noreplace) %{_sysconfdir}/%{name}/clementine.profile
+%config(noreplace) %{_sysconfdir}/%{name}/epiphany.profile
 %config(noreplace) %{_sysconfdir}/%{name}/gnome-mplayer.profile
 %config(noreplace) %{_sysconfdir}/%{name}/rhythmbox.profile
 %config(noreplace) %{_sysconfdir}/%{name}/totem.profile

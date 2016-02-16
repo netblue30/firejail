@@ -243,6 +243,21 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strcmp(argv[i], "--version") == 0) {
 		printf("firejail version %s\n", VERSION);
+#ifndef HAVE_NETWORK
+		printf("Networking support is disabled.\n");
+#endif
+#ifndef HAVE_USERNS
+		printf("User namespace support is disabled.\n");
+#endif
+#ifndef HAVE_SECCOMP
+		printf("Seccomp-bpf support is disabled.\n");
+#endif
+#ifndef HAVE_BIND
+		printf("Bind support is disabled.\n");
+#endif
+#ifndef HAVE_CHROOT
+		printf("Chroot support is disabled.\n");
+#endif
 		exit(0);
 	}
 #ifdef HAVE_NETWORK	

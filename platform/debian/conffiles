@@ -21,6 +21,7 @@
 /etc/firejail/vlc.profile
 /etc/firejail/audacious.profile
 /etc/firejail/clementine.profile
+/etc/firejail/epiphany.profile
 /etc/firejail/gnome-mplayer.profile
 /etc/firejail/rhythmbox.profile
 /etc/firejail/totem.profile

@@ -5,7 +5,7 @@ firejail (0.9.39) baseline; urgency=low
   * added --nice option
   * --version also prints compile options
   * build rpm packages using "make rpms"
-  * new profiles: lxterminal
+  * new profiles: lxterminal, Epiphany
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Tue, 8 Feb 2016 10:00:00 -0500
 

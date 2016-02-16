@@ -509,5 +509,8 @@ void run_symlink(int argc, char **argv);
 // user.c
 void check_user(int argc, char **argv);
 
+// paths.c
+char **build_paths(void);
+
 #endif
 

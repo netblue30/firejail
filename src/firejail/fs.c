@@ -460,13 +460,14 @@ void fs_blacklist(void) {
 			if (strncmp(ptr, "${PATH}", 7) == 0) {
 				char *fname = ptr + 7;
 				size_t fname_len = strlen(fname);
-				char **path, *paths[] = {"/bin", "/sbin", "/usr/bin", "/usr/sbin", NULL};
-				for (path = &paths[0]; *path; path++) {
-					char newname[strlen(*path) + fname_len + 1];
-					sprintf(newname, "%s%s", *path, fname);
+				char **paths = build_paths(); //{"/bin", "/sbin", "/usr/bin", "/usr/sbin", NULL};
+				int i = 0;
+				while (paths[i] != NULL) {
+					char *path = paths[i];
+					i++;
+					char newname[strlen(path) + fname_len + 1];
+					sprintf(newname, "%s%s", path, fname);
 					globbing(op, newname, (const char**)noblacklist, noblacklist_c);
-					if  (last_disable == SUCCESSFUL)
-						break;
 				}
 			}
 			else

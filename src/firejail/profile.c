@@ -533,8 +533,10 @@ void profile_read(const char *fname) {
 		// verify syntax, exit in case of error
 		if (profile_check_line(ptr, lineno, fname))
 			profile_add(ptr);
-		else
-			free(ptr);
+// we cannot free ptr here, data is extracted from ptr and linked as a pointer in cfg structure
+//		else {
+//			free(ptr);
+//		}
 	}
 	fclose(fp);
 }

@@ -99,6 +99,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strncmp(ptr, "mkdir ", 6) == 0) {
+		fs_mkdir(ptr + 6);
+		return 0;
+	}
+
 	// sandbox name
 	if (strncmp(ptr, "name ", 5) == 0) {
 		cfg.name = ptr + 5;

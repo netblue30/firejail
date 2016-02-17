@@ -512,5 +512,8 @@ void check_user(int argc, char **argv);
 // paths.c
 char **build_paths(void);
 
+// fs_mkdir.c
+void fs_mkdir(const char *name);
+
 #endif
 

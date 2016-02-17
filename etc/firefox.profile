@@ -12,7 +12,11 @@ netfilter
 tracelog
 noroot
 whitelist ${DOWNLOADS}
+mkdir ~/.mozilla
 whitelist ~/.mozilla
+mkdir ~/.cache
+mkdir ~/.cache/mozilla
+mkdir ~/.cache/mozilla/firefox
 whitelist ~/.cache/mozilla/firefox
 whitelist ~/dwhelper
 whitelist ~/.zotero

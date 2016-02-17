@@ -134,6 +134,25 @@ Mount-bind directory1 on top of directory2. This option is only available when r
 \fBbind file1,file2
 Mount-bind file1 on top of file2. This option is only available when running as root.
 .TP
+\fBmkdir directory
+Create a directory in user home. Use this command for whitelisted directories you need to preserve
+when the sandbox is closed. Subdirectories also need to be created using mkdir. Example from
+firefox profile:
+.br
+
+.br
+mkdir ~/.mozilla
+.br
+whitelist ~/.mozilla
+.br
+mkdir ~/.cache
+.br
+mkdir ~/.cache/mozilla
+.br
+mkdir ~/.cache/mozilla/firefox
+.br
+whitelist ~/.cache/mozilla/firefox
+.TP
 \fBprivate
 Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is

@@ -3,6 +3,7 @@ firejail (0.9.39) baseline; urgency=low
   * default seccomp filter update
   * disable STUN/WebRTC in default netfilter configuration
   * added --nice option
+  * addded mkdir profile command
   * --version also prints compile options
   * build rpm packages using "make rpms"
   * new profiles: lxterminal, Epiphany, cherrytree

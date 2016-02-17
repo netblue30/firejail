@@ -79,6 +79,27 @@ $ firejail --net=eth0 firefox
               $ firejail --nice=-5 firefox
 `````
 
+## mkdir
+
+`````
+$ man firejail-profile
+[...]
+       mkdir directory
+              Create   a   directory  in  user  home.  Use  this  command  for
+              whitelisted directories you need to preserve when the sandbox is
+              closed.  Subdirectories  also  need  to  be created using mkdir.
+              Example from firefox profile:
+
+              mkdir ~/.mozilla
+              whitelist ~/.mozilla
+              mkdir ~/.cache
+              mkdir ~/.cache/mozilla
+              mkdir ~/.cache/mozilla/firefox
+              whitelist ~/.cache/mozilla/firefox
+
+[...]
+`````
+
 ## New security profiles
 
 lxterminal, Epiphany, cherrytree

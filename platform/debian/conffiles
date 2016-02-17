@@ -65,3 +65,4 @@
 /etc/firejail/mupen64plus.profile
 /etc/disable-terminals.inc
 /etc/lxterminal.profile
+/etc/cherrytree.profile

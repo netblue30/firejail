@@ -79,3 +79,6 @@ $ firejail --net=eth0 firefox
               $ firejail --nice=-5 firefox
 `````
 
+## New security profiles
+
+lxterminal, Epiphany, cherrytree

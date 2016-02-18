@@ -1,5 +1,9 @@
 whitelist ${HOME}/cherrytree
+mkdir ~/.config
+mkdir ~/.config/cherrytree
 whitelist ${HOME}/.config/cherrytree/
+mkdir ~/.local
+mkdir ~/.local/share
 whitelist ${HOME}/.local/share/
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc

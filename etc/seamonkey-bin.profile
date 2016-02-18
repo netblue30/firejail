@@ -12,7 +12,12 @@ netfilter
 tracelog
 noroot
 whitelist ${DOWNLOADS}
+mkdir ~/.mozilla
+mkdir ~/.mozilla/seamonkey
 whitelist ~/.mozilla/seamonkey
+mkdir ~/.cache
+mkdir ~/.cache/mozilla
+mkdir ~/.cache/mozilla/seamonkey
 whitelist ~/.cache/mozilla/seamonkey
 whitelist ~/dwhelper
 whitelist ~/.zotero
@@ -24,6 +29,7 @@ whitelist ~/.pentadactyl
 whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
+mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 

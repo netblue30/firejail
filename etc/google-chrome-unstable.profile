@@ -11,8 +11,13 @@ include /etc/firejail/disable-terminals.inc
 
 netfilter
 whitelist ${DOWNLOADS}
+mkdir ~/.config
+mkdir ~/.config/google-chrome-unstable
 whitelist ~/.config/google-chrome-unstable
+mkdir ~/.cache
+mkdir ~/.cache/google-chrome-unstable
 whitelist ~/.cache/google-chrome-unstable
+mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 

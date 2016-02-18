@@ -57,7 +57,7 @@ void fs_mkdir(const char *name) {
 			errExit("setuid/getuid");
 		
 		// create directory
-		if (mkdir(expanded, 0755) == -1)
+		if (mkdir(expanded, 0700) == -1)
 			fprintf(stderr, "Warning: cannot create %s directory\n", expanded);
 		exit(0);
 	}

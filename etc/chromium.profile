@@ -11,7 +11,12 @@ include /etc/firejail/disable-terminals.inc
 
 netfilter
 whitelist ${DOWNLOADS}
+mkdir ~/.config
+mkdir ~/.config/chromium
 whitelist ~/.config/chromium
+mkdir ~/.cache
+mkdir ~/.cache/chromium
 whitelist ~/.cache/chromium
+mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc

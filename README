@@ -21,7 +21,9 @@ netblue30 (netblue30@yahoo.com)
 mahdi1234 (https://github.com/mahdi1234)
 	- cherrytree profile
 jrabe (https://github.com/jrabe)
+	- disallow access to kdbx files
 	- Epiphany profile
+	- Polari profile
 jgriffiths (https://github.com/jgriffiths)
 	- make rpm packages support
 Tom Mellor (https://github.com/kalegrill)
@@ -60,8 +62,6 @@ pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile
 Kaan Genç (https://github.com/SeriousBug)
 	- dynamic allocation of noblacklist buffer
-jrabe (https://github.com/jrabe)
-	- disallow access to kdbx files
 Veeti Paananen (https://github.com/veeti)
 	- fixed Spotify profile
 Rahiel Kasim (https://github.com/rahiel)

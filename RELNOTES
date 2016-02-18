@@ -6,7 +6,7 @@ firejail (0.9.39) baseline; urgency=low
   * addded mkdir profile command
   * --version also prints compile options
   * build rpm packages using "make rpms"
-  * new profiles: lxterminal, Epiphany, cherrytree
+  * new profiles: lxterminal, Epiphany, cherrytree, Polari
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Tue, 8 Feb 2016 10:00:00 -0500
 

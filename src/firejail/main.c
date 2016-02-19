@@ -45,6 +45,8 @@ printf("time %s:%d %u\n", __FILE__, __LINE__, (uint32_t) systick);
 }
 #endif
 
+uid_t firejail_uid = 0;
+
 #define STACK_SIZE (1024 * 1024)
 static char child_stack[STACK_SIZE];		// space for child's stack
 Config cfg;					// configuration
@@ -124,11 +126,13 @@ static void my_handler(int s){
 
 static void extract_user_data(void) {
 	// check suid
+	EUID_ROOT();
 	if (geteuid()) {
 		fprintf(stderr, "Error: the sandbox is not setuid root\n");
 		exit(1);
 	}
-
+	EUID_USER();
+	
 	struct passwd *pw = getpwuid(getuid());
 	if (!pw)
 		errExit("getpwuid");
@@ -315,6 +319,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		
 		// extract pid or sandbox name
 		pid_t pid;
+		EUID_ROOT();
 		if (read_pid(argv[i] + 12, &pid) == 0)
 			bandwidth_pid(pid, cmd, dev, down, up);
 		else
@@ -337,6 +342,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
 		// print seccomp filter for a sandbox specified by pid or by name
 		pid_t pid;
+		EUID_ROOT();
 		if (read_pid(argv[i] + 16, &pid) == 0)		
 			seccomp_print_filter(pid);
 		else
@@ -350,6 +356,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
 		// print seccomp filter for a sandbox specified by pid or by name
 		pid_t pid;
+		EUID_ROOT();
 		if (read_pid(argv[i] + 17, &pid) == 0)		
 			protocol_print_filter(pid);
 		else
@@ -360,6 +367,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;
+		EUID_ROOT();
 		if (read_pid(argv[i] + 13, &pid) == 0)		
 			caps_print_filter(pid);
 		else
@@ -369,6 +377,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--fs.print=", 11) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;
+		EUID_ROOT();
 		if (read_pid(argv[i] + 11, &pid) == 0)		
 			fs_logger_print_log(pid);
 		else
@@ -378,6 +387,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;
+		EUID_ROOT();
 		if (read_pid(argv[i] + 12, &pid) == 0)		
 			net_dns_print(pid);
 		else
@@ -411,6 +421,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		
 		// join sandbox by pid or by name
 		pid_t pid;
+		EUID_ROOT();
 		if (read_pid(argv[i] + 7, &pid) == 0)		
 			join(pid, cfg.homedir, argc, argv, i + 1);
 		else
@@ -456,6 +467,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		
 		// shutdown sandbox by pid or by name
 		pid_t pid;
+		EUID_ROOT();
 		if (read_pid(argv[i] + 11, &pid) == 0)
 			shut(pid);
 		else
@@ -480,6 +492,10 @@ int main(int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 	int highest_errno = errno_highest_nr();
 #endif
+	
+	// drop permissions by default and rise them when required
+	EUID_INIT();
+	EUID_USER();
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
@@ -517,10 +533,12 @@ int main(int argc, char **argv) {
 	srand(t ^ sandbox_pid);
 
 	// check firejail directories
+	EUID_ROOT();
 	fs_build_firejail_dir();
 	shm_create_firejail_dir();	
 	bandwidth_shm_del_file(sandbox_pid);
-
+	EUID_USER();
+	
 	// is this a login shell?
 	if (*argv[0] == '-') {
 		fullargc = restricted_shell(cfg.username);
@@ -1449,6 +1467,7 @@ int main(int argc, char **argv) {
 
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
+		EUID_ROOT();
 		lockfd = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
 		if (lockfd != -1) {
 			int rv = fchown(lockfd, 0, 0);
@@ -1463,6 +1482,7 @@ int main(int argc, char **argv) {
 			
 		// save network mapping in shared memory
 		network_shm_set_file(sandbox_pid);
+		EUID_USER();
 	}
 
  	// create the parent-child communication pipe
@@ -1494,12 +1514,14 @@ int main(int argc, char **argv) {
 	else if (arg_debug)
 		printf("Using the local network stack\n");
 
+	EUID_ROOT();
 	child = clone(sandbox,
 		child_stack + STACK_SIZE,
 		flags,
 		NULL);
 	if (child == -1)
 		errExit("clone");
+	EUID_USER();
 
 	if (!arg_command && !arg_quiet) {
 		printf("Parent pid %u, child pid %u\n", sandbox_pid, child);
@@ -1508,7 +1530,8 @@ int main(int argc, char **argv) {
 			printf("The new log directory is /proc/%d/root/var/log\n", child);
 	}
 	
-	
+
+	EUID_ROOT();	
 	if (!arg_nonetwork) {
 		// create veth pair or macvlan device
 		if (cfg.bridge0.configured) {
@@ -1554,6 +1577,7 @@ int main(int argc, char **argv) {
 			net_move_interface(cfg.interface3.dev, child);
 		}
 	}
+	EUID_USER();
 
  	// close each end of the unused pipes
  	close(parent_to_child_fds[0]);
@@ -1576,7 +1600,9 @@ int main(int argc, char **argv) {
 	 	uid_t uid = getuid();
 	 	if (asprintf(&map, "%d %d 1", uid, uid) == -1)
 	 		errExit("asprintf");
+ 		EUID_ROOT();
 	 	update_map(map, map_path);
+	 	EUID_USER();
 	 	free(map);
 	 	free(map_path);
 	 
@@ -1586,7 +1612,9 @@ int main(int argc, char **argv) {
 	 	gid_t gid = getgid();
 	 	if (asprintf(&map, "%d %d 1", gid, gid) == -1)
 	 		errExit("asprintf");
+ 		EUID_ROOT();
 	 	update_map(map, map_path);
+	 	EUID_USER();
 	 	free(map);
 	 	free(map_path);
  	}
@@ -1595,6 +1623,7 @@ int main(int argc, char **argv) {
  	notify_other(parent_to_child_fds[1]);
  	close(parent_to_child_fds[1]);
  
+ 	EUID_ROOT();
 	if (lockfd != -1)
 		flock(lockfd, LOCK_UN);
 

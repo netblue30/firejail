@@ -183,12 +183,12 @@ void join_name(const char *name, const char *homedir, int argc, char **argv, int
 		fprintf(stderr, "Error: invalid sandbox name\n");
 		exit(1);
 	}
+
 	pid_t pid;
 	if (name2pid(name, &pid)) {
 		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
 		exit(1);
 	}
-
 	join(pid, homedir, argc, argv, index);
 }
 

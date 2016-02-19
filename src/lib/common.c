@@ -58,6 +58,7 @@ int join_namespace(pid_t pid, char *type) {
 }
 
 // return 1 if error
+// this function requires root access - todo: fix it!
 int name2pid(const char *name, pid_t *pid) {
 	pid_t parent = getpid();
 	

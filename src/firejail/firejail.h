@@ -20,6 +20,8 @@
 #ifndef FIREJAIL_H
 #define FIREJAIL_H
 #include "../include/common.h"
+#include "../include/euid_common.h"
+
 
 // filesystem
 #define RUN_FIREJAIL_BASEDIR	"/run"

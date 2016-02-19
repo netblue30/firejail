@@ -172,7 +172,7 @@ static ErrnoEntry errnolist[] = {
 };
 
 int errno_highest_nr(void) {
-        int i, max = 0;
+	int i, max = 0;
 	int elems = sizeof(errnolist) / sizeof(errnolist[0]);
 	for (i = 0; i < elems; i++) {
 		if (errnolist[i].nr > max)
@@ -183,6 +183,8 @@ int errno_highest_nr(void) {
 }
 
 int errno_find_name(const char *name) {
+	EUID_ASSERT();
+	
 	int i;
 	int elems = sizeof(errnolist) / sizeof(errnolist[0]);
 	for (i = 0; i < elems; i++) {
@@ -205,6 +207,8 @@ char *errno_find_nr(int nr) {
 }
 
 void errno_print(void) {
+	EUID_ASSERT();
+	
 	int i;
 	int elems = sizeof(errnolist) / sizeof(errnolist[0]);
 	for (i = 0; i < elems; i++) {

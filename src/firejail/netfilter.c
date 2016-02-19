@@ -44,6 +44,7 @@ static char *client_filter =
 "COMMIT\n";
 
 void check_netfilter_file(const char *fname) {
+	EUID_ASSERT();
 	invalid_filename(fname);
 	
 	if (is_dir(fname) || is_link(fname) || strstr(fname, "..")) {

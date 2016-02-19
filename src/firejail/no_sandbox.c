@@ -26,6 +26,8 @@
 // check process space for kernel processes
 // return 1 if found, 0 if not found
 int check_kernel_procs(void) {
+	EUID_ASSERT();
+	
 	char *kern_proc[] = {
 		"kthreadd",
 		"ksoftirqd",
@@ -97,14 +99,7 @@ int check_kernel_procs(void) {
 }
 
 void run_no_sandbox(int argc, char **argv) {
-	// drop privileges
-	int rv = setgroups(0, NULL); // this could fail
-	(void) rv;
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
-
+	EUID_ASSERT();
 
 	// build command
 	char *command = NULL;
@@ -141,7 +136,7 @@ void run_no_sandbox(int argc, char **argv) {
 	// start the program in /bin/sh
 	fprintf(stderr, "Warning: an existing sandbox was detected. "
 		"%s will run without any additional sandboxing features in a /bin/sh shell\n", command);
-	rv = system(command);
+	int rv = system(command);
 	(void) rv;
 	if (allocated)
 		free(command);

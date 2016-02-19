@@ -71,6 +71,8 @@ errout:
 
 
 void set_cgroup(const char *path) {
+	EUID_ASSERT();
+	
 	invalid_filename(path);
 	
 	// path starts with /sys/fs/cgroup

@@ -125,6 +125,7 @@ void env_defaults(void) {
 
 // parse and store the environment setting 
 void env_store(const char *str) {
+	EUID_ASSERT();
 	assert(str);
 	
 	// some basic checking

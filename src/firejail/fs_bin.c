@@ -64,6 +64,7 @@ static char *check_dir_or_file(const char *name) {
 }
 
 void fs_check_bin_list(void) {
+	EUID_ASSERT();
 	if (strstr(cfg.bin_private_keep, "..")) {
 		fprintf(stderr, "Error: invalid private bin list\n");
 		exit(1);

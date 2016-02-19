@@ -24,6 +24,7 @@ char *restricted_user = NULL;
 
 
 int restricted_shell(const char *user) {
+	EUID_ASSERT();
 	assert(user);
 
 	// open profile file:

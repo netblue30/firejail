@@ -101,6 +101,8 @@ static struct sock_filter *find_protocol_domain(const char *p) {
 
 // --debug-protocols
 void protocol_list(void) {
+	EUID_ASSERT();
+	
 #ifndef SYS_socket
 	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
 	return;
@@ -117,6 +119,7 @@ void protocol_list(void) {
 
 // check protocol list and store it in cfg structure
 void protocol_store(const char *prlist) {
+	EUID_ASSERT();
 	assert(prlist);
 	
 	if (cfg.protocol) {
@@ -308,6 +311,8 @@ void protocol_filter_load(const char *fname) {
 
 // --protocol.print
 void protocol_print_filter_name(const char *name) {
+	EUID_ASSERT();
+	
 	(void) name;
 #ifdef SYS_socket
 	if (!name || strlen(name) == 0) {
@@ -329,6 +334,8 @@ void protocol_print_filter_name(const char *name) {
 
 // --protocol.print
 void protocol_print_filter(pid_t pid) {
+	EUID_ASSERT();
+	
 	(void) pid;
 #ifdef SYS_socket
 	// if the pid is that of a firejail  process, use the pid of the first child process
@@ -358,6 +365,7 @@ void protocol_print_filter(pid_t pid) {
 	}
 
 	// find the seccomp filter
+	EUID_ROOT();
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_PROTOCOL_CFG) == -1)
 		errExit("asprintf");

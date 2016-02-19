@@ -25,6 +25,7 @@ C - chroot filesystem
 1.9 mount namespace
 1.10 disable /selinux
 
+
 2. Networking features
 
 2.1 Hostname (use --hostname=newhostname, do a ping and cat /etc/hostname)
@@ -36,6 +37,7 @@ C - chroot filesystem
 	- ping disabled for C by default seccomp filter - transfer test not implemented for C
 2.5 interface
 2.6 Default gw (--noprofile --net=eth0 --defaultgw=192.168.1.10, run netstat -rn)
+
 
 3. Filesystem features (use --noprofile)
 
@@ -56,6 +58,7 @@ C - chroot filesystem
 	- N not working on Debian wheezy (32-bit and 64-bit) - todo
 3.10 whitelist tmp
 	- O not working on Arch Linux - todo
+3.11 mkdir
 
 
 

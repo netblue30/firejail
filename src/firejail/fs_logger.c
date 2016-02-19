@@ -122,6 +122,8 @@ void fs_logger_change_owner(void) {
 }
 
 void fs_logger_print_log_name(const char *name) {
+	EUID_ASSERT();
+	
 	if (!name || strlen(name) == 0) {
 		fprintf(stderr, "Error: invalid sandbox name\n");
 		exit(1);
@@ -136,6 +138,8 @@ void fs_logger_print_log_name(const char *name) {
 }
 
 void fs_logger_print_log(pid_t pid) {
+	EUID_ASSERT();
+
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	char *comm = pid_proc_comm(pid);
 	if (comm) {
@@ -163,6 +167,7 @@ void fs_logger_print_log(pid_t pid) {
 	}
 
 	// print RUN_FSLOGGER_FILE
+	EUID_ROOT();
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_FSLOGGER_FILE) == -1)
 		errExit("asprintf");

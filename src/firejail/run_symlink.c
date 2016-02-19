@@ -23,6 +23,8 @@
 #include <unistd.h>
 
 void run_symlink(int argc, char **argv) {
+	EUID_ASSERT();
+	
 	char *program = strrchr(argv[0], '/');
 	if (program)
 		program += 1;

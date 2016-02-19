@@ -26,6 +26,7 @@
 
 
 void check_user(int argc, char **argv) {
+	EUID_ASSERT();
 	int i;
 	char *user = NULL;
 

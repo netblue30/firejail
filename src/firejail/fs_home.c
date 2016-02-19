@@ -338,6 +338,7 @@ void fs_private(void) {
 
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void) {
+	EUID_ASSERT();
 	invalid_filename(cfg.home_private);
 	
 	// Expand the home directory

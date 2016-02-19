@@ -25,6 +25,8 @@
  #include <sys/wait.h>
  
 void fs_mkdir(const char *name) {
+	EUID_ASSERT();
+	
 	// check directory name
 	invalid_filename(name);
 	char *expanded = expand_home(name, cfg.homedir);
@@ -39,31 +41,9 @@ void fs_mkdir(const char *name) {
 		goto doexit;
 	}
 
-	// fork a process, drop privileges, and create the directory
-	// no error recovery will be attempted
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		if (arg_debug)
-			printf("Create %s directory\n", expanded);
-		
-		// drop privileges
-		if (setgroups(0, NULL) < 0)
-			errExit("setgroups");
-		if (setgid(getgid()) < 0)
-			errExit("setgid/getgid");
-		if (setuid(getuid()) < 0)
-			errExit("setuid/getuid");
-		
-		// create directory
-		if (mkdir(expanded, 0700) == -1)
-			fprintf(stderr, "Warning: cannot create %s directory\n", expanded);
-		exit(0);
-	}
-	
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
+	// create directory
+	if (mkdir(expanded, 0700) == -1)
+		fprintf(stderr, "Warning: cannot create %s directory\n", expanded);
 
 doexit:
 	free(expanded);

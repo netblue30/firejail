@@ -23,7 +23,7 @@ BINOBJS =  $(foreach file, $(OBJS), $file)
 CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -DPREFIX='"$(prefix)"'  -DSYSCONFDIR='"$(sysconfdir)/firejail"' -DLIBDIR='"$(libdir)"' $(HAVE_SECCOMP) $(HAVE_SECCOMP_H) $(HAVE_CHROOT) $(HAVE_NETWORK) $(HAVE_USERNS) $(HAVE_BIND) -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security
 LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
 
-%.o : %.c $(H_FILE_LIST)
+%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/pid.h
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 firejail: $(OBJS) ../lib/libnetlink.o ../lib/common.o

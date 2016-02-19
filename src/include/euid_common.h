@@ -23,9 +23,16 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <assert.h>
+
+#define EUID_ASSERT() { \
+	if (getuid() != 0) \
+		assert(geteuid() != 0); \
+}
 
 extern uid_t firejail_uid;
-extern uid_t firejail_uid_switch;
+
+
 
 static inline void EUID_ROOT(void) {
 	if (seteuid(0) == -1)

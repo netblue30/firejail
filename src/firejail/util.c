@@ -321,6 +321,8 @@ char *split_comma(char *str) {
 
 
 int not_unsigned(const char *str) {
+	EUID_ASSERT();
+	
 	int rv = 0;
 	const char *ptr = str;
 	while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0') {
@@ -399,6 +401,7 @@ int find_child(pid_t parent, pid_t *child) {
 
 
 void extract_command_name(int index, char **argv) {
+	EUID_ASSERT();
 	assert(argv);
 	assert(argv[index]);
 

@@ -874,6 +874,7 @@ void fs_overlayfs(void) {
 #ifdef HAVE_CHROOT		
 // return 1 if error
 int fs_check_chroot_dir(const char *rootdir) {
+	EUID_ASSERT();
 	assert(rootdir);
 	struct stat s;
 	char *name;

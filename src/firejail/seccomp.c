@@ -800,6 +800,7 @@ void seccomp_set(void) {
 }
 
 void seccomp_print_filter_name(const char *name) {
+	EUID_ASSERT();
 	if (!name || strlen(name) == 0) {
 		fprintf(stderr, "Error: invalid sandbox name\n");
 		exit(1);
@@ -814,6 +815,8 @@ void seccomp_print_filter_name(const char *name) {
 }
 
 void seccomp_print_filter(pid_t pid) {
+	EUID_ASSERT();
+	
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	char *comm = pid_proc_comm(pid);
 	if (comm) {
@@ -842,6 +845,7 @@ void seccomp_print_filter(pid_t pid) {
 
 
 	// find the seccomp filter
+	EUID_ROOT();
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_SECCOMP_CFG) == -1)
 		errExit("asprintf");

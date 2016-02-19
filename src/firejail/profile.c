@@ -66,6 +66,8 @@ int profile_find(const char *name, const char *dir) {
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
 int profile_check_line(char *ptr, int lineno, const char *fname) {
+	EUID_ASSERT();
+	
 	// check ignore list
 	int i;
 	for (i = 0; i < MAX_PROFILE_IGNORE; i++) {
@@ -458,6 +460,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str) {
+	EUID_ASSERT();
+	
 	ProfileEntry *prf = malloc(sizeof(ProfileEntry));
 	if (!prf)
 		errExit("malloc");
@@ -479,6 +483,8 @@ void profile_add(char *str) {
 // read a profile file
 static int include_level = 0;
 void profile_read(const char *fname) {
+	EUID_ASSERT();
+	
 	// exit program if maximum include level was reached
 	if (include_level > MAX_INCLUDE_LEVEL) {
 		fprintf(stderr, "Error: maximum profile include level was reached\n");

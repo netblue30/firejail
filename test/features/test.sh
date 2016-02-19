@@ -113,3 +113,6 @@ echo "TESTING: 3.9 whitelist dev"
 echo "TESTING: 3.10 whitelist tmp"
 ./3.10.exp $OVERLAY $CHROOT
 
+echo "TESTING: 3.11 mkdir"
+./3.11.exp $OVERLAY $CHROOT
+

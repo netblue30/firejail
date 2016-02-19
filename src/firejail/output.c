@@ -23,6 +23,8 @@
 #include <unistd.h>
 
 void check_output(int argc, char **argv) {
+	EUID_ASSERT();
+	
 	int i;
 	char *outfile = NULL;
 //	drop_privs(0);
@@ -55,8 +57,6 @@ void check_output(int argc, char **argv) {
 				}
 			}
 
-			// drop privileges and try to open the file for writing
-			drop_privs(0);
 			/* coverity[toctou] */
 			FILE *fp = fopen(outfile, "a");
 			if (!fp) {

@@ -193,6 +193,7 @@ static int caps_find_name(const char *name) {
 
 // return 1 if error, 0 if OK
 int caps_check_list(const char *clist, void (*callback)(int)) {
+	
 	// don't allow empty lists
 	if (clist == NULL || *clist == '\0') {
 		fprintf(stderr, "Error: empty capabilities lists are not allowed\n");
@@ -240,6 +241,7 @@ int caps_check_list(const char *clist, void (*callback)(int)) {
 }
 
 void caps_print(void) {
+	EUID_ASSERT();
 	int i;
 	int elems = sizeof(capslist) / sizeof(capslist[0]);
 	
@@ -364,6 +366,8 @@ void caps_keep_list(const char *clist) {
 
 #define MAXBUF 4098
 static uint64_t extract_caps(int pid) {
+	EUID_ASSERT();
+	
 	char *file;
 	if (asprintf(&file, "/proc/%d/status", pid) == -1) {
 		errExit("asprintf");
@@ -410,6 +414,8 @@ void caps_print_filter_name(const char *name) {
 }
 
 void caps_print_filter(pid_t pid) {
+	EUID_ASSERT();
+	
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	char *comm = pid_proc_comm(pid);
 	if (comm) {

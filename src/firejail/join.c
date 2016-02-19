@@ -30,6 +30,7 @@ static int apply_seccomp = 0;
 #define BUFLEN 4096
 
 static void extract_command(int argc, char **argv, int index) {
+	EUID_ASSERT();
 	if (index >= argc)
 		return;
 
@@ -179,6 +180,7 @@ static void extract_user_namespace(pid_t pid) {
 }
 
 void join_name(const char *name, const char *homedir, int argc, char **argv, int index) {
+	EUID_ASSERT();
 	if (!name || strlen(name) == 0) {
 		fprintf(stderr, "Error: invalid sandbox name\n");
 		exit(1);
@@ -193,6 +195,8 @@ void join_name(const char *name, const char *homedir, int argc, char **argv, int
 }
 
 void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
+	EUID_ASSERT();
+	
 	extract_command(argc, argv, index);
 
 	// if the pid is that of a firejail  process, use the pid of the first child process
@@ -222,6 +226,7 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 		}
 	}
 
+	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
 	if (getuid() != 0) {
 		extract_caps_seccomp(pid);

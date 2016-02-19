@@ -20,8 +20,7 @@
 #include "firejail.h"
 
 void top(void) {
-	if (getuid() != geteuid())
-		drop_privs(1);
+	EUID_ASSERT();
 	
 	char *arg[4];
 	arg[0] = "bash";
@@ -32,8 +31,7 @@ void top(void) {
 }
 
 void netstats(void) {
-	if (getuid() != geteuid())
-		drop_privs(1);
+	EUID_ASSERT();
 	
 	char *arg[4];
 	arg[0] = "bash";
@@ -44,8 +42,7 @@ void netstats(void) {
 }
 
 void list(void) {
-	if (getuid() != geteuid())
-		drop_privs(1);
+	EUID_ASSERT();
 	
 	char *arg[4];
 	arg[0] = "bash";
@@ -56,8 +53,7 @@ void list(void) {
 }
 
 void tree(void) {
-	if (getuid() != geteuid())
-		drop_privs(1);
+	EUID_ASSERT();
 	
 	char *arg[4];
 	arg[0] = "bash";

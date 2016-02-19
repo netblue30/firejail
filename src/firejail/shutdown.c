@@ -24,6 +24,7 @@
 #include <sys/prctl.h>
 
 void shut_name(const char *name) {
+	EUID_ASSERT();
 	if (!name || strlen(name) == 0) {
 		fprintf(stderr, "Error: invalid sandbox name\n");
 		exit(1);
@@ -39,6 +40,8 @@ void shut_name(const char *name) {
 }
 
 void shut(pid_t pid) {
+	EUID_ASSERT();
+	
 	pid_t parent = pid;
 	// if the pid is that of a firejail  process, use the pid of a child process inside the sandbox
 	char *comm = pid_proc_comm(pid);
@@ -73,6 +76,7 @@ void shut(pid_t pid) {
 		}
 	}
 	
+	EUID_ROOT();
 	printf("Sending SIGTERM to %u\n", pid);
 	kill(pid, SIGTERM);
 	sleep(2);

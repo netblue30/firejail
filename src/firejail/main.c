@@ -128,15 +128,48 @@ static void my_handler(int s){
 	myexit(1);
 }
 
-static void extract_user_data(void) {
-	// check suid
-	EUID_ROOT();
-	if (geteuid()) {
-		fprintf(stderr, "Error: the sandbox is not setuid root\n");
-		exit(1);
+static inline Bridge *last_bridge_configured(void) {
+	if (cfg.bridge3.configured)
+		return &cfg.bridge3;
+	else if (cfg.bridge2.configured)
+		return &cfg.bridge2;
+	else if (cfg.bridge1.configured)
+		return &cfg.bridge1;
+	else if (cfg.bridge0.configured)
+		return &cfg.bridge0;
+	else
+		return NULL;
+}
+
+// return 1 if error, 0 if a valid pid was found
+static int read_pid(char *str, pid_t *pid) {
+	char *endptr;
+	errno = 0;
+	long int pidtmp = strtol(str, &endptr, 10);
+	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
+		|| (errno != 0 && pidtmp == 0)) {
+		return 1;
 	}
-	EUID_USER();
+	if (endptr == str) {
+		return 1;
+	}
+	*pid = (pid_t)pidtmp;
+	return 0;
+}
+
+// init configuration
+static void init_cfg(int argc, char **argv) {
+	EUID_ASSERT();
+	memset(&cfg, 0, sizeof(cfg));
+
+	cfg.original_argv = argv;
+	cfg.original_argc = argc;
+	cfg.bridge0.devsandbox = "eth0";
+	cfg.bridge1.devsandbox = "eth1";
+	cfg.bridge2.devsandbox = "eth2";
+	cfg.bridge3.devsandbox = "eth3";
 	
+	// extract user data
 	struct passwd *pw = getpwuid(getuid());
 	if (!pw)
 		errExit("getpwuid");
@@ -155,53 +188,12 @@ static void extract_user_data(void) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
-	
 	cfg.cwd = getcwd(NULL, 0);
-}
 
-
-
-
-static inline Bridge *last_bridge_configured(void) {
-	if (cfg.bridge3.configured)
-		return &cfg.bridge3;
-	else if (cfg.bridge2.configured)
-		return &cfg.bridge2;
-	else if (cfg.bridge1.configured)
-		return &cfg.bridge1;
-	else if (cfg.bridge0.configured)
-		return &cfg.bridge0;
-	else
-		return NULL;
-}
-
-
-
-// return 1 if error, 0 if a valid pid was found
-static int read_pid(char *str, pid_t *pid) {
-	char *endptr;
-	errno = 0;
-	long int pidtmp = strtol(str, &endptr, 10);
-	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
-		|| (errno != 0 && pidtmp == 0)) {
-		return 1;
-	}
-	if (endptr == str) {
-		return 1;
-	}
-	*pid = (pid_t)pidtmp;
-	return 0;
-}
-
-static void init_cfg(void) {
-	memset(&cfg, 0, sizeof(cfg));
-	
-	cfg.bridge0.devsandbox = "eth0";
-	cfg.bridge1.devsandbox = "eth1";
-	cfg.bridge2.devsandbox = "eth2";
-	cfg.bridge3.devsandbox = "eth3";
-	
-	extract_user_data();
+	// initialize random number generator
+	sandbox_pid = getpid();
+	time_t t = time(NULL);
+	srand(t ^ sandbox_pid);
 }
 
 static void check_network(Bridge *br) {
@@ -219,6 +211,7 @@ static void check_network(Bridge *br) {
 
 #ifdef HAVE_USERNS
 void check_user_namespace(void) {
+	EUID_ASSERT();
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: --noroot option cannot be used when starting the sandbox as root.\n");
 		exit(1);
@@ -241,6 +234,8 @@ void check_user_namespace(void) {
 
 // exit commands
 static void run_cmd_and_exit(int i, int argc, char **argv) {
+	EUID_ASSERT();
+	
 	//*************************************
 	// basic arguments
 	//*************************************
@@ -346,7 +341,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
 		// print seccomp filter for a sandbox specified by pid or by name
 		pid_t pid;
-		EUID_ROOT();
 		if (read_pid(argv[i] + 16, &pid) == 0)		
 			seccomp_print_filter(pid);
 		else
@@ -360,7 +354,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
 		// print seccomp filter for a sandbox specified by pid or by name
 		pid_t pid;
-		EUID_ROOT();
 		if (read_pid(argv[i] + 17, &pid) == 0)		
 			protocol_print_filter(pid);
 		else
@@ -371,7 +364,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;
-		EUID_ROOT();
 		if (read_pid(argv[i] + 13, &pid) == 0)		
 			caps_print_filter(pid);
 		else
@@ -381,7 +373,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--fs.print=", 11) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;
-		EUID_ROOT();
 		if (read_pid(argv[i] + 11, &pid) == 0)		
 			fs_logger_print_log(pid);
 		else
@@ -391,7 +382,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;
-		EUID_ROOT();
 		if (read_pid(argv[i] + 12, &pid) == 0)		
 			net_dns_print(pid);
 		else
@@ -425,7 +415,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		
 		// join sandbox by pid or by name
 		pid_t pid;
-		EUID_ROOT();
 		if (read_pid(argv[i] + 7, &pid) == 0)		
 			join(pid, cfg.homedir, argc, argv, i + 1);
 		else
@@ -471,7 +460,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		
 		// shutdown sandbox by pid or by name
 		pid_t pid;
-		EUID_ROOT();
 		if (read_pid(argv[i] + 11, &pid) == 0)
 			shut(pid);
 		else
@@ -526,7 +514,8 @@ int main(int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 	int highest_errno = errno_highest_nr();
 #endif
-	
+
+
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
@@ -534,7 +523,6 @@ int main(int argc, char **argv) {
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
 		run_symlink(argc, argv);
-
 
 	// check if we already have a sandbox running
 	int rv = check_kernel_procs();
@@ -556,19 +544,22 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	// initialize globals
-	init_cfg();
-	cfg.original_argv = argv;
-	cfg.original_argc = argc;
+	// check root/suid
+	EUID_ROOT();
+	if (geteuid()) {
+		fprintf(stderr, "Error: the sandbox is not setuid root\n");
+		exit(1);
+	}
+	EUID_USER();
 
-	// initialize random number generator
-	sandbox_pid = getpid();
-	time_t t = time(NULL);
-	srand(t ^ sandbox_pid);
+	// initialize globals
+	init_cfg(argc, argv);
+
 
 	// check firejail directories
 	EUID_ROOT();
 	fs_build_firejail_dir();
+	// todo: deprecate shm functions
 	shm_create_firejail_dir();	
 	bandwidth_shm_del_file(sandbox_pid);
 	EUID_USER();

@@ -25,6 +25,7 @@
 
 // find and read the profile specified by name from dir directory
 int profile_find(const char *name, const char *dir) {
+	EUID_ASSERT();
 	assert(name);
 	assert(dir);
 	

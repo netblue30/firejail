@@ -193,7 +193,6 @@ static int caps_find_name(const char *name) {
 
 // return 1 if error, 0 if OK
 int caps_check_list(const char *clist, void (*callback)(int)) {
-	
 	// don't allow empty lists
 	if (clist == NULL || *clist == '\0') {
 		fprintf(stderr, "Error: empty capabilities lists are not allowed\n");
@@ -400,6 +399,7 @@ static uint64_t extract_caps(int pid) {
 
 
 void caps_print_filter_name(const char *name) {
+	EUID_ASSERT();
 	if (!name || strlen(name) == 0) {
 		fprintf(stderr, "Error: invalid sandbox name\n");
 		exit(1);

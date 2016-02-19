@@ -258,6 +258,7 @@ int is_link(const char *fname) {
 
 // remove multiple spaces and return allocated memory
 char *line_remove_spaces(const char *buf) {
+	EUID_ASSERT();
 	assert(buf);
 	if (strlen(buf) == 0)
 		return NULL;
@@ -307,6 +308,7 @@ char *line_remove_spaces(const char *buf) {
 
 
 char *split_comma(char *str) {
+	EUID_ASSERT();
 	if (str == NULL || *str == '\0')
 		return NULL;
 	char *ptr = strchr(str, ',');
@@ -340,6 +342,7 @@ int not_unsigned(const char *str) {
 #define BUFLEN 4096
 // find the first child for this parent; return 1 if error
 int find_child(pid_t parent, pid_t *child) {
+	EUID_ASSERT();
 	*child = 0;				  // use it to flag a found child
 
 	DIR *dir;
@@ -530,8 +533,7 @@ void notify_other(int fd) {
 // directory (supplied).
 // The return value is allocated using malloc and must be freed by the caller.
 // The function returns NULL if there are any errors.
-char *expand_home(const char *path, const char* homedir)
-{
+char *expand_home(const char *path, const char* homedir) {
 	assert(path);
 	assert(homedir);
 	
@@ -554,8 +556,7 @@ char *expand_home(const char *path, const char* homedir)
 // Equivalent to the GNU version of basename, which is incompatible with
 // the POSIX basename. A few lines of code saves any portability pain.
 // https://www.gnu.org/software/libc/manual/html_node/Finding-Tokens-in-a-String.html#index-basename
-const char *gnu_basename(const char *path)
-{
+const char *gnu_basename(const char *path) {
 	const char *last_slash = strrchr(path, '/');
 	if (!last_slash)
 		return path;
@@ -563,6 +564,7 @@ const char *gnu_basename(const char *path)
 }
 
 uid_t pid_get_uid(pid_t pid) {
+	EUID_ASSERT();
 	uid_t rv = 0;
 	
 	// open status file
@@ -606,6 +608,7 @@ uid_t pid_get_uid(pid_t pid) {
 }
 
 void invalid_filename(const char *fname) {
+	EUID_ASSERT();
 	assert(fname);
 	const char *ptr = fname;
 	

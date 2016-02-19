@@ -40,6 +40,8 @@ static void set_cpu(const char *str) {
 }
 
 void read_cpu_list(const char *str) {
+	EUID_ASSERT();
+	
 	char *tmp = strdup(str);
 	if (tmp == NULL)
 		errExit("strdup");

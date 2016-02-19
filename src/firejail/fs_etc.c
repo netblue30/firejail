@@ -57,6 +57,7 @@ static int check_dir_or_file(const char *name) {
 }
 
 void fs_check_etc_list(void) {
+	EUID_ASSERT();
 	if (strstr(cfg.etc_private_keep, "..")) {
 		fprintf(stderr, "Error: invalid private etc list\n");
 		exit(1);

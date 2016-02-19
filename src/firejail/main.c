@@ -104,6 +104,9 @@ int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
 
+static void set_name_file(uid_t pid);
+static void delete_name_file(uid_t pid);
+
 static void myexit(int rv) {
 	logmsg("exiting...");
 	if (!arg_command && !arg_quiet)
@@ -112,6 +115,7 @@ static void myexit(int rv) {
 	// delete sandbox files in shared memory
 	bandwidth_shm_del_file(sandbox_pid);		// bandwidth file
 	network_shm_del_file(sandbox_pid);		// network map file
+	delete_name_file(sandbox_pid);
 	
 	exit(rv); 
 }
@@ -475,6 +479,36 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 
+}
+
+static void set_name_file(uid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, pid) == -1)
+		errExit("asprintf");
+
+	// the file is deleted first
+	FILE *fp = fopen(fname, "w");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot create %s\n", fname);
+		exit(1);
+	}
+	fprintf(fp, "%s\n", cfg.name);
+	fclose(fp);
+	
+	// mode and ownership
+	if (chown(fname, 0, 0) == -1)
+		errExit("chown");
+	if (chmod(fname, 0644) == -1)
+		errExit("chmod");
+	
+}
+
+static void delete_name_file(uid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, pid) == -1)
+		errExit("asprintf");
+	int rv = unlink(fname);
+	(void) rv;
 }
 
 //*******************************************
@@ -1500,6 +1534,13 @@ int main(int argc, char **argv) {
 		arg_noroot = 0;
 	}
 
+
+	// set name file
+	EUID_ROOT();
+	if (cfg.name)
+		set_name_file(sandbox_pid);
+	EUID_USER();
+	
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;
 	
@@ -1626,6 +1667,9 @@ int main(int argc, char **argv) {
  	EUID_ROOT();
 	if (lockfd != -1)
 		flock(lockfd, LOCK_UN);
+
+	// create name file under /run/firejail
+	
 
 	// handle CTRL-C in parent
 	signal (SIGINT, my_handler);

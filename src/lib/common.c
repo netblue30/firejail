@@ -95,53 +95,34 @@ int name2pid(const char *name, pid_t *pid) {
 			free(comm);
 		}
 		
-		char *cmd = pid_proc_cmdline(newpid);
-		if (cmd) {
-			// mark the end of the name
-			char *ptr = strstr(cmd, "--name=");
-			char *start = ptr;
-			if (!ptr) {
-				free(cmd);
-				
-				// extract name for /run/mnt/firejail/fslogger file
-				char *fname;
-				if (asprintf(&fname, "/proc/%d/root/run/firejail/mnt/fslogger", newpid) == -1)
-					errExit("asprintf");
-
-				struct stat s;
-				if (stat(fname, &s) == 0) {
-					FILE *fp = fopen(fname, "r");
-					if (fp) {
-						char buf[BUFLEN];
-						if (fgets(buf, BUFLEN, fp)) {
-							if (strncmp(buf, "sandbox name: ", 14) == 0) {
-								char *ptr2 = buf + 14;
-								if (strncmp(name, ptr2, strlen(name)) == 0) {
-									fclose(fp);
-									*pid = newpid;
-									closedir(dir);
-									return 0;
-								}
-							}
-						}
+		// look for the sandbox name in /run/firejail/name/<PID>
+		// todo: use RUN_FIREJAIL_NAME_DIR define from src/firejail/firejail.h
+		char *fname;
+		if (asprintf(&fname, "/run/firejail/name/%d", newpid) == -1)
+			errExit("asprintf");
+		FILE *fp = fopen(fname, "r");
+		if (fp) {
+			char buf[BUFLEN];
+			if (fgets(buf, BUFLEN, fp)) {
+				// remove \n
+				char *ptr = strchr(buf, '\n');
+				if (ptr) {
+					*ptr = '\0';
+					if (strcmp(buf, name) == 0) {
+						// we found it!
 						fclose(fp);
+						free(fname);
+						*pid = newpid;
+						closedir(dir);
+						return 0;
 					}
-				}	
-				
-				continue;
+				}
+				else
+					fprintf(stderr, "Error: invalid %s\n", fname);
 			}
-			while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
-				ptr++;
-			*ptr = '\0';
-			int rv = strcmp(start + 7, name);
-			if (rv == 0) {
-				free(cmd);
-				*pid = newpid;
-				closedir(dir);
-				return 0;
-			}
-			free(cmd);
+			fclose(fp);
 		}
+		free(fname);
 	}
 	closedir(dir);
 	return 1;

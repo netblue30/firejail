@@ -19,10 +19,10 @@ expect {
 }
 sleep 1
 
-send -- "ls -al /dev | wc -l\r"
+send -- "ls -l /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"14"
+	"12"
 }
 
 after 100
@@ -40,10 +40,10 @@ if { $overlay == "overlay" } {
 	}
 	sleep 1
 	
-	send -- "ls -al /dev | wc -l\r"
+	send -- "ls -l /dev | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
-		"13"
+		"12"
 	}
 	
 	after 100
@@ -62,10 +62,10 @@ if { $chroot == "chroot" } {
 	}
 	sleep 1
 	
-	send -- "ls -al /dev | wc -l\r"
+	send -- "ls -l /dev | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.1\n";exit}
-		"13"
+		"12"
 	}
 	
 	after 100

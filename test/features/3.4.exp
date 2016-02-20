@@ -53,7 +53,7 @@ expect {
 	".Xauthority"
 }
 
-send -- "ls -al | grep config\r"
+send -- "ls -al | grep .config\r"
 expect {
 	timeout {puts "TESTING ERROR 1.8\n";exit}
 	"netblue"
@@ -117,7 +117,7 @@ if { $overlay == "overlay" } {
 		".Xauthority"
 	}
 	
-	send -- "ls -al | grep config\r"
+	send -- "ls -al | grep .config\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.8\n";exit}
 		"netblue"
@@ -181,7 +181,7 @@ if { $chroot == "chroot" } {
 		".Xauthority"
 	}
 	
-	send -- "ls -al | grep config\r"
+	send -- "ls -al | grep .config\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.8\n";exit}
 		"netblue"

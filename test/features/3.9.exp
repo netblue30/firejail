@@ -12,7 +12,7 @@ set chroot [lindex $argv 1]
 #
 # N
 #
-send -- "firejail --noprofile --whitelist=/dev/tty --whitelist=/dev/shm --whitelist=/dev/null\r"
+send -- "firejail --noprofile --whitelist=/dev/tty --whitelist=/dev/null\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -22,7 +22,7 @@ sleep 1
 send -- "ls -l /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"4"
+	"3"
 }
 
 
@@ -35,7 +35,7 @@ sleep 1
 # O
 #
 if { $overlay == "overlay" } {
-	send -- "firejail --noprofile --overlay --whitelist=/dev/tty --whitelist=/dev/shm --whitelist=/dev/null\r"
+	send -- "firejail --noprofile --overlay --whitelist=/dev/tty --whitelist=/dev/null\r"
 	expect {
 		timeout {puts "TESTING ERROR 2\n";exit}
 		"Child process initialized"
@@ -45,7 +45,7 @@ if { $overlay == "overlay" } {
 	send -- "ls -l /dev | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
-		"4"
+		"3"
 	}
 	
 
@@ -58,7 +58,7 @@ if { $overlay == "overlay" } {
 # C
 #
 if { $chroot == "chroot" } {
-	send -- "firejail --noprofile --chroot=/tmp/chroot --whitelist=/dev/tty --whitelist=/dev/shm --whitelist=/dev/null\r"
+	send -- "firejail --noprofile --chroot=/tmp/chroot --whitelist=/dev/tty --whitelist=/dev/null\r"
 	expect {
 		timeout {puts "TESTING ERROR 4\n";exit}
 		"Child process initialized"
@@ -68,7 +68,7 @@ if { $chroot == "chroot" } {
 	send -- "ls -l /dev | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.1\n";exit}
-		"4"
+		"3"
 	}
 	
 	after 100

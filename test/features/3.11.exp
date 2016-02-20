@@ -22,7 +22,7 @@ expect {
 }
 sleep 1
 
-send -- "ls -l ~ | grep xy76_u9\r"
+send -- "ls -l ~ | grep firejail-xy76_u9\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"drwx------"
@@ -71,7 +71,7 @@ if { $overlay == "overlay" } {
 	}
 	sleep 1
 	
-	send -- "ls -l ~ | grep xy76_u9\r"
+	send -- "ls -l ~ | grep firejail-xy76_u9\r"
 	expect {
 		timeout {puts "TESTING ERROR 11\n";exit}
 		"drwx------"
@@ -123,7 +123,7 @@ if { $chroot == "chroot" } {
 	}
 	sleep 1
 	
-	send -- "ls -l ~ | grep xy76_u9\r"
+	send -- "ls -l ~ | grep firejail-xy76_u9\r"
 	expect {
 		timeout {puts "TESTING ERROR 21\n";exit}
 		"drwx------"
@@ -162,3 +162,4 @@ if { $chroot == "chroot" } {
 
 
 puts "\nall done\n"
+

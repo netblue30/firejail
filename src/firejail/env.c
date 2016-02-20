@@ -86,7 +86,9 @@ void env_ibus_load(void) {
 				*ptr = '\0';
 			if (arg_debug)
 				printf("%s\n", buf);
+			EUID_USER();
 			env_store(buf);
+			EUID_ROOT();
 		}
 
 		fclose(fp);

@@ -18,14 +18,14 @@ expect {
 }
 sleep 1
 
-send -- "ls -a /tmp | wc\r"
+send -- "ls -a /tmp | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"3"
 }
 sleep 1
 
-send -- "ls -a ~ | wc\r"
+send -- "ls -a ~ | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"4"

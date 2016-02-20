@@ -83,7 +83,7 @@ fi
 ####################
 # filesystem features
 ####################
-echo "TESTING: 3.1 private"
+echo "TESTING: 3.1 private (fails on OpenSUSE)"
 ./3.1.exp $OVERLAY $CHROOT
 
 echo "TESTING: 3.2 read-only"
@@ -92,7 +92,7 @@ echo "TESTING: 3.2 read-only"
 echo "TESTING: 3.3 blacklist"
 ./3.3.exp $OVERLAY $CHROOT
 
-echo "TESTING: 3.4 whitelist home"
+echo "TESTING: 3.4 whitelist home (fails on OpenSUSE)"
 ./3.4.exp $OVERLAY $CHROOT
 
 echo "TESTING: 3.5 private-dev"

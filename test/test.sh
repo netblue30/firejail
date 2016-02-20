@@ -31,6 +31,7 @@ echo "TESTING: private-bin (private-bin.exp)"
 ./private-bin.exp
 
 echo "TESTING: private whitelist (private-whitelist.exp)"
+echo "TESTING:    failing on OpenSUSE"
 ./private-whitelist.exp
 
 sleep 1

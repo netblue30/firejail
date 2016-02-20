@@ -29,7 +29,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"netblue netblue"
+	"netblue netblue" { puts "Debian\n"}
+	"netblue users" { puts "Arch\n"}
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -44,7 +45,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"netblue netblue"
+	"netblue netblue" { puts "Debian\n"}
+	"netblue users" { puts "Arch\n"}
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
@@ -78,7 +80,8 @@ if { $overlay == "overlay" } {
 	}
 	expect {
 		timeout {puts "TESTING ERROR 12\n";exit}
-		"netblue netblue"
+		"netblue netblue" { puts "Debian\n"}
+		"netblue users" { puts "Arch\n"}
 	}
 	expect {
 		timeout {puts "TESTING ERROR 13\n";exit}
@@ -93,7 +96,8 @@ if { $overlay == "overlay" } {
 	}
 	expect {
 		timeout {puts "TESTING ERROR 15\n";exit}
-		"netblue netblue"
+		"netblue netblue" { puts "Debian\n"}
+		"netblue users" { puts "Arch\n"}
 	}
 	expect {
 		timeout {puts "TESTING ERROR 16\n";exit}
@@ -130,7 +134,8 @@ if { $chroot == "chroot" } {
 	}
 	expect {
 		timeout {puts "TESTING ERROR 22\n";exit}
-		"netblue netblue"
+		"netblue netblue" { puts "Debian\n"}
+		"netblue users" { puts "Arch\n"}
 	}
 	expect {
 		timeout {puts "TESTING ERROR 23\n";exit}
@@ -145,7 +150,8 @@ if { $chroot == "chroot" } {
 	}
 	expect {
 		timeout {puts "TESTING ERROR 25\n";exit}
-		"netblue netblue"
+		"netblue netblue" { puts "Debian\n"}
+		"netblue users" { puts "Arch\n"}
 	}
 	expect {
 		timeout {puts "TESTING ERROR 26\n";exit}

@@ -15,9 +15,14 @@ private-dev
 
 private-tmp
 
+mkdir ${HOME}/.local
+mkdir ${HOME}/.local/share
 mkdir ${HOME}/.local/share/wesnoth
+mkdir ${HOME}/.config
 mkdir ${HOME}/.config/wesnoth
+mkdir ${HOME}/.cache
 mkdir ${HOME}/.cache/wesnoth
 whitelist ${HOME}/.local/share/wesnoth
 whitelist ${HOME}/.config/wesnoth
 whitelist ${HOME}/.cache/wesnoth
+include /etc/firejail/whitelist-common.inc

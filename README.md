@@ -102,4 +102,4 @@ $ man firejail-profile
 
 ## New security profiles
 
-lxterminal, Epiphany, cherrytree
+lxterminal, Epiphany, cherrytree, Battle for Wesnoth

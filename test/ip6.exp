@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --debug --noprofile --net=eth0 --ip6=2001:0db8:0:f101::1/64 --netfilter6=ipv6.net\r"
+send -- "firejail --debug --noprofile --net=br0 --ip6=2001:0db8:0:f101::1/64 --netfilter6=ipv6.net\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Installing network filter"
@@ -26,15 +26,16 @@ sleep 2
 send -- "/sbin/ifconfig\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"inet6 addr"
+	"inet6"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"2001:db8:0:f101::1/64"
+	"2001:db8:0:f101::1"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Scope:Global"
+	"Scope:Global" { puts "Debian\n"}
+	"scopeid 0x0<global>" { puts "Arch\n"}
 }
 
 

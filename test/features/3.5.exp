@@ -22,7 +22,8 @@ sleep 1
 send -- "ls -l /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"12"
+	"12" { puts "Debian\n"}
+	"11" { puts "Centos\n"}
 }
 
 after 100

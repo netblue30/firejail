@@ -240,6 +240,7 @@ echo "TESTING: quiet (quiet.exp)"
 ./quiet.exp
 
 echo "TESTING: IPv6 support (ip6.exp)"
+echo "TESTING:    broken on Centos - todo"
 ./ip6.exp
 
 echo "TESTING: local network (net_local.exp)"

@@ -43,7 +43,7 @@ if { $overlay == "overlay" } {
 	send -- "ls -l /dev | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
-		"12"
+		"11"
 	}
 	
 	after 100
@@ -65,7 +65,7 @@ if { $chroot == "chroot" } {
 	send -- "ls -l /dev | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.1\n";exit}
-		"12"
+		"11"
 	}
 	
 	after 100

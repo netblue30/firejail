@@ -73,6 +73,12 @@ void fs_build_firejail_dir(void) {
 		if (chmod(RUN_FIREJAIL_BASEDIR, 0755) < 0)
 			errExit("chmod");
 	}
+	else { // check /tmp/firejail directory belongs to root end exit if doesn't!
+		if (s.st_uid != 0 || s.st_gid != 0) {
+			fprintf(stderr, "Error: non-root %s directory, exiting...\n", RUN_FIREJAIL_DIR);
+			exit(1);
+		}
+	}
 
 	if (stat(RUN_FIREJAIL_DIR, &s)) {
 		if (arg_debug)
@@ -85,6 +91,11 @@ void fs_build_firejail_dir(void) {
 			errExit("chown");
 		if (chmod(RUN_FIREJAIL_DIR, 0755) < 0)
 			errExit("chmod");
+	}
+	
+	if (stat(RUN_FIREJAIL_NETWORK_DIR, &s)) {
+		if (arg_debug)
+			printf("Creating %s directory\n", RUN_FIREJAIL_NETWORK_DIR);
 		
 		if (mkdir(RUN_FIREJAIL_NETWORK_DIR, 0755) == -1)
 			errExit("mkdir");
@@ -92,26 +103,28 @@ void fs_build_firejail_dir(void) {
 			errExit("chown");
 		if (chmod(RUN_FIREJAIL_NETWORK_DIR, 0755) < 0)
 			errExit("chmod");
-		
+	}
+	
+	if (stat(RUN_FIREJAIL_BANDWIDTH_DIR, &s)) {
+		if (arg_debug)
+			printf("Creating %s directory\n", RUN_FIREJAIL_BANDWIDTH_DIR);
 		if (mkdir(RUN_FIREJAIL_BANDWIDTH_DIR, 0755) == -1)
 			errExit("mkdir");
 		if (chown(RUN_FIREJAIL_BANDWIDTH_DIR, 0, 0) < 0)
 			errExit("chown");
 		if (chmod(RUN_FIREJAIL_BANDWIDTH_DIR, 0755) < 0)
 			errExit("chmod");
+	}
 		
+	if (stat(RUN_FIREJAIL_NAME_DIR, &s)) {
+		if (arg_debug)
+			printf("Creating %s directory\n", RUN_FIREJAIL_NAME_DIR);
 		if (mkdir(RUN_FIREJAIL_NAME_DIR, 0755) == -1)
 			errExit("mkdir");
 		if (chown(RUN_FIREJAIL_NAME_DIR, 0, 0) < 0)
 			errExit("chown");
 		if (chmod(RUN_FIREJAIL_NAME_DIR, 0755) < 0)
 			errExit("chmod");
-	}
-	else { // check /tmp/firejail directory belongs to root end exit if doesn't!
-		if (s.st_uid != 0 || s.st_gid != 0) {
-			fprintf(stderr, "Error: non-root %s directory, exiting...\n", RUN_FIREJAIL_DIR);
-			exit(1);
-		}
 	}
 	
 	create_empty_dir();

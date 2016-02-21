@@ -12,6 +12,8 @@ whitelist ${HOME}/.local/share/epiphany
 mkdir ${HOME}/.config
 mkdir ${HOME}/.config/epiphany
 whitelist ${HOME}/.config/epiphany
+mkdir ${HOME}/.config/dconf
+whitelist ${HOME}/.config/dconf
 mkdir ${HOME}/.cache
 mkdir ${HOME}/.cache/epiphany
 whitelist ${HOME}/.cache/epiphany

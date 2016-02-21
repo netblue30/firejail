@@ -20,3 +20,8 @@ whitelist ~/.gtkrc
 whitelist ~/.gtkrc-2.0
 whitelist ~/.config/gtk-3.0
 whitelist ~/.themes
+
+# dconf
+mkdir ~/.config
+mkdir ~/.config/dconf
+whitelist ~/.config/dconf

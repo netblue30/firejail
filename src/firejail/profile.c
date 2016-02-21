@@ -363,6 +363,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Error: invalid file name.\n");
 			exit(1);
 		}
+		if (is_link(dname1) || is_link(dname2)) {
+			fprintf(stderr, "Symbolic links are not allowed for bind command\n");
+			exit(1);
+		}
 		
 		// insert comma back
 		*(dname2 - 1) = ',';

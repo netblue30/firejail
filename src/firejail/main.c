@@ -142,7 +142,7 @@ static inline Bridge *last_bridge_configured(void) {
 }
 
 // return 1 if error, 0 if a valid pid was found
-static int read_pid(char *str, pid_t *pid) {
+static inline int read_pid(char *str, pid_t *pid) {
 	char *endptr;
 	errno = 0;
 	long int pidtmp = strtol(str, &endptr, 10);

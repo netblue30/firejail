@@ -105,6 +105,12 @@ echo "TESTING: shutdown (option_shutdown.exp)"
 echo "TESTING: join (opton-join.exp)"
 ./option-join.exp
 
+echo "TESTING: join2 (opton-join2.exp)"
+./option-join2.exp
+
+echo "TESTING: join3 (opton-join3.exp)"
+./option-join3.exp
+
 echo "TESTING: join profile (option-join-profile.exp)"
 ./option-join-profile.exp
 

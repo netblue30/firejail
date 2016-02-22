@@ -1,4 +1,4 @@
-# Whitelist-based profile for "Battle of Wesnoth" (game).
+# Whitelist-based profile for "Battle for Wesnoth" (game).
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -13,7 +13,7 @@ noroot
 
 private-dev
 
-private-tmp
+whitelist /tmp/.X11-unix
 
 mkdir ${HOME}/.local
 mkdir ${HOME}/.local/share

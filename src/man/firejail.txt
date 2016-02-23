@@ -471,6 +471,8 @@ Example:
 .br
 $ firejail \-\-net=eth0 \-\-ip6=2001:0db8:0:f101::1/64 firefox
 
+Note: you don't need this option if you obtain your ip6 address from router via SLAAC (your ip6 address and default route will be configured by kernel automatically).
+
 .TP
 \fB\-\-iprange=address,address
 Assign an IP address in the provided range to the last network interface defined by a \-\-net option. A

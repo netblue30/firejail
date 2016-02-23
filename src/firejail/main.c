@@ -263,6 +263,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #endif
 		exit(0);
 	}
+	else if (strcmp(argv[i], "--x11") == 0) {
+		x11_start(argc, argv);
+		exit(0);
+	}
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		logargs(argc, argv);

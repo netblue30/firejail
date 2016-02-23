@@ -166,6 +166,7 @@ else
 fi
 
 ./test-apps.sh
+./test-apps-x11.sh
 
 echo "TESTING: PID (pid.exp)"
 ./pid.exp

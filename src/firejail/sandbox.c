@@ -588,12 +588,14 @@ int sandbox(void* sandbox_arg) {
 		errno = 0;
 		int rv = nice(cfg.nice);
 		(void) rv;
-printf("nice rv %d\n", rv);		
 		if (errno) {
 			fprintf(stderr, "Warning: cannot set nice value\n");
 			errno = 0;
 		}
 	}
+	
+	// clean /tmp/.X11-unix sockets
+	fs_x11();
 	
 	//****************************
 	// set security filters

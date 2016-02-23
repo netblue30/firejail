@@ -46,6 +46,7 @@
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
 #define RUN_DEVLOG_FILE	"/run/firejail/mnt/devlog"
 
+#define RUN_WHITELIST_X11_DIR	"/run/firejail/mnt/orig-x11"
 #define RUN_WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"	// default home directory masking
 #define RUN_WHITELIST_HOME_USER_DIR	"/run/firejail/mnt/orig-home-user"	// home directory whitelisting
 #define RUN_WHITELIST_TMP_DIR	"/run/firejail/mnt/orig-tmp"
@@ -519,6 +520,10 @@ char **build_paths(void);
 
 // fs_mkdir.c
 void fs_mkdir(const char *name);
+
+// x11.c
+void fs_x11(void);
+void x11_start(int argc, char **argv);
 
 #endif
 

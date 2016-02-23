@@ -27,6 +27,7 @@
 #include <sys/mount.h>
 
 void fs_x11(void) {
+#ifdef HAVE_X11
 	// extract display
 	char *d = getenv("DISPLAY");
 	if (!d)
@@ -94,9 +95,11 @@ void fs_x11(void) {
 	 if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, "none", MS_BIND, "mode=400,gid=0") == -1)
 	 	errExit("mount");
 	 fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
+#endif
 }
 
 
+#ifdef HAVE_X11
 void x11_start(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;
@@ -215,3 +218,4 @@ void x11_start(int argc, char **argv) {
 		printf("Xpra server pid %d, client pid %d\n", server, client);
 	exit(0);
 }
+#endif

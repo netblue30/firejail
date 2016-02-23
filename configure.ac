@@ -49,6 +49,14 @@ AS_IF([test "x$enable_userns" != "xno"], [
 	AC_SUBST(HAVE_USERNS)
 ])
 
+HAVE_X11=""
+AC_ARG_ENABLE([x11],
+    AS_HELP_STRING([--disable-x11], [disable X11 support]))
+AS_IF([test "x$enable_x11" != "xno"], [
+	HAVE_X11="-DHAVE_X11"
+	AC_SUBST(HAVE_X11)
+])
+
 HAVE_FATAL_WARNINGS=""
 AC_ARG_ENABLE([fatal_warnings],
     AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror]))
@@ -81,6 +89,7 @@ echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
+echo "   X11 support: $HAVE_X11"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo
 

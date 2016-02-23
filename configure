@@ -629,6 +629,7 @@ EGREP
 GREP
 CPP
 HAVE_FATAL_WARNINGS
+HAVE_X11
 HAVE_USERNS
 HAVE_NETWORK
 HAVE_BIND
@@ -691,6 +692,7 @@ enable_chroot
 enable_bind
 enable_network
 enable_userns
+enable_x11
 enable_fatal_warnings
 '
       ac_precious_vars='build_alias
@@ -1316,6 +1318,7 @@ Optional Features:
   --disable-bind          disable bind
   --disable-network       disable network
   --disable-userns        disable user namespace
+  --disable-x11           disable X11 support
   --enable-fatal-warnings -W -Wall -Werror
 
 Some influential environment variables:
@@ -3119,6 +3122,19 @@ if test "x$enable_userns" != "xno"; then :
 
 fi
 
+HAVE_X11=""
+# Check whether --enable-x11 was given.
+if test "${enable_x11+set}" = set; then :
+  enableval=$enable_x11;
+fi
+
+if test "x$enable_x11" != "xno"; then :
+
+	HAVE_X11="-DHAVE_X11"
+
+
+fi
+
 HAVE_FATAL_WARNINGS=""
 # Check whether --enable-fatal_warnings was given.
 if test "${enable_fatal_warnings+set}" = set; then :
@@ -4777,6 +4793,7 @@ echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
+echo "   X11 support: $HAVE_X11"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo
 

@@ -261,12 +261,17 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifndef HAVE_CHROOT
 		printf("Chroot support is disabled.\n");
 #endif
+#ifndef HAVE_X11
+		printf("X11 support is disabled.\n");
+#endif
 		exit(0);
 	}
+#ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
 		x11_start(argc, argv);
 		exit(0);
 	}
+#endif
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		logargs(argc, argv);

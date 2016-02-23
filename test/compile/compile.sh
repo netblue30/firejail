@@ -6,6 +6,7 @@ arr[3]="TEST 3: compile chroot disabled"
 arr[4]="TEST 4: compile bind disabled"
 arr[5]="TEST 5: compile user namespace disabled"
 arr[6]="TEST 6: compile network disabled"
+arr[7]="TEST 7: compile X11 disabled"
 
 
 # remove previous reports and output file
@@ -146,6 +147,23 @@ grep Warning output-configure output-make > ./report-test6
 grep Error output-configure output-make >> ./report-test6
 rm output-configure output-make
 
+#*****************************************************************
+# TEST 7
+#*****************************************************************
+# - disable X11 support
+# - check compilation
+#*****************************************************************
+print_title "${arr[6]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-x11  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test7
+grep Error output-configure output-make >> ./report-test7
+rm output-configure output-make
+
 
 #*****************************************************************
 # PRINT REPORTS
@@ -167,3 +185,4 @@ echo ${arr[3]}
 echo ${arr[4]}
 echo ${arr[5]}
 echo ${arr[6]}
+echo ${arr[7]}

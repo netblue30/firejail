@@ -106,6 +106,8 @@ pid_t sandbox_pid;
 
 static void set_name_file(uid_t pid);
 static void delete_name_file(uid_t pid);
+static void set_x11_file(uid_t pid, int display);
+static void delete_x11_file(uid_t pid);
 
 static void myexit(int rv) {
 	logmsg("exiting...");
@@ -116,6 +118,7 @@ static void myexit(int rv) {
 	bandwidth_shm_del_file(sandbox_pid);		// bandwidth file
 	network_shm_del_file(sandbox_pid);		// network map file
 	delete_name_file(sandbox_pid);
+	delete_x11_file(sandbox_pid);
 	
 	exit(rv); 
 }
@@ -506,6 +509,36 @@ static void set_name_file(uid_t pid) {
 static void delete_name_file(uid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, pid) == -1)
+		errExit("asprintf");
+	int rv = unlink(fname);
+	(void) rv;
+}
+
+static void set_x11_file(uid_t pid, int display) {
+	char *fname;
+	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
+		errExit("asprintf");
+
+	// the file is deleted first
+	FILE *fp = fopen(fname, "w");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot create %s\n", fname);
+		exit(1);
+	}
+	fprintf(fp, "%d\n", display);
+	fclose(fp);
+	
+	// mode and ownership
+	if (chown(fname, 0, 0) == -1)
+		errExit("chown");
+	if (chmod(fname, 0644) == -1)
+		errExit("chmod");
+	
+}
+
+static void delete_x11_file(uid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
 		errExit("asprintf");
 	int rv = unlink(fname);
 	(void) rv;
@@ -1554,6 +1587,9 @@ int main(int argc, char **argv) {
 	EUID_ROOT();
 	if (cfg.name)
 		set_name_file(sandbox_pid);
+	int display = x11_display();
+	if (display > 0)
+		set_x11_file(sandbox_pid, display);
 	EUID_USER();
 	
 	// clone environment

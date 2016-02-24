@@ -127,6 +127,17 @@ void fs_build_firejail_dir(void) {
 			errExit("chmod");
 	}
 	
+	if (stat(RUN_FIREJAIL_X11_DIR, &s)) {
+		if (arg_debug)
+			printf("Creating %s directory\n", RUN_FIREJAIL_X11_DIR);
+		if (mkdir(RUN_FIREJAIL_X11_DIR, 0755) == -1)
+			errExit("mkdir");
+		if (chown(RUN_FIREJAIL_X11_DIR, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(RUN_FIREJAIL_X11_DIR, 0755) < 0)
+			errExit("chmod");
+	}
+	
 	create_empty_dir();
 	create_empty_file();
 }

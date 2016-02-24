@@ -26,12 +26,12 @@
 #include <dirent.h>
 #include <sys/mount.h>
 
-void fs_x11(void) {
-#ifdef HAVE_X11
+// return display number, -1 if not configured
+int x11_display(void) {
 	// extract display
 	char *d = getenv("DISPLAY");
 	if (!d)
-		return;
+		return - 1;
 	
 	int display;
 	int rv = sscanf(d, ":%d", &display);
@@ -39,6 +39,15 @@ void fs_x11(void) {
 		return;
 	if (arg_debug)
 		printf("DISPLAY %s, %d\n", d, display);
+	
+	return display;
+}
+
+void fs_x11(void) {
+#ifdef HAVE_X11
+	int display = x11_display();
+	if (display <= 0)
+		return;
 
 	char *x11file;
 	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
@@ -48,7 +57,7 @@ void fs_x11(void) {
 		return;
 
 	// keep a copy of real /tmp/.X11-unix directory in WHITELIST_TMP_DIR
-	rv = mkdir(RUN_WHITELIST_X11_DIR, 1777);
+	int rv = mkdir(RUN_WHITELIST_X11_DIR, 1777);
 	if (rv == -1)
 		errExit("mkdir");
 	if (chown(RUN_WHITELIST_X11_DIR, 0, 0) < 0)
@@ -178,6 +187,7 @@ void x11_start(int argc, char **argv) {
 		exit(1);
 	}
 	sleep(1);
+
 	if (arg_debug) {
 		printf("X11 sockets: "); fflush(0);
 		int rv = system("ls /tmp/.X11-unix");
@@ -213,6 +223,7 @@ void x11_start(int argc, char **argv) {
 	
 	if (!arg_quiet)
 		printf("Xpra server pid %d, client pid %d\n", server, client);
+
 	exit(0);
 }
 #endif

@@ -1505,6 +1505,20 @@ $ firejail \-\-whitelist=~/.mozilla \-\-whitelist=~/Downloads
 $ firejail \-\-whitelist=/tmp/.X11-unix --whitelist=/dev/null
 .br
 $ firejail "\-\-whitelist=/home/username/My Virtual Machines"
+
+.TP
+\fB\-\-x11
+Start a new X11 server using Xpra (http://xpra.org) and attach the sandbox to this server.
+Xpra is a persistent remote display server and client for forwarding X11 applications and desktop screens.
+The regular X11 server (display 0) is not visible in the sandbox. This prevents screenshot and keylogger
+applications started in the sandbox from accessing display 0.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-x11 firefox
+
 .TP
 \fB\-\-zsh
 Use /usr/bin/zsh as default user shell.
@@ -1514,6 +1528,7 @@ Use /usr/bin/zsh as default user shell.
 Example:
 .br
 $ firejail \-\-zsh
+
 .SH TRAFFIC SHAPING
 Network bandwidth is an expensive resource shared among all sandboxes running on a system.
 Traffic shaping allows the user to increase network performance by controlling

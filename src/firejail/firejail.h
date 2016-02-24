@@ -27,6 +27,7 @@
 #define RUN_FIREJAIL_BASEDIR	"/run"
 #define RUN_FIREJAIL_DIR	"/run/firejail"
 #define RUN_FIREJAIL_NAME_DIR	"/run/firejail/name"
+#define RUN_FIREJAIL_X11_DIR	"/run/firejail/x11"
 #define RUN_FIREJAIL_NETWORK_DIR	"/run/firejail/network"
 #define RUN_FIREJAIL_BANDWIDTH_DIR	"/run/firejail/bandwidth"
 #define RUN_NETWORK_LOCK_FILE	"/run/firejail/firejail.lock"
@@ -524,6 +525,7 @@ void fs_mkdir(const char *name);
 // x11.c
 void fs_x11(void);
 void x11_start(int argc, char **argv);
+int x11_display(void);
 
 #endif
 

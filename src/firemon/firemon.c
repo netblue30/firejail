@@ -33,6 +33,7 @@ static int arg_seccomp = 0;
 static int arg_caps = 0;
 static int arg_cpu = 0;
 static int arg_cgroup = 0;
+static int arg_x11 = 0;
 int arg_nowrap = 0;
 
 static struct termios tlocal;	// startup terminal setting
@@ -141,6 +142,9 @@ int main(int argc, char **argv) {
 
 
 		// cumulative options with or without a pid argument
+		else if (strcmp(argv[i], "--x11") == 0) {
+			arg_x11 = 1;
+		}
 		else if (strcmp(argv[i], "--cgroup") == 0) {
 			arg_cgroup = 1;
 		}
@@ -217,6 +221,8 @@ int main(int argc, char **argv) {
 		cpu((pid_t) pid);
 	if (arg_cgroup)
 		cgroup((pid_t) pid);
+	if (arg_x11)
+		x11((pid_t) pid);
 	
 	if (!arg_route && !arg_arp && !arg_interface && !arg_tree && !arg_caps && !arg_seccomp)
 		procevent((pid_t) pid); // never to return

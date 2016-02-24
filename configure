@@ -1317,6 +1317,8 @@ Optional Features:
   --disable-chroot        disable chroot
   --disable-bind          disable bind
   --disable-network       disable network
+  --enable-network=restricted
+                          restrict --net= to root only
   --disable-userns        disable user namespace
   --disable-x11           disable X11 support
   --enable-fatal-warnings -W -Wall -Werror
@@ -3102,9 +3104,19 @@ if test "${enable_network+set}" = set; then :
   enableval=$enable_network;
 fi
 
+# Check whether --enable-network was given.
+if test "${enable_network+set}" = set; then :
+  enableval=$enable_network;
+fi
+
 if test "x$enable_network" != "xno"; then :
 
 	HAVE_NETWORK="-DHAVE_NETWORK"
+	if test "x$enable_network" = "xrestricted"; then :
+
+	       HAVE_NETWORK="$HAVE_NETWORK -DHAVE_NETWORK_RESTRICTED"
+
+fi
 
 
 fi

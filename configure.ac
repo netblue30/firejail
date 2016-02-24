@@ -36,6 +36,8 @@ AS_IF([test "x$enable_bind" != "xno"], [
 HAVE_NETWORK=""
 AC_ARG_ENABLE([network],
     AS_HELP_STRING([--disable-network], [disable network]))
+AC_ARG_ENABLE([network],
+    AS_HELP_STRING([--enable-network=restricted], [ restrict --net= to root only]))
 AS_IF([test "x$enable_network" != "xno"], [
 	HAVE_NETWORK="-DHAVE_NETWORK"
 	AS_IF([test "x$enable_network" = "xrestricted"], [

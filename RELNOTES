@@ -5,10 +5,11 @@ firejail (0.9.39) baseline; urgency=low
   * added --nice option
   * addded mkdir profile command
   * --version also prints compile options
+  * added compile-time option to restrict --net= to root only
   * build rpm packages using "make rpms"
   * new profiles: lxterminal, Epiphany, cherrytree, Polari
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Tue, 8 Feb 2016 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Wed, 24 Feb 2016 10:00:00 -0500
 
 firejail (0.9.38) baseline; urgency=low
   * IPv6 support (--ip6 and --netfilter6)

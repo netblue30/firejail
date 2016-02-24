@@ -7,6 +7,7 @@ arr[4]="TEST 4: compile bind disabled"
 arr[5]="TEST 5: compile user namespace disabled"
 arr[6]="TEST 6: compile network disabled"
 arr[7]="TEST 7: compile X11 disabled"
+arr[8]="TEST 8: compile network restricted"
 
 
 # remove previous reports and output file
@@ -153,7 +154,7 @@ rm output-configure output-make
 # - disable X11 support
 # - check compilation
 #*****************************************************************
-print_title "${arr[6]}"
+print_title "${arr[7]}"
 # seccomp
 cd firejail
 make distclean
@@ -162,6 +163,24 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test7
 grep Error output-configure output-make >> ./report-test7
+rm output-configure output-make
+
+
+#*****************************************************************
+# TEST 8
+#*****************************************************************
+# - enable network restricted
+# - check compilation
+#*****************************************************************
+print_title "${arr[8]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-network=restricted  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test8
+grep Error output-configure output-make >> ./report-test8
 rm output-configure output-make
 
 
@@ -186,3 +205,4 @@ echo ${arr[4]}
 echo ${arr[5]}
 echo ${arr[6]}
 echo ${arr[7]}
+echo ${arr[8]}

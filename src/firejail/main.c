@@ -1090,6 +1090,12 @@ int main(int argc, char **argv) {
 				cfg.interface3.configured = 0;
 				continue;
 			}
+#ifdef HAVE_NETWORK_RESTRICTED
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: only --net=none is allowed to non-root users\n");
+				exit(1);
+			}
+#endif
 			if (strcmp(argv[i] + 6, "lo") == 0) {
 				fprintf(stderr, "Error: cannot attach to lo device\n");
 				exit(1);

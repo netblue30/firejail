@@ -30,4 +30,5 @@ socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
 
 6. --shutdown does not clear sandboxes started with --join
 
+7. profile for okular
 

@@ -249,6 +249,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifndef HAVE_NETWORK
 		printf("Networking support is disabled.\n");
 #endif
+#ifdef HAVE_NETWORK_RESTRICTED
+		printf("Networking support is allowed only to root user.\n");
+#endif
 #ifndef HAVE_USERNS
 		printf("User namespace support is disabled.\n");
 #endif
@@ -1044,6 +1047,12 @@ int main(int argc, char **argv) {
 		//*************************************
 #ifdef HAVE_NETWORK	
 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
+#ifdef HAVE_NETWORK_RESTRICTED
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --interface is allowed only to root user\n");
+				exit(1);
+			}
+#endif
 			// checks
 			if (arg_nonetwork) {
 				fprintf(stderr, "Error: --network=none and --interface are incompatible\n");

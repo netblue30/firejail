@@ -110,10 +110,7 @@ void x11_start(int argc, char **argv) {
 	// check xpra
 	if (stat("/usr/bin/xpra", &s) == -1) {
 		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
-		fprintf(stderr, "   Arch: sudo pacman -S xpra\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
-		fprintf(stderr, "   Fedora/CentOS: sudo yum install xpra\n");
-		fprintf(stderr, "   Gentoo: sudo emerge xpra\n\n");
 		exit(0);
 	}
 	

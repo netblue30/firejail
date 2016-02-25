@@ -1,1 +1,34 @@
-firejail --noprofile --net=eth0 --x11 xterm -fg white -bg black
+1. Disable /dev/tcp in bash. Compiled time: --enable-net-redirections, --disable-net-redirections
+ksh and zsh seem to have it.
+
+Tests:
+a)
+cat </dev/tcp/time.nist.gov/13
+
+b)
+exec 3<>/dev/tcp/www.google.com/80
+echo -e "GET / HTTP/1.1\r\nhost: http://www.google.com\r\nConnection: close\r\n\r\n" >&3
+cat <&3
+
+c) A list of attacks
+http://www.lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
+
+2. SELinux integration
+
+Firefox selinux disabled (RedHat): http://danwalsh.livejournal.com/72697.html
+Firefox selinux enabled (Gentoo hardened): http://blog.siphos.be/2015/08/why-we-do-confine-firefox/
+"desktops are notoriously difficult to use a mandatory access control system on"
+
+3. abstract unix socket bridge, example for ibus:
+
+before the sandbox is started
+socat UNIX-LISTEN:/tmp/mysoc,fork ABSTRACT-CONNECT:/tmp/dbus-awBoQTCc &
+in sandbox
+socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
+
+5. add support for --ip, --iprange, --mac and --mtu for --interface option
+
+6. --shutdown does not clear sandboxes started with --join
+
+7. profile for okular
+

@@ -199,23 +199,32 @@ void x11_start(int argc, char **argv) {
 		perror("execvp");
 		exit(1);
 	}
-	sleep(1);
-
-	if (arg_debug) {
-		printf("X11 sockets: "); fflush(0);
-		int rv = system("ls /tmp/.X11-unix");
-		(void) rv;
-	}
 
 	// check X11 socket
 	char *fname;
 	if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
 		errExit("asprintf");
-	if (stat(fname, &s) == -1) {
+	int n = 0;
+	// wait for x11 server to start
+	while (++n < 10) {
+		sleep(1);
+		if (stat(fname, &s) == 0)
+			break;
+	};
+	
+	if (n == 10) {
 		fprintf(stderr, "Error: failed to start xpra\n");
 		exit(1);
 	}
+	free(fname);
+	sleep(1);
 	
+	if (arg_debug) {
+                printf("X11 sockets: "); fflush(0);
+                int rv = system("ls /tmp/.X11-unix");
+                (void) rv;
+        }
+
 	// run attach command
 	client = fork();
 	if (client < 0)

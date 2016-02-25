@@ -26,6 +26,17 @@
 #include <dirent.h>
 #include <sys/mount.h>
 
+// return 1 if xpra is installed on the system
+int x11_check_xpra(void) {
+	struct stat s;
+	
+	// check xpra
+	if (stat("/usr/bin/xpra", &s) == -1)
+		return 0;
+
+	return 1;
+}
+
 // return display number, -1 if not configured
 int x11_display(void) {
 	// extract display
@@ -117,7 +128,7 @@ void x11_start(int argc, char **argv) {
 	pid_t server = 0;
 	
 	// check xpra
-	if (stat("/usr/bin/xpra", &s) == -1) {
+	if (x11_check_xpra() == 0) {
 		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
 		exit(0);
@@ -127,6 +138,8 @@ void x11_start(int argc, char **argv) {
 	int found = 1;
 	for (i = 0; i < 100; i++) {
 		display = rand() % 1024;
+		if (display < 10)
+			continue;
 		char *fname;
 		if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
 			errExit("asprintf");

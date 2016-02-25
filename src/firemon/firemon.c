@@ -224,7 +224,7 @@ int main(int argc, char **argv) {
 	if (arg_x11)
 		x11((pid_t) pid);
 	
-	if (!arg_route && !arg_arp && !arg_interface && !arg_tree && !arg_caps && !arg_seccomp)
+	if (!arg_route && !arg_arp && !arg_interface && !arg_tree && !arg_caps && !arg_seccomp && !arg_x11)
 		procevent((pid_t) pid); // never to return
 		
 	return 0;

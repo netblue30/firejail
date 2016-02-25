@@ -526,6 +526,8 @@ void fs_mkdir(const char *name);
 void fs_x11(void);
 void x11_start(int argc, char **argv);
 int x11_display(void);
+// return 1 if xpra is installed on the system
+int x11_check_xpra(void);
 
 #endif
 

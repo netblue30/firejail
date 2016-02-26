@@ -299,7 +299,7 @@ Example:
 .br
 $ firejail \-\-debug-syscalls
 .TP
-\fB\-\-debug-whitelsts\fR
+\fB\-\-debug-whitelists\fR
 Debug whitelisting.
 .br
 

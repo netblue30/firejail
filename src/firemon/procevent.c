@@ -27,18 +27,20 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <time.h>
+#include <fcntl.h>
 #define PIDS_BUFLEN 4096
 #define SERVER_PORT 889	// 889-899 is left unassigned by IANA
 
 static int pid_is_firejail(pid_t pid) {
 	uid_t rv = 0;
 	
-	// open stat file
+	// open /proc/self/comm
 	char *file;
-	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
+	if (asprintf(&file, "/proc/%u/comm", pid) == -1) {
 		perror("asprintf");
 		exit(1);
 	}
+	
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -47,21 +49,62 @@ static int pid_is_firejail(pid_t pid) {
 
 	// look for firejail executable name
 	char buf[PIDS_BUFLEN];
-	while (fgets(buf, PIDS_BUFLEN - 1, fp)) {
-		if (strncmp(buf, "Name:", 5) == 0) {
-			char *ptr = buf + 5;
-			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
-				ptr++;
+	if (fgets(buf, PIDS_BUFLEN - 1, fp)) {
+		if (strncmp(buf, "firejail", 8) == 0)
+			rv = 1;
+	}
+	
+	if (rv) {
+		// open /proc/pid/cmdline file
+		char *fname;
+		int fd;
+		if (asprintf(&fname, "/proc/%d/cmdline", pid) == -1)
+			errExit("asprintf");
+		if ((fd = open(fname, O_RDONLY)) < 0) {
+			free(fname);
+			rv = 0;
+			goto doexit;
+		}
+		free(fname);
+	
+		// read file
+#define BUFLEN 4096
+		unsigned char buffer[BUFLEN];
+		ssize_t len;
+		if ((len = read(fd, buffer, sizeof(buffer) - 1)) <= 0) {
+			close(fd);
+			rv = 0;
+			goto doexit;
+		}
+		buffer[len] = '\0';
+		close(fd);
+	
+		// list of firejail arguments that don't trigger sandbox creation
+		// the initial -- is not included 
+		char *firejail_args = "list tree x11 help version top netstats debug-syscalls debug-errnos debug-protocols";
+		
+		int i;
+		char *start;
+		int first = 1;
+		for (i = 0; i < len; i++) {
+			if (buffer[i] != '\0')
+				continue;
+			if (first) {
+				first = 0;
+				start = buffer + i + 1;
+				continue;
 			}
-			if (*ptr == '\0')
-				goto doexit;
-			if (strncmp(ptr, "firejail", 8) == 0)
-				rv = 1;
-//			if (strncmp(ptr, "lxc-execute", 11) == 0)
-//				rv = 1;
-			break;
+			if (strncmp(start, "--", 2) != 0)
+				break;
+			
+			if (strstr(firejail_args, start + 2)) {
+				rv = 0;
+				break;
+			}
+			start = buffer + i + 1;
 		}
 	}
+
 doexit:	
 	fclose(fp);
 	free(file);

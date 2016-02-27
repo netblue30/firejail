@@ -431,6 +431,7 @@ $ firejail \-\-ignore=shell --ignore=seccomp firefox
 .TP
 \fB\-\-interface=interface
 Move interface in a new network namespace. Up to four --interface options can be specified.
+Note: wlan devices are not supported for this option.
 .br
 
 .br
@@ -640,6 +641,7 @@ to the sandbox. The IP address is verified using ARP before
 assignment. The address configured as default gateway is the
 default gateway of the host. Up to four \-\-net devices can
 be defined. Mixing bridge and macvlan devices is allowed.
+Note: wlan devices are not supported for this option.
 .br
 
 .br

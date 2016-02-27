@@ -32,3 +32,6 @@ socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
 
 7. profile for okular
 
+8. profile for dillo
+Also, in dillo open a directory (file:///etc), when the browser window is closed the sandbox still remains active.
+This is probably a dillo problem.

@@ -50,7 +50,6 @@ $ firejail --x11 --net=eth0 firefox
 --x11 starts the server, --net is required in order to remove the main X11 server socket from the sandbox.
 More information here: https://firejail.wordpress.com/documentation-2/x11-guide/
 
-
 ## Default seccomp filter update
 
 Currently 50 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).

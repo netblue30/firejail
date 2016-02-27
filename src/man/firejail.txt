@@ -1517,7 +1517,7 @@ applications started in the sandbox from accessing display 0.
 .br
 Example:
 .br
-$ firejail \-\-x11 firefox
+$ firejail \-\-x11 --net=eth0 firefox
 
 .TP
 \fB\-\-zsh

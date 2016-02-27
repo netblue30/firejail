@@ -292,6 +292,7 @@ void usage(void) {
 	printf("\t--user=new_user - switch the user before starting the sandbox.\n\n");
 	printf("\t--version - print program version and exit.\n\n");
 	printf("\t--whitelist=dirname_or_filename - whitelist directory or file.\n\n");
+	printf("\t--x11 - enable x11 server.\n\n");
 	printf("\t--zsh - use /usr/bin/zsh as default shell.\n\n");
 	printf("\n");
 	printf("\n");

@@ -651,6 +651,30 @@ void fs_whitelist(void) {
 			errExit("mount tmpfs");
 	}
 
+	// mask the real /var directory, currently mounted on RUN_WHITELIST_VAR_DIR
+	if (var_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_VAR_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+	}
+
+	// mask the real /opt directory, currently mounted on RUN_WHITELIST_OPT_DIR
+	if (opt_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_OPT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+	}
+
+	// mask the real /dev directory, currently mounted on RUN_WHITELIST_DEV_DIR
+	if (dev_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_DEV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+	}
+
+	// mask the real /media directory, currently mounted on RUN_WHITELIST_MEDIA_DIR
+	if (media_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_MEDIA_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+	}
+
 	if (new_name)
 		free(new_name);
 		

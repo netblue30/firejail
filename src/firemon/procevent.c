@@ -91,7 +91,7 @@ static int pid_is_firejail(pid_t pid) {
 				continue;
 			if (first) {
 				first = 0;
-				start = buffer + i + 1;
+				start = (char *) buffer + i + 1;
 				continue;
 			}
 			if (strncmp(start, "--", 2) != 0)
@@ -101,7 +101,7 @@ static int pid_is_firejail(pid_t pid) {
 				rv = 0;
 				break;
 			}
-			start = buffer + i + 1;
+			start = (char *) buffer + i + 1;
 		}
 	}
 

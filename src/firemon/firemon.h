@@ -81,4 +81,7 @@ void tree(pid_t pid);
 // netstats.c
 void netstats(void);
 
+// x11.c
+void x11(pid_t pid);
+
 #endif

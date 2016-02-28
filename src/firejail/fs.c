@@ -283,6 +283,8 @@ static void disable_file(OPERATION op, const char *filename) {
 	
 	// if the file is not present, do nothing
 	struct stat s;
+	if (fname == NULL)
+		return;
 	if (stat(fname, &s) == -1) {
 		if (arg_debug)
 			printf("Warning: %s does not exist, skipping...\n", fname);

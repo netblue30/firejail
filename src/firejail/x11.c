@@ -47,7 +47,7 @@ int x11_display(void) {
 	int display;
 	int rv = sscanf(d, ":%d", &display);
 	if (rv != 1)
-		return;
+		return -1;
 	if (arg_debug)
 		printf("DISPLAY %s, %d\n", d, display);
 	

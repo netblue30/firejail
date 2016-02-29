@@ -64,9 +64,9 @@
 /etc/firejail/Mathematica.profile
 /etc/firejail/uget-gtk.profile
 /etc/firejail/mupen64plus.profile
-/etc/disable-terminals.inc
-/etc/lxterminal.profile
-/etc/cherrytree.profile
-/etc/wesnoth.profile
-/etc/vivaldi.profile
-/etc/vivaldi-beta.profile
+/etc/firejail/disable-terminals.inc
+/etc/firejail/lxterminal.profile
+/etc/firejail/cherrytree.profile
+/etc/firejail/wesnoth.profile
+/etc/firejail/vivaldi.profile
+/etc/firejail/vivaldi-beta.profile

@@ -31,7 +31,12 @@
 #define PIDS_BUFLEN 4096
 #define SERVER_PORT 889	// 889-899 is left unassigned by IANA
 
+//#define DEBUG_PRCTL
+
 static int pid_is_firejail(pid_t pid) {
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, pid %d\n", __FUNCTION__, __LINE__, pid);
+#endif
 	uid_t rv = 0;
 	
 	// open /proc/self/comm
@@ -54,6 +59,9 @@ static int pid_is_firejail(pid_t pid) {
 			rv = 1;
 	}
 	
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
+#endif
 	if (rv) {
 		// open /proc/pid/cmdline file
 		char *fname;
@@ -108,6 +116,9 @@ static int pid_is_firejail(pid_t pid) {
 doexit:	
 	fclose(fp);
 	free(file);
+#ifdef DEBUG_PRCTL
+	printf("%s: %d: return %d\n", __FUNCTION__, __LINE__, rv);
+#endif
 	return rv;
 }
 
@@ -240,10 +251,16 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 			int remove_pid = 0;
 			switch (proc_ev->what) {
 				case PROC_EVENT_FORK:
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, event fork\n", __FUNCTION__, __LINE__);
+#endif
 					if (proc_ev->event_data.fork.child_pid !=
 					    proc_ev->event_data.fork.child_tgid)
 					    	continue; // this is a thread, not a process
 					pid = proc_ev->event_data.fork.parent_tgid;
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, event fork, pid %d\n", __FUNCTION__, __LINE__, pid);
+#endif
 					if (pids[pid].level > 0) {
 						child = proc_ev->event_data.fork.child_tgid;
 						child %= max_pids;
@@ -254,6 +271,12 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 					break;
 				case PROC_EVENT_EXEC:
 					pid = proc_ev->event_data.exec.process_tgid;
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, event exec, pid %d\n", __FUNCTION__, __LINE__, pid);
+#endif
+					if (pids[pid].level == -1) {
+						pids[pid].level = 0; // start tracking
+					}
 					sprintf(lineptr, " exec");
 					break;
 					
@@ -263,26 +286,41 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 						continue; // this is a thread, not a process
 
 					pid = proc_ev->event_data.exit.process_tgid;
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, event exit, pid %d\n", __FUNCTION__, __LINE__, pid);
+#endif
 					remove_pid = 1;
 					sprintf(lineptr, " exit");
 					break;
 					
 				case PROC_EVENT_UID:
 					pid = proc_ev->event_data.id.process_tgid;
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, event uid, pid %d\n", __FUNCTION__, __LINE__, pid);
+#endif
 					sprintf(lineptr, " uid ");
 					break;
 
 				case PROC_EVENT_GID:
 					pid = proc_ev->event_data.id.process_tgid;
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, event gid, pid %d\n", __FUNCTION__, __LINE__, pid);
+#endif
 					sprintf(lineptr, " gid ");
 					break;
 
 				case PROC_EVENT_SID:
 					pid = proc_ev->event_data.sid.process_tgid;
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, event sid, pid %d\n", __FUNCTION__, __LINE__, pid);
+#endif
 					sprintf(lineptr, " sid ");
 					break;
 
 				default:
+#ifdef DEBUG_PRCTL
+	printf("%s: %d, event unknown\n", __FUNCTION__, __LINE__);
+#endif
 					sprintf(lineptr, "\n");
 					continue;
 			}

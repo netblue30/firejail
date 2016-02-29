@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Fred-Barclay (https://github.com/Fred-Barclay)
+	- added Vivaldi profiles
 yumkam (https://github.com/yumkam)
 	- add compile-time option to restrict --net= to root only
 	- man page fixes

@@ -1076,7 +1076,7 @@ $ firejail \-\-name=mybrowser firefox &
 .br
 [...]
 .br
-$ firejail \-\-print.print=mybrowser
+$ firejail \-\-protocol.print=mybrowser
 .br
 unix,inet,inet6,netlink
 

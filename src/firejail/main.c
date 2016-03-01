@@ -612,8 +612,24 @@ int main(int argc, char **argv) {
 	bandwidth_shm_del_file(sandbox_pid);
 	EUID_USER();
 	
-	// is this a login shell?
-	if (*argv[0] == '-') {
+	//check if the parent is sshd daemon
+	int parent_sshd = 0;
+	{
+		pid_t ppid = getppid();
+		char *comm = pid_proc_comm(ppid);
+		if (comm) {
+			// remove \n
+			char *ptr = strchr(comm, '\n');
+			if (ptr)
+				*ptr = '\0';
+			if (strcmp(comm, "sshd") == 0)
+				parent_sshd = 1;
+			free(comm);
+		}
+	}
+	
+	// is this a login shell, or a command passed by sshd insert command line options from /etc/firejail/login.users
+	if (*argv[0] == '-' || parent_sshd) {
 		fullargc = restricted_shell(cfg.username);
 		if (fullargc) {
 			int j;

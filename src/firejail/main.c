@@ -560,7 +560,6 @@ int main(int argc, char **argv) {
 	int highest_errno = errno_highest_nr();
 #endif
 
-
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
@@ -579,6 +578,10 @@ int main(int argc, char **argv) {
 				found = 1;
 				break;
 			}
+			if (strcmp(argv[i], "--") == 0)
+				break;
+			if (strncmp(argv[i], "--", 2) != 0)
+				break;
 		}
 		
 		if (found == 0) {
@@ -1473,6 +1476,9 @@ int main(int argc, char **argv) {
 		for (i = 0; i < argcnt; i++) {
 			// detect bash commands
 			if (strstr(argv[i + prog_index], "&&") || strstr(argv[i + prog_index], "||")) {
+				sprintf(ptr1, "%s ", argv[i + prog_index]);
+			}
+			else if (arg_command){
 				sprintf(ptr1, "%s ", argv[i + prog_index]);
 			}
 			else {

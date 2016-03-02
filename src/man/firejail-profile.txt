@@ -283,7 +283,9 @@ Disable supplementary user groups
 .TP
 \fBshell none
 Run the program directly, without a shell.
-
+.TP
+\fBipc-namespace
+Enable IPC namespace.
 .SH Networking
 Networking features available in profile files.
 

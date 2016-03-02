@@ -116,6 +116,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		return 0;
 	}
+	else if (strcmp(ptr, "ipc-namespace") == 0) {
+		arg_ipc = 1;
+		return 0;
+	}
 	// seccomp, caps, private, user namespace
 	else if (strcmp(ptr, "noroot") == 0) {
 #if HAVE_USERNS

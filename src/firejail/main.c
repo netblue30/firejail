@@ -95,6 +95,7 @@ int arg_quiet = 0;				// no output for scripting
 int arg_join_network = 0;			// join only the network namespace
 int arg_join_filesystem = 0;			// join only the mount namespace
 int arg_nice = 0;				// nice value configured
+int arg_ipc = 0;					// enable ipc namespace
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -551,7 +552,6 @@ int main(int argc, char **argv) {
 	int i;
 	int prog_index = -1;			  // index in argv where the program command starts
 	int lockfd = -1;
-	int arg_ipc = 0;
 	int arg_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	char *custom_profile_dir = NULL; // custom profile directory
@@ -1619,8 +1619,11 @@ int main(int argc, char **argv) {
 	
 	// in root mode also enable CLONE_NEWIPC
 	// in user mode CLONE_NEWIPC will break MIT Shared Memory Extension (MIT-SHM)
-	if (getuid() == 0 || arg_ipc)
+	if (getuid() == 0 || arg_ipc) {
 		flags |= CLONE_NEWIPC;
+		if (arg_debug)
+			printf("Enabling IPC namespace\n");
+	}
 	
 	if (any_bridge_configured() || any_interface_configured() || arg_nonetwork) {
 		flags |= CLONE_NEWNET;

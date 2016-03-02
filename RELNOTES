@@ -3,7 +3,7 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * disable STUN/WebRTC in default netfilter configuration
   * added --nice option
   * added --x11 option
-  * addded mkdir profile command
+  * addded mkdir and ipc-namespace profile commands
   * --version also prints compile options
   * added compile-time option to restrict --net= to root only
   * build rpm packages using "make rpms"

@@ -6,7 +6,8 @@
 # current working directory.
 
 name=$1
-version=$2
+# Strip any trailing prefix from the version like -rc1 etc
+version=$(echo "$2" | sed 's/\-.*//g')
 
 if [[ ! -f platform/rpm/${name}.spec ]]; then
     echo error: spec file not found for name \"${name}\"

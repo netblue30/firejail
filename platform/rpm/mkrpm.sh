@@ -6,7 +6,8 @@
 # current working directory.
 
 name=$1
-version=$2
+# Strip any trailing prefix from the version like -rc1 etc
+version=$(echo "$2" | sed 's/\-.*//g')
 
 if [[ ! -f platform/rpm/${name}.spec ]]; then
     echo error: spec file not found for name \"${name}\"
@@ -32,7 +33,7 @@ sed -e "s/__NAME__/${name}/g" -e "s/__VERSION__/${version}/g" platform/rpm/${nam
 # FIXME: We could parse RELNOTES and create a %changelog section here
 
 # Copy the source to build into a tarball
-tar czf ${tmpdir}/SOURCES/${name}-${version}.tar.gz . --transform "s/^./${name}-${version}/" --exclude='.git/*'
+tar czf ${tmpdir}/SOURCES/${name}-${version}.tar.gz . --transform "s/^./${name}-${version}/" --exclude='./.git*' --exclude='./test*'
 
 # Build the files (rpm, debug rpm and source rpm)
 rpmbuild --quiet --define "_topdir ${tmpdir}" -ba ${tmp_spec_file}

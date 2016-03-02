@@ -618,10 +618,6 @@ int main(int argc, char **argv) {
 		pid_t ppid = getppid();
 		char *comm = pid_proc_comm(ppid);
 		if (comm) {
-			// remove \n
-			char *ptr = strchr(comm, '\n');
-			if (ptr)
-				*ptr = '\0';
 			if (strcmp(comm, "sshd") == 0)
 				parent_sshd = 1;
 			free(comm);

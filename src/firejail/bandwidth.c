@@ -364,10 +364,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		exit(1);
 	}
 
-	// remove \n and check for firejail sandbox
-	char *ptr = strchr(comm, '\n');
-	if (ptr)
-		*ptr = '\0';
+	// check for firejail sandbox
 	if (strcmp(comm, "firejail") != 0) {
 		fprintf(stderr, "Error: cannot find sandbox\n");
 		exit(1);

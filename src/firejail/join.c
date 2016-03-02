@@ -202,10 +202,6 @@ void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	char *comm = pid_proc_comm(pid);
 	if (comm) {
-		// remove \n
-		char *ptr = strchr(comm, '\n');
-		if (ptr)
-			*ptr = '\0';
 		if (strcmp(comm, "firejail") == 0) {
 			pid_t child;
 			if (find_child(pid, &child) == 0) {

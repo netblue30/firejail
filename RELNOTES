@@ -1,4 +1,4 @@
-firejail (0.9.40-rc1) baseline; urgency=low
+firejail (0.9.39) baseline; urgency=low
   * default seccomp filter update
   * disable STUN/WebRTC in default netfilter configuration
   * added --nice option
@@ -9,7 +9,7 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * build rpm packages using "make rpms"
   * new profiles: lxterminal, Epiphany, cherrytree, Polari, Vivaldi
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Wed, 28 Feb 2016 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Wed, 3 Mar 2016 08:00:00 -0500
 
 firejail (0.9.38) baseline; urgency=low
   * IPv6 support (--ip6 and --netfilter6)

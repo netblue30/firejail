@@ -84,10 +84,6 @@ int name2pid(const char *name, pid_t *pid) {
 		// check if this is a firejail executable
 		char *comm = pid_proc_comm(newpid);
 		if (comm) {
-			// remove \n
-			char *ptr = strchr(comm, '\n');
-			if (ptr)
-				*ptr = '\0';
 			if (strcmp(comm, "firejail")) {
 				free(comm);
 				continue;
@@ -149,6 +145,11 @@ char *pid_proc_comm(const pid_t pid) {
 	}
 	buffer[len] = '\0';
 	close(fd);
+
+	// remove \n
+	char *ptr = strchr(buffer, '\n');
+	if (ptr)
+		*ptr = '\0';
 
 	// return a malloc copy of the command line
 	char *rv = strdup((char *) buffer);

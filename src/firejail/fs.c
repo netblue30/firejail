@@ -248,7 +248,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	char* fname = realpath(filename, NULL);
 	if (fname == NULL && errno != EACCES) {
 		if (arg_debug)
-			printf("Warning: %s is an invalid file, skipping...\n", filename);
+			printf("Warning (realpath): %s is an invalid file, skipping...\n", filename);
 		return;
 	}
 	if (fname == NULL && errno == EACCES) {
@@ -275,7 +275,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		}
 		else {
 			if (arg_debug)
-				printf("Warning: %s is an invalid file, skipping...\n", filename);
+				printf("Warning (blacklisting): %s is an invalid file, skipping...\n", filename);
 		}
 				
 		return;

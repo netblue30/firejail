@@ -249,7 +249,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	else {
 		if (arg_debug || arg_debug_whitelists) {
-			fprintf(stderr, "Warning: %s is an invalid file, skipping...\n", path);
+ 			fprintf(stderr, "Warning (whitelisting): %s is an invalid file, skipping...\n", path);
 		}
 		return;
 	}

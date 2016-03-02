@@ -68,5 +68,6 @@
 /etc/firejail/lxterminal.profile
 /etc/firejail/cherrytree.profile
 /etc/firejail/wesnoth.profile
+/etc/firejail/hedgewars.profile
 /etc/firejail/vivaldi.profile
 /etc/firejail/vivaldi-beta.profile

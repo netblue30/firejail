@@ -179,7 +179,7 @@ static void extract_user_namespace(pid_t pid) {
 	free(uidmap);
 }
 
-void join_name(const char *name, const char *homedir, int argc, char **argv, int index) {
+void join_name(const char *name, int argc, char **argv, int index) {
 	EUID_ASSERT();
 	if (!name || strlen(name) == 0) {
 		fprintf(stderr, "Error: invalid sandbox name\n");
@@ -191,11 +191,12 @@ void join_name(const char *name, const char *homedir, int argc, char **argv, int
 		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
 		exit(1);
 	}
-	join(pid, homedir, argc, argv, index);
+	join(pid, argc, argv, index);
 }
 
-void join(pid_t pid, const char *homedir, int argc, char **argv, int index) {
+void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
+	char *homedir = cfg.homedir;
 	
 	extract_command(argc, argv, index);
 

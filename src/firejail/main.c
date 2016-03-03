@@ -432,9 +432,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		// join sandbox by pid or by name
 		pid_t pid;
 		if (read_pid(argv[i] + 7, &pid) == 0)		
-			join(pid, cfg.homedir, argc, argv, i + 1);
+			join(pid, argc, argv, i + 1);
 		else
-			join_name(argv[i] + 7, cfg.homedir, argc, argv, i + 1);
+			join_name(argv[i] + 7, argc, argv, i + 1);
 		exit(0);
 	}
 #ifdef HAVE_NETWORK	
@@ -449,9 +449,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		// join sandbox by pid or by name
 		pid_t pid;
 		if (read_pid(argv[i] + 15, &pid) == 0)		
-			join(pid, cfg.homedir, argc, argv, i + 1);
+			join(pid, argc, argv, i + 1);
 		else
-			join_name(argv[i] + 15, cfg.homedir, argc, argv, i + 1);
+			join_name(argv[i] + 15, argc, argv, i + 1);
 		exit(0);
 	}
 #endif
@@ -466,9 +466,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		// join sandbox by pid or by name
 		pid_t pid;
 		if (read_pid(argv[i] + 18, &pid) == 0)		
-			join(pid, cfg.homedir, argc, argv, i + 1);
+			join(pid, argc, argv, i + 1);
 		else
-			join_name(argv[i] + 18, cfg.homedir, argc, argv, i + 1);
+			join_name(argv[i] + 18, argc, argv, i + 1);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--shutdown=", 11) == 0) {

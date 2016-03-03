@@ -142,6 +142,7 @@ realinstall:
 	install -c -m 0644 .etc/lxterminal.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/cherrytree.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/wesnoth.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/hedgewars.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/vivaldi.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/vivaldi-beta.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"

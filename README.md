@@ -113,4 +113,4 @@ $ man firejail-profile
 
 ## New security profiles
 
-lxterminal, Epiphany, cherrytree, Battle for Wesnoth
+lxterminal, Epiphany, cherrytree, Battle for Wesnoth, Hedgewars

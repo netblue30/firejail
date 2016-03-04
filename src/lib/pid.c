@@ -136,13 +136,14 @@ char *pid_get_user_name(uid_t uid) {
 
 uid_t pid_get_uid(pid_t pid) {
 	uid_t rv = 0;
-	
-	// open statua file
+
+	// open status file
 	char *file;
 	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
 		perror("asprintf");
 		exit(1);
 	}
+
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);

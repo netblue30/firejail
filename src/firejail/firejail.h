@@ -530,5 +530,9 @@ int x11_display(void);
 // return 1 if xpra is installed on the system
 int x11_check_xpra(void);
 
+// ls.c
+void ls_name(const char *name, const char *path);
+void ls(pid_t pid, const char *path);
+
 #endif
 

@@ -566,6 +566,7 @@ const char *gnu_basename(const char *path) {
 uid_t pid_get_uid(pid_t pid) {
 	EUID_ASSERT();
 	uid_t rv = 0;
+printf("here %d, pid %d\n", __LINE__, pid);
 	
 	// open status file
 	char *file;

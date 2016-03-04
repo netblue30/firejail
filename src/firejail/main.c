@@ -426,6 +426,29 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 #endif	
+	else if (strncmp(argv[i], "--ls=", 5) == 0) {
+		logargs(argc, argv);
+		
+		// verify path
+		if ((i + 2) != argc) {
+			fprintf(stderr, "Error: invalid --ls option, path expected\n");
+			exit(1);
+		}
+		char *path = argv[i + 1];
+		 invalid_filename(path);
+		 if (strstr(path, "..")) {
+		 	fprintf(stderr, "Error: invalid file name %s\n", path);
+		 	exit(1);
+		 }
+		 
+		// list directory contents
+		pid_t pid;
+		if (read_pid(argv[i] + 5, &pid) == 0)		
+			ls(pid, path);
+		else
+			ls_name(argv[i] + 5, path);
+		exit(0);
+	}
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
 		logargs(argc, argv);
 		

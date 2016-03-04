@@ -157,27 +157,27 @@ void fs_logger_print_log(pid_t pid) {
 	if (uid != 0) {
 		uid_t sandbox_uid = pid_get_uid(pid);
 		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission denied.\n");
+			fprintf(stderr, "Error: permission denied\n");
 			exit(1);
 		}
 	}
 
 	// print RUN_FSLOGGER_FILE
-	EUID_ROOT();
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_FSLOGGER_FILE) == -1)
 		errExit("asprintf");
 
+	EUID_ROOT();
 	struct stat s;
 	if (stat(fname, &s) == -1) {
-		printf("Cannot access filesystem log.\n");
+		fprintf(stderr, "Error: Cannot access filesystem log\n");
 		exit(1);
 	}
 
 	/* coverity[toctou] */
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		printf("Cannot open filesystem log.\n");
+		fprintf(stderr, "Error: Cannot open filesystem log\n");
 		exit(1);
 	}
 	

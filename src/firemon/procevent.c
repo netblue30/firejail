@@ -89,7 +89,7 @@ static int pid_is_firejail(pid_t pid) {
 	
 		// list of firejail arguments that don't trigger sandbox creation
 		// the initial -- is not included 
-		char *firejail_args = "list tree x11 help version top netstats debug-syscalls debug-errnos debug-protocols";
+		char *firejail_args = "ls list tree x11 help version top netstats debug-syscalls debug-errnos debug-protocols";
 		
 		int i;
 		char *start;
@@ -104,6 +104,11 @@ static int pid_is_firejail(pid_t pid) {
 			}
 			if (strncmp(start, "--", 2) != 0)
 				break;
+			
+			// clan starting with =
+			char *ptr = strchr(start + 2, '=');
+			if (ptr)
+				*ptr = '\0';
 			
 			if (strstr(firejail_args, start + 2)) {
 				rv = 0;

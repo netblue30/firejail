@@ -1,3 +1,6 @@
+# various programs
+blacklist  ${HOME}/.config/vlc
+
 # History files in $HOME
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
@@ -5,17 +8,20 @@ blacklist-nolog ${HOME}/.*_history
 # HTTP / FTP / Mail
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.macromedia
-blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.config/midori
-blacklist ${HOME}/.config/opera
-blacklist ${HOME}/.config/opera-beta
+
+blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.config/chromium
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
+blacklist ${HOME}/.config/opera
+blacklist ${HOME}/.config/opera-beta
+blacklist ~/.config/vivaldi
+
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.local/share/systemd
@@ -125,3 +131,12 @@ read-only ${HOME}/.xscreensaver
 # The user ~/bin directory can override commands such as ls
 read-only ${HOME}/bin
 
+# cache
+blacklist ~/.cache/mozilla
+blacklist ~/.cache/chromium
+blacklist ~/.cache/google-chrome
+blacklist ~/.cache/google-chrome-beta
+blacklist ~/.cache/google-chrome-unstable
+blacklist ~/.cache/opera
+blacklist ~/.cache/opera-beta
+blacklist ~/.cache/vivaldi

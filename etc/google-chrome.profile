@@ -1,5 +1,7 @@
 # Google Chrome browser profile
-noblacklist ${HOME}/.config/google-chrome
+noblacklist ~/.config/google-chrome
+noblacklist ~/.cache/google-chrome
+noblacklist ~/keepassx.kdbx
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
@@ -10,6 +12,7 @@ include /etc/firejail/disable-terminals.inc
 #
 
 netfilter
+
 whitelist ${DOWNLOADS}
 mkdir ~/.config
 mkdir ~/.config/google-chrome
@@ -20,3 +23,11 @@ whitelist ~/.cache/google-chrome
 mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
+
+# lastpass, keepassx
+whitelist ~/.keepassx
+whitelist ~/.config/keepassx
+whitelist ~/keepassx.kdbx
+whitelist ~/.lastpass
+whitelist ~/.config/lastpass
+

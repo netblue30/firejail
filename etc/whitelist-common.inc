@@ -5,6 +5,7 @@ whitelist ~/.icons
 whitelist ~/.config/user-dirs.dirs
 read-only ~/.config/user-dirs.dirs
 whitelist ~/.asoundrc
+whitelist ~/.config/Trolltech.conf
 
 # fonts
 whitelist ~/.fonts

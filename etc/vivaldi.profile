@@ -9,7 +9,6 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-terminals.inc
 
 netfilter
-tracelog
 
 whitelist ${DOWNLOADS}
 mkdir ~/.config

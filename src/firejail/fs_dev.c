@@ -107,7 +107,7 @@ void fs_private_dev(void){
 	// mount tmpfs on top of /dev
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
-	fs_logger("mount tmpfs on /dev");
+	fs_logger("tmpfs /dev");
 
 	// bring back /dev/log
 	if (have_devlog) {
@@ -203,7 +203,7 @@ void fs_dev_shm(void) {
 			printf("Mounting tmpfs on /dev/shm\n");
 		if (mount("tmpfs", "/dev/shm", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting /dev/shm");
-		fs_logger("mount tmpfs on /dev/shm");
+		fs_logger("tmpfs /dev/shm");
 	}
 	else {
 		char *lnk = realpath("/dev/shm", NULL);
@@ -221,7 +221,7 @@ void fs_dev_shm(void) {
 				printf("Mounting tmpfs on %s on behalf of /dev/shm\n", lnk);
 			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/tmp");
-			fs_logger3("mount tmpfs on", lnk, "on behalf of /dev/shm");
+			fs_logger2("tmpfs", lnk);
 			free(lnk);
 		}
 		else {

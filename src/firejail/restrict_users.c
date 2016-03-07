@@ -83,7 +83,7 @@ static void sanitize_home(void) {
 	// mount tmpfs in the new home
 	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
-	fs_logger("mount tmpfs on /home");
+	fs_logger("tmpfs /home");
 
 	// create user home directory
 	if (mkdir(cfg.homedir, 0755) == -1) {
@@ -107,6 +107,10 @@ static void sanitize_home(void) {
 	// mask home dir under /run
 	if (mount("tmpfs", RUN_WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
+	fs_logger2("tmpfs", RUN_WHITELIST_HOME_DIR);
+	if (!arg_private)
+		fs_logger2("whitelist", cfg.homedir);
+	
 }
 
 static void sanitize_passwd(void) {
@@ -347,7 +351,7 @@ void restrict_users(void) {
 			// mount tmpfs on top of /home in order to hide it
 			if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mount tmpfs");
-			fs_logger("mount tmpfs on /home");
+			fs_logger("tmpfs /home");
 		}
 		sanitize_passwd();
 		sanitize_group();

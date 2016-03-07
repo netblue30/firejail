@@ -178,6 +178,7 @@ void fs_build_mnt_dir(void) {
 		if (mount("tmpfs", RUN_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /tmp/firejail/mnt");
 		tmpfs_mounted = 1;
+		fs_logger2("tmpfs", RUN_MNT_DIR);
 	}
 }
 
@@ -342,7 +343,7 @@ static void disable_file(OPERATION op, const char *filename) {
 			if (chown(fname, s.st_uid, s.st_gid) == -1)
 				errExit("mounting tmpfs chmod");
 			last_disable = SUCCESSFUL;
-			fs_logger2("mount tmpfs on", fname);
+			fs_logger2("tmpfs", fname);
 		}
 		else
 			printf("Warning: %s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
@@ -1030,5 +1031,6 @@ void fs_private_tmp(void) {
 		printf("Mounting tmpfs on /tmp directory\n");
 	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 		errExit("mounting /tmp/firejail/mnt");
+	fs_logger2("tmpfs", "/tmp");
 }
 

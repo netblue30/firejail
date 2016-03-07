@@ -516,7 +516,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /tmp directory\n");
 		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting tmpfs on /tmp");
-		fs_logger("mount tmpfs on /tmp");
+		fs_logger("tmpfs /tmp");
 	}
 	
 	// /media mountpoint
@@ -538,7 +538,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /media directory\n");
 		if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /media");
-		fs_logger("mount tmpfs on /media");
+		fs_logger("tmpfs /media");
 	}
 
 	// /var mountpoint
@@ -560,7 +560,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /var directory\n");
 		if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /var");
-		fs_logger("mount tmpfs on /var");
+		fs_logger("tmpfs /var");
 	}
 
 	// /dev mountpoint
@@ -582,7 +582,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /dev directory\n");
 		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /dev");
-		fs_logger("mount tmpfs on /dev");
+		fs_logger("tmpfs /dev");
 	}
 
 	// /opt mountpoint
@@ -604,7 +604,7 @@ void fs_whitelist(void) {
 			printf("Mounting tmpfs on /opt directory\n");
 		if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /opt");
-		fs_logger("mount tmpfs on /opt");
+		fs_logger("tmpfs /opt");
 	}
 
 	// go through profile rules again, and interpret whitelist commands
@@ -643,36 +643,42 @@ void fs_whitelist(void) {
 	if (home_dir) {
 		if (mount("tmpfs", RUN_WHITELIST_HOME_USER_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_HOME_USER_DIR);
 	}
 	
 	// mask the real /tmp directory, currently mounted on RUN_WHITELIST_TMP_DIR
 	if (tmp_dir) {
 		if (mount("tmpfs", RUN_WHITELIST_TMP_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_TMP_DIR);
 	}
 
 	// mask the real /var directory, currently mounted on RUN_WHITELIST_VAR_DIR
 	if (var_dir) {
 		if (mount("tmpfs", RUN_WHITELIST_VAR_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_VAR_DIR);
 	}
 
 	// mask the real /opt directory, currently mounted on RUN_WHITELIST_OPT_DIR
 	if (opt_dir) {
 		if (mount("tmpfs", RUN_WHITELIST_OPT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_OPT_DIR);
 	}
 
 	// mask the real /dev directory, currently mounted on RUN_WHITELIST_DEV_DIR
 	if (dev_dir) {
 		if (mount("tmpfs", RUN_WHITELIST_DEV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_DEV_DIR);
 	}
 
 	// mask the real /media directory, currently mounted on RUN_WHITELIST_MEDIA_DIR
 	if (media_dir) {
 		if (mount("tmpfs", RUN_WHITELIST_MEDIA_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_MEDIA_DIR);
 	}
 
 	if (new_name)

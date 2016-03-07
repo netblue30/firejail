@@ -84,7 +84,7 @@ void fs_x11(void) {
 		printf("Mounting tmpfs on /tmp/.X11-unix directory\n");
 	if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 		errExit("mounting tmpfs on /tmp");
-	fs_logger("mount tmpfs on /tmp/.X11-unix");
+	fs_logger("tmpfs /tmp/.X11-unix");
 
 	// create an empty file
 	FILE *fp = fopen(x11file, "w");

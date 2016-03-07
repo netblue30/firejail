@@ -144,7 +144,6 @@ static void duplicate(char *fname) {
 			printf("%s\n", cmd);
 		if (system(cmd))
 			errExit("system cp -a");
-		fs_logger2("clone", fname);
 		free(cmd);
 		free(actual_path);
 	}
@@ -220,8 +219,29 @@ void fs_private_bin_list(void) {
 			printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
 		if (mount(RUN_BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
+		fs_logger2("tmpfs", paths[i]);
 		fs_logger2("mount", paths[i]);
 		i++;
+	}
+	
+	// log cloned files
+	char *dlist = strdup(private_list);
+	if (!dlist)
+		errExit("strdup");
+	
+	
+	char *ptr = strtok(dlist, ",");
+	while (ptr) {
+		i = 0;
+		while (paths[i]) {
+			char *fname;
+			if (asprintf(&fname, "%s/%s", paths[i], ptr) == -1)
+				errExit("asprintf");
+			fs_logger2("clone", fname);
+			free(fname);
+			i++;
+		}
+		ptr = strtok(NULL, ",");
 	}
 }
 

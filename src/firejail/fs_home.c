@@ -107,7 +107,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			errExit("asprintf");
 		struct stat s;
 		// don't copy it if we already have the file
-		if (stat(fname, &s) == 0)
+		if (stat(fname, &s) == 0) 
 			return;
 		if (stat("/etc/skel/.bashrc", &s) == 0) {
 			if (is_link("/etc/skel/.bashrc")) {
@@ -254,6 +254,7 @@ void fs_private_homedir(void) {
 	if (mount(private_homedir, homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger3("mount-bind", private_homedir, cfg.homedir);
+	fs_logger2("whitelist", cfg.homedir);
 // preserve mode and ownership
 //	if (chown(homedir, s.st_uid, s.st_gid) == -1)
 //		errExit("mount-bind chown");
@@ -266,7 +267,7 @@ void fs_private_homedir(void) {
 			printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
 			errExit("mounting home directory");
-		fs_logger("mount tmpfs on /root");
+		fs_logger("tmpfs /root");
 	}
 	else {
 		// mask /home
@@ -274,7 +275,7 @@ void fs_private_homedir(void) {
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
-		fs_logger("mount tmpfs on /home");
+		fs_logger("tmpfs /home");
 	}
 	
 
@@ -304,14 +305,14 @@ void fs_private(void) {
 		printf("Mounting a new /home directory\n");
 	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting home directory");
-	fs_logger("mount tmpfs on /home");
+	fs_logger("tmpfs /home");
 
 	// mask /root
 	if (arg_debug)
 		printf("Mounting a new /root directory\n");
 	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
 		errExit("mounting root directory");
-	fs_logger("mount tmpfs on /root");
+	fs_logger("tmpfs /root");
 
 	if (u != 0) {
 		// create /home/user

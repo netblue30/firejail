@@ -123,7 +123,7 @@ void fs_var_log(void) {
 			printf("Mounting tmpfs on /var/log\n");
 		if (mount("tmpfs", "/var/log", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/log");
-		fs_logger("mount tmpfs on /var/log");
+		fs_logger("tmpfs /var/log");
 		
 		build_dirs();
 		release_all();
@@ -162,7 +162,7 @@ void fs_var_lib(void) {
 			printf("Mounting tmpfs on /var/lib/dhcp\n");
 		if (mount("tmpfs", "/var/lib/dhcp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/dhcp");
-		fs_logger("mount tmpfs on /var/lib/dhcp");
+		fs_logger("tmpfs /var/lib/dhcp");
 			
 		// isc dhcp server requires a /var/lib/dhcp/dhcpd.leases file
 		FILE *fp = fopen("/var/lib/dhcp/dhcpd.leases", "w");
@@ -184,7 +184,7 @@ void fs_var_lib(void) {
 			printf("Mounting tmpfs on /var/lib/nginx\n");
 		if (mount("tmpfs", "/var/lib/nginx", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/nginx");
-		fs_logger("mount tmpfs on /var/lib/nginx");
+		fs_logger("tmpfs /var/lib/nginx");
 	}			
 
 	// net-snmp multiserver
@@ -193,7 +193,7 @@ void fs_var_lib(void) {
 			printf("Mounting tmpfs on /var/lib/snmp\n");
 		if (mount("tmpfs", "/var/lib/snmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/snmp");
-		fs_logger("mount tmpfs on /var/lib/snmp");
+		fs_logger("tmpfs /var/lib/snmp");
 	}			
 
 	// this is where sudo remembers its state
@@ -202,7 +202,7 @@ void fs_var_lib(void) {
 			printf("Mounting tmpfs on /var/lib/sudo\n");
 		if (mount("tmpfs", "/var/lib/sudo", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/sudo");
-		fs_logger("mount tmpfs on /var/lib/sudo");
+		fs_logger("tmpfs /var/lib/sudo");
 	}			
 }
 
@@ -214,7 +214,7 @@ void fs_var_cache(void) {
 			printf("Mounting tmpfs on /var/cache/apache2\n");
 		if (mount("tmpfs", "/var/cache/apache2", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/apache2");
-		fs_logger("mount tmpfs on /var/cache/apache2");
+		fs_logger("tmpfs /var/cache/apache2");
 	}			
 
 	if (stat("/var/cache/lighttpd", &s) == 0) {
@@ -222,7 +222,7 @@ void fs_var_cache(void) {
 			printf("Mounting tmpfs on /var/cache/lighttpd\n");
 		if (mount("tmpfs", "/var/cache/lighttpd", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/lighttpd");
-		fs_logger("mount tmpfs on /var/cache/lighttpd");
+		fs_logger("tmpfs /var/cache/lighttpd");
 
 		struct passwd *p = getpwnam("www-data");
 		uid_t uid = 0;
@@ -270,7 +270,7 @@ void fs_var_lock(void) {
 			printf("Mounting tmpfs on /var/lock\n");
 		if (mount("tmpfs", "/var/lock", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting /lock");
-		fs_logger("mount tmpfs on /var/lock");
+		fs_logger("tmpfs /var/lock");
 	}
 	else {
 		char *lnk = realpath("/var/lock", NULL);
@@ -289,7 +289,7 @@ void fs_var_lock(void) {
 			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/lock");
 			free(lnk);
-			fs_logger("mount tmpfs on /var/lock");
+			fs_logger("tmpfs /var/lock");
 		}
 		else {
 			fprintf(stderr, "Warning: /var/lock not mounted\n");
@@ -306,7 +306,7 @@ void fs_var_tmp(void) {
 				printf("Mounting tmpfs on /var/tmp\n");
 			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/tmp");
-			fs_logger("mount tmpfs on /var/tmp");
+			fs_logger("tmpfs /var/tmp");
 		}
 	}
 	else {

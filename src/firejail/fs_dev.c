@@ -133,7 +133,7 @@ void fs_private_dev(void){
 			errExit("chmod");
 		if (mount(RUN_DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /dev/dri");
-		fs_logger("clone /dev/dri");
+		fs_logger("whitelist /dev/dri");
 	}
 	
 	// create /dev/shm
@@ -181,7 +181,7 @@ void fs_private_dev(void){
 	// mount -vt devpts -o newinstance -o ptmxmode=0666 devpts //dev/pts
 	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  "newinstance,ptmxmode=0666") < 0)
 		errExit("mounting /dev/pts");
-	fs_logger("mount devpts");
+	fs_logger("clone /dev/pts");
 
 #if 0
 	// stdin, stdout, stderr

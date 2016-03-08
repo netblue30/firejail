@@ -98,7 +98,12 @@ static void duplicate(char *fname) {
 	if (system(cmd))
 		errExit("system cp -a --parents");
 	free(cmd);
-	fs_logger2("clone", fname);
+	
+	char *name;
+	if (asprintf(&name, "/etc/%s", fname) == -1)
+		errExit("asprintf");
+	fs_logger2("clone", name);
+	free(name);
 }
 
 
@@ -121,6 +126,7 @@ void fs_private_etc_list(void) {
 		errExit("chown");
 	if (chmod(RUN_ETC_DIR, 0755) < 0)
 		errExit("chmod");
+	fs_logger("tmpfs /etc");
 	
 	// copy the list of files in the new etc directory
 	// using a new child process without root privileges

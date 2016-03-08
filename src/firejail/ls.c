@@ -25,6 +25,9 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <grp.h>
+//#include <dirent.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 
 // uid/gid cache
 static uid_t c_uid = 0;
@@ -169,27 +172,20 @@ static void print_directory(const char *path) {
 		return;
 	assert(S_ISDIR(s.st_mode));
 	
-	DIR *dir;
-	if (!(dir = opendir(path))) {
-		// sleep 2 seconds and try again
-		sleep(2);
-		if (!(dir = opendir(path))) {
-			fprintf(stderr, "Error: cannot open directory %s\n", path);
-			exit(1);
+	struct dirent **namelist;
+	int i;
+	int n;
+
+	n = scandir(path, &namelist, 0, alphasort);
+	if (n < 0)
+        		errExit("scandir");
+	else {
+		for (i = 0; i < n; i++) {
+			print_file_or_dir(path, namelist[i]->d_name, 0);
+			free(namelist[i]);
 		}
 	}
-	
-	struct dirent *entry;		
-	while ((entry = readdir(dir))) {
-		if (strcmp(entry->d_name, ".") == 0)
-			continue;
-		if (strcmp(entry->d_name, "..") == 0)
-			continue;
-		
-		print_file_or_dir(path, entry->d_name, 0);
-	}
-	
-	closedir(dir);
+	free(namelist);
 }
 
 void ls_name(const char *name, const char *path) {

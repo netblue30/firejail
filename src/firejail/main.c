@@ -1746,8 +1746,15 @@ int main(int argc, char **argv) {
 	 	if (asprintf(&map_path, "/proc/%d/gid_map", child) == -1)
 	 		errExit("asprintf");
 	 	gid_t gid = getgid();
-	 	if (asprintf(&map, "%d %d 1", gid, gid) == -1)
-	 		errExit("asprintf");
+	 	gid_t ttygid = get_tty_gid();
+	 	if (ttygid == 0)  {
+		 	if (asprintf(&map, "%d %d 1", gid, gid) == -1)
+		 		errExit("asprintf");
+		}
+		else {
+			if (asprintf(&map, "%d %d 1\n%d %d 1", gid, gid, ttygid, ttygid) == -1)
+				errExit("asprintf");
+		}
  		EUID_ROOT();
 	 	update_map(map, map_path);
 	 	EUID_USER();

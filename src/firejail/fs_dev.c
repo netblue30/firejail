@@ -178,9 +178,21 @@ void fs_private_dev(void){
 	create_char_dev("/dev/pts/ptmx", 0666, 5, 2); //"mknod -m 666 /dev/pts/ptmx c 5 2");
 	fs_logger("mknod /dev/pts/ptmx");
 	create_link("/dev/pts/ptmx", "/dev/ptmx");
+
+// code before github issue #351
 	// mount -vt devpts -o newinstance -o ptmxmode=0666 devpts //dev/pts
-	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  "newinstance,ptmxmode=0666") < 0)
+//	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  "newinstance,ptmxmode=0666") < 0)
+//		errExit("mounting /dev/pts");
+
+
+	// mount /dev/pts
+	gid_t ttygid = get_tty_gid();
+	char *data;
+	if (asprintf(&data, "newinstance,gid=%d,mode=620,ptmxmode=0666", (int) ttygid) == -1)
+		errExit("asprintf");
+	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  data) < 0)
 		errExit("mounting /dev/pts");
+	free(data);
 	fs_logger("clone /dev/pts");
 
 #if 0

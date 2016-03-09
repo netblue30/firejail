@@ -9,6 +9,9 @@
 echo "TESTING: nice (nice.exp)"
 ./nice.exp
 
+echo "TESTING: tty (tty.exp)"
+./tty.exp
+
 echo "TESTING: protocol (protocol.exp)"
 ./protocol.exp
 

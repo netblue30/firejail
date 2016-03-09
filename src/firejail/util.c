@@ -629,3 +629,13 @@ void invalid_filename(const char *fname) {
 		exit(1);
 	}
 }
+
+uid_t get_tty_gid(void) {
+	// find tty group id
+	gid_t ttygid = 0;
+	struct group *g = getgrnam("tty");
+	if (g)
+		ttygid = g->gr_gid;
+
+	return ttygid;
+}

@@ -369,6 +369,7 @@ char *expand_home(const char *path, const char* homedir);
 const char *gnu_basename(const char *path);
 uid_t pid_get_uid(pid_t pid);
 void invalid_filename(const char *fname);
+uid_t get_tty_gid(void);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

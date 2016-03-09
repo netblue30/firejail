@@ -255,6 +255,12 @@ void ls(pid_t pid, const char *path) {
 		exit(1);
 	}
 
+	// access chek is performed with the real UID
+	if (access(fname, R_OK) == -1) {
+		fprintf(stderr, "Error: Cannot access file %s\n", fname);
+		exit(1);
+	}
+
 	// list directory contents
 	struct stat s;
 	if (stat(fname, &s) == -1) {

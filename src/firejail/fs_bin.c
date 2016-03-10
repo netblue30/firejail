@@ -243,5 +243,6 @@ void fs_private_bin_list(void) {
 		}
 		ptr = strtok(NULL, ",");
 	}
+	free(dlist);
 }
 

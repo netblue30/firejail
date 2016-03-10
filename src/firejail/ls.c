@@ -32,8 +32,6 @@
 // uid/gid cache
 static uid_t c_uid = 0;
 static char *c_uid_name = NULL;
-static gid_t c_gid = 0;
-static char *g_uid_name = NULL;
 
 static void print_file_or_dir(const char *path, const char *fname, int separator) {
 	assert(fname);
@@ -49,9 +47,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 	}
 	
 	struct stat s;
-	int is_broken_link = 0;
 	if (stat(name, &s) == -1) {
-		is_broken_link = 1;
 		if (lstat(name, &s) == -1) {
 			printf("Error: cannot access %s\n", name);
 			return;

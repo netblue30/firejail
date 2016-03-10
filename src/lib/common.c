@@ -137,7 +137,7 @@ char *pid_proc_comm(const pid_t pid) {
 	free(fname);
 
 	// read file
-	unsigned char buffer[BUFLEN];
+	char buffer[BUFLEN];
 	ssize_t len;
 	if ((len = read(fd, buffer, sizeof(buffer) - 1)) <= 0) {
 		close(fd);
@@ -152,7 +152,7 @@ char *pid_proc_comm(const pid_t pid) {
 		*ptr = '\0';
 
 	// return a malloc copy of the command line
-	char *rv = strdup((char *) buffer);
+	char *rv = strdup(buffer);
 	if (strlen(rv) == 0) {
 		free(rv);
 		return NULL;

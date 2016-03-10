@@ -687,7 +687,7 @@ int sandbox(void* sandbox_arg) {
 
 	int status = monitor_application(app_pid);	// monitor application
 
-	if WIFEXITED(status) {
+	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status
 		return WEXITSTATUS(status);
 	} else {

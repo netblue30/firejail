@@ -130,11 +130,11 @@ static void chk_chroot(void) {
 	exit(1);
 }
 
-static void monitor_application(pid_t app_pid) {
+static int monitor_application(pid_t app_pid) {
+	int status;
 	while (app_pid) {
 		usleep(20000);
 
-		int status;
 		pid_t rv;
 		do {
 			rv = waitpid(-1, &status, 0);
@@ -171,6 +171,9 @@ static void monitor_application(pid_t app_pid) {
 		if (app_pid != 0 && arg_debug)
 			printf("Sandbox monitor: monitoring %u\n", app_pid);
 	}
+
+	// return the latest exit status.
+	return status;
 
 #if 0
 // todo: find a way to shut down interfaces before closing the namespace
@@ -681,7 +684,13 @@ int sandbox(void* sandbox_arg) {
 		start_application();	// start app
 	}
 
-	monitor_application(app_pid);	// monitor application
-	
-	return 0;
+	int status = monitor_application(app_pid);	// monitor application
+
+	if WIFEXITED(status) {
+		// if we had a proper exit, return that exit status
+		return WEXITSTATUS(status);
+	} else {
+		// something else went wrong!
+		return -1;
+	}
 }

@@ -874,9 +874,19 @@ void fs_overlayfs(void) {
 	if (mount("/dev", dev, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting /dev");
 
+	// mount-bind run directory
+	if (arg_debug)
+		printf("Mounting /run\n");
+	char *run;
+	if (asprintf(&run, "%s/run", oroot) == -1)
+		errExit("asprintf");
+	if (mount("/run", run, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /dev");
+
 	// chroot in the new filesystem
 	if (chroot(oroot) == -1)
 		errExit("chroot");
+
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	if (!arg_private_dev)
 		fs_dev_shm();

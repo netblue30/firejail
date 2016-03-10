@@ -859,9 +859,67 @@ void fs_overlayfs(void) {
 	else { // kernel 3.18 or newer
 		if (asprintf(&option, "lowerdir=/,upperdir=%s,workdir=%s", odiff, owork) == -1)
 			errExit("asprintf");
-//printf("option #%s#\n", option);			
 		if (mount("overlay", oroot, "overlay", MS_MGC_VAL, option) < 0)
 			errExit("mounting overlayfs");
+			
+		//***************************
+		// issue #263 start code
+		// My setup has a separate mount point for /home. When the overlay is mounted,
+		// the overlay does not contain the original /home contents. 
+		// I added code to create a second overlay for /home if the overlay home dir is empty and this seems to work
+		// @dshmgh, Jan 2016
+		{
+			char *overlayhome;
+			struct stat s;
+			char *hroot;
+			char *hdiff;
+			char *hwork;
+		
+			// dons add debug
+			if (arg_debug) printf ("DEBUG: chroot dirs are oroot %s  odiff %s  owork %s\n",oroot,odiff,owork);
+		
+			// BEFORE NEXT, WE NEED TO TEST IF /home has any contents or do we need to mount it?
+			// must create var for oroot/cfg.homedir
+			if (asprintf(&overlayhome,"%s%s",oroot,cfg.homedir) == -1)
+				errExit("asprintf");
+			if (arg_debug) printf ("DEBUG: overlayhome var holds ##%s##\n",overlayhome);
+		
+			// if no homedir in overlay -- create another overlay for /home
+			if (stat(overlayhome, &s) == -1) {
+		
+				if(asprintf(&hroot, "%s/oroot/home", RUN_MNT_DIR) == -1)
+					errExit("asprintf");
+		
+				if(asprintf(&hdiff, "%s/hdiff", basedir) == -1)
+					errExit("asprintf");
+				if (mkdir(hdiff, S_IRWXU | S_IRWXG | S_IRWXO))
+					errExit("mkdir");
+				if (chown(hdiff, 0, 0) < 0)
+					errExit("chown");
+				if (chmod(hdiff, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+					errExit("chmod");
+		
+				if(asprintf(&hwork, "%s/hwork", basedir) == -1)
+					errExit("asprintf");
+				if (mkdir(hwork, S_IRWXU | S_IRWXG | S_IRWXO))
+					errExit("mkdir");
+				if (chown(hwork, 0, 0) < 0)
+					errExit("chown");
+				if (chmod(hwork, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+					errExit("chmod");
+		
+				// no homedir in overlay so now mount another overlay for /home
+				if (asprintf(&option, "lowerdir=/home,upperdir=%s,workdir=%s", hdiff, hwork) == -1)
+					errExit("asprintf");
+				if (mount("overlay", hroot, "overlay", MS_MGC_VAL, option) < 0)
+					errExit("mounting overlayfs for mounted home directory");
+		
+				printf("OverlayFS for /home configured in %s directory\n", basedir);
+			} // stat(overlayhome)
+			free(overlayhome);
+		}
+		// issue #263 end code
+		//***************************
 	}
 	printf("OverlayFS configured in %s directory\n", basedir);
 	

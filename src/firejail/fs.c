@@ -873,6 +873,7 @@ void fs_overlayfs(void) {
 		errExit("asprintf");
 	if (mount("/dev", dev, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting /dev");
+	fs_logger("whitelist /dev");
 
 	// mount-bind run directory
 	if (arg_debug)
@@ -881,7 +882,8 @@ void fs_overlayfs(void) {
 	if (asprintf(&run, "%s/run", oroot) == -1)
 		errExit("asprintf");
 	if (mount("/run", run, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mounting /dev");
+		errExit("mounting /run");
+	fs_logger("whitelist /run");
 
 	// chroot in the new filesystem
 	if (chroot(oroot) == -1)

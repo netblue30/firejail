@@ -513,6 +513,9 @@ void wait_for_other(int fd) {
 		fprintf(stderr, "Error: cannot establish communication with the parent, exiting...\n");
 		exit(1);
 	}
+	if (strcmp(childstr, "arg_noroot=0") == 0)
+		arg_noroot = 0;
+
 	fclose(stream);
 }
 
@@ -523,7 +526,7 @@ void notify_other(int fd) {
 	if (newfd == -1)
 		errExit("dup");
 	stream = fdopen(newfd, "w");
-	fprintf(stream, "%u\n", getpid());
+	fprintf(stream, "arg_noroot=%d\n", arg_noroot);
 	fflush(stream);
 	fclose(stream);
 }

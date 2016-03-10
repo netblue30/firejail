@@ -61,7 +61,7 @@ echo "TESTING: version (option_version.exp)"
 echo "TESTING: help (option_help.exp)"
 ./option_help.exp
 
-echo "TESTING: man (opton_man.exp)"
+echo "TESTING: man (option_man.exp)"
 ./option_man.exp
 
 echo "TESTING: list (option_list.exp)"
@@ -105,13 +105,13 @@ echo "TESTING: rlimit (option_rlimit.exp)"
 echo "TESTING: shutdown (option_shutdown.exp)"
 ./option-shutdown.exp
 
-echo "TESTING: join (opton-join.exp)"
+echo "TESTING: join (option-join.exp)"
 ./option-join.exp
 
-echo "TESTING: join2 (opton-join2.exp)"
+echo "TESTING: join2 (option-join2.exp)"
 ./option-join2.exp
 
-echo "TESTING: join3 (opton-join3.exp)"
+echo "TESTING: join3 (option-join3.exp)"
 ./option-join3.exp
 
 echo "TESTING: join profile (option-join-profile.exp)"
@@ -123,13 +123,13 @@ echo "TESTING: firejail in firejail - single sandbox (firejail-in-firejail.exp)"
 echo "TESTING: firejail in firejail - force new sandbox (firejail-in-firejail2.exp)"
 ./firejail-in-firejail2.exp
 
-echo "TESTING: chroot overlay (opton_chroot_overlay.exp)"
+echo "TESTING: chroot overlay (option_chroot_overlay.exp)"
 ./option_chroot_overlay.exp
 
 echo "TESTING: blacklist directory (option_blacklist.exp)"
 ./option_blacklist.exp
 
-echo "TESTING: blacklist file (opton_blacklist_file.exp)"
+echo "TESTING: blacklist file (opiton_blacklist_file.exp)"
 ./option_blacklist_file.exp
 
 echo "TESTING: bind as user (option_bind_user.exp)"
@@ -137,7 +137,7 @@ echo "TESTING: bind as user (option_bind_user.exp)"
 
 if [ -d /home/bingo ];
 then
-	echo "TESTING: home sanitize (opton_version.exp)"
+	echo "TESTING: home sanitize (opiton_version.exp)"
 	./option_version.exp
 fi
 

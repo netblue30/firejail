@@ -643,14 +643,15 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
-			fprintf(stderr, "Error: cannot mount a new user namespace\n");
+			fprintf(stderr, "Warning: cannot mount a new user namespace, going forward without it\n");
 			perror("unshare");
 			drop_privs(arg_nogroups);
+			arg_noroot = 0;
 		}
 	}
 	else
 		drop_privs(arg_nogroups);
- 	
+	
 	// notify parent that new user namespace has been created so a proper
  	// UID/GID map can be setup
  	notify_other(child_to_parent_fds[1]);

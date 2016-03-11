@@ -163,6 +163,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_nogroups = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "nosound") == 0) {
+		arg_nosound = 1;
+		arg_private_dev = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "netfilter") == 0) {
 #ifdef HAVE_NETWORK
 		arg_netfilter = 1;

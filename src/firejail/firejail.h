@@ -532,8 +532,10 @@ int x11_display(void);
 int x11_check_xpra(void);
 
 // ls.c
-void ls_name(const char *name, const char *path);
-void ls(pid_t pid, const char *path);
+#define SANDBOX_FS_LS 0
+#define SANDBOX_FS_GET 1
+void sandboxfs_name(int op, const char *name, const char *path);
+void sandboxfs(int op, pid_t pid, const char *path);
 
 #endif
 

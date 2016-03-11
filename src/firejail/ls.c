@@ -184,7 +184,7 @@ static void print_directory(const char *path) {
 	free(namelist);
 }
 
-void ls_name(const char *name, const char *path) {
+void sandboxfs_name(int op, const char *name, const char *path) {
 	EUID_ASSERT();
 	
 	if (!name || strlen(name) == 0) {
@@ -197,10 +197,10 @@ void ls_name(const char *name, const char *path) {
 		exit(1);
 	}
 
-	ls(pid, path);
+	sandboxfs(op, pid, path);
 }
 
-void ls(pid_t pid, const char *path) {
+void sandboxfs(int op, pid_t pid, const char *path) {
 	EUID_ASSERT();
 
 	// if the pid is that of a firejail  process, use the pid of the first child process
@@ -225,16 +225,6 @@ void ls(pid_t pid, const char *path) {
 		}
 	}
 
-	EUID_ROOT();
-	// chroot
-	char *rootdir;
-	if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)
-		errExit("asprintf");
-	if (chroot(rootdir) < 0)
-		errExit("chroot");
-	if (chdir("/") < 0)
-		errExit("chdir");
-	
 	// full path or file in current directory?
 	char *fname;
 	if (*path == '/') {
@@ -251,55 +241,151 @@ void ls(pid_t pid, const char *path) {
 		exit(1);
 	}
 
-	// access chek is performed with the real UID
-	if (access(fname, R_OK) == -1) {
-		fprintf(stderr, "Error: Cannot access file %s\n", fname);
-		exit(1);
-	}
+	// sandbox root directory
+	char *rootdir;
+	if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)
+		errExit("asprintf");
 
-	// list directory contents
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error: Cannot access file %s\n", fname);
-		exit(1);
-	}
-	if (S_ISDIR(s.st_mode)) {
-		char *rp = realpath(fname, NULL);
-		if (!rp) {
-			fprintf(stderr, "Error: Cannot access file %s\n", fname);
-			exit(1);
-		}
-		if (arg_debug)
-			printf("realpath %s\n", rp);
-
-		char *dir;
-		if (asprintf(&dir, "%s/", rp) == -1)
-			errExit("asprintf");
+	if (op == SANDBOX_FS_LS) {
+		EUID_ROOT();
+		// chroot
+		if (chroot(rootdir) < 0)
+			errExit("chroot");
+		if (chdir("/") < 0)
+			errExit("chdir");
 		
-		print_directory(dir);
-		free(rp);
-		free(dir);
-	}
-	else {
-		char *rp = realpath(fname, NULL);
-		if (!rp) {
+		// access chek is performed with the real UID
+		if (access(fname, R_OK) == -1) {
 			fprintf(stderr, "Error: Cannot access file %s\n", fname);
 			exit(1);
 		}
-		if (arg_debug)
-			printf("realpath %s\n", rp);
-		char *split = strrchr(rp, '/');
-		if (split) {
-			*split = '\0';
-			char *rp2 = split + 1;
-			if (arg_debug)
-				printf("path %s, file %s\n", rp, rp2);
-			print_file_or_dir(rp, rp2, 1);
+	
+		// list directory contents
+		struct stat s;
+		if (stat(fname, &s) == -1) {
+			fprintf(stderr, "Error: Cannot access file %s\n", fname);
+			exit(1);
 		}
-		free(rp);
+		if (S_ISDIR(s.st_mode)) {
+			char *rp = realpath(fname, NULL);
+			if (!rp) {
+				fprintf(stderr, "Error: Cannot access file %s\n", fname);
+				exit(1);
+			}
+			if (arg_debug)
+				printf("realpath %s\n", rp);
+	
+			char *dir;
+			if (asprintf(&dir, "%s/", rp) == -1)
+				errExit("asprintf");
+			
+			print_directory(dir);
+			free(rp);
+			free(dir);
+		}
+		else {
+			char *rp = realpath(fname, NULL);
+			if (!rp) {
+				fprintf(stderr, "Error: Cannot access file %s\n", fname);
+				exit(1);
+			}
+			if (arg_debug)
+				printf("realpath %s\n", rp);
+			char *split = strrchr(rp, '/');
+			if (split) {
+				*split = '\0';
+				char *rp2 = split + 1;
+				if (arg_debug)
+					printf("path %s, file %s\n", rp, rp2);
+				print_file_or_dir(rp, rp2, 1);
+			}
+			free(rp);
+		}
 	}
+	
+	// get file from sandbox
+	else if (op == SANDBOX_FS_GET) {
+		// check source file (sandbox)
+		char *src_fname;
+		if (asprintf(&src_fname, "%s%s", rootdir, fname) == -1)
+			errExit("asprintf");
+		EUID_ROOT();
+		struct stat s;
+		if (stat(src_fname, &s) == -1) {
+			fprintf(stderr, "Error: Cannot access file %s\n", fname);
+			exit(1);
+		}
+		
+		
+		// try to open the source file - we need to chroot
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// chroot
+			if (chroot(rootdir) < 0)
+				errExit("chroot");
+			if (chdir("/") < 0)
+				errExit("chdir");
+			
+			// drop privileges
+			drop_privs(0);
+			
+			// try to read the file
+			if (access(fname, R_OK) == -1) {
+				fprintf(stderr, "Error: Cannot read file %s\n", fname);
+				exit(1);
+			}
+			exit(0);
+		}
+
+		// wait for the child to finish
+		int status = NULL;
+		waitpid(child, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
+		else
+			exit(1);
+		EUID_USER();
+		
+		// check destination file (host)
+		char *dest_fname = strrchr(fname, '/');
+		if (!dest_fname || *(++dest_fname) == '\0') {
+			fprintf(stderr, "Error: invalid file name %s\n", fname);
+			exit(1);
+		}
+		
+		if (access(dest_fname, F_OK) == -1) {
+			// try to create the file
+			FILE *fp = fopen(dest_fname, "w");
+			if (!fp) {
+				fprintf(stderr, "Error: cannot create %s file\n", dest_fname);
+				exit(1);
+			}
+			fclose(fp);
+		}
+		else {
+			if (access(dest_fname, W_OK) == -1) {
+				fprintf(stderr, "Error: cannot writee %s file\n", dest_fname);
+				exit(1);
+			}
+		}
+		// copy file
+		EUID_ROOT();
+		copy_file(src_fname, dest_fname);
+		if (chown(dest_fname, getuid(), getgid()) == -1)
+			errExit("chown");
+		if (chmod(dest_fname, 0644) == -1)
+			errExit("chmod");
+		EUID_USER();
+	}
+	
+	// put file in sandbox
+	else if (op == SANDBOX_FS_LS) {
+printf("todo!\n");
+	}		
 
 	free(fname);
+	free(rootdir);
 
 	exit(0);
 }

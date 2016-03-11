@@ -6,6 +6,9 @@
 
 ./fscheck.sh
 
+echo "TESTING: sound (sound.exp)"
+./sound.exp
+
 echo "TESTING: nice (nice.exp)"
 ./nice.exp
 

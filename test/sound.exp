@@ -1,0 +1,79 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --nosound speaker-test\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"parent is shutting down"
+}
+sleep 2
+
+send -- "firejail --nosound aplay -l\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"List of PLAYBACK" {puts "TESTING ERROR 3\n";exit}
+	"no soundcards found"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"parent is shutting down"
+}
+sleep 2
+
+
+send -- "firejail --profile=sound.profile speaker-test\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"parent is shutting down"
+}
+sleep 2
+
+send -- "firejail --profile=sound.profile aplay -l\r"
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	"List of PLAYBACK" {puts "TESTING ERROR 3\n";exit}
+	"no soundcards found"
+}
+expect {
+	timeout {puts "TESTING ERROR 15\n";exit}
+	"parent is shutting down"
+}
+sleep 2
+
+
+send -- "firejail aplay -l\r"
+expect {
+	timeout {puts "TESTING ERROR 23\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 24\n";exit}
+	"List of PLAYBACK"
+}
+expect {
+	timeout {puts "TESTING ERROR 25\n";exit}
+	"parent is shutting down"
+}
+sleep 2
+
+puts "\n"
+

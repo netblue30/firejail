@@ -237,7 +237,7 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 			errExit("asprintf");
 	}
 	else {
-		fprintf(stderr, "Error: Cannot access file %s\n", path);
+		fprintf(stderr, "Error: Cannot access %s\n", path);
 		exit(1);
 	}
 
@@ -256,20 +256,20 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		
 		// access chek is performed with the real UID
 		if (access(fname, R_OK) == -1) {
-			fprintf(stderr, "Error: Cannot access file %s\n", fname);
+			fprintf(stderr, "Error: Cannot access %s\n", fname);
 			exit(1);
 		}
 	
 		// list directory contents
 		struct stat s;
 		if (stat(fname, &s) == -1) {
-			fprintf(stderr, "Error: Cannot access file %s\n", fname);
+			fprintf(stderr, "Error: Cannot access %s\n", fname);
 			exit(1);
 		}
 		if (S_ISDIR(s.st_mode)) {
 			char *rp = realpath(fname, NULL);
 			if (!rp) {
-				fprintf(stderr, "Error: Cannot access file %s\n", fname);
+				fprintf(stderr, "Error: Cannot access %s\n", fname);
 				exit(1);
 			}
 			if (arg_debug)
@@ -286,7 +286,7 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		else {
 			char *rp = realpath(fname, NULL);
 			if (!rp) {
-				fprintf(stderr, "Error: Cannot access file %s\n", fname);
+				fprintf(stderr, "Error: Cannot access %s\n", fname);
 				exit(1);
 			}
 			if (arg_debug)
@@ -303,7 +303,7 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		}
 	}
 	
-	// get file from sandbox
+	// get file from sandbox and store it in the current directory
 	else if (op == SANDBOX_FS_GET) {
 		// check source file (sandbox)
 		char *src_fname;
@@ -312,7 +312,7 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		EUID_ROOT();
 		struct stat s;
 		if (stat(src_fname, &s) == -1) {
-			fprintf(stderr, "Error: Cannot access file %s\n", fname);
+			fprintf(stderr, "Error: Cannot access %s\n", fname);
 			exit(1);
 		}
 		
@@ -333,7 +333,7 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 			
 			// try to read the file
 			if (access(fname, R_OK) == -1) {
-				fprintf(stderr, "Error: Cannot read file %s\n", fname);
+				fprintf(stderr, "Error: Cannot read %s\n", fname);
 				exit(1);
 			}
 			exit(0);
@@ -358,14 +358,14 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 			// try to create the file
 			FILE *fp = fopen(dest_fname, "w");
 			if (!fp) {
-				fprintf(stderr, "Error: cannot create %s file\n", dest_fname);
+				fprintf(stderr, "Error: cannot create %s\n", dest_fname);
 				exit(1);
 			}
 			fclose(fp);
 		}
 		else {
 			if (access(dest_fname, W_OK) == -1) {
-				fprintf(stderr, "Error: cannot writee %s file\n", dest_fname);
+				fprintf(stderr, "Error: cannot write %s\n", dest_fname);
 				exit(1);
 			}
 		}
@@ -379,11 +379,6 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		EUID_USER();
 	}
 	
-	// put file in sandbox
-	else if (op == SANDBOX_FS_LS) {
-printf("todo!\n");
-	}		
-
 	free(fname);
 	free(rootdir);
 

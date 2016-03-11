@@ -85,7 +85,7 @@ void usage(void) {
 	printf("    --env=name=value - set environment variable in the new sandbox.\n\n");
 	printf("    --fs.print=name|pid - print the filesystem log for the sandbox identified\n");
 	printf("\tby name or PID.\n\n");
-	
+	printf("    --get=name|pid filename - get a file from sandbox container.\n\n");
 	printf("    --help, -? - this help screen.\n\n");
 	printf("    --hostname=name - set sandbox hostname.\n\n");
 	printf("    --ignore=command - ignore command in profile files.\n\n");
@@ -110,6 +110,7 @@ void usage(void) {
 	printf("\tidentified by name or PID.\n\n");
 #endif
 	printf("    --list - list all sandboxes.\n\n");
+	printf("    --ls=name|pid dir_or_filename - list files in sandbox container.\n\n");
 #ifdef HAVE_NETWORK	
 	printf("    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n\n");
 	printf("    --mtu=number - set interface MTU.\n\n");

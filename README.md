@@ -50,6 +50,45 @@ $ firejail --x11 --net=eth0 firefox
 --x11 starts the server, --net is required in order to remove the main X11 server socket from the sandbox.
 More information here: https://firejail.wordpress.com/documentation-2/x11-guide/
 
+## File transfers
+`````
+FILE TRANSFERS
+       These features allow the user to inspect the file system  container  of
+       an  existing  sandbox and transfer files from the container to the host
+       file system.
+
+       --get=name filename
+              Retrieve the container file filename and store it on the host in
+              the  current working directory.  The container is spececified by
+              name (--name option). Full path is needed for filename.
+
+       --get=pid filename
+              Retrieve the container file filename and store it on the host in
+              the  current working directory.  The container is spececified by
+              process ID. Full path is needed for filename.
+
+       --ls=name dir_or_filename
+              List container files.  The  container  is  spececified  by  name
+              (--name option).  Full path is needed for dir_or_filename.
+
+       --ls=pid dir_or_filename
+              List  container  files.  The container is spececified by process
+              ID.  Full path is needed for dir_or_filename.
+
+       Examples:
+
+              $ firejail --ls=mybrowser ~/Downloads
+              drwxr-xr-x netblue  netblue         4096 .
+              drwxr-xr-x netblue  netblue         4096 ..
+              -rw-r--r-- netblue  netblue         7847 x11-x305.png
+              -rw-r--r-- netblue  netblue         6800 x11-x642.png
+              -rw-r--r-- netblue  netblue        34139 xpra-clipboard.png
+
+              $ firejail --get=mybrowser ~/Downloads/xpra-clipboard.png
+
+
+`````
+
 ## Default seccomp filter update
 
 Currently 50 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).

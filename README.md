@@ -52,20 +52,20 @@ More information here: https://firejail.wordpress.com/documentation-2/x11-guide/
 
 ## File transfers
 `````
-FILE TRANSFERS
+FILE TRANSFER
        These features allow the user to inspect the file system  container  of
        an  existing  sandbox and transfer files from the container to the host
        file system.
 
        --get=name filename
-              Retrieve the container file filename and store it on the host in
-              the  current working directory.  The container is spececified by
-              name (--name option). Full path is needed for filename.
+              Retrieve the container file and store it on the host in the cur‐
+              rent  working  directory.   The container is spececified by name
+              (--name option). Full path is needed for filename.
 
        --get=pid filename
-              Retrieve the container file filename and store it on the host in
-              the  current working directory.  The container is spececified by
-              process ID. Full path is needed for filename.
+              Retrieve the container file and store it on the host in the cur‐
+              rent working directory.  The container is spececified by process
+              ID. Full path is needed for filename.
 
        --ls=name dir_or_filename
               List container files.  The  container  is  spececified  by  name
@@ -76,6 +76,8 @@ FILE TRANSFERS
               ID.  Full path is needed for dir_or_filename.
 
        Examples:
+
+              $ firejail --name=mybrowser --private firefox
 
               $ firejail --ls=mybrowser ~/Downloads
               drwxr-xr-x netblue  netblue         4096 .

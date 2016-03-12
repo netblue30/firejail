@@ -1,4 +1,4 @@
-# BitlBee profile
+# BitlBee instant messaging profile
 noblacklist /sbin
 noblacklist /usr/sbin
 include /etc/firejail/disable-mgmt.inc
@@ -8,3 +8,4 @@ protocol unix,inet,inet6
 private
 private-dev
 seccomp
+netfilter

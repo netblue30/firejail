@@ -1,2 +1,2 @@
-# Weechat profile (Debian)
+# Weechat IRC profile (Debian)
 include /etc/firejail/weechat.profile

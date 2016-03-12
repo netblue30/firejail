@@ -1,4 +1,4 @@
-# fbreader profile
+# fbreader ebook reader profile
 noblacklist ${HOME}/.FBReader
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
@@ -15,4 +15,5 @@ seccomp
 protocol unix,inet,inet6
 netfilter
 noroot
+nosound
 

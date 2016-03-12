@@ -1,4 +1,4 @@
-# VLC profile
+# VLC media player profile
 noblacklist ${HOME}/.config/vlc
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
@@ -14,3 +14,4 @@ caps.drop all
 seccomp
 protocol unix,inet,inet6
 noroot
+netfilter

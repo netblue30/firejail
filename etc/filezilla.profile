@@ -1,4 +1,4 @@
-# FileZilla profile
+# FileZilla ftp profile
 noblacklist ${HOME}/.filezilla
 noblacklist ${HOME}/.config/filezilla
 include /etc/firejail/disable-mgmt.inc
@@ -12,5 +12,7 @@ seccomp
 protocol unix,inet,inet6
 noroot
 netfilter
+nosound
+
 
 

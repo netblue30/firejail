@@ -1,4 +1,4 @@
-# deluge profile
+# deluge bittorernt client profile
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
@@ -14,5 +14,6 @@ seccomp
 protocol unix,inet,inet6
 netfilter
 noroot
+nosound
 
 

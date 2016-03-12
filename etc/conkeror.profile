@@ -1,4 +1,4 @@
-# Firejail profile for Mozilla Firefox (Iceweasel in Debian)
+# Firejail profile for Conkeror web browser profile
 noblacklist ${HOME}/.conkeror.mozdev.org
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc

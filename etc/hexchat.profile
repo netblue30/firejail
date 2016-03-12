@@ -1,4 +1,4 @@
-# HexChat profile
+# HexChat instant messaging profile
 noblacklist ${HOME}/.config/hexchat
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc

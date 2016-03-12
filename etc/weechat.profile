@@ -1,4 +1,4 @@
-# Weechat profile
+# Weechat IRC profile
 noblacklist ${HOME}/.weechat
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-common.inc
@@ -9,3 +9,4 @@ seccomp
 protocol unix,inet,inet6
 netfilter
 noroot
+netfilter

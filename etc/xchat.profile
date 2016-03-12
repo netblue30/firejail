@@ -1,4 +1,4 @@
-# XChat profile
+# XChat IRC profile
 noblacklist ${HOME}/.config/xchat
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc

@@ -1,4 +1,4 @@
-# Telegram profile
+# Telegram IRC profile
 noblacklist ${HOME}/.TelegramDesktop
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
@@ -10,6 +10,7 @@ caps.drop all
 seccomp
 protocol unix,inet,inet6
 noroot
+netfilter
 
 whitelist ~/Downloads/Telegram Desktop
 mkdir ${HOME}/.TelegramDesktop

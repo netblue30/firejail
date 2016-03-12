@@ -9,3 +9,5 @@ caps.drop all
 seccomp
 protocol unix,inet,inet6
 noroot
+netfilter
+

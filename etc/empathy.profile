@@ -1,4 +1,4 @@
-# Empathy profile
+# Empathy instant messaging profile
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
@@ -8,3 +8,5 @@ blacklist ${HOME}/.wine
 caps.drop all
 seccomp
 protocol unix,inet,inet6
+netfilter
+

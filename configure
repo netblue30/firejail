@@ -1322,7 +1322,7 @@ Optional Features:
   --enable-network=restricted
                           restrict --net= to root only
   --disable-userns        disable user namespace
-  --disable-x11           disable X11 support
+  --disable-x11           disable X11 sandboxing support
   --disable-file-transfer disable file transfer
   --enable-fatal-warnings -W -Wall -Werror
 
@@ -4821,7 +4821,7 @@ echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
-echo "   X11 support: $HAVE_X11"
+echo "   X11 sandboxing support: $HAVE_X11"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo

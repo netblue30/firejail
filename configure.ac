@@ -56,7 +56,7 @@ AS_IF([test "x$enable_userns" != "xno"], [
 
 HAVE_X11=""
 AC_ARG_ENABLE([x11],
-    AS_HELP_STRING([--disable-x11], [disable X11 support]))
+    AS_HELP_STRING([--disable-x11], [disable X11 sandboxing support]))
 AS_IF([test "x$enable_x11" != "xno"], [
 	HAVE_X11="-DHAVE_X11"
 	AC_SUBST(HAVE_X11)
@@ -102,7 +102,7 @@ echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
-echo "   X11 support: $HAVE_X11"
+echo "   X11 sandboxing support: $HAVE_X11"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo

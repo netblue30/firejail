@@ -535,7 +535,12 @@ int x11_check_xpra(void);
 #define SANDBOX_FS_LS 0
 #define SANDBOX_FS_GET 1
 void sandboxfs_name(int op, const char *name, const char *path);
-void sandboxfs(int op, pid_t pid, const char *path);
+void sandboxfs(int op, pid_t pid, const char *patqh);
+
+// checkcfg.c
+#define CFG_FILE_TRANSFER 0
+#define CFG_MAX 1 // this should always be the last entry
+int checkcfg(int val);
 
 #endif
 

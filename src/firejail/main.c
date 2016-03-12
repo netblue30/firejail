@@ -429,52 +429,64 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 #endif	
-#ifndef HAVE_FILE_TRANSFER
+#ifdef HAVE_FILE_TRANSFER
 	else if (strncmp(argv[i], "--get=", 6) == 0) {
-		logargs(argc, argv);
-		
-		// verify path
-		if ((i + 2) != argc) {
-			fprintf(stderr, "Error: invalid --get option, path expected\n");
+		if (checkcfg(CFG_FILE_TRANSFER)) {
+			logargs(argc, argv);
+			
+			// verify path
+			if ((i + 2) != argc) {
+				fprintf(stderr, "Error: invalid --get option, path expected\n");
+				exit(1);
+			}
+			char *path = argv[i + 1];
+			 invalid_filename(path);
+			 if (strstr(path, "..")) {
+			 	fprintf(stderr, "Error: invalid file name %s\n", path);
+			 	exit(1);
+			 }
+			 
+			// get file
+			pid_t pid;
+			if (read_pid(argv[i] + 6, &pid) == 0)		
+				sandboxfs(SANDBOX_FS_GET, pid, path);
+			else
+				sandboxfs_name(SANDBOX_FS_GET, argv[i] + 6, path);
+			exit(0);
+		}
+		else {
+			fprintf(stderr, "Error: this feature is disabled in Firejail configuration file\n");
 			exit(1);
 		}
-		char *path = argv[i + 1];
-		 invalid_filename(path);
-		 if (strstr(path, "..")) {
-		 	fprintf(stderr, "Error: invalid file name %s\n", path);
-		 	exit(1);
-		 }
-		 
-		// get file
-		pid_t pid;
-		if (read_pid(argv[i] + 6, &pid) == 0)		
-			sandboxfs(SANDBOX_FS_GET, pid, path);
-		else
-			sandboxfs_name(SANDBOX_FS_GET, argv[i] + 6, path);
-		exit(0);
 	}
 	else if (strncmp(argv[i], "--ls=", 5) == 0) {
-		logargs(argc, argv);
-		
-		// verify path
-		if ((i + 2) != argc) {
-			fprintf(stderr, "Error: invalid --ls option, path expected\n");
+		if (checkcfg(CFG_FILE_TRANSFER)) {
+			logargs(argc, argv);
+			
+			// verify path
+			if ((i + 2) != argc) {
+				fprintf(stderr, "Error: invalid --ls option, path expected\n");
+				exit(1);
+			}
+			char *path = argv[i + 1];
+			 invalid_filename(path);
+			 if (strstr(path, "..")) {
+			 	fprintf(stderr, "Error: invalid file name %s\n", path);
+			 	exit(1);
+			 }
+			 
+			// list directory contents
+			pid_t pid;
+			if (read_pid(argv[i] + 5, &pid) == 0)		
+				sandboxfs(SANDBOX_FS_LS, pid, path);
+			else
+				sandboxfs_name(SANDBOX_FS_LS, argv[i] + 5, path);
+			exit(0);
+		}
+		else {
+			fprintf(stderr, "Error: this feature is disabled in Firejail configuration file\n");
 			exit(1);
 		}
-		char *path = argv[i + 1];
-		 invalid_filename(path);
-		 if (strstr(path, "..")) {
-		 	fprintf(stderr, "Error: invalid file name %s\n", path);
-		 	exit(1);
-		 }
-		 
-		// list directory contents
-		pid_t pid;
-		if (read_pid(argv[i] + 5, &pid) == 0)		
-			sandboxfs(SANDBOX_FS_LS, pid, path);
-		else
-			sandboxfs_name(SANDBOX_FS_LS, argv[i] + 5, path);
-		exit(0);
 	}
 #endif
 	else if (strncmp(argv[i], "--join=", 7) == 0) {

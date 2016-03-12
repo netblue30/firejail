@@ -55,17 +55,21 @@ int checkcfg(int val) {
 				continue;
 
 			// parse line				
-			line_remove_spaces(buf);
-			if (strncmp(buf, "file-transfer ", 14) == 0) {
-				if (strcmp(buf + 14, "yes") == 0)
+			char *ptr = line_remove_spaces(buf);
+			if (!ptr)
+				continue;
+				
+			if (strncmp(ptr, "file-transfer ", 14) == 0) {
+				if (strcmp(ptr + 14, "yes") == 0)
 					cfg_val[CFG_FILE_TRANSFER] = 1;
-				else if (strcmp(buf + 14, "no") == 0)
+				else if (strcmp(ptr + 14, "no") == 0)
 					cfg_val[CFG_FILE_TRANSFER] = 0;
 				else
 					goto errout;
 			}
 			else
 				goto errout;
+			free(ptr);
 		}
 
 		fclose(fp);

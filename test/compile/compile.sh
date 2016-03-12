@@ -8,6 +8,7 @@ arr[5]="TEST 5: compile user namespace disabled"
 arr[6]="TEST 6: compile network disabled"
 arr[7]="TEST 7: compile X11 disabled"
 arr[8]="TEST 8: compile network restricted"
+arr[9]="TEST 9: compile file transfer disabled"
 
 
 # remove previous reports and output file
@@ -185,6 +186,24 @@ rm output-configure output-make
 
 
 #*****************************************************************
+# TEST 9
+#*****************************************************************
+# - disable file transfer
+# - check compilation
+#*****************************************************************
+print_title "${arr[9]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-network=restricted  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test9
+grep Error output-configure output-make >> ./report-test9
+rm output-configure output-make
+
+
+#*****************************************************************
 # PRINT REPORTS
 #*****************************************************************
 echo
@@ -206,3 +225,4 @@ echo ${arr[5]}
 echo ${arr[6]}
 echo ${arr[7]}
 echo ${arr[8]}
+echo ${arr[9]}

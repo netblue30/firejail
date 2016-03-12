@@ -58,12 +58,22 @@ int checkcfg(int val) {
 			char *ptr = line_remove_spaces(buf);
 			if (!ptr)
 				continue;
-				
+			
+			// file transfer	
 			if (strncmp(ptr, "file-transfer ", 14) == 0) {
 				if (strcmp(ptr + 14, "yes") == 0)
 					cfg_val[CFG_FILE_TRANSFER] = 1;
 				else if (strcmp(ptr + 14, "no") == 0)
 					cfg_val[CFG_FILE_TRANSFER] = 0;
+				else
+					goto errout;
+			}
+			// x11
+			else if (strncmp(ptr, "x11 ", 4) == 0) {
+				if (strcmp(ptr + 4, "yes") == 0)
+					cfg_val[CFG_X11] = 1;
+				else if (strcmp(ptr + 4, "no") == 0)
+					cfg_val[CFG_X11] = 0;
 				else
 					goto errout;
 			}

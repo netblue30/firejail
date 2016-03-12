@@ -278,8 +278,14 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 #ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
-		x11_start(argc, argv);
-		exit(0);
+		if (checkcfg(CFG_X11)) {
+			x11_start(argc, argv);
+			exit(0);
+		}
+		else {
+			fprintf(stderr, "Error: this feature is disabled in Firejail configuration file\n");
+			exit(1);
+		}
 	}
 #endif
 #ifdef HAVE_NETWORK	

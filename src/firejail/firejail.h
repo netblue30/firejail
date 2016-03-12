@@ -539,7 +539,8 @@ void sandboxfs(int op, pid_t pid, const char *patqh);
 
 // checkcfg.c
 #define CFG_FILE_TRANSFER 0
-#define CFG_MAX 1 // this should always be the last entry
+#define CFG_X11 1
+#define CFG_MAX 2 // this should always be the last entry
 int checkcfg(int val);
 
 #endif

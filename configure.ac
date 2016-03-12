@@ -62,6 +62,14 @@ AS_IF([test "x$enable_x11" != "xno"], [
 	AC_SUBST(HAVE_X11)
 ])
 
+HAVE_FILE_TRANSFER=""
+AC_ARG_ENABLE([file-transfer],
+    AS_HELP_STRING([--disable-file-transfer], [disable file transfer]))
+AS_IF([test "x$enable_file_transfer" != "xno"], [
+	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
+	AC_SUBST(HAVE_FILE_TRANSFER)
+])
+
 HAVE_FATAL_WARNINGS=""
 AC_ARG_ENABLE([fatal_warnings],
     AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror]))
@@ -95,6 +103,7 @@ echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 support: $HAVE_X11"
+echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo
 

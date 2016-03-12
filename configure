@@ -629,6 +629,7 @@ EGREP
 GREP
 CPP
 HAVE_FATAL_WARNINGS
+HAVE_FILE_TRANSFER
 HAVE_X11
 HAVE_USERNS
 HAVE_NETWORK
@@ -693,6 +694,7 @@ enable_bind
 enable_network
 enable_userns
 enable_x11
+enable_file_transfer
 enable_fatal_warnings
 '
       ac_precious_vars='build_alias
@@ -1321,6 +1323,7 @@ Optional Features:
                           restrict --net= to root only
   --disable-userns        disable user namespace
   --disable-x11           disable X11 support
+  --disable-file-transfer disable file transfer
   --enable-fatal-warnings -W -Wall -Werror
 
 Some influential environment variables:
@@ -3147,6 +3150,19 @@ if test "x$enable_x11" != "xno"; then :
 
 fi
 
+HAVE_FILE_TRANSFER=""
+# Check whether --enable-file-transfer was given.
+if test "${enable_file_transfer+set}" = set; then :
+  enableval=$enable_file_transfer;
+fi
+
+if test "x$enable_file_transfer" != "xno"; then :
+
+	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
+
+
+fi
+
 HAVE_FATAL_WARNINGS=""
 # Check whether --enable-fatal_warnings was given.
 if test "${enable_fatal_warnings+set}" = set; then :
@@ -4806,6 +4822,7 @@ echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 support: $HAVE_X11"
+echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo
 

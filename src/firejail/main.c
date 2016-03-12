@@ -271,6 +271,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifndef HAVE_X11
 		printf("X11 support is disabled.\n");
 #endif
+#ifndef HAVE_FILE_TRANSFER
+		printf("File transfer support is disabled.\n");
+#endif
 		exit(0);
 	}
 #ifdef HAVE_X11
@@ -426,6 +429,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 #endif	
+#ifndef HAVE_FILE_TRANSFER
 	else if (strncmp(argv[i], "--get=", 6) == 0) {
 		logargs(argc, argv);
 		
@@ -472,6 +476,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			sandboxfs_name(SANDBOX_FS_LS, argv[i] + 5, path);
 		exit(0);
 	}
+#endif
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
 		logargs(argc, argv);
 		

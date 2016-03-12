@@ -283,7 +283,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else {
-			fprintf(stderr, "Error: this feature is disabled in Firejail configuration file\n");
+			fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
 			exit(1);
 		}
 	}
@@ -461,7 +461,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else {
-			fprintf(stderr, "Error: this feature is disabled in Firejail configuration file\n");
+			fprintf(stderr, "Error: --get feature is disabled in Firejail configuration file\n");
 			exit(1);
 		}
 	}
@@ -490,7 +490,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else {
-			fprintf(stderr, "Error: this feature is disabled in Firejail configuration file\n");
+			fprintf(stderr, "Error: --ls feature is disabled in Firejail configuration file\n");
 			exit(1);
 		}
 	}
@@ -887,12 +887,18 @@ int main(int argc, char **argv) {
 		//*************************************
 #ifdef HAVE_BIND		
 		else if (strncmp(argv[i], "--bind=", 7) == 0) {
-			char *line;
-			if (asprintf(&line, "bind %s", argv[i] + 7) == -1)
-				errExit("asprintf");
-
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
+			if (checkcfg(CFG_BIND)) {
+				char *line;
+				if (asprintf(&line, "bind %s", argv[i] + 7) == -1)
+					errExit("asprintf");
+	
+				profile_check_line(line, 0, NULL);	// will exit if something wrong
+				profile_add(line);
+			}
+			else {
+				fprintf(stderr, "Error: --bind feature is disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
 #endif
 		else if (strncmp(argv[i], "--tmpfs=", 8) == 0) {

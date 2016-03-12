@@ -435,12 +435,12 @@ void fs_blacklist(void) {
 			}
 			struct stat s;
 			if (stat(dname1, &s) == -1) {
-				fprintf(stderr, "Error: cannot find directories for bind command\n");
+				fprintf(stderr, "Error: cannot find %s for bind command\n", dname1);
 				entry = entry->next;
 				continue;
 			}
 			if (stat(dname2, &s) == -1) {
-				fprintf(stderr, "Error: cannot find directories for bind command\n");
+				fprintf(stderr, "Error: cannot find %s for bind command\n", dname2);
 				entry = entry->next;
 				continue;
 			}

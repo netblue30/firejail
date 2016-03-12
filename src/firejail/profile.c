@@ -352,34 +352,44 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// filesystem bind
 	if (strncmp(ptr, "bind ", 5) == 0) {
-		if (getuid() != 0) {
-			fprintf(stderr, "Error: --bind option is available only if running as root\n");
-			exit(1);
+#ifdef HAVE_BIND		
+		if (checkcfg(CFG_BIND)) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --bind option is available only if running as root\n");
+				exit(1);
+			}
+	
+			// extract two directories
+			char *dname1 = ptr + 5;
+			char *dname2 = split_comma(dname1); // this inserts a '0 to separate the two dierctories
+			if (dname2 == NULL) {
+				fprintf(stderr, "Error: missing second directory for bind\n");
+				exit(1);
+			}
+			
+			// check directories
+			invalid_filename(dname1);
+			invalid_filename(dname2);
+			if (strstr(dname1, "..") || strstr(dname2, "..")) {
+				fprintf(stderr, "Error: invalid file name.\n");
+				exit(1);
+			}
+			if (is_link(dname1) || is_link(dname2)) {
+				fprintf(stderr, "Symbolic links are not allowed for bind command\n");
+				exit(1);
+			}
+			
+			// insert comma back
+			*(dname2 - 1) = ',';
+			return 1;
 		}
-
-		// extract two directories
-		char *dname1 = ptr + 5;
-		char *dname2 = split_comma(dname1); // this inserts a '0 to separate the two dierctories
-		if (dname2 == NULL) {
-			fprintf(stderr, "Error: missing second directory for bind\n");
-			exit(1);
+		else {
+			fprintf(stderr, "Warning: bind feature is disabled in Firejail configuration file\n");
+			return 0;			
 		}
-		
-		// check directories
-		invalid_filename(dname1);
-		invalid_filename(dname2);
-		if (strstr(dname1, "..") || strstr(dname2, "..")) {
-			fprintf(stderr, "Error: invalid file name.\n");
-			exit(1);
-		}
-		if (is_link(dname1) || is_link(dname2)) {
-			fprintf(stderr, "Symbolic links are not allowed for bind command\n");
-			exit(1);
-		}
-		
-		// insert comma back
-		*(dname2 - 1) = ',';
-		return 1;
+#else
+		return 0;
+#endif		
 	}
 
 	// rlimit

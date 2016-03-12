@@ -77,6 +77,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// bind
+			else if (strncmp(ptr, "bind ", 5) == 0) {
+				if (strcmp(ptr + 5, "yes") == 0)
+					cfg_val[CFG_BIND] = 1;
+				else if (strcmp(ptr + 5, "no") == 0)
+					cfg_val[CFG_BIND] = 0;
+				else
+					goto errout;
+			}
 			else
 				goto errout;
 			free(ptr);

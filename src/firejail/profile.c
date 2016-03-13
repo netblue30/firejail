@@ -123,8 +123,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// seccomp, caps, private, user namespace
 	else if (strcmp(ptr, "noroot") == 0) {
 #if HAVE_USERNS
-		check_user_namespace();
+		if (checkcfg(CFG_USERNS))
+			check_user_namespace();
+		else
+			fprintf(stderr, "Warning: user namespace feature is disabled in Firejail configuration file\n");
 #endif
+
 		return 0;
 	}
 	else if (strcmp(ptr, "seccomp") == 0) {

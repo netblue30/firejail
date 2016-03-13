@@ -1155,7 +1155,12 @@ int main(int argc, char **argv) {
 			arg_nogroups = 1;
 #ifdef HAVE_USERNS
 		else if (strcmp(argv[i], "--noroot") == 0) {
-			check_user_namespace();
+			if (checkcfg(CFG_USERNS))
+				check_user_namespace();
+			else {
+				fprintf(stderr, "Error: --noroot feature is disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
 #endif
 		else if (strncmp(argv[i], "--env=", 6) == 0)

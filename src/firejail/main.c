@@ -356,20 +356,38 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	//*************************************
 #ifdef HAVE_SECCOMP
 	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
-		syscall_print();
-		exit(0);
+		if (checkcfg(CFG_SECCOMP)) {
+			syscall_print();
+			exit(0);
+		}
+		else {
+			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
+			exit(1);
+		}
 	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
-		errno_print();
+		if (checkcfg(CFG_SECCOMP)) {
+			errno_print();
+		}
+		else {
+			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
+			exit(1);
+		}
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
-		// print seccomp filter for a sandbox specified by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 16, &pid) == 0)		
-			seccomp_print_filter(pid);
-		else
-			seccomp_print_filter_name(argv[i] + 16);
+		if (checkcfg(CFG_SECCOMP)) {
+			// print seccomp filter for a sandbox specified by pid or by name
+			pid_t pid;
+			if (read_pid(argv[i] + 16, &pid) == 0)		
+				seccomp_print_filter(pid);
+			else
+				seccomp_print_filter_name(argv[i] + 16);
+		}
+		else {
+			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
+			exit(1);
+		}
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--debug-protocols") == 0) {
@@ -377,12 +395,18 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
-		// print seccomp filter for a sandbox specified by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 17, &pid) == 0)		
-			protocol_print_filter(pid);
-		else
-			protocol_print_filter_name(argv[i] + 17);
+		if (checkcfg(CFG_SECCOMP)) {
+			// print seccomp filter for a sandbox specified by pid or by name
+			pid_t pid;
+			if (read_pid(argv[i] + 17, &pid) == 0)		
+				protocol_print_filter(pid);
+			else
+				protocol_print_filter_name(argv[i] + 17);
+		}
+		else {
+			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
+			exit(1);
+		}
 		exit(0);
 	}
 #endif
@@ -733,72 +757,109 @@ int main(int argc, char **argv) {
 		// filtering
 		//*************************************
 #ifdef HAVE_SECCOMP
-		else if (strncmp(argv[i], "--protocol=", 11) == 0) 
-			protocol_store(argv[i] + 11);
-		else if (strcmp(argv[i], "--seccomp") == 0) {
-			if (arg_seccomp) {
-				fprintf(stderr, "Error: seccomp already enabled\n");
+		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				protocol_store(argv[i] + 11);
+			}
+			else {
+				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			arg_seccomp = 1;
+		}
+		else if (strcmp(argv[i], "--seccomp") == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp) {
+					fprintf(stderr, "Error: seccomp already enabled\n");
+					exit(1);
+				}
+				arg_seccomp = 1;
+			}
+			else {
+				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
 		else if (strncmp(argv[i], "--seccomp=", 10) == 0) {
-			if (arg_seccomp) {
-				fprintf(stderr, "Error: seccomp already enabled\n");
+			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp) {
+					fprintf(stderr, "Error: seccomp already enabled\n");
+					exit(1);
+				}
+				arg_seccomp = 1;
+				cfg.seccomp_list = strdup(argv[i] + 10);
+				if (!cfg.seccomp_list)
+					errExit("strdup");
+			}
+			else {
+				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			arg_seccomp = 1;
-			cfg.seccomp_list = strdup(argv[i] + 10);
-			if (!cfg.seccomp_list)
-				errExit("strdup");
 		}
 		else if (strncmp(argv[i], "--seccomp.drop=", 15) == 0) {
-			if (arg_seccomp) {
-				fprintf(stderr, "Error: seccomp already enabled\n");
+			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp) {
+					fprintf(stderr, "Error: seccomp already enabled\n");
+					exit(1);
+				}
+				arg_seccomp = 1;
+				cfg.seccomp_list_drop = strdup(argv[i] + 15);
+				if (!cfg.seccomp_list_drop)
+					errExit("strdup");
+			}
+			else {
+				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			arg_seccomp = 1;
-			cfg.seccomp_list_drop = strdup(argv[i] + 15);
-			if (!cfg.seccomp_list_drop)
-				errExit("strdup");
 		}
 		else if (strncmp(argv[i], "--seccomp.keep=", 15) == 0) {
-			if (arg_seccomp) {
-				fprintf(stderr, "Error: seccomp already enabled\n");
+			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp) {
+					fprintf(stderr, "Error: seccomp already enabled\n");
+					exit(1);
+				}
+				arg_seccomp = 1;
+				cfg.seccomp_list_keep = strdup(argv[i] + 15);
+				if (!cfg.seccomp_list_keep)
+					errExit("strdup");
+			}
+			else {
+				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			arg_seccomp = 1;
-			cfg.seccomp_list_keep = strdup(argv[i] + 15);
-			if (!cfg.seccomp_list_keep)
-				errExit("strdup");
 		}
 		else if (strncmp(argv[i], "--seccomp.e", 11) == 0 && strchr(argv[i], '=')) {
-			if (arg_seccomp && !cfg.seccomp_list_errno) {
-				fprintf(stderr, "Error: seccomp already enabled\n");
-				exit(1);
-			}
-			char *eq = strchr(argv[i], '=');
-			char *errnoname = strndup(argv[i] + 10, eq - (argv[i] + 10));
-			int nr = errno_find_name(errnoname);
-			if (nr == -1) {
-				fprintf(stderr, "Error: unknown errno %s\n", errnoname);
+			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp && !cfg.seccomp_list_errno) {
+					fprintf(stderr, "Error: seccomp already enabled\n");
+					exit(1);
+				}
+				char *eq = strchr(argv[i], '=');
+				char *errnoname = strndup(argv[i] + 10, eq - (argv[i] + 10));
+				int nr = errno_find_name(errnoname);
+				if (nr == -1) {
+					fprintf(stderr, "Error: unknown errno %s\n", errnoname);
+					free(errnoname);
+					exit(1);
+				}
+	
+				if (!cfg.seccomp_list_errno)
+					cfg.seccomp_list_errno = calloc(highest_errno+1, sizeof(cfg.seccomp_list_errno[0]));
+	
+				if (cfg.seccomp_list_errno[nr]) {
+					fprintf(stderr, "Error: errno %s already configured\n", errnoname);
+					free(errnoname);
+					exit(1);
+				}
+				arg_seccomp = 1;
+				cfg.seccomp_list_errno[nr] = strdup(eq+1);
+				if (!cfg.seccomp_list_errno[nr])
+					errExit("strdup");
 				free(errnoname);
+			}
+			else {
+				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-
-			if (!cfg.seccomp_list_errno)
-				cfg.seccomp_list_errno = calloc(highest_errno+1, sizeof(cfg.seccomp_list_errno[0]));
-
-			if (cfg.seccomp_list_errno[nr]) {
-				fprintf(stderr, "Error: errno %s already configured\n", errnoname);
-				free(errnoname);
-				exit(1);
-			}
-			arg_seccomp = 1;
-			cfg.seccomp_list_errno[nr] = strdup(eq+1);
-			if (!cfg.seccomp_list_errno[nr])
-				errExit("strdup");
-			free(errnoname);
 		}
 #endif		
 		else if (strcmp(argv[i], "--caps") == 0)
@@ -1061,33 +1122,40 @@ int main(int argc, char **argv) {
 		}
 #ifdef HAVE_CHROOT		
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
-			if (arg_overlay) {
-				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+			if (checkcfg(CFG_CHROOT)) {
+				if (arg_overlay) {
+					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					exit(1);
+				}
+				invalid_filename(argv[i] + 9);
+				
+				// extract chroot dirname
+				cfg.chrootdir = argv[i] + 9;
+				// if the directory starts with ~, expand the home directory
+				if (*cfg.chrootdir == '~') {
+					char *tmp;
+					if (asprintf(&tmp, "%s%s", cfg.homedir, cfg.chrootdir + 1) == -1)
+						errExit("asprintf");
+					cfg.chrootdir = tmp;
+				}
+				
+				// check chroot dirname exists
+				if (strstr(cfg.chrootdir, "..") || !is_dir(cfg.chrootdir) || is_link(cfg.chrootdir)) {
+					fprintf(stderr, "Error: invalid directory %s\n", cfg.chrootdir);
+					return 1;
+				}
+				
+				// check chroot directory structure
+				if (fs_check_chroot_dir(cfg.chrootdir)) {
+					fprintf(stderr, "Error: invalid chroot\n");
+					exit(1);
+				}
+			}
+			else {
+				fprintf(stderr, "Error: --chroot feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			invalid_filename(argv[i] + 9);
-			
-			// extract chroot dirname
-			cfg.chrootdir = argv[i] + 9;
-			// if the directory starts with ~, expand the home directory
-			if (*cfg.chrootdir == '~') {
-				char *tmp;
-				if (asprintf(&tmp, "%s%s", cfg.homedir, cfg.chrootdir + 1) == -1)
-					errExit("asprintf");
-				cfg.chrootdir = tmp;
-			}
-			
-			// check chroot dirname exists
-			if (strstr(cfg.chrootdir, "..") || !is_dir(cfg.chrootdir) || is_link(cfg.chrootdir)) {
-				fprintf(stderr, "Error: invalid directory %s\n", cfg.chrootdir);
-				return 1;
-			}
-			
-			// check chroot directory structure
-			if (fs_check_chroot_dir(cfg.chrootdir)) {
-				fprintf(stderr, "Error: invalid chroot\n");
-				exit(1);
-			}
+
 		}
 #endif
 		else if (strcmp(argv[i], "--private") == 0)

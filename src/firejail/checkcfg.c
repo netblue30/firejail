@@ -86,12 +86,30 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			// bind
+			// user namespace
 			else if (strncmp(ptr, "userns ", 7) == 0) {
 				if (strcmp(ptr + 7, "yes") == 0)
 					cfg_val[CFG_USERNS] = 1;
 				else if (strcmp(ptr + 7, "no") == 0)
 					cfg_val[CFG_USERNS] = 0;
+				else
+					goto errout;
+			}
+			// chroot
+			else if (strncmp(ptr, "chroot ", 7) == 0) {
+				if (strcmp(ptr + 7, "yes") == 0)
+					cfg_val[CFG_CHROOT] = 1;
+				else if (strcmp(ptr + 7, "no") == 0)
+					cfg_val[CFG_CHROOT] = 0;
+				else
+					goto errout;
+			}
+			// seccomp
+			else if (strncmp(ptr, "seccomp ", 8) == 0) {
+				if (strcmp(ptr + 8, "yes") == 0)
+					cfg_val[CFG_SECCOMP] = 1;
+				else if (strcmp(ptr + 8, "no") == 0)
+					cfg_val[CFG_SECCOMP] = 0;
 				else
 					goto errout;
 			}

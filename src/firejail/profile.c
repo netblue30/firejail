@@ -132,7 +132,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "seccomp") == 0) {
-		arg_seccomp = 1;
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP))
+			arg_seccomp = 1;
+		else
+			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+#endif
 		return 0;
 	}
 	else if (strcmp(ptr, "caps") == 0) {
@@ -209,12 +214,15 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
-#ifdef HAVE_SECCOMP
 	if (strncmp(ptr, "protocol ", 9) == 0) {
-		protocol_store(ptr + 9);
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP))
+			protocol_store(ptr + 9);
+		else
+			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+#endif
 		return 0;
 	}
-#endif
 	
 	if (strncmp(ptr, "env ", 4) == 0) {
 		env_store(ptr + 4);
@@ -223,34 +231,47 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	
 	// seccomp drop list on top of default list
 	if (strncmp(ptr, "seccomp ", 8) == 0) {
-		arg_seccomp = 1;
 #ifdef HAVE_SECCOMP
-		cfg.seccomp_list = strdup(ptr + 8);
-		if (!cfg.seccomp_list)
-			errExit("strdup");
+		if (checkcfg(CFG_SECCOMP)) {
+			arg_seccomp = 1;
+			cfg.seccomp_list = strdup(ptr + 8);
+			if (!cfg.seccomp_list)
+				errExit("strdup");
+		}
+		else
+			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
 #endif
+
 		return 0;
 	}
 	
 	// seccomp drop list without default list
 	if (strncmp(ptr, "seccomp.drop ", 13) == 0) {
-		arg_seccomp = 1;
 #ifdef HAVE_SECCOMP
-		cfg.seccomp_list_drop = strdup(ptr + 13);
-		if (!cfg.seccomp_list_drop)
-			errExit("strdup");
-#endif
+		if (checkcfg(CFG_SECCOMP)) {
+			arg_seccomp = 1;
+			cfg.seccomp_list_drop = strdup(ptr + 13);
+			if (!cfg.seccomp_list_drop)
+				errExit("strdup");
+		}
+		else
+			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+#endif		
 		return 0;
 	}
 
 	// seccomp keep list
 	if (strncmp(ptr, "seccomp.keep ", 13) == 0) {
-		arg_seccomp = 1;
 #ifdef HAVE_SECCOMP
-		cfg.seccomp_list_keep= strdup(ptr + 13);
-		if (!cfg.seccomp_list_keep)
-			errExit("strdup");
-#endif
+		if (checkcfg(CFG_SECCOMP)) {
+			arg_seccomp = 1;
+			cfg.seccomp_list_keep= strdup(ptr + 13);
+			if (!cfg.seccomp_list_keep)
+				errExit("strdup");
+		}
+		else
+			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+#endif		
 		return 0;
 	}
 	

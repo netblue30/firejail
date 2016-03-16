@@ -72,3 +72,5 @@
 /etc/firejail/vivaldi.profile
 /etc/firejail/vivaldi-beta.profile
 /etc/firejail/atril.profile
+/etc/firejail/firejail.config
+/etc/firejail/qutebrowser.profile

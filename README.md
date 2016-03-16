@@ -154,5 +154,5 @@ $ man firejail-profile
 
 ## New security profiles
 
-lxterminal, Epiphany, cherrytree, Battle for Wesnoth, Hedgewars, qutebrowser
+lxterminal, Epiphany, cherrytree, Battle for Wesnoth, Hedgewars, qutebrowser, SlimJet
 

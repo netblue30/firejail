@@ -310,7 +310,11 @@ void pid_read(pid_t mon_pid) {
 			continue;
 		if (pid == mypid)
 			continue;
-		
+
+		// skip PID 1 just in case we run a sandbox-in-sandbox
+		if (pid == 1)
+			continue;
+			
 		// open stat file
 		char *file;
 		if (asprintf(&file, "/proc/%u/status", pid) == -1) {

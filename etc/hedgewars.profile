@@ -12,7 +12,6 @@ private-dev
 whitelist /tmp/.X11-unix
 seccomp
 tracelog
-netfilter
 
 mkdir     ~/.hedgewars
 whitelist ~/.hedgewars

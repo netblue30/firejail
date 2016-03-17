@@ -645,7 +645,8 @@ int main(int argc, char **argv) {
 	int i;
 	int prog_index = -1;			  // index in argv where the program command starts
 	int lockfd = -1;
-	int arg_cgroup = 0;
+	int option_cgroup = 0;
+	int option_force = 0;
 	int custom_profile = 0;	// custom profile loaded
 	char *custom_profile_dir = NULL; // custom profile directory
 	int arg_noprofile = 0; // use generic.profile if none other found/specified
@@ -667,7 +668,11 @@ int main(int argc, char **argv) {
 		// if --force option is passed to the program, disregard the existing sandbox
 		int found = 0;
 		for (i = 1; i < argc; i++) {
-			if (strcmp(argv[i], "--force") == 0) {
+			if (strcmp(argv[i], "--force") == 0 ||
+			    strcmp(argv[i], "--netstats") == 0 ||	
+			    strcmp(argv[i], "--list") == 0 ||	
+			    strcmp(argv[i], "--tree") == 0 ||	
+			    strcmp(argv[i], "--top") == 0) {
 				found = 1;
 				break;
 			}
@@ -683,6 +688,8 @@ int main(int argc, char **argv) {
 			// it will never get here!
 			assert(0);
 		}
+		else
+			option_force = 1;
 	}
 
 	// check root/suid
@@ -740,8 +747,11 @@ int main(int argc, char **argv) {
 	for (i = 1; i < argc; i++) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
 		
-		if (strcmp(argv[i], "--debug") == 0)
+		if (strcmp(argv[i], "--debug") == 0) {
 			arg_debug = 1;
+			if (option_force)
+				printf("Entering sandbox-in-sandbox mode\n");
+		}
 		else if (strcmp(argv[i], "--debug-check-filename") == 0)
 			arg_debug_check_filename = 1;
 		else if (strcmp(argv[i], "--debug-blacklists") == 0)
@@ -752,7 +762,7 @@ int main(int argc, char **argv) {
 			arg_quiet = 1;
 		else if (strcmp(argv[i], "--force") == 0)
 			;
-		
+
 		//*************************************
 		// filtering
 		//*************************************
@@ -931,12 +941,12 @@ int main(int argc, char **argv) {
 			arg_nice = 1;
 		}
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
-			if (arg_cgroup) {
+			if (option_cgroup) {
 				fprintf(stderr, "Error: only a cgroup can be defined\n");
 				exit(1);
 			}
 			
-			arg_cgroup = 1;
+			option_cgroup = 1;
 			cfg.cgroup = strdup(argv[i] + 9);
 			if (!cfg.cgroup)
 				errExit("strdup");

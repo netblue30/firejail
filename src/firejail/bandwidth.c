@@ -341,6 +341,7 @@ void bandwidth_shm_set(pid_t pid, const char *dev, int down, int up) {
 // command execution
 //***********************************
 void bandwidth_name(const char *name, const char *command, const char *dev, int down, int up) {
+	EUID_ASSERT();
 	if (!name || strlen(name) == 0) {
 		fprintf(stderr, "Error: invalid sandbox name\n");
 		exit(1);
@@ -355,6 +356,7 @@ void bandwidth_name(const char *name, const char *command, const char *dev, int 
 }
 
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) {
+	EUID_ASSERT();
 	//************************
 	// verify sandbox
 	//************************
@@ -388,6 +390,8 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		fprintf(stderr, "Error: cannot join the network namespace\n");
 		exit(1);
 	}
+
+	EUID_ROOT();
 	if (join_namespace(child, "net")) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");
 		exit(1);

@@ -604,7 +604,7 @@ int sandbox(void* sandbox_arg) {
 	// set security filters
 	//****************************
 	// set capabilities
-	if (!arg_noroot)
+//	if (!arg_noroot)
 		set_caps();
 
 	// set rlimits
@@ -646,8 +646,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
-			fprintf(stderr, "Warning: cannot mount a new user namespace, going forward without it\n");
-			perror("unshare");
+			fprintf(stderr, "Warning: cannot mount a new user namespace, going forward without it...\n");
 			drop_privs(arg_nogroups);
 			arg_noroot = 0;
 		}
@@ -667,11 +666,10 @@ int sandbox(void* sandbox_arg) {
 	// somehow, the new user namespace resets capabilities;
 	// we need to do them again
 	if (arg_noroot) {
-		set_caps();
 		if (arg_debug)
 			printf("noroot user namespace installed\n");
+		set_caps();
 	}
-
 
 	//****************************************
 	// fork the application and monitor it

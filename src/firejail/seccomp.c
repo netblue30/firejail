@@ -261,7 +261,7 @@ static void filter_end_whitelist(void) {
 }
 
 
-// save seccomp filter in  /tmp/firejail/mnt/seccomp
+// save seccomp filter in  /run/firejail/mnt/seccomp
 static void write_seccomp_file(void) {
 	fs_build_mnt_dir();
 	assert(sfilter);
@@ -283,10 +283,10 @@ static void write_seccomp_file(void) {
 		errExit("chown");
 }
 
-// read seccomp filter from /tmp/firejail/mnt/seccomp
+// read seccomp filter from /run/firejail/mnt/seccomp
 static void read_seccomp_file(const char *fname) {
 	assert(sfilter == NULL && sfilter_index == 0);
-
+printf("***%s***\n", fname);
 	// check file
 	struct stat s;
 	if (stat(fname, &s) == -1) {

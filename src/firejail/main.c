@@ -343,7 +343,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		
 		// extract pid or sandbox name
 		pid_t pid;
-		EUID_ROOT();
 		if (read_pid(argv[i] + 12, &pid) == 0)
 			bandwidth_pid(pid, cmd, dev, down, up);
 		else
@@ -669,10 +668,35 @@ int main(int argc, char **argv) {
 		int found = 0;
 		for (i = 1; i < argc; i++) {
 			if (strcmp(argv[i], "--force") == 0 ||
-			    strcmp(argv[i], "--netstats") == 0 ||	
 			    strcmp(argv[i], "--list") == 0 ||	
+			    strcmp(argv[i], "--netstats") == 0 ||	
 			    strcmp(argv[i], "--tree") == 0 ||	
-			    strcmp(argv[i], "--top") == 0) {
+			    strcmp(argv[i], "--top") == 0 ||
+			    strncmp(argv[i], "--ls=", 5) == 0 ||
+			    strncmp(argv[i], "--get=", 6) == 0 ||
+			    strcmp(argv[i], "--debug-caps") == 0 ||
+			    strcmp(argv[i], "--debug-errnos") == 0 ||
+			    strcmp(argv[i], "--debug-syscalls") == 0 ||
+			    strcmp(argv[i], "--debug-protocols") == 0 ||
+			    strcmp(argv[i], "--help") == 0 ||
+			    strcmp(argv[i], "--version") == 0 ||
+			    strncmp(argv[i], "--dns.print=", 12) == 0 ||
+			    strncmp(argv[i], "--bandwidth=", 12) == 0 ||
+			    strncmp(argv[i], "--caps.print=", 13) == 0 ||
+//********************************************************************************
+// todo: fix the following problems
+			    strncmp(argv[i], "--join=", 7) == 0 ||
+//[netblue@debian Downloads]$ firejail --join=896
+//Switching to pid 897, the first child process inside the sandbox
+//Error: seccomp file not found
+//********************************************************************************
+
+			    strncmp(argv[i], "--join-filesystem=", 18) == 0 ||
+			    strncmp(argv[i], "--join-network=", 15) == 0 ||
+			    strncmp(argv[i], "--fs.print=", 11) == 0 ||
+			    strncmp(argv[i], "--protocol.print=", 17) == 0 ||
+			    strncmp(argv[i], "--seccomp.print", 15) == 0 ||
+			    strncmp(argv[i], "--shutdown=", 11) == 0) {
 				found = 1;
 				break;
 			}

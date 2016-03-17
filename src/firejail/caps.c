@@ -439,8 +439,6 @@ void caps_print_filter(pid_t pid) {
 	}
 
 	uint64_t caps = extract_caps(pid);
-	drop_privs(1);
-
 	int i;
 	uint64_t mask;
 	int elems = sizeof(capslist) / sizeof(capslist[0]);

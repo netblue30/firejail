@@ -35,3 +35,23 @@ socat ABSTRACT-LISTEN:/tmp/dbus-awBoQTCc,fork UNIX-CONNECT:/tmp/mysock
 8. profile for dillo
 Also, in dillo open a directory (file:///etc), when the browser window is closed the sandbox still remains active.
 This is probably a dillo problem.
+
+9. --force sandbox in a overlayfs sandbox
+
+$ sudo firejail --overlay
+# su netblue
+$ xterm &
+$ firejail --force --private
+Parent pid 77, child pid 78
+Warning: failed to unmount /sys
+
+Warning: cannot mount a new user namespace, going forward without it...
+Child process initialized
+
+Try to join the forced sandbox in xterm window:
+$ firejail --join=77
+Switching to pid 78, the first child process inside the sandbox
+Warning: seccomp file not found
+Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.
+$ ls ~ <----------------- all files are available, the directory is not empty!
+

@@ -286,12 +286,12 @@ static void write_seccomp_file(void) {
 // read seccomp filter from /run/firejail/mnt/seccomp
 static void read_seccomp_file(const char *fname) {
 	assert(sfilter == NULL && sfilter_index == 0);
-printf("***%s***\n", fname);
+
 	// check file
 	struct stat s;
 	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error: seccomp file not found\n");
-		exit(1);
+		fprintf(stderr, "Warning: seccomp file not found\n");
+		return;
 	}
 	ssize_t sz = s.st_size;
 	if (sz == 0 || (sz % sizeof(struct sock_filter)) != 0) {

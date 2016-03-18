@@ -35,6 +35,7 @@ int checkcfg(int val) {
 		int i;
 		for (i = 0; i < CFG_MAX; i++)
 			cfg_val[i] = 1; // most of them are enabled by default
+		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
 		
 		// open configuration file
 		char *fname;
@@ -110,6 +111,24 @@ int checkcfg(int val) {
 					cfg_val[CFG_SECCOMP] = 1;
 				else if (strcmp(ptr + 8, "no") == 0)
 					cfg_val[CFG_SECCOMP] = 0;
+				else
+					goto errout;
+			}
+			// network
+			else if (strncmp(ptr, "network ", 8) == 0) {
+				if (strcmp(ptr + 8, "yes") == 0)
+					cfg_val[CFG_NETWORK] = 1;
+				else if (strcmp(ptr + 8, "no") == 0)
+					cfg_val[CFG_NETWORK] = 0;
+				else
+					goto errout;
+			}
+			// network
+			else if (strncmp(ptr, "restricted-network ", 19) == 0) {
+				if (strcmp(ptr + 19, "yes") == 0)
+					cfg_val[CFG_RESTRICTED_NETWORK] = 1;
+				else if (strcmp(ptr + 19, "no") == 0)
+					cfg_val[CFG_RESTRICTED_NETWORK] = 0;
 				else
 					goto errout;
 			}

@@ -290,63 +290,69 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #endif
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
-		logargs(argc, argv);
-		
-		// extract the command
-		if ((i + 1) == argc) {
-			fprintf(stderr, "Error: command expected after --bandwidth option\n");
-			exit(1);
-		}
-		char *cmd = argv[i + 1];
-		if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
-			fprintf(stderr, "Error: invalid --bandwidth command.\nValid commands: set, clear, status.\n");
-			exit(1);
-		}
-
-		// extract network name
-		char *dev = NULL;
-		int down = 0;
-		int up = 0;
-		if (strcmp(cmd, "set") == 0 || strcmp(cmd, "clear") == 0) {
-			// extract device name
-			if ((i + 2) == argc) {
-				fprintf(stderr, "Error: network name expected after --bandwidth %s option\n", cmd);
+		if (checkcfg(CFG_NETWORK)) {
+			logargs(argc, argv);
+			
+			// extract the command
+			if ((i + 1) == argc) {
+				fprintf(stderr, "Error: command expected after --bandwidth option\n");
 				exit(1);
 			}
-			dev = argv[i + 2];
-
-			// check device name
-			if (if_nametoindex(dev) == 0) {
-				fprintf(stderr, "Error: network device %s not found\n", dev);
+			char *cmd = argv[i + 1];
+			if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
+				fprintf(stderr, "Error: invalid --bandwidth command.\nValid commands: set, clear, status.\n");
 				exit(1);
 			}
-
-			// extract bandwidth
-			if (strcmp(cmd, "set") == 0) {
-				if ((i + 4) >= argc) {
-					fprintf(stderr, "Error: invalid --bandwidth set command\n");
+	
+			// extract network name
+			char *dev = NULL;
+			int down = 0;
+			int up = 0;
+			if (strcmp(cmd, "set") == 0 || strcmp(cmd, "clear") == 0) {
+				// extract device name
+				if ((i + 2) == argc) {
+					fprintf(stderr, "Error: network name expected after --bandwidth %s option\n", cmd);
 					exit(1);
 				}
-				
-				down = atoi(argv[i + 3]);
-				if (down < 0) {
-					fprintf(stderr, "Error: invalid download speed\n");
+				dev = argv[i + 2];
+	
+				// check device name
+				if (if_nametoindex(dev) == 0) {
+					fprintf(stderr, "Error: network device %s not found\n", dev);
 					exit(1);
 				}
-				up = atoi(argv[i + 4]);
-				if (up < 0) {
-					fprintf(stderr, "Error: invalid upload speed\n");
-					exit(1);
+	
+				// extract bandwidth
+				if (strcmp(cmd, "set") == 0) {
+					if ((i + 4) >= argc) {
+						fprintf(stderr, "Error: invalid --bandwidth set command\n");
+						exit(1);
+					}
+					
+					down = atoi(argv[i + 3]);
+					if (down < 0) {
+						fprintf(stderr, "Error: invalid download speed\n");
+						exit(1);
+					}
+					up = atoi(argv[i + 4]);
+					if (up < 0) {
+						fprintf(stderr, "Error: invalid upload speed\n");
+						exit(1);
+					}
 				}
-			}
-		}	
-		
-		// extract pid or sandbox name
-		pid_t pid;
-		if (read_pid(argv[i] + 12, &pid) == 0)
-			bandwidth_pid(pid, cmd, dev, down, up);
-		else
-			bandwidth_name(argv[i] + 12, cmd, dev, down, up);
+			}	
+			
+			// extract pid or sandbox name
+			pid_t pid;
+			if (read_pid(argv[i] + 12, &pid) == 0)
+				bandwidth_pid(pid, cmd, dev, down, up);
+			else
+				bandwidth_name(argv[i] + 12, cmd, dev, down, up);
+		}
+		else {
+			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+			exit(1);
+		}
 		exit(0);
 	}
 #endif
@@ -454,7 +460,13 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 #ifdef HAVE_NETWORK	
 	else if (strcmp(argv[i], "--netstats") == 0) {
-		netstats();
+		if (checkcfg(CFG_NETWORK)) {
+			netstats();
+		}
+		else {
+			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+			exit(1);
+		}
 		exit(0);
 	}
 #endif	
@@ -531,19 +543,26 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
-		logargs(argc, argv);
-		arg_join_network = 1;
-		if (getuid() != 0) {
-			fprintf(stderr, "Error: --join-network is only available to root user\n");
+		if (checkcfg(CFG_NETWORK)) {
+			logargs(argc, argv);
+			arg_join_network = 1;
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --join-network is only available to root user\n");
+				exit(1);
+			}
+			
+			// join sandbox by pid or by name
+			pid_t pid;
+			if (read_pid(argv[i] + 15, &pid) == 0)		
+				join(pid, argc, argv, i + 1);
+			else
+				join_name(argv[i] + 15, argc, argv, i + 1);
+		}
+		else {
+			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
 			exit(1);
 		}
-		
-		// join sandbox by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 15, &pid) == 0)		
-			join(pid, argc, argv, i + 1);
-		else
-			join_name(argv[i] + 15, argc, argv, i + 1);
+
 		exit(0);
 	}
 #endif
@@ -1277,204 +1296,278 @@ int main(int argc, char **argv) {
 		//*************************************
 #ifdef HAVE_NETWORK	
 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
 #ifdef HAVE_NETWORK_RESTRICTED
-			if (getuid() != 0) {
-				fprintf(stderr, "Error: --interface is allowed only to root user\n");
-				exit(1);
-			}
+				// compile time restricted networking
+				if (getuid() != 0) {
+					fprintf(stderr, "Error: --interface is allowed only to root user\n");
+					exit(1);
+				}
 #endif
-			// checks
-			if (arg_nonetwork) {
-				fprintf(stderr, "Error: --network=none and --interface are incompatible\n");
-				exit(1);
+				// run time restricted networking
+				if (checkcfg(CFG_RESTRICTED_NETWORK) && getuid() != 0) {
+					fprintf(stderr, "Error: --interface is allowed only to root user\n");
+					exit(1);
+				}
+		
+				// checks
+				if (arg_nonetwork) {
+					fprintf(stderr, "Error: --network=none and --interface are incompatible\n");
+					exit(1);
+				}
+				if (strcmp(argv[i] + 12, "lo") == 0) {
+					fprintf(stderr, "Error: cannot use lo device in --interface command\n");
+					exit(1);
+				}
+				int ifindex = if_nametoindex(argv[i] + 12);
+				if (ifindex <= 0) {
+					fprintf(stderr, "Error: cannot find interface %s\n", argv[i] + 12);
+					exit(1);
+				}
+				
+				Interface *intf;
+				if (cfg.interface0.configured == 0)
+					intf = &cfg.interface0;
+				else if (cfg.interface1.configured == 0)
+					intf = &cfg.interface1;
+				else if (cfg.interface2.configured == 0)
+					intf = &cfg.interface2;
+				else if (cfg.interface3.configured == 0)
+					intf = &cfg.interface3;
+				else {
+					fprintf(stderr, "Error: maximum 4 interfaces are allowed\n");
+					return 1;
+				}
+				
+				intf->dev = strdup(argv[i] + 12);
+				if (!intf->dev)
+					errExit("strdup");
+				
+				if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac, &intf->mtu)) {
+					fprintf(stderr, "Warning:  interface %s is not configured\n", intf->dev);
+				}
+				intf->configured = 1;
 			}
-			if (strcmp(argv[i] + 12, "lo") == 0) {
-				fprintf(stderr, "Error: cannot use lo device in --interface command\n");
-				exit(1);
-			}
-			int ifindex = if_nametoindex(argv[i] + 12);
-			if (ifindex <= 0) {
-				fprintf(stderr, "Error: cannot find interface %s\n", argv[i] + 12);
-				exit(1);
-			}
-			
-			Interface *intf;
-			if (cfg.interface0.configured == 0)
-				intf = &cfg.interface0;
-			else if (cfg.interface1.configured == 0)
-				intf = &cfg.interface1;
-			else if (cfg.interface2.configured == 0)
-				intf = &cfg.interface2;
-			else if (cfg.interface3.configured == 0)
-				intf = &cfg.interface3;
 			else {
-				fprintf(stderr, "Error: maximum 4 interfaces are allowed\n");
-				return 1;
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
 			}
-			
-			intf->dev = strdup(argv[i] + 12);
-			if (!intf->dev)
-				errExit("strdup");
-			
-			if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac, &intf->mtu)) {
-				fprintf(stderr, "Warning:  interface %s is not configured\n", intf->dev);
-			}
-			intf->configured = 1;
 		}
-		else if (strncmp(argv[i], "--net=", 6) == 0) {
-			if (strcmp(argv[i] + 6, "none") == 0) {
-				arg_nonetwork  = 1;
-				cfg.bridge0.configured = 0;
-				cfg.bridge1.configured = 0;
-				cfg.bridge2.configured = 0;
-				cfg.bridge3.configured = 0;
-				cfg.interface0.configured = 0;
-				cfg.interface1.configured = 0;
-				cfg.interface2.configured = 0;
-				cfg.interface3.configured = 0;
-				continue;
-			}
-#ifdef HAVE_NETWORK_RESTRICTED
-			if (getuid() != 0) {
-				fprintf(stderr, "Error: only --net=none is allowed to non-root users\n");
-				exit(1);
-			}
-#endif
-			if (strcmp(argv[i] + 6, "lo") == 0) {
-				fprintf(stderr, "Error: cannot attach to lo device\n");
-				exit(1);
-			}
 
-			Bridge *br;
-			if (cfg.bridge0.configured == 0)
-				br = &cfg.bridge0;
-			else if (cfg.bridge1.configured == 0)
-				br = &cfg.bridge1;
-			else if (cfg.bridge2.configured == 0)
-				br = &cfg.bridge2;
-			else if (cfg.bridge3.configured == 0)
-				br = &cfg.bridge3;
-			else {
-				fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
-				return 1;
+		else if (strncmp(argv[i], "--net=", 6) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				if (strcmp(argv[i] + 6, "none") == 0) {
+					arg_nonetwork  = 1;
+					cfg.bridge0.configured = 0;
+					cfg.bridge1.configured = 0;
+					cfg.bridge2.configured = 0;
+					cfg.bridge3.configured = 0;
+					cfg.interface0.configured = 0;
+					cfg.interface1.configured = 0;
+					cfg.interface2.configured = 0;
+					cfg.interface3.configured = 0;
+					continue;
+				}
+
+#ifdef HAVE_NETWORK_RESTRICTED
+				// compile time restricted networking
+				if (getuid() != 0) {
+					fprintf(stderr, "Error: only --net=none is allowed to non-root users\n");
+					exit(1);
+				}
+#endif
+				// run time restricted networking
+				if (checkcfg(CFG_RESTRICTED_NETWORK) && getuid() != 0) {
+					fprintf(stderr, "Error: only --net=none is allowed to non-root users\n");
+					exit(1);
+				}
+				if (strcmp(argv[i] + 6, "lo") == 0) {
+					fprintf(stderr, "Error: cannot attach to lo device\n");
+					exit(1);
+				}
+	
+				Bridge *br;
+				if (cfg.bridge0.configured == 0)
+					br = &cfg.bridge0;
+				else if (cfg.bridge1.configured == 0)
+					br = &cfg.bridge1;
+				else if (cfg.bridge2.configured == 0)
+					br = &cfg.bridge2;
+				else if (cfg.bridge3.configured == 0)
+					br = &cfg.bridge3;
+				else {
+					fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
+					return 1;
+				}
+				net_configure_bridge(br, argv[i] + 6);
 			}
-			net_configure_bridge(br, argv[i] + 6);
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
+
 		else if (strcmp(argv[i], "--scan") == 0) {
-			arg_scan = 1;
+			if (checkcfg(CFG_NETWORK)) {
+				arg_scan = 1;
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
 		else if (strncmp(argv[i], "--iprange=", 10) == 0) {
-			Bridge *br = last_bridge_configured();
-			if (br == NULL) {
-				fprintf(stderr, "Error: no network device configured\n");
-				return 1;
-			}
-			if (br->iprange_start || br->iprange_end) {
-				fprintf(stderr, "Error: cannot configure the IP range twice for the same interface\n");
-				return 1;
-			}
-			
-			// parse option arguments
-			char *firstip = argv[i] + 10;
-			char *secondip = firstip;
-			while (*secondip != '\0') {
-				if (*secondip == ',')
-					break;
+			if (checkcfg(CFG_NETWORK)) {
+				Bridge *br = last_bridge_configured();
+				if (br == NULL) {
+					fprintf(stderr, "Error: no network device configured\n");
+					return 1;
+				}
+				if (br->iprange_start || br->iprange_end) {
+					fprintf(stderr, "Error: cannot configure the IP range twice for the same interface\n");
+					return 1;
+				}
+				
+				// parse option arguments
+				char *firstip = argv[i] + 10;
+				char *secondip = firstip;
+				while (*secondip != '\0') {
+					if (*secondip == ',')
+						break;
+					secondip++;
+				}
+				if (*secondip == '\0') {
+					fprintf(stderr, "Error: invalid IP range\n");
+					return 1;
+				}
+				*secondip = '\0';
 				secondip++;
-			}
-			if (*secondip == '\0') {
-				fprintf(stderr, "Error: invalid IP range\n");
-				return 1;
-			}
-			*secondip = '\0';
-			secondip++;
-			
-			// check addresses
-			if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
-			    br->iprange_start >= br->iprange_end) {
-				fprintf(stderr, "Error: invalid IP range\n");
-				return 1;
-			}
-			if (in_netrange(br->iprange_start, br->ip, br->mask) || in_netrange(br->iprange_end, br->ip, br->mask)) {
-				fprintf(stderr, "Error: IP range addresses not in network range\n");
-				return 1;
-			}
-		}
-		else if (strncmp(argv[i], "--mac=", 6) == 0) {
-			Bridge *br = last_bridge_configured();
-			if (br == NULL) {
-				fprintf(stderr, "Error: no network device configured\n");
-				return 1;
-			}
-			if (mac_not_zero(br->macsandbox)) {
-				fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
-				return 1;
-			}
-
-			// read the address
-			if (atomac(argv[i] + 6, br->macsandbox)) {
-				fprintf(stderr, "Error: invalid MAC address\n");
-				return 1;
-			}
-		}
-		else if (strncmp(argv[i], "--mtu=", 6) == 0) {
-			Bridge *br = last_bridge_configured();
-			if (br == NULL) {
-				fprintf(stderr, "Error: no network device configured\n");
-				return 1;
-			}
-
-			if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
-				fprintf(stderr, "Error: invalid mtu value\n");
-				return 1;
-			}
-		}
-		else if (strncmp(argv[i], "--ip=", 5) == 0) {
-			Bridge *br = last_bridge_configured();
-			if (br == NULL) {
-				fprintf(stderr, "Error: no network device configured\n");
-				return 1;
-			}
-			if (br->arg_ip_none || br->ipsandbox) {
-				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
-				return 1;
-			}
-
-			// configure this IP address for the last bridge defined
-			if (strcmp(argv[i] + 5, "none") == 0)
-				br->arg_ip_none = 1;
-			else {
-				if (atoip(argv[i] + 5, &br->ipsandbox)) {
-					fprintf(stderr, "Error: invalid IP address\n");
+				
+				// check addresses
+				if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
+				    br->iprange_start >= br->iprange_end) {
+					fprintf(stderr, "Error: invalid IP range\n");
+					return 1;
+				}
+				if (in_netrange(br->iprange_start, br->ip, br->mask) || in_netrange(br->iprange_end, br->ip, br->mask)) {
+					fprintf(stderr, "Error: IP range addresses not in network range\n");
 					return 1;
 				}
 			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
-		else if (strncmp(argv[i], "--ip6=", 6) == 0) {
-			Bridge *br = last_bridge_configured();
-			if (br == NULL) {
-				fprintf(stderr, "Error: no network device configured\n");
-				return 1;
-			}
-			if (br->arg_ip_none || br->ip6sandbox) {
-				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
-				return 1;
-			}
 
-			// configure this IP address for the last bridge defined
-			// todo: verify ipv6 syntax
-			br->ip6sandbox = argv[i] + 6;
+		else if (strncmp(argv[i], "--mac=", 6) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				Bridge *br = last_bridge_configured();
+				if (br == NULL) {
+					fprintf(stderr, "Error: no network device configured\n");
+					return 1;
+				}
+				if (mac_not_zero(br->macsandbox)) {
+					fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
+					return 1;
+				}
+	
+				// read the address
+				if (atomac(argv[i] + 6, br->macsandbox)) {
+					fprintf(stderr, "Error: invalid MAC address\n");
+					return 1;
+				}
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
+		}
+
+		else if (strncmp(argv[i], "--mtu=", 6) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				Bridge *br = last_bridge_configured();
+				if (br == NULL) {
+					fprintf(stderr, "Error: no network device configured\n");
+					return 1;
+				}
+	
+				if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
+					fprintf(stderr, "Error: invalid mtu value\n");
+					return 1;
+				}
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
+		}
+
+		else if (strncmp(argv[i], "--ip=", 5) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				Bridge *br = last_bridge_configured();
+				if (br == NULL) {
+					fprintf(stderr, "Error: no network device configured\n");
+					return 1;
+				}
+				if (br->arg_ip_none || br->ipsandbox) {
+					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+					return 1;
+				}
+	
+				// configure this IP address for the last bridge defined
+				if (strcmp(argv[i] + 5, "none") == 0)
+					br->arg_ip_none = 1;
+				else {
+					if (atoip(argv[i] + 5, &br->ipsandbox)) {
+						fprintf(stderr, "Error: invalid IP address\n");
+						return 1;
+					}
+				}
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
+		}
+
+		else if (strncmp(argv[i], "--ip6=", 6) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				Bridge *br = last_bridge_configured();
+				if (br == NULL) {
+					fprintf(stderr, "Error: no network device configured\n");
+					return 1;
+				}
+				if (br->arg_ip_none || br->ip6sandbox) {
+					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+					return 1;
+				}
+	
+				// configure this IP address for the last bridge defined
+				// todo: verify ipv6 syntax
+				br->ip6sandbox = argv[i] + 6;
 //				if (atoip(argv[i] + 5, &br->ipsandbox)) {
 //					fprintf(stderr, "Error: invalid IP address\n");
 //					return 1;
 //				}
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
 
 
 		else if (strncmp(argv[i], "--defaultgw=", 12) == 0) {
-			if (atoip(argv[i] + 12, &cfg.defaultgw)) {
-				fprintf(stderr, "Error: invalid IP address\n");
-				return 1;
+			if (checkcfg(CFG_NETWORK)) {
+				if (atoip(argv[i] + 12, &cfg.defaultgw)) {
+					fprintf(stderr, "Error: invalid IP address\n");
+					return 1;
+				}
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
 			}
 		}
 #endif		
@@ -1496,18 +1589,40 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
+
 #ifdef HAVE_NETWORK
-		else if (strcmp(argv[i], "--netfilter") == 0)
-			arg_netfilter = 1;
-		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
-			arg_netfilter = 1;
-			arg_netfilter_file = argv[i] + 12;
-			check_netfilter_file(arg_netfilter_file);
+		else if (strcmp(argv[i], "--netfilter") == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				arg_netfilter = 1;
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
+
+		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				arg_netfilter = 1;
+				arg_netfilter_file = argv[i] + 12;
+				check_netfilter_file(arg_netfilter_file);
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
+		}
+
 		else if (strncmp(argv[i], "--netfilter6=", 13) == 0) {
-			arg_netfilter6 = 1;
-			arg_netfilter6_file = argv[i] + 13;
-			check_netfilter_file(arg_netfilter6_file);
+			if (checkcfg(CFG_NETWORK)) {
+				arg_netfilter6 = 1;
+				arg_netfilter6_file = argv[i] + 13;
+				check_netfilter_file(arg_netfilter6_file);
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
 #endif
 		//*************************************
@@ -1515,6 +1630,7 @@ int main(int argc, char **argv) {
 		//*************************************
 		else if (strcmp(argv[i], "--csh") == 0) {
 			if (arg_shell_none) {
+			
 				fprintf(stderr, "Error: --shell=none was already specified.\n");
 				return 1;
 			}

@@ -179,37 +179,51 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	else if (strcmp(ptr, "netfilter") == 0) {
 #ifdef HAVE_NETWORK
-		arg_netfilter = 1;
+		if (checkcfg(CFG_NETWORK))
+			arg_netfilter = 1;
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
 	}
 	else if (strncmp(ptr, "netfilter ", 10) == 0) {
 #ifdef HAVE_NETWORK
-		arg_netfilter = 1;
-		arg_netfilter_file = strdup(ptr + 10);
-		if (!arg_netfilter_file)
-			errExit("strdup");
-		check_netfilter_file(arg_netfilter_file);
+		if (checkcfg(CFG_NETWORK)) {
+			arg_netfilter_file = strdup(ptr + 10);
+			if (!arg_netfilter_file)
+				errExit("strdup");
+			check_netfilter_file(arg_netfilter_file);
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
 	}
 	else if (strncmp(ptr, "netfilter6 ", 11) == 0) {
 #ifdef HAVE_NETWORK
-		arg_netfilter6 = 1;
-		arg_netfilter6_file = strdup(ptr + 11);
-		if (!arg_netfilter6_file)
-			errExit("strdup");
-		check_netfilter_file(arg_netfilter6_file);
+		if (checkcfg(CFG_NETWORK)) {
+			arg_netfilter6 = 1;
+			arg_netfilter6_file = strdup(ptr + 11);
+			if (!arg_netfilter6_file)
+				errExit("strdup");
+			check_netfilter_file(arg_netfilter6_file);
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
 	}
 	else if (strcmp(ptr, "net none") == 0) {
 #ifdef HAVE_NETWORK
-		arg_nonetwork  = 1;
-		cfg.bridge0.configured = 0;
-		cfg.bridge1.configured = 0;
-		cfg.bridge2.configured = 0;
-		cfg.bridge3.configured = 0;
+		if (checkcfg(CFG_NETWORK)) {
+			arg_nonetwork  = 1;
+			cfg.bridge0.configured = 0;
+			cfg.bridge1.configured = 0;
+			cfg.bridge2.configured = 0;
+			cfg.bridge3.configured = 0;
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
 	}

@@ -127,6 +127,13 @@ void x11_start(int argc, char **argv) {
 	pid_t client = 0;
 	pid_t server = 0;
 	
+
+	// unfortunately, xpra does a number of wired things when started by root user!!!
+	if (getuid() == 0) {
+		fprintf(stderr, "Error: this feature is not available when running as root\n");
+		exit(1);
+	}
+
 	// check xpra
 	if (x11_check_xpra() == 0) {
 		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");

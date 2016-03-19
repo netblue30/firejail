@@ -89,6 +89,43 @@ FILE TRANSFER
               $ firejail --get=mybrowser ~/Downloads/xpra-clipboard.png
 `````
 
+## Compile time and run time configuration support
+
+Most Linux kernel security features require root privileges during configuration.
+The same is true for kernel networking features. Firejail (SUID binary) opens the 
+access to these features to regular users. The privilege escalation is restricted 
+to the sandbox being configured, and is not extended to the rest of the system. 
+This arrangement works fine for user desktops or servers where the access is already limited.
+
+If you not happy with a particular feature, all the support can be eliminated from SUID binary at compile time,
+or at run time by editing /etc/firejail/firejail.config file.
+
+The following features can be enabled or disabled:
+`````
+       secomp Enable or disable seccomp support, default enabled.
+
+       chroot Enable or disable chroot support, default enabled.
+
+       bind   Enable or disable bind support, default enabled.
+
+       network
+              Enable or disable networking features, default enabled.
+
+       restricted-network
+              Enable  or disable restricted network support, default disabled.
+              If enabled, networking features should also be enabled  (network
+              yes).   Restricted  networking  grants access to --interface and
+              --net=ethXXX only to root user. Regular users are  only  allowed
+              --net=none.
+
+       userns Enable or disable user namespace support, default enabled.
+
+       x11    Enable or disable X11 sandboxing support, default enabled.
+
+       file-transfer
+              Enable or disable file transfer support, default enabled.
+`````
+
 ## Default seccomp filter update
 
 Currently 50 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).

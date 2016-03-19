@@ -352,6 +352,7 @@ Homepage: http://firejail.wordpress.com
 \&\flfirejail\fR\|(1),
 \&\flfiremon\fR\|(1),
 \&\flfirejail-login\fR\|(5)
+\&\flfirejail-config\fR\|(5)
 
 
 

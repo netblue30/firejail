@@ -7,6 +7,7 @@ firejail (0.9.39) baseline; urgency=low
   * added mkdir, ipc-namespace and nosound profile commands
   * --version also prints compile options
   * added compile-time option to restrict --net= to root only
+  * run time config support, man firejail-config
   * build rpm packages using "make rpms"
   * new profiles: lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril
   * new profiles: qutebrowser, SlimJet

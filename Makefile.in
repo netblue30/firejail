@@ -1,4 +1,4 @@
-all: apps firejail.1 firemon.1 firejail-profile.5 firejail-login.5
+all: apps firejail.1 firemon.1 firejail-profile.5 firejail-login.5 firejail-config.5
 MYLIBS = src/lib
 APPS = src/firejail src/firemon src/libtrace src/libtracelog src/ftee
 
@@ -33,6 +33,8 @@ firejail-profile.5: src/man/firejail-profile.txt
 	./mkman.sh $(VERSION) src/man/firejail-profile.txt firejail-profile.5
 firejail-login.5: src/man/firejail-login.txt
 	./mkman.sh $(VERSION) src/man/firejail-login.txt firejail-login.5
+firejail-config.5: src/man/firejail-config.txt
+	./mkman.sh $(VERSION) src/man/firejail-config.txt firejail-config.5
 
 clean:
 	for dir in $(APPS); do \
@@ -41,7 +43,7 @@ clean:
 	for dir in $(MYLIBS); do \
 		$(MAKE) -C $$dir clean; \
 	done
-	rm -f firejail.1 firejail.1.gz firemon.1 firemon.1.gz firejail-profile.5 firejail-profile.5.gz firejail-login.5 firejail-login.5.gz firejail*.rpm
+	rm -f firejail.1 firejail.1.gz firemon.1 firemon.1.gz firejail-profile.5 firejail-profile.5.gz firejail-login.5 firejail-login.5.gz firejail-config.5 firejail-config.5.gz firejail*.rpm
 
 distclean: clean
 	for dir in $(APPS); do \
@@ -160,13 +162,16 @@ realinstall:
 	gzip -9n firejail-profile.5
 	rm -f firejail-login.5.gz
 	gzip -9n firejail-login.5
+	rm -f firejail-config.5.gz
+	gzip -9n firejail-config.5
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man1
 	install -c -m 0644 firejail.1.gz $(DESTDIR)/$(mandir)/man1/.
 	install -c -m 0644 firemon.1.gz $(DESTDIR)/$(mandir)/man1/.
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man5
 	install -c -m 0644 firejail-profile.5.gz $(DESTDIR)/$(mandir)/man5/.
 	install -c -m 0644 firejail-login.5.gz $(DESTDIR)/$(mandir)/man5/.
-	rm -f firejail.1.gz firemon.1.gz firejail-profile.5.gz firejail-login.5.gz
+	install -c -m 0644 firejail-config.5.gz $(DESTDIR)/$(mandir)/man5/.
+	rm -f firejail.1.gz firemon.1.gz firejail-profile.5.gz firejail-login.5.gz firejail-config.5.gz
 	# bash completion
 	install -m 0755 -d $(DESTDIR)/$(datarootdir)/bash-completion/completions
 	install -c -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)/$(datarootdir)/bash-completion/completions/firejail
@@ -193,6 +198,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(mandir)/man1/firemon.1*
 	rm -f $(DESTDIR)/$(mandir)/man5/firejail-profile.5*
 	rm -f $(DESTDIR)/$(mandir)/man5/firejail-login.5*
+	rm -f $(DESTDIR)/$(mandir)/man5/firejail-config.5*
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firejail
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	

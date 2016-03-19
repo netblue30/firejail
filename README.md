@@ -53,27 +53,27 @@ More information here: https://firejail.wordpress.com/documentation-2/x11-guide/
 ## File transfers
 `````
 FILE TRANSFER
-       These features allow the user to inspect the file system  container  of
-       an  existing  sandbox and transfer files from the container to the host
-       file system.
+       These features allow the user to inspect the filesystem container of an
+       existing sandbox and transfer files from  the  container  to  the  host
+       filesystem.
 
        --get=name filename
               Retrieve the container file and store it on the host in the cur‐
-              rent  working  directory.   The container is spececified by name
+              rent working directory.  The  container  is  specified  by  name
               (--name option). Full path is needed for filename.
 
        --get=pid filename
               Retrieve the container file and store it on the host in the cur‐
-              rent working directory.  The container is spececified by process
+              rent working directory.  The container is specified  by  process
               ID. Full path is needed for filename.
 
        --ls=name dir_or_filename
-              List container files.  The  container  is  spececified  by  name
+              List  container  files.   The  container  is  specified  by name
               (--name option).  Full path is needed for dir_or_filename.
 
        --ls=pid dir_or_filename
-              List  container  files.  The container is spececified by process
-              ID.  Full path is needed for dir_or_filename.
+              List container files.  The container is specified by process ID.
+              Full path is needed for dir_or_filename.
 
        Examples:
 
@@ -87,8 +87,6 @@ FILE TRANSFER
               -rw-r--r-- netblue  netblue        34139 xpra-clipboard.png
 
               $ firejail --get=mybrowser ~/Downloads/xpra-clipboard.png
-
-
 `````
 
 ## Default seccomp filter update

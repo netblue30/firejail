@@ -642,3 +642,13 @@ uid_t get_tty_gid(void) {
 
 	return ttygid;
 }
+
+uid_t get_audio_gid(void) {
+	// find tty group id
+	gid_t audiogid = 0;
+	struct group *g = getgrnam("audio");
+	if (g)
+		audiogid = g->gr_gid;
+
+	return audiogid;
+}

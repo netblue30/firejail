@@ -2007,6 +2007,7 @@ int main(int argc, char **argv) {
 	 	char *map_path;
 	 	if (asprintf(&map_path, "/proc/%d/uid_map", child) == -1)
 	 		errExit("asprintf");
+
 	 	char *map;
 	 	uid_t uid = getuid();
 	 	if (asprintf(&map, "%d %d 1", uid, uid) == -1)
@@ -2017,23 +2018,35 @@ int main(int argc, char **argv) {
 	 	free(map);
 	 	free(map_path);
 	 
-	 	//gid
-	 	if (asprintf(&map_path, "/proc/%d/gid_map", child) == -1)
-	 		errExit("asprintf");
+	 	// gid file
+		if (asprintf(&map_path, "/proc/%d/gid_map", child) == -1)
+			errExit("asprintf");
+	 	char gidmap[1024];
+	 	char *ptr = gidmap;
+	 	*ptr = '\0';
+
+	 	// add user group
 	 	gid_t gid = getgid();
+	 	sprintf(ptr, "%d %d 1\n", gid, gid);
+	 	ptr += strlen(ptr);
+	 	
+	 	//  add tty group
 	 	gid_t ttygid = get_tty_gid();
-	 	if (ttygid == 0)  {
-		 	if (asprintf(&map, "%d %d 1", gid, gid) == -1)
-		 		errExit("asprintf");
-		}
-		else {
-			if (asprintf(&map, "%d %d 1\n%d %d 1", gid, gid, ttygid, ttygid) == -1)
-				errExit("asprintf");
-		}
+	 	if (ttygid) {
+	 		sprintf(ptr, "%d %d 1\n", ttygid, ttygid);
+	 		ptr += strlen(ptr);
+	 	}
+	 	
+	 	//  add audio group
+	 	gid_t audiogid = get_audio_gid();
+	 	if (ttygid) {
+	 		sprintf(ptr, "%d %d 1\n", audiogid, audiogid);
+	 		ptr += strlen(ptr);
+	 	}
+	 	
  		EUID_ROOT();
-	 	update_map(map, map_path);
+	 	update_map(gidmap, map_path);
 	 	EUID_USER();
-	 	free(map);
 	 	free(map_path);
  	}
  	

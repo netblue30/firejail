@@ -96,7 +96,8 @@ static void duplicate(char *fname) {
 	if (arg_debug)
 		printf("%s\n", cmd);
 	if (system(cmd))
-		errExit("system cp -a --parents");
+		fprintf(stderr, "Warning (fs_etc): error copying file /etc/%s, skipping...\n", fname);
+
 	free(cmd);
 	
 	char *name;

@@ -129,7 +129,7 @@ static void duplicate(char *fname) {
 	char *path = check_dir_or_file(fname);
 	if (!path)
 		return;
-	
+
 	// expand path, just in case this is a symbolic link
 	char *full_path;
 	if (asprintf(&full_path, "%s/%s", path, fname) == -1)
@@ -137,14 +137,28 @@ static void duplicate(char *fname) {
 	
 	char *actual_path = realpath(full_path, NULL);
 	if (actual_path) {
-		// copy the file
-		if (asprintf(&cmd, "%s -a %s %s/%s", RUN_CP_COMMAND, actual_path, RUN_BIN_DIR, fname) == -1)
-			errExit("asprintf");
-		if (arg_debug)
-			printf("%s\n", cmd);
-		if (system(cmd))
-			errExit("system cp -a");
-		free(cmd);
+		// if the file is a symbolic link not under path, make a symbolic link
+		if (is_link(full_path) && strncmp(actual_path, path, strlen(path))) {
+			char *lnkname;
+			if (asprintf(&lnkname, "%s/%s", RUN_BIN_DIR, fname) == -1)
+				errExit("asprintf");
+			int rv = symlink(actual_path, lnkname);
+			if (rv)
+				fprintf(stderr, "Warning cannot create symbolic link %s\n", lnkname);
+			else if (arg_debug)
+				printf("Created symbolic link %s -> %s\n", lnkname, actual_path);
+			free(lnkname);
+		}
+		else {
+			// copy the file
+			if (asprintf(&cmd, "%s -a %s %s/%s", RUN_CP_COMMAND, actual_path, RUN_BIN_DIR, fname) == -1)
+				errExit("asprintf");
+			if (arg_debug)
+				printf("%s\n", cmd);
+			if (system(cmd))
+				errExit("system cp -a");
+			free(cmd);
+		}
 		free(actual_path);
 	}
 

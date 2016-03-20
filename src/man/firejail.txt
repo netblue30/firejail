@@ -1534,6 +1534,59 @@ Example:
 .br
 $ firejail \-\-zsh
 
+.SH DESKTOP INTEGRATION
+A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.
+The symbolic link should be placed in the first $PATH position. On most systems, a good place
+is /usr/local/bin directory. Example:
+.PP
+.RS
+.br
+
+.br
+Make a firefox symlink to /usr/bin/firejail:
+.br
+
+.br
+$ ln -s /usr/bin/firejail /usr/local/bin/firefox
+.br
+
+.br
+Verify $PATH
+.br
+
+.br
+$ which -a firefox
+.br
+/usr/local/bin/firefox
+.br
+/usr/bin/firefox
+.br
+
+.br
+Starting firefox in this moment, automatically invokes “firejail firefox”.
+.RE
+.br
+
+.br
+This works for clicking on desktop environment icons, menus etc. Use "firejail --tree"
+to verify the program is sandboxed.
+.PP
+.RS
+.br
+
+.br
+.br
+$ firejail --tree
+.br
+1189:netblue:firejail firefox
+.br
+  1190:netblue:firejail firefox
+.br
+    1220:netblue:/bin/sh -c "/usr/lib/firefox/firefox"  
+.br
+      1221:netblue:/usr/lib/firefox/firefox
+.RE
+
 .SH FILE TRANSFER
 These features allow the user to inspect the filesystem container of an existing sandbox
 and transfer files from the container to the host filesystem.

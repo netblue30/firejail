@@ -162,10 +162,19 @@ static int store_asoundrc(void) {
 		errExit("asprintf");
 	
 	struct stat s;
-	if (stat(src, &s) == 0) {	
+	if (stat(src, &s) == 0) {
 		if (is_link(src)) {
-			fprintf(stderr, "Error: invalid .asoundrc file\n");
-			exit(1);
+			// make sure the real path of the file is inside the home directory
+			char* rp = realpath(src, NULL);
+			if (!rp) {
+				fprintf(stderr, "Error: Cannot access %s\n", src);
+				exit(1);
+			}
+			if (strncmp(rp, cfg.homedir, strlen(cfg.homedir)) != 0) {
+				fprintf(stderr, "Error: .asoundrc is a symbolic link pointing to a file outside home directory\n");
+				exit(1);
+			}
+			free(rp);
 		}
 
 		int rv = copy_file(src, dest);

@@ -122,7 +122,7 @@ void protocol_store(const char *prlist) {
 	EUID_ASSERT();
 	assert(prlist);
 	
-	if (cfg.protocol) {
+	if (cfg.protocol && !arg_quiet) {
 		fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", prlist);
 		return;
 	}

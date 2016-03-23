@@ -50,7 +50,7 @@ echo "TESTING: 1.6 new /var/log"
 echo "TESTING: 1.7 new /var/tmp"
 ./1.7.exp $OVERLAY $CHROOT
 
-echo "TESTING: 1.8 disable /etc/firejail and ~/.config/firejail"
+echo "TESTING: 1.8 disable firejail config and run time information"
 ./1.8.exp $OVERLAY $CHROOT
 
 echo "TESTING: 1.10 disable /selinux"

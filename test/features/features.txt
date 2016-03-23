@@ -21,7 +21,7 @@ C - chroot filesystem
 1.5 PID namespace
 1.6 new /var/log
 1.7 new /var/tmp
-1.8 disable /etc/firejail and ~/.config/firejail
+1.8 disable firejail config and run time information
 1.9 mount namespace
 1.10 disable /selinux
 

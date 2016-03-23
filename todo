@@ -55,3 +55,23 @@ Warning: seccomp file not found
 Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.
 $ ls ~ <----------------- all files are available, the directory is not empty!
 
+10. Posibly capabilities broken for --join
+
+$ firejail --name=test
+...
+$ firejail --debug --join=test
+Switching to pid 18591, the first child process inside the sandbox
+User namespace detected: /proc/18591/uid_map, 1000, 1000
+Set caps filter 0
+Set protocol filter: unix,inet,inet6
+Read seccomp filter, size 792 bytes
+
+However, in the join sandbox we have:
+$ cat /proc/self/status | grep Cap
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+
+11. net_netfilter.exp broken

@@ -35,6 +35,7 @@ blacklist ${HOME}/.retroshare
 blacklist ${HOME}/.weechat
 blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.Skype
+blacklist ${HOME}/.config/tox
 
 # Cryptocoins
 blacklist ${HOME}/.*coin

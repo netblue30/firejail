@@ -78,6 +78,7 @@ realinstall:
 	install -c -m 0644 .etc/audacious.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/clementine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/epiphany.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/qtox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/polari.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/gnome-mplayer.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/rhythmbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.

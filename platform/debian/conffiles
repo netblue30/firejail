@@ -22,6 +22,7 @@
 /etc/firejail/audacious.profile
 /etc/firejail/clementine.profile
 /etc/firejail/epiphany.profile
+/etc/firejail/qtox.profile
 /etc/firejail/polari.profile
 /etc/firejail/gnome-mplayer.profile
 /etc/firejail/rhythmbox.profile

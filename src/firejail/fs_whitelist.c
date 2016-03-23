@@ -422,7 +422,12 @@ void fs_whitelist(void) {
 			entry->var_dir = 1;
 			var_dir = 1;
 			// both path and absolute path are under /var
-			if (strncmp(fname, "/var/", 5) != 0) {
+			// exceptions: /var/run and /var/lock
+			if (strcmp(new_name, "/var/run")== 0)
+				;
+			else if (strcmp(new_name, "/var/lock")== 0)
+				;
+			else if (strncmp(fname, "/var/", 5) != 0) {
 				if (arg_debug)
 					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
@@ -618,21 +623,31 @@ void fs_whitelist(void) {
 
 //printf("here %d#%s#\n", __LINE__, entry->data);
 		// whitelist the real file
-		whitelist_path(entry);
-
-		// create the link if any
-		if (entry->link) {
-			// if the link is already there, do not bother
-			struct stat s;
-			if (stat(entry->link, &s) != 0) {
-				// create the path if necessary
-				mkpath(entry->link, s.st_mode);
-
-				int rv = symlink(entry->data + 10, entry->link);
-				if (rv)
-					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
-				else if (arg_debug || arg_debug_whitelists)
-					printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+		if (strcmp(entry->data, "whitelist /run") == 0 && 
+		    (strcmp(entry->link, "/var/run") == 0 || strcmp(entry->link, "/var/lock") == 0)) {
+			int rv = symlink(entry->data + 10, entry->link);
+			if (rv)
+				fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
+			else if (arg_debug || arg_debug_whitelists)
+				printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+		}
+		else {
+			whitelist_path(entry);
+	
+			// create the link if any
+			if (entry->link) {
+				// if the link is already there, do not bother
+				struct stat s;
+				if (stat(entry->link, &s) != 0) {
+					// create the path if necessary
+					mkpath(entry->link, s.st_mode);
+	
+					int rv = symlink(entry->data + 10, entry->link);
+					if (rv)
+						fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
+					else if (arg_debug || arg_debug_whitelists)
+						printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+				}
 			}
 		}
 

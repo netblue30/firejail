@@ -189,6 +189,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "netfilter ", 10) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
+			arg_netfilter = 1;
 			arg_netfilter_file = strdup(ptr + 10);
 			if (!arg_netfilter_file)
 				errExit("strdup");

@@ -73,5 +73,3 @@ CapPrm:	0000000000000000
 CapEff:	0000000000000000
 CapBnd:	0000003fffffffff
 CapAmb:	0000000000000000
-
-11. net_netfilter.exp broken

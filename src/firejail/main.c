@@ -2041,7 +2041,6 @@ int main(int argc, char **argv) {
 	 	gid_t audiogid = get_audio_gid();
 	 	if (ttygid) {
 	 		sprintf(ptr, "%d %d 1\n", audiogid, audiogid);
-	 		ptr += strlen(ptr);
 	 	}
 	 	
  		EUID_ROOT();

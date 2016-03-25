@@ -89,6 +89,52 @@ FILE TRANSFER
               $ firejail --get=mybrowser ~/Downloads/xpra-clipboard.png
 `````
 
+## FIrecfg
+`````
+NAME
+       Firecfg - Desktop configuration program for Firejail software.
+
+SYNOPSIS
+       firecfg [OPTIONS]
+
+DESCRIPTION
+       Firecfg is the desktop configuration utility for Firejail software. The
+       utility creates several symbolic links  to  firejail  executable.  This
+       allows the user to sandbox applications automatically, just by clicking
+       on a regular desktop menus and icons.
+
+       The symbolic links are placed in /usr/local/bin. For more  information,
+       see DESKTOP INTEGRATION section in man 1 firejail.
+
+OPTIONS
+       --clear
+              Clear all firejail symbolic links
+
+       -?, --help
+              Print options end exit.
+
+       --list List all firejail symbolic links
+
+       --version
+              Print program version and exit.
+
+       Example:
+
+       $ sudo firecfg
+       /usr/local/bin/firefox created
+       /usr/local/bin/vlc created
+       [...]
+       $ firecfg --list
+       /usr/local/bin/firefox
+       /usr/local/bin/vlc
+       [...]
+       $ sudo firecfg --clear
+       /usr/local/bin/firefox removed
+       /usr/local/bin/vlc removed
+       [...]
+`````
+
+
 ## Compile time and run time configuration support
 
 Most Linux kernel security features require root privileges during configuration.

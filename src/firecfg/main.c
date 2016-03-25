@@ -30,7 +30,7 @@ static void usage(void) {
 	printf("Firecfg is the desktop configuration utility for Firejail software. The utility\n");
 	printf("creates several symbolic links to firejail executable. This allows the user to\n");
 	printf("sandbox applications automatically, just by clicking on a regular desktop\n");
-	printf("menues and icons.\n\n");
+	printf("menus and icons.\n\n");
 	printf("The symbolic links are placed in /usr/local/bin. For more information, see\n");
 	printf("DESKTOP INTEGRATION section in man 1 firejail.\n\n");
 	printf("Usage: firecfg [OPTIONS]\n\n");
@@ -245,21 +245,33 @@ static void set(void) {
 		lineno++;
 		if (*buf == '#') // comments
 			continue;
-		
-		// remove \n
-		char *ptr = strchr(buf, '\n');
-		if (ptr)
-			*ptr = '\0';
-		
+
 		// do not accept .. and/or / in file name
 		if (strstr(buf, "..") || strchr(buf, '/')) {
 			fprintf(stderr, "Error: invalid line %d in %s\n", lineno, cfgfile);
 			exit(1);
 		}
 		
-		set_file(buf, firejail_exec);
+		// remove \n
+		char *ptr = strchr(buf, '\n');
+		if (ptr)
+			*ptr = '\0';
+			
+		// trim spaces
+		ptr = buf;
+		while (*ptr == ' ' || *ptr == '\t')
+			ptr++;
+		char *start = ptr;
+		
+		// empty line
+		if (*start == '\0')
+			continue;
+		
+		// set link
+		set_file(start, firejail_exec);
 	}
 
+	fclose(fp);
 	free(cfgfile);
 	free(firejail_exec);
 }

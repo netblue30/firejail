@@ -89,7 +89,7 @@ FILE TRANSFER
               $ firejail --get=mybrowser ~/Downloads/xpra-clipboard.png
 `````
 
-## FIrecfg
+## Firecfg
 `````
 NAME
        Firecfg - Desktop configuration program for Firejail software.

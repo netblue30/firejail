@@ -234,6 +234,5 @@ $ man firejail-profile
 `````
 
 ## New security profiles
-
-lxterminal, Epiphany, cherrytree, Battle for Wesnoth, Hedgewars, qutebrowser, SlimJet, qTox
+lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril, qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars, qTox
 

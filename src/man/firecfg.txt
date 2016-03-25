@@ -1,0 +1,70 @@
+.TH FIREMON 1 "MONTH YEAR" "VERSION" "firecfg man page"
+.SH NAME
+Firecfg \- Desktop configuration program for Firejail software.
+.SH SYNOPSIS
+firecfg [OPTIONS]
+.SH DESCRIPTION
+Firecfg is the desktop configuration utility for Firejail software. The utility
+creates several symbolic links to firejail executable. This allows the user to
+sandbox applications automatically, just by clicking on a regular desktop
+menues and icons.
+
+The symbolic links are placed in /usr/local/bin. For more information, see
+DESKTOP INTEGRATION section in man 1 firejail.
+
+.SH OPTIONS
+.TP
+\fB\-\-clear
+Clear all firejail symbolic links
+.TP
+\fB\-?\fR, \fB\-\-help\fR
+Print options end exit.
+.TP
+\fB\-\-list
+List all firejail symbolic links
+.TP
+\fB\-\-version
+Print program version and exit.
+
+
+.PP
+Example:
+.br
+
+.br
+$ sudo firecfg
+.br
+/usr/local/bin/firefox created
+.br
+/usr/local/bin/vlc created
+.br
+[...]
+.br
+$ firecfg --list
+.br
+/usr/local/bin/firefox
+.br
+/usr/local/bin/vlc
+.br
+[...]
+.br
+$ sudo firecfg --clear
+.br
+/usr/local/bin/firefox removed
+.br
+/usr/local/bin/vlc removed
+.br
+[...]
+
+.SH LICENSE
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+.PP
+Homepage: http://firejail.wordpress.com
+.SH SEE ALSO
+\&\flfirejail\fR\|(1),
+\&\flfiremon\fR\|(1),
+\&\flfirejail-profile\fR\|(5),
+\&\flfirejail-login\fR\|(5)
+\&\flfirejail-config\fR\|(5)
+
+

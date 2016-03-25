@@ -90,7 +90,7 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
-AC_OUTPUT(Makefile src/lib/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/ftee/Makefile)
+AC_OUTPUT(Makefile src/lib/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/ftee/Makefile)
 
 echo
 echo "Configuration options:"

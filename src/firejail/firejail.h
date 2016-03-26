@@ -527,10 +527,10 @@ void fs_mkdir(const char *name);
 
 // x11.c
 void fs_x11(void);
-void x11_start(int argc, char **argv);
 int x11_display(void);
-// return 1 if xpra is installed on the system
-int x11_check_xpra(void);
+void x11_start(int argc, char **argv);
+void x11_start_xpra(int argc, char **argv);
+void x11_start_xephyr(int argc, char **argv);
 
 // ls.c
 #define SANDBOX_FS_LS 0

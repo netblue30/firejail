@@ -287,6 +287,26 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(1);
 		}
 	}
+	else if (strcmp(argv[i], "--x11=xpra") == 0) {
+		if (checkcfg(CFG_X11)) {
+			x11_start_xpra(argc, argv);
+			exit(0);
+		}
+		else {
+			fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
+			exit(1);
+		}
+	}
+	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
+		if (checkcfg(CFG_X11)) {
+			x11_start_xephyr(argc, argv);
+			exit(0);
+		}
+		else {
+			fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
+			exit(1);
+		}
+	}
 #endif
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {

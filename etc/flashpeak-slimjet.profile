@@ -5,7 +5,7 @@
 #
 #  firejail flashpeak-slimjet --no-sandbox
 #
-noblacklist ~/.config/silmjet
+noblacklist ~/.config/slimjet
 noblacklist ~/.cache/slimjet
 noblacklist ~/keepassx.kdbx
 include /etc/firejail/disable-mgmt.inc
@@ -29,7 +29,7 @@ mkdir ~/.config/slimjet
 whitelist ~/.config/slimjet
 mkdir ~/.cache
 mkdir ~/.cache/slimjet
-whitelist ~/.cache/simjet
+whitelist ~/.cache/slimjet
 mkdir ~/.pki
 whitelist ~/.pki
 

@@ -3,6 +3,7 @@ noblacklist ${HOME}/.gnupg
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-terminals.inc
 
 # Users have thunderbird set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories

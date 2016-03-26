@@ -76,3 +76,5 @@
 /etc/firejail/firejail.config
 /etc/firejail/qutebrowser.profile
 /etc/firejail/flashpeak-slimjet.profile
+/etc/firejail/ssh
+/etc/firejail/openbox

@@ -200,6 +200,10 @@ void x11_start_xephyr(int argc, char **argv) {
 	for (i = 0; i < argc; i++) {
 		if (strcmp(argv[i], "--x11") == 0)
 			continue;
+		if (strcmp(argv[i], "--x11=xpra") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xephyr") == 0)
+			continue;
 		ptr += sprintf(ptr, "%s ", argv[i]);
 	}
 	if (arg_debug)
@@ -312,6 +316,10 @@ void x11_start_xpra(int argc, char **argv) {
 	char *ptr = cmd1 + strlen(cmd1);
 	for (i = 0; i < argc; i++) {
 		if (strcmp(argv[i], "--x11") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xpra") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xephyr") == 0)
 			continue;
 		ptr += sprintf(ptr, "%s ", argv[i]);
 	}

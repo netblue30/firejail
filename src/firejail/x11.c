@@ -166,7 +166,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	pid_t server = 0;
 	
 
-	// unfortunately, xpra does a number of wired things when started by root user!!!
+	// unfortunately, xpra does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: this feature is not available when running as root\n");
 		exit(1);
@@ -283,7 +283,7 @@ void x11_start_xpra(int argc, char **argv) {
 	pid_t server = 0;
 	
 
-	// unfortunately, xpra does a number of wired things when started by root user!!!
+	// unfortunately, xpra does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: this feature is not available when running as root\n");
 		exit(1);
@@ -396,13 +396,8 @@ void x11_start_xpra(int argc, char **argv) {
 
 void x11_start(int argc, char **argv) {
 	EUID_ASSERT();
-	int i;
-	struct stat s;
-	pid_t client = 0;
-	pid_t server = 0;
-	
 
-	// unfortunately, xpra does a number of wired things when started by root user!!!
+	// unfortunately, xpra does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: this feature is not available when running as root\n");
 		exit(1);

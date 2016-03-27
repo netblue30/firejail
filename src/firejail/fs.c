@@ -732,6 +732,7 @@ void fs_basic_fs(void) {
 	fs_rdonly("/lib");
 	fs_rdonly("/lib64");
 	fs_rdonly("/lib32");
+	fs_rdonly("/libx32");
 	fs_rdonly("/usr");
 	fs_rdonly("/etc");
 	fs_rdonly("/var");

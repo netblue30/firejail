@@ -6,8 +6,6 @@ blacklist ${HOME}/.FBReader
 blacklist ${HOME}/.wine
 
 # HTTP / FTP / Mail
-blacklist-nolog ${HOME}/.adobe
-blacklist-nolog ${HOME}/.macromedia
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.sylpheed-2.0

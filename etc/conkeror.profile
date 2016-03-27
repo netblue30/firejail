@@ -1,7 +1,5 @@
 # Firejail profile for Conkeror web browser profile
 noblacklist ${HOME}/.conkeror.mozdev.org
-include /etc/firejail/disable-mgmt.inc
-include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-terminals.inc

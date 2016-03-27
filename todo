@@ -75,3 +75,5 @@ CapBnd:	0000003fffffffff
 CapAmb:	0000000000000000
 
 11. cleanup thunderbird profile - disable-common was commented out
+
+12. removed disable_mgmgt.inc form server.profile, replace the information

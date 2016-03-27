@@ -81,3 +81,44 @@ read-only ${HOME}/.xscreensaver
 # The user ~/bin directory can override commands such as ls
 read-only ${HOME}/bin
 
+# top secret
+blacklist ${HOME}/.ssh
+blacklist ${HOME}/.gnome2/keyrings
+blacklist ${HOME}/kde4/share/apps/kwallet
+blacklist ${HOME}/kde/share/apps/kwallet
+blacklist ${HOME}/.local/share/kwalletd
+blacklist ${HOME}/.netrc
+blacklist ${HOME}/.gnupg
+blacklist ${HOME}/*.kdbx
+blacklist ${HOME}/*.kdb
+blacklist ${HOME}/*.key
+blacklist /etc/shadow
+blacklist /etc/gshadow
+blacklist /etc/passwd-
+blacklist /etc/group-
+blacklist /etc/shadow-
+blacklist /etc/gshadow-
+blacklist /etc/passwd+
+blacklist /etc/group+
+blacklist /etc/shadow+
+blacklist /etc/gshadow+
+blacklist /etc/ssh
+blacklist /var/backup
+
+# system management
+blacklist ${PATH}/umount
+blacklist ${PATH}/mount
+blacklist ${PATH}/fusermount
+blacklist ${PATH}/su
+blacklist ${PATH}/sudo
+blacklist ${PATH}/xinput
+blacklist ${PATH}/evtest
+blacklist ${PATH}/xev
+blacklist ${PATH}/strace
+blacklist ${PATH}/nc
+blacklist ${PATH}/ncat
+
+# system directories	
+blacklist /sbin
+blacklist /usr/sbin
+blacklist /usr/local/sbin

@@ -2,7 +2,7 @@
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-terminals.inc
+
 mkdir ${HOME}/.local
 mkdir ${HOME}/.local/share/
 mkdir ${HOME}/.local/share/Empathy
@@ -20,6 +20,7 @@ whitelist ${HOME}/.cache/telepathy
 mkdir ${HOME}/.purple
 whitelist ${HOME}/.purple
 include /etc/firejail/whitelist-common.inc
+
 caps.drop all
 seccomp
 protocol unix,inet,inet6

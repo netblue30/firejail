@@ -5,7 +5,6 @@ noblacklist ~/keepassx.kdbx
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-terminals.inc
 
 caps.drop all
 seccomp
@@ -47,8 +46,6 @@ whitelist ~/.wine-pipelight
 whitelist ~/.wine-pipelight64 
 whitelist ~/.config/pipelight-widevine 
 whitelist ~/.config/pipelight-silverlight5.1
-
-
 
 # experimental features
 #private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse

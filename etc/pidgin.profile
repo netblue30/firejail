@@ -3,8 +3,9 @@ noblacklist ${HOME}/.purple
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-terminals.inc
+
 blacklist ${HOME}/.wine
+
 caps.drop all
 seccomp
 protocol unix,inet,inet6

@@ -145,7 +145,6 @@ realinstall:
 	install -c -m 0644 .etc/uget-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/mupen64plus.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/disable-programs.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/disable-terminals.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/lxterminal.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/cherrytree.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/wesnoth.profile $(DESTDIR)/$(sysconfdir)/firejail/.

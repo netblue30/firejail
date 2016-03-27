@@ -1,12 +1,15 @@
 ################################
-# Generic GUI application profile
+# OpenBox window manager profile
+# - all applications started in OpenBox will run in
+# this profile
 ################################
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-terminals.inc
+
 blacklist ${HOME}/.pki/nssdb
 blacklist ${HOME}/.lastpass
 blacklist ${HOME}/.keepassx
 blacklist ${HOME}/.password-store
+
 caps.drop all
 seccomp
 protocol unix,inet,inet6

@@ -63,7 +63,6 @@
 /etc/firejail/Mathematica.profile
 /etc/firejail/uget-gtk.profile
 /etc/firejail/mupen64plus.profile
-/etc/firejail/disable-terminals.inc
 /etc/firejail/lxterminal.profile
 /etc/firejail/cherrytree.profile
 /etc/firejail/wesnoth.profile

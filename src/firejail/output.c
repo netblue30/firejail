@@ -76,7 +76,7 @@ void check_output(int argc, char **argv) {
 	for (i = 0; i < argc; i++) {
 		len += strlen(argv[i]) + 1; // + ' '
 	}
-	len += 50 + strlen(outfile); // tee command
+	len += 100 + strlen(LIBDIR) + strlen(outfile); // tee command
 	
 	char *cmd = malloc(len + 1); // + '\0'
 	if (!cmd)
@@ -88,7 +88,7 @@ void check_output(int argc, char **argv) {
 			continue;
 		ptr += sprintf(ptr, "%s ", argv[i]);
 	}
-	sprintf(ptr, "| %s/firejail/ftee %s", LIBDIR, outfile);
+	sprintf(ptr, "2>&1 | %s/firejail/ftee %s", LIBDIR, outfile);
 
 	// run command
 	char *a[4];

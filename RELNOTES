@@ -6,6 +6,7 @@ firejail (0.9.39) baseline; urgency=low
   * added filetransfer options --ls and --get
   * added mkdir, ipc-namespace and nosound profile commands
   * --version also prints compile options
+  * --output option also redirects stderr
   * added compile-time option to restrict --net= to root only
   * run time config support, man firejail-config
   * added firecfg utility

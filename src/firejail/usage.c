@@ -157,8 +157,8 @@ void usage(void) {
 #endif
 	printf("    --nosound - disable sound system.\n\n");
 		
-	printf("    --output=logfile - stdout logging and log rotation. Copy stdout to\n");
-	printf("\tlogfile, and keep the size of the file under 500KB using log\n");
+	printf("    --output=logfile - stdout logging and log rotation. Copy stdout and stderr\n");
+	printf("\tto logfile, and keep the size of the file under 500KB using log\n");
 	printf("\trotation. Five files with prefixes .1 to .5 are used in\n");
 	printf("\trotation.\n\n");
 	

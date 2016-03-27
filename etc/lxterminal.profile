@@ -13,6 +13,3 @@ netfilter
 
 #noroot - somehow this breaks on Debian Jessie!
 
-# lxterminal is a single-instence program
-# blacklist any existing lxterminal socket in order to force a second process instance
-blacklist /tmp/.lxterminal-socket*

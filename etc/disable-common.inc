@@ -122,3 +122,6 @@ blacklist ${PATH}/ncat
 blacklist /sbin
 blacklist /usr/sbin
 blacklist /usr/local/sbin
+
+# prevent lxterminal connecting to an existing lxterminal session
+blacklist /tmp/.lxterminal-socket*

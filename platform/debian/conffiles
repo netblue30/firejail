@@ -1,5 +1,4 @@
 /etc/firejail/evince.profile
-/etc/firejail/disable-secret.inc
 /etc/firejail/chromium.profile
 /etc/firejail/chromium-browser.profile
 /etc/firejail/google-chrome.profile
@@ -11,7 +10,6 @@
 /etc/firejail/iceweasel.profile
 /etc/firejail/dropbox.profile
 /etc/firejail/login.users
-/etc/firejail/disable-mgmt.inc
 /etc/firejail/firefox.profile
 /etc/firejail/opera.profile
 /etc/firejail/opera-beta.profile
@@ -78,3 +76,4 @@
 /etc/firejail/flashpeak-slimjet.profile
 /etc/firejail/ssh
 /etc/firejail/openbox
+/etc/firejail/disable-programs.inc

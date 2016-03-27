@@ -99,8 +99,6 @@ realinstall:
 	install -c -m 0644 .etc/google-chrome-stable.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/google-chrome-beta.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/google-chrome-unstable.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/disable-mgmt.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/disable-secret.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/disable-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/dropbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/opera.profile $(DESTDIR)/$(sysconfdir)/firejail/.
@@ -146,6 +144,7 @@ realinstall:
 	install -c -m 0644 .etc/Mathematica.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/uget-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/mupen64plus.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/disable-programs.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/disable-terminals.inc $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/lxterminal.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/cherrytree.profile $(DESTDIR)/$(sysconfdir)/firejail/.

@@ -1,54 +1,8 @@
-# various programs
-blacklist  ${HOME}/.config/vlc
-
 # History files in $HOME
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
 
-# HTTP / FTP / Mail
-blacklist-nolog ${HOME}/.adobe
-blacklist-nolog ${HOME}/.macromedia
-blacklist ${HOME}/.icedove
-blacklist ${HOME}/.thunderbird
-blacklist ${HOME}/.sylpheed-2.0
-blacklist ${HOME}/.config/midori
-
-blacklist ${HOME}/.mozilla
-blacklist ${HOME}/.config/chromium
-blacklist ${HOME}/.config/google-chrome
-blacklist ${HOME}/.config/google-chrome-beta
-blacklist ${HOME}/.config/google-chrome-unstable
-blacklist ${HOME}/.config/opera
-blacklist ${HOME}/.config/opera-beta
-blacklist ~/.config/vivaldi
-
-blacklist ${HOME}/.filezilla
-blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.local/share/systemd
-
-# Instant Messaging
-blacklist ${HOME}/.config/hexchat
-blacklist ${HOME}/.mcabber
-blacklist ${HOME}/.purple
-blacklist ${HOME}/.config/psi+
-blacklist ${HOME}/.retroshare
-blacklist ${HOME}/.weechat
-blacklist ${HOME}/.config/xchat
-blacklist ${HOME}/.Skype
-blacklist ${HOME}/.config/tox
-
-# Cryptocoins
-blacklist ${HOME}/.*coin
-blacklist ${HOME}/.electrum*
-blacklist ${HOME}/wallet.dat
-
-# VNC
-blacklist ${HOME}/.remmina
-
-# Other
-blacklist ${HOME}/.tconn
-blacklist ${HOME}/.FBReader
-blacklist ${HOME}/.wine
 
 # X11 session autostart
 blacklist ${HOME}/.xinitrc
@@ -69,11 +23,6 @@ blacklist ${HOME}/.config/openbox/environment
 blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/VirtualBox VMs
 blacklist ${HOME}/.config/VirtualBox
-
-# git, subversion
-blacklist ${HOME}/.subversion
-blacklist ${HOME}/.gitconfig
-blacklist ${HOME}/.git-credential-cache
 
 # var
 blacklist /var/spool/cron
@@ -132,12 +81,3 @@ read-only ${HOME}/.xscreensaver
 # The user ~/bin directory can override commands such as ls
 read-only ${HOME}/bin
 
-# cache
-blacklist ~/.cache/mozilla
-blacklist ~/.cache/chromium
-blacklist ~/.cache/google-chrome
-blacklist ~/.cache/google-chrome-beta
-blacklist ~/.cache/google-chrome-unstable
-blacklist ~/.cache/opera
-blacklist ~/.cache/opera-beta
-blacklist ~/.cache/vivaldi

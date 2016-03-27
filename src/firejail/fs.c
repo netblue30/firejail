@@ -465,13 +465,11 @@ void fs_blacklist(void) {
 		// Process noblacklist command
 		if (strncmp(entry->data, "noblacklist ", 12) == 0) {
 			if (noblacklist_c >= noblacklist_m) {
-                                noblacklist_m *= 2;
-                                noblacklist = realloc(noblacklist, sizeof(*noblacklist) * noblacklist_m);
-                                if (noblacklist == NULL)
-                                        errExit("failed increasing memory for noblacklist entries");
-			}
-			else
-				noblacklist[noblacklist_c++] = expand_home(entry->data + 12, homedir);
+			noblacklist_m *= 2;
+			noblacklist = realloc(noblacklist, sizeof(*noblacklist) * noblacklist_m);
+			if (noblacklist == NULL)
+				errExit("failed increasing memory for noblacklist entries");}
+			noblacklist[noblacklist_c++] = expand_home(entry->data + 12, homedir);
 			entry = entry->next;
 			continue;
 		}

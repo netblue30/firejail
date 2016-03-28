@@ -469,10 +469,10 @@ int seccomp_filter_drop(int enforce_seccomp) {
 	// default seccomp
 	if (cfg.seccomp_list_drop == NULL) {
 #if defined(__x86_64__)
-		seccomp_filter_32();
+		seccomp_filter_64();
 #endif
 #if defined(__i386__)
-		seccomp_filter_64();
+		seccomp_filter_32();
 #endif
 
 #ifdef SYS_mount		

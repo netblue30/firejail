@@ -1,19 +1,16 @@
 # Firejail profile for Mozilla Thunderbird (Icedove in Debian)
-noblacklist ${HOME}/.gnupg
-include /etc/firejail/disable-devel.inc
-
 # Users have thunderbird set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories
-#include /etc/firejail/disable-common.inc thunderbird icedove
-blacklist ${HOME}/.adobe
-blacklist ${HOME}/.macromedia
-blacklist ${HOME}/.filezilla
-blacklist ${HOME}/.config/filezilla
-blacklist ${HOME}/.purple
-blacklist ${HOME}/.config/psi+
-blacklist ${HOME}/.remmina
-blacklist ${HOME}/.tconn
 
+noblacklist ${HOME}/.gnupg
+noblacklist ~/.icedove
+noblacklist ~/.thunderbird
+noblacklist ~/.mozilla
+noblacklist ~/.cache/mozilla
+noblacklist ~/keepassx.kdbx
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-devel.inc
 
 caps.drop all
 seccomp

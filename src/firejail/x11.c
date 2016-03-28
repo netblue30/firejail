@@ -41,7 +41,7 @@ static int x11_check_xpra(void) {
 static int x11_check_xephyr(void) {
 	struct stat s;
 	
-	// check xpra
+	// check xephyr
 	if (stat("/usr/bin/Xephyr", &s) == -1)
 		return 0;
 
@@ -166,16 +166,17 @@ void x11_start_xephyr(int argc, char **argv) {
 	pid_t server = 0;
 	
 
-	// unfortunately, xpra does a number of weird things when started by root user!!!
+	// unfortunately, xephyr does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: this feature is not available when running as root\n");
 		exit(1);
 	}
 
-	// check xpra
-	if (x11_check_xpra() == 0) {
+	// check xephyr
+	if (x11_check_xephyr() == 0) {
 		fprintf(stderr, "\nError: Xephyr program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n");
+		fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xephyr\n");
 		exit(0);
 	}
 	
@@ -217,7 +218,7 @@ void x11_start_xephyr(int argc, char **argv) {
 		errExit("fork");
 	if (server == 0) {
 		if (arg_debug)
-			printf("Starting xpra...\n");
+			printf("Starting xephyr...\n");
 	
 		char *a[4];
 		a[0] = "/bin/bash";
@@ -243,7 +244,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	};
 	
 	if (n == 10) {
-		fprintf(stderr, "Error: failed to start xpra\n");
+		fprintf(stderr, "Error: failed to start xephyr\n");
 		exit(1);
 	}
 	free(fname);
@@ -334,7 +335,7 @@ void x11_start_xpra(int argc, char **argv) {
 	if (arg_debug)
 		printf("xpra client: %s\n", cmd2);
 
-	signal(SIGHUP,SIG_IGN);	// fix sleep(1`) below
+	signal(SIGHUP,SIG_IGN);	// fix sleep(1) below
 	server = fork();
 	if (server < 0)
 		errExit("fork");

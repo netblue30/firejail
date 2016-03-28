@@ -1,7 +1,6 @@
 # Opera browser profile
 noblacklist ~/.config/opera
 noblacklist ~/.cache/opera
-noblacklist ~/keepassx.kdbx
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

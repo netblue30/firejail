@@ -76,3 +76,4 @@
 /etc/firejail/ssh
 /etc/firejail/openbox
 /etc/firejail/disable-programs.inc
+/etc/firejail/disable-passwdmgr.inc

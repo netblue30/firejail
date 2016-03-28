@@ -1,7 +1,6 @@
 # Google Chrome unstable browser profile
 noblacklist ~/.config/google-chrome-unstable
 noblacklist ~/.cache/google-chrome-unstable
-noblacklist ~/keepassx.kdbx
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 

@@ -2,11 +2,13 @@
 noblacklist ${HOME}/.conkeror.mozdev.org
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
+
 caps.drop all
 seccomp
 protocol unix,inet,inet6
 netfilter
 noroot
+
 whitelist ~/.conkeror.mozdev.org
 whitelist ~/Downloads
 whitelist ~/dwhelper
@@ -18,6 +20,4 @@ whitelist ~/.vimperator
 whitelist ~/.pentadactylrc
 whitelist ~/.pentadactyl
 whitelist ~/.conkerorrc
-
-# common
 include /etc/firejail/whitelist-common.inc

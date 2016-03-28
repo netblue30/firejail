@@ -1,7 +1,6 @@
 # Chromium browser profile
 noblacklist ~/.config/chromium
 noblacklist ~/.cache/chromium
-noblacklist ~/keepassx.kdbx
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 

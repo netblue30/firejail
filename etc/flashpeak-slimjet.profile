@@ -7,7 +7,6 @@
 #
 noblacklist ~/.config/slimjet
 noblacklist ~/.cache/slimjet
-noblacklist ~/keepassx.kdbx
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 

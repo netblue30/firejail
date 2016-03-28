@@ -2,6 +2,7 @@
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
 
 # Whitelist the folders needed by Spotify - This is more restrictive 
 # than a blacklist though, but this is all spotify requires for 

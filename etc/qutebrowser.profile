@@ -19,5 +19,4 @@ whitelist ~/.config/qutebrowser
 mkdir ~/.cache
 mkdir ~/.cache/qutebrowser
 whitelist ~/.cache/qutebrowser
-
 include /etc/firejail/whitelist-common.inc

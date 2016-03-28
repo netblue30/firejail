@@ -2,11 +2,10 @@
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
-blacklist ${HOME}/.pki/nssdb
-blacklist ${HOME}/.lastpass
-blacklist ${HOME}/.keepassx
-blacklist ${HOME}/.password-store
+include /etc/firejail/disable-passwdmgr.inc
+
 blacklist ${HOME}/.wine
+
 caps.drop all
 seccomp
 protocol unix,inet,inet6

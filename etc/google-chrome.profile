@@ -1,7 +1,6 @@
 # Google Chrome browser profile
 noblacklist ~/.config/google-chrome
 noblacklist ~/.cache/google-chrome
-noblacklist ~/keepassx.kdbx
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 

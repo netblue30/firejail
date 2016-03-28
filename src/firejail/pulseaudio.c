@@ -120,9 +120,49 @@ void pulseaudio_init(void) {
 	if (chown(pulsecfg, getuid(), getgid()) == -1)
 		errExit("chown");
 
-	// set environment
-	if (setenv("PULSE_CLIENTCONFIG", pulsecfg, 1) < 0)
-		errExit("setenv");
+	// create ~/.config/pulse directory if not present
+	char *dir1;
+	if (asprintf(&dir1, "%s/.config", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(dir1, &s) == -1) {
+		int rv = mkdir(dir1, 0755);
+		if (rv == 0) {
+			rv = chown(dir1, getuid(), getgid());
+			(void) rv;
+			rv = chmod(dir1, 0755);
+			(void) rv;
+		}
+	}
+	free(dir1);
+	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(dir1, &s) == -1) {
+		int rv = mkdir(dir1, 0700);
+		if (rv == 0) {
+			rv = chown(dir1, getuid(), getgid());
+			(void) rv;
+			rv = chmod(dir1, 0700);
+			(void) rv;
+		}
+	}
+	free(dir1);
 	
+	
+	// if we have ~/.config/pulse mount the new directory, else set environment variable
+	char *homeusercfg;
+	if (asprintf(&homeusercfg, "%s/.config/pulse", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(homeusercfg, &s) == 0) {
+		if (mount(RUN_PULSE_DIR, homeusercfg, "none", MS_BIND, NULL) < 0)
+			errExit("mount pulseaudio");
+		fs_logger2("tmpfs", homeusercfg);
+	}
+	else {
+		// set environment
+		if (setenv("PULSE_CLIENTCONFIG", pulsecfg, 1) < 0)
+			errExit("setenv");
+	}
+		
 	free(pulsecfg);
+	free(homeusercfg);
 }

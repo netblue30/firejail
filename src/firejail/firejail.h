@@ -531,6 +531,7 @@ int x11_display(void);
 void x11_start(int argc, char **argv);
 void x11_start_xpra(int argc, char **argv);
 void x11_start_xephyr(int argc, char **argv);
+extern char *xephyr_screen;
 
 // ls.c
 #define SANDBOX_FS_LS 0

@@ -24,6 +24,7 @@
 
 static int initialized = 0;
 static int cfg_val[CFG_MAX];
+char *xephyr_screen = "800x600";
 
 int checkcfg(int val) {
 	EUID_ASSERT();
@@ -132,8 +133,21 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			
+			// Xephyr screen size
+			else if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
+				// expecting two numbers and an x between them
+				int n1;
+				int n2;
+				int rv = sscanf(ptr + 14, "%dx%d", &n1, &n2);
+				if (rv != 2)
+					goto errout;
+				if (asprintf(&xephyr_screen, "%dx%d", n1, n2) == -1)
+					errExit("asprintf");
+			}
 			else
 				goto errout;
+				
 			free(ptr);
 		}
 

@@ -1,10 +1,10 @@
 # History files in $HOME
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
-
 blacklist ${HOME}/.local/share/systemd
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.macromedia
+read-only ${HOME}/.local/share/applications
 
 # X11 session autostart
 blacklist ${HOME}/.xinitrc

@@ -275,7 +275,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	sleep(1);
 	
 	if (!arg_quiet)
-		printf("Xphyr server pid %d, client pid %d\n", server, client);
+		printf("Xephyr server pid %d, client pid %d\n", server, client);
 
 	exit(0);
 }

@@ -1,8 +1,8 @@
 firejail (0.9.39) baseline; urgency=low
-  * default seccomp filter update
-  * disable STUN/WebRTC in default netfilter configuration
   * added --nice option
   * added --x11 option
+  * added --x11=xpra option
+  * added --x11=xephyr option
   * added filetransfer options --ls and --get
   * added mkdir, ipc-namespace and nosound profile commands
   * --version also prints compile options
@@ -10,10 +10,12 @@ firejail (0.9.39) baseline; urgency=low
   * added compile-time option to restrict --net= to root only
   * run time config support, man firejail-config
   * added firecfg utility
-  * build rpm packages using "make rpms"
+  * default seccomp filter update
+  * disable STUN/WebRTC in default netfilter configuration
   * new profiles: lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril
   * new profiles: qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars
-  * new profiles: qTox
+  * new profiles: qTox, OpenSSH client, OpenBox
+  * build rpm packages using "make rpms"
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Wed, 16 Mar 2016 08:00:00 -0500
 

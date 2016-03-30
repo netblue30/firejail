@@ -14,16 +14,16 @@ time. Most features are enabled by default both at compile time and
 at run time.
 
 .TP
-\fBsecomp
-Enable or disable seccomp support, default enabled.
+\fBbind
+Enable or disable bind support, default enabled.
 
 .TP
 \fBchroot
 Enable or disable chroot support, default enabled.
 
 .TP
-\fBbind
-Enable or disable bind support, default enabled.
+\fBfile-transfer
+Enable or disable file transfer support, default enabled.
 
 .TP
 \fBnetwork
@@ -37,6 +37,10 @@ Restricted networking grants access to --interface and --net=ethXXX
 only to root user. Regular users are only allowed --net=none.
 
 .TP
+\fBsecomp
+Enable or disable seccomp support, default enabled.
+
+.TP
 \fBuserns
 Enable or disable user namespace support, default enabled.
 
@@ -45,8 +49,19 @@ Enable or disable user namespace support, default enabled.
 Enable or disable X11 sandboxing support, default enabled.
 
 .TP
-\fBfile-transfer
-Enable or disable file transfer support, default enabled.
+\fBxephyr-screen
+Screen size for --x11=xephyr, default 800x600. Run /usr/bin/xrandr for
+a full list of resolutions available on your specific setup. Examples:
+.br
+
+.br
+xephyr-screen 640x480
+.br
+xephyr-screen 800x600
+.br
+xephyr-screen 1024x768
+.br
+xephyr-screen 1280x1024
 
 .SH FILES
 /etc/firejail/firejail.config

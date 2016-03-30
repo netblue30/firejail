@@ -41,13 +41,51 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 ## X11 sandboxing support
 
-X11 support is built around Xpra (http://xpra.org/).
-So far I've seen it working on Debian 7 and 8, and Ubuntu 14.04. If you manage to run it on another
-distribution, please let me know. Example:
+X11 support is built around Xpra (http://xpra.org/) of Xephyr.
 `````
-$ firejail --x11 --net=eth0 firefox
+       --x11  Start a new X11 server using Xpra or Xephyr and attach the sand‐
+              box to this server.  The regular X11 server (display 0)  is  not
+              visible  in  the sandbox. This prevents screenshot and keylogger
+              applications started in the sandbox  from  accessing  other  X11
+              displays.  A network namespace needs to be instantiated in order
+              to deny access to X11 abstract Unix domain socket.
+
+              Firejail will try first Xpra, and if Xpra is  not  installed  on
+              the  system,  it  will  try to find Xephyr.  This feature is not
+              available when running as root.
+
+              Example:
+              $ firejail --x11 --net=eth0 firefox
+
+       --x11=xpra
+              Start a new X11 server using Xpra (http://xpra.org)  and  attach
+              the sandbox to this server.  Xpra is a persistent remote display
+              server and client for forwarding X11  applications  and  desktop
+              screens.  On Debian platforms Xpra is installed with the command
+              sudo apt-get install xpra.  This feature is not  available  when
+              running as root.
+
+              Example:
+              $ firejail --x11 --net=eth0 firefox
+
+       --x11=xephyr
+              Start  a  new  X11 server using Xephyr and attach the sandbox to
+              this server.  Xephyr is a display server  implementing  the  X11
+              display  server protocol.  It runs in a window just like other X
+              applications, but it is an X server itself in which you can  run
+              other software.  The default Xephyr window size is 800x600. This
+              can be modified in /etc/firejail/firejail.config file, see man 5
+              firejail-config for more details.
+
+              The  recommended way to use this feature is to run a window man‐
+              ager inside the sandbox.  A security profile for OpenBox is pro‐
+              vided.  On Debian platforms Xephyr is installed with the command
+              sudo apt-get install xserver-xephyr.  This feature is not avail‐
+              able when running as root.
+
+              Example:
+              $ firejail --x11 --net=eth0 openbox
 `````
---x11 starts the server, --net is required in order to remove the main X11 server socket from the sandbox.
 More information here: https://firejail.wordpress.com/documentation-2/x11-guide/
 
 ## File transfers

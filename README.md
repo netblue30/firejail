@@ -41,7 +41,7 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 ## X11 sandboxing support
 
-X11 support is built around Xpra (http://xpra.org/) of Xephyr.
+X11 support is built around Xpra (http://xpra.org/) or Xephyr.
 `````
        --x11  Start a new X11 server using Xpra or Xephyr and attach the sand‐
               box to this server.  The regular X11 server (display 0)  is  not

@@ -129,47 +129,7 @@ FILE TRANSFER
 
 ## Firecfg
 `````
-NAME
-       Firecfg - Desktop configuration program for Firejail software.
 
-SYNOPSIS
-       firecfg [OPTIONS]
-
-DESCRIPTION
-       Firecfg is the desktop configuration utility for Firejail software. The
-       utility creates several symbolic links  to  firejail  executable.  This
-       allows the user to sandbox applications automatically, just by clicking
-       on a regular desktop menus and icons.
-
-       The symbolic links are placed in /usr/local/bin. For more  information,
-       see DESKTOP INTEGRATION section in man 1 firejail.
-
-OPTIONS
-       --clear
-              Clear all firejail symbolic links
-
-       -?, --help
-              Print options end exit.
-
-       --list List all firejail symbolic links
-
-       --version
-              Print program version and exit.
-
-       Example:
-
-       $ sudo firecfg
-       /usr/local/bin/firefox created
-       /usr/local/bin/vlc created
-       [...]
-       $ firecfg --list
-       /usr/local/bin/firefox
-       /usr/local/bin/vlc
-       [...]
-       $ sudo firecfg --clear
-       /usr/local/bin/firefox removed
-       /usr/local/bin/vlc removed
-       [...]
 `````
 
 
@@ -186,11 +146,12 @@ or at run time by editing /etc/firejail/firejail.config file.
 
 The following features can be enabled or disabled:
 `````
-       secomp Enable or disable seccomp support, default enabled.
+       bind   Enable or disable bind support, default enabled.
 
        chroot Enable or disable chroot support, default enabled.
 
-       bind   Enable or disable bind support, default enabled.
+       file-transfer
+              Enable or disable file transfer support, default enabled.
 
        network
               Enable or disable networking features, default enabled.
@@ -202,12 +163,21 @@ The following features can be enabled or disabled:
               --net=ethXXX only to root user. Regular users are  only  allowed
               --net=none.
 
+       secomp Enable or disable seccomp support, default enabled.
+
        userns Enable or disable user namespace support, default enabled.
 
        x11    Enable or disable X11 sandboxing support, default enabled.
 
-       file-transfer
-              Enable or disable file transfer support, default enabled.
+       xephyr-screen
+              Screen    size    for   --x11=xephyr,   default   800x600.   Run
+              /usr/bin/xrandr for a full list of resolutions available on your
+              specific setup. Examples:
+
+              xephyr-screen 640x480
+              xephyr-screen 800x600
+              xephyr-screen 1024x768
+              xephyr-screen 1280x1024
 `````
 
 ## Default seccomp filter update
@@ -272,5 +242,6 @@ $ man firejail-profile
 `````
 
 ## New security profiles
-lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril, qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars, qTox
+lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril, qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars, qTox,
+OpenSSH client, OpenBox window manager.
 

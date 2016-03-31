@@ -22,7 +22,7 @@ sleep 1
 send -- "ls -al | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"5"
+	"6"
 }
 
 send -- "ls -al .bashrc\r"
@@ -73,7 +73,7 @@ if { $overlay == "overlay" } {
 	send -- "ls -al | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
-		"5"
+		"6"
 	}
 	
 	send -- "ls -al .bashrc\r"

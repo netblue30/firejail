@@ -42,8 +42,8 @@ expect {
 send -- "ls -al | wc -l;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"5" {puts "normal system\n";}
-	"4" {puts "OpenSUSE\n";}
+	"7" {puts "normal system\n";}
+	"5" {puts "OpenSUSE\n";}
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}

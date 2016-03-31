@@ -73,7 +73,7 @@
 /etc/firejail/firejail.config
 /etc/firejail/qutebrowser.profile
 /etc/firejail/flashpeak-slimjet.profile
-/etc/firejail/ssh
-/etc/firejail/openbox
+/etc/firejail/ssh.profile
+/etc/firejail/openbox.profile
 /etc/firejail/disable-programs.inc
 /etc/firejail/disable-passwdmgr.inc

@@ -1,4 +1,4 @@
-firejail (0.9.39) baseline; urgency=low
+firejail (0.9.40-rc1) baseline; urgency=low
   * added --nice option
   * added --x11 option
   * added --x11=xpra option

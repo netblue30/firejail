@@ -77,3 +77,4 @@
 /etc/firejail/openbox.profile
 /etc/firejail/disable-programs.inc
 /etc/firejail/disable-passwdmgr.inc
+/etc/firejail/dillo.profile

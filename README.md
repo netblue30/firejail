@@ -283,5 +283,5 @@ $ man firejail-profile
 
 ## New security profiles
 lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril, qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars, qTox,
-OpenSSH client, OpenBox window manager.
+OpenSSH client, OpenBox window manager, Dillo.
 

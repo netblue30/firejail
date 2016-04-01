@@ -20,6 +20,7 @@ blacklist ${HOME}/.config/opera-beta
 blacklist ~/.config/vivaldi
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla
+blacklist ~/.dillo
 
 # cache
 blacklist ~/.cache/mozilla

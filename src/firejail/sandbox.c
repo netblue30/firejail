@@ -163,6 +163,16 @@ static int monitor_application(pid_t app_pid) {
 				continue;
 			if (pid == 1)
 				continue;
+			
+			// todo: make this generic
+			// Dillo browser leaves a dpid process running, we need to shut it down
+			if (strcmp(cfg.command_name, "dillo") == 0) {
+				char *pidname = pid_proc_comm(pid);
+				if (pidname && strcmp(pidname, "dpid") == 0)
+					break;
+				free(pidname);
+			}
+
 			app_pid = pid;
 			break;
 		}

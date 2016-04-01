@@ -2,20 +2,26 @@
 # Users have thunderbird set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories
 
-noblacklist ${HOME}/.gnupg
-noblacklist ~/.icedove
-noblacklist ~/.thunderbird
-noblacklist ~/.mozilla
-noblacklist ~/.cache/mozilla
-noblacklist ~/keepassx.kdbx
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-devel.inc
+noblacklist ~/.gnupg
+mkdir ~/.gnupg
+whitelist ~/.gnupg
 
-caps.drop all
-seccomp
-protocol unix,inet,inet6
-netfilter
-tracelog
-noroot
+noblacklist ~/.icedove
+mkdir ~/.icedove
+whitelist ~/.icedove
+
+noblacklist ~/.thunderbird
+mkdir ~/.thunderbird
+whitelist ~/.thunderbird
+
+noblacklist ~/.cache/thunderbird
+mkdir ~/.cache
+mkdir ~/.cache/thunderbird
+whitelist ~/.cache/thunderbird
+
+noblacklist ~/.cache/icedove
+mkdir ~/.cache/icedove
+whitelist ~/.cache/icedove
+
+include /etc/firejail/firefox.profile
 

@@ -227,8 +227,14 @@ static void start_application(void) {
 			}
 		}
 
+		if (cfg.original_program_index == 0) {
+			fprintf(stderr, "Error: --shell=none configured, but no program specified\n");
+			exit(1);
+		}
+
 		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
+
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 	}
 	//****************************************

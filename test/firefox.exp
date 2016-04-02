@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail firefox www.gentoo.org\r"
+send -- "firejail firefox -no-remote www.gentoo.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/firefox.profile"
@@ -26,6 +26,10 @@ expect {
 	"firefox" {puts "firefox detected\n";}
 	"iceweasel" {puts "iceweasel detected\n";}
 }
+expect {
+	timeout {puts "TESTING ERROR 3.2\n";exit}
+	"no-remote"
+}
 sleep 1
 send -- "firejail --name=blablabla\r"
 expect {
@@ -42,6 +46,10 @@ expect {
 	" iceweasel" {puts "iceweasel detected\n";}
 }
 expect {
+	timeout {puts "TESTING ERROR 5.0\n";exit}
+	"no-remote"
+}
+expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
 	"Seccomp:	2"
 }
@@ -55,6 +63,10 @@ expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	" firefox" {puts "firefox detected\n";}
 	" iceweasel" {puts "iceweasel detected\n";}
+}
+expect {
+	timeout {puts "TESTING ERROR 6.0\n";exit}
+	"no-remote"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

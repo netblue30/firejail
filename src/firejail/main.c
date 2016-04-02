@@ -1268,8 +1268,8 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: invalid private-bin option\n");
 				exit(1);
 			}
-			fs_check_bin_list();
 			arg_private_bin = 1;
+			fs_check_bin_list();
 		}
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;

@@ -4,6 +4,7 @@ blacklist ${HOME}/.remmina
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.FBReader
 blacklist ${HOME}/.wine
+blacklist ${HOME}/.config/cmus
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove

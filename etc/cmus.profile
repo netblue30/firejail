@@ -15,4 +15,3 @@ noroot
 private-bin cmus
 private-etc group
 shell none
-noroot

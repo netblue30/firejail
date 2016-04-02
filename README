@@ -100,6 +100,7 @@ avoidr (https://github.com/avoidr)
 	- hostname support in profile file
 	- Google Chrome profile rework
 	- added cmus profile
+	- man page fixes
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix

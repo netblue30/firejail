@@ -10,7 +10,7 @@ if { $argc != 1 } {
 	exit
 }
 
-send -- "firejail --profile=$argv\r"
+send -- "firejail --profile=$argv /bin/bash\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"

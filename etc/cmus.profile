@@ -1,5 +1,5 @@
 # cmus profile
-noblacklist {HOME}/.config/cmus
+noblacklist ${HOME}/.config/cmus
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

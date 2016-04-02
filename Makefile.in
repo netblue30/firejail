@@ -158,6 +158,7 @@ realinstall:
 	install -c -m 0644 .etc/ssh.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/openbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/dillo.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/cmus.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/firejail.config ]; then install -c -m 0644 etc/firejail.config $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc

@@ -548,7 +548,57 @@ Security filters, cgroups and cpus configurations are not applied to the process
 \fB\-\-join-network=name
 Join the network namespace of the sandbox identified by name. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. This command is available only to root user.
-Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox.
+Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox. Example:
+.br
+
+.br
+# start firefox
+.br
+$ firejail --net=eth0 --name=browser firefox &
+.br
+
+.br
+# change netfilter configuration
+.br
+$ sudo firejail --join-network=browser "cat /etc/firejail/nolocal.net | /sbin/iptables-restore"
+.br
+
+.br
+# verify netfilter configuration
+.br
+$ sudo firejail --join-network=browser "/sbin/iptables -vL"
+.br
+
+.br
+# verify  IP addresses
+.br
+$ sudo firejail --join-network=browser "ip addr"
+.br
+Switching to pid 1932, the first child process inside the sandbox
+.br
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default 
+.br
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+.br
+    inet 127.0.0.1/8 scope host lo
+.br
+       valid_lft forever preferred_lft forever
+.br
+    inet6 ::1/128 scope host 
+.br
+       valid_lft forever preferred_lft forever
+.br
+2: eth0-1931: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default 
+.br
+    link/ether 76:58:14:42:78:e4 brd ff:ff:ff:ff:ff:ff
+.br
+    inet 192.168.1.158/24 brd 192.168.1.255 scope global eth0-1931
+.br
+       valid_lft forever preferred_lft forever
+.br
+    inet6 fe80::7458:14ff:fe42:78e4/64 scope link 
+.br
+       valid_lft forever preferred_lft forever
 
 .TP
 \fB\-\-join-network=pid

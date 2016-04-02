@@ -1886,7 +1886,7 @@ See man 5 firejail-profile for profile file syntax information.
 	
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
-/etc/password file for each user that needs to be restricted. Alternatively,
+/etc/passwd file for each user that needs to be restricted. Alternatively,
 you can specify /usr/bin/firejail  in adduser command:
 
 adduser \-\-shell /usr/bin/firejail username

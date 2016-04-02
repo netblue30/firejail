@@ -1,3 +1,4 @@
+# cmus profile
 noblacklist {HOME}/.config/cmus
 
 include /etc/firejail/disable-common.inc

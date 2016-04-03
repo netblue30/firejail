@@ -34,7 +34,7 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 `````
 
 `````
-# Current development version: 0.9.40-rc
+# Current development version: 0.9.40-rc2
 Version 0.9.40-rc1 released!
 
 ## X11 sandboxing support

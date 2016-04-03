@@ -18,7 +18,7 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * new profiles: qTox, OpenSSH client, OpenBox, Dillo, cmus
   * build rpm packages using "make rpms"
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Sun, 3 Apr 2016 09:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 3 Apr 2016 08:00:00 -0500
 
 firejail (0.9.38) baseline; urgency=low
   * IPv6 support (--ip6 and --netfilter6)

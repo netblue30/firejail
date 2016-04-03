@@ -2085,7 +2085,7 @@ int main(int argc, char **argv) {
 	signal (SIGTERM, my_handler);
 	
 	// wait for the child to finish
-	int status = NULL;
+	int status = 0;
 	waitpid(child, &status, 0);
 
 	// free globals

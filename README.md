@@ -38,7 +38,10 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 `````
 
 `````
+Version 0.9.40-rc1 released!
+`````
 
+`````
 ## X11 sandboxing support
 
 X11 support is built around Xpra (http://xpra.org/) or Xephyr.

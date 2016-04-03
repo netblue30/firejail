@@ -341,7 +341,7 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		}
 
 		// wait for the child to finish
-		int status = NULL;
+		int status = 0;
 		waitpid(child, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
 		else

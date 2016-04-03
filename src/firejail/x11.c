@@ -26,6 +26,7 @@
 #include <dirent.h>
 #include <sys/mount.h>
 
+#ifdef HAVE_X11
 // return 1 if xpra is installed on the system
 static int x11_check_xpra(void) {
 	struct stat s;
@@ -72,6 +73,7 @@ static int random_display_number(void) {
 	
 	return display;
 }
+#endif
 
 // return display number, -1 if not configured
 int x11_display(void) {

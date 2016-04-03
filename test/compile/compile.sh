@@ -15,6 +15,7 @@ arr[9]="TEST 9: compile file transfer disabled"
 cleanup() {
 	rm -f report*
 	rm -fr firejail
+	rm oc* om*
 }
 
 print_title() {
@@ -61,6 +62,8 @@ sudo make install 2>&1 | tee ../output-install
 cd ..
 grep Warning output-configure output-make output-install > ./report-test1
 grep Error output-configure output-make output-install >> ./report-test1
+cp output-configure oc1
+cp output-make om1
 rm output-configure output-make output-install
 
 
@@ -79,6 +82,8 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test2
 grep Error output-configure output-make >> ./report-test2
+cp output-configure oc2
+cp output-make om2
 rm output-configure output-make
 
 #*****************************************************************
@@ -96,6 +101,8 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test3
 grep Error output-configure output-make >> ./report-test3
+cp output-configure oc3
+cp output-make om3
 rm output-configure output-make
 
 #*****************************************************************
@@ -113,6 +120,8 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test4
 grep Error output-configure output-make >> ./report-test4
+cp output-configure oc4
+cp output-make om4
 rm output-configure output-make
 
 #*****************************************************************
@@ -130,6 +139,8 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test5
 grep Error output-configure output-make >> ./report-test5
+cp output-configure oc5
+cp output-make om5
 rm output-configure output-make
 
 #*****************************************************************
@@ -147,6 +158,8 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test6
 grep Error output-configure output-make >> ./report-test6
+cp output-configure oc6
+cp output-make om6
 rm output-configure output-make
 
 #*****************************************************************
@@ -164,6 +177,8 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test7
 grep Error output-configure output-make >> ./report-test7
+cp output-configure oc7
+cp output-make om7
 rm output-configure output-make
 
 
@@ -182,6 +197,8 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test8
 grep Error output-configure output-make >> ./report-test8
+cp output-configure oc8
+cp output-make om8
 rm output-configure output-make
 
 
@@ -200,6 +217,8 @@ make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test9
 grep Error output-configure output-make >> ./report-test9
+cp output-configure oc9
+cp output-make om9
 rm output-configure output-make
 
 

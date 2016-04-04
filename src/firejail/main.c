@@ -701,7 +701,9 @@ int main(int argc, char **argv) {
 		run_symlink(argc, argv);
 
 	// check if we already have a sandbox running
+	EUID_ROOT();
 	int rv = check_kernel_procs();
+	EUID_USER();
 	if (rv == 0) {
 		// if --force option is passed to the program, disregard the existing sandbox
 		int found = 0;

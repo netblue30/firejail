@@ -26,8 +26,10 @@
 // check process space for kernel processes
 // return 1 if found, 0 if not found
 int check_kernel_procs(void) {
-	EUID_ASSERT();
-	
+	// we run this function with EUID set in order to detect grsecurity
+	// only user processes are available in /proc when running grsecurity
+	// EUID_ASSERT();
+
 	char *kern_proc[] = {
 		"kthreadd",
 		"ksoftirqd",

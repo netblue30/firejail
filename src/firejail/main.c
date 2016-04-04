@@ -174,9 +174,11 @@ static void init_cfg(int argc, char **argv) {
 	cfg.bridge3.devsandbox = "eth3";
 	
 	// extract user data
+	EUID_ROOT();
 	struct passwd *pw = getpwuid(getuid());
 	if (!pw)
 		errExit("getpwuid");
+	EUID_USER();
 	cfg.username = strdup(pw->pw_name);
 	if (!cfg.username)
 		errExit("strdup");

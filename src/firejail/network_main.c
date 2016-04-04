@@ -212,7 +212,10 @@ void net_check_cfg(void) {
 		// first network is a mac device
 		else {
 			// get the host default gw
+			EUID_ROOT();	// rise permissions for grsecurity
+			// Error fopen:network_get_defaultgw(479): Permission denied
 			uint32_t gw = network_get_defaultgw();
+			EUID_USER();
 			// check the gateway is network range
 			if (in_netrange(gw, cfg.bridge0.ip, cfg.bridge0.mask))
 				gw = 0;

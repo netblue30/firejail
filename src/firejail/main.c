@@ -174,7 +174,7 @@ static void init_cfg(int argc, char **argv) {
 	cfg.bridge3.devsandbox = "eth3";
 	
 	// extract user data
-	EUID_ROOT();
+	EUID_ROOT(); // rise permissions for grsecurity
 	struct passwd *pw = getpwuid(getuid());
 	if (!pw)
 		errExit("getpwuid");

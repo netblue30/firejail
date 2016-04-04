@@ -139,7 +139,6 @@ void netfilter(const char *fname) {
 			exit(1);
 		}
 		dup2(fd,STDIN_FILENO);
-		close(fd);
 
 		// wipe out environment variables
 		environ = NULL;
@@ -155,6 +154,11 @@ void netfilter(const char *fname) {
 		if (child < 0)
 			errExit("fork");
 		if (child == 0) {
+			// elevate privileges in order to get grsecurity working
+			if (setreuid(0, 0))
+				errExit("setreuid");
+			if (setregid(0, 0))
+				errExit("setregid");
 			environ = NULL;
 			execl(iptables, iptables, "-vL", NULL);
 			// it will never get here!!!
@@ -246,7 +250,6 @@ void netfilter6(const char *fname) {
 			exit(1);
 		}
 		dup2(fd,STDIN_FILENO);
-		close(fd);
 
 		// wipe out environment variables
 		environ = NULL;

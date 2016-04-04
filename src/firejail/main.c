@@ -1965,54 +1965,27 @@ int main(int argc, char **argv) {
 			printf("The new log directory is /proc/%d/root/var/log\n", child);
 	}
 	
-
-	EUID_ROOT();	
 	if (!arg_nonetwork) {
-		// create veth pair or macvlan device
-		if (cfg.bridge0.configured) {
-			if (cfg.bridge0.macvlan == 0) {
-				net_configure_veth_pair(&cfg.bridge0, "eth0", child);
-			}
-			else
-				net_create_macvlan(cfg.bridge0.devsandbox, cfg.bridge0.dev, child);
+		EUID_ROOT();	
+		pid_t net_child = fork();
+		if (net_child < 0)
+			errExit("fork");
+		if (net_child == 0) {
+			// elevate privileges in order to get grsecurity working
+			if (setreuid(0, 0))
+				errExit("setreuid");
+			if (setregid(0, 0))
+				errExit("setregid");
+			network_main(child);
+			if (arg_debug)
+				printf("Host network configured\n");			
+			exit(0);			
 		}
-		
-		if (cfg.bridge1.configured) {
-			if (cfg.bridge1.macvlan == 0)
-				net_configure_veth_pair(&cfg.bridge1, "eth1", child);
-			else
-				net_create_macvlan(cfg.bridge1.devsandbox, cfg.bridge1.dev, child);
-		}
-		
-		if (cfg.bridge2.configured) {
-			if (cfg.bridge2.macvlan == 0)
-				net_configure_veth_pair(&cfg.bridge2, "eth2", child);
-			else
-				net_create_macvlan(cfg.bridge2.devsandbox, cfg.bridge2.dev, child);
-		}
-		
-		if (cfg.bridge3.configured) {
-			if (cfg.bridge3.macvlan == 0)
-				net_configure_veth_pair(&cfg.bridge3, "eth3", child);
-			else
-				net_create_macvlan(cfg.bridge3.devsandbox, cfg.bridge3.dev, child);
-		}
-	
-		// move interfaces in sandbox
-		if (cfg.interface0.configured) {
-			net_move_interface(cfg.interface0.dev, child);
-		}
-		if (cfg.interface1.configured) {
-			net_move_interface(cfg.interface1.dev, child);
-		}
-		if (cfg.interface2.configured) {
-			net_move_interface(cfg.interface2.dev, child);
-		}
-		if (cfg.interface3.configured) {
-			net_move_interface(cfg.interface3.dev, child);
-		}
+
+		// wait for the child to finish
+		waitpid(net_child, NULL, 0);
+		EUID_USER();
 	}
-	EUID_USER();
 
  	// close each end of the unused pipes
  	close(parent_to_child_fds[0]);

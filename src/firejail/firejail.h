@@ -264,6 +264,7 @@ void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
 void net_check_cfg(void);
 void net_dns_print_name(const char *name);
 void net_dns_print(pid_t pid);
+void network_main(pid_t child);
 
 // network.c
 void net_if_up(const char *ifname);

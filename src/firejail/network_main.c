@@ -278,3 +278,49 @@ void net_dns_print(pid_t pid) {
 	free(fname);
 	exit(0);
 }
+
+void network_main(pid_t child) {
+	// create veth pair or macvlan device
+	if (cfg.bridge0.configured) {
+		if (cfg.bridge0.macvlan == 0) {
+			net_configure_veth_pair(&cfg.bridge0, "eth0", child);
+		}
+		else
+			net_create_macvlan(cfg.bridge0.devsandbox, cfg.bridge0.dev, child);
+	}
+	
+	if (cfg.bridge1.configured) {
+		if (cfg.bridge1.macvlan == 0)
+			net_configure_veth_pair(&cfg.bridge1, "eth1", child);
+		else
+			net_create_macvlan(cfg.bridge1.devsandbox, cfg.bridge1.dev, child);
+	}
+	
+	if (cfg.bridge2.configured) {
+		if (cfg.bridge2.macvlan == 0)
+			net_configure_veth_pair(&cfg.bridge2, "eth2", child);
+		else
+			net_create_macvlan(cfg.bridge2.devsandbox, cfg.bridge2.dev, child);
+	}
+	
+	if (cfg.bridge3.configured) {
+		if (cfg.bridge3.macvlan == 0)
+			net_configure_veth_pair(&cfg.bridge3, "eth3", child);
+		else
+			net_create_macvlan(cfg.bridge3.devsandbox, cfg.bridge3.dev, child);
+	}
+
+	// move interfaces in sandbox
+	if (cfg.interface0.configured) {
+		net_move_interface(cfg.interface0.dev, child);
+	}
+	if (cfg.interface1.configured) {
+		net_move_interface(cfg.interface1.dev, child);
+	}
+	if (cfg.interface2.configured) {
+		net_move_interface(cfg.interface2.dev, child);
+	}
+	if (cfg.interface3.configured) {
+		net_move_interface(cfg.interface3.dev, child);
+	}
+}

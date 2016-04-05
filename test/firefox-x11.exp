@@ -23,6 +23,13 @@ expect {
 	"no-remote"
 }
 sleep 1
+# grsecurity exit
+send -- "file /proc/sys/kernel/grsecurity\r"
+expect {
+	timeout {puts "TESTING ERROR - grsecurity detection\n";exit}
+	"grsecurity: directory" {puts "grsecurity present, exiting...\n";exit}
+	"cannot open" {puts "grsecurity not present\n"}
+}
 send -- "firejail --name=blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}

@@ -1,6 +1,7 @@
 # Opera browser profile
 noblacklist ~/.config/opera
 noblacklist ~/.cache/opera
+noblacklist ~/.opera
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -14,6 +15,8 @@ whitelist ~/.config/opera
 mkdir ~/.cache
 mkdir ~/.cache/opera
 whitelist ~/.cache/opera
+mkdir ~/.opera
+whitelist ~/.opera
 mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc

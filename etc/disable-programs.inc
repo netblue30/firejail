@@ -18,6 +18,7 @@ blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
+blacklist ${HOME}/.opera
 blacklist ~/.config/vivaldi
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla

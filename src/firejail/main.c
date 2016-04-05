@@ -1204,6 +1204,14 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);
 				}
+				
+				struct stat s;
+				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+					fprintf(stderr, "Error: --chroot option is not available on GRSecurity systems\n");
+					exit(1);	
+				}
+				
+				
 				invalid_filename(argv[i] + 9);
 				
 				// extract chroot dirname

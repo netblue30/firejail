@@ -201,7 +201,8 @@ Example:
 .TP
 \fB\-\-chroot=dirname
 Chroot the sandbox into a root filesystem. If the sandbox is started as a
-regular user, default seccomp and capabilities filters are enabled.
+regular user, default seccomp and capabilities filters are enabled. This
+option is not available on Grsecurity systems.
 .br
 
 .br

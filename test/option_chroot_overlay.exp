@@ -7,7 +7,8 @@ match_max 100000
 send --  "firejail --chroot=/tmp/chroot --overlay\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"mutually exclusive"
+	"mutually exclusive" {puts "normal system\n"}
+	"Error: --chroot option is not available on GRSecurity systems" { puts "\nall done\n"; exit}
 }
 sleep 1
 

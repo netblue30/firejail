@@ -118,7 +118,7 @@ The filter is applied to all processes started in the sandbox.
 .br
 Example:
 .br
-$ sudo firejail \-\-caps "/etc/init.d/nginx start && sleep inf"
+$ sudo firejail \-\-caps /etc/init.d/nginx start
 
 .TP
 \fB\-\-caps.drop=all

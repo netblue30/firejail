@@ -6,6 +6,9 @@
 
 ./fscheck.sh
 
+echo "TESTING: caps.print (caps-print.exp)
+./caps-print.exp
+
 echo "TESTING: sound (sound.exp)"
 ./sound.exp
 

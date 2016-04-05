@@ -23,7 +23,8 @@
 #include <sys/ioctl.h>
 #include <sys/prctl.h>
 #include <grp.h>
-
+#include <sys/stat.h>
+ 
 
 static int arg_route = 0;
 static int arg_arp = 0;
@@ -111,6 +112,12 @@ int main(int argc, char **argv) {
 	unsigned pid = 0;
 	int i;
 
+	struct stat s;
+	if (getuid() != 0 &&stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+		fprintf(stderr, "Error: on Grsecurity systems only root user can run this program\n");
+		exit(1);
+	}
+	
 	// handle CTRL-C
 	signal (SIGINT, my_handler);
 	signal (SIGTERM, my_handler);

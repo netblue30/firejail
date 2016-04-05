@@ -24,7 +24,8 @@ void usage(void) {
 	printf("Usage: firemon [OPTIONS] [PID]\n\n");
 	printf("Monitor processes started in a Firejail sandbox. Without any PID specified,\n");
 	printf("all processes started by Firejail are monitored. Descendants of these processes\n");
-	printf("are also being monitored.\n\n");
+	printf("are also being monitored. On Grsecurity systems only root user\n");
+	printf("can run this program.\n\n");
 	printf("Options:\n");
 	printf("\t--arp - print ARP table for each sandbox.\n\n");
 	printf("\t--caps - print capabilities configuration for each sandbox.\n\n");

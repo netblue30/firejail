@@ -373,7 +373,9 @@ static uint64_t extract_caps(int pid) {
 		exit(1);
 	}
 
+	EUID_ROOT();	// grsecurity
 	FILE *fp = fopen(file, "r");
+	EUID_USER();	// grsecurity
 	if (!fp) {
 		printf("Error: cannot open %s\n", file);
 		free(file);
@@ -417,7 +419,9 @@ void caps_print_filter(pid_t pid) {
 	EUID_ASSERT();
 	
 	// if the pid is that of a firejail  process, use the pid of the first child process
+	EUID_ROOT();	// grsecurity
 	char *comm = pid_proc_comm(pid);
+	EUID_USER();	// grsecurity
 	if (comm) {
 		if (strcmp(comm, "firejail") == 0) {
 			pid_t child;

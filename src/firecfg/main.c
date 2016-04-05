@@ -36,9 +36,9 @@ static void usage(void) {
 	printf("The symbolic links are placed in /usr/local/bin. For more information, see\n");
 	printf("DESKTOP INTEGRATION section in man 1 firejail.\n\n");
 	printf("Usage: firecfg [OPTIONS]\n\n");
-	printf("   --clear - clear all firejail symbolic links\n\n");
+	printf("   --clean - remove all firejail symbolic links.\n\n");
 	printf("   --help, -? - this help screen.\n\n");
-	printf("   --list - list all firejail symbolic links\n\n");
+	printf("   --list - list all firejail symbolic links.\n\n");
 	printf("   --version - print program version and exit.\n\n");
 	printf("Example:\n\n");
 	printf("   $ sudo firecfg\n");
@@ -292,7 +292,7 @@ int main(int argc, char **argv) {
 			printf("firecfg version %s\n\n", VERSION);
 			return 0;
 		}
-		else if (strcmp(argv[i], "--clear") == 0) {
+		else if (strcmp(argv[i], "--clean") == 0) {
 			clear();
 			return 0;
 		}

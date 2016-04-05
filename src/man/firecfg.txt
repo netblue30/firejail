@@ -14,8 +14,8 @@ DESKTOP INTEGRATION section in man 1 firejail.
 
 .SH OPTIONS
 .TP
-\fB\-\-clear
-Clear all firejail symbolic links
+\fB\-\-clean
+Remove all firejail symbolic links.
 .TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.

@@ -971,7 +971,7 @@ $ ls -l sandboxlog*
 .TP
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail directory.
+The overlay is stored in $HOME/.firejail directory. This option is not available on Grsecurity systems.
 .br
 
 .br
@@ -987,7 +987,7 @@ $ firejail \-\-overlay firefox
 .TP
 \fB\-\-overlay-tmpfs
 Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay,
-and are discarded when the sandbox is closed.
+and are discarded when the sandbox is closed. This option is not available on Grsecurity systems.
 .br
 
 .br

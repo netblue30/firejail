@@ -1084,6 +1084,11 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
+			struct stat s;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+				exit(1);	
+			}
 			arg_overlay = 1;
 			arg_overlay_keep = 1;
 			
@@ -1091,7 +1096,6 @@ int main(int argc, char **argv) {
 			char *dirname;
 			if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
 				errExit("asprintf");
-			struct stat s;
 			if (stat(dirname, &s) == -1) {
 				/* coverity[toctou] */
 				if (mkdir(dirname, 0700))
@@ -1121,6 +1125,11 @@ int main(int argc, char **argv) {
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
+			}
+			struct stat s;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+				exit(1);	
 			}
 			arg_overlay = 1;
 		}
@@ -1207,7 +1216,7 @@ int main(int argc, char **argv) {
 				
 				struct stat s;
 				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --chroot option is not available on GRSecurity systems\n");
+					fprintf(stderr, "Error: --chroot option is not available on Grsecurity systems\n");
 					exit(1);	
 				}
 				

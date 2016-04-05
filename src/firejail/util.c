@@ -346,6 +346,7 @@ int find_child(pid_t parent, pid_t *child) {
 	*child = 0;				  // use it to flag a found child
 
 	DIR *dir;
+	EUID_ROOT(); // grsecurity fix
 	if (!(dir = opendir("/proc"))) {
 		// sleep 2 seconds and try again
 		sleep(2);
@@ -397,7 +398,7 @@ int find_child(pid_t parent, pid_t *child) {
 		free(file);
 	}
 	closedir(dir);
-
+	EUID_USER();
 	return (*child)? 0:1;			  // 0 = found, 1 = not found
 }
 
@@ -576,6 +577,7 @@ uid_t pid_get_uid(pid_t pid) {
 		perror("asprintf");
 		exit(1);
 	}
+	EUID_ROOT();	// grsecurity fix
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -602,6 +604,7 @@ uid_t pid_get_uid(pid_t pid) {
 
 	fclose(fp);
 	free(file);
+	EUID_USER();	// grsecurity fix
 	
 	if (rv == 0) {
 		fprintf(stderr, "Error: cannot read /proc file\n");

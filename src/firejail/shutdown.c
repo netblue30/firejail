@@ -44,7 +44,9 @@ void shut(pid_t pid) {
 	
 	pid_t parent = pid;
 	// if the pid is that of a firejail  process, use the pid of a child process inside the sandbox
+	EUID_ROOT();
 	char *comm = pid_proc_comm(pid);
+	EUID_USER();
 	if (comm) {
 		if (strcmp(comm, "firejail") == 0) {
 			pid_t child;

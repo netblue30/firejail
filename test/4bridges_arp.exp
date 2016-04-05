@@ -115,7 +115,7 @@ sleep 2
 
 
 # check loopback
-send -- "firejail --net=br0 --net=br1 --net=br2 --net=br3\r"
+send -- "firejail --net=br0 --net=br1 --net=br2 --net=br3 --protocol=unix,inet,netlink\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"lo"
@@ -136,40 +136,35 @@ expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
 	"Child process initialized"
 }
+sleep 1
 
 # check default gateway
-send -- "bash\r"
-sleep 1
-send -- "netstat -rn;pwd\r"
+send -- "ip route show\r"
 expect {
 	timeout {puts "TESTING ERROR 10.1\n";exit}
-	"0.0.0.0"
+	"default via 10.10.20.1 dev eth0"
 }
+send -- "ip route show\r"
 expect {
 	timeout {puts "TESTING ERROR 10.2\n";exit}
-	"10.10.20.1"
+	"10.10.20.0/29 dev eth0  proto kernel  scope link"
 }
+send -- "ip route show\r"
 expect {
-	timeout {puts "TESTING ERROR 10.3\n";exit}
-	"eth0"
+	timeout {puts "TESTING ERROR 10.2\n";exit}
+	"10.10.30.0/24 dev eth1  proto kernel  scope link"
 }
+send -- "ip route show\r"
 expect {
-	timeout {puts "TESTING ERROR 10.4\n";exit}
-	"10.10.20.0"
+	timeout {puts "TESTING ERROR 10.2\n";exit}
+	"10.10.40.0/24 dev eth2  proto kernel  scope link"
 }
+send -- "ip route show\r"
 expect {
-	timeout {puts "TESTING ERROR 10.5\n";exit}
-	"0.0.0.0"
-}
-expect {
-	timeout {puts "TESTING ERROR 10.6\n";exit}
-	"eth0"
-}
-expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
-	"home"
+	timeout {puts "TESTING ERROR 10.2\n";exit}
+	"10.10.50.0/24 dev eth3  proto kernel  scope link"
 }
 sleep 1
 
-puts "\n"
+puts "\nall done\n"
 

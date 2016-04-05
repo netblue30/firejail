@@ -69,7 +69,8 @@ if { $overlay == "overlay" } {
 	send -- "firejail --profile=3.11.profile\r"
 	expect {
 		timeout {puts "TESTING ERROR 10\n";exit}
-		"Child process initialized"
+		"overlay option is not available" {puts "grsecurity\n"; exit}
+		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
 	

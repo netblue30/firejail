@@ -12,17 +12,17 @@ set chroot [lindex $argv 1]
 #
 # N
 #
-send -- "firejail --noprofile --net=eth0 --defaultgw=192.168.1.10\r"
+send -- "firejail --noprofile --net=eth0 --defaultgw=192.168.1.10 --protocol=unix,inet,netlink\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "netstat -rn\r"
+send -- "ip route show\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"0.0.0.0         192.168.1.10"
+	"default via 192.168.1.10 dev eth0"
 }
 after 100
 send -- "exit\r"
@@ -32,17 +32,18 @@ sleep 1
 # O
 #
 if { $overlay == "overlay" } {
-	send -- "firejail --noprofile --overlay --net=eth0 --defaultgw=192.168.1.10\r"
+	send -- "firejail --noprofile --overlay --net=eth0 --defaultgw=192.168.1.10 --protocol=unix,inet,netlink\r"
 	expect {
 		timeout {puts "TESTING ERROR 2\n";exit}
-		"Child process initialized"
+		"overlay option is not available" {puts "grsecurity\n"; exit}
+		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
 	
-	send -- "netstat -rn\r"
+	send -- "ip route show\r"
 	expect {
 		timeout {puts "TESTING ERROR 3\n";exit}
-		"0.0.0.0         192.168.1.10"
+		"default via 192.168.1.10 dev eth0"
 	}
 	after 100
 	send -- "exit\r"
@@ -53,17 +54,17 @@ if { $overlay == "overlay" } {
 # C
 #
 if { $chroot == "chroot" } {
-	send -- "firejail --noprofile --chroot=/tmp/chroot --net=eth0 --defaultgw=192.168.1.10\r"
+	send -- "firejail --noprofile --chroot=/tmp/chroot --net=eth0 --defaultgw=192.168.1.10 --protocol=unix,inet,netlink\r"
 	expect {
 		timeout {puts "TESTING ERROR 4\n";exit}
 		"Child process initialized"
 	}
 	sleep 1
 	
-	send -- "netstat -rn\r"
+	send -- "ip route show\r"
 	expect {
 		timeout {puts "TESTING ERROR 5\n";exit}
-		"0.0.0.0         192.168.1.10"
+		"default via 192.168.1.10 dev eth0"
 	}
 	after 100
 	send -- "exit\r"

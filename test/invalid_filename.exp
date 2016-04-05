@@ -57,7 +57,7 @@ send -- "firejail --debug-check-filename --noprofile --chroot=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
 	"Checking filename bla&&bla" {puts "normal system\n"}
-	"Error: --chroot option is not available on GRSecurity systems" { puts "\nall done\n"; exit}
+	"Error: --chroot option is not available on Grsecurity systems" { puts "\nall done\n"; exit}
 }
 expect {
 	timeout {puts "TESTING ERROR 3.2\n";exit}

@@ -47,7 +47,8 @@ if { $overlay == "overlay" } {
 	send -- "firejail --noprofile --overlay --interface=eth0.6\r"
 	expect {
 		timeout {puts "TESTING ERROR 2\n";exit}
-		"Child process initialized"
+		"overlay option is not available" {puts "grsecurity\n"; exit}
+		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
 	

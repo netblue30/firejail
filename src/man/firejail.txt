@@ -1591,7 +1591,7 @@ This feature is not available when running as root.
 .br
 Example:
 .br
-$ firejail \-\-x11 --net=eth0 firefox
+$ firejail \-\-x11=xpra --net=eth0 firefox
 
 .TP
 \fB\-\-x11=xephyr
@@ -1612,7 +1612,7 @@ This feature is not available when running as root.
 .br
 Example:
 .br
-$ firejail \-\-x11 --net=eth0 openbox
+$ firejail \-\-x11=xephyr --net=eth0 openbox
 
 .TP
 \fB\-\-zsh

@@ -783,7 +783,9 @@ int main(int argc, char **argv) {
 	int parent_sshd = 0;
 	{
 		pid_t ppid = getppid();
+		EUID_ROOT();
 		char *comm = pid_proc_comm(ppid);
+		EUID_USER();
 		if (comm) {
 			if (strcmp(comm, "sshd") == 0)
 				parent_sshd = 1;

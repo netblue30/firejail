@@ -339,7 +339,9 @@ void protocol_print_filter(pid_t pid) {
 	(void) pid;
 #ifdef SYS_socket
 	// if the pid is that of a firejail  process, use the pid of the first child process
+	EUID_ROOT();
 	char *comm = pid_proc_comm(pid);
+	EUID_USER();
 	if (comm) {
 		if (strcmp(comm, "firejail") == 0) {
 			pid_t child;

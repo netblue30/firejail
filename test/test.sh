@@ -6,11 +6,14 @@
 
 ./fscheck.sh
 
-echo "TESTING: caps.print (caps-print.exp)
+echo "TESTING: caps.print (caps-print.exp)"
 ./caps-print.exp
 
-echo "TESTING: seccomp.print (seccomp-print.exp)
+echo "TESTING: seccomp.print (seccomp-print.exp)"
 ./seccomp-print.exp
+
+echo "TESTING: protocol.print (protocol-print.exp)"
+./protocol-print.exp
 
 echo "TESTING: sound (sound.exp)"
 ./sound.exp

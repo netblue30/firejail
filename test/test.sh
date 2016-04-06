@@ -6,6 +6,9 @@
 
 ./fscheck.sh
 
+echo "TESTING: file transfer (ls.exp)"
+./ls.exp
+
 echo "TESTING: fs.print (fs-print.exp)"
 ./fs-print.exp
 

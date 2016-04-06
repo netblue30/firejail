@@ -205,7 +205,9 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 	EUID_ASSERT();
 
 	// if the pid is that of a firejail  process, use the pid of the first child process
+	EUID_ROOT();
 	char *comm = pid_proc_comm(pid);
+	EUID_USER();
 	if (comm) {
 		if (strcmp(comm, "firejail") == 0) {
 			pid_t child;

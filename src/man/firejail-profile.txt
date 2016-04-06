@@ -296,10 +296,30 @@ If a new network namespace is created, enabled default network filter.
 If a new network namespace is created, enabled the network filter in filename.
 
 .TP
+\fBnet bridge_interface
+Enable a new network namespace and connect it to this bridge interface.
+Unless specified with option \-\-ip and \-\-defaultgw, an IP address and a default gateway will be assigned
+automatically to the sandbox. The IP address is verified using ARP before assignment. The address
+configured as default gateway is the bridge device IP address. Up to four \-\-net
+bridge devices can be defined. Mixing bridge and macvlan devices is allowed.
+
+.TP
+\fBnet ethernet_interface
+Enable a new network namespace and connect it
+to this ethernet interface using the standard Linux macvlan
+driver. Unless specified with option \-\-ip and \-\-defaultgw, an
+IP address and a default gateway will be assigned automatically
+to the sandbox. The IP address is verified using ARP before
+assignment. The address configured as default gateway is the
+default gateway of the host. Up to four \-\-net devices can
+be defined. Mixing bridge and macvlan devices is allowed.
+Note: wlan devices are not supported for this option.
+
+.TP
 \fBnet none
-Enable  a new, unconnected network namespace. The only interface
+Enable a new, unconnected network namespace. The only interface
 available in the new namespace is a new loopback interface (lo).
-Use  this  option  to deny network access to programs that don't
+Use this option to deny network access to programs that don't
 really need network access.
 
 .TP

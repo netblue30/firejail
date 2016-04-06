@@ -228,6 +228,34 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
+	else if (strncmp(ptr, "net ", 4) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			if (strcmp(ptr + 4, "lo") == 0) {
+				fprintf(stderr, "Error: cannot attach to lo device\n");
+				exit(1);
+			}
+
+			Bridge *br;
+			if (cfg.bridge0.configured == 0)
+				br = &cfg.bridge0;
+			else if (cfg.bridge1.configured == 0)
+				br = &cfg.bridge1;
+			else if (cfg.bridge2.configured == 0)
+				br = &cfg.bridge2;
+			else if (cfg.bridge3.configured == 0)
+				br = &cfg.bridge3;
+			else {
+				fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
+				exit(1);
+			}
+			net_configure_bridge(br, ptr + 4);
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
 	
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 #ifdef HAVE_SECCOMP

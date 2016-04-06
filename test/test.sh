@@ -6,6 +6,9 @@
 
 ./fscheck.sh
 
+echo "TESTING: fs.print (fs-print.exp)"
+./fs-print.exp
+
 echo "TESTING: caps.print (caps-print.exp)"
 ./caps-print.exp
 

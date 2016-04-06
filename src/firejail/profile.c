@@ -222,6 +222,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.bridge1.configured = 0;
 			cfg.bridge2.configured = 0;
 			cfg.bridge3.configured = 0;
+			cfg.interface0.configured = 0;
+			cfg.interface1.configured = 0;
+			cfg.interface2.configured = 0;
+			cfg.interface3.configured = 0;
 		}
 		else
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");

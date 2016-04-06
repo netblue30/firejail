@@ -6,6 +6,9 @@
 
 ./fscheck.sh
 
+echo "TESTING: bandwidth (bandwidth.exp)"
+./bandwidth.exp
+
 echo "TESTING: file transfer (ls.exp)"
 ./ls.exp
 

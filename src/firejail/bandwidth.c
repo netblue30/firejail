@@ -360,7 +360,9 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	//************************
 	// verify sandbox
 	//************************
+	EUID_ROOT();
 	char *comm = pid_proc_comm(pid);
+	EUID_USER();
 	if (!comm) {
 		fprintf(stderr, "Error: cannot find sandbox\n");
 		exit(1);
@@ -374,7 +376,9 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	free(comm);
 	
 	// check network namespace
+	EUID_ROOT();
 	char *cmd = pid_proc_cmdline(pid);
+	EUID_USER();
 	if (!cmd || strstr(cmd, "--net") == NULL) {
 		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace\n");
 		exit(1);

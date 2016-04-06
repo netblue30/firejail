@@ -131,9 +131,16 @@ static void chk_chroot(void) {
 }
 
 static int monitor_application(pid_t app_pid) {
+
+
 	int status;
 	while (app_pid) {
 		usleep(20000);
+		char *msg;
+		if (asprintf(&msg, "monitoring pid %d\n", app_pid) == -1)
+			errExit("asprintf");
+		logmsg(msg);
+		free(msg);
 
 		pid_t rv;
 		do {

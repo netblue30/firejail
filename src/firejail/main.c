@@ -787,8 +787,10 @@ int main(int argc, char **argv) {
 		char *comm = pid_proc_comm(ppid);
 		EUID_USER();
 		if (comm) {
-			if (strcmp(comm, "sshd") == 0)
+			if (strcmp(comm, "sshd") == 0) {
+				arg_quiet = 1;
 				parent_sshd = 1;
+			}
 			free(comm);
 		}
 	}
@@ -817,9 +819,11 @@ int main(int argc, char **argv) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
 		
 		if (strcmp(argv[i], "--debug") == 0) {
-			arg_debug = 1;
-			if (option_force)
-				printf("Entering sandbox-in-sandbox mode\n");
+			if (!arg_quiet) {
+				arg_debug = 1;
+				if (option_force)
+					printf("Entering sandbox-in-sandbox mode\n");
+			}
 		}
 		else if (strcmp(argv[i], "--debug-check-filename") == 0)
 			arg_debug_check_filename = 1;
@@ -827,8 +831,10 @@ int main(int argc, char **argv) {
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
 			arg_debug_whitelists = 1;
-		else if (strcmp(argv[i], "--quiet") == 0)
+		else if (strcmp(argv[i], "--quiet") == 0) {
 			arg_quiet = 1;
+			arg_debug = 0;
+		}
 		else if (strcmp(argv[i], "--force") == 0)
 			;
 

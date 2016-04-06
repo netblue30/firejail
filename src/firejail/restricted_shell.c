@@ -61,7 +61,20 @@ int restricted_shell(const char *user) {
 		ptr = strchr(args, '\n');
 		if (ptr)
 			*ptr = '\0';
-			
+		
+		// if nothing follows, continue
+		char *ptr2 = args;
+		int found = 0;
+		while (*ptr2 != '\0') {
+			if (*ptr2 != ' ' && *ptr2 != '\t') {
+				found = 1;
+				break;
+			}
+		}
+		if (!found)
+			continue;
+		
+		// process user
 		if (strcmp(user, usr) == 0) {
 			restricted_user = strdup(user);
 		    	// extract program arguments

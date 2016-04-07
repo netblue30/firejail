@@ -161,8 +161,8 @@ make the whitelist read-only. Example:
 .br
 $ firejail --whitelist=~/work --read-only=~/ --read-only=~/work
 .TP
-\fB\-\-caps.print=name
-Print the caps filter for the sandbox identified by name.
+\fB\-\-caps.print=name|pid
+Print the caps filter for the sandbox identified by name or by PID.
 .br
 
 .br
@@ -170,13 +170,7 @@ Example:
 .br
 $ firejail \-\-name=mygame \-\-caps.drop=all warzone2100 &
 .br
-[...]
-.br
 $ firejail \-\-caps.print=mygame
-
-.TP
-\fB\-\-caps.print=pid
-Print the caps filter for a sandbox identified by PID.
 .br
 
 .br
@@ -221,8 +215,8 @@ Example:
 $ firejail \-\-cpu=0,1 handbrake
 
 .TP
-\fB\-\-cpu.print=name
-Print the CPU cores in use by the sandbox identified by name.
+\fB\-\-cpu.print=name|pid
+Print the CPU cores in use by the sandbox identified by name or by PID.
 .br
 
 .br
@@ -230,13 +224,7 @@ Example:
 .br
 $ firejail \-\-name=mygame \-\-caps.drop=all warzone2100 &
 .br
-[...]
-.br
 $ firejail \-\-cpu.print=mygame
-
-.TP
-\fB\-\-caps.print=pid
-Print the CPU cores in use by the sandbox identified by PID.
 .br
 
 .br
@@ -355,8 +343,8 @@ Example:
 $ firejail \-\-dns=8.8.8.8 \-\-dns=8.8.4.4 firefox
 
 .TP
-\fB\-\-dns.print=name
-Print DNS configuration for a sandbox identified by name.
+\fB\-\-dns.print=name|pid
+Print DNS configuration for a sandbox identified by name or by PID.
 .br
 
 .br
@@ -364,13 +352,7 @@ Example:
 .br
 $ firejail \-\-name=mygame \-\-caps.drop=all warzone2100 &
 .br
-[...]
-.br
 $ firejail \-\-dns.print=mygame
-
-.TP
-\fB\-\-dns.print=pid
-Print DNS configuration for a sandbox identified by PID.
 .br
 
 .br
@@ -400,8 +382,8 @@ There could be lots of reasons for it to fail, for example if the existing sandb
 admin capabilities, SUID binaries, or if it runs seccomp.
 
 .TP
-\fB\-\-fs.print=name
-Print the filesystem log for the sandbox identified by name.
+\fB\-\-fs.print=name|print
+Print the filesystem log for the sandbox identified by name or by PID.
 .br
 
 .br
@@ -409,13 +391,7 @@ Example:
 .br
 $ firejail \-\-name=mygame \-\-caps.drop=all warzone2100 &
 .br
-[...]
-.br
 $ firejail \-\-fs.print=mygame
-
-.TP
-\fB\-\-fs.print=pid
-Print the filesystem log for a sandbox identified by PID.
 .br
 
 .br
@@ -524,13 +500,12 @@ Example:
 .br
 $ firejail \-\-ipc-namespace firefox
 .TP
-\fB\-\-join=name
-Join the sandbox identified by name. By default a /bin/bash shell is started after joining the sandbox.
+\fB\-\-join=name|pid
+Join the sandbox identified by name or by PID. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. If \-\-join command is issued as a regular user,
 all security filters are configured for the new process the same they are configured in the sandbox.
 If \-\-join command is issued as root, the security filters, cgroups and cpus configurations are not applied
 to the process joining the sandbox.
-
 .br
 
 .br
@@ -538,18 +513,7 @@ Example:
 .br
 $ firejail \-\-name=mygame \-\-caps.drop=all warzone2100 &
 .br
-[...]
-.br
 $ firejail \-\-join=mygame
-
-
-.TP
-\fB\-\-join=pid
-Join the sandbox identified by process ID. By default a /bin/bash shell is started after joining the sandbox.
-If a program is specified, the program is run in the sandbox. If \-\-join command is issued as a regular user,
-all security filters are configured for the new process the same they are configured in the sandbox.
-If \-\-join command is issued as root, the security filters, cgroups and cpus configurations are not applied
-to the process joining the sandbox.
 .br
 
 .br
@@ -562,19 +526,13 @@ $ firejail \-\-list
 $ firejail \-\-join=3272
 
 .TP
-\fB\-\-join-filesystem=name
-Join the mount namespace of the sandbox identified by name. By default a /bin/bash shell is started after joining the sandbox.
+\fB\-\-join-filesystem=name|pid
+Join the mount namespace of the sandbox identified by name or PID. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. This command is available only to root user.
 Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox.
 
 .TP
-\fB\-\-join-filesystem=pid
-Join the mount namespace of the sandbox identified by process ID. By default a /bin/bash shell is started after joining the sandbox.
-If a program is specified, the program is run in the sandbox. This command is available only to root user.
-Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox.
-
-.TP
-\fB\-\-join-network=name
+\fB\-\-join-network=name|PID
 Join the network namespace of the sandbox identified by name. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. This command is available only to root user.
 Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox. Example:
@@ -630,18 +588,8 @@ Switching to pid 1932, the first child process inside the sandbox
        valid_lft forever preferred_lft forever
 
 .TP
-\fB\-\-join-network=pid
-Join the network namespace of the sandbox identified by process ID. By default a /bin/bash shell is started after joining the sandbox.
-If a program is specified, the program is run in the sandbox. This command is available only to root user.
-Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox.
-
-
-
-.TP
 \fB\-\-ls=name|pid dir_or_filename
 List files in sandbox container, see \fBFILE TRANSFER\fR section for more details.
-
-\fB
 
 .TP
 \fB\-\-list
@@ -1147,8 +1095,8 @@ Example:
 .br
 $ firejail \-\-protocol=unix,inet,inet6 firefox
 .TP
-\fB\-\-protocol.print=name
-Print the protocol filter for the sandbox identified by name.
+\fB\-\-protocol.print=name|pid
+Print the protocol filter for the sandbox identified by name or PID.
 .br
 
 .br
@@ -1156,15 +1104,9 @@ Example:
 .br
 $ firejail \-\-name=mybrowser firefox &
 .br
-[...]
-.br
 $ firejail \-\-protocol.print=mybrowser
 .br
 unix,inet,inet6,netlink
-
-.TP
-\fB\-\-protocol.print=pid
-Print the protocol filter for a sandbox identified by PID.
 .br
 
 .br
@@ -1284,8 +1226,8 @@ $ rm testfile
 rm: cannot remove `testfile': Operation not permitted
 
 .TP
-\fB\-\-seccomp.print=name
-Print the seccomp filter for the sandbox started using \-\-name option.
+\fB\-\-seccomp.print=name|PID
+Print the seccomp filter for the sandbox identified by name or PID.
 .br
 
 .br
@@ -1300,72 +1242,6 @@ SECCOMP Filter:
   VALIDATE_ARCHITECTURE
 .br
   EXAMINE_SYSCALL
-.br
-  BLACKLIST 165 mount
-.br
-  BLACKLIST 166 umount2
-.br
-  BLACKLIST 101 ptrace
-.br
-  BLACKLIST 246 kexec_load
-.br
-  BLACKLIST 304 open_by_handle_at
-.br
-  BLACKLIST 175 init_module
-.br
-  BLACKLIST 176 delete_module
-.br
-  BLACKLIST 172 iopl
-.br
-  BLACKLIST 173 ioperm
-.br
-  BLACKLIST 167 swapon
-.br
-  BLACKLIST 168 swapoff
-.br
-  BLACKLIST 103 syslog
-.br
-  BLACKLIST 310 process_vm_readv
-.br
-  BLACKLIST 311 process_vm_writev
-.br
-  BLACKLIST 133 mknod
-.br
-  BLACKLIST 139 sysfs
-.br
-  BLACKLIST 156 _sysctl
-.br
-  BLACKLIST 159 adjtimex
-.br
-  BLACKLIST 305 clock_adjtime
-.br
-  BLACKLIST 212 lookup_dcookie
-.br
-  BLACKLIST 298 perf_event_open
-.br
-  BLACKLIST 300 fanotify_init
-.br
-  RETURN_ALLOW
-.br
-$ 
-.TP
-\fB\-\-seccomp.print=pid
-Print the seccomp filter for the sandbox specified by process ID. Use \-\-list option to get a list of all active sandboxes.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-list
-.br
-10786:netblue:firejail \-\-name=browser firefox 
-$ firejail \-\-seccomp.print=10786
-.br
-SECCOMP Filter:
-.br
-  VALIDATE_ARCHITECTURE
-.br
-  EXAMINE_SYSCAL
 .br
   BLACKLIST 165 mount
 .br
@@ -1435,8 +1311,8 @@ shell.
 Example:
 $firejail \-\-shell=/bin/dash script.sh
 .TP
-\fB\-\-shutdown=name
-Shutdown the sandbox started using \-\-name option.
+\fB\-\-shutdown=name|PID
+Shutdown the sandbox identified by name or PID.
 .br
 
 .br
@@ -1444,12 +1320,7 @@ Example:
 .br
 $ firejail \-\-name=mygame \-\-caps.drop=all warzone2100 &
 .br
-[...]
-.br
 $ firejail \-\-shutdown=mygame
-.TP
-\fB\-\-shutdown=pid
-Shutdown the sandbox specified by process ID. Use \-\-list option to get a list of all active sandboxes.
 .br
 
 .br
@@ -1710,25 +1581,13 @@ These features allow the user to inspect the filesystem container of an existing
 and transfer files from the container to the host filesystem.
 
 .TP
-\fB\-\-get=name filename
+\fB\-\-get=name|pid filename
 Retrieve the container file and store it on the host in the current working directory.
-The container is specified by name (\-\-name option). Full path is needed for filename.
+The container is specified by name or PID. Full path is needed for filename.
 
 .TP
-\fB\-\-get=pid filename
-Retrieve the container file and store it on the host in the current working directory.
-The container is specified by process ID. Full path is needed for filename.
-
-.TP
-\fB\-\-ls=name dir_or_filename
-List container files.
-The container is specified by name (\-\-name option).
-Full path is needed for dir_or_filename.
-
-.TP
-\fB\-\-ls=pid dir_or_filename
-List container files.
-The container is specified by process ID.
+\fB\-\-ls=name|pid dir_or_filename
+List container files. The container is specified by name or PID.
 Full path is needed for dir_or_filename.
 
 .TP
@@ -1767,15 +1626,15 @@ The shaper works at sandbox level, and can be used only for sandboxes configured
 
 Set rate-limits:
 
-	firejail --bandwidth={name|pid} set network download upload
+	firejail --bandwidth=name|pid set network download upload
 
 Clear rate-limits:
 
-	firejail --bandwidth={name|pid} clear network
+	firejail --bandwidth=name|pid clear network
 
 Status:
 
-	firejail --bandwidth={name|pid} status
+	firejail --bandwidth=name|pid status
 
 where:
 .br

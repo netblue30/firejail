@@ -131,7 +131,7 @@ static void chk_chroot(void) {
 }
 
 static int monitor_application(pid_t app_pid) {
-
+	EUID_USER();
 
 	int status;
 	while (app_pid) {

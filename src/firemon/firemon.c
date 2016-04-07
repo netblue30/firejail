@@ -112,12 +112,6 @@ int main(int argc, char **argv) {
 	unsigned pid = 0;
 	int i;
 
-	struct stat s;
-	if (getuid() != 0 &&stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-		fprintf(stderr, "Error: on Grsecurity systems only root user can run this program\n");
-		exit(1);
-	}
-	
 	// handle CTRL-C
 	signal (SIGINT, my_handler);
 	signal (SIGTERM, my_handler);
@@ -143,6 +137,12 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else if (strcmp(argv[i], "--netstats") == 0) {
+			struct stat s;
+			if (getuid() != 0 && stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: this feature is not available on Grsecurity systems\n");
+				exit(1);
+			}	
+
 			netstats();
 			return 0;
 		}

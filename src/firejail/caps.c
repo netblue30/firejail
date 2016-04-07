@@ -247,11 +247,13 @@ void caps_print(void) {
 	// check current caps supported by the kernel
 	int cnt = 0;
 	unsigned long cap;
+	EUID_ROOT();	// grsecurity fix
 	for (cap=0; cap <= 63; cap++) {
 		int code = prctl(PR_CAPBSET_DROP, cap, 0, 0, 0);
 		if (code == 0)
 			cnt++;
 	}
+	EUID_USER();
 	printf("Your kernel supports %d capabilities.\n", cnt);
 	
 	for (i = 0; i < elems; i++) {

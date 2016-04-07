@@ -437,6 +437,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 #endif
+	else if (strncmp(argv[i], "--cpu.print=", 12) == 0) {
+		// join sandbox by pid or by name
+		pid_t pid;
+		if (read_pid(argv[i] + 12, &pid) == 0)		
+			cpu_print_filter(pid);
+		else
+			cpu_print_filter_name(argv[i] + 12);
+		exit(0);
+	}
 	else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid;
@@ -726,6 +735,7 @@ int main(int argc, char **argv) {
 			    strncmp(argv[i], "--dns.print=", 12) == 0 ||
 			    strncmp(argv[i], "--bandwidth=", 12) == 0 ||
 			    strncmp(argv[i], "--caps.print=", 13) == 0 ||
+			    strncmp(argv[i], "--cpu.print=", 12) == 0 ||
 //********************************************************************************
 // todo: fix the following problems
 			    strncmp(argv[i], "--join=", 7) == 0 ||

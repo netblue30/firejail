@@ -56,6 +56,8 @@ void usage(void) {
 	printf("    --chroot=dirname - chroot into directory.\n\n");
 #endif
 	printf("    --cpu=cpu-number,cpu-number - set cpu affinity.\n\n");
+	printf("    --cpu.print=name|pid - print the cup in use by the sandbox identified\n");
+	printf("\tby name or PID.\n\n");
 	printf("    --csh - use /bin/csh as default shell.\n\n");
 	
 	printf("    --debug - print sandbox debug messages.\n\n");

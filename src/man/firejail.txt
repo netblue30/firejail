@@ -221,6 +221,34 @@ Example:
 $ firejail \-\-cpu=0,1 handbrake
 
 .TP
+\fB\-\-cpu.print=name
+Print the CPU cores in use by the sandbox identified by name.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-name=mygame \-\-caps.drop=all warzone2100 &
+.br
+[...]
+.br
+$ firejail \-\-cpu.print=mygame
+
+.TP
+\fB\-\-caps.print=pid
+Print the CPU cores in use by the sandbox identified by PID.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-list
+.br
+3272:netblue:firejail \-\-private firefox
+.br
+$ firejail \-\-cpu.print=3272
+
+.TP
 \fB\-\-csh
 Use /bin/csh as default user shell.
 .br

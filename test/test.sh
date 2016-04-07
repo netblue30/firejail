@@ -6,6 +6,10 @@
 
 ./fscheck.sh
 
+echo "TESTING: cpu.print (cpu-print.exp)"
+echo "TESTING:    failing under VirtualBox where there is only one CPU"
+./cpu-print.exp
+
 echo "TESTING: bandwidth (bandwidth.exp)"
 ./bandwidth.exp
 

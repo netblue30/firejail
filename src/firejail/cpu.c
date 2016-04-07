@@ -139,3 +139,81 @@ void set_cpu_affinity(void) {
         			printf("CPU affinity not set\n");
         	}
 }
+
+static void print_cpu(int pid) {
+	char *file;
+	if (asprintf(&file, "/proc/%d/status", pid) == -1) {
+		errExit("asprintf");
+		exit(1);
+	}
+
+	EUID_ROOT();	// grsecurity
+	FILE *fp = fopen(file, "r");
+	EUID_USER();	// grsecurity
+	if (!fp) {
+		printf("  Error: cannot open %s\n", file);
+		free(file);
+		return;
+	}
+
+#define MAXBUF 4096	
+	char buf[MAXBUF];
+	while (fgets(buf, MAXBUF, fp)) {
+		if (strncmp(buf, "Cpus_allowed_list:", 18) == 0) {
+			printf("  %s", buf);
+			fflush(0);
+			free(file);
+			fclose(fp);
+			return;
+		}
+	}
+	fclose(fp);
+	free(file);
+}
+
+void cpu_print_filter_name(const char *name) {
+	EUID_ASSERT();
+	if (!name || strlen(name) == 0) {
+		fprintf(stderr, "Error: invalid sandbox name\n");
+		exit(1);
+	}
+	pid_t pid;
+	if (name2pid(name, &pid)) {
+		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
+		exit(1);
+	}
+
+	cpu_print_filter(pid);
+}
+
+void cpu_print_filter(pid_t pid) {
+	EUID_ASSERT();
+	
+	// if the pid is that of a firejail  process, use the pid of the first child process
+	EUID_ROOT();	// grsecurity
+	char *comm = pid_proc_comm(pid);
+	EUID_USER();	// grsecurity
+	if (comm) {
+		if (strcmp(comm, "firejail") == 0) {
+			pid_t child;
+			if (find_child(pid, &child) == 0) {
+				pid = child;
+			}
+		}
+		free(comm);
+	}
+
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission denied.\n");
+			exit(1);
+		}
+	}
+
+	print_cpu(pid);
+	exit(0);
+}
+

@@ -438,6 +438,8 @@ void read_cpu_list(const char *str);
 void set_cpu_affinity(void);
 void load_cpu(const char *fname);
 void save_cpu(void);
+void cpu_print_filter_name(const char *name);
+void cpu_print_filter(pid_t pid);
 
 // cgroup.c
 void save_cgroup(void);

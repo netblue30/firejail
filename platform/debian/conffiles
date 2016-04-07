@@ -79,3 +79,4 @@
 /etc/firejail/disable-passwdmgr.inc
 /etc/firejail/dillo.profile
 /etc/firejail/cmus.profile
+/etc/firejail/dnsmasq.profile

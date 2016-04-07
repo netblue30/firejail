@@ -66,6 +66,7 @@ creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
 curiosity-seeker (https://github.com/curiosity-seeker)
 	- tightening unbound and dnscrypt-proxy profiles
+	- dnsmasq profile
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH

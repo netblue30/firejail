@@ -21,7 +21,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-void static grsec_elevate_privileges(void) {
+static void grsec_elevate_privileges(void) {
 	struct stat s;
 	if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
 		EUID_ROOT();

@@ -3,8 +3,9 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * added --x11 option
   * added --x11=xpra option
   * added --x11=xephyr option
+  * added --cpu.print option
   * added filetransfer options --ls and --get
-  * added mkdir, ipc-namespace and nosound profile commands
+  * added mkdir, ipc-namespace, net iface and nosound profile commands
   * --version also prints compile options
   * --output option also redirects stderr
   * added compile-time option to restrict --net= to root only

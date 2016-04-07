@@ -103,6 +103,7 @@ avoidr (https://github.com/avoidr)
 	- Google Chrome profile rework
 	- added cmus profile
 	- man page fixes
+	- add net iface support in profile files
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix

@@ -1774,9 +1774,6 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	// check network configuration options - it will exit if anything went wrong
-	net_check_cfg();
-	
 	// check trace configuration
 	if (arg_trace && arg_tracelog)
 		fprintf(stderr, "Warning: --trace and --tracelog are mutually exclusive; --tracelog disabled\n");
@@ -1922,6 +1919,9 @@ int main(int argc, char **argv) {
 		}
 	}
 
+	// check network configuration options - it will exit if anything went wrong
+	net_check_cfg();
+	
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
 		EUID_ROOT();

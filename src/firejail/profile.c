@@ -274,6 +274,52 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
+	else if (strncmp(ptr, "iprange ", 8) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			if (br->iprange_start || br->iprange_end) {
+				fprintf(stderr, "Error: cannot configure the IP range twice for the same interface\n");
+				exit(1);
+			}
+
+			// parse option arguments
+			char *firstip = ptr + 8;
+			char *secondip = firstip;
+			while (*secondip != '\0') {
+				if (*secondip == ',')
+					break;
+				secondip++;
+			}
+			if (*secondip == '\0') {
+				fprintf(stderr, "Error: invalid IP range\n");
+				exit(1);
+			}
+			*secondip = '\0';
+			secondip++;
+			
+			// check addresses
+			if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
+			    br->iprange_start >= br->iprange_end) {
+				fprintf(stderr, "Error: invalid IP range\n");
+				exit(1);
+			}
+			if (in_netrange(br->iprange_start, br->ip, br->mask) || in_netrange(br->iprange_end, br->ip, br->mask)) {
+				fprintf(stderr, "Error: IP range addresses not in network range\n");
+				exit(1);
+			}
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
+
+	
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))

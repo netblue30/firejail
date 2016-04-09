@@ -287,6 +287,29 @@ Disable sound system.
 .SH Networking
 Networking features available in profile files.
 
+\fBdns address
+Set a DNS server for the sandbox. Up to three DNS servers can be defined.
+
+.TP
+\fBhostname name
+Set a hostname for the sandbox.
+
+.TP
+\fBiprange address,address
+Assign  an  IP address in the provided range to the last network
+interface defined by  a  net command.  A  default  gateway  is assigned by default.
+.br
+
+.br
+Example:
+.br
+
+.br
+net eth0
+.br
+iprange 192.168.1.150,192.168.1.160
+.br
+
 .TP
 \fBnetfilter
 If a new network namespace is created, enabled default network filter.
@@ -321,14 +344,6 @@ Enable a new, unconnected network namespace. The only interface
 available in the new namespace is a new loopback interface (lo).
 Use this option to deny network access to programs that don't
 really need network access.
-
-.TP
-\fBdns address
-Set a DNS server for the sandbox. Up to three DNS servers can be defined.
-
-.TP
-\fBhostname name
-Set a hostname for the sandbox.
 
 .SH RELOCATING PROFILES
 For various reasons some users might want to keep the profile files in a different directory.

@@ -182,6 +182,19 @@ typedef struct config_t {
 } Config;
 extern Config cfg;
 
+static inline Bridge *last_bridge_configured(void) {
+	if (cfg.bridge3.configured)
+		return &cfg.bridge3;
+	else if (cfg.bridge2.configured)
+		return &cfg.bridge2;
+	else if (cfg.bridge1.configured)
+		return &cfg.bridge1;
+	else if (cfg.bridge0.configured)
+		return &cfg.bridge0;
+	else
+		return NULL;
+}
+
 static inline int any_bridge_configured(void) {
 	if (cfg.bridge0.configured || cfg.bridge1.configured || cfg.bridge2.configured || cfg.bridge3.configured)
 		return 1;

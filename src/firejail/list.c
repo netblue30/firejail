@@ -21,7 +21,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#if 0
 static void grsec_elevate_privileges(void) {
 	struct stat s;
 	if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
@@ -34,7 +33,6 @@ static void grsec_elevate_privileges(void) {
 			errExit("setregid");
 	}
 }
-#endif
 
 void top(void) {
 	EUID_ASSERT();
@@ -49,7 +47,7 @@ void top(void) {
 
 void netstats(void) {
 	EUID_ASSERT();
-//	grsec_elevate_privileges();	
+	grsec_elevate_privileges();	
 	
 	char *arg[4];
 	arg[0] = "bash";

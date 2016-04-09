@@ -132,19 +132,6 @@ static void my_handler(int s){
 	myexit(1);
 }
 
-static inline Bridge *last_bridge_configured(void) {
-	if (cfg.bridge3.configured)
-		return &cfg.bridge3;
-	else if (cfg.bridge2.configured)
-		return &cfg.bridge2;
-	else if (cfg.bridge1.configured)
-		return &cfg.bridge1;
-	else if (cfg.bridge0.configured)
-		return &cfg.bridge0;
-	else
-		return NULL;
-}
-
 // return 1 if error, 0 if a valid pid was found
 static inline int read_pid(char *str, pid_t *pid) {
 	char *endptr;

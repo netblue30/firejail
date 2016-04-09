@@ -208,6 +208,7 @@ static inline int any_interface_configured(void) {
 	else
 		return 0;
 }
+void clear_run_files(pid_t pid);
 
 extern int arg_private;		// mount private /home
 extern int arg_debug;		// print debug messages
@@ -468,13 +469,11 @@ void netfilter(const char *fname);
 void netfilter6(const char *fname);
 
 // bandwidth.c
-void shm_create_firejail_dir(void);
-void bandwidth_shm_del_file(pid_t pid);
-void bandwidth_shm_set(pid_t pid, const char *dev, int down, int up);
+void bandwidth_del_run_file(pid_t pid);
 void bandwidth_name(const char *name, const char *command, const char *dev, int down, int up);
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up);
-void network_shm_del_file(pid_t pid);
-void network_shm_set_file(pid_t pid);
+void network_del_run_file(pid_t pid);
+void network_set_run_file(pid_t pid);
 
 // fs_etc.c
 void fs_check_etc_list(void);

@@ -112,28 +112,11 @@ int fibw_count(void) {
 	
 
 //***********************************
-// shm file handling
+// run file handling
 //***********************************
-void shm_create_firejail_dir(void) {
-	struct stat s;
-	if (stat("/dev/shm/firejail", &s) == -1) {
-		/* coverity[toctou] */
-		if (mkdir("/dev/shm/firejail", 0644) == -1)
-			errExit("mkdir");
-		if (chown("/dev/shm/firejail", 0, 0) == -1)
-			errExit("chown");
-	}
-	else { // check /dev/shm/firejail directory belongs to root end exit if doesn't!
-		if (s.st_uid != 0 || s.st_gid != 0) {
-			fprintf(stderr, "Error: non-root %s directory, exiting...\n", "/dev/shm/firejail");
-			exit(1);
-		}
-	}
-}
-
-static void shm_create_bandwidth_file(pid_t pid) {
+static void bandwidth_create_run_file(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/dev/shm/firejail/%d-bandwidth", (int) pid) == -1)
+	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
 		errExit("asprintf");
 	
 	// if the file already exists, do nothing
@@ -157,33 +140,33 @@ static void shm_create_bandwidth_file(pid_t pid) {
 			errExit("chown");
 	}
 	else {
-		fprintf(stderr, "Error: cannot create bandwidth file in /dev/shm/firejail directory\n");
+		fprintf(stderr, "Error: cannot create bandwidth file\n");
 		exit(1);
 	}
 	
 	free(fname);
 }
 
-// delete shm bandwidth file
-void bandwidth_shm_del_file(pid_t pid) {
+// delete bandwidth file
+void bandwidth_del_run_file(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/dev/shm/firejail/%d-bandwidth", (int) pid) == -1)
+	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
 		errExit("asprintf");
 	unlink(fname);
 	free(fname);
 }
 
-void network_shm_del_file(pid_t pid) {
+void network_del_run_file(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/dev/shm/firejail/%d-netmap", (int) pid) == -1)
+	if (asprintf(&fname, "%s/%d-netmap", RUN_FIREJAIL_NETWORK_DIR, (int) pid) == -1)
 		errExit("asprintf");
 	unlink(fname);
 	free(fname);
 }
 
-void network_shm_set_file(pid_t pid) {
+void network_set_run_file(pid_t pid) {
 	char *fname;
-	if (asprintf(&fname, "/dev/shm/firejail/%d-netmap", (int) pid) == -1)
+	if (asprintf(&fname, "%s/%d-netmap", RUN_FIREJAIL_NETWORK_DIR, (int) pid) == -1)
 		errExit("asprintf");
 	
 	// create an empty file and set mod and ownership
@@ -205,7 +188,7 @@ void network_shm_set_file(pid_t pid) {
 			errExit("chown");
 	}
 	else {
-		fprintf(stderr, "Error: cannot create network map file in /dev/shm/firejail directory\n");
+		fprintf(stderr, "Error: cannot create network map file\n");
 		exit(1);
 	}
 	
@@ -213,11 +196,11 @@ void network_shm_set_file(pid_t pid) {
 }
 
 
-void shm_read_bandwidth_file(pid_t pid) {
+static void read_bandwidth_file(pid_t pid) {
 	assert(ifbw == NULL);
 
 	char *fname;
-	if (asprintf(&fname, "/dev/shm/firejail/%d-bandwidth", (int) pid) == -1)
+	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
 		errExit("asprintf");
 
 	FILE *fp = fopen(fname, "r");
@@ -248,12 +231,12 @@ void shm_read_bandwidth_file(pid_t pid) {
 	}
 }
 
-void shm_write_bandwidth_file(pid_t pid) {
+static void write_bandwidth_file(pid_t pid) {
 	if (ifbw == NULL)
 		return; // nothing to do
 
 	char *fname;
-	if (asprintf(&fname, "/dev/shm/firejail/%d-bandwidth", (int) pid) == -1)
+	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
 		errExit("asprintf");
 
 	FILE *fp = fopen(fname, "w");
@@ -279,33 +262,30 @@ errout:
 // add or remove interfaces
 //***********************************
 
-// remove interface from shm file
-void bandwidth_shm_remove(pid_t pid, const char *dev) {
-	// create bandwidth directory & file in case they are not in the filesystem yet
-	shm_create_firejail_dir();
-	shm_create_bandwidth_file(pid);
+// remove interface from run file
+void bandwidth_remove(pid_t pid, const char *dev) {
+	bandwidth_create_run_file(pid);
 	
 	// read bandwidth file
-	shm_read_bandwidth_file(pid);
+	read_bandwidth_file(pid);
 	
 	// find the element and remove it
 	IFBW *elem = ifbw_find(dev);
 	if (elem) {
 		ifbw_remove(elem);
-		shm_write_bandwidth_file(pid) ;
+		write_bandwidth_file(pid) ;
 	}
 	
 	// remove the file if there are no entries in the list
 	if (ifbw == NULL) {
-		bandwidth_shm_del_file(pid);
+		 bandwidth_del_run_file(pid);
 	}
 }
 
-// add interface to shm file
-void bandwidth_shm_set(pid_t pid, const char *dev, int down, int up) {
+// add interface to run file
+void bandwidth_set(pid_t pid, const char *dev, int down, int up) {
 	// create bandwidth directory & file in case they are not in the filesystem yet
-	shm_create_firejail_dir();
-	shm_create_bandwidth_file(pid);
+	bandwidth_create_run_file(pid);
 
 	// create the new text entry
 	char *txt;
@@ -313,7 +293,7 @@ void bandwidth_shm_set(pid_t pid, const char *dev, int down, int up) {
 		errExit("asprintf");
 	
 	// read bandwidth file
-	shm_read_bandwidth_file(pid);
+	read_bandwidth_file(pid);
 
 	// look for an existing entry and replace the text
 	IFBW *ptr = ifbw_find(dev);
@@ -333,7 +313,7 @@ void bandwidth_shm_set(pid_t pid, const char *dev, int down, int up) {
 		// add it to the linked list
 		ifbw_add(ifbw_new);
 	}
-	shm_write_bandwidth_file(pid) ;
+	write_bandwidth_file(pid) ;
 }
 
 
@@ -376,15 +356,14 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	free(comm);
 	
 	// check network namespace
-	EUID_ROOT();
-	char *cmd = pid_proc_cmdline(pid);
-	EUID_USER();
-	if (!cmd || strstr(cmd, "--net") == NULL) {
+	char *name;
+	if (asprintf(&name, "/run/firejail/network/%d-netmap", pid) == -1)
+		errExit("asprintf");
+	struct stat s;
+	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace\n");
 		exit(1);
 	}
-	free(cmd);
-
 
 	//************************
 	// join the network namespace
@@ -401,20 +380,20 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		exit(1);
 	}
 
-	// set shm file
+	// set run file
 	if (strcmp(command, "set") == 0)
-		bandwidth_shm_set(pid, dev, down, up);
+		bandwidth_set(pid, dev, down, up);
 	else if (strcmp(command, "clear") == 0)
-		bandwidth_shm_remove(pid, dev);
+		bandwidth_remove(pid, dev);
 
 	//************************
 	// build command
 	//************************
 	char *devname = NULL;
 	if (dev) {
-		// read shm network map file
+		// read network map file
 		char *fname;
-		if (asprintf(&fname, "/dev/shm/firejail/%d-netmap", (int) pid) == -1)
+		if (asprintf(&fname, "%s/%d-netmap", RUN_FIREJAIL_NETWORK_DIR, (int) pid) == -1)
 			errExit("asprintf");
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
@@ -449,7 +428,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	}
 	
 	// build fshaper.sh command
-	cmd = NULL;
+	char *cmd = NULL;
 	if (devname) {
 		if (strcmp(command, "set") == 0) {
 			if (asprintf(&cmd, "%s/firejail/fshaper.sh --%s %s %d %d",

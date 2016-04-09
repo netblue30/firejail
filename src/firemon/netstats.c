@@ -117,8 +117,14 @@ static void print_proc(int index, int itv, int col) {
 	}
 	else
 		ptrcmd = cmd;
-	// if the command doesn't have a --net= option, don't print
-	if (strstr(ptrcmd, "--net=") == NULL) {
+	
+	// check network namespace
+	char *name;
+	if (asprintf(&name, "/run/firejail/network/%d-netmap", index) == -1)
+		errExit("asprintf");
+	struct stat s;
+	if (stat(name, &s) == -1) {
+		// the sandbox doesn't have a --net= option, don't print
 		if (cmd)
 			free(cmd);
 		return;

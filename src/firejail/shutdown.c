@@ -98,4 +98,6 @@ void shut(pid_t pid) {
 		printf("Sending SIGKILL to %u\n", parent);
 		kill(parent, SIGKILL);
 	}
+	
+	clear_run_files(parent);
 }

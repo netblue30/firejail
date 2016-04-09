@@ -105,27 +105,33 @@ int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
 
-static void set_name_file(uid_t pid);
-static void delete_name_file(uid_t pid);
-static void set_x11_file(uid_t pid, int display);
-static void delete_x11_file(uid_t pid);
+static void set_name_file(pid_t pid);
+static void delete_name_file(pid_t pid);
+static void set_x11_file(pid_t pid, int display);
+static void delete_x11_file(pid_t pid);
+
+void clear_run_files(pid_t pid) {
+	bandwidth_del_run_file(pid);		// bandwidth file
+	network_del_run_file(pid);		// network map file
+	delete_name_file(pid);
+	delete_x11_file(pid);
+}
 
 static void myexit(int rv) {
 	logmsg("exiting...");
 	if (!arg_command && !arg_quiet)
 		printf("\nparent is shutting down, bye...\n");
-	
+
+
 	// delete sandbox files in shared memory
-	bandwidth_shm_del_file(sandbox_pid);		// bandwidth file
-	network_shm_del_file(sandbox_pid);		// network map file
-	delete_name_file(sandbox_pid);
-	delete_x11_file(sandbox_pid);
+	EUID_ROOT();
+	clear_run_files(sandbox_pid);
 	
 	exit(rv); 
 }
 
 static void my_handler(int s){
-EUID_ROOT();
+	EUID_ROOT();
 	if (!arg_quiet)
 		printf("\nSignal %d caught, shutting down the child process\n", s);
 	logsignal(s);
@@ -615,7 +621,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 
 }
 
-static void set_name_file(uid_t pid) {
+static void set_name_file(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, pid) == -1)
 		errExit("asprintf");
@@ -637,7 +643,7 @@ static void set_name_file(uid_t pid) {
 	
 }
 
-static void delete_name_file(uid_t pid) {
+static void delete_name_file(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, pid) == -1)
 		errExit("asprintf");
@@ -645,7 +651,7 @@ static void delete_name_file(uid_t pid) {
 	(void) rv;
 }
 
-static void set_x11_file(uid_t pid, int display) {
+static void set_x11_file(pid_t pid, int display) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
 		errExit("asprintf");
@@ -667,7 +673,7 @@ static void set_x11_file(uid_t pid, int display) {
 	
 }
 
-static void delete_x11_file(uid_t pid) {
+static void delete_x11_file(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
 		errExit("asprintf");
@@ -772,9 +778,11 @@ int main(int argc, char **argv) {
 	// check firejail directories
 	EUID_ROOT();
 	fs_build_firejail_dir();
-	// todo: deprecate shm functions
-	shm_create_firejail_dir();	
-	bandwidth_shm_del_file(sandbox_pid);
+	bandwidth_del_run_file(sandbox_pid);
+	network_del_run_file(sandbox_pid);
+	delete_name_file(sandbox_pid);
+	delete_x11_file(sandbox_pid);
+	
 	EUID_USER();
 	
 	//check if the parent is sshd daemon
@@ -1926,7 +1934,7 @@ int main(int argc, char **argv) {
 		check_network(&cfg.bridge3);
 			
 		// save network mapping in shared memory
-		network_shm_set_file(sandbox_pid);
+		network_set_run_file(sandbox_pid);
 		EUID_USER();
 	}
 
@@ -2089,6 +2097,7 @@ int main(int argc, char **argv) {
 	EUID_USER();
 	int status = 0;
 	waitpid(child, &status, 0);
+printf("after wait\n");
 
 	// free globals
 #ifdef HAVE_SECCOMP

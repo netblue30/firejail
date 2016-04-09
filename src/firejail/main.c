@@ -125,6 +125,7 @@ static void myexit(int rv) {
 }
 
 static void my_handler(int s){
+EUID_ROOT();
 	if (!arg_quiet)
 		printf("\nSignal %d caught, shutting down the child process\n", s);
 	logsignal(s);
@@ -2082,8 +2083,10 @@ int main(int argc, char **argv) {
 	// handle CTRL-C in parent
 	signal (SIGINT, my_handler);
 	signal (SIGTERM, my_handler);
+
 	
 	// wait for the child to finish
+	EUID_USER();
 	int status = 0;
 	waitpid(child, &status, 0);
 

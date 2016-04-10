@@ -332,7 +332,7 @@ void x11_start_xpra(int argc, char **argv) {
 	
 	// build the attach command
 	char *cmd2;
-	if (asprintf(&cmd2, "xpra attach :%d", display) == -1)
+	if (asprintf(&cmd2, "xpra --title=\"firejail x11 sandbox\" attach :%d", display) == -1)
 		errExit("asprintf");
 	if (arg_debug)
 		printf("xpra client: %s\n", cmd2);

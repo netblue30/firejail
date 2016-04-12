@@ -30,7 +30,7 @@ blacklist ${HOME}/.config/filezilla
 blacklist ~/.dillo
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.config/.epiphany
-blacklist ${HOME}/.config/.slimjet
+blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/qutebrowser
 
 # cache

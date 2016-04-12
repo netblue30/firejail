@@ -26,6 +26,7 @@ blacklist ${HOME}/.config/filezilla
 blacklist ~/.dillo
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.config/.epiphany
+blacklist ${HOME}/.config/.slimjet
 
 # cache
 blacklist ~/.cache/mozilla
@@ -37,6 +38,7 @@ blacklist ~/.cache/opera
 blacklist ~/.cache/opera-beta
 blacklist ~/.cache/vivaldi
 blacklist ~/.cache/epiphany
+blacklist ~/.cache/slimjet
 
 # share
 blacklist ~/.local/share/epiphany

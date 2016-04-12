@@ -6,6 +6,7 @@ blacklist ${HOME}/.FBReader
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/deadbeef
+blacklist ${HOME}/.hedgewars
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove

@@ -1,4 +1,5 @@
 # whitelist profile for Hedgewars (game)
+noblacklist ${HOME}/.hedgewars
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

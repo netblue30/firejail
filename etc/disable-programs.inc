@@ -12,6 +12,7 @@ blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.steam
+blacklist ${HOME}/.config/transmission
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -50,6 +51,7 @@ blacklist ~/.cache/qutebrowser
 blacklist ~/.cache/spotify
 blacklist ~/.cache/thunderbird
 blacklist ~/.cache/icedove
+blacklist ~/.cache/transmission
 
 # share
 blacklist ~/.local/share/epiphany

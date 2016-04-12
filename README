@@ -105,6 +105,7 @@ avoidr (https://github.com/avoidr)
 	- added cmus profile
 	- man page fixes
 	- add net iface support in profile files
+	- paths fix
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix

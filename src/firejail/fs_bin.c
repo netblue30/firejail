@@ -26,10 +26,11 @@
 
 static char *paths[] = {
 	"/usr/local/bin",
-	"/bin",
 	"/usr/bin",
-	"/sbin",
+	"/bin",
+	"/usr/local/sbin",
 	"/usr/sbin",
+	"/sbin",
 	NULL
 };
 
@@ -173,6 +174,7 @@ void fs_private_bin_list(void) {
 	
 	// check bin paths
 	int i = 0;
+#if 0
 	while (paths[i]) {
 		struct stat s;
 		if (stat(paths[i], &s) == -1) {
@@ -181,6 +183,7 @@ void fs_private_bin_list(void) {
 		}
 		i++;
 	}
+#endif
 
 	// create /tmp/firejail/mnt/bin directory
 	fs_build_mnt_dir();
@@ -230,12 +233,15 @@ void fs_private_bin_list(void) {
 	// mount-bind
 	i = 0;
 	while (paths[i]) {
-		if (arg_debug)
-			printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
-		if (mount(RUN_BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind");
-		fs_logger2("tmpfs", paths[i]);
-		fs_logger2("mount", paths[i]);
+		struct stat s;
+		if (stat(paths[i], &s) == 0) {
+			if (arg_debug)
+				printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
+			if (mount(RUN_BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+			fs_logger2("tmpfs", paths[i]);
+			fs_logger2("mount", paths[i]);
+		}
 		i++;
 	}
 	
@@ -249,11 +255,14 @@ void fs_private_bin_list(void) {
 	while (ptr) {
 		i = 0;
 		while (paths[i]) {
-			char *fname;
-			if (asprintf(&fname, "%s/%s", paths[i], ptr) == -1)
-				errExit("asprintf");
-			fs_logger2("clone", fname);
-			free(fname);
+			struct stat s;
+			if (stat(paths[i], &s) == 0) {
+				char *fname;
+				if (asprintf(&fname, "%s/%s", paths[i], ptr) == -1)
+					errExit("asprintf");
+				fs_logger2("clone", fname);
+				free(fname);
+			}
 			i++;
 		}
 		ptr = strtok(NULL, ",");

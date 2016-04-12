@@ -76,10 +76,11 @@ char **build_paths(void) {
 
 		// add default paths
 		add_path("/usr/local/bin");
-		add_path("/bin");
 		add_path("/usr/bin");
-		add_path("/sbin");
+		add_path("/bin");
+		add_path("/usr/local/sbin");
 		add_path("/usr/sbin");
+		add_path("/sbin");
 
 		path2 = strdup(path1);
 		if (!path2)

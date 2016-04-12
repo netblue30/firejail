@@ -34,6 +34,20 @@
 #define CLONE_NEWUSER	0x10000000
 #endif
 
+static monitored_pid = 0;
+static void sandbox_handler(int s){
+	if (!arg_quiet)
+		printf("\nChild received signal %d, shutting down the sandbox...\n", s);
+	if (monitored_pid) {
+		kill(monitored_pid, SIGTERM);
+		sleep(1);
+		kill(monitored_pid, SIGKILL);
+	}
+	
+	exit(s);
+}
+
+
 static void set_caps(void) {
 	if (arg_caps_drop_all)
 		caps_drop_all();
@@ -131,13 +145,15 @@ static void chk_chroot(void) {
 }
 
 static int monitor_application(pid_t app_pid) {
+	monitored_pid = app_pid;
+	signal (SIGTERM, sandbox_handler);
 	EUID_USER();
 
 	int status;
-	while (app_pid) {
+	while (monitored_pid) {
 		usleep(20000);
 		char *msg;
-		if (asprintf(&msg, "monitoring pid %d\n", app_pid) == -1)
+		if (asprintf(&msg, "monitoring pid %d\n", monitored_pid) == -1)
 			errExit("asprintf");
 		logmsg(msg);
 		free(msg);
@@ -148,9 +164,9 @@ static int monitor_application(pid_t app_pid) {
 			if (rv == -1)
 				break;
 		}
-		while(rv != app_pid);
+		while(rv != monitored_pid);
 		if (arg_debug)
-			printf("Sandbox monitor: waitpid %u retval %d status %d\n", app_pid, rv, status);
+			printf("Sandbox monitor: waitpid %u retval %d status %d\n", monitored_pid, rv, status);
 
 		DIR *dir;
 		if (!(dir = opendir("/proc"))) {
@@ -163,7 +179,7 @@ static int monitor_application(pid_t app_pid) {
 		}
 
 		struct dirent *entry;
-		app_pid = 0;
+		monitored_pid = 0;
 		while ((entry = readdir(dir)) != NULL) {
 			unsigned pid;
 			if (sscanf(entry->d_name, "%u", &pid) != 1)
@@ -180,14 +196,15 @@ static int monitor_application(pid_t app_pid) {
 				free(pidname);
 			}
 
-			app_pid = pid;
+			monitored_pid = pid;
 			break;
 		}
 		closedir(dir);
 
-		if (app_pid != 0 && arg_debug)
-			printf("Sandbox monitor: monitoring %u\n", app_pid);
+		if (monitored_pid != 0 && arg_debug)
+			printf("Sandbox monitor: monitoring %u\n", monitored_pid);
 	}
+printf("blablabla\n");
 
 	// return the latest exit status.
 	return status;

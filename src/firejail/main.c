@@ -120,7 +120,7 @@ void clear_run_files(pid_t pid) {
 static void myexit(int rv) {
 	logmsg("exiting...");
 	if (!arg_command && !arg_quiet)
-		printf("\nparent is shutting down, bye...\n");
+		printf("\nParent is shutting down, bye...\n");
 
 
 	// delete sandbox files in shared memory
@@ -133,9 +133,9 @@ static void myexit(int rv) {
 static void my_handler(int s){
 	EUID_ROOT();
 	if (!arg_quiet)
-		printf("\nSignal %d caught, shutting down the child process\n", s);
+		printf("\nParent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
-	kill(child, SIGKILL);
+	kill(child, SIGTERM);
 	myexit(1);
 }
 
@@ -2097,7 +2097,6 @@ int main(int argc, char **argv) {
 	EUID_USER();
 	int status = 0;
 	waitpid(child, &status, 0);
-printf("after wait\n");
 
 	// free globals
 #ifdef HAVE_SECCOMP

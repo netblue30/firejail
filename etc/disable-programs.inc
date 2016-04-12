@@ -31,6 +31,7 @@ blacklist ~/.dillo
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.config/.epiphany
 blacklist ${HOME}/.config/.slimjet
+blacklist ${HOME}/.config/qutebrowser
 
 # cache
 blacklist ~/.cache/mozilla
@@ -43,6 +44,7 @@ blacklist ~/.cache/opera-beta
 blacklist ~/.cache/vivaldi
 blacklist ~/.cache/epiphany
 blacklist ~/.cache/slimjet
+blacklist ~/.cache/qutebrowser
 
 # share
 blacklist ~/.local/share/epiphany

@@ -1,5 +1,5 @@
 # Epiphany browser profile
-noblacklist ${HOME}/.config/.epiphany
+noblacklist ${HOME}/.config/epiphany
 noblacklist ${HOME}/.cache/epiphany
 noblacklist ${HOME}/.local/share/epiphany
 

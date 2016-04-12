@@ -33,7 +33,7 @@ blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.dillo
 blacklist ${HOME}/.conkeror.mozdev.org
-blacklist ${HOME}/.config/.epiphany
+blacklist ${HOME}/.config/epiphany
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/qutebrowser
 

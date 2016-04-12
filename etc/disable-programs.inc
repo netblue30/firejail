@@ -13,6 +13,7 @@ blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.steam
 blacklist ${HOME}/.config/transmission
+blacklist ${HOME}/.config/uGet
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove

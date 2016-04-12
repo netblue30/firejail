@@ -25,6 +25,7 @@ blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla
 blacklist ~/.dillo
 blacklist ${HOME}/.conkeror.mozdev.org
+blacklist ${HOME}/.config/.epiphany
 
 # cache
 blacklist ~/.cache/mozilla
@@ -35,6 +36,10 @@ blacklist ~/.cache/google-chrome-unstable
 blacklist ~/.cache/opera
 blacklist ~/.cache/opera-beta
 blacklist ~/.cache/vivaldi
+blacklist ~/.cache/epiphany
+
+# share
+blacklist ~/.local/share/epiphany
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

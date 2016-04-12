@@ -1,4 +1,8 @@
 # Epiphany browser profile
+noblacklist ${HOME}/.config/.epiphany
+noblacklist ${HOME}/.cache/epiphany
+noblacklist ${HOME}/.local/share/epiphany
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

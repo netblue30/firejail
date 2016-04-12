@@ -25,9 +25,10 @@
 #include <unistd.h>
 
 static char *paths[] = {
+	"/usr/local/bin",
 	"/bin",
-	"/sbin",
 	"/usr/bin",
+	"/sbin",
 	"/usr/sbin",
 	NULL
 };

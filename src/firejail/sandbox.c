@@ -204,7 +204,6 @@ static int monitor_application(pid_t app_pid) {
 		if (monitored_pid != 0 && arg_debug)
 			printf("Sandbox monitor: monitoring %u\n", monitored_pid);
 	}
-printf("blablabla\n");
 
 	// return the latest exit status.
 	return status;

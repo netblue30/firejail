@@ -180,8 +180,7 @@ void usage(void) {
 	printf("    --private=directory - use directory as user home.\n\n");
 
 	printf("    --private-bin=file,file - build a new /bin in a temporary filesystem,\n");
-	printf("\tand copy the programs in the list. The same directory is\n");
-	printf("\talso bind-mounted over /sbin, /usr/bin and /usr/sbin.\n\n");
+	printf("\tand copy the programs in the list.\n\n");
 
 	printf("    --private-dev - create a new /dev directory. Only dri, null, full, zero,\n");
 	printf("\ttty, pst, ptms, random, urandom, log and shm devices are available.\n\n");

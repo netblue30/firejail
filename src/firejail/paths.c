@@ -75,9 +75,10 @@ char **build_paths(void) {
 		memset(paths, 0, sizeof(char *) * cnt);
 
 		// add default paths
+		add_path("/usr/local/bin");
 		add_path("/bin");
-		add_path("/sbin");
 		add_path("/usr/bin");
+		add_path("/sbin");
 		add_path("/usr/sbin");
 
 		path2 = strdup(path1);

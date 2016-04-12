@@ -227,7 +227,7 @@ void fs_private_bin_list(void) {
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
 
-	// moun-bind
+	// mount-bind
 	i = 0;
 	while (paths[i]) {
 		if (arg_debug)

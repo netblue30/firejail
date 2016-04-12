@@ -501,12 +501,12 @@ void fs_blacklist(void) {
 		char *new_name = expand_home(ptr, homedir);
 		ptr = new_name;
 
-		// expand path macro - look for the file in /bin, /usr/bin, /sbin and  /usr/sbin directories
+		// expand path macro - look for the file in /usr/local/bin, /bin, /usr/bin, /sbin and  /usr/sbin directories
 		if (ptr) {
 			if (strncmp(ptr, "${PATH}", 7) == 0) {
 				char *fname = ptr + 7;
 				size_t fname_len = strlen(fname);
-				char **paths = build_paths(); //{"/bin", "/sbin", "/usr/bin", "/usr/sbin", NULL};
+				char **paths = build_paths(); //{"/usr/local/bin", "/bin", "/usr/bin/", "/sbin", "/usr/sbin", NULL};
 				int i = 0;
 				while (paths[i] != NULL) {
 					char *path = paths[i];

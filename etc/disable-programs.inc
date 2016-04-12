@@ -23,6 +23,7 @@ blacklist ~/.config/vivaldi
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.config/filezilla
 blacklist ~/.dillo
+blacklist ${HOME}/.conkeror.mozdev.org
 
 # cache
 blacklist ~/.cache/mozilla

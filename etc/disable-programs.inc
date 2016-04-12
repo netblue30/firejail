@@ -1,20 +1,19 @@
 # various programs
-blacklist  ${HOME}/.config/vlc
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.FBReader
 blacklist ${HOME}/.wine
-blacklist ${HOME}/.config/cmus
-blacklist ${HOME}/.config/deadbeef
-blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.config/mupen64plus
-blacklist ${HOME}/.config/spotify
-blacklist ${HOME}/.steam
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/uGet
-blacklist ${HOME}/.config/wesnoth
+
+# Media players
+blacklist ${HOME}/.config/cmus
+blacklist ${HOME}/.config/deadbeef
+blacklist ${HOME}/.config/spotify
+blacklist ${HOME}/.config/vlc
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -37,6 +36,33 @@ blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.config/.epiphany
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/qutebrowser
+
+# Instant Messaging
+blacklist ${HOME}/.config/hexchat
+blacklist ${HOME}/.mcabber
+blacklist ${HOME}/.purple
+blacklist ${HOME}/.config/psi+
+blacklist ${HOME}/.retroshare
+blacklist ${HOME}/.weechat
+blacklist ${HOME}/.config/xchat
+blacklist ${HOME}/.Skype
+blacklist ${HOME}/.config/tox
+blacklist ${HOME}/.TelegramDesktop
+
+# Games
+blacklist ${HOME}/.hedgewars
+blacklist ${HOME}/.steam
+blacklist ${HOME}/.config/wesnoth
+
+# Cryptocoins
+blacklist ${HOME}/.*coin
+blacklist ${HOME}/.electrum*
+blacklist ${HOME}/wallet.dat
+
+# git, subversion
+blacklist ${HOME}/.subversion
+blacklist ${HOME}/.gitconfig
+blacklist ${HOME}/.git-credential-cache
 
 # cache
 blacklist ~/.cache/mozilla
@@ -62,26 +88,3 @@ blacklist ~/.local/share/mupen64plus
 blacklist ~/.local/share/spotify
 blacklist ~/.local/share/steam
 blacklist ~/.local/share/wesnoth
-
-# Instant Messaging
-blacklist ${HOME}/.config/hexchat
-blacklist ${HOME}/.mcabber
-blacklist ${HOME}/.purple
-blacklist ${HOME}/.config/psi+
-blacklist ${HOME}/.retroshare
-blacklist ${HOME}/.weechat
-blacklist ${HOME}/.config/xchat
-blacklist ${HOME}/.Skype
-blacklist ${HOME}/.config/tox
-blacklist ${HOME}/.TelegramDesktop
-
-# Cryptocoins
-blacklist ${HOME}/.*coin
-blacklist ${HOME}/.electrum*
-blacklist ${HOME}/wallet.dat
-
-# git, subversion
-blacklist ${HOME}/.subversion
-blacklist ${HOME}/.gitconfig
-blacklist ${HOME}/.git-credential-cache
-

@@ -65,6 +65,7 @@ blacklist ${HOME}/.weechat
 blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.Skype
 blacklist ${HOME}/.config/tox
+blacklist ${HOME}/.TelegramDesktop
 
 # Cryptocoins
 blacklist ${HOME}/.*coin

@@ -7,6 +7,8 @@ blacklist ${HOME}/.wine
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.hedgewars
+blacklist ${HOME}/.Mathematica
+blacklist ${HOME}/.Wolfram Research
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove

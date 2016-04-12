@@ -14,6 +14,7 @@ blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.steam
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/uGet
+blacklist ${HOME}/.config/wesnoth
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -53,12 +54,14 @@ blacklist ~/.cache/spotify
 blacklist ~/.cache/thunderbird
 blacklist ~/.cache/icedove
 blacklist ~/.cache/transmission
+blacklist ~/.cache/wesnoth
 
 # share
 blacklist ~/.local/share/epiphany
 blacklist ~/.local/share/mupen64plus
 blacklist ~/.local/share/spotify
 blacklist ~/.local/share/steam
+blacklist ~/.local/share/wesnoth
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

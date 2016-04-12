@@ -11,6 +11,7 @@ blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/spotify
+blacklist ${HOME}/.steam
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -52,6 +53,7 @@ blacklist ~/.cache/spotify
 blacklist ~/.local/share/epiphany
 blacklist ~/.local/share/mupen64plus
 blacklist ~/.local/share/spotify
+blacklist ~/.local/share/steam
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

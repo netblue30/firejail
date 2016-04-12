@@ -48,6 +48,7 @@ blacklist ~/.cache/epiphany
 blacklist ~/.cache/slimjet
 blacklist ~/.cache/qutebrowser
 blacklist ~/.cache/spotify
+blacklist ~/.cache/thunderbird
 
 # share
 blacklist ~/.local/share/epiphany

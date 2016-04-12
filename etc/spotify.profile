@@ -1,4 +1,7 @@
 # Spotify media player profile
+noblacklist ${HOME}/.config/spotify
+noblacklist ${HOME}/.cache/spotify
+noblacklist ${HOME}/.local/share/spotify
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

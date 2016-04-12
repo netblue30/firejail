@@ -10,6 +10,7 @@ blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.config/mupen64plus
+blacklist ${HOME}/.config/spotify
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -45,10 +46,12 @@ blacklist ~/.cache/vivaldi
 blacklist ~/.cache/epiphany
 blacklist ~/.cache/slimjet
 blacklist ~/.cache/qutebrowser
+blacklist ~/.cache/spotify
 
 # share
 blacklist ~/.local/share/epiphany
 blacklist ~/.local/share/mupen64plus
+blacklist ~/.local/share/spotify
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

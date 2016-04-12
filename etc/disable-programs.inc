@@ -9,6 +9,7 @@ blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Wolfram Research
+blacklist ${HOME}/.config/mupen64plus
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -45,6 +46,7 @@ blacklist ~/.cache/slimjet
 
 # share
 blacklist ~/.local/share/epiphany
+blacklist ~/.local/share/mupen64plus
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

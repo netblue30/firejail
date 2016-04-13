@@ -4,8 +4,6 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-blacklist ${HOME}/.wine
-
 whitelist ${HOME}/cherrytree
 mkdir ~/.config
 mkdir ~/.config/cherrytree

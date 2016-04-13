@@ -1,4 +1,7 @@
 # Mathematica profile
+noblacklist ${HOME}/.Mathematica
+noblacklist ${HOME}/.Wolfram Research
+
 mkdir ~/.Mathematica
 whitelist ~/.Mathematica
 mkdir ~/.Wolfram Research

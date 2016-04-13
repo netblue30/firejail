@@ -1,5 +1,8 @@
 # mupen64plus profile
 # manually whitelist ROM files
+noblacklist ${HOME}/.config/mupen64plus
+noblacklist ${HOME}/.local/share/mupen64plus
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

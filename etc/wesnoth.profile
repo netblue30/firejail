@@ -1,4 +1,8 @@
 # Whitelist-based profile for "Battle for Wesnoth" (game).
+noblacklist ${HOME}/.config/wesnoth
+noblacklist ${HOME}/.cache/wesnoth
+noblacklist ${HOME}/.local/share/wesnoth
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

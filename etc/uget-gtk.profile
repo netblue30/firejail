@@ -1,4 +1,6 @@
 # uGet profile
+noblacklist ${HOME}/.config/uGet
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

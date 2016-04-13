@@ -34,3 +34,18 @@ blacklist /usr/lib/php*
 # Ruby
 blacklist /usr/bin/ruby
 blacklist /usr/lib/ruby
+
+# Python 2
+blacklist /usr/bin/python2*
+blacklist /usr/lib/python2*
+blacklist /usr/local/lib/python2*
+blacklist /usr/include/python2*
+blacklist /usr/share/python2* #If this exists (not on my machine).
+
+# Python 3
+blacklist /usr/bin/python3*
+blacklist /usr/lib/python3*
+blacklist /usr/local/lib/python3*
+blacklist /usr/share/python3*
+blacklist /usr/include/python3*
+

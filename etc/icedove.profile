@@ -1,5 +1,5 @@
 # Firejail profile for Mozilla Thunderbird (Icedove in Debian Stable)
-# Users have thunderbird set to open a browser by clicking a link in an email
+# Users have icedove set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories
 
 noblacklist ~/.gnupg

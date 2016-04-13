@@ -11,7 +11,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"parent is shutting down"
+	"Parent is shutting down"
 }
 sleep 2
 
@@ -27,7 +27,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"parent is shutting down"
+	"Parent is shutting down"
 }
 sleep 2
 
@@ -39,7 +39,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
-	"parent is shutting down"
+	"Parent is shutting down"
 }
 sleep 2
 
@@ -55,7 +55,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
-	"parent is shutting down"
+	"Parent is shutting down"
 }
 sleep 2
 
@@ -71,7 +71,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 25\n";exit}
-	"parent is shutting down"
+	"Parent is shutting down"
 }
 sleep 2
 

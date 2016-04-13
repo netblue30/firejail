@@ -15,7 +15,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"parent is shutting down, bye"
+	"Parent is shutting down, bye"
 }
 sleep 1
 

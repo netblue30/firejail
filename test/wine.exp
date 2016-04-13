@@ -23,7 +23,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"parent is shutting down, bye..."
+	"Parent is shutting down, bye..."
 }
 
 puts "\nall done\n"

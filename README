@@ -18,6 +18,21 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Fred-Barclay (https://github.com/Fred-Barclay)
+	- added Vivaldi, Atril profiles
+	- added PaleMoon profile
+avoidr (https://github.com/avoidr)
+	- whitelist fix
+	- recently-used.xbel fix
+	- added parole profile
+	- blacklist ncat, manpage fixes,
+	- hostname support in profile file
+	- Google Chrome profile rework
+	- added cmus profile
+	- man page fixes
+	- add net iface support in profile files
+	- paths fix
+	- lots of profile fixes
 Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
 n1trux (https://github.com/n1trux)
@@ -30,8 +45,6 @@ Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
 dshmgh (https://github.com/dshmgh)
 	- overlayfs fix for systems with /home mounted on a separate partition
-Fred-Barclay (https://github.com/Fred-Barclay)
-	- added Vivaldi, Atril profiles
 yumkam (https://github.com/yumkam)
 	- add compile-time option to restrict --net= to root only
 	- man page fixes
@@ -95,17 +108,6 @@ Peter Hogg (https://github.com/pigmonkey)
 	- rtorrent profile
 rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
-avoidr (https://github.com/avoidr)
-	- whitelist fix
-	- recently-used.xbel fix
-	- added parole profile
-	- blacklist ncat, manpage fixes,
-	- hostname support in profile file
-	- Google Chrome profile rework
-	- added cmus profile
-	- man page fixes
-	- add net iface support in profile files
-	- paths fix
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix

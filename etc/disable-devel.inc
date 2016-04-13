@@ -40,7 +40,7 @@ blacklist /usr/bin/python2*
 blacklist /usr/lib/python2*
 blacklist /usr/local/lib/python2*
 blacklist /usr/include/python2*
-blacklist /usr/share/python2* #If this exists (not on my machine).
+blacklist /usr/share/python2*
 
 # Python 3
 blacklist /usr/bin/python3*

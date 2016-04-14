@@ -34,17 +34,45 @@
 #define CLONE_NEWUSER	0x10000000
 #endif
 
-static monitored_pid = 0;
-static void sandbox_handler(int s){
-	if (!arg_quiet)
-		printf("\nChild received signal %d, shutting down the sandbox...\n", s);
-	if (monitored_pid) {
-		kill(monitored_pid, SIGTERM);
-		sleep(1);
-		kill(monitored_pid, SIGKILL);
+static int monitored_pid = 0;
+static void sandbox_handler(int sig){
+	if (!arg_quiet) {
+		printf("\nChild received signal %d, shutting down the sandbox...\n", sig);
+		fflush(0);
 	}
-	
-	exit(s);
+
+	// broadcast sigterm to all processes in the group
+	kill(-1, SIGTERM);
+	sleep(1);
+
+	if (monitored_pid) {
+		int monsec = 9;
+		char *monfile;
+		if (asprintf(&monfile, "/proc/%d/cmdline", monitored_pid) == -1)
+			errExit("asprintf");
+		while (monsec) {
+			FILE *fp = fopen(monfile, "r");
+			if (!fp)
+				break;
+				
+			char c;
+			size_t count = fread(&c, 1, 1, fp);
+			fclose(fp);
+			if (count == 0)
+				break;
+
+			if (arg_debug)
+				printf("Waiting on PID %d to finish\n", monitored_pid);
+			sleep(1);
+			monsec--;
+		}
+		free(monfile);
+		
+	}
+
+	// broadcast a SIGKILL
+	kill(-1, SIGKILL);
+	exit(sig);
 }
 
 
@@ -149,13 +177,15 @@ static int monitor_application(pid_t app_pid) {
 	signal (SIGTERM, sandbox_handler);
 	EUID_USER();
 
-	int status;
+	int status = 0;
 	while (monitored_pid) {
 		usleep(20000);
 		char *msg;
 		if (asprintf(&msg, "monitoring pid %d\n", monitored_pid) == -1)
 			errExit("asprintf");
 		logmsg(msg);
+		if (arg_debug)
+			printf("%s\n", msg);
 		free(msg);
 
 		pid_t rv;

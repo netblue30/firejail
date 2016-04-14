@@ -77,26 +77,46 @@ void shut(pid_t pid) {
 	EUID_ROOT();
 	printf("Sending SIGTERM to %u\n", pid);
 	kill(pid, SIGTERM);
+	
+	// wait for not more than 10 seconds
 	sleep(2);
-	
-	// if the process is still running, terminate it using SIGKILL
-	// try to open stat file
-	char *file;
-	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-		perror("asprintf");
-		exit(1);
+	int monsec = 8;
+	char *monfile;
+	if (asprintf(&monfile, "/proc/%d/cmdline", pid) == -1)
+		errExit("asprintf");
+	int killdone = 0;
+
+	while (monsec) {
+		FILE *fp = fopen(monfile, "r");
+		if (!fp) {
+			killdone = 1;
+			break;
+		}
+		
+		char c;
+		size_t count = fread(&c, 1, 1, fp);
+		fclose(fp);
+		if (count == 0) {
+			// all done
+			killdone = 1;
+			break;
+		}
+
+		sleep(1);
+		monsec--;
 	}
-	FILE *fp = fopen(file, "r");
-	if (!fp)
-		return;
-	fclose(fp);
-	
-	// kill the process and also the parent
-	printf("Sending SIGKILL to %u\n", pid);
-	kill(pid, SIGKILL);
-	if (parent != pid) {
-		printf("Sending SIGKILL to %u\n", parent);
-		kill(parent, SIGKILL);
+	free(monfile);
+
+
+	// force SIGKILL
+	if (!killdone) {
+		// kill the process and also the parent
+		printf("Sending SIGKILL to %u\n", pid);
+		kill(pid, SIGKILL);
+		if (parent != pid) {
+			printf("Sending SIGKILL to %u\n", parent);
+			kill(parent, SIGKILL);
+		}
 	}
 	
 	clear_run_files(parent);

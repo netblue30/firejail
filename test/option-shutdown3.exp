@@ -4,46 +4,59 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail\r"
+set firstspawn $spawn_id
+
+send --  "firejail --name=shutdowntesting ./catchsignal-master.sh\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
-sleep 1
+sleep 2
 
-# test processes
-send -- "bash\r"
-sleep 1
-send -- "ps aux; pwd\r"
+spawn $env(SHELL)
+send --  "firejail --shutdown=shutdowntesting\r"
+
+set spawn_id $firstspawn
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"/bin/bash"
+	"1"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"bash"
+	"1"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"ps aux"
+	"2"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"home"
+	"2"
 }
-sleep 1
-
-
-send -- "ps aux |wc -l; pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"6" {puts "normal system\n"}
-	"5" {puts "grsecurity\n"}
+	"3"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"home"
+	"3"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"4"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"4"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"5"
+}
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"5"
 }
 sleep 1
 
-puts "\nall done\n"
+puts "\nalldone\n"

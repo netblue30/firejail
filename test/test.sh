@@ -133,6 +133,15 @@ echo "TESTING: rlimit (option_rlimit.exp)"
 echo "TESTING: shutdown (option_shutdown.exp)"
 ./option-shutdown.exp
 
+echo "TESTING: shutdown2 (option_shutdown2.exp)"
+./option-shutdown2.exp
+
+echo "TESTING: shutdown3 (option_shutdown3.exp)"
+./option-shutdown3.exp
+
+echo "TESTING: shutdown4 (option_shutdown4.exp)"
+./option-shutdown4.exp
+
 echo "TESTING: join (option-join.exp)"
 ./option-join.exp
 

@@ -170,7 +170,7 @@ void x11_start_xephyr(int argc, char **argv) {
 
 	// unfortunately, xephyr does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
-		fprintf(stderr, "Error: this feature is not available when running as root\n");
+		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
 		exit(1);
 	}
 
@@ -292,7 +292,7 @@ void x11_start_xpra(int argc, char **argv) {
 
 	// unfortunately, xpra does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
-		fprintf(stderr, "Error: this feature is not available when running as root\n");
+		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
 		exit(1);
 	}
 
@@ -410,7 +410,7 @@ void x11_start(int argc, char **argv) {
 
 	// unfortunately, xpra does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
-		fprintf(stderr, "Error: this feature is not available when running as root\n");
+		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
 		exit(1);
 	}
 

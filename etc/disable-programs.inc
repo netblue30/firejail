@@ -53,6 +53,7 @@ blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.steam
 blacklist ${HOME}/.config/wesnoth
+blacklist ${HOME}/.config/0ad
 
 # Cryptocoins
 blacklist ${HOME}/.*coin
@@ -81,6 +82,7 @@ blacklist ${HOME}/.cache/thunderbird
 blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/wesnoth
+blacklist ${HOME}/.cache/0ad
 
 # share
 blacklist ${HOME}/.local/share/epiphany
@@ -88,3 +90,4 @@ blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/wesnoth
+blacklist ${HOME}/.local/share/0ad

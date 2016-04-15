@@ -81,5 +81,3 @@
 /etc/firejail/cmus.profile
 /etc/firejail/dnsmasq.profile
 /etc/firejail/palemoon.profile
-/etc/firejail/icedove.profile
-

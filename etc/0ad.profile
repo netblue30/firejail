@@ -1,10 +1,8 @@
 # Firejail profile for 0ad.
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-programs.inc
-
-#May cause problems for online gamers if they use a password manager. Test first.
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 # Call these options
 caps.drop all
@@ -30,5 +28,3 @@ mkdir ~/.local
 mkdir ~/.local/share
 mkdir ~/.local/share/0ad
 whitelist ~/.local/share/0ad
-
-

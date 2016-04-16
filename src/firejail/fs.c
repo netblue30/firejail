@@ -750,7 +750,13 @@ void fs_basic_fs(void) {
 	// don't leak user information
 	restrict_users();
 	
-	disable_firejail_config();
+	// when starting as root, firejail config is not disabled;
+	// this mode could be used to install and test new software by chaining
+	// firejail sandboxes (firejail --force)
+	if (getuid() != 0)
+		disable_firejail_config();
+	else
+		fprintf(stderr, "Warning: masking /etc/firejail disabled when starting the sandbox as root\n");
 }
 
 
@@ -967,13 +973,13 @@ void fs_overlayfs(void) {
 	// don't leak user information
 	restrict_users();
 
-	// when starting as root in overlay mode, firejail config is not disabled;
+	// when starting as root, firejail config is not disabled;
 	// this mode could be used to install and test new software by chaining
 	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
 		disable_firejail_config();
 	else
-		fprintf(stderr, "Warning: masking /etc/firejail disabled when starting the sandbox as root using --overlay option\n");
+		fprintf(stderr, "Warning: masking /etc/firejail disabled when starting the sandbox as root\n");
 
 	// cleanup and exit
 	free(option);
@@ -1104,7 +1110,13 @@ void fs_chroot(const char *rootdir) {
 	// don't leak user information
 	restrict_users();
 
-	disable_firejail_config();
+	// when starting as root, firejail config is not disabled;
+	// this mode could be used to install and test new software by chaining
+	// firejail sandboxes (firejail --force)
+	if (getuid() != 0)
+		disable_firejail_config();
+	else
+		fprintf(stderr, "Warning: masking /etc/firejail disabled when starting the sandbox as root\n");
 }
 #endif
 

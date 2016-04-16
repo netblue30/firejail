@@ -1,4 +1,5 @@
 # Firejail profile for 0ad.
+noblacklist ~/.config/0ad
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
@@ -18,7 +19,6 @@ mkdir ~/.cache
 mkdir ~/.cache/0ad
 whitelist ~/.cache/0ad
 
-noblacklist ~/.config/0ad
 mkdir ~/.config
 mkdir ~/.config/0ad
 whitelist ~/.config/0ad

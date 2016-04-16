@@ -90,4 +90,4 @@ blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/wesnoth
-blacklsit ${HOME}/.local/share/0ad
+blacklist ${HOME}/.local/share/0ad

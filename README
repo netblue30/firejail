@@ -18,10 +18,13 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Joan Figueras (https://github.com/figue)
+	- added abrowser profile
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile
 	- split Icedove and Thunderbird profiles
+	- added 0ad profile
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix

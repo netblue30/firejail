@@ -83,3 +83,4 @@
 /etc/firejail/palemoon.profile
 /etc/firejail/abrowser.profile
 /etc/firejail/0ad.profile
+/etc/firejail/netsurf.profile

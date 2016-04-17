@@ -27,8 +27,8 @@ blacklist ${HOME}/VirtualBox VMs
 blacklist ${HOME}/.config/VirtualBox
 
 # VeraCrypt
-blacklist /usr/bin/veracrypt
-blacklist /usr/bin/veracrypt-uninstall.sh
+blacklist ${PATH}/veracrypt
+blacklist ${PATH}/veracrypt-uninstall.sh
 blacklist /usr/share/veracrypt
 blacklist /usr/share/applications/veracrypt.*
 blacklist /usr/share/pixmaps/veracrypt.*

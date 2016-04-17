@@ -74,11 +74,9 @@ CapEff:	0000000000000000
 CapBnd:	0000003fffffffff
 CapAmb:	0000000000000000
 
-11. cleanup thunderbird profile - disable-common was commented out
-
-12. check seccomp on Docker: https://docs.docker.com/engine/security/seccomp/
+11. check seccomp on Docker: https://docs.docker.com/engine/security/seccomp/
 Seccomp lists:
 https://github.com/torvalds/linux/blob/1e75a9f34a5ed5902707fb74b468356c55142b71/arch/x86/entry/syscalls/syscall_64.tbl
 https://github.com/torvalds/linux/blob/1e75a9f34a5ed5902707fb74b468356c55142b71/arch/x86/entry/syscalls/syscall_32.tbl
 
-13. check for --chroot why .config/pulse dir is not created
+12. check for --chroot why .config/pulse dir is not created

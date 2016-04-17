@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Matthew Gyurgyik (https://github.com/pyther)
+	- rpm spec and several fixes
 Joan Figueras (https://github.com/figue)
 	- added abrowser profile
 Fred-Barclay (https://github.com/Fred-Barclay)
@@ -25,6 +27,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added PaleMoon profile
 	- split Icedove and Thunderbird profiles
 	- added 0ad profile
+	- fixed version for deb packages
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix
@@ -132,8 +135,6 @@ andrew160 (https://github.com/andrew160)
 	- profile and man pages fixes
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
-Matthew Gyurgyik (https://github.com/pyther)
-	- rpm spec and several fixes
 greigdp (https://github.com/greigdp)
 	- add Spotify profile
 Mattias Wadman (https://github.com/wader)

@@ -79,7 +79,8 @@ static int find(const char *program, const char *directory) {
 static int which(const char *program) {
 	// check some well-known paths
 	if (find(program, "/bin") || find(program, "/usr/bin") ||
-	     find(program, "/sbin") || find(program, "/usr/sbin"))
+	     find(program, "/sbin") || find(program, "/usr/sbin") ||
+	     find(program, "/usr/games"))
 		return 1;
 		
 	// check environment
@@ -268,7 +269,7 @@ static void set(void) {
 		// empty line
 		if (*start == '\0')
 			continue;
-		
+
 		// set link
 		set_file(start, firejail_exec);
 	}

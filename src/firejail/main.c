@@ -2104,8 +2104,10 @@ int main(int argc, char **argv) {
  	close(parent_to_child_fds[1]);
  
  	EUID_ROOT();
-	if (lockfd != -1)
+	if (lockfd != -1) {
 		flock(lockfd, LOCK_UN);
+		close(lockfd);
+	}
 
 	// create name file under /run/firejail
 	

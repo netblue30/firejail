@@ -26,6 +26,10 @@
 
 #define MAXBUF 4096
 
+// ip -s link: device stats
+// ss -s: socket stats
+
+
 static char *get_header(void) {
 	char *rv;
 	if (asprintf(&rv, "%-5.5s %-9.9s %-10.10s %-10.10s %s",

@@ -29,6 +29,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added 0ad profile
 	- fixed version for deb packages
 	- added Warzone2100 profile
+	- blacklisted VeraCrypt
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix

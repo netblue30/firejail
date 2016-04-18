@@ -85,3 +85,6 @@
 /etc/firejail/0ad.profile
 /etc/firejail/netsurf.profile
 /etc/firejail/warzone2100.profile
+/etc/firejail/okular.profile
+/etc/firejail/gwenview.profile
+

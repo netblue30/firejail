@@ -8,6 +8,11 @@ blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/uGet
+blacklist ~/.kde/share/apps/okular
+blacklist ~/.kde/share/config/okularrc
+blacklist ~/.kde/share/config/okularpartrc
+blacklist ~/.kde/share/apps/gwenview
+blacklist ~/.kde/share/config/gwenviewrc
 
 # Media players
 blacklist ${HOME}/.config/cmus

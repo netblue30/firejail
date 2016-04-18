@@ -20,6 +20,7 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * new profiles: qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars
   * new profiles: qTox, OpenSSH client, OpenBox, Dillo, cmus, dnsmasq
   * new profiles: PaleMoon, Icedove, abrowser, 0ad, netsurf, Warzone2100
+  * new profiles: okular, gwenview
   * build rpm packages using "make rpms"
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 3 Apr 2016 08:00:00 -0500

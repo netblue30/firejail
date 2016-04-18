@@ -18,6 +18,10 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+curiosity-seeker (https://github.com/curiosity-seeker)
+        - tightening unbound and dnscrypt-proxy profiles
+        - dnsmasq profile
+        - okular and gwenview profiles
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
 Joan Figueras (https://github.com/figue)
@@ -86,9 +90,6 @@ Rahiel Kasim (https://github.com/rahiel)
 	- Mathematica profile
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
-curiosity-seeker (https://github.com/curiosity-seeker)
-	- tightening unbound and dnscrypt-proxy profiles
-	- dnsmasq profile
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH

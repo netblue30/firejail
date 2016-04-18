@@ -246,6 +246,12 @@ void usage(void) {
 	printf("    --user=new_user - switch the user before starting the sandbox.\n\n");
 	printf("    --version - print program version and exit.\n\n");
 	printf("    --whitelist=dirname_or_filename - whitelist directory or file.\n\n");
+	
+	printf("    --writable-etc - /etc directory is mounted read-write. This option is\n");
+	printf("\tavailable only when running the sandbox as root user.\n\n");
+	printf("    --writable-var - /var directory is mounted read-write. This option is\n");
+	printf("\tavailable only when running the sandbox as root user.\n\n");
+	
 	printf("    --x11 - enable X11 server. The software checks first if Xpra is installed,\n");
 	printf("\tthen it checks if Xephyr is installed.\n\n");
 	printf("    --x11=xpra - enable Xpra X11 server.\n\n");

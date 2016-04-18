@@ -256,6 +256,8 @@ extern int arg_join_network;	// join only the network namespace
 extern int arg_join_filesystem;	// join only the mount namespace
 extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
+extern int arg_writable_etc;	// writable etc
+extern int arg_writable_var;	// writable var
 
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];

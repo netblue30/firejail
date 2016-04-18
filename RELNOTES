@@ -5,6 +5,7 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * added --x11=xephyr option
   * added --cpu.print option
   * added filetransfer options --ls and --get
+  * added --writable-etc and --writable-var options
   * added mkdir, ipc-namespace, and nosound profile commands
   * added net iface, and iprange profile commands
   * --version also prints compile options

@@ -734,8 +734,10 @@ void fs_basic_fs(void) {
 	fs_rdonly("/lib32");
 	fs_rdonly("/libx32");
 	fs_rdonly("/usr");
-	fs_rdonly("/etc");
-	fs_rdonly("/var");
+	if (!arg_writable_etc)
+		fs_rdonly("/etc");
+	if (!arg_writable_var)
+		fs_rdonly("/var");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	if (!arg_private_dev)

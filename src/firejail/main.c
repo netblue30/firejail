@@ -96,6 +96,8 @@ int arg_join_network = 0;			// join only the network namespace
 int arg_join_filesystem = 0;			// join only the mount namespace
 int arg_nice = 0;				// nice value configured
 int arg_ipc = 0;					// enable ipc namespace
+int arg_writable_etc = 0;			// writable etc
+int arg_writable_var = 0;			// writable var
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -1272,6 +1274,20 @@ int main(int argc, char **argv) {
 
 		}
 #endif
+		else if (strcmp(argv[i], "--writable-etc") == 0) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --writable-etc is available only for root user\n");
+				exit(1);
+			}
+			arg_writable_etc = 1;
+		}
+		else if (strcmp(argv[i], "--writable-var") == 0) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --writable-var is available only for root user\n");
+				exit(1);
+			}
+			arg_writable_var = 1;
+		}
 		else if (strcmp(argv[i], "--private") == 0)
 			arg_private = 1;
 		else if (strncmp(argv[i], "--private=", 10) == 0) {

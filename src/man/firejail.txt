@@ -1462,6 +1462,27 @@ $ firejail \-\-whitelist=/tmp/.X11-unix --whitelist=/dev/null
 $ firejail "\-\-whitelist=/home/username/My Virtual Machines"
 
 .TP
+\fB\-\-writable-etc
+Mount /etc directory read-write. This option is available only when running the sandbox as root user
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --writable-etc
+
+.TP
+\fB\-\-writable-var
+Mount /var directory read-write. This option is available only when running the sandbox as root user
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --writable-var
+
+
+.TP
 \fB\-\-x11
 Start a new X11 server using Xpra or Xephyr and attach the sandbox to this server.
 The regular X11 server (display 0) is not visible in the sandbox. This prevents screenshot and keylogger

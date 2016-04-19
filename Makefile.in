@@ -169,6 +169,8 @@ realinstall:
 	install -c -m 0644 .etc/okular.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/gwenview.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/gpredict.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/aweather.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/stellarium.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/firejail.config ]; then install -c -m 0644 etc/firejail.config $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc

@@ -282,5 +282,5 @@ $ man firejail-profile
 ## New security profiles
 lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril, qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars, qTox,
 OpenSSH client, OpenBox window manager, Dillo, cmus, dnsmasq, PaleMoon, Icedove, abrowser, 0ad, netsurf,
-Warzone2100, okular, gwenview, Gpredict
+Warzone2100, okular, gwenview, Gpredict, Aweather, Stellarium
 

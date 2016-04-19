@@ -726,7 +726,16 @@ static void disable_firejail_config(void) {
 // build a basic read-only filesystem
 void fs_basic_fs(void) {
 	if (arg_debug)
-		printf("Mounting read-only /bin, /sbin, /lib, /lib32, /lib64, /usr, /etc, /var\n");
+		printf("Mounting read-only /bin, /sbin, /lib, /lib32, /lib64, /usr");
+	if (!arg_writable_etc) {
+		fs_rdonly("/etc");
+		if (arg_debug) printf(", /etc");
+	}
+	if (!arg_writable_var) {
+		fs_rdonly("/var");
+		if (arg_debug) printf(", /var");
+	}
+	if (arg_debug) printf("\n");
 	fs_rdonly("/bin");
 	fs_rdonly("/sbin");
 	fs_rdonly("/lib");
@@ -734,10 +743,6 @@ void fs_basic_fs(void) {
 	fs_rdonly("/lib32");
 	fs_rdonly("/libx32");
 	fs_rdonly("/usr");
-	if (!arg_writable_etc)
-		fs_rdonly("/etc");
-	if (!arg_writable_var)
-		fs_rdonly("/var");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	if (!arg_private_dev)

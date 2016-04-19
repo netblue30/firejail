@@ -10,6 +10,7 @@ caps.drop all
 seccomp
 protocol unix,inet,inet6,netlink
 noroot
+netfilter
 
 #whitelist ~/.pulse
 #whitelist ~/.config/pulse

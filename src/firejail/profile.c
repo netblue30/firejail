@@ -319,7 +319,126 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	
+
+// from here
+	else if (strncmp(ptr, "mac ", 4) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			
+			if (mac_not_zero(br->macsandbox)) {
+				fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
+				exit(1);
+			}
+
+			// read the address
+			if (atomac(ptr + 4, br->macsandbox)) {
+				fprintf(stderr, "Error: invalid MAC address\n");
+				exit(1);
+			}
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
+
+	else if (strncmp(ptr, "mtu ", 4) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			
+			if (sscanf(ptr + 4, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
+				fprintf(stderr, "Error: invalid mtu value\n");
+				exit(1);
+			}
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
+
+	else if (strncmp(ptr, "ip ", 3) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			if (br->arg_ip_none || br->ipsandbox) {
+				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+				exit(1);
+			}
+
+			// configure this IP address for the last bridge defined
+			if (strcmp(ptr + 3, "none") == 0)
+				br->arg_ip_none = 1;
+			else {
+				if (atoip(ptr + 3, &br->ipsandbox)) {
+					fprintf(stderr, "Error: invalid IP address\n");
+					exit(1);
+				}
+			}
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
+
+	else if (strncmp(ptr, "ip6 ", 4) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			if (br->arg_ip_none || br->ip6sandbox) {
+				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+				exit(1);
+			}
+
+			// configure this IP address for the last bridge defined
+			// todo: verify ipv6 syntax
+			br->ip6sandbox = ptr + 4;
+//			if (atoip(argv[i] + 5, &br->ipsandbox)) {
+//				fprintf(stderr, "Error: invalid IP address\n");
+//				exit(1);
+//			}
+			
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
+
+	else if (strncmp(ptr, "defaultgw ", 10) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (atoip(ptr + 10, &cfg.defaultgw)) {
+				fprintf(stderr, "Error: invalid IP address\n");
+				exit(1);
+			}
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
+
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))

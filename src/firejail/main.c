@@ -1542,17 +1542,17 @@ int main(int argc, char **argv) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
 					fprintf(stderr, "Error: no network device configured\n");
-					return 1;
+					exit(1);
 				}
 				if (mac_not_zero(br->macsandbox)) {
 					fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
-					return 1;
+					exit(1);
 				}
 	
 				// read the address
 				if (atomac(argv[i] + 6, br->macsandbox)) {
 					fprintf(stderr, "Error: invalid MAC address\n");
-					return 1;
+					exit(1);
 				}
 			}
 			else {
@@ -1566,12 +1566,12 @@ int main(int argc, char **argv) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
 					fprintf(stderr, "Error: no network device configured\n");
-					return 1;
+					exit(1);
 				}
 	
 				if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
 					fprintf(stderr, "Error: invalid mtu value\n");
-					return 1;
+					exit(1);
 				}
 			}
 			else {
@@ -1585,11 +1585,11 @@ int main(int argc, char **argv) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
 					fprintf(stderr, "Error: no network device configured\n");
-					return 1;
+					exit(1);
 				}
 				if (br->arg_ip_none || br->ipsandbox) {
 					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
-					return 1;
+					exit(1);
 				}
 	
 				// configure this IP address for the last bridge defined
@@ -1598,7 +1598,7 @@ int main(int argc, char **argv) {
 				else {
 					if (atoip(argv[i] + 5, &br->ipsandbox)) {
 						fprintf(stderr, "Error: invalid IP address\n");
-						return 1;
+						exit(1);
 					}
 				}
 			}
@@ -1613,11 +1613,11 @@ int main(int argc, char **argv) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
 					fprintf(stderr, "Error: no network device configured\n");
-					return 1;
+					exit(1);
 				}
 				if (br->arg_ip_none || br->ip6sandbox) {
 					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
-					return 1;
+					exit(1);
 				}
 	
 				// configure this IP address for the last bridge defined
@@ -1625,7 +1625,7 @@ int main(int argc, char **argv) {
 				br->ip6sandbox = argv[i] + 6;
 //				if (atoip(argv[i] + 5, &br->ipsandbox)) {
 //					fprintf(stderr, "Error: invalid IP address\n");
-//					return 1;
+//					exit(1);
 //				}
 			}
 			else {
@@ -1639,7 +1639,7 @@ int main(int argc, char **argv) {
 			if (checkcfg(CFG_NETWORK)) {
 				if (atoip(argv[i] + 12, &cfg.defaultgw)) {
 					fprintf(stderr, "Error: invalid IP address\n");
-					return 1;
+					exit(1);
 				}
 			}
 			else {

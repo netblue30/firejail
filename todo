@@ -80,3 +80,5 @@ https://github.com/torvalds/linux/blob/1e75a9f34a5ed5902707fb74b468356c55142b71/
 https://github.com/torvalds/linux/blob/1e75a9f34a5ed5902707fb74b468356c55142b71/arch/x86/entry/syscalls/syscall_32.tbl
 
 12. check for --chroot why .config/pulse dir is not created
+
+13. print error line number for profile files in  profile_check_line()

@@ -284,15 +284,60 @@ Enable IPC namespace.
 .TP
 \fBnosound
 Disable sound system.
+
 .SH Networking
 Networking features available in profile files.
 
+.TP
+\fBdefaultgw address
+Use this address as default gateway in the new network namespace.
+
+.TP
 \fBdns address
 Set a DNS server for the sandbox. Up to three DNS servers can be defined.
 
 .TP
 \fBhostname name
 Set a hostname for the sandbox.
+
+.TP
+\fBip address
+Assign IP addresses to the last network interface defined by a net command. A
+default gateway is assigned by default.
+.br
+
+.br
+Example:
+.br
+net eth0
+.br
+ip 10.10.20.56
+
+.TP
+\fBip none
+No IP address and no default gateway are configured for the last interface
+defined by a net command. Use this option
+in case you intend to start an external DHCP client in the sandbox.
+.br
+
+.br
+Example:
+.br
+net eth0
+.br
+ip none
+
+.TP
+\fBip6 address
+Assign IPv6 addresses to the last network interface defined by a net command.
+.br
+
+.br
+Example:
+.br
+net eth0
+.br
+ip6 2001:0db8:0:f101::1/64
 
 .TP
 \fBiprange address,address
@@ -309,6 +354,16 @@ net eth0
 .br
 iprange 192.168.1.150,192.168.1.160
 .br
+
+.TP
+\fBmac address
+Assign MAC addresses to the last network interface defined by a net command.
+
+.TP
+\fBmtu number
+Assign a MTU value to the last network interface defined by a net command.
+
+
 
 .TP
 \fBnetfilter

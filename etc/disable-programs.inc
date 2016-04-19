@@ -9,6 +9,7 @@ blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/uGet
 blacklist ${HOME}/.config/Gpredict
+blacklist ${HOME}/.config/aweather
 blacklist ~/.kde/share/apps/okular
 blacklist ~/.kde/share/config/okularrc
 blacklist ~/.kde/share/config/okularpartrc

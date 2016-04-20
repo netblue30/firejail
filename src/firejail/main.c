@@ -1097,6 +1097,14 @@ int main(int argc, char **argv) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
+		else if (strncmp(argv[i], "--read-write=", 13) == 0) {
+			char *line;
+			if (asprintf(&line, "read-write %s", argv[i] + 13) == -1)
+				errExit("asprintf");
+			
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			// profile_add(line); is not necessary
+		}
 		else if (strcmp(argv[i], "--overlay") == 0) {
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");

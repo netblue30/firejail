@@ -568,5 +568,10 @@ void sandboxfs(int op, pid_t pid, const char *patqh);
 #define CFG_MAX 8 // this should always be the last entry
 int checkcfg(int val);
 
+// fs_rdwr.c
+void fs_rdwr_add(const char *path);
+void fs_rdwr(void);
+
+
 #endif
 

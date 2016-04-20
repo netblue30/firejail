@@ -1279,6 +1279,10 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --writable-etc is available only for root user\n");
 				exit(1);
 			}
+			if (cfg.etc_private_keep) {
+				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+				exit(1);
+			}
 			arg_writable_etc = 1;
 		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
@@ -1304,6 +1308,11 @@ int main(int argc, char **argv) {
 			arg_private_dev = 1;
 		}
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
+			if (arg_writable_etc) {
+				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+				exit(1);
+			}
+			
 			// extract private etc list
 			cfg.etc_private_keep = argv[i] + 14;
 			if (*cfg.etc_private_keep == '\0') {

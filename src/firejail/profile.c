@@ -580,6 +580,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
+		if (arg_writable_etc) {
+			fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+			exit(1);
+		}
 		cfg.etc_private_keep = ptr + 12;
 		fs_check_etc_list();
 		if (*cfg.etc_private_keep != '\0')

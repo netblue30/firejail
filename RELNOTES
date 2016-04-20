@@ -7,7 +7,7 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * added filetransfer options --ls and --get
   * added --writable-etc and --writable-var options
   * added mkdir, ipc-namespace, and nosound profile commands
-  * added net, ip, defaultgw, ip, mac, mtu and iprange profile commands
+  * added net, ip, defaultgw, ip6, mac, mtu and iprange profile commands
   * --version also prints compile options
   * --output option also redirects stderr
   * added compile-time option to restrict --net= to root only

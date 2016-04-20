@@ -722,9 +722,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Error: read-write command is available only for root user\n");
 			exit(1);
 		}
-printf("here %d\n", __LINE__);		
 		fs_rdwr_add(ptr + 11);
-printf("here %d\n", __LINE__);		
 		return 0;
 	}
 

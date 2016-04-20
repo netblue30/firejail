@@ -570,6 +570,30 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
+	// writable-etc
+	if (strcmp(ptr, "writable-etc") == 0) {
+		if (getuid() != 0) {
+			fprintf(stderr, "Error: writable-etc is available only for root user\n");
+			exit(1);
+		}
+		if (cfg.etc_private_keep) {
+			fprintf(stderr, "Error: private-etc and writable-etc are mutually exclusive\n");
+			exit(1);
+		}
+		arg_writable_etc = 1;
+		return 0;
+	}
+	
+	// writable-var
+	if (strcmp(ptr, "writable-var") == 0) {
+		if (getuid() != 0) {
+			fprintf(stderr, "Error: writable-var is available only for root user\n");
+			exit(1);
+		}
+		arg_writable_var = 1;
+		return 0;
+	}
+	
 	// private directory
 	if (strncmp(ptr, "private ", 8) == 0) {
 		cfg.home_private = ptr + 8;

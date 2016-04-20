@@ -181,6 +181,14 @@ Build a new user home in a temporary filesystem, and mount-bind file_or_director
 The modifications to file_or_directory are persistent, everything else is discarded
 when the sandbox is closed.
 .TP
+\fBwritable-etc
+Mount /etc directory read-write. This option is  available  only
+when running the sandbox as root user.
+.TP
+\fBwritable-var
+Mount /var directory read-write. This option is  available  only
+when running the sandbox as root user.
+.TP
 \fBtracelog
 Blacklist violations logged to syslog.
 .SH Security filters

@@ -49,7 +49,7 @@ static void usage(void) {
 	printf("   /usr/local/bin/firefox\n");
 	printf("   /usr/local/bin/vlc\n");
 	printf("   [...]\n");
-	printf("   $ sudo firecfg --clear\n");
+	printf("   $ sudo firecfg --clean\n");
 	printf("   /usr/local/bin/firefox removed\n");
 	printf("   /usr/local/bin/vlc removed\n");
 	printf("   [...]\n");

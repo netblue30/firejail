@@ -6,6 +6,7 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * added --cpu.print option
   * added filetransfer options --ls and --get
   * added --writable-etc and --writable-var options
+  * added --read-only option
   * added mkdir, ipc-namespace, and nosound profile commands
   * added net, ip, defaultgw, ip6, mac, mtu and iprange profile commands
   * --version also prints compile options

@@ -50,15 +50,16 @@ of applications. The software includes security profiles for a number of more co
 Linux programs, such as Mozilla Firefox, Chromium, VLC, Transmission etc.
 
 .SH USAGE
-Without any options, the sandbox consists of a chroot filesystem build in a new mount namespace,
-and new PID and UTS namespaces. IPC, network and user namespaces can be added using the command line options.
-The default Firejail filesystem is based on the host filesystem with the main directories mounted read-only.
-Only /home and /tmp are writable.
+Without any options, the sandbox consists of a filesystem build in a new mount namespace,
+and new PID and UTS namespaces. IPC, network and user namespaces can be added using the
+command line options. The default Firejail filesystem is based on the host filesystem with the main 
+system directories mounted read-only. These directories are /etc, /var, /usr, /bin, /sbin, /lib, /lib32, 
+/libx32 and /lib64. Only /home and /tmp are writable.
 .PP
 As it starts up, Firejail tries to find a security profile based on the name of the application.
 If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option 
-to disable it. For more information, please see \fBSECURITY PROFILES\fR section.
+to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.
 .PP
 If a program argument is not specified, Firejail starts /bin/bash shell.
 Examples:
@@ -194,7 +195,8 @@ Example:
 
 .TP
 \fB\-\-chroot=dirname
-Chroot the sandbox into a root filesystem. If the sandbox is started as a
+Chroot the sandbox into a root filesystem. Unlike the regular filesystem container,
+the system directories are mounted read-write. If the sandbox is started as a
 regular user, default seccomp and capabilities filters are enabled. This
 option is not available on Grsecurity systems.
 .br
@@ -946,7 +948,8 @@ $ ls -l sandboxlog*
 
 .TP
 \fB\-\-overlay
-Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay.
+Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
+the system directories are mounted read-write. All filesystem modifications go into the overlay.
 The overlay is stored in $HOME/.firejail directory. This option is not available on Grsecurity systems.
 .br
 
@@ -1143,6 +1146,16 @@ Set the maximum number of processes that can be created for the real user ID of 
 .TP
 \fB\-\-rlimit-sigpending=number
 Set the maximum number of pending signals for a process.
+
+.TP
+\fB\-\-read-write=dirname_or_filename
+By default, the sandbox mounts system directories read-only.
+These directories are /etc, /var, /usr, /bin, /sbin, /lib, /lib32, /libx32 and /lib64. 
+Use this option to mount read-write files or directories inside the system directories.
+
+This option is available only to root user. It has no effect when --chroot or --overlay are also set. In these
+cases the system directories are mounted read-write.
+
 .TP
 \fB\-\-scan
 ARP-scan all the networks from inside a network namespace.

@@ -122,12 +122,6 @@ blacklist ${PATH}/ifconfig
 blacklist ${HOME}/.ssh
 
 .TP
-\fBread-only file_or_directory
-Make directory or file read-only.
-.TP
-\fBtmpfs directory
-Mount an empty tmpfs filesystem on top of directory. This option is available only when running the sandbox as root.
-.TP
 \fBbind directory1,directory2
 Mount-bind directory1 on top of directory2. This option is only available when running as root.
 .TP
@@ -182,6 +176,18 @@ All modifications are discarded when the sandbox is closed.
 \fBprivate-tmp
 Mount an empty temporary filesystem on top of /tmp directory.
 .TP
+\fBread-only file_or_directory
+Make directory or file read-only.
+.TP
+\fBread-write file_or_directory
+Make directory or file read-write.
+.TP
+\fBtmpfs directory
+Mount an empty tmpfs filesystem on top of directory. This option is available only when running the sandbox as root.
+.TP
+\fBtracelog
+Blacklist violations logged to syslog.
+.TP
 \fBwhitelist file_or_directory
 Build a new user home in a temporary filesystem, and mount-bind file_or_directory.
 The modifications to file_or_directory are persistent, everything else is discarded
@@ -194,9 +200,6 @@ when running the sandbox as root user.
 \fBwritable-var
 Mount /var directory read-write. This option is  available  only
 when running the sandbox as root user.
-.TP
-\fBtracelog
-Blacklist violations logged to syslog.
 .SH Security filters
 The following security filters are currently implemented:
 

@@ -209,6 +209,7 @@ void usage(void) {
 	printf("\tcreated for the real user ID of the calling process.\n\n");
 	printf("    --rlimit-sigpending=number - set the maximum number of pending signals\n");
 	printf("\tfor a process.\n\n");
+	printf("    --read-write=dirname_or_filename - set directory or file read-write..\n\n");
 #ifdef HAVE_NETWORK	
 	printf("    --scan - ARP-scan all the networks from inside a network namespace.\n");
 	printf("\tThis makes it possible to detect macvlan kernel device drivers\n");

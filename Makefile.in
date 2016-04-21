@@ -239,6 +239,7 @@ dist:
 	cd $(NAME)-$(VERSION); cp -a ../src .; cp -a ../etc .; cp -a ../platform .; rm -fr src/tools; cd ..
 	cd $(NAME)-$(VERSION); cp -a ../configure .; cp -a ../configure.ac .; cp -a ../Makefile.in .; cp -a ../install.sh .; cp -a ../mkman.sh .; cp -a ../mketc.sh .; cp -a ../mkdeb.sh .;cd ..
 	cd $(NAME)-$(VERSION); cp -a ../COPYING .; cp -a ../README .; cp -a ../RELNOTES .; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/profiles test/.; cd ..
 	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
 	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
@@ -258,5 +259,9 @@ cppcheck: clean
 
 scan-build: clean
 	scan-build make
+
 asc:; ./mkasc.sh $(VERSION)
+
+test-profiles:
+	cd test/profiles; ./profiles.sh | grep TESTING
 

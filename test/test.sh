@@ -2,8 +2,6 @@
 
 ./chk_config.exp
 
-./test-profiles.sh
-
 ./fscheck.sh
 
 echo "TESTING: cpu.print (cpu-print.exp)"
@@ -219,12 +217,6 @@ echo "TESTING: output (output.exp)"
 
 echo "TESTING: profile no permissions (profile_noperm.exp)"
 ./profile_noperm.exp
-
-echo "TESTING: profile syntax (profile_syntax.exp)"
-./profile_syntax.exp
-
-echo "TESTING: profile syntax 2 (profile_syntax2.exp)"
-./profile_syntax2.exp
 
 echo "TESTING: profile rlimit (profile_rlimit.exp)"
 ./profile_rlimit.exp

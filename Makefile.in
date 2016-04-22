@@ -240,6 +240,7 @@ dist:
 	cd $(NAME)-$(VERSION); cp -a ../configure .; cp -a ../configure.ac .; cp -a ../Makefile.in .; cp -a ../install.sh .; cp -a ../mkman.sh .; cp -a ../mketc.sh .; cp -a ../mkdeb.sh .;cd ..
 	cd $(NAME)-$(VERSION); cp -a ../COPYING .; cp -a ../README .; cp -a ../RELNOTES .; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/profiles test/.; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps test/.; cd ..
 	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
 	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
@@ -265,3 +266,8 @@ asc:; ./mkasc.sh $(VERSION)
 test-profiles:
 	cd test/profiles; ./profiles.sh | grep TESTING
 
+test-apps:
+	cd test/apps; ./apps.sh | grep TESTING
+
+test: test-profiles test-apps
+	echo "TEST COMPLETE"

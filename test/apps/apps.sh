@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export MALLOC_CHECK_=3
+export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
+
 which firefox
 if [ "$?" -eq 0 ];
 then
@@ -25,15 +28,6 @@ then
 	./chromium.exp
 else
 	echo "TESTING: chromium not found"
-fi
-
-which google-chrome
-if [ "$?" -eq 0 ];
-then
-	echo "TESTING: google-chrome"
-	./chromium.exp
-else
-	echo "TESTING: google-chrome not found"
 fi
 
 which opera

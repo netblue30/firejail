@@ -206,7 +206,6 @@ else
         echo "TESTING: dash not found"
 fi
 
-./test-apps.sh
 ./test-apps-x11.sh
 
 echo "TESTING: PID (pid.exp)"

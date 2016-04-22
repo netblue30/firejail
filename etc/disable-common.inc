@@ -148,3 +148,5 @@ blacklist ${PATH}/pantheon-terminal
 blacklist ${PATH}/roxterm
 blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
+blacklist ${PATH}/urxvtc
+blacklist ${PATH}/urxvtcd

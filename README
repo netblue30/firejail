@@ -28,6 +28,7 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- dnsmasq profile
 	- okular and gwenview profiles
 	- cherrytree profile fixes
+	- added quiterss profile
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
 Joan Figueras (https://github.com/figue)
@@ -44,6 +45,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Gpredict profile
 	- added Aweather, Stellarium profiles
 	- fixed HexChat and Atril profiles
+	- fixed disable-common.inc for mate-terminal
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix

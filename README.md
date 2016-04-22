@@ -143,8 +143,8 @@ DESCRIPTION
        see DESKTOP INTEGRATION section in man 1 firejail.
 
 OPTIONS
-       --clear
-              Clear all firejail symbolic links
+       --clean
+              Remove all firejail symbolic links
 
        -?, --help
               Print options end exit.
@@ -164,7 +164,7 @@ OPTIONS
        /usr/local/bin/firefox
        /usr/local/bin/vlc
        [...]
-       $ sudo firecfg --clear
+       $ sudo firecfg --clean
        /usr/local/bin/firefox removed
        /usr/local/bin/vlc removed
        [...]

@@ -48,7 +48,7 @@ $ firecfg --list
 .br
 [...]
 .br
-$ sudo firecfg --clear
+$ sudo firecfg --clean
 .br
 /usr/local/bin/firefox removed
 .br

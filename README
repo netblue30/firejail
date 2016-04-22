@@ -27,6 +27,7 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- tightening unbound and dnscrypt-proxy profiles
 	- dnsmasq profile
 	- okular and gwenview profiles
+	- cherrytree profile fixes
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
 Joan Figueras (https://github.com/figue)

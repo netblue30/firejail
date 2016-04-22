@@ -1,4 +1,6 @@
 # cherrytree note taking application
+noblacklist /usr/bin/python2*
+noblacklist /usr/lib/python2*
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

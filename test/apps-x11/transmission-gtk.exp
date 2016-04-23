@@ -1,10 +1,13 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --net=br0 --x11 icedove\r"
+send -- "firejail --name=test --net=br0 --x11 transmission-gtk\r"
 sleep 10
 
 spawn $env(SHELL)
@@ -15,7 +18,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"icedove"
+	"transmission-gtk"
 }
 sleep 1
 
@@ -42,7 +45,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"icedove"
+	"transmission-gtk"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -52,7 +55,7 @@ expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
 	"name=blablabla"
 }
-sleep 2
+sleep 1
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
@@ -60,7 +63,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6.0\n";exit}
-	"icedove"
+	"transmission-gtk"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

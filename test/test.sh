@@ -171,8 +171,6 @@ else
         echo "TESTING: dash not found"
 fi
 
-./test-apps-x11.sh
-
 echo "TESTING: PID (pid.exp)"
 ./pid.exp
 

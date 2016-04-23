@@ -1,10 +1,13 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --x11 --net=br0 chromium www.gentoo.org\r"
+send -- "firejail --name=test --x11 --net=br0 firefox -no-remote www.gentoo.org\r"
 sleep 10
 
 spawn $env(SHELL)
@@ -15,10 +18,14 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"chromium"
+	"firefox" {puts "firefox detected\n";}
+	"iceweasel" {puts "iceweasel detected\n";}
+}
+expect {
+	timeout {puts "TESTING ERROR 3.2\n";exit}
+	"no-remote"
 }
 sleep 1
-
 # grsecurity exit
 send -- "file /proc/sys/kernel/grsecurity\r"
 expect {
@@ -37,15 +44,16 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	":firejail"
+	" firefox" {puts "firefox detected\n";}
+	" iceweasel" {puts "iceweasel detected\n";}
 }
 expect {
 	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"chromium"
+	"no-remote"
 }
 expect {
-	timeout {puts "TESTING ERROR 5.1\n";exit}
-	"Seccomp:	0"
+	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
+	"Seccomp:	2"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
@@ -55,11 +63,12 @@ sleep 1
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail"
+	" firefox" {puts "firefox detected\n";}
+	" iceweasel" {puts "iceweasel detected\n";}
 }
 expect {
 	timeout {puts "TESTING ERROR 6.0\n";exit}
-	"chromium"
+	"no-remote"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
@@ -67,7 +76,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6.2\n";exit}
-	"fffffffff"
+	"0000000000000000"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.3\n";exit}
@@ -77,6 +86,5 @@ sleep 1
 send -- "firejail --shutdown=test\r"
 sleep 3
 
- 
 puts "\nall done\n"
 

@@ -1,10 +1,13 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --net=br0 --x11 transmission-gtk\r"
+send -- "firejail --name=test --x11 --net=br0 chromium www.gentoo.org\r"
 sleep 10
 
 spawn $env(SHELL)
@@ -15,7 +18,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"transmission-gtk"
+	"chromium"
 }
 sleep 1
 
@@ -26,7 +29,6 @@ expect {
 	"grsecurity: directory" {puts "grsecurity present, exiting...\n";exit}
 	"cannot open" {puts "grsecurity not present\n"}
 }
-
 send -- "firejail --name=blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -42,11 +44,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"transmission-gtk"
+	"chromium"
 }
 expect {
-	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
-	"Seccomp:	2"
+	timeout {puts "TESTING ERROR 5.1\n";exit}
+	"Seccomp:	0"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
@@ -60,15 +62,15 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6.0\n";exit}
-	"transmission-gtk"
+	"chromium"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
-	"CapBnd"
+	"CapBnd:"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.2\n";exit}
-	"0000000000000000"
+	"fffffffff"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.3\n";exit}
@@ -78,5 +80,6 @@ sleep 1
 send -- "firejail --shutdown=test\r"
 sleep 3
 
+ 
 puts "\nall done\n"
 

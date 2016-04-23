@@ -243,6 +243,8 @@ dist:
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/profiles test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/utils test/.; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps-x11 test/.; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/firemon test/.; cd ..
 	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
 	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
@@ -271,8 +273,14 @@ test-profiles:
 test-apps:
 	cd test/apps; ./apps.sh | grep TESTING
 
+test-apps-x11:
+	cd test/apps-x11; ./apps-x11.sh | grep TESTING
+
+test-firemon:
+	cd test/firemon; ./firemon.sh | grep TESTING
+
 test-utils:
 	cd test/utils; ./utils.sh | grep TESTING
 
-test: test-profiles test-utils test-apps 
+test: test-profiles test-utils test-apps test-apps-x11 test-firemon
 	echo "TEST COMPLETE"

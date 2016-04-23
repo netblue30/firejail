@@ -46,6 +46,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Aweather, Stellarium profiles
 	- fixed HexChat and Atril profiles
 	- fixed disable-common.inc for mate-terminal
+	- blacklisted escape-happy terminals in disable-common.inc
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix

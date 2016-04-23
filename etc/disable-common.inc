@@ -143,3 +143,10 @@ blacklist ${PATH}/xfce4-terminal
 blacklist ${PATH}/xfce4-terminal.wrapper
 blacklist ${PATH}/mate-terminal
 blacklist ${PATH}/mate-terminal.wrapper
+blacklist ${PATH}/lilyterm
+blacklist ${PATH}/pantheon-terminal
+blacklist ${PATH}/roxterm
+blacklist ${PATH}/roxterm-config
+blacklist ${PATH}/terminix
+blacklist ${PATH}/urxvtc
+blacklist ${PATH}/urxvtcd

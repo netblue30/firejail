@@ -15,3 +15,4 @@ netfilter
 mkdir ~/.config
 mkdir ~/.config/hexchat
 whitelist ~/.config/hexchat
+include /etc/firejail/whitelist-common.inc

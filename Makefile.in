@@ -242,6 +242,7 @@ dist:
 	cd $(NAME)-$(VERSION); cp -a ../COPYING .; cp -a ../README .; cp -a ../RELNOTES .; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/profiles test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps test/.; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/utils test/.; cd ..
 	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
 	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
@@ -270,5 +271,8 @@ test-profiles:
 test-apps:
 	cd test/apps; ./apps.sh | grep TESTING
 
-test: test-profiles test-apps
+test-utils:
+	cd test/utils; ./utils.sh | grep TESTING
+
+test: test-profiles test-utils test-apps 
 	echo "TEST COMPLETE"

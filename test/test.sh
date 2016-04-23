@@ -4,10 +4,6 @@
 
 ./fscheck.sh
 
-echo "TESTING: cpu.print (cpu-print.exp)"
-echo "TESTING:    failing under VirtualBox where there is only one CPU"
-./cpu-print.exp
-
 echo "TESTING: network profile (net_profile.exp)"
 ./net_profile.exp
 
@@ -16,18 +12,6 @@ echo "TESTING: bandwidth (bandwidth.exp)"
 
 echo "TESTING: file transfer (ls.exp)"
 ./ls.exp
-
-echo "TESTING: fs.print (fs-print.exp)"
-./fs-print.exp
-
-echo "TESTING: dns.print (dns-print.exp)"
-./dns-print.exp
-
-echo "TESTING: caps.print (caps-print.exp)"
-./caps-print.exp
-
-echo "TESTING: seccomp.print (seccomp-print.exp)"
-./seccomp-print.exp
 
 echo "TESTING: protocol.print (protocol-print.exp)"
 ./protocol-print.exp
@@ -52,9 +36,6 @@ echo "TESTING: environment variables (env.exp)"
 
 echo "TESTING: whitelist empty (whitelist-empty.exp)"
 ./whitelist-empty.exp
-
-echo "TESTING: ignore command (ignore.exp)"
-./ignore.exp
 
 echo "TESTING: private-etc (private-etc.exp)"
 ./private-etc.exp
@@ -82,22 +63,6 @@ echo "TESTING: blacklist directory link (blacklist-link.exp)"
 rm -fr auto2
 rm -fr auto3
 rm -fr auto4
-
-
-echo "TESTING: version (option_version.exp)"
-./option_version.exp
-
-echo "TESTING: help (option_help.exp)"
-./option_help.exp
-
-echo "TESTING: man (option_man.exp)"
-./option_man.exp
-
-echo "TESTING: list (option_list.exp)"
-./option_list.exp
-
-echo "TESTING: tree (option_tree.exp)"
-./option_tree.exp
 
 if [ -f /proc/self/uid_map ];
 then

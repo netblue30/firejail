@@ -1,10 +1,13 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test\r"
+send -- "firejail --name=test --cpu=1,2\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -12,18 +15,10 @@ expect {
 sleep 2
 
 spawn $env(SHELL)
-send -- "firejail --fs.print=test\r"
+send -- "firejail --cpu.print=test\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"blacklist /boot"
-}
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"blacklist /dev/kmsg"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"blacklist /proc/kmsg"
+	"Cpus_allowed_list:	1-2"
 }
 sleep 1
 puts "\nall done\n"

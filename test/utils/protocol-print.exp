@@ -1,4 +1,7 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
@@ -12,18 +15,10 @@ expect {
 sleep 2
 
 spawn $env(SHELL)
-send -- "firejail --caps.print=test\r"
+send -- "firejail --protocol.print=test\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"setgid              - disabled"
-}
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"setuid              - disabled"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"net_raw             - disabled"
+	"unix,inet,inet6"
 }
 sleep 1
 puts "\nall done\n"

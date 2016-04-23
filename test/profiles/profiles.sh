@@ -14,9 +14,12 @@ do
 	./test-profile.exp $PROFILE
 done
 
-echo "TESTING: profile syntax (profiles/profile_syntax.exp)"
+echo "TESTING: profile syntax (test/profiles/profile_syntax.exp)"
 ./profile_syntax.exp
 
-echo "TESTING: profile syntax 2 (profiles/profile_syntax2.exp)"
+echo "TESTING: profile syntax 2 (test/profiles/profile_syntax2.exp)"
 ./profile_syntax2.exp
+
+echo "TESTING: ignore command (test/profiles/ignore.exp)"
+./ignore.exp
 

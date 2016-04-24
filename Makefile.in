@@ -49,6 +49,7 @@ clean:
 	rm -f test/utils/index.html*
 	rm -f test/utils/lstesting
 	cd test/compile; ./compile.sh --clean; cd ../..
+	cd test/dist-compile; ./compile.sh --clean; cd ../..
 
 distclean: clean
 	for dir in $(APPS); do \
@@ -249,6 +250,7 @@ dist:
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps-x11 test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/firemon test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/compile test/.; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/dist-compile test/.; cd ..
 	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
 	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
@@ -256,6 +258,12 @@ dist:
 deb: dist
 	./mkdeb.sh $(NAME) $(VERSION)
 
+github-compile:
+	cd test/compile; ./compile.sh
+
+dist-compile: dist
+	cd test/dist-compile; ./compile.sh $(NAME)-$(VERSION)
+	
 .PHONY: rpms
 rpms:
 	./platform/rpm/mkrpm.sh $(NAME) $(VERSION)
@@ -285,9 +293,6 @@ test-utils:
 
 test-environment:
 	cd test/environment; ./environment.sh | grep TESTING
-
-github-compile:
-	cd test/compile; ./compile.sh
 
 test: test-profiles test-utils  test-environment test-apps test-apps-x11
 	echo "TEST COMPLETE"

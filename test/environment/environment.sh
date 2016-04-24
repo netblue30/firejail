@@ -50,3 +50,9 @@ echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-
 
 echo "TESTING: firejail in firejail - force new sandbox (test/environment/firejail-in-firejail2.exp)"
 ./firejail-in-firejail2.exp
+
+echo "TESTING: sound (test/environment/sound.exp)"
+./sound.exp
+
+echo "TESTING: nice ((test/environment/nice.exp)"
+./nice.exp

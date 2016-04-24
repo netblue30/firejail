@@ -255,9 +255,4 @@ echo "TESTING: firemon --arp (firemon-arp.exp)"
 echo "TESTING: firemon --route (firemon-route.exp)"
 ./firemon-route.exp
 
-echo "TESTING: firemon --seccomp (firemon-seccomp.exp)"
-./firemon-seccomp.exp
-
-echo "TESTING: firemon --caps (firemon-caps.exp)"
-./firemon-caps.exp
 

@@ -45,6 +45,7 @@ blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.config/epiphany
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/qutebrowser
+blacklist ${HOME}/.8pecxstudios
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat
@@ -93,6 +94,7 @@ blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/0ad
+blacklist ${HOME}/.cache/8pecxstudios
 
 # share
 blacklist ${HOME}/.local/share/epiphany

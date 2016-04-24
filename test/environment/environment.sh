@@ -45,3 +45,8 @@ echo "TESTING: rlimit (test/environment/rlimit.exp)"
 echo "TESTING: rlimit profile (test/environment/rlimit-profile.exp)"
 ./rlimit-profile.exp
 
+echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
+./firejail-in-firejail.exp
+
+echo "TESTING: firejail in firejail - force new sandbox (test/environment/firejail-in-firejail2.exp)"
+./firejail-in-firejail2.exp

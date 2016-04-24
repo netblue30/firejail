@@ -34,9 +34,6 @@ echo "TESTING: protocol (protocol.exp)"
 echo "TESTING: invalid filename (invalid_filename.exp)"
 ./invalid_filename.exp
 
-echo "TESTING: environment variables (env.exp)"
-./env.exp
-
 echo "TESTING: whitelist empty (whitelist-empty.exp)"
 ./whitelist-empty.exp
 
@@ -96,15 +93,6 @@ echo "TESTING: extract command (extract_command.exp)"
 echo "TESTING: kmsg access (kmsg.exp)"
 ./kmsg.exp
 
-echo "TESTING: rlimit (option_rlimit.exp)"
-./option_rlimit.exp
-
-echo "TESTING: firejail in firejail - single sandbox (firejail-in-firejail.exp)"
-./firejail-in-firejail.exp
-
-echo "TESTING: firejail in firejail - force new sandbox (firejail-in-firejail2.exp)"
-./firejail-in-firejail2.exp
-
 echo "TESTING: chroot overlay (option_chroot_overlay.exp)"
 ./option_chroot_overlay.exp
 
@@ -135,20 +123,6 @@ ls -al > tmpreadonly
 sleep 5
 rm -f tmpreadonly
 
-echo "TESTING: zsh (shell_zsh.exp)"
-./shell_zsh.exp
-
-echo "TESTING: csh (shell_csh.exp)"
-./shell_csh.exp
-
-which dash
-if [ "$?" -eq 0 ];
-then
-        echo "TESTING: dash (shell_dash.exp)"
-        ./shell_dash.exp
-else
-        echo "TESTING: dash not found"
-fi
 
 echo "TESTING: PID (pid.exp)"
 ./pid.exp
@@ -158,9 +132,6 @@ echo "TESTING: output (output.exp)"
 
 echo "TESTING: profile no permissions (profile_noperm.exp)"
 ./profile_noperm.exp
-
-echo "TESTING: profile rlimit (profile_rlimit.exp)"
-./profile_rlimit.exp
 
 echo "TESTING: profile read-only (profile_readonly.exp)"
 ./profile_readonly.exp

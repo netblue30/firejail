@@ -1,10 +1,13 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --private --tracelog --zsh\r"
+send -- "firejail --private --tracelog --csh\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -14,7 +17,7 @@ sleep 1
 send -- "ls -al;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	".zshrc"
+	".cshrc"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
@@ -22,12 +25,12 @@ expect {
 }
 send -- "env | grep SHELL;pwd\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"SHELL"
+        timeout {puts "TESTING ERROR 2\n";exit}
+        "SHELL"
 }
 expect {
 	timeout {puts "TESTING ERROR 2.1\n";exit}
-	"/usr/bin/zsh"
+	"/bin/csh"
 }
 expect {
 	timeout {puts "TESTING ERROR 2.2\n";exit}

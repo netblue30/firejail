@@ -1,20 +1,23 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --noprofile\r"
+send --  "firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send --  "firejail --force\r"
+send --  "firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	"Warning: an existing sandbox was detected"
 }
 sleep 1
 

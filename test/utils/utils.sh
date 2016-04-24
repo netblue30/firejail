@@ -55,8 +55,8 @@ echo "TESTING: shutdown4 (test/utils/shutdown4.exp)"
 echo "TESTING: join test/utils/(join.exp)"
 ./join.exp
 
-echo "TESTING: join2 test/utils/(join2.exp)"
-.join2.exp
+echo "TESTING: join2 (test/utils/join2.exp)"
+./join2.exp
 
 echo "TESTING: join3 (test/utils/join3.exp)"
 ./join3.exp

@@ -427,7 +427,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "defaultgw ", 10) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
-			Bridge *br = last_bridge_configured();
 			if (atoip(ptr + 10, &cfg.defaultgw)) {
 				fprintf(stderr, "Error: invalid IP address\n");
 				exit(1);

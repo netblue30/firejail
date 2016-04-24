@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --x11 --net=br0 firefox -no-remote www.gentoo.org\r"
+send -- "firejail --name=test --x11 firefox -no-remote www.gentoo.org\r"
 sleep 10
 
 spawn $env(SHELL)

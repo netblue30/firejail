@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --net=br0 --x11 icedove\r"
+send -- "firejail --name=test --x11 icedove\r"
 sleep 10
 
 spawn $env(SHELL)

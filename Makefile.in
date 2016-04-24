@@ -277,14 +277,11 @@ test-apps:
 test-apps-x11:
 	cd test/apps-x11; ./apps-x11.sh | grep TESTING
 
-test-firemon:
-	cd test/firemon; ./firemon.sh | grep TESTING
-
 test-utils:
 	cd test/utils; ./utils.sh | grep TESTING
 
 test-environment:
 	cd test/environment; ./environment.sh | grep TESTING
 
-test: test-profiles test-utils  test-environment test-apps test-apps-x11 test-firemon
+test: test-profiles test-utils  test-environment test-apps test-apps-x11
 	echo "TEST COMPLETE"

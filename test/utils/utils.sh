@@ -69,3 +69,9 @@ rm -f index.html*
 ./trace.exp
 rm -f index.html*
 
+echo "TESTING: firemon --seccomp (test/utils/seccomp.exp)"
+./seccomp.exp
+
+echo "TESTING: firemon --caps (test/ustil/caps.exp)"
+./caps.exp
+

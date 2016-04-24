@@ -40,3 +40,27 @@ echo "TESTING: seccomp.print (test/utils/seccomp-print.exp)"
 echo "TESTING: protocol.print (test/utils/protocol-print.exp)"
 ./protocol-print.exp
 
+echo "TESTING: shutdown (test/utils/shutdown.exp)"
+./shutdown.exp
+
+echo "TESTING: shutdown2 (test/utils/shutdown2.exp)"
+./shutdown2.exp
+
+echo "TESTING: shutdown3 (test/utils/shutdown3.exp)"
+./shutdown3.exp
+
+echo "TESTING: shutdown4 (test/utils/shutdown4.exp)"
+./shutdown4.exp
+
+echo "TESTING: join test/utils/(join.exp)"
+./join.exp
+
+echo "TESTING: join2 test/utils/(join2.exp)"
+.join2.exp
+
+echo "TESTING: join3 (test/utils/join3.exp)"
+./join3.exp
+
+echo "TESTING: join profile (test/utils/join-profile.exp)"
+./join-profile.exp
+

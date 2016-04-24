@@ -1,4 +1,7 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
@@ -6,7 +9,7 @@ match_max 100000
 
 set firstspawn $spawn_id
 
-send --  "firejail --name=shutdowntesting ./catchsignal2.sh\r"
+send --  "firejail --name=shutdowntesting ./catchsignal.sh\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -36,30 +39,6 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"5"
-}
-expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
-	"10"
-}
-expect {
-	timeout {puts "TESTING ERROR 20\n";exit}
-	"20"
-}
-expect {
-	timeout {puts "TESTING ERROR 30\n";exit}
-	"30"
-}
-expect {
-	timeout {puts "TESTING ERROR 40\n";exit}
-	"40"
-}
-expect {
-	timeout {puts "TESTING ERROR 50\n";exit}
-	"50"
-}
-expect {
-	timeout {puts "TESTING ERROR 60\n";exit}
-	"Killed"
 }
 sleep 1
 

@@ -1,4 +1,7 @@
 #!/bin/bash
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 ./chk_config.exp
 
@@ -95,30 +98,6 @@ echo "TESTING: kmsg access (kmsg.exp)"
 
 echo "TESTING: rlimit (option_rlimit.exp)"
 ./option_rlimit.exp
-
-echo "TESTING: shutdown (option_shutdown.exp)"
-./option-shutdown.exp
-
-echo "TESTING: shutdown2 (option_shutdown2.exp)"
-./option-shutdown2.exp
-
-echo "TESTING: shutdown3 (option_shutdown3.exp)"
-./option-shutdown3.exp
-
-echo "TESTING: shutdown4 (option_shutdown4.exp)"
-./option-shutdown4.exp
-
-echo "TESTING: join (option-join.exp)"
-./option-join.exp
-
-echo "TESTING: join2 (option-join2.exp)"
-./option-join2.exp
-
-echo "TESTING: join3 (option-join3.exp)"
-./option-join3.exp
-
-echo "TESTING: join profile (option-join-profile.exp)"
-./option-join-profile.exp
 
 echo "TESTING: firejail in firejail - single sandbox (firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp

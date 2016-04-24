@@ -1,10 +1,13 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --name=svntesting\r"
+send --  "firejail --name=svn\\ testing\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -12,7 +15,7 @@ expect {
 sleep 3
 
 spawn $env(SHELL)
-send --  "firejail --join=svntesting;pwd\r"
+send --  "firejail --join=svn\\ testing;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Switching to pid"
@@ -21,7 +24,7 @@ sleep 1
 
 
 spawn $env(SHELL)
-send --  "firejail --shutdown=svntesting;pwd\r"
+send --  "firejail --shutdown=svn\\ testing;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"home"
@@ -31,7 +34,7 @@ sleep 1
 send --  "firejail --list;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"svntesting" {puts "TESTING ERROR 5\n";exit}
+	"svn testing" {puts "TESTING ERROR 5\n";exit}
 	"home"
 }
 sleep 1

@@ -379,6 +379,7 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 			errExit("chown");
 		if (chmod(dest_fname, 0644) == -1)
 			errExit("chmod");
+		printf("Transfer complete\n");
 		EUID_USER();
 	}
 	

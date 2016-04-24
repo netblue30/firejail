@@ -75,3 +75,6 @@ echo "TESTING: firemon --seccomp (test/utils/seccomp.exp)"
 echo "TESTING: firemon --caps (test/ustil/caps.exp)"
 ./caps.exp
 
+echo "TESTING: file transfer (test/ustil/ls.exp)"
+./ls.exp
+

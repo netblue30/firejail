@@ -25,13 +25,13 @@ expect {
 sleep 1
 send -- "firejail --get=test ~/lstesting\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"lstesting"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Transfer complete"
 }
 sleep 1
 send -- "cat lstesting\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"my_testing"
 }
 sleep 1

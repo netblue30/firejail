@@ -13,9 +13,6 @@ echo "TESTING: network profile (net_profile.exp)"
 echo "TESTING: bandwidth (bandwidth.exp)"
 ./bandwidth.exp
 
-echo "TESTING: file transfer (ls.exp)"
-./ls.exp
-
 echo "TESTING: protocol.print (protocol-print.exp)"
 ./protocol-print.exp
 

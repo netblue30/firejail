@@ -60,10 +60,6 @@ expect {
 	timeout {puts "TESTING ERROR 50\n";exit}
 	"50"
 }
-expect {
-	timeout {puts "TESTING ERROR 60\n";exit}
-	"Killed"
-}
 sleep 1
 
 puts "\nalldone\n"

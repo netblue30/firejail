@@ -723,7 +723,7 @@ int rta_addattr32(struct rtattr *rta, int maxlen, int type, __u32 data)
 	int len = RTA_LENGTH(4);
 	struct rtattr *subrta;
 
-	if (RTA_ALIGN(rta->rta_len) + len > maxlen) {
+	if ((int) (RTA_ALIGN(rta->rta_len) + len) > maxlen) {
 		fprintf(stderr,"rta_addattr32: Error! max allowed bound %d exceeded\n",maxlen);
 		return -1;
 	}
@@ -741,7 +741,7 @@ int rta_addattr_l(struct rtattr *rta, int maxlen, int type,
 	struct rtattr *subrta;
 	int len = RTA_LENGTH(alen);
 
-	if (RTA_ALIGN(rta->rta_len) + RTA_ALIGN(len) > maxlen) {
+	if ((int) (RTA_ALIGN(rta->rta_len) + RTA_ALIGN(len)) > maxlen) {
 		fprintf(stderr,"rta_addattr_l: Error! max allowed bound %d exceeded\n",maxlen);
 		return -1;
 	}

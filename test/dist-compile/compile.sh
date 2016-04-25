@@ -15,7 +15,7 @@ arr[9]="TEST 9: compile file transfer disabled"
 cleanup() {
 	rm -f report*
 	rm -fr firejail
-	rm oc* om*
+	rm -f oc* om*
 }
 
 print_title() {

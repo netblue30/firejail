@@ -539,6 +539,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// networking
 	//****************************
+	int gw_cfg_failed = 0; // default gw configuration flag
 	if (arg_nonetwork) {
 		net_if_up("lo");
 		if (arg_debug)
@@ -563,13 +564,6 @@ int sandbox(void* sandbox_arg) {
 		if (mac_not_zero(cfg.bridge3.macsandbox))
 			net_config_mac(cfg.bridge3.devsandbox, cfg.bridge3.macsandbox);
 		sandbox_if_up(&cfg.bridge3);
-		
-		// add a default route
-		if (cfg.defaultgw) {
-			// set the default route
-			if (net_add_route(0, 0, cfg.defaultgw))
-				fprintf(stderr, "Warning: cannot configure default route\n");
-		}
 		
 		// enable interfaces
 		if (cfg.interface0.configured && cfg.interface0.ip) {
@@ -597,6 +591,15 @@ int sandbox(void* sandbox_arg) {
 			net_if_up(cfg.interface3.dev);
 		}			
 			
+		// add a default route
+		if (cfg.defaultgw) {
+			// set the default route
+			if (net_add_route(0, 0, cfg.defaultgw)) {
+				fprintf(stderr, "Warning: cannot configure default route\n");
+				gw_cfg_failed = 1;
+			}
+		}
+
 		if (arg_debug)
 			printf("Network namespace enabled\n");
 	}
@@ -612,8 +615,12 @@ int sandbox(void* sandbox_arg) {
 			printf("\n");
 			if (any_bridge_configured() || any_interface_configured())
 				net_ifprint();
-			if (cfg.defaultgw != 0)
-				printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+			if (cfg.defaultgw != 0) {
+				if (gw_cfg_failed)
+					printf("Default gateway configuration failed\n");
+				else
+					printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+			}
 			if (cfg.dns1 != 0)
 				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
 			if (cfg.dns2 != 0)

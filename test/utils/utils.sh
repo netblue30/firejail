@@ -12,8 +12,14 @@ echo "TESTING: version (test/utils/version.exp)"
 echo "TESTING: help (test/utils/help.exp)"
 ./help.exp
 
-echo "TESTING: man (test/utils/man.exp)"
-./man.exp
+which man
+if [ "$?" -eq 0 ];
+then
+        echo "TESTING: man (test/utils/man.exp)"
+        ./man.exp
+else
+        echo "TESTING: man not found"
+fi
 
 echo "TESTING: list (test/utils/list.exp)"
 ./list.exp
@@ -21,9 +27,13 @@ echo "TESTING: list (test/utils/list.exp)"
 echo "TESTING: tree (test/utils/tree.exp)"
 ./tree.exp
 
-echo "TESTING: cpu.print (test/utils/cpu-print.exp)"
-echo "TESTING:    failing under VirtualBox where there is only one CPU"
-./cpu-print.exp
+if [ $(grep -c ^processor /proc/cpuinfo) -gt 1 ];
+then
+        echo "TESTING: cpu.print (test/utils/cpu-print.exp)"
+        ./cpu-print.exp
+else
+        echo "TESTING: cpu.print, not enough CPUs"
+fi
 
 echo "TESTING: fs.print (test/utils/fs-print.exp)"
 ./fs-print.exp
@@ -52,7 +62,7 @@ echo "TESTING: shutdown3 (test/utils/shutdown3.exp)"
 echo "TESTING: shutdown4 (test/utils/shutdown4.exp)"
 ./shutdown4.exp
 
-echo "TESTING: join test/utils/(join.exp)"
+echo "TESTING: join (test/utils/join.exp)"
 ./join.exp
 
 echo "TESTING: join2 (test/utils/join2.exp)"
@@ -72,9 +82,9 @@ rm -f index.html*
 echo "TESTING: firemon --seccomp (test/utils/seccomp.exp)"
 ./seccomp.exp
 
-echo "TESTING: firemon --caps (test/ustil/caps.exp)"
+echo "TESTING: firemon --caps (test/utils/caps.exp)"
 ./caps.exp
 
-echo "TESTING: file transfer (test/ustil/ls.exp)"
+echo "TESTING: file transfer (test/utils/ls.exp)"
 ./ls.exp
 

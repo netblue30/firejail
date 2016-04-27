@@ -48,6 +48,6 @@ then
 	echo "TESTING: icedove x11"
 	./icedove.exp
 else
-	echo "TESTING: icedovenot found"
+	echo "TESTING: icedove not found"
 fi
 

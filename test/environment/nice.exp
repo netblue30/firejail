@@ -17,7 +17,7 @@ sleep 1
 send -- "top -b -n 1\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"netblue"
+	$env(USER)
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
@@ -29,7 +29,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"netblu"
+	$env(USER)
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
@@ -54,7 +54,7 @@ sleep 1
 send -- "top -b -n 1\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"netblue"
+	$env(USER)
 }
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
@@ -66,7 +66,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
-	"netblu"
+	$env(USER)
 }
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}

@@ -15,7 +15,9 @@ do
 done
 
 echo "TESTING: profile syntax (test/profiles/profile_syntax.exp)"
+pushd /home
 ./profile_syntax.exp
+popd
 
 echo "TESTING: profile syntax 2 (test/profiles/profile_syntax2.exp)"
 ./profile_syntax2.exp

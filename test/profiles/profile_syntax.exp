@@ -34,31 +34,19 @@ expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Permission denied"
 }
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"home"
-}
 
 sleep 1
-send -- "mount;pwd\r"
+send -- "mount\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"Permission denied"
 }
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"home"
-}
 
 sleep 1
-send -- "umount;pwd\r"
+send -- "umount\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"Permission denied"
-}
-expect {
-	timeout {puts "TESTING ERROR 9\n";exit}
-	"home"
 }
 send -- "exit\r"
 

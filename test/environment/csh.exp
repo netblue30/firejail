@@ -4,7 +4,6 @@
 # License GPL v2
 
 set timeout 10
-#cd /home
 spawn $env(SHELL)
 match_max 100000
 
@@ -15,16 +14,13 @@ expect {
 }
 sleep 1
 
-send -- "ls -al;pwd\r"
+send -- "find /home\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	".cshrc"
 }
-expect {
-	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"home"
-}
-send -- "env | grep SHELL;pwd\r"
+
+send -- "env | grep SHELL\r"
 expect {
         timeout {puts "TESTING ERROR 2\n";exit}
         "SHELL"
@@ -32,10 +28,6 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 2.1\n";exit}
 	"/bin/csh"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.2\n";exit}
-	"home"
 }
 send -- "exit\r"
 sleep 1

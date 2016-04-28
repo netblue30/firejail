@@ -12,7 +12,7 @@ expect {
 }
 sleep 1
 
-send -- "cat /proc/self/limits; pwd\r"
+send -- "cat /proc/self/limits\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
 	"Max file size             1024                 1024"
@@ -29,9 +29,5 @@ expect {
 	timeout {puts "TESTING ERROR 1.4\n";exit}
 	"Max pending signals       200                  200"
 }
-expect {
-	timeout {puts "TESTING ERROR 1.5\n";exit}
-	"home"
-}
 sleep 1
-puts "\n"
+puts "\nall done\n"

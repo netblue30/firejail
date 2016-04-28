@@ -4,7 +4,6 @@
 # License GPL v2
 
 set timeout 10
-#cd /home
 spawn $env(SHELL)
 match_max 100000
 
@@ -15,15 +14,12 @@ expect {
 }
 sleep 1
 
-send -- "ls -al;pwd\r"
+send -- "find /home\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	".zshrc"
 }
-expect {
-	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"home"
-}
+
 send -- "env | grep SHELL;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
@@ -33,12 +29,8 @@ expect {
 	timeout {puts "TESTING ERROR 2.1\n";exit}
 	"/usr/bin/zsh"
 }
-expect {
-	timeout {puts "TESTING ERROR 2.2\n";exit}
-	"home"
-}
 send -- "exit\r"
 sleep 1
 
-puts "\n"
+puts "\nall done\n"
 

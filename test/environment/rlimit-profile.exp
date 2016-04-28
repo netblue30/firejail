@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 
 set timeout 10
-cd /home
+#cd /home
 spawn $env(SHELL)
 match_max 100000
 

@@ -12,7 +12,7 @@ expect {
 	"Child process initialized"
 }
 sleep 2
-send -- "echo my_testing > lstesting\r"
+send -- "echo my_testing > ~/lstesting\r"
 sleep 2
 
 

@@ -95,18 +95,18 @@ sleep 1
 
 send --  "firejail --trace\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 11\n";exit}
 	"Child process initialized"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 12\n";exit}
 	"bash:open /dev/tty" {puts "64bit\n"}
 	"bash:open64 /dev/tty" {puts "32bit\n"}
 }
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"bash:access /etc/terminfo/x/xterm" {puts "debian\n"}
-	"bash:access /usr/share/terminfo/x/xterm" {puts "arch\n"}
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"bash:access /etc/terminfo/" {puts "debian\n"}
+	"bash:access /usr/share/terminfo/" {puts "arch\n"}
 }
 
 puts "\nall done\n"

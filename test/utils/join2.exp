@@ -4,6 +4,7 @@
 # License GPL v2
 
 set timeout 10
+cd /home
 spawn $env(SHELL)
 match_max 100000
 

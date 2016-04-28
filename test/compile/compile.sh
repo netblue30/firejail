@@ -42,9 +42,6 @@ while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
 done
 
 cleanup
-# enable sudo
-sudo ls -al
-
 
 #*****************************************************************
 # TEST 1
@@ -58,13 +55,12 @@ git clone https://github.com/netblue30/firejail.git
 cd firejail
 ./configure --prefix=/usr --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
-sudo make install 2>&1 | tee ../output-install
 cd ..
-grep Warning output-configure output-make output-install > ./report-test1
-grep Error output-configure output-make output-install >> ./report-test1
+grep Warning output-configure output-make > ./report-test1
+grep Error output-configure output-make >> ./report-test1
 cp output-configure oc1
 cp output-make om1
-rm output-configure output-make output-install
+rm output-configure output-make
 
 
 #*****************************************************************

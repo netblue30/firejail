@@ -12,7 +12,7 @@ then
 	echo "TESTING: firefox"
 	./firefox.exp
 else
-	echo "TESTING: firefox not found"
+	echo "TESTING SKIP: firefox not found"
 fi
 
 which midori
@@ -21,7 +21,7 @@ then
 	echo "TESTING: midori"
 	./midori.exp
 else
-	echo "TESTING: midori not found"
+	echo "TESTING SKIP: midori not found"
 fi
 
 which chromium
@@ -30,7 +30,7 @@ then
 	echo "TESTING: chromium"
 	./chromium.exp
 else
-	echo "TESTING: chromium not found"
+	echo "TESTING SKIP: chromium not found"
 fi
 
 which opera
@@ -39,7 +39,7 @@ then
 	echo "TESTING: opera"
 	./opera.exp
 else
-	echo "TESTING: opera not found"
+	echo "TESTING SKIP: opera not found"
 fi
 
 which transmission-gtk
@@ -48,7 +48,7 @@ then
 	echo "TESTING: transmission-gtk"
 	./transmission-gtk.exp
 else
-	echo "TESTING: transmission-gtk not found"
+	echo "TESTING SKIP: transmission-gtk not found"
 fi
 
 which transmission-qt
@@ -57,7 +57,7 @@ then
 	echo "TESTING: transmission-qt"
 	./transmission-qt.exp
 else
-	echo "TESTING: transmission-qt not found"
+	echo "TESTING SKIP: transmission-qt not found"
 fi
 
 which evince
@@ -66,7 +66,7 @@ then
 	echo "TESTING: evince"
 	./evince.exp
 else
-	echo "TESTING: evince not found"
+	echo "TESTING SKIP: evince not found"
 fi
 
 which icedove
@@ -75,7 +75,7 @@ then
 	echo "TESTING: icedove"
 	./icedove.exp
 else
-	echo "TESTING: icedove not found"
+	echo "TESTING SKIP: icedove not found"
 fi
 
 which vlc
@@ -84,7 +84,7 @@ then
 	echo "TESTING: vlc"
 	./vlc.exp
 else
-	echo "TESTING: vlc not found"
+	echo "TESTING SKIP: vlc not found"
 fi
 
 which fbreader
@@ -93,7 +93,7 @@ then
 	echo "TESTING: fbreader"
 	./fbreader.exp
 else
-	echo "TESTING: fbreader not found"
+	echo "TESTING SKIP: fbreader not found"
 fi
 
 which deluge
@@ -102,7 +102,7 @@ then
 	echo "TESTING: deluge"
 	./deluge.exp
 else
-	echo "TESTING: deluge not found"
+	echo "TESTING SKIP: deluge not found"
 fi
 
 which gnome-mplayer
@@ -111,7 +111,7 @@ then
 	echo "TESTING: gnome-mplayer"
 	./gnome-mplayer.exp
 else
-	echo "TESTING: gnome-mplayer not found"
+	echo "TESTING SKIP: gnome-mplayer not found"
 fi
 
 which xchat
@@ -120,7 +120,7 @@ then
 	echo "TESTING: xchat"
 	./xchat.exp
 else
-	echo "TESTING: xchat not found"
+	echo "TESTING SKIP: xchat not found"
 fi
 
 which hexchat
@@ -129,7 +129,7 @@ then
 	echo "TESTING: hexchat"
 	./hexchat.exp
 else
-	echo "TESTING: hexchat not found"
+	echo "TESTING SKIP: hexchat not found"
 fi
 
 which weechat-curses
@@ -138,7 +138,7 @@ then
 	echo "TESTING: weechat"
 	./weechat.exp
 else
-	echo "TESTING: weechat not found"
+	echo "TESTING SKIP: weechat not found"
 fi
 
 which wine
@@ -147,6 +147,6 @@ then
 	echo "TESTING: wine"
 	./wine.exp
 else
-	echo "TESTING: wine not found"
+	echo "TESTING SKIP: wine not found"
 fi
 

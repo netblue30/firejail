@@ -18,7 +18,7 @@ then
         echo "TESTING: dash (test/environment/dash.exp)"
         ./dash.exp
 else
-        echo "TESTING: dash not found"
+        echo "TESTING SKIP: dash not found"
 fi
 
 which csh
@@ -27,7 +27,7 @@ then
         echo "TESTING: csh (test/environment/csh.exp)"
         ./csh.exp
 else
-        echo "TESTING: csh not found"
+        echo "TESTING SKIP: csh not found"
 fi
 
 which zsh
@@ -36,7 +36,7 @@ then
         echo "TESTING: zsh (test/environment/zsh.exp)"
         ./csh.exp
 else
-        echo "TESTING: zsh not found"
+        echo "TESTING SKIP: zsh not found"
 fi
 
 echo "TESTING: rlimit (test/environment/rlimit.exp)"
@@ -57,7 +57,7 @@ then
         echo "TESTING: sound (test/environment/sound.exp)"
         ./sound.exp
 else
-        echo "TESTING: aplay not found"
+        echo "TESTING SKIP: aplay not found"
 fi
 
 echo "TESTING: nice (test/environment/nice.exp)"

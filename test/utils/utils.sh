@@ -18,7 +18,7 @@ then
         echo "TESTING: man (test/utils/man.exp)"
         ./man.exp
 else
-        echo "TESTING: man not found"
+        echo "TESTING SKIP: man not found"
 fi
 
 echo "TESTING: list (test/utils/list.exp)"
@@ -32,7 +32,7 @@ then
         echo "TESTING: cpu.print (test/utils/cpu-print.exp)"
         ./cpu-print.exp
 else
-        echo "TESTING: cpu.print, not enough CPUs"
+        echo "TESTING SKIP: cpu.print, not enough CPUs"
 fi
 
 echo "TESTING: fs.print (test/utils/fs-print.exp)"

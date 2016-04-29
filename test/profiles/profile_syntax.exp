@@ -29,7 +29,7 @@ expect {
 }
 
 sleep 1
-send -- "rmdir;pwd\r"
+send -- "rmdir\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Permission denied"
@@ -51,4 +51,4 @@ expect {
 send -- "exit\r"
 
 sleep 1
-puts "\n"
+puts "\nall done\n"

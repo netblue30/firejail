@@ -249,7 +249,7 @@ dist:
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/utils test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps-x11 test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/firemon test/.; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/environment test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/compile test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/dist-compile test/.; cd ..
 	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..

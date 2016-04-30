@@ -1,3 +1,7 @@
+// This file is part of Firejail project
+// Copyright (C) 2014-2016 Firejail Authors
+// License GPL v2
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>

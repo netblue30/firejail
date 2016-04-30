@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --noprofile --protocol=unix ../src/tools/syscall_test socket\r"
+send -- "firejail --noprofile --protocol=unix ./syscall_test socket\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
@@ -47,7 +47,7 @@ expect {
 }
 sleep 1
 
-send -- "firejail --noprofile --protocol=inet6,packet ../src/tools/syscall_test socket\r"
+send -- "firejail --noprofile --protocol=inet6,packet ./syscall_test socket\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
@@ -91,7 +91,7 @@ expect {
 sleep 1
 
 # profile testing
-send -- "firejail --profile=protocol1.profile ../src/tools/syscall_test socket\r"
+send -- "firejail --profile=protocol1.profile ./syscall_test socket\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
@@ -134,7 +134,7 @@ expect {
 }
 sleep 1
 
-send -- "firejail --profile=protocol2.profile ../src/tools/syscall_test socket\r"
+send -- "firejail --profile=protocol2.profile ./syscall_test socket\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized"
@@ -176,9 +176,5 @@ expect {
 	"after socket"
 }
 sleep 1
-
-
-
-
 
 puts "\nall done\n"

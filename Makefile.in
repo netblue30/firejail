@@ -252,6 +252,7 @@ dist:
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/environment test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/compile test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/dist-compile test/.; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/filters test/.; cd ..
 	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
 	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
@@ -294,6 +295,9 @@ test-utils:
 
 test-environment:
 	cd test/environment; ./environment.sh | grep TESTING
+
+test-filters:
+	cd test/filters; ./filters.sh | grep TESTING
 
 test: test-profiles test-utils  test-environment test-apps test-apps-x11
 	echo "TEST COMPLETE"

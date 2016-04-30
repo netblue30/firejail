@@ -12,7 +12,7 @@ then
 	echo "TESTING: xterm x11"
 	./xterm.exp
 else
-	echo "TESTING: xterm not found"
+	echo "TESTING SKIP: xterm not found"
 fi
 
 which firefox
@@ -21,7 +21,7 @@ then
 	echo "TESTING: firefox x11"
 	./firefox.exp
 else
-	echo "TESTING: firefox not found"
+	echo "TESTING SKIP: firefox not found"
 fi
 
 which chromium
@@ -30,7 +30,7 @@ then
 	echo "TESTING: chromium x11"
 	./chromium.exp
 else
-	echo "TESTING: chromium not found"
+	echo "TESTING SKIP: chromium not found"
 fi
 
 which transmission-gtk
@@ -39,7 +39,7 @@ then
 	echo "TESTING: transmission-gtk x11"
 	./transmission-gtk.exp
 else
-	echo "TESTING: transmission-gtk not found"
+	echo "TESTING SKIP: transmission-gtk not found"
 fi
 
 which icedove
@@ -48,6 +48,6 @@ then
 	echo "TESTING: icedove x11"
 	./icedove.exp
 else
-	echo "TESTING: icedove not found"
+	echo "TESTING SKIP: icedove not found"
 fi
 

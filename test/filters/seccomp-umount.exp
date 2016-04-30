@@ -1,0 +1,31 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "sudo ls; sudo whoami; sudo pwd\r"
+expect {
+	timeout {puts "TESTING ERROR: you need to root run this test as root\n";exit}
+	"root"
+}
+
+send --  "firejail --net=br0 --ip=10.10.20.5 --seccomp --noprofile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+send -- "umount /proc\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Bad system call"
+}
+
+send -- "exit\r"
+sleep 1
+puts "\n"

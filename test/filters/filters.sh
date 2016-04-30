@@ -30,11 +30,16 @@ echo "TESTING: seccomp su (test/filters/seccomp-su.exp)"
 echo "TESTING: seccomp ptrace (seccomp-ptrace.exp)"
 ./seccomp-ptrace.exp
 
-echo "TESTING: seccomp chmod - seccomp lists (test/filters/seccomp-chmod.exp)"
-./seccomp-chmod.exp
+# todo: fix pwd
+#echo "TESTING: seccomp chmod - seccomp lists (test/filters/seccomp-chmod.exp)"
+#./seccomp-chmod.exp
 
-echo "TESTING: seccomp chmod profile - seccomp lists (test/filters/seccomp-chmod-profile.exp)"
-./seccomp-chmod-profile.exp
+# todo: fix pwd
+#echo "TESTING: seccomp chmod profile - seccomp lists (test/filters/seccomp-chmod-profile.exp)"
+#./seccomp-chmod-profile.exp
+
+# todo:  fix pwd and add seccomp-chown.exp and seccomp-umount.exp
+
 
 echo "TESTING: seccomp empty (test/filters/seccomp-empty.exp)"
 ./seccomp-empty.exp

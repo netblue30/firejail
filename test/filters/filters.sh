@@ -12,8 +12,12 @@ echo "TESTING: noroot (test/filters/noroot.exp)"
 echo "TESTING: capabilities (test/filters/caps.exp)"
 ./caps.exp
 
-echo "TESTING: protocol (test/filters/protocol.exp)"
-./protocol.exp
+if [ "$(uname -m)" = "x86_64" ]; then
+        echo "TESTING: protocol (test/filters/protocol.exp)"
+        ./protocol.exp
+else
+        echo "TESTING SKIP: protocol, not running on x86_64"
+fi
 
 echo "TESTING: seccomp bad empty (test/filters/seccomp-bad-empty.exp)"
 ./seccomp-bad-empty.exp
@@ -27,8 +31,13 @@ echo "TESTING: seccomp errno (test/filters/seccomp-errno.exp)"
 echo "TESTING: seccomp su (test/filters/seccomp-su.exp)"
 ./seccomp-su.exp
 
-echo "TESTING: seccomp ptrace (test/filters/seccomp-ptrace.exp)"
-./seccomp-ptrace.exp
+which strace
+if [ $? -eq 0 ]; then
+        echo "TESTING: seccomp ptrace (test/filters/seccomp-ptrace.exp)"
+        ./seccomp-ptrace.exp
+else
+        echo "TESTING SKIP: ptrace, strace not found"
+fi
 
 echo "TESTING: seccomp chmod - seccomp lists (test/filters/seccomp-chmod.exp)"
 ./seccomp-chmod.exp
@@ -44,7 +53,9 @@ echo "TESTING: seccomp empty (test/filters/seccomp-empty.exp)"
 echo "TESTING: seccomp bad empty (test/filters/seccomp-bad-empty.exp)"
 ./seccomp-bad-empty.exp
 
-echo "TESTING: seccomp dual filter (test/filters/seccomp-dualfilter.exp)"
-./seccomp-dualfilter.exp
-
-
+if [ "$(uname -m)" = "x86_64" ]; then
+        echo "TESTING: seccomp dual filter (test/filters/seccomp-dualfilter.exp)"
+        ./seccomp-dualfilter.exp
+else
+        echo "TESTING SKIP: seccomp dual, not running on x86_64"
+fi

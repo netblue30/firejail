@@ -729,9 +729,11 @@ void fs_basic_fs(void) {
 		printf("Mounting read-only /bin, /sbin, /lib, /lib32, /lib64, /usr");
 	if (!arg_writable_etc) {
 		fs_rdonly("/etc");
+		if (arg_debug) printf(", /etc");
 	}
 	if (!arg_writable_var) {
 		fs_rdonly("/var");
+		if (arg_debug) printf(", /var");
 	}
 	if (arg_debug) printf("\n");
 	fs_rdonly("/bin");

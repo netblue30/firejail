@@ -18,6 +18,25 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Reiner Herrmann
+	- a number of build patches
+	- man page fixes
+	- Debian and Ubuntu integration
+	- clang-analyzer fixes
+	- Debian reproducible build
+	- unit testing framework
+avoidr (https://github.com/avoidr)
+	- whitelist fix
+	- recently-used.xbel fix
+	- added parole profile
+	- blacklist ncat, manpage fixes,
+	- hostname support in profile file
+	- Google Chrome profile rework
+	- added cmus profile
+	- man page fixes
+	- add net iface support in profile files
+	- paths fix
+	- lots of profile fixes
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
 Vasya Novikov (https://github.com/vn971)
@@ -50,18 +69,6 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- fixed HexChat and Atril profiles
 	- fixed disable-common.inc for mate-terminal
 	- blacklisted escape-happy terminals in disable-common.inc
-avoidr (https://github.com/avoidr)
-	- whitelist fix
-	- recently-used.xbel fix
-	- added parole profile
-	- blacklist ncat, manpage fixes,
-	- hostname support in profile file
-	- Google Chrome profile rework
-	- added cmus profile
-	- man page fixes
-	- add net iface support in profile files
-	- paths fix
-	- lots of profile fixes
 Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
 n1trux (https://github.com/n1trux)
@@ -166,12 +173,6 @@ sarneaud (https://github.com/sarneaud)
 	- various enhancements and bug fixes
 Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
 	- user namespace implementation
-Reiner Herrmann
-	- a number of build patches
-	- man page fixes
-	- Debian and Ubuntu integration
-	- clang-analyzer fixes
-	- Debian reproducible build
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)

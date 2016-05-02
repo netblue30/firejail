@@ -178,6 +178,7 @@ realinstall:
 	install -c -m 0644 .etc/google-play-music-desktop-player.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/quiterss.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/cyberfox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/snap.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/firejail.config ]; then install -c -m 0644 etc/firejail.config $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc

@@ -1023,6 +1023,8 @@ int main(int argc, char **argv) {
 			read_cpu_list(argv[i] + 6);
 		else if (strncmp(argv[i], "--nice=", 7) == 0) {
 			cfg.nice = atoi(argv[i] + 7);
+			if (getuid() != 0 &&cfg.nice < 0)
+				cfg.nice = 0;
 			arg_nice = 1;
 		}
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {

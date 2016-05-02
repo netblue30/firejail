@@ -9,6 +9,8 @@ blacklist /usr/bin/c8*
 blacklist /usr/bin/c++*
 blacklist /usr/bin/ld
 blacklist /usr/bin/gdb
+blacklist /usr/bin/g++*
+blacklist /usr/bin/x86_64-linux-gnu-g++*
 
 # clang/llvm
 blacklist /usr/bin/clang*

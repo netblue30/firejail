@@ -25,10 +25,9 @@ sleep 1
 
 send -- "firejail ./syscall_test32 mount\r"
 expect {
-	"syscall_test32: No such file or directory" {puts "\nTESTING SKIP 3: can't execute 32 bit binary\n"; exit}
-}
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
+        timeout {puts "TESTING ERROR 4\n";exit}
+	"No such file or directory" {puts "\nTESTING SKIP 3: can't execute 32 bit binary\n"; exit}
+	"Parent is shutting down, bye" {puts "\nTESTING SKIP 3: can't execute 32 bit binary\n"; exit}
 	"Child process initialized"
 }
 expect {

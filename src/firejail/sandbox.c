@@ -722,7 +722,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
-			fprintf(stderr, "Warning: cannot mount a new user namespace, going forward without it...\n");
+			fprintf(stderr, "Warning: cannot create a new user namespace, going forward without it...\n");
 			drop_privs(arg_nogroups);
 			arg_noroot = 0;
 		}

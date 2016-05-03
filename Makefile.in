@@ -304,5 +304,5 @@ test-filters:
 test-network:
 	echo "Please read test/netwok/README file and run the test manually"
 
-test: test-profiles test-utils  test-environment test-apps test-apps-x11
+test: test-profiles test-utils  test-environment test-apps test-apps-x11 test-filters test-network
 	echo "TEST COMPLETE"

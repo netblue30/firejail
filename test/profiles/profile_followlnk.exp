@@ -5,33 +5,21 @@ spawn $env(SHELL)
 match_max 100000
 
 send -- "mkdir /tmp/firejailtestdir\r"
-sleep 1
 send -- "ln -s /tmp/firejailtestdir  /tmp/firejailtestdirlnk\r"
-sleep 1
 send -- "touch /tmp/firejailtestfile\r"
-sleep 1
 send -- "ln -s /tmp/firejailtestfile /tmp/firejailtestfilelnk\r"
 sleep 1
 
-send -- "firejail --profile=readonly-lnk.profile --debug\r"
+send -- "firejail --profile=readonly-lnk.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 
-# testing private only
-send -- "bash\r"
-sleep 1
-
-
-send -- "ls > /tmp/firejailtestdirlnk/ttt;pwd\r"
+send -- "ls > /tmp/firejailtestdirlnk/ttt\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Read-only file system"
-}
-expect {
-	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"home"
 }
 sleep 1
 
@@ -40,29 +28,10 @@ expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Read-only file system"
 }
-expect {
-	timeout {puts "TESTING ERROR 2.1\n";exit}
-	"home"
-}
 sleep 1
 
 send -- "exit\r"
-sleep 1
-send -- "pwd\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"home"
-}
-sleep 1
-send -- "exit\r"
-sleep 1
-send -- "pwd\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"home"
-}
-sleep 2
 send -- "rm -fr /tmp/firejailtest*\r"
 sleep 1
 
-puts "\n"
+puts "\nall done\n"

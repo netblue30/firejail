@@ -7,11 +7,6 @@
 
 ./fscheck.sh
 
-echo "TESTING: network profile (net_profile.exp)"
-./net_profile.exp
-
-echo "TESTING: bandwidth (bandwidth.exp)"
-./bandwidth.exp
 
 echo "TESTING: protocol.print (protocol-print.exp)"
 ./protocol-print.exp
@@ -126,12 +121,6 @@ echo "TESTING: PID (pid.exp)"
 
 echo "TESTING: output (output.exp)"
 ./output.exp
-
-echo "TESTING: profile no permissions (profile_noperm.exp)"
-./profile_noperm.exp
-
-echo "TESTING: profile read-only (profile_readonly.exp)"
-./profile_readonly.exp
 
 echo "TESTING: private (private.exp)"
 ./private.exp `whoami`

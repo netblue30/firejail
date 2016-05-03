@@ -10,4 +10,4 @@ expect {
 	"cannot access profile"
 }
 sleep 1
-puts "\n"
+puts "\nall done\n"

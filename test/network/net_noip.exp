@@ -1,4 +1,7 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
@@ -16,24 +19,24 @@ send -- "bash\r"
 sleep 1
 
 # no default gateway configured
-send -- "netstat -rn;pwd\r"
+send -- "netstat -rn;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"0.0.0.0" {puts "TESTING ERROR 3\n";exit}
 	"eth0" {puts "TESTING ERROR 4\n";exit}
-	"home"
+	"done"
 }
 sleep 1
 
 # eth0 configured
-send -- "/sbin/ifconfig;pwd\r"
+send -- "/sbin/ifconfig;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"eth0"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"home"
+	"done"
 }
 after 100
 

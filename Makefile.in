@@ -254,6 +254,7 @@ dist:
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/compile test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/dist-compile test/.; cd ..
 	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/filters test/.; cd ..
+	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/network test/.; cd ..
 	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
 	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
@@ -299,6 +300,9 @@ test-environment:
 
 test-filters:
 	cd test/filters; ./filters.sh | grep TESTING
+
+test-network:
+	echo "Please read test/netwok/README file and run the test manually"
 
 test: test-profiles test-utils  test-environment test-apps test-apps-x11
 	echo "TEST COMPLETE"

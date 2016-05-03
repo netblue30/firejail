@@ -1,4 +1,7 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
@@ -51,11 +54,11 @@ expect {
 }
 sleep 1
 
-send -- "firejail --bandwidth=test status; pwd\r"
+send -- "firejail --bandwidth=test status; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"rate 80Kbit burst 10Kb" {puts "TESTING ERROR 9\n";exit}
-	"home" {puts "ok\n"}
+	"done"
 }
 sleep 1
 

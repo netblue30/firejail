@@ -113,7 +113,7 @@ realinstall:
 	install -c -m 0644 .etc/vlc.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/deluge.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/qbittorrent.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/generic.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/default.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/pidgin.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/xchat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/empathy.profile $(DESTDIR)/$(sysconfdir)/firejail/.

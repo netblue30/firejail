@@ -68,7 +68,7 @@
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
 
 // profiles
-#define DEFAULT_USER_PROFILE	"generic"
+#define DEFAULT_USER_PROFILE	"default"
 #define DEFAULT_ROOT_PROFILE	"server"
 #define MAX_INCLUDE_LEVEL 6		// include levels in profile files
 

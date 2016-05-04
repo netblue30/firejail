@@ -868,7 +868,7 @@ Example:
 .br
 $ firejail
 .br
-Reading profile /etc/firejail/generic.profile
+Reading profile /etc/firejail/default.profile
 .br
 Parent pid 8553, child pid 8554
 .br
@@ -1786,7 +1786,7 @@ To disable default profile loading, use --noprofile command option. Example:
 .RS
 $ firejail
 .br
-Reading profile /etc/firejail/generic.profile
+Reading profile /etc/firejail/default.profile
 .br
 Parent pid 8553, child pid 8554
 .br

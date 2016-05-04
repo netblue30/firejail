@@ -696,7 +696,7 @@ int main(int argc, char **argv) {
 	int option_force = 0;
 	int custom_profile = 0;	// custom profile loaded
 	char *custom_profile_dir = NULL; // custom profile directory
-	int arg_noprofile = 0; // use generic.profile if none other found/specified
+	int arg_noprofile = 0; // use default.profile if none other found/specified
 #ifdef HAVE_SECCOMP
 	int highest_errno = errno_highest_nr();
 #endif
@@ -1920,7 +1920,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	// use generic.profile as the default
+	// use default.profile as the default
 	if (!custom_profile && !arg_noprofile) {
 		if (cfg.chrootdir)
 			fprintf(stderr, "Warning: default profile disabled by --chroot option\n");

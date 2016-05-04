@@ -27,7 +27,7 @@
 /etc/firejail/totem.profile
 /etc/firejail/deluge.profile
 /etc/firejail/qbittorrent.profile
-/etc/firejail/generic.profile
+/etc/firejail/default.profile
 /etc/firejail/xchat.profile
 /etc/firejail/server.profile
 /etc/firejail/quassel.profile

@@ -15,29 +15,29 @@ expect {
 }
 sleep 1
 
-send -- "ls -al /etc\r"
+send -- "LC_ALL=C ls -al /etc\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"group"
+	"X11"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"passwd"
+	"group"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"resolv.conf"
+	"passwd"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"X11"
+	"resolv.conf"
 }
 
-send -- "ls -al /etc\r"
+send -- "ls -al /etc; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
 	"shadow" {puts "TESTING ERROR 8\n";exit}
-	"X11"
+	"done"
 }
 
 sleep 1

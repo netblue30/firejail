@@ -1,4 +1,7 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
@@ -16,14 +19,14 @@ expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Permission denied"
 }
-sleep 1
+after 100
 
 send -- "cat /proc/kmsg\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"Permission denied"
 }
-sleep 1
+after 100
 
 puts "\nall done\n"
 

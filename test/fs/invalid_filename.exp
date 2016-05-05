@@ -1,23 +1,7 @@
 #!/usr/bin/expect -f
-
-#invalid_filename checks:
-#
-#--bind (two files) - profile.c - Note: The test is not implemented here, need to be root to test it
-#--blacklist - profile.c
-#--cgroup - cgroup.c
-#--chroot - main.c
-#--netfilter - netfilter.c
-#--output - output.c
-#--private - fs_home.c
-#--privte-bin (list) - fs_bin.c
-#--private-home (list) - fs_home.c
-#--private-etc (list) - fs_etc.c
-#--profile - main.c
-#--read_only - profile.c
-#--shell - main.c
-#--tmpfs - profile.c
-#--white-list
-
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
@@ -200,8 +184,6 @@ expect {
 	"is an invalid filename"
 }
 after 100
-
-
 
 puts "\nall done\n"
 

@@ -11,14 +11,14 @@ expect {
 }
 sleep 1
 
-send -- "cat /etc/passwd;pwd\r"
+send -- "cat /etc/passwd;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Permission denied"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"home"
+	"done"
 }
 sleep 1
 

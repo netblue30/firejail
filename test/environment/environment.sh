@@ -62,3 +62,8 @@ fi
 
 echo "TESTING: nice (test/environment/nice.exp)"
 ./nice.exp
+
+echo "TESTING: quiet (test/environment/quiet.exp)"
+./quiet.exp
+
+

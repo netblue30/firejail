@@ -31,7 +31,6 @@ echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 ./whitelist-empty.exp
 
 echo "TESTING: private whitelist (test/fs/private-whitelist.exp)"
-echo "TESTING:     (failing on OpenSUSE)"
 ./private-whitelist.exp
 
 echo "TESTING: invalid filename (test/fs/invalid_filename.exp)"

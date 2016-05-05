@@ -38,49 +38,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	[lindex $argv 0]
+	done
 }
-send -- "ls -al; echo done\r"
-expect {
-	timeout {
-		# OpenSUSE doesn't use .Xauthority from user done directory
-		send -- "env | grep XAUTHORITY\r"
-
-		expect {
-			timeout {puts "TESTING ERROR 4\n";exit}
-			"/run/lightdm/netblue/xauthority"
-		}
-	}
-	".Xauthority"
-}
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	[lindex $argv 0]
-}
-
-
-# testing private only
-send -- "bash\r"
-sleep 1
-# owner /done/netblue
-send -- "ls -l /done;echo done\r"
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	[lindex $argv 0]
-}
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	[lindex $argv 0]
-}
-expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
-	[lindex $argv 0]
-}
-expect {
-	timeout {puts "TESTING ERROR 9\n";exit}
-	"done"
-}
-sleep 1
 
 # owner /tmp
 send -- "stat -c %U%a /tmp;echo done\r"

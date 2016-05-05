@@ -47,6 +47,7 @@ clean:
 	done
 	rm -f firejail.1 firejail.1.gz firemon.1 firemon.1.gz firecfg.1 firecfg.gz firejail-profile.5 firejail-profile.5.gz firejail-login.5 firejail-login.5.gz firejail-config.5 firejail-config.5.gz firejail*.rpm
 	rm -f test/utils/index.html*
+	rm -f test/utils/wget-log
 	rm -f test/utils/lstesting
 	cd test/compile; ./compile.sh --clean; cd ../..
 	cd test/dist-compile; ./compile.sh --clean; cd ../..
@@ -303,10 +304,10 @@ test-filters:
 	cd test/filters; ./filters.sh | grep TESTING
 
 test-network:
-	echo "Please read test/netwok/README file and run the test manually"
+	echo "Please read test/network/README file and run the test manually"
 
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
 
-test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-filters test-network
+test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-filters
 	echo "TEST COMPLETE"

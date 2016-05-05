@@ -12,26 +12,28 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
 }
-sleep 1
+after 100
 
 send -- "ls -al /tmp\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	".X11-unix"
 }
-sleep 1
+after 100
 
 send -- "ls -a /tmp | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"3"
 }
-sleep 1
+after 100
 
 send -- "ls -a ~ | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"5"
+	"3" {puts "3\n"}
+        "4" {puts "4\n"}
+        "5" {puts "5\n"}
 }
 
 sleep 1

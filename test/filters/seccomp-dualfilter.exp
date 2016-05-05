@@ -3,10 +3,23 @@
 # Copyright (C) 2014-2016 Firejail Authors
 # License GPL v2
 
-set timeout 10
+set timeout 1
 spawn $env(SHELL)
 match_max 100000
 
+send -- "./syscall_test\r"
+expect {
+        timeout {puts "TESTING SKIP: 64-bit support missing\n";exit}
+	"Usage"
+}
+
+send -- "./syscall_test32\r"
+expect {
+        timeout {puts "TESTING SKIP: 32-bit support missing\n";exit}
+        "Usage"
+}
+
+set timeout 10
 send -- "firejail ./syscall_test mount\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
@@ -18,7 +31,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"after mount" {puts "TESTING ERROR 2.1\n";exit}
+	"after mount" {puts "TESTING ERROR 3\n";exit}
 	"Parent is shutting down"
 }
 sleep 1
@@ -26,8 +39,6 @@ sleep 1
 send -- "firejail ./syscall_test32 mount\r"
 expect {
         timeout {puts "TESTING ERROR 4\n";exit}
-	"No such file or directory" {puts "\nTESTING SKIP 3: can't execute 32 bit binary\n"; exit}
-	"Parent is shutting down, bye" {puts "\nTESTING SKIP 3: can't execute 32 bit binary\n"; exit}
 	"Child process initialized"
 }
 expect {
@@ -36,7 +47,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"after mount" {puts "TESTING ERROR 6.1\n";exit}
+	"after mount" {puts "TESTING ERROR 7\n";exit}
 	"Parent is shutting down"
 }
 

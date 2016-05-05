@@ -6,6 +6,23 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+# check xpra/xephyr
+which xpra
+if [ "$?" -eq 0 ];
+then
+        echo "xpra found"
+else
+        echo "xpra not found"
+	which xephyr
+	if [ "$?" -eq 0 ];
+	then
+        	echo "xephyr found"
+	else
+        	echo "TESTING SKIP: xpra and/or xephyr not found"
+		exit
+	fi
+fi
+
 which xterm
 if [ "$?" -eq 0 ];
 then

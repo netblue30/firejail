@@ -1,6 +1,5 @@
-# Atril profile
-noblacklist ~/.config/atril
-noblacklist ~/.local/share
+noblacklist ~/.config/xviewer
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

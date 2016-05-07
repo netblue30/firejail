@@ -12,17 +12,22 @@ blacklist ${HOME}/.config/uGet
 blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/aweather
 blacklist ${HOME}/.config/stellarium
-blacklist ~/.kde/share/apps/okular
-blacklist ~/.kde/share/config/okularrc
-blacklist ~/.kde/share/config/okularpartrc
-blacklist ~/.kde/share/apps/gwenview
-blacklist ~/.kde/share/config/gwenviewrc
+blacklist ${HOME}/.config/atril
+blacklist ${HOME}/.config/xreader
+blacklist ${HOME}/.config/xviewer
+blacklist ${HOME}/.kde/share/apps/okular
+blacklist ${HOME}/.kde/share/config/okularrc
+blacklist ${HOME}/.kde/share/config/okularpartrc
+blacklist ${HOME}/.kde/share/apps/gwenview
+blacklist ${HOME}/.kde/share/config/gwenviewrc
 
 # Media players
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/vlc
+blacklist ${HOME}/.config/totem
+blacklist ${HOME}/.config/xplayer
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -95,6 +100,7 @@ blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/0ad
 blacklist ${HOME}/.cache/8pecxstudios
+blacklist ${HOME}/.cache/xreader
 
 # share
 blacklist ${HOME}/.local/share/epiphany
@@ -103,3 +109,4 @@ blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/0ad
+blacklist ${HOME}/.local/share/xplayer

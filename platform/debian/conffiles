@@ -94,3 +94,6 @@
 /etc/firejail/quiterss.profile
 /etc/firejail/cyberfox.profile
 /etc/firejail/snap.profile
+/etc/firejail/xplayer.profile
+/etc/firejail/xreader.profile
+/etc/firejail/xviewer.profile

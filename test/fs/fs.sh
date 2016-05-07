@@ -24,6 +24,9 @@ echo "TESTING: private (test/fs/private.exp)"
 echo "TESTING: private-etc (test/fs/private-etc.exp)"
 ./private-etc.exp
 
+echo "TESTING: empty private-etc (test/fs/private-etc-empty.exp)"
+./private-etc-empty.exp
+
 echo "TESTING: private-bin (test/fs/private-bin.exp)"
 ./private-bin.exp
 

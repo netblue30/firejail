@@ -129,40 +129,44 @@ void fs_private_etc_list(void) {
 		errExit("chmod");
 	fs_logger("tmpfs /etc");
 	
+	fs_logger_print();	// save the current log
+
+
 	// copy the list of files in the new etc directory
 	// using a new child process without root privileges
-	fs_logger_print();	// save the current log
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		if (arg_debug)
-			printf("Copying files in the new etc directory:\n");
-
-		// elevate privileges - files in the new /etc directory belong to root
-		if (setreuid(0, 0) < 0)
-			errExit("setreuid");
-		if (setregid(0, 0) < 0)
-			errExit("setregid");
+	if (*private_list != '\0') {
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			if (arg_debug)
+				printf("Copying files in the new etc directory:\n");
+	
+			// elevate privileges - files in the new /etc directory belong to root
+			if (setreuid(0, 0) < 0)
+				errExit("setreuid");
+			if (setregid(0, 0) < 0)
+				errExit("setregid");
+			
+			// copy the list of files in the new home directory
+			char *dlist = strdup(private_list);
+			if (!dlist)
+				errExit("strdup");
 		
-		// copy the list of files in the new home directory
-		char *dlist = strdup(private_list);
-		if (!dlist)
-			errExit("strdup");
 	
-
-		char *ptr = strtok(dlist, ",");
-		duplicate(ptr);
-	
-		while ((ptr = strtok(NULL, ",")) != NULL)
+			char *ptr = strtok(dlist, ",");
 			duplicate(ptr);
-		free(dlist);	
-		fs_logger_print();
-		exit(0);
+		
+			while ((ptr = strtok(NULL, ",")) != NULL)
+				duplicate(ptr);
+			free(dlist);	
+			fs_logger_print();
+			exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
 	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
-
+	
 	if (arg_debug)
 		printf("Mount-bind %s on top of /etc\n", RUN_ETC_DIR);
 	if (mount(RUN_ETC_DIR, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)

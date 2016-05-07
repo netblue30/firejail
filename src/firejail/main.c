@@ -1330,12 +1330,7 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			fs_check_etc_list();
-			if (*cfg.etc_private_keep != '\0')
-				arg_private_etc = 1;
-			else {
-				arg_private_etc = 0;
-				fprintf(stderr, "Warning: private-etc disabled, no file found\n");
-			}
+			arg_private_etc = 1;
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			// extract private bin list

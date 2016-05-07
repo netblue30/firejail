@@ -611,12 +611,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		cfg.etc_private_keep = ptr + 12;
 		fs_check_etc_list();
-		if (*cfg.etc_private_keep != '\0')
-			arg_private_etc = 1;
-		else {
-			arg_private_etc = 0;
-			fprintf(stderr, "Warning: private-etc disabled, no file found\n");
-		}
+		arg_private_etc = 1;
 		
 		return 0;
 	}

@@ -108,10 +108,10 @@ void fs_check_bin_list(void) {
 	}
 	
 	if (*newlist == '\0') {
-		fprintf(stderr, "Warning: no --private-bin list executable found, option disabled\n");
-		cfg.bin_private_keep = NULL;
-		arg_private_bin = 0;
-		free(newlist);
+//		fprintf(stderr, "Warning: no --private-bin list executable found, option disabled\n");
+//		cfg.bin_private_keep = NULL;
+//		arg_private_bin = 0;
+//		free(newlist);
 	}
 	else {
 		ptr = strrchr(newlist, ',');
@@ -172,19 +172,6 @@ void fs_private_bin_list(void) {
 	char *private_list = cfg.bin_private_keep;
 	assert(private_list);
 	
-	// check bin paths
-	int i = 0;
-#if 0
-	while (paths[i]) {
-		struct stat s;
-		if (stat(paths[i], &s) == -1) {
-			fprintf(stderr, "Error: cannot find %s directory\n", paths[i]);
-			exit(1);
-		}
-		i++;
-	}
-#endif
-
 	// create /tmp/firejail/mnt/bin directory
 	fs_build_mnt_dir();
 	int rv = mkdir(RUN_BIN_DIR, 0755);
@@ -231,7 +218,7 @@ void fs_private_bin_list(void) {
 	waitpid(child, NULL, 0);
 
 	// mount-bind
-	i = 0;
+	int i = 0;
 	while (paths[i]) {
 		struct stat s;
 		if (stat(paths[i], &s) == 0) {

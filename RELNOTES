@@ -23,7 +23,8 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * new profiles: PaleMoon, Icedove, abrowser, 0ad, netsurf, Warzone2100
   * new profiles: okular, gwenview, Google-Play-Music-Desktop-Player
   * new profiles: Aweather, Stellarium, gpredict, quiterss, cyberfox
-  * new profiles: generic Ubuntu snap application profile
+  * new profiles: generic Ubuntu snap application profile, xplayer
+  * new profiles: xreader, xplayer
   * generic.profile renamed default.profile
   * build rpm packages using "make rpms"
   * bugfixes

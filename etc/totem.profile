@@ -1,4 +1,7 @@
 # Totem media player profile
+noblacklist ~/.config/totem
+noblacklist ~/.local/share/totem
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

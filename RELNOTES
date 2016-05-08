@@ -24,7 +24,7 @@ firejail (0.9.40-rc1) baseline; urgency=low
   * new profiles: okular, gwenview, Google-Play-Music-Desktop-Player
   * new profiles: Aweather, Stellarium, gpredict, quiterss, cyberfox
   * new profiles: generic Ubuntu snap application profile, xplayer
-  * new profiles: xreader, xplayer
+  * new profiles: xreader, xviewer
   * generic.profile renamed default.profile
   * build rpm packages using "make rpms"
   * bugfixes

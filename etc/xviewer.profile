@@ -11,7 +11,3 @@ protocol unix,inet,inet6
 noroot
 tracelog
 netfilter
-
-mkdir ~/.config
-mkdir ~/.config/xviewer
-whitelist ~/.config/xviewer

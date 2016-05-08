@@ -13,11 +13,3 @@ protocol unix,inet,inet6
 noroot
 tracelog
 netfilter
-
-mkdir ~/.config
-mkdir ~/.config/xplayer
-whitelist ~/.config/xplayer
-
-mkdir ~/.local
-mkdir ~/.local/share
-mkdir ~/.local/share/xplayer

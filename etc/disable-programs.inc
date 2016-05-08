@@ -110,3 +110,4 @@ blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/xplayer
+blacklsit ${HOME}/.local/share/totem

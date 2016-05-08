@@ -12,12 +12,3 @@ seccomp
 protocol unix,inet,inet6
 noroot
 netfilter
-
-mkdir ~/.config
-mkdir ~/.config/totem
-whitelist ~/.config/totme
-
-mkdir ~/.local
-mkdir ~/.local/share
-mkdir ~/.local/share/totem
-whitelist ~/.local/share/totem

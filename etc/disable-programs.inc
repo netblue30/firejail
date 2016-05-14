@@ -55,6 +55,7 @@ blacklist ${HOME}/.8pecxstudios
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat
 blacklist ${HOME}/.mcabber
+blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.retroshare

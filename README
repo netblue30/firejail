@@ -29,7 +29,7 @@ avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix
 	- added parole profile
-	- blacklist ncat, manpage fixes,
+	- blacklist ncat
 	- hostname support in profile file
 	- Google Chrome profile rework
 	- added cmus profile
@@ -37,6 +37,7 @@ avoidr (https://github.com/avoidr)
 	- add net iface support in profile files
 	- paths fix
 	- lots of profile fixes
+	- added mcabber profile
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
 Vasya Novikov (https://github.com/vn971)

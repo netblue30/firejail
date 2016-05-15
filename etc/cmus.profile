@@ -13,5 +13,5 @@ netfilter
 noroot
 
 private-bin cmus
-private-etc group
+private-etc null
 shell none

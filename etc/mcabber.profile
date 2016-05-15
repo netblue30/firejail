@@ -14,6 +14,6 @@ netfilter
 noroot
 
 private-bin mcabber
-private-etc group
+private-etc null
 private-dev
 shell none

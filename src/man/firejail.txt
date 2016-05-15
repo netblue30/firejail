@@ -1480,7 +1480,7 @@ $ firejail "\-\-whitelist=/home/username/My Virtual Machines"
 
 .TP
 \fB\-\-writable-etc
-Mount /etc directory read-write. This option is available only when running the sandbox as root user.
+Mount /etc directory read-write.
 .br
 
 .br
@@ -1490,7 +1490,7 @@ $ sudo firejail --writable-etc
 
 .TP
 \fB\-\-writable-var
-Mount /var directory read-write. This option is available only when running the sandbox as root user.
+Mount /var directory read-write.
 .br
 
 .br

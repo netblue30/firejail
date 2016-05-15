@@ -194,12 +194,10 @@ The modifications to file_or_directory are persistent, everything else is discar
 when the sandbox is closed.
 .TP
 \fBwritable-etc
-Mount /etc directory read-write. This option is  available  only
-when running the sandbox as root user.
+Mount /etc directory read-write.
 .TP
 \fBwritable-var
-Mount /var directory read-write. This option is  available  only
-when running the sandbox as root user.
+Mount /var directory read-write.
 .SH Security filters
 The following security filters are currently implemented:
 

@@ -1004,7 +1004,9 @@ $ firejail \-\-private=/home/netblue/firefox-home firefox
 .TP
 \fB\-\-private-bin=file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
+If no listed file is found, /bin directory will be empty.
 The same directory is also bind-mounted over /sbin, /usr/bin, /usr/sbin and /usr/local/bin.
+All modifications are discarded when the sandbox is closed. 
 .br
 
 .br
@@ -1043,7 +1045,8 @@ $
 \fB\-\-private-etc=file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
-All modifications are discarded when the sandbox is closed.
+If no listed file is found, /etc directory will be empty.
+All modifications are discarded when the sandbox is closed. 
 .br
 
 .br

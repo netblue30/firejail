@@ -9,7 +9,7 @@ echo "TESTING: profile tmpfs (profile_tmpfs)"
 ./profile_tmpfs.exp
 
 echo "TESTING: network interfaces (net_interface.exp)"
-./net_interface.exp
+./network/net_interface.exp
 
 echo "TESTING: chroot (fs_chroot_asroot.exp)"
 ./fs_chroot_asroot.exp
@@ -48,13 +48,13 @@ echo "TESTING: /proc/sysrq-trigger reset disabled (sysrq-trigger.exp)"
 ./sysrq-trigger.exp
 
 echo "TESTING: seccomp umount (seccomp-umount.exp)"
-./seccomp-umount.exp
+./filters/seccomp-umount.exp
 
 echo "TESTING: seccomp chmod (seccomp-chmod.exp)"
-./seccomp-chmod.exp
+./filters/seccomp-chmod.exp
 
 echo "TESTING: seccomp chown (seccomp-chown.exp)"
-./seccomp-chown.exp
+./filters/seccomp-chown.exp
 
 echo "TESTING: bind directory (option_bind_directory.exp)"
 ./option_bind_directory.exp

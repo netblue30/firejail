@@ -111,7 +111,7 @@ void fs_check_bin_list(void) {
 //		fprintf(stderr, "Warning: no --private-bin list executable found, option disabled\n");
 //		cfg.bin_private_keep = NULL;
 //		arg_private_bin = 0;
-//		free(newlist);
+		free(newlist);
 	}
 	else {
 		ptr = strrchr(newlist, ',');

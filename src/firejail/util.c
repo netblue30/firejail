@@ -548,7 +548,7 @@ char *expand_home(const char *path, const char* homedir) {
 			errExit("asprintf");
 		return new_name;
 	}
-	else if (strncmp(path, "~/", 2) == 0) {
+	else if (*path == '~') {
 		if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
 			errExit("asprintf");
 		return new_name;

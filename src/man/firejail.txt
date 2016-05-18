@@ -153,14 +153,7 @@ Example:
 .br
 $ sudo firejail \-\-caps.keep=chown,net_bind_service,setgid,\\
 setuid /etc/init.d/nginx start
-.br
 
-.br
-A short note about mixing \-\-whitelist and \-\-read-only options. Whitelisted directories
-should be made read-only independently. Making a parent directory read-only, will not
-make the whitelist read-only. Example:
-.br
-$ firejail --whitelist=~/work --read-only=~/ --read-only=~/work
 .TP
 \fB\-\-caps.print=name|pid
 Print the caps filter for the sandbox identified by name or by PID.
@@ -1138,6 +1131,15 @@ Set directory or file read-only.
 Example:
 .br
 $ firejail \-\-read-only=~/.mozilla firefox
+.br
+
+.br
+A short note about mixing \-\-whitelist and \-\-read-only options. Whitelisted directories
+should be made read-only independently. Making a parent directory read-only, will not
+make the whitelist read-only. Example:
+.br
+$ firejail --whitelist=~/work --read-only=~/ --read-only=~/work
+
 .TP
 \fB\-\-rlimit-fsize=number
 Set the maximum file size that can be created by a process.

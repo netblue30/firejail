@@ -1138,7 +1138,7 @@ A short note about mixing \-\-whitelist and \-\-read-only options. Whitelisted d
 should be made read-only independently. Making a parent directory read-only, will not
 make the whitelist read-only. Example:
 .br
-$ firejail --whitelist=~/work --read-only=~/ --read-only=~/work
+$ firejail --whitelist=~ --read-only=~ --whitelist=~/work
 
 .TP
 \fB\-\-rlimit-fsize=number

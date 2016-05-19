@@ -91,6 +91,12 @@ void run_symlink(int argc, char **argv) {
 
 	printf("Redirecting symlink to %s\n", program);
 
+	// drop privileges
+	if (setgid(getgid()) < 0)
+		errExit("setgid/getgid");
+	if (setuid(getuid()) < 0)
+		errExit("setuid/getuid");
+
 	// run command
 	char *a[3 + argc];
 	a[0] = firejail;

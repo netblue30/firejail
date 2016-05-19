@@ -29,6 +29,7 @@
 // drop privileges
 // - for root group or if nogroups is set, supplementary groups are not configured
 void drop_privs(int nogroups) {
+	EUID_ROOT();
 	gid_t gid = getgid();
 
 	// configure supplementary groups

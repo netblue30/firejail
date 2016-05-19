@@ -173,6 +173,7 @@ void x11_start_xephyr(int argc, char **argv) {
 		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
 		exit(1);
 	}
+	drop_privs(0);
 
 	// check xephyr
 	if (x11_check_xephyr() == 0) {
@@ -295,6 +296,7 @@ void x11_start_xpra(int argc, char **argv) {
 		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
 		exit(1);
 	}
+	drop_privs(0);
 
 	// check xpra
 	if (x11_check_xpra() == 0) {

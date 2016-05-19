@@ -21,7 +21,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-static void grsec_elevate_privileges(void) {
+static void set_privileges(void) {
 	struct stat s;
 	if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
 		EUID_ROOT();
@@ -32,49 +32,69 @@ static void grsec_elevate_privileges(void) {
 		if (setregid(0, 0))
 			errExit("setregid");
 	}
+	else
+		drop_privs(1);
+}
+
+static char *get_firemon_path(const char *cmd) {
+	assert(cmd);
+	
+	// start the argv[0] program in a new sandbox
+	char *firemon;
+	if (asprintf(&firemon, "%s/bin/firemon %s", PREFIX, cmd) == -1)
+		errExit("asprintf");
+
+	return firemon;
 }
 
 void top(void) {
 	EUID_ASSERT();
-	
+	drop_privs(1);
+	char *cmd = get_firemon_path("--top");
+
 	char *arg[4];
 	arg[0] = "bash";
 	arg[1] = "-c";
-	arg[2] = "firemon --top";
+	arg[2] = cmd;
 	arg[3] = NULL;
 	execvp("/bin/bash", arg); 
 }
 
 void netstats(void) {
 	EUID_ASSERT();
-	grsec_elevate_privileges();	
+	set_privileges();	
+	char *cmd = get_firemon_path("--netstats");
 	
 	char *arg[4];
 	arg[0] = "bash";
 	arg[1] = "-c";
-	arg[2] = "firemon --netstats";
+	arg[2] = cmd;
 	arg[3] = NULL;
 	execvp("/bin/bash", arg); 
 }
 
 void list(void) {
 	EUID_ASSERT();
+	drop_privs(1);
+	char *cmd = get_firemon_path("--list");
 	
 	char *arg[4];
 	arg[0] = "bash";
 	arg[1] = "-c";
-	arg[2] = "firemon --list";
+	arg[2] = cmd;
 	arg[3] = NULL;
 	execvp("/bin/bash", arg); 
 }
 
 void tree(void) {
 	EUID_ASSERT();
+	drop_privs(1);
+	char *cmd = get_firemon_path("--tree");
 	
 	char *arg[4];
 	arg[0] = "bash";
 	arg[1] = "-c";
-	arg[2] = "firemon --tree";
+	arg[2] = cmd;
 	arg[3] = NULL;
 	execvp("/bin/bash", arg); 
 }

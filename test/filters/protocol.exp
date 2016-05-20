@@ -10,10 +10,12 @@ match_max 100000
 send -- "firejail --noprofile --protocol=unix ./syscall_test socket\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
+	"Permission denied" {puts "TESTING SKIP: permission denied\n"; exit}
 	"Child process initialized"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Permission denied" {puts "TESTING SKIP: permission denied\n"; exit}
 	"socket AF_INET"
 }
 expect {

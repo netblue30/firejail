@@ -143,6 +143,7 @@ expect {
 	timeout {puts "TESTING ERROR 22\n";exit}
 	"effective uid is not 0, is sudo installed setuid root?" { puts "OK\n";}
 	"sudo must be owned by uid 0 and have the setuid bit set" { puts "OK\n";}
+	"Permission denied" { puts "OK\n";}
 }
 send -- "cat /proc/self/uid_map | wc -l\r"
 expect {

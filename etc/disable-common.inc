@@ -93,6 +93,7 @@ read-only ${HOME}/bin
 
 # top secret
 blacklist ${HOME}/.ssh
+blacklist ${HOME}/.cert
 blacklist ${HOME}/.gnome2/keyrings
 blacklist ${HOME}/kde4/share/apps/kwallet
 blacklist ${HOME}/kde/share/apps/kwallet

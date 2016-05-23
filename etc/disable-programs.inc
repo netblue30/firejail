@@ -112,3 +112,4 @@ blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/totem
+blacklist ${HOME}/.local/share/psi+

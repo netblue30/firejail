@@ -17,13 +17,15 @@ sleep 2
 send -- "sudo su -\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"effective uid is not 0"
+	"effective uid is not 0" {puts "OK\n"}
+	"Bad system call" {puts "OK\n"}
 }
 
 send -- "sudo ls\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"effective uid is not 0"
+	"effective uid is not 0" {puts "OK\n"}
+	"Bad system call" {puts "OK\n"}
 }
 
 send -- "ping google.com\r"

@@ -227,7 +227,7 @@ The following features can be enabled or disabled:
 
 ## Default seccomp filter update
 
-Currently 50 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).
+Currently 51 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).
 
 ## STUN/WebRTC disabled in default netfilter configuration
 

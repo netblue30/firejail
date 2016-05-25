@@ -227,7 +227,7 @@ The following features can be enabled or disabled:
 
 ## Default seccomp filter update
 
-Currently 50 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).
+Currently 51 syscalls are blacklisted by default, out of a total of 318 calls (AMD64, Debian Jessie).
 
 ## STUN/WebRTC disabled in default netfilter configuration
 
@@ -290,6 +290,4 @@ $ man firejail-profile
 lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril, qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars, qTox,
 OpenSSH client, OpenBox window manager, Dillo, cmus, dnsmasq, PaleMoon, Icedove, abrowser, 0ad, netsurf,
 Warzone2100, okular, gwenview, Gpredict, Aweather, Stellarium, Google-Play-Music-Desktop-Player, quiterss,
-cyberfox, generic Ubuntu snap application profile, xplayer, xreader, xviewer, mcabber, Psi+, Corebird, Konversation
-
-
+cyberfox, generic Ubuntu snap application profile, xplayer, xreader, xviewer, mcabber, Psi+, Corebird, Konversation, Brave

@@ -12,3 +12,4 @@ protocol unix,inet,inet6
 noroot
 tracelog
 netfilter
+nosound

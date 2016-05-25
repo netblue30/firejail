@@ -445,6 +445,7 @@ void seccomp_filter_64(void) {
 		BLACKLIST(169), // reboot
 		BLACKLIST(180), // nfsservctl
 		BLACKLIST(177), // get_kernel_syms
+		BLACKLIST(48),  // shutdown
 		RETURN_ALLOW
 	};
 

@@ -36,7 +36,9 @@ int checkcfg(int val) {
 		int i;
 		for (i = 0; i < CFG_MAX; i++)
 			cfg_val[i] = 1; // most of them are enabled by default
+
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
+		cfg_val[CFG_FORCE_NONEWPRIVS  ] = 0; // disabled by default
 		
 		// open configuration file
 		char *fname;
@@ -103,6 +105,15 @@ int checkcfg(int val) {
 					cfg_val[CFG_CHROOT] = 1;
 				else if (strcmp(ptr + 7, "no") == 0)
 					cfg_val[CFG_CHROOT] = 0;
+				else
+					goto errout;
+			}
+			// nonewprivs
+			else if (strncmp(ptr, "force-nonewprivs ", 17) == 0) {
+				if (strcmp(ptr + 17, "yes") == 0)
+					cfg_val[CFG_SECCOMP] = 1;
+				else if (strcmp(ptr + 17, "no") == 0)
+					cfg_val[CFG_SECCOMP] = 0;
 				else
 					goto errout;
 			}

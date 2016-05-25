@@ -49,6 +49,14 @@ Enable or disable user namespace support, default enabled.
 Enable or disable X11 sandboxing support, default enabled.
 
 .TP
+\fBforce-nonewprivs
+Force use of nonewprivs.  This mitigates the possibility of
+a user abusing firejail's features to trick a privileged (suid
+or file capabilities) process into loading code or configuration
+that is partially under their control.  Default disabled.
+
+
+.TP
 \fBxephyr-screen
 Screen size for --x11=xephyr, default 800x600. Run /usr/bin/xrandr for
 a full list of resolutions available on your specific setup. Examples:

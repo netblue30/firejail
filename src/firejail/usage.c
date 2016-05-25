@@ -157,6 +157,9 @@ void usage(void) {
 	printf("\tuser. root user does not exist in the new namespace. This option\n");
 	printf("\tis not supported for --chroot and --overlay configurations.\n\n");
 #endif
+	printf("    --nonewprivs - sets the NO_NEW_PRIVS prctl - the child processes\n");
+	printf("\tcannot gain privileges using execve(2); in particular, this prevents\n");
+	printf("\tgaining privileges by calling a suid binary\n\n");
 	printf("    --nosound - disable sound system.\n\n");
 		
 	printf("    --output=logfile - stdout logging and log rotation. Copy stdout and stderr\n");

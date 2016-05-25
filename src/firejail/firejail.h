@@ -237,6 +237,7 @@ extern int arg_rlimit_nproc;	// rlimit nproc
 extern int arg_rlimit_fsize;	// rlimit fsize
 extern int arg_rlimit_sigpending;// rlimit sigpending
 extern int arg_nogroups;	// disable supplementary groups
+extern int arg_nonewprivs;	// set the NO_NEW_PRIVS prctl
 extern int arg_noroot;		// create a new user namespace and disable root user
 extern int arg_netfilter;	// enable netfilter
 extern int arg_netfilter6;	// enable netfilter6
@@ -565,7 +566,8 @@ void sandboxfs(int op, pid_t pid, const char *patqh);
 #define CFG_SECCOMP 5
 #define CFG_NETWORK 6
 #define CFG_RESTRICTED_NETWORK 7
-#define CFG_MAX 8 // this should always be the last entry
+#define CFG_FORCE_NONEWPRIVS 8
+#define CFG_MAX 9 // this should always be the last entry
 int checkcfg(int val);
 
 // fs_rdwr.c

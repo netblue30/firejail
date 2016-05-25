@@ -77,6 +77,7 @@ int arg_rlimit_nproc = 0;			// rlimit nproc
 int arg_rlimit_fsize = 0;				// rlimit fsize
 int arg_rlimit_sigpending = 0;			// rlimit fsize
 int arg_nogroups = 0;				// disable supplementary groups
+int arg_nonewprivs = 0;			// set the NO_NEW_PRIVS prctl
 int arg_noroot = 0;				// create a new user namespace and disable root user
 int arg_netfilter;				// enable netfilter
 int arg_netfilter6;				// enable netfilter6
@@ -1367,6 +1368,9 @@ int main(int argc, char **argv) {
 			}
 		}
 #endif
+		else if (strcmp(argv[i], "--nonewprivs") == 0) {
+			arg_nonewprivs = 1;
+		}
 		else if (strncmp(argv[i], "--env=", 6) == 0)
 			env_store(argv[i] + 6);
 		else if (strncmp(argv[i], "--nosound", 9) == 0) {

@@ -207,6 +207,13 @@ The following features can be enabled or disabled:
 
        x11    Enable or disable X11 sandboxing support, default enabled.
 
+       force-nonewprivs
+              Force use of theh NO_NEW_PRIVS prctl(2) flag.
+              This mitigates the possibility of a user abusing firejail's
+              features to trick a privileged (suid or file capabilities)
+              process into loading code or configuration that is partially
+              under their control.  Default disabled
+
        xephyr-screen
               Screen    size    for   --x11=xephyr,   default   800x600.   Run
               /usr/bin/xrandr for a full list of resolutions available on your

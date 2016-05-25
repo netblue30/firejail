@@ -904,6 +904,13 @@ ping: icmp open socket: Operation not permitted
 $
 
 .TP
+\fB\-\-nonewprivs
+Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
+cannot acquire new privileges using execve(2);  in particular,
+this means that calling a suid binary (or one with file capabilities)
+does not results in an increase of privilege.
+
+.TP
 \fB\-\-nosound
 Disable sound system.
 .br

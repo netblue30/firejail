@@ -239,6 +239,12 @@ Enable seccomp filter and blacklist  the system calls in the list.
 \fBseccomp.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list.
 .TP
+\fBnonewprivs
+Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
+cannot acquire new privileges using execve(2);  in particular,
+this means that calling a suid binary (or one with file capabilities)
+does not results in an increase of privilege.
+.TP
 \fBnoroot
 Use this command  to enable an user namespace. The namespace has only one user, the current user.
 There is no root account (uid 0) defined in the namespace.

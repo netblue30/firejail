@@ -1,5 +1,6 @@
 # common whitelist for all profiles
 
+whitelist ~/.XCompose
 whitelist ~/.config/mimeapps.list
 whitelist ~/.icons
 whitelist ~/.config/user-dirs.dirs

@@ -47,7 +47,7 @@ int checkcfg(int val) {
 
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
-			fprintf(stderr, "Error: Firejail configuration file %s not found\n", fname);
+			fprintf(stderr, "Warning: Firejail configuration file %s not found\n", fname);
 			exit(1);
 		}
 		

@@ -25,6 +25,11 @@ Reiner Herrmann
 	- clang-analyzer fixes
 	- Debian reproducible build
 	- unit testing framework
+KellerFuchs (https://github.com/KellerFuchs)
+	- nonewpriv support
+ValdikSS (https://github.com/ValdikSS)
+	- Psi+, Corebird, Konversation profiles
+	- various profile fixes
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix

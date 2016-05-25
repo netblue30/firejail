@@ -750,7 +750,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************************
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
-	if (arg_nonewprivs || checkcfg(CFG_FORCE_NONEWPRIVS)) {
+	if (arg_nonewprivs) {
 		int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
 
 		if(no_new_privs != 0)

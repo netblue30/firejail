@@ -806,7 +806,7 @@ int main(int argc, char **argv) {
 		}
 	}
 	
-	// is this a login shell, or a command passed by sshd insert command line options from /etc/firejail/login.users
+	// is this a login shell, or a command passed by sshd, insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
 		fullargc = restricted_shell(cfg.username);
 		if (fullargc) {
@@ -824,6 +824,11 @@ int main(int argc, char **argv) {
 		check_output(argc, argv); // the function will not return if --output option was found
 		check_user(argc, argv); // the function will not return if --user option was found
 	}
+	
+	
+	// check for force-nonewprivs in /etc/firejail/firejail.config file
+	if (!option_force && checkcfg(CFG_FORCE_NONEWPRIVS))
+		arg_nonewprivs = 1;
 	
 	// parse arguments
 	for (i = 1; i < argc; i++) {

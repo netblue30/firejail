@@ -290,6 +290,6 @@ $ man firejail-profile
 lxterminal, Epiphany, cherrytree, Polari, Vivaldi, Atril, qutebrowser, SlimJet, Battle for Wesnoth, Hedgewars, qTox,
 OpenSSH client, OpenBox window manager, Dillo, cmus, dnsmasq, PaleMoon, Icedove, abrowser, 0ad, netsurf,
 Warzone2100, okular, gwenview, Gpredict, Aweather, Stellarium, Google-Play-Music-Desktop-Player, quiterss,
-cyberfox, generic Ubuntu snap application profile, xplayer, xreader, xviewer, mcabber
+cyberfox, generic Ubuntu snap application profile, xplayer, xreader, xviewer, mcabber, Psi+, Corebird, Konversation
 
 

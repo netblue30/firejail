@@ -98,3 +98,6 @@
 /etc/firejail/xreader.profile
 /etc/firejail/xviewer.profile
 /etc/firejail/mcabber.profile
+/etc/firejail/corebird.profile
+/etc/firejail/konversation.profile
+/etc/firejail/psi-plus.profile

@@ -10,6 +10,7 @@ caps.drop all
 seccomp
 protocol unix,inet,inet6
 netfilter
+nonewprivs
 noroot
 
 private-bin cmus

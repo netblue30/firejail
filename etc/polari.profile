@@ -24,6 +24,7 @@ include /etc/firejail/whitelist-common.inc
 caps.drop all
 seccomp
 protocol unix,inet,inet6
+nonewprivs
 noroot
 netfilter
 

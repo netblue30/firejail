@@ -12,6 +12,7 @@ include /etc/firejail/disable-programs.inc
 # Call these options
 caps.drop all
 netfilter
+nonewprivs
 noroot
 protocol unix,inet,inet6,netlink
 seccomp

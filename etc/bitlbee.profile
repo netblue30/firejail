@@ -9,3 +9,4 @@ private
 private-dev
 seccomp
 netfilter
+nonewprivs

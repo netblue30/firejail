@@ -11,6 +11,7 @@ caps.drop all
 seccomp
 protocol inet,inet6
 netfilter
+nonewprivs
 noroot
 
 private-bin mcabber

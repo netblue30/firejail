@@ -16,4 +16,5 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 seccomp
+nonewprivs
 noroot

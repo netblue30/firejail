@@ -19,6 +19,7 @@ seccomp
 protocol unix,inet,inet6,netlink
 netfilter
 tracelog
+nonewprivs
 noroot
 include /etc/firejail/whitelist-common.inc
 nosound

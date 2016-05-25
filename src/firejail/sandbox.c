@@ -750,11 +750,14 @@ int sandbox(void* sandbox_arg) {
 	//****************************************
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
-	int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
-	if(no_new_privs != 0) {
-	  errExit("NO_NEW_PRIVS");
-	} else
-	  printf("No new privileges from this point on\n");
+	if (arg_nonewprivs) {
+		int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+
+		if(no_new_privs != 0)
+			errExit("NO_NEW_PRIVS");
+		else if (arg_debug)
+			printf("NO_NEW_PRIVS set\n");
+	}
 
 
 	//****************************************

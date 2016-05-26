@@ -197,9 +197,9 @@ The following features can be enabled or disabled:
        restricted-network
               Enable  or disable restricted network support, default disabled.
               If enabled, networking features should also be enabled  (network
-              yes).   Restricted  networking  grants access to --interface and
-              --net=ethXXX only to root user. Regular users are  only  allowed
-              --net=none.
+              yes).  Restricted networking  grants access to --interface,
+              --net=ethXXX and --netfilter only to root user.  Regular users
+			  are only allowed --net=none.  Default disabled
 
        secomp Enable or disable seccomp support, default enabled.
 

@@ -12,6 +12,7 @@ protocol unix,inet,inet6,netlink
 netfilter
 tracelog
 noroot
+nonewprivs
 
 # Whitelists
 noblacklist ~/.cache/0ad

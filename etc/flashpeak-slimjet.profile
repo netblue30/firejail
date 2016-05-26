@@ -18,6 +18,7 @@ caps.drop all
 seccomp
 protocol unix,inet,inet6,netlink
 netfilter
+nonewprivs
 noroot
 
 whitelist ${DOWNLOADS}

@@ -11,6 +11,7 @@ seccomp
 protocol unix,inet,inet6
 netfilter
 tracelog
+nonewprivs
 noroot
 
 whitelist ${DOWNLOADS}

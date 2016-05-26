@@ -11,3 +11,4 @@ protocol unix,inet,inet6,netlink
 netfilter
 private
 private-dev
+nonewprivs

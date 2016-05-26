@@ -6,6 +6,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 
 netfilter
+nonewprivs
 
 whitelist ${DOWNLOADS}
 mkdir ~/.config

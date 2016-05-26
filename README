@@ -26,7 +26,8 @@ Reiner Herrmann
 	- Debian reproducible build
 	- unit testing framework
 KellerFuchs (https://github.com/KellerFuchs)
-	- nonewpriv support
+	- nonewpriv support, extended profiles for this feature
+	- make `restricted-network` prevent use of netfilter
 ValdikSS (https://github.com/ValdikSS)
 	- Psi+, Corebird, Konversation profiles
 	- various profile fixes

@@ -51,6 +51,7 @@ blacklist ${HOME}/.config/epiphany
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.8pecxstudios
+blacklist ${HOME}/.config/brave
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

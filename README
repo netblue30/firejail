@@ -77,6 +77,8 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- blacklisted escape-happy terminals in disable-common.inc
 	- blacklisted g++
 	- added xplayer, xreader, and xviewer profiles
+	- added Brave profile
+	- added "shutdown" filter for x86_64 arch to seccomp
 Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
 n1trux (https://github.com/n1trux)

@@ -15,3 +15,4 @@ nonewprivs
 noroot
 tracelog
 netfilter
+nosound

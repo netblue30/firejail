@@ -12,12 +12,12 @@ include /etc/firejail/whitelist-common.inc
 
 # Options
 caps.drop all
-seccomp
-protocol unix,inet,inet6,netlink
 netfilter
-tracelog
 nonewprivs
 noroot
+protocol unix,inet,inet6,netlink
+seccomp
+tracelog
 
 whitelist ${DOWNLOADS}
 mkdir ~/.moonchild productions
@@ -41,9 +41,9 @@ whitelist ~/.cache/moonchild productions/pale moon
 #whitelist ~/.pki
 
 # For silverlight
-#whitelist ~/.wine-pipelight 
-#whitelist ~/.wine-pipelight64 
-#whitelist ~/.config/pipelight-widevine 
+#whitelist ~/.wine-pipelight
+#whitelist ~/.wine-pipelight64
+#whitelist ~/.config/pipelight-widevine
 #whitelist ~/.config/pipelight-silverlight5.1
 
 

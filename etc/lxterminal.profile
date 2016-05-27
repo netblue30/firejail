@@ -5,7 +5,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
 netfilter
+protocol unix,inet,inet6
+seccomp
 #noroot - somehow this breaks on Debian Jessie!

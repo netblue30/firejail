@@ -761,7 +761,7 @@ int sandbox(void* sandbox_arg) {
 		int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
 
 		if(no_new_privs != 0)
-			errExit("NO_NEW_PRIVS");
+			fprintf(stderr, "Warning: NO_NEW_PRIVS disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		else if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");
 	}

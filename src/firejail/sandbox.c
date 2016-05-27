@@ -34,6 +34,13 @@
 #define CLONE_NEWUSER	0x10000000
 #endif
 
+#include <sys/prctl.h>
+#ifndef PR_SET_NO_NEW_PRIVS
+# define PR_SET_NO_NEW_PRIVS 38
+#endif
+
+
+
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
 	if (!arg_quiet) {
@@ -746,7 +753,7 @@ int sandbox(void* sandbox_arg) {
 			printf("noroot user namespace installed\n");
 		set_caps();
 	}
-
+	
 	//****************************************
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
@@ -758,7 +765,6 @@ int sandbox(void* sandbox_arg) {
 		else if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");
 	}
-
 
 	//****************************************
 	// fork the application and monitor it

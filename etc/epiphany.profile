@@ -19,8 +19,9 @@ mkdir ${HOME}/.cache
 mkdir ${HOME}/.cache/epiphany
 whitelist ${HOME}/.cache/epiphany
 include /etc/firejail/whitelist-common.inc
+
 caps.drop all
-seccomp
-protocol unix,inet,inet6
 netfilter
 nonewprivs
+protocol unix,inet,inet6
+seccomp

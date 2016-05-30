@@ -65,6 +65,7 @@ blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.Skype
 blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.TelegramDesktop
+blacklist ${HOME}/.config/Gitter
 
 # Games
 blacklist ${HOME}/.hedgewars

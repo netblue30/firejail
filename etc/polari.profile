@@ -22,9 +22,8 @@ whitelist ${HOME}/.purple
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
+netfilter
 nonewprivs
 noroot
-netfilter
-
+protocol unix,inet,inet6
+seccomp

@@ -8,8 +8,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
 nonewprivs
 noroot
 netfilter
+protocol unix,inet,inet6
+seccomp

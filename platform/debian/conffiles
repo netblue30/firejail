@@ -102,3 +102,4 @@
 /etc/firejail/konversation.profile
 /etc/firejail/psi-plus.profile
 /etc/firejail/brave.profile
+/etc/firejail/gitter.profile

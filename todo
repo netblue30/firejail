@@ -82,3 +82,22 @@ https://github.com/torvalds/linux/blob/1e75a9f34a5ed5902707fb74b468356c55142b71/
 12. check for --chroot why .config/pulse dir is not created
 
 13. print error line number for profile files in  profile_check_line()
+
+14. make rpms problems
+$ firejail --version
+firejail version 0.9.40
+User namespace support is disabled.
+
+$ rpmlint firejail-0.9.40-1.x86_64.rpm 
+firejail.x86_64: E: no-changelogname-tag
+firejail.x86_64: W: unstripped-binary-or-object /usr/lib64/firejail/libtracelog.so
+firejail.x86_64: W: unstripped-binary-or-object /usr/lib64/firejail/libtrace.so
+firejail.x86_64: E: missing-call-to-setgroups /usr/lib64/firejail/libtrace.so
+firejail.x86_64: W: conffile-without-noreplace-flag /etc/firejail/google-play-music-desktop-player.profile
+firejail.x86_64: W: conffile-without-noreplace-flag /etc/firejail/rtorrent.profi
+
+$ rpmlint firejail-0.9.40-1.src.rpm
+firejail.src: E: no-changelogname-tag
+firejail.src: W: invalid-url Source0: https://github.com/netblue30/firejail/archive/0.9.40.tar.gz#/firejail-0.9.40.tar.gz HTTP Error 404: Not Found
+1 packages and 0 specfiles checked; 1 errors, 1 warnings.
+

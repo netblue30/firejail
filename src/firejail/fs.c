@@ -966,6 +966,19 @@ void fs_overlayfs(void) {
 		errExit("mounting /run");
 	fs_logger("whitelist /run");
 
+	// mount-bind /tmp/.X11-unix directory
+	if (arg_debug)
+		printf("Mounting /tmp/.X11-unix\n");
+	char *x11;
+	if (asprintf(&x11, "%s/tmp/.X11-unix", oroot) == -1)
+		errExit("asprintf");
+	if (mount("/tmp/.X11-unix", x11, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /tmp/.X11-unix");
+	fs_logger("whitelist /tmp/.X11-unix");
+
+
+
+
 	// chroot in the new filesystem
 	if (chroot(oroot) == -1)
 		errExit("chroot");

@@ -16,8 +16,8 @@ mkdir ${HOME}/.config
 mkdir ${HOME}/.config/mupen64plus
 whitelist ${HOME}/.config/mupen64plus/
 
+caps.drop all
+net none
 nonewprivs
 noroot
-caps.drop all
 seccomp
-net none

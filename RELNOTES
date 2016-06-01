@@ -1,3 +1,8 @@
+firejail (0.9.41) baseline; urgency=low
+  * work in progress...
+  * new profiles: Gitter
+ -- netblue30 <netblue30@yahoo.com>  Tue, 31 May 2016 08:00:00 -0500
+
 firejail (0.9.40) baseline; urgency=low
   * added --nice option
   * added --x11 option
@@ -25,7 +30,7 @@ firejail (0.9.40) baseline; urgency=low
   * new profiles: Aweather, Stellarium, gpredict, quiterss, cyberfox
   * new profiles: generic Ubuntu snap application profile, xplayer
   * new profiles: xreader, xviewer, mcabber, Psi+, Corebird, Konversation
-  * new profiles: Brave
+  * new profiles: Brave, Gitter
   * generic.profile renamed default.profile
   * build rpm packages using "make rpms"
   * bugfixes

@@ -7,8 +7,8 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-# Whitelist the folders needed by Spotify - This is more restrictive 
-# than a blacklist though, but this is all spotify requires for 
+# Whitelist the folders needed by Spotify - This is more restrictive
+# than a blacklist though, but this is all spotify requires for
 # streaming audio
 mkdir ${HOME}/.config
 mkdir ${HOME}/.config/spotify
@@ -23,9 +23,8 @@ whitelist ${HOME}/.cache/spotify
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6,netlink
 netfilter
 nonewprivs
 noroot
-
+protocol unix,inet,inet6,netlink
+seccomp

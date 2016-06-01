@@ -35,3 +35,7 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 `````
 # Current development version: 0.9.41
+
+## New security profiles
+
+Gitter

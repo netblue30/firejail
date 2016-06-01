@@ -1,13 +1,13 @@
-# DeaDBeeF media player profile
-noblacklist ${HOME}/.config/deadbeef
+# Firejail profile for Gitter
+noblacklist ~/.config/Gitter
 
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-nonewprivs
+netfilter
 noroot
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp

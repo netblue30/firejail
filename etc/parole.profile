@@ -8,9 +8,9 @@ private-etc passwd,group,fonts
 private-bin parole,dbus-launch
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
 netfilter
 nonewprivs
 noroot
+protocol unix,inet,inet6
+seccomp
 shell none

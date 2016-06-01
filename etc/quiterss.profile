@@ -16,15 +16,16 @@ mkdir ~/.cache/QuiteRss
 whitelist ${HOME}/.cache/QuiteRss
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
 netfilter
-tracelog
 nonewprivs
-noroot
 nogroups
-shell none
-private-dev
+noroot
 private-bin quiterss
+private-dev
 #private-etc X11,ssl
+protocol unix,inet,inet6
+seccomp
+shell none
+tracelog
+
 include /etc/firejail/whitelist-common.inc

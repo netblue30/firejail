@@ -7,12 +7,12 @@ include /etc/firejail/disable-programs.inc
 
 # Call these options
 caps.drop all
-seccomp
-protocol unix,inet,inet6,netlink
 netfilter
-tracelog
 noroot
 nonewprivs
+protocol unix,inet,inet6,netlink
+seccomp
+tracelog
 
 # Whitelists
 noblacklist ~/.cache/0ad

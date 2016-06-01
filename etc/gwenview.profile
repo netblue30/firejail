@@ -5,16 +5,16 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+
 caps.drop all
-seccomp
-protocol unix
 nonewprivs
 noroot
 nogroups
 private-dev
+protocol unix
+seccomp
 
 #Experimental:
 #shell none
 #private-bin gwenview
 #private-etc X11
-

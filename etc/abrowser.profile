@@ -7,12 +7,12 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6,netlink
 netfilter
-tracelog
 nonewprivs
 noroot
+protocol unix,inet,inet6,netlink
+seccomp
+tracelog
 
 whitelist ${DOWNLOADS}
 mkdir ~/.mozilla
@@ -41,13 +41,12 @@ whitelist ~/.config/lastpass
 
 
 #silverlight
-whitelist ~/.wine-pipelight 
-whitelist ~/.wine-pipelight64 
-whitelist ~/.config/pipelight-widevine 
+whitelist ~/.wine-pipelight
+whitelist ~/.wine-pipelight64
+whitelist ~/.config/pipelight-widevine
 whitelist ~/.config/pipelight-silverlight5.1
 
 include /etc/firejail/whitelist-common.inc
 
 # experimental features
 #private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
-

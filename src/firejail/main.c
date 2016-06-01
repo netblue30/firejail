@@ -710,6 +710,20 @@ int main(int argc, char **argv) {
 	if (*argv[0] != '-')
 		run_symlink(argc, argv);
 
+	// detect --quiet
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--quiet") == 0) {
+			arg_quiet = 1;
+			break;
+		}
+		
+		// detect end of firejail params
+		if (strcmp(argv[i], "--") == 0)
+			break;
+		if (strncmp(argv[i], "--", 2) != 0)
+			break;
+	}
+
 	// check if we already have a sandbox running
 	EUID_ROOT();
 	int rv = check_kernel_procs();
@@ -752,6 +766,8 @@ int main(int argc, char **argv) {
 				found = 1;
 				break;
 			}
+
+			// detect end of firejail params
 			if (strcmp(argv[i], "--") == 0)
 				break;
 			if (strncmp(argv[i], "--", 2) != 0)

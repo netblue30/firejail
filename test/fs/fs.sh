@@ -45,6 +45,9 @@ echo "TESTING: blacklist directory (test/fs/option_blacklist.exp)"
 echo "TESTING: blacklist file (test/fs/option_blacklist_file.exp)"
 ./option_blacklist_file.exp
 
+echo "TESTING: blacklist glob (test/fs/option_blacklist_glob.exp)"
+./option_blacklist_glob.exp
+
 echo "TESTING: bind as user (test/fs/option_bind_user.exp)"
 ./option_bind_user.exp
 

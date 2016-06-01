@@ -361,7 +361,7 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 	glob_t globbuf;
 	// Profiles contain blacklists for files that might not exist on a user's machine.
 	// GLOB_NOCHECK makes that okay.
-	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT, NULL, &globbuf);
+	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT | GLOB_PERIOD, NULL, &globbuf);
 	if (globerr) {
 		fprintf(stderr, "Error: failed to glob pattern %s\n", pattern);
 		exit(1);

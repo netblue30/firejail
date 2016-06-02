@@ -31,7 +31,8 @@ expect {
 send -- "ping google.com\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Operation not permitted"
+	"Operation not permitted" {puts "OK\n"}
+	"unknown host" {puts "OK\n"}
 }
 
 send -- "exit\r"

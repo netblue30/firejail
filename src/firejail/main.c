@@ -725,65 +725,71 @@ int main(int argc, char **argv) {
 	}
 
 	// check if we already have a sandbox running
-	EUID_ROOT();
-	int rv = check_kernel_procs();
-	EUID_USER();
-	if (rv == 0) {
-		// if --force option is passed to the program, disregard the existing sandbox
-		int found = 0;
-		for (i = 1; i < argc; i++) {
-			if (strcmp(argv[i], "--force") == 0 ||
-			    strcmp(argv[i], "--list") == 0 ||	
-			    strcmp(argv[i], "--netstats") == 0 ||	
-			    strcmp(argv[i], "--tree") == 0 ||	
-			    strcmp(argv[i], "--top") == 0 ||
-			    strncmp(argv[i], "--ls=", 5) == 0 ||
-			    strncmp(argv[i], "--get=", 6) == 0 ||
-			    strcmp(argv[i], "--debug-caps") == 0 ||
-			    strcmp(argv[i], "--debug-errnos") == 0 ||
-			    strcmp(argv[i], "--debug-syscalls") == 0 ||
-			    strcmp(argv[i], "--debug-protocols") == 0 ||
-			    strcmp(argv[i], "--help") == 0 ||
-			    strcmp(argv[i], "--version") == 0 ||
-			    strncmp(argv[i], "--dns.print=", 12) == 0 ||
-			    strncmp(argv[i], "--bandwidth=", 12) == 0 ||
-			    strncmp(argv[i], "--caps.print=", 13) == 0 ||
-			    strncmp(argv[i], "--cpu.print=", 12) == 0 ||
-//********************************************************************************
-// todo: fix the following problems
-			    strncmp(argv[i], "--join=", 7) == 0 ||
-//[netblue@debian Downloads]$ firejail --join=896
-//Switching to pid 897, the first child process inside the sandbox
-//Error: seccomp file not found
-//********************************************************************************
-
-			    strncmp(argv[i], "--join-filesystem=", 18) == 0 ||
-			    strncmp(argv[i], "--join-network=", 15) == 0 ||
-			    strncmp(argv[i], "--fs.print=", 11) == 0 ||
-			    strncmp(argv[i], "--protocol.print=", 17) == 0 ||
-			    strncmp(argv[i], "--seccomp.print", 15) == 0 ||
-			    strncmp(argv[i], "--shutdown=", 11) == 0) {
-				found = 1;
-				break;
+	// If LXC is detected, start firejail sandbox
+	// otherwise try to detect a PID namespace by looking under /proc for specific kernel processes and:
+	//	- if --force flag is set, start firejail sandbox
+	//	-- if --force flag is not set, start the application in a /bin/bash shell 
+	if (check_namespace_virt() == 0) {
+		EUID_ROOT();
+		int rv = check_kernel_procs();
+		EUID_USER();
+		if (rv == 0) {
+			// if --force option is passed to the program, disregard the existing sandbox
+			int found = 0;
+			for (i = 1; i < argc; i++) {
+				if (strcmp(argv[i], "--force") == 0 ||
+				    strcmp(argv[i], "--list") == 0 ||	
+				    strcmp(argv[i], "--netstats") == 0 ||	
+				    strcmp(argv[i], "--tree") == 0 ||	
+				    strcmp(argv[i], "--top") == 0 ||
+				    strncmp(argv[i], "--ls=", 5) == 0 ||
+				    strncmp(argv[i], "--get=", 6) == 0 ||
+				    strcmp(argv[i], "--debug-caps") == 0 ||
+				    strcmp(argv[i], "--debug-errnos") == 0 ||
+				    strcmp(argv[i], "--debug-syscalls") == 0 ||
+				    strcmp(argv[i], "--debug-protocols") == 0 ||
+				    strcmp(argv[i], "--help") == 0 ||
+				    strcmp(argv[i], "--version") == 0 ||
+				    strncmp(argv[i], "--dns.print=", 12) == 0 ||
+				    strncmp(argv[i], "--bandwidth=", 12) == 0 ||
+				    strncmp(argv[i], "--caps.print=", 13) == 0 ||
+				    strncmp(argv[i], "--cpu.print=", 12) == 0 ||
+	//********************************************************************************
+	// todo: fix the following problems
+				    strncmp(argv[i], "--join=", 7) == 0 ||
+	//[netblue@debian Downloads]$ firejail --join=896
+	//Switching to pid 897, the first child process inside the sandbox
+	//Error: seccomp file not found
+	//********************************************************************************
+	
+				    strncmp(argv[i], "--join-filesystem=", 18) == 0 ||
+				    strncmp(argv[i], "--join-network=", 15) == 0 ||
+				    strncmp(argv[i], "--fs.print=", 11) == 0 ||
+				    strncmp(argv[i], "--protocol.print=", 17) == 0 ||
+				    strncmp(argv[i], "--seccomp.print", 15) == 0 ||
+				    strncmp(argv[i], "--shutdown=", 11) == 0) {
+					found = 1;
+					break;
+				}
+	
+				// detect end of firejail params
+				if (strcmp(argv[i], "--") == 0)
+					break;
+				if (strncmp(argv[i], "--", 2) != 0)
+					break;
 			}
-
-			// detect end of firejail params
-			if (strcmp(argv[i], "--") == 0)
-				break;
-			if (strncmp(argv[i], "--", 2) != 0)
-				break;
+			
+			if (found == 0) {
+				// start the program directly without sandboxing
+				run_no_sandbox(argc, argv);
+				// it will never get here!
+				assert(0);
+			}
+			else
+				option_force = 1;
 		}
-		
-		if (found == 0) {
-			// start the program directly without sandboxing
-			run_no_sandbox(argc, argv);
-			// it will never get here!
-			assert(0);
-		}
-		else
-			option_force = 1;
 	}
-
+	
 	// check root/suid
 	EUID_ROOT();
 	if (geteuid()) {

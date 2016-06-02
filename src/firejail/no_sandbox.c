@@ -23,6 +23,19 @@
 #include <unistd.h>
 #include <grp.h>
 
+// returns 1 if we are running under LXC
+int check_namespace_virt(void) {
+	char *container = getenv("container");
+	if (container &&
+	    (strcmp(container, "lxc") == 0 ||
+	     strcmp(container, "docker") == 0 ||
+	     strcmp(container, "lxc-libvirt") == 0 ||
+	     strcmp(container, "systemd-nspawn") == 0 ||
+	     strcmp(container, "rkt") == 0))
+		return 1;
+	return 0;
+}
+
 // check process space for kernel processes
 // return 1 if found, 0 if not found
 int check_kernel_procs(void) {

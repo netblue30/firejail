@@ -48,8 +48,25 @@ static char *check_dir_or_file(const char *name) {
 			errExit("asprintf");
 		if (arg_debug)
 			printf("Checking %s/%s\n", paths[i], name);		
-		if (stat(fname, &s) == 0 && !S_ISDIR(s.st_mode)) // do not allow directories
+		if (stat(fname, &s) == 0 && !S_ISDIR(s.st_mode)) { // do not allow directories
+			// check symlink to firejail executable in /usr/local/bin
+			if (strcmp(paths[i], "/usr/local/bin") == 0 && is_link(fname)) {
+				char *actual_path = realpath(fname, NULL);
+				if (actual_path) {
+					char *ptr = strstr(actual_path, "/firejail");
+					if (ptr && strlen(ptr) == strlen("/firejail")) {
+						if (arg_debug)
+							printf("firejail exec symlink detected\n");
+						free(fname);
+						fname = NULL;
+						i++;
+						continue;
+					}
+				}
+				
+			}		
 			break; // file found
+		}
 		
 		free(fname);
 		fname = NULL;

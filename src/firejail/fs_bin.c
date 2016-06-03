@@ -57,11 +57,13 @@ static char *check_dir_or_file(const char *name) {
 					if (ptr && strlen(ptr) == strlen("/firejail")) {
 						if (arg_debug)
 							printf("firejail exec symlink detected\n");
+						free(actual_path);
 						free(fname);
 						fname = NULL;
 						i++;
 						continue;
 					}
+					free(actual_path);
 				}
 				
 			}		

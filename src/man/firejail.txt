@@ -460,6 +460,11 @@ in case you intend to start an external DHCP client in the sandbox.
 Example:
 .br
 $ firejail \-\-net=eth0 \-\-\ip=none
+.br
+
+.br
+If the coresponding interface doesn't have an IP address configured, this
+option is enabled by default.
 
 .TP
 \fB\-\-ip6=address

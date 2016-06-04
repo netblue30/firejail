@@ -56,9 +56,12 @@ void net_configure_bridge(Bridge *br, char *dev_name) {
 		}
 	}
 
+	// allow unconfigured interfaces
 	if (net_get_if_addr(br->dev, &br->ip, &br->mask, br->mac, &br->mtu)) {
-		fprintf(stderr, "Error: interface %s is not configured\n", br->dev);
-		exit(1);
+		fprintf(stderr, "Warning: interface %s is not configured\n", br->dev);
+		br->configured = 1;
+		br->arg_ip_none = 1;
+		return;
 	}
 	if (arg_debug) {
 		if (br->macvlan == 0)

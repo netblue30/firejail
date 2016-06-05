@@ -248,8 +248,6 @@ static void disable_file(OPERATION op, const char *filename) {
 	// Resolve all symlinks
 	char* fname = realpath(filename, NULL);
 	if (fname == NULL && errno != EACCES) {
-		if (arg_debug)
-			printf("Warning (realpath): %s is an invalid file, skipping...\n", filename);
 		return;
 	}
 	if (fname == NULL && errno == EACCES) {
@@ -601,89 +599,55 @@ void fs_proc_sys_dev_boot(void) {
 			fs_logger("remount /sys");
 	}
 		
-	if (stat("/sys/firmware", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/firmware");
-	}
-		
-	if (stat("/sys/hypervisor", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/hypervisor");
-	}
-
-	if (stat("/sys/fs", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/fs");
-	}
-
-	if (stat("/sys/module", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/module");
-	}
-
-	if (stat("/sys/power", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/power");
-	}
+	disable_file(BLACKLIST_FILE, "/sys/firmware");
+	disable_file(BLACKLIST_FILE, "/sys/hypervisor");
+	disable_file(BLACKLIST_FILE, "/sys/fs");
+	disable_file(BLACKLIST_FILE, "/sys/module");
+	disable_file(BLACKLIST_FILE, "/sys/power");
+	disable_file(BLACKLIST_FILE, "/sys/kernel/debug");
+	disable_file(BLACKLIST_FILE, "/sys/kernel/vmcoreinfo");
+	disable_file(BLACKLIST_FILE, "/sys/kernel/uevent_helper");
 
 //	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
 //		errExit("mounting /sys");
 
-	// Disable SysRq
-	// a linux box can be shut down easily using the following commands (as root):
-	// # echo 1 > /proc/sys/kernel/sysrq
-	// #echo b > /proc/sysrq-trigger
-	// for more information see https://www.kernel.org/doc/Documentation/sysrq.txt
-	if (arg_debug)
-		printf("Disable /proc/sysrq-trigger\n");
-	fs_rdonly_noexit("/proc/sysrq-trigger");
-	
-	// disable hotplug and uevent_helper
-	if (arg_debug)
-		printf("Disable /proc/sys/kernel/hotplug\n");
-	fs_rdonly_noexit("/proc/sys/kernel/hotplug");
-	if (arg_debug)
-		printf("Disable /sys/kernel/uevent_helper\n");
-	fs_rdonly_noexit("/sys/kernel/uevent_helper");
-	
-	// read-only /proc/irq and /proc/bus
-	if (arg_debug)
-		printf("Disable /proc/irq\n");
-	fs_rdonly_noexit("/proc/irq");
-	if (arg_debug)
-		printf("Disable /proc/bus\n");
-	fs_rdonly_noexit("/proc/bus");
-	
-	// disable /proc/kcore
-	disable_file(BLACKLIST_FILE, "/proc/kcore");
 
-	// disable /proc/kallsyms
+	// various /proc/sys files
+	disable_file(BLACKLIST_FILE, "/proc/sys/security");	
+	disable_file(BLACKLIST_FILE, "/proc/sys/efi/vars");	
+	disable_file(BLACKLIST_FILE, "/proc/sys/fs/binfmt_misc");	
+	disable_file(BLACKLIST_FILE, "/proc/sys/kernel/core_pattern");	
+	disable_file(BLACKLIST_FILE, "/proc/sys/kernel/modprobe");	
+	disable_file(BLACKLIST_FILE, "/proc/sysrq-trigger");
+	disable_file(BLACKLIST_FILE, "/proc/sys/kernel/hotplug");
+	disable_file(BLACKLIST_FILE, "/proc/sys/vm/panic_on_oom");
+
+
+	// various /proc files
+	disable_file(BLACKLIST_FILE, "/proc/irq");
+	disable_file(BLACKLIST_FILE, "/proc/bus");
+	disable_file(BLACKLIST_FILE, "/proc/config.gz");	
+	disable_file(BLACKLIST_FILE, "/proc/sched_debug");	
+	disable_file(BLACKLIST_FILE, "/proc/timer_list");	
+	disable_file(BLACKLIST_FILE, "/proc/timer_stats");	
+	disable_file(BLACKLIST_FILE, "/proc/kcore");
 	disable_file(BLACKLIST_FILE, "/proc/kallsyms");
+	disable_file(BLACKLIST_FILE, "/proc/mem");
+	disable_file(BLACKLIST_FILE, "/proc/kmem");
 	
 	// disable /boot
-	if (stat("/boot", &s) == 0) {
-		if (arg_debug)
-			printf("Disable /boot directory\n");
-		disable_file(BLACKLIST_FILE, "/boot");
-	}
+	disable_file(BLACKLIST_FILE, "/boot");
 	
 	// disable /selinux
-	if (stat("/selinux", &s) == 0) {
-		if (arg_debug)
-			printf("Disable /selinux directory\n");
-		disable_file(BLACKLIST_FILE, "/selinux");
-	}
+	disable_file(BLACKLIST_FILE, "/selinux");
 	
 	// disable /dev/port
-	if (stat("/dev/port", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/dev/port");
-	}
+	disable_file(BLACKLIST_FILE, "/dev/port");
 	
 	if (getuid() != 0) {
-		// disable /dev/kmsg
-		if (stat("/dev/kmsg", &s) == 0) {
-			disable_file(BLACKLIST_FILE, "/dev/kmsg");
-		}
-		
-		// disable /proc/kmsg
-		if (stat("/proc/kmsg", &s) == 0) {
-			disable_file(BLACKLIST_FILE, "/proc/kmsg");
-		}
+		// disable /dev/kmsg and /proc/kmsg
+		disable_file(BLACKLIST_FILE, "/dev/kmsg");
+		disable_file(BLACKLIST_FILE, "/proc/kmsg");
 	}
 }
 

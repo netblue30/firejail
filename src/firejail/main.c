@@ -107,6 +107,7 @@ char *fullargv[MAX_ARGS];			// expanded argv for restricted shell
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
+static char *appimage_mntdir = NULL;
 
 static void set_name_file(pid_t pid);
 static void delete_name_file(pid_t pid);
@@ -129,7 +130,12 @@ static void myexit(int rv) {
 	// delete sandbox files in shared memory
 	EUID_ROOT();
 	clear_run_files(sandbox_pid);
-	
+	if (appimage_mntdir) {
+		umount2(appimage_mntdir, MNT_FORCE);
+		rmdir(appimage_mntdir);
+		free(appimage_mntdir);
+	}
+		
 	exit(rv); 
 }
 
@@ -701,6 +707,7 @@ int main(int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 	int highest_errno = errno_highest_nr();
 #endif
+	int arg_appimage = 0;
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -1400,7 +1407,7 @@ int main(int argc, char **argv) {
 		}
 		else if (strncmp(argv[i], "--env=", 6) == 0)
 			env_store(argv[i] + 6);
-		else if (strncmp(argv[i], "--nosound", 9) == 0) {
+		else if (strcmp(argv[i], "--nosound") == 0) {
 			arg_nosound = 1;
 			arg_private_dev = 1;
 		}
@@ -1766,6 +1773,8 @@ int main(int argc, char **argv) {
 		//*************************************
 		// command
 		//*************************************
+		else if (strcmp(argv[i], "--appimage") == 0)
+			arg_appimage = 1;
 		else if (strcmp(argv[i], "--csh") == 0) {
 			if (arg_shell_none) {
 			
@@ -1847,7 +1856,13 @@ int main(int argc, char **argv) {
 			}
 			
 			// we have a program name coming
-			extract_command_name(i, argv);
+			if (arg_appimage) {
+				cfg.command_name = strdup(argv[i]);
+				if (!cfg.command_name)
+					errExit("strdup");
+			}
+			else
+				extract_command_name(i, argv);
 			prog_index = i;
 			break;
 		}
@@ -1900,6 +1915,13 @@ int main(int argc, char **argv) {
 		cfg.window_title = "/bin/bash";
 		cfg.command_name = "bash";
 	}
+	else if (arg_appimage) {
+		if (arg_debug)
+			printf("Configuring appimage environment\n");
+		appimage_mntdir = appimage_set(cfg.command_name);
+		cfg.window_title = "appimage";
+		//todo: set window title
+	}
 	else {
 		// calculate the length of the command
 		int i;
@@ -1939,6 +1961,7 @@ int main(int argc, char **argv) {
 	assert(cfg.command_name);
 	if (arg_debug)
 		printf("Command name #%s#\n", cfg.command_name);
+		
 				
 	// load the profile
 	if (!arg_noprofile) {

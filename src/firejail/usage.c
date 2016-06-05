@@ -34,6 +34,7 @@ void usage(void) {
 	printf("\n");
 	printf("Options:\n\n");
 	printf("    -- - signal the end of options and disables further option processing.\n\n");
+	printf("    --appimage - sandbox an AppImage application\n\n");
 #ifdef HAVE_NETWORK	
 	printf("    --bandwidth=name|pid - set  bandwidth  limits  for  the sandbox identified\n");
 	printf("\tby name or PID, see Traffic Shaping section fo more details.\n\n");

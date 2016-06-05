@@ -36,6 +36,35 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 `````
 # Current development version: 0.9.41
 
+## AppImage
+
+AppImage (http://appimage.org/) is a distribution-agnostic packaging format.
+The package is a regular ISO file containing all binaries, libraries and resources
+necessary for the program to run.
+
+We introduce in this release support for sandboxing AppImage applications. Example:
+`````
+$ firejail --appimage krita-3.0-x86_64.appimage
+`````
+All Firejail sandboxing options should be available. A private home directory:
+`````
+$ firejail --appimage --private krita-3.0-x86_64.appimage
+`````
+or some basic X11 sandboxing:
+`````
+$ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
+`````
+Major software applications distributing AppImage packages:
+
+..* Krita: https://krita.org/download/krita-desktop/
+..* OpenShot: http://www.openshot.org/download/
+..* Scribus: https://www.scribus.net/downloads/unstable-branch/
+..* MuseScore: https://musescore.org/en/download
+
+More packages build by AppImage developer Simon Peter: https://bintray.com/probono/AppImages
+
+AppImage project home: https://github.com/probonopd/AppImageKit
+
 ## New security profiles
 
 Gitter

@@ -575,6 +575,8 @@ int checkcfg(int val);
 void fs_rdwr_add(const char *path);
 void fs_rdwr(void);
 
+// appimage.c
+char *appimage_set(const char *appimage_path);
 
 #endif
 

@@ -56,10 +56,10 @@ $ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
 `````
 Major software applications distributing AppImage packages:
 
-..* Krita: https://krita.org/download/krita-desktop/
-..* OpenShot: http://www.openshot.org/download/
-..* Scribus: https://www.scribus.net/downloads/unstable-branch/
-..* MuseScore: https://musescore.org/en/download
+* Krita: https://krita.org/download/krita-desktop/
+* OpenShot: http://www.openshot.org/download/
+* Scribus: https://www.scribus.net/downloads/unstable-branch/
+* MuseScore: https://musescore.org/en/download
 
 More packages build by AppImage developer Simon Peter: https://bintray.com/probono/AppImages
 

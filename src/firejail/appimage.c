@@ -26,11 +26,14 @@
 #include <sys/mount.h>
 #include <fcntl.h>
 #include <linux/loop.h>
+#include <errno.h>
 
+static char *devloop = NULL;	// device file 
+static char *mntdir = NULL;	// mount point in /tmp directory
 
-
-char *appimage_set(const char *appimage_path) {
+void appimage_set(const char *appimage_path) {
 	assert(appimage_path);
+	assert(devloop == NULL);	// don't call this twice!
 	EUID_ASSERT();
 	
 	// check appimage_path
@@ -49,7 +52,6 @@ char *appimage_set(const char *appimage_path) {
 		exit(1);
 	}
 	close(cfd);
-	char *devloop;
 	if (asprintf(&devloop, "/dev/loop%d", devnr) == -1)
 		errExit("asprintf");
 		
@@ -63,21 +65,24 @@ char *appimage_set(const char *appimage_path) {
 	close(ffd);
 	
 	char dirname[] = "/tmp/firejail-mnt-XXXXXX";
-	char *mntdir =  strdup(mkdtemp(dirname));
+	mntdir =  strdup(mkdtemp(dirname));
 	if (mntdir == NULL) {
 		fprintf(stderr, "Error: cannot create temporary directory\n");
 		exit(1);
 	}
 	mkdir(mntdir, 755);
-	chown(mntdir, getuid(), getgid());
-	chmod(mntdir, 755);
-
+	if (chown(mntdir, getuid(), getgid()) == -1)
+		errExit("chown");
+	if (chmod(mntdir, 755) == -1)
+		errExit("chmod");
+	
 	char *mode;
 	if (asprintf(&mode, "mode=755,uid=%d,gid=%d", getuid(), getgid()) == -1)
 		errExit("asprintf");
 
 	if (mount(devloop, mntdir, "iso9660",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
 		errExit("mounting appimage");
+
 
 	if (arg_debug)
 		printf("appimage mounted on %s\n", mntdir);
@@ -87,8 +92,26 @@ char *appimage_set(const char *appimage_path) {
 	if (asprintf(&cfg.command_line, "%s/AppRun", mntdir) == -1)
 		errExit("asprintf");
 	
-	free(devloop);
 	free(mode);
-	
-	return mntdir;
+}
+
+void appimage_clear(void) {
+	int rv;
+
+	if (mntdir) {
+		rv = umount2(mntdir, MNT_FORCE);
+		if (rv == -1 && errno == EBUSY) {
+			sleep(1);			
+			rv = umount2(mntdir, MNT_FORCE);
+			
+		}
+		rmdir(mntdir);
+		free(mntdir);
+	}
+
+	if (devloop) {
+		int lfd = open(devloop, O_RDONLY);
+		rv = ioctl(lfd, LOOP_CLR_FD, 0);
+		close(lfd);
+	}
 }

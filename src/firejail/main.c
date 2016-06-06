@@ -107,7 +107,6 @@ char *fullargv[MAX_ARGS];			// expanded argv for restricted shell
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
-static char *appimage_mntdir = NULL;
 
 static void set_name_file(pid_t pid);
 static void delete_name_file(pid_t pid);
@@ -130,16 +129,13 @@ static void myexit(int rv) {
 	// delete sandbox files in shared memory
 	EUID_ROOT();
 	clear_run_files(sandbox_pid);
-	if (appimage_mntdir) {
-		umount2(appimage_mntdir, MNT_FORCE);
-		rmdir(appimage_mntdir);
-		free(appimage_mntdir);
-	}
+	appimage_clear();
 		
 	exit(rv); 
 }
 
 static void my_handler(int s){
+printf("**************************\n");
 	EUID_ROOT();
 	if (!arg_quiet) {
 		printf("\nParent received signal %d, shutting down the child process...\n", s);
@@ -1918,9 +1914,8 @@ int main(int argc, char **argv) {
 	else if (arg_appimage) {
 		if (arg_debug)
 			printf("Configuring appimage environment\n");
-		appimage_mntdir = appimage_set(cfg.command_name);
+		appimage_set(cfg.command_name);
 		cfg.window_title = "appimage";
-		//todo: set window title
 	}
 	else {
 		// calculate the length of the command

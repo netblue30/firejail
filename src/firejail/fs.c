@@ -570,8 +570,6 @@ void fs_rdonly_noexit(const char *dir) {
 
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {
-	struct stat s;
-
 	if (arg_debug)
 		printf("Remounting /proc and /proc/sys filesystems\n");
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)

@@ -576,7 +576,8 @@ void fs_rdwr_add(const char *path);
 void fs_rdwr(void);
 
 // appimage.c
-char *appimage_set(const char *appimage_path);
+void appimage_set(const char *appimage_path);
+void appimage_clear(void);
 
 #endif
 

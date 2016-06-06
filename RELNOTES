@@ -1,6 +1,6 @@
 firejail (0.9.41) baseline; urgency=low
   * work in progress...
-  * new profiles: Gitter
+  * new profiles: Gitter, gThumb, mpv
  -- netblue30 <netblue30@yahoo.com>  Tue, 31 May 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low

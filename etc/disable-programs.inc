@@ -6,6 +6,7 @@ blacklist ${HOME}/.wine
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.stellarium
+blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/uGet
@@ -26,6 +27,7 @@ blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/vlc
+blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/xplayer
 

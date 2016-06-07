@@ -10,3 +10,4 @@ nonewprivs
 # noroot - noroot break midori on Ubuntu 14.04
 protocol unix,inet,inet6
 seccomp
+

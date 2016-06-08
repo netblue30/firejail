@@ -89,7 +89,8 @@ static int pid_is_firejail(pid_t pid) {
 	
 		// list of firejail arguments that don't trigger sandbox creation
 		// the initial -- is not included 
-		char *firejail_args = "ls list tree x11 help version top netstats debug-syscalls debug-errnos debug-protocols";
+		char *firejail_args = "ls list tree x11 help version top netstats debug-syscalls debug-errnos debug-protocols "
+			"protocol.print debug.caps shutdown bandwidth caps.print cpu.print debug-caps fs.print get ";
 		
 		int i;
 		char *start;

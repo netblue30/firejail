@@ -103,6 +103,7 @@ void appimage_clear(void) {
 		if (rv == -1 && errno == EBUSY) {
 			sleep(1);			
 			rv = umount2(mntdir, MNT_FORCE);
+			(void) rv;
 			
 		}
 		rmdir(mntdir);
@@ -112,6 +113,7 @@ void appimage_clear(void) {
 	if (devloop) {
 		int lfd = open(devloop, O_RDONLY);
 		rv = ioctl(lfd, LOOP_CLR_FD, 0);
+		(void) rv;
 		close(lfd);
 	}
 }

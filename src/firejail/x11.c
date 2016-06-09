@@ -187,9 +187,15 @@ void x11_start_xephyr(int argc, char **argv) {
 
 	// start xephyr
 	char *cmd1;
-	if (asprintf(&cmd1, "Xephyr -ac -br -title \"firejail x11 sandbox\" -noreset -screen %s :%d", xephyr_screen, display) == -1)
-		errExit("asprintf");
-	
+	if (checkcfg(CFG_XEPHYR_WINDOW_TITLE)) {
+		if (asprintf(&cmd1, "Xephyr -ac -br -title \"firejail x11 sandbox\" %s -noreset -screen %s :%d", xephyr_extra_params, xephyr_screen, display) == -1)
+			errExit("asprintf");
+	}
+	else {
+		if (asprintf(&cmd1, "Xephyr -ac -br  %s -noreset -screen %s :%d", xephyr_extra_params, xephyr_screen, display) == -1)
+			errExit("asprintf");
+	}
+
 	int len = 50; // DISPLAY...
 	for (i = 0; i < argc; i++) {
 		len += strlen(argv[i]) + 1; // + ' '

@@ -550,7 +550,6 @@ int x11_display(void);
 void x11_start(int argc, char **argv);
 void x11_start_xpra(int argc, char **argv);
 void x11_start_xephyr(int argc, char **argv);
-extern char *xephyr_screen;
 
 // ls.c
 #define SANDBOX_FS_LS 0
@@ -569,7 +568,10 @@ void sandboxfs(int op, pid_t pid, const char *patqh);
 #define CFG_RESTRICTED_NETWORK 7
 #define CFG_FORCE_NONEWPRIVS 8
 #define CFG_WHITELIST 9
-#define CFG_MAX 10 // this should always be the last entry
+#define CFG_XEPHYR_WINDOW_TITLE 10
+#define CFG_MAX 11 // this should always be the last entry
+extern char *xephyr_screen;
+extern char *xephyr_extra_params;
 int checkcfg(int val);
 
 // fs_rdwr.c

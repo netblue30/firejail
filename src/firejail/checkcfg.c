@@ -25,6 +25,7 @@
 static int initialized = 0;
 static int cfg_val[CFG_MAX];
 char *xephyr_screen = "800x600";
+char *xephyr_extra_params = "";
 
 int checkcfg(int val) {
 	EUID_ASSERT();
@@ -165,9 +166,27 @@ int checkcfg(int val) {
 				if (asprintf(&xephyr_screen, "%dx%d", n1, n2) == -1)
 					errExit("asprintf");
 			}
+	
+			// xephyr window title
+			else if (strncmp(ptr, "xephyr-window-title ", 20) == 0) {
+				if (strcmp(ptr + 20, "yes") == 0)
+					cfg_val[CFG_XEPHYR_WINDOW_TITLE] = 1;
+				else if (strcmp(ptr + 20, "no") == 0)
+					cfg_val[CFG_XEPHYR_WINDOW_TITLE] = 0;
+				else
+					goto errout;
+			}
+				
+			// Xephyr command extra parameters
+			else if (strncmp(ptr, "xephyr-extra-params ", 19) == 0) {
+				xephyr_extra_params = strdup(ptr + 19);
+				if (!xephyr_extra_params)
+					errExit("strdup");
+			}
+
 			else
 				goto errout;
-				
+
 			free(ptr);
 		}
 

@@ -72,8 +72,9 @@ void usage(void) {
 	printf("\tsoftware build.\n\n");
 	printf("    --debug-syscalls - print all recognized system calls in the current Firejail\n");
 	printf("\tsoftware build.\n\n");
+#ifdef HAVE_WHITELIST	
 	printf("    --debug-whitelists - debug whitelisting.\n\n");
-
+#endif
 
 
 #ifdef HAVE_NETWORK	
@@ -250,8 +251,9 @@ void usage(void) {
 	printf("    --tree - print a tree of all sandboxed processes.\n\n");
 	printf("    --user=new_user - switch the user before starting the sandbox.\n\n");
 	printf("    --version - print program version and exit.\n\n");
+#ifdef HAVE_WHITELIST	
 	printf("    --whitelist=dirname_or_filename - whitelist directory or file.\n\n");
-	
+#endif	
 	printf("    --writable-etc - /etc directory is mounted read-write.\n\n");
 	printf("    --writable-var - /var directory is mounted read-write.\n\n");
 	

@@ -629,6 +629,7 @@ EGREP
 GREP
 CPP
 HAVE_FATAL_WARNINGS
+HAVE_WHITELIST
 HAVE_FILE_TRANSFER
 HAVE_X11
 HAVE_USERNS
@@ -695,6 +696,7 @@ enable_network
 enable_userns
 enable_x11
 enable_file_transfer
+enable_whitelist
 enable_fatal_warnings
 '
       ac_precious_vars='build_alias
@@ -1324,6 +1326,7 @@ Optional Features:
   --disable-userns        disable user namespace
   --disable-x11           disable X11 sandboxing support
   --disable-file-transfer disable file transfer
+  --disable-whitelist     disable whitelist
   --enable-fatal-warnings -W -Wall -Werror
 
 Some influential environment variables:
@@ -3163,6 +3166,19 @@ if test "x$enable_file_transfer" != "xno"; then :
 
 fi
 
+HAVE_WHITELIST=""
+# Check whether --enable-whitelist was given.
+if test "${enable_whitelist+set}" = set; then :
+  enableval=$enable_whitelist;
+fi
+
+if test "x$enable_whitelist" != "xno"; then :
+
+	HAVE_WHITELIST="-DHAVE_WHITELIST"
+
+
+fi
+
 HAVE_FATAL_WARNINGS=""
 # Check whether --enable-fatal_warnings was given.
 if test "${enable_fatal_warnings+set}" = set; then :
@@ -4823,6 +4839,7 @@ echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"
+echo "   whitelisting: $HAVE_WHITELIST"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo

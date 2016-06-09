@@ -277,6 +277,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifndef HAVE_FILE_TRANSFER
 		printf("File transfer support is disabled.\n");
 #endif
+#ifndef HAVE_WHITELIST
+		printf("whitelisting support is disabled.\n");
+#endif
 		exit(0);
 	}
 #ifdef HAVE_X11
@@ -1114,14 +1117,24 @@ int main(int argc, char **argv) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
+
+#ifdef HAVE_WHITELIST
 		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
-			char *line;
-			if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
-				errExit("asprintf");
-			
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
+			if (checkcfg(CFG_WHITELIST)) {
+				char *line;
+				if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
+					errExit("asprintf");
+				
+				profile_check_line(line, 0, NULL);	// will exit if something wrong
+				profile_add(line);
+			}
+			else {
+				fprintf(stderr, "Error: whitelist feature is disabled in Firejail configuration file\n");
+				exit(1);
+			}
 		}
+#endif		
+
 		else if (strncmp(argv[i], "--read-only=", 12) == 0) {
 			char *line;
 			if (asprintf(&line, "read-only %s", argv[i] + 12) == -1)

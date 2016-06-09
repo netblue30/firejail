@@ -38,7 +38,7 @@ int checkcfg(int val) {
 			cfg_val[i] = 1; // most of them are enabled by default
 
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
-		cfg_val[CFG_FORCE_NONEWPRIVS  ] = 0; // disabled by default
+		cfg_val[CFG_FORCE_NONEWPRIVS] = 0; // disabled by default
 		
 		// open configuration file
 		char *fname;
@@ -123,6 +123,15 @@ int checkcfg(int val) {
 					cfg_val[CFG_SECCOMP] = 1;
 				else if (strcmp(ptr + 8, "no") == 0)
 					cfg_val[CFG_SECCOMP] = 0;
+				else
+					goto errout;
+			}
+			// whitelist
+			else if (strncmp(ptr, "whitelist ", 10) == 0) {
+				if (strcmp(ptr + 10, "yes") == 0)
+					cfg_val[CFG_WHITELIST] = 1;
+				else if (strcmp(ptr + 10, "no") == 0)
+					cfg_val[CFG_WHITELIST] = 0;
 				else
 					goto errout;
 			}

@@ -70,6 +70,14 @@ AS_IF([test "x$enable_file_transfer" != "xno"], [
 	AC_SUBST(HAVE_FILE_TRANSFER)
 ])
 
+HAVE_WHITELIST=""
+AC_ARG_ENABLE([whitelist],
+    AS_HELP_STRING([--disable-whitelist], [disable whitelist]))
+AS_IF([test "x$enable_whitelist" != "xno"], [
+	HAVE_WHITELIST="-DHAVE_WHITELIST"
+	AC_SUBST(HAVE_WHITELIST)
+])
+
 HAVE_FATAL_WARNINGS=""
 AC_ARG_ENABLE([fatal_warnings],
     AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror]))
@@ -103,6 +111,7 @@ echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"
+echo "   whitelisting: $HAVE_WHITELIST"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo

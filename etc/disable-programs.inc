@@ -68,6 +68,7 @@ blacklist ${HOME}/.Skype
 blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.config/Gitter
+blacklist ${HOME}/.config/Franz
 
 # Games
 blacklist ${HOME}/.hedgewars
@@ -106,6 +107,7 @@ blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/0ad
 blacklist ${HOME}/.cache/8pecxstudios
 blacklist ${HOME}/.cache/xreader
+blacklist ${HOME}/.cache/Franz
 
 # share
 blacklist ${HOME}/.local/share/epiphany

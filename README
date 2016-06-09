@@ -25,6 +25,8 @@ Reiner Herrmann (https://github.com/reinerh)
 	- clang-analyzer fixes
 	- Debian reproducible build
 	- unit testing framework
+maces (https://github.com/maces)
+	- Franz messenger profile
 KellerFuchs (https://github.com/KellerFuchs)
 	- nonewpriv support, extended profiles for this feature
 	- make `restricted-network` prevent use of netfilter

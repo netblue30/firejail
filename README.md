@@ -67,4 +67,4 @@ AppImage project home: https://github.com/probonopd/AppImageKit
 
 ## New security profiles
 
-Gitter, gThumb, mpv
+Gitter, gThumb, mpv, Franz messenger

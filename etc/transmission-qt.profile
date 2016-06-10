@@ -18,3 +18,4 @@ tracelog
 
 shell none
 private-bin transmission-qt
+whitelist /tmp/.X11-unix

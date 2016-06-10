@@ -17,3 +17,5 @@ mkdir ~/.config
 mkdir ~/.config/hexchat
 whitelist ~/.config/hexchat
 include /etc/firejail/whitelist-common.inc
+
+# private-bin requires perl, python, etc.

@@ -37,7 +37,7 @@ blacklist /usr/lib/php*
 blacklist /usr/bin/ruby
 blacklist /usr/lib/ruby
 
-# Programs using python: deluge, firefox addons, filezilla, cherrytree
+# Programs using python: deluge, firefox addons, filezilla, cherrytree, xchat, hexchat
 # Python 2
 #blacklist /usr/bin/python2*
 #blacklist /usr/lib/python2*

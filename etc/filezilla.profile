@@ -16,3 +16,4 @@ seccomp
 
 shell none
 private-bin filezilla,uname,sh,python,lsb_release,fzputtygen,fzsftp
+whitelist /tmp/.X11-unix

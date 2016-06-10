@@ -69,6 +69,15 @@ else
 	echo "TESTING SKIP: qbittorrent not found"
 fi
 
+which uget-gtk
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: uget"
+	./uget-gtk.exp
+else
+	echo "TESTING SKIP: uget-gtk not found"
+fi
+
 which filezilla
 if [ "$?" -eq 0 ];
 then

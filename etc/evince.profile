@@ -13,3 +13,4 @@ seccomp
 
 shell none
 private-bin evince,evince-previewer,evince-thumbnailer
+whitelist /tmp/.X11-unix

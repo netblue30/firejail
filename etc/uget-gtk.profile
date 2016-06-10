@@ -17,3 +17,7 @@ mkdir ~/.config
 mkdir ~/.config/uGet
 whitelist ~/.config/uGet
 include /etc/firejail/whitelist-common.inc
+
+shell none
+private-bin uget-gtk
+whitelist /tmp/.X11-unix

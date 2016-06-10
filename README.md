@@ -67,7 +67,7 @@ AppImage project home: https://github.com/probonopd/AppImageKit
 
 ## Converting profiles to private-bin - work in progress!
 
-BitTorrent profiles converted to private-bin: deluge, qbittorrent, rtorrent, transmission-gtk, transmission-qt
+BitTorrent: deluge, qbittorrent, rtorrent, transmission-gtk, transmission-qt, uget-gtk
 
 File transfer: filezilla
 

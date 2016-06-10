@@ -16,3 +16,4 @@ seccomp
 
 shell none
 private-bin fbreader,FBReader
+whitelist /tmp/.X11-unix

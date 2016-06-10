@@ -69,6 +69,15 @@ else
 	echo "TESTING SKIP: qbittorrent not found"
 fi
 
+which filezilla
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: filezilla"
+	./filezilla.exp
+else
+	echo "TESTING SKIP: filezilla not found"
+fi
+
 which evince
 if [ "$?" -eq 0 ];
 then

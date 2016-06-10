@@ -13,3 +13,6 @@ noroot
 nosound
 protocol unix,inet,inet6
 seccomp
+
+shell none
+private-bin filezilla,uname,sh,python,lsb_release,fzputtygen,fzsftp

@@ -16,7 +16,7 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
 }
-sleep 10
+sleep 5
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
@@ -28,7 +28,7 @@ expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
 	"midori"
 }
-sleep 1
+after 100
 
 # grsecurity exit
 send -- "file /proc/sys/kernel/grsecurity\r"
@@ -59,7 +59,7 @@ expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
 	"name=blablabla"
 }
-sleep 1
+after 100
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
@@ -77,7 +77,7 @@ expect {
 	timeout {puts "TESTING ERROR 6.3n";exit}
 	"name=blablabla"
 }
-sleep 1
+after 100
 
 
 puts "\n"

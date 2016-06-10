@@ -60,6 +60,15 @@ else
 	echo "TESTING SKIP: transmission-qt not found"
 fi
 
+which qbittorrent
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: qbittorrent"
+	./qbittorrent.exp
+else
+	echo "TESTING SKIP: qbittorrent not found"
+fi
+
 which evince
 if [ "$?" -eq 0 ];
 then

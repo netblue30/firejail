@@ -12,3 +12,8 @@ nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp
+
+
+# to test
+shell none
+private-bin vlc

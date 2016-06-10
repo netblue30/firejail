@@ -37,8 +37,7 @@ blacklist /usr/lib/php*
 blacklist /usr/bin/ruby
 blacklist /usr/lib/ruby
 
-# disabled temporarily pending globbing implementation
-# in noblacklist command and firefox profile fix
+# Programs using python: deluge, some firefox addons
 # Python 2
 #blacklist /usr/bin/python2*
 #blacklist /usr/lib/python2*

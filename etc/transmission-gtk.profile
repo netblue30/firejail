@@ -1,4 +1,4 @@
-# transmission-gtk profile
+# transmission-gtk bittorrent profile
 noblacklist ${HOME}/.config/transmission
 noblacklist ${HOME}/.cache/transmission
 
@@ -15,3 +15,6 @@ nosound
 protocol unix,inet,inet6
 seccomp
 tracelog
+
+shell none
+private-bin transmission-gtk

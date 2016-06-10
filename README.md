@@ -65,9 +65,10 @@ More packages build by AppImage developer Simon Peter: https://bintray.com/probo
 
 AppImage project home: https://github.com/probonopd/AppImageKit
 
-## Converting profiles to private-bin - work in progress
+## Converting profiles to private-bin - work in progress!
 
 BitTorrent profiles converted to private-bin: deluge, qbittorrent, rtorrent, transmission-gtk, transmission-qt
+
 File transfer: filezilla
 
 ## New security profiles

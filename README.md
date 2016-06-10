@@ -71,6 +71,10 @@ BitTorrent profiles converted to private-bin: deluge, qbittorrent, rtorrent, tra
 
 File transfer: filezilla
 
+Media: vlc, mpv, gnome-mplayer
+
+Office: evince, gthumb, fbreader
+
 ## New security profiles
 
 Gitter, gThumb, mpv, Franz messenger

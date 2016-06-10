@@ -10,3 +10,6 @@ noroot
 nosound
 protocol unix,inet,inet6
 seccomp
+
+shell none
+private-bin evince,evince-previewer,evince-thumbnailer

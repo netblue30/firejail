@@ -87,6 +87,16 @@ else
 	echo "TESTING SKIP: evince not found"
 fi
 
+
+which gthumb
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: gthumb"
+	./gthumb.exp
+else
+	echo "TESTING SKIP: gthumb not found"
+fi
+
 which icedove
 if [ "$?" -eq 0 ];
 then

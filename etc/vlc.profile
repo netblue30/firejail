@@ -16,4 +16,4 @@ seccomp
 
 # to test
 shell none
-private-bin vlc
+private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc

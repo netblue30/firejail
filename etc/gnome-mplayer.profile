@@ -9,3 +9,6 @@ nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp
+
+shell none
+private-bin gnome-mplayer

@@ -13,5 +13,5 @@ noroot
 protocol unix,inet,inet6
 seccomp
 
-private-bin gthumb
 shell none
+private-bin gthumb

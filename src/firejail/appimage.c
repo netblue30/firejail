@@ -87,7 +87,13 @@ void appimage_set(const char *appimage_path) {
 	if (arg_debug)
 		printf("appimage mounted on %s\n", mntdir);
 	EUID_USER();
+
+	if (mntdir && setenv("APPIMAGE", appimage_path, 1) < 0)
+		errExit("setenv");
 	
+	if (mntdir && setenv("APPDIR", mntdir, 1) < 0)
+		errExit("setenv");
+
 	// build new command line
 	if (asprintf(&cfg.command_line, "%s/AppRun", mntdir) == -1)
 		errExit("asprintf");

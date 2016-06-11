@@ -88,7 +88,7 @@ void appimage_set(const char *appimage_path) {
 		printf("appimage mounted on %s\n", mntdir);
 	EUID_USER();
 
-	if (mntdir && setenv("APPIMAGE", appimage_path, 1) < 0)
+	if (appimage_path && setenv("APPIMAGE", appimage_path, 1) < 0)
 		errExit("setenv");
 	
 	if (mntdir && setenv("APPDIR", mntdir, 1) < 0)

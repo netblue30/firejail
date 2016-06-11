@@ -12,6 +12,7 @@ nosound
 protocol unix,inet,inet6
 seccomp
 
-shell none
-private-bin qbittorrent
+# there are some problems with "Open destination folder", see bug #536
+#shell none
+#private-bin qbittorrent
 whitelist /tmp/.X11-unix

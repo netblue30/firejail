@@ -725,8 +725,6 @@ void fs_basic_fs(void) {
 	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
 		disable_firejail_config();
-	else
-		fprintf(stderr, "Warning: masking /etc/firejail disabled when starting the sandbox as root\n");
 		
 	if (getuid() == 0)
 		fs_rdwr();
@@ -964,8 +962,6 @@ void fs_overlayfs(void) {
 	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
 		disable_firejail_config();
-	else
-		fprintf(stderr, "Warning: masking /etc/firejail disabled when starting the sandbox as root\n");
 
 	// cleanup and exit
 	free(option);
@@ -1101,8 +1097,6 @@ void fs_chroot(const char *rootdir) {
 	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
 		disable_firejail_config();
-	else
-		fprintf(stderr, "Warning: masking /etc/firejail disabled when starting the sandbox as root\n");
 }
 #endif
 

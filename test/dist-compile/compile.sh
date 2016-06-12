@@ -9,7 +9,8 @@ arr[6]="TEST 6: compile network disabled"
 arr[7]="TEST 7: compile X11 disabled"
 arr[8]="TEST 8: compile network restricted"
 arr[9]="TEST 9: compile file transfer disabled"
-
+arr[10]="TEST 10: compile disable whitelist"
+arr[11]="TEST 11: compile disable global config"
 
 # remove previous reports and output file
 cleanup() {
@@ -213,13 +214,51 @@ print_title "${arr[9]}"
 # seccomp
 cd firejail
 make distclean
-./configure --prefix=/usr --enable-network=restricted  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-file-transfer  --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test9
 grep Error output-configure output-make >> ./report-test9
 cp output-configure oc9
 cp output-make om9
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 10
+#*****************************************************************
+# - disable whitelist
+# - check compilation
+#*****************************************************************
+print_title "${arr[10]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-whitelist  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test10
+grep Error output-configure output-make >> ./report-test10
+cp output-configure oc10
+cp output-make om10
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 11
+#*****************************************************************
+# - disable global config
+# - check compilation
+#*****************************************************************
+print_title "${arr[11]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-globalcfg  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test11
+grep Error output-configure output-make >> ./report-test11
+cp output-configure oc11
+cp output-make om11
 rm output-configure output-make
 
 
@@ -246,3 +285,5 @@ echo ${arr[6]}
 echo ${arr[7]}
 echo ${arr[8]}
 echo ${arr[9]}
+echo ${arr[10]}
+echo ${arr[11]}

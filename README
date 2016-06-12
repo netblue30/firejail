@@ -25,6 +25,8 @@ Reiner Herrmann (https://github.com/reinerh)
 	- clang-analyzer fixes
 	- Debian reproducible build
 	- unit testing framework
+geg2048 (https://github.com/geg2048)
+	- kwallet profile fixes
 Simon Peter (https://github.com/probonopd)
 	- set $APPIMAGE and $APPDIR environment variables
 maces (https://github.com/maces)

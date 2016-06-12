@@ -48,8 +48,13 @@ int checkcfg(int val) {
 
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
+#ifdef HAVE_GLOBALCFG			
 			fprintf(stderr, "Warning: Firejail configuration file %s not found\n", fname);
 			exit(1);
+#else
+			initialized = 1;
+			return	cfg_val[val];
+#endif	
 		}
 		
 		// read configuration file

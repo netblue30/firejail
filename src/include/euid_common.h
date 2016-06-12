@@ -36,12 +36,12 @@ extern uid_t firejail_uid;
 
 static inline void EUID_ROOT(void) {
 	if (seteuid(0) == -1)
-		fprintf(stderr, "Error: cannot switch euid to root\n");
+		fprintf(stderr, "Warning: cannot switch euid to root\n");
 }
 
 static inline void EUID_USER(void) {
 	if (seteuid(firejail_uid) == -1)
-		fprintf(stderr, "Error: cannot switch euid to user\n");
+		fprintf(stderr, "Warning: cannot switch euid to user\n");
 }
 
 static inline void EUID_PRINT(void) {

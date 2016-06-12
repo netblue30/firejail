@@ -634,6 +634,7 @@ HAVE_FILE_TRANSFER
 HAVE_X11
 HAVE_USERNS
 HAVE_NETWORK
+HAVE_GLOBALCFG
 HAVE_BIND
 HAVE_CHROOT
 HAVE_SECCOMP
@@ -692,6 +693,7 @@ enable_option_checking
 enable_seccomp
 enable_chroot
 enable_bind
+enable_globalcfg
 enable_network
 enable_userns
 enable_x11
@@ -1320,6 +1322,8 @@ Optional Features:
   --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
   --disable-bind          disable bind
+  --disable-globalcfg     disable global config file
+                          (/etc/firejail/firejail.cfg)
   --disable-network       disable network
   --enable-network=restricted
                           restrict --net= to root only
@@ -3104,6 +3108,19 @@ if test "x$enable_bind" != "xno"; then :
 
 fi
 
+HAVE_GLOBALCFG=""
+# Check whether --enable-globalcfg was given.
+if test "${enable_globalcfg+set}" = set; then :
+  enableval=$enable_globalcfg;
+fi
+
+if test "x$enable_globalcfg" != "xno"; then :
+
+	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
+
+
+fi
+
 HAVE_NETWORK=""
 # Check whether --enable-network was given.
 if test "${enable_network+set}" = set; then :
@@ -4834,6 +4851,7 @@ echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
+echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"

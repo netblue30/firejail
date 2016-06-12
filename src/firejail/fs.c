@@ -652,26 +652,27 @@ void fs_proc_sys_dev_boot(void) {
 // disable firejail configuration in /etc/firejail and in ~/.config/firejail
 static void disable_firejail_config(void) {
 	struct stat s;
-	if (stat("/etc/firejail", &s) == 0)
-		disable_file(BLACKLIST_FILE, "/etc/firejail");
+//	if (stat("/etc/firejail", &s) == 0)
+//		disable_file(BLACKLIST_FILE, "/etc/firejail");
 
 	char *fname;
 	if (asprintf(&fname, "%s/.config/firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(fname, &s) == 0)
 		disable_file(BLACKLIST_FILE, fname);
-	
-	if (stat("/usr/local/etc/firejail", &s) == 0)
-		disable_file(BLACKLIST_FILE, "/usr/local/etc/firejail");
-
-	if (strcmp(PREFIX, "/usr/local")) {
-		if (asprintf(&fname, "%s/etc/firejail", PREFIX) == -1)
-			errExit("asprintf");
-		if (stat(fname, &s) == 0)
-			disable_file(BLACKLIST_FILE, fname);
-	}
-	
 	free(fname);
+	
+//	if (stat("/usr/local/etc/firejail", &s) == 0)
+//		disable_file(BLACKLIST_FILE, "/usr/local/etc/firejail");
+//
+//	if (strcmp(PREFIX, "/usr/local")) {
+//		if (asprintf(&fname, "%s/etc/firejail", PREFIX) == -1)
+//			errExit("asprintf");
+//		if (stat(fname, &s) == 0)
+//			disable_file(BLACKLIST_FILE, fname);
+//		free(fname);
+//	}
+	
 	
 	// disable run time information
 	if (stat(RUN_FIREJAIL_NETWORK_DIR, &s) == 0)

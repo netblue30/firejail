@@ -33,6 +33,14 @@ AS_IF([test "x$enable_bind" != "xno"], [
 	AC_SUBST(HAVE_BIND)
 ])
 
+HAVE_GLOBALCFG=""
+AC_ARG_ENABLE([globalcfg],
+    AS_HELP_STRING([--disable-globalcfg], [if the global config file firejail.cfg is not present, continue the program using defaults]))
+AS_IF([test "x$enable_globalcfg" != "xno"], [
+	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
+	AC_SUBST(HAVE_GLOBALCFG)
+])
+
 HAVE_NETWORK=""
 AC_ARG_ENABLE([network],
     AS_HELP_STRING([--disable-network], [disable network]))
@@ -106,6 +114,7 @@ echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
+echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"

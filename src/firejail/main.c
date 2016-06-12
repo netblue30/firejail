@@ -854,7 +854,7 @@ int main(int argc, char **argv) {
 	
 	
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
-	if (!option_force && checkcfg(CFG_FORCE_NONEWPRIVS))
+	if (checkcfg(CFG_FORCE_NONEWPRIVS))
 		arg_nonewprivs = 1;
 	
 	// parse arguments

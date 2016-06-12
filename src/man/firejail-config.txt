@@ -74,6 +74,23 @@ xephyr-screen 1024x768
 .br
 xephyr-screen 1280x1024
 
+.TP
+\fBxephyr-window-title
+Firejail window title in Xephry, default enabled.
+
+.TP
+\fBxephyr-extra-params
+Xephyr command extra parameters. None by default, and the declaration is commented out. Examples:
+.br
+
+.br
+xephyr-extra-params -keybd ephyr,,,xkbmodel=evdev
+.br
+xephyr-extra-params -grayscale
+
+.SH COMPILE TIME CONFIGURATION
+Most of the features described in this file can also be configured at compile time, please run \fB./configure --help\fR for more details.
+
 .SH FILES
 /etc/firejail/firejail.config
 

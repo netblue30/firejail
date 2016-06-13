@@ -27,13 +27,6 @@ rm -fr auto2
 rm -fr auto3
 rm -fr auto4
 
-echo "TESTING: doubledash"
-mkdir -- -testdir
-touch -- -testdir/ttt
-cp -- /bin/bash -testdir/.
-./doubledash.exp
-rm -fr -- -testdir
-
 echo "TESTING: extract command (extract_command.exp)"
 ./extract_command.exp
 

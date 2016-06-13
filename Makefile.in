@@ -49,6 +49,10 @@ clean:
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
 	rm -f test/utils/lstesting
+	rm -f test/environment/index.html*
+	rm -f test/environment/wget-log*
+	rm -fr test/environment/-testdir
+	rm -f test/environment/logfile*
 	cd test/compile; ./compile.sh --clean; cd ../..
 	cd test/dist-compile; ./compile.sh --clean; cd ../..
 

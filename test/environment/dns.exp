@@ -1,0 +1,30 @@
+#!/usr/bin/expect -f
+
+set timeout 30
+spawn $env(SHELL)
+match_max 100000
+
+# no chroot
+send -- "firejail --trace --dns=208.67.222.222 wget -q debian.org\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"connect"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"208.67.222.222"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"53"
+}
+
+after 100
+
+send -- "rm index.html\r"
+after 100
+puts "\nall done\n"

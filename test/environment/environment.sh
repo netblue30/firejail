@@ -6,6 +6,22 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+echo "TESTING: DNS (test/environment/dns.exp)"
+./dns.exp
+
+echo "TESTING: doubledash (test/environment/doubledash.exp"
+mkdir -- -testdir
+touch -- -testdir/ttt
+cp -- /bin/bash -testdir/.
+./doubledash.exp
+rm -fr -- -testdir
+
+echo "TESTING: output (test/environment/output.exp)"
+./output.exp
+
+echo "TESTING: extract command (extract_command.exp)"
+./extract_command.exp
+
 echo "TESTING: environment variables (test/environment/env.exp)"
 ./env.exp
 

@@ -1322,8 +1322,8 @@ Optional Features:
   --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
   --disable-bind          disable bind
-  --disable-globalcfg     disable global config file
-                          (/etc/firejail/firejail.cfg)
+  --disable-globalcfg     if the global config file firejail.cfg is not
+                          present, continue the program using defaults
   --disable-network       disable network
   --enable-network=restricted
                           restrict --net= to root only

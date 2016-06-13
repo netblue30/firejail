@@ -504,7 +504,7 @@ void fs_whitelist(void) {
 	
 	// /tmp mountpoint
 	if (tmp_dir) {
-		// keep a copy of real /tmp directory in WHITELIST_TMP_DIR
+		// keep a copy of real /tmp directory in  
 		int rv = mkdir(RUN_WHITELIST_TMP_DIR, 1777);
 		if (rv == -1)
 			errExit("mkdir");
@@ -522,6 +522,29 @@ void fs_whitelist(void) {
 		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting tmpfs on /tmp");
 		fs_logger("tmpfs /tmp");
+		
+		// mount appimage directory if necessary
+		if (arg_appimage) {
+			const char *dir = appimage_getdir();
+			assert(dir);
+			char *wdir;
+			if (asprintf(&wdir, "%s/%s", RUN_WHITELIST_TMP_DIR, dir + 4) == -1)
+				errExit("asprintf");
+
+			// create directory
+			if (mkdir(dir, 0755) < 0)
+				errExit("mkdir");
+			if (chown(dir, getuid(), getgid()) < 0)
+				errExit("chown");
+			if (chmod(dir, 0755) < 0)
+				errExit("chmod");
+		
+			// mount
+			if (mount(wdir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+			fs_logger2("whitelist", dir);
+			free(wdir);
+		}
 	}
 	
 	// /media mountpoint

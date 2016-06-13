@@ -259,6 +259,7 @@ extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_writable_var;	// writable var
+extern int arg_appimage;	// appimage
 
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
@@ -581,6 +582,7 @@ void fs_rdwr(void);
 // appimage.c
 void appimage_set(const char *appimage_path);
 void appimage_clear(void);
+const char *appimage_getdir(void);
 
 #endif
 

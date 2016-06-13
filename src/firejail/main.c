@@ -99,6 +99,7 @@ int arg_nice = 0;				// nice value configured
 int arg_ipc = 0;					// enable ipc namespace
 int arg_writable_etc = 0;			// writable etc
 int arg_writable_var = 0;			// writable var
+int arg_appimage = 0;				// appimage
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -705,7 +706,6 @@ int main(int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 	int highest_errno = errno_highest_nr();
 #endif
-	int arg_appimage = 0;
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();

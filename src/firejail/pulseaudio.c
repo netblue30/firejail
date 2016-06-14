@@ -104,10 +104,6 @@ void pulseaudio_init(void) {
 	char *pulsecfg = NULL;
 	if (asprintf(&pulsecfg, "%s/client.conf", RUN_PULSE_DIR) == -1)
 		errExit("asprintf");
-	if (is_link("/etc/pulse/client.conf")) {
-		fprintf(stderr, "Error: invalid /etc/pulse/client.conf file\n");
-		exit(1);
-	}
 	if (copy_file("/etc/pulse/client.conf", pulsecfg))
 		errExit("copy_file");
 	FILE *fp = fopen(pulsecfg, "a+");

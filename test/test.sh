@@ -27,9 +27,6 @@ rm -fr auto2
 rm -fr auto3
 rm -fr auto4
 
-echo "TESTING: extract command (extract_command.exp)"
-./extract_command.exp
-
 echo "TESTING: chroot overlay (option_chroot_overlay.exp)"
 ./option_chroot_overlay.exp
 
@@ -46,8 +43,6 @@ sleep 5
 rm -f tmpreadonly
 
 
-echo "TESTING: output (output.exp)"
-./output.exp
 
 echo "TESTING: private directory (private_dir.exp)"
 rm -fr dirprivate

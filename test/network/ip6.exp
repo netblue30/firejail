@@ -18,6 +18,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
+	"unable to initialize table 'filter'" {puts "\nTESTING SKIP 2: no IPv6 support\n"; exit}
 	"2001:db8:1f0a:3ec::2"
 }
 expect {

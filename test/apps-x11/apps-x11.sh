@@ -13,12 +13,12 @@ then
         echo "xpra found"
 else
         echo "xpra not found"
-	which xephyr
+	which Xephyr
 	if [ "$?" -eq 0 ];
 	then
-        	echo "xephyr found"
+        	echo "Xephyr found"
 	else
-        	echo "TESTING SKIP: xpra and/or xephyr not found"
+        	echo "TESTING SKIP: xpra and/or Xephyr not found"
 		exit
 	fi
 fi

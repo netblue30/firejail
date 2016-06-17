@@ -659,6 +659,7 @@ static void delete_name_file(pid_t pid) {
 		errExit("asprintf");
 	int rv = unlink(fname);
 	(void) rv;
+	free(fname);
 }
 
 static void set_x11_file(pid_t pid, int display) {
@@ -689,6 +690,7 @@ static void delete_x11_file(pid_t pid) {
 		errExit("asprintf");
 	int rv = unlink(fname);
 	(void) rv;
+	free(fname);
 }
 
 //*******************************************

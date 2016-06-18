@@ -58,11 +58,15 @@ read-only ${HOME}/.xserverrc
 read-only ${HOME}/.profile
 
 # Shell startup files
+read-only ${HOME}/.antigen
 read-only ${HOME}/.bash_login
 read-only ${HOME}/.bashrc
 read-only ${HOME}/.bash_profile
 read-only ${HOME}/.bash_logout
+read-only ${HOME}/.zsh.d
+read-only ${HOME}/.zshenv
 read-only ${HOME}/.zshrc
+read-only ${HOME}/.zshrc.local
 read-only ${HOME}/.zlogin
 read-only ${HOME}/.zprofile
 read-only ${HOME}/.zlogout

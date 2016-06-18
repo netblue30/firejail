@@ -77,6 +77,7 @@ read-only ${HOME}/.csh_files
 read-only ${HOME}/.profile
 
 # Initialization files that allow arbitrary command execution
+read-only ${HOME}/.caffrc
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.exrc
 read-only ${HOME}/_exrc
@@ -105,6 +106,7 @@ blacklist ${HOME}/.kde/share/apps/kwallet
 blacklist ${HOME}/.local/share/kwalletd
 blacklist ${HOME}/.netrc
 blacklist ${HOME}/.gnupg
+blacklist ${HOME}/.caff
 blacklist ${HOME}/*.kdbx
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.key

@@ -74,6 +74,7 @@ read-only ${HOME}/.zsh_files
 read-only ${HOME}/.tcshrc
 read-only ${HOME}/.cshrc
 read-only ${HOME}/.csh_files
+read-only ${HOME}/.profile
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.mailcap

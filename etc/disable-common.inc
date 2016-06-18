@@ -93,6 +93,7 @@ read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.iscreenrc
 read-only ${HOME}/.muttrc
 read-only ${HOME}/.mutt/muttrc
+read-only ${HOME}/.msmtprc
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
 

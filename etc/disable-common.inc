@@ -107,6 +107,7 @@ blacklist ${HOME}/.local/share/kwalletd
 blacklist ${HOME}/.netrc
 blacklist ${HOME}/.gnupg
 blacklist ${HOME}/.caff
+blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/*.kdbx
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.key

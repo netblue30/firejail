@@ -18,7 +18,7 @@ spawn $env(SHELL)
 send -- "firejail --bandwidth=test status\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"qdisc noqueue 0: dev eth0"
+	"qdisc pfifo_fast 0: dev eth0"
 }
 sleep 1
 

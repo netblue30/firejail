@@ -87,6 +87,8 @@ read-only ${HOME}/.gvimrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/.vim
 read-only ${HOME}/.emacs
+read-only ${HOME}/.emacs.d
+read-only ${HOME}/.nano
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.iscreenrc
 read-only ${HOME}/.muttrc

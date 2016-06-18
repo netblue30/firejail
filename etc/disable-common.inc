@@ -78,6 +78,8 @@ read-only ${HOME}/.profile
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
+read-only ${HOME}/.dotfiles
+read-only ${HOME}/dotfiles
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.exrc
 read-only ${HOME}/_exrc

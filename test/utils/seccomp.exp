@@ -40,7 +40,7 @@ expect {
 	"bingo2"
 }
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"Seccomp:	0"
 }
 after 100

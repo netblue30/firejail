@@ -1,5 +1,5 @@
 ################################
 # LibreOffice profile
 ################################
-include /etc/firejail/liberoffice.profile
+include /etc/firejail/libreoffice.profile
 

@@ -11,6 +11,7 @@
 /etc/firejail/dropbox.profile
 /etc/firejail/login.users
 /etc/firejail/firefox.profile
+/etc/firejail/firefox-esr.profile
 /etc/firejail/opera.profile
 /etc/firejail/opera-beta.profile
 /etc/firejail/thunderbird.profile

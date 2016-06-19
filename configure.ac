@@ -35,7 +35,7 @@ AS_IF([test "x$enable_bind" != "xno"], [
 
 HAVE_GLOBALCFG=""
 AC_ARG_ENABLE([globalcfg],
-    AS_HELP_STRING([--disable-globalcfg], [if the global config file firejail.cfg is not present, continue the program using defaults]))
+    AS_HELP_STRING([--disable-globalcfg], [disable system-wide configuration file support]))
 AS_IF([test "x$enable_globalcfg" != "xno"], [
 	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
 	AC_SUBST(HAVE_GLOBALCFG)

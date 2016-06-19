@@ -107,3 +107,13 @@
 /etc/firejail/mpv.profile
 /etc/firejail/franz.profile
 /etc/firejail/libreoffice.profile
+/etc/firejail/localc.profile
+/etc/firejail/lodraw.profile
+/etc/firejail/loffice.profile
+/etc/firejail/lofromtemplate.profile
+/etc/firejail/loimpress.profile
+/etc/firejail/lomath.profile
+/etc/firejail/loweb.profile
+/etc/firejail/lowriter.profile
+
+

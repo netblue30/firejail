@@ -12,3 +12,7 @@ noroot
 protocol unix,inet,inet6,netlink
 seccomp
 tracelog
+
+private-dev
+whitelist /tmp/.X11-unix/
+

@@ -58,11 +58,15 @@ read-only ${HOME}/.xserverrc
 read-only ${HOME}/.profile
 
 # Shell startup files
+read-only ${HOME}/.antigen
 read-only ${HOME}/.bash_login
 read-only ${HOME}/.bashrc
 read-only ${HOME}/.bash_profile
 read-only ${HOME}/.bash_logout
+read-only ${HOME}/.zsh.d
+read-only ${HOME}/.zshenv
 read-only ${HOME}/.zshrc
+read-only ${HOME}/.zshrc.local
 read-only ${HOME}/.zlogin
 read-only ${HOME}/.zprofile
 read-only ${HOME}/.zlogout
@@ -70,8 +74,12 @@ read-only ${HOME}/.zsh_files
 read-only ${HOME}/.tcshrc
 read-only ${HOME}/.cshrc
 read-only ${HOME}/.csh_files
+read-only ${HOME}/.profile
 
 # Initialization files that allow arbitrary command execution
+read-only ${HOME}/.caffrc
+read-only ${HOME}/.dotfiles
+read-only ${HOME}/dotfiles
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.exrc
 read-only ${HOME}/_exrc
@@ -81,10 +89,14 @@ read-only ${HOME}/.gvimrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/.vim
 read-only ${HOME}/.emacs
+read-only ${HOME}/.emacs.d
+read-only ${HOME}/.nano
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.iscreenrc
 read-only ${HOME}/.muttrc
 read-only ${HOME}/.mutt/muttrc
+read-only ${HOME}/.msmtprc
+read-only ${HOME}/.reportbugrc
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
 
@@ -100,6 +112,8 @@ blacklist ${HOME}/.kde/share/apps/kwallet
 blacklist ${HOME}/.local/share/kwalletd
 blacklist ${HOME}/.netrc
 blacklist ${HOME}/.gnupg
+blacklist ${HOME}/.caff
+blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/*.kdbx
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.key

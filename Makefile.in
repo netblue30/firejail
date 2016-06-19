@@ -196,6 +196,7 @@ realinstall:
 	install -c -m 0644 .etc/gthumb.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/mpv.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/franz.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/libreoffice.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	install -c -m 0644 etc/firejail.config $(DESTDIR)/$(sysconfdir)/firejail/.
 	rm -fr .etc

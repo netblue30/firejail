@@ -16,7 +16,7 @@ blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
-blacklist $(HOME)/.config/libreoffice
+blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/okularrc
 blacklist ${HOME}/.kde/share/config/okularpartrc

@@ -34,6 +34,7 @@ maces (https://github.com/maces)
 KellerFuchs (https://github.com/KellerFuchs)
 	- nonewpriv support, extended profiles for this feature
 	- make `restricted-network` prevent use of netfilter
+	- disable-common.inc additions
 ValdikSS (https://github.com/ValdikSS)
 	- Psi+, Corebird, Konversation profiles
 	- various profile fixes

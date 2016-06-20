@@ -17,6 +17,7 @@ blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
 blacklist ${HOME}/.config/libreoffice
+blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/okularrc
 blacklist ${HOME}/.kde/share/config/okularpartrc
@@ -120,3 +121,4 @@ blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/totem
 blacklist ${HOME}/.local/share/psi+
+blacklist ${HOME}/.local/share/pix

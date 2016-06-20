@@ -116,5 +116,4 @@
 /etc/firejail/lomath.profile
 /etc/firejail/loweb.profile
 /etc/firejail/lowriter.profile
-
-
+/etc/firejail/pix.profile

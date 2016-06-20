@@ -73,8 +73,8 @@ File transfer: filezilla
 
 Media: vlc, mpv, gnome-mplayer
 
-Office: evince, gthumb, fbreader
+Office: evince, gthumb, fbreader, pix
 
 ## New security profiles
 
-Gitter, gThumb, mpv, Franz messenger, LibreOffice
+Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix

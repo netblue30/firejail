@@ -207,6 +207,7 @@ realinstall:
 	install -c -m 0644 .etc/loweb.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/lowriter.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/pix.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/soffice.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	install -c -m 0644 etc/firejail.config $(DESTDIR)/$(sysconfdir)/firejail/.
 	rm -fr .etc

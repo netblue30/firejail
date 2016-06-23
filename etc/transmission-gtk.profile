@@ -19,3 +19,5 @@ tracelog
 shell none
 private-bin transmission-gtk
 whitelist /tmp/.X11-unix
+private-dev
+

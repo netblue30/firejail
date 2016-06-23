@@ -21,3 +21,5 @@ include /etc/firejail/whitelist-common.inc
 shell none
 private-bin uget-gtk
 whitelist /tmp/.X11-unix
+private-dev
+

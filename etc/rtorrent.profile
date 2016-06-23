@@ -15,3 +15,4 @@ seccomp
 shell none
 private-bin rtorrent
 whitelist /tmp/.X11-unix
+private-dev

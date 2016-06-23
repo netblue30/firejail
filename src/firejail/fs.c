@@ -1006,7 +1006,7 @@ int fs_check_chroot_dir(const char *rootdir) {
 	}
 	free(name);
 	
-	// check /proc
+	// check /tmp
 	if (asprintf(&name, "%s/tmp", rootdir) == -1)
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
@@ -1014,7 +1014,7 @@ int fs_check_chroot_dir(const char *rootdir) {
 		return 1;
 	}
 	free(name);
-	
+
 	// check /bin/bash
 	if (asprintf(&name, "%s/bin/bash", rootdir) == -1)
 		errExit("asprintf");
@@ -1024,6 +1024,18 @@ int fs_check_chroot_dir(const char *rootdir) {
 	}
 	free(name);
 
+	// check x11 socket directory
+	if (getenv("FIREJAIL_X11")) {
+		char *name;
+		if (asprintf(&name, "%s/tmp/.X11-unix", rootdir) == -1)
+			errExit("asprintf");
+		if (stat(name, &s) == -1) {
+			fprintf(stderr, "Error: cannot find /tmp/.X11-unix in chroot directory\n");
+			return 1;
+		}
+		free(name);
+	}
+	
 	return 0;	
 }
 
@@ -1031,10 +1043,7 @@ int fs_check_chroot_dir(const char *rootdir) {
 void fs_chroot(const char *rootdir) {
 	assert(rootdir);
 	
-	//***********************************
 	// mount-bind a /dev in rootdir
-	//***********************************
-	// mount /dev
 	char *newdev;
 	if (asprintf(&newdev, "%s/dev", rootdir) == -1)
 		errExit("asprintf");
@@ -1042,6 +1051,19 @@ void fs_chroot(const char *rootdir) {
 		printf("Mounting /dev on %s\n", newdev);
 	if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting /dev");
+	free(newdev);
+	
+	// x11
+	if (getenv("FIREJAIL_X11")) {
+		char *newx11;
+		if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
+			errExit("asprintf");
+		if (arg_debug)
+			printf("Mounting /tmp/.X11-unix on %s\n", newdev);
+		if (mount("/tmp/.X11-unix", newx11, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting /tmp/.X11-unix");
+		free(newx11);
+	}
 	
 	// some older distros don't have a /run directory
 	// create one by default

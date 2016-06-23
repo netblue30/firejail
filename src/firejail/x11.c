@@ -168,6 +168,8 @@ void x11_start_xephyr(int argc, char **argv) {
 	pid_t server = 0;
 	
 
+	setenv("FIREJAIL_X11", "yes", 1);
+
 	// unfortunately, xephyr does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
@@ -296,6 +298,7 @@ void x11_start_xpra(int argc, char **argv) {
 	pid_t client = 0;
 	pid_t server = 0;
 	
+	setenv("FIREJAIL_X11", "yes", 1);
 
 	// unfortunately, xpra does a number of weird things when started by root user!!!
 	if (getuid() == 0) {

@@ -37,6 +37,11 @@
 	{"_sysctl", __NR__sysctl},
 #endif
 #endif
+#ifdef SYS_accept4
+#ifdef __NR_accept4
+	{"accept4", __NR_accept4},
+#endif
+#endif
 #ifdef SYS_access
 #ifdef __NR_access
 	{"access", __NR_access},
@@ -70,6 +75,11 @@
 #ifdef SYS_bdflush
 #ifdef __NR_bdflush
 	{"bdflush", __NR_bdflush},
+#endif
+#endif
+#ifdef SYS_bind
+#ifdef __NR_bind
+	{"bind", __NR_bind},
 #endif
 #endif
 #ifdef SYS_bpf
@@ -155,6 +165,16 @@
 #ifdef SYS_close
 #ifdef __NR_close
 	{"close", __NR_close},
+#endif
+#endif
+#ifdef SYS_connect
+#ifdef __NR_connect
+	{"connect", __NR_connect},
+#endif
+#endif
+#ifdef SYS_copy_file_range
+#ifdef __NR_copy_file_range
+	{"copy_file_range", __NR_copy_file_range},
 #endif
 #endif
 #ifdef SYS_creat
@@ -492,6 +512,11 @@
 	{"getitimer", __NR_getitimer},
 #endif
 #endif
+#ifdef SYS_getpeername
+#ifdef __NR_getpeername
+	{"getpeername", __NR_getpeername},
+#endif
+#endif
 #ifdef SYS_getpgid
 #ifdef __NR_getpgid
 	{"getpgid", __NR_getpgid},
@@ -560,6 +585,16 @@
 #ifdef SYS_getsid
 #ifdef __NR_getsid
 	{"getsid", __NR_getsid},
+#endif
+#endif
+#ifdef SYS_getsockname
+#ifdef __NR_getsockname
+	{"getsockname", __NR_getsockname},
+#endif
+#endif
+#ifdef SYS_getsockopt
+#ifdef __NR_getsockopt
+	{"getsockopt", __NR_getsockopt},
 #endif
 #endif
 #ifdef SYS_gettid
@@ -722,6 +757,11 @@
 	{"linkat", __NR_linkat},
 #endif
 #endif
+#ifdef SYS_listen
+#ifdef __NR_listen
+	{"listen", __NR_listen},
+#endif
+#endif
 #ifdef SYS_listxattr
 #ifdef __NR_listxattr
 	{"listxattr", __NR_listxattr},
@@ -777,6 +817,11 @@
 	{"mbind", __NR_mbind},
 #endif
 #endif
+#ifdef SYS_membarrier
+#ifdef __NR_membarrier
+	{"membarrier", __NR_membarrier},
+#endif
+#endif
 #ifdef SYS_memfd_create
 #ifdef __NR_memfd_create
 	{"memfd_create", __NR_memfd_create},
@@ -815,6 +860,11 @@
 #ifdef SYS_mlock
 #ifdef __NR_mlock
 	{"mlock", __NR_mlock},
+#endif
+#endif
+#ifdef SYS_mlock2
+#ifdef __NR_mlock2
+	{"mlock2", __NR_mlock2},
 #endif
 #endif
 #ifdef SYS_mlockall
@@ -1122,9 +1172,19 @@
 	{"reboot", __NR_reboot},
 #endif
 #endif
+#ifdef SYS_recvfrom
+#ifdef __NR_recvfrom
+	{"recvfrom", __NR_recvfrom},
+#endif
+#endif
 #ifdef SYS_recvmmsg
 #ifdef __NR_recvmmsg
 	{"recvmmsg", __NR_recvmmsg},
+#endif
+#endif
+#ifdef SYS_recvmsg
+#ifdef __NR_recvmsg
+	{"recvmsg", __NR_recvmsg},
 #endif
 #endif
 #ifdef SYS_remap_file_pages
@@ -1292,6 +1352,16 @@
 	{"sendmmsg", __NR_sendmmsg},
 #endif
 #endif
+#ifdef SYS_sendmsg
+#ifdef __NR_sendmsg
+	{"sendmsg", __NR_sendmsg},
+#endif
+#endif
+#ifdef SYS_sendto
+#ifdef __NR_sendto
+	{"sendto", __NR_sendto},
+#endif
+#endif
 #ifdef SYS_set_mempolicy
 #ifdef __NR_set_mempolicy
 	{"set_mempolicy", __NR_set_mempolicy},
@@ -1432,6 +1502,11 @@
 	{"setsid", __NR_setsid},
 #endif
 #endif
+#ifdef SYS_setsockopt
+#ifdef __NR_setsockopt
+	{"setsockopt", __NR_setsockopt},
+#endif
+#endif
 #ifdef SYS_settimeofday
 #ifdef __NR_settimeofday
 	{"settimeofday", __NR_settimeofday},
@@ -1455,6 +1530,11 @@
 #ifdef SYS_sgetmask
 #ifdef __NR_sgetmask
 	{"sgetmask", __NR_sgetmask},
+#endif
+#endif
+#ifdef SYS_shutdown
+#ifdef __NR_shutdown
+	{"shutdown", __NR_shutdown},
 #endif
 #endif
 #ifdef SYS_sigaction
@@ -1502,9 +1582,19 @@
 	{"sigsuspend", __NR_sigsuspend},
 #endif
 #endif
+#ifdef SYS_socket
+#ifdef __NR_socket
+	{"socket", __NR_socket},
+#endif
+#endif
 #ifdef SYS_socketcall
 #ifdef __NR_socketcall
 	{"socketcall", __NR_socketcall},
+#endif
+#endif
+#ifdef SYS_socketpair
+#ifdef __NR_socketpair
+	{"socketpair", __NR_socketpair},
 #endif
 #endif
 #ifdef SYS_splice
@@ -1722,6 +1812,11 @@
 	{"uselib", __NR_uselib},
 #endif
 #endif
+#ifdef SYS_userfaultfd
+#ifdef __NR_userfaultfd
+	{"userfaultfd", __NR_userfaultfd},
+#endif
+#endif
 #ifdef SYS_ustat
 #ifdef __NR_ustat
 	{"ustat", __NR_ustat},
@@ -1932,6 +2027,11 @@
 #ifdef SYS_connect
 #ifdef __NR_connect
 	{"connect", __NR_connect},
+#endif
+#endif
+#ifdef SYS_copy_file_range
+#ifdef __NR_copy_file_range
+	{"copy_file_range", __NR_copy_file_range},
 #endif
 #endif
 #ifdef SYS_creat
@@ -2484,6 +2584,11 @@
 	{"mbind", __NR_mbind},
 #endif
 #endif
+#ifdef SYS_membarrier
+#ifdef __NR_membarrier
+	{"membarrier", __NR_membarrier},
+#endif
+#endif
 #ifdef SYS_memfd_create
 #ifdef __NR_memfd_create
 	{"memfd_create", __NR_memfd_create},
@@ -2522,6 +2627,11 @@
 #ifdef SYS_mlock
 #ifdef __NR_mlock
 	{"mlock", __NR_mlock},
+#endif
+#endif
+#ifdef SYS_mlock2
+#ifdef __NR_mlock2
+	{"mlock2", __NR_mlock2},
 #endif
 #endif
 #ifdef SYS_mlockall
@@ -3354,6 +3464,11 @@
 	{"uselib", __NR_uselib},
 #endif
 #endif
+#ifdef SYS_userfaultfd
+#ifdef __NR_userfaultfd
+	{"userfaultfd", __NR_userfaultfd},
+#endif
+#endif
 #ifdef SYS_ustat
 #ifdef __NR_ustat
 	{"ustat", __NR_ustat},
@@ -3544,6 +3659,11 @@
 #ifdef SYS_connect
 #ifdef __NR_connect
 	{"connect", __NR_connect},
+#endif
+#endif
+#ifdef SYS_copy_file_range
+#ifdef __NR_copy_file_range
+	{"copy_file_range", __NR_copy_file_range},
 #endif
 #endif
 #ifdef SYS_creat
@@ -4071,6 +4191,11 @@
 	{"mbind", __NR_mbind},
 #endif
 #endif
+#ifdef SYS_membarrier
+#ifdef __NR_membarrier
+	{"membarrier", __NR_membarrier},
+#endif
+#endif
 #ifdef SYS_memfd_create
 #ifdef __NR_memfd_create
 	{"memfd_create", __NR_memfd_create},
@@ -4109,6 +4234,11 @@
 #ifdef SYS_mlock
 #ifdef __NR_mlock
 	{"mlock", __NR_mlock},
+#endif
+#endif
+#ifdef SYS_mlock2
+#ifdef __NR_mlock2
+	{"mlock2", __NR_mlock2},
 #endif
 #endif
 #ifdef SYS_mlockall
@@ -4919,6 +5049,11 @@
 #ifdef SYS_unshare
 #ifdef __NR_unshare
 	{"unshare", __NR_unshare},
+#endif
+#endif
+#ifdef SYS_userfaultfd
+#ifdef __NR_userfaultfd
+	{"userfaultfd", __NR_userfaultfd},
 #endif
 #endif
 #ifdef SYS_ustat

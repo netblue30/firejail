@@ -77,4 +77,4 @@ Office: evince, gthumb, fbreader, pix
 
 ## New security profiles
 
-Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix
+Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix, audacity

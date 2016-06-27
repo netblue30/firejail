@@ -32,6 +32,7 @@ blacklist ${HOME}/.config/vlc
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/xplayer
+blacklist ${HOME}/.audacity-data
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove

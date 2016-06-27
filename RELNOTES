@@ -4,7 +4,7 @@ firejail (0.9.41) baseline; urgency=low
   * compile time support to disable global configuration file
   * some profiles have been converted to private-bin
   * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
-  * new profiles: pix
+  * new profiles: pix, audacity
  -- netblue30 <netblue30@yahoo.com>  Tue, 31 May 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low

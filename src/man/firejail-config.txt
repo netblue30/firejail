@@ -76,7 +76,7 @@ xephyr-screen 1280x1024
 
 .TP
 \fBxephyr-window-title
-Firejail window title in Xephry, default enabled.
+Firejail window title in Xephyr, default enabled.
 
 .TP
 \fBxephyr-extra-params

@@ -25,6 +25,14 @@ Reiner Herrmann (https://github.com/reinerh)
 	- clang-analyzer fixes
 	- Debian reproducible build
 	- unit testing framework
+Jaykishan Mutkawoa (https://github.com/jmutkawoa)
+	- cpio profile
+Paupiah Yash (https://github.com/CaffeinatedStud)
+	- gzip  profile
+Akhil Hans Maulloo (https://github.com/kouul)
+	- xz profile
+Rahul Golam (https://github.com/technoLord)
+	- strings profile
 geg2048 (https://github.com/geg2048)
 	- kwallet profile fixes
 Simon Peter (https://github.com/probonopd)
@@ -52,6 +60,7 @@ avoidr (https://github.com/avoidr)
 	- lots of profile fixes
 	- added mcabber profile
 	- fixed mpv profile
+	- various other fixes
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
 Vasya Novikov (https://github.com/vn971)

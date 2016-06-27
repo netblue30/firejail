@@ -119,3 +119,8 @@
 /etc/firejail/pix.profile
 /etc/firejail/soffice.profile
 /etc/firejail/audacity.profile
+/etc/firejail/cpio.profile
+/etc/firejail/gzip.profile
+/etc/firejail/xzdec.profile
+/etc/firejail/strings.profile
+

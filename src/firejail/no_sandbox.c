@@ -180,7 +180,7 @@ void run_no_sandbox(int argc, char **argv) {
 		}
 		int start_index = i;
 		for (i = start_index; i < argc; i++)
-			len += strlen(argv[i]) + 1;
+			len += strlen(argv[i]) + 3;
 		
 		// allocate
 		command = malloc(len + 1);
@@ -191,8 +191,9 @@ void run_no_sandbox(int argc, char **argv) {
 		
 		// copy
 		for (i = start_index; i < argc; i++) {
+			strcat(command, "\"");
 			strcat(command, argv[i]);
-			strcat(command, " ");
+			strcat(command, "\" ");
 		}
 	}
 	

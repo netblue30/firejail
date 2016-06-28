@@ -102,8 +102,13 @@ void run_symlink(int argc, char **argv) {
 	a[0] = firejail;
 	a[1] = program;
 	int i;
-	for (i = 0; i < (argc - 1); i++)
-		a[i + 2] = argv[i + 1];
+	for (i = 0; i < (argc - 1); i++) {
+		char *str = malloc(strlen(argv[i + 1]));
+		if (str == NULL)
+			errExit("malloc");
+		sprintf(str, "\"%s\"", argv[i + 1]);
+		a[i + 2] = str;
+	}
 	a[i + 2] = NULL;
 	execvp(a[0], a); 
 

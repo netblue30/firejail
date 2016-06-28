@@ -53,6 +53,7 @@ clean:
 	rm -f test/environment/wget-log*
 	rm -fr test/environment/-testdir
 	rm -f test/environment/logfile*
+	rm -f test/sysutils/firejail_t*
 	cd test/compile; ./compile.sh --clean; cd ../..
 	cd test/dist-compile; ./compile.sh --clean; cd ../..
 
@@ -213,6 +214,7 @@ realinstall:
 	install -c -m 0644 .etc/gzip.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/xzdec.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/strings.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/xz.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	install -c -m 0644 etc/firejail.config $(DESTDIR)/$(sysconfdir)/firejail/.
 	rm -fr .etc
@@ -327,6 +329,9 @@ test-apps:
 test-apps-x11:
 	cd test/apps-x11; ./apps-x11.sh | grep TESTING
 
+test-sysutils:
+	cd test/sysutils; ./sysutils.sh | grep TESTING
+	
 test-utils:
 	cd test/utils; ./utils.sh | grep TESTING
 
@@ -342,5 +347,5 @@ test-network:
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
 
-test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-filters
+test: test-profiles test-fs test-utils  test-environment test-sysutils test-apps test-apps-x11 test-filters
 	echo "TEST COMPLETE"

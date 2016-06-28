@@ -123,4 +123,5 @@
 /etc/firejail/gzip.profile
 /etc/firejail/xzdec.profile
 /etc/firejail/strings.profile
+/etc/firejail/xz.profile
 

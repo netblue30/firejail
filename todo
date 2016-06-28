@@ -101,3 +101,10 @@ firejail.src: E: no-changelogname-tag
 firejail.src: W: invalid-url Source0: https://github.com/netblue30/firejail/archive/0.9.40.tar.gz#/firejail-0.9.40.tar.gz HTTP Error 404: Not Found
 1 packages and 0 specfiles checked; 1 errors, 1 warnings.
 
+15. Testing:
+find /usr/share/doc/firejail | cpio -ov > t1
+strings /usr/bin/firejail > t1
+gzip -c /usr/bin/firejail > t1
+
+use diff -s to compare the files
+

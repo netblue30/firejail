@@ -693,6 +693,52 @@ static void delete_x11_file(pid_t pid) {
 	free(fname);
 }
 
+static void detect_quiet(int argc, char **argv) {
+	int i;
+	char *progs[] = {
+		"cpio",
+		"strings",
+		"gzip",
+		"xz",
+		"xzdec",
+		NULL
+	};
+	
+	// detect --quiet
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--quiet") == 0) {
+			arg_quiet = 1;
+			break;
+		}
+		
+		// detect end of firejail params
+		if (strcmp(argv[i], "--") == 0)
+			break;
+		if (strncmp(argv[i], "--", 2) != 0)
+			break;
+	}
+
+	// argv[i] is the program name if --quiet was not already detected
+	if (arg_quiet || i == argc)
+		return;
+
+	// extract the name of the program without the leading path
+	char *ptr = strrchr(argv[i], '/');
+	char *name = (ptr)? (ptr + 1): argv[i];
+	if (*name == '\0')
+		return;
+
+	// look for the program in the list	
+	int j = 0;
+	while (progs[j] != NULL) {
+		if (strcmp(name, progs[j]) == 0) {
+			arg_quiet = 1;
+			return;
+		}
+		j++;
+	}
+}
+
 //*******************************************
 // Main program
 //*******************************************
@@ -709,6 +755,8 @@ int main(int argc, char **argv) {
 	int highest_errno = errno_highest_nr();
 #endif
 
+	detect_quiet(argc, argv);
+
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
@@ -717,19 +765,6 @@ int main(int argc, char **argv) {
 	if (*argv[0] != '-')
 		run_symlink(argc, argv);
 
-	// detect --quiet
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "--quiet") == 0) {
-			arg_quiet = 1;
-			break;
-		}
-		
-		// detect end of firejail params
-		if (strcmp(argv[i], "--") == 0)
-			break;
-		if (strncmp(argv[i], "--", 2) != 0)
-			break;
-	}
 
 	// check if we already have a sandbox running
 	// If LXC is detected, start firejail sandbox

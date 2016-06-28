@@ -1,10 +1,21 @@
 # cpio profile
-# testing: find . -print -depth | cpio -ov > tree.cpio
-include /etc/firejail/default.profile
-tracelog
+# /sbin and /usr/sbin are visible inside the sandbox
+# /boot is not visible and /var is heavily modified 
+
+noblacklist /sbin
+noblacklist /usr/sbin
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-passwdmgr.inc
+
+private-dev
+private-tmp
+seccomp
+caps.drop all
 net none
 shell none
-private-bin cpio
-private-dev
+tracelog
+net none
+
 
 

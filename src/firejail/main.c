@@ -696,6 +696,7 @@ static void delete_x11_file(pid_t pid) {
 static void detect_quiet(int argc, char **argv) {
 	int i;
 	char *progs[] = {
+		"less",
 		"cpio",
 		"strings",
 		"gzip",

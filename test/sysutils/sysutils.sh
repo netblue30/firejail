@@ -42,3 +42,21 @@ else
 	echo "TESTING SKIP: xzdec not found"
 fi
 
+which xz
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: xz"
+	./xz.exp
+else
+	echo "TESTING SKIP: xz not found"
+fi
+
+which less
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: less"
+	./less.exp
+else
+	echo "TESTING SKIP: less not found"
+fi
+

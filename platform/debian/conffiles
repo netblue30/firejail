@@ -124,4 +124,5 @@
 /etc/firejail/xzdec.profile
 /etc/firejail/strings.profile
 /etc/firejail/xz.profile
+/etc/firejail/less.profile
 

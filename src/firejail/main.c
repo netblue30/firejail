@@ -766,7 +766,6 @@ int main(int argc, char **argv) {
 	if (*argv[0] != '-')
 		run_symlink(argc, argv);
 
-
 	// check if we already have a sandbox running
 	// If LXC is detected, start firejail sandbox
 	// otherwise try to detect a PID namespace by looking under /proc for specific kernel processes and:
@@ -836,7 +835,19 @@ int main(int argc, char **argv) {
 	// check root/suid
 	EUID_ROOT();
 	if (geteuid()) {
-		fprintf(stderr, "Error: the sandbox is not setuid root\n");
+		// detect --version
+		for (i = 1; i < argc; i++) {
+			if (strcmp(argv[i], "--version") == 0) {
+				printf("firejail version %s\n", VERSION);
+				exit(0);
+			}
+			
+			// detect end of firejail params
+			if (strcmp(argv[i], "--") == 0)
+				break;
+			if (strncmp(argv[i], "--", 2) != 0)
+				break;
+		}
 		exit(1);
 	}
 	EUID_USER();

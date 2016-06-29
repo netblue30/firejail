@@ -191,9 +191,15 @@ void run_no_sandbox(int argc, char **argv) {
 		
 		// copy
 		for (i = start_index; i < argc; i++) {
-			strcat(command, "\"");
-			strcat(command, argv[i]);
-			strcat(command, "\" ");
+			if (strchr(argv[i], '&')) {
+				strcat(command, "\"");
+				strcat(command, argv[i]);
+				strcat(command, "\" ");
+			}
+			else {
+				strcat(command, argv[i]);
+				strcat(command, " ");
+			}
 		}
 	}
 	

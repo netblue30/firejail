@@ -61,9 +61,15 @@ static void extract_command(int argc, char **argv, int index) {
 	cfg.command_line = malloc(len + 1);
 	*cfg.command_line = '\0';
 	for (i = index; i < argc; i++) {
-		strcat(cfg.command_line, "\"");
-		strcat(cfg.command_line, argv[i]);
-		strcat(cfg.command_line, "\" ");
+		if (strchr(argv[i], '&')) {
+			strcat(cfg.command_line, "\"");
+			strcat(cfg.command_line, argv[i]);
+			strcat(cfg.command_line, "\" ");
+		}
+		else {
+			strcat(cfg.command_line, argv[i]);
+			strcat(cfg.command_line, " ");
+		}
 	}
 	if (arg_debug)
 		printf("Extracted command #%s#\n", cfg.command_line);

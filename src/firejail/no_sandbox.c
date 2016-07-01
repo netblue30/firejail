@@ -34,8 +34,6 @@ int is_container(const char *str) {
 	     strcmp(str, "rkt") == 0)
 		return 1;
 	return 0;
-
-
 }
 
 // returns 1 if we are running under LXC

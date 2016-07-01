@@ -17,15 +17,21 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "faudit.h"
 
-int main(int argc, char **argv) {
-	printf("FAUDIT: Firejail audit started\n");
+#ifndef FAUDIT_H
+#define FAUDIT_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mount.h>
+#include <assert.h>
 
-	// check pid namespace
-	pid();
+#define errExit(msg)    do { char msgout[500]; sprintf(msgout, "Error %s:%s(%d)", msg, __FUNCTION__, __LINE__); perror(msgout); exit(1);} while (0)
 
-	printf("FAUDIT: Firejail audit ended\n");
-	return 0;
-	
-}
+// pid.c
+void pid(void);
+
+#endif

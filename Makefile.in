@@ -1,6 +1,6 @@
 all: apps firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-config.5
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee
+APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/libtracelog src/faudit
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -84,6 +84,7 @@ realinstall:
 	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.
@@ -249,7 +250,6 @@ realinstall:
 	install -c -m 0644 src/bash_completion/firemon.bash_completion $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	install -c -m 0644 src/bash_completion/firecfg.bash_completion $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 
-
 install: all
 	$(MAKE) realinstall
 
@@ -260,6 +260,7 @@ install-strip: all
 	strip src/libtrace/libtrace.so
 	strip src/libtracelog/libtracelog.so
 	strip src/ftee/ftee
+	strip src/faudit/faudit
 	$(MAKE) realinstall
 
 uninstall:

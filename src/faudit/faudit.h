@@ -22,6 +22,7 @@
 #define FAUDIT_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -33,5 +34,8 @@
 
 // pid.c
 void pid(void);
+
+// caps.c
+void caps(void);
 
 #endif

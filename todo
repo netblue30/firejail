@@ -101,10 +101,25 @@ firejail.src: E: no-changelogname-tag
 firejail.src: W: invalid-url Source0: https://github.com/netblue30/firejail/archive/0.9.40.tar.gz#/firejail-0.9.40.tar.gz HTTP Error 404: Not Found
 1 packages and 0 specfiles checked; 1 errors, 1 warnings.
 
-15. Testing:
-find /usr/share/doc/firejail | cpio -ov > t1
-strings /usr/bin/firejail > t1
-gzip -c /usr/bin/firejail > t1
+15. bug: capabiliteis declared on the command line take precedence over caps declared in profiles
 
-use diff -s to compare the files
+$ firejail  --caps.keep=chown,net_bind_service src/faudit/faudit
+Reading profile /etc/firejail/default.profile
+Reading profile /etc/firejail/disable-common.inc
+Reading profile /etc/firejail/disable-programs.inc
+Reading profile /etc/firejail/disable-passwdmgr.inc
 
+** Note: you can use --noprofile to disable default.profile **
+
+Parent pid 6872, child pid 6873
+
+Child process initialized
+
+----- Firejail Audit: the Good, the Bad and the Ugly -----
+
+GOOD: Process PID 2, running in a PID namespace
+Container/sandbox: firejail
+GOOD: all capabilities are disabled
+
+
+Parent is shutting down, bye...

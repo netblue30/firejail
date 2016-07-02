@@ -20,12 +20,15 @@
 #include "faudit.h"
 
 int main(int argc, char **argv) {
-	printf("FAUDIT: Firejail audit started\n");
+	printf("\n----- Firejail Audit: the Good, the Bad and the Ugly -----\n");
 
 	// check pid namespace
 	pid();
+	
+	// chack capabilities
+	caps();
 
-	printf("FAUDIT: Firejail audit ended\n");
+	printf("----------------------------------------------------------\n");
 	return 0;
 	
 }

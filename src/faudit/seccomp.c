@@ -21,17 +21,17 @@
 #include <linux/capability.h>
 
 #define MAXBUF 4098
-static int extract_caps(uint64_t *val) {
+static int extract_seccomp(int *val) {
 	FILE *fp = fopen("/proc/self/status", "r");
 	if (!fp)
 		return 1;
 	
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
-		if (strncmp(buf, "CapBnd:\t", 8) == 0) {
+		if (strncmp(buf, "Seccomp:\t", 8) == 0) {
 			char *ptr = buf + 8;
-			unsigned long long tmp;
-			sscanf(ptr, "%llx", &tmp);
+			int tmp;
+			sscanf(ptr, "%d", &tmp);
 			*val = tmp;
 			fclose(fp);
 			return 0;
@@ -42,36 +42,23 @@ static int extract_caps(uint64_t *val) {
 	return 1;
 }
 
-// return 1 if the capability is in tbe map
-static int check_capability(uint64_t map, int cap) {
-	int i;
-	uint64_t mask = 1ULL;
+void seccomp_test(void) {
+	int seccomp_status;
+	int rv = extract_seccomp(&seccomp_status);
 	
-	for (i = 0; i < 64; i++, mask <<= 1) {
-		if ((i == cap) && (mask & map))
-			return 1;
-	}
-
-	return 0;
-}
-
-void caps_test(void) {
-	uint64_t caps_val;
-	
-	if (extract_caps(&caps_val)) {
-		printf("SKIP: cannot extract capabilities on this platform\n");
+	if (rv) {
+		printf("SKIP: cannot extract seccomp configuration on this platform\n");
 		return;
 	}
 	
-	if (caps_val) {
-		printf("BAD: the capability map is %llx, it should be all zero\n", (unsigned long long) caps_val);
-		
-		if (check_capability(caps_val, CAP_SYS_ADMIN))
-			printf("UGLY: CAP_SYS_ADMIN is enabled\n");
-		if (check_capability(caps_val, CAP_SYS_BOOT))
-			printf("UGLY: CAP_SYS_BOOT is enabled\n");
+	if (seccomp_status == 0)
+		printf("BAD: seccomp disabled\n");
+	else if (seccomp_status == 1)
+		printf("GOOD: seccomp strict mode - only  read, write, _exit, and sigreturn are allowd\n");
+	else if (seccomp_status == 2) {
+		printf("GOOD: seccomp BPF enababled\n");
 	}
 	else
-		printf("GOOD: all capabilities are disabled\n"); 
-}
+		fprintf(stderr, "Error: unrecognized seccomp mode\n");
 
+}

@@ -32,10 +32,16 @@
 
 #define errExit(msg)    do { char msgout[500]; sprintf(msgout, "Error %s:%s(%d)", msg, __FUNCTION__, __LINE__); perror(msgout); exit(1);} while (0)
 
+// main.c
+extern char *prog;
+
 // pid.c
-void pid(void);
+void pid_test(void);
 
 // caps.c
-void caps(void);
+void caps_test(void);
+
+// seccomp.c
+void seccomp_test(void);
 
 #endif

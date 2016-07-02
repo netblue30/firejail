@@ -80,10 +80,10 @@ void pid_test(void) {
 	}
 
 
-	printf("GOOD: Process PID %d, running in a PID namespace\n", getpid());
+	printf("GOOD: process PID %d, running in a PID namespace\n", getpid());
 	
 	// try to guess the type of container/sandbox
 	char *str = getenv("container");
 	if (str)
-		printf("Container/sandbox: %s\n", str);
+		printf("INFO: container/sandbox %s\n", str);
 }

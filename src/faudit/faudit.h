@@ -44,4 +44,8 @@ void caps_test(void);
 // seccomp.c
 void seccomp_test(void);
 
+// syscall.c
+void syscall_helper(int argc, char **argv);
+void syscall_run(const char *name);
+
 #endif

@@ -18,11 +18,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "faudit.h"
-#include <limits.h>
 char *prog;
 
 int main(int argc, char **argv) {
-	printf("\n-------- Firejail Audit: the Good, the Bad and the Ugly --------\n");
+	if (argc != 1) {
+		int i;
+		
+		for (i = 1; i < argc; i++) {
+			if (strcmp(argv[i], "syscall")) {
+				syscall_helper(argc, argv);
+				return 0;
+			}
+		}
+		return 1;
+	}
+
+	printf("\n---------------- Firejail Audit: the Good, the Bad and the Ugly ----------------\n");
 
 	// extract program name
 	prog = realpath(argv[0], NULL);
@@ -30,7 +41,7 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Error: cannot extract the path of the audit program\n");
 		return 1;
 	}
-	printf("Running %s\n", prog);
+	printf("INFO: starting %s\n", prog);
 	
 	
 	// check pid namespace
@@ -43,6 +54,6 @@ int main(int argc, char **argv) {
 	seccomp_test();
 	
 	free(prog);
-	printf("----------------------------------------------------------------\n");
+	printf("--------------------------------------------------------------------------------\n");
 	return 0;
 }

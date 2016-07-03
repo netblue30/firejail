@@ -11,6 +11,3 @@ noroot
 protocol unix,inet,inet6
 seccomp
 
-whitelist ~/Downloads/Telegram Desktop
-mkdir ${HOME}/.TelegramDesktop
-whitelist ~/.TelegramDesktop

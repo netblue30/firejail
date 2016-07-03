@@ -70,6 +70,7 @@ void pid_test(void) {
 				fclose(fp);
 				free(fname);
 				printf("BAD: Process PID %d, not running in a PID namespace\n", getpid());
+				printf("Are you sure you're running in a sandbox?\n");
 				return;
 			}
 			j++;

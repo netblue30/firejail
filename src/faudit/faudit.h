@@ -48,4 +48,10 @@ void seccomp_test(void);
 void syscall_helper(int argc, char **argv);
 void syscall_run(const char *name);
 
+// files.c
+void files_test(void);
+
+// network.c
+void network_test(void);
+
 #endif

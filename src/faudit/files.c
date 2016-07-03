@@ -31,8 +31,10 @@ static void check_home_file(const char *name) {
 	if (asprintf(&fname, "%s/%s", homedir, name) ==  -1)
 		errExit("asprintf");
 
-	if (access(fname, R_OK) == 0)
+	if (access(fname, R_OK) == 0) {
 		printf("UGLY: I can access files in %s directory\n", fname);
+		printf("Use \"firejail --blacklist=~/%s\" to block it.\n", fname);
+	}
 	else
 		printf("GOOD: I cannot access files in %s directory\n", fname);
 	

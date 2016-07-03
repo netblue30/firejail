@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
-	printf("\n---------------- Firejail Audit: the Good, the Bad and the Ugly ----------------\n");
+	printf("\n---------------- Firejail Audit: the GOOD, the BAD and the UGLY ----------------\n");
 
 	// extract program name
 	prog = realpath(argv[0], NULL);
@@ -53,8 +53,11 @@ int main(int argc, char **argv) {
 	// check seccomp
 	seccomp_test();
 	
-	// check some well-known problematic files
+	// check some well-known problematic files and directories
 	files_test();
+	
+	// network
+	network_test();
 	
 	free(prog);
 	printf("--------------------------------------------------------------------------------\n");

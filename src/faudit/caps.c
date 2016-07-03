@@ -66,6 +66,7 @@ void caps_test(void) {
 	
 	if (caps_val) {
 		printf("BAD: the capability map is %llx, it should be all zero\n", (unsigned long long) caps_val);
+		printf("Use \"firejail --caps.drop=all\" to fix it.\n");
 		
 		if (check_capability(caps_val, CAP_SYS_ADMIN))
 			printf("UGLY: CAP_SYS_ADMIN is enabled\n");

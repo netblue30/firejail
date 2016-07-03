@@ -50,8 +50,10 @@ void seccomp_test(void) {
 		return;
 	}
 	
-	if (seccomp_status == 0)
+	if (seccomp_status == 0) {
 		printf("BAD: seccomp disabled\n");
+		printf("Use \"firejail --seccomp\" to fix it.\n");
+	}
 	else if (seccomp_status == 1)
 		printf("GOOD: seccomp strict mode - only  read, write, _exit, and sigreturn are allowd\n");
 	else if (seccomp_status == 2) {

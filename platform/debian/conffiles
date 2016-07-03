@@ -125,4 +125,5 @@
 /etc/firejail/strings.profile
 /etc/firejail/xz.profile
 /etc/firejail/less.profile
+/etc/firejail/Telegram.profile
 

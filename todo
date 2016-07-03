@@ -123,3 +123,19 @@ GOOD: all capabilities are disabled
 
 
 Parent is shutting down, bye...
+
+16. Sound devices:
+/dev/snd
+
+
+    /dev/snd/pcmC0D0 -> /dev/audio0 (/dev/audio) -> minor 4
+    /dev/snd/pcmC0D0 -> /dev/dsp0 (/dev/dsp) -> minor 3
+    /dev/snd/pcmC0D1 -> /dev/adsp0 (/dev/adsp) -> minor 12
+    /dev/snd/pcmC1D0 -> /dev/audio1 -> minor 4+16 = 20
+    /dev/snd/pcmC1D0 -> /dev/dsp1 -> minor 3+16 = 19
+    /dev/snd/pcmC1D1 -> /dev/adsp1 -> minor 12+16 = 28
+    /dev/snd/pcmC2D0 -> /dev/audio2 -> minor 4+32 = 36
+    /dev/snd/pcmC2D0 -> /dev/dsp2 -> minor 3+32 = 35
+    /dev/snd/pcmC2D1 -> /dev/adsp2 -> minor 12+32 = 44
+
+

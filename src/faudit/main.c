@@ -53,6 +53,9 @@ int main(int argc, char **argv) {
 	// check seccomp
 	seccomp_test();
 	
+	// check some well-known problematic files
+	files_test();
+	
 	free(prog);
 	printf("--------------------------------------------------------------------------------\n");
 	return 0;

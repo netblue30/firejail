@@ -62,9 +62,9 @@ static void extract_command(int argc, char **argv, int index) {
 	*cfg.command_line = '\0';
 	for (i = index; i < argc; i++) {
 		if (strchr(argv[i], '&')) {
-			strcat(cfg.command_line, "\"");
+			strcat(cfg.command_line, "\'");
 			strcat(cfg.command_line, argv[i]);
-			strcat(cfg.command_line, "\" ");
+			strcat(cfg.command_line, "\' ");
 		}
 		else {
 			strcat(cfg.command_line, argv[i]);

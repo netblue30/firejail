@@ -54,4 +54,7 @@ void files_test(void);
 // network.c
 void network_test(void);
 
+// dbus.c
+void dbus_test(void);
+
 #endif

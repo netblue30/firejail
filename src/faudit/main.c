@@ -59,6 +59,9 @@ int main(int argc, char **argv) {
 	// network
 	network_test();
 	
+	// dbus
+	dbus_test();
+	
 	free(prog);
 	printf("--------------------------------------------------------------------------------\n");
 	return 0;

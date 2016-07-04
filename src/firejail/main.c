@@ -2005,7 +2005,7 @@ int main(int argc, char **argv) {
 				sprintf(ptr1, "%s ", argv[i + prog_index]);
 			}
 			else {
-				sprintf(ptr1, "\"%s\" ", argv[i + prog_index]);
+				sprintf(ptr1, "\'%s\' ", argv[i + prog_index]);
 			}
 			sprintf(ptr2, "%s ", argv[i + prog_index]);
 

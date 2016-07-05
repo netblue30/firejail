@@ -25,6 +25,33 @@ Reiner Herrmann (https://github.com/reinerh)
 	- clang-analyzer fixes
 	- Debian reproducible build
 	- unit testing framework
+Aleksey Manevich (https://github.com/manevich)
+	- several profile fixes
+	- fix problem with relative path in storage_find function
+	- fix build for systems without bash
+	- fix double quotes/single quotes problem
+Fred-Barclay (https://github.com/Fred-Barclay)
+	- added Vivaldi, Atril profiles
+	- added PaleMoon profile
+	- split Icedove and Thunderbird profiles
+	- added 0ad profile
+	- fixed version for .deb packages
+	- added Warzone2100 profile
+	- blacklisted VeraCrypt
+	- added Gpredict profile
+	- added Aweather, Stellarium profiles
+	- fixed HexChat and Atril profiles
+	- fixed disable-common.inc for mate-terminal
+	- blacklisted escape-happy terminals in disable-common.inc
+	- blacklisted g++
+	- added xplayer, xreader, and xviewer profiles
+	- added Brave profile
+	- added Gitter profile
+	- various organising
+	- added LibreOffice profile
+	- added pix profile
+	- added audacity profile
+	- fixed Telegram and qtox profiles
 Jaykishan Mutkawoa (https://github.com/jmutkawoa)
 	- cpio profile
 Paupiah Yash (https://github.com/CaffeinatedStud)
@@ -80,27 +107,6 @@ Joan Figueras (https://github.com/figue)
 	- added abrowser profile
 	- added Google-Play-Music-Desktop-Player
 	- added cyberfox profile
-Fred-Barclay (https://github.com/Fred-Barclay)
-	- added Vivaldi, Atril profiles
-	- added PaleMoon profile
-	- split Icedove and Thunderbird profiles
-	- added 0ad profile
-	- fixed version for .deb packages
-	- added Warzone2100 profile
-	- blacklisted VeraCrypt
-	- added Gpredict profile
-	- added Aweather, Stellarium profiles
-	- fixed HexChat and Atril profiles
-	- fixed disable-common.inc for mate-terminal
-	- blacklisted escape-happy terminals in disable-common.inc
-	- blacklisted g++
-	- added xplayer, xreader, and xviewer profiles
-	- added Brave profile
-	- added Gitter profile
-	- various organising
-	- added LibreOffice profile
-	- added pix profile
-	- added audacity profile
 Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
 n1trux (https://github.com/n1trux)
@@ -131,10 +137,6 @@ Tom Mellor (https://github.com/kalegrill)
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support
-Aleksey Manevich (https://github.com/manevich)
-	- several profile fixes
-	- fix problem with relative path in storage_find function
-	- fix build for systems without bash
 pszxzsd (https://github.com/pszxzsd)
 	-uGet profile
 Rahiel Kasim (https://github.com/rahiel)

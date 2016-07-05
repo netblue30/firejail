@@ -35,6 +35,8 @@ void usage(void) {
 	printf("Options:\n\n");
 	printf("    -- - signal the end of options and disables further option processing.\n\n");
 	printf("    --appimage - sandbox an AppImage application\n\n");
+	printf("    --audit - audit the sandbox, see Audit section for more details\n\n");
+	printf("    --audit=test-program - audit the sandbox, see Audit section for more details\n\n");
 #ifdef HAVE_NETWORK	
 	printf("    --bandwidth=name|pid - set  bandwidth  limits  for  the sandbox identified\n");
 	printf("\tby name or PID, see Traffic Shaping section fo more details.\n\n");
@@ -298,7 +300,19 @@ void usage(void) {
 	printf("\n");
 #endif
 
-
+	printf("Audit\n\n");
+	printf("Audit feature allows the user to point out gaps in security profiles. The\n");
+	printf("implementation replaces the program to be sandboxed with a test program. By\n");
+	printf("default, we use faudit program distributed with Firejail. A custom test program\n");
+	printf("can also be supplied by the user. Examples:\n\n");
+	printf("Running the default audit program:\n");
+	printf("    $ firejail --audit transmission-gtk\n\n");
+	printf("Running a custom audit program:\n");
+	printf("    $ firejail --audit=~/sandbox-test transmission-gtk\n\n");
+	printf("In the examples above, the sandbox configures transmission-gtk profile and\n");
+	printf("starts the test program. The real program, transmission-gtk, will not be\n");
+	printf("started.\n\n\n");
+	
 	printf("Monitoring\n\n");
 
 	printf("Option --list prints a list of all sandboxes. The format for each entry is as\n");

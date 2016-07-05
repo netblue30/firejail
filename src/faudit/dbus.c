@@ -42,7 +42,7 @@ void check_session_bus(const char *sockfile) {
 		printf("GOOD: I cannot connect to session bus. If the application misbehaves, please log a bug with the application developer.\n");
 	}
 	else {
-		printf("MAYBE: I can connect to session bus. If this is undesirable, use \"--private-tmp\" or blacklist the socket file.\n");
+		printf("MAYBE: I can connect to session bus. It could be a good idea to create a new network namespace using \"--net=none\" or \"--net=eth0\".\n");
 	}	
 
 	close(sock);

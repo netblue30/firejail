@@ -79,11 +79,8 @@ void syscall_run(const char *name) {
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
-		char *cmd;
-		if (asprintf(&cmd, "%s syscall %s", prog, name) == -1)
-			errExit("asprintf");
 		execl(prog, prog, "syscall", name, NULL);
-		exit(0);
+		exit(1);
 	}
 		
 	// wait for the child to finish

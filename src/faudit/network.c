@@ -40,7 +40,7 @@ void check_ssh(void) {
 	if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
 		printf("GOOD: SSH server not available on localhost.\n");
 	else {
-		printf("MAYBE: An SSH server is accessible on localhost. ");
+		printf("MAYBE: an SSH server is accessible on localhost. ");
 		printf("It could be a good idea to create a new network namespace using \"--net=none\" or \"--net=eth0\".\n");
 	}
 	

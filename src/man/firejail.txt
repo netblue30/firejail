@@ -88,6 +88,12 @@ $ firejail --appimage --private krita-3.0-x86_64.appimage
 .br
 $ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
 .TP
+\fB\-\-audit
+Audit the sandbox, see \fBAUDIT\fR section for more details.
+.TP
+\fB\-\-audit=test-program
+Audit the sandbox, see \fBAUDIT\fR section for more details.
+.TP
 \fB\-\-bandwidth=name|pid
 Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
 .TP
@@ -1691,15 +1697,15 @@ The shaper works at sandbox level, and can be used only for sandboxes configured
 
 Set rate-limits:
 
-	firejail --bandwidth=name|pid set network download upload
+	$ firejail --bandwidth=name|pid set network download upload
 
 Clear rate-limits:
 
-	firejail --bandwidth=name|pid clear network
+	$ firejail --bandwidth=name|pid clear network
 
 Status:
 
-	firejail --bandwidth=name|pid status
+	$ firejail --bandwidth=name|pid status
 
 where:
 .br
@@ -1722,6 +1728,25 @@ Example:
 	$ firejail \-\-bandwidth=mybrowser status
 .br
 	$ firejail \-\-bandwidth=mybrowser clear eth0
+
+.SH AUDIT
+Audit feature allows the user to point out gaps in security profiles. The
+implementation replaces the program to be sandboxed with a test program. By
+default, we use faudit program distributed with Firejail. A custom test program
+can also be supplied by the user. Examples:
+
+Running the default audit program:
+.br
+	$ firejail --audit transmission-gtk
+
+Running a custom audit program:
+.br
+	$ firejail --audit=~/sandbox-test transmission-gtk\n\n");
+
+In the examples above, the sandbox configures transmission-gtk profile and
+starts the test program. The real program, transmission-gtk, will not be
+started.
+
 
 .SH MONITORING
 Option \-\-list prints a list of all sandboxes. The format

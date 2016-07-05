@@ -275,9 +275,18 @@ static int monitor_application(pid_t app_pid) {
 
 static void start_application(void) {
 	//****************************************
+	// audit
+	//****************************************
+	if (arg_audit) {
+		char *audit_prog;
+		if (asprintf(&audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
+			errExit("asprintf");
+		execl(audit_prog, audit_prog, NULL);
+	}
+	//****************************************
 	// start the program without using a shell
 	//****************************************
-	if (arg_shell_none) {
+	else if (arg_shell_none) {
 		if (arg_debug) {
 			int i;
 			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {

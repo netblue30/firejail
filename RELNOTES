@@ -1,5 +1,7 @@
 firejail (0.9.41) baseline; urgency=low
   * work in progress...
+  * AppImage support (--appimage)
+  * Sandbox auditing support (--audit)
   * compile time and run time support to disable whitelists
   * compile time support to disable global configuration file
   * some profiles have been converted to private-bin

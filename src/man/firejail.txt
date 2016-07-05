@@ -1741,12 +1741,13 @@ Running the default audit program:
 
 Running a custom audit program:
 .br
-	$ firejail --audit=~/sandbox-test transmission-gtk\n\n");
+	$ firejail --audit=~/sandbox-test transmission-gtk
 
 In the examples above, the sandbox configures transmission-gtk profile and
 starts the test program. The real program, transmission-gtk, will not be
 started.
 
+Limitations: audit feature is not implemented for --x11 commands.
 
 .SH MONITORING
 Option \-\-list prints a list of all sandboxes. The format

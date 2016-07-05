@@ -65,6 +65,27 @@ More packages build by AppImage developer Simon Peter: https://bintray.com/probo
 
 AppImage project home: https://github.com/probonopd/AppImageKit
 
+## Sandbox auditing
+`````
+AUDIT
+       Audit feature allows the user to point out gaps in  security  profiles.
+       The  implementation  replaces  the  program to be sandboxed with a test
+       program. By default, we use faudit program distributed with Firejail. A
+       custom test program can also be supplied by the user. Examples:
+
+       Running the default audit program:
+            $ firejail --audit transmission-gtk
+
+       Running a custom audit program:
+            $ firejail --audit=~/sandbox-test transmission-gtk
+
+       In  the examples above, the sandbox configures transmission-gtk profile
+       and starts the test program. The real program,  transmission-gtk,  will
+       not be started.
+
+       Limitations: audit feature is not implemented for --x11 commands.
+`````
+
 ## Converting profiles to private-bin - work in progress!
 
 BitTorrent: deluge, qbittorrent, rtorrent, transmission-gtk, transmission-qt, uget-gtk

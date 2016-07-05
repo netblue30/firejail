@@ -261,6 +261,7 @@ extern int arg_writable_etc;	// writable etc
 extern int arg_writable_var;	// writable var
 extern int arg_appimage;	// appimage
 extern int arg_audit;		// audit
+extern char *arg_audit_prog;	// audit
 
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];

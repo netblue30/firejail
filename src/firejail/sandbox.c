@@ -272,16 +272,27 @@ static int monitor_application(pid_t app_pid) {
 #endif	
 }
 
+void start_audit(void) {
+	char *audit_prog;
+	if (asprintf(&audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
+		errExit("asprintf");
+	execl(audit_prog, audit_prog, NULL);
+	perror("execl");
+	exit(1);
+}
 
 static void start_application(void) {
 	//****************************************
 	// audit
 	//****************************************
 	if (arg_audit) {
-		char *audit_prog;
-		if (asprintf(&audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
-			errExit("asprintf");
-		execl(audit_prog, audit_prog, NULL);
+		assert(arg_audit_prog);
+		struct stat s;
+		if (stat(arg_audit_prog, &s) != 0) {
+			fprintf(stderr, "Error: cannot find the audit program\n");
+			exit(1);
+		}
+		execl(arg_audit_prog, arg_audit_prog, NULL);
 	}
 	//****************************************
 	// start the program without using a shell
@@ -305,6 +316,7 @@ static void start_application(void) {
 			printf("Child process initialized\n");
 
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
+		exit(1);
 	}
 	//****************************************
 	// start the program using a shell

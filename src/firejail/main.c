@@ -101,6 +101,7 @@ int arg_writable_etc = 0;			// writable etc
 int arg_writable_var = 0;			// writable var
 int arg_appimage = 0;				// appimage
 int arg_audit = 0;				// audit
+char *arg_audit_prog;				// audit
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -1831,8 +1832,21 @@ int main(int argc, char **argv) {
 		//*************************************
 		// command
 		//*************************************
-		else if (strcmp(argv[i], "--audit") == 0)
+		else if (strcmp(argv[i], "--audit") == 0) {
+			if (asprintf(&arg_audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
+				errExit("asprintf");
 			arg_audit = 1;
+		}
+		else if (strncmp(argv[i], "--audit=", 8) == 0) {
+			if (strlen(argv[i] + 8) == 0) {
+				fprintf(stderr, "Error: invalid audit program\n");
+				exit(1);
+			}
+			arg_audit_prog = strdup(argv[i] + 8);
+			if (!arg_audit_prog)
+				errExit("strdup");
+			arg_audit = 1;
+		}
 		else if (strcmp(argv[i], "--appimage") == 0)
 			arg_appimage = 1;
 		else if (strcmp(argv[i], "--csh") == 0) {

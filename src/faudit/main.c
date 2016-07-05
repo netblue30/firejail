@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Error: cannot extract the path of the audit program\n");
 		return 1;
 	}
-	printf("INFO: starting %s\n", prog);
+	printf("INFO: Starting %s.\n", prog);
 	
 	
 	// check pid namespace

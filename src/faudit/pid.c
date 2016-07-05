@@ -69,7 +69,7 @@ void pid_test(void) {
 			if (strncmp(buf, kern_proc[j], strlen(kern_proc[j])) == 0) {
 				fclose(fp);
 				free(fname);
-				printf("BAD: Process PID %d, not running in a PID namespace\n", getpid());
+				printf("BAD: Process %d, not running in a PID namespace. ", getpid());
 				printf("Are you sure you're running in a sandbox?\n");
 				return;
 			}
@@ -81,10 +81,10 @@ void pid_test(void) {
 	}
 
 
-	printf("GOOD: process PID %d, running in a PID namespace\n", getpid());
+	printf("GOOD: process %d running in a PID namespace.\n", getpid());
 	
 	// try to guess the type of container/sandbox
 	char *str = getenv("container");
 	if (str)
-		printf("INFO: container/sandbox %s\n", str);
+		printf("INFO: container/sandbox %s.\n", str);
 }

@@ -20,14 +20,14 @@
 #include "faudit.h"
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <linux/netlink.h>
+#include <linux/rtnetlink.h>
 
 void check_ssh(void) {
-	printf("INFO: looking for ssh servers running on localhost\n");
-	
 	// open socket
 	int sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock == -1) {
-		printf("Error: cannot create an IPv4 socket\n");
+		printf("GOOD: SSH server not available on localhost.\n");
 		return;
 	}
 
@@ -38,15 +38,40 @@ void check_ssh(void) {
 	server.sin_port = htons(22);	
 	
 	if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
-		printf("GOOD: SSH server not available on localhost\n");
+		printf("GOOD: SSH server not available on localhost.\n");
 	else {
-		printf("MAYBE: an SSH server is accessible on localhost\n");
+		printf("MAYBE: An SSH server is accessible on localhost. ");
 		printf("It could be a good idea to create a new network namespace using \"--net=none\" or \"--net=eth0\".\n");
 	}
 	
 	close(sock);
 }
+
+void check_netlink(void) {
+	socklen_t addr_len;
+	int sock = socket(AF_NETLINK, SOCK_RAW | SOCK_CLOEXEC, 0);
+	if (sock == -1) {
+		printf("GOOD: I cannot connect to netlink socket. Network utilities such as iproute2 will not work in the sandbox.\n");
+		return;
+	}
+
+	struct sockaddr_nl local;
+	memset(&local, 0, sizeof(local));
+	local.nl_family = AF_NETLINK;
+	local.nl_groups = 0; //subscriptions;
+
+	if (bind(sock, (struct sockaddr*)&local, sizeof(local)) < 0) {
+		printf("GOOD: I cannot connect to netlink socket. Network utilities such as iproute2 will not work in the sandbox.\n");
+		close(sock);
+		return;
+	}
+	
+	close(sock);
+	printf("MAYBE: I can connect to netlink socket. Network utilities such as iproute2 will work fine in the sandbox. ");
+	printf("You can use \"--protocol\" to disable the socket.\n");
+}
 	
 void network_test(void) {
 	check_ssh();
+	check_netlink();
 }

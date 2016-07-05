@@ -22,52 +22,52 @@
 void syscall_helper(int argc, char **argv) {
 	if (strcmp(argv[2], "mount") == 0) {
 		mount(NULL, NULL, NULL, 0, NULL);
-		printf("\nUGLY: mount syscall permitted\n");
+		printf("\nUGLY: mount syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "umount2") == 0) {
 		umount2(NULL, 0);
-		printf("\nUGLY: umount2 syscall permitted\n");
+		printf("\nUGLY: umount2 syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "ptrace") == 0) {
 		ptrace(0, 0, NULL, NULL);
-		printf("\nUGLY: ptrace syscall permitted\n");
+		printf("\nUGLY: ptrace syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "swapon") == 0) {
 		swapon(NULL, 0);
-		printf("\nUGLY: swapon syscall permitted\n");
+		printf("\nUGLY: swapon syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "swapoff") == 0) {
 		swapoff(NULL);
-		printf("\nUGLY: swapoff syscall permitted\n");
+		printf("\nUGLY: swapoff syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "init_module") == 0) {
 		init_module(NULL, 0, NULL);
-		printf("\nUGLY: init_moule syscall permitted\n");
+		printf("\nUGLY: init_module syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "finit_module") == 0) {
 		swapoff(0, NULL, 0);
-		printf("\nUGLY: finit_moule syscall permitted\n");
+		printf("\nUGLY: finit_module syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "delete_module") == 0) {
 		delete_module(NULL, 0);
-		printf("\nUGLY: delete_moule syscall permitted\n");
+		printf("\nUGLY: delete_module syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "chroot") == 0) {
 		int rv = chroot(NULL);
 		(void) rv;
-		printf("\nUGLY: chroot syscall permitted\n");
+		printf("\nUGLY: chroot syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "pivot_root") == 0) {
 		pivot_root(NULL, NULL);
-		printf("\nUGLY: pivot_root syscall permitted\n");
+		printf("\nUGLY: pivot_root syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "iopl") == 0) {
 		iopl(0L);
-		printf("\nUGLY: iopl syscall permitted\n");
+		printf("\nUGLY: iopl syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "ioperm") == 0) {
 		ioperm(0, 0, 0);
-		printf("\nUGLY: ioperm syscall permitted\n");
+		printf("\nUGLY: ioperm syscall permitted.\n");
 	}
 	exit(0);
 }

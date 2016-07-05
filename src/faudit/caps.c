@@ -60,20 +60,20 @@ void caps_test(void) {
 	uint64_t caps_val;
 	
 	if (extract_caps(&caps_val)) {
-		printf("SKIP: cannot extract capabilities on this platform\n");
+		printf("SKIP: cannot extract capabilities on this platform.\n");
 		return;
 	}
 	
 	if (caps_val) {
-		printf("BAD: the capability map is %llx, it should be all zero\n", (unsigned long long) caps_val);
+		printf("BAD: the capability map is %llx, it should be all zero. ", (unsigned long long) caps_val);
 		printf("Use \"firejail --caps.drop=all\" to fix it.\n");
 		
 		if (check_capability(caps_val, CAP_SYS_ADMIN))
-			printf("UGLY: CAP_SYS_ADMIN is enabled\n");
+			printf("UGLY: CAP_SYS_ADMIN is enabled.\n");
 		if (check_capability(caps_val, CAP_SYS_BOOT))
-			printf("UGLY: CAP_SYS_BOOT is enabled\n");
+			printf("UGLY: CAP_SYS_BOOT is enabled.\n");
 	}
 	else
-		printf("GOOD: all capabilities are disabled\n"); 
+		printf("GOOD: all capabilities are disabled.\n"); 
 }
 

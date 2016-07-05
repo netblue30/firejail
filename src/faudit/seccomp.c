@@ -46,18 +46,17 @@ void seccomp_test(void) {
 	int rv = extract_seccomp(&seccomp_status);
 	
 	if (rv) {
-		printf("SKIP: cannot extract seccomp configuration on this platform\n");
+		printf("INFO: cannot extract seccomp configuration on this platform.\n");
 		return;
 	}
 	
 	if (seccomp_status == 0) {
-		printf("BAD: seccomp disabled\n");
-		printf("Use \"firejail --seccomp\" to fix it.\n");
+		printf("BAD: seccomp disabled. Use \"firejail --seccomp\" to enable it.\n");
 	}
 	else if (seccomp_status == 1)
-		printf("GOOD: seccomp strict mode - only  read, write, _exit, and sigreturn are allowd\n");
+		printf("GOOD: seccomp strict mode - only  read, write, _exit, and sigreturn are allowd.\n");
 	else if (seccomp_status == 2) {
-		printf("GOOD: seccomp BPF enababled\n");
+		printf("GOOD: seccomp BPF enabled.\n");
 
 		printf("checking syscalls: "); fflush(0);
 		printf("mount... "); fflush(0);

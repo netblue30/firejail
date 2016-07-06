@@ -91,9 +91,9 @@ static void storage_add(const char *str) {
 	storage[h] = ptr;
 }
 
-char* cwd = NULL; // global variable for keeping current working directory
-typedef int (*orig_chdir_t)(const char *pathname);
-static orig_chdir_t orig_chdir = NULL;
+// global variable to keep current working directory
+char* cwd = NULL;
+
 static char *storage_find(const char *str) {
 #ifdef DEBUG
 	printf("storage find %s\n", str);
@@ -107,17 +107,23 @@ static char *storage_find(const char *str) {
 	const char *tofind = str;
 	int allocated = 0;
 
-	if (strstr(str, "..") || strstr(str, "/./") || strstr(str, "//") || str[0]!='/') {
-		if (!orig_chdir)
-			orig_chdir = (orig_chdir_t)dlsym(RTLD_NEXT, "chdir");
-		if (!orig_chdir(cwd)) {
-#ifdef DEBUG
-			printf("chdir failed\n");
-#endif
-			return NULL;
+	if (strstr(str, "..") || strstr(str, "/./") || strstr(str, "//") || str[0] != '/') {
+		if (cwd != NULL & str[0] != '/') {
+			char *fullpath=malloc(PATH_MAX);
+			if (!fullpath) {
+				fprintf(stderr, "Error: cannot allocate memory\n");
+				return NULL;
+			}
+			if (snprintf(fullpath, PATH_MAX, "%s/%s", cwd, str)<3) {
+				fprintf(stderr, "Error: snprintf failed\n");
+				free(fullpath);
+				return NULL;
+			}
+			tofind = realpath(fullpath, NULL);
+			free(fullpath);
+		} else {
+			tofind = realpath(str, NULL);
 		}
-
-		tofind = realpath(str, NULL);
 		if (!tofind) {
 #ifdef DEBUG
 			printf("realpath failed\n");
@@ -641,9 +647,8 @@ DIR *opendir(const char *pathname) {
 }
 
 // chdir
-// definition of orig_chdir placed before storage_find function
-//typedef int (*orig_chdir_t)(const char *pathname);
-//static orig_chdir_t orig_chdir = NULL;
+typedef int (*orig_chdir_t)(const char *pathname);
+static orig_chdir_t orig_chdir = NULL;
 int chdir(const char *pathname) {
 #ifdef DEBUG
 	printf("%s %s\n", __FUNCTION__, pathname);
@@ -660,5 +665,34 @@ int chdir(const char *pathname) {
 	cwd = strdup(pathname);
 
 	int rv = orig_chdir(pathname);
+	return rv;
+}
+
+// fchdir
+typedef int (*orig_fchdir_t)(int fd);
+static orig_fchdir_t orig_fchdir = NULL;
+int fchdir(int fd) {
+#ifdef DEBUG
+	printf("%s %d\n", __FUNCTION__, fd);
+#endif
+	if (!orig_fchdir)
+		orig_fchdir = (orig_fchdir_t)dlsym(RTLD_NEXT, "fchdir");
+
+	free(cwd);
+	char *pathname=malloc(PATH_MAX);
+	if (pathname) {
+		if (snprintf(pathname,PATH_MAX,"/proc/self/fd/%d", fd)>0) {
+			cwd = realpath(pathname, NULL);
+		} else {
+			cwd = NULL;
+			fprintf(stderr, "Error: snprintf failed\n");
+		}
+		free(pathname);
+	} else {
+		fprintf(stderr, "Error: cannot allocate memory\n");
+		cwd = NULL;
+	}
+
+	int rv = orig_fchdir(fd);
 	return rv;
 }

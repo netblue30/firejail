@@ -68,9 +68,12 @@ void fs_private_dev(void){
 		printf("Mounting tmpfs on /dev\n");
 
 	int have_dri = 0;
+	int have_snd = 0;
 	struct stat s;
 	if (stat("/dev/dri", &s) == 0)
 		have_dri = 1;
+	if (stat("/dev/snd", &s) == 0)
+		have_snd = 1;
 
 	// create DRI_DIR
 	fs_build_mnt_dir();
@@ -89,7 +92,23 @@ void fs_private_dev(void){
 			errExit("mounting /dev/dri");
 	}
 	
-	// restore /dev/log
+	// create SND_DIR
+	if (have_snd) {
+		/* coverity[toctou] */
+		rv = mkdir(RUN_SND_DIR, 0755);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown(RUN_SND_DIR, 0, 0) < 0)
+			errExit("chown");
+		if (chmod(RUN_SND_DIR, 0755) < 0)
+			errExit("chmod");
+	
+		// keep a copy of /dev/dri under DRI_DIR
+		if (mount("/dev/snd", RUN_SND_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting /dev/snd");
+	}
+	
+	// create DEVLOG_FILE
 	int have_devlog = 0;
 	if (stat("/dev/log", &s) == 0) {
 		have_devlog = 1;
@@ -120,6 +139,21 @@ void fs_private_dev(void){
 			fs_logger("clone /dev/log");
 		}
 	}		
+
+	// bring back the /dev/snd directory
+	if (have_snd) {
+		/* coverity[toctou] */
+		rv = mkdir("/dev/snd", 0755);
+		if (rv == -1)
+			errExit("mkdir");
+		if (chown("/dev/snd", 0, 0) < 0)
+			errExit("chown");
+		if (chmod("/dev/snd",0755) < 0)
+			errExit("chmod");
+		if (mount(RUN_SND_DIR, "/dev/snd", NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting /dev/snd");
+		fs_logger("whitelist /dev/snd");
+	}
 
 	// bring back the /dev/dri directory
 	if (have_dri) {
@@ -242,4 +276,10 @@ void fs_dev_shm(void) {
 		}
 			
 	}
+}
+
+void fs_dev_disable_sound() {
+	if (mount(RUN_RO_DIR, "/dev/snd", "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("disable /dev/snd");
+	fs_logger("blacklist /dev/snd");
 }

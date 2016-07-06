@@ -86,6 +86,10 @@ AUDIT
        Limitations: audit feature is not implemented for --x11 commands.
 `````
 
+## --private-dev enhancements - work in progress!
+
+The following devices are added to --private-dev list.
+
 ## Converting profiles to private-bin - work in progress!
 
 BitTorrent: deluge, qbittorrent, rtorrent, transmission-gtk, transmission-qt, uget-gtk

@@ -1468,7 +1468,6 @@ int main(int argc, char **argv) {
 			env_store(argv[i] + 6);
 		else if (strcmp(argv[i], "--nosound") == 0) {
 			arg_nosound = 1;
-			arg_private_dev = 1;
 		}
 				
 		//*************************************

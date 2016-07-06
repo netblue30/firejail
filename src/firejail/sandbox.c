@@ -559,8 +559,13 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// --nosound and fix for pulseaudio 7.0
 	//****************************
-	if (arg_nosound)
+	if (arg_nosound) {
+		// disable pulseaudio
 		pulseaudio_disable();
+
+		// disable /dev/snd
+		fs_dev_disable_sound();
+	}
 	else
 		pulseaudio_init();
 	

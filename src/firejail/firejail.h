@@ -44,6 +44,7 @@
 #define RUN_ETC_DIR	"/run/firejail/mnt/etc"
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
 #define RUN_DRI_DIR	"/run/firejail/mnt/dri"
+#define RUN_SND_DIR	"/run/firejail/mnt/snd"
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
 #define RUN_DEVLOG_FILE	"/run/firejail/mnt/devlog"
 
@@ -406,6 +407,7 @@ void dbg_test_dir(const char *dir);
 // fs_dev.c
 void fs_dev_shm(void);
 void fs_private_dev(void);
+void fs_dev_disable_sound();
 
 // fs_home.c
 // private mode (--private)

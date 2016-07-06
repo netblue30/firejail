@@ -126,4 +126,6 @@
 /etc/firejail/xz.profile
 /etc/firejail/less.profile
 /etc/firejail/Telegram.profile
+/etc/firejail/atom-beta.profile
+
 

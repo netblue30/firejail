@@ -1,4 +1,5 @@
 # various programs
+blacklist ${HOME}/.Atom
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.FBReader
@@ -6,6 +7,7 @@ blacklist ${HOME}/.wine
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.stellarium
+blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/transmission

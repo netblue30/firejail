@@ -25,6 +25,8 @@ Reiner Herrmann (https://github.com/reinerh)
 	- clang-analyzer fixes
 	- Debian reproducible build
 	- unit testing framework
+Niklas Haas (https://github.com/haasn)
+	- blacklisting for keybase.io's client
 Aleksey Manevich (https://github.com/manevich)
 	- several profile fixes
 	- fix problem with relative path in storage_find function

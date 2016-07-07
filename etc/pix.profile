@@ -1,4 +1,4 @@
-# gthumb profile
+# Firejail profile for pix
 noblacklist ${HOME}/.config/pix
 noblacklist ${HOME}/.local/share/pix
 

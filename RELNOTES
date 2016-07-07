@@ -8,6 +8,7 @@ firejail (0.9.41) baseline; urgency=low
   * some profiles have been converted to private-bin
   * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
   * new profiles: pix, audacity, strings, xz, xzdec, gzip, cpio, less
+  * new profiles: Atom Beta
  -- netblue30 <netblue30@yahoo.com>  Tue, 31 May 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low

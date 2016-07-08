@@ -190,7 +190,7 @@ void usage(void) {
 	printf("\tand copy the programs in the list.\n\n");
 
 	printf("    --private-dev - create a new /dev directory. Only dri, null, full, zero,\n");
-	printf("\ttty, pst, ptms, random, urandom, log and shm devices are available.\n\n");
+	printf("\ttty, pst, ptms, random, snd, urandom, log and shm devices are available.\n\n");
 
 	printf("    --private-etc=file,directory - build a new /etc in a temporary\n");
 	printf("\tfilesystem, and copy the files and directories in the list.\n");

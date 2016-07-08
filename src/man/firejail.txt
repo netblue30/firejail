@@ -1048,7 +1048,7 @@ bash  cat  ls  sed
 
 .TP
 \fB\-\-private-dev
-Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, urandom, log and shm devices are available.
+Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, snd, urandom, log and shm devices are available.
 .br
 
 .br
@@ -1062,7 +1062,7 @@ Child process initialized
 .br
 $ ls /dev
 .br
-dri  full  log  null  ptmx  pts  random  shm  tty  urandom  zero
+dri  full  log  null  ptmx  pts  random  shm  snd  tty  urandom  zero
 .br
 $
 .TP

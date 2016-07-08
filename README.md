@@ -100,6 +100,8 @@ Media: vlc, mpv, gnome-mplayer
 
 Office: evince, gthumb, fbreader, pix
 
+Chat/messaging: qtox
+
 ## New security profiles
 
 Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix, audacity, strings, xz, xzdec, gzip, cpio, less, Atom Beta, Atom

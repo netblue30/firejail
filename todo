@@ -139,3 +139,28 @@ Parent is shutting down, bye...
     /dev/snd/pcmC2D1 -> /dev/adsp2 -> minor 12+32 = 44
 
 
+17. test 3d acceleration
+
+$ lspci -nn | grep VGA
+
+# apt-get install mesa-utils
+
+$ glxinfo  | grep rendering
+
+The output should be:
+
+direct rendering: Yes
+	
+$ glxinfo | grep "renderer string"
+
+OpenGL renderer string: Gallium 0.4 on AMD KAVERI
+
+
+glxgears stuck to 60fps may be due to VSync signal synchronization.
+To disable Vsync
+
+$ vblank_mode=0 glxgears
+
+18. Add nosound in all profiles with private-dev (including server.profile)
+test hedgewars!
+

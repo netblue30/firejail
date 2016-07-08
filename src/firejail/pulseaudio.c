@@ -56,13 +56,27 @@ void pulseaudio_disable(void) {
 	// blacklist user config directory
 	disable_file(cfg.homedir, ".config/pulse");
 
+
+	// blacklist pulseaudio socket in XDG_RUNTIME_DIR
+	char *name = getenv("XDG_RUNTIME_DIR");
+	if (name)
+		disable_file(name, "pulse/native");
+
+	// try the default location anyway
+	char *path;
+	if (asprintf(&path, "/run/user/%d", getuid()) == -1)
+		errExit("asprintf");
+	disable_file(path, "pulse/native");
+	free(path);
+		
+
+
 	// blacklist any pulse* file in /tmp directory
 	DIR *dir;
 	if (!(dir = opendir("/tmp"))) {
 		// sleep 2 seconds and try again
 		sleep(2);
 		if (!(dir = opendir("/tmp"))) {
-			fprintf(stderr, "Warning: cannot open /tmp directory. PulseAudio sockets are not disabled\n");
 			return;
 		}
 	}
@@ -76,10 +90,6 @@ void pulseaudio_disable(void) {
 
 	closedir(dir);
 
-	// blacklist XDG_RUNTIME_DIR
-	char *name = getenv("XDG_RUNTIME_DIR");
-	if (name)
-		disable_file(name, "pulse/native");
 }
 
 

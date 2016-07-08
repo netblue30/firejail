@@ -22,6 +22,7 @@ nogroups
 noroot
 private-bin quiterss
 private-dev
+nosound
 #private-etc X11,ssl
 protocol unix,inet,inet6
 seccomp

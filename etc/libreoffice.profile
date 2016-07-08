@@ -15,4 +15,5 @@ tracelog
 
 private-dev
 whitelist /tmp/.X11-unix/
+nosound
 

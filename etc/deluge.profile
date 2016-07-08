@@ -17,4 +17,5 @@ shell none
 private-bin deluge,sh,python,uname
 whitelist /tmp/.X11-unix
 private-dev
+nosound
 

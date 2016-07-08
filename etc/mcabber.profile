@@ -18,3 +18,4 @@ private-bin mcabber
 private-etc null
 private-dev
 shell none
+nosound

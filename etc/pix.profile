@@ -18,4 +18,5 @@ shell none
 private-bin pix
 whitelist /tmp/.X11-unix
 private-dev
+nosound
 

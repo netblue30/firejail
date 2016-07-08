@@ -15,6 +15,7 @@ protocol unix,inet,inet6
 seccomp
 
 private-dev
+nosound
 
 whitelist /tmp/.X11-unix
 

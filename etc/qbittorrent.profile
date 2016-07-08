@@ -17,3 +17,4 @@ seccomp
 #private-bin qbittorrent
 whitelist /tmp/.X11-unix
 private-dev
+nosound

@@ -12,6 +12,7 @@ noroot
 private-dev
 seccomp
 tracelog
+nosound
 
 mkdir     ~/.hedgewars
 whitelist ~/.hedgewars

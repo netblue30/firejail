@@ -14,6 +14,7 @@ noroot
 private-dev
 protocol unix
 seccomp
+nosound
 
 #Experimental:
 #net none

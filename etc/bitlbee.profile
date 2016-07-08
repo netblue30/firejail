@@ -10,3 +10,5 @@ private
 private-dev
 protocol unix,inet,inet6
 seccomp
+nosound
+

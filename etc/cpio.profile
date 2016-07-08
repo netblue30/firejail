@@ -16,6 +16,7 @@ net none
 shell none
 tracelog
 net none
+nosound
 
 
 

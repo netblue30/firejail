@@ -5,3 +5,4 @@ net none
 shell none
 private-dev
 private-tmp
+nosound

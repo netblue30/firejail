@@ -15,3 +15,5 @@ seccomp
 shell none
 
 private-dev
+nosound
+

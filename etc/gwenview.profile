@@ -13,6 +13,7 @@ nogroups
 private-dev
 protocol unix
 seccomp
+nosound
 
 #Experimental:
 #shell none

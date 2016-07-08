@@ -11,5 +11,6 @@ netfilter
 nonewprivs
 private
 private-dev
+nosound
 protocol unix,inet,inet6,netlink
 seccomp

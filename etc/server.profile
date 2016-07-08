@@ -8,6 +8,7 @@ include /etc/firejail/disable-passwdmgr.inc
 
 private
 private-dev
+nosound
 private-tmp
 seccomp
 

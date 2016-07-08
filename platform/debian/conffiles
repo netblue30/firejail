@@ -1,5 +1,3 @@
-# Do not have a new/empty line on the end of this file or dpkg-deb will warn
-# that "conffile '' is not a plain file." 
 /etc/firejail/evince.profile
 /etc/firejail/chromium.profile
 /etc/firejail/chromium-browser.profile

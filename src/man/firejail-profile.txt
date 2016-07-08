@@ -153,6 +153,10 @@ mkdir ~/.cache/mozilla/firefox
 .br
 whitelist ~/.cache/mozilla/firefox
 .TP
+\fBmkfile file
+Similar to mkdir, this command creates a file in user home before the sandbox is started.
+The file is created if it doesn't already exist.
+.TP
 \fBprivate
 Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is

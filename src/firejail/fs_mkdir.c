@@ -48,3 +48,36 @@ void fs_mkdir(const char *name) {
 doexit:
 	free(expanded);
 }	
+
+void fs_mkfile(const char *name) {
+	EUID_ASSERT();
+	
+	// check file name
+	invalid_filename(name);
+	char *expanded = expand_home(name, cfg.homedir);
+	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0) {
+		fprintf(stderr, "Error: only files in user home are supported by mkfile\n");
+		exit(1);
+	}
+
+	struct stat s;
+	if (stat(expanded, &s) == 0) {
+		// file exists, do nothing
+		goto doexit;
+	}
+
+	// create file
+	FILE *fp = fopen(expanded, "w");
+	if (!fp)
+		fprintf(stderr, "Warning: cannot create %s file\n", expanded);
+	else {
+		fclose(fp);
+		int rv = chown(expanded, getuid(), getgid());
+		(void) rv;
+		rv = chmod(expanded, 0600);
+		(void) rv;
+	}
+
+doexit:
+	free(expanded);
+}

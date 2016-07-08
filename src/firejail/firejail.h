@@ -548,6 +548,7 @@ char **build_paths(void);
 
 // fs_mkdir.c
 void fs_mkdir(const char *name);
+void fs_mkfile(const char *name);
 
 // x11.c
 void fs_x11(void);

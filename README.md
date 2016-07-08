@@ -98,7 +98,7 @@ File transfer: filezilla
 
 Media: vlc, mpv, gnome-mplayer
 
-Office: evince, gthumb, fbreader, pix
+Office: evince, gthumb, fbreader, pix, atril, xreader
 
 Chat/messaging: qtox
 

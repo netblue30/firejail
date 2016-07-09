@@ -493,7 +493,12 @@ int check_kernel_procs(void);
 void run_no_sandbox(int argc, char **argv);
 
 // env.c
-void env_store(const char *str);
+typedef enum {
+	SETENV = 0,
+	RMENV
+} ENV_OP;
+
+void env_store(const char *str, ENV_OP op);
 void env_apply(void);
 void env_defaults(void);
 void env_ibus_load(void);

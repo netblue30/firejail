@@ -208,6 +208,7 @@ void usage(void) {
 	
 	printf("    --quiet - turn off Firejail's output.\n\n");
 	printf("    --read-only=dirname_or_filename - set directory or file read-only..\n\n");
+	printf("    --read-write=dirname_or_filename - set directory or file read-write..\n\n");
 	printf("    --rlimit-fsize=number - set the maximum file size that can be created\n");
 	printf("\tby a process.\n\n");
 	printf("    --rlimit-nofile=number - set the maximum number of files that can be\n");
@@ -216,7 +217,7 @@ void usage(void) {
 	printf("\tcreated for the real user ID of the calling process.\n\n");
 	printf("    --rlimit-sigpending=number - set the maximum number of pending signals\n");
 	printf("\tfor a process.\n\n");
-	printf("    --read-write=dirname_or_filename - set directory or file read-write..\n\n");
+	printf("    --rmenv=name - remove environment variable in the new sandbox.\n\n");
 #ifdef HAVE_NETWORK	
 	printf("    --scan - ARP-scan all the networks from inside a network namespace.\n");
 	printf("\tThis makes it possible to detect macvlan kernel device drivers\n");

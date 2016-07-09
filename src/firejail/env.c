@@ -27,12 +27,27 @@ typedef struct env_t {
 	struct env_t *next;
 	char *name;
 	char *value;
+	ENV_OP op;
 } Env;
 static Env *envlist = NULL;
 
 static void env_add(Env *env) {
-	env->next = envlist;
-	envlist = env;
+	env->next = NULL;
+	
+	// add the new entry at the end of the list
+	if (envlist == NULL) {
+		envlist = env;
+		return;
+	}
+	
+	Env *ptr = envlist;
+	while (1) {
+		if (ptr->next == NULL) {
+			ptr->next = env;
+			break;
+		}
+		ptr = ptr->next;
+	}
 }
 
 // load IBUS env variables
@@ -87,7 +102,7 @@ void env_ibus_load(void) {
 			if (arg_debug)
 				printf("%s\n", buf);
 			EUID_USER();
-			env_store(buf);
+			env_store(buf, SETENV);
 			EUID_ROOT();
 		}
 
@@ -126,7 +141,7 @@ void env_defaults(void) {
 }
 
 // parse and store the environment setting 
-void env_store(const char *str) {
+void env_store(const char *str, ENV_OP op) {
 	EUID_ASSERT();
 	assert(str);
 	
@@ -134,11 +149,13 @@ void env_store(const char *str) {
 	if (*str == '\0')
 		goto errexit;
 	char *ptr = strchr(str, '=');
-	if (!ptr)
-		goto errexit;
-	ptr++;
-	if (*ptr == '\0')
-		goto errexit;
+	if (op == SETENV) {
+		if (!ptr)
+			goto errexit;
+		ptr++;
+		if (*ptr == '\0')
+			goto errexit;
+	}
 
 	// build list entry
 	Env *env = malloc(sizeof(Env));
@@ -148,10 +165,13 @@ void env_store(const char *str) {
 	env->name = strdup(str);
 	if (env->name == NULL)
 		errExit("strdup");
-	char *ptr2 = strchr(env->name, '=');
-	assert(ptr2);
-	*ptr2 = '\0';
-	env->value = ptr2 + 1;
+	if (op == SETENV) {
+		char *ptr2 = strchr(env->name, '=');
+		assert(ptr2);
+		*ptr2 = '\0';
+		env->value = ptr2 + 1;
+	}
+	env->op = op;
 	
 	// add entry to the list
 	env_add(env);
@@ -167,8 +187,13 @@ void env_apply(void) {
 	Env *env = envlist;
 	
 	while (env) {
-		if (setenv(env->name, env->value, 1) < 0)
-			errExit("setenv");
+		if (env->op == SETENV) {
+			if (setenv(env->name, env->value, 1) < 0)
+				errExit("setenv");
+		}
+		else if (env->op == RMENV) {
+			unsetenv(env->name);
+		}
 		env = env->next;
 	}
 }

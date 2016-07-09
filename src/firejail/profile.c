@@ -457,7 +457,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	
 	if (strncmp(ptr, "env ", 4) == 0) {
-		env_store(ptr + 4);
+		env_store(ptr + 4, SETENV);
+		return 0;
+	}
+	if (strncmp(ptr, "rmenv ", 6) == 0) {
+		env_store(ptr + 6, RMENV);
 		return 0;
 	}
 	

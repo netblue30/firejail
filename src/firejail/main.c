@@ -1465,7 +1465,9 @@ int main(int argc, char **argv) {
 			arg_nonewprivs = 1;
 		}
 		else if (strncmp(argv[i], "--env=", 6) == 0)
-			env_store(argv[i] + 6);
+			env_store(argv[i] + 6, SETENV);
+		else if (strncmp(argv[i], "--rmenv=", 8) == 0)
+			env_store(argv[i] + 8, RMENV);
 		else if (strcmp(argv[i], "--nosound") == 0) {
 			arg_nosound = 1;
 		}

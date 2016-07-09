@@ -1172,6 +1172,15 @@ make the whitelist read-only. Example:
 $ firejail --whitelist=~/work --read-only=~ --read-only=~/work
 
 .TP
+\fB\-\-read-write=dirname_or_filename
+By default, the sandbox mounts system directories read-only.
+These directories are /etc, /var, /usr, /bin, /sbin, /lib, /lib32, /libx32 and /lib64. 
+Use this option to mount read-write files or directories inside the system directories.
+
+This option is available only to root user. It has no effect when --chroot or --overlay are also set. In these
+cases the system directories are mounted read-write.
+
+.TP
 \fB\-\-rlimit-fsize=number
 Set the maximum file size that can be created by a process.
 .TP
@@ -1185,13 +1194,14 @@ Set the maximum number of processes that can be created for the real user ID of 
 Set the maximum number of pending signals for a process.
 
 .TP
-\fB\-\-read-write=dirname_or_filename
-By default, the sandbox mounts system directories read-only.
-These directories are /etc, /var, /usr, /bin, /sbin, /lib, /lib32, /libx32 and /lib64. 
-Use this option to mount read-write files or directories inside the system directories.
+\fB\-\-rmenv=name
+Remove environment variable in the new sandbox.
+.br
 
-This option is available only to root user. It has no effect when --chroot or --overlay are also set. In these
-cases the system directories are mounted read-write.
+.br
+Example:
+.br
+$ firejail \-\-rmenv=DBUS_SESSION_BUS_ADDRESS
 
 .TP
 \fB\-\-scan

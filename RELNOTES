@@ -1,8 +1,9 @@
 firejail (0.9.41) baseline; urgency=low
   * work in progress...
+  * deprecated --user option, please use "sudo -u username firejail" instead
   * AppImage support (--appimage)
   * Sandbox auditing support (--audit)
-  * Remove environment variable (--rmenv)
+  * remove environment variable (--rmenv)
   * include /dev/snd in --private-dev
   * added mkfile profile command
   * seccomp filter updated

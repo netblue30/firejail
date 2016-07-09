@@ -1485,15 +1485,7 @@ $ firejail \-\-tree
 11969:netblue:firejail \-\-net=eth0 transmission-gtk 
 .br
   11970:netblue:transmission-gtk 
-.TP
-\fB\-\-user=new-user
-Switch the user before starting the sandbox. This command should be run as root.
-.br
 
-.br
-Example:
-.br
-# firejail \-\-user=www-data
 .TP
 \fB\-\-version
 Print program version and exit.

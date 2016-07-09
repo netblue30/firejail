@@ -36,6 +36,10 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 `````
 # Current development version: 0.9.41
 
+## Deprecated --user
+
+--user option was deprecated, please use "sudo -u username firejail application" instead.
+
 ## AppImage
 
 AppImage (http://appimage.org/) is a distribution-agnostic packaging format.

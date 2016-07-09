@@ -252,7 +252,6 @@ void usage(void) {
 	printf("    --tracelog - add a syslog message for every access to files or\n");
 	printf("\tdirectoires blacklisted by the security profile.\n\n");
 	printf("    --tree - print a tree of all sandboxed processes.\n\n");
-	printf("    --user=new_user - switch the user before starting the sandbox.\n\n");
 	printf("    --version - print program version and exit.\n\n");
 #ifdef HAVE_WHITELIST	
 	printf("    --whitelist=dirname_or_filename - whitelist directory or file.\n\n");

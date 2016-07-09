@@ -24,7 +24,12 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink
 seccomp
+shell none
+
+private-bin spotify
+private-dev

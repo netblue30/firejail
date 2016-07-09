@@ -4,6 +4,7 @@ firejail (0.9.41) baseline; urgency=low
   * Sandbox auditing support (--audit)
   * include /dev/snd in --private-dev
   * added mkfile profile command
+  * seccomp filter updated
   * compile time and run time support to disable whitelists
   * compile time support to disable global configuration file
   * some profiles have been converted to private-bin

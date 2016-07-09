@@ -334,12 +334,15 @@ void seccomp_filter_32(void) {
 		BLACKLIST(52), // umount2
 		BLACKLIST(26), // ptrace
 		BLACKLIST(283), // kexec_load
+		BLACKLIST(341), // name_to_handle_at
 		BLACKLIST(342), // open_by_handle_at
+		BLACKLIST(127), // create_module
 		BLACKLIST(128), // init_module
 		BLACKLIST(350), // finit_module
 		BLACKLIST(129), // delete_module
 		BLACKLIST(110), // iopl
 		BLACKLIST(101), // ioperm
+		BLACKLIST(289), // ioprio_set
 		BLACKLIST(87), // swapon
 		BLACKLIST(115), // swapoff
 		BLACKLIST(103), // syslog
@@ -376,6 +379,7 @@ void seccomp_filter_32(void) {
 		BLACKLIST(88), // reboot
 		BLACKLIST(169), // nfsservctl
 		BLACKLIST(130), // get_kernel_syms
+		
 		RETURN_ALLOW
 	};
 
@@ -403,11 +407,14 @@ void seccomp_filter_64(void) {
 		BLACKLIST(101), // ptrace
 		BLACKLIST(246), // kexec_load
 		BLACKLIST(304), // open_by_handle_at
+		BLACKLIST(303), // name_to_handle_at
+		BLACKLIST(174), // create_module
 		BLACKLIST(175), // init_module
 		BLACKLIST(313), // finit_module
 		BLACKLIST(176), // delete_module
 		BLACKLIST(172), // iopl
 		BLACKLIST(173), // ioperm
+		BLACKLIST(251), // ioprio_set
 		BLACKLIST(167), // swapon
 		BLACKLIST(168), // swapoff
 		BLACKLIST(103), // syslog
@@ -445,6 +452,7 @@ void seccomp_filter_64(void) {
 		BLACKLIST(169), // reboot
 		BLACKLIST(180), // nfsservctl
 		BLACKLIST(177), // get_kernel_syms
+		
 		RETURN_ALLOW
 	};
 
@@ -493,11 +501,17 @@ int seccomp_filter_drop(int enforce_seccomp) {
 #ifdef SYS_open_by_handle_at		
 		filter_add_blacklist(SYS_open_by_handle_at, 0);
 #endif
+#ifdef SYS_name_to_handle_at		
+		filter_add_blacklist(SYS_name_to_handle_at, 0);
+#endif
 #ifdef SYS_init_module		
 		filter_add_blacklist(SYS_init_module, 0);
 #endif
 #ifdef SYS_finit_module // introduced in 2013
 		filter_add_blacklist(SYS_finit_module, 0);
+#endif
+#ifdef SYS_create_module
+		filter_add_blacklist(SYS_create_module, 0);
 #endif
 #ifdef SYS_delete_module		
 		filter_add_blacklist(SYS_delete_module, 0);
@@ -507,6 +521,9 @@ int seccomp_filter_drop(int enforce_seccomp) {
 #endif
 #ifdef 	SYS_ioperm	
 		filter_add_blacklist(SYS_ioperm, 0);
+#endif
+#ifdef 	SYS_ioprio_set	
+		filter_add_blacklist(SYS_ioprio_set, 0);
 #endif
 #ifdef SYS_ni_syscall // new io permissions call on arm devices
 		filter_add_blacklist(SYS_ni_syscall, 0);
@@ -648,6 +665,7 @@ int seccomp_filter_drop(int enforce_seccomp) {
 #ifdef SYS_get_kernel_syms
 		filter_add_blacklist(SYS_get_kernel_syms, 0);
 #endif
+
 	}
 
 	// default seccomp filter with additional drop list

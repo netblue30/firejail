@@ -96,11 +96,19 @@ BitTorrent: deluge, qbittorrent, rtorrent, transmission-gtk, transmission-qt, ug
 
 File transfer: filezilla
 
-Media: vlc, mpv, gnome-mplayer
+Media: vlc, mpv, gnome-mplayer, audacity, rhythmbox, spotify, xplayer, xviewer
 
 Office: evince, gthumb, fbreader, pix, atril, xreader
 
-Chat/messaging: qtox
+Chat/messaging: qtox, gitter
+
+Games: warzone2100
+
+Weather/climate: aweather
+
+Astronomy: gpredict, stellarium
+
+Browsers: Palemoon
 
 ## New security profiles
 

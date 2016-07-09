@@ -7,10 +7,13 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
 nonewprivs
-noroot
 nogroups
-#private-bin audacity
-protocol unix,inet,inet6
+noroot
+protocol unix
 seccomp
+shell none
+tracelog
+
+private-bin audacity
+private-dev

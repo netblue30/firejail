@@ -164,3 +164,22 @@ $ vblank_mode=0 glxgears
 18. Add nosound in all profiles with private-dev (including server.profile)
 test hedgewars!
 
+19. new syscalls:
+create_module
+name_to_handle_at
+ioprio_set, 
+
+???
+146	- sched_get_priority_max
+147	- sched_get_priority_min
+204	- sched_getaffinity
+315	- sched_getattr
+143	- sched_getparam
+145	- sched_getscheduler
+148	- sched_rr_get_interval
+203	- sched_setaffinity
+314	- sched_setattr
+142	- sched_setparam
+144	- sched_setscheduler
+24	- sched_yield
+

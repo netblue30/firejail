@@ -2,6 +2,7 @@ firejail (0.9.41) baseline; urgency=low
   * work in progress...
   * AppImage support (--appimage)
   * Sandbox auditing support (--audit)
+  * Remove environment variable (--rmenv)
   * include /dev/snd in --private-dev
   * added mkfile profile command
   * seccomp filter updated

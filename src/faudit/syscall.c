@@ -18,8 +18,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "faudit.h"
+#include <sys/ptrace.h>
+#include <sys/swap.h>
+#include <sys/io.h>
+#include <sys/wait.h>
+extern int init_module(void *module_image, unsigned long len,
+                       const char *param_values);
+extern int finit_module(int fd, const char *param_values,
+                        int flags);
+extern int delete_module(const char *name, int flags);
+extern int pivot_root(const char *new_root, const char *put_old);
 
 void syscall_helper(int argc, char **argv) {
+	(void) argc;
+	
 	if (strcmp(argv[2], "mount") == 0) {
 		mount(NULL, NULL, NULL, 0, NULL);
 		printf("\nUGLY: mount syscall permitted.\n");
@@ -44,16 +56,12 @@ void syscall_helper(int argc, char **argv) {
 		init_module(NULL, 0, NULL);
 		printf("\nUGLY: init_module syscall permitted.\n");
 	}
-	else if (strcmp(argv[2], "finit_module") == 0) {
-		swapoff(0, NULL, 0);
-		printf("\nUGLY: finit_module syscall permitted.\n");
-	}
 	else if (strcmp(argv[2], "delete_module") == 0) {
 		delete_module(NULL, 0);
 		printf("\nUGLY: delete_module syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "chroot") == 0) {
-		int rv = chroot(NULL);
+		int rv = chroot("/blablabla-57281292");
 		(void) rv;
 		printf("\nUGLY: chroot syscall permitted.\n");
 	}

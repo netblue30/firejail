@@ -92,7 +92,7 @@ static void storage_add(const char *str) {
 }
 
 // global variable to keep current working directory
-char* cwd = NULL;
+static char* cwd = NULL;
 
 static char *storage_find(const char *str) {
 #ifdef DEBUG
@@ -108,7 +108,7 @@ static char *storage_find(const char *str) {
 	int allocated = 0;
 
 	if (strstr(str, "..") || strstr(str, "/./") || strstr(str, "//") || str[0] != '/') {
-		if (cwd != NULL & str[0] != '/') {
+		if (cwd != NULL && str[0] != '/') {
 			char *fullpath=malloc(PATH_MAX);
 			if (!fullpath) {
 				fprintf(stderr, "Error: cannot allocate memory\n");

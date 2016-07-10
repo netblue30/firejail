@@ -77,9 +77,6 @@ void seccomp_test(void) {
 		printf("init_module... "); fflush(0);
 		syscall_run("init_module");
 
-		printf("finit_module... "); fflush(0);
-		syscall_run("finit_module");
-
 		printf("delete_module... "); fflush(0);
 		syscall_run("delete_module");
 		

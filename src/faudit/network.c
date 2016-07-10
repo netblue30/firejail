@@ -48,7 +48,6 @@ void check_ssh(void) {
 }
 
 void check_netlink(void) {
-	socklen_t addr_len;
 	int sock = socket(AF_NETLINK, SOCK_RAW | SOCK_CLOEXEC, 0);
 	if (sock == -1) {
 		printf("GOOD: I cannot connect to netlink socket. Network utilities such as iproute2 will not work in the sandbox.\n");

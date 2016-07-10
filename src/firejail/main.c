@@ -1192,6 +1192,14 @@ int main(int argc, char **argv) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
+		else if (strncmp(argv[i], "--noexec=", 9) == 0) {
+			char *line;
+			if (asprintf(&line, "noexec %s", argv[i] + 9) == -1)
+				errExit("asprintf");
+			
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
+		}
 		else if (strncmp(argv[i], "--read-write=", 13) == 0) {
 			char *line;
 			if (asprintf(&line, "read-write %s", argv[i] + 13) == -1)

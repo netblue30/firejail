@@ -228,6 +228,7 @@ typedef enum {
 	BLACKLIST_NOLOG,
 	MOUNT_READONLY,
 	MOUNT_TMPFS,
+	MOUNT_NOEXEC,
 	OPERATION_MAX
 } OPERATION;
 
@@ -328,6 +329,12 @@ static void disable_file(OPERATION op, const char *filename) {
 		if (arg_debug)
 			printf("Mounting read-only %s\n", fname);
 		fs_rdonly(fname);
+// todo: last_disable = SUCCESSFUL;
+	}
+	else if (op == MOUNT_NOEXEC) {
+		if (arg_debug)
+			printf("Mounting noexec %s\n", fname);
+		fs_noexec(fname);
 // todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_TMPFS) {
@@ -485,6 +492,10 @@ void fs_blacklist(void) {
 			ptr = entry->data + 10;
 			op = MOUNT_READONLY;
 		}			
+		else if (strncmp(entry->data, "noexec ", 7) == 0) {
+			ptr = entry->data + 7;
+			op = MOUNT_NOEXEC;
+		}			
 		else if (strncmp(entry->data, "tmpfs ", 6) == 0) {
 			ptr = entry->data + 6;
 			op = MOUNT_TMPFS;
@@ -548,6 +559,25 @@ void fs_rdonly(const char *dir) {
 		fs_logger2("read-only", dir);
 	}
 }
+
+void fs_noexec(const char *dir) {
+	assert(dir);
+	// check directory exists
+	struct stat s;
+	int rv = stat(dir, &s);
+	if (rv == 0) {
+		// mount --bind /bin /bin
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount noexec");
+		// mount --bind -o remount,ro /bin
+		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_REC, NULL) < 0)
+			errExit("mount read-only");
+		fs_logger2("noexec", dir);
+	}
+}
+
+
+
 void fs_rdonly_noexit(const char *dir) {
 	assert(dir);
 	// check directory exists

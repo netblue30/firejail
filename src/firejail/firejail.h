@@ -313,6 +313,8 @@ void fs_delete_cp_command(void) ;
 void fs_blacklist(void);
 // remount a directory read-only
 void fs_rdonly(const char *dir);
+// remount a directory noexec, nodev and nosuid
+void fs_noexec(const char *dir);
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void);
 // build a basic read-only filesystem

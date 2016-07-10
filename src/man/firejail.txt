@@ -851,6 +851,21 @@ $ nc dict.org 2628
 220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
 .br
 .TP
+\fB\-\-noexec=dirname_or_filename
+Remount directory or file noexec, nodev and nosuid.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noexec=/tmp
+.br
+
+.br
+/etc and /var are noexec by default. If there are more than one mount operation
+on the path of the file or directory, noexec should be applied to the last one. Always check if the change took effect inside the sandbox.
+
+.TP
 \fB\-\-nogroups
 Disable supplementary groups. Without this option, supplementary groups are enabled for the user starting the
 sandbox. For root user supplementary groups are always disabled.

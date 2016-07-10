@@ -147,9 +147,11 @@ void usage(void) {
 	printf("    --nice=value - set nice value\n\n");
 	printf("    --noblacklist=dirname_or_filename - disable blacklist for directory or\n");
 	printf("\tfile.\n\n");
+	printf("    --noexec=dirname_of_filenam - remount the file or directory noexec\n");
+	printf("\tnosuid and nodev\n\n");
 	printf("    --nogroups - disable supplementary groups. Without this option,\n");
 	printf("\tsupplementary groups are enabled for the user starting the sandbox.\n");
-	printf("\t For root, groups are always disabled.\n\n");
+	printf("\tFor root, groups are always disabled.\n\n");
 
 	printf("    --noprofile - do not use a profile.  Profile priority is use the one\n");
 	printf("\tspecified on the command line, next try to find one that\n");

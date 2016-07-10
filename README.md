@@ -90,9 +90,28 @@ AUDIT
        Limitations: audit feature is not implemented for --x11 commands.
 `````
 
-## --private-dev enhancements - work in progress!
+## --noexec
+`````
+       --noexec=dirname_or_filename
+              Remount directory or file noexec, nodev and nosuid.
 
-The following devices are added to --private-dev list.
+              Example:
+              $ firejail --noexec=/tmp
+
+              /etc and /var are noexec by default. If there are more than one
+              mount operation on the path of the file  or  directory,  noexec
+              should  be  applied to the last one. Always check if the change
+              took effect inside the sandbox.
+`````
+
+## --rmenv
+`````
+      --rmenv=name
+              Remove environment variable in the new sandbox.
+
+              Example:
+              $ firejail --rmenv=DBUS_SESSION_BUS_ADDRESS
+`````
 
 ## Converting profiles to private-bin - work in progress!
 

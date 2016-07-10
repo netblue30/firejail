@@ -248,7 +248,7 @@ void fs_private_homedir(void) {
 	// mount bind private_homedir on top of homedir
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_homedir, homedir);
-	if (mount(private_homedir, homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(private_homedir, homedir, NULL, MS_NOSUID | MS_NODEV | MS_BIND | MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger3("mount-bind", private_homedir, cfg.homedir);
 	fs_logger2("whitelist", cfg.homedir);
@@ -262,7 +262,7 @@ void fs_private_homedir(void) {
 		// mask /root
 		if (arg_debug)
 			printf("Mounting a new /root directory\n");
-		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
+		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
 			errExit("mounting home directory");
 		fs_logger("tmpfs /root");
 	}
@@ -270,7 +270,7 @@ void fs_private_homedir(void) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
-		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
 		fs_logger("tmpfs /home");
 	}
@@ -300,14 +300,14 @@ void fs_private(void) {
 	// mask /home
 	if (arg_debug)
 		printf("Mounting a new /home directory\n");
-	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting home directory");
 	fs_logger("tmpfs /home");
 
 	// mask /root
 	if (arg_debug)
 		printf("Mounting a new /root directory\n");
-	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
+	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
 		errExit("mounting root directory");
 	fs_logger("tmpfs /root");
 
@@ -331,6 +331,7 @@ void fs_private(void) {
 		copy_xauthority();
 	if (aflag)
 		copy_asoundrc();
+
 }
 
 

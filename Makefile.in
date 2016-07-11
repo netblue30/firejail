@@ -307,6 +307,9 @@ dist:
 deb: dist
 	./mkdeb.sh $(NAME) $(VERSION)
 
+snap: all
+	cd platform/snap; ./snap.sh
+
 github-compile:
 	cd test/compile; ./compile.sh
 

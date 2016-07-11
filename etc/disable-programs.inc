@@ -74,6 +74,7 @@ blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Franz
+blacklist ${HOME}/.jitsi
 
 # Games
 blacklist ${HOME}/.hedgewars

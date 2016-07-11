@@ -60,10 +60,10 @@ void dbus_test(void) {
 			sockfile += 13;
 			*sockfile = '@';
 			char *ptr = strchr(sockfile, ',');
-			if (ptr) {
+			if (ptr)
 				*ptr = '\0';	
-				check_session_bus(sockfile);
-			}
+			check_session_bus(sockfile);
+			
 			sockfile -= 13;
 			free(sockfile);
 		}

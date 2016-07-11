@@ -46,23 +46,30 @@ int main(int argc, char **argv) {
 	
 	// check pid namespace
 	pid_test();
+	printf("\n");
+	
+	// check seccomp
+	seccomp_test();
+	printf("\n");
 	
 	// check capabilities
 	caps_test();
+	printf("\n");
 
-	// check seccomp
-	seccomp_test();
-	
 	// check some well-known problematic files and directories
 	files_test();
+	printf("\n");
 	
 	// network
 	network_test();
+	printf("\n");
 	
 	// dbus
 	dbus_test();
+	printf("\n");
 	
 	free(prog);
 	printf("--------------------------------------------------------------------------------\n");
+
 	return 0;
 }

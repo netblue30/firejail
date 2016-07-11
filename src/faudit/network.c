@@ -23,7 +23,7 @@
 #include <linux/netlink.h>
 #include <linux/rtnetlink.h>
 
-void check_ssh(void) {
+static void check_ssh(void) {
 	// open socket
 	int sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock == -1) {
@@ -41,6 +41,30 @@ void check_ssh(void) {
 		printf("GOOD: SSH server not available on localhost.\n");
 	else {
 		printf("MAYBE: an SSH server is accessible on localhost. ");
+		printf("It could be a good idea to create a new network namespace using \"--net=none\" or \"--net=eth0\".\n");
+	}
+	
+	close(sock);
+}
+
+static void check_http(void) {
+	// open socket
+	int sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock == -1) {
+		printf("GOOD: HTTP server not available on localhost.\n");
+		return;
+	}
+
+	// connect to localhost
+	struct sockaddr_in server;
+	server.sin_addr.s_addr = inet_addr("127.0.0.1");
+	server.sin_family = AF_INET;
+	server.sin_port = htons(80);	
+	
+	if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
+		printf("GOOD: HTTP server not available on localhost.\n");
+	else {
+		printf("MAYBE: an HTTP server is accessible on localhost. ");
 		printf("It could be a good idea to create a new network namespace using \"--net=none\" or \"--net=eth0\".\n");
 	}
 	
@@ -72,5 +96,6 @@ void check_netlink(void) {
 	
 void network_test(void) {
 	check_ssh();
+	check_http();
 	check_netlink();
 }

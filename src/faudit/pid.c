@@ -31,6 +31,7 @@ void pid_test(void) {
 	int i;
 
 	// look at the first 10 processes
+	int not_visible = 1;
 	for (i = 1; i <= 10; i++) { 
 		struct stat s;
 		char *fname;
@@ -45,7 +46,7 @@ void pid_test(void) {
 		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
-			fprintf(stderr, "Warning: cannot open %s\n", fname);
+//			fprintf(stderr, "Warning: cannot open %s\n", fname);
 			free(fname);
 			continue;
 		}
@@ -53,11 +54,13 @@ void pid_test(void) {
 		// read file
 		char buf[100];
 		if (fgets(buf, 10, fp) == NULL) {
-			fprintf(stderr, "Warning: cannot read %s\n", fname);
+//			fprintf(stderr, "Warning: cannot read %s\n", fname);
 			fclose(fp);
 			free(fname);
 			continue;
 		}
+		not_visible = 0;
+
 		// clean /n
 		char *ptr;
 		if ((ptr = strchr(buf, '\n')) != NULL)
@@ -69,7 +72,7 @@ void pid_test(void) {
 			if (strncmp(buf, kern_proc[j], strlen(kern_proc[j])) == 0) {
 				fclose(fp);
 				free(fname);
-				printf("BAD: Process %d, not running in a PID namespace. ", getpid());
+				printf("BAD: Process %d is not running in a PID namespace. ", getpid());
 				printf("Are you sure you're running in a sandbox?\n");
 				return;
 			}
@@ -80,11 +83,19 @@ void pid_test(void) {
 		free(fname);
 	}
 
-
-	printf("GOOD: process %d running in a PID namespace.\n", getpid());
+	pid_t pid = getpid();
+	if (not_visible && pid > 100)
+		printf("BAD: Process %d is not running in a PID namespace.\n", pid);
+	else
+		printf("GOOD: process %d is running in a PID namespace.\n", pid);
 	
 	// try to guess the type of container/sandbox
 	char *str = getenv("container");
 	if (str)
 		printf("INFO: container/sandbox %s.\n", str);
+	else {
+		str = getenv("SNAP");
+		if (str)
+			printf("INFO: this is a snap package\n");
+	}
 }

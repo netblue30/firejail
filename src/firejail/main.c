@@ -2022,11 +2022,7 @@ int main(int argc, char **argv) {
 		char *ptr1 = cfg.command_line;
 		char *ptr2 = cfg.window_title;
 		for (i = 0; i < argcnt; i++) {
-			// detect bash commands
-			if (strstr(argv[i + prog_index], "&&") || strstr(argv[i + prog_index], "||")) {
-				sprintf(ptr1, "%s ", argv[i + prog_index]);
-			}
-			else if (arg_command){
+			if (arg_shell_none){
 				sprintf(ptr1, "%s ", argv[i + prog_index]);
 			}
 			else {

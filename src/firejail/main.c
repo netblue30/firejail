@@ -2022,12 +2022,7 @@ int main(int argc, char **argv) {
 		char *ptr1 = cfg.command_line;
 		char *ptr2 = cfg.window_title;
 		for (i = 0; i < argcnt; i++) {
-			if (arg_shell_none){
-				sprintf(ptr1, "%s ", argv[i + prog_index]);
-			}
-			else {
-				sprintf(ptr1, "\'%s\' ", argv[i + prog_index]);
-			}
+			sprintf(ptr1, "\'%s\' ", argv[i + prog_index]);
 			sprintf(ptr2, "%s ", argv[i + prog_index]);
 
 			ptr1 += strlen(ptr1);

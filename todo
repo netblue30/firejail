@@ -161,3 +161,60 @@ To disable Vsync
 
 $ vblank_mode=0 glxgears
 
+18. Bring in nvidia drives in private-dev
+
+/dev/nvidia[0-9], /dev/nvidiactl, /dev/nvidia-modset and /dev/nvidia-uvm
+
+19. testing snaps
+
+Install firejail from official repository
+sudo apt-get install firejail
+
+Check firejail version
+firejail --version
+
+Above command outputs: firejail version 0.9.38
+
+Search the snap 'ubuntu clock' application
+sudo snap find ubuntu-clock-app
+
+Install 'ubuntu clock' application using snap
+sudo snap install ubuntu-clock-app
+
+Ubuntu snap packages are installed in /snap/// directory and can be executed from /snap/bin/
+cd /snap/bin/
+ls -l
+
+Note: We see application name is: ubuntu-clock-app.clock
+
+Run application
+/snap/bin/ubuntu-clock-app.clock
+
+Note: Application starts-up without a problem and clock is displayed.
+
+Close application using mouse.
+
+Now try to firejail the application.
+firejail /snap/bin/ubuntu-clock-app.clock
+
+-------- Error message --------
+Reading profile /etc/firejail/generic.profile
+Reading profile /etc/firejail/disable-mgmt.inc
+Reading profile /etc/firejail/disable-secret.inc
+Reading profile /etc/firejail/disable-common.inc
+
+** Note: you can use --noprofile to disable generic.profile **
+
+Parent pid 3770, child pid 3771
+
+Child process initialized
+need to run as root or suid
+
+parent is shutting down, bye...
+-------- End of Error message --------
+
+Try running as root as message instructs.
+sudo firejail /snap/bin/ubuntu-clock-app.clock
+
+extract env for process
+ps e -p <pid> | sed 's/ /\n/g' 

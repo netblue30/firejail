@@ -181,11 +181,15 @@ static void whitelist_path(ProfileEntry *entry) {
 	char *wfile = NULL;
 
 	if (entry->home_dir) {
-		fname = path + strlen(cfg.homedir);
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in user home directory, exiting...\n", path);
-			exit(1);
+		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {		
+			fname = path + strlen(cfg.homedir);
+			if (*fname == '\0') {
+				fprintf(stderr, "Error: file %s is not in user home directory, exiting...\n", path);
+				exit(1);
+			}
 		}
+		else
+			fname = path;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
@@ -248,9 +252,6 @@ static void whitelist_path(ProfileEntry *entry) {
 			printf("Whitelisting %s\n", path);
 	}
 	else {
-		if (arg_debug || arg_debug_whitelists) {
- 			fprintf(stderr, "Warning (whitelisting): %s is an invalid file, skipping...\n", path);
-		}
 		return;
 	}
 	
@@ -390,13 +391,14 @@ void fs_whitelist(void) {
 
 			entry->home_dir = 1;
 			home_dir = 1;
+			if (arg_debug)
+				fprintf(stderr, "Debug %d: fname #%s#, cfg.homedir #%s#\n",
+					__LINE__, fname, cfg.homedir);
+
 			// both path and absolute path are under /home
-			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#, cfg.homedir #%s#\n",
-						__LINE__, fname, cfg.homedir);
-				goto errexit;
-			}
+//			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0) {
+//				goto errexit;
+//			}
 		}
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {
 			entry->tmp_dir = 1;

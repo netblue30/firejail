@@ -40,6 +40,23 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 --user option was deprecated, please use "sudo -u username firejail application" instead.
 
+## --whitelist rework
+
+Symlinks outside user home directories are allowed:
+`````
+      --whitelist=dirname_or_filename
+              Whitelist directory or file. This feature  is  implemented  only
+              for  user  home, /dev, /media, /opt, /var, and /tmp directories.
+              With the exeception of user home, both the  link  and  the  real
+              file should be in the same top directory.
+
+              Example:
+              $ firejail --noprofile --whitelist=~/.mozilla
+              $ firejail --whitelist=/tmp/.X11-unix --whitelist=/dev/null
+              $ firejail "--whitelist=/home/username/My Virtual Machines"
+`````
+
+
 ## AppImage
 
 AppImage (http://appimage.org/) is a distribution-agnostic packaging format.

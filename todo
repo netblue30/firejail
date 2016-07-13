@@ -235,3 +235,14 @@ If you say Y here, additional restrictions will be placed on
 /proc that keep normal users from viewing device information and 
 slabinfo information that could be useful for exploits.
 
+21. Core Infrastructure Initiative (CII) Best Practices
+
+Proposal
+
+Someone closely involved with the project could go thought the criteria and keep them up-to-date.
+References
+
+    https://bestpractices.coreinfrastructure.org
+    https://twit.tv/shows/floss-weekly/episodes/389
+
+@netblue30 

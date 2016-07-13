@@ -218,3 +218,20 @@ sudo firejail /snap/bin/ubuntu-clock-app.clock
 
 extract env for process
 ps e -p <pid> | sed 's/ /\n/g' 
+
+
+20. check default disable - from grsecurity
+
+GRKERNSEC_HIDESYM
+/proc/kallsyms and other files
+
+GRKERNSEC_PROC_USER
+If you say Y here, non-root users will only be able to view their own
+processes, and restricts them from viewing network-related information,
+and viewing kernel symbol and module information.
+
+GRKERNSEC_PROC_ADD
+If you say Y here, additional restrictions will be placed on
+/proc that keep normal users from viewing device information and 
+slabinfo information that could be useful for exploits.
+

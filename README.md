@@ -140,7 +140,7 @@ Media: vlc, mpv, gnome-mplayer, audacity, rhythmbox, spotify, xplayer, xviewer
 
 Office: evince, gthumb, fbreader, pix, atril, xreader
 
-Chat/messaging: qtox, gitter
+Chat/messaging: qtox, gitter, pidgin
 
 Games: warzone2100
 

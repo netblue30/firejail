@@ -17,48 +17,32 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#include "faudit.h"
+#include <dirent.h>
 
-#ifndef FAUDIT_H
-#define FAUDIT_H
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/mount.h>
-#include <assert.h>
-
-#define errExit(msg)    do { char msgout[500]; sprintf(msgout, "Error %s:%s(%d)", msg, __FUNCTION__, __LINE__); perror(msgout); exit(1);} while (0)
-
-// main.c
-extern char *prog;
-
-// pid.c
-void pid_test(void);
-
-// caps.c
-void caps_test(void);
-
-// seccomp.c
-void seccomp_test(void);
-
-// syscall.c
-void syscall_helper(int argc, char **argv);
-void syscall_run(const char *name);
-
-// files.c
-void files_test(void);
-
-// network.c
-void network_test(void);
-
-// dbus.c
-void dbus_test(void);
-
-// dev.c
-void dev_test(void);
-
-#endif
+void dev_test(void) {
+	DIR *dir;
+	if (!(dir = opendir("/dev"))) {
+		fprintf(stderr, "Error: cannot open /dev directory\n");
+		return;
+	}
+	
+	struct dirent *entry;
+	char *end;
+	printf("INFO: files visible in /dev directory: ");
+	int cnt = 0;
+	while ((entry = readdir(dir)) != NULL) {
+		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+			continue;
+		
+		printf("%s, ", entry->d_name);
+		cnt++;
+	}
+	printf("\n");
+	
+	if (cnt > 20)
+		printf("MAYBE: /dev directory seems to be fully populated. Use --private-dev or --whitelist to restrict the access.\n");
+	else
+		printf("GOOD: Access to /dev directory is restricted.\n");
+	closedir(dir);
+}

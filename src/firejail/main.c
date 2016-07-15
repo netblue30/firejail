@@ -2008,8 +2008,26 @@ int main(int argc, char **argv) {
 		int i;
 		int len = 0;
 		int argcnt = argc - prog_index;
-		for (i = 0; i < argcnt; i++)
-			len += strlen(argv[i + prog_index]) + 3; // + ' ' + 2 '"'
+		int j;
+		char *arg, *arg_ptr, *token;
+
+		for (i = 0; i < argcnt; i++) {
+			arg = strdup(argv[i + prog_index]);
+			arg_ptr = arg;
+			for (token = strsep(&arg_ptr, "\'"); token != NULL; token = strsep(&arg_ptr, "\'")) {
+				if (token[0] == '\0') {
+					len += 3;
+				} else {
+					len += strlen(token) + 5;
+				}
+			}
+			free(arg);
+			len -= 2; // + ' ' - 3 char overrun
+		}
+		len += 3; // for overrun
+
+		if (arg_debug)
+			printf("Predicted command length %d\n", len);
 
 		// build the string
 		cfg.command_line = malloc(len + 1); // + '\0'
@@ -2022,12 +2040,31 @@ int main(int argc, char **argv) {
 		char *ptr1 = cfg.command_line;
 		char *ptr2 = cfg.window_title;
 		for (i = 0; i < argcnt; i++) {
-			sprintf(ptr1, "\'%s\' ", argv[i + prog_index]);
-			sprintf(ptr2, "%s ", argv[i + prog_index]);
+			// enclose args by single quotes,
+			// and since single quote can't be represented in single quoted text
+			// each occurence of it in arg should be enclosed by double quotes
+			arg = strdup(argv[i + prog_index]);
+			arg_ptr = arg;
+			for (token = strsep(&arg_ptr, "\'"); token != NULL; token = strsep(&arg_ptr, "\'")) {
+				if (token[0] == '\0') {
+					sprintf(ptr1, "\"\'\"");
+				} else {
+					sprintf(ptr1, "\'%s\'\"\'\"", token);
+				}
+				ptr1 += strlen(ptr1);
+			}
+			free(arg);
+			ptr1 -= 3;
 
+			sprintf(ptr1, " ");
 			ptr1 += strlen(ptr1);
+
+			sprintf(ptr2, "%s ", argv[i + prog_index]);
 			ptr2 += strlen(ptr2);
 		}
+		ptr1[0]='\0'; // just to be sure
+		if (arg_debug)
+			printf("Actual command length %zd\n", strlen(cfg.command_line));
 	}
 	
 	assert(cfg.command_name);

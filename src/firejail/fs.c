@@ -1093,7 +1093,7 @@ void fs_chroot(const char *rootdir) {
 		if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
 			errExit("asprintf");
 		if (arg_debug)
-			printf("Mounting /tmp/.X11-unix on %s\n", newdev);
+			printf("Mounting /tmp/.X11-unix on %s\n", newx11);
 		if (mount("/tmp/.X11-unix", newx11, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /tmp/.X11-unix");
 		free(newx11);

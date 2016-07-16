@@ -34,7 +34,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.4\n";exit}
-	"proc /proc/sysrq-trigger proc"
+	"/proc/sysrq-trigger"
 }
 #expect {
 #	timeout {puts "TESTING ERROR 1.5\n";exit}
@@ -42,11 +42,11 @@ expect {
 #}
 expect {
 	timeout {puts "TESTING ERROR 1.6\n";exit}
-	"proc /proc/irq proc"
+	"/proc/irq"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.7\n";exit}
-	"proc /proc/bus proc"
+	"/proc/bus"
 }
 after 100
 send -- "exit\r"

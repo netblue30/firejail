@@ -67,6 +67,7 @@ void dbus_test(void) {
 			sockfile -= 13;
 			free(sockfile);
 		}
+		free(bus);
 	}
 }
 

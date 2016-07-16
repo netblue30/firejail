@@ -62,9 +62,6 @@ echo "TESTING: overlayfs (fs_overlay.exp)"
 echo "TESTING: login SSH (login_ssh.exp)"
 ./login_ssh.exp
 
-echo "TESTING: DNS (dns.exp)"
-./dns.exp
-
 echo "TESTING: firemon --arp (firemon-arp.exp)"
 ./firemon-arp.exp
 

@@ -20,12 +20,6 @@ expect {
 }
 sleep 1
 
-send -- "ls /etc/firejail\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"Permission denied"
-}
-after 100
 send -- "ls ~/.config/firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
@@ -77,12 +71,6 @@ if { $overlay == "overlay" } {
 		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
-	send -- "ls /etc/firejail\r"
-	expect {
-		timeout {puts "TESTING ERROR 3\n";exit}
-		"Permission denied"
-	}
-	after 100
 	send -- "ls ~/.config/firejail\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
@@ -134,12 +122,6 @@ if { $chroot == "chroot" } {
 		"Child process initialized"
 	}
 	sleep 1
-	send -- "ls /etc/firejail\r"
-	expect {
-		timeout {puts "TESTING ERROR 5\n";exit}
-		"Permission denied"
-	}
-	after 100
 	send -- "ls ~/.config/firejail\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.1\n";exit}

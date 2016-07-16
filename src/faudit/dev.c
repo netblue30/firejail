@@ -28,7 +28,6 @@ void dev_test(void) {
 	}
 	
 	struct dirent *entry;
-	char *end;
 	printf("INFO: files visible in /dev directory: ");
 	int cnt = 0;
 	while ((entry = readdir(dir)) != NULL) {

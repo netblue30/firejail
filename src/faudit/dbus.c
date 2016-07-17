@@ -65,7 +65,6 @@ void dbus_test(void) {
 			check_session_bus(sockfile);
 			
 			sockfile -= 13;
-			free(sockfile);
 		}
 		free(bus);
 	}

@@ -20,6 +20,8 @@ blacklist ${HOME}/.config/lxsession/LXDE/autostart
 blacklist ${HOME}/.fluxbox/startup
 blacklist ${HOME}/.config/openbox/autostart
 blacklist ${HOME}/.config/openbox/environment
+blacklist ${HOME}/.gnomerc
+blacklist /etc/X11/Xsession.d/
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox

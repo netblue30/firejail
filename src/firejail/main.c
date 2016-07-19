@@ -2009,25 +2009,34 @@ int main(int argc, char **argv) {
 		int len = 0;
 		int argcnt = argc - prog_index;
 		int j;
-		char *arg, *arg_ptr, *token;
+		bool in_quotes = false;
 
 		for (i = 0; i < argcnt; i++) {
-			arg = strdup(argv[i + prog_index]);
-			arg_ptr = arg;
-			for (token = strsep(&arg_ptr, "\'"); token != NULL; token = strsep(&arg_ptr, "\'")) {
-				if (token[0] == '\0') {
-					len += 3;
+			in_quotes = false;
+			for (j = 0; j < strlen(argv[i + prog_index]); j++) {
+				if (argv[i + prog_index][j] == '\'') {
+					if (in_quotes)
+						len++;
+					if (j > 0 && argv[i + prog_index][j-1] == '\'')
+						len++;
+					else
+						len += 3;
+					in_quotes = false;
 				} else {
-					len += strlen(token) + 5;
+					if (!in_quotes)
+						len++;
+					len++;
+					in_quotes = true;
 				}
 			}
-			free(arg);
-			len -= 2; // + ' ' - 3 char overrun
+			if (in_quotes) {
+				len++;
+			}
+			if (strlen(argv[i + prog_index]) == 0) {
+				len += 2;
+			}
+			len++;
 		}
-		len += 3; // for overrun
-
-		if (arg_debug)
-			printf("Predicted command length %d\n", len);
 
 		// build the string
 		cfg.command_line = malloc(len + 1); // + '\0'
@@ -2040,31 +2049,64 @@ int main(int argc, char **argv) {
 		char *ptr1 = cfg.command_line;
 		char *ptr2 = cfg.window_title;
 		for (i = 0; i < argcnt; i++) {
+
 			// enclose args by single quotes,
 			// and since single quote can't be represented in single quoted text
-			// each occurence of it in arg should be enclosed by double quotes
-			arg = strdup(argv[i + prog_index]);
-			arg_ptr = arg;
-			for (token = strsep(&arg_ptr, "\'"); token != NULL; token = strsep(&arg_ptr, "\'")) {
-				if (token[0] == '\0') {
-					sprintf(ptr1, "\"\'\"");
-				} else {
-					sprintf(ptr1, "\'%s\'\"\'\"", token);
+			// each occurence of it should be enclosed by double quotes
+			in_quotes = false;
+			for (j = 0; j < strlen(argv[i + prog_index]); j++) {
+				// single quote
+				if (argv[i + prog_index][j] == '\'') {
+					if (in_quotes) {
+						// close quotes
+						ptr1[0] = '\'';
+						ptr1++;
+					}
+					// previous char was single quote too
+					if (j > 0 && argv[i + prog_index][j-1] == '\'') {
+						ptr1--;
+						sprintf(ptr1, "\'\"");
+					} 
+					// this first in series
+					else
+					{
+						sprintf(ptr1, "\"\'\"");
+					}
+					ptr1 += strlen(ptr1);
+					in_quotes = false;
 				}
+				// anything other
+				else
+				{
+					if (!in_quotes) {
+						// open quotes
+						ptr1[0] = '\'';
+						ptr1++;
+					}
+					ptr1[0] = argv[i + prog_index][j];
+					ptr1++;
+					in_quotes = true;
+				}
+			}
+			// close quotes
+			if (in_quotes) {
+				ptr1[0] = '\'';
+				ptr1++;
+			}
+			// handle empty argument case
+			if (strlen(argv[i + prog_index]) == 0) {
+				sprintf(ptr1, "\'\'");
 				ptr1 += strlen(ptr1);
 			}
-			free(arg);
-			ptr1 -= 3;
-
+			// add space
 			sprintf(ptr1, " ");
 			ptr1 += strlen(ptr1);
 
 			sprintf(ptr2, "%s ", argv[i + prog_index]);
 			ptr2 += strlen(ptr2);
 		}
-		ptr1[0]='\0'; // just to be sure
-		if (arg_debug)
-			printf("Actual command length %zd\n", strlen(cfg.command_line));
+
+		assert(len == strlen(cfg.command_line));
 	}
 	
 	assert(cfg.command_name);

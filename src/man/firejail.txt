@@ -1184,16 +1184,23 @@ A short note about mixing \-\-whitelist and \-\-read-only options. Whitelisted d
 should be made read-only independently. Making a parent directory read-only, will not
 make the whitelist read-only. Example:
 .br
+
+.br
 $ firejail --whitelist=~/work --read-only=~ --read-only=~/work
 
 .TP
 \fB\-\-read-write=dirname_or_filename
-By default, the sandbox mounts system directories read-only.
-These directories are /etc, /var, /usr, /bin, /sbin, /lib, /lib32, /libx32 and /lib64. 
-Use this option to mount read-write files or directories inside the system directories.
+Set directory or file read-write. Only files or directories belonging to the current user are allowed for
+this operation. Example:
+.br
 
-This option is available only to root user. It has no effect when --chroot or --overlay are also set. In these
-cases the system directories are mounted read-write.
+.br
+$ mkdir ~/test
+.br
+$ touch ~/test/a
+.br
+$ firejail --read-only=~/test --read-write=~/test/a
+
 
 .TP
 \fB\-\-rlimit-fsize=number

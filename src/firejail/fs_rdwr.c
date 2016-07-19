@@ -17,6 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#if 0
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
@@ -90,4 +91,6 @@ void fs_rdwr(void) {
 		ptr = ptr->next;
 	}
 }
+
+#endif
 

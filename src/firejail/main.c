@@ -1206,7 +1206,7 @@ int main(int argc, char **argv) {
 				errExit("asprintf");
 			
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			// profile_add(line); is not necessary
+			profile_add(line);
 		}
 		else if (strcmp(argv[i], "--overlay") == 0) {
 			if (cfg.chrootdir) {

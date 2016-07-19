@@ -27,6 +27,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
+static void fs_rdwr(const char *dir);
+
 static void create_empty_dir(void) {
 	struct stat s;
 	
@@ -229,6 +231,7 @@ typedef enum {
 	MOUNT_READONLY,
 	MOUNT_TMPFS,
 	MOUNT_NOEXEC,
+	MOUNT_RDWR,
 	OPERATION_MAX
 } OPERATION;
 
@@ -329,6 +332,12 @@ static void disable_file(OPERATION op, const char *filename) {
 		if (arg_debug)
 			printf("Mounting read-only %s\n", fname);
 		fs_rdonly(fname);
+// todo: last_disable = SUCCESSFUL;
+	}
+	else if (op == MOUNT_RDWR) {
+		if (arg_debug)
+			printf("Mounting read-only %s\n", fname);
+		fs_rdwr(fname);
 // todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_NOEXEC) {
@@ -492,6 +501,10 @@ void fs_blacklist(void) {
 			ptr = entry->data + 10;
 			op = MOUNT_READONLY;
 		}			
+		else if (strncmp(entry->data, "read-write ", 11) == 0) {
+			ptr = entry->data + 11;
+			op = MOUNT_RDWR;
+		}			
 		else if (strncmp(entry->data, "noexec ", 7) == 0) {
 			ptr = entry->data + 7;
 			op = MOUNT_NOEXEC;
@@ -557,6 +570,29 @@ void fs_rdonly(const char *dir) {
 		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
 			errExit("mount read-only");
 		fs_logger2("read-only", dir);
+	}
+}
+
+static void fs_rdwr(const char *dir) {
+	assert(dir);
+	// check directory exists
+	struct stat s;
+	int rv = stat(dir, &s);
+	if (rv == 0) {
+		// if the file is outside /home directory, allow only root user
+		uid_t u = getuid();
+		if (u != 0 && s.st_uid != u) {
+			fprintf(stderr, "Warning: you are not allowed to change %s to read-write\n", dir);
+			return;
+		}
+		
+		// mount --bind /bin /bin
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount read-write");
+		// mount --bind -o remount,rw /bin
+		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
+			errExit("mount read-write");
+		fs_logger2("read-write", dir);
 	}
 }
 
@@ -757,9 +793,6 @@ void fs_basic_fs(void) {
 	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
 		disable_firejail_config();
-		
-	if (getuid() == 0)
-		fs_rdwr();
 }
 
 

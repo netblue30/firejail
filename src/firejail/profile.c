@@ -716,16 +716,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;		
 	}
 
-	// read-write
-	if (strncmp(ptr, "read-write ", 11) == 0) {
-		if (getuid() != 0) {
-			fprintf(stderr, "Error: read-write command is available only for root user\n");
-			exit(1);
-		}
-		fs_rdwr_add(ptr + 11);
-		return 0;
-	}
-
 	// rest of filesystem
 	if (strncmp(ptr, "blacklist ", 10) == 0)
 		ptr += 10;
@@ -747,6 +737,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	else if (strncmp(ptr, "read-only ", 10) == 0)
 		ptr += 10;
+	else if (strncmp(ptr, "read-write ", 11) == 0)
+		ptr += 11;
 	else if (strncmp(ptr, "noexec ", 7) == 0)
 		ptr += 7;
 	else if (strncmp(ptr, "tmpfs ", 6) == 0) {

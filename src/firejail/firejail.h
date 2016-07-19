@@ -584,10 +584,6 @@ extern char *xephyr_screen;
 extern char *xephyr_extra_params;
 int checkcfg(int val);
 
-// fs_rdwr.c
-void fs_rdwr_add(const char *path);
-void fs_rdwr(void);
-
 // appimage.c
 void appimage_set(const char *appimage_path);
 void appimage_clear(void);

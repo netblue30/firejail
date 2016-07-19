@@ -2072,8 +2072,6 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "Warning: default profile disabled by --chroot option\n");
 		else if (arg_overlay)
 			fprintf(stderr, "Warning: default profile disabled by --overlay option\n");
-//		else if (cfg.home_private_keep)
-//			fprintf(stderr, "Warning: default profile disabled by --private-home option\n");
 		else {
 			// try to load a default profile
 			char *profile_name = DEFAULT_USER_PROFILE;
@@ -2095,6 +2093,10 @@ int main(int argc, char **argv) {
 					custom_profile = profile_find(profile_name, custom_profile_dir);
 				else
 					custom_profile = profile_find(profile_name, SYSCONFDIR);
+			}
+			if (!custom_profile) {
+				fprintf(stderr, "Error: no default.profile installed\n");
+				exit(1);
 			}
 			
 			if (custom_profile && !arg_quiet)

@@ -38,8 +38,9 @@ int main(int argc, char **argv) {
 	// extract program name
 	prog = realpath(argv[0], NULL);
 	if (prog == NULL) {
-		fprintf(stderr, "Error: cannot extract the path of the audit program\n");
-		return 1;
+		prog = strdup("faudit");
+		if (!prog)
+			errExit("strdup");
 	}
 	printf("INFO: starting %s.\n", prog);
 	
@@ -67,11 +68,11 @@ int main(int argc, char **argv) {
 	// dbus
 	dbus_test();
 	printf("\n");
-	
+
 	// /dev test
 	dev_test();
 	printf("\n");
-	
+
 	free(prog);
 	printf("--------------------------------------------------------------------------------\n");
 

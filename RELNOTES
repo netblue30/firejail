@@ -1,21 +1,21 @@
-firejail (0.9.41) baseline; urgency=low
-  * work in progress...
+firejail (0.9.42~rc1) baseline; urgency=low
   * deprecated --user option, please use "sudo -u username firejail" instead
-  * --read-write opton rework
+  * --read-write option rework
+  * allow symlinks in home directory for --whitelist option
   * AppImage support (--appimage)
   * Sandbox auditing support (--audit)
   * remove environment variable (--rmenv)
   * noexec support (--noexec)
+  * Ubuntu snap support
   * include /dev/snd in --private-dev
   * added mkfile profile command
   * seccomp filter updated
   * compile time and run time support to disable whitelists
   * compile time support to disable global configuration file
-  * some profiles have been converted to private-bin
   * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
   * new profiles: pix, audacity, strings, xz, xzdec, gzip, cpio, less
   * new profiles: Atom Beta, Atom, jitsi
- -- netblue30 <netblue30@yahoo.com>  Tue, 31 May 2016 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Thu, 21 Jul 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low
   * added --nice option

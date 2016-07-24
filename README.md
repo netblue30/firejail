@@ -34,7 +34,9 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 `````
 
 `````
-# Current development version: 0.9.41
+# Current development version: 0.9.42~rc2
+
+Version 0.9.41~rc1 was released.
 
 ## Deprecated --user
 

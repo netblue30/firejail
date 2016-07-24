@@ -9,13 +9,13 @@ match_max 100000
 
 send -- "./syscall_test\r"
 expect {
-        timeout {puts "TESTING SKIP: 64-bit support missing\n";exit}
+        timeout {puts "\nTESTING SKIP: 64-bit support missing\n";exit}
 	"Usage"
 }
 
 send -- "./syscall_test32\r"
 expect {
-        timeout {puts "TESTING SKIP: 32-bit support missing\n";exit}
+        timeout {puts "\nTESTING SKIP: 32-bit support missing\n";exit}
         "Usage"
 }
 

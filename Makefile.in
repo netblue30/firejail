@@ -284,24 +284,17 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
+DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh COPYING README RELNOTES"
+DISTFILES_TEST = "test/apps test/apps-x11 test/environment test/profiles test/utils test/compile test/dist-compile test/filters test/network test/fs test/sysutils"
+
 dist:
 	make distclean
 	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.bz2
-	mkdir $(NAME)-$(VERSION)
-	cd $(NAME)-$(VERSION); cp -a ../src .; cp -a ../etc .; cp -a ../platform .; rm -fr src/tools; cd ..
-	cd $(NAME)-$(VERSION); cp -a ../configure .; cp -a ../configure.ac .; cp -a ../Makefile.in .; cp -a ../install.sh .; cp -a ../mkman.sh .; cp -a ../mketc.sh .; cp -a ../mkdeb.sh .;cd ..
-	cd $(NAME)-$(VERSION); cp -a ../COPYING .; cp -a ../README .; cp -a ../RELNOTES .; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/profiles test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/utils test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/apps-x11 test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/environment test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/compile test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/dist-compile test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/filters test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/network test/.; cd ..
-	cd $(NAME)-$(VERSION); mkdir -p test; cp -a ../test/fs test/.; cd ..
-	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
+	mkdir -p $(NAME)-$(VERSION)/test
+	cp -a "$(DISTFILES)" $(NAME)-$(VERSION)
+	cp -a "$(DISTFILES_TEST)" $(NAME)-$(VERSION)/test
+	rm -rf $(NAME)-$(VERSION)/src/tools
+	find $(NAME)-$(VERSION) -name .svn -delete
 	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
 

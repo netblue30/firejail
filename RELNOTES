@@ -14,7 +14,7 @@ firejail (0.9.42~rc1) baseline; urgency=low
   * compile time support to disable global configuration file
   * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
   * new profiles: pix, audacity, strings, xz, xzdec, gzip, cpio, less
-  * new profiles: Atom Beta, Atom, jitsi
+  * new profiles: Atom Beta, Atom, jitsi, eom
  -- netblue30 <netblue30@yahoo.com>  Thu, 21 Jul 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low

@@ -136,9 +136,9 @@ BitTorrent: deluge, qbittorrent, rtorrent, transmission-gtk, transmission-qt, ug
 
 File transfer: filezilla
 
-Media: vlc, mpv, gnome-mplayer, audacity, rhythmbox, spotify, xplayer, xviewer
+Media: vlc, mpv, gnome-mplayer, audacity, rhythmbox, spotify, xplayer, xviewer, eom
 
-Office: evince, gthumb, fbreader, pix, atril, xreader
+Office: evince, gthumb, fbreader, pix, atril, xreader,
 
 Chat/messaging: qtox, gitter, pidgin
 
@@ -152,5 +152,5 @@ Browsers: Palemoon
 
 ## New security profiles
 
-Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix, audacity, strings, xz, xzdec, gzip, cpio, less, Atom Beta, Atom, jitsi
+Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix, audacity, strings, xz, xzdec, gzip, cpio, less, Atom Beta, Atom, jitsi, eom
 

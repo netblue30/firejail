@@ -20,6 +20,7 @@ blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/pix
+blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/okularrc
 blacklist ${HOME}/.kde/share/config/okularpartrc

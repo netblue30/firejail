@@ -44,7 +44,7 @@ static void check_home_file(const char *name) {
 void files_test(void) {
 	struct passwd *pw = getpwuid(getuid());
 	if (!pw) {
-		fprintf(stderr, "Error: cannot retrive user account information\n");
+		fprintf(stderr, "Error: cannot retrieve user account information\n");
 		return;
 	}
 	

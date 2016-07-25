@@ -32,6 +32,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- fix problem with relative path in storage_find function
 	- fix build for systems without bash
 	- fix double quotes/single quotes problem
+	- big rework of argument processing subsytem
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile

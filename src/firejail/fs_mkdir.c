@@ -42,8 +42,20 @@ void fs_mkdir(const char *name) {
 	}
 
 	// create directory
-	if (mkdir(expanded, 0700) == -1)
-		fprintf(stderr, "Warning: cannot create %s directory\n", expanded);
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		// create directory
+		if (mkdir(expanded, 0700) == -1)
+			fprintf(stderr, "Warning: cannot create %s directory\n", expanded);
+		exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
 
 doexit:
 	free(expanded);
@@ -67,16 +79,25 @@ void fs_mkfile(const char *name) {
 	}
 
 	// create file
-	FILE *fp = fopen(expanded, "w");
-	if (!fp)
-		fprintf(stderr, "Warning: cannot create %s file\n", expanded);
-	else {
-		fclose(fp);
-		int rv = chown(expanded, getuid(), getgid());
-		(void) rv;
-		rv = chmod(expanded, 0600);
-		(void) rv;
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		FILE *fp = fopen(expanded, "w");
+		if (!fp)
+			fprintf(stderr, "Warning: cannot create %s file\n", expanded);
+		else {
+			fclose(fp);
+			int rv = chmod(expanded, 0600);
+			(void) rv;
+		}
+		exit(0);
 	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
 
 doexit:
 	free(expanded);

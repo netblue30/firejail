@@ -2008,8 +2008,35 @@ int main(int argc, char **argv) {
 		int i;
 		int len = 0;
 		int argcnt = argc - prog_index;
-		for (i = 0; i < argcnt; i++)
-			len += strlen(argv[i + prog_index]) + 3; // + ' ' + 2 '"'
+		int j;
+		bool in_quotes = false;
+
+		for (i = 0; i < argcnt; i++) {
+			in_quotes = false;
+			for (j = 0; j < strlen(argv[i + prog_index]); j++) {
+				if (argv[i + prog_index][j] == '\'') {
+					if (in_quotes)
+						len++;
+					if (j > 0 && argv[i + prog_index][j-1] == '\'')
+						len++;
+					else
+						len += 3;
+					in_quotes = false;
+				} else {
+					if (!in_quotes)
+						len++;
+					len++;
+					in_quotes = true;
+				}
+			}
+			if (in_quotes) {
+				len++;
+			}
+			if (strlen(argv[i + prog_index]) == 0) {
+				len += 2;
+			}
+			len++;
+		}
 
 		// build the string
 		cfg.command_line = malloc(len + 1); // + '\0'
@@ -2022,21 +2049,64 @@ int main(int argc, char **argv) {
 		char *ptr1 = cfg.command_line;
 		char *ptr2 = cfg.window_title;
 		for (i = 0; i < argcnt; i++) {
-			// detect bash commands
-			if (strstr(argv[i + prog_index], "&&") || strstr(argv[i + prog_index], "||")) {
-				sprintf(ptr1, "%s ", argv[i + prog_index]);
-			}
-			else if (arg_command){
-				sprintf(ptr1, "%s ", argv[i + prog_index]);
-			}
-			else {
-				sprintf(ptr1, "\'%s\' ", argv[i + prog_index]);
-			}
-			sprintf(ptr2, "%s ", argv[i + prog_index]);
 
+			// enclose args by single quotes,
+			// and since single quote can't be represented in single quoted text
+			// each occurence of it should be enclosed by double quotes
+			in_quotes = false;
+			for (j = 0; j < strlen(argv[i + prog_index]); j++) {
+				// single quote
+				if (argv[i + prog_index][j] == '\'') {
+					if (in_quotes) {
+						// close quotes
+						ptr1[0] = '\'';
+						ptr1++;
+					}
+					// previous char was single quote too
+					if (j > 0 && argv[i + prog_index][j-1] == '\'') {
+						ptr1--;
+						sprintf(ptr1, "\'\"");
+					} 
+					// this first in series
+					else
+					{
+						sprintf(ptr1, "\"\'\"");
+					}
+					ptr1 += strlen(ptr1);
+					in_quotes = false;
+				}
+				// anything other
+				else
+				{
+					if (!in_quotes) {
+						// open quotes
+						ptr1[0] = '\'';
+						ptr1++;
+					}
+					ptr1[0] = argv[i + prog_index][j];
+					ptr1++;
+					in_quotes = true;
+				}
+			}
+			// close quotes
+			if (in_quotes) {
+				ptr1[0] = '\'';
+				ptr1++;
+			}
+			// handle empty argument case
+			if (strlen(argv[i + prog_index]) == 0) {
+				sprintf(ptr1, "\'\'");
+				ptr1 += strlen(ptr1);
+			}
+			// add space
+			sprintf(ptr1, " ");
 			ptr1 += strlen(ptr1);
+
+			sprintf(ptr2, "%s ", argv[i + prog_index]);
 			ptr2 += strlen(ptr2);
 		}
+
+		assert(len == strlen(cfg.command_line));
 	}
 	
 	assert(cfg.command_name);

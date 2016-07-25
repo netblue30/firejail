@@ -36,23 +36,23 @@ expect {
 sleep 3
 
 spawn $env(SHELL)
-send --  "firejail --list;pwd\r"
+send --  "firejail --list;ls -d /tmp\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"name=testing"
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"home"
+	"/tmp"
 }
-send --  "firejail --list;pwd\r"
+send --  "firejail --list;ls -d /tmp\r"
 expect {
 	timeout {puts "TESTING ERROR 8 (join)\n";exit}
 	"join=testing"
 }
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
-	"home"
+	"/tmp"
 }
 
 sleep 1

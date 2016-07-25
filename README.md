@@ -49,7 +49,7 @@ Symlinks outside user home directories are allowed:
       --whitelist=dirname_or_filename
               Whitelist directory or file. This feature  is  implemented  only
               for  user  home, /dev, /media, /opt, /var, and /tmp directories.
-              With the exeception of user home, both the  link  and  the  real
+              With the exception of user home, both the  link  and  the  real
               file should be in the same top directory.
 
               Example:

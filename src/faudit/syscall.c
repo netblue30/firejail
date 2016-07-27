@@ -20,7 +20,9 @@
 #include "faudit.h"
 #include <sys/ptrace.h>
 #include <sys/swap.h>
+#if defined(__i386__) || defined(__x86_64__)
 #include <sys/io.h>
+#endif
 #include <sys/wait.h>
 extern int init_module(void *module_image, unsigned long len,
                        const char *param_values);
@@ -69,6 +71,7 @@ void syscall_helper(int argc, char **argv) {
 		pivot_root(NULL, NULL);
 		printf("\nUGLY: pivot_root syscall permitted.\n");
 	}
+#if defined(__i386__) || defined(__x86_64__)
 	else if (strcmp(argv[2], "iopl") == 0) {
 		iopl(0L);
 		printf("\nUGLY: iopl syscall permitted.\n");
@@ -77,6 +80,7 @@ void syscall_helper(int argc, char **argv) {
 		ioperm(0, 0, 0);
 		printf("\nUGLY: ioperm syscall permitted.\n");
 	}
+#endif
 	exit(0);
 }
 

@@ -86,12 +86,13 @@ void seccomp_test(void) {
 		printf("pivot_root... "); fflush(0);
 		syscall_run("pivot_root");
 		
+#if defined(__i386__) || defined(__x86_64__)
 		printf("iopl... "); fflush(0);
 		syscall_run("iopl");
 		
 		printf("ioperm... "); fflush(0);
 		syscall_run("ioperm");
-		
+#endif	
 		printf("\n");
 	}
 	else

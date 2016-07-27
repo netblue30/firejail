@@ -1523,7 +1523,7 @@ firejail version 0.9.27
 \fB\-\-whitelist=dirname_or_filename
 Whitelist directory or file. This feature is implemented only for user home, /dev, /media, /opt, /var, and /tmp directories.
 With the exception of user home, both the link and the real file should be in
-the same top directory.
+the same top directory. For /home, both the link and the real file should be owned by the user.
 .br
 
 .br

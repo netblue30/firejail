@@ -391,14 +391,17 @@ void fs_whitelist(void) {
 
 			entry->home_dir = 1;
 			home_dir = 1;
-			if (arg_debug)
+			if (arg_debug || arg_debug_whitelists)
 				fprintf(stderr, "Debug %d: fname #%s#, cfg.homedir #%s#\n",
 					__LINE__, fname, cfg.homedir);
 
 			// both path and absolute path are under /home
-//			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0) {
-//				goto errexit;
-//			}
+			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0) {
+				// check if the file is owned by the user
+				struct stat s;
+				if (stat(fname, &s) == 0 && s.st_uid != getuid())
+					goto errexit;
+			}
 		}
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {
 			entry->tmp_dir = 1;

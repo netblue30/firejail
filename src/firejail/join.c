@@ -352,17 +352,25 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		// run cmdline trough /bin/bash
 		if (cfg.command_line == NULL) {
-			struct stat s;
 
 			// replace the process with a shell
-			if (stat("/bin/bash", &s) == 0)
-				execlp("/bin/bash", "/bin/bash", NULL);
-			else if (stat("/usr/bin/zsh", &s) == 0)
-				execlp("/usr/bin/zsh", "/usr/bin/zsh", NULL);
-			else if (stat("/bin/csh", &s) == 0)
-				execlp("/bin/csh", "/bin/csh", NULL);
-			else if (stat("/bin/sh", &s) == 0)
-				execlp("/bin/sh", "/bin/sh", NULL);
+			if (cfg.shell)
+					execlp(cfg.shell, cfg.shell, NULL);
+				else if (arg_zsh)
+					execlp("/usr/bin/zsh", "/usr/bin/zsh", NULL);
+				else if (arg_csh)
+					execlp("/bin/csh", "/bin/csh", NULL);
+				else {
+					struct stat s;
+					if (stat("/bin/bash", &s) == 0)
+						execlp("/bin/bash", "/bin/bash", NULL);
+					else if (stat("/usr/bin/zsh", &s) == 0)
+						execlp("/usr/bin/zsh", "/usr/bin/zsh", NULL);
+					else if (stat("/bin/csh", &s) == 0)
+						execlp("/bin/csh", "/bin/csh", NULL);
+					else if (stat("/bin/sh", &s) == 0)
+						execlp("/bin/sh", "/bin/sh", NULL);
+				}
 			
 			// no shell found, print an error and exit
 			fprintf(stderr, "Error: no POSIX shell found\n");
@@ -389,21 +397,54 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				}
 			}
 
-			char *arg[5];
-			arg[0] = "/bin/bash";
-			arg[1] = "-c";
-			if (arg_debug)
-				printf("Starting %s\n", cfg.command_line);
-			if (!arg_doubledash) {
-				arg[2] = cfg.command_line;
-				arg[3] = NULL;
+			if (arg_shell_none) {
+				if (arg_debug) {
+					int i;
+					for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
+						if (cfg.original_argv[i] == NULL)
+							break;
+						printf("execvp argument %d: %s\n", i - cfg.original_program_index, cfg.original_argv[i]);
+					}
+				}
+		
+				if (cfg.original_program_index == 0) {
+					fprintf(stderr, "Error: --shell=none configured, but no program specified\n");
+					exit(1);
+				}
+		
+				if (!arg_command && !arg_quiet)
+					printf("Child process initialized\n");
+		
+				execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
+				exit(1);
+			} else {
+				// choose the shell requested by the user, or use bash as default
+				char *sh;
+				if (cfg.shell)
+			 		sh = cfg.shell;
+				else if (arg_zsh)
+					sh = "/usr/bin/zsh";
+				else if (arg_csh)
+					sh = "/bin/csh";
+				else
+					sh = "/bin/bash";
+	
+				char *arg[5];
+				arg[0] = sh;
+				arg[1] = "-c";
+				if (arg_debug)
+					printf("Starting %s\n", cfg.command_line);
+				if (!arg_doubledash) {
+					arg[2] = cfg.command_line;
+					arg[3] = NULL;
+				}
+				else {
+					arg[2] = "--";
+					arg[3] = cfg.command_line;
+					arg[4] = NULL;
+				}
+				execvp("/bin/bash", arg);
 			}
-			else {
-				arg[2] = "--";
-				arg[3] = cfg.command_line;
-				arg[4] = NULL;
-			}
-			execvp("/bin/bash", arg);
 		}
 
 		// it will never get here!!!

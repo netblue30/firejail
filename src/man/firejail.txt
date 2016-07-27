@@ -949,6 +949,10 @@ cannot acquire new privileges using execve(2);  in particular,
 this means that calling a suid binary (or one with file capabilities)
 does not result in an increase of privilege.
 
+--nonewprivs is enabled by default if seccomp filter is activated, or if a
+symbolic link in user home directory pointing outside user home
+is whitelisted.
+
 .TP
 \fB\-\-nosound
 Disable sound system.

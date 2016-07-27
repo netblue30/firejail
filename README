@@ -33,6 +33,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- fix build for systems without bash
 	- fix double quotes/single quotes problem
 	- big rework of argument processing subsytem
+	- --join fixes
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile

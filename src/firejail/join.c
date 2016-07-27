@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/prctl.h>
+#include <errno.h>
 
 static int apply_caps = 0;
 static uint64_t caps = 0;
@@ -337,6 +338,17 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
 		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
 			errExit("setenv");
+
+		// set nice
+		if (arg_nice) {
+			errno = 0;
+			int rv = nice(cfg.nice);
+			(void) rv;
+			if (errno) {
+				fprintf(stderr, "Warning: cannot set nice value\n");
+				errno = 0;
+			}
+		}
 
 		// run cmdline trough /bin/bash
 		if (cfg.command_line == NULL) {

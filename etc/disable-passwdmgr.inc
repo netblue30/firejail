@@ -3,4 +3,5 @@ blacklist ${HOME}/.lastpass
 blacklist ${HOME}/.keepassx
 blacklist ${HOME}/.password-store
 blacklist ${HOME}/keepassx.kdbx
+blacklist ${HOME}/.config/keepassx
 

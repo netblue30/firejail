@@ -401,9 +401,6 @@ void fs_whitelist(void) {
 				struct stat s;
 				if (stat(fname, &s) == 0 && s.st_uid != getuid())
 					goto errexit;
-					
-				// set nonewprivs
-				arg_nonewprivs = 1;
 			}
 		}
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {

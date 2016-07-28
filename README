@@ -27,6 +27,7 @@ Reiner Herrmann (https://github.com/reinerh)
 	- unit testing framework
 Thomas Jarosch (https://github.com/thomasjfox)
 	- disable keepassx in disable-passwdmgr.inc
+	- added uudeview profile
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Aleksey Manevich (https://github.com/manevich)

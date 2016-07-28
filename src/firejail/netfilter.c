@@ -66,6 +66,8 @@ void netfilter(const char *fname) {
 
 	// custom filter
 	int allocated = 0;
+	if (netfilter_default)
+		fname = netfilter_default;
 	if (fname) {
 		// buffer the filter
 		struct stat s;

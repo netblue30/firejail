@@ -582,6 +582,7 @@ void sandboxfs(int op, pid_t pid, const char *patqh);
 #define CFG_MAX 11 // this should always be the last entry
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
+extern char *netfilter_default;
 int checkcfg(int val);
 
 // appimage.c

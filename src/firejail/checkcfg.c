@@ -26,6 +26,7 @@ static int initialized = 0;
 static int cfg_val[CFG_MAX];
 char *xephyr_screen = "800x600";
 char *xephyr_extra_params = "";
+char *netfilter_default = NULL;
 
 int checkcfg(int val) {
 	EUID_ASSERT();
@@ -158,6 +159,28 @@ int checkcfg(int val) {
 					cfg_val[CFG_RESTRICTED_NETWORK] = 0;
 				else
 					goto errout;
+			}
+			// netfilter
+			else if (strncmp(ptr, "netfilter-default ", 18) == 0) {
+				char *fname = ptr + 18;
+				while (*fname == ' ' || *fname == '\t')
+					ptr++;
+				char *end = strchr(fname, ' ');
+				if (end)
+					*end = '\0';
+				
+				// is the file present?
+				struct stat s;
+				if (stat(fname, &s) == -1) {
+					fprintf(stderr, "Error: netfilter-default file %s not available\n", fname);
+					exit(1);
+				}
+				
+				netfilter_default = strdup(fname);
+				if (!netfilter_default)
+					errExit("strdup");
+				if (arg_debug)
+					printf("netfilter default file %s\n", fname);
 			}
 			
 			// Xephyr screen size

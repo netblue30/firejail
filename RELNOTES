@@ -1,4 +1,4 @@
-firejail (0.9.42~rc1) baseline; urgency=low
+firejail (0.9.42~rc2) baseline; urgency=low
   * deprecated --user option, please use "sudo -u username firejail" instead
   * --read-write option rework
   * allow symlinks in home directory for --whitelist option
@@ -12,6 +12,7 @@ firejail (0.9.42~rc1) baseline; urgency=low
   * seccomp filter updated
   * compile time and run time support to disable whitelists
   * compile time support to disable global configuration file
+  * added netfilter-default config option in /etc/firejail/firejail.config
   * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
   * new profiles: pix, audacity, strings, xz, xzdec, gzip, cpio, less
   * new profiles: Atom Beta, Atom, jitsi, eom

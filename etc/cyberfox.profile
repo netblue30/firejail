@@ -1,6 +1,6 @@
 # Firejail profile for Cyberfox (based on Mozilla Firefox)
 
-noblacklist ~/.8pecxstudios/cyberfox
+noblacklist ~/.8pecxstudios
 noblacklist ~/.cache/8pecxstudios
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -19,8 +19,7 @@ mkdir ~/.8pecxstudios
 whitelist ~/.8pecxstudios
 mkdir ~/.cache
 mkdir ~/.cache/8pecxstudios
-mkdir ~/.cache/8pecxstudios/cyberfox
-whitelist ~/.cache/8pecxstudios/cyberfox
+whitelist ~/.cache/8pecxstudios
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.vimperatorrc

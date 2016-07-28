@@ -224,6 +224,7 @@ realinstall:
 	install -c -m 0644 .etc/atom.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/jitsi.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/eom.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/Cyberfox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	install -c -m 0644 etc/firejail.config $(DESTDIR)/$(sysconfdir)/firejail/.
 	rm -fr .etc

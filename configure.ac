@@ -106,6 +106,9 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
+# extract UID_MIN and GID_MIN from login.def
+./mkuid.sh
+
 AC_OUTPUT(Makefile src/lib/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/ftee/Makefile src/faudit/Makefile)
 
 echo
@@ -123,6 +126,9 @@ echo "   X11 sandboxing support: $HAVE_X11"
 echo "   whitelisting: $HAVE_WHITELIST"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
+printf "   uid_min: "; grep UID_MIN uids.h
+printf "   gid_min: "; grep GID_MIN uids.h
 echo
+
 
 

@@ -26,6 +26,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <errno.h>
+#include "../../uids.h"
 
 #define MAXBUF 1024
 
@@ -118,7 +119,7 @@ static void sanitize_passwd(void) {
 	if (stat("/etc/passwd", &s) == -1)
 		return;
 	if (arg_debug)
-		printf("Sanitizing /etc/passwd\n");
+		printf("Sanitizing /etc/passwd, UID_MIN %d\n", UID_MIN);
 	if (is_link("/etc/passwd")) {
 		fprintf(stderr, "Error: invalid /etc/passwd\n");
 		exit(1);
@@ -170,7 +171,7 @@ static void sanitize_passwd(void) {
 		int rv = sscanf(ptr, "%d:", &uid);
 		if (rv == 0 || uid < 0)
 			goto errout;
-		if (uid < 1000) { // todo extract UID_MIN from /etc/login.def
+		if (uid < UID_MIN) {
 			fprintf(fpout, "%s", buf);
 			continue;
 		}
@@ -255,7 +256,7 @@ static void sanitize_group(void) {
 	if (stat("/etc/group", &s) == -1)
 		return;
 	if (arg_debug)
-		printf("Sanitizing /etc/group\n");
+		printf("Sanitizing /etc/group, GID_MIN %d\n", GID_MIN);
 	if (is_link("/etc/group")) {
 		fprintf(stderr, "Error: invalid /etc/group\n");
 		exit(1);
@@ -306,7 +307,7 @@ static void sanitize_group(void) {
 		int rv = sscanf(ptr, "%d:", &gid);
 		if (rv == 0 || gid < 0)
 			goto errout;
-		if (gid < 1000) { // todo extract GID_MIN from /etc/login.def
+		if (gid < GID_MIN) {
 			if (copy_line(fpout, buf, ptr))
 				goto errout;
 			continue;

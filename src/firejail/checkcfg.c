@@ -58,6 +58,15 @@ int checkcfg(int val) {
 #endif	
 		}
 		
+		// if the file exists, it should be owned by root
+		struct stat s;
+		if (stat(fname, &s) == -1)
+			errExit("stat");
+		if (s.st_uid != 0 || s.st_gid != 0) {
+			fprintf(stderr, "Error: configuration file should be owned by root\n");
+			exit(1);
+		}
+
 		// read configuration file
 		char buf[MAX_READ];
 		while (fgets(buf,MAX_READ, fp)) {

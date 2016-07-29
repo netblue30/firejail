@@ -862,7 +862,7 @@ $ firejail \-\-noexec=/tmp
 .br
 
 .br
-/etc and /var are noexec by default. If there are more than one mount operation
+/etc and /var are noexec by default if the sandbox was started as a regular user. If there are more than one mount operation
 on the path of the file or directory, noexec should be applied to the last one. Always check if the change took effect inside the sandbox.
 
 .TP

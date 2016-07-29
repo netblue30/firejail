@@ -716,10 +716,8 @@ void fs_proc_sys_dev_boot(void) {
 }
 
 // disable firejail configuration in /etc/firejail and in ~/.config/firejail
-static void disable_firejail_config(void) {
+static void disable_config(void) {
 	struct stat s;
-//	if (stat("/etc/firejail", &s) == 0)
-//		disable_file(BLACKLIST_FILE, "/etc/firejail");
 
 	char *fname;
 	if (asprintf(&fname, "%s/.config/firejail", cfg.homedir) == -1)
@@ -727,18 +725,6 @@ static void disable_firejail_config(void) {
 	if (stat(fname, &s) == 0)
 		disable_file(BLACKLIST_FILE, fname);
 	free(fname);
-	
-//	if (stat("/usr/local/etc/firejail", &s) == 0)
-//		disable_file(BLACKLIST_FILE, "/usr/local/etc/firejail");
-//
-//	if (strcmp(PREFIX, "/usr/local")) {
-//		if (asprintf(&fname, "%s/etc/firejail", PREFIX) == -1)
-//			errExit("asprintf");
-//		if (stat(fname, &s) == 0)
-//			disable_file(BLACKLIST_FILE, fname);
-//		free(fname);
-//	}
-	
 	
 	// disable run time information
 	if (stat(RUN_FIREJAIL_NETWORK_DIR, &s) == 0)
@@ -754,16 +740,20 @@ static void disable_firejail_config(void) {
 
 // build a basic read-only filesystem
 void fs_basic_fs(void) {
+	uid_t uid = getuid();
+	
 	if (arg_debug)
 		printf("Mounting read-only /bin, /sbin, /lib, /lib32, /lib64, /usr");
 	if (!arg_writable_etc) {
 		fs_rdonly("/etc");
-		fs_noexec("/etc");
+		if (uid)
+			fs_noexec("/etc");
 		if (arg_debug) printf(", /etc");
 	}
 	if (!arg_writable_var) {
 		fs_rdonly("/var");
-		fs_noexec("/var");
+		if (uid)
+			fs_noexec("/var");
 		if (arg_debug) printf(", /var");
 	}
 	if (arg_debug) printf("\n");
@@ -791,8 +781,8 @@ void fs_basic_fs(void) {
 	// when starting as root, firejail config is not disabled;
 	// this mode could be used to install and test new software by chaining
 	// firejail sandboxes (firejail --force)
-	if (getuid() != 0)
-		disable_firejail_config();
+	if (uid)
+		disable_config();
 }
 
 
@@ -1028,7 +1018,7 @@ void fs_overlayfs(void) {
 	// this mode could be used to install and test new software by chaining
 	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
-		disable_firejail_config();
+		disable_config();
 
 	// cleanup and exit
 	free(option);
@@ -1185,7 +1175,7 @@ void fs_chroot(const char *rootdir) {
 	// this mode could be used to install and test new software by chaining
 	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
-		disable_firejail_config();
+		disable_config();
 }
 #endif
 

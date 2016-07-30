@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # unpack firejail archive
-ARCFIREJAIL=`ls *.tar.bz2| grep firejail`
+ARCFIREJAIL=`ls *.tar.xz| grep firejail`
 if [ "$?" -eq 0 ];
 then
 	echo "preparing $ARCFIREJAIL"
-	DIRFIREJAIL=`basename $ARCFIREJAIL  .tar.bz2`
+	DIRFIREJAIL=`basename $ARCFIREJAIL  .tar.xz`
 	rm -fr $DIRFIREJAIL
-	tar -xjvf $ARCFIREJAIL
+	tar -xJvf $ARCFIREJAIL
 	cd $DIRFIREJAIL
 	./configure --prefix=/usr
 	cd ..

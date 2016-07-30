@@ -3,6 +3,9 @@
 mkdir symtest
 ln -s /usr/bin/firejail symtest/argtest
 
+# search for argtest in current directory
+export PATH=$PATH:.
+
 echo "TESTING: 2.1 - simple args"
 symtest/argtest arg1 arg2
 

@@ -4,7 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "./bashrun.sh\r"
+send --  "./symrun.sh\r"
 expect {
 	timeout {puts "TESTING ERROR 2.1.1\n";exit}
 	"Arguments:"

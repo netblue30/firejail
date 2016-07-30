@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[ -f argtest ] || make argtest
+
 echo "TESTING: 1. regular bash session"
 ./bashrun.exp
 

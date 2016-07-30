@@ -6,7 +6,6 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 # Whitelist
-mkdir ~/.config
 mkdir ~/.config/aweather
 whitelist ~/.config/aweather
 

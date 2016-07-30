@@ -22,8 +22,38 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <grp.h>
- #include <sys/wait.h>
- 
+#include <sys/wait.h>
+#include <string.h>
+
+static void mkdir_recursive(char *path) {
+	char *subdir = NULL;
+	struct stat s;
+
+	if (chdir("/")) {
+		fprintf(stderr, "Error: can't chdir to /");
+		return;
+	}
+
+	subdir = strtok(path, "/");
+	while(subdir) {
+		if (stat(subdir, &s) == -1) {
+			if (mkdir(subdir, 0700) == -1) {
+				fprintf(stderr, "Warning: cannot create %s directory\n", subdir);
+				return;
+			}
+		} else if (!S_ISDIR(s.st_mode)) {
+			fprintf(stderr, "Warning: '%s' exists, but is no directory\n", subdir);
+			return;
+		}
+		if (chdir(subdir)) {
+			fprintf(stderr, "Error: can't chdir to %s", subdir);
+			return;
+		}
+
+		subdir = strtok(NULL, "/");
+	}
+}
+
 void fs_mkdir(const char *name) {
 	EUID_ASSERT();
 	
@@ -50,8 +80,7 @@ void fs_mkdir(const char *name) {
 		drop_privs(0);
 
 		// create directory
-		if (mkdir(expanded, 0700) == -1)
-			fprintf(stderr, "Warning: cannot create %s directory\n", expanded);
+		mkdir_recursive(expanded);
 		exit(0);
 	}
 	// wait for the child to finish

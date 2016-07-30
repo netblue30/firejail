@@ -14,6 +14,5 @@ seccomp
 
 whitelist ${DOWNLOADS}
 
-mkdir ~/.config
 mkdir ~/.config/brave
 whitelist ~/.config/brave

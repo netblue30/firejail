@@ -15,10 +15,8 @@ seccomp
 tracelog
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/netsurf
 whitelist ~/.config/netsurf
-mkdir ~/.cache
 mkdir ~/.cache/netsurf
 whitelist ~/.cache/netsurf
 

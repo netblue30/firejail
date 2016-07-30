@@ -51,5 +51,6 @@ echo "TESTING: blacklist glob (test/fs/option_blacklist_glob.exp)"
 echo "TESTING: bind as user (test/fs/option_bind_user.exp)"
 ./option_bind_user.exp
 
-
+echo "TESTING: recursive mkdir (test/fs/mkdir.exp)"
+./mkdir.exp
 

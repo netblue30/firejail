@@ -17,8 +17,6 @@ tracelog
 whitelist ${DOWNLOADS}
 mkdir ~/.mozilla
 whitelist ~/.mozilla
-mkdir ~/.cache
-mkdir ~/.cache/mozilla
 mkdir ~/.cache/mozilla/abrowser
 whitelist ~/.cache/mozilla/abrowser
 whitelist ~/dwhelper

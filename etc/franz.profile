@@ -14,10 +14,8 @@ nonewprivs
 noroot
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/Franz
 whitelist ~/.config/Franz
-mkdir ~/.cache
 mkdir ~/.cache/Franz
 whitelist ~/.cache/Franz
 mkdir ~/.pki

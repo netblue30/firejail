@@ -13,7 +13,6 @@ protocol unix,inet,inet6
 seccomp
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/uGet
 whitelist ~/.config/uGet
 include /etc/firejail/whitelist-common.inc

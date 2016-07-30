@@ -562,7 +562,7 @@ int stat64(const char *pathname, struct stat64 *buf) {
 #ifdef DEBUG
 	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
-	if (!orig_stat)
+	if (!orig_stat64)
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
 	if (!blacklist_loaded)
 		load_blacklist();
@@ -598,7 +598,7 @@ int lstat64(const char *pathname, struct stat64 *buf) {
 #ifdef DEBUG
 	printf("%s %s\n", __FUNCTION__, pathname);
 #endif
-	if (!orig_lstat)
+	if (!orig_lstat64)
 		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
 	if (!blacklist_loaded)
 		load_blacklist();

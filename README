@@ -35,6 +35,7 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- disable keepassx in disable-passwdmgr.inc
 	- added uudeview profile
 	- improved profile list
+	- fixed small variable glitch in stat64() / lstat64() (libtracelog)
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Aleksey Manevich (https://github.com/manevich)

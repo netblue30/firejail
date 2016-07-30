@@ -131,6 +131,7 @@ realinstall:
 	install -c -m 0644 .etc/epiphany.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/evince.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/fbreader.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/file.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/filezilla.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/firefox-esr.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/firefox.profile $(DESTDIR)/$(sysconfdir)/firejail/.

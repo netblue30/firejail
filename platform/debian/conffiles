@@ -36,6 +36,7 @@
 /etc/firejail/epiphany.profile
 /etc/firejail/evince.profile
 /etc/firejail/fbreader.profile
+/etc/firejail/file.profile
 /etc/firejail/filezilla.profile
 /etc/firejail/firefox-esr.profile
 /etc/firejail/firefox.profile

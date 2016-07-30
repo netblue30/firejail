@@ -1,0 +1,13 @@
+# tar profile
+include /etc/firejail/default.profile
+
+tracelog
+net none
+shell none
+
+# support compressed archives
+private-bin tar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop
+private-dev
+private-etc passwd,group,localtime
+hostname tar
+nosound

@@ -144,6 +144,7 @@ realinstall:
 	install -c -m 0644 .etc/google-chrome.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/google-play-music-desktop-player.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/gpredict.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/gtar.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/gthumb.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/gwenview.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/gzip.profile $(DESTDIR)/$(sysconfdir)/firejail/.
@@ -201,6 +202,7 @@ realinstall:
 	install -c -m 0644 .etc/steam.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/stellarium.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/strings.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/tar.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/telegram.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/thunderbird.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/totem.profile $(DESTDIR)/$(sysconfdir)/firejail/.
@@ -208,6 +210,8 @@ realinstall:
 	install -c -m 0644 .etc/transmission-qt.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/uget-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/unbound.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/unrar.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/unzip.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/uudeview.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/vivaldi-beta.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/vivaldi.profile $(DESTDIR)/$(sysconfdir)/firejail/.

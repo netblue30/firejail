@@ -132,6 +132,10 @@ void quote_cmdline(char *command_line, char *window_title, int len, int argc, ch
 
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index) {
 	int len = cmdline_length(argc, argv, index);
+	if (len > ARG_MAX) {
+		errno = E2BIG;
+		errExit("cmdline_length");
+	}
 
 	*command_line = malloc(len + 1);
 	if (!*command_line)

@@ -151,7 +151,6 @@ realinstall:
 	install -c -m 0644 .etc/hexchat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/icecat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/icedove.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/icedove.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/iceweasel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/jitsi.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/kmail.profile $(DESTDIR)/$(sysconfdir)/firejail/.

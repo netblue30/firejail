@@ -25,9 +25,16 @@ Reiner Herrmann (https://github.com/reinerh)
 	- clang-analyzer fixes
 	- Debian reproducible build
 	- unit testing framework
+xee5ch (https://github.com/xee5ch)
+	- skypeforlinux profile
+Peter Hogg (https://github.com/pigmonkey)
+	- WeeChat profile
+	- rtorrent profile
+	- bitlbee profile fixes
 Thomas Jarosch (https://github.com/thomasjfox)
 	- disable keepassx in disable-passwdmgr.inc
 	- added uudeview profile
+	- improved profile list
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Aleksey Manevich (https://github.com/manevich)
@@ -35,7 +42,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- fix problem with relative path in storage_find function
 	- fix build for systems without bash
 	- fix double quotes/single quotes problem
-	- big rework of argument processing subsytem
+	- big rework of argument processing subsystem
 	- --join fixes
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
@@ -180,9 +187,6 @@ Veeti Paananen (https://github.com/veeti)
 	- fixed Spotify profile
 Rahiel Kasim (https://github.com/rahiel)
 	- whitelist keysnail config for firefox
-Peter Hogg (https://github.com/pigmonkey)
-	- WeeChat profile
-	- rtorrent profile
 rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Bruno Nova (https://github.com/brunonova)

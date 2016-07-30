@@ -246,3 +246,14 @@ References
     https://twit.tv/shows/floss-weekly/episodes/389
 
 22. add support for read-write and noexec to Firetools
+
+
+23. AppArmor
+
+$ sudo perl -pi -e 's,GRUB_CMDLINE_LINUX="(.*)"$,GRUB_CMDLINE_LINUX="$1 apparmor=1 security=apparmor",' /etc/default/grub
+$ sudo update-grub
+$ sudo reboot
+
+$ ps auxZ | grep -v '^unconfined'
+
+

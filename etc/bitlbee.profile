@@ -11,4 +11,4 @@ private-dev
 protocol unix,inet,inet6
 seccomp
 nosound
-
+read-write /var/lib/bitlbee

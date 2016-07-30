@@ -36,6 +36,7 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- added uudeview profile
 	- improved profile list
 	- fixed small variable glitch in stat64() / lstat64() (libtracelog)
+	- added lstat() / lstat64() support to libtrace
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Aleksey Manevich (https://github.com/manevich)

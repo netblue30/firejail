@@ -49,29 +49,9 @@ static void extract_command(int argc, char **argv, int index) {
 		exit(1);
 	}
 
-
-	int len = 0;
-	int i;
-	// calculate command length
-	for (i = index; i < argc; i++) {
-		len += strlen(argv[i]) + 3;
-	}
-	assert(len > 0);
-
 	// build command
-	cfg.command_line = malloc(len + 1);
-	*cfg.command_line = '\0';
-	for (i = index; i < argc; i++) {
-		if (strchr(argv[i], '&')) {
-			strcat(cfg.command_line, "\'");
-			strcat(cfg.command_line, argv[i]);
-			strcat(cfg.command_line, "\' ");
-		}
-		else {
-			strcat(cfg.command_line, argv[i]);
-			strcat(cfg.command_line, " ");
-		}
-	}
+	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index);
+
 	if (arg_debug)
 		printf("Extracted command #%s#\n", cfg.command_line);
 }

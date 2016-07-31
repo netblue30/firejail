@@ -7,14 +7,10 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/psi+
 whitelist ~/.config/psi+
-mkdir ~/.local
-mkdir ~/.local/share
 mkdir ~/.local/share/psi+
 whitelist ~/.local/share/psi+
-mkdir ~/.cache
 mkdir ~/.cache/psi+
 whitelist ~/.cache/psi+
 

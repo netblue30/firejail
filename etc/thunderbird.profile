@@ -11,7 +11,6 @@ mkdir ~/.thunderbird
 whitelist ~/.thunderbird
 
 noblacklist ~/.cache/thunderbird
-mkdir ~/.cache
 mkdir ~/.cache/thunderbird
 whitelist ~/.cache/thunderbird
 

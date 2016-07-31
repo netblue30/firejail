@@ -11,10 +11,8 @@ include /etc/firejail/disable-programs.inc
 netfilter
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/chromium
 whitelist ~/.config/chromium
-mkdir ~/.cache
 mkdir ~/.cache/chromium
 whitelist ~/.cache/chromium
 mkdir ~/.pki

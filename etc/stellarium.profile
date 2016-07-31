@@ -9,7 +9,6 @@ include /etc/firejail/disable-programs.inc
 # Whitelist
 mkdir ~/.stellarium
 whitelist ~/.stellarium
-mkdir ~/.config
 mkdir ~/.config/stellarium
 whitelist ~/.config/stellarium
 

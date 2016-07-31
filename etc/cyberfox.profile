@@ -17,7 +17,6 @@ tracelog
 whitelist ${DOWNLOADS}
 mkdir ~/.8pecxstudios
 whitelist ~/.8pecxstudios
-mkdir ~/.cache
 mkdir ~/.cache/8pecxstudios
 whitelist ~/.cache/8pecxstudios
 whitelist ~/dwhelper

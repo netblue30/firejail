@@ -136,7 +136,7 @@ The directory is created if it doesn't already exist.
 .br
 Use this command for whitelisted directories you need to preserve
 when the sandbox is closed. Without it, the application will create the directory, and the directory
-will be deleted when the sandbox is closed. Subdirectories also need to be created using mkdir. Example from
+will be deleted when the sandbox is closed. Subdirectories are recursively created. Example from
 firefox profile:
 .br
 
@@ -145,17 +145,13 @@ mkdir ~/.mozilla
 .br
 whitelist ~/.mozilla
 .br
-mkdir ~/.cache
-.br
-mkdir ~/.cache/mozilla
-.br
 mkdir ~/.cache/mozilla/firefox
 .br
 whitelist ~/.cache/mozilla/firefox
 .TP
 \fBmkfile file
 Similar to mkdir, this command creates a file in user home before the sandbox is started.
-The file is created if it doesn't already exist.
+The file is created if it doesn't already exist, but it's target directory has to exist.
 .TP
 \fBnoexec file_or_directory
 Remount the file or the directory noexec, nodev and nosuid.

@@ -17,6 +17,5 @@ whitelist ~/.dropbox
 mkdir ~/.dropbox-dist
 whitelist ~/.dropbox-dist
 
-mkdir ~/.config/autostart
 mkfile ~/.config/autostart/dropbox.desktop
 whitelist ~/.config/autostart/dropbox.desktop

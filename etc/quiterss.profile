@@ -4,14 +4,11 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-devel.inc
 
 whitelist ${HOME}/quiterssfeeds.opml
-mkdir ~/.config
 mkdir ~/.config/QuiteRss
 whitelist ${HOME}/.config/QuiteRss/
 whitelist ${HOME}/.config/QuiteRssrc
-mkdir ~/.local
 mkdir ~/.local/share
 whitelist ${HOME}/.local/share/
-mkdir ~/.cache
 mkdir ~/.cache/QuiteRss
 whitelist ${HOME}/.cache/QuiteRss
 

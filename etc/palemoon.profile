@@ -9,8 +9,6 @@ include /etc/firejail/whitelist-common.inc
 whitelist ${DOWNLOADS}
 mkdir ~/.moonchild productions
 whitelist ~/.moonchild productions
-mkdir ~/.cache
-mkdir ~/.cache/moonchild productions
 mkdir ~/.cache/moonchild productions/pale moon
 whitelist ~/.cache/moonchild productions/pale moon
 

@@ -55,7 +55,7 @@ cleanup
 #*****************************************************************
 print_title "${arr[1]}"
 echo "$DIST"
-tar -xjvf ../../$DIST.tar.bz2
+tar -xJvf ../../$DIST.tar.xz
 mv $DIST firejail
 
 cd firejail

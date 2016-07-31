@@ -295,13 +295,13 @@ DISTFILES_TEST = "test/apps test/apps-x11 test/environment test/profiles test/ut
 
 dist:
 	make distclean
-	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.bz2
+	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz
 	mkdir -p $(NAME)-$(VERSION)/test
 	cp -a "$(DISTFILES)" $(NAME)-$(VERSION)
 	cp -a "$(DISTFILES_TEST)" $(NAME)-$(VERSION)/test
 	rm -rf $(NAME)-$(VERSION)/src/tools
 	find $(NAME)-$(VERSION) -name .svn -delete
-	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
+	tar -cJvf $(NAME)-$(VERSION).tar.xz $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
 
 deb: dist

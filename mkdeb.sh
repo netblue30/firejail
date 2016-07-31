@@ -3,7 +3,7 @@
 # a code archive should already be available
 
 TOP=`pwd`
-CODE_ARCHIVE="$1-$2.tar.bz2"
+CODE_ARCHIVE="$1-$2.tar.xz"
 CODE_DIR="$1-$2"
 INSTALL_DIR="${INSTALL_DIR}${CODE_DIR}/debian"
 DEBIAN_CTRL_DIR="${DEBIAN_CTRL_DIR}${CODE_DIR}/debian/DEBIAN"
@@ -15,7 +15,7 @@ echo "install directory: $INSTALL_DIR"
 echo "debian control directory: $DEBIAN_CTRL_DIR"
 echo "*****************************************"
 
-tar -xjvf $CODE_ARCHIVE
+tar -xJvf $CODE_ARCHIVE
 #mkdir -p $INSTALL_DIR
 cd $CODE_DIR
 ./configure --prefix=/usr

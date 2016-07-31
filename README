@@ -34,6 +34,8 @@ Peter Hogg (https://github.com/pigmonkey)
 Thomas Jarosch (https://github.com/thomasjfox)
 	- disable keepassx in disable-passwdmgr.inc
 	- added uudeview profile
+	- added tar (gtar), unzip and unrar profile
+	- added file profile
 	- improved profile list
 	- fixed small variable glitch in stat64() / lstat64() (libtracelog)
 	- added lstat() / lstat64() support to libtrace

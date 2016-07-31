@@ -36,6 +36,7 @@
 /etc/firejail/epiphany.profile
 /etc/firejail/evince.profile
 /etc/firejail/fbreader.profile
+/etc/firejail/file.profile
 /etc/firejail/filezilla.profile
 /etc/firejail/firefox-esr.profile
 /etc/firejail/firefox.profile
@@ -50,6 +51,7 @@
 /etc/firejail/google-chrome.profile
 /etc/firejail/google-play-music-desktop-player.profile
 /etc/firejail/gpredict.profile
+/etc/firejail/gtar.profile
 /etc/firejail/gthumb.profile
 /etc/firejail/gwenview.profile
 /etc/firejail/gzip.profile
@@ -108,6 +110,7 @@
 /etc/firejail/steam.profile
 /etc/firejail/stellarium.profile
 /etc/firejail/strings.profile
+/etc/firejail/tar.profile
 /etc/firejail/telegram.profile
 /etc/firejail/thunderbird.profile
 /etc/firejail/totem.profile
@@ -115,6 +118,8 @@
 /etc/firejail/transmission-qt.profile
 /etc/firejail/uget-gtk.profile
 /etc/firejail/unbound.profile
+/etc/firejail/unrar.profile
+/etc/firejail/unzip.profile
 /etc/firejail/uudeview.profile
 /etc/firejail/vivaldi-beta.profile
 /etc/firejail/vivaldi.profile

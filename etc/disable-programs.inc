@@ -71,6 +71,7 @@ blacklist ${HOME}/.retroshare
 blacklist ${HOME}/.weechat
 blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.Skype
+blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.config/Gitter

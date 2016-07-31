@@ -196,6 +196,7 @@ realinstall:
 	install -c -m 0644 .etc/seamonkey.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/server.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/skype.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	install -c -m 0644 .etc/skypeforlinux.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/snap.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/soffice.profile $(DESTDIR)/$(sysconfdir)/firejail/.
 	install -c -m 0644 .etc/spotify.profile $(DESTDIR)/$(sysconfdir)/firejail/.

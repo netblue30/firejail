@@ -103,6 +103,7 @@
 /etc/firejail/seamonkey.profile
 /etc/firejail/server.profile
 /etc/firejail/skype.profile
+/etc/firejail/skypeforlinux.profile
 /etc/firejail/snap.profile
 /etc/firejail/soffice.profile
 /etc/firejail/spotify.profile

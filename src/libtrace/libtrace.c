@@ -423,11 +423,36 @@ int stat(const char *pathname, struct stat *buf) {
 typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
 static orig_stat64_t orig_stat64 = NULL;
 int stat64(const char *pathname, struct stat64 *buf) {
-	if (!orig_stat)
+	if (!orig_stat64)
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
 			
 	int rv = orig_stat64(pathname, buf);
-	printf("%u:%s:stat %s:%d\n", pid(), name(), pathname, rv);
+	printf("%u:%s:stat64 %s:%d\n", pid(), name(), pathname, rv);
+	return rv;
+}
+#endif /* __GLIBC__ */
+
+// lstat
+typedef int (*orig_lstat_t)(const char *pathname, struct stat *buf);
+static orig_lstat_t orig_lstat = NULL;
+int lstat(const char *pathname, struct stat *buf) {
+	if (!orig_lstat)
+		orig_lstat = (orig_lstat_t)dlsym(RTLD_NEXT, "lstat");
+
+	int rv = orig_lstat(pathname, buf);
+	printf("%u:%s:lstat %s:%d\n", pid(), name(), pathname, rv);
+	return rv;
+}
+
+#ifdef __GLIBC__
+typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *buf);
+static orig_lstat64_t orig_lstat64 = NULL;
+int lstat64(const char *pathname, struct stat64 *buf) {
+	if (!orig_lstat64)
+		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
+
+	int rv = orig_lstat64(pathname, buf);
+	printf("%u:%s:lstat64 %s:%d\n", pid(), name(), pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */

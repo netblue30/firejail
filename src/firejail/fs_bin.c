@@ -136,7 +136,7 @@ void fs_check_bin_list(void) {
 		ptr = strrchr(newlist, ',');
 		assert(ptr);
 		*ptr = '\0';
-		if (notfound)
+		if (notfound && !arg_quiet)
 			fprintf(stderr, "Warning: not all executables from --private-bin list were found. The current list is %s\n", newlist);
 		
 		cfg.bin_private_keep = newlist;

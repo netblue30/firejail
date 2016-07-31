@@ -9,6 +9,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * Ubuntu snap support
   * include /dev/snd in --private-dev
   * added mkfile profile command
+  * recursive mkdir
   * seccomp filter updated
   * compile time and run time support to disable whitelists
   * compile time support to disable global configuration file

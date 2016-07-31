@@ -27,9 +27,9 @@
 #include <errno.h>
 
 int cmdline_length(int argc, char **argv, int index) {
-	int i,j;
+	unsigned i,j;
 	int len = 0;
-	int argcnt = argc - index;
+	unsigned argcnt = argc - index;
 	bool in_quotes = false;
 
 	for (i = 0; i < argcnt; i++) {
@@ -63,8 +63,8 @@ int cmdline_length(int argc, char **argv, int index) {
 }
 
 void quote_cmdline(char *command_line, char *window_title, int len, int argc, char **argv, int index) {
-	int i,j;
-	int argcnt = argc - index;
+	unsigned i,j;
+	unsigned argcnt = argc - index;
 	bool in_quotes = false;
 	char *ptr1 = command_line;
 	char *ptr2 = window_title;
@@ -127,7 +127,7 @@ void quote_cmdline(char *command_line, char *window_title, int len, int argc, ch
 		ptr2 += strlen(ptr2);
 	}
 
-	assert(len == strlen(command_line));
+	assert((unsigned) len == strlen(command_line));
 }
 
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index) {

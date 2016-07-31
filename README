@@ -25,6 +25,9 @@ Reiner Herrmann (https://github.com/reinerh)
 	- clang-analyzer fixes
 	- Debian reproducible build
 	- unit testing framework
+	- moved build to .xz
+	- detached signatures for source archive
+	- recursive mkdir
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 Peter Hogg (https://github.com/pigmonkey)
@@ -39,6 +42,7 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- improved profile list
 	- fixed small variable glitch in stat64() / lstat64() (libtracelog)
 	- added lstat() / lstat64() support to libtrace
+	- include mkuid.sh in make dist
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Aleksey Manevich (https://github.com/manevich)
@@ -48,6 +52,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- fix double quotes/single quotes problem
 	- big rework of argument processing subsystem
 	- --join fixes
+	- spliting up cmdline.c
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile

@@ -1,4 +1,5 @@
 # tar profile
+ignore noroot
 include /etc/firejail/default.profile
 
 tracelog

@@ -704,6 +704,11 @@ static void detect_quiet(int argc, char **argv) {
 		"gzip",
 		"xz",
 		"xzdec",
+		"file",
+		"gtar",
+		"tar",
+		"unrar",
+		"unzip",
 		NULL
 	};
 	

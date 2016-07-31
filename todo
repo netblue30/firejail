@@ -250,10 +250,14 @@ References
 
 23. AppArmor
 
+$ sudo apt-get install apparmor apparmor-profiles apparmor-utils apparmor-notify
+
 $ sudo perl -pi -e 's,GRUB_CMDLINE_LINUX="(.*)"$,GRUB_CMDLINE_LINUX="$1 apparmor=1 security=apparmor",' /etc/default/grub
 $ sudo update-grub
 $ sudo reboot
 
-$ ps auxZ | grep -v '^unconfined'
+If you are using auditd, start aa-notify to get notification whenever a program causes a DENIED message.
+$ sudo aa-notify -p -f /var/log/audit/audit.log
+
 
 

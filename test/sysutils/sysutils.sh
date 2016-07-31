@@ -60,3 +60,21 @@ else
 	echo "TESTING SKIP: less not found"
 fi
 
+which file
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: file"
+	./file.exp
+else
+	echo "TESTING SKIP: file not found"
+fi
+
+which tar
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: tar"
+	./tar.exp
+else
+	echo "TESTING SKIP: tar not found"
+fi
+

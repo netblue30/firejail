@@ -590,5 +590,8 @@ void appimage_set(const char *appimage_path);
 void appimage_clear(void);
 const char *appimage_getdir(void);
 
+// cmdline.c
+void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
+
 #endif
 

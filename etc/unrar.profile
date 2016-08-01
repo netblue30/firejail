@@ -1,4 +1,5 @@
 # unrar profile
+quiet
 ignore noroot
 include /etc/firejail/default.profile
 

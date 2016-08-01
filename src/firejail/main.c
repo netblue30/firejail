@@ -697,21 +697,6 @@ static void delete_x11_file(pid_t pid) {
 
 static void detect_quiet(int argc, char **argv) {
 	int i;
-	char *progs[] = {
-		"cpio",
-		"file",
-		"gtar",
-		"gzip",
-		"less",
-		"strings",
-		"tar",
-		"unrar",
-		"unzip",
-		"uudeview",
-		"xz",
-		"xzdec",
-		NULL
-	};
 	
 	// detect --quiet
 	for (i = 1; i < argc; i++) {
@@ -725,26 +710,6 @@ static void detect_quiet(int argc, char **argv) {
 			break;
 		if (strncmp(argv[i], "--", 2) != 0)
 			break;
-	}
-
-	// argv[i] is the program name if --quiet was not already detected
-	if (arg_quiet || i == argc)
-		return;
-
-	// extract the name of the program without the leading path
-	char *ptr = strrchr(argv[i], '/');
-	char *name = (ptr)? (ptr + 1): argv[i];
-	if (*name == '\0')
-		return;
-
-	// look for the program in the list	
-	int j = 0;
-	while (progs[j] != NULL) {
-		if (strcmp(name, progs[j]) == 0) {
-			arg_quiet = 1;
-			return;
-		}
-		j++;
 	}
 }
 

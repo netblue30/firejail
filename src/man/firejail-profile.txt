@@ -93,10 +93,16 @@ If the file name matches file_name, the file will not be blacklisted in any blac
 Example: "noblacklist ${HOME}/.mozilla"
 
 .TP
-\fBignore command
+\fBignore
 Ignore command.
 
 Example: "ignore seccomp"
+
+.TP
+\fBquiet
+Disable Firejail's output. This should be the first uncommented command in the profile file.
+
+Example: "quiet"
 
 .SH Filesystem
 These profile entries define a chroot filesystem built on top of the existing

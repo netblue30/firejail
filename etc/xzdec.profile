@@ -1,4 +1,6 @@
 # xzdec profile
+quiet
+ignore noroot
 include /etc/firejail/default.profile
 tracelog
 net none

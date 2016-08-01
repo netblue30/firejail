@@ -1,5 +1,7 @@
 # uudeview profile
 # the default profile will disable root user, enable seccomp filter etc.
+quiet
+ignore noroot
 include /etc/firejail/default.profile
 
 tracelog

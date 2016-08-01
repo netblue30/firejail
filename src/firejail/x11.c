@@ -158,7 +158,7 @@ void fs_x11(void) {
 
 
 #ifdef HAVE_X11
-//$ Xephyr -ac -br -noreset -screen 800x600 :22 &
+//$ Xephyr -ac -br -terminate -screen 800x600 :22 &
 //$ DISPLAY=:22 firejail --net=eth0 --blacklist=/tmp/.X11-unix/x0 firefox
 void x11_start_xephyr(int argc, char **argv) {
 	EUID_ASSERT();
@@ -190,11 +190,11 @@ void x11_start_xephyr(int argc, char **argv) {
 	// start xephyr
 	char *cmd1;
 	if (checkcfg(CFG_XEPHYR_WINDOW_TITLE)) {
-		if (asprintf(&cmd1, "Xephyr -ac -br -title \"firejail x11 sandbox\" %s -noreset -screen %s :%d", xephyr_extra_params, xephyr_screen, display) == -1)
+		if (asprintf(&cmd1, "Xephyr -ac -br -title \"firejail x11 sandbox\" %s -terminate -screen %s :%d", xephyr_extra_params, xephyr_screen, display) == -1)
 			errExit("asprintf");
 	}
 	else {
-		if (asprintf(&cmd1, "Xephyr -ac -br  %s -noreset -screen %s :%d", xephyr_extra_params, xephyr_screen, display) == -1)
+		if (asprintf(&cmd1, "Xephyr -ac -br  %s -terminate -screen %s :%d", xephyr_extra_params, xephyr_screen, display) == -1)
 			errExit("asprintf");
 	}
 

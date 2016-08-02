@@ -625,9 +625,6 @@ ac_includes_default="\
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 HAVE_SECCOMP_H
-EGREP
-GREP
-CPP
 HAVE_FATAL_WARNINGS
 HAVE_WHITELIST
 HAVE_FILE_TRANSFER
@@ -638,6 +635,11 @@ HAVE_GLOBALCFG
 HAVE_BIND
 HAVE_CHROOT
 HAVE_SECCOMP
+EXTRA_LDFLAGS
+EGREP
+GREP
+CPP
+HAVE_APPARMOR
 RANLIB
 INSTALL_DATA
 INSTALL_SCRIPT
@@ -690,6 +692,7 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
+enable_apparmor
 enable_seccomp
 enable_chroot
 enable_bind
@@ -1319,6 +1322,7 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-apparmor       enable apparmor
   --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
   --disable-bind          disable bind
@@ -1461,52 +1465,6 @@ fi
   as_fn_set_status $ac_retval
 
 } # ac_fn_c_try_compile
-
-# ac_fn_c_try_link LINENO
-# -----------------------
-# Try to link conftest.$ac_ext, and return whether this succeeded.
-ac_fn_c_try_link ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  rm -f conftest.$ac_objext conftest$ac_exeext
-  if { { ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-$as_echo "$ac_try_echo"; } >&5
-  (eval "$ac_link") 2>conftest.err
-  ac_status=$?
-  if test -s conftest.err; then
-    grep -v '^ *+' conftest.err >conftest.er1
-    cat conftest.er1 >&5
-    mv -f conftest.er1 conftest.err
-  fi
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext && {
-	 test "$cross_compiling" = yes ||
-	 test -x conftest$ac_exeext
-       }; then :
-  ac_retval=0
-else
-  $as_echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_retval=1
-fi
-  # Delete the IPA/IPO (Inter Procedural Analysis/Optimization) information
-  # created by the PGI compiler (conftest_ipa8_conftest.oo), as it would
-  # interfere with the next link command; also delete a directory that is
-  # left behind by Apple's compiler.  We do this before executing the actions.
-  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-  as_fn_set_status $ac_retval
-
-} # ac_fn_c_try_link
 
 # ac_fn_c_try_cpp LINENO
 # ----------------------
@@ -1708,6 +1666,52 @@ $as_echo "$ac_res" >&6; }
   eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
 
 } # ac_fn_c_check_header_compile
+
+# ac_fn_c_try_link LINENO
+# -----------------------
+# Try to link conftest.$ac_ext, and return whether this succeeded.
+ac_fn_c_try_link ()
+{
+  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
+  rm -f conftest.$ac_objext conftest$ac_exeext
+  if { { ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
+$as_echo "$ac_try_echo"; } >&5
+  (eval "$ac_link") 2>conftest.err
+  ac_status=$?
+  if test -s conftest.err; then
+    grep -v '^ *+' conftest.err >conftest.er1
+    cat conftest.er1 >&5
+    mv -f conftest.er1 conftest.err
+  fi
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext && {
+	 test "$cross_compiling" = yes ||
+	 test -x conftest$ac_exeext
+       }; then :
+  ac_retval=0
+else
+  $as_echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_retval=1
+fi
+  # Delete the IPA/IPO (Inter Procedural Analysis/Optimization) information
+  # created by the PGI compiler (conftest_ipa8_conftest.oo), as it would
+  # interfere with the next link command; also delete a directory that is
+  # left behind by Apple's compiler.  We do this before executing the actions.
+  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
+  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
+  as_fn_set_status $ac_retval
+
+} # ac_fn_c_try_link
 cat >config.log <<_ACEOF
 This file contains any messages produced by compilers while
 running configure, to aid debugging if configure makes a mistake.
@@ -3069,189 +3073,23 @@ else
 fi
 
 
-HAVE_SECCOMP=""
-# Check whether --enable-seccomp was given.
-if test "${enable_seccomp+set}" = set; then :
-  enableval=$enable_seccomp;
+# Allow to build without apparmor support by calling:
+# ./configure --disable-apparmor
+# This makes it possible to run snaps in devmode on almost any host,
+# regardless of the kernel version.
+HAVE_APPARMOR=""
+# Check whether --enable-apparmor was given.
+if test "${enable_apparmor+set}" = set; then :
+  enableval=$enable_apparmor;
 fi
 
-if test "x$enable_seccomp" != "xno"; then :
+if test "x$enable_apparmor" = "xyes"; then :
 
-	HAVE_SECCOMP="-DHAVE_SECCOMP"
-
-
-fi
-
-HAVE_CHROOT=""
-# Check whether --enable-chroot was given.
-if test "${enable_chroot+set}" = set; then :
-  enableval=$enable_chroot;
-fi
-
-if test "x$enable_chroot" != "xno"; then :
-
-	HAVE_CHROOT="-DHAVE_CHROOT"
+	HAVE_APPARMOR="-DHAVE_APPARMOR"
 
 
 fi
 
-HAVE_BIND=""
-# Check whether --enable-bind was given.
-if test "${enable_bind+set}" = set; then :
-  enableval=$enable_bind;
-fi
-
-if test "x$enable_bind" != "xno"; then :
-
-	HAVE_BIND="-DHAVE_BIND"
-
-
-fi
-
-HAVE_GLOBALCFG=""
-# Check whether --enable-globalcfg was given.
-if test "${enable_globalcfg+set}" = set; then :
-  enableval=$enable_globalcfg;
-fi
-
-if test "x$enable_globalcfg" != "xno"; then :
-
-	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
-
-
-fi
-
-HAVE_NETWORK=""
-# Check whether --enable-network was given.
-if test "${enable_network+set}" = set; then :
-  enableval=$enable_network;
-fi
-
-# Check whether --enable-network was given.
-if test "${enable_network+set}" = set; then :
-  enableval=$enable_network;
-fi
-
-if test "x$enable_network" != "xno"; then :
-
-	HAVE_NETWORK="-DHAVE_NETWORK"
-	if test "x$enable_network" = "xrestricted"; then :
-
-	       HAVE_NETWORK="$HAVE_NETWORK -DHAVE_NETWORK_RESTRICTED"
-
-fi
-
-
-fi
-
-HAVE_USERNS=""
-# Check whether --enable-userns was given.
-if test "${enable_userns+set}" = set; then :
-  enableval=$enable_userns;
-fi
-
-if test "x$enable_userns" != "xno"; then :
-
-	HAVE_USERNS="-DHAVE_USERNS"
-
-
-fi
-
-HAVE_X11=""
-# Check whether --enable-x11 was given.
-if test "${enable_x11+set}" = set; then :
-  enableval=$enable_x11;
-fi
-
-if test "x$enable_x11" != "xno"; then :
-
-	HAVE_X11="-DHAVE_X11"
-
-
-fi
-
-HAVE_FILE_TRANSFER=""
-# Check whether --enable-file-transfer was given.
-if test "${enable_file_transfer+set}" = set; then :
-  enableval=$enable_file_transfer;
-fi
-
-if test "x$enable_file_transfer" != "xno"; then :
-
-	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
-
-
-fi
-
-HAVE_WHITELIST=""
-# Check whether --enable-whitelist was given.
-if test "${enable_whitelist+set}" = set; then :
-  enableval=$enable_whitelist;
-fi
-
-if test "x$enable_whitelist" != "xno"; then :
-
-	HAVE_WHITELIST="-DHAVE_WHITELIST"
-
-
-fi
-
-HAVE_FATAL_WARNINGS=""
-# Check whether --enable-fatal_warnings was given.
-if test "${enable_fatal_warnings+set}" = set; then :
-  enableval=$enable_fatal_warnings;
-fi
-
-if test "x$enable_fatal_warnings" = "xyes"; then :
-
-	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
-
-
-fi
-
-
-# checking pthread library
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
-$as_echo_n "checking for main in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_main+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-
-int
-main ()
-{
-return main ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_main=yes
-else
-  ac_cv_lib_pthread_main=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_main" >&5
-$as_echo "$ac_cv_lib_pthread_main" >&6; }
-if test "x$ac_cv_lib_pthread_main" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
-
-  LIBS="-lpthread $LIBS"
-
-else
-  as_fn_error $? "*** POSIX thread support not installed ***" "$LINENO" 5
-fi
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -3649,6 +3487,208 @@ fi
 
 done
 
+
+if test "x$enable_apparmor" = "xyes"; then :
+
+	ac_fn_c_check_header_mongrel "$LINENO" "sys/apparmor.h" "ac_cv_header_sys_apparmor_h" "$ac_includes_default"
+if test "x$ac_cv_header_sys_apparmor_h" = xyes; then :
+
+else
+  as_fn_error $? "Couldn't find sys/apparmor.h... please install apparmor user space library and development files " "$LINENO" 5
+fi
+
+
+
+fi
+if test "x$enable_apparmor" = "xyes"; then :
+
+	EXTRA_LDFLAGS="-lapparmor"
+
+fi
+
+
+HAVE_SECCOMP=""
+# Check whether --enable-seccomp was given.
+if test "${enable_seccomp+set}" = set; then :
+  enableval=$enable_seccomp;
+fi
+
+if test "x$enable_seccomp" != "xno"; then :
+
+	HAVE_SECCOMP="-DHAVE_SECCOMP"
+
+
+fi
+
+HAVE_CHROOT=""
+# Check whether --enable-chroot was given.
+if test "${enable_chroot+set}" = set; then :
+  enableval=$enable_chroot;
+fi
+
+if test "x$enable_chroot" != "xno"; then :
+
+	HAVE_CHROOT="-DHAVE_CHROOT"
+
+
+fi
+
+HAVE_BIND=""
+# Check whether --enable-bind was given.
+if test "${enable_bind+set}" = set; then :
+  enableval=$enable_bind;
+fi
+
+if test "x$enable_bind" != "xno"; then :
+
+	HAVE_BIND="-DHAVE_BIND"
+
+
+fi
+
+HAVE_GLOBALCFG=""
+# Check whether --enable-globalcfg was given.
+if test "${enable_globalcfg+set}" = set; then :
+  enableval=$enable_globalcfg;
+fi
+
+if test "x$enable_globalcfg" != "xno"; then :
+
+	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
+
+
+fi
+
+HAVE_NETWORK=""
+# Check whether --enable-network was given.
+if test "${enable_network+set}" = set; then :
+  enableval=$enable_network;
+fi
+
+# Check whether --enable-network was given.
+if test "${enable_network+set}" = set; then :
+  enableval=$enable_network;
+fi
+
+if test "x$enable_network" != "xno"; then :
+
+	HAVE_NETWORK="-DHAVE_NETWORK"
+	if test "x$enable_network" = "xrestricted"; then :
+
+	       HAVE_NETWORK="$HAVE_NETWORK -DHAVE_NETWORK_RESTRICTED"
+
+fi
+
+
+fi
+
+HAVE_USERNS=""
+# Check whether --enable-userns was given.
+if test "${enable_userns+set}" = set; then :
+  enableval=$enable_userns;
+fi
+
+if test "x$enable_userns" != "xno"; then :
+
+	HAVE_USERNS="-DHAVE_USERNS"
+
+
+fi
+
+HAVE_X11=""
+# Check whether --enable-x11 was given.
+if test "${enable_x11+set}" = set; then :
+  enableval=$enable_x11;
+fi
+
+if test "x$enable_x11" != "xno"; then :
+
+	HAVE_X11="-DHAVE_X11"
+
+
+fi
+
+HAVE_FILE_TRANSFER=""
+# Check whether --enable-file-transfer was given.
+if test "${enable_file_transfer+set}" = set; then :
+  enableval=$enable_file_transfer;
+fi
+
+if test "x$enable_file_transfer" != "xno"; then :
+
+	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
+
+
+fi
+
+HAVE_WHITELIST=""
+# Check whether --enable-whitelist was given.
+if test "${enable_whitelist+set}" = set; then :
+  enableval=$enable_whitelist;
+fi
+
+if test "x$enable_whitelist" != "xno"; then :
+
+	HAVE_WHITELIST="-DHAVE_WHITELIST"
+
+
+fi
+
+HAVE_FATAL_WARNINGS=""
+# Check whether --enable-fatal_warnings was given.
+if test "${enable_fatal_warnings+set}" = set; then :
+  enableval=$enable_fatal_warnings;
+fi
+
+if test "x$enable_fatal_warnings" = "xyes"; then :
+
+	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
+
+
+fi
+
+
+# checking pthread library
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
+$as_echo_n "checking for main in -lpthread... " >&6; }
+if ${ac_cv_lib_pthread_main+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpthread  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+
+int
+main ()
+{
+return main ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_pthread_main=yes
+else
+  ac_cv_lib_pthread_main=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_main" >&5
+$as_echo "$ac_cv_lib_pthread_main" >&6; }
+if test "x$ac_cv_lib_pthread_main" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBPTHREAD 1
+_ACEOF
+
+  LIBS="-lpthread $LIBS"
+
+else
+  as_fn_error $? "*** POSIX thread support not installed ***" "$LINENO" 5
+fi
 
 ac_fn_c_check_header_mongrel "$LINENO" "pthread.h" "ac_cv_header_pthread_h" "$ac_includes_default"
 if test "x$ac_cv_header_pthread_h" = xyes; then :
@@ -4855,6 +4895,7 @@ echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
+echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
@@ -4866,6 +4907,7 @@ echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 printf "   uid_min: "; grep UID_MIN uids.h
 printf "   gid_min: "; grep GID_MIN uids.h
+printf "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo
 
 

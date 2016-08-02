@@ -9,6 +9,27 @@ AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_RANLIB
 
+# Allow to build without apparmor support by calling:
+# ./configure --disable-apparmor
+# This makes it possible to run snaps in devmode on almost any host,
+# regardless of the kernel version.
+HAVE_APPARMOR=""
+AC_ARG_ENABLE([apparmor],
+    AS_HELP_STRING([--enable-apparmor], [enable apparmor]))
+AS_IF([test "x$enable_apparmor" = "xyes"], [
+	HAVE_APPARMOR="-DHAVE_APPARMOR"
+	AC_SUBST(HAVE_APPARMOR)
+])
+
+AS_IF([test "x$enable_apparmor" = "xyes"], [
+	AC_CHECK_HEADER(sys/apparmor.h, , [AC_MSG_ERROR(
+	[Couldn't find sys/apparmor.h... please install apparmor user space library and development files] )])
+])
+AS_IF([test "x$enable_apparmor" = "xyes"], [
+	EXTRA_LDFLAGS="-lapparmor"
+])
+AC_SUBST([EXTRA_LDFLAGS])
+
 HAVE_SECCOMP=""
 AC_ARG_ENABLE([seccomp],
     AS_HELP_STRING([--disable-seccomp], [disable seccomp]))
@@ -117,6 +138,7 @@ echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
+echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
@@ -128,6 +150,7 @@ echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 printf "   uid_min: "; grep UID_MIN uids.h
 printf "   gid_min: "; grep GID_MIN uids.h
+printf "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo
 
 

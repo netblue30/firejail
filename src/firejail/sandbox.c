@@ -39,6 +39,9 @@
 # define PR_SET_NO_NEW_PRIVS 38
 #endif
 
+#ifdef HAVE_APPARMOR
+#include <sys/apparmor.h>
+#endif
 
 
 static int monitored_pid = 0;
@@ -392,6 +395,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_debug && child_pid == 1)
 		printf("PID namespace installed\n");
 
+
 	//****************************
 	// set hostname
 	//****************************
@@ -503,7 +507,6 @@ int sandbox(void* sandbox_arg) {
 	else
 		fs_basic_fs();
 	
-
 	//****************************
 	// set hostname in /etc/hostname
 	//****************************
@@ -798,8 +801,13 @@ int sandbox(void* sandbox_arg) {
 	pid_t app_pid = fork();
 	if (app_pid == -1)
 		errExit("fork");
-		
+
 	if (app_pid == 0) {
+#ifdef HAVE_APPARMOR
+		errno = 0;
+		if (aa_change_onexec("firejail-default")) 
+			fprintf(stderr, "Warning: apparmor profile not loaded, errno %d\n", errno);
+#endif		
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		start_application();	// start app
 	}

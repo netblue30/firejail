@@ -85,6 +85,8 @@ realinstall:
 	done
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc
+	# install apparmor profile
+	sh -c "if [ -d /etc/apparmor.d ]; then install -c -m 0644 etc/firejail-default /etc/apparmor.d/firejail-default; fi;"
 	# man pages
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man1
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man5

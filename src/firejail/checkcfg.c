@@ -239,3 +239,84 @@ errout:
 	exit(1);
 }
 
+
+void print_compiletime_support(void) {
+	printf("Compile time support:\n");
+	printf("\t- AppArmor support is %s\n",
+#ifdef HAVE_APPARMOR
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+
+	printf("\t- bind support is %s\n",
+#ifdef HAVE_BIND
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- chroot support is %s\n",
+#ifdef HAVE_CHROOT
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- file and directory whitelisting support is %s\n",
+#ifdef HAVE_WHITELIST
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- file transfer support is %s\n",
+#ifdef HAVE_FILE_TRANSFER
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- networking support is %s\n",
+#ifdef HAVE_NETWORK
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+
+#ifdef HAVE_NETWORK_RESTRICTED
+	printf("\t- networking features are available only to root user\n");
+#endif
+
+	printf("\t- seccomp-bpf support is %s\n",
+#ifdef HAVE_SECCOMP
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- user namespace support is %s\n",
+#ifdef HAVE_USERNS
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- X11 snadboxing support is %s\n",
+#ifdef HAVE_X11
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+}

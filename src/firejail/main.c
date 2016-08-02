@@ -102,6 +102,7 @@ int arg_writable_var = 0;			// writable var
 int arg_appimage = 0;				// appimage
 int arg_audit = 0;				// audit
 char *arg_audit_prog;				// audit
+int arg_apparmor;				// apparmor
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -241,6 +242,7 @@ void check_user_namespace(void) {
 }
 #endif
 
+
 // exit commands
 static void run_cmd_and_exit(int i, int argc, char **argv) {
 	EUID_ASSERT();
@@ -255,33 +257,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strcmp(argv[i], "--version") == 0) {
 		printf("firejail version %s\n", VERSION);
-#ifndef HAVE_NETWORK
-		printf("Networking support is disabled.\n");
-#endif
-#ifdef HAVE_NETWORK_RESTRICTED
-		printf("Networking support is allowed only to root user.\n");
-#endif
-#ifndef HAVE_USERNS
-		printf("User namespace support is disabled.\n");
-#endif
-#ifndef HAVE_SECCOMP
-		printf("Seccomp-bpf support is disabled.\n");
-#endif
-#ifndef HAVE_BIND
-		printf("Bind support is disabled.\n");
-#endif
-#ifndef HAVE_CHROOT
-		printf("Chroot support is disabled.\n");
-#endif
-#ifndef HAVE_X11
-		printf("X11 support is disabled.\n");
-#endif
-#ifndef HAVE_FILE_TRANSFER
-		printf("File transfer support is disabled.\n");
-#endif
-#ifndef HAVE_WHITELIST
-		printf("whitelisting support is disabled.\n");
-#endif
+		printf("\n");
+		print_compiletime_support();
+		printf("\n");
 		exit(0);
 	}
 #ifdef HAVE_X11
@@ -905,6 +883,10 @@ int main(int argc, char **argv) {
 		//*************************************
 		// filtering
 		//*************************************
+#ifdef HAVE_APPARMOR
+		else if (strcmp(argv[i], "--apparmor") == 0)
+			arg_apparmor = 1;
+#endif	
 #ifdef HAVE_SECCOMP
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {

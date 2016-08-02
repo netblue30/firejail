@@ -75,6 +75,9 @@ $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 \fB\-\-
 Signal the end of options and disables further option processing.
 .TP
+\fB\-\-apparmor
+Enable AppArmor confinement. Formore information, please see \fBAPPARMOR\fR section below.
+.TP
 \fB\-\-appimage
 Sandbox an AppImage (http://appimage.org/) application.
 .br
@@ -1671,6 +1674,44 @@ $ firejail --tree
 .br
       1221:netblue:/usr/lib/firefox/firefox
 .RE
+
+.SH APPARMOR
+.TP
+AppArmor support is disabled by default at compile time. Use --enable-apparmor configuration option to enable it:
+.br
+
+.br
+$ ./configure --prefix=/usr --enable-apparmor
+.TP
+During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The profile needs to be loaded into the kernel by running the following command as root:
+.br
+
+.br
+# aa-enforce firejail-default
+.TP
+The installed profile tries to replicate some advanced security features inspired by kernel-based Grsecurity:
+.br
+
+.br
+- Prevent information leakage in /proc and /sys directories. The resulting filesystem is barely enough for running
+commands such as "top" and "ps aux".
+.br
+
+.br
+- Allow running programs only from well-known system paths, such as /bin, /sbin, /usr/bin etc. Running
+programs and scripts from user home or other directories writable by the user is not allowed.
+.br
+
+.br
+- Disable D-Bus. D-Bus has long been a huge security hole, and most programs don't use it anyway.
+You should have no problems running Chromium or Firefox.
+
+.TP
+To enable AppArmor confinement on top of your current Firejail security features, pass \fB\-\-apparmor\fR flag to Firejail command line. You can also include \fBapparmor\fR command in a Firejail profile file. Example:
+.br
+
+.br
+$ firejail --apparmor firefox
 
 .SH FILE TRANSFER
 These features allow the user to inspect the filesystem container of an existing sandbox

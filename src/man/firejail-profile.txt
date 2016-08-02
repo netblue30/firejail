@@ -211,6 +211,9 @@ Mount /var directory read-write.
 The following security filters are currently implemented:
 
 .TP
+\fBapparmor
+Enable AppArmor confinement.
+.TP
 \fBcaps
 Enable default Linux capabilities filter.
 .TP

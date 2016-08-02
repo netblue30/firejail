@@ -446,6 +446,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "apparmor") == 0) {
+#ifdef HAVE_APPARMOR		
+		arg_apparmor = 1;
+#endif
+		return 0;
+	}
+
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))

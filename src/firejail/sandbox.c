@@ -804,9 +804,17 @@ int sandbox(void* sandbox_arg) {
 
 	if (app_pid == 0) {
 #ifdef HAVE_APPARMOR
-		errno = 0;
-		if (aa_change_onexec("firejail-default")) 
-			fprintf(stderr, "Warning: apparmor profile not loaded, errno %d\n", errno);
+		if (arg_apparmor) {
+			errno = 0;
+			if (aa_change_onexec("firejail-default")) {
+				fprintf(stderr, "Error: cannot confine the application using AppArmor.\n");
+				fprintf(stderr, "Maybe firejail-default AppArmor profile is not loaded into the kernel.\n");
+				fprintf(stderr, "As root, run \"aa-enforce firejail-default\" to load it.\n");
+				exit(1);
+			}
+			else if (arg_debug)
+				printf("AppArmor enabled\n");
+		}
 #endif		
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		start_application();	// start app

@@ -3,6 +3,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * --read-write option rework
   * allow symlinks in home directory for --whitelist option
   * AppImage support (--appimage)
+  * AppArmor support (--apparmor)
   * Sandbox auditing support (--audit)
   * remove environment variable (--rmenv)
   * noexec support (--noexec)

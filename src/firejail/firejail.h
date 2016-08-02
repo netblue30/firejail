@@ -263,6 +263,7 @@ extern int arg_writable_var;	// writable var
 extern int arg_appimage;	// appimage
 extern int arg_audit;		// audit
 extern char *arg_audit_prog;	// audit
+extern int arg_apparmor;	// apparmor
 
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
@@ -584,6 +585,7 @@ extern char *xephyr_screen;
 extern char *xephyr_extra_params;
 extern char *netfilter_default;
 int checkcfg(int val);
+void print_compiletime_support(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);

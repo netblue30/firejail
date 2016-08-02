@@ -59,8 +59,49 @@ Symlinks outside user home directories are allowed:
               $ firejail "--whitelist=/home/username/My Virtual Machines"
 `````
 
+## AppArmor support
 
-## AppImage
+So far I've seen this working on Debian Jessie and Ubuntu 16.04, where I can get Firefox and
+Chromium running. There is more testing to come.
+
+`````
+APPARMOR
+       AppArmor  support is disabled by default at compile time. Use --enable-
+       apparmor configuration option to enable it:
+
+              $ ./configure --prefix=/usr --enable-apparmor
+
+       During software install, a generic  AppArmor  profile  file,  firejail-
+       default,  is  placed in /etc/apparmor.d directory. The profile needs to
+       be loaded into the kernel by running the following command as root:
+
+              # aa-enforce firejail-default
+
+       The installed profile tries to replicate some  advanced  security  fea‐
+       tures inspired by kernel-based Grsecurity:
+
+              - Prevent information leakage in /proc and /sys directories. The
+              resulting file system is barely enough for running commands such
+              as "top" and "ps aux".
+
+              - Allow running programs only from well-known system paths, such
+              as /bin, /sbin, /usr/bin etc. Running programs and scripts  from
+              user  home  or  other  directories  writable  by the user is not
+              allowed.
+
+              - Disable D-Bus. D-Bus has long been a huge security  hole,  and
+              most  programs don't use it anyway.  You should have no problems
+              running Chromium or Firefox.
+
+       To enable AppArmor confinement on top of your current Firejail security
+       features,  pass  --apparmor flag to Firejail command line. You can also
+       include apparmor command in a Fireajail profile file. Example:
+
+              $ firejail --apparmor firefox
+
+`````
+
+## AppImage support
 
 AppImage (http://appimage.org/) is a distribution-agnostic packaging format.
 The package is a regular ISO file containing all binaries, libraries and resources

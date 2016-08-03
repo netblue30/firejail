@@ -1,19 +1,36 @@
-#include <tunables/global>
+#########################################
+# Generic Firejail AppArmor profile
+#########################################
+
+##########
+# A simple PID declaration based on Ubuntu's @{pid}
+# Ubuntu keeps it under tunables/kernelvars and include it via tunables/global.
+# We don't know if this definition is available outside Debian and Ubuntu, so
+# we declare our own here.
+##########
+@{PID}={[1-9],[1-9][0-9],[1-9][0-9][0-9],[1-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9][0-9]}
 
 profile firejail-default {
 
-#####
-# D-Bus is a huge security hole, we disable it here. Uncomment this line if you
-# need D-Bus functionality.
-#
+##########
+# D-Bus is a huge security hole. Uncomment this line if you need D-Bus
+# functionality.
+##########
 #dbus,
 
-#####
+##########
 # Mask /proc and /sys information leakage. The configuration here is barely
 # enough to run "top" or "ps aux".
-#
+##########
 / r,
 /[^proc,^sys]** mrwlk,
+/{,var/}run/ r,
+/{,var/}run/** r,
+/{,var/}run/user/**/dconf/ rw,
+/{,var/}run/user/**/dconf/user rw,
+/{,var/}run/firejail/mnt/fslogger r,
+/{run,dev}/shm/ r,
+/{run,dev}/shm/** rmwk,
 
 /proc/ r,
 /proc/meminfo r,
@@ -22,14 +39,16 @@ profile firejail-default {
 /proc/uptime r,
 /proc/loadavg r,
 /proc/stat r,
-/proc/@{pid}/ r,
-/proc/@{pid}/fd/ r,
-/proc/@{pid}/task/ r,
-/proc/@{pid}/cmdline r,
-/proc/@{pid}/comm r,
-/proc/@{pid}/stat r,
-/proc/@{pid}/statm r,
-/proc/@{pid}/status r,
+
+/proc/@{PID}/ r,
+/proc/@{PID}/fd/ r,
+/proc/@{PID}/task/ r,
+/proc/@{PID}/cmdline r,
+/proc/@{PID}/comm r,
+/proc/@{PID}/stat r,
+/proc/@{PID}/statm r,
+/proc/@{PID}/status r,
+/proc/@{PID}/task/@{PID}/stat r,
 /proc/sys/kernel/pid_max r,
 /proc/sys/kernel/shmmax r,
 /sys/ r,
@@ -40,19 +59,15 @@ profile firejail-default {
 /sys/devices/ r,
 /sys/devices/** r,
 
-/proc/@{pid}/maps r,
-/proc/@{pid}/mounts r,
-/proc/@{pid}/mountinfo r,
-/proc/@{pid}/oom_score_adj r,
+/proc/@{PID}/maps r,
+/proc/@{PID}/mounts r,
+/proc/@{PID}/mountinfo r,
+/proc/@{PID}/oom_score_adj r,
 
-/{,var/}run/firejail/mnt/fslogger r,
-/{,var/}run/user/**/dconf/ r,
-/{,var/}run/user/**/dconf/user r,
-
-#####
+##########
 # Allow running programs only from well-known system directories. If you need
 # to run programs from your home directory, uncomment /home line.
-#
+##########
 /lib/** ix,
 /lib64/** ix,
 /bin/** ix,
@@ -65,24 +80,23 @@ profile firejail-default {
 /opt/** ix,
 #/home/** ix,
 
-#####
+##########
 # Allow all networking functionality, and control it from Firejail.
-#
+##########
 network inet,
 network inet6,
 network unix,
 network netlink,
 network raw,
 
-#####
+##########
 # There is no equivalent in Firejail for filtering signals.
-#
+##########
 signal,
 
-#####
-# Disable all capabilities. If you run your sandbox as root, you might need to
-# enable/uncomment some of them.
-#
+##########
+# We let Firejail deal with capabilities.
+##########
 capability chown,
 capability dac_override,
 capability dac_read_search,
@@ -118,12 +132,13 @@ capability setfcap,
 capability mac_override,
 capability mac_admin,
 
-#####
-# No mount/umount functionality when running as regular user.
-#
+##########
+# We let Firejail deal with mount/umount functionality.
+##########
 mount,
 remount,
 umount,
 pivot_root,
 
 }
+

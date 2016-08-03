@@ -538,6 +538,11 @@ int sandbox(void* sandbox_arg) {
 		fs_private_tmp();
 	
 	//****************************
+	// update /proc, /sys, /dev, /boot directorymy
+	//****************************
+	fs_proc_sys_dev_boot();
+	
+	//****************************
 	// apply the profile file
 	//****************************
 	if (cfg.profile) {
@@ -554,11 +559,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_trace || arg_tracelog)
 		fs_trace();
 		
-	//****************************
-	// update /proc, /dev, /boot directorymy
-	//****************************
-	fs_proc_sys_dev_boot();
-	
 	//****************************
 	// --nosound and fix for pulseaudio 7.0
 	//****************************

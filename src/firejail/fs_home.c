@@ -335,6 +335,9 @@ void fs_private(void) {
 
 }
 
+int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *sftw);
+
+
 int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *sftw)
 {
 
@@ -357,7 +360,7 @@ int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *s
          if (copy_file(path, dest) == 0) {
             if (chown(dest, u, g) == -1)
                errExit("chown");
-            fs_logger("clone %s", path);
+            fs_logger2("clone", path);
          }
       }
 		free(dest);

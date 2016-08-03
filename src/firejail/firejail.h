@@ -213,6 +213,7 @@ static inline int any_interface_configured(void) {
 void clear_run_files(pid_t pid);
 
 extern int arg_private;		// mount private /home
+extern int arg_private_template; // private /home template
 extern int arg_debug;		// print debug messages
 extern int arg_debug_check_filename;		// print debug messages for filename checking
 extern int arg_debug_blacklists;	// print debug messages for blacklists
@@ -327,9 +328,6 @@ void fs_overlayfs(void);
 void fs_chroot(const char *rootdir);
 int fs_check_chroot_dir(const char *rootdir);
 void fs_private_tmp(void);
-
-// copy all (normal) files and directory recursively
-int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *sftw);
 
 // profile.c
 // find and read the profile specified by name from dir directory

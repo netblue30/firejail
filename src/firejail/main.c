@@ -1361,7 +1361,7 @@ int main(int argc, char **argv) {
 			fs_check_private_dir();
 			arg_private = 1;
 		}
-      else if (strcmp(argv[i], "--private-template=", 19) == 0) {
+      else if (strncmp(argv[i], "--private-template=", 19) == 0) {
          cfg.private_template = argv[i] + 14;
          if (arg_private) {
             fprintf(stderr, "Error: --private and --private-template are mutually exclusive\n");

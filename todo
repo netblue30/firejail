@@ -263,4 +263,6 @@ $ sudo aa-notify -p -f /var/log/audit/audit.log
 /sys/module/apparmor/parameters/enabled
 /sys/kernel/security/apparmor
 
+24. check monitor proc behaviour for sandboxes with --blacklist=/proc
+also check --apparmor in this case
 

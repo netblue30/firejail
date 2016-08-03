@@ -28,6 +28,8 @@ static char *paths[] = {
 	"/usr/local/bin",
 	"/usr/bin",
 	"/bin",
+	"/usr/games",
+	"/usr/local/games",
 	"/usr/local/sbin",
 	"/usr/sbin",
 	"/sbin",
@@ -76,7 +78,8 @@ static char *check_dir_or_file(const char *name) {
 	}
 
 	if (!fname) {
-//		fprintf(stderr, "Warning: file %s not found\n", name);
+		if (arg_debug)
+			fprintf(stderr, "Warning: file %s not found\n", name);
 		return NULL;
 	}
 	

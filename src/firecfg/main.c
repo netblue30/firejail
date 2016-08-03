@@ -69,9 +69,12 @@ static int find(const char *program, const char *directory) {
 		errExit("asprintf");
 		
 	struct stat s;
-	if (stat(fname, &s) == 0)
+	if (stat(fname, &s) == 0) {
+	     	if (arg_debug)
+	     		printf("found %s in directory %s\n", program, directory);
 		retval = 1;
-	
+	}
+		
 	free(fname);
 	return retval;
 }
@@ -209,8 +212,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 	
 	struct stat s;
 	if (stat(fname, &s) == 0) {
-		if (arg_debug)
-			printf("%s is already present in /usr/local/bin directory, skipping...\n", fname);
+		printf("%s is already present, skipping...\n", fname);
 	}
 	else {
 		int rv = symlink(firejail_exec, fname);

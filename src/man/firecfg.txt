@@ -17,6 +17,9 @@ The symbolic links are placed in /usr/local/bin. For more information, see
 \fB\-\-clean
 Remove all firejail symbolic links.
 .TP
+\fB\-\-debug
+Print debug messages.
+.TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.
 .TP

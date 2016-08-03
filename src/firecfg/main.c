@@ -26,6 +26,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "../include/common.h"
+static int arg_debug = 0;
 
 static void usage(void) {
 	printf("firecfg - version %s\n\n", VERSION);
@@ -37,6 +38,7 @@ static void usage(void) {
 	printf("DESKTOP INTEGRATION section in man 1 firejail.\n\n");
 	printf("Usage: firecfg [OPTIONS]\n\n");
 	printf("   --clean - remove all firejail symbolic links.\n\n");
+	printf("   --debug - print debug messages.\n\n");
 	printf("   --help, -? - this help screen.\n\n");
 	printf("   --list - list all firejail symbolic links.\n\n");
 	printf("   --version - print program version and exit.\n\n");
@@ -206,8 +208,10 @@ static void set_file(const char *name, const char *firejail_exec) {
 		errExit("asprintf");
 	
 	struct stat s;
-	if (stat(fname, &s) == 0)
-		; //printf("%s already present\n", fname);
+	if (stat(fname, &s) == 0) {
+		if (arg_debug)
+			printf("%s is already present in /usr/local/bin directory, skipping...\n", fname);
+	}
 	else {
 		int rv = symlink(firejail_exec, fname);
 		if (rv) {
@@ -289,6 +293,8 @@ int main(int argc, char **argv) {
 			usage();
 			return 0;
 		}
+		else if (strcmp(argv[i], "--debug") == 0)
+			arg_debug = 1;
 		else if (strcmp(argv[i], "--version") == 0) {
 			printf("firecfg version %s\n\n", VERSION);
 			return 0;

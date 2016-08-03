@@ -51,6 +51,7 @@ uid_t firejail_uid = 0;
 static char child_stack[STACK_SIZE];		// space for child's stack
 Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
+int arg_private_template = 0; // mount private /home using a template
 int arg_debug = 0;				// print debug messages
 int arg_debug_check_filename;		// print debug messages for filename checking
 int arg_debug_blacklists;			// print debug messages for blacklists
@@ -1360,6 +1361,19 @@ int main(int argc, char **argv) {
 			fs_check_private_dir();
 			arg_private = 1;
 		}
+      else if (strcmp(argv[i], "--private-template=", 19) == 0) {
+         cfg.private_template = argv[i] + 14;
+         if (arg_private) {
+            fprintf(stderr, "Error: --private and --private-template are mutually exclusive\n");
+            exit(1);
+         }
+         if (*cfg.private_template == '\0') {
+            fprintf(stderr, "Error: invalid private-template option\n");
+            exit(1);
+         }
+         fs_check_private_template();
+         arg_private_template = 1;
+      }
 		else if (strcmp(argv[i], "--private-dev") == 0) {
 			arg_private_dev = 1;
 		}

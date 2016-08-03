@@ -28,6 +28,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <grp.h>
+#include <ftw.h>
 
 static void skel(const char *homedir, uid_t u, gid_t g) {
 	char *fname;
@@ -334,6 +335,43 @@ void fs_private(void) {
 
 }
 
+int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *sftw)
+{
+
+   char *homedir = cfg.homedir;
+   char *dest;
+	int  srcbaselen = 0;
+   assert(homedir);
+   uid_t u = getuid();
+   gid_t g = getgid();
+	srcbaselen = strlen(cfg.private_template);
+
+   if(ftype == FTW_F || ftype == FTW_D) {
+    	if (asprintf(&dest, "%s/%s", homedir, path + srcbaselen) == -1)
+         errExit("asprintf");
+      struct stat s;
+      // don't copy it if we already have the file
+      if (stat(dest, &s) == 0)
+         return 0;
+      if (stat(path, &s) == 0) {
+         if (copy_file(path, dest) == 0) {
+            if (chown(dest, u, g) == -1)
+               errExit("chown");
+            fs_logger("clone %s", path);
+         }
+      }
+		free(dest);
+   }
+ 	return(0);
+}
+
+void fs_private_template(void) {
+	fs_private();
+	if(!nftw(cfg.private_template, fs_copydir, 1, FTW_PHYS)) {
+		fprintf(stderr, "Error: unable to copy template dir\n");
+		exit(1);
+	}
+}
 
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void) {
@@ -372,4 +410,43 @@ void fs_check_private_dir(void) {
 		exit(1);
 	}
 }
+
+// check new template home directoty (--private-template= option) - exit if it fails
+void fs_check_private_template(void) {
+   EUID_ASSERT();
+   invalid_filename(cfg.private_template);
+
+   // Expand the home directory
+   char *tmp = expand_home(cfg.private_template, cfg.homedir);
+   cfg.private_template = realpath(tmp, NULL);
+   free(tmp);
+
+   if (!cfg.private_template
+    || !is_dir(cfg.private_template)
+    || is_link(cfg.private_template)
+    || strstr(cfg.private_template, "..")) {
+      fprintf(stderr, "Error: invalid private template directory\n");
+      exit(1);
+   }
+
+   // check home directory and chroot home directory have the same owner
+   struct stat s2;
+   int rv = stat(cfg.private_template, &s2);
+   if (rv < 0) {
+      fprintf(stderr, "Error: cannot find %s directory\n", cfg.private_template);
+      exit(1);
+   }
+
+   struct stat s1;
+   rv = stat(cfg.homedir, &s1);
+   if (rv < 0) {
+      fprintf(stderr, "Error: cannot find %s directory, full path name required\n", cfg.homedir);
+      exit(1);
+   }
+   if (s1.st_uid != s2.st_uid) {
+      printf("Error: --private-template directory should be owned by the current user\n");
+      exit(1);
+   }
+}
+
 

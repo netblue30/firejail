@@ -136,6 +136,7 @@ typedef struct config_t {
 	char *bin_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *overlay_dir;
+   char *private_template; // template dir for tmpfs home
 
 	// networking
 	char *name;		// sandbox name
@@ -327,6 +328,9 @@ void fs_chroot(const char *rootdir);
 int fs_check_chroot_dir(const char *rootdir);
 void fs_private_tmp(void);
 
+// copy all (normal) files and directory recursively
+int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *sftw);
+
 // profile.c
 // find and read the profile specified by name from dir directory
 int profile_find(const char *name, const char *dir);
@@ -417,9 +421,12 @@ void fs_dev_disable_sound();
 void fs_private(void);
 // private mode (--private=homedir)
 void fs_private_homedir(void);
+// private template (--private-template=templatedir)
+void fs_private_template(void);
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void);
-
+// check new private template home directory (--private-template= option) exit if it fails
+void fs_check_private_template(void);
 
 // seccomp.c
 int seccomp_filter_drop(int enforce_seccomp);

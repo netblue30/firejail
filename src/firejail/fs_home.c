@@ -355,11 +355,22 @@ int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *s
       struct stat s;
       // don't copy it if we already have the file
       if (stat(dest, &s) == 0)
-         return 0;
+         return(0);
       if (stat(path, &s) == 0) {
-         if (copy_file(path, dest) == 0) {
-            if (chown(dest, u, g) == -1)
-               errExit("chown");
+         if(ftype == FTW_F) {
+            if (copy_file(path, dest) == 0) {
+               if (arg_debug)
+                  printf("copy from %s to %s\n", path, dest);
+               if (chown(dest, u, g) == -1)
+                  errExit("chown");
+               fs_logger2("clone", path);
+            }
+         }
+         else if(ftype == FTW_D) {
+            if (mkdir(dest, s.st_mode) == -1) 
+               errExit("mkdir");
+            if (arg_debug)
+               printf("copy from %s to %s\n", path, dest);
             fs_logger2("clone", path);
          }
       }
@@ -369,11 +380,13 @@ int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *s
 }
 
 void fs_private_template(void) {
+
 	fs_private();
-	if(!nftw(cfg.private_template, fs_copydir, 1, FTW_PHYS)) {
+	if(nftw(cfg.private_template, fs_copydir, 1, FTW_PHYS) != 0) {
 		fprintf(stderr, "Error: unable to copy template dir\n");
 		exit(1);
 	}
+
 }
 
 // check new private home directory (--private= option) - exit if it fails

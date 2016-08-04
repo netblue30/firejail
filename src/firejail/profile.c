@@ -614,6 +614,17 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+   if (strncmp(ptr, "private-template ", 17) == 0) {
+      if (arg_private) {
+         fprintf(stderr, "Error: --private and --private-template are mutually exclusive\n");
+         exit(1);
+      }
+      cfg.private_template = ptr + 17;
+      fs_check_private_template();
+      arg_private_template = 1;
+
+      return 0;
+   }
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
 		if (arg_writable_etc) {

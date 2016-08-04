@@ -189,6 +189,9 @@ void usage(void) {
 	printf("\tclosed.\n\n");
 	printf("    --private=directory - use directory as user home.\n\n");
 
+   printf("    --private-template=directory - same as --private but copy the\n");
+   printf("\ttemplatedirectory in the tmpfs mounted user home.\n\n");
+
 	printf("    --private-bin=file,file - build a new /bin in a temporary filesystem,\n");
 	printf("\tand copy the programs in the list.\n\n");
 

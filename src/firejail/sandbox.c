@@ -524,6 +524,9 @@ int sandbox(void* sandbox_arg) {
 			fs_private();
 	}
 	
+   if (arg_private_template) 
+      fs_private_template();
+
 	if (arg_private_dev)
 		fs_private_dev();
 	if (arg_private_etc) {

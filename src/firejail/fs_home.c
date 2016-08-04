@@ -369,6 +369,8 @@ int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *s
          else if(ftype == FTW_D) {
             if (mkdir(dest, s.st_mode) == -1) 
                errExit("mkdir");
+            if (chown(dest, u, g) < 0)
+                errExit("chown");
             if (arg_debug)
                printf("copy from %s to %s\n", path, dest);
             fs_logger2("clone", path);

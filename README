@@ -28,6 +28,8 @@ Reiner Herrmann (https://github.com/reinerh)
 	- moved build to .xz
 	- detached signatures for source archive
 	- recursive mkdir
+Franco (nextime) Lanza (https://github.com/nextime)
+	- added --private-template
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 Peter Hogg (https://github.com/pigmonkey)

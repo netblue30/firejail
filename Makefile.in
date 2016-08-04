@@ -15,6 +15,7 @@ VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
+HAVE_APPARMOR=@HAVE_APPARMOR@
 
 .PHONY: mylibs $(MYLIBS)
 mylibs: $(MYLIBS)
@@ -85,9 +86,11 @@ realinstall:
 	done
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc
+ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)	
 	# install apparmor profile
 	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"
 	install -c -m 0644 etc/firejail-default $(DESTDIR)/$(sysconfdir)/apparmor.d/.
+endif	
 	# man pages
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man1
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man5

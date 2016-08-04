@@ -28,6 +28,8 @@ profile firejail-default {
 /{,var/}run/** r,
 /{,var/}run/user/**/dconf/ rw,
 /{,var/}run/user/**/dconf/user rw,
+/{,var/}run/user/**/pulse/ rw,
+/{,var/}run/user/**/pulse/** rw,
 /{,var/}run/firejail/mnt/fslogger r,
 /{run,dev}/shm/ r,
 /{run,dev}/shm/** rmwk,
@@ -51,6 +53,9 @@ profile firejail-default {
 /proc/@{PID}/task/@{PID}/stat r,
 /proc/sys/kernel/pid_max r,
 /proc/sys/kernel/shmmax r,
+/proc/sys/vm/overcommit_memory r,
+/proc/sys/vm/overcommit_ratio r,
+
 /sys/ r,
 /sys/bus/ r,
 /sys/bus/** r,

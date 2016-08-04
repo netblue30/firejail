@@ -169,10 +169,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_private = 1;
 		return 0;
 	}
-   else if (strcmp(ptr, "private-template") == 0) {
-      arg_private_template = 1;
-      return 0;
-   }
 	else if (strcmp(ptr, "private-dev") == 0) {
 		arg_private_dev = 1;
 		return 0;
@@ -626,6 +622,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
       cfg.private_template = ptr + 17;
       fs_check_private_template();
       arg_private_template = 1;
+
+      return 0;
    }
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {

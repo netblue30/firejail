@@ -186,7 +186,7 @@ Office: evince, gthumb, fbreader, pix, atril, xreader,
 
 Chat/messaging: qtox, gitter, pidgin
 
-Games: warzone2100
+Games: warzone2100, gnome-chess
 
 Weather/climate: aweather
 
@@ -197,5 +197,5 @@ Browsers: Palemoon
 ## New security profiles
 
 Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix, audacity, strings, xz, xzdec, gzip, cpio, less, Atom Beta, Atom, jitsi, eom, uudeview
-tar (gtar), unzip, unrar, file, skypeforlinux
+tar (gtar), unzip, unrar, file, skypeforlinux, gnome-chess
 

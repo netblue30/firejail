@@ -128,3 +128,4 @@ blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/totem
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/pix
+blacklist ${HOME}/.local/share/gnome-chess

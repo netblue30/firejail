@@ -44,6 +44,7 @@
 /etc/firejail/flashpeak-slimjet.profile
 /etc/firejail/franz.profile
 /etc/firejail/gitter.profile
+/etc/firejail/gnome-chess.profile
 /etc/firejail/gnome-mplayer.profile
 /etc/firejail/google-chrome-beta.profile
 /etc/firejail/google-chrome-stable.profile

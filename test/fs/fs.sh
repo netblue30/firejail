@@ -54,3 +54,5 @@ echo "TESTING: bind as user (test/fs/option_bind_user.exp)"
 echo "TESTING: recursive mkdir (test/fs/mkdir.exp)"
 ./mkdir.exp
 
+echo "TESTING: double whitelist (test/fs/whitelist-double.exp)"
+./whitelist-double.exp

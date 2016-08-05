@@ -11,6 +11,7 @@ arr[8]="TEST 8: compile network restricted"
 arr[9]="TEST 9: compile file transfer disabled"
 arr[10]="TEST 10: compile disable whitelist"
 arr[11]="TEST 11: compile disable global config"
+arr[12]="TEST 12: compile apparmor"
 
 # remove previous reports and output file
 cleanup() {
@@ -261,6 +262,25 @@ cp output-configure oc11
 cp output-make om11
 rm output-configure output-make
 
+#*****************************************************************
+# TEST 12
+#*****************************************************************
+# - enable apparmor
+# - check compilation
+#*****************************************************************
+print_title "${arr[11]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-apparmor  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test12
+grep Error output-configure output-make >> ./report-test12
+cp output-configure oc12
+cp output-make om12
+rm output-configure output-make
+
 
 #*****************************************************************
 # PRINT REPORTS
@@ -287,3 +307,4 @@ echo ${arr[8]}
 echo ${arr[9]}
 echo ${arr[10]}
 echo ${arr[11]}
+echo ${arr[12]}

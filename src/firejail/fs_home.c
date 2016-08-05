@@ -340,7 +340,8 @@ int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *s
 
 int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *sftw)
 {
-
+(void) st;
+(void) sftw;
    char *homedir = cfg.homedir;
    char *dest;
 	int  srcbaselen = 0;

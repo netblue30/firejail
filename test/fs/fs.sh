@@ -56,3 +56,16 @@ echo "TESTING: recursive mkdir (test/fs/mkdir.exp)"
 
 echo "TESTING: double whitelist (test/fs/whitelist-double.exp)"
 ./whitelist-double.exp
+
+
+echo "TESTING: whitelist (test/fs/whitelist.exp)"
+./whitelist.exp
+rm -fr ~/fjtest-dir
+rm -fr ~/fjtest-dir-lnk
+rm -f ~/fjtest-file
+rm -f ~/fjtest-file-lnk
+rm -f /tmp/fjtest-file
+rm -fr /tmp/fjtest-dir
+
+
+

@@ -8,6 +8,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * Sandbox auditing support (--audit)
   * remove environment variable (--rmenv)
   * noexec support (--noexec)
+  * --overlay-clean option
   * Ubuntu snap support
   * include /dev/snd in --private-dev
   * added mkfile profile command

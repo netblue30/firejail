@@ -17,7 +17,9 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+#define _XOPEN_SOURCE 500
 #include "firejail.h"
+#include <ftw.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <syslog.h>
@@ -78,7 +80,7 @@ void drop_privs(int nogroups) {
 
 int mkpath_as_root(const char* path) {
 	assert(path && *path);
-	
+
 	// work on a copy of the path
 	char *file_path = strdup(path);
 	if (!file_path)
@@ -101,17 +103,16 @@ int mkpath_as_root(const char* path) {
 			if (chown(file_path, 0, 0) == -1)
 				errExit("chown");
 			done = 1;
-		}			
+		}
 
 		*p='/';
 	}
 	if (done)
 		fs_logger2("mkpath", path);
-		
+
 	free(file_path);
 	return 0;
 }
-
 
 
 void logsignal(int s) {
@@ -211,12 +212,13 @@ int copy_file(const char *srcname, const char *destname) {
 	return 0;
 }
 
+
 // return 1 if the file is a directory
 int is_dir(const char *fname) {
 	assert(fname);
 	if (*fname == '\0')
 		return 0;
-	
+
 	// if fname doesn't end in '/', add one
 	int rv;
 	struct stat s;
@@ -227,19 +229,20 @@ int is_dir(const char *fname) {
 		if (asprintf(&tmp, "%s/", fname) == -1) {
 			fprintf(stderr, "Error: cannot allocate memory, %s:%d\n", __FILE__, __LINE__);
 			errExit("asprintf");
-		}		
+		}
 		rv = stat(tmp, &s);
 		free(tmp);
 	}
-	
+
 	if (rv == -1)
 		return 0;
-		
+
 	if (S_ISDIR(s.st_mode))
 		return 1;
 
 	return 0;
 }
+
 
 // return 1 if the file is a link
 int is_link(const char *fname) {
@@ -325,7 +328,7 @@ char *split_comma(char *str) {
 
 int not_unsigned(const char *str) {
 	EUID_ASSERT();
-	
+
 	int rv = 0;
 	const char *ptr = str;
 	while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0') {
@@ -347,7 +350,7 @@ int find_child(pid_t parent, pid_t *child) {
 	*child = 0;				  // use it to flag a found child
 
 	DIR *dir;
-	EUID_ROOT(); // grsecurity fix
+	EUID_ROOT();				  // grsecurity fix
 	if (!(dir = opendir("/proc"))) {
 		// sleep 2 seconds and try again
 		sleep(2);
@@ -404,12 +407,10 @@ int find_child(pid_t parent, pid_t *child) {
 }
 
 
-
 void extract_command_name(int index, char **argv) {
 	EUID_ASSERT();
 	assert(argv);
 	assert(argv[index]);
-
 
 	// configure command index
 	cfg.original_program_index = index;
@@ -446,7 +447,6 @@ void extract_command_name(int index, char **argv) {
 			fprintf(stderr, "Error: invalid command name\n");
 			exit(1);
 		}
-
 
 		char *tmp = strdup(ptr);
 		if (!tmp)
@@ -533,6 +533,7 @@ void notify_other(int fd) {
 	fclose(stream);
 }
 
+
 // This function takes a pathname supplied by the user and expands '~' and
 // '${HOME}' at the start, to refer to a path relative to the user's home
 // directory (supplied).
@@ -541,7 +542,7 @@ void notify_other(int fd) {
 char *expand_home(const char *path, const char* homedir) {
 	assert(path);
 	assert(homedir);
-	
+
 	// Replace home macro
 	char *new_name = NULL;
 	if (strncmp(path, "${HOME}", 7) == 0) {
@@ -554,9 +555,10 @@ char *expand_home(const char *path, const char* homedir) {
 			errExit("asprintf");
 		return new_name;
 	}
-	
+
 	return strdup(path);
 }
+
 
 // Equivalent to the GNU version of basename, which is incompatible with
 // the POSIX basename. A few lines of code saves any portability pain.
@@ -568,17 +570,18 @@ const char *gnu_basename(const char *path) {
 	return last_slash+1;
 }
 
+
 uid_t pid_get_uid(pid_t pid) {
 	EUID_ASSERT();
 	uid_t rv = 0;
-	
+
 	// open status file
 	char *file;
 	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
 		perror("asprintf");
 		exit(1);
 	}
-	EUID_ROOT();	// grsecurity fix
+	EUID_ROOT();				  // grsecurity fix
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -597,16 +600,16 @@ uid_t pid_get_uid(pid_t pid) {
 			}
 			if (*ptr == '\0')
 				break;
-				
+
 			rv = atoi(ptr);
-			break; // break regardless!
+			break;			  // break regardless!
 		}
 	}
 
 	fclose(fp);
 	free(file);
-	EUID_USER();	// grsecurity fix
-	
+	EUID_USER();				  // grsecurity fix
+
 	if (rv == 0) {
 		fprintf(stderr, "Error: cannot read /proc file\n");
 		exit(1);
@@ -614,14 +617,15 @@ uid_t pid_get_uid(pid_t pid) {
 	return rv;
 }
 
+
 void invalid_filename(const char *fname) {
 	EUID_ASSERT();
 	assert(fname);
 	const char *ptr = fname;
-	
+
 	if (arg_debug_check_filename)
 		printf("Checking filename %s\n", fname);
-	
+
 	if (strncmp(ptr, "${HOME}", 7) == 0)
 		ptr = fname + 7;
 	else if (strncmp(ptr, "${PATH}", 7) == 0)
@@ -637,6 +641,7 @@ void invalid_filename(const char *fname) {
 	}
 }
 
+
 uid_t get_tty_gid(void) {
 	// find tty group id
 	gid_t ttygid = 0;
@@ -647,6 +652,7 @@ uid_t get_tty_gid(void) {
 	return ttygid;
 }
 
+
 uid_t get_audio_gid(void) {
 	// find tty group id
 	gid_t audiogid = 0;
@@ -655,4 +661,23 @@ uid_t get_audio_gid(void) {
 		audiogid = g->gr_gid;
 
 	return audiogid;
+}
+
+
+static int remove_callback(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf) {
+	(void) sb;
+	(void) typeflag;
+	(void) ftwbuf;
+	
+	int rv = remove(fpath);
+	if (rv)
+		perror(fpath);
+
+	return rv;
+}
+
+
+int remove_directory(const char *path) {
+	// FTW_PHYS - do not follow symbolic links
+	return nftw(path, remove_callback, 64, FTW_DEPTH | FTW_PHYS);
 }

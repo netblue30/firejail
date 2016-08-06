@@ -1008,6 +1008,16 @@ Example:
 $ firejail \-\-overlay firefox
 
 .TP
+\fB\-\-overlay-clean
+Clean all overlays stored in $HOME/.firejail directory.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-overlay-clean
+
+.TP
 \fB\-\-overlay-tmpfs
 Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay,
 and are discarded when the sandbox is closed. This option is not available on Grsecurity systems.

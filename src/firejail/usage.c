@@ -179,11 +179,13 @@ void usage(void) {
 	printf("\t$HOME/.firejail directory. (OverlayFS support is required in\n");
 	printf("\tLinux kernel for this option to work). \n\n");   
 
+	printf("    --overlay-clean - clean all overlays stored in $HOME/.firejail directory.\n\n");
+	
 	printf("    --overlay-tmpfs - mount a filesystem overlay on top of the current\n");
 	printf("\tfilesystem. The upper layer is stored in a tmpfs filesystem,\n");
 	printf("\tand it is discarded when the sandbox is closed. (OverlayFS\n");
 	printf("\tsupport is required in Linux kernel for this option to work).\n\n");   
-
+	
 	printf("    --private - mount new /root and /home/user directories in temporary\n");
 	printf("\tfilesystems. All modifications are discarded when the sandbox is\n");
 	printf("\tclosed.\n\n");

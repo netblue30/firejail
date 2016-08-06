@@ -127,6 +127,7 @@ Vasya Novikov (https://github.com/vn971)
 	- Hedegewars profile
 	- manpage fixes
 	- fixed firecfg clean/clear issue
+	- found the ugliest bug so far
 curiosity-seeker (https://github.com/curiosity-seeker)
 	- tightening unbound and dnscrypt-proxy profiles
 	- dnsmasq profile

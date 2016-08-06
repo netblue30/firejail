@@ -263,6 +263,23 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		printf("\n");
 		exit(0);
 	}
+	else if (strcmp(argv[i], "--overlay-clean") == 0) {
+		char *path;
+		if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		EUID_ROOT();
+		if (setreuid(0, 0) < 0)
+			errExit("setreuid");
+		if (setregid(0, 0) < 0)
+			errExit("setregid");
+		errno = 0;
+		int rv = remove_directory(path);
+		if (rv) {
+			fprintf(stderr, "Error: cannot removed overlays stored in ~/.firejail directory, errno %d\n", errno);
+			exit(1);
+		}
+		exit(0);
+	}
 #ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -744,6 +761,7 @@ int main(int argc, char **argv) {
 				    strcmp(argv[i], "--debug-protocols") == 0 ||
 				    strcmp(argv[i], "--help") == 0 ||
 				    strcmp(argv[i], "--version") == 0 ||
+				    strcmp(argv[i], "--overlay-clean") == 0 ||
 				    strncmp(argv[i], "--dns.print=", 12) == 0 ||
 				    strncmp(argv[i], "--bandwidth=", 12) == 0 ||
 				    strncmp(argv[i], "--caps.print=", 13) == 0 ||

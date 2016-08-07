@@ -28,11 +28,11 @@ sleep 1
 
 send -- "cat /tmp/firejal-deleteme\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"123"
 }
 
-send -- "rm/tmp/firejal-deleteme \r"
+send -- "rm /tmp/firejal-deleteme\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"0"

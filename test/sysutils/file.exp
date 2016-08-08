@@ -7,10 +7,12 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail file ~/.bashrc\r"
+send -- "echo 'test string for firejail test' > /tmp/firejail_test.txt; firejail file /tmp/firejail_test.txt\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"ASCII text"
 }
+send -- "rm /tmp/firejail_test.txt\r"
+sleep 1
 
 puts "\nall done\n"

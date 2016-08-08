@@ -28,7 +28,7 @@
 static int check_dir_or_file(const char *name) {
 	assert(name);
 	invalid_filename(name);
-	
+
 	struct stat s;
 	char *fname;
 	if (asprintf(&fname, "/etc/%s", name) == -1)
@@ -40,7 +40,11 @@ static int check_dir_or_file(const char *name) {
 			printf("Warning: file %s not found.\n", fname);
 		return 0;
 	}
-	
+
+	// read access
+	if (access(fname, R_OK) == -1)
+		goto errexit;
+
 	// dir or regular file
 	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode)) {
 		free(fname);
@@ -52,6 +56,8 @@ static int check_dir_or_file(const char *name) {
 		return 1;
 	}
 	
+
+errexit:	
 	fprintf(stderr, "Error: invalid file type, %s.\n", fname);
 	exit(1);
 }
@@ -88,18 +94,22 @@ void fs_check_etc_list(void) {
 }
 
 static void duplicate(char *fname) {
-	char *cmd;
-
-	// copy the file - this code assumes ETC_DIR is actually MNT_DIR/etc
-	if (asprintf(&cmd, "%s -a --parents /etc/%s %s", RUN_CP_COMMAND, fname, RUN_MNT_DIR) == -1)
-		errExit("asprintf");
+	// copy the file
 	if (arg_debug)
-		printf("%s\n", cmd);
-	if (system(cmd))
-		fprintf(stderr, "Warning (fs_etc): error copying file /etc/%s, skipping...\n", fname);
+		printf("running: %s -a --parents /etc/%s %s\n", RUN_CP_COMMAND, fname, RUN_MNT_DIR);
 
-	free(cmd);
-	
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		char *f;
+		if (asprintf(&f, "/etc/%s", fname) == -1)
+			errExit("asprintf");
+		execlp(RUN_CP_COMMAND, RUN_CP_COMMAND, "-a", "--parents", f, RUN_MNT_DIR, NULL);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+
 	char *name;
 	if (asprintf(&name, "/etc/%s", fname) == -1)
 		errExit("asprintf");
@@ -133,7 +143,7 @@ void fs_private_etc_list(void) {
 
 
 	// copy the list of files in the new etc directory
-	// using a new child process without root privileges
+	// using a new child process with root privileges
 	if (*private_list != '\0') {
 		pid_t child = fork();
 		if (child < 0)

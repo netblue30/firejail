@@ -149,7 +149,6 @@ void fs_check_bin_list(void) {
 }
 
 static void duplicate(char *fname) {
-	char *cmd;
 	char *path = check_dir_or_file(fname);
 	if (!path)
 		return;
@@ -175,13 +174,21 @@ static void duplicate(char *fname) {
 		}
 		else {
 			// copy the file
-			if (asprintf(&cmd, "%s -a %s %s/%s", RUN_CP_COMMAND, actual_path, RUN_BIN_DIR, fname) == -1)
-				errExit("asprintf");
 			if (arg_debug)
-				printf("%s\n", cmd);
-			if (system(cmd))
-				errExit("system cp -a");
-			free(cmd);
+				printf("running: %s -a %s %s/%s", RUN_CP_COMMAND, actual_path, RUN_BIN_DIR, fname);
+
+			pid_t child = fork();
+			if (child < 0)
+				errExit("fork");
+			if (child == 0) {
+				char *f;
+				if (asprintf(&f, "%s/%s", RUN_BIN_DIR, fname) == -1)
+					errExit("asprintf");
+				execlp(RUN_CP_COMMAND, RUN_CP_COMMAND, "-a", actual_path, f, NULL);
+			}
+			// wait for the child to finish
+			waitpid(child, NULL, 0);
+		
 		}
 		free(actual_path);
 	}

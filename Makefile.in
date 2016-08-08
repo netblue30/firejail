@@ -16,6 +16,7 @@ NAME=@PACKAGE_NAME@
 PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
 HAVE_APPARMOR=@HAVE_APPARMOR@
+BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 
 .PHONY: mylibs $(MYLIBS)
 mylibs: $(MYLIBS)
@@ -79,7 +80,7 @@ realinstall:
 	install -c -m 0644 README $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 RELNOTES $(DESTDIR)/$(DOCDIR)/.
 	# etc files
-	./mketc.sh $(sysconfdir)
+	./mketc.sh $(sysconfdir) $(BUSYBOX_WORKAROUND)
 	install -m 0755 -d $(DESTDIR)/$(sysconfdir)/firejail
 	for file in .etc/* etc/firejail.config; do \
 		install -c -m 0644 $$file $(DESTDIR)/$(sysconfdir)/firejail; \

@@ -95,7 +95,7 @@ APPARMOR
 
        To enable AppArmor confinement on top of your current Firejail security
        features,  pass  --apparmor flag to Firejail command line. You can also
-       include apparmor command in a Fireajail profile file. Example:
+       include apparmor command in a Firejail profile file. Example:
 
               $ firejail --apparmor firefox
 

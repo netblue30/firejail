@@ -60,14 +60,19 @@ if { $chroot == "chroot" } {
 	expect {
 		timeout {puts "TESTING ERROR 4\n";exit}
 		"chroot option is not available" {puts "grsecurity\n"; exit}
+		"private-etc feature is disabled in chroot"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5\n";exit}
+		"chroot option is not available" {puts "grsecurity\n"; exit}
 		"Child process initialized"
 	}
 	sleep 1
 	
-	send -- "ls -al /etc | wc -l\r"
+	send -- "ls /etc | grep firejail\r"
 	expect {
-		timeout {puts "TESTING ERROR 5.1\n";exit}
-		"10"
+		timeout {puts "TESTING ERROR 6\n";exit}
+		"firejail"
 	}
 	
 	after 100

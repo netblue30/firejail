@@ -460,8 +460,9 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_CHROOT		
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
-		// redo cp command
-		fs_build_cp_command();
+
+//		// redo cp command
+//		fs_build_cp_command();
 		
 		// force caps and seccomp if not started as root
 		if (getuid() != 0) {
@@ -482,7 +483,7 @@ int sandbox(void* sandbox_arg) {
 			
 			// disable all capabilities
 			if (arg_caps_default_filter || arg_caps_list)
-				fprintf(stderr, "Warning: all capabilities disabled for a regular user during chroot\n");
+				fprintf(stderr, "Warning: all capabilities disabled for a regular user in chroot\n");
 			arg_caps_drop_all = 1;
 			
 			// drop all supplementary groups; /etc/group file inside chroot
@@ -530,13 +531,21 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_dev)
 		fs_private_dev();
 	if (arg_private_etc) {
-		fs_private_etc_list();
-		// create /etc/ld.so.preload file again
-		if (arg_trace || arg_tracelog)
-			fs_trace_preload();
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-etc feature is disabled in chroot\n");
+		else {
+			fs_private_etc_list();
+			// create /etc/ld.so.preload file again
+			if (arg_trace || arg_tracelog)
+				fs_trace_preload();
+		}
 	}
-	if (arg_private_bin)
-		fs_private_bin_list();
+	if (arg_private_bin) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-bin feature is disabled in chroot\n");
+		else
+			fs_private_bin_list();
+	}
 	if (arg_private_tmp)
 		fs_private_tmp();
 	

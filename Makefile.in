@@ -160,9 +160,6 @@ snap: all
 install-snap: snap
 	sudo snap remove faudit; sudo snap install faudit*.snap
 
-github-compile:
-	cd test/compile; ./compile.sh
-
 dist-compile: dist
 	cd test/dist-compile; ./compile.sh $(NAME)-$(VERSION)
 	

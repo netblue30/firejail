@@ -115,6 +115,15 @@ AS_IF([test "x$enable_fatal_warnings" = "xyes"], [
 	AC_SUBST(HAVE_FATAL_WARNINGS)
 ])
 
+BUSYBOX_WORKAROUND="no"
+AC_ARG_ENABLE([busybox-workaround],
+    AS_HELP_STRING([--enable-busybox-workaround], [enable busybox workaround]))
+AS_IF([test "x$enable_busybox_workaround" = "xyes"], [
+	BUSYBOX_WORKAROUND="yes"
+	AC_SUBST(BUSYBOX_WORKAROUND)
+])
+
+
 
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
@@ -148,6 +157,7 @@ echo "   X11 sandboxing support: $HAVE_X11"
 echo "   whitelisting: $HAVE_WHITELIST"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
+echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 printf "   uid_min: "; grep UID_MIN uids.h
 printf "   gid_min: "; grep GID_MIN uids.h
 printf "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

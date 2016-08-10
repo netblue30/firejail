@@ -1064,6 +1064,16 @@ int fs_check_chroot_dir(const char *rootdir) {
 	struct stat s;
 	char *name;
 
+	// rootdir has to be owned by root
+	if (stat(rootdir, &s) != 0) {
+		fprintf(stderr, "Error: cannot find chroot directory\n");
+		return 1;
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot directory should be owned by root\n");
+		return 1;
+	}
+
 	// check /dev
 	if (asprintf(&name, "%s/dev", rootdir) == -1)
 		errExit("asprintf");

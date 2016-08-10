@@ -12,6 +12,7 @@ arr[9]="TEST 9: compile file transfer disabled"
 arr[10]="TEST 10: compile disable whitelist"
 arr[11]="TEST 11: compile disable global config"
 arr[12]="TEST 12: compile apparmor"
+arr[12]="TEST 13: compile busybox"
 
 # remove previous reports and output file
 cleanup() {
@@ -281,6 +282,25 @@ cp output-configure oc12
 cp output-make om12
 rm output-configure output-make
 
+#*****************************************************************
+# TEST 13
+#*****************************************************************
+# - enable busybox workaround
+# - check compilation
+#*****************************************************************
+print_title "${arr[11]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-busybox-workaround --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test13
+grep Error output-configure output-make >> ./report-test13
+cp output-configure oc13
+cp output-make om13
+rm output-configure output-make
+
 
 #*****************************************************************
 # PRINT REPORTS
@@ -308,3 +328,4 @@ echo ${arr[9]}
 echo ${arr[10]}
 echo ${arr[11]}
 echo ${arr[12]}
+echo ${arr[13]}

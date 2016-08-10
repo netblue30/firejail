@@ -28,6 +28,15 @@ Reiner Herrmann (https://github.com/reinerh)
 	- moved build to .xz
 	- detached signatures for source archive
 	- recursive mkdir
+Aleksey Manevich (https://github.com/manevich)
+	- several profile fixes
+	- fix problem with relative path in storage_find function
+	- fix build for systems without bash
+	- fix double quotes/single quotes problem
+	- big rework of argument processing subsystem
+	- --join fixes
+	- spliting up cmdline.c
+	- Busybox support
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template
 xee5ch (https://github.com/xee5ch)
@@ -47,14 +56,6 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- include mkuid.sh in make dist
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
-Aleksey Manevich (https://github.com/manevich)
-	- several profile fixes
-	- fix problem with relative path in storage_find function
-	- fix build for systems without bash
-	- fix double quotes/single quotes problem
-	- big rework of argument processing subsystem
-	- --join fixes
-	- spliting up cmdline.c
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile

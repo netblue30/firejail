@@ -5,6 +5,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * --private-template (very simillar to the former --private-home)
   * AppImage support (--appimage)
   * AppArmor support (--apparmor)
+  * compile time support for Busybox
   * Sandbox auditing support (--audit)
   * remove environment variable (--rmenv)
   * noexec support (--noexec)

@@ -220,7 +220,12 @@ int checkcfg(int val) {
 				if (!xephyr_extra_params)
 					errExit("strdup");
 			}
-
+			
+			// quiet by default
+			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
+				if (strcmp(ptr + 17, "yes") == 0)
+					arg_quiet = 1;
+			}
 			else
 				goto errout;
 

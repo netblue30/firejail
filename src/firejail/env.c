@@ -133,7 +133,7 @@ void env_defaults(void) {
 		errExit("setenv");
 
 	// set the window title
-	printf("\033]0;firejail %s\007\n", cfg.window_title);
+	printf("\033]0;firejail %s\007", cfg.window_title);fflush(0);
 }
 
 // parse and store the environment setting 

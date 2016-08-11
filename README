@@ -158,6 +158,7 @@ yumkam (https://github.com/yumkam)
 	- man page fixes
 mahdi1234 (https://github.com/mahdi1234)
 	- cherrytree profile
+	- Seamonkey profiles
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -176,6 +177,7 @@ pszxzsd (https://github.com/pszxzsd)
 Rahiel Kasim (https://github.com/rahiel)
 	- Mathematica profile
 	- whitelisted Dropbox profile
+	- whitelisted keysnail config for firefox
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
 sinkuu (https://github.com/sinkuu)
@@ -187,8 +189,7 @@ Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Andrey Alekseenko (https://github.com/al42and)
 	- fixing lintian warnings
-mahdi1234 (https://github.com/mahdi1234)
-	- Seamonkey profiles
+	- fixed Skype profile
 Ivan Kozik (https://github.com/ivan)
 	- speed up sandbox exit
 Christian Stadelmann (https://github.com/genodeftest)
@@ -199,8 +200,6 @@ Kaan Genç (https://github.com/SeriousBug)
 	- dynamic allocation of noblacklist buffer
 Veeti Paananen (https://github.com/veeti)
 	- fixed Spotify profile
-Rahiel Kasim (https://github.com/rahiel)
-	- whitelist keysnail config for firefox
 rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Bruno Nova (https://github.com/brunonova)
@@ -208,8 +207,6 @@ Bruno Nova (https://github.com/brunonova)
 	- bash arguments fix
 Matt Parnell (https://github.com/ilikenwf)
 	- whitelisting for core firefox related functionality
-Andrey Alekseenko (https://github.com/al42and)
-	- fixed Skype profile
 Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
 emacsomancer (https://github.com/emacsomancer)

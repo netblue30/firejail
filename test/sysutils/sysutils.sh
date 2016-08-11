@@ -15,14 +15,14 @@ else
 	echo "TESTING SKIP: cpio not found"
 fi
 
-which strings
-if [ "$?" -eq 0 ];
-then
-	echo "TESTING: strings"
-	./strings.exp
-else
-	echo "TESTING SKIP: strings not found"
-fi
+#which strings
+#if [ "$?" -eq 0 ];
+#then
+#	echo "TESTING: strings"
+#	./strings.exp
+#else
+#	echo "TESTING SKIP: strings not found"
+#fi
 
 which gzip
 if [ "$?" -eq 0 ];

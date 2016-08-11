@@ -196,6 +196,6 @@ Browsers: Palemoon
 
 ## New security profiles
 
-Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix, audacity, strings, xz, xzdec, gzip, cpio, less, Atom Beta, Atom, jitsi, eom, uudeview
+Gitter, gThumb, mpv, Franz messenger, LibreOffice, pix, audacity, xz, xzdec, gzip, cpio, less, Atom Beta, Atom, jitsi, eom, uudeview
 tar (gtar), unzip, unrar, file, skypeforlinux, gnome-chess
 

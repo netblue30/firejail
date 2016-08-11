@@ -111,7 +111,6 @@
 /etc/firejail/ssh.profile
 /etc/firejail/steam.profile
 /etc/firejail/stellarium.profile
-/etc/firejail/strings.profile
 /etc/firejail/tar.profile
 /etc/firejail/telegram.profile
 /etc/firejail/thunderbird.profile

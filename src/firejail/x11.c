@@ -158,16 +158,15 @@ void fs_x11(void) {
 
 
 #ifdef HAVE_X11
-//$ Xephyr -ac -br -terminate -screen 800x600 :22 &
+//$ Xephyr -ac -br -noreset -screen 800x600 :22 &
 //$ DISPLAY=:22 firejail --net=eth0 --blacklist=/tmp/.X11-unix/x0 firefox
 void x11_start_xephyr(int argc, char **argv) {
 	EUID_ASSERT();
-	int i;
+	size_t i;
 	struct stat s;
 	pid_t client = 0;
 	pid_t server = 0;
 	
-
 	setenv("FIREJAIL_X11", "yes", 1);
 
 	// unfortunately, xephyr does a number of weird things when started by root user!!!
@@ -186,29 +185,78 @@ void x11_start_xephyr(int argc, char **argv) {
 	}
 	
 	int display = random_display_number();
+	char *display_str;
+	if (asprintf(&display_str, ":%d", display) == -1)
+		errExit("asprintf");
 
-	// start xephyr
-	char *cmd1;
+	assert(xephyr_screen);
+	char *server_argv[256] = { "Xephyr", "-ac", "-br", "-noreset", "-screen", xephyr_screen }; // rest initialyzed to NULL
+	unsigned pos = 0;
+	while (server_argv[pos] != NULL) pos++;
 	if (checkcfg(CFG_XEPHYR_WINDOW_TITLE)) {
-		if (asprintf(&cmd1, "Xephyr -ac -br -title \"firejail x11 sandbox\" -terminate -screen %s %s :%d", xephyr_screen, xephyr_extra_params, display) == -1)
-			errExit("asprintf");
-	}
-	else {
-		if (asprintf(&cmd1, "Xephyr -ac -br -terminate -screen %s %s :%d",  xephyr_screen, xephyr_extra_params, display) == -1)
-			errExit("asprintf");
+		server_argv[pos++] = "-title";
+		server_argv[pos++] = "firejail x11 sandbox";
 	}
 
-	int len = 50; // DISPLAY...
-	for (i = 0; i < argc; i++) {
-		len += strlen(argv[i]) + 1; // + ' '
+	assert(xephyr_extra_params); // should be "" if empty
+
+	// parse xephyr_extra_params
+	// very basic quoting support
+	char *temp = strdup(xephyr_extra_params);
+	if (xephyr_extra_params != "") {
+		if (!temp)
+			errExit("strdup");
+		bool dquote = false;
+		bool squote = false;
+		for (i = 0; i < strlen(xephyr_extra_params); i++) {
+			if (temp[i] == '\"') {
+				dquote = !dquote;
+				if (dquote) temp[i] = '\0'; // replace closing quote by \0
+			}
+			if (temp[i] == '\'') {
+				squote = !squote;
+				if (squote) temp[i] = '\0'; // replace closing quote by \0
+			}
+			if (!dquote && !squote && temp[i] == ' ') temp[i] = '\0';
+			if (dquote && squote) {
+				fprintf(stderr, "Error: mixed quoting found while parsing xephyr_extra_params\n");
+				exit(1);
+			}
+		}
+		if (dquote) {
+			fprintf(stderr, "Error: unclosed quote found while parsing xephyr_extra_params\n");
+			exit(1);
+		}
+
+		for (i = 0; i < strlen(xephyr_extra_params)-1; i++) {
+			if (pos >= (sizeof(server_argv)/sizeof(*server_argv))) {
+				fprintf(stderr, "Error: arg count limit exceeded while parsing xephyr_extra_params\n");
+				exit(1);
+			}
+			if (temp[i] == '\0' && (temp[i+1] == '\"' || temp[i+1] == '\'')) server_argv[pos++] = temp + i + 2;
+			else if (temp[i] == '\0' && temp[i+1] != '\0') server_argv[pos++] = temp + i + 1;
+		}
 	}
 	
-	char *cmd2 = malloc(len + 1); // + '\0'
-	if (!cmd2)
-		errExit("malloc");
+	server_argv[pos++] = display_str;
+	server_argv[pos++] = NULL;
+
+	assert(pos < (sizeof(server_argv)/sizeof(*server_argv))); // no overrun
+	assert(server_argv[pos-1] == NULL); // last element is null
 	
-	sprintf(cmd2, "DISPLAY=:%d ", display);
-	char *ptr = cmd2 + strlen(cmd2);
+	if (arg_debug) {
+		size_t i = 0;
+		printf("xephyr server:");
+		while (server_argv[i]!=NULL) {
+			printf(" \"%s\"", server_argv[i]);
+			i++;
+		}
+		putchar('\n');
+	}
+
+	// remove --x11 arg
+	char *client_argv[argc+2];
+	size_t j = 0;
 	for (i = 0; i < argc; i++) {
 		if (strcmp(argv[i], "--x11") == 0)
 			continue;
@@ -216,14 +264,23 @@ void x11_start_xephyr(int argc, char **argv) {
 			continue;
 		if (strcmp(argv[i], "--x11=xephyr") == 0)
 			continue;
-		ptr += sprintf(ptr, "%s ", argv[i]);
+		client_argv[j] = argv[i];
+		j++;
 	}
-	if (arg_debug)
-		printf("xephyr server: %s\n", cmd1);	
-	if (arg_debug)
-		printf("xephyr client: %s\n", cmd2);	
+	client_argv[j] = NULL;
+
+	assert(j < argc+2); // no overrun
+
+	if (arg_debug) {
+		size_t i = 0;
+		printf("xephyr client:");
+		while (client_argv[i]!=NULL) {
+			printf(" \"%s\"", client_argv[i]);
+			i++;
+		}
+		putchar('\n');
+	}
 	
-	signal(SIGHUP,SIG_IGN);	// fix sleep(1) below
 	server = fork();
 	if (server < 0)
 		errExit("fork");
@@ -231,16 +288,13 @@ void x11_start_xephyr(int argc, char **argv) {
 		if (arg_debug)
 			printf("Starting xephyr...\n");
 	
-		char *a[4];
-		a[0] = "/bin/bash";
-		a[1] = "-c";
-		a[2] = cmd1;
-		a[3] = NULL;
-	
-		execvp(a[0], a); 
+		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		exit(1);
 	}
+
+	if (arg_debug)
+		printf("xephyr server pid %d\n", server);
 
 	// check X11 socket
 	char *fname;
@@ -259,7 +313,6 @@ void x11_start_xephyr(int argc, char **argv) {
 		exit(1);
 	}
 	free(fname);
-	sleep(1);
 	
 	if (arg_debug) {
             	printf("X11 sockets: "); fflush(0);
@@ -267,33 +320,39 @@ void x11_start_xephyr(int argc, char **argv) {
             	(void) rv;
 	}
 
+	setenv("DISPLAY", display_str, 1);
 	// run attach command
 	client = fork();
 	if (client < 0)
 		errExit("fork");
 	if (client == 0) {
 		printf("\n*** Attaching to Xephyr display %d ***\n\n", display);
-		char *a[4];
-		a[0] = "/bin/bash";
-		a[1] = "-c";
-		a[2] = cmd2;
-		a[3] = NULL;
-	
-		execvp(a[0], a); 
+
+		execvp(client_argv[0], client_argv);
 		perror("execvp");
 		exit(1);
 	}
-	sleep(1);
-	
-	if (!arg_quiet)
-		printf("Xephyr server pid %d, client pid %d\n", server, client);
+
+	// cleanup
+	free(display_str);
+	free(temp);
+
+	// wait for either server or client termination
+	pid_t pid = wait();
+
+	// see which process terminated and kill other
+	if (pid == server) {
+		kill(client, SIGTERM);
+	} else if (pid == client) {
+		kill(server, SIGTERM);
+	}
 
 	exit(0);
 }
 
 void x11_start_xpra(int argc, char **argv) {
 	EUID_ASSERT();
-	int i;
+	size_t i;
 	struct stat s;
 	pid_t client = 0;
 	pid_t server = 0;
@@ -315,40 +374,14 @@ void x11_start_xpra(int argc, char **argv) {
 	}
 	
 	int display = random_display_number();
+	char *display_str;
+	if (asprintf(&display_str, ":%d", display) == -1)
+		errExit("asprintf");
 
 	// build the start command
-	int len = 50; // xpra start...
-	for (i = 0; i < argc; i++) {
-		len += strlen(argv[i]) + 1; // + ' '
-	}
-	
-	char *cmd1 = malloc(len + 1); // + '\0'
-	if (!cmd1)
-		errExit("malloc");
-	
-	sprintf(cmd1, "xpra start :%d --exit-with-children --start-child=\"", display);
-	char *ptr = cmd1 + strlen(cmd1);
-	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "--x11") == 0)
-			continue;
-		if (strcmp(argv[i], "--x11=xpra") == 0)
-			continue;
-		if (strcmp(argv[i], "--x11=xephyr") == 0)
-			continue;
-		ptr += sprintf(ptr, "%s ", argv[i]);
-	}
-	sprintf(ptr, "\"");
-	if (arg_debug)
-		printf("xpra server: %s\n", cmd1);	
-	
-	// build the attach command
-	char *cmd2;
-	if (asprintf(&cmd2, "xpra --title=\"firejail x11 sandbox\" attach :%d", display) == -1)
-		errExit("asprintf");
-	if (arg_debug)
-		printf("xpra client: %s\n", cmd2);
+	char *server_argv[] = { "xpra", "start", display_str, "--no-daemon",  NULL };
 
-	signal(SIGHUP,SIG_IGN);	// fix sleep(1) below
+	// start
 	server = fork();
 	if (server < 0)
 		errExit("fork");
@@ -356,13 +389,7 @@ void x11_start_xpra(int argc, char **argv) {
 		if (arg_debug)
 			printf("Starting xpra...\n");
 	
-		char *a[4];
-		a[0] = "/bin/bash";
-		a[1] = "-c";
-		a[2] = cmd1;
-		a[3] = NULL;
-	
-		execvp(a[0], a); 
+		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		exit(1);
 	}
@@ -378,13 +405,13 @@ void x11_start_xpra(int argc, char **argv) {
 		if (stat(fname, &s) == 0)
 			break;
 	};
+//	sleep(1);
 	
 	if (n == 10) {
 		fprintf(stderr, "Error: failed to start xpra\n");
 		exit(1);
 	}
 	free(fname);
-	sleep(1);
 	
 	if (arg_debug) {
                 printf("X11 sockets: "); fflush(0);
@@ -392,28 +419,74 @@ void x11_start_xpra(int argc, char **argv) {
                 (void) rv;
         }
 
+	// build attach command
+	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str };
+
 	// run attach command
 	client = fork();
 	if (client < 0)
 		errExit("fork");
 	if (client == 0) {
 		printf("\n*** Attaching to xpra display %d ***\n\n", display);
-		char *a[4];
-		a[0] = "/bin/bash";
-		a[1] = "-c";
-		a[2] = cmd2;
-		a[3] = NULL;
-	
-		execvp(a[0], a); 
+		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
 		exit(1);
 	}
-	sleep(1);
-	
-	if (!arg_quiet)
-		printf("Xpra server pid %d, client pid %d\n", server, client);
 
-	exit(0);
+	setenv("DISPLAY", display_str, 1);
+
+	// build jail command
+	char *firejail_argv[argc+2];
+	unsigned pos = 0;
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "--x11") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xpra") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xephyr") == 0)
+			continue;
+		firejail_argv[pos] = argv[i];
+		pos++;
+	}
+	firejail_argv[pos] = NULL;
+
+	assert(pos < argc+2);
+	assert(!firejail_argv[pos]);
+
+	// start jail
+	pid_t jail = fork();
+	if (jail < 0)
+		errExit("fork");
+	if (jail == 0) {
+		execvp(firejail_argv[0], firejail_argv);
+		perror("execvp");
+		exit(1);
+	}
+
+	if (!arg_quiet)
+		printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
+
+	// wait for jail or server to end
+	while (1) {
+		pid_t pid = wait();
+
+		if (pid == jail) {
+			sleep(3); // FIXME: find better way to wait for xpra
+			char *stop_argv[] = { "xpra", "stop", display_str, NULL };
+			pid_t stop = fork();
+			if (stop < 0)
+				errExit("fork");
+			if (stop == 0) {
+				execvp(stop_argv[0], stop_argv);
+				perror("execvp");
+				exit(1);
+			}
+			sleep(3);
+			kill(client, SIGTERM);
+			kill(server, SIGTERM);
+			exit(0);
+		}
+	}
 }
 
 void x11_start(int argc, char **argv) {

@@ -994,7 +994,7 @@ $ ls -l sandboxlog*
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail directory. This option is not available on Grsecurity systems.
+The overlay is stored in $HOME/.firejail/<PID> directory. This option is not available on Grsecurity systems.
 .br
 
 .br
@@ -1008,14 +1008,40 @@ Example:
 $ firejail \-\-overlay firefox
 
 .TP
-\fB\-\-overlay-clean
-Clean all overlays stored in $HOME/.firejail directory.
+\fB\-\-overlay-named=name
+Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
+the system directories are mounted read-write. All filesystem modifications go into the overlay.
+The overlay is stored in $HOME/.firejail/<NAME> directory. The created overlay can be reused between multiple
+sessions. This option is not available on Grsecurity systems.
+.br
+
+.br
+OverlayFS support is required in Linux kernel for this option to work.
+OverlayFS was officially introduced in Linux kernel version 3.18
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-overlay-clean
+$ firejail \-\-overlay-named=jail1 firefox
+
+.TP
+\fB\-\-overlay-path=path
+Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
+the system directories are mounted read-write. All filesystem modifications go into the overlay.
+The overlay is stored in the specified path. The created overlay can be reused between multiple sessions.
+This option is not available on Grsecurity systems.
+.br
+
+.br
+OverlayFS support is required in Linux kernel for this option to work.
+OverlayFS was officially introduced in Linux kernel version 3.18
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-overlay-path=~/jails/jail1 firefox
 
 .TP
 \fB\-\-overlay-tmpfs
@@ -1032,6 +1058,16 @@ OverlayFS was officially introduced in Linux kernel version 3.18
 Example:
 .br
 $ firejail \-\-overlay-tmpfs firefox
+
+.TP
+\fB\-\-overlay-clean
+Clean all overlays stored in $HOME/.firejail directory.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-overlay-clean
 
 .TP
 \fB\-\-private

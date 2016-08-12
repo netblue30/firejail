@@ -37,6 +37,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- --join fixes
 	- spliting up cmdline.c
 	- Busybox support
+	- X11 support rewrite
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template
 xee5ch (https://github.com/xee5ch)

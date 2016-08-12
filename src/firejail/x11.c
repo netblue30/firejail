@@ -352,7 +352,7 @@ void x11_start_xephyr(int argc, char **argv) {
 
 void x11_start_xpra(int argc, char **argv) {
 	EUID_ASSERT();
-	int i;
+	size_t i;
 	struct stat s;
 	pid_t client = 0;
 	pid_t server = 0;
@@ -374,40 +374,14 @@ void x11_start_xpra(int argc, char **argv) {
 	}
 	
 	int display = random_display_number();
+	char *display_str;
+	if (asprintf(&display_str, ":%d", display) == -1)
+		errExit("asprintf");
 
 	// build the start command
-	int len = 50; // xpra start...
-	for (i = 0; i < argc; i++) {
-		len += strlen(argv[i]) + 1; // + ' '
-	}
-	
-	char *cmd1 = malloc(len + 1); // + '\0'
-	if (!cmd1)
-		errExit("malloc");
-	
-	sprintf(cmd1, "xpra start :%d --exit-with-children --start-child=\"", display);
-	char *ptr = cmd1 + strlen(cmd1);
-	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "--x11") == 0)
-			continue;
-		if (strcmp(argv[i], "--x11=xpra") == 0)
-			continue;
-		if (strcmp(argv[i], "--x11=xephyr") == 0)
-			continue;
-		ptr += sprintf(ptr, "%s ", argv[i]);
-	}
-	sprintf(ptr, "\"");
-	if (arg_debug)
-		printf("xpra server: %s\n", cmd1);	
-	
-	// build the attach command
-	char *cmd2;
-	if (asprintf(&cmd2, "xpra --title=\"firejail x11 sandbox\" attach :%d", display) == -1)
-		errExit("asprintf");
-	if (arg_debug)
-		printf("xpra client: %s\n", cmd2);
+	char *server_argv[] = { "xpra", "start", display_str, "--no-daemon",  NULL };
 
-	signal(SIGHUP,SIG_IGN);	// fix sleep(1) below
+	// start
 	server = fork();
 	if (server < 0)
 		errExit("fork");
@@ -415,13 +389,7 @@ void x11_start_xpra(int argc, char **argv) {
 		if (arg_debug)
 			printf("Starting xpra...\n");
 	
-		char *a[4];
-		a[0] = "/bin/bash";
-		a[1] = "-c";
-		a[2] = cmd1;
-		a[3] = NULL;
-	
-		execvp(a[0], a); 
+		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		exit(1);
 	}
@@ -437,13 +405,13 @@ void x11_start_xpra(int argc, char **argv) {
 		if (stat(fname, &s) == 0)
 			break;
 	};
+//	sleep(1);
 	
 	if (n == 10) {
 		fprintf(stderr, "Error: failed to start xpra\n");
 		exit(1);
 	}
 	free(fname);
-	sleep(1);
 	
 	if (arg_debug) {
                 printf("X11 sockets: "); fflush(0);
@@ -451,28 +419,74 @@ void x11_start_xpra(int argc, char **argv) {
                 (void) rv;
         }
 
+	// build attach command
+	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str };
+
 	// run attach command
 	client = fork();
 	if (client < 0)
 		errExit("fork");
 	if (client == 0) {
 		printf("\n*** Attaching to xpra display %d ***\n\n", display);
-		char *a[4];
-		a[0] = "/bin/bash";
-		a[1] = "-c";
-		a[2] = cmd2;
-		a[3] = NULL;
-	
-		execvp(a[0], a); 
+		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
 		exit(1);
 	}
-	sleep(1);
-	
-	if (!arg_quiet)
-		printf("Xpra server pid %d, client pid %d\n", server, client);
 
-	exit(0);
+	setenv("DISPLAY", display_str, 1);
+
+	// build jail command
+	char *firejail_argv[argc+2];
+	unsigned pos = 0;
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "--x11") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xpra") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xephyr") == 0)
+			continue;
+		firejail_argv[pos] = argv[i];
+		pos++;
+	}
+	firejail_argv[pos] = NULL;
+
+	assert(pos < argc+2);
+	assert(!firejail_argv[pos]);
+
+	// start jail
+	pid_t jail = fork();
+	if (jail < 0)
+		errExit("fork");
+	if (jail == 0) {
+		execvp(firejail_argv[0], firejail_argv);
+		perror("execvp");
+		exit(1);
+	}
+
+	if (!arg_quiet)
+		printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
+
+	// wait for jail or server to end
+	while (1) {
+		pid_t pid = wait();
+
+		if (pid == jail) {
+			sleep(3); // FIXME: find better way to wait for xpra
+			char *stop_argv[] = { "xpra", "stop", display_str, NULL };
+			pid_t stop = fork();
+			if (stop < 0)
+				errExit("fork");
+			if (stop == 0) {
+				execvp(stop_argv[0], stop_argv);
+				perror("execvp");
+				exit(1);
+			}
+			sleep(3);
+			kill(client, SIGTERM);
+			kill(server, SIGTERM);
+			exit(0);
+		}
+	}
 }
 
 void x11_start(int argc, char **argv) {

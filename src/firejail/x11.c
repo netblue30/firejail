@@ -216,10 +216,6 @@ void x11_start_xephyr(int argc, char **argv) {
 			continue;
 		if (strcmp(argv[i], "--x11=xephyr") == 0)
 			continue;
-		if (strcmp(argv[i], "--audit") == 0 || strncmp(argv[i], "--audit=", 8) == 0) {
-			fprintf(stderr, "Error: auditing x11 sandboxes is not supported\n");
-			exit(1);
-		}
 		ptr += sprintf(ptr, "%s ", argv[i]);
 	}
 	if (arg_debug)
@@ -339,10 +335,6 @@ void x11_start_xpra(int argc, char **argv) {
 			continue;
 		if (strcmp(argv[i], "--x11=xephyr") == 0)
 			continue;
-		if (strcmp(argv[i], "--audit") == 0 || strncmp(argv[i], "--audit=", 8) == 0) {
-			fprintf(stderr, "Error: auditing x11 sandboxes is not supported\n");
-			exit(1);
-		}
 		ptr += sprintf(ptr, "%s ", argv[i]);
 	}
 	sprintf(ptr, "\"");

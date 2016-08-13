@@ -1,3 +1,7 @@
+firejail (0.9.38.1) baseline; urgency=low
+  * testing in progress, it will be released as 0.9.38.2
+ -- netblue30 <netblue30@yahoo.com>  Fri, 12 Aug 2016 10:00:00 -0500
+
 firejail (0.9.38) baseline; urgency=low
   * IPv6 support (--ip6 and --netfilter6)
   * --join command enhancement (--join-network, --join-filesystem)

@@ -458,7 +458,8 @@ void x11_start_xpra(int argc, char **argv) {
 	if (jail < 0)
 		errExit("fork");
 	if (jail == 0) {
-		execvp(firejail_argv[0], firejail_argv);
+		if (firejail_argv[0]) // shut up llvm scan-build
+			execvp(firejail_argv[0], firejail_argv);
 		perror("execvp");
 		exit(1);
 	}

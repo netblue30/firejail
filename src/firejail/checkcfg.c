@@ -50,7 +50,7 @@ int checkcfg(int val) {
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
 #ifdef HAVE_GLOBALCFG			
-			fprintf(stderr, "Warning: Firejail configuration file %s not found\n", fname);
+			fprintf(stderr, "Error: Firejail configuration file %s not found\n", fname);
 			exit(1);
 #else
 			initialized = 1;
@@ -317,7 +317,7 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- X11 snadboxing support is %s\n",
+	printf("\t- X11 sandboxing support is %s\n",
 #ifdef HAVE_X11
 		"enabled"
 #else

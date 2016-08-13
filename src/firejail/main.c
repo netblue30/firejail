@@ -237,7 +237,8 @@ void check_user_namespace(void) {
 	    stat("/proc/self/gid_map", &s3) == 0)
 		arg_noroot = 1;
 	else {
-		fprintf(stderr, "Warning: user namespaces not available in the current kernel.\n");
+		if (!arg_quiet || arg_debug)
+			fprintf(stderr, "Warning: user namespaces not available in the current kernel.\n");
 		arg_noroot = 0;
 	}
 }
@@ -1526,7 +1527,8 @@ int main(int argc, char **argv) {
 					errExit("strdup");
 				
 				if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac, &intf->mtu)) {
-					fprintf(stderr, "Warning:  interface %s is not configured\n", intf->dev);
+					if (!arg_quiet || arg_debug)
+						fprintf(stderr, "Warning:  interface %s is not configured\n", intf->dev);
 				}
 				intf->configured = 1;
 			}
@@ -1945,8 +1947,10 @@ int main(int argc, char **argv) {
 	}
 
 	// check trace configuration
-	if (arg_trace && arg_tracelog)
-		fprintf(stderr, "Warning: --trace and --tracelog are mutually exclusive; --tracelog disabled\n");
+	if (arg_trace && arg_tracelog) {
+		if (!arg_quiet || arg_debug)
+			fprintf(stderr, "Warning: --trace and --tracelog are mutually exclusive; --tracelog disabled\n");
+	}
 	
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
@@ -2030,10 +2034,14 @@ int main(int argc, char **argv) {
 
 	// use default.profile as the default
 	if (!custom_profile && !arg_noprofile) {
-		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: default profile disabled by --chroot option\n");
-		else if (arg_overlay)
-			fprintf(stderr, "Warning: default profile disabled by --overlay option\n");
+		if (cfg.chrootdir) {
+			if (!arg_quiet || arg_debug)
+				fprintf(stderr, "Warning: default profile disabled by --chroot option\n");
+		}
+		else if (arg_overlay) {
+			if (!arg_quiet || arg_debug)
+				fprintf(stderr, "Warning: default profile disabled by --overlay option\n");
+		}
 		else {
 			// try to load a default profile
 			char *profile_name = DEFAULT_USER_PROFILE;
@@ -2096,11 +2104,13 @@ int main(int argc, char **argv) {
 		errExit("pipe");
 
 	if (arg_noroot && arg_overlay) {
-		fprintf(stderr, "Warning: --overlay and --noroot are mutually exclusive, noroot disabled\n");
+		if (!arg_quiet || arg_debug)
+			fprintf(stderr, "Warning: --overlay and --noroot are mutually exclusive, noroot disabled\n");
 		arg_noroot = 0;
 	}
 	else if (arg_noroot && cfg.chrootdir) {
-		fprintf(stderr, "Warning: --chroot and --noroot are mutually exclusive, noroot disabled\n");
+		if (!arg_quiet || arg_debug)
+			fprintf(stderr, "Warning: --chroot and --noroot are mutually exclusive, noroot disabled\n");
 		arg_noroot = 0;
 	}
 

@@ -63,8 +63,6 @@ void dbus_test(void) {
 			if (ptr)
 				*ptr = '\0';	
 			check_session_bus(sockfile);
-			
-			sockfile -= 13;
 		}
 		free(bus);
 	}

@@ -48,7 +48,6 @@ clean:
 	rm -f test/environment/index.html
 	rm -f test/environment/wget-log
 	rm -f test/sysutils/firejail_t*
-	cd test/compile; ./compile.sh --clean; cd ../..
 	cd test/dist-compile; ./compile.sh --clean; cd ../..
 
 distclean: clean
@@ -138,7 +137,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
 DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
-DISTFILES_TEST = "test/apps test/apps-x11 test/environment test/profiles test/utils test/compile test/dist-compile test/filters test/network test/fs test/sysutils"
+DISTFILES_TEST = "test/apps test/apps-x11 test/environment test/profiles test/utils test/dist-compile test/filters test/network test/fs test/sysutils"
 
 dist:
 	make distclean

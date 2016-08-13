@@ -279,3 +279,6 @@ private-dev
 private-tmp
 nosound
 
+26. fix firemon and firetools on systems with hidepid=2
+
+sudo mount -o remount,rw,hidepid=2 /proc

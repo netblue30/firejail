@@ -1111,13 +1111,13 @@ int fs_check_chroot_dir(const char *rootdir) {
 	free(name);
 
 	// check /bin/bash
-	if (asprintf(&name, "%s/bin/bash", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: cannot find /bin/bash in chroot directory\n");
-		return 1;
-	}
-	free(name);
+//	if (asprintf(&name, "%s/bin/bash", rootdir) == -1)
+//		errExit("asprintf");
+//	if (stat(name, &s) == -1) {
+//		fprintf(stderr, "Error: cannot find /bin/bash in chroot directory\n");
+//		return 1;
+//	}
+//	free(name);
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {

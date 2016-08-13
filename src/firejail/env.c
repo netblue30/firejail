@@ -121,10 +121,6 @@ void env_defaults(void) {
 		errExit("setenv");
 	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
 		errExit("setenv");
-	if (arg_zsh && setenv("SHELL", "/usr/bin/zsh", 1) < 0)
-		errExit("setenv");
-	if (arg_csh && setenv("SHELL", "/bin/csh", 1) < 0)
-		errExit("setenv");
 	if (cfg.shell && setenv("SHELL", cfg.shell, 1) < 0)
 		errExit("setenv");
 	// set prompt color to green

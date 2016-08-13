@@ -330,32 +330,21 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			}
 		}
 
-		// run cmdline trough /bin/bash
+		// run cmdline trough shell
 		if (cfg.command_line == NULL) {
+			cfg.shell = guess_shell();
+			if (!cfg.shell) {
+				fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
+				exit(1);
+			}
+			if (arg_debug)
+				printf("Autoselecting %s as shell\n", cfg.shell);
 
 			// replace the process with a shell
-			if (cfg.shell)
-					execlp(cfg.shell, cfg.shell, NULL);
-				else if (arg_zsh)
-					execlp("/usr/bin/zsh", "/usr/bin/zsh", NULL);
-				else if (arg_csh)
-					execlp("/bin/csh", "/bin/csh", NULL);
-				else {
-					struct stat s;
-					if (stat("/bin/bash", &s) == 0)
-						execlp("/bin/bash", "/bin/bash", NULL);
-					else if (stat("/usr/bin/zsh", &s) == 0)
-						execlp("/usr/bin/zsh", "/usr/bin/zsh", NULL);
-					else if (stat("/bin/csh", &s) == 0)
-						execlp("/bin/csh", "/bin/csh", NULL);
-					else if (stat("/bin/sh", &s) == 0)
-						execlp("/bin/sh", "/bin/sh", NULL);
-				}
+			execlp(cfg.shell, cfg.shell, NULL);
 			
-			// no shell found, print an error and exit
-			fprintf(stderr, "Error: no POSIX shell found\n");
-			sleep(5);
-			exit(1);
+			// it should never get here
+			errExit("execlp");
 		}
 		else {
 			// run the command supplied by the user
@@ -398,19 +387,16 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 				exit(1);
 			} else {
-				// choose the shell requested by the user, or use bash as default
-				char *sh;
-				if (cfg.shell)
-			 		sh = cfg.shell;
-				else if (arg_zsh)
-					sh = "/usr/bin/zsh";
-				else if (arg_csh)
-					sh = "/bin/csh";
-				else
-					sh = "/bin/bash";
-	
+//				assert(cfg.shell);
+				cfg.shell = guess_shell();
+				if (!cfg.shell) {
+					fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
+					exit(1);
+				}
+				if (arg_debug)
+					printf("Autoselecting %s as shell\n", cfg.shell);
 				char *arg[5];
-				arg[0] = sh;
+				arg[0] = cfg.shell;
 				arg[1] = "-c";
 				if (arg_debug)
 					printf("Starting %s\n", cfg.command_line);
@@ -423,7 +409,10 @@ void join(pid_t pid, int argc, char **argv, int index) {
 					arg[3] = cfg.command_line;
 					arg[4] = NULL;
 				}
-				execvp("/bin/bash", arg);
+				execvp(arg[0], arg);
+
+				// it should never get here
+				errExit("execvp");
 			}
 		}
 

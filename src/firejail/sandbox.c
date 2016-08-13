@@ -325,20 +325,11 @@ static void start_application(void) {
 	// start the program using a shell
 	//****************************************
 	else {
-		// choose the shell requested by the user, or use bash as default
-		char *sh;
-		if (cfg.shell)
-	 		sh = cfg.shell;
-		else if (arg_zsh)
-			sh = "/usr/bin/zsh";
-		else if (arg_csh)
-			sh = "/bin/csh";
-		else
-			sh = "/bin/bash";
-			
+		assert(cfg.shell);
+
 		char *arg[5];
 		int index = 0;
-		arg[index++] = sh;
+		arg[index++] = cfg.shell;
 		arg[index++] = "-c";
 		assert(cfg.command_line);
 		if (arg_debug)
@@ -368,7 +359,7 @@ static void start_application(void) {
 		
 		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
-		execvp(sh, arg);
+		execvp(arg[0], arg);
 	}
 	
 	perror("execvp");

@@ -277,6 +277,7 @@ extern int fullargc;
 
 // main.c
 void check_user_namespace(void);
+char *guess_shell(void);
 
 // sandbox.c
 int sandbox(void* sandbox_arg);

@@ -709,6 +709,32 @@ static void detect_quiet(int argc, char **argv) {
 	}
 }
 
+char *guess_shell(void) {
+	char *shell;
+	// shells in order of preference
+	char *shells[] = {"/bin/bash", "/bin/csh", "/usr/bin/zsh", "/bin/sh", "/bin/ash", NULL };
+
+	int i = 0;
+	while (shells[i] != NULL) {
+		struct stat s;
+		// access call checks as real UID/GID, not as effective UID/GID
+		if (stat(shells[i], &s) == 0 && access(shells[i], R_OK) == 0) {
+			shell = shells[i];
+			break;
+		}
+		i++;
+	}
+
+
+	// FIXME get rid of arg_csh and arg_zsh completely
+	if (strcmp(shell,"/bin/csh"))
+		arg_csh = 1;
+	if (strcmp(shell,"/usr/bin/zsh") || strcmp(shell,"/bin/zsh"))
+		arg_zsh = 1;
+
+	return shell;
+}
+
 //*******************************************
 // Main program
 //*******************************************
@@ -1857,26 +1883,28 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --shell=none was already specified.\n");
 				return 1;
 			}
-			if (arg_zsh || cfg.shell ) {
+			if (cfg.shell) {
 				fprintf(stderr, "Error: only one default user shell can be specified\n");
 				return 1;
 			}
 			arg_csh = 1;
+			cfg.shell = "/bin/csh";
 		}
 		else if (strcmp(argv[i], "--zsh") == 0) {
 			if (arg_shell_none) {
 				fprintf(stderr, "Error: --shell=none was already specified.\n");
 				return 1;
 			}
-			if (arg_csh || cfg.shell ) {
+			if (cfg.shell) {
 				fprintf(stderr, "Error: only one default user shell can be specified\n");
 				return 1;
 			}
 			arg_zsh = 1;
+			cfg.shell = "/bin/zsh";
 		}
 		else if (strcmp(argv[i], "--shell=none") == 0) {
 			arg_shell_none = 1;
-			if (arg_csh || arg_zsh || cfg.shell) {
+			if (cfg.shell) {
 				fprintf(stderr, "Error: a shell was already specified\n");
 				return 1;
 			}
@@ -1888,7 +1916,7 @@ int main(int argc, char **argv) {
 			}
 			invalid_filename(argv[i] + 8);
 			
-			if (arg_csh || arg_zsh || cfg.shell) {
+			if (cfg.shell) {
 				fprintf(stderr, "Error: only one user shell can be specified\n");
 				return 1;
 			}
@@ -1970,26 +1998,23 @@ int main(int argc, char **argv) {
 		free(msg);
 	}
 
+	// guess shell if unspecified
+//	if (!arg_shell_none && !cfg.shell) {
+	if (prog_index == -1 && !cfg.shell) {
+		cfg.shell = guess_shell();
+		if (!cfg.shell) {
+			fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
+			exit(1);
+		}
+		if (arg_debug)
+			printf("Autoselecting %s as shell\n", cfg.shell);
+	}
+
 	// build the sandbox command
-	if (prog_index == -1 && arg_zsh) {
-		cfg.command_line = "/usr/bin/zsh";
-		cfg.window_title = "/usr/bin/zsh";
-		cfg.command_name = "zsh";
-	}
-	else if (prog_index == -1 && arg_csh) {
-		cfg.command_line = "/bin/csh";
-		cfg.window_title = "/bin/csh";
-		cfg.command_name = "csh";
-	}
-	else if (prog_index == -1 && cfg.shell) {
+	if (prog_index == -1 && cfg.shell) {
 		cfg.command_line = cfg.shell;
 		cfg.window_title = cfg.shell;
 		cfg.command_name = cfg.shell;
-	}
-	else if (prog_index == -1) {
-		cfg.command_line = "/bin/bash";
-		cfg.window_title = "/bin/bash";
-		cfg.command_name = "bash";
 	}
 	else if (arg_appimage) {
 		if (arg_debug)
@@ -2000,6 +2025,10 @@ int main(int argc, char **argv) {
 	else {
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
 	}
+/*	else {
+		fprintf(stderr, "Error: command must be specified when --shell=none used.\n");
+		exit(1);
+	}*/
 	
 	assert(cfg.command_name);
 	if (arg_debug)

@@ -459,13 +459,15 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	if (setregid(0, 0))
 		errExit("setregid");
 
+	assert(cfg.shell);
+
 	char *arg[4];
-	arg[0] = "/bin/bash";
+	arg[0] = cfg.shell;
 	arg[1] = "-c";
 	arg[2] = cmd;
 	arg[3] = NULL;
-	execvp("/bin/bash", arg);
+	execvp(arg[0], arg);
 	
 	// it will never get here
-	exit(0);		
+	errExit("execvp");
 }

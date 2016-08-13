@@ -1999,8 +1999,7 @@ int main(int argc, char **argv) {
 	}
 
 	// guess shell if unspecified
-//	if (!arg_shell_none && !cfg.shell) {
-	if (prog_index == -1 && !cfg.shell) {
+	if (!arg_shell_none && !cfg.shell) {
 		cfg.shell = guess_shell();
 		if (!cfg.shell) {
 			fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");

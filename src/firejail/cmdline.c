@@ -26,7 +26,9 @@
 #include <assert.h>
 #include <errno.h>
 
-int cmdline_length(int argc, char **argv, int index) {
+static int cmdline_length(int argc, char **argv, int index) {
+	assert(index != -1);
+	
 	unsigned i,j;
 	int len = 0;
 	unsigned argcnt = argc - index;
@@ -62,7 +64,9 @@ int cmdline_length(int argc, char **argv, int index) {
 	return len;
 }
 
-void quote_cmdline(char *command_line, char *window_title, int len, int argc, char **argv, int index) {
+static void quote_cmdline(char *command_line, char *window_title, int len, int argc, char **argv, int index) {
+	assert(index != -1);
+
 	unsigned i,j;
 	unsigned argcnt = argc - index;
 	bool in_quotes = false;
@@ -131,6 +135,10 @@ void quote_cmdline(char *command_line, char *window_title, int len, int argc, ch
 }
 
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index) {
+	// index == -1 could happen if we have --shell=none and no program was specified
+	// the program should exit with an error before entering this function
+	assert(index != -1);
+
 	int len = cmdline_length(argc, argv, index);
 	if (len > ARG_MAX) {
 		errno = E2BIG;

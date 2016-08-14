@@ -1974,6 +1974,12 @@ int main(int argc, char **argv) {
 			break;
 		}
 	}
+	
+	// prog_index could still be -1 if no program was specified
+	if (prog_index == -1 && arg_shell_none) {
+		fprintf(stderr, "shell=none configured, but no program specified\n");
+		exit(1);
+	}
 
 	// check trace configuration
 	if (arg_trace && arg_tracelog) {
@@ -2027,7 +2033,9 @@ int main(int argc, char **argv) {
 		cfg.window_title = "appimage";
 	}
 	else {
+printf("here %d\n", __LINE__);
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
+printf("here %d\n", __LINE__);
 	}
 /*	else {
 		fprintf(stderr, "Error: command must be specified when --shell=none used.\n");

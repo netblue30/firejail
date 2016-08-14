@@ -32,8 +32,9 @@
 
 static void skel(const char *homedir, uid_t u, gid_t g) {
 	char *fname;
+
 	// zsh
-	if (arg_zsh) {
+	if (!arg_shell_none && (strcmp(cfg.shell,"/usr/bin/zsh") == 0 || strcmp(cfg.shell,"/bin/zsh") == 0)) {
 		// copy skel files
 		if (asprintf(&fname, "%s/.zshrc", homedir) == -1)
 			errExit("asprintf");
@@ -63,7 +64,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		free(fname);
 	}
 	// csh
-	else if (arg_csh) {
+	else if (!arg_shell_none && strcmp(cfg.shell,"/bin/csh") == 0) {
 		// copy skel files
 		if (asprintf(&fname, "%s/.cshrc", homedir) == -1)
 			errExit("asprintf");

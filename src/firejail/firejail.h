@@ -222,8 +222,6 @@ extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
 extern int arg_overlay;		// overlay option
 extern int arg_overlay_keep;	// place overlay diff directory in ~/.firejail
-extern int arg_zsh;		// use zsh as default shell
-extern int arg_csh;		// use csh as default shell
 
 extern int arg_seccomp;	// enable default seccomp filter
 
@@ -277,6 +275,7 @@ extern int fullargc;
 
 // main.c
 void check_user_namespace(void);
+char *guess_shell(void);
 
 // sandbox.c
 int sandbox(void* sandbox_arg);

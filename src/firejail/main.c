@@ -2033,9 +2033,7 @@ int main(int argc, char **argv) {
 		cfg.window_title = "appimage";
 	}
 	else {
-printf("here %d\n", __LINE__);
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
-printf("here %d\n", __LINE__);
 	}
 /*	else {
 		fprintf(stderr, "Error: command must be specified when --shell=none used.\n");

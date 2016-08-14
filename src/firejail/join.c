@@ -332,13 +332,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		// run cmdline trough shell
 		if (cfg.command_line == NULL) {
-			cfg.shell = guess_shell();
-			if (!cfg.shell) {
-				fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
-				exit(1);
-			}
-			if (arg_debug)
-				printf("Autoselecting %s as shell\n", cfg.shell);
+			assert(cfg.shell);
 
 			// replace the process with a shell
 			execlp(cfg.shell, cfg.shell, NULL);
@@ -387,14 +381,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 				exit(1);
 			} else {
-//				assert(cfg.shell);
-				cfg.shell = guess_shell();
-				if (!cfg.shell) {
-					fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
-					exit(1);
-				}
-				if (arg_debug)
-					printf("Autoselecting %s as shell\n", cfg.shell);
+				assert(cfg.shell);
+
 				char *arg[5];
 				arg[0] = cfg.shell;
 				arg[1] = "-c";

@@ -60,8 +60,6 @@ int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 int arg_overlay = 0;				// overlay option
 int arg_overlay_keep = 0;			// place overlay diff directory in ~/.firejail
-int arg_zsh = 0;				// use zsh as default shell
-int arg_csh = 0;				// use csh as default shell
 
 int arg_seccomp = 0;				// enable default seccomp filter
 
@@ -565,7 +563,18 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #endif
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
 		logargs(argc, argv);
-		
+
+		if (arg_shell_none) {
+			if (argc <= (i+1)) {
+				fprintf(stderr, "Error: --shell=none set, but no command specified\n");
+				exit(1);
+			}
+			cfg.original_program_index = i + 1;
+		}
+
+		if (!cfg.shell && !arg_shell_none)
+			cfg.shell = guess_shell();
+
 		// join sandbox by pid or by name
 		pid_t pid;
 		if (read_pid(argv[i] + 7, &pid) == 0)		
@@ -573,6 +582,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			join_name(argv[i] + 7, argc, argv, i + 1);
 		exit(0);
+
 	}
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
@@ -724,13 +734,6 @@ char *guess_shell(void) {
 		}
 		i++;
 	}
-
-
-	// FIXME get rid of arg_csh and arg_zsh completely
-	if (strcmp(shell,"/bin/csh"))
-		arg_csh = 1;
-	if (strcmp(shell,"/usr/bin/zsh") || strcmp(shell,"/bin/zsh"))
-		arg_zsh = 1;
 
 	return shell;
 }
@@ -1887,7 +1890,6 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: only one default user shell can be specified\n");
 				return 1;
 			}
-			arg_csh = 1;
 			cfg.shell = "/bin/csh";
 		}
 		else if (strcmp(argv[i], "--zsh") == 0) {
@@ -1899,7 +1901,6 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: only one default user shell can be specified\n");
 				return 1;
 			}
-			arg_zsh = 1;
 			cfg.shell = "/bin/zsh";
 		}
 		else if (strcmp(argv[i], "--shell=none") == 0) {

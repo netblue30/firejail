@@ -1932,14 +1932,14 @@ int main(int argc, char **argv) {
 
 			// access call checks as real UID/GID, not as effective UID/GID
 			if(cfg.chrootdir) {
-					char *shellpath;
-					if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
-						errExit("asprintf");
-					if (access(shellpath, R_OK)) {
-						fprintf(stderr, "Error: cannot access shell file in chroot\n");
-						exit(1);
-					}
-					free(shellpath);
+				char *shellpath;
+				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
+					errExit("asprintf");
+				if (access(shellpath, R_OK)) {
+					fprintf(stderr, "Error: cannot access shell file in chroot\n");
+					exit(1);
+				}
+				free(shellpath);
 			} else if (access(cfg.shell, R_OK)) {
 				fprintf(stderr, "Error: cannot access shell file\n");
 				exit(1);

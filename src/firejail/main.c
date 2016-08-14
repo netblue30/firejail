@@ -1931,8 +1931,7 @@ int main(int argc, char **argv) {
 			}
 
 			// access call checks as real UID/GID, not as effective UID/GID
-			if (access(cfg.shell, R_OK)) {
-				if(cfg.chrootdir) {
+			if(cfg.chrootdir) {
 					char *shellpath;
 					if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
 						errExit("asprintf");

@@ -13,7 +13,7 @@ net_configure_bridge(br, device) {
 }
 
 net_configure_sandbox_ip(br) {
-	if br->ip_snadbox
+	if br->ip_sandbox
 		check br->ipsandbox inside the bridge network
 		arp_check(br->ipsandbox)	// send an arp req to check if anybody else is using this address
 	else

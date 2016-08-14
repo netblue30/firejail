@@ -69,6 +69,6 @@ expect {
 	"sleep 20"
 }
 
-# wait for snadboxes to be shutdown
+# wait for sandboxes to be shutdown
 sleep 30
 puts "\n"

@@ -102,6 +102,7 @@ int arg_appimage = 0;				// appimage
 int arg_audit = 0;				// audit
 char *arg_audit_prog;				// audit
 int arg_apparmor;				// apparmor
+int login_shell = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -877,6 +878,31 @@ int main(int argc, char **argv) {
 			if (strcmp(comm, "sshd") == 0) {
 				arg_quiet = 1;
 				parent_sshd = 1;
+
+#if 0
+EUID_ROOT();
+FILE *fp = fopen("/mylog", "w");
+if (fp) {
+	int i;
+	for (i = 0; i < argc; i++)
+		fprintf(fp, "#%s# ", argv[i]);
+	fprintf(fp, "\n");
+	fclose(fp);
+}
+EUID_USER();
+#endif
+				
+				// run sftp and ssh directly without any sandboxing
+				// regular login has argv[0] == "-firejail"
+				if (*argv[0] != '-') {
+					if (strcmp(argv[1], "-c") == 0 && argc > 2) {
+						if (strcmp(argv[2], "/usr/lib/openssh/sftp-server") == 0 ||
+						    strncmp(argv[2], "scp ", 4) == 0) {
+						    	drop_privs(1);
+							run_no_sandbox(argc, argv);
+						}
+					}
+				}
 			}
 			free(comm);
 		}
@@ -884,6 +910,7 @@ int main(int argc, char **argv) {
 	
 	// is this a login shell, or a command passed by sshd, insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
+		login_shell = 1;
 		fullargc = restricted_shell(cfg.username);
 		if (fullargc) {
 			int j;

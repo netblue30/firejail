@@ -172,6 +172,8 @@ void run_no_sandbox(int argc, char **argv) {
 		int len = 0;
 		int i;
 		for (i = 1; i < argc; i++) {
+//			if (i == 1 && strcmp(argv[i], "-c") == 0)
+//				continue;
 			if (*argv[i] == '-')
 				continue;
 			break;
@@ -202,8 +204,9 @@ void run_no_sandbox(int argc, char **argv) {
 	}
 	
 	// start the program in /bin/sh
-	fprintf(stderr, "Warning: an existing sandbox was detected. "
-		"%s will run without any additional sandboxing features in a /bin/sh shell\n", command);
+//	if (!arg_quiet)
+		fprintf(stderr, "Warning: an existing sandbox was detected. "
+			"%s will run without any additional sandboxing features in a /bin/sh shell\n", command);
 	int rv = system(command);
 	(void) rv;
 	if (allocated)

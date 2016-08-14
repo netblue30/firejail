@@ -327,9 +327,11 @@ static void start_application(void) {
 	else {
 		assert(cfg.shell);
 
-		char *arg[5];
+		char *arg[6];
 		int index = 0;
 		arg[index++] = cfg.shell;
+		if (login_shell)
+			arg[index++] = "-l";
 		arg[index++] = "-c";
 		assert(cfg.command_line);
 		if (arg_debug)

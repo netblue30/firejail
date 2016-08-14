@@ -265,6 +265,7 @@ extern int arg_audit;		// audit
 extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
 
+extern int login_shell;
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
 extern pid_t sandbox_pid;
@@ -356,7 +357,6 @@ void shut(pid_t pid);
 void shut_name(const char *name);
 
 // restricted_shell.c
-extern char *restricted_user;
 int restricted_shell(const char *user);
 
 // arp.c

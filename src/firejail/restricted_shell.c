@@ -76,7 +76,6 @@ int restricted_shell(const char *user) {
 		
 		// process user
 		if (strcmp(user, usr) == 0) {
-			restricted_user = strdup(user);
 		    	// extract program arguments
 
 		    	fullargv[0] = "firejail";

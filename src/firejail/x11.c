@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -164,7 +165,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	EUID_ASSERT();
 	size_t i;
 	struct stat s;
-	pid_t client = 0;
+	pid_t jail = 0;
 	pid_t server = 0;
 	
 	setenv("FIREJAIL_X11", "yes", 1);
@@ -255,7 +256,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	}
 
 	// remove --x11 arg
-	char *client_argv[argc+2];
+	char *jail_argv[argc+2];
 	size_t j = 0;
 	for (i = 0; i < argc; i++) {
 		if (strcmp(argv[i], "--x11") == 0)
@@ -264,18 +265,18 @@ void x11_start_xephyr(int argc, char **argv) {
 			continue;
 		if (strcmp(argv[i], "--x11=xephyr") == 0)
 			continue;
-		client_argv[j] = argv[i];
+		jail_argv[j] = argv[i];
 		j++;
 	}
-	client_argv[j] = NULL;
+	jail_argv[j] = NULL;
 
 	assert(j < argc+2); // no overrun
 
 	if (arg_debug) {
 		size_t i = 0;
 		printf("xephyr client:");
-		while (client_argv[i]!=NULL) {
-			printf(" \"%s\"", client_argv[i]);
+		while (jail_argv[i]!=NULL) {
+			printf(" \"%s\"", jail_argv[i]);
 			i++;
 		}
 		putchar('\n');
@@ -322,13 +323,14 @@ void x11_start_xephyr(int argc, char **argv) {
 
 	setenv("DISPLAY", display_str, 1);
 	// run attach command
-	client = fork();
-	if (client < 0)
+	jail = fork();
+	if (jail < 0)
 		errExit("fork");
-	if (client == 0) {
-		printf("\n*** Attaching to Xephyr display %d ***\n\n", display);
+	if (jail == 0) {
+		if (!arg_quiet)
+			printf("\n*** Attaching to Xephyr display %d ***\n\n", display);
 
-		execvp(client_argv[0], client_argv);
+		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
 		exit(1);
 	}
@@ -337,15 +339,20 @@ void x11_start_xephyr(int argc, char **argv) {
 	free(display_str);
 	free(temp);
 
-	// wait for either server or client termination
-	pid_t pid = wait();
+	// wait for either server or jail termination
+	pid_t pid = wait(NULL);
 
 	// see which process terminated and kill other
 	if (pid == server) {
-		kill(client, SIGTERM);
-	} else if (pid == client) {
+		kill(jail, SIGTERM);
+	} else if (pid == jail) {
 		kill(server, SIGTERM);
 	}
+
+	// without this closing Xephyr window may mess your terminal:
+	// "monitoring" process will release terminal before
+	// jail process ends and releases terminal
+	wait(NULL); // fulneral
 
 	exit(0);
 }
@@ -381,6 +388,13 @@ void x11_start_xpra(int argc, char **argv) {
 	// build the start command
 	char *server_argv[] = { "xpra", "start", display_str, "--no-daemon",  NULL };
 
+	int fd_null = -1;
+	if (arg_quiet) {
+		fd_null = open("/dev/null", O_RDWR);
+		if (fd_null == -1)
+			errExit("open");
+	}
+
 	// start
 	server = fork();
 	if (server < 0)
@@ -388,6 +402,12 @@ void x11_start_xpra(int argc, char **argv) {
 	if (server == 0) {
 		if (arg_debug)
 			printf("Starting xpra...\n");
+
+		if (arg_quiet && fd_null != -1) {
+			dup2(fd_null,0);
+			dup2(fd_null,1);
+			dup2(fd_null,2);
+		}
 	
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
@@ -404,8 +424,7 @@ void x11_start_xpra(int argc, char **argv) {
 		sleep(1);
 		if (stat(fname, &s) == 0)
 			break;
-	};
-//	sleep(1);
+	}
 	
 	if (n == 10) {
 		fprintf(stderr, "Error: failed to start xpra\n");
@@ -427,7 +446,15 @@ void x11_start_xpra(int argc, char **argv) {
 	if (client < 0)
 		errExit("fork");
 	if (client == 0) {
-		printf("\n*** Attaching to xpra display %d ***\n\n", display);
+		if (arg_quiet && fd_null != -1) {
+			dup2(fd_null,0);
+			dup2(fd_null,1);
+			dup2(fd_null,2);
+		}
+
+		if (!arg_quiet)
+			printf("\n*** Attaching to xpra display %d ***\n\n", display);
+
 		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
 		exit(1);
@@ -467,24 +494,52 @@ void x11_start_xpra(int argc, char **argv) {
 	if (!arg_quiet)
 		printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
 
+	sleep(1); // let jail start
+
 	// wait for jail or server to end
 	while (1) {
-		pid_t pid = wait();
+		pid_t pid = wait(NULL);
 
 		if (pid == jail) {
-			sleep(3); // FIXME: find better way to wait for xpra
 			char *stop_argv[] = { "xpra", "stop", display_str, NULL };
 			pid_t stop = fork();
 			if (stop < 0)
 				errExit("fork");
 			if (stop == 0) {
+				if (arg_quiet && fd_null != -1) {
+					dup2(fd_null,0);
+					dup2(fd_null,1);
+					dup2(fd_null,2);
+				}
 				execvp(stop_argv[0], stop_argv);
 				perror("execvp");
 				exit(1);
 			}
-			sleep(3);
+
+			// wait for xpra server to stop, 10 seconds limit
+			while (++n < 10) {
+				sleep(1);
+				pid = waitpid(server, NULL, WNOHANG);
+				if (pid == server)
+					break;
+			}
+
+			if (arg_debug)
+				if (n == 10)
+					printf("failed to stop xpra server gratefully\n");
+				else
+					printf("xpra server successfully stoped in %d secs\n", n);
+
+			// kill xpra server and xpra client
 			kill(client, SIGTERM);
 			kill(server, SIGTERM);
+			exit(0);
+		}
+		else if (pid == server) {
+			// kill firejail process
+			kill(jail, SIGTERM);
+			// kill xpra client (should die with server, but...)
+			kill(client, SIGTERM);
 			exit(0);
 		}
 	}

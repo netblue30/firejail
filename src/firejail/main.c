@@ -891,7 +891,7 @@ if (fp) {
 }
 EUID_USER();
 #endif
-				
+
 				// run sftp and scp directly without any sandboxing
 				// regular login has argv[0] == "-firejail"
 				if (*argv[0] != '-') {

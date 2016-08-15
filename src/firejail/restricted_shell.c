@@ -40,7 +40,7 @@ int restricted_shell(const char *user) {
 	char buf[MAX_READ];
 	while (fgets(buf, MAX_READ, fp)) {
 		lineno++;
-		
+
 		// remove empty spaces at the beginning of the line
 		char *ptr = buf;
 		while (*ptr == ' ' || *ptr == '\t') { 
@@ -48,7 +48,7 @@ int restricted_shell(const char *user) {
 		}
 		if (*ptr == '\n' || *ptr == '#')
 			continue;
-		
+
 		// parse line	
 		char *usr = ptr;
 		char *args = strchr(usr, ':');
@@ -56,6 +56,7 @@ int restricted_shell(const char *user) {
 			fprintf(stderr, "Error: users.conf line %d\n", lineno);
 			exit(1);
 		}
+		
 		*args = '\0';
 		args++;
 		ptr = strchr(args, '\n');
@@ -70,6 +71,7 @@ int restricted_shell(const char *user) {
 				found = 1;
 				break;
 			}
+			ptr2++;
 		}
 		if (!found)
 			continue;
@@ -107,7 +109,7 @@ int restricted_shell(const char *user) {
 		}
 	}
 	fclose(fp);
-			 
+
 	return 0;   
 }
 

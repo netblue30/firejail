@@ -892,7 +892,7 @@ if (fp) {
 EUID_USER();
 #endif
 				
-				// run sftp and ssh directly without any sandboxing
+				// run sftp and scp directly without any sandboxing
 				// regular login has argv[0] == "-firejail"
 				if (*argv[0] != '-') {
 					if (strcmp(argv[1], "-c") == 0 && argc > 2) {
@@ -910,7 +910,8 @@ EUID_USER();
 	
 	// is this a login shell, or a command passed by sshd, insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
-		login_shell = 1;
+		if (argc == 1)
+			login_shell = 1;
 		fullargc = restricted_shell(cfg.username);
 		if (fullargc) {
 			int j;

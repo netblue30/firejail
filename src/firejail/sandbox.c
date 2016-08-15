@@ -331,7 +331,7 @@ static void start_application(void) {
 		char *arg[5];
 		int index = 0;
 		arg[index++] = cfg.shell;
-		if (login_shell && cfg.shell == cfg.command_line) {
+		if (login_shell) {
 			arg[index++] = "-l";
 			if (arg_debug)
 				printf("Starting %s login shell\n", cfg.shell);

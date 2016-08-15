@@ -39,6 +39,8 @@ Aleksey Manevich (https://github.com/manevich)
 	- Busybox support
 	- X11 support rewrite
 	- gether shell selection code in one place
+Laurent Declercq (https://github.com/nuxwin)
+	- fixed test for shell interpreter in chroots
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template
 xee5ch (https://github.com/xee5ch)

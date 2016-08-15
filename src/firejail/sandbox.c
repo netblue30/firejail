@@ -326,22 +326,26 @@ static void start_application(void) {
 	//****************************************
 	else {
 		assert(cfg.shell);
+		assert(cfg.command_line);
 
-		char *arg[6];
+		char *arg[5];
 		int index = 0;
 		arg[index++] = cfg.shell;
-		if (login_shell)
+		if (login_shell && cfg.shell == cfg.command_line) {
 			arg[index++] = "-l";
-		arg[index++] = "-c";
-		assert(cfg.command_line);
-		if (arg_debug)
-			printf("Starting %s\n", cfg.command_line);
-		if (arg_doubledash) 
-			arg[index++] = "--";
-		arg[index++] = cfg.command_line;
+			if (arg_debug)
+				printf("Starting %s login shell\n", cfg.shell);
+		} else {
+			arg[index++] = "-c";
+			if (arg_debug)
+				printf("Running %s command through %s\n", cfg.command_line, cfg.shell);
+			if (arg_doubledash)
+				arg[index++] = "--";
+			arg[index++] = cfg.command_line;
+		}
 		arg[index] = NULL;
 		assert(index < 5);
-		
+
 		if (arg_debug) {
 			char *msg;
 			if (asprintf(&msg, "sandbox %d, execvp into %s", sandbox_pid, cfg.command_line) == -1)
@@ -349,7 +353,7 @@ static void start_application(void) {
 			logmsg(msg);
 			free(msg);
 		}
-		
+
 		if (arg_debug) {
 			int i;
 			for (i = 0; i < 5; i++) {
@@ -358,12 +362,12 @@ static void start_application(void) {
 				printf("execvp argument %d: %s\n", i, arg[i]);
 			}
 		}
-		
+
 		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
 		execvp(arg[0], arg);
 	}
-	
+
 	perror("execvp");
 	exit(1); // it should never get here!!!
 }

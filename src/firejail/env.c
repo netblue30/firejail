@@ -125,8 +125,8 @@ void env_defaults(void) {
 		errExit("setenv");
 	// set prompt color to green
 	//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
-	if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
-		errExit("setenv");
+//	if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
+//		errExit("setenv");
 
 	// set the window title
 	printf("\033]0;firejail %s\007", cfg.window_title);

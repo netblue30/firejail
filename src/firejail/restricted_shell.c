@@ -84,16 +84,28 @@ int restricted_shell(const char *user) {
 		    	int i;
 		    	ptr = args;
 		    	for (i = 1; i < MAX_ARGS; i++) {
-		    		fullargv[i] = ptr;
-		    		while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
+		    		// skip blanks
+		    		while (*ptr == ' ' || *ptr == '\t')
 		    			ptr++;
+		    		fullargv[i] = ptr;
+#ifdef DEBUG_RESTRICTED_SHELL
+				{EUID_ROOT();
+				FILE *fp = fopen("/firelog", "a");
+				if (fp) {
+					fprintf(fp, "i %d ptr #%s#\n", i, fullargv[i]);
+					fclose(fp);
+				}
+				EUID_USER();}
+#endif				
+		    		
 		    		if (*ptr != '\0') {
+		    			// go to the end of the word
+			    		while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
+			    			ptr++;
 		    			*ptr ='\0';
 		    			fullargv[i] = strdup(fullargv[i]);
-		    			if (fullargv[i] == NULL) {
-		    				fprintf(stderr, "Error: cannot allocate memory\n");
-		    				exit(1);
-		    			}
+		    			if (fullargv[i] == NULL)
+		    				errExit("strdup");
 		    			ptr++;
 		    			while (*ptr == ' ' || *ptr == '\t')
 		    				ptr++;

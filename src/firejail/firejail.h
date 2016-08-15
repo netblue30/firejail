@@ -22,6 +22,8 @@
 #include "../include/common.h"
 #include "../include/euid_common.h"
 
+// debug restricted shell
+//#define DEBUG_RESTRICTED_SHELL
 
 // filesystem
 #define RUN_FIREJAIL_BASEDIR	"/run"

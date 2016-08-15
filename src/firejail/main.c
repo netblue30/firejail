@@ -879,25 +879,35 @@ int main(int argc, char **argv) {
 				arg_quiet = 1;
 				parent_sshd = 1;
 
-#if 0
-EUID_ROOT();
-FILE *fp = fopen("/mylog", "w");
-if (fp) {
-	int i;
-	for (i = 0; i < argc; i++)
-		fprintf(fp, "#%s# ", argv[i]);
-	fprintf(fp, "\n");
-	fclose(fp);
-}
-EUID_USER();
+#ifdef DEBUG_RESTRICTED_SHELL
+				{EUID_ROOT();
+				FILE *fp = fopen("/firelog", "w");
+				if (fp) {
+					int i;
+					fprintf(fp, "argc %d: ", argc);
+					for (i = 0; i < argc; i++)
+						fprintf(fp, "#%s# ", argv[i]);
+					fprintf(fp, "\n");
+					fclose(fp);
+				}
+				EUID_USER();}
 #endif
-
 				// run sftp and scp directly without any sandboxing
 				// regular login has argv[0] == "-firejail"
 				if (*argv[0] != '-') {
 					if (strcmp(argv[1], "-c") == 0 && argc > 2) {
 						if (strcmp(argv[2], "/usr/lib/openssh/sftp-server") == 0 ||
 						    strncmp(argv[2], "scp ", 4) == 0) {
+#ifdef DEBUG_RESTRICTED_SHELL
+							{EUID_ROOT();
+							FILE *fp = fopen("/firelog", "a");
+							if (fp) {
+								fprintf(fp, "run without a sandbox\n");
+								fclose(fp);
+							}
+							EUID_USER();}
+#endif
+						    
 						    	drop_privs(1);
 							run_no_sandbox(argc, argv);
 						}
@@ -914,6 +924,21 @@ EUID_USER();
 			login_shell = 1;
 		fullargc = restricted_shell(cfg.username);
 		if (fullargc) {
+			
+#ifdef DEBUG_RESTRICTED_SHELL
+			{EUID_ROOT();
+			FILE *fp = fopen("/firelog", "a");
+			if (fp) {
+				fprintf(fp, "fullargc %d: ",  fullargc);
+				int i;
+				for (i = 0; i < fullargc; i++)
+					fprintf(fp, "#%s# ", fullargv[i]);
+				fprintf(fp, "\n");
+				fclose(fp);
+			}
+			EUID_USER();}
+#endif
+			
 			int j;
 			for (i = 1, j = fullargc; i < argc && j < MAX_ARGS; i++, j++, fullargc++)
 				fullargv[j] = argv[i];
@@ -921,6 +946,20 @@ EUID_USER();
 			// replace argc/argv with fullargc/fullargv
 			argv = fullargv;
 			argc = j;
+
+#ifdef DEBUG_RESTRICTED_SHELL
+			{EUID_ROOT();
+			FILE *fp = fopen("/firelog", "a");
+			if (fp) {
+				fprintf(fp, "argc %d: ", argc);
+				int i;
+				for (i = 0; i < argc; i++)
+					fprintf(fp, "#%s# ", argv[i]);
+				fprintf(fp, "\n");
+				fclose(fp);
+			}
+			EUID_USER();}
+#endif
 		}
 	}
 	else {

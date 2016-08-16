@@ -225,8 +225,6 @@ extern int arg_command;	// -c
 extern int arg_overlay;		// overlay option
 extern int arg_overlay_keep;	// place overlay diff in a known directory
 extern int arg_overlay_reuse;	// allow the reuse of overlays
-extern int arg_zsh;		// use zsh as default shell
-extern int arg_csh;		// use csh as default shell
 
 extern int arg_seccomp;	// enable default seccomp filter
 

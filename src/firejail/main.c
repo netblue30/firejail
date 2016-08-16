@@ -59,7 +59,10 @@ int arg_debug_whitelists;			// print debug messages for whitelists
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 int arg_overlay = 0;				// overlay option
-int arg_overlay_keep = 0;			// place overlay diff directory in ~/.firejail
+int arg_overlay_keep = 0;			// place overlay diff in a known directory
+int arg_overlay_reuse = 0;			// allow the reuse of overlays
+int arg_zsh = 0;				// use zsh as default shell
+int arg_csh = 0;				// use csh as default shell
 
 int arg_seccomp = 0;				// enable default seccomp filter
 

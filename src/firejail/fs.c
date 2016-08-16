@@ -1110,16 +1110,14 @@ int fs_check_chroot_dir(const char *rootdir) {
 	}
 	free(name);
 
-	// check shell (test not needed. We already test access in main.c)
-	//if (!arg_shell_none) {
-	//      if (asprintf(&name, "%s%s", rootdir, (char *)&cfg.shell) == -1)
-	//              errExit("asprintf");
-	//      if (stat(name, &s) == -1) {
-	//              fprintf(stderr, "Error: cannot find %s in chroot directory\n", name);
-	//              return 1;
-	//      }
-	//      free(name);
-	//}
+	// check /bin/bash
+//	if (asprintf(&name, "%s/bin/bash", rootdir) == -1)
+//		errExit("asprintf");
+//	if (stat(name, &s) == -1) {
+//		fprintf(stderr, "Error: cannot find /bin/bash in chroot directory\n");
+//		return 1;
+//	}
+//	free(name);
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {

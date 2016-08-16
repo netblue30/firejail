@@ -223,6 +223,7 @@ extern int arg_debug_whitelists;	// print debug messages for whitelists
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
 extern int arg_overlay;		// overlay option
+extern int arg_overlay_reuse;	// allow the reuse of overlays
 extern int arg_overlay_keep;	// place overlay diff directory in ~/.firejail
 
 extern int arg_seccomp;	// enable default seccomp filter

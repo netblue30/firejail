@@ -994,12 +994,13 @@ $ ls -l sandboxlog*
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail/<PID> directory. This option is not available on Grsecurity systems.
+The overlay is stored in $HOME/.firejail/<PID> directory.
 .br
 
 .br
 OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18
+OverlayFS was officially introduced in Linux kernel version 3.18.
+This option is not available on Grsecurity systems.
 .br
 
 .br
@@ -1012,12 +1013,13 @@ $ firejail \-\-overlay firefox
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
 The overlay is stored in $HOME/.firejail/<NAME> directory. The created overlay can be reused between multiple
-sessions. This option is not available on Grsecurity systems.
+sessions.
 .br
 
 .br
 OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18
+OverlayFS was officially introduced in Linux kernel version 3.18.
+This option is not available on Grsecurity systems.
 .br
 
 .br
@@ -1030,12 +1032,12 @@ $ firejail \-\-overlay-named=jail1 firefox
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
 The overlay is stored in the specified path. The created overlay can be reused between multiple sessions.
-This option is not available on Grsecurity systems.
 .br
 
 .br
 OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18
+OverlayFS was officially introduced in Linux kernel version 3.18.
+This option is not available on Grsecurity systems.
 .br
 
 .br
@@ -1046,12 +1048,13 @@ $ firejail \-\-overlay-path=~/jails/jail1 firefox
 .TP
 \fB\-\-overlay-tmpfs
 Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay,
-and are discarded when the sandbox is closed. This option is not available on Grsecurity systems.
+and are discarded when the sandbox is closed.
 .br
 
 .br
 OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18
+OverlayFS was officially introduced in Linux kernel version 3.18.
+This option is not available on Grsecurity systems.
 .br
 
 .br
@@ -1061,7 +1064,8 @@ $ firejail \-\-overlay-tmpfs firefox
 
 .TP
 \fB\-\-overlay-clean
-Clean all overlays stored in $HOME/.firejail directory.
+Clean all overlays stored in $HOME/.firejail directory. Overlays created with --overlay-path=path
+outside $HOME/.firejail will not be deleted.
 .br
 
 .br

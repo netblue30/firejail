@@ -10,6 +10,8 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * remove environment variable (--rmenv)
   * noexec support (--noexec)
   * --overlay-clean option
+  * --overlay-named=name option
+  * --overlay-path=path option
   * Ubuntu snap support
   * include /dev/snd in --private-dev
   * added mkfile profile command

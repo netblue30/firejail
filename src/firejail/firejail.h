@@ -326,6 +326,7 @@ void fs_proc_sys_dev_boot(void);
 // build a basic read-only filesystem
 void fs_basic_fs(void);
 // mount overlayfs on top of / directory
+char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
 void fs_overlayfs(void);
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir);

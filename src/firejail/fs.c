@@ -814,6 +814,44 @@ void fs_basic_fs(void) {
 }
 
 
+
+char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
+	// create ~/.firejail directory
+	struct stat s;
+	char *dirname;
+	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(dirname, &s) == -1) {
+		/* coverity[toctou] */
+		if (mkdir(dirname, 0700))
+			errExit("mkdir");
+		if (chown(dirname, getuid(), getgid()) < 0)
+			errExit("chown");
+		if (chmod(dirname, 0700) < 0)
+			errExit("chmod");
+	}
+	else if (is_link(dirname)) {
+		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+		exit(1);
+	}
+
+	free(dirname);
+
+	// check overlay directory
+	if (asprintf(&dirname, "%s/.firejail/%s", cfg.homedir, subdirname) == -1)
+		errExit("asprintf");
+	if (allow_reuse == 0) {
+		if (stat(dirname, &s) == 0) {
+			fprintf(stderr, "Error: overlay directory already exists: %s\n", dirname);
+			exit(1);
+		}
+	}
+
+	return dirname;
+}
+
+
+
 // mount overlayfs on top of / directory
 // mounting an overlay and chrooting into it:
 //

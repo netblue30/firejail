@@ -61,6 +61,7 @@
 /etc/firejail/icecat.profile
 /etc/firejail/icedove.profile
 /etc/firejail/iceweasel.profile
+/etc/firejail/inox.profile
 /etc/firejail/jitsi.profile
 /etc/firejail/kmail.profile
 /etc/firejail/konversation.profile

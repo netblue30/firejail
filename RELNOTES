@@ -23,7 +23,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
   * new profiles: pix, audacity, xz, xzdec, gzip, cpio, less
   * new profiles: Atom Beta, Atom, jitsi, eom, uudeview
-  * new profiles: tar (gtar), unzip, unrar, file, skypeforlinux
+  * new profiles: tar (gtar), unzip, unrar, file, skypeforlinux, inox
  -- netblue30 <netblue30@yahoo.com>  Thu, 21 Jul 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low

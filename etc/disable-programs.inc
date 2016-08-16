@@ -60,6 +60,7 @@ blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.config/brave
+blacklist ${HOME}/.config/inox
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

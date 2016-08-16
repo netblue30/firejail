@@ -7,9 +7,11 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 
 caps.drop all
+netfilter
+nogroups
 nonewprivs
 noroot
-netfilter
+nosound
 protocol unix,inet,inet6
 seccomp
 
@@ -18,3 +20,5 @@ whitelist ~/.config/hexchat
 include /etc/firejail/whitelist-common.inc
 
 # private-bin requires perl, python, etc.
+private-dev
+private-tmp

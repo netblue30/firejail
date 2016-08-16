@@ -7,8 +7,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-nonewprivs
 nogroups
+nonewprivs
 noroot
 nosound
 protocol unix
@@ -19,3 +19,4 @@ tracelog
 private-bin gthumb
 whitelist /tmp/.X11-unix
 private-dev
+private-tmp

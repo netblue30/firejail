@@ -9,7 +9,11 @@ include /etc/firejail/disable-passwdmgr.inc
 caps.drop all
 netfilter
 nonewprivs
+nogroups
 noroot
 protocol unix,inet,inet6,netlink
 seccomp
 tracelog
+
+private-dev
+private-tmp

@@ -7,11 +7,15 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+netfilter
+nogroups
 nonewprivs
 noroot
-private-dev
 seccomp
 tracelog
+
+private-dev
+private-tmp
 
 mkdir     ~/.hedgewars
 whitelist ~/.hedgewars

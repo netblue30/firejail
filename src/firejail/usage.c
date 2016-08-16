@@ -176,16 +176,26 @@ void usage(void) {
 	
 	printf("    --overlay - mount a filesystem overlay on top of the current filesystem.\n");
 	printf("\tThe upper filesystem layer is persistent, and stored in\n");
-	printf("\t$HOME/.firejail directory. (OverlayFS support is required in\n");
-	printf("\tLinux kernel for this option to work). \n\n");   
+	printf("\t$HOME/.firejail/<PID> directory. (OverlayFS support is required in\n");
+	printf("\tLinux kernel for this option to work). \n\n");
 
-	printf("    --overlay-clean - clean all overlays stored in $HOME/.firejail directory.\n\n");
-	
+	printf("    --overlay-named=name - mount a filesystem overlay on top of the current\n");
+	printf("\tfilesystem. The upper filesystem layer is persistent, and stored in\n");
+	printf("\t$HOME/.firejail/<NAME> directory. (OverlayFS support is required in\n");
+	printf("\tLinux kernel for this option to work). \n\n");
+
+	printf("    --overlay-path=path - mount a filesystem overlay on top of the current\n");
+	printf("\tfilesystem. The upper filesystem layer is persistent, and stored in\n");
+	printf("\tthe specified path. (OverlayFS support is required in Linux kernel for\n");
+	printf("\tthis option to work). \n\n");
+
 	printf("    --overlay-tmpfs - mount a filesystem overlay on top of the current\n");
 	printf("\tfilesystem. The upper layer is stored in a tmpfs filesystem,\n");
 	printf("\tand it is discarded when the sandbox is closed. (OverlayFS\n");
 	printf("\tsupport is required in Linux kernel for this option to work).\n\n");   
 	
+	printf("    --overlay-clean - clean all overlays stored in $HOME/.firejail directory.\n\n");
+
 	printf("    --private - mount new /root and /home/user directories in temporary\n");
 	printf("\tfilesystems. All modifications are discarded when the sandbox is\n");
 	printf("\tclosed.\n\n");

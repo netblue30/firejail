@@ -706,6 +706,41 @@ static void delete_x11_file(pid_t pid) {
 	free(fname);
 }
 
+static char *create_and_check_overlay_dir(const char *subdirname, int allow_reuse) {
+	// create ~/.firejail directory
+	struct stat s;
+	char *dirname;
+	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(dirname, &s) == -1) {
+		/* coverity[toctou] */
+		if (mkdir(dirname, 0700))
+			errExit("mkdir");
+		if (chown(dirname, getuid(), getgid()) < 0)
+			errExit("chown");
+		if (chmod(dirname, 0700) < 0)
+			errExit("chmod");
+	}
+	else if (is_link(dirname)) {
+		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+		exit(1);
+	}
+
+	free(dirname);
+
+	// check overlay directory
+	if (asprintf(&dirname, "%s/.firejail/%s", cfg.homedir, subdirname) == -1)
+		errExit("asprintf");
+	if (allow_reuse == 0) {
+		if (stat(dirname, &s) == 0) {
+			fprintf(stderr, "Error: overlay directory already exists: %s\n", dirname);
+			exit(1);
+		}
+	}
+
+	return dirname;
+}
+
 static void detect_quiet(int argc, char **argv) {
 	int i;
 	
@@ -1293,34 +1328,54 @@ int main(int argc, char **argv) {
 			arg_overlay = 1;
 			arg_overlay_keep = 1;
 			
-			// create ~/.firejail directory
-			char *dirname;
-			if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
+			char *subdirname;
+			if (asprintf(&subdirname, "%d", getpid()) == -1)
 				errExit("asprintf");
-			if (stat(dirname, &s) == -1) {
-				/* coverity[toctou] */
-				if (mkdir(dirname, 0700))
-					errExit("mkdir");
-				if (chown(dirname, getuid(), getgid()) < 0)
-					errExit("chown");
-				if (chmod(dirname, 0700) < 0)
-					errExit("chmod");
-			}
-			else if (is_link(dirname)) {
-				fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+			cfg.overlay_dir = create_and_check_overlay_dir(subdirname, arg_overlay_reuse);
+
+			free(subdirname);
+		}
+		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
+			if (cfg.chrootdir) {
+				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
-			
-			free(dirname);
-			
-			// check overlay directory
-			if (asprintf(&dirname, "%s/.firejail/%d", cfg.homedir, getpid()) == -1)
-				errExit("asprintf");
-			if (stat(dirname, &s) == 0) {
-				fprintf(stderr, "Error: overlay directory already exists: %s\n", dirname);
+			struct stat s;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
 				exit(1);
 			}
-			cfg.overlay_dir = dirname;
+			arg_overlay = 1;
+			arg_overlay_keep = 1;
+			arg_overlay_reuse = 1;
+			
+			char *subdirname = argv[i] + 16;
+			if (subdirname == '\0') {
+				fprintf(stderr, "Error: invalid overlay option\n");
+				exit(1);
+			}
+			cfg.overlay_dir = create_and_check_overlay_dir(subdirname, arg_overlay_reuse);
+		}
+		else if (strncmp(argv[i], "--overlay-path=", 15) == 0) {
+			if (cfg.chrootdir) {
+				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+				exit(1);
+			}
+			struct stat s;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+				exit(1);
+			}
+			arg_overlay = 1;
+			arg_overlay_keep = 1;
+			arg_overlay_reuse = 1;
+			
+			char *dirname = argv[i] + 15;
+			if (dirname == '\0') {
+				fprintf(stderr, "Error: invalid overlay option\n");
+				exit(1);
+			}
+			cfg.overlay_dir = expand_home(dirname, cfg.homedir);
 		}
 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
 			if (cfg.chrootdir) {

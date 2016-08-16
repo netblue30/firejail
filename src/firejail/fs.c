@@ -879,21 +879,37 @@ void fs_overlayfs(void) {
 	if (chmod(oroot, 0755) < 0)
 		errExit("chmod");
 
+	struct stat s;
 	char *basedir = RUN_MNT_DIR;
 	if (arg_overlay_keep) {
 		// set base for working and diff directories
 		basedir = cfg.overlay_dir;
-		if (mkdir(basedir, 0755) != 0) {
-			fprintf(stderr, "Error: cannot create overlay directory\n");
-			exit(1);
+
+		// does the overlay exist?
+		if (stat(basedir, &s) == 0) {
+			if (arg_overlay_reuse == 0) {
+				fprintf(stderr, "Error: overlay directory exists, but reuse is not allowed\n");
+				exit(1);
+			}
+		}
+		else {
+			if (mkdir(basedir, 0755) != 0) {
+				fprintf(stderr, "Error: cannot create overlay directory\n");
+				exit(1);
+			}
 		}
 	}
 
 	char *odiff;
 	if(asprintf(&odiff, "%s/odiff", basedir) == -1)
 		errExit("asprintf");
-	if (mkdir(odiff, 0755))
-		errExit("mkdir");
+
+	// no need to check arg_overlay_reuse
+	if (stat(odiff, &s) != 0) {
+		if (mkdir(odiff, 0755))
+			errExit("mkdir");
+	}
+
 	if (chown(odiff, 0, 0) < 0)
 		errExit("chown");
 	if (chmod(odiff, 0755) < 0)
@@ -902,8 +918,13 @@ void fs_overlayfs(void) {
 	char *owork;
 	if(asprintf(&owork, "%s/owork", basedir) == -1)
 		errExit("asprintf");
-	if (mkdir(owork, 0755))
-		errExit("mkdir");
+
+	// no need to check arg_overlay_reuse
+	if (stat(owork, &s) != 0) {
+		if (mkdir(owork, 0755))
+			errExit("mkdir");
+	}
+
 	if (chown(owork, 0, 0) < 0)
 		errExit("chown");
 	if (chmod(owork, 0755) < 0)
@@ -959,8 +980,13 @@ void fs_overlayfs(void) {
 		
 				if(asprintf(&hdiff, "%s/hdiff", basedir) == -1)
 					errExit("asprintf");
-				if (mkdir(hdiff, S_IRWXU | S_IRWXG | S_IRWXO))
-					errExit("mkdir");
+
+				// no need to check arg_overlay_reuse
+				if (stat(hdiff, &s) != 0) {
+					if (mkdir(hdiff, S_IRWXU | S_IRWXG | S_IRWXO))
+						errExit("mkdir");
+				}
+
 				if (chown(hdiff, 0, 0) < 0)
 					errExit("chown");
 				if (chmod(hdiff, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
@@ -968,8 +994,13 @@ void fs_overlayfs(void) {
 		
 				if(asprintf(&hwork, "%s/hwork", basedir) == -1)
 					errExit("asprintf");
-				if (mkdir(hwork, S_IRWXU | S_IRWXG | S_IRWXO))
-					errExit("mkdir");
+
+				// no need to check arg_overlay_reuse
+				if (stat(hwork, &s) != 0) {
+					if (mkdir(hwork, S_IRWXU | S_IRWXG | S_IRWXO))
+						errExit("mkdir");
+				}
+
 				if (chown(hwork, 0, 0) < 0)
 					errExit("chown");
 				if (chmod(hwork, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
@@ -1011,7 +1042,6 @@ void fs_overlayfs(void) {
 	fs_logger("whitelist /run");
 
 	// mount-bind /tmp/.X11-unix directory
-	struct stat s;
 	if (stat("/tmp/.X11-unix", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting /tmp/.X11-unix\n");

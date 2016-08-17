@@ -78,6 +78,7 @@ blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.jitsi
+blacklist ${HOME}/.config/Slack
 
 # Games
 blacklist ${HOME}/.hedgewars

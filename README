@@ -43,6 +43,9 @@ hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path	
 Gaman Gabriel (https://github.com/stelariusinfinitek)
 	- inox profile
+greigdp (https://github.com/greigdp)
+	- fixed spotify profile
+	- added Slack profile
 Laurent Declercq (https://github.com/nuxwin)
 	- fixed test for shell interpreter in chroots
 Franco (nextime) Lanza (https://github.com/nextime)

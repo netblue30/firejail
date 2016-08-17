@@ -14,3 +14,4 @@ seccomp
 shell none
 tracelog
 
+private-tmp

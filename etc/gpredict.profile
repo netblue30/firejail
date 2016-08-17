@@ -15,10 +15,11 @@ nonewprivs
 nogroups
 noroot
 nosound
-protocol unix,inet,inet6,netlink
+protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
 
 private-bin gpredict
 private-dev
+private-tmp

@@ -242,7 +242,7 @@ int pid_proc_cmdline_x11(const pid_t pid) {
 		if (i >= len)
 			break;
 		char *arg = buffer + i;
-		
+
 		// detect the last command line option
 		if (strcmp(arg, "--") == 0)
 			break;
@@ -250,8 +250,9 @@ int pid_proc_cmdline_x11(const pid_t pid) {
 			break;
 			
 		// check x11
-		if (strcmp(arg, "--x11") == 0 || strncmp(arg, "--x11=", 6) == 0)
+		if (strncmp(arg, "--x11", 5) == 0)
 			return 1;
+		i += strlen(arg);
 	}
 	return 0;
 }

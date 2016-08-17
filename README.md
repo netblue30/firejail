@@ -57,19 +57,7 @@ TESTING: file
 TESTING: tar
 netblue@debian:~/work/github/firejail/test/sysutils$ TESTING ERROR 3.1
 [...]
-cd test/apps-x11; ./apps-x11.sh | grep TESTING
-TESTING: xterm x11
-netblue@debian:~/work/github/firejail/test/apps-x11$ TESTING ERROR 5.1
-TESTING: firefox x11
-netblue@debian:~/work/github/firejail/test/apps-x11$ TESTING ERROR 5.1
-TESTING: chromium x11
-TESTING: transmission-gtk x11
-netblue@debian:~/work/github/firejail/test/apps-x11$ TESTING ERROR 5.1
-TESTING: icedove x11
-netblue@debian:~/work/github/firejail/test/apps-x11$ TESTING ERROR 5.1
-[...]
 `````
-"firemon --seccomp" and "firemon --caps" are misbehaving at the moment.
 
 ## Deprecated --user
 

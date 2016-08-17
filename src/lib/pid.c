@@ -341,10 +341,8 @@ void pid_read(pid_t mon_pid) {
 				}
 
 				if ((strncmp(ptr, "firejail", 8) == 0) && (mon_pid == 0 || mon_pid == pid)) {
-					if (pid_proc_cmdline_x11(pid)) {
-						printf("--x11 detected for pid %d\n", pid);
+					if (pid_proc_cmdline_x11(pid))
 						pids[pid].level = -1;
-					}
 					else
 						pids[pid].level = 1;
 				}

@@ -340,18 +340,14 @@ void pid_read(pid_t mon_pid) {
 					exit(1);
 				}
 
-				if (mon_pid == 0 && strncmp(ptr, "firejail", 8) == 0) {
-					pids[pid].level = 1;
+				if ((strncmp(ptr, "firejail", 8) == 0) && (mon_pid == 0 || mon_pid == pid)) {
+					if (pid_proc_cmdline_x11(pid)) {
+						printf("--x11 detected for pid %d\n", pid);
+						pids[pid].level = -1;
+					}
+					else
+						pids[pid].level = 1;
 				}
-				else if (mon_pid == pid && strncmp(ptr, "firejail", 8) == 0) {
-					pids[pid].level = 1;
-				}
-//				else if (mon_pid == 0 && strncmp(ptr, "lxc-execute", 11) == 0) {
-//					pids[pid].level = 1;
-//				}
-//				else if (mon_pid == pid && strncmp(ptr, "lxc-execute", 11) == 0) {
-//					pids[pid].level = 1;
-//				}
 				else
 					pids[pid].level = -1;
 			}

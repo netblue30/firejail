@@ -199,3 +199,62 @@ char *pid_proc_cmdline(const pid_t pid) {
 	}
 	return rv;
 }
+
+// return 1 if firejail --x11 on command line
+int pid_proc_cmdline_x11(const pid_t pid) {
+	// if comm is not firejail return 0
+	char *comm = pid_proc_comm(pid);
+	if (strcmp(comm, "firejail") != 0) {
+		free(comm);
+		return 0;
+	}
+	free(comm);
+
+	// open /proc/pid/cmdline file
+	char *fname;
+	int fd;
+	if (asprintf(&fname, "/proc/%d/cmdline", pid) == -1)
+		return 0;
+	if ((fd = open(fname, O_RDONLY)) < 0) {
+		free(fname);
+		return 0;
+	}
+	free(fname);
+
+	// read file
+	unsigned char buffer[BUFLEN];
+	ssize_t len;
+	if ((len = read(fd, buffer, sizeof(buffer) - 1)) <= 0) {
+		close(fd);
+		return 0;
+	}
+	buffer[len] = '\0';
+	close(fd);
+
+	// skip the first argument
+	int i;
+	for (i = 0; buffer[i] != '\0'; i++);
+
+	// parse remaining command line options
+	while (1) {
+		// extract argument
+		i++;
+		if (i >= len)
+			break;
+		char *arg = buffer + i;
+		
+		// detect the last command line option
+		if (strcmp(arg, "--") == 0)
+			break;
+		if (strncmp(arg, "--", 2) != 0)
+			break;
+			
+		// check x11
+		if (strcmp(arg, "--x11") == 0 || strncmp(arg, "--x11=", 6) == 0)
+			return 1;
+	}
+	return 0;
+}
+
+
+

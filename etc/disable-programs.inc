@@ -79,6 +79,9 @@ blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.config/Slack
+blacklist ${HOME}/.cache/gajim
+blacklist ${HOME}/.local/share/gajim
+blacklist ${HOME}/.config/gajim
 
 # Games
 blacklist ${HOME}/.hedgewars

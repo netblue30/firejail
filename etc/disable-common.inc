@@ -14,6 +14,7 @@ blacklist /etc/xdg/autostart
 blacklist ${HOME}/.kde4/Autostart
 blacklist ${HOME}/.kde4/share/autostart
 blacklist ${HOME}/.kde/Autostart
+blacklist ${HOME}/.kde/share/autostart
 blacklist ${HOME}/.config/plasma-workspace/shutdown
 blacklist ${HOME}/.config/plasma-workspace/env
 blacklist ${HOME}/.config/lxsession/LXDE/autostart
@@ -168,3 +169,5 @@ blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
+blacklist ${PATH}/konsole
+blacklist ${PATH}/yakuake

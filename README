@@ -39,6 +39,11 @@ Aleksey Manevich (https://github.com/manevich)
 	- Busybox support
 	- X11 support rewrite
 	- gether shell selection code in one place
+greigdp (https://github.com/greigdp)
+	- Gajim IM client profile
+Icaro Perseo (https://github.com/icaroperseo)
+	- Icecat profile
+	- several profile fixes
 hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path	
 Gaman Gabriel (https://github.com/stelariusinfinitek)

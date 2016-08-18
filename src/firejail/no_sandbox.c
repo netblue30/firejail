@@ -162,54 +162,119 @@ int check_kernel_procs(void) {
 void run_no_sandbox(int argc, char **argv) {
 	EUID_ASSERT();
 
-	// build command
-	char *command = NULL;
-	int allocated = 0;
-	if (argc == 1)
-		command = "/bin/bash";
-	else {
-		// calculate length
-		int len = 0;
-		int i;
-		for (i = 1; i < argc; i++) {
-			if (i == 1 && strcmp(argv[i], "-c") == 0)
-				continue;
-			if (*argv[i] == '-')
-				continue;
-			break;
-		}
-		int start_index = i;
-		for (i = start_index; i < argc; i++)
-			len += strlen(argv[i]) + 3;
-		
-		// allocate
-		command = malloc(len + 1);
-		if (!command)
-			errExit("malloc");
-		memset(command, 0, len + 1);
-		allocated = 1;
-		
-		// copy
-		for (i = start_index; i < argc; i++) {
-			if (strchr(argv[i], '&')) {
-				strcat(command, "\"");
-				strcat(command, argv[i]);
-				strcat(command, "\" ");
+	// process limited subset of options
+	int i;
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "--csh") == 0) {
+			if (arg_shell_none) {
+				fprintf(stderr, "Error: --shell=none was already specified.\n");
+				exit(1);
 			}
-			else {
-				strcat(command, argv[i]);
-				strcat(command, " ");
+			if (cfg.shell) {
+				fprintf(stderr, "Error: only one default user shell can be specified\n");
+				exit(1);
+			}
+			cfg.shell = "/bin/csh";
+		}
+		else if (strcmp(argv[i], "--zsh") == 0) {
+			if (arg_shell_none) {
+				fprintf(stderr, "Error: --shell=none was already specified.\n");
+				exit(1);
+			}
+			if (cfg.shell) {
+				fprintf(stderr, "Error: only one default user shell can be specified\n");
+				exit(1);
+			}
+			cfg.shell = "/bin/zsh";
+		}
+		else if (strcmp(argv[i], "--shell=none") == 0) {
+			arg_shell_none = 1;
+			if (cfg.shell) {
+				fprintf(stderr, "Error: a shell was already specified\n");
+				exit(1);
+			}
+		}
+		else if (strncmp(argv[i], "--shell=", 8) == 0) {
+			if (arg_shell_none) {
+				fprintf(stderr, "Error: --shell=none was already specified.\n");
+				exit(1);
+			}
+			invalid_filename(argv[i] + 8);
+
+			if (cfg.shell) {
+				fprintf(stderr, "Error: only one user shell can be specified\n");
+				exit(1);
+			}
+			cfg.shell = argv[i] + 8;
+
+			if (is_dir(cfg.shell) || strstr(cfg.shell, "..")) {
+				fprintf(stderr, "Error: invalid shell\n");
+				exit(1);
+			}
+
+			// access call checks as real UID/GID, not as effective UID/GID
+			if(cfg.chrootdir) {
+				char *shellpath;
+				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
+					errExit("asprintf");
+				if (access(shellpath, R_OK)) {
+					fprintf(stderr, "Error: cannot access shell file in chroot\n");
+					exit(1);
+				}
+				free(shellpath);
+			} else if (access(cfg.shell, R_OK)) {
+				fprintf(stderr, "Error: cannot access shell file\n");
+				exit(1);
 			}
 		}
 	}
-	
-	// start the program in /bin/sh
+
+	// use $SHELL to get shell used in sandbox
+	if (!arg_shell_none && !cfg.shell) {
+		char *shell =  secure_getenv("SHELL");
+		if (access(shell, R_OK) == 0)
+			cfg.shell = shell;
+	}
+	// guess shell otherwise
+	if (!arg_shell_none && !cfg.shell) {
+		guess_shell();
+		if (arg_debug)
+			printf("Autoselecting %s as shell\n", cfg.shell);
+	}
+	if (!arg_shell_none && !cfg.shell) {
+		fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
+		exit(1);
+	}
+
+	int prog_index = 0;
+	// find first non option arg
+	for (i = 1; i < argc; i++) {
+		if (strncmp(argv[i],"--",2) != 0) {
+			prog_index = i;
+			break;
+		}
+	}
+
+	if (!arg_shell_none) {
+		if (prog_index == 0) {
+			cfg.command_line = cfg.shell;
+			cfg.window_title = cfg.shell;
+		} else {
+			build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
+		}
+	}
+
+	cfg.original_argv = argv;
+	cfg.original_program_index = prog_index;
+
+	char *command;
+	if (prog_index == 0)
+		command = cfg.shell;
+	else
+		command = argv[prog_index];
 	if (!arg_quiet)
 		fprintf(stderr, "Warning: an existing sandbox was detected. "
-			"%s will run without any additional sandboxing features in a /bin/sh shell\n", command);
-	int rv = system(command);
-	(void) rv;
-	if (allocated)
-		free(command);
-	exit(1);
+			"%s will run without any additional sandboxing features\n", command);
+
+	start_application();
 }

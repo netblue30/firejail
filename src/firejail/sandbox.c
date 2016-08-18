@@ -284,7 +284,7 @@ void start_audit(void) {
 	exit(1);
 }
 
-static void start_application(void) {
+void start_application(void) {
 	//****************************************
 	// audit
 	//****************************************

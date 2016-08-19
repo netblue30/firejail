@@ -723,7 +723,7 @@ static void detect_quiet(int argc, char **argv) {
 }
 
 char *guess_shell(void) {
-	char *shell;
+	char *shell = NULL;
 	// shells in order of preference
 	char *shells[] = {"/bin/bash", "/bin/csh", "/usr/bin/zsh", "/bin/sh", "/bin/ash", NULL };
 
@@ -910,7 +910,8 @@ int main(int argc, char **argv) {
 #endif
 						    
 						    	drop_privs(1);
-							run_no_sandbox(argc, argv);
+						    	int rv = system(argv[2]);
+						    	exit(rv);
 						}
 					}
 				}

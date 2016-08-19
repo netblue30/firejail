@@ -237,7 +237,7 @@ void run_no_sandbox(int argc, char **argv) {
 	}
 	// guess shell otherwise
 	if (!arg_shell_none && !cfg.shell) {
-		guess_shell();
+		cfg.shell = guess_shell();
 		if (arg_debug)
 			printf("Autoselecting %s as shell\n", cfg.shell);
 	}
@@ -247,8 +247,19 @@ void run_no_sandbox(int argc, char **argv) {
 	}
 
 	int prog_index = 0;
-	// find first non option arg
+	// find first non option arg:
+	//	- first argument not starting wiht --,
+	//	- whatever follows after -c (example: firejail -c ls)
 	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "-c") == 0) {
+			prog_index = i + 1;
+			if (prog_index == argc) {
+				fprintf(stderr, "Error: option -c requires an argument\n");
+				exit(1);
+			}
+			break;
+		}
+		// check first argument not starting with --
 		if (strncmp(argv[i],"--",2) != 0) {
 			prog_index = i;
 			break;

@@ -356,7 +356,7 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
 		// redo cp command
-		fs_build_cp_command();
+//		fs_build_cp_command();
 		
 		// force caps and seccomp if not started as root
 		if (getuid() != 0) {
@@ -423,13 +423,21 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_dev)
 		fs_private_dev();
 	if (arg_private_etc) {
-		fs_private_etc_list();
-		// create /etc/ld.so.preload file again
-		if (arg_trace || arg_tracelog)
-			fs_trace_preload();
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-etc feature is disabled in chroot\n");
+		else {
+			fs_private_etc_list();
+			// create /etc/ld.so.preload file again
+			if (arg_trace || arg_tracelog)
+				fs_trace_preload();
+		}
 	}
-	if (arg_private_bin)
-		fs_private_bin_list();
+	if (arg_private_bin) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-bin feature is disabled in chroot\n");
+		else
+			fs_private_bin_list();
+	}
 	if (arg_private_tmp)
 		fs_private_tmp();
 	

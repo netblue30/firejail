@@ -267,13 +267,17 @@ static void whitelist_path(ProfileEntry *entry) {
 	
 	// process regular file
 	else {
-		// create an empty file
-		FILE *fp = fopen(path, "w");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot create empty file in home directory\n");
-			exit(1);
+		if (access(path, R_OK)) {
+			// create an empty file
+			FILE *fp = fopen(path, "w");
+			if (!fp) {
+				fprintf(stderr, "Error: cannot create empty file in home directory\n");
+				exit(1);
+			}
+			fclose(fp);
 		}
-		fclose(fp);
+		else
+			return; // the file is already present
 	}
 	
 	// set file properties

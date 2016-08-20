@@ -1,6 +1,7 @@
 firejail (0.9.38.1) baseline; urgency=low
   * testing in progress, it will be released as 0.9.38.2
-  * disable x32 ABI, problem submitted by Jann Horn
+  * disable x32 ABI, submitted by Jann Horn
+  * fix --whitelist deleted files, submitted by Vasya Novikov
  -- netblue30 <netblue30@yahoo.com>  Fri, 12 Aug 2016 10:00:00 -0500
 
 firejail (0.9.38) baseline; urgency=low

@@ -333,76 +333,30 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		// run cmdline trough shell
 		if (cfg.command_line == NULL) {
 			assert(cfg.shell);
-
-			// replace the process with a shell
-			execlp(cfg.shell, cfg.shell, NULL);
-			
-			// it should never get here
-			errExit("execlp");
+			cfg.command_line = cfg.shell;
+			cfg.window_title = cfg.shell;
 		}
-		else {
-			// run the command supplied by the user
-			int cwd = 0;
-			if (cfg.cwd) {
-				if (chdir(cfg.cwd) == 0)
-					cwd = 1;
-			}
-			
-			if (!cwd) {
-				if (chdir("/") < 0)
-					errExit("chdir");
-				if (cfg.homedir) {
-					struct stat s;
-					if (stat(cfg.homedir, &s) == 0) {
-						if (chdir(cfg.homedir) < 0)
-							errExit("chdir");
-					}
-				}
-			}
 
-			if (arg_shell_none) {
-				if (arg_debug) {
-					int i;
-					for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
-						if (cfg.original_argv[i] == NULL)
-							break;
-						printf("execvp argument %d: %s\n", i - cfg.original_program_index, cfg.original_argv[i]);
-					}
-				}
-		
-				if (cfg.original_program_index == 0) {
-					fprintf(stderr, "Error: --shell=none configured, but no program specified\n");
-					exit(1);
-				}
-		
-				if (!arg_command && !arg_quiet)
-					printf("Child process initialized\n");
-		
-				execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
-				exit(1);
-			} else {
-				assert(cfg.shell);
+		int cwd = 0;
+		if (cfg.cwd) {
+			if (chdir(cfg.cwd) == 0)
+				cwd = 1;
+		}
 
-				char *arg[5];
-				arg[0] = cfg.shell;
-				arg[1] = "-c";
-				if (arg_debug)
-					printf("Starting %s\n", cfg.command_line);
-				if (!arg_doubledash) {
-					arg[2] = cfg.command_line;
-					arg[3] = NULL;
+		if (!cwd) {
+			if (chdir("/") < 0)
+				errExit("chdir");
+			if (cfg.homedir) {
+				struct stat s;
+				if (stat(cfg.homedir, &s) == 0) {
+					/* coverity[toctou] */
+					if (chdir(cfg.homedir) < 0)
+						errExit("chdir");
 				}
-				else {
-					arg[2] = "--";
-					arg[3] = cfg.command_line;
-					arg[4] = NULL;
-				}
-				execvp(arg[0], arg);
-
-				// it should never get here
-				errExit("execvp");
 			}
 		}
+
+		start_application();
 
 		// it will never get here!!!
 	}

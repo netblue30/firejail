@@ -122,7 +122,7 @@ static void extract_caps_seccomp(pid_t pid) {
 			break;
 		}
 		else if (strncmp(buf, "CapBnd:", 7) == 0) {		
-			char *ptr = buf + 8;
+			char *ptr = buf + 7;
 			unsigned long long val;
 			sscanf(ptr, "%llx", &val);
 			apply_caps = 1;
@@ -295,9 +295,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		// set seccomp filter
 		if (apply_seccomp == 1)	// not available for uid 0
 			seccomp_set();
-		
 #endif
-		
+
 		// fix qt 4.8
 		if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
 			errExit("setenv");
@@ -313,6 +312,11 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 		else 
 			drop_privs(arg_nogroups);	// nogroups not available for uid 0
+
+		// user namespace resets capabilities
+		// set caps filter
+		if (apply_caps == 1)	// not available for uid 0
+			caps_set(caps);
 
 		// set prompt color to green
 		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '

@@ -155,7 +155,7 @@ blacklist /usr/local/sbin
 # prevent lxterminal connecting to an existing lxterminal session
 blacklist /tmp/.lxterminal-socket*
 
-# disable terminals running as server
+# disable terminals running as server resulting in sandbox escape
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
 blacklist ${PATH}/xfce4-terminal
@@ -169,5 +169,3 @@ blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
-blacklist ${PATH}/konsole
-blacklist ${PATH}/yakuake

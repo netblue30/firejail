@@ -1,4 +1,8 @@
 firejail (0.9.42~rc2) baseline; urgency=low
+  * security: --whitelist deleted files, submitted by Vasya Novikov
+  * security: disable x32 ABI, submitted by Jann Horn
+  * security: tighten --chroot, submitted by Jann Horn
+  * security: terminal sandbox escape, submitted by Stephan Sokolow
   * deprecated --user option, please use "sudo -u username firejail" instead
   * --read-write option rework
   * allow symlinks in home directory for --whitelist option

@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <sys/mount.h>
+#include <sys/wait.h>
 
 #ifdef HAVE_X11
 // return 1 if xpra is installed on the system
@@ -163,7 +164,7 @@ void fs_x11(void) {
 //$ DISPLAY=:22 firejail --net=eth0 --blacklist=/tmp/.X11-unix/x0 firefox
 void x11_start_xephyr(int argc, char **argv) {
 	EUID_ASSERT();
-	size_t i;
+	int i;
 	struct stat s;
 	pid_t jail = 0;
 	pid_t server = 0;
@@ -204,12 +205,12 @@ void x11_start_xephyr(int argc, char **argv) {
 	// parse xephyr_extra_params
 	// very basic quoting support
 	char *temp = strdup(xephyr_extra_params);
-	if (xephyr_extra_params != "") {
+	if (*xephyr_extra_params != '\0') {
 		if (!temp)
 			errExit("strdup");
 		bool dquote = false;
 		bool squote = false;
-		for (i = 0; i < strlen(xephyr_extra_params); i++) {
+		for (i = 0; i < (int) strlen(xephyr_extra_params); i++) {
 			if (temp[i] == '\"') {
 				dquote = !dquote;
 				if (dquote) temp[i] = '\0'; // replace closing quote by \0
@@ -229,7 +230,7 @@ void x11_start_xephyr(int argc, char **argv) {
 			exit(1);
 		}
 
-		for (i = 0; i < strlen(xephyr_extra_params)-1; i++) {
+		for (i = 0; i < (int) strlen(xephyr_extra_params)-1; i++) {
 			if (pos >= (sizeof(server_argv)/sizeof(*server_argv))) {
 				fprintf(stderr, "Error: arg count limit exceeded while parsing xephyr_extra_params\n");
 				exit(1);
@@ -257,7 +258,7 @@ void x11_start_xephyr(int argc, char **argv) {
 
 	// remove --x11 arg
 	char *jail_argv[argc+2];
-	size_t j = 0;
+	int j = 0;
 	for (i = 0; i < argc; i++) {
 		if (strcmp(argv[i], "--x11") == 0)
 			continue;
@@ -359,7 +360,7 @@ void x11_start_xephyr(int argc, char **argv) {
 
 void x11_start_xpra(int argc, char **argv) {
 	EUID_ASSERT();
-	size_t i;
+	int i;
 	struct stat s;
 	pid_t client = 0;
 	pid_t server = 0;
@@ -464,7 +465,7 @@ void x11_start_xpra(int argc, char **argv) {
 
 	// build jail command
 	char *firejail_argv[argc+2];
-	unsigned pos = 0;
+	int pos = 0;
 	for (i = 0; i < argc; i++) {
 		if (strcmp(argv[i], "--x11") == 0)
 			continue;
@@ -477,7 +478,7 @@ void x11_start_xpra(int argc, char **argv) {
 	}
 	firejail_argv[pos] = NULL;
 
-	assert(pos < argc+2);
+	assert(pos < (argc+2));
 	assert(!firejail_argv[pos]);
 
 	// start jail
@@ -524,12 +525,13 @@ void x11_start_xpra(int argc, char **argv) {
 					break;
 			}
 
-			if (arg_debug)
+			if (arg_debug) {
 				if (n == 10)
 					printf("failed to stop xpra server gratefully\n");
 				else
 					printf("xpra server successfully stoped in %d secs\n", n);
-
+			}
+			
 			// kill xpra server and xpra client
 			kill(client, SIGTERM);
 			kill(server, SIGTERM);

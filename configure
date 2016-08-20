@@ -636,6 +636,7 @@ HAVE_GLOBALCFG
 HAVE_BIND
 HAVE_CHROOT
 HAVE_SECCOMP
+HAVE_OVERLAYFS
 EXTRA_LDFLAGS
 EGREP
 GREP
@@ -694,6 +695,7 @@ ac_subst_files=''
 ac_user_opts='
 enable_option_checking
 enable_apparmor
+enable_overlayfs
 enable_seccomp
 enable_chroot
 enable_bind
@@ -1325,6 +1327,7 @@ Optional Features:
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-apparmor       enable apparmor
+  --disable-overlayfs     disable overlayfs
   --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
   --disable-bind          disable bind
@@ -3511,6 +3514,19 @@ if test "x$enable_apparmor" = "xyes"; then :
 fi
 
 
+HAVE_OVERLAYFS=""
+# Check whether --enable-overlayfs was given.
+if test "${enable_overlayfs+set}" = set; then :
+  enableval=$enable_overlayfs;
+fi
+
+if test "x$enable_overlayfs" != "xno"; then :
+
+	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+
+
+fi
+
 HAVE_SECCOMP=""
 # Check whether --enable-seccomp was given.
 if test "${enable_seccomp+set}" = set; then :
@@ -4922,6 +4938,7 @@ echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"
 echo "   whitelisting: $HAVE_WHITELIST"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
+echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 printf "   uid_min: "; grep UID_MIN uids.h

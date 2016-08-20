@@ -30,6 +30,14 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 ])
 AC_SUBST([EXTRA_LDFLAGS])
 
+HAVE_OVERLAYFS=""
+AC_ARG_ENABLE([overlayfs],
+    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
+AS_IF([test "x$enable_overlayfs" != "xno"], [
+	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+	AC_SUBST(HAVE_OVERLAYFS)
+])
+
 HAVE_SECCOMP=""
 AC_ARG_ENABLE([seccomp],
     AS_HELP_STRING([--disable-seccomp], [disable seccomp]))
@@ -156,6 +164,7 @@ echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"
 echo "   whitelisting: $HAVE_WHITELIST"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
+echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 printf "   uid_min: "; grep UID_MIN uids.h

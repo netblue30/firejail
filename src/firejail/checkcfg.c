@@ -272,6 +272,14 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- overlayfs support is %s\n",
+#ifdef HAVE_OVERLAYFS
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- file and directory whitelisting support is %s\n",
 #ifdef HAVE_WHITELIST
 		"enabled"

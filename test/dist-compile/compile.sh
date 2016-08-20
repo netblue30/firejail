@@ -12,7 +12,8 @@ arr[9]="TEST 9: compile file transfer disabled"
 arr[10]="TEST 10: compile disable whitelist"
 arr[11]="TEST 11: compile disable global config"
 arr[12]="TEST 12: compile apparmor"
-arr[12]="TEST 13: compile busybox"
+arr[13]="TEST 13: compile busybox"
+arr[14]="TEST 14: compile overlayfs disabled"
 
 # remove previous reports and output file
 cleanup() {
@@ -52,8 +53,6 @@ cleanup
 # TEST 1
 #*****************************************************************
 # - checkout source code
-# - check compilation
-# - install
 #*****************************************************************
 print_title "${arr[1]}"
 echo "$DIST"
@@ -75,7 +74,6 @@ rm output-configure output-make
 # TEST 2
 #*****************************************************************
 # - disable seccomp configuration
-# - check compilation
 #*****************************************************************
 print_title "${arr[2]}"
 # seccomp
@@ -94,7 +92,6 @@ rm output-configure output-make
 # TEST 3
 #*****************************************************************
 # - disable chroot configuration
-# - check compilation
 #*****************************************************************
 print_title "${arr[3]}"
 # seccomp
@@ -113,7 +110,6 @@ rm output-configure output-make
 # TEST 4
 #*****************************************************************
 # - disable bind configuration
-# - check compilation
 #*****************************************************************
 print_title "${arr[4]}"
 # seccomp
@@ -132,7 +128,6 @@ rm output-configure output-make
 # TEST 5
 #*****************************************************************
 # - disable user namespace configuration
-# - check compilation
 #*****************************************************************
 print_title "${arr[5]}"
 # seccomp
@@ -170,7 +165,6 @@ rm output-configure output-make
 # TEST 7
 #*****************************************************************
 # - disable X11 support
-# - check compilation
 #*****************************************************************
 print_title "${arr[7]}"
 # seccomp
@@ -190,7 +184,6 @@ rm output-configure output-make
 # TEST 8
 #*****************************************************************
 # - enable network restricted
-# - check compilation
 #*****************************************************************
 print_title "${arr[8]}"
 # seccomp
@@ -210,7 +203,6 @@ rm output-configure output-make
 # TEST 9
 #*****************************************************************
 # - disable file transfer
-# - check compilation
 #*****************************************************************
 print_title "${arr[9]}"
 # seccomp
@@ -229,7 +221,6 @@ rm output-configure output-make
 # TEST 10
 #*****************************************************************
 # - disable whitelist
-# - check compilation
 #*****************************************************************
 print_title "${arr[10]}"
 # seccomp
@@ -248,7 +239,6 @@ rm output-configure output-make
 # TEST 11
 #*****************************************************************
 # - disable global config
-# - check compilation
 #*****************************************************************
 print_title "${arr[11]}"
 # seccomp
@@ -267,9 +257,8 @@ rm output-configure output-make
 # TEST 12
 #*****************************************************************
 # - enable apparmor
-# - check compilation
 #*****************************************************************
-print_title "${arr[11]}"
+print_title "${arr[12]}"
 # seccomp
 cd firejail
 make distclean
@@ -286,9 +275,8 @@ rm output-configure output-make
 # TEST 13
 #*****************************************************************
 # - enable busybox workaround
-# - check compilation
 #*****************************************************************
-print_title "${arr[11]}"
+print_title "${arr[13]}"
 # seccomp
 cd firejail
 make distclean
@@ -299,6 +287,24 @@ grep Warning output-configure output-make > ./report-test13
 grep Error output-configure output-make >> ./report-test13
 cp output-configure oc13
 cp output-make om13
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 14
+#*****************************************************************
+# - disable overlayfs
+#*****************************************************************
+print_title "${arr[14]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-overlayfs --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test14
+grep Error output-configure output-make >> ./report-test14
+cp output-configure oc14
+cp output-make om14
 rm output-configure output-make
 
 
@@ -329,3 +335,4 @@ echo ${arr[10]}
 echo ${arr[11]}
 echo ${arr[12]}
 echo ${arr[13]}
+echo ${arr[14]}

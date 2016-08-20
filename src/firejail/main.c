@@ -264,6 +264,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		printf("\n");
 		exit(0);
 	}
+#ifdef HAVE_OVERLAYFS
 	else if (strcmp(argv[i], "--overlay-clean") == 0) {
 		char *path;
 		if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
@@ -281,6 +282,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		}
 		exit(0);
 	}
+#endif
 #ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -1279,6 +1281,7 @@ int main(int argc, char **argv) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
+#ifdef HAVE_OVERLAYFS
 		else if (strcmp(argv[i], "--overlay") == 0) {
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
@@ -1353,6 +1356,7 @@ int main(int argc, char **argv) {
 			}
 			arg_overlay = 1;
 		}
+#endif
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
 			if (arg_noprofile) {
 				fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");

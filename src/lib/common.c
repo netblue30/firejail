@@ -241,7 +241,7 @@ int pid_proc_cmdline_x11(const pid_t pid) {
 		i++;
 		if (i >= len)
 			break;
-		char *arg = buffer + i;
+		char *arg = (char *)buffer + i;
 
 		// detect the last command line option
 		if (strcmp(arg, "--") == 0)

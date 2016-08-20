@@ -500,9 +500,11 @@ int sandbox(void* sandbox_arg) {
 	}
 	else 
 #endif		
+#ifdef HAVE_OVERLAYFS
 	if (arg_overlay)	
 		fs_overlayfs();
 	else
+#endif
 		fs_basic_fs();
 	
 	//****************************

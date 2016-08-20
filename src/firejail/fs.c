@@ -815,6 +815,7 @@ void fs_basic_fs(void) {
 
 
 
+#ifdef HAVE_OVERLAYFS
 char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 	// create ~/.firejail directory
 	struct stat s;
@@ -1121,7 +1122,7 @@ void fs_overlayfs(void) {
 	free(oroot);
 	free(odiff);
 }
-
+#endif
 
 
 #ifdef HAVE_CHROOT		

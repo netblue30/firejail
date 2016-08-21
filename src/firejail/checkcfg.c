@@ -29,7 +29,6 @@ char *xephyr_extra_params = "";
 char *netfilter_default = NULL;
 
 int checkcfg(int val) {
-	EUID_ASSERT();
 	assert(val < CFG_MAX);
 	int line = 0;
 
@@ -38,7 +37,6 @@ int checkcfg(int val) {
 		int i;
 		for (i = 0; i < CFG_MAX; i++)
 			cfg_val[i] = 1; // most of them are enabled by default
-
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
 		cfg_val[CFG_FORCE_NONEWPRIVS] = 0; // disabled by default
 		
@@ -225,6 +223,15 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
 					arg_quiet = 1;
+			}
+			// remount /proc and /sys
+			else if (strncmp(ptr, "remount-proc-sys ", 17) == 0) {
+				if (strcmp(ptr + 17, "yes") == 0)
+					cfg_val[CFG_REMOUNT_PROC_SYS] = 1;
+				else if (strcmp(ptr + 17, "no") == 0)
+					cfg_val[CFG_REMOUNT_PROC_SYS] = 0;
+				else
+					goto errout;
 			}
 			else
 				goto errout;

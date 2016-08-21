@@ -208,6 +208,12 @@ static int monitor_application(pid_t app_pid) {
 		if (arg_debug)
 			printf("Sandbox monitor: waitpid %u retval %d status %d\n", monitored_pid, rv, status);
 
+		// if /proc is not remounted, we cannot check /proc directory,
+		// for now we just get out of here
+		// todo: find another way of checking child processes!
+		if (!checkcfg(CFG_REMOUNT_PROC_SYS))
+			break;
+
 		DIR *dir;
 		if (!(dir = opendir("/proc"))) {
 			// sleep 2 seconds and try again
@@ -551,7 +557,8 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// update /proc, /sys, /dev, /boot directorymy
 	//****************************
-	fs_proc_sys_dev_boot();
+	if (checkcfg(CFG_REMOUNT_PROC_SYS))
+		fs_proc_sys_dev_boot();
 	
 	//****************************
 	// apply the profile file

@@ -134,3 +134,6 @@ blacklist ${HOME}/.local/share/totem
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/gnome-chess
+
+# ssh
+blacklist /tmp/ssh-*

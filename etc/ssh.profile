@@ -1,5 +1,6 @@
 # ssh client
 noblacklist ~/.ssh
+noblacklist /tmp/ssh-*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

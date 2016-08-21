@@ -233,6 +233,14 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			else if (strncmp(ptr, "overlayfs ", 10) == 0) {
+				if (strcmp(ptr + 10, "yes") == 0)
+					cfg_val[CFG_OVERLAYFS] = 1;
+				else if (strcmp(ptr + 10, "no") == 0)
+					cfg_val[CFG_OVERLAYFS] = 0;
+				else
+					goto errout;
+			}
 			else
 				goto errout;
 

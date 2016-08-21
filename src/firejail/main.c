@@ -266,18 +266,24 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 #ifdef HAVE_OVERLAYFS
 	else if (strcmp(argv[i], "--overlay-clean") == 0) {
-		char *path;
-		if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
-			errExit("asprintf");
-		EUID_ROOT();
-		if (setreuid(0, 0) < 0)
-			errExit("setreuid");
-		if (setregid(0, 0) < 0)
-			errExit("setregid");
-		errno = 0;
-		int rv = remove_directory(path);
-		if (rv) {
-			fprintf(stderr, "Error: cannot removed overlays stored in ~/.firejail directory, errno %d\n", errno);
+		if (checkcfg(CFG_OVERLAYFS)) {
+			char *path;
+			if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
+				errExit("asprintf");
+			EUID_ROOT();
+			if (setreuid(0, 0) < 0)
+				errExit("setreuid");
+			if (setregid(0, 0) < 0)
+				errExit("setregid");
+			errno = 0;
+			int rv = remove_directory(path);
+			if (rv) {
+				fprintf(stderr, "Error: cannot removed overlays stored in ~/.firejail directory, errno %d\n", errno);
+				exit(1);
+			}
+		}
+		else {
+			fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
 			exit(1);
 		}
 		exit(0);
@@ -1283,78 +1289,103 @@ int main(int argc, char **argv) {
 		}
 #ifdef HAVE_OVERLAYFS
 		else if (strcmp(argv[i], "--overlay") == 0) {
-			if (cfg.chrootdir) {
-				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+			if (checkcfg(CFG_OVERLAYFS)) {
+				if (cfg.chrootdir) {
+					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					exit(1);
+				}
+				struct stat s;
+				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+					exit(1);	
+				}
+				arg_overlay = 1;
+				arg_overlay_keep = 1;
+				
+				char *subdirname;
+				if (asprintf(&subdirname, "%d", getpid()) == -1)
+					errExit("asprintf");
+				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
+	
+				free(subdirname);
+			}
+			else {
+				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);	
-			}
-			arg_overlay = 1;
-			arg_overlay_keep = 1;
-			
-			char *subdirname;
-			if (asprintf(&subdirname, "%d", getpid()) == -1)
-				errExit("asprintf");
-			cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
-
-			free(subdirname);
 		}
 		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
-			if (cfg.chrootdir) {
-				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+			if (checkcfg(CFG_OVERLAYFS)) {
+				if (cfg.chrootdir) {
+					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					exit(1);
+				}
+				struct stat s;
+				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+					exit(1);
+				}
+				arg_overlay = 1;
+				arg_overlay_keep = 1;
+				arg_overlay_reuse = 1;
+				
+				char *subdirname = argv[i] + 16;
+				if (subdirname == '\0') {
+					fprintf(stderr, "Error: invalid overlay option\n");
+					exit(1);
+				}
+				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
+			}
+			else {
+				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);
-			}
-			arg_overlay = 1;
-			arg_overlay_keep = 1;
-			arg_overlay_reuse = 1;
-			
-			char *subdirname = argv[i] + 16;
-			if (subdirname == '\0') {
-				fprintf(stderr, "Error: invalid overlay option\n");
-				exit(1);
-			}
-			cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
+
 		}
 		else if (strncmp(argv[i], "--overlay-path=", 15) == 0) {
-			if (cfg.chrootdir) {
-				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+			if (checkcfg(CFG_OVERLAYFS)) {
+				if (cfg.chrootdir) {
+					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					exit(1);
+				}
+				struct stat s;
+				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+					exit(1);
+				}
+				arg_overlay = 1;
+				arg_overlay_keep = 1;
+				arg_overlay_reuse = 1;
+				
+				char *dirname = argv[i] + 15;
+				if (dirname == '\0') {
+					fprintf(stderr, "Error: invalid overlay option\n");
+					exit(1);
+				}
+				cfg.overlay_dir = expand_home(dirname, cfg.homedir);
+			}
+			else {
+				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);
-			}
-			arg_overlay = 1;
-			arg_overlay_keep = 1;
-			arg_overlay_reuse = 1;
-			
-			char *dirname = argv[i] + 15;
-			if (dirname == '\0') {
-				fprintf(stderr, "Error: invalid overlay option\n");
-				exit(1);
-			}
-			cfg.overlay_dir = expand_home(dirname, cfg.homedir);
 		}
 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
-			if (cfg.chrootdir) {
-				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+			if (checkcfg(CFG_OVERLAYFS)) {
+				if (cfg.chrootdir) {
+					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					exit(1);
+				}
+				struct stat s;
+				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+					exit(1);	
+				}
+				arg_overlay = 1;
+			}
+			else {
+				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);	
-			}
-			arg_overlay = 1;
 		}
 #endif
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
@@ -1477,7 +1508,6 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --chroot feature is disabled in Firejail configuration file\n");
 				exit(1);
 			}
-
 		}
 #endif
 		else if (strcmp(argv[i], "--writable-etc") == 0) {

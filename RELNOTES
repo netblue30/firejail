@@ -6,6 +6,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * deprecated --user option, please use "sudo -u username firejail" instead
   * --read-write option rework
   * allow symlinks in home directory for --whitelist option
+  * --allow-debuggers option
   * --private-template (very simillar to the former --private-home)
   * AppImage support (--appimage)
   * AppArmor support (--apparmor)

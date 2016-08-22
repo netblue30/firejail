@@ -344,6 +344,7 @@ void seccomp_filter_32(void) {
 		EXAMINE_SYSCALL,
 		BLACKLIST(21), // mount
 		BLACKLIST(52), // umount2
+// todo: implement --allow-debuggers		
 		BLACKLIST(26), // ptrace
 		BLACKLIST(283), // kexec_load
 		BLACKLIST(341), // name_to_handle_at
@@ -416,6 +417,7 @@ void seccomp_filter_64(void) {
 		EXAMINE_SYSCALL,
 		BLACKLIST(165), // mount
 		BLACKLIST(166), // umount2
+// todo: implement --allow-debuggers		
 		BLACKLIST(101), // ptrace
 		BLACKLIST(246), // kexec_load
 		BLACKLIST(304), // open_by_handle_at
@@ -501,9 +503,13 @@ int seccomp_filter_drop(int enforce_seccomp) {
 #ifdef SYS_umount2		
 		filter_add_blacklist(SYS_umount2, 0);
 #endif
+
+		if (!arg_allow_debuggers) {
 #ifdef SYS_ptrace 		
-		filter_add_blacklist(SYS_ptrace, 0);
+			filter_add_blacklist(SYS_ptrace, 0);
 #endif
+		}
+
 #ifdef SYS_kexec_load		
 		filter_add_blacklist(SYS_kexec_load, 0);
 #endif
@@ -549,9 +555,12 @@ int seccomp_filter_drop(int enforce_seccomp) {
 #ifdef SYS_syslog		
 		filter_add_blacklist(SYS_syslog, 0);
 #endif
+		if (!arg_allow_debuggers) {
 #ifdef SYS_process_vm_readv		
-		filter_add_blacklist(SYS_process_vm_readv, 0);
+			filter_add_blacklist(SYS_process_vm_readv, 0);
 #endif
+		}
+		
 #ifdef SYS_process_vm_writev		
 		filter_add_blacklist(SYS_process_vm_writev, 0);
 #endif

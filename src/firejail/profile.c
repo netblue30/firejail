@@ -828,6 +828,16 @@ void profile_read(const char *fname) {
 		exit(1);
 	}
 
+	// allow debuggers
+	if (arg_allow_debuggers) {
+		char *tmp = strrchr(fname, '/');
+		if (tmp && *(tmp + 1) != '\0') {
+			tmp++;
+			if (strcmp(tmp, "disable-devel.inc") == 0)
+				return;
+		}
+	}
+
 	// open profile file:
 	FILE *fp = fopen(fname, "r");
 	if (fp == NULL) {

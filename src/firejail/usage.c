@@ -34,6 +34,7 @@ void usage(void) {
 	printf("\n");
 	printf("Options:\n\n");
 	printf("    -- - signal the end of options and disables further option processing.\n\n");
+	printf("    --allow-debuggers - allow tools such as strace and gdb inside the sandbox.\n\n");
 	printf("    --apparmor - enable AppArmor confinement\n\n");
 	printf("    --appimage - sandbox an AppImage application\n\n");
 	printf("    --audit - audit the sandbox, see Audit section for more details\n\n");

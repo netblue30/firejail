@@ -101,8 +101,9 @@ int arg_writable_etc = 0;			// writable etc
 int arg_writable_var = 0;			// writable var
 int arg_appimage = 0;				// appimage
 int arg_audit = 0;				// audit
-char *arg_audit_prog;				// audit
-int arg_apparmor;				// apparmor
+char *arg_audit_prog = NULL;			// audit
+int arg_apparmor = 0;				// apparmor
+int arg_allow_debuggers = 0;			// allow debuggers
 int login_shell = 0;
 
 int parent_to_child_fds[2];
@@ -730,6 +731,24 @@ static void detect_quiet(int argc, char **argv) {
 	}
 }
 
+static void detect_allow_debuggers(int argc, char **argv) {
+	int i;
+	
+	// detect --allow-debuggers
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--allow-debuggers") == 0) {
+			arg_allow_debuggers = 1;
+			break;
+		}
+		
+		// detect end of firejail params
+		if (strcmp(argv[i], "--") == 0)
+			break;
+		if (strncmp(argv[i], "--", 2) != 0)
+			break;
+	}
+}
+
 char *guess_shell(void) {
 	char *shell = NULL;
 	// shells in order of preference
@@ -766,10 +785,12 @@ int main(int argc, char **argv) {
 #endif
 
 	detect_quiet(argc, argv);
+	detect_allow_debuggers(argc, argv);
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
+
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
@@ -982,6 +1003,13 @@ int main(int argc, char **argv) {
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))
 		arg_nonewprivs = 1;
 	
+	if (arg_allow_debuggers) {
+		char *cmd = strdup("noblacklist ${PATH}/strace");
+		if (!cmd)
+			errExit("strdup");
+		profile_add(cmd);
+	}
+	
 	// parse arguments
 	for (i = 1; i < argc; i++) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
@@ -1005,6 +1033,9 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--force") == 0)
 			;
+		else if (strcmp(argv[i], "--allow-debuggers") == 0) {
+			// already handled
+		}
 
 		//*************************************
 		// filtering

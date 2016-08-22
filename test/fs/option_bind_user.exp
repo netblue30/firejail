@@ -9,7 +9,7 @@ expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"bind option is available only if running as root"
 }
-sleep 1
+after 100
 
 puts "\n"
 

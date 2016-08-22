@@ -45,6 +45,6 @@ expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"Child process initialized"
 }
-
-sleep 1
+send -- "exit\r"
+after 100
 puts "\nall done\n"

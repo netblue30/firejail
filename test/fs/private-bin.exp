@@ -66,6 +66,6 @@ expect {
 }
 send -- "exit\r"
 
-sleep 1
+after 100
 puts "\nall done\n"
 

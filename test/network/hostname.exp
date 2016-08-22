@@ -23,6 +23,7 @@ expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"done"
 }
-sleep 1
+send -- "exit\r"
+after 100
 
 puts "all done\n"

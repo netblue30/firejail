@@ -86,6 +86,8 @@ while { $i <= $MAXi } {
 	after 100
 #	sleep 1
 }
+send -- "exit\r"
+after 100
 
 puts "\n"
 

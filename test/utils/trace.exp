@@ -110,5 +110,6 @@ expect {
 	"bash:access /etc/terminfo/" {puts "debian\n"}
 	"bash:access /usr/share/terminfo/" {puts "arch\n"}
 }
+after 100
 
 puts "\nall done\n"

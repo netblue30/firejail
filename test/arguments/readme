@@ -5,5 +5,5 @@ Run "make && sudo make install" to install it.
 
 Run "make test" to run the tests.
 
-Run "make uninstall" to remove the test program.
+Run "sudo make uninstall" to remove the test program.
 

@@ -32,7 +32,7 @@ expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"done"
 }
-sleep 1
+after 100
 
 puts "\n"
 

@@ -85,6 +85,6 @@ expect {
 	"done"
 }
 
-sleep 1
+after 100
 
 puts "\nall done\n"

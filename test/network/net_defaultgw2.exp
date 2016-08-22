@@ -37,7 +37,8 @@ expect {
 	timeout {puts "TESTING ERROR 10.3\n";exit}
 	"10.10.30.0/24 dev eth1  proto kernel  scope link"
 }
-sleep 1
+send -- "exit\r"
+after 100
 
 puts "\nall done\n"
 

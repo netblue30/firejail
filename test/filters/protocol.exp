@@ -180,6 +180,6 @@ expect {
 	timeout {puts "TESTING ERROR 4.9\n";exit}
 	"after socket"
 }
-sleep 1
+after 100
 
 puts "\nall done\n"

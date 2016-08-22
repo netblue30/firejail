@@ -70,7 +70,8 @@ expect {
 	"state UP"
 }
 
-sleep 1
+send -- "exit\r"
+after 100
 
 puts "\nall done\n"
 

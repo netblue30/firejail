@@ -28,6 +28,8 @@ expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"state UP"
 }
+send -- "exit\r"
+after 100
 
 puts "\nall done\n"
 

@@ -156,4 +156,5 @@ expect {
 	timeout {puts "TESTING ERROR 24\n";exit}
 	"3"
 }
+after 100
 puts "\nall done\n"

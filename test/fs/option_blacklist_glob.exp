@@ -27,6 +27,7 @@ expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Permission denied"
 }
+after 100
 
 puts "\n"
 

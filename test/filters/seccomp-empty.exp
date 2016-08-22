@@ -144,5 +144,6 @@ expect {
 }
 sleep 2
 send -- "exit\r"
+after 100
 puts "\n"
 

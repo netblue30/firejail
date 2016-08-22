@@ -66,6 +66,7 @@ expect {
 	"eth0" {puts "TESTING ERROR 5.1\n";exit}
 	"done"
 }
-sleep 1
+send -- "exit\r"
+after 100
 
 puts "\nall done\n"

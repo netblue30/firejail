@@ -9,5 +9,5 @@ expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"cannot access profile"
 }
-sleep 1
+after 100
 puts "\nall done\n"

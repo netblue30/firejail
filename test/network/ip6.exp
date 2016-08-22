@@ -42,6 +42,8 @@ expect {
 	"scopeid 0x0<global>" { puts "Arch\n"}
 }
 
+send -- "exit\r"
+after 100
 
 puts "\nall done\n"
 

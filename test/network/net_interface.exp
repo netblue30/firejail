@@ -86,6 +86,8 @@ expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
 	"UP"
 }
+send -- "exit\r"
+after 100
 
 puts "all done\n"
 

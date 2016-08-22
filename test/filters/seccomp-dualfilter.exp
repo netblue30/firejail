@@ -51,4 +51,5 @@ expect {
 	"Parent is shutting down"
 }
 
+after 100
 puts "\nall done\n"

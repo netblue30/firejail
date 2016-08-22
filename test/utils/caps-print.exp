@@ -28,5 +28,5 @@ expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"net_raw             - disabled"
 }
-sleep 1
+after 100
 puts "\nall done\n"

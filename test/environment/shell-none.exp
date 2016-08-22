@@ -19,7 +19,7 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"shell=none configured, but no program specified"
 }
-sleep 1
+after 100
 
 send -- "firejail  --shell=none ls\r"
 expect {
@@ -30,7 +30,7 @@ expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"environment.sh"
 }
-sleep 1
+after 100
 
 send -- "firejail  --profile=shell-none.profile ls\r"
 expect {
@@ -41,7 +41,7 @@ expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"environment.sh"
 }
-sleep 1
+after 100
 
 
 puts "\nall done\n"

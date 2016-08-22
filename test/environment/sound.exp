@@ -77,7 +77,7 @@ expect {
 	timeout {puts "TESTING ERROR 25\n";exit}
 	"Parent is shutting down"
 }
-sleep 2
+after 100
 
 puts "\nall done\n"
 

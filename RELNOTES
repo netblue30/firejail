@@ -29,6 +29,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * run time support to disable remounting of /proc and /sys
   * added quiet-by-default config option in /etc/firejail/firejail.config
   * added netfilter-default config option in /etc/firejail/firejail.config
+  * added x11 command for profile files
   * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
   * new profiles: pix, audacity, xz, xzdec, gzip, cpio, less
   * new profiles: Atom Beta, Atom, jitsi, eom, uudeview

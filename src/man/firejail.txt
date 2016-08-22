@@ -82,7 +82,7 @@ Allow tools such as strace and gdb inside the sandbox.
 .br
 Example:
 .br
-$ firejail  --allow-debuggers --profile=/etc/firejail/firefox.profile --allow-debuggers strace -f firefox
+$ firejail  --allow-debuggers --profile=/etc/firejail/firefox.profile strace -f firefox
 .TP
 \fB\-\-apparmor
 Enable AppArmor confinement. Formore information, please see \fBAPPARMOR\fR section below.

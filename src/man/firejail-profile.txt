@@ -198,9 +198,15 @@ Mount an empty tmpfs filesystem on top of directory. This option is available on
 Blacklist violations logged to syslog.
 .TP
 \fBwhitelist file_or_directory
-Build a new user home in a temporary filesystem, and mount-bind file_or_directory.
-The modifications to file_or_directory are persistent, everything else is discarded
-when the sandbox is closed.
+Whitelist directory or file. A temporary file system is mounted on the top directory, and the
+whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
+everything else is discarded when the sandbox is closed. The top directory could be 
+user home, /dev, /media, /opt, /var, and /tmp.
+.br
+
+.br
+Symbolic link handling: with the exception of user home, both the link and the real file should be in
+the same top directory. For user home, both the link and the real file should be owned by the user.
 .TP
 \fBwritable-etc
 Mount /etc directory read-write.

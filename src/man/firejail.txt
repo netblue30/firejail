@@ -1587,9 +1587,15 @@ $ firejail \-\-version
 firejail version 0.9.27
 .TP
 \fB\-\-whitelist=dirname_or_filename
-Whitelist directory or file. This feature is implemented only for user home, /dev, /media, /opt, /var, and /tmp directories.
-With the exception of user home, both the link and the real file should be in
-the same top directory. For /home, both the link and the real file should be owned by the user.
+Whitelist directory or file. A temporary file system is mounted on the top directory, and the
+whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
+everything else is discarded when the sandbox is closed. The top directory could be 
+user home, /dev, /media, /opt, /var, and /tmp.
+.br
+
+.br
+Symbolic link handling: with the exception of user home, both the link and the real file should be in
+the same top directory. For user home, both the link and the real file should be owned by the user.
 .br
 
 .br
@@ -1630,7 +1636,7 @@ applications started in the sandbox from accessing other X11 displays.
 A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
 .br
 
-.br
+br
 Firejail will try first Xpra, and if Xpra is not installed on the system, it will try to find Xephyr.
 This feature is not available when running as root. 
 .br

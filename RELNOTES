@@ -1,35 +1,36 @@
 firejail (0.9.42~rc2) baseline; urgency=low
   * security: --whitelist deleted files, submitted by Vasya Novikov
-  * security: disable x32 ABI, submitted by Jann Horn
+  * security: disable x32 ABI in seccomp, submitted by Jann Horn
   * security: tighten --chroot, submitted by Jann Horn
   * security: terminal sandbox escape, submitted by Stephan Sokolow
-  * deprecated --user option, please use "sudo -u username firejail" instead
-  * --read-write option rework
-  * allow symlinks in home directory for --whitelist option
-  * --allow-debuggers option
-  * --private-template (very simillar to the former --private-home)
-  * AppImage support (--appimage)
-  * AppArmor support (--apparmor)
-  * compile time support for Busybox
-  * Sandbox auditing support (--audit)
-  * remove environment variable (--rmenv)
-  * noexec support (--noexec)
-  * --overlay-clean option
-  * --overlay-named=name option
-  * compile time and run time support to disable overlayfs
-  * Ubuntu snap support
-  * include /dev/snd in --private-dev
-  * added mkfile profile command
-  * added quiet profile command
-  * recursive mkdir
-  * seccomp filter updated
-  * compile time and run time support to disable whitelists
-  * compile time support to disable global configuration file
-  * run time support to disable remounting of /proc and /sys
-  * run time support to disable chroot desktop features
-  * added quiet-by-default config option in /etc/firejail/firejail.config
-  * added netfilter-default config option in /etc/firejail/firejail.config
-  * added x11 command for profile files
+  * modifs: deprecated --user option, please use "sudo -u username firejail" instead
+  * modifs: allow symlinks in home directory for --whitelist option
+  * modifs: Firejail prompt is enabled by env variable FIREJAIL_PROMPT="yes"
+  * modifs: recursive mkdir
+  * modifs: include /dev/snd in --private-dev
+  * modifs: seccomp filter update
+  * feature: AppImage support (--appimage)
+  * feature: AppArmor support (--apparmor)
+  * feature: Ubuntu snap support (/etc/firejail/snap.profile)
+  * feature: Sandbox auditing support (--audit)
+  * feature: remove environment variable (--rmenv)
+  * feature: noexec support (--noexec)
+  * feature: clean local overlay storage directory (--overlay-clean)
+  * feature: store and reuse overlay (--overlay-named)
+  * feature: allow debugging inside the sandbox with gdb and strace (--allow-debuggers)
+  * feature: mkfile profile command
+  * feature: quiet profile command
+  * feature: x11 profile command
+  * compile time: Busybox support (--enable-busybox-workaround)
+  * compile time: disable overlayfs (--disable-overlayfs)
+  * compile time: disable whitlisting (--disable-whitelist)
+  * compile time: disable global config (--disable-globalcfg)
+  * run time: enable/disable overlayfs (overlayfs yes/no)
+  * run time: enable/disable  quiet as default (quiet-by-default yes/no)
+  * run time: user-defined network filter (netfilter-default)
+  * run time: enable/disable whitelisting (whitelist yes/no)
+  * run time: enable/disable remounting of /proc and /sys (remount-proc-sys yes/no)
+  * run time: enable/disable chroot desktop features (chroot-desktop yes/no)
   * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
   * new profiles: pix, audacity, xz, xzdec, gzip, cpio, less
   * new profiles: Atom Beta, Atom, jitsi, eom, uudeview

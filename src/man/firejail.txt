@@ -1037,24 +1037,6 @@ Example:
 $ firejail \-\-overlay-named=jail1 firefox
 
 .TP
-\fB\-\-overlay-path=path
-Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
-the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in the specified path. The created overlay can be reused between multiple sessions.
-.br
-
-.br
-OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18.
-This option is not available on Grsecurity systems.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay-path=~/jails/jail1 firefox
-
-.TP
 \fB\-\-overlay-tmpfs
 Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay,
 and are discarded when the sandbox is closed.

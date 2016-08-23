@@ -1365,6 +1365,13 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: invalid overlay option\n");
 					exit(1);
 				}
+				
+				// check name
+				invalid_filename(subdirname);
+				if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
+					fprintf(stderr, "Error: invalid overlay name\n");
+					exit(1);
+				}
 				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
 			}
 			else {
@@ -1373,6 +1380,7 @@ int main(int argc, char **argv) {
 			}
 
 		}
+#if 0 // disabled for now, it could be used to overwrite system directories	
 		else if (strncmp(argv[i], "--overlay-path=", 15) == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
 				if (cfg.chrootdir) {
@@ -1400,6 +1408,7 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 		}
+#endif
 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
 				if (cfg.chrootdir) {

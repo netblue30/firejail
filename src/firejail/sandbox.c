@@ -378,7 +378,30 @@ void start_application(void) {
 	exit(1); // it should never get here!!!
 }
 
-
+static void enforce_filters(void) {
+	// force default seccomp inside the chroot, no keep or drop list
+	// the list build on top of the default drop list is kept intact
+	arg_seccomp = 1;
+	if (cfg.seccomp_list_drop) {
+		free(cfg.seccomp_list_drop);
+		cfg.seccomp_list_drop = NULL;
+	}
+	if (cfg.seccomp_list_keep) {
+		free(cfg.seccomp_list_keep);
+		cfg.seccomp_list_keep = NULL;
+	}
+	
+	// disable all capabilities
+	if (arg_caps_default_filter || arg_caps_list)
+		fprintf(stderr, "Warning: all capabilities disabled for a regular user in chroot\n");
+	arg_caps_drop_all = 1;
+	
+	// drop all supplementary groups; /etc/group file inside chroot
+	// is controlled by a regular usr
+	arg_nogroups = 1;
+	if (!arg_quiet)
+		printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
+}
 
 int sandbox(void* sandbox_arg) {
 	// Get rid of unused parameter warning
@@ -463,37 +486,13 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_CHROOT		
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
-
-//		// redo cp command
-//		fs_build_cp_command();
 		
 		// force caps and seccomp if not started as root
 		if (getuid() != 0) {
-			// force default seccomp inside the chroot, no keep or drop list
-			// the list build on top of the default drop list is kept intact
-			arg_seccomp = 1;
+			enforce_filters();
 #ifdef HAVE_SECCOMP
 			enforce_seccomp = 1;
 #endif
-			if (cfg.seccomp_list_drop) {
-				free(cfg.seccomp_list_drop);
-				cfg.seccomp_list_drop = NULL;
-			}
-			if (cfg.seccomp_list_keep) {
-				free(cfg.seccomp_list_keep);
-				cfg.seccomp_list_keep = NULL;
-			}
-			
-			// disable all capabilities
-			if (arg_caps_default_filter || arg_caps_list)
-				fprintf(stderr, "Warning: all capabilities disabled for a regular user in chroot\n");
-			arg_caps_drop_all = 1;
-			
-			// drop all supplementary groups; /etc/group file inside chroot
-			// is controlled by a regular usr
-			arg_nogroups = 1;
-			if (!arg_quiet)
-				printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
 		}
 		else
 			arg_seccomp = 1;
@@ -507,8 +506,18 @@ int sandbox(void* sandbox_arg) {
 	else 
 #endif		
 #ifdef HAVE_OVERLAYFS
-	if (arg_overlay)	
+	if (arg_overlay)	{
 		fs_overlayfs();
+		// force caps and seccomp if not started as root
+		if (getuid() != 0) {
+			enforce_filters();
+#ifdef HAVE_SECCOMP
+			enforce_seccomp = 1;
+#endif
+		}
+		else
+			arg_seccomp = 1;
+	}
 	else
 #endif
 		fs_basic_fs();

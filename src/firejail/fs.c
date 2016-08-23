@@ -817,9 +817,10 @@ void fs_basic_fs(void) {
 
 #ifdef HAVE_OVERLAYFS
 char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
-	// create ~/.firejail directory
 	struct stat s;
 	char *dirname;
+
+	// create ~/.firejail directory
 	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dirname, &s) == -1) {
@@ -835,12 +836,15 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
 		exit(1);
 	}
-
 	free(dirname);
 
 	// check overlay directory
 	if (asprintf(&dirname, "%s/.firejail/%s", cfg.homedir, subdirname) == -1)
 		errExit("asprintf");
+	if (is_link(dirname)) {
+		fprintf(stderr, "Error: overlay directory is a symbolic link\n");
+		exit(1);
+	}
 	if (allow_reuse == 0) {
 		if (stat(dirname, &s) == 0) {
 			fprintf(stderr, "Error: overlay directory already exists: %s\n", dirname);

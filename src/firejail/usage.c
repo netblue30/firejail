@@ -185,10 +185,30 @@ void usage(void) {
 	printf("\t$HOME/.firejail/<NAME> directory. (OverlayFS support is required in\n");
 	printf("\tLinux kernel for this option to work). \n\n");
 
+#if 0 // disabled for now, it could be used to overwrite system directories	
 	printf("    --overlay-path=path - mount a filesystem overlay on top of the current\n");
 	printf("\tfilesystem. The upper filesystem layer is persistent, and stored in\n");
 	printf("\tthe specified path. (OverlayFS support is required in Linux kernel for\n");
 	printf("\tthis option to work). \n\n");
+	
+.TP
+\fB\-\-overlay-path=path
+Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
+the system directories are mounted read-write. All filesystem modifications go into the overlay.
+The overlay is stored in the specified path. The created overlay can be reused between multiple sessions.
+.br
+
+.br
+OverlayFS support is required in Linux kernel for this option to work.
+OverlayFS was officially introduced in Linux kernel version 3.18.
+This option is not available on Grsecurity systems.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-overlay-path=~/jails/jail1 firefox
+#endif
 
 	printf("    --overlay-tmpfs - mount a filesystem overlay on top of the current\n");
 	printf("\tfilesystem. The upper layer is stored in a tmpfs filesystem,\n");

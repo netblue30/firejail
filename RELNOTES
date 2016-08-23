@@ -16,7 +16,6 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * noexec support (--noexec)
   * --overlay-clean option
   * --overlay-named=name option
-  * --overlay-path=path option
   * compile time and run time support to disable overlayfs
   * Ubuntu snap support
   * include /dev/snd in --private-dev

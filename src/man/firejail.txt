@@ -921,6 +921,17 @@ Example:
 $ firejail \-\-overlay-tmpfs firefox
 
 .TP
+\fB\-\-overlay-clean
+Clean all overlays stored in $HOME/.firejail directory. Overlays created with --overlay-path=path
+outside $HOME/.firejail will not be deleted.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-overlay-clean
+
+.TP
 \fB\-\-private
 Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is

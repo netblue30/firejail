@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <dirent.h>
 #include <grp.h>
+#include <ftw.h>
 
 #define MAX_GROUPS 1024
 // drop privileges
@@ -614,4 +615,22 @@ void invalid_filename(const char *fname) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
 		exit(1);
 	}
+}
+
+static int remove_callback(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf) {
+	(void) sb;
+	(void) typeflag;
+	(void) ftwbuf;
+	
+	int rv = remove(fpath);
+	if (rv)
+		perror(fpath);
+
+	return rv;
+}
+
+
+int remove_directory(const char *path) {
+	// FTW_PHYS - do not follow symbolic links
+	return nftw(path, remove_callback, 64, FTW_DEPTH | FTW_PHYS);
 }

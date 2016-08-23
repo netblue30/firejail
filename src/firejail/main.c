@@ -245,6 +245,21 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		printf("firejail version %s\n", VERSION);
 		exit(0);
 	}
+	else if (strcmp(argv[i], "--overlay-clean") == 0) {
+		char *path;
+		if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		if (setreuid(0, 0) < 0)
+			errExit("setreuid");
+		if (setregid(0, 0) < 0)
+			errExit("setregid");
+		errno = 0;
+		int rv = remove_directory(path);
+		if (rv) {
+			fprintf(stderr, "Error: cannot removed overlays stored in ~/.firejail directory, errno %d\n", errno);
+			exit(1);
+		}
+	}
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		logargs(argc, argv);

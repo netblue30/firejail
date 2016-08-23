@@ -39,7 +39,7 @@ Reading profile /home/netblue/.config/firejail/icecat.profile
 \fB3.\fR Use a default.profile file if the sandbox
 is started by a regular user, or a server.profile file if the sandbox
 is started by root. Firejail looks for these files in ~/.config/firejail directory, followed by /etc/firejail directory.
-To disable default profile loading, use --noroot command option. Example:
+To disable default profile loading, use \-\-noprofile command option. Example:
 .PP
 .RS
 $ firejail

@@ -533,8 +533,14 @@ int sandbox(void* sandbox_arg) {
 	// private mode
 	//****************************
 	if (arg_private) {
-		if (cfg.home_private)	// --private=
-			fs_private_homedir();
+		if (cfg.home_private) {	// --private=
+			if (cfg.chrootdir)
+				fprintf(stderr, "Warning: private=directory feature is disabled in chroot\n");
+			else if (arg_overlay)
+				fprintf(stderr, "Warning: private=directory feature is disabled in overlay\n");
+			else
+				fs_private_homedir();
+		}
 		else // --private
 			fs_private();
 	}
@@ -542,11 +548,20 @@ int sandbox(void* sandbox_arg) {
    if (arg_private_template) 
       fs_private_template();
 
-	if (arg_private_dev)
-		fs_private_dev();
+	if (arg_private_dev) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-dev feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-dev feature is disabled in overlay\n");
+		else
+			fs_private_dev();
+	}
+		
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
 			fprintf(stderr, "Warning: private-etc feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-etc feature is disabled in overlay\n");
 		else {
 			fs_private_etc_list();
 			// create /etc/ld.so.preload file again
@@ -554,14 +569,24 @@ int sandbox(void* sandbox_arg) {
 				fs_trace_preload();
 		}
 	}
+	
 	if (arg_private_bin) {
 		if (cfg.chrootdir)
 			fprintf(stderr, "Warning: private-bin feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-bin feature is disabled in overlay\n");
 		else
 			fs_private_bin_list();
 	}
-	if (arg_private_tmp)
-		fs_private_tmp();
+	
+	if (arg_private_tmp) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-tmp feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-tmp feature is disabled in overlay\n");
+		else
+			fs_private_tmp();
+	}
 	
 	//****************************
 	// update /proc, /sys, /dev, /boot directorymy
@@ -574,7 +599,12 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	if (cfg.profile) {
 		// apply all whitelist commands ... 
-		fs_whitelist();
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: whitelist feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: whitelist feature is disabled in overlay\n");
+		else
+			fs_whitelist();
 		
 		// ... followed by blacklist commands
 		fs_blacklist();

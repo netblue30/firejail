@@ -26,6 +26,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * compile time and run time support to disable whitelists
   * compile time support to disable global configuration file
   * run time support to disable remounting of /proc and /sys
+  * run time support to disable chroot desktop features
   * added quiet-by-default config option in /etc/firejail/firejail.config
   * added netfilter-default config option in /etc/firejail/firejail.config
   * added x11 command for profile files

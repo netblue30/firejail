@@ -1211,56 +1211,58 @@ int fs_check_chroot_dir(const char *rootdir) {
 void fs_chroot(const char *rootdir) {
 	assert(rootdir);
 	
-	// mount-bind a /dev in rootdir
-	char *newdev;
-	if (asprintf(&newdev, "%s/dev", rootdir) == -1)
-		errExit("asprintf");
-	if (arg_debug)
-		printf("Mounting /dev on %s\n", newdev);
-	if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mounting /dev");
-	free(newdev);
-	
-	// x11
-	if (getenv("FIREJAIL_X11")) {
-		char *newx11;
-		if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
+	if (checkcfg(CFG_CHROOT_DESKTOP)) {
+		// mount-bind a /dev in rootdir
+		char *newdev;
+		if (asprintf(&newdev, "%s/dev", rootdir) == -1)
 			errExit("asprintf");
 		if (arg_debug)
-			printf("Mounting /tmp/.X11-unix on %s\n", newx11);
-		if (mount("/tmp/.X11-unix", newx11, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /tmp/.X11-unix");
-		free(newx11);
-	}
-	
-	// some older distros don't have a /run directory
-	// create one by default
-	// no exit on error, let the user deal with any problems
-	char *rundir;
-	if (asprintf(&rundir, "%s/run", rootdir) == -1)
-		errExit("asprintf");
-	if (!is_dir(rundir)) {
-		int rv = mkdir(rundir, 0755);
-		(void) rv;
-		rv = chown(rundir, 0, 0);
-		(void) rv;
-	}
-	
-	// copy /etc/resolv.conf in chroot directory
-	// if resolv.conf in chroot is a symbolic link, this will fail
-	// no exit on error, let the user deal with the problem
-	char *fname;
-	if (asprintf(&fname, "%s/etc/resolv.conf", rootdir) == -1)
-		errExit("asprintf");
-	if (arg_debug)
-		printf("Updating /etc/resolv.conf in %s\n", fname);
-	if (is_link(fname)) {
-		fprintf(stderr, "Error: invalid %s file\n", fname);
-		exit(1);
-	}
-	if (copy_file("/etc/resolv.conf", fname) == -1)
-		fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
+			printf("Mounting /dev on %s\n", newdev);
+		if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting /dev");
+		free(newdev);
 		
+		// x11
+		if (getenv("FIREJAIL_X11")) {
+			char *newx11;
+			if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
+				errExit("asprintf");
+			if (arg_debug)
+				printf("Mounting /tmp/.X11-unix on %s\n", newx11);
+			if (mount("/tmp/.X11-unix", newx11, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mounting /tmp/.X11-unix");
+			free(newx11);
+		}
+		
+		// some older distros don't have a /run directory
+		// create one by default
+		// no exit on error, let the user deal with any problems
+		char *rundir;
+		if (asprintf(&rundir, "%s/run", rootdir) == -1)
+			errExit("asprintf");
+		if (!is_dir(rundir)) {
+			int rv = mkdir(rundir, 0755);
+			(void) rv;
+			rv = chown(rundir, 0, 0);
+			(void) rv;
+		}
+		
+		// copy /etc/resolv.conf in chroot directory
+		// if resolv.conf in chroot is a symbolic link, this will fail
+		// no exit on error, let the user deal with the problem
+		char *fname;
+		if (asprintf(&fname, "%s/etc/resolv.conf", rootdir) == -1)
+			errExit("asprintf");
+		if (arg_debug)
+			printf("Updating /etc/resolv.conf in %s\n", fname);
+		if (is_link(fname)) {
+			fprintf(stderr, "Error: invalid %s file\n", fname);
+			exit(1);
+		}
+		if (copy_file("/etc/resolv.conf", fname) == -1)
+			fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
+	}
+	
 	// chroot into the new directory
 	if (arg_debug)
 		printf("Chrooting into %s\n", rootdir);
@@ -1269,24 +1271,26 @@ void fs_chroot(const char *rootdir) {
 	// mount a new tmpfs in /run/firejail/mnt - the old one was lost in chroot
 	fs_build_remount_mnt_dir();
 		
-	// update /var directory in order to support multiple sandboxes running on the same root directory
-	if (!arg_private_dev)
-		fs_dev_shm();
-	fs_var_lock();
-	fs_var_tmp();
-	fs_var_log();
-	fs_var_lib();
-	fs_var_cache();
-	fs_var_utmp();
-
-	// don't leak user information
-	restrict_users();
-
-	// when starting as root, firejail config is not disabled;
-	// this mode could be used to install and test new software by chaining
-	// firejail sandboxes (firejail --force)
-	if (getuid() != 0)
-		disable_config();
+	if (checkcfg(CFG_CHROOT_DESKTOP)) {
+		// update /var directory in order to support multiple sandboxes running on the same root directory
+		if (!arg_private_dev)
+			fs_dev_shm();
+		fs_var_lock();
+		fs_var_tmp();
+		fs_var_log();
+		fs_var_lib();
+		fs_var_cache();
+		fs_var_utmp();
+	
+		// don't leak user information
+		restrict_users();
+	
+		// when starting as root, firejail config is not disabled;
+		// this mode could be used to install and test new software by chaining
+		// firejail sandboxes (firejail --force)
+		if (getuid() != 0)
+			disable_config();
+	}
 }
 #endif
 

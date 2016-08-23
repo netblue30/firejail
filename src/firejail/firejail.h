@@ -593,7 +593,8 @@ void sandboxfs(int op, pid_t pid, const char *patqh);
 #define CFG_XEPHYR_WINDOW_TITLE 10
 #define CFG_REMOUNT_PROC_SYS 11
 #define CFG_OVERLAYFS 12
-#define CFG_MAX 13 // this should always be the last entry
+#define CFG_CHROOT_DESKTOP 13
+#define CFG_MAX 14 // this should always be the last entry
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
 extern char *netfilter_default;

@@ -241,6 +241,14 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			else if (strncmp(ptr, "chroot-desktop ", 15) == 0) {
+				if (strcmp(ptr + 15, "yes") == 0)
+					cfg_val[CFG_CHROOT_DESKTOP] = 1;
+				else if (strcmp(ptr + 15, "no") == 0)
+					cfg_val[CFG_CHROOT_DESKTOP] = 0;
+				else
+					goto errout;
+			}
 			else
 				goto errout;
 

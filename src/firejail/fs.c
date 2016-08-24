@@ -60,14 +60,7 @@ static void create_empty_file(void) {
 		if (!fp)
 			errExit("fopen");
 
-		int fd = fileno(fp);
-		if (fd == -1)
-			errExit("fileno");
-		if (fchown(fd, 0, 0) < 0)
-			errExit("chown");
-		if (fchmod(fd, S_IRUSR) < 0)
-			errExit("chown");
-
+		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR);
 		fclose(fp);
 	}
 }

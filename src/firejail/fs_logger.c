@@ -97,11 +97,7 @@ void fs_logger_print(void) {
 		perror("fopen");		
 		return;
 	}
-	
-	int rv = chown(RUN_FSLOGGER_FILE, getuid(), getgid());
-	(void) rv; // best effort!
-	rv = chmod(RUN_FSLOGGER_FILE, 0644);
-	(void) rv; // best effort!
+	SET_PERMS_STREAM_NOERR(fp, getuid(), getgid(), 0644);
 	
 	FsMsg *ptr = head;
 	while (ptr) {

@@ -40,14 +40,10 @@ void fs_hostname(const char *hostname) {
 			exit(1);
 		}
 		fprintf(fp, "%s\n", hostname);
-		fclose(fp);
-		
 		// mode and owner
-		if (chown(RUN_HOSTNAME_FILE, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_HOSTNAME_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
-			errExit("chmod");
-		
+		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+		fclose(fp);
+
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_HOSTNAME_FILE, "/etc/hostname", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind /etc/hostname");
@@ -88,13 +84,9 @@ void fs_hostname(const char *hostname) {
 				fprintf(fp2, "%s\n", buf);
 		}
 		fclose(fp1);
-		fclose(fp2);
-		
 		// mode and owner
-		if (chown(RUN_HOSTS_FILE, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_HOSTS_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
-			errExit("chmod");
+		SET_PERMS_STREAM(fp2, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+		fclose(fp2);
 		
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_HOSTS_FILE, "/etc/hosts", NULL, MS_BIND|MS_REC, NULL) < 0)
@@ -126,13 +118,11 @@ void fs_resolvconf(void) {
 			fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
 		if (cfg.dns3)
 			fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
-		fclose(fp);
-		
+
 		// mode and owner
-		if (chown(RUN_RESOLVCONF_FILE, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_RESOLVCONF_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
-			errExit("chmod");
+		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+
+		fclose(fp);
 		
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_RESOLVCONF_FILE, "/etc/resolv.conf", NULL, MS_BIND|MS_REC, NULL) < 0)

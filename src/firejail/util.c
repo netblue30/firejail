@@ -170,7 +170,7 @@ void logerr(const char *msg) {
 
 
 // return -1 if error, 0 if no error
-int copy_file(const char *srcname, const char *destname) {
+int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
 	assert(srcname);
 	assert(destname);
 
@@ -206,6 +206,11 @@ int copy_file(const char *srcname, const char *destname) {
 			done += rv;
 		}
 	}
+
+	if (fchown(dst, uid, gid) == -1)
+		errExit("fchown");
+	if (fchmod(dst, mode) == -1)
+		errExit("fchmod");
 
 	close(src);
 	close(dst);

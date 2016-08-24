@@ -114,7 +114,7 @@ void pulseaudio_init(void) {
 	char *pulsecfg = NULL;
 	if (asprintf(&pulsecfg, "%s/client.conf", RUN_PULSE_DIR) == -1)
 		errExit("asprintf");
-	if (copy_file("/etc/pulse/client.conf", pulsecfg))
+	if (copy_file("/etc/pulse/client.conf", pulsecfg, -1, -1, 0644))
 		errExit("copy_file");
 	FILE *fp = fopen(pulsecfg, "a+");
 	if (!fp)

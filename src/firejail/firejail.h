@@ -81,19 +81,23 @@
 		assert(file);\
 		struct stat s;\
 		if (stat(file, &s) == -1) errExit("stat");\
-		assert(s.st_uid == uid && s.st_gid == gid && (s.st_mode & 07777) == mode);\
+		assert(s.st_uid == uid);\
+		assert(s.st_gid == gid);\
+		assert((s.st_mode & 07777) == (mode));\
 	} while (0)
 #define ASSERT_PERMS_FD(fd, uid, gid, mode) \
 	do { \
 		struct stat s;\
 		if (stat(fd, &s) == -1) errExit("stat");\
-		assert(s.st_uid == uid && s.st_gid == gid && (s.st_mode & 07777) == mode);\
+		assert(s.st_uid == uid);\
+		assert(s.st_gid == gid);\
+		assert((s.st_mode & 07777) == (mode));\
 	} while (0)
 #define ASSERT_PERMS_STREAM(file, uid, gid, mode) \
 	do { \
 		int fd = fileno(file);\
 		if (fd == -1) errExit("fileno");\
-		ASSERT_PERMS_FD(fd, uid, gid, mode);\
+		ASSERT_PERMS_FD(fd, uid, gid, (mode));\
 	} while (0)
 
 // main.c

@@ -3,12 +3,14 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * security: disable x32 ABI in seccomp, submitted by Jann Horn
   * security: tighten --chroot, submitted by Jann Horn
   * security: terminal sandbox escape, submitted by Stephan Sokolow
-  * modifs: deprecated --user option, please use "sudo -u username firejail" instead
+  * security: several TOCTOU fixes submitted by Aleksey Manevich
+  * modifs: deprecated --user option, please use "sudo -u username firejail"
   * modifs: allow symlinks in home directory for --whitelist option
   * modifs: Firejail prompt is enabled by env variable FIREJAIL_PROMPT="yes"
   * modifs: recursive mkdir
   * modifs: include /dev/snd in --private-dev
   * modifs: seccomp filter update
+  * modifs: release archives moved to .xz format
   * feature: AppImage support (--appimage)
   * feature: AppArmor support (--apparmor)
   * feature: Ubuntu snap support (/etc/firejail/snap.profile)
@@ -17,7 +19,8 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * feature: noexec support (--noexec)
   * feature: clean local overlay storage directory (--overlay-clean)
   * feature: store and reuse overlay (--overlay-named)
-  * feature: allow debugging inside the sandbox with gdb and strace (--allow-debuggers)
+  * feature: allow debugging inside the sandbox with gdb and strace
+         (--allow-debuggers)
   * feature: mkfile profile command
   * feature: quiet profile command
   * feature: x11 profile command
@@ -29,13 +32,14 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * run time: enable/disable  quiet as default (quiet-by-default yes/no)
   * run time: user-defined network filter (netfilter-default)
   * run time: enable/disable whitelisting (whitelist yes/no)
-  * run time: enable/disable remounting of /proc and /sys (remount-proc-sys yes/no)
+  * run time: enable/disable remounting of /proc and /sys
+          (remount-proc-sys yes/no)
   * run time: enable/disable chroot desktop features (chroot-desktop yes/no)
-  * new profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
-  * new profiles: pix, audacity, xz, xzdec, gzip, cpio, less
-  * new profiles: Atom Beta, Atom, jitsi, eom, uudeview
-  * new profiles: tar (gtar), unzip, unrar, file, skypeforlinux,
-  * new profiles: inox, Slack, gnome-chess. Gajim IM client
+  * profiles: Gitter, gThumb, mpv, Franz messenger, LibreOffice
+  * profiles: pix, audacity, xz, xzdec, gzip, cpio, less
+  * profiles: Atom Beta, Atom, jitsi, eom, uudeview
+  * profiles: tar (gtar), unzip, unrar, file, skypeforlinux,
+  * profiles: inox, Slack, gnome-chess. Gajim IM client
  -- netblue30 <netblue30@yahoo.com>  Thu, 21 Jul 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low

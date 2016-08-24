@@ -1086,18 +1086,6 @@ Example:
 $ firejail \-\-private=/home/netblue/firefox-home firefox
 
 .TP
-\fB\-\-private-template=templatedir
-Mount new /root and /home/user directories in temporary
-filesystems, and copy all files in templatedir. All modifications are discarded when the sandbox is
-closed.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-private-template=/home/netblue/.config/mozilla firefox
-
-.TP
 \fB\-\-private-bin=file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
 If no listed file is found, /bin directory will be empty.

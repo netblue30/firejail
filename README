@@ -39,6 +39,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- Busybox support
 	- X11 support rewrite
 	- gether shell selection code in one place
+	- fixed several TOCTOU security problems
 greigdp (https://github.com/greigdp)
 	- Gajim IM client profile
 	- fix Slack profile

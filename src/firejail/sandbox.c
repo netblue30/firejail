@@ -544,9 +544,11 @@ int sandbox(void* sandbox_arg) {
 		else // --private
 			fs_private();
 	}
-	
+
+#if 0	
    if (arg_private_template) 
       fs_private_template();
+#endif
 
 	if (arg_private_dev) {
 		if (cfg.chrootdir)

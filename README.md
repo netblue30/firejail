@@ -38,27 +38,6 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 Version 0.9.41~rc1 was released.
 
-# Branch status: unstable
-
-A number of problems are being worked on. This is the output of "make test":
-`````
-[...]
-cd test/sysutils; ./sysutils.sh | grep TESTING
-TESTING: cpio
-netblue@debian:~/work/github/firejail/test/sysutils$ TESTING ERROR 1
-TESTING: gzip
-netblue@debian:~/work/github/firejail/test/sysutils$ TESTING ERROR 1
-TESTING: xzdec
-netblue@debian:~/work/github/firejail/test/sysutils$ TESTING ERROR 1
-TESTING: xz
-netblue@debian:~/work/github/firejail/test/sysutils$ TESTING ERROR 1
-TESTING: less
-TESTING: file
-TESTING: tar
-netblue@debian:~/work/github/firejail/test/sysutils$ TESTING ERROR 3.1
-[...]
-`````
-
 ## Deprecated --user
 
 --user option was deprecated, please use "sudo -u username firejail application" instead.

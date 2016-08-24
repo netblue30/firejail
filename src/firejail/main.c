@@ -1561,17 +1561,21 @@ int main(int argc, char **argv) {
 			arg_writable_var = 1;
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
+#if 0 
          if (arg_private_template) {
             fprintf(stderr, "Error: --private and --private-template are mutually exclusive\n");
             exit(1);
          }
+#endif
 			arg_private = 1;
-      }
+		}
 		else if (strncmp(argv[i], "--private=", 10) == 0) {
+#if 0 
          if (arg_private_template) {
             fprintf(stderr, "Error: --private and --private-template are mutually exclusive\n");
             exit(1);
          }
+#endif
 			// extract private home dirname
 			cfg.home_private = argv[i] + 10;
 			if (*cfg.home_private == '\0') {
@@ -1581,6 +1585,7 @@ int main(int argc, char **argv) {
 			fs_check_private_dir();
 			arg_private = 1;
 		}
+#if 0		
       else if (strncmp(argv[i], "--private-template=", 19) == 0) {
          cfg.private_template = argv[i] + 19;
          if (arg_private) {
@@ -1594,6 +1599,7 @@ int main(int argc, char **argv) {
          fs_check_private_template();
          arg_private_template = 1;
       }
+#endif
 		else if (strcmp(argv[i], "--private-dev") == 0) {
 			arg_private_dev = 1;
 		}

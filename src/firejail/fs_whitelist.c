@@ -275,18 +275,14 @@ static void whitelist_path(ProfileEntry *entry) {
 				fprintf(stderr, "Error: cannot create empty file in home directory\n");
 				exit(1);
 			}
+			// set file properties
+			SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
 			fclose(fp);
 		}
 		else
 			return; // the file is already present
 	}
 	
-	// set file properties
-	if (chown(path, s.st_uid, s.st_gid) < 0)
-		errExit("chown");
-	if (chmod(path, s.st_mode) < 0)
-		errExit("chmod");
-
 	// mount
 	if (mount(wfile, path, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");

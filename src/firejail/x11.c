@@ -132,13 +132,9 @@ void fs_x11(void) {
 		fprintf(stderr, "Error: cannot create empty file in x11 directory\n");
 		exit(1);
 	}
-	fclose(fp);
-
 	// set file properties
-	if (chown(x11file, s.st_uid, s.st_gid) < 0)
-		errExit("chown");
-	if (chmod(x11file, s.st_mode) < 0)
-		errExit("chmod");
+	SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
+	fclose(fp);
 
 	// mount
 	char *wx11file;

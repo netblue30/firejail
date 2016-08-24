@@ -273,14 +273,8 @@ void protocol_filter_save(void) {
 	if (!fp)
 		errExit("fopen");
 	fprintf(fp, "%s\n", cfg.protocol);
+	SET_PERMS_STREAM(fp, 0, 0, 0600);
 	fclose(fp);
-
-	if (chmod(RUN_PROTOCOL_CFG, 0600) < 0)
-		errExit("chmod");
-
-	if (chown(RUN_PROTOCOL_CFG, 0, 0) < 0)
-		errExit("chown");
-
 }
 
 void protocol_filter_load(const char *fname) {

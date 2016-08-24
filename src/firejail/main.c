@@ -663,14 +663,10 @@ static void set_name_file(pid_t pid) {
 		exit(1);
 	}
 	fprintf(fp, "%s\n", cfg.name);
-	fclose(fp);
-	
+
 	// mode and ownership
-	if (chown(fname, 0, 0) == -1)
-		errExit("chown");
-	if (chmod(fname, 0644) == -1)
-		errExit("chmod");
-	
+	SET_PERMS_STREAM(fp, 0, 0, 0644);
+	fclose(fp);
 }
 
 static void delete_name_file(pid_t pid) {
@@ -694,14 +690,10 @@ static void set_x11_file(pid_t pid, int display) {
 		exit(1);
 	}
 	fprintf(fp, "%d\n", display);
-	fclose(fp);
-	
+
 	// mode and ownership
-	if (chown(fname, 0, 0) == -1)
-		errExit("chown");
-	if (chmod(fname, 0644) == -1)
-		errExit("chmod");
-	
+	SET_PERMS_STREAM(fp, 0, 0, 0644);
+	fclose(fp);
 }
 
 static void delete_x11_file(pid_t pid) {

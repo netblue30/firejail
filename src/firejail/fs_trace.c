@@ -37,11 +37,8 @@ void fs_trace_preload(void) {
 		FILE *fp = fopen("/etc/ld.so.preload", "w");
 		if (!fp)
 			errExit("fopen");
+		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 		fclose(fp);
-		if (chown("/etc/ld.so.preload", 0, 0) < 0)
-			errExit("chown");
-		if (chmod("/etc/ld.so.preload", S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
-			errExit("chmod");
 		fs_logger("touch /etc/ld.so.preload");
 	}
 }
@@ -66,12 +63,9 @@ void fs_trace(void) {
 	}	
 	else
 		assert(0);
-		
+
+	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	fclose(fp);
-	if (chown(RUN_LDPRELOAD_FILE, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(RUN_LDPRELOAD_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
-		errExit("chmod");
 	
 	// mount the new preload file
 	if (arg_debug)
@@ -81,5 +75,3 @@ void fs_trace(void) {
 	fs_logger("create /etc/ld.so.preload");
 }
 
-		
-	

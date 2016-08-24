@@ -187,12 +187,9 @@ static void sanitize_passwd(void) {
 		fprintf(fpout, "%s", buf);
 	}
 	fclose(fpin);
+	SET_PERMS_STREAM(fpout, 0, 0, 0644);
 	fclose(fpout);
-	if (chown(RUN_PASSWD_FILE, 0, 0) == -1)
-		errExit("chown");
-	if (chmod(RUN_PASSWD_FILE, 0644) == -1)
-		errExit("chmod");
-		
+
 	// mount-bind tne new password file
 	if (mount(RUN_PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
@@ -319,12 +316,9 @@ static void sanitize_group(void) {
 			goto errout;
 	}
 	fclose(fpin);
+	SET_PERMS_STREAM(fpout, 0, 0, 0644);
 	fclose(fpout);
-	if (chown(RUN_GROUP_FILE, 0, 0) == -1)
-		errExit("chown");
-	if (chmod(RUN_GROUP_FILE, 0644) == -1)
-		errExit("chmod");
-		
+
 	// mount-bind tne new group file
 	if (mount(RUN_GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");

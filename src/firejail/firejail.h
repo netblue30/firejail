@@ -75,6 +75,27 @@
 #define DEFAULT_ROOT_PROFILE	"server"
 #define MAX_INCLUDE_LEVEL 6		// include levels in profile files
 
+
+#define ASSERT_PERMS(file, uid, gid, mode) \
+	do { \
+		assert(file);\
+		struct stat s;\
+		if (stat(file, &s) == -1) errExit("stat");\
+		assert(s.st_uid == uid && s.st_gid == gid && (s.st_mode & 07777) == mode);\
+	} while (0)
+#define ASSERT_PERMS_FD(fd, uid, gid, mode) \
+	do { \
+		struct stat s;\
+		if (stat(fd, &s) == -1) errExit("stat");\
+		assert(s.st_uid == uid && s.st_gid == gid && (s.st_mode & 07777) == mode);\
+	} while (0)
+#define ASSERT_PERMS_STREAM(file, uid, gid, mode) \
+	do { \
+		int fd = fileno(file);\
+		if (fd == -1) errExit("fileno");\
+		ASSERT_PERMS_FD(fd, uid, gid, mode);\
+	} while (0)
+
 // main.c
 typedef struct bridge_t {
 	// on the host
@@ -386,7 +407,7 @@ void logsignal(int s);
 void logmsg(const char *msg);
 void logargs(int argc, char **argv) ;
 void logerr(const char *msg);
-int copy_file(const char *srcname, const char *destname);
+int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);
 char *line_remove_spaces(const char *buf);

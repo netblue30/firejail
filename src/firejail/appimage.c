@@ -39,15 +39,20 @@ void appimage_set(const char *appimage_path) {
 	assert(appimage_path);
 	assert(devloop == NULL);	// don't call this twice!
 	EUID_ASSERT();
-	
+
 	// check appimage_path
 	if (access(appimage_path, R_OK) == -1) {
 		fprintf(stderr, "Error: cannot access AppImage file\n");
 		exit(1);
 	}
-	
+
+	// open as user to prevent race condition
+	int ffd = open(appimage_path, O_RDONLY|O_CLOEXEC);
+	if (ffd == -1)
+		errExit("open");
+
 	EUID_ROOT();
-	
+
 	// find or allocate a free loop device to use
 	int cfd = open("/dev/loop-control", O_RDWR);
 	int devnr = ioctl(cfd, LOOP_CTL_GET_FREE);
@@ -59,7 +64,6 @@ void appimage_set(const char *appimage_path) {
 	if (asprintf(&devloop, "/dev/loop%d", devnr) == -1)
 		errExit("asprintf");
 		
-	int ffd = open(appimage_path, O_RDONLY|O_CLOEXEC);
 	int lfd = open(devloop, O_RDONLY);
 	if (ioctl(lfd, LOOP_SET_FD, ffd) == -1) {
 		fprintf(stderr, "Error: cannot configure the loopback device\n");
@@ -68,22 +72,22 @@ void appimage_set(const char *appimage_path) {
 	close(lfd);
 	close(ffd);
 	
+	EUID_USER();
+
+	// creates directory with perms 0700
 	char dirname[] = "/tmp/firejail-mnt-XXXXXX";
 	mntdir =  strdup(mkdtemp(dirname));
 	if (mntdir == NULL) {
 		fprintf(stderr, "Error: cannot create temporary directory\n");
 		exit(1);
 	}
-	mkdir(mntdir, 755);
-	if (chown(mntdir, getuid(), getgid()) == -1)
-		errExit("chown");
-	if (chmod(mntdir, 755) == -1)
-		errExit("chmod");
+	ASSERT_PERMS(mntdir, getuid(), getgid(), 0700);
 	
 	char *mode;
-	if (asprintf(&mode, "mode=755,uid=%d,gid=%d", getuid(), getgid()) == -1)
+	if (asprintf(&mode, "mode=700,uid=%d,gid=%d", getuid(), getgid()) == -1)
 		errExit("asprintf");
 
+	EUID_ROOT();
 	if (mount(devloop, mntdir, "iso9660",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
 		errExit("mounting appimage");
 

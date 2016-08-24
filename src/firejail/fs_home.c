@@ -43,9 +43,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0)
 			return;
 		if (stat("/etc/skel/.zshrc", &s) == 0) {
-			if (copy_file("/etc/skel/.zshrc", fname) == 0) {
-				if (chown(fname, u, g) == -1)
-					errExit("chown");
+			if (copy_file("/etc/skel/.zshrc", fname, u, g, 0644) == 0) {
 				fs_logger("clone /etc/skel/.zshrc");
 			}
 		}
@@ -73,9 +71,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0)
 			return;
 		if (stat("/etc/skel/.cshrc", &s) == 0) {
-			if (copy_file("/etc/skel/.cshrc", fname) == 0) {
-				if (chown(fname, u, g) == -1)
-					errExit("chown");
+			if (copy_file("/etc/skel/.cshrc", fname, u, g, 0644) == 0) {
 				fs_logger("clone /etc/skel/.cshrc");
 			}
 		}
@@ -104,10 +100,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0) 
 			return;
 		if (stat("/etc/skel/.bashrc", &s) == 0) {
-			if (copy_file("/etc/skel/.bashrc", fname) == 0) {
-				/* coverity[toctou] */
-				if (chown(fname, u, g) == -1)
-					errExit("chown");
+			if (copy_file("/etc/skel/.bashrc", fname, u, g, 0644) == 0) {
 				fs_logger("clone /etc/skel/.bashrc");
 			}
 		}
@@ -131,7 +124,7 @@ static int store_xauthority(void) {
 			exit(1);
 		}
 			
-		int rv = copy_file(src, dest);
+		int rv = copy_file(src, dest, -1, -1, 0600);
 		if (rv) {
 			fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
 			return 0;
@@ -167,7 +160,7 @@ static int store_asoundrc(void) {
 			free(rp);
 		}
 
-		int rv = copy_file(src, dest);
+		int rv = copy_file(src, dest, -1, -1, -0644);
 		if (rv) {
 			fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
 			return 0;
@@ -184,7 +177,7 @@ static void copy_xauthority(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	int rv = copy_file(src, dest);
+	int rv = copy_file(src, dest, -1, -1, 0600);
 	if (rv)
 		fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
 	else {
@@ -207,7 +200,7 @@ static void copy_asoundrc(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.asoundrc", cfg.homedir) == -1)
 		errExit("asprintf");
-	int rv = copy_file(src, dest);
+	int rv = copy_file(src, dest, -1 , -1, 0644);
 	if (rv)
 		fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
 	else {
@@ -360,11 +353,9 @@ int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *s
          return(0);
       if (stat(path, &s) == 0) {
          if(ftype == FTW_F) {
-            if (copy_file(path, dest) == 0) {
+            if (copy_file(path, dest, u, g, 0644) == 0) {
                if (arg_debug)
                   printf("copy from %s to %s\n", path, dest);
-               if (chown(dest, u, g) == -1)
-                  errExit("chown");
                fs_logger2("clone", path);
             }
          }

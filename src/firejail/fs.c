@@ -29,16 +29,25 @@
 
 static void fs_rdwr(const char *dir);
 
+static void create_dir_as_root(const char *dir, mode_t mode) {
+	assert(dir);
+	if (arg_debug)
+		printf("Creating %s directory\n", dir);
+
+	if (mkdir(dir, mode) == -1)
+		errExit("mkdir");
+
+	ASSERT_PERMS(dir, 0, 0, mode);
+}
+
 static void create_empty_dir(void) {
 	struct stat s;
 	
 	if (stat(RUN_RO_DIR, &s)) {
 		/* coverity[toctou] */
-		int rv = mkdir(RUN_RO_DIR, S_IRUSR | S_IXUSR);
-		if (rv == -1)
-			errExit("mkdir");	
-		if (chown(RUN_RO_DIR, 0, 0) < 0)
-			errExit("chown");
+		if (mkdir(RUN_RO_DIR, S_IRUSR | S_IXUSR) == -1)
+			errExit("mkdir");
+		ASSERT_PERMS(RUN_RO_DIR, 0, 0, S_IRUSR | S_IXUSR);
 	}
 }
 
@@ -50,11 +59,16 @@ static void create_empty_file(void) {
 		FILE *fp = fopen(RUN_RO_FILE, "w");
 		if (!fp)
 			errExit("fopen");
+
+		int fd = fileno(fp);
+		if (fd == -1)
+			errExit("fileno");
+		if (fchown(fd, 0, 0) < 0)
+			errExit("chown");
+		if (fchmod(fd, S_IRUSR) < 0)
+			errExit("chown");
+
 		fclose(fp);
-		if (chown(RUN_RO_FILE, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_RO_FILE, S_IRUSR) < 0)
-			errExit("chown");
 	}
 }
 
@@ -64,16 +78,7 @@ void fs_build_firejail_dir(void) {
 
 	// CentOS 6 doesn't have /run directory
 	if (stat(RUN_FIREJAIL_BASEDIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_BASEDIR);
-		/* coverity[toctou] */
-		int rv = mkdir(RUN_FIREJAIL_BASEDIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_BASEDIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_BASEDIR, 0755) < 0)
-			errExit("chmod");
+		create_dir_as_root(RUN_FIREJAIL_BASEDIR, 0755);
 	}
 	else { // check /tmp/firejail directory belongs to root end exit if doesn't!
 		if (s.st_uid != 0 || s.st_gid != 0) {
@@ -83,61 +88,23 @@ void fs_build_firejail_dir(void) {
 	}
 
 	if (stat(RUN_FIREJAIL_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_DIR);
-		/* coverity[toctou] */
-		int rv = mkdir(RUN_FIREJAIL_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_DIR, 0755) < 0)
-			errExit("chmod");
+		create_dir_as_root(RUN_FIREJAIL_DIR, 0755);
 	}
 	
 	if (stat(RUN_FIREJAIL_NETWORK_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_NETWORK_DIR);
-		
-		if (mkdir(RUN_FIREJAIL_NETWORK_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_NETWORK_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_NETWORK_DIR, 0755) < 0)
-			errExit("chmod");
+		create_dir_as_root(RUN_FIREJAIL_NETWORK_DIR, 0755);
 	}
 	
 	if (stat(RUN_FIREJAIL_BANDWIDTH_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_BANDWIDTH_DIR);
-		if (mkdir(RUN_FIREJAIL_BANDWIDTH_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_BANDWIDTH_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_BANDWIDTH_DIR, 0755) < 0)
-			errExit("chmod");
+		create_dir_as_root(RUN_FIREJAIL_BANDWIDTH_DIR, 0755);
 	}
 		
 	if (stat(RUN_FIREJAIL_NAME_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_NAME_DIR);
-		if (mkdir(RUN_FIREJAIL_NAME_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_NAME_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_NAME_DIR, 0755) < 0)
-			errExit("chmod");
+		create_dir_as_root(RUN_FIREJAIL_NAME_DIR, 0755);
 	}
 	
 	if (stat(RUN_FIREJAIL_X11_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_X11_DIR);
-		if (mkdir(RUN_FIREJAIL_X11_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_X11_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_X11_DIR, 0755) < 0)
-			errExit("chmod");
+		create_dir_as_root(RUN_FIREJAIL_X11_DIR, 0755);
 	}
 	
 	create_empty_dir();
@@ -160,16 +127,7 @@ void fs_build_mnt_dir(void) {
 	
 	// create /run/firejail/mnt directory
 	if (stat(RUN_MNT_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_MNT_DIR);
-		/* coverity[toctou] */
-		int rv = mkdir(RUN_MNT_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_MNT_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_MNT_DIR, 0755) < 0)
-			errExit("chmod");
+		create_dir_as_root(RUN_MNT_DIR, 0755);
 	}
 
 	// ... and mount tmpfs on top of it
@@ -202,16 +160,12 @@ void fs_build_cp_command(void) {
 			fprintf(stderr, "Error: invalid /bin/cp file\n");
 			exit(1);
 		}
-		int rv = copy_file(fname, RUN_CP_COMMAND);
+		int rv = copy_file(fname, RUN_CP_COMMAND, 0, 0, 0755);
 		if (rv) {
 			fprintf(stderr, "Error: cannot access /bin/cp\n");
 			exit(1);
 		}
-		/* coverity[toctou] */
-		if (chown(RUN_CP_COMMAND, 0, 0))
-			errExit("chown");
-		if (chmod(RUN_CP_COMMAND, 0755))
-			errExit("chmod");
+		ASSERT_PERMS(RUN_CP_COMMAND, 0, 0, 0755);
 			
 		free(fname);
 	}
@@ -827,10 +781,7 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 		/* coverity[toctou] */
 		if (mkdir(dirname, 0700))
 			errExit("mkdir");
-		if (chown(dirname, getuid(), getgid()) < 0)
-			errExit("chown");
-		if (chmod(dirname, 0700) < 0)
-			errExit("chmod");
+		ASSERT_PERMS(dirname, getuid(), getgid(), 0700);
 	}
 	else if (is_link(dirname)) {
 		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
@@ -917,10 +868,7 @@ void fs_overlayfs(void) {
 		errExit("asprintf");
 	if (mkdir(oroot, 0755))
 		errExit("mkdir");
-	if (chown(oroot, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(oroot, 0755) < 0)
-		errExit("chmod");
+	ASSERT_PERMS(oroot, 0, 0, 0755);
 
 	struct stat s;
 	char *basedir = RUN_MNT_DIR;
@@ -1259,7 +1207,7 @@ void fs_chroot(const char *rootdir) {
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);
 		}
-		if (copy_file("/etc/resolv.conf", fname) == -1)
+		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1)
 			fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
 	}
 	

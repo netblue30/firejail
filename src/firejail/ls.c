@@ -374,11 +374,7 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		}
 		// copy file
 		EUID_ROOT();
-		copy_file(src_fname, dest_fname);
-		if (chown(dest_fname, getuid(), getgid()) == -1)
-			errExit("chown");
-		if (chmod(dest_fname, 0644) == -1)
-			errExit("chmod");
+		copy_file(src_fname, dest_fname, getuid(), getgid(), 0644);
 		printf("Transfer complete\n");
 		EUID_USER();
 	}

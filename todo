@@ -247,7 +247,6 @@ References
 
 22. add support for read-write and noexec to Firetools
 
-
 23. AppArmor
 
 $ sudo apt-get install apparmor apparmor-profiles apparmor-utils apparmor-notify
@@ -266,19 +265,6 @@ $ sudo aa-notify -p -f /var/log/audit/audit.log
 24. check monitor proc behaviour for sandboxes with --blacklist=/proc
 also check --apparmor in this case
 
-25. bring back strings.profile
-
-# strings profile
-quiet
-ignore noroot
-include /etc/firejail/default.profile
-tracelog
-net none
-shell none
-private-dev
-private-tmp
-nosound
-
-26. fix firemon and firetools on systems with hidepid=2
+25. fix firemon and firetools on systems with hidepid=2
 
 sudo mount -o remount,rw,hidepid=2 /proc

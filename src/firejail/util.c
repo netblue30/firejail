@@ -425,13 +425,13 @@ void extract_command_name(int index, char **argv) {
 		errExit("strdup");
 
 	// if we have a symbolic link, use the real path to extract the name
-	if (is_link(argv[index])) {
-		char*newname = realpath(argv[index], NULL);
-		if (newname) {
-			free(str);
-			str = newname;
-		}
-	}
+//	if (is_link(argv[index])) {
+//		char*newname = realpath(argv[index], NULL);
+//		if (newname) {
+//			free(str);
+//			str = newname;
+//		}
+//	}
 
 	// configure command name
 	cfg.command_name = str;

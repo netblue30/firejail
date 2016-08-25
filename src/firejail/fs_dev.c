@@ -32,15 +32,11 @@
 
 static void create_char_dev(const char *path, mode_t mode, int major, int minor) {
 	dev_t dev = makedev(major, minor);
-	int rv = mknod(path, S_IFCHR | mode, dev);
-	if (rv == -1)
+	if (mknod(path, S_IFCHR | mode, dev) == -1)
 		goto errexit;
-	
-
 	if (chmod(path, mode) < 0)
 		goto errexit;
-	if (chown(path, 0, 0) < 0)
-		goto errexit;
+	ASSERT_PERMS(path, 0, 0, mode);
 
 	return;
 	
@@ -78,14 +74,9 @@ void fs_private_dev(void){
 	// create DRI_DIR
 	fs_build_mnt_dir();
 	if (have_dri) {
-		/* coverity[toctou] */
-		rv = mkdir(RUN_DRI_DIR, 0755);
-		if (rv == -1)
+		if (mkdir(RUN_DRI_DIR, 0755) == -1)
 			errExit("mkdir");
-		if (chown(RUN_DRI_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_DRI_DIR, 0755) < 0)
-			errExit("chmod");
+		ASSERT_PERMS(RUN_DRI_DIR, 0, 0, 0755);
 	
 		// keep a copy of /dev/dri under DRI_DIR
 		if (mount("/dev/dri", RUN_DRI_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
@@ -94,14 +85,9 @@ void fs_private_dev(void){
 	
 	// create SND_DIR
 	if (have_snd) {
-		/* coverity[toctou] */
-		rv = mkdir(RUN_SND_DIR, 0755);
-		if (rv == -1)
+		if (mkdir(RUN_SND_DIR, 0755) == -1)
 			errExit("mkdir");
-		if (chown(RUN_SND_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_SND_DIR, 0755) < 0)
-			errExit("chmod");
+		ASSERT_PERMS(RUN_SND_DIR, 0, 0, 0755);
 	
 		// keep a copy of /dev/dri under DRI_DIR
 		if (mount("/dev/snd", RUN_SND_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
@@ -143,13 +129,9 @@ void fs_private_dev(void){
 	// bring back the /dev/snd directory
 	if (have_snd) {
 		/* coverity[toctou] */
-		rv = mkdir("/dev/snd", 0755);
-		if (rv == -1)
+		if (mkdir("/dev/snd", 0755) == -1)
 			errExit("mkdir");
-		if (chown("/dev/snd", 0, 0) < 0)
-			errExit("chown");
-		if (chmod("/dev/snd",0755) < 0)
-			errExit("chmod");
+		ASSERT_PERMS("/dev/snd", 0, 0, 0755);
 		if (mount(RUN_SND_DIR, "/dev/snd", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /dev/snd");
 		fs_logger("whitelist /dev/snd");
@@ -157,14 +139,9 @@ void fs_private_dev(void){
 
 	// bring back the /dev/dri directory
 	if (have_dri) {
-		/* coverity[toctou] */
-		rv = mkdir("/dev/dri", 0755);
-		if (rv == -1)
+		if (mkdir("/dev/dri", 0755) == -1)
 			errExit("mkdir");
-		if (chown("/dev/dri", 0, 0) < 0)
-			errExit("chown");
-		if (chmod("/dev/dri",0755) < 0)
-			errExit("chmod");
+		ASSERT_PERMS("/dev/dri", 0, 0, 0755);
 		if (mount(RUN_DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /dev/dri");
 		fs_logger("whitelist /dev/dri");
@@ -173,13 +150,12 @@ void fs_private_dev(void){
 	// create /dev/shm
 	if (arg_debug)
 		printf("Create /dev/shm directory\n");
-	rv = mkdir("/dev/shm", 01777);
-	if (rv == -1)
+	if (mkdir("/dev/shm", 01777) == -1)
 		errExit("mkdir");
-	if (chown("/dev/shm", 0, 0) < 0)
-		errExit("chown");
+	// mkdir sets only the file permission bits
 	if (chmod("/dev/shm", 01777) < 0)
 		errExit("chmod");
+	ASSERT_PERMS("/dev/shm", 0, 0, 01777);
 	fs_logger("mkdir /dev/shm");
 
 	// create devices
@@ -201,13 +177,9 @@ void fs_private_dev(void){
 #endif
 
 	// pseudo-terminal
-	rv = mkdir("/dev/pts", 0755);
-	if (rv == -1)
+	if (mkdir("/dev/pts", 0755) == -1)
 		errExit("mkdir");
-	if (chown("/dev/pts", 0, 0) < 0)
-		errExit("chown");
-	if (chmod("/dev/pts", 0755) < 0)
-		errExit("chmod");
+	ASSERT_PERMS("/dev/pts", 0, 0, 0755);
 	fs_logger("mkdir /dev/pts");
 	create_char_dev("/dev/pts/ptmx", 0666, 5, 2); //"mknod -m 666 /dev/pts/ptmx c 5 2");
 	fs_logger("mknod /dev/pts/ptmx");
@@ -258,10 +230,10 @@ void fs_dev_shm(void) {
 				// create directory
 				if (mkdir(lnk, 01777))
 					errExit("mkdir");
-				if (chown(lnk, 0, 0))
-					errExit("chown");
+				// mkdir sets only the file permission bits
 				if (chmod(lnk, 01777))
 					errExit("chmod");
+				ASSERT_PERMS(lnk, 0, 0, 01777);
 			}
 			if (arg_debug)
 				printf("Mounting tmpfs on %s on behalf of /dev/shm\n", lnk);

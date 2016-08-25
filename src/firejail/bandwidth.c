@@ -130,14 +130,8 @@ static void bandwidth_create_run_file(pid_t pid) {
 	/* coverity[toctou] */
 	FILE *fp = fopen(fname, "w");
 	if (fp) {
+		SET_PERMS_STREAM(fp, 0, 0, 0644);
 		fclose(fp);
-	
-		/* coverity[toctou] */
-		if (chmod(fname, 0644) == -1)
-			errExit("chmod");
-		/* coverity[toctou] */
-		if (chown(fname, 0, 0) == -1)
-			errExit("chown");
 	}
 	else {
 		fprintf(stderr, "Error: cannot create bandwidth file\n");
@@ -180,12 +174,9 @@ void network_set_run_file(pid_t pid) {
 			fprintf(fp, "%s:%s\n", cfg.bridge2.dev, cfg.bridge2.devsandbox);
 		if (cfg.bridge3.configured)
 			fprintf(fp, "%s:%s\n", cfg.bridge3.dev, cfg.bridge3.devsandbox);
-		fclose(fp);
 
-		if (chmod(fname, 0644) == -1)
-			errExit("chmod");
-		if (chown(fname, 0, 0) == -1)
-			errExit("chown");
+		SET_PERMS_STREAM(fp, 0, 0, 0644);
+		fclose(fp);
 	}
 	else {
 		fprintf(stderr, "Error: cannot create network map file\n");

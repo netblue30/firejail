@@ -78,11 +78,8 @@ void save_cpu(void) {
 	FILE *fp = fopen(RUN_CPU_CFG, "w");
 	if (fp) {
 		fprintf(fp, "%x\n", cfg.cpus);
+		SET_PERMS_STREAM(fp, 0, 0, 0600);
 		fclose(fp);
-		if (chmod(RUN_CPU_CFG, 0600) < 0)
-			errExit("chmod");
-		if (chown(RUN_CPU_CFG, 0, 0) < 0)
-			errExit("chown");
 	}
 	else {
 		fprintf(stderr, "Error: cannot save cpu affinity mask\n");

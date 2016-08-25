@@ -290,9 +290,8 @@ static void write_seccomp_file(void) {
 		fprintf(stderr, "Error: cannot save seccomp filter\n");
 		exit(1);
 	}
+	SET_PERMS_FD(fd, 0, 0, S_IRUSR | S_IWUSR);
 	close(fd);
-	if (chown(RUN_SECCOMP_CFG, 0, 0) < 0)
-		errExit("chown");
 }
 
 // read seccomp filter from /run/firejail/mnt/seccomp

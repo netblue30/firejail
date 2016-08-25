@@ -51,11 +51,8 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			FILE *fp = fopen(fname, "w");
 			if (fp) {
 				fprintf(fp, "\n");
+				SET_PERMS_STREAM(fp, u, g, S_IRUSR | S_IWUSR);
 				fclose(fp);
-				if (chown(fname, u, g) == -1)
-					errExit("chown");
-				if (chmod(fname, S_IRUSR | S_IWUSR) < 0)
-					errExit("chown");
 				fs_logger2("touch", fname);
 			}
 		}
@@ -80,11 +77,8 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			FILE *fp = fopen(fname, "w");
 			if (fp) {
 				fprintf(fp, "\n");
+				SET_PERMS_STREAM(fp, u, g, S_IRUSR | S_IWUSR);
 				fclose(fp);
-				if (chown(fname, u, g) == -1)
-					errExit("chown");
-				if (chmod(fname, S_IRUSR | S_IWUSR) < 0)
-					errExit("chown");
 				fs_logger2("touch", fname);
 			}
 		}
@@ -177,17 +171,12 @@ static void copy_xauthority(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	int rv = copy_file(src, dest, -1, -1, 0600);
+	// copy, set permissions and ownership
+	int rv = copy_file(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
 	if (rv)
 		fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
 	else {
 		fs_logger2("clone", dest);
-	
-		// set permissions and ownership
-		if (chown(dest, getuid(), getgid()) < 0)
-			errExit("chown");
-		if (chmod(dest, S_IRUSR | S_IWUSR) < 0)
-			errExit("chmod");
 	}
 	
 	// delete the temporary file
@@ -200,17 +189,12 @@ static void copy_asoundrc(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.asoundrc", cfg.homedir) == -1)
 		errExit("asprintf");
-	int rv = copy_file(src, dest, -1 , -1, 0644);
+	// copy, set permissions and ownership
+	int rv = copy_file(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
 	if (rv)
 		fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
 	else {
 		fs_logger2("clone", dest);
-	
-		// set permissions and ownership
-		if (chown(dest, getuid(), getgid()) < 0)
-			errExit("chown");
-		if (chmod(dest, S_IRUSR | S_IWUSR) < 0)
-			errExit("chmod");
 	}
 
 	// delete the temporary file

@@ -120,11 +120,8 @@ void pulseaudio_init(void) {
 	if (!fp)
 		errExit("fopen");
 	fprintf(fp, "%s", "\nenable-shm = no\n");
+	SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);
 	fclose(fp);
-	if (chmod(pulsecfg, 0644) == -1)
-		errExit("chmod");
-	if (chown(pulsecfg, getuid(), getgid()) == -1)
-		errExit("chown");
 
 	// create ~/.config/pulse directory if not present
 	char *dir1;

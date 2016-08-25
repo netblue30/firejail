@@ -104,9 +104,8 @@ void save_nogroups(void) {
 	FILE *fp = fopen(RUN_GROUPS_CFG, "w");
 	if (fp) {
 		fprintf(fp, "\n");
+		SET_PERMS_STREAM(fp, 0, 0, 0644); // assume mode 0644
 		fclose(fp);
-		if (chown(RUN_GROUPS_CFG, 0, 0) < 0)
-			errExit("chown");
 	}
 	else {
 		fprintf(stderr, "Error: cannot save nogroups state\n");

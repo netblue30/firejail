@@ -30,10 +30,9 @@ void save_cgroup(void) {
 	if (fp) {
 		fprintf(fp, "%s", cfg.cgroup);
 		fflush(0);
+		SET_PERMS_STREAM(fp, 0, 0, 0644);
 		if (fclose(fp))
 			goto errout;
-		if (chown(RUN_CGROUP_CFG, 0, 0) < 0)
-			errExit("chown");
 	}
 	else
 		goto errout;

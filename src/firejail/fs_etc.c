@@ -130,13 +130,9 @@ void fs_private_etc_list(void) {
 
 	// create /tmp/firejail/mnt/etc directory
 	fs_build_mnt_dir();
-	int rv = mkdir(RUN_ETC_DIR, 0755);
-	if (rv == -1)
+	if (mkdir(RUN_ETC_DIR, 0755) == -1)
 		errExit("mkdir");
-	if (chown(RUN_ETC_DIR, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(RUN_ETC_DIR, 0755) < 0)
-		errExit("chmod");
+	ASSERT_PERMS(RUN_ETC_DIR, 0, 0, 0755);
 	fs_logger("tmpfs /etc");
 	
 	fs_logger_print();	// save the current log

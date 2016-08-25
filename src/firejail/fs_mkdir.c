@@ -119,9 +119,12 @@ void fs_mkfile(const char *name) {
 		if (!fp)
 			fprintf(stderr, "Warning: cannot create %s file\n", expanded);
 		else {
-			fclose(fp);
-			int rv = chmod(expanded, 0600);
+			int fd = fileno(fp);
+			if (fd == -1)
+				errExit("fileno");
+			int rv = fchmod(fd, 0600);
 			(void) rv;
+			fclose(fp);
 		}
 		exit(0);
 	}

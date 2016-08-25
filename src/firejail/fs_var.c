@@ -131,22 +131,16 @@ void fs_var_log(void) {
 		// create an empty /var/log/wtmp file
 		/* coverity[toctou] */
 		FILE *fp = fopen("/var/log/wtmp", "w");
+		SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
 		if (fp)
 			fclose(fp);
-		if (chown("/var/log/wtmp", 0, wtmp_group) < 0)
-			errExit("chown");
-		if (chmod("/var/log/wtmp", S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH ) < 0)
-			errExit("chmod");
 		fs_logger("touch /var/log/wtmp");
 			
 		// create an empty /var/log/btmp file
 		fp = fopen("/var/log/btmp", "w");
+		SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP);
 		if (fp)
 			fclose(fp);
-		if (chown("/var/log/btmp", 0, wtmp_group) < 0)
-			errExit("chown");
-		if (chmod("/var/log/btmp", S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP) < 0)
-			errExit("chmod");
 		fs_logger("touch /var/log/btmp");
 	}
 	else
@@ -169,11 +163,8 @@ void fs_var_lib(void) {
 		
 		if (fp) {
 			fprintf(fp, "\n");
+			SET_PERMS_STREAM(fp, 0, 0, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 			fclose(fp);
-			if (chown("/var/lib/dhcp/dhcpd.leases", 0, 0) == -1)
-				errExit("chown");
-			if (chmod("/var/lib/dhcp/dhcpd.leases", S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH))
-				errExit("chmod");
 			fs_logger("touch /var/lib/dhcp/dhcpd.leases");
 		}
 	}
@@ -279,10 +270,9 @@ void fs_var_lock(void) {
 				// create directory
 				if (mkdir(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
 					errExit("mkdir");
-				if (chown(lnk, 0, 0))
-					errExit("chown");
 				if (chmod(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
 					errExit("chmod");
+				ASSERT_PERMS(lnk, 0, 0, S_IRWXU|S_IRWXG|S_IRWXO);
 			}
 			if (arg_debug)
 				printf("Mounting tmpfs on %s on behalf of /var/lock\n", lnk);
@@ -353,11 +343,8 @@ void fs_var_utmp(void) {
 			
 	// save new utmp file
 	fwrite(&u_boot, sizeof(u_boot), 1, fp);
+	SET_PERMS_STREAM(fp, 0, utmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
 	fclose(fp);
-	if (chown(RUN_UTMP_FILE, 0, utmp_group) < 0)
-		errExit("chown");
-	if (chmod(RUN_UTMP_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH ) < 0)
-		errExit("chmod");
 	
 	// mount the new utmp file
 	if (arg_debug)

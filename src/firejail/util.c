@@ -443,6 +443,13 @@ void extract_command_name(int index, char **argv) {
 		char *tmp = strdup(ptr);
 		if (!tmp)
 			errExit("strdup");
+
+		// limit the command to the first '.'
+		char *ptr2 = tmp;
+		while (*ptr2 != '.' && *ptr2 != '\0')
+			ptr2++;
+		*ptr2 = '\0';
+			
 		free(cfg.command_name);
 		cfg.command_name = tmp;
 	}

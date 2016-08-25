@@ -431,6 +431,7 @@ $ firejail \-\-ignore=shell --ignore=seccomp firefox
 .TP
 \fB\-\-interface=interface
 Move interface in a new network namespace. Up to four --interface options can be specified.
+Note: wlan devices are not supported for this option.
 .br
 
 .br
@@ -613,6 +614,7 @@ Unless specified with option \-\-ip and \-\-defaultgw, an IP address and a defau
 automatically to the sandbox. The IP address is verified using ARP before assignment. The address
 configured as default gateway is the bridge device IP address. Up to four \-\-net
 bridge devices can be defined. Mixing bridge and macvlan devices is allowed.
+Note: wlan devices are not supported for this option.
 .br
 
 .br
@@ -638,6 +640,7 @@ to the sandbox. The IP address is verified using ARP before
 assignment. The address configured as default gateway is the
 default gateway of the host. Up to four \-\-net devices can
 be defined. Mixing bridge and macvlan devices is allowed.
+Note: wlan devices are not supported for this option.
 .br
 
 .br
@@ -1473,6 +1476,8 @@ firejail version 0.9.27
 .TP
 \fB\-\-whitelist=dirname_or_filename
 Whitelist directory or file. This feature is implemented only for user home, /dev, /media, /opt, /var, and /tmp directories.
+When whitlisting symbolic links, both the link and the real file should be in the same top directory
+(home user, /media, /var etc.)
 .br
 
 .br
@@ -1650,7 +1655,7 @@ See man 5 firejail-profile for profile file syntax information.
 	
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
-/etc/password file for each user that needs to be restricted. Alternatively,
+/etc/passwd file for each user that needs to be restricted. Alternatively,
 you can specify /usr/bin/firejail  in adduser command:
 
 adduser \-\-shell /usr/bin/firejail username

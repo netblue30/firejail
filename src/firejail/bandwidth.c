@@ -450,7 +450,12 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	if (setregid(0, 0))
 		errExit("setregid");
 
-	assert(cfg.shell);
+	if (!cfg.shell)
+		cfg.shell = guess_shell();
+	if (!cfg.shell) {
+		fprintf(stderr, "Error: no POSIX shell found, please use --shell command line option\n");
+		exit(1);
+	}
 
 	char *arg[4];
 	arg[0] = cfg.shell;

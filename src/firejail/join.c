@@ -319,10 +319,13 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			caps_set(caps);
 
 		// set prompt color to green
-		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
-		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
-			errExit("setenv");
-
+		char *prompt = getenv("FIREJAIL_PROMPT");
+		if (prompt && strcmp(prompt, "yes") == 0) {
+			//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
+			if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
+				errExit("setenv");
+		}
+		
 		// set nice
 		if (arg_nice) {
 			errno = 0;
@@ -336,7 +339,22 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		// run cmdline trough shell
 		if (cfg.command_line == NULL) {
-			assert(cfg.shell);
+			// if the sandbox was started with --shell=none, it is possible we don't have a shell
+			// inside the sandbox
+			if (cfg.shell == NULL) {
+				cfg.shell = guess_shell();
+				if (!cfg.shell) {
+					fprintf(stderr, "Error: no POSIX shell found, please use --shell command line option\n");
+					exit(1);
+				}
+			}
+				
+			struct stat s;
+			if (stat(cfg.shell, &s) == -1)  {
+				fprintf(stderr, "Error: %s shell not found inside the sandbox\n", cfg.shell);
+				exit(1);
+			}
+
 			cfg.command_line = cfg.shell;
 			cfg.window_title = cfg.shell;
 		}

@@ -121,6 +121,8 @@ void env_defaults(void) {
 		errExit("setenv");
 	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
 		errExit("setenv");
+	if (!cfg.shell)
+		cfg.shell = guess_shell();
 	if (cfg.shell && setenv("SHELL", cfg.shell, 1) < 0)
 		errExit("setenv");
 

@@ -141,3 +141,4 @@
 /etc/firejail/xviewer.profile
 /etc/firejail/xz.profile
 /etc/firejail/xzdec.profile
+/etc/firejail/strings.profile

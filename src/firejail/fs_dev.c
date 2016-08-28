@@ -58,7 +58,6 @@ errexit:
 }
 
 void fs_private_dev(void){
-	int rv;
 	// install a new /dev directory
 	if (arg_debug)
 		printf("Mounting tmpfs on /dev\n");

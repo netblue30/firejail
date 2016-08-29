@@ -205,6 +205,8 @@ void fs_private_bin_list(void) {
 	fs_build_mnt_dir();
 	if (mkdir(RUN_BIN_DIR, 0755) == -1)
 		errExit("mkdir");
+	if (chmod(RUN_BIN_DIR, 0755) == -1)
+		errExit("chmod");
 	ASSERT_PERMS(RUN_BIN_DIR, 0, 0, 0755);
 	
 	// copy the list of files in the new etc directory

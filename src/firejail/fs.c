@@ -36,6 +36,8 @@ static void create_dir_as_root(const char *dir, mode_t mode) {
 
 	if (mkdir(dir, mode) == -1)
 		errExit("mkdir");
+	if (chmod(dir, mode) == -1)
+		errExit("chmod");
 
 	ASSERT_PERMS(dir, 0, 0, mode);
 }
@@ -47,6 +49,8 @@ static void create_empty_dir(void) {
 		/* coverity[toctou] */
 		if (mkdir(RUN_RO_DIR, S_IRUSR | S_IXUSR) == -1)
 			errExit("mkdir");
+		if (chmod(RUN_RO_DIR, S_IRUSR | S_IXUSR) == -1)
+			errExit("chmod");
 		ASSERT_PERMS(RUN_RO_DIR, 0, 0, S_IRUSR | S_IXUSR);
 	}
 }
@@ -772,6 +776,8 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 		/* coverity[toctou] */
 		if (mkdir(dirname, 0700))
 			errExit("mkdir");
+		if (chmod(dirname, 0700) == -1)
+			errExit("chmod");
 		ASSERT_PERMS(dirname, getuid(), getgid(), 0700);
 	}
 	else if (is_link(dirname)) {
@@ -859,6 +865,8 @@ void fs_overlayfs(void) {
 		errExit("asprintf");
 	if (mkdir(oroot, 0755))
 		errExit("mkdir");
+	if (chmod(oroot, 0755) == -1)
+		errExit("chmod");
 	ASSERT_PERMS(oroot, 0, 0, 0755);
 
 	struct stat s;

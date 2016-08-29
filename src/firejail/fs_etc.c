@@ -132,6 +132,8 @@ void fs_private_etc_list(void) {
 	fs_build_mnt_dir();
 	if (mkdir(RUN_ETC_DIR, 0755) == -1)
 		errExit("mkdir");
+	if (chmod(RUN_ETC_DIR, 0755) == -1)
+		errExit("chmod");
 	ASSERT_PERMS(RUN_ETC_DIR, 0, 0, 0755);
 	fs_logger("tmpfs /etc");
 	

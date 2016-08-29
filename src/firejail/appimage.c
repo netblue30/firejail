@@ -81,6 +81,8 @@ void appimage_set(const char *appimage_path) {
 		fprintf(stderr, "Error: cannot create temporary directory\n");
 		exit(1);
 	}
+	if (chmod(mntdir, 0700) == -1)
+		errExit("chmod");
 	ASSERT_PERMS(mntdir, getuid(), getgid(), 0700);
 	
 	char *mode;

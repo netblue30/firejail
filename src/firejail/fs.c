@@ -647,10 +647,6 @@ void fs_proc_sys_dev_boot(void) {
 	disable_file(BLACKLIST_FILE, "/sys/kernel/vmcoreinfo");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/uevent_helper");
 
-//	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
-//		errExit("mounting /sys");
-
-
 	// various /proc/sys files
 	disable_file(BLACKLIST_FILE, "/proc/sys/security");	
 	disable_file(BLACKLIST_FILE, "/proc/sys/efi/vars");	
@@ -660,7 +656,6 @@ void fs_proc_sys_dev_boot(void) {
 	disable_file(BLACKLIST_FILE, "/proc/sysrq-trigger");
 	disable_file(BLACKLIST_FILE, "/proc/sys/kernel/hotplug");
 	disable_file(BLACKLIST_FILE, "/proc/sys/vm/panic_on_oom");
-
 
 	// various /proc files
 	disable_file(BLACKLIST_FILE, "/proc/irq");
@@ -674,7 +669,10 @@ void fs_proc_sys_dev_boot(void) {
 	disable_file(BLACKLIST_FILE, "/proc/mem");
 	disable_file(BLACKLIST_FILE, "/proc/kmem");
 	
-	// disable /boot
+	// remove kernel symbol information
+	disable_file(BLACKLIST_FILE, "/usr/src/linux");
+	disable_file(BLACKLIST_FILE, "/lib/modules");
+	disable_file(BLACKLIST_FILE, "/usr/lib/debug");
 	disable_file(BLACKLIST_FILE, "/boot");
 	
 	// disable /selinux

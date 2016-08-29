@@ -40,6 +40,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * profiles: Atom Beta, Atom, jitsi, eom, uudeview
   * profiles: tar (gtar), unzip, unrar, file, skypeforlinux,
   * profiles: inox, Slack, gnome-chess. Gajim IM client
+  * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Thu, 26 Aug 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low

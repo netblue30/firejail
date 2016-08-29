@@ -268,3 +268,6 @@ also check --apparmor in this case
 25. fix firemon and firetools on systems with hidepid=2
 
 sudo mount -o remount,rw,hidepid=2 /proc
+
+26. mupdf profile
+

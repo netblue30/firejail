@@ -525,7 +525,7 @@ void x11_start_xpra(int argc, char **argv) {
 				if (n == 10)
 					printf("failed to stop xpra server gratefully\n");
 				else
-					printf("xpra server successfully stoped in %d secs\n", n);
+					printf("xpra server successfully stopped in %d secs\n", n);
 			}
 			
 			// kill xpra server and xpra client

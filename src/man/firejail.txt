@@ -85,7 +85,7 @@ Example:
 $ firejail  --allow-debuggers --profile=/etc/firejail/firefox.profile strace -f firefox
 .TP
 \fB\-\-apparmor
-Enable AppArmor confinement. Formore information, please see \fBAPPARMOR\fR section below.
+Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
 .TP
 \fB\-\-appimage
 Sandbox an AppImage (http://appimage.org/) application.

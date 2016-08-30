@@ -75,6 +75,8 @@ void fs_private_dev(void){
 	if (have_dri) {
 		if (mkdir(RUN_DRI_DIR, 0755) == -1)
 			errExit("mkdir");
+		if (chmod(RUN_DRI_DIR, 0755) == -1)
+			errExit("chmod");
 		ASSERT_PERMS(RUN_DRI_DIR, 0, 0, 0755);
 	
 		// keep a copy of /dev/dri under DRI_DIR
@@ -86,6 +88,8 @@ void fs_private_dev(void){
 	if (have_snd) {
 		if (mkdir(RUN_SND_DIR, 0755) == -1)
 			errExit("mkdir");
+		if (chmod(RUN_SND_DIR, 0755) == -1)
+			errExit("chmod");
 		ASSERT_PERMS(RUN_SND_DIR, 0, 0, 0755);
 	
 		// keep a copy of /dev/dri under DRI_DIR
@@ -130,6 +134,8 @@ void fs_private_dev(void){
 		/* coverity[toctou] */
 		if (mkdir("/dev/snd", 0755) == -1)
 			errExit("mkdir");
+		if (chmod("/dev/snd", 0755) == -1)
+			errExit("chmod");
 		ASSERT_PERMS("/dev/snd", 0, 0, 0755);
 		if (mount(RUN_SND_DIR, "/dev/snd", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /dev/snd");
@@ -140,6 +146,8 @@ void fs_private_dev(void){
 	if (have_dri) {
 		if (mkdir("/dev/dri", 0755) == -1)
 			errExit("mkdir");
+		if (chmod("/dev/dri", 0755) == -1)
+			errExit("chmod");
 		ASSERT_PERMS("/dev/dri", 0, 0, 0755);
 		if (mount(RUN_DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /dev/dri");
@@ -178,6 +186,8 @@ void fs_private_dev(void){
 	// pseudo-terminal
 	if (mkdir("/dev/pts", 0755) == -1)
 		errExit("mkdir");
+	if (chmod("/dev/pts", 0755) == -1)
+		errExit("chmod");
 	ASSERT_PERMS("/dev/pts", 0, 0, 0755);
 	fs_logger("mkdir /dev/pts");
 	create_char_dev("/dev/pts/ptmx", 0666, 5, 2); //"mknod -m 666 /dev/pts/ptmx c 5 2");

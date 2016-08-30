@@ -46,6 +46,7 @@ printf("time %s:%d %u\n", __FILE__, __LINE__, (uint32_t) systick);
 #endif
 
 uid_t firejail_uid = 0;
+gid_t firejail_gid = 0;
 
 #define STACK_SIZE (1024 * 1024)
 static char child_stack[STACK_SIZE];		// space for child's stack

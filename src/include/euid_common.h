@@ -31,6 +31,7 @@
 }
 
 extern uid_t firejail_uid;
+extern uid_t firejail_gid;
 
 
 
@@ -44,16 +45,18 @@ static inline void EUID_ROOT(void) {
 static inline void EUID_USER(void) {
 	if (seteuid(firejail_uid) == -1)
 		errExit("seteuid");
-	if (setegid(firejail_uid) == -1)
+	if (setegid(firejail_gid) == -1)
 		errExit("setegid");
 }
 
 static inline void EUID_PRINT(void) {
 	printf("debug: uid %d, euid %d\n", getuid(), geteuid());
+	printf("debug: gid %d, egid %d\n", getgid(), getegid());
 }
 
 static inline void EUID_INIT(void) {
 	firejail_uid = getuid();
+	firejail_gid = getgid();
 }
 
 #endif

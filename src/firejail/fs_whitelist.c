@@ -554,24 +554,30 @@ void fs_whitelist(void) {
 	
 	// /media mountpoint
 	if (media_dir) {
-		// keep a copy of real /media directory in RUN_WHITELIST_MEDIA_DIR
-		int rv = mkdir(RUN_WHITELIST_MEDIA_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_WHITELIST_MEDIA_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_MEDIA_DIR, 0755) < 0)
-			errExit("chmod");
+		// some distros don't have a /media directory
+		struct stat s;
+		if (stat("/media", &s) == 0) {
+			// keep a copy of real /media directory in RUN_WHITELIST_MEDIA_DIR
+			int rv = mkdir(RUN_WHITELIST_MEDIA_DIR, 0755);
+			if (rv == -1)
+				errExit("mkdir");
+			if (chown(RUN_WHITELIST_MEDIA_DIR, 0, 0) < 0)
+				errExit("chown");
+			if (chmod(RUN_WHITELIST_MEDIA_DIR, 0755) < 0)
+				errExit("chmod");
 	
-		if (mount("/media", RUN_WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind");
+			if (mount("/media", RUN_WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
 	
-		// mount tmpfs on /media
-		if (arg_debug || arg_debug_whitelists)
-			printf("Mounting tmpfs on /media directory\n");
-		if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mounting tmpfs on /media");
-		fs_logger("tmpfs /media");
+			// mount tmpfs on /media
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /media directory\n");
+			if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /media");
+			fs_logger("tmpfs /media");
+		}
+		else
+			media_dir = 0;
 	}
 
 	// /var mountpoint

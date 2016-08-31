@@ -309,14 +309,15 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				printf("Joining user namespace\n");
 			if (join_namespace(1, "user"))
 				exit(1);
+
+			// user namespace resets capabilities
+			// set caps filter
+			if (apply_caps == 1)	// not available for uid 0
+				caps_set(caps);
 		}
 		else 
 			drop_privs(arg_nogroups);	// nogroups not available for uid 0
 
-		// user namespace resets capabilities
-		// set caps filter
-		if (apply_caps == 1)	// not available for uid 0
-			caps_set(caps);
 
 		// set prompt color to green
 		char *prompt = getenv("FIREJAIL_PROMPT");

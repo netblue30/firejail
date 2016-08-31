@@ -1,4 +1,4 @@
-# Firjail profile for Atom.
+# Firejail profile for Atom.
 noblacklist ~/.atom
 noblacklist ~/.config/Atom
 
@@ -11,8 +11,10 @@ netfilter
 nonewprivs
 nogroups
 noroot
+nosound
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
 private-dev
-nosound
+private-tmp

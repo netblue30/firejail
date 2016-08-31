@@ -23,6 +23,7 @@ shell none
 tracelog
 
 private-bin palemoon
+private-tmp
 
 # These are uncommented in the Firefox profile. If you run into trouble you may
 # want to uncomment (some of) them.

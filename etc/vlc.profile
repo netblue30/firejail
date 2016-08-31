@@ -17,3 +17,5 @@ shell none
 tracelog
 
 private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
+private-dev
+private-tmp

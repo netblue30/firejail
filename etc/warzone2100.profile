@@ -23,3 +23,4 @@ tracelog
 
 private-bin warzone2100
 private-dev
+private-tmp

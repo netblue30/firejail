@@ -16,3 +16,4 @@ tracelog
 
 private-bin rhythmbox
 private-dev
+private-tmp

@@ -19,8 +19,8 @@ whitelist ~/.local/share/0ad
 
 caps.drop all
 netfilter
-nonewprivs
 nogroups
+nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp
@@ -28,4 +28,4 @@ shell none
 tracelog
 
 private-dev
-
+private-tmp

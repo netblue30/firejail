@@ -18,3 +18,4 @@ tracelog
 
 private-bin eom
 private-dev
+private-tmp

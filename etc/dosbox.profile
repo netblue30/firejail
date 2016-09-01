@@ -1,6 +1,5 @@
-# transmission-gtk bittorrent profile
-noblacklist ${HOME}/.config/transmission
-noblacklist ${HOME}/.cache/transmission
+# Firejail profile for dosbox
+noblacklist ~/.dosbox
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -9,15 +8,14 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
-nosound
 protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
 
-private-bin transmission-gtk
-whitelist /tmp/.X11-unix
+private-bin dosbox
 private-dev
-
+private-tmp

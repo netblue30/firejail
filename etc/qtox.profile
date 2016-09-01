@@ -20,3 +20,4 @@ shell none
 tracelog
 
 private-bin qtox
+private-tmp

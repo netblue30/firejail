@@ -7,12 +7,14 @@ include /etc/firejail/disable-devel.inc
 
 caps.drop all
 netfilter
-nonewprivs
 nogroups
+nonewprivs
 noroot
+nosound
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
 private-bin gitter
 private-dev
+private-tmp

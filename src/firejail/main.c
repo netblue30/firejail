@@ -607,6 +607,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				exit(1);
 			}
 			
+			if (!cfg.shell && !arg_shell_none)
+				cfg.shell = guess_shell();
+
 			// join sandbox by pid or by name
 			pid_t pid;
 			if (read_pid(argv[i] + 15, &pid) == 0)		
@@ -630,6 +633,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(1);
 		}
 		
+		if (!cfg.shell && !arg_shell_none)
+			cfg.shell = guess_shell();
+
 		// join sandbox by pid or by name
 		pid_t pid;
 		if (read_pid(argv[i] + 18, &pid) == 0)		

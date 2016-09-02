@@ -50,7 +50,7 @@ which zsh
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: zsh (test/environment/zsh.exp)"
-        ./csh.exp
+        ./zsh.exp
 else
         echo "TESTING SKIP: zsh not found"
 fi

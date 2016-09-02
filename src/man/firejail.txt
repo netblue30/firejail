@@ -578,19 +578,19 @@ $ firejail --net=eth0 --name=browser firefox &
 .br
 # change netfilter configuration
 .br
-$ sudo firejail --join-network=browser "cat /etc/firejail/nolocal.net | /sbin/iptables-restore"
+$ sudo firejail --join-network=browser bash -c "cat /etc/firejail/nolocal.net | /sbin/iptables-restore"
 .br
 
 .br
 # verify netfilter configuration
 .br
-$ sudo firejail --join-network=browser "/sbin/iptables -vL"
+$ sudo firejail --join-network=browser /sbin/iptables -vL
 .br
 
 .br
 # verify  IP addresses
 .br
-$ sudo firejail --join-network=browser "ip addr"
+$ sudo firejail --join-network=browser ip addr
 .br
 Switching to pid 1932, the first child process inside the sandbox
 .br

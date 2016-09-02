@@ -408,7 +408,7 @@ static void fix_desktop_files(void) {
 
 		// check if basename in PATH
 		if (!which(bname)) {
-			fprintf(stderr, "/usr/share/applications/%s - unable to fix: executable not in PATH\n", filename);
+			fprintf(stderr, "/usr/share/applications/%s - skipped, %s not in PATH\n", filename, bname);
 			continue;
 		}
 

@@ -61,6 +61,15 @@ $ sudo firecfg --clean
 /usr/local/bin/vlc removed
 .br
 [...]
+.br
+$ firecfg --fix
+.br
+/home/user/.local/share/applications/chromium.desktop created
+.br
+/home/user/.local/share/applications/vlc.desktop created
+.br
+[...]
+
 
 .SH LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.

@@ -89,6 +89,7 @@ blacklist ${HOME}/.steam
 blacklist ${HOME}/.config/wesnoth
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.warzone2100-3.1
+blacklist ${HOME}/.dosbox
 
 # Cryptocoins
 blacklist ${HOME}/.*coin

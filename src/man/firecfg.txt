@@ -26,6 +26,9 @@ Print options end exit.
 \fB\-\-list
 List all firejail symbolic links
 .TP
+\fB\-\-fix
+Fix .desktop files. Some .desktop files use full path to executable. Firecfg will check .desktop files in /usr/share/applications/, replace full path by name if it is in PATH, and write result to $HOME/.local/share/applications/.
+.TP
 \fB\-\-version
 Print program version and exit.
 

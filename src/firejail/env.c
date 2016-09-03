@@ -135,7 +135,8 @@ void env_defaults(void) {
 	}
 
 	// set the window title
-	printf("\033]0;firejail %s\007", cfg.window_title);
+	if (!arg_quiet)
+		printf("\033]0;firejail %s\007", cfg.window_title);
 	fflush(0);
 }
 

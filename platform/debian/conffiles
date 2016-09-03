@@ -142,3 +142,4 @@
 /etc/firejail/xz.profile
 /etc/firejail/xzdec.profile
 /etc/firejail/strings.profile
+/etc/firejail/dosbox.profile

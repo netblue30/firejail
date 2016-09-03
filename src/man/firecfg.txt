@@ -26,6 +26,9 @@ Print options end exit.
 \fB\-\-list
 List all firejail symbolic links
 .TP
+\fB\-\-fix
+Fix .desktop files. Some .desktop files use full path to executable. Firecfg will check .desktop files in /usr/share/applications/, replace full path by name if it is in PATH, and write result to $HOME/.local/share/applications/.
+.TP
 \fB\-\-version
 Print program version and exit.
 
@@ -58,6 +61,15 @@ $ sudo firecfg --clean
 /usr/local/bin/vlc removed
 .br
 [...]
+.br
+$ firecfg --fix
+.br
+/home/user/.local/share/applications/chromium.desktop created
+.br
+/home/user/.local/share/applications/vlc.desktop created
+.br
+[...]
+
 
 .SH LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.

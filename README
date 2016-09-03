@@ -40,6 +40,37 @@ Aleksey Manevich (https://github.com/manevich)
 	- X11 support rewrite
 	- gether shell selection code in one place
 	- fixed several TOCTOU security problems
+	- added --fix option to firecfg utility
+Fred-Barclay (https://github.com/Fred-Barclay)
+	- added Vivaldi, Atril profiles
+	- added PaleMoon profile
+	- split Icedove and Thunderbird profiles
+	- added 0ad profile
+	- fixed version for .deb packages
+	- added Warzone2100 profile
+	- blacklisted VeraCrypt
+	- added Gpredict profile
+	- added Aweather, Stellarium profiles
+	- fixed HexChat and Atril profiles
+	- fixed disable-common.inc for mate-terminal
+	- blacklisted escape-happy terminals in disable-common.inc
+	- blacklisted g++
+	- added xplayer, xreader, and xviewer profiles
+	- added Brave profile
+	- added Gitter profile
+	- various organising
+	- added LibreOffice profile
+	- added pix profile
+	- added audacity profile
+	- fixed Telegram and qtox profiles
+	- added Atom Beta and Atom profiles
+	- tightened 0ad, atril, evince, gthumb, pix, qtox, and xreader profiles.
+	- several private-bin conversions
+	- added jitsi profile
+	- pidgin private-bin conversion
+	- added eom profile
+	- added gnome-chess profile
+	- added DOSBox profile
 greigdp (https://github.com/greigdp)
 	- Gajim IM client profile
 	- fix Slack profile
@@ -74,36 +105,6 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- include mkuid.sh in make dist
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
-Fred-Barclay (https://github.com/Fred-Barclay)
-	- added Vivaldi, Atril profiles
-	- added PaleMoon profile
-	- split Icedove and Thunderbird profiles
-	- added 0ad profile
-	- fixed version for .deb packages
-	- added Warzone2100 profile
-	- blacklisted VeraCrypt
-	- added Gpredict profile
-	- added Aweather, Stellarium profiles
-	- fixed HexChat and Atril profiles
-	- fixed disable-common.inc for mate-terminal
-	- blacklisted escape-happy terminals in disable-common.inc
-	- blacklisted g++
-	- added xplayer, xreader, and xviewer profiles
-	- added Brave profile
-	- added Gitter profile
-	- various organising
-	- added LibreOffice profile
-	- added pix profile
-	- added audacity profile
-	- fixed Telegram and qtox profiles
-	- added Atom Beta and Atom profiles
-	- tightened 0ad, atril, evince, gthumb, pix, qtox, and xreader profiles.
-	- several private-bin conversions
-	- added jitsi profile
-	- pidgin private-bin conversion
-	- added eom profile
-	- added gnome-chess profile
-	- added DOSBox profile
 Jaykishan Mutkawoa (https://github.com/jmutkawoa)
 	- cpio profile
 Paupiah Yash (https://github.com/CaffeinatedStud)

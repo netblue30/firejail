@@ -241,6 +241,14 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			else if (strncmp(ptr, "private-home ", 13) == 0) {
+				if (strcmp(ptr + 13, "yes") == 0)
+					cfg_val[CFG_PRIVATE_HOME] = 1;
+				else if (strcmp(ptr + 13, "no") == 0)
+					cfg_val[CFG_PRIVATE_HOME] = 0;
+				else
+					goto errout;
+			}
 			else if (strncmp(ptr, "chroot-desktop ", 15) == 0) {
 				if (strcmp(ptr + 15, "yes") == 0)
 					cfg_val[CFG_CHROOT_DESKTOP] = 1;
@@ -295,14 +303,6 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- overlayfs support is %s\n",
-#ifdef HAVE_OVERLAYFS
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- file and directory whitelisting support is %s\n",
 #ifdef HAVE_WHITELIST
 		"enabled"
@@ -331,6 +331,22 @@ void print_compiletime_support(void) {
 #ifdef HAVE_NETWORK_RESTRICTED
 	printf("\t- networking features are available only to root user\n");
 #endif
+
+	printf("\t- overlayfs support is %s\n",
+#ifdef HAVE_OVERLAYFS
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- private-home support is %s\n",
+#ifdef HAVE_PRIVATE_HOME
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
 
 	printf("\t- seccomp-bpf support is %s\n",
 #ifdef HAVE_SECCOMP

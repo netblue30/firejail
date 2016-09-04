@@ -221,24 +221,10 @@ $ firejail \-\-overlay-path=~/jails/jail1 firefox
 	printf("\tfilesystems. All modifications are discarded when the sandbox is\n");
 	printf("\tclosed.\n\n");
 	printf("    --private=directory - use directory as user home.\n\n");
-#if 0
-   printf("    --private-template=directory - same as --private but copy the\n");
-   printf("\ttemplatedirectory in the tmpfs mounted user home.\n\n");
-
-.TP
-\fB\-\-private-template=templatedir
-Mount new /root and /home/user directories in temporary
-filesystems, and copy all files in templatedir. All modifications are discarded when the sandbox is
-closed.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-private-template=/home/netblue/.config/mozilla firefox
-#endif
-
-
+	printf("    --private-home=file,directory - build a new user home in a temporary\n");
+	printf("\t\tfilesystem, and copy the files and directories in the list in\n");
+	printf("\t\tthe new home. All modifications are discarded when the sandbox\n");
+	printf("\t\tis closed.\n\n");
 
 	printf("    --private-bin=file,file - build a new /bin in a temporary filesystem,\n");
 	printf("\tand copy the programs in the list.\n\n");

@@ -169,6 +169,18 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_private = 1;
 		return 0;
 	}
+	if (strncmp(ptr, "private-home ", 13) == 0) {
+#ifdef HAVE_PRIVATE_HOME
+		if (checkcfg(CFG_PRIVATE_HOME)) {
+			cfg.home_private_keep = ptr + 13;
+			fs_check_home_list();
+			arg_private = 1;
+		}
+		else
+			fprintf(stderr, "Warning: private-home is disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
 	else if (strcmp(ptr, "private-dev") == 0) {
 		arg_private_dev = 1;
 		return 0;

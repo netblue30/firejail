@@ -87,7 +87,7 @@ greigdp (https://github.com/greigdp)
 Laurent Declercq (https://github.com/nuxwin)
 	- fixed test for shell interpreter in chroots
 Franco (nextime) Lanza (https://github.com/nextime)
-	- added --private-template
+	- added --private-template/--private-home
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 Peter Hogg (https://github.com/pigmonkey)

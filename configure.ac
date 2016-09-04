@@ -38,6 +38,14 @@ AS_IF([test "x$enable_overlayfs" != "xno"], [
 	AC_SUBST(HAVE_OVERLAYFS)
 ])
 
+HAVE_PRIVATEHOME=""
+AC_ARG_ENABLE([private-home],
+    AS_HELP_STRING([--disable-private-home], [disable private home feature]))
+AS_IF([test "x$enable_private_home" != "xno"], [
+	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
+	AC_SUBST(HAVE_PRIVATE_HOME)
+])
+
 HAVE_SECCOMP=""
 AC_ARG_ENABLE([seccomp],
     AS_HELP_STRING([--disable-seccomp], [disable seccomp]))
@@ -163,6 +171,7 @@ echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"
 echo "   whitelisting: $HAVE_WHITELIST"
+echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"

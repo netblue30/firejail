@@ -636,6 +636,7 @@ HAVE_GLOBALCFG
 HAVE_BIND
 HAVE_CHROOT
 HAVE_SECCOMP
+HAVE_PRIVATE_HOME
 HAVE_OVERLAYFS
 EXTRA_LDFLAGS
 EGREP
@@ -696,6 +697,7 @@ ac_user_opts='
 enable_option_checking
 enable_apparmor
 enable_overlayfs
+enable_private_home
 enable_seccomp
 enable_chroot
 enable_bind
@@ -1328,6 +1330,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-apparmor       enable apparmor
   --disable-overlayfs     disable overlayfs
+  --disable-private-home  disable private home feature
   --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
   --disable-bind          disable bind
@@ -3527,6 +3530,19 @@ if test "x$enable_overlayfs" != "xno"; then :
 
 fi
 
+HAVE_PRIVATEHOME=""
+# Check whether --enable-private-home was given.
+if test "${enable_private_home+set}" = set; then :
+  enableval=$enable_private_home;
+fi
+
+if test "x$enable_private_home" != "xno"; then :
+
+	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
+
+
+fi
+
 HAVE_SECCOMP=""
 # Check whether --enable-seccomp was given.
 if test "${enable_seccomp+set}" = set; then :
@@ -4937,6 +4953,7 @@ echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"
 echo "   whitelisting: $HAVE_WHITELIST"
+echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"

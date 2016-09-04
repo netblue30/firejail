@@ -38,6 +38,8 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
 Version 0.9.41~rc1 was released.
 
+## Bringing back --private-home
+
 ## Deprecated --user
 
 --user option was deprecated, please use "sudo -u username firejail application" instead.

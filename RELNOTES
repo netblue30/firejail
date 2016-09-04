@@ -4,6 +4,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * security: tighten --chroot, submitted by Jann Horn
   * security: terminal sandbox escape, submitted by Stephan Sokolow
   * security: several TOCTOU fixes submitted by Aleksey Manevich
+  * modifs: bringing back --private-home option
   * modifs: deprecated --user option, please use "sudo -u username firejail"
   * modifs: allow symlinks in home directory for --whitelist option
   * modifs: Firejail prompt is enabled by env variable FIREJAIL_PROMPT="yes"

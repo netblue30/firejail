@@ -180,6 +180,7 @@ typedef struct config_t {
 	char *profile_ignore[MAX_PROFILE_IGNORE];
 	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory
+	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
 	char *bin_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
@@ -640,7 +641,8 @@ void sandboxfs(int op, pid_t pid, const char *patqh);
 #define CFG_REMOUNT_PROC_SYS 11
 #define CFG_OVERLAYFS 12
 #define CFG_CHROOT_DESKTOP 13
-#define CFG_MAX 14 // this should always be the last entry
+#define CFG_PRIVATE_HOME 14
+#define CFG_MAX 15 // this should always be the last entry
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
 extern char *netfilter_default;

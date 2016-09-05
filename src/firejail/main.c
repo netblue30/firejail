@@ -161,7 +161,8 @@ static inline int read_pid(char *str, pid_t *pid) {
 		|| (errno != 0 && pidtmp == 0)) {
 		return 1;
 	}
-	if (endptr == str) {
+	// endptr points to '\0' char in str if the entire string is valid
+	if (endptr == NULL || endptr[0]!='\0') {
 		return 1;
 	}
 	*pid = (pid_t)pidtmp;

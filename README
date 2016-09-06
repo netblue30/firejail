@@ -41,6 +41,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- gether shell selection code in one place
 	- fixed several TOCTOU security problems
 	- added --fix option to firecfg utility
+	- read_pid fix
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile

@@ -259,8 +259,8 @@ $ sudo reboot
 If you are using auditd, start aa-notify to get notification whenever a program causes a DENIED message.
 $ sudo aa-notify -p -f /var/log/audit/audit.log
 
-/sys/module/apparmor/parameters/enabled
-/sys/kernel/security/apparmor
+$ sudo cat /sys/kernel/security/apparmor/profiles | grep firejail
+firejail-default (enforce)
 
 24. check monitor proc behaviour for sandboxes with --blacklist=/proc
 also check --apparmor in this case
@@ -271,3 +271,10 @@ sudo mount -o remount,rw,hidepid=2 /proc
 
 26. mupdf profile
 
+27. LUKS 
+
+dm-crypt+LUKS – dm-crypt is a transparent disk encryption subsystem in 
+Linux kernel v2.6+ and later and DragonFly BSD. It can encrypt whole disks, 
+removable media, partitions, software RAID volumes, logical volumes, and files.
+
+28. add support for whitelisting /mtn

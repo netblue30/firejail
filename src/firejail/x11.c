@@ -436,7 +436,7 @@ void x11_start_xpra(int argc, char **argv) {
         }
 
 	// build attach command
-	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str };
+	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str, NULL };
 
 	// run attach command
 	client = fork();

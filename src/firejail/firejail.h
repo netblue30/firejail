@@ -478,6 +478,10 @@ void fs_private_template(void);
 void fs_check_private_dir(void);
 // check new private template home directory (--private-template= option) exit if it fails
 void fs_check_private_template(void);
+// check directory list specified by user (--private-home option) - exit if it fails
+void fs_check_home_list(void);
+void fs_private_home_list(void);
+
 
 // seccomp.c
 int seccomp_filter_drop(int enforce_seccomp);

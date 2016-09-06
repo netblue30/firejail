@@ -387,7 +387,7 @@ static void fix_desktop_files(void) {
 
 		// put '\0' at end of filename
 		char *tail = NULL;
-		char endchar;
+		char endchar = ' ';
 		if (execname[0] == '/') {
 			char *ptr2 = index(execname, ' ');
 			char *ptr3 = index(execname, '\n');

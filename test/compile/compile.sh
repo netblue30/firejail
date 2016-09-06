@@ -14,6 +14,7 @@ arr[11]="TEST 11: compile disable global config"
 arr[12]="TEST 12: compile apparmor"
 arr[13]="TEST 13: compile busybox"
 arr[14]="TEST 14: compile overlayfs disabled"
+arr[15]="TEST 15: compile apparmor enabled"
 
 # remove previous reports and output file
 cleanup() {
@@ -307,6 +308,24 @@ cp output-configure oc14
 cp output-make om14
 rm output-configure output-make
 
+#*****************************************************************
+# TEST 15
+#*****************************************************************
+# - enable apparmor
+#*****************************************************************
+print_title "${arr[15]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-apparmor --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test15
+grep Error output-configure output-make >> ./report-test15
+cp output-configure oc15
+cp output-make om15
+rm output-configure output-make
+
 
 #*****************************************************************
 # PRINT REPORTS
@@ -336,3 +355,5 @@ echo ${arr[11]}
 echo ${arr[12]}
 echo ${arr[13]}
 echo ${arr[14]}
+echo ${arr[15]}
+

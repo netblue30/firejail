@@ -361,6 +361,8 @@ static unsigned size_cnt = 0;
 static char *check_dir_or_file(const char *name);
 
 int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *sftw) {
+	(void) st;
+	(void) sftw;
 	if (size_limit_reached)
 		return 0;
 

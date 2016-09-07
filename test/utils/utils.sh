@@ -71,6 +71,9 @@ echo "TESTING: join2 (test/utils/join2.exp)"
 echo "TESTING: join3 (test/utils/join3.exp)"
 ./join3.exp
 
+echo "TESTING: join3 (test/utils/join4.exp)"
+./join4.exp
+
 echo "TESTING: join profile (test/utils/join-profile.exp)"
 ./join-profile.exp
 

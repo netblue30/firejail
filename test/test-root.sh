@@ -44,9 +44,6 @@ then
 	./servers6.exp
 fi
 
-echo "TESTING: /proc/sysrq-trigger reset disabled (sysrq-trigger.exp)"
-./sysrq-trigger.exp
-
 echo "TESTING: seccomp umount (seccomp-umount.exp)"
 ./filters/seccomp-umount.exp
 
@@ -80,3 +77,5 @@ rm -f /tmp/chroot/etc/resolv.conf
 ln -s tmp /tmp/chroot/etc/resolv.conf
 ./chroot-resolvconf.exp
 rm -f tmpfile
+rm /tmp/chroot/etc/resolv.conf
+

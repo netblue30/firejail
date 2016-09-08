@@ -1,4 +1,4 @@
-firejail (0.9.42~rc2) baseline; urgency=low
+firejail (0.9.42) baseline; urgency=low
   * security: --whitelist deleted files, submitted by Vasya Novikov
   * security: disable x32 ABI in seccomp, submitted by Jann Horn
   * security: tighten --chroot, submitted by Jann Horn
@@ -43,7 +43,7 @@ firejail (0.9.42~rc2) baseline; urgency=low
   * profiles: tar (gtar), unzip, unrar, file, skypeforlinux,
   * profiles: inox, Slack, gnome-chess. Gajim IM client, DOSBox
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Fri, 26 Aug 2016 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Thu, 8 Sept 2016 08:00:00 -0500
 
 firejail (0.9.40) baseline; urgency=low
   * added --nice option

@@ -25,7 +25,7 @@ sleep 1
 send -- "ls -l /etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"root root 0"
+	"root root"
 }
 
 sleep 1

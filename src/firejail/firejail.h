@@ -631,22 +631,24 @@ void sandboxfs_name(int op, const char *name, const char *path);
 void sandboxfs(int op, pid_t pid, const char *patqh);
 
 // checkcfg.c
-#define CFG_FILE_TRANSFER 0
-#define CFG_X11 1
-#define CFG_BIND 2
-#define CFG_USERNS 3
-#define CFG_CHROOT 4
-#define CFG_SECCOMP 5
-#define CFG_NETWORK 6
-#define CFG_RESTRICTED_NETWORK 7
-#define CFG_FORCE_NONEWPRIVS 8
-#define CFG_WHITELIST 9
-#define CFG_XEPHYR_WINDOW_TITLE 10
-#define CFG_REMOUNT_PROC_SYS 11
-#define CFG_OVERLAYFS 12
-#define CFG_CHROOT_DESKTOP 13
-#define CFG_PRIVATE_HOME 14
-#define CFG_MAX 15 // this should always be the last entry
+enum {
+	CFG_FILE_TRANSFER = 0,
+	CFG_X11,
+	CFG_BIND,
+	CFG_USERNS,
+	CFG_CHROOT,
+	CFG_SECCOMP,
+	CFG_NETWORK,
+	CFG_RESTRICTED_NETWORK,
+	CFG_FORCE_NONEWPRIVS,
+	CFG_WHITELIST,
+	CFG_XEPHYR_WINDOW_TITLE,
+	CFG_REMOUNT_PROC_SYS,
+	CFG_OVERLAYFS,
+	CFG_CHROOT_DESKTOP,
+	CFG_PRIVATE_HOME,
+	CFG_MAX // this should always be the last entry
+};
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
 extern char *netfilter_default;

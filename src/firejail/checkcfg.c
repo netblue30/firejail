@@ -19,6 +19,7 @@
 */
 #include "firejail.h"
 #include <sys/stat.h>
+#include <linux/loop.h>
 
 #define MAX_READ 8192				  // line buffer for profile files
 
@@ -285,6 +286,17 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
+
+	printf("\t- AppImage support is %s\n",
+#ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+
+
 
 
 	printf("\t- bind support is %s\n",

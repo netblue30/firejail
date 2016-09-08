@@ -40,6 +40,7 @@ void appimage_set(const char *appimage_path) {
 	assert(devloop == NULL);	// don't call this twice!
 	EUID_ASSERT();
 
+#ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
 	// check appimage_path
 	if (access(appimage_path, R_OK) == -1) {
 		fprintf(stderr, "Error: cannot access AppImage file\n");
@@ -48,8 +49,10 @@ void appimage_set(const char *appimage_path) {
 
 	// open as user to prevent race condition
 	int ffd = open(appimage_path, O_RDONLY|O_CLOEXEC);
-	if (ffd == -1)
-		errExit("open");
+	if (ffd == -1) {
+		fprintf(stderr, "Error: /dev/loop-control interface is not supported by your kernel\n");
+		exit(1);
+	}
 
 	EUID_ROOT();
 
@@ -109,6 +112,10 @@ void appimage_set(const char *appimage_path) {
 		errExit("asprintf");
 	
 	free(mode);
+#else
+	fprintf(stderr, "Error: /dev/loop-control interface is not supported by your kernel\n");
+	exit(1);
+#endif
 }
 
 void appimage_clear(void) {

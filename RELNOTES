@@ -1,3 +1,7 @@
+firejail (0.9.43) baseline; urgency=low
+  * development version
+ -- netblue30 <netblue30@yahoo.com>  Fri, 9 Sept 2016 08:00:00 -0500
+
 firejail (0.9.42) baseline; urgency=low
   * security: --whitelist deleted files, submitted by Vasya Novikov
   * security: disable x32 ABI in seccomp, submitted by Jann Horn

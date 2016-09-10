@@ -105,6 +105,7 @@ int arg_audit = 0;				// audit
 char *arg_audit_prog = NULL;			// audit
 int arg_apparmor = 0;				// apparmor
 int arg_allow_debuggers = 0;			// allow debuggers
+int arg_x11_block = 0;				// block X11
 int login_shell = 0;
 
 int parent_to_child_fds[2];
@@ -2118,6 +2119,9 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
+		else if (strcmp(argv[i], "--x11=block") == 0) {
+			arg_x11_block = 1;
+		}
 		else if (strcmp(argv[i], "--") == 0) {
 			// double dash - positional params to follow
 			arg_doubledash = 1;
@@ -2283,6 +2287,10 @@ int main(int argc, char **argv) {
 				printf("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 		}
 	}
+
+	// block X11 sockets
+	if (arg_x11_block)
+		x11_block();
 
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();

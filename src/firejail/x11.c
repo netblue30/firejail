@@ -51,6 +51,27 @@ static int x11_check_xephyr(void) {
 	return 1;
 }
 
+// check for X11 abstract sockets
+static int x11_abstract_sockets_present(void) {
+	char *path;
+	FILE *fp = fopen("/proc/net/unix", "r");
+	if (!fp)
+		errExit("fopen");
+
+	while (fscanf(fp, "%*s %*s %*s %*s %*s %*s %*s %ms\n", &path) != EOF) {
+		if (path && strncmp(path, "@/tmp/.X11-unix/", 16) == 0) {
+			free(path);
+			fclose(fp);
+			return 1;
+		}
+	}
+
+	free(path);
+	fclose(fp);
+
+	return 0;
+}
+
 static int random_display_number(void) {
 	int i;
 	int found = 1;
@@ -566,3 +587,37 @@ void x11_start(int argc, char **argv) {
 }
 
 #endif
+
+void x11_block(void) {
+#ifdef HAVE_X11
+	// check abstract socket presence and network namespace options
+	if ((!arg_nonetwork && !cfg.bridge0.configured && !cfg.interface0.configured)
+		&& x11_abstract_sockets_present()) {
+		fprintf(stderr, "ERROR: --x11=block specified, but abstract X11 socket still accessible.\n"
+						"Additional setup required. To block abstract X11 socket you need either:\n"
+						" * use network namespace (--net=none, --net=...)\n"
+						" * add \"-nolisten local\" to xserver options (eg. /etc/X11/xinit/xserverrc)\n");
+		exit(1);
+	}
+
+	// blacklist sockets
+	profile_check_line("blacklist /tmp/.X11-unix", 0, NULL);
+	profile_add(strdup("blacklist /tmp/.X11-unix"));
+
+	// blacklist .Xauthority
+	profile_check_line("blacklist ${HOME}/.Xauthority", 0, NULL);
+	profile_add(strdup("blacklist ${HOME}/.Xauthority"));
+	char *xauthority = getenv("XAUTHORITY");
+	if (xauthority) {
+		char *line;
+		if (asprintf(&line, "blacklist %s", xauthority) == -1)
+			errExit("asprintf");
+		profile_check_line(line, 0, NULL);
+		profile_add(line);
+	}
+
+	// clear enviroment
+	env_store("DISPLAY", RMENV);
+	env_store("XAUTHORITY", RMENV);
+#endif
+}

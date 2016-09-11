@@ -315,6 +315,7 @@ extern int arg_audit;		// audit
 extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
 extern int arg_allow_debuggers;	// allow debuggers
+extern int arg_x11_block;	// block X11
 
 extern int login_shell;
 extern int parent_to_child_fds[2];
@@ -623,6 +624,7 @@ int x11_display(void);
 void x11_start(int argc, char **argv);
 void x11_start_xpra(int argc, char **argv);
 void x11_start_xephyr(int argc, char **argv);
+void x11_block(void);
 
 // ls.c
 #define SANDBOX_FS_LS 0

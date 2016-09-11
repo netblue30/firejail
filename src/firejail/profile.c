@@ -625,6 +625,45 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_private = 1;
 		return 0;
 	}
+
+	if (strcmp(ptr, "x11 block") == 0) {
+#ifdef HAVE_X11
+		arg_x11_block = 1;
+#endif
+		return 0;
+	}
+
+	if (strcmp(ptr, "x11 xephyr") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11)) {
+			char *x11env = getenv("FIREJAIL_X11");
+			if (x11env && strcmp(x11env, "yes") == 0)
+				return 0;
+			else {
+				// start x11
+				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
+				exit(0);
+			}
+		}
+#endif
+		return 0;
+	}
+
+	if (strcmp(ptr, "x11 xpra") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11)) {
+			char *x11env = getenv("FIREJAIL_X11");
+			if (x11env && strcmp(x11env, "yes") == 0)
+				return 0;
+			else {
+				// start x11
+				x11_start_xpra(cfg.original_argc, cfg.original_argv);
+				exit(0);
+			}
+		}
+#endif
+		return 0;
+	}
 	
 	if (strcmp(ptr, "x11") == 0) {
 #ifdef HAVE_X11

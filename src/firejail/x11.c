@@ -54,7 +54,11 @@ static int x11_check_xephyr(void) {
 // check for X11 abstract sockets
 static int x11_abstract_sockets_present(void) {
 	char *path;
+
+	EUID_ROOT(); // grsecurity fix
 	FILE *fp = fopen("/proc/net/unix", "r");
+	EUID_USER();
+
 	if (!fp)
 		errExit("fopen");
 

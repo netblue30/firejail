@@ -54,7 +54,11 @@ static int x11_check_xephyr(void) {
 // check for X11 abstract sockets
 static int x11_abstract_sockets_present(void) {
 	char *path;
+
+	EUID_ROOT(); // grsecurity fix
 	FILE *fp = fopen("/proc/net/unix", "r");
+	EUID_USER();
+
 	if (!fp)
 		errExit("fopen");
 
@@ -594,9 +598,10 @@ void x11_block(void) {
 	if ((!arg_nonetwork && !cfg.bridge0.configured && !cfg.interface0.configured)
 		&& x11_abstract_sockets_present()) {
 		fprintf(stderr, "ERROR: --x11=block specified, but abstract X11 socket still accessible.\n"
-						"Additional setup required. To block abstract X11 socket you need either:\n"
-						" * use network namespace (--net=none, --net=...)\n"
-						" * add \"-nolisten local\" to xserver options (eg. /etc/X11/xinit/xserverrc)\n");
+						"Additional setup required. To block abstract X11 socket you can either:\n"
+						" * use network namespace in firejail (--net=none, --net=...)\n"
+						" * add \"-nolisten local\" to xserver options\n"
+						"   (eg. to your display manager config, or /etc/X11/xinit/xserverrc)\n");
 		exit(1);
 	}
 

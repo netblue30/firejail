@@ -36,3 +36,15 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 `````
 # Current development version: 0.9.43
 
+## New command line options
+`````
+      --x11=block
+              Blacklist  /tmp/.X11-unix  directory,  ${HOME}/.Xauthority  and  file
+              specified in ${XAUTHORITY} enviroment variable.  Remove  DISPLAY  and
+              XAUTHORITY  enviroment  variables.   Stop  with  error message if X11
+              abstract socket will be accessible in jail.
+`````
+
+## New profile commands
+
+x11 xpra, x11 xephyr, x11 block

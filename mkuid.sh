@@ -4,7 +4,7 @@ echo "extracting UID_MIN and GID_MIN"
 echo "#ifndef FIREJAIL_UIDS_H" > uids.h
 echo "#define FIREJAIL_UIDS_H" >> uids.h
 
-if [ -f /etc/login.defs ]
+if [ -r /etc/login.defs ]
 then
 	echo "// using values extracted from /etc/login.defs" >> uids.h
 	UID_MIN=`awk '/^\s*UID_MIN\s*([0-9]*).*?$/ {print $2}' /etc/login.defs`

@@ -42,6 +42,8 @@ Aleksey Manevich (https://github.com/manevich)
 	- fixed several TOCTOU security problems
 	- added --fix option to firecfg utility
 	- read_pid fix
+	- added --x11=block options
+	- x11 xpra, xphyr, block profile commands
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile

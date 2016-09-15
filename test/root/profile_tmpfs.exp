@@ -34,4 +34,4 @@ send -- "rm -fr  /tmp/firejailtestdir\r"
 
 sleep 1
 
-puts "\n"
+puts "\nall done\n"

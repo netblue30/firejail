@@ -40,5 +40,5 @@ expect {
 after 100
 
 
-puts "\nalldone\n"
+puts "\nall done\n"
 

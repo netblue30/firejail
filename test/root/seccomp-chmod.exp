@@ -7,34 +7,45 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --noprofile --seccomp\r"
+send --  "firejail --seccomp=chmod,fchmod,fchmodat --private\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 sleep 2
 
-send -- "sudo su -\r"
+send -- "cd ~; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"effective uid is not 0" {puts "OK\n"}
-	"Bad system call" {puts "OK\n"}
+	"done"
 }
 
-send -- "sudo ls\r"
+send -- "touch testfile; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"effective uid is not 0" {puts "OK\n"}
-	"Bad system call" {puts "OK\n"}
+	"done"
 }
 
-send -- "ping google.com\r"
+send -- "ls -l testfile; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Operation not permitted" {puts "OK\n"}
-	"unknown host" {puts "OK\n"}
+	"testfile"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"done"
+}
+
+send -- "chmod +x testfile; echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Bad system call"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"done"
 }
 
 send -- "exit\r"
 after 100
-puts "all done\n"
+puts "\nall done\n"

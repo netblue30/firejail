@@ -45,7 +45,7 @@ echo "TESTING: seccomp chmod - seccomp lists (test/filters/seccomp-chmod.exp)"
 echo "TESTING: seccomp chmod profile - seccomp lists (test/filters/seccomp-chmod-profile.exp)"
 ./seccomp-chmod-profile.exp
 
-# todo:  fix pwd and add seccomp-chown.exp and seccomp-umount.exp
+# todo:  fix pwd and add seccomp-chown.exp
 
 echo "TESTING: seccomp empty (test/filters/seccomp-empty.exp)"
 ./seccomp-empty.exp

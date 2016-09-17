@@ -651,6 +651,7 @@ enum {
 	CFG_OVERLAYFS,
 	CFG_CHROOT_DESKTOP,
 	CFG_PRIVATE_HOME,
+	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

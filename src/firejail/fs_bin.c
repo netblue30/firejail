@@ -46,6 +46,13 @@ static char *check_dir_or_file(const char *name) {
 	
 	int i = 0;
 	while (paths[i]) {
+		// private-bin-no-local can be disabled in /etc/firejail/firejail.config
+		if (checkcfg(CFG_PRIVATE_BIN_NO_LOCAL) && strstr(paths[i], "local/")) {
+			i++;
+			continue;
+		}
+		
+		// check file		
 		if (asprintf(&fname, "%s/%s", paths[i], name) == -1)
 			errExit("asprintf");
 		if (arg_debug)

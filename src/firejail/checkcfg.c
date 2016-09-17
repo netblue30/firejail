@@ -40,6 +40,7 @@ int checkcfg(int val) {
 			cfg_val[i] = 1; // most of them are enabled by default
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
 		cfg_val[CFG_FORCE_NONEWPRIVS] = 0; // disabled by default
+		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0; // disabled by default
 		
 		// open configuration file
 		char *fname;
@@ -255,6 +256,14 @@ int checkcfg(int val) {
 					cfg_val[CFG_CHROOT_DESKTOP] = 1;
 				else if (strcmp(ptr + 15, "no") == 0)
 					cfg_val[CFG_CHROOT_DESKTOP] = 0;
+				else
+					goto errout;
+			}
+			else if (strncmp(ptr, "private-bin-no-local ", 21) == 0) {
+				if (strcmp(ptr + 21, "yes") == 0)
+					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 1;
+				else if (strcmp(ptr + 21, "no") == 0)
+					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
 				else
 					goto errout;
 			}

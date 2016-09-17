@@ -61,7 +61,7 @@ int checkcfg(int val) {
 		struct stat s;
 		if (stat(fname, &s) == -1)
 			errExit("stat");
-		if (s.st_uid != 0 || s.st_gid != 0) {
+		if (s.st_uid != 0) {
 			fprintf(stderr, "Error: configuration file should be owned by root\n");
 			exit(1);
 		}

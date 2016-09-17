@@ -119,6 +119,8 @@ void env_defaults(void) {
 	// fix qt 4.8
 	if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
 		errExit("setenv");
+//	if (setenv("MOZ_NO_REMOTE, "1", 1) < 0)
+//		errExit("setenv");
 	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
 		errExit("setenv");
 	if (!cfg.shell)

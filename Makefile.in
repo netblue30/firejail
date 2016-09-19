@@ -18,14 +18,16 @@ DOCDIR=@docdir@
 HAVE_APPARMOR=@HAVE_APPARMOR@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 
+uids.h:; ./mkuid.sh
+
 .PHONY: mylibs $(MYLIBS)
-mylibs: $(MYLIBS)
+mylibs: $(MYLIBS) uids.h
 $(MYLIBS):
 	$(MAKE) -C $@
 
 .PHONY: apps $(APPS)
 apps: $(APPS)
-$(APPS): $(MYLIBS)
+$(APPS): $(MYLIBS) uids.h
 	$(MAKE) -C $@
 
 $(MANPAGES): $(wildcard src/man/*.txt)

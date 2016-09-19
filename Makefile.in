@@ -140,7 +140,9 @@ DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkma
 DISTFILES_TEST = "test/apps test/apps-x11 test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils"
 
 dist:
+	mv config.status config.status.old
 	make distclean
+	mv config.status.old config.status
 	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz
 	mkdir -p $(NAME)-$(VERSION)/test
 	cp -a "$(DISTFILES)" $(NAME)-$(VERSION)

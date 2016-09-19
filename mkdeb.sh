@@ -18,7 +18,9 @@ echo "*****************************************"
 tar -xJvf $CODE_ARCHIVE
 #mkdir -p $INSTALL_DIR
 cd $CODE_DIR
-./configure --prefix=/usr
+cp ../config.status .
+./config.status
+#./configure --prefix=/usr
 make
 mkdir debian
 DESTDIR=debian make install-strip

@@ -1,5 +1,6 @@
 firejail (0.9.43) baseline; urgency=low
   * development version
+  * modifs: removed man firejail-config
   * feature: blocking x11 (--x11=block)
   * feature: x11 xpra, x11 xephyr, x11 block profile commands
  -- netblue30 <netblue30@yahoo.com>  Fri, 9 Sept 2016 08:00:00 -0500

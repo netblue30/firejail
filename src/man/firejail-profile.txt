@@ -128,6 +128,17 @@ blacklist ${PATH}/ifconfig
 blacklist ${HOME}/.ssh
 
 .TP
+\fBblacklist-nolog file_or_directory
+When --tracelog flag is set, blacklisting generates syslog messages if the sandbox tries to access the file or directory.
+blacklist-nolog command disables syslog messages for this particular file or directory. Examples:
+.br
+
+.br
+blacklist-nolog /usr/bin
+.br
+blacklist-nolog /usr/bin/gcc*
+
+.TP
 \fBbind directory1,directory2
 Mount-bind directory1 on top of directory2. This option is only available when running as root.
 .TP

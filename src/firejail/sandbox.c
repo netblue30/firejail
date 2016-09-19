@@ -593,8 +593,13 @@ int sandbox(void* sandbox_arg) {
 			fprintf(stderr, "Warning: private-tmp feature is disabled in chroot\n");
 		else if (arg_overlay)
 			fprintf(stderr, "Warning: private-tmp feature is disabled in overlay\n");
-		else
-			fs_private_tmp();
+		else {
+			// private-tmp is implemented as a whitelist
+			EUID_USER();
+			profile_add("whitelist /tmp/.X11-unix");
+			EUID_ROOT();
+//			fs_private_tmp();
+		}
 	}
 	
 	//****************************
@@ -606,18 +611,16 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// apply the profile file
 	//****************************
-	if (cfg.profile) {
-		// apply all whitelist commands ... 
-		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: whitelist feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fprintf(stderr, "Warning: whitelist feature is disabled in overlay\n");
-		else
-			fs_whitelist();
-		
-		// ... followed by blacklist commands
-		fs_blacklist();
-	}
+	// apply all whitelist commands ... 
+	if (cfg.chrootdir)
+		fprintf(stderr, "Warning: whitelist feature is disabled in chroot\n");
+	else if (arg_overlay)
+		fprintf(stderr, "Warning: whitelist feature is disabled in overlay\n");
+	else
+		fs_whitelist();
+	
+	// ... followed by blacklist commands
+	fs_blacklist();
 	
 	//****************************
 	// install trace

@@ -1,7 +1,7 @@
 all: apps man
 MYLIBS = src/lib
 APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-config.5
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@

@@ -45,9 +45,9 @@
 #define RUN_HOME_DIR	"/run/firejail/mnt/home"
 #define RUN_ETC_DIR	"/run/firejail/mnt/etc"
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
-#define RUN_DRI_DIR	"/run/firejail/mnt/dri"
-#define RUN_SND_DIR	"/run/firejail/mnt/snd"
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
+
+#define RUN_DEV_DIR		"/run/firejail/mnt/dev"
 #define RUN_DEVLOG_FILE	"/run/firejail/mnt/devlog"
 
 #define RUN_WHITELIST_X11_DIR	"/run/firejail/mnt/orig-x11"

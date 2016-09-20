@@ -30,6 +30,49 @@
 #endif
 #include <sys/types.h>
 
+typedef struct {
+	const char *dev_fname;
+	const char *run_fname;
+} DevEntry;
+
+static DevEntry dev[] = {
+	{"/dev/snd", RUN_DEV_DIR "/snd"},
+	{"/dev/dri", RUN_DEV_DIR "/dri"},
+	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0"},
+	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1"},
+	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2"},
+	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3"},
+	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4"},
+	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5"},
+	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6"},
+	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7"},
+	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8"},
+	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9"},
+	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl"},
+	{"/dev/nvidia-modset", RUN_DEV_DIR "/nvidia-modset"},
+	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm"},
+	{NULL, NULL}
+};
+
+static void deventry_mount(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		struct stat s;
+		if (stat(dev[i].run_fname, &s) == 0) {
+			if (mkdir(dev[i].dev_fname, 0755) == -1)
+				errExit("mkdir");
+			if (chmod(dev[i].dev_fname, 0755) == -1)
+				errExit("chmod");
+			ASSERT_PERMS(dev[i].dev_fname, 0, 0, 0755);
+			if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mounting /dev/snd");
+			fs_logger2("whitelist", dev[i].dev_fname);
+		}
+		
+		i++;	
+	}
+}
+	
 static void create_char_dev(const char *path, mode_t mode, int major, int minor) {
 	dev_t dev = makedev(major, minor);
 	if (mknod(path, S_IFCHR | mode, dev) == -1)
@@ -62,43 +105,21 @@ void fs_private_dev(void){
 	if (arg_debug)
 		printf("Mounting tmpfs on /dev\n");
 
-	int have_dri = 0;
-	int have_snd = 0;
-	struct stat s;
-	if (stat("/dev/dri", &s) == 0)
-		have_dri = 1;
-	if (stat("/dev/snd", &s) == 0)
-		have_snd = 1;
-
 	// create DRI_DIR
 	fs_build_mnt_dir();
-	if (have_dri) {
-		if (mkdir(RUN_DRI_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chmod(RUN_DRI_DIR, 0755) == -1)
-			errExit("chmod");
-		ASSERT_PERMS(RUN_DRI_DIR, 0, 0, 0755);
 	
-		// keep a copy of /dev/dri under DRI_DIR
-		if (mount("/dev/dri", RUN_DRI_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /dev/dri");
-	}
-	
-	// create SND_DIR
-	if (have_snd) {
-		if (mkdir(RUN_SND_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chmod(RUN_SND_DIR, 0755) == -1)
-			errExit("chmod");
-		ASSERT_PERMS(RUN_SND_DIR, 0, 0, 0755);
-	
-		// keep a copy of /dev/dri under DRI_DIR
-		if (mount("/dev/snd", RUN_SND_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /dev/snd");
-	}
-	
+	// keep a copy of dev directory
+	if (mkdir(RUN_DEV_DIR, 0755) == -1)
+		errExit("mkdir");
+	if (chmod(RUN_DEV_DIR, 0755) == -1)
+		errExit("chmod");
+	ASSERT_PERMS(RUN_DEV_DIR, 0, 0, 0755);
+	if (mount("/dev", RUN_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /dev/dri");
+
 	// create DEVLOG_FILE
 	int have_devlog = 0;
+	struct stat s;
 	if (stat("/dev/log", &s) == 0) {
 		have_devlog = 1;
 		FILE *fp = fopen(RUN_DEVLOG_FILE, "w");
@@ -116,6 +137,8 @@ void fs_private_dev(void){
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
 	fs_logger("tmpfs /dev");
+	
+	deventry_mount();
 
 	// bring back /dev/log
 	if (have_devlog) {
@@ -128,31 +151,9 @@ void fs_private_dev(void){
 			fs_logger("clone /dev/log");
 		}
 	}		
+	if (mount(RUN_RO_DIR, RUN_DEV_DIR, "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("disable /dev/snd");
 
-	// bring back the /dev/snd directory
-	if (have_snd) {
-		/* coverity[toctou] */
-		if (mkdir("/dev/snd", 0755) == -1)
-			errExit("mkdir");
-		if (chmod("/dev/snd", 0755) == -1)
-			errExit("chmod");
-		ASSERT_PERMS("/dev/snd", 0, 0, 0755);
-		if (mount(RUN_SND_DIR, "/dev/snd", NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /dev/snd");
-		fs_logger("whitelist /dev/snd");
-	}
-
-	// bring back the /dev/dri directory
-	if (have_dri) {
-		if (mkdir("/dev/dri", 0755) == -1)
-			errExit("mkdir");
-		if (chmod("/dev/dri", 0755) == -1)
-			errExit("chmod");
-		ASSERT_PERMS("/dev/dri", 0, 0, 0755);
-		if (mount(RUN_DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /dev/dri");
-		fs_logger("whitelist /dev/dri");
-	}
 	
 	// create /dev/shm
 	if (arg_debug)

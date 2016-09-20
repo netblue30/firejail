@@ -161,10 +161,6 @@ To disable Vsync
 
 $ vblank_mode=0 glxgears
 
-18. Bring in nvidia drives in private-dev
-
-/dev/nvidia[0-9], /dev/nvidiactl, /dev/nvidia-modset and /dev/nvidia-uvm
-
 19. testing snaps
 
 Install firejail from official repository

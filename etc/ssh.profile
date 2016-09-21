@@ -1,4 +1,5 @@
 # ssh client
+quiet
 noblacklist ~/.ssh
 noblacklist /tmp/ssh-*
 

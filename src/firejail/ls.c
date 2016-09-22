@@ -257,7 +257,9 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		if (chdir("/") < 0)
 			errExit("chdir");
 		
-		// access chek is performed with the real UID
+		// drop privileges
+		drop_privs(0);
+
 		if (access(fname, R_OK) == -1) {
 			fprintf(stderr, "Error: Cannot access %s\n", fname);
 			exit(1);

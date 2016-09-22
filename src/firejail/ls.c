@@ -360,13 +360,29 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 		}
 		
 		if (access(dest_fname, F_OK) == -1) {
-			// try to create the file
-			FILE *fp = fopen(dest_fname, "w");
-			if (!fp) {
-				fprintf(stderr, "Error: cannot create %s\n", dest_fname);
-				exit(1);
+			// try to create the file as a regular user
+			pid_t child = fork();
+			if (child < 0)
+				errExit("fork");
+			if (child == 0) {
+				// drop privileges
+				drop_privs(0);
+				
+				FILE *fp = fopen(dest_fname, "w");
+				if (!fp) {
+					fprintf(stderr, "Error: cannot create %s\n", dest_fname);
+					exit(1);
+				}
+				fclose(fp);
+				exit(0);
 			}
-			fclose(fp);
+			
+			// wait for the child to finish
+			int status = 0;
+			waitpid(child, &status, 0);
+			if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
+			else
+				exit(1);
 		}
 		else {
 			if (access(dest_fname, W_OK) == -1) {
@@ -374,10 +390,13 @@ void sandboxfs(int op, pid_t pid, const char *path) {
 				exit(1);
 			}
 		}
+		
 		// copy file
 		EUID_ROOT();
-		copy_file(src_fname, dest_fname, getuid(), getgid(), 0644);
-		printf("Transfer complete\n");
+		if (copy_file(src_fname, dest_fname, getuid(), getgid(), 0644))
+			fprintf(stderr, "Error: transfer failed\n");
+		else
+			printf("Transfer complete\n");
 		EUID_USER();
 	}
 	

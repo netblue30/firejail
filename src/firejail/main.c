@@ -536,9 +536,44 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			// get file
 			pid_t pid;
 			if (read_pid(argv[i] + 6, &pid) == 0)		
-				sandboxfs(SANDBOX_FS_GET, pid, path);
+				sandboxfs(SANDBOX_FS_GET, pid, path, NULL);
 			else
-				sandboxfs_name(SANDBOX_FS_GET, argv[i] + 6, path);
+				sandboxfs_name(SANDBOX_FS_GET, argv[i] + 6, path, NULL);
+			exit(0);
+		}
+		else {
+			fprintf(stderr, "Error: --get feature is disabled in Firejail configuration file\n");
+			exit(1);
+		}
+	}
+	else if (strncmp(argv[i], "--put=", 6) == 0) {
+		if (checkcfg(CFG_FILE_TRANSFER)) {
+			logargs(argc, argv);
+			
+			// verify path
+			if ((i + 3) != argc) {
+				fprintf(stderr, "Error: invalid --put option, 2 paths expected\n");
+				exit(1);
+			}
+			char *path1 = argv[i + 1];
+			 invalid_filename(path1);
+			 if (strstr(path1, "..")) {
+			 	fprintf(stderr, "Error: invalid file name %s\n", path1);
+			 	exit(1);
+			 }
+			char *path2 = argv[i + 2];
+			 invalid_filename(path2);
+			 if (strstr(path2, "..")) {
+			 	fprintf(stderr, "Error: invalid file name %s\n", path2);
+			 	exit(1);
+			 }
+			 
+			// get file
+			pid_t pid;
+			if (read_pid(argv[i] + 6, &pid) == 0)		
+				sandboxfs(SANDBOX_FS_PUT, pid, path1, path2);
+			else
+				sandboxfs_name(SANDBOX_FS_PUT, argv[i] + 6, path1, path2);
 			exit(0);
 		}
 		else {
@@ -565,9 +600,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			// list directory contents
 			pid_t pid;
 			if (read_pid(argv[i] + 5, &pid) == 0)		
-				sandboxfs(SANDBOX_FS_LS, pid, path);
+				sandboxfs(SANDBOX_FS_LS, pid, path, NULL);
 			else
-				sandboxfs_name(SANDBOX_FS_LS, argv[i] + 5, path);
+				sandboxfs_name(SANDBOX_FS_LS, argv[i] + 5, path, NULL);
 			exit(0);
 		}
 		else {

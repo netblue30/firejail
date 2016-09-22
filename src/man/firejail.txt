@@ -11,7 +11,7 @@ firejail [OPTIONS] [program and arguments]
 File transfer from an existing sandbox
 .PP
 .RS
-firejail {\-\-ls | \-\-get} dir_or_filename
+firejail {\-\-ls | \-\-get | \-\-put} dir_or_filename
 .RE
 .PP
 Network traffic shaping for an existing sandbox:
@@ -1224,6 +1224,9 @@ $ firejail \-\-protocol.print=3272
 .br
 unix,inet,inet6,netlink
 .TP
+\fB\-\-put=name|pid src-filename dest-filename
+Put a file in sandbox container, see \fBFILE TRANSFER\fR section for more details.
+.TP
 \fB\-\-quiet
 Turn off Firejail's output.
 .TP
@@ -1787,12 +1790,16 @@ and transfer files from the container to the host filesystem.
 .TP
 \fB\-\-get=name|pid filename
 Retrieve the container file and store it on the host in the current working directory.
-The container is specified by name or PID. Full path is needed for filename.
+The container is specified by name or PID.
 
 .TP
 \fB\-\-ls=name|pid dir_or_filename
 List container files. The container is specified by name or PID.
-Full path is needed for dir_or_filename.
+
+.TP
+\fB\-\-put=name|pid src-filename dest-filename
+Put src-filename in sandbox container.
+The container is specified by name or PID.
 
 .TP
 Examples:
@@ -1818,7 +1825,11 @@ drwxr-xr-x netblue  netblue         4096 ..
 
 .br
 $ firejail \-\-get=mybrowser ~/Downloads/xpra-clipboard.png
+.br
 
+.br
+$ firejail \-\-put=mybrowser xpra-clipboard.png ~/Downloads/xpra-clipboard.png
+.br
 
 .SH TRAFFIC SHAPING
 Network bandwidth is an expensive resource shared among all sandboxes running on a system.

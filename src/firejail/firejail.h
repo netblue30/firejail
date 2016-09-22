@@ -629,10 +629,14 @@ void x11_start_xephyr(int argc, char **argv);
 void x11_block(void);
 
 // ls.c
-#define SANDBOX_FS_LS 0
-#define SANDBOX_FS_GET 1
-void sandboxfs_name(int op, const char *name, const char *path);
-void sandboxfs(int op, pid_t pid, const char *patqh);
+enum {
+	SANDBOX_FS_LS = 0,
+	SANDBOX_FS_GET,
+	SANDBOX_FS_PUT,
+	SANDBOX_FS_MAX // this should always be the last entry
+};
+void sandboxfs_name(int op, const char *name, const char *path1, const char *path2);
+void sandboxfs(int op, pid_t pid, const char *path1, const char *path2);
 
 // checkcfg.c
 enum {

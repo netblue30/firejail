@@ -803,6 +803,30 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;		
 	}
 
+	if (strncmp(ptr, "join-or-start ", 14) == 0) {
+		// try to join by name only
+		pid_t pid;
+		if (!name2pid(ptr + 14, &pid)) {
+			if (!cfg.shell && !arg_shell_none)
+				cfg.shell = guess_shell();
+
+			// find first non-option arg
+			int i;
+			for (i = 1; i < cfg.original_argc && strncmp(cfg.original_argv[i], "--", 2) != 0; i++);
+
+			join(pid, cfg.original_argc,cfg.original_argv, i + 1);
+			exit(0);
+		}
+
+		// set sandbox name and start normally
+		cfg.name = ptr + 14;
+		if (strlen(cfg.name) == 0) {
+			fprintf(stderr, "Error: invalid sandbox name\n");
+			exit(1);
+		}
+		return 0;
+	}
+
 	// rest of filesystem
 	if (strncmp(ptr, "blacklist ", 10) == 0)
 		ptr += 10;

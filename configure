@@ -3083,10 +3083,6 @@ else
 fi
 
 
-# Allow to build without apparmor support by calling:
-# ./configure --disable-apparmor
-# This makes it possible to run snaps in devmode on almost any host,
-# regardless of the kernel version.
 HAVE_APPARMOR=""
 # Check whether --enable-apparmor was given.
 if test "${enable_apparmor+set}" = set; then :

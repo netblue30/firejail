@@ -9,10 +9,6 @@ AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_RANLIB
 
-# Allow to build without apparmor support by calling:
-# ./configure --disable-apparmor
-# This makes it possible to run snaps in devmode on almost any host,
-# regardless of the kernel version.
 HAVE_APPARMOR=""
 AC_ARG_ENABLE([apparmor],
     AS_HELP_STRING([--enable-apparmor], [enable apparmor]))

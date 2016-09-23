@@ -1,7 +1,6 @@
 firejail (0.9.43) baseline; urgency=low
   * development version
   * modifs: removed man firejail-config
-  * modifs: make deb builds package based on the current configuration
   * modifs: --private-tmp whitelists /tmp/.X11-unix directory
   * modifs: Nvidia drivers added to --privte-dev
   * feature: add files to sandbox container (--put)

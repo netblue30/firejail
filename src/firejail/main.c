@@ -634,6 +634,30 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 
 	}
+	else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
+		// NOTE: this is first part of option handler,
+		// 		 sandbox name is set in other part
+		logargs(argc, argv);
+
+		if (arg_shell_none) {
+			if (argc <= (i+1)) {
+				fprintf(stderr, "Error: --shell=none set, but no command specified\n");
+				exit(1);
+			}
+			cfg.original_program_index = i + 1;
+		}
+
+		// try to join by name only
+		pid_t pid;
+		if (!name2pid(argv[i] + 16, &pid)) {
+			if (!cfg.shell && !arg_shell_none)
+				cfg.shell = guess_shell();
+
+			join(pid, argc, argv, i + 1);
+			exit(0);
+		}
+		// if there no such sandbox continue argument processing
+	}
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -2156,6 +2180,17 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--x11=block") == 0) {
 			arg_x11_block = 1;
+		}
+		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
+			// NOTE: this is second part of option handler,
+			//		 atempt to find and join sandbox is done in other one
+
+			// set sandbox name and start normally
+			cfg.name = argv[i] + 16;
+			if (strlen(cfg.name) == 0) {
+				fprintf(stderr, "Error: please provide a name for sandbox\n");
+				return 1;
+			}
 		}
 		else if (strcmp(argv[i], "--") == 0) {
 			// double dash - positional params to follow

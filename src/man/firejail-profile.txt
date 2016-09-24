@@ -467,6 +467,12 @@ available in the new namespace is a new loopback interface (lo).
 Use this option to deny network access to programs that don't
 really need network access.
 
+.SH Other
+.TP
+\fBjoin-or-start sandboxname
+Join the sandbox identified by name or start a new one.
+Same as "firejail --join=sandboxname" command if sandbox with specified name exists, otherwise same as "name sandboxname".
+
 .SH RELOCATING PROFILES
 For various reasons some users might want to keep the profile files in a different directory.
 Using \fB--profile-path\fR command line option, Firejail can be instructed to look for profiles

@@ -619,6 +619,13 @@ Switching to pid 1932, the first child process inside the sandbox
        valid_lft forever preferred_lft forever
 
 .TP
+\fB\-\-join-or-start=name
+Join the sandbox identified by name or start a new one.
+Same as "firejail --join=name" if sandbox with specified name exists, otherwise same as "firejail --name=name ..."
+.br
+Note that in contrary to other join options there is respective profile option.
+
+.TP
 \fB\-\-ls=name|pid dir_or_filename
 List files in sandbox container, see \fBFILE TRANSFER\fR section for more details.
 

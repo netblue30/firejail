@@ -106,7 +106,10 @@ char *arg_audit_prog = NULL;			// audit
 int arg_apparmor = 0;				// apparmor
 int arg_allow_debuggers = 0;			// allow debuggers
 int arg_x11_block = 0;				// block X11
+int arg_allusers = 0;				// all user home directories visible
+
 int login_shell = 0;
+
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -1296,6 +1299,8 @@ int main(int argc, char **argv) {
 		//*************************************
 		// filesystem
 		//*************************************
+		else if (strcmp(argv[i], "--allusers") == 0)
+			arg_allusers = 1;
 #ifdef HAVE_BIND		
 		else if (strncmp(argv[i], "--bind=", 7) == 0) {
 			if (checkcfg(CFG_BIND)) {

@@ -335,6 +335,9 @@ errout:
 }
 
 void restrict_users(void) {
+	if (arg_allusers)
+		return;
+		
 	// only in user mode
 	if (getuid()) {
 		if (strncmp(cfg.homedir, "/home/", 6) == 0) {

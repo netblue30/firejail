@@ -318,6 +318,7 @@ extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
 extern int arg_allow_debuggers;	// allow debuggers
 extern int arg_x11_block;	// block X11
+extern int arg_allusers;	// all user home directories visible
 
 extern int login_shell;
 extern int parent_to_child_fds[2];

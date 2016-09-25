@@ -290,6 +290,10 @@ void start_audit(void) {
 }
 
 void start_application(void) {
+	// fix problem found in SELinux (CVE-2016-7545) that affects Firejail too
+	if (setsid() == -1)
+		errExit("setsid");
+
 	//****************************************
 	// audit
 	//****************************************

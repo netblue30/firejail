@@ -3,9 +3,12 @@ firejail (0.9.43) baseline; urgency=low
   * modifs: removed man firejail-config
   * modifs: --private-tmp whitelists /tmp/.X11-unix directory
   * modifs: Nvidia drivers added to --privte-dev
+  * feature: support starting/joining sandbox is a single command
+    (--join-or-start)
+  * feature: all user home directories are visible (--allusers)
   * feature: add files to sandbox container (--put)
   * feature: blocking x11 (--x11=block)
-  * feature: x11 xpra, x11 xephyr, x11 block profile commands
+  * feature: x11 xpra, x11 xephyr, x11 block, allusers profile commands
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Fri, 9 Sept 2016 08:00:00 -0500
 

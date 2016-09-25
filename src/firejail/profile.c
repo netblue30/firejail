@@ -181,6 +181,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
+	else if (strcmp(ptr, "allusers") == 0) {
+		arg_allusers = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "private-dev") == 0) {
 		arg_private_dev = 1;
 		return 0;

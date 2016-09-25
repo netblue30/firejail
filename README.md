@@ -43,8 +43,24 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
               specified in ${XAUTHORITY} enviroment variable.  Remove  DISPLAY  and
               XAUTHORITY  enviroment  variables.   Stop  with  error message if X11
               abstract socket will be accessible in jail.
+
+      --put=name|pid src-filename dest-filename
+              Put src-filename in sandbox container.  The container is specified by name or PID.
+
+       --allusers
+              All user home directories are visible inside the sandbox. By default, only current user home
+              directory is visible.
+
+              Example:
+              $ firejail --allusers
+
+       --join-or-start=name
+              Join the sandbox identified by name or start a new one.  Same as "firejail  --join=name"  if
+              sandbox with specified name exists, otherwise same as "firejail --name=name ..."
+              Note that in contrary to other join options there is respective profile option.
+
 `````
 
 ## New profile commands
 
-x11 xpra, x11 xephyr, x11 block
+x11 xpra, x11 xephyr, x11 block, allusers, join-or-start

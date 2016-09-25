@@ -345,7 +345,7 @@ void restrict_users(void) {
 			sanitize_home();
 		}
 		else {
-			// user has the home diercotry outside /home
+			// user has the home directory outside /home
 			// mount tmpfs on top of /home in order to hide it
 			if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mount tmpfs");

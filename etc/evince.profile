@@ -5,14 +5,15 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-nonewprivs
 nogroups
+nonewprivs
 noroot
 nosound
 protocol unix
 seccomp
-
 shell none
+tracelog
+
 private-bin evince,evince-previewer,evince-thumbnailer
 whitelist /tmp/.X11-unix
 private-dev

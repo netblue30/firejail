@@ -30,6 +30,7 @@
 #include <errno.h>
 #include <sys/ioctl.h>
 #include <termios.h>
+#include <fcntl.h>
 
 #include <sched.h>
 #ifndef CLONE_NEWUSER
@@ -85,7 +86,16 @@ static void sandbox_handler(int sig){
 
 	// broadcast a SIGKILL
 	kill(-1, SIGKILL);
-	ioctl(0, TCFLSH, TCIFLUSH);
+	int fd = open("/dev/tty", O_RDWR);
+	if (fd != -1) {
+		ioctl(fd, TCFLSH, TCIFLUSH);
+		close(fd);
+	} else {
+		fprintf(stderr, "Warning: can't open /dev/tty, flushing stdin, stdout and stderr file descriptors instead\n");
+		ioctl(0, TCFLSH, TCIFLUSH);
+		ioctl(1, TCFLSH, TCIFLUSH);
+		ioctl(2, TCFLSH, TCIFLUSH);
+	}
 	exit(sig);
 }
 
@@ -896,7 +906,16 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	int status = monitor_application(app_pid);	// monitor application
-	ioctl(0, TCFLSH, TCIFLUSH);
+	int fd = open("/dev/tty", O_RDWR);
+	if (fd != -1) {
+		ioctl(fd, TCFLSH, TCIFLUSH);
+		close(fd);
+	} else {
+		fprintf(stderr, "Warning: can't open /dev/tty, flushing stdin, stdout and stderr file descriptors instead\n");
+		ioctl(0, TCFLSH, TCIFLUSH);
+		ioctl(1, TCFLSH, TCIFLUSH);
+		ioctl(2, TCFLSH, TCIFLUSH);
+	}
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

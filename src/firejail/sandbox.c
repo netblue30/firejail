@@ -86,6 +86,7 @@ static void sandbox_handler(int sig){
 
 	// broadcast a SIGKILL
 	kill(-1, SIGKILL);
+#if 0	
 	int fd = open("/dev/tty", O_RDWR);
 	if (fd != -1) {
 		ioctl(fd, TCFLSH, TCIFLUSH);
@@ -96,6 +97,7 @@ static void sandbox_handler(int sig){
 		ioctl(1, TCFLSH, TCIFLUSH);
 		ioctl(2, TCFLSH, TCIFLUSH);
 	}
+#endif
 	exit(sig);
 }
 
@@ -906,6 +908,7 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	int status = monitor_application(app_pid);	// monitor application
+#if 0	
 	int fd = open("/dev/tty", O_RDWR);
 	if (fd != -1) {
 		ioctl(fd, TCFLSH, TCIFLUSH);
@@ -916,6 +919,7 @@ int sandbox(void* sandbox_arg) {
 		ioctl(1, TCFLSH, TCIFLUSH);
 		ioctl(2, TCFLSH, TCIFLUSH);
 	}
+#endif
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

@@ -45,6 +45,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- added --x11=block options
 	- x11 xpra, xphyr, block profile commands
 	- added --join-or-start command
+	- CVE-2016-7545
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile

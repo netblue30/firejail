@@ -1,4 +1,5 @@
 firejail (0.9.43) baseline; urgency=low
+  * CVE-2016-7545 submitted by Aleksey Manevich
   * development version
   * modifs: removed man firejail-config
   * modifs: --private-tmp whitelists /tmp/.X11-unix directory

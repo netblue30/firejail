@@ -28,6 +28,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
+#include <sys/ioctl.h>
+#include <termios.h>
 
 #include <sched.h>
 #ifndef CLONE_NEWUSER
@@ -80,8 +82,10 @@ static void sandbox_handler(int sig){
 		
 	}
 
+
 	// broadcast a SIGKILL
 	kill(-1, SIGKILL);
+	ioctl(0, TCFLSH, TCIFLUSH);
 	exit(sig);
 }
 
@@ -290,6 +294,8 @@ void start_audit(void) {
 }
 
 void start_application(void) {
+//if (setsid() == -1)
+//errExit("setsid");
 	//****************************************
 	// audit
 	//****************************************
@@ -890,6 +896,7 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	int status = monitor_application(app_pid);	// monitor application
+	ioctl(0, TCFLSH, TCIFLUSH);
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

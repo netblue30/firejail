@@ -35,6 +35,8 @@
 #include <signal.h>
 #include <time.h>
 #include <net/if.h>
+#include <sys/ioctl.h>
+#include <termios.h>
 
 #if 0
 #include <sys/times.h>
@@ -141,6 +143,7 @@ static void myexit(int rv) {
 	EUID_ROOT();
 	clear_run_files(sandbox_pid);
 	appimage_clear();
+	ioctl(0, TCFLSH, TCIFLUSH);
 		
 	exit(rv); 
 }

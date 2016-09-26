@@ -85,7 +85,7 @@ static void sandbox_handler(int sig){
 
 	// broadcast a SIGKILL
 	kill(-1, SIGKILL);
-	ioctl(0, TCFLSH, TCIFLUSH);
+//	ioctl(0, TCFLSH, TCIFLUSH);
 	exit(sig);
 }
 
@@ -896,7 +896,7 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	int status = monitor_application(app_pid);	// monitor application
-	ioctl(0, TCFLSH, TCIFLUSH);
+//	ioctl(0, TCFLSH, TCIFLUSH);
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

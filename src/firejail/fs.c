@@ -674,11 +674,13 @@ void fs_proc_sys_dev_boot(void) {
 	disable_file(BLACKLIST_FILE, "/proc/kmem");
 	
 	// remove kernel symbol information
-	disable_file(BLACKLIST_FILE, "/usr/src/linux");
-	disable_file(BLACKLIST_FILE, "/lib/modules");
-	disable_file(BLACKLIST_FILE, "/usr/lib/debug");
-	disable_file(BLACKLIST_FILE, "/boot");
-	
+	if (!arg_allow_debuggers) {
+		disable_file(BLACKLIST_FILE, "/usr/src/linux");
+		disable_file(BLACKLIST_FILE, "/lib/modules");
+		disable_file(BLACKLIST_FILE, "/usr/lib/debug");
+		disable_file(BLACKLIST_FILE, "/boot");
+	}
+		
 	// disable /selinux
 	disable_file(BLACKLIST_FILE, "/selinux");
 	

@@ -86,10 +86,11 @@ static void sandbox_handler(int sig){
 
 	// broadcast a SIGKILL
 	kill(-1, SIGKILL);
-#if 0	
 	int fd = open("/dev/tty", O_RDWR);
 	if (fd != -1) {
+		ioctl(fd, TIOCNOTTY);
 		ioctl(fd, TCFLSH, TCIFLUSH);
+		ioctl(fd, TIOCSCTTY);
 		close(fd);
 	} else {
 		fprintf(stderr, "Warning: can't open /dev/tty, flushing stdin, stdout and stderr file descriptors instead\n");
@@ -97,7 +98,7 @@ static void sandbox_handler(int sig){
 		ioctl(1, TCFLSH, TCIFLUSH);
 		ioctl(2, TCFLSH, TCIFLUSH);
 	}
-#endif
+
 	exit(sig);
 }
 
@@ -306,8 +307,7 @@ void start_audit(void) {
 }
 
 void start_application(void) {
-//if (setsid() == -1)
-//errExit("setsid");
+
 	//****************************************
 	// audit
 	//****************************************
@@ -908,10 +908,11 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	int status = monitor_application(app_pid);	// monitor application
-#if 0	
 	int fd = open("/dev/tty", O_RDWR);
 	if (fd != -1) {
+		ioctl(fd, TIOCNOTTY);
 		ioctl(fd, TCFLSH, TCIFLUSH);
+		ioctl(fd, TIOCSCTTY);
 		close(fd);
 	} else {
 		fprintf(stderr, "Warning: can't open /dev/tty, flushing stdin, stdout and stderr file descriptors instead\n");
@@ -919,7 +920,6 @@ int sandbox(void* sandbox_arg) {
 		ioctl(1, TCFLSH, TCIFLUSH);
 		ioctl(2, TCFLSH, TCIFLUSH);
 	}
-#endif
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

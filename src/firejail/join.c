@@ -30,6 +30,12 @@ static uint64_t caps = 0;
 static int apply_seccomp = 0;
 #define BUFLEN 4096
 
+static void signal_handler(int sig){
+	flush_stdin();
+
+	exit(sig);
+}
+
 static void extract_command(int argc, char **argv, int index) {
 	EUID_ASSERT();
 	if (index >= argc)
@@ -187,6 +193,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	char *homedir = cfg.homedir;
 	
 	extract_command(argc, argv, index);
+	signal (SIGTERM, signal_handler);
 
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	EUID_ROOT();

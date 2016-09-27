@@ -31,6 +31,8 @@ Features: https://firejail.wordpress.com/features-3/
 Documentation: https://firejail.wordpress.com/documentation-2/
 
 FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
+
+User submitted profile repositories: https://github.com/chiraag-nataraj/firejail-profiles
 `````
 
 `````

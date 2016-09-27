@@ -32,7 +32,14 @@ Documentation: https://firejail.wordpress.com/documentation-2/
 
 FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
-User submitted profile repositories: https://github.com/chiraag-nataraj/firejail-profiles
+`````
+
+`````
+## User submitted profile repositories
+
+If you keep your Firejail profiles in a public repository, please give us a link:
+
+* https://github.com/chiraag-nataraj/firejail-profiles
 `````
 
 `````

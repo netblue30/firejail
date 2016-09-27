@@ -146,7 +146,9 @@ static void myexit(int rv) {
 
 	int fd = open("/dev/tty", O_RDWR);
 	if (fd != -1) {
+		ioctl(fd, TIOCNOTTY);
 		ioctl(fd, TCFLSH, TCIFLUSH);
+		ioctl(fd, TIOCSCTTY);
 		close(fd);
 	} else {
 		fprintf(stderr, "Warning: can't open /dev/tty, flushing stdin, stdout and stderr file descriptors instead\n");
@@ -154,7 +156,7 @@ static void myexit(int rv) {
 		ioctl(1, TCFLSH, TCIFLUSH);
 		ioctl(2, TCFLSH, TCIFLUSH);
 	}
-		
+
 	exit(rv); 
 }
 

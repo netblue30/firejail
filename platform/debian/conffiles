@@ -143,3 +143,6 @@
 /etc/firejail/xzdec.profile
 /etc/firejail/strings.profile
 /etc/firejail/dosbox.profile
+/etc/firejail/mupdf.profile
+/etc/firejail/qpdfview.profile
+

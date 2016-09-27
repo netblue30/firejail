@@ -26,6 +26,7 @@ blacklist ${HOME}/.kde/share/config/okularrc
 blacklist ${HOME}/.kde/share/config/okularpartrc
 blacklist ${HOME}/.kde/share/apps/gwenview
 blacklist ${HOME}/.kde/share/config/gwenviewrc
+blacklist ${HOME}/.config/qpdfview
 
 # Media players
 blacklist ${HOME}/.config/cmus
@@ -135,6 +136,7 @@ blacklist ${HOME}/.local/share/totem
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/gnome-chess
+blacklist ${HOME}/.local/share/qpdfview
 
 # ssh
 blacklist /tmp/ssh-*

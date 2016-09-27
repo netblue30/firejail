@@ -10,6 +10,7 @@ firejail (0.9.43) baseline; urgency=low
   * feature: add files to sandbox container (--put)
   * feature: blocking x11 (--x11=block)
   * feature: x11 xpra, x11 xephyr, x11 block, allusers profile commands
+  * new profiles: qpdfview, mupdf
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Fri, 9 Sept 2016 08:00:00 -0500
 

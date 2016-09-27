@@ -386,6 +386,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
+	flush_stdin();
 	exit(0);
 }
 

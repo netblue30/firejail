@@ -35,8 +35,6 @@
 #include <signal.h>
 #include <time.h>
 #include <net/if.h>
-#include <sys/ioctl.h>
-#include <termios.h>
 
 #if 0
 #include <sys/times.h>
@@ -143,18 +141,7 @@ static void myexit(int rv) {
 	EUID_ROOT();
 	clear_run_files(sandbox_pid);
 	appimage_clear();
-
-	int fd = open("/dev/tty", O_RDWR);
-	if (fd != -1) {
-		ioctl(fd, TCFLSH, TCIFLUSH);
-		close(fd);
-	} else {
-		fprintf(stderr, "Warning: can't open /dev/tty, flushing stdin, stdout and stderr file descriptors instead\n");
-		ioctl(0, TCFLSH, TCIFLUSH);
-		ioctl(1, TCFLSH, TCIFLUSH);
-		ioctl(2, TCFLSH, TCIFLUSH);
-	}
-		
+	flush_stdin();
 	exit(rv); 
 }
 

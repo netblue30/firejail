@@ -29,3 +29,6 @@ whitelist ~/.kde/share/config/gtkrc-2.0
 # dconf
 mkdir ~/.config/dconf
 whitelist ~/.config/dconf
+
+# qt
+whitelist ~/.config/kdeglobals

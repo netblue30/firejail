@@ -59,13 +59,15 @@ static void deventry_mount(void) {
 	while (dev[i].dev_fname != NULL) {
 		struct stat s;
 		if (stat(dev[i].run_fname, &s) == 0) {
+			if (arg_debug)
+				printf("mounting %s\n", dev[i].run_fname);
 			if (mkdir(dev[i].dev_fname, 0755) == -1)
 				errExit("mkdir");
 			if (chmod(dev[i].dev_fname, 0755) == -1)
 				errExit("chmod");
 			ASSERT_PERMS(dev[i].dev_fname, 0, 0, 0755);
 			if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
-				errExit("mounting /dev/snd");
+				errExit("mounting dev file");
 			fs_logger2("whitelist", dev[i].dev_fname);
 		}
 		
@@ -261,6 +263,8 @@ void fs_dev_shm(void) {
 }
 
 void fs_dev_disable_sound() {
+	if (arg_debug)
+		printf("disable /dev/snd\n");
 	if (mount(RUN_RO_DIR, "/dev/snd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("disable /dev/snd");
 	fs_logger("blacklist /dev/snd");

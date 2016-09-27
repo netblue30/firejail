@@ -53,6 +53,8 @@ doexit:
 
 // disable pulseaudio socket
 void pulseaudio_disable(void) {
+	if (arg_debug)
+		printf("disable pulseaudio\n");
 	// blacklist user config directory
 	disable_file(cfg.homedir, ".config/pulse");
 

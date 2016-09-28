@@ -302,6 +302,29 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
+	else if (strncmp(ptr, "veth-name ", 10) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+
+			br->veth_name = strdup(ptr + 10);
+			if (br->veth_name == NULL)
+				errExit("strdup");
+			if (*br->veth_name == '\0') {
+				fprintf(stderr, "Error: no veth-name configured\n");
+				exit(1);
+			}
+		}
+		else
+			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+#endif
+		return 0;
+	}
+
 	else if (strncmp(ptr, "iprange ", 8) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
@@ -348,7 +371,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 
-// from here
 	else if (strncmp(ptr, "mac ", 4) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {

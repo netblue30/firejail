@@ -73,6 +73,13 @@ If you keep your Firejail profiles in a public repository, please give us a link
               Example:
               $ firejail --no3d firefox
 
+      --veth-name=name
+              Use this name for the interface  connected  to  the  bridge  for
+              --net=bridge_interface commands, instead of the default one.
+
+              Example:
+              $ firejail --net=br0 --veth-name=if0
+
 `````
 
 ## New profile commands

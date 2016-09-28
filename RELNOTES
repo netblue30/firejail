@@ -6,6 +6,8 @@ firejail (0.9.43) baseline; urgency=low
   * modifs: Nvidia drivers added to --private-dev
   * feature: support starting/joining sandbox is a single command
     (--join-or-start)
+  * feature: assign a name to the interface connected to the bridge 
+    (--veth-name)
   * feature: all user home directories are visible (--allusers)
   * feature: add files to sandbox container (--put)
   * feature: blocking x11 (--x11=block)

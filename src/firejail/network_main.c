@@ -120,8 +120,13 @@ void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child) {
 
 	// create a veth pair
 	char *dev;
-	if (asprintf(&dev, "veth%u%s", getpid(), ifname) < 0)
-		errExit("asprintf");
+	if (br->veth_name == NULL) {
+		if (asprintf(&dev, "veth%u%s", getpid(), ifname) < 0)
+			errExit("asprintf");
+	}
+	else
+		dev = br->veth_name;
+		
 	net_create_veth(dev, ifname, child);
 
 	// add interface to the bridge

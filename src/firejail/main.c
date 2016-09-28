@@ -1855,6 +1855,27 @@ int main(int argc, char **argv) {
 			}
 		}
 
+		else if (strncmp(argv[i], "--veth-name=", 12) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				Bridge *br = last_bridge_configured();
+				if (br == NULL) {
+					fprintf(stderr, "Error: no network device configured\n");
+					exit(1);
+				}
+				br->veth_name = strdup(argv[i] + 12);
+				if (br->veth_name == NULL)
+					errExit("strdup");
+				if (*br->veth_name == '\0') {
+					fprintf(stderr, "Error: no veth-name configured\n");
+					exit(1);
+				}
+			}
+			else {
+				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
+				exit(1);
+			}
+		}
+
 		else if (strcmp(argv[i], "--scan") == 0) {
 			if (checkcfg(CFG_NETWORK)) {
 				arg_scan = 1;

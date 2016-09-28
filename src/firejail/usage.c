@@ -272,6 +272,10 @@ void usage(void) {
 	printf("\tdirectoires blacklisted by the security profile.\n\n");
 	printf("    --tree - print a tree of all sandboxed processes.\n\n");
 	printf("    --version - print program version and exit.\n\n");
+#ifdef HAVE_NETWORK	
+	printf("    --veth-name=name - use this name for the interface connected to the bridge\n");
+	printf("\tfor --net=bridgename commands, instead of the default one.\n\n"); 
+#endif	
 #ifdef HAVE_WHITELIST	
 	printf("    --whitelist=dirname_or_filename - whitelist directory or file.\n\n");
 #endif	

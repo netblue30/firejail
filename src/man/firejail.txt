@@ -1605,6 +1605,18 @@ Example:
 $ firejail \-\-version
 .br
 firejail version 0.9.27
+
+.TP
+\fB\-\-veth-name=name
+Use this name for the interface connected to the bridge for --net=bridge_interface commands, 
+instead of the default one.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=br0 --veth-name=if0
+
 .TP
 \fB\-\-whitelist=dirname_or_filename
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the

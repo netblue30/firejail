@@ -131,6 +131,8 @@ typedef struct bridge_t {
 	uint8_t mac[6];		// interface mac address
 	int mtu;		// interface mtu
 	
+	char *veth_name;	// veth name for the device connected to the bridge
+	
 	// inside the sandbox
 	char *devsandbox;	// name of the device inside the sandbox
 	uint32_t ipsandbox;	// ip address inside the sandbox

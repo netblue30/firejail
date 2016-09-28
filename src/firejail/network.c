@@ -204,6 +204,7 @@ void net_if_up(const char *ifname) {
 	// read the existing flags
 	if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0) {
 		close(sock);
+		printf("Error: cannot bring up interface %s\n", ifname);
 		errExit("ioctl");
 	}
 
@@ -212,6 +213,7 @@ void net_if_up(const char *ifname) {
 	// set the new flags
 	if (ioctl( sock, SIOCSIFFLAGS, &ifr ) < 0) {
 		close(sock);
+		printf("Error: cannot bring up interface %s\n", ifname);
 		errExit("ioctl");
 	}
 
@@ -219,6 +221,7 @@ void net_if_up(const char *ifname) {
 	// read the existing flags
 	if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0) {
 		close(sock);
+		printf("Error: cannot bring up interface %s\n", ifname);
 		errExit("ioctl");
 	}
 
@@ -230,6 +233,7 @@ void net_if_up(const char *ifname) {
 		// read the existing flags
 		if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0) {
 			close(sock);
+			printf("Error: cannot bring up interface %s\n", ifname);
 			errExit("ioctl");
 		}
 		if (ifr.ifr_flags & IFF_RUNNING)
@@ -260,6 +264,7 @@ void net_if_down(const char *ifname) {
 	// read the existing flags
 	if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0) {
 		close(sock);
+		printf("Error: cannot shut down interface %s\n", ifname);
 		errExit("ioctl");
 	}
 
@@ -268,6 +273,7 @@ void net_if_down(const char *ifname) {
 	// set the new flags
 	if (ioctl( sock, SIOCSIFFLAGS, &ifr ) < 0) {
 		close(sock);
+		printf("Error: cannot shut down interface %s\n", ifname);
 		errExit("ioctl");
 	}
 

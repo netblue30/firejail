@@ -558,11 +558,6 @@ int sandbox(void* sandbox_arg) {
 			fs_private();
 	}
 
-#if 0	
-   if (arg_private_template) 
-      fs_private_template();
-#endif
-
 	if (arg_private_dev) {
 		if (cfg.chrootdir)
 			fprintf(stderr, "Warning: private-dev feature is disabled in chroot\n");
@@ -635,7 +630,7 @@ int sandbox(void* sandbox_arg) {
 		fs_trace();
 		
 	//****************************
-	// --nosound and fix for pulseaudio 7.0
+	// nosound/no3d and fix for pulseaudio 7.0
 	//****************************
 	if (arg_nosound) {
 		// disable pulseaudio
@@ -646,6 +641,9 @@ int sandbox(void* sandbox_arg) {
 	}
 	else
 		pulseaudio_init();
+	
+	if (arg_no3d)
+		fs_dev_disable_3d();
 	
 	//****************************
 	// networking

@@ -355,6 +355,9 @@ Enable IPC namespace.
 .TP
 \fBnosound
 Disable sound system.
+.TP
+\fBno3d
+Disable 3D hardware acceleration.
 
 .SH Networking
 Networking features available in profile files.

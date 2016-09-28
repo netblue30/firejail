@@ -33,25 +33,27 @@
 typedef struct {
 	const char *dev_fname;
 	const char *run_fname;
+	int sound;
+	int hw3d;
 } DevEntry;
 
 static DevEntry dev[] = {
-	{"/dev/snd", RUN_DEV_DIR "/snd"},
-	{"/dev/dri", RUN_DEV_DIR "/dri"},
-	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0"},
-	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1"},
-	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2"},
-	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3"},
-	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4"},
-	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5"},
-	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6"},
-	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7"},
-	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8"},
-	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9"},
-	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl"},
-	{"/dev/nvidia-modset", RUN_DEV_DIR "/nvidia-modset"},
-	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm"},
-	{NULL, NULL}
+	{"/dev/snd", RUN_DEV_DIR "/snd", 1, 0},	// sound device
+	{"/dev/dri", RUN_DEV_DIR "/dri", 0, 1},		// 3d device
+	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", 0, 1},
+	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", 0, 1},
+	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2", 0, 1},
+	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3", 0, 1},
+	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4", 0, 1},
+	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5", 0, 1},
+	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6", 0, 1},
+	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7", 0, 1},
+	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", 0, 1},
+	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", 0, 1},
+	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1},
+	{"/dev/nvidia-modset", RUN_DEV_DIR "/nvidia-modset", 0, 1},
+	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", 0, 1},
+	{NULL, NULL, 0, 0}
 };
 
 static void deventry_mount(void) {
@@ -281,10 +283,38 @@ void fs_dev_shm(void) {
 	}
 }
 
-void fs_dev_disable_sound() {
+static void disable_file_or_dir(const char *fname) {
 	if (arg_debug)
-		printf("disable /dev/snd\n");
-	if (mount(RUN_RO_DIR, "/dev/snd", "none", MS_BIND, "mode=400,gid=0") < 0)
-		errExit("disable /dev/snd");
-	fs_logger("blacklist /dev/snd");
+		printf("disable %s\n", fname);
+	struct stat s;
+	if (stat(fname, &s) != -1) {
+		if (is_dir(fname)) {	
+			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				errExit("disable directory");
+		}
+		else {
+			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				errExit("disable file");
+		}		
+	}
+	fs_logger2("blacklist", fname);
+
+}
+
+void fs_dev_disable_sound(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].sound)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_3d(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].hw3d)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
 }

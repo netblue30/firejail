@@ -201,6 +201,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_nosound = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "no3d") == 0) {
+		arg_no3d = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "netfilter") == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK))

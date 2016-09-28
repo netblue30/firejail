@@ -93,6 +93,7 @@ int arg_private_tmp = 0;			// private tmp directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
 int arg_nosound = 0;				// disable sound
+int arg_no3d;					// disable 3d hardware acceleration
 int arg_quiet = 0;				// no output for scripting
 int arg_join_network = 0;			// join only the network namespace
 int arg_join_filesystem = 0;			// join only the mount namespace
@@ -1732,6 +1733,9 @@ int main(int argc, char **argv) {
 			env_store(argv[i] + 8, RMENV);
 		else if (strcmp(argv[i], "--nosound") == 0) {
 			arg_nosound = 1;
+		}
+		else if (strcmp(argv[i], "--no3d") == 0) {
+			arg_no3d = 1;
 		}
 				
 		//*************************************

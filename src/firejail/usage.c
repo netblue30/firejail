@@ -147,7 +147,8 @@ void usage(void) {
 	printf("    --netstats - monitor network statistics for sandboxes creating a new\n");
 	printf("\tnetwork namespace.\n\n");
 #endif
-	printf("    --nice=value - set nice value\n\n");
+	printf("    --nice=value - set nice value.\n\n");
+	printf("    --no3d - disable 3D hardware acceleration.\n\n");
 	printf("    --noblacklist=dirname_or_filename - disable blacklist for directory or\n");
 	printf("\tfile.\n\n");
 	printf("    --noexec=dirname_of_filenam - remount the file or directory noexec\n");

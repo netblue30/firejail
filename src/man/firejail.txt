@@ -853,6 +853,15 @@ Example:
 .br
 $ firejail --nice=2 firefox
 
+.TP
+\fB\-\-no3d
+Disable 3D hardware acceleration.
+.br
+
+.br
+Example:
+.br
+$ firejail --no3d firefox
 
 .TP
 \fB\-\-noblacklist=dirname_or_filename

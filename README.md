@@ -68,6 +68,11 @@ If you keep your Firejail profiles in a public repository, please give us a link
               sandbox with specified name exists, otherwise same as "firejail --name=name ..."
               Note that in contrary to other join options there is respective profile option.
 
+      --no3d Disable 3D hardware acceleration.
+
+              Example:
+              $ firejail --no3d firefox
+
 `````
 
 ## New profile commands

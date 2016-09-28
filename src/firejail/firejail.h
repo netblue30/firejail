@@ -305,6 +305,7 @@ extern int arg_private_tmp;	// private tmp directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
+extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting
 extern int arg_join_network;	// join only the network namespace
 extern int arg_join_filesystem;	// join only the mount namespace
@@ -470,7 +471,8 @@ void dbg_test_dir(const char *dir);
 // fs_dev.c
 void fs_dev_shm(void);
 void fs_private_dev(void);
-void fs_dev_disable_sound();
+void fs_dev_disable_sound(void);
+void fs_dev_disable_3d(void);
 
 // fs_home.c
 // private mode (--private)

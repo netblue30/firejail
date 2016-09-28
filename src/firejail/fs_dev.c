@@ -59,13 +59,32 @@ static void deventry_mount(void) {
 	while (dev[i].dev_fname != NULL) {
 		struct stat s;
 		if (stat(dev[i].run_fname, &s) == 0) {
+			int dir = is_dir(dev[i].run_fname);
 			if (arg_debug)
-				printf("mounting %s\n", dev[i].run_fname);
-			if (mkdir(dev[i].dev_fname, 0755) == -1)
-				errExit("mkdir");
-			if (chmod(dev[i].dev_fname, 0755) == -1)
-				errExit("chmod");
-			ASSERT_PERMS(dev[i].dev_fname, 0, 0, 0755);
+				printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
+			if (dir) {
+				if (mkdir(dev[i].dev_fname, 0755) == -1)
+					errExit("mkdir");
+				if (chmod(dev[i].dev_fname, 0755) == -1)
+					errExit("chmod");
+				ASSERT_PERMS(dev[i].dev_fname, 0, 0, 0755);
+			}
+			else {
+				struct stat s;
+				if (stat(dev[i].run_fname, &s) == -1) {
+					if (arg_debug)
+						printf("Warning: cannot stat %s file\n", dev[i].run_fname);
+					i++;
+					continue;
+				}
+				FILE *fp = fopen(dev[i].dev_fname, "w");
+				if (fp) {
+					fprintf(fp, "\n");
+					SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
+					fclose(fp);
+				}
+			}
+				
 			if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mounting dev file");
 			fs_logger2("whitelist", dev[i].dev_fname);

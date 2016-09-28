@@ -8,6 +8,10 @@ net none
 shell none
 private-bin unrar
 private-dev
+nosound
+no3d
 private-etc passwd,group,localtime
 hostname unrar
-nosound
+private-tmp
+blacklist /tmp/.X11-unix
+

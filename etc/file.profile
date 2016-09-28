@@ -7,7 +7,11 @@ tracelog
 net none
 shell none
 private-bin file
-private-dev
 private-etc magic.mgc,magic,localtime
 hostname file
+private-dev
 nosound
+no3d
+private-tmp
+blacklist /tmp/.X11-unix
+

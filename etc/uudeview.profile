@@ -13,3 +13,5 @@ private-tmp
 private-etc nonexisting_fakefile_for_empty_etc
 hostname uudeview
 nosound
+uudeview
+

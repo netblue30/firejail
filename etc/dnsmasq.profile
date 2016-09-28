@@ -12,5 +12,6 @@ nonewprivs
 private
 private-dev
 nosound
+no3d
 protocol unix,inet,inet6,netlink
 seccomp

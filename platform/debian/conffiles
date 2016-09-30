@@ -145,4 +145,6 @@
 /etc/firejail/dosbox.profile
 /etc/firejail/mupdf.profile
 /etc/firejail/qpdfview.profile
+/etc/firejail/luminance-hdr.profile
+/etc/firejail/synfigstudio.profile
 

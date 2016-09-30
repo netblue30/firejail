@@ -27,6 +27,9 @@ blacklist ${HOME}/.kde/share/config/okularpartrc
 blacklist ${HOME}/.kde/share/apps/gwenview
 blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.config/qpdfview
+blacklist ${HOME}/.config/Luminance
+blacklist ${HOME}/.config/synfig
+blacklist ${HOME}/.synfig
 
 # Media players
 blacklist ${HOME}/.config/cmus

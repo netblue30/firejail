@@ -88,5 +88,5 @@ x11 xpra, x11 xephyr, x11 block, allusers, join-or-start
 
 ## New profiles
 
-qpdfview, mupdf
+qpdfview, mupdf, Luminance HDR, Synfig Studio
 

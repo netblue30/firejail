@@ -1,21 +1,18 @@
-# luminance-hdr
-noblacklist ${HOME}/.config/Luminance
+# inkscape
+noblacklist ${HOME}/.inkscape
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
-protocol unix
 nonewprivs
 noroot
+protocol unix
 seccomp
-shell none
-tracelog
-private-tmp
 private-dev
+private-tmp
 noexec ${HOME}
 noexec /tmp
 nogroups
 nosound
-ipc-namespace

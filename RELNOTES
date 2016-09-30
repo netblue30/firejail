@@ -13,7 +13,7 @@ firejail (0.9.43) baseline; urgency=low
   * feature: blocking x11 (--x11=block)
   * feature: disable 3D hardware acceleration (--no3d)
   * feature: x11 xpra, x11 xephyr, x11 block, allusers, no3d profile commands
-  * new profiles: qpdfview, mupdf, Luminance HDR, Synfig Studio
+  * new profiles: qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Fri, 9 Sept 2016 08:00:00 -0500
 

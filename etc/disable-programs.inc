@@ -30,6 +30,8 @@ blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.synfig
+blacklist ${HOME}/.inkscape
+blacklist ${HOME}/.gimp*
 
 # Media players
 blacklist ${HOME}/.config/cmus

@@ -2,7 +2,7 @@
 
 # GCC
 blacklist /usr/include
-blacklist /usr/lib/gcc
+#blacklist /usr/lib/gcc	- seems to create problems on Gentoo
 blacklist /usr/bin/gcc*
 blacklist /usr/bin/cpp*
 blacklist /usr/bin/c9*

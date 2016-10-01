@@ -1,6 +1,6 @@
 all: apps man
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libx11
+APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
 
 prefix=@prefix@
@@ -71,7 +71,7 @@ realinstall:
 	install -m 0755 -d $(DESTDIR)/$(libdir)/firejail
 	install -c -m 0644 src/libtrace/libtrace.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/libtracelog/libtracelog.so $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 src/libx11/libx11.so $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 src/libconnect/libconnect.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
@@ -121,7 +121,7 @@ install-strip: all
 	strip src/firecfg/firecfg
 	strip src/libtrace/libtrace.so
 	strip src/libtracelog/libtracelog.so
-	strip src/libx11/libx11.so
+	strip src/libconnect/libconnect.so
 	strip src/ftee/ftee
 	strip src/faudit/faudit
 	$(MAKE) realinstall

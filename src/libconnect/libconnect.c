@@ -38,7 +38,7 @@
 static int check_sockaddr(const struct sockaddr *addr) {
 	if (addr->sa_family == AF_UNIX) {
 		struct sockaddr_un *a = (struct sockaddr_un *) addr;
-		if (a->sun_path[0] == '\0') {
+		if (a->sun_path[0] == '\0' && strstr(a->sun_path + 1, "X11-unix")) {
 //			printf("@%s\n", a->sun_path + 1);
 			errno = ENOENT;
 			return -1;

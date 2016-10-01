@@ -627,6 +627,7 @@ void fs_mkdir(const char *name);
 void fs_mkfile(const char *name);
 
 // x11.c
+extern int mask_x11_abstract_socket;
 void fs_x11(void);
 int x11_display(void);
 void x11_start(int argc, char **argv);

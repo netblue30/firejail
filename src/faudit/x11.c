@@ -35,8 +35,9 @@ void x11_test(void) {
 	if (!(dir = opendir("/tmp/.X11-unix"))) {
 		// sleep 2 seconds and try again
 		sleep(2);
-		if (!(dir = opendir("/tmp/.X11-unix")))
+		if (!(dir = opendir("/tmp/.X11-unix"))) {
 			;
+		}
 	}
 	
 	if (dir == NULL)

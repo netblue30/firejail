@@ -27,6 +27,7 @@
 #include <dirent.h>
 #include <sys/mount.h>
 #include <sys/wait.h>
+int mask_x11_abstract_socket = 0;
 
 #ifdef HAVE_X11
 // return 1 if xpra is installed on the system
@@ -51,6 +52,7 @@ static int x11_check_xephyr(void) {
 	return 1;
 }
 
+#if 0
 // check for X11 abstract sockets
 static int x11_abstract_sockets_present(void) {
 	char *path;
@@ -75,6 +77,7 @@ static int x11_abstract_sockets_present(void) {
 
 	return 0;
 }
+#endif
 
 static int random_display_number(void) {
 	int i;
@@ -594,6 +597,8 @@ void x11_start(int argc, char **argv) {
 
 void x11_block(void) {
 #ifdef HAVE_X11
+	mask_x11_abstract_socket = 1;
+#if 0
 	// check abstract socket presence and network namespace options
 	if ((!arg_nonetwork && !cfg.bridge0.configured && !cfg.interface0.configured)
 		&& x11_abstract_sockets_present()) {
@@ -604,6 +609,7 @@ void x11_block(void) {
 						"   (eg. to your display manager config, or /etc/X11/xinit/xserverrc)\n");
 		exit(1);
 	}
+#endif
 
 	// blacklist sockets
 	profile_check_line("blacklist /tmp/.X11-unix", 0, NULL);

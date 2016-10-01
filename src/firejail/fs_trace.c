@@ -54,15 +54,17 @@ void fs_trace(void) {
 	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "w");
 	if (!fp)
 		errExit("fopen");
-	if (arg_trace)
+	if (arg_trace) {
 		fprintf(fp, "%s/firejail/libtrace.so\n", LIBDIR);
+	}
 	else if (arg_tracelog) {
 		fprintf(fp, "%s/firejail/libtracelog.so\n", LIBDIR);
 		if (!arg_quiet)
 			printf("Blacklist violations are logged to syslog\n");
 	}	
-	else
-		assert(0);
+
+	if (mask_x11_abstract_socket)
+		fprintf(fp, "%s/firejail/libx11.so\n", LIBDIR);
 
 	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	fclose(fp);

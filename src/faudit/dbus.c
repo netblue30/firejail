@@ -79,10 +79,8 @@ void dbus_test(void) {
 			else if (rv == -1)
 				printf("GOOD: cannot connect to D-Bus socket %s\n", sockfile);
 		}
-		else if ((sockfile = strstr(bus, "tcp:host=")) != NULL) {
-			printf("UGLY: session bus configured for TCPcommunication.\n");
-			rv = -2;
-		}
+		else if ((sockfile = strstr(bus, "tcp:host=")) != NULL)
+			printf("UGLY: session bus configured for TCP communication.\n");
 		else
 			printf("GOOD: cannot find a D-Bus socket\n");
 			

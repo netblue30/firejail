@@ -419,7 +419,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		EUID_USER();
 	}
 	// get file from host and store it in the sandbox
-	else if (op == SANDBOX_FS_PUT) {
+	else if (op == SANDBOX_FS_PUT && path2) {
 		// verify the source file
 		const char *src_fname = path1;
 		struct stat s;

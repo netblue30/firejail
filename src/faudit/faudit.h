@@ -62,4 +62,7 @@ void dbus_test(void);
 // dev.c
 void dev_test(void);
 
+// x11.c
+void x11_test(void);
+
 #endif

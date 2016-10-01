@@ -1143,6 +1143,7 @@ int fs_check_chroot_dir(const char *rootdir) {
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {
+		mask_x11_abstract_socket = 1;
 		char *name;
 		if (asprintf(&name, "%s/tmp/.X11-unix", rootdir) == -1)
 			errExit("asprintf");
@@ -1173,6 +1174,7 @@ void fs_chroot(const char *rootdir) {
 		
 		// x11
 		if (getenv("FIREJAIL_X11")) {
+			mask_x11_abstract_socket = 1;
 			char *newx11;
 			if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
 				errExit("asprintf");

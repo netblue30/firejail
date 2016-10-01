@@ -2266,6 +2266,10 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "Warning: --trace and --tracelog are mutually exclusive; --tracelog disabled\n");
 	}
 	
+	// disable x11 abstract socket
+	if (getenv("FIREJAIL_X11"))
+		mask_x11_abstract_socket = 1;
+	
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
 		if (arg_overlay) {

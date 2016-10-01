@@ -4,6 +4,8 @@ firejail (0.9.43) baseline; urgency=low
   * modifs: removed man firejail-config
   * modifs: --private-tmp whitelists /tmp/.X11-unix directory
   * modifs: Nvidia drivers added to --private-dev
+  * modifs: dropping requirement for network namespace when 
+     using a --x11
   * feature: support starting/joining sandbox is a single command
     (--join-or-start)
   * feature: X11 detection support for --audit

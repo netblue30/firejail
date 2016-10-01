@@ -667,8 +667,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
 			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0)
+			if (x11env && strcmp(x11env, "yes") == 0) {
+				mask_x11_abstract_socket = 1;
 				return 0;
+			}
 			else {
 				// start x11
 				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
@@ -683,8 +685,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
 			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0)
+			if (x11env && strcmp(x11env, "yes") == 0) {
+				mask_x11_abstract_socket = 1;
 				return 0;
+			}
 			else {
 				// start x11
 				x11_start_xpra(cfg.original_argc, cfg.original_argv);
@@ -699,8 +703,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
 			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0)
+			if (x11env && strcmp(x11env, "yes") == 0) {
+				mask_x11_abstract_socket = 1;
 				return 0;
+			}
 			else {
 				// start x11
 				x11_start(cfg.original_argc, cfg.original_argv);

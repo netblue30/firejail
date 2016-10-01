@@ -273,4 +273,16 @@ dm-crypt+LUKS – dm-crypt is a transparent disk encryption subsystem in
 Linux kernel v2.6+ and later and DragonFly BSD. It can encrypt whole disks, 
 removable media, partitions, software RAID volumes, logical volumes, and files.
 
-28. add support for whitelisting /mtn
+28. Merge --dbus=none from https://github.com/Sidnioulz/firejail
+
+  // block dbus session bus the hard way if necessary
+  if (cfg.dbus == 0) {
+    char *dbus_path;
+		if (asprintf(&dbus_path, "/run/user/%d/bus", getuid()) == -1)
+			errExit("asprintf");
+    fs_blacklist_file(dbus_path);
+    free(dbus_path);
+}
+
+
+

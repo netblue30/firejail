@@ -56,6 +56,7 @@ void files_test(void);
 void network_test(void);
 
 // dbus.c
+int check_unix(const char *sockfile);
 void dbus_test(void);
 
 // dev.c

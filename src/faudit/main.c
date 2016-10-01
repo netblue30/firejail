@@ -69,9 +69,14 @@ int main(int argc, char **argv) {
 	dbus_test();
 	printf("\n");
 
+	// x11 test
+	x11_test();
+	printf("\n");
+
 	// /dev test
 	dev_test();
 	printf("\n");
+
 
 	free(prog);
 	printf("--------------------------------------------------------------------------------\n");

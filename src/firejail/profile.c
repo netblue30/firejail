@@ -656,7 +656,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	if (strcmp(ptr, "x11 block") == 0) {
+	if (strcmp(ptr, "x11 none") == 0) {
 #ifdef HAVE_X11
 		arg_x11_block = 1;
 #endif

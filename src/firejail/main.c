@@ -2208,7 +2208,7 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
-		else if (strcmp(argv[i], "--x11=block") == 0) {
+		else if (strcmp(argv[i], "--x11=none") == 0) {
 			arg_x11_block = 1;
 		}
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {

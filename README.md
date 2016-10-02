@@ -47,7 +47,7 @@ If you keep your Firejail profiles in a public repository, please give us a link
 
 ## New command line options
 `````
-      --x11=block
+      --x11=none
               Blacklist  /tmp/.X11-unix  directory,  ${HOME}/.Xauthority  and  file
               specified in ${XAUTHORITY} environment variable.  Remove  DISPLAY  and
               XAUTHORITY  environment  variables.   Stop  with  error message if X11
@@ -84,7 +84,7 @@ If you keep your Firejail profiles in a public repository, please give us a link
 
 ## New profile commands
 
-x11 xpra, x11 xephyr, x11 block, allusers, join-or-start
+x11 xpra, x11 xephyr, x11 none, allusers, join-or-start
 
 ## New profiles
 

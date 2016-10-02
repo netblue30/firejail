@@ -52,7 +52,6 @@ static int x11_check_xephyr(void) {
 	return 1;
 }
 
-#if 0
 // check for X11 abstract sockets
 static int x11_abstract_sockets_present(void) {
 	char *path;
@@ -77,7 +76,6 @@ static int x11_abstract_sockets_present(void) {
 
 	return 0;
 }
-#endif
 
 static int random_display_number(void) {
 	int i;
@@ -598,18 +596,17 @@ void x11_start(int argc, char **argv) {
 void x11_block(void) {
 #ifdef HAVE_X11
 	mask_x11_abstract_socket = 1;
-#if 0
+
 	// check abstract socket presence and network namespace options
 	if ((!arg_nonetwork && !cfg.bridge0.configured && !cfg.interface0.configured)
 		&& x11_abstract_sockets_present()) {
-		fprintf(stderr, "ERROR: --x11=block specified, but abstract X11 socket still accessible.\n"
+		fprintf(stderr, "ERROR: --x11=none specified, but abstract X11 socket still accessible.\n"
 						"Additional setup required. To block abstract X11 socket you can either:\n"
 						" * use network namespace in firejail (--net=none, --net=...)\n"
 						" * add \"-nolisten local\" to xserver options\n"
 						"   (eg. to your display manager config, or /etc/X11/xinit/xserverrc)\n");
 		exit(1);
 	}
-#endif
 
 	// blacklist sockets
 	profile_check_line("blacklist /tmp/.X11-unix", 0, NULL);

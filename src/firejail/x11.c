@@ -627,7 +627,7 @@ void x11_block(void) {
 		profile_add(line);
 	}
 
-	// clear enviroment
+	// clear environment
 	env_store("DISPLAY", RMENV);
 	env_store("XAUTHORITY", RMENV);
 #endif

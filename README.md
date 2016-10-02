@@ -49,8 +49,8 @@ If you keep your Firejail profiles in a public repository, please give us a link
 `````
       --x11=block
               Blacklist  /tmp/.X11-unix  directory,  ${HOME}/.Xauthority  and  file
-              specified in ${XAUTHORITY} enviroment variable.  Remove  DISPLAY  and
-              XAUTHORITY  enviroment  variables.   Stop  with  error message if X11
+              specified in ${XAUTHORITY} environment variable.  Remove  DISPLAY  and
+              XAUTHORITY  environment  variables.   Stop  with  error message if X11
               abstract socket will be accessible in jail.
 
       --put=name|pid src-filename dest-filename

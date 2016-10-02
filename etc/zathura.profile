@@ -1,4 +1,4 @@
-# zathura document viewer profile
+# zathura viewer profile
 # noblacklist ~/.config/zathura
 # noblacklist ~/.local/share/zathura
 include /etc/firejail/disable-common.inc
@@ -12,8 +12,9 @@ protocol unix
 netfilter
 nonewprivs
 noroot
+nogroups
 nosound
-
-#net none
 shell none
-#private-etc X11
+
+private-bin zathura
+private-dev

@@ -36,6 +36,7 @@
 /etc/firejail/epiphany.profile
 /etc/firejail/evince.profile
 /etc/firejail/fbreader.profile
+/etc/firejail/feh.profile
 /etc/firejail/file.profile
 /etc/firejail/filezilla.profile
 /etc/firejail/firefox-esr.profile
@@ -100,6 +101,7 @@
 /etc/firejail/quassel.profile
 /etc/firejail/quiterss.profile
 /etc/firejail/qutebrowser.profile
+/etc/firejail/ranger.profile
 /etc/firejail/rhythmbox.profile
 /etc/firejail/rtorrent.profile
 /etc/firejail/seamonkey-bin.profile
@@ -141,6 +143,7 @@
 /etc/firejail/xviewer.profile
 /etc/firejail/xz.profile
 /etc/firejail/xzdec.profile
+/etc/firejail/zathura.profile
 /etc/firejail/strings.profile
 /etc/firejail/dosbox.profile
 /etc/firejail/mupdf.profile

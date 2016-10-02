@@ -69,6 +69,9 @@ blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/inox
+blacklist ${HOME}/.muttrc
+blacklist ${HOME}/.mutt/muttrc
+blacklist ${HOME}/.msmtprc
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

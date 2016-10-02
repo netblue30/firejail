@@ -121,6 +121,9 @@ blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/*.kdbx
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.key
+blacklist ${HOME}/.muttrc
+blacklist ${HOME}/.mutt/muttrc
+blacklist ${HOME}/.msmtprc
 blacklist /etc/shadow
 blacklist /etc/gshadow
 blacklist /etc/passwd-

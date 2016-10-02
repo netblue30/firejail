@@ -286,8 +286,8 @@ Enable X11 sandboxing with xpra.
 Enable X11 sandboxing with xephyr.
 .TP
 \fBx11 block
-Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and file specified in ${XAUTHORITY} enviroment variable.
-Remove DISPLAY and XAUTHORITY enviroment variables.
+Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and file specified in ${XAUTHORITY} environment variable.
+Remove DISPLAY and XAUTHORITY environment variables.
 Stop with error message if X11 abstract socket will be accessible in jail.
 
 .SH Resource limits, CPU affinity, Control Groups

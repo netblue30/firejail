@@ -11,8 +11,14 @@ noroot
 nosound
 protocol unix
 seccomp
+netfilter
 shell none
 tracelog
 
+private-bin mupdf
 private-tmp
 private-dev
+
+# mupdf will never write anything
+read-only ${HOME}
+

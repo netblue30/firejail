@@ -30,6 +30,7 @@
 /etc/firejail/disable-programs.inc
 /etc/firejail/dnscrypt-proxy.profile
 /etc/firejail/dnsmasq.profile
+/etc/firejail/dosbox.profile
 /etc/firejail/dropbox.profile
 /etc/firejail/empathy.profile
 /etc/firejail/eom.profile
@@ -45,6 +46,7 @@
 /etc/firejail/flashpeak-slimjet.profile
 /etc/firejail/franz.profile
 /etc/firejail/gajim.profile
+/etc/firejail/gimp.profile
 /etc/firejail/gitter.profile
 /etc/firejail/gnome-chess.profile
 /etc/firejail/gnome-mplayer.profile
@@ -63,6 +65,7 @@
 /etc/firejail/icecat.profile
 /etc/firejail/icedove.profile
 /etc/firejail/iceweasel.profile
+/etc/firejail/inkscape.profile
 /etc/firejail/inox.profile
 /etc/firejail/jitsi.profile
 /etc/firejail/kmail.profile
@@ -78,11 +81,13 @@
 /etc/firejail/lomath.profile
 /etc/firejail/loweb.profile
 /etc/firejail/lowriter.profile
+/etc/firejail/luminance-hdr.profile
 /etc/firejail/lxterminal.profile
 /etc/firejail/mathematica.profile
 /etc/firejail/mcabber.profile
 /etc/firejail/midori.profile
 /etc/firejail/mpv.profile
+/etc/firejail/mupdf.profile
 /etc/firejail/mupen64plus.profile
 /etc/firejail/netsurf.profile
 /etc/firejail/nolocal.net
@@ -97,6 +102,7 @@
 /etc/firejail/polari.profile
 /etc/firejail/psi-plus.profile
 /etc/firejail/qbittorrent.profile
+/etc/firejail/qpdfview.profile
 /etc/firejail/qtox.profile
 /etc/firejail/quassel.profile
 /etc/firejail/quiterss.profile
@@ -116,6 +122,8 @@
 /etc/firejail/ssh.profile
 /etc/firejail/steam.profile
 /etc/firejail/stellarium.profile
+/etc/firejail/strings.profile
+/etc/firejail/synfigstudio.profile
 /etc/firejail/tar.profile
 /etc/firejail/telegram.profile
 /etc/firejail/thunderbird.profile
@@ -144,11 +152,3 @@
 /etc/firejail/xz.profile
 /etc/firejail/xzdec.profile
 /etc/firejail/zathura.profile
-/etc/firejail/strings.profile
-/etc/firejail/dosbox.profile
-/etc/firejail/mupdf.profile
-/etc/firejail/qpdfview.profile
-/etc/firejail/luminance-hdr.profile
-/etc/firejail/synfigstudio.profile
-/etc/firejail/gimp.profile
-/etc/firejail/inkscape.profile

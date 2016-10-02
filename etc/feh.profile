@@ -5,9 +5,17 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+seccomp
+protocol unix
 netfilter
+net none
 nonewprivs
 noroot
+nogroups
 nosound
-protocol unix
-seccomp
+shell none
+
+private-bin feh
+whitelist /tmp/.X11-unix
+private-dev
+private-etc feh

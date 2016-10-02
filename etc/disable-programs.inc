@@ -32,6 +32,8 @@ blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.synfig
 blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.gimp*
+blacklist ${HOME}/.config/zathura
+
 
 # Media players
 blacklist ${HOME}/.config/cmus
@@ -142,6 +144,7 @@ blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/qpdfview
+blacklist ${HOME}/.local/share/zathura
 
 # ssh
 blacklist /tmp/ssh-*

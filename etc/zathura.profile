@@ -1,6 +1,6 @@
 # zathura document viewer profile
-# noblacklist ~/.config/zathura
-# noblacklist ~/.local/share/zathura
+noblacklist ~/.config/zathura
+noblacklist ~/.local/share/zathura
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

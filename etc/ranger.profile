@@ -1,4 +1,4 @@
-# ranger profile
+# ranger file manager profile
 noblacklist /usr/bin/perl
 #noblacklist /usr/bin/cpan*
 noblacklist /usr/share/perl*

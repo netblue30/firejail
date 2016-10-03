@@ -152,3 +152,6 @@
 /etc/firejail/xz.profile
 /etc/firejail/xzdec.profile
 /etc/firejail/zathura.profile
+/etc/firejail/7z.profile
+/etc/firejail/keepass.profile
+/etc/firejail/keepassx.profile

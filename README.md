@@ -106,9 +106,9 @@ If you keep your Firejail profiles in a public repository, please give us a link
 
 ## New profile commands
 
-x11 xpra, x11 xephyr, x11 none, x11 xorg allusers, join-or-start
+x11 xpra, x11 xephyr, x11 none, x11 xorg, allusers, join-or-start
 
 ## New profiles
 
-qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape, feh, ranger, zathura
+qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape, feh, ranger, zathura, 7z, keepass, keepassx
 

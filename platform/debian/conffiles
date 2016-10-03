@@ -1,4 +1,5 @@
 /etc/firejail/0ad.profile
+/etc/firejail/7z.profile
 /etc/firejail/Cyberfox.profile
 /etc/firejail/Mathematica.profile
 /etc/firejail/Telegram.profile
@@ -68,6 +69,8 @@
 /etc/firejail/inkscape.profile
 /etc/firejail/inox.profile
 /etc/firejail/jitsi.profile
+/etc/firejail/keepass.profile
+/etc/firejail/keepassx.profile
 /etc/firejail/kmail.profile
 /etc/firejail/konversation.profile
 /etc/firejail/less.profile
@@ -148,6 +151,7 @@
 /etc/firejail/xchat.profile
 /etc/firejail/xplayer.profile
 /etc/firejail/xreader.profile
+/etc/firejail/xterm.profile
 /etc/firejail/xviewer.profile
 /etc/firejail/xz.profile
 /etc/firejail/xzdec.profile

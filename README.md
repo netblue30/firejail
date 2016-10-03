@@ -88,5 +88,5 @@ x11 xpra, x11 xephyr, x11 block, allusers, join-or-start
 
 ## New profiles
 
-qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape, feh, ranger, zathura
+qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape, feh, ranger, zathura, 7z, term, keepassx, keepass
 

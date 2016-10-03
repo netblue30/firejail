@@ -45,14 +45,36 @@ If you keep your Firejail profiles in a public repository, please give us a link
 `````
 # Current development version: 0.9.43
 
-## New command line options
+## X11 development
 `````
-      --x11=none
-              Blacklist  /tmp/.X11-unix  directory,  ${HOME}/.Xauthority  and  file
-              specified in ${XAUTHORITY} environment variable.  Remove  DISPLAY  and
-              XAUTHORITY  environment  variables.   Stop  with  error message if X11
-              abstract socket will be accessible in jail.
+       --x11=none
+              Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and  the
+              file  specified  in  ${XAUTHORITY} environment variable.  Remove
+              DISPLAY and XAUTHORITY environment variables.  Stop  with  error
+              message if X11 abstract socket will be accessible in jail.
 
+      --x11=xorg
+              Sandbox the application using the untrusted mode implemented  by
+              X11  security  extension.   The  extension  is available in Xorg
+              package and it is installed by default on most  Linux  distribu‐
+              tions.  It  provides support for a simple trusted/untrusted con‐
+              nection model. Untrusted clients are restricted in certain  ways
+              to  prevent  them from reading window contents of other clients,
+              stealing input events, etc.
+
+              The untrusted mode has several limitations.  A  lot  of  regular
+              programs   assume  they are a trusted X11 clients and will crash
+              or lock up when run in  untrusted  mode.  Chromium  browser  and
+              xterm are two examples.  Firefox and transmission-gtk seem to be
+              working fine.  A network namespace  is  not  required  for  this
+              option.
+
+              Example:
+              $ firejail --x11=xorg firefox
+`````
+
+## Other command line options
+`````
       --put=name|pid src-filename dest-filename
               Put src-filename in sandbox container.  The container is specified by name or PID.
 
@@ -84,7 +106,7 @@ If you keep your Firejail profiles in a public repository, please give us a link
 
 ## New profile commands
 
-x11 xpra, x11 xephyr, x11 none, allusers, join-or-start
+x11 xpra, x11 xephyr, x11 none, x11 xorg allusers, join-or-start
 
 ## New profiles
 

@@ -629,3 +629,73 @@ void x11_block(void) {
 	env_store("XAUTHORITY", RMENV);
 #endif
 }
+
+void x11_xorg(void) {
+#ifdef HAVE_X11
+	// destination
+	char *dest;
+	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
+		errExit("asprintf");
+	struct stat s;
+	if (stat(dest, &s) == -1) {
+		// create an .Xauthority file
+		FILE *fp = fopen(dest, "w");
+		if (!fp)
+			errExit("fopen");
+		SET_PERMS_STREAM(fp, getuid(), getgid(), 0600);
+		fclose(fp);
+	}
+
+	if (stat("/usr/bin/xauth", &s) == -1) {
+		fprintf(stderr, "Error: cannot find /usr/bin/xauth executable\n");
+		exit(1);
+	}
+
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// generate a new .Xauthority file
+		if (arg_debug)
+			printf("Generating a new .Xauthority file\n");
+
+		// elevate privileges - files in /run/firejail/mnt directory belong to root
+		if (setreuid(0, 0) < 0)
+			errExit("setreuid");
+		if (setregid(0, 0) < 0)
+			errExit("setregid");
+		
+		char *display = getenv("DISPLAY");
+		if (!display)
+			display = ":0.0";
+			
+		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", RUN_XAUTHORITY_SEC_FILE,
+			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
+		
+		exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+
+	// check the file was created and set mode and ownership
+	if (stat(RUN_XAUTHORITY_SEC_FILE, &s) == -1) {
+		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
+		exit(1);
+	}
+	if (chown(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid()) == -1)
+		errExit("chown");
+	if (chmod(RUN_XAUTHORITY_SEC_FILE, 0600) == -1)
+		errExit("chmod");
+	
+	// mount
+	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
+		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
+		exit(1);
+	}
+	if (chown(dest, getuid(), getgid()) == -1)
+		errExit("chown");
+	if (chmod(dest, 0600) == -1)
+		errExit("chmod");
+	free(dest);
+#endif	
+}

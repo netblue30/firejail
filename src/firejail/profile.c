@@ -657,9 +657,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	if (strcmp(ptr, "x11 none") == 0) {
-#ifdef HAVE_X11
 		arg_x11_block = 1;
-#endif
 		return 0;
 	}
 
@@ -681,6 +679,17 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "x11 xorg") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11))
+			arg_x11_xorg = 1;
+		else {
+			fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
+			return 0;
+		}
+#endif
+		return 0;
+	}
 	if (strcmp(ptr, "x11 xpra") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
@@ -717,19 +726,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
-#if 0
-   if (strncmp(ptr, "private-template ", 17) == 0) {
-      if (arg_private) {
-         fprintf(stderr, "Error: --private and --private-template are mutually exclusive\n");
-         exit(1);
-      }
-      cfg.private_template = ptr + 17;
-      fs_check_private_template();
-      arg_private_template = 1;
-
-      return 0;
-   }
-#endif   
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
 		if (arg_writable_etc) {

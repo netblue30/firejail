@@ -107,6 +107,7 @@ char *arg_audit_prog = NULL;			// audit
 int arg_apparmor = 0;				// apparmor
 int arg_allow_debuggers = 0;			// allow debuggers
 int arg_x11_block = 0;				// block X11
+int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
 
 int login_shell = 0;
@@ -2208,9 +2209,21 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
+		
+		// unlike all other x11 features, this is available always
 		else if (strcmp(argv[i], "--x11=none") == 0) {
 			arg_x11_block = 1;
 		}
+#ifdef HAVE_X11
+		else if (strcmp(argv[i], "--x11=xorg") == 0) {
+			if (checkcfg(CFG_X11))
+				arg_x11_xorg = 1;
+			else {
+				fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
+				exit(1);
+			}
+		}
+#endif
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
 			// NOTE: this is second part of option handler,
 			//		 atempt to find and join sandbox is done in other one

@@ -61,6 +61,7 @@
 #define RUN_WHITELIST_OPT_DIR	"/run/firejail/mnt/orig-opt"
 
 #define RUN_XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
+#define RUN_XAUTHORITY_SEC_FILE	"/run/firejail/mnt/sec.Xauthority"
 #define RUN_ASOUNDRC_FILE	"/run/firejail/mnt/.asoundrc"
 #define RUN_HOSTNAME_FILE	"/run/firejail/mnt/hostname"
 #define RUN_HOSTS_FILE	"/run/firejail/mnt/hosts"
@@ -321,6 +322,7 @@ extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
 extern int arg_allow_debuggers;	// allow debuggers
 extern int arg_x11_block;	// block X11
+extern int arg_x11_xorg;	// use X11 security extention
 extern int arg_allusers;	// all user home directories visible
 
 extern int login_shell;

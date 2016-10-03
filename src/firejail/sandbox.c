@@ -585,8 +585,19 @@ int sandbox(void* sandbox_arg) {
 			fprintf(stderr, "Warning: private-bin feature is disabled in chroot\n");
 		else if (arg_overlay)
 			fprintf(stderr, "Warning: private-bin feature is disabled in overlay\n");
-		else
+		else {
+			// for --x11=xorg we need to add xauth command
+			if (arg_x11_xorg) {
+				EUID_USER();
+				char *tmp;
+				if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
+					errExit("asprintf");
+				cfg.bin_private_keep = tmp;
+				fs_check_bin_list();
+				EUID_ROOT();
+			}
 			fs_private_bin_list();
+		}
 	}
 	
 	if (arg_private_tmp) {
@@ -784,6 +795,8 @@ int sandbox(void* sandbox_arg) {
 	
 	// clean /tmp/.X11-unix sockets
 	fs_x11();
+	if (arg_x11_xorg)
+		x11_xorg();
 	
 	//****************************
 	// set security filters

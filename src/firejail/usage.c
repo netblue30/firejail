@@ -282,10 +282,13 @@ void usage(void) {
 	printf("    --writable-etc - /etc directory is mounted read-write.\n\n");
 	printf("    --writable-var - /var directory is mounted read-write.\n\n");
 	
-	printf("    --x11 - enable X11 server. The software checks first if Xpra is installed,\n");
-	printf("\tthen it checks if Xephyr is installed.\n\n");
-	printf("    --x11=xpra - enable Xpra X11 server.\n\n");
+	printf("    --x11 - enable X11 sandboxing. The software checks first if Xpra is\n");
+	printf("\tinstalled, then it checks if Xephyr is installed. If all fails, it will\n");
+	printf("\tattempt to use X11 security extension.\n\n");
+	printf("    --x11=none - disable access to X11 sockets.\n\n");
 	printf("    --x11=xephyr - enable Xephyr X11 server. The window size is 800x600.\n\n");
+	printf("    --x11=xorg - enable X11 security extension.\n\n");
+	printf("    --x11=xpra - enable Xpra X11 server.\n\n");
 	printf("    --zsh - use /usr/bin/zsh as default shell.\n\n");
 	printf("\n");
 	printf("\n");

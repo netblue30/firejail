@@ -1662,15 +1662,17 @@ $ sudo firejail --writable-var
 
 .TP
 \fB\-\-x11
-Start a new X11 server using Xpra or Xephyr and attach the sandbox to this server.
-The regular X11 server (display 0) is not visible in the sandbox. This prevents screenshot and keylogger
-applications started in the sandbox from accessing other X11 displays.
-A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
+Sandbox the application using Xpra, Xephyr or Xorg security extension.
+The sandbox will prevents screenshot and keylogger applications started inside the sandbox from accessing
+clients running outside the sandbox.
+Firejail will try first Xpra, and if Xpra is not installed on the system, it will try to find Xephyr.
+If all fails, Firejail will not attempt to use X11 security extension.
 .br
 
-br
-Firejail will try first Xpra, and if Xpra is not installed on the system, it will try to find Xephyr.
-This feature is not available when running as root. 
+.br
+Xpra and Xephyr modes require a network namespace to be instantiated in order to disable
+X11 abstract Unix socket. If this is not possible, the user can disable the abstract socket
+by adding "-nolisten local" on Xorg command line.
 .br
 
 .br
@@ -1679,31 +1681,30 @@ Example:
 $ firejail \-\-x11 --net=eth0 firefox
 
 .TP
-\fB\-\-x11=xpra
-Start a new X11 server using Xpra (http://xpra.org) and attach the sandbox to this server.
-Xpra is a persistent remote display server and client for forwarding X11 applications and desktop screens.
-On Debian platforms Xpra is installed with the command \fBsudo apt-get install xpra\fR.
-This feature is not available when running as root.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-x11=xpra --net=eth0 firefox
+\fB\-\-x11=none
+Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified in ${XAUTHORITY} environment variable.
+Remove DISPLAY and XAUTHORITY environment variables.
+Stop with error message if X11 abstract socket will be accessible in jail.
 
 .TP
 \fB\-\-x11=xephyr
-Start a new X11 server using Xephyr and attach the sandbox to this server.
+Start Xephyr and attach the sandbox to this server.
 Xephyr is a display server implementing the X11 display server protocol.
-It runs in a window just like other X applications, but it is an X server itself in which you can run other software.
-The default Xephyr window size is 800x600. This can be modified in /etc/firejail/firejail.config file,
-see \fBman 5 firejail-config\fR for more details.
+A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
+.br
+
+.br
+Xephyr runs in a window just like any other X11 application. The default window size is 800x600.
+This can be modified in /etc/firejail/firejail.config file.
 .br
 
 .br
 The recommended way to use this feature is to run a window manager inside the sandbox.
 A security profile for OpenBox is provided.
-On Debian platforms Xephyr is installed with the command \fBsudo apt-get install xserver-xephyr\fR.
+.br
+
+.br
+Xephyr is developed by Xorg project. On Debian platforms it is installed with the command \fBsudo apt-get install xserver-xephyr\fR.
 This feature is not available when running as root. 
 .br
 
@@ -1713,11 +1714,40 @@ Example:
 $ firejail \-\-x11=xephyr --net=eth0 openbox
 
 .TP
-\fB\-\-x11=none
-Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and file specified in ${XAUTHORITY} environment variable.
-Remove DISPLAY and XAUTHORITY environment variables.
-Stop with error message if X11 abstract socket will be accessible in jail.
+\fB\-\-x11=xorg
+Sandbox the application using the untrusted mode implemented by X11 security extension. 
+The extension is available in Xorg package
+and it is installed by default on most Linux distributions. It provides support for a simple trusted/untrusted 
+connection model. Untrusted clients are restricted in certain ways to prevent them from reading window
+contents of other clients, stealing input events, etc.
+
+The untrusted mode has several limitations. A lot of regular programs  assume they are a trusted X11 clients
+and will crash or lock up when run in untrusted mode. Chromium browser and xterm are two examples.
+Firefox and transmission-gtk seem to be working fine.
+A network namespace is not required for this option.
 .br
+
+.br
+Example:
+.br
+$ firejail \-\-x11=xorg firefox
+
+.TP
+\fB\-\-x11=xpra
+Start Xpra (http://xpra.org) and attach the sandbox to this server.
+Xpra is a persistent remote display server and client for forwarding X11 applications and desktop screens.
+A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
+.br
+
+.br
+On Debian platforms Xpra is installed with the command \fBsudo apt-get install xpra\fR.
+This feature is not available when running as root.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-x11=xpra --net=eth0 firefox
 
 .TP
 \fB\-\-zsh

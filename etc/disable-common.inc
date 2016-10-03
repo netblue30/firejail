@@ -155,6 +155,9 @@ blacklist /sbin
 blacklist /usr/sbin
 blacklist /usr/local/sbin
 
+# workaround for fedora,arch,RHEL
+include /etc/firejail/blacklistbin.inc
+
 # prevent lxterminal connecting to an existing lxterminal session
 blacklist /tmp/.lxterminal-socket*
 

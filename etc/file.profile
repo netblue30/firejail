@@ -12,6 +12,5 @@ hostname file
 private-dev
 nosound
 no3d
-private-tmp
 blacklist /tmp/.X11-unix
 

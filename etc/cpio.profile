@@ -9,7 +9,6 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 private-dev
-private-tmp
 seccomp
 caps.drop all
 net none

@@ -14,6 +14,5 @@ nosound
 no3d
 private-etc passwd,group,localtime
 hostname tar
-private-tmp
 blacklist /tmp/.X11-unix
 

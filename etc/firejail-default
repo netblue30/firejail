@@ -82,6 +82,8 @@ profile firejail-default {
 /usr/local/** ix,
 /usr/lib/** ix,
 /usr/games/** ix,
+/opt/ r,
+/opt/** r,
 /opt/** ix,
 #/home/** ix,
 

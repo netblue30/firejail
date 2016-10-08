@@ -225,7 +225,7 @@ void fs_private_dev(void){
 
 
 	// mount /dev/pts
-	gid_t ttygid = get_tty_gid();
+	gid_t ttygid = get_group_id("tty");
 	char *data;
 	if (asprintf(&data, "newinstance,gid=%d,mode=620,ptmxmode=0666", (int) ttygid) == -1)
 		errExit("asprintf");

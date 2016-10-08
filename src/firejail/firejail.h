@@ -457,8 +457,7 @@ char *expand_home(const char *path, const char* homedir);
 const char *gnu_basename(const char *path);
 uid_t pid_get_uid(pid_t pid);
 void invalid_filename(const char *fname);
-uid_t get_tty_gid(void);
-uid_t get_audio_gid(void);
+uid_t get_group_id(const char *group);
 int remove_directory(const char *path);
 void flush_stdin(void);
 

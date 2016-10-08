@@ -649,25 +649,14 @@ void invalid_filename(const char *fname) {
 }
 
 
-uid_t get_tty_gid(void) {
+uid_t get_group_id(const char *group) {
 	// find tty group id
-	gid_t ttygid = 0;
-	struct group *g = getgrnam("tty");
+	gid_t gid = 0;
+	struct group *g = getgrnam(group);
 	if (g)
-		ttygid = g->gr_gid;
+		gid = g->gr_gid;
 
-	return ttygid;
-}
-
-
-uid_t get_audio_gid(void) {
-	// find tty group id
-	gid_t audiogid = 0;
-	struct group *g = getgrnam("audio");
-	if (g)
-		audiogid = g->gr_gid;
-
-	return audiogid;
+	return gid;
 }
 
 

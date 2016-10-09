@@ -708,7 +708,7 @@ int seccomp_filter_drop(int enforce_seccomp) {
 	if (arg_debug)
 		filter_debug();
 
-	// save seccomp filter in  /tmp/firejail/mnt/seccomp
+	// save seccomp filter in  /run/firejail/mnt/seccomp
 	// in order to use it in --join operations
 	write_seccomp_file();
 
@@ -754,7 +754,7 @@ int seccomp_filter_keep(void) {
 	if (arg_debug)
 		filter_debug();
 
-	// save seccomp filter in  /tmp/firejail/mnt/seccomp
+	// save seccomp filter in  /run/firejail/mnt/seccomp
 	// in order to use it in --join operations
 	write_seccomp_file();
 
@@ -796,7 +796,7 @@ int seccomp_filter_errno(void) {
 	if (arg_debug)
 		filter_debug();
 
-	// save seccomp filter in  /tmp/firejail/mnt/seccomp
+	// save seccomp filter in  /run/firejail/mnt/seccomp
 	// in order to use it in --join operations
 	write_seccomp_file();
 
@@ -819,7 +819,7 @@ int seccomp_filter_errno(void) {
 
 
 void seccomp_set(void) {
-	// read seccomp filter from  /tmp/firejail/mnt/seccomp
+	// read seccomp filter from  /runp/firejail/mnt/seccomp
 	read_seccomp_file(RUN_SECCOMP_CFG);
 	
 	// apply filter

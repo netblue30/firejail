@@ -77,14 +77,15 @@ void fs_build_firejail_dir(void) {
 	if (stat(RUN_FIREJAIL_BASEDIR, &s)) {
 		create_dir_as_root(RUN_FIREJAIL_BASEDIR, 0755);
 	}
-	else { // check /tmp/firejail directory belongs to root end exit if doesn't!
+
+	// check /run/firejail directory belongs to root end exit if doesn't!
+	if (stat(RUN_FIREJAIL_DIR, &s) == 0) {
 		if (s.st_uid != 0 || s.st_gid != 0) {
 			fprintf(stderr, "Error: non-root %s directory, exiting...\n", RUN_FIREJAIL_DIR);
 			exit(1);
 		}
 	}
-
-	if (stat(RUN_FIREJAIL_DIR, &s)) {
+	else {
 		create_dir_as_root(RUN_FIREJAIL_DIR, 0755);
 	}
 	
@@ -113,7 +114,7 @@ void fs_build_firejail_dir(void) {
 }
 
 
-// build /tmp/firejail/mnt directory
+// build /run/firejail/mnt directory
 static int tmpfs_mounted = 0;
 #ifdef HAVE_CHROOT		
 static void fs_build_remount_mnt_dir(void) {
@@ -137,7 +138,7 @@ void fs_build_mnt_dir(void) {
 		if (arg_debug)
 			printf("Mounting tmpfs on %s directory\n", RUN_MNT_DIR);
 		if (mount("tmpfs", RUN_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mounting /tmp/firejail/mnt");
+			errExit("mounting /run/firejail/mnt");
 		tmpfs_mounted = 1;
 		fs_logger2("tmpfs", RUN_MNT_DIR);
 	}
@@ -1254,7 +1255,7 @@ void fs_private_tmp(void) {
 	if (arg_debug)
 		printf("Mounting tmpfs on /tmp directory\n");
 	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-		errExit("mounting /tmp/firejail/mnt");
+		errExit("mounting tmpfs on /tmp directory");
 	fs_logger2("tmpfs", "/tmp");
 }
 

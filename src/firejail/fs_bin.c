@@ -208,7 +208,7 @@ void fs_private_bin_list(void) {
 	char *private_list = cfg.bin_private_keep;
 	assert(private_list);
 	
-	// create /tmp/firejail/mnt/bin directory
+	// create /run/firejail/mnt/bin directory
 	fs_build_mnt_dir();
 	if (mkdir(RUN_BIN_DIR, 0755) == -1)
 		errExit("mkdir");

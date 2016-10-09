@@ -44,7 +44,7 @@ void fs_trace_preload(void) {
 }
 
 void fs_trace(void) {
-	// create /tmp/firejail/mnt directory
+	// create /run/firejail/mnt directory
 	fs_build_mnt_dir();
 	
 	// create the new ld.so.preload file and mount-bind it

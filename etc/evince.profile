@@ -15,5 +15,4 @@ shell none
 tracelog
 
 private-bin evince,evince-previewer,evince-thumbnailer
-whitelist /tmp/.X11-unix
 private-dev

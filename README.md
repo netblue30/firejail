@@ -40,6 +40,8 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 If you keep your Firejail profiles in a public repository, please give us a link:
 
 * https://github.com/chiraag-nataraj/firejail-profiles
+
+* https://github.com/triceratops1/fe
 `````
 
 `````

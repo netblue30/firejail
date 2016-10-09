@@ -104,6 +104,10 @@ void fs_build_firejail_dir(void) {
 		create_dir_as_root(RUN_FIREJAIL_X11_DIR, 0755);
 	}
 	
+	if (stat(RUN_FIREJAIL_APPIMAGE_DIR, &s)) {
+		create_dir_as_root(RUN_FIREJAIL_APPIMAGE_DIR, 0755);
+	}
+	
 	create_empty_dir();
 	create_empty_file();
 }

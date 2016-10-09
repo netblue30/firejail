@@ -28,6 +28,7 @@
 // filesystem
 #define RUN_FIREJAIL_BASEDIR	"/run"
 #define RUN_FIREJAIL_DIR	"/run/firejail"
+#define RUN_FIREJAIL_APPIMAGE_DIR	"/run/firejail/appimage"
 #define RUN_FIREJAIL_NAME_DIR	"/run/firejail/name"
 #define RUN_FIREJAIL_X11_DIR	"/run/firejail/x11"
 #define RUN_FIREJAIL_NETWORK_DIR	"/run/firejail/network"

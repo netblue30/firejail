@@ -54,9 +54,13 @@ void appimage_set(const char *appimage_path) {
 		exit(1);
 	}
 
+	// populate /run/firejail directory
 	EUID_ROOT();
+	fs_build_firejail_dir();
+	EUID_USER();
 
 	// find or allocate a free loop device to use
+	EUID_ROOT();
 	int cfd = open("/dev/loop-control", O_RDWR);
 	int devnr = ioctl(cfd, LOOP_CTL_GET_FREE);
 	if (devnr == -1) {
@@ -74,36 +78,37 @@ void appimage_set(const char *appimage_path) {
 	}
 	close(lfd);
 	close(ffd);
-	
 	EUID_USER();
 
-	// creates directory with perms 0700
-	char dirname[] = "/tmp/firejail-mnt-XXXXXX";
-	mntdir =  strdup(mkdtemp(dirname));
-	if (mntdir == NULL) {
-		fprintf(stderr, "Error: cannot create temporary directory\n");
+	// creates appimage mount point perms 0700
+	if (asprintf(&mntdir, "%s/appimage-%u",  RUN_FIREJAIL_APPIMAGE_DIR, getpid()) == -1)
+		errExit("asprintf");
+	EUID_ROOT();
+	if (mkdir(mntdir, 0700) == -1) {
+		fprintf(stderr, "Error: cannot create appimage mount point\n");
 		exit(1);
 	}
 	if (chmod(mntdir, 0700) == -1)
 		errExit("chmod");
+	if (chown(mntdir, getuid(), getgid()) == -1)
+		errExit("chown");
+	EUID_USER();
 	ASSERT_PERMS(mntdir, getuid(), getgid(), 0700);
 	
+	// mount
 	char *mode;
 	if (asprintf(&mode, "mode=700,uid=%d,gid=%d", getuid(), getgid()) == -1)
 		errExit("asprintf");
-
 	EUID_ROOT();
 	if (mount(devloop, mntdir, "iso9660",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
 		errExit("mounting appimage");
-
-
 	if (arg_debug)
 		printf("appimage mounted on %s\n", mntdir);
 	EUID_USER();
 
+	// set environment
 	if (appimage_path && setenv("APPIMAGE", appimage_path, 1) < 0)
 		errExit("setenv");
-	
 	if (mntdir && setenv("APPDIR", mntdir, 1) < 0)
 		errExit("setenv");
 
@@ -124,7 +129,7 @@ void appimage_clear(void) {
 	if (mntdir) {
 		rv = umount2(mntdir, MNT_FORCE);
 		if (rv == -1 && errno == EBUSY) {
-			sleep(1);			
+			sleep(5);			
 			rv = umount2(mntdir, MNT_FORCE);
 			(void) rv;
 			

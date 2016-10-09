@@ -126,16 +126,32 @@ void appimage_set(const char *appimage_path) {
 void appimage_clear(void) {
 	int rv;
 
+	EUID_ROOT();
 	if (mntdir) {
-		rv = umount2(mntdir, MNT_FORCE);
-		if (rv == -1 && errno == EBUSY) {
-			sleep(5);			
+		int i;
+		int rv = 0;
+		for (i = 0; i < 5; i++) {
 			rv = umount2(mntdir, MNT_FORCE);
-			(void) rv;
+			if (rv == 0)
+				break;
+			if (rv == -1 && errno == EBUSY) {
+				if (!arg_quiet)
+					printf("Warning: EBUSY error trying to unmount %s\n", mntdir);			
+				sleep(2);
+				continue;
+			}
 			
+			// rv = -1
+			if (!arg_quiet) {
+				printf("Warning: error trying to unmount %s\n", mntdir);
+				perror("umount");
+			}
 		}
-		rmdir(mntdir);
-		free(mntdir);
+		
+		if (rv == 0) {
+			rmdir(mntdir);
+			free(mntdir);
+		}
 	}
 
 	if (devloop) {

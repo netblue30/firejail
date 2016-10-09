@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include <fnmatch.h>
 
 #define MAX_READ 4096	// maximum line length
 char *restricted_user = NULL;
@@ -49,7 +50,11 @@ int restricted_shell(const char *user) {
 		if (*ptr == '\n' || *ptr == '#')
 			continue;
 
-		// parse line	
+		//
+		// parse line
+		//
+		
+		// extract users
 		char *usr = ptr;
 		char *args = strchr(usr, ':');
 		if (args == NULL) {
@@ -63,7 +68,7 @@ int restricted_shell(const char *user) {
 		if (ptr)
 			*ptr = '\0';
 		
-		// if nothing follows, continue
+		// extract firejail command line arguments
 		char *ptr2 = args;
 		int found = 0;
 		while (*ptr2 != '\0') {
@@ -73,12 +78,13 @@ int restricted_shell(const char *user) {
 			}
 			ptr2++;
 		}
+		// if nothing follows, continue
 		if (!found)
 			continue;
 		
-		// process user
-		if (strcmp(user, usr) == 0) {
-		    	// extract program arguments
+		// user name globbing
+		if (fnmatch(usr, user, 0) == 0) {
+		    	// process program arguments
 
 		    	fullargv[0] = "firejail";
 		    	int i;

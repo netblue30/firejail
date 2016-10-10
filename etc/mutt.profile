@@ -17,6 +17,7 @@ noblacklist ~/.vim
 noblacklist ~/.viminfo
 noblacklist ~/.emacs
 noblacklist ~/.emacs.d
+noblacklist ~/.signature
 noblacklist ~/.bogofilter
 
 include /etc/firejail/disable-common.inc

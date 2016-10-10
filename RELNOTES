@@ -1,7 +1,7 @@
 firejail (0.9.38.3) baseline; urgency=low
-  * this is a development version for LTS branch
+  * CVE-2016-7545 submitted by Aleksey Manevich
   * bugfixes 
- -- netblue30 <netblue30@yahoo.com>  Tue, 23 Aug 2016 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Mon, 10 Oct 2016 10:00:00 -0500
 
 firejail (0.9.38.2) baseline; urgency=low
   * security: --whitelist deleted files, submitted by Vasya Novikov

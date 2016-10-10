@@ -111,6 +111,7 @@ static void myexit(int rv) {
 	bandwidth_shm_del_file(sandbox_pid);		// bandwidth file
 	network_shm_del_file(sandbox_pid);		// network map file
 	
+	flush_stdin();
 	exit(rv); 
 }
 

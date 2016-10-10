@@ -25,6 +25,8 @@
 #include <dirent.h>
 #include <grp.h>
 #include <ftw.h>
+#include <sys/ioctl.h>
+#include <termios.h>
 
 #define MAX_GROUPS 1024
 // drop privileges
@@ -640,4 +642,16 @@ static int remove_callback(const char *fpath, const struct stat *sb, int typefla
 int remove_directory(const char *path) {
 	// FTW_PHYS - do not follow symbolic links
 	return nftw(path, remove_callback, 64, FTW_DEPTH | FTW_PHYS);
+}
+
+void flush_stdin(void) {
+	if (isatty(STDIN_FILENO)) {
+		int cnt = 0;
+		ioctl(STDIN_FILENO, FIONREAD, &cnt);
+		if (cnt) {
+			if (!arg_quiet)
+				printf("Warning: removing %d bytes from stdin\n", cnt);
+			ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
+		}
+	}
 }

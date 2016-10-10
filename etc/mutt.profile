@@ -1,13 +1,23 @@
 # mutt email client profile
 
 noblacklist ~/.muttrc
-noblacklist ~/.mutt/muttrc
+noblacklist ~/.mutt
+noblacklist ~/.mailcap
 noblacklist ~/.gnupg
 noblacklist ~/.mail
 noblacklist ~/.Mail
 noblacklist ~/mail
 noblacklist ~/Mail
+noblacklist ~/sent
+noblacklist ~/postponed
 noblacklist ~/.cache/mutt
+noblacklist ~/.w3m
+noblacklist ~/.elinks
+noblacklist ~/.vim
+noblacklist ~/.viminfo
+noblacklist ~/.emacs
+noblacklist ~/.emacs.d
+noblacklist ~/.bogofilter
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -24,8 +34,4 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin mutt
 private-dev
-private-etc
-# private-tmp
-# whitelist /tmp/.X11-unix

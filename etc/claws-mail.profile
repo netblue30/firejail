@@ -2,7 +2,6 @@
 
 noblacklist ~/.claws-mail
 noblacklist ~/.signature
-noblacklist ~/.ssh
 noblacklist ~/.gnupg
 
 include /etc/firejail/disable-common.inc

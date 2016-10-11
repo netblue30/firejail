@@ -14,6 +14,7 @@ noblacklist ~/.cache/mutt
 noblacklist ~/.w3m
 noblacklist ~/.elinks
 noblacklist ~/.vim
+noblacklist ~/.vimrc
 noblacklist ~/.viminfo
 noblacklist ~/.emacs
 noblacklist ~/.emacs.d

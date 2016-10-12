@@ -160,4 +160,5 @@
 /etc/firejail/git
 /etc/firejail/emacs
 /etc/firejail/vim
+/etc/firejail/xpdf
 

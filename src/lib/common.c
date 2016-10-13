@@ -201,7 +201,7 @@ char *pid_proc_cmdline(const pid_t pid) {
 }
 
 // return 1 if firejail --x11 on command line
-int pid_proc_cmdline_x11(const pid_t pid) {
+int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid) {
 	// if comm is not firejail return 0
 	char *comm = pid_proc_comm(pid);
 	if (strcmp(comm, "firejail") != 0) {
@@ -248,8 +248,11 @@ int pid_proc_cmdline_x11(const pid_t pid) {
 			break;
 		if (strncmp(arg, "--", 2) != 0)
 			break;
-			
-		// check x11
+		
+		if (strcmp(arg, "--x11=xorg") == 0)
+			return 0;
+		
+		// check x11 xpra or xephyr
 		if (strncmp(arg, "--x11", 5) == 0)
 			return 1;
 		i += strlen(arg);

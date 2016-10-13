@@ -113,5 +113,5 @@ int join_namespace(pid_t pid, char *type);
 int name2pid(const char *name, pid_t *pid);
 char *pid_proc_comm(const pid_t pid);
 char *pid_proc_cmdline(const pid_t pid);
-int pid_proc_cmdline_x11(const pid_t pid);
+int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid);
 #endif

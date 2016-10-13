@@ -155,10 +155,9 @@
 /etc/firejail/7z.profile
 /etc/firejail/keepass.profile
 /etc/firejail/keepassx.profile
-/etc/firejail/claws-mail
-/etc/firejail/mutt
-/etc/firejail/git
-/etc/firejail/emacs
-/etc/firejail/vim
-/etc/firejail/xpdf
-
+/etc/firejail/claws-mail.profile
+/etc/firejail/mutt.profile
+/etc/firejail/git.profile
+/etc/firejail/emacs.profile
+/etc/firejail/vim.profile
+/etc/firejail/xpdf.profile

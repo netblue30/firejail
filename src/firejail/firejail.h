@@ -672,6 +672,7 @@ extern char *xephyr_extra_params;
 extern char *netfilter_default;
 int checkcfg(int val);
 void print_compiletime_support(void);
+void x11_xorg(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);

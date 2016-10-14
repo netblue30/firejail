@@ -11,19 +11,27 @@ expect {
 	"Child process initialized"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"exited with 0"
+        timeout {puts "TESTING ERROR 1\n";exit}
+        "ioctl"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"exit_group"
 }
 after 100
 
 send -- "firejail --allow-debuggers --profile=/etc/firejail/firefox.profile strace ls\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
 }
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"exited with 0"
+        timeout {puts "TESTING ERROR 4\n";exit}
+        "ioctl"
+}       
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"exit_group"
 }
 after 100
 

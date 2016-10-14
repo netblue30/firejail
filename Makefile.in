@@ -216,5 +216,5 @@ test-network:
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
 
-test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-xorg-x11 test-filters
+test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"

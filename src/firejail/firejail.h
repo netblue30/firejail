@@ -60,6 +60,7 @@
 #define RUN_WHITELIST_VAR_DIR	"/run/firejail/mnt/orig-var"
 #define RUN_WHITELIST_DEV_DIR	"/run/firejail/mnt/orig-dev"
 #define RUN_WHITELIST_OPT_DIR	"/run/firejail/mnt/orig-opt"
+#define RUN_WHITELIST_SRV_DIR   "/run/firejail/mnt/orig-srv"
 
 #define RUN_XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
 #define RUN_XAUTHORITY_SEC_FILE	"/run/firejail/mnt/sec.Xauthority"
@@ -173,6 +174,7 @@ typedef struct profile_entry_t {
 	unsigned var_dir:1;	// whitelist in /var directory
 	unsigned dev_dir:1;	// whitelist in /dev directory
 	unsigned opt_dir:1;	// whitelist in /opt directory
+        unsigned srv_dir:1;     // whitelist in /srv directory
 }ProfileEntry;
 
 typedef struct config_t {

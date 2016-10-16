@@ -1622,7 +1622,7 @@ $ firejail \-\-net=br0 --veth-name=if0
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
 whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
 everything else is discarded when the sandbox is closed. The top directory could be 
-user home, /dev, /media, /mnt, /opt, /var, and /tmp.
+user home, /dev, /media, /mnt, /opt, /srv, /var, and /tmp.
 .br
 
 .br

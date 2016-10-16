@@ -254,7 +254,16 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_OPT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	else if (entry->srv_dir) {
+		fname = path + 4; // strlen("/srv")
+		if (*fname == '\0') {
+			fprintf(stderr, "Error: file %s is not in /srv directory, exiting...\n", path);
+			exit(1);
+		}
 
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SRV_DIR, fname) == -1)
+			errExit("asprintf");
+	}
 	// check if the file exists
 	struct stat s;
 	if (wfile && stat(wfile, &s) == 0) {
@@ -317,7 +326,7 @@ void fs_whitelist(void) {
 	int var_dir = 0;		// /var directory flag
 	int dev_dir = 0;		// /dev directory flag
 	int opt_dir = 0;		// /opt directory flag
-
+        int srv_dir = 0;                // /srv directory flag
 	// verify whitelist files, extract symbolic links, etc.
 	while (entry) {
 		// handle only whitelist commands
@@ -387,7 +396,9 @@ void fs_whitelist(void) {
 				dev_dir = 1;
 			else if (strncmp(new_name, "/opt/", 5) == 0)
 				opt_dir = 1;
-
+			else if (strncmp(new_name, "/srv/", 5) == 0)
+				opt_dir = 1;
+			
 			continue;
 		}
 		
@@ -476,6 +487,16 @@ void fs_whitelist(void) {
 			opt_dir = 1;
 			// both path and absolute path are under /dev
 			if (strncmp(fname, "/opt/", 5) != 0) {
+				if (arg_debug)
+					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
+				goto errexit;
+			}
+		}
+		else if (strncmp(new_name, "/srv/", 5) == 0) {
+			entry->srv_dir = 1;
+			srv_dir = 1;
+			// both path and absolute path are under /srv
+			if (strncmp(fname, "/srv/", 5) != 0) {
 				if (arg_debug)
 					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
@@ -675,6 +696,36 @@ void fs_whitelist(void) {
 		fs_logger("tmpfs /opt");
 	}
 
+	// /srv mountpoint
+	if (srv_dir) {
+		// check if /srv directory exists
+		struct stat s;
+		if (stat("/srv", &s) == 0) {
+			// keep a copy of real /srv directory in RUN_WHITELIST_SRV_DIR
+			int rv = mkdir(RUN_WHITELIST_SRV_DIR, 0755);
+			if (rv == -1)
+				errExit("mkdir");
+			if (chown(RUN_WHITELIST_SRV_DIR, 0, 0) < 0)
+				errExit("chown");
+			if (chmod(RUN_WHITELIST_SRV_DIR, 0755) < 0)
+				errExit("chmod");
+
+			if (mount("/srv", RUN_WHITELIST_SRV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+
+			// mount tmpfs on /srv
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /srv directory\n");
+			if (mount("tmpfs", "/srv", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /srv");
+			fs_logger("tmpfs /srv");
+		}
+		else
+			srv_dir = 0;
+	}
+
+
+	
 	// go through profile rules again, and interpret whitelist commands
 	entry = cfg.profile;
 	while (entry) {
@@ -765,6 +816,12 @@ void fs_whitelist(void) {
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_MNT_DIR);
 	}
+
+	// mask the real /srv directory, currently mounted on RUN_WHITELIST_SRV_DIR
+	if (srv_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_SRV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_SRV_DIR);
 
 	if (new_name)
 		free(new_name);

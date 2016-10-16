@@ -77,6 +77,12 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added gnome-chess profile
 	- added DOSBox profile
 	- evince profile enhancement
+valoq (https://github.com/valoq)
+	- LibreOffice profile fixes
+	- cherrytree profile fixes
+	- added support for /srv in --whitelist feature
+Rafael Cavalcanti (https://github.com/rccavalcanti)
+	- chromium profile fixes for Arch Linux
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
 vismir2 (https://github.com/vismir2)
@@ -84,9 +90,6 @@ vismir2 (https://github.com/vismir2)
 Dara Adib (https://github.com/daradib)
 	- ssh profile fix
 	- evince profile fix
-valoq (https://github.com/valoq)
-	- LibreOffice profile fixes
-	- cherrytree profile fixes
 vismir2 (https://github.com/vismir2)
 	- feh, ranger, 7z, keepass, keepassx and zathura profiles
 	- lots of profile fixes

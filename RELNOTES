@@ -20,7 +20,7 @@ firejail (0.9.44~rc1) baseline; urgency=low
   * feature: move files in sandbox (--put)
   * new profiles: qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape
   * new profiles: feh, ranger, zathura, 7z, keepass, keepassx,
-  * new profiles: claws-mail, mutt, git, emacs, vim, xpdf, VirtualBox
+  * new profiles: claws-mail, mutt, git, emacs, vim, xpdf, VirtualBox, OpenShot
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sat, 15 Sept 2016 08:00:00 -0500
 

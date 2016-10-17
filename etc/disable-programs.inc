@@ -35,6 +35,7 @@ blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.xpdfrc
+blacklist ${HOME}/.openshot
 
 
 # Media players

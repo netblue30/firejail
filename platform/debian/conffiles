@@ -162,3 +162,4 @@
 /etc/firejail/vim.profile
 /etc/firejail/xpdf.profile
 /etc/firejail/virtualbox.profile
+/etc/firejail/openshot.profile

@@ -163,3 +163,4 @@
 /etc/firejail/xpdf.profile
 /etc/firejail/virtualbox.profile
 /etc/firejail/openshot.profile
+/etc/firejail/flowblade.profile

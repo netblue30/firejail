@@ -113,5 +113,5 @@ x11 xpra, x11 xephyr, x11 none, x11 xorg, allusers, join-or-start
 ## New profiles
 
 qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape, feh, ranger, zathura, 7z, keepass, keepassx,
-claws-mail, mutt, git, emacs, vim, xpdf, VirtualBox, OpenShot
+claws-mail, mutt, git, emacs, vim, xpdf, VirtualBox, OpenShot, Flowblade
 

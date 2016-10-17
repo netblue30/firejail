@@ -36,6 +36,9 @@ blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.openshot
+blacklist ${HOME}/.openshot_qt
+blacklist ${HOME}/.flowblade
+blacklist ${HOME}/.config/flowblade
 
 
 # Media players

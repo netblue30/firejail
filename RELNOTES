@@ -5,6 +5,7 @@ firejail (0.9.44~rc1) baseline; urgency=low
   * modifs: --private-tmp whitelists /tmp/.X11-unix directory
   * modifs: Nvidia drivers added to --private-dev
   * modifs: /srv supported by --whitelist
+  * feature: allow user access to /sys/fs (--noblacklist=/sys/fs)
   * feature: support starting/joining sandbox is a single command
     (--join-or-start)
   * feature: X11 detection support for --audit

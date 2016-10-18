@@ -42,6 +42,8 @@ If you keep your Firejail profiles in a public repository, please give us a link
 * https://github.com/chiraag-nataraj/firejail-profiles
 
 * https://github.com/triceratops1/fe
+
+Use this issue to request new profiles: https://github.com/netblue30/firejail/issues/825
 `````
 
 `````
@@ -113,5 +115,5 @@ x11 xpra, x11 xephyr, x11 none, x11 xorg, allusers, join-or-start
 ## New profiles
 
 qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape, feh, ranger, zathura, 7z, keepass, keepassx,
-claws-mail, mutt, git, emacs, vim, xpdf, VirtualBox, OpenShot, Flowblade
+claws-mail, mutt, git, emacs, vim, xpdf, VirtualBox, OpenShot, Flowblade, Eye of GNOME (eog), Evolution
 

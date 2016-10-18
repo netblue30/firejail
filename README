@@ -81,6 +81,7 @@ valoq (https://github.com/valoq)
 	- LibreOffice profile fixes
 	- cherrytree profile fixes
 	- added support for /srv in --whitelist feature
+	- Eye of GNOME and Evolution profiles
 Rafael Cavalcanti (https://github.com/rccavalcanti)
 	- chromium profile fixes for Arch Linux
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)

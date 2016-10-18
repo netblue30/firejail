@@ -164,3 +164,5 @@
 /etc/firejail/virtualbox.profile
 /etc/firejail/openshot.profile
 /etc/firejail/flowblade.profile
+/etc/firejail/eog.profile
+/etc/firejail/evolution.profile

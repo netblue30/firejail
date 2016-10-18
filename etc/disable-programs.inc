@@ -39,6 +39,7 @@ blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.config/flowblade
+blacklist ${HOME}/.config/eog
 
 
 # Media players
@@ -78,6 +79,9 @@ blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.mutt/muttrc
 blacklist ${HOME}/.msmtprc
+blacklist ${HOME}/.config/evolution
+blacklist ${HOME}/.local/share/evolution
+blacklist ${HOME}/.cache/evolution
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat

@@ -77,6 +77,7 @@ blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.muttrc
+blacklist ${HOME}/.mutt
 blacklist ${HOME}/.mutt/muttrc
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.config/evolution

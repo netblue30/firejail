@@ -145,7 +145,8 @@ void netfilter(const char *fname) {
 		// wipe out environment variables
 		environ = NULL;
 		execl(iptables_restore, iptables_restore, NULL);
-		// it will never get here!!!
+		perror("execl");
+		_exit(1);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
@@ -163,7 +164,8 @@ void netfilter(const char *fname) {
 				errExit("setregid");
 			environ = NULL;
 			execl(iptables, iptables, "-vL", NULL);
-			// it will never get here!!!
+			perror("execl");
+			_exit(1);
 		}
 		// wait for the child to finish
 		waitpid(child, NULL, 0);
@@ -256,7 +258,8 @@ void netfilter6(const char *fname) {
 		// wipe out environment variables
 		environ = NULL;
 		execl(ip6tables_restore, ip6tables_restore, NULL);
-		// it will never get here!!!
+		perror("execl");
+		_exit(1);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
@@ -269,7 +272,8 @@ void netfilter6(const char *fname) {
 		if (child == 0) {
 			environ = NULL;
 			execl(ip6tables, ip6tables, "-vL", NULL);
-			// it will never get here!!!
+			perror("execl");
+			_exit(1);
 		}
 		// wait for the child to finish
 		waitpid(child, NULL, 0);

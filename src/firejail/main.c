@@ -2506,7 +2506,7 @@ int main(int argc, char **argv) {
 			network_main(child);
 			if (arg_debug)
 				printf("Host network configured\n");			
-			exit(0);			
+			_exit(0);			
 		}
 
 		// wait for the child to finish

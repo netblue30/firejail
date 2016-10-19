@@ -106,6 +106,8 @@ static void duplicate(char *fname) {
 		if (asprintf(&f, "/etc/%s", fname) == -1)
 			errExit("asprintf");
 		execlp(RUN_CP_COMMAND, RUN_CP_COMMAND, "-a", "--parents", f, RUN_MNT_DIR, NULL);
+		perror("execlp");
+		_exit(1);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
@@ -169,7 +171,7 @@ void fs_private_etc_list(void) {
 				duplicate(ptr);
 			free(dlist);	
 			fs_logger_print();
-			exit(0);
+			_exit(0);
 		}
 		// wait for the child to finish
 		waitpid(child, NULL, 0);

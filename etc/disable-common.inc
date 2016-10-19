@@ -172,3 +172,29 @@ blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
+
+# disable common suid programms
+blacklist ${PATH}/firejail
+blacklist ${PATH}/sudo
+blacklist ${PATH}/su
+blacklist ${PATH}/mount
+blacklist ${PATH}/umount
+blacklist ${PATH}/fusermount
+blacklist ${PATH}/passwd
+blacklist ${PATH}/gpasswd
+blacklist ${PATH}/newgidmap
+blacklist ${PATH}/newgrp
+blacklist ${PATH}/newuidmap
+blacklist ${PATH}/pkexec
+blacklist ${PATH}/sg
+blacklist ${PATH}/rsh
+blacklist ${PATH}/rlogin
+blacklist ${PATH}/rcp
+blacklist ${PATH}/crontab
+blacklist ${PATH}/ksu
+blacklist ${PATH}/chsh
+blacklist ${PATH}/chfn
+blacklist ${PATH}/chage
+blacklist ${PATH}/expiry
+blacklist ${PATH}/ping
+blacklist ${PATH}/unix_chkpwd

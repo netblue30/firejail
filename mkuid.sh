@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "extracting UID_MIN and GID_MIN"
 echo "#ifndef FIREJAIL_UIDS_H" > uids.h

@@ -2,6 +2,7 @@
 
 noblacklist ~/.muttrc
 noblacklist ~/.mutt
+noblacklist ~/.mutt/muttrc
 noblacklist ~/.mailcap
 noblacklist ~/.gnupg
 noblacklist ~/.mail

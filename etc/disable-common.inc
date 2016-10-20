@@ -138,11 +138,11 @@ blacklist /etc/ssh
 blacklist /var/backup
 
 # system management
-blacklist ${PATH}/umount
-blacklist ${PATH}/mount
-blacklist ${PATH}/fusermount
-blacklist ${PATH}/su
-blacklist ${PATH}/sudo
+# blacklist ${PATH}/umount
+# blacklist ${PATH}/mount
+# blacklist ${PATH}/fusermount
+# blacklist ${PATH}/su
+# blacklist ${PATH}/sudo
 blacklist ${PATH}/xinput
 blacklist ${PATH}/evtest
 blacklist ${PATH}/xev

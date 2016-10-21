@@ -2579,7 +2579,6 @@ int main(int argc, char **argv) {
 	 	g = get_group_id("games");
 	 	if (g) {
 	 		sprintf(ptr, "%d %d 1\n", g, g);
-	 		ptr += strlen(ptr);
 	 	}
 	 	
  		EUID_ROOT();

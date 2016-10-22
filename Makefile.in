@@ -141,7 +141,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
 DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
-DISTFILES_TEST = "test/apps test/apps-x11 test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils"
+DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils"
 
 dist:
 	mv config.status config.status.old

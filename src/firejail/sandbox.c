@@ -488,6 +488,13 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_SECCOMP
 	int enforce_seccomp = 0;
 #endif
+	if (arg_appimage) {
+		enforce_filters();
+#ifdef HAVE_SECCOMP
+		enforce_seccomp = 1;
+#endif		
+	}
+	
 #ifdef HAVE_CHROOT		
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);

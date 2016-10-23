@@ -96,7 +96,7 @@ void appimage_set(const char *appimage_path) {
 	EUID_USER();
 
 	// creates appimage mount point perms 0700
-	if (asprintf(&mntdir, "%s/appimage-%u",  RUN_FIREJAIL_APPIMAGE_DIR, getpid()) == -1)
+	if (asprintf(&mntdir, "%s/.appimage-%u",  RUN_FIREJAIL_APPIMAGE_DIR, getpid()) == -1)
 		errExit("asprintf");
 	EUID_ROOT();
 	if (mkdir(mntdir, 0700) == -1) {

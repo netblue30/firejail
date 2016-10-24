@@ -6,13 +6,15 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
+nosound
 protocol unix
 seccomp
-private-dev
-private-tmp
+
 noexec ${HOME}
 noexec /tmp
-nogroups
-nosound
+
+private-dev
+private-tmp

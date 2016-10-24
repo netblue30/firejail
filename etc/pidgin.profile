@@ -8,8 +8,8 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
-nonewprivs
 nogroups
+nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp

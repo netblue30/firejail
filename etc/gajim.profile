@@ -22,8 +22,8 @@ include /etc/firejail/disable-devel.inc
 
 caps.drop all
 netfilter
-nonewprivs
 nogroups
+nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp

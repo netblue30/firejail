@@ -172,3 +172,7 @@ blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
+
+# kernel files
+blacklist /vmlinuz*
+blacklist /initrd*

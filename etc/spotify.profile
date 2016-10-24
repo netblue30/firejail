@@ -41,7 +41,3 @@ blacklist /sbin
 blacklist /srv
 blacklist /sys
 blacklist /var
-blacklist /initrd.img
-blacklist /initrd.img.old
-blacklist /vmlinuz
-blacklist /vmlinuz.old

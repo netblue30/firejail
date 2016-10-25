@@ -47,6 +47,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- added --join-or-start command
 	- CVE-2016-7545
 Fred-Barclay (https://github.com/Fred-Barclay)
+	- lots of profile fixes
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile
 	- split Icedove and Thunderbird profiles
@@ -83,6 +84,7 @@ valoq (https://github.com/valoq)
 	- cherrytree profile fixes
 	- added support for /srv in --whitelist feature
 	- Eye of GNOME and Evolution profiles
+	- blacklist suid binaries in disable-common.inc
 Rafael Cavalcanti (https://github.com/rccavalcanti)
 	- chromium profile fixes for Arch Linux
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)

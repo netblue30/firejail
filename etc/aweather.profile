@@ -11,8 +11,8 @@ whitelist ~/.config/aweather
 
 caps.drop all
 netfilter
-nonewprivs
 nogroups
+nonewprivs
 noroot
 nosound
 protocol unix,inet,inet6

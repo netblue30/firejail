@@ -14,10 +14,10 @@ whitelist ~/.local/share/psi+
 mkdir ~/.cache/psi+
 whitelist ~/.cache/psi+
 
-include /etc/firejail/whitelist-common.inc
-
 caps.drop all
 netfilter
 noroot
 protocol unix,inet,inet6
 seccomp
+
+include /etc/firejail/whitelist-common.inc

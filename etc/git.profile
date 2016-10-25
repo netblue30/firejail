@@ -12,15 +12,15 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-quiet
 
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
-nogroups
 nosound
 protocol unix,inet,inet6
+quiet
 seccomp
 shell none
 

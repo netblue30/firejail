@@ -16,10 +16,10 @@ noroot
 nosound
 protocol unix,inet,inet6
 seccomp
-#shell none
+shell none
 tracelog
 
-#private-bin gpredict
+private-bin gpredict
 private-etc fonts,resolv.conf
 private-dev
 private-tmp

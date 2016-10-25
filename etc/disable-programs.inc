@@ -7,6 +7,8 @@ blacklist ${HOME}/.wine
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.stellarium
+blacklist ${HOME}/.sword
+blacklist ${HOME}/.xiphos
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/mupen64plus

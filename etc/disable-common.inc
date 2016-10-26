@@ -1,6 +1,7 @@
 # History files in $HOME
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
+blacklist-nolog ${HOME}/.bash_history
 blacklist ${HOME}/.local/share/systemd
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.macromedia
@@ -23,6 +24,7 @@ blacklist ${HOME}/.config/openbox/autostart
 blacklist ${HOME}/.config/openbox/environment
 blacklist ${HOME}/.gnomerc
 blacklist /etc/X11/Xsession.d/
+blacklist ${HOME}/.xpra
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox
@@ -96,9 +98,6 @@ read-only ${HOME}/.emacs.d
 read-only ${HOME}/.nano
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.iscreenrc
-read-only ${HOME}/.muttrc
-read-only ${HOME}/.mutt/muttrc
-read-only ${HOME}/.msmtprc
 read-only ${HOME}/.reportbugrc
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
@@ -143,11 +142,11 @@ blacklist /usr/sbin
 blacklist /usr/local/sbin
 
 # system management
-# blacklist ${PATH}/umount
-# blacklist ${PATH}/mount
-# blacklist ${PATH}/fusermount
-# blacklist ${PATH}/su
-# blacklist ${PATH}/sudo
+blacklist ${PATH}/umount
+blacklist ${PATH}/mount
+blacklist ${PATH}/fusermount
+blacklist ${PATH}/su
+blacklist ${PATH}/sudo
 blacklist ${PATH}/xinput
 blacklist ${PATH}/evtest
 blacklist ${PATH}/xev

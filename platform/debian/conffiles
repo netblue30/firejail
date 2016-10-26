@@ -166,3 +166,5 @@
 /etc/firejail/flowblade.profile
 /etc/firejail/eog.profile
 /etc/firejail/evolution.profile
+/etc/firejail/start-tor-browser.profile
+/etc/firejail/xiphos.profile

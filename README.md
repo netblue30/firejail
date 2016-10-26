@@ -48,4 +48,9 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 
 `````
 # Current development version: 0.9.45
+`````
+
+`````
+## New Profiles
+xiphos, Tor Browser Bundle
 

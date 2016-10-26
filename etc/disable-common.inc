@@ -169,7 +169,6 @@ blacklist ${PATH}/chsh
 blacklist ${PATH}/chfn
 blacklist ${PATH}/chage
 blacklist ${PATH}/expiry
-blacklist ${PATH}/ping
 blacklist ${PATH}/unix_chkpwd
 
 # prevent lxterminal connecting to an existing lxterminal session

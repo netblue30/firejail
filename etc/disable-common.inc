@@ -137,6 +137,11 @@ blacklist /etc/gshadow+
 blacklist /etc/ssh
 blacklist /var/backup
 
+# system directories	
+blacklist /sbin
+blacklist /usr/sbin
+blacklist /usr/local/sbin
+
 # system management
 # blacklist ${PATH}/umount
 # blacklist ${PATH}/mount
@@ -149,11 +154,22 @@ blacklist ${PATH}/xev
 blacklist ${PATH}/strace
 blacklist ${PATH}/nc
 blacklist ${PATH}/ncat
-
-# system directories	
-blacklist /sbin
-blacklist /usr/sbin
-blacklist /usr/local/sbin
+blacklist ${PATH}/gpasswd
+blacklist ${PATH}/newgidmap
+blacklist ${PATH}/newgrp
+blacklist ${PATH}/newuidmap
+blacklist ${PATH}/pkexec
+blacklist ${PATH}/sg
+blacklist ${PATH}/rsh
+blacklist ${PATH}/rlogin
+blacklist ${PATH}/rcp
+blacklist ${PATH}/crontab
+blacklist ${PATH}/ksu
+blacklist ${PATH}/chsh
+blacklist ${PATH}/chfn
+blacklist ${PATH}/chage
+blacklist ${PATH}/expiry
+blacklist ${PATH}/unix_chkpwd
 
 # prevent lxterminal connecting to an existing lxterminal session
 blacklist /tmp/.lxterminal-socket*
@@ -173,28 +189,6 @@ blacklist ${PATH}/terminix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
 
-# disable common suid programms
-blacklist ${PATH}/firejail
-blacklist ${PATH}/sudo
-blacklist ${PATH}/su
-blacklist ${PATH}/mount
-blacklist ${PATH}/umount
-blacklist ${PATH}/fusermount
-blacklist ${PATH}/passwd
-blacklist ${PATH}/gpasswd
-blacklist ${PATH}/newgidmap
-blacklist ${PATH}/newgrp
-blacklist ${PATH}/newuidmap
-blacklist ${PATH}/pkexec
-blacklist ${PATH}/sg
-blacklist ${PATH}/rsh
-blacklist ${PATH}/rlogin
-blacklist ${PATH}/rcp
-blacklist ${PATH}/crontab
-blacklist ${PATH}/ksu
-blacklist ${PATH}/chsh
-blacklist ${PATH}/chfn
-blacklist ${PATH}/chage
-blacklist ${PATH}/expiry
-blacklist ${PATH}/ping
-blacklist ${PATH}/unix_chkpwd
+# kernel files
+blacklist /vmlinuz*
+blacklist /initrd*

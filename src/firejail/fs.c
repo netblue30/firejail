@@ -649,7 +649,11 @@ void fs_proc_sys_dev_boot(void) {
 		
 	disable_file(BLACKLIST_FILE, "/sys/firmware");
 	disable_file(BLACKLIST_FILE, "/sys/hypervisor");
-	disable_file(BLACKLIST_FILE, "/sys/fs");
+	{ // allow user access to /sys/fs if "--noblacklist=/sys/fs" is present on the command line
+		EUID_USER();	
+		profile_add("blacklist /sys/fs");
+		EUID_ROOT();
+	}
 	disable_file(BLACKLIST_FILE, "/sys/module");
 	disable_file(BLACKLIST_FILE, "/sys/power");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/debug");

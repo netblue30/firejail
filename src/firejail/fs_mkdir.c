@@ -81,7 +81,7 @@ void fs_mkdir(const char *name) {
 
 		// create directory
 		mkdir_recursive(expanded);
-		exit(0);
+		_exit(0);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
@@ -126,7 +126,7 @@ void fs_mkfile(const char *name) {
 			(void) rv;
 			fclose(fp);
 		}
-		exit(0);
+		_exit(0);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);

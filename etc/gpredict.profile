@@ -6,13 +6,12 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 # Whitelist
-mkdir ~/.config/Gpredict
 whitelist ~/.config/Gpredict
 
 caps.drop all
 netfilter
-nonewprivs
 nogroups
+nonewprivs
 noroot
 nosound
 protocol unix,inet,inet6
@@ -21,5 +20,6 @@ shell none
 tracelog
 
 private-bin gpredict
+private-etc fonts,resolv.conf
 private-dev
 private-tmp

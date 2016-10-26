@@ -314,7 +314,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
-		exit(1);
+		_exit(1);
 	}
 
 	if (arg_debug)
@@ -355,7 +355,7 @@ void x11_start_xephyr(int argc, char **argv) {
 
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
-		exit(1);
+		_exit(1);
 	}
 
 	// cleanup
@@ -434,7 +434,7 @@ void x11_start_xpra(int argc, char **argv) {
 	
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
-		exit(1);
+		_exit(1);
 	}
 
 	// check X11 socket
@@ -480,7 +480,7 @@ void x11_start_xpra(int argc, char **argv) {
 
 		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
-		exit(1);
+		_exit(1);
 	}
 
 	setenv("DISPLAY", display_str, 1);
@@ -536,7 +536,7 @@ void x11_start_xpra(int argc, char **argv) {
 				}
 				execvp(stop_argv[0], stop_argv);
 				perror("execvp");
-				exit(1);
+				_exit(1);
 			}
 
 			// wait for xpra server to stop, 10 seconds limit
@@ -672,7 +672,7 @@ void x11_xorg(void) {
 		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", RUN_XAUTHORITY_SEC_FILE,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
 		
-		exit(0);
+		_exit(0);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);

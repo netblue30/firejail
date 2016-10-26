@@ -2506,7 +2506,7 @@ int main(int argc, char **argv) {
 			network_main(child);
 			if (arg_debug)
 				printf("Host network configured\n");			
-			exit(0);			
+			_exit(0);			
 		}
 
 		// wait for the child to finish
@@ -2579,7 +2579,6 @@ int main(int argc, char **argv) {
 	 	g = get_group_id("games");
 	 	if (g) {
 	 		sprintf(ptr, "%d %d 1\n", g, g);
-	 		ptr += strlen(ptr);
 	 	}
 	 	
  		EUID_ROOT();

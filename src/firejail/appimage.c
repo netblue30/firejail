@@ -39,13 +39,19 @@ void appimage_set(const char *appimage_path) {
 	assert(appimage_path);
 	assert(devloop == NULL);	// don't call this twice!
 	EUID_ASSERT();
-
+	
 #ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
 	// check appimage_path
 	if (access(appimage_path, R_OK) == -1) {
 		fprintf(stderr, "Error: cannot access AppImage file\n");
 		exit(1);
 	}
+
+	// get appimage type and ELF size
+	// a value of 0 means we are dealing with a type1 appimage
+	long unsigned int size = appimage2_size(appimage_path);
+	if (arg_debug)
+		printf("AppImage ELF size %lu\n", size);
 
 	// open as user to prevent race condition
 	int ffd = open(appimage_path, O_RDONLY|O_CLOEXEC);
@@ -76,12 +82,21 @@ void appimage_set(const char *appimage_path) {
 		fprintf(stderr, "Error: cannot configure the loopback device\n");
 		exit(1);
 	}
+	
+	if (size) {
+		struct loop_info64 info;
+		memset(&info, 0, sizeof(struct loop_info64));
+		info.lo_offset = size;
+		if (ioctl(lfd,  LOOP_SET_STATUS64, &info) == -1)
+			errExit("configure appimage offset");
+	}
+	
 	close(lfd);
 	close(ffd);
 	EUID_USER();
 
 	// creates appimage mount point perms 0700
-	if (asprintf(&mntdir, "%s/appimage-%u",  RUN_FIREJAIL_APPIMAGE_DIR, getpid()) == -1)
+	if (asprintf(&mntdir, "%s/.appimage-%u",  RUN_FIREJAIL_APPIMAGE_DIR, getpid()) == -1)
 		errExit("asprintf");
 	EUID_ROOT();
 	if (mkdir(mntdir, 0700) == -1) {
@@ -100,8 +115,16 @@ void appimage_set(const char *appimage_path) {
 	if (asprintf(&mode, "mode=700,uid=%d,gid=%d", getuid(), getgid()) == -1)
 		errExit("asprintf");
 	EUID_ROOT();
-	if (mount(devloop, mntdir, "iso9660",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
-		errExit("mounting appimage");
+	
+	if (size == 0) {
+		if (mount(devloop, mntdir, "iso9660",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
+			errExit("mounting appimage");
+	}
+	else {
+		if (mount(devloop, mntdir, "squashfs",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
+			errExit("mounting appimage");
+	}
+
 	if (arg_debug)
 		printf("appimage mounted on %s\n", mntdir);
 	EUID_USER();

@@ -822,6 +822,7 @@ void fs_whitelist(void) {
 		if (mount("tmpfs", RUN_WHITELIST_SRV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_SRV_DIR);
+	}
 
 	if (new_name)
 		free(new_name);

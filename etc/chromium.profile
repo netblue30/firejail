@@ -25,4 +25,7 @@ whitelist ~/keepassx.kdbx
 whitelist ~/.lastpass
 whitelist ~/.config/lastpass
 
+# specific to Arch
+whitelist ~/.config/chromium-flags.conf
+
 include /etc/firejail/whitelist-common.inc

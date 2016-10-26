@@ -18,5 +18,5 @@ shell none
 tracelog
 
 private-bin qpdfview
-private-tmp
 private-dev
+private-tmp

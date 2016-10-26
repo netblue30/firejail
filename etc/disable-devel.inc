@@ -20,7 +20,7 @@ blacklist /usr/bin/x86_64-unknown-linux-gnu-gcc*
 # clang/llvm
 blacklist /usr/bin/clang*
 blacklist /usr/bin/llvm*
-blacklist /usb/bin/lldb*
+blacklist /usr/bin/lldb*
 blacklist /usr/lib/llvm*
 
 # tcc - Tiny C Compiler

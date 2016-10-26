@@ -28,6 +28,8 @@
 #include <arpa/inet.h>
 #include <time.h>
 #include <fcntl.h>
+#include <sys/uio.h>
+
 #define PIDS_BUFLEN 4096
 #define SERVER_PORT 889	// 889-899 is left unassigned by IANA
 

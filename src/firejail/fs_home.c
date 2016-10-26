@@ -641,7 +641,7 @@ void fs_private_home_list(void) {
 
 		fs_logger_print();	// save the current log
 		free(dlist);
-		exit(0);
+		_exit(0);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);

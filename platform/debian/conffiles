@@ -161,3 +161,10 @@
 /etc/firejail/emacs.profile
 /etc/firejail/vim.profile
 /etc/firejail/xpdf.profile
+/etc/firejail/virtualbox.profile
+/etc/firejail/openshot.profile
+/etc/firejail/flowblade.profile
+/etc/firejail/eog.profile
+/etc/firejail/evolution.profile
+/etc/firejail/start-tor-browser.profile
+/etc/firejail/xiphos.profile

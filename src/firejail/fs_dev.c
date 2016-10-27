@@ -244,6 +244,7 @@ void fs_private_dev(void){
 }
 
 
+#if 0
 void fs_dev_shm(void) {
 	uid_t uid = getuid(); // set a new shm only if we started as root
 	if (uid)
@@ -282,6 +283,7 @@ void fs_dev_shm(void) {
 			
 	}
 }
+#endif	
 
 static void disable_file_or_dir(const char *fname) {
 	if (arg_debug)

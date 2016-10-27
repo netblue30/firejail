@@ -171,10 +171,16 @@ void logerr(const char *msg) {
 }
 
 
-// return -1 if error, 0 if no error
+// return -1 if error, 0 if no error; if destname already exists, return error
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
 	assert(srcname);
 	assert(destname);
+
+	struct stat s;
+	if (stat(destname, &s) == 0) {
+		fprintf(stderr, "Error: file %s already exists\n", destname);
+		return -1;
+	}
 
 	// open source
 	int src = open(srcname, O_RDONLY);

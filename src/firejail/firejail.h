@@ -362,7 +362,6 @@ void net_if_ip6(const char *ifname, const char *addr6);
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
 int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
 void net_ifprint(void);
-void net_bridge_add_interface(const char *bridge, const char *dev);
 uint32_t network_get_defaultgw(void);
 int net_config_mac(const char *ifname, const unsigned char mac[6]);
 int net_get_mac(const char *ifname, unsigned char mac[6]);
@@ -431,11 +430,6 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr);
 uint32_t arp_assign(const char *dev, Bridge *br);
 // scan interface (--scan option)
 void arp_scan(const char *dev, uint32_t srcaddr, uint32_t srcmask);
-
-// veth.c
-int net_create_veth(const char *dev, const char *nsdev, unsigned pid);
-int net_create_macvlan(const char *dev, const char *parent, unsigned pid);
-int net_move_interface(const char *dev, unsigned pid);
 
 // util.c
 void drop_privs(int nogroups);

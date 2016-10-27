@@ -45,7 +45,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "firejail.h"
+#include "fnet.h"
 #include "../include/libnetlink.h"
 #include <linux/veth.h>
 #include <net/if.h>
@@ -63,8 +63,6 @@ int net_create_veth(const char *dev, const char *nsdev, unsigned pid) {
 	int len;
 	struct iplink_req req;
 
-	if (arg_debug)
-		printf("create veth %s/%s/%u\n", dev, nsdev, pid);
 	assert(dev);
 	assert(nsdev);
 	assert(pid);
@@ -120,8 +118,6 @@ int net_create_veth(const char *dev, const char *nsdev, unsigned pid) {
 int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	int len;
 	struct iplink_req req;
-	if (arg_debug)
-		printf("create macvlan %s, parent %s\n", dev, parent);
 	assert(dev);
 	assert(parent);
 
@@ -184,8 +180,6 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 // when the interface is moved, netlink does not preserve interface configuration
 int net_move_interface(const char *dev, unsigned pid) {
 	struct iplink_req req;
-	if (arg_debug)
-		printf("move device %s inside the namespace\n", dev);
 	assert(dev);
 
 	if (rtnl_open(&rth, 0) < 0) {

@@ -431,52 +431,6 @@ int net_add_route(uint32_t ip, uint32_t mask, uint32_t gw) {
 }
 
 
-// add a veth device to a bridge
-void net_bridge_add_interface(const char *bridge, const char *dev) {
-	if (strlen(bridge) > IFNAMSIZ) {
-		fprintf(stderr, "Error: invalid network device name %s\n", bridge);
-		exit(1);
-	}
-
-	// somehow adding the interface to the bridge resets MTU on bridge device!!!
-	// workaround: restore MTU on the bridge device
-	// todo: put a real fix in
-	int mtu1 = net_get_mtu(bridge);
-
-	struct ifreq ifr;
-	int err;
-	int ifindex = if_nametoindex(dev);
-
-	if (ifindex <= 0)
-		errExit("if_nametoindex");
-
-	int sock;
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-              	errExit("socket");
-
-	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, bridge, IFNAMSIZ);
-#ifdef SIOCBRADDIF
-	ifr.ifr_ifindex = ifindex;
-	err = ioctl(sock, SIOCBRADDIF, &ifr);
-	if (err < 0)
-#endif
-	{
-		unsigned long args[4] = { BRCTL_ADD_IF, ifindex, 0, 0 };
-
-		ifr.ifr_data = (char *) args;
-		err = ioctl(sock, SIOCDEVPRIVATE, &ifr);
-	}
-	(void) err;
-	close(sock);
-
-	int mtu2 = net_get_mtu(bridge);
-	if (mtu1 != mtu2) {
-		if (arg_debug)
-			printf("Restoring MTU for %s\n", bridge);
-		net_set_mtu(bridge, mtu1);
-	}
-}
 
 #define BUFSIZE 1024
 uint32_t network_get_defaultgw(void) {

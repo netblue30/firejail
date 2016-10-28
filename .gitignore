@@ -18,4 +18,5 @@ src/firecfg/firecfg
 src/ftee/ftee
 src/tags
 src/faudit/faudit
+src/fnet/fnet
 uids.h

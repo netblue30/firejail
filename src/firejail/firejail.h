@@ -25,6 +25,7 @@
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
 
+
 // filesystem
 #define RUN_FIREJAIL_BASEDIR	"/run"
 #define RUN_FIREJAIL_DIR	"/run/firejail"
@@ -680,6 +681,17 @@ long unsigned int appimage2_size(const char *fname);
 
 // cmdline.c
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
+
+// sbox.c
+// programs
+#define PATH_FNET (LIBDIR "/firejail/fnet")
+#define PATH_FIREMON (PREFIX "/bin/firemon")
+// bitmapped filters for sbox_run
+#define SBOX_ROOT 1
+#define SBOX_USER 2
+#define SBOX_CAPS 4
+#define SBOX_SECCOMP 8
+int sbox_run(unsigned filter, int num, ...);
 
 
 #endif

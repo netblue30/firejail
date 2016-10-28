@@ -47,7 +47,7 @@
 
 #ifdef HAVE_SECCOMP
 #include "firejail.h"
-#include "seccomp.h"
+#include "../include/seccomp.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 

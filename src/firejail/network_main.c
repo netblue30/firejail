@@ -25,49 +25,6 @@
 #include <net/if.h>
 #include <stdarg.h>
 
-static void fnet_run(int num, ...) {
-	int i;
-	va_list valist;
-	va_start(valist, num);
-
-	char *fnet;
-	if (asprintf(&fnet, "%s/firejail/fnet", LIBDIR) == -1)
-		errExit("asprintf");
-
-	char *arg[num + 2];
-	arg[0] = fnet;
-	for (i = 0; i < num; i++)
-		arg[i + 1] = va_arg(valist, char*);
-	arg[i + 1] = NULL;
-
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// elevate privileges in order to get grsecurity working
-		if (setreuid(0, 0))
-			errExit("setreuid");
-		if (setregid(0, 0))
-			errExit("setregid");
-
-		execvp(arg[0], arg);
-		perror("execl");
-		_exit(1);
-	}
-
-	int status;
-	if (waitpid(child, &status, 0) == -1 ) {
-		errExit("waitpid");
-	}
-	if (WIFEXITED(status) && status != 0) {
-		fprintf(stderr, "Error: cannot run fnet\n");
-		exit(1);
-	}
-
-	va_end(valist);
-	free(fnet);
-}
-
 // configure bridge structure
 // - extract ip address and mask from the bridge interface
 void net_configure_bridge(Bridge *br, char *dev_name) {
@@ -175,7 +132,7 @@ void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child) {
 	char *cstr;
 	if (asprintf(&cstr, "%d", child) == -1)
 		errExit("asprintf");
-	fnet_run(6, "create", "veth", dev, ifname, br->dev, cstr);
+	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 7, PATH_FNET, "create", "veth", dev, ifname, br->dev, cstr);
 	free(cstr);
 
 	char *msg;
@@ -344,7 +301,7 @@ void network_main(pid_t child) {
 		}
 		else
 //			net_create_macvlan(cfg.bridge0.devsandbox, cfg.bridge0.dev, child);
-			fnet_run(5, "create", "macvlan", cfg.bridge0.devsandbox, cfg.bridge0.dev, cstr);
+			sbox_run(SBOX_ROOT | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge0.devsandbox, cfg.bridge0.dev, cstr);
 	}
 	
 	if (cfg.bridge1.configured) {
@@ -352,7 +309,7 @@ void network_main(pid_t child) {
 			net_configure_veth_pair(&cfg.bridge1, "eth1", child);
 		else
 //			net_create_macvlan(cfg.bridge1.devsandbox, cfg.bridge1.dev, child);
-			fnet_run(5, "create", "macvlan", cfg.bridge1.devsandbox, cfg.bridge1.dev, cstr);
+			sbox_run(SBOX_ROOT | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge1.devsandbox, cfg.bridge1.dev, cstr);
 	}
 	
 	if (cfg.bridge2.configured) {
@@ -360,7 +317,7 @@ void network_main(pid_t child) {
 			net_configure_veth_pair(&cfg.bridge2, "eth2", child);
 		else
 //			net_create_macvlan(cfg.bridge2.devsandbox, cfg.bridge2.dev, child);
-			fnet_run(5, "create", "macvlan", cfg.bridge2.devsandbox, cfg.bridge2.dev, cstr);
+			sbox_run(SBOX_ROOT | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge2.devsandbox, cfg.bridge2.dev, cstr);
 	}
 	
 	if (cfg.bridge3.configured) {
@@ -368,25 +325,25 @@ void network_main(pid_t child) {
 			net_configure_veth_pair(&cfg.bridge3, "eth3", child);
 		else
 //			net_create_macvlan(cfg.bridge3.devsandbox, cfg.bridge3.dev, child);
-			fnet_run(5, "create", "macvlan", cfg.bridge3.devsandbox, cfg.bridge3.dev, cstr);
+			sbox_run(SBOX_ROOT | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge3.devsandbox, cfg.bridge3.dev, cstr);
 	}
 
 	// move interfaces in sandbox
 	if (cfg.interface0.configured) {
 //		net_move_interface(cfg.interface0.dev, child);
-		fnet_run(3, "moveif", cfg.interface0.dev, cstr);
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface0.dev, cstr);
 	}
 	if (cfg.interface1.configured) {
 //		net_move_interface(cfg.interface1.dev, child);
-		fnet_run(3, "moveif", cfg.interface1.dev, cstr);
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface1.dev, cstr);
 	}
 	if (cfg.interface2.configured) {
 //		net_move_interface(cfg.interface2.dev, child);
-		fnet_run(3, "moveif", cfg.interface3.dev, cstr);
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface3.dev, cstr);
 	}
 	if (cfg.interface3.configured) {
 //		net_move_interface(cfg.interface3.dev, child);
-		fnet_run(3, "moveif", cfg.interface3.dev, cstr);
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface3.dev, cstr);
 	}
 
 	free(cstr);

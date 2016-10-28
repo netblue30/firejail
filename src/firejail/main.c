@@ -54,9 +54,9 @@ Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_private_template = 0; // mount private /home using a template
 int arg_debug = 0;				// print debug messages
-int arg_debug_check_filename;		// print debug messages for filename checking
-int arg_debug_blacklists;			// print debug messages for blacklists
-int arg_debug_whitelists;			// print debug messages for whitelists
+int arg_debug_check_filename = 0;		// print debug messages for filename checking
+int arg_debug_blacklists = 0;			// print debug messages for blacklists
+int arg_debug_whitelists = 0;			// print debug messages for whitelists
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 int arg_overlay = 0;				// overlay option
@@ -498,27 +498,32 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--list") == 0) {
-		list();
-		exit(0);
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
+		exit(rv);
 	}
 	else if (strcmp(argv[i], "--tree") == 0) {
-		tree();
-		exit(0);
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
+		exit(rv);
 	}
 	else if (strcmp(argv[i], "--top") == 0) {
-		top();
-		exit(0);
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--top");
+		exit(rv);
 	}
 #ifdef HAVE_NETWORK	
 	else if (strcmp(argv[i], "--netstats") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
-			netstats();
+			struct stat s;
+			int rv;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0)
+				rv = sbox_run(SBOX_ROOT | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
+			else
+				rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
+			exit(rv);
 		}
 		else {
 			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
 			exit(1);
 		}
-		exit(0);
 	}
 #endif	
 #ifdef HAVE_FILE_TRANSFER

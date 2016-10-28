@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <net/if.h>
 #include <stdarg.h>
+ #include <sys/wait.h>
 #include "../include/seccomp.h"
 
 static struct sock_filter filter[] = {
@@ -112,7 +113,7 @@ typedef struct sbox_config {
 
 int sbox_run(unsigned filter, int num, ...) {
 	EUID_ROOT();
-	char *path = NULL;
+	
 	int i;
 	va_list valist;
 	va_start(valist, num);
@@ -159,7 +160,10 @@ printf("\n");
 		else if (filter & SBOX_USER)
 			drop_privs(1);
 
-		execvp(arg[0], arg);
+		if (arg[0])	// get rid of scan-build warning
+			execvp(arg[0], arg);
+		else
+			assert(0);
 		perror("execl");
 		_exit(1);
 	}

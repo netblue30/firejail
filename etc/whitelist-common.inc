@@ -14,6 +14,7 @@ whitelist ~/.fonts.d
 whitelist ~/.fontconfig
 whitelist ~/.fonts.conf
 whitelist ~/.fonts.conf.d
+whitelist ~/.local/share/fonts
 whitelist ~/.config/fontconfig
 whitelist ~/.cache/fontconfig
 

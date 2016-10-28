@@ -124,14 +124,14 @@ int sbox_run(unsigned filter, int num, ...) {
 	arg[i] = NULL;
 	va_end(valist);
 	
-#if 0
+//#if 0
 {
 int i;
 for (i = 0; i <= num; i++)
 	printf("#%s# ", arg[i]);
 printf("\n");
 }	
-#endif
+//#endif
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -169,7 +169,7 @@ printf("\n");
 		errExit("waitpid");
 	}
 	if (WIFEXITED(status) && status != 0) {
-		fprintf(stderr, "Error: cannot run fnet\n");
+		fprintf(stderr, "Error: failed to run %s\n", arg[0]);
 		exit(1);
 	}
 	

@@ -206,15 +206,4 @@ char *errno_find_nr(int nr) {
 	return "unknown";
 }
 
-void errno_print(void) {
-	EUID_ASSERT();
-	
-	int i;
-	int elems = sizeof(errnolist) / sizeof(errnolist[0]);
-	for (i = 0; i < elems; i++) {
-		printf("%d\t- %s\n", errnolist[i].nr, errnolist[i].name);
-	}
-	printf("\n");
-}
-
 #endif // HAVE_SECCOMP

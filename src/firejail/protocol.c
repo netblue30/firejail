@@ -18,241 +18,44 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-/*
-	struct sock_filter filter[] = {
-		VALIDATE_ARCHITECTURE,
-		EXAMINE_SYSCALL,
-		ONLY(SYS_socket),
-		EXAMINE_ARGUMENT(0), // allow only AF_INET and AF_INET6, drop everything else
-		WHITELIST(AF_INET),
-		WHITELIST(AF_INET6),
-		WHITELIST(AF_PACKET),
-		RETURN_ERRNO(ENOTSUP)
-	};
-	struct sock_fprog prog = {
-		.len = (unsigned short)(sizeof(filter) / sizeof(filter[0])),
-		.filter = filter,
-	};
-
-
-	if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		perror("prctl(NO_NEW_PRIVS)");
-		return 1;
-	}
-	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog)) {
-		perror("prctl");
-		return 1;
-	}
-*/
-
 #ifdef HAVE_SECCOMP
 #include "firejail.h"
 #include "../include/seccomp.h"
-#include <sys/types.h>
-#include <sys/socket.h>
-
-static char *protocol[] = {
-	"unix",
-	"inet",
-	"inet6",
-	"netlink",
-	"packet",
-	NULL
-};
-
-static struct sock_filter protocol_filter_command[] = {
-	WHITELIST(AF_UNIX),
-	WHITELIST(AF_INET),
-	WHITELIST(AF_INET6),
-	WHITELIST(AF_NETLINK),
-	WHITELIST(AF_PACKET)
-};
-// Note: protocol[] and protocol_filter_command are synchronized
-
-// command length
-struct sock_filter whitelist[] = {
-	WHITELIST(AF_UNIX)
-};
-unsigned whitelist_len = sizeof(whitelist) / sizeof(struct sock_filter);
-
-
-
-static int is_protocol(const char *p) {
-	int i = 0;
-	while (protocol[i] != NULL) {
-		if (strcmp(protocol[i], p) == 0)
-			return 1;
-		i++;
-	}
-
-	return 0;
-}	
-
-static struct sock_filter *find_protocol_domain(const char *p) {
-	int i = 0;
-	while (protocol[i] != NULL) {
-		if (strcmp(protocol[i], p) == 0)
-			return &protocol_filter_command[i * whitelist_len];
-		i++;
-	}
-
-	return NULL;
-}	
-
-// --debug-protocols
-void protocol_list(void) {
-	EUID_ASSERT();
-	
-#ifndef SYS_socket
-	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
-	return;
-#endif
-
-	int i = 0;
-	while (protocol[i] != NULL) {
-		printf("%s, ", protocol[i]);
-		i++;
-	}
-	printf("\n");
-}
-
-
-// check protocol list and store it in cfg structure
-void protocol_store(const char *prlist) {
-	EUID_ASSERT();
-	assert(prlist);
-	
-	if (cfg.protocol && !arg_quiet) {
-		fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", prlist);
-		return;
-	}
-	
-	// temporary list
-	char *tmplist = strdup(prlist);
-	if (!tmplist)
-		errExit("strdup");
-	
-	// check list
-	char *token = strtok(tmplist, ",");
-	if (!token)
-		goto errout;
-		
-	while (token) {
-		if (!is_protocol(token))
-			goto errout;
-		token = strtok(NULL, ",");
-	}	
-	free(tmplist);
-	
-	// store list
-	cfg.protocol = strdup(prlist);
-	if (!cfg.protocol)
-		errExit("strdup");
-	return;
-		
-errout:
-	fprintf(stderr, "Error: invalid protocol list\n");
-	exit(1);
-}	
 
 // install protocol filter
-void protocol_filter(void) {
-	assert(cfg.protocol);
-	if (arg_debug)
-		printf("Set protocol filter: %s\n", cfg.protocol);
-
+void protocol_filter(const char *fname) {
 #ifndef SYS_socket
-	(void) find_protocol_domain;
-        fprintf(stderr, "Warning: --protocol not supported on this platform\n");
-        return;
+	if (arg_debug)
+		printf("No support for --protocol on this platform\n");
+	return;
 #else
-	// build the filter
+	assert(fname);
+
+	// check file
+	struct stat s;
+	if (stat(fname, &s) == -1) {
+		fprintf(stderr, "Error: cannot read protocol filter file\n");
+		exit(1);
+	}
+	int size = s.st_size;
+
+	// read filter
 	struct sock_filter filter[32];	// big enough
 	memset(&filter[0], 0, sizeof(filter));
-	uint8_t *ptr = (uint8_t *) &filter[0];
-	
-	// header
-	struct sock_filter filter_start[] = {
-		VALIDATE_ARCHITECTURE,
-		EXAMINE_SYSCALL,
-		ONLY(SYS_socket),
-		EXAMINE_ARGUMENT(0)
-	};
-	memcpy(ptr, &filter_start[0], sizeof(filter_start));
-	ptr += sizeof(filter_start);
-
-#if 0
-printf("entries %u\n", (unsigned) (sizeof(filter_start) / sizeof(struct sock_filter)));
-{
-	unsigned j;
-	unsigned char *ptr2 = (unsigned char *) &filter[0];
-	for (j = 0; j < sizeof(filter); j++, ptr2++) {
-		if ((j % (sizeof(struct sock_filter))) == 0)
-			printf("\n%u: ", 1 + (unsigned) (j / (sizeof(struct sock_filter))));
-		printf("%02x, ", (*ptr2) & 0xff);
+	int src = open(fname, O_RDONLY);
+	int rd = 0;
+	while (rd < size) {
+		int rv = read(src, (unsigned char *) filter + rd, size - rd);
+		if (rv == -1) {
+			fprintf(stderr, "Error: cannot read %s file\n", fname);
+			exit(1);
+		}
+		rd += rv;
 	}
-	printf("\n");
-}
-printf("whitelist_len %u, struct sock_filter len %u\n", whitelist_len, (unsigned) sizeof(struct sock_filter));
-#endif
-
-
-	// parse list and add commands
-	char *tmplist = strdup(cfg.protocol);
-	if (!tmplist)
-		errExit("strdup");
-	char *token = strtok(tmplist, ",");
-	if (!token)
-		errExit("strtok");
-		
-	while (token) {
-		struct sock_filter *domain = find_protocol_domain(token);
-		assert(domain);
-		memcpy(ptr, domain, whitelist_len * sizeof(struct sock_filter));
-		ptr += whitelist_len * sizeof(struct sock_filter);
-		token = strtok(NULL, ",");
-
-#if 0
-printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (unsigned) sizeof(struct sock_filter));
-{
-	unsigned j;
-	unsigned char *ptr2 = (unsigned char *) &filter[0];
-	for (j = 0; j < sizeof(filter); j++, ptr2++) {
-		if ((j % (sizeof(struct sock_filter))) == 0)
-			printf("\n%u: ", 1 + (unsigned) (j / (sizeof(struct sock_filter))));
-		printf("%02x, ", (*ptr2) & 0xff);
-	}
-	printf("\n");
-}
-#endif
-
-
-	}	
-	free(tmplist);
-
-	// add end of filter
-	struct sock_filter filter_end[] = {
-		RETURN_ERRNO(ENOTSUP)
-	};
-	memcpy(ptr, &filter_end[0], sizeof(filter_end));
-	ptr += sizeof(filter_end);
-
-#if 0
-printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (unsigned) sizeof(struct sock_filter));
-{
-	unsigned j;
-	unsigned char *ptr2 = (unsigned char *) &filter[0];
-	for (j = 0; j < sizeof(filter); j++, ptr2++) {
-		if ((j % (sizeof(struct sock_filter))) == 0)
-			printf("\n%u: ", 1 + (unsigned) (j / (sizeof(struct sock_filter))));
-		printf("%02x, ", (*ptr2) & 0xff);
-	}
-	printf("\n");
-}
-#endif	
+	close(src);
 
 	// install filter
-	unsigned short entries = (unsigned short) ((uintptr_t) ptr - (uintptr_t) (filter)) / (unsigned) sizeof(struct sock_filter);
+	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	struct sock_fprog prog = {
 		.len = entries,
 		.filter = filter,
@@ -262,7 +65,7 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return;
 	}
-#endif // SYS_socket	
+#endif	
 }
 
 void protocol_filter_save(void) {

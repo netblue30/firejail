@@ -404,8 +404,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			syscall_print();
-			exit(0);
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-syscalls");
+			exit(rv);
 		}
 		else {
 			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -414,7 +414,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			errno_print();
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-errnos");
+			exit(rv);
 		}
 		else {
 			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -438,8 +439,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--debug-protocols") == 0) {
-		protocol_list();
-		exit(0);
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-protocols");
+		exit(rv);
 	}
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
@@ -1117,7 +1118,16 @@ int main(int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
-				protocol_store(argv[i] + 11);
+				if (cfg.protocol) {
+					if (!arg_quiet)
+						fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", argv[i] + 11);
+				}
+				else {
+					// store list
+					cfg.protocol = strdup(argv[i] + 11);
+					if (!cfg.protocol)
+						errExit("strdup");
+				}
 			}
 			else {
 				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");

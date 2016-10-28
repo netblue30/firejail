@@ -20,7 +20,6 @@
 
 // content extracted from /bits/syscall.h file form glibc 2.22
 // using ../tools/extract_syscall tool
-
 #if !defined __x86_64__
 #ifdef SYS__llseek
 #ifdef __NR__llseek

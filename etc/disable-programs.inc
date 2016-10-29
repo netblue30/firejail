@@ -106,6 +106,7 @@ blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.config/gajim
+blacklist ${HOME}/.config/Wire
 
 # Games
 blacklist ${HOME}/.hedgewars

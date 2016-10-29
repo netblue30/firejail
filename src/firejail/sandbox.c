@@ -819,8 +819,24 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_SECCOMP
 	// install protocol filter
 	if (cfg.protocol) {
-		protocol_filter();	// install filter	
-		protocol_filter_save();	// save filter in PROTOCOL_CFG
+		if (arg_debug)
+			printf("Set protocol filter: %s\n", cfg.protocol);
+		// as root, create RUN_SECCOMP_PROTOCOL file
+		// this is where fseccomp program will store the protocol filter
+		int dst = open(RUN_SECCOMP_PROTOCOL, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		if (dst == -1)
+			errExit("open");
+		close(dst);
+		if (chown(RUN_SECCOMP_PROTOCOL, getuid(), getgid()) == -1)
+			errExit("chown");
+
+		// build the seccomp filter as a regular user
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 5,
+			PATH_FSECCOMP, "protocol", "build", cfg.protocol, RUN_SECCOMP_PROTOCOL);
+		if (rv)
+			exit(rv);
+		protocol_filter(RUN_SECCOMP_PROTOCOL);	// install filter	
+		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
 	}
 
 	// if a keep list is available, disregard the drop list

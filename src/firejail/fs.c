@@ -754,8 +754,8 @@ void fs_basic_fs(void) {
 	fs_rdonly("/usr");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
-	if (!arg_private_dev)
-		fs_dev_shm();
+//	if (!arg_private_dev)
+//		fs_dev_shm();
 	fs_var_lock();
 	fs_var_tmp();
 	fs_var_log();
@@ -1061,8 +1061,8 @@ void fs_overlayfs(void) {
 		errExit("chroot");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
-	if (!arg_private_dev)
-		fs_dev_shm();
+//	if (!arg_private_dev)
+//		fs_dev_shm();
 	fs_var_lock();
 	fs_var_tmp();
 	fs_var_log();
@@ -1233,8 +1233,8 @@ void fs_chroot(const char *rootdir) {
 		
 	if (checkcfg(CFG_CHROOT_DESKTOP)) {
 		// update /var directory in order to support multiple sandboxes running on the same root directory
-		if (!arg_private_dev)
-			fs_dev_shm();
+//		if (!arg_private_dev)
+//			fs_dev_shm();
 		fs_var_lock();
 		fs_var_tmp();
 		fs_var_log();

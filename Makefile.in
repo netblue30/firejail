@@ -1,6 +1,6 @@
 all: apps man
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect
+APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect src/fnet src/fseccomp
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
 
 prefix=@prefix@
@@ -76,6 +76,8 @@ realinstall:
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.
@@ -124,6 +126,8 @@ install-strip: all
 	strip src/libconnect/libconnect.so
 	strip src/ftee/ftee
 	strip src/faudit/faudit
+	strip src/fnet/fnet
+	strip src/fseccomp/fseccomp
 	$(MAKE) realinstall
 
 uninstall:

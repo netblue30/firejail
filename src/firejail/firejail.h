@@ -25,6 +25,7 @@
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
 
+
 // filesystem
 #define RUN_FIREJAIL_BASEDIR	"/run"
 #define RUN_FIREJAIL_DIR	"/run/firejail"
@@ -38,6 +39,7 @@
 #define RUN_RO_FILE	"/run/firejail/firejail.ro.file"
 #define RUN_MNT_DIR	"/run/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
 #define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"
+#define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"
 #define RUN_CGROUP_CFG	"/run/firejail/mnt/cgroup"
 #define RUN_CPU_CFG	"/run/firejail/mnt/cpu"
 #define RUN_GROUPS_CFG	"/run/firejail/mnt/groups"
@@ -362,7 +364,6 @@ void net_if_ip6(const char *ifname, const char *addr6);
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
 int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
 void net_ifprint(void);
-void net_bridge_add_interface(const char *bridge, const char *dev);
 uint32_t network_get_defaultgw(void);
 int net_config_mac(const char *ifname, const unsigned char mac[6]);
 int net_get_mac(const char *ifname, unsigned char mac[6]);
@@ -431,11 +432,6 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr);
 uint32_t arp_assign(const char *dev, Bridge *br);
 // scan interface (--scan option)
 void arp_scan(const char *dev, uint32_t srcaddr, uint32_t srcmask);
-
-// veth.c
-int net_create_veth(const char *dev, const char *nsdev, unsigned pid);
-int net_create_macvlan(const char *dev, const char *parent, unsigned pid);
-int net_move_interface(const char *dev, unsigned pid);
 
 // util.c
 void drop_privs(int nogroups);
@@ -519,8 +515,6 @@ void caps_print_filter_name(const char *name);
 const char *syscall_find_nr(int nr);
 // return -1 if error, 0 if no error
 int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg), int arg);
-// print all available syscallsseccomp
-void syscall_print(void);
 
 // fs_trace.c
 void fs_trace_preload(void);
@@ -603,7 +597,7 @@ void protocol_list();
 void protocol_print_filter_name(const char *name);
 void protocol_print_filter(pid_t pid);
 void protocol_store(const char *prlist);
-void protocol_filter(void);
+void protocol_filter(const char *fname);
 void protocol_filter_save(void);
 void protocol_filter_load(const char *fname);
 
@@ -686,6 +680,19 @@ long unsigned int appimage2_size(const char *fname);
 
 // cmdline.c
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
+
+// sbox.c
+// programs
+#define PATH_FNET (LIBDIR "/firejail/fnet")
+#define PATH_FIREMON (PREFIX "/bin/firemon")
+#define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
+// bitmapped filters for sbox_run
+#define SBOX_ROOT 1
+#define SBOX_USER 2
+#define SBOX_CAPS 4
+#define SBOX_SECCOMP 8
+// run sbox
+int sbox_run(unsigned filter, int num, ...);
 
 
 #endif

@@ -31,7 +31,7 @@ static SyscallEntry syslist[] = {
 //
 // code generated using tools/extract-syscall
 //
-#include "syscall.h"
+#include "../include/syscall.h"
 //
 // end of generated code
 //
@@ -100,17 +100,6 @@ int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg)
 	
 	free(str);
 	return 0;
-}
-
-void syscall_print(void) {
-	EUID_ASSERT();
-	
-	int i;
-	int elems = sizeof(syslist) / sizeof(syslist[0]);
-	for (i = 0; i < elems; i++) {
-		printf("%d\t- %s\n", syslist[i].nr, syslist[i].name);
-	}
-	printf("\n");
 }
 
 #endif // HAVE_SECCOMP

@@ -1,4 +1,23 @@
 /*
+ * Copyright (C) 2014-2016 Firejail Authors
+ *
+ * This file is part of firejail project
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+/*
 Compile with:
 gcc elfsize.c -o elfsize
 Example:
@@ -9,7 +28,6 @@ Size of section headers		e_shentsize	64
 Number of section headers	e_shnum		29
 e_shoff + ( e_shentsize * e_shnum ) =		126584
 */
-
 #include <elf.h>
 #include <byteswap.h>
 #include <stdio.h>
@@ -23,7 +41,6 @@ e_shoff + ( e_shentsize * e_shnum ) =		126584
 typedef Elf32_Nhdr Elf_Nhdr;
 
 static Elf64_Ehdr ehdr;
-static Elf64_Phdr *phdr;
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
 #define ELFDATANATIVE ELFDATA2LSB
@@ -57,7 +74,7 @@ static uint64_t file64_to_cpu(uint64_t val) {
 // return 0 if error
 static long unsigned int read_elf32(int fd) {
 	Elf32_Ehdr ehdr32;
-	ssize_t ret, i;
+	ssize_t ret;
 
 	ret = pread(fd, &ehdr32, sizeof(ehdr32), 0);
 	if (ret < 0 || (size_t)ret != sizeof(ehdr))
@@ -74,7 +91,7 @@ static long unsigned int read_elf32(int fd) {
 // return 0 if error
 static long unsigned int read_elf64(int fd) {
 	Elf64_Ehdr ehdr64;
-	ssize_t ret, i;
+	ssize_t ret;
 
 	ret = pread(fd, &ehdr64, sizeof(ehdr64), 0);
 	if (ret < 0 || (size_t)ret != sizeof(ehdr))

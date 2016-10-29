@@ -1,25 +1,5 @@
-/*
- * Copyright (C) 2014-2016 Firejail Authors
- *
- * This file is part of firejail project
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+#include "fseccomp.h"
 
-#ifdef HAVE_SECCOMP
-#include "firejail.h"
 #include <errno.h>
 //#include <attr/xattr.h>
 
@@ -171,39 +151,11 @@ static ErrnoEntry errnolist[] = {
 #endif	
 };
 
-int errno_highest_nr(void) {
-	int i, max = 0;
-	int elems = sizeof(errnolist) / sizeof(errnolist[0]);
-	for (i = 0; i < elems; i++) {
-		if (errnolist[i].nr > max)
-			max = errnolist[i].nr;
-	}
-
-	return max;
-}
-
-int errno_find_name(const char *name) {
-	EUID_ASSERT();
-	
+void errno_print(void) {
 	int i;
 	int elems = sizeof(errnolist) / sizeof(errnolist[0]);
 	for (i = 0; i < elems; i++) {
-		if (strcasecmp(name, errnolist[i].name) == 0)
-			return errnolist[i].nr;
+		printf("%d\t- %s\n", errnolist[i].nr, errnolist[i].name);
 	}
-
-	return -1;
+	printf("\n");
 }
-
-char *errno_find_nr(int nr) {
-	int i;
-	int elems = sizeof(errnolist) / sizeof(errnolist[0]);
-	for (i = 0; i < elems; i++) {
-		if (nr == errnolist[i].nr)
-			return errnolist[i].name;
-	}
-
-	return "unknown";
-}
-
-#endif // HAVE_SECCOMP

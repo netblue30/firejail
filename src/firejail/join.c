@@ -296,7 +296,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		if (getuid() != 0)
 			protocol_filter_load(RUN_PROTOCOL_CFG);
 		if (cfg.protocol) {	// not available for uid 0
-			protocol_filter();
+			protocol_filter(RUN_SECCOMP_PROTOCOL);
 		}
 				
 		// set seccomp filter

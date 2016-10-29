@@ -20,7 +20,7 @@
 
 #ifdef HAVE_SECCOMP
 #include "firejail.h"
-#include "seccomp.h"
+#include "../include/seccomp.h"
 
 #define SECSIZE 128 // initial filter size
 static struct sock_filter *sfilter = NULL;

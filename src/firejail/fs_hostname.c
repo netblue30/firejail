@@ -27,7 +27,6 @@
 
 void fs_hostname(const char *hostname) {
 	struct stat s;
-	fs_build_mnt_dir();
 	
 	// create a new /etc/hostname
 	if (stat("/etc/hostname", &s) == 0) {
@@ -100,7 +99,6 @@ void fs_resolvconf(void) {
 		return;
 
 	struct stat s;
-	fs_build_mnt_dir();
 	
 	// create a new /etc/hostname
 	if (stat("/etc/resolv.conf", &s) == 0) {

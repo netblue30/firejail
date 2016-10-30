@@ -363,20 +363,19 @@ void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
 void net_if_ip6(const char *ifname, const char *addr6);
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
 int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
-void net_ifprint(void);
 uint32_t network_get_defaultgw(void);
 int net_config_mac(const char *ifname, const unsigned char mac[6]);
 int net_get_mac(const char *ifname, unsigned char mac[6]);
+void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
+
+// preproc.c
+void preproc_build_firejail_dir(void);
+void preproc_mount_mnt_dir(void);
+void preproc_build_cp_command(void);
+void preproc_delete_cp_command(void) ;
+void preproc_remount_mnt_dir(void);
 
 // fs.c
-// build /run/firejail directory
-void fs_build_firejail_dir(void);
-// build /run/firejail/mnt directory
-void fs_build_mnt_dir(void);
-// grab a copy of cp command
-void fs_build_cp_command(void);
-// delete the temporary cp command
-void fs_delete_cp_command(void) ;
 // blacklist files or directoies by mounting empty files on top of them
 void fs_blacklist(void);
 // remount a directory read-only
@@ -393,7 +392,6 @@ void fs_overlayfs(void);
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir);
 int fs_check_chroot_dir(const char *rootdir);
-void fs_private_tmp(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -430,8 +428,6 @@ int restricted_shell(const char *user);
 int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr);
 // assign an IP address using arp scanning
 uint32_t arp_assign(const char *dev, Bridge *br);
-// scan interface (--scan option)
-void arp_scan(const char *dev, uint32_t srcaddr, uint32_t srcmask);
 
 // util.c
 void drop_privs(int nogroups);
@@ -459,6 +455,8 @@ void invalid_filename(const char *fname);
 uid_t get_group_id(const char *group);
 int remove_directory(const char *path);
 void flush_stdin(void);
+void create_empty_dir_as_root(const char *dir, mode_t mode);
+void create_empty_file_as_root(const char *dir, mode_t mode);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log
@@ -687,10 +685,11 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
 // bitmapped filters for sbox_run
-#define SBOX_ROOT 1
-#define SBOX_USER 2
-#define SBOX_CAPS 4
-#define SBOX_SECCOMP 8
+#define SBOX_ROOT (1 << 0)
+#define SBOX_USER (1 << 1)
+#define SBOX_SECCOMP (1 << 2)
+#define SBOX_CAPS_NONE (1 << 3)		// drop all capabilities
+#define SBOX_CAPS_NETWORK (1 << 4)	// caps filter for programs running network programs
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 

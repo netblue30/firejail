@@ -70,8 +70,6 @@ void protocol_filter(const char *fname) {
 
 void protocol_filter_save(void) {
 	// save protocol filter configuration in PROTOCOL_CFG
-	fs_build_mnt_dir();
-
 	FILE *fp = fopen(RUN_PROTOCOL_CFG, "w");
 	if (!fp)
 		errExit("fopen");

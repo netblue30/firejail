@@ -125,21 +125,26 @@ int sbox_run(unsigned filter, int num, ...) {
 	arg[i] = NULL;
 	va_end(valist);
 	
-//#if 0
-{
-int i;
-for (i = 0; i <= num; i++)
-	printf("#%s# ", arg[i]);
-printf("\n");
-}	
-//#endif
+	if (arg_debug) {
+		printf("sbox run: ");
+		for (i = 0; i <= num; i++)
+			printf("%s ", arg[i]);
+		printf("\n");
+	}
+
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
 		// apply filters
-		if (filter & SBOX_CAPS)
+		if (filter & SBOX_CAPS_NONE) {
 			caps_drop_all();
+		}
+		else if (filter & SBOX_CAPS_NETWORK) {
+			uint64_t set = ((uint64_t) 1) << CAP_NET_ADMIN;
+			set |=  ((uint64_t) 1) << CAP_NET_RAW;
+			caps_set(set);
+		}	
 
 		if (filter & SBOX_SECCOMP) {
 			if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {

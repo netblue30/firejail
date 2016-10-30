@@ -73,7 +73,6 @@ static void sanitize_home(void) {
 		return;
 	}
 	
-	fs_build_mnt_dir();
 	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
 		errExit("mkdir");
 
@@ -127,7 +126,6 @@ static void sanitize_passwd(void) {
 
 	FILE *fpin = NULL;
 	FILE *fpout = NULL;
-	fs_build_mnt_dir();
 
 	// open files
 	/* coverity[toctou] */
@@ -261,7 +259,6 @@ static void sanitize_group(void) {
 
 	FILE *fpin = NULL;
 	FILE *fpout = NULL;
-	fs_build_mnt_dir();
 
 	// open files
 	/* coverity[toctou] */

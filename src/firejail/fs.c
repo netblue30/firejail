@@ -29,154 +29,7 @@
 
 static void fs_rdwr(const char *dir);
 
-static void create_dir_as_root(const char *dir, mode_t mode) {
-	assert(dir);
-	if (arg_debug)
-		printf("Creating %s directory\n", dir);
 
-	if (mkdir(dir, mode) == -1)
-		errExit("mkdir");
-	if (chmod(dir, mode) == -1)
-		errExit("chmod");
-
-	ASSERT_PERMS(dir, 0, 0, mode);
-}
-
-static void create_empty_dir(void) {
-	struct stat s;
-	
-	if (stat(RUN_RO_DIR, &s)) {
-		/* coverity[toctou] */
-		if (mkdir(RUN_RO_DIR, S_IRUSR | S_IXUSR) == -1)
-			errExit("mkdir");
-		if (chmod(RUN_RO_DIR, S_IRUSR | S_IXUSR) == -1)
-			errExit("chmod");
-		ASSERT_PERMS(RUN_RO_DIR, 0, 0, S_IRUSR | S_IXUSR);
-	}
-}
-
-static void create_empty_file(void) {
-	struct stat s;
-
-	if (stat(RUN_RO_FILE, &s)) {
-		/* coverity[toctou] */
-		FILE *fp = fopen(RUN_RO_FILE, "w");
-		if (!fp)
-			errExit("fopen");
-
-		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR);
-		fclose(fp);
-	}
-}
-
-// build /run/firejail directory
-void fs_build_firejail_dir(void) {
-	struct stat s;
-
-	// CentOS 6 doesn't have /run directory
-	if (stat(RUN_FIREJAIL_BASEDIR, &s)) {
-		create_dir_as_root(RUN_FIREJAIL_BASEDIR, 0755);
-	}
-
-	// check /run/firejail directory belongs to root end exit if doesn't!
-	if (stat(RUN_FIREJAIL_DIR, &s) == 0) {
-		if (s.st_uid != 0 || s.st_gid != 0) {
-			fprintf(stderr, "Error: non-root %s directory, exiting...\n", RUN_FIREJAIL_DIR);
-			exit(1);
-		}
-	}
-	else {
-		create_dir_as_root(RUN_FIREJAIL_DIR, 0755);
-	}
-	
-	if (stat(RUN_FIREJAIL_NETWORK_DIR, &s)) {
-		create_dir_as_root(RUN_FIREJAIL_NETWORK_DIR, 0755);
-	}
-	
-	if (stat(RUN_FIREJAIL_BANDWIDTH_DIR, &s)) {
-		create_dir_as_root(RUN_FIREJAIL_BANDWIDTH_DIR, 0755);
-	}
-		
-	if (stat(RUN_FIREJAIL_NAME_DIR, &s)) {
-		create_dir_as_root(RUN_FIREJAIL_NAME_DIR, 0755);
-	}
-	
-	if (stat(RUN_FIREJAIL_X11_DIR, &s)) {
-		create_dir_as_root(RUN_FIREJAIL_X11_DIR, 0755);
-	}
-	
-	if (stat(RUN_FIREJAIL_APPIMAGE_DIR, &s)) {
-		create_dir_as_root(RUN_FIREJAIL_APPIMAGE_DIR, 0755);
-	}
-	
-	create_empty_dir();
-	create_empty_file();
-}
-
-
-// build /run/firejail/mnt directory
-static int tmpfs_mounted = 0;
-#ifdef HAVE_CHROOT		
-static void fs_build_remount_mnt_dir(void) {
-	tmpfs_mounted = 0;
-	fs_build_mnt_dir();
-}
-#endif
-
-void fs_build_mnt_dir(void) {
-	struct stat s;
-	fs_build_firejail_dir();
-	
-	// create /run/firejail/mnt directory
-	if (stat(RUN_MNT_DIR, &s)) {
-		create_dir_as_root(RUN_MNT_DIR, 0755);
-	}
-
-	// ... and mount tmpfs on top of it
-	if (!tmpfs_mounted) {
-		// mount tmpfs on top of /run/firejail/mnt
-		if (arg_debug)
-			printf("Mounting tmpfs on %s directory\n", RUN_MNT_DIR);
-		if (mount("tmpfs", RUN_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mounting /run/firejail/mnt");
-		tmpfs_mounted = 1;
-		fs_logger2("tmpfs", RUN_MNT_DIR);
-	}
-}
-
-// grab a copy of cp command
-void fs_build_cp_command(void) {
-	struct stat s;
-	fs_build_mnt_dir();
-	if (stat(RUN_CP_COMMAND, &s)) {
-		char* fname = realpath("/bin/cp", NULL);
-		if (fname == NULL) {
-			fprintf(stderr, "Error: /bin/cp not found\n");
-			exit(1);
-		}
-		if (stat(fname, &s)) {
-			fprintf(stderr, "Error: /bin/cp not found\n");
-			exit(1);
-		}
-		if (is_link(fname)) {
-			fprintf(stderr, "Error: invalid /bin/cp file\n");
-			exit(1);
-		}
-		int rv = copy_file(fname, RUN_CP_COMMAND, 0, 0, 0755);
-		if (rv) {
-			fprintf(stderr, "Error: cannot access /bin/cp\n");
-			exit(1);
-		}
-		ASSERT_PERMS(RUN_CP_COMMAND, 0, 0, 0755);
-			
-		free(fname);
-	}
-}
-
-// delete the temporary cp command
-void fs_delete_cp_command(void) {
-	unlink(RUN_CP_COMMAND);
-}
 
 //***********************************************
 // process profile file
@@ -201,9 +54,6 @@ static void disable_file(OPERATION op, const char *filename) {
 	assert(filename);
 	assert(op <OPERATION_MAX);
 	last_disable = UNSUCCESSFUL;
-	
-	// rebuild /run/firejail directory in case tmpfs was mounted on top of /run
-	fs_build_firejail_dir();
 	
 	// Resolve all symlinks
 	char* fname = realpath(filename, NULL);
@@ -868,9 +718,6 @@ void fs_overlayfs(void) {
 	if (major == 3 && minor < 18)
 		oldkernel = 1;
 	
-	// build overlay directories
-	fs_build_mnt_dir();
-
 	char *oroot;
 	if(asprintf(&oroot, "%s/oroot", RUN_MNT_DIR) == -1)
 		errExit("asprintf");
@@ -1194,17 +1041,33 @@ void fs_chroot(const char *rootdir) {
 			free(newx11);
 		}
 		
-		// some older distros don't have a /run directory
-		// create one by default
-		// no exit on error, let the user deal with any problems
+		// create /run/firejail directory in chroot
 		char *rundir;
 		if (asprintf(&rundir, "%s/run", rootdir) == -1)
 			errExit("asprintf");
-		if (!is_dir(rundir)) {
-			int rv = mkdir(rundir, 0755);
-			(void) rv;
-			rv = chown(rundir, 0, 0);
-			(void) rv;
+		create_empty_dir_as_root(rundir, 0755);
+		free(rundir);
+		if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
+			errExit("asprintf");
+		create_empty_dir_as_root(rundir, 0755);
+		free(rundir);
+		
+		// create /run/firejail/mnt directory in chroot and mount a tmpfs
+		if (asprintf(&rundir, "%s/run/firejail/mnt", rootdir) == -1)
+			errExit("asprintf");
+		create_empty_dir_as_root(rundir, 0755);
+		if (mount("tmpfs", rundir, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mounting /run/firejail/mnt");
+		fs_logger2("tmpfs", RUN_MNT_DIR);
+		free(rundir);
+
+		// retrieve seccomp.protocol
+		struct stat s;
+		if (stat(RUN_SECCOMP_PROTOCOL, &s) == 0) {
+			if (asprintf(&rundir, "%s%s", rootdir, RUN_SECCOMP_PROTOCOL) == -1)
+				errExit("asprintf");
+			copy_file(RUN_SECCOMP_PROTOCOL, rundir, getuid(), getgid(), 0644);
+			free(rundir);
 		}
 		
 		// copy /etc/resolv.conf in chroot directory
@@ -1228,8 +1091,9 @@ void fs_chroot(const char *rootdir) {
 		printf("Chrooting into %s\n", rootdir);
 	if (chroot(rootdir) < 0)
 		errExit("chroot");
-	// mount a new tmpfs in /run/firejail/mnt - the old one was lost in chroot
-	fs_build_remount_mnt_dir();
+
+	// create all other /run/firejail files and directories
+	preproc_build_firejail_dir();
 		
 	if (checkcfg(CFG_CHROOT_DESKTOP)) {
 		// update /var directory in order to support multiple sandboxes running on the same root directory
@@ -1254,12 +1118,4 @@ void fs_chroot(const char *rootdir) {
 }
 #endif
 
-void fs_private_tmp(void) {
-	// mount tmpfs on top of /run/firejail/mnt
-	if (arg_debug)
-		printf("Mounting tmpfs on /tmp directory\n");
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-		errExit("mounting tmpfs on /tmp directory");
-	fs_logger2("tmpfs", "/tmp");
-}
 

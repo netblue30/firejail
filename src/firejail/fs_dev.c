@@ -129,8 +129,6 @@ void fs_private_dev(void){
 		printf("Mounting tmpfs on /dev\n");
 
 	// create DRI_DIR
-	fs_build_mnt_dir();
-	
 	// keep a copy of dev directory
 	if (mkdir(RUN_DEV_DIR, 0755) == -1)
 		errExit("mkdir");

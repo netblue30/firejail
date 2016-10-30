@@ -404,7 +404,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-syscalls");
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-syscalls");
 			exit(rv);
 		}
 		else {
@@ -414,7 +414,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-errnos");
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-errnos");
 			exit(rv);
 		}
 		else {
@@ -439,7 +439,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--debug-protocols") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-protocols");
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-protocols");
 		exit(rv);
 	}
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
@@ -499,15 +499,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--list") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
 		exit(rv);
 	}
 	else if (strcmp(argv[i], "--tree") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
 		exit(rv);
 	}
 	else if (strcmp(argv[i], "--top") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--top");
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--top");
 		exit(rv);
 	}
 #ifdef HAVE_NETWORK	
@@ -516,9 +516,9 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			struct stat s;
 			int rv;
 			if (stat("/proc/sys/kernel/grsecurity", &s) == 0)
-				rv = sbox_run(SBOX_ROOT | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
+				rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
 			else
-				rv = sbox_run(SBOX_USER | SBOX_CAPS | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
+				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
 			exit(rv);
 		}
 		else {
@@ -855,6 +855,9 @@ int main(int argc, char **argv) {
 	int highest_errno = errno_highest_nr();
 #endif
 
+	// build /run/firejail directory structure
+	preproc_build_firejail_dir();
+	
 	detect_quiet(argc, argv);
 	detect_allow_debuggers(argc, argv);
 
@@ -957,10 +960,8 @@ int main(int argc, char **argv) {
 	// initialize globals
 	init_cfg(argc, argv);
 
-
 	// check firejail directories
 	EUID_ROOT();
-	fs_build_firejail_dir();
 	bandwidth_del_run_file(sandbox_pid);
 	network_del_run_file(sandbox_pid);
 	delete_name_file(sandbox_pid);
@@ -1462,35 +1463,6 @@ int main(int argc, char **argv) {
 			}
 
 		}
-#if 0 // disabled for now, it could be used to overwrite system directories	
-		else if (strncmp(argv[i], "--overlay-path=", 15) == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-				arg_overlay_keep = 1;
-				arg_overlay_reuse = 1;
-				
-				char *dirname = argv[i] + 15;
-				if (dirname == '\0') {
-					fprintf(stderr, "Error: invalid overlay option\n");
-					exit(1);
-				}
-				cfg.overlay_dir = expand_home(dirname, cfg.homedir);
-			}
-			else {
-				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
-		}
-#endif
 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
 				if (cfg.chrootdir) {

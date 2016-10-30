@@ -211,7 +211,6 @@ void fs_private_bin_list(void) {
 	assert(private_list);
 	
 	// create /run/firejail/mnt/bin directory
-	fs_build_mnt_dir();
 	if (mkdir(RUN_BIN_DIR, 0755) == -1)
 		errExit("mkdir");
 	if (chmod(RUN_BIN_DIR, 0755) == -1)

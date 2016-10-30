@@ -529,10 +529,6 @@ void fs_whitelist(void) {
 		entry = entry->next;
 	}
 		
-	// create mount points
-	fs_build_mnt_dir();
-	
-
 	// /home/user
 	if (home_dir) {
 		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR

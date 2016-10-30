@@ -60,11 +60,6 @@ void appimage_set(const char *appimage_path) {
 		exit(1);
 	}
 
-	// populate /run/firejail directory
-	EUID_ROOT();
-	fs_build_firejail_dir();
-	EUID_USER();
-
 	// find or allocate a free loop device to use
 	EUID_ROOT();
 	int cfd = open("/dev/loop-control", O_RDWR);

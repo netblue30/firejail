@@ -86,6 +86,8 @@ valoq (https://github.com/valoq)
 	- added support for /srv in --whitelist feature
 	- Eye of GNOME and Evolution profiles
 	- blacklist suid binaries in disable-common.inc
+Vadim A. Misbakh-Soloviov (https://github.com/msva)
+	- profile fixes
 Rafael Cavalcanti (https://github.com/rccavalcanti)
 	- chromium profile fixes for Arch Linux
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)

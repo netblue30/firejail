@@ -131,7 +131,6 @@ void fs_private_etc_list(void) {
 	}
 
 	// create /run/firejail/mnt/etc directory
-	fs_build_mnt_dir();
 	if (mkdir(RUN_ETC_DIR, 0755) == -1)
 		errExit("mkdir");
 	if (chmod(RUN_ETC_DIR, 0755) == -1)

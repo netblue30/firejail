@@ -36,5 +36,14 @@ void net_bridge_add_interface(const char *bridge, const char *dev);
 void net_if_up(const char *ifname);
 int net_get_mtu(const char *ifname);
 void net_set_mtu(const char *ifname, int mtu);
+void net_ifprint(int scan);
+int net_get_mac(const char *ifname, unsigned char mac[6]);
+void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
+int net_if_mac(const char *ifname, const unsigned char mac[6]);
+void net_if_ip6(const char *ifname, const char *addr6);
+
+
+// arp.c
+void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask);
 
 #endif

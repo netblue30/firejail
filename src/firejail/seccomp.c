@@ -275,7 +275,6 @@ static void filter_end_whitelist(void) {
 
 // save seccomp filter in  /run/firejail/mnt/seccomp
 static void write_seccomp_file(void) {
-	fs_build_mnt_dir();
 	assert(sfilter);
 
 	int fd = open(RUN_SECCOMP_CFG, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);

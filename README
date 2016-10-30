@@ -84,7 +84,7 @@ valoq (https://github.com/valoq)
 	- LibreOffice profile fixes
 	- cherrytree profile fixes
 	- added support for /srv in --whitelist feature
-	- Eye of GNOME and Evolution profiles
+	- Eye of GNOME, Evolution, display (imagemagik) and Wire profiles
 	- blacklist suid binaries in disable-common.inc
 Vadim A. Misbakh-Soloviov (https://github.com/msva)
 	- profile fixes

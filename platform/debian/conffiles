@@ -168,3 +168,5 @@
 /etc/firejail/evolution.profile
 /etc/firejail/start-tor-browser.profile
 /etc/firejail/xiphos.profile
+/etc/firejail/display.profile
+/etc/firejail/Wire.profile

@@ -698,8 +698,8 @@ void flush_stdin(void) {
 
 void create_empty_dir_as_root(const char *dir, mode_t mode) {
 	assert(dir);
-
 	struct stat s;
+	
 	if (stat(dir, &s)) {
 		if (arg_debug)
 			printf("Creating empty %s directory\n", dir);
@@ -707,9 +707,10 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 			errExit("mkdir");
 		if (chmod(dir, mode) == -1)
 			errExit("chmod");
+		if (chown(dir, 0, 0) == -1)
+			errExit("chown");
 		ASSERT_PERMS(dir, 0, 0, mode);
 	}
-
 }
 
 void create_empty_file_as_root(const char *fname, mode_t mode) {

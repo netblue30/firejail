@@ -47,73 +47,8 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 `````
 
 `````
-# Current development version: 0.9.43
+# 0.9.44 bugfixes branch
 
-## X11 development
-`````
-       --x11=none
-              Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and  the
-              file  specified  in  ${XAUTHORITY} environment variable.  Remove
-              DISPLAY and XAUTHORITY environment variables.  Stop  with  error
-              message if X11 abstract socket will be accessible in jail.
-
-      --x11=xorg
-              Sandbox the application using the untrusted mode implemented  by
-              X11  security  extension.   The  extension  is available in Xorg
-              package and it is installed by default on most  Linux  distribu‐
-              tions.  It  provides support for a simple trusted/untrusted con‐
-              nection model. Untrusted clients are restricted in certain  ways
-              to  prevent  them from reading window contents of other clients,
-              stealing input events, etc.
-
-              The untrusted mode has several limitations.  A  lot  of  regular
-              programs   assume  they are a trusted X11 clients and will crash
-              or lock up when run in  untrusted  mode.  Chromium  browser  and
-              xterm are two examples.  Firefox and transmission-gtk seem to be
-              working fine.  A network namespace  is  not  required  for  this
-              option.
-
-              Example:
-              $ firejail --x11=xorg firefox
-`````
-
-## Other command line options
-`````
-      --put=name|pid src-filename dest-filename
-              Put src-filename in sandbox container.  The container is specified by name or PID.
-
-       --allusers
-              All user home directories are visible inside the sandbox. By default, only current user home
-              directory is visible.
-
-              Example:
-              $ firejail --allusers
-
-       --join-or-start=name
-              Join the sandbox identified by name or start a new one.  Same as "firejail  --join=name"  if
-              sandbox with specified name exists, otherwise same as "firejail --name=name ..."
-              Note that in contrary to other join options there is respective profile option.
-
-      --no3d Disable 3D hardware acceleration.
-
-              Example:
-              $ firejail --no3d firefox
-
-      --veth-name=name
-              Use this name for the interface  connected  to  the  bridge  for
-              --net=bridge_interface commands, instead of the default one.
-
-              Example:
-              $ firejail --net=br0 --veth-name=if0
-
-`````
-
-## New profile commands
-
-x11 xpra, x11 xephyr, x11 none, x11 xorg, allusers, join-or-start
-
-## New profiles
-
-qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape, feh, ranger, zathura, 7z, keepass, keepassx,
-claws-mail, mutt, git, emacs, vim, xpdf, VirtualBox, OpenShot, Flowblade, Eye of GNOME (eog), Evolution
+This branch will get released soon as 0.9.44.2. It solves some security problems and som small bug fixes.
+For any other developments, please use the main branch.
 

@@ -49,6 +49,6 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 `````
 # 0.9.44 bugfixes branch
 
-This branch will get released soon as 0.9.44.2. It solves some security problems and some small bug fixes.
+This branch will get released soon as 0.9.44.2. It solves some security problems and some small bugs.
 For any other developments, please use the main branch.
 

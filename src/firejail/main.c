@@ -903,6 +903,14 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 			
+			// don't allow "--chroot=/"
+			char *rpath = realpath(cfg.chrootdir, NULL);
+			if (rpath == NULL || strcmp(rpath, "/") == 0) {
+				fprintf(stderr, "Error: invalid chroot directory\n");
+				exit(1);
+			}
+			free(rpath);
+				
 			// check chroot directory structure
 			if (fs_check_chroot_dir(cfg.chrootdir)) {
 				fprintf(stderr, "Error: invalid chroot\n");

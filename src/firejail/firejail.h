@@ -25,7 +25,6 @@
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
 
-
 // filesystem
 #define RUN_FIREJAIL_BASEDIR	"/run"
 #define RUN_FIREJAIL_DIR	"/run/firejail"
@@ -38,8 +37,6 @@
 #define RUN_RO_DIR	"/run/firejail/firejail.ro.dir"
 #define RUN_RO_FILE	"/run/firejail/firejail.ro.file"
 #define RUN_MNT_DIR	"/run/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
-#define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"
-#define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"
 #define RUN_CGROUP_CFG	"/run/firejail/mnt/cgroup"
 #define RUN_CPU_CFG	"/run/firejail/mnt/cpu"
 #define RUN_GROUPS_CFG	"/run/firejail/mnt/groups"
@@ -49,6 +46,12 @@
 #define RUN_ETC_DIR	"/run/firejail/mnt/etc"
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
+
+#define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
+#define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
+#define RUN_SECCOMP_AMD64	"/run/firejail/mnt/seccomp.amd64"	// amd64 filter installed on i386 architectures
+#define RUN_SECCOMP_I386	"/run/firejail/mnt/seccomp.i386"		// i386 filter installed on amd64 architectures
+
 
 #define RUN_DEV_DIR		"/run/firejail/mnt/dev"
 #define RUN_DEVLOG_FILE	"/run/firejail/mnt/devlog"
@@ -75,6 +78,8 @@
 #define RUN_PASSWD_FILE		"/run/firejail/mnt/passwd"
 #define RUN_GROUP_FILE		"/run/firejail/mnt/group"
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
+
+
 
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
@@ -491,12 +496,14 @@ void fs_private_home_list(void);
 
 
 // seccomp.c
+int seccomp_load(const char *fname);
+void seccomp_filter_32(void);
+void seccomp_filter_64(void);
 int seccomp_filter_drop(int enforce_seccomp);
 int seccomp_filter_keep(void);
-void seccomp_set(void);
+int seccomp_filter_errno(void);
 void seccomp_print_filter_name(const char *name);
 void seccomp_print_filter(pid_t pid);
-int seccomp_filter_errno(void);
 
 // caps.c
 int caps_default_filter(void);
@@ -591,13 +598,10 @@ void fs_check_bin_list(void);
 void fs_private_bin_list(void);
 
 // protocol.c
-void protocol_list();
-void protocol_print_filter_name(const char *name);
-void protocol_print_filter(pid_t pid);
-void protocol_store(const char *prlist);
-void protocol_filter(const char *fname);
 void protocol_filter_save(void);
 void protocol_filter_load(const char *fname);
+void protocol_print_filter_name(const char *name);
+void protocol_print_filter(pid_t pid);
 
 // restrict_users.c
 void restrict_users(void);

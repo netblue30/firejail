@@ -22,52 +22,6 @@
 #include "firejail.h"
 #include "../include/seccomp.h"
 
-// install protocol filter
-void protocol_filter(const char *fname) {
-#ifndef SYS_socket
-	if (arg_debug)
-		printf("No support for --protocol on this platform\n");
-	return;
-#else
-	assert(fname);
-
-	// check file
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error: cannot read protocol filter file\n");
-		exit(1);
-	}
-	int size = s.st_size;
-
-	// read filter
-	struct sock_filter filter[32];	// big enough
-	memset(&filter[0], 0, sizeof(filter));
-	int src = open(fname, O_RDONLY);
-	int rd = 0;
-	while (rd < size) {
-		int rv = read(src, (unsigned char *) filter + rd, size - rd);
-		if (rv == -1) {
-			fprintf(stderr, "Error: cannot read %s file\n", fname);
-			exit(1);
-		}
-		rd += rv;
-	}
-	close(src);
-
-	// install filter
-	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
-	struct sock_fprog prog = {
-		.len = entries,
-		.filter = filter,
-	};
-
-	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
-		return;
-	}
-#endif	
-}
-
 void protocol_filter_save(void) {
 	// save protocol filter configuration in PROTOCOL_CFG
 	FILE *fp = fopen(RUN_PROTOCOL_CFG, "w");

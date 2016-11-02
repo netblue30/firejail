@@ -559,13 +559,6 @@ assert(0);
 	if (cfg.protocol) {
 		if (arg_debug)
 			printf("Build protocol filter: %s\n", cfg.protocol);
-		// as root, create RUN_SECCOMP_PROTOCOL file
-		// this is where fseccomp program will store the protocol filter
-		create_empty_file_as_root(RUN_SECCOMP_PROTOCOL, 0644);
-		if (chown(RUN_SECCOMP_PROTOCOL, getuid(), getgid()) == -1)
-			errExit("chown");
-		if (chmod(RUN_SECCOMP_PROTOCOL, 0644) == -1)
-			errExit("chmod");
 
 		// build the seccomp filter as a regular user
 		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
@@ -826,13 +819,23 @@ assert(0);
 	// set rlimits
 	set_rlimits();
 
-	// set seccomp
+	// set cpu affinity
+	if (cfg.cpus) {
+		save_cpu(); // save cpu affinity mask to CPU_CFG file
+		set_cpu_affinity();
+	}
+	
+	// save cgroup in CGROUP_CFG file
+	if (cfg.cgroup)
+		save_cgroup();
+
+	// set seccomp //todo: push it down after drop_privs and/or configuring noroot
 #ifdef HAVE_SECCOMP
 	// install protocol filter
 	if (cfg.protocol) {
 		if (arg_debug)
 			printf("Install protocol filter: %s\n", cfg.protocol);
-		protocol_filter(RUN_SECCOMP_PROTOCOL);	// install filter	
+		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter	
 		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
 	}
 
@@ -846,16 +849,6 @@ assert(0);
 			seccomp_filter_drop(enforce_seccomp);
 	}
 #endif
-
-	// set cpu affinity
-	if (cfg.cpus) {
-		save_cpu(); // save cpu affinity mask to CPU_CFG file
-		set_cpu_affinity();
-	}
-	
-	// save cgroup in CGROUP_CFG file
-	if (cfg.cgroup)
-		save_cgroup();
 
 	//****************************************
 	// drop privileges or create a new user namespace
@@ -928,8 +921,6 @@ assert(0);
 
 	int status = monitor_application(app_pid);	// monitor application
 	flush_stdin();
-
-
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

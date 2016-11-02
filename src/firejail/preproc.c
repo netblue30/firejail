@@ -66,8 +66,6 @@ void preproc_build_firejail_dir(void) {
 
 // build /run/firejail/mnt directory
 void preproc_mount_mnt_dir(void) {
-	struct stat s;
-	
 	// mount tmpfs on top of /run/firejail/mnt
 	if (!tmpfs_mounted) {
 		if (arg_debug)
@@ -76,6 +74,35 @@ void preproc_mount_mnt_dir(void) {
 			errExit("mounting /run/firejail/mnt");
 		tmpfs_mounted = 1;
 		fs_logger2("tmpfs", RUN_MNT_DIR);
+		
+		// create all seccomp files
+		// as root, create RUN_SECCOMP_I386 file
+		create_empty_file_as_root(RUN_SECCOMP_I386, 0644);
+		if (chown(RUN_SECCOMP_I386, getuid(), getgid()) == -1)
+			errExit("chown");
+		if (chmod(RUN_SECCOMP_I386, 0644) == -1)
+			errExit("chmod");
+
+		// as root, create RUN_SECCOMP_AMD64 file
+		create_empty_file_as_root(RUN_SECCOMP_AMD64, 0644);
+		if (chown(RUN_SECCOMP_AMD64, getuid(), getgid()) == -1)
+			errExit("chown");
+		if (chmod(RUN_SECCOMP_AMD64, 0644) == -1)
+			errExit("chmod");
+
+		// as root, create RUN_SECCOMP file
+		create_empty_file_as_root(RUN_SECCOMP_CFG, 0644);
+		if (chown(RUN_SECCOMP_CFG, getuid(), getgid()) == -1)
+			errExit("chown");
+		if (chmod(RUN_SECCOMP_CFG, 0644) == -1)
+			errExit("chmod");
+
+		// as root, create RUN_SECCOMP_PROTOCOL file
+		create_empty_file_as_root(RUN_SECCOMP_PROTOCOL, 0644);
+		if (chown(RUN_SECCOMP_PROTOCOL, getuid(), getgid()) == -1)
+			errExit("chown");
+		if (chmod(RUN_SECCOMP_PROTOCOL, 0644) == -1)
+			errExit("chmod");
 	}
 }
 

@@ -721,13 +721,13 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 		if (arg_debug)
 			printf("Creating empty %s file\n", fname);
 
-		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "w");
 		if (!fp)
 			errExit("fopen");
-
 		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR);
 		fclose(fp);
+		if (chmod(fname, mode) == -1)
+			errExit("chmod");
 	}
 }
 

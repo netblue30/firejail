@@ -7,6 +7,8 @@ blacklist ${HOME}/.wine
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.stellarium
+blacklist ${HOME}/.sword
+blacklist ${HOME}/.xiphos
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/mupen64plus
@@ -33,6 +35,13 @@ blacklist ${HOME}/.synfig
 blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.config/zathura
+blacklist ${HOME}/.config/cherrytree
+blacklist ${HOME}/.xpdfrc
+blacklist ${HOME}/.openshot
+blacklist ${HOME}/.openshot_qt
+blacklist ${HOME}/.flowblade
+blacklist ${HOME}/.config/flowblade
+blacklist ${HOME}/.config/eog
 
 
 # Media players
@@ -70,8 +79,12 @@ blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.muttrc
+blacklist ${HOME}/.mutt
 blacklist ${HOME}/.mutt/muttrc
 blacklist ${HOME}/.msmtprc
+blacklist ${HOME}/.config/evolution
+blacklist ${HOME}/.local/share/evolution
+blacklist ${HOME}/.cache/evolution
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat
@@ -93,6 +106,7 @@ blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.config/gajim
+blacklist ${HOME}/.config/Wire
 
 # Games
 blacklist ${HOME}/.hedgewars

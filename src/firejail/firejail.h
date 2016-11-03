@@ -28,6 +28,7 @@
 // filesystem
 #define RUN_FIREJAIL_BASEDIR	"/run"
 #define RUN_FIREJAIL_DIR	"/run/firejail"
+#define RUN_FIREJAIL_APPIMAGE_DIR	"/run/firejail/appimage"
 #define RUN_FIREJAIL_NAME_DIR	"/run/firejail/name"
 #define RUN_FIREJAIL_X11_DIR	"/run/firejail/x11"
 #define RUN_FIREJAIL_NETWORK_DIR	"/run/firejail/network"
@@ -36,7 +37,6 @@
 #define RUN_RO_DIR	"/run/firejail/firejail.ro.dir"
 #define RUN_RO_FILE	"/run/firejail/firejail.ro.file"
 #define RUN_MNT_DIR	"/run/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
-#define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"
 #define RUN_CGROUP_CFG	"/run/firejail/mnt/cgroup"
 #define RUN_CPU_CFG	"/run/firejail/mnt/cpu"
 #define RUN_GROUPS_CFG	"/run/firejail/mnt/groups"
@@ -46,6 +46,12 @@
 #define RUN_ETC_DIR	"/run/firejail/mnt/etc"
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
+
+#define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
+#define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
+#define RUN_SECCOMP_AMD64	"/run/firejail/mnt/seccomp.amd64"	// amd64 filter installed on i386 architectures
+#define RUN_SECCOMP_I386	"/run/firejail/mnt/seccomp.i386"		// i386 filter installed on amd64 architectures
+
 
 #define RUN_DEV_DIR		"/run/firejail/mnt/dev"
 #define RUN_DEVLOG_FILE	"/run/firejail/mnt/devlog"
@@ -59,6 +65,7 @@
 #define RUN_WHITELIST_VAR_DIR	"/run/firejail/mnt/orig-var"
 #define RUN_WHITELIST_DEV_DIR	"/run/firejail/mnt/orig-dev"
 #define RUN_WHITELIST_OPT_DIR	"/run/firejail/mnt/orig-opt"
+#define RUN_WHITELIST_SRV_DIR   "/run/firejail/mnt/orig-srv"
 
 #define RUN_XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
 #define RUN_XAUTHORITY_SEC_FILE	"/run/firejail/mnt/sec.Xauthority"
@@ -71,6 +78,8 @@
 #define RUN_PASSWD_FILE		"/run/firejail/mnt/passwd"
 #define RUN_GROUP_FILE		"/run/firejail/mnt/group"
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
+
+
 
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
@@ -172,6 +181,7 @@ typedef struct profile_entry_t {
 	unsigned var_dir:1;	// whitelist in /var directory
 	unsigned dev_dir:1;	// whitelist in /dev directory
 	unsigned opt_dir:1;	// whitelist in /opt directory
+        unsigned srv_dir:1;     // whitelist in /srv directory
 }ProfileEntry;
 
 typedef struct config_t {
@@ -358,21 +368,19 @@ void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
 void net_if_ip6(const char *ifname, const char *addr6);
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
 int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
-void net_ifprint(void);
-void net_bridge_add_interface(const char *bridge, const char *dev);
 uint32_t network_get_defaultgw(void);
 int net_config_mac(const char *ifname, const unsigned char mac[6]);
 int net_get_mac(const char *ifname, unsigned char mac[6]);
+void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
+
+// preproc.c
+void preproc_build_firejail_dir(void);
+void preproc_mount_mnt_dir(void);
+void preproc_build_cp_command(void);
+void preproc_delete_cp_command(void) ;
+void preproc_remount_mnt_dir(void);
 
 // fs.c
-// build /run/firejail directory
-void fs_build_firejail_dir(void);
-// build /run/firejail/mnt directory
-void fs_build_mnt_dir(void);
-// grab a copy of cp command
-void fs_build_cp_command(void);
-// delete the temporary cp command
-void fs_delete_cp_command(void) ;
 // blacklist files or directoies by mounting empty files on top of them
 void fs_blacklist(void);
 // remount a directory read-only
@@ -389,7 +397,6 @@ void fs_overlayfs(void);
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir);
 int fs_check_chroot_dir(const char *rootdir);
-void fs_private_tmp(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -426,13 +433,6 @@ int restricted_shell(const char *user);
 int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr);
 // assign an IP address using arp scanning
 uint32_t arp_assign(const char *dev, Bridge *br);
-// scan interface (--scan option)
-void arp_scan(const char *dev, uint32_t srcaddr, uint32_t srcmask);
-
-// veth.c
-int net_create_veth(const char *dev, const char *nsdev, unsigned pid);
-int net_create_macvlan(const char *dev, const char *parent, unsigned pid);
-int net_move_interface(const char *dev, unsigned pid);
 
 // util.c
 void drop_privs(int nogroups);
@@ -457,10 +457,11 @@ char *expand_home(const char *path, const char* homedir);
 const char *gnu_basename(const char *path);
 uid_t pid_get_uid(pid_t pid);
 void invalid_filename(const char *fname);
-uid_t get_tty_gid(void);
-uid_t get_audio_gid(void);
+uid_t get_group_id(const char *group);
 int remove_directory(const char *path);
 void flush_stdin(void);
+void create_empty_dir_as_root(const char *dir, mode_t mode);
+void create_empty_file_as_root(const char *dir, mode_t mode);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log
@@ -495,12 +496,14 @@ void fs_private_home_list(void);
 
 
 // seccomp.c
+int seccomp_load(const char *fname);
+void seccomp_filter_32(void);
+void seccomp_filter_64(void);
 int seccomp_filter_drop(int enforce_seccomp);
 int seccomp_filter_keep(void);
-void seccomp_set(void);
+int seccomp_filter_errno(void);
 void seccomp_print_filter_name(const char *name);
 void seccomp_print_filter(pid_t pid);
-int seccomp_filter_errno(void);
 
 // caps.c
 int caps_default_filter(void);
@@ -517,8 +520,6 @@ void caps_print_filter_name(const char *name);
 const char *syscall_find_nr(int nr);
 // return -1 if error, 0 if no error
 int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg), int arg);
-// print all available syscallsseccomp
-void syscall_print(void);
 
 // fs_trace.c
 void fs_trace_preload(void);
@@ -597,13 +598,10 @@ void fs_check_bin_list(void);
 void fs_private_bin_list(void);
 
 // protocol.c
-void protocol_list();
-void protocol_print_filter_name(const char *name);
-void protocol_print_filter(pid_t pid);
-void protocol_store(const char *prlist);
-void protocol_filter(void);
 void protocol_filter_save(void);
 void protocol_filter_load(const char *fname);
+void protocol_print_filter_name(const char *name);
+void protocol_print_filter(pid_t pid);
 
 // restrict_users.c
 void restrict_users(void);
@@ -672,14 +670,33 @@ extern char *xephyr_extra_params;
 extern char *netfilter_default;
 int checkcfg(int val);
 void print_compiletime_support(void);
+void x11_xorg(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);
 void appimage_clear(void);
 const char *appimage_getdir(void);
 
+// appimage_size.c
+long unsigned int appimage2_size(const char *fname);
+
 // cmdline.c
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
+
+// sbox.c
+// programs
+#define PATH_FNET (LIBDIR "/firejail/fnet")
+#define PATH_FIREMON (PREFIX "/bin/firemon")
+#define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
+// bitmapped filters for sbox_run
+#define SBOX_ROOT (1 << 0)
+#define SBOX_USER (1 << 1)
+#define SBOX_SECCOMP (1 << 2)
+#define SBOX_CAPS_NONE (1 << 3)		// drop all capabilities
+#define SBOX_CAPS_NETWORK (1 << 4)	// caps filter for programs running network programs
+// run sbox
+int sbox_run(unsigned filter, int num, ...);
+
 
 #endif
 

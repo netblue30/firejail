@@ -292,16 +292,16 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
 #ifdef HAVE_SECCOMP
-		// set protocol filter
+		// read cfg.protocol from file
 		if (getuid() != 0)
 			protocol_filter_load(RUN_PROTOCOL_CFG);
 		if (cfg.protocol) {	// not available for uid 0
-			protocol_filter();
+			seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter	
 		}
 				
 		// set seccomp filter
 		if (apply_seccomp == 1)	// not available for uid 0
-			seccomp_set();
+			seccomp_load(RUN_SECCOMP_CFG);
 #endif
 
 		// fix qt 4.8

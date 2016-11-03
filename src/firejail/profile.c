@@ -497,8 +497,18 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 #ifdef HAVE_SECCOMP
-		if (checkcfg(CFG_SECCOMP))
-			protocol_store(ptr + 9);
+		if (checkcfg(CFG_SECCOMP)) {
+			if (cfg.protocol) {
+				if (!arg_quiet)
+					fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", ptr + 9);
+				return 0;
+			}
+			
+			// store list
+			cfg.protocol = strdup(ptr + 9);
+			if (!cfg.protocol)
+				errExit("strdup");
+		}
 		else
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
 #endif

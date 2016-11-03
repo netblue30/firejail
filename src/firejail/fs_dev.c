@@ -129,8 +129,6 @@ void fs_private_dev(void){
 		printf("Mounting tmpfs on /dev\n");
 
 	// create DRI_DIR
-	fs_build_mnt_dir();
-	
 	// keep a copy of dev directory
 	if (mkdir(RUN_DEV_DIR, 0755) == -1)
 		errExit("mkdir");
@@ -225,7 +223,7 @@ void fs_private_dev(void){
 
 
 	// mount /dev/pts
-	gid_t ttygid = get_tty_gid();
+	gid_t ttygid = get_group_id("tty");
 	char *data;
 	if (asprintf(&data, "newinstance,gid=%d,mode=620,ptmxmode=0666", (int) ttygid) == -1)
 		errExit("asprintf");
@@ -244,6 +242,7 @@ void fs_private_dev(void){
 }
 
 
+#if 0
 void fs_dev_shm(void) {
 	uid_t uid = getuid(); // set a new shm only if we started as root
 	if (uid)
@@ -282,6 +281,7 @@ void fs_dev_shm(void) {
 			
 	}
 }
+#endif	
 
 static void disable_file_or_dir(const char *fname) {
 	if (arg_debug)

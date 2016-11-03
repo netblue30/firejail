@@ -14,16 +14,17 @@ whitelist ${HOME}/.cache/QuiteRss
 
 caps.drop all
 netfilter
-nonewprivs
 nogroups
+nonewprivs
 noroot
-private-bin quiterss
-private-dev
 nosound
-#private-etc X11,ssl
 protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
+
+private-bin quiterss
+private-dev
+#private-etc X11,ssl
 
 include /etc/firejail/whitelist-common.inc

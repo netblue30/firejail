@@ -104,8 +104,6 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 
 static int store_xauthority(void) {
 	// put a copy of .Xauthority in XAUTHORITY_FILE
-	fs_build_mnt_dir();
-
 	char *src;
 	char *dest = RUN_XAUTHORITY_FILE;
 	if (asprintf(&src, "%s/.Xauthority", cfg.homedir) == -1)
@@ -130,9 +128,6 @@ static int store_xauthority(void) {
 }
 
 static int store_asoundrc(void) {
-	// put a copy of .Xauthority in XAUTHORITY_FILE
-	fs_build_mnt_dir();
-
 	char *src;
 	char *dest = RUN_ASOUNDRC_FILE;
 	if (asprintf(&src, "%s/.asoundrc", cfg.homedir) == -1)
@@ -591,8 +586,7 @@ void fs_private_home_list(void) {
 		exit(1);
 	}
 
-	// create /tmp/firejail/mnt/home directory
-	fs_build_mnt_dir();
+	// create /run/firejail/mnt/home directory
 	int rv = mkdir(RUN_HOME_DIR, 0755);
 	if (rv == -1)
 		errExit("mkdir");
@@ -641,7 +635,7 @@ void fs_private_home_list(void) {
 
 		fs_logger_print();	// save the current log
 		free(dlist);
-		exit(0);
+		_exit(0);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);

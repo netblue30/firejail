@@ -1,0 +1,138 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+after 100
+send -- "/usr/lib/firejail/fseccomp debug-syscalls\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"1	- write"
+}
+
+after 100
+send -- "/usr/lib/firejail/fseccomp debug-errnos\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"1	- EPERM"
+}
+
+after 100
+send -- "/usr/lib/firejail/fseccomp debug-protocols\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"unix, inet, inet6, netlink, packet,"
+}
+
+after 100
+send -- "/usr/lib/firejail/fseccomp protocol build unix,inet seccomp-test-file\r"
+after 100
+send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"WHITELIST 41 socket"
+}
+
+after 100
+send -- "/usr/lib/firejail/fseccomp secondary 64 seccomp-test-file\r"
+after 100
+send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 5.1\n";exit}
+	"BLACKLIST 165 mount"
+}
+expect {
+	timeout {puts "TESTING ERROR 5.2\n";exit}
+	"BLACKLIST 166 umount2"
+}
+expect {
+	timeout {puts "TESTING ERROR 5.3\n";exit}
+	"RETURN_ALLOW"
+}
+
+after 100
+send -- "/usr/lib/firejail/fseccomp default seccomp-test-file\r"
+after 100
+send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 6.1\n";exit}
+	"BLACKLIST 165 mount"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.2\n";exit}
+	"BLACKLIST 166 umount2"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.3\n";exit}
+	"RETURN_ALLOW"
+}
+
+after 100
+send -- "/usr/lib/firejail/fseccomp drop seccomp-test-file chmod,chown\r"
+after 100
+send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 7.1\n";exit}
+	"BLACKLIST 165 mount" {puts "TESTING ERROR 7.2\n";exit}
+	"BLACKLIST 166 umount2" {puts "TESTING ERROR 7.3\n";exit}
+	"BLACKLIST 90 chmod"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.4\n";exit}
+	"BLACKLIST 92 chown"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.5\n";exit}
+	"RETURN_ALLOW"
+}
+
+after 100
+send -- "/usr/lib/firejail/fseccomp default drop seccomp-test-file chmod,chown\r"
+after 100
+send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 8.1\n";exit}
+	"BLACKLIST 165 mount"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.2\n";exit}
+	"BLACKLIST 166 umount2"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.3\n";exit}
+	"BLACKLIST 90 chmod"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.4\n";exit}
+	"BLACKLIST 92 chown"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.5\n";exit}
+	"RETURN_ALLOW"
+}
+after 100
+send -- "/usr/lib/firejail/fseccomp keep seccomp-test-file chmod,chown\r"
+after 100
+send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 9.1\n";exit}
+	"WHITELIST 90 chmod"
+}
+expect {
+	timeout {puts "TESTING ERROR 9.2\n";exit}
+	"WHITELIST 92 chown"
+}
+expect {
+	timeout {puts "TESTING ERROR 9.3\n";exit}
+	"KILL_PROCESS"
+}
+
+
+
+after 100
+puts "\nall done\n"
+

@@ -104,7 +104,6 @@ void pulseaudio_init(void) {
 		return;
 	 
  	// create the new user pulseaudio directory
-	 fs_build_mnt_dir();
 	int rv = mkdir(RUN_PULSE_DIR, 0700);
 	(void) rv; // in --chroot mode the directory can already be there
 	if (chown(RUN_PULSE_DIR, getuid(), getgid()) < 0)

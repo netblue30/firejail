@@ -122,7 +122,7 @@ static void sandbox_if_up(Bridge *br) {
 	assert(br);
 	if (!br->configured)
 		return;
-		
+
 	char *dev = br->devsandbox;
 	net_if_up(dev);
 
@@ -137,8 +137,7 @@ static void sandbox_if_up(Bridge *br) {
 		assert(br->ipsandbox);
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
-		net_if_ip(dev, br->ipsandbox, br->mask, br->mtu);
-		net_if_up(dev);
+		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
 	}
 	else if (br->arg_ip_none == 0 && br->macvlan == 1) {
 		// reassign the macvlan address
@@ -160,8 +159,7 @@ static void sandbox_if_up(Bridge *br) {
 			
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
-		net_if_ip(dev, br->ipsandbox, br->mask, br->mtu);
-		net_if_up(dev);
+		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
 	}
 	
 	if (br->ip6sandbox)
@@ -256,32 +254,6 @@ static int monitor_application(pid_t app_pid) {
 
 	// return the latest exit status.
 	return status;
-
-#if 0
-// todo: find a way to shut down interfaces before closing the namespace
-// the problem is we don't have enough privileges to shutdown interfaces in this moment
-	// shut down bridge/macvlan interfaces
-	if (any_bridge_configured()) {
-		
-		if (cfg.bridge0.configured) {
-			printf("Shutting down %s\n", cfg.bridge0.devsandbox);
-			net_if_down( cfg.bridge0.devsandbox);
-		}
-		if (cfg.bridge1.configured) {
-			printf("Shutting down %s\n", cfg.bridge1.devsandbox);
-			net_if_down( cfg.bridge1.devsandbox);
-		}
-		if (cfg.bridge2.configured) {
-			printf("Shutting down %s\n", cfg.bridge2.devsandbox);
-			net_if_down( cfg.bridge2.devsandbox);
-		}
-		if (cfg.bridge3.configured) {
-			printf("Shutting down %s\n", cfg.bridge3.devsandbox);
-			net_if_down( cfg.bridge3.devsandbox);
-		}
-		usleep(20000);	// 20 ms sleep
-	}	
-#endif	
 }
 
 void start_audit(void) {
@@ -442,7 +414,8 @@ int sandbox(void* sandbox_arg) {
 	if (mount(NULL, "/", NULL, MS_SLAVE | MS_REC, NULL) < 0) {
 		chk_chroot();
 	}
-	
+	// ... and mount a tmpfs on top of /run/firejail/mnt directory
+	preproc_mount_mnt_dir();
 	
 	//****************************
 	// log sandbox data
@@ -459,13 +432,112 @@ int sandbox(void* sandbox_arg) {
 	fs_logger("install mount namespace");
 	
 	//****************************
-	// netfilter etc.
+	// netfilter
 	//****************************
 	if (arg_netfilter && any_bridge_configured()) { // assuming by default the client filter
 		netfilter(arg_netfilter_file);
 	}
 	if (arg_netfilter6 && any_bridge_configured()) { // assuming by default the client filter
 		netfilter6(arg_netfilter6_file);
+	}
+
+	//****************************
+	// networking
+	//****************************
+	int gw_cfg_failed = 0; // default gw configuration flag
+	if (arg_nonetwork) {
+		net_if_up("lo");
+		if (arg_debug)
+			printf("Network namespace enabled, only loopback interface available\n");
+	}
+	else if (any_bridge_configured() || any_interface_configured()) {
+		// configure lo and eth0...eth3
+		net_if_up("lo");
+		
+		if (mac_not_zero(cfg.bridge0.macsandbox))
+			net_config_mac(cfg.bridge0.devsandbox, cfg.bridge0.macsandbox);
+		sandbox_if_up(&cfg.bridge0);
+		
+		if (mac_not_zero(cfg.bridge1.macsandbox))
+			net_config_mac(cfg.bridge1.devsandbox, cfg.bridge1.macsandbox);
+		sandbox_if_up(&cfg.bridge1);
+		
+		if (mac_not_zero(cfg.bridge2.macsandbox))
+			net_config_mac(cfg.bridge2.devsandbox, cfg.bridge2.macsandbox);
+		sandbox_if_up(&cfg.bridge2);
+		
+		if (mac_not_zero(cfg.bridge3.macsandbox))
+			net_config_mac(cfg.bridge3.devsandbox, cfg.bridge3.macsandbox);
+		sandbox_if_up(&cfg.bridge3);
+		
+
+// todo: this code seems to be dead!!!
+		// enable interfaces
+		if (cfg.interface0.configured && cfg.interface0.ip) {
+assert(0);			
+			if (arg_debug)
+				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
+			net_config_interface(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
+		}			
+		if (cfg.interface1.configured && cfg.interface1.ip) {
+assert(0);			
+			if (arg_debug)
+				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
+			net_config_interface(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
+		}			
+		if (cfg.interface2.configured && cfg.interface2.ip) {
+assert(0);			
+			if (arg_debug)
+				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
+			net_config_interface(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
+		}			
+		if (cfg.interface3.configured && cfg.interface3.ip) {
+assert(0);			
+			if (arg_debug)
+				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
+			net_config_interface(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);
+		}			
+			
+		// add a default route
+		if (cfg.defaultgw) {
+			// set the default route
+			if (net_add_route(0, 0, cfg.defaultgw)) {
+				fprintf(stderr, "Warning: cannot configure default route\n");
+				gw_cfg_failed = 1;
+			}
+		}
+
+		if (arg_debug)
+			printf("Network namespace enabled\n");
+	}
+	
+
+	// print network configuration
+	if (!arg_quiet) {
+		if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
+			printf("\n");
+			if (any_bridge_configured() || any_interface_configured()) {
+//				net_ifprint();
+				if (arg_scan)
+					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, PATH_FNET, "printif", "scan");
+				else
+					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif", "scan");
+				
+			}
+			if (cfg.defaultgw != 0) {
+				if (gw_cfg_failed)
+					printf("Default gateway configuration failed\n");
+				else
+					printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+			}
+			if (cfg.dns1 != 0)
+				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
+			if (cfg.dns2 != 0)
+				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
+			if (cfg.dns3 != 0)
+				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
+			printf("\n");
+		}
 	}
 
 	// load IBUS env variables
@@ -475,9 +547,27 @@ int sandbox(void* sandbox_arg) {
 	else
 		env_ibus_load();
 	
-	// grab a copy of cp command
-	fs_build_cp_command();
-	
+	//****************************
+	// fs pre-processing:
+	//  - copy some commands under /run
+	//  - build seccomp filters
+	//  - create an empty /etc/ld.so.preload
+	//****************************
+	preproc_build_cp_command();
+
+#ifdef HAVE_SECCOMP
+	if (cfg.protocol) {
+		if (arg_debug)
+			printf("Build protocol filter: %s\n", cfg.protocol);
+
+		// build the seccomp filter as a regular user
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
+			PATH_FSECCOMP, "protocol", "build", cfg.protocol, RUN_SECCOMP_PROTOCOL);
+		if (rv)
+			exit(rv);
+	}
+#endif	
+
 	// trace pre-install
 	if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
 		fs_trace_preload();
@@ -488,6 +578,13 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_SECCOMP
 	int enforce_seccomp = 0;
 #endif
+	if (arg_appimage) {
+		enforce_filters();
+#ifdef HAVE_SECCOMP
+		enforce_seccomp = 1;
+#endif		
+	}
+
 #ifdef HAVE_CHROOT		
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
@@ -610,7 +707,6 @@ int sandbox(void* sandbox_arg) {
 			EUID_USER();
 			profile_add("whitelist /tmp/.X11-unix");
 			EUID_ROOT();
-//			fs_private_tmp();
 		}
 	}
 	
@@ -657,101 +753,16 @@ int sandbox(void* sandbox_arg) {
 		fs_dev_disable_3d();
 	
 	//****************************
-	// networking
+	// set dns
 	//****************************
-	int gw_cfg_failed = 0; // default gw configuration flag
-	if (arg_nonetwork) {
-		net_if_up("lo");
-		if (arg_debug)
-			printf("Network namespace enabled, only loopback interface available\n");
-	}
-	else if (any_bridge_configured() || any_interface_configured()) {
-		// configure lo and eth0...eth3
-		net_if_up("lo");
-		
-		if (mac_not_zero(cfg.bridge0.macsandbox))
-			net_config_mac(cfg.bridge0.devsandbox, cfg.bridge0.macsandbox);
-		sandbox_if_up(&cfg.bridge0);
-		
-		if (mac_not_zero(cfg.bridge1.macsandbox))
-			net_config_mac(cfg.bridge1.devsandbox, cfg.bridge1.macsandbox);
-		sandbox_if_up(&cfg.bridge1);
-		
-		if (mac_not_zero(cfg.bridge2.macsandbox))
-			net_config_mac(cfg.bridge2.devsandbox, cfg.bridge2.macsandbox);
-		sandbox_if_up(&cfg.bridge2);
-		
-		if (mac_not_zero(cfg.bridge3.macsandbox))
-			net_config_mac(cfg.bridge3.devsandbox, cfg.bridge3.macsandbox);
-		sandbox_if_up(&cfg.bridge3);
-		
-		// enable interfaces
-		if (cfg.interface0.configured && cfg.interface0.ip) {
-			if (arg_debug)
-				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
-			net_if_ip(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
-			net_if_up(cfg.interface0.dev);
-		}			
-		if (cfg.interface1.configured && cfg.interface1.ip) {
-			if (arg_debug)
-				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
-			net_if_ip(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
-			net_if_up(cfg.interface1.dev);
-		}			
-		if (cfg.interface2.configured && cfg.interface2.ip) {
-			if (arg_debug)
-				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
-			net_if_ip(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
-			net_if_up(cfg.interface2.dev);
-		}			
-		if (cfg.interface3.configured && cfg.interface3.ip) {
-			if (arg_debug)
-				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
-			net_if_ip(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);
-			net_if_up(cfg.interface3.dev);
-		}			
-			
-		// add a default route
-		if (cfg.defaultgw) {
-			// set the default route
-			if (net_add_route(0, 0, cfg.defaultgw)) {
-				fprintf(stderr, "Warning: cannot configure default route\n");
-				gw_cfg_failed = 1;
-			}
-		}
-
-		if (arg_debug)
-			printf("Network namespace enabled\n");
-	}
-	
-	// if any dns server is configured, it is time to set it now
 	fs_resolvconf();
+	
+	//****************************
+	// fs post-processing
+	//****************************
+	preproc_delete_cp_command();
 	fs_logger_print();
 	fs_logger_change_owner();
-
-	// print network configuration
-	if (!arg_quiet) {
-		if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
-			printf("\n");
-			if (any_bridge_configured() || any_interface_configured())
-				net_ifprint();
-			if (cfg.defaultgw != 0) {
-				if (gw_cfg_failed)
-					printf("Default gateway configuration failed\n");
-				else
-					printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
-			}
-			if (cfg.dns1 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
-			if (cfg.dns2 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
-			if (cfg.dns3 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
-			printf("\n");
-		}
-	}
-	
-	fs_delete_cp_command();
 
 	//****************************
 	// set application environment
@@ -808,12 +819,24 @@ int sandbox(void* sandbox_arg) {
 	// set rlimits
 	set_rlimits();
 
-	// set seccomp
+	// set cpu affinity
+	if (cfg.cpus) {
+		save_cpu(); // save cpu affinity mask to CPU_CFG file
+		set_cpu_affinity();
+	}
+	
+	// save cgroup in CGROUP_CFG file
+	if (cfg.cgroup)
+		save_cgroup();
+
+	// set seccomp //todo: push it down after drop_privs and/or configuring noroot
 #ifdef HAVE_SECCOMP
 	// install protocol filter
 	if (cfg.protocol) {
-		protocol_filter();	// install filter	
-		protocol_filter_save();	// save filter in PROTOCOL_CFG
+		if (arg_debug)
+			printf("Install protocol filter: %s\n", cfg.protocol);
+		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter	
+		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
 	}
 
 	// if a keep list is available, disregard the drop list
@@ -826,16 +849,6 @@ int sandbox(void* sandbox_arg) {
 			seccomp_filter_drop(enforce_seccomp);
 	}
 #endif
-
-	// set cpu affinity
-	if (cfg.cpus) {
-		save_cpu(); // save cpu affinity mask to CPU_CFG file
-		set_cpu_affinity();
-	}
-	
-	// save cgroup in CGROUP_CFG file
-	if (cfg.cgroup)
-		save_cgroup();
 
 	//****************************************
 	// drop privileges or create a new user namespace
@@ -908,8 +921,6 @@ int sandbox(void* sandbox_arg) {
 
 	int status = monitor_application(app_pid);	// monitor application
 	flush_stdin();
-
-
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

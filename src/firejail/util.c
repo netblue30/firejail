@@ -171,10 +171,16 @@ void logerr(const char *msg) {
 }
 
 
-// return -1 if error, 0 if no error
+// return -1 if error, 0 if no error; if destname already exists, return error
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
 	assert(srcname);
 	assert(destname);
+
+	struct stat s;
+	if (stat(destname, &s) == 0) {
+		fprintf(stderr, "Error: file %s already exists\n", destname);
+		return -1;
+	}
 
 	// open source
 	int src = open(srcname, O_RDONLY);
@@ -649,25 +655,14 @@ void invalid_filename(const char *fname) {
 }
 
 
-uid_t get_tty_gid(void) {
+uid_t get_group_id(const char *group) {
 	// find tty group id
-	gid_t ttygid = 0;
-	struct group *g = getgrnam("tty");
+	gid_t gid = 0;
+	struct group *g = getgrnam(group);
 	if (g)
-		ttygid = g->gr_gid;
+		gid = g->gr_gid;
 
-	return ttygid;
-}
-
-
-uid_t get_audio_gid(void) {
-	// find tty group id
-	gid_t audiogid = 0;
-	struct group *g = getgrnam("audio");
-	if (g)
-		audiogid = g->gr_gid;
-
-	return audiogid;
+	return gid;
 }
 
 
@@ -698,6 +693,41 @@ void flush_stdin(void) {
 				printf("Warning: removing %d bytes from stdin\n", cnt);
 			ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
 		}
+	}
+}
+
+void create_empty_dir_as_root(const char *dir, mode_t mode) {
+	assert(dir);
+	struct stat s;
+	
+	if (stat(dir, &s)) {
+		if (arg_debug)
+			printf("Creating empty %s directory\n", dir);
+		if (mkdir(dir, mode) == -1)
+			errExit("mkdir");
+		if (chmod(dir, mode) == -1)
+			errExit("chmod");
+		if (chown(dir, 0, 0) == -1)
+			errExit("chown");
+		ASSERT_PERMS(dir, 0, 0, mode);
+	}
+}
+
+void create_empty_file_as_root(const char *fname, mode_t mode) {
+	assert(fname);
+	struct stat s;
+
+	if (stat(fname, &s)) {
+		if (arg_debug)
+			printf("Creating empty %s file\n", fname);
+
+		FILE *fp = fopen(fname, "w");
+		if (!fp)
+			errExit("fopen");
+		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR);
+		fclose(fp);
+		if (chmod(fname, mode) == -1)
+			errExit("chmod");
 	}
 }
 

@@ -54,9 +54,9 @@ Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_private_template = 0; // mount private /home using a template
 int arg_debug = 0;				// print debug messages
-int arg_debug_check_filename;		// print debug messages for filename checking
-int arg_debug_blacklists;			// print debug messages for blacklists
-int arg_debug_whitelists;			// print debug messages for whitelists
+int arg_debug_check_filename = 0;		// print debug messages for filename checking
+int arg_debug_blacklists = 0;			// print debug messages for blacklists
+int arg_debug_whitelists = 0;			// print debug messages for whitelists
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 int arg_overlay = 0;				// overlay option
@@ -404,8 +404,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			syscall_print();
-			exit(0);
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-syscalls");
+			exit(rv);
 		}
 		else {
 			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -414,7 +414,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			errno_print();
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-errnos");
+			exit(rv);
 		}
 		else {
 			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -438,8 +439,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--debug-protocols") == 0) {
-		protocol_list();
-		exit(0);
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-protocols");
+		exit(rv);
 	}
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
@@ -498,27 +499,32 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--list") == 0) {
-		list();
-		exit(0);
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
+		exit(rv);
 	}
 	else if (strcmp(argv[i], "--tree") == 0) {
-		tree();
-		exit(0);
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
+		exit(rv);
 	}
 	else if (strcmp(argv[i], "--top") == 0) {
-		top();
-		exit(0);
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--top");
+		exit(rv);
 	}
 #ifdef HAVE_NETWORK	
 	else if (strcmp(argv[i], "--netstats") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
-			netstats();
+			struct stat s;
+			int rv;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0)
+				rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
+			else
+				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
+			exit(rv);
 		}
 		else {
 			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
 			exit(1);
 		}
-		exit(0);
 	}
 #endif	
 #ifdef HAVE_FILE_TRANSFER
@@ -849,6 +855,9 @@ int main(int argc, char **argv) {
 	int highest_errno = errno_highest_nr();
 #endif
 
+	// build /run/firejail directory structure
+	preproc_build_firejail_dir();
+	
 	detect_quiet(argc, argv);
 	detect_allow_debuggers(argc, argv);
 
@@ -951,10 +960,8 @@ int main(int argc, char **argv) {
 	// initialize globals
 	init_cfg(argc, argv);
 
-
 	// check firejail directories
 	EUID_ROOT();
-	fs_build_firejail_dir();
 	bandwidth_del_run_file(sandbox_pid);
 	network_del_run_file(sandbox_pid);
 	delete_name_file(sandbox_pid);
@@ -1112,7 +1119,16 @@ int main(int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
-				protocol_store(argv[i] + 11);
+				if (cfg.protocol) {
+					if (!arg_quiet)
+						fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", argv[i] + 11);
+				}
+				else {
+					// store list
+					cfg.protocol = strdup(argv[i] + 11);
+					if (!cfg.protocol)
+						errExit("strdup");
+				}
 			}
 			else {
 				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -1447,35 +1463,6 @@ int main(int argc, char **argv) {
 			}
 
 		}
-#if 0 // disabled for now, it could be used to overwrite system directories	
-		else if (strncmp(argv[i], "--overlay-path=", 15) == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-				arg_overlay_keep = 1;
-				arg_overlay_reuse = 1;
-				
-				char *dirname = argv[i] + 15;
-				if (dirname == '\0') {
-					fprintf(stderr, "Error: invalid overlay option\n");
-					exit(1);
-				}
-				cfg.overlay_dir = expand_home(dirname, cfg.homedir);
-			}
-			else {
-				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
-		}
-#endif
 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
 				if (cfg.chrootdir) {
@@ -1604,6 +1591,14 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: invalid directory %s\n", cfg.chrootdir);
 					return 1;
 				}
+				
+				// don't allow "--chroot=/"
+				char *rpath = realpath(cfg.chrootdir, NULL);
+				if (rpath == NULL || strcmp(rpath, "/") == 0) {
+					fprintf(stderr, "Error: invalid chroot directory\n");
+					exit(1);
+				}
+				free(rpath);
 				
 				// check chroot directory structure
 				if (fs_check_chroot_dir(cfg.chrootdir)) {
@@ -2506,7 +2501,7 @@ int main(int argc, char **argv) {
 			network_main(child);
 			if (arg_debug)
 				printf("Host network configured\n");			
-			exit(0);			
+			_exit(0);			
 		}
 
 		// wait for the child to finish
@@ -2555,16 +2550,30 @@ int main(int argc, char **argv) {
 	 	ptr += strlen(ptr);
 	 	
 	 	//  add tty group
-	 	gid_t ttygid = get_tty_gid();
-	 	if (ttygid) {
-	 		sprintf(ptr, "%d %d 1\n", ttygid, ttygid);
+	 	gid_t g = get_group_id("tty");
+	 	if (g) {
+	 		sprintf(ptr, "%d %d 1\n", g, g);
 	 		ptr += strlen(ptr);
 	 	}
 	 	
 	 	//  add audio group
-	 	gid_t audiogid = get_audio_gid();
-	 	if (ttygid) {
-	 		sprintf(ptr, "%d %d 1\n", audiogid, audiogid);
+	 	g = get_group_id("audio");
+	 	if (g) {
+	 		sprintf(ptr, "%d %d 1\n", g, g);
+	 		ptr += strlen(ptr);
+	 	}
+	 	
+	 	//  add video group
+	 	g = get_group_id("video");
+	 	if (g) {
+	 		sprintf(ptr, "%d %d 1\n", g, g);
+	 		ptr += strlen(ptr);
+	 	}
+	 	
+	 	//  add games group
+	 	g = get_group_id("games");
+	 	if (g) {
+	 		sprintf(ptr, "%d %d 1\n", g, g);
 	 	}
 	 	
  		EUID_ROOT();

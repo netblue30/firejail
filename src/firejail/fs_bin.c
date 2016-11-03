@@ -192,6 +192,8 @@ static void duplicate(char *fname) {
 				if (asprintf(&f, "%s/%s", RUN_BIN_DIR, fname) == -1)
 					errExit("asprintf");
 				execlp(RUN_CP_COMMAND, RUN_CP_COMMAND, "-a", actual_path, f, NULL);
+				perror("execlp");
+				_exit(1);
 			}
 			// wait for the child to finish
 			waitpid(child, NULL, 0);
@@ -208,8 +210,7 @@ void fs_private_bin_list(void) {
 	char *private_list = cfg.bin_private_keep;
 	assert(private_list);
 	
-	// create /tmp/firejail/mnt/bin directory
-	fs_build_mnt_dir();
+	// create /run/firejail/mnt/bin directory
 	if (mkdir(RUN_BIN_DIR, 0755) == -1)
 		errExit("mkdir");
 	if (chmod(RUN_BIN_DIR, 0755) == -1)
@@ -245,7 +246,7 @@ void fs_private_bin_list(void) {
 			duplicate(ptr);
 		free(dlist);	
 		fs_logger_print();
-		exit(0);
+		_exit(0);
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);

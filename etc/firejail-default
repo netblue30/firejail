@@ -31,6 +31,9 @@ profile firejail-default {
 /{,var/}run/user/**/pulse/ rw,
 /{,var/}run/user/**/pulse/** rw,
 /{,var/}run/firejail/mnt/fslogger r,
+/{,var/}run/firejail/appimage r,
+/{,var/}run/firejail/appimage/** r,
+/{,var/}run/firejail/appimage/** ix,
 /{run,dev}/shm/ r,
 /{run,dev}/shm/** rmwk,
 

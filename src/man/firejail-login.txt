@@ -13,6 +13,10 @@ Example:
 
 	netblue:--net=none --protocol=unix
 
+Wildcard patterns are accepted in the user name field:
+
+	user*: --private
+
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
 /etc/passwd file for each user that needs to be restricted. Alternatively,

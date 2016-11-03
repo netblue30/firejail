@@ -146,7 +146,7 @@ static void print_sandbox(pid_t pid) {
 			return;
 		net_ifprint();
 		printf("\n");
-		exit(0);
+		_exit(0);
 	}
 	
 	// wait for the child to finish

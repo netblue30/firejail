@@ -1,17 +1,18 @@
 # unrar profile
-quiet
 ignore noroot
 include /etc/firejail/default.profile
 
-tracelog
-net none
-shell none
-private-bin unrar
-private-dev
-nosound
-no3d
-private-etc passwd,group,localtime
-hostname unrar
-private-tmp
 blacklist /tmp/.X11-unix
 
+hostname unrar
+net none
+no3d
+nosound
+quiet
+shell none
+tracelog
+
+private-bin unrar
+private-dev
+private-etc passwd,group,localtime
+private-tmp

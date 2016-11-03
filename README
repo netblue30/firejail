@@ -47,6 +47,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- added --join-or-start command
 	- CVE-2016-7545
 Fred-Barclay (https://github.com/Fred-Barclay)
+	- lots of profile fixes
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile
 	- split Icedove and Thunderbird profiles
@@ -69,7 +70,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added audacity profile
 	- fixed Telegram and qtox profiles
 	- added Atom Beta and Atom profiles
-	- tightened 0ad, atril, evince, gthumb, pix, qtox, and xreader profiles.
+	- tightened 0ad, atril, evince, gthumb, pix, qtox, and xreader profiles
 	- several private-bin conversions
 	- added jitsi profile
 	- pidgin private-bin conversion
@@ -77,13 +78,32 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added gnome-chess profile
 	- added DOSBox profile
 	- evince profile enhancement
+	- tightened Spotify profile
+	- added xiphos and Tor Browser Bundle profiles
+Impyy (https://github.com/Impyy)
+	- added mumble profile
+valoq (https://github.com/valoq)
+	- LibreOffice profile fixes
+	- cherrytree profile fixes
+	- added support for /srv in --whitelist feature
+	- Eye of GNOME, Evolution, display (imagemagik) and Wire profiles
+	- blacklist suid binaries in disable-common.inc
+Vadim A. Misbakh-Soloviov (https://github.com/msva)
+	- profile fixes
+Rafael Cavalcanti (https://github.com/rccavalcanti)
+	- chromium profile fixes for Arch Linux
+Deelvesh Bunjun (https://github.com/DeelveshBunjun)
+	- added xpdf profile
+vismir2 (https://github.com/vismir2)
+	- claws-mail, mutt, git, emacs, vim profiles
+Dara Adib (https://github.com/daradib)
+	- ssh profile fix
+	- evince profile fix
 vismir2 (https://github.com/vismir2)
 	- feh, ranger, 7z, keepass, keepassx and zathura profiles
 	- lots of profile fixes
 graywolf (https://github.com/graywolf)
 	- spelling fix
-Dara Adib (https://github.com/daradib)
-	- ssh profile fix
 Tomasz Jan Góralczyk (https://github.com/tjg)
 	- fixed Steam profile
 pwnage-pineapple (https://github.com/pwnage-pineapple)

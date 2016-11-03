@@ -6,6 +6,9 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+echo "TESTING: /sys/fs access (test/fs/sys_fs.exp)"
+./sys_fs.exp
+
 echo "TESTING: kmsg access (test/fs/kmsg.exp)"
 ./kmsg.exp
 

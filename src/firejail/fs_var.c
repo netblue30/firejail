@@ -317,9 +317,6 @@ void fs_var_utmp(void) {
 		return;
 	}
 
-	// create /tmp/firejail/mnt directory
-	fs_build_mnt_dir();
-	
 	// create a new utmp file
 	if (arg_debug)
 		printf("Create the new utmp file\n");

@@ -358,7 +358,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 				fprintf(stderr, "Error: Cannot read %s\n", fname1);
 				exit(1);
 			}
-			exit(0);
+			_exit(0);
 		}
 
 		// wait for the child to finish
@@ -391,7 +391,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 					exit(1);
 				}
 				fclose(fp);
-				exit(0);
+				_exit(0);
 			}
 
 			// wait for the child to finish
@@ -445,7 +445,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 				fprintf(stderr, "Error: Cannot read %s\n", src_fname);
 				exit(1);
 			}
-			exit(0);
+			_exit(0);
 		}
 
 		// wait for the child to finish
@@ -494,7 +494,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 				}
 			}
 
-			exit(0);
+			_exit(0);
 		}
 
 		// wait for the child to finish

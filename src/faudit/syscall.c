@@ -92,7 +92,8 @@ void syscall_run(const char *name) {
 		errExit("fork");
 	if (child == 0) {
 		execl(prog, prog, "syscall", name, NULL);
-		exit(1);
+		perror("execl");
+		_exit(1);
 	}
 		
 	// wait for the child to finish

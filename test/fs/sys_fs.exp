@@ -1,0 +1,44 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls /sys/fs\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Permission denied"
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+send -- "firejail --noblacklist=/sys/fs\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls /sys/fs\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"cgroup"
+}
+after 100
+send -- "exit\r"
+after 100
+
+puts "\nall done\n"
+

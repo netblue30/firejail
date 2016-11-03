@@ -6,11 +6,12 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-private
-private-dev
-nosound
-no3d
-private-tmp
 blacklist /tmp/.X11-unix
+
+no3d
+nosound
 seccomp
 
+private
+private-dev
+private-tmp

@@ -1,6 +1,7 @@
 # History files in $HOME
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
+blacklist-nolog ${HOME}/.bash_history
 blacklist ${HOME}/.local/share/systemd
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.macromedia
@@ -23,6 +24,7 @@ blacklist ${HOME}/.config/openbox/autostart
 blacklist ${HOME}/.config/openbox/environment
 blacklist ${HOME}/.gnomerc
 blacklist /etc/X11/Xsession.d/
+blacklist ${HOME}/.xpra
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox
@@ -96,9 +98,6 @@ read-only ${HOME}/.emacs.d
 read-only ${HOME}/.nano
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.iscreenrc
-read-only ${HOME}/.muttrc
-read-only ${HOME}/.mutt/muttrc
-read-only ${HOME}/.msmtprc
 read-only ${HOME}/.reportbugrc
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
@@ -137,6 +136,11 @@ blacklist /etc/gshadow+
 blacklist /etc/ssh
 blacklist /var/backup
 
+# system directories	
+blacklist /sbin
+blacklist /usr/sbin
+blacklist /usr/local/sbin
+
 # system management
 blacklist ${PATH}/umount
 blacklist ${PATH}/mount
@@ -149,11 +153,22 @@ blacklist ${PATH}/xev
 blacklist ${PATH}/strace
 blacklist ${PATH}/nc
 blacklist ${PATH}/ncat
-
-# system directories	
-blacklist /sbin
-blacklist /usr/sbin
-blacklist /usr/local/sbin
+blacklist ${PATH}/gpasswd
+blacklist ${PATH}/newgidmap
+blacklist ${PATH}/newgrp
+blacklist ${PATH}/newuidmap
+blacklist ${PATH}/pkexec
+blacklist ${PATH}/sg
+blacklist ${PATH}/rsh
+blacklist ${PATH}/rlogin
+blacklist ${PATH}/rcp
+blacklist ${PATH}/crontab
+blacklist ${PATH}/ksu
+blacklist ${PATH}/chsh
+blacklist ${PATH}/chfn
+blacklist ${PATH}/chage
+blacklist ${PATH}/expiry
+blacklist ${PATH}/unix_chkpwd
 
 # prevent lxterminal connecting to an existing lxterminal session
 blacklist /tmp/.lxterminal-socket*
@@ -172,3 +187,7 @@ blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
+
+# kernel files
+blacklist /vmlinuz*
+blacklist /initrd*

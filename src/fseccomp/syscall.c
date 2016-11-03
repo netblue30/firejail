@@ -17,9 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-
-#ifdef HAVE_SECCOMP
-#include "firejail.h"
+#include "fseccomp.h"
 #include <sys/syscall.h>
 
 typedef struct {
@@ -31,25 +29,14 @@ static SyscallEntry syslist[] = {
 //
 // code generated using tools/extract-syscall
 //
-#include "syscall.h"
+#include "../include/syscall.h"
 //
 // end of generated code
 //
 }; // end of syslist
 
-const char *syscall_find_nr(int nr) {
-	int i;
-	int elems = sizeof(syslist) / sizeof(syslist[0]);
-	for (i = 0; i < elems; i++) {
-		if (nr == syslist[i].nr)
-			return syslist[i].name;
-	}
-	
-	return "unknown";
-}
-
 // return -1 if error, or syscall number
-static int syscall_find_name(const char *name) {
+int syscall_find_name(const char *name) {
 	int i;
 	int elems = sizeof(syslist) / sizeof(syslist[0]);
 	for (i = 0; i < elems; i++) {
@@ -60,8 +47,28 @@ static int syscall_find_name(const char *name) {
 	return -1;
 }
 
+char *syscall_find_nr(int nr) {
+	int i;
+	int elems = sizeof(syslist) / sizeof(syslist[0]);
+	for (i = 0; i < elems; i++) {
+		if (nr == syslist[i].nr)
+			return syslist[i].name;
+	}
+	
+	return "unknown";
+}
+
+void syscall_print(void) {
+	int i;
+	int elems = sizeof(syslist) / sizeof(syslist[0]);
+	for (i = 0; i < elems; i++) {
+		printf("%d\t- %s\n", syslist[i].nr, syslist[i].name);
+	}
+	printf("\n");
+}
+
 // return 1 if error, 0 if OK
-int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg), int arg) {
+int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg), int fd, int arg) {
 	// don't allow empty lists
 	if (slist == NULL || *slist == '\0') {
 		fprintf(stderr, "Error: empty syscall lists are not allowed\n");
@@ -84,7 +91,7 @@ int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg)
 			if (nr == -1)
 				fprintf(stderr, "Warning: syscall %s not found\n", start);
 			else if (callback != NULL)
-				callback(nr, arg);
+				callback(fd, nr, arg);
 				
 			start = ptr + 1;
 		}
@@ -95,22 +102,9 @@ int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg)
 		if (nr == -1)
 			fprintf(stderr, "Warning: syscall %s not found\n", start);
 		else if (callback != NULL)
-			callback(nr, arg);
+			callback(fd, nr, arg);
 	}
 	
 	free(str);
 	return 0;
 }
-
-void syscall_print(void) {
-	EUID_ASSERT();
-	
-	int i;
-	int elems = sizeof(syslist) / sizeof(syslist[0]);
-	for (i = 0; i < elems; i++) {
-		printf("%d\t- %s\n", syslist[i].nr, syslist[i].name);
-	}
-	printf("\n");
-}
-
-#endif // HAVE_SECCOMP

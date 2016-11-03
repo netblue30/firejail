@@ -175,6 +175,14 @@ static void monitor_application(pid_t app_pid) {
 
 
 static void start_application(void) {
+	// set environment
+	env_defaults();
+	env_apply();
+	if (arg_debug) {
+		printf("starting application\n");
+		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
+	}
+	
 	//****************************************
 	// start the program without using a shell
 	//****************************************
@@ -556,12 +564,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 	
-	// set environment
-	env_defaults();
-	
-	// set user-supplied environment variables
-	env_apply();
-
 	//****************************
 	// set security filters
 	//****************************

@@ -1180,7 +1180,7 @@ nsswitch.conf,passwd,resolv.conf
 
 .TP
 \fB\-\-private-tmp
-Mount an empty filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
+Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
 .br
 
 .br

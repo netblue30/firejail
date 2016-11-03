@@ -16,5 +16,4 @@ seccomp
 #shell none
 #private-bin qbittorrent
 private-dev
-
-whitelist /tmp/.X11-unix
+private-tmp

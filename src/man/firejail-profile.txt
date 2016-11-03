@@ -200,7 +200,7 @@ filesystem, and copy the files and directories in the list.
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-tmp
-Mount an empty temporary filesystem on top of /tmp directory.
+Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
 .TP
 \fBread-only file_or_directory
 Make directory or file read-only.

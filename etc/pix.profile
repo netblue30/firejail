@@ -18,5 +18,5 @@ shell none
 tracelog
 
 private-bin pix
-whitelist /tmp/.X11-unix
 private-dev
+private-tmp

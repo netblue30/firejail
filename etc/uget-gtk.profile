@@ -16,8 +16,8 @@ shell none
 
 private-bin uget-gtk
 private-dev
+private-tmp
 
-whitelist /tmp/.X11-unix
 whitelist ${DOWNLOADS}
 mkdir ~/.config/uGet
 whitelist ~/.config/uGet

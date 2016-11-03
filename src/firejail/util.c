@@ -176,12 +176,6 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 	assert(srcname);
 	assert(destname);
 
-	struct stat s;
-	if (stat(destname, &s) == 0) {
-		fprintf(stderr, "Error: file %s already exists\n", destname);
-		return -1;
-	}
-
 	// open source
 	int src = open(srcname, O_RDONLY);
 	if (src < 0) {

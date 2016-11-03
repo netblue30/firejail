@@ -324,22 +324,24 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 	
 	// get file from sandbox and store it in the current directory
 	else if (op == SANDBOX_FS_GET) {
-		// check source file (sandbox)
-		char *src_fname;
-		if (asprintf(&src_fname, "%s%s", rootdir, fname1) == -1)
-			errExit("asprintf");
+		char *src_fname =fname1;
+		char *dest_fname = strrchr(fname1, '/');
+		if (!dest_fname || *(++dest_fname) == '\0') {
+			fprintf(stderr, "Error: invalid file name %s\n", fname1);
+			exit(1);
+		}
+
 		EUID_ROOT();
-		struct stat s;
-		if (stat(src_fname, &s) == -1) {
-			fprintf(stderr, "Error: Cannot access %s\n", fname1);
-			exit(1);
-		}
-		if (is_dir(src_fname)) {
-			fprintf(stderr, "Error: source file name is a directory\n");
-			exit(1);
-		}
-		
-		// try to open the source file - we need to chroot
+		if (arg_debug)
+			printf("copy %s to %s\n", src_fname, dest_fname);
+
+		// create a user-owned temporary file in /run/firejail directory
+		char tmp_fname[] = "/run/firejail/tmpget-XXXXXX";
+		int fd = mkstemp(tmp_fname);
+		SET_PERMS_FD(fd, getuid(), getgid(), 0600);
+		close(fd);
+	
+		// copy the source file into the temporary file - we need to chroot
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -353,11 +355,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			// drop privileges
 			drop_privs(0);
 			
-			// try to read the file
-			if (access(fname1, R_OK) == -1) {
-				fprintf(stderr, "Error: Cannot read %s\n", fname1);
-				exit(1);
-			}
+			// copy the file
+			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600))
+				_exit(1);
 			_exit(0);
 		}
 
@@ -365,74 +365,54 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		int status = 0;
 		waitpid(child, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
-		else
-			exit(1);
-		EUID_USER();
-		
-		// check destination file (host)
-		char *dest_fname = strrchr(fname1, '/');
-		if (!dest_fname || *(++dest_fname) == '\0') {
-			fprintf(stderr, "Error: invalid file name %s\n", fname1);
-			exit(1);
-		}
-		
-		if (access(dest_fname, F_OK) == -1) {
-			// try to create the file as a regular user
-			pid_t child = fork();
-			if (child < 0)
-				errExit("fork");
-			if (child == 0) {
-				// drop privileges
-				drop_privs(0);
-				
-				FILE *fp = fopen(dest_fname, "w");
-				if (!fp) {
-					fprintf(stderr, "Error: cannot create %s\n", dest_fname);
-					exit(1);
-				}
-				fclose(fp);
-				_exit(0);
-			}
-
-			// wait for the child to finish
-			int status = 0;
-			waitpid(child, &status, 0);
-			if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
-			else
-				exit(1);
-		}
 		else {
-			if (access(dest_fname, W_OK) == -1) {
-				fprintf(stderr, "Error: cannot write %s\n", dest_fname);
-				exit(1);
-			}
+			unlink(tmp_fname);
+			exit(1);
 		}
 		
-		// copy file
-		if (arg_debug)
-			printf("copy %s to %s\n", src_fname, dest_fname);
-		EUID_ROOT();
-		if (copy_file(src_fname, dest_fname, getuid(), getgid(), 0644))
-			fprintf(stderr, "Error: transfer failed\n");
-		else
-			printf("Transfer complete\n");
+		// copy the temporary file into the destionation file
+		child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+			
+			// copy the file
+			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600))
+				_exit(1);
+			_exit(0);
+		}
+
+		// wait for the child to finish
+		status = 0;
+		waitpid(child, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
+		else {
+			unlink(tmp_fname);
+			exit(1);
+		}
+		
+		// remove the temporary file
+		unlink(tmp_fname);
 		EUID_USER();
 	}
 	// get file from host and store it in the sandbox
 	else if (op == SANDBOX_FS_PUT && path2) {
-		// verify the source file
-		const char *src_fname = path1;
-		struct stat s;
-		if (stat(src_fname, &s) == -1) {
-			fprintf(stderr, "Error: Cannot access %s\n", fname1);
-			exit(1);
-		}
-		if (is_dir(src_fname)) {
-			fprintf(stderr, "Error: source file name is a directory\n");
-			exit(1);
-		}
-		
-		// try to open the source file 
+		char *src_fname =fname1;
+		char *dest_fname = fname2;
+
+		EUID_ROOT();
+		if (arg_debug)
+			printf("copy %s to %s\n", src_fname, dest_fname);
+
+		// create a user-owned temporary file in /run/firejail directory
+		char tmp_fname[] = "/run/firejail/tmpget-XXXXXX";
+		int fd = mkstemp(tmp_fname);
+		SET_PERMS_FD(fd, getuid(), getgid(), 0600);
+		close(fd);
+	
+		// copy the source file into the temporary file - we need to chroot
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -440,11 +420,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			// drop privileges
 			drop_privs(0);
 			
-			// try to read the file
-			if (access(src_fname, R_OK) == -1) {
-				fprintf(stderr, "Error: Cannot read %s\n", src_fname);
-				exit(1);
-			}
+			// copy the file
+			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600))
+				_exit(1);
 			_exit(0);
 		}
 
@@ -452,20 +430,12 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		int status = 0;
 		waitpid(child, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
-		else
-			exit(1);
-		
-		// check destination file (sandbox)
-		char *dest_fname;
-		if (asprintf(&dest_fname, "%s%s", rootdir, fname2) == -1)
-			errExit("asprintf");
-		EUID_ROOT();
-		if (is_dir(dest_fname)) {
-			fprintf(stderr, "Error: destination file name is a directory inside the sandbox\n");
+		else {
+			unlink(tmp_fname);
 			exit(1);
 		}
 		
-		// check write access on destination
+		// copy the temporary file into the destionation file
 		child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -475,25 +445,13 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 				errExit("chroot");
 			if (chdir("/") < 0)
 				errExit("chdir");
-
+			
 			// drop privileges
 			drop_privs(0);
-
-			if (access(path2, F_OK) == -1) {
-				FILE *fp = fopen(path2, "w");
-				if (!fp) {
-					fprintf(stderr, "Error: cannot create %s\n", path2);
-					exit(1);
-				}
-				fclose(fp);
-			}
-			else {
-				if (access(path2, W_OK) == -1) {
-					fprintf(stderr, "Error: cannot write %s\n", path2);
-					exit(1);
-				}
-			}
-
+			
+			// copy the file
+			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600))
+				_exit(1);
 			_exit(0);
 		}
 
@@ -501,17 +459,13 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		status = 0;
 		waitpid(child, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
-		else
+		else {
+			unlink(tmp_fname);
 			exit(1);
-			
-		// copy file
-		if (arg_debug)
-			printf("copy %s to %s\n", src_fname, dest_fname);
-		EUID_ROOT();
-		if (copy_file(src_fname, dest_fname, getuid(), getgid(), 0644))
-			fprintf(stderr, "Error: transfer failed\n");
-		else
-			printf("Transfer complete\n");
+		}
+		
+		// remove the temporary file
+		unlink(tmp_fname);
 		EUID_USER();
 	}
 

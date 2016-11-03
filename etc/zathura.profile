@@ -18,3 +18,8 @@ shell none
 
 private-bin zathura
 private-dev
+private-etc fonts
+whitelist /tmp/.X11-unix
+
+read-only ~/
+read-write ~/.local/share/zathura/

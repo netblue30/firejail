@@ -2,8 +2,10 @@ firejail (0.9.45) baseline; urgency=low
   * development version, work in progress
   * security: overwrite /etc/resolv.conf found by Martin Carpenter
   * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
+  * security: invalid environment exploit found by Martin Carpener
+  * security: split most of networking code in a separate executable
+  * security: split seccomp filter code code in a separate executable
   * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)
-  * feature: split most of networking code in a separate executable
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500

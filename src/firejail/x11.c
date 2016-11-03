@@ -311,7 +311,8 @@ void x11_start_xephyr(int argc, char **argv) {
 	if (server == 0) {
 		if (arg_debug)
 			printf("Starting xephyr...\n");
-	
+
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -353,6 +354,7 @@ void x11_start_xephyr(int argc, char **argv) {
 		if (!arg_quiet)
 			printf("\n*** Attaching to Xephyr display %d ***\n\n", display);
 
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
 		_exit(1);
@@ -432,6 +434,7 @@ void x11_start_xpra(int argc, char **argv) {
 			dup2(fd_null,2);
 		}
 	
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -478,6 +481,7 @@ void x11_start_xpra(int argc, char **argv) {
 		if (!arg_quiet)
 			printf("\n*** Attaching to xpra display %d ***\n\n", display);
 
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
 		_exit(1);
@@ -508,6 +512,7 @@ void x11_start_xpra(int argc, char **argv) {
 	if (jail < 0)
 		errExit("fork");
 	if (jail == 0) {
+		assert(getenv("LD_PRELOAD") == NULL);	
 		if (firejail_argv[0]) // shut up llvm scan-build
 			execvp(firejail_argv[0], firejail_argv);
 		perror("execvp");
@@ -534,6 +539,7 @@ void x11_start_xpra(int argc, char **argv) {
 					dup2(fd_null,1);
 					dup2(fd_null,2);
 				}
+				assert(getenv("LD_PRELOAD") == NULL);	
 				execvp(stop_argv[0], stop_argv);
 				perror("execvp");
 				_exit(1);
@@ -664,11 +670,12 @@ void x11_xorg(void) {
 			errExit("setreuid");
 		if (setregid(0, 0) < 0)
 			errExit("setregid");
-		
+
 		char *display = getenv("DISPLAY");
 		if (!display)
 			display = ":0.0";
-			
+		
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", RUN_XAUTHORITY_SEC_FILE,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
 		

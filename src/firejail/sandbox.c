@@ -260,6 +260,7 @@ void start_audit(void) {
 	char *audit_prog;
 	if (asprintf(&audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
 		errExit("asprintf");
+	assert(getenv("LD_PRELOAD") == NULL);	
 	execl(audit_prog, audit_prog, NULL);
 	perror("execl");
 	exit(1);
@@ -268,6 +269,15 @@ void start_audit(void) {
 void start_application(void) {
 //if (setsid() == -1)
 //errExit("setsid");
+
+	// set environment
+	env_defaults();
+	env_apply();
+	if (arg_debug) {
+		printf("starting application\n");
+		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
+	}
+	
 	//****************************************
 	// audit
 	//****************************************
@@ -787,12 +797,6 @@ assert(0);
 		}
 	}
 	
-	// set environment
-	env_defaults();
-	
-	// set user-supplied environment variables
-	env_apply();
-
 	// set nice
 	if (arg_nice) {
 		errno = 0;

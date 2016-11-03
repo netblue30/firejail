@@ -106,6 +106,7 @@ void run_symlink(int argc, char **argv) {
 		a[i + 2] = argv[i + 1];
 	}
 	a[i + 2] = NULL;
+	assert(getenv("LD_PRELOAD") == NULL);	
 	execvp(a[0], a); 
 
 	perror("execvp");

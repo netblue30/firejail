@@ -144,6 +144,7 @@ void netfilter(const char *fname) {
 
 		// wipe out environment variables
 		environ = NULL;
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execl(iptables_restore, iptables_restore, NULL);
 		perror("execl");
 		_exit(1);
@@ -163,6 +164,7 @@ void netfilter(const char *fname) {
 			if (setregid(0, 0))
 				errExit("setregid");
 			environ = NULL;
+			assert(getenv("LD_PRELOAD") == NULL);	
 			execl(iptables, iptables, "-vL", NULL);
 			perror("execl");
 			_exit(1);
@@ -257,6 +259,7 @@ void netfilter6(const char *fname) {
 
 		// wipe out environment variables
 		environ = NULL;
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execl(ip6tables_restore, ip6tables_restore, NULL);
 		perror("execl");
 		_exit(1);

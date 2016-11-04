@@ -165,7 +165,7 @@ int sbox_run(unsigned filter, int num, ...) {
 		else if (filter & SBOX_USER)
 			drop_privs(1);
 
-		assert(getenv("LD_PRELOAD") == NULL);	
+		clearenv();
 		if (arg[0])	// get rid of scan-build warning
 			execvp(arg[0], arg);
 		else

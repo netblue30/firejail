@@ -80,6 +80,8 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- evince profile enhancement
 	- tightened Spotify profile
 	- added xiphos and Tor Browser Bundle profiles
+BogDan Vatra (https://github.com/bog-dan-ro)
+	- zoom profile
 Impyy (https://github.com/Impyy)
 	- added mumble profile
 valoq (https://github.com/valoq)
@@ -88,6 +90,8 @@ valoq (https://github.com/valoq)
 	- added support for /srv in --whitelist feature
 	- Eye of GNOME, Evolution, display (imagemagik) and Wire profiles
 	- blacklist suid binaries in disable-common.inc
+	- fix man pages
+	- various profile improvements
 Vadim A. Misbakh-Soloviov (https://github.com/msva)
 	- profile fixes
 Rafael Cavalcanti (https://github.com/rccavalcanti)

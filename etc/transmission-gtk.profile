@@ -19,5 +19,4 @@ tracelog
 
 private-bin transmission-gtk
 private-dev
-
-whitelist /tmp/.X11-unix
+private-tmp

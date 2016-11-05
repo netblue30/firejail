@@ -12,6 +12,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+nosound
 protocol unix
 seccomp
 shell none

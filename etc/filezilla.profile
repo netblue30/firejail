@@ -17,5 +17,4 @@ shell none
 
 private-bin filezilla,uname,sh,python,lsb_release,fzputtygen,fzsftp
 private-dev
-
-whitelist /tmp/.X11-unix
+private-tmp

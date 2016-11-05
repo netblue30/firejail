@@ -47,4 +47,8 @@ whitelist ~/.config/pipelight-silverlight5.1
 include /etc/firejail/whitelist-common.inc
 
 # experimental features
-#private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
+
+private-bin firefox,which,sh,dbus-launch,dbus-send,env
+private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,firefox,mime.types,mailcap,asound.conf,pulse
+private-dev
+private-tmp

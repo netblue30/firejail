@@ -16,6 +16,6 @@ seccomp
 shell none
 
 private-bin feh
-whitelist /tmp/.X11-unix
 private-dev
 private-etc feh
+private-tmp

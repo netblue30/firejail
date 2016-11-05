@@ -5,6 +5,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+netfilter
+net none
 nogroups
 nonewprivs
 noroot
@@ -16,3 +18,5 @@ tracelog
 
 private-bin evince,evince-previewer,evince-thumbnailer
 private-dev
+private-etc fonts
+private-tmp

@@ -15,8 +15,7 @@ protocol unix,inet,inet6
 seccomp
 
 private-dev
-
-whitelist /tmp/.X11-unix
+private-tmp
 
 mkdir ${HOME}/.local/share/wesnoth
 mkdir ${HOME}/.config/wesnoth

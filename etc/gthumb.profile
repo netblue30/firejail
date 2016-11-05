@@ -17,5 +17,5 @@ shell none
 tracelog
 
 private-bin gthumb
-whitelist /tmp/.X11-unix
 private-dev
+private-tmp

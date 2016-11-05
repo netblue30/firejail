@@ -8,6 +8,7 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
+net none
 nogroups
 nonewprivs
 noroot
@@ -19,7 +20,7 @@ protocol unix
 private-bin zathura
 private-dev
 private-etc fonts
-whitelist /tmp/.X11-unix
+private-tmp
 
 read-only ~/
 read-write ~/.local/share/zathura/

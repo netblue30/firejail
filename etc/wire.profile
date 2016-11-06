@@ -1,6 +1,7 @@
 # wire messenger profile
 
 noblacklist ~/.config/Wire
+noblacklist ~/.config/wire
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

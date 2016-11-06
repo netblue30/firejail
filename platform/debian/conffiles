@@ -171,3 +171,4 @@
 /etc/firejail/display.profile
 /etc/firejail/Wire.profile
 /etc/firejail/mumble.profile
+/etc/firejail/zoom.profile

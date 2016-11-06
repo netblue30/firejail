@@ -6,7 +6,7 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
-net none
+#net none - creates some problems on some distributions
 nogroups
 nonewprivs
 noroot

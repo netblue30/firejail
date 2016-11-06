@@ -529,9 +529,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
-			cfg.seccomp_list = strdup(ptr + 8);
-			if (!cfg.seccomp_list)
-				errExit("strdup");
+			cfg.seccomp_list = seccomp_check_list(ptr + 8);
 		}
 		else
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
@@ -545,9 +543,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
-			cfg.seccomp_list_drop = strdup(ptr + 13);
-			if (!cfg.seccomp_list_drop)
-				errExit("strdup");
+			cfg.seccomp_list_drop = seccomp_check_list(ptr + 13);
 		}
 		else
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
@@ -560,9 +556,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
-			cfg.seccomp_list_keep= strdup(ptr + 13);
-			if (!cfg.seccomp_list_keep)
-				errExit("strdup");
+			cfg.seccomp_list_keep= seccomp_check_list(ptr + 13);
 		}
 		else
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
@@ -576,7 +570,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_caps_list = strdup(ptr + 10);
 		if (!arg_caps_list)
 			errExit("strdup");
-		// verify seccomp list and exit if problems
+		// verify caps list and exit if problems
 		if (caps_check_list(arg_caps_list, NULL))
 			exit(1);
 		return 0;
@@ -588,7 +582,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_caps_list = strdup(ptr + 10);
 		if (!arg_caps_list)
 			errExit("strdup");
-		// verify seccomp list and exit if problems
+		// verify caps list and exit if problems
 		if (caps_check_list(arg_caps_list, NULL))
 			exit(1);
 		return 0;

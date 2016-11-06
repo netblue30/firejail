@@ -462,7 +462,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	arg[1] = "-c";
 	arg[2] = cmd;
 	arg[3] = NULL;
-	assert(getenv("LD_PRELOAD") == NULL);	
+	clearenv();
 	execvp(arg[0], arg);
 	
 	// it will never get here

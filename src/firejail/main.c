@@ -851,9 +851,6 @@ int main(int argc, char **argv) {
 	int custom_profile = 0;	// custom profile loaded
 	char *custom_profile_dir = NULL; // custom profile directory
 	int arg_noprofile = 0; // use default.profile if none other found/specified
-#ifdef HAVE_SECCOMP
-	int highest_errno = errno_highest_nr();
-#endif
 
 	// build /run/firejail directory structure
 	preproc_build_firejail_dir();
@@ -1155,9 +1152,7 @@ int main(int argc, char **argv) {
 					exit(1);
 				}
 				arg_seccomp = 1;
-				cfg.seccomp_list = strdup(argv[i] + 10);
-				if (!cfg.seccomp_list)
-					errExit("strdup");
+				cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
 			}
 			else {
 				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -1171,9 +1166,7 @@ int main(int argc, char **argv) {
 					exit(1);
 				}
 				arg_seccomp = 1;
-				cfg.seccomp_list_drop = strdup(argv[i] + 15);
-				if (!cfg.seccomp_list_drop)
-					errExit("strdup");
+				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
 			}
 			else {
 				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -1187,43 +1180,7 @@ int main(int argc, char **argv) {
 					exit(1);
 				}
 				arg_seccomp = 1;
-				cfg.seccomp_list_keep = strdup(argv[i] + 15);
-				if (!cfg.seccomp_list_keep)
-					errExit("strdup");
-			}
-			else {
-				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
-		}
-		else if (strncmp(argv[i], "--seccomp.e", 11) == 0 && strchr(argv[i], '=')) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp && !cfg.seccomp_list_errno) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
-					exit(1);
-				}
-				char *eq = strchr(argv[i], '=');
-				char *errnoname = strndup(argv[i] + 10, eq - (argv[i] + 10));
-				int nr = errno_find_name(errnoname);
-				if (nr == -1) {
-					fprintf(stderr, "Error: unknown errno %s\n", errnoname);
-					free(errnoname);
-					exit(1);
-				}
-	
-				if (!cfg.seccomp_list_errno)
-					cfg.seccomp_list_errno = calloc(highest_errno+1, sizeof(cfg.seccomp_list_errno[0]));
-	
-				if (cfg.seccomp_list_errno[nr]) {
-					fprintf(stderr, "Error: errno %s already configured\n", errnoname);
-					free(errnoname);
-					exit(1);
-				}
-				arg_seccomp = 1;
-				cfg.seccomp_list_errno[nr] = strdup(eq+1);
-				if (!cfg.seccomp_list_errno[nr])
-					errExit("strdup");
-				free(errnoname);
+				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
 			}
 			else {
 				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -2606,13 +2563,6 @@ int main(int argc, char **argv) {
 	waitpid(child, &status, 0);
 
 	// free globals
-#ifdef HAVE_SECCOMP
-	if (cfg.seccomp_list_errno) {
-		for (i = 0; i < highest_errno; i++)
-			free(cfg.seccomp_list_errno[i]);
-		free(cfg.seccomp_list_errno);
-	}
-#endif
 	if (cfg.profile) {
 		ProfileEntry *prf = cfg.profile;
 		while (prf != NULL) {

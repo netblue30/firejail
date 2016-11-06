@@ -67,12 +67,52 @@ void syscall_print(void) {
 	printf("\n");
 }
 
+// allowed input:
+// - syscall
+// - syscall(error)
+static void syscall_process_name(const char *name, int *syscall_nr, int *error_nr) {
+	assert(name);
+	if (strlen(name) == 0)
+		goto error;
+	*error_nr = -1;
+	
+	// syntax check
+	char *str = strdup(name);
+	if (!str)
+		errExit("strdup");
+
+	char *syscall_name = str;
+	char *error_name = strchr(str, ':');
+	if (error_name) {
+		*error_name = '\0';
+		error_name++;
+	}
+	if (strlen(syscall_name) == 0) {
+		free(str);
+		goto error;
+	}
+
+	*syscall_nr = syscall_find_name(syscall_name);
+	if (error_name) {
+		*error_nr = errno_find_name(error_name);
+		if (*error_nr == -1)
+			*syscall_nr = -1;
+	}
+
+	free(str);
+	return;
+	
+error:
+	fprintf(stderr, "Error fseccomp: invalid syscall list entry %s\n", name);
+	exit(1);
+}
+
 // return 1 if error, 0 if OK
 int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg), int fd, int arg) {
 	// don't allow empty lists
 	if (slist == NULL || *slist == '\0') {
-		fprintf(stderr, "Error: empty syscall lists are not allowed\n");
-		return -1;
+		fprintf(stderr, "Error fseccomp: empty syscall lists are not allowed\n");
+		exit(1);
 	}
 
 	// work on a copy of the string
@@ -80,29 +120,28 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 	if (!str)
 		errExit("strdup");
 
-	char *ptr = str;
-	char *start = str;
-	while (*ptr != '\0') {
-		if (islower(*ptr) || isdigit(*ptr) || *ptr == '_')
-			;
-		else if (*ptr == ',') {
-			*ptr = '\0';
-			int nr = syscall_find_name(start);
-			if (nr == -1)
-				fprintf(stderr, "Warning: syscall %s not found\n", start);
-			else if (callback != NULL)
-				callback(fd, nr, arg);
-				
-			start = ptr + 1;
-		}
-		ptr++;
+	char *ptr =strtok(str, ",");
+	if (ptr == NULL) {
+		fprintf(stderr, "Error fseccomp: empty syscall lists are not allowed\n");
+		exit(1);
 	}
-	if (*start != '\0') {
-		int nr = syscall_find_name(start);
-		if (nr == -1)
-			fprintf(stderr, "Warning: syscall %s not found\n", start);
-		else if (callback != NULL)
-			callback(fd, nr, arg);
+
+	while (ptr) {
+printf("ptr %s\n", ptr);
+		
+		int syscall_nr;
+		int error_nr;
+		syscall_process_name(ptr, &syscall_nr, &error_nr);
+printf("%d, %d\n", syscall_nr, error_nr);		
+		if (syscall_nr == -1)
+			fprintf(stderr, "Warning fseccomp: syscall %s not found\n", ptr);
+		else if (callback != NULL) {
+			if (error_nr != -1)
+				filter_add_errno(fd, syscall_nr, error_nr);
+			else
+				callback(fd, syscall_nr, arg);
+		}
+		ptr = strtok(NULL, ",");
 	}
 	
 	free(str);

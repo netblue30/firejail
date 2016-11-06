@@ -107,7 +107,7 @@ void protocol_build_filter(const char *prlist, const char *fname) {
 	assert(fname);
 
 #ifndef SYS_socket
-	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+	fprintf(stderr, "Warning fseccomp: --protocol not supported on this platform\n");
 	return;
 #else
 	// build the filter

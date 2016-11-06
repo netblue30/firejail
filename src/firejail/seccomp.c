@@ -22,6 +22,34 @@
 #include "firejail.h"
 #include "../include/seccomp.h"
 
+char *seccomp_check_list(const char *str) {
+	assert(str);
+	if (strlen(str) == 0) {
+		fprintf(stderr, "Error: empty syscall lists are not allowed\n");
+		exit(1);
+	}
+	
+	int len = strlen(str) + 1;
+	char *rv = malloc(len);
+	if (!rv)
+		errExit("malloc");
+	memset(rv, 0, len);
+	
+	const char *ptr1 = str;
+	char *ptr2 = rv;
+	while (*ptr1 != '\0') {
+		if (isalnum(*ptr1) || *ptr1 == '_' || *ptr1 == ',' || *ptr1 == ':')
+			*ptr2++ = *ptr1++;
+		else {
+			fprintf(stderr, "Error: invalid syscall list\n");
+			exit(1);
+		}
+	}
+						
+	return rv;
+}
+
+
 int seccomp_load(const char *fname) {
 	assert(fname);
 
@@ -136,10 +164,6 @@ int seccomp_filter_drop(int enforce_seccomp) {
 #endif
 		if (arg_debug)
 			printf("Build default+drop seccomp filter\n");
-		if (strlen(cfg.seccomp_list) == 0) {
-			fprintf(stderr, "Error: empty syscall lists are not allowed\n");
-			exit(1);
-		}
 		
 		// build the seccomp filter as a regular user
 		int rv;
@@ -157,10 +181,6 @@ int seccomp_filter_drop(int enforce_seccomp) {
 	else if (cfg.seccomp_list == NULL && cfg.seccomp_list_drop) {
 		if (arg_debug)
 			printf("Build drop seccomp filter\n");
-		if (strlen(cfg.seccomp_list_drop) == 0) {
-			fprintf(stderr, "Error: empty syscall lists are not allowed\n");
-			exit(1);
-		}
 
 		// build the seccomp filter as a regular user
 		int rv;
@@ -199,10 +219,6 @@ int seccomp_filter_drop(int enforce_seccomp) {
 int seccomp_filter_keep(void) {
 	if (arg_debug)
 		printf("Build drop seccomp filter\n");
-	if (strlen(cfg.seccomp_list_keep) == 0) {
-		fprintf(stderr, "Error: empty syscall lists are not allowed\n");
-		exit(1);
-	}
 	
 	// build the seccomp filter as a regular user
 	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
@@ -214,38 +230,6 @@ int seccomp_filter_keep(void) {
 
 		
 	return seccomp_load(RUN_SECCOMP_CFG);
-}
-
-// errno filter for seccomp option
-int seccomp_filter_errno(void) {
-#if 0 //todo: disabled temporarely, bring it back
-	int i;
-	int higest_errno = errno_highest_nr();
-	filter_init();
-
-	// apply errno list
-
-	for (i = 0; i < higest_errno; i++) {
-		if (cfg.seccomp_list_errno[i]) {
-			if (syscall_check_list(cfg.seccomp_list_errno[i], filter_add_errno, i)) {
-				fprintf(stderr, "Error: cannot load seccomp filter\n");
-				exit(1);
-			}
-		}
-	}
-
-	filter_end_blacklist();
-	if (arg_debug)
-		filter_debug();
-
-	// save seccomp filter in  /run/firejail/mnt/seccomp
-	// in order to use it in --join operations
-	write_seccomp_file();
-	return seccomp_load(RUN_SECCOMP_CFG);
-#else
-printf("*** --seccomp.<errno> is temporarily disabled, it will be brought back soon ***\n");
-	return 0;
-#endif	
 }
 
 void seccomp_print_filter_name(const char *name) {

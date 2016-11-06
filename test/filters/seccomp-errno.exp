@@ -8,23 +8,23 @@ spawn $env(SHELL)
 match_max 100000
 
 send -- "touch seccomp-test-file\r"
-sleep 1
+after 100
 
-send --  "firejail --seccomp.enoent=unlinkat rm seccomp-test-file\r"
+send --  "firejail --seccomp=unlinkat:ENOENT rm seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"No such file or directory"
 }
 sleep 1
 
-send --  "firejail --seccomp.enoent=unlinkat --debug rm seccomp-test-file\r"
+send --  "firejail --seccomp=unlinkat:ENOENT --debug rm seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"unlinkat 2 ENOENT"
 }
 sleep 1
 
-send --  "firejail --seccomp.enoent=unlinkat,mkdir\r"
+send --  "firejail --seccomp=unlinkat:ENOENT,mkdir:ENOENT\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
@@ -48,42 +48,6 @@ puts "\n"
 
 send -- "exit\r"
 sleep 1
-
-
-send --  "firejail --seccomp.enoent=unlinkat --seccomp.enoent=mkdir\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"errno enoent already configured"
-}
-sleep 1
-
-send --  "firejail --seccomp.enoent=unlinkat --seccomp.eperm=mkdir\r"
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"Child process initialized"
-}
-sleep 1
-send -- "rm seccomp-test-file\r"
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"No such file or directory"
-}
-after 100
-puts "\n"
-
-send -- "mkdir seccomp-test-dir\r"
-expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
-	"Operation not permitted"
-}
-after 100
-puts "\n"
-
-send -- "exit\r"
-sleep 1
-
-
-
 
 send -- "rm seccomp-test-file\r"
 after 100

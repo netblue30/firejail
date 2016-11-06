@@ -222,7 +222,6 @@ typedef struct config_t {
 	char *seccomp_list;//  optional seccomp list on top of default filter
 	char *seccomp_list_drop;	// seccomp drop list
 	char *seccomp_list_keep;	// seccomp keep list
-	char **seccomp_list_errno;	// seccomp errno[nr] lists
 	char *protocol;			// protocol list
 
 	// rlimits
@@ -496,12 +495,12 @@ void fs_private_home_list(void);
 
 
 // seccomp.c
+char *seccomp_check_list(const char *str);
 int seccomp_load(const char *fname);
 void seccomp_filter_32(void);
 void seccomp_filter_64(void);
 int seccomp_filter_drop(int enforce_seccomp);
 int seccomp_filter_keep(void);
-int seccomp_filter_errno(void);
 void seccomp_print_filter_name(const char *name);
 void seccomp_print_filter(pid_t pid);
 

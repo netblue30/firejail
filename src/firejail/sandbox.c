@@ -847,8 +847,6 @@ assert(0);
 	if (arg_seccomp == 1) {
 		if (cfg.seccomp_list_keep)
 			seccomp_filter_keep();
-		else if (cfg.seccomp_list_errno)
-			seccomp_filter_errno(); 
 		else
 			seccomp_filter_drop(enforce_seccomp);
 	}

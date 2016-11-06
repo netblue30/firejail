@@ -136,6 +136,21 @@ int sbox_run(unsigned filter, int num, ...) {
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
+		// clean the new process
+		clearenv();
+		int max = 20; // getdtablesize() is overkill for a firejail process
+		for (i = 3; i < max; i++)
+			close(i); // close open files
+		int fd = open("/dev/null",O_RDWR, 0);
+		if (fd != -1) {
+			dup2 (fd, STDIN_FILENO);
+			if (fd > 2)
+				close (fd);
+		}
+		else // the user could run the sandbox without /dev/null
+			close(STDIN_FILENO);
+		umask(027);	
+
 		// apply filters
 		if (filter & SBOX_CAPS_NONE) {
 			caps_drop_all();

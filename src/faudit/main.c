@@ -21,6 +21,19 @@
 char *prog;
 
 int main(int argc, char **argv) {
+	// make test-arguments helper
+	if (getenv("FIREJAIL_TEST_ARGUMENTS")) {
+		printf("Arguments:\n");
+	
+		int i;
+		for (i = 0; i < argc; i++) {
+			printf("#%s#\n", argv[i]);
+		}
+		
+		return 0;
+	}
+
+
 	if (argc != 1) {
 		int i;
 		

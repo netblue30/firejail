@@ -1,9 +1,0 @@
-Argument testing fremework for Firejail.
-
-A small test program, argtest, is compiled and installed in /usr/local/bin directory.
-Run "make && sudo make install" to install it.
-
-Run "make test" to run the tests.
-
-Run "sudo make uninstall" to remove the test program.
-

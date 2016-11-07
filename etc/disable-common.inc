@@ -106,6 +106,8 @@ read-only ${HOME}/.xscreensaver
 read-only ${HOME}/bin
 
 # top secret
+blacklist ${HOME}/.ecryptfs
+blacklist ${HOME}/.Private
 blacklist ${HOME}/.ssh
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.gnome2/keyrings

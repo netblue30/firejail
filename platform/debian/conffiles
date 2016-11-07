@@ -170,5 +170,6 @@
 /etc/firejail/xiphos.profile
 /etc/firejail/display.profile
 /etc/firejail/Wire.profile
+/etc/firejail/wire.profile
 /etc/firejail/mumble.profile
 /etc/firejail/zoom.profile

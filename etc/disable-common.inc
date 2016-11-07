@@ -42,6 +42,7 @@ blacklist ${HOME}/.VeraCrypt
 # var
 blacklist /var/spool/cron
 blacklist /var/spool/anacron
+blacklist /var/mail
 blacklist /var/run/acpid.socket
 blacklist /var/run/minissdpd.sock
 blacklist /var/run/rpcbind.sock
@@ -52,7 +53,7 @@ blacklist /var/lib/mysql/mysql.sock
 blacklist /var/run/docker.sock
 
 # etc
-blacklist /etc/cron.*
+blacklist /etc/cron*
 blacklist /etc/profile.d
 blacklist /etc/rc.local
 blacklist /etc/anacrontab
@@ -147,6 +148,8 @@ blacklist /usr/local/sbin
 blacklist ${PATH}/umount
 blacklist ${PATH}/mount
 blacklist ${PATH}/fusermount
+blacklist ${PATH}/ntfs-3g
+blacklist ${PATH}/at
 blacklist ${PATH}/su
 blacklist ${PATH}/sudo
 blacklist ${PATH}/xinput
@@ -171,6 +174,10 @@ blacklist ${PATH}/chfn
 blacklist ${PATH}/chage
 blacklist ${PATH}/expiry
 blacklist ${PATH}/unix_chkpwd
+blacklist ${PATH}/procmail
+
+# other SUID binaries
+blacklist /usr/lib/virtualbox
 
 # prevent lxterminal connecting to an existing lxterminal session
 blacklist /tmp/.lxterminal-socket*

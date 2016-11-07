@@ -138,6 +138,7 @@ blacklist /etc/shadow+
 blacklist /etc/gshadow+
 blacklist /etc/ssh
 blacklist /var/backup
+blacklist /home/.ecryptfs
 
 # system directories	
 blacklist /sbin

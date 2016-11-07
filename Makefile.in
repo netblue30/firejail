@@ -225,7 +225,7 @@ test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11
 	echo "TEST COMPLETE"
 
 gcov:;
-	lcov --capture -d src/firejail -d src/firemon -d src/fseccomp -d src/fnet -d src/ftee --output-file gcov-file
+	lcov --capture -d src/firejail -d src/firemon -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file
 	rm -fr gcov-dir
 	genhtml gcov-file --output-directory gcov-dir
 	

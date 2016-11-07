@@ -22,7 +22,7 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 	[Couldn't find sys/apparmor.h... please install apparmor user space library and development files] )])
 ])
 AS_IF([test "x$enable_apparmor" = "xyes"], [
-	EXTRA_LDFLAGS="-lapparmor"
+	EXTRA_LDFLAGS+="-lapparmor "
 ])
 AC_SUBST([EXTRA_LDFLAGS])
 
@@ -136,6 +136,16 @@ AS_IF([test "x$enable_busybox_workaround" = "xyes"], [
 ])
 
 
+HAVE_GCOV=""
+AC_ARG_ENABLE([gcov],
+    AS_HELP_STRING([--enable-gcov], [Gcov instrumentation]))
+AS_IF([test "x$enable_gcov" = "xyes"], [
+	HAVE_GCOV="--coverage "
+	EXTRA_LDFLAGS+="-lgcov --coverage "
+	AC_SUBST(HAVE_GCOV)
+])
+
+
 
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
@@ -170,7 +180,8 @@ echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
-printf "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
+echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
+echo "   Gcov instrumentation: $HAVE_GCOV"
 echo
 
 

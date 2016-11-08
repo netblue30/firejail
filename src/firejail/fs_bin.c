@@ -191,6 +191,7 @@ static void duplicate(char *fname) {
 				char *f;
 				if (asprintf(&f, "%s/%s", RUN_BIN_DIR, fname) == -1)
 					errExit("asprintf");
+				clearenv();
 				execlp(RUN_CP_COMMAND, RUN_CP_COMMAND, "-a", actual_path, f, NULL);
 				perror("execlp");
 				_exit(1);

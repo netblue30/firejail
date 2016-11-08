@@ -144,6 +144,7 @@ void netfilter(const char *fname) {
 
 		// wipe out environment variables
 		environ = NULL;
+		clearenv();
 		execl(iptables_restore, iptables_restore, NULL);
 		perror("execl");
 		_exit(1);
@@ -257,6 +258,7 @@ void netfilter6(const char *fname) {
 
 		// wipe out environment variables
 		environ = NULL;
+		clearenv();
 		execl(ip6tables_restore, ip6tables_restore, NULL);
 		perror("execl");
 		_exit(1);
@@ -271,6 +273,7 @@ void netfilter6(const char *fname) {
 			errExit("fork");
 		if (child == 0) {
 			environ = NULL;
+			clearenv();
 			execl(ip6tables, ip6tables, "-vL", NULL);
 			perror("execl");
 			_exit(1);

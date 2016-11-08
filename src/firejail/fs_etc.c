@@ -105,6 +105,7 @@ static void duplicate(char *fname) {
 		char *f;
 		if (asprintf(&f, "/etc/%s", fname) == -1)
 			errExit("asprintf");
+		clearenv();
 		execlp(RUN_CP_COMMAND, RUN_CP_COMMAND, "-a", "--parents", f, RUN_MNT_DIR, NULL);
 		perror("execlp");
 		_exit(1);

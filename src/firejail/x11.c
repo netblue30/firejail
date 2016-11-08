@@ -311,7 +311,9 @@ void x11_start_xephyr(int argc, char **argv) {
 	if (server == 0) {
 		if (arg_debug)
 			printf("Starting xephyr...\n");
-	
+
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -353,6 +355,8 @@ void x11_start_xephyr(int argc, char **argv) {
 		if (!arg_quiet)
 			printf("\n*** Attaching to Xephyr display %d ***\n\n", display);
 
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
 		_exit(1);
@@ -432,6 +436,8 @@ void x11_start_xpra(int argc, char **argv) {
 			dup2(fd_null,2);
 		}
 	
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -478,6 +484,8 @@ void x11_start_xpra(int argc, char **argv) {
 		if (!arg_quiet)
 			printf("\n*** Attaching to xpra display %d ***\n\n", display);
 
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);	
 		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
 		_exit(1);
@@ -508,6 +516,8 @@ void x11_start_xpra(int argc, char **argv) {
 	if (jail < 0)
 		errExit("fork");
 	if (jail == 0) {
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);	
 		if (firejail_argv[0]) // shut up llvm scan-build
 			execvp(firejail_argv[0], firejail_argv);
 		perror("execvp");
@@ -534,6 +544,8 @@ void x11_start_xpra(int argc, char **argv) {
 					dup2(fd_null,1);
 					dup2(fd_null,2);
 				}
+				// running without privileges - see drop_privs call above
+				assert(getenv("LD_PRELOAD") == NULL);	
 				execvp(stop_argv[0], stop_argv);
 				perror("execvp");
 				_exit(1);
@@ -632,7 +644,7 @@ void x11_block(void) {
 
 void x11_xorg(void) {
 #ifdef HAVE_X11
-	// destination
+	// destination - create an empty ~/.Xauthotrity file if it doesn't exist already, and use it as a mount point
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
@@ -646,46 +658,67 @@ void x11_xorg(void) {
 		fclose(fp);
 	}
 
+	// check xauth utility is present in the system
 	if (stat("/usr/bin/xauth", &s) == -1) {
 		fprintf(stderr, "Error: cannot find /usr/bin/xauth executable\n");
 		exit(1);
 	}
 
+	// create a temporary .Xauthority file
+	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
+	int fd = mkstemp(tmpfname);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot create .Xauthority file\n");
+		exit(1);
+	}
+	close(fd);
+	if (chown(tmpfname, getuid(), getgid()) == -1)
+		errExit("chown");
+
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
-		// generate a new .Xauthority file
+		// generate the new .Xauthority file using xauth utility
 		if (arg_debug)
 			printf("Generating a new .Xauthority file\n");
+		drop_privs(1);
 
-		// elevate privileges - files in /run/firejail/mnt directory belong to root
-		if (setreuid(0, 0) < 0)
-			errExit("setreuid");
-		if (setregid(0, 0) < 0)
-			errExit("setregid");
-		
 		char *display = getenv("DISPLAY");
 		if (!display)
 			display = ":0.0";
-			
-		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", RUN_XAUTHORITY_SEC_FILE,
+		
+		clearenv();
+		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
 		
 		_exit(0);
 	}
+
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
 
 	// check the file was created and set mode and ownership
-	if (stat(RUN_XAUTHORITY_SEC_FILE, &s) == -1) {
+	if (stat(tmpfname, &s) == -1) {
 		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
+		exit(1);
+	}
+	if (chown(tmpfname, getuid(), getgid()) == -1)
+		errExit("chown");
+	if (chmod(tmpfname, 0600) == -1)
+		errExit("chmod");
+	
+	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
+	// automatically when the sandbox is closed
+	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) {
+		fprintf(stderr, "asdfdsfError: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
 	if (chown(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid()) == -1)
 		errExit("chown");
 	if (chmod(RUN_XAUTHORITY_SEC_FILE, 0600) == -1)
 		errExit("chmod");
+	unlink(tmpfname);
 	
 	// mount
 	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {

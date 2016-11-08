@@ -21,6 +21,7 @@ noblacklist ~/.emacs
 noblacklist ~/.emacs.d
 noblacklist ~/.signature
 noblacklist ~/.bogofilter
+noblacklist ~/.msmtprc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

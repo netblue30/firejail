@@ -21,9 +21,11 @@ if {[file exists ~/.Xauthority]} {
 	send -- "touch ~/.Xauthority\r"
 }
 after 100
+send -- "mkdir ~/_firejail_test_dir_\r"
+sleep 1
 
 # testing profile and private
-send -- "firejail --private\r"
+send -- "firejail --private=~/_firejail_test_dir_\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -54,5 +56,15 @@ after 100
 
 send -- "exit\r"
 sleep 1
+
+
+# testing profile and private
+send -- "firejail --private=/etc\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"private directory should be owned by the current user"
+}
+sleep 1
+
 
 puts "all done\n"

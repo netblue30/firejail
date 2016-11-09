@@ -3,6 +3,9 @@ firejail (0.9.44.1) baseline; urgency=low
   * security: overwrite /etc/resolv.conf found by Martin Carpenter
   * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
   * security: invalid environment exploit found by Martin Carpenter
+  * security: several security enhancements
+  * bugfix: crashing VLC by pressing Ctrl-O
+  * bugfix: use user configured icons in KDE
  -- netblue30 <netblue30@yahoo.com>  Wed, 2 Nov 2016 08:00:00 -0500
   
 firejail (0.9.44) baseline; urgency=low

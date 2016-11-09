@@ -11,7 +11,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 

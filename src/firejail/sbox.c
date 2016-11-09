@@ -156,9 +156,11 @@ int sbox_run(unsigned filter, int num, ...) {
 			caps_drop_all();
 		}
 		else if (filter & SBOX_CAPS_NETWORK) {
+#ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
 			uint64_t set = ((uint64_t) 1) << CAP_NET_ADMIN;
 			set |=  ((uint64_t) 1) << CAP_NET_RAW;
 			caps_set(set);
+#endif
 		}	
 
 		if (filter & SBOX_SECCOMP) {

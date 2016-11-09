@@ -284,6 +284,7 @@ void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu) {
 	((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr = htonl(ip);
 	if (ioctl( sock, SIOCSIFADDR, &ifr ) < 0) {
 		close(sock);
+		fprintf(stderr, "Error fnet: cannot find interface %s\n", ifname);
 		errExit("ioctl");
 	}
 

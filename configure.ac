@@ -140,7 +140,7 @@ HAVE_GCOV=""
 AC_ARG_ENABLE([gcov],
     AS_HELP_STRING([--enable-gcov], [Gcov instrumentation]))
 AS_IF([test "x$enable_gcov" = "xyes"], [
-	HAVE_GCOV="--coverage "
+	HAVE_GCOV="--coverage -DHAVE_GCOV "
 	EXTRA_LDFLAGS+="-lgcov --coverage "
 	AC_SUBST(HAVE_GCOV)
 ])
@@ -178,9 +178,9 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
-echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
+echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo
 

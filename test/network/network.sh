@@ -52,6 +52,12 @@ echo "TESTING: network default gateway test 2 (net_defaultgw2.exp)"
 echo "TESTING: network default gateway test 3 (net_defaultgw3.exp)"
 ./net_defaultgw3.exp
 
+echo "TESTING: scan (net_scan.exp)"
+./net_scan.exp
+
+echo "TESTING: interface (interface.exp)"
+./interface.exp
+
 echo "TESTING: netfilter (net_netfilter.exp)"
 ./net_netfilter.exp
 

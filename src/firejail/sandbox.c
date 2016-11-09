@@ -481,28 +481,24 @@ int sandbox(void* sandbox_arg) {
 		sandbox_if_up(&cfg.bridge3);
 		
 
-// todo: this code seems to be dead!!!
-		// enable interfaces
+		// moving an interface in a namespace using --interface will reset the interface configuration;
+		// we need to put the configuration back
 		if (cfg.interface0.configured && cfg.interface0.ip) {
-assert(0);			
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
 			net_config_interface(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
 		}			
 		if (cfg.interface1.configured && cfg.interface1.ip) {
-assert(0);			
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
 			net_config_interface(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
 		}			
 		if (cfg.interface2.configured && cfg.interface2.ip) {
-assert(0);			
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
 			net_config_interface(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
 		}			
 		if (cfg.interface3.configured && cfg.interface3.ip) {
-assert(0);			
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
 			net_config_interface(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);

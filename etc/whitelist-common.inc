@@ -31,5 +31,8 @@ whitelist ~/.kde/share/config/gtkrc-2.0
 mkdir ~/.config/dconf
 whitelist ~/.config/dconf
 
-# qt
+# qt/kde
 whitelist ~/.config/kdeglobals
+whitelist ~/.kde/share/config/oxygenrc
+whitelist ~/.kde/share/config/kdeglobals
+whitelist ~/.kde/share/icons

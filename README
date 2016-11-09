@@ -136,6 +136,7 @@ Peter Hogg (https://github.com/pigmonkey)
 	- WeeChat profile
 	- rtorrent profile
 	- bitlbee profile fixes
+	- mutt profile fixes
 Thomas Jarosch (https://github.com/thomasjfox)
 	- disable keepassx in disable-passwdmgr.inc
 	- added uudeview profile

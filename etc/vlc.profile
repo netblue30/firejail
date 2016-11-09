@@ -10,5 +10,5 @@ blacklist ${HOME}/.password-store
 blacklist ${HOME}/.wine
 caps.drop all
 seccomp
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 noroot

@@ -6,6 +6,14 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+sudo ./configure
+
+echo "TESTING: firemon arp (firemon-arp.exp)"
+./firemon-arp.exp
+
+echo "TESTING: firemon route (firemon-route.exp)"
+./firemon-route.exp
+
 echo "TESTING: network profile (net_profile.exp)"
 ./net_profile.exp
 
@@ -57,6 +65,9 @@ echo "TESTING: scan (net_scan.exp)"
 
 echo "TESTING: interface (interface.exp)"
 ./interface.exp
+
+echo "TESTING: veth (net_veth.exp)"
+./net_veth.exp
 
 echo "TESTING: netfilter (net_netfilter.exp)"
 ./net_netfilter.exp

@@ -12,7 +12,7 @@ expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
-sleep 2
+sleep 1
 
 spawn $env(SHELL)
 send -- "firejail --bandwidth=test status\r"

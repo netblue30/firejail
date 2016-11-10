@@ -29,9 +29,9 @@ expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized"
 }
-sleep 2
+sleep 1
 send -- "exit\r"
-sleep 2
+sleep 1
 
 # check loopback
 send -- "firejail --net=br0 --ip=10.10.20.5 --protocol=unix,inet,netlink\r"

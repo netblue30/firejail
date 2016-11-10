@@ -11,5 +11,4 @@ Limitations - to be investigated and fixed:
 	- macvlan interfaces don't seem to work correctly under VirtualBox
 
 Run the test:
-	$ sudo ./configure
 	$ ./network.sh | grep TESTING

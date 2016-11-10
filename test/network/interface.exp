@@ -14,7 +14,7 @@ set chroot [lindex $argv 1]
 #
 # todo: seems to be unable to find interface eth0.7
 #send -- "firejail --noprofile --interface=eth0.5 --interface=eth0.6 --interface=eth0.7\r"
-send -- "firejail --noprofile --interface=eth0.7 --interface=eth0.6\r"
+send -- "firejail --noprofile --interface=eth0.5 --interface=eth0.6\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"

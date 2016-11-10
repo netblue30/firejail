@@ -29,9 +29,9 @@ expect {
 	timeout {puts "TESTING ERROR 0.4\n";exit}
 	"Child process initialized"
 }
-sleep 2
+sleep 1
 send -- "exit\r"
-sleep 2
+sleep 1
 
 # check eth1
 send -- "firejail --net=br0 --net=br1 --ip=10.10.30.50 --net=br2 --ip=10.10.40.100 --net=br3\r"
@@ -55,9 +55,9 @@ expect {
 	timeout {puts "TESTING ERROR 1.4\n";exit}
 	"Child process initialized"
 }
-sleep 2
+sleep 1
 send -- "exit\r"
-sleep 2
+sleep 1
 
 
 # check eth2
@@ -82,9 +82,9 @@ expect {
 	timeout {puts "TESTING ERROR 2.4\n";exit}
 	"Child process initialized"
 }
-sleep 2
+sleep 1
 send -- "exit\r"
-sleep 2
+sleep 1
 
 
 
@@ -110,9 +110,9 @@ expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized"
 }
-sleep 2
+sleep 1
 send -- "exit\r"
-sleep 2
+sleep 1
 
 
 

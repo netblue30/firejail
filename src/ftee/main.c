@@ -193,6 +193,10 @@ int main(int argc, char **argv) {
 		usage();
 		exit(1);
 	}
+	if (strcmp(argv[1], "--help") == 0) {
+		usage();
+		return 0;
+	}
 	char *fname = argv[1];
 
 

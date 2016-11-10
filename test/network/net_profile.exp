@@ -33,7 +33,7 @@ expect {
 	timeout {puts "TESTING ERROR 0.4\n";exit}
 	"Child process initialized"
 }
-sleep 2
+sleep 1
 
 send -- "ip route show\r"
 expect {

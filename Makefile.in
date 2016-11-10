@@ -39,7 +39,7 @@ clean:
 	for dir in $(APPS) $(MYLIBS); do \
 		$(MAKE) -C $$dir clean; \
 	done
-	rm -fr gcov-file gcov-dir
+	rm -fr gcov-file gcov-dir gcov-test-initialized
 	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
@@ -146,7 +146,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
 DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
-DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils"
+DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
 dist:
 	mv config.status config.status.old
@@ -219,7 +219,7 @@ test-arguments:
 	cd test/arguments; ./arguments.sh | grep TESTING
 	
 test-network:
-	echo "Please read test/network/README file and run the test manually"
+	cd test/network; ./network.sh | grep TESTING
 
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
@@ -227,7 +227,10 @@ test-fs:
 test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
 	echo "TEST COMPLETE"
 
-gcov:;
+gcov-test-initialized:
+	./gcov-test-init.sh
+	
+gcov: gcov-test-initialized
 	lcov --capture -d src/firejail -d src/firemon -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file
 	rm -fr gcov-dir
 	genhtml gcov-file --output-directory gcov-dir

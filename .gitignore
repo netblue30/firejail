@@ -3,6 +3,8 @@
 *~
 *.swp
 *.rpm
+*.gcda
+*.gcno
 Makefile
 config.log
 config.status

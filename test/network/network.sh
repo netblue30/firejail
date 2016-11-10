@@ -8,8 +8,14 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
 sudo ./configure
 
+echo "TESTING: firemon interface (firemon-interfaces.exp)"
+sudo ./firemon-interfaces.exp
+
 echo "TESTING: firemon arp (firemon-arp.exp)"
 ./firemon-arp.exp
+
+echo "TESTING: firemon netstats (netstats.exp)"
+./netstats.exp
 
 echo "TESTING: firemon route (firemon-route.exp)"
 ./firemon-route.exp

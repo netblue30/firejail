@@ -517,9 +517,11 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			struct stat s;
 			int rv;
 			if (stat("/proc/sys/kernel/grsecurity", &s) == 0)
-				rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
+				rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+					2, PATH_FIREMON, "--netstats");
 			else
-				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--netstats");
+				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+					2, PATH_FIREMON, "--netstats");
 			exit(rv);
 		}
 		else {

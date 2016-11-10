@@ -88,6 +88,15 @@ echo "TESTING: firemon --seccomp (test/utils/seccomp.exp)"
 echo "TESTING: firemon --caps (test/utils/caps.exp)"
 ./caps.exp
 
+echo "TESTING: top (test/utils/top.exp)"
+./top.exp
+
 echo "TESTING: file transfer (test/utils/ls.exp)"
 ./ls.exp
+
+echo "TESTING: firemon cpu (test/utils/firemon-cpu.exp)"
+./firemon-cpu.exp
+
+echo "TESTING: firemon cgroup (test/utils/firemon-cgroup.exp)"
+./firemon-cgroup.exp
 

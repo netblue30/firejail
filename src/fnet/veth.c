@@ -111,6 +111,8 @@ int net_create_veth(const char *dev, const char *nsdev, unsigned pid) {
 	if (rtnl_talk(&rth, &req.n, 0, 0, NULL) < 0)
 		exit(2);
 
+	rtnl_close(&rth);
+	
 	return 0;
 }
 
@@ -173,6 +175,8 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	if (rtnl_talk(&rth, &req.n, 0, 0, NULL) < 0)
 		exit(2);
 
+	rtnl_close(&rth);
+	
 	return 0;
 }
 
@@ -209,6 +213,8 @@ int net_move_interface(const char *dev, unsigned pid) {
 	if (rtnl_talk(&rth, &req.n, 0, 0, NULL) < 0)
 		exit(2);
 
+	rtnl_close(&rth);
+	
 	return 0;
 }
 

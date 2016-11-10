@@ -6,6 +6,7 @@ firejail (0.9.44.1) baseline; urgency=low
   * security: several security enhancements
   * bugfix: crashing VLC by pressing Ctrl-O
   * bugfix: use user configured icons in KDE
+  * bugfix: mkdir and mkfile are not applied to private directories
  -- netblue30 <netblue30@yahoo.com>  Wed, 2 Nov 2016 08:00:00 -0500
   
 firejail (0.9.44) baseline; urgency=low

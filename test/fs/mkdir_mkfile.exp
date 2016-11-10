@@ -1,0 +1,46 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+# testing profile and private
+send -- "firejail --private --profile=mkdir_mkfile.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "find ~\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"_firejail_test_file"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"_firejail_test_dir"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"_firejail_test_dir/dir1"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"_firejail_test_dir/dir1/dir2"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"_firejail_test_dir/dir1/dir2/dir3"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"_firejail_test_dir/dir1/dir2/dir3/file1"
+}
+after 100
+
+puts "all done\n"

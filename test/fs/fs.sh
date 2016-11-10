@@ -6,6 +6,10 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+rm -fr ~/_firejail_test_*
+echo "TESTING: mkdir/mkfile (test/fs/mkdir_mkfile.exp)"
+rm -fr ~/_firejail_test_*
+
 echo "TESTING: /sys/fs access (test/fs/sys_fs.exp)"
 ./sys_fs.exp
 
@@ -69,12 +73,15 @@ echo "TESTING: double whitelist (test/fs/whitelist-double.exp)"
 
 echo "TESTING: whitelist (test/fs/whitelist.exp)"
 ./whitelist.exp
+
+#cleanup
 rm -fr ~/fjtest-dir
 rm -fr ~/fjtest-dir-lnk
 rm -f ~/fjtest-file
 rm -f ~/fjtest-file-lnk
 rm -f /tmp/fjtest-file
 rm -fr /tmp/fjtest-dir
+rm -fr ~/_firejail_test_*
 
 
 

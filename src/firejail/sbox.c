@@ -141,14 +141,16 @@ int sbox_run(unsigned filter, int num, ...) {
 		int max = 20; // getdtablesize() is overkill for a firejail process
 		for (i = 3; i < max; i++)
 			close(i); // close open files
+		if ((filter & SBOX_ALLOW_STDIN) == 0) {
 		int fd = open("/dev/null",O_RDWR, 0);
-		if (fd != -1) {
-			dup2 (fd, STDIN_FILENO);
-			if (fd > 2)
-				close (fd);
+			if (fd != -1) {
+				dup2 (fd, STDIN_FILENO);
+				if (fd > 2)
+					close (fd);
+			}
+			else // the user could run the sandbox without /dev/null
+				close(STDIN_FILENO);
 		}
-		else // the user could run the sandbox without /dev/null
-			close(STDIN_FILENO);
 		umask(027);	
 
 		// apply filters

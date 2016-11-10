@@ -688,11 +688,13 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
 // bitmapped filters for sbox_run
-#define SBOX_ROOT (1 << 0)
-#define SBOX_USER (1 << 1)
-#define SBOX_SECCOMP (1 << 2)
+#define SBOX_ROOT (1 << 0)			// run the sandbox as root
+#define SBOX_USER (1 << 1)			// run the sandbox as a regular user
+#define SBOX_SECCOMP (1 << 2)		// install seccomp 
 #define SBOX_CAPS_NONE (1 << 3)		// drop all capabilities
 #define SBOX_CAPS_NETWORK (1 << 4)	// caps filter for programs running network programs
+#define SBOX_ALLOW_STDIN (1 << 5)		// don't close stdin
+
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 

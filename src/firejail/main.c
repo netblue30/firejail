@@ -507,7 +507,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(rv);
 	}
 	else if (strcmp(argv[i], "--top") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--top");
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+			2, PATH_FIREMON, "--top");
 		exit(rv);
 	}
 #ifdef HAVE_NETWORK	

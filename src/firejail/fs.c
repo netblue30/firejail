@@ -348,6 +348,20 @@ void fs_blacklist(void) {
 			ptr = entry->data + 6;
 			op = MOUNT_TMPFS;
 		}			
+		else if (strncmp(entry->data, "mkdir ", 6) == 0) {
+			EUID_USER();
+			fs_mkdir(entry->data + 6);
+			EUID_ROOT();
+			entry = entry->next;
+			continue;
+		}			
+		else if (strncmp(entry->data, "mkfile ", 7) == 0) {
+			EUID_USER();
+			fs_mkfile(entry->data + 7);
+			EUID_ROOT();
+			entry = entry->next;
+			continue;
+		}			
 		else {
 			fprintf(stderr, "Error: invalid profile line %s\n", entry->data);
 			entry = entry->next;

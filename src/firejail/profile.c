@@ -105,12 +105,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// mkdir 
 	if (strncmp(ptr, "mkdir ", 6) == 0) {
 		fs_mkdir(ptr + 6);
-		return 0;
+		return 1;	// process mkdir again while applying blacklists
 	}
 	// mkfile 
 	if (strncmp(ptr, "mkfile ", 7) == 0) {
 		fs_mkfile(ptr + 7);
-		return 0;
+		return 1;	// process mkfile again while applying blacklists
 	}
 	// sandbox name
 	else if (strncmp(ptr, "name ", 5) == 0) {

@@ -734,7 +734,7 @@ int sandbox(void* sandbox_arg) {
 		fs_whitelist();
 	
 	// ... followed by blacklist commands
-	fs_blacklist();
+	fs_blacklist(); // mkdir and mkfile are processed all over again
 	
 	//****************************
 	// install trace

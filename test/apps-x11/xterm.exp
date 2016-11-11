@@ -41,6 +41,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
+	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
 	":firejail"
 }
 expect {

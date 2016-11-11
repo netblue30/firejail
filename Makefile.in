@@ -251,3 +251,4 @@ test-root:
 test-overlay:
 	cd test/overlay; ./overlay.sh | grep TESTING
 
+# mount -o remount,rw,hidepid=2 /proc

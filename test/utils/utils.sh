@@ -82,17 +82,17 @@ rm -f index.html*
 ./trace.exp
 rm -f index.html*
 
-echo "TESTING: firemon --seccomp (test/utils/seccomp.exp)"
-./seccomp.exp
-
-echo "TESTING: firemon --caps (test/utils/caps.exp)"
-./caps.exp
-
 echo "TESTING: top (test/utils/top.exp)"
 ./top.exp
 
 echo "TESTING: file transfer (test/utils/ls.exp)"
 ./ls.exp
+
+echo "TESTING: firemon --seccomp (test/utils/firemon-seccomp.exp)"
+./firemon-seccomp.exp
+
+echo "TESTING: firemon --caps (test/utils/firemon-caps.exp)"
+./firemon-caps.exp
 
 echo "TESTING: firemon cpu (test/utils/firemon-cpu.exp)"
 ./firemon-cpu.exp

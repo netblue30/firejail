@@ -66,6 +66,7 @@ spawn $env(SHELL)
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 8.1\n";exit}
+	"need to be root" {puts "TESTING SKIP: /proc mounted as hidepid\n"; exit}
 	"bingo1"
 }
 expect {

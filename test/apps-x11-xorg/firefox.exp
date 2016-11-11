@@ -44,6 +44,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
+	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
 	" firefox" {puts "firefox detected\n";}
 	" iceweasel" {puts "iceweasel detected\n";}
 }

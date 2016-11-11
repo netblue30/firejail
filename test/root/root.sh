@@ -78,3 +78,16 @@ rm -f tmpfile
 #********************************
 echo "TESTING: firemon events (test/root/firemon-events.exp)"
 ./firemon-events.exp
+
+#********************************
+# firecfg
+#********************************
+which firefox
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: firecfg (test/root/firecfg.exp)"
+	./firecfg.exp
+else
+	echo "TESTING SKIP: firecfg, firefox not found"
+fi
+

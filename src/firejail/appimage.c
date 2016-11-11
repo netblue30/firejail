@@ -135,6 +135,9 @@ void appimage_set(const char *appimage_path) {
 		errExit("asprintf");
 	
 	free(mode);
+#ifdef HAVE_GCOV
+	__gcov_flush();
+#endif
 #else
 	fprintf(stderr, "Error: /dev/loop-control interface is not supported by your kernel\n");
 	exit(1);

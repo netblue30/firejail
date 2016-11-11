@@ -169,15 +169,6 @@ else
 	echo "TESTING SKIP: hexchat not found"
 fi
 
-which weechat-curses
-if [ "$?" -eq 0 ];
-then
-	echo "TESTING: weechat"
-	./weechat.exp
-else
-	echo "TESTING SKIP: weechat not found"
-fi
-
 which wine
 if [ "$?" -eq 0 ];
 then

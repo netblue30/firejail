@@ -158,21 +158,37 @@ static void my_handler(int s){
 	myexit(1);
 }
 
-// return 1 if error, 0 if a valid pid was found
-static inline int read_pid(char *str, pid_t *pid) {
+static pid_t extract_pid(const char *name) {
+	EUID_ASSERT();
+	if (!name || strlen(name) == 0) {
+		fprintf(stderr, "Error: invalid sandbox name\n");
+		exit(1);
+	}
+	
+	pid_t pid;
+	EUID_ROOT();
+	if (name2pid(name, &pid)) {
+		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
+		exit(1);
+	}
+	EUID_USER();
+	return pid;
+}
+
+
+static pid_t read_pid(const char *str) {
 	char *endptr;
 	errno = 0;
 	long int pidtmp = strtol(str, &endptr, 10);
 	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
 		|| (errno != 0 && pidtmp == 0)) {
-		return 1;
+		return extract_pid(str);
 	}
 	// endptr points to '\0' char in str if the entire string is valid
 	if (endptr == NULL || endptr[0]!='\0') {
-		return 1;
+		return extract_pid(str);
 	}
-	*pid = (pid_t)pidtmp;
-	return 0;
+	return (pid_t)pidtmp;
 }
 
 // init configuration
@@ -385,11 +401,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			}	
 			
 			// extract pid or sandbox name
-			pid_t pid;
-			if (read_pid(argv[i] + 12, &pid) == 0)
-				bandwidth_pid(pid, cmd, dev, down, up);
-			else
-				bandwidth_name(argv[i] + 12, cmd, dev, down, up);
+			pid_t pid = read_pid(argv[i] + 12);
+			bandwidth_pid(pid, cmd, dev, down, up);
 		}
 		else {
 			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
@@ -426,11 +439,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			// print seccomp filter for a sandbox specified by pid or by name
-			pid_t pid;
-			if (read_pid(argv[i] + 16, &pid) == 0)		
-				seccomp_print_filter(pid);
-			else
-				seccomp_print_filter_name(argv[i] + 16);
+			pid_t pid = read_pid(argv[i] + 16);
+			seccomp_print_filter(pid);
 		}
 		else {
 			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -445,11 +455,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			// print seccomp filter for a sandbox specified by pid or by name
-			pid_t pid;
-			if (read_pid(argv[i] + 17, &pid) == 0)		
-				protocol_print_filter(pid);
-			else
-				protocol_print_filter_name(argv[i] + 17);
+			pid_t pid = read_pid(argv[i] + 17);		
+			protocol_print_filter(pid);
 		}
 		else {
 			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
@@ -460,38 +467,26 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #endif
 	else if (strncmp(argv[i], "--cpu.print=", 12) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 12, &pid) == 0)		
-			cpu_print_filter(pid);
-		else
-			cpu_print_filter_name(argv[i] + 12);
+		pid_t pid = read_pid(argv[i] + 12);
+		cpu_print_filter(pid);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 13, &pid) == 0)		
-			caps_print_filter(pid);
-		else
-			caps_print_filter_name(argv[i] + 13);
+		pid_t pid = read_pid(argv[i] + 13);
+		caps_print_filter(pid);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--fs.print=", 11) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 11, &pid) == 0)		
-			fs_logger_print_log(pid);
-		else
-			fs_logger_print_log_name(argv[i] + 11);
+		pid_t pid = read_pid(argv[i] + 11);
+		fs_logger_print_log(pid);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 12, &pid) == 0)		
-			net_dns_print(pid);
-		else
-			net_dns_print_name(argv[i] + 12);
+		pid_t pid = read_pid(argv[i] + 12);
+		net_dns_print(pid);
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--debug-caps") == 0) {
@@ -543,11 +538,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 			 
 			// get file
-			pid_t pid;
-			if (read_pid(argv[i] + 6, &pid) == 0)		
-				sandboxfs(SANDBOX_FS_GET, pid, path, NULL);
-			else
-				sandboxfs_name(SANDBOX_FS_GET, argv[i] + 6, path, NULL);
+			pid_t pid = read_pid(argv[i] + 6);
+			sandboxfs(SANDBOX_FS_GET, pid, path, NULL);
 			exit(0);
 		}
 		else {
@@ -578,11 +570,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 			 
 			// get file
-			pid_t pid;
-			if (read_pid(argv[i] + 6, &pid) == 0)		
-				sandboxfs(SANDBOX_FS_PUT, pid, path1, path2);
-			else
-				sandboxfs_name(SANDBOX_FS_PUT, argv[i] + 6, path1, path2);
+			pid_t pid = read_pid(argv[i] + 6);
+			sandboxfs(SANDBOX_FS_PUT, pid, path1, path2);
 			exit(0);
 		}
 		else {
@@ -607,11 +596,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 			 
 			// list directory contents
-			pid_t pid;
-			if (read_pid(argv[i] + 5, &pid) == 0)		
-				sandboxfs(SANDBOX_FS_LS, pid, path, NULL);
-			else
-				sandboxfs_name(SANDBOX_FS_LS, argv[i] + 5, path, NULL);
+			pid_t pid = read_pid(argv[i] + 5);
+			sandboxfs(SANDBOX_FS_LS, pid, path, NULL);
 			exit(0);
 		}
 		else {
@@ -635,11 +621,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			cfg.shell = guess_shell();
 
 		// join sandbox by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 7, &pid) == 0)		
-			join(pid, argc, argv, i + 1);
-		else
-			join_name(argv[i] + 7, argc, argv, i + 1);
+		pid_t pid = read_pid(argv[i] + 7);
+		join(pid, argc, argv, i + 1);
 		exit(0);
 
 	}
@@ -656,6 +639,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			cfg.original_program_index = i + 1;
 		}
 
+#if 0 // todo: redo it
 		// try to join by name only
 		pid_t pid;
 		if (!name2pid(argv[i] + 16, &pid)) {
@@ -665,6 +649,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			join(pid, argc, argv, i + 1);
 			exit(0);
 		}
+#endif		
 		// if there no such sandbox continue argument processing
 	}
 #ifdef HAVE_NETWORK	
@@ -681,11 +666,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				cfg.shell = guess_shell();
 
 			// join sandbox by pid or by name
-			pid_t pid;
-			if (read_pid(argv[i] + 15, &pid) == 0)		
-				join(pid, argc, argv, i + 1);
-			else
-				join_name(argv[i] + 15, argc, argv, i + 1);
+			pid_t pid = read_pid(argv[i] + 15);
+			join(pid, argc, argv, i + 1);
 		}
 		else {
 			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
@@ -707,22 +689,16 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			cfg.shell = guess_shell();
 
 		// join sandbox by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 18, &pid) == 0)		
-			join(pid, argc, argv, i + 1);
-		else
-			join_name(argv[i] + 18, argc, argv, i + 1);
+		pid_t pid = read_pid(argv[i] + 18);
+		join(pid, argc, argv, i + 1);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--shutdown=", 11) == 0) {
 		logargs(argc, argv);
 		
 		// shutdown sandbox by pid or by name
-		pid_t pid;
-		if (read_pid(argv[i] + 11, &pid) == 0)
-			shut(pid);
-		else
-			shut_name(argv[i] + 11);
+		pid_t pid = read_pid(argv[i] + 11);
+		shut(pid);
 		exit(0);
 	}
 

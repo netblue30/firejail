@@ -29,13 +29,18 @@
 #include <net/route.h>
 #include <linux/if_bridge.h>
 
-// add a veth device to a bridge
-void net_bridge_add_interface(const char *bridge, const char *dev) {
-	if (strlen(bridge) > IFNAMSIZ) {
-		fprintf(stderr, "Error fnet: invalid network device name %s\n", bridge);
+static void check_if_name(const char *ifname) {
+	if (strlen(ifname) > IFNAMSIZ) {
+		fprintf(stderr, "Error fnet: invalid network device name %s\n", ifname);
 		exit(1);
 	}
+}
 
+// add a veth device to a bridge
+void net_bridge_add_interface(const char *bridge, const char *dev) {
+	check_if_name(bridge);
+	check_if_name(dev);
+	
 	// somehow adding the interface to the bridge resets MTU on bridge device!!!
 	// workaround: restore MTU on the bridge device
 	// todo: put a real fix in
@@ -69,18 +74,14 @@ void net_bridge_add_interface(const char *bridge, const char *dev) {
 	close(sock);
 
 	int mtu2 = net_get_mtu(bridge);
-	if (mtu1 != mtu2) {
+	if (mtu1 != mtu2)
 		net_set_mtu(bridge, mtu1);
-	}
 }
 
 
 // bring interface up
 void net_if_up(const char *ifname) {
-	if (strlen(ifname) > IFNAMSIZ) {
-		fprintf(stderr, "Error fnet: invalid network device name %s\n", ifname);
-		exit(1);
-	}
+	check_if_name(ifname);
 	
 	int sock = socket(AF_INET,SOCK_DGRAM,0);
 	if (sock < 0)
@@ -93,28 +94,19 @@ void net_if_up(const char *ifname) {
 	ifr.ifr_addr.sa_family = AF_INET;
 
 	// read the existing flags
-	if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0) {
-		close(sock);
-		printf("Error fnet: cannot bring up interface %s\n", ifname);
+	if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0)
 		errExit("ioctl");
-	}
 
 	ifr.ifr_flags |= IFF_UP;
 
 	// set the new flags
-	if (ioctl( sock, SIOCSIFFLAGS, &ifr ) < 0) {
-		close(sock);
-		printf("Error fnet: cannot bring up interface %s\n", ifname);
+	if (ioctl( sock, SIOCSIFFLAGS, &ifr ) < 0)
 		errExit("ioctl");
-	}
 
 	// checking
 	// read the existing flags
-	if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0) {
-		close(sock);
-		printf("Error fnet: cannot bring up interface %s\n", ifname);
+	if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0)
 		errExit("ioctl");
-	}
 
 	// wait not more than 500ms for the interface to come up
 	int cnt = 0;
@@ -122,11 +114,8 @@ void net_if_up(const char *ifname) {
 		usleep(10000);			  // sleep 10ms
 
 		// read the existing flags
-		if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0) {
-			close(sock);
-			printf("Error fnet: cannot bring up interface %s\n", ifname);
+		if (ioctl(sock, SIOCGIFFLAGS, &ifr ) < 0)
 			errExit("ioctl");
-		}
 		if (ifr.ifr_flags & IFF_RUNNING)
 			break;
 		cnt++;
@@ -136,12 +125,8 @@ void net_if_up(const char *ifname) {
 }
 
 int net_get_mtu(const char *ifname) {
+	check_if_name(ifname);
 	int mtu = 0;
-	if (strlen(ifname) > IFNAMSIZ) {
-		fprintf(stderr, "Error fnet: invalid network device name %s\n", ifname);
-		exit(1);
-	}
-
 	int s;
 	struct ifreq ifr;
 
@@ -160,11 +145,7 @@ int net_get_mtu(const char *ifname) {
 }
 
 void net_set_mtu(const char *ifname, int mtu) {
-	if (strlen(ifname) > IFNAMSIZ) {
-		fprintf(stderr, "Error fnet: invalid network device name %s\n", ifname);
-		exit(1);
-	}
-
+	check_if_name(ifname);
 	int s;
 	struct ifreq ifr;
 
@@ -246,6 +227,7 @@ void net_ifprint(int scan) {
 }
 
 int net_get_mac(const char *ifname, unsigned char mac[6]) {
+	check_if_name(ifname);
 
 	struct ifreq ifr;
 	int sock;
@@ -267,11 +249,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
 
 // configure interface ipv4 address
 void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu) {
-	if (strlen(ifname) > IFNAMSIZ) {
-		fprintf(stderr, "Error: invalid network device name %s\n", ifname);
-		exit(1);
-	}
-
+	check_if_name(ifname);
 	int sock = socket(AF_INET,SOCK_DGRAM,0);
 	if (sock < 0)
 		errExit("socket");
@@ -282,34 +260,29 @@ void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu) {
 	ifr.ifr_addr.sa_family = AF_INET;
 
 	((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr = htonl(ip);
-	if (ioctl( sock, SIOCSIFADDR, &ifr ) < 0) {
-		close(sock);
-		fprintf(stderr, "Error fnet: cannot find interface %s\n", ifname);
+	if (ioctl( sock, SIOCSIFADDR, &ifr ) < 0) 
 		errExit("ioctl");
-	}
 
 	if (ip != 0) {
 		((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr =  htonl(mask);
-		if (ioctl( sock, SIOCSIFNETMASK, &ifr ) < 0) {
-			close(sock);
+		if (ioctl( sock, SIOCSIFNETMASK, &ifr ) < 0)
 			errExit("ioctl");
-		}
 	}
 	
 	// configure mtu
 	if (mtu > 0) {
 		ifr.ifr_mtu = mtu;
-		if (ioctl( sock, SIOCSIFMTU, &ifr ) < 0) {
-			close(sock);
+		if (ioctl( sock, SIOCSIFMTU, &ifr ) < 0)
 			errExit("ioctl");
-		}
 	}
 
 	close(sock);
 	usleep(10000);				  // sleep 10ms
+	return;
 }
 
 int net_if_mac(const char *ifname, const unsigned char mac[6]) {
+	check_if_name(ifname);
 	struct ifreq ifr;
 	int sock;
 
@@ -335,6 +308,7 @@ struct ifreq6 {
 	unsigned int ifr6_ifindex;
 };
 void net_if_ip6(const char *ifname, const char *addr6) {
+	check_if_name(ifname);
 	if (strchr(addr6, ':') == NULL) {
 		fprintf(stderr, "Error fnet: invalid IPv6 address %s\n", addr6);
 		exit(1);

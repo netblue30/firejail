@@ -4,19 +4,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "rm -f /tmp/firejail-overlay-test;pwd\r"
-expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"home"
-}
-
-send -- "ls > /tmp/firejail-overlay-test;pwd\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"home"
-}
-
-send -- "firejail --noprofile --overlay\r"
+send -- "firejail --overlay\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"not available for kernels older than 3.18" {puts "\nTESTING: overlayfs not available\n"; exit}
@@ -25,42 +13,34 @@ expect {
 }
 sleep 1
 
-send -- "echo xyzxyzxyz > /tmp/firejail-overlay-test;pwd\r"
+send -- "echo xyzxyzxyz > ~/_firejail_test_file; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"home"
+	"done"
 }
-sleep 1
+after 100
 
-send -- "cat  /tmp/firejail-overlay-test;pwd\r"
+send -- "cat  ~/_firejail_test_file; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"xyzxyzxyz"
 }
 expect {
 	timeout {puts "TESTING ERROR 4.1\n";exit}
-	"home"
+	"done"
 }
-sleep 1
+after 100
 
 send -- "exit\r"
 sleep 2
 
-send -- "cat  /tmp/firejail-overlay-test;pwd\r"
+send -- "cat  ~/_firejail_test_file; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"xyzxyzxyz" {puts "TESTING ERROR 5.1\n";exit}
-	"home"
+	"done"
 }
 
-sleep 1
-send -- "rm -f /tmp/firejail-overlay-test;pwd\r"
-expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"home"
-}
-
-
-sleep 1
-puts "all done \n"
+after 100
+puts "\nall done\n"
 

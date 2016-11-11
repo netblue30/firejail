@@ -161,6 +161,8 @@ dist:
 	tar -cJvf $(NAME)-$(VERSION).tar.xz $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
 
+asc:; ./mkasc.sh $(VERSION)
+
 deb: dist
 	./mkdeb.sh $(NAME) $(VERSION)
 
@@ -173,9 +175,6 @@ install-snap: snap
 test-compile: dist
 	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
 
-test-root:
-	cd test/root; su -c ./root.sh | grep TESTING
-	
 .PHONY: rpms
 rpms:
 	./platform/rpm/mkrpm.sh $(NAME) $(VERSION)
@@ -189,7 +188,19 @@ cppcheck: clean
 scan-build: clean
 	scan-build make
 
-asc:; ./mkasc.sh $(VERSION)
+gcov-test-initialized:
+	./gcov-test-init.sh
+	
+gcov: gcov-test-initialized
+	lcov --capture -d src/firejail -d src/firemon -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file
+	rm -fr gcov-dir
+	genhtml gcov-file --output-directory gcov-dir
+	
+
+#
+# make test
+#
+
 
 test-profiles:
 	cd test/profiles; ./profiles.sh | grep TESTING
@@ -218,21 +229,25 @@ test-filters:
 test-arguments:
 	cd test/arguments; ./arguments.sh | grep TESTING
 	
-test-network:
-	cd test/network; ./network.sh | grep TESTING
-
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
 
 test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
 	echo "TEST COMPLETE"
 
-gcov-test-initialized:
-	./gcov-test-init.sh
+#
+# individual tests, some of them requiring root access
+#
+
+# root access, network devices are created before the test
+test-network:
+	cd test/network; ./network.sh | grep TESTING
+
+# all the tests are run as root
+test-root:
+	cd test/root; su -c ./root.sh | grep TESTING
 	
-gcov: gcov-test-initialized
-	lcov --capture -d src/firejail -d src/firemon -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file
-	rm -fr gcov-dir
-	genhtml gcov-file --output-directory gcov-dir
-	
-	
+# runs as regular user
+test-overlay:
+	cd test/overlay; ./overlay.sh | grep TESTING
+

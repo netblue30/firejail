@@ -919,6 +919,9 @@ void fs_overlayfs(void) {
 	}
 
 	// chroot in the new filesystem
+#ifdef HAVE_GCOV
+	__gcov_flush();
+#endif
 	if (chroot(oroot) == -1)
 		errExit("chroot");
 
@@ -1102,6 +1105,9 @@ void fs_chroot(const char *rootdir) {
 	}
 	
 	// chroot into the new directory
+#ifdef HAVE_GCOV
+	__gcov_flush();
+#endif
 	if (arg_debug)
 		printf("Chrooting into %s\n", rootdir);
 	if (chroot(rootdir) < 0)

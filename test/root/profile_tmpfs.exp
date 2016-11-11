@@ -4,34 +4,37 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "mkdir /tmp/firejailtestdir\r"
-sleep 1
-send -- "ls > /tmp/firejailtestdir/tmpfile\r"
-sleep 1
-
 send -- "firejail --profile=tmpfs.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
-
-# testing private only
-send -- "bash\r"
 sleep 1
 
-send -- "ls -l /tmp/firejailtestdir;pwd\r"
+send -- "ls -l /var;pwd\r"
 expect {
-	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"tmpfile" {puts "TESTING ERROR 1\n";exit}
-	"home"
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"total 0"
 }
-sleep 1
+after 100
 send -- "exit\r"
 sleep 1
-send -- "exit\r"
-sleep 1
-send -- "rm -fr  /tmp/firejailtestdir\r"
 
-sleep 1
+send -- "firejail --debug-check-filename --profile=tmpfs-bad.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 13.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 13.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 13.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
 
 puts "\nall done\n"
+

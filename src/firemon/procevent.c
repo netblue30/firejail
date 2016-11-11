@@ -192,6 +192,10 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 	tv.tv_usec = 0;
 
 	while (1) {
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+
 #define BUFFSIZE 4096 
 		char __attribute__ ((aligned(NLMSG_ALIGNTO)))buf[BUFFSIZE];
 		

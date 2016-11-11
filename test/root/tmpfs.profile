@@ -1,1 +1,1 @@
-tmpfs /tmp/firejailtestdir
+tmpfs /var

@@ -171,6 +171,9 @@ void fs_private_etc_list(void) {
 				duplicate(ptr);
 			free(dlist);	
 			fs_logger_print();
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 			_exit(0);
 		}
 		// wait for the child to finish

@@ -8,6 +8,15 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
 rm -fr ~/_firejail_test_*
 echo "TESTING: mkdir/mkfile (test/fs/mkdir_mkfile.exp)"
+./mkdir_mkfile.exp
+rm -fr ~/_firejail_test_*
+
+mkdir ~/_firejail_test_dir
+touch ~/_firejail_test_dir/a
+mkdir ~/_firejail_test_dir/test1
+touch ~/_firejail_test_dir/test1/b
+echo "TESTING: read/write (test/fs/read-write.exp)"
+./read-write.exp
 rm -fr ~/_firejail_test_*
 
 echo "TESTING: /sys/fs access (test/fs/sys_fs.exp)"

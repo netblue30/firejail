@@ -1,7 +1,5 @@
 #!/bin/bash
 
-./configure 2 > /dev/null
-
 #********************************
 # servers
 #********************************
@@ -76,30 +74,7 @@ echo hello > tmpfile
 rm -f tmpfile
 
 #********************************
-# networking
+# firemon
 #********************************
-echo "TESTING: network interfaces (test/root/net_interface.exp)"
-./net_interface.exp
-
-echo "TESTING: firemon --interface (test/root/firemon-interface.exp)"
-./firemon-interface.exp
-
-#if [ -f /sys/fs/cgroup/g1/tasks ]
-#then
-#	echo "TESTING: firemon --cgroup (firemon-cgroup.exp)"
-#	./firemon-cgroup.exp
-#fi
-#
-#echo "TESTING: chroot resolv.conf (chroot-resolvconf.exp)"
-#rm -f tmpfile
-#touch tmpfile
-#rm -f /tmp/chroot/etc/resolv.conf
-#ln -s tmp /tmp/chroot/etc/resolv.conf
-#./chroot-resolvconf.exp
-#rm -f tmpfile
-#rm /tmp/chroot/etc/resolv.conf
-
-#echo "TESTING: chroot (fs_chroot_asroot.exp)"
-#./fs_chroot_asroot.exp
-
-
+echo "TESTING: firemon events (test/root/firemon-events.exp)"
+./firemon-events.exp

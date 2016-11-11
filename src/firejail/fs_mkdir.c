@@ -81,6 +81,9 @@ void fs_mkdir(const char *name) {
 
 		// create directory
 		mkdir_recursive(expanded);
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
 		_exit(0);
 	}
 	// wait for the child to finish
@@ -126,6 +129,9 @@ void fs_mkfile(const char *name) {
 			(void) rv;
 			fclose(fp);
 		}
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
 		_exit(0);
 	}
 	// wait for the child to finish

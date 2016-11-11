@@ -174,7 +174,7 @@ test-compile: dist
 	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
 
 test-root:
-	cd test/root; su -c ./start.sh
+	cd test/root; su -c ./root.sh | grep TESTING
 	
 .PHONY: rpms
 rpms:

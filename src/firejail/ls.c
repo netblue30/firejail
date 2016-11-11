@@ -358,6 +358,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			// copy the file
 			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600))
 				_exit(1);
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 			_exit(0);
 		}
 
@@ -381,6 +384,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			// copy the file
 			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600))
 				_exit(1);
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 			_exit(0);
 		}
 
@@ -423,6 +429,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			// copy the file
 			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600))
 				_exit(1);
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 			_exit(0);
 		}
 
@@ -452,6 +461,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			// copy the file
 			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600))
 				_exit(1);
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 			_exit(0);
 		}
 

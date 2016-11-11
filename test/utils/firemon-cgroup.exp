@@ -1,10 +1,13 @@
 #!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail\r"
+send --  "firejail --name=test1\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -12,23 +15,26 @@ expect {
 sleep 1
 
 spawn $env(SHELL)
-send -- "firemon --interface\r"
+send --  "firejail --name=test2\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"lo UP"
-}
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"10.10.20.1/29"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"10.10.50.1/24"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"br3"
+	"Child process initialized"
 }
 sleep 1
 
-puts "\n"
+spawn $env(SHELL)
+send --  "firemon --cgroup\r"
+sleep 4
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"name=test1"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"name=test2"
+}
+
+after 100
+
+puts "\nall done\n"
+

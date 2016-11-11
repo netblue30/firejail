@@ -2461,6 +2461,9 @@ int main(int argc, char **argv) {
 			network_main(child);
 			if (arg_debug)
 				printf("Host network configured\n");			
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 			_exit(0);			
 		}
 

@@ -146,6 +146,9 @@ static void print_sandbox(pid_t pid) {
 			return;
 		net_ifprint();
 		printf("\n");
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
 		_exit(0);
 	}
 	

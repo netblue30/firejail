@@ -146,7 +146,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
 DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
-DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
+DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/appimage test/root test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
 dist:
 	mv config.status config.status.old
@@ -232,7 +232,10 @@ test-arguments:
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
 
-test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+test-appimage:
+	cd test/appimage; ./appimage.sh | grep TESTING
+	
+test: test-profiles test-fs test-utils  test-environment test-appimage test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
 	echo "TEST COMPLETE"
 
 #

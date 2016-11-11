@@ -80,6 +80,10 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- evince profile enhancement
 	- tightened Spotify profile
 	- added xiphos and Tor Browser Bundle profiles
+Simon Peter (https://github.com/probonopd)
+	- set $APPIMAGE and $APPDIR environment variables
+	- AppImage version detection
+	- Leafppad type v1 and v2 appimage packages in test/appimage
 BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
 Impyy (https://github.com/Impyy)
@@ -158,8 +162,6 @@ Rahul Golam (https://github.com/technoLord)
 	- strings profile
 geg2048 (https://github.com/geg2048)
 	- kwallet profile fixes
-Simon Peter (https://github.com/probonopd)
-	- set $APPIMAGE and $APPDIR environment variables
 maces (https://github.com/maces)
 	- Franz messenger profile
 KellerFuchs (https://github.com/KellerFuchs)

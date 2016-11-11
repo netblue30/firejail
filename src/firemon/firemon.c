@@ -35,6 +35,9 @@ static int arg_caps = 0;
 static int arg_cpu = 0;
 static int arg_cgroup = 0;
 static int arg_x11 = 0;
+static int arg_top = 0;
+static int arg_list = 0;
+static int arg_netstats = 0;
 int arg_nowrap = 0;
 
 static struct termios tlocal;	// startup terminal setting
@@ -118,53 +121,39 @@ int main(int argc, char **argv) {
 		}
 		
 		// options without a pid argument
-		else if (strcmp(argv[i], "--top") == 0) {
-			top(); // never to return
-		}
-		else if (strcmp(argv[i], "--list") == 0) {
-			list();
-			return 0;
-		}
+		else if (strcmp(argv[i], "--top") == 0)
+			arg_top = 1;
+		else if (strcmp(argv[i], "--list") == 0)
+			arg_list = 1;
+		else if (strcmp(argv[i], "--tree") == 0)
+			arg_tree = 1;
 		else if (strcmp(argv[i], "--netstats") == 0) {
 			struct stat s;
 			if (getuid() != 0 && stat("/proc/sys/kernel/grsecurity", &s) == 0) {
 				fprintf(stderr, "Error: this feature is not available on Grsecurity systems\n");
 				exit(1);
 			}	
-
-			netstats();
-			return 0;
+			arg_netstats = 1;
 		}
 
 
 		// cumulative options with or without a pid argument
-		else if (strcmp(argv[i], "--x11") == 0) {
+		else if (strcmp(argv[i], "--x11") == 0)
 			arg_x11 = 1;
-		}
-		else if (strcmp(argv[i], "--cgroup") == 0) {
+		else if (strcmp(argv[i], "--cgroup") == 0)
 			arg_cgroup = 1;
-		}
-		else if (strcmp(argv[i], "--cpu") == 0) {
+		else if (strcmp(argv[i], "--cpu") == 0)
 			arg_cpu = 1;
-		}
-		else if (strcmp(argv[i], "--seccomp") == 0) {
+		else if (strcmp(argv[i], "--seccomp") == 0)
 			arg_seccomp = 1;
-		}
-		else if (strcmp(argv[i], "--caps") == 0) {
+		else if (strcmp(argv[i], "--caps") == 0)
 			arg_caps = 1;
-		}
-		else if (strcmp(argv[i], "--tree") == 0) {
-			arg_tree = 1;
-		}
-		else if (strcmp(argv[i], "--interface") == 0) {
+		else if (strcmp(argv[i], "--interface") == 0)
 			arg_interface = 1;
-		}
-		else if (strcmp(argv[i], "--route") == 0) {
+		else if (strcmp(argv[i], "--route") == 0)
 			arg_route = 1;
-		}
-		else if (strcmp(argv[i], "--arp") == 0) {
+		else if (strcmp(argv[i], "--arp") == 0)
 			arg_arp = 1;
-		}
 
 		else if (strncmp(argv[i], "--name=", 7) == 0) {
 			char *name = argv[i] + 7;
@@ -201,8 +190,28 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	if (arg_tree)
-		tree((pid_t) pid);
+	// allow only root user if /proc is mounted hidepid
+	if (pid_hidepid() && getuid() != 0) {
+		fprintf(stderr, "Error: /proc is mounted hidepid, you would need to be root to run this command\n");
+		exit(1);
+	}
+	
+	if (arg_top)
+		top(); // never to return
+	if (arg_tree) {
+		tree();
+		return 0;
+	}
+	if (arg_list) {
+		list();
+		return 0;
+	}
+	if (arg_netstats) {
+		netstats();
+		return 0;		
+	}
+	
+	// cumulative options
 	if (arg_interface)
 		interface((pid_t) pid);
 	if (arg_route)
@@ -220,7 +229,7 @@ int main(int argc, char **argv) {
 	if (arg_x11)
 		x11((pid_t) pid);
 	
-	if (!arg_route && !arg_arp && !arg_interface && !arg_tree && !arg_caps && !arg_seccomp && !arg_x11)
+	if (!arg_interface && !arg_route && !arg_arp && !arg_seccomp && !arg_caps && !arg_cgroup && !arg_x11)
 		procevent((pid_t) pid); // never to return
 		
 	return 0;

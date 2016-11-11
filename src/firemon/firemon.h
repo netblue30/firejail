@@ -75,7 +75,7 @@ void cpu(pid_t pid);
 void cgroup(pid_t pid);
 
 // tree.c
-void tree(pid_t pid);
+void tree(void);
 
 // netstats.c
 void netstats(void);

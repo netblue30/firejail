@@ -29,7 +29,6 @@
 //Process pids[max_pids];
 Process *pids = NULL;
 int max_pids=32769;
-#define PIDS_BUFLEN 4096
 
 // get the memory associated with this pid
 void pid_getmem(unsigned pid, unsigned *rss, unsigned *shared) {

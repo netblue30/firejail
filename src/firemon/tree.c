@@ -19,8 +19,8 @@
 */
 #include "firemon.h"
 
-void tree(pid_t pid) {
-	pid_read(pid);	// include all processes
+void tree(void) {
+	pid_read(0);	// include all processes
 	
 	// print processes
 	int i;

@@ -260,5 +260,26 @@ int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid) {
 	return 0;
 }
 
+// return 1 if /proc is mounted hidepid, or if /proc/mouns access is denied
+#define BUFLEN 4096
+int pid_hidepid(void) {
+	FILE *fp = fopen("/proc/mounts", "r");
+	if (!fp)
+		return 1;
+		
+	char buf[BUFLEN];
+	while (fgets(buf, BUFLEN, fp)) {
+		if (strstr(buf, "proc /proc proc")) {
+			fclose(fp);
+			// check hidepid
+			if (strstr(buf, "hidepid=2") || strstr(buf, "hidepid=1"))
+				return 1;
+			return 0;
+		}
+	}
+	
+	return 0;
+}
+
 
 

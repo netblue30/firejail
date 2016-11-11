@@ -494,25 +494,39 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--list") == 0) {
-		int rv = sbox_run(SBOX_ROOT| SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
-		exit(rv);
+		if (pid_hidepid())
+			sbox_run(SBOX_ROOT| SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
+		else
+			sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
+		exit(0);
 	}
 	else if (strcmp(argv[i], "--tree") == 0) {
-		int rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
-		exit(rv);
+		if (pid_hidepid())
+			sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
+		else
+			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
+		exit(0);
 	}
 	else if (strcmp(argv[i], "--top") == 0) {
-		int rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
-			2, PATH_FIREMON, "--top");
-		exit(rv);
+		if (pid_hidepid())
+			sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+				2, PATH_FIREMON, "--top");
+		else
+			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+				2, PATH_FIREMON, "--top");
+		exit(0);
 	}
 #ifdef HAVE_NETWORK	
 	else if (strcmp(argv[i], "--netstats") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
 			struct stat s;
-			int rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0 || pid_hidepid())
+				sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
 					2, PATH_FIREMON, "--netstats");
-			exit(rv);
+			else
+				sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+					2, PATH_FIREMON, "--netstats");
+			exit(0);
 		}
 		else {
 			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");

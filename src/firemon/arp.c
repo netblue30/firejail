@@ -73,9 +73,6 @@ static void print_arp(const char *fname) {
 }
 
 void arp(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
 	pid_read(pid);
 	
 	// print processes

@@ -170,9 +170,6 @@ static void print_proc(int index, int itv, int col) {
 }
 
 void netstats(void) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
 	pid_read(0);	// include all processes
 	
 	printf("Displaying network statistics only for sandboxes using a new network namespace.\n");

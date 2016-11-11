@@ -232,9 +232,6 @@ void head_print(int col, int row) {
 }
 
 void top(void) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-
 	while (1) {
 		// clear linked list
 		head_clear();

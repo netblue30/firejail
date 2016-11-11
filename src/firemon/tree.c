@@ -20,9 +20,6 @@
 #include "firemon.h"
 
 void tree(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
 	pid_read(pid);	// include all processes
 	
 	// print processes

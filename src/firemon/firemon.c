@@ -62,17 +62,6 @@ int find_child(int id) {
 	return -1;
 }
 
-// drop privileges
-void firemon_drop_privs(void) {
-	// drop privileges
-	if (setgroups(0, NULL) < 0)
-		errExit("setgroups");
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
-}
-
 // sleep and wait for a key to be pressed
 void firemon_sleep(int st) {
 	if (terminal_set == 0) {

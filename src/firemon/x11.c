@@ -23,9 +23,6 @@
 #include <unistd.h>
 			
 void x11(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
 	pid_read(pid);
 	
 	// print processes

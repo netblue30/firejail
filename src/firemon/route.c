@@ -182,9 +182,6 @@ static void print_route(const char *fname) {
 }
 
 void route(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
 	pid_read(pid);
 	
 	// print processes

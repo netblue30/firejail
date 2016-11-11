@@ -49,9 +49,6 @@ static void print_cpu(int pid) {
 }
 			
 void cpu(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
 	pid_read(pid);
 	
 	// print processes

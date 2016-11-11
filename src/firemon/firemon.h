@@ -38,7 +38,6 @@ static inline void firemon_clrscr(void) {
 // firemon.c
 extern int arg_nowrap;
 int find_child(int id);
-void firemon_drop_privs(void);
 void firemon_sleep(int st);
 
 

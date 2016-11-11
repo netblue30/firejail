@@ -49,9 +49,6 @@ static void print_seccomp(int pid) {
 }
 			
 void seccomp(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
 	pid_read(pid);	// include all processes
 	
 	// print processes

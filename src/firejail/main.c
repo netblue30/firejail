@@ -499,15 +499,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--list") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
+		int rv = sbox_run(SBOX_ROOT| SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
 		exit(rv);
 	}
 	else if (strcmp(argv[i], "--tree") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
+		int rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
 		exit(rv);
 	}
 	else if (strcmp(argv[i], "--top") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+		int rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
 			2, PATH_FIREMON, "--top");
 		exit(rv);
 	}
@@ -515,12 +515,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strcmp(argv[i], "--netstats") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
 			struct stat s;
-			int rv;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0)
-				rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
-					2, PATH_FIREMON, "--netstats");
-			else
-				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+			int rv = sbox_run(SBOX_ROOT | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
 					2, PATH_FIREMON, "--netstats");
 			exit(rv);
 		}

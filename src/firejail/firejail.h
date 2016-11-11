@@ -356,7 +356,6 @@ void net_configure_bridge(Bridge *br, char *dev_name);
 void net_configure_sandbox_ip(Bridge *br);
 void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
 void net_check_cfg(void);
-void net_dns_print_name(const char *name);
 void net_dns_print(pid_t pid);
 void network_main(pid_t child);
 
@@ -420,9 +419,9 @@ void usage(void);
 
 // join.c
 void join(pid_t pid, int argc, char **argv, int index);
-void join_name(const char *name, int argc, char **argv, int index);
+
+// shutdown.c
 void shut(pid_t pid);
-void shut_name(const char *name);
 
 // restricted_shell.c
 int restricted_shell(const char *user);
@@ -501,7 +500,6 @@ void seccomp_filter_32(void);
 void seccomp_filter_64(void);
 int seccomp_filter_drop(int enforce_seccomp);
 int seccomp_filter_keep(void);
-void seccomp_print_filter_name(const char *name);
 void seccomp_print_filter(pid_t pid);
 
 // caps.c
@@ -513,7 +511,6 @@ int caps_check_list(const char *clist, void (*callback)(int));
 void caps_drop_list(const char *clist);
 void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);
-void caps_print_filter_name(const char *name);
 
 // syscall.c
 const char *syscall_find_nr(int nr);
@@ -536,7 +533,6 @@ void read_cpu_list(const char *str);
 void set_cpu_affinity(void);
 void load_cpu(const char *fname);
 void save_cpu(void);
-void cpu_print_filter_name(const char *name);
 void cpu_print_filter(pid_t pid);
 
 // cgroup.c
@@ -554,7 +550,6 @@ void netfilter6(const char *fname);
 
 // bandwidth.c
 void bandwidth_del_run_file(pid_t pid);
-void bandwidth_name(const char *name, const char *command, const char *dev, int down, int up);
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up);
 void network_del_run_file(pid_t pid);
 void network_set_run_file(pid_t pid);
@@ -599,7 +594,6 @@ void fs_private_bin_list(void);
 // protocol.c
 void protocol_filter_save(void);
 void protocol_filter_load(const char *fname);
-void protocol_print_filter_name(const char *name);
 void protocol_print_filter(pid_t pid);
 
 // restrict_users.c
@@ -612,7 +606,6 @@ void fs_logger2int(const char *msg1, int d);
 void fs_logger3(const char *msg1, const char *msg2, const char *msg3);
 void fs_logger_print(void);
 void fs_logger_change_owner(void);
-void fs_logger_print_log_name(const char *name);
 void fs_logger_print_log(pid_t pid);
 
 // run_symlink.c
@@ -641,7 +634,6 @@ enum {
 	SANDBOX_FS_PUT,
 	SANDBOX_FS_MAX // this should always be the last entry
 };
-void sandboxfs_name(int op, const char *name, const char *path1, const char *path2);
 void sandboxfs(int op, pid_t pid, const char *path1, const char *path2);
 
 // checkcfg.c

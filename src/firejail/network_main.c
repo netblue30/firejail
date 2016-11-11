@@ -231,23 +231,6 @@ void net_check_cfg(void) {
 	}
 }
 
-
-
-void net_dns_print_name(const char *name) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	net_dns_print(pid);
-}
-
 #define MAXBUF 4096
 void net_dns_print(pid_t pid) {
 	EUID_ASSERT();

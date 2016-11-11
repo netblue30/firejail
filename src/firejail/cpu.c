@@ -168,21 +168,6 @@ static void print_cpu(int pid) {
 	free(file);
 }
 
-void cpu_print_filter_name(const char *name) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	cpu_print_filter(pid);
-}
-
 void cpu_print_filter(pid_t pid) {
 	EUID_ASSERT();
 	

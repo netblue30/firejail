@@ -185,22 +185,6 @@ static void print_directory(const char *path) {
 	free(namelist);
 }
 
-void sandboxfs_name(int op, const char *name, const char *path1, const char *path2) {
-	EUID_ASSERT();
-	
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	sandboxfs(op, pid, path1, path2);
-}
-
 char *expand_path(const char *path) {
 	char *fname = NULL;
 	if (*path == '/') {

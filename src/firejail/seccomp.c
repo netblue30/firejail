@@ -232,21 +232,6 @@ int seccomp_filter_keep(void) {
 	return seccomp_load(RUN_SECCOMP_CFG);
 }
 
-void seccomp_print_filter_name(const char *name) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	seccomp_print_filter(pid);
-}
-
 void seccomp_print_filter(pid_t pid) {
 	EUID_ASSERT();
 

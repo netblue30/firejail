@@ -311,21 +311,6 @@ void bandwidth_set(pid_t pid, const char *dev, int down, int up) {
 //***********************************
 // command execution
 //***********************************
-void bandwidth_name(const char *name, const char *command, const char *dev, int down, int up) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	bandwidth_pid(pid, command, dev, down, up);
-}
-
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) {
 	EUID_ASSERT();
 	//************************

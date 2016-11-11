@@ -117,22 +117,6 @@ void fs_logger_change_owner(void) {
 		errExit("chown");
 }
 
-void fs_logger_print_log_name(const char *name) {
-	EUID_ASSERT();
-	
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	fs_logger_print_log(pid);
-}
-
 void fs_logger_print_log(pid_t pid) {
 	EUID_ASSERT();
 

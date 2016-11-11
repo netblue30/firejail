@@ -59,29 +59,6 @@ void protocol_filter_load(const char *fname) {
 
 
 // --protocol.print
-void protocol_print_filter_name(const char *name) {
-	EUID_ASSERT();
-	
-	(void) name;
-#ifdef SYS_socket
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	protocol_print_filter(pid);
-#else
-	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
-	return;
-#endif
-}
-
-// --protocol.print
 void protocol_print_filter(pid_t pid) {
 	EUID_ASSERT();
 	

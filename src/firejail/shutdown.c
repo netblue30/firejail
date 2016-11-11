@@ -23,22 +23,6 @@
 #include <fcntl.h>
 #include <sys/prctl.h>
 
-void shut_name(const char *name) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	shut(pid);
-}
-
 void shut(pid_t pid) {
 	EUID_ASSERT();
 	

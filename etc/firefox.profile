@@ -2,6 +2,9 @@
 
 noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
+noblacklist ~/.config/qpdfview
+noblacklist ~/.local/share/qpdfview
+noblacklist ~/.kde/share/apps/okular
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -29,6 +32,9 @@ whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
+whitelist ~/.config/qpdfview
+whitelist ~/.local/share/qpdfview
+whitelist ~/.kde/share/apps/okular
 
 # lastpass, keepassx
 whitelist ~/.keepassx

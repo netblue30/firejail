@@ -14,8 +14,7 @@ protocol unix,inet,inet6
 seccomp
 
 shell none
-private-bin deluge,sh,python,uname
-whitelist /tmp/.X11-unix
+#private-bin deluge,sh,python,uname
 private-dev
-nosound
+private-tmp
 

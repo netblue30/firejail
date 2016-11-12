@@ -43,6 +43,9 @@ echo "TESTING: private home (test/fs/private-home.exp)"
 echo "TESTING: private home dir (test/fs/private-home-dir.exp)"
 ./private-home-dir.exp
 
+echo "TESTING: private home dir same as user home (test/fs/private-homedir.exp)"
+./private-homedir.exp
+
 echo "TESTING: private-etc (test/fs/private-etc.exp)"
 ./private-etc.exp
 

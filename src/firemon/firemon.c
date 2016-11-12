@@ -25,7 +25,6 @@
 #include <grp.h>
 #include <sys/stat.h>
  
-
 static int arg_route = 0;
 static int arg_arp = 0;
 static int arg_tree = 0;
@@ -148,8 +147,13 @@ int main(int argc, char **argv) {
 			arg_seccomp = 1;
 		else if (strcmp(argv[i], "--caps") == 0)
 			arg_caps = 1;
-		else if (strcmp(argv[i], "--interface") == 0)
+		else if (strcmp(argv[i], "--interface") == 0) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: you need to be root to run this command\n");
+				exit(1);
+			}
 			arg_interface = 1;
+		}
 		else if (strcmp(argv[i], "--route") == 0)
 			arg_route = 1;
 		else if (strcmp(argv[i], "--arp") == 0)
@@ -196,10 +200,8 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 	
-	if (arg_top)
-		top(); // never to return
-	if (arg_tree) {
-		tree();
+	if (arg_top) {
+		top(); 
 		return 0;
 	}
 	if (arg_list) {
@@ -212,25 +214,46 @@ int main(int argc, char **argv) {
 	}
 	
 	// cumulative options
-	if (arg_interface)
-		interface((pid_t) pid);
-	if (arg_route)
-		route((pid_t) pid);
-	if (arg_arp)
-		arp((pid_t) pid);
-	if (arg_seccomp)
-		seccomp((pid_t) pid);
-	if (arg_caps)
-		caps((pid_t) pid);
-	if (arg_cpu)
-		cpu((pid_t) pid);
-	if (arg_cgroup)
-		cgroup((pid_t) pid);
-	if (arg_x11)
-		x11((pid_t) pid);
+	int print_procs = 1;
+	if (arg_tree) {
+		tree((pid_t) pid);
+		print_procs = 0;
+	}
+	if (arg_cpu) {
+		cpu((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_seccomp) {
+		seccomp((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_caps) {
+		caps((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_cgroup) {
+		cgroup((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_x11) {
+		x11((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_interface) {
+		interface((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_route) {
+		route((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_arp) {
+		arp((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
 	
-	if (!arg_interface && !arg_route && !arg_arp && !arg_seccomp && !arg_caps && !arg_cgroup && !arg_x11)
-		procevent((pid_t) pid); // never to return
+	if (print_procs)
+		procevent((pid_t) pid);
 		
 	return 0;
 }

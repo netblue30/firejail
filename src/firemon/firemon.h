@@ -54,33 +54,33 @@ void top(void);
 void list(void);
 
 // interface.c
-void interface(pid_t pid);
+void interface(pid_t pid, int print_procs);
 
 // arp.c
-void arp(pid_t pid);
+void arp(pid_t pid, int print_procs);
 
 // route.c
-void route(pid_t pid);
+void route(pid_t pid, int print_procs);
 
 // caps.c
-void caps(pid_t pid);
+void caps(pid_t pid, int print_procs);
 
 // seccomp.c
-void seccomp(pid_t pid);
+void seccomp(pid_t pid, int print_procs);
 
 // cpu.c
-void cpu(pid_t pid);
+void cpu(pid_t pid, int print_procs);
 
 // cgroup.c
-void cgroup(pid_t pid);
+void cgroup(pid_t pid, int print_procs);
 
 // tree.c
-void tree(void);
+void tree(pid_t pid);
 
 // netstats.c
 void netstats(void);
 
 // x11.c
-void x11(pid_t pid);
+void x11(pid_t pid, int print_procs);
 
 #endif

@@ -11,6 +11,16 @@ rm -fr ~/_firejail_test_*
 ./fs.exp
 rm -fr ~/_firejail_test_*
 
+echo "TESTING: overlay named fs (test/overlay/fs-named.exp)"
+rm -fr ~/_firejail_test_*
+./fs-named.exp
+rm -fr ~/_firejail_test_*
+
+echo "TESTING: overlay tmpfs fs (test/overlay/fs-tmpfs.exp)"
+rm -fr ~/_firejail_test_*
+./fs-tmpfs.exp
+rm -fr ~/_firejail_test_*
+
 which firefox
 if [ "$?" -eq 0 ];
 then
@@ -51,7 +61,7 @@ which firefox
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: overlay firefox x11"
-	./firefox.exp
+	./firefox-x11.exp
 else
 	echo "TESTING SKIP: firefox not found"
 fi

@@ -127,12 +127,9 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 	}
 
 	while (ptr) {
-printf("ptr %s\n", ptr);
-		
 		int syscall_nr;
 		int error_nr;
 		syscall_process_name(ptr, &syscall_nr, &error_nr);
-printf("%d, %d\n", syscall_nr, error_nr);		
 		if (syscall_nr == -1)
 			fprintf(stderr, "Warning fseccomp: syscall %s not found\n", ptr);
 		else if (callback != NULL) {

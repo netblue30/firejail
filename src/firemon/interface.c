@@ -145,7 +145,6 @@ static void print_sandbox(pid_t pid) {
 		if (rv)
 			return;
 		net_ifprint();
-		printf("\n");
 #ifdef HAVE_GCOV
 		__gcov_flush();
 #endif
@@ -156,24 +155,21 @@ static void print_sandbox(pid_t pid) {
 	waitpid(child, NULL, 0);
 }
 
-void interface(pid_t pid) {
-	if (getuid() != 0) {
-		fprintf(stderr, "Error: you need to be root to run this command\n");
-		exit(1);
-	}
-	
+void interface(pid_t pid, int print_procs) {
 	pid_read(pid); // a pid of 0 will include all processes
 	
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {
-			pid_print_list(i, 0);
+			if (print_procs || pid == 0)
+				pid_print_list(i, 0);
 			int child = find_child(i);
 			if (child != -1) {
 				print_sandbox(child);
 			}
 		}
 	}
+	printf("\n");
 }
 

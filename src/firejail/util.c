@@ -100,10 +100,8 @@ int mkpath_as_root(const char* path) {
 			}
 		}
 		else {
-			if (chmod(file_path, 0755) == -1)
-				errExit("chmod");
-			if (chown(file_path, 0, 0) == -1)
-				errExit("chown");
+			if (set_perms(file_path, 0, 0, 0755))
+				errExit("set_perms");
 			done = 1;
 		}
 
@@ -699,10 +697,8 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 			printf("Creating empty %s directory\n", dir);
 		if (mkdir(dir, mode) == -1)
 			errExit("mkdir");
-		if (chmod(dir, mode) == -1)
-			errExit("chmod");
-		if (chown(dir, 0, 0) == -1)
-			errExit("chown");
+		if (set_perms(dir, 0, 0, mode))
+			errExit("set_perms");
 		ASSERT_PERMS(dir, 0, 0, mode);
 	}
 }
@@ -724,4 +720,15 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 			errExit("chmod");
 	}
 }
+
+// return 1 if error
+int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
+	assert(fname);
+	if (chmod(fname, mode) == -1)
+		return 1;
+	if (chown(fname, uid, gid) == -1)
+		return 1;
+	return 0;
+}
+
 

@@ -273,11 +273,8 @@ void fs_blacklist(void) {
 			if (mount(dname1, dname2, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 			/* coverity[toctou] */
-			if (chown(dname2, s.st_uid, s.st_gid) == -1)
-				errExit("mount-bind chown");
-			/* coverity[toctou] */
-			if (chmod(dname2, s.st_mode) == -1)
-				errExit("mount-bind chmod");
+			if (set_perms(dname2,  s.st_uid, s.st_gid,s.st_mode))
+				errExit("set_perms"); 
 				
 			entry = entry->next;
 			continue;
@@ -773,10 +770,8 @@ void fs_overlayfs(void) {
 			errExit("mkdir");
 	}
 
-	if (chown(odiff, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(odiff, 0755) < 0)
-		errExit("chmod");
+	if (set_perms(odiff, 0, 0, 0755))
+		errExit("set_perms");
 	
 	char *owork;
 	if(asprintf(&owork, "%s/owork", basedir) == -1)
@@ -788,10 +783,8 @@ void fs_overlayfs(void) {
 			errExit("mkdir");
 	}
 
-	if (chown(owork, 0, 0) < 0)
+	if (set_perms(owork, 0, 0, 0755))
 		errExit("chown");
-	if (chmod(owork, 0755) < 0)
-		errExit("chmod");
 	
 	// mount overlayfs
 	if (arg_debug)
@@ -850,10 +843,8 @@ void fs_overlayfs(void) {
 						errExit("mkdir");
 				}
 
-				if (chown(hdiff, 0, 0) < 0)
-					errExit("chown");
-				if (chmod(hdiff, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
-					errExit("chmod");
+				if (set_perms(hdiff, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+					errExit("set_perms");
 		
 				if(asprintf(&hwork, "%s/hwork", basedir) == -1)
 					errExit("asprintf");
@@ -864,10 +855,8 @@ void fs_overlayfs(void) {
 						errExit("mkdir");
 				}
 
-				if (chown(hwork, 0, 0) < 0)
-					errExit("chown");
-				if (chmod(hwork, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
-					errExit("chmod");
+				if (set_perms(hwork, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+					errExit("set_perms");
 		
 				// no homedir in overlay so now mount another overlay for /home
 				if (asprintf(&option, "lowerdir=/home,upperdir=%s,workdir=%s", hdiff, hwork) == -1)

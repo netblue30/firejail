@@ -398,15 +398,8 @@ int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *s
 	else if (ftype == FTW_D) {
 		if (mkdir(dest, s.st_mode) == -1)
 			errExit("mkdir");
-		if (chmod(dest, s.st_mode) < 0) {
-			fprintf(stderr, "Error: cannot change mode for %s\n", path);
-			exit(1);
-		}
-		if (chown(dest, firejail_uid, firejail_gid) < 0) {
-			fprintf(stderr, "Error: cannot change ownership for %s\n", path);
-			exit(1);
-		}
-
+		if (set_perms(dest, firejail_uid, firejail_gid, s.st_mode))
+			errExit("set_perms");
 #if 0
 struct stat s2;		
 if (stat(dest, &s2) == 0) {
@@ -590,10 +583,8 @@ void fs_private_home_list(void) {
 	int rv = mkdir(RUN_HOME_DIR, 0755);
 	if (rv == -1)
 		errExit("mkdir");
-	if (chown(RUN_HOME_DIR, u, g) < 0)
-		errExit("chown");
-	if (chmod(RUN_HOME_DIR, 0755) < 0)
-		errExit("chmod");
+	if (set_perms(RUN_HOME_DIR, u, g, 0755))
+		errExit("set_perms");
 	ASSERT_PERMS(RUN_HOME_DIR, u, g, 0755);
 
 	fs_logger_print();	// save the current log

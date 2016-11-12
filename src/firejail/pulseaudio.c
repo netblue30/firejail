@@ -106,10 +106,8 @@ void pulseaudio_init(void) {
  	// create the new user pulseaudio directory
 	int rv = mkdir(RUN_PULSE_DIR, 0700);
 	(void) rv; // in --chroot mode the directory can already be there
-	if (chown(RUN_PULSE_DIR, getuid(), getgid()) < 0)
-		errExit("chown");
-	if (chmod(RUN_PULSE_DIR, 0700) < 0)
-		errExit("chmod");
+	if (set_perms(RUN_PULSE_DIR, getuid(), getgid(), 0700))
+		errExit("set_perms");
 
 	// create the new client.conf file
 	char *pulsecfg = NULL;
@@ -131,10 +129,8 @@ void pulseaudio_init(void) {
 	if (stat(dir1, &s) == -1) {
 		int rv = mkdir(dir1, 0755);
 		if (rv == 0) {
-			rv = chown(dir1, getuid(), getgid());
-			(void) rv;
-			rv = chmod(dir1, 0755);
-			(void) rv;
+			if (set_perms(dir1, getuid(), getgid(), 0755))
+				; // do nothing
 		}
 	}
 	free(dir1);
@@ -143,10 +139,8 @@ void pulseaudio_init(void) {
 	if (stat(dir1, &s) == -1) {
 		int rv = mkdir(dir1, 0700);
 		if (rv == 0) {
-			rv = chown(dir1, getuid(), getgid());
-			(void) rv;
-			rv = chmod(dir1, 0700);
-			(void) rv;
+			if (set_perms(dir1, getuid(), getgid(), 0700))
+				; // do nothing
 		}
 	}
 	free(dir1);

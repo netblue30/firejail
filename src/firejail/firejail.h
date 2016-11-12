@@ -460,6 +460,7 @@ int remove_directory(const char *path);
 void flush_stdin(void);
 void create_empty_dir_as_root(const char *dir, mode_t mode);
 void create_empty_file_as_root(const char *dir, mode_t mode);
+int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

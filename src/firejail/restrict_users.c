@@ -95,10 +95,8 @@ static void sanitize_home(void) {
 	fs_logger2("mkdir", cfg.homedir);
 	
 	// set mode and ownership
-	if (chown(cfg.homedir, s.st_uid, s.st_gid) == -1)
-		errExit("chown");
-	if (chmod(cfg.homedir, s.st_mode) == -1)
-		errExit("chmod");
+	if (set_perms(cfg.homedir, s.st_uid, s.st_gid, s.st_mode))
+		errExit("set_perms");
 
 	// mount user home directory
 	if (mount(RUN_WHITELIST_HOME_DIR, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)

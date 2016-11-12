@@ -78,31 +78,23 @@ void preproc_mount_mnt_dir(void) {
 		// create all seccomp files
 		// as root, create RUN_SECCOMP_I386 file
 		create_empty_file_as_root(RUN_SECCOMP_I386, 0644);
-		if (chown(RUN_SECCOMP_I386, getuid(), getgid()) == -1)
-			errExit("chown");
-		if (chmod(RUN_SECCOMP_I386, 0644) == -1)
-			errExit("chmod");
+		if (set_perms(RUN_SECCOMP_I386, getuid(), getgid(), 0644))
+			errExit("set_perms");
 
 		// as root, create RUN_SECCOMP_AMD64 file
 		create_empty_file_as_root(RUN_SECCOMP_AMD64, 0644);
-		if (chown(RUN_SECCOMP_AMD64, getuid(), getgid()) == -1)
-			errExit("chown");
-		if (chmod(RUN_SECCOMP_AMD64, 0644) == -1)
-			errExit("chmod");
+		if (set_perms(RUN_SECCOMP_AMD64, getuid(), getgid(), 0644))
+			errExit("set_perms");
 
 		// as root, create RUN_SECCOMP file
 		create_empty_file_as_root(RUN_SECCOMP_CFG, 0644);
-		if (chown(RUN_SECCOMP_CFG, getuid(), getgid()) == -1)
-			errExit("chown");
-		if (chmod(RUN_SECCOMP_CFG, 0644) == -1)
-			errExit("chmod");
+		if (set_perms(RUN_SECCOMP_CFG, getuid(), getgid(), 0644))
+			errExit("set_perms");
 
 		// as root, create RUN_SECCOMP_PROTOCOL file
 		create_empty_file_as_root(RUN_SECCOMP_PROTOCOL, 0644);
-		if (chown(RUN_SECCOMP_PROTOCOL, getuid(), getgid()) == -1)
-			errExit("chown");
-		if (chmod(RUN_SECCOMP_PROTOCOL, 0644) == -1)
-			errExit("chmod");
+		if (set_perms(RUN_SECCOMP_PROTOCOL, getuid(), getgid(), 0644))
+			errExit("set_perms");
 	}
 }
 

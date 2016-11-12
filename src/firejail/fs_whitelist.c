@@ -157,10 +157,8 @@ static int mkpath(const char* path, mode_t mode) {
 			}
 		}
 		else {
-			if (chmod(file_path, mode) == -1)
-				errExit("chmod");
-			if (chown(file_path, uid, gid) == -1)
-				errExit("chown");
+			if (set_perms(file_path, uid, gid, mode))
+				errExit("set_perms");
 			done = 1;
 		}			
 
@@ -535,11 +533,8 @@ void fs_whitelist(void) {
 		int rv = mkdir(RUN_WHITELIST_HOME_USER_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(RUN_WHITELIST_HOME_USER_DIR, getuid(), getgid()) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_HOME_USER_DIR, 0755) < 0)
-			errExit("chmod");
-	
+		if (set_perms(RUN_WHITELIST_HOME_USER_DIR, getuid(), getgid(), 0755))
+			errExit("set_perms");
 		if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -553,10 +548,8 @@ void fs_whitelist(void) {
 		int rv = mkdir(RUN_WHITELIST_TMP_DIR, 1777);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(RUN_WHITELIST_TMP_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_TMP_DIR, 1777) < 0)
-			errExit("chmod");
+		if (set_perms(RUN_WHITELIST_TMP_DIR, 0, 0, 1777))
+			errExit("set_perms");
 	
 		if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
@@ -578,10 +571,8 @@ void fs_whitelist(void) {
 			int rv = mkdir(RUN_WHITELIST_MEDIA_DIR, 0755);
 			if (rv == -1)
 				errExit("mkdir");
-			if (chown(RUN_WHITELIST_MEDIA_DIR, 0, 0) < 0)
-				errExit("chown");
-			if (chmod(RUN_WHITELIST_MEDIA_DIR, 0755) < 0)
-				errExit("chmod");
+			if (set_perms(RUN_WHITELIST_MEDIA_DIR, 0, 0, 0755))
+				errExit("set_perms");
 	
 			if (mount("/media", RUN_WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
@@ -606,10 +597,8 @@ void fs_whitelist(void) {
 			int rv = mkdir(RUN_WHITELIST_MNT_DIR, 0755);
 			if (rv == -1)
 				errExit("mkdir");
-			if (chown(RUN_WHITELIST_MNT_DIR, 0, 0) < 0)
-				errExit("chown");
-			if (chmod(RUN_WHITELIST_MNT_DIR, 0755) < 0)
-				errExit("chmod");
+			if (set_perms(RUN_WHITELIST_MNT_DIR, 0, 0, 0755))
+				errExit("set_perms");
 
 			if (mount("/mnt", RUN_WHITELIST_MNT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
@@ -632,10 +621,8 @@ void fs_whitelist(void) {
 		int rv = mkdir(RUN_WHITELIST_VAR_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(RUN_WHITELIST_VAR_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_VAR_DIR, 0755) < 0)
-			errExit("chmod");
+		if (set_perms(RUN_WHITELIST_VAR_DIR, 0, 0, 0755))
+			errExit("set_perms");
 	
 		if (mount("/var", RUN_WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
@@ -654,10 +641,8 @@ void fs_whitelist(void) {
 		int rv = mkdir(RUN_WHITELIST_DEV_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(RUN_WHITELIST_DEV_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_DEV_DIR, 0755) < 0)
-			errExit("chmod");
+		if (set_perms(RUN_WHITELIST_DEV_DIR, 0, 0, 0755))
+			errExit("set_perms");
 	
 		if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount bind");
@@ -676,10 +661,8 @@ void fs_whitelist(void) {
 		int rv = mkdir(RUN_WHITELIST_OPT_DIR, 0755);
 		if (rv == -1)
 			errExit("mkdir");
-		if (chown(RUN_WHITELIST_OPT_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_OPT_DIR, 0755) < 0)
-			errExit("chmod");
+		if (set_perms(RUN_WHITELIST_OPT_DIR, 0, 0, 0755))
+			errExit("set_perms");
 	
 		if (mount("/opt", RUN_WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
@@ -701,10 +684,8 @@ void fs_whitelist(void) {
 			int rv = mkdir(RUN_WHITELIST_SRV_DIR, 0755);
 			if (rv == -1)
 				errExit("mkdir");
-			if (chown(RUN_WHITELIST_SRV_DIR, 0, 0) < 0)
-				errExit("chown");
-			if (chmod(RUN_WHITELIST_SRV_DIR, 0755) < 0)
-				errExit("chmod");
+			if (set_perms(RUN_WHITELIST_SRV_DIR, 0, 0, 0755))
+				errExit("set_perms");
 
 			if (mount("/srv", RUN_WHITELIST_SRV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");

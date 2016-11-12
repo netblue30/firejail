@@ -137,10 +137,8 @@ void fs_x11(void) {
 	int rv = mkdir(RUN_WHITELIST_X11_DIR, 1777);
 	if (rv == -1)
 		errExit("mkdir");
-	if (chown(RUN_WHITELIST_X11_DIR, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(RUN_WHITELIST_X11_DIR, 1777) < 0)
-		errExit("chmod");
+	if (set_perms(RUN_WHITELIST_X11_DIR, 0, 0, 1777))
+		errExit("set_perms");
 
 	if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
@@ -706,10 +704,8 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
-	if (chown(tmpfname, getuid(), getgid()) == -1)
-		errExit("chown");
-	if (chmod(tmpfname, 0600) == -1)
-		errExit("chmod");
+	if (set_perms(tmpfname, getuid(), getgid(), 0600))
+		errExit("set_perms");
 	
 	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
 	// automatically when the sandbox is closed
@@ -717,10 +713,8 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
-	if (chown(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid()) == -1)
-		errExit("chown");
-	if (chmod(RUN_XAUTHORITY_SEC_FILE, 0600) == -1)
-		errExit("chmod");
+	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
+		errExit("set_perms");
 	unlink(tmpfname);
 	
 	// mount
@@ -728,10 +722,8 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
-	if (chown(dest, getuid(), getgid()) == -1)
-		errExit("chown");
-	if (chmod(dest, 0600) == -1)
-		errExit("chmod");
+	if (set_perms(dest, getuid(), getgid(), 0600))
+		errExit("set_perms");
 	free(dest);
 #endif	
 }

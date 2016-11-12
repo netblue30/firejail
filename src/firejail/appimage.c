@@ -98,10 +98,8 @@ void appimage_set(const char *appimage_path) {
 		fprintf(stderr, "Error: cannot create appimage mount point\n");
 		exit(1);
 	}
-	if (chmod(mntdir, 0700) == -1)
-		errExit("chmod");
-	if (chown(mntdir, getuid(), getgid()) == -1)
-		errExit("chown");
+	if (set_perms(mntdir, getuid(), getgid(), 0700))
+		errExit("set_perms");
 	EUID_USER();
 	ASSERT_PERMS(mntdir, getuid(), getgid(), 0700);
 	

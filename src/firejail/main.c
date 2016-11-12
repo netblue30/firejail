@@ -1583,6 +1583,12 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			fs_check_private_dir();
+
+			// downgrade to --private if the directory is the user home directory
+			if (strcmp(cfg.home_private, cfg.homedir) == 0) {
+				free(cfg.home_private);
+				cfg.home_private = NULL;
+			}
 			arg_private = 1;
 		}
 #ifdef HAVE_PRIVATE_HOME

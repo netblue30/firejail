@@ -278,6 +278,7 @@ int pid_hidepid(void) {
 		}
 	}
 	
+	fclose(fp);
 	return 0;
 }
 

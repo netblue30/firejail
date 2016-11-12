@@ -714,7 +714,7 @@ void x11_xorg(void) {
 	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
 	// automatically when the sandbox is closed
 	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) {
-		fprintf(stderr, "asdfdsfError: cannot create the new .Xauthority file\n");
+		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
 	if (chown(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid()) == -1)

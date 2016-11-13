@@ -20,12 +20,14 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"done"
 }
+after 100
 
 send -- "echo mytest >~/_firejail_test_dir/test1/b;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"done"
 }
+after 100
 
 send -- "cat ~/_firejail_test_dir/a;echo done\r"
 expect {
@@ -33,7 +35,7 @@ expect {
 	"mytest" {puts "TESTING ERROR 4\n";exit}
 	"done"
 }
-
+after 100
 
 send -- "cat ~/_firejail_test_dir/test1/b;echo done\r"
 expect {

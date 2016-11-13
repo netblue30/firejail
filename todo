@@ -286,4 +286,5 @@ removable media, partitions, software RAID volumes, logical volumes, and files.
 
 29. grsecurity - move test after "firejail --name=blablabla" in /test/apps*
 
+30. /* coverity[toctou] */
 

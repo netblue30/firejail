@@ -461,6 +461,7 @@ void flush_stdin(void);
 void create_empty_dir_as_root(const char *dir, mode_t mode);
 void create_empty_file_as_root(const char *dir, mode_t mode);
 int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
+void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

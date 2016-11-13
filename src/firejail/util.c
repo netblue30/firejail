@@ -731,4 +731,40 @@ int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
 	return 0;
 }
 
+void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
+	assert(fname);
+	mode &= 07777;
+#if 0	
+	printf("fname %s, uid %d, gid %d, mode %x - ", fname, uid, gid, (unsigned) mode);
+	if (S_ISLNK(mode))
+		printf("l");
+	else if (S_ISDIR(mode))
+		printf("d");
+	else if (S_ISCHR(mode))
+		printf("c");
+	else if (S_ISBLK(mode))
+		printf("b");
+	else if (S_ISSOCK(mode))
+		printf("s");
+	else
+		printf("-");
+	printf( (mode & S_IRUSR) ? "r" : "-");
+	printf( (mode & S_IWUSR) ? "w" : "-");
+	printf( (mode & S_IXUSR) ? "x" : "-");
+	printf( (mode & S_IRGRP) ? "r" : "-");
+	printf( (mode & S_IWGRP) ? "w" : "-");
+	printf( (mode & S_IXGRP) ? "x" : "-");
+	printf( (mode & S_IROTH) ? "r" : "-");
+	printf( (mode & S_IWOTH) ? "w" : "-");
+	printf( (mode & S_IXOTH) ? "x" : "-");
+	printf("\n");
+#endif	
+	if (mkdir(fname, mode) == -1 ||
+	    chmod(fname, mode) == -1 ||
+	    chown(fname, uid, gid)) {
+	    	fprintf(stderr, "Error: failed to create %s directory\n", fname);
+		errExit("mkdir/chmod");
+	}
 
+	ASSERT_PERMS(fname, uid, gid, mode);
+}

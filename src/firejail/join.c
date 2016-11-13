@@ -229,15 +229,11 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			exit(1);
 	}
 	else {
-		if (join_namespace(pid, "ipc"))
-			exit(1);
-		if (join_namespace(pid, "net"))
-			exit(1);
-		if (join_namespace(pid, "pid"))
-			exit(1);
-		if (join_namespace(pid, "uts"))
-			exit(1);
-		if (join_namespace(pid, "mnt"))
+		if (join_namespace(pid, "ipc") ||
+		    join_namespace(pid, "net") ||
+		    join_namespace(pid, "pid") ||
+		    join_namespace(pid, "uts") ||
+		    join_namespace(pid, "mnt"))
 			exit(1);
 	}
 

@@ -247,21 +247,13 @@ void fs_blacklist(void) {
 
 		// process bind command
 		if (strncmp(entry->data, "bind ", 5) == 0)  {
+			struct stat s;
 			char *dname1 = entry->data + 5;
 			char *dname2 = split_comma(dname1);
-			if (dname2 == NULL) {
-				fprintf(stderr, "Error: second directory missing in bind command\n");
-				entry = entry->next;
-				continue;
-			}
-			struct stat s;
-			if (stat(dname1, &s) == -1) {
-				fprintf(stderr, "Error: cannot find %s for bind command\n", dname1);
-				entry = entry->next;
-				continue;
-			}
-			if (stat(dname2, &s) == -1) {
-				fprintf(stderr, "Error: cannot find %s for bind command\n", dname2);
+			if (dname2 == NULL ||
+			    stat(dname1, &s) == -1 ||
+			    stat(dname2, &s) == -1) {
+				fprintf(stderr, "Error: invalid bind command, directory missing\n");
 				entry = entry->next;
 				continue;
 			}
@@ -410,10 +402,9 @@ void fs_rdonly(const char *dir) {
 	int rv = stat(dir, &s);
 	if (rv == 0) {
 		// mount --bind /bin /bin
-		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount read-only");
 		// mount --bind -o remount,ro /bin
-		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
+		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
 			errExit("mount read-only");
 		fs_logger2("read-only", dir);
 	}
@@ -428,15 +419,15 @@ static void fs_rdwr(const char *dir) {
 		// if the file is outside /home directory, allow only root user
 		uid_t u = getuid();
 		if (u != 0 && s.st_uid != u) {
-			fprintf(stderr, "Warning: you are not allowed to change %s to read-write\n", dir);
+			if (!arg_quiet)
+				fprintf(stderr, "Warning: you are not allowed to change %s to read-write\n", dir);
 			return;
 		}
 		
 		// mount --bind /bin /bin
-		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount read-write");
 		// mount --bind -o remount,rw /bin
-		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 || 
+		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
 			errExit("mount read-write");
 		fs_logger2("read-write", dir);
 	}
@@ -449,36 +440,15 @@ void fs_noexec(const char *dir) {
 	int rv = stat(dir, &s);
 	if (rv == 0) {
 		// mount --bind /bin /bin
-		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount noexec");
 		// mount --bind -o remount,ro /bin
-		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_REC, NULL) < 0)
-			errExit("mount read-only");
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 || 
+		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_REC, NULL) < 0)
+			errExit("mount noexec");
 		fs_logger2("noexec", dir);
 	}
 }
 
 
-
-void fs_rdonly_noexit(const char *dir) {
-	assert(dir);
-	// check directory exists
-	struct stat s;
-	int rv = stat(dir, &s);
-	if (rv == 0) {
-		int merr = 0;
-		// mount --bind /bin /bin
-		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
-			merr = 1;
-		// mount --bind -o remount,ro /bin
-		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
-			merr = 1;
-		if (merr)
-			fprintf(stderr, "Warning: cannot mount %s read-only\n", dir); 
-		else
-			fs_logger2("read-only", dir);
-	}
-}
 
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {
@@ -489,10 +459,8 @@ void fs_proc_sys_dev_boot(void) {
 	fs_logger("remount /proc");
 
 	// remount /proc/sys readonly
-	if (mount("/proc/sys", "/proc/sys", NULL, MS_BIND | MS_REC, NULL) < 0)
-		errExit("mounting /proc/sys");
-
-	if (mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_REC, NULL) < 0)
+	if (mount("/proc/sys", "/proc/sys", NULL, MS_BIND | MS_REC, NULL) < 0 ||
+	    mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_REC, NULL) < 0)
 		errExit("mounting /proc/sys");
 	fs_logger("read-only /proc/sys");
 
@@ -646,12 +614,7 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dirname, &s) == -1) {
-		/* coverity[toctou] */
-		if (mkdir(dirname, 0700))
-			errExit("mkdir");
-		if (chmod(dirname, 0700) == -1)
-			errExit("chmod");
-		ASSERT_PERMS(dirname, getuid(), getgid(), 0700);
+		mkdir_attr(dirname, 0700, 0, 0);
 	}
 	else if (is_link(dirname)) {
 		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
@@ -733,11 +696,7 @@ void fs_overlayfs(void) {
 	char *oroot;
 	if(asprintf(&oroot, "%s/oroot", RUN_MNT_DIR) == -1)
 		errExit("asprintf");
-	if (mkdir(oroot, 0755))
-		errExit("mkdir");
-	if (chmod(oroot, 0755) == -1)
-		errExit("chmod");
-	ASSERT_PERMS(oroot, 0, 0, 0755);
+	mkdir_attr(oroot, 0755, 0, 0);
 
 	struct stat s;
 	char *basedir = RUN_MNT_DIR;
@@ -766,11 +725,9 @@ void fs_overlayfs(void) {
 
 	// no need to check arg_overlay_reuse
 	if (stat(odiff, &s) != 0) {
-		if (mkdir(odiff, 0755))
-			errExit("mkdir");
+		mkdir_attr(odiff, 0755, 0, 0);
 	}
-
-	if (set_perms(odiff, 0, 0, 0755))
+	else if (set_perms(odiff, 0, 0, 0755))
 		errExit("set_perms");
 	
 	char *owork;
@@ -779,11 +736,9 @@ void fs_overlayfs(void) {
 
 	// no need to check arg_overlay_reuse
 	if (stat(owork, &s) != 0) {
-		if (mkdir(owork, 0755))
-			errExit("mkdir");
+		mkdir_attr(owork, 0755, 0, 0);
 	}
-
-	if (set_perms(owork, 0, 0, 0755))
+	else if (set_perms(owork, 0, 0, 0755))
 		errExit("chown");
 	
 	// mount overlayfs
@@ -839,11 +794,9 @@ void fs_overlayfs(void) {
 
 				// no need to check arg_overlay_reuse
 				if (stat(hdiff, &s) != 0) {
-					if (mkdir(hdiff, S_IRWXU | S_IRWXG | S_IRWXO))
-						errExit("mkdir");
+					mkdir_attr(hdiff, S_IRWXU | S_IRWXG | S_IRWXO, 0, 0);
 				}
-
-				if (set_perms(hdiff, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+				else if (set_perms(hdiff, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
 					errExit("set_perms");
 		
 				if(asprintf(&hwork, "%s/hwork", basedir) == -1)
@@ -851,11 +804,9 @@ void fs_overlayfs(void) {
 
 				// no need to check arg_overlay_reuse
 				if (stat(hwork, &s) != 0) {
-					if (mkdir(hwork, S_IRWXU | S_IRWXG | S_IRWXO))
-						errExit("mkdir");
+					mkdir_attr(hwork, S_IRWXU | S_IRWXG | S_IRWXO, 0, 0);
 				}
-
-				if (set_perms(hwork, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+				else if (set_perms(hwork, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
 					errExit("set_perms");
 		
 				// no homedir in overlay so now mount another overlay for /home

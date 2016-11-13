@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# set a new firejail config file
+cp firejail.config /etc/firejail/firejail.config
+
 #********************************
 # servers
 #********************************
@@ -90,4 +93,7 @@ then
 else
 	echo "TESTING SKIP: firecfg, firefox not found"
 fi
+
+# restore the default config file
+cp ../../etc/firejail.config /etc/firejail/firejail.config
 

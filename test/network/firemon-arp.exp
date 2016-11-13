@@ -4,12 +4,12 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "ping -c 3 192.168.1.1\r"
-expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"3 packets transmitted"
-}
-sleep 1
+#send -- "ping -c 3 192.168.1.1\r"
+#expect {
+#	timeout {puts "TESTING ERROR 0\n";exit}
+#	"3 packets transmitted"
+#}
+#sleep 1
 
 send --  "firejail --name=test1\r"
 expect {

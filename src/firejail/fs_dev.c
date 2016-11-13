@@ -65,11 +65,7 @@ static void deventry_mount(void) {
 			if (arg_debug)
 				printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
 			if (dir) {
-				if (mkdir(dev[i].dev_fname, 0755) == -1)
-					errExit("mkdir");
-				if (chmod(dev[i].dev_fname, 0755) == -1)
-					errExit("chmod");
-				ASSERT_PERMS(dev[i].dev_fname, 0, 0, 0755);
+				mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
 			}
 			else {
 				struct stat s;
@@ -130,11 +126,7 @@ void fs_private_dev(void){
 
 	// create DRI_DIR
 	// keep a copy of dev directory
-	if (mkdir(RUN_DEV_DIR, 0755) == -1)
-		errExit("mkdir");
-	if (chmod(RUN_DEV_DIR, 0755) == -1)
-		errExit("chmod");
-	ASSERT_PERMS(RUN_DEV_DIR, 0, 0, 0755);
+	mkdir_attr(RUN_DEV_DIR, 0755, 0, 0);
 	if (mount("/dev", RUN_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting /dev/dri");
 
@@ -179,12 +171,7 @@ void fs_private_dev(void){
 	// create /dev/shm
 	if (arg_debug)
 		printf("Create /dev/shm directory\n");
-	if (mkdir("/dev/shm", 01777) == -1)
-		errExit("mkdir");
-	// mkdir sets only the file permission bits
-	if (chmod("/dev/shm", 01777) < 0)
-		errExit("chmod");
-	ASSERT_PERMS("/dev/shm", 0, 0, 01777);
+	mkdir_attr("/dev/shm", 01777, 0, 0);
 	fs_logger("mkdir /dev/shm");
 
 	// create devices
@@ -206,11 +193,7 @@ void fs_private_dev(void){
 #endif
 
 	// pseudo-terminal
-	if (mkdir("/dev/pts", 0755) == -1)
-		errExit("mkdir");
-	if (chmod("/dev/pts", 0755) == -1)
-		errExit("chmod");
-	ASSERT_PERMS("/dev/pts", 0, 0, 0755);
+	mkdir_attr("/dev/pts", 0755, 0, 0);
 	fs_logger("mkdir /dev/pts");
 	create_char_dev("/dev/pts/ptmx", 0666, 5, 2); //"mknod -m 666 /dev/pts/ptmx c 5 2");
 	fs_logger("mknod /dev/pts/ptmx");
@@ -260,12 +243,7 @@ void fs_dev_shm(void) {
 		if (lnk) {
 			if (!is_dir(lnk)) {
 				// create directory
-				if (mkdir(lnk, 01777))
-					errExit("mkdir");
-				// mkdir sets only the file permission bits
-				if (chmod(lnk, 01777))
-					errExit("chmod");
-				ASSERT_PERMS(lnk, 0, 0, 01777);
+				mkdir_attr(lnk, 01777, 0, 0);
 			}
 			if (arg_debug)
 				printf("Mounting tmpfs on %s on behalf of /dev/shm\n", lnk);

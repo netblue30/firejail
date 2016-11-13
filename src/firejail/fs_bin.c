@@ -212,11 +212,7 @@ void fs_private_bin_list(void) {
 	assert(private_list);
 	
 	// create /run/firejail/mnt/bin directory
-	if (mkdir(RUN_BIN_DIR, 0755) == -1)
-		errExit("mkdir");
-	if (chmod(RUN_BIN_DIR, 0755) == -1)
-		errExit("chmod");
-	ASSERT_PERMS(RUN_BIN_DIR, 0, 0, 0755);
+	mkdir_attr(RUN_BIN_DIR, 0755, 0, 0);
 	
 	// copy the list of files in the new etc directory
 	// using a new child process without root privileges

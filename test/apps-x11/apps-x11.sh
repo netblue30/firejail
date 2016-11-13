@@ -6,6 +6,33 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+echo "TESTING: no x11 (test/apps-x11/x11-none.exp)"
+./x11-none.exp
+
+
+which xterm
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: xterm x11 xorg"
+	./xterm-xorg.exp
+
+	which xpra
+	if [ "$?" -eq 0 ];
+	then
+	echo "TESTING: xterm x11 xpra"
+	./xterm-xpra.exp
+	fi
+	
+	which Xephyr
+	if [ "$?" -eq 0 ];
+	then
+	echo "TESTING: xterm x11 xephyr"
+	./xterm-xephyr.exp
+	fi
+else
+	echo "TESTING SKIP: xterm not found"
+fi
+
 # check xpra/xephyr
 which xpra
 if [ "$?" -eq 0 ];
@@ -21,15 +48,6 @@ else
         	echo "TESTING SKIP: xpra and/or Xephyr not found"
 		exit
 	fi
-fi
-
-which xterm
-if [ "$?" -eq 0 ];
-then
-	echo "TESTING: xterm x11"
-	./xterm.exp
-else
-	echo "TESTING SKIP: xterm not found"
 fi
 
 which firefox

@@ -98,10 +98,7 @@ static void build_dirs(void) {
 	// create directories under /var/log
 	DirData *ptr = dirlist;
 	while (ptr) {
-		if (mkdir(ptr->name, ptr->st_mode))
-			errExit("mkdir");
-		if (chown(ptr->name, ptr->st_uid, ptr->st_gid))
-			errExit("chown");
+		mkdir_attr(ptr->name, ptr->st_mode, ptr->st_uid, ptr->st_gid);
 		fs_logger2("mkdir", ptr->name);
 		ptr = ptr->next;
 	}
@@ -223,18 +220,10 @@ void fs_var_cache(void) {
 			gid = p->pw_gid;
 		}
 		
-		int rv = mkdir("/var/cache/lighttpd/compress", 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown("/var/cache/lighttpd/compress", uid, gid) < 0)
-			errExit("chown");
+		mkdir_attr("/var/cache/lighttpd/compress", 0755, uid, gid);
 		fs_logger("mkdir /var/cache/lighttpd/compress");
 
-		rv = mkdir("/var/cache/lighttpd/uploads", 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown("/var/cache/lighttpd/uploads", uid, gid) < 0)
-			errExit("chown");
+		mkdir_attr("/var/cache/lighttpd/uploads", 0755, uid, gid);
 		fs_logger("/var/cache/lighttpd/uploads");
 	}			
 }
@@ -268,11 +257,7 @@ void fs_var_lock(void) {
 		if (lnk) {
 			if (!is_dir(lnk)) {
 				// create directory
-				if (mkdir(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
-					errExit("mkdir");
-				if (chmod(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
-					errExit("chmod");
-				ASSERT_PERMS(lnk, 0, 0, S_IRWXU|S_IRWXG|S_IRWXO);
+				mkdir_attr(lnk, S_IRWXU|S_IRWXG|S_IRWXO, 0, 0);
 			}
 			if (arg_debug)
 				printf("Mounting tmpfs on %s on behalf of /var/lock\n", lnk);

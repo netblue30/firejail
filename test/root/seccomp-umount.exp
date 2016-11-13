@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --net=br0 --ip=10.10.20.5 --seccomp --noprofile\r"
+send --  "firejail --seccomp --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"

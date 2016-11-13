@@ -94,14 +94,8 @@ void appimage_set(const char *appimage_path) {
 	if (asprintf(&mntdir, "%s/.appimage-%u",  RUN_FIREJAIL_APPIMAGE_DIR, getpid()) == -1)
 		errExit("asprintf");
 	EUID_ROOT();
-	if (mkdir(mntdir, 0700) == -1) {
-		fprintf(stderr, "Error: cannot create appimage mount point\n");
-		exit(1);
-	}
-	if (set_perms(mntdir, getuid(), getgid(), 0700))
-		errExit("set_perms");
+	mkdir_attr(mntdir, 0700, getuid(), getgid());
 	EUID_USER();
-	ASSERT_PERMS(mntdir, getuid(), getgid(), 0700);
 	
 	// mount
 	char *mode;

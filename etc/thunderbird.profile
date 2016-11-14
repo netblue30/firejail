@@ -17,5 +17,5 @@ whitelist ~/.cache/thunderbird
 # allow browsers
 ignore private-tmp
 include /etc/firejail/firefox.profile
-include /etc/firejail/chromium.profile
+#include /etc/firejail/chromium.profile - chromium runs as suid!
 

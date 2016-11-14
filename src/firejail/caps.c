@@ -168,17 +168,6 @@ static CapsEntry capslist[] = {
 //
 }; // end of capslist
 
-const char *caps_find_nr(int nr) {
-	int i;
-	int elems = sizeof(capslist) / sizeof(capslist[0]);
-	for (i = 0; i < elems; i++) {
-		if (nr == capslist[i].nr)
-			return capslist[i].name;
-	}
-	
-	return "unknown";
-}
-
 // return -1 if error, or syscall number
 static int caps_find_name(const char *name) {
 	int i;
@@ -397,7 +386,7 @@ static uint64_t extract_caps(int pid) {
 	}
 	fclose(fp);
 	free(file);
-	printf("Error: cannot read caps configuration\n");
+	fprintf(stderr, "Error: cannot read caps configuration\n");
 	exit(1);
 }
 

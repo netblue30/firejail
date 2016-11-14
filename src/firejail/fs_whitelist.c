@@ -530,11 +530,7 @@ void fs_whitelist(void) {
 	// /home/user
 	if (home_dir) {
 		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
-		int rv = mkdir(RUN_WHITELIST_HOME_USER_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (set_perms(RUN_WHITELIST_HOME_USER_DIR, getuid(), getgid(), 0755))
-			errExit("set_perms");
+		mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
 		if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -545,12 +541,7 @@ void fs_whitelist(void) {
 	// /tmp mountpoint
 	if (tmp_dir) {
 		// keep a copy of real /tmp directory in  
-		int rv = mkdir(RUN_WHITELIST_TMP_DIR, 1777);
-		if (rv == -1)
-			errExit("mkdir");
-		if (set_perms(RUN_WHITELIST_TMP_DIR, 0, 0, 1777))
-			errExit("set_perms");
-	
+		mkdir_attr(RUN_WHITELIST_TMP_DIR, 1777, 0, 0);
 		if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -568,12 +559,7 @@ void fs_whitelist(void) {
 		struct stat s;
 		if (stat("/media", &s) == 0) {
 			// keep a copy of real /media directory in RUN_WHITELIST_MEDIA_DIR
-			int rv = mkdir(RUN_WHITELIST_MEDIA_DIR, 0755);
-			if (rv == -1)
-				errExit("mkdir");
-			if (set_perms(RUN_WHITELIST_MEDIA_DIR, 0, 0, 0755))
-				errExit("set_perms");
-	
+			mkdir_attr(RUN_WHITELIST_MEDIA_DIR, 0755, 0, 0);
 			if (mount("/media", RUN_WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 	
@@ -594,12 +580,7 @@ void fs_whitelist(void) {
 		struct stat s;
 		if (stat("/mnt", &s) == 0) {
 			// keep a copy of real /mnt directory in RUN_WHITELIST_MNT_DIR
-			int rv = mkdir(RUN_WHITELIST_MNT_DIR, 0755);
-			if (rv == -1)
-				errExit("mkdir");
-			if (set_perms(RUN_WHITELIST_MNT_DIR, 0, 0, 0755))
-				errExit("set_perms");
-
+			mkdir_attr(RUN_WHITELIST_MNT_DIR, 0755, 0, 0);
 			if (mount("/mnt", RUN_WHITELIST_MNT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 
@@ -618,12 +599,7 @@ void fs_whitelist(void) {
 	// /var mountpoint
 	if (var_dir) {
 		// keep a copy of real /var directory in RUN_WHITELIST_VAR_DIR
-		int rv = mkdir(RUN_WHITELIST_VAR_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (set_perms(RUN_WHITELIST_VAR_DIR, 0, 0, 0755))
-			errExit("set_perms");
-	
+		mkdir_attr(RUN_WHITELIST_VAR_DIR, 0755, 0, 0);
 		if (mount("/var", RUN_WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -638,12 +614,7 @@ void fs_whitelist(void) {
 	// /dev mountpoint
 	if (dev_dir) {
 		// keep a copy of real /dev directory in RUN_WHITELIST_DEV_DIR
-		int rv = mkdir(RUN_WHITELIST_DEV_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (set_perms(RUN_WHITELIST_DEV_DIR, 0, 0, 0755))
-			errExit("set_perms");
-	
+		mkdir_attr(RUN_WHITELIST_DEV_DIR, 0755, 0, 0);
 		if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount bind");
 	
@@ -658,12 +629,7 @@ void fs_whitelist(void) {
 	// /opt mountpoint
 	if (opt_dir) {
 		// keep a copy of real /opt directory in RUN_WHITELIST_OPT_DIR
-		int rv = mkdir(RUN_WHITELIST_OPT_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (set_perms(RUN_WHITELIST_OPT_DIR, 0, 0, 0755))
-			errExit("set_perms");
-	
+		mkdir_attr(RUN_WHITELIST_OPT_DIR, 0755, 0, 0);
 		if (mount("/opt", RUN_WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -681,12 +647,7 @@ void fs_whitelist(void) {
 		struct stat s;
 		if (stat("/srv", &s) == 0) {
 			// keep a copy of real /srv directory in RUN_WHITELIST_SRV_DIR
-			int rv = mkdir(RUN_WHITELIST_SRV_DIR, 0755);
-			if (rv == -1)
-				errExit("mkdir");
-			if (set_perms(RUN_WHITELIST_SRV_DIR, 0, 0, 0755))
-				errExit("set_perms");
-
+			mkdir_attr(RUN_WHITELIST_SRV_DIR, 0755, 0, 0);
 			if (mount("/srv", RUN_WHITELIST_SRV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 

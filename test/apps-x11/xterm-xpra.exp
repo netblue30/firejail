@@ -79,6 +79,18 @@ expect {
 	"name=blablabla"
 }
 sleep 1
+
+send -- "firemon --x11\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"name=test xterm"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.1\n";exit}
+	"DISPLAY"
+}
+sleep 1
+
 send -- "firejail --shutdown=test\r"
 sleep 3
 

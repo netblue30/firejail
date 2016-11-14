@@ -4,15 +4,6 @@ set timeout 5
 spawn $env(SHELL)
 match_max 100000
 
-send -- "sudo ls; sudo whoami; sudo pwd\r"
-expect {
-	timeout {puts "TESTING ERROR: you need to root run this test as root\n";exit}
-	"root"
-}
-
-send -- "pkill unbound\r"
-sleep 2
-
 send -- "firejail --name=unbound unbound\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

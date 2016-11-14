@@ -4,10 +4,6 @@ set timeout 5
 spawn $env(SHELL)
 match_max 100000
 
-send -- "pkill nginx\r"
-sleep 2
-
-
 send -- "firejail --name=nginx /etc/init.d/nginx start\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

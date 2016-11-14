@@ -48,6 +48,12 @@ else
 fi
 
 #********************************
+# filesystem
+#********************************
+echo "TESTING: fs private (test/root/private.exp)"
+./private.exp
+
+#********************************
 # seccomp
 #********************************
 echo "TESTING: seccomp umount (test/root/seccomp-umount.exp)"

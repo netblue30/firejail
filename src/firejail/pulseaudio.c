@@ -130,7 +130,7 @@ void pulseaudio_init(void) {
 		int rv = mkdir(dir1, 0755);
 		if (rv == 0) {
 			if (set_perms(dir1, getuid(), getgid(), 0755))
-				; // do nothing
+				{;} // do nothing
 		}
 	}
 	free(dir1);
@@ -140,7 +140,7 @@ void pulseaudio_init(void) {
 		int rv = mkdir(dir1, 0700);
 		if (rv == 0) {
 			if (set_perms(dir1, getuid(), getgid(), 0700))
-				; // do nothing
+				{;} // do nothing
 		}
 	}
 	free(dir1);

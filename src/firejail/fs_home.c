@@ -626,6 +626,9 @@ void fs_private_home_list(void) {
 
 		fs_logger_print();	// save the current log
 		free(dlist);
+#ifdef HAVE_GCOV
+	__gcov_flush();
+#endif
 		_exit(0);
 	}
 	// wait for the child to finish

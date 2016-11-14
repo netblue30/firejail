@@ -104,16 +104,8 @@ void preproc_build_cp_command(void) {
 	preproc_mount_mnt_dir();
 	if (stat(RUN_CP_COMMAND, &s)) {
 		char* fname = realpath("/bin/cp", NULL);
-		if (fname == NULL) {
-			fprintf(stderr, "Error: /bin/cp not found\n");
-			exit(1);
-		}
-		if (stat(fname, &s)) {
-			fprintf(stderr, "Error: /bin/cp not found\n");
-			exit(1);
-		}
-		if (is_link(fname)) {
-			fprintf(stderr, "Error: invalid /bin/cp file\n");
+		if (fname == NULL || stat(fname, &s) || is_link(fname)) {
+			fprintf(stderr, "Error: invalid /bin/cp\n");
 			exit(1);
 		}
 		int rv = copy_file(fname, RUN_CP_COMMAND, 0, 0, 0755);

@@ -14,5 +14,8 @@ noblacklist ~/.cache/icedove
 mkdir ~/.cache/icedove
 whitelist ~/.cache/icedove
 
+# allow browsers
+ignore private-tmp
 include /etc/firejail/firefox.profile
+#include /etc/firejail/chromium.profile - chromium runs as suid!
 

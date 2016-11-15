@@ -6,7 +6,8 @@ firejail (0.9.45) baseline; urgency=low
   * security: split most of networking code in a separate executable
   * security: split seccomp filter code configuration in a separate executable
   * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)
-  * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire
+  * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
+  * new profiles: mumble, zoom, Guayadeque
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
 

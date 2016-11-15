@@ -80,6 +80,13 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- evince profile enhancement
 	- tightened Spotify profile
 	- added xiphos and Tor Browser Bundle profiles
+curiosity-seeker (https://github.com/curiosity-seeker)
+	- tightening unbound and dnscrypt-proxy profiles
+	- dnsmasq profile
+	- okular and gwenview profiles
+	- cherrytree profile fixes
+	- added quiterss profile
+	- added guayadeque profile
 Simon Peter (https://github.com/probonopd)
 	- set $APPIMAGE and $APPDIR environment variables
 	- AppImage version detection
@@ -194,12 +201,6 @@ Vasya Novikov (https://github.com/vn971)
 	- manpage fixes
 	- fixed firecfg clean/clear issue
 	- found the ugliest bug so far
-curiosity-seeker (https://github.com/curiosity-seeker)
-	- tightening unbound and dnscrypt-proxy profiles
-	- dnsmasq profile
-	- okular and gwenview profiles
-	- cherrytree profile fixes
-	- added quiterss profile
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
 Joan Figueras (https://github.com/figue)

@@ -53,6 +53,7 @@ blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.audacity-data
+blacklist ${HOME}/.guayadeque
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove

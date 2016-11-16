@@ -13,7 +13,7 @@ match_max 100000
 send -- "rm -fr dest/*\r"
 after 100
 
-send -- "/usr/lib/firejail/fcopy src/dircopy.exp dest\r"
+send -- "/usr/lib/firejail/fcopy dircopy.exp dest\r"
 after 100
 
 send -- "find dest\r"
@@ -31,7 +31,7 @@ after 100
 send -- "ls -al dest\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"lrwxrwxrwx"
+	"rwxr-xr-x"
 }
 after 100
 
@@ -45,7 +45,7 @@ expect {
 send -- "file dest/dircopy.exp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"symbolic link"
+	"ASCII text"
 }
 
 send -- "rm -fr dest/*\r"

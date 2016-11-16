@@ -13,7 +13,7 @@ match_max 100000
 send -- "rm -fr dest/*\r"
 after 100
 
-send -- "/usr/lib/firejail/fcopy src dest\r"
+send -- "/usr/lib/firejail/fcopy src/dircopy.exp dest\r"
 after 100
 
 send -- "find dest\r"
@@ -23,60 +23,28 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"dest/a"
-}
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"dest/a/b"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"dest/a/b/file4"
-}
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"dest/a/file3"
-}
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
 	"dest/dircopy.exp"
-}
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"dest/file2"
-}
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"dest/file1"
 }
 after 100
 
 
 send -- "ls -al dest\r"
 expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
-	"drwx--x--x"
-}
-expect {
-	timeout {puts "TESTING ERROR 9\n";exit}
-	"rwxrwxrwx"
-}
-expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
-	"rw-r--r--"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"lrwxrwxrwx"
 }
 after 100
 
-send -- "diff -q src/a/b/file4 dest/a/b/file4; echo done\r"
+send -- "diff -q dircopy.exp dest/dircopy.exp; echo done\r"
 expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	"differ" {puts "TESTING ERROR 12\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"differ" {puts "TESTING ERROR 4\n";exit}
 	"done"
 }
 
 send -- "file dest/dircopy.exp\r"
 expect {
-	timeout {puts "TESTING ERROR 13\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"symbolic link"
 }
 

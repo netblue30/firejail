@@ -562,7 +562,10 @@ char *expand_home(const char *path, const char* homedir) {
 		return new_name;
 	}
 
-	return strdup(path);
+	char *rv = strdup(path);
+	if (!rv)
+		errExit("strdup");
+	return rv;
 }
 
 
@@ -625,7 +628,7 @@ uid_t pid_get_uid(pid_t pid) {
 
 
 void invalid_filename(const char *fname) {
-	EUID_ASSERT();
+//	EUID_ASSERT();
 	assert(fname);
 	const char *ptr = fname;
 

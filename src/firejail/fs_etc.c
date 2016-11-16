@@ -62,37 +62,6 @@ errexit:
 	exit(1);
 }
 
-void fs_check_etc_list(void) {
-	EUID_ASSERT();
-	if (strstr(cfg.etc_private_keep, "..")) {
-		fprintf(stderr, "Error: invalid private etc list\n");
-		exit(1);
-	}
-	
-	char *dlist = strdup(cfg.etc_private_keep);
-	if (!dlist)
-		errExit("strdup");
-	
-	// build a new list only with the files found
-	char *newlist = malloc(strlen(cfg.etc_private_keep) + 1);
-	if (!newlist)
-		errExit("malloc");
-	*newlist = '\0';
-
-	char *ptr = strtok(dlist, ",");
-	if (check_dir_or_file(ptr))
-		strcat(newlist, ptr);
-	while ((ptr = strtok(NULL, ",")) != NULL) {
-		if (check_dir_or_file(ptr)) {
-			strcat(newlist, ",");
-			strcat(newlist, ptr);
-		}
-	}
-	cfg.etc_private_keep = newlist;
-	
-	free(dlist);
-}
-
 static void duplicate(char *fname) {
 	// copy the file
 	if (arg_debug)

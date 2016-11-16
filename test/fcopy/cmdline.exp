@@ -43,14 +43,4 @@ expect {
 }
 after 100
 
-send -- "/usr/lib/firejail/fcopy foo1 foo2\r"
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"cannot find destination directory"
-}
-after 100
-
-
-
-
 puts "\nall done\n"

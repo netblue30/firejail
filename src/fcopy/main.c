@@ -130,9 +130,15 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	if (size_limit_reached)
 		return 0;
 
+
 	char *outfname;
 	if (asprintf(&outfname, "%s%s", outpath, infname + strlen(inpath)) == -1)
 		errExit("asprintf");
+
+//printf("outpaht %s\n", outpath);
+//printf("inpath %s\n", inpath);
+//printf("infname %s\n", infname);
+//printf("outfname %s\n\n", outfname);
 
 	// don't copy it if we already have the file
 	struct stat s;
@@ -265,7 +271,7 @@ static void duplicate_link(const char *src, const char *dest, struct stat *s) {
 static void usage(void) {
 	printf("Usage: fcopy src dest\n");
 	printf("Copy src file in dest directory. If src is a directory, copy all the files in\n");
-	printf("src recoursively\n");
+	printf("src recoursively. If the destination directory does not exist, it will be created.\n");
 }
 
 int main(int argc, char **argv) {
@@ -276,25 +282,16 @@ int i;
 for (i = 0; i < argc; i++)
 	printf("*%s* ", argv[i]);
 printf("\n");
-}	
-#endif
+}
+#endif	
 	if (argc != 3) {
 		fprintf(stderr, "Error fcopy: files missing\n");
 		usage();
 		exit(1);
 	}
 	
-	int i;
-	int index = 1;
-	for (i = 1; i < (argc - 2); i++) {
-		if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
-			usage();
-			return 0;
-		}
-	}
-
 	// check the two files; remove ending /
-	char *src = argv[index];
+	char *src = argv[1];
 	int len = strlen(src);
 	if (src[len - 1] == '/')
 		src[len - 1] = '\0';
@@ -303,7 +300,7 @@ printf("\n");
 		exit(1);
 	}
 	
-	char *dest = argv[index + 1];
+	char *dest = argv[2];
 	len = strlen(dest);
 	if (dest[len - 1] == '/')
 		dest[len - 1] = '\0';
@@ -313,14 +310,11 @@ printf("\n");
 	}
 	
 
-	// the destination should be a directory; remove ending /
+	// the destination should be a directory; 
 	struct stat s;
-	if (stat(dest, &s) == -1) {
-		fprintf(stderr, "Error fcopy: cannot find destination directory\n");
-		exit(1);
-	}
-	if (S_ISDIR(s.st_mode) == -1) {
-		fprintf(stderr, "Error fcopy: the destination should be a directory\n");
+	if (stat(dest, &s) == -1 ||
+	    !S_ISDIR(s.st_mode)) {
+		fprintf(stderr, "Error fcopy: invalid destination directory\n");
 		exit(1);
 	}
 	

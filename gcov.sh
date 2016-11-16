@@ -1,22 +1,28 @@
 #!/bin/bash
 
+gcov_init() {
+	USER=`whoami`
+	firejail --help
+	firemon --help
+	/usr/lib/firejail/fnet --help
+	/usr/lib/firejail/fseccomp --help
+	/usr/lib/firejail/ftee --help
+	/usr/lib/firejail/fcopy --help
+	firecfg --help
+	sudo chown $USER:$USER `find .`
+}
+
 generate() {
-	lcov --capture -d src/firejail -d src/firemon -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file
+	lcov --capture -d src/firejail -d src/firemon -d  src/fcopy -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file
 	rm -fr gcov-dir
 	genhtml gcov-file --output-directory gcov-dir
 }
 
-# init
-USER=`whoami`
-firejail --help
-firemon --help
-/usr/lib/firejail/fnet --help
-/usr/lib/firejail/fseccomp --help
-/usr/lib/firejail/ftee --help
-/usr/lib/firejail/fcopy --help
-firecfg --help
-sudo chown $USER:$USER `find .`
+gcov_init
 generate
+echo "press any key to continue, or Ctrl-C to exit"
+read text
+
 
 # running tests
 make test-root

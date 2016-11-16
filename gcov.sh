@@ -13,6 +13,7 @@ firemon --help
 /usr/lib/firejail/fnet --help
 /usr/lib/firejail/fseccomp --help
 /usr/lib/firejail/ftee --help
+/usr/lib/firejail/fcopy --help
 firecfg --help
 sudo chown $USER:$USER `find .`
 generate
@@ -31,6 +32,10 @@ generate
 sleep 2
 
 make test-overlay
+generate
+sleep 2
+
+make test-fcopy
 generate
 sleep 2
 

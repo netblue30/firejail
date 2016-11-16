@@ -206,6 +206,7 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 			done += rv;
 		}
 	}
+	fflush(0);
 
 	if (fchown(dst, uid, gid) == -1)
 		errExit("fchown");

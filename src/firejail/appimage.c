@@ -31,10 +31,6 @@
 static char *devloop = NULL;	// device file 
 static char *mntdir = NULL;	// mount point in /tmp directory
 
-const char *appimage_getdir(void) {
-	return mntdir;
-}
-
 void appimage_set(const char *appimage_path) {
 	assert(appimage_path);
 	assert(devloop == NULL);	// don't call this twice!

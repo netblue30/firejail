@@ -24,7 +24,6 @@ static void print_caps(int pid) {
 	char *file;
 	if (asprintf(&file, "/proc/%d/status", pid) == -1) {
 		errExit("asprintf");
-		exit(1);
 	}
 
 	FILE *fp = fopen(file, "r");

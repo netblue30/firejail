@@ -188,22 +188,19 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 static char *check(const char *src) {
 	struct stat s;
 	char *rsrc = realpath(src, NULL);
-	if (!rsrc || stat(rsrc, &s) == -1) {
-		fprintf(stderr, "Error fcopy: cannot find %s directory\n", src);
-		exit(1);
-	}
+	if (!rsrc || stat(rsrc, &s) == -1)
+		goto errexit;
 
 	// check uid
-	if (s.st_uid != getuid() || s.st_gid != getgid()) {
-		fprintf(stderr, "Error fcopy: uid/gid mismatch for %s\n", rsrc);
-		exit(1);
-	}
+	if (s.st_uid != getuid() || s.st_gid != getgid())
+		goto errexit;
 
 	// dir, link, regular file
-	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || S_ISLNK(s.st_mode)) {
+	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || S_ISLNK(s.st_mode))
 		return rsrc;			  // normal exit from the function
-	}
-	fprintf(stderr, "Error fcopy: invalid directory %s\n", rsrc);
+	
+errexit:
+	fprintf(stderr, "Error fcopy: invalid file %s\n", src);
 	exit(1);
 }
 

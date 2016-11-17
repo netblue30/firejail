@@ -43,10 +43,8 @@ static int pid_is_firejail(pid_t pid) {
 	
 	// open /proc/self/comm
 	char *file;
-	if (asprintf(&file, "/proc/%u/comm", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/comm", pid) == -1)
+		errExit("asprintf");
 	
 	FILE *fp = fopen(file, "r");
 	if (!fp) {

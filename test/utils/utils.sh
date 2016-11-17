@@ -100,3 +100,12 @@ echo "TESTING: firemon cpu (test/utils/firemon-cpu.exp)"
 echo "TESTING: firemon cgroup (test/utils/firemon-cgroup.exp)"
 ./firemon-cgroup.exp
 
+echo "TESTING: firemon version (test/utils/firemon-version.exp)"
+./firemon-version.exp
+
+echo "TESTING: firemon interface (test/utils/firemon-interface.exp)"
+./firemon-interface.exp
+
+echo "TESTING: firemon name (test/utils/firemon-name.exp)"
+./firemon-name.exp
+

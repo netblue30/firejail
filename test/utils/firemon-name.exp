@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --name=test1\r"
+send --  "firejail --name=test\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -15,27 +15,11 @@ expect {
 sleep 1
 
 spawn $env(SHELL)
-send --  "firejail --name=test2\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
-}
-sleep 1
-
-spawn $env(SHELL)
-send --  "firemon --cpu\r"
+send --  "firemon --cpu --name=test\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"need to be root" {puts "TESTING SKIP: /proc mounted as hidepid\n"; exit}
-	"name=test1"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
 	"Cpus_allowed_list"
-}
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"name=test2"
 }
 
 after 100

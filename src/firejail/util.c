@@ -694,6 +694,7 @@ void flush_stdin(void) {
 
 void create_empty_dir_as_root(const char *dir, mode_t mode) {
 	assert(dir);
+	mode &= 07777;
 	struct stat s;
 	
 	if (stat(dir, &s)) {
@@ -709,6 +710,7 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 
 void create_empty_file_as_root(const char *fname, mode_t mode) {
 	assert(fname);
+	mode &= 07777;
 	struct stat s;
 
 	if (stat(fname, &s)) {

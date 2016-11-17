@@ -31,34 +31,39 @@
 static char *devloop = NULL;	// device file 
 static char *mntdir = NULL;	// mount point in /tmp directory
 
-void appimage_set(const char *appimage_path) {
-	assert(appimage_path);
+void appimage_set(const char *appimage) {
+	assert(appimage);
 	assert(devloop == NULL);	// don't call this twice!
 	EUID_ASSERT();
 	
 #ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
-	// check appimage_path
-	if (access(appimage_path, R_OK) == -1) {
+	// check appimage file
+	invalid_filename(appimage);
+	if (access(appimage, R_OK) == -1) {
 		fprintf(stderr, "Error: cannot access AppImage file\n");
 		exit(1);
 	}
 
 	// get appimage type and ELF size
 	// a value of 0 means we are dealing with a type1 appimage
-	long unsigned int size = appimage2_size(appimage_path);
+	long unsigned int size = appimage2_size(appimage);
 	if (arg_debug)
 		printf("AppImage ELF size %lu\n", size);
 
-	// open as user to prevent race condition
-	int ffd = open(appimage_path, O_RDONLY|O_CLOEXEC);
+	// open appimage file
+	int ffd = open(appimage, O_RDONLY|O_CLOEXEC);
 	if (ffd == -1) {
-		fprintf(stderr, "Error: /dev/loop-control interface is not supported by your kernel\n");
+		fprintf(stderr, "Error: cannot open AppImage file\n");
 		exit(1);
 	}
 
 	// find or allocate a free loop device to use
 	EUID_ROOT();
 	int cfd = open("/dev/loop-control", O_RDWR);
+	if (cfd == -1) {
+		fprintf(stderr, "Error: /dev/loop-control interface is not supported by your kernel\n");
+		exit(1);
+	}
 	int devnr = ioctl(cfd, LOOP_CTL_GET_FREE);
 	if (devnr == -1) {
 		fprintf(stderr, "Error: cannot allocate a new loopback device\n");
@@ -113,7 +118,7 @@ void appimage_set(const char *appimage_path) {
 	EUID_USER();
 
 	// set environment
-	if (appimage_path && setenv("APPIMAGE", appimage_path, 1) < 0)
+	if (appimage && setenv("APPIMAGE", appimage, 1) < 0)
 		errExit("setenv");
 	if (mntdir && setenv("APPDIR", mntdir, 1) < 0)
 		errExit("setenv");

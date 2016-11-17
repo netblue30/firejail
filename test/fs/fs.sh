@@ -82,9 +82,20 @@ echo "TESTING: recursive mkdir (test/fs/mkdir.exp)"
 echo "TESTING: double whitelist (test/fs/whitelist-double.exp)"
 ./whitelist-double.exp
 
-
 echo "TESTING: whitelist (test/fs/whitelist.exp)"
 ./whitelist.exp
+
+echo "TESTING: fscheck --bind non root (test/fs/fscheck-bindnoroot.exp)"
+./fscheck-bindnoroot.exp
+
+echo "TESTING: fscheck --tmpfs non root (test/fs/fscheck-tmpfs.exp)"
+./fscheck-tmpfs.exp
+
+echo "TESTING: fscheck --private= (test/fs/fscheck-private.exp)"
+./fscheck-private.exp
+
+echo "TESTING: fscheck --read-only= (test/fs/fscheck-readonly.exp)"
+./fscheck-readonly.exp
 
 #cleanup
 rm -fr ~/fjtest-dir

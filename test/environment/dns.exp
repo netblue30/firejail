@@ -22,9 +22,33 @@ expect {
 	timeout {puts "TESTING ERROR 1.2\n";exit}
 	"53"
 }
-
 after 100
 
 send -- "rm index.html\r"
 after 100
+send -- "exit\r"
+sleep 1
+
+send -- "firejail --dns=8.8.4.4 --dns=8.8.8.8 --dns=4.2.2.1\r"
+expect {
+	timeout {puts "TESTING ERROR 2.1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "cat /etc/resolv.conf\r"
+expect {
+	timeout {puts "TESTING ERROR 2.2\n";exit}
+	"nameserver 8.8.4.4"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.3\n";exit}
+	"nameserver 8.8.8.8"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.4\n";exit}
+	"nameserver 4.2.2.1"
+}
+after 100
+
 puts "\nall done\n"

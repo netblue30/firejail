@@ -745,7 +745,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strncmp(ptr, "private-bin ", 12) == 0) {
 		cfg.bin_private_keep = ptr + 12;
 		arg_private_bin = 1;
-		fs_check_bin_list();
 		return 0;
 	}
 

@@ -244,7 +244,7 @@ static void duplicate_file(const char *src, const char *dest, struct stat *s) {
 }
 
 static void duplicate_link(const char *src, const char *dest, struct stat *s) {
-	char *rsrc = check(src);
+	char *rsrc = check(src); // we drop the result and use the original name
 	char *rdest = check(dest);
 	uid_t uid = s->st_uid;
 	gid_t gid = s->st_gid;
@@ -252,7 +252,8 @@ static void duplicate_link(const char *src, const char *dest, struct stat *s) {
 	
 	// build destination file name
 	char *name;
-	char *ptr = strrchr(rsrc, '/');
+//	char *ptr = strrchr(rsrc, '/');
+	char *ptr = strrchr(src, '/');
 	ptr++;
 	if (asprintf(&name, "%s/%s", rdest, ptr) == -1)
 		errExit("asprintf");
@@ -272,7 +273,7 @@ static void usage(void) {
 }
 
 int main(int argc, char **argv) {
-//#if 0
+#if 0
 {
 //system("cat /proc/self/status");
 int i;
@@ -280,7 +281,7 @@ for (i = 0; i < argc; i++)
 	printf("*%s* ", argv[i]);
 printf("\n");
 }
-//#endif	
+#endif	
 	if (argc != 3) {
 		fprintf(stderr, "Error fcopy: files missing\n");
 		usage();

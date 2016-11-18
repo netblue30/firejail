@@ -33,15 +33,7 @@ void fs_hostname(const char *hostname) {
 		if (arg_debug)
 			printf("Creating a new /etc/hostname file\n");
 
-		FILE *fp = fopen(RUN_HOSTNAME_FILE, "w");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot create %s\n", RUN_HOSTNAME_FILE);
-			exit(1);
-		}
-		fprintf(fp, "%s\n", hostname);
-		// mode and owner
-		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
-		fclose(fp);
+		create_empty_file_as_root(RUN_HOSTNAME_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_HOSTNAME_FILE, "/etc/hostname", NULL, MS_BIND|MS_REC, NULL) < 0)
@@ -56,15 +48,12 @@ void fs_hostname(const char *hostname) {
 		// copy /etc/host into our new file, and modify it on the fly
 		/* coverity[toctou] */
 		FILE *fp1 = fopen("/etc/hosts", "r");
-		if (!fp1) {
-			fprintf(stderr, "Error: cannot open /etc/hosts\n");
-			exit(1);
-		}
+		if (!fp1)
+			goto errexit;
+
 		FILE *fp2 = fopen(RUN_HOSTS_FILE, "w");
-		if (!fp2) {
-			fprintf(stderr, "Error: cannot create %s\n", RUN_HOSTS_FILE);
-			exit(1);
-		}
+		if (!fp2)
+			goto errexit;
 		
 		char buf[4096];
 		int done = 0;
@@ -92,6 +81,11 @@ void fs_hostname(const char *hostname) {
 			errExit("mount bind /etc/hosts");
 		fs_logger("create /etc/hosts");
 	}
+	return;
+
+errexit:
+	fprintf(stderr, "Error: cannot create hostname file\n");
+	exit(1);
 }
 
 void fs_resolvconf(void) {

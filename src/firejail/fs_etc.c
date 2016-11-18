@@ -26,11 +26,8 @@
 // return 0 if file not found, 1 if found
 static int check_dir_or_file(const char *fname) {
 	assert(fname);
-	invalid_filename(fname);
 
 	struct stat s;
-	if (arg_debug)
-		printf("Checking %s\n", fname);		
 	if (stat(fname, &s) == -1) {
 		if (arg_debug)
 			printf("Warning: file %s not found.\n", fname);
@@ -51,6 +48,12 @@ errexit:
 }
 
 static void duplicate(char *fname) {
+	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
+		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
+		exit(1);
+	}
+	invalid_filename(fname);
+
 	char *src;
 	if (asprintf(&src,  "/etc/%s", fname) == -1)
 		errExit("asprintf");
@@ -60,7 +63,6 @@ static void duplicate(char *fname) {
 		free(src);
 		return;
 	}
-
 
 	struct stat s;
 	if (stat(src, &s) == 0 && S_ISDIR(s.st_mode)) {
@@ -84,12 +86,6 @@ void fs_private_etc_list(void) {
 	char *private_list = cfg.etc_private_keep;
 	assert(private_list);
 	
-	struct stat s;
-	if (stat("/etc", &s) == -1) {
-		fprintf(stderr, "Error: cannot find user /etc directory\n");
-		exit(1);
-	}
-
 	// create /run/firejail/mnt/etc directory
 	mkdir_attr(RUN_ETC_DIR, 0755, 0, 0);
 	fs_logger("tmpfs /etc");

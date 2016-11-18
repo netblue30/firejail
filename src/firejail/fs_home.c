@@ -212,12 +212,6 @@ void fs_private_homedir(void) {
 	
 	uid_t u = getuid();
 	gid_t g = getgid();
-	struct stat s;
-	if (stat(homedir, &s) == -1) {
-		fprintf(stderr, "Error: cannot find user home directory\n");
-		exit(1);
-	}
-	
 
 	// mount bind private_homedir on top of homedir
 	if (arg_debug)
@@ -351,11 +345,9 @@ void fs_check_private_dir(void) {
 //***********************************************************************************
 static char *check_dir_or_file(const char *name) {
 	assert(name);
-	struct stat s;
 
 	// basic checks
 	invalid_filename(name);
-
 	if (arg_debug)
 		printf("Private home: checking %s\n", name);
 
@@ -372,28 +364,44 @@ static char *check_dir_or_file(const char *name) {
 		fname = tmp;
 	}
 
-	// check the file is in user home directory, a full home directory is not allowed
-	char *rname = realpath(fname, NULL);
-	if (!rname ||
-	    strncmp(rname, cfg.homedir, strlen(cfg.homedir)) != 0 ||
-	    strcmp(rname, cfg.homedir) == 0) {
-		fprintf(stderr, "Error: invalid file %s\n", name);
-		exit(1);
-	}
-	
-	// only top files and directories in user home are allowed
-	char *ptr = rname + strlen(cfg.homedir);
-	assert(*ptr != '\0');
-	ptr = strchr(++ptr, '/');
-	if (ptr) {
-		if (*ptr != '\0') {
-			fprintf(stderr, "Error: only top files and directories in user home are allowed\n");
+	// we allow only files in user home directory or symbolic links to files or directories owned by the user
+	struct stat s;
+	if (lstat(fname, &s) == 0 && S_ISLNK(s.st_mode)) {
+		if (stat(fname, &s) == 0) {	
+			if (s.st_uid != getuid()) {
+				fprintf(stderr, "Error: symbolic link %s to file or directory not owned by the user\n", fname);
+				exit(1);
+			}
+			return fname;
+		}
+		else {
+			fprintf(stderr, "Error: invalid file %s\n", name);
 			exit(1);
 		}
 	}
-
-	free(fname);
-	return rname;
+	else {
+		// check the file is in user home directory, a full home directory is not allowed
+		char *rname = realpath(fname, NULL);
+		if (!rname ||
+		    strncmp(rname, cfg.homedir, strlen(cfg.homedir)) != 0 ||
+		    strcmp(rname, cfg.homedir) == 0) {
+			fprintf(stderr, "Error: invalid file %s\n", name);
+			exit(1);
+		}
+		
+		// only top files and directories in user home are allowed
+		char *ptr = rname + strlen(cfg.homedir);
+		assert(*ptr != '\0');
+		ptr = strchr(++ptr, '/');
+		if (ptr) {
+			if (*ptr != '\0') {
+				fprintf(stderr, "Error: only top files and directories in user home are allowed\n");
+				exit(1);
+			}
+		}
+		free(fname);
+		return rname;
+	}
 }
 
 static void duplicate(char *name) {
@@ -405,7 +413,7 @@ static void duplicate(char *name) {
 	assert(strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0);
 
 	struct stat s;
-	if (stat(fname, &s) == -1) {
+	if (lstat(fname, &s) == -1) {
 		free(fname);
 		return;
 	}
@@ -445,11 +453,6 @@ void fs_private_home_list(void) {
 
 	uid_t uid = getuid();
 	gid_t gid = getgid();
-	struct stat s;
-	if (stat(homedir, &s) == -1) {
-		fprintf(stderr, "Error: cannot find user home directory\n");
-		exit(1);
-	}
 
 	// create /run/firejail/mnt/home directory
 	mkdir_attr(RUN_HOME_DIR, 0755, uid, gid);

@@ -587,7 +587,6 @@ void pulseaudio_init(void);
 void pulseaudio_disable(void);
 
 // fs_bin.c
-void fs_check_bin_list(void);
 void fs_private_bin_list(void);
 
 // protocol.c

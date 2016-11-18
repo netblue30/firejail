@@ -406,7 +406,6 @@ static char *check_dir_or_file(const char *name) {
 
 static void duplicate(char *name) {
 	char *fname = check_dir_or_file(name);
-	char *dest = RUN_HOME_DIR;
 
 	if (arg_debug)
 		printf("Private home: duplicating %s\n", fname);

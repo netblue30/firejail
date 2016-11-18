@@ -102,6 +102,9 @@ static void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 }
 
 void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid, gid_t gid) {
+	(void) mode;
+	(void) uid;
+	(void) gid;
 	char *rp = realpath(target, NULL);
 	if (rp) {
 		if (symlink(rp, linkpath) == -1)

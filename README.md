@@ -51,6 +51,10 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 `````
 
 `````
+## AppImage type 2 support
+`````
+
+`````
 ## New Profiles
 xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom,Guayadeque
 

@@ -79,6 +79,7 @@
 /etc/firejail/inox.profile
 /etc/firejail/jitsi.profile
 /etc/firejail/keepass.profile
+/etc/firejail/keepass2.profile
 /etc/firejail/keepassx.profile
 /etc/firejail/kmail.profile
 /etc/firejail/konversation.profile
@@ -117,6 +118,8 @@
 /etc/firejail/polari.profile
 /etc/firejail/psi-plus.profile
 /etc/firejail/qbittorrent.profile
+/etc/firejail/qemu-launcher.profile
+/etc/firejail/qemu-system-x86_64.profile
 /etc/firejail/qpdfview.profile
 /etc/firejail/qtox.profile
 /etc/firejail/quassel.profile

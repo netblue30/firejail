@@ -16,4 +16,4 @@ seccomp
 tracelog
 
 private-dev
-private-tmp
+# private-tmp

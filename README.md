@@ -56,5 +56,5 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 
 `````
 ## New Profiles
-xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom,Guayadeque
+xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom,Guayadeque, qemu, keypass2
 

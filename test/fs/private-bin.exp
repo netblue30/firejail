@@ -65,6 +65,28 @@ expect {
 	"sh"
 }
 send -- "exit\r"
+after 100
+
+
+send -- "firejail --private-bin=/etc/shadow\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"invalid filename"
+}
+after 100
+
+send -- "firejail --private-bin=\"bla;bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --private-etc=../bin/ls\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"is an invalid filename"
+}
 
 after 100
 puts "\nall done\n"

@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=appimage-test --appimage Leafpad-0.8.17-x86_64.AppImage\r"
+send -- "firejail --name=appimage-test --debug --appimage Leafpad-0.8.17-x86_64.AppImage\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"

@@ -206,6 +206,7 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 			done += rv;
 		}
 	}
+	fflush(0);
 
 	if (fchown(dst, uid, gid) == -1)
 		errExit("fchown");
@@ -561,7 +562,10 @@ char *expand_home(const char *path, const char* homedir) {
 		return new_name;
 	}
 
-	return strdup(path);
+	char *rv = strdup(path);
+	if (!rv)
+		errExit("strdup");
+	return rv;
 }
 
 
@@ -624,7 +628,7 @@ uid_t pid_get_uid(pid_t pid) {
 
 
 void invalid_filename(const char *fname) {
-	EUID_ASSERT();
+//	EUID_ASSERT();
 	assert(fname);
 	const char *ptr = fname;
 
@@ -690,6 +694,7 @@ void flush_stdin(void) {
 
 void create_empty_dir_as_root(const char *dir, mode_t mode) {
 	assert(dir);
+	mode &= 07777;
 	struct stat s;
 	
 	if (stat(dir, &s)) {
@@ -705,6 +710,7 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 
 void create_empty_file_as_root(const char *fname, mode_t mode) {
 	assert(fname);
+	mode &= 07777;
 	struct stat s;
 
 	if (stat(fname, &s)) {

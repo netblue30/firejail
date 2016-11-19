@@ -39,7 +39,6 @@ static char *paths[] = {
 // return 1 if found, 0 if not found
 static char *check_dir_or_file(const char *name) {
 	assert(name);
-	invalid_filename(name);
 	
 	struct stat s;
 	char *fname = NULL;
@@ -94,68 +93,13 @@ static char *check_dir_or_file(const char *name) {
 	return paths[i];
 }
 
-void fs_check_bin_list(void) {
-	EUID_ASSERT();
-	if (strstr(cfg.bin_private_keep, "..")) {
-		fprintf(stderr, "Error: invalid private bin list\n");
+static void duplicate(char *fname) {
+	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
+		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
-	
-	char *dlist = strdup(cfg.bin_private_keep);
-	if (!dlist)
-		errExit("strdup");
+	invalid_filename(fname);
 
-	// create a new list removing files not found
-	char *newlist = malloc(strlen(dlist) + 1 + 1); // +',' + '\0'
-	if (!newlist)
-		errExit("malloc");
-	*newlist = '\0';
-	char *newlistptr = newlist;
-
-	// check the first file
-	char *ptr = strtok(dlist, ",");
-	int notfound = 0;
-	if (check_dir_or_file(ptr)) {
-		// file found, copy the name in the new list
-		strcpy(newlistptr, ptr);
-		strcat(newlistptr, ",");
-		newlistptr += strlen(newlistptr);
-	}
-	else
-		notfound = 1;
-
-	// check the rest of the list
-	while ((ptr = strtok(NULL, ",")) != NULL) {
-		if (check_dir_or_file(ptr)) {
-			// file found, copy the name in the new list
-			strcpy(newlistptr, ptr);
-			strcat(newlistptr, ",");
-			newlistptr += strlen(newlistptr);
-		}
-		else
-			notfound = 1;
-	}
-	
-	if (*newlist == '\0') {
-//		fprintf(stderr, "Warning: no --private-bin list executable found, option disabled\n");
-//		cfg.bin_private_keep = NULL;
-//		arg_private_bin = 0;
-		free(newlist);
-	}
-	else {
-		ptr = strrchr(newlist, ',');
-		assert(ptr);
-		*ptr = '\0';
-		if (notfound && !arg_quiet)
-			fprintf(stderr, "Warning: not all executables from --private-bin list were found. The current list is %s\n", newlist);
-		
-		cfg.bin_private_keep = newlist;
-	}
-	
-	free(dlist);
-}
-
-static void duplicate(char *fname) {
 	char *path = check_dir_or_file(fname);
 	if (!path)
 		return;
@@ -165,44 +109,9 @@ static void duplicate(char *fname) {
 	if (asprintf(&full_path, "%s/%s", path, fname) == -1)
 		errExit("asprintf");
 	
-	char *actual_path = realpath(full_path, NULL);
-	if (actual_path) {
-		// if the file is a symbolic link not under path, make a symbolic link
-		if (is_link(full_path) && strncmp(actual_path, path, strlen(path))) {
-			char *lnkname;
-			if (asprintf(&lnkname, "%s/%s", RUN_BIN_DIR, fname) == -1)
-				errExit("asprintf");
-			int rv = symlink(actual_path, lnkname);
-			if (rv)
-				fprintf(stderr, "Warning cannot create symbolic link %s\n", lnkname);
-			else if (arg_debug)
-				printf("Created symbolic link %s -> %s\n", lnkname, actual_path);
-			free(lnkname);
-		}
-		else {
-			// copy the file
-			if (arg_debug)
-				printf("running: %s -a %s %s/%s", RUN_CP_COMMAND, actual_path, RUN_BIN_DIR, fname);
-
-			pid_t child = fork();
-			if (child < 0)
-				errExit("fork");
-			if (child == 0) {
-				char *f;
-				if (asprintf(&f, "%s/%s", RUN_BIN_DIR, fname) == -1)
-					errExit("asprintf");
-				clearenv();	
-				execlp(RUN_CP_COMMAND, RUN_CP_COMMAND, "-a", actual_path, f, NULL);
-				perror("execlp");
-				_exit(1);
-			}
-			// wait for the child to finish
-			waitpid(child, NULL, 0);
-		
-		}
-		free(actual_path);
-	}
-
+	// copy the file
+	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
+	fs_logger2("clone", fname);
 	free(full_path);
 }
 
@@ -214,42 +123,20 @@ void fs_private_bin_list(void) {
 	// create /run/firejail/mnt/bin directory
 	mkdir_attr(RUN_BIN_DIR, 0755, 0, 0);
 	
-	// copy the list of files in the new etc directory
-	// using a new child process without root privileges
-	fs_logger_print();	// save the current log
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		if (arg_debug)
-			printf("Copying files in the new home:\n");
+	if (arg_debug)
+		printf("Copying files in the new bin directory\n");
 
-		// elevate privileges - files in the new /bin directory belong to root
-		if (setreuid(0, 0) < 0)
-			errExit("setreuid");
-		if (setregid(0, 0) < 0)
-			errExit("setregid");
-		
-		// copy the list of files in the new home directory
-		char *dlist = strdup(private_list);
-		if (!dlist)
-			errExit("strdup");
+	// copy the list of files in the new home directory
+	char *dlist = strdup(private_list);
+	if (!dlist)
+		errExit("strdup");
 	
-	
-		char *ptr = strtok(dlist, ",");
+	char *ptr = strtok(dlist, ",");
+	duplicate(ptr);
+	while ((ptr = strtok(NULL, ",")) != NULL)
 		duplicate(ptr);
-	
-		while ((ptr = strtok(NULL, ",")) != NULL)
-			duplicate(ptr);
-		free(dlist);	
+	free(dlist);	
 		fs_logger_print();
-#ifdef HAVE_GCOV
-		__gcov_flush();
-#endif
-		_exit(0);
-	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
 
 	// mount-bind
 	int i = 0;
@@ -265,29 +152,5 @@ void fs_private_bin_list(void) {
 		}
 		i++;
 	}
-	
-	// log cloned files
-	char *dlist = strdup(private_list);
-	if (!dlist)
-		errExit("strdup");
-	
-	
-	char *ptr = strtok(dlist, ",");
-	while (ptr) {
-		i = 0;
-		while (paths[i]) {
-			struct stat s;
-			if (stat(paths[i], &s) == 0) {
-				char *fname;
-				if (asprintf(&fname, "%s/%s", paths[i], ptr) == -1)
-					errExit("asprintf");
-				fs_logger2("clone", fname);
-				free(fname);
-			}
-			i++;
-		}
-		ptr = strtok(NULL, ",");
-	}
-	free(dlist);
 }
 

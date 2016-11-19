@@ -292,6 +292,9 @@ void top(void) {
 			}
 		}
 		head_print(col, row);
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 	}
 }
 

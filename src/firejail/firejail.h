@@ -490,8 +490,6 @@ void fs_private_template(void);
 void fs_check_private_dir(void);
 // check new private template home directory (--private-template= option) exit if it fails
 void fs_check_private_template(void);
-// check directory list specified by user (--private-home option) - exit if it fails
-void fs_check_home_list(void);
 void fs_private_home_list(void);
 
 
@@ -557,7 +555,6 @@ void network_del_run_file(pid_t pid);
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
-void fs_check_etc_list(void);
 void fs_private_etc_list(void);
 
 // no_sandbox.c
@@ -590,7 +587,6 @@ void pulseaudio_init(void);
 void pulseaudio_disable(void);
 
 // fs_bin.c
-void fs_check_bin_list(void);
 void fs_private_bin_list(void);
 
 // protocol.c
@@ -681,6 +677,7 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 #define PATH_FNET (LIBDIR "/firejail/fnet")
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
+#define PATH_FCOPY (LIBDIR "/firejail/fcopy")
 // bitmapped filters for sbox_run
 #define SBOX_ROOT (1 << 0)			// run the sandbox as root
 #define SBOX_USER (1 << 1)			// run the sandbox as a regular user

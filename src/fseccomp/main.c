@@ -47,8 +47,10 @@ for (i = 0; i < argc; i++)
 printf("\n");
 }       
 #endif
-	if (argc < 2)
+	if (argc < 2) {
+		usage();
 		return 1;
+	}
 		
 	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
 		usage();

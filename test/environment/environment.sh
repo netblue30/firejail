@@ -6,6 +6,7 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+
 echo "TESTING: DNS (test/environment/dns.exp)"
 ./dns.exp
 
@@ -84,4 +85,29 @@ then
 else
         echo "TESTING SKIP: strace not found"
 fi
+
+# to install ibus:
+#       $ sudo apt-get install ibus-table-array30
+#       $ ibus-setup
+
+find ~/.config/ibus/bus | grep unix-0
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: ibus (test/environment/ibus.exp)"
+	./ibus.exp
+else
+        echo "TESTING SKIP: ibus not configured"
+fi
+
+echo "TESTING: rlimit (test/rlimit/rlimit.exp)"
+./rlimit.exp
+
+echo "TESTING: rlimit profile (test/rlimit/rlimit-profile.exp)"
+./rlimit-profile.exp
+
+echo "TESTING: rlimit errors (test/rlimit/rlimit-bad.exp)"
+./rlimit-bad.exp
+
+echo "TESTING: rlimit errors profile (test/rlimit/rlimit-bad-profile.exp)"
+./rlimit-bad-profile.exp
 

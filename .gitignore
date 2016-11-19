@@ -22,4 +22,5 @@ src/tags
 src/faudit/faudit
 src/fnet/fnet
 src/fseccomp/fseccomp
+src/fcopy/fcopy
 uids.h

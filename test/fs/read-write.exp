@@ -15,36 +15,20 @@ expect {
 }
 sleep 1
 
-send -- "echo mytest >~/_firejail_test_dir/a;echo done\r"
+send -- "echo mytest > ~/_firejail_test_dir/a\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"done"
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Read-only file system"
 }
 after 100
 
-send -- "echo mytest >~/_firejail_test_dir/test1/b;echo done\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"done"
-}
-after 100
+send -- "echo mytest > ~/_firejail_test_dir/test1/b\r"
+sleep 1
 
-send -- "cat ~/_firejail_test_dir/a;echo done\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"mytest" {puts "TESTING ERROR 4\n";exit}
-	"done"
-}
-after 100
-
-send -- "cat ~/_firejail_test_dir/test1/b;echo done\r"
+send -- "cat ~/_firejail_test_dir/test1/b\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"mytest"
-}
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"done"
 }
 
 after 100

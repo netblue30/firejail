@@ -1601,7 +1601,6 @@ int main(int argc, char **argv) {
 				
 				// extract private home dirname
 				cfg.home_private_keep = argv[i] + 15;
-				fs_check_home_list();
 				arg_private = 1;
 			}
 			else {
@@ -1625,7 +1624,6 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: invalid private-etc option\n");
 				exit(1);
 			}
-			fs_check_etc_list();
 			arg_private_etc = 1;
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
@@ -1636,7 +1634,6 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			arg_private_bin = 1;
-			fs_check_bin_list();
 		}
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;

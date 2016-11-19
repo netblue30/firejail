@@ -28,7 +28,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <grp.h>
-#include <ftw.h>
+//#include <ftw.h>
 
 static void skel(const char *homedir, uid_t u, gid_t g) {
 	char *fname;
@@ -212,12 +212,6 @@ void fs_private_homedir(void) {
 	
 	uid_t u = getuid();
 	gid_t g = getgid();
-	struct stat s;
-	if (stat(homedir, &s) == -1) {
-		fprintf(stderr, "Error: cannot find user home directory\n");
-		exit(1);
-	}
-	
 
 	// mount bind private_homedir on top of homedir
 	if (arg_debug)
@@ -349,122 +343,17 @@ void fs_check_private_dir(void) {
 //***********************************************************************************
 // --private-home
 //***********************************************************************************
-#define PRIVATE_COPY_LIMIT (500 * 1024 *1024)
-static int size_limit_reached = 0;
-static unsigned file_cnt = 0;
-static unsigned size_cnt = 0;
-static char *check_dir_or_file(const char *name);
-
-int fs_copydir(const char *path, const struct stat *st, int ftype, struct FTW *sftw) {
-	(void) st;
-	(void) sftw;
-	if (size_limit_reached)
-		return 0;
-
-	struct stat s;
-	char *dest;
-	if (asprintf(&dest, "%s%s", RUN_HOME_DIR, path + strlen(cfg.homedir)) == -1)
-		errExit("asprintf");
-
-	// don't copy it if we already have the file
-	if (stat(dest, &s) == 0) {
-		free(dest);
-		return 0;
-	}
-	
-	// extract mode and ownership
-	if (stat(path, &s) != 0) {
-		free(dest);
-		return 0;
-	}
-
-	// check uid
-	if (s.st_uid != firejail_uid || s.st_gid != firejail_gid) {
-		free(dest);
-		return 0;
-	}
-
-	if ((s.st_size + size_cnt) > PRIVATE_COPY_LIMIT) {
-		size_limit_reached = 1;
-		free(dest);
-		return 0;
-	}
-
-	file_cnt++;
-	size_cnt += s.st_size;
-
-	if(ftype == FTW_F)
-		copy_file(path, dest, firejail_uid, firejail_gid, s.st_mode);
-	else if (ftype == FTW_D) {
-		if (mkdir(dest, s.st_mode) == -1)
-			errExit("mkdir");
-		if (set_perms(dest, firejail_uid, firejail_gid, s.st_mode))
-			errExit("set_perms");
-#if 0
-struct stat s2;		
-if (stat(dest, &s2) == 0) {
-    printf("%s\t", dest);
-    printf((S_ISDIR(s.st_mode))  ? "d" : "-");
-    printf((s.st_mode & S_IRUSR) ? "r" : "-");
-    printf((s.st_mode & S_IWUSR) ? "w" : "-");
-    printf((s.st_mode & S_IXUSR) ? "x" : "-");
-    printf((s.st_mode & S_IRGRP) ? "r" : "-");
-    printf((s.st_mode & S_IWGRP) ? "w" : "-");
-    printf((s.st_mode & S_IXGRP) ? "x" : "-");
-    printf((s.st_mode & S_IROTH) ? "r" : "-");
-    printf((s.st_mode & S_IWOTH) ? "w" : "-");
-    printf((s.st_mode & S_IXOTH) ? "x" : "-");
-    printf("\n");
-}
-#endif		
-		
-		fs_logger2("clone", path);
-	}		
-		
-	free(dest);
-	return(0);
-}
-
-static void duplicate(char *name) {
-	char *fname = check_dir_or_file(name);
-
-	if (arg_debug)
-		printf("Private home: duplicating %s\n", fname);
-	assert(strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0);
-
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		free(fname);
-		return;
-	}
-	
-	if(nftw(fname, fs_copydir, 1, FTW_PHYS) != 0) {
-		fprintf(stderr, "Error: unable to copy template dir\n");
-		exit(1);
-	}
-	fs_logger_print();	// save the current log
-
-	free(fname);
-}
-
-
-
 static char *check_dir_or_file(const char *name) {
 	assert(name);
-	struct stat s;
 
 	// basic checks
 	invalid_filename(name);
-
 	if (arg_debug)
 		printf("Private home: checking %s\n", name);
 
 	// expand home directory
 	char *fname = expand_home(name, cfg.homedir);
-	if (!fname) {
-		fprintf(stderr, "Error: file %s not found.\n", name);
-		exit(1);
-	}
+	assert(fname);
 
 	// If it doesn't start with '/', it must be relative to homedir
 	if (fname[0] != '/') {
@@ -475,86 +364,76 @@ static char *check_dir_or_file(const char *name) {
 		fname = tmp;
 	}
 
-	// check the file is in user home directory
-	char *rname = realpath(fname, NULL);
-	if (!rname) {
-		fprintf(stderr, "Error: invalid file %s\n", name);
-		exit(1);
-	}
-	if (strncmp(rname, cfg.homedir, strlen(cfg.homedir)) != 0) {
-		fprintf(stderr, "Error: file %s is not in user home directory\n", name);
-		exit(1);
-	}
-	
-	// a full home directory is not allowed
-	if (strcmp(rname, cfg.homedir) == 0) {
-		fprintf(stderr, "Error: invalid directory %s\n", rname);
-		exit(1);
-	}
-	
-	// only top files and directories in user home are allowed
-	char *ptr = rname + strlen(cfg.homedir);
-	if (*ptr == '\0') {
-		fprintf(stderr, "Error: invalid file %s\n", name);
-		exit(1);
-	}
-	ptr++;
-	ptr = strchr(ptr, '/');
-	if (ptr) {
-		if (*ptr != '\0') {
-			fprintf(stderr, "Error: only top files and directories in user home are allowed\n");
+	// we allow only files in user home directory or symbolic links to files or directories owned by the user
+	struct stat s;
+	if (lstat(fname, &s) == 0 && S_ISLNK(s.st_mode)) {
+		if (stat(fname, &s) == 0) {	
+			if (s.st_uid != getuid()) {
+				fprintf(stderr, "Error: symbolic link %s to file or directory not owned by the user\n", fname);
+				exit(1);
+			}
+			return fname;
+		}
+		else {
+			fprintf(stderr, "Error: invalid file %s\n", name);
 			exit(1);
 		}
 	}
-
-	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error: file %s not found.\n", fname);
-		exit(1);
-	}
-
-	// check uid
-	uid_t uid = getuid();
-	gid_t gid = getgid();
-	if (s.st_uid != uid || s.st_gid != gid) {
-		fprintf(stderr, "Error: only files or directories created by the current user are allowed.\n");
-		exit(1);
-	}
-
-	// dir or regular file
-	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode)) {
+	else {
+		// check the file is in user home directory, a full home directory is not allowed
+		char *rname = realpath(fname, NULL);
+		if (!rname ||
+		    strncmp(rname, cfg.homedir, strlen(cfg.homedir)) != 0 ||
+		    strcmp(rname, cfg.homedir) == 0) {
+			fprintf(stderr, "Error: invalid file %s\n", name);
+			exit(1);
+		}
+		
+		// only top files and directories in user home are allowed
+		char *ptr = rname + strlen(cfg.homedir);
+		assert(*ptr != '\0');
+		ptr = strchr(++ptr, '/');
+		if (ptr) {
+			if (*ptr != '\0') {
+				fprintf(stderr, "Error: only top files and directories in user home are allowed\n");
+				exit(1);
+			}
+		}
 		free(fname);
-		return rname;			  // regular exit from the function
+		return rname;
 	}
-
-	fprintf(stderr, "Error: invalid file type, %s.\n", fname);
-	exit(1);
 }
 
+static void duplicate(char *name) {
+	char *fname = check_dir_or_file(name);
 
-// check directory list specified by user (--private-home option) - exit if it fails
-void fs_check_home_list(void) {
-	if (strstr(cfg.home_private_keep, "..")) {
-		fprintf(stderr, "Error: invalid private-home list\n");
-		exit(1);
+	if (arg_debug)
+		printf("Private home: duplicating %s\n", fname);
+	assert(strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0);
+
+	struct stat s;
+	if (lstat(fname, &s) == -1) {
+		free(fname);
+		return;
 	}
-
-	char *dlist = strdup(cfg.home_private_keep);
-	if (!dlist)
-		errExit("strdup");
-
-	char *ptr = strtok(dlist, ",");
-	char *tmp = check_dir_or_file(ptr);
-	free(tmp);
-
-	while ((ptr = strtok(NULL, ",")) != NULL) {
-		tmp = check_dir_or_file(ptr);
-		free(tmp);
+	else if (S_ISDIR(s.st_mode)) {
+		// create the directory in RUN_HOME_DIR
+		char *name;
+		char *ptr = strrchr(fname, '/');
+		ptr++;
+		if (asprintf(&name, "%s/%s", RUN_HOME_DIR, ptr) == -1)
+			errExit("asprintf");
+		mkdir_attr(name, 0755, getuid(), getgid());
+		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FCOPY, fname, name);
+		free(name);
 	}
+	else
+		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FCOPY, fname, RUN_HOME_DIR);
+	fs_logger2("clone", fname);
+	fs_logger_print();	// save the current log
 
-	free(dlist);
+	free(fname);
 }
-
-
 
 // private mode (--private-home=list):
 // 	mount homedir on top of /home/user,
@@ -571,68 +450,28 @@ void fs_private_home_list(void) {
 	int xflag = store_xauthority();
 	int aflag = store_asoundrc();
 
-	uid_t u = firejail_uid;
-	gid_t g = firejail_gid;
-	struct stat s;
-	if (stat(homedir, &s) == -1) {
-		fprintf(stderr, "Error: cannot find user home directory\n");
-		exit(1);
-	}
+	uid_t uid = getuid();
+	gid_t gid = getgid();
 
 	// create /run/firejail/mnt/home directory
-	int rv = mkdir(RUN_HOME_DIR, 0755);
-	if (rv == -1)
-		errExit("mkdir");
-	if (set_perms(RUN_HOME_DIR, u, g, 0755))
-		errExit("set_perms");
-	ASSERT_PERMS(RUN_HOME_DIR, u, g, 0755);
-
+	mkdir_attr(RUN_HOME_DIR, 0755, uid, gid);
 	fs_logger_print();	// save the current log
 
+	if (arg_debug)
+		printf("Copying files in the new home:\n");
+
 	// copy the list of files in the new home directory
-	// using a new child process without root privileges
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		if (arg_debug)
-			printf("Copying files in the new home:\n");
-
-		// drop privileges
-		if (setgroups(0, NULL) < 0)
-			errExit("setgroups");
-		if (setgid(getgid()) < 0)
-			errExit("setgid/getgid");
-		if (setuid(getuid()) < 0)
-			errExit("setuid/getuid");
-
-		// copy the list of files in the new home directory
-		char *dlist = strdup(cfg.home_private_keep);
-		if (!dlist)
-			errExit("strdup");
-		
-		char *ptr = strtok(dlist, ",");
+	char *dlist = strdup(cfg.home_private_keep);
+	if (!dlist)
+		errExit("strdup");
+	
+	char *ptr = strtok(dlist, ",");
+	duplicate(ptr);
+	while ((ptr = strtok(NULL, ",")) != NULL)
 		duplicate(ptr);
-		while ((ptr = strtok(NULL, ",")) != NULL)
-			duplicate(ptr);
 
-		if (!arg_quiet) {
-			if (size_limit_reached)
-				fprintf(stderr, "Warning: private-home copy limit of %u MB reached, not all the files were copied\n", 
-					PRIVATE_COPY_LIMIT / (1024 *1024));
-			else
-				printf("Private home: %u files, total size %u bytes\n", file_cnt, size_cnt);
-		}
-
-		fs_logger_print();	// save the current log
-		free(dlist);
-#ifdef HAVE_GCOV
-	__gcov_flush();
-#endif
-		_exit(0);
-	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
+	fs_logger_print();	// save the current log
+	free(dlist);
 
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", RUN_HOME_DIR, homedir);
@@ -640,7 +479,7 @@ void fs_private_home_list(void) {
 	if (mount(RUN_HOME_DIR, homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 
-	if (u != 0) {
+	if (uid != 0) {
 		// mask /root
 		if (arg_debug)
 			printf("Mounting a new /root directory\n");
@@ -655,7 +494,7 @@ void fs_private_home_list(void) {
 			errExit("mounting home directory");
 	}
 
-	skel(homedir, u, g);
+	skel(homedir, uid, gid);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)

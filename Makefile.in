@@ -1,6 +1,6 @@
 all: apps man
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect src/fnet src/fseccomp
+APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect src/fnet src/fseccomp src/fcopy
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
 
 prefix=@prefix@
@@ -78,6 +78,7 @@ realinstall:
 	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fcopy/fcopy $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.
@@ -128,6 +129,7 @@ install-strip: all
 	strip src/faudit/faudit
 	strip src/fnet/fnet
 	strip src/fseccomp/fseccomp
+	strip src/fcopy/fcopy
 	$(MAKE) realinstall
 
 uninstall:
@@ -145,7 +147,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
 DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
-DISTFILES_TEST = "test/rlimit test/apps test/apps-x11 test/apps-x11-xorg test/root test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
+DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
 dist:
 	mv config.status config.status.old
@@ -223,10 +225,10 @@ test-arguments:
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
 
-test-rlimit:
-	cd test/rlimit; ./rlimit.sh | grep TESTING
+test-fcopy:
+	cd test/fcopy; ./fcopy.sh | grep TESTING
 	
-test: test-profiles test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments test-rlimit
+test: test-profiles test-fcopy test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
 	echo "TEST COMPLETE"
 
 ##########################################
@@ -254,6 +256,6 @@ test-overlay:
 
 # For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"
 
-test-all: test-root test-network test-appimage test-overlay test
+test-all: test-root test-network test-appimage test-overlay test-fcopy test
 	echo "TEST COMPLETE"
 	

@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+cd /home
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+after 100
+
+send -- "env | grep IBUS\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"IBUS_ADDRESS"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"IBUS_DAEMON_PID"
+}
+after 100
+
+
+puts "\nall done\n"
+

@@ -22,10 +22,8 @@
 #define MAXBUF 4098
 static void print_seccomp(int pid) {
 	char *file;
-	if (asprintf(&file, "/proc/%d/status", pid) == -1) {
+	if (asprintf(&file, "/proc/%d/status", pid) == -1)
 		errExit("asprintf");
-		exit(1);
-	}
 
 	FILE *fp = fopen(file, "r");
 	if (!fp) {

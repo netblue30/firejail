@@ -109,6 +109,21 @@ expect {
 }
 after 100
 
+send -- "firejail --debug-check-filename --noprofile --private-home=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 8.1\n";exit}
+	"Checking filename bla&&bla"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
 send -- "firejail --debug-check-filename --noprofile --private-etc=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 9.1\n";exit}

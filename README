@@ -103,6 +103,7 @@ valoq (https://github.com/valoq)
 	- blacklist suid binaries in disable-common.inc
 	- fix man pages
 	- various profile improvements
+	- added keypass2, qemu profiles
 Vadim A. Misbakh-Soloviov (https://github.com/msva)
 	- profile fixes
 Rafael Cavalcanti (https://github.com/rccavalcanti)

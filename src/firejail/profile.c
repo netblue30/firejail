@@ -173,7 +173,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_PRIVATE_HOME
 		if (checkcfg(CFG_PRIVATE_HOME)) {
 			cfg.home_private_keep = ptr + 13;
-			fs_check_home_list();
 			arg_private = 1;
 		}
 		else
@@ -737,7 +736,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			exit(1);
 		}
 		cfg.etc_private_keep = ptr + 12;
-		fs_check_etc_list();
 		arg_private_etc = 1;
 		
 		return 0;
@@ -747,7 +745,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strncmp(ptr, "private-bin ", 12) == 0) {
 		cfg.bin_private_keep = ptr + 12;
 		arg_private_bin = 1;
-		fs_check_bin_list();
 		return 0;
 	}
 

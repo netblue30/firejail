@@ -696,7 +696,6 @@ int sandbox(void* sandbox_arg) {
 				if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
 					errExit("asprintf");
 				cfg.bin_private_keep = tmp;
-				fs_check_bin_list();
 				EUID_ROOT();
 			}
 			fs_private_bin_list();

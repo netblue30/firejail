@@ -216,6 +216,9 @@ void netstats(void) {
 				print_proc(i, itv, col);
 			}
 		}
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 	}
 }
 

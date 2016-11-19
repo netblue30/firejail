@@ -24,7 +24,6 @@ sleep 1
 
 spawn $env(SHELL)
 send --  "firemon --cpu\r"
-sleep 4
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"need to be root" {puts "TESTING SKIP: /proc mounted as hidepid\n"; exit}

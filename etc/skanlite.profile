@@ -12,7 +12,7 @@ noroot
 nosound
 shell none
 #seccomp
-protocol unix
+protocol unix,inet,inet6
 
 private-bin skanlite
 # private-dev

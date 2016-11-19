@@ -6,7 +6,7 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
-rm -fr dest/*
+mkdir dest
 
 echo "TESTING: fcopy cmdline (test/fcopy/cmdline.exp)"
 ./cmdline.exp

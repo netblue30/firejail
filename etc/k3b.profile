@@ -15,7 +15,7 @@ seccomp
 protocol unix
 
 # private-bin 
-private-dev
-private-tmp
+# private-dev
+# private-tmp
 # private-etc
 

@@ -1,4 +1,4 @@
-# amorak profile
+# amarok profile
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -13,7 +13,7 @@ shell none
 #seccomp
 protocol unix,inet,inet6
 
-#private-bin amorak
+#private-bin amarok
 private-dev
 private-tmp
 #private-etc none

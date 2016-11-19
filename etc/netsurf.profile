@@ -1,5 +1,4 @@
 # Firejail profile for Mozilla Firefox (Iceweasel in Debian)
-
 noblacklist ~/.config/netsurf
 noblacklist ~/.cache/netsurf
 include /etc/firejail/disable-common.inc

@@ -1,5 +1,4 @@
 # evolution profile
-
 noblacklist ~/.config/evolution
 noblacklist ~/.local/share/evolution
 noblacklist ~/.cache/evolution

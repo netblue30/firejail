@@ -1,5 +1,4 @@
 # mutt email client profile
-
 noblacklist ~/.muttrc
 noblacklist ~/.mutt
 noblacklist ~/.mutt/muttrc

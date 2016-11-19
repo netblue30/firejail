@@ -1,5 +1,4 @@
 # gpg-agent profile
-
 noblacklist ~/.gnupg
 
 include /etc/firejail/disable-common.inc

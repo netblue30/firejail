@@ -1,5 +1,4 @@
 # wire messenger profile
-
 noblacklist ~/.config/Wire
 noblacklist ~/.config/wire
 

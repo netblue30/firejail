@@ -1,5 +1,4 @@
 # Firejail profile for Qutebrowser (Qt5-Webkit+Python) browser
-
 noblacklist ~/.config/qutebrowser
 noblacklist ~/.cache/qutebrowser
 include /etc/firejail/disable-common.inc

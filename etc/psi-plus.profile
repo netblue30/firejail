@@ -1,5 +1,4 @@
 # Firejail profile for Psi+
-
 noblacklist ${HOME}/.config/psi+
 noblacklist ${HOME}/.local/share/psi+
 include /etc/firejail/disable-common.inc

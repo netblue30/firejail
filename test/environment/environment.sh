@@ -95,4 +95,19 @@ if [ "$?" -eq 0 ];
 then
 	echo "TESTING: ibus (test/environment/ibus.exp)"
 	./ibus.exp
+else
+        echo "TESTING SKIP: ibus not configured"
 fi
+
+echo "TESTING: rlimit (test/rlimit/rlimit.exp)"
+./rlimit.exp
+
+echo "TESTING: rlimit profile (test/rlimit/rlimit-profile.exp)"
+./rlimit-profile.exp
+
+echo "TESTING: rlimit errors (test/rlimit/rlimit-bad.exp)"
+./rlimit-bad.exp
+
+echo "TESTING: rlimit errors profile (test/rlimit/rlimit-bad-profile.exp)"
+./rlimit-bad-profile.exp
+

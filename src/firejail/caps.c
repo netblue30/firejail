@@ -181,12 +181,10 @@ static int caps_find_name(const char *name) {
 }
 
 // return 1 if error, 0 if OK
-int caps_check_list(const char *clist, void (*callback)(int)) {
+void caps_check_list(const char *clist, void (*callback)(int)) {
 	// don't allow empty lists
-	if (clist == NULL || *clist == '\0') {
-		fprintf(stderr, "Error: empty capabilities lists are not allowed\n");
-		return -1;
-	}
+	if (clist == NULL || *clist == '\0')
+		goto errexit;
 
 	// work on a copy of the string
 	char *str = strdup(clist);
@@ -201,11 +199,8 @@ int caps_check_list(const char *clist, void (*callback)(int)) {
 		else if (*ptr == ',') {
 			*ptr = '\0';
 			int nr = caps_find_name(start);
-			if (nr == -1) {
-				fprintf(stderr, "Error: capability %s not found\n", start);
-				free(str);
-				return -1;
-			}
+			if (nr == -1)
+				goto errexit;
 			else if (callback != NULL)
 				callback(nr);
 				
@@ -215,17 +210,18 @@ int caps_check_list(const char *clist, void (*callback)(int)) {
 	}
 	if (*start != '\0') {
 		int nr = caps_find_name(start);
-		if (nr == -1) {
-			fprintf(stderr, "Error: capability %s not found\n", start);
-			free(str);	
-			return -1;
-		}
+		if (nr == -1) 
+			goto errexit;
 		else if (callback != NULL)
 			callback(nr);
 	}
 
 	free(str);	
-	return 0;
+	return;
+
+errexit:
+	fprintf(stderr, "Error: capability \"%s\" not found\n", start);
+	exit(1);	
 }
 
 void caps_print(void) {
@@ -256,49 +252,53 @@ void caps_print(void) {
 // enabled by default
 int caps_default_filter(void) {
 	// drop capabilities
-	if (prctl(PR_CAPBSET_DROP, CAP_SYS_MODULE, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_MODULE");
+	if (prctl(PR_CAPBSET_DROP, CAP_SYS_MODULE, 0, 0, 0))
+		goto errexit;
 	else if (arg_debug)
 		printf("Drop CAP_SYS_MODULE\n");
 
-	if (prctl(PR_CAPBSET_DROP, CAP_SYS_RAWIO, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_RAWIO");
+	if (prctl(PR_CAPBSET_DROP, CAP_SYS_RAWIO, 0, 0, 0))
+		goto errexit;
 	else if (arg_debug)
 		printf("Drop CAP_SYS_RAWIO\n");
 
-	if (prctl(PR_CAPBSET_DROP, CAP_SYS_BOOT, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_BOOT");
+	if (prctl(PR_CAPBSET_DROP, CAP_SYS_BOOT, 0, 0, 0))
+		goto errexit;
 	else if (arg_debug)
 		printf("Drop CAP_SYS_BOOT\n");
 
-	if (prctl(PR_CAPBSET_DROP, CAP_SYS_NICE, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_NICE");
+	if (prctl(PR_CAPBSET_DROP, CAP_SYS_NICE, 0, 0, 0))
+		goto errexit;
 	else if (arg_debug)
 		printf("Drop CAP_SYS_NICE\n");
 
-	if (prctl(PR_CAPBSET_DROP, CAP_SYS_TTY_CONFIG, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_TTY_CONFIG");
+	if (prctl(PR_CAPBSET_DROP, CAP_SYS_TTY_CONFIG, 0, 0, 0))
+		goto errexit;
 	else if (arg_debug)
 		printf("Drop CAP_SYS_TTY_CONFIG\n");
 
 #ifdef CAP_SYSLOG
-	if (prctl(PR_CAPBSET_DROP, CAP_SYSLOG, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYSLOG");
+	if (prctl(PR_CAPBSET_DROP, CAP_SYSLOG, 0, 0, 0))
+		goto errexit;
 	else if (arg_debug)
 		printf("Drop CAP_SYSLOG\n");
 #endif
 
-	if (prctl(PR_CAPBSET_DROP, CAP_MKNOD, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_MKNOD");
+	if (prctl(PR_CAPBSET_DROP, CAP_MKNOD, 0, 0, 0))
+		goto errexit;
 	else if (arg_debug)
 		printf("Drop CAP_MKNOD\n");
 
-	if (prctl(PR_CAPBSET_DROP, CAP_SYS_ADMIN, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_ADMIN");
+	if (prctl(PR_CAPBSET_DROP, CAP_SYS_ADMIN, 0, 0, 0))
+		goto errexit;
 	else if (arg_debug)
 		printf("Drop CAP_SYS_ADMIN\n");
 
 	return 0;
+
+errexit:
+	fprintf(stderr, "Error: cannot drop capabilities\n");
+	exit(1);	
 }
 
 void caps_drop_all(void) {
@@ -359,19 +359,14 @@ static uint64_t extract_caps(int pid) {
 	EUID_ASSERT();
 	
 	char *file;
-	if (asprintf(&file, "/proc/%d/status", pid) == -1) {
+	if (asprintf(&file, "/proc/%d/status", pid) == -1)
 		errExit("asprintf");
-		exit(1);
-	}
 
 	EUID_ROOT();	// grsecurity
 	FILE *fp = fopen(file, "r");
 	EUID_USER();	// grsecurity
-	if (!fp) {
-		printf("Error: cannot open %s\n", file);
-		free(file);
-		exit(1);
-	}
+	if (!fp)
+		goto errexit;
 	
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
@@ -385,6 +380,8 @@ static uint64_t extract_caps(int pid) {
 		}
 	}
 	fclose(fp);
+
+errexit:	
 	free(file);
 	fprintf(stderr, "Error: cannot read caps configuration\n");
 	exit(1);

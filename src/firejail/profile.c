@@ -570,8 +570,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (!arg_caps_list)
 			errExit("strdup");
 		// verify caps list and exit if problems
-		if (caps_check_list(arg_caps_list, NULL))
-			exit(1);
+		caps_check_list(arg_caps_list, NULL);
 		return 0;
 	}
 	
@@ -582,8 +581,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (!arg_caps_list)
 			errExit("strdup");
 		// verify caps list and exit if problems
-		if (caps_check_list(arg_caps_list, NULL))
-			exit(1);
+		caps_check_list(arg_caps_list, NULL);
 		return 0;
 	}
 

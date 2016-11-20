@@ -1186,8 +1186,7 @@ int main(int argc, char **argv) {
 			if (!arg_caps_list)
 				errExit("strdup");
 			// verify caps list and exit if problems
-			if (caps_check_list(arg_caps_list, NULL))
-				return 1;
+			caps_check_list(arg_caps_list, NULL);
 		}
 		else if (strncmp(argv[i], "--caps.keep=", 12) == 0) {
 			arg_caps_keep = 1;
@@ -1195,8 +1194,7 @@ int main(int argc, char **argv) {
 			if (!arg_caps_list)
 				errExit("strdup");
 			// verify caps list and exit if problems
-			if (caps_check_list(arg_caps_list, NULL))
-				return 1;
+			caps_check_list(arg_caps_list, NULL);
 		}
 
 

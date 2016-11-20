@@ -12,6 +12,9 @@ echo "TESTING: noroot (test/filters/noroot.exp)"
 echo "TESTING: capabilities (test/filters/caps.exp)"
 ./caps.exp
 
+echo "TESTING: capabilities print (test/filters/caps-print.exp)"
+./caps-print.exp
+
 rm -f seccomp-test-file
 if [ "$(uname -m)" = "x86_64" ]; then
        echo "TESTING: fseccomp (test/filters/fseccomp.exp)"

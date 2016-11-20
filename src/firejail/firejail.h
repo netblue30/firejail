@@ -508,7 +508,7 @@ int caps_default_filter(void);
 void caps_print(void);
 void caps_drop_all(void);
 void caps_set(uint64_t caps);
-int caps_check_list(const char *clist, void (*callback)(int));
+void caps_check_list(const char *clist, void (*callback)(int));
 void caps_drop_list(const char *clist);
 void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);

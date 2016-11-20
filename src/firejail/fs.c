@@ -1042,6 +1042,9 @@ void fs_chroot(const char *rootdir) {
 	if (chroot(rootdir) < 0)
 		errExit("chroot");
 
+	// create all other /run/firejail files and directories
+	preproc_build_firejail_dir();
+
 	if (checkcfg(CFG_CHROOT_DESKTOP)) {
 		// update /var directory in order to support multiple sandboxes running on the same root directory
 //		if (!arg_private_dev)

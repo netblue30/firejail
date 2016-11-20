@@ -249,6 +249,10 @@ test: test-profiles test-fcopy test-fs test-utils  test-environment test-apps te
 # with them you will need to restart your computer.
 ##########################################
 
+# requires root access
+test-chroot:
+	cd test/chroot; ./chroot.sh | grep testing
+
 # Huge appimage files, not included in "make dist" archive
 test-appimage:
 	cd test/appimage; ./appimage.sh | grep TESTING
@@ -268,6 +272,6 @@ test-overlay:
 
 # For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"
 
-test-all: test-root test-network test-appimage test-overlay test-fcopy test
+test-all: test-root test-chroot test-network test-appimage test-overlay
 	echo "TEST COMPLETE"
 	

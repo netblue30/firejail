@@ -29,6 +29,10 @@ make test-root
 generate
 sleep 2
 
+make test-chroot
+generate
+sleep 2
+
 make test-network
 generate
 sleep 2

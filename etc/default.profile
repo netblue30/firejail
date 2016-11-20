@@ -5,11 +5,17 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-#blacklist ${HOME}/.wine
-
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp
+shell none
+
+# private-bin program
+# private-etc none
+# private-dev
+# private-tmp
+

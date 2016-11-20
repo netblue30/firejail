@@ -38,7 +38,7 @@ static void usage(void) {
 }
 
 int main(int argc, char **argv) {
-#if 0
+//#if 0
 {
 //system("cat /proc/self/status");
 int i;
@@ -46,7 +46,7 @@ for (i = 0; i < argc; i++)
         printf("*%s* ", argv[i]);
 printf("\n");
 }       
-#endif
+//#endif
 	if (argc < 2) {
 		usage();
 		return 1;

@@ -47,10 +47,14 @@
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
 
-#define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
 #define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
+#define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
 #define RUN_SECCOMP_AMD64	"/run/firejail/mnt/seccomp.amd64"	// amd64 filter installed on i386 architectures
 #define RUN_SECCOMP_I386	"/run/firejail/mnt/seccomp.i386"		// i386 filter installed on amd64 architectures
+#define PATH_SECCOMP_DEFAULT (LIBDIR "/firejail/seccomp")			// default filter built during make
+#define PATH_SECCOMP_DEFAULT_DEBUG (LIBDIR "/firejail/seccomp.debug")	// default filter built during make
+#define PATH_SECCOMP_AMD64 (LIBDIR "/firejail/seccomp.amd64")		// amd64 filter built during make
+#define PATH_SECCOMP_I386 (LIBDIR "/firejail/seccomp.i386")			// i386 filter built during make
 
 
 #define RUN_DEV_DIR		"/run/firejail/mnt/dev"
@@ -374,9 +378,6 @@ void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
 // preproc.c
 void preproc_build_firejail_dir(void);
 void preproc_mount_mnt_dir(void);
-void preproc_build_cp_command(void);
-void preproc_delete_cp_command(void) ;
-void preproc_remount_mnt_dir(void);
 
 // fs.c
 // blacklist files or directoies by mounting empty files on top of them

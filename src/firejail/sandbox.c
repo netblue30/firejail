@@ -555,12 +555,9 @@ int sandbox(void* sandbox_arg) {
 	
 	//****************************
 	// fs pre-processing:
-	//  - copy some commands under /run
 	//  - build seccomp filters
 	//  - create an empty /etc/ld.so.preload
 	//****************************
-	preproc_build_cp_command();
-
 #ifdef HAVE_SECCOMP
 	if (cfg.protocol) {
 		if (arg_debug)
@@ -765,7 +762,6 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// fs post-processing
 	//****************************
-	preproc_delete_cp_command();
 	fs_logger_print();
 	fs_logger_change_owner();
 

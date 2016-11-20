@@ -1,7 +1,8 @@
-all: apps man
+all: apps man filters
 MYLIBS = src/lib
 APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect src/fnet src/fseccomp src/fcopy
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
+SECCOMP_FILTERS = seccomp seccomp.i386 seccomp.amd64
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -35,11 +36,18 @@ $(MANPAGES): $(wildcard src/man/*.txt)
 
 man: $(MANPAGES)
 
+filters: src/fseccomp
+	src/fseccomp/fseccomp default seccomp
+	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
+	src/fseccomp/fseccomp secondary 32 seccomp.i386
+	src/fseccomp/fseccomp secondary 64 seccomp.amd64
+
 clean:
 	for dir in $(APPS) $(MYLIBS); do \
 		$(MAKE) -C $$dir clean; \
 	done
 	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
+	rm -f seccomp seccomp.debug seccomp.i386 seccomp.amd64
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
 	rm -f test/utils/lstesting
@@ -79,6 +87,10 @@ realinstall:
 	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fcopy/fcopy $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.

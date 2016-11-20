@@ -56,9 +56,9 @@ void preproc_build_firejail_dir(void) {
 		create_empty_dir_as_root(RUN_FIREJAIL_APPIMAGE_DIR, 0755);
 	}
 	
-        if (stat(RUN_MNT_DIR, &s)) {
-                create_empty_dir_as_root(RUN_MNT_DIR, 0755);
-        }
+	if (stat(RUN_MNT_DIR, &s)) {
+		create_empty_dir_as_root(RUN_MNT_DIR, 0755);
+	}
 
 	create_empty_file_as_root(RUN_RO_FILE, S_IRUSR);
 	create_empty_dir_as_root(RUN_RO_DIR, S_IRUSR);
@@ -75,51 +75,17 @@ void preproc_mount_mnt_dir(void) {
 		tmpfs_mounted = 1;
 		fs_logger2("tmpfs", RUN_MNT_DIR);
 		
-		// create all seccomp files
-		// as root, create RUN_SECCOMP_I386 file
-		create_empty_file_as_root(RUN_SECCOMP_I386, 0644);
-		if (set_perms(RUN_SECCOMP_I386, getuid(), getgid(), 0644))
-			errExit("set_perms");
-
-		// as root, create RUN_SECCOMP_AMD64 file
-		create_empty_file_as_root(RUN_SECCOMP_AMD64, 0644);
-		if (set_perms(RUN_SECCOMP_AMD64, getuid(), getgid(), 0644))
-			errExit("set_perms");
-
-		// as root, create RUN_SECCOMP file
-		create_empty_file_as_root(RUN_SECCOMP_CFG, 0644);
-		if (set_perms(RUN_SECCOMP_CFG, getuid(), getgid(), 0644))
-			errExit("set_perms");
-
-		// as root, create RUN_SECCOMP_PROTOCOL file
+		//copy defaultl seccomp files
+		copy_file(PATH_SECCOMP_I386, RUN_SECCOMP_I386, getuid(), getgid(), 0644);
+		copy_file(PATH_SECCOMP_AMD64, RUN_SECCOMP_AMD64, getuid(), getgid(), 0644);
+		if (arg_allow_debuggers)
+			copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644);
+		else
+			copy_file(PATH_SECCOMP_DEFAULT, RUN_SECCOMP_CFG, getuid(), getgid(), 0644);
+			
+		// as root, create an empty RUN_SECCOMP_PROTOCOL file
 		create_empty_file_as_root(RUN_SECCOMP_PROTOCOL, 0644);
 		if (set_perms(RUN_SECCOMP_PROTOCOL, getuid(), getgid(), 0644))
 			errExit("set_perms");
 	}
-}
-
-// grab a copy of cp command
-void preproc_build_cp_command(void) {
-	struct stat s;
-	preproc_mount_mnt_dir();
-	if (stat(RUN_CP_COMMAND, &s)) {
-		char* fname = realpath("/bin/cp", NULL);
-		if (fname == NULL || stat(fname, &s) || is_link(fname)) {
-			fprintf(stderr, "Error: invalid /bin/cp\n");
-			exit(1);
-		}
-		int rv = copy_file(fname, RUN_CP_COMMAND, 0, 0, 0755);
-		if (rv) {
-			fprintf(stderr, "Error: cannot access /bin/cp\n");
-			exit(1);
-		}
-		ASSERT_PERMS(RUN_CP_COMMAND, 0, 0, 0755);
-			
-		free(fname);
-	}
-}
-
-// delete the temporary cp command
-void preproc_delete_cp_command(void) {
-	unlink(RUN_CP_COMMAND);
 }

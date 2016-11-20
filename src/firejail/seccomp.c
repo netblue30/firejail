@@ -92,11 +92,9 @@ int seccomp_load(const char *fname) {
 	return 0;
 }
 
-
-
-
 // i386 filter installed on amd64 architectures
 void seccomp_filter_32(void) {
+#if 0
 	if (arg_debug)
 		printf("Build secondary 32-bit filter\n");
 
@@ -105,7 +103,7 @@ void seccomp_filter_32(void) {
 		PATH_FSECCOMP, "secondary", "32", RUN_SECCOMP_I386);
 	if (rv)
 		exit(rv);
-
+#endif
 	if (seccomp_load(RUN_SECCOMP_I386) == 0) {
 		if (arg_debug)
 			printf("Dual i386/amd64 seccomp filter configured\n");
@@ -114,6 +112,7 @@ void seccomp_filter_32(void) {
 
 // amd64 filter installed on i386 architectures
 void seccomp_filter_64(void) {
+#if 0
 	if (arg_debug)
 		printf("Build secondary 64-bit filter\n");
 
@@ -122,13 +121,13 @@ void seccomp_filter_64(void) {
 		PATH_FSECCOMP, "secondary", "64", RUN_SECCOMP_AMD64);
 	if (rv)
 		exit(rv);
+#endif
 
 	if (seccomp_load(RUN_SECCOMP_AMD64) == 0) {
 		if (arg_debug)
 			printf("Dual i386/amd64 seccomp filter configured\n");
 	}
 }
-
 
 // drop filter for seccomp option
 int seccomp_filter_drop(int enforce_seccomp) {
@@ -140,6 +139,8 @@ int seccomp_filter_drop(int enforce_seccomp) {
 #if defined(__i386__)
 		seccomp_filter_64();
 #endif
+
+#if 0
 		if (arg_debug)
 			printf("Build default seccomp filter\n");
 		// build the seccomp filter as a regular user
@@ -152,8 +153,8 @@ int seccomp_filter_drop(int enforce_seccomp) {
 				PATH_FSECCOMP, "default", RUN_SECCOMP_CFG);
 		if (rv)
 			exit(rv);
+#endif
 	}
-
 	// default seccomp filter with additional drop list
 	else if (cfg.seccomp_list && cfg.seccomp_list_drop == NULL) {
 #if defined(__x86_64__)

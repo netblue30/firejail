@@ -1,5 +1,4 @@
 # qemu-launcher profile
-
 noblacklist ~/.qemu-launcher
 
 include /etc/firejail/disable-common.inc

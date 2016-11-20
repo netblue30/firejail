@@ -1,3 +1,4 @@
+# xviewer profile
 noblacklist ~/.config/xviewer
 
 include /etc/firejail/disable-common.inc

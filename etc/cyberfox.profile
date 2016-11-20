@@ -1,5 +1,4 @@
 # Firejail profile for Cyberfox (based on Mozilla Firefox)
-
 noblacklist ~/.8pecxstudios
 noblacklist ~/.cache/8pecxstudios
 include /etc/firejail/disable-common.inc

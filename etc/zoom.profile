@@ -1,5 +1,4 @@
 # Firejail profile for zoom.us
-
 noblacklist ~/.config/zoomus.conf
 
 include /etc/firejail/disable-common.inc

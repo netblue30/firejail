@@ -1,5 +1,4 @@
 # Firejail profile for Mozilla Firefox (Iceweasel in Debian)
-
 noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
 noblacklist ~/.config/qpdfview

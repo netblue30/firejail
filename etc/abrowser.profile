@@ -1,5 +1,4 @@
 # Firejail profile for Abrowser
-
 noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
 include /etc/firejail/disable-common.inc

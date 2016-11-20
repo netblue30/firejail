@@ -1,5 +1,4 @@
 # Firejail profile for Dillo web browser
-
 noblacklist ~/.dillo
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

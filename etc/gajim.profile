@@ -1,5 +1,4 @@
 # Firejail profile for Gajim
-
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.local/share/gajim
 mkdir ${HOME}/.config/gajim

@@ -10,6 +10,7 @@ firejail (0.9.44.1) baseline; urgency=low
   * bugfix: cannot open files on Deluge running under KDE
   * bugfix: --private=dir where dir is the user home directory
   * bugfix: cannot start Vivaldi browser
+  * bugfix: cannot start mupdf
  -- netblue30 <netblue30@yahoo.com>  Wed, 2 Nov 2016 08:00:00 -0500
   
 firejail (0.9.44) baseline; urgency=low

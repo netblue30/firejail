@@ -94,16 +94,6 @@ int seccomp_load(const char *fname) {
 
 // i386 filter installed on amd64 architectures
 void seccomp_filter_32(void) {
-#if 0
-	if (arg_debug)
-		printf("Build secondary 32-bit filter\n");
-
-	// build the seccomp filter as a regular user
-	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
-		PATH_FSECCOMP, "secondary", "32", RUN_SECCOMP_I386);
-	if (rv)
-		exit(rv);
-#endif
 	if (seccomp_load(RUN_SECCOMP_I386) == 0) {
 		if (arg_debug)
 			printf("Dual i386/amd64 seccomp filter configured\n");
@@ -112,17 +102,6 @@ void seccomp_filter_32(void) {
 
 // amd64 filter installed on i386 architectures
 void seccomp_filter_64(void) {
-#if 0
-	if (arg_debug)
-		printf("Build secondary 64-bit filter\n");
-
-	// build the seccomp filter as a regular user
-	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
-		PATH_FSECCOMP, "secondary", "64", RUN_SECCOMP_AMD64);
-	if (rv)
-		exit(rv);
-#endif
-
 	if (seccomp_load(RUN_SECCOMP_AMD64) == 0) {
 		if (arg_debug)
 			printf("Dual i386/amd64 seccomp filter configured\n");
@@ -138,21 +117,6 @@ int seccomp_filter_drop(int enforce_seccomp) {
 #endif
 #if defined(__i386__)
 		seccomp_filter_64();
-#endif
-
-#if 0
-		if (arg_debug)
-			printf("Build default seccomp filter\n");
-		// build the seccomp filter as a regular user
-		int rv;
-		if (arg_allow_debuggers)
-			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
-				PATH_FSECCOMP, "default", RUN_SECCOMP_CFG, "allow-debuggers");
-		else
-			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-				PATH_FSECCOMP, "default", RUN_SECCOMP_CFG);
-		if (rv)
-			exit(rv);
 #endif
 	}
 	// default seccomp filter with additional drop list
@@ -209,7 +173,7 @@ int seccomp_filter_drop(int enforce_seccomp) {
 		exit(1);
 	}
 	
-	if (arg_debug)
+	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0)
 		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
 			PATH_FSECCOMP, "print", RUN_SECCOMP_CFG);
 

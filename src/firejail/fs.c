@@ -1010,24 +1010,13 @@ void fs_chroot(const char *rootdir) {
 		create_empty_dir_as_root(rundir, 0755);
 		free(rundir);
 		
-		// create /run/firejail/mnt directory in chroot and mount a tmpfs
-		if (asprintf(&rundir, "%s/run/firejail/mnt", rootdir) == -1)
+		// create /run/firejail/mnt directory in chroot and mount the current one
+		if (asprintf(&rundir, "%s%s", rootdir, RUN_MNT_DIR) == -1)
 			errExit("asprintf");
 		create_empty_dir_as_root(rundir, 0755);
-		if (mount("tmpfs", rundir, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mounting /run/firejail/mnt");
-		fs_logger2("tmpfs", RUN_MNT_DIR);
-		free(rundir);
+		if (mount(RUN_MNT_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount bind");
 
-		// retrieve seccomp.protocol
-		struct stat s;
-		if (stat(RUN_SECCOMP_PROTOCOL, &s) == 0) {
-			if (asprintf(&rundir, "%s%s", rootdir, RUN_SECCOMP_PROTOCOL) == -1)
-				errExit("asprintf");
-			copy_file(RUN_SECCOMP_PROTOCOL, rundir, getuid(), getgid(), 0644);
-			free(rundir);
-		}
-		
 		// copy /etc/resolv.conf in chroot directory
 		// if resolv.conf in chroot is a symbolic link, this will fail
 		// no exit on error, let the user deal with the problem
@@ -1053,9 +1042,6 @@ void fs_chroot(const char *rootdir) {
 	if (chroot(rootdir) < 0)
 		errExit("chroot");
 
-	// create all other /run/firejail files and directories
-	preproc_build_firejail_dir();
-		
 	if (checkcfg(CFG_CHROOT_DESKTOP)) {
 		// update /var directory in order to support multiple sandboxes running on the same root directory
 //		if (!arg_private_dev)

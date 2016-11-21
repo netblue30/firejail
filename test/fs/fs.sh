@@ -61,6 +61,9 @@ echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 echo "TESTING: private whitelist (test/fs/private-whitelist.exp)"
 ./private-whitelist.exp
 
+echo "TESTING: whitelist ~/Downloads (test/fs/whitelist-downloads.exp)"
+./whitelist-downloads.exp
+
 echo "TESTING: invalid filename (test/fs/invalid_filename.exp)"
 ./invalid_filename.exp
 

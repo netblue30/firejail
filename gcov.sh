@@ -13,9 +13,9 @@ gcov_init() {
 }
 
 generate() {
-	lcov --capture -d src/firejail -d src/firemon -d  src/fcopy -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file
+	lcov -q --capture -d src/firejail -d src/firemon -d  src/fcopy -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file
 	rm -fr gcov-dir
-	genhtml gcov-file --output-directory gcov-dir
+	genhtml -q gcov-file --output-directory gcov-dir
 }
 
 gcov_init

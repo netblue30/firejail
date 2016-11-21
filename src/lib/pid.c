@@ -34,10 +34,9 @@ int max_pids=32769;
 void pid_getmem(unsigned pid, unsigned *rss, unsigned *shared) {
 	// open stat file
 	char *file;
-	if (asprintf(&file, "/proc/%u/statm", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/statm", pid) == -1)
+		errExit("asprintf");
+		
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -59,10 +58,9 @@ void pid_getmem(unsigned pid, unsigned *rss, unsigned *shared) {
 void pid_get_cpu_time(unsigned pid, unsigned *utime, unsigned *stime) {
 	// open stat file
 	char *file;
-	if (asprintf(&file, "/proc/%u/stat", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/stat", pid) == -1)
+		errExit("asprintf");
+
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -93,10 +91,9 @@ myexit:
 unsigned long long pid_get_start_time(unsigned pid) {
 	// open stat file
 	char *file;
-	if (asprintf(&file, "/proc/%u/stat", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/stat", pid) == -1)
+		errExit("asprintf");
+
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -138,10 +135,8 @@ uid_t pid_get_uid(pid_t pid) {
 
 	// open status file
 	char *file;
-	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/status", pid) == -1)
+		errExit("asprintf");
 
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
@@ -316,10 +311,9 @@ void pid_read(pid_t mon_pid) {
 			
 		// open stat file
 		char *file;
-		if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-			perror("asprintf");
-			exit(1);
-		}
+		if (asprintf(&file, "/proc/%u/status", pid) == -1)
+			errExit("asprintf");
+
 		FILE *fp = fopen(file, "r");
 		if (!fp) {
 			free(file);

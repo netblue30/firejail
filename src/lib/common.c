@@ -39,22 +39,23 @@ int join_namespace(pid_t pid, char *type) {
 		errExit("asprintf");
 	
 	int fd = open(path, O_RDONLY);
-	if (fd < 0) {
-		free(path);
-		fprintf(stderr, "Error: cannot open /proc/%u/ns/%s.\n", pid, type);
-		return -1;
-	}
+	if (fd < 0)
+		goto errout;
 
 	if (syscall(__NR_setns, fd, 0) < 0) {
-		free(path);
-		fprintf(stderr, "Error: cannot join namespace %s.\n", type);
 		close(fd);
-		return -1;
+		goto errout;
 	}
 
 	close(fd);
 	free(path);
 	return 0;
+
+errout:
+	free(path);
+	fprintf(stderr, "Error: cannot join namespace %s\\n", type);
+	return -1;
+	
 }
 
 // return 1 if error
@@ -187,8 +188,6 @@ char *pid_proc_cmdline(const pid_t pid) {
 	for (i = 0; i < len; i++) {
 		if (buffer[i] == '\0')
 			buffer[i] = ' ';
-//		if (buffer[i] >= 0x80) // execv in progress!!!
-//			return NULL;
 	}
 
 	// return a malloc copy of the command line

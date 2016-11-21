@@ -105,6 +105,7 @@ int rtnl_open(struct rtnl_handle *rth, unsigned subscriptions)
 	return rtnl_open_byproto(rth, subscriptions, NETLINK_ROUTE);
 }
 
+#if 0
 int rtnl_wilddump_request(struct rtnl_handle *rth, int family, int type)
 {
 	return rtnl_wilddump_req_filter(rth, family, type, RTEXT_FILTER_VF);
@@ -303,6 +304,7 @@ int rtnl_dump_filter(struct rtnl_handle *rth,
 
 	return rtnl_dump_filter_l(rth, a);
 }
+#endif
 
 int rtnl_talk(struct rtnl_handle *rtnl, struct nlmsghdr *n, pid_t peer,
 	      unsigned groups, struct nlmsghdr *answer)
@@ -422,6 +424,7 @@ int rtnl_talk(struct rtnl_handle *rtnl, struct nlmsghdr *n, pid_t peer,
 	}
 }
 
+#if 0
 int rtnl_listen(struct rtnl_handle *rtnl,
 		rtnl_filter_t handler,
 		void *jarg)
@@ -580,7 +583,7 @@ int addattrstrz(struct nlmsghdr *n, int maxlen, int type, const char *str)
 {
 	return addattr_l(n, maxlen, type, str, strlen(str)+1);
 }
-
+#endif
 
 
 int addattr_l(struct nlmsghdr *n, int maxlen, int type, const void *data,
@@ -632,46 +635,8 @@ printf("\tdata length: %d\n", alen);
 	return 0;
 }
 
+
 #if 0
-int addattr_l(struct nlmsghdr *n, int maxlen, int type, const void *data,
-	      int alen)
-{
-printf("%s: adding type %d, length %d ", __FUNCTION__, type, alen);
-if (type == IFLA_INFO_KIND) {
-if (alen)
-	printf("(IFLA_INFO_KIND %s)\n", (char *)data);	
-else
-printf("(VETH_INFO_PEER)\n");
-}
-else if (type == IFLA_IFNAME) {
-printf("(IFLA_IFNAME %s)\n", (char *) data);
-}
-else if (type == IFLA_NET_NS_PID) {
-printf("(IFLA_NET_NS_PID %u)\n", *((unsigned *) data));
-}
-else if (type == IFLA_LINKINFO)
-printf("(IFLA_LINKINFO)\n");
-else if (type == IFLA_INFO_DATA)
-printf("(IFLA_INFO_DATA)\n");
-else
-	printf("\n");
-
-	int len = RTA_LENGTH(alen);
-	struct rtattr *rta;
-
-	if (NLMSG_ALIGN(n->nlmsg_len) + RTA_ALIGN(len) > maxlen) {
-		fprintf(stderr, "addattr_l ERROR: message exceeded bound of %d\n",maxlen);
-		return -1;
-	}
-	rta = NLMSG_TAIL(n);
-	rta->rta_type = type;
-	rta->rta_len = len;
-	memcpy(RTA_DATA(rta), data, alen);
-	n->nlmsg_len = NLMSG_ALIGN(n->nlmsg_len) + RTA_ALIGN(len);
-	return 0;
-}
-#endif
-
 int addraw_l(struct nlmsghdr *n, int maxlen, const void *data, int len)
 {
 	if ((int)(NLMSG_ALIGN(n->nlmsg_len) + NLMSG_ALIGN(len)) > maxlen) {
@@ -802,3 +767,4 @@ int __parse_rtattr_nested_compat(struct rtattr *tb[], int max, struct rtattr *rt
 	memset(tb, 0, sizeof(struct rtattr *) * (max + 1));
 	return 0;
 }
+#endif

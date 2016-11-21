@@ -130,7 +130,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #if HAVE_USERNS
 		if (checkcfg(CFG_USERNS))
 			check_user_namespace();
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: user namespace feature is disabled in Firejail configuration file\n");
 #endif
 
@@ -144,7 +144,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))
 			arg_seccomp = 1;
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -176,7 +176,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fs_check_home_list();
 			arg_private = 1;
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: private-home is disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -209,7 +209,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK))
 			arg_netfilter = 1;
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -223,7 +223,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				errExit("strdup");
 			check_netfilter_file(arg_netfilter_file);
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -237,7 +237,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				errExit("strdup");
 			check_netfilter_file(arg_netfilter6_file);
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -255,7 +255,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.interface2.configured = 0;
 			cfg.interface3.configured = 0;
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -296,7 +296,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			net_configure_bridge(br, ptr + 4);
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -319,7 +319,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -364,7 +364,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -391,7 +391,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -411,7 +411,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -440,7 +440,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				}
 			}
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -468,7 +468,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 //			}
 			
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -482,7 +482,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -499,7 +499,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))
 			protocol_store(ptr + 9);
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
 #endif
 		return 0;
@@ -523,7 +523,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (!cfg.seccomp_list)
 				errExit("strdup");
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
 #endif
 
@@ -539,7 +539,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (!cfg.seccomp_list_drop)
 				errExit("strdup");
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
 #endif		
 		return 0;
@@ -554,7 +554,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (!cfg.seccomp_list_keep)
 				errExit("strdup");
 		}
-		else
+		else if (!arg_quiet)
 			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
 #endif		
 		return 0;
@@ -780,7 +780,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			*(dname2 - 1) = ',';
 			return 1;
 		}
-		else {
+		else if (!arg_quiet) {
 			fprintf(stderr, "Warning: bind feature is disabled in Firejail configuration file\n");
 			return 0;			
 		}

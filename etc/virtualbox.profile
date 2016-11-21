@@ -1,5 +1,4 @@
 # VirtualBox profile
-
 noblacklist ${HOME}/.VirtualBox
 noblacklist ${HOME}/VirtualBox VMs
 noblacklist ${HOME}/.config/VirtualBox

@@ -1,16 +1,25 @@
 # file profile
-ignore noroot
-include /etc/firejail/default.profile
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-passwdmgr.inc
 
-blacklist /tmp/.X11-unix
-
+caps.drop all
 hostname file
+netfilter
 net none
 no3d
+nogroups
+nonewprivs
+#noroot
 nosound
-quiet
+protocol unix
+seccomp
 shell none
 tracelog
+quiet
+x11 none
+
+blacklist /tmp/.X11-unix
 
 private-dev
 private-bin file

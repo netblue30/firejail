@@ -1,5 +1,4 @@
 # eog (gnome image viewer) profile
-
 noblacklist ~/.config/eog
 
 include /etc/firejail/disable-common.inc

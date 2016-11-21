@@ -1,5 +1,4 @@
 # keepass password manager profile
-
 noblacklist ${HOME}/.config/keepass
 noblacklist ${HOME}/.keepass
  

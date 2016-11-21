@@ -80,6 +80,25 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- evince profile enhancement
 	- tightened Spotify profile
 	- added xiphos and Tor Browser Bundle profiles
+valoq (https://github.com/valoq)
+	- lots of profile fixes
+	- added support for /srv in --whitelist feature
+	- Eye of GNOME, Evolution, display (imagemagik) and Wire profiles
+	- blacklist suid binaries in disable-common.inc
+	- fix man pages
+	- added keypass2, qemu profiles
+	- added amarok, ark, atool, bleachbit, brasero, dolphin, dragon, elinks, enchant, exiftool profiles
+	- added file-roller, gedit, gjs,gnome-books, gnome-documents, gnome-maps, gnome-music profiles
+	- added gnome-photos, gnome-weather, goobox, gpa, gpg, gpg-agent, highlight profiles
+	- added img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext, simple-scan profiles
+	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
+Vasya Novikov (https://github.com/vn971)
+	- Wesnoth profile
+	- Hedegewars profile
+	- manpage fixes
+	- fixed firecfg clean/clear issue
+	- found the ugliest bug so far
+	- seccomp debug description in man page
 curiosity-seeker (https://github.com/curiosity-seeker)
 	- tightening unbound and dnscrypt-proxy profiles
 	- dnsmasq profile
@@ -95,15 +114,6 @@ BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
 Impyy (https://github.com/Impyy)
 	- added mumble profile
-valoq (https://github.com/valoq)
-	- LibreOffice profile fixes
-	- cherrytree profile fixes
-	- added support for /srv in --whitelist feature
-	- Eye of GNOME, Evolution, display (imagemagik) and Wire profiles
-	- blacklist suid binaries in disable-common.inc
-	- fix man pages
-	- various profile improvements
-	- added keypass2, qemu profiles
 Vadim A. Misbakh-Soloviov (https://github.com/msva)
 	- profile fixes
 Rafael Cavalcanti (https://github.com/rccavalcanti)
@@ -196,12 +206,6 @@ avoidr (https://github.com/avoidr)
 	- various other fixes
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
-Vasya Novikov (https://github.com/vn971)
-	- Wesnoth profile
-	- Hedegewars profile
-	- manpage fixes
-	- fixed firecfg clean/clear issue
-	- found the ugliest bug so far
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
 Joan Figueras (https://github.com/figue)

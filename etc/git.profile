@@ -1,5 +1,4 @@
 # git profile
-
 noblacklist ~/.gitconfig
 noblacklist ~/.ssh
 noblacklist ~/.gnupg

@@ -92,6 +92,7 @@ valoq (https://github.com/valoq)
 	- added gnome-photos, gnome-weather, goobox, gpa, gpg, gpg-agent, highlight profiles
 	- added img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext, simple-scan profiles
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
+	- added wget profile
 Vasya Novikov (https://github.com/vn971)
 	- Wesnoth profile
 	- Hedegewars profile

@@ -111,8 +111,12 @@ static void disable_file(OPERATION op, const char *filename) {
 				fprintf(stderr, "Warning: %s directory link was not blacklisted\n", filename);
 		}
 		else {
-			if (arg_debug)
-				printf("Disable %s\n", fname);
+			if (arg_debug) {
+				if (strcmp(filename, fname))
+					printf("Disable %s (requesterd %s)\n", fname, filename);
+				else
+					printf("Disable %s\n", fname);
+			}
 			else if (arg_debug_blacklists) {
 				printf("Disable %s", fname);
 				if (op == BLACKLIST_FILE)
@@ -120,6 +124,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				else
 					printf(" - no logging\n");
 			}
+			
 			if (S_ISDIR(s.st_mode)) {
 				if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 					errExit("disable file");

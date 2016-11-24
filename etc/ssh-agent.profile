@@ -2,6 +2,7 @@
 quiet
 noblacklist ~/.ssh
 noblacklist /tmp/ssh-*
+noblacklist /etc/ssh
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

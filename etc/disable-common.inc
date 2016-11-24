@@ -165,9 +165,6 @@ blacklist ${PATH}/newgrp
 blacklist ${PATH}/newuidmap
 blacklist ${PATH}/pkexec
 blacklist ${PATH}/sg
-blacklist ${PATH}/rsh
-blacklist ${PATH}/rlogin
-blacklist ${PATH}/rcp
 blacklist ${PATH}/crontab
 blacklist ${PATH}/ksu
 blacklist ${PATH}/chsh

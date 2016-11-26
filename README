@@ -80,6 +80,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- evince profile enhancement
 	- tightened Spotify profile
 	- added xiphos and Tor Browser Bundle profiles
+    - added xed and pluma profiles
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature

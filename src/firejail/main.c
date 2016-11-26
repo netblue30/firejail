@@ -2064,8 +2064,7 @@ int main(int argc, char **argv) {
 		// command
 		//*************************************
 		else if (strcmp(argv[i], "--audit") == 0) {
-			if (asprintf(&arg_audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
-				errExit("asprintf");
+			arg_audit_prog = LIBDIR "/firejail/faudit";
 			arg_audit = 1;
 		}
 		else if (strncmp(argv[i], "--audit=", 8) == 0) {
@@ -2076,6 +2075,12 @@ int main(int argc, char **argv) {
 			arg_audit_prog = strdup(argv[i] + 8);
 			if (!arg_audit_prog)
 				errExit("strdup");
+
+			struct stat s;
+			if (stat(arg_audit_prog, &s) != 0) {
+				fprintf(stderr, "Error: cannot find the audit program %s\n", arg_audit_prog);
+				exit(1);
+			}
 			arg_audit = 1;
 		}
 		else if (strcmp(argv[i], "--appimage") == 0)

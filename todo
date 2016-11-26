@@ -288,3 +288,4 @@ removable media, partitions, software RAID volumes, logical volumes, and files.
 
 30. /* coverity[toctou] */
 
+31. test dillo, sandbox.c:240

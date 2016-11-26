@@ -185,6 +185,8 @@ int checkcfg(int val) {
 					exit(1);
 				}
 				
+				if (netfilter_default)
+					goto errout;
 				netfilter_default = strdup(fname);
 				if (!netfilter_default)
 					errExit("strdup");
@@ -216,6 +218,8 @@ int checkcfg(int val) {
 				
 			// Xephyr command extra parameters
 			else if (strncmp(ptr, "xephyr-extra-params ", 19) == 0) {
+				if (*xephyr_extra_params != '\0')
+					goto errout;
 				xephyr_extra_params = strdup(ptr + 19);
 				if (!xephyr_extra_params)
 					errExit("strdup");

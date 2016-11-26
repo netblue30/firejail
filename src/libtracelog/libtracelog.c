@@ -163,9 +163,9 @@ static char *storage_find(const char *str) {
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
 #define MAXBUF 4096
 static int blacklist_loaded = 0;
-static char *sandbox_pid_str = 0;
+static char *sandbox_pid_str = NULL;
 static char *sandbox_name_str = NULL;
-void load_blacklist(void) {
+static void load_blacklist(void) {
 	if (blacklist_loaded)
 		return;
 	
@@ -184,13 +184,15 @@ void load_blacklist(void) {
 			char *ptr = strchr(buf, '\n');
 			if (ptr)
 				*ptr = '\0';
-			sandbox_pid_str = strdup(buf + 13);
+			if (sandbox_pid_str == NULL)
+				sandbox_pid_str = strdup(buf + 13);
 		}
 		else if (strncmp(buf, "sandbox name: ", 14) == 0) {
 			char *ptr = strchr(buf, '\n');
 			if (ptr)
 				*ptr = '\0';
-			sandbox_name_str = strdup(buf + 14);
+			if (sandbox_name_str == NULL);
+				sandbox_name_str = strdup(buf + 14);
 		}
 		else if (strncmp(buf, "blacklist ", 10) == 0) {
 			char *ptr = strchr(buf, '\n');

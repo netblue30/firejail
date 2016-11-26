@@ -37,20 +37,17 @@ void x11(pid_t pid, int print_procs) {
 			if (asprintf(&x11file, "/run/firejail/x11/%d", i) == -1)
 				errExit("asprintf");
 
-			struct stat s;
-			if (stat(x11file, &s) == 0) {
-				FILE *fp = fopen(x11file, "r");
-				if (!fp) {
-					free(x11file);
-					continue;
-				}
-				int display;
-				int rv = fscanf(fp, "%d", &display);
-				if (rv == 1)
-					printf("  DISPLAY :%d\n", display);
-				fclose(fp);
+			FILE *fp = fopen(x11file, "r");
+			if (!fp) {
+				free(x11file);
+				continue;
 			}
 
+			int display;
+			int rv = fscanf(fp, "%d", &display);
+			if (rv == 1)
+				printf("  DISPLAY :%d\n", display);
+			fclose(fp);
 			free(x11file);
 		}
 	}

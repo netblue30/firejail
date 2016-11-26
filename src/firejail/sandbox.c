@@ -236,12 +236,15 @@ static int monitor_application(pid_t app_pid) {
 			
 			// todo: make this generic
 			// Dillo browser leaves a dpid process running, we need to shut it down
+			int found = 0;
 			if (strcmp(cfg.command_name, "dillo") == 0) {
 				char *pidname = pid_proc_comm(pid);
 				if (pidname && strcmp(pidname, "dpid") == 0)
-					break;
+					found = 1;
 				free(pidname);
 			}
+			if (found)
+				break;
 
 			monitored_pid = pid;
 			break;
@@ -283,11 +286,6 @@ void start_application(void) {
 	//****************************************
 	if (arg_audit) {
 		assert(arg_audit_prog);
-		struct stat s;
-		if (stat(arg_audit_prog, &s) != 0) {
-			fprintf(stderr, "Error: cannot find the audit program\n");
-			exit(1);
-		}
 		execl(arg_audit_prog, arg_audit_prog, NULL);
 	}
 	//****************************************

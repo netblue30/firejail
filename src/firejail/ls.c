@@ -258,42 +258,35 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		// drop privileges
 		drop_privs(0);
 
+		// check access
 		if (access(fname1, R_OK) == -1) {
 			fprintf(stderr, "Error: Cannot access %s\n", fname1);
 			exit(1);
 		}
-	
-		// list directory contents
-		struct stat s;
-		if (stat(fname1, &s) == -1) {
+		char *rp = realpath(fname1, NULL);
+		if (!rp) {
 			fprintf(stderr, "Error: Cannot access %s\n", fname1);
 			exit(1);
 		}
-		if (S_ISDIR(s.st_mode)) {
-			char *rp = realpath(fname1, NULL);
-			if (!rp) {
-				fprintf(stderr, "Error: Cannot access %s\n", fname1);
-				exit(1);
-			}
-			if (arg_debug)
-				printf("realpath %s\n", rp);
+		if (arg_debug)
+			printf("realpath %s\n", rp);
+		
 	
+		// list directory contents
+		struct stat s;
+		if (stat(rp, &s) == -1) {
+			fprintf(stderr, "Error: Cannot access %s\n", rp);
+			exit(1);
+		}
+		if (S_ISDIR(s.st_mode)) {
 			char *dir;
 			if (asprintf(&dir, "%s/", rp) == -1)
 				errExit("asprintf");
 			
 			print_directory(dir);
-			free(rp);
 			free(dir);
 		}
 		else {
-			char *rp = realpath(fname1, NULL);
-			if (!rp) {
-				fprintf(stderr, "Error: Cannot access %s\n", fname1);
-				exit(1);
-			}
-			if (arg_debug)
-				printf("realpath %s\n", rp);
 			char *split = strrchr(rp, '/');
 			if (split) {
 				*split = '\0';
@@ -302,8 +295,8 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 					printf("path %s, file %s\n", rp, rp2);
 				print_file_or_dir(rp, rp2, 1);
 			}
-			free(rp);
 		}
+		free(rp);
 	}
 	
 	// get file from sandbox and store it in the current directory

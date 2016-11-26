@@ -52,44 +52,53 @@ char *seccomp_check_list(const char *str) {
 
 int seccomp_load(const char *fname) {
 	assert(fname);
+	
+	// open filter file
+	int fd = open(fname, O_RDONLY);
+	if (fd == -1)
+		goto errexit;
 
-	// check file
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error: cannot read protocol filter file\n");
-		exit(1);
-	}
-	int size = s.st_size;
+	// calculate the number of entries
+	int size = lseek(fd, 0, SEEK_END);
+	if (size == -1)
+		goto errexit;
+	if (lseek(fd, 0 , SEEK_SET) == -1)
+		goto errexit;
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
-//printf("size %d, entries %d\n", s.st_size, entries);
+	if (arg_debug)
+		printf("reading %d seccomp entries from %s\n", entries, fname);
 
 	// read filter
-	struct sock_filter filter[entries];
+	struct sock_filter *filter = malloc(size);
+	if (filter == NULL)
+		goto errexit;
 	memset(&filter[0], 0, sizeof(filter));
-	int src = open(fname, O_RDONLY);
 	int rd = 0;
 	while (rd < size) {
-		int rv = read(src, (unsigned char *) filter + rd, size - rd);
-		if (rv == -1) {
-			fprintf(stderr, "Error: cannot read %s file\n", fname);
-			exit(1);
-		}
+		int rv = read(fd, (unsigned char *) filter + rd, size - rd);
+		if (rv == -1)
+			goto errexit;
 		rd += rv;
 	}
-	close(src);
+	
+	// close file
+	close(fd);
 
 	// install filter
 	struct sock_fprog prog = {
 		.len = entries,
 		.filter = filter,
 	};
-
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
 		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return 1;
 	}
 	
 	return 0;
+	
+errexit:
+	fprintf(stderr, "Error: cannot read %s\n", fname);
+	exit(1);
 }
 
 // i386 filter installed on amd64 architectures

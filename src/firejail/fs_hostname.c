@@ -52,8 +52,10 @@ void fs_hostname(const char *hostname) {
 			goto errexit;
 
 		FILE *fp2 = fopen(RUN_HOSTS_FILE, "w");
-		if (!fp2)
+		if (!fp2) {
+			fclose(fp1);
 			goto errexit;
+		}
 		
 		char buf[4096];
 		int done = 0;

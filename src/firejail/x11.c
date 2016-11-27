@@ -151,6 +151,7 @@ void fs_x11(void) {
 	fs_logger("tmpfs /tmp/.X11-unix");
 
 	// create an empty file
+	/* coverity[toctou] */
 	FILE *fp = fopen(x11file, "w");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot create empty file in x11 directory\n");

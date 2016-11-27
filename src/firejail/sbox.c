@@ -150,6 +150,7 @@ int sbox_run(unsigned filter, int num, ...) {
 			}
 			else // the user could run the sandbox without /dev/null
 				close(STDIN_FILENO);
+			close(fd);
 		}
 		umask(027);	
 

@@ -191,7 +191,7 @@ static void load_blacklist(void) {
 			char *ptr = strchr(buf, '\n');
 			if (ptr)
 				*ptr = '\0';
-			if (sandbox_name_str == NULL);
+			if (sandbox_name_str == NULL)
 				sandbox_name_str = strdup(buf + 14);
 		}
 		else if (strncmp(buf, "blacklist ", 10) == 0) {

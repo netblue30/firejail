@@ -128,16 +128,18 @@ void fs_var_log(void) {
 		// create an empty /var/log/wtmp file
 		/* coverity[toctou] */
 		FILE *fp = fopen("/var/log/wtmp", "w");
-		SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
-		if (fp)
+		if (fp) {
+			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
 			fclose(fp);
+		}
 		fs_logger("touch /var/log/wtmp");
 			
 		// create an empty /var/log/btmp file
 		fp = fopen("/var/log/btmp", "w");
-		SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP);
-		if (fp)
+		if (fp) {
+			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP);
 			fclose(fp);
+		}
 		fs_logger("touch /var/log/btmp");
 	}
 	else

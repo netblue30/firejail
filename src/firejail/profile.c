@@ -990,6 +990,7 @@ void profile_read(const char *fname) {
 		// process quiet
 		if (strcmp(ptr, "quiet") == 0) {
 			arg_quiet = 1;
+			free(ptr);
 			continue;
 		}
 		if (!msg_printed) {

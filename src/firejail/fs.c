@@ -717,6 +717,7 @@ void fs_overlayfs(void) {
 			}
 		}
 		else {
+			/* coverity[toctou] */
 			if (mkdir(basedir, 0755) != 0) {
 				fprintf(stderr, "Error: cannot create overlay directory\n");
 				exit(1);

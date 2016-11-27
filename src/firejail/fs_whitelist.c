@@ -350,6 +350,8 @@ void fs_whitelist(void) {
 		}
 
 		// replace ~/ or ${HOME} into /home/username
+//		if (new_name)
+//			free(new_name);
 		new_name = expand_home(entry->data + 10, cfg.homedir);
 		assert(new_name);
 		if (arg_debug)

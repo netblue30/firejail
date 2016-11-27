@@ -137,6 +137,7 @@ void pulseaudio_init(void) {
 	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
+		/* coverity[toctou] */
 		int rv = mkdir(dir1, 0700);
 		if (rv == 0) {
 			if (set_perms(dir1, getuid(), getgid(), 0700))

@@ -46,7 +46,6 @@ void pid_test(void) {
 		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
-//			fprintf(stderr, "Warning: cannot open %s\n", fname);
 			free(fname);
 			continue;
 		}
@@ -54,7 +53,6 @@ void pid_test(void) {
 		// read file
 		char buf[100];
 		if (fgets(buf, 10, fp) == NULL) {
-//			fprintf(stderr, "Warning: cannot read %s\n", fname);
 			fclose(fp);
 			free(fname);
 			continue;

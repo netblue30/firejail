@@ -342,6 +342,7 @@ static void fix_desktop_files(void) {
 		if (stat(filename, &sb) == -1)
 			errExit("stat");
 
+		/* coverity[toctou] */
 		int fd = open(filename, O_RDONLY);
 		if (fd == -1)
 			errExit("open");

@@ -259,6 +259,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		drop_privs(0);
 
 		// check access
+		/* coverity[toctou] */
 		if (access(fname1, R_OK) == -1) {
 			fprintf(stderr, "Error: Cannot access %s\n", fname1);
 			exit(1);
@@ -392,6 +393,10 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		// create a user-owned temporary file in /run/firejail directory
 		char tmp_fname[] = "/run/firejail/tmpget-XXXXXX";
 		int fd = mkstemp(tmp_fname);
+		if (fd == -1) {
+			fprintf(stderr, "Error: cannot create temporary file %s\n", tmp_fname);
+			exit(1);
+		}
 		SET_PERMS_FD(fd, getuid(), getgid(), 0600);
 		close(fd);
 	

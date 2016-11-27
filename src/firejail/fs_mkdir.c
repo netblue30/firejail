@@ -37,6 +37,7 @@ static void mkdir_recursive(char *path) {
 	subdir = strtok(path, "/");
 	while(subdir) {
 		if (stat(subdir, &s) == -1) {
+			/* coverity[toctou] */
 			if (mkdir(subdir, 0700) == -1) {
 				fprintf(stderr, "Warning: cannot create %s directory\n", subdir);
 				return;
@@ -118,6 +119,7 @@ void fs_mkfile(const char *name) {
 		// drop privileges
 		drop_privs(0);
 
+		/* coverity[toctou] */
 		FILE *fp = fopen(expanded, "w");
 		if (!fp)
 			fprintf(stderr, "Warning: cannot create %s file\n", expanded);

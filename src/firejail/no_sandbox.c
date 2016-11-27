@@ -232,7 +232,7 @@ void run_no_sandbox(int argc, char **argv) {
 	// use $SHELL to get shell used in sandbox
 	if (!arg_shell_none && !cfg.shell) {
 		char *shell =  getenv("SHELL");
-		if (access(shell, R_OK) == 0)
+		if (shell && access(shell, R_OK) == 0)
 			cfg.shell = shell;
 	}
 	// guess shell otherwise

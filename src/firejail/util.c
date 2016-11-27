@@ -683,11 +683,12 @@ int remove_directory(const char *path) {
 void flush_stdin(void) {
 	if (isatty(STDIN_FILENO)) {
 		int cnt = 0;
-		ioctl(STDIN_FILENO, FIONREAD, &cnt);
-		if (cnt) {
+		int rv = ioctl(STDIN_FILENO, FIONREAD, &cnt);
+		if (rv == 0 && cnt) {
 			if (!arg_quiet)
 				printf("Warning: removing %d bytes from stdin\n", cnt);
-			ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
+			rv = ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
+			(void) rv;
 		}
 	}
 }
@@ -700,6 +701,7 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 	if (stat(dir, &s)) {
 		if (arg_debug)
 			printf("Creating empty %s directory\n", dir);
+		/* coverity[toctou] */
 		if (mkdir(dir, mode) == -1)
 			errExit("mkdir");
 		if (set_perms(dir, 0, 0, mode))
@@ -717,6 +719,7 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 		if (arg_debug)
 			printf("Creating empty %s file\n", fname);
 
+		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "w");
 		if (!fp)
 			errExit("fopen");

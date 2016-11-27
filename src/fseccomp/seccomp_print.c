@@ -26,35 +26,41 @@ static int filter_cnt = 0;
 
 static void load_seccomp(const char *fname) {
 	assert(fname);
+	
+	// open filter file
+	int fd = open(fname, O_RDONLY);
+	if (fd == -1)
+		goto errexit;
 
-	// check file
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error fseccomp: cannot read protocol filter file\n");
-		exit(1);
-	}
-	int size = s.st_size;
+	// calculate the number of entries
+	int size = lseek(fd, 0, SEEK_END);
+	if (size == -1)
+		goto errexit;
+	if (lseek(fd, 0 , SEEK_SET) == -1)
+		goto errexit;
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	filter_cnt = entries;
-//printf("size %d, entries %d\n", s.st_size, entries);
-
-	filter = malloc(sizeof(struct sock_filter) * entries);
-	if (!filter)
-		errExit("malloc");
-		
+	
 	// read filter
-	memset(filter, 0, sizeof(struct sock_filter) * entries);
-	int src = open(fname, O_RDONLY);
+	filter = malloc(size);
+	if (filter == NULL)
+		goto errexit;
+	memset(&filter[0], 0, sizeof(filter));
 	int rd = 0;
 	while (rd < size) {
-		int rv = read(src, (unsigned char *) filter + rd, size - rd);
-		if (rv == -1) {
-			fprintf(stderr, "Error fseccomp: cannot read %s file\n", fname);
-			exit(1);
-		}
+		int rv = read(fd, (unsigned char *) filter + rd, size - rd);
+		if (rv == -1)
+			goto errexit;
 		rd += rv;
 	}
-	close(src);
+	
+	// close file
+	close(fd);
+	return;
+
+errexit:
+	fprintf(stderr, "Error fseccomp: cannot read %s\n", fname);
+	exit(1);
 }
 
 // debug filter

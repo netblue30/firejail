@@ -51,6 +51,7 @@ void appimage_set(const char *appimage) {
 		printf("AppImage ELF size %lu\n", size);
 
 	// open appimage file
+	/* coverity[toctou] */
 	int ffd = open(appimage, O_RDONLY|O_CLOEXEC);
 	if (ffd == -1) {
 		fprintf(stderr, "Error: cannot open AppImage file\n");
@@ -74,6 +75,10 @@ void appimage_set(const char *appimage) {
 		errExit("asprintf");
 		
 	int lfd = open(devloop, O_RDONLY);
+	if (lfd == -1) {
+		fprintf(stderr, "Error: cannot open %s\n", devloop);
+		exit(1);
+	}
 	if (ioctl(lfd, LOOP_SET_FD, ffd) == -1) {
 		fprintf(stderr, "Error: cannot configure the loopback device\n");
 		exit(1);
@@ -118,7 +123,7 @@ void appimage_set(const char *appimage) {
 	EUID_USER();
 
 	// set environment
-	if (appimage && setenv("APPIMAGE", appimage, 1) < 0)
+	if (setenv("APPIMAGE", appimage, 1) < 0)
 		errExit("setenv");
 	if (mntdir && setenv("APPDIR", mntdir, 1) < 0)
 		errExit("setenv");
@@ -170,8 +175,10 @@ void appimage_clear(void) {
 
 	if (devloop) {
 		int lfd = open(devloop, O_RDONLY);
-		rv = ioctl(lfd, LOOP_CLR_FD, 0);
-		(void) rv;
-		close(lfd);
+		if (lfd != -1) {
+			rv = ioctl(lfd, LOOP_CLR_FD, 0);
+			(void) rv;
+			close(lfd);
+		}
 	}
 }

@@ -137,6 +137,7 @@ static int store_asoundrc(void) {
 	if (stat(src, &s) == 0) {
 		if (is_link(src)) {
 			// make sure the real path of the file is inside the home directory
+			/* coverity[toctou] */
 			char* rp = realpath(src, NULL);
 			if (!rp) {
 				fprintf(stderr, "Error: Cannot access %s\n", src);

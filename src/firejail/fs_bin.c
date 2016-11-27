@@ -59,6 +59,7 @@ static char *check_dir_or_file(const char *name) {
 		if (stat(fname, &s) == 0 && !S_ISDIR(s.st_mode)) { // do not allow directories
 			// check symlink to firejail executable in /usr/local/bin
 			if (strcmp(paths[i], "/usr/local/bin") == 0 && is_link(fname)) {
+				/* coverity[toctou] */
 				char *actual_path = realpath(fname, NULL);
 				if (actual_path) {
 					char *ptr = strstr(actual_path, "/firejail");

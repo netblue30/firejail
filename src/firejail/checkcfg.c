@@ -32,6 +32,7 @@ char *netfilter_default = NULL;
 int checkcfg(int val) {
 	assert(val < CFG_MAX);
 	int line = 0;
+	FILE *fp = NULL;
 
 	if (!initialized) {
 		// initialize defaults
@@ -47,7 +48,7 @@ int checkcfg(int val) {
 		if (asprintf(&fname, "%s/firejail.config", SYSCONFDIR) == -1)
 			errExit("asprintf");
 
-		FILE *fp = fopen(fname, "r");
+		fp = fopen(fname, "r");
 		if (!fp) {
 #ifdef HAVE_GLOBALCFG			
 			fprintf(stderr, "Error: Firejail configuration file %s not found\n", fname);
@@ -285,6 +286,8 @@ int checkcfg(int val) {
 	return cfg_val[val];
 	
 errout:
+	if (fp)
+		fclose(fp);
 	fprintf(stderr, "Error: invalid line %d in firejail configuration file\n", line );
 	exit(1);
 }

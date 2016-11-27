@@ -35,7 +35,7 @@ int check_unix(const char *sockfile) {
 	struct sockaddr_un remote;
 	memset(&remote, 0, sizeof(struct sockaddr_un));
 	remote.sun_family = AF_UNIX;
-	strcpy(remote.sun_path, sockfile);
+	strncpy(remote.sun_path, sockfile, sizeof(remote.sun_path));
 	int len = strlen(remote.sun_path) + sizeof(remote.sun_family);
 	if (*sockfile == '@')
 		remote.sun_path[0] = '\0';

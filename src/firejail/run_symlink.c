@@ -59,6 +59,7 @@ void run_symlink(int argc, char **argv) {
 
 		struct stat s;
 		if (stat(name, &s) == 0) {
+			/* coverity[toctou] */
 			char* rp = realpath(name, NULL);
 			if (!rp)
 				errExit("realpath");

@@ -69,31 +69,33 @@ void netfilter(const char *fname) {
 	if (netfilter_default)
 		fname = netfilter_default;
 	if (fname) {
-		// buffer the filter
-		struct stat s;
-		if (stat(fname, &s) == -1) {
-			fprintf(stderr, "Error: cannot find network filter file %s\n", fname);
-			exit(1);
+		assert(fname);
+		
+		// open filter file
+		int fd = open(fname, O_RDONLY);
+		if (fd == -1)
+			goto errexit;
+		int size = lseek(fd, 0, SEEK_END);
+		if (size == -1)
+			goto errexit;
+		if (lseek(fd, 0 , SEEK_SET) == -1)
+			goto errexit;
+		
+		// read filter
+		filter = malloc(size + 1);	  // + '\0'
+		if (filter == NULL)
+			goto errexit;
+		memset(&filter[0], 0, sizeof(filter));
+		int rd = 0;
+		while (rd < size) {
+			int rv = read(fd, (unsigned char *) filter + rd, size - rd);
+			if (rv == -1)
+				goto errexit;
+			rd += rv;
 		}
-
-		filter = malloc(s.st_size + 1);	  // + '\0'
-		if (!filter)
-			errExit("malloc");
-		memset(filter, 0, s.st_size + 1);
-
-		/* coverity[toctou] */
-		FILE *fp = fopen(fname, "r");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot open network filter file %s\n", fname);
-			exit(1);
-		}
-
-		size_t sz = fread(filter, 1, s.st_size, fp);
-		if ((off_t)sz != s.st_size) {
-			fprintf(stderr, "Error: cannot read network filter file %s\n", fname);
-			exit(1);
-		}
-		fclose(fp);
+		
+		// close file
+		close(fd);
 		allocated = 1;
 	}
 
@@ -178,6 +180,11 @@ doexit:
 
 	if (allocated)
 		free(filter);
+	return;
+
+errexit:
+	fprintf(stderr, "Error: cannot read network filter %s\n", fname);
+	exit(1);
 }
 
 void netfilter6(const char *fname) {
@@ -186,38 +193,38 @@ void netfilter6(const char *fname) {
 		
 	char *filter;
 
-	// buffer the filter
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error: cannot find network filter file %s\n", fname);
-		exit(1);
+	// open filter file
+	int fd = open(fname, O_RDONLY);
+	if (fd == -1)
+		goto errexit;
+	int size = lseek(fd, 0, SEEK_END);
+	if (size == -1)
+		goto errexit;
+	if (lseek(fd, 0 , SEEK_SET) == -1)
+		goto errexit;
+	
+	// read filter
+	filter = malloc(size + 1);	  // + '\0'
+	if (filter == NULL)
+		goto errexit;
+	memset(&filter[0], 0, sizeof(filter));
+	int rd = 0;
+	while (rd < size) {
+		int rv = read(fd, (unsigned char *) filter + rd, size - rd);
+		if (rv == -1)
+			goto errexit;
+		rd += rv;
 	}
-
-	filter = malloc(s.st_size + 1);	  // + '\0'
-	if (!filter)
-		errExit("malloc");
-	memset(filter, 0, s.st_size + 1);
-
-	/* coverity[toctou] */
-	FILE *fp = fopen(fname, "r");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open network filter file %s\n", fname);
-		exit(1);
-	}
-
-	size_t sz = fread(filter, 1, s.st_size, fp);
-	if ((off_t)sz != s.st_size) {
-		fprintf(stderr, "Error: cannot read network filter file %s\n", fname);
-		exit(1);
-	}
-	fclose(fp);
+	
+	// close file
+	close(fd);
 
 	// temporarily mount a tempfs on top of /tmp directory
 	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting /tmp");
 
 	// create the filter file
-	fp = fopen("/tmp/netfilter6", "w");
+	FILE *fp = fopen("/tmp/netfilter6", "w");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open /tmp/netfilter6 file\n");
 		exit(1);
@@ -228,6 +235,7 @@ void netfilter6(const char *fname) {
 	// find iptables command
 	char *ip6tables = NULL;
 	char *ip6tables_restore = NULL;
+	struct stat s;
 	if (stat("/sbin/ip6tables", &s) == 0) {
 		ip6tables = "/sbin/ip6tables";
 		ip6tables_restore = "/sbin/ip6tables-restore";
@@ -284,4 +292,9 @@ doexit:
 	// unmount /tmp
 	umount("/tmp");
 	free(filter);
+	return;
+	
+errexit:
+	fprintf(stderr, "Error: cannot read network filter %s\n", fname);
+	exit(1);
 }

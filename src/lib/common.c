@@ -203,6 +203,8 @@ char *pid_proc_cmdline(const pid_t pid) {
 int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid) {
 	// if comm is not firejail return 0
 	char *comm = pid_proc_comm(pid);
+	if (comm == NULL)
+		return 0;
 	if (strcmp(comm, "firejail") != 0) {
 		free(comm);
 		return 0;

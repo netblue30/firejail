@@ -148,6 +148,7 @@
 /etc/firejail/pdftotext.profile
 /etc/firejail/pidgin.profile
 /etc/firejail/pix.profile
+/etc/firejail/pluma.profile
 /etc/firejail/polari.profile
 /etc/firejail/psi-plus.profile
 /etc/firejail/qbittorrent.profile
@@ -208,6 +209,7 @@
 /etc/firejail/wine.profile
 /etc/firejail/wire.profile
 /etc/firejail/xchat.profile
+/etc/firejail/xed.profile
 /etc/firejail/xfburn.profile
 /etc/firejail/xiphos.profile
 /etc/firejail/xpdf.profile

@@ -56,10 +56,9 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 
 `````
 ## New Profiles
-xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom,Guayadeque, qemu, keypass2
-amarok, ark, atool, bleachbit, brasero, dolphin, dragon, elinks, enchant, exiftool, file-roller, gedit
-gjs, gnome-books, gnome-clocks, gnome-documents, gnome-maps, gnome-music, gnome-photos, gnome-weather
-goobox, gpa, gpg, gpg-agent, highlight, img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext
-simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, w3m, xfburn, xpra, wget
-
-
+xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom, Guayadeque, qemu, keypass2,
+amarok, ark, atool, bleachbit, brasero, dolphin, dragon, elinks, enchant, exiftool, file-roller, gedit,
+gjs, gnome-books, gnome-clocks, gnome-documents, gnome-maps, gnome-music, gnome-photos, gnome-weather,
+goobox, gpa, gpg, gpg-agent, highlight, img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext,
+simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, w3m, xfburn, xpra, wget,
+xed, pluma

@@ -33,6 +33,7 @@ int checkcfg(int val) {
 	assert(val < CFG_MAX);
 	int line = 0;
 	FILE *fp = NULL;
+	char *ptr;
 
 	if (!initialized) {
 		// initialize defaults
@@ -76,7 +77,7 @@ int checkcfg(int val) {
 				continue;
 
 			// parse line				
-			char *ptr = line_remove_spaces(buf);
+			ptr = line_remove_spaces(buf);
 			if (!ptr)
 				continue;
 			
@@ -286,8 +287,10 @@ int checkcfg(int val) {
 	return cfg_val[val];
 	
 errout:
-	if (fp)
-		fclose(fp);
+	assert(ptr);
+	free(ptr);
+	assert(fp);
+	fclose(fp);
 	fprintf(stderr, "Error: invalid line %d in firejail configuration file\n", line );
 	exit(1);
 }

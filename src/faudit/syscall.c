@@ -35,7 +35,8 @@ void syscall_helper(int argc, char **argv) {
 	(void) argc;
 	
 	if (strcmp(argv[2], "mount") == 0) {
-		mount(NULL, NULL, NULL, 0, NULL);
+		int rv = mount(NULL, NULL, NULL, 0, NULL);
+		(void) rv;
 		printf("\nUGLY: mount syscall permitted.\n");
 	}
 	else if (strcmp(argv[2], "umount2") == 0) {

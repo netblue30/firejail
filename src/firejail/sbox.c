@@ -145,12 +145,10 @@ int sbox_run(unsigned filter, int num, ...) {
 			int fd = open("/dev/null",O_RDWR, 0);
 			if (fd != -1) {
 				dup2 (fd, STDIN_FILENO);
-				if (fd > 2)
-					close (fd);
+				close(fd);
 			}
 			else // the user could run the sandbox without /dev/null
 				close(STDIN_FILENO);
-			close(fd);
 		}
 		umask(027);	
 

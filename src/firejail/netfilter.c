@@ -85,12 +85,14 @@ void netfilter(const char *fname) {
 		filter = malloc(size + 1);	  // + '\0'
 		if (filter == NULL)
 			goto errexit;
-		memset(&filter[0], 0, sizeof(filter));
+		memset(filter, 0, size + 1);
 		int rd = 0;
 		while (rd < size) {
 			int rv = read(fd, (unsigned char *) filter + rd, size - rd);
-			if (rv == -1)
+			if (rv == -1) {
+				close(fd);
 				goto errexit;
+			}
 			rd += rv;
 		}
 		
@@ -207,7 +209,7 @@ void netfilter6(const char *fname) {
 	filter = malloc(size + 1);	  // + '\0'
 	if (filter == NULL)
 		goto errexit;
-	memset(&filter[0], 0, sizeof(filter));
+	memset(filter, 0, size + 1);
 	int rd = 0;
 	while (rd < size) {
 		int rv = read(fd, (unsigned char *) filter + rd, size - rd);

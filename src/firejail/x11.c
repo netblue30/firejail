@@ -252,7 +252,8 @@ void x11_start_xephyr(int argc, char **argv) {
 		}
 
 		for (i = 0; i < (int) strlen(xephyr_extra_params)-1; i++) {
-			if (pos >= (sizeof(server_argv)/sizeof(*server_argv))) {
+//todo: if working , add a -2 also in 0.9.44-bugfix			
+			if (pos >= (sizeof(server_argv)/sizeof(*server_argv)) - 2) {
 				fprintf(stderr, "Error: arg count limit exceeded while parsing xephyr_extra_params\n");
 				exit(1);
 			}
@@ -716,6 +717,7 @@ void x11_xorg(void) {
 	}
 	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
 		errExit("set_perms");
+	/* coverity[toctou] */
 	unlink(tmpfname);
 	
 	// mount

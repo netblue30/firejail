@@ -72,7 +72,7 @@ int seccomp_load(const char *fname) {
 	struct sock_filter *filter = malloc(size);
 	if (filter == NULL)
 		goto errexit;
-	memset(&filter[0], 0, sizeof(filter));
+	memset(filter, 0, size);
 	int rd = 0;
 	while (rd < size) {
 		int rv = read(fd, (unsigned char *) filter + rd, size - rd);

@@ -27,6 +27,7 @@
 /etc/firejail/conkeror.profile
 /etc/firejail/corebird.profile
 /etc/firejail/cpio.profile
+/etc/firejail/Cryptocat.profile
 /etc/firejail/cyberfox.profile
 /etc/firejail/deadbeef.profile
 /etc/firejail/default.profile

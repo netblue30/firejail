@@ -10,7 +10,8 @@ firejail (0.9.45) baseline; urgency=low
   * feature: AppImage type 2 support
   * feature: test coverage (gcov) support
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
-  * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma
+  * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
+  * new profiles: Cryptocat
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
 

@@ -110,6 +110,7 @@ blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/Wire
+blacklist ${HOME}/.config/Cryptocat
 
 # Games
 blacklist ${HOME}/.hedgewars

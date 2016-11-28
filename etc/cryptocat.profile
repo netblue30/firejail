@@ -1,0 +1,1 @@
+include /etc/Cryptocat.profile

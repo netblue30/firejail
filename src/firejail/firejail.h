@@ -41,7 +41,6 @@
 #define RUN_CPU_CFG	"/run/firejail/mnt/cpu"
 #define RUN_GROUPS_CFG	"/run/firejail/mnt/groups"
 #define RUN_PROTOCOL_CFG	"/run/firejail/mnt/protocol"
-#define RUN_CP_COMMAND	"/run/firejail/mnt/cp"
 #define RUN_HOME_DIR	"/run/firejail/mnt/home"
 #define RUN_ETC_DIR	"/run/firejail/mnt/etc"
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
@@ -463,6 +462,7 @@ void create_empty_dir_as_root(const char *dir, mode_t mode);
 void create_empty_file_as_root(const char *dir, mode_t mode);
 int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
+char *read_text_file_or_exit(const char *fname);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log
@@ -679,6 +679,8 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
 #define PATH_FCOPY (LIBDIR "/firejail/fcopy")
+#define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"
+
 // bitmapped filters for sbox_run
 #define SBOX_ROOT (1 << 0)			// run the sandbox as root
 #define SBOX_USER (1 << 1)			// run the sandbox as a regular user
@@ -686,6 +688,7 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 #define SBOX_CAPS_NONE (1 << 3)		// drop all capabilities
 #define SBOX_CAPS_NETWORK (1 << 4)	// caps filter for programs running network programs
 #define SBOX_ALLOW_STDIN (1 << 5)		// don't close stdin
+#define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);

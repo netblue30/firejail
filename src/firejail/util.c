@@ -777,3 +777,45 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 
 	ASSERT_PERMS(fname, uid, gid, mode);
 }
+
+char *read_text_file_or_exit(const char *fname) {
+	assert(fname);
+	
+	// open file
+	int fd = open(fname, O_RDONLY);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot read %s\n", fname);
+		exit(1);
+	}
+
+	int size = lseek(fd, 0, SEEK_END);
+	if (size == -1)
+		goto errexit;
+	if (lseek(fd, 0 , SEEK_SET) == -1)
+		goto errexit;
+	
+	// allocate memory
+	char *data = malloc(size + 1);	  // + '\0'
+	if (data == NULL)
+		goto errexit;
+	memset(data, 0, size + 1);
+
+	// read file
+	int rd = 0;
+	while (rd < size) {
+		int rv = read(fd, (unsigned char *) data + rd, size - rd);
+		if (rv == -1) {
+			goto errexit;
+		}
+		rd += rv;
+	}
+	
+	// close file
+	close(fd);
+	return data;
+	
+errexit:
+	close(fd);
+	fprintf(stderr, "Error: cannot read %s\n", fname);
+	exit(1);
+}

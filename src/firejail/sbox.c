@@ -138,18 +138,34 @@ int sbox_run(unsigned filter, int num, ...) {
 	if (child == 0) {
 		// clean the new process
 		clearenv();
-		int max = 20; // getdtablesize() is overkill for a firejail process
-		for (i = 3; i < max; i++)
-			close(i); // close open files
-		if ((filter & SBOX_ALLOW_STDIN) == 0) {
-			int fd = open("/dev/null",O_RDWR, 0);
-			if (fd != -1) {
-				dup2 (fd, STDIN_FILENO);
-				close(fd);
+		
+		if (filter & SBOX_STDIN_FROM_FILE) {
+			int fd;
+			if((fd = open(SBOX_STDIN_FILE, O_RDONLY)) == -1) {
+				fprintf(stderr,"Error: cannot open /tmp/netfilter\n");
+				exit(1);
 			}
+			dup2(fd,STDIN_FILENO);
+		}
+		else if ((filter & SBOX_ALLOW_STDIN) == 0) {
+			int fd = open("/dev/null",O_RDWR, 0);
+			if (fd != -1)
+				dup2(fd, STDIN_FILENO);
 			else // the user could run the sandbox without /dev/null
 				close(STDIN_FILENO);
 		}
+		
+		// close all other file descriptors
+		int max = 20; // getdtablesize() is overkill for a firejail process
+		for (i = 3; i < max; i++)
+			close(i); // close open files
+
+		if (arg_debug) {
+			printf("sbox file descriptors:\n");
+			int rv = system("ls -l /proc/self/fd");
+			(void) rv;	
+		}
+
 		umask(027);	
 
 		// apply filters

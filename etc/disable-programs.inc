@@ -10,6 +10,7 @@ blacklist ${HOME}/.stellarium
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.xiphos
 blacklist ${HOME}/.config/Atom
+blacklist ${HOME}/.config/bless
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/transmission
@@ -44,6 +45,7 @@ blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/eog
+blacklist ${HOME}/.config/jd-gui.cfg
 
 
 # Media players
@@ -56,6 +58,7 @@ blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.audacity-data
 blacklist ${HOME}/.guayadeque
+blacklist ${HOME}/.local/share/lollypop
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -119,6 +122,10 @@ blacklist ${HOME}/.config/wesnoth
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.warzone2100-3.1
 blacklist ${HOME}/.dosbox
+blacklist ${HOME}/.local/share/gnome-2048
+blacklist ${HOME}/.local/share/multimc5
+blacklist ${HOME}/.multimc5
+blacklist ${HOME}/.xonotic
 
 # Cryptocoins
 blacklist ${HOME}/.*coin

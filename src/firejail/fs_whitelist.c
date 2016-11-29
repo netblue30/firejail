@@ -95,34 +95,29 @@ static char *resolve_downloads(void) {
 					if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
 						errExit("asprintf");
 					
-					if (stat(fname, &s) == -1) {
-						fprintf(stderr, "***\n");
-						fprintf(stderr, "*** Error: directory %s not found.\n", fname);
-						fprintf(stderr, "*** \tThis directory is configured in ~/.config/user-dirs.dirs.\n");
-						fprintf(stderr, "*** \tPlease create a Downloads directory.\n");
-						fprintf(stderr, "***\n");
+					if (stat(fname, &s) == -1)
 						free(fname);
-						return NULL;
-					}
+						goto errout;
 				
 					char *rv;
 					if (asprintf(&rv, "whitelist ~/%s", ptr + 24) == -1)
 						errExit("asprintf");
 					return rv;
 				}
-				else {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Error: invalid XDG_DOWNLOAD_DIR entry in ~/.config/user-dirs.dirs.\n");
-					fprintf(stderr, "*** \tPlease specify a valid Downloads directory, example:\n");
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "***\t\tXDG_DOWNLOAD_DIR=\"$HOME/Downloads\"\n");
-					fprintf(stderr, "***\n");
-					return NULL;
-				}
+				else
+					goto errout;
 			}
 		}
 	}
+	
 	fclose(fp);
+	return NULL;
+
+errout:
+	fprintf(stderr, "***\n");
+	fprintf(stderr, "*** Error: Downloads directory was not found in user home.\n");
+	fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
+	fprintf(stderr, "***\n");
 	
 	return NULL;
 }
@@ -181,10 +176,8 @@ static void whitelist_path(ProfileEntry *entry) {
 	if (entry->home_dir) {
 		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {		
 			fname = path + strlen(cfg.homedir);
-			if (*fname == '\0') {
-				fprintf(stderr, "Error: file %s is not in user home directory, exiting...\n", path);
-				exit(1);
-			}
+			if (*fname == '\0')
+				goto errexit;
 		}
 		else
 			fname = path;
@@ -194,70 +187,56 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	else if (entry->tmp_dir) {
 		fname = path + 4; // strlen("/tmp")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /tmp directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->media_dir) {
 		fname = path + 6; // strlen("/media")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /media directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MEDIA_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->mnt_dir) {
 		fname = path + 4; // strlen("/mnt")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /mnt directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MNT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->var_dir) {
 		fname = path + 4; // strlen("/var")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /var directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_VAR_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->dev_dir) {
 		fname = path + 4; // strlen("/dev")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /dev directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_DEV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->opt_dir) {
 		fname = path + 4; // strlen("/opt")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /opt directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_OPT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->srv_dir) {
 		fname = path + 4; // strlen("/srv")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /srv directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SRV_DIR, fname) == -1)
 			errExit("asprintf");
@@ -305,6 +284,11 @@ static void whitelist_path(ProfileEntry *entry) {
 		errExit("mount bind");
 
 	free(wfile);
+	return;
+
+errexit:
+	fprintf(stderr, "Error: file %s is not in the whitelisted directory\n", path);
+	exit(1);
 }
 
 
@@ -432,8 +416,6 @@ void fs_whitelist(void) {
 			tmp_dir = 1;
 			// both path and absolute path are under /tmp
 			if (strncmp(fname, "/tmp/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -442,8 +424,6 @@ void fs_whitelist(void) {
 			media_dir = 1;
 			// both path and absolute path are under /media
 			if (strncmp(fname, "/media/", 7) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -452,8 +432,6 @@ void fs_whitelist(void) {
 			mnt_dir = 1;
 			// both path and absolute path are under /mnt
 			if (strncmp(fname, "/mnt/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -467,8 +445,6 @@ void fs_whitelist(void) {
 			else if (strcmp(new_name, "/var/lock")== 0)
 				;
 			else if (strncmp(fname, "/var/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -477,8 +453,6 @@ void fs_whitelist(void) {
 			dev_dir = 1;
 			// both path and absolute path are under /dev
 			if (strncmp(fname, "/dev/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -487,8 +461,6 @@ void fs_whitelist(void) {
 			opt_dir = 1;
 			// both path and absolute path are under /dev
 			if (strncmp(fname, "/opt/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -497,14 +469,10 @@ void fs_whitelist(void) {
 			srv_dir = 1;
 			// both path and absolute path are under /srv
 			if (strncmp(fname, "/srv/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
 		else {
-			if (arg_debug)
-				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
 		}
 

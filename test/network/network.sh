@@ -78,6 +78,12 @@ echo "TESTING: veth (net_veth.exp)"
 echo "TESTING: netfilter (net_netfilter.exp)"
 ./net_netfilter.exp
 
+echo "TESTING: iprange (iprange.exp)"
+./iprange.exp
+
+echo "TESTING: veth-name (veth-name.exp)"
+./veth-name.exp
+
 echo "TESTING: 4 bridges ARP (4bridges_arp.exp)"
 ./4bridges_arp.exp
 

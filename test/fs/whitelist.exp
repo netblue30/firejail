@@ -36,7 +36,7 @@ after 200
 send -- "ln -s ~/fjtest-dir ~/fjtest-dir-lnk\r"
 after 200
 
-send -- "firejail --whitelist=~/fjtest-file --whitelist=~/fjtest-dir\r"
+send -- "firejail --whitelist=~/fjtest-file --whitelist=~/fjtest-dir --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -49,19 +49,19 @@ expect {
 	"2"
 }
 
-send -- "cat fjtest-file\r"
+send -- "cat ~/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"123"
 }
 
-send -- "cat fjtest-dir/fjtest-file\r"
+send -- "cat ~/fjtest-dir/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"123"
 }
 
-send -- "cat fjtest-dir/fjtest-dir/fjtest-file\r"
+send -- "cat ~/fjtest-dir/fjtest-dir/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"123"
@@ -86,7 +86,7 @@ expect {
 	"1"
 }
 
-send -- "cat fjtest-dir/fjtest-dir/fjtest-file\r"
+send -- "cat ~/fjtest-dir/fjtest-dir/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
 	"123"
@@ -111,37 +111,37 @@ expect {
 	"4"
 }
 
-send -- "cat fjtest-file\r"
+send -- "cat ~/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 22\n";exit}
 	"123"
 }
 
-send -- "cat fjtest-dir/fjtest-file\r"
+send -- "cat ~/fjtest-dir/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 23\n";exit}
 	"123"
 }
 
-send -- "cat fjtest-dir/fjtest-dir/fjtest-file\r"
+send -- "cat ~/fjtest-dir/fjtest-dir/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 24\n";exit}
 	"123"
 }
 
-send -- "cat fjtest-file-lnk\r"
+send -- "cat ~/fjtest-file-lnk\r"
 expect {
 	timeout {puts "TESTING ERROR 25\n";exit}
 	"123"
 }
 
-send -- "cat fjtest-dir-lnk/fjtest-file\r"
+send -- "cat ~/fjtest-dir-lnk/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 26\n";exit}
 	"123"
 }
 
-send -- "cat fjtest-dir-lnk/fjtest-dir/fjtest-file\r"
+send -- "cat ~/fjtest-dir-lnk/fjtest-dir/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 27\n";exit}
 	"123"
@@ -193,13 +193,13 @@ expect {
 	"2"
 }
 
-send -- "cat fjtest-file-lnk\r"
+send -- "cat ~/fjtest-file-lnk\r"
 expect {
 	timeout {puts "TESTING ERROR 42\n";exit}
 	"123"
 }
 
-send -- "cat fjtest-dir-lnk/fjtest-file\r"
+send -- "cat ~/fjtest-dir-lnk/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 43\n";exit}
 	"123"

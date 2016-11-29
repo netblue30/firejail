@@ -1,0 +1,86 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "touch /mnt/firejail-test-file\r"
+after 100
+send -- "firejail --whitelist=/mnt/firejail-test-file --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "find /mnt | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"2"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+send -- "touch /opt/firejail-test-file\r"
+after 100
+send -- "firejail --whitelist=/opt/firejail-test-file --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "find /opt | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"2"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+send -- "touch /media/firejail-test-file\r"
+after 100
+send -- "firejail --whitelist=/media/firejail-test-file --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "find /media | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"2"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+send -- "firejail --whitelist=/var/run --whitelist=/var/lock --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "find /var | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	""
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+
+after 100
+puts "\nall done\n"
+

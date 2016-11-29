@@ -88,6 +88,9 @@ echo "TESTING: double whitelist (test/fs/whitelist-double.exp)"
 echo "TESTING: whitelist (test/fs/whitelist.exp)"
 ./whitelist.exp
 
+echo "TESTING: whitelist dev, var(test/fs/whitelist-dev.exp)"
+./whitelist-dev.exp
+
 echo "TESTING: fscheck --bind non root (test/fs/fscheck-bindnoroot.exp)"
 ./fscheck-bindnoroot.exp
 

@@ -47,14 +47,8 @@ void check_netfilter_file(const char *fname) {
 	EUID_ASSERT();
 	invalid_filename(fname);
 	
-	if (is_dir(fname) || is_link(fname) || strstr(fname, "..")) {
-		fprintf(stderr, "Error: invalid network filter file\n");
-		exit(1);
-	}
-
-	// access call checks as real UID/GID, not as effective UID/GID
-	if (access(fname, R_OK)) {
-		fprintf(stderr, "Error: cannot access network filter file\n");
+	if (is_dir(fname) || is_link(fname) || strstr(fname, "..") || access(fname, R_OK )) {
+		fprintf(stderr, "Error: invalid network filter file %s\n", fname);
 		exit(1);
 	}
 }
@@ -138,7 +132,7 @@ void netfilter6(const char *fname) {
 	char *filter = read_text_file_or_exit(fname);
 	FILE *fp = fopen(SBOX_STDIN_FILE, "w");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open /tmp/netfilter6 file\n");
+		fprintf(stderr, "Error: cannot open %s\n", SBOX_STDIN_FILE);
 		exit(1);
 	}
 	fprintf(fp, "%s\n", filter);

@@ -26,10 +26,33 @@ expect {
 }
 after 100
 send -- "exit\r"
+sleep 1
+
+
+send -- "firejail --profile=dns.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 12.1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "cat /etc/resolv.conf\r"
+expect {
+	timeout {puts "TESTING ERROR 12.2\n";exit}
+	"nameserver 8.8.4.4"
+}
+expect {
+	timeout {puts "TESTING ERROR 12.3\n";exit}
+	"nameserver 8.8.8.8"
+}
+expect {
+	timeout {puts "TESTING ERROR 12.4\n";exit}
+	"nameserver 4.2.2.1"
+}
 after 100
+send -- "exit\r"
+sleep 1
 
-
-# no chroot
 send -- "firejail --trace --dns=208.67.222.222 wget -q debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}

@@ -65,10 +65,9 @@ static void build_list(const char *srcdir) {
 			struct stat s;
 			char *name;
 			if (asprintf(&name, "%s/%s", srcdir, dir->d_name) == -1)
-				continue;
-			if (stat(name, &s) == -1)
-				continue;
-			if (S_ISLNK(s.st_mode)) {
+				errExit("asprintf");
+			if (stat(name, &s) == -1 ||
+			    S_ISLNK(s.st_mode)) {
 				free(name);
 				continue;
 			}
@@ -143,7 +142,7 @@ void fs_var_log(void) {
 		fs_logger("touch /var/log/btmp");
 	}
 	else
-		fprintf(stderr, "Warning: cannot mount tmpfs on top of /var/log\n");
+		fprintf(stderr, "Warning: cannot hide /var/log directory\n");
 }
 
 void fs_var_lib(void) {

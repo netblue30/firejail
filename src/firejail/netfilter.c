@@ -95,7 +95,10 @@ void netfilter(const char *fname) {
 	// push filter
 	if (arg_debug)
 		printf("Installing network filter:\n%s\n", filter);
-	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP | SBOX_STDIN_FROM_FILE, 1, iptables_restore);
+		
+	// first run of iptables on this platform installs a number of kernel modules such as ip_tables, x_tables, iptable_filter
+	// we run this command with caps and seccomp disabled in order to allow the loading of these modules
+	sbox_run(SBOX_ROOT /* | SBOX_CAPS_NETWORK | SBOX_SECCOMP*/ | SBOX_STDIN_FROM_FILE, 1, iptables_restore);
 	unlink(SBOX_STDIN_FILE);
 
 	// debug
@@ -141,7 +144,10 @@ void netfilter6(const char *fname) {
 	// push filter
 	if (arg_debug)
 		printf("Installing network filter:\n%s\n", filter);
-	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP | SBOX_STDIN_FROM_FILE, 1, ip6tables_restore);
+
+	// first run of iptables on this platform installs a number of kernel modules such as ip_tables, x_tables, iptable_filter
+	// we run this command with caps and seccomp disabled in order to allow the loading of these modules
+	sbox_run(SBOX_ROOT | /* SBOX_CAPS_NETWORK | SBOX_SECCOMP | */ SBOX_STDIN_FROM_FILE, 1, ip6tables_restore);
 	unlink(SBOX_STDIN_FILE);
 	
 	// debug

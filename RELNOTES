@@ -13,6 +13,8 @@ firejail (0.9.44.1) baseline; urgency=low
   * bugfix: cannot start mupdf
   * bugfix: ssh profile problems
   * bugfix: --quiet
+  * bugfix: quiet in git profile
+  * bugfix: memory corruption
  -- netblue30 <netblue30@yahoo.com>  Wed, 2 Nov 2016 08:00:00 -0500
   
 firejail (0.9.44) baseline; urgency=low

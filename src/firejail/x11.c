@@ -253,7 +253,7 @@ void x11_start_xephyr(int argc, char **argv) {
 		}
 
 		for (i = 0; i < (int) strlen(xephyr_extra_params)-1; i++) {
-			if (pos >= (sizeof(server_argv)/sizeof(*server_argv))) {
+			if (pos >= (sizeof(server_argv)/sizeof(*server_argv)) - 2) {
 				fprintf(stderr, "Error: arg count limit exceeded while parsing xephyr_extra_params\n");
 				exit(1);
 			}

@@ -1,4 +1,5 @@
 # file profile
+quiet
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
@@ -16,7 +17,6 @@ protocol unix
 seccomp
 shell none
 tracelog
-quiet
 x11 none
 
 blacklist /tmp/.X11-unix

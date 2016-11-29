@@ -1,4 +1,5 @@
 # unrar profile
+quiet
 ignore noroot
 include /etc/firejail/default.profile
 
@@ -8,7 +9,6 @@ hostname unrar
 net none
 no3d
 nosound
-quiet
 shell none
 tracelog
 

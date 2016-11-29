@@ -1,4 +1,5 @@
 # git profile
+quiet
 noblacklist ~/.gitconfig
 noblacklist ~/.ssh
 noblacklist ~/.gnupg
@@ -19,7 +20,6 @@ nonewprivs
 noroot
 nosound
 protocol unix,inet,inet6
-quiet
 seccomp
 shell none
 

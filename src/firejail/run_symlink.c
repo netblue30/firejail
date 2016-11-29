@@ -90,8 +90,6 @@ void run_symlink(int argc, char **argv) {
 	if (asprintf(&firejail, "%s/bin/firejail", PREFIX) == -1)
 		errExit("asprintf");
 
-	printf("Redirecting symlink to %s\n", program);
-
 	// drop privileges
 	if (setgid(getgid()) < 0)
 		errExit("setgid/getgid");

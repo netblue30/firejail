@@ -24,7 +24,7 @@ blacklist ${HOME}/.config/openbox/autostart
 blacklist ${HOME}/.config/openbox/environment
 blacklist ${HOME}/.gnomerc
 blacklist /etc/X11/Xsession.d/
-blacklist ${HOME}/.xpra
+# blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox

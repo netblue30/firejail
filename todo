@@ -286,4 +286,14 @@ removable media, partitions, software RAID volumes, logical volumes, and files.
 
 29. grsecurity - move test after "firejail --name=blablabla" in /test/apps*
 
-
+30.
+$ sudo firejail --fs.print=test
+[sudo] password for netblue: 
+tmpfs /run/firejail/mnt			<< ????????????????
+sandbox name: test
+sandbox pid: 5790
+sandbox filesystem: local
+install mount namespace
+read-only /etc
+read-only /var
+read-only /bin

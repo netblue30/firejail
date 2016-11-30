@@ -43,6 +43,8 @@
 #define RUN_PROTOCOL_CFG	"/run/firejail/mnt/protocol"
 #define RUN_HOME_DIR	"/run/firejail/mnt/home"
 #define RUN_ETC_DIR	"/run/firejail/mnt/etc"
+#define RUN_OPT_DIR	"/run/firejail/mnt/opt"
+#define RUN_SRV_DIR	"/run/firejail/mnt/srv"
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
 
@@ -200,6 +202,8 @@ typedef struct config_t {
 	char *home_private;	// private home directory
 	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
+	char *opt_private_keep;	// keep list for private opt directory
+	char *srv_private_keep;	// keep list for private srv directory
 	char *bin_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *overlay_dir;
@@ -315,6 +319,8 @@ extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
 extern int arg_private_etc;	// private etc directory
+extern int arg_private_opt;	// private opt directory
+extern int arg_private_srv;	// private srv directory
 extern int arg_private_bin;	// private bin directory
 extern int arg_private_tmp;	// private tmp directory
 extern int arg_scan;		// arp-scan all interfaces
@@ -556,7 +562,7 @@ void network_del_run_file(pid_t pid);
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
-void fs_private_etc_list(void);
+void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
 
 // no_sandbox.c
 int check_namespace_virt(void);

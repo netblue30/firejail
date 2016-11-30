@@ -47,7 +47,7 @@ errexit:
 	exit(1);
 }
 
-static void duplicate(char *fname) {
+static void duplicate(const char *fname, const char *private_dir, const char *private_run_dir) {
 	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
@@ -55,40 +55,44 @@ static void duplicate(char *fname) {
 	invalid_filename(fname);
 
 	char *src;
-	if (asprintf(&src,  "/etc/%s", fname) == -1)
+	if (asprintf(&src,  "%s/%s", private_dir, fname) == -1)
 		errExit("asprintf");
 	if (check_dir_or_file(src) == 0) {
 		if (!arg_quiet)
-			fprintf(stderr, "Warning: skipping %s for private bin\n", fname);
+			fprintf(stderr, "Warning: skipping %s for private %s\n", fname, private_dir);
 		free(src);
 		return;
 	}
 
+	if (arg_debug)
+		printf("copying %s to private %s\n", src, private_dir);
+		
 	struct stat s;
 	if (stat(src, &s) == 0 && S_ISDIR(s.st_mode)) {
 		// create the directory in RUN_ETC_DIR
 		char *dirname;
-		if (asprintf(&dirname, "%s/%s", RUN_ETC_DIR, fname) == -1)
+		if (asprintf(&dirname, "%s/%s", private_run_dir, fname) == -1)
 			errExit("asprintf");
 		create_empty_dir_as_root(dirname, s.st_mode);
 		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, src, dirname);
 		free(dirname);
 	}
 	else
-		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, src, RUN_ETC_DIR);
+		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, src, private_run_dir);
 
 	fs_logger2("clone", src);
 	free(src);
 }
 
 
-void fs_private_etc_list(void) {
-	char *private_list = cfg.etc_private_keep;
+void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list) {
+	assert(private_dir);
+	assert(private_run_dir);
 	assert(private_list);
 	
 	// create /run/firejail/mnt/etc directory
-	mkdir_attr(RUN_ETC_DIR, 0755, 0, 0);
-	fs_logger("tmpfs /etc");
+	mkdir_attr(private_run_dir, 0755, 0, 0);
+	fs_logger2("tmpfs", private_dir);
 	
 	fs_logger_print();	// save the current log
 
@@ -97,7 +101,7 @@ void fs_private_etc_list(void) {
 	// using a new child process with root privileges
 	if (*private_list != '\0') {
 		if (arg_debug)
-			printf("Copying files in the new etc directory:\n");
+			printf("Copying files in the new %s directory:\n", private_dir);
 
 		// copy the list of files in the new home directory
 		char *dlist = strdup(private_list);
@@ -106,18 +110,18 @@ void fs_private_etc_list(void) {
 	
 
 		char *ptr = strtok(dlist, ",");
-		duplicate(ptr);
+		duplicate(ptr, private_dir, private_run_dir);
 	
 		while ((ptr = strtok(NULL, ",")) != NULL)
-			duplicate(ptr);
+			duplicate(ptr, private_dir, private_run_dir);
 		free(dlist);	
 		fs_logger_print();
 	}
 	
 	if (arg_debug)
-		printf("Mount-bind %s on top of /etc\n", RUN_ETC_DIR);
-	if (mount(RUN_ETC_DIR, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)
+		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
+	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
-	fs_logger("mount /etc");
+	fs_logger2("mount", private_dir);
 }
 

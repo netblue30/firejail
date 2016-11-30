@@ -53,8 +53,8 @@ fi
 echo "TESTING: fs private (test/root/private.exp)"
 ./private.exp
 
-echo "TESTING: fs whitelist mnt, opt, media(test/root/whitelist-mnt.exp)"
-./whitelist-mnt.exp
+echo "TESTING: fs whitelist mnt, opt, media (test/root/whitelist-mnt.exp)"
+./whitelist.exp
 
 #********************************
 # seccomp

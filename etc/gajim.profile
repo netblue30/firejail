@@ -1,4 +1,8 @@
 # Firejail profile for Gajim
+noblacklist ${HOME}/.cache/gajim
+noblacklist ${HOME}/.local/share/gajim
+noblacklist ${HOME}/.config/gajim
+
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.local/share/gajim
 mkdir ${HOME}/.config/gajim
@@ -29,4 +33,6 @@ seccomp
 shell none
 
 #private-bin python2.7 gajim
+#private-etc fonts
 private-dev
+#private-tmp

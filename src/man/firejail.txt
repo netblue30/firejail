@@ -1179,6 +1179,32 @@ $ firejail --private-etc=group,hostname,localtime, \\
 nsswitch.conf,passwd,resolv.conf
 
 .TP
+\fB\-\-private-opt=file,directory
+Build a new /opt in a temporary
+filesystem, and copy the files and directories in the list.
+If no listed file is found, /opt directory will be empty.
+All modifications are discarded when the sandbox is closed. 
+.br
+
+.br
+Example:
+.br
+$ firejail --private-opt=firefox /opt/firefox/firefox
+
+.TP
+\fB\-\-private-srv=file,directory
+Build a new /srv in a temporary
+filesystem, and copy the files and directories in the list.
+If no listed file is found, /srv directory will be empty.
+All modifications are discarded when the sandbox is closed. 
+.br
+
+.br
+Example:
+.br
+# firejail --private-srv=www /etc/init.d/apache2 start
+
+.TP
 \fB\-\-private-tmp
 Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
 .br

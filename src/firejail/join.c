@@ -285,12 +285,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			seccomp_load(RUN_SECCOMP_CFG);
 #endif
 
-		// fix qt 4.8
-		if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
-			errExit("setenv");
-		if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
-			errExit("setenv");
-
 		// mount user namespace or drop privileges
 		if (arg_noroot) {	// not available for uid 0
 			if (arg_debug)
@@ -307,14 +301,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			drop_privs(arg_nogroups);	// nogroups not available for uid 0
 
 
-		// set prompt color to green
-		char *prompt = getenv("FIREJAIL_PROMPT");
-		if (prompt && strcmp(prompt, "yes") == 0) {
-			//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
-			if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
-				errExit("setenv");
-		}
-		
 		// set nice
 		if (arg_nice) {
 			errno = 0;
@@ -326,24 +312,9 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			}
 		}
 
-		// run cmdline trough shell
+		env_defaults();
 		if (cfg.command_line == NULL) {
-			// if the sandbox was started with --shell=none, it is possible we don't have a shell
-			// inside the sandbox
-			if (cfg.shell == NULL) {
-				cfg.shell = guess_shell();
-				if (!cfg.shell) {
-					fprintf(stderr, "Error: no POSIX shell found, please use --shell command line option\n");
-					exit(1);
-				}
-			}
-				
-			struct stat s;
-			if (stat(cfg.shell, &s) == -1)  {
-				fprintf(stderr, "Error: %s shell not found inside the sandbox\n", cfg.shell);
-				exit(1);
-			}
-
+			assert(cfg.shell);
 			cfg.command_line = cfg.shell;
 			cfg.window_title = cfg.shell;
 		}

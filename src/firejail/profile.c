@@ -739,6 +739,22 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	// private /opt list of files and directories
+	if (strncmp(ptr, "private-opt ", 12) == 0) {
+		cfg.opt_private_keep = ptr + 12;
+		arg_private_opt = 1;
+		
+		return 0;
+	}
+
+	// private /srv list of files and directories
+	if (strncmp(ptr, "private-srv ", 12) == 0) {
+		cfg.srv_private_keep = ptr + 12;
+		arg_private_srv = 1;
+		
+		return 0;
+	}
+
 	// private /bin list of files
 	if (strncmp(ptr, "private-bin ", 12) == 0) {
 		cfg.bin_private_keep = ptr + 12;

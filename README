@@ -95,6 +95,9 @@ valoq (https://github.com/valoq)
 	- added img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext, simple-scan profiles
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
+SpotComms (https://github.com/SpotComms)
+	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
+	- added PDFSam, Pithos, and Xonotic profiles
 Vasya Novikov (https://github.com/vn971)
 	- Wesnoth profile
 	- Hedegewars profile

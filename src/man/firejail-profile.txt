@@ -181,7 +181,7 @@ closed.
 \fBprivate directory
 Use directory as user home.
 .TP
-\f\private-home file,directory
+\fBprivate-home file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
 new home. All modifications are discarded when the sandbox is
@@ -196,6 +196,16 @@ Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random,
 .TP
 \fBprivate-etc file,directory
 Build a new /etc in a temporary
+filesystem, and copy the files and directories in the list.
+All modifications are discarded when the sandbox is closed.
+.TP
+\fBprivate-opt file,directory
+Build a new /optin a temporary
+filesystem, and copy the files and directories in the list.
+All modifications are discarded when the sandbox is closed.
+.TP
+\fBprivate-srv file,directory
+Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
 All modifications are discarded when the sandbox is closed.
 .TP

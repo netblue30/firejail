@@ -223,3 +223,15 @@
 /etc/firejail/zathura.profile
 /etc/firejail/zoom.profile
 /etc/firejail/wget.profile
+/etc/firejail/bless.profile
+/etc/firejail/gnome-2048.profile
+/etc/firejail/gnome-calculator.profile
+/etc/firejail/gnome-contacts.profile
+/etc/firejail/jd-gui.profile
+/etc/firejail/lollypop.profile
+/etc/firejail/multimc5.profile
+/etc/firejail/pdfsam.profile
+/etc/firejail/pithos.profile
+/etc/firejail/xonotic-glx.profile
+/etc/firejail/xonotic-sdl.profile
+/etc/firejail/xonotic.profile

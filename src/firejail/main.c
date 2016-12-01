@@ -88,6 +88,8 @@ int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
 int arg_private_etc = 0;			// private etc directory
+int arg_private_opt = 0;			// private opt directory
+int arg_private_srv = 0;			// private srv directory
 int arg_private_bin = 0;			// private bin directory
 int arg_private_tmp = 0;			// private tmp directory
 int arg_scan = 0;				// arp-scan all interfaces
@@ -1623,6 +1625,24 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			arg_private_etc = 1;
+		}
+		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
+			// extract private opt list
+			cfg.opt_private_keep = argv[i] + 14;
+			if (*cfg.opt_private_keep == '\0') {
+				fprintf(stderr, "Error: invalid private-opt option\n");
+				exit(1);
+			}
+			arg_private_opt = 1;
+		}
+		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
+			// extract private srv list
+			cfg.srv_private_keep = argv[i] + 14;
+			if (*cfg.srv_private_keep == '\0') {
+				fprintf(stderr, "Error: invalid private-etc option\n");
+				exit(1);
+			}
+			arg_private_srv = 1;
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			// extract private bin list

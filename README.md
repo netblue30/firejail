@@ -55,10 +55,31 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 `````
 
 `````
+## New command line options
+`````
+      --private-opt=file,directory
+              Build  a  new /opt in a temporary filesystem, and copy the files
+              and directories in the list.  If no listed file is  found,  /opt
+              directory  will  be empty.  All modifications are discarded when
+              the sandbox is closed.
+
+              Example:
+              $ firejail --private-opt=firefox /opt/firefox/firefox
+
+       --private-srv=file,directory
+              Build a new /srv in a temporary filesystem, and copy  the  files
+              and  directories  in the list.  If no listed file is found, /srv
+              directory will be empty.  All modifications are  discarded  when
+              the sandbox is closed.
+
+              Example:
+              # firejail --private-srv=www /etc/init.d/apache2 start
+`````
 ## New Profiles
 xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom, Guayadeque, qemu, keypass2,
 amarok, ark, atool, bleachbit, brasero, dolphin, dragon, elinks, enchant, exiftool, file-roller, gedit,
 gjs, gnome-books, gnome-clocks, gnome-documents, gnome-maps, gnome-music, gnome-photos, gnome-weather,
 goobox, gpa, gpg, gpg-agent, highlight, img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext,
 simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, w3m, xfburn, xpra, wget,
-xed, pluma, Cryptocat
+xed, pluma, Cryptocat Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5, 
+PDFSam, Pithos, Xonotic

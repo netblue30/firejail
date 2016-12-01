@@ -671,10 +671,30 @@ int sandbox(void* sandbox_arg) {
 		else if (arg_overlay)
 			fprintf(stderr, "Warning: private-etc feature is disabled in overlay\n");
 		else {
-			fs_private_etc_list();
+			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
 			// create /etc/ld.so.preload file again
 			if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
 				fs_trace_preload();
+		}
+	}
+	
+	if (arg_private_opt) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-opt feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-opt feature is disabled in overlay\n");
+		else {
+			fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
+		}
+	}
+	
+	if (arg_private_srv) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-srv feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-srv feature is disabled in overlay\n");
+		else {
+			fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
 		}
 	}
 	

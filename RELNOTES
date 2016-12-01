@@ -9,9 +9,13 @@ firejail (0.9.45) baseline; urgency=low
   * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)
   * feature: AppImage type 2 support
   * feature: test coverage (gcov) support
+  * feature: private /opt directory (--private-opt, profile support)
+  * feature: private /srv directory (--private-srv, profile support)
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
-  * new profiles: Cryptocat
+  * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator, 
+  * new profiles: Gnome Contacts, JD-GUI, Lollypop, MultiMC5, PDFSam, Pithos,
+  * new profies: Xonotic
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
 

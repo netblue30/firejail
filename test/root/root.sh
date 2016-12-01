@@ -57,6 +57,12 @@ echo "TESTING: fs whitelist mnt, opt, media (test/root/whitelist-mnt.exp)"
 ./whitelist.exp
 
 #********************************
+# utils
+#********************************
+echo "TESTING: join (test/root/join.exp)"
+./join.exp
+
+#********************************
 # seccomp
 #********************************
 echo "TESTING: seccomp umount (test/root/seccomp-umount.exp)"

@@ -63,6 +63,13 @@ int profile_find(const char *name, const char *dir) {
 // run-time profiles
 //***************************************************
 
+static void warning_feature_disabled(const char *feature) {
+	if (!arg_quiet)
+ 		fprintf(stderr, "Warning: %s feature is disabled in Firejail configuration file\n", feature);
+}
+
+
+
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
@@ -130,8 +137,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #if HAVE_USERNS
 		if (checkcfg(CFG_USERNS))
 			check_user_namespace();
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: user namespace feature is disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("noroot");
 #endif
 
 		return 0;
@@ -144,8 +151,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))
 			arg_seccomp = 1;
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("seccomp");
 #endif
 		return 0;
 	}
@@ -175,8 +182,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.home_private_keep = ptr + 13;
 			arg_private = 1;
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: private-home is disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("private-home");
 #endif
 		return 0;
 	}
@@ -208,8 +215,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK))
 			arg_netfilter = 1;
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -222,8 +229,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				errExit("strdup");
 			check_netfilter_file(arg_netfilter_file);
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -236,8 +243,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				errExit("strdup");
 			check_netfilter_file(arg_netfilter6_file);
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -254,8 +261,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.interface2.configured = 0;
 			cfg.interface3.configured = 0;
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -295,8 +302,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			net_configure_bridge(br, ptr + 4);
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -318,8 +325,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -363,8 +370,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -390,8 +397,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -410,8 +417,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -439,8 +446,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				}
 			}
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -467,8 +474,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 //			}
 			
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -481,8 +488,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -508,8 +515,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (!cfg.protocol)
 				errExit("strdup");
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("seccomp");
 #endif
 		return 0;
 	}
@@ -531,7 +538,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.seccomp_list = seccomp_check_list(ptr + 8);
 		}
 		else if (!arg_quiet)
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+			warning_feature_disabled("seccomp");
 #endif
 
 		return 0;
@@ -544,8 +551,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_seccomp = 1;
 			cfg.seccomp_list_drop = seccomp_check_list(ptr + 13);
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("seccomp");
 #endif		
 		return 0;
 	}
@@ -557,8 +564,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_seccomp = 1;
 			cfg.seccomp_list_keep= seccomp_check_list(ptr + 13);
 		}
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+		else
+			warning_feature_disabled("seccomp");
 #endif		
 		return 0;
 	}
@@ -676,6 +683,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(0);
 			}
 		}
+		else
+			warning_feature_disabled("x11");
 #endif
 		return 0;
 	}
@@ -684,10 +693,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11))
 			arg_x11_xorg = 1;
-		else {
-			fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
-			return 0;
-		}
+		else
+			warning_feature_disabled("x11");
 #endif
 		return 0;
 	}
@@ -705,6 +712,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(0);
 			}
 		}
+		else
+			warning_feature_disabled("x11");
 #endif
 		return 0;
 	}
@@ -723,6 +732,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(0);		
 			}
 		}
+		else
+			warning_feature_disabled("x11");
 #endif		
 		return 0;
 	}
@@ -795,13 +806,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			*(dname2 - 1) = ',';
 			return 1;
 		}
-		else if (!arg_quiet) {
-			fprintf(stderr, "Warning: bind feature is disabled in Firejail configuration file\n");
-			return 0;			
-		}
-#else
-		return 0;
+		else
+			warning_feature_disabled("bind");
 #endif		
+		return 0;
 	}
 
 	// rlimit

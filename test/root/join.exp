@@ -37,13 +37,14 @@ sleep 1
 send --  "firejail --join-network=jointesting\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"is only available to root user"
+	"Child process initialized"
 }
-after 100
+send -- "exit\r"
+sleep 1
 send --  "firejail --join-filesystem=jointesting\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"is only available to root user"
+	"Child process initialized"
 }
 
 after 100

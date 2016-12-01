@@ -250,10 +250,8 @@ static void check_network(Bridge *br) {
 #ifdef HAVE_USERNS
 void check_user_namespace(void) {
 	EUID_ASSERT();
-	if (getuid() == 0) {
-		fprintf(stderr, "Error: --noroot option cannot be used when starting the sandbox as root.\n");
-		exit(1);
-	}
+	if (getuid() == 0)
+		goto errout;
 	
 	// test user namespaces available in the kernel
 	struct stat s1;
@@ -263,16 +261,27 @@ void check_user_namespace(void) {
 	    stat("/proc/self/uid_map", &s2) == 0 &&
 	    stat("/proc/self/gid_map", &s3) == 0)
 		arg_noroot = 1;
-	else {
-		if (!arg_quiet || arg_debug)
-			fprintf(stderr, "Warning: user namespaces not available in the current kernel.\n");
-		arg_noroot = 0;
-	}
+	else
+		goto errout;
+
+	return;
+
+errout:
+	if (!arg_quiet || arg_debug)
+		fprintf(stderr, "Warning: noroot option is not available\n");
+	arg_noroot = 0;
+
 }
 #endif
 
 
-// exit commands
+static void exit_err_feature(const char *feature) {
+	fprintf(stderr, "Error: %s feature is disabled in Firejail configuration file\n", feature);
+	exit(1);
+}
+
+// run independent commands and exit program
+// this function handles command line options such as --version and --help
 static void run_cmd_and_exit(int i, int argc, char **argv) {
 	EUID_ASSERT();
 	
@@ -298,21 +307,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
 				errExit("asprintf");
 			EUID_ROOT();
-			if (setreuid(0, 0) < 0)
-				errExit("setreuid");
-			if (setregid(0, 0) < 0)
-				errExit("setregid");
+			if (setreuid(0, 0) < 0 || 
+			    setregid(0, 0) < 0)
+				errExit("setreuid/setregid");
 			errno = 0;
-			int rv = remove_directory(path);
-			if (rv) {
-				fprintf(stderr, "Error: cannot removed overlays stored in ~/.firejail directory, errno %d\n", errno);
-				exit(1);
-			}
+			if (remove_directory(path))
+				errExit("remove_directory");
 		}
-		else {
-			fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("overlayfs");
 		exit(0);
 	}
 #endif
@@ -322,30 +325,24 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			x11_start(argc, argv);
 			exit(0);
 		}
-		else {
-			fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("x11");
 	}
 	else if (strcmp(argv[i], "--x11=xpra") == 0) {
 		if (checkcfg(CFG_X11)) {
 			x11_start_xpra(argc, argv);
 			exit(0);
 		}
-		else {
-			fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("x11");
 	}
 	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
 		if (checkcfg(CFG_X11)) {
 			x11_start_xephyr(argc, argv);
 			exit(0);
 		}
-		else {
-			fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("x11");
 	}
 #endif
 #ifdef HAVE_NETWORK	
@@ -406,10 +403,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			pid_t pid = read_pid(argv[i] + 12);
 			bandwidth_pid(pid, cmd, dev, down, up);
 		}
-		else {
-			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("networking");
 		exit(0);
 	}
 #endif
@@ -422,20 +417,16 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-syscalls");
 			exit(rv);
 		}
-		else {
-			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("seccomp");
 	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-errnos");
 			exit(rv);
 		}
-		else {
-			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("seccomp");
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
@@ -444,10 +435,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			pid_t pid = read_pid(argv[i] + 16);
 			seccomp_print_filter(pid);
 		}
-		else {
-			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("seccomp");
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--debug-protocols") == 0) {
@@ -460,10 +449,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			pid_t pid = read_pid(argv[i] + 17);		
 			protocol_print_filter(pid);
 		}
-		else {
-			fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("seccomp");
 		exit(0);
 	}
 #endif
@@ -530,10 +517,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 					2, PATH_FIREMON, "--netstats");
 			exit(0);
 		}
-		else {
-			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("networking");
 	}
 #endif	
 #ifdef HAVE_FILE_TRANSFER
@@ -558,10 +543,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			sandboxfs(SANDBOX_FS_GET, pid, path, NULL);
 			exit(0);
 		}
-		else {
-			fprintf(stderr, "Error: --get feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("file transfer");
 	}
 	else if (strncmp(argv[i], "--put=", 6) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
@@ -590,10 +573,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			sandboxfs(SANDBOX_FS_PUT, pid, path1, path2);
 			exit(0);
 		}
-		else {
-			fprintf(stderr, "Error: --get feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("file transfer");
 	}
 	else if (strncmp(argv[i], "--ls=", 5) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
@@ -616,10 +597,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			sandboxfs(SANDBOX_FS_LS, pid, path, NULL);
 			exit(0);
 		}
-		else {
-			fprintf(stderr, "Error: --ls feature is disabled in Firejail configuration file\n");
-			exit(1);
-		}
+		else
+			exit_err_feature("file transfer");
 	}
 #endif
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
@@ -685,11 +664,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			pid_t pid = read_pid(argv[i] + 15);
 			join(pid, argc, argv, i + 1);
 		}
-		else {
-			fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-			exit(1);
-		}
-
+		else
+			exit_err_feature("networking");
 		exit(0);
 	}
 #endif
@@ -1117,10 +1093,8 @@ int main(int argc, char **argv) {
 						errExit("strdup");
 				}
 			}
-			else {
-				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else 
+				exit_err_feature("seccomp");
 		}
 		else if (strcmp(argv[i], "--seccomp") == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1130,10 +1104,8 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 			}
-			else {
-				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("seccomp");
 		}
 		else if (strncmp(argv[i], "--seccomp=", 10) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1144,10 +1116,8 @@ int main(int argc, char **argv) {
 				arg_seccomp = 1;
 				cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
 			}
-			else {
-				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("seccomp");
 		}
 		else if (strncmp(argv[i], "--seccomp.drop=", 15) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1158,10 +1128,8 @@ int main(int argc, char **argv) {
 				arg_seccomp = 1;
 				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
 			}
-			else {
-				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("seccomp");
 		}
 		else if (strncmp(argv[i], "--seccomp.keep=", 15) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1172,10 +1140,8 @@ int main(int argc, char **argv) {
 				arg_seccomp = 1;
 				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
 			}
-			else {
-				fprintf(stderr, "Error: seccomp feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("seccomp");
 		}
 #endif		
 		else if (strcmp(argv[i], "--caps") == 0)
@@ -1274,10 +1240,8 @@ int main(int argc, char **argv) {
 				profile_check_line(line, 0, NULL);	// will exit if something wrong
 				profile_add(line);
 			}
-			else {
-				fprintf(stderr, "Error: --bind feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("bind");
 		}
 #endif
 		else if (strncmp(argv[i], "--tmpfs=", 8) == 0) {
@@ -1315,10 +1279,8 @@ int main(int argc, char **argv) {
 				profile_check_line(line, 0, NULL);	// will exit if something wrong
 				profile_add(line);
 			}
-			else {
-				fprintf(stderr, "Error: whitelist feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("whitelist");
 		}
 #endif		
 
@@ -1368,10 +1330,8 @@ int main(int argc, char **argv) {
 	
 				free(subdirname);
 			}
-			else {
-				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("overlayfs");
 		}
 		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
@@ -1402,11 +1362,8 @@ int main(int argc, char **argv) {
 				}
 				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
 			}
-			else {
-				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
-
+			else
+				exit_err_feature("overlayfs");
 		}
 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
@@ -1421,10 +1378,8 @@ int main(int argc, char **argv) {
 				}
 				arg_overlay = 1;
 			}
-			else {
-				fprintf(stderr, "Error: overlayfs feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("overlayfs");
 		}
 #endif
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
@@ -1551,10 +1506,8 @@ int main(int argc, char **argv) {
 					exit(1);
 				}
 			}
-			else {
-				fprintf(stderr, "Error: --chroot feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("chroot");
 		}
 #endif
 		else if (strcmp(argv[i], "--writable-etc") == 0) {
@@ -1603,10 +1556,8 @@ int main(int argc, char **argv) {
 				cfg.home_private_keep = argv[i] + 15;
 				arg_private = 1;
 			}
-			else {
-				fprintf(stderr, "Error: --private-home feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("private-home");
 		}
 #endif		
 		else if (strcmp(argv[i], "--private-dev") == 0) {
@@ -1680,10 +1631,8 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--noroot") == 0) {
 			if (checkcfg(CFG_USERNS))
 				check_user_namespace();
-			else {
-				fprintf(stderr, "Error: --noroot feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("noroot");
 		}
 #endif
 		else if (strcmp(argv[i], "--nonewprivs") == 0) {
@@ -1758,10 +1707,8 @@ int main(int argc, char **argv) {
 				}
 				intf->configured = 1;
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strncmp(argv[i], "--net=", 6) == 0) {
@@ -1811,10 +1758,8 @@ int main(int argc, char **argv) {
 				}
 				net_configure_bridge(br, argv[i] + 6);
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strncmp(argv[i], "--veth-name=", 12) == 0) {
@@ -1832,20 +1777,16 @@ int main(int argc, char **argv) {
 					exit(1);
 				}
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strcmp(argv[i], "--scan") == 0) {
 			if (checkcfg(CFG_NETWORK)) {
 				arg_scan = 1;
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 		else if (strncmp(argv[i], "--iprange=", 10) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
@@ -1885,10 +1826,8 @@ int main(int argc, char **argv) {
 					return 1;
 				}
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strncmp(argv[i], "--mac=", 6) == 0) {
@@ -1909,10 +1848,8 @@ int main(int argc, char **argv) {
 					exit(1);
 				}
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strncmp(argv[i], "--mtu=", 6) == 0) {
@@ -1928,10 +1865,8 @@ int main(int argc, char **argv) {
 					exit(1);
 				}
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strncmp(argv[i], "--ip=", 5) == 0) {
@@ -1956,10 +1891,8 @@ int main(int argc, char **argv) {
 					}
 				}
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strncmp(argv[i], "--ip6=", 6) == 0) {
@@ -1982,10 +1915,8 @@ int main(int argc, char **argv) {
 //					exit(1);
 //				}
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else 
+				exit_err_feature("networking");
 		}
 
 
@@ -1996,10 +1927,8 @@ int main(int argc, char **argv) {
 					exit(1);
 				}
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 #endif		
 		else if (strncmp(argv[i], "--dns=", 6) == 0) {
@@ -2038,10 +1967,8 @@ int main(int argc, char **argv) {
 			if (checkcfg(CFG_NETWORK)) {
 				arg_netfilter = 1;
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
@@ -2062,10 +1989,8 @@ int main(int argc, char **argv) {
 				arg_netfilter_file = argv[i] + 12;
 				check_netfilter_file(arg_netfilter_file);
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 
 		else if (strncmp(argv[i], "--netfilter6=", 13) == 0) {
@@ -2074,10 +1999,8 @@ int main(int argc, char **argv) {
 				arg_netfilter6_file = argv[i] + 13;
 				check_netfilter_file(arg_netfilter6_file);
 			}
-			else {
-				fprintf(stderr, "Error: networking features are disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else
+				exit_err_feature("networking");
 		}
 #endif
 		//*************************************
@@ -2184,10 +2107,8 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--x11=xorg") == 0) {
 			if (checkcfg(CFG_X11))
 				arg_x11_xorg = 1;
-			else {
-				fprintf(stderr, "Error: --x11 feature is disabled in Firejail configuration file\n");
-				exit(1);
-			}
+			else 
+				exit_err_feature("x11");
 		}
 #endif
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {

@@ -1,4 +1,6 @@
 # evince pdf reader profile
+noblacklist ~/.config/evince
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

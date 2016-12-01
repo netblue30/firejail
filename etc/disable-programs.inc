@@ -44,7 +44,27 @@ blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/eog
-
+blacklist ${HOME}/.config/arkrc
+blacklist ${HOME}/.config/atril
+blacklist ${HOME}/.config/aweather
+blacklist ${HOME}/.config/brasero
+blacklist ${HOME}/.config/enchant
+blacklist ${HOME}/.config/gedit
+blacklist ${HOME}/.config/Cryptocat
+blacklist ${HOME}/.config/dolphinrc
+blacklist ${HOME}/.config/katerc
+blacklist ${HOME}/.config/katepartrc
+blacklist ${HOME}/.config/kateschemarc
+blacklist ${HOME}/.config/katesyntaxhighlightingrc
+blacklist ${HOME}/.config/katevirc
+blacklist ${HOME}/.config/nautilus
+blacklist ${HOME}/.config/xfburn
+blacklist ${HOME}/.config/evince
+blacklist ${HOME}/.emacs
+blacklist ${HOME}/.emacs.d
+blacklist ${HOME}/.claws-mail
+blacklist ${HOME}/.config/ranger
+blacklist ${HOME}/.qemu-launcher
 
 # Media players
 blacklist ${HOME}/.config/cmus
@@ -56,6 +76,7 @@ blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.audacity-data
 blacklist ${HOME}/.guayadeque
+blacklist ${HOME}/.config/dragonplayerrc
 
 # HTTP / FTP / Mail
 blacklist ${HOME}/.icedove
@@ -88,6 +109,8 @@ blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.local/share/evolution
 blacklist ${HOME}/.cache/evolution
+blacklist ${HOME}/.elinks
+blacklist ${HOME}/.w3m
 
 # Instant Messaging
 blacklist ${HOME}/.config/hexchat
@@ -110,6 +133,7 @@ blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/Wire
+blacklist ${HOME}/.config/wire
 blacklist ${HOME}/.config/Cryptocat
 
 # Games
@@ -119,6 +143,7 @@ blacklist ${HOME}/.config/wesnoth
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.warzone2100-3.1
 blacklist ${HOME}/.dosbox
+blacklist ${HOME}/.local/share/gnome-chess
 
 # Cryptocoins
 blacklist ${HOME}/.*coin
@@ -151,6 +176,9 @@ blacklist ${HOME}/.cache/0ad
 blacklist ${HOME}/.cache/8pecxstudios
 blacklist ${HOME}/.cache/xreader
 blacklist ${HOME}/.cache/Franz
+blacklist ${HOME}/.cache/simple-scan
+blacklist ${HOME}/.cache/libgweather
+blacklist ${HOME}/.cache/org.gnome.Books
 
 # share
 blacklist ${HOME}/.local/share/epiphany
@@ -166,6 +194,10 @@ blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/zathura
+blacklist ${HOME}/.local/share/gnome-music
+blacklist ${HOME}/.local/share/gnome-photos
+blacklist ${HOME}/.local/share/kate
+blacklist ${HOME}/.local/share/dolphin
 
 # ssh
 blacklist /tmp/ssh-*

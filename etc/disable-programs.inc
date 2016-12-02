@@ -47,12 +47,9 @@ blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/eog
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/arkrc
-blacklist ${HOME}/.config/atril
-blacklist ${HOME}/.config/aweather
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/enchant
 blacklist ${HOME}/.config/gedit
-blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/katepartrc
@@ -198,7 +195,6 @@ blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/totem
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/pix
-blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.local/share/gnome-music

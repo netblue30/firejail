@@ -1,5 +1,4 @@
 firejail (0.9.44.1) baseline; urgency=low
-  * ongoing development on 0.9.44-bugfixes branch
   * security: overwrite /etc/resolv.conf found by Martin Carpenter
   * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
   * security: invalid environment exploit found by Martin Carpenter
@@ -15,7 +14,7 @@ firejail (0.9.44.1) baseline; urgency=low
   * bugfix: --quiet
   * bugfix: quiet in git profile
   * bugfix: memory corruption
- -- netblue30 <netblue30@yahoo.com>  Wed, 2 Nov 2016 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Fri, 2 Dec 2016 08:00:00 -0500
   
 firejail (0.9.44) baseline; urgency=low
   * CVE-2016-7545 submitted by Aleksey Manevich

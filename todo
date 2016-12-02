@@ -297,3 +297,5 @@ install mount namespace
 read-only /etc
 read-only /var
 read-only /bin
+
+31. --private and --allusers are coliding

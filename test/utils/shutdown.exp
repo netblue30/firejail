@@ -32,4 +32,18 @@ expect {
 }
 sleep 1
 
+send --  "firejail --shutdown=sutdowntesting\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"cannot find sandbox sutdowntesting"
+}
+after 100
+
+send --  "firejail --shutdown=10\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"this is not a firejail sandbox"
+}
+after 100
+
 puts "\nall done\n"

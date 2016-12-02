@@ -195,10 +195,8 @@ int seccomp_filter_keep(void) {
 		printf("Build drop seccomp filter\n");
 	
 	// build the seccomp filter as a regular user
-	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
+	sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
 		PATH_FSECCOMP, "keep", RUN_SECCOMP_CFG, cfg.seccomp_list_keep);
-	if (rv)
-		exit(rv);
 	if (arg_debug)
 		printf("seccomp filter configured\n");
 
@@ -246,10 +244,7 @@ void seccomp_print_filter(pid_t pid) {
 	}
 
 	// read and print the filter - run this as root, the user doesn't have access
-	int rv = sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3,
-		PATH_FSECCOMP, "print", fname);
-	if (rv)
-		exit(rv);
+	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FSECCOMP, "print", fname);
 	free(fname);
 
 	exit(0);

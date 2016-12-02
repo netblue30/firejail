@@ -71,6 +71,6 @@ after 100
 send -- "rm index.html\r"
 after 100
 send -- "exit\r"
-after 100
+sleep 1
 
 puts "\nall done\n"

@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.44"
+VERSION="0.9.44.2"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -458,6 +458,9 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Sat Dec 3 2016 netblue30 <netblue30@yahoo.com> 0.9.44.2-1
+  - bugfix release
+
 * Fri Oct 21 2016  netblue30 <netblue30@yahoo.com> 0.9.44-1
   - CVE-2016-7545 submitted by Aleksey Manevich
   - modifs: removed man firejail-config

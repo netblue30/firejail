@@ -3,6 +3,7 @@ noblacklist /usr/bin/perl
 #noblacklist /usr/bin/cpan*
 noblacklist /usr/share/perl*
 noblacklist /usr/lib/perl*
+noblacklist ~/.config/ranger
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

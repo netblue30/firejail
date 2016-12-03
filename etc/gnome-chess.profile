@@ -1,5 +1,5 @@
 # Firejail profile for gnome-chess
-noblacklist /.local/share/gnome-chess
+noblacklist ~/.local/share/gnome-chess
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

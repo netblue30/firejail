@@ -51,8 +51,7 @@ blacklist ${HOME}/.TrueCrypt
 blacklist ${HOME}/.zuluCrypt                                                                                                                                                                                        
 blacklist ${HOME}/.zuluCrypt-socket                                                                                                                                                                                 
 blacklist ${PATH}/zuluCrypt-cli                                                                                                                                                                                     
-blacklist ${PATH}/zuluMount-cli                                                                                                                                                                                     
-blacklist ${PATH}/mount.ecryptfs_private                                                                                                                                                                            
+blacklist ${PATH}/zuluMount-cli                                                                                                                                                                                                                                                                                                                                                              
 
 # var
 blacklist /var/spool/cron
@@ -188,6 +187,7 @@ blacklist ${PATH}/chage
 blacklist ${PATH}/expiry
 blacklist ${PATH}/unix_chkpwd
 blacklist ${PATH}/procmail
+blacklist ${PATH}/mount.ecryptfs_private
 
 # other SUID binaries
 blacklist /usr/lib/virtualbox

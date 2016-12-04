@@ -1,4 +1,4 @@
-firejail (0.9.44.1) baseline; urgency=low
+firejail (0.9.44.2) baseline; urgency=low
   * security: overwrite /etc/resolv.conf found by Martin Carpenter
   * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
   * security: invalid environment exploit found by Martin Carpenter

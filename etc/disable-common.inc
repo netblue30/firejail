@@ -39,6 +39,20 @@ blacklist /usr/share/applications/veracrypt.*
 blacklist /usr/share/pixmaps/veracrypt.*
 blacklist ${HOME}/.VeraCrypt
 
+# TrueCrypt                                                                                                                                                                                                         
+blacklist ${PATH}/truecrypt                                                                                                                                                                                         
+blacklist ${PATH}/truecrypt-uninstall.sh                                                                                                                                                                            
+blacklist /usr/share/truecrypt                                                                                                                                                                                      
+blacklist /usr/share/applications/truecrypt.*                                                                                                                                                                       
+blacklist /usr/share/pixmaps/truecrypt.*                                                                                                                                                                            
+blacklist ${HOME}/.TrueCrypt 
+
+# zuluCrypt                                                                                                                                                                                                         
+blacklist ${HOME}/.zuluCrypt                                                                                                                                                                                        
+blacklist ${HOME}/.zuluCrypt-socket                                                                                                                                                                                 
+blacklist ${PATH}/zuluCrypt-cli                                                                                                                                                                                     
+blacklist ${PATH}/zuluMount-cli                                                                                                                                                                                                                                                                                                                                                              
+
 # var
 blacklist /var/spool/cron
 blacklist /var/spool/anacron
@@ -173,6 +187,7 @@ blacklist ${PATH}/chage
 blacklist ${PATH}/expiry
 blacklist ${PATH}/unix_chkpwd
 blacklist ${PATH}/procmail
+blacklist ${PATH}/mount.ecryptfs_private
 
 # other SUID binaries
 blacklist /usr/lib/virtualbox

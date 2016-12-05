@@ -74,6 +74,13 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 
               Example:
               # firejail --private-srv=www /etc/init.d/apache2 start
+
+       --machine-id
+              Preserve  id  number  in  /etc/machine-id file. By default a new
+              random id is generated inside the sandbox.
+
+              Example:
+              $ firejail --machine-id
 `````
 ## New Profiles
 xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom, Guayadeque, qemu, keypass2,

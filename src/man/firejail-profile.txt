@@ -447,6 +447,10 @@ iprange 192.168.1.150,192.168.1.160
 Assign MAC addresses to the last network interface defined by a net command.
 
 .TP
+\fBmachine-id
+Preserve id number in /etc/machine-id file. By default a new random id is generated inside the sandbox.
+
+.TP
 \fBmtu number
 Assign a MTU value to the last network interface defined by a net command.
 

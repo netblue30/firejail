@@ -299,3 +299,5 @@ read-only /var
 read-only /bin
 
 31. --private and --allusers are coliding
+
+32. machine-id defined in rfc4122

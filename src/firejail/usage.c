@@ -94,6 +94,9 @@ void usage(void) {
 	printf("    --ls=name|pid dir_or_filename - list files in sandbox container.\n");
 #ifdef HAVE_NETWORK	
 	printf("    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n");
+#endif
+	printf("    --machine-id - preserve /etc/machine-id\n");
+#ifdef HAVE_NETWORK	
 	printf("    --mtu=number - set interface MTU.\n");
 #endif
 	printf("    --name=name - set sandbox name.\n");

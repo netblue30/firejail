@@ -18,4 +18,6 @@ mkdir ~/.config/qutebrowser
 whitelist ~/.config/qutebrowser
 mkdir ~/.cache/qutebrowser
 whitelist ~/.cache/qutebrowser
+mkdir ~/.local/share/qutebrowser
+whitelist ~/.local/share/qutebrowser
 include /etc/firejail/whitelist-common.inc

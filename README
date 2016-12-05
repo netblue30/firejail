@@ -80,8 +80,8 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- evince profile enhancement
 	- tightened Spotify profile
 	- added xiphos and Tor Browser Bundle profiles
-    - added xed and pluma profiles
-    - added Cryptocat profile
+	- added xed and pluma profiles
+	- added Cryptocat profile
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature
@@ -95,6 +95,8 @@ valoq (https://github.com/valoq)
 	- added img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext, simple-scan profiles
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
+Lari Rauno (https://github.com/tuutti)
+	- qutebrowser profile fixes
 SpotComms (https://github.com/SpotComms)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
 	- added PDFSam, Pithos, and Xonotic profiles

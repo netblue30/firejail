@@ -225,7 +225,7 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 }
 
 
-// blacklist files or directoies by mounting empty files on top of them
+// blacklist files or directories by mounting empty files on top of them
 void fs_blacklist(void) {
 	char *homedir = cfg.homedir;
 	assert(homedir);
@@ -530,6 +530,69 @@ void fs_proc_sys_dev_boot(void) {
 	
 	// disable /dev/port
 	disable_file(BLACKLIST_FILE, "/dev/port");
+
+
+	// WARNING: this is not reliable. When services like gpg-agent are started after the jail, the sockets are not blacklisted
+	
+	// disable various ipc sockets
+	struct stat s;
+	
+	// disable /run/user/{uid}/bus
+	char *fnamebus;
+	if (asprintf(&fnamebus, "/run/user/%d/bus", getuid()) == -1)
+	    errExit("asprintf");
+	if (stat(fnamebus, &s) == 0)
+	    disable_file(BLACKLIST_FILE, fnamebus);
+	free(fnamebus);
+
+	// disable /run/user/{uid}/gnupg
+	char *fnamegpg;
+	if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
+	    errExit("asprintf");
+	if (stat(fnamegpg, &s) == 0)
+	    disable_file(BLACKLIST_FILE, fnamegpg);
+	free(fnamegpg);
+
+	// disable /run/user/{uid}/systemd
+	char *fnamesysd;
+	if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
+	    errExit("asprintf");
+	if (stat(fnamesysd, &s) == 0)
+	    disable_file(BLACKLIST_FILE, fnamesysd);
+	free(fnamesysd);
+
+
+	// WARNING: not working
+	// disable /run/user/{uid}/kdeinit*
+	//char *fnamekde;
+	//if (asprintf(&fnamekde, "/run/user/%d/kdeinit*", getuid()) == -1)
+	//    errExit("asprintf");
+	//if (stat(fnamekde, &s) == 0)
+	//    disable_file(BLACKLIST_FILE, fnamekde);
+	//free(fnamekde);
+	
+	
+	// disable /run/user/{uid}/pulse
+	/* char *fnamepulse; */
+	/* if (asprintf(&fnamepulse, "/run/user/%d/pulse", getuid()) == -1) */
+	/*     errExit("asprintf"); */
+	/* if (stat(fnamepulse, &s) == 0) */
+	/*     disable_file(BLACKLIST_FILE, fnamepulse); */
+	/* free(fnamepulse); */
+
+	// disable /run/user/{uid}/dconf
+	/* char *fnamedconf; */
+	/* if (asprintf(&fnamedconf, "/run/user/%d/dconf", getuid()) == -1) */
+	/*     errExit("asprintf"); */
+	/* if (stat(fnamedconf, &s) == 0) */
+	/*     disable_file(BLACKLIST_FILE, fnamedconf); */
+	/* free(fnamedconf); */
+
+	
+	//more files with sockets to be blacklisted
+	//  /run/dbus /run/systemd /run/udev /run/lvm
+
+	
 	
 	if (getuid() != 0) {
 		// disable /dev/kmsg and /proc/kmsg

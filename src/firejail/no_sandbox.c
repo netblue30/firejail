@@ -165,84 +165,28 @@ void run_no_sandbox(int argc, char **argv) {
 	// process limited subset of options
 	int i;
 	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "--csh") == 0) {
-			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				exit(1);
-			}
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one default user shell can be specified\n");
-				exit(1);
-			}
-			cfg.shell = "/bin/csh";
-		}
-		else if (strcmp(argv[i], "--zsh") == 0) {
-			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				exit(1);
-			}
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one default user shell can be specified\n");
-				exit(1);
-			}
-			cfg.shell = "/bin/zsh";
-		}
-		else if (strcmp(argv[i], "--shell=none") == 0) {
-			arg_shell_none = 1;
-			if (cfg.shell) {
-				fprintf(stderr, "Error: a shell was already specified\n");
-				exit(1);
-			}
-		}
-		else if (strncmp(argv[i], "--shell=", 8) == 0) {
-			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				exit(1);
-			}
-			invalid_filename(argv[i] + 8);
-
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one user shell can be specified\n");
-				exit(1);
-			}
-			cfg.shell = argv[i] + 8;
-
-			if (is_dir(cfg.shell) || strstr(cfg.shell, "..")) {
-				fprintf(stderr, "Error: invalid shell\n");
-				exit(1);
-			}
-
-			// access call checks as real UID/GID, not as effective UID/GID
-			if(cfg.chrootdir) {
-				char *shellpath;
-				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
-					errExit("asprintf");
-				if (access(shellpath, R_OK)) {
-					fprintf(stderr, "Error: cannot access shell file in chroot\n");
-					exit(1);
-				}
-				free(shellpath);
-			} else if (access(cfg.shell, R_OK)) {
-				fprintf(stderr, "Error: cannot access shell file\n");
-				exit(1);
-			}
-		}
+		if (strcmp(argv[i], "--debug") == 0)
+			arg_debug = 1;
+ 		else if (strcmp(argv[i], "--csh") == 0 ||
+		    strcmp(argv[i], "--zsh") == 0 ||
+		    strcmp(argv[i], "--shell=none") == 0 ||
+		    strncmp(argv[i], "--shell=", 8) == 0)
+			fprintf(stderr, "Warning: shell-related command line options are disregarded - using SHELL environment variable");
 	}
 
 	// use $SHELL to get shell used in sandbox
-	if (!arg_shell_none && !cfg.shell) {
-		char *shell =  getenv("SHELL");
-		if (shell && access(shell, R_OK) == 0)
-			cfg.shell = shell;
-	}
+	char *shell =  getenv("SHELL");
+	if (shell && access(shell, R_OK) == 0)
+		cfg.shell = shell;
+
 	// guess shell otherwise
-	if (!arg_shell_none && !cfg.shell) {
+	if (!cfg.shell) {
 		cfg.shell = guess_shell();
 		if (arg_debug)
 			printf("Autoselecting %s as shell\n", cfg.shell);
 	}
-	if (!arg_shell_none && !cfg.shell) {
-		fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
+	if (!cfg.shell) {
+		fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
 		exit(1);
 	}
 
@@ -266,13 +210,11 @@ void run_no_sandbox(int argc, char **argv) {
 		}
 	}
 
-	if (!arg_shell_none) {
-		if (prog_index == 0) {
-			cfg.command_line = cfg.shell;
-			cfg.window_title = cfg.shell;
-		} else {
-			build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
-		}
+	if (prog_index == 0) {
+		cfg.command_line = cfg.shell;
+		cfg.window_title = cfg.shell;
+	} else {
+		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
 	}
 
 	cfg.original_argv = argv;

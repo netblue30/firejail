@@ -751,42 +751,6 @@ static void delete_x11_file(pid_t pid) {
 	free(fname);
 }
 
-static void detect_quiet(int argc, char **argv) {
-	int i;
-	
-	// detect --quiet
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "--quiet") == 0) {
-			arg_quiet = 1;
-			break;
-		}
-		
-		// detect end of firejail params
-		if (strcmp(argv[i], "--") == 0)
-			break;
-		if (strncmp(argv[i], "--", 2) != 0)
-			break;
-	}
-}
-
-static void detect_allow_debuggers(int argc, char **argv) {
-	int i;
-	
-	// detect --allow-debuggers
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "--allow-debuggers") == 0) {
-			arg_allow_debuggers = 1;
-			break;
-		}
-		
-		// detect end of firejail params
-		if (strcmp(argv[i], "--") == 0)
-			break;
-		if (strncmp(argv[i], "--", 2) != 0)
-			break;
-	}
-}
-
 char *guess_shell(void) {
 	char *shell = NULL;
 	// shells in order of preference
@@ -806,6 +770,25 @@ char *guess_shell(void) {
 	return shell;
 }
 
+static int check_arg(int argc, char **argv, const char *argument) {
+	int i;
+	int found = 0;
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--force") == 0) {
+			found = 1;
+			break;
+		}
+
+		// detect end of firejail params
+		if (strcmp(argv[i], "--") == 0)
+			break;
+		if (strncmp(argv[i], "--", 2) != 0)
+			break;
+	}
+	
+	return found;
+}
+
 //*******************************************
 // Main program
 //*******************************************
@@ -822,8 +805,10 @@ int main(int argc, char **argv) {
 	// build /run/firejail directory structure
 	preproc_build_firejail_dir();
 	
-	detect_quiet(argc, argv);
-	detect_allow_debuggers(argc, argv);
+	if (check_arg(argc, argv, "--quiet"))
+		arg_quiet = 1;
+	if (check_arg(argc, argv, "--allow-debuggers"))
+		arg_allow_debuggers = 1;
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -845,78 +830,27 @@ int main(int argc, char **argv) {
 		EUID_USER();
 		if (rv == 0) {
 			// if --force option is passed to the program, disregard the existing sandbox
-			int found = 0;
-			for (i = 1; i < argc; i++) {
-				if (strcmp(argv[i], "--force") == 0 ||
-				    strcmp(argv[i], "--list") == 0 ||	
-				    strcmp(argv[i], "--netstats") == 0 ||	
-				    strcmp(argv[i], "--tree") == 0 ||	
-				    strcmp(argv[i], "--top") == 0 ||
-				    strncmp(argv[i], "--ls=", 5) == 0 ||
-				    strncmp(argv[i], "--get=", 6) == 0 ||
-				    strcmp(argv[i], "--debug-caps") == 0 ||
-				    strcmp(argv[i], "--debug-errnos") == 0 ||
-				    strcmp(argv[i], "--debug-syscalls") == 0 ||
-				    strcmp(argv[i], "--debug-protocols") == 0 ||
-				    strcmp(argv[i], "--help") == 0 ||
-				    strcmp(argv[i], "--version") == 0 ||
-				    strcmp(argv[i], "--overlay-clean") == 0 ||
-				    strncmp(argv[i], "--dns.print=", 12) == 0 ||
-				    strncmp(argv[i], "--bandwidth=", 12) == 0 ||
-				    strncmp(argv[i], "--caps.print=", 13) == 0 ||
-				    strncmp(argv[i], "--cpu.print=", 12) == 0 ||
-	//********************************************************************************
-	// todo: fix the following problems
-				    strncmp(argv[i], "--join=", 7) == 0 ||
-	//[netblue@debian Downloads]$ firejail --join=896
-	//Switching to pid 897, the first child process inside the sandbox
-	//Error: seccomp file not found
-	//********************************************************************************
-	
-				    strncmp(argv[i], "--join-filesystem=", 18) == 0 ||
-				    strncmp(argv[i], "--join-network=", 15) == 0 ||
-				    strncmp(argv[i], "--fs.print=", 11) == 0 ||
-				    strncmp(argv[i], "--protocol.print=", 17) == 0 ||
-				    strncmp(argv[i], "--seccomp.print", 15) == 0 ||
-				    strncmp(argv[i], "--shutdown=", 11) == 0) {
-					found = 1;
-					break;
-				}
-	
-				// detect end of firejail params
-				if (strcmp(argv[i], "--") == 0)
-					break;
-				if (strncmp(argv[i], "--", 2) != 0)
-					break;
-			}
-			
-			if (found == 0) {
+			if (check_arg(argc, argv, "--force"))
+				option_force = 1;
+			else {
 				// start the program directly without sandboxing
 				run_no_sandbox(argc, argv);
 				// it will never get here!
 				assert(0);
 			}
-			else
-				option_force = 1;
 		}
 	}
 	
 	// check root/suid
 	EUID_ROOT();
 	if (geteuid()) {
-		// detect --version
-		for (i = 1; i < argc; i++) {
-			if (strcmp(argv[i], "--version") == 0) {
-				printf("firejail version %s\n", VERSION);
-				exit(0);
-			}
-			
-			// detect end of firejail params
-			if (strcmp(argv[i], "--") == 0)
-				break;
-			if (strncmp(argv[i], "--", 2) != 0)
-				break;
+		// only --version is supported without SUID support
+		if (check_arg(argc, argv, "--force")) {
+			printf("firejail version %s\n", VERSION);
+			exit(0);
 		}
+
+		fprintf(stderr, "Error: cannot rise privileges\n");
 		exit(1);
 	}
 	EUID_USER();

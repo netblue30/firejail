@@ -1053,6 +1053,9 @@ void profile_read(const char *fname) {
 //		else {
 //			free(ptr);
 //		}
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
 	}
 	fclose(fp);
 }

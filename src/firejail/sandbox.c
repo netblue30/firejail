@@ -286,6 +286,9 @@ void start_application(void) {
 	//****************************************
 	if (arg_audit) {
 		assert(arg_audit_prog);
+#ifdef HAVE_GCOV
+	__gcov_dump();
+#endif
 		execl(arg_audit_prog, arg_audit_prog, NULL);
 	}
 	//****************************************
@@ -309,6 +312,9 @@ void start_application(void) {
 		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
 
+#ifdef HAVE_GCOV
+	__gcov_dump();
+#endif
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 		exit(1);
 	}
@@ -356,6 +362,9 @@ void start_application(void) {
 
 		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
+#ifdef HAVE_GCOV
+	__gcov_dump();
+#endif
 		execvp(arg[0], arg);
 	}
 

@@ -2,13 +2,13 @@
 
 gcov_init() {
 	USER=`whoami`
-	firejail --help
-	firemon --help
-	/usr/lib/firejail/fnet --help
-	/usr/lib/firejail/fseccomp --help
-	/usr/lib/firejail/ftee --help
-	/usr/lib/firejail/fcopy --help
-	firecfg --help
+	firejail --help > /dev/null
+	firemon --help > /dev/null
+	/usr/lib/firejail/fnet --help > /dev/null
+	/usr/lib/firejail/fseccomp --help > /dev/null
+	/usr/lib/firejail/ftee --help > /dev/null
+	/usr/lib/firejail/fcopy --help > /dev/null
+	firecfg --help > /dev/null
 	sudo chown $USER:$USER `find .`
 }
 
@@ -24,6 +24,13 @@ generate() {
 
 
 gcov_init
+lcov -q --capture -d src/firejail -d src/firemon -d  src/fcopy -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg --output-file gcov-file-old
+
+#make test-environment
+#generate
+#sleep 2
+#exit
+
 
 # running tests
 make test-root

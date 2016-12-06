@@ -774,7 +774,7 @@ static int check_arg(int argc, char **argv, const char *argument) {
 	int i;
 	int found = 0;
 	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "--force") == 0) {
+		if (strcmp(argv[i], argument) == 0) {
 			found = 1;
 			break;
 		}
@@ -833,6 +833,11 @@ int main(int argc, char **argv) {
 			if (check_arg(argc, argv, "--force"))
 				option_force = 1;
 			else {
+				if (check_arg(argc, argv, "--version")) {
+					printf("firejail version %s\n", VERSION);
+					exit(0);
+				}
+				
 				// start the program directly without sandboxing
 				run_no_sandbox(argc, argv);
 				// it will never get here!
@@ -840,12 +845,12 @@ int main(int argc, char **argv) {
 			}
 		}
 	}
-	
+
 	// check root/suid
 	EUID_ROOT();
 	if (geteuid()) {
 		// only --version is supported without SUID support
-		if (check_arg(argc, argv, "--force")) {
+		if (check_arg(argc, argv, "--version")) {
 			printf("firejail version %s\n", VERSION);
 			exit(0);
 		}

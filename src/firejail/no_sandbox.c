@@ -229,5 +229,6 @@ void run_no_sandbox(int argc, char **argv) {
 		fprintf(stderr, "Warning: an existing sandbox was detected. "
 			"%s will run without any additional sandboxing features\n", command);
 
+	arg_quiet = 1;
 	start_application();
 }

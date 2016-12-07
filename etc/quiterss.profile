@@ -1,29 +1,35 @@
+noblacklist ${HOME}/.cache/QuiteRss
+noblacklist ${HOME}/.config/QuiteRss
+noblacklist ${HOME}/.config/QuiteRssrc
+noblacklist ${HOME}/.local/share/QuiteRss
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-devel.inc
 
 whitelist ${HOME}/quiterssfeeds.opml
-mkdir ~/.config
 mkdir ~/.config/QuiteRss
 whitelist ${HOME}/.config/QuiteRss/
 whitelist ${HOME}/.config/QuiteRssrc
-mkdir ~/.local
-mkdir ~/.local/share
-whitelist ${HOME}/.local/share/
-mkdir ~/.cache
+mkdir ~/.local/share/data/QuiteRss
+whitelist ${HOME}/.local/share/data/QuiteRss
 mkdir ~/.cache/QuiteRss
 whitelist ${HOME}/.cache/QuiteRss
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
 netfilter
-tracelog
-noroot
 nogroups
+nonewprivs
+noroot
+nosound
+protocol unix,inet,inet6
+seccomp
 shell none
-private-dev
+tracelog
+
 private-bin quiterss
+private-dev
 #private-etc X11,ssl
+
 include /etc/firejail/whitelist-common.inc

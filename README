@@ -82,6 +82,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added xiphos and Tor Browser Bundle profiles
 	- added xed and pluma profiles
 	- added Cryptocat profile
+	- added wireshark profile
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature

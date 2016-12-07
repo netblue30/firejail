@@ -536,14 +536,16 @@ void fs_proc_sys_dev_boot(void) {
 	
 	// disable various ipc sockets
 	struct stat s;
-	
-	// disable /run/user/{uid}/bus
-	char *fnamebus;
-	if (asprintf(&fnamebus, "/run/user/%d/bus", getuid()) == -1)
-	    errExit("asprintf");
-	if (stat(fnamebus, &s) == 0)
-	    disable_file(BLACKLIST_FILE, fnamebus);
-	free(fnamebus);
+
+
+	// breaks too many applications, option needed
+	/* // disable /run/user/{uid}/bus */
+	/* char *fnamebus; */
+	/* if (asprintf(&fnamebus, "/run/user/%d/bus", getuid()) == -1) */
+	/*     errExit("asprintf"); */
+	/* if (stat(fnamebus, &s) == 0) */
+	/*     disable_file(BLACKLIST_FILE, fnamebus); */
+	/* free(fnamebus); */
 
 	// disable /run/user/{uid}/gnupg
 	char *fnamegpg;

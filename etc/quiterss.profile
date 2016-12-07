@@ -12,6 +12,7 @@ whitelist ${HOME}/quiterssfeeds.opml
 mkdir ~/.config/QuiteRss
 whitelist ${HOME}/.config/QuiteRss/
 whitelist ${HOME}/.config/QuiteRssrc
+mkdir ~/.local/share/data
 mkdir ~/.local/share/data/QuiteRss
 whitelist ${HOME}/.local/share/data/QuiteRss
 mkdir ~/.cache/QuiteRss

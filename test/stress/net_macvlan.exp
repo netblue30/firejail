@@ -12,7 +12,7 @@ spawn $env(SHELL)
 send -- "firejail --net=eth0 --ip=192.168.1.60\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";puts "Please open a sandbox on 192.168.1.60\n";exit}
-	"the address 192.168.1.60 is already in use"
+	"192.168.1.60 is interface eth0 address"
 }
 
 

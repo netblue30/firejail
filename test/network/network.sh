@@ -11,6 +11,9 @@ sudo ./configure
 echo "TESTING: firemon interface (firemon-interfaces.exp)"
 sudo ./firemon-interfaces.exp
 
+echo "TESTING: print dns (dns-print.exp)"
+./dns-print.exp
+
 echo "TESTING: firemon arp (firemon-arp.exp)"
 ./firemon-arp.exp
 
@@ -69,6 +72,9 @@ echo "TESTING: network default gateway test 3 (net_defaultgw3.exp)"
 echo "TESTING: scan (net_scan.exp)"
 ./net_scan.exp
 
+echo "TESTING: mtu (mtu.exp)"
+./mtu.exp
+
 echo "TESTING: interface (interface.exp)"
 ./interface.exp
 
@@ -83,6 +89,9 @@ echo "TESTING: iprange (iprange.exp)"
 
 echo "TESTING: veth-name (veth-name.exp)"
 ./veth-name.exp
+
+echo "TESTING: macvlan2 (net_macvlan2.exp)"
+./net_macvlan2.exp
 
 echo "TESTING: 4 bridges ARP (4bridges_arp.exp)"
 ./4bridges_arp.exp

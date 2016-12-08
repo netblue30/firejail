@@ -209,7 +209,8 @@ blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
-blacklist ${PATH}/konsole
+#konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
+#blacklist ${PATH}/konsole
 
 # kernel files
 blacklist /vmlinuz*

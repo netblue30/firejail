@@ -96,6 +96,7 @@ valoq (https://github.com/valoq)
 	- added img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext, simple-scan profiles
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
+	- disable gnupg and systemd directories under /run/user
 Lari Rauno (https://github.com/tuutti)
 	- qutebrowser profile fixes
 SpotComms (https://github.com/SpotComms)

@@ -538,6 +538,24 @@ void fs_proc_sys_dev_boot(void) {
 	struct stat s;
 
 
+	// disable /run/user/{uid}/gnupg
+	char *fnamegpg;
+	if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
+		errExit("asprintf");
+	if (stat(fnamegpg, &s) == 0)
+		disable_file(BLACKLIST_FILE, fnamegpg);
+	free(fnamegpg);
+
+	// disable /run/user/{uid}/systemd
+	char *fnamesysd;
+	if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
+		errExit("asprintf");
+	if (stat(fnamesysd, &s) == 0)
+		disable_file(BLACKLIST_FILE, fnamesysd);
+	free(fnamesysd);
+
+// todo: investigate
+#if 0
 	// breaks too many applications, option needed
 	/* // disable /run/user/{uid}/bus */
 	/* char *fnamebus; */
@@ -546,23 +564,6 @@ void fs_proc_sys_dev_boot(void) {
 	/* if (stat(fnamebus, &s) == 0) */
 	/*     disable_file(BLACKLIST_FILE, fnamebus); */
 	/* free(fnamebus); */
-
-	// disable /run/user/{uid}/gnupg
-	char *fnamegpg;
-	if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
-	    errExit("asprintf");
-	if (stat(fnamegpg, &s) == 0)
-	    disable_file(BLACKLIST_FILE, fnamegpg);
-	free(fnamegpg);
-
-	// disable /run/user/{uid}/systemd
-	char *fnamesysd;
-	if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
-	    errExit("asprintf");
-	if (stat(fnamesysd, &s) == 0)
-	    disable_file(BLACKLIST_FILE, fnamesysd);
-	free(fnamesysd);
-
 
 	// WARNING: not working
 	// disable /run/user/{uid}/kdeinit*
@@ -593,7 +594,7 @@ void fs_proc_sys_dev_boot(void) {
 	
 	//more files with sockets to be blacklisted
 	//  /run/dbus /run/systemd /run/udev /run/lvm
-
+#endif
 	
 	
 	if (getuid() != 0) {

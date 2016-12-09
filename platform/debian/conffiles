@@ -27,6 +27,7 @@
 /etc/firejail/conkeror.profile
 /etc/firejail/corebird.profile
 /etc/firejail/cpio.profile
+/etc/firejail/cryptocat.profile
 /etc/firejail/Cryptocat.profile
 /etc/firejail/cyberfox.profile
 /etc/firejail/deadbeef.profile
@@ -209,6 +210,7 @@
 /etc/firejail/whitelist-common.inc
 /etc/firejail/wine.profile
 /etc/firejail/wire.profile
+/etc/firejail/wireshark.profile
 /etc/firejail/xchat.profile
 /etc/firejail/xed.profile
 /etc/firejail/xfburn.profile

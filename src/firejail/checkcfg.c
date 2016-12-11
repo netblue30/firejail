@@ -43,6 +43,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
 		cfg_val[CFG_FORCE_NONEWPRIVS] = 0; // disabled by default
 		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0; // disabled by default
+		cfg_val[CFG_FIREJAIL_PROMPT] = 0; // disabled by default
 		
 		// open configuration file
 		char *fname;
@@ -123,6 +124,15 @@ int checkcfg(int val) {
 					cfg_val[CFG_CHROOT] = 1;
 				else if (strcmp(ptr + 7, "no") == 0)
 					cfg_val[CFG_CHROOT] = 0;
+				else
+					goto errout;
+			}
+			// prompt
+			else if (strncmp(ptr, "firejail-prompt ", 16) == 0) {
+				if (strcmp(ptr + 16, "yes") == 0)
+					cfg_val[CFG_FIREJAIL_PROMPT] = 1;
+				else if (strcmp(ptr + 16, "no") == 0)
+					cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 				else
 					goto errout;
 			}

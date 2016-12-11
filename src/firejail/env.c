@@ -129,13 +129,21 @@ void env_defaults(void) {
 		errExit("setenv");
 
 	// set prompt color to green
-	char *prompt = getenv("FIREJAIL_PROMPT");
-	if (prompt && strcmp(prompt, "yes") == 0) {
+	int set_prompt = 0;
+	if (checkcfg(CFG_FIREJAIL_PROMPT))
+		set_prompt = 1;
+	else { // check FIREJAIL_PROMPT="yes" environment variable
+		char *prompt = getenv("FIREJAIL_PROMPT");
+		if (prompt && strcmp(prompt, "yes") == 0)
+			set_prompt = 1;
+	}
+	
+	if (set_prompt) {
 		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
 		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
 			errExit("setenv");
 	}
-
+	
 	// set the window title
 	if (!arg_quiet)
 		printf("\033]0;firejail %s\007", cfg.window_title);

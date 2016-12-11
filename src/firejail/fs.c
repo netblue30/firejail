@@ -531,17 +531,16 @@ void fs_proc_sys_dev_boot(void) {
 	// disable /dev/port
 	disable_file(BLACKLIST_FILE, "/dev/port");
 
-
-	// WARNING: this is not reliable. When services like gpg-agent are started after the jail, the sockets are not blacklisted
 	
-	// disable various ipc sockets
-	struct stat s;
-
+	/* // disable various ipc sockets */
+	struct stat s; 
 
 	// disable /run/user/{uid}/gnupg
 	char *fnamegpg;
 	if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
 		errExit("asprintf");
+	if (stat(fnamegpg, &s) == -1) 
+	    mkdir_attr(fnamegpg, 0700, getuid(), getgid());
 	if (stat(fnamegpg, &s) == 0)
 		disable_file(BLACKLIST_FILE, fnamegpg);
 	free(fnamegpg);
@@ -550,10 +549,13 @@ void fs_proc_sys_dev_boot(void) {
 	char *fnamesysd;
 	if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
 		errExit("asprintf");
+	if (stat(fnamesysd, &s) == -1) 
+		mkdir_attr(fnamesysd, 0755, getuid(), getgid());
 	if (stat(fnamesysd, &s) == 0)
 		disable_file(BLACKLIST_FILE, fnamesysd);
 	free(fnamesysd);
 
+	
 // todo: investigate
 #if 0
 	// breaks too many applications, option needed
@@ -591,12 +593,21 @@ void fs_proc_sys_dev_boot(void) {
 	/*     disable_file(BLACKLIST_FILE, fnamedconf); */
 	/* free(fnamedconf); */
 
-	
+
+	// dirs in /run/user/{uid}/
+	// using gnome:
+	// bus, dconf, gdm, gnome-shell, gnupg, gvfs, keyring, pulse, systemd
+
+	// using kde:
+	// kdeinit__0, ...
+		
 	//more files with sockets to be blacklisted
 	//  /run/dbus /run/systemd /run/udev /run/lvm
+
+	// /run/user/{uid} does not exist on some systems, usually used and created by desktop applications
+	
 #endif
-	
-	
+
 	if (getuid() != 0) {
 		// disable /dev/kmsg and /proc/kmsg
 		disable_file(BLACKLIST_FILE, "/dev/kmsg");

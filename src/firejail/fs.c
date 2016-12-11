@@ -532,7 +532,7 @@ void fs_proc_sys_dev_boot(void) {
 	disable_file(BLACKLIST_FILE, "/dev/port");
 
 	
-	/* // disable various ipc sockets */
+	// disable various ipc sockets
 	struct stat s; 
 
 	// disable /run/user/{uid}/gnupg
@@ -601,8 +601,8 @@ void fs_proc_sys_dev_boot(void) {
 	// using kde:
 	// kdeinit__0, ...
 		
-	//more files with sockets to be blacklisted
-	//  /run/dbus /run/systemd /run/udev /run/lvm
+	// more files with sockets to be blacklisted
+	// /run/dbus /run/systemd /run/udev /run/lvm
 
 	// /run/user/{uid} does not exist on some systems, usually used and created by desktop applications
 	

@@ -85,7 +85,7 @@ Example:
 $ firejail  --allow-debuggers --profile=/etc/firejail/firefox.profile strace -f firefox
 .TP
 \fB\-\-allusers
-All user home directories are visible inside the sandbox. By default, only current user home directory is visible.
+All directories under /home are visible inside the sandbox. By default, only current user home directory is visible.
 .br
 
 .br

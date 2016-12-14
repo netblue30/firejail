@@ -9,6 +9,4 @@ whitelist ~/snap
 whitelist ${DOWNLOADS}
 include /etc/firejail/whitelist-common.inc
 
-caps.keep chown,sys_admin
-
 

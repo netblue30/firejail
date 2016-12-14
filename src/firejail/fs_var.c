@@ -106,8 +106,7 @@ static void build_dirs(void) {
 void fs_var_log(void) {
 	build_list("/var/log");
 	
-	// note: /var/log is not created here, if it does not exist, this section fails. Intended?
-
+	// note: /var/log is not created here, if it does not exist, this section fails.
 	// create /var/log if it doesn't exit
 	if (is_dir("/var/log")) {
 		// extract group id for /var/log/wtmp

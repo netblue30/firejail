@@ -46,10 +46,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0; // disabled by default
 		
 		// open configuration file
-		char *fname;
-		if (asprintf(&fname, "%s/firejail.config", SYSCONFDIR) == -1)
-			errExit("asprintf");
-
+		const char *fname = SYSCONFDIR "/firejail.config";
 		fp = fopen(fname, "r");
 		if (!fp) {
 #ifdef HAVE_GLOBALCFG			
@@ -61,15 +58,6 @@ int checkcfg(int val) {
 #endif	
 		}
 		
-		// if the file exists, it should be owned by root
-		struct stat s;
-		if (stat(fname, &s) == -1)
-			errExit("stat");
-		if (s.st_uid != 0) {
-			fprintf(stderr, "Error: configuration file should be owned by root\n");
-			exit(1);
-		}
-
 		// read configuration file
 		char buf[MAX_READ];
 		while (fgets(buf,MAX_READ, fp)) {
@@ -290,7 +278,6 @@ int checkcfg(int val) {
 		}
 
 		fclose(fp);
-		free(fname);
 		initialized = 1;
 	}
 	
@@ -323,10 +310,6 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-
-
-
-
 
 	printf("\t- bind support is %s\n",
 #ifdef HAVE_BIND

@@ -442,6 +442,9 @@ void x11_start_xpra(int argc, char **argv) {
 		_exit(1);
 	}
 
+	// add a small delay, on some systems it takes some time for the server to start
+	sleep(1);
+
 	// check X11 socket
 	char *fname;
 	if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)

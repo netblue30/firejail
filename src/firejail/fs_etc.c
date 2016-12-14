@@ -58,7 +58,6 @@ void fs_machineid(void) {
 		
 
 	struct stat s;
-	// mount-bind 
 	if (stat("/etc/machine-id", &s) == 0) {
 		if (arg_debug)
 			printf("installing a new /etc/machine-id\n");
@@ -66,12 +65,10 @@ void fs_machineid(void) {
 		if (mount(RUN_MACHINEID, "/etc/machine-id", "none", MS_BIND, "mode=444,gid=0"))
 			errExit("mount");
 	}
-//#if 0 // todo: investigate	
 	if (stat("/var/lib/dbus/machine-id", &s) == 0) {
-		if (mount(RUN_MACHINEID, "/etc/machine-id", "none", MS_BIND, "mode=444,gid=0"))
+		if (mount(RUN_MACHINEID, "/var/lib/dbus/machine-id", "none", MS_BIND, "mode=444,gid=0"))
 			errExit("mount");
 	}
-//#endif
 }
 
 // return 0 if file not found, 1 if found

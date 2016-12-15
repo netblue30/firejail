@@ -16,9 +16,9 @@ firejail (0.9.45) baseline; urgency=low
   * feature: config support for firejail prompt in terminal
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
-  * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator, 
+  * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,
   * new profiles: Gnome Contacts, JD-GUI, Lollypop, MultiMC5, PDFSam, Pithos,
-  * new profies: Xonotic, wireshark
+  * new profies: Xonotic, wireshark, keepassx2
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
 
@@ -32,7 +32,7 @@ firejail (0.9.44) baseline; urgency=low
   * feature: support starting/joining sandbox is a single command
     (--join-or-start)
   * feature: X11 detection support for --audit
-  * feature: assign a name to the interface connected to the bridge 
+  * feature: assign a name to the interface connected to the bridge
     (--veth-name)
   * feature: all user home directories are visible (--allusers)
   * feature: add files to sandbox container (--put)
@@ -265,7 +265,7 @@ firejail (0.9.24) baseline; urgency=low
   * two build patches from Reiner Herman (tickets 11, 12)
   * man page patch from Reiner Herman (ticket 13)
   * output patch (ticket 15) from sshirokov
-  
+
  -- netblue30 <netblue30@yahoo.com>  Sun, 5 Apr 2015 08:00:00 -0500
 
 firejail (0.9.22) baseline; urgency=low
@@ -330,7 +330,7 @@ firejail (0.9.16) baseline; urgency=low
  -- netblue30 <netblue30@yahoo.com>  Tue, 4 Nov 2014 10:00:00 -0500
 
 firejail (0.9.14) baseline; urgency=low
-  * Linux capabilities and seccomp filters are automatically enabled in 
+  * Linux capabilities and seccomp filters are automatically enabled in
     chroot mode (--chroot option) if the sandbox is started as regular user
   * Added support for user defined seccomp blacklists
   * Added syscall trace support
@@ -382,7 +382,7 @@ firejail (0.9.8.1) baseline; urgency=low
   * FIxed a number of bugs introduced in 0.9.8
 
  -- netblue30 <netblue30@yahoo.com>  Fri, 25 Jul 2014 07:25:00 -0500
-  
+
 firejail (0.9.8) baseline; urgency=low
   * Implemented nowrap mode for firejail --list command option
   * Added --top option in both firejail and firemon
@@ -391,7 +391,7 @@ firejail (0.9.8) baseline; urgency=low
   * bugfixes
 
  -- netblue30 <netblue30@yahoo.com>  Tue, 24 Jul 2014 08:51:00 -0500
-  
+
 firejail (0.9.6) baseline; urgency=low
 
   * Mounting tmpfs on top of /var/log, required by several server programs
@@ -430,7 +430,7 @@ firejail (0.9.2) baseline; urgency=low
   * Added an expect-based testing framework for the project
   * Added bash completion support
   * Added support for multiple networks
-  
+
  -- netblue30 <netblue30@yahoo.com>  Fri, 25 Apr 2014 08:00:00 -0500
 
 firejail (0.9) baseline; urgency=low

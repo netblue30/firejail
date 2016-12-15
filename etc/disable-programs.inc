@@ -107,7 +107,7 @@ blacklist ${HOME}/.config/katepartrc
 blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/kateschemarc
 blacklist ${HOME}/.config/katesyntaxhighlightingrc
-blacklist ${HOME}/.config/katevirc
+blacklist ${HOME}/.config/katevir
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/midori
@@ -148,7 +148,7 @@ blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
-blacklist ${HOME}/.conkeror.mozdev.org 
+blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox-dist

@@ -1,0 +1,79 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --audit\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Firejail Audit"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"is running in a PID namespace"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"container/sandbox firejail"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"seccomp BPF enabled"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"all capabilities are disabled"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"dev directory seems to be fully populated"
+}
+after 100
+
+
+send -- "firejail --audit=/usr/lib/firejail/faudit\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"Firejail Audit"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"is running in a PID namespace"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"container/sandbox firejail"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"seccomp BPF enabled"
+}
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"all capabilities are disabled"
+}
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"dev directory seems to be fully populated"
+}
+after 100
+
+send -- "firejail --audit=blablabla\r"
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"cannot find the audit program"
+}
+after 100
+
+send -- "firejail --audit=\r"
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"invalid audit program"
+}
+after 100
+
+puts "\nall done\n"

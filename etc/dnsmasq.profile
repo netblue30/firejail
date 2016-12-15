@@ -5,9 +5,13 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-devel.inc
+
 caps
-seccomp
-protocol unix,inet,inet6,netlink
 netfilter
+nonewprivs
 private
 private-dev
+nosound
+no3d
+protocol unix,inet,inet6,netlink
+seccomp

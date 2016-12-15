@@ -3,6 +3,8 @@
 *~
 *.swp
 *.rpm
+*.gcda
+*.gcno
 Makefile
 config.log
 config.status
@@ -17,3 +19,13 @@ src/firemon/firemon
 src/firecfg/firecfg
 src/ftee/ftee
 src/tags
+src/faudit/faudit
+src/fnet/fnet
+src/fseccomp/fseccomp
+src/fcopy/fcopy
+uids.h
+seccomp
+seccomp.debug
+seccomp.i386
+seccomp.amd64
+

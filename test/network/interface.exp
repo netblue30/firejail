@@ -1,0 +1,66 @@
+#!/usr/bin/expect -f
+#
+# interface
+#
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+set overlay [lindex $argv 0]
+set chroot [lindex $argv 1]
+
+#
+# N
+#
+# todo: seems to be unable to find interface eth0.7
+#send -- "firejail --noprofile --interface=eth0.5 --interface=eth0.6 --interface=eth0.7\r"
+send -- "firejail --noprofile --interface=eth0.5 --interface=eth0.6\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "/sbin/ifconfig\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"eth0.5"
+}
+expect {
+	timeout {puts "TESTING ERROR 2n";exit}
+	"Link"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"10.10.205.10"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
+}
+after 100
+
+send -- "/sbin/ifconfig\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"eth0.6"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"Link"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"10.10.206.10"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+
+puts "\nall done\n"

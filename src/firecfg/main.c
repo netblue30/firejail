@@ -24,8 +24,13 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/mman.h>
 #include "../include/common.h"
+static int arg_debug = 0;
 
 static void usage(void) {
 	printf("firecfg - version %s\n\n", VERSION);
@@ -37,8 +42,10 @@ static void usage(void) {
 	printf("DESKTOP INTEGRATION section in man 1 firejail.\n\n");
 	printf("Usage: firecfg [OPTIONS]\n\n");
 	printf("   --clean - remove all firejail symbolic links.\n\n");
+	printf("   --debug - print debug messages.\n\n");
 	printf("   --help, -? - this help screen.\n\n");
 	printf("   --list - list all firejail symbolic links.\n\n");
+	printf("   --fix - fix .desktop files.\n\n");
 	printf("   --version - print program version and exit.\n\n");
 	printf("Example:\n\n");
 	printf("   $ sudo firecfg\n");
@@ -49,9 +56,13 @@ static void usage(void) {
 	printf("   /usr/local/bin/firefox\n");
 	printf("   /usr/local/bin/vlc\n");
 	printf("   [...]\n");
-	printf("   $ sudo firecfg --clear\n");
+	printf("   $ sudo firecfg --clean\n");
 	printf("   /usr/local/bin/firefox removed\n");
 	printf("   /usr/local/bin/vlc removed\n");
+	printf("   [...]\n");
+	printf("   $ firecfg --fix\n");
+	printf("   /home/user/.local/share/applications/chromium.desktop created\n");
+	printf("   /home/user/.local/share/applications/vlc.desktop created\n");
 	printf("   [...]\n");
 	printf("\n");
 	printf("License GPL version 2 or later\n");
@@ -67,9 +78,12 @@ static int find(const char *program, const char *directory) {
 		errExit("asprintf");
 		
 	struct stat s;
-	if (stat(fname, &s) == 0)
+	if (stat(fname, &s) == 0) {
+	     	if (arg_debug)
+	     		printf("found %s in directory %s\n", program, directory);
 		retval = 1;
-	
+	}
+		
 	free(fname);
 	return retval;
 }
@@ -79,7 +93,8 @@ static int find(const char *program, const char *directory) {
 static int which(const char *program) {
 	// check some well-known paths
 	if (find(program, "/bin") || find(program, "/usr/bin") ||
-	     find(program, "/sbin") || find(program, "/usr/sbin"))
+	     find(program, "/sbin") || find(program, "/usr/sbin") ||
+	     find(program, "/usr/games"))
 		return 1;
 		
 	// check environment
@@ -205,8 +220,9 @@ static void set_file(const char *name, const char *firejail_exec) {
 		errExit("asprintf");
 	
 	struct stat s;
-	if (stat(fname, &s) == 0)
-		; //printf("%s already present\n", fname);
+	if (stat(fname, &s) == 0) {
+		printf("%s is already present, skipping...\n", fname);
+	}
 	else {
 		int rv = symlink(firejail_exec, fname);
 		if (rv) {
@@ -268,7 +284,7 @@ static void set(void) {
 		// empty line
 		if (*start == '\0')
 			continue;
-		
+
 		// set link
 		set_file(start, firejail_exec);
 	}
@@ -276,6 +292,165 @@ static void set(void) {
 	fclose(fp);
 	free(cfgfile);
 	free(firejail_exec);
+}
+
+static void fix_desktop_files(void) {
+	if (getuid() == 0) {
+		fprintf(stderr, "Error: you should run --fix as user\n");
+		exit(1);
+	}
+
+	char *homedir = getenv("HOME");
+	if (!homedir)
+		errExit("getenv");
+
+	char *user_apps_dir;
+	if (asprintf(&user_apps_dir, "%s/.local/share/applications", homedir) == -1)
+		errExit("asprintf");
+
+	DIR *dir = opendir("/usr/share/applications");
+	if (!dir) {
+		perror("Error: cannot open /usr/share/applications directory");
+		exit(1);
+	}
+
+	if (chdir("/usr/share/applications")) {
+		perror("Error: cannot chdir to /usr/share/applications");
+		exit(1);
+	}
+
+	struct dirent *entry;
+	while ((entry = readdir(dir)) != NULL) {
+		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+			continue;
+
+		// skip if not regular file or link
+		if (entry->d_type != DT_REG && entry->d_type != DT_LNK)
+			continue;
+
+		// skip if not .desktop file
+		if (strstr(entry->d_name,".desktop") != (entry->d_name+strlen(entry->d_name)-8))
+			continue;
+
+		char *filename = entry->d_name;
+
+		// skip links
+		if (is_link(filename))
+			continue;
+
+		struct stat sb;
+		if (stat(filename, &sb) == -1)
+			errExit("stat");
+
+		/* coverity[toctou] */
+		int fd = open(filename, O_RDONLY);
+		if (fd == -1)
+			errExit("open");
+
+		char *buf = mmap(NULL, sb.st_size + 1, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+		if (buf == MAP_FAILED)
+			errExit("mmap");
+
+		close(fd);
+
+		// check format
+		if (strstr(buf, "[Desktop Entry]\n") == NULL) {
+			if (arg_debug)
+				fprintf(stderr, "/usr/share/applications/%s - SKIPPED: wrong format?\n", filename);
+			munmap(buf, sb.st_size + 1);
+			continue;
+		}
+
+		// get executable name
+		char *ptr1 = strstr(buf,"\nExec=");
+		if (!ptr1 || strlen(ptr1) < 7) {
+			if (arg_debug)
+				fprintf(stderr, "/usr/share/applications/%s - SKIPPED: wrong format?\n", filename);
+			munmap(buf, sb.st_size + 1);
+			continue;
+		}
+
+		char *execname = ptr1 + 6;
+		// https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s06.html
+		// The executable program can either be specified with its full path
+		// or with the name of the executable only
+		if (execname[0] != '/') {
+			if (arg_debug)
+				fprintf(stderr, "/usr/share/applications/%s - already OK\n", filename);
+			continue;
+		}
+		// executable name can be quoted, this is rare and currently unsupported, TODO
+		if (execname[0] == '"') {
+			if (arg_debug)
+				fprintf(stderr, "/usr/share/applications/%s - skipped: path quoting unsupported\n", filename);
+			continue;
+		}
+
+		// put '\0' at end of filename
+		char *tail = NULL;
+		char endchar = ' ';
+		if (execname[0] == '/') {
+			char *ptr2 = index(execname, ' ');
+			char *ptr3 = index(execname, '\n');
+			if (ptr2 && (!ptr3 || (ptr2 < ptr3))) {
+				endchar = ptr2[0];
+				ptr2[0] = '\0';
+				tail = ptr2 + 1;
+			} else if (ptr3 && (!ptr2 || (ptr3 < ptr2))) {
+				endchar = ptr3[0];
+				ptr3[0] = '\0';
+				tail = ptr3 + 1;
+			}
+			ptr1[5] = '\0';
+		}
+
+		char *bname = basename(execname);
+		assert(bname);
+
+		// check if basename in PATH
+		if (!which(bname)) {
+			fprintf(stderr, "/usr/share/applications/%s - skipped, %s not in PATH\n", filename, bname);
+			continue;
+		}
+
+		char *outname;
+		if (asprintf(&outname ,"%s/%s", user_apps_dir, filename) == -1)
+			errExit("asprintf");
+
+		int fd1 = open(outname, O_CREAT | O_WRONLY | O_EXCL, S_IRUSR | S_IWUSR);
+		free(outname);
+
+		if (fd1 == -1) {
+			fprintf(stderr, "%s/%s skipped: %s\n", user_apps_dir, filename, strerror(errno));
+			munmap(buf, sb.st_size + 1);
+			continue;
+		}
+
+		FILE *outfile = fdopen(fd1, "w");
+		if (!outfile) {
+			fprintf(stderr, "%s/%s skipped: %s\n", user_apps_dir, filename, strerror(errno));
+			munmap(buf, sb.st_size + 1);
+			close(fd1);
+			continue;
+		}
+
+		if (fprintf(outfile,\
+		"# Converted by firecfg --fix from /usr/share/applications/%s\n\n%s=%s%c%s",\
+		filename, buf, bname, endchar, tail) < 0) {
+			fprintf(stderr, "Unable to write %s/%s: %s\n", user_apps_dir, filename, strerror(errno));
+			munmap(buf, sb.st_size + 1);
+			fclose(outfile);
+			continue;
+		}
+
+		fclose(outfile);
+		munmap(buf, sb.st_size + 1);
+
+		printf("%s/%s created\n", user_apps_dir, filename);
+	}
+
+	closedir(dir);
+	free(user_apps_dir);
 }
 
 int main(int argc, char **argv) {
@@ -288,6 +463,8 @@ int main(int argc, char **argv) {
 			usage();
 			return 0;
 		}
+		else if (strcmp(argv[i], "--debug") == 0)
+			arg_debug = 1;
 		else if (strcmp(argv[i], "--version") == 0) {
 			printf("firecfg version %s\n\n", VERSION);
 			return 0;
@@ -298,6 +475,10 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--list") == 0) {
 			list();
+			return 0;
+		}
+		else if (strcmp(argv[i], "--fix") == 0) {
+			fix_desktop_files();
 			return 0;
 		}
 		else {

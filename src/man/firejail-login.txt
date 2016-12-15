@@ -13,9 +13,13 @@ Example:
 
 	netblue:--net=none --protocol=unix
 
+Wildcard patterns are accepted in the user name field:
+
+	user*: --private
+
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
-/etc/password file for each user that needs to be restricted. Alternatively,
+/etc/passwd file for each user that needs to be restricted. Alternatively,
 you can specify /usr/bin/firejail  using adduser or usermod commands:
 
 adduser \-\-shell /usr/bin/firejail username
@@ -34,6 +38,5 @@ Homepage: http://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-profile\fR\|(5)
-\&\flfirejail-config\fR\|(5)
 
 

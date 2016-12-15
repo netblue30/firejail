@@ -9,20 +9,16 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
+nonewprivs
 noroot
+protocol unix,inet,inet6
+seccomp
 
 private-dev
+private-tmp
 
-whitelist /tmp/.X11-unix
-
-mkdir ${HOME}/.local
-mkdir ${HOME}/.local/share
 mkdir ${HOME}/.local/share/wesnoth
-mkdir ${HOME}/.config
 mkdir ${HOME}/.config/wesnoth
-mkdir ${HOME}/.cache
 mkdir ${HOME}/.cache/wesnoth
 whitelist ${HOME}/.local/share/wesnoth
 whitelist ${HOME}/.config/wesnoth

@@ -53,8 +53,25 @@ doexit:
 
 // disable pulseaudio socket
 void pulseaudio_disable(void) {
+	if (arg_debug)
+		printf("disable pulseaudio\n");
 	// blacklist user config directory
 	disable_file(cfg.homedir, ".config/pulse");
+
+
+	// blacklist pulseaudio socket in XDG_RUNTIME_DIR
+	char *name = getenv("XDG_RUNTIME_DIR");
+	if (name)
+		disable_file(name, "pulse/native");
+
+	// try the default location anyway
+	char *path;
+	if (asprintf(&path, "/run/user/%d", getuid()) == -1)
+		errExit("asprintf");
+	disable_file(path, "pulse/native");
+	free(path);
+		
+
 
 	// blacklist any pulse* file in /tmp directory
 	DIR *dir;
@@ -62,7 +79,6 @@ void pulseaudio_disable(void) {
 		// sleep 2 seconds and try again
 		sleep(2);
 		if (!(dir = opendir("/tmp"))) {
-			fprintf(stderr, "Warning: cannot open /tmp directory. PulseAudio sockets are not disabled\n");
 			return;
 		}
 	}
@@ -76,10 +92,6 @@ void pulseaudio_disable(void) {
 
 	closedir(dir);
 
-	// blacklist XDG_RUNTIME_DIR
-	char *name = getenv("XDG_RUNTIME_DIR");
-	if (name)
-		disable_file(name, "pulse/native");
 }
 
 
@@ -92,33 +104,23 @@ void pulseaudio_init(void) {
 		return;
 	 
  	// create the new user pulseaudio directory
-	 fs_build_mnt_dir();
 	int rv = mkdir(RUN_PULSE_DIR, 0700);
 	(void) rv; // in --chroot mode the directory can already be there
-	if (chown(RUN_PULSE_DIR, getuid(), getgid()) < 0)
-		errExit("chown");
-	if (chmod(RUN_PULSE_DIR, 0700) < 0)
-		errExit("chmod");
+	if (set_perms(RUN_PULSE_DIR, getuid(), getgid(), 0700))
+		errExit("set_perms");
 
 	// create the new client.conf file
 	char *pulsecfg = NULL;
 	if (asprintf(&pulsecfg, "%s/client.conf", RUN_PULSE_DIR) == -1)
 		errExit("asprintf");
-	if (is_link("/etc/pulse/client.conf")) {
-		fprintf(stderr, "Error: invalid /etc/pulse/client.conf file\n");
-		exit(1);
-	}
-	if (copy_file("/etc/pulse/client.conf", pulsecfg))
+	if (copy_file("/etc/pulse/client.conf", pulsecfg, -1, -1, 0644))
 		errExit("copy_file");
 	FILE *fp = fopen(pulsecfg, "a+");
 	if (!fp)
 		errExit("fopen");
 	fprintf(fp, "%s", "\nenable-shm = no\n");
+	SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);
 	fclose(fp);
-	if (chmod(pulsecfg, 0644) == -1)
-		errExit("chmod");
-	if (chown(pulsecfg, getuid(), getgid()) == -1)
-		errExit("chown");
 
 	// create ~/.config/pulse directory if not present
 	char *dir1;
@@ -127,22 +129,19 @@ void pulseaudio_init(void) {
 	if (stat(dir1, &s) == -1) {
 		int rv = mkdir(dir1, 0755);
 		if (rv == 0) {
-			rv = chown(dir1, getuid(), getgid());
-			(void) rv;
-			rv = chmod(dir1, 0755);
-			(void) rv;
+			if (set_perms(dir1, getuid(), getgid(), 0755))
+				{;} // do nothing
 		}
 	}
 	free(dir1);
 	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
+		/* coverity[toctou] */
 		int rv = mkdir(dir1, 0700);
 		if (rv == 0) {
-			rv = chown(dir1, getuid(), getgid());
-			(void) rv;
-			rv = chmod(dir1, 0700);
-			(void) rv;
+			if (set_perms(dir1, getuid(), getgid(), 0700))
+				{;} // do nothing
 		}
 	}
 	free(dir1);

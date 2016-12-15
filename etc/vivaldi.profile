@@ -8,10 +8,8 @@ include /etc/firejail/disable-devel.inc
 netfilter
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/vivaldi
 whitelist ~/.config/vivaldi
-mkdir ~/.cache
 mkdir ~/.cache/vivaldi
 whitelist ~/.cache/vivaldi
 include /etc/firejail/whitelist-common.inc

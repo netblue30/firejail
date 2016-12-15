@@ -1,0 +1,83 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --nice=15\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "top -b -n 1\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	$env(USER)
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"15"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"bash"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	$env(USER)
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"15"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"top"
+}
+
+sleep 1
+send -- "exit\r"
+after 100
+
+send -- "firejail --profile=nice.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "top -b -n 1\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	$env(USER)
+}
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"15"
+}
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"bash"
+}
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	$env(USER)
+}
+expect {
+	timeout {puts "TESTING ERROR 15\n";exit}
+	"15"
+}
+expect {
+	timeout {puts "TESTING ERROR 16\n";exit}
+	"top"
+}
+
+
+
+puts "\nall done\n"
+

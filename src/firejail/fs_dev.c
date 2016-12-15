@@ -30,17 +30,75 @@
 #endif
 #include <sys/types.h>
 
+typedef struct {
+	const char *dev_fname;
+	const char *run_fname;
+	int sound;
+	int hw3d;
+} DevEntry;
+
+static DevEntry dev[] = {
+	{"/dev/snd", RUN_DEV_DIR "/snd", 1, 0},	// sound device
+	{"/dev/dri", RUN_DEV_DIR "/dri", 0, 1},		// 3d device
+	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", 0, 1},
+	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", 0, 1},
+	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2", 0, 1},
+	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3", 0, 1},
+	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4", 0, 1},
+	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5", 0, 1},
+	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6", 0, 1},
+	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7", 0, 1},
+	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", 0, 1},
+	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", 0, 1},
+	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1},
+	{"/dev/nvidia-modset", RUN_DEV_DIR "/nvidia-modset", 0, 1},
+	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", 0, 1},
+	{NULL, NULL, 0, 0}
+};
+
+static void deventry_mount(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		struct stat s;
+		if (stat(dev[i].run_fname, &s) == 0) {
+			int dir = is_dir(dev[i].run_fname);
+			if (arg_debug)
+				printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
+			if (dir) {
+				mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
+			}
+			else {
+				struct stat s;
+				if (stat(dev[i].run_fname, &s) == -1) {
+					if (arg_debug)
+						printf("Warning: cannot stat %s file\n", dev[i].run_fname);
+					i++;
+					continue;
+				}
+				FILE *fp = fopen(dev[i].dev_fname, "w");
+				if (fp) {
+					fprintf(fp, "\n");
+					SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
+					fclose(fp);
+				}
+			}
+				
+			if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mounting dev file");
+			fs_logger2("whitelist", dev[i].dev_fname);
+		}
+		
+		i++;	
+	}
+}
+	
 static void create_char_dev(const char *path, mode_t mode, int major, int minor) {
 	dev_t dev = makedev(major, minor);
-	int rv = mknod(path, S_IFCHR | mode, dev);
-	if (rv == -1)
+	if (mknod(path, S_IFCHR | mode, dev) == -1)
 		goto errexit;
-	
-
 	if (chmod(path, mode) < 0)
 		goto errexit;
-	if (chown(path, 0, 0) < 0)
-		goto errexit;
+	ASSERT_PERMS(path, 0, 0, mode);
 
 	return;
 	
@@ -62,35 +120,19 @@ errexit:
 }
 
 void fs_private_dev(void){
-	int rv;
 	// install a new /dev directory
 	if (arg_debug)
 		printf("Mounting tmpfs on /dev\n");
 
-	int have_dri = 0;
-	struct stat s;
-	if (stat("/dev/dri", &s) == 0)
-		have_dri = 1;
-
 	// create DRI_DIR
-	fs_build_mnt_dir();
-	if (have_dri) {
-		/* coverity[toctou] */
-		rv = mkdir(RUN_DRI_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_DRI_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_DRI_DIR, 0755) < 0)
-			errExit("chmod");
-	
-		// keep a copy of /dev/dri under DRI_DIR
-		if (mount("/dev/dri", RUN_DRI_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /dev/dri");
-	}
-	
-	// restore /dev/log
+	// keep a copy of dev directory
+	mkdir_attr(RUN_DEV_DIR, 0755, 0, 0);
+	if (mount("/dev", RUN_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /dev/dri");
+
+	// create DEVLOG_FILE
 	int have_devlog = 0;
+	struct stat s;
 	if (stat("/dev/log", &s) == 0) {
 		have_devlog = 1;
 		FILE *fp = fopen(RUN_DEVLOG_FILE, "w");
@@ -108,6 +150,8 @@ void fs_private_dev(void){
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
 	fs_logger("tmpfs /dev");
+	
+	deventry_mount();
 
 	// bring back /dev/log
 	if (have_devlog) {
@@ -120,32 +164,14 @@ void fs_private_dev(void){
 			fs_logger("clone /dev/log");
 		}
 	}		
+	if (mount(RUN_RO_DIR, RUN_DEV_DIR, "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("disable /dev/snd");
 
-	// bring back the /dev/dri directory
-	if (have_dri) {
-		/* coverity[toctou] */
-		rv = mkdir("/dev/dri", 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown("/dev/dri", 0, 0) < 0)
-			errExit("chown");
-		if (chmod("/dev/dri",0755) < 0)
-			errExit("chmod");
-		if (mount(RUN_DRI_DIR, "/dev/dri", NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /dev/dri");
-		fs_logger("whitelist /dev/dri");
-	}
 	
 	// create /dev/shm
 	if (arg_debug)
 		printf("Create /dev/shm directory\n");
-	rv = mkdir("/dev/shm", 01777);
-	if (rv == -1)
-		errExit("mkdir");
-	if (chown("/dev/shm", 0, 0) < 0)
-		errExit("chown");
-	if (chmod("/dev/shm", 01777) < 0)
-		errExit("chmod");
+	mkdir_attr("/dev/shm", 01777, 0, 0);
 	fs_logger("mkdir /dev/shm");
 
 	// create devices
@@ -167,13 +193,7 @@ void fs_private_dev(void){
 #endif
 
 	// pseudo-terminal
-	rv = mkdir("/dev/pts", 0755);
-	if (rv == -1)
-		errExit("mkdir");
-	if (chown("/dev/pts", 0, 0) < 0)
-		errExit("chown");
-	if (chmod("/dev/pts", 0755) < 0)
-		errExit("chmod");
+	mkdir_attr("/dev/pts", 0755, 0, 0);
 	fs_logger("mkdir /dev/pts");
 	create_char_dev("/dev/pts/ptmx", 0666, 5, 2); //"mknod -m 666 /dev/pts/ptmx c 5 2");
 	fs_logger("mknod /dev/pts/ptmx");
@@ -186,7 +206,7 @@ void fs_private_dev(void){
 
 
 	// mount /dev/pts
-	gid_t ttygid = get_tty_gid();
+	gid_t ttygid = get_group_id("tty");
 	char *data;
 	if (asprintf(&data, "newinstance,gid=%d,mode=620,ptmxmode=0666", (int) ttygid) == -1)
 		errExit("asprintf");
@@ -205,6 +225,7 @@ void fs_private_dev(void){
 }
 
 
+#if 0
 void fs_dev_shm(void) {
 	uid_t uid = getuid(); // set a new shm only if we started as root
 	if (uid)
@@ -222,12 +243,7 @@ void fs_dev_shm(void) {
 		if (lnk) {
 			if (!is_dir(lnk)) {
 				// create directory
-				if (mkdir(lnk, 01777))
-					errExit("mkdir");
-				if (chown(lnk, 0, 0))
-					errExit("chown");
-				if (chmod(lnk, 01777))
-					errExit("chmod");
+				mkdir_attr(lnk, 01777, 0, 0);
 			}
 			if (arg_debug)
 				printf("Mounting tmpfs on %s on behalf of /dev/shm\n", lnk);
@@ -241,5 +257,42 @@ void fs_dev_shm(void) {
 			dbg_test_dir("/dev/shm");
 		}
 			
+	}
+}
+#endif	
+
+static void disable_file_or_dir(const char *fname) {
+	if (arg_debug)
+		printf("disable %s\n", fname);
+	struct stat s;
+	if (stat(fname, &s) != -1) {
+		if (is_dir(fname)) {	
+			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				errExit("disable directory");
+		}
+		else {
+			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				errExit("disable file");
+		}		
+	}
+	fs_logger2("blacklist", fname);
+
+}
+
+void fs_dev_disable_sound(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].sound)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_3d(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].hw3d)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
 	}
 }

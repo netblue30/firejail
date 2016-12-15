@@ -33,16 +33,22 @@ rm -rf %{buildroot}
 %doc
 %defattr(-, root, root, -)
 %attr(4755, -, -) %{_bindir}/__NAME__
+%{_bindir}/firecfg
 %{_bindir}/firemon
+%{_libdir}/__NAME__/firecfg.config
 %{_libdir}/__NAME__/ftee
+%{_libdir}/__NAME__/faudit
 %{_libdir}/__NAME__/fshaper.sh
 %{_libdir}/__NAME__/libtrace.so
 %{_libdir}/__NAME__/libtracelog.so
 %{_datarootdir}/bash-completion/completions/__NAME__
+%{_datarootdir}/bash-completion/completions/firecfg
 %{_datarootdir}/bash-completion/completions/firemon
 %{_docdir}/__NAME__
 %{_mandir}/man1/__NAME__.1.gz
+%{_mandir}/man1/firecfg.1.gz
 %{_mandir}/man1/firemon.1.gz
+%{_mandir}/man5/__NAME__-config.5.gz
 %{_mandir}/man5/__NAME__-login.5.gz
 %{_mandir}/man5/__NAME__-profile.5.gz
 %config %{_sysconfdir}/__NAME__

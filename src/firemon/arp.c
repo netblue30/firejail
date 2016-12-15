@@ -72,17 +72,15 @@ static void print_arp(const char *fname) {
 
 }
 
-void arp(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
+void arp(pid_t pid, int print_procs) {
 	pid_read(pid);
 	
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {
-			pid_print_list(i, 0);
+			if (print_procs || pid == 0)
+				pid_print_list(i, 0);
 			int child = find_child(i);
 			if (child != -1) {
 				char *fname;
@@ -90,10 +88,10 @@ void arp(pid_t pid) {
 					errExit("asprintf");
 				print_arp(fname);
 				free(fname);
-				printf("\n");
 			}
 		}
 	}
+	printf("\n");
 }
 
 

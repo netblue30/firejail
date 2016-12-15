@@ -29,16 +29,14 @@
 //Process pids[max_pids];
 Process *pids = NULL;
 int max_pids=32769;
-#define PIDS_BUFLEN 4096
 
 // get the memory associated with this pid
 void pid_getmem(unsigned pid, unsigned *rss, unsigned *shared) {
 	// open stat file
 	char *file;
-	if (asprintf(&file, "/proc/%u/statm", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/statm", pid) == -1)
+		errExit("asprintf");
+		
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -60,10 +58,9 @@ void pid_getmem(unsigned pid, unsigned *rss, unsigned *shared) {
 void pid_get_cpu_time(unsigned pid, unsigned *utime, unsigned *stime) {
 	// open stat file
 	char *file;
-	if (asprintf(&file, "/proc/%u/stat", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/stat", pid) == -1)
+		errExit("asprintf");
+
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -94,10 +91,9 @@ myexit:
 unsigned long long pid_get_start_time(unsigned pid) {
 	// open stat file
 	char *file;
-	if (asprintf(&file, "/proc/%u/stat", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/stat", pid) == -1)
+		errExit("asprintf");
+
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -139,10 +135,8 @@ uid_t pid_get_uid(pid_t pid) {
 
 	// open status file
 	char *file;
-	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/status", pid) == -1)
+		errExit("asprintf");
 
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
@@ -317,10 +311,9 @@ void pid_read(pid_t mon_pid) {
 			
 		// open stat file
 		char *file;
-		if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-			perror("asprintf");
-			exit(1);
-		}
+		if (asprintf(&file, "/proc/%u/status", pid) == -1)
+			errExit("asprintf");
+
 		FILE *fp = fopen(file, "r");
 		if (!fp) {
 			free(file);
@@ -340,18 +333,12 @@ void pid_read(pid_t mon_pid) {
 					exit(1);
 				}
 
-				if (mon_pid == 0 && strncmp(ptr, "firejail", 8) == 0) {
-					pids[pid].level = 1;
+				if ((strncmp(ptr, "firejail", 8) == 0) && (mon_pid == 0 || mon_pid == pid)) {
+					if (pid_proc_cmdline_x11_xpra_xephyr(pid))
+						pids[pid].level = -1;
+					else
+						pids[pid].level = 1;
 				}
-				else if (mon_pid == pid && strncmp(ptr, "firejail", 8) == 0) {
-					pids[pid].level = 1;
-				}
-//				else if (mon_pid == 0 && strncmp(ptr, "lxc-execute", 11) == 0) {
-//					pids[pid].level = 1;
-//				}
-//				else if (mon_pid == pid && strncmp(ptr, "lxc-execute", 11) == 0) {
-//					pids[pid].level = 1;
-//				}
 				else
 					pids[pid].level = -1;
 			}

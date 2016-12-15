@@ -27,12 +27,27 @@ typedef struct env_t {
 	struct env_t *next;
 	char *name;
 	char *value;
+	ENV_OP op;
 } Env;
 static Env *envlist = NULL;
 
 static void env_add(Env *env) {
-	env->next = envlist;
-	envlist = env;
+	env->next = NULL;
+	
+	// add the new entry at the end of the list
+	if (envlist == NULL) {
+		envlist = env;
+		return;
+	}
+	
+	Env *ptr = envlist;
+	while (1) {
+		if (ptr->next == NULL) {
+			ptr->next = env;
+			break;
+		}
+		ptr = ptr->next;
+	}
 }
 
 // load IBUS env variables
@@ -87,7 +102,7 @@ void env_ibus_load(void) {
 			if (arg_debug)
 				printf("%s\n", buf);
 			EUID_USER();
-			env_store(buf);
+			env_store(buf, SETENV);
 			EUID_ROOT();
 		}
 
@@ -104,29 +119,39 @@ void env_defaults(void) {
 	// fix qt 4.8
 	if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
 		errExit("setenv");
+//	if (setenv("MOZ_NO_REMOTE, "1", 1) < 0)
+//		errExit("setenv");
 	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
 		errExit("setenv");
-	if (arg_zsh && setenv("SHELL", "/usr/bin/zsh", 1) < 0)
-		errExit("setenv");
-	if (arg_csh && setenv("SHELL", "/bin/csh", 1) < 0)
-		errExit("setenv");
+	if (!cfg.shell)
+		cfg.shell = guess_shell();
 	if (cfg.shell && setenv("SHELL", cfg.shell, 1) < 0)
 		errExit("setenv");
-	// set prompt color to green
-	//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
-	if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
-		errExit("setenv");
 
-	// build the window title and set it
-	char *title;
-	if (asprintf(&title, "\033]0;firejail %s\007\n", cfg.window_title) == -1)
-		errExit("asprintf");
-	printf("%s", title);
-	free(title);
+	// set prompt color to green
+	int set_prompt = 0;
+	if (checkcfg(CFG_FIREJAIL_PROMPT))
+		set_prompt = 1;
+	else { // check FIREJAIL_PROMPT="yes" environment variable
+		char *prompt = getenv("FIREJAIL_PROMPT");
+		if (prompt && strcmp(prompt, "yes") == 0)
+			set_prompt = 1;
+	}
+	
+	if (set_prompt) {
+		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
+		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
+			errExit("setenv");
+	}
+	
+	// set the window title
+	if (!arg_quiet)
+		printf("\033]0;firejail %s\007", cfg.window_title);
+	fflush(0);
 }
 
 // parse and store the environment setting 
-void env_store(const char *str) {
+void env_store(const char *str, ENV_OP op) {
 	EUID_ASSERT();
 	assert(str);
 	
@@ -134,11 +159,13 @@ void env_store(const char *str) {
 	if (*str == '\0')
 		goto errexit;
 	char *ptr = strchr(str, '=');
-	if (!ptr)
-		goto errexit;
-	ptr++;
-	if (*ptr == '\0')
-		goto errexit;
+	if (op == SETENV) {
+		if (!ptr)
+			goto errexit;
+		ptr++;
+		if (*ptr == '\0')
+			goto errexit;
+	}
 
 	// build list entry
 	Env *env = malloc(sizeof(Env));
@@ -148,10 +175,13 @@ void env_store(const char *str) {
 	env->name = strdup(str);
 	if (env->name == NULL)
 		errExit("strdup");
-	char *ptr2 = strchr(env->name, '=');
-	assert(ptr2);
-	*ptr2 = '\0';
-	env->value = ptr2 + 1;
+	if (op == SETENV) {
+		char *ptr2 = strchr(env->name, '=');
+		assert(ptr2);
+		*ptr2 = '\0';
+		env->value = ptr2 + 1;
+	}
+	env->op = op;
 	
 	// add entry to the list
 	env_add(env);
@@ -167,8 +197,13 @@ void env_apply(void) {
 	Env *env = envlist;
 	
 	while (env) {
-		if (setenv(env->name, env->value, 1) < 0)
-			errExit("setenv");
+		if (env->op == SETENV) {
+			if (setenv(env->name, env->value, 1) < 0)
+				errExit("setenv");
+		}
+		else if (env->op == RMENV) {
+			unsetenv(env->name);
+		}
 		env = env->next;
 	}
 }

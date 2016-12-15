@@ -78,11 +78,8 @@ void save_cpu(void) {
 	FILE *fp = fopen(RUN_CPU_CFG, "w");
 	if (fp) {
 		fprintf(fp, "%x\n", cfg.cpus);
+		SET_PERMS_STREAM(fp, 0, 0, 0600);
 		fclose(fp);
-		if (chmod(RUN_CPU_CFG, 0600) < 0)
-			errExit("chmod");
-		if (chown(RUN_CPU_CFG, 0, 0) < 0)
-			errExit("chown");
 	}
 	else {
 		fprintf(stderr, "Error: cannot save cpu affinity mask\n");
@@ -169,21 +166,6 @@ static void print_cpu(int pid) {
 	}
 	fclose(fp);
 	free(file);
-}
-
-void cpu_print_filter_name(const char *name) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	cpu_print_filter(pid);
 }
 
 void cpu_print_filter(pid_t pid) {

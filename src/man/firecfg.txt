@@ -10,18 +10,24 @@ sandbox applications automatically, just by clicking on a regular desktop
 menus and icons.
 
 The symbolic links are placed in /usr/local/bin. For more information, see
-DESKTOP INTEGRATION section in man 1 firejail.
+\fBDESKTOP INTEGRATION\fR section in \fBman 1 firejail\fR.
 
 .SH OPTIONS
 .TP
 \fB\-\-clean
 Remove all firejail symbolic links.
 .TP
+\fB\-\-debug
+Print debug messages.
+.TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.
 .TP
 \fB\-\-list
 List all firejail symbolic links
+.TP
+\fB\-\-fix
+Fix .desktop files. Some .desktop files use full path to executable. Firecfg will check .desktop files in /usr/share/applications/, replace full path by name if it is in PATH, and write result to $HOME/.local/share/applications/.
 .TP
 \fB\-\-version
 Print program version and exit.
@@ -48,13 +54,22 @@ $ firecfg --list
 .br
 [...]
 .br
-$ sudo firecfg --clear
+$ sudo firecfg --clean
 .br
 /usr/local/bin/firefox removed
 .br
 /usr/local/bin/vlc removed
 .br
 [...]
+.br
+$ firecfg --fix
+.br
+/home/user/.local/share/applications/chromium.desktop created
+.br
+/home/user/.local/share/applications/vlc.desktop created
+.br
+[...]
+
 
 .SH LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -65,6 +80,5 @@ Homepage: http://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5)
-\&\flfirejail-config\fR\|(5)
 
 

@@ -4,8 +4,12 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
 netfilter
+nonewprivs
 noroot
-netfilter
+protocol unix,inet,inet6
+seccomp
+
+# no private-bin support for various reasons:
+# Plugins loaded: alias, aspell, charset, exec, fifo, guile, irc,
+# logger, lua, perl, python, relay, ruby, script, tcl, trigger, xferloading plugins 

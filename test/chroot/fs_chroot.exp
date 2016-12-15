@@ -1,0 +1,54 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail  --chroot=/tmp/chroot\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Error: --chroot option is not available on Grsecurity systems" {puts "\nall done\n"; exit}
+	"Child process initialized" {puts "chroot available\n"};
+}
+sleep 1
+
+send -- "cd /home;pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 0.1\n";exit}
+	"home"
+}
+sleep 1
+send -- "bash\r"
+sleep 1
+send -- "ls /\r"
+expect {
+	timeout {puts "TESTING ERROR 0.2\n";exit}
+	"this-is-my-chroot"
+}
+after 100
+
+send -- "ps aux\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"/bin/bash"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"bash"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"ps aux"
+}
+after 100
+
+send -- "ps aux | wc -l; pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"6"
+}
+after 100
+
+
+puts "all done\n"
+

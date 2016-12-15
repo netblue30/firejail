@@ -9,5 +9,6 @@ include /etc/firejail/disable-devel.inc
 
 caps.drop all
 netfilter
+nonewprivs
 noroot
 seccomp

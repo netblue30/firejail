@@ -1,0 +1,54 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+#
+# copy directory src to dest
+#
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "rm -fr dest/*\r"
+after 100
+
+send -- "/usr/lib/firejail/fcopy dircopy.exp dest\r"
+after 100
+
+send -- "find dest\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"dest/"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"dest/dircopy.exp"
+}
+after 100
+
+
+send -- "ls -al dest\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"rwxr-xr-x"
+}
+after 100
+
+send -- "diff -q dircopy.exp dest/dircopy.exp; echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"differ" {puts "TESTING ERROR 4\n";exit}
+	"done"
+}
+
+send -- "file dest/dircopy.exp\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"ASCII text"
+}
+
+send -- "rm -fr dest/*\r"
+after 100
+
+puts "\nall done\n"

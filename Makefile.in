@@ -1,6 +1,8 @@
-all: apps firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-config.5
+all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee
+APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect src/fnet src/fseccomp src/fcopy
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
+SECCOMP_FILTERS = seccomp seccomp.i386 seccomp.amd64
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -14,47 +16,55 @@ VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
+HAVE_APPARMOR=@HAVE_APPARMOR@
+BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
+
+uids.h:; ./mkuid.sh
 
 .PHONY: mylibs $(MYLIBS)
-mylibs: $(MYLIBS)
+mylibs: $(MYLIBS) uids.h
 $(MYLIBS):
 	$(MAKE) -C $@
 
 .PHONY: apps $(APPS)
 apps: $(APPS)
-$(APPS): $(MYLIBS)
+$(APPS): $(MYLIBS) uids.h
 	$(MAKE) -C $@
 
-firemon.1: src/man/firemon.txt
-	./mkman.sh $(VERSION) src/man/firemon.txt firemon.1
-firejail.1: src/man/firejail.txt
-	./mkman.sh $(VERSION) src/man/firejail.txt firejail.1
-firecfg.1: src/man/firecfg.txt
-	./mkman.sh $(VERSION) src/man/firecfg.txt firecfg.1
-firejail-profile.5: src/man/firejail-profile.txt
-	./mkman.sh $(VERSION) src/man/firejail-profile.txt firejail-profile.5
-firejail-login.5: src/man/firejail-login.txt
-	./mkman.sh $(VERSION) src/man/firejail-login.txt firejail-login.5
-firejail-config.5: src/man/firejail-config.txt
-	./mkman.sh $(VERSION) src/man/firejail-config.txt firejail-config.5
+$(MANPAGES): $(wildcard src/man/*.txt)
+	./mkman.sh $(VERSION) src/man/$(basename $@).txt $@
+
+man: $(MANPAGES)
+
+filters: src/fseccomp
+	src/fseccomp/fseccomp default seccomp
+	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
+	src/fseccomp/fseccomp secondary 32 seccomp.i386
+	src/fseccomp/fseccomp secondary 64 seccomp.amd64
 
 clean:
-	for dir in $(APPS); do \
+	for dir in $(APPS) $(MYLIBS); do \
 		$(MAKE) -C $$dir clean; \
 	done
-	for dir in $(MYLIBS); do \
-		$(MAKE) -C $$dir clean; \
-	done
-	rm -f firejail.1 firejail.1.gz firemon.1 firemon.1.gz firecfg.1 firecfg.gz firejail-profile.5 firejail-profile.5.gz firejail-login.5 firejail-login.5.gz firejail-config.5 firejail-config.5.gz firejail*.rpm
+	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
+	rm -f seccomp seccomp.debug seccomp.i386 seccomp.amd64
+	rm -f test/utils/index.html*
+	rm -f test/utils/wget-log
+	rm -f test/utils/lstesting
+	rm -f test/environment/index.html*
+	rm -f test/environment/wget-log*
+	rm -fr test/environment/-testdir
+	rm -f test/environment/logfile*
+	rm -f test/environment/index.html
+	rm -f test/environment/wget-log
+	rm -f test/sysutils/firejail_t*
+	cd test/compile; ./compile.sh --clean; cd ../..
 
 distclean: clean
-	for dir in $(APPS); do \
+	for dir in $(APPS) $(MYLIBS); do \
 		$(MAKE) -C $$dir distclean; \
 	done
-	for dir in $(MYLIBS); do \
-		$(MAKE) -C $$dir distclean; \
-	done
-	rm -fr Makefile autom4te.cache config.log config.status config.h
+	rm -fr Makefile autom4te.cache config.log config.status config.h uids.h
 
 realinstall:
 	# firejail executable
@@ -69,132 +79,53 @@ realinstall:
 	install -m 0755 -d $(DESTDIR)/$(libdir)/firejail
 	install -c -m 0644 src/libtrace/libtrace.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/libtracelog/libtracelog.so $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 src/libconnect/libconnect.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fcopy/fcopy $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 README $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 RELNOTES $(DESTDIR)/$(DOCDIR)/.
 	# etc files
-	./mketc.sh $(sysconfdir)
+	./mketc.sh $(sysconfdir) $(BUSYBOX_WORKAROUND)
 	install -m 0755 -d $(DESTDIR)/$(sysconfdir)/firejail
-	install -c -m 0644 .etc/audacious.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/clementine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/epiphany.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/qtox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/polari.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/gnome-mplayer.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/rhythmbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/totem.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/firefox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/icedove.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/iceweasel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/midori.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/evince.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/chromium-browser.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/chromium.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/google-chrome.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/google-chrome-stable.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/google-chrome-beta.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/google-chrome-unstable.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/disable-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/dropbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/opera.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/opera-beta.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/thunderbird.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/transmission-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/transmission-qt.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/vlc.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/deluge.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/qbittorrent.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/generic.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/pidgin.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/xchat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/empathy.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/server.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/icecat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/quassel.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/deadbeef.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/filezilla.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/fbreader.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/spotify.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/steam.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/skype.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/wine.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/disable-devel.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/conkeror.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/unbound.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/dnscrypt-proxy.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/whitelist-common.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/nolocal.net $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/webserver.net $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/bitlbee.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/weechat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/weechat-curses.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/hexchat.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/rtorrent.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/parole.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/kmail.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/seamonkey.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/seamonkey-bin.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/telegram.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/mathematica.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/Mathematica.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/uget-gtk.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/mupen64plus.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/disable-programs.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/disable-passwdmgr.inc $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/lxterminal.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/cherrytree.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/wesnoth.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/hedgewars.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/vivaldi.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/vivaldi-beta.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/atril.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/qutebrowser.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/flashpeak-slimjet.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/ssh.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/openbox.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/dillo.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/cmus.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/dnsmasq.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/palemoon.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/icedove.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/abrowser.profile $(DESTDIR)/$(sysconfdir)/firejail/.
-	install -c -m 0644 .etc/0ad.profile $(DESTDIR)/$(sysconfdir)/firejail/.
+	for file in .etc/* etc/firejail.config; do \
+		install -c -m 0644 $$file $(DESTDIR)/$(sysconfdir)/firejail; \
+	done
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/firejail.config ]; then install -c -m 0644 etc/firejail.config $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc
+ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)	
+	# install apparmor profile
+	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"
+	install -c -m 0644 etc/firejail-default $(DESTDIR)/$(sysconfdir)/apparmor.d/.
+endif	
 	# man pages
-	rm -f firejail.1.gz
-	gzip -9n firejail.1
-	rm -f firemon.1.gz
-	gzip -9n firemon.1
-	rm -f firecfg.1.gz
-	gzip -9n firecfg.1
-	rm -f firejail-profile.5.gz
-	gzip -9n firejail-profile.5
-	rm -f firejail-login.5.gz
-	gzip -9n firejail-login.5
-	rm -f firejail-config.5.gz
-	gzip -9n firejail-config.5
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man1
-	install -c -m 0644 firejail.1.gz $(DESTDIR)/$(mandir)/man1/.
-	install -c -m 0644 firemon.1.gz $(DESTDIR)/$(mandir)/man1/.
-	install -c -m 0644 firecfg.1.gz $(DESTDIR)/$(mandir)/man1/.
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man5
-	install -c -m 0644 firejail-profile.5.gz $(DESTDIR)/$(mandir)/man5/.
-	install -c -m 0644 firejail-login.5.gz $(DESTDIR)/$(mandir)/man5/.
-	install -c -m 0644 firejail-config.5.gz $(DESTDIR)/$(mandir)/man5/.
-	rm -f firejail.1.gz firemon.1.gz firecfg.1.gz firejail-profile.5.gz firejail-login.5.gz firejail-config.5.gz
+	for man in $(MANPAGES); do \
+		rm -f $$man.gz; \
+		gzip -9n $$man; \
+		case "$$man" in \
+			*.1) install -c -m 0644 $$man.gz $(DESTDIR)/$(mandir)/man1/; ;; \
+			*.5) install -c -m 0644 $$man.gz $(DESTDIR)/$(mandir)/man5/; ;; \
+		esac; \
+	done
+	rm -f $(MANPAGES) $(MANPAGES:%=%.gz)
 	# bash completion
 	install -m 0755 -d $(DESTDIR)/$(datarootdir)/bash-completion/completions
 	install -c -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)/$(datarootdir)/bash-completion/completions/firejail
 	install -c -m 0644 src/bash_completion/firemon.bash_completion $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	install -c -m 0644 src/bash_completion/firecfg.bash_completion $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
-
 
 install: all
 	$(MAKE) realinstall
@@ -205,7 +136,12 @@ install-strip: all
 	strip src/firecfg/firecfg
 	strip src/libtrace/libtrace.so
 	strip src/libtracelog/libtracelog.so
+	strip src/libconnect/libconnect.so
 	strip src/ftee/ftee
+	strip src/faudit/faudit
+	strip src/fnet/fnet
+	strip src/fseccomp/fseccomp
+	strip src/fcopy/fcopy
 	$(MAKE) realinstall
 
 uninstall:
@@ -214,29 +150,43 @@ uninstall:
 	rm -f $(DESTDIR)/$(bindir)/firecfg
 	rm -fr $(DESTDIR)/$(libdir)/firejail
 	rm -fr $(DESTDIR)/$(datarootdir)/doc/firejail
-	rm -f $(DESTDIR)/$(mandir)/man1/firejail.1*
-	rm -f $(DESTDIR)/$(mandir)/man1/firemon.1*
-	rm -f $(DESTDIR)/$(mandir)/man1/firecfg.1*
-	rm -f $(DESTDIR)/$(mandir)/man5/firejail-profile.5*
-	rm -f $(DESTDIR)/$(mandir)/man5/firejail-login.5*
-	rm -f $(DESTDIR)/$(mandir)/man5/firejail-config.5*
+	for man in $(MANPAGES); do \
+		rm -f $(DESTDIR)/$(mandir)/man5/$$man*; \
+		rm -f $(DESTDIR)/$(mandir)/man1/$$man*; \
+	done
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firejail
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
+DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
+DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
+
 dist:
+	mv config.status config.status.old
 	make distclean
-	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.bz2
-	mkdir $(NAME)-$(VERSION)
-	cd $(NAME)-$(VERSION); cp -a ../src .; cp -a ../etc .; cp -a ../platform .; rm -fr src/tools; cd ..
-	cd $(NAME)-$(VERSION); cp -a ../configure .; cp -a ../configure.ac .; cp -a ../Makefile.in .; cp -a ../install.sh .; cp -a ../mkman.sh .; cp -a ../mketc.sh .; cp -a ../mkdeb.sh .;cd ..
-	cd $(NAME)-$(VERSION); cp -a ../COPYING .; cp -a ../README .; cp -a ../RELNOTES .; cd ..
-	cd $(NAME)-$(VERSION); rm -fr `find . -name .svn`; rm -fr $(NAME)-$(VERSION); cd ..
-	tar -cjvf $(NAME)-$(VERSION).tar.bz2 $(NAME)-$(VERSION)
+	mv config.status.old config.status
+	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz
+	mkdir -p $(NAME)-$(VERSION)/test
+	cp -a "$(DISTFILES)" $(NAME)-$(VERSION)
+	cp -a "$(DISTFILES_TEST)" $(NAME)-$(VERSION)/test
+	rm -rf $(NAME)-$(VERSION)/src/tools
+	find $(NAME)-$(VERSION) -name .svn -delete
+	tar -cJvf $(NAME)-$(VERSION).tar.xz $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
+
+asc:; ./mkasc.sh $(VERSION)
 
 deb: dist
 	./mkdeb.sh $(NAME) $(VERSION)
+
+snap: all
+	cd platform/snap; ./snap.sh
+
+install-snap: snap
+	sudo snap remove faudit; sudo snap install faudit*.snap
+
+test-compile: dist
+	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
 
 .PHONY: rpms
 rpms:
@@ -250,5 +200,78 @@ cppcheck: clean
 
 scan-build: clean
 	scan-build make
-asc:; ./mkasc.sh $(VERSION)
 
+
+#
+# make test
+#
+
+
+test-profiles:
+	cd test/profiles; ./profiles.sh | grep TESTING
+
+test-apps:
+	cd test/apps; ./apps.sh | grep TESTING
+
+test-apps-x11:
+	cd test/apps-x11; ./apps-x11.sh | grep TESTING
+
+test-apps-x11-xorg:
+	cd test/apps-x11-xorg; ./apps-x11-xorg.sh | grep TESTING
+
+test-sysutils:
+	cd test/sysutils; ./sysutils.sh | grep TESTING
+	
+test-utils:
+	cd test/utils; ./utils.sh | grep TESTING
+
+test-environment:
+	cd test/environment; ./environment.sh | grep TESTING
+
+test-filters:
+	cd test/filters; ./filters.sh | grep TESTING
+
+test-arguments:
+	cd test/arguments; ./arguments.sh | grep TESTING
+	
+test-fs:
+	cd test/fs; ./fs.sh | grep TESTING
+
+test-fcopy:
+	cd test/fcopy; ./fcopy.sh | grep TESTING
+	
+test: test-profiles test-fcopy test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+	echo "TEST COMPLETE"
+
+##########################################
+# Individual tests, some of them require root access
+# The tests are very intrussive, by the time you are done
+# with them you will need to restart your computer.
+##########################################
+
+# requires root access
+test-chroot:
+	cd test/chroot; ./chroot.sh | grep testing
+
+# Huge appimage files, not included in "make dist" archive
+test-appimage:
+	cd test/appimage; ./appimage.sh | grep TESTING
+
+# Root access, network devices are created before the test
+# restart your computer to get rid of these devices
+test-network:
+	cd test/network; ./network.sh | grep TESTING
+
+# Tesets running a root user
+test-root:
+	cd test/root; su -c ./root.sh | grep TESTING
+	
+# OverlayFS is not available on all platforms
+test-overlay:
+	cd test/overlay; ./overlay.sh | grep TESTING
+
+# For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"
+
+test-all: test-root test-chroot test-network test-appimage test-overlay
+	echo "TEST COMPLETE"
+	

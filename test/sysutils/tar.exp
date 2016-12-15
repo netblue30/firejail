@@ -1,0 +1,46 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail /bin/tar -cjvf firejail_t2 /usr/share/doc/firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Error" {puts "TESTING ERROR 1.2\n";exit}
+	"/usr/share/doc/firejail/README"
+}
+after 100
+
+send -- "stat -c '|%s|' firejail_t2; uname -s\r"
+expect {
+	timeout {puts "TESTING ERROR 2.1\n";exit}
+	"|0|" {puts "TESTING ERROR 2.2\n";exit}
+	"Linux"
+}
+sleep 1
+
+send -- "firejail /bin/tar --compare --file=firejail_t2 -C / | wc\r"
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"This does not look like a tar archive" {puts "TESTING ERROR 3.2\n"; exit}
+	"      0       0       0"
+}
+sleep 1
+send -- "/bin/tar --compare --file=firejail_t2 -C / | wc\r"
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"This does not look like a tar archive" {puts "TESTING ERROR 4.2\n"; exit}
+	"      0       0       0"
+}
+sleep 1
+
+
+send -- "rm firejail_t*\r"
+sleep 1
+
+
+puts "\nall done\n"

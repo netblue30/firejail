@@ -1,0 +1,48 @@
+#!/usr/bin/expect -f
+
+set timeout 5
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --name=unbound unbound\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+spawn $env(SHELL)
+send -- "firejail --tree\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"unbound:unbound"
+}
+sleep 2
+
+send -- "tail /var/log/syslog\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"unbound"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"info: start of service"
+}
+sleep 2
+
+send -- "firejail --join=unbound\r"
+sleep 2
+
+send -- "ls /dev\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"tty0" {puts "TESTING ERROR 6\n";exit}
+	"ttyS0" {puts "TESTING ERROR 6\n";exit}
+	"audio" {puts "TESTING ERROR 6\n";exit}
+	"ppp" {puts "TESTING ERROR 6\n";exit}
+	"log"
+}
+sleep 2
+
+
+puts "\nall done\n"

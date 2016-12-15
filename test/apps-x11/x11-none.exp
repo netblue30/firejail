@@ -1,0 +1,48 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --name=test --x11=none\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"use network namespace in firejail"
+}
+sleep 1
+
+send -- "firejail --name=test --net=none --x11=none\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -al /tmp/.X11-unix\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"cannot open directory"
+}
+after 100
+
+send -- "xterm\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"DISPLAY is not set"
+}
+after 100
+
+send -- "export DISPLAY=:0.0\r"
+after 100
+send -- "xterm\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Xt error"
+}
+after 100
+
+puts "\nall done\n"
+

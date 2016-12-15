@@ -22,39 +22,35 @@
 #include <sys/stat.h>
 #include <unistd.h>
 			
-void x11(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
+void x11(pid_t pid, int print_procs) {
 	pid_read(pid);
 	
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {
-			pid_print_list(i, 0);
+			if (print_procs || pid == 0)
+				pid_print_list(i, 0);
 			
 			char *x11file;
 			// todo: use macro from src/firejail/firejail.h for /run/firejail/x11 directory
 			if (asprintf(&x11file, "/run/firejail/x11/%d", i) == -1)
 				errExit("asprintf");
 
-			struct stat s;
-			if (stat(x11file, &s) == 0) {
-				FILE *fp = fopen(x11file, "r");
-				if (!fp) {
-					free(x11file);
-					continue;
-				}
-				int display;
-				int rv = fscanf(fp, "%d", &display);
-				if (rv == 1)
-					printf("   DISPLAY :%d\n", display);
-				fclose(fp);
+			FILE *fp = fopen(x11file, "r");
+			if (!fp) {
+				free(x11file);
+				continue;
 			}
 
+			int display;
+			int rv = fscanf(fp, "%d", &display);
+			if (rv == 1)
+				printf("  DISPLAY :%d\n", display);
+			fclose(fp);
 			free(x11file);
 		}
 	}
+	printf("\n");
 }
 

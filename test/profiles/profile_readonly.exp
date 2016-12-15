@@ -1,0 +1,36 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "mkdir /tmp/firejailtestdir\r"
+send -- "touch /tmp/firejailtestfile\r"
+sleep 1
+
+send -- "firejail --profile=readonly.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+send -- "ls > /tmp/firejailtestdir/ttt\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Read-only file system"
+}
+sleep 1
+
+send -- "ls > /tmp/firejailtestfile\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Read-only file system"
+}
+send -- "exit\r"
+after 100
+
+send -- "rm -fr /tmp/firejailtest*\r"
+after 100
+
+puts "\nall done\n"

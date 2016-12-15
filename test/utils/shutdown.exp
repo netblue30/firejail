@@ -1,0 +1,49 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+cd /home
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --name=shutdowntesting\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+spawn $env(SHELL)
+send --  "firejail --shutdown=shutdowntesting; echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"done"
+}
+sleep 5
+
+spawn $env(SHELL)
+send --  "firejail --list;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"shutdowntesting" {puts "TESTING ERROR 6\n";exit}
+	"done"
+}
+sleep 1
+
+send --  "firejail --shutdown=sutdowntesting\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"cannot find sandbox sutdowntesting"
+}
+after 100
+
+send --  "firejail --shutdown=10\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"this is not a firejail sandbox"
+}
+after 100
+
+puts "\nall done\n"

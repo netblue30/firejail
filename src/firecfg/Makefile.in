@@ -16,22 +16,24 @@ HAVE_NETWORK=@HAVE_NETWORK@
 HAVE_USERNS=@HAVE_USERNS@
 HAVE_X11=@HAVE_X11@
 HAVE_FILE_TRANSFER=@HAVE_FILE_TRANSFER@
+HAVE_GCOV=@HAVE_GCOV@
+EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
 
 
 H_FILE_LIST       = $(sort $(wildcard *.[h]))
 C_FILE_LIST       = $(sort $(wildcard *.c))
 OBJS = $(C_FILE_LIST:.c=.o)
 BINOBJS =  $(foreach file, $(OBJS), $file)
-CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -DPREFIX='"$(prefix)"'  -DSYSCONFDIR='"$(sysconfdir)/firejail"' -DLIBDIR='"$(libdir)"' $(HAVE_X11) $(HAVE_SECCOMP) $(HAVE_SECCOMP_H) $(HAVE_CHROOT) $(HAVE_NETWORK) $(HAVE_USERNS) $(HAVE_BIND) $(HAVE_FILE_TRANSFER) -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security
+CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' $(HAVE_GCOV)  -DPREFIX='"$(prefix)"'  -DSYSCONFDIR='"$(sysconfdir)/firejail"' -DLIBDIR='"$(libdir)"' $(HAVE_X11) $(HAVE_SECCOMP) $(HAVE_SECCOMP_H) $(HAVE_CHROOT) $(HAVE_NETWORK) $(HAVE_USERNS) $(HAVE_BIND) $(HAVE_FILE_TRANSFER) -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security
 LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/pid.h
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 firecfg: $(OBJS) ../lib/common.o
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o $(LIBS)
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o $(LIBS) $(EXTRA_LDFLAGS)
 
-clean:; rm -f *.o firecfg firecfg.1 firecfg.1.gz
+clean:; rm -f *.o firecfg firecfg.1 firecfg.1.gz *.gcov *.gcda *.gcno
 
 distclean: clean
 	rm -fr Makefile

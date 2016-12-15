@@ -28,11 +28,22 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #include <sched.h>
 #ifndef CLONE_NEWUSER
 #define CLONE_NEWUSER	0x10000000
 #endif
+
+#include <sys/prctl.h>
+#ifndef PR_SET_NO_NEW_PRIVS
+# define PR_SET_NO_NEW_PRIVS 38
+#endif
+
+#ifdef HAVE_APPARMOR
+#include <sys/apparmor.h>
+#endif
+
 
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
@@ -70,8 +81,11 @@ static void sandbox_handler(int sig){
 		
 	}
 
+
 	// broadcast a SIGKILL
 	kill(-1, SIGKILL);
+	flush_stdin();
+
 	exit(sig);
 }
 
@@ -94,9 +108,8 @@ void save_nogroups(void) {
 	FILE *fp = fopen(RUN_GROUPS_CFG, "w");
 	if (fp) {
 		fprintf(fp, "\n");
+		SET_PERMS_STREAM(fp, 0, 0, 0644); // assume mode 0644
 		fclose(fp);
-		if (chown(RUN_GROUPS_CFG, 0, 0) < 0)
-			errExit("chown");
 	}
 	else {
 		fprintf(stderr, "Error: cannot save nogroups state\n");
@@ -109,7 +122,7 @@ static void sandbox_if_up(Bridge *br) {
 	assert(br);
 	if (!br->configured)
 		return;
-		
+
 	char *dev = br->devsandbox;
 	net_if_up(dev);
 
@@ -124,8 +137,7 @@ static void sandbox_if_up(Bridge *br) {
 		assert(br->ipsandbox);
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
-		net_if_ip(dev, br->ipsandbox, br->mask, br->mtu);
-		net_if_up(dev);
+		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
 	}
 	else if (br->arg_ip_none == 0 && br->macvlan == 1) {
 		// reassign the macvlan address
@@ -147,8 +159,7 @@ static void sandbox_if_up(Bridge *br) {
 			
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
-		net_if_ip(dev, br->ipsandbox, br->mask, br->mtu);
-		net_if_up(dev);
+		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
 	}
 	
 	if (br->ip6sandbox)
@@ -198,6 +209,12 @@ static int monitor_application(pid_t app_pid) {
 		if (arg_debug)
 			printf("Sandbox monitor: waitpid %u retval %d status %d\n", monitored_pid, rv, status);
 
+		// if /proc is not remounted, we cannot check /proc directory,
+		// for now we just get out of here
+		// todo: find another way of checking child processes!
+		if (!checkcfg(CFG_REMOUNT_PROC_SYS))
+			break;
+
 		DIR *dir;
 		if (!(dir = opendir("/proc"))) {
 			// sleep 2 seconds and try again
@@ -219,12 +236,15 @@ static int monitor_application(pid_t app_pid) {
 			
 			// todo: make this generic
 			// Dillo browser leaves a dpid process running, we need to shut it down
+			int found = 0;
 			if (strcmp(cfg.command_name, "dillo") == 0) {
 				char *pidname = pid_proc_comm(pid);
 				if (pidname && strcmp(pidname, "dpid") == 0)
-					break;
+					found = 1;
 				free(pidname);
 			}
+			if (found)
+				break;
 
 			monitored_pid = pid;
 			break;
@@ -237,40 +257,44 @@ static int monitor_application(pid_t app_pid) {
 
 	// return the latest exit status.
 	return status;
-
-#if 0
-// todo: find a way to shut down interfaces before closing the namespace
-// the problem is we don't have enough privileges to shutdown interfaces in this moment
-	// shut down bridge/macvlan interfaces
-	if (any_bridge_configured()) {
-		
-		if (cfg.bridge0.configured) {
-			printf("Shutting down %s\n", cfg.bridge0.devsandbox);
-			net_if_down( cfg.bridge0.devsandbox);
-		}
-		if (cfg.bridge1.configured) {
-			printf("Shutting down %s\n", cfg.bridge1.devsandbox);
-			net_if_down( cfg.bridge1.devsandbox);
-		}
-		if (cfg.bridge2.configured) {
-			printf("Shutting down %s\n", cfg.bridge2.devsandbox);
-			net_if_down( cfg.bridge2.devsandbox);
-		}
-		if (cfg.bridge3.configured) {
-			printf("Shutting down %s\n", cfg.bridge3.devsandbox);
-			net_if_down( cfg.bridge3.devsandbox);
-		}
-		usleep(20000);	// 20 ms sleep
-	}	
-#endif	
 }
 
+void start_audit(void) {
+	char *audit_prog;
+	if (asprintf(&audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
+		errExit("asprintf");
+	assert(getenv("LD_PRELOAD") == NULL);	
+	execl(audit_prog, audit_prog, NULL);
+	perror("execl");
+	exit(1);
+}
 
-static void start_application(void) {
+void start_application(void) {
+//if (setsid() == -1)
+//errExit("setsid");
+
+	// set environment
+	env_defaults();
+	env_apply();
+	if (arg_debug) {
+		printf("starting application\n");
+		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
+	}
+	
+	//****************************************
+	// audit
+	//****************************************
+	if (arg_audit) {
+		assert(arg_audit_prog);
+#ifdef HAVE_GCOV
+	__gcov_dump();
+#endif
+		execl(arg_audit_prog, arg_audit_prog, NULL);
+	}
 	//****************************************
 	// start the program without using a shell
 	//****************************************
-	if (arg_shell_none) {
+	else if (arg_shell_none) {
 		if (arg_debug) {
 			int i;
 			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
@@ -288,36 +312,37 @@ static void start_application(void) {
 		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
 
+#ifdef HAVE_GCOV
+	__gcov_dump();
+#endif
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
+		exit(1);
 	}
 	//****************************************
 	// start the program using a shell
 	//****************************************
 	else {
-		// choose the shell requested by the user, or use bash as default
-		char *sh;
-		if (cfg.shell)
-	 		sh = cfg.shell;
-		else if (arg_zsh)
-			sh = "/usr/bin/zsh";
-		else if (arg_csh)
-			sh = "/bin/csh";
-		else
-			sh = "/bin/bash";
-			
+		assert(cfg.shell);
+		assert(cfg.command_line);
+
 		char *arg[5];
 		int index = 0;
-		arg[index++] = sh;
-		arg[index++] = "-c";
-		assert(cfg.command_line);
-		if (arg_debug)
-			printf("Starting %s\n", cfg.command_line);
-		if (arg_doubledash) 
-			arg[index++] = "--";
-		arg[index++] = cfg.command_line;
+		arg[index++] = cfg.shell;
+		if (login_shell) {
+			arg[index++] = "-l";
+			if (arg_debug)
+				printf("Starting %s login shell\n", cfg.shell);
+		} else {
+			arg[index++] = "-c";
+			if (arg_debug)
+				printf("Running %s command through %s\n", cfg.command_line, cfg.shell);
+			if (arg_doubledash)
+				arg[index++] = "--";
+			arg[index++] = cfg.command_line;
+		}
 		arg[index] = NULL;
 		assert(index < 5);
-		
+
 		if (arg_debug) {
 			char *msg;
 			if (asprintf(&msg, "sandbox %d, execvp into %s", sandbox_pid, cfg.command_line) == -1)
@@ -325,7 +350,7 @@ static void start_application(void) {
 			logmsg(msg);
 			free(msg);
 		}
-		
+
 		if (arg_debug) {
 			int i;
 			for (i = 0; i < 5; i++) {
@@ -334,17 +359,43 @@ static void start_application(void) {
 				printf("execvp argument %d: %s\n", i, arg[i]);
 			}
 		}
-		
+
 		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
-		execvp(sh, arg);
+#ifdef HAVE_GCOV
+	__gcov_dump();
+#endif
+		execvp(arg[0], arg);
 	}
-	
+
 	perror("execvp");
 	exit(1); // it should never get here!!!
 }
 
-
+static void enforce_filters(void) {
+	// force default seccomp inside the chroot, no keep or drop list
+	// the list build on top of the default drop list is kept intact
+	arg_seccomp = 1;
+	if (cfg.seccomp_list_drop) {
+		free(cfg.seccomp_list_drop);
+		cfg.seccomp_list_drop = NULL;
+	}
+	if (cfg.seccomp_list_keep) {
+		free(cfg.seccomp_list_keep);
+		cfg.seccomp_list_keep = NULL;
+	}
+	
+	// disable all capabilities
+	if (arg_caps_default_filter || arg_caps_list)
+		fprintf(stderr, "Warning: all capabilities disabled for a regular user in chroot\n");
+	arg_caps_drop_all = 1;
+	
+	// drop all supplementary groups; /etc/group file inside chroot
+	// is controlled by a regular usr
+	arg_nogroups = 1;
+	if (!arg_quiet)
+		printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
+}
 
 int sandbox(void* sandbox_arg) {
 	// Get rid of unused parameter warning
@@ -364,6 +415,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_debug && child_pid == 1)
 		printf("PID namespace installed\n");
 
+
 	//****************************
 	// set hostname
 	//****************************
@@ -379,7 +431,8 @@ int sandbox(void* sandbox_arg) {
 	if (mount(NULL, "/", NULL, MS_SLAVE | MS_REC, NULL) < 0) {
 		chk_chroot();
 	}
-	
+	// ... and mount a tmpfs on top of /run/firejail/mnt directory
+	preproc_mount_mnt_dir();
 	
 	//****************************
 	// log sandbox data
@@ -396,7 +449,7 @@ int sandbox(void* sandbox_arg) {
 	fs_logger("install mount namespace");
 	
 	//****************************
-	// netfilter etc.
+	// netfilter
 	//****************************
 	if (arg_netfilter && any_bridge_configured()) { // assuming by default the client filter
 		netfilter(arg_netfilter_file);
@@ -405,140 +458,10 @@ int sandbox(void* sandbox_arg) {
 		netfilter6(arg_netfilter6_file);
 	}
 
-	// load IBUS env variables
-	if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {
-		// do nothing - there are problems with ibus version 1.5.11
-	}
-	else
-		env_ibus_load();
-	
-	// grab a copy of cp command
-	fs_build_cp_command();
-	
-	// trace pre-install
-	if (arg_trace || arg_tracelog)
-		fs_trace_preload();
-
-	//****************************
-	// configure filesystem
-	//****************************
-#ifdef HAVE_SECCOMP
-	int enforce_seccomp = 0;
-#endif
-#ifdef HAVE_CHROOT		
-	if (cfg.chrootdir) {
-		fs_chroot(cfg.chrootdir);
-		// redo cp command
-		fs_build_cp_command();
-		
-		// force caps and seccomp if not started as root
-		if (getuid() != 0) {
-			// force default seccomp inside the chroot, no keep or drop list
-			// the list build on top of the default drop list is kept intact
-			arg_seccomp = 1;
-#ifdef HAVE_SECCOMP
-			enforce_seccomp = 1;
-#endif
-			if (cfg.seccomp_list_drop) {
-				free(cfg.seccomp_list_drop);
-				cfg.seccomp_list_drop = NULL;
-			}
-			if (cfg.seccomp_list_keep) {
-				free(cfg.seccomp_list_keep);
-				cfg.seccomp_list_keep = NULL;
-			}
-			
-			// disable all capabilities
-			if (arg_caps_default_filter || arg_caps_list)
-				fprintf(stderr, "Warning: all capabilities disabled for a regular user during chroot\n");
-			arg_caps_drop_all = 1;
-			
-			// drop all supplementary groups; /etc/group file inside chroot
-			// is controlled by a regular usr
-			arg_nogroups = 1;
-			if (!arg_quiet)
-				printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
-		}
-		else
-			arg_seccomp = 1;
-						
-		//****************************
-		// trace pre-install, this time inside chroot
-		//****************************
-		if (arg_trace || arg_tracelog)
-			fs_trace_preload();
-	}
-	else 
-#endif		
-	if (arg_overlay)	
-		fs_overlayfs();
-	else
-		fs_basic_fs();
-	
-
-	//****************************
-	// set hostname in /etc/hostname
-	//****************************
-	if (cfg.hostname) {
-		fs_hostname(cfg.hostname);
-	}
-	
-	//****************************
-	// private mode
-	//****************************
-	if (arg_private) {
-		if (cfg.home_private)	// --private=
-			fs_private_homedir();
-		else // --private
-			fs_private();
-	}
-	
-	if (arg_private_dev)
-		fs_private_dev();
-	if (arg_private_etc) {
-		fs_private_etc_list();
-		// create /etc/ld.so.preload file again
-		if (arg_trace || arg_tracelog)
-			fs_trace_preload();
-	}
-	if (arg_private_bin)
-		fs_private_bin_list();
-	if (arg_private_tmp)
-		fs_private_tmp();
-	
-	//****************************
-	// apply the profile file
-	//****************************
-	if (cfg.profile) {
-		// apply all whitelist commands ... 
-		fs_whitelist();
-		
-		// ... followed by blacklist commands
-		fs_blacklist();
-	}
-	
-	//****************************
-	// install trace
-	//****************************
-	if (arg_trace || arg_tracelog)
-		fs_trace();
-		
-	//****************************
-	// update /proc, /dev, /boot directorymy
-	//****************************
-	fs_proc_sys_dev_boot();
-	
-	//****************************
-	// --nosound and fix for pulseaudio 7.0
-	//****************************
-	if (arg_nosound)
-		pulseaudio_disable();
-	else
-		pulseaudio_init();
-	
 	//****************************
 	// networking
 	//****************************
+	int gw_cfg_failed = 0; // default gw configuration flag
 	if (arg_nonetwork) {
 		net_if_up("lo");
 		if (arg_debug)
@@ -564,56 +487,62 @@ int sandbox(void* sandbox_arg) {
 			net_config_mac(cfg.bridge3.devsandbox, cfg.bridge3.macsandbox);
 		sandbox_if_up(&cfg.bridge3);
 		
-		// add a default route
-		if (cfg.defaultgw) {
-			// set the default route
-			if (net_add_route(0, 0, cfg.defaultgw))
-				fprintf(stderr, "Warning: cannot configure default route\n");
-		}
-		
-		// enable interfaces
+
+		// moving an interface in a namespace using --interface will reset the interface configuration;
+		// we need to put the configuration back
 		if (cfg.interface0.configured && cfg.interface0.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
-			net_if_ip(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
-			net_if_up(cfg.interface0.dev);
+			net_config_interface(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
 		}			
 		if (cfg.interface1.configured && cfg.interface1.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
-			net_if_ip(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
-			net_if_up(cfg.interface1.dev);
+			net_config_interface(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
 		}			
 		if (cfg.interface2.configured && cfg.interface2.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
-			net_if_ip(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
-			net_if_up(cfg.interface2.dev);
+			net_config_interface(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
 		}			
 		if (cfg.interface3.configured && cfg.interface3.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
-			net_if_ip(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);
-			net_if_up(cfg.interface3.dev);
+			net_config_interface(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);
 		}			
 			
+		// add a default route
+		if (cfg.defaultgw) {
+			// set the default route
+			if (net_add_route(0, 0, cfg.defaultgw)) {
+				fprintf(stderr, "Warning: cannot configure default route\n");
+				gw_cfg_failed = 1;
+			}
+		}
+
 		if (arg_debug)
 			printf("Network namespace enabled\n");
 	}
 	
-	// if any dns server is configured, it is time to set it now
-	fs_resolvconf();
-	fs_logger_print();
-	fs_logger_change_owner();
 
 	// print network configuration
 	if (!arg_quiet) {
 		if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
 			printf("\n");
-			if (any_bridge_configured() || any_interface_configured())
-				net_ifprint();
-			if (cfg.defaultgw != 0)
-				printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+			if (any_bridge_configured() || any_interface_configured()) {
+//				net_ifprint();
+				if (arg_scan)
+					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, PATH_FNET, "printif", "scan");
+				else
+					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif", "scan");
+				
+			}
+			if (cfg.defaultgw != 0) {
+				if (gw_cfg_failed)
+					printf("Default gateway configuration failed\n");
+				else
+					printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+			}
 			if (cfg.dns1 != 0)
 				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
 			if (cfg.dns2 != 0)
@@ -623,8 +552,245 @@ int sandbox(void* sandbox_arg) {
 			printf("\n");
 		}
 	}
+
+	// load IBUS env variables
+	if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {
+		// do nothing - there are problems with ibus version 1.5.11
+	}
+	else
+		env_ibus_load();
 	
-	fs_delete_cp_command();
+	//****************************
+	// fs pre-processing:
+	//  - build seccomp filters
+	//  - create an empty /etc/ld.so.preload
+	//****************************
+#ifdef HAVE_SECCOMP
+	if (cfg.protocol) {
+		if (arg_debug)
+			printf("Build protocol filter: %s\n", cfg.protocol);
+
+		// build the seccomp filter as a regular user
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
+			PATH_FSECCOMP, "protocol", "build", cfg.protocol, RUN_SECCOMP_PROTOCOL);
+		if (rv)
+			exit(rv);
+	}
+#endif	
+
+	// trace pre-install
+	if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+		fs_trace_preload();
+
+	//****************************
+	// configure filesystem
+	//****************************
+#ifdef HAVE_SECCOMP
+	int enforce_seccomp = 0;
+#endif
+	if (arg_appimage) {
+		enforce_filters();
+#ifdef HAVE_SECCOMP
+		enforce_seccomp = 1;
+#endif		
+	}
+
+#ifdef HAVE_CHROOT		
+	if (cfg.chrootdir) {
+		fs_chroot(cfg.chrootdir);
+		
+		// force caps and seccomp if not started as root
+		if (getuid() != 0) {
+			enforce_filters();
+#ifdef HAVE_SECCOMP
+			enforce_seccomp = 1;
+#endif
+		}
+		else
+			arg_seccomp = 1;
+						
+		//****************************
+		// trace pre-install, this time inside chroot
+		//****************************
+		if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+			fs_trace_preload();
+	}
+	else 
+#endif		
+#ifdef HAVE_OVERLAYFS
+	if (arg_overlay)	{
+		fs_overlayfs();
+		// force caps and seccomp if not started as root
+		if (getuid() != 0) {
+			enforce_filters();
+#ifdef HAVE_SECCOMP
+			enforce_seccomp = 1;
+#endif
+		}
+		else
+			arg_seccomp = 1;
+	}
+	else
+#endif
+		fs_basic_fs();
+	
+	//****************************
+	// set hostname in /etc/hostname
+	//****************************
+	if (cfg.hostname) {
+		fs_hostname(cfg.hostname);
+	}
+	
+	//****************************
+	// private mode
+	//****************************
+	if (arg_private) {
+		if (cfg.home_private) {	// --private=
+			if (cfg.chrootdir)
+				fprintf(stderr, "Warning: private=directory feature is disabled in chroot\n");
+			else if (arg_overlay)
+				fprintf(stderr, "Warning: private=directory feature is disabled in overlay\n");
+			else
+				fs_private_homedir();
+		}
+		else if (cfg.home_private_keep) { // --private-home=
+			if (cfg.chrootdir)
+				fprintf(stderr, "Warning: private-home= feature is disabled in chroot\n");
+			else if (arg_overlay)
+				fprintf(stderr, "Warning: private-home= feature is disabled in overlay\n");
+			else
+				fs_private_home_list();
+		}
+		else // --private
+			fs_private();
+	}
+
+	if (arg_private_dev) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-dev feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-dev feature is disabled in overlay\n");
+		else
+			fs_private_dev();
+	}
+		
+	if (arg_private_etc) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-etc feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-etc feature is disabled in overlay\n");
+		else {
+			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
+			// create /etc/ld.so.preload file again
+			if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+				fs_trace_preload();
+		}
+	}
+	
+	if (arg_private_opt) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-opt feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-opt feature is disabled in overlay\n");
+		else {
+			fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
+		}
+	}
+	
+	if (arg_private_srv) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-srv feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-srv feature is disabled in overlay\n");
+		else {
+			fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
+		}
+	}
+	
+	if (arg_private_bin) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-bin feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-bin feature is disabled in overlay\n");
+		else {
+			// for --x11=xorg we need to add xauth command
+			if (arg_x11_xorg) {
+				EUID_USER();
+				char *tmp;
+				if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
+					errExit("asprintf");
+				cfg.bin_private_keep = tmp;
+				EUID_ROOT();
+			}
+			fs_private_bin_list();
+		}
+	}
+	
+	if (arg_private_tmp) {
+		if (cfg.chrootdir)
+			fprintf(stderr, "Warning: private-tmp feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fprintf(stderr, "Warning: private-tmp feature is disabled in overlay\n");
+		else {
+			// private-tmp is implemented as a whitelist
+			EUID_USER();
+			profile_add("whitelist /tmp/.X11-unix");
+			EUID_ROOT();
+		}
+	}
+	
+	//****************************
+	// update /proc, /sys, /dev, /boot directorymy
+	//****************************
+	if (checkcfg(CFG_REMOUNT_PROC_SYS))
+		fs_proc_sys_dev_boot();
+	
+	//****************************
+	// apply the profile file
+	//****************************
+	// apply all whitelist commands ... 
+	if (cfg.chrootdir)
+		fprintf(stderr, "Warning: whitelist feature is disabled in chroot\n");
+	else if (arg_overlay)
+		fprintf(stderr, "Warning: whitelist feature is disabled in overlay\n");
+	else
+		fs_whitelist();
+	
+	// ... followed by blacklist commands
+	fs_blacklist(); // mkdir and mkfile are processed all over again
+	
+	//****************************
+	// install trace
+	//****************************
+	if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+		fs_trace();
+		
+	//****************************
+	// nosound/no3d and fix for pulseaudio 7.0
+	//****************************
+	if (arg_nosound) {
+		// disable pulseaudio
+		pulseaudio_disable();
+
+		// disable /dev/snd
+		fs_dev_disable_sound();
+	}
+	else
+		pulseaudio_init();
+	
+	if (arg_no3d)
+		fs_dev_disable_3d();
+	
+	//****************************
+	// set dns
+	//****************************
+	fs_resolvconf();
+	
+	//****************************
+	// fs post-processing
+	//****************************
+	fs_logger_print();
+	fs_logger_change_owner();
 
 	//****************************
 	// set application environment
@@ -649,12 +815,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 	
-	// set environment
-	env_defaults();
-	
-	// set user-supplied environment variables
-	env_apply();
-
 	// set nice
 	if (arg_nice) {
 		errno = 0;
@@ -668,6 +828,8 @@ int sandbox(void* sandbox_arg) {
 	
 	// clean /tmp/.X11-unix sockets
 	fs_x11();
+	if (arg_x11_xorg)
+		x11_xorg();
 	
 	//****************************
 	// set security filters
@@ -679,25 +841,6 @@ int sandbox(void* sandbox_arg) {
 	// set rlimits
 	set_rlimits();
 
-	// set seccomp
-#ifdef HAVE_SECCOMP
-	// install protocol filter
-	if (cfg.protocol) {
-		protocol_filter();	// install filter	
-		protocol_filter_save();	// save filter in PROTOCOL_CFG
-	}
-
-	// if a keep list is available, disregard the drop list
-	if (arg_seccomp == 1) {
-		if (cfg.seccomp_list_keep)
-			seccomp_filter_keep();
-		else if (cfg.seccomp_list_errno)
-			seccomp_filter_errno(); 
-		else
-			seccomp_filter_drop(enforce_seccomp);
-	}
-#endif
-
 	// set cpu affinity
 	if (cfg.cpus) {
 		save_cpu(); // save cpu affinity mask to CPU_CFG file
@@ -708,6 +851,25 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.cgroup)
 		save_cgroup();
 
+	// set seccomp //todo: push it down after drop_privs and/or configuring noroot
+#ifdef HAVE_SECCOMP
+	// install protocol filter
+	if (cfg.protocol) {
+		if (arg_debug)
+			printf("Install protocol filter: %s\n", cfg.protocol);
+		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter	
+		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
+	}
+
+	// if a keep list is available, disregard the drop list
+	if (arg_seccomp == 1) {
+		if (cfg.seccomp_list_keep)
+			seccomp_filter_keep();
+		else
+			seccomp_filter_drop(enforce_seccomp);
+	}
+#endif
+
 	//****************************************
 	// drop privileges or create a new user namespace
 	//****************************************
@@ -715,7 +877,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
-			fprintf(stderr, "Warning: cannot mount a new user namespace, going forward without it...\n");
+			fprintf(stderr, "Warning: cannot create a new user namespace, going forward without it...\n");
 			drop_privs(arg_nogroups);
 			arg_noroot = 0;
 		}
@@ -739,6 +901,18 @@ int sandbox(void* sandbox_arg) {
 			printf("noroot user namespace installed\n");
 		set_caps();
 	}
+	
+	//****************************************
+	// Set NO_NEW_PRIVS if desired
+	//****************************************
+	if (arg_nonewprivs) {
+		int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+
+		if(no_new_privs != 0)
+			fprintf(stderr, "Warning: NO_NEW_PRIVS disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		else if (arg_debug)
+			printf("NO_NEW_PRIVS set\n");
+	}
 
 	//****************************************
 	// fork the application and monitor it
@@ -746,13 +920,27 @@ int sandbox(void* sandbox_arg) {
 	pid_t app_pid = fork();
 	if (app_pid == -1)
 		errExit("fork");
-		
+
 	if (app_pid == 0) {
+#ifdef HAVE_APPARMOR
+		if (arg_apparmor) {
+			errno = 0;
+			if (aa_change_onexec("firejail-default")) {
+				fprintf(stderr, "Error: cannot confine the application using AppArmor.\n");
+				fprintf(stderr, "Maybe firejail-default AppArmor profile is not loaded into the kernel.\n");
+				fprintf(stderr, "As root, run \"aa-enforce firejail-default\" to load it.\n");
+				exit(1);
+			}
+			else if (arg_debug)
+				printf("AppArmor enabled\n");
+		}
+#endif		
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		start_application();	// start app
 	}
 
 	int status = monitor_application(app_pid);	// monitor application
+	flush_stdin();
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

@@ -11,10 +11,8 @@ include /etc/firejail/disable-programs.inc
 netfilter
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/google-chrome-beta
 whitelist ~/.config/google-chrome-beta
-mkdir ~/.cache
 mkdir ~/.cache/google-chrome-beta
 whitelist ~/.cache/google-chrome-beta
 mkdir ~/.pki

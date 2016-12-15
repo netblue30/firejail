@@ -47,67 +47,14 @@ void check_netfilter_file(const char *fname) {
 	EUID_ASSERT();
 	invalid_filename(fname);
 	
-	if (is_dir(fname) || is_link(fname) || strstr(fname, "..")) {
-		fprintf(stderr, "Error: invalid network filter file\n");
-		exit(1);
-	}
-
-	// access call checks as real UID/GID, not as effective UID/GID
-	if (access(fname, R_OK)) {
-		fprintf(stderr, "Error: cannot access network filter file\n");
+	if (is_dir(fname) || is_link(fname) || strstr(fname, "..") || access(fname, R_OK )) {
+		fprintf(stderr, "Error: invalid network filter file %s\n", fname);
 		exit(1);
 	}
 }
 
 
 void netfilter(const char *fname) {
-	// default filter
-	char *filter = client_filter;
-
-	// custom filter
-	int allocated = 0;
-	if (fname) {
-		// buffer the filter
-		struct stat s;
-		if (stat(fname, &s) == -1) {
-			fprintf(stderr, "Error: cannot find network filter file %s\n", fname);
-			exit(1);
-		}
-
-		filter = malloc(s.st_size + 1);	  // + '\0'
-		if (!filter)
-			errExit("malloc");
-		memset(filter, 0, s.st_size + 1);
-
-		/* coverity[toctou] */
-		FILE *fp = fopen(fname, "r");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot open network filter file %s\n", fname);
-			exit(1);
-		}
-
-		size_t sz = fread(filter, 1, s.st_size, fp);
-		if ((off_t)sz != s.st_size) {
-			fprintf(stderr, "Error: cannot read network filter file %s\n", fname);
-			exit(1);
-		}
-		fclose(fp);
-		allocated = 1;
-	}
-
-	// temporarily mount a tempfs on top of /tmp directory
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("mounting /tmp");
-
-	// create the filter file
-	FILE *fp = fopen("/tmp/netfilter", "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open /tmp/netfilter file\n");
-		exit(1);
-	}
-	fprintf(fp, "%s\n", filter);
-	fclose(fp);
-
 	// find iptables command
 	struct stat s;
 	char *iptables = NULL;
@@ -121,108 +68,56 @@ void netfilter(const char *fname) {
 		iptables_restore = "/usr/sbin/iptables-restore";
 	}
 	if (iptables == NULL || iptables_restore == NULL) {
-		fprintf(stderr, "Error: iptables command not found\n");
-		goto doexit;
+		fprintf(stderr, "Error: iptables command not found, netfilter not configured\n");
+		return;
 	}
+
+	// read filter
+	char *filter = client_filter;
+	int allocated = 0;
+	if (netfilter_default)
+		fname = netfilter_default;
+	if (fname) {
+		filter = read_text_file_or_exit(fname);
+		allocated = 1;
+	}
+
+	// create the filter file
+	FILE *fp = fopen(SBOX_STDIN_FILE, "w");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open %s\n", SBOX_STDIN_FILE);
+		exit(1);
+	}
+	fprintf(fp, "%s\n", filter);
+	fclose(fp);
+
 
 	// push filter
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		if (arg_debug)
-			printf("Installing network filter:\n%s\n", filter);
-
-		int fd;
-		if((fd = open("/tmp/netfilter", O_RDONLY)) == -1) {
-			fprintf(stderr,"Error: cannot open /tmp/netfilter\n");
-			exit(1);
-		}
-		dup2(fd,STDIN_FILENO);
-
-		// wipe out environment variables
-		environ = NULL;
-		execl(iptables_restore, iptables_restore, NULL);
-		// it will never get here!!!
-	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
+	if (arg_debug)
+		printf("Installing network filter:\n%s\n", filter);
+		
+	// first run of iptables on this platform installs a number of kernel modules such as ip_tables, x_tables, iptable_filter
+	// we run this command with caps and seccomp disabled in order to allow the loading of these modules
+	sbox_run(SBOX_ROOT /* | SBOX_CAPS_NETWORK | SBOX_SECCOMP*/ | SBOX_STDIN_FROM_FILE, 1, iptables_restore);
+	unlink(SBOX_STDIN_FILE);
 
 	// debug
-	if (arg_debug) {
-		child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			// elevate privileges in order to get grsecurity working
-			if (setreuid(0, 0))
-				errExit("setreuid");
-			if (setregid(0, 0))
-				errExit("setregid");
-			environ = NULL;
-			execl(iptables, iptables, "-vL", NULL);
-			// it will never get here!!!
-		}
-		// wait for the child to finish
-		waitpid(child, NULL, 0);
-	}
-
-doexit:
-	// unmount /tmp
-	umount("/tmp");
+	if (arg_debug) 
+		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, iptables, "-vL");
 
 	if (allocated)
 		free(filter);
+	return;
 }
 
 void netfilter6(const char *fname) {
 	if (fname == NULL)
 		return;
 		
-	char *filter;
-
-	// buffer the filter
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		fprintf(stderr, "Error: cannot find network filter file %s\n", fname);
-		exit(1);
-	}
-
-	filter = malloc(s.st_size + 1);	  // + '\0'
-	if (!filter)
-		errExit("malloc");
-	memset(filter, 0, s.st_size + 1);
-
-	/* coverity[toctou] */
-	FILE *fp = fopen(fname, "r");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open network filter file %s\n", fname);
-		exit(1);
-	}
-
-	size_t sz = fread(filter, 1, s.st_size, fp);
-	if ((off_t)sz != s.st_size) {
-		fprintf(stderr, "Error: cannot read network filter file %s\n", fname);
-		exit(1);
-	}
-	fclose(fp);
-
-	// temporarily mount a tempfs on top of /tmp directory
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("mounting /tmp");
-
-	// create the filter file
-	fp = fopen("/tmp/netfilter6", "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open /tmp/netfilter6 file\n");
-		exit(1);
-	}
-	fprintf(fp, "%s\n", filter);
-	fclose(fp);
-
 	// find iptables command
 	char *ip6tables = NULL;
 	char *ip6tables_restore = NULL;
+	struct stat s;
 	if (stat("/sbin/ip6tables", &s) == 0) {
 		ip6tables = "/sbin/ip6tables";
 		ip6tables_restore = "/sbin/ip6tables-restore";
@@ -232,49 +127,33 @@ void netfilter6(const char *fname) {
 		ip6tables_restore = "/usr/sbin/ip6tables-restore";
 	}
 	if (ip6tables == NULL || ip6tables_restore == NULL) {
-		fprintf(stderr, "Error: ip6tables command not found\n");
-		goto doexit;
+		fprintf(stderr, "Error: ip6tables command not found, netfilter6 not configured\n");
+		return;
 	}
+
+	// create the filter file
+	char *filter = read_text_file_or_exit(fname);
+	FILE *fp = fopen(SBOX_STDIN_FILE, "w");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open %s\n", SBOX_STDIN_FILE);
+		exit(1);
+	}
+	fprintf(fp, "%s\n", filter);
+	fclose(fp);
 
 	// push filter
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		if (arg_debug)
-			printf("Installing network filter:\n%s\n", filter);
+	if (arg_debug)
+		printf("Installing network filter:\n%s\n", filter);
 
-		int fd;
-		if((fd = open("/tmp/netfilter6", O_RDONLY)) == -1) {
-			fprintf(stderr,"Error: cannot open /tmp/netfilter6\n");
-			exit(1);
-		}
-		dup2(fd,STDIN_FILENO);
-
-		// wipe out environment variables
-		environ = NULL;
-		execl(ip6tables_restore, ip6tables_restore, NULL);
-		// it will never get here!!!
-	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
-
+	// first run of iptables on this platform installs a number of kernel modules such as ip_tables, x_tables, iptable_filter
+	// we run this command with caps and seccomp disabled in order to allow the loading of these modules
+	sbox_run(SBOX_ROOT | /* SBOX_CAPS_NETWORK | SBOX_SECCOMP | */ SBOX_STDIN_FROM_FILE, 1, ip6tables_restore);
+	unlink(SBOX_STDIN_FILE);
+	
 	// debug
-	if (arg_debug) {
-		child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			environ = NULL;
-			execl(ip6tables, ip6tables, "-vL", NULL);
-			// it will never get here!!!
-		}
-		// wait for the child to finish
-		waitpid(child, NULL, 0);
-	}
+	if (arg_debug)
+		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, ip6tables, "-vL");
 
-doexit:
-	// unmount /tmp
-	umount("/tmp");
 	free(filter);
+	return;
 }

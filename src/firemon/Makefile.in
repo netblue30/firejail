@@ -4,21 +4,26 @@ PREFIX=@prefix@
 VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 HAVE_FATAL_WARNINGS=@HAVE_FATAL_WARNINGS@
+HAVE_GCOV=@HAVE_GCOV@
+EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
 
 H_FILE_LIST       = $(sort $(wildcard *.[h]))
 C_FILE_LIST       = $(sort $(wildcard *.c))
 OBJS = $(C_FILE_LIST:.c=.o)
 BINOBJS =  $(foreach file, $(OBJS), $file)
-CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security
+CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' $(HAVE_GCOV) -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security
 LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now 
+HAVE_GCOV=@HAVE_GCOV@
+EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
+
 
 %.o : %.c $(H_FILE_LIST)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 firemon: $(OBJS) ../lib/common.o ../lib/pid.o
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/pid.o $(LIBS)
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/pid.o $(LIBS) $(EXTRA_LDFLAGS)
 
-clean:; rm -f *.o firemon
+clean:; rm -f *.o firemon *.gcov *.gcda *.gcno
 
 distclean: clean
 	rm -fr Makefile

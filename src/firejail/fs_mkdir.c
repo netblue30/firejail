@@ -22,8 +22,39 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <grp.h>
- #include <sys/wait.h>
- 
+#include <sys/wait.h>
+#include <string.h>
+
+static void mkdir_recursive(char *path) {
+	char *subdir = NULL;
+	struct stat s;
+
+	if (chdir("/")) {
+		fprintf(stderr, "Error: can't chdir to /");
+		return;
+	}
+
+	subdir = strtok(path, "/");
+	while(subdir) {
+		if (stat(subdir, &s) == -1) {
+			/* coverity[toctou] */
+			if (mkdir(subdir, 0700) == -1) {
+				fprintf(stderr, "Warning: cannot create %s directory\n", subdir);
+				return;
+			}
+		} else if (!S_ISDIR(s.st_mode)) {
+			fprintf(stderr, "Warning: '%s' exists, but is no directory\n", subdir);
+			return;
+		}
+		if (chdir(subdir)) {
+			fprintf(stderr, "Error: can't chdir to %s", subdir);
+			return;
+		}
+
+		subdir = strtok(NULL, "/");
+	}
+}
+
 void fs_mkdir(const char *name) {
 	EUID_ASSERT();
 	
@@ -42,9 +73,72 @@ void fs_mkdir(const char *name) {
 	}
 
 	// create directory
-	if (mkdir(expanded, 0700) == -1)
-		fprintf(stderr, "Warning: cannot create %s directory\n", expanded);
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		// create directory
+		mkdir_recursive(expanded);
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
 
 doexit:
 	free(expanded);
 }	
+
+void fs_mkfile(const char *name) {
+	EUID_ASSERT();
+	
+	// check file name
+	invalid_filename(name);
+	char *expanded = expand_home(name, cfg.homedir);
+	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0) {
+		fprintf(stderr, "Error: only files in user home are supported by mkfile\n");
+		exit(1);
+	}
+
+	struct stat s;
+	if (stat(expanded, &s) == 0) {
+		// file exists, do nothing
+		goto doexit;
+	}
+
+	// create file
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		/* coverity[toctou] */
+		FILE *fp = fopen(expanded, "w");
+		if (!fp)
+			fprintf(stderr, "Warning: cannot create %s file\n", expanded);
+		else {
+			int fd = fileno(fp);
+			if (fd == -1)
+				errExit("fileno");
+			int rv = fchmod(fd, 0600);
+			(void) rv;
+			fclose(fp);
+		}
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+
+doexit:
+	free(expanded);
+}

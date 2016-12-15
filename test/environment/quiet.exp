@@ -1,0 +1,21 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 4
+spawn $env(SHELL)
+match_max 100000
+
+# check ip address
+send -- "firejail --quiet echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Reading profile" {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized" {puts "TESTING ERROR 3\n";exit}
+	"done"
+}
+after 100
+
+puts "\nall done\n"
+

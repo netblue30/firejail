@@ -1,0 +1,23 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --debug ls -al\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Reading profile /etc/firejail/default.profile"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Parent is shutting down, bye"
+}
+after 100
+
+puts "\nall done\n"
+

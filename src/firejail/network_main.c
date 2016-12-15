@@ -23,6 +23,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <net/if.h>
+#include <stdarg.h>
 
 // configure bridge structure
 // - extract ip address and mask from the bridge interface
@@ -56,9 +57,12 @@ void net_configure_bridge(Bridge *br, char *dev_name) {
 		}
 	}
 
+	// allow unconfigured interfaces
 	if (net_get_if_addr(br->dev, &br->ip, &br->mask, br->mac, &br->mtu)) {
-		fprintf(stderr, "Error: interface %s is not configured\n", br->dev);
-		exit(1);
+		fprintf(stderr, "Warning: the network interface %s is not configured\n", br->dev);
+		br->configured = 1;
+		br->arg_ip_none = 1;
+		return;
 	}
 	if (arg_debug) {
 		if (br->macvlan == 0)
@@ -117,15 +121,18 @@ void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child) {
 
 	// create a veth pair
 	char *dev;
-	if (asprintf(&dev, "veth%u%s", getpid(), ifname) < 0)
+	if (br->veth_name == NULL) {
+		if (asprintf(&dev, "veth%u%s", getpid(), ifname) < 0)
+			errExit("asprintf");
+	}
+	else
+		dev = br->veth_name;
+		
+	char *cstr;
+	if (asprintf(&cstr, "%d", child) == -1)
 		errExit("asprintf");
-	net_create_veth(dev, ifname, child);
-
-	// add interface to the bridge
-	net_bridge_add_interface(br->dev, dev);
-
-	// bring up the interface
-	net_if_up(dev);
+	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 7, PATH_FNET, "create", "veth", dev, ifname, br->dev, cstr);
+	free(cstr);
 
 	char *msg;
 	if (asprintf(&msg, "%d.%d.%d.%d address assigned to sandbox", PRINT_IP(br->ipsandbox)) == -1)
@@ -224,23 +231,6 @@ void net_check_cfg(void) {
 	}
 }
 
-
-
-void net_dns_print_name(const char *name) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	net_dns_print(pid);
-}
-
 #define MAXBUF 4096
 void net_dns_print(pid_t pid) {
 	EUID_ASSERT();
@@ -282,47 +272,53 @@ void net_dns_print(pid_t pid) {
 }
 
 void network_main(pid_t child) {
+	char *cstr;
+	if (asprintf(&cstr, "%d", child) == -1)
+		errExit("asprintf");
+
 	// create veth pair or macvlan device
 	if (cfg.bridge0.configured) {
 		if (cfg.bridge0.macvlan == 0) {
 			net_configure_veth_pair(&cfg.bridge0, "eth0", child);
 		}
 		else
-			net_create_macvlan(cfg.bridge0.devsandbox, cfg.bridge0.dev, child);
+			sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge0.devsandbox, cfg.bridge0.dev, cstr);
 	}
 	
 	if (cfg.bridge1.configured) {
 		if (cfg.bridge1.macvlan == 0)
 			net_configure_veth_pair(&cfg.bridge1, "eth1", child);
 		else
-			net_create_macvlan(cfg.bridge1.devsandbox, cfg.bridge1.dev, child);
+			sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge1.devsandbox, cfg.bridge1.dev, cstr);
 	}
 	
 	if (cfg.bridge2.configured) {
 		if (cfg.bridge2.macvlan == 0)
 			net_configure_veth_pair(&cfg.bridge2, "eth2", child);
 		else
-			net_create_macvlan(cfg.bridge2.devsandbox, cfg.bridge2.dev, child);
+			sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge2.devsandbox, cfg.bridge2.dev, cstr);
 	}
 	
 	if (cfg.bridge3.configured) {
 		if (cfg.bridge3.macvlan == 0)
 			net_configure_veth_pair(&cfg.bridge3, "eth3", child);
 		else
-			net_create_macvlan(cfg.bridge3.devsandbox, cfg.bridge3.dev, child);
+			sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge3.devsandbox, cfg.bridge3.dev, cstr);
 	}
 
 	// move interfaces in sandbox
 	if (cfg.interface0.configured) {
-		net_move_interface(cfg.interface0.dev, child);
+		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface0.dev, cstr);
 	}
 	if (cfg.interface1.configured) {
-		net_move_interface(cfg.interface1.dev, child);
+		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface1.dev, cstr);
 	}
 	if (cfg.interface2.configured) {
-		net_move_interface(cfg.interface2.dev, child);
+		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface3.dev, cstr);
 	}
 	if (cfg.interface3.configured) {
-		net_move_interface(cfg.interface3.dev, child);
+		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface3.dev, cstr);
 	}
+
+	free(cstr);
 }

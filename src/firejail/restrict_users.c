@@ -26,6 +26,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <errno.h>
+#include "../../uids.h"
 
 #define MAXBUF 1024
 
@@ -72,7 +73,6 @@ static void sanitize_home(void) {
 		return;
 	}
 	
-	fs_build_mnt_dir();
 	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
 		errExit("mkdir");
 
@@ -95,10 +95,8 @@ static void sanitize_home(void) {
 	fs_logger2("mkdir", cfg.homedir);
 	
 	// set mode and ownership
-	if (chown(cfg.homedir, s.st_uid, s.st_gid) == -1)
-		errExit("chown");
-	if (chmod(cfg.homedir, s.st_mode) == -1)
-		errExit("chmod");
+	if (set_perms(cfg.homedir, s.st_uid, s.st_gid, s.st_mode))
+		errExit("set_perms");
 
 	// mount user home directory
 	if (mount(RUN_WHITELIST_HOME_DIR, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
@@ -118,7 +116,7 @@ static void sanitize_passwd(void) {
 	if (stat("/etc/passwd", &s) == -1)
 		return;
 	if (arg_debug)
-		printf("Sanitizing /etc/passwd\n");
+		printf("Sanitizing /etc/passwd, UID_MIN %d\n", UID_MIN);
 	if (is_link("/etc/passwd")) {
 		fprintf(stderr, "Error: invalid /etc/passwd\n");
 		exit(1);
@@ -126,7 +124,6 @@ static void sanitize_passwd(void) {
 
 	FILE *fpin = NULL;
 	FILE *fpout = NULL;
-	fs_build_mnt_dir();
 
 	// open files
 	/* coverity[toctou] */
@@ -170,7 +167,7 @@ static void sanitize_passwd(void) {
 		int rv = sscanf(ptr, "%d:", &uid);
 		if (rv == 0 || uid < 0)
 			goto errout;
-		if (uid < 1000) { // todo extract UID_MIN from /etc/login.def
+		if (uid < UID_MIN) {
 			fprintf(fpout, "%s", buf);
 			continue;
 		}
@@ -186,12 +183,9 @@ static void sanitize_passwd(void) {
 		fprintf(fpout, "%s", buf);
 	}
 	fclose(fpin);
+	SET_PERMS_STREAM(fpout, 0, 0, 0644);
 	fclose(fpout);
-	if (chown(RUN_PASSWD_FILE, 0, 0) == -1)
-		errExit("chown");
-	if (chmod(RUN_PASSWD_FILE, 0644) == -1)
-		errExit("chmod");
-		
+
 	// mount-bind tne new password file
 	if (mount(RUN_PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
@@ -255,7 +249,7 @@ static void sanitize_group(void) {
 	if (stat("/etc/group", &s) == -1)
 		return;
 	if (arg_debug)
-		printf("Sanitizing /etc/group\n");
+		printf("Sanitizing /etc/group, GID_MIN %d\n", GID_MIN);
 	if (is_link("/etc/group")) {
 		fprintf(stderr, "Error: invalid /etc/group\n");
 		exit(1);
@@ -263,7 +257,6 @@ static void sanitize_group(void) {
 
 	FILE *fpin = NULL;
 	FILE *fpout = NULL;
-	fs_build_mnt_dir();
 
 	// open files
 	/* coverity[toctou] */
@@ -306,7 +299,7 @@ static void sanitize_group(void) {
 		int rv = sscanf(ptr, "%d:", &gid);
 		if (rv == 0 || gid < 0)
 			goto errout;
-		if (gid < 1000) { // todo extract GID_MIN from /etc/login.def
+		if (gid < GID_MIN) {
 			if (copy_line(fpout, buf, ptr))
 				goto errout;
 			continue;
@@ -318,12 +311,9 @@ static void sanitize_group(void) {
 			goto errout;
 	}
 	fclose(fpin);
+	SET_PERMS_STREAM(fpout, 0, 0, 0644);
 	fclose(fpout);
-	if (chown(RUN_GROUP_FILE, 0, 0) == -1)
-		errExit("chown");
-	if (chmod(RUN_GROUP_FILE, 0644) == -1)
-		errExit("chmod");
-		
+
 	// mount-bind tne new group file
 	if (mount(RUN_GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
@@ -340,6 +330,9 @@ errout:
 }
 
 void restrict_users(void) {
+	if (arg_allusers)
+		return;
+		
 	// only in user mode
 	if (getuid()) {
 		if (strncmp(cfg.homedir, "/home/", 6) == 0) {
@@ -347,7 +340,7 @@ void restrict_users(void) {
 			sanitize_home();
 		}
 		else {
-			// user has the home diercotry outside /home
+			// user has the home directory outside /home
 			// mount tmpfs on top of /home in order to hide it
 			if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mount tmpfs");

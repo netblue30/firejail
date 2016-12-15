@@ -11,7 +11,7 @@ firejail [OPTIONS] [program and arguments]
 File transfer from an existing sandbox
 .PP
 .RS
-firejail {\-\-ls | \-\-get} dir_or_filename
+firejail {\-\-ls | \-\-get | \-\-put} dir_or_filename
 .RE
 .PP
 Network traffic shaping for an existing sandbox:
@@ -50,15 +50,16 @@ of applications. The software includes security profiles for a number of more co
 Linux programs, such as Mozilla Firefox, Chromium, VLC, Transmission etc.
 
 .SH USAGE
-Without any options, the sandbox consists of a chroot filesystem build in a new mount namespace,
-and new PID and UTS namespaces. IPC, network and user namespaces can be added using the command line options.
-The default Firejail filesystem is based on the host filesystem with the main directories mounted read-only.
-Only /home and /tmp are writable.
+Without any options, the sandbox consists of a filesystem build in a new mount namespace,
+and new PID and UTS namespaces. IPC, network and user namespaces can be added using the
+command line options. The default Firejail filesystem is based on the host filesystem with the main 
+system directories mounted read-only. These directories are /etc, /var, /usr, /bin, /sbin, /lib, /lib32, 
+/libx32 and /lib64. Only /home and /tmp are writable.
 .PP
 As it starts up, Firejail tries to find a security profile based on the name of the application.
 If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option 
-to disable it. For more information, please see \fBSECURITY PROFILES\fR section.
+to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.
 .PP
 If a program argument is not specified, Firejail starts /bin/bash shell.
 Examples:
@@ -73,6 +74,46 @@ $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 .TP
 \fB\-\-
 Signal the end of options and disables further option processing.
+.TP
+\fB\-\-allow-debuggers
+Allow tools such as strace and gdb inside the sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail  --allow-debuggers --profile=/etc/firejail/firefox.profile strace -f firefox
+.TP
+\fB\-\-allusers
+All directories under /home are visible inside the sandbox. By default, only current user home directory is visible.
+.br
+
+.br
+Example:
+.br
+$ firejail --allusers
+.TP
+\fB\-\-apparmor
+Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
+.TP
+\fB\-\-appimage
+Sandbox an AppImage (http://appimage.org/) application.
+.br
+
+.br
+Example:
+.br
+$ firejail --appimage krita-3.0-x86_64.appimage
+.br
+$ firejail --appimage --private krita-3.0-x86_64.appimage
+.br
+$ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
+.TP
+\fB\-\-audit
+Audit the sandbox, see \fBAUDIT\fR section for more details.
+.TP
+\fB\-\-audit=test-program
+Audit the sandbox, see \fBAUDIT\fR section for more details.
 .TP
 \fB\-\-bandwidth=name|pid
 Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
@@ -152,14 +193,7 @@ Example:
 .br
 $ sudo firejail \-\-caps.keep=chown,net_bind_service,setgid,\\
 setuid /etc/init.d/nginx start
-.br
 
-.br
-A short note about mixing \-\-whitelist and \-\-read-only options. Whitelisted directories
-should be made read-only independently. Making a parent directory read-only, will not
-make the whitelist read-only. Example:
-.br
-$ firejail --whitelist=~/work --read-only=~/ --read-only=~/work
 .TP
 \fB\-\-caps.print=name|pid
 Print the caps filter for the sandbox identified by name or by PID.
@@ -194,7 +228,8 @@ Example:
 
 .TP
 \fB\-\-chroot=dirname
-Chroot the sandbox into a root filesystem. If the sandbox is started as a
+Chroot the sandbox into a root filesystem. Unlike the regular filesystem container,
+the system directories are mounted read-write. If the sandbox is started as a
 regular user, default seccomp and capabilities filters are enabled. This
 option is not available on Grsecurity systems.
 .br
@@ -465,6 +500,11 @@ in case you intend to start an external DHCP client in the sandbox.
 Example:
 .br
 $ firejail \-\-net=eth0 \-\-\ip=none
+.br
+
+.br
+If the corresponding interface doesn't have an IP address configured, this
+option is enabled by default.
 
 .TP
 \fB\-\-ip6=address
@@ -547,19 +587,19 @@ $ firejail --net=eth0 --name=browser firefox &
 .br
 # change netfilter configuration
 .br
-$ sudo firejail --join-network=browser "cat /etc/firejail/nolocal.net | /sbin/iptables-restore"
+$ sudo firejail --join-network=browser bash -c "cat /etc/firejail/nolocal.net | /sbin/iptables-restore"
 .br
 
 .br
 # verify netfilter configuration
 .br
-$ sudo firejail --join-network=browser "/sbin/iptables -vL"
+$ sudo firejail --join-network=browser /sbin/iptables -vL
 .br
 
 .br
 # verify  IP addresses
 .br
-$ sudo firejail --join-network=browser "ip addr"
+$ sudo firejail --join-network=browser ip addr
 .br
 Switching to pid 1932, the first child process inside the sandbox
 .br
@@ -586,6 +626,13 @@ Switching to pid 1932, the first child process inside the sandbox
     inet6 fe80::7458:14ff:fe42:78e4/64 scope link 
 .br
        valid_lft forever preferred_lft forever
+
+.TP
+\fB\-\-join-or-start=name
+Join the sandbox identified by name or start a new one.
+Same as "firejail --join=name" if sandbox with specified name exists, otherwise same as "firejail --name=name ..."
+.br
+Note that in contrary to other join options there is respective profile option.
 
 .TP
 \fB\-\-ls=name|pid dir_or_filename
@@ -617,6 +664,16 @@ Assign MAC addresses to the last network interface defined by a \-\-net option.
 Example:
 .br
 $ firejail \-\-net=eth0 \-\-mac=00:11:22:33:44:55 firefox
+
+.TP
+\fB\-\-machine-id
+Preserve id number in /etc/machine-id file. By default a new random id is generated inside the sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-machine-id
 
 .TP
 \fB\-\-mtu=number
@@ -798,13 +855,23 @@ PID  User    RX(KB/s) TX(KB/s) Command
 .TP
 \fB\-\-nice=value
 Set nice value for all processes running inside the sandbox.
+Only root may specify a negative value.
 .br
 
 .br
 Example:
 .br
-$ firejail --nice=-5 firefox
+$ firejail --nice=2 firefox
 
+.TP
+\fB\-\-no3d
+Disable 3D hardware acceleration.
+.br
+
+.br
+Example:
+.br
+$ firejail --no3d firefox
 
 .TP
 \fB\-\-noblacklist=dirname_or_filename
@@ -830,6 +897,21 @@ $ nc dict.org 2628
 .br
 220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
 .br
+.TP
+\fB\-\-noexec=dirname_or_filename
+Remount directory or file noexec, nodev and nosuid.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noexec=/tmp
+.br
+
+.br
+/etc and /var are noexec by default if the sandbox was started as a regular user. If there are more than one mount operation
+on the path of the file or directory, noexec should be applied to the last one. Always check if the change took effect inside the sandbox.
+
 .TP
 \fB\-\-nogroups
 Disable supplementary groups. Without this option, supplementary groups are enabled for the user starting the
@@ -865,7 +947,7 @@ Example:
 .br
 $ firejail
 .br
-Reading profile /etc/firejail/generic.profile
+Reading profile /etc/firejail/default.profile
 .br
 Parent pid 8553, child pid 8554
 .br
@@ -908,6 +990,14 @@ ping: icmp open socket: Operation not permitted
 $
 
 .TP
+\fB\-\-nonewprivs
+Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
+cannot acquire new privileges using execve(2);  in particular,
+this means that calling a suid binary (or one with file capabilities)
+does not result in an increase of privilege. This option
+is enabled by default if seccomp filter is activated.
+
+.TP
 \fB\-\-nosound
 Disable sound system.
 .br
@@ -946,13 +1036,15 @@ $ ls -l sandboxlog*
 
 .TP
 \fB\-\-overlay
-Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail directory. This option is not available on Grsecurity systems.
+Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
+the system directories are mounted read-write. All filesystem modifications go into the overlay.
+The overlay is stored in $HOME/.firejail/<PID> directory.
 .br
 
 .br
 OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18
+OverlayFS was officially introduced in Linux kernel version 3.18.
+This option is not available on Grsecurity systems.
 .br
 
 .br
@@ -961,20 +1053,51 @@ Example:
 $ firejail \-\-overlay firefox
 
 .TP
-\fB\-\-overlay-tmpfs
-Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay,
-and are discarded when the sandbox is closed. This option is not available on Grsecurity systems.
+\fB\-\-overlay-named=name
+Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
+the system directories are mounted read-write. All filesystem modifications go into the overlay.
+The overlay is stored in $HOME/.firejail/<NAME> directory. The created overlay can be reused between multiple
+sessions.
 .br
 
 .br
 OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18
+OverlayFS was officially introduced in Linux kernel version 3.18.
+This option is not available on Grsecurity systems.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-overlay-named=jail1 firefox
+
+.TP
+\fB\-\-overlay-tmpfs
+Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay,
+and are discarded when the sandbox is closed.
+.br
+
+.br
+OverlayFS support is required in Linux kernel for this option to work.
+OverlayFS was officially introduced in Linux kernel version 3.18.
+This option is not available on Grsecurity systems.
 .br
 
 .br
 Example:
 .br
 $ firejail \-\-overlay-tmpfs firefox
+
+.TP
+\fB\-\-overlay-clean
+Clean all overlays stored in $HOME/.firejail directory. Overlays created with --overlay-path=path
+outside $HOME/.firejail will not be deleted.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-overlay-clean
 
 .TP
 \fB\-\-private
@@ -998,9 +1121,24 @@ Example:
 $ firejail \-\-private=/home/netblue/firefox-home firefox
 
 .TP
+\fB\-\-private-home=file,directory
+Build a new user home in a temporary
+filesystem, and copy the files and directories in the list in the
+new home. All modifications are discarded when the sandbox is
+closed.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-private-home=.mozilla firefox
+
+.TP
 \fB\-\-private-bin=file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
+If no listed file is found, /bin directory will be empty.
 The same directory is also bind-mounted over /sbin, /usr/bin, /usr/sbin and /usr/local/bin.
+All modifications are discarded when the sandbox is closed. 
 .br
 
 .br
@@ -1018,7 +1156,7 @@ bash  cat  ls  sed
 
 .TP
 \fB\-\-private-dev
-Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, urandom, log and shm devices are available.
+Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, snd, urandom, log and shm devices are available.
 .br
 
 .br
@@ -1032,14 +1170,15 @@ Child process initialized
 .br
 $ ls /dev
 .br
-dri  full  log  null  ptmx  pts  random  shm  tty  urandom  zero
+dri  full  log  null  ptmx  pts  random  shm  snd  tty  urandom  zero
 .br
 $
 .TP
 \fB\-\-private-etc=file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
-All modifications are discarded when the sandbox is closed.
+If no listed file is found, /etc directory will be empty.
+All modifications are discarded when the sandbox is closed. 
 .br
 
 .br
@@ -1050,8 +1189,34 @@ $ firejail --private-etc=group,hostname,localtime, \\
 nsswitch.conf,passwd,resolv.conf
 
 .TP
+\fB\-\-private-opt=file,directory
+Build a new /opt in a temporary
+filesystem, and copy the files and directories in the list.
+If no listed file is found, /opt directory will be empty.
+All modifications are discarded when the sandbox is closed. 
+.br
+
+.br
+Example:
+.br
+$ firejail --private-opt=firefox /opt/firefox/firefox
+
+.TP
+\fB\-\-private-srv=file,directory
+Build a new /srv in a temporary
+filesystem, and copy the files and directories in the list.
+If no listed file is found, /srv directory will be empty.
+All modifications are discarded when the sandbox is closed. 
+.br
+
+.br
+Example:
+.br
+# firejail --private-srv=www /etc/init.d/apache2 start
+
+.TP
 \fB\-\-private-tmp
-Mount an empty temporary filesystem on top of /tmp directory.
+Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
 .br
 
 .br
@@ -1120,6 +1285,9 @@ $ firejail \-\-protocol.print=3272
 .br
 unix,inet,inet6,netlink
 .TP
+\fB\-\-put=name|pid src-filename dest-filename
+Put a file in sandbox container, see \fBFILE TRANSFER\fR section for more details.
+.TP
 \fB\-\-quiet
 Turn off Firejail's output.
 .TP
@@ -1131,6 +1299,31 @@ Set directory or file read-only.
 Example:
 .br
 $ firejail \-\-read-only=~/.mozilla firefox
+.br
+
+.br
+A short note about mixing \-\-whitelist and \-\-read-only options. Whitelisted directories
+should be made read-only independently. Making a parent directory read-only, will not
+make the whitelist read-only. Example:
+.br
+
+.br
+$ firejail --whitelist=~/work --read-only=~ --read-only=~/work
+
+.TP
+\fB\-\-read-write=dirname_or_filename
+Set directory or file read-write. Only files or directories belonging to the current user are allowed for
+this operation. Example:
+.br
+
+.br
+$ mkdir ~/test
+.br
+$ touch ~/test/a
+.br
+$ firejail --read-only=~/test --read-write=~/test/a
+
+
 .TP
 \fB\-\-rlimit-fsize=number
 Set the maximum file size that can be created by a process.
@@ -1143,6 +1336,17 @@ Set the maximum number of processes that can be created for the real user ID of 
 .TP
 \fB\-\-rlimit-sigpending=number
 Set the maximum number of pending signals for a process.
+
+.TP
+\fB\-\-rmenv=name
+Remove environment variable in the new sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-rmenv=DBUS_SESSION_BUS_ADDRESS
+
 .TP
 \fB\-\-scan
 ARP-scan all the networks from inside a network namespace.
@@ -1156,13 +1360,13 @@ $ firejail \-\-net=eth0 \-\-scan
 .TP
 \fB\-\-seccomp
 Enable seccomp filter and blacklist the syscalls in the default list. The default list is as follows:
-mount, umount2, ptrace, kexec_load, kexec_file_load, open_by_handle_at, init_module, finit_module, delete_module,
-iopl, ioperm, swapon, swapoff, syslog, process_vm_readv, process_vm_writev,
+mount, umount2, ptrace, kexec_load, kexec_file_load, name_to_handle_at, open_by_handle_at, create_module, init_module, finit_module, delete_module,
+iopl, ioperm, ioprio_set, swapon, swapoff, syslog, process_vm_readv, process_vm_writev,
 sysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie, perf_event_open, fanotify_init, kcmp,
 add_key, request_key, keyctl, uselib, acct, modify_ldt, pivot_root, io_setup,
 io_destroy, io_getevents, io_submit, io_cancel,
 remap_file_pages, mbind, get_mempolicy, set_mempolicy,
-migrate_pages, move_pages, vmsplice, perf_event_open, chroot,
+migrate_pages, move_pages, vmsplice, chroot,
 tuxcall, reboot, mfsservctl and get_kernel_syms.
 .br
 
@@ -1170,6 +1374,10 @@ tuxcall, reboot, mfsservctl and get_kernel_syms.
 System architecture is not strictly imposed. The filter is applied
 at run time only if the correct architecture was detected. For the case of I386 and AMD64
 both 32-bit and 64-bit filters are installed.
+.br
+
+.br
+Firejail will print seccomp violations to the audit log if the kernel was compiled with audit support (CONFIG_AUDIT flag).
 .br
 
 .br
@@ -1425,15 +1633,7 @@ $ firejail \-\-tree
 11969:netblue:firejail \-\-net=eth0 transmission-gtk 
 .br
   11970:netblue:transmission-gtk 
-.TP
-\fB\-\-user=new-user
-Switch the user before starting the sandbox. This command should be run as root.
-.br
 
-.br
-Example:
-.br
-# firejail \-\-user=www-data
 .TP
 \fB\-\-version
 Print program version and exit.
@@ -1445,33 +1645,74 @@ Example:
 $ firejail \-\-version
 .br
 firejail version 0.9.27
+
 .TP
-\fB\-\-whitelist=dirname_or_filename
-Whitelist directory or file. This feature is implemented only for user home, /dev, /media, /opt, /var, and /tmp directories.
-When whitlisting symbolic links, both the link and the real file should be in the same top directory
-(home user, /media, /var etc.)
+\fB\-\-veth-name=name
+Use this name for the interface connected to the bridge for --net=bridge_interface commands, 
+instead of the default one.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-whitelist=~/.mozilla \-\-whitelist=~/Downloads
+$ firejail \-\-net=br0 --veth-name=if0
+
+.TP
+\fB\-\-whitelist=dirname_or_filename
+Whitelist directory or file. A temporary file system is mounted on the top directory, and the
+whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
+everything else is discarded when the sandbox is closed. The top directory could be 
+user home, /dev, /media, /mnt, /opt, /srv, /var, and /tmp.
+.br
+
+.br
+Symbolic link handling: with the exception of user home, both the link and the real file should be in
+the same top directory. For user home, both the link and the real file should be owned by the user.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noprofile \-\-whitelist=~/.mozilla
 .br
 $ firejail \-\-whitelist=/tmp/.X11-unix --whitelist=/dev/null
 .br
 $ firejail "\-\-whitelist=/home/username/My Virtual Machines"
 
 .TP
-\fB\-\-x11
-Start a new X11 server using Xpra or Xephyr and attach the sandbox to this server.
-The regular X11 server (display 0) is not visible in the sandbox. This prevents screenshot and keylogger
-applications started in the sandbox from accessing other X11 displays.
-A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
+\fB\-\-writable-etc
+Mount /etc directory read-write.
 .br
 
 .br
+Example:
+.br
+$ sudo firejail --writable-etc
+
+.TP
+\fB\-\-writable-var
+Mount /var directory read-write.
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --writable-var
+
+
+.TP
+\fB\-\-x11
+Sandbox the application using Xpra, Xephyr or Xorg security extension.
+The sandbox will prevents screenshot and keylogger applications started inside the sandbox from accessing
+clients running outside the sandbox.
 Firejail will try first Xpra, and if Xpra is not installed on the system, it will try to find Xephyr.
-This feature is not available when running as root. 
+If all fails, Firejail will not attempt to use X11 security extension.
+.br
+
+.br
+Xpra and Xephyr modes require a network namespace to be instantiated in order to disable
+X11 abstract Unix socket. If this is not possible, the user can disable the abstract socket
+by adding "-nolisten local" on Xorg command line.
 .br
 
 .br
@@ -1480,9 +1721,65 @@ Example:
 $ firejail \-\-x11 --net=eth0 firefox
 
 .TP
+\fB\-\-x11=none
+Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified in ${XAUTHORITY} environment variable.
+Remove DISPLAY and XAUTHORITY environment variables.
+Stop with error message if X11 abstract socket will be accessible in jail.
+
+.TP
+\fB\-\-x11=xephyr
+Start Xephyr and attach the sandbox to this server.
+Xephyr is a display server implementing the X11 display server protocol.
+A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
+.br
+
+.br
+Xephyr runs in a window just like any other X11 application. The default window size is 800x600.
+This can be modified in /etc/firejail/firejail.config file.
+.br
+
+.br
+The recommended way to use this feature is to run a window manager inside the sandbox.
+A security profile for OpenBox is provided.
+.br
+
+.br
+Xephyr is developed by Xorg project. On Debian platforms it is installed with the command \fBsudo apt-get install xserver-xephyr\fR.
+This feature is not available when running as root. 
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-x11=xephyr --net=eth0 openbox
+
+.TP
+\fB\-\-x11=xorg
+Sandbox the application using the untrusted mode implemented by X11 security extension. 
+The extension is available in Xorg package
+and it is installed by default on most Linux distributions. It provides support for a simple trusted/untrusted 
+connection model. Untrusted clients are restricted in certain ways to prevent them from reading window
+contents of other clients, stealing input events, etc.
+
+The untrusted mode has several limitations. A lot of regular programs  assume they are a trusted X11 clients
+and will crash or lock up when run in untrusted mode. Chromium browser and xterm are two examples.
+Firefox and transmission-gtk seem to be working fine.
+A network namespace is not required for this option.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-x11=xorg firefox
+
+.TP
 \fB\-\-x11=xpra
-Start a new X11 server using Xpra (http://xpra.org) and attach the sandbox to this server.
+Start Xpra (http://xpra.org) and attach the sandbox to this server.
 Xpra is a persistent remote display server and client for forwarding X11 applications and desktop screens.
+A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
+.br
+
+.br
 On Debian platforms Xpra is installed with the command \fBsudo apt-get install xpra\fR.
 This feature is not available when running as root.
 .br
@@ -1491,27 +1788,6 @@ This feature is not available when running as root.
 Example:
 .br
 $ firejail \-\-x11=xpra --net=eth0 firefox
-
-.TP
-\fB\-\-x11=xephyr
-Start a new X11 server using Xephyr and attach the sandbox to this server.
-Xephyr is a display server implementing the X11 display server protocol.
-It runs in a window just like other X applications, but it is an X server itself in which you can run other software.
-The default Xephyr window size is 800x600. This can be modified in /etc/firejail/firejail.config file,
-see \fBman 5 firejail-config\fR for more details.
-.br
-
-.br
-The recommended way to use this feature is to run a window manager inside the sandbox.
-A security profile for OpenBox is provided.
-On Debian platforms Xephyr is installed with the command \fBsudo apt-get install xserver-xephyr\fR.
-This feature is not available when running as root. 
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-x11=xephyr --net=eth0 openbox
 
 .TP
 \fB\-\-zsh
@@ -1576,6 +1852,44 @@ $ firejail --tree
       1221:netblue:/usr/lib/firefox/firefox
 .RE
 
+.SH APPARMOR
+.TP
+AppArmor support is disabled by default at compile time. Use --enable-apparmor configuration option to enable it:
+.br
+
+.br
+$ ./configure --prefix=/usr --enable-apparmor
+.TP
+During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The profile needs to be loaded into the kernel by running the following command as root:
+.br
+
+.br
+# aa-enforce firejail-default
+.TP
+The installed profile tries to replicate some advanced security features inspired by kernel-based Grsecurity:
+.br
+
+.br
+- Prevent information leakage in /proc and /sys directories. The resulting filesystem is barely enough for running
+commands such as "top" and "ps aux".
+.br
+
+.br
+- Allow running programs only from well-known system paths, such as /bin, /sbin, /usr/bin etc. Running
+programs and scripts from user home or other directories writable by the user is not allowed.
+.br
+
+.br
+- Disable D-Bus. D-Bus has long been a huge security hole, and most programs don't use it anyway.
+You should have no problems running Chromium or Firefox.
+
+.TP
+To enable AppArmor confinement on top of your current Firejail security features, pass \fB\-\-apparmor\fR flag to Firejail command line. You can also include \fBapparmor\fR command in a Firejail profile file. Example:
+.br
+
+.br
+$ firejail --apparmor firefox
+
 .SH FILE TRANSFER
 These features allow the user to inspect the filesystem container of an existing sandbox
 and transfer files from the container to the host filesystem.
@@ -1583,12 +1897,16 @@ and transfer files from the container to the host filesystem.
 .TP
 \fB\-\-get=name|pid filename
 Retrieve the container file and store it on the host in the current working directory.
-The container is specified by name or PID. Full path is needed for filename.
+The container is specified by name or PID.
 
 .TP
 \fB\-\-ls=name|pid dir_or_filename
 List container files. The container is specified by name or PID.
-Full path is needed for dir_or_filename.
+
+.TP
+\fB\-\-put=name|pid src-filename dest-filename
+Put src-filename in sandbox container.
+The container is specified by name or PID.
 
 .TP
 Examples:
@@ -1614,7 +1932,11 @@ drwxr-xr-x netblue  netblue         4096 ..
 
 .br
 $ firejail \-\-get=mybrowser ~/Downloads/xpra-clipboard.png
+.br
 
+.br
+$ firejail \-\-put=mybrowser xpra-clipboard.png ~/Downloads/xpra-clipboard.png
+.br
 
 .SH TRAFFIC SHAPING
 Network bandwidth is an expensive resource shared among all sandboxes running on a system.
@@ -1626,15 +1948,15 @@ The shaper works at sandbox level, and can be used only for sandboxes configured
 
 Set rate-limits:
 
-	firejail --bandwidth=name|pid set network download upload
+	$ firejail --bandwidth=name|pid set network download upload
 
 Clear rate-limits:
 
-	firejail --bandwidth=name|pid clear network
+	$ firejail --bandwidth=name|pid clear network
 
 Status:
 
-	firejail --bandwidth=name|pid status
+	$ firejail --bandwidth=name|pid status
 
 where:
 .br
@@ -1657,6 +1979,26 @@ Example:
 	$ firejail \-\-bandwidth=mybrowser status
 .br
 	$ firejail \-\-bandwidth=mybrowser clear eth0
+
+.SH AUDIT
+Audit feature allows the user to point out gaps in security profiles. The
+implementation replaces the program to be sandboxed with a test program. By
+default, we use faudit program distributed with Firejail. A custom test program
+can also be supplied by the user. Examples:
+
+Running the default audit program:
+.br
+	$ firejail --audit transmission-gtk
+
+Running a custom audit program:
+.br
+	$ firejail --audit=~/sandbox-test transmission-gtk
+
+In the examples above, the sandbox configures transmission-gtk profile and
+starts the test program. The real program, transmission-gtk, will not be
+started.
+
+Limitations: audit feature is not implemented for --x11 commands.
 
 .SH MONITORING
 Option \-\-list prints a list of all sandboxes. The format
@@ -1751,7 +2093,7 @@ To disable default profile loading, use --noprofile command option. Example:
 .RS
 $ firejail
 .br
-Reading profile /etc/firejail/generic.profile
+Reading profile /etc/firejail/default.profile
 .br
 Parent pid 8553, child pid 8554
 .br
@@ -1818,7 +2160,6 @@ Homepage: http://firejail.wordpress.com
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5)
-\&\flfirejail-config\fR\|(5)
 
 
 

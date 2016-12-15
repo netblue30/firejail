@@ -1,0 +1,31 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --name=test-dns --net=eth0 --dns=1.2.3.4 --dns=2.3.4.5 --dns=3.4.5.6\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+spawn $env(SHELL)
+send --  "firejail --dns.print=test-dns\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"nameserver 1.2.3.4"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"nameserver 2.3.4.5"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"nameserver 3.4.5.6"
+}
+
+after 100
+
+puts "\nall done\n"

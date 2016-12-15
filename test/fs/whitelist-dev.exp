@@ -1,0 +1,47 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --whitelist=/dev/null --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l /dev | find /dev | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"2"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+send -- "firejail --whitelist=/var/tmp --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l /dev | find /dev | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"2"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+
+
+after 100
+puts "\nall done\n"
+

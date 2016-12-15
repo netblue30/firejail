@@ -4,7 +4,8 @@
 :OUTPUT ACCEPT [0:0]
 
 ###################################################################
-# Client filter rejecting local network traffic, with the exception of DNS traffic
+# Client filter rejecting local network traffic, with the exception of
+# DNS traffic
 #
 # Usage:
 #     firejail --net=eth0 --netfilter=/etc/firejail/nolocal.net firefox

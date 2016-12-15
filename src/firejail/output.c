@@ -27,7 +27,6 @@ void check_output(int argc, char **argv) {
 	
 	int i;
 	char *outfile = NULL;
-//	drop_privs(0);
 
 	int found = 0;
 	for (i = 1; i < argc; i++) {
@@ -91,6 +90,7 @@ void check_output(int argc, char **argv) {
 	sprintf(ptr, "2>&1 | %s/firejail/ftee %s", LIBDIR, outfile);
 
 	// run command
+	drop_privs(0);
 	char *a[4];
 	a[0] = "/bin/bash";
 	a[1] = "-c";

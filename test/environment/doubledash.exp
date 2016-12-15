@@ -1,0 +1,60 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail -- ls -- -testdir\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"ttt"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Parent is shutting down"
+}
+sleep 1
+
+
+send --  "firejail --name=testing -- -testdir/bash\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+sleep 3
+
+spawn $env(SHELL)
+send --  "firejail --join=testing -- -testdir/bash\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"the first child process inside the sandbox"
+}
+sleep 3
+
+spawn $env(SHELL)
+send --  "firejail --list;ls -d /tmp\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"name=testing"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"/tmp"
+}
+send --  "firejail --list;ls -d /tmp\r"
+expect {
+	timeout {puts "TESTING ERROR 8 (join)\n";exit}
+	"join=testing"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"/tmp"
+}
+
+after 100
+
+puts "\n"

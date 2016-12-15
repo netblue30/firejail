@@ -9,10 +9,8 @@ include /etc/firejail/disable-devel.inc
 netfilter
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/opera
 whitelist ~/.config/opera
-mkdir ~/.cache
 mkdir ~/.cache/opera
 whitelist ~/.cache/opera
 mkdir ~/.opera

@@ -61,14 +61,18 @@ if { $chroot == "chroot" } {
 	send -- "firejail --noprofile --chroot=/tmp/chroot --private-bin=bash,cat,cp,ls,wc\r"
 	expect {
 		timeout {puts "TESTING ERROR 4\n";exit}
+		"private-bin feature is disabled in chroot"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 5\n";exit}
 		"Child process initialized"
 	}
 	sleep 1
 	
 	send -- "ls -l /usr/bin | wc -l\r"
 	expect {
-		timeout {puts "TESTING ERROR 5.1\n";exit}
-		"6"
+		timeout {puts "TESTING ERROR 6\n";exit}
+		"9"
 	}
 	
 	after 100

@@ -1,0 +1,90 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# testing read-write /var/lock
+send -- "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "echo mytest > /var/lock/ttt;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"done"
+}
+
+send -- "cat /var/lock/ttt;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"mytest"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"done"
+}
+
+send -- "rm /var/lock/ttt;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"done"
+}
+
+send -- "cat /var/lock/ttt;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"mytest" {puts "TESTING ERROR 6\n";exit}
+	"done"
+}
+
+sleep 1
+send -- "exit\r"
+sleep 1
+
+# redo the test with --private
+send -- "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "echo mytest > /var/lock/ttt;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"done"
+}
+
+send -- "cat /var/lock/ttt;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"mytest"
+}
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"done"
+}
+
+send -- "rm /var/lock/ttt;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"done"
+}
+
+send -- "cat /var/lock/ttt;echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"mytest" {puts "TESTING ERROR 13\n";exit}
+	"done"
+}
+
+after 100
+
+puts "\nall done\n"

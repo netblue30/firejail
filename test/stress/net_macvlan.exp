@@ -1,0 +1,93 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# check the existing address
+spawn $env(SHELL)
+send -- "firejail --net=eth0 --ip=192.168.1.60\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";puts "Please open a sandbox on 192.168.1.60\n";exit}
+	"192.168.1.60 is interface eth0 address"
+}
+
+
+
+# grab 30 ip addresses
+set MAXi 229
+set i 200
+while { $i <= $MAXi } {
+	spawn $env(SHELL)
+	send -- "firejail --net=eth0 --ip=192.168.1.$i\r"
+	expect {
+		timeout {puts "TESTING ERROR 0\n";exit}
+		"Child process initialized"
+	}
+	incr i
+	after 100
+}
+
+
+# check an existing address
+spawn $env(SHELL)
+send -- "firejail --net=eth0 --ip=192.168.1.200\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"the address 192.168.1.200 is already in use"
+}
+
+
+set MAXi 254
+set i 2
+while { $i <= $MAXi } {
+	spawn $env(SHELL)
+	send -- "firejail --net=eth0\r"
+	expect {
+		timeout {puts "TESTING ERROR 2.1\n";exit}
+		"192.168.1.60" {puts "TESTING ERROR 2.2\n";exit}
+		"192.168.1.200" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.201" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.202" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.203" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.204" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.205" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.206" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.207" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.208" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.209" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.210" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.211" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.212" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.213" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.214" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.215" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.216" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.217" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.218" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.219" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.220" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.221" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.222" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.223" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.224" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.225" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.226" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.227" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.228" {puts "TESTING ERROR 3\n";exit}
+		"192.168.1.229" {puts "TESTING ERROR 3\n";exit}
+		"Child process initialized"
+	}
+	puts "************ $i ******************\n"
+	incr i
+	after 100
+#	sleep 1
+}
+send -- "exit\r"
+after 100
+
+puts "\n"
+

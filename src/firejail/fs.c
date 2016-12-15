@@ -27,198 +27,9 @@
 #include <fcntl.h>
 #include <errno.h>
 
-static void create_empty_dir(void) {
-	struct stat s;
-	
-	if (stat(RUN_RO_DIR, &s)) {
-		/* coverity[toctou] */
-		int rv = mkdir(RUN_RO_DIR, S_IRUSR | S_IXUSR);
-		if (rv == -1)
-			errExit("mkdir");	
-		if (chown(RUN_RO_DIR, 0, 0) < 0)
-			errExit("chown");
-	}
-}
-
-static void create_empty_file(void) {
-	struct stat s;
-
-	if (stat(RUN_RO_FILE, &s)) {
-		/* coverity[toctou] */
-		FILE *fp = fopen(RUN_RO_FILE, "w");
-		if (!fp)
-			errExit("fopen");
-		fclose(fp);
-		if (chown(RUN_RO_FILE, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_RO_FILE, S_IRUSR) < 0)
-			errExit("chown");
-	}
-}
-
-// build /run/firejail directory
-void fs_build_firejail_dir(void) {
-	struct stat s;
-
-	// CentOS 6 doesn't have /run directory
-	if (stat(RUN_FIREJAIL_BASEDIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_BASEDIR);
-		/* coverity[toctou] */
-		int rv = mkdir(RUN_FIREJAIL_BASEDIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_BASEDIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_BASEDIR, 0755) < 0)
-			errExit("chmod");
-	}
-	else { // check /tmp/firejail directory belongs to root end exit if doesn't!
-		if (s.st_uid != 0 || s.st_gid != 0) {
-			fprintf(stderr, "Error: non-root %s directory, exiting...\n", RUN_FIREJAIL_DIR);
-			exit(1);
-		}
-	}
-
-	if (stat(RUN_FIREJAIL_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_DIR);
-		/* coverity[toctou] */
-		int rv = mkdir(RUN_FIREJAIL_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_DIR, 0755) < 0)
-			errExit("chmod");
-	}
-	
-	if (stat(RUN_FIREJAIL_NETWORK_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_NETWORK_DIR);
-		
-		if (mkdir(RUN_FIREJAIL_NETWORK_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_NETWORK_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_NETWORK_DIR, 0755) < 0)
-			errExit("chmod");
-	}
-	
-	if (stat(RUN_FIREJAIL_BANDWIDTH_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_BANDWIDTH_DIR);
-		if (mkdir(RUN_FIREJAIL_BANDWIDTH_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_BANDWIDTH_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_BANDWIDTH_DIR, 0755) < 0)
-			errExit("chmod");
-	}
-		
-	if (stat(RUN_FIREJAIL_NAME_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_NAME_DIR);
-		if (mkdir(RUN_FIREJAIL_NAME_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_NAME_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_NAME_DIR, 0755) < 0)
-			errExit("chmod");
-	}
-	
-	if (stat(RUN_FIREJAIL_X11_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_FIREJAIL_X11_DIR);
-		if (mkdir(RUN_FIREJAIL_X11_DIR, 0755) == -1)
-			errExit("mkdir");
-		if (chown(RUN_FIREJAIL_X11_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_FIREJAIL_X11_DIR, 0755) < 0)
-			errExit("chmod");
-	}
-	
-	create_empty_dir();
-	create_empty_file();
-}
+static void fs_rdwr(const char *dir);
 
 
-// build /tmp/firejail/mnt directory
-static int tmpfs_mounted = 0;
-#ifdef HAVE_CHROOT		
-static void fs_build_remount_mnt_dir(void) {
-	tmpfs_mounted = 0;
-	fs_build_mnt_dir();
-}
-#endif
-
-void fs_build_mnt_dir(void) {
-	struct stat s;
-	fs_build_firejail_dir();
-	
-	// create /run/firejail/mnt directory
-	if (stat(RUN_MNT_DIR, &s)) {
-		if (arg_debug)
-			printf("Creating %s directory\n", RUN_MNT_DIR);
-		/* coverity[toctou] */
-		int rv = mkdir(RUN_MNT_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_MNT_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_MNT_DIR, 0755) < 0)
-			errExit("chmod");
-	}
-
-	// ... and mount tmpfs on top of it
-	if (!tmpfs_mounted) {
-		// mount tmpfs on top of /run/firejail/mnt
-		if (arg_debug)
-			printf("Mounting tmpfs on %s directory\n", RUN_MNT_DIR);
-		if (mount("tmpfs", RUN_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mounting /tmp/firejail/mnt");
-		tmpfs_mounted = 1;
-		fs_logger2("tmpfs", RUN_MNT_DIR);
-	}
-}
-
-// grab a copy of cp command
-void fs_build_cp_command(void) {
-	struct stat s;
-	fs_build_mnt_dir();
-	if (stat(RUN_CP_COMMAND, &s)) {
-		char* fname = realpath("/bin/cp", NULL);
-		if (fname == NULL) {
-			fprintf(stderr, "Error: /bin/cp not found\n");
-			exit(1);
-		}
-		if (stat(fname, &s)) {
-			fprintf(stderr, "Error: /bin/cp not found\n");
-			exit(1);
-		}
-		if (is_link(fname)) {
-			fprintf(stderr, "Error: invalid /bin/cp file\n");
-			exit(1);
-		}
-		int rv = copy_file(fname, RUN_CP_COMMAND);
-		if (rv) {
-			fprintf(stderr, "Error: cannot access /bin/cp\n");
-			exit(1);
-		}
-		/* coverity[toctou] */
-		if (chown(RUN_CP_COMMAND, 0, 0))
-			errExit("chown");
-		if (chmod(RUN_CP_COMMAND, 0755))
-			errExit("chmod");
-			
-		free(fname);
-	}
-}
-
-// delete the temporary cp command
-void fs_delete_cp_command(void) {
-	unlink(RUN_CP_COMMAND);
-}
 
 //***********************************************
 // process profile file
@@ -228,6 +39,8 @@ typedef enum {
 	BLACKLIST_NOLOG,
 	MOUNT_READONLY,
 	MOUNT_TMPFS,
+	MOUNT_NOEXEC,
+	MOUNT_RDWR,
 	OPERATION_MAX
 } OPERATION;
 
@@ -242,14 +55,9 @@ static void disable_file(OPERATION op, const char *filename) {
 	assert(op <OPERATION_MAX);
 	last_disable = UNSUCCESSFUL;
 	
-	// rebuild /run/firejail directory in case tmpfs was mounted on top of /run
-	fs_build_firejail_dir();
-	
 	// Resolve all symlinks
 	char* fname = realpath(filename, NULL);
 	if (fname == NULL && errno != EACCES) {
-		if (arg_debug)
-			printf("Warning (realpath): %s is an invalid file, skipping...\n", filename);
 		return;
 	}
 	if (fname == NULL && errno == EACCES) {
@@ -298,12 +106,17 @@ static void disable_file(OPERATION op, const char *filename) {
 		// some distros put all executables under /usr/bin and make /bin a symbolic link
 		if ((strcmp(fname, "/bin") == 0 || strcmp(fname, "/usr/bin") == 0) &&
 		      is_link(filename) &&
-		      S_ISDIR(s.st_mode))
-			fprintf(stderr, "Warning: %s directory link was not blacklisted\n", filename);
-			
+		      S_ISDIR(s.st_mode)) {
+		      	if (!arg_quiet)
+				fprintf(stderr, "Warning: %s directory link was not blacklisted\n", filename);
+		}
 		else {
-			if (arg_debug)
-				printf("Disable %s\n", fname);
+			if (arg_debug) {
+				if (strcmp(filename, fname))
+					printf("Disable %s (requesterd %s)\n", fname, filename);
+				else
+					printf("Disable %s\n", fname);
+			}
 			else if (arg_debug_blacklists) {
 				printf("Disable %s", fname);
 				if (op == BLACKLIST_FILE)
@@ -311,6 +124,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				else
 					printf(" - no logging\n");
 			}
+			
 			if (S_ISDIR(s.st_mode)) {
 				if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 					errExit("disable file");
@@ -330,6 +144,18 @@ static void disable_file(OPERATION op, const char *filename) {
 		if (arg_debug)
 			printf("Mounting read-only %s\n", fname);
 		fs_rdonly(fname);
+// todo: last_disable = SUCCESSFUL;
+	}
+	else if (op == MOUNT_RDWR) {
+		if (arg_debug)
+			printf("Mounting read-only %s\n", fname);
+		fs_rdwr(fname);
+// todo: last_disable = SUCCESSFUL;
+	}
+	else if (op == MOUNT_NOEXEC) {
+		if (arg_debug)
+			printf("Mounting noexec %s\n", fname);
+		fs_noexec(fname);
 // todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_TMPFS) {
@@ -361,7 +187,7 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 	glob_t globbuf;
 	// Profiles contain blacklists for files that might not exist on a user's machine.
 	// GLOB_NOCHECK makes that okay.
-	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT, NULL, &globbuf);
+	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT | GLOB_PERIOD, NULL, &globbuf);
 	if (globerr) {
 		fprintf(stderr, "Error: failed to glob pattern %s\n", pattern);
 		exit(1);
@@ -399,7 +225,7 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 }
 
 
-// blacklist files or directoies by mounting empty files on top of them
+// blacklist files or directories by mounting empty files on top of them
 void fs_blacklist(void) {
 	char *homedir = cfg.homedir;
 	assert(homedir);
@@ -426,21 +252,13 @@ void fs_blacklist(void) {
 
 		// process bind command
 		if (strncmp(entry->data, "bind ", 5) == 0)  {
+			struct stat s;
 			char *dname1 = entry->data + 5;
 			char *dname2 = split_comma(dname1);
-			if (dname2 == NULL) {
-				fprintf(stderr, "Error: second directory missing in bind command\n");
-				entry = entry->next;
-				continue;
-			}
-			struct stat s;
-			if (stat(dname1, &s) == -1) {
-				fprintf(stderr, "Error: cannot find %s for bind command\n", dname1);
-				entry = entry->next;
-				continue;
-			}
-			if (stat(dname2, &s) == -1) {
-				fprintf(stderr, "Error: cannot find %s for bind command\n", dname2);
+			if (dname2 == NULL ||
+			    stat(dname1, &s) == -1 ||
+			    stat(dname2, &s) == -1) {
+				fprintf(stderr, "Error: invalid bind command, directory missing\n");
 				entry = entry->next;
 				continue;
 			}
@@ -452,11 +270,8 @@ void fs_blacklist(void) {
 			if (mount(dname1, dname2, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 			/* coverity[toctou] */
-			if (chown(dname2, s.st_uid, s.st_gid) == -1)
-				errExit("mount-bind chown");
-			/* coverity[toctou] */
-			if (chmod(dname2, s.st_mode) == -1)
-				errExit("mount-bind chmod");
+			if (set_perms(dname2,  s.st_uid, s.st_gid,s.st_mode))
+				errExit("set_perms"); 
 				
 			entry = entry->next;
 			continue;
@@ -464,12 +279,40 @@ void fs_blacklist(void) {
 
 		// Process noblacklist command
 		if (strncmp(entry->data, "noblacklist ", 12) == 0) {
-			if (noblacklist_c >= noblacklist_m) {
-			noblacklist_m *= 2;
-			noblacklist = realloc(noblacklist, sizeof(*noblacklist) * noblacklist_m);
-			if (noblacklist == NULL)
-				errExit("failed increasing memory for noblacklist entries");}
-			noblacklist[noblacklist_c++] = expand_home(entry->data + 12, homedir);
+			char **paths = build_paths();
+
+			char *enames[sizeof(paths)+1] = {0};
+			int i = 0;
+
+			if (strncmp(entry->data + 12, "${PATH}", 7) == 0) {
+				// expand ${PATH} macro
+				while (paths[i] != NULL) {
+					if (asprintf(&enames[i], "%s%s", paths[i], entry->data + 19) == -1)
+						errExit("asprintf");
+					i++;
+				}
+			} else {
+				// expand ${HOME} macro if found or pass as is
+				enames[0] = expand_home(entry->data + 12, homedir);
+				enames[1] = NULL;
+			}
+
+			i = 0;
+			while (enames[i] != NULL) {
+				if (noblacklist_c >= noblacklist_m) {
+					noblacklist_m *= 2;
+					noblacklist = realloc(noblacklist, sizeof(*noblacklist) * noblacklist_m);
+					if (noblacklist == NULL)
+						errExit("failed increasing memory for noblacklist entries");
+				}
+				noblacklist[noblacklist_c++] = enames[i];
+				i++;
+			}
+
+			while (enames[i] != NULL) {
+				free(enames[i]);
+			}
+
 			entry = entry->next;
 			continue;
 		}
@@ -487,9 +330,31 @@ void fs_blacklist(void) {
 			ptr = entry->data + 10;
 			op = MOUNT_READONLY;
 		}			
+		else if (strncmp(entry->data, "read-write ", 11) == 0) {
+			ptr = entry->data + 11;
+			op = MOUNT_RDWR;
+		}			
+		else if (strncmp(entry->data, "noexec ", 7) == 0) {
+			ptr = entry->data + 7;
+			op = MOUNT_NOEXEC;
+		}			
 		else if (strncmp(entry->data, "tmpfs ", 6) == 0) {
 			ptr = entry->data + 6;
 			op = MOUNT_TMPFS;
+		}			
+		else if (strncmp(entry->data, "mkdir ", 6) == 0) {
+			EUID_USER();
+			fs_mkdir(entry->data + 6);
+			EUID_ROOT();
+			entry = entry->next;
+			continue;
+		}			
+		else if (strncmp(entry->data, "mkfile ", 7) == 0) {
+			EUID_USER();
+			fs_mkfile(entry->data + 7);
+			EUID_ROOT();
+			entry = entry->next;
+			continue;
 		}			
 		else {
 			fprintf(stderr, "Error: invalid profile line %s\n", entry->data);
@@ -542,38 +407,56 @@ void fs_rdonly(const char *dir) {
 	int rv = stat(dir, &s);
 	if (rv == 0) {
 		// mount --bind /bin /bin
-		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount read-only");
 		// mount --bind -o remount,ro /bin
-		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
+		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
 			errExit("mount read-only");
 		fs_logger2("read-only", dir);
 	}
 }
-void fs_rdonly_noexit(const char *dir) {
+
+static void fs_rdwr(const char *dir) {
 	assert(dir);
 	// check directory exists
 	struct stat s;
 	int rv = stat(dir, &s);
 	if (rv == 0) {
-		int merr = 0;
+		// if the file is outside /home directory, allow only root user
+		uid_t u = getuid();
+		if (u != 0 && s.st_uid != u) {
+			if (!arg_quiet)
+				fprintf(stderr, "Warning: you are not allowed to change %s to read-write\n", dir);
+			return;
+		}
+		
 		// mount --bind /bin /bin
-		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0)
-			merr = 1;
-		// mount --bind -o remount,ro /bin
-		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
-			merr = 1;
-		if (merr)
-			fprintf(stderr, "Warning: cannot mount %s read-only\n", dir); 
-		else
-			fs_logger2("read-only", dir);
+		// mount --bind -o remount,rw /bin
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 || 
+		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
+			errExit("mount read-write");
+		fs_logger2("read-write", dir);
 	}
 }
 
+void fs_noexec(const char *dir) {
+	assert(dir);
+	// check directory exists
+	struct stat s;
+	int rv = stat(dir, &s);
+	if (rv == 0) {
+		// mount --bind /bin /bin
+		// mount --bind -o remount,ro /bin
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 || 
+		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_REC, NULL) < 0)
+			errExit("mount noexec");
+		fs_logger2("noexec", dir);
+	}
+}
+
+
+
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {
-	struct stat s;
-
 	if (arg_debug)
 		printf("Remounting /proc and /proc/sys filesystems\n");
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
@@ -581,10 +464,8 @@ void fs_proc_sys_dev_boot(void) {
 	fs_logger("remount /proc");
 
 	// remount /proc/sys readonly
-	if (mount("/proc/sys", "/proc/sys", NULL, MS_BIND | MS_REC, NULL) < 0)
-		errExit("mounting /proc/sys");
-
-	if (mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_REC, NULL) < 0)
+	if (mount("/proc/sys", "/proc/sys", NULL, MS_BIND | MS_REC, NULL) < 0 ||
+	    mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_REC, NULL) < 0)
 		errExit("mounting /proc/sys");
 	fs_logger("read-only /proc/sys");
 
@@ -601,114 +482,148 @@ void fs_proc_sys_dev_boot(void) {
 			fs_logger("remount /sys");
 	}
 		
-	if (stat("/sys/firmware", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/firmware");
+	disable_file(BLACKLIST_FILE, "/sys/firmware");
+	disable_file(BLACKLIST_FILE, "/sys/hypervisor");
+	{ // allow user access to /sys/fs if "--noblacklist=/sys/fs" is present on the command line
+		EUID_USER();	
+		profile_add("blacklist /sys/fs");
+		EUID_ROOT();
 	}
-		
-	if (stat("/sys/hypervisor", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/hypervisor");
-	}
+	disable_file(BLACKLIST_FILE, "/sys/module");
+	disable_file(BLACKLIST_FILE, "/sys/power");
+	disable_file(BLACKLIST_FILE, "/sys/kernel/debug");
+	disable_file(BLACKLIST_FILE, "/sys/kernel/vmcoreinfo");
+	disable_file(BLACKLIST_FILE, "/sys/kernel/uevent_helper");
 
-	if (stat("/sys/fs", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/fs");
-	}
+	// various /proc/sys files
+	disable_file(BLACKLIST_FILE, "/proc/sys/security");	
+	disable_file(BLACKLIST_FILE, "/proc/sys/efi/vars");	
+	disable_file(BLACKLIST_FILE, "/proc/sys/fs/binfmt_misc");	
+	disable_file(BLACKLIST_FILE, "/proc/sys/kernel/core_pattern");	
+	disable_file(BLACKLIST_FILE, "/proc/sys/kernel/modprobe");	
+	disable_file(BLACKLIST_FILE, "/proc/sysrq-trigger");
+	disable_file(BLACKLIST_FILE, "/proc/sys/kernel/hotplug");
+	disable_file(BLACKLIST_FILE, "/proc/sys/vm/panic_on_oom");
 
-	if (stat("/sys/module", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/module");
-	}
-
-	if (stat("/sys/power", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/sys/power");
-	}
-
-//	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
-//		errExit("mounting /sys");
-
-	// Disable SysRq
-	// a linux box can be shut down easily using the following commands (as root):
-	// # echo 1 > /proc/sys/kernel/sysrq
-	// #echo b > /proc/sysrq-trigger
-	// for more information see https://www.kernel.org/doc/Documentation/sysrq.txt
-	if (arg_debug)
-		printf("Disable /proc/sysrq-trigger\n");
-	fs_rdonly_noexit("/proc/sysrq-trigger");
-	
-	// disable hotplug and uevent_helper
-	if (arg_debug)
-		printf("Disable /proc/sys/kernel/hotplug\n");
-	fs_rdonly_noexit("/proc/sys/kernel/hotplug");
-	if (arg_debug)
-		printf("Disable /sys/kernel/uevent_helper\n");
-	fs_rdonly_noexit("/sys/kernel/uevent_helper");
-	
-	// read-only /proc/irq and /proc/bus
-	if (arg_debug)
-		printf("Disable /proc/irq\n");
-	fs_rdonly_noexit("/proc/irq");
-	if (arg_debug)
-		printf("Disable /proc/bus\n");
-	fs_rdonly_noexit("/proc/bus");
-	
-	// disable /proc/kcore
+	// various /proc files
+	disable_file(BLACKLIST_FILE, "/proc/irq");
+	disable_file(BLACKLIST_FILE, "/proc/bus");
+	disable_file(BLACKLIST_FILE, "/proc/config.gz");	
+	disable_file(BLACKLIST_FILE, "/proc/sched_debug");	
+	disable_file(BLACKLIST_FILE, "/proc/timer_list");	
+	disable_file(BLACKLIST_FILE, "/proc/timer_stats");	
 	disable_file(BLACKLIST_FILE, "/proc/kcore");
-
-	// disable /proc/kallsyms
 	disable_file(BLACKLIST_FILE, "/proc/kallsyms");
+	disable_file(BLACKLIST_FILE, "/proc/mem");
+	disable_file(BLACKLIST_FILE, "/proc/kmem");
 	
-	// disable /boot
-	if (stat("/boot", &s) == 0) {
-		if (arg_debug)
-			printf("Disable /boot directory\n");
+	// remove kernel symbol information
+	if (!arg_allow_debuggers) {
+		disable_file(BLACKLIST_FILE, "/usr/src/linux");
+		disable_file(BLACKLIST_FILE, "/lib/modules");
+		disable_file(BLACKLIST_FILE, "/usr/lib/debug");
 		disable_file(BLACKLIST_FILE, "/boot");
 	}
-	
+		
 	// disable /selinux
-	if (stat("/selinux", &s) == 0) {
-		if (arg_debug)
-			printf("Disable /selinux directory\n");
-		disable_file(BLACKLIST_FILE, "/selinux");
-	}
+	disable_file(BLACKLIST_FILE, "/selinux");
 	
 	// disable /dev/port
-	if (stat("/dev/port", &s) == 0) {
-		disable_file(BLACKLIST_FILE, "/dev/port");
-	}
+	disable_file(BLACKLIST_FILE, "/dev/port");
+
 	
-	if (getuid() != 0) {
-		// disable /dev/kmsg
-		if (stat("/dev/kmsg", &s) == 0) {
-			disable_file(BLACKLIST_FILE, "/dev/kmsg");
-		}
+	// disable various ipc sockets
+	struct stat s; 
+
+	// disable /run/user/{uid}/gnupg
+	char *fnamegpg;
+	if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
+		errExit("asprintf");
+	if (stat(fnamegpg, &s) == -1) 
+	    mkdir_attr(fnamegpg, 0700, getuid(), getgid());
+	if (stat(fnamegpg, &s) == 0)
+		disable_file(BLACKLIST_FILE, fnamegpg);
+	free(fnamegpg);
+
+	// disable /run/user/{uid}/systemd
+	char *fnamesysd;
+	if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
+		errExit("asprintf");
+	if (stat(fnamesysd, &s) == -1) 
+		mkdir_attr(fnamesysd, 0755, getuid(), getgid());
+	if (stat(fnamesysd, &s) == 0)
+		disable_file(BLACKLIST_FILE, fnamesysd);
+	free(fnamesysd);
+
+	
+// todo: investigate
+#if 0
+	// breaks too many applications, option needed
+	/* // disable /run/user/{uid}/bus */
+	/* char *fnamebus; */
+	/* if (asprintf(&fnamebus, "/run/user/%d/bus", getuid()) == -1) */
+	/*     errExit("asprintf"); */
+	/* if (stat(fnamebus, &s) == 0) */
+	/*     disable_file(BLACKLIST_FILE, fnamebus); */
+	/* free(fnamebus); */
+
+	// WARNING: not working
+	// disable /run/user/{uid}/kdeinit*
+	//char *fnamekde;
+	//if (asprintf(&fnamekde, "/run/user/%d/kdeinit*", getuid()) == -1)
+	//    errExit("asprintf");
+	//if (stat(fnamekde, &s) == 0)
+	//    disable_file(BLACKLIST_FILE, fnamekde);
+	//free(fnamekde);
+	
+	
+	// disable /run/user/{uid}/pulse
+	/* char *fnamepulse; */
+	/* if (asprintf(&fnamepulse, "/run/user/%d/pulse", getuid()) == -1) */
+	/*     errExit("asprintf"); */
+	/* if (stat(fnamepulse, &s) == 0) */
+	/*     disable_file(BLACKLIST_FILE, fnamepulse); */
+	/* free(fnamepulse); */
+
+	// disable /run/user/{uid}/dconf
+	/* char *fnamedconf; */
+	/* if (asprintf(&fnamedconf, "/run/user/%d/dconf", getuid()) == -1) */
+	/*     errExit("asprintf"); */
+	/* if (stat(fnamedconf, &s) == 0) */
+	/*     disable_file(BLACKLIST_FILE, fnamedconf); */
+	/* free(fnamedconf); */
+
+
+	// dirs in /run/user/{uid}/
+	// using gnome:
+	// bus, dconf, gdm, gnome-shell, gnupg, gvfs, keyring, pulse, systemd
+
+	// using kde:
+	// kdeinit__0, ...
 		
-		// disable /proc/kmsg
-		if (stat("/proc/kmsg", &s) == 0) {
-			disable_file(BLACKLIST_FILE, "/proc/kmsg");
-		}
+	// more files with sockets to be blacklisted
+	// /run/dbus /run/systemd /run/udev /run/lvm
+
+	// /run/user/{uid} does not exist on some systems, usually used and created by desktop applications
+	
+#endif
+
+	if (getuid() != 0) {
+		// disable /dev/kmsg and /proc/kmsg
+		disable_file(BLACKLIST_FILE, "/dev/kmsg");
+		disable_file(BLACKLIST_FILE, "/proc/kmsg");
 	}
 }
 
 // disable firejail configuration in /etc/firejail and in ~/.config/firejail
-static void disable_firejail_config(void) {
+static void disable_config(void) {
 	struct stat s;
-	if (stat("/etc/firejail", &s) == 0)
-		disable_file(BLACKLIST_FILE, "/etc/firejail");
 
 	char *fname;
 	if (asprintf(&fname, "%s/.config/firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(fname, &s) == 0)
 		disable_file(BLACKLIST_FILE, fname);
-	
-	if (stat("/usr/local/etc/firejail", &s) == 0)
-		disable_file(BLACKLIST_FILE, "/usr/local/etc/firejail");
-
-	if (strcmp(PREFIX, "/usr/local")) {
-		if (asprintf(&fname, "%s/etc/firejail", PREFIX) == -1)
-			errExit("asprintf");
-		if (stat(fname, &s) == 0)
-			disable_file(BLACKLIST_FILE, fname);
-	}
-	
 	free(fname);
 	
 	// disable run time information
@@ -725,8 +640,23 @@ static void disable_firejail_config(void) {
 
 // build a basic read-only filesystem
 void fs_basic_fs(void) {
+	uid_t uid = getuid();
+	
 	if (arg_debug)
-		printf("Mounting read-only /bin, /sbin, /lib, /lib32, /lib64, /usr, /etc, /var\n");
+		printf("Mounting read-only /bin, /sbin, /lib, /lib32, /lib64, /usr");
+	if (!arg_writable_etc) {
+		fs_rdonly("/etc");
+		if (uid)
+			fs_noexec("/etc");
+		if (arg_debug) printf(", /etc");
+	}
+	if (!arg_writable_var) {
+		fs_rdonly("/var");
+		if (uid)
+			fs_noexec("/var");
+		if (arg_debug) printf(", /var");
+	}
+	if (arg_debug) printf("\n");
 	fs_rdonly("/bin");
 	fs_rdonly("/sbin");
 	fs_rdonly("/lib");
@@ -734,24 +664,64 @@ void fs_basic_fs(void) {
 	fs_rdonly("/lib32");
 	fs_rdonly("/libx32");
 	fs_rdonly("/usr");
-	fs_rdonly("/etc");
-	fs_rdonly("/var");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
-	if (!arg_private_dev)
-		fs_dev_shm();
+//	if (!arg_private_dev)
+//		fs_dev_shm();
 	fs_var_lock();
 	fs_var_tmp();
 	fs_var_log();
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
-
+	fs_machineid();
+	
 	// don't leak user information
 	restrict_users();
 	
-	disable_firejail_config();
+	// when starting as root, firejail config is not disabled;
+	// this mode could be used to install and test new software by chaining
+	// firejail sandboxes (firejail --force)
+	if (uid)
+		disable_config();
 }
+
+
+
+#ifdef HAVE_OVERLAYFS
+char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
+	struct stat s;
+	char *dirname;
+
+	// create ~/.firejail directory
+	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(dirname, &s) == -1) {
+		mkdir_attr(dirname, 0700, 0, 0);
+	}
+	else if (is_link(dirname)) {
+		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+		exit(1);
+	}
+	free(dirname);
+
+	// check overlay directory
+	if (asprintf(&dirname, "%s/.firejail/%s", cfg.homedir, subdirname) == -1)
+		errExit("asprintf");
+	if (is_link(dirname)) {
+		fprintf(stderr, "Error: overlay directory is a symbolic link\n");
+		exit(1);
+	}
+	if (allow_reuse == 0) {
+		if (stat(dirname, &s) == 0) {
+			fprintf(stderr, "Error: overlay directory already exists: %s\n", dirname);
+			exit(1);
+		}
+	}
+
+	return dirname;
+}
+
 
 
 // mount overlayfs on top of / directory
@@ -806,48 +776,54 @@ void fs_overlayfs(void) {
 	if (major == 3 && minor < 18)
 		oldkernel = 1;
 	
-	// build overlay directories
-	fs_build_mnt_dir();
-
 	char *oroot;
 	if(asprintf(&oroot, "%s/oroot", RUN_MNT_DIR) == -1)
 		errExit("asprintf");
-	if (mkdir(oroot, 0755))
-		errExit("mkdir");
-	if (chown(oroot, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(oroot, 0755) < 0)
-		errExit("chmod");
+	mkdir_attr(oroot, 0755, 0, 0);
 
+	struct stat s;
 	char *basedir = RUN_MNT_DIR;
 	if (arg_overlay_keep) {
 		// set base for working and diff directories
 		basedir = cfg.overlay_dir;
-		if (mkdir(basedir, 0755) != 0) {
-			fprintf(stderr, "Error: cannot create overlay directory\n");
-			exit(1);
+
+		// does the overlay exist?
+		if (stat(basedir, &s) == 0) {
+			if (arg_overlay_reuse == 0) {
+				fprintf(stderr, "Error: overlay directory exists, but reuse is not allowed\n");
+				exit(1);
+			}
+		}
+		else {
+			/* coverity[toctou] */
+			if (mkdir(basedir, 0755) != 0) {
+				fprintf(stderr, "Error: cannot create overlay directory\n");
+				exit(1);
+			}
 		}
 	}
 
 	char *odiff;
 	if(asprintf(&odiff, "%s/odiff", basedir) == -1)
 		errExit("asprintf");
-	if (mkdir(odiff, 0755))
-		errExit("mkdir");
-	if (chown(odiff, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(odiff, 0755) < 0)
-		errExit("chmod");
+
+	// no need to check arg_overlay_reuse
+	if (stat(odiff, &s) != 0) {
+		mkdir_attr(odiff, 0755, 0, 0);
+	}
+	else if (set_perms(odiff, 0, 0, 0755))
+		errExit("set_perms");
 	
 	char *owork;
 	if(asprintf(&owork, "%s/owork", basedir) == -1)
 		errExit("asprintf");
-	if (mkdir(owork, 0755))
-		errExit("mkdir");
-	if (chown(owork, 0, 0) < 0)
+
+	// no need to check arg_overlay_reuse
+	if (stat(owork, &s) != 0) {
+		mkdir_attr(owork, 0755, 0, 0);
+	}
+	else if (set_perms(owork, 0, 0, 0755))
 		errExit("chown");
-	if (chmod(owork, 0755) < 0)
-		errExit("chmod");
 	
 	// mount overlayfs
 	if (arg_debug)
@@ -899,21 +875,23 @@ void fs_overlayfs(void) {
 		
 				if(asprintf(&hdiff, "%s/hdiff", basedir) == -1)
 					errExit("asprintf");
-				if (mkdir(hdiff, S_IRWXU | S_IRWXG | S_IRWXO))
-					errExit("mkdir");
-				if (chown(hdiff, 0, 0) < 0)
-					errExit("chown");
-				if (chmod(hdiff, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
-					errExit("chmod");
+
+				// no need to check arg_overlay_reuse
+				if (stat(hdiff, &s) != 0) {
+					mkdir_attr(hdiff, S_IRWXU | S_IRWXG | S_IRWXO, 0, 0);
+				}
+				else if (set_perms(hdiff, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+					errExit("set_perms");
 		
 				if(asprintf(&hwork, "%s/hwork", basedir) == -1)
 					errExit("asprintf");
-				if (mkdir(hwork, S_IRWXU | S_IRWXG | S_IRWXO))
-					errExit("mkdir");
-				if (chown(hwork, 0, 0) < 0)
-					errExit("chown");
-				if (chmod(hwork, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
-					errExit("chmod");
+
+				// no need to check arg_overlay_reuse
+				if (stat(hwork, &s) != 0) {
+					mkdir_attr(hwork, S_IRWXU | S_IRWXG | S_IRWXO, 0, 0);
+				}
+				else if (set_perms(hwork, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+					errExit("set_perms");
 		
 				// no homedir in overlay so now mount another overlay for /home
 				if (asprintf(&option, "lowerdir=/home,upperdir=%s,workdir=%s", hdiff, hwork) == -1)
@@ -950,37 +928,53 @@ void fs_overlayfs(void) {
 		errExit("mounting /run");
 	fs_logger("whitelist /run");
 
+	// mount-bind /tmp/.X11-unix directory
+	if (stat("/tmp/.X11-unix", &s) == 0) {
+		if (arg_debug)
+			printf("Mounting /tmp/.X11-unix\n");
+		char *x11;
+		if (asprintf(&x11, "%s/tmp/.X11-unix", oroot) == -1)
+			errExit("asprintf");
+		if (mount("/tmp/.X11-unix", x11, NULL, MS_BIND|MS_REC, NULL) < 0)
+			fprintf(stderr, "Warning: cannot mount /tmp/.X11-unix in overlay\n");
+		else
+			fs_logger("whitelist /tmp/.X11-unix");
+		free(x11);
+	}
+
 	// chroot in the new filesystem
+#ifdef HAVE_GCOV
+	__gcov_flush();
+#endif
 	if (chroot(oroot) == -1)
 		errExit("chroot");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
-	if (!arg_private_dev)
-		fs_dev_shm();
+//	if (!arg_private_dev)
+//		fs_dev_shm();
 	fs_var_lock();
 	fs_var_tmp();
 	fs_var_log();
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
+	fs_machineid();
 
 	// don't leak user information
 	restrict_users();
 
-	// when starting as root in overlay mode, firejail config is not disabled;
+	// when starting as root, firejail config is not disabled;
 	// this mode could be used to install and test new software by chaining
 	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
-		disable_firejail_config();
-	else
-		fprintf(stderr, "Warning: masking /etc/firejail disabled when starting the sandbox as root using --overlay option\n");
+		disable_config();
 
 	// cleanup and exit
 	free(option);
 	free(oroot);
 	free(odiff);
 }
-
+#endif
 
 
 #ifdef HAVE_CHROOT		
@@ -990,6 +984,16 @@ int fs_check_chroot_dir(const char *rootdir) {
 	assert(rootdir);
 	struct stat s;
 	char *name;
+
+	// rootdir has to be owned by root
+	if (stat(rootdir, &s) != 0) {
+		fprintf(stderr, "Error: cannot find chroot directory\n");
+		return 1;
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot directory should be owned by root\n");
+		return 1;
+	}
 
 	// check /dev
 	if (asprintf(&name, "%s/dev", rootdir) == -1)
@@ -1018,7 +1022,7 @@ int fs_check_chroot_dir(const char *rootdir) {
 	}
 	free(name);
 	
-	// check /proc
+	// check /tmp
 	if (asprintf(&name, "%s/tmp", rootdir) == -1)
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
@@ -1026,16 +1030,29 @@ int fs_check_chroot_dir(const char *rootdir) {
 		return 1;
 	}
 	free(name);
-	
-	// check /bin/bash
-	if (asprintf(&name, "%s/bin/bash", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: cannot find /bin/bash in chroot directory\n");
-		return 1;
-	}
-	free(name);
 
+	// check /bin/bash
+//	if (asprintf(&name, "%s/bin/bash", rootdir) == -1)
+//		errExit("asprintf");
+//	if (stat(name, &s) == -1) {
+//		fprintf(stderr, "Error: cannot find /bin/bash in chroot directory\n");
+//		return 1;
+//	}
+//	free(name);
+
+	// check x11 socket directory
+	if (getenv("FIREJAIL_X11")) {
+		mask_x11_abstract_socket = 1;
+		char *name;
+		if (asprintf(&name, "%s/tmp/.X11-unix", rootdir) == -1)
+			errExit("asprintf");
+		if (stat(name, &s) == -1) {
+			fprintf(stderr, "Error: cannot find /tmp/.X11-unix in chroot directory\n");
+			return 1;
+		}
+		free(name);
+	}
+	
 	return 0;	
 }
 
@@ -1043,77 +1060,98 @@ int fs_check_chroot_dir(const char *rootdir) {
 void fs_chroot(const char *rootdir) {
 	assert(rootdir);
 	
-	//***********************************
-	// mount-bind a /dev in rootdir
-	//***********************************
-	// mount /dev
-	char *newdev;
-	if (asprintf(&newdev, "%s/dev", rootdir) == -1)
-		errExit("asprintf");
-	if (arg_debug)
-		printf("Mounting /dev on %s\n", newdev);
-	if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mounting /dev");
-	
-	// some older distros don't have a /run directory
-	// create one by default
-	// no exit on error, let the user deal with any problems
-	char *rundir;
-	if (asprintf(&rundir, "%s/run", rootdir) == -1)
-		errExit("asprintf");
-	if (!is_dir(rundir)) {
-		int rv = mkdir(rundir, 0755);
-		(void) rv;
-		rv = chown(rundir, 0, 0);
-		(void) rv;
-	}
-	
-	// copy /etc/resolv.conf in chroot directory
-	// if resolv.conf in chroot is a symbolic link, this will fail
-	// no exit on error, let the user deal with the problem
-	char *fname;
-	if (asprintf(&fname, "%s/etc/resolv.conf", rootdir) == -1)
-		errExit("asprintf");
-	if (arg_debug)
-		printf("Updating /etc/resolv.conf in %s\n", fname);
-	if (is_link(fname)) {
-		fprintf(stderr, "Error: invalid %s file\n", fname);
-		exit(1);
-	}
-	if (copy_file("/etc/resolv.conf", fname) == -1)
-		fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
+	if (checkcfg(CFG_CHROOT_DESKTOP)) {
+		// mount-bind a /dev in rootdir
+		char *newdev;
+		if (asprintf(&newdev, "%s/dev", rootdir) == -1)
+			errExit("asprintf");
+		if (arg_debug)
+			printf("Mounting /dev on %s\n", newdev);
+		if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting /dev");
+		free(newdev);
 		
+		// x11
+		if (getenv("FIREJAIL_X11")) {
+			mask_x11_abstract_socket = 1;
+			char *newx11;
+			if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
+				errExit("asprintf");
+			if (arg_debug)
+				printf("Mounting /tmp/.X11-unix on %s\n", newx11);
+			if (mount("/tmp/.X11-unix", newx11, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mounting /tmp/.X11-unix");
+			free(newx11);
+		}
+		
+		// create /run/firejail directory in chroot
+		char *rundir;
+		if (asprintf(&rundir, "%s/run", rootdir) == -1)
+			errExit("asprintf");
+		create_empty_dir_as_root(rundir, 0755);
+		free(rundir);
+		if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
+			errExit("asprintf");
+		create_empty_dir_as_root(rundir, 0755);
+		free(rundir);
+		
+		// create /run/firejail/mnt directory in chroot and mount the current one
+		if (asprintf(&rundir, "%s%s", rootdir, RUN_MNT_DIR) == -1)
+			errExit("asprintf");
+		create_empty_dir_as_root(rundir, 0755);
+		if (mount(RUN_MNT_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount bind");
+
+		// copy /etc/resolv.conf in chroot directory
+		// if resolv.conf in chroot is a symbolic link, this will fail
+		// no exit on error, let the user deal with the problem
+		char *fname;
+		if (asprintf(&fname, "%s/etc/resolv.conf", rootdir) == -1)
+			errExit("asprintf");
+		if (arg_debug)
+			printf("Updating /etc/resolv.conf in %s\n", fname);
+		if (is_link(fname)) {
+			fprintf(stderr, "Error: invalid %s file\n", fname);
+			exit(1);
+		}
+		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1)
+			fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
+	}
+	
 	// chroot into the new directory
+#ifdef HAVE_GCOV
+	__gcov_flush();
+#endif
 	if (arg_debug)
 		printf("Chrooting into %s\n", rootdir);
 	if (chroot(rootdir) < 0)
 		errExit("chroot");
-	// mount a new tmpfs in /run/firejail/mnt - the old one was lost in chroot
-	fs_build_remount_mnt_dir();
-		
-	// update /var directory in order to support multiple sandboxes running on the same root directory
-	if (!arg_private_dev)
-		fs_dev_shm();
-	fs_var_lock();
-	fs_var_tmp();
-	fs_var_log();
-	fs_var_lib();
-	fs_var_cache();
-	fs_var_utmp();
 
-	// don't leak user information
-	restrict_users();
+	// create all other /run/firejail files and directories
+	preproc_build_firejail_dir();
 
-	disable_firejail_config();
+	if (checkcfg(CFG_CHROOT_DESKTOP)) {
+		// update /var directory in order to support multiple sandboxes running on the same root directory
+//		if (!arg_private_dev)
+//			fs_dev_shm();
+		fs_var_lock();
+		fs_var_tmp();
+		fs_var_log();
+		fs_var_lib();
+		fs_var_cache();
+		fs_var_utmp();
+		fs_machineid();
+	
+		// don't leak user information
+		restrict_users();
+	
+		// when starting as root, firejail config is not disabled;
+		// this mode could be used to install and test new software by chaining
+		// firejail sandboxes (firejail --force)
+		if (getuid() != 0)
+			disable_config();
+	}
 }
 #endif
 
-void fs_private_tmp(void) {
-	// mount tmpfs on top of /run/firejail/mnt
-	if (arg_debug)
-		printf("Mounting tmpfs on /tmp directory\n");
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-		errExit("mounting /tmp/firejail/mnt");
-	fs_logger2("tmpfs", "/tmp");
-}
 

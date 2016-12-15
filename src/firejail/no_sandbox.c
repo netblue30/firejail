@@ -23,6 +23,65 @@
 #include <unistd.h>
 #include <grp.h>
 
+#define MAX_BUF 4096
+
+int is_container(const char *str) {
+	assert(str);
+	if (strcmp(str, "lxc") == 0 ||
+	     strcmp(str, "docker") == 0 ||
+	     strcmp(str, "lxc-libvirt") == 0 ||
+	     strcmp(str, "systemd-nspawn") == 0 ||
+	     strcmp(str, "rkt") == 0)
+		return 1;
+	return 0;
+}
+
+// returns 1 if we are running under LXC
+int check_namespace_virt(void) {
+	EUID_ASSERT();
+	
+	// check container environment variable
+	char *str = getenv("container");
+	if (str && is_container(str))
+		return 1;
+	
+	// check PID 1 container environment variable
+	EUID_ROOT();
+	FILE *fp = fopen("/proc/1/environ", "r");
+	if (fp) {
+		int c = 0;
+		while (c != EOF) {
+			// read one line
+			char buf[MAX_BUF];
+			int i = 0;
+			while ((c = fgetc(fp)) != EOF) {
+				if (c == 0)
+					break;
+				buf[i] = (char) c;
+				if (++i == (MAX_BUF - 1))
+					break;
+			}
+			buf[i] = '\0';
+			
+			// check env var name
+			if (strncmp(buf, "container=", 10) == 0) {
+				// found it
+				if (is_container(buf + 10)) {
+					fclose(fp);
+					EUID_USER();
+					return 1;
+				}
+			}
+//			printf("i %d c %d, buf #%s#\n", i, c, buf);
+		}
+		
+		fclose(fp);
+	}
+		
+	EUID_USER();
+	return 0;
+}
+
 // check process space for kernel processes
 // return 1 if found, 0 if not found
 int check_kernel_procs(void) {
@@ -103,44 +162,73 @@ int check_kernel_procs(void) {
 void run_no_sandbox(int argc, char **argv) {
 	EUID_ASSERT();
 
-	// build command
-	char *command = NULL;
-	int allocated = 0;
-	if (argc == 1)
-		command = "/bin/bash";
-	else {
-		// calculate length
-		int len = 0;
-		int i;
-		for (i = 1; i < argc; i++) {
-			if (*argv[i] == '-')
-				continue;
+	// process limited subset of options
+	int i;
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "--debug") == 0)
+			arg_debug = 1;
+ 		else if (strcmp(argv[i], "--csh") == 0 ||
+		    strcmp(argv[i], "--zsh") == 0 ||
+		    strcmp(argv[i], "--shell=none") == 0 ||
+		    strncmp(argv[i], "--shell=", 8) == 0)
+			fprintf(stderr, "Warning: shell-related command line options are disregarded - using SHELL environment variable");
+	}
+
+	// use $SHELL to get shell used in sandbox
+	char *shell =  getenv("SHELL");
+	if (shell && access(shell, R_OK) == 0)
+		cfg.shell = shell;
+
+	// guess shell otherwise
+	if (!cfg.shell) {
+		cfg.shell = guess_shell();
+		if (arg_debug)
+			printf("Autoselecting %s as shell\n", cfg.shell);
+	}
+	if (!cfg.shell) {
+		fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
+		exit(1);
+	}
+
+	int prog_index = 0;
+	// find first non option arg:
+	//	- first argument not starting wiht --,
+	//	- whatever follows after -c (example: firejail -c ls)
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "-c") == 0) {
+			prog_index = i + 1;
+			if (prog_index == argc) {
+				fprintf(stderr, "Error: option -c requires an argument\n");
+				exit(1);
+			}
 			break;
 		}
-		int start_index = i;
-		for (i = start_index; i < argc; i++)
-			len += strlen(argv[i]) + 1;
-		
-		// allocate
-		command = malloc(len + 1);
-		if (!command)
-			errExit("malloc");
-		memset(command, 0, len + 1);
-		allocated = 1;
-		
-		// copy
-		for (i = start_index; i < argc; i++) {
-			strcat(command, argv[i]);
-			strcat(command, " ");
+		// check first argument not starting with --
+		if (strncmp(argv[i],"--",2) != 0) {
+			prog_index = i;
+			break;
 		}
 	}
-	
-	// start the program in /bin/sh
-	fprintf(stderr, "Warning: an existing sandbox was detected. "
-		"%s will run without any additional sandboxing features in a /bin/sh shell\n", command);
-	int rv = system(command);
-	(void) rv;
-	if (allocated)
-		free(command);
-	exit(1);
+
+	if (prog_index == 0) {
+		cfg.command_line = cfg.shell;
+		cfg.window_title = cfg.shell;
+	} else {
+		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
+	}
+
+	cfg.original_argv = argv;
+	cfg.original_program_index = prog_index;
+
+	char *command;
+	if (prog_index == 0)
+		command = cfg.shell;
+	else
+		command = argv[prog_index];
+	if (!arg_quiet)
+		fprintf(stderr, "Warning: an existing sandbox was detected. "
+			"%s will run without any additional sandboxing features\n", command);
+
+	arg_quiet = 1;
+	start_application();
 }

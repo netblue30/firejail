@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include <fnmatch.h>
 
 #define MAX_READ 4096	// maximum line length
 char *restricted_user = NULL;
@@ -40,7 +41,7 @@ int restricted_shell(const char *user) {
 	char buf[MAX_READ];
 	while (fgets(buf, MAX_READ, fp)) {
 		lineno++;
-		
+
 		// remove empty spaces at the beginning of the line
 		char *ptr = buf;
 		while (*ptr == ' ' || *ptr == '\t') { 
@@ -48,21 +49,26 @@ int restricted_shell(const char *user) {
 		}
 		if (*ptr == '\n' || *ptr == '#')
 			continue;
+
+		//
+		// parse line
+		//
 		
-		// parse line	
+		// extract users
 		char *usr = ptr;
 		char *args = strchr(usr, ':');
 		if (args == NULL) {
 			fprintf(stderr, "Error: users.conf line %d\n", lineno);
 			exit(1);
 		}
+		
 		*args = '\0';
 		args++;
 		ptr = strchr(args, '\n');
 		if (ptr)
 			*ptr = '\0';
 		
-		// if nothing follows, continue
+		// extract firejail command line arguments
 		char *ptr2 = args;
 		int found = 0;
 		while (*ptr2 != '\0') {
@@ -70,29 +76,42 @@ int restricted_shell(const char *user) {
 				found = 1;
 				break;
 			}
+			ptr2++;
 		}
+		// if nothing follows, continue
 		if (!found)
 			continue;
 		
-		// process user
-		if (strcmp(user, usr) == 0) {
-			restricted_user = strdup(user);
-		    	// extract program arguments
+		// user name globbing
+		if (fnmatch(usr, user, 0) == 0) {
+		    	// process program arguments
 
 		    	fullargv[0] = "firejail";
 		    	int i;
 		    	ptr = args;
 		    	for (i = 1; i < MAX_ARGS; i++) {
-		    		fullargv[i] = ptr;
-		    		while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
+		    		// skip blanks
+		    		while (*ptr == ' ' || *ptr == '\t')
 		    			ptr++;
+		    		fullargv[i] = ptr;
+#ifdef DEBUG_RESTRICTED_SHELL
+				{EUID_ROOT();
+				FILE *fp = fopen("/firelog", "a");
+				if (fp) {
+					fprintf(fp, "i %d ptr #%s#\n", i, fullargv[i]);
+					fclose(fp);
+				}
+				EUID_USER();}
+#endif				
+		    		
 		    		if (*ptr != '\0') {
+		    			// go to the end of the word
+			    		while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
+			    			ptr++;
 		    			*ptr ='\0';
 		    			fullargv[i] = strdup(fullargv[i]);
-		    			if (fullargv[i] == NULL) {
-		    				fprintf(stderr, "Error: cannot allocate memory\n");
-		    				exit(1);
-		    			}
+		    			if (fullargv[i] == NULL)
+		    				errExit("strdup");
 		    			ptr++;
 		    			while (*ptr == ' ' || *ptr == '\t')
 		    				ptr++;
@@ -108,7 +127,7 @@ int restricted_shell(const char *user) {
 		}
 	}
 	fclose(fp);
-			 
+
 	return 0;   
 }
 

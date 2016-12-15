@@ -37,19 +37,13 @@ void fs_trace_preload(void) {
 		FILE *fp = fopen("/etc/ld.so.preload", "w");
 		if (!fp)
 			errExit("fopen");
+		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 		fclose(fp);
-		if (chown("/etc/ld.so.preload", 0, 0) < 0)
-			errExit("chown");
-		if (chmod("/etc/ld.so.preload", S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
-			errExit("chmod");
 		fs_logger("touch /etc/ld.so.preload");
 	}
 }
 
 void fs_trace(void) {
-	// create /tmp/firejail/mnt directory
-	fs_build_mnt_dir();
-	
 	// create the new ld.so.preload file and mount-bind it
 	if (arg_debug)
 		printf("Create the new ld.so.preload file\n");
@@ -57,21 +51,20 @@ void fs_trace(void) {
 	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "w");
 	if (!fp)
 		errExit("fopen");
-	if (arg_trace)
+	if (arg_trace) {
 		fprintf(fp, "%s/firejail/libtrace.so\n", LIBDIR);
+	}
 	else if (arg_tracelog) {
 		fprintf(fp, "%s/firejail/libtracelog.so\n", LIBDIR);
 		if (!arg_quiet)
 			printf("Blacklist violations are logged to syslog\n");
 	}	
-	else
-		assert(0);
-		
+
+	if (mask_x11_abstract_socket)
+		fprintf(fp, "%s/firejail/libconnect.so\n", LIBDIR);
+
+	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	fclose(fp);
-	if (chown(RUN_LDPRELOAD_FILE, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(RUN_LDPRELOAD_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH ) < 0)
-		errExit("chmod");
 	
 	// mount the new preload file
 	if (arg_debug)
@@ -81,5 +74,3 @@ void fs_trace(void) {
 	fs_logger("create /etc/ld.so.preload");
 }
 
-		
-	

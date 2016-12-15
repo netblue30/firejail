@@ -95,34 +95,29 @@ static char *resolve_downloads(void) {
 					if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
 						errExit("asprintf");
 					
-					if (stat(fname, &s) == -1) {
-						fprintf(stderr, "***\n");
-						fprintf(stderr, "*** Error: directory %s not found.\n", fname);
-						fprintf(stderr, "*** \tThis directory is configured in ~/.config/user-dirs.dirs.\n");
-						fprintf(stderr, "*** \tPlease create a Downloads directory.\n");
-						fprintf(stderr, "***\n");
+					if (stat(fname, &s) == -1)
 						free(fname);
-						return NULL;
-					}
+						goto errout;
 				
 					char *rv;
 					if (asprintf(&rv, "whitelist ~/%s", ptr + 24) == -1)
 						errExit("asprintf");
 					return rv;
 				}
-				else {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Error: invalid XDG_DOWNLOAD_DIR entry in ~/.config/user-dirs.dirs.\n");
-					fprintf(stderr, "*** \tPlease specify a valid Downloads directory, example:\n");
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "***\t\tXDG_DOWNLOAD_DIR=\"$HOME/Downloads\"\n");
-					fprintf(stderr, "***\n");
-					return NULL;
-				}
+				else
+					goto errout;
 			}
 		}
 	}
+	
 	fclose(fp);
+	return NULL;
+
+errout:
+	fprintf(stderr, "***\n");
+	fprintf(stderr, "*** Error: Downloads directory was not found in user home.\n");
+	fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
+	fprintf(stderr, "***\n");
 	
 	return NULL;
 }
@@ -157,10 +152,8 @@ static int mkpath(const char* path, mode_t mode) {
 			}
 		}
 		else {
-			if (chmod(file_path, mode) == -1)
-				errExit("chmod");
-			if (chown(file_path, uid, gid) == -1)
-				errExit("chown");
+			if (set_perms(file_path, uid, gid, mode))
+				errExit("set_perms");
 			done = 1;
 		}			
 
@@ -181,66 +174,73 @@ static void whitelist_path(ProfileEntry *entry) {
 	char *wfile = NULL;
 
 	if (entry->home_dir) {
-		fname = path + strlen(cfg.homedir);
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in user home directory, exiting...\n", path);
-			exit(1);
+		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {		
+			fname = path + strlen(cfg.homedir);
+			if (*fname == '\0')
+				goto errexit;
 		}
+		else
+			fname = path;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->tmp_dir) {
 		fname = path + 4; // strlen("/tmp")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /tmp directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->media_dir) {
 		fname = path + 6; // strlen("/media")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /media directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MEDIA_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	else if (entry->mnt_dir) {
+		fname = path + 4; // strlen("/mnt")
+		if (*fname == '\0')
+			goto errexit;
+
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MNT_DIR, fname) == -1)
+			errExit("asprintf");
+	}
 	else if (entry->var_dir) {
 		fname = path + 4; // strlen("/var")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /var directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_VAR_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->dev_dir) {
 		fname = path + 4; // strlen("/dev")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /dev directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_DEV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->opt_dir) {
 		fname = path + 4; // strlen("/opt")
-		if (*fname == '\0') {
-			fprintf(stderr, "Error: file %s is not in /opt directory, exiting...\n", path);
-			exit(1);
-		}
+		if (*fname == '\0')
+			goto errexit;
 	
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_OPT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	else if (entry->srv_dir) {
+		fname = path + 4; // strlen("/srv")
+		if (*fname == '\0')
+			goto errexit;
 
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SRV_DIR, fname) == -1)
+			errExit("asprintf");
+	}
 	// check if the file exists
 	struct stat s;
 	if (wfile && stat(wfile, &s) == 0) {
@@ -248,9 +248,6 @@ static void whitelist_path(ProfileEntry *entry) {
 			printf("Whitelisting %s\n", path);
 	}
 	else {
-		if (arg_debug || arg_debug_whitelists) {
- 			fprintf(stderr, "Warning (whitelisting): %s is an invalid file, skipping...\n", path);
-		}
 		return;
 	}
 	
@@ -267,26 +264,31 @@ static void whitelist_path(ProfileEntry *entry) {
 	
 	// process regular file
 	else {
-		// create an empty file
-		FILE *fp = fopen(path, "w");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot create empty file in home directory\n");
-			exit(1);
+		if (access(path, R_OK)) {
+			// create an empty file
+			FILE *fp = fopen(path, "w");
+			if (!fp) {
+				fprintf(stderr, "Error: cannot create empty file in home directory\n");
+				exit(1);
+			}
+			// set file properties
+			SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
+			fclose(fp);
 		}
-		fclose(fp);
+		else
+			return; // the file is already present
 	}
 	
-	// set file properties
-	if (chown(path, s.st_uid, s.st_gid) < 0)
-		errExit("chown");
-	if (chmod(path, s.st_mode) < 0)
-		errExit("chmod");
-
 	// mount
 	if (mount(wfile, path, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 
 	free(wfile);
+	return;
+
+errexit:
+	fprintf(stderr, "Error: file %s is not in the whitelisted directory\n", path);
+	exit(1);
 }
 
 
@@ -302,10 +304,11 @@ void fs_whitelist(void) {
 	int home_dir = 0;	// /home/user directory flag
 	int tmp_dir = 0;	// /tmp directory flag
 	int media_dir = 0;	// /media directory flag
+	int mnt_dir = 0;	// /mnt directory flag
 	int var_dir = 0;		// /var directory flag
 	int dev_dir = 0;		// /dev directory flag
 	int opt_dir = 0;		// /opt directory flag
-
+        int srv_dir = 0;                // /srv directory flag
 	// verify whitelist files, extract symbolic links, etc.
 	while (entry) {
 		// handle only whitelist commands
@@ -331,6 +334,8 @@ void fs_whitelist(void) {
 		}
 
 		// replace ~/ or ${HOME} into /home/username
+//		if (new_name)
+//			free(new_name);
 		new_name = expand_home(entry->data + 10, cfg.homedir);
 		assert(new_name);
 		if (arg_debug)
@@ -367,13 +372,17 @@ void fs_whitelist(void) {
 				tmp_dir = 1;
 			else if (strncmp(new_name, "/media/", 7) == 0)
 				media_dir = 1;
+			else if (strncmp(new_name, "/mnt/", 5) == 0)
+				mnt_dir = 1;
 			else if (strncmp(new_name, "/var/", 5) == 0)
 				var_dir = 1;
 			else if (strncmp(new_name, "/dev/", 5) == 0)
 				dev_dir = 1;
 			else if (strncmp(new_name, "/opt/", 5) == 0)
 				opt_dir = 1;
-
+			else if (strncmp(new_name, "/srv/", 5) == 0)
+				opt_dir = 1;
+			
 			continue;
 		}
 		
@@ -390,12 +399,16 @@ void fs_whitelist(void) {
 
 			entry->home_dir = 1;
 			home_dir = 1;
+			if (arg_debug || arg_debug_whitelists)
+				fprintf(stderr, "Debug %d: fname #%s#, cfg.homedir #%s#\n",
+					__LINE__, fname, cfg.homedir);
+
 			// both path and absolute path are under /home
 			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#, cfg.homedir #%s#\n",
-						__LINE__, fname, cfg.homedir);
-				goto errexit;
+				// check if the file is owned by the user
+				struct stat s;
+				if (stat(fname, &s) == 0 && s.st_uid != getuid())
+					goto errexit;
 			}
 		}
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {
@@ -403,8 +416,6 @@ void fs_whitelist(void) {
 			tmp_dir = 1;
 			// both path and absolute path are under /tmp
 			if (strncmp(fname, "/tmp/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -413,8 +424,14 @@ void fs_whitelist(void) {
 			media_dir = 1;
 			// both path and absolute path are under /media
 			if (strncmp(fname, "/media/", 7) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
+				goto errexit;
+			}
+		}
+		else if (strncmp(new_name, "/mnt/", 5) == 0) {
+			entry->mnt_dir = 1;
+			mnt_dir = 1;
+			// both path and absolute path are under /mnt
+			if (strncmp(fname, "/mnt/", 5) != 0) {
 				goto errexit;
 			}
 		}
@@ -428,8 +445,6 @@ void fs_whitelist(void) {
 			else if (strcmp(new_name, "/var/lock")== 0)
 				;
 			else if (strncmp(fname, "/var/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -438,8 +453,6 @@ void fs_whitelist(void) {
 			dev_dir = 1;
 			// both path and absolute path are under /dev
 			if (strncmp(fname, "/dev/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
 				goto errexit;
 			}
 		}
@@ -448,14 +461,18 @@ void fs_whitelist(void) {
 			opt_dir = 1;
 			// both path and absolute path are under /dev
 			if (strncmp(fname, "/opt/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
+				goto errexit;
+			}
+		}
+		else if (strncmp(new_name, "/srv/", 5) == 0) {
+			entry->srv_dir = 1;
+			srv_dir = 1;
+			// both path and absolute path are under /srv
+			if (strncmp(fname, "/srv/", 5) != 0) {
 				goto errexit;
 			}
 		}
 		else {
-			if (arg_debug)
-				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
 		}
 
@@ -480,21 +497,10 @@ void fs_whitelist(void) {
 		entry = entry->next;
 	}
 		
-	// create mount points
-	fs_build_mnt_dir();
-	
-
 	// /home/user
 	if (home_dir) {
 		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
-		int rv = mkdir(RUN_WHITELIST_HOME_USER_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_WHITELIST_HOME_USER_DIR, getuid(), getgid()) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_HOME_USER_DIR, 0755) < 0)
-			errExit("chmod");
-	
+		mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
 		if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -504,15 +510,8 @@ void fs_whitelist(void) {
 	
 	// /tmp mountpoint
 	if (tmp_dir) {
-		// keep a copy of real /tmp directory in WHITELIST_TMP_DIR
-		int rv = mkdir(RUN_WHITELIST_TMP_DIR, 1777);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_WHITELIST_TMP_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_TMP_DIR, 1777) < 0)
-			errExit("chmod");
-	
+		// keep a copy of real /tmp directory in  
+		mkdir_attr(RUN_WHITELIST_TMP_DIR, 1777, 0, 0);
 		if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -526,37 +525,51 @@ void fs_whitelist(void) {
 	
 	// /media mountpoint
 	if (media_dir) {
-		// keep a copy of real /media directory in RUN_WHITELIST_MEDIA_DIR
-		int rv = mkdir(RUN_WHITELIST_MEDIA_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_WHITELIST_MEDIA_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_MEDIA_DIR, 0755) < 0)
-			errExit("chmod");
+		// some distros don't have a /media directory
+		struct stat s;
+		if (stat("/media", &s) == 0) {
+			// keep a copy of real /media directory in RUN_WHITELIST_MEDIA_DIR
+			mkdir_attr(RUN_WHITELIST_MEDIA_DIR, 0755, 0, 0);
+			if (mount("/media", RUN_WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
 	
-		if (mount("/media", RUN_WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind");
-	
-		// mount tmpfs on /media
-		if (arg_debug || arg_debug_whitelists)
-			printf("Mounting tmpfs on /media directory\n");
-		if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mounting tmpfs on /media");
-		fs_logger("tmpfs /media");
+			// mount tmpfs on /media
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /media directory\n");
+			if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /media");
+			fs_logger("tmpfs /media");
+		}
+		else
+			media_dir = 0;
 	}
+
+	// /mnt mountpoint
+	if (mnt_dir) {
+		// check if /mnt directory exists
+		struct stat s;
+		if (stat("/mnt", &s) == 0) {
+			// keep a copy of real /mnt directory in RUN_WHITELIST_MNT_DIR
+			mkdir_attr(RUN_WHITELIST_MNT_DIR, 0755, 0, 0);
+			if (mount("/mnt", RUN_WHITELIST_MNT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+
+			// mount tmpfs on /mnt
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /mnt directory\n");
+			if (mount("tmpfs", "/mnt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /mnt");
+			fs_logger("tmpfs /mnt");
+		}
+		else
+			mnt_dir = 0;
+	}
+
 
 	// /var mountpoint
 	if (var_dir) {
 		// keep a copy of real /var directory in RUN_WHITELIST_VAR_DIR
-		int rv = mkdir(RUN_WHITELIST_VAR_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_WHITELIST_VAR_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_VAR_DIR, 0755) < 0)
-			errExit("chmod");
-	
+		mkdir_attr(RUN_WHITELIST_VAR_DIR, 0755, 0, 0);
 		if (mount("/var", RUN_WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -571,14 +584,7 @@ void fs_whitelist(void) {
 	// /dev mountpoint
 	if (dev_dir) {
 		// keep a copy of real /dev directory in RUN_WHITELIST_DEV_DIR
-		int rv = mkdir(RUN_WHITELIST_DEV_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_WHITELIST_DEV_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_DEV_DIR, 0755) < 0)
-			errExit("chmod");
-	
+		mkdir_attr(RUN_WHITELIST_DEV_DIR, 0755, 0, 0);
 		if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount bind");
 	
@@ -593,14 +599,7 @@ void fs_whitelist(void) {
 	// /opt mountpoint
 	if (opt_dir) {
 		// keep a copy of real /opt directory in RUN_WHITELIST_OPT_DIR
-		int rv = mkdir(RUN_WHITELIST_OPT_DIR, 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown(RUN_WHITELIST_OPT_DIR, 0, 0) < 0)
-			errExit("chown");
-		if (chmod(RUN_WHITELIST_OPT_DIR, 0755) < 0)
-			errExit("chmod");
-	
+		mkdir_attr(RUN_WHITELIST_OPT_DIR, 0755, 0, 0);
 		if (mount("/opt", RUN_WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
 	
@@ -612,6 +611,29 @@ void fs_whitelist(void) {
 		fs_logger("tmpfs /opt");
 	}
 
+	// /srv mountpoint
+	if (srv_dir) {
+		// check if /srv directory exists
+		struct stat s;
+		if (stat("/srv", &s) == 0) {
+			// keep a copy of real /srv directory in RUN_WHITELIST_SRV_DIR
+			mkdir_attr(RUN_WHITELIST_SRV_DIR, 0755, 0, 0);
+			if (mount("/srv", RUN_WHITELIST_SRV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+
+			// mount tmpfs on /srv
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /srv directory\n");
+			if (mount("tmpfs", "/srv", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /srv");
+			fs_logger("tmpfs /srv");
+		}
+		else
+			srv_dir = 0;
+	}
+
+
+	
 	// go through profile rules again, and interpret whitelist commands
 	entry = cfg.profile;
 	while (entry) {
@@ -694,6 +716,20 @@ void fs_whitelist(void) {
 		if (mount("tmpfs", RUN_WHITELIST_MEDIA_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_MEDIA_DIR);
+	}
+
+	// mask the real /mnt directory, currently mounted on RUN_WHITELIST_MNT_DIR
+	if (mnt_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_MNT_DIR);
+	}
+
+	// mask the real /srv directory, currently mounted on RUN_WHITELIST_SRV_DIR
+	if (srv_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_SRV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_SRV_DIR);
 	}
 
 	if (new_name)

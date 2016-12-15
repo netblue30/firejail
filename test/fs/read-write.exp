@@ -1,0 +1,35 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+send -- "firejail --read-only=~/_firejail_test_dir --read-write=~/_firejail_test_dir/test1\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "echo mytest > ~/_firejail_test_dir/a\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Read-only file system"
+}
+after 100
+
+send -- "echo mytest > ~/_firejail_test_dir/test1/b\r"
+sleep 1
+
+send -- "cat ~/_firejail_test_dir/test1/b\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"mytest"
+}
+
+after 100
+puts "\nall done\n"

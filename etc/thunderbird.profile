@@ -11,9 +11,11 @@ mkdir ~/.thunderbird
 whitelist ~/.thunderbird
 
 noblacklist ~/.cache/thunderbird
-mkdir ~/.cache
 mkdir ~/.cache/thunderbird
 whitelist ~/.cache/thunderbird
 
+# allow browsers
+ignore private-tmp
 include /etc/firejail/firefox.profile
+#include /etc/firejail/chromium.profile - chromium runs as suid!
 

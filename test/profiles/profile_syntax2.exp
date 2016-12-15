@@ -1,0 +1,50 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --debug --profile=test2.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Reading profile test2.profile"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Reading profile test.profile"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Mounting a new /home directory"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Disable /bin/rmdir" {puts "Most Linux platforms\n"}
+	"Disable /usr/bin/rmdir" { puts "OpenSUSE platform\n"}
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Drop CAP_SYS_MODULE"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"SECCOMP Filter"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"BLACKLIST"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"mount"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"Child process initialized"
+}
+send -- "exit\r"
+after 100
+puts "\nall done\n"

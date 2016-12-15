@@ -24,7 +24,6 @@ static void print_caps(int pid) {
 	char *file;
 	if (asprintf(&file, "/proc/%d/status", pid) == -1) {
 		errExit("asprintf");
-		exit(1);
 	}
 
 	FILE *fp = fopen(file, "r");
@@ -48,17 +47,15 @@ static void print_caps(int pid) {
 	free(file);
 }
 			
-void caps(pid_t pid) {
-	if (getuid() == 0)
-		firemon_drop_privs();
-	
+void caps(pid_t pid, int print_procs) {
 	pid_read(pid);	// include all processes
 	
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {
-			pid_print_list(i, 0);
+			if (print_procs || pid == 0)
+				pid_print_list(i, 0);
 			int child = find_child(i);
 			if (child != -1)
 				print_caps(child);

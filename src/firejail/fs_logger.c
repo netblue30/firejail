@@ -97,11 +97,7 @@ void fs_logger_print(void) {
 		perror("fopen");		
 		return;
 	}
-	
-	int rv = chown(RUN_FSLOGGER_FILE, getuid(), getgid());
-	(void) rv; // best effort!
-	rv = chmod(RUN_FSLOGGER_FILE, 0644);
-	(void) rv; // best effort!
+	SET_PERMS_STREAM_NOERR(fp, getuid(), getgid(), 0644);
 	
 	FsMsg *ptr = head;
 	while (ptr) {
@@ -119,22 +115,6 @@ void fs_logger_print(void) {
 void fs_logger_change_owner(void) {
 	if (chown(RUN_FSLOGGER_FILE, 0, 0) == -1)
 		errExit("chown");
-}
-
-void fs_logger_print_log_name(const char *name) {
-	EUID_ASSERT();
-	
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	fs_logger_print_log(pid);
 }
 
 void fs_logger_print_log(pid_t pid) {

@@ -28,6 +28,8 @@
 #include <arpa/inet.h>
 #include <time.h>
 #include <fcntl.h>
+#include <sys/uio.h>
+
 #define PIDS_BUFLEN 4096
 #define SERVER_PORT 889	// 889-899 is left unassigned by IANA
 
@@ -41,10 +43,8 @@ static int pid_is_firejail(pid_t pid) {
 	
 	// open /proc/self/comm
 	char *file;
-	if (asprintf(&file, "/proc/%u/comm", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
+	if (asprintf(&file, "/proc/%u/comm", pid) == -1)
+		errExit("asprintf");
 	
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
@@ -89,7 +89,8 @@ static int pid_is_firejail(pid_t pid) {
 	
 		// list of firejail arguments that don't trigger sandbox creation
 		// the initial -- is not included 
-		char *firejail_args = "ls list tree x11 help version top netstats debug-syscalls debug-errnos debug-protocols";
+		char *firejail_args = "ls list tree x11 help version top netstats debug-syscalls debug-errnos debug-protocols "
+			"protocol.print debug.caps shutdown bandwidth caps.print cpu.print debug-caps fs.print get overlay-clean ";
 		
 		int i;
 		char *start;
@@ -189,6 +190,10 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 	tv.tv_usec = 0;
 
 	while (1) {
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+
 #define BUFFSIZE 4096 
 		char __attribute__ ((aligned(NLMSG_ALIGNTO)))buf[BUFFSIZE];
 		

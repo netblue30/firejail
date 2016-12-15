@@ -1,0 +1,154 @@
+#########################################
+# Generic Firejail AppArmor profile
+#########################################
+
+##########
+# A simple PID declaration based on Ubuntu's @{pid}
+# Ubuntu keeps it under tunables/kernelvars and include it via tunables/global.
+# We don't know if this definition is available outside Debian and Ubuntu, so
+# we declare our own here.
+##########
+@{PID}={[1-9],[1-9][0-9],[1-9][0-9][0-9],[1-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9][0-9]}
+
+profile firejail-default {
+
+##########
+# D-Bus is a huge security hole. Uncomment this line if you need D-Bus
+# functionality.
+##########
+#dbus,
+
+##########
+# Mask /proc and /sys information leakage. The configuration here is barely
+# enough to run "top" or "ps aux".
+##########
+/ r,
+/[^proc,^sys]** mrwlk,
+/{,var/}run/ r,
+/{,var/}run/** r,
+/{,var/}run/user/**/dconf/ rw,
+/{,var/}run/user/**/dconf/user rw,
+/{,var/}run/user/**/pulse/ rw,
+/{,var/}run/user/**/pulse/** rw,
+/{,var/}run/firejail/mnt/fslogger r,
+/{,var/}run/firejail/appimage r,
+/{,var/}run/firejail/appimage/** r,
+/{,var/}run/firejail/appimage/** ix,
+/{run,dev}/shm/ r,
+/{run,dev}/shm/** rmwk,
+
+/proc/ r,
+/proc/meminfo r,
+/proc/cpuinfo r,
+/proc/filesystems r,
+/proc/uptime r,
+/proc/loadavg r,
+/proc/stat r,
+
+/proc/@{PID}/ r,
+/proc/@{PID}/fd/ r,
+/proc/@{PID}/task/ r,
+/proc/@{PID}/cmdline r,
+/proc/@{PID}/comm r,
+/proc/@{PID}/stat r,
+/proc/@{PID}/statm r,
+/proc/@{PID}/status r,
+/proc/@{PID}/task/@{PID}/stat r,
+/proc/sys/kernel/pid_max r,
+/proc/sys/kernel/shmmax r,
+/proc/sys/vm/overcommit_memory r,
+/proc/sys/vm/overcommit_ratio r,
+
+/sys/ r,
+/sys/bus/ r,
+/sys/bus/** r,
+/sys/class/ r,
+/sys/class/** r,
+/sys/devices/ r,
+/sys/devices/** r,
+
+/proc/@{PID}/maps r,
+/proc/@{PID}/mounts r,
+/proc/@{PID}/mountinfo r,
+/proc/@{PID}/oom_score_adj r,
+
+##########
+# Allow running programs only from well-known system directories. If you need
+# to run programs from your home directory, uncomment /home line.
+##########
+/lib/** ix,
+/lib64/** ix,
+/bin/** ix,
+/sbin/** ix,
+/usr/bin/** ix,
+/usr/sbin/** ix,
+/usr/local/** ix,
+/usr/lib/** ix,
+/usr/games/** ix,
+/opt/ r,
+/opt/** r,
+/opt/** ix,
+#/home/** ix,
+
+##########
+# Allow all networking functionality, and control it from Firejail.
+##########
+network inet,
+network inet6,
+network unix,
+network netlink,
+network raw,
+
+##########
+# There is no equivalent in Firejail for filtering signals.
+##########
+signal,
+
+##########
+# We let Firejail deal with capabilities.
+##########
+capability chown,
+capability dac_override,
+capability dac_read_search,
+capability fowner,
+capability fsetid,
+capability kill,
+capability setgid,
+capability setuid,
+capability setpcap,
+capability linux_immutable,
+capability net_bind_service,
+capability net_broadcast,
+capability net_admin,
+capability net_raw,
+capability ipc_lock,
+capability ipc_owner,
+capability sys_module,
+capability sys_rawio,
+capability sys_chroot,
+capability sys_ptrace,
+capability sys_pacct,
+capability sys_admin,
+capability sys_boot,
+capability sys_nice,
+capability sys_resource,
+capability sys_time,
+capability sys_tty_config,
+capability mknod,
+capability lease,
+capability audit_write,
+capability audit_control,
+capability setfcap,
+capability mac_override,
+capability mac_admin,
+
+##########
+# We let Firejail deal with mount/umount functionality.
+##########
+mount,
+remount,
+umount,
+pivot_root,
+
+}
+

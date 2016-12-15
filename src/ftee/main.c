@@ -179,10 +179,6 @@ static int is_link(const char *fname) {
 	return 0;
 }
 
-
-
-
-
 static void usage(void) {
 	printf("Usage: ftee filename\n");
 }
@@ -193,37 +189,33 @@ int main(int argc, char **argv) {
 		usage();
 		exit(1);
 	}
+	if (strcmp(argv[1], "--help") == 0) {
+		usage();
+		return 0;
+	}
 	char *fname = argv[1];
 
 
 	// do not accept directories, links, and files with ".."
-	if (strstr(fname, "..") || is_link(fname) || is_dir(fname)) {
-		fprintf(stderr, "Error: invalid output file. Links, directories and files with \"..\" are not allowed.\n");
-		exit(1);
-	}
+	if (strstr(fname, "..") || is_link(fname) || is_dir(fname))
+		goto errexit;
 	
 	struct stat s;
 	if (stat(fname, &s) == 0) {
 		// check permissions
-		if (s.st_uid != getuid() || s.st_gid != getgid()) {
-			fprintf(stderr, "Error: the output file needs to be owned by the current user.\n");
-			exit(1);
-		}
+		if (s.st_uid != getuid() || s.st_gid != getgid())
+			goto errexit;
 		
 		// check hard links
-		if (s.st_nlink != 1) {
-			fprintf(stderr, "Error: no hard links allowed.\n");
-			exit(1);
-		}
+		if (s.st_nlink != 1)
+			goto errexit;
 	}
 
 	// check if we can append to this file
 	/* coverity[toctou] */
 	FILE *fp = fopen(fname, "a");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open output file %s\n", fname);
-		exit(1);
-	}
+	if (!fp)
+		goto errexit;
 	fclose(fp);
 
 
@@ -244,4 +236,8 @@ int main(int argc, char **argv) {
 	
 	log_close();
 	return 0;
+
+errexit:
+	fprintf(stderr, "Error ftee: invalid output file.\n");
+	return 1;
 }

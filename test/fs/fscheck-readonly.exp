@@ -1,0 +1,15 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# dir
+send -- "firejail --read-only=../test/testdir1\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Error"
+}
+after 100
+
+puts "\nall done\n"

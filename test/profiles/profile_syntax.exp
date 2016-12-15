@@ -1,0 +1,54 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --profile=test.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+
+sleep 2
+send -- "cat /sbin/iptables\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"No such file" {puts "\nTESTING /sbin/iptables not found\n"}
+	"Permission denied"
+}
+
+sleep 1
+send -- "ls -l /etc/shadow\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"root root"
+}
+
+sleep 1
+send -- "rmdir\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Permission denied"
+}
+
+sleep 1
+send -- "mount\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"Permission denied"
+}
+
+sleep 1
+send -- "umount\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"Permission denied"
+}
+send -- "exit\r"
+
+after 100
+puts "\nall done\n"

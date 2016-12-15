@@ -39,22 +39,23 @@ int join_namespace(pid_t pid, char *type) {
 		errExit("asprintf");
 	
 	int fd = open(path, O_RDONLY);
-	if (fd < 0) {
-		free(path);
-		fprintf(stderr, "Error: cannot open /proc/%u/ns/%s.\n", pid, type);
-		return -1;
-	}
+	if (fd < 0)
+		goto errout;
 
 	if (syscall(__NR_setns, fd, 0) < 0) {
-		free(path);
-		fprintf(stderr, "Error: cannot join namespace %s.\n", type);
 		close(fd);
-		return -1;
+		goto errout;
 	}
 
 	close(fd);
 	free(path);
 	return 0;
+
+errout:
+	free(path);
+	fprintf(stderr, "Error: cannot join namespace %s\\n", type);
+	return -1;
+	
 }
 
 // return 1 if error
@@ -187,8 +188,6 @@ char *pid_proc_cmdline(const pid_t pid) {
 	for (i = 0; i < len; i++) {
 		if (buffer[i] == '\0')
 			buffer[i] = ' ';
-//		if (buffer[i] >= 0x80) // execv in progress!!!
-//			return NULL;
 	}
 
 	// return a malloc copy of the command line
@@ -199,3 +198,90 @@ char *pid_proc_cmdline(const pid_t pid) {
 	}
 	return rv;
 }
+
+// return 1 if firejail --x11 on command line
+int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid) {
+	// if comm is not firejail return 0
+	char *comm = pid_proc_comm(pid);
+	if (comm == NULL)
+		return 0;
+	if (strcmp(comm, "firejail") != 0) {
+		free(comm);
+		return 0;
+	}
+	free(comm);
+
+	// open /proc/pid/cmdline file
+	char *fname;
+	int fd;
+	if (asprintf(&fname, "/proc/%d/cmdline", pid) == -1)
+		return 0;
+	if ((fd = open(fname, O_RDONLY)) < 0) {
+		free(fname);
+		return 0;
+	}
+	free(fname);
+
+	// read file
+	unsigned char buffer[BUFLEN];
+	ssize_t len;
+	if ((len = read(fd, buffer, sizeof(buffer) - 1)) <= 0) {
+		close(fd);
+		return 0;
+	}
+	buffer[len] = '\0';
+	close(fd);
+
+	// skip the first argument
+	int i;
+	for (i = 0; buffer[i] != '\0'; i++);
+
+	// parse remaining command line options
+	while (1) {
+		// extract argument
+		i++;
+		if (i >= len)
+			break;
+		char *arg = (char *)buffer + i;
+
+		// detect the last command line option
+		if (strcmp(arg, "--") == 0)
+			break;
+		if (strncmp(arg, "--", 2) != 0)
+			break;
+		
+		if (strcmp(arg, "--x11=xorg") == 0)
+			return 0;
+		
+		// check x11 xpra or xephyr
+		if (strncmp(arg, "--x11", 5) == 0)
+			return 1;
+		i += strlen(arg);
+	}
+	return 0;
+}
+
+// return 1 if /proc is mounted hidepid, or if /proc/mouns access is denied
+#define BUFLEN 4096
+int pid_hidepid(void) {
+	FILE *fp = fopen("/proc/mounts", "r");
+	if (!fp)
+		return 1;
+		
+	char buf[BUFLEN];
+	while (fgets(buf, BUFLEN, fp)) {
+		if (strstr(buf, "proc /proc proc")) {
+			fclose(fp);
+			// check hidepid
+			if (strstr(buf, "hidepid=2") || strstr(buf, "hidepid=1"))
+				return 1;
+			return 0;
+		}
+	}
+	
+	fclose(fp);
+	return 0;
+}
+
+
+

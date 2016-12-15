@@ -5,7 +5,9 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6
 netfilter
+nonewprivs
+# noroot - noroot break midori on Ubuntu 14.04
+protocol unix,inet,inet6
+seccomp
 

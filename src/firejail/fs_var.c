@@ -65,10 +65,9 @@ static void build_list(const char *srcdir) {
 			struct stat s;
 			char *name;
 			if (asprintf(&name, "%s/%s", srcdir, dir->d_name) == -1)
-				continue;
-			if (stat(name, &s) == -1)
-				continue;
-			if (S_ISLNK(s.st_mode)) {
+				errExit("asprintf");
+			if (stat(name, &s) == -1 ||
+			    S_ISLNK(s.st_mode)) {
 				free(name);
 				continue;
 			}
@@ -98,10 +97,7 @@ static void build_dirs(void) {
 	// create directories under /var/log
 	DirData *ptr = dirlist;
 	while (ptr) {
-		if (mkdir(ptr->name, ptr->st_mode))
-			errExit("mkdir");
-		if (chown(ptr->name, ptr->st_uid, ptr->st_gid))
-			errExit("chown");
+		mkdir_attr(ptr->name, ptr->st_mode, ptr->st_uid, ptr->st_gid);
 		fs_logger2("mkdir", ptr->name);
 		ptr = ptr->next;
 	}
@@ -110,6 +106,7 @@ static void build_dirs(void) {
 void fs_var_log(void) {
 	build_list("/var/log");
 	
+	// note: /var/log is not created here, if it does not exist, this section fails.
 	// create /var/log if it doesn't exit
 	if (is_dir("/var/log")) {
 		// extract group id for /var/log/wtmp
@@ -121,7 +118,7 @@ void fs_var_log(void) {
 		// mount a tmpfs on top of /var/log
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/log\n");
-		if (mount("tmpfs", "/var/log", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/log", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/log");
 		fs_logger("tmpfs /var/log");
 		
@@ -131,26 +128,22 @@ void fs_var_log(void) {
 		// create an empty /var/log/wtmp file
 		/* coverity[toctou] */
 		FILE *fp = fopen("/var/log/wtmp", "w");
-		if (fp)
+		if (fp) {
+			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
 			fclose(fp);
-		if (chown("/var/log/wtmp", 0, wtmp_group) < 0)
-			errExit("chown");
-		if (chmod("/var/log/wtmp", S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH ) < 0)
-			errExit("chmod");
+		}
 		fs_logger("touch /var/log/wtmp");
 			
 		// create an empty /var/log/btmp file
 		fp = fopen("/var/log/btmp", "w");
-		if (fp)
+		if (fp) {
+			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP);
 			fclose(fp);
-		if (chown("/var/log/btmp", 0, wtmp_group) < 0)
-			errExit("chown");
-		if (chmod("/var/log/btmp", S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP) < 0)
-			errExit("chmod");
+		}
 		fs_logger("touch /var/log/btmp");
 	}
 	else
-		fprintf(stderr, "Warning: cannot mount tmpfs on top of /var/log\n");
+		fprintf(stderr, "Warning: cannot hide /var/log directory\n");
 }
 
 void fs_var_lib(void) {
@@ -160,7 +153,7 @@ void fs_var_lib(void) {
 	if (stat("/var/lib/dhcp", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lib/dhcp\n");
-		if (mount("tmpfs", "/var/lib/dhcp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/lib/dhcp", "tmpfs", MS_NOSUID |  MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/dhcp");
 		fs_logger("tmpfs /var/lib/dhcp");
 			
@@ -169,11 +162,8 @@ void fs_var_lib(void) {
 		
 		if (fp) {
 			fprintf(fp, "\n");
+			SET_PERMS_STREAM(fp, 0, 0, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 			fclose(fp);
-			if (chown("/var/lib/dhcp/dhcpd.leases", 0, 0) == -1)
-				errExit("chown");
-			if (chmod("/var/lib/dhcp/dhcpd.leases", S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH))
-				errExit("chmod");
 			fs_logger("touch /var/lib/dhcp/dhcpd.leases");
 		}
 	}
@@ -182,7 +172,7 @@ void fs_var_lib(void) {
 	if (stat("/var/lib/nginx", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lib/nginx\n");
-		if (mount("tmpfs", "/var/lib/nginx", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/lib/nginx", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/nginx");
 		fs_logger("tmpfs /var/lib/nginx");
 	}			
@@ -191,7 +181,7 @@ void fs_var_lib(void) {
 	if (stat("/var/lib/snmp", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lib/snmp\n");
-		if (mount("tmpfs", "/var/lib/snmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/lib/snmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/snmp");
 		fs_logger("tmpfs /var/lib/snmp");
 	}			
@@ -200,7 +190,7 @@ void fs_var_lib(void) {
 	if (stat("/var/lib/sudo", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lib/sudo\n");
-		if (mount("tmpfs", "/var/lib/sudo", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/lib/sudo", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/sudo");
 		fs_logger("tmpfs /var/lib/sudo");
 	}			
@@ -212,7 +202,7 @@ void fs_var_cache(void) {
 	if (stat("/var/cache/apache2", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/cache/apache2\n");
-		if (mount("tmpfs", "/var/cache/apache2", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/cache/apache2", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/apache2");
 		fs_logger("tmpfs /var/cache/apache2");
 	}			
@@ -220,7 +210,7 @@ void fs_var_cache(void) {
 	if (stat("/var/cache/lighttpd", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/cache/lighttpd\n");
-		if (mount("tmpfs", "/var/cache/lighttpd", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/cache/lighttpd", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/lighttpd");
 		fs_logger("tmpfs /var/cache/lighttpd");
 
@@ -232,18 +222,10 @@ void fs_var_cache(void) {
 			gid = p->pw_gid;
 		}
 		
-		int rv = mkdir("/var/cache/lighttpd/compress", 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown("/var/cache/lighttpd/compress", uid, gid) < 0)
-			errExit("chown");
+		mkdir_attr("/var/cache/lighttpd/compress", 0755, uid, gid);
 		fs_logger("mkdir /var/cache/lighttpd/compress");
 
-		rv = mkdir("/var/cache/lighttpd/uploads", 0755);
-		if (rv == -1)
-			errExit("mkdir");
-		if (chown("/var/cache/lighttpd/uploads", uid, gid) < 0)
-			errExit("chown");
+		mkdir_attr("/var/cache/lighttpd/uploads", 0755, uid, gid);
 		fs_logger("/var/cache/lighttpd/uploads");
 	}			
 }
@@ -268,7 +250,7 @@ void fs_var_lock(void) {
 	if (is_dir("/var/lock")) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lock\n");
-		if (mount("tmpfs", "/var/lock", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
+		if (mount("tmpfs", "/var/lock", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting /lock");
 		fs_logger("tmpfs /var/lock");
 	}
@@ -277,16 +259,11 @@ void fs_var_lock(void) {
 		if (lnk) {
 			if (!is_dir(lnk)) {
 				// create directory
-				if (mkdir(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
-					errExit("mkdir");
-				if (chown(lnk, 0, 0))
-					errExit("chown");
-				if (chmod(lnk, S_IRWXU|S_IRWXG|S_IRWXO))
-					errExit("chmod");
+				mkdir_attr(lnk, S_IRWXU|S_IRWXG|S_IRWXO, 0, 0);
 			}
 			if (arg_debug)
 				printf("Mounting tmpfs on %s on behalf of /var/lock\n", lnk);
-			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
+			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/lock");
 			free(lnk);
 			fs_logger("tmpfs /var/lock");
@@ -304,7 +281,7 @@ void fs_var_tmp(void) {
 		if (!is_link("/var/tmp")) {
 			if (arg_debug)
 				printf("Mounting tmpfs on /var/tmp\n");
-			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
+			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/tmp");
 			fs_logger("tmpfs /var/tmp");
 		}
@@ -327,9 +304,6 @@ void fs_var_utmp(void) {
 		return;
 	}
 
-	// create /tmp/firejail/mnt directory
-	fs_build_mnt_dir();
-	
 	// create a new utmp file
 	if (arg_debug)
 		printf("Create the new utmp file\n");
@@ -353,16 +327,13 @@ void fs_var_utmp(void) {
 			
 	// save new utmp file
 	fwrite(&u_boot, sizeof(u_boot), 1, fp);
+	SET_PERMS_STREAM(fp, 0, utmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
 	fclose(fp);
-	if (chown(RUN_UTMP_FILE, 0, utmp_group) < 0)
-		errExit("chown");
-	if (chmod(RUN_UTMP_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH ) < 0)
-		errExit("chmod");
 	
 	// mount the new utmp file
 	if (arg_debug)
 		printf("Mount the new utmp file\n");
-	if (mount(RUN_UTMP_FILE, UTMP_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(RUN_UTMP_FILE, UTMP_FILE, NULL, MS_BIND|MS_NOSUID|MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mount bind utmp");
 	fs_logger("create /var/run/utmp");
 }

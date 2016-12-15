@@ -32,7 +32,7 @@
 #include <ctype.h>
 #include <assert.h>
 
-#define errExit(msg)    do { char msgout[500]; sprintf(msgout, "Error %s:%s(%d)", msg, __FUNCTION__, __LINE__); perror(msgout); exit(1);} while (0)
+#define errExit(msg)    do { char msgout[500]; sprintf(msgout, "Error %s: %s:%d %s", msg, __FILE__, __LINE__, __FUNCTION__); perror(msgout); exit(1);} while (0)
 
 // macro to print ip addresses in a printf statement
 #define PRINT_IP(A) \
@@ -113,4 +113,6 @@ int join_namespace(pid_t pid, char *type);
 int name2pid(const char *name, pid_t *pid);
 char *pid_proc_comm(const pid_t pid);
 char *pid_proc_cmdline(const pid_t pid);
+int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid);
+int pid_hidepid(void);
 #endif

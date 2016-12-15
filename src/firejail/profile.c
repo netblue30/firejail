@@ -63,6 +63,13 @@ int profile_find(const char *name, const char *dir) {
 // run-time profiles
 //***************************************************
 
+static void warning_feature_disabled(const char *feature) {
+	if (!arg_quiet)
+ 		fprintf(stderr, "Warning: %s feature is disabled in Firejail configuration file\n", feature);
+}
+
+
+
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
@@ -105,7 +112,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// mkdir 
 	if (strncmp(ptr, "mkdir ", 6) == 0) {
 		fs_mkdir(ptr + 6);
-		return 0;
+		return 1;	// process mkdir again while applying blacklists
+	}
+	// mkfile 
+	if (strncmp(ptr, "mkfile ", 7) == 0) {
+		fs_mkfile(ptr + 7);
+		return 1;	// process mkfile again while applying blacklists
 	}
 	// sandbox name
 	else if (strncmp(ptr, "name ", 5) == 0) {
@@ -126,9 +138,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_USERNS))
 			check_user_namespace();
 		else
-			fprintf(stderr, "Warning: user namespace feature is disabled in Firejail configuration file\n");
+			warning_feature_disabled("noroot");
 #endif
 
+		return 0;
+	}
+	else if (strcmp(ptr, "nonewprivs") == 0) {
+		arg_nonewprivs = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "seccomp") == 0) {
@@ -136,7 +152,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_SECCOMP))
 			arg_seccomp = 1;
 		else
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+			warning_feature_disabled("seccomp");
 #endif
 		return 0;
 	}
@@ -160,6 +176,21 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_private = 1;
 		return 0;
 	}
+	if (strncmp(ptr, "private-home ", 13) == 0) {
+#ifdef HAVE_PRIVATE_HOME
+		if (checkcfg(CFG_PRIVATE_HOME)) {
+			cfg.home_private_keep = ptr + 13;
+			arg_private = 1;
+		}
+		else
+			warning_feature_disabled("private-home");
+#endif
+		return 0;
+	}
+	else if (strcmp(ptr, "allusers") == 0) {
+		arg_allusers = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "private-dev") == 0) {
 		arg_private_dev = 1;
 		return 0;
@@ -174,7 +205,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	else if (strcmp(ptr, "nosound") == 0) {
 		arg_nosound = 1;
-		arg_private_dev = 1;
+		return 0;
+	}
+	else if (strcmp(ptr, "no3d") == 0) {
+		arg_no3d = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "netfilter") == 0) {
@@ -182,7 +216,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_NETWORK))
 			arg_netfilter = 1;
 		else
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -196,7 +230,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			check_netfilter_file(arg_netfilter_file);
 		}
 		else
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -210,7 +244,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			check_netfilter_file(arg_netfilter6_file);
 		}
 		else
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -228,7 +262,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.interface3.configured = 0;
 		}
 		else
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
@@ -269,11 +303,34 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			net_configure_bridge(br, ptr + 4);
 		}
 		else
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
 	
+	else if (strncmp(ptr, "veth-name ", 10) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+
+			br->veth_name = strdup(ptr + 10);
+			if (br->veth_name == NULL)
+				errExit("strdup");
+			if (*br->veth_name == '\0') {
+				fprintf(stderr, "Error: no veth-name configured\n");
+				exit(1);
+			}
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
+
 	else if (strncmp(ptr, "iprange ", 8) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
@@ -314,24 +371,162 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			fprintf(stderr, "Warning: networking features are disabled in Firejail configuration file\n");
+			warning_feature_disabled("networking");
 #endif
 		return 0;
 	}
 
-	
+
+	else if (strncmp(ptr, "mac ", 4) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			
+			if (mac_not_zero(br->macsandbox)) {
+				fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
+				exit(1);
+			}
+
+			// read the address
+			if (atomac(ptr + 4, br->macsandbox)) {
+				fprintf(stderr, "Error: invalid MAC address\n");
+				exit(1);
+			}
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
+
+	else if (strncmp(ptr, "mtu ", 4) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			
+			if (sscanf(ptr + 4, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
+				fprintf(stderr, "Error: invalid mtu value\n");
+				exit(1);
+			}
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
+
+	else if (strncmp(ptr, "ip ", 3) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			if (br->arg_ip_none || br->ipsandbox) {
+				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+				exit(1);
+			}
+
+			// configure this IP address for the last bridge defined
+			if (strcmp(ptr + 3, "none") == 0)
+				br->arg_ip_none = 1;
+			else {
+				if (atoip(ptr + 3, &br->ipsandbox)) {
+					fprintf(stderr, "Error: invalid IP address\n");
+					exit(1);
+				}
+			}
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
+
+	else if (strncmp(ptr, "ip6 ", 4) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			if (br->arg_ip_none || br->ip6sandbox) {
+				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+				exit(1);
+			}
+
+			// configure this IP address for the last bridge defined
+			// todo: verify ipv6 syntax
+			br->ip6sandbox = ptr + 4;
+//			if (atoip(argv[i] + 5, &br->ipsandbox)) {
+//				fprintf(stderr, "Error: invalid IP address\n");
+//				exit(1);
+//			}
+			
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
+
+	else if (strncmp(ptr, "defaultgw ", 10) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			if (atoip(ptr + 10, &cfg.defaultgw)) {
+				fprintf(stderr, "Error: invalid IP address\n");
+				exit(1);
+			}
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
+
+	if (strcmp(ptr, "apparmor") == 0) {
+#ifdef HAVE_APPARMOR		
+		arg_apparmor = 1;
+#endif
+		return 0;
+	}
+
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 #ifdef HAVE_SECCOMP
-		if (checkcfg(CFG_SECCOMP))
-			protocol_store(ptr + 9);
+		if (checkcfg(CFG_SECCOMP)) {
+			if (cfg.protocol) {
+				if (!arg_quiet)
+					fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", ptr + 9);
+				return 0;
+			}
+			
+			// store list
+			cfg.protocol = strdup(ptr + 9);
+			if (!cfg.protocol)
+				errExit("strdup");
+		}
 		else
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+			warning_feature_disabled("seccomp");
 #endif
 		return 0;
 	}
 	
 	if (strncmp(ptr, "env ", 4) == 0) {
-		env_store(ptr + 4);
+		env_store(ptr + 4, SETENV);
+		return 0;
+	}
+	if (strncmp(ptr, "rmenv ", 6) == 0) {
+		env_store(ptr + 6, RMENV);
 		return 0;
 	}
 	
@@ -340,12 +535,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
-			cfg.seccomp_list = strdup(ptr + 8);
-			if (!cfg.seccomp_list)
-				errExit("strdup");
+			cfg.seccomp_list = seccomp_check_list(ptr + 8);
 		}
-		else
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+		else if (!arg_quiet)
+			warning_feature_disabled("seccomp");
 #endif
 
 		return 0;
@@ -356,12 +549,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
-			cfg.seccomp_list_drop = strdup(ptr + 13);
-			if (!cfg.seccomp_list_drop)
-				errExit("strdup");
+			cfg.seccomp_list_drop = seccomp_check_list(ptr + 13);
 		}
 		else
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+			warning_feature_disabled("seccomp");
 #endif		
 		return 0;
 	}
@@ -371,12 +562,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
-			cfg.seccomp_list_keep= strdup(ptr + 13);
-			if (!cfg.seccomp_list_keep)
-				errExit("strdup");
+			cfg.seccomp_list_keep= seccomp_check_list(ptr + 13);
 		}
 		else
-			fprintf(stderr, "Warning: user seccomp feature is disabled in Firejail configuration file\n");
+			warning_feature_disabled("seccomp");
 #endif		
 		return 0;
 	}
@@ -387,9 +576,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_caps_list = strdup(ptr + 10);
 		if (!arg_caps_list)
 			errExit("strdup");
-		// verify seccomp list and exit if problems
-		if (caps_check_list(arg_caps_list, NULL))
-			exit(1);
+		// verify caps list and exit if problems
+		caps_check_list(arg_caps_list, NULL);
 		return 0;
 	}
 	
@@ -399,9 +587,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_caps_list = strdup(ptr + 10);
 		if (!arg_caps_list)
 			errExit("strdup");
-		// verify seccomp list and exit if problems
-		if (caps_check_list(arg_caps_list, NULL))
-			exit(1);
+		// verify caps list and exit if problems
+		caps_check_list(arg_caps_list, NULL);
 		return 0;
 	}
 
@@ -441,6 +628,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// nice value
 	if (strncmp(ptr, "nice ", 4) == 0) {
 		cfg.nice = atoi(ptr + 5);
+		if (getuid() != 0 &&cfg.nice < 0)
+			cfg.nice = 0;
 		arg_nice = 1;
 		return 0;
 	}
@@ -448,6 +637,26 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// cgroup
 	if (strncmp(ptr, "cgroup ", 7) == 0) {
 		set_cgroup(ptr + 7);
+		return 0;
+	}
+	
+	// writable-etc
+	if (strcmp(ptr, "writable-etc") == 0) {
+		if (cfg.etc_private_keep) {
+			fprintf(stderr, "Error: private-etc and writable-etc are mutually exclusive\n");
+			exit(1);
+		}
+		arg_writable_etc = 1;
+		return 0;
+	}
+	
+	if (strcmp(ptr, "machine-id") == 0) {
+		arg_machineid = 1;
+		return 0;
+	}
+	// writable-var
+	if (strcmp(ptr, "writable-var") == 0) {
+		arg_writable_var = 1;
 		return 0;
 	}
 	
@@ -459,16 +668,104 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "x11 none") == 0) {
+		arg_x11_block = 1;
+		return 0;
+	}
+
+	if (strcmp(ptr, "x11 xephyr") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11)) {
+			char *x11env = getenv("FIREJAIL_X11");
+			if (x11env && strcmp(x11env, "yes") == 0) {
+				mask_x11_abstract_socket = 1;
+				return 0;
+			}
+			else {
+				// start x11
+				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
+				exit(0);
+			}
+		}
+		else
+			warning_feature_disabled("x11");
+#endif
+		return 0;
+	}
+
+	if (strcmp(ptr, "x11 xorg") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11))
+			arg_x11_xorg = 1;
+		else
+			warning_feature_disabled("x11");
+#endif
+		return 0;
+	}
+	if (strcmp(ptr, "x11 xpra") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11)) {
+			char *x11env = getenv("FIREJAIL_X11");
+			if (x11env && strcmp(x11env, "yes") == 0) {
+				mask_x11_abstract_socket = 1;
+				return 0;
+			}
+			else {
+				// start x11
+				x11_start_xpra(cfg.original_argc, cfg.original_argv);
+				exit(0);
+			}
+		}
+		else
+			warning_feature_disabled("x11");
+#endif
+		return 0;
+	}
+	
+	if (strcmp(ptr, "x11") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11)) {
+			char *x11env = getenv("FIREJAIL_X11");
+			if (x11env && strcmp(x11env, "yes") == 0) {
+				mask_x11_abstract_socket = 1;
+				return 0;
+			}
+			else {
+				// start x11
+				x11_start(cfg.original_argc, cfg.original_argv);
+				exit(0);		
+			}
+		}
+		else
+			warning_feature_disabled("x11");
+#endif		
+		return 0;
+	}
+	
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
-		cfg.etc_private_keep = ptr + 12;
-		fs_check_etc_list();
-		if (*cfg.etc_private_keep != '\0')
-			arg_private_etc = 1;
-		else {
-			arg_private_etc = 0;
-			fprintf(stderr, "Warning: private-etc disabled, no file found\n");
+		if (arg_writable_etc) {
+			fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+			exit(1);
 		}
+		cfg.etc_private_keep = ptr + 12;
+		arg_private_etc = 1;
+		
+		return 0;
+	}
+
+	// private /opt list of files and directories
+	if (strncmp(ptr, "private-opt ", 12) == 0) {
+		cfg.opt_private_keep = ptr + 12;
+		arg_private_opt = 1;
+		
+		return 0;
+	}
+
+	// private /srv list of files and directories
+	if (strncmp(ptr, "private-srv ", 12) == 0) {
+		cfg.srv_private_keep = ptr + 12;
+		arg_private_srv = 1;
 		
 		return 0;
 	}
@@ -477,7 +774,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strncmp(ptr, "private-bin ", 12) == 0) {
 		cfg.bin_private_keep = ptr + 12;
 		arg_private_bin = 1;
-		fs_check_bin_list();
 		return 0;
 	}
 
@@ -514,13 +810,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			*(dname2 - 1) = ',';
 			return 1;
 		}
-		else {
-			fprintf(stderr, "Warning: bind feature is disabled in Firejail configuration file\n");
-			return 0;			
-		}
-#else
-		return 0;
+		else
+			warning_feature_disabled("bind");
 #endif		
+		return 0;
 	}
 
 	// rlimit
@@ -569,6 +862,30 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;		
 	}
 
+	if (strncmp(ptr, "join-or-start ", 14) == 0) {
+		// try to join by name only
+		pid_t pid;
+		if (!name2pid(ptr + 14, &pid)) {
+			if (!cfg.shell && !arg_shell_none)
+				cfg.shell = guess_shell();
+
+			// find first non-option arg
+			int i;
+			for (i = 1; i < cfg.original_argc && strncmp(cfg.original_argv[i], "--", 2) != 0; i++);
+
+			join(pid, cfg.original_argc,cfg.original_argv, i + 1);
+			exit(0);
+		}
+
+		// set sandbox name and start normally
+		cfg.name = ptr + 14;
+		if (strlen(cfg.name) == 0) {
+			fprintf(stderr, "Error: invalid sandbox name\n");
+			exit(1);
+		}
+		return 0;
+	}
+
 	// rest of filesystem
 	if (strncmp(ptr, "blacklist ", 10) == 0)
 		ptr += 10;
@@ -577,11 +894,23 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "noblacklist ", 12) == 0)
 		ptr += 12;
 	else if (strncmp(ptr, "whitelist ", 10) == 0) {
-		arg_whitelist = 1;
-		ptr += 10;
+#ifdef HAVE_WHITELIST		
+		if (checkcfg(CFG_WHITELIST)) {
+			arg_whitelist = 1;
+			ptr += 10;
+		}
+		else
+			return 0;
+#else		
+		return 0;
+#endif
 	}
 	else if (strncmp(ptr, "read-only ", 10) == 0)
 		ptr += 10;
+	else if (strncmp(ptr, "read-write ", 11) == 0)
+		ptr += 11;
+	else if (strncmp(ptr, "noexec ", 7) == 0)
+		ptr += 7;
 	else if (strncmp(ptr, "tmpfs ", 6) == 0) {
 		if (getuid() != 0) {
 			fprintf(stderr, "Error: tmpfs available only when running the sandbox as root\n");
@@ -651,6 +980,16 @@ void profile_read(const char *fname) {
 		exit(1);
 	}
 
+	// allow debuggers
+	if (arg_allow_debuggers) {
+		char *tmp = strrchr(fname, '/');
+		if (tmp && *(tmp + 1) != '\0') {
+			tmp++;
+			if (strcmp(tmp, "disable-devel.inc") == 0)
+				return;
+		}
+	}
+
 	// open profile file:
 	FILE *fp = fopen(fname, "r");
 	if (fp == NULL) {
@@ -658,8 +997,7 @@ void profile_read(const char *fname) {
 		exit(1);
 	}
 
-	if (!arg_quiet)
-		fprintf(stderr, "Reading profile %s\n", fname);
+	int msg_printed = 0;
 
 	// read the file line by line
 	char buf[MAX_READ + 1];
@@ -677,6 +1015,18 @@ void profile_read(const char *fname) {
 			continue;
 		}
 		
+		// process quiet
+		if (strcmp(ptr, "quiet") == 0) {
+			arg_quiet = 1;
+			free(ptr);
+			continue;
+		}
+		if (!msg_printed) {
+			if (!arg_quiet)
+				fprintf(stderr, "Reading profile %s\n", fname);
+			msg_printed = 1;
+		}
+
 		// process include
 		if (strncmp(ptr, "include ", 8) == 0) {
 			include_level++;
@@ -703,6 +1053,9 @@ void profile_read(const char *fname) {
 //		else {
 //			free(ptr);
 //		}
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
 	}
 	fclose(fp);
 }

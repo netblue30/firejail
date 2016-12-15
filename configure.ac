@@ -1,5 +1,5 @@
 AC_PREREQ([2.68])
-AC_INIT(firejail, 0.9.40-rc2, netblue30@yahoo.com, , http://firejail.wordpress.com)
+AC_INIT(firejail, 0.9.45, netblue30@yahoo.com, , http://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 #AC_CONFIG_HEADERS([config.h])
 
@@ -8,6 +8,39 @@ AC_PROG_CC
 #AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_RANLIB
+
+HAVE_APPARMOR=""
+AC_ARG_ENABLE([apparmor],
+    AS_HELP_STRING([--enable-apparmor], [enable apparmor]))
+AS_IF([test "x$enable_apparmor" = "xyes"], [
+	HAVE_APPARMOR="-DHAVE_APPARMOR"
+	AC_SUBST(HAVE_APPARMOR)
+])
+
+AS_IF([test "x$enable_apparmor" = "xyes"], [
+	AC_CHECK_HEADER(sys/apparmor.h, , [AC_MSG_ERROR(
+	[Couldn't find sys/apparmor.h... please install apparmor user space library and development files] )])
+])
+AS_IF([test "x$enable_apparmor" = "xyes"], [
+	EXTRA_LDFLAGS+="-lapparmor "
+])
+AC_SUBST([EXTRA_LDFLAGS])
+
+HAVE_OVERLAYFS=""
+AC_ARG_ENABLE([overlayfs],
+    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
+AS_IF([test "x$enable_overlayfs" != "xno"], [
+	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+	AC_SUBST(HAVE_OVERLAYFS)
+])
+
+HAVE_PRIVATEHOME=""
+AC_ARG_ENABLE([private-home],
+    AS_HELP_STRING([--disable-private-home], [disable private home feature]))
+AS_IF([test "x$enable_private_home" != "xno"], [
+	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
+	AC_SUBST(HAVE_PRIVATE_HOME)
+])
 
 HAVE_SECCOMP=""
 AC_ARG_ENABLE([seccomp],
@@ -31,6 +64,14 @@ AC_ARG_ENABLE([bind],
 AS_IF([test "x$enable_bind" != "xno"], [
 	HAVE_BIND="-DHAVE_BIND"
 	AC_SUBST(HAVE_BIND)
+])
+
+HAVE_GLOBALCFG=""
+AC_ARG_ENABLE([globalcfg],
+    AS_HELP_STRING([--disable-globalcfg], [if the global config file firejail.cfg is not present, continue the program using defaults]))
+AS_IF([test "x$enable_globalcfg" != "xno"], [
+	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
+	AC_SUBST(HAVE_GLOBALCFG)
 ])
 
 HAVE_NETWORK=""
@@ -70,6 +111,14 @@ AS_IF([test "x$enable_file_transfer" != "xno"], [
 	AC_SUBST(HAVE_FILE_TRANSFER)
 ])
 
+HAVE_WHITELIST=""
+AC_ARG_ENABLE([whitelist],
+    AS_HELP_STRING([--disable-whitelist], [disable whitelist]))
+AS_IF([test "x$enable_whitelist" != "xno"], [
+	HAVE_WHITELIST="-DHAVE_WHITELIST"
+	AC_SUBST(HAVE_WHITELIST)
+])
+
 HAVE_FATAL_WARNINGS=""
 AC_ARG_ENABLE([fatal_warnings],
     AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror]))
@@ -77,6 +126,25 @@ AS_IF([test "x$enable_fatal_warnings" = "xyes"], [
 	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
 	AC_SUBST(HAVE_FATAL_WARNINGS)
 ])
+
+BUSYBOX_WORKAROUND="no"
+AC_ARG_ENABLE([busybox-workaround],
+    AS_HELP_STRING([--enable-busybox-workaround], [enable busybox workaround]))
+AS_IF([test "x$enable_busybox_workaround" = "xyes"], [
+	BUSYBOX_WORKAROUND="yes"
+	AC_SUBST(BUSYBOX_WORKAROUND)
+])
+
+
+HAVE_GCOV=""
+AC_ARG_ENABLE([gcov],
+    AS_HELP_STRING([--enable-gcov], [Gcov instrumentation]))
+AS_IF([test "x$enable_gcov" = "xyes"], [
+	HAVE_GCOV="--coverage -DHAVE_GCOV "
+	EXTRA_LDFLAGS+="-lgcov --coverage "
+	AC_SUBST(HAVE_GCOV)
+])
+
 
 
 # checking pthread library
@@ -90,7 +158,9 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
-AC_OUTPUT(Makefile src/lib/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/ftee/Makefile)
+AC_OUTPUT(Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile \
+src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile \
+src/ftee/Makefile src/faudit/Makefile src/libconnect/Makefile src/fseccomp/Makefile)
 
 echo
 echo "Configuration options:"
@@ -98,13 +168,22 @@ echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
+echo "   apparmor: $HAVE_APPARMOR"
+echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"
+echo "   whitelisting: $HAVE_WHITELIST"
+echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
+echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   busybox workaround: $BUSYBOX_WORKAROUND"
+echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
+echo "   Gcov instrumentation: $HAVE_GCOV"
 echo
+
 
 

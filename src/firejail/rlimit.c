@@ -27,6 +27,9 @@ void set_rlimits(void) {
 	if (arg_rlimit_nofile) {
 		rl.rlim_cur = (rlim_t) cfg.rlimit_nofile;
 		rl.rlim_max = (rlim_t) cfg.rlimit_nofile;
+#ifdef HAVE_GCOV	// gcov-instrumented programs might crash at this point
+		__gcov_dump();
+#endif
 		if (setrlimit(RLIMIT_NOFILE, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
@@ -36,6 +39,9 @@ void set_rlimits(void) {
 	if (arg_rlimit_nproc) {
 		rl.rlim_cur = (rlim_t) cfg.rlimit_nproc;
 		rl.rlim_max = (rlim_t) cfg.rlimit_nproc;
+#ifdef HAVE_GCOV
+		__gcov_dump();
+#endif
 		if (setrlimit(RLIMIT_NPROC, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
@@ -45,6 +51,9 @@ void set_rlimits(void) {
 	if (arg_rlimit_fsize) {
 		rl.rlim_cur = (rlim_t) cfg.rlimit_fsize;
 		rl.rlim_max = (rlim_t) cfg.rlimit_fsize;
+#ifdef HAVE_GCOV
+		__gcov_dump();
+#endif
 		if (setrlimit(RLIMIT_FSIZE, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
@@ -54,6 +63,9 @@ void set_rlimits(void) {
 	if (arg_rlimit_sigpending) {
 		rl.rlim_cur = (rlim_t) cfg.rlimit_sigpending;
 		rl.rlim_max = (rlim_t) cfg.rlimit_sigpending;
+#ifdef HAVE_GCOV
+		__gcov_dump();
+#endif
 		if (setrlimit(RLIMIT_SIGPENDING, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)

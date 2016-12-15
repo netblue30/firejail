@@ -1,0 +1,46 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firecfg\r"
+sleep 1
+
+send --  "firecfg --clean\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"/usr/local/bin/firefox removed"
+}
+after 100
+send -- "file /usr/local/bin/firefox; echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"symbolic link to /usr/bin/firejail"  {puts "TESTING ERROR 2\n";exit}
+	"done"
+}
+after 100
+
+send --  "firecfg\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"/usr/local/bin/firefox created"
+}
+after 100
+send -- "file /usr/local/bin/firefox\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"symbolic link to /usr/bin/firejail"
+}
+after 100
+
+send -- "firecfg --list\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"/usr/local/bin/firefox"
+}
+after 100
+puts "\nall done\n"

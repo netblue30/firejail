@@ -1,0 +1,65 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "rm -f logfile*\r"
+sleep 1
+puts "\n"
+
+send -- "firejail --output=logfile -- ./output.sh\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"20000"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"60000"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"100000"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.3\n";exit}
+	"120000"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.4\n";exit}
+	"14999"
+}
+sleep 2
+puts "\n"
+
+
+set timeout 2
+send -- "ls -al logfile*\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"logfile"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"logfile.1"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"logfile.2"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"logfile.3"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"logfile.4"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"logfile.5"
+}
+after 100
+send -- "rm -f logfile*\r"
+after 100
+puts "\nall done\n"

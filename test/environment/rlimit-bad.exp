@@ -1,0 +1,34 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --rlimit-fsize=-1024\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"invalid rlimt fsize"
+}
+after 100
+
+send -- "firejail --rlimit-nofile=asdf\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"invalid rlimt nofile"
+}
+after 100
+
+send -- "firejail --rlimit-nproc=100.23\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"invalid rlimt nproc"
+}
+after 100
+send -- "firejail --rlimit-sigpending=2345-78\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"invalid rlimt sigpending"
+}
+after 100
+
+puts "\nall done\n"

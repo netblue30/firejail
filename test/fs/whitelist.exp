@@ -1,0 +1,226 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# cleanup
+send -- "rm -fr ~/fjtest-dir\r"
+after 200
+send -- "rm -fr ~/fjtest-dir-lnk\r"
+after 200
+send -- "rm ~/fjtest-file\r"
+after 200
+send -- "rm ~/fjtest-file-lnk\r"
+after 200
+send -- "rm /tmp/fjtest-file\r"
+after 200
+send -- "rm -fr /tmp/fjtest-dir\r"
+after 200
+
+
+# simple files and directories
+send -- "mkdir -p ~/fjtest-dir/fjtest-dir\r"
+after 200
+send -- "echo 123 > ~/fjtest-file\r"
+after 200
+send -- "echo 123 > ~/fjtest-dir/fjtest-file\r"
+after 200
+send -- "echo 123 > ~/fjtest-dir/fjtest-dir/fjtest-file\r"
+after 200
+send -- "ln -s ~/fjtest-file ~/fjtest-file-lnk\r"
+after 200
+send -- "ln -s ~/fjtest-dir ~/fjtest-dir-lnk\r"
+after 200
+
+send -- "firejail --whitelist=~/fjtest-file --whitelist=~/fjtest-dir --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l ~/ | grep -v total | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"2"
+}
+
+send -- "cat ~/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"123"
+}
+
+send -- "cat ~/fjtest-dir/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"123"
+}
+
+send -- "cat ~/fjtest-dir/fjtest-dir/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"123"
+}
+
+send -- "exit\r"
+sleep 1
+
+
+
+# simple files and directories
+send -- "firejail --whitelist=~/fjtest-dir/fjtest-dir/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l ~/ | grep -v total | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"1"
+}
+
+send -- "cat ~/fjtest-dir/fjtest-dir/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"123"
+}
+
+send -- "exit\r"
+sleep 1
+
+
+
+# symlinks
+send -- "firejail --whitelist=~/fjtest-file-lnk --whitelist=~/fjtest-dir-lnk\r"
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l ~/ | grep -v total | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 21\n";exit}
+	"4"
+}
+
+send -- "cat ~/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 22\n";exit}
+	"123"
+}
+
+send -- "cat ~/fjtest-dir/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 23\n";exit}
+	"123"
+}
+
+send -- "cat ~/fjtest-dir/fjtest-dir/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 24\n";exit}
+	"123"
+}
+
+send -- "cat ~/fjtest-file-lnk\r"
+expect {
+	timeout {puts "TESTING ERROR 25\n";exit}
+	"123"
+}
+
+send -- "cat ~/fjtest-dir-lnk/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 26\n";exit}
+	"123"
+}
+
+send -- "cat ~/fjtest-dir-lnk/fjtest-dir/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 27\n";exit}
+	"123"
+}
+send -- "exit\r"
+sleep 1
+
+# symlinks outside home to a file we don't own
+send -- "rm ~/fjtest-file-lnk\r"
+after 200
+send -- "ln -s /etc/passwd ~/fjtest-file-lnk\r"
+after 200
+send -- "firejail --whitelist=~/fjtest-file-lnk --whitelist=~/fjtest-dir-lnk\r"
+expect {
+	timeout {puts "TESTING ERROR 30\n";exit}
+	"invalid whitelist path"
+}
+expect {
+	timeout {puts "TESTING ERROR 31\n";exit}
+	"exiting"
+}
+sleep 1
+
+# symlinks outside home to a file we own
+send -- "rm -fr ~/fjtest-dir-lnk\r"
+after 200
+send -- "rm ~/fjtest-file-lnk\r"
+after 200
+send -- "echo 123 > /tmp/fjtest-file\r"
+after 200
+send -- "mkdir /tmp/fjtest-dir\r"
+after 200
+send -- "echo 123 > /tmp/fjtest-dir/fjtest-file\r"
+after 200
+send -- "ln -s /tmp/fjtest-file ~/fjtest-file-lnk\r"
+after 200
+send -- "ln -s /tmp/fjtest-dir ~/fjtest-dir-lnk\r"
+after 200
+send -- "firejail --whitelist=~/fjtest-file-lnk --whitelist=~/fjtest-dir-lnk\r"
+expect {
+	timeout {puts "TESTING ERROR 40\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l ~/ | grep -v total | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 41\n";exit}
+	"2"
+}
+
+send -- "cat ~/fjtest-file-lnk\r"
+expect {
+	timeout {puts "TESTING ERROR 42\n";exit}
+	"123"
+}
+
+send -- "cat ~/fjtest-dir-lnk/fjtest-file\r"
+expect {
+	timeout {puts "TESTING ERROR 43\n";exit}
+	"123"
+}
+send -- "exit\r"
+sleep 1
+
+# cleanup
+send -- "rm -fr ~/fjtest-dir\r"
+after 200
+send -- "rm -fr ~/fjtest-dir-lnk\r"
+after 200
+send -- "rm ~/fjtest-file\r"
+after 200
+send -- "rm ~/fjtest-file-lnk\r"
+after 200
+send -- "rm /tmp/fjtest-file\r"
+after 200
+send -- "rm -fr /tmp/fjtest-dir\r"
+after 200
+
+
+puts "\nall done\n"
+

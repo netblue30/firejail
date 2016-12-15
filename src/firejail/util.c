@@ -17,18 +17,23 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+#define _XOPEN_SOURCE 500
 #include "firejail.h"
+#include <ftw.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <syslog.h>
 #include <errno.h>
 #include <dirent.h>
 #include <grp.h>
+#include <sys/ioctl.h>
+#include <termios.h>
 
 #define MAX_GROUPS 1024
 // drop privileges
 // - for root group or if nogroups is set, supplementary groups are not configured
 void drop_privs(int nogroups) {
+	EUID_ROOT();
 	gid_t gid = getgid();
 
 	// configure supplementary groups
@@ -77,7 +82,7 @@ void drop_privs(int nogroups) {
 
 int mkpath_as_root(const char* path) {
 	assert(path && *path);
-	
+
 	// work on a copy of the path
 	char *file_path = strdup(path);
 	if (!file_path)
@@ -95,22 +100,19 @@ int mkpath_as_root(const char* path) {
 			}
 		}
 		else {
-			if (chmod(file_path, 0755) == -1)
-				errExit("chmod");
-			if (chown(file_path, 0, 0) == -1)
-				errExit("chown");
+			if (set_perms(file_path, 0, 0, 0755))
+				errExit("set_perms");
 			done = 1;
-		}			
+		}
 
 		*p='/';
 	}
 	if (done)
 		fs_logger2("mkpath", path);
-		
+
 	free(file_path);
 	return 0;
 }
-
 
 
 void logsignal(int s) {
@@ -167,8 +169,8 @@ void logerr(const char *msg) {
 }
 
 
-// return -1 if error, 0 if no error
-int copy_file(const char *srcname, const char *destname) {
+// return -1 if error, 0 if no error; if destname already exists, return error
+int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
 	assert(srcname);
 	assert(destname);
 
@@ -204,18 +206,25 @@ int copy_file(const char *srcname, const char *destname) {
 			done += rv;
 		}
 	}
+	fflush(0);
+
+	if (fchown(dst, uid, gid) == -1)
+		errExit("fchown");
+	if (fchmod(dst, mode) == -1)
+		errExit("fchmod");
 
 	close(src);
 	close(dst);
 	return 0;
 }
 
+
 // return 1 if the file is a directory
 int is_dir(const char *fname) {
 	assert(fname);
 	if (*fname == '\0')
 		return 0;
-	
+
 	// if fname doesn't end in '/', add one
 	int rv;
 	struct stat s;
@@ -226,19 +235,20 @@ int is_dir(const char *fname) {
 		if (asprintf(&tmp, "%s/", fname) == -1) {
 			fprintf(stderr, "Error: cannot allocate memory, %s:%d\n", __FILE__, __LINE__);
 			errExit("asprintf");
-		}		
+		}
 		rv = stat(tmp, &s);
 		free(tmp);
 	}
-	
+
 	if (rv == -1)
 		return 0;
-		
+
 	if (S_ISDIR(s.st_mode))
 		return 1;
 
 	return 0;
 }
+
 
 // return 1 if the file is a link
 int is_link(const char *fname) {
@@ -324,7 +334,7 @@ char *split_comma(char *str) {
 
 int not_unsigned(const char *str) {
 	EUID_ASSERT();
-	
+
 	int rv = 0;
 	const char *ptr = str;
 	while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0') {
@@ -346,7 +356,7 @@ int find_child(pid_t parent, pid_t *child) {
 	*child = 0;				  // use it to flag a found child
 
 	DIR *dir;
-	EUID_ROOT(); // grsecurity fix
+	EUID_ROOT();				  // grsecurity fix
 	if (!(dir = opendir("/proc"))) {
 		// sleep 2 seconds and try again
 		sleep(2);
@@ -403,12 +413,10 @@ int find_child(pid_t parent, pid_t *child) {
 }
 
 
-
 void extract_command_name(int index, char **argv) {
 	EUID_ASSERT();
 	assert(argv);
 	assert(argv[index]);
-
 
 	// configure command index
 	cfg.original_program_index = index;
@@ -418,13 +426,13 @@ void extract_command_name(int index, char **argv) {
 		errExit("strdup");
 
 	// if we have a symbolic link, use the real path to extract the name
-	if (is_link(argv[index])) {
-		char*newname = realpath(argv[index], NULL);
-		if (newname) {
-			free(str);
-			str = newname;
-		}
-	}
+//	if (is_link(argv[index])) {
+//		char*newname = realpath(argv[index], NULL);
+//		if (newname) {
+//			free(str);
+//			str = newname;
+//		}
+//	}
 
 	// configure command name
 	cfg.command_name = str;
@@ -445,7 +453,6 @@ void extract_command_name(int index, char **argv) {
 			fprintf(stderr, "Error: invalid command name\n");
 			exit(1);
 		}
-
 
 		char *tmp = strdup(ptr);
 		if (!tmp)
@@ -532,6 +539,7 @@ void notify_other(int fd) {
 	fclose(stream);
 }
 
+
 // This function takes a pathname supplied by the user and expands '~' and
 // '${HOME}' at the start, to refer to a path relative to the user's home
 // directory (supplied).
@@ -540,7 +548,7 @@ void notify_other(int fd) {
 char *expand_home(const char *path, const char* homedir) {
 	assert(path);
 	assert(homedir);
-	
+
 	// Replace home macro
 	char *new_name = NULL;
 	if (strncmp(path, "${HOME}", 7) == 0) {
@@ -548,14 +556,18 @@ char *expand_home(const char *path, const char* homedir) {
 			errExit("asprintf");
 		return new_name;
 	}
-	else if (strncmp(path, "~/", 2) == 0) {
+	else if (*path == '~') {
 		if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
 			errExit("asprintf");
 		return new_name;
 	}
-	
-	return strdup(path);
+
+	char *rv = strdup(path);
+	if (!rv)
+		errExit("strdup");
+	return rv;
 }
+
 
 // Equivalent to the GNU version of basename, which is incompatible with
 // the POSIX basename. A few lines of code saves any portability pain.
@@ -567,17 +579,18 @@ const char *gnu_basename(const char *path) {
 	return last_slash+1;
 }
 
+
 uid_t pid_get_uid(pid_t pid) {
 	EUID_ASSERT();
 	uid_t rv = 0;
-	
+
 	// open status file
 	char *file;
 	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
 		perror("asprintf");
 		exit(1);
 	}
-	EUID_ROOT();	// grsecurity fix
+	EUID_ROOT();				  // grsecurity fix
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -596,16 +609,16 @@ uid_t pid_get_uid(pid_t pid) {
 			}
 			if (*ptr == '\0')
 				break;
-				
+
 			rv = atoi(ptr);
-			break; // break regardless!
+			break;			  // break regardless!
 		}
 	}
 
 	fclose(fp);
 	free(file);
-	EUID_USER();	// grsecurity fix
-	
+	EUID_USER();				  // grsecurity fix
+
 	if (rv == 0) {
 		fprintf(stderr, "Error: cannot read /proc file\n");
 		exit(1);
@@ -613,14 +626,15 @@ uid_t pid_get_uid(pid_t pid) {
 	return rv;
 }
 
+
 void invalid_filename(const char *fname) {
-	EUID_ASSERT();
+//	EUID_ASSERT();
 	assert(fname);
 	const char *ptr = fname;
-	
+
 	if (arg_debug_check_filename)
 		printf("Checking filename %s\n", fname);
-	
+
 	if (strncmp(ptr, "${HOME}", 7) == 0)
 		ptr = fname + 7;
 	else if (strncmp(ptr, "${PATH}", 7) == 0)
@@ -636,22 +650,172 @@ void invalid_filename(const char *fname) {
 	}
 }
 
-uid_t get_tty_gid(void) {
-	// find tty group id
-	gid_t ttygid = 0;
-	struct group *g = getgrnam("tty");
-	if (g)
-		ttygid = g->gr_gid;
 
-	return ttygid;
+uid_t get_group_id(const char *group) {
+	// find tty group id
+	gid_t gid = 0;
+	struct group *g = getgrnam(group);
+	if (g)
+		gid = g->gr_gid;
+
+	return gid;
 }
 
-uid_t get_audio_gid(void) {
-	// find tty group id
-	gid_t audiogid = 0;
-	struct group *g = getgrnam("audio");
-	if (g)
-		audiogid = g->gr_gid;
 
-	return audiogid;
+static int remove_callback(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf) {
+	(void) sb;
+	(void) typeflag;
+	(void) ftwbuf;
+	
+	int rv = remove(fpath);
+	if (rv)
+		perror(fpath);
+
+	return rv;
+}
+
+
+int remove_directory(const char *path) {
+	// FTW_PHYS - do not follow symbolic links
+	return nftw(path, remove_callback, 64, FTW_DEPTH | FTW_PHYS);
+}
+
+void flush_stdin(void) {
+	if (isatty(STDIN_FILENO)) {
+		int cnt = 0;
+		int rv = ioctl(STDIN_FILENO, FIONREAD, &cnt);
+		if (rv == 0 && cnt) {
+			if (!arg_quiet)
+				printf("Warning: removing %d bytes from stdin\n", cnt);
+			rv = ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
+			(void) rv;
+		}
+	}
+}
+
+void create_empty_dir_as_root(const char *dir, mode_t mode) {
+	assert(dir);
+	mode &= 07777;
+	struct stat s;
+	
+	if (stat(dir, &s)) {
+		if (arg_debug)
+			printf("Creating empty %s directory\n", dir);
+		/* coverity[toctou] */
+		if (mkdir(dir, mode) == -1)
+			errExit("mkdir");
+		if (set_perms(dir, 0, 0, mode))
+			errExit("set_perms");
+		ASSERT_PERMS(dir, 0, 0, mode);
+	}
+}
+
+void create_empty_file_as_root(const char *fname, mode_t mode) {
+	assert(fname);
+	mode &= 07777;
+	struct stat s;
+
+	if (stat(fname, &s)) {
+		if (arg_debug)
+			printf("Creating empty %s file\n", fname);
+
+		/* coverity[toctou] */
+		FILE *fp = fopen(fname, "w");
+		if (!fp)
+			errExit("fopen");
+		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR);
+		fclose(fp);
+		if (chmod(fname, mode) == -1)
+			errExit("chmod");
+	}
+}
+
+// return 1 if error
+int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
+	assert(fname);
+	if (chmod(fname, mode) == -1)
+		return 1;
+	if (chown(fname, uid, gid) == -1)
+		return 1;
+	return 0;
+}
+
+void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
+	assert(fname);
+	mode &= 07777;
+#if 0	
+	printf("fname %s, uid %d, gid %d, mode %x - ", fname, uid, gid, (unsigned) mode);
+	if (S_ISLNK(mode))
+		printf("l");
+	else if (S_ISDIR(mode))
+		printf("d");
+	else if (S_ISCHR(mode))
+		printf("c");
+	else if (S_ISBLK(mode))
+		printf("b");
+	else if (S_ISSOCK(mode))
+		printf("s");
+	else
+		printf("-");
+	printf( (mode & S_IRUSR) ? "r" : "-");
+	printf( (mode & S_IWUSR) ? "w" : "-");
+	printf( (mode & S_IXUSR) ? "x" : "-");
+	printf( (mode & S_IRGRP) ? "r" : "-");
+	printf( (mode & S_IWGRP) ? "w" : "-");
+	printf( (mode & S_IXGRP) ? "x" : "-");
+	printf( (mode & S_IROTH) ? "r" : "-");
+	printf( (mode & S_IWOTH) ? "w" : "-");
+	printf( (mode & S_IXOTH) ? "x" : "-");
+	printf("\n");
+#endif	
+	if (mkdir(fname, mode) == -1 ||
+	    chmod(fname, mode) == -1 ||
+	    chown(fname, uid, gid)) {
+	    	fprintf(stderr, "Error: failed to create %s directory\n", fname);
+		errExit("mkdir/chmod");
+	}
+
+	ASSERT_PERMS(fname, uid, gid, mode);
+}
+
+char *read_text_file_or_exit(const char *fname) {
+	assert(fname);
+	
+	// open file
+	int fd = open(fname, O_RDONLY);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot read %s\n", fname);
+		exit(1);
+	}
+
+	int size = lseek(fd, 0, SEEK_END);
+	if (size == -1)
+		goto errexit;
+	if (lseek(fd, 0 , SEEK_SET) == -1)
+		goto errexit;
+	
+	// allocate memory
+	char *data = malloc(size + 1);	  // + '\0'
+	if (data == NULL)
+		goto errexit;
+	memset(data, 0, size + 1);
+
+	// read file
+	int rd = 0;
+	while (rd < size) {
+		int rv = read(fd, (unsigned char *) data + rd, size - rd);
+		if (rv == -1) {
+			goto errexit;
+		}
+		rd += rv;
+	}
+	
+	// close file
+	close(fd);
+	return data;
+	
+errexit:
+	close(fd);
+	fprintf(stderr, "Error: cannot read %s\n", fname);
+	exit(1);
 }

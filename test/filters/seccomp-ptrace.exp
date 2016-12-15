@@ -1,0 +1,26 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --noprofile --seccomp\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+send -- "strace ls\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Bad system call" {puts "version 1\n";}
+	" unexpected signal 31" {puts "version 2\n"}
+}
+
+send -- "exit\r"
+after 100
+puts "all done\n"

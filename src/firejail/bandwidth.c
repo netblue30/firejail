@@ -130,14 +130,8 @@ static void bandwidth_create_run_file(pid_t pid) {
 	/* coverity[toctou] */
 	FILE *fp = fopen(fname, "w");
 	if (fp) {
+		SET_PERMS_STREAM(fp, 0, 0, 0644);
 		fclose(fp);
-	
-		/* coverity[toctou] */
-		if (chmod(fname, 0644) == -1)
-			errExit("chmod");
-		/* coverity[toctou] */
-		if (chown(fname, 0, 0) == -1)
-			errExit("chown");
 	}
 	else {
 		fprintf(stderr, "Error: cannot create bandwidth file\n");
@@ -180,12 +174,9 @@ void network_set_run_file(pid_t pid) {
 			fprintf(fp, "%s:%s\n", cfg.bridge2.dev, cfg.bridge2.devsandbox);
 		if (cfg.bridge3.configured)
 			fprintf(fp, "%s:%s\n", cfg.bridge3.dev, cfg.bridge3.devsandbox);
-		fclose(fp);
 
-		if (chmod(fname, 0644) == -1)
-			errExit("chmod");
-		if (chown(fname, 0, 0) == -1)
-			errExit("chown");
+		SET_PERMS_STREAM(fp, 0, 0, 0644);
+		fclose(fp);
 	}
 	else {
 		fprintf(stderr, "Error: cannot create network map file\n");
@@ -320,21 +311,6 @@ void bandwidth_set(pid_t pid, const char *dev, int down, int up) {
 //***********************************
 // command execution
 //***********************************
-void bandwidth_name(const char *name, const char *command, const char *dev, int down, int up) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-
-	bandwidth_pid(pid, command, dev, down, up);
-}
-
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) {
 	EUID_ASSERT();
 	//************************
@@ -459,13 +435,21 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	if (setregid(0, 0))
 		errExit("setregid");
 
+	if (!cfg.shell)
+		cfg.shell = guess_shell();
+	if (!cfg.shell) {
+		fprintf(stderr, "Error: no POSIX shell found, please use --shell command line option\n");
+		exit(1);
+	}
+
 	char *arg[4];
-	arg[0] = "/bin/bash";
+	arg[0] = cfg.shell;
 	arg[1] = "-c";
 	arg[2] = cmd;
 	arg[3] = NULL;
-	execvp("/bin/bash", arg);
+	clearenv();
+	execvp(arg[0], arg);
 	
 	// it will never get here
-	exit(0);		
+	errExit("execvp");
 }

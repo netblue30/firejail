@@ -1,0 +1,70 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2016 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+if {[file exists ~/.asoundrc]} {
+	puts "found .asoundrc file\n"
+} else {
+	send -- "touch ~/.asoundrc\r"
+}
+after 100
+
+if {[file exists ~/.Xauthority]} {
+	puts "found .Xauthority file\n"
+} else {
+	send -- "touch ~/.Xauthority\r"
+}
+after 100
+send -- "mkdir ~/_firejail_test_dir_\r"
+sleep 1
+
+# testing profile and private
+send -- "firejail --private=~/_firejail_test_dir_\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls -l ~\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"total 0"
+}
+after 100
+
+send -- "ls -al ~\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	".asoundrc"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	".bashrc"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	".Xauthority"
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+
+# testing profile and private
+send -- "firejail --private=/etc\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"private directory should be owned by the current user"
+}
+sleep 1
+
+
+puts "all done\n"

@@ -59,6 +59,7 @@ void run_symlink(int argc, char **argv) {
 
 		struct stat s;
 		if (stat(name, &s) == 0) {
+			/* coverity[toctou] */
 			char* rp = realpath(name, NULL);
 			if (!rp)
 				errExit("realpath");
@@ -89,16 +90,22 @@ void run_symlink(int argc, char **argv) {
 	if (asprintf(&firejail, "%s/bin/firejail", PREFIX) == -1)
 		errExit("asprintf");
 
-	printf("Redirecting symlink to %s\n", program);
+	// drop privileges
+	if (setgid(getgid()) < 0)
+		errExit("setgid/getgid");
+	if (setuid(getuid()) < 0)
+		errExit("setuid/getuid");
 
 	// run command
 	char *a[3 + argc];
 	a[0] = firejail;
 	a[1] = program;
 	int i;
-	for (i = 0; i < (argc - 1); i++)
+	for (i = 0; i < (argc - 1); i++) {
 		a[i + 2] = argv[i + 1];
+	}
 	a[i + 2] = NULL;
+	assert(getenv("LD_PRELOAD") == NULL);	
 	execvp(a[0], a); 
 
 	perror("execvp");

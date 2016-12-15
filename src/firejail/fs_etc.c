@@ -21,130 +21,136 @@
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
-// return 0 if file not found, 1 if found
-static int check_dir_or_file(const char *name) {
-	assert(name);
-	invalid_filename(name);
+// spoof /etc/machine_id
+void fs_machineid(void) {
+	union machineid_t {
+		uint8_t u8[16];
+		uint32_t u32[4];
+	} mid;
+
+	// if --machine-id flag is active, do nothing
+	if (arg_machineid)
+		return;
+
+	// init random number generator
+	srand(time(NULL));
 	
+	// generate random id
+	mid.u32[0] = rand();
+	mid.u32[1] = rand();
+	mid.u32[2] = rand();
+	mid.u32[3] = rand();
+	
+	// UUID version 4 and DCE variant
+	mid.u8[6] = (mid.u8[6] & 0x0F) | 0x40;
+	mid.u8[8] = (mid.u8[8] & 0x3F) | 0x80;
+	
+	// write it in a file
+	FILE *fp = fopen(RUN_MACHINEID, "w");
+	if (!fp)
+		errExit("fopen");
+	fprintf(fp, "%08x%08x%08x%08x\n", mid.u32[0], mid.u32[1], mid.u32[2], mid.u32[3]);
+	fclose(fp);
+	if (set_perms(RUN_MACHINEID, 0, 0, 0444))
+		errExit("set_perms");
+		
+
 	struct stat s;
-	char *fname;
-	if (asprintf(&fname, "/etc/%s", name) == -1)
-		errExit("asprintf");
-	if (arg_debug)
-		printf("Checking %s\n", fname);		
+	if (stat("/etc/machine-id", &s) == 0) {
+		if (arg_debug)
+			printf("installing a new /etc/machine-id\n");
+
+		if (mount(RUN_MACHINEID, "/etc/machine-id", "none", MS_BIND, "mode=444,gid=0"))
+			errExit("mount");
+	}
+	if (stat("/var/lib/dbus/machine-id", &s) == 0) {
+		if (mount(RUN_MACHINEID, "/var/lib/dbus/machine-id", "none", MS_BIND, "mode=444,gid=0"))
+			errExit("mount");
+	}
+}
+
+// return 0 if file not found, 1 if found
+static int check_dir_or_file(const char *fname) {
+	assert(fname);
+
+	struct stat s;
 	if (stat(fname, &s) == -1) {
 		if (arg_debug)
 			printf("Warning: file %s not found.\n", fname);
 		return 0;
 	}
-	
-	// dir or regular file
-	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode)) {
-		free(fname);
-		return 1;
-	}
 
-	if (!is_link(fname)) {
-		free(fname);
-		return 1;
-	}
-	
+	// read access
+	if (access(fname, R_OK) == -1)
+		goto errexit;
+
+	// dir or regular file
+	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || !is_link(fname))
+		return 1;	// normal exit
+
+errexit:	
 	fprintf(stderr, "Error: invalid file type, %s.\n", fname);
 	exit(1);
 }
 
-void fs_check_etc_list(void) {
-	EUID_ASSERT();
-	if (strstr(cfg.etc_private_keep, "..")) {
-		fprintf(stderr, "Error: invalid private etc list\n");
+static void duplicate(const char *fname, const char *private_dir, const char *private_run_dir) {
+	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
+		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
-	
-	char *dlist = strdup(cfg.etc_private_keep);
-	if (!dlist)
-		errExit("strdup");
-	
-	// build a new list only with the files found
-	char *newlist = malloc(strlen(cfg.etc_private_keep) + 1);
-	if (!newlist)
-		errExit("malloc");
-	*newlist = '\0';
+	invalid_filename(fname);
 
-	char *ptr = strtok(dlist, ",");
-	if (check_dir_or_file(ptr))
-		strcat(newlist, ptr);
-	while ((ptr = strtok(NULL, ",")) != NULL) {
-		if (check_dir_or_file(ptr)) {
-			strcat(newlist, ",");
-			strcat(newlist, ptr);
-		}
+	char *src;
+	if (asprintf(&src,  "%s/%s", private_dir, fname) == -1)
+		errExit("asprintf");
+	if (check_dir_or_file(src) == 0) {
+		if (!arg_quiet)
+			fprintf(stderr, "Warning: skipping %s for private %s\n", fname, private_dir);
+		free(src);
+		return;
 	}
-	cfg.etc_private_keep = newlist;
-	
-	free(dlist);
-}
 
-static void duplicate(char *fname) {
-	char *cmd;
-
-	// copy the file - this code assumes ETC_DIR is actually MNT_DIR/etc
-	if (asprintf(&cmd, "%s -a --parents /etc/%s %s", RUN_CP_COMMAND, fname, RUN_MNT_DIR) == -1)
-		errExit("asprintf");
 	if (arg_debug)
-		printf("%s\n", cmd);
-	if (system(cmd))
-		fprintf(stderr, "Warning (fs_etc): error copying file /etc/%s, skipping...\n", fname);
+		printf("copying %s to private %s\n", src, private_dir);
+		
+	struct stat s;
+	if (stat(src, &s) == 0 && S_ISDIR(s.st_mode)) {
+		// create the directory in RUN_ETC_DIR
+		char *dirname;
+		if (asprintf(&dirname, "%s/%s", private_run_dir, fname) == -1)
+			errExit("asprintf");
+		create_empty_dir_as_root(dirname, s.st_mode);
+		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, src, dirname);
+		free(dirname);
+	}
+	else
+		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, src, private_run_dir);
 
-	free(cmd);
-	
-	char *name;
-	if (asprintf(&name, "/etc/%s", fname) == -1)
-		errExit("asprintf");
-	fs_logger2("clone", name);
-	free(name);
+	fs_logger2("clone", src);
+	free(src);
 }
 
 
-void fs_private_etc_list(void) {
-	char *private_list = cfg.etc_private_keep;
+void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list) {
+	assert(private_dir);
+	assert(private_run_dir);
 	assert(private_list);
 	
-	struct stat s;
-	if (stat("/etc", &s) == -1) {
-		fprintf(stderr, "Error: cannot find user /etc directory\n");
-		exit(1);
-	}
-
-	// create /tmp/firejail/mnt/etc directory
-	fs_build_mnt_dir();
-	int rv = mkdir(RUN_ETC_DIR, 0755);
-	if (rv == -1)
-		errExit("mkdir");
-	if (chown(RUN_ETC_DIR, 0, 0) < 0)
-		errExit("chown");
-	if (chmod(RUN_ETC_DIR, 0755) < 0)
-		errExit("chmod");
-	fs_logger("tmpfs /etc");
+	// create /run/firejail/mnt/etc directory
+	mkdir_attr(private_run_dir, 0755, 0, 0);
+	fs_logger2("tmpfs", private_dir);
 	
-	// copy the list of files in the new etc directory
-	// using a new child process without root privileges
 	fs_logger_print();	// save the current log
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		if (arg_debug)
-			printf("Copying files in the new etc directory:\n");
 
-		// elevate privileges - files in the new /etc directory belong to root
-		if (setreuid(0, 0) < 0)
-			errExit("setreuid");
-		if (setregid(0, 0) < 0)
-			errExit("setregid");
-		
+
+	// copy the list of files in the new etc directory
+	// using a new child process with root privileges
+	if (*private_list != '\0') {
+		if (arg_debug)
+			printf("Copying files in the new %s directory:\n", private_dir);
+
 		// copy the list of files in the new home directory
 		char *dlist = strdup(private_list);
 		if (!dlist)
@@ -152,21 +158,18 @@ void fs_private_etc_list(void) {
 	
 
 		char *ptr = strtok(dlist, ",");
-		duplicate(ptr);
+		duplicate(ptr, private_dir, private_run_dir);
 	
 		while ((ptr = strtok(NULL, ",")) != NULL)
-			duplicate(ptr);
+			duplicate(ptr, private_dir, private_run_dir);
 		free(dlist);	
 		fs_logger_print();
-		exit(0);
 	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
-
+	
 	if (arg_debug)
-		printf("Mount-bind %s on top of /etc\n", RUN_ETC_DIR);
-	if (mount(RUN_ETC_DIR, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)
+		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
+	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
-	fs_logger("mount /etc");
+	fs_logger2("mount", private_dir);
 }
 

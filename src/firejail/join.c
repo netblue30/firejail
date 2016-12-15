@@ -23,11 +23,18 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/prctl.h>
+#include <errno.h>
 
 static int apply_caps = 0;
 static uint64_t caps = 0;
 static int apply_seccomp = 0;
 #define BUFLEN 4096
+
+static void signal_handler(int sig){
+	flush_stdin();
+
+	exit(sig);
+}
 
 static void extract_command(int argc, char **argv, int index) {
 	EUID_ASSERT();
@@ -48,22 +55,9 @@ static void extract_command(int argc, char **argv, int index) {
 		exit(1);
 	}
 
-
-	int len = 0;
-	int i;
-	// calculate command length
-	for (i = index; i < argc; i++) {
-		len += strlen(argv[i]) + 1;
-	}
-	assert(len > 0);
-
 	// build command
-	cfg.command_line = malloc(len + 1);
-	*cfg.command_line = '\0';
-	for (i = index; i < argc; i++) {
-		strcat(cfg.command_line, argv[i]);
-		strcat(cfg.command_line, " ");
-	}
+	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index);
+
 	if (arg_debug)
 		printf("Extracted command #%s#\n", cfg.command_line);
 }
@@ -134,7 +128,7 @@ static void extract_caps_seccomp(pid_t pid) {
 			break;
 		}
 		else if (strncmp(buf, "CapBnd:", 7) == 0) {		
-			char *ptr = buf + 8;
+			char *ptr = buf + 7;
 			unsigned long long val;
 			sscanf(ptr, "%llx", &val);
 			apply_caps = 1;
@@ -179,26 +173,12 @@ static void extract_user_namespace(pid_t pid) {
 	free(uidmap);
 }
 
-void join_name(const char *name, int argc, char **argv, int index) {
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-
-	pid_t pid;
-	if (name2pid(name, &pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-	join(pid, argc, argv, index);
-}
-
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
 	char *homedir = cfg.homedir;
 	
 	extract_command(argc, argv, index);
+	signal (SIGTERM, signal_handler);
 
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	EUID_ROOT();
@@ -249,15 +229,11 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			exit(1);
 	}
 	else {
-		if (join_namespace(pid, "ipc"))
-			exit(1);
-		if (join_namespace(pid, "net"))
-			exit(1);
-		if (join_namespace(pid, "pid"))
-			exit(1);
-		if (join_namespace(pid, "uts"))
-			exit(1);
-		if (join_namespace(pid, "mnt"))
+		if (join_namespace(pid, "ipc") ||
+		    join_namespace(pid, "net") ||
+		    join_namespace(pid, "pid") ||
+		    join_namespace(pid, "uts") ||
+		    join_namespace(pid, "mnt"))
 			exit(1);
 	}
 
@@ -297,24 +273,17 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
 #ifdef HAVE_SECCOMP
-		// set protocol filter
+		// read cfg.protocol from file
 		if (getuid() != 0)
 			protocol_filter_load(RUN_PROTOCOL_CFG);
 		if (cfg.protocol) {	// not available for uid 0
-			protocol_filter();
+			seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter	
 		}
 				
 		// set seccomp filter
 		if (apply_seccomp == 1)	// not available for uid 0
-			seccomp_set();
-		
+			seccomp_load(RUN_SECCOMP_CFG);
 #endif
-		
-		// fix qt 4.8
-		if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
-			errExit("setenv");
-		if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
-			errExit("setenv");
 
 		// mount user namespace or drop privileges
 		if (arg_noroot) {	// not available for uid 0
@@ -322,76 +291,61 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				printf("Joining user namespace\n");
 			if (join_namespace(1, "user"))
 				exit(1);
+
+			// user namespace resets capabilities
+			// set caps filter
+			if (apply_caps == 1)	// not available for uid 0
+				caps_set(caps);
 		}
 		else 
 			drop_privs(arg_nogroups);	// nogroups not available for uid 0
 
-		// set prompt color to green
-		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
-		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
-			errExit("setenv");
 
-		// run cmdline trough /bin/bash
-		if (cfg.command_line == NULL) {
-			struct stat s;
-
-			// replace the process with a shell
-			if (stat("/bin/bash", &s) == 0)
-				execlp("/bin/bash", "/bin/bash", NULL);
-			else if (stat("/usr/bin/zsh", &s) == 0)
-				execlp("/usr/bin/zsh", "/usr/bin/zsh", NULL);
-			else if (stat("/bin/csh", &s) == 0)
-				execlp("/bin/csh", "/bin/csh", NULL);
-			else if (stat("/bin/sh", &s) == 0)
-				execlp("/bin/sh", "/bin/sh", NULL);
-			
-			// no shell found, print an error and exit
-			fprintf(stderr, "Error: no POSIX shell found\n");
-			sleep(5);
-			exit(1);
-		}
-		else {
-			// run the command supplied by the user
-			int cwd = 0;
-			if (cfg.cwd) {
-				if (chdir(cfg.cwd) == 0)
-					cwd = 1;
+		// set nice
+		if (arg_nice) {
+			errno = 0;
+			int rv = nice(cfg.nice);
+			(void) rv;
+			if (errno) {
+				fprintf(stderr, "Warning: cannot set nice value\n");
+				errno = 0;
 			}
-			
-			if (!cwd) {
-				if (chdir("/") < 0)
-					errExit("chdir");
-				if (cfg.homedir) {
-					struct stat s;
-					if (stat(cfg.homedir, &s) == 0) {
-						if (chdir(cfg.homedir) < 0)
-							errExit("chdir");
-					}
+		}
+
+		env_defaults();
+		if (cfg.command_line == NULL) {
+			assert(cfg.shell);
+			cfg.command_line = cfg.shell;
+			cfg.window_title = cfg.shell;
+		}
+
+		int cwd = 0;
+		if (cfg.cwd) {
+			if (chdir(cfg.cwd) == 0)
+				cwd = 1;
+		}
+
+		if (!cwd) {
+			if (chdir("/") < 0)
+				errExit("chdir");
+			if (cfg.homedir) {
+				struct stat s;
+				if (stat(cfg.homedir, &s) == 0) {
+					/* coverity[toctou] */
+					if (chdir(cfg.homedir) < 0)
+						errExit("chdir");
 				}
 			}
-
-			char *arg[5];
-			arg[0] = "/bin/bash";
-			arg[1] = "-c";
-			if (arg_debug)
-				printf("Starting %s\n", cfg.command_line);
-			if (!arg_doubledash) {
-				arg[2] = cfg.command_line;
-				arg[3] = NULL;
-			}
-			else {
-				arg[2] = "--";
-				arg[3] = cfg.command_line;
-				arg[4] = NULL;
-			}
-			execvp("/bin/bash", arg);
 		}
+
+		start_application();
 
 		// it will never get here!!!
 	}
 
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
+	flush_stdin();
 	exit(0);
 }
 

@@ -18,18 +18,194 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
-Joan Figueras (https://github.com/figue)
-	- added abrowser profile
+Reiner Herrmann (https://github.com/reinerh)
+	- a number of build patches
+	- man page fixes
+	- Debian and Ubuntu integration
+	- clang-analyzer fixes
+	- Debian reproducible build
+	- unit testing framework
+	- moved build to .xz
+	- detached signatures for source archive
+	- recursive mkdir
+Aleksey Manevich (https://github.com/manevich)
+	- several profile fixes
+	- fix problem with relative path in storage_find function
+	- fix build for systems without bash
+	- fix double quotes/single quotes problem
+	- big rework of argument processing subsystem
+	- --join fixes
+	- spliting up cmdline.c
+	- Busybox support
+	- X11 support rewrite
+	- gether shell selection code in one place
+	- fixed several TOCTOU security problems
+	- added --fix option to firecfg utility
+	- read_pid fix
+	- added --x11=block options
+	- x11 xpra, xphyr, none profile commands
+	- added --join-or-start command
+	- CVE-2016-7545
 Fred-Barclay (https://github.com/Fred-Barclay)
+	- lots of profile fixes
 	- added Vivaldi, Atril profiles
 	- added PaleMoon profile
 	- split Icedove and Thunderbird profiles
 	- added 0ad profile
+	- fixed version for .deb packages
+	- added Warzone2100 profile
+	- blacklisted VeraCrypt
+	- added Gpredict profile
+	- added Aweather, Stellarium profiles
+	- fixed HexChat and Atril profiles
+	- fixed disable-common.inc for mate-terminal
+	- blacklisted escape-happy terminals in disable-common.inc
+	- blacklisted g++
+	- added xplayer, xreader, and xviewer profiles
+	- added Brave profile
+	- added Gitter profile
+	- various organising
+	- added LibreOffice profile
+	- added pix profile
+	- added audacity profile
+	- fixed Telegram and qtox profiles
+	- added Atom Beta and Atom profiles
+	- tightened 0ad, atril, evince, gthumb, pix, qtox, and xreader profiles
+	- several private-bin conversions
+	- added jitsi profile
+	- pidgin private-bin conversion
+	- added eom profile
+	- added gnome-chess profile
+	- added DOSBox profile
+	- evince profile enhancement
+	- tightened Spotify profile
+	- added xiphos and Tor Browser Bundle profiles
+	- added xed and pluma profiles
+	- added Cryptocat profile
+	- added wireshark profile
+valoq (https://github.com/valoq)
+	- lots of profile fixes
+	- added support for /srv in --whitelist feature
+	- Eye of GNOME, Evolution, display (imagemagik) and Wire profiles
+	- blacklist suid binaries in disable-common.inc
+	- fix man pages
+	- added keypass2, qemu profiles
+	- added amarok, ark, atool, bleachbit, brasero, dolphin, dragon, elinks, enchant, exiftool profiles
+	- added file-roller, gedit, gjs,gnome-books, gnome-documents, gnome-maps, gnome-music profiles
+	- added gnome-photos, gnome-weather, goobox, gpa, gpg, gpg-agent, highlight profiles
+	- added img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext, simple-scan profiles
+	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
+	- added wget profile
+	- disable gnupg and systemd directories under /run/user
+Lari Rauno (https://github.com/tuutti)
+	- qutebrowser profile fixes
+SpotComms (https://github.com/SpotComms)
+	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
+	- added PDFSam, Pithos, and Xonotic profiles
+Vasya Novikov (https://github.com/vn971)
+	- Wesnoth profile
+	- Hedegewars profile
+	- manpage fixes
+	- fixed firecfg clean/clear issue
+	- found the ugliest bug so far
+	- seccomp debug description in man page
+curiosity-seeker (https://github.com/curiosity-seeker)
+	- tightening unbound and dnscrypt-proxy profiles
+	- correct and tighten QuiteRss profile
+	- dnsmasq profile
+	- okular and gwenview profiles
+	- cherrytree profile fixes
+	- added quiterss profile
+	- added guayadeque profile
+Simon Peter (https://github.com/probonopd)
+	- set $APPIMAGE and $APPDIR environment variables
+	- AppImage version detection
+	- Leafppad type v1 and v2 appimage packages in test/appimage
+BogDan Vatra (https://github.com/bog-dan-ro)
+	- zoom profile
+Impyy (https://github.com/Impyy)
+	- added mumble profile
+Vadim A. Misbakh-Soloviov (https://github.com/msva)
+	- profile fixes
+Rafael Cavalcanti (https://github.com/rccavalcanti)
+	- chromium profile fixes for Arch Linux
+Deelvesh Bunjun (https://github.com/DeelveshBunjun)
+	- added xpdf profile
+Dara Adib (https://github.com/daradib)
+	- ssh profile fix
+	- evince profile fix
+vismir2 (https://github.com/vismir2)
+	- feh, ranger, 7z, keepass, keepassx and zathura profiles
+	- claws-mail, mutt, git, emacs, vim profiles
+	- lots of profile fixes
+	-  support for truecrypt and zuluCrypt
+graywolf (https://github.com/graywolf)
+	- spelling fix
+Tomasz Jan Góralczyk (https://github.com/tjg)
+	- fixed Steam profile
+pwnage-pineapple (https://github.com/pwnage-pineapple)
+	- update Okular profile
+Sergey Alirzaev (https://github.com/l29ah)
+	- firejail.h enum fix
+greigdp (https://github.com/greigdp)
+	- Gajim IM client profile
+	- fix Slack profile
+Icaro Perseo (https://github.com/icaroperseo)
+	- Icecat profile
+	- several profile fixes
+hamzadis (https://github.com/hamzadis)
+	- added --overlay-named=name and --overlay-path=path	
+Gaman Gabriel (https://github.com/stelariusinfinitek)
+	- inox profile
+greigdp (https://github.com/greigdp)
+	- fixed spotify profile
+	- added Slack profile
+Laurent Declercq (https://github.com/nuxwin)
+	- fixed test for shell interpreter in chroots
+Franco (nextime) Lanza (https://github.com/nextime)
+	- added --private-template/--private-home
+xee5ch (https://github.com/xee5ch)
+	- skypeforlinux profile
+Peter Hogg (https://github.com/pigmonkey)
+	- WeeChat profile
+	- rtorrent profile
+	- bitlbee profile fixes
+	- mutt profile fixes
+Thomas Jarosch (https://github.com/thomasjfox)
+	- disable keepassx in disable-passwdmgr.inc
+	- added uudeview profile
+	- added tar (gtar), unzip and unrar profile
+	- added file profile
+	- improved profile list
+	- fixed small variable glitch in stat64() / lstat64() (libtracelog)
+	- added lstat() / lstat64() support to libtrace
+	- include mkuid.sh in make dist
+Niklas Haas (https://github.com/haasn)
+	- blacklisting for keybase.io's client
+Jaykishan Mutkawoa (https://github.com/jmutkawoa)
+	- cpio profile
+Paupiah Yash (https://github.com/CaffeinatedStud)
+	- gzip  profile
+Akhil Hans Maulloo (https://github.com/kouul)
+	- xz profile
+Rahul Golam (https://github.com/technoLord)
+	- strings profile
+geg2048 (https://github.com/geg2048)
+	- kwallet profile fixes
+maces (https://github.com/maces)
+	- Franz messenger profile
+KellerFuchs (https://github.com/KellerFuchs)
+	- nonewpriv support, extended profiles for this feature
+	- make `restricted-network` prevent use of netfilter
+	- disable-common.inc additions
+ValdikSS (https://github.com/ValdikSS)
+	- Psi+, Corebird, Konversation profiles
+	- various profile fixes
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix
 	- added parole profile
-	- blacklist ncat, manpage fixes,
+	- blacklist ncat
 	- hostname support in profile file
 	- Google Chrome profile rework
 	- added cmus profile
@@ -37,6 +213,17 @@ avoidr (https://github.com/avoidr)
 	- add net iface support in profile files
 	- paths fix
 	- lots of profile fixes
+	- added mcabber profile
+	- fixed mpv profile
+	- various other fixes
+Ruan (https://github.com/ruany)
+	- fixed hexchat profile
+Matthew Gyurgyik (https://github.com/pyther)
+	- rpm spec and several fixes
+Joan Figueras (https://github.com/figue)
+	- added abrowser profile
+	- added Google-Play-Music-Desktop-Player
+	- added cyberfox profile
 Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
 n1trux (https://github.com/n1trux)
@@ -52,12 +239,9 @@ dshmgh (https://github.com/dshmgh)
 yumkam (https://github.com/yumkam)
 	- add compile-time option to restrict --net= to root only
 	- man page fixes
-Vasya Novikov (https://github.com/vn971)
-	- Wesnoth profile
-	- Hedegewars profile
-	- manpage fixes
 mahdi1234 (https://github.com/mahdi1234)
 	- cherrytree profile
+	- Seamonkey profiles
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -71,19 +255,14 @@ Tom Mellor (https://github.com/kalegrill)
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support
-Aleksey Manevich (https://github.com/manevich)
-	- several profile fixes
-	- fix problem with relative path in storage_find function
-	- fix build for systems without bash
 pszxzsd (https://github.com/pszxzsd)
 	-uGet profile
 Rahiel Kasim (https://github.com/rahiel)
 	- Mathematica profile
+	- whitelisted Dropbox profile
+	- whitelisted keysnail config for firefox
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
-curiosity-seeker (https://github.com/curiosity-seeker)
-	- tightening unbound and dnscrypt-proxy profiles
-	- dnsmasq profile
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH
@@ -93,8 +272,7 @@ Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Andrey Alekseenko (https://github.com/al42and)
 	- fixing lintian warnings
-mahdi1234 (https://github.com/mahdi1234)
-	- Seamonkey profiles
+	- fixed Skype profile
 Ivan Kozik (https://github.com/ivan)
 	- speed up sandbox exit
 Christian Stadelmann (https://github.com/genodeftest)
@@ -105,11 +283,6 @@ Kaan Genç (https://github.com/SeriousBug)
 	- dynamic allocation of noblacklist buffer
 Veeti Paananen (https://github.com/veeti)
 	- fixed Spotify profile
-Rahiel Kasim (https://github.com/rahiel)
-	- whitelist keysnail config for firefox
-Peter Hogg (https://github.com/pigmonkey)
-	- WeeChat profile
-	- rtorrent profile
 rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Bruno Nova (https://github.com/brunonova)
@@ -117,8 +290,6 @@ Bruno Nova (https://github.com/brunonova)
 	- bash arguments fix
 Matt Parnell (https://github.com/ilikenwf)
 	- whitelisting for core firefox related functionality
-Andrey Alekseenko (https://github.com/al42and)
-	- fixed Skype profile
 Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
 emacsomancer (https://github.com/emacsomancer)
@@ -132,8 +303,6 @@ andrew160 (https://github.com/andrew160)
 	- profile and man pages fixes
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
-Matthew Gyurgyik (https://github.com/pyther)
-	- rpm spec and several fixes
 greigdp (https://github.com/greigdp)
 	- add Spotify profile
 Mattias Wadman (https://github.com/wader)
@@ -150,12 +319,6 @@ sarneaud (https://github.com/sarneaud)
 	- various enhancements and bug fixes
 Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
 	- user namespace implementation
-Reiner Herrmann
-	- a number of build patches
-	- man page fixes
-	- Debian and Ubuntu integration
-	- clang-analyzer fixes
-	- Debian reproducible build
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)

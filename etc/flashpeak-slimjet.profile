@@ -15,16 +15,15 @@ include /etc/firejail/disable-programs.inc
 #
 
 caps.drop all
-seccomp
-protocol unix,inet,inet6,netlink
 netfilter
+nonewprivs
 noroot
+protocol unix,inet,inet6,netlink
+seccomp
 
 whitelist ${DOWNLOADS}
-mkdir ~/.config
 mkdir ~/.config/slimjet
 whitelist ~/.config/slimjet
-mkdir ~/.cache
 mkdir ~/.cache/slimjet
 whitelist ~/.cache/slimjet
 mkdir ~/.pki

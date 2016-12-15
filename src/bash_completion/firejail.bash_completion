@@ -47,6 +47,10 @@ _firejail()
             _filedir
             return 0
             ;;
+       --read-write)
+            _filedir
+            return 0
+            ;;
         --bind)
             _filedir
             return 0
@@ -60,6 +64,10 @@ _firejail()
             return 0
             ;;
         --shell)
+            _filedir
+            return 0
+            ;;
+        --audit)
             _filedir
             return 0
             ;;

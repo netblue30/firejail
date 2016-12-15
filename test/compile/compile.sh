@@ -9,13 +9,18 @@ arr[6]="TEST 6: compile network disabled"
 arr[7]="TEST 7: compile X11 disabled"
 arr[8]="TEST 8: compile network restricted"
 arr[9]="TEST 9: compile file transfer disabled"
-
+arr[10]="TEST 10: compile disable whitelist"
+arr[11]="TEST 11: compile disable global config"
+arr[12]="TEST 12: compile apparmor"
+arr[13]="TEST 13: compile busybox"
+arr[14]="TEST 14: compile overlayfs disabled"
+arr[15]="TEST 15: compile apparmor enabled"
 
 # remove previous reports and output file
 cleanup() {
 	rm -f report*
 	rm -fr firejail
-	rm oc* om*
+	rm -f oc* om*
 }
 
 print_title() {
@@ -27,6 +32,7 @@ print_title() {
 	echo "**************************************************"
 }
 
+DIST="$1"
 while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
     case "$1" in
     --clean)
@@ -42,36 +48,33 @@ while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
 done
 
 cleanup
-# enable sudo
-sudo ls -al
 
 
 #*****************************************************************
 # TEST 1
 #*****************************************************************
 # - checkout source code
-# - check compilation
-# - install
 #*****************************************************************
 print_title "${arr[1]}"
-git clone https://github.com/netblue30/firejail.git
+echo "$DIST"
+tar -xJvf ../../$DIST.tar.xz
+mv $DIST firejail
+
 cd firejail
 ./configure --prefix=/usr --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
-sudo make install 2>&1 | tee ../output-install
 cd ..
-grep Warning output-configure output-make output-install > ./report-test1
-grep Error output-configure output-make output-install >> ./report-test1
+grep Warning output-configure output-make > ./report-test1
+grep Error output-configure output-make >> ./report-test1
 cp output-configure oc1
 cp output-make om1
-rm output-configure output-make output-install
+rm output-configure output-make
 
 
 #*****************************************************************
 # TEST 2
 #*****************************************************************
 # - disable seccomp configuration
-# - check compilation
 #*****************************************************************
 print_title "${arr[2]}"
 # seccomp
@@ -90,7 +93,6 @@ rm output-configure output-make
 # TEST 3
 #*****************************************************************
 # - disable chroot configuration
-# - check compilation
 #*****************************************************************
 print_title "${arr[3]}"
 # seccomp
@@ -109,7 +111,6 @@ rm output-configure output-make
 # TEST 4
 #*****************************************************************
 # - disable bind configuration
-# - check compilation
 #*****************************************************************
 print_title "${arr[4]}"
 # seccomp
@@ -128,7 +129,6 @@ rm output-configure output-make
 # TEST 5
 #*****************************************************************
 # - disable user namespace configuration
-# - check compilation
 #*****************************************************************
 print_title "${arr[5]}"
 # seccomp
@@ -166,7 +166,6 @@ rm output-configure output-make
 # TEST 7
 #*****************************************************************
 # - disable X11 support
-# - check compilation
 #*****************************************************************
 print_title "${arr[7]}"
 # seccomp
@@ -186,7 +185,6 @@ rm output-configure output-make
 # TEST 8
 #*****************************************************************
 # - enable network restricted
-# - check compilation
 #*****************************************************************
 print_title "${arr[8]}"
 # seccomp
@@ -206,19 +204,126 @@ rm output-configure output-make
 # TEST 9
 #*****************************************************************
 # - disable file transfer
-# - check compilation
 #*****************************************************************
 print_title "${arr[9]}"
 # seccomp
 cd firejail
 make distclean
-./configure --prefix=/usr --enable-network=restricted  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-file-transfer  --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test9
 grep Error output-configure output-make >> ./report-test9
 cp output-configure oc9
 cp output-make om9
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 10
+#*****************************************************************
+# - disable whitelist
+#*****************************************************************
+print_title "${arr[10]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-whitelist  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test10
+grep Error output-configure output-make >> ./report-test10
+cp output-configure oc10
+cp output-make om10
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 11
+#*****************************************************************
+# - disable global config
+#*****************************************************************
+print_title "${arr[11]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-globalcfg  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test11
+grep Error output-configure output-make >> ./report-test11
+cp output-configure oc11
+cp output-make om11
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 12
+#*****************************************************************
+# - enable apparmor
+#*****************************************************************
+print_title "${arr[12]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-apparmor  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test12
+grep Error output-configure output-make >> ./report-test12
+cp output-configure oc12
+cp output-make om12
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 13
+#*****************************************************************
+# - enable busybox workaround
+#*****************************************************************
+print_title "${arr[13]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-busybox-workaround --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test13
+grep Error output-configure output-make >> ./report-test13
+cp output-configure oc13
+cp output-make om13
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 14
+#*****************************************************************
+# - disable overlayfs
+#*****************************************************************
+print_title "${arr[14]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-overlayfs --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test14
+grep Error output-configure output-make >> ./report-test14
+cp output-configure oc14
+cp output-make om14
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 15
+#*****************************************************************
+# - enable apparmor
+#*****************************************************************
+print_title "${arr[15]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-apparmor --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test15
+grep Error output-configure output-make >> ./report-test15
+cp output-configure oc15
+cp output-make om15
 rm output-configure output-make
 
 
@@ -245,3 +350,10 @@ echo ${arr[6]}
 echo ${arr[7]}
 echo ${arr[8]}
 echo ${arr[9]}
+echo ${arr[10]}
+echo ${arr[11]}
+echo ${arr[12]}
+echo ${arr[13]}
+echo ${arr[14]}
+echo ${arr[15]}
+

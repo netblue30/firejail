@@ -107,7 +107,7 @@ blacklist ${HOME}/.config/katepartrc
 blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/kateschemarc
 blacklist ${HOME}/.config/katesyntaxhighlightingrc
-blacklist ${HOME}/.config/katevir
+blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/midori

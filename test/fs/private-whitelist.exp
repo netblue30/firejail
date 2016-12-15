@@ -34,6 +34,7 @@ expect {
 	"3" {puts "3\n"}
         "4" {puts "4\n"}
         "5" {puts "5\n"}
+        "6" {puts "6\n"}
 }
 
 sleep 1

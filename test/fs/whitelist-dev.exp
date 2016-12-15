@@ -14,7 +14,7 @@ expect {
 }
 sleep 1
 
-send -- "ls -l /dev | find /dev | wc -l\r"
+send -- "find /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"2"
@@ -23,17 +23,17 @@ after 100
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --whitelist=/var/tmp --debug\r"
+send -- "firejail --private-dev --debug\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "ls -l /dev | find /dev | wc -l\r"
+send -- "ls -l /dev | wc -l\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"2"
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"13"
 }
 after 100
 send -- "exit\r"

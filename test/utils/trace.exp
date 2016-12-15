@@ -53,15 +53,15 @@ expect {
 sleep 1
 
 send -- "firejail --trace wget -q debian.org\r"
-expect {
-	timeout {puts "TESTING ERROR 8.1\n";exit}
-	"Child process initialized"
-}
-expect {
-	timeout {puts "TESTING ERROR 8.2\n";exit}
-	"bash:open /dev/tty" {puts "OK\n";}
-	"bash:open64 /dev/tty" {puts "OK\n";}
-}
+#expect {
+#	timeout {puts "TESTING ERROR 8.1\n";exit}
+#	"Child process initialized"
+#}
+#expect {
+#	timeout {puts "TESTING ERROR 8.2\n";exit}
+#	"bash:open /dev/tty" {puts "OK\n";}
+#	"bash:open64 /dev/tty" {puts "OK\n";}
+#}
 expect {
 	timeout {puts "TESTING ERROR 8.3\n";exit}
 	"wget:fopen64 /etc/wgetrc" {puts "OK\n";}

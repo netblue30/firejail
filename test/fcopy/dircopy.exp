@@ -21,30 +21,58 @@ expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"dest/"
 }
+after 100
+
+send -- "find dest\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"dest/"
+}
+after 100
+
+send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"dest/a"
 }
+after 100
+
+send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"dest/a/b"
 }
+after 100
+
+send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"dest/a/b/file4"
 }
+after 100
+
+send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"dest/a/file3"
 }
+after 100
+
+send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"dest/dircopy.exp"
 }
+after 100
+
+send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"dest/file2"
 }
+after 100
+
+send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
 	"dest/file1"

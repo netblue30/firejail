@@ -238,3 +238,5 @@
 /etc/firejail/xonotic-glx.profile
 /etc/firejail/xonotic-sdl.profile
 /etc/firejail/xonotic.profile
+/etc/firejail/VirtualBox.profile
+/etc/firejail/qupzilla.profile

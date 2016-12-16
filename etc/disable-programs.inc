@@ -20,6 +20,7 @@ blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
+blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/chromium-dev
 blacklist ${HOME}/.cache/darktable
 blacklist ${HOME}/.cache/epiphany

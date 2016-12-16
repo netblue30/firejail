@@ -97,6 +97,8 @@ valoq (https://github.com/valoq)
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
 	- disable gnupg and systemd directories under /run/user
+Jesse Smith (https://github.com/slicer69)
+	- added QupZilla profile
 Lari Rauno (https://github.com/tuutti)
 	- qutebrowser profile fixes
 SpotComms (https://github.com/SpotComms)
@@ -117,6 +119,8 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- cherrytree profile fixes
 	- added quiterss profile
 	- added guayadeque profile
+	- added VirtualBox.profile
+	- various other profile fixes
 Simon Peter (https://github.com/probonopd)
 	- set $APPIMAGE and $APPDIR environment variables
 	- AppImage version detection

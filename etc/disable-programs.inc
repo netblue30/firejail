@@ -81,6 +81,7 @@ blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.config/chromium
+blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/chromium-dev
 blacklist ${HOME}/.config/chromium-flags.conf
 blacklist ${HOME}/.config/cmus

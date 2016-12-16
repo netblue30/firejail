@@ -1,8 +1,7 @@
-firejail (0.9.38.5) baseline; urgency=low
-  * this is a development release
+firejail (0.9.38.6) baseline; urgency=low
   * security: overwrite /etc/resolv.conf found by Martin Carpenter
   * bugfix: crashing VLC by pressing Ctrl-O
- -- netblue30 <netblue30@yahoo.com>  Mon, 2 Nov 2016 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Fri, 16 Dec 2016 10:00:00 -0500
 
 firejail (0.9.38.4) baseline; urgency=low
   * CVE-2016-7545 submitted by Aleksey Manevich

@@ -191,6 +191,7 @@ blacklist ${PATH}/mount.ecryptfs_private
 
 # other SUID binaries
 blacklist /usr/lib/virtualbox
+blacklist /usr/lib64/virtualbox
 
 # prevent lxterminal connecting to an existing lxterminal session
 blacklist /tmp/.lxterminal-socket*

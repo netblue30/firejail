@@ -11,10 +11,10 @@ nonewprivs
 noroot
 nosound
 shell none
-#seccomp
-protocol unix,inet,inet6
+seccomp
+# protocol unix,inet,inet6
 
-private-bin skanlite
+# private-bin skanlite
 # private-dev
 # private-tmp
 # private-etc

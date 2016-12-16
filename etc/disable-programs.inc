@@ -148,7 +148,7 @@ blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
-blacklist ${HOME}/.conkeror.mozdev.org 
+blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox-dist

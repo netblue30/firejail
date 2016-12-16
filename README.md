@@ -18,7 +18,7 @@ prefix your command with “firejail”:
 
 `````
 $ firejail firefox            # starting Mozilla Firefox
-$ firejail transmission-gtk   # starting Transmission BitTorrent 
+$ firejail transmission-gtk   # starting Transmission BitTorrent
 $ firejail vlc                # starting VideoLAN Client
 $ sudo firejail /etc/init.d/nginx start
 `````
@@ -88,5 +88,5 @@ amarok, ark, atool, bleachbit, brasero, dolphin, dragon, elinks, enchant, exifto
 gjs, gnome-books, gnome-clocks, gnome-documents, gnome-maps, gnome-music, gnome-photos, gnome-weather,
 goobox, gpa, gpg, gpg-agent, highlight, img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext,
 simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, w3m, xfburn, xpra, wget,
-xed, pluma, Cryptocat, Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5, 
-PDFSam, Pithos, Xonotic, wireshark
+xed, pluma, Cryptocat, Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5,
+PDFSam, Pithos, Xonotic, wireshark, keepassx2

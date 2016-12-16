@@ -39,19 +39,19 @@ blacklist /usr/share/applications/veracrypt.*
 blacklist /usr/share/pixmaps/veracrypt.*
 blacklist ${HOME}/.VeraCrypt
 
-# TrueCrypt                                                                                                                                                                                                         
-blacklist ${PATH}/truecrypt                                                                                                                                                                                         
-blacklist ${PATH}/truecrypt-uninstall.sh                                                                                                                                                                            
-blacklist /usr/share/truecrypt                                                                                                                                                                                      
-blacklist /usr/share/applications/truecrypt.*                                                                                                                                                                       
-blacklist /usr/share/pixmaps/truecrypt.*                                                                                                                                                                            
-blacklist ${HOME}/.TrueCrypt 
+# TrueCrypt
+blacklist ${PATH}/truecrypt
+blacklist ${PATH}/truecrypt-uninstall.sh
+blacklist /usr/share/truecrypt
+blacklist /usr/share/applications/truecrypt.*
+blacklist /usr/share/pixmaps/truecrypt.*
+blacklist ${HOME}/.TrueCrypt
 
-# zuluCrypt                                                                                                                                                                                                         
-blacklist ${HOME}/.zuluCrypt                                                                                                                                                                                        
-blacklist ${HOME}/.zuluCrypt-socket                                                                                                                                                                                 
-blacklist ${PATH}/zuluCrypt-cli                                                                                                                                                                                     
-blacklist ${PATH}/zuluMount-cli                                                                                                                                                                                                                                                                                                                                                              
+# zuluCrypt
+blacklist ${HOME}/.zuluCrypt
+blacklist ${HOME}/.zuluCrypt-socket
+blacklist ${PATH}/zuluCrypt-cli
+blacklist ${PATH}/zuluMount-cli
 
 # var
 blacklist /var/spool/cron
@@ -154,7 +154,7 @@ blacklist /etc/ssh
 blacklist /var/backup
 blacklist /home/.ecryptfs
 
-# system directories	
+# system directories
 blacklist /sbin
 blacklist /usr/sbin
 blacklist /usr/local/sbin

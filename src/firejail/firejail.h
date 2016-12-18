@@ -208,7 +208,7 @@ typedef struct config_t {
 	char *bin_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *overlay_dir;
-   char *private_template; // template dir for tmpfs home
+	char *private_template; // template dir for tmpfs home
 
 	// networking
 	char *name;		// sandbox name
@@ -285,6 +285,7 @@ void clear_run_files(pid_t pid);
 
 extern int arg_private;		// mount private /home
 extern int arg_private_template; // private /home template
+extern int arg_allow_private_blacklist;  // blacklist things in private directories
 extern int arg_debug;		// print debug messages
 extern int arg_debug_check_filename;		// print debug messages for filename checking
 extern int arg_debug_blacklists;	// print debug messages for blacklists

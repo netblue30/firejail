@@ -112,6 +112,7 @@ int arg_x11_block = 0;				// block X11
 int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
+int arg_allow_private_blacklist = 0;  // blacklist things in private directories
 
 int login_shell = 0;
 
@@ -1462,6 +1463,9 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--machine-id") == 0) {
 			arg_machineid = 1;
+		}
+		else if (strcmp(argv[i], "--allow-private-blacklist") == 0) {
+			arg_allow_private_blacklist = 1;
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;

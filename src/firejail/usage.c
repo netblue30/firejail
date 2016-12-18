@@ -30,12 +30,14 @@ void usage(void) {
 	printf("Options:\n");
 	printf("    -- - signal the end of options and disables further option processing.\n");
 	printf("    --allow-debuggers - allow tools such as strace and gdb inside the sandbox.\n");
+	printf("    --allow-private-blacklist - allow blacklisting things in private\n");
+	printf("\tdirectories.\n");
 	printf("    --allusers - all user home directories are visible inside the sandbox.\n");
 	printf("    --apparmor - enable AppArmor confinement.\n");
 	printf("    --appimage - sandbox an AppImage application.\n");
 	printf("    --audit[=test-program] - audit the sandbox.\n");
 #ifdef HAVE_NETWORK	
-	printf("    --bandwidth=name|pid - set  bandwidth  limits\n");
+	printf("    --bandwidth=name|pid - set bandwidth limits.\n");
 #endif
 #ifdef HAVE_BIND		
 	printf("    --bind=dirname1,dirname2 - mount-bind dirname1 on top of dirname2.\n");

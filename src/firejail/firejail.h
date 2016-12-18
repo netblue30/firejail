@@ -564,6 +564,7 @@ void network_del_run_file(pid_t pid);
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
+void fs_machineid(void);
 void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
 
 // no_sandbox.c

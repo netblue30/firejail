@@ -97,6 +97,10 @@ valoq (https://github.com/valoq)
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
 	- disable gnupg and systemd directories under /run/user
+thewisenerd (https://github.com/thewisenerd)
+	- appimage: pass commandline arguments
+KOLANICH (https://github.com/KOLANICH)
+	- added symlink fixer
 Jesse Smith (https://github.com/slicer69)
 	- added QupZilla profile
 Lari Rauno (https://github.com/tuutti)
@@ -317,6 +321,7 @@ Peter Millerchip (https://github.com/pmillerchip)
 	- support for files and directories starting with ~ in blacklist option
 	- support for files and directories with spaces in blacklist option
 	- lots of other fixes
+	- implement the --allow-private-blacklist option
 sarneaud (https://github.com/sarneaud)
 	- rewrite globbing code to fix various minor issues
 	- added noblacklist command for profile files

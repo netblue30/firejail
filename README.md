@@ -81,6 +81,15 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 
               Example:
               $ firejail --machine-id
+
+       --allow-private-blacklist
+              Allow  blacklisting  files in private home directory. By default
+              these blacklists are disabled.
+
+              Example:
+              $   firejail    --allow-private-blacklist   --private=~/priv-dir
+              --blacklist=~/.mozilla
+             
 `````
 ## New Profiles
 xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom, Guayadeque, qemu, keypass2,

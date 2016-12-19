@@ -13,7 +13,9 @@ firejail (0.9.45) baseline; urgency=low
   * feature: private /opt directory (--private-opt, profile support)
   * feature: private /srv directory (--private-srv, profile support)
   * feature: spoof machine-id
-  * feature: config support for firejail prompt in terminal
+  * feature: config support for firejail prompt in terminals
+  * feature: pass command line arguments to appimages
+  * feature: --allow-private-blacklist option
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,

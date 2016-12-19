@@ -14,3 +14,7 @@ echo "TESTING: AppImage v2 (test/appimage/appimage-v2.exp)"
 
 echo "TESTING: AppImage file name (test/appimage/filename.exp)";
 ./filename.exp
+
+echo "TESTING: AppImage argsv1 (test/appimage/appimage-args.exp)"
+./appimage-args.exp
+

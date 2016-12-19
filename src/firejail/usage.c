@@ -30,8 +30,8 @@ void usage(void) {
 	printf("Options:\n");
 	printf("    -- - signal the end of options and disables further option processing.\n");
 	printf("    --allow-debuggers - allow tools such as strace and gdb inside the sandbox.\n");
-	printf("    --allow-private-blacklist - allow blacklisting things in private\n");
-	printf("\tdirectories.\n");
+	printf("    --allow-private-blacklist - allow blacklisting files in private\n");
+	printf("\thome directories.\n");
 	printf("    --allusers - all user home directories are visible inside the sandbox.\n");
 	printf("    --apparmor - enable AppArmor confinement.\n");
 	printf("    --appimage - sandbox an AppImage application.\n");

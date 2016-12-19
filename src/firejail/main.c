@@ -2160,7 +2160,7 @@ int main(int argc, char **argv) {
 		if (arg_debug)
 			printf("Configuring appimage environment\n");
 		appimage_set(cfg.command_name);
-		cfg.window_title = "appimage";
+		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, cfg.command_line);
 	}
 	else {
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);

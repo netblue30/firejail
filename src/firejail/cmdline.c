@@ -157,3 +157,47 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 	assert(*command_line);
 	assert(*window_title);
 }
+
+void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, char *apprun_path) {
+	// index == -1 could happen if we have --shell=none and no program was specified
+	// the program should exit with an error before entering this function
+	assert(index != -1);
+
+	unsigned argcount = argc - index;
+
+	int len1 = cmdline_length(argc, argv, index);  // length of argv w/o changes
+	int len2 = cmdline_length(1, &argv[index], 0); // apptest.AppImage
+	int len3 = cmdline_length(1, &apprun_path, 0); // /run/firejail/appimage/.appimage-23304/AppRun
+	int len4 = (len1 - len2 + len3) + 1;           // apptest.AppImage is replaced by /path/to/AppRun
+
+	if (len4 > ARG_MAX) {
+		errno = E2BIG;
+		errExit("cmdline_length");
+	}
+
+	// save created apprun in cfg.command_line
+	char *tmp1 = strdup(*command_line);
+	if (!tmp1)
+		errExit("strdup");
+
+	// TODO: deal with extra allocated memory.
+	char *command_line_tmp = malloc(len1 + len3 + 1);
+	if (!command_line_tmp)
+			errExit("malloc");
+	*window_title = malloc(len1 + len3 + 1);
+	if (!*window_title)
+			errExit("malloc");
+
+	// run default quote_cmdline
+	quote_cmdline(command_line_tmp, *window_title, len1, argc, argv, index);
+
+	assert(command_line_tmp);
+	assert(*window_title);
+
+	// 'fix' command_line now
+	if (asprintf(command_line, "'%s' %s", tmp1, command_line_tmp + len2) == -1)
+		errExit("asprintf");
+
+	// free strdup
+	free(tmp1);
+}

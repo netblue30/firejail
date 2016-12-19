@@ -683,6 +683,7 @@ long unsigned int appimage2_size(const char *fname);
 
 // cmdline.c
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
+void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, char *apprun_path);
 
 // sbox.c
 // programs

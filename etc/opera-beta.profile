@@ -16,10 +16,10 @@ mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
+# lastpass, keepass
+# for keepass we additionally need to whitelist our .kdbx password database
+whitelist ~/.keepass
+whitelist ~/.config/keepass
+whitelist ~/.config/KeePass
 whitelist ~/.lastpass
 whitelist ~/.config/lastpass
-

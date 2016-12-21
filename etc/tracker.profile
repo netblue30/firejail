@@ -12,11 +12,14 @@ nogroups
 nonewprivs
 noroot
 nosound
+no3d
 protocol unix
 seccomp
 netfilter
 shell none
 tracelog
+
+blacklist /tmp/.X11-unix
 
 # private-bin tracker
 # private-tmp

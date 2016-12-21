@@ -12,5 +12,8 @@ caps.drop all
 netfilter
 nonewprivs
 noroot
+no3d
 protocol unix,inet,inet6
 seccomp
+
+blacklist /tmp/.X11-unix

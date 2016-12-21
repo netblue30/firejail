@@ -14,6 +14,8 @@ shell none
 seccomp
 protocol unix,inet,inet6
 
+# blacklist /tmp/.X11-unix
+
 # private-bin 
 private-dev
 private-tmp

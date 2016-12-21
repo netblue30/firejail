@@ -7,5 +7,6 @@ net none
 nosound
 shell none
 tracelog
-
 private-dev
+no3d
+blacklist /tmp/.X11-unix

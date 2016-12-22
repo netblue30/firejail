@@ -95,9 +95,10 @@ static char *resolve_downloads(void) {
 					if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
 						errExit("asprintf");
 					
-					if (stat(fname, &s) == -1)
+					if (stat(fname, &s) == -1) {
 						free(fname);
 						goto errout;
+					}
 				
 					char *rv;
 					if (asprintf(&rv, "whitelist ~/%s", ptr + 24) == -1)

@@ -33,7 +33,8 @@ sleep 1
 send -- "ls -l /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"13"
+	"13" {puts "OK\n"}
+	"12" {puts "OK\n"}
 }
 after 100
 send -- "exit\r"

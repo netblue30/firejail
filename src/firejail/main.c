@@ -1521,38 +1521,38 @@ int main(int argc, char **argv) {
 			}
 			
 			// extract private etc list
-			cfg.etc_private_keep = argv[i] + 14;
-			if (*cfg.etc_private_keep == '\0') {
+			if (*(argv[i] + 14) == '\0') {
 				fprintf(stderr, "Error: invalid private-etc option\n");
 				exit(1);
 			}
+			cfg.etc_private_keep = argv[i] + 14;
 			arg_private_etc = 1;
 		}
 		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
 			// extract private opt list
-			cfg.opt_private_keep = argv[i] + 14;
-			if (*cfg.opt_private_keep == '\0') {
+			if (*(argv[i] + 14) == '\0') {
 				fprintf(stderr, "Error: invalid private-opt option\n");
 				exit(1);
 			}
+			cfg.opt_private_keep = argv[i] + 14;
 			arg_private_opt = 1;
 		}
 		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
 			// extract private srv list
-			cfg.srv_private_keep = argv[i] + 14;
-			if (*cfg.srv_private_keep == '\0') {
+			if (*(argv[i] + 14) == '\0') {
 				fprintf(stderr, "Error: invalid private-etc option\n");
 				exit(1);
 			}
+			cfg.srv_private_keep = argv[i] + 14;
 			arg_private_srv = 1;
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			// extract private bin list
-			cfg.bin_private_keep = argv[i] + 14;
-			if (*cfg.bin_private_keep == '\0') {
+			if (*(argv[i] + 14) == '\0') {
 				fprintf(stderr, "Error: invalid private-bin option\n");
 				exit(1);
 			}
+			cfg.bin_private_keep = argv[i] + 14;
 			arg_private_bin = 1;
 		}
 		else if (strcmp(argv[i], "--private-tmp") == 0) {

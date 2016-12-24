@@ -97,6 +97,11 @@ valoq (https://github.com/valoq)
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
 	- disable gnupg and systemd directories under /run/user
+eventyrer (https://github.com/eventyrer)
+	- update gnome-mplayer.profile
+thewisenerd (https://github.com/thewisenerd)
+	- allow multiple private-home commands
+	- use $SHELL variable if the shell is not specified
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 thewisenerd (https://github.com/thewisenerd)

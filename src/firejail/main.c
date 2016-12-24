@@ -1500,6 +1500,10 @@ int main(int argc, char **argv) {
 				}
 				
 				// extract private home dirname
+				if (*(argv[i] + 15) == '\0') {
+					fprintf(stderr, "Error: invalid private-home option\n");
+					exit(1);
+				}
 				cfg.home_private_keep = argv[i] + 15;
 				arg_private = 1;
 			}

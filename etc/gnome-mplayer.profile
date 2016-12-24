@@ -12,6 +12,6 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin gnome-mplayer
+private-bin gnome-mplayer,mplayer
 private-dev
 private-tmp

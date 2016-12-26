@@ -1,5 +1,8 @@
 # gnome-music profile
 noblacklist ~/.local/share/gnome-music
+noblacklist /mnt
+noblacklist /media
+noblackist /run/media
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

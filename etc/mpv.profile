@@ -1,5 +1,8 @@
 # mpv media player profile
 noblacklist ${HOME}/.config/mpv
+noblacklist /mnt
+noblacklist /media
+noblackist /run/media
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

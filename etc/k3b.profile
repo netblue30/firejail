@@ -1,4 +1,8 @@
 # k3b profile
+noblacklist /mnt
+noblacklist /media
+noblackist /run/media
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -14,8 +18,7 @@ shell none
 seccomp
 protocol unix
 
-# private-bin 
+# private-bin
 # private-dev
 # private-tmp
 # private-etc
-

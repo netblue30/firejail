@@ -4,6 +4,9 @@
 
 #No Blacklist Paths
 noblacklist ${HOME}/.local/share/lollypop
+noblacklist /mnt
+noblacklist /media
+noblackist /run/media
 
 #Blacklist Paths
 include /etc/firejail/disable-common.inc

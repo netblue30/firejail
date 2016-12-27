@@ -81,6 +81,7 @@ read-only ${HOME}/.profile
 read-only ${HOME}/.antigen
 read-only ${HOME}/.bash_login
 read-only ${HOME}/.bashrc
+read-only ${HOME}/.bash_aliases
 read-only ${HOME}/.bash_profile
 read-only ${HOME}/.bash_logout
 read-only ${HOME}/.zsh.d

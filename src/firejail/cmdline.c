@@ -163,7 +163,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 	// the program should exit with an error before entering this function
 	assert(index != -1);
 
-	unsigned argcount = argc - index;
+//	unsigned argcount = argc - index;
 
 	int len1 = cmdline_length(argc, argv, index);  // length of argv w/o changes
 	int len2 = cmdline_length(1, &argv[index], 0); // apptest.AppImage

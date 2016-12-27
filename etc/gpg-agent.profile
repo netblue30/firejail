@@ -14,8 +14,11 @@ nosound
 protocol unix
 seccomp
 netfilter
+no3d
 shell none
 tracelog
+
+blacklist /tmp/.X11-unix
 
 # private-bin gpg-agent,gpg
 private-tmp

@@ -17,8 +17,11 @@ protocol unix
 seccomp
 netfilter
 net none
+no3d
 shell none
 tracelog
+
+blacklist /tmp/.X11-unix
 
 # private-bin exiftool,perl
 private-tmp

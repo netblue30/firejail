@@ -11,11 +11,14 @@ nogroups
 nonewprivs
 noroot
 nosound
+no3d
 protocol unix,inet,inet6
 seccomp
 netfilter
 shell none
 tracelog
+
+blacklist /tmp/.X11-unix
 
 # private-bin elinks
 private-tmp

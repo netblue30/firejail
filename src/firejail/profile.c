@@ -179,7 +179,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strncmp(ptr, "private-home ", 13) == 0) {
 #ifdef HAVE_PRIVATE_HOME
 		if (checkcfg(CFG_PRIVATE_HOME)) {
-			cfg.home_private_keep = ptr + 13;
+			if (cfg.home_private_keep) {
+				if ( asprintf(&cfg.home_private_keep, "%s,%s", cfg.home_private_keep, ptr + 13) < 0 )
+					errExit("asprintf");
+			} else
+				cfg.home_private_keep = ptr + 13;
 			arg_private = 1;
 		}
 		else
@@ -748,7 +752,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
 			exit(1);
 		}
-		cfg.etc_private_keep = ptr + 12;
+		if (cfg.etc_private_keep) {
+			if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, ptr + 12) < 0 )
+				errExit("asprintf");
+		} else {
+			cfg.etc_private_keep = ptr + 12;
+		}
 		arg_private_etc = 1;
 		
 		return 0;
@@ -756,7 +765,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// private /opt list of files and directories
 	if (strncmp(ptr, "private-opt ", 12) == 0) {
-		cfg.opt_private_keep = ptr + 12;
+		if (cfg.opt_private_keep) {
+			if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, ptr + 12) < 0 )
+				errExit("asprintf");
+		} else {
+			cfg.opt_private_keep = ptr + 12;
+		}
 		arg_private_opt = 1;
 		
 		return 0;
@@ -764,7 +778,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// private /srv list of files and directories
 	if (strncmp(ptr, "private-srv ", 12) == 0) {
-		cfg.srv_private_keep = ptr + 12;
+		if (cfg.srv_private_keep) {
+			if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, ptr + 12) < 0 )
+				errExit("asprintf");
+		} else {
+			cfg.srv_private_keep = ptr + 12;
+		}
 		arg_private_srv = 1;
 		
 		return 0;
@@ -772,7 +791,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// private /bin list of files
 	if (strncmp(ptr, "private-bin ", 12) == 0) {
-		cfg.bin_private_keep = ptr + 12;
+		if (cfg.bin_private_keep) {
+			if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, ptr + 12) < 0 )
+				errExit("asprintf");
+		} else {
+			cfg.bin_private_keep = ptr + 12;
+		}
 		arg_private_bin = 1;
 		return 0;
 	}

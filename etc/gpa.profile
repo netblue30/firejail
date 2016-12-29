@@ -18,6 +18,4 @@ shell none
 tracelog
 
 # private-bin gpa,gpg
-private-tmp
 private-dev
-# private-etc none

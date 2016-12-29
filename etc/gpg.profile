@@ -11,10 +11,9 @@ nogroups
 nonewprivs
 noroot
 nosound
-protocol unix
+protocol unix,inet,inet6
 seccomp
 netfilter
-net none
 no3d
 shell none
 tracelog
@@ -22,6 +21,4 @@ tracelog
 blacklist /tmp/.X11-unix
 
 # private-bin gpg,gpg-agent
-private-tmp
 private-dev
-# private-etc none

@@ -240,3 +240,5 @@
 /etc/firejail/xonotic.profile
 /etc/firejail/VirtualBox.profile
 /etc/firejail/qupzilla.profile
+/etc/firejail/FossaMail.profile
+/etc/firejail/fossamail.profile

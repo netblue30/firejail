@@ -133,7 +133,15 @@ void pulseaudio_init(void) {
 				{;} // do nothing
 		}
 	}
+	else {
+		// make sure the directory is owned by the user
+		if (s.st_uid != getuid()) {
+			fprintf(stderr, "Error: user .config directory is not owned by the current user\n");
+			exit(1);
+		}
+	}
 	free(dir1);
+	
 	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
@@ -142,6 +150,13 @@ void pulseaudio_init(void) {
 		if (rv == 0) {
 			if (set_perms(dir1, getuid(), getgid(), 0700))
 				{;} // do nothing
+		}
+	}
+	else {
+		// make sure the directory is owned by the user
+		if (s.st_uid != getuid()) {
+			fprintf(stderr, "Error: user .config/pulse directory is not owned by the current user\n");
+			exit(1);
 		}
 	}
 	free(dir1);

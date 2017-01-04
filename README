@@ -97,6 +97,8 @@ valoq (https://github.com/valoq)
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
 	- disable gnupg and systemd directories under /run/user
+Pixel Fairy (https://github.com/xahare)
+	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
 pshpsh (https://github.com/pshpsh)
 	- added FossaMail profile
 eventyrer (https://github.com/eventyrer)
@@ -109,7 +111,7 @@ SYN-cook (https://github.com/SYN-cook)
 thewisenerd (https://github.com/thewisenerd)
 	- appimage: pass commandline arguments
 KOLANICH (https://github.com/KOLANICH)
-	- added symlink fixer
+	- added symlink fixer fix_private-bin.py in contrib section
 Jesse Smith (https://github.com/slicer69)
 	- added QupZilla profile
 Lari Rauno (https://github.com/tuutti)

@@ -17,6 +17,7 @@ firejail (0.9.45) baseline; urgency=low
   * feature: pass command line arguments to appimages
   * feature: --allow-private-blacklist option
   * feature: allow non-seccomp setup for OverlayFS sandboxes
+  * feature: added a number o Python scripts for handling sandboxes
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,

@@ -91,9 +91,10 @@ realinstall:
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
-	for file in contrib/*; do \
-		install -c -m 0755 $$file $(DESTDIR)/$(libdir)/firejail/.; \
-	done
+	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/fjclip.py $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/fjdisplay.py $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/fjresize.py $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.
@@ -161,7 +162,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
-DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
+DISTFILES = "src etc platform contrib configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
 DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
 dist:

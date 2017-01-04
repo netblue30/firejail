@@ -177,14 +177,14 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 	// open source
 	int src = open(srcname, O_RDONLY);
 	if (src < 0) {
-		fprintf(stderr, "Warning: cannot open %s, file not copied\n", srcname);
+		fprintf(stderr, "Warning: cannot open source file %s, file not copied\n", srcname);
 		return -1;
 	}
 
 	// open destination
 	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {
-		fprintf(stderr, "Warning: cannot open %s, file not copied\n", destname);
+		fprintf(stderr, "Warning: cannot open destination file %s, file not copied\n", destname);
 		close(src);
 		return -1;
 	}

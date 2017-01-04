@@ -127,11 +127,25 @@ void pulseaudio_init(void) {
 	if (asprintf(&dir1, "%s/.config", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
-		int rv = mkdir(dir1, 0755);
-		if (rv == 0) {
-			if (set_perms(dir1, getuid(), getgid(), 0755))
-				{;} // do nothing
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+	
+			int rv = mkdir(dir1, 0755);
+			if (rv == 0) {
+				if (set_perms(dir1, getuid(), getgid(), 0755))
+					{;} // do nothing
+			}
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
 		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
 	}
 	else {
 		// make sure the directory is owned by the user
@@ -145,12 +159,25 @@ void pulseaudio_init(void) {
 	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
-		/* coverity[toctou] */
-		int rv = mkdir(dir1, 0700);
-		if (rv == 0) {
-			if (set_perms(dir1, getuid(), getgid(), 0700))
-				{;} // do nothing
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+	
+			int rv = mkdir(dir1, 0700);
+			if (rv == 0) {
+				if (set_perms(dir1, getuid(), getgid(), 0700))
+					{;} // do nothing
+			}
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
 		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
 	}
 	else {
 		// make sure the directory is owned by the user

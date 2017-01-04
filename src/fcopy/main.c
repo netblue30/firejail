@@ -41,7 +41,7 @@ static void copy_file(const char *srcname, const char *destname, mode_t mode, ui
 	// open source
 	int src = open(srcname, O_RDONLY);
 	if (src < 0) {
-		fprintf(stderr, "Warning: cannot open %s, file not copied\n", srcname);
+		fprintf(stderr, "Warning fcopy: cannot open %s, file not copied\n", srcname);
 		return;
 	}
 

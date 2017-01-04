@@ -91,6 +91,9 @@ realinstall:
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
+	for file in contrib/*; do \
+		install -c -m 0755 $$file $(DESTDIR)/$(libdir)/firejail/.; \
+	done
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.

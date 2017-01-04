@@ -1,3 +1,8 @@
+firejail (0.9.44.3) baseline; urgency=low
+  * development version
+  * security: root exploit found by Sebastian Krahmer
+ -- netblue30 <netblue30@yahoo.com>  Wed, 4 Jan 2017 11:00:00 -0500
+
 firejail (0.9.44.2) baseline; urgency=low
   * security: overwrite /etc/resolv.conf found by Martin Carpenter
   * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson

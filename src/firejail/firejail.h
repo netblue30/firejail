@@ -463,6 +463,7 @@ void invalid_filename(const char *fname);
 uid_t get_group_id(const char *group);
 int remove_directory(const char *path);
 void flush_stdin(void);
+int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

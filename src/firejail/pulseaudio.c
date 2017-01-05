@@ -1,4 +1,4 @@
-/*
+    /*
  * Copyright (C) 2014-2016 Firejail Authors
  *
  * This file is part of firejail project
@@ -22,6 +22,7 @@
 #include <sys/stat.h>
 #include <sys/mount.h>
 #include <dirent.h>
+#include <sys/wait.h>
 
 static void disable_file(const char *path, const char *file) {
 	assert(file);
@@ -125,18 +126,28 @@ void pulseaudio_init(void) {
 	SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);
 	fclose(fp);
 
+
 	// create ~/.config/pulse directory if not present
 	char *dir1;
 	if (asprintf(&dir1, "%s/.config", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
-		int rv = mkdir(dir1, 0755);
-		if (rv == 0) {
-			rv = chown(dir1, getuid(), getgid());
-			(void) rv;
-			rv = chmod(dir1, 0755);
-			(void) rv;
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+	
+			int rv = mkdir(dir1, 0755);
+			if (rv == 0) {
+				if (set_perms(dir1, getuid(), getgid(), 0755))
+					{;} // do nothing
+			}
+			_exit(0);
 		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
 	}
 	else {
 		// make sure the directory is owned by the user
@@ -146,17 +157,26 @@ void pulseaudio_init(void) {
 		}
 	}
 	free(dir1);
-
+	
 	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
-		int rv = mkdir(dir1, 0700);
-		if (rv == 0) {
-			rv = chown(dir1, getuid(), getgid());
-			(void) rv;
-			rv = chmod(dir1, 0700);
-			(void) rv;
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+	
+			int rv = mkdir(dir1, 0700);
+			if (rv == 0) {
+				if (set_perms(dir1, getuid(), getgid(), 0700))
+					{;} // do nothing
+			}
+			_exit(0);
 		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
 	}
 	else {
 		// make sure the directory is owned by the user
@@ -166,7 +186,6 @@ void pulseaudio_init(void) {
 		}
 	}
 	free(dir1);
-	
 	
 	// if we have ~/.config/pulse mount the new directory, else set environment variable
 	char *homeusercfg;

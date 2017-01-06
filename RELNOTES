@@ -1,5 +1,8 @@
 firejail (0.9.45) baseline; urgency=low
   * development version, work in progress
+  * security: disabled --allow-debuggers when running on kenel
+    versions prior to 4.8; a kernel bug in ptrace system call
+    allows a full bypass of seccomp filter; problem reported by Lizzie Dixon
   * security: overwrite /etc/resolv.conf found by Martin Carpenter
   * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
   * security: invalid environment exploit found by Martin Carpenter

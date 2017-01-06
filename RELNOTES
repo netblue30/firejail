@@ -1,5 +1,8 @@
 firejail (0.9.44.3) baseline; urgency=low
   * development version
+  * security: disabled --allow-debuggers when running on kernel
+    versions prior to 4.8; a kernel bug in ptrace system call
+    allows a full bypass of seccomp filter; problem reported by Lizzie Dixon
   * security: root exploit found by Sebastian Krahmer
  -- netblue30 <netblue30@yahoo.com>  Wed, 4 Jan 2017 11:00:00 -0500
 

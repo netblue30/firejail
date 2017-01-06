@@ -64,6 +64,52 @@
 #define DEFAULT_ROOT_PROFILE	"server"
 #define MAX_INCLUDE_LEVEL 6		// include levels in profile files
 
+#define ASSERT_PERMS(file, uid, gid, mode) \
+	do { \
+		assert(file);\
+		struct stat s;\
+		if (stat(file, &s) == -1) errExit("stat");\
+		assert(s.st_uid == uid);\
+		assert(s.st_gid == gid);\
+		assert((s.st_mode & 07777) == (mode));\
+	} while (0)
+#define ASSERT_PERMS_FD(fd, uid, gid, mode) \
+	do { \
+		struct stat s;\
+		if (stat(fd, &s) == -1) errExit("stat");\
+		assert(s.st_uid == uid);\
+		assert(s.st_gid == gid);\
+		assert((s.st_mode & 07777) == (mode));\
+	} while (0)
+#define ASSERT_PERMS_STREAM(file, uid, gid, mode) \
+	do { \
+		int fd = fileno(file);\
+		if (fd == -1) errExit("fileno");\
+		ASSERT_PERMS_FD(fd, uid, gid, (mode));\
+	} while (0)
+
+#define SET_PERMS_FD(fd, uid, gid, mode) \
+	do { \
+		if (fchmod(fd, (mode)) == -1)	errExit("chmod");\
+		if (fchown(fd, uid, gid) == -1) errExit("chown");\
+	} while (0)
+#define SET_PERMS_STREAM(stream, uid, gid, mode) \
+	do { \
+		int fd = fileno(stream);\
+		if (fd == -1) errExit("fileno");\
+		SET_PERMS_FD(fd, uid, gid, (mode));\
+	} while (0)
+#define SET_PERMS_STREAM_NOERR(stream, uid, gid, mode) \
+	do { \
+		int fd = fileno(stream);\
+		if (fd == -1) continue;\
+		int rv = fchmod(fd, (mode));\
+		(void) rv;\
+		rv = fchown(fd, uid, gid);\
+		(void) rv;\
+	} while (0)
+
+
 // main.c
 typedef struct bridge_t {
 	// on the host

@@ -132,6 +132,29 @@ firejail (0.9.40) baseline; urgency=low
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 29 May 2016 08:00:00 -0500
 
+firejail (0.9.38.8) baseline; urgency=low
+  * security: root exploit found by Sebastian Krahmer (CVE-2017-5180)
+ -- netblue30 <netblue30@yahoo.com>  Sat, 7 Jan 2017 10:00:00 -0500
+
+firejail (0.9.38.6) baseline; urgency=low
+  * security: overwrite /etc/resolv.conf found by Martin Carpenter (CVE-2016-10118)
+  * bugfix: crashing VLC by pressing Ctrl-O
+ -- netblue30 <netblue30@yahoo.com>  Fri, 16 Dec 2016 10:00:00 -0500
+
+firejail (0.9.38.4) baseline; urgency=low
+  * CVE-2016-7545 submitted by Aleksey Manevich
+  * bugfixes 
+ -- netblue30 <netblue30@yahoo.com>  Mon, 10 Oct 2016 10:00:00 -0500
+
+firejail (0.9.38.2) baseline; urgency=low
+  * security: --whitelist deleted files, submitted by Vasya Novikov
+  * security: disable x32 ABI, submitted by Jann Horn
+  * security: tighten --chroot, submitted by Jann Horn
+  * security: terminal sandbox escape, submitted by Stephan Sokolow
+  * feature: clean local overlay storage directory (--overlay-clean)
+  * bugfixes
+ -- netblue30 <netblue30@yahoo.com>  Tue, 23 Aug 2016 10:00:00 -0500
+
 firejail (0.9.38) baseline; urgency=low
   * IPv6 support (--ip6 and --netfilter6)
   * --join command enhancement (--join-network, --join-filesystem)

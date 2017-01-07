@@ -82,12 +82,12 @@ echo "TESTING: nice (test/environment/nice.exp)"
 echo "TESTING: quiet (test/environment/quiet.exp)"
 ./quiet.exp
 
-which strace
-if [ "$?" -eq 0 ];
-then
-        echo "TESTING: --allow-debuggers (test/environment/allow-debuggers.exp)"
-        ./allow-debuggers.exp
-else
-        echo "TESTING SKIP: strace not found"
-fi
+#which strace
+#if [ "$?" -eq 0 ];
+#then
+#        echo "TESTING: --allow-debuggers (test/environment/allow-debuggers.exp)"
+#        ./allow-debuggers.exp
+#else
+#        echo "TESTING SKIP: strace not found"
+#fi
 

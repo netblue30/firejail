@@ -1,5 +1,6 @@
 firejail (0.9.44.3) baseline; urgency=low
   * development version
+  * security: --bandwidth root shell found by Martin Carpenter
   * security: disabled --allow-debuggers when running on kernel
     versions prior to 4.8; a kernel bug in ptrace system call
     allows a full bypass of seccomp filter; problem reported by Lizzie Dixon

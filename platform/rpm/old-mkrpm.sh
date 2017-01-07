@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.44.2"
+VERSION="0.9.44.4"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -458,6 +458,9 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Sat Jan 7 2017 netblue30 <netblue30@yahoo.com> 0.9.44.4-1
+  - security release
+
 * Sat Dec 3 2016 netblue30 <netblue30@yahoo.com> 0.9.44.2-1
   - bugfix release
 

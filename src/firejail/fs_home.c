@@ -43,18 +43,12 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0)
 			return;
 		if (stat("/etc/skel/.zshrc", &s) == 0) {
-			if (copy_file("/etc/skel/.zshrc", fname, u, g, 0644) == 0) {
-				fs_logger("clone /etc/skel/.zshrc");
-			}
+			copy_file("/etc/skel/.zshrc", fname, u, g, 0644);
+			fs_logger("clone /etc/skel/.zshrc");
 		}
-		else { // 
-			FILE *fp = fopen(fname, "w");
-			if (fp) {
-				fprintf(fp, "\n");
-				SET_PERMS_STREAM(fp, u, g, S_IRUSR | S_IWUSR);
-				fclose(fp);
-				fs_logger2("touch", fname);
-			}
+		else {
+			touch_file_as_user(fname, u, g, 0644);
+			fs_logger2("touch", fname);
 		}
 		free(fname);
 	}
@@ -68,19 +62,12 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0)
 			return;
 		if (stat("/etc/skel/.cshrc", &s) == 0) {
-			if (copy_file("/etc/skel/.cshrc", fname, u, g, 0644) == 0) {
-				fs_logger("clone /etc/skel/.cshrc");
-			}
+			copy_file("/etc/skel/.cshrc", fname, u, g, 0644);
+			fs_logger("clone /etc/skel/.cshrc");
 		}
-		else { // 
-			/* coverity[toctou] */
-			FILE *fp = fopen(fname, "w");
-			if (fp) {
-				fprintf(fp, "\n");
-				SET_PERMS_STREAM(fp, u, g, S_IRUSR | S_IWUSR);
-				fclose(fp);
-				fs_logger2("touch", fname);
-			}
+		else {
+			touch_file_as_user(fname, u, g, 0644);
+			fs_logger2("touch", fname);
 		}
 		free(fname);
 	}
@@ -94,9 +81,8 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat(fname, &s) == 0) 
 			return;
 		if (stat("/etc/skel/.bashrc", &s) == 0) {
-			if (copy_file("/etc/skel/.bashrc", fname, u, g, 0644) == 0) {
-				fs_logger("clone /etc/skel/.bashrc");
-			}
+			copy_file("/etc/skel/.bashrc", fname, u, g, 0644);
+			fs_logger("clone /etc/skel/.bashrc");
 		}
 		free(fname);
 	}
@@ -126,24 +112,8 @@ static int store_xauthority(void) {
 			return 0;
 		}
 
-		pid_t child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			// drop privileges
-			drop_privs(0);
-	
-			// copy, set permissions and ownership
-			int rv = copy_file(src, dest, getuid(), getgid(), 0600);
-			if (rv)
-				fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
-			else {
-				fs_logger2("clone", dest);
-			}
-			_exit(0);
-		}
-		// wait for the child to finish
-		waitpid(child, NULL, 0);
+		copy_file_as_user(src, dest, getuid(), getgid(), 0600);
+		fs_logger2("clone", dest);
 		return 1; // file copied
 	}
 	
@@ -184,24 +154,8 @@ static int store_asoundrc(void) {
 			free(rp);
 		}
 
-		pid_t child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			// drop privileges
-			drop_privs(0);
-	
-			// copy, set permissions and ownership
-			int rv = copy_file(src, dest, getuid(), getgid(), 0644);
-			if (rv)
-				fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
-			else {
-				fs_logger2("clone", dest);
-			}
-			_exit(0);
-		}
-		// wait for the child to finish
-		waitpid(child, NULL, 0);
+		copy_file_as_user(src, dest, getuid(), getgid(), 0644);
+		fs_logger2("clone", dest);
 		return 1; // file copied
 	}
 	
@@ -221,24 +175,8 @@ static void copy_xauthority(void) {
 		exit(1);
 	}
 
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// drop privileges
-		drop_privs(0);
-
-		// copy, set permissions and ownership
-		int rv = copy_file(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
-		if (rv)
-			fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
-		else {
-			fs_logger2("clone", dest);
-		}
-		_exit(0);
-	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
+	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
+	fs_logger2("clone", dest);
 	
 	// delete the temporary file
 	unlink(src);
@@ -257,24 +195,8 @@ static void copy_asoundrc(void) {
 		exit(1);
 	}
 
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// drop privileges
-		drop_privs(0);
-
-		// copy, set permissions and ownership
-		int rv = copy_file(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
-		if (rv)
-			fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
-		else {
-			fs_logger2("clone", dest);
-		}
-		_exit(0);
-	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
+	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
+	fs_logger2("clone", dest);
 
 	// delete the temporary file
 	unlink(src);

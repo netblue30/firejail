@@ -101,6 +101,9 @@ read-only ${HOME}/.caffrc
 read-only ${HOME}/.dotfiles
 read-only ${HOME}/dotfiles
 read-only ${HOME}/.mailcap
+read-only ${HOME}/.muttrc
+read-only ${HOME}/.mutt/muttrc
+read-only ${HOME}/.msmtprc
 read-only ${HOME}/.exrc
 read-only ${HOME}/_exrc
 read-only ${HOME}/.vimrc

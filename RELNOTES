@@ -1,3 +1,7 @@
+firejail (0.9.44.5) baseline; urgency=low
+  * development
+ -- netblue30 <netblue30@yahoo.com>  Mon, 9 Jan 2017 10:00:00 -0500
+
 firejail (0.9.44.4) baseline; urgency=low
   * security: --bandwidth root shell found by Martin Carpenter (CVE-2017-5207)
   * security: disabled --allow-debuggers when running on kernel

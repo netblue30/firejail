@@ -6,6 +6,9 @@ noblacklist ~/.pki
 noblacklist ~/.pki/nssdb
 noblacklist ~/.gnupg
 
+noblacklist /var/spool/mail
+noblacklist /var/mail
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

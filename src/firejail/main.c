@@ -1630,13 +1630,10 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: invalid chroot directory\n");
 					exit(1);
 				}
-				free(rpath);
+				cfg.chrootdir = rpath;
 				
 				// check chroot directory structure
-				if (fs_check_chroot_dir(cfg.chrootdir)) {
-					fprintf(stderr, "Error: invalid chroot\n");
-					exit(1);
-				}
+				fs_check_chroot_dir(cfg.chrootdir);
 			}
 			else {
 				fprintf(stderr, "Error: --chroot feature is disabled in Firejail configuration file\n");

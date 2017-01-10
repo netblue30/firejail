@@ -230,7 +230,7 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 		drop_privs(0);
 
 		// copy, set permissions and ownership
-		int rv = copy_file(srcname, destname, uid, gid, mode);
+		int rv = copy_file(srcname, destname, uid, gid, mode); // already a regular user
 		if (rv)
 			fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
 		_exit(0);

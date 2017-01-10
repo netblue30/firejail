@@ -356,7 +356,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			drop_privs(0);
 			
 			// copy the file
-			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600))
+			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
 			_exit(0);
 		}
@@ -379,7 +379,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			drop_privs(0);
 			
 			// copy the file
-			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600))
+			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600)) // aleady a regular user
 				_exit(1);
 			_exit(0);
 		}
@@ -422,7 +422,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			drop_privs(0);
 			
 			// copy the file
-			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600))
+			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600)) // already regular user
 				_exit(1);
 			_exit(0);
 		}
@@ -451,7 +451,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			drop_privs(0);
 			
 			// copy the file
-			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600))
+			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
 			_exit(0);
 		}

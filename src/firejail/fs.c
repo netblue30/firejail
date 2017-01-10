@@ -994,20 +994,25 @@ void fs_overlayfs(void) {
 
 #ifdef HAVE_CHROOT		
 // return 1 if error
-int fs_check_chroot_dir(const char *rootdir) {
+void fs_check_chroot_dir(const char *rootdir) {
 	EUID_ASSERT();
 	assert(rootdir);
 	struct stat s;
 	char *name;
 
+	if (strcmp(rootdir, "/tmp") == 0 || strcmp(rootdir, "/var/tmp") == 0) {
+		fprintf(stderr, "Error: invalid chroot directory\n");
+		exit(1);
+	}
+
 	// rootdir has to be owned by root
 	if (stat(rootdir, &s) != 0) {
 		fprintf(stderr, "Error: cannot find chroot directory\n");
-		return 1;
+		exit(1);
 	}
 	if (s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot directory should be owned by root\n");
-		return 1;
+		exit(1);
 	}
 
 	// check /dev
@@ -1015,7 +1020,11 @@ int fs_check_chroot_dir(const char *rootdir) {
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: cannot find /dev in chroot directory\n");
-		return 1;
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /dev directory should be owned by root\n");
+		exit(1);
 	}
 	free(name);
 
@@ -1024,7 +1033,11 @@ int fs_check_chroot_dir(const char *rootdir) {
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: cannot find /var/tmp in chroot directory\n");
-		return 1;
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /var/tmp directory should be owned by root\n");
+		exit(1);
 	}
 	free(name);
 	
@@ -1033,7 +1046,11 @@ int fs_check_chroot_dir(const char *rootdir) {
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: cannot find /proc in chroot directory\n");
-		return 1;
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /proc directory should be owned by root\n");
+		exit(1);
 	}
 	free(name);
 	
@@ -1042,18 +1059,41 @@ int fs_check_chroot_dir(const char *rootdir) {
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: cannot find /tmp in chroot directory\n");
-		return 1;
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /tmp directory should be owned by root\n");
+		exit(1);
 	}
 	free(name);
 
-	// check /bin/bash
-//	if (asprintf(&name, "%s/bin/bash", rootdir) == -1)
-//		errExit("asprintf");
-//	if (stat(name, &s) == -1) {
-//		fprintf(stderr, "Error: cannot find /bin/bash in chroot directory\n");
-//		return 1;
-//	}
-//	free(name);
+	// check /etc
+	if (asprintf(&name, "%s/etc", rootdir) == -1)
+		errExit("asprintf");
+	if (stat(name, &s) == -1) {
+		fprintf(stderr, "Error: cannot find /etc in chroot directory\n");
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /etc directory should be owned by root\n");
+		exit(1);
+	}
+	free(name);
+
+	// check /etc/resolv.conf
+	if (asprintf(&name, "%s/etc/resolv.conf", rootdir) == -1)
+		errExit("asprintf");
+	if (stat(name, &s) == 0) {
+		if (s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /etc/resolv.conf should be owned by root\n");
+			exit(1);
+		}
+	}
+	if (is_link(name)) {
+		fprintf(stderr, "Error: invalid %s file\n", name);
+		exit(1);
+	}
+	free(name);
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {
@@ -1063,12 +1103,14 @@ int fs_check_chroot_dir(const char *rootdir) {
 			errExit("asprintf");
 		if (stat(name, &s) == -1) {
 			fprintf(stderr, "Error: cannot find /tmp/.X11-unix in chroot directory\n");
-			return 1;
+			exit(1);
+		}
+		if (s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /tmp/.X11-unix directory should be owned by root\n");
+			exit(1);
 		}
 		free(name);
 	}
-	
-	return 0;	
 }
 
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf

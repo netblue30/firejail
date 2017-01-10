@@ -403,7 +403,7 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
 void fs_overlayfs(void);
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir);
-int fs_check_chroot_dir(const char *rootdir);
+void fs_check_chroot_dir(const char *rootdir);
 
 // profile.c
 // find and read the profile specified by name from dir directory

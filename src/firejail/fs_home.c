@@ -47,7 +47,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			exit(1);
 		}
 		if (stat("/etc/skel/.zshrc", &s) == 0) {
-			copy_file_as_user("/etc/skel/.zshrc", fname, u, g, 0644);
+			copy_file_as_user("/etc/skel/.zshrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.zshrc");
 		}
 		else {
@@ -71,7 +71,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			exit(1);
 		}
 		if (stat("/etc/skel/.cshrc", &s) == 0) {
-			copy_file_as_user("/etc/skel/.cshrc", fname, u, g, 0644);
+			copy_file_as_user("/etc/skel/.cshrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.cshrc");
 		}
 		else {
@@ -94,7 +94,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			exit(1);
 		}
 		if (stat("/etc/skel/.bashrc", &s) == 0) {
-			copy_file_as_user("/etc/skel/.bashrc", fname, u, g, 0644);
+			copy_file_as_user("/etc/skel/.bashrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.bashrc");
 		}
 		free(fname);
@@ -123,7 +123,7 @@ static int store_xauthority(void) {
 			return 0;
 		}
 
-		copy_file_as_user(src, dest, getuid(), getgid(), 0600);
+		copy_file_as_user(src, dest, getuid(), getgid(), 0600); // regular user
 		fs_logger2("clone", dest);
 		return 1; // file copied
 	}
@@ -163,7 +163,7 @@ static int store_asoundrc(void) {
 			free(rp);
 		}
 
-		copy_file_as_user(src, dest, getuid(), getgid(), 0644);
+		copy_file_as_user(src, dest, getuid(), getgid(), 0644); // regular user
 		fs_logger2("clone", dest);
 		return 1; // file copied
 	}
@@ -184,7 +184,7 @@ static void copy_xauthority(void) {
 		exit(1);
 	}
 
-	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
+	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
 	fs_logger2("clone", dest);
 	
 	// delete the temporary file
@@ -204,7 +204,7 @@ static void copy_asoundrc(void) {
 		exit(1);
 	}
 
-	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
+	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
 	fs_logger2("clone", dest);
 
 	// delete the temporary file

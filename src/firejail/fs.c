@@ -1129,7 +1129,7 @@ void fs_chroot(const char *rootdir) {
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);
 		}
-		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1)
+		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
 			fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
 	}
 	

@@ -1189,6 +1189,21 @@ void fs_check_chroot_dir(const char *rootdir) {
 	}
 	free(name);
 
+	// check /etc/resolv.conf
+	if (asprintf(&name, "%s/etc/resolv.conf", rootdir) == -1)
+		errExit("asprintf");
+	if (stat(name, &s) == 0) {
+		if (s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /etc/resolv.conf should be owned by root\n");
+			exit(1);
+		}
+	}
+	if (is_link(name)) {
+		fprintf(stderr, "Error: invalid %s file\n", name);
+		exit(1);
+	}
+	free(name);
+
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {
 		mask_x11_abstract_socket = 1;
@@ -1200,7 +1215,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 			exit(1);
 		}
 		if (s.st_uid != 0) {
-			fprintf(stderr, "Error: chroot /etc directory should be owned by root\n");
+			fprintf(stderr, "Error: chroot /tmp/.X11-unix directory should be owned by root\n");
 			exit(1);
 		}
 		free(name);

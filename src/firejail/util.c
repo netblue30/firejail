@@ -28,6 +28,7 @@
 #include <grp.h>
 #include <sys/ioctl.h>
 #include <termios.h>
+#include <sys/wait.h>
 
 #define MAX_GROUPS 1024
 // drop privileges
@@ -218,6 +219,51 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 	return 0;
 }
 
+// return -1 if error, 0 if no error
+void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		// copy, set permissions and ownership
+		int rv = copy_file(srcname, destname, uid, gid, mode);
+		if (rv)
+			fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+}
+
+// return -1 if error, 0 if no error
+void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		FILE *fp = fopen(fname, "w");
+		if (fp) {
+			fprintf(fp, "\n");
+			SET_PERMS_STREAM(fp, uid, gid, mode);
+			fclose(fp);
+		}
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+}
 
 // return 1 if the file is a directory
 int is_dir(const char *fname) {

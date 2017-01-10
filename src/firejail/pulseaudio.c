@@ -22,6 +22,7 @@
 #include <sys/stat.h>
 #include <sys/mount.h>
 #include <dirent.h>
+#include <sys/wait.h>
 
 static void disable_file(const char *path, const char *file) {
 	assert(file);

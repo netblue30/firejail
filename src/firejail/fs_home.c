@@ -42,8 +42,12 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		// don't copy it if we already have the file
 		if (stat(fname, &s) == 0)
 			return;
+		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+			fprintf(stderr, "Error: invalid %s file\n", fname);
+			exit(1);
+		}
 		if (stat("/etc/skel/.zshrc", &s) == 0) {
-			copy_file("/etc/skel/.zshrc", fname, u, g, 0644);
+			copy_file_as_user("/etc/skel/.zshrc", fname, u, g, 0644);
 			fs_logger("clone /etc/skel/.zshrc");
 		}
 		else {
@@ -61,8 +65,12 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		// don't copy it if we already have the file
 		if (stat(fname, &s) == 0)
 			return;
+		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+			fprintf(stderr, "Error: invalid %s file\n", fname);
+			exit(1);
+		}
 		if (stat("/etc/skel/.cshrc", &s) == 0) {
-			copy_file("/etc/skel/.cshrc", fname, u, g, 0644);
+			copy_file_as_user("/etc/skel/.cshrc", fname, u, g, 0644);
 			fs_logger("clone /etc/skel/.cshrc");
 		}
 		else {
@@ -80,8 +88,12 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		// don't copy it if we already have the file
 		if (stat(fname, &s) == 0) 
 			return;
+		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+			fprintf(stderr, "Error: invalid %s file\n", fname);
+			exit(1);
+		}
 		if (stat("/etc/skel/.bashrc", &s) == 0) {
-			copy_file("/etc/skel/.bashrc", fname, u, g, 0644);
+			copy_file_as_user("/etc/skel/.bashrc", fname, u, g, 0644);
 			fs_logger("clone /etc/skel/.bashrc");
 		}
 		free(fname);
@@ -94,7 +106,7 @@ static int store_xauthority(void) {
 
 	char *src;
 	char *dest = RUN_XAUTHORITY_FILE;
-	// create an empty file 
+	// create an empty file as root, and change ownership to user
 	FILE *fp = fopen(dest, "w");
 	if (fp) {
 		fprintf(fp, "\n");
@@ -126,7 +138,7 @@ static int store_asoundrc(void) {
 
 	char *src;
 	char *dest = RUN_ASOUNDRC_FILE;
-	// create an empty file 
+	// create an empty file as root, and change ownership to user
 	FILE *fp = fopen(dest, "w");
 	if (fp) {
 		fprintf(fp, "\n");

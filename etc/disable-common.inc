@@ -123,6 +123,11 @@ read-only ${HOME}/.gem
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
 
+# Make the contents of ~/.local read-only,
+#  except the commonly-used ~/.local/share
+read-only  ${HOME}/.local
+read-write ${HOME}/.local/share
+
 # top secret
 blacklist ${HOME}/.ecryptfs
 blacklist ${HOME}/.Private

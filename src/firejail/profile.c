@@ -1018,7 +1018,7 @@ void profile_read(const char *fname) {
 	FILE *fp = fopen(fname, "r");
 	if (fp == NULL) {
 		fprintf(stderr, "Error: cannot open profile file %s\n", fname);
-		exit(1);
+		return;
 	}
 
 	int msg_printed = 0;

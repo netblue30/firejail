@@ -97,6 +97,8 @@ valoq (https://github.com/valoq)
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
 	- disable gnupg and systemd directories under /run/user
+Jericho (https://github.com/attritionorg)
+	- spelling
 Pixel Fairy (https://github.com/xahare)
 	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
 pshpsh (https://github.com/pshpsh)
@@ -108,6 +110,7 @@ thewisenerd (https://github.com/thewisenerd)
 	- use $SHELL variable if the shell is not specified
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
+	- disable-common.inc fixes
 thewisenerd (https://github.com/thewisenerd)
 	- appimage: pass commandline arguments
 KOLANICH (https://github.com/KOLANICH)
@@ -217,6 +220,8 @@ KellerFuchs (https://github.com/KellerFuchs)
 	- nonewpriv support, extended profiles for this feature
 	- make `restricted-network` prevent use of netfilter
 	- disable-common.inc additions
+	- make mutt and msmtp's rc files read-only
+	- added support for .local profile files in /etc/firejail
 ValdikSS (https://github.com/ValdikSS)
 	- Psi+, Corebird, Konversation profiles
 	- various profile fixes
@@ -296,6 +301,7 @@ Ivan Kozik (https://github.com/ivan)
 	- speed up sandbox exit
 Christian Stadelmann (https://github.com/genodeftest)
 	- profile fixes
+	- evolution profile fix
 pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile
 Kaan Genç (https://github.com/SeriousBug)

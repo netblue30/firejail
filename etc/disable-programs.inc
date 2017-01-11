@@ -1,3 +1,6 @@
+# Local customizations come here
+include /etc/firejail/disable-programs.local
+
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.Atom

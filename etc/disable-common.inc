@@ -1,3 +1,6 @@
+# Local customizations come here
+include /etc/firejail/disable-common.local
+
 # History files in $HOME
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history

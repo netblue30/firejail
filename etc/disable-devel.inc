@@ -1,3 +1,6 @@
+# Local customizations come here
+include /etc/firejail/disable-devel.local
+
 # development tools
 
 # GCC

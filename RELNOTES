@@ -1,5 +1,6 @@
 firejail (0.9.44.5) baseline; urgency=low
   * development
+  * Gentoo compile patch
  -- netblue30 <netblue30@yahoo.com>  Mon, 9 Jan 2017 10:00:00 -0500
 
 firejail (0.9.44.4) baseline; urgency=low

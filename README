@@ -77,6 +77,8 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added gnome-chess profile
 	- added DOSBox profile
 	- evince profile enhancement
+Mike Frysinger (vapier@gentoo.org)
+	- Gentoo compile patch
 valoq (https://github.com/valoq)
 	- LibreOffice profile fixes
 	- cherrytree profile fixes

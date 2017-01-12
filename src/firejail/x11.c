@@ -653,11 +653,7 @@ void x11_xorg(void) {
 	struct stat s;
 	if (stat(dest, &s) == -1) {
 		// create an .Xauthority file
-		FILE *fp = fopen(dest, "w");
-		if (!fp)
-			errExit("fopen");
-		SET_PERMS_STREAM(fp, getuid(), getgid(), 0600);
-		fclose(fp);
+		touch_file_as_user(dest, getuid(), getgid(), 0600);
 	}
 
 	// check xauth utility is present in the system
@@ -666,6 +662,10 @@ void x11_xorg(void) {
 		exit(1);
 	}
 
+	// temporarily mount a tempfs on top of /tmp directory
+	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+		errExit("mounting /tmp");
+
 	// create a temporary .Xauthority file
 	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
 	int fd = mkstemp(tmpfname);
@@ -673,9 +673,9 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot create .Xauthority file\n");
 		exit(1);
 	}
-	close(fd);
-	if (chown(tmpfname, getuid(), getgid()) == -1)
+	if (fchown(fd, getuid(), getgid()) == -1)
 		errExit("chown");
+	close(fd);
 
 	pid_t child = fork();
 	if (child < 0)
@@ -713,7 +713,7 @@ void x11_xorg(void) {
 	
 	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
 	// automatically when the sandbox is closed
-	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) {
+	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) { // root needed
 		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
@@ -730,5 +730,8 @@ void x11_xorg(void) {
 	if (set_perms(dest, getuid(), getgid(), 0600))
 		errExit("set_perms");
 	free(dest);
+	
+	// unmount /tmp
+	umount("/tmp");
 #endif	
 }

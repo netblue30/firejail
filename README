@@ -97,6 +97,8 @@ valoq (https://github.com/valoq)
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
 	- disable gnupg and systemd directories under /run/user
+Mike Frysinger (vapier@gentoo.org)
+	- Gentoo compile patch
 Jericho (https://github.com/attritionorg)
 	- spelling
 Pixel Fairy (https://github.com/xahare)

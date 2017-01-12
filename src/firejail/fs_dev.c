@@ -28,6 +28,7 @@
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE 
 #endif
+#include <sys/sysmacros.h>
 #include <sys/types.h>
 
 static void create_char_dev(const char *path, mode_t mode, int major, int minor) {

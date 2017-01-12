@@ -18,6 +18,8 @@ License: GPL v2
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
+Mike Frysinger (vapier@gentoo.org)
+	- Gentoo compile patch
 Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Martin Carpenter (https://github.com/mcarpenter)

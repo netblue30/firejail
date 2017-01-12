@@ -28,6 +28,7 @@
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE 
 #endif
+#include <sys/sysmacros.h>
 #include <sys/types.h>
 
 typedef struct {

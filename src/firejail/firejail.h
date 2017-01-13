@@ -68,6 +68,7 @@
 #define RUN_HOSTNAME_FILE	"/run/firejail/mnt/hostname"
 #define RUN_HOSTS_FILE	"/run/firejail/mnt/hosts"
 #define RUN_RESOLVCONF_FILE	"/run/firejail/mnt/resolv.conf"
+#define RUN_MACHINEID  "/run/firejail/mnt/machine-id"
 #define RUN_LDPRELOAD_FILE	"/run/firejail/mnt/ld.so.preload"
 #define RUN_UTMP_FILE		"/run/firejail/mnt/utmp"
 #define RUN_PASSWD_FILE		"/run/firejail/mnt/passwd"
@@ -327,6 +328,7 @@ extern int arg_allow_debuggers;	// allow debuggers
 extern int arg_x11_block;	// block X11
 extern int arg_x11_xorg;	// use X11 security extention
 extern int arg_allusers;	// all user home directories visible
+extern int arg_machineid;      // preserve /etc/machine-id
 
 extern int login_shell;
 extern int parent_to_child_fds[2];

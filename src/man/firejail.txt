@@ -668,6 +668,16 @@ Example:
 $ firejail \-\-net=eth0 \-\-mac=00:11:22:33:44:55 firefox
 
 .TP
+\fB\-\-machine-id
+Preserve id number in /etc/machine-id file. By default a new random id is generated inside the sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-machine-id
+
+.TP
 \fB\-\-mtu=number
 Assign a MTU value to the last network interface defined by a \-\-net option.
 .br

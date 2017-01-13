@@ -1,3 +1,6 @@
+# Local customizations come here
+include /etc/firejail/whitelist-common.local
+
 # common whitelist for all profiles
 
 whitelist ~/.XCompose

@@ -1,3 +1,6 @@
+# Local customizations come here
+include /etc/firejail/disable-programs.local
+
 # various programs
 blacklist ${HOME}/.Atom
 blacklist ${HOME}/.remmina

@@ -231,7 +231,7 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 		// copy, set permissions and ownership
 		int rv = copy_file(srcname, destname, uid, gid, mode); // already a regular user
 		if (rv)
-			fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
+			fprintf(stderr, "Warning: cannot copy %s\n", srcname);
 #ifdef HAVE_GCOV
 		__gcov_flush();
 #endif

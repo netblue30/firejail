@@ -711,10 +711,36 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 	// create ~/.firejail directory
 	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (stat(dirname, &s) == -1) {
-		mkdir_attr(dirname, 0700, 0, 0);
+		
+	if (is_link(dirname)) {
+		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+		exit(1);
 	}
-	else if (is_link(dirname)) {
+	if (stat(dirname, &s) == -1) {
+		// create directory
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+	
+			// create directory
+			if (mkdir(dirname, 0700))
+				errExit("mkdir");
+			if (chmod(dirname, 0700) == -1)
+				errExit("chmod");
+			ASSERT_PERMS(dirname, getuid(), getgid(), 0700);
+			_exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+		if (stat(dirname, &s) == -1) {
+			fprintf(stderr, "Error: cannot create ~/.firejail directory\n");
+			exit(1);
+		}
+	}
+	else if (s.st_uid != getuid()) {
 		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
 		exit(1);
 	}
@@ -1141,10 +1167,16 @@ void fs_chroot(const char *rootdir) {
 			free(newx11);
 		}
 		
+		// some older distros don't have a /run directory
+		// create one by default
 		// create /run/firejail directory in chroot
 		char *rundir;
 		if (asprintf(&rundir, "%s/run", rootdir) == -1)
 			errExit("asprintf");
+		if (is_link(rundir)) {
+			fprintf(stderr, "Error: invalid run directory inside chroot\n");
+			exit(1);
+		}
 		create_empty_dir_as_root(rundir, 0755);
 		free(rundir);
 		if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)

@@ -228,9 +228,9 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 			fprintf(stderr, "Warning: cannot copy %s\n", srcname);
 		else {
 			if (chown(destname, uid, gid) == -1)
-				errExit("fchown");
+				errExit("chown");
 			if (chmod(destname, mode) == -1)
-				errExit("fchmod");
+				errExit("chmod");
 		}
 		_exit(0);
 	}

@@ -885,6 +885,14 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
+			
+			struct stat s;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: --chroot option is not available on Grsecurity systems\n");
+				exit(1);	
+			}
+			
+			
 			invalid_filename(argv[i] + 9);
 			
 			// extract chroot dirname
@@ -909,13 +917,10 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: invalid chroot directory\n");
 				exit(1);
 			}
-			free(rpath);
-				
+			cfg.chrootdir = rpath;
+			
 			// check chroot directory structure
-			if (fs_check_chroot_dir(cfg.chrootdir)) {
-				fprintf(stderr, "Error: invalid chroot\n");
-				exit(1);
-			}
+			fs_check_chroot_dir(cfg.chrootdir);
 		}
 #endif
 		else if (strcmp(argv[i], "--private") == 0)

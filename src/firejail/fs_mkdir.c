@@ -108,28 +108,7 @@ void fs_mkfile(const char *name) {
 	}
 
 	// create file
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// drop privileges
-		drop_privs(0);
-
-		FILE *fp = fopen(expanded, "w");
-		if (!fp)
-			fprintf(stderr, "Warning: cannot create %s file\n", expanded);
-		else {
-			int fd = fileno(fp);
-			if (fd == -1)
-				errExit("fileno");
-			int rv = fchmod(fd, 0600);
-			(void) rv;
-			fclose(fp);
-		}
-		_exit(0);
-	}
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
+	touch_file_as_user(expanded, getuid(), getgid(), 0600);
 
 doexit:
 	free(expanded);

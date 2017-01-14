@@ -93,7 +93,7 @@
 #define ASSERT_PERMS_FD(fd, uid, gid, mode) \
 	do { \
 		struct stat s;\
-		if (stat(fd, &s) == -1) errExit("stat");\
+		if (fstat(fd, &s) == -1) errExit("stat");\
 		assert(s.st_uid == uid);\
 		assert(s.st_gid == gid);\
 		assert((s.st_mode & 07777) == (mode));\

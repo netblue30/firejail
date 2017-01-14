@@ -6,7 +6,8 @@ firejail (0.9.44.5) baseline; urgency=low
   * bugfix: ported Gentoo compile patch
   * bugfix: Nvidia drivers bug in --private-dev
   * feature: allow local customization using .local files under /etc/firejail
-  * feature: spoof machine-id
+    backported from our development branch
+  * feature: spoof machine-id backported from our development branch
  -- netblue30 <netblue30@yahoo.com>  Mon, 9 Jan 2017 10:00:00 -0500
 
 firejail (0.9.44.4) baseline; urgency=low

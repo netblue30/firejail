@@ -86,6 +86,10 @@ file in user home directory.
 
 Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1" file.
 
+If the file is not found, and the file name does not end in ".local", the sandbox exist immediately
+with an error printed on stderr. ".local" files can be used to customize the global configuration
+in /etc/firejail directory. These files are not overwritten during software install.
+
 .TP
 \fBnoblacklist file_name
 If the file name matches file_name, the file will not be blacklisted in any blacklist commands that follow.

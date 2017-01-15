@@ -27,6 +27,7 @@
 #include <ftw.h>
 #include <sys/ioctl.h>
 #include <termios.h>
+#include <sys/wait.h>
 
 #define MAX_GROUPS 1024
 // drop privileges

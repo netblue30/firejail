@@ -569,6 +569,7 @@ void network_set_run_file(pid_t pid);
 // fs_etc.c
 void fs_check_etc_list(void);
 void fs_private_etc_list(void);
+void fs_machineid(void);
 
 // no_sandbox.c
 int check_namespace_virt(void);

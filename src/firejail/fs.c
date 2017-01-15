@@ -26,6 +26,8 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <sys/wait.h>
+
 
 static void fs_rdwr(const char *dir);
 

@@ -23,6 +23,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <time.h>
 
 // spoof /etc/machine_id
 void fs_machineid(void) {

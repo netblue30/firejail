@@ -1,10 +1,9 @@
-firejail (0.9.38.9) baseline; urgency=low
-  * development version
+firejail (0.9.38.10) baseline; urgency=low
   * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week
   * security: tightening the rules for --chroot
   * bugfix: ported Gentoo compile patch
   * bugfix: fix ASSERT_PERMS_FD macro
- -- netblue30 <netblue30@yahoo.com>  Thu, 12 Jan 2017 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 15 Jan 2017 10:00:00 -0500
 
 firejail (0.9.38.8) baseline; urgency=low
   * security: root exploit found by Sebastian Krahmer (CVE-2017-5180)

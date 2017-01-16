@@ -1,4 +1,4 @@
-# Firejail profile for 
+# Firejail profile for Cryptocat
 noblacklist ${HOME}/.config/Cryptocat
 
 include /etc/firejail/disable-common.inc

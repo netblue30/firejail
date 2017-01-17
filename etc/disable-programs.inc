@@ -173,6 +173,7 @@ blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.jitsi
+blacklist ${HOME}/.kde/share/apps/kcookiejar
 blacklist ${HOME}/.kde/share/apps/gwenview
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/gwenviewrc

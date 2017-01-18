@@ -176,10 +176,12 @@ blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.kde/share/apps/gwenview
 blacklist ${HOME}/.kde/share/apps/kcookiejar
 blacklist ${HOME}/.kde/share/apps/khtml/formcompletions
+blacklist ${HOME}/.kde/share/apps/konqsidebartng
 blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.kde/share/config/konq_history
+blacklist ${HOME}/.kde/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde/share/config/konquerorrc
 blacklist ${HOME}/.kde/share/config/okularpartrc
 blacklist ${HOME}/.kde/share/config/okularrc

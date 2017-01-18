@@ -32,8 +32,8 @@ void fs_machineid(void) {
 		uint32_t u32[4];
 	} mid;
 
-	// if --machine-id flag is active, do nothing
-	if (arg_machineid)
+	// if --machine-id flag is inactive, do nothing
+	if (arg_machineid == 0)
 		return;
 
 	// init random number generator

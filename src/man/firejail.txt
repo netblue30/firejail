@@ -669,7 +669,7 @@ $ firejail \-\-net=eth0 \-\-mac=00:11:22:33:44:55 firefox
 
 .TP
 \fB\-\-machine-id
-Preserve id number in /etc/machine-id file. By default a new random id is generated inside the sandbox.
+Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
 .br
 
 .br

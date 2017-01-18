@@ -180,6 +180,7 @@ blacklist ${HOME}/.kde/share/apps/konqsidebartng
 blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/gwenviewrc
+blacklist ${HOME}/.kde/share/config/kcookiejarrc
 blacklist ${HOME}/.kde/share/config/khtmlrc
 blacklist ${HOME}/.kde/share/config/konq_history
 blacklist ${HOME}/.kde/share/config/konqsidebartngrc

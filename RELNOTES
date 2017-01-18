@@ -1,3 +1,7 @@
+firejail (0.9.44.7) baseline; urgency=low
+  * development version
+ -- netblue30 <netblue30@yahoo.com>  Wed, 18 Jan 2017 10:00:00 -0500
+
 firejail (0.9.44.6) baseline; urgency=low
   * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week
   * security: major cleanup of file copying code

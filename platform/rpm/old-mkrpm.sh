@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.44.6"
+VERSION="0.9.44.8"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -458,6 +458,9 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Thu Jan 19 2017  netblue30 <netblue30@yahoo.com> 0.9.44.8-1
+  - fixing broken PulseAudio support in previous release
+
 * Sun Jan 15 2017  netblue30 <netblue30@yahoo.com> 0.9.44.6-1
   - security release
 

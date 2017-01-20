@@ -99,6 +99,11 @@ read-only ${HOME}/.tcshrc
 read-only ${HOME}/.cshrc
 read-only ${HOME}/.csh_files
 read-only ${HOME}/.profile
+read-only ${HOME}/.login
+read-only ${HOME}/.logout
+read-only ${HOME}/.pgpkey
+read-only ${HOME}/.plan
+read-only ${HOME}/.project
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc

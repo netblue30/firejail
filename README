@@ -97,6 +97,8 @@ valoq (https://github.com/valoq)
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
 	- disable gnupg and systemd directories under /run/user
+GSI (https://github.com/GSI)
+	- added Uzbl browser profile
 Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
 Jericho (https://github.com/attritionorg)
@@ -224,6 +226,7 @@ KellerFuchs (https://github.com/KellerFuchs)
 	- disable-common.inc additions
 	- make mutt and msmtp's rc files read-only
 	- added support for .local profile files in /etc/firejail
+	- fixed Cryptocat profile
 ValdikSS (https://github.com/ValdikSS)
 	- Psi+, Corebird, Konversation profiles
 	- various profile fixes

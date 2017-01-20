@@ -242,3 +242,5 @@
 /etc/firejail/qupzilla.profile
 /etc/firejail/FossaMail.profile
 /etc/firejail/fossamail.profile
+/etc/firejail/uzbl-browser.profile
+

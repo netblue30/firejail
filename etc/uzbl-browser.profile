@@ -2,10 +2,10 @@
 
 noblacklist ~/.config/uzbl
 noblacklist ~/.cache/uzbl
+noblacklist ~/.gnupg
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
@@ -23,5 +23,10 @@ mkdir ~/.local/share/uzbl
 whitelist ~/.local/share/uzbl
 
 whitelist ${DOWNLOADS}
+
+mkdir ~/.gnupg
+whitelist ~/.gnupg
+mkdir ~/.password-store
+whitelist ~/.password-store
 
 include /etc/firejail/whitelist-common.inc

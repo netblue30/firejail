@@ -1,4 +1,8 @@
 # Clementine media player profile
+noblacklist /mnt
+noblacklist /media
+noblackist /run/media
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

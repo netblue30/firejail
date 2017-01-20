@@ -75,6 +75,11 @@ blacklist /etc/profile.d
 blacklist /etc/rc.local
 blacklist /etc/anacrontab
 
+# mnt
+blacklist /mnt
+blacklist /media
+blacklist /run/media
+
 # General startup files
 read-only ${HOME}/.xinitrc
 read-only ${HOME}/.xserverrc

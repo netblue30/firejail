@@ -1,5 +1,8 @@
 # dragon player profile
 noblacklist ~/.config/dragonplayerrc
+noblacklist /mnt
+noblacklist /media
+noblackist /run/media
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -19,4 +22,3 @@ private-bin dragon
 private-dev
 private-tmp
 # private-etc
-

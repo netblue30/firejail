@@ -85,6 +85,7 @@ int arg_netfilter;				// enable netfilter
 int arg_netfilter6;				// enable netfilter6
 char *arg_netfilter_file = NULL;			// netfilter file
 char *arg_netfilter6_file = NULL;		// netfilter6 file
+char *arg_netns = NULL;			// "ip netns"-created network namespace to use
 int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
@@ -1995,6 +1996,15 @@ int main(int argc, char **argv) {
 				arg_netfilter6 = 1;
 				arg_netfilter6_file = argv[i] + 13;
 				check_netfilter_file(arg_netfilter6_file);
+			}
+			else
+				exit_err_feature("networking");
+		}
+
+		else if (strncmp(argv[i], "--netns=", 8) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				arg_netns = argv[i] + 8;
+				check_netns(arg_netns);
 			}
 			else
 				exit_err_feature("networking");

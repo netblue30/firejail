@@ -317,6 +317,7 @@ extern int arg_netfilter;	// enable netfilter
 extern int arg_netfilter6;	// enable netfilter6
 extern char *arg_netfilter_file;	// netfilter file
 extern char *arg_netfilter6_file;	// netfilter file
+extern char *arg_netns;		// "ip netns"-created network namespace to use
 extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
@@ -559,6 +560,11 @@ void check_output(int argc, char **argv);
 void check_netfilter_file(const char *fname);
 void netfilter(const char *fname);
 void netfilter6(const char *fname);
+
+// netns.c
+void check_netns(const char *nsname);
+void netns(const char *nsname);
+void netns_mounts(const char *nsname);
 
 // bandwidth.c
 void bandwidth_del_run_file(pid_t pid);

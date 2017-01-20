@@ -228,6 +228,7 @@ KellerFuchs (https://github.com/KellerFuchs)
 	- make mutt and msmtp's rc files read-only
 	- added support for .local profile files in /etc/firejail
 	- fixed Cryptocat profile
+	- make ~/.local read-only
 ValdikSS (https://github.com/ValdikSS)
 	- Psi+, Corebird, Konversation profiles
 	- various profile fixes

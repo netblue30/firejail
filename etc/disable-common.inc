@@ -124,8 +124,16 @@ read-only ${HOME}/.reportbugrc
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
 
-# The user ~/bin directory can override commands such as ls
+# Make directories commonly found in $PATH read-only
 read-only ${HOME}/bin
+read-only ${HOME}/.gem
+read-only ${HOME}/.luarocks
+read-only ${HOME}/.npm-packages
+
+# Make the contents of ~/.local read-only,
+#  except the commonly-used ~/.local/share
+read-only  ${HOME}/.local
+read-write ${HOME}/.local/share
 
 # top secret
 blacklist ${HOME}/.ecryptfs

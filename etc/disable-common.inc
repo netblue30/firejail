@@ -75,12 +75,9 @@ blacklist /etc/profile.d
 blacklist /etc/rc.local
 blacklist /etc/anacrontab
 
-# General startup files
+# Startup files
 read-only ${HOME}/.xinitrc
 read-only ${HOME}/.xserverrc
-read-only ${HOME}/.profile
-
-# Shell startup files
 read-only ${HOME}/.antigen
 read-only ${HOME}/.bash_login
 read-only ${HOME}/.bashrc

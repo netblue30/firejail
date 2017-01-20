@@ -1,7 +1,6 @@
 # Firejail profile for uzbl-browser
 
 noblacklist ~/.config/uzbl
-noblacklist ~/.cache/uzbl
 noblacklist ~/.gnupg
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -17,8 +16,6 @@ tracelog
 
 mkdir ~/.config/uzbl
 whitelist ~/.config/uzbl
-mkdir ~/.cache/uzbl
-whitelist ~/.cache/uzbl
 mkdir ~/.local/share/uzbl
 whitelist ~/.local/share/uzbl
 

@@ -213,6 +213,8 @@ blacklist /usr/lib64/virtualbox
 
 # prevent lxterminal connecting to an existing lxterminal session
 blacklist /tmp/.lxterminal-socket*
+# prevent tmux connecting to an existing session
+blacklist /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
 blacklist ${PATH}/gnome-terminal

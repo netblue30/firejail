@@ -761,6 +761,11 @@ Example:
 $ firejail \-\-net=none vlc
 
 .TP
+\fB\-\-netns=name
+Run the program in a named, persistent network namespace.  These can
+be created and configured using "ip netns".
+
+.TP
 \fB\-\-netfilter
 Enable a default client network filter in the new network namespace.
 New network namespaces are created using \-\-net option. If a new network namespaces is not created,

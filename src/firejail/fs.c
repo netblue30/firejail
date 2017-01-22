@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <linux/limits.h>
 #include <fnmatch.h>
 #include <glob.h>

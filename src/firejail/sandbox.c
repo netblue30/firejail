@@ -467,6 +467,11 @@ int sandbox(void* sandbox_arg) {
 		if (arg_debug)
 			printf("Network namespace enabled, only loopback interface available\n");
 	}
+	else if (arg_netns) {
+		netns(arg_netns);
+		if (arg_debug)
+			printf("Network namespace '%s' activated\n", arg_netns);
+	}
 	else if (any_bridge_configured() || any_interface_configured()) {
 		// configure lo and eth0...eth3
 		net_if_up("lo");
@@ -729,6 +734,12 @@ int sandbox(void* sandbox_arg) {
 			EUID_ROOT();
 		}
 	}
+
+	//****************************
+	// /etc overrides from the network namespace
+	//****************************
+	if (arg_netns)
+		netns_mounts(arg_netns);
 	
 	//****************************
 	// update /proc, /sys, /dev, /boot directorymy

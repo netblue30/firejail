@@ -14,7 +14,7 @@ seccomp
 shell none
 tracelog
 
-private-bin bash,grep,sed,tail,env,gpg,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf
+private-bin bash,grep,tail,env,gpg,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf
 private-etc fonts
 private-dev
 private-tmp

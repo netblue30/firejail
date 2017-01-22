@@ -14,16 +14,17 @@ firejail (0.9.45) baseline; urgency=low
   * security: split file copying in private option in a separate executable
   * security: root exploit found by Sebastian Krahmer (CVE-2017-5180)
   * feature: disable gnupg and systemd directories under /run/user
-  * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)
-  * feature: AppImage type 2 support
   * feature: test coverage (gcov) support
+  * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)
   * feature: private /opt directory (--private-opt, profile support)
   * feature: private /srv directory (--private-srv, profile support)
-  * feature: spoof machine-id
+  * feature: spoof machine-id (--machine-id, profile support)
+  * feature: allow blacklists under --private (--allow-private-blacklist) - more work to come
+  * feature: user-defined /etc/hosts file (--hosts-file, profile support)
   * feature: config support for firejail prompt in terminals
+  * feature: AppImage type 2 support
   * feature: pass command line arguments to appimages
-  * feature: --allow-private-blacklist option
-  * feature: allow non-seccomp setup for OverlayFS sandboxes
+  * feature: allow non-seccomp setup for OverlayFS sandboxes - more work to come
   * feature: added a number o Python scripts for handling sandboxes
   * feature: allow local customization using .local files under /etc/firejail
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,

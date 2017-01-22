@@ -78,6 +78,7 @@ void usage(void) {
 	printf("    --get=name|pid filename - get a file from sandbox container.\n");
 	printf("    --help, -? - this help screen.\n");
 	printf("    --hostname=name - set sandbox hostname.\n");
+	printf("    --hosts-file=file - use file as /etc/hosts.\n");
 	printf("    --ignore=command - ignore command in profile files.\n");
 #ifdef HAVE_NETWORK	
 	printf("    --interface=name - move interface in sandbox.\n");

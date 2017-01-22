@@ -469,6 +469,16 @@ Example:
 $ firejail \-\-hostname=officepc firefox
 
 .TP
+\fB\-\-hosts-file=file
+Use file as /etc/hosts.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-hosts-file=~/myhosts firefox
+
+.TP
 \fB\-\-ignore=command
 Ignore command in profile file.
 .br

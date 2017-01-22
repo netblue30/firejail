@@ -51,7 +51,9 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 `````
 
 `````
-## AppImage type 2 support
+## AppImage
+
+Added AppImage type 2 support, and support for passing command line arguments to appimages.
 `````
 
 `````
@@ -75,9 +77,9 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
               Example:
               # firejail --private-srv=www /etc/init.d/apache2 start
 
-       --machine-id
-              Preserve  id  number  in  /etc/machine-id file. By default a new
-              random id is generated inside the sandbox.
+      --machine-id
+              Spoof id number in /etc/machine-id file - a  new  random  id  is
+              generated inside the sandbox.
 
               Example:
               $ firejail --machine-id
@@ -89,6 +91,12 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
               Example:
               $   firejail    --allow-private-blacklist   --private=~/priv-dir
               --blacklist=~/.mozilla
+
+      --hosts-file=file
+              Use file as /etc/hosts.
+
+              Example:
+              $ firejail --hosts-file=~/myhosts firefox
              
 `````
 ## New Profiles

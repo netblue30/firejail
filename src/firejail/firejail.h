@@ -213,6 +213,7 @@ typedef struct config_t {
 	// networking
 	char *name;		// sandbox name
 	char *hostname;	// host name
+	char *hosts_file;		// hosts file to be installed in the sandbox
 	uint32_t defaultgw;	// default gateway
 	Bridge bridge0;
 	Bridge bridge1;
@@ -537,6 +538,9 @@ void fs_trace(void);
 // fs_hostname.c
 void fs_hostname(const char *hostname);
 void fs_resolvconf(void);
+char *fs_check_hosts_fiile(const char *fname);
+void fs_store_hosts_file(void);
+void fs_mount_hosts_file(void);
 
 // rlimit.c
 void set_rlimits(void);

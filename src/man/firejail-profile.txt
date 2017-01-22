@@ -392,6 +392,10 @@ Set a DNS server for the sandbox. Up to three DNS servers can be defined.
 Set a hostname for the sandbox.
 
 .TP
+\fBhosts-file file
+Use file as /etc/hosts.
+
+.TP
 \fBip address
 Assign IP addresses to the last network interface defined by a net command. A
 default gateway is assigned by default.

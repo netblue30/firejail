@@ -42,7 +42,7 @@ void fs_hostname(const char *hostname) {
 	}
 	
 	// create a new /etc/hosts
-	if (stat("/etc/hosts", &s) == 0) {
+	if (cfg.hosts_file == NULL && stat("/etc/hosts", &s) == 0) {
 		if (arg_debug)
 			printf("Creating a new /etc/hosts file\n");
 		// copy /etc/host into our new file, and modify it on the fly
@@ -79,9 +79,7 @@ void fs_hostname(const char *hostname) {
 		fclose(fp2);
 		
 		// bind-mount the file on top of /etc/hostname
-		if (mount(RUN_HOSTS_FILE, "/etc/hosts", NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind /etc/hosts");
-		fs_logger("create /etc/hosts");
+		fs_mount_hosts_file();
 	}
 	return;
 
@@ -129,4 +127,53 @@ void fs_resolvconf(void) {
 	}
 }
 
+char *fs_check_hosts_fiile(const char *fname) {
+	assert(fname);
+	invalid_filename(fname);
+	char *rv = expand_home(fname, cfg.homedir);
+
+	// no a link
+	if (is_link(rv))
+		goto errexit;
 	
+	// file owned by the user
+	struct stat s;
+	if (stat(rv, &s) == -1)
+		goto errexit;
+	
+	if (s.st_uid != getuid())
+		goto errexit;
+
+	return rv;
+errexit:
+	fprintf(stderr, "Error: invalid file %s\n", fname);
+	exit(1);
+}
+
+void fs_store_hosts_file(void) {
+	copy_file(cfg.hosts_file, RUN_HOSTS_FILE, 0, 0, 0644); // root needed
+}
+
+void fs_mount_hosts_file(void) {
+	// check /etc/hosts file
+	struct stat s;
+	if (stat("/etc/hosts", &s) == -1)
+		goto errexit;
+	// not a link
+	if (is_link("/etc/hosts"))
+		goto errexit;
+	// owned by root
+	if (s.st_uid != 0)
+		goto errexit;
+
+	// bind-mount the file on top of /etc/hostname
+	if (mount(RUN_HOSTS_FILE, "/etc/hosts", NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind /etc/hosts");
+	fs_logger("create /etc/hosts");
+	return;
+
+errexit:
+	fprintf(stderr, "Error: invalid /etc/hosts file\n");
+	exit(1);
+}
+

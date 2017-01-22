@@ -602,6 +602,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
+	// hosts-file
+	if (strncmp(ptr, "hosts-file ", 11) == 0) {
+		cfg.hosts_file = fs_check_hosts_fiile(ptr + 11);
+		return 0;
+	}
+	
 	// dns
 	if (strncmp(ptr, "dns ", 4) == 0) {
 		uint32_t dns;

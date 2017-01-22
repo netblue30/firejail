@@ -587,6 +587,10 @@ int sandbox(void* sandbox_arg) {
 	if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
 		fs_trace_preload();
 
+	// store hosts file
+	if (cfg.hosts_file)
+		fs_store_hosts_file();
+
 	//****************************
 	// configure filesystem
 	//****************************
@@ -629,13 +633,6 @@ int sandbox(void* sandbox_arg) {
 	else
 #endif
 		fs_basic_fs();
-	
-	//****************************
-	// set hostname in /etc/hostname
-	//****************************
-	if (cfg.hostname) {
-		fs_hostname(cfg.hostname);
-	}
 	
 	//****************************
 	// private mode
@@ -734,6 +731,16 @@ int sandbox(void* sandbox_arg) {
 			EUID_ROOT();
 		}
 	}
+
+	
+	//****************************
+	// hosts and hostname
+	//****************************
+	if (cfg.hostname)
+		fs_hostname(cfg.hostname);
+
+	if (cfg.hosts_file)
+		fs_mount_hosts_file();
 
 	//****************************
 	// /etc overrides from the network namespace

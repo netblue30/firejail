@@ -97,6 +97,8 @@ valoq (https://github.com/valoq)
 	- added skanlite, ssh-agent, transmission-cli, tracker, transmission-show, w3m, xfburn, xpra profiles
 	- added wget profile
 	- disable gnupg and systemd directories under /run/user
+Zack Weinberg (https://github.com/zackw)
+	- sdded support for joining a persistent, named network namespace
 GSI (https://github.com/GSI)
 	- added Uzbl browser profile
 Mike Frysinger (vapier@gentoo.org)

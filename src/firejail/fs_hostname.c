@@ -136,12 +136,8 @@ char *fs_check_hosts_fiile(const char *fname) {
 	if (is_link(rv))
 		goto errexit;
 	
-	// file owned by the user
-	struct stat s;
-	if (stat(rv, &s) == -1)
-		goto errexit;
-	
-	if (s.st_uid != getuid())
+	// the user has read access to the file
+	if (access(rv, R_OK))
 		goto errexit;
 
 	return rv;

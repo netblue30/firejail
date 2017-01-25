@@ -96,6 +96,7 @@ read-only ${HOME}/.tcshrc
 read-only ${HOME}/.cshrc
 read-only ${HOME}/.csh_files
 read-only ${HOME}/.profile
+read-only ${HOME}/.forward
 read-only ${HOME}/.login
 read-only ${HOME}/.logout
 read-only ${HOME}/.pgpkey

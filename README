@@ -83,6 +83,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added xed and pluma profiles
 	- added Cryptocat profile
 	- added wireshark profile
+	- uudeview profile fix
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature

@@ -215,6 +215,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_no3d = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "allow-private-blacklist") == 0) {
+		arg_allow_private_blacklist = 1;
+		return 0;
+	}	
 	else if (strcmp(ptr, "netfilter") == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK))

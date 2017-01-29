@@ -629,6 +629,23 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_OVERLAYFS
 	if (arg_overlay)	{
 		fs_overlayfs();
+
+//todo - bring it back for overlay-named
+#if 0		
+		fs_overlayfs();
+		// force caps and seccomp if not started as root
+		if (getuid() != 0) {
+			enforce_filters();
+#ifdef HAVE_SECCOMP
+			enforce_seccomp = 1;
+#endif
+		}
+		else
+			arg_seccomp = 1;
+#endif		
+		
+		
+		
 	}
 	else
 #endif

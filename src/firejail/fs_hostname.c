@@ -147,7 +147,7 @@ errexit:
 }
 
 void fs_store_hosts_file(void) {
-	copy_file(cfg.hosts_file, RUN_HOSTS_FILE, 0, 0, 0644); // root needed
+	copy_file_from_user_to_root(cfg.hosts_file, RUN_HOSTS_FILE, 0, 0, 0644); // root needed
 }
 
 void fs_mount_hosts_file(void) {

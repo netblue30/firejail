@@ -9,6 +9,12 @@
 #
 #       netblue:--net=none --protocol=unix
 #
+# Wildcard patterns are accepted in the user name field:
+#
+#       user*: --private
+#
+# The example will do --private for user1, user2, and so on.
+#
 # The extra arguments are inserted into program command line if firejail
 # was started as a login shell.
 

@@ -169,6 +169,25 @@ void logerr(const char *msg) {
 	closelog();
 }
 
+static int copy_file_by_fd(int src, int dst) {
+	assert(src >= 0);
+	assert(dst >= 0);
+
+	ssize_t len;
+	static const int BUFLEN = 1024;
+	unsigned char buf[BUFLEN];
+	while ((len = read(src, buf, BUFLEN)) > 0) {
+		int done = 0;
+		while (done != len) {
+			int rv = write(dst, buf + done, len - done);
+			if (rv == -1)
+				return -1;
+			done += rv;
+		}
+	}
+	fflush(0);
+	return 0;
+}
 
 // return -1 if error, 0 if no error; if destname already exists, return error
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
@@ -190,33 +209,16 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 		return -1;
 	}
 
-	// copy
-	ssize_t len;
-	static const int BUFLEN = 1024;
-	unsigned char buf[BUFLEN];
-	while ((len = read(src, buf, BUFLEN)) > 0) {
-		int done = 0;
-		while (done != len) {
-			int rv = write(dst, buf + done, len - done);
-			if (rv == -1) {
-				close(src);
-				close(dst);
-				return -1;
-			}
-
-			done += rv;
-		}
+	int errors = copy_file_by_fd(src, dst);
+	if (!errors) {
+		if (fchown(dst, uid, gid) == -1)
+			errExit("fchown");
+		if (fchmod(dst, mode) == -1)
+			errExit("fchmod");
 	}
-	fflush(0);
-
-	if (fchown(dst, uid, gid) == -1)
-		errExit("fchown");
-	if (fchmod(dst, mode) == -1)
-		errExit("fchmod");
-
 	close(src);
 	close(dst);
-	return 0;
+	return errors;
 }
 
 // return -1 if error, 0 if no error
@@ -239,6 +241,45 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 	}
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
+}
+
+void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
+	// open destination
+	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (dst < 0) {
+		fprintf(stderr, "Warning: cannot open destination file %s, file not copied\n", destname);
+		return;
+	}
+
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		int src = open(srcname, O_RDONLY);
+		if (src < 0) {
+			fprintf(stderr, "Warning: cannot open source file %s, file not copied\n", srcname);
+		} else {
+			if (copy_file_by_fd(src, dst)) {
+				fprintf(stderr, "Warning: cannot copy %s\n", srcname);
+			}
+			close(src);
+		}
+		close(dst);
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+	if (fchown(dst, uid, gid) == -1)
+		errExit("fchown");
+	if (fchmod(dst, mode) == -1)
+		errExit("fchmod");
+	close(dst);
 }
 
 // return -1 if error, 0 if no error

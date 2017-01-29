@@ -453,6 +453,7 @@ void logargs(int argc, char **argv) ;
 void logerr(const char *msg);
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
 void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
+void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
 void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);

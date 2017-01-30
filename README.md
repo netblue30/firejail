@@ -99,7 +99,7 @@ Added AppImage type 2 support, and support for passing command line arguments to
               $ firejail --hosts-file=~/myhosts firefox
              
       --writable-var-log
-              Use the real /var/log directory, not  a  clone.  By  default,  a
+              Useq the real /var/log directory, not  a  clone.  By  default,  a
               tmpfs  is  mounted  on top of /var/log directory, and a skeleton
               filesystem is created based on the original /var/log.
 

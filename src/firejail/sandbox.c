@@ -386,7 +386,7 @@ static void enforce_filters(void) {
 	}
 	
 	// disable all capabilities
-	if (arg_caps_default_filter || arg_caps_list)
+	if (arg_caps_default_filter || arg_caps_list && !arg_quiet)
 		fprintf(stderr, "Warning: all capabilities disabled for a regular user in chroot\n");
 	arg_caps_drop_all = 1;
 	
@@ -520,7 +520,8 @@ int sandbox(void* sandbox_arg) {
 		if (cfg.defaultgw) {
 			// set the default route
 			if (net_add_route(0, 0, cfg.defaultgw)) {
-				fprintf(stderr, "Warning: cannot configure default route\n");
+				if (!arg_quiet)
+					fprintf(stderr, "Warning: cannot configure default route\n");
 				gw_cfg_failed = 1;
 			}
 		}
@@ -847,7 +848,8 @@ int sandbox(void* sandbox_arg) {
 		int rv = nice(cfg.nice);
 		(void) rv;
 		if (errno) {
-			fprintf(stderr, "Warning: cannot set nice value\n");
+			if (!arg_quiet)
+				fprintf(stderr, "Warning: cannot set nice value\n");
 			errno = 0;
 		}
 	}
@@ -903,7 +905,8 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
-			fprintf(stderr, "Warning: cannot create a new user namespace, going forward without it...\n");
+			if (!arg_quiet)
+				fprintf(stderr, "Warning: cannot create a new user namespace, going forward without it...\n");
 			drop_privs(arg_nogroups);
 			arg_noroot = 0;
 		}
@@ -934,7 +937,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_nonewprivs) {
 		int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
 
-		if(no_new_privs != 0)
+		if(no_new_privs != 0 && !arg_quiet)
 			fprintf(stderr, "Warning: NO_NEW_PRIVS disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		else if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");

@@ -1725,6 +1725,17 @@ Example:
 .br
 $ sudo firejail --writable-var
 
+.TP
+\fB\-\-writable-var-log
+Use the real /var/log directory, not a clone. By default, a tmpfs is mounted on top of /var/log
+directory, and a skeleton filesystem is created based on the original /var/log.
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --writable-var-log
+
 
 .TP
 \fB\-\-x11

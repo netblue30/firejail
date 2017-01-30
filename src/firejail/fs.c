@@ -445,6 +445,7 @@ static void fs_rdwr(const char *dir) {
 		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
 			errExit("mount read-write");
 		fs_logger2("read-write", dir);
+printf("readwrite %s\n", dir);	
 	}
 }
 
@@ -682,11 +683,13 @@ void fs_basic_fs(void) {
 	fs_rdonly("/usr");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
-//	if (!arg_private_dev)
-//		fs_dev_shm();
 	fs_var_lock();
 	fs_var_tmp();
-	fs_var_log();
+	if (!arg_writable_var_log)
+		fs_var_log();
+	else
+		fs_rdwr("/var/log");
+	
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
@@ -996,7 +999,11 @@ void fs_overlayfs(void) {
 //		fs_dev_shm();
 	fs_var_lock();
 	fs_var_tmp();
-	fs_var_log();
+	if (!arg_writable_var_log)
+		fs_var_log();
+	else
+		fs_rdwr("/var/log");
+		
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
@@ -1226,7 +1233,11 @@ void fs_chroot(const char *rootdir) {
 //			fs_dev_shm();
 		fs_var_lock();
 		fs_var_tmp();
-		fs_var_log();
+		if (!arg_writable_var_log)
+			fs_var_log();
+		else
+			fs_rdwr("/var/log");
+			
 		fs_var_lib();
 		fs_var_cache();
 		fs_var_utmp();

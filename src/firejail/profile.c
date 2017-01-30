@@ -673,6 +673,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_writable_var = 1;
 		return 0;
 	}
+	if (strcmp(ptr, "writable-var-log") == 0) {
+		arg_writable_var_log = 1;
+		return 0;
+	}
 	
 	// private directory
 	if (strncmp(ptr, "private ", 8) == 0) {

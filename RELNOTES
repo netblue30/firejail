@@ -19,8 +19,9 @@ firejail (0.9.45) baseline; urgency=low
   * feature: private /opt directory (--private-opt, profile support)
   * feature: private /srv directory (--private-srv, profile support)
   * feature: spoof machine-id (--machine-id, profile support)
-  * feature: allow blacklists under --private (--allow-private-blacklist)
+  * feature: allow blacklists under --private (--allow-private-blacklist, profile support)
   * feature: user-defined /etc/hosts file (--hosts-file, profile support)
+  * feature: support for the real /var/log directory (--writable-var-log, profile support)
   * feature: config support for firejail prompt in terminals
   * feature: AppImage type 2 support
   * feature: pass command line arguments to appimages

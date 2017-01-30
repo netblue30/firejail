@@ -114,7 +114,8 @@ int arg_x11_block = 0;				// block X11
 int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
-int arg_allow_private_blacklist = 0;  // blacklist things in private directories
+int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
+int arg_writable_var_log;			// writable /var/log
 
 int login_shell = 0;
 
@@ -1487,6 +1488,9 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
+		}
+		else if (strcmp(argv[i], "--writable-var-log") == 0) {
+			arg_writable_var_log = 1;
 		}
 		else if (strcmp(argv[i], "--machine-id") == 0) {
 			arg_machineid = 1;

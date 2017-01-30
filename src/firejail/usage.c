@@ -192,6 +192,7 @@ void usage(void) {
 #endif	
 	printf("    --writable-etc - /etc directory is mounted read-write.\n");
 	printf("    --writable-var - /var directory is mounted read-write.\n");
+	printf("    --writable-var-log - use the real /var/log directory, not a clone.\n");
 	printf("    --x11 - enable X11 sandboxing. The software checks first if Xpra is\n");
 	printf("\tinstalled, then it checks if Xephyr is installed. If all fails, it will\n");
 	printf("\tattempt to use X11 security extension.\n");

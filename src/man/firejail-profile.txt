@@ -244,6 +244,11 @@ Mount /etc directory read-write.
 .TP
 \fBwritable-var
 Mount /var directory read-write.
+.TP
+\fBwritable-var-log
+Use the real /var/log directory, not a clone. By default, a tmpfs is mounted on top of /var/log
+directory, and a skeleton filesystem is created based on the original /var/log.
+
 .SH Security filters
 The following security filters are currently implemented:
 

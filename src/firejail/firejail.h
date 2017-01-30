@@ -338,6 +338,7 @@ extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_writable_var;	// writable var
+extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
 extern int arg_audit;		// audit
 extern char *arg_audit_prog;	// audit

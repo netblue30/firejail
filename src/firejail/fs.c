@@ -445,7 +445,6 @@ static void fs_rdwr(const char *dir) {
 		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
 			errExit("mount read-write");
 		fs_logger2("read-write", dir);
-printf("readwrite %s\n", dir);	
 	}
 }
 

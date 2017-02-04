@@ -23,6 +23,7 @@
 #include <sys/mount.h>
 
 // install a very simple mount namespace sandbox with a tmpfs on top of /tmp
+// and drop privileges
 static void sbox_ns(void) {
 	if (unshare(CLONE_NEWNS) < 0)
 		errExit("unshare");
@@ -32,20 +33,11 @@ static void sbox_ns(void) {
 		errExit("mount");
 	}
 
-	// moount a tmpfs on top of /tmp
+	// mount a tmpfs on top of /tmp
 	if (mount(NULL, "/tmp", "tmpfs", 0, NULL) < 0)
 		errExit("mount");
-}
-		
 
-void git_install() {
-	// redirect to "/usr/bin/firejail --noprofile --private-tmp /usr/lib/firejail/fgit-install.sh"
-	EUID_ASSERT();
-	EUID_ROOT();
-	
-	// install a mount namespace with a tmpfs on top of /tmp
-	sbox_ns();
-	
+
 	// drop privileges
 	if (setgid(getgid()) < 0)
 		errExit("setgid/getgid");
@@ -59,15 +51,25 @@ void git_install() {
 	printf("/tmp directory: "); fflush(0);
 	rv = system("ls -l /tmp");
 	(void) rv;
+}
+		
 
+void git_install(void) {
+	// redirect to "/usr/bin/firejail --noprofile --private-tmp /usr/lib/firejail/fgit-install.sh"
+	EUID_ASSERT();
+	EUID_ROOT();
+	
+	// install a mount namespace with a tmpfs on top of /tmp
+	sbox_ns();
+	
 	// run command
 	const char *cmd = LIBDIR "/firejail/fgit-install.sh";
-	rv = system(cmd);
+	int rv = system(cmd);
 	(void) rv;
 	exit(0);
 }
 
-void git_uninstall() {
+void git_uninstall(void) {
 	// redirect to "/usr/bin/firejail --noprofile --private-tmp /usr/lib/firejail/fgit-install.sh"
 	EUID_ASSERT();
 	EUID_ROOT();
@@ -75,23 +77,9 @@ void git_uninstall() {
 	// install a mount namespace with a tmpfs on top of /tmp
 	sbox_ns();
 	
-	// drop privileges
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
-	assert(getenv("LD_PRELOAD") == NULL);	
-
-	printf("Running as "); fflush(0);
-	int rv = system("whoami");
-	(void) rv;
-	printf("/tmp directory: "); fflush(0);
-	rv = system("ls -l /tmp");
-	(void) rv;
-
 	// run command
 	const char *cmd = LIBDIR "/firejail/fgit-uninstall.sh";
-	rv = system(cmd);
+	int rv = system(cmd);
 	(void) rv;
 	exit(0);
 }

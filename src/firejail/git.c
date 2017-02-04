@@ -22,14 +22,21 @@
 #include <sched.h>
 #include <sys/mount.h>
 
-// install a simple mount/pid namespace sandbox with a tmpfs on top of /tmp
+// install a very simple mount namespace sandbox with a tmpfs on top of /tmp
 static void sbox_ns(void) {
-	if (unshare(CLONE_NEWNS | CLONE_NEWIPC) < 0)
+	if (unshare(CLONE_NEWNS) < 0)
 		errExit("unshare");
 
+	// mount events are not forwarded between the host the sandbox
+	if (mount(NULL, "/", NULL, MS_SLAVE | MS_REC, NULL) < 0) {
+		errExit("mount");
+	}
+
+	// moount a tmpfs on top of /tmp
 	if (mount(NULL, "/tmp", "tmpfs", 0, NULL) < 0)
 		errExit("mount");
 }
+		
 
 void git_install() {
 	// redirect to "/usr/bin/firejail --noprofile --private-tmp /usr/lib/firejail/fgit-install.sh"

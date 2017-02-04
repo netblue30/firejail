@@ -846,10 +846,15 @@ int main(int argc, char **argv) {
 	EUID_INIT();
 	EUID_USER();
 
+	// process git-install and git-uninstall
+	if (check_arg(argc, argv, "--git-install"))
+		git_install(); // this function will not return
+	if (check_arg(argc, argv, "--git-uninstall"))
+		git_uninstall(); // this function will not return
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
-		run_symlink(argc, argv);
+		run_symlink(argc, argv); // this function will not return
 
 	// check if we already have a sandbox running
 	// If LXC is detected, start firejail sandbox

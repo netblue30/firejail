@@ -720,5 +720,9 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 int sbox_run(unsigned filter, int num, ...);
 
 
+// git.c
+void git_install();
+void git_uninstall();
+
 #endif
 

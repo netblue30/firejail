@@ -1,5 +1,6 @@
-# xmms media player profile
+# Firejail profile for XMMS
 noblacklist ${HOME}/.xmms
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -12,6 +13,6 @@ noroot
 protocol unix,inet,inet6
 seccomp
 shell none
+
 private-bin xmms
 private-dev
-private-tmp

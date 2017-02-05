@@ -85,6 +85,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added wireshark profile
 	- uudeview profile fix
 	- fixed palemoon and qbittorrent profiles
+	- compile/install scripts for --git-install/--git-uninstall commands
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature

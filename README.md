@@ -105,6 +105,31 @@ Added AppImage type 2 support, and support for passing command line arguments to
 
               Example:
               $ sudo firejail --writable-var-log
+              
+       --git-install
+              Download, compile and install mainline git version  of  Firejail
+              from  the  official  repository  on  GitHub.   The  software  is
+              installed in /usr/local/bin, and takes precedence over the (old)
+              version installed in /usr/bin. If for any reason the new version
+              doesn't work, the user can uninstall  it  using  --git-uninstall
+              command and revert to the old version.
+
+              Prerequisites: git and compile support are required for this com‐
+              mand to work. On Debian/Ubuntu systems this support is installed
+              using "sudo apt-get install build-essential git".
+
+              Example:
+
+              $ firejail --git-install
+
+       --git-uninstall
+              Remove    the   Firejail   version   previously   installed   in
+              /usr/local/bin using --git-install command.
+
+              Example:
+
+              $ firejail --git-uninstall
+
 
 `````
 ## New Profiles

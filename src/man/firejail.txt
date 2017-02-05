@@ -453,6 +453,39 @@ $ firejail \-\-fs.print=3272
 \fB\-\-get=name|pid filename
 Get a file from sandbox container, see \fBFILE TRANSFER\fR section for more details.
 
+
+.TP
+\fB\-\-git-install
+Download, compile and install mainline git version of Firejail from the official repository on GitHub.
+The software is installed in /usr/local/bin, and takes precedence over the (old) version
+installed in /usr/bin. If for any reason the new version doesn't work, the user can uninstall it
+using \-\-git-uninstall command and revert to the old version.
+.br
+
+.br
+Prerequisites: git and compile support are required for this command to work. On Debian/Ubuntu
+systems this support is installed using "sudo apt-get install build-essential git".
+.br
+
+.br
+Example:
+.br
+
+.br
+$ firejail \-\-git-install
+
+.TP
+\fB\-\-git-uninstall
+Remove the Firejail version previously installed in /usr/local/bin using \-\-git-install command.
+.br
+
+.br
+Example:
+.br
+
+.br
+$ firejail \-\-git-uninstall
+
 .TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.

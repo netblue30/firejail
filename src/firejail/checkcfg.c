@@ -351,6 +351,13 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- git install support is %s\n",
+#ifdef HAVE_GIT_INSTALL
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
 
 #ifdef HAVE_NETWORK_RESTRICTED
 	printf("\t- networking features are available only to root user\n");
@@ -395,4 +402,5 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
+		
 }

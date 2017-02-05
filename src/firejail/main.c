@@ -846,11 +846,13 @@ int main(int argc, char **argv) {
 	EUID_INIT();
 	EUID_USER();
 
+#ifdef HAVE_GIT_INSTALL
 	// process git-install and git-uninstall
 	if (check_arg(argc, argv, "--git-install"))
 		git_install(); // this function will not return
 	if (check_arg(argc, argv, "--git-uninstall"))
 		git_uninstall(); // this function will not return
+#endif
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')

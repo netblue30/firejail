@@ -145,6 +145,13 @@ AS_IF([test "x$enable_gcov" = "xyes"], [
 	AC_SUBST(HAVE_GCOV)
 ])
 
+HAVE_GIT_INSTALL=""
+AC_ARG_ENABLE([git-install],
+    AS_HELP_STRING([--disable-git-install], [disable git install feature]))
+AS_IF([test "x$enable_git_install" != "xno"], [
+	HAVE_GIT_INSTALL="-DHAVE_GIT_INSTALL"
+	AC_SUBST(HAVE_GIT_INSTALL)
+])
 
 
 # checking pthread library
@@ -179,6 +186,7 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   git install support: $HAVE_GIT_INSTALL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"

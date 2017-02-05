@@ -76,9 +76,11 @@ void usage(void) {
 	printf("    --env=name=value - set environment variable.\n");
 	printf("    --fs.print=name|pid - print the filesystem log.\n");
 	printf("    --get=name|pid filename - get a file from sandbox container.\n");
+#ifdef HAVE_GIT_INSTALL
 	printf("    --git-install - download, compile and install mainline git version\n");
 	printf("\tof Firejail.\n");
 	printf("    --git-uninstall - uninstall mainline git version of Firejail\n");
+#endif
 	printf("    --help, -? - this help screen.\n");
 	printf("    --hostname=name - set sandbox hostname.\n");
 	printf("    --hosts-file=file - use file as /etc/hosts.\n");

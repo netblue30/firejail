@@ -572,58 +572,6 @@ void fs_proc_sys_dev_boot(void) {
 	}
 	free(fname);
 	
-// todo: investigate
-#if 0
-	// breaks too many applications, option needed
-	/* // disable /run/user/{uid}/bus */
-	/* char *fnamebus; */
-	/* if (asprintf(&fnamebus, "/run/user/%d/bus", getuid()) == -1) */
-	/*     errExit("asprintf"); */
-	/* if (stat(fnamebus, &s) == 0) */
-	/*     disable_file(BLACKLIST_FILE, fnamebus); */
-	/* free(fnamebus); */
-
-	// WARNING: not working
-	// disable /run/user/{uid}/kdeinit*
-	//char *fnamekde;
-	//if (asprintf(&fnamekde, "/run/user/%d/kdeinit*", getuid()) == -1)
-	//    errExit("asprintf");
-	//if (stat(fnamekde, &s) == 0)
-	//    disable_file(BLACKLIST_FILE, fnamekde);
-	//free(fnamekde);
-	
-	
-	// disable /run/user/{uid}/pulse
-	/* char *fnamepulse; */
-	/* if (asprintf(&fnamepulse, "/run/user/%d/pulse", getuid()) == -1) */
-	/*     errExit("asprintf"); */
-	/* if (stat(fnamepulse, &s) == 0) */
-	/*     disable_file(BLACKLIST_FILE, fnamepulse); */
-	/* free(fnamepulse); */
-
-	// disable /run/user/{uid}/dconf
-	/* char *fnamedconf; */
-	/* if (asprintf(&fnamedconf, "/run/user/%d/dconf", getuid()) == -1) */
-	/*     errExit("asprintf"); */
-	/* if (stat(fnamedconf, &s) == 0) */
-	/*     disable_file(BLACKLIST_FILE, fnamedconf); */
-	/* free(fnamedconf); */
-
-
-	// dirs in /run/user/{uid}/
-	// using gnome:
-	// bus, dconf, gdm, gnome-shell, gnupg, gvfs, keyring, pulse, systemd
-
-	// using kde:
-	// kdeinit__0, ...
-		
-	// more files with sockets to be blacklisted
-	// /run/dbus /run/systemd /run/udev /run/lvm
-
-	// /run/user/{uid} does not exist on some systems, usually used and created by desktop applications
-	
-#endif
-
 	if (getuid() != 0) {
 		// disable /dev/kmsg and /proc/kmsg
 		disable_file(BLACKLIST_FILE, "/dev/kmsg");

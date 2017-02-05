@@ -17,6 +17,9 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
+#ifdef HAVE_GIT_INSTALL
+ 
 #include "firejail.h"
 #include <sys/utsname.h>
 #include <sched.h>
@@ -84,3 +87,4 @@ void git_uninstall(void) {
 	exit(0);
 }
 	
+#endif // HAVE_GIT_INSTALL

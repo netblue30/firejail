@@ -1351,7 +1351,7 @@ Optional Features:
   --enable-busybox-workaround
                           enable busybox workaround
   --enable-gcov           Gcov instrumentation
-  --disable-git-install   disable git install feature
+  --enable-git-install    enable git install feature
 
 Some influential environment variables:
   CC          C compiler command
@@ -3103,6 +3103,7 @@ if test "x$enable_apparmor" = "xyes"; then :
 fi
 
 
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -3713,19 +3714,19 @@ if test "x$enable_gcov" = "xyes"; then :
 
 fi
 
+
 HAVE_GIT_INSTALL=""
 # Check whether --enable-git-install was given.
 if test "${enable_git_install+set}" = set; then :
   enableval=$enable_git_install;
 fi
 
-if test "x$enable_git_install" != "xno"; then :
+if test "x$enable_git_install" = "xyes"; then :
 
 	HAVE_GIT_INSTALL="-DHAVE_GIT_INSTALL"
 
 
 fi
-
 
 # checking pthread library
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5

@@ -2143,6 +2143,12 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
+		else if (strcmp(argv[i], "--git-install") == 0 ||
+			strcmp(argv[i], "--git-uninstall") == 0) {
+			fprintf(stderr, "This feature is not enabled in the current build\n");
+			exit(1);
+		}
+		
 		else if (strcmp(argv[i], "--") == 0) {
 			// double dash - positional params to follow
 			arg_doubledash = 1;

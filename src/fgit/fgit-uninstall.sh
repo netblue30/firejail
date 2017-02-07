@@ -6,7 +6,7 @@ set -e		# exit immediately if one of the commands fails
 cd /tmp		# by the time we start this, we should have a tmpfs mounted on top of /tmp
 git clone --depth=1 https://www.github.com/netblue30/firejail.git
 cd firejail
-./configure
+./configure --enable-git-install
 sudo make uninstall
 echo "**********************************************************************"
 echo "Firejail mainline git version uninstalled from /usr/local"

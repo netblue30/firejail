@@ -70,7 +70,9 @@ static int pid_is_firejail(pid_t pid) {
 			errExit("asprintf");
 		if ((fd = open(fname, O_RDONLY)) < 0) {
 			free(fname);
-			rv = 0;
+#ifdef DEBUG_PRCTL
+			printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
+#endif
 			goto doexit;
 		}
 		free(fname);
@@ -81,7 +83,9 @@ static int pid_is_firejail(pid_t pid) {
 		ssize_t len;
 		if ((len = read(fd, buffer, sizeof(buffer) - 1)) <= 0) {
 			close(fd);
-			rv = 0;
+#ifdef DEBUG_PRCTL
+			printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
+#endif
 			goto doexit;
 		}
 		buffer[len] = '\0';
@@ -89,8 +93,12 @@ static int pid_is_firejail(pid_t pid) {
 	
 		// list of firejail arguments that don't trigger sandbox creation
 		// the initial -- is not included 
-		char *firejail_args = "ls list tree x11 help version top netstats debug-syscalls debug-errnos debug-protocols "
-			"protocol.print debug.caps shutdown bandwidth caps.print cpu.print debug-caps fs.print get overlay-clean ";
+		char *exclude_args[] = {
+			"ls", "list", "tree", "x11", "help", "version", "top", "netstats", "debug-syscalls",
+			"debug-errnos", "debug-protocols", "protocol.print",  "debug.caps", 
+			"shutdown", "bandwidth", "caps.print", "cpu.print", "debug-caps",
+			"fs.print", "get", "overlay-clean", NULL
+		};
 		
 		int i;
 		char *start;
@@ -105,16 +113,26 @@ static int pid_is_firejail(pid_t pid) {
 			}
 			if (strncmp(start, "--", 2) != 0)
 				break;
+			start += 2;
 			
 			// clan starting with =
-			char *ptr = strchr(start + 2, '=');
+			char *ptr = strchr(start, '=');
 			if (ptr)
 				*ptr = '\0';
 			
-			if (strstr(firejail_args, start + 2)) {
-				rv = 0;
-				break;
+			// look into exclude list
+			int j = 0;
+			while (exclude_args[j] != NULL) {
+				if (strcmp(start, exclude_args[j]) == 0) {
+					rv = 0;
+#ifdef DEBUG_PRCTL
+printf("start=#%s#,  ptr=#%s#, flip rv %d\n", start, ptr, rv);				
+#endif
+					break;
+				}
+				j++;
 			}
+			
 			start = (char *) buffer + i + 1;
 		}
 	}

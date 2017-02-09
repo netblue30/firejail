@@ -648,6 +648,11 @@ char *expand_home(const char *path, const char* homedir) {
 			errExit("asprintf");
 		return new_name;
 	}
+	else if (strncmp(path, "${CFG}", 6) == 0) {
+		if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
+			errExit("asprintf");
+		return new_name;
+	}
 
 	char *rv = strdup(path);
 	if (!rv)

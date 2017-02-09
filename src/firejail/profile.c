@@ -1013,8 +1013,23 @@ void profile_read(const char *fname) {
 		exit(1);	
 	}
 
+	// check file
 	if (strlen(fname) == 0) {
 		fprintf(stderr, "Error: invalid profile file\n");
+		exit(1);
+	}
+	invalid_filename(fname);
+	if (is_dir(fname) || is_link(fname) || strstr(fname, "..")) {
+		fprintf(stderr, "Error: invalid profile file\n");
+		exit(1);
+	}
+	if (access(fname, R_OK)) {
+		// if the file ends in ".local", do not exit
+		char *ptr = strstr(fname, ".local");
+		if (ptr && strlen(ptr) == 6)
+			return;
+		
+		fprintf(stderr, "Error: cannot access profile file\n");
 		exit(1);
 	}
 
@@ -1027,15 +1042,10 @@ void profile_read(const char *fname) {
 				return;
 		}
 	}
-
+	
 	// open profile file:
 	FILE *fp = fopen(fname, "r");
 	if (fp == NULL) {
-		// if the file ends in ".local", do not exit
-		char *ptr = strstr(fname, ".local");
-		if (ptr && strlen(ptr) == 6)
-			return;
-		
 		fprintf(stderr, "Error: cannot open profile file %s\n", fname);
 		exit(1);
 	}

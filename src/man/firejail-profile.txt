@@ -81,14 +81,20 @@ Include other.profile file.
 
 Example: "include /etc/firejail/disable-common.inc"
 
-other.profile file name can be prefixed with ${HOME}. This will force Firejail to look for the
-file in user home directory.
+The file name can be prefixed with a macro such as ${HOME} or ${CFG}.
+${HOME} is expanded as user home directory, and ${CFG} is expanded as
+Firejail system configuration directory - in most cases /etc/firejail or
+/usr/local/etc/firejail.
 
 Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1" file.
 
-If the file is not found, and the file name does not end in ".local", the sandbox exist immediately
-with an error printed on stderr. ".local" files can be used to customize the global configuration
-in /etc/firejail directory. These files are not overwritten during software install.
+Example: "include ${CFG}/firefox.profile" will load "/etc/firejail/firefox.profile" file.
+
+System configuration files in ${CFG} are overwritten during software installation.
+Persistent configuration at system level is handled in ".local" files. For every
+profile file in ${CFG} directory, the user can create a corresponding .local file 
+storing modifications to the persistent configuration. Persistent .local files
+are included at the start of regular profile files.
 
 .TP
 \fBnoblacklist file_name

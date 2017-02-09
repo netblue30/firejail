@@ -1362,6 +1362,8 @@ int main(int argc, char **argv) {
 		}
 #endif
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
+			// multiple profile files are allowed!
+
 			if (arg_noprofile) {
 				fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");
 				exit(1);
@@ -1370,19 +1372,6 @@ int main(int argc, char **argv) {
 			char *ppath = expand_home(argv[i] + 10, cfg.homedir);
 			if (!ppath)
 				errExit("strdup");
-			invalid_filename(ppath);
-			
-			// multiple profile files are allowed!
-			if (is_dir(ppath) || is_link(ppath) || strstr(ppath, "..")) {
-				fprintf(stderr, "Error: invalid profile file\n");
-				exit(1);
-			}
-			
-			// access call checks as real UID/GID, not as effective UID/GID
-			if (access(ppath, R_OK)) {
-				fprintf(stderr, "Error: cannot access profile file\n");
-				return 1;
-			}
 
 			profile_read(ppath);
 			custom_profile = 1;

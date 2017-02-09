@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/flashpeak-slimjet.local
+
 # SlimJet browser profile
 # This is a whitelisted profile, the internal browser sandbox
 # is disabled because it requires sudo password. The command

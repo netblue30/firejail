@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/google-play-music-desktop-player.local
+
 # Google Play Music desktop player profile
 noblacklist ~/.config/Google Play Music Desktop Player
 

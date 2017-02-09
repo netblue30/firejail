@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/deluge.local
+
 # deluge bittorrernt client profile
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

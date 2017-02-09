@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/totem.local
+
 # Totem media player profile
 noblacklist ~/.config/totem
 noblacklist ~/.local/share/totem

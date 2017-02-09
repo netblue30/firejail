@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/qutebrowser.local
+
 # Firejail profile for Qutebrowser (Qt5-Webkit+Python) browser
 noblacklist ~/.config/qutebrowser
 noblacklist ~/.cache/qutebrowser

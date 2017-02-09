@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/wireshark.local
+
 # Firejail profile for 
 noblacklist ${HOME}/.config/wireshark
 

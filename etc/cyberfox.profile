@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/cyberfox.local
+
 # Firejail profile for Cyberfox (based on Mozilla Firefox)
 noblacklist ~/.8pecxstudios
 noblacklist ~/.cache/8pecxstudios

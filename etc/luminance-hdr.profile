@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/luminance-hdr.local
+
 # luminance-hdr
 noblacklist ${HOME}/.config/Luminance
 include /etc/firejail/disable-common.inc

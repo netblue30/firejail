@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/atril.local
+
 # Atril profile
 noblacklist ~/.config/atril
 noblacklist ~/.local/share

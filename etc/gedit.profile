@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/gedit.local
+
 # gedit profile
 
 # when gedit is started via gnome-shell, firejail is not applied because systemd will start it

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/mupen64plus.local
+
 # mupen64plus profile
 # manually whitelist ROM files
 noblacklist ${HOME}/.config/mupen64plus

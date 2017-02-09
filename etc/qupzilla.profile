@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/qupzilla.local
+
 # Firejail profile for Qupzilla web browser
 noblacklist ${HOME}/.config/qupzilla
 noblacklist ${HOME}/.cache/qupzilla

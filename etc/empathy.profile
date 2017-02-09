@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/empathy.local
+
 # Empathy instant messaging profile
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

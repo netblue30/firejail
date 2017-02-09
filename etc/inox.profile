@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/inox.local
+
 # Inox browser profile
 noblacklist ~/.config/inox
 noblacklist ~/.cache/inox

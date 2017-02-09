@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/slack.local
+
 # Firejail profile for Slack
 noblacklist ${HOME}/.config/Slack
 noblacklist ${HOME}/Downloads

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/uzbl-browser.local
+
 # Firejail profile for uzbl-browser
 
 noblacklist ~/.config/uzbl

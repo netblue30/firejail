@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/start-tor-browser.local
+
 # Firejail profile for the Tor Brower Bundle
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/xreader.local
+
 # Xreader profile
 noblacklist ~/.config/xreader
 noblacklist ~/.cache/xreader

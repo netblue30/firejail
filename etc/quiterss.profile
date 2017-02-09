@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/quiterss.local
+
 noblacklist ${HOME}/.cache/QuiteRss
 noblacklist ${HOME}/.config/QuiteRss
 noblacklist ${HOME}/.config/QuiteRssrc

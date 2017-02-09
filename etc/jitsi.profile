@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/jitsi.local
+
 # Firejail profile for jitsi
 noblacklist ~/.jitsi
 include /etc/firejail/disable-common.inc

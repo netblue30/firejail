@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/eom.local
+
 # Firejail profile for Eye of Mate (eom)
 noblacklist ~/.config/mate/eom
 

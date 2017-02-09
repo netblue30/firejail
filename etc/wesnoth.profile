@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/wesnoth.local
+
 # Whitelist-based profile for "Battle for Wesnoth" (game).
 noblacklist ${HOME}/.config/wesnoth
 noblacklist ${HOME}/.cache/wesnoth

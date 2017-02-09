@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/vlc.local
+
 # VLC media player profile
 noblacklist ${HOME}/.config/vlc
 

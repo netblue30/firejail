@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/steam.local
+
 # Steam profile (applies to games/apps launched from Steam as well)
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.local/share/steam

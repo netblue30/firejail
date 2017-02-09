@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/uget-gtk.local
+
 # uGet profile
 noblacklist ${HOME}/.config/uGet
 

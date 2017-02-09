@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/unbound.local
+
 # security profile for unbound (https://unbound.net)
 noblacklist /sbin
 noblacklist /usr/sbin

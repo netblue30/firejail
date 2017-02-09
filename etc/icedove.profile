@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/icedove.local
+
 # Firejail profile for Mozilla Thunderbird (Icedove in Debian Stable)
 # Users have icedove set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories

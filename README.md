@@ -22,6 +22,10 @@ $ firejail transmission-gtk   # starting Transmission BitTorrent
 $ firejail vlc                # starting VideoLAN Client
 $ sudo firejail /etc/init.d/nginx start
 `````
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/Yk1HVPOeoTc/0.jpg)](http://www.youtube.com/watch?v=Yk1HVPOeoTc)
+
+
 Project webpage: https://firejail.wordpress.com/
 
 Download and Installation: https://firejail.wordpress.com/download-2/
@@ -35,6 +39,13 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 `````
 
 `````
+## Compile and install
+`````
+$ git clone https://github.com/netblue30/firejail.git
+$ cd firejail
+$ ./configure && make && sudo make install-strip
+`````
+
 ## User submitted profile repositories
 
 If you keep your Firejail profiles in a public repository, please give us a link:

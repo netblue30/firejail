@@ -23,7 +23,7 @@ $ firejail vlc                # starting VideoLAN Client
 $ sudo firejail /etc/init.d/nginx start
 `````
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/Yk1HVPOeoTc/0.jpg)](http://www.youtube.com/watch?v=Yk1HVPOeoTc)
+[![About Firejail](video.png)](http://www.youtube.com/watch?v=Yk1HVPOeoTc)
 
 
 Project webpage: https://firejail.wordpress.com/

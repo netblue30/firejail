@@ -585,7 +585,7 @@ int sandbox(void* sandbox_arg) {
 #endif	
 
 	// trace pre-install
-	if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+	if (arg_trace || arg_tracelog)
 		fs_trace_preload();
 
 	// store hosts file
@@ -622,7 +622,7 @@ int sandbox(void* sandbox_arg) {
 		//****************************
 		// trace pre-install, this time inside chroot
 		//****************************
-		if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+		if (arg_trace || arg_tracelog)
 			fs_trace_preload();
 	}
 	else 
@@ -685,7 +685,7 @@ int sandbox(void* sandbox_arg) {
 		else {
 			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
 			// create /etc/ld.so.preload file again
-			if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+			if (arg_trace || arg_tracelog)
 				fs_trace_preload();
 		}
 	}
@@ -742,7 +742,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	
 	//****************************
 	// hosts and hostname
 	//****************************
@@ -757,13 +756,13 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	if (arg_netns)
 		netns_mounts(arg_netns);
-	
+
 	//****************************
 	// update /proc, /sys, /dev, /boot directorymy
 	//****************************
 	if (checkcfg(CFG_REMOUNT_PROC_SYS))
 		fs_proc_sys_dev_boot();
-	
+
 	//****************************
 	// apply the profile file
 	//****************************
@@ -774,14 +773,15 @@ int sandbox(void* sandbox_arg) {
 		fprintf(stderr, "Warning: whitelist feature is disabled in overlay\n");
 	else
 		fs_whitelist();
-	
+
+
 	// ... followed by blacklist commands
 	fs_blacklist(); // mkdir and mkfile are processed all over again
-	
+
 	//****************************
 	// install trace
 	//****************************
-	if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+	if (arg_trace || arg_tracelog)
 		fs_trace();
 		
 	//****************************
@@ -850,7 +850,7 @@ int sandbox(void* sandbox_arg) {
 	fs_x11();
 	if (arg_x11_xorg)
 		x11_xorg();
-	
+
 	//****************************
 	// set security filters
 	//****************************

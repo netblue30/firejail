@@ -1,6 +1,6 @@
 all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect src/fnet src/fseccomp src/fcopy
+APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fcopy
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
 SECCOMP_FILTERS = seccomp seccomp.i386 seccomp.amd64
 
@@ -79,7 +79,6 @@ realinstall:
 	install -m 0755 -d $(DESTDIR)/$(libdir)/firejail
 	install -c -m 0644 src/libtrace/libtrace.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/libtracelog/libtracelog.so $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 src/libconnect/libconnect.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fgit/fgit-install.sh $(DESTDIR)/$(libdir)/firejail/.
@@ -142,7 +141,6 @@ install-strip: all
 	strip src/firecfg/firecfg
 	strip src/libtrace/libtrace.so
 	strip src/libtracelog/libtracelog.so
-	strip src/libconnect/libconnect.so
 	strip src/ftee/ftee
 	strip src/faudit/faudit
 	strip src/fnet/fnet
@@ -280,4 +278,4 @@ test-overlay:
 
 test-all: test-root test-chroot test-network test-appimage test-overlay
 	echo "TEST COMPLETE"
-	
+

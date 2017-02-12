@@ -605,11 +605,33 @@ void wait_for_other(int fd) {
 		*ptr = '\0';
 	}
 	else {
-		fprintf(stderr, "Error: cannot establish communication with the parent, exiting...\n");
+		fprintf(stderr, "Error: proc %d cannot sync with peer: %s\n",
+			getpid(), ferror(stream) ? strerror(errno) : "unexpected EOF");
+
+		int status = 0;
+		pid_t pid = wait(&status);
+		if (pid != -1) {
+			if (WIFEXITED(status))
+				fprintf(stderr, "Peer %d unexpectedly exited with status %d\n",
+					pid, WEXITSTATUS(status));
+			else if (WIFSIGNALED(status))
+				fprintf(stderr, "Peer %d unexpectedly killed (%s)\n",
+					pid, strsignal(WTERMSIG(status)));
+			else
+				fprintf(stderr, "Peer %d unexpectedly exited "
+					"(un-decodable wait status %04x)\n", pid, status);
+		}
 		exit(1);
 	}
+
 	if (strcmp(childstr, "arg_noroot=0") == 0)
 		arg_noroot = 0;
+	else if (strcmp(childstr, "arg_noroot=1") == 0)
+		arg_noroot = 1;
+	else {
+		fprintf(stderr, "Error: unexpected message from peer: %s\n", childstr);
+		exit(1);
+	}
 
 	fclose(stream);
 }
@@ -910,4 +932,188 @@ errexit:
 	close(fd);
 	fprintf(stderr, "Error: cannot read %s\n", fname);
 	exit(1);
+}
+
+static int pass_to_reinvocation(const char *arg) {
+        // Reinvocations use a different primary profile than the default, so
+        // we do not pass down any options that could be set in a profile.
+        // We also don't pass down any options that would normally cause the
+        // program to do something other than run a sandbox.
+        if (!strcmp(arg, "--allow-debuggers") ||
+            !strncmp(arg, "--audit", 7) ||
+            !strcmp(arg, "--debug") ||
+            !strcmp(arg, "--debug-blacklists") ||
+            !strcmp(arg, "--debug-check-filename") ||
+            !strcmp(arg, "--debug-whitelists") ||
+            !strcmp(arg, "--quiet") ||
+            !strcmp(arg, "--trace") ||
+            !strcmp(arg, "--tracelog"))
+                return 1;
+        else
+                return 0;
+}
+
+void prepare_self_reinvocation(int *p_argc_used, int *p_argc_alloc, char ***p_argv,
+                               int parent_argc, char **parent_argv) {
+        int argc_used  = *p_argc_used;
+        int argc_alloc = *p_argc_alloc;
+        char **argv    = *p_argv;
+        assert(argc_used == 0);
+        assert(argc_alloc == 0);
+        assert(argv == 0);
+
+        // one for the firejail executable at the beginning, and one
+        // for "--" at the end
+        argc_used = 2;
+
+        for (int i = 1; i < parent_argc; i++)
+                if (pass_to_reinvocation(parent_argv[i]))
+                        argc_used++;
+
+        // leave room for at least eight more arguments
+        argc_alloc = argc_used + 8;
+
+        argv = calloc(argc_alloc, sizeof(char *));
+        if (!argv)
+                errExit("calloc");
+
+        argv[0] = parent_argv[0];
+        int j = 1;
+        for (int i = 1; i < parent_argc; i++)
+                if (pass_to_reinvocation(parent_argv[i]))
+                        argv[j++] = parent_argv[i];
+
+        argv[j++] = "--";
+        assert(j == argc_used);
+        assert(j < argc_alloc);
+        assert(argv[j] == 0);
+
+        *p_argc_used  = argc_used;
+        *p_argc_alloc = argc_alloc;
+        *p_argv       = argv;
+}
+
+// Split up 'cmdline', using a reasonably close approximation to
+// Bourne shell's default "word splitting" rules, and append all of
+// the words to the argument vector described by the first three
+// arguments.  All of the new pointers appended to 'argv' point into a
+// _single_ allocation which is a modified copy of 'cmdline'; caller
+// should not pass any of those pointers to free().
+void append_cmdline_to_argv(int *p_argc_used, int *p_argc_alloc,
+			    char ***p_argv, const char *cmdline) {
+	int argc_used  = *p_argc_used;
+	int argc_alloc = *p_argc_alloc;
+	char **argv    = *p_argv;
+
+	assert(cmdline);
+	char *xcmdline = strdup(cmdline);
+	if (!xcmdline)
+		errExit("strdup");
+
+	if (argc_alloc == 0 || argv == 0) {
+		assert(argc_used == 0 && argc_alloc == 0 && argv == 0);
+		argc_alloc = 4;
+		argv = malloc(argc_alloc * sizeof(char *));
+		if (!argv)
+			errExit("malloc");
+	}
+
+	char *word = xcmdline, *p, *q;
+	int in_squote = 0;
+	int in_dquote = 0;
+	while (*word) {
+		// skip initial whitespace
+		// default IFS setting for sh is space, tab, newline, and
+		// no others
+		while (*word == ' ' || *word == '\t' || *word == '\n')
+			word++;
+		if (*word == '\0')
+			break;
+
+		q = p = word;
+		while (*p) {
+			if (*p == '\\' && !in_squote) {
+				p++;
+				if (*p == '\0')
+					// A live backslash at EOF is
+					// _not_ a syntax error for sh.
+					*q++ = '\\';
+				else
+					*q++ = *p++;
+			}
+			else if (*p == '"' && !in_squote) {
+				in_dquote = !in_dquote;
+				p++;
+			}
+			else if (*p == '\'' && !in_dquote) {
+				in_squote = !in_squote;
+				p++;
+			}
+			else if ((*p == ' ' || *p == '\t' || *p == '\n')
+				 && !in_squote && !in_dquote) {
+				p++;
+				break;
+			}
+			else
+				*q++ = *p++;
+		}
+		// An unclosed quoted-word at EOF _is_ a syntax error for sh.
+		if (in_squote || in_dquote) {
+			fprintf(stderr, "unclosed quoted-word in %s\n", cmdline);
+			exit(1);
+		}
+
+		// at this point, 'word' points to the next dequoted
+		// token to append to the command line, 'q' points one
+		// character past its end, and 'p' points to the
+		// beginning of the next token, if any.
+		*q = '\0';
+		if (argc_used == argc_alloc) {
+			argc_alloc *= 2;
+			argv = realloc(argv, argc_alloc * sizeof(char *));
+			if (!argv)
+				errExit("realloc");
+		}
+		argv[argc_used++] = word;
+
+		word = p;
+	}
+
+	if (argc_used == argc_alloc) {
+		argc_alloc *= 2;
+		argv = realloc(argv, argc_alloc * sizeof(char *));
+		if (!argv)
+			errExit("realloc");
+	}
+	argv[argc_used] = 0;
+	*p_argc_used  = argc_used;
+	*p_argc_alloc = argc_alloc;
+	*p_argv	      = argv;
+}
+
+void debug_print_argv(int argc, char **argv, const char *label) {
+	if (!arg_debug)
+		return;
+
+	fputs(label, stdout);
+	for (int i = 0; i < argc; i++) {
+		putchar(' ');
+		for (size_t j = 0; ; j++) {
+			char c = argv[i][j];
+			if (!c)
+				break;
+			else if (c == '\'' || c == '"' || c == '\\' || c == ' ') {
+				putchar('\\');
+				putchar(c);
+			}
+			else if (c < ' ' || c > '~')
+				// Casting directly to unsigned int, or casting to unsigned char but
+				// not to unsigned int, can and will cause undesired sign-extension.
+				printf("\\x%02x", (unsigned int)(unsigned char)c);
+			else
+				putchar(c);
+		}
+	}
+	putchar('\n');
+	fflush(stdout);
 }

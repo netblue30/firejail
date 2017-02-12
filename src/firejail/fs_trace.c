@@ -60,9 +60,6 @@ void fs_trace(void) {
 			printf("Blacklist violations are logged to syslog\n");
 	}	
 
-	if (mask_x11_abstract_socket)
-		fprintf(fp, "%s/firejail/libconnect.so\n", LIBDIR);
-
 	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	fclose(fp);
 	

@@ -6,6 +6,7 @@
 *.gcda
 *.gcno
 Makefile
+autom4te.cache/
 config.log
 config.status
 firejail-login.5

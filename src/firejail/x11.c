@@ -20,6 +20,8 @@
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
@@ -27,604 +29,714 @@
 #include <dirent.h>
 #include <sys/mount.h>
 #include <sys/wait.h>
-int mask_x11_abstract_socket = 0;
+#include <errno.h>
+#include <limits.h>
+
+// Parse the DISPLAY environment variable and return a display number.
+// Returns -1 if DISPLAY is not set, or is set to anything other than :ddd.
+int x11_display(void) {
+        const char *display_str = getenv("DISPLAY");
+        char *endp;
+        unsigned long display;
+
+        if (!display_str) {
+                if (arg_debug)
+                        fputs("DISPLAY is not set\n", stderr);
+                return -1;
+        }
+
+        if (display_str[0] != ':' || display_str[1] < '0' || display_str[1] > '9') {
+                if (arg_debug)
+                        fprintf(stderr, "unsupported DISPLAY form '%s'\n", display_str);
+                return -1;
+        }
+
+        errno = 0;
+        display = strtoul(display_str+1, &endp, 10);
+        if (endp == display_str+1 || *endp != '\0') {
+                if (arg_debug)
+                        fprintf(stderr, "unsupported DISPLAY form '%s'\n", display_str);
+                return -1;
+        }
+        if (errno || display > (unsigned long)INT_MAX) {
+                if (arg_debug)
+                        fprintf(stderr, "display number %s is outside the valid range\n",
+                                display_str+1);
+                return -1;
+        }
+
+        if (arg_debug)
+                fprintf(stderr, "DISPLAY=%s parsed as %lu\n", display_str, display);
+
+        return (int)display;
+}
 
 #ifdef HAVE_X11
-// return 1 if xpra is installed on the system
-static int x11_check_xpra(void) {
-	struct stat s;
-	
-	// check xpra
-	if (stat("/usr/bin/xpra", &s) == -1)
-		return 0;
-
-	return 1;
-}
-
-// return 1 if xephyr is installed on the system
-static int x11_check_xephyr(void) {
-	struct stat s;
-	
-	// check xephyr
-	if (stat("/usr/bin/Xephyr", &s) == -1)
-		return 0;
-
-	return 1;
-}
-
 // check for X11 abstract sockets
 static int x11_abstract_sockets_present(void) {
-	char *path;
 
 	EUID_ROOT(); // grsecurity fix
 	FILE *fp = fopen("/proc/net/unix", "r");
-	EUID_USER();
-
 	if (!fp)
 		errExit("fopen");
+	EUID_USER();
 
-	while (fscanf(fp, "%*s %*s %*s %*s %*s %*s %*s %ms\n", &path) != EOF) {
-		if (path && strncmp(path, "@/tmp/.X11-unix/", 16) == 0) {
-			free(path);
-			fclose(fp);
-			return 1;
+	char *linebuf = 0;
+        size_t bufsz = 0;
+        int found = 0;
+        errno = 0;
+
+	for (;;) {
+                if (getline(&linebuf, &bufsz, fp) == -1) {
+                        if (errno)
+                                errExit("getline");
+                        break;
+                }
+                // The last space-separated field in 'linebuf' is the
+                // pathname of the socket.  Abstract sockets' pathnames
+                // all begin with '@/', normal ones begin with '/'.
+                char *p = strrchr(linebuf, ' ');
+                if (!p) {
+                        fputs("error parsing /proc/net/unix\n", stderr);
+                        exit(1);
+                }
+                if (strncmp(p+1, "@/tmp/.X11-unix/", 16) == 0) {
+                        found = 1;
+                        break;
 		}
 	}
 
-	free(path);
+	free(linebuf);
 	fclose(fp);
-
-	return 0;
+	return found;
 }
 
+// Choose a random, unallocated display number.  This has an inherent
+// and unavoidable TOCTOU race, since we cannot create either the
+// socket or a lockfile ourselves.
 static int random_display_number(void) {
-	int i;
-	int found = 1;
-	int display;
-	for (i = 0; i < 100; i++) {
-		display = rand() % 1024;
-		if (display < 10)
-			continue;
-		char *fname;
-		if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
-			errExit("asprintf");
-		struct stat s;
-		if (stat(fname, &s) == -1) {
-			found = 1;
-			break;
-		}
+        int display;
+        int found = 0;
+
+        struct sockaddr_un sa;
+        // The -1 here is because we need space to inject a
+        // leading nul byte.
+        int sun_pathmax = (int)(sizeof sa.sun_path - 1);
+        assert((size_t)sun_pathmax == sizeof sa.sun_path - 1);
+        int sun_pathlen;
+
+        int sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+        if (sockfd == -1)
+                errExit("socket");
+
+	for (int i = 0; i < 100; i++) {
+                // We try display numbers in the range 21 through 1000.
+                // Normal X servers typically use displays in the 0-10 range;
+                // ssh's X11 forwarding uses 10-20, and login screens
+                // (e.g. gdm3) may use displays above 1000.
+                display = rand() % 979 + 21;
+
+                // The display number might be claimed by a server listening
+                // in _either_ the normal or the abstract namespace; they
+                // don't necessarily do both.  The easiest way to check is
+                // to try to connect, both ways.
+                memset(&sa, 0, sizeof sa);
+                sa.sun_family = AF_UNIX;
+                sun_pathlen = snprintf(sa.sun_path, sun_pathmax,
+                                       "/tmp/.X11-unix/X%d", display);
+                if (sun_pathlen >= sun_pathmax) {
+                        fprintf(stderr, "sun_path too small for display :%d"
+                                " (only %d bytes usable)\n", display, sun_pathmax);
+                        exit(1);
+                }
+
+                if (connect(sockfd, (struct sockaddr *)&sa,
+                            offsetof(struct sockaddr_un, sun_path) + sun_pathlen + 1) == 0) {
+                        close(sockfd);
+                        sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+                        if (sockfd == -1)
+                                errExit("socket");
+                        continue;
+                }
+                if (errno != ECONNREFUSED && errno != ENOENT)
+                        errExit("connect");
+
+                // Name not claimed in the normal namespace; now try it
+                // in the abstract namespace.  Note that abstract-namespace
+                // names are NOT nul-terminated; they extend to the length
+                // specified as the third argument to 'connect'.
+                memmove(sa.sun_path + 1, sa.sun_path, sun_pathlen + 1);
+                sa.sun_path[0] = '\0';
+                if (connect(sockfd, (struct sockaddr *)&sa,
+                            offsetof(struct sockaddr_un, sun_path) + 1 + sun_pathlen) == 0) {
+                        close(sockfd);
+                        sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+                        if (sockfd == -1)
+                                errExit("socket");
+                        continue;
+                }
+                if (errno != ECONNREFUSED && errno != ENOENT)
+                        errExit("connect");
+
+                // This display number is unclaimed.  Of course, it could
+                // be claimed before we get around to doing it...
+                found = 1;
+                break;
 	}
+        close(sockfd);
+
 	if (!found) {
-		fprintf(stderr, "Error: cannot pick up a random X11 display number, exiting...\n");
+                fputs("Error: cannot find an unallocated X11 display number, "
+                      "exiting...\n", stderr);
 		exit(1);
 	}
-	
-	return display;
-}
-#endif
-
-// return display number, -1 if not configured
-int x11_display(void) {
-	// extract display
-	char *d = getenv("DISPLAY");
-	if (!d)
-		return - 1;
-	
-	int display;
-	int rv = sscanf(d, ":%d", &display);
-	if (rv != 1)
-		return -1;
-	if (arg_debug)
-		printf("DISPLAY %s, %d\n", d, display);
-	
 	return display;
 }
 
-void fs_x11(void) {
-#ifdef HAVE_X11
-	int display = x11_display();
-	if (display <= 0)
-		return;
-
-	char *x11file;
-	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
-		errExit("asprintf");
-	struct stat s;
-	if (stat(x11file, &s) == -1)
-		return;
-
-	// keep a copy of real /tmp/.X11-unix directory in WHITELIST_TMP_DIR
-	int rv = mkdir(RUN_WHITELIST_X11_DIR, 1777);
-	if (rv == -1)
-		errExit("mkdir");
-	if (set_perms(RUN_WHITELIST_X11_DIR, 0, 0, 1777))
-		errExit("set_perms");
-
-	if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-
-	// mount tmpfs on /tmp/.X11-unix
-	if (arg_debug || arg_debug_whitelists)
-		printf("Mounting tmpfs on /tmp/.X11-unix directory\n");
-	if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-		errExit("mounting tmpfs on /tmp");
-	fs_logger("tmpfs /tmp/.X11-unix");
-
-	// create an empty file
-	/* coverity[toctou] */
-	FILE *fp = fopen(x11file, "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot create empty file in x11 directory\n");
-		exit(1);
-	}
-	// set file properties
-	SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
-	fclose(fp);
-
-	// mount
-	char *wx11file;
-	if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
-		errExit("asprintf");
-	if (mount(wx11file, x11file, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-	 fs_logger2("whitelist", x11file);
-
-	free(x11file);
-	free(wx11file);
-	
-	// block access to RUN_WHITELIST_X11_DIR
-	 if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, "none", MS_BIND, "mode=400,gid=0") == -1)
-	 	errExit("mount");
-	 fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
-#endif
+static void squelch_output_when_quiet(void) {
+        int fd_null = open("/dev/null", O_RDWR);
+        if (fd_null == -1)
+                errExit("open");
+        // stdin is always redirected from /dev/null
+        dup2(fd_null, 0);
+        // stdout and stderr are redirected to /dev/null when --quiet is in effect
+        if (arg_quiet) {
+                dup2(fd_null, 1);
+                dup2(fd_null, 2);
+        }
+        close(fd_null);
 }
 
+static pid_t run_jailed_subprocess(int parent_argc, char **parent_argv,
+                                   const char *cmdline, const char *label) {
 
-#ifdef HAVE_X11
-//$ Xephyr -ac -br -noreset -screen 800x600 :22 &
-//$ DISPLAY=:22 firejail --net=eth0 --blacklist=/tmp/.X11-unix/x0 firefox
-void x11_start_xephyr(int argc, char **argv) {
-	EUID_ASSERT();
-	int i;
-	struct stat s;
-	pid_t jail = 0;
-	pid_t server = 0;
-	
+        // safety check - caller should have used drop_privs
+        assert(getenv("LD_PRELOAD") == NULL);
+        assert(geteuid() == getuid());
+
+        fflush(0);
+        pid_t child = fork();
+        if (child < 0)
+                errExit("fork");
+        else if (child > 0)
+                return child;
+
+        // Control reaches this point only in the child process.
+        // Assembly of the command line is done here so we don't have
+        // to worry about deallocating it.
+        int argc_used = 0;
+        int argc_alloc = 0;
+        char **argv = 0;
+        prepare_self_reinvocation(&argc_used, &argc_alloc, &argv, parent_argc, parent_argv);
+        append_cmdline_to_argv(&argc_used, &argc_alloc, &argv, cmdline);
+        debug_print_argv(argc_used, argv, label);
+
+        squelch_output_when_quiet();
+        execvp(argv[0], argv);
+        perror(argv[0]);
+
+#ifdef HAVE_GCOV
+        __gcov_flush();
+#endif
+        _exit(127);
+}
+
+static pid_t run_jailed_subprocess_with_x11_display(int parent_argc, char **parent_argv,
+                                                    const char *cmdline, int display,
+                                                    const char *label) {
+
+        // safety check - caller should have used drop_privs
+        assert(getenv("LD_PRELOAD") == NULL);
+        assert(geteuid() == getuid());
+
+        fflush(0);
+        pid_t child = fork();
+        if (child < 0)
+                errExit("fork");
+        else if (child > 0)
+                return child;
+
+        // Control reaches this point only in the child process.
+        // Assembly of the command line is done here so we don't have
+        // to worry about deallocating it.
+
+        char *display_str;
+        if (asprintf(&display_str, ":%d", display) == -1)
+                errExit("asprintf");
+
+	setenv("DISPLAY", display_str, 1);
 	setenv("FIREJAIL_X11", "yes", 1);
 
-	// unfortunately, xephyr does a number of weird things when started by root user!!!
-	if (getuid() == 0) {
-		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
-		exit(1);
-	}
-	drop_privs(0);
+        int argc_used = 0;
+        int argc_alloc = 0;
+        char **argv = 0;
+        prepare_self_reinvocation(&argc_used, &argc_alloc, &argv, parent_argc, parent_argv);
+        append_cmdline_to_argv(&argc_used, &argc_alloc, &argv, cmdline);
+        debug_print_argv(argc_used, argv, label);
 
-	// check xephyr
-	if (x11_check_xephyr() == 0) {
-		fprintf(stderr, "\nError: Xephyr program was not found in /usr/bin directory, please install it:\n");
-		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n");
-		fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xephyr\n");
-		exit(0);
-	}
-	
-	int display = random_display_number();
-	char *display_str;
-	if (asprintf(&display_str, ":%d", display) == -1)
-		errExit("asprintf");
+        squelch_output_when_quiet();
+        execvp(argv[0], argv);
+        perror(argv[0]);
 
-	assert(xephyr_screen);
-	char *server_argv[256] = { "Xephyr", "-ac", "-br", "-noreset", "-screen", xephyr_screen }; // rest initialyzed to NULL
-	unsigned pos = 0;
-	while (server_argv[pos] != NULL) pos++;
-	if (checkcfg(CFG_XEPHYR_WINDOW_TITLE)) {
-		server_argv[pos++] = "-title";
-		server_argv[pos++] = "firejail x11 sandbox";
-	}
+#ifdef HAVE_GCOV
+        __gcov_flush();
+#endif
+        _exit(127);
+}
 
-	assert(xephyr_extra_params); // should be "" if empty
+static pid_t run_self_with_x11_display(int parent_argc, char **parent_argv,
+                                       int display, char *label) {
 
-	// parse xephyr_extra_params
-	// very basic quoting support
-	char *temp = strdup(xephyr_extra_params);
-	if (*xephyr_extra_params != '\0') {
-		if (!temp)
-			errExit("strdup");
-		bool dquote = false;
-		bool squote = false;
-		for (i = 0; i < (int) strlen(xephyr_extra_params); i++) {
-			if (temp[i] == '\"') {
-				dquote = !dquote;
-				if (dquote) temp[i] = '\0'; // replace closing quote by \0
-			}
-			if (temp[i] == '\'') {
-				squote = !squote;
-				if (squote) temp[i] = '\0'; // replace closing quote by \0
-			}
-			if (!dquote && !squote && temp[i] == ' ') temp[i] = '\0';
-			if (dquote && squote) {
-				fprintf(stderr, "Error: mixed quoting found while parsing xephyr_extra_params\n");
-				exit(1);
-			}
-		}
-		if (dquote) {
-			fprintf(stderr, "Error: unclosed quote found while parsing xephyr_extra_params\n");
-			exit(1);
-		}
+        // safety check - caller should have used drop_privs
+        assert(getenv("LD_PRELOAD") == NULL);
+        assert(geteuid() == getuid());
 
-		for (i = 0; i < (int) strlen(xephyr_extra_params)-1; i++) {
-			if (pos >= (sizeof(server_argv)/sizeof(*server_argv)) - 2) {
-				fprintf(stderr, "Error: arg count limit exceeded while parsing xephyr_extra_params\n");
-				exit(1);
-			}
-			if (temp[i] == '\0' && (temp[i+1] == '\"' || temp[i+1] == '\'')) server_argv[pos++] = temp + i + 2;
-			else if (temp[i] == '\0' && temp[i+1] != '\0') server_argv[pos++] = temp + i + 1;
-		}
-	}
-	
-	server_argv[pos++] = display_str;
-	server_argv[pos++] = NULL;
+        fflush(0);
+        pid_t child = fork();
+        if (child < 0)
+                errExit("fork");
+        else if (child > 0)
+                return child;
 
-	assert(pos < (sizeof(server_argv)/sizeof(*server_argv))); // no overrun
-	assert(server_argv[pos-1] == NULL); // last element is null
-	
-	if (arg_debug) {
-		size_t i = 0;
-		printf("xephyr server:");
-		while (server_argv[i]!=NULL) {
-			printf(" \"%s\"", server_argv[i]);
-			i++;
-		}
-		putchar('\n');
-	}
+        // Control reaches this point only in the child process.
+        // Assembly of the command line is done here so we don't have
+        // to worry about deallocating it.
+        if (!arg_quiet)
+                printf("\n*** Attaching to %s display %d ***\n\n", label, display);
 
-	// remove --x11 arg
-	char *jail_argv[argc+2];
-	int j = 0;
-	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "--x11") == 0)
+        char *display_str;
+        if (asprintf(&display_str, ":%d", display) == -1)
+                errExit("asprintf");
+
+	setenv("DISPLAY", display_str, 1);
+	setenv("FIREJAIL_X11", "yes", 1);
+
+	// remove --x11 arg for self-reinvocation
+	char **jail_argv = calloc(parent_argc+2, sizeof(char *));
+	int i, j = 0;
+	for (i = 0; i < parent_argc; i++) {
+		if (strncmp(parent_argv[i], "--x11", 5) == 0)
 			continue;
-		if (strcmp(argv[i], "--x11=xpra") == 0)
-			continue;
-		if (strcmp(argv[i], "--x11=xephyr") == 0)
-			continue;
-		jail_argv[j] = argv[i];
+		jail_argv[j] = parent_argv[i];
 		j++;
 	}
 	jail_argv[j] = NULL;
+	assert(j < parent_argc+2); // no overrun
+        debug_print_argv(j, jail_argv, "X client:");
+        execvp(jail_argv[0], jail_argv);
+        perror(jail_argv[0]);
 
-	assert(j < argc+2); // no overrun
+#ifdef HAVE_GCOV
+        __gcov_flush();
+#endif
+        _exit(127);
+}
 
-	if (arg_debug) {
-		size_t i = 0;
-		printf("xephyr client:");
-		while (jail_argv[i]!=NULL) {
-			printf(" \"%s\"", jail_argv[i]);
-			i++;
-		}
-		putchar('\n');
-	}
-	
-	server = fork();
-	if (server < 0)
-		errExit("fork");
-	if (server == 0) {
-		if (arg_debug)
-			printf("Starting xephyr...\n");
-
-		// running without privileges - see drop_privs call above
-		assert(getenv("LD_PRELOAD") == NULL);	
-		execvp(server_argv[0], server_argv);
-		perror("execvp");
-		_exit(1);
-	}
-
-	if (arg_debug)
-		printf("xephyr server pid %d\n", server);
-
-	// check X11 socket
+static void wait_for_x11_socket(pid_t server, int display) {
 	char *fname;
-	if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
+	if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1) {
+                kill(server, SIGTERM);
 		errExit("asprintf");
+        }
+
 	int n = 0;
-	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
-	};
-	
-	if (n == 10) {
-		fprintf(stderr, "Error: failed to start xephyr\n");
-		exit(1);
 	}
-	free(fname);
-	
+
 	if (arg_debug) {
             	printf("X11 sockets: "); fflush(0);
             	int rv = system("ls /tmp/.X11-unix");
             	(void) rv;
 	}
 
-	setenv("DISPLAY", display_str, 1);
-	// run attach command
-	jail = fork();
-	if (jail < 0)
-		errExit("fork");
-	if (jail == 0) {
-		if (!arg_quiet)
-			printf("\n*** Attaching to Xephyr display %d ***\n\n", display);
+        if (n == 10) {
+                kill(server, SIGTERM);
+                fprintf(stderr, "Error: X11 socket %s not available after 10 seconds\n", fname);
+                exit(1);
+        }
 
-		// running without privileges - see drop_privs call above
-		assert(getenv("LD_PRELOAD") == NULL);	
-		execvp(jail_argv[0], jail_argv);
-		perror("execvp");
-		_exit(1);
+        free(fname);
+}
+
+static void wait_kill_wait_all(pid_t a, pid_t b, pid_t c) {
+        pid_t pid;
+        while (a != -1 && b != -1 && c != -1) {
+                pid = wait(0);
+
+                if (a == pid) a = -1; else if (a != -1) kill(a, SIGTERM);
+                if (b == pid) b = -1; else if (b != -1) kill(b, SIGTERM);
+                if (c == pid) c = -1; else if (c != -1) kill(c, SIGTERM);
+        }
+}
+
+//$ firejail -- Xephyr -ac -br -noreset -screen 800x600 :22 &
+//$ DISPLAY=:22 firejail --net=eth0 --blacklist=/tmp/.X11-unix/x0 firefox
+void x11_start_xephyr(int argc, char **argv) {
+	pid_t jail = -1;
+	pid_t server = -1;
+        pid_t window_mgr = -1;
+
+	EUID_ASSERT();
+	// unfortunately, xephyr does a number of weird things when started by root user!!!
+	if (getuid() == 0) {
+		fputs("Error: X11 sandboxing is not available when running as root\n", stderr);
+		exit(1);
+	}
+	drop_privs(0);
+
+	// check xephyr
+	if (!program_in_path("Xephyr")) {
+                fputs("\nError: Xephyr program was not found in PATH, please install it:\n"
+                      "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n"
+                      "   Arch: sudo pacman -S xorg-server-xephyr\n", stderr);
+		exit(1);
 	}
 
-	// cleanup
-	free(display_str);
-	free(temp);
+        int outer_display = x11_display();
+        if (outer_display == -1) {
+                fputs("Error: --x11=xephyr requires an 'outer' X11 server to use.\n", stderr);
+                exit(1);
+        }
 
-	// wait for either server or jail termination
-	pid_t pid = wait(NULL);
+	assert(xephyr_screen);
+	assert(xephyr_extra_params); // should be "" if empty
 
-	// see which process terminated and kill other
-	if (pid == server) {
-		kill(jail, SIGTERM);
-	} else if (pid == jail) {
-		kill(server, SIGTERM);
-	}
+	int display = random_display_number();
+	char *xephyr_cmdline;
+	if (asprintf(&xephyr_cmdline,
+                     "Xephyr -ac -br -noreset -screen '%s' %s %s :%d",
+                     xephyr_screen,
+                     checkcfg(CFG_XEPHYR_WINDOW_TITLE) ? "-title 'firejail x11 sandbox'" : "",
+                     xephyr_extra_params,
+                     display) == -1)
+		errExit("asprintf");
 
-	// without this closing Xephyr window may mess your terminal:
-	// "monitoring" process will release terminal before
-	// jail process ends and releases terminal
-	wait(NULL); // fulneral
+        server = run_jailed_subprocess_with_x11_display(argc, argv,
+                                                        xephyr_cmdline, outer_display,
+                                                        "xephyr server:");
+	if (arg_debug)
+		printf("xephyr server pid %d\n", server);
 
+        wait_for_x11_socket(server, display);
+
+        if (x11_window_manager)
+                window_mgr = run_jailed_subprocess_with_x11_display(argc, argv, x11_window_manager,
+                                                                    display, "window manager:");
+
+        jail = run_self_with_x11_display(argc, argv, display, "jailed program:");
+
+        wait_kill_wait_all(server, jail, window_mgr);
 	exit(0);
 }
 
 void x11_start_xpra(int argc, char **argv) {
-	EUID_ASSERT();
-	int i;
-	struct stat s;
-	pid_t client = 0;
-	pid_t server = 0;
-	
-	setenv("FIREJAIL_X11", "yes", 1);
+	pid_t jail = -1;
+	pid_t server = -1;
+        pid_t client = -1;
 
+	EUID_ASSERT();
 	// unfortunately, xpra does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
-		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
+		fputs("Error: X11 sandboxing is not available when running as root\n", stderr);
 		exit(1);
 	}
 	drop_privs(0);
 
 	// check xpra
-	if (x11_check_xpra() == 0) {
-		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
-		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
-		exit(0);
-	}
-	
-	int display = random_display_number();
-	char *display_str;
-	if (asprintf(&display_str, ":%d", display) == -1)
-		errExit("asprintf");
-
-	// build the start command
-	char *server_argv[] = { "xpra", "start", display_str, "--no-daemon",  NULL };
-
-	int fd_null = -1;
-	if (arg_quiet) {
-		fd_null = open("/dev/null", O_RDWR);
-		if (fd_null == -1)
-			errExit("open");
-	}
-
-	// start
-	server = fork();
-	if (server < 0)
-		errExit("fork");
-	if (server == 0) {
-		if (arg_debug)
-			printf("Starting xpra...\n");
-
-		if (arg_quiet && fd_null != -1) {
-			dup2(fd_null,0);
-			dup2(fd_null,1);
-			dup2(fd_null,2);
-		}
-	
-		// running without privileges - see drop_privs call above
-		assert(getenv("LD_PRELOAD") == NULL);	
-		execvp(server_argv[0], server_argv);
-		perror("execvp");
-		_exit(1);
-	}
-
-	// add a small delay, on some systems it takes some time for the server to start
-	sleep(1);
-
-	// check X11 socket
-	char *fname;
-	if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
-		errExit("asprintf");
-	int n = 0;
-	// wait for x11 server to start
-	while (++n < 10) {
-		sleep(1);
-		if (stat(fname, &s) == 0)
-			break;
-	}
-	
-	if (n == 10) {
-		fprintf(stderr, "Error: failed to start xpra\n");
+	if (!program_in_path("xpra")) {
+		fputs("\nError: xpra program was not found in PATH, please install it:\n"
+                      "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n", stderr);
 		exit(1);
 	}
-	free(fname);
-	
-	if (arg_debug) {
-                printf("X11 sockets: "); fflush(0);
-                int rv = system("ls /tmp/.X11-unix");
-                (void) rv;
+
+        int outer_display = x11_display();
+        if (outer_display == -1) {
+                fputs("Error: --x11=xpra requires an 'outer' X11 server to use.\n", stderr);
+                exit(1);
         }
 
-	// build attach command
-	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str, NULL };
+        // xpra doesn't create its own screen, so there is no xpra_screen parameter
+	int display = random_display_number();
+        char *xpra_server_cmdline;
+        if (asprintf(&xpra_server_cmdline, "xpra start :%d --no-daemon %s",
+                     display, xpra_extra_params) == -1)
+                errExit("asprintf");
 
-	// run attach command
-	client = fork();
-	if (client < 0)
-		errExit("fork");
-	if (client == 0) {
-		if (arg_quiet && fd_null != -1) {
-			dup2(fd_null,0);
-			dup2(fd_null,1);
-			dup2(fd_null,2);
-		}
+        // The xpra server does not need to connect to the 'outer' X server.
+        server = run_jailed_subprocess(argc, argv, xpra_server_cmdline, "xpra server:");
+        if (arg_debug)
+                printf("xpra server pid %d\n", server);
 
-		if (!arg_quiet)
-			printf("\n*** Attaching to xpra display %d ***\n\n", display);
+        wait_for_x11_socket(server, display);
 
-		// running without privileges - see drop_privs call above
-		assert(getenv("LD_PRELOAD") == NULL);	
-		execvp(attach_argv[0], attach_argv);
-		perror("execvp");
-		_exit(1);
-	}
+        char *xpra_client_cmdline;
+        if (asprintf(&xpra_client_cmdline, "xpra --title='firejail x11 sandbox' attach :%d",
+                     display) == -1)
+                errExit("asprintf");
 
-	setenv("DISPLAY", display_str, 1);
+        // The xpra *client*, however, *does* need to connect to the 'outer' X server.
+        client = run_jailed_subprocess_with_x11_display(argc, argv, xpra_client_cmdline,
+                                                        outer_display, "xpra client:");
 
-	// build jail command
-	char *firejail_argv[argc+2];
-	int pos = 0;
-	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "--x11") == 0)
-			continue;
-		if (strcmp(argv[i], "--x11=xpra") == 0)
-			continue;
-		if (strcmp(argv[i], "--x11=xephyr") == 0)
-			continue;
-		firejail_argv[pos] = argv[i];
-		pos++;
-	}
-	firejail_argv[pos] = NULL;
+        // xpra doesn't create its own screen, so running a window manager doesn't make sense
+        jail = run_self_with_x11_display(argc, argv, display, "jailed program:");
 
-	assert(pos < (argc+2));
-	assert(!firejail_argv[pos]);
-
-	// start jail
-	pid_t jail = fork();
-	if (jail < 0)
-		errExit("fork");
-	if (jail == 0) {
-		// running without privileges - see drop_privs call above
-		assert(getenv("LD_PRELOAD") == NULL);	
-		if (firejail_argv[0]) // shut up llvm scan-build
-			execvp(firejail_argv[0], firejail_argv);
-		perror("execvp");
-		exit(1);
-	}
-
-	if (!arg_quiet)
-		printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
-
-	sleep(1); // let jail start
-
-	// wait for jail or server to end
-	while (1) {
-		pid_t pid = wait(NULL);
-
-		if (pid == jail) {
-			char *stop_argv[] = { "xpra", "stop", display_str, NULL };
-			pid_t stop = fork();
-			if (stop < 0)
-				errExit("fork");
-			if (stop == 0) {
-				if (arg_quiet && fd_null != -1) {
-					dup2(fd_null,0);
-					dup2(fd_null,1);
-					dup2(fd_null,2);
-				}
-				// running without privileges - see drop_privs call above
-				assert(getenv("LD_PRELOAD") == NULL);	
-				execvp(stop_argv[0], stop_argv);
-				perror("execvp");
-				_exit(1);
-			}
-
-			// wait for xpra server to stop, 10 seconds limit
-			while (++n < 10) {
-				sleep(1);
-				pid = waitpid(server, NULL, WNOHANG);
-				if (pid == server)
-					break;
-			}
-
-			if (arg_debug) {
-				if (n == 10)
-					printf("failed to stop xpra server gratefully\n");
-				else
-					printf("xpra server successfully stopped in %d secs\n", n);
-			}
-			
-			// kill xpra server and xpra client
-			kill(client, SIGTERM);
-			kill(server, SIGTERM);
-			exit(0);
-		}
-		else if (pid == server) {
-			// kill firejail process
-			kill(jail, SIGTERM);
-			// kill xpra client (should die with server, but...)
-			kill(client, SIGTERM);
-			exit(0);
-		}
-	}
+        wait_kill_wait_all(server, client, jail);
+        exit(0);
 }
 
 void x11_start(int argc, char **argv) {
-	EUID_ASSERT();
-
-	// unfortunately, xpra does a number of weird things when started by root user!!!
-	if (getuid() == 0) {
-		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
-		exit(1);
-	}
-
-	// check xpra
-	if (x11_check_xpra() == 1)
+	if (program_in_path("xpra"))
 		x11_start_xpra(argc, argv);
-	else if (x11_check_xephyr() == 1)
+	else if (program_in_path("Xephyr"))
 		x11_start_xephyr(argc, argv);
 	else {
-		fprintf(stderr, "\nError: Xpra or Xephyr not found in /usr/bin directory, please install one of them:\n");
-		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
-		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n");
-		exit(0);
+                fputs("\nError: neither xpra nor Xephyr found in PATH.\n"
+                      "Please install one of them:\n"
+                      "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n"
+                      "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n",
+                      stderr);
+		exit(1);
 	}
 }
 
-#endif
+void x11_start_xvfb(int argc, char **argv) {
+	pid_t jail = -1;
+	pid_t server = -1;
+        pid_t window_mgr = -1;
 
-void x11_block(void) {
-#ifdef HAVE_X11
-	mask_x11_abstract_socket = 1;
+	EUID_ASSERT();
+	// unfortunately, xvfb does a number of weird things when started by root user!!!
+	if (getuid() == 0) {
+		fputs("Error: X11 sandboxing is not available when running as root\n", stderr);
+		exit(1);
+	}
+	drop_privs(0);
 
-	// check abstract socket presence and network namespace options
-	if ((!arg_nonetwork && !cfg.bridge0.configured && !cfg.interface0.configured)
-		&& x11_abstract_sockets_present()) {
-		fprintf(stderr, "ERROR: --x11=none specified, but abstract X11 socket still accessible.\n"
-						"Additional setup required. To block abstract X11 socket you can either:\n"
-						" * use network namespace in firejail (--net=none, --net=...)\n"
-						" * add \"-nolisten local\" to xserver options\n"
-						"   (eg. to your display manager config, or /etc/X11/xinit/xserverrc)\n");
+        if (!program_in_path("Xvfb")) {
+                fputs("\nError: Xvfb program was not found in PATH, please install it:\n"
+                      "   Debian/Ubuntu/Mint: sudo apt-get install xvfb\n", stderr);
 		exit(1);
 	}
 
-	// blacklist sockets
-	profile_check_line("blacklist /tmp/.X11-unix", 0, NULL);
-	profile_add(strdup("blacklist /tmp/.X11-unix"));
+	assert(xvfb_screen);
+	assert(xvfb_extra_params); // should be "" if empty
+
+	int display = random_display_number();
+	char *xvfb_cmdline;
+        if (asprintf(&xvfb_cmdline, "Xvfb -screen 0 '%s' %s :%d",
+                     xvfb_screen, xvfb_extra_params, display) == -1)
+                errExit("asprintf");
+
+        server = run_jailed_subprocess(argc, argv, xvfb_cmdline, "xvfb server:");
+	if (arg_debug)
+		printf("Xvfb server pid %d\n", server);
+
+        wait_for_x11_socket(server, display);
+
+        if (x11_window_manager)
+                window_mgr = run_jailed_subprocess_with_x11_display(argc, argv,x11_window_manager,
+                                                                    display, "window manager:");
+
+        jail = run_self_with_x11_display(argc, argv, display, "jailed program:");
+
+        wait_kill_wait_all(server, jail, window_mgr);
+	exit(0);
+}
+#endif
+
+void x11_xorg(void) {
+#ifdef HAVE_X11
+	// check xauth utility is present in the system
+	if (!program_in_path("xauth")) {
+		fputs("Error: xauth utility not found in PATH.  Please install it:\n"
+                      "   Debian/Ubuntu/Mint: sudo apt-get install xauth\n",
+                      stderr);
+		exit(1);
+	}
+
+        char *display = getenv("DISPLAY");
+        if (!display) {
+                fputs("Error: --x11=xorg requires an 'outer' X11 server to use.\n", stderr);
+                exit(1);
+        }
+
+	// create an "untrusted" .Xauthority file using the 'xauth'
+	// utility, in a private location
+        if (arg_debug)
+                fputs("Generating a new .Xauthority file\n", stderr);
+	char tmpfname[] = RUN_XAUTHORITY_SEC_FILE "-XXXXXX";
+	int fd = mkstemp(tmpfname);
+	if (fd == -1)
+                errExit(tmpfname);
+	if (fchown(fd, getuid(), getgid()) == -1)
+		errExit("chown");
+	close(fd);
+
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		drop_privs(1);
+		clearenv();
+		execlp("xauth", "xauth", "-f", tmpfname,
+			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);
+                perror("xauth");
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(127);
+	}
+
+	// wait for the xauth process to finish
+        int status;
+	if (waitpid(child, &status, 0) != child)
+                errExit("waitpid");
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+                /* success */
+        } else if (WIFEXITED(status)) {
+                fprintf(stderr, "Failed to create untrusted X cookie: xauth: exit %d\n",
+                        WEXITSTATUS(status));
+                exit(1);
+        } else if (WIFSIGNALED(status)) {
+                fprintf(stderr, "Failed to create untrusted X cookie: xauth: %s\n",
+                        strsignal(WTERMSIG(status)));
+                exit(1);
+        } else {
+                fprintf(stderr, "Failed to create untrusted X cookie: "
+                        "xauth: un-decodable exit status %04x\n", status);
+                exit(1);
+        }
+
+        // ensure the file has the correct permissions and move it
+        // into the correct location.
+        if (set_perms(tmpfname, getuid(), getgid(), 0600))
+		errExit(tmpfname);
+        if (rename(tmpfname, RUN_XAUTHORITY_SEC_FILE))
+                errExit(RUN_XAUTHORITY_SEC_FILE);
+
+        // Ensure there is already a file in the usual location, so that the
+        // bind-mount below will work.
+        // FIXME TOCTOU races.
+	char *dest;
+	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
+		errExit("asprintf");
+
+	struct stat s;
+	if (stat(dest, &s) == -1) {
+		// create an .Xauthority file
+		touch_file_as_user(dest, getuid(), getgid(), 0600);
+	}
+
+	// mount
+	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, 0, MS_BIND, 0) == -1) {
+		fprintf(stderr, "Error: failed to emplace untrusted .Xauthority file: %s\n",
+                        strerror(errno));
+		exit(1);
+	}
+	free(dest);
+#endif
+}
+
+// Replace /tmp/.X11-unix with a directory containing only the socket mentioned
+// in the DISPLAY environment variable.  If there is no DISPLAY, or if the socket
+// doesn't exist, /tmp/.X11-unix is masked out entirely.
+void fs_x11(void) {
+#ifdef HAVE_X11
+        if (!arg_x11_mask) {
+                if (arg_debug || arg_debug_whitelists)
+                        fputs("Not masking any X11 sockets\n", stderr);
+                return;
+        }
+
+        char *x11file = 0;
+        struct stat x11stat = { 0 };
+	int display = x11_display();
+	if (display >= 0) {
+                if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
+                        errExit("asprintf");
+
+                if (stat(x11file, &x11stat) < 0 || !S_ISSOCK(x11stat.st_mode)) {
+                        free(x11file);
+                        x11file = 0;
+                }
+        }
+
+        if (x11file) {
+                if (arg_debug || arg_debug_whitelists)
+                        fprintf(stderr, "Masking all X11 sockets except %s\n", x11file);
+
+                // Move the real /tmp/.X11-unix to a scratch location
+                // so we can still access x11file after we mount a
+                // tmpfs over /tmp/.X11-unix.
+                int rv = mkdir(RUN_WHITELIST_X11_DIR, 0700);
+                if (rv == -1)
+                        errExit("mkdir");
+                if (set_perms(RUN_WHITELIST_X11_DIR, 0, 0, 0700))
+                        errExit("set_perms");
+
+                if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, 0, MS_BIND|MS_REC, 0) < 0)
+                        errExit("mount bind");
+
+                // This directory must be mode 1777, or Xlib will barf.
+                if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs",
+                          MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,
+                          "mode=1777,uid=0,gid=0") < 0)
+                        errExit("mounting tmpfs on /tmp/.X11-unix");
+                fs_logger("tmpfs /tmp/.X11-unix");
+
+                // create an empty file which will have the desired socket bind-mounted over it
+                int fd = open(x11file, O_RDWR|O_CREAT|O_EXCL, x11stat.st_mode & ~S_IFMT);
+                if (fd < 0)
+                        errExit(x11file);
+                if (fchown(fd, x11stat.st_uid, x11stat.st_gid))
+                        errExit("fchown");
+                close(fd);
+
+                // do the mount
+                char *wx11file;
+                if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
+                        errExit("asprintf");
+                if (mount(wx11file, x11file, NULL, MS_BIND|MS_REC, NULL) < 0)
+                        errExit("mount bind");
+                fs_logger2("whitelist", x11file);
+
+                free(x11file);
+                free(wx11file);
+
+                // block access to RUN_WHITELIST_X11_DIR
+                if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, 0, MS_BIND, 0) < 0)
+                        errExit("mount");
+                fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
+
+        }
+        else {
+                if (arg_debug || arg_debug_whitelists)
+                        fputs("Masking all X11 sockets\n", stderr);
+
+                if (mount(RUN_RO_DIR, "/tmp/.X11-unix", 0, MS_BIND, 0) < 0)
+                        errExit("mount");
+                fs_logger2("blacklist", "/tmp/.X11-unix");
+        }
+#endif
+}
+
+void x11_block(void) {
+#ifdef HAVE_X11
+	// check abstract socket presence and network namespace options
+	if ((!arg_nonetwork && !cfg.bridge0.configured && !cfg.interface0.configured)
+            && x11_abstract_sockets_present()) {
+		fputs("ERROR: --x11=none specified, but abstract X11 socket still accessible.\n"
+                      "Additional setup required. To block abstract X11 socket you can either:\n"
+                      " * use network namespace in firejail (--net=none, --net=...)\n"
+                      " * add \"-nolisten local\" to xserver options\n"
+                      "   (eg. to your display manager config, or /etc/X11/xinit/xserverrc)\n",
+                      stderr);
+		exit(1);
+	}
 
 	// blacklist .Xauthority
 	profile_check_line("blacklist ${HOME}/.Xauthority", 0, NULL);
@@ -636,102 +748,12 @@ void x11_block(void) {
 			errExit("asprintf");
 		profile_check_line(line, 0, NULL);
 		profile_add(line);
+                env_store("XAUTHORITY", RMENV);
 	}
 
 	// clear environment
+        // in the child, fs_x11() will block access to the X11 socket directory
 	env_store("DISPLAY", RMENV);
-	env_store("XAUTHORITY", RMENV);
+        env_store("FIREJAIL_X11", RMENV);
 #endif
-}
-
-void x11_xorg(void) {
-#ifdef HAVE_X11
-	// destination - create an empty ~/.Xauthotrity file if it doesn't exist already, and use it as a mount point
-	char *dest;
-	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
-		errExit("asprintf");
-	struct stat s;
-	if (stat(dest, &s) == -1) {
-		// create an .Xauthority file
-		touch_file_as_user(dest, getuid(), getgid(), 0600);
-	}
-
-	// check xauth utility is present in the system
-	if (stat("/usr/bin/xauth", &s) == -1) {
-		fprintf(stderr, "Error: cannot find /usr/bin/xauth executable\n");
-		exit(1);
-	}
-
-	// temporarily mount a tempfs on top of /tmp directory
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-		errExit("mounting /tmp");
-
-	// create a temporary .Xauthority file
-	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
-	int fd = mkstemp(tmpfname);
-	if (fd == -1) {
-		fprintf(stderr, "Error: cannot create .Xauthority file\n");
-		exit(1);
-	}
-	if (fchown(fd, getuid(), getgid()) == -1)
-		errExit("chown");
-	close(fd);
-
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// generate the new .Xauthority file using xauth utility
-		if (arg_debug)
-			printf("Generating a new .Xauthority file\n");
-		drop_privs(1);
-
-		char *display = getenv("DISPLAY");
-		if (!display)
-			display = ":0.0";
-		
-		clearenv();
-		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
-			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
-		
-#ifdef HAVE_GCOV
-		__gcov_flush();
-#endif
-		_exit(0);
-	}
-
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
-
-	// check the file was created and set mode and ownership
-	if (stat(tmpfname, &s) == -1) {
-		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(tmpfname, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	
-	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
-	// automatically when the sandbox is closed
-	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) { // root needed
-		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	/* coverity[toctou] */
-	unlink(tmpfname);
-	
-	// mount
-	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
-		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(dest, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	free(dest);
-	
-	// unmount /tmp
-	umount("/tmp");
-#endif	
 }

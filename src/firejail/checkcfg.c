@@ -124,6 +124,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// follow symlink as user
+			else if (strncmp(ptr, "follow-symlink-as-user ", 23) == 0) {
+				if (strcmp(ptr + 23, "yes") == 0)
+					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 1;
+				else if (strcmp(ptr + 23, "no") == 0)
+					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 0;
+				else
+					goto errout;
+			}
 			// nonewprivs
 			else if (strncmp(ptr, "force-nonewprivs ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)

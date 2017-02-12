@@ -28,6 +28,7 @@ firejail (0.9.45) baseline; urgency=low
   * feature: allow non-seccomp setup for OverlayFS sandboxes - more work to come
   * feature: added a number o Python scripts for handling sandboxes
   * feature: allow local customization using .local files under /etc/firejail
+  * feature: follow-symlink-as-user runtime config option in /etc/firejail/firejail.config
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,

@@ -127,9 +127,9 @@ int checkcfg(int val) {
 			// nonewprivs
 			else if (strncmp(ptr, "force-nonewprivs ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
-					cfg_val[CFG_SECCOMP] = 1;
+					cfg_val[CFG_FORCE_NONEWPRIVS] = 1;
 				else if (strcmp(ptr + 17, "no") == 0)
-					cfg_val[CFG_SECCOMP] = 0;
+					cfg_val[CFG_FORCE_NONEWPRIVS] = 0;
 				else
 					goto errout;
 			}

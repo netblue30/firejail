@@ -1,5 +1,9 @@
 firejail (0.9.44.9) baseline; urgency=low
   * branch open for bugfixes
+  * bugfix: firecfg config fix
+  * bugfix: gajim security profile fix
+  * bugfix: man page fix
+  * bugfix: force-nonewprivs fix for /etc/firejail/firejail.config
  -- netblue30 <netblue30@yahoo.com>  Sat, 28 Jan 2017 10:00:00 -0500
 
 firejail (0.9.44.8) baseline; urgency=low

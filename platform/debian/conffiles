@@ -244,3 +244,6 @@
 /etc/firejail/fossamail.profile
 /etc/firejail/uzbl-browser.profile
 /etc/firejail/xmms.profile
+/etc/firejail/iridium-browser.profile
+/etc/firejail/iridium.profile
+

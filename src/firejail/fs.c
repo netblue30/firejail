@@ -290,6 +290,7 @@ void fs_blacklist(void) {
                 // Process noblacklist command
                 if (strncmp(entry->data, "noblacklist ", 12) == 0) {
                         char **enames;
+			int i;
 
                         if (strncmp(entry->data + 12, "${PATH}", 7) == 0) {
                                 // expand ${PATH} macro
@@ -299,7 +300,7 @@ void fs_blacklist(void) {
                                 if (!enames)
                                         errExit("calloc");
 
-                                for (int i = 0; paths[i]; i++) {
+                                for (i = 0; paths[i]; i++) {
                                         if (asprintf(&enames[i], "%s%s", paths[i],
                                                      entry->data + 19) == -1)
                                                 errExit("asprintf");
@@ -315,7 +316,7 @@ void fs_blacklist(void) {
                                 assert(enames[1] == 0);
                         }
 
-                        for (int i = 0; enames[i]; i++) {
+                        for (i = 0; enames[i]; i++) {
                                 if (noblacklist_c >= noblacklist_m) {
                                         noblacklist_m *= 2;
                                         noblacklist = realloc(noblacklist, sizeof(*noblacklist) * noblacklist_m);

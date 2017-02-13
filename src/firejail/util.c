@@ -958,6 +958,8 @@ void prepare_self_reinvocation(int *p_argc_used, int *p_argc_alloc, char ***p_ar
         int argc_used  = *p_argc_used;
         int argc_alloc = *p_argc_alloc;
         char **argv    = *p_argv;
+	int i, j;
+
         assert(argc_used == 0);
         assert(argc_alloc == 0);
         assert(argv == 0);
@@ -966,7 +968,7 @@ void prepare_self_reinvocation(int *p_argc_used, int *p_argc_alloc, char ***p_ar
         // for "--" at the end
         argc_used = 2;
 
-        for (int i = 1; i < parent_argc; i++)
+        for (i = 1; i < parent_argc; i++)
                 if (pass_to_reinvocation(parent_argv[i]))
                         argc_used++;
 
@@ -978,8 +980,7 @@ void prepare_self_reinvocation(int *p_argc_used, int *p_argc_alloc, char ***p_ar
                 errExit("calloc");
 
         argv[0] = parent_argv[0];
-        int j = 1;
-        for (int i = 1; i < parent_argc; i++)
+        for (i = 1, j = 1; i < parent_argc; i++)
                 if (pass_to_reinvocation(parent_argv[i]))
                         argv[j++] = parent_argv[i];
 
@@ -1092,13 +1093,16 @@ void append_cmdline_to_argv(int *p_argc_used, int *p_argc_alloc,
 }
 
 void debug_print_argv(int argc, char **argv, const char *label) {
+	int i;
+	size_t j;
+
 	if (!arg_debug)
 		return;
 
 	fputs(label, stdout);
-	for (int i = 0; i < argc; i++) {
+	for (i = 0; i < argc; i++) {
 		putchar(' ');
-		for (size_t j = 0; ; j++) {
+		for (j = 0; ; j++) {
 			char c = argv[i][j];
 			if (!c)
 				break;

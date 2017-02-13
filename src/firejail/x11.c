@@ -117,6 +117,7 @@ static int x11_abstract_sockets_present(void) {
 static int random_display_number(void) {
         int display;
         int found = 0;
+	int i;
 
         struct sockaddr_un sa;
         // The -1 here is because we need space to inject a
@@ -129,7 +130,7 @@ static int random_display_number(void) {
         if (sockfd == -1)
                 errExit("socket");
 
-	for (int i = 0; i < 100; i++) {
+	for (i = 0; i < 100; i++) {
                 // We try display numbers in the range 21 through 1000.
                 // Normal X servers typically use displays in the 0-10 range;
                 // ssh's X11 forwarding uses 10-20, and login screens

@@ -26,6 +26,7 @@ static unsigned int longest_path_elt = 0;
 
 static void init_paths(void) {
 	char *path = getenv("PATH");
+	char *p;
 	if (!path) {
 		path = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin";
 		setenv("PATH", path, 1);
@@ -35,7 +36,7 @@ static void init_paths(void) {
 		errExit("strdup");
 
 	// size the paths array
-	for (char *p = path; *p; p++)
+	for (p = path; *p; p++)
 		if (*p == ':')
 			path_cnt++;
 	path_cnt += 2; // one because we were counting fenceposts, one for the NULL at the end
@@ -46,7 +47,7 @@ static void init_paths(void) {
 
 	// fill in 'paths' with pointers to elements of 'path'
 	char *elt;
-	unsigned int i = 0;
+	unsigned int i = 0, j;
 	unsigned int len;
 	while ((elt = strsep(&path, ":")) != 0) {
 		// skip any entry that is not absolute
@@ -61,7 +62,7 @@ static void init_paths(void) {
 			goto skip;
 
 		// filter out duplicate entries
-		for (unsigned int j = 0; j < i; j++)
+		for (j = 0; j < i; j++)
 			if (strcmp(elt, paths[j]) == 0)
 				goto skip;
 
@@ -113,7 +114,8 @@ int program_in_path(const char *program) {
 
 	int found = 0;
 	size_t dlen;
-	for (char **p = paths; *p; p++) {
+	char **p;
+	for (p = paths; *p; p++) {
 		char *dir = *p;
 		dlen = strlen(dir);
 

@@ -24,7 +24,6 @@ install -m 755 /usr/lib/firejail/fshaper.sh  firejail-$VERSION/usr/lib/firejail/
 install -m 755 /usr/lib/firejail/ftee  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libtrace.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libtracelog.so  firejail-$VERSION/usr/lib/firejail/.
-install -m 644 /usr/lib/firejail/libconnect.so  firejail-$VERSION/usr/lib/firejail/.
 
 mkdir -p firejail-$VERSION/usr/share/man/man1
 install -m 644 /usr/share/man/man1/firejail.1.gz firejail-$VERSION/usr/share/man/man1/.
@@ -436,7 +435,6 @@ rm -rf %{buildroot}
 
 /usr/lib/firejail/libtrace.so
 /usr/lib/firejail/libtracelog.so
-/usr/lib/firejail/libconnect.so
 /usr/lib/firejail/faudit
 /usr/lib/firejail/ftee
 /usr/lib/firejail/firecfg.config

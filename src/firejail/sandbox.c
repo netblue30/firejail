@@ -585,7 +585,7 @@ int sandbox(void* sandbox_arg) {
 #endif	
 
 	// trace pre-install
-	if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+	if (arg_trace || arg_tracelog)
 		fs_trace_preload();
 
 	// store hosts file
@@ -622,7 +622,7 @@ int sandbox(void* sandbox_arg) {
 		//****************************
 		// trace pre-install, this time inside chroot
 		//****************************
-		if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+		if (arg_trace || arg_tracelog)
 			fs_trace_preload();
 	}
 	else 
@@ -685,7 +685,7 @@ int sandbox(void* sandbox_arg) {
 		else {
 			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
 			// create /etc/ld.so.preload file again
-			if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+			if (arg_trace || arg_tracelog)
 				fs_trace_preload();
 		}
 	}
@@ -781,7 +781,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// install trace
 	//****************************
-	if (arg_trace || arg_tracelog || mask_x11_abstract_socket)
+	if (arg_trace || arg_tracelog)
 		fs_trace();
 		
 	//****************************

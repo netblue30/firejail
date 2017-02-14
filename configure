@@ -3793,7 +3793,7 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
-ac_config_files="$ac_config_files Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/ftee/Makefile src/faudit/Makefile src/libconnect/Makefile src/fseccomp/Makefile"
+ac_config_files="$ac_config_files Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4513,7 +4513,6 @@ do
     "src/firecfg/Makefile") CONFIG_FILES="$CONFIG_FILES src/firecfg/Makefile" ;;
     "src/ftee/Makefile") CONFIG_FILES="$CONFIG_FILES src/ftee/Makefile" ;;
     "src/faudit/Makefile") CONFIG_FILES="$CONFIG_FILES src/faudit/Makefile" ;;
-    "src/libconnect/Makefile") CONFIG_FILES="$CONFIG_FILES src/libconnect/Makefile" ;;
     "src/fseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/fseccomp/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

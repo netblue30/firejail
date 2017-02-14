@@ -346,6 +346,7 @@ extern int arg_apparmor;	// apparmor
 extern int arg_allow_debuggers;	// allow debuggers
 extern int arg_x11_block;	// block X11
 extern int arg_x11_xorg;	// use X11 security extention
+extern int arg_x11_mask;	// mask X11 sockets other than the one named by $DISPLAY
 extern int arg_allusers;	// all user home directories visible
 extern int arg_machineid;	// preserve /etc/machine-id
 
@@ -478,6 +479,11 @@ void create_empty_file_as_root(const char *dir, mode_t mode);
 int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 char *read_text_file_or_exit(const char *fname);
+void prepare_self_reinvocation(int *p_argc_used, int *p_argc_alloc, char ***p_argv,
+                               int parent_argc, char **parent_argv);
+void append_cmdline_to_argv(int *p_argc_used, int *p_argc_alloc, char ***p_argv,
+                            const char *cmdline);
+void debug_print_argv(int argc, char **argv, const char *label);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log
@@ -636,18 +642,20 @@ void run_symlink(int argc, char **argv);
 
 // paths.c
 char **build_paths(void);
+unsigned int count_paths(void);
+int program_in_path(const char *program);
 
 // fs_mkdir.c
 void fs_mkdir(const char *name);
 void fs_mkfile(const char *name);
 
 // x11.c
-extern int mask_x11_abstract_socket;
 void fs_x11(void);
 int x11_display(void);
 void x11_start(int argc, char **argv);
 void x11_start_xpra(int argc, char **argv);
 void x11_start_xephyr(int argc, char **argv);
+void x11_start_xvfb(int argc, char **argv);
 void x11_block(void);
 
 // ls.c
@@ -683,6 +691,10 @@ enum {
 };
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
+extern char *xpra_extra_params;
+extern char *xvfb_screen;
+extern char *xvfb_extra_params;
+extern char *x11_window_manager;
 extern char *netfilter_default;
 int checkcfg(int val);
 void print_compiletime_support(void);

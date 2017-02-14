@@ -112,6 +112,7 @@ int arg_apparmor = 0;				// apparmor
 int arg_allow_debuggers = 0;			// allow debuggers
 int arg_x11_block = 0;				// block X11
 int arg_x11_xorg = 0;				// use X11 security extention
+int arg_x11_mask = 1;				// mask X11 sockets other than $DISPLAY
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
 int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
@@ -344,6 +345,14 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
 		if (checkcfg(CFG_X11)) {
 			x11_start_xephyr(argc, argv);
+			exit(0);
+		}
+		else
+			exit_err_feature("x11");
+	}
+	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
+		if (checkcfg(CFG_X11)) {
+			x11_start_xvfb(argc, argv);
 			exit(0);
 		}
 		else
@@ -2113,6 +2122,12 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--x11=none") == 0) {
 			arg_x11_block = 1;
 		}
+                else if (strcmp(argv[i], "--mask-x11=no") == 0) {
+                        arg_x11_mask = 0;
+                }
+                else if (strcmp(argv[i], "--mask-x11=yes") == 0) {
+                        arg_x11_mask = 1;
+                }
 #ifdef HAVE_X11
 		else if (strcmp(argv[i], "--x11=xorg") == 0) {
 			if (checkcfg(CFG_X11))
@@ -2181,11 +2196,7 @@ int main(int argc, char **argv) {
 		if (!arg_quiet || arg_debug)
 			fprintf(stderr, "Warning: --trace and --tracelog are mutually exclusive; --tracelog disabled\n");
 	}
-	
-	// disable x11 abstract socket
-	if (getenv("FIREJAIL_X11"))
-		mask_x11_abstract_socket = 1;
-	
+
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
 		if (arg_overlay) {

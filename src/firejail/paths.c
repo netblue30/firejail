@@ -18,83 +18,134 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include <sys/stat.h>
 
-static char **paths = NULL;
-static int path_cnt = 0;
-static char initialized = 0;
+static char **paths = 0;
+static unsigned int path_cnt = 0;
+static unsigned int longest_path_elt = 0;
 
-static void add_path(const char *path) {
-	assert(paths);
-	assert(path_cnt);
-	
-	// filter out duplicates
-	int i;
-	int empty = 0;
-	for (i = 0; i < path_cnt; i++) {
-		if (paths[i] && strcmp(path, paths[i]) == 0) {
-			return;
-		}
-		if (!paths[i]) {
-			empty = i;
-			break;
-		}
+static void init_paths(void) {
+	char *path = getenv("PATH");
+	char *p;
+	if (!path) {
+		path = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin";
+		setenv("PATH", path, 1);
+	}
+	path = strdup(path);
+	if (!path)
+		errExit("strdup");
+
+	// size the paths array
+	for (p = path; *p; p++)
+		if (*p == ':')
+			path_cnt++;
+	path_cnt += 2; // one because we were counting fenceposts, one for the NULL at the end
+
+	paths = calloc(path_cnt, sizeof(char *));
+	if (!paths)
+		errExit("calloc");
+
+	// fill in 'paths' with pointers to elements of 'path'
+	char *elt;
+	unsigned int i = 0, j;
+	unsigned int len;
+	while ((elt = strsep(&path, ":")) != 0) {
+		// skip any entry that is not absolute
+		if (elt[0] != '/')
+			goto skip;
+
+		// strip trailing slashes (this also prevents '/' from being a path entry).
+		len = strlen(elt);
+		while (len > 0 && elt[len-1] == '/')
+			elt[--len] = '\0';
+		if (len == 0)
+			goto skip;
+
+		// filter out duplicate entries
+		for (j = 0; j < i; j++)
+			if (strcmp(elt, paths[j]) == 0)
+				goto skip;
+
+		paths[i++] = elt;
+		if (len > longest_path_elt)
+			longest_path_elt = len;
+
+		skip:;
 	}
 
-	paths[empty] = strdup(path);
-	if (!paths[empty])
-		errExit("strdup");
+	assert(paths[i] == 0);
+	// path_cnt may be too big now, if entries were skipped above
+	path_cnt = i+1;
 }
 
+
 char **build_paths(void) {
-	if (initialized) {
-		assert(paths);
-		return paths;
-	}
-	initialized = 1;
-	
-	int cnt = 5;	// 4 default paths + 1 NULL to end the array
-	char *path1 = getenv("PATH");
-	if (path1) {
-		char *path2 = strdup(path1);
-		if (!path2)
-			errExit("strdup");
-		
-		// use path2 to count the entries
-		char *ptr = strtok(path2, ":");
-		while (ptr) {
-			cnt++;
-			ptr = strtok(NULL, ":");
-		}
-		free(path2);
-		path_cnt = cnt;
-
-		// allocate paths array
-		paths = malloc(sizeof(char *) * cnt);
-		if (!paths)
-			errExit("malloc");
-		memset(paths, 0, sizeof(char *) * cnt);
-
-		// add default paths
-		add_path("/usr/local/bin");
-		add_path("/usr/bin");
-		add_path("/bin");
-		add_path("/usr/local/sbin");
-		add_path("/usr/sbin");
-		add_path("/sbin");
-
-		path2 = strdup(path1);
-		if (!path2)
-			errExit("strdup");
-		
-		// use path2 to count the entries
-		ptr = strtok(path2, ":");
-		while (ptr) {
-			cnt++;
-			add_path(ptr);
-			ptr = strtok(NULL, ":");
-		}
-		free(path2);
-	}
-	
+	if (!paths)
+		init_paths();
+	assert(paths);
 	return paths;
+}
+
+// Note: the NULL element at the end of 'paths' is included in this count.
+unsigned int count_paths(void) {
+	if (!path_cnt)
+		init_paths();
+	assert(path_cnt);
+	return path_cnt;
+}
+
+// Return 1 if PROGRAM exists in $PATH and is runnable by the
+// invoking user (not root).
+// In other words, tests "will execvp(PROGRAM, ...) succeed?"
+int program_in_path(const char *program) {
+	assert(program && *program);
+	assert(strchr(program, '/') == 0);
+	assert(strcmp(program, ".") != 0);
+	assert(strcmp(program, "..") != 0);
+
+	if (!paths)
+		init_paths();
+	assert(paths);
+
+	size_t proglen = strlen(program);
+	char *scratch = malloc(longest_path_elt + proglen + 2);
+	if (!scratch)
+		errExit("malloc");
+
+	int found = 0;
+	size_t dlen;
+	char **p;
+	for (p = paths; *p; p++) {
+		char *dir = *p;
+		dlen = strlen(dir);
+
+		// init_paths should ensure that this is true; as long
+		// as it is true, 'scratch' has enough space for "$p/$program".
+		assert(dlen <= longest_path_elt);
+
+		memcpy(scratch, dir, dlen);
+		scratch[dlen++] = '/';
+
+		// copy proglen+1 bytes to copy the nul terminator at
+		// the end of 'program'.
+		memcpy(scratch + dlen, program, proglen+1);
+
+		if (access(scratch, X_OK) == 0) {
+			// must also verify that this is a regular file
+			// ('x' permission means something different for directories).
+			// exec follows symlinks, so use stat, not lstat.
+			struct stat st;
+			if (stat(scratch, &st)) {
+				perror(scratch);
+				exit(1);
+			}
+			if (S_ISREG(st.st_mode)) {
+				found = 1;
+				break;
+			}
+		}
+	}
+
+	free(scratch);
+	return found;
 }

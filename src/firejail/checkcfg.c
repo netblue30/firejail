@@ -27,6 +27,10 @@ static int initialized = 0;
 static int cfg_val[CFG_MAX];
 char *xephyr_screen = "800x600";
 char *xephyr_extra_params = "";
+char *xpra_extra_params = "";
+char *xvfb_screen = "800x600x24";
+char *xvfb_extra_params = "";
+char *x11_window_manager = NULL;
 char *netfilter_default = NULL;
 
 int checkcfg(int val) {
@@ -224,16 +228,58 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-				
+
 			// Xephyr command extra parameters
-			else if (strncmp(ptr, "xephyr-extra-params ", 19) == 0) {
+			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
 				if (*xephyr_extra_params != '\0')
 					goto errout;
-				xephyr_extra_params = strdup(ptr + 19);
+				xephyr_extra_params = strdup(ptr + 20);
 				if (!xephyr_extra_params)
 					errExit("strdup");
 			}
-			
+
+			// xpra server extra parameters
+			else if (strncmp(ptr, "xpra-extra-params ", 18) == 0) {
+				if (*xpra_extra_params != '\0')
+					goto errout;
+				xpra_extra_params = strdup(ptr + 18);
+				if (!xpra_extra_params)
+					errExit("strdup");
+			}
+
+                        // Xvfb screen size
+                        else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
+                                // expecting three numbers separated by x's
+                                unsigned int n1;
+                                unsigned int n2;
+                                unsigned int n3;
+                                int rv = sscanf(ptr + 12, "%ux%ux%u", &n1, &n2, &n3);
+                                if (rv != 3)
+                                        goto errout;
+                                if (asprintf(&xvfb_screen, "%ux%ux%u", n1, n2, n3) == -1)
+                                        errExit("asprintf");
+                        }
+
+                        // Xvfb extra parameters
+			else if (strncmp(ptr, "xvfb-extra-params ", 18) == 0) {
+				if (*xvfb_extra_params != '\0')
+					goto errout;
+				xvfb_extra_params = strdup(ptr + 18);
+				if (!xvfb_extra_params)
+					errExit("strdup");
+			}
+
+                        // window manager used with xephyr and xvfb ("no" for none)
+                        else if (strncmp(ptr, "x11-window-manager ", 19) == 0) {
+				if (x11_window_manager)
+					goto errout;
+                                if (strcmp(ptr + 19, "no") != 0) {
+                                        x11_window_manager = strdup(ptr + 19);
+                                        if (!x11_window_manager)
+                                                errExit("strdup");
+                                }
+                        }
+
 			// quiet by default
 			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)

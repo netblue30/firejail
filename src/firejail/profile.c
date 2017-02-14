@@ -690,15 +690,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_x11_block = 1;
 		return 0;
 	}
+	if (strcmp(ptr, "mask-x11 no") == 0) {
+		arg_x11_mask = 0;
+		return 0;
+	}
+	if (strcmp(ptr, "mask-x11 yes") == 0) {
+		arg_x11_mask = 1;
+		return 0;
+	}
 
 	if (strcmp(ptr, "x11 xephyr") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				mask_x11_abstract_socket = 1;
+			if (getenv("FIREJAIL_X11"))
 				return 0;
-			}
 			else {
 				// start x11
 				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
@@ -720,14 +725,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
+
 	if (strcmp(ptr, "x11 xpra") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				mask_x11_abstract_socket = 1;
+			if (getenv("FIREJAIL_X11"))
 				return 0;
-			}
 			else {
 				// start x11
 				x11_start_xpra(cfg.original_argc, cfg.original_argv);
@@ -740,14 +743,28 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
+	if (strcmp(ptr, "x11 xvfb") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11)) {
+			if (getenv("FIREJAIL_X11"))
+				return 0;
+			else {
+				// start x11
+				x11_start_xvfb(cfg.original_argc, cfg.original_argv);
+				exit(0);
+			}
+		}
+		else
+			warning_feature_disabled("x11");
+#endif
+		return 0;
+	}
+
 	if (strcmp(ptr, "x11") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				mask_x11_abstract_socket = 1;
+			if (getenv("FIREJAIL_X11"))
 				return 0;
-			}
 			else {
 				// start x11
 				x11_start(cfg.original_argc, cfg.original_argv);

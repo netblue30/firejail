@@ -636,6 +636,8 @@ void run_symlink(int argc, char **argv);
 
 // paths.c
 char **build_paths(void);
+unsigned int count_paths(void);
+int program_in_path(const char *program);
 
 // fs_mkdir.c
 void fs_mkdir(const char *name);

@@ -289,26 +289,35 @@ void fs_blacklist(void) {
 
 		// Process noblacklist command
 		if (strncmp(entry->data, "noblacklist ", 12) == 0) {
-			char **paths = build_paths();
-
-			char *enames[sizeof(paths)+1] = {0};
-			int i = 0;
+			char **enames;
+			int i;
 
 			if (strncmp(entry->data + 12, "${PATH}", 7) == 0) {
 				// expand ${PATH} macro
-				while (paths[i] != NULL) {
-					if (asprintf(&enames[i], "%s%s", paths[i], entry->data + 19) == -1)
+				char **paths = build_paths();
+				unsigned int npaths = count_paths();
+				enames = calloc(npaths, sizeof(char *));
+				if (!enames)
+					errExit("calloc");
+
+				for (i = 0; paths[i]; i++) {
+					if (asprintf(&enames[i], "%s%s", paths[i],
+						entry->data + 19) == -1)
 						errExit("asprintf");
-					i++;
 				}
-			} else {
+				assert(enames[npaths-1] == 0);
+
+			}
+			else {
 				// expand ${HOME} macro if found or pass as is
+				enames = calloc(2, sizeof(char *));
+				if (!enames)
+					errExit("calloc");
 				enames[0] = expand_home(entry->data + 12, homedir);
-				enames[1] = NULL;
+				assert(enames[1] == 0);
 			}
 
-			i = 0;
-			while (enames[i] != NULL) {
+			for (i = 0; enames[i]; i++) {
 				if (noblacklist_c >= noblacklist_m) {
 					noblacklist_m *= 2;
 					noblacklist = realloc(noblacklist, sizeof(*noblacklist) * noblacklist_m);
@@ -316,12 +325,9 @@ void fs_blacklist(void) {
 						errExit("failed increasing memory for noblacklist entries");
 				}
 				noblacklist[noblacklist_c++] = enames[i];
-				i++;
 			}
 
-			while (enames[i] != NULL) {
-				free(enames[i]);
-			}
+			free(enames);
 
 			entry = entry->next;
 			continue;

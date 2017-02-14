@@ -386,7 +386,7 @@ static void enforce_filters(void) {
 	}
 	
 	// disable all capabilities
-	if (arg_caps_default_filter || arg_caps_list && !arg_quiet)
+	if ((arg_caps_default_filter || arg_caps_list) && !arg_quiet)
 		fprintf(stderr, "Warning: all capabilities disabled for a regular user in chroot\n");
 	arg_caps_drop_all = 1;
 	

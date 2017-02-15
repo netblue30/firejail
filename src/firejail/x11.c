@@ -761,9 +761,6 @@ void x11_xorg(void) {
 	if (set_perms(dest, getuid(), getgid(), 0600))
 		errExit("set_perms");
 	free(dest);
-	
-	// unmount /tmp
-	umount("/tmp");
 #endif	
 }
 

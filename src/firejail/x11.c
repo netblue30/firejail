@@ -32,28 +32,6 @@
 int mask_x11_abstract_socket = 0;
 
 #ifdef HAVE_X11
-// return 1 if xpra is installed on the system
-static int x11_check_xpra(void) {
-	struct stat s;
-	
-	// check xpra
-	if (stat("/usr/bin/xpra", &s) == -1)
-		return 0;
-
-	return 1;
-}
-
-// return 1 if xephyr is installed on the system
-static int x11_check_xephyr(void) {
-	struct stat s;
-	
-	// check xephyr
-	if (stat("/usr/bin/Xephyr", &s) == -1)
-		return 0;
-
-	return 1;
-}
-
 // check for X11 abstract sockets
 static int x11_abstract_sockets_present(void) {
 	char *path;
@@ -205,54 +183,6 @@ void fs_x11(void) {
                 if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, 0, MS_BIND, 0) < 0)
                         errExit("mount");
                 fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
-
-
-#if 0
-	// keep a copy of real /tmp/.X11-unix directory in WHITELIST_TMP_DIR
-	int rv = mkdir(RUN_WHITELIST_X11_DIR, 1777);
-	if (rv == -1)
-		errExit("mkdir");
-	if (set_perms(RUN_WHITELIST_X11_DIR, 0, 0, 1777))
-		errExit("set_perms");
-
-	if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-
-	// mount tmpfs on /tmp/.X11-unix
-	if (arg_debug || arg_debug_whitelists)
-		printf("Mounting tmpfs on /tmp/.X11-unix directory\n");
-	if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-		errExit("mounting tmpfs on /tmp");
-	fs_logger("tmpfs /tmp/.X11-unix");
-
-	// create an empty file
-	/* coverity[toctou] */
-	FILE *fp = fopen(x11file, "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot create empty file in x11 directory\n");
-		exit(1);
-	}
-	// set file properties
-	SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
-	fclose(fp);
-
-	// mount
-	char *wx11file;
-	if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
-		errExit("asprintf");
-	if (mount(wx11file, x11file, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-	 fs_logger2("whitelist", x11file);
-
-	free(x11file);
-	free(wx11file);
-	
-	// block access to RUN_WHITELIST_X11_DIR
-	 if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, "none", MS_BIND, "mode=400,gid=0") == -1)
-	 	errExit("mount");
-	 fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
-#endif
-
 #endif
 }
 
@@ -277,7 +207,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	drop_privs(0);
 
 	// check xephyr
-	if (x11_check_xephyr() == 0) {
+	if (!program_in_path("Xephyr")) {
 		fprintf(stderr, "\nError: Xephyr program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n");
 		fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xephyr\n");
@@ -477,7 +407,7 @@ void x11_start_xpra(int argc, char **argv) {
 	drop_privs(0);
 
 	// check xpra
-	if (x11_check_xpra() == 0) {
+	if (!program_in_path("xpra")) {
 		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
 		exit(0);
@@ -670,9 +600,9 @@ void x11_start(int argc, char **argv) {
 	}
 
 	// check xpra
-	if (x11_check_xpra() == 1)
+	if (program_in_path("xpra"))
 		x11_start_xpra(argc, argv);
-	else if (x11_check_xephyr() == 1)
+	else if (program_in_path("Xephyr"))
 		x11_start_xephyr(argc, argv);
 	else {
 		fprintf(stderr, "\nError: Xpra or Xephyr not found in /usr/bin directory, please install one of them:\n");

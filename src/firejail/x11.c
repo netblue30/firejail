@@ -31,58 +31,6 @@
 #include <limits.h>
 int mask_x11_abstract_socket = 0;
 
-#ifdef HAVE_X11
-// check for X11 abstract sockets
-static int x11_abstract_sockets_present(void) {
-	char *path;
-
-	EUID_ROOT(); // grsecurity fix
-	FILE *fp = fopen("/proc/net/unix", "r");
-	EUID_USER();
-
-	if (!fp)
-		errExit("fopen");
-
-	while (fscanf(fp, "%*s %*s %*s %*s %*s %*s %*s %ms\n", &path) != EOF) {
-		if (path && strncmp(path, "@/tmp/.X11-unix/", 16) == 0) {
-			free(path);
-			fclose(fp);
-			return 1;
-		}
-	}
-
-	free(path);
-	fclose(fp);
-
-	return 0;
-}
-
-static int random_display_number(void) {
-	int i;
-	int found = 1;
-	int display;
-	for (i = 0; i < 100; i++) {
-		display = rand() % 1024;
-		if (display < 10)
-			continue;
-		char *fname;
-		if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
-			errExit("asprintf");
-		struct stat s;
-		if (stat(fname, &s) == -1) {
-			found = 1;
-			break;
-		}
-	}
-	if (!found) {
-		fprintf(stderr, "Error: cannot pick up a random X11 display number, exiting...\n");
-		exit(1);
-	}
-	
-	return display;
-}
-#endif
-
 
 // Parse the DISPLAY environment variable and return a display number.
 // Returns -1 if DISPLAY is not set, or is set to anything other than :ddd.
@@ -122,6 +70,75 @@ int x11_display(void) {
 
         return (int)display;
 }
+
+
+#ifdef HAVE_X11
+// check for X11 abstract sockets
+static int x11_abstract_sockets_present(void) {
+
+	EUID_ROOT(); // grsecurity fix
+	FILE *fp = fopen("/proc/net/unix", "r");
+	if (!fp)
+		errExit("fopen");
+	EUID_USER();
+
+	char *linebuf = 0;
+        size_t bufsz = 0;
+        int found = 0;
+        errno = 0;
+
+	for (;;) {
+                if (getline(&linebuf, &bufsz, fp) == -1) {
+                        if (errno)
+                                errExit("getline");
+                        break;
+                }
+                // The last space-separated field in 'linebuf' is the
+                // pathname of the socket.  Abstract sockets' pathnames
+                // all begin with '@/', normal ones begin with '/'.
+                char *p = strrchr(linebuf, ' ');
+                if (!p) {
+                        fputs("error parsing /proc/net/unix\n", stderr);
+                        exit(1);
+                }
+                if (strncmp(p+1, "@/tmp/.X11-unix/", 16) == 0) {
+                        found = 1;
+                        break;
+		}
+	}
+
+	free(linebuf);
+	fclose(fp);
+	return found;
+}
+
+static int random_display_number(void) {
+	int i;
+	int found = 1;
+	int display;
+	for (i = 0; i < 100; i++) {
+		display = rand() % 1024;
+		if (display < 10)
+			continue;
+		char *fname;
+		if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
+			errExit("asprintf");
+		struct stat s;
+		if (stat(fname, &s) == -1) {
+			found = 1;
+			break;
+		}
+	}
+	if (!found) {
+		fprintf(stderr, "Error: cannot pick up a random X11 display number, exiting...\n");
+		exit(1);
+	}
+	
+	return display;
+}
+#endif
+
+
 
 void fs_x11(void) {
 #ifdef HAVE_X11

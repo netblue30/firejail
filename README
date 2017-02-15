@@ -104,7 +104,10 @@ valoq (https://github.com/valoq)
 Zack Weinberg (https://github.com/zackw)
 	- removed libconnect
 	- fixed memory corruption in noblacklist processing
-	- rework DISPLAY environment parsing, rework masking X11 sockets in /tmp/.X11-unix directory
+	- rework DISPLAY environment parsing
+	- rework masking X11 sockets in /tmp/.X11-unix directory
+	- rework xpra and xephyr detection
+	- rework abstract X11 socket detection
 Igor Bukanov (https://github.com/ibukanov)
 	- found/fiixed privilege escalation in --hosts-file option
 Cat (https://github.com/ecat3)

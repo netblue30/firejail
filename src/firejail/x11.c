@@ -196,101 +196,9 @@ static int random_display_number(void) {
 	}
 	return display;
 }
-
-
-
-#if 0
-static int random_display_number(void) {
-	int i;
-	int found = 1;
-	int display;
-	for (i = 0; i < 100; i++) {
-		display = rand() % 1024;
-		if (display < 10)
-			continue;
-		char *fname;
-		if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
-			errExit("asprintf");
-		struct stat s;
-		if (stat(fname, &s) == -1) {
-			found = 1;
-			break;
-		}
-	}
-	if (!found) {
-		fprintf(stderr, "Error: cannot pick up a random X11 display number, exiting...\n");
-		exit(1);
-	}
-	
-	return display;
-}
-#endif
 #endif
 
 
-
-void fs_x11(void) {
-#ifdef HAVE_X11
-	int display = x11_display();
-	if (display <= 0)
-		return;
-
-	char *x11file;
-	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
-		errExit("asprintf");
-	struct stat x11stat;
-	if (stat(x11file, &x11stat) == -1 || !S_ISSOCK(x11stat.st_mode)) {
-		free(x11file);
-		return;
-	}
-
-	if (arg_debug || arg_debug_whitelists)
-		fprintf(stderr, "Masking all X11 sockets except %s\n", x11file);
-
-               // Move the real /tmp/.X11-unix to a scratch location
-                // so we can still access x11file after we mount a
-                // tmpfs over /tmp/.X11-unix.
-                int rv = mkdir(RUN_WHITELIST_X11_DIR, 0700);
-                if (rv == -1)
-                        errExit("mkdir");
-                if (set_perms(RUN_WHITELIST_X11_DIR, 0, 0, 0700))
-                        errExit("set_perms");
-
-                if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, 0, MS_BIND|MS_REC, 0) < 0)
-                        errExit("mount bind");
-
-                // This directory must be mode 1777, or Xlib will barf.
-                if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs",
-                          MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,
-                          "mode=1777,uid=0,gid=0") < 0)
-                        errExit("mounting tmpfs on /tmp/.X11-unix");
-                fs_logger("tmpfs /tmp/.X11-unix");
-
-                // create an empty file which will have the desired socket bind-mounted over it
-                int fd = open(x11file, O_RDWR|O_CREAT|O_EXCL, x11stat.st_mode & ~S_IFMT);
-                if (fd < 0)
-                        errExit(x11file);
-                if (fchown(fd, x11stat.st_uid, x11stat.st_gid))
-                        errExit("fchown");
-                close(fd);
-
-                // do the mount
-                char *wx11file;
-                if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
-                        errExit("asprintf");
-                if (mount(wx11file, x11file, NULL, MS_BIND|MS_REC, NULL) < 0)
-                        errExit("mount bind");
-                fs_logger2("whitelist", x11file);
-
-                free(x11file);
-                free(wx11file);
-
-                // block access to RUN_WHITELIST_X11_DIR
-                if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, 0, MS_BIND, 0) < 0)
-                        errExit("mount");
-                fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
-#endif
-}
 
 
 #ifdef HAVE_X11
@@ -720,6 +628,208 @@ void x11_start(int argc, char **argv) {
 
 #endif
 
+// Porting notes:
+// 
+// 1. merge #1100 from zackw:
+//     Attempting to run xauth -f directly on a file in /run/firejail/mnt/ directory fails on Debian 8
+//     with this message:
+//            xauth:  timeout in locking authority file /run/firejail/mnt/sec.Xauthority-Qt5Mu4
+//            Failed to create untrusted X cookie: xauth: exit 1
+//     For this reason we run xauth on a file in a tmpfs filesystem mounted on /tmp. This was
+//     a partial merge.
+//
+// 2. Since we cannot deal with the TOCTOU condition when mounting .Xauthority in user home
+// directory, we need to make sure /usr/bin/xauth executable is the real thing, and not
+// something picked up on $PATH.
+//
+void x11_xorg(void) {
+#ifdef HAVE_X11
+
+	// check xauth utility is present in the system
+	struct stat s;
+	if (stat("/usr/bin/xauth", &s) == -1) {
+		fprintf(stderr, "Error: xauth utility not found in PATH.  Please install it:\n"
+                      		"   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
+		exit(1);
+	}
+	if (s.st_uid != 0 && s.st_gid != 0) {
+		fprintf(stderr, "Error: invalid /usr/bin/xauth executable\n");
+		exit(1);
+	}
+
+	// get DISPLAY env
+	char *display = getenv("DISPLAY");
+	if (!display) {
+		fputs("Error: --x11=xorg requires an 'outer' X11 server to use.\n", stderr);
+		exit(1);
+	}
+
+	// temporarily mount a tempfs on top of /tmp directory
+	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+		errExit("mounting /tmp");
+
+	// create the temporary .Xauthority file
+	if (arg_debug)
+		printf("Generating a new .Xauthority file\n");
+	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
+	int fd = mkstemp(tmpfname);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot create .Xauthority file\n");
+		exit(1);
+	}
+	if (fchown(fd, getuid(), getgid()) == -1)
+		errExit("chown");
+	close(fd);
+
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		drop_privs(1);
+		clearenv();
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
+			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
+		
+		_exit(127);
+	}
+
+	// wait for the xauth process to finish
+	int status;
+	if (waitpid(child, &status, 0) != child)
+		errExit("waitpid");
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+		 /* success */
+	} else if (WIFEXITED(status)) {
+		fprintf(stderr, "Failed to create untrusted X cookie: xauth: exit %d\n",
+			WEXITSTATUS(status));
+		exit(1);
+	} else if (WIFSIGNALED(status)) {
+		fprintf(stderr, "Failed to create untrusted X cookie: xauth: %s\n",
+			strsignal(WTERMSIG(status)));
+		exit(1);
+	} else {
+		fprintf(stderr, "Failed to create untrusted X cookie: "
+			"xauth: un-decodable exit status %04x\n", status);
+		exit(1);
+	}
+
+	// ensure the file has the correct permissions and move it
+	// into the correct location.
+	if (stat(tmpfname, &s) == -1) {
+		fprintf(stderr, "Error: .Xauthority file was mpt created\n");
+		exit(1);
+	}
+	if (set_perms(tmpfname, getuid(), getgid(), 0600))
+		errExit("set_perms");
+	
+	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
+	// automatically when the sandbox is closed (rename doesn't work)
+	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) { // root needed
+		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
+		exit(1);
+	}
+	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
+		errExit("set_perms");
+	/* coverity[toctou] */
+	unlink(tmpfname);
+	umount("/tmp");
+	
+
+	// Ensure there is already a file in the usual location, so that bind-mount below will work.
+	// todo: fix TOCTOU races, currently managed by imposing /usr/bin/xauth as executable
+	char *dest;
+	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(dest, &s) == -1) {
+		// create an .Xauthority file
+		touch_file_as_user(dest, getuid(), getgid(), 0600);
+	}
+	if (is_link(dest)) {
+		fprintf(stderr, "Error: .Xauthority is a symbolic link\n");
+		exit(1);
+	}
+
+	// mount
+	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
+		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
+		exit(1);
+	}
+	// just  in case...
+	if (set_perms(dest, getuid(), getgid(), 0600))
+		errExit("set_perms");
+	free(dest);
+	
+	// unmount /tmp
+	umount("/tmp");
+#endif	
+}
+
+void fs_x11(void) {
+#ifdef HAVE_X11
+	int display = x11_display();
+	if (display <= 0)
+		return;
+
+	char *x11file;
+	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
+		errExit("asprintf");
+	struct stat x11stat;
+	if (stat(x11file, &x11stat) == -1 || !S_ISSOCK(x11stat.st_mode)) {
+		free(x11file);
+		return;
+	}
+
+	if (arg_debug || arg_debug_whitelists)
+		fprintf(stderr, "Masking all X11 sockets except %s\n", x11file);
+
+               // Move the real /tmp/.X11-unix to a scratch location
+                // so we can still access x11file after we mount a
+                // tmpfs over /tmp/.X11-unix.
+                int rv = mkdir(RUN_WHITELIST_X11_DIR, 0700);
+                if (rv == -1)
+                        errExit("mkdir");
+                if (set_perms(RUN_WHITELIST_X11_DIR, 0, 0, 0700))
+                        errExit("set_perms");
+
+                if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, 0, MS_BIND|MS_REC, 0) < 0)
+                        errExit("mount bind");
+
+                // This directory must be mode 1777, or Xlib will barf.
+                if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs",
+                          MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,
+                          "mode=1777,uid=0,gid=0") < 0)
+                        errExit("mounting tmpfs on /tmp/.X11-unix");
+                fs_logger("tmpfs /tmp/.X11-unix");
+
+                // create an empty file which will have the desired socket bind-mounted over it
+                int fd = open(x11file, O_RDWR|O_CREAT|O_EXCL, x11stat.st_mode & ~S_IFMT);
+                if (fd < 0)
+                        errExit(x11file);
+                if (fchown(fd, x11stat.st_uid, x11stat.st_gid))
+                        errExit("fchown");
+                close(fd);
+
+                // do the mount
+                char *wx11file;
+                if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
+                        errExit("asprintf");
+                if (mount(wx11file, x11file, NULL, MS_BIND|MS_REC, NULL) < 0)
+                        errExit("mount bind");
+                fs_logger2("whitelist", x11file);
+
+                free(x11file);
+                free(wx11file);
+
+                // block access to RUN_WHITELIST_X11_DIR
+                if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, 0, MS_BIND, 0) < 0)
+                        errExit("mount");
+                fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
+#endif
+}
+
 void x11_block(void) {
 #ifdef HAVE_X11
 	mask_x11_abstract_socket = 1;
@@ -757,94 +867,3 @@ void x11_block(void) {
 #endif
 }
 
-void x11_xorg(void) {
-#ifdef HAVE_X11
-	// destination - create an empty ~/.Xauthotrity file if it doesn't exist already, and use it as a mount point
-	char *dest;
-	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
-		errExit("asprintf");
-	struct stat s;
-	if (stat(dest, &s) == -1) {
-		// create an .Xauthority file
-		touch_file_as_user(dest, getuid(), getgid(), 0600);
-	}
-
-	// check xauth utility is present in the system
-	if (stat("/usr/bin/xauth", &s) == -1) {
-		fprintf(stderr, "Error: cannot find /usr/bin/xauth executable\n");
-		exit(1);
-	}
-
-	// temporarily mount a tempfs on top of /tmp directory
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
-		errExit("mounting /tmp");
-
-	// create a temporary .Xauthority file
-	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
-	int fd = mkstemp(tmpfname);
-	if (fd == -1) {
-		fprintf(stderr, "Error: cannot create .Xauthority file\n");
-		exit(1);
-	}
-	if (fchown(fd, getuid(), getgid()) == -1)
-		errExit("chown");
-	close(fd);
-
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// generate the new .Xauthority file using xauth utility
-		if (arg_debug)
-			printf("Generating a new .Xauthority file\n");
-		drop_privs(1);
-
-		char *display = getenv("DISPLAY");
-		if (!display)
-			display = ":0.0";
-		
-		clearenv();
-		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
-			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
-		
-#ifdef HAVE_GCOV
-		__gcov_flush();
-#endif
-		_exit(0);
-	}
-
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
-
-	// check the file was created and set mode and ownership
-	if (stat(tmpfname, &s) == -1) {
-		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(tmpfname, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	
-	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
-	// automatically when the sandbox is closed
-	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) { // root needed
-		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	/* coverity[toctou] */
-	unlink(tmpfname);
-	
-	// mount
-	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
-		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(dest, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	free(dest);
-	
-	// unmount /tmp
-	umount("/tmp");
-#endif	
-}

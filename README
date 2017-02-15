@@ -110,6 +110,7 @@ Zack Weinberg (https://github.com/zackw)
 	- rework abstract X11 socket detection
 	- rework X11 display number assignment
 	- rework X11 xorg processing
+	- rework fcopy, --follow-link support in fcopy
 Igor Bukanov (https://github.com/ibukanov)
 	- found/fiixed privilege escalation in --hosts-file option
 Cat (https://github.com/ecat3)

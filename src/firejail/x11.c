@@ -20,6 +20,8 @@
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
@@ -112,6 +114,92 @@ static int x11_abstract_sockets_present(void) {
 	return found;
 }
 
+// Choose a random, unallocated display number.  This has an inherent
+// and unavoidable TOCTOU race, since we cannot create either the
+// socket or a lockfile ourselves.
+static int random_display_number(void) {
+        int display;
+        int found = 0;
+	int i;
+
+        struct sockaddr_un sa;
+        // The -1 here is because we need space to inject a
+        // leading nul byte.
+        int sun_pathmax = (int)(sizeof sa.sun_path - 1);
+        assert((size_t)sun_pathmax == sizeof sa.sun_path - 1);
+        int sun_pathlen;
+
+        int sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+        if (sockfd == -1)
+                errExit("socket");
+
+	for (i = 0; i < 100; i++) {
+                // We try display numbers in the range 21 through 1000.
+                // Normal X servers typically use displays in the 0-10 range;
+                // ssh's X11 forwarding uses 10-20, and login screens
+                // (e.g. gdm3) may use displays above 1000.
+                display = rand() % 979 + 21;
+
+                // The display number might be claimed by a server listening
+                // in _either_ the normal or the abstract namespace; they
+                // don't necessarily do both.  The easiest way to check is
+                // to try to connect, both ways.
+                memset(&sa, 0, sizeof sa);
+                sa.sun_family = AF_UNIX;
+                sun_pathlen = snprintf(sa.sun_path, sun_pathmax,
+                                       "/tmp/.X11-unix/X%d", display);
+                if (sun_pathlen >= sun_pathmax) {
+                        fprintf(stderr, "sun_path too small for display :%d"
+                                " (only %d bytes usable)\n", display, sun_pathmax);
+                        exit(1);
+                }
+
+                if (connect(sockfd, (struct sockaddr *)&sa,
+                            offsetof(struct sockaddr_un, sun_path) + sun_pathlen + 1) == 0) {
+                        close(sockfd);
+                        sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+                        if (sockfd == -1)
+                                errExit("socket");
+                        continue;
+                }
+                if (errno != ECONNREFUSED && errno != ENOENT)
+                        errExit("connect");
+
+                // Name not claimed in the normal namespace; now try it
+                // in the abstract namespace.  Note that abstract-namespace
+                // names are NOT nul-terminated; they extend to the length
+                // specified as the third argument to 'connect'.
+                memmove(sa.sun_path + 1, sa.sun_path, sun_pathlen + 1);
+                sa.sun_path[0] = '\0';
+                if (connect(sockfd, (struct sockaddr *)&sa,
+                            offsetof(struct sockaddr_un, sun_path) + 1 + sun_pathlen) == 0) {
+                        close(sockfd);
+                        sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+                        if (sockfd == -1)
+                                errExit("socket");
+                        continue;
+                }
+                if (errno != ECONNREFUSED && errno != ENOENT)
+                        errExit("connect");
+
+                // This display number is unclaimed.  Of course, it could
+                // be claimed before we get around to doing it...
+                found = 1;
+                break;
+	}
+        close(sockfd);
+
+	if (!found) {
+                fputs("Error: cannot find an unallocated X11 display number, "
+                      "exiting...\n", stderr);
+		exit(1);
+	}
+	return display;
+}
+
+
+
+#if 0
 static int random_display_number(void) {
 	int i;
 	int found = 1;
@@ -136,6 +224,7 @@ static int random_display_number(void) {
 	
 	return display;
 }
+#endif
 #endif
 
 

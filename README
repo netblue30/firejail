@@ -108,6 +108,7 @@ Zack Weinberg (https://github.com/zackw)
 	- rework masking X11 sockets in /tmp/.X11-unix directory
 	- rework xpra and xephyr detection
 	- rework abstract X11 socket detection
+	- rework X11 display number assignment
 Igor Bukanov (https://github.com/ibukanov)
 	- found/fiixed privilege escalation in --hosts-file option
 Cat (https://github.com/ecat3)

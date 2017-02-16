@@ -89,7 +89,7 @@ expect {
 	"Child process initialized"
 }
 after 100
-send -- "file file ~/_firejail_test_link2\r"
+send -- "file ~/_firejail_test_link2\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
 	"broken symbolic link"

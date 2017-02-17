@@ -150,5 +150,7 @@ gjs, gnome-books, gnome-clocks, gnome-documents, gnome-maps, gnome-music, gnome-
 goobox, gpa, gpg, gpg-agent, highlight, img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext,
 simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, w3m, xfburn, xpra, wget,
 xed, pluma, Cryptocat, Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5,
-PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser, xmms, iridium browser
+PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser, xmms, iridium browser,
+Kino
+
 

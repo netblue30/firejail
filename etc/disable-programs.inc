@@ -282,3 +282,5 @@ blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom
 blacklist ${HOME}/wallet.dat
 blacklist /tmp/ssh-*
+blacklist ${HOME}/.kinorc
+blacklist ${HOME}/.kino-history

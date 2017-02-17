@@ -112,6 +112,8 @@ Zack Weinberg (https://github.com/zackw)
 	- rework X11 xorg processing
 	- rework fcopy, --follow-link support in fcopy
 	- follow link support in --private-bin
+Austin S. Hemmelgarn (https://github.com/Ferroin)
+	- unbound profile update
 Igor Bukanov (https://github.com/ibukanov)
 	- found/fiixed privilege escalation in --hosts-file option
 Cat (https://github.com/ecat3)

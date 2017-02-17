@@ -625,7 +625,6 @@ void x11_start(int argc, char **argv) {
 		exit(0);
 	}
 }
-
 #endif
 
 // Porting notes:
@@ -642,6 +641,11 @@ void x11_start(int argc, char **argv) {
 // directory, we need to make sure /usr/bin/xauth executable is the real thing, and not
 // something picked up on $PATH.
 //
+// 3. If for any reason xauth command fails, we exit the sandbox. On Debian 8 this happens
+// when using a network namespace. Somehow, xauth tries to connect to the abstract socket,
+// and it failes because of the network namespace - it should try to connect to the regular
+// Unix socket! If we ignore the fail condition, the program will be started on X server without
+// the security extension loaded.
 void x11_xorg(void) {
 #ifdef HAVE_X11
 
@@ -690,7 +694,7 @@ void x11_xorg(void) {
 #ifdef HAVE_GCOV
 		__gcov_flush();
 #endif
-		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
+		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-v", "-f", tmpfname,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
 		
 		_exit(127);
@@ -719,7 +723,7 @@ void x11_xorg(void) {
 	// ensure the file has the correct permissions and move it
 	// into the correct location.
 	if (stat(tmpfname, &s) == -1) {
-		fprintf(stderr, "Error: .Xauthority file was mpt created\n");
+		fprintf(stderr, "Error: .Xauthority file was not created\n");
 		exit(1);
 	}
 	if (set_perms(tmpfname, getuid(), getgid(), 0600))

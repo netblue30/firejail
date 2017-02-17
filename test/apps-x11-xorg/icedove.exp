@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --x11=xorg icedove\r"
+send -- "firejail --name=test --x11=xorg --ignore=net --ignore=netfilter --ignore=iprange icedove\r"
 sleep 10
 
 spawn $env(SHELL)

@@ -45,6 +45,10 @@ $ git clone https://github.com/netblue30/firejail.git
 $ cd firejail
 $ ./configure && make && sudo make install-strip
 `````
+On Debian/Ubuntu you will need to install git and a compiler:
+`````
+$ sudo apt-get install git build-essential
+`````
 
 ## User submitted profile repositories
 

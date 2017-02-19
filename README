@@ -15,6 +15,17 @@ Documentation and support: https://firejail.wordpress.com/
 Development: https://github.com/netblue30/firejail
 License: GPL v2
 
+Compile and install
+
+$ git clone https://github.com/netblue30/firejail.git
+$ cd firejail
+$ ./configure && make && sudo make install-strip
+
+On Debian/Ubuntu you will need to install git and a compiler:
+
+$ sudo apt-get install build-essential
+
+
 Firejail Authors:
 
 netblue30 (netblue30@yahoo.com)
@@ -86,6 +97,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- uudeview profile fix
 	- fixed palemoon and qbittorrent profiles
 	- compile/install scripts for --git-install/--git-uninstall commands
+	- tighten keepassx
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature

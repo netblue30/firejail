@@ -13,14 +13,16 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+net none
 nogroups
 nonewprivs
 noroot
 nosound
 protocol unix
 seccomp
-netfilter
 shell none
 
+private-bin keepassx2
+private-etc fonts
+private-dev
 private-tmp
-private-dev 

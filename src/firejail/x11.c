@@ -643,7 +643,7 @@ void x11_start(int argc, char **argv) {
 //
 // 3. If for any reason xauth command fails, we exit the sandbox. On Debian 8 this happens
 // when using a network namespace. Somehow, xauth tries to connect to the abstract socket,
-// and it failes because of the network namespace - it should try to connect to the regular
+// and it fails because of the network namespace - it should try to connect to the regular
 // Unix socket! If we ignore the fail condition, the program will be started on X server without
 // the security extension loaded.
 void x11_xorg(void) {

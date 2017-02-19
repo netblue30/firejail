@@ -247,3 +247,5 @@
 /etc/firejail/iridium-browser.profile
 /etc/firejail/iridium.profile
 /etc/firejail/kino.profile
+/etc/firejail/Thunar.profile
+/etc/firejail/thunar.profile

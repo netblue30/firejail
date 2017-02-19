@@ -1,5 +1,5 @@
 firejail (0.9.44.9) baseline; urgency=low
-  * security: while using --x11=xorg and --net, incorrect processing of
+  * security: when using --x11=xorg and --net, incorrect processing of
     the return code of /usr/bin/xauth could end up in starting the
     sandbox without X11 security extension installed. Problem found/fixed
     by Zack Weinberg
@@ -16,7 +16,8 @@ firejail (0.9.44.8) baseline; urgency=low
  -- netblue30 <netblue30@yahoo.com>  Wed, 18 Jan 2017 10:00:00 -0500
 
 firejail (0.9.44.6) baseline; urgency=low
-  * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week
+  * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week,
+     new CVE code assigned after release: CVE-2017-5940
   * security: major cleanup of file copying code
   * security: tightening the rules for --chroot and --overlay features
   * bugfix: ported Gentoo compile patch

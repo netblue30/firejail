@@ -641,22 +641,44 @@ void x11_block(void) {
 	env_store("XAUTHORITY", RMENV);
 #endif
 }
-
+// Porting notes:
+// 
+// 1. merge #1100 from zackw:
+//     Attempting to run xauth -f directly on a file in /run/firejail/mnt/ directory fails on Debian 8
+//     with this message:
+//            xauth:  timeout in locking authority file /run/firejail/mnt/sec.Xauthority-Qt5Mu4
+//            Failed to create untrusted X cookie: xauth: exit 1
+//     For this reason we run xauth on a file in a tmpfs filesystem mounted on /tmp. This was
+//     a partial merge.
+//
+// 2. Since we cannot deal with the TOCTOU condition when mounting .Xauthority in user home
+// directory, we need to make sure /usr/bin/xauth executable is the real thing, and not
+// something picked up on $PATH.
+//
+// 3. If for any reason xauth command fails, we exit the sandbox. On Debian 8 this happens
+// when using a network namespace. Somehow, xauth tries to connect to the abstract socket,
+// and it fails because of the network namespace - it should try to connect to the regular
+// Unix socket! If we ignore the fail condition, the program will be started on X server without
+// the security extension loaded.
 void x11_xorg(void) {
 #ifdef HAVE_X11
-	// destination - create an empty ~/.Xauthotrity file if it doesn't exist already, and use it as a mount point
-	char *dest;
-	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
-		errExit("asprintf");
-	struct stat s;
-	if (stat(dest, &s) == -1) {
-		// create an .Xauthority file
-		touch_file_as_user(dest, getuid(), getgid(), 0600);
-	}
 
 	// check xauth utility is present in the system
+	struct stat s;
 	if (stat("/usr/bin/xauth", &s) == -1) {
-		fprintf(stderr, "Error: cannot find /usr/bin/xauth executable\n");
+		fprintf(stderr, "Error: xauth utility not found in PATH.  Please install it:\n"
+                      		"   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
+		exit(1);
+	}
+	if (s.st_uid != 0 && s.st_gid != 0) {
+		fprintf(stderr, "Error: invalid /usr/bin/xauth executable\n");
+		exit(1);
+	}
+
+	// get DISPLAY env
+	char *display = getenv("DISPLAY");
+	if (!display) {
+		fputs("Error: --x11=xorg requires an 'outer' X11 server to use.\n", stderr);
 		exit(1);
 	}
 
@@ -664,7 +686,9 @@ void x11_xorg(void) {
 	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
 		errExit("mounting /tmp");
 
-	// create a temporary .Xauthority file
+	// create the temporary .Xauthority file
+	if (arg_debug)
+		printf("Generating a new .Xauthority file\n");
 	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
 	int fd = mkstemp(tmpfname);
 	if (fd == -1) {
@@ -679,59 +703,81 @@ void x11_xorg(void) {
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
-		// generate the new .Xauthority file using xauth utility
-		if (arg_debug)
-			printf("Generating a new .Xauthority file\n");
 		drop_privs(1);
-
-		char *display = getenv("DISPLAY");
-		if (!display)
-			display = ":0.0";
-		
 		clearenv();
-		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-v", "-f", tmpfname,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
 		
-		_exit(0);
+		_exit(127);
 	}
 
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
+	// wait for the xauth process to finish
+	int status;
+	if (waitpid(child, &status, 0) != child)
+		errExit("waitpid");
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+		 /* success */
+	} else if (WIFEXITED(status)) {
+		fprintf(stderr, "Failed to create untrusted X cookie: xauth: exit %d\n",
+			WEXITSTATUS(status));
+		exit(1);
+	} else if (WIFSIGNALED(status)) {
+		fprintf(stderr, "Failed to create untrusted X cookie: xauth: %s\n",
+			strsignal(WTERMSIG(status)));
+		exit(1);
+	} else {
+		fprintf(stderr, "Failed to create untrusted X cookie: "
+			"xauth: un-decodable exit status %04x\n", status);
+		exit(1);
+	}
 
-	// check the file was created and set mode and ownership
+	// ensure the file has the correct permissions and move it
+	// into the correct location.
 	if (stat(tmpfname, &s) == -1) {
+		fprintf(stderr, "Error: .Xauthority file was not created\n");
+		exit(1);
+	}
+	if (set_perms(tmpfname, getuid(), getgid(), 0600))
+		errExit("set_perms");
+	
+	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
+	// automatically when the sandbox is closed (rename doesn't work)
+	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) { // root needed
 		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
-	if (chown(tmpfname, getuid(), getgid()) == -1)
-		errExit("chown");
-	if (chmod(tmpfname, 0600) == -1)
-		errExit("chmod");
+	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
+		errExit("set_perms");
+	/* coverity[toctou] */
+	unlink(tmpfname);
+	umount("/tmp");
 	
-	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
-	// automatically when the sandbox is closed
-	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) { // root needed
-		fprintf(stderr, "asdfdsfError: cannot create the new .Xauthority file\n");
+
+	// Ensure there is already a file in the usual location, so that bind-mount below will work.
+	// todo: fix TOCTOU races, currently managed by imposing /usr/bin/xauth as executable
+	char *dest;
+	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(dest, &s) == -1) {
+		// create an .Xauthority file
+		touch_file_as_user(dest, getuid(), getgid(), 0600);
+	}
+	if (is_link(dest)) {
+		fprintf(stderr, "Error: .Xauthority is a symbolic link\n");
 		exit(1);
 	}
-	if (chown(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid()) == -1)
-		errExit("chown");
-	if (chmod(RUN_XAUTHORITY_SEC_FILE, 0600) == -1)
-		errExit("chmod");
-	unlink(tmpfname);
-	
+
 	// mount
 	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
-	if (chown(dest, getuid(), getgid()) == -1)
-		errExit("chown");
-	if (chmod(dest, 0600) == -1)
-		errExit("chmod");
+	// just  in case...
+	if (set_perms(dest, getuid(), getgid(), 0600))
+		errExit("set_perms");
 	free(dest);
-	
-	// unmount /tmp
-	umount("/tmp");
 #endif	
 }

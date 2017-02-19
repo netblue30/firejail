@@ -77,6 +77,9 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added gnome-chess profile
 	- added DOSBox profile
 	- evince profile enhancement
+Zack Weinberg (https://github.com/zackw)
+	- fixed memory corruption in noblacklist processing
+	- rework X11 xorg processing
 Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
 valoq (https://github.com/valoq)

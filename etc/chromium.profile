@@ -5,6 +5,7 @@ include /etc/firejail/chromium.local
 # Chromium browser profile
 noblacklist ~/.config/chromium
 noblacklist ~/.cache/chromium
+noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 

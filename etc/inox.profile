@@ -5,6 +5,7 @@ include /etc/firejail/inox.local
 # Inox browser profile
 noblacklist ~/.config/inox
 noblacklist ~/.cache/inox
+noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 

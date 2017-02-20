@@ -8,6 +8,7 @@ noblacklist ~/.cache/mozilla
 noblacklist ~/.config/qpdfview
 noblacklist ~/.local/share/qpdfview
 noblacklist ~/.kde/share/apps/okular
+noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -34,6 +35,7 @@ whitelist ~/.pentadactyl
 whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
+mkdir ~/.pki
 whitelist ~/.pki
 whitelist ~/.config/qpdfview
 whitelist ~/.local/share/qpdfview

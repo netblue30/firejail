@@ -13,6 +13,8 @@ firejail (0.9.45) baseline; urgency=low
   * security: split seccomp filter code configuration in a separate executable
   * security: split file copying in private option in a separate executable
   * security: root exploit found by Sebastian Krahmer (CVE-2017-5180)
+  * security: ~/.pki directory whitelisted and later blacklisted. This affects 
+    most browsers, and disables the custom certificates installed by the user.
   * feature: disable gnupg and systemd directories under /run/user
   * feature: test coverage (gcov) support
   * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)

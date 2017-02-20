@@ -5,6 +5,7 @@ include /etc/firejail/google-chrome.local
 # Google Chrome browser profile
 noblacklist ~/.config/google-chrome
 noblacklist ~/.cache/google-chrome
+noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 

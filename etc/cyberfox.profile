@@ -2,6 +2,7 @@
 
 noblacklist ~/.8pecxstudios
 noblacklist ~/.cache/8pecxstudios
+noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

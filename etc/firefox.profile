@@ -2,6 +2,7 @@
 
 noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
+noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -28,6 +29,7 @@ whitelist ~/.pentadactyl
 whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
+mkdir ~/.pki
 whitelist ~/.pki
 
 # lastpass, keepassx

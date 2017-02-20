@@ -2,6 +2,7 @@
 noblacklist ~/.config/opera
 noblacklist ~/.cache/opera
 noblacklist ~/.opera
+noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

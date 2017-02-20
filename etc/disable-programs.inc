@@ -70,6 +70,7 @@ blacklist ${HOME}/.config/Mumble
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Slack
+blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/ardour4
@@ -149,6 +150,7 @@ blacklist ${HOME}/.config/wireshark
 blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.config/xed
 blacklist ${HOME}/.config/xfburn
+blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer

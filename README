@@ -98,6 +98,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- fixed palemoon and qbittorrent profiles
 	- compile/install scripts for --git-install/--git-uninstall commands
 	- tighten keepassx
+	- added Thunar profile
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature
@@ -407,4 +408,4 @@ pstn (https://github.com/pstn)
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
 	- src/lib/libnetlink.c extracted from iproute2 software package
 	
-Copyright (C) 2014-2016 Firejail Authors
+Copyright (C) 2014-2017 Firejail Authors

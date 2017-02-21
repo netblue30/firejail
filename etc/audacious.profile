@@ -3,6 +3,7 @@
 include /etc/firejail/audacious.local
 
 # Audacious media player profile
+noblacklist ~/.config/audacious
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

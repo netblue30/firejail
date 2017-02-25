@@ -17,6 +17,7 @@ noroot
 protocol unix,inet,inet6
 seccomp
 shell none
+no3d
 
 private-bin xmms
 private-dev

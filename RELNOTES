@@ -3,15 +3,16 @@ firejail (0.9.44.9) baseline; urgency=low
     the return code of /usr/bin/xauth could end up in starting the
     sandbox without X11 security extension installed. Problem found/fixed
     by Zack Weinberg
-  * security: ~/.pki directory whitelisted and later blacklisted. This affects 
+  * bug: ~/.pki directory whitelisted and later blacklisted. This affects 
     most browsers, and disables the custom certificates installed by the user
   * bugfix: firecfg config fix
   * bugfix: gajim security profile fix
   * bugfix: man page fix
   * bugfix: force-nonewprivs fix for /etc/firejail/firejail.config
   * bugfix: xephyr-extra-params fix for /etc/firejail/firejail.config
-  * bugfix: ugly memory corruption in noblacklist processing
+  * bugfix: memory corruption in noblacklist processing
   * bugfix: --quiet fix for Arch and Fedora systems
+  * bugfix: updated Keepass(x) profiles
  -- netblue30 <netblue30@yahoo.com>  Sat, 28 Jan 2017 10:00:00 -0500
 
 firejail (0.9.44.8) baseline; urgency=low

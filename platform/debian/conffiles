@@ -240,3 +240,12 @@
 /etc/firejail/xonotic.profile
 /etc/firejail/VirtualBox.profile
 /etc/firejail/qupzilla.profile
+/etc/firejail/FossaMail.profile
+/etc/firejail/fossamail.profile
+/etc/firejail/uzbl-browser.profile
+/etc/firejail/xmms.profile
+/etc/firejail/iridium-browser.profile
+/etc/firejail/iridium.profile
+/etc/firejail/kino.profile
+/etc/firejail/Thunar.profile
+/etc/firejail/thunar.profile

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/gpg-agent.local
+
 # gpg-agent profile
 noblacklist ~/.gnupg
 
@@ -11,7 +15,7 @@ nogroups
 nonewprivs
 noroot
 nosound
-protocol unix
+protocol unix,inet,inet6
 seccomp
 netfilter
 no3d
@@ -21,6 +25,4 @@ tracelog
 blacklist /tmp/.X11-unix
 
 # private-bin gpg-agent,gpg
-private-tmp
 private-dev
-# private-etc none

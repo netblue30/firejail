@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -215,6 +215,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_no3d = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "allow-private-blacklist") == 0) {
+		arg_allow_private_blacklist = 1;
+		return 0;
+	}	
 	else if (strcmp(ptr, "netfilter") == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK))
@@ -602,6 +606,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	
+	// hosts-file
+	if (strncmp(ptr, "hosts-file ", 11) == 0) {
+		cfg.hosts_file = fs_check_hosts_fiile(ptr + 11);
+		return 0;
+	}
+	
 	// dns
 	if (strncmp(ptr, "dns ", 4) == 0) {
 		uint32_t dns;
@@ -661,6 +671,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// writable-var
 	if (strcmp(ptr, "writable-var") == 0) {
 		arg_writable_var = 1;
+		return 0;
+	}
+	if (strcmp(ptr, "writable-var-log") == 0) {
+		arg_writable_var_log = 1;
 		return 0;
 	}
 	
@@ -999,8 +1013,23 @@ void profile_read(const char *fname) {
 		exit(1);	
 	}
 
+	// check file
 	if (strlen(fname) == 0) {
 		fprintf(stderr, "Error: invalid profile file\n");
+		exit(1);
+	}
+	invalid_filename(fname);
+	if (is_dir(fname) || is_link(fname) || strstr(fname, "..")) {
+		fprintf(stderr, "Error: invalid profile file\n");
+		exit(1);
+	}
+	if (access(fname, R_OK)) {
+		// if the file ends in ".local", do not exit
+		char *ptr = strstr(fname, ".local");
+		if (ptr && strlen(ptr) == 6)
+			return;
+		
+		fprintf(stderr, "Error: cannot access profile file\n");
 		exit(1);
 	}
 
@@ -1013,7 +1042,7 @@ void profile_read(const char *fname) {
 				return;
 		}
 	}
-
+	
 	// open profile file:
 	FILE *fp = fopen(fname, "r");
 	if (fp == NULL) {

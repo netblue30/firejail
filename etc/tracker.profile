@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/tracker.local
+
 # tracker profile
 
 # Tracker is started by systemd on most systems. Therefore it is not firejailed by default

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/vlc.local
+
 # VLC media player profile
 noblacklist ${HOME}/.config/vlc
 
@@ -8,7 +12,7 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
-nogroups
+# nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink

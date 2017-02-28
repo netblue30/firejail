@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -124,12 +124,21 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// follow symlink as user
+			else if (strncmp(ptr, "follow-symlink-as-user ", 23) == 0) {
+				if (strcmp(ptr + 23, "yes") == 0)
+					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 1;
+				else if (strcmp(ptr + 23, "no") == 0)
+					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 0;
+				else
+					goto errout;
+			}
 			// nonewprivs
 			else if (strncmp(ptr, "force-nonewprivs ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
-					cfg_val[CFG_SECCOMP] = 1;
+					cfg_val[CFG_FORCE_NONEWPRIVS] = 1;
 				else if (strcmp(ptr + 17, "no") == 0)
-					cfg_val[CFG_SECCOMP] = 0;
+					cfg_val[CFG_FORCE_NONEWPRIVS] = 0;
 				else
 					goto errout;
 			}
@@ -351,6 +360,13 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- git install support is %s\n",
+#ifdef HAVE_GIT_INSTALL
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
 
 #ifdef HAVE_NETWORK_RESTRICTED
 	printf("\t- networking features are available only to root user\n");
@@ -395,4 +411,5 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
+		
 }

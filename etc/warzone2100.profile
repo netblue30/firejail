@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/warzone2100.local
+
 # Firejail profile for warzone2100
 # Currently supports warzone2100-3.1
 noblacklist ~/.warzone2100-3.1

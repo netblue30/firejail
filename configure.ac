@@ -17,6 +17,7 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 	AC_SUBST(HAVE_APPARMOR)
 ])
 
+
 AS_IF([test "x$enable_apparmor" = "xyes"], [
 	AC_CHECK_HEADER(sys/apparmor.h, , [AC_MSG_ERROR(
 	[Couldn't find sys/apparmor.h... please install apparmor user space library and development files] )])
@@ -146,6 +147,13 @@ AS_IF([test "x$enable_gcov" = "xyes"], [
 ])
 
 
+HAVE_GIT_INSTALL=""
+AC_ARG_ENABLE([git-install],
+    AS_HELP_STRING([--enable-git-install], [enable git install feature]))
+AS_IF([test "x$enable_git_install" = "xyes"], [
+	HAVE_GIT_INSTALL="-DHAVE_GIT_INSTALL"
+	AC_SUBST(HAVE_GIT_INSTALL)
+])
 
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
@@ -160,7 +168,7 @@ fi
 
 AC_OUTPUT(Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile \
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile \
-src/ftee/Makefile src/faudit/Makefile src/libconnect/Makefile src/fseccomp/Makefile)
+src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile)
 
 echo
 echo "Configuration options:"
@@ -179,6 +187,7 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   git install support: $HAVE_GIT_INSTALL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"

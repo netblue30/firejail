@@ -1,3 +1,7 @@
+# This file is overwritten during software install. 
+# Persistent customizations should go in a .local file.
+include /etc/firejail/disable-common.local
+
 # History files in $HOME
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
@@ -72,12 +76,9 @@ blacklist /etc/profile.d
 blacklist /etc/rc.local
 blacklist /etc/anacrontab
 
-# General startup files
+# Startup files
 read-only ${HOME}/.xinitrc
 read-only ${HOME}/.xserverrc
-read-only ${HOME}/.profile
-
-# Shell startup files
 read-only ${HOME}/.antigen
 read-only ${HOME}/.bash_login
 read-only ${HOME}/.bashrc
@@ -96,12 +97,21 @@ read-only ${HOME}/.tcshrc
 read-only ${HOME}/.cshrc
 read-only ${HOME}/.csh_files
 read-only ${HOME}/.profile
+read-only ${HOME}/.forward
+read-only ${HOME}/.login
+read-only ${HOME}/.logout
+read-only ${HOME}/.pgpkey
+read-only ${HOME}/.plan
+read-only ${HOME}/.project
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.dotfiles
 read-only ${HOME}/dotfiles
 read-only ${HOME}/.mailcap
+read-only ${HOME}/.muttrc
+read-only ${HOME}/.mutt/muttrc
+read-only ${HOME}/.msmtprc
 read-only ${HOME}/.exrc
 read-only ${HOME}/_exrc
 read-only ${HOME}/.vimrc
@@ -118,8 +128,16 @@ read-only ${HOME}/.reportbugrc
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
 
-# The user ~/bin directory can override commands such as ls
+# Make directories commonly found in $PATH read-only
 read-only ${HOME}/bin
+read-only ${HOME}/.gem
+read-only ${HOME}/.luarocks
+read-only ${HOME}/.npm-packages
+
+# Make the contents of ~/.local read-only,
+#  except the commonly-used ~/.local/share
+read-only  ${HOME}/.local
+read-write ${HOME}/.local/share
 
 # top secret
 blacklist ${HOME}/.ecryptfs
@@ -197,6 +215,8 @@ blacklist /usr/lib64/virtualbox
 
 # prevent lxterminal connecting to an existing lxterminal session
 blacklist /tmp/.lxterminal-socket*
+# prevent tmux connecting to an existing session
+blacklist /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
 blacklist ${PATH}/gnome-terminal

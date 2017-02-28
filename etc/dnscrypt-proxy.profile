@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/dnscrypt-proxy.local
+
 # security profile for dnscrypt-proxy
 noblacklist /sbin
 noblacklist /usr/sbin

@@ -625,6 +625,7 @@ ac_includes_default="\
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 HAVE_SECCOMP_H
+HAVE_GIT_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
 HAVE_FATAL_WARNINGS
@@ -711,6 +712,7 @@ enable_whitelist
 enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
+enable_git_install
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1349,6 +1351,7 @@ Optional Features:
   --enable-busybox-workaround
                           enable busybox workaround
   --enable-gcov           Gcov instrumentation
+  --enable-git-install    enable git install feature
 
 Some influential environment variables:
   CC          C compiler command
@@ -3100,6 +3103,7 @@ if test "x$enable_apparmor" = "xyes"; then :
 fi
 
 
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -3711,6 +3715,18 @@ if test "x$enable_gcov" = "xyes"; then :
 fi
 
 
+HAVE_GIT_INSTALL=""
+# Check whether --enable-git-install was given.
+if test "${enable_git_install+set}" = set; then :
+  enableval=$enable_git_install;
+fi
+
+if test "x$enable_git_install" = "xyes"; then :
+
+	HAVE_GIT_INSTALL="-DHAVE_GIT_INSTALL"
+
+
+fi
 
 # checking pthread library
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
@@ -3777,7 +3793,7 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
-ac_config_files="$ac_config_files Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/ftee/Makefile src/faudit/Makefile src/libconnect/Makefile src/fseccomp/Makefile"
+ac_config_files="$ac_config_files Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4497,7 +4513,6 @@ do
     "src/firecfg/Makefile") CONFIG_FILES="$CONFIG_FILES src/firecfg/Makefile" ;;
     "src/ftee/Makefile") CONFIG_FILES="$CONFIG_FILES src/ftee/Makefile" ;;
     "src/faudit/Makefile") CONFIG_FILES="$CONFIG_FILES src/faudit/Makefile" ;;
-    "src/libconnect/Makefile") CONFIG_FILES="$CONFIG_FILES src/libconnect/Makefile" ;;
     "src/fseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/fseccomp/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
@@ -4971,6 +4986,7 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   git install support: $HAVE_GIT_INSTALL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"

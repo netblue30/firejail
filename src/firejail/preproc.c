@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -76,12 +76,12 @@ void preproc_mount_mnt_dir(void) {
 		fs_logger2("tmpfs", RUN_MNT_DIR);
 		
 		//copy defaultl seccomp files
-		copy_file(PATH_SECCOMP_I386, RUN_SECCOMP_I386, getuid(), getgid(), 0644);
-		copy_file(PATH_SECCOMP_AMD64, RUN_SECCOMP_AMD64, getuid(), getgid(), 0644);
+		copy_file(PATH_SECCOMP_I386, RUN_SECCOMP_I386, getuid(), getgid(), 0644); // root needed
+		copy_file(PATH_SECCOMP_AMD64, RUN_SECCOMP_AMD64, getuid(), getgid(), 0644); // root needed
 		if (arg_allow_debuggers)
-			copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644);
+			copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
 		else
-			copy_file(PATH_SECCOMP_DEFAULT, RUN_SECCOMP_CFG, getuid(), getgid(), 0644);
+			copy_file(PATH_SECCOMP_DEFAULT, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
 			
 		// as root, create an empty RUN_SECCOMP_PROTOCOL file
 		create_empty_file_as_root(RUN_SECCOMP_PROTOCOL, 0644);

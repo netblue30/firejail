@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -35,6 +35,7 @@
 #include <signal.h>
 #include <time.h>
 #include <net/if.h>
+#include <sys/utsname.h>
 
 #if 0
 #include <sys/times.h>
@@ -84,6 +85,7 @@ int arg_netfilter;				// enable netfilter
 int arg_netfilter6;				// enable netfilter6
 char *arg_netfilter_file = NULL;			// netfilter file
 char *arg_netfilter6_file = NULL;		// netfilter6 file
+char *arg_netns = NULL;			// "ip netns"-created network namespace to use
 int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
@@ -112,7 +114,8 @@ int arg_x11_block = 0;				// block X11
 int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
-int arg_allow_private_blacklist = 0;  // blacklist things in private directories
+int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
+int arg_writable_var_log;			// writable /var/log
 
 int login_shell = 0;
 
@@ -817,17 +820,43 @@ int main(int argc, char **argv) {
 	
 	if (check_arg(argc, argv, "--quiet"))
 		arg_quiet = 1;
-	if (check_arg(argc, argv, "--allow-debuggers"))
+	if (check_arg(argc, argv, "--allow-debuggers")) {
+		// check kernel version
+		struct utsname u;
+		int rv = uname(&u);
+		if (rv != 0)
+			errExit("uname");
+		int major;
+		int minor;
+		if (2 != sscanf(u.release, "%d.%d", &major, &minor)) {
+			fprintf(stderr, "Error: cannot extract Linux kernel version: %s\n", u.version);
+			exit(1);
+		}
+		if (major < 4 || (major == 4 && minor < 8)) {
+			fprintf(stderr, "Error: --allow-debuggers is disabled on Linux kernels prior to 4.8. "
+				"A bug in ptrace call allows a full bypass of the seccomp filter. "
+				"Your current kernel version is %d.%d.\n", major, minor);
+			exit(1);
+		}
+
 		arg_allow_debuggers = 1;
+	}
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
 
+#ifdef HAVE_GIT_INSTALL
+	// process git-install and git-uninstall
+	if (check_arg(argc, argv, "--git-install"))
+		git_install(); // this function will not return
+	if (check_arg(argc, argv, "--git-uninstall"))
+		git_uninstall(); // this function will not return
+#endif
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
-		run_symlink(argc, argv);
+		run_symlink(argc, argv); // this function will not return
 
 	// check if we already have a sandbox running
 	// If LXC is detected, start firejail sandbox
@@ -1333,6 +1362,8 @@ int main(int argc, char **argv) {
 		}
 #endif
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
+			// multiple profile files are allowed!
+
 			if (arg_noprofile) {
 				fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");
 				exit(1);
@@ -1341,19 +1372,6 @@ int main(int argc, char **argv) {
 			char *ppath = expand_home(argv[i] + 10, cfg.homedir);
 			if (!ppath)
 				errExit("strdup");
-			invalid_filename(ppath);
-			
-			// multiple profile files are allowed!
-			if (is_dir(ppath) || is_link(ppath) || strstr(ppath, "..")) {
-				fprintf(stderr, "Error: invalid profile file\n");
-				exit(1);
-			}
-			
-			// access call checks as real UID/GID, not as effective UID/GID
-			if (access(ppath, R_OK)) {
-				fprintf(stderr, "Error: cannot access profile file\n");
-				return 1;
-			}
 
 			profile_read(ppath);
 			custom_profile = 1;
@@ -1448,13 +1466,10 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: invalid chroot directory\n");
 					exit(1);
 				}
-				free(rpath);
+				cfg.chrootdir = rpath;
 				
 				// check chroot directory structure
-				if (fs_check_chroot_dir(cfg.chrootdir)) {
-					fprintf(stderr, "Error: invalid chroot\n");
-					exit(1);
-				}
+				fs_check_chroot_dir(cfg.chrootdir);
 			}
 			else
 				exit_err_feature("chroot");
@@ -1469,6 +1484,9 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
+		}
+		else if (strcmp(argv[i], "--writable-var-log") == 0) {
+			arg_writable_var_log = 1;
 		}
 		else if (strcmp(argv[i], "--machine-id") == 0) {
 			arg_machineid = 1;
@@ -1929,6 +1947,9 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
+		
+		else if (strncmp(argv[i], "--hosts-file=", 13) == 0)
+			cfg.hosts_file = fs_check_hosts_fiile(argv[i] + 13);
 
 #ifdef HAVE_NETWORK
 		else if (strcmp(argv[i], "--netfilter") == 0) {
@@ -1978,6 +1999,15 @@ int main(int argc, char **argv) {
 				arg_netfilter6 = 1;
 				arg_netfilter6_file = argv[i] + 13;
 				check_netfilter_file(arg_netfilter6_file);
+			}
+			else
+				exit_err_feature("networking");
+		}
+
+		else if (strncmp(argv[i], "--netns=", 8) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				arg_netns = argv[i] + 8;
+				check_netns(arg_netns);
 			}
 			else
 				exit_err_feature("networking");
@@ -2102,6 +2132,12 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
+		else if (strcmp(argv[i], "--git-install") == 0 ||
+			strcmp(argv[i], "--git-uninstall") == 0) {
+			fprintf(stderr, "This feature is not enabled in the current build\n");
+			exit(1);
+		}
+		
 		else if (strcmp(argv[i], "--") == 0) {
 			// double dash - positional params to follow
 			arg_doubledash = 1;

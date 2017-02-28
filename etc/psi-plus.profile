@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/psi-plus.local
+
 # Firejail profile for Psi+
 noblacklist ${HOME}/.config/psi+
 noblacklist ${HOME}/.local/share/psi+

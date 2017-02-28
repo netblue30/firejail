@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/transmission-gtk.local
+
 # transmission-gtk bittorrent profile
 noblacklist ${HOME}/.config/transmission
 noblacklist ${HOME}/.cache/transmission

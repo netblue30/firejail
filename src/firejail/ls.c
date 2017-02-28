@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -336,7 +336,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			drop_privs(0);
 			
 			// copy the file
-			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600))
+			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
 #ifdef HAVE_GCOV
 			__gcov_flush();
@@ -362,7 +362,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			drop_privs(0);
 			
 			// copy the file
-			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600))
+			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
 #ifdef HAVE_GCOV
 			__gcov_flush();
@@ -411,7 +411,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			drop_privs(0);
 			
 			// copy the file
-			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600))
+			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
 #ifdef HAVE_GCOV
 			__gcov_flush();
@@ -443,7 +443,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			drop_privs(0);
 			
 			// copy the file
-			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600))
+			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
 #ifdef HAVE_GCOV
 			__gcov_flush();

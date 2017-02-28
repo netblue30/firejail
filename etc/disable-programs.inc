@@ -1,3 +1,7 @@
+# This file is overwritten during software install. 
+# Persistent customizations should go in a .local file.
+include /etc/firejail/disable-programs.local
+
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.Atom
@@ -66,12 +70,14 @@ blacklist ${HOME}/.config/Mumble
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Slack
+blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/arkrc
 blacklist ${HOME}/.config/atril
+blacklist ${HOME}/.config/audacious
 blacklist ${HOME}/.config/autostart
 blacklist ${HOME}/.config/autostart/dropbox.desktop
 blacklist ${HOME}/.config/aweather
@@ -145,6 +151,7 @@ blacklist ${HOME}/.config/wireshark
 blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.config/xed
 blacklist ${HOME}/.config/xfburn
+blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
@@ -278,3 +285,5 @@ blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom
 blacklist ${HOME}/wallet.dat
 blacklist /tmp/ssh-*
+blacklist ${HOME}/.kinorc
+blacklist ${HOME}/.kino-history

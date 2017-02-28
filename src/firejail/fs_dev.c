@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -28,6 +28,7 @@
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE 
 #endif
+#include <sys/sysmacros.h>
 #include <sys/types.h>
 
 typedef struct {
@@ -51,7 +52,7 @@ static DevEntry dev[] = {
 	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", 0, 1},
 	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", 0, 1},
 	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1},
-	{"/dev/nvidia-modset", RUN_DEV_DIR "/nvidia-modset", 0, 1},
+	{"/dev/nvidia-modeset", RUN_DEV_DIR "/nvidia-modeset", 0, 1},
 	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", 0, 1},
 	{NULL, NULL, 0, 0}
 };

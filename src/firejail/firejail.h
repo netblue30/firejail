@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -105,7 +105,7 @@
 #define ASSERT_PERMS_FD(fd, uid, gid, mode) \
 	do { \
 		struct stat s;\
-		if (stat(fd, &s) == -1) errExit("stat");\
+		if (fstat(fd, &s) == -1) errExit("fstat");\
 		assert(s.st_uid == uid);\
 		assert(s.st_gid == gid);\
 		assert((s.st_mode & 07777) == (mode));\
@@ -213,6 +213,7 @@ typedef struct config_t {
 	// networking
 	char *name;		// sandbox name
 	char *hostname;	// host name
+	char *hosts_file;		// hosts file to be installed in the sandbox
 	uint32_t defaultgw;	// default gateway
 	Bridge bridge0;
 	Bridge bridge1;
@@ -317,6 +318,7 @@ extern int arg_netfilter;	// enable netfilter
 extern int arg_netfilter6;	// enable netfilter6
 extern char *arg_netfilter_file;	// netfilter file
 extern char *arg_netfilter6_file;	// netfilter file
+extern char *arg_netns;		// "ip netns"-created network namespace to use
 extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
@@ -336,6 +338,7 @@ extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_writable_var;	// writable var
+extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
 extern int arg_audit;		// audit
 extern char *arg_audit_prog;	// audit
@@ -403,7 +406,7 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
 void fs_overlayfs(void);
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir);
-int fs_check_chroot_dir(const char *rootdir);
+void fs_check_chroot_dir(const char *rootdir);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -450,6 +453,9 @@ void logmsg(const char *msg);
 void logargs(int argc, char **argv) ;
 void logerr(const char *msg);
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
+void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
+void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
+void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);
 char *line_remove_spaces(const char *buf);
@@ -534,6 +540,9 @@ void fs_trace(void);
 // fs_hostname.c
 void fs_hostname(const char *hostname);
 void fs_resolvconf(void);
+char *fs_check_hosts_fiile(const char *fname);
+void fs_store_hosts_file(void);
+void fs_mount_hosts_file(void);
 
 // rlimit.c
 void set_rlimits(void);
@@ -557,6 +566,11 @@ void check_output(int argc, char **argv);
 void check_netfilter_file(const char *fname);
 void netfilter(const char *fname);
 void netfilter6(const char *fname);
+
+// netns.c
+void check_netns(const char *nsname);
+void netns(const char *nsname);
+void netns_mounts(const char *nsname);
 
 // bandwidth.c
 void bandwidth_del_run_file(pid_t pid);
@@ -622,6 +636,8 @@ void run_symlink(int argc, char **argv);
 
 // paths.c
 char **build_paths(void);
+unsigned int count_paths(void);
+int program_in_path(const char *program);
 
 // fs_mkdir.c
 void fs_mkdir(const char *name);
@@ -664,6 +680,7 @@ enum {
 	CFG_PRIVATE_HOME,
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_FIREJAIL_PROMPT,
+	CFG_FOLLOW_SYMLINK_AS_USER,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;
@@ -705,6 +722,10 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 
+
+// git.c
+void git_install();
+void git_uninstall();
 
 #endif
 

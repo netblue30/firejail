@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/okular.local
+
 # KDE okular profile
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.kde/share/config/okularrc

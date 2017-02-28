@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -28,6 +28,7 @@
 #include <grp.h>
 #include <sys/ioctl.h>
 #include <termios.h>
+#include <sys/wait.h>
 
 #define MAX_GROUPS 1024
 // drop privileges
@@ -168,6 +169,25 @@ void logerr(const char *msg) {
 	closelog();
 }
 
+static int copy_file_by_fd(int src, int dst) {
+	assert(src >= 0);
+	assert(dst >= 0);
+
+	ssize_t len;
+	static const int BUFLEN = 1024;
+	unsigned char buf[BUFLEN];
+	while ((len = read(src, buf, BUFLEN)) > 0) {
+		int done = 0;
+		while (done != len) {
+			int rv = write(dst, buf + done, len - done);
+			if (rv == -1)
+				return -1;
+			done += rv;
+		}
+	}
+	fflush(0);
+	return 0;
+}
 
 // return -1 if error, 0 if no error; if destname already exists, return error
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
@@ -177,47 +197,114 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 	// open source
 	int src = open(srcname, O_RDONLY);
 	if (src < 0) {
-		fprintf(stderr, "Warning: cannot open %s, file not copied\n", srcname);
+		fprintf(stderr, "Warning: cannot open source file %s, file not copied\n", srcname);
 		return -1;
 	}
 
 	// open destination
 	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {
-		fprintf(stderr, "Warning: cannot open %s, file not copied\n", destname);
+		fprintf(stderr, "Warning: cannot open destination file %s, file not copied\n", destname);
 		close(src);
 		return -1;
 	}
 
-	// copy
-	ssize_t len;
-	static const int BUFLEN = 1024;
-	unsigned char buf[BUFLEN];
-	while ((len = read(src, buf, BUFLEN)) > 0) {
-		int done = 0;
-		while (done != len) {
-			int rv = write(dst, buf + done, len - done);
-			if (rv == -1) {
-				close(src);
-				close(dst);
-				return -1;
-			}
-
-			done += rv;
-		}
+	int errors = copy_file_by_fd(src, dst);
+	if (!errors) {
+		if (fchown(dst, uid, gid) == -1)
+			errExit("fchown");
+		if (fchmod(dst, mode) == -1)
+			errExit("fchmod");
 	}
-	fflush(0);
+	close(src);
+	close(dst);
+	return errors;
+}
 
+// return -1 if error, 0 if no error
+void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		// copy, set permissions and ownership
+		int rv = copy_file(srcname, destname, uid, gid, mode); // already a regular user
+		if (rv)
+			fprintf(stderr, "Warning: cannot copy %s\n", srcname);
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+}
+
+void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
+	// open destination
+	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (dst < 0) {
+		fprintf(stderr, "Warning: cannot open destination file %s, file not copied\n", destname);
+		return;
+	}
+
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		int src = open(srcname, O_RDONLY);
+		if (src < 0) {
+			fprintf(stderr, "Warning: cannot open source file %s, file not copied\n", srcname);
+		} else {
+			if (copy_file_by_fd(src, dst)) {
+				fprintf(stderr, "Warning: cannot copy %s\n", srcname);
+			}
+			close(src);
+		}
+		close(dst);
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
 	if (fchown(dst, uid, gid) == -1)
 		errExit("fchown");
 	if (fchmod(dst, mode) == -1)
 		errExit("fchmod");
-
-	close(src);
 	close(dst);
-	return 0;
 }
 
+// return -1 if error, 0 if no error
+void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
+		FILE *fp = fopen(fname, "w");
+		if (fp) {
+			fprintf(fp, "\n");
+			SET_PERMS_STREAM(fp, uid, gid, mode);
+			fclose(fp);
+		}
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	// wait for the child to finish
+	waitpid(child, NULL, 0);
+}
 
 // return 1 if the file is a directory
 int is_dir(const char *fname) {
@@ -518,15 +605,36 @@ void wait_for_other(int fd) {
 		*ptr = '\0';
 	}
 	else {
-		fprintf(stderr, "Error: cannot establish communication with the parent, exiting...\n");
+		fprintf(stderr, "Error: proc %d cannot sync with peer: %s\n",
+			getpid(), ferror(stream) ? strerror(errno) : "unexpected EOF");
+
+		int status = 0;
+		pid_t pid = wait(&status);
+		if (pid != -1) {
+			if (WIFEXITED(status))
+				fprintf(stderr, "Peer %d unexpectedly exited with status %d\n",
+					pid, WEXITSTATUS(status));
+			else if (WIFSIGNALED(status))
+				fprintf(stderr, "Peer %d unexpectedly killed (%s)\n",
+					pid, strsignal(WTERMSIG(status)));
+			else
+				fprintf(stderr, "Peer %d unexpectedly exited "
+					"(un-decodable wait status %04x)\n", pid, status);
+		}
 		exit(1);
 	}
+
 	if (strcmp(childstr, "arg_noroot=0") == 0)
 		arg_noroot = 0;
+	else if (strcmp(childstr, "arg_noroot=1") == 0)
+		arg_noroot = 1;
+	else {
+		fprintf(stderr, "Error: unexpected message from peer: %s\n", childstr);
+		exit(1);
+	}
 
 	fclose(stream);
 }
-
 
 void notify_other(int fd) {
 	FILE* stream;
@@ -558,6 +666,11 @@ char *expand_home(const char *path, const char* homedir) {
 	}
 	else if (*path == '~') {
 		if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
+			errExit("asprintf");
+		return new_name;
+	}
+	else if (strncmp(path, "${CFG}", 6) == 0) {
+		if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
 			errExit("asprintf");
 		return new_name;
 	}

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/gpa.local
+
 # gpa profile
 noblacklist ~/.gnupg
 
@@ -18,6 +22,4 @@ shell none
 tracelog
 
 # private-bin gpa,gpg
-private-tmp
 private-dev
-# private-etc none

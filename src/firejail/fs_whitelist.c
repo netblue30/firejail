@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -406,10 +406,12 @@ void fs_whitelist(void) {
 
 			// both path and absolute path are under /home
 			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0) {
-				// check if the file is owned by the user
-				struct stat s;
-				if (stat(fname, &s) == 0 && s.st_uid != getuid())
-					goto errexit;
+				if (checkcfg(CFG_FOLLOW_SYMLINK_AS_USER)) {
+					// check if the file is owned by the user
+					struct stat s;
+					if (stat(fname, &s) == 0 && s.st_uid != getuid())
+						goto errexit;
+				}
 			}
 		}
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {

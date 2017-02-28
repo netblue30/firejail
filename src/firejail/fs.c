@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <linux/limits.h>
 #include <fnmatch.h>
 #include <glob.h>
@@ -288,26 +289,35 @@ void fs_blacklist(void) {
 
 		// Process noblacklist command
 		if (strncmp(entry->data, "noblacklist ", 12) == 0) {
-			char **paths = build_paths();
-
-			char *enames[sizeof(paths)+1] = {0};
-			int i = 0;
+			char **enames;
+			int i;
 
 			if (strncmp(entry->data + 12, "${PATH}", 7) == 0) {
 				// expand ${PATH} macro
-				while (paths[i] != NULL) {
-					if (asprintf(&enames[i], "%s%s", paths[i], entry->data + 19) == -1)
+				char **paths = build_paths();
+				unsigned int npaths = count_paths();
+				enames = calloc(npaths, sizeof(char *));
+				if (!enames)
+					errExit("calloc");
+
+				for (i = 0; paths[i]; i++) {
+					if (asprintf(&enames[i], "%s%s", paths[i],
+						entry->data + 19) == -1)
 						errExit("asprintf");
-					i++;
 				}
-			} else {
+				assert(enames[npaths-1] == 0);
+
+			}
+			else {
 				// expand ${HOME} macro if found or pass as is
+				enames = calloc(2, sizeof(char *));
+				if (!enames)
+					errExit("calloc");
 				enames[0] = expand_home(entry->data + 12, homedir);
-				enames[1] = NULL;
+				assert(enames[1] == 0);
 			}
 
-			i = 0;
-			while (enames[i] != NULL) {
+			for (i = 0; enames[i]; i++) {
 				if (noblacklist_c >= noblacklist_m) {
 					noblacklist_m *= 2;
 					noblacklist = realloc(noblacklist, sizeof(*noblacklist) * noblacklist_m);
@@ -315,12 +325,9 @@ void fs_blacklist(void) {
 						errExit("failed increasing memory for noblacklist entries");
 				}
 				noblacklist[noblacklist_c++] = enames[i];
-				i++;
 			}
 
-			while (enames[i] != NULL) {
-				free(enames[i]);
-			}
+			free(enames);
 
 			entry = entry->next;
 			continue;
@@ -571,58 +578,6 @@ void fs_proc_sys_dev_boot(void) {
 	}
 	free(fname);
 	
-// todo: investigate
-#if 0
-	// breaks too many applications, option needed
-	/* // disable /run/user/{uid}/bus */
-	/* char *fnamebus; */
-	/* if (asprintf(&fnamebus, "/run/user/%d/bus", getuid()) == -1) */
-	/*     errExit("asprintf"); */
-	/* if (stat(fnamebus, &s) == 0) */
-	/*     disable_file(BLACKLIST_FILE, fnamebus); */
-	/* free(fnamebus); */
-
-	// WARNING: not working
-	// disable /run/user/{uid}/kdeinit*
-	//char *fnamekde;
-	//if (asprintf(&fnamekde, "/run/user/%d/kdeinit*", getuid()) == -1)
-	//    errExit("asprintf");
-	//if (stat(fnamekde, &s) == 0)
-	//    disable_file(BLACKLIST_FILE, fnamekde);
-	//free(fnamekde);
-	
-	
-	// disable /run/user/{uid}/pulse
-	/* char *fnamepulse; */
-	/* if (asprintf(&fnamepulse, "/run/user/%d/pulse", getuid()) == -1) */
-	/*     errExit("asprintf"); */
-	/* if (stat(fnamepulse, &s) == 0) */
-	/*     disable_file(BLACKLIST_FILE, fnamepulse); */
-	/* free(fnamepulse); */
-
-	// disable /run/user/{uid}/dconf
-	/* char *fnamedconf; */
-	/* if (asprintf(&fnamedconf, "/run/user/%d/dconf", getuid()) == -1) */
-	/*     errExit("asprintf"); */
-	/* if (stat(fnamedconf, &s) == 0) */
-	/*     disable_file(BLACKLIST_FILE, fnamedconf); */
-	/* free(fnamedconf); */
-
-
-	// dirs in /run/user/{uid}/
-	// using gnome:
-	// bus, dconf, gdm, gnome-shell, gnupg, gvfs, keyring, pulse, systemd
-
-	// using kde:
-	// kdeinit__0, ...
-		
-	// more files with sockets to be blacklisted
-	// /run/dbus /run/systemd /run/udev /run/lvm
-
-	// /run/user/{uid} does not exist on some systems, usually used and created by desktop applications
-	
-#endif
-
 	if (getuid() != 0) {
 		// disable /dev/kmsg and /proc/kmsg
 		disable_file(BLACKLIST_FILE, "/dev/kmsg");
@@ -681,11 +636,13 @@ void fs_basic_fs(void) {
 	fs_rdonly("/usr");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
-//	if (!arg_private_dev)
-//		fs_dev_shm();
 	fs_var_lock();
 	fs_var_tmp();
-	fs_var_log();
+	if (!arg_writable_var_log)
+		fs_var_log();
+	else
+		fs_rdwr("/var/log");
+	
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
@@ -711,10 +668,36 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 	// create ~/.firejail directory
 	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (stat(dirname, &s) == -1) {
-		mkdir_attr(dirname, 0700, 0, 0);
+		
+	if (is_link(dirname)) {
+		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+		exit(1);
 	}
-	else if (is_link(dirname)) {
+	if (stat(dirname, &s) == -1) {
+		// create directory
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+	
+			// create directory
+			if (mkdir(dirname, 0700))
+				errExit("mkdir");
+			if (chmod(dirname, 0700) == -1)
+				errExit("chmod");
+			ASSERT_PERMS(dirname, getuid(), getgid(), 0700);
+			_exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+		if (stat(dirname, &s) == -1) {
+			fprintf(stderr, "Error: cannot create ~/.firejail directory\n");
+			exit(1);
+		}
+	}
+	else if (s.st_uid != getuid()) {
 		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
 		exit(1);
 	}
@@ -969,7 +952,11 @@ void fs_overlayfs(void) {
 //		fs_dev_shm();
 	fs_var_lock();
 	fs_var_tmp();
-	fs_var_log();
+	if (!arg_writable_var_log)
+		fs_var_log();
+	else
+		fs_rdwr("/var/log");
+		
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
@@ -994,20 +981,25 @@ void fs_overlayfs(void) {
 
 #ifdef HAVE_CHROOT		
 // return 1 if error
-int fs_check_chroot_dir(const char *rootdir) {
+void fs_check_chroot_dir(const char *rootdir) {
 	EUID_ASSERT();
 	assert(rootdir);
 	struct stat s;
 	char *name;
 
+	if (strcmp(rootdir, "/tmp") == 0 || strcmp(rootdir, "/var/tmp") == 0) {
+		fprintf(stderr, "Error: invalid chroot directory\n");
+		exit(1);
+	}
+
 	// rootdir has to be owned by root
 	if (stat(rootdir, &s) != 0) {
 		fprintf(stderr, "Error: cannot find chroot directory\n");
-		return 1;
+		exit(1);
 	}
 	if (s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot directory should be owned by root\n");
-		return 1;
+		exit(1);
 	}
 
 	// check /dev
@@ -1015,7 +1007,11 @@ int fs_check_chroot_dir(const char *rootdir) {
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: cannot find /dev in chroot directory\n");
-		return 1;
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /dev directory should be owned by root\n");
+		exit(1);
 	}
 	free(name);
 
@@ -1024,7 +1020,11 @@ int fs_check_chroot_dir(const char *rootdir) {
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: cannot find /var/tmp in chroot directory\n");
-		return 1;
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /var/tmp directory should be owned by root\n");
+		exit(1);
 	}
 	free(name);
 	
@@ -1033,7 +1033,11 @@ int fs_check_chroot_dir(const char *rootdir) {
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: cannot find /proc in chroot directory\n");
-		return 1;
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /proc directory should be owned by root\n");
+		exit(1);
 	}
 	free(name);
 	
@@ -1042,18 +1046,41 @@ int fs_check_chroot_dir(const char *rootdir) {
 		errExit("asprintf");
 	if (stat(name, &s) == -1) {
 		fprintf(stderr, "Error: cannot find /tmp in chroot directory\n");
-		return 1;
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /tmp directory should be owned by root\n");
+		exit(1);
 	}
 	free(name);
 
-	// check /bin/bash
-//	if (asprintf(&name, "%s/bin/bash", rootdir) == -1)
-//		errExit("asprintf");
-//	if (stat(name, &s) == -1) {
-//		fprintf(stderr, "Error: cannot find /bin/bash in chroot directory\n");
-//		return 1;
-//	}
-//	free(name);
+	// check /etc
+	if (asprintf(&name, "%s/etc", rootdir) == -1)
+		errExit("asprintf");
+	if (stat(name, &s) == -1) {
+		fprintf(stderr, "Error: cannot find /etc in chroot directory\n");
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /etc directory should be owned by root\n");
+		exit(1);
+	}
+	free(name);
+
+	// check /etc/resolv.conf
+	if (asprintf(&name, "%s/etc/resolv.conf", rootdir) == -1)
+		errExit("asprintf");
+	if (stat(name, &s) == 0) {
+		if (s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /etc/resolv.conf should be owned by root\n");
+			exit(1);
+		}
+	}
+	if (is_link(name)) {
+		fprintf(stderr, "Error: invalid %s file\n", name);
+		exit(1);
+	}
+	free(name);
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {
@@ -1063,12 +1090,14 @@ int fs_check_chroot_dir(const char *rootdir) {
 			errExit("asprintf");
 		if (stat(name, &s) == -1) {
 			fprintf(stderr, "Error: cannot find /tmp/.X11-unix in chroot directory\n");
-			return 1;
+			exit(1);
+		}
+		if (s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /tmp/.X11-unix directory should be owned by root\n");
+			exit(1);
 		}
 		free(name);
 	}
-	
-	return 0;	
 }
 
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
@@ -1099,10 +1128,16 @@ void fs_chroot(const char *rootdir) {
 			free(newx11);
 		}
 		
+		// some older distros don't have a /run directory
+		// create one by default
 		// create /run/firejail directory in chroot
 		char *rundir;
 		if (asprintf(&rundir, "%s/run", rootdir) == -1)
 			errExit("asprintf");
+		if (is_link(rundir)) {
+			fprintf(stderr, "Error: invalid run directory inside chroot\n");
+			exit(1);
+		}
 		create_empty_dir_as_root(rundir, 0755);
 		free(rundir);
 		if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
@@ -1129,7 +1164,7 @@ void fs_chroot(const char *rootdir) {
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);
 		}
-		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1)
+		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
 			fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
 	}
 	
@@ -1151,7 +1186,11 @@ void fs_chroot(const char *rootdir) {
 //			fs_dev_shm();
 		fs_var_lock();
 		fs_var_tmp();
-		fs_var_log();
+		if (!arg_writable_var_log)
+			fs_var_log();
+		else
+			fs_rdwr("/var/log");
+			
 		fs_var_lib();
 		fs_var_cache();
 		fs_var_utmp();

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/7z.local
+
 # 7zip crompression tool profile
 quiet
 ignore noroot

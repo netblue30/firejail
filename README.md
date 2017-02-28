@@ -22,6 +22,10 @@ $ firejail transmission-gtk   # starting Transmission BitTorrent
 $ firejail vlc                # starting VideoLAN Client
 $ sudo firejail /etc/init.d/nginx start
 `````
+
+[![About Firejail](video.png)](http://www.youtube.com/watch?v=Yk1HVPOeoTc)
+
+
 Project webpage: https://firejail.wordpress.com/
 
 Download and Installation: https://firejail.wordpress.com/download-2/
@@ -35,6 +39,17 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 `````
 
 `````
+## Compile and install
+`````
+$ git clone https://github.com/netblue30/firejail.git
+$ cd firejail
+$ ./configure && make && sudo make install-strip
+`````
+On Debian/Ubuntu you will need to install git and a compiler:
+`````
+$ sudo apt-get install git build-essential
+`````
+
 ## User submitted profile repositories
 
 If you keep your Firejail profiles in a public repository, please give us a link:
@@ -51,7 +66,9 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 `````
 
 `````
-## AppImage type 2 support
+## AppImage
+
+Added AppImage type 2 support, and support for passing command line arguments to appimages.
 `````
 
 `````
@@ -75,9 +92,9 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
               Example:
               # firejail --private-srv=www /etc/init.d/apache2 start
 
-       --machine-id
-              Preserve  id  number  in  /etc/machine-id file. By default a new
-              random id is generated inside the sandbox.
+      --machine-id
+              Spoof id number in /etc/machine-id file - a  new  random  id  is
+              generated inside the sandbox.
 
               Example:
               $ firejail --machine-id
@@ -89,7 +106,46 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
               Example:
               $   firejail    --allow-private-blacklist   --private=~/priv-dir
               --blacklist=~/.mozilla
+
+      --hosts-file=file
+              Use file as /etc/hosts.
+
+              Example:
+              $ firejail --hosts-file=~/myhosts firefox
              
+      --writable-var-log
+              Use the real /var/log directory, not  a  clone.  By  default,  a
+              tmpfs  is  mounted  on top of /var/log directory, and a skeleton
+              filesystem is created based on the original /var/log.
+
+              Example:
+              $ sudo firejail --writable-var-log
+              
+       --git-install
+              Download, compile and install mainline git version  of  Firejail
+              from  the  official  repository  on  GitHub.   The  software  is
+              installed in /usr/local/bin, and takes precedence over the (old)
+              version installed in /usr/bin. If for any reason the new version
+              doesn't work, the user can uninstall  it  using  --git-uninstall
+              command and revert to the old version.
+
+              Prerequisites: git and compile support are required for this com‐
+              mand to work. On Debian/Ubuntu systems this support is installed
+              using "sudo apt-get install build-essential git".
+
+              Example:
+
+              $ firejail --git-install
+
+       --git-uninstall
+              Remove    the   Firejail   version   previously   installed   in
+              /usr/local/bin using --git-install command.
+
+              Example:
+
+              $ firejail --git-uninstall
+
+
 `````
 ## New Profiles
 xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom, Guayadeque, qemu, keypass2,
@@ -98,5 +154,5 @@ gjs, gnome-books, gnome-clocks, gnome-documents, gnome-maps, gnome-music, gnome-
 goobox, gpa, gpg, gpg-agent, highlight, img2txt, k3b, kate, lynx, mediainfo, nautilus, odt2txt, pdftotext,
 simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, w3m, xfburn, xpra, wget,
 xed, pluma, Cryptocat, Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5,
-PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla
-
+PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser, xmms, iridium browser,
+Kino, Thunar

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/mumble.local
+
 # mumble profile
 noblacklist ${HOME}/.config/Mumble
 noblacklist ${HOME}/.local/share/data/Mumble

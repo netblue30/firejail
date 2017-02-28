@@ -1,31 +1,47 @@
 firejail (0.9.45) baseline; urgency=low
   * development version, work in progress
-  * security: overwrite /etc/resolv.conf found by Martin Carpenter
-  * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
-  * security: invalid environment exploit found by Martin Carpenter
+  * Gentoo compile patch
+  * security: --bandwidth root shell found by Martin Carpenter (CVE-2017-5207)
+  * security: disabled --allow-debuggers when running on kernel
+    versions prior to 4.8; a kernel bug in ptrace system call
+    allows a full bypass of seccomp filter; problem reported by Lizzie Dixon
+    (CVE-2017-5206)
+  * security: overwrite /etc/resolv.conf found by Martin Carpenter (CVE-2016-10118)
+  * security: TOCTOU exploit for --get and --put found by Daniel Hodson
+  * security: invalid environment exploit found by Martin Carpenter (CVE-2016-10122)
   * security: split most of networking code in a separate executable
   * security: split seccomp filter code configuration in a separate executable
   * security: split file copying in private option in a separate executable
+  * security: root exploit found by Sebastian Krahmer (CVE-2017-5180)
+  * security: ~/.pki directory whitelisted and later blacklisted. This affects 
+    most browsers, and disables the custom certificates installed by the user.
   * feature: disable gnupg and systemd directories under /run/user
-  * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)
-  * feature: AppImage type 2 support
   * feature: test coverage (gcov) support
+  * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)
   * feature: private /opt directory (--private-opt, profile support)
   * feature: private /srv directory (--private-srv, profile support)
-  * feature: spoof machine-id
+  * feature: spoof machine-id (--machine-id, profile support)
+  * feature: allow blacklists under --private (--allow-private-blacklist, profile support)
+  * feature: user-defined /etc/hosts file (--hosts-file, profile support)
+  * feature: support for the real /var/log directory (--writable-var-log, profile support)
   * feature: config support for firejail prompt in terminals
+  * feature: AppImage type 2 support
   * feature: pass command line arguments to appimages
-  * feature: --allow-private-blacklist option
+  * feature: allow non-seccomp setup for OverlayFS sandboxes - more work to come
+  * feature: added a number o Python scripts for handling sandboxes
+  * feature: allow local customization using .local files under /etc/firejail
+  * feature: follow-symlink-as-user runtime config option in /etc/firejail/firejail.config
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,
   * new profiles: Gnome Contacts, JD-GUI, Lollypop, MultiMC5, PDFSam, Pithos,
-  * new profies: Xonotic, wireshark, keepassx2, QupZilla
+  * new profies: Xonotic, wireshark, keepassx2, QupZilla, FossaMail,
+  * new profiles: Uzbl browser, iridium browser, Thunar
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
 
 firejail (0.9.44) baseline; urgency=low
-  * CVE-2016-7545 submitted by Aleksey Manevich
+  * CVE-2016-9016 submitted by Aleksey Manevich
   * modifs: removed man firejail-config
   * modifs: --private-tmp whitelists /tmp/.X11-unix directory
   * modifs: Nvidia drivers added to --private-dev
@@ -142,11 +158,12 @@ firejail (0.9.38) baseline; urgency=low
   * added KMail, Seamonkey, Telegram, Mathematica, uGet,
   *   and mupen64plus profiles
   * --chroot in user mode allowed only if seccomp support is available
-  *   in current Linux kernel
+  *   in current Linux kernel (CVE-2016-10123)
   * deprecated --private-home feature
   * the first protocol list installed takes precedence
-  * --tmpfs option allowed only running as root
+  * --tmpfs option allowed only running as root (CVE-2016-10117)
   * added --private-tmp option
+  * weak permissions (CVE-2016-10119, CVE-2016-10120, CVE-2016-10121)
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Tue, 2 Feb 2016 10:00:00 -0500
 

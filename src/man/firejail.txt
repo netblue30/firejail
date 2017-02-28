@@ -76,7 +76,9 @@ $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 Signal the end of options and disables further option processing.
 .TP
 \fB\-\-allow-debuggers
-Allow tools such as strace and gdb inside the sandbox.
+Allow tools such as strace and gdb inside the sandbox. This option is only available
+when running on Linux kernels 4.8 or newer - a kernel bug in ptrace system call allows a full
+bypass of the seccomp filter.
 .br
 
 .br
@@ -190,7 +192,7 @@ Define a custom blacklist Linux capabilities filter.
 .br
 Example:
 .br
-$ firejail \-\-caps.keep=net_broadcast,net_admin,net_raw
+$ firejail \-\-caps.drop=net_broadcast,net_admin,net_raw
 
 .TP
 \fB\-\-caps.keep=capability,capability,capability
@@ -451,6 +453,39 @@ $ firejail \-\-fs.print=3272
 \fB\-\-get=name|pid filename
 Get a file from sandbox container, see \fBFILE TRANSFER\fR section for more details.
 
+
+.TP
+\fB\-\-git-install
+Download, compile and install mainline git version of Firejail from the official repository on GitHub.
+The software is installed in /usr/local/bin, and takes precedence over the (old) version
+installed in /usr/bin. If for any reason the new version doesn't work, the user can uninstall it
+using \-\-git-uninstall command and revert to the old version.
+.br
+
+.br
+Prerequisites: git and compile support are required for this command to work. On Debian/Ubuntu
+systems this support is installed using "sudo apt-get install build-essential git".
+.br
+
+.br
+Example:
+.br
+
+.br
+$ firejail \-\-git-install
+
+.TP
+\fB\-\-git-uninstall
+Remove the Firejail version previously installed in /usr/local/bin using \-\-git-install command.
+.br
+
+.br
+Example:
+.br
+
+.br
+$ firejail \-\-git-uninstall
+
 .TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.
@@ -465,6 +500,16 @@ Set sandbox hostname.
 Example:
 .br
 $ firejail \-\-hostname=officepc firefox
+
+.TP
+\fB\-\-hosts-file=file
+Use file as /etc/hosts.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-hosts-file=~/myhosts firefox
 
 .TP
 \fB\-\-ignore=command
@@ -676,7 +721,7 @@ $ firejail \-\-net=eth0 \-\-mac=00:11:22:33:44:55 firefox
 
 .TP
 \fB\-\-machine-id
-Preserve id number in /etc/machine-id file. By default a new random id is generated inside the sandbox.
+Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
 .br
 
 .br
@@ -757,6 +802,11 @@ network access to programs that don't really need network access.
 Example:
 .br
 $ firejail \-\-net=none vlc
+
+.TP
+\fB\-\-netns=name
+Run the program in a named, persistent network namespace.  These can
+be created and configured using "ip netns".
 
 .TP
 \fB\-\-netfilter
@@ -1707,6 +1757,17 @@ Mount /var directory read-write.
 Example:
 .br
 $ sudo firejail --writable-var
+
+.TP
+\fB\-\-writable-var-log
+Use the real /var/log directory, not a clone. By default, a tmpfs is mounted on top of /var/log
+directory, and a skeleton filesystem is created based on the original /var/log.
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --writable-var-log
 
 
 .TP

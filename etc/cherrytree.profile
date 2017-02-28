@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/cherrytree.local
+
 # cherrytree note taking application
 noblacklist /usr/bin/python2*
 noblacklist /usr/lib/python3*

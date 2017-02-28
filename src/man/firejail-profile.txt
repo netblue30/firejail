@@ -81,10 +81,20 @@ Include other.profile file.
 
 Example: "include /etc/firejail/disable-common.inc"
 
-other.profile file name can be prefixed with ${HOME}. This will force Firejail to look for the
-file in user home directory.
+The file name can be prefixed with a macro such as ${HOME} or ${CFG}.
+${HOME} is expanded as user home directory, and ${CFG} is expanded as
+Firejail system configuration directory - in most cases /etc/firejail or
+/usr/local/etc/firejail.
 
 Example: "include ${HOME}/myprofiles/profile1" will load "~/myprofiles/profile1" file.
+
+Example: "include ${CFG}/firefox.profile" will load "/etc/firejail/firefox.profile" file.
+
+System configuration files in ${CFG} are overwritten during software installation.
+Persistent configuration at system level is handled in ".local" files. For every
+profile file in ${CFG} directory, the user can create a corresponding .local file 
+storing modifications to the persistent configuration. Persistent .local files
+are included at the start of regular profile files.
 
 .TP
 \fBnoblacklist file_name
@@ -240,6 +250,11 @@ Mount /etc directory read-write.
 .TP
 \fBwritable-var
 Mount /var directory read-write.
+.TP
+\fBwritable-var-log
+Use the real /var/log directory, not a clone. By default, a tmpfs is mounted on top of /var/log
+directory, and a skeleton filesystem is created based on the original /var/log.
+
 .SH Security filters
 The following security filters are currently implemented:
 
@@ -388,6 +403,10 @@ Set a DNS server for the sandbox. Up to three DNS servers can be defined.
 Set a hostname for the sandbox.
 
 .TP
+\fBhosts-file file
+Use file as /etc/hosts.
+
+.TP
 \fBip address
 Assign IP addresses to the last network interface defined by a net command. A
 default gateway is assigned by default.
@@ -448,7 +467,7 @@ Assign MAC addresses to the last network interface defined by a net command.
 
 .TP
 \fBmachine-id
-Preserve id number in /etc/machine-id file. By default a new random id is generated inside the sandbox.
+Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
 
 .TP
 \fBmtu number

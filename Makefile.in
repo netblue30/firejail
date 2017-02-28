@@ -1,6 +1,6 @@
 all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/libconnect src/fnet src/fseccomp src/fcopy
+APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fcopy
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
 SECCOMP_FILTERS = seccomp seccomp.i386 seccomp.amd64
 
@@ -79,9 +79,10 @@ realinstall:
 	install -m 0755 -d $(DESTDIR)/$(libdir)/firejail
 	install -c -m 0644 src/libtrace/libtrace.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/libtracelog/libtracelog.so $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 src/libconnect/libconnect.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fgit/fgit-install.sh $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fgit/fgit-uninstall.sh $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
@@ -91,6 +92,10 @@ realinstall:
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/fjclip.py $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/fjdisplay.py $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/fjresize.py $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.
@@ -136,7 +141,6 @@ install-strip: all
 	strip src/firecfg/firecfg
 	strip src/libtrace/libtrace.so
 	strip src/libtracelog/libtracelog.so
-	strip src/libconnect/libconnect.so
 	strip src/ftee/ftee
 	strip src/faudit/faudit
 	strip src/fnet/fnet
@@ -158,7 +162,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	
-DISTFILES = "src etc platform configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
+DISTFILES = "src etc platform contrib configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
 DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
 dist:

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -59,9 +59,6 @@ void fs_trace(void) {
 		if (!arg_quiet)
 			printf("Blacklist violations are logged to syslog\n");
 	}	
-
-	if (mask_x11_abstract_socket)
-		fprintf(fp, "%s/firejail/libconnect.so\n", LIBDIR);
 
 	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	fclose(fp);

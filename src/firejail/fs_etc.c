@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -31,8 +31,8 @@ void fs_machineid(void) {
 		uint32_t u32[4];
 	} mid;
 
-	// if --machine-id flag is active, do nothing
-	if (arg_machineid)
+	// if --machine-id flag is inactive, do nothing
+	if (arg_machineid == 0)
 		return;
 
 	// init random number generator

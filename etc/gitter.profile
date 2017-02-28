@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/gitter.local
+
 # Firejail profile for Gitter
 noblacklist ~/.config/Gitter
 include /etc/firejail/disable-common.inc

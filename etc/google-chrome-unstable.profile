@@ -1,6 +1,11 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/google-chrome-unstable.local
+
 # Google Chrome unstable browser profile
 noblacklist ~/.config/google-chrome-unstable
 noblacklist ~/.cache/google-chrome-unstable
+noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 

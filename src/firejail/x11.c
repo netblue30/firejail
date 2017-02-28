@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -20,6 +20,8 @@
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
@@ -27,157 +29,176 @@
 #include <dirent.h>
 #include <sys/mount.h>
 #include <sys/wait.h>
+#include <errno.h>
+#include <limits.h>
 int mask_x11_abstract_socket = 0;
 
+
+// Parse the DISPLAY environment variable and return a display number.
+// Returns -1 if DISPLAY is not set, or is set to anything other than :ddd.
+int x11_display(void) {
+        const char *display_str = getenv("DISPLAY");
+        char *endp;
+        unsigned long display;
+
+        if (!display_str) {
+                if (arg_debug)
+                        fputs("DISPLAY is not set\n", stderr);
+                return -1;
+        }
+
+        if (display_str[0] != ':' || display_str[1] < '0' || display_str[1] > '9') {
+                if (arg_debug)
+                        fprintf(stderr, "unsupported DISPLAY form '%s'\n", display_str);
+                return -1;
+        }
+
+        errno = 0;
+        display = strtoul(display_str+1, &endp, 10);
+        if (endp == display_str+1 || (*endp != '\0' && *endp != '.')) { // handling DISPLAY=:0 and also :0.0
+                if (arg_debug)
+                        fprintf(stderr, "unsupported DISPLAY form '%s'\n", display_str);
+                return -1;
+        }
+        if (errno || display > (unsigned long)INT_MAX) {
+                if (arg_debug)
+                        fprintf(stderr, "display number %s is outside the valid range\n",
+                                display_str+1);
+                return -1;
+        }
+
+        if (arg_debug)
+                fprintf(stderr, "DISPLAY=%s parsed as %lu\n", display_str, display);
+
+        return (int)display;
+}
+
+
 #ifdef HAVE_X11
-// return 1 if xpra is installed on the system
-static int x11_check_xpra(void) {
-	struct stat s;
-	
-	// check xpra
-	if (stat("/usr/bin/xpra", &s) == -1)
-		return 0;
-
-	return 1;
-}
-
-// return 1 if xephyr is installed on the system
-static int x11_check_xephyr(void) {
-	struct stat s;
-	
-	// check xephyr
-	if (stat("/usr/bin/Xephyr", &s) == -1)
-		return 0;
-
-	return 1;
-}
-
 // check for X11 abstract sockets
 static int x11_abstract_sockets_present(void) {
-	char *path;
 
 	EUID_ROOT(); // grsecurity fix
 	FILE *fp = fopen("/proc/net/unix", "r");
-	EUID_USER();
-
 	if (!fp)
 		errExit("fopen");
+	EUID_USER();
 
-	while (fscanf(fp, "%*s %*s %*s %*s %*s %*s %*s %ms\n", &path) != EOF) {
-		if (path && strncmp(path, "@/tmp/.X11-unix/", 16) == 0) {
-			free(path);
-			fclose(fp);
-			return 1;
+	char *linebuf = 0;
+        size_t bufsz = 0;
+        int found = 0;
+        errno = 0;
+
+	for (;;) {
+                if (getline(&linebuf, &bufsz, fp) == -1) {
+                        if (errno)
+                                errExit("getline");
+                        break;
+                }
+                // The last space-separated field in 'linebuf' is the
+                // pathname of the socket.  Abstract sockets' pathnames
+                // all begin with '@/', normal ones begin with '/'.
+                char *p = strrchr(linebuf, ' ');
+                if (!p) {
+                        fputs("error parsing /proc/net/unix\n", stderr);
+                        exit(1);
+                }
+                if (strncmp(p+1, "@/tmp/.X11-unix/", 16) == 0) {
+                        found = 1;
+                        break;
 		}
 	}
 
-	free(path);
+	free(linebuf);
 	fclose(fp);
-
-	return 0;
+	return found;
 }
 
+// Choose a random, unallocated display number.  This has an inherent
+// and unavoidable TOCTOU race, since we cannot create either the
+// socket or a lockfile ourselves.
 static int random_display_number(void) {
+        int display;
+        int found = 0;
 	int i;
-	int found = 1;
-	int display;
+
+        struct sockaddr_un sa;
+        // The -1 here is because we need space to inject a
+        // leading nul byte.
+        int sun_pathmax = (int)(sizeof sa.sun_path - 1);
+        assert((size_t)sun_pathmax == sizeof sa.sun_path - 1);
+        int sun_pathlen;
+
+        int sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+        if (sockfd == -1)
+                errExit("socket");
+
 	for (i = 0; i < 100; i++) {
-		display = rand() % 1024;
-		if (display < 10)
-			continue;
-		char *fname;
-		if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
-			errExit("asprintf");
-		struct stat s;
-		if (stat(fname, &s) == -1) {
-			found = 1;
-			break;
-		}
+                // We try display numbers in the range 21 through 1000.
+                // Normal X servers typically use displays in the 0-10 range;
+                // ssh's X11 forwarding uses 10-20, and login screens
+                // (e.g. gdm3) may use displays above 1000.
+                display = rand() % 979 + 21;
+
+                // The display number might be claimed by a server listening
+                // in _either_ the normal or the abstract namespace; they
+                // don't necessarily do both.  The easiest way to check is
+                // to try to connect, both ways.
+                memset(&sa, 0, sizeof sa);
+                sa.sun_family = AF_UNIX;
+                sun_pathlen = snprintf(sa.sun_path, sun_pathmax,
+                                       "/tmp/.X11-unix/X%d", display);
+                if (sun_pathlen >= sun_pathmax) {
+                        fprintf(stderr, "sun_path too small for display :%d"
+                                " (only %d bytes usable)\n", display, sun_pathmax);
+                        exit(1);
+                }
+
+                if (connect(sockfd, (struct sockaddr *)&sa,
+                            offsetof(struct sockaddr_un, sun_path) + sun_pathlen + 1) == 0) {
+                        close(sockfd);
+                        sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+                        if (sockfd == -1)
+                                errExit("socket");
+                        continue;
+                }
+                if (errno != ECONNREFUSED && errno != ENOENT)
+                        errExit("connect");
+
+                // Name not claimed in the normal namespace; now try it
+                // in the abstract namespace.  Note that abstract-namespace
+                // names are NOT nul-terminated; they extend to the length
+                // specified as the third argument to 'connect'.
+                memmove(sa.sun_path + 1, sa.sun_path, sun_pathlen + 1);
+                sa.sun_path[0] = '\0';
+                if (connect(sockfd, (struct sockaddr *)&sa,
+                            offsetof(struct sockaddr_un, sun_path) + 1 + sun_pathlen) == 0) {
+                        close(sockfd);
+                        sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+                        if (sockfd == -1)
+                                errExit("socket");
+                        continue;
+                }
+                if (errno != ECONNREFUSED && errno != ENOENT)
+                        errExit("connect");
+
+                // This display number is unclaimed.  Of course, it could
+                // be claimed before we get around to doing it...
+                found = 1;
+                break;
 	}
+        close(sockfd);
+
 	if (!found) {
-		fprintf(stderr, "Error: cannot pick up a random X11 display number, exiting...\n");
+                fputs("Error: cannot find an unallocated X11 display number, "
+                      "exiting...\n", stderr);
 		exit(1);
 	}
-	
 	return display;
 }
 #endif
 
-// return display number, -1 if not configured
-int x11_display(void) {
-	// extract display
-	char *d = getenv("DISPLAY");
-	if (!d)
-		return - 1;
-	
-	int display;
-	int rv = sscanf(d, ":%d", &display);
-	if (rv != 1)
-		return -1;
-	if (arg_debug)
-		printf("DISPLAY %s, %d\n", d, display);
-	
-	return display;
-}
 
-void fs_x11(void) {
-#ifdef HAVE_X11
-	int display = x11_display();
-	if (display <= 0)
-		return;
-
-	char *x11file;
-	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
-		errExit("asprintf");
-	struct stat s;
-	if (stat(x11file, &s) == -1)
-		return;
-
-	// keep a copy of real /tmp/.X11-unix directory in WHITELIST_TMP_DIR
-	int rv = mkdir(RUN_WHITELIST_X11_DIR, 1777);
-	if (rv == -1)
-		errExit("mkdir");
-	if (set_perms(RUN_WHITELIST_X11_DIR, 0, 0, 1777))
-		errExit("set_perms");
-
-	if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-
-	// mount tmpfs on /tmp/.X11-unix
-	if (arg_debug || arg_debug_whitelists)
-		printf("Mounting tmpfs on /tmp/.X11-unix directory\n");
-	if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-		errExit("mounting tmpfs on /tmp");
-	fs_logger("tmpfs /tmp/.X11-unix");
-
-	// create an empty file
-	/* coverity[toctou] */
-	FILE *fp = fopen(x11file, "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot create empty file in x11 directory\n");
-		exit(1);
-	}
-	// set file properties
-	SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
-	fclose(fp);
-
-	// mount
-	char *wx11file;
-	if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
-		errExit("asprintf");
-	if (mount(wx11file, x11file, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-	 fs_logger2("whitelist", x11file);
-
-	free(x11file);
-	free(wx11file);
-	
-	// block access to RUN_WHITELIST_X11_DIR
-	 if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, "none", MS_BIND, "mode=400,gid=0") == -1)
-	 	errExit("mount");
-	 fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
-#endif
-}
 
 
 #ifdef HAVE_X11
@@ -200,7 +221,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	drop_privs(0);
 
 	// check xephyr
-	if (x11_check_xephyr() == 0) {
+	if (!program_in_path("Xephyr")) {
 		fprintf(stderr, "\nError: Xephyr program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n");
 		fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xephyr\n");
@@ -400,7 +421,7 @@ void x11_start_xpra(int argc, char **argv) {
 	drop_privs(0);
 
 	// check xpra
-	if (x11_check_xpra() == 0) {
+	if (!program_in_path("xpra")) {
 		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
 		exit(0);
@@ -593,9 +614,9 @@ void x11_start(int argc, char **argv) {
 	}
 
 	// check xpra
-	if (x11_check_xpra() == 1)
+	if (program_in_path("xpra"))
 		x11_start_xpra(argc, argv);
-	else if (x11_check_xephyr() == 1)
+	else if (program_in_path("Xephyr"))
 		x11_start_xephyr(argc, argv);
 	else {
 		fprintf(stderr, "\nError: Xpra or Xephyr not found in /usr/bin directory, please install one of them:\n");
@@ -604,8 +625,211 @@ void x11_start(int argc, char **argv) {
 		exit(0);
 	}
 }
-
 #endif
+
+// Porting notes:
+// 
+// 1. merge #1100 from zackw:
+//     Attempting to run xauth -f directly on a file in /run/firejail/mnt/ directory fails on Debian 8
+//     with this message:
+//            xauth:  timeout in locking authority file /run/firejail/mnt/sec.Xauthority-Qt5Mu4
+//            Failed to create untrusted X cookie: xauth: exit 1
+//     For this reason we run xauth on a file in a tmpfs filesystem mounted on /tmp. This was
+//     a partial merge.
+//
+// 2. Since we cannot deal with the TOCTOU condition when mounting .Xauthority in user home
+// directory, we need to make sure /usr/bin/xauth executable is the real thing, and not
+// something picked up on $PATH.
+//
+// 3. If for any reason xauth command fails, we exit the sandbox. On Debian 8 this happens
+// when using a network namespace. Somehow, xauth tries to connect to the abstract socket,
+// and it fails because of the network namespace - it should try to connect to the regular
+// Unix socket! If we ignore the fail condition, the program will be started on X server without
+// the security extension loaded.
+void x11_xorg(void) {
+#ifdef HAVE_X11
+
+	// check xauth utility is present in the system
+	struct stat s;
+	if (stat("/usr/bin/xauth", &s) == -1) {
+		fprintf(stderr, "Error: xauth utility not found in PATH.  Please install it:\n"
+                      		"   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
+		exit(1);
+	}
+	if (s.st_uid != 0 && s.st_gid != 0) {
+		fprintf(stderr, "Error: invalid /usr/bin/xauth executable\n");
+		exit(1);
+	}
+
+	// get DISPLAY env
+	char *display = getenv("DISPLAY");
+	if (!display) {
+		fputs("Error: --x11=xorg requires an 'outer' X11 server to use.\n", stderr);
+		exit(1);
+	}
+
+	// temporarily mount a tempfs on top of /tmp directory
+	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+		errExit("mounting /tmp");
+
+	// create the temporary .Xauthority file
+	if (arg_debug)
+		printf("Generating a new .Xauthority file\n");
+	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
+	int fd = mkstemp(tmpfname);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot create .Xauthority file\n");
+		exit(1);
+	}
+	if (fchown(fd, getuid(), getgid()) == -1)
+		errExit("chown");
+	close(fd);
+
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		drop_privs(1);
+		clearenv();
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-v", "-f", tmpfname,
+			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
+		
+		_exit(127);
+	}
+
+	// wait for the xauth process to finish
+	int status;
+	if (waitpid(child, &status, 0) != child)
+		errExit("waitpid");
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+		 /* success */
+	} else if (WIFEXITED(status)) {
+		fprintf(stderr, "Failed to create untrusted X cookie: xauth: exit %d\n",
+			WEXITSTATUS(status));
+		exit(1);
+	} else if (WIFSIGNALED(status)) {
+		fprintf(stderr, "Failed to create untrusted X cookie: xauth: %s\n",
+			strsignal(WTERMSIG(status)));
+		exit(1);
+	} else {
+		fprintf(stderr, "Failed to create untrusted X cookie: "
+			"xauth: un-decodable exit status %04x\n", status);
+		exit(1);
+	}
+
+	// ensure the file has the correct permissions and move it
+	// into the correct location.
+	if (stat(tmpfname, &s) == -1) {
+		fprintf(stderr, "Error: .Xauthority file was not created\n");
+		exit(1);
+	}
+	if (set_perms(tmpfname, getuid(), getgid(), 0600))
+		errExit("set_perms");
+	
+	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
+	// automatically when the sandbox is closed (rename doesn't work)
+	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) { // root needed
+		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
+		exit(1);
+	}
+	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
+		errExit("set_perms");
+	/* coverity[toctou] */
+	unlink(tmpfname);
+	umount("/tmp");
+	
+
+	// Ensure there is already a file in the usual location, so that bind-mount below will work.
+	// todo: fix TOCTOU races, currently managed by imposing /usr/bin/xauth as executable
+	char *dest;
+	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (stat(dest, &s) == -1) {
+		// create an .Xauthority file
+		touch_file_as_user(dest, getuid(), getgid(), 0600);
+	}
+	if (is_link(dest)) {
+		fprintf(stderr, "Error: .Xauthority is a symbolic link\n");
+		exit(1);
+	}
+
+	// mount
+	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
+		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
+		exit(1);
+	}
+	// just  in case...
+	if (set_perms(dest, getuid(), getgid(), 0600))
+		errExit("set_perms");
+	free(dest);
+#endif	
+}
+
+void fs_x11(void) {
+#ifdef HAVE_X11
+	int display = x11_display();
+	if (display <= 0)
+		return;
+
+	char *x11file;
+	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
+		errExit("asprintf");
+	struct stat x11stat;
+	if (stat(x11file, &x11stat) == -1 || !S_ISSOCK(x11stat.st_mode)) {
+		free(x11file);
+		return;
+	}
+
+	if (arg_debug || arg_debug_whitelists)
+		fprintf(stderr, "Masking all X11 sockets except %s\n", x11file);
+
+               // Move the real /tmp/.X11-unix to a scratch location
+                // so we can still access x11file after we mount a
+                // tmpfs over /tmp/.X11-unix.
+                int rv = mkdir(RUN_WHITELIST_X11_DIR, 0700);
+                if (rv == -1)
+                        errExit("mkdir");
+                if (set_perms(RUN_WHITELIST_X11_DIR, 0, 0, 0700))
+                        errExit("set_perms");
+
+                if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, 0, MS_BIND|MS_REC, 0) < 0)
+                        errExit("mount bind");
+
+                // This directory must be mode 1777, or Xlib will barf.
+                if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs",
+                          MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,
+                          "mode=1777,uid=0,gid=0") < 0)
+                        errExit("mounting tmpfs on /tmp/.X11-unix");
+                fs_logger("tmpfs /tmp/.X11-unix");
+
+                // create an empty file which will have the desired socket bind-mounted over it
+                int fd = open(x11file, O_RDWR|O_CREAT|O_EXCL, x11stat.st_mode & ~S_IFMT);
+                if (fd < 0)
+                        errExit(x11file);
+                if (fchown(fd, x11stat.st_uid, x11stat.st_gid))
+                        errExit("fchown");
+                close(fd);
+
+                // do the mount
+                char *wx11file;
+                if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
+                        errExit("asprintf");
+                if (mount(wx11file, x11file, NULL, MS_BIND|MS_REC, NULL) < 0)
+                        errExit("mount bind");
+                fs_logger2("whitelist", x11file);
+
+                free(x11file);
+                free(wx11file);
+
+                // block access to RUN_WHITELIST_X11_DIR
+                if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, 0, MS_BIND, 0) < 0)
+                        errExit("mount");
+                fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
+#endif
+}
 
 void x11_block(void) {
 #ifdef HAVE_X11
@@ -644,91 +868,3 @@ void x11_block(void) {
 #endif
 }
 
-void x11_xorg(void) {
-#ifdef HAVE_X11
-	// destination - create an empty ~/.Xauthotrity file if it doesn't exist already, and use it as a mount point
-	char *dest;
-	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
-		errExit("asprintf");
-	struct stat s;
-	if (stat(dest, &s) == -1) {
-		// create an .Xauthority file
-		FILE *fp = fopen(dest, "w");
-		if (!fp)
-			errExit("fopen");
-		SET_PERMS_STREAM(fp, getuid(), getgid(), 0600);
-		fclose(fp);
-	}
-
-	// check xauth utility is present in the system
-	if (stat("/usr/bin/xauth", &s) == -1) {
-		fprintf(stderr, "Error: cannot find /usr/bin/xauth executable\n");
-		exit(1);
-	}
-
-	// create a temporary .Xauthority file
-	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
-	int fd = mkstemp(tmpfname);
-	if (fd == -1) {
-		fprintf(stderr, "Error: cannot create .Xauthority file\n");
-		exit(1);
-	}
-	close(fd);
-	if (chown(tmpfname, getuid(), getgid()) == -1)
-		errExit("chown");
-
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// generate the new .Xauthority file using xauth utility
-		if (arg_debug)
-			printf("Generating a new .Xauthority file\n");
-		drop_privs(1);
-
-		char *display = getenv("DISPLAY");
-		if (!display)
-			display = ":0.0";
-		
-		clearenv();
-		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
-			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL); 
-		
-#ifdef HAVE_GCOV
-		__gcov_flush();
-#endif
-		_exit(0);
-	}
-
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
-
-	// check the file was created and set mode and ownership
-	if (stat(tmpfname, &s) == -1) {
-		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(tmpfname, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	
-	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
-	// automatically when the sandbox is closed
-	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) {
-		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	/* coverity[toctou] */
-	unlink(tmpfname);
-	
-	// mount
-	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
-		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
-		exit(1);
-	}
-	if (set_perms(dest, getuid(), getgid(), 0600))
-		errExit("set_perms");
-	free(dest);
-#endif	
-}

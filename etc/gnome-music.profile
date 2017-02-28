@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/gnome-music.local
+
 # gnome-music profile
 noblacklist ~/.local/share/gnome-music
 

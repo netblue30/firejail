@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -42,19 +42,17 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		// don't copy it if we already have the file
 		if (stat(fname, &s) == 0)
 			return;
-		if (stat("/etc/skel/.zshrc", &s) == 0) {
-			if (copy_file("/etc/skel/.zshrc", fname, u, g, 0644) == 0) {
-				fs_logger("clone /etc/skel/.zshrc");
-			}
+		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+			fprintf(stderr, "Error: invalid %s file\n", fname);
+			exit(1);
 		}
-		else { // 
-			FILE *fp = fopen(fname, "w");
-			if (fp) {
-				fprintf(fp, "\n");
-				SET_PERMS_STREAM(fp, u, g, S_IRUSR | S_IWUSR);
-				fclose(fp);
-				fs_logger2("touch", fname);
-			}
+		if (stat("/etc/skel/.zshrc", &s) == 0) {
+			copy_file_as_user("/etc/skel/.zshrc", fname, u, g, 0644); // regular user
+			fs_logger("clone /etc/skel/.zshrc");
+		}
+		else {
+			touch_file_as_user(fname, u, g, 0644);
+			fs_logger2("touch", fname);
 		}
 		free(fname);
 	}
@@ -64,23 +62,21 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (asprintf(&fname, "%s/.cshrc", homedir) == -1)
 			errExit("asprintf");
 		struct stat s;
+		
 		// don't copy it if we already have the file
 		if (stat(fname, &s) == 0)
 			return;
-		if (stat("/etc/skel/.cshrc", &s) == 0) {
-			if (copy_file("/etc/skel/.cshrc", fname, u, g, 0644) == 0) {
-				fs_logger("clone /etc/skel/.cshrc");
-			}
+		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+			fprintf(stderr, "Error: invalid %s file\n", fname);
+			exit(1);
 		}
-		else { // 
-			/* coverity[toctou] */
-			FILE *fp = fopen(fname, "w");
-			if (fp) {
-				fprintf(fp, "\n");
-				SET_PERMS_STREAM(fp, u, g, S_IRUSR | S_IWUSR);
-				fclose(fp);
-				fs_logger2("touch", fname);
-			}
+		if (stat("/etc/skel/.cshrc", &s) == 0) {
+			copy_file_as_user("/etc/skel/.cshrc", fname, u, g, 0644); // regular user
+			fs_logger("clone /etc/skel/.cshrc");
+		}
+		else {
+			touch_file_as_user(fname, u, g, 0644);
+			fs_logger2("touch", fname);
 		}
 		free(fname);
 	}
@@ -93,10 +89,13 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		// don't copy it if we already have the file
 		if (stat(fname, &s) == 0) 
 			return;
+		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+			fprintf(stderr, "Error: invalid %s file\n", fname);
+			exit(1);
+		}
 		if (stat("/etc/skel/.bashrc", &s) == 0) {
-			if (copy_file("/etc/skel/.bashrc", fname, u, g, 0644) == 0) {
-				fs_logger("clone /etc/skel/.bashrc");
-			}
+			copy_file_as_user("/etc/skel/.bashrc", fname, u, g, 0644); // regular user
+			fs_logger("clone /etc/skel/.bashrc");
 		}
 		free(fname);
 	}
@@ -106,6 +105,14 @@ static int store_xauthority(void) {
 	// put a copy of .Xauthority in XAUTHORITY_FILE
 	char *src;
 	char *dest = RUN_XAUTHORITY_FILE;
+	// create an empty file as root, and change ownership to user
+	FILE *fp = fopen(dest, "w");
+	if (fp) {
+		fprintf(fp, "\n");
+		SET_PERMS_STREAM(fp, getuid(), getgid(), 0600);
+		fclose(fp);
+	}
+	
 	if (asprintf(&src, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
 	
@@ -115,12 +122,9 @@ static int store_xauthority(void) {
 			fprintf(stderr, "Warning: invalid .Xauthority file\n");
 			return 0;
 		}
-			
-		int rv = copy_file(src, dest, -1, -1, 0600);
-		if (rv) {
-			fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
-			return 0;
-		}
+
+		copy_file_as_user(src, dest, getuid(), getgid(), 0600); // regular user
+		fs_logger2("clone", dest);
 		return 1; // file copied
 	}
 	
@@ -128,8 +132,17 @@ static int store_xauthority(void) {
 }
 
 static int store_asoundrc(void) {
+	// put a copy of .Xauthority in XAUTHORITY_FILE
 	char *src;
 	char *dest = RUN_ASOUNDRC_FILE;
+	// create an empty file as root, and change ownership to user
+	FILE *fp = fopen(dest, "w");
+	if (fp) {
+		fprintf(fp, "\n");
+		SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);
+		fclose(fp);
+	}
+	
 	if (asprintf(&src, "%s/.asoundrc", cfg.homedir) == -1)
 		errExit("asprintf");
 	
@@ -150,11 +163,8 @@ static int store_asoundrc(void) {
 			free(rp);
 		}
 
-		int rv = copy_file(src, dest, -1, -1, -0644);
-		if (rv) {
-			fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
-			return 0;
-		}
+		copy_file_as_user(src, dest, getuid(), getgid(), 0644); // regular user
+		fs_logger2("clone", dest);
 		return 1; // file copied
 	}
 	
@@ -167,13 +177,15 @@ static void copy_xauthority(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	// copy, set permissions and ownership
-	int rv = copy_file(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
-	if (rv)
-		fprintf(stderr, "Warning: cannot transfer .Xauthority in private home directory\n");
-	else {
-		fs_logger2("clone", dest);
+	
+	// if destination is a symbolic link, exit the sandbox!!!
+	if (is_link(dest)) {
+		fprintf(stderr, "Error: %s is a symbolic link\n", dest);
+		exit(1);
 	}
+
+	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
+	fs_logger2("clone", dest);
 	
 	// delete the temporary file
 	unlink(src);
@@ -185,13 +197,15 @@ static void copy_asoundrc(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.asoundrc", cfg.homedir) == -1)
 		errExit("asprintf");
-	// copy, set permissions and ownership
-	int rv = copy_file(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR);
-	if (rv)
-		fprintf(stderr, "Warning: cannot transfer .asoundrc in private home directory\n");
-	else {
-		fs_logger2("clone", dest);
+	
+	// if destination is a symbolic link, exit the sandbox!!!
+	if (is_link(dest)) {
+		fprintf(stderr, "Error: %s is a symbolic link\n", dest);
+		exit(1);
 	}
+
+	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
+	fs_logger2("clone", dest);
 
 	// delete the temporary file
 	unlink(src);

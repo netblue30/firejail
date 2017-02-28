@@ -1,4 +1,8 @@
-# Firejail profile for 
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/Cryptocat.local
+
+# Firejail profile for Cryptocat
 noblacklist ${HOME}/.config/Cryptocat
 
 include /etc/firejail/disable-common.inc

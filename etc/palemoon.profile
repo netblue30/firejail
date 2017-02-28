@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/palemoon.local
+
 # Firejail profile for Pale Moon
 noblacklist ~/.moonchild productions/pale moon
 noblacklist ~/.cache/moonchild productions/pale moon
@@ -23,6 +27,7 @@ shell none
 tracelog
 
 private-bin palemoon
+private-opt palemoon
 private-tmp
 
 # These are uncommented in the Firefox profile. If you run into trouble you may

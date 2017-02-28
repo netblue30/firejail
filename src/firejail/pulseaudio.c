@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -22,6 +22,7 @@
 #include <sys/stat.h>
 #include <sys/mount.h>
 #include <dirent.h>
+#include <sys/wait.h>
 
 static void disable_file(const char *path, const char *file) {
 	assert(file);
@@ -113,7 +114,7 @@ void pulseaudio_init(void) {
 	char *pulsecfg = NULL;
 	if (asprintf(&pulsecfg, "%s/client.conf", RUN_PULSE_DIR) == -1)
 		errExit("asprintf");
-	if (copy_file("/etc/pulse/client.conf", pulsecfg, -1, -1, 0644))
+	if (copy_file("/etc/pulse/client.conf", pulsecfg, -1, -1, 0644)) // root needed
 		errExit("copy_file");
 	FILE *fp = fopen(pulsecfg, "a+");
 	if (!fp)
@@ -127,21 +128,63 @@ void pulseaudio_init(void) {
 	if (asprintf(&dir1, "%s/.config", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
-		int rv = mkdir(dir1, 0755);
-		if (rv == 0) {
-			if (set_perms(dir1, getuid(), getgid(), 0755))
-				{;} // do nothing
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+	
+			int rv = mkdir(dir1, 0755);
+			if (rv == 0) {
+				if (set_perms(dir1, getuid(), getgid(), 0755))
+					{;} // do nothing
+			}
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+	}
+	else {
+		// make sure the directory is owned by the user
+		if (s.st_uid != getuid()) {
+			fprintf(stderr, "Error: user .config directory is not owned by the current user\n");
+			exit(1);
 		}
 	}
 	free(dir1);
+	
 	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
-		/* coverity[toctou] */
-		int rv = mkdir(dir1, 0700);
-		if (rv == 0) {
-			if (set_perms(dir1, getuid(), getgid(), 0700))
-				{;} // do nothing
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+	
+			int rv = mkdir(dir1, 0700);
+			if (rv == 0) {
+				if (set_perms(dir1, getuid(), getgid(), 0700))
+					{;} // do nothing
+			}
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+	}
+	else {
+		// make sure the directory is owned by the user
+		if (s.st_uid != getuid()) {
+			fprintf(stderr, "Error: user .config/pulse directory is not owned by the current user\n");
+			exit(1);
 		}
 	}
 	free(dir1);

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/0ad.local
+
 # Firejail profile for 0ad.
 noblacklist ~/.cache/0ad
 noblacklist ~/.config/0ad

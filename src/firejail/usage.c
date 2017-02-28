@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -76,8 +76,14 @@ void usage(void) {
 	printf("    --env=name=value - set environment variable.\n");
 	printf("    --fs.print=name|pid - print the filesystem log.\n");
 	printf("    --get=name|pid filename - get a file from sandbox container.\n");
+#ifdef HAVE_GIT_INSTALL
+	printf("    --git-install - download, compile and install mainline git version\n");
+	printf("\tof Firejail.\n");
+	printf("    --git-uninstall - uninstall mainline git version of Firejail\n");
+#endif
 	printf("    --help, -? - this help screen.\n");
 	printf("    --hostname=name - set sandbox hostname.\n");
+	printf("    --hosts-file=file - use file as /etc/hosts.\n");
 	printf("    --ignore=command - ignore command in profile files.\n");
 #ifdef HAVE_NETWORK	
 	printf("    --interface=name - move interface in sandbox.\n");
@@ -191,6 +197,7 @@ void usage(void) {
 #endif	
 	printf("    --writable-etc - /etc directory is mounted read-write.\n");
 	printf("    --writable-var - /var directory is mounted read-write.\n");
+	printf("    --writable-var-log - use the real /var/log directory, not a clone.\n");
 	printf("    --x11 - enable X11 sandboxing. The software checks first if Xpra is\n");
 	printf("\tinstalled, then it checks if Xephyr is installed. If all fails, it will\n");
 	printf("\tattempt to use X11 security extension.\n");

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/xchat.local
+
 # XChat IRC profile
 noblacklist ${HOME}/.config/xchat
 

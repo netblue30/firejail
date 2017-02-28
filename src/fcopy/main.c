@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 Firejail Authors
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -21,6 +21,9 @@
 #include "../include/common.h"
 #include <fcntl.h>
 #include <ftw.h>
+#include <errno.h>
+
+static int arg_follow_link = 0;
 
 
 #define COPY_LIMIT (500 * 1024 *1024)
@@ -34,245 +37,244 @@ static char *inpath = NULL;
 
 // modified version of the function from util.c
 static void copy_file(const char *srcname, const char *destname, mode_t mode, uid_t uid, gid_t gid) {
-	assert(srcname);
-	assert(destname);
-	mode &= 07777;
-	
-	// open source
-	int src = open(srcname, O_RDONLY);
-	if (src < 0) {
-		fprintf(stderr, "Warning: cannot open %s, file not copied\n", srcname);
-		return;
-	}
+        assert(srcname);
+        assert(destname);
+        mode &= 07777;
 
-	// open destination
-	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, 0755);
-	if (dst < 0) {
-		fprintf(stderr, "Warning fcopy: cannot open %s, file not copied\n", destname);
-		close(src);
-		return;
-	}
+        // open source
+        int src = open(srcname, O_RDONLY);
+        if (src < 0) {
+                fprintf(stderr, "Warning fcopy: cannot open %s, file not copied\n", srcname);
+                return;
+        }
 
-	// copy
-	ssize_t len;
-	static const int BUFLEN = 1024;
-	unsigned char buf[BUFLEN];
-	while ((len = read(src, buf, BUFLEN)) > 0) {
-		int done = 0;
-		while (done != len) {
-			int rv = write(dst, buf + done, len - done);
-			if (rv == -1)
-				goto errexit;
-			done += rv;
-		}
-	}
-	fflush(0);
+        // open destination
+        int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, 0755);
+        if (dst < 0) {
+                fprintf(stderr, "Warning fcopy: cannot open %s, file not copied\n", destname);
+                close(src);
+                return;
+        }
 
-	if (fchown(dst, uid, gid) == -1)
-		goto errexit;
-	if (fchmod(dst, mode) == -1)
-		goto errexit;
+        // copy
+        ssize_t len;
+        static const int BUFLEN = 1024;
+        unsigned char buf[BUFLEN];
+        while ((len = read(src, buf, BUFLEN)) > 0) {
+                int done = 0;
+                while (done != len) {
+                        int rv = write(dst, buf + done, len - done);
+                        if (rv == -1)
+                                goto errexit;
+                        done += rv;
+                }
+        }
+        fflush(0);
 
-	close(src);
-	close(dst);
+        if (fchown(dst, uid, gid) == -1)
+                goto errexit;
+        if (fchmod(dst, mode) == -1)
+                goto errexit;
 
-	return;
+        close(src);
+        close(dst);
+
+        return;
 
 errexit:
-	close(src);
-	close(dst);
-	unlink(destname);
-	fprintf(stderr, "Warning fcopy: cannot copy %s\n", destname);
+        close(src);
+        close(dst);
+        unlink(destname);
+        fprintf(stderr, "Warning fcopy: cannot copy %s\n", destname);
 }
 
 
 
 // modified version of the function in firejail/util.c
 static void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
-	assert(fname);
-	mode &= 07777;
+        assert(fname);
+        mode &= 07777;
 
-	if (mkdir(fname, mode) == -1 ||
-	    chmod(fname, mode) == -1) {
-	    	fprintf(stderr, "Error fcopy: failed to create %s directory\n", fname);
-		errExit("mkdir/chmod");
-	}
-	if (chown(fname, uid, gid))
-	    	fprintf(stderr, "Warning fcopy: failed to change ownership of %s\n", fname);
+        if (mkdir(fname, mode) == -1 ||
+            chmod(fname, mode) == -1) {
+                fprintf(stderr, "Error fcopy: failed to create %s directory\n", fname);
+                errExit("mkdir/chmod");
+        }
+        if (chown(fname, uid, gid))
+                fprintf(stderr, "Warning fcopy: failed to change ownership of %s\n", fname);
 }
 
 void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid, gid_t gid) {
-	(void) mode;
-	(void) uid;
-	(void) gid;
-	char *rp = realpath(target, NULL);
-	if (rp) {
-		if (symlink(rp, linkpath) == -1)
-			goto errout;
-		free(rp);
-	}
-	else
-		goto errout;
+        (void) mode;
+        (void) uid;
+        (void) gid;
+        char *rp = realpath(target, NULL);
+        if (rp) {
+                if (symlink(rp, linkpath) == -1)
+                        goto errout;
+                free(rp);
+        }
+        else
+                goto errout;
 
-	return;
+        return;
 errout:
-	fprintf(stderr, "Warning fcopy: cannot create symbolic link %s\n", target);
+        fprintf(stderr, "Warning fcopy: cannot create symbolic link %s\n", target);
 }
 
 static int first = 1;
 static int fs_copydir(const char *infname, const struct stat *st, int ftype, struct FTW *sftw) {
-	(void) st;
-	(void) sftw;
-	assert(infname);
-	assert(*infname != '\0');
-	assert(outpath);
-	assert(*outpath != '\0');
-	assert(inpath);
-	
-	// check size limit
-	if (size_limit_reached)
-		return 0;
+        (void) st;
+        (void) sftw;
+        assert(infname);
+        assert(*infname != '\0');
+        assert(outpath);
+        assert(*outpath != '\0');
+        assert(inpath);
+
+        // check size limit
+        if (size_limit_reached)
+                return 0;
 
 
-	char *outfname;
-	if (asprintf(&outfname, "%s%s", outpath, infname + strlen(inpath)) == -1)
-		errExit("asprintf");
+        char *outfname;
+        if (asprintf(&outfname, "%s%s", outpath, infname + strlen(inpath)) == -1)
+                errExit("asprintf");
 
-//printf("outpaht %s\n", outpath);
-//printf("inpath %s\n", inpath);
-//printf("infname %s\n", infname);
-//printf("outfname %s\n\n", outfname);
+        // don't copy it if we already have the file
+        struct stat s;
+        if (stat(outfname, &s) == 0) {
+                if (first)
+                        first = 0;
+                else
+                        fprintf(stderr, "Warning fcopy: skipping %s, file already present\n", infname);
+                free(outfname);
+                return 0;
+        }
 
-	// don't copy it if we already have the file
-	struct stat s;
-	if (stat(outfname, &s) == 0) {
-		if (first)
-			first = 0;
-		else	
-		    	fprintf(stderr, "Warning fcopy: skipping %s, file already present\n", infname);
-		free(outfname);
-		return 0;
-	}
-	
-	// extract mode and ownership
-	if (stat(infname, &s) != 0) {
-	    	fprintf(stderr, "Warning fcopy: skipping %s, cannot find inode\n", infname);
-		free(outfname);
-		return 0;
-	}
-	uid_t uid = s.st_uid;
-	gid_t gid = s.st_gid;
-	mode_t mode = s.st_mode;
+        // extract mode and ownership
+        if (stat(infname, &s) != 0) {
+                fprintf(stderr, "Warning fcopy: skipping %s, cannot find inode\n", infname);
+                free(outfname);
+                return 0;
+        }
+        uid_t uid = s.st_uid;
+        gid_t gid = s.st_gid;
+        mode_t mode = s.st_mode;
 
-	// recalculate size
-	if ((s.st_size + size_cnt) > COPY_LIMIT) {
-		fprintf(stderr, "Error fcopy: size limit of %dMB reached\n", (COPY_LIMIT / 1024) / 1024);
-		size_limit_reached = 1;
-		free(outfname);
-		return 0;
-	}
+        // recalculate size
+        if ((s.st_size + size_cnt) > COPY_LIMIT) {
+                fprintf(stderr, "Error fcopy: size limit of %dMB reached\n", (COPY_LIMIT / 1024) / 1024);
+                size_limit_reached = 1;
+                free(outfname);
+                return 0;
+        }
 
-	file_cnt++;
-	size_cnt += s.st_size;
+        file_cnt++;
+        size_cnt += s.st_size;
 
-	if(ftype == FTW_F) {
-		copy_file(infname, outfname, mode, uid, gid);
-	}
-	else if (ftype == FTW_D) {
-		mkdir_attr(outfname, mode, uid, gid);
-	}		
-	else if (ftype == FTW_SL) {
-		copy_link(infname, outfname, mode, uid, gid);
-	}		
+        if(ftype == FTW_F) {
+                copy_file(infname, outfname, mode, uid, gid);
+        }
+        else if (ftype == FTW_D) {
+                mkdir_attr(outfname, mode, uid, gid);
+        }
+        else if (ftype == FTW_SL) {
+                copy_link(infname, outfname, mode, uid, gid);
+        }
 
-	return(0);
+        return(0);
 }
 
 static char *check(const char *src) {
-	struct stat s;
-	char *rsrc = realpath(src, NULL);
-	if (!rsrc || stat(rsrc, &s) == -1)
-		goto errexit;
+        struct stat s;
+        char *rsrc = realpath(src, NULL);
+        if (!rsrc || stat(rsrc, &s) == -1)
+                goto errexit;
 
-	// check uid
-	if (s.st_uid != getuid() || s.st_gid != getgid())
-		goto errexit;
+        // check uid
+        if (s.st_uid != getuid() || s.st_gid != getgid())
+                goto errexit;
 
-	// dir, link, regular file
-	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || S_ISLNK(s.st_mode))
-		return rsrc;			  // normal exit from the function
-	
+        // dir, link, regular file
+        if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || S_ISLNK(s.st_mode))
+                return rsrc;                      // normal exit from the function
+
 errexit:
-	fprintf(stderr, "Error fcopy: invalid file %s\n", src);
-	exit(1);
+        fprintf(stderr, "Error fcopy: invalid file %s\n", src);
+        exit(1);
 }
 
 static void duplicate_dir(const char *src, const char *dest, struct stat *s) {
-	(void) s;
-	char *rsrc = check(src);
-	char *rdest = check(dest);
-	inpath = rsrc;
-	outpath = rdest;
-	
-	// walk
-	if(nftw(rsrc, fs_copydir, 1, FTW_PHYS) != 0) {
-		fprintf(stderr, "Error: unable to copy file\n");
-		exit(1);
-	}
+        (void) s;
+        char *rsrc = check(src);
+        char *rdest = check(dest);
+        inpath = rsrc;
+        outpath = rdest;
 
-	free(rsrc);
-	free(rdest);
+        // walk
+        if(nftw(rsrc, fs_copydir, 1, FTW_PHYS) != 0) {
+                fprintf(stderr, "Error: unable to copy file\n");
+                exit(1);
+        }
+
+        free(rsrc);
+        free(rdest);
 }
 
 static void duplicate_file(const char *src, const char *dest, struct stat *s) {
-	char *rsrc = check(src);
-	char *rdest = check(dest);
-	uid_t uid = s->st_uid;
-	gid_t gid = s->st_gid;
-	mode_t mode = s->st_mode;
-	
-	// build destination file name
-	char *name;
-	char *ptr = strrchr(rsrc, '/');
-	ptr++;
-	if (asprintf(&name, "%s/%s", rdest, ptr) == -1)
-		errExit("asprintf");
-	
-	// copy
-	copy_file(rsrc, name, mode, uid, gid);
+        char *rsrc = check(src);
+        char *rdest = check(dest);
+        uid_t uid = s->st_uid;
+        gid_t gid = s->st_gid;
+        mode_t mode = s->st_mode;
 
-	free(name);
-	free(rsrc);
-	free(rdest);
+        // build destination file name
+        char *name;
+ 	char *ptr = (arg_follow_link)? strrchr(src, '/'): strrchr(rsrc, '/');
+        ptr++;
+        if (asprintf(&name, "%s/%s", rdest, ptr) == -1)
+                errExit("asprintf");
+
+        // copy
+        copy_file(rsrc, name, mode, uid, gid);
+
+        free(name);
+        free(rsrc);
+        free(rdest);
 }
 
 static void duplicate_link(const char *src, const char *dest, struct stat *s) {
-	char *rsrc = check(src); // we drop the result and use the original name
-	char *rdest = check(dest);
-	uid_t uid = s->st_uid;
-	gid_t gid = s->st_gid;
-	mode_t mode = s->st_mode;
-	
-	// build destination file name
-	char *name;
-//	char *ptr = strrchr(rsrc, '/');
-	char *ptr = strrchr(src, '/');
-	ptr++;
-	if (asprintf(&name, "%s/%s", rdest, ptr) == -1)
-		errExit("asprintf");
-	
-	// copy
-	copy_link(rsrc, name, mode, uid, gid);
+        char *rsrc = check(src); // we drop the result and use the original name
+        char *rdest = check(dest);
+        uid_t uid = s->st_uid;
+        gid_t gid = s->st_gid;
+        mode_t mode = s->st_mode;
 
-	free(name);
-	free(rsrc);
-	free(rdest);
+        // build destination file name
+        char *name;
+//     char *ptr = strrchr(rsrc, '/');
+        char *ptr = strrchr(src, '/');
+        ptr++;
+        if (asprintf(&name, "%s/%s", rdest, ptr) == -1)
+                errExit("asprintf");
+
+        // copy
+        copy_link(rsrc, name, mode, uid, gid);
+
+        free(name);
+        free(rsrc);
+        free(rdest);
 }
 
 static void usage(void) {
-	printf("Usage: fcopy src dest\n");
-	printf("Copy src file in dest directory. If src is a directory, copy all the files in\n");
-	printf("src recoursively. If the destination directory does not exist, it will be created.\n");
+        fputs("Usage: fcopy [--follow-link] src dest\n"
+              "\n"
+              "Copy SRC to DEST/SRC. SRC may be a file, directory, or symbolic link.\n"
+              "If SRC is a directory it is copied recursively.  If it is a symlink,\n"
+              "the link itself is duplicated, unless --follow-link is given,\n"
+              "in which case the destination of the link is copied.\n"
+              "DEST must already exist and must be a directory.\n", stderr);
 }
 
 int main(int argc, char **argv) {
@@ -285,56 +287,70 @@ for (i = 0; i < argc; i++)
 printf("\n");
 }
 #endif	
-	if (argc != 3) {
-		fprintf(stderr, "Error fcopy: files missing\n");
-		usage();
-		exit(1);
-	}
-	
-	// check the two files; remove ending /
-	char *src = argv[1];
-	int len = strlen(src);
-	if (src[len - 1] == '/')
-		src[len - 1] = '\0';
-	if (strcspn(src, "\\*&!?\"'<>%^(){}[];,") != (size_t)len) {
-		fprintf(stderr, "Error fcopy: invalid file name %s\n", src);
-		exit(1);
-	}
-	
-	char *dest = argv[2];
-	len = strlen(dest);
-	if (dest[len - 1] == '/')
-		dest[len - 1] = '\0';
-	if (strcspn(dest, "\\*&!?\"'<>%^(){}[];,~") != (size_t)len) {
-		fprintf(stderr, "Error fcopy: invalid file name %s\n", dest);
-		exit(1);
-	}
-	
+        char *src;
+        char *dest;
 
-	// the destination should be a directory; 
-	struct stat s;
-	if (stat(dest, &s) == -1 ||
-	    !S_ISDIR(s.st_mode)) {
-		fprintf(stderr, "Error fcopy: invalid destination directory\n");
-		exit(1);
-	}
-	
-	// copy files
-	if (lstat(src, &s) == -1) {
-		fprintf(stderr, "Error fcopy: cannot find source file\n");
-		exit(1);
-	}
+        if (argc == 3) {
+                src = argv[1];
+                dest = argv[2];
+                arg_follow_link = 0;
+        }
+        else if (argc == 4 && !strcmp(argv[1], "--follow-link")) {
+                src = argv[2];
+                dest = argv[3];
+                arg_follow_link = 1;
+        }
+        else {
+        	    fprintf(stderr, "Error: arguments missing\n");
+                usage();
+                exit(1);
+        }
 
-	if (S_ISDIR(s.st_mode))
-		duplicate_dir(src, dest, &s);
-	else if (S_ISREG(s.st_mode))
-		duplicate_file(src, dest, &s);
-	else if (S_ISLNK(s.st_mode))
-		duplicate_link(src, dest, &s);
-	else {
-		fprintf(stderr, "Error fcopy: source file unsupported\n");
-		exit(1);
-	}
-		
-	return 0;
+        // check the two files; remove ending /
+        int len = strlen(src);
+        if (src[len - 1] == '/')
+                src[len - 1] = '\0';
+        if (strcspn(src, "\\*&!?\"'<>%^(){}[];,") != (size_t)len) {
+                fprintf(stderr, "Error fcopy: invalid source file name %s\n", src);
+                exit(1);
+        }
+
+        len = strlen(dest);
+        if (dest[len - 1] == '/')
+                dest[len - 1] = '\0';
+        if (strcspn(dest, "\\*&!?\"'<>%^(){}[];,~") != (size_t)len) {
+                fprintf(stderr, "Error fcopy: invalid dest file name %s\n", dest);
+                exit(1);
+        }
+
+
+        // the destination should be a directory;
+        struct stat s;
+        if (stat(dest, &s) == -1) {
+                fprintf(stderr, "Error fcopy: dest dir %s: %s\n", dest, strerror(errno));
+                exit(1);
+        }
+        if (!S_ISDIR(s.st_mode)) {
+                fprintf(stderr, "Error fcopy: dest %s is not a directory\n", dest);
+                exit(1);
+        }
+
+        // copy files
+        if ((arg_follow_link ? stat : lstat)(src, &s) == -1) {
+                fprintf(stderr, "Error fcopy: src %s: %s\n", src, strerror(errno));
+                exit(1);
+        }
+
+        if (S_ISDIR(s.st_mode))
+                duplicate_dir(src, dest, &s);
+        else if (S_ISREG(s.st_mode))
+                duplicate_file(src, dest, &s);
+        else if (S_ISLNK(s.st_mode))
+                duplicate_link(src, dest, &s);
+        else {
+                fprintf(stderr, "Error fcopy: src %s is an unsupported type of file\n", src);
+                exit(1);
+        }
+
+        return 0;
 }

@@ -1,6 +1,8 @@
 # keepassx password manager profile
 noblacklist ${HOME}/.config/keepassx
 noblacklist ${HOME}/.keepassx
+noblacklist ${HOME}/*.kdbx
+noblacklist ${HOME}/*.kdb
  
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

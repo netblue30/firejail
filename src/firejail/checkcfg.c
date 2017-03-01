@@ -27,6 +27,8 @@ static int initialized = 0;
 static int cfg_val[CFG_MAX];
 char *xephyr_screen = "800x600";
 char *xephyr_extra_params = "";
+char *xvfb_screen = "800x600x24";
+char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 
 int checkcfg(int val) {
@@ -231,6 +233,28 @@ int checkcfg(int val) {
 					goto errout;
 				xephyr_extra_params = strdup(ptr + 19);
 				if (!xephyr_extra_params)
+					errExit("strdup");
+			}
+			
+			// Xvfb screen size
+            		else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
+				// expecting three numbers separated by x's
+				unsigned int n1;
+				unsigned int n2;
+				unsigned int n3;
+				int rv = sscanf(ptr + 12, "%ux%ux%u", &n1, &n2, &n3);
+				if (rv != 3)
+					goto errout;
+				if (asprintf(&xvfb_screen, "%ux%ux%u", n1, n2, n3) == -1)
+					errExit("asprintf");
+			}
+
+			// Xvfb extra parameters
+			else if (strncmp(ptr, "xvfb-extra-params ", 18) == 0) {
+				if (*xvfb_extra_params != '\0')
+					goto errout;
+				xvfb_extra_params = strdup(ptr + 18);
+				if (!xvfb_extra_params)
 					errExit("strdup");
 			}
 			

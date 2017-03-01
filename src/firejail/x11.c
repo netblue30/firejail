@@ -200,6 +200,206 @@ static int random_display_number(void) {
 
 
 #ifdef HAVE_X11
+
+void x11_start_xvfb(int argc, char **argv) {
+	EUID_ASSERT();
+	int i;
+	struct stat s;
+	pid_t jail = 0;
+	pid_t server = 0;
+	
+	setenv("FIREJAIL_X11", "yes", 1);
+
+	// mever try to run X servers as root!!!
+	if (getuid() == 0) {
+		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
+		exit(1);
+	}
+	drop_privs(0);
+
+	// check xephyr
+	if (!program_in_path("Xvfb")) {
+		fprintf(stderr, "\nError: xvfb program was not found in /usr/bin directory, please install it:\n");
+		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xvfb\n");
+		fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xvfb\n");
+		exit(0);
+	}
+	
+	int display = random_display_number();
+	char *display_str;
+	if (asprintf(&display_str, ":%d", display) == -1)
+		errExit("asprintf");
+
+	assert(xvfb_screen);
+
+	char *server_argv[256] = { "Xvfb", display_str, "-screen", "0", xvfb_screen }; // rest initialyzed to NULL
+	unsigned pos = 0;
+	while (server_argv[pos] != NULL) pos++;
+	assert(xvfb_extra_params); // should be "" if empty
+
+	// parse xvfb_extra_params
+	// very basic quoting support
+	char *temp = strdup(xephyr_extra_params);
+	if (*xephyr_extra_params != '\0') {
+		if (!temp)
+			errExit("strdup");
+		bool dquote = false;
+		bool squote = false;
+		for (i = 0; i < (int) strlen(xvfb_extra_params); i++) {
+			if (temp[i] == '\"') {
+				dquote = !dquote;
+				if (dquote) temp[i] = '\0'; // replace closing quote by \0
+			}
+			if (temp[i] == '\'') {
+				squote = !squote;
+				if (squote) temp[i] = '\0'; // replace closing quote by \0
+			}
+			if (!dquote && !squote && temp[i] == ' ') temp[i] = '\0';
+			if (dquote && squote) {
+				fprintf(stderr, "Error: mixed quoting found while parsing xvfb_extra_params\n");
+				exit(1);
+			}
+		}
+		if (dquote) {
+			fprintf(stderr, "Error: unclosed quote found while parsing xephyr_extra_params\n");
+			exit(1);
+		}
+
+		for (i = 0; i < (int) strlen(xvfb_extra_params)-1; i++) {
+			if (pos >= (sizeof(server_argv)/sizeof(*server_argv)) - 2) {
+				fprintf(stderr, "Error: arg count limit exceeded while parsing xvfb_extra_params\n");
+				exit(1);
+			}
+			if (temp[i] == '\0' && (temp[i+1] == '\"' || temp[i+1] == '\'')) server_argv[pos++] = temp + i + 2;
+			else if (temp[i] == '\0' && temp[i+1] != '\0') server_argv[pos++] = temp + i + 1;
+		}
+	}
+	
+	server_argv[pos++] = NULL;
+
+	assert(pos < (sizeof(server_argv)/sizeof(*server_argv))); // no overrun
+	assert(server_argv[pos-1] == NULL); // last element is null
+	
+	if (arg_debug) {
+		size_t i = 0;
+		printf("xvfb server:");
+		while (server_argv[i]!=NULL) {
+			printf(" \"%s\"", server_argv[i]);
+			i++;
+		}
+		putchar('\n');
+	}
+
+	// remove --x11 arg
+	char *jail_argv[argc+2];
+	int j = 0;
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "--x11") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xpra") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xephyr") == 0)
+			continue;
+		if (strcmp(argv[i], "--x11=xvfb") == 0)
+			continue;
+		jail_argv[j] = argv[i];
+		j++;
+	}
+	jail_argv[j] = NULL;
+
+	assert(j < argc+2); // no overrun
+
+	if (arg_debug) {
+		size_t i = 0;
+		printf("xvfb client:");
+		while (jail_argv[i]!=NULL) {
+			printf(" \"%s\"", jail_argv[i]);
+			i++;
+		}
+		putchar('\n');
+	}
+	
+	server = fork();
+	if (server < 0)
+		errExit("fork");
+	if (server == 0) {
+		if (arg_debug)
+			printf("Starting xvfb...\n");
+
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);	
+		execvp(server_argv[0], server_argv);
+		perror("execvp");
+		_exit(1);
+	}
+
+	if (arg_debug)
+		printf("xephyr server pid %d\n", server);
+
+	// check X11 socket
+	char *fname;
+	if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
+		errExit("asprintf");
+	int n = 0;
+	// wait for x11 server to start
+	while (++n < 10) {
+		sleep(1);
+		if (stat(fname, &s) == 0)
+			break;
+	};
+	
+	if (n == 10) {
+		fprintf(stderr, "Error: failed to start xephyr\n");
+		exit(1);
+	}
+	free(fname);
+	
+	if (arg_debug) {
+            	printf("X11 sockets: "); fflush(0);
+            	int rv = system("ls /tmp/.X11-unix");
+            	(void) rv;
+	}
+
+	setenv("DISPLAY", display_str, 1);
+	// run attach command
+	jail = fork();
+	if (jail < 0)
+		errExit("fork");
+	if (jail == 0) {
+		if (!arg_quiet)
+			printf("\n*** Attaching to Xvfb display %d ***\n\n", display);
+
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);	
+		execvp(jail_argv[0], jail_argv);
+		perror("execvp");
+		_exit(1);
+	}
+
+	// cleanup
+	free(display_str);
+	free(temp);
+
+	// wait for either server or jail termination
+	pid_t pid = wait(NULL);
+
+	// see which process terminated and kill other
+	if (pid == server) {
+		kill(jail, SIGTERM);
+	} else if (pid == jail) {
+		kill(server, SIGTERM);
+	}
+
+	// without this closing Xephyr window may mess your terminal:
+	// "monitoring" process will release terminal before
+	// jail process ends and releases terminal
+	wait(NULL); // fulneral
+
+	exit(0);
+}
+
+
+
 //$ Xephyr -ac -br -noreset -screen 800x600 :22 &
 //$ DISPLAY=:22 firejail --net=eth0 --blacklist=/tmp/.X11-unix/x0 firefox
 void x11_start_xephyr(int argc, char **argv) {

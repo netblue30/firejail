@@ -349,6 +349,14 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature("x11");
 	}
+	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
+		if (checkcfg(CFG_X11)) {
+			x11_start_xvfb(argc, argv);
+			exit(0);
+		}
+		else
+			exit_err_feature("x11");
+	}
 #endif
 #ifdef HAVE_NETWORK	
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {

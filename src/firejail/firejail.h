@@ -684,6 +684,8 @@ enum {
 };
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
+extern char *xvfb_screen;
+extern char *xvfb_extra_params;
 extern char *netfilter_default;
 int checkcfg(int val);
 void print_compiletime_support(void);

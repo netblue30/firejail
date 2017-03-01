@@ -31,8 +31,6 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <limits.h>
-int mask_x11_abstract_socket = 0;
-
 
 // Parse the DISPLAY environment variable and return a display number.
 // Returns -1 if DISPLAY is not set, or is set to anything other than :ddd.
@@ -833,8 +831,6 @@ void fs_x11(void) {
 
 void x11_block(void) {
 #ifdef HAVE_X11
-	mask_x11_abstract_socket = 1;
-
 	// check abstract socket presence and network namespace options
 	if ((!arg_nonetwork && !cfg.bridge0.configured && !cfg.interface0.configured)
 		&& x11_abstract_sockets_present()) {

@@ -696,7 +696,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_X11)) {
 			char *x11env = getenv("FIREJAIL_X11");
 			if (x11env && strcmp(x11env, "yes") == 0) {
-				mask_x11_abstract_socket = 1;
 				return 0;
 			}
 			else {
@@ -725,7 +724,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_X11)) {
 			char *x11env = getenv("FIREJAIL_X11");
 			if (x11env && strcmp(x11env, "yes") == 0) {
-				mask_x11_abstract_socket = 1;
 				return 0;
 			}
 			else {
@@ -745,7 +743,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_X11)) {
 			char *x11env = getenv("FIREJAIL_X11");
 			if (x11env && strcmp(x11env, "yes") == 0) {
-				mask_x11_abstract_socket = 1;
 				return 0;
 			}
 			else {

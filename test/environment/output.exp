@@ -61,5 +61,27 @@ expect {
 }
 after 100
 send -- "rm -f logfile*\r"
+
+
+send -- "firejail --output=../logfile -- ./output.sh\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"invalid output file"
+}
+after 100
+
+send -- "firejail --output=/etc -- ./output.sh\r"
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"invalid output file"
+}
+after 100
+
+send -- "firejail --output=/etc/firejail/zoom.profile -- ./output.sh\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"the output file needs to be owned by the current user"
+}
+
 after 100
 puts "\nall done\n"

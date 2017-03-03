@@ -310,13 +310,16 @@ Remove DISPLAY and XAUTHORITY environment variables.
 Stop with error message if X11 abstract socket will be accessible in jail.
 .TP
 \fBx11 xephyr
-Enable X11 sandboxing with xephyr.
+Enable X11 sandboxing with Xephyr server.
 .TP
 \fBx11 xorg
 Enable X11 sandboxing with X11 security extension.
 .TP
 \fBx11 xpra
-Enable X11 sandboxing with xpra.
+Enable X11 sandboxing with Xpra server.
+.TP
+\fBx11 xvfb
+Enable X11 sandboxing with Xvfb server.
 
 .SH Resource limits, CPU affinity, Control Groups
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.

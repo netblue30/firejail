@@ -145,6 +145,43 @@ Added AppImage type 2 support, and support for passing command line arguments to
 
               $ firejail --git-uninstall
 
+       --x11=xvfb
+              Start  Xvfb  X11  server  and attach the sandbox to this server.
+              Xvfb, short for X virtual framebuffer,  performs  all  graphical
+              operations  in memory without showing any screen output. Xvfb is
+              mainly used for remote access and software testing  on  headless
+              servers.
+
+              On Debian platforms Xvfb is installed with the command sudo apt-
+              get install xvfb.  This feature is not available when running as
+              root.
+
+              Example: remote VNC access
+
+              On  the  server we start a sandbox using Xvfb and openbox window
+              manager. The default size of Xvfb screen is 800x600 - it can  be
+              changed  in  /etc/firejail/firejail.config  (xvfb-screen).  Some
+              sort of networking (--net) is required in order to  isolate  the
+              abstract sockets used by other X servers.
+
+              $ firejail --net=none --x11=xvfb openbox
+
+              *** Attaching to Xvfb display 792 ***
+
+              Reading profile /etc/firejail/openbox.profile
+              Reading profile /etc/firejail/disable-common.inc
+              Reading profile /etc/firejail/disable-common.local
+              Parent pid 5400, child pid 5401
+
+              On  the  server  we also start a VNC server and attach it to the
+              display handled by our Xvfb server (792).
+
+              $ x11vnc -display :792
+
+              On the client machine we start a VNC viewer and use it  to  con‐
+              nect to our server:
+
+              $ vncviewer
 
 `````
 ## New Profiles

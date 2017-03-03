@@ -1772,17 +1772,17 @@ $ sudo firejail --writable-var-log
 
 .TP
 \fB\-\-x11
-Sandbox the application using Xpra, Xephyr or Xorg security extension.
+Sandbox the application using Xpra, Xephyr, Xvfb or Xorg security extension.
 The sandbox will prevents screenshot and keylogger applications started inside the sandbox from accessing
 clients running outside the sandbox.
 Firejail will try first Xpra, and if Xpra is not installed on the system, it will try to find Xephyr.
-If all fails, Firejail will not attempt to use X11 security extension.
+If all fails, Firejail will not attempt to use Xvfb or X11 security extension. 
 .br
 
 .br
-Xpra and Xephyr modes require a network namespace to be instantiated in order to disable
+Xpra, Xephyr and Xvfb modes require a network namespace to be instantiated in order to disable
 X11 abstract Unix socket. If this is not possible, the user can disable the abstract socket
-by adding "-nolisten local" on Xorg command line.
+by adding "-nolisten local" on Xorg command line at system level.
 .br
 
 .br
@@ -1858,6 +1858,68 @@ This feature is not available when running as root.
 Example:
 .br
 $ firejail \-\-x11=xpra --net=eth0 firefox
+
+
+.TP
+\fB\-\-x11=xvfb
+Start Xvfb X11 server and attach the sandbox to this server. 
+Xvfb, short for X virtual framebuffer, performs all graphical operations in memory 
+without showing any screen output. Xvfb is mainly used for remote access and software 
+testing on headless servers.
+.br
+
+.br
+On Debian platforms Xvfb is installed with the command \fBsudo apt-get install xvfb\fR.
+This feature is not available when running as root.
+.br
+
+.br
+Example: remote VNC access
+.br
+
+.br
+On the server we start a sandbox using Xvfb and openbox
+window manager. The default size of Xvfb screen is 800x600 - it can be changed
+in /etc/firejail/firejail.config (xvfb-screen). Some sort of networking (--net) is required
+in order to isolate the abstract sockets used by other X servers.
+.br
+
+.br
+$ firejail --net=none --x11=xvfb openbox
+.br
+
+.br
+*** Attaching to Xvfb display 792 ***
+.br
+
+.br
+Reading profile /etc/firejail/openbox.profile
+.br
+Reading profile /etc/firejail/disable-common.inc
+.br
+Reading profile /etc/firejail/disable-common.local
+.br
+Parent pid 5400, child pid 5401
+.br
+
+.br
+On the server we also start a VNC server and attach it to the display handled by our
+Xvfb server (792).
+.br
+
+.br
+$ x11vnc -display :792
+.br
+
+.br
+On the client machine we start a VNC viewer and use it to connect to our server:
+.br
+
+.br
+$ vncviewer
+.br
+
+
 
 .TP
 \fB\-\-zsh

@@ -183,8 +183,10 @@ static int caps_find_name(const char *name) {
 // return 1 if error, 0 if OK
 void caps_check_list(const char *clist, void (*callback)(int)) {
 	// don't allow empty lists
-	if (clist == NULL || *clist == '\0')
-		goto errexit;
+	if (clist == NULL || *clist == '\0') {
+		fprintf(stderr, "Error: empty capabilities list\n");
+		exit(1);
+	}
 
 	// work on a copy of the string
 	char *str = strdup(clist);

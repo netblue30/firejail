@@ -205,6 +205,7 @@ void usage(void) {
 	printf("    --x11=xephyr - enable Xephyr X11 server. The window size is 800x600.\n");
 	printf("    --x11=xorg - enable X11 security extension.\n");
 	printf("    --x11=xpra - enable Xpra X11 server.\n");
+	printf("    --x11=xvfb - enable Xvfb X11 server.\n");
 	printf("    --zsh - use /usr/bin/zsh as default shell.\n");
 	printf("\n");
 	printf("Examples:\n");

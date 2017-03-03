@@ -126,6 +126,7 @@ Zack Weinberg (https://github.com/zackw)
 	- rework fcopy, --follow-link support in fcopy
 	- follow link support in --private-bin
 	- wait_for_other function rewrite
+	- xvfb X11 server support
 Austin S. Hemmelgarn (https://github.com/Ferroin)
 	- unbound profile update
 Igor Bukanov (https://github.com/ibukanov)

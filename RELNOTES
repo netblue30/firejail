@@ -6,6 +6,7 @@ firejail (0.9.38.11) baseline; urgency=low
 
 firejail (0.9.38.10) baseline; urgency=low
   * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week
+     new CVE code assigned after release: CVE-2017-5940
   * security: tightening the rules for --chroot
   * bugfix: ported Gentoo compile patch
   * bugfix: fix ASSERT_PERMS_FD macro

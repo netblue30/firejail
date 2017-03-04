@@ -23,14 +23,6 @@ whitelist ~/.cache/chromium
 mkdir ~/.pki
 whitelist ~/.pki
 
-# lastpass, keepass
-# for keepass we additionally need to whitelist our .kdbx password database
-whitelist ~/.keepass
-whitelist ~/.config/keepass
-whitelist ~/.config/KeePass
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
-
 # specific to Arch
 whitelist ~/.config/chromium-flags.conf
 

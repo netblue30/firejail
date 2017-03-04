@@ -23,12 +23,4 @@ whitelist ~/.config/netsurf
 mkdir ~/.cache/netsurf
 whitelist ~/.cache/netsurf
 
-# lastpass, keepass
-# for keepass we additionally need to whitelist our .kdbx password database
-whitelist ~/.keepass
-whitelist ~/.config/keepass
-whitelist ~/.config/KeePass
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
-
 include /etc/firejail/whitelist-common.inc

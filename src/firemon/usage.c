@@ -37,6 +37,7 @@ void usage(void) {
 	printf("\t--name=name - print information only about named sandbox.\n\n");
 	printf("\t--netstats - monitor network statistics for sandboxes creating a new\n");
 	printf("\t\tnetwork namespace.\n\n");
+	printf("\t--nowrap - enable line wrapping in terminals.\n\n");
 	printf("\t--route - print route table for each sandbox.\n\n");
 	printf("\t--seccomp - print seccomp configuration for each sandbox.\n\n");
 	printf("\t--tree - print a tree of all sandboxed processes.\n\n");

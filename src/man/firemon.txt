@@ -37,6 +37,9 @@ Print information only about named sandbox.
 \fB\-\-netstats
 Monitor network statistics for sandboxes creating a new network namespace.
 .TP
+\fB\-\-nowrap
+Enable line wrapping in terminals. By default the lines are trimmed.
+.TP
 \fB\-\-route
 Print route table for each sandbox.
 .TP

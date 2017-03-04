@@ -150,10 +150,8 @@ doexit:
 static int procevent_netlink_setup(void) {
 	// open socket for process event connector
 	int sock;
-	if ((sock = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_CONNECTOR)) < 0) {
-		fprintf(stderr, "Error: cannot open netlink socket\n");
-		exit(1);
-	}
+	if ((sock = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_CONNECTOR)) < 0)
+		goto errexit;
 
 	// bind socket
 	struct sockaddr_nl addr;
@@ -161,10 +159,8 @@ static int procevent_netlink_setup(void) {
 	addr.nl_pid = getpid();
 	addr.nl_family = AF_NETLINK;
 	addr.nl_groups = CN_IDX_PROC;
-	if (bind(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
-		fprintf(stderr, "Error: cannot bind to netlink socket\n");
-		exit(1);
-	}
+	if (bind(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+		goto errexit;
 
 	// send monitoring message
 	struct nlmsghdr nlmsghdr;
@@ -189,12 +185,13 @@ static int procevent_netlink_setup(void) {
 	iov[2].iov_base = &op;
 	iov[2].iov_len = sizeof(op);
 
-	if (writev(sock, iov, 3) == -1) {
-		fprintf(stderr, "Error: cannot write to netlink socket\n");
-		exit(1);
-	}
+	if (writev(sock, iov, 3) == -1)
+		goto errexit;
 	
 	return sock;
+errexit:
+	fprintf(stderr, "Error: netlink socket problem\n");
+	exit(1);
 }
 
 

@@ -37,9 +37,7 @@ static void print_seccomp(int pid) {
 		if (strncmp(buf, "Seccomp:", 8) == 0) {
 			printf("  %s", buf);
 			fflush(0);
-			fclose(fp);
-			free(file);
-			return;
+			break;
 		}
 	}
 	fclose(fp);
@@ -54,7 +52,7 @@ void seccomp(pid_t pid, int print_procs) {
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {
 			if (print_procs || pid == 0)
-				pid_print_list(i, 0);
+				pid_print_list(i, arg_nowrap);
 			int child = find_child(i);
 			if (child != -1)
 				print_seccomp(child);

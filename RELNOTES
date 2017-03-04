@@ -1,3 +1,7 @@
+firejail (0.9.38.11) baseline; urgency=low
+  * development
+ -- netblue30 <netblue30@yahoo.com>  Sat, 4 Mar 2017 10:00:00 -0500
+
 firejail (0.9.38.10) baseline; urgency=low
   * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week
   * security: tightening the rules for --chroot

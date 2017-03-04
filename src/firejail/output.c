@@ -26,49 +26,44 @@ void check_output(int argc, char **argv) {
 	EUID_ASSERT();
 	
 	int i;
-	char *outfile = NULL;
+	int outindex = 0;
 
-	int found = 0;
 	for (i = 1; i < argc; i++) {
 		if (strncmp(argv[i], "--output=", 9) == 0) {
-			found = 1;
-			invalid_filename(argv[i] + 9);
-			outfile = argv[i] + 9;
-
-			// do not accept directories, links, and files with ".."
-			if (strstr(outfile, "..") || is_link(outfile) || is_dir(outfile)) {
-				fprintf(stderr, "Error: invalid output file. Links, directories and files with \"..\" are not allowed.\n");
-				exit(1);
-			}
-			
-			struct stat s;
-			if (stat(outfile, &s) == 0) {
-				// check permissions
-				if (s.st_uid != getuid() || s.st_gid != getgid()) {
-					fprintf(stderr, "Error: the output file needs to be owned by the current user.\n");
-					exit(1);
-				}
-				
-				// check hard links
-				if (s.st_nlink != 1) {
-					fprintf(stderr, "Error: no hard links allowed.\n");
-					exit(1);
-				}
-			}
-
-			/* coverity[toctou] */
-			FILE *fp = fopen(outfile, "a");
-			if (!fp) {
-				fprintf(stderr, "Error: cannot open output file %s\n", outfile);
-				exit(1);
-			}
-			fclose(fp);
+			outindex = i;
 			break;
 		}
 	}
-	if (!found)
+	if (!outindex)
 		return;
 
+
+	// check filename
+	drop_privs(0);
+	char *outfile = NULL;
+	invalid_filename(argv[outindex] + 9);
+	outfile = argv[outindex] + 9;
+
+	// do not accept directories, links, and files with ".."
+	if (strstr(outfile, "..") || is_link(outfile) || is_dir(outfile)) {
+		fprintf(stderr, "Error: invalid output file. Links, directories and files with \"..\" are not allowed.\n");
+		exit(1);
+	}
+	
+	struct stat s;
+	if (stat(outfile, &s) == 0) {
+		// check permissions
+		if (s.st_uid != getuid() || s.st_gid != getgid()) {
+			fprintf(stderr, "Error: the output file needs to be owned by the current user.\n");
+			exit(1);
+		}
+		
+		// check hard links
+		if (s.st_nlink != 1) {
+			fprintf(stderr, "Error: no hard links allowed.\n");
+			exit(1);
+		}
+	}
 
 	// build the new command line
 	int len = 0;
@@ -90,7 +85,6 @@ void check_output(int argc, char **argv) {
 	sprintf(ptr, "2>&1 | %s/firejail/ftee %s", LIBDIR, outfile);
 
 	// run command
-	drop_privs(0);
 	char *a[4];
 	a[0] = "/bin/bash";
 	a[1] = "-c";

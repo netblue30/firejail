@@ -34,12 +34,4 @@ whitelist ~/.cache/slimjet
 mkdir ~/.pki
 whitelist ~/.pki
 
-# lastpass, keepass
-# for keepass we additionally need to whitelist our .kdbx password database
-whitelist ~/.keepass
-whitelist ~/.config/keepass
-whitelist ~/.config/KeePass
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
-
 include /etc/firejail/whitelist-common.inc

@@ -77,7 +77,48 @@ expect {
 	"top"
 }
 
+sleep 1
+send -- "exit\r"
+after 100
 
+
+# negative nice value should result in nice=0
+send -- "firejail --nice=-5\r"
+expect {
+	timeout {puts "TESTING ERROR 17\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "top -b -n 1\r"
+expect {
+	timeout {puts "TESTING ERROR 18\n";exit}
+	$env(USER)
+}
+expect {
+	timeout {puts "TESTING ERROR 19\n";exit}
+	"0"
+}
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	"bash"
+}
+expect {
+	timeout {puts "TESTING ERROR 21\n";exit}
+	$env(USER)
+}
+expect {
+	timeout {puts "TESTING ERROR 22\n";exit}
+	"0"
+}
+expect {
+	timeout {puts "TESTING ERROR 23\n";exit}
+	"top"
+}
+
+sleep 1
+send -- "exit\r"
+after 100
 
 puts "\nall done\n"
 

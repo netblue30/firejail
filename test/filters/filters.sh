@@ -6,6 +6,9 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+echo "TESTING: debug options (test/filters/debug.exp)"
+./debug.exp
+
 echo "TESTING: noroot (test/filters/noroot.exp)"
 ./noroot.exp
 

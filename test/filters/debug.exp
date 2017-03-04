@@ -1,0 +1,45 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2017 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --debug-syscalls\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"set_mempolicy"
+}
+after 100
+
+send --  "firejail --debug-syscalls\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"setitimer"
+}
+after 100
+
+send --  "firejail --debug-errnos\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"EBADMSG"
+}
+after 100
+
+send --  "firejail --debug-errnos\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"ELIBMAX"
+}
+after 100
+
+send --  "firejail --debug-protocols\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"unix, inet, inet6, netlink, packet"
+}
+after 100
+
+puts "all done\n"

@@ -29,7 +29,7 @@ void list(void) {
 	int i;
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1)
-			pid_print_list(i, 0);
+			pid_print_list(i, arg_nowrap);
 	}
 }
 

@@ -13,6 +13,7 @@ firejail (0.9.44.9) baseline; urgency=low
   * bugfix: memory corruption in noblacklist processing
   * bugfix: --quiet fix for Arch and Fedora systems
   * bugfix: updated Keepass(x) profiles
+  * bugfix: firemon --nowrap problem
   * bugfix: document firemon --nowrap in man page and in --help option
   * enhancement: --output cleanup
   * enhancement: updated copyright statement in all files

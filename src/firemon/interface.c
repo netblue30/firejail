@@ -165,7 +165,7 @@ void interface(pid_t pid) {
 	int i;
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {
-			pid_print_list(i, 0);
+			pid_print_list(i, arg_nowrap);
 			int child = find_child(i);
 			if (child != -1) {
 				print_sandbox(child);

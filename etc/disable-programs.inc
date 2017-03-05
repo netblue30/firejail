@@ -30,6 +30,7 @@ blacklist ${HOME}/.cache/darktable
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/gajim
+blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
@@ -103,6 +104,7 @@ blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/gajim
+blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/gedit
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
@@ -218,6 +220,7 @@ blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
 blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/gajim
+blacklist ${HOME}/.local/share/geeqie
 blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-music

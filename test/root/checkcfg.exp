@@ -1,0 +1,106 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2017 Firejail Authors
+# License GPL v2
+
+set timeout 10
+cd /home
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --noprofile --overlay\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+send -- "rm /etc/firejail/firejail.config\r"
+after 100
+
+send --  "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"firejail.config not found"
+}
+
+# seccomp
+send --  "echo \"seccomp no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --seccomp --force\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"seccomp feature is disabled in Firejail configuration file\r"
+}
+send --  "exit\r"
+after 100
+
+# whitelist
+send --  "echo \"whitelist no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --whitelist=~/.config --force\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"whitelist feature is disabled in Firejail configuration file\r"
+}
+
+# network
+send --  "echo \"network no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --net=eth0 --force\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"networking feature is disabled in Firejail configuration file\r"
+}
+
+# bind
+send --  "echo \"bind no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --bind=/tmp,/var/tmp --force\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"bind feature is disabled in Firejail configuration file\r"
+}
+
+# overlay
+send --  "echo \"overlayfs no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --overlay --force\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"overlayfs feature is disabled in Firejail configuration file\r"
+}
+
+# private-home
+send --  "echo \"private-home no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --private-home=/tmp --force\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"private-home feature is disabled in Firejail configuration file\r"
+}
+
+# chroot
+send --  "echo \"chroot no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --chroot=/tmp --force\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"chroot feature is disabled in Firejail configuration file\r"
+}
+
+# userns
+send --  "echo \"userns no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --noroot --force\r"
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"noroot feature is disabled in Firejail configuration file\r"
+}
+
+send --  "exit\r"
+after 100
+
+
+after 100
+puts "\nall done\n"

@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/palemoon.local
+
 # Firejail profile for Pale Moon
 noblacklist ~/.moonchild productions/pale moon
 noblacklist ~/.cache/moonchild productions/pale moon
@@ -23,6 +27,7 @@ shell none
 tracelog
 
 private-bin palemoon
+private-opt palemoon
 private-tmp
 
 # These are uncommented in the Firefox profile. If you run into trouble you may
@@ -37,20 +42,13 @@ private-tmp
 #whitelist ~/.config/gnome-mplayer
 #whitelist ~/.cache/gnome-mplayer/plugin
 #whitelist ~/.pki
+#whitelist ~/.lastpass
 
 # For silverlight
 #whitelist ~/.wine-pipelight
 #whitelist ~/.wine-pipelight64
 #whitelist ~/.config/pipelight-widevine
 #whitelist ~/.config/pipelight-silverlight5.1
-
-
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
 
 # experimental features
 #private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse

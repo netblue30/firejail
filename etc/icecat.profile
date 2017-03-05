@@ -1,8 +1,12 @@
-# Firejail profile for GNU Icecat
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/icecat.local
 
+# Firejail profile for GNU Icecat
 noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
 noblacklist ~/.pki
+noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -30,16 +34,9 @@ whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
-
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
 whitelist ~/.lastpass
-whitelist ~/.config/lastpass
 
-
-#silverlight
+# silverlight
 whitelist ~/.wine-pipelight
 whitelist ~/.wine-pipelight64
 whitelist ~/.config/pipelight-widevine

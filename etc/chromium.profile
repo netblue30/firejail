@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/chromium.local
+
 # Chromium browser profile
 noblacklist ~/.config/chromium
 noblacklist ~/.cache/chromium
@@ -18,13 +22,6 @@ mkdir ~/.cache/chromium
 whitelist ~/.cache/chromium
 mkdir ~/.pki
 whitelist ~/.pki
-
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
 
 # specific to Arch
 whitelist ~/.config/chromium-flags.conf

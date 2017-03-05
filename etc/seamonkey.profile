@@ -1,7 +1,12 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/seamonkey.local
+
 # Firejail profile for Seamoneky based off Mozilla Firefox
 noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
 noblacklist ~/.pki
+noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -21,7 +26,6 @@ mkdir ~/.cache/mozilla/seamonkey
 whitelist ~/.cache/mozilla/seamonkey
 whitelist ~/dwhelper
 whitelist ~/.zotero
-whitelist ~/.lastpass
 whitelist ~/.vimperatorrc
 whitelist ~/.vimperator
 whitelist ~/.pentadactylrc
@@ -30,16 +34,10 @@ whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
+whitelist ~/.lastpass
 include /etc/firejail/whitelist-common.inc
 
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
-
-#silverlight
+# silverlight
 whitelist ~/.wine-pipelight
 whitelist ~/.wine-pipelight64
 whitelist ~/.config/pipelight-widevine

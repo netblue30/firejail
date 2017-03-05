@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/opera-beta.local
+
 # Opera-beta browser profile
 noblacklist ~/.config/opera-beta
 noblacklist ~/.cache/opera-beta
@@ -16,11 +20,3 @@ whitelist ~/.cache/opera-beta
 mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
-
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
-

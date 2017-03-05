@@ -1,3 +1,7 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/inox.local
+
 # Inox browser profile
 noblacklist ~/.config/inox
 noblacklist ~/.cache/inox
@@ -14,12 +18,5 @@ mkdir ~/.cache/inox
 whitelist ~/.cache/inox
 mkdir ~/.pki
 whitelist ~/.pki
-
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
 
 include /etc/firejail/whitelist-common.inc

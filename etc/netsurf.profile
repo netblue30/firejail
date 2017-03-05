@@ -1,5 +1,8 @@
-# Firejail profile for Mozilla Firefox (Iceweasel in Debian)
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/netsurf.local
 
+# Firejail profile for Mozilla Firefox (Iceweasel in Debian)
 noblacklist ~/.config/netsurf
 noblacklist ~/.cache/netsurf
 include /etc/firejail/disable-common.inc
@@ -19,12 +22,5 @@ mkdir ~/.config/netsurf
 whitelist ~/.config/netsurf
 mkdir ~/.cache/netsurf
 whitelist ~/.cache/netsurf
-
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
 
 include /etc/firejail/whitelist-common.inc

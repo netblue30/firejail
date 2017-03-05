@@ -9,6 +9,7 @@ noblacklist ~/.config/qpdfview
 noblacklist ~/.local/share/qpdfview
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.pki
+noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -37,19 +38,12 @@ whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
 mkdir ~/.pki
 whitelist ~/.pki
+whitelist ~/.lastpass
 whitelist ~/.config/qpdfview
 whitelist ~/.local/share/qpdfview
 whitelist ~/.kde/share/apps/okular
 
-# lastpass, keepass
-# for keepass we additionally need to whitelist our .kdbx password database
-whitelist ~/.keepass
-whitelist ~/.config/keepass
-whitelist ~/.config/KeePass
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
-
-#silverlight
+# silverlight
 whitelist ~/.wine-pipelight
 whitelist ~/.wine-pipelight64
 whitelist ~/.config/pipelight-widevine

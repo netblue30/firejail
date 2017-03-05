@@ -34,7 +34,7 @@ whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
-whitelist ~/.keepass
+whitelist ~/.lastpass
 
 # silverlight
 whitelist ~/.wine-pipelight

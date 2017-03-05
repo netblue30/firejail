@@ -6,6 +6,7 @@ include /etc/firejail/abrowser.local
 noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
 noblacklist ~/.pki
+noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -33,16 +34,9 @@ whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
-
-# lastpass, keepass
-# for keepass we additionally need to whitelist our .kdbx password database
-whitelist ~/.keepass
-whitelist ~/.config/keepass
-whitelist ~/.config/KeePass
 whitelist ~/.lastpass
-whitelist ~/.config/lastpass
 
-#silverlight
+# silverlight
 whitelist ~/.wine-pipelight
 whitelist ~/.wine-pipelight64
 whitelist ~/.config/pipelight-widevine

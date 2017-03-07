@@ -57,12 +57,15 @@ static void mkdir_recursive(char *path) {
 
 void fs_mkdir(const char *name) {
 	EUID_ASSERT();
+printf("****************************\n");
+
 	
 	// check directory name
 	invalid_filename(name);
 	char *expanded = expand_home(name, cfg.homedir);
-	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0) {
-		fprintf(stderr, "Error: only directories in user home are supported by mkdir\n");
+	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0 &&
+	    strncmp(expanded, "/tmp", 4) != 0) {
+		fprintf(stderr, "Error: only directories in user home or /tmp are supported by mkdir\n");
 		exit(1);
 	}
 
@@ -100,8 +103,9 @@ void fs_mkfile(const char *name) {
 	// check file name
 	invalid_filename(name);
 	char *expanded = expand_home(name, cfg.homedir);
-	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0) {
-		fprintf(stderr, "Error: only files in user home are supported by mkfile\n");
+	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0 &&
+	    strncmp(expanded, "/tmp", 4) != 0) {
+		fprintf(stderr, "Error: only files in user home or /tmp are supported by mkfile\n");
 		exit(1);
 	}
 

@@ -156,7 +156,7 @@ Mount-bind directory1 on top of directory2. This option is only available when r
 Mount-bind file1 on top of file2. This option is only available when running as root.
 .TP
 \fBmkdir directory
-Create a directory in user home before the sandbox is started.
+Create a directory in user home or under /tmp before the sandbox is started.
 The directory is created if it doesn't already exist.
 .br
 
@@ -177,8 +177,8 @@ mkdir ~/.cache/mozilla/firefox
 whitelist ~/.cache/mozilla/firefox
 .TP
 \fBmkfile file
-Similar to mkdir, this command creates a file in user home before the sandbox is started.
-The file is created if it doesn't already exist, but it's target directory has to exist.
+Similar to mkdir, this command creates a file in user home or under /tmp before the sandbox is started.
+The file is created if it doesn't already exist.
 .TP
 \fBnoexec file_or_directory
 Remount the file or the directory noexec, nodev and nosuid.

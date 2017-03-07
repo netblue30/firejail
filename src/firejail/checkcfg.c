@@ -46,6 +46,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_FORCE_NONEWPRIVS] = 0; // disabled by default
 		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0; // disabled by default
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0; // disabled by default
+		cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0; // disabled by default
 		
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -132,6 +133,15 @@ int checkcfg(int val) {
 					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 1;
 				else if (strcmp(ptr + 23, "no") == 0)
 					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 0;
+				else
+					goto errout;
+			}
+			// follow symlink in private-bin command
+			else if (strncmp(ptr, "follow-symlink-private-bin ", 27) == 0) {
+				if (strcmp(ptr + 27, "yes") == 0)
+					cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 1;
+				else if (strcmp(ptr + 27, "no") == 0)
+					cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0;
 				else
 					goto errout;
 			}

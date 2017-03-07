@@ -680,6 +680,7 @@ enum {
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_FIREJAIL_PROMPT,
 	CFG_FOLLOW_SYMLINK_AS_USER,
+	CFG_FOLLOW_SYMLINK_PRIVATE_BIN,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

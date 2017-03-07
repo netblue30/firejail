@@ -111,7 +111,10 @@ static void duplicate(char *fname) {
 		errExit("asprintf");
 	
 	// copy the file
-	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, RUN_BIN_DIR);
+	if (checkcfg(CFG_FOLLOW_SYMLINK_PRIVATE_BIN))
+		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, RUN_BIN_DIR);
+	else
+		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
 	fs_logger2("clone", fname);
 	free(full_path);
 }

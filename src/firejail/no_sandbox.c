@@ -171,7 +171,7 @@ void run_no_sandbox(int argc, char **argv) {
 		    strcmp(argv[i], "--zsh") == 0 ||
 		    strcmp(argv[i], "--shell=none") == 0 ||
 		    strncmp(argv[i], "--shell=", 8) == 0)
-			fprintf(stderr, "Warning: shell-related command line options are disregarded - using SHELL environment variable");
+			fprintf(stderr, "Warning: shell-related command line options are disregarded - using SHELL environment variable\n");
 	}
 
 	// use $SHELL to get shell used in sandbox

@@ -960,6 +960,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 #endif
 	}
+	else if (strncmp(ptr, "nowhitelist ", 12) == 0)
+		ptr += 12;
 	else if (strncmp(ptr, "read-only ", 10) == 0)
 		ptr += 10;
 	else if (strncmp(ptr, "read-write ", 11) == 0)

@@ -35,7 +35,7 @@ static char *dentry[] = {
 };
 
 #define MAXBUF 4098
-static char *resolve_downloads(void) {
+static char *resolve_downloads(int nowhitelist_flag) {
 	char *fname;
 	struct stat s;
 
@@ -50,8 +50,14 @@ static char *resolve_downloads(void) {
 				printf("Downloads directory resolved as \"%s\"\n", fname);
 			
 			char *rv;
-			if (asprintf(&rv, "whitelist ~/%s", dentry[i]) == -1)
-				errExit("asprintf");
+			if (nowhitelist_flag) {
+				if (asprintf(&rv, "nowhitelist ~/%s", dentry[i]) == -1)
+					errExit("asprintf");
+			}
+			else {
+				if (asprintf(&rv, "whitelist ~/%s", dentry[i]) == -1)
+					errExit("asprintf");
+			}
 			free(fname);
 			return rv;
 		}
@@ -101,8 +107,14 @@ static char *resolve_downloads(void) {
 					}
 				
 					char *rv;
-					if (asprintf(&rv, "whitelist ~/%s", ptr + 24) == -1)
-						errExit("asprintf");
+					if (nowhitelist_flag) {
+						if (asprintf(&rv, "nowhitelist ~/%s", ptr + 24) == -1)
+							errExit("asprintf");
+					}
+					else {
+						if (asprintf(&rv, "whitelist ~/%s", ptr + 24) == -1)
+							errExit("asprintf");
+					}
 					return rv;
 				}
 				else
@@ -309,38 +321,54 @@ void fs_whitelist(void) {
 	int var_dir = 0;		// /var directory flag
 	int dev_dir = 0;		// /dev directory flag
 	int opt_dir = 0;		// /opt directory flag
-        int srv_dir = 0;                // /srv directory flag
+	int srv_dir = 0;                // /srv directory flag
+
+	size_t nowhitelist_c = 0;
+	size_t nowhitelist_m = 32;
+	char **nowhitelist = calloc(nowhitelist_m, sizeof(*nowhitelist));
+	if (nowhitelist == NULL)
+		errExit("failed allocating memory for nowhitelist entries");
+	
 	// verify whitelist files, extract symbolic links, etc.
 	while (entry) {
-		// handle only whitelist commands
-		if (strncmp(entry->data, "whitelist ", 10)) {
+		int nowhitelist_flag = 0;
+	
+		// handle only whitelist and nowhitelist commands
+		if (strncmp(entry->data, "whitelist ", 10) == 0)
+			nowhitelist_flag = 0;
+		else if (strncmp(entry->data, "nowhitelist ", 12) == 0)
+			nowhitelist_flag = 1;
+		else {
 			entry = entry->next;
 			continue;
 		}
+		char *dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 
 		// resolve ${DOWNLOADS}
-		if (strcmp(entry->data + 10, "${DOWNLOADS}") == 0) {
-			char *tmp = resolve_downloads();
-			if (tmp)
+		if (strcmp(dataptr, "${DOWNLOADS}") == 0) {
+			char *tmp = resolve_downloads(nowhitelist_flag);
+			if (tmp) {
 				entry->data = tmp;
+				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
+			}
 			else {
+				if (!nowhitelist_flag) {
+					fprintf(stderr, "***\n");
+					fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
+					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
+					fprintf(stderr, "*** \tPlease create a proper Downloads directory for your application.\n");
+					fprintf(stderr, "***\n");
+				}
 				*entry->data = '\0';
-				fprintf(stderr, "***\n");
-				fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
-				fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-				fprintf(stderr, "*** \tPlease create a proper Downloads directory for your application.\n");
-				fprintf(stderr, "***\n");
 				continue;
 			}
 		}
 
 		// replace ~/ or ${HOME} into /home/username
-//		if (new_name)
-//			free(new_name);
-		new_name = expand_home(entry->data + 10, cfg.homedir);
+		new_name = expand_home(dataptr, cfg.homedir);
 		assert(new_name);
 		if (arg_debug)
-			fprintf(stderr, "Debug %d: new_name #%s#\n", __LINE__, new_name);
+			fprintf(stderr, "Debug %d: new_name #%s#, %s\n", __LINE__, new_name, (nowhitelist_flag)? "nowhitelist": "whitelist");
 
 		// valid path referenced to filesystem root
 		if (*new_name != '/') {
@@ -356,36 +384,55 @@ void fs_whitelist(void) {
 		if (!fname) {
 			// file not found, blank the entry in the list and continue
 			if (arg_debug || arg_debug_whitelists) {
-				printf("Removed whitelist path: %s\n", entry->data);
+				printf("Removed whitelist/nowhitelist path: %s\n", entry->data);
 				printf("\texpanded: %s\n", new_name);
 				printf("\treal path: (null)\n");
 				printf("\t");fflush(0);
 				perror("realpath");
 			}
-			*entry->data = '\0';
 
 			// if 1 the file was not found; mount an empty directory
-			if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
-				if(!arg_private)
-					home_dir = 1;
+			if (!nowhitelist_flag) {
+				if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
+					if(!arg_private)
+						home_dir = 1;
+				}
+				else if (strncmp(new_name, "/tmp/", 5) == 0)
+					tmp_dir = 1;
+				else if (strncmp(new_name, "/media/", 7) == 0)
+					media_dir = 1;
+				else if (strncmp(new_name, "/mnt/", 5) == 0)
+					mnt_dir = 1;
+				else if (strncmp(new_name, "/var/", 5) == 0)
+					var_dir = 1;
+				else if (strncmp(new_name, "/dev/", 5) == 0)
+					dev_dir = 1;
+				else if (strncmp(new_name, "/opt/", 5) == 0)
+					opt_dir = 1;
+				else if (strncmp(new_name, "/srv/", 5) == 0)
+					opt_dir = 1;
 			}
-			else if (strncmp(new_name, "/tmp/", 5) == 0)
-				tmp_dir = 1;
-			else if (strncmp(new_name, "/media/", 7) == 0)
-				media_dir = 1;
-			else if (strncmp(new_name, "/mnt/", 5) == 0)
-				mnt_dir = 1;
-			else if (strncmp(new_name, "/var/", 5) == 0)
-				var_dir = 1;
-			else if (strncmp(new_name, "/dev/", 5) == 0)
-				dev_dir = 1;
-			else if (strncmp(new_name, "/opt/", 5) == 0)
-				opt_dir = 1;
-			else if (strncmp(new_name, "/srv/", 5) == 0)
-				opt_dir = 1;
 			
+			*entry->data = '\0';
 			continue;
 		}
+		
+		if (nowhitelist_flag) {
+			// store the path in nowhitelist array
+			if (arg_debug || arg_debug_whitelists)
+				printf("Storing nowhitelist %s\n", fname);
+				
+			if (nowhitelist_c >= nowhitelist_m) {
+				nowhitelist_m *= 2;
+				nowhitelist = realloc(nowhitelist, sizeof(*nowhitelist) * nowhitelist_m);
+				if (nowhitelist == NULL)
+					errExit("failed increasing memory for nowhitelist entries");
+			}
+			nowhitelist[nowhitelist_c++] = fname;
+			*entry->data = 0;
+			continue;
+		}
+		
 		
 		// check for supported directories
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
@@ -478,6 +525,27 @@ void fs_whitelist(void) {
 		else {
 			goto errexit;
 		}
+
+		// check if the path is in nowhitelist array
+		if (nowhitelist_flag == 0) {
+			size_t i;
+			int found = 0;
+			for (i = 0; i < nowhitelist_c; i++) {
+				if (nowhitelist[i] == NULL)
+					break;
+				if (strcmp(nowhitelist[i], fname) == 0) {
+					found = 1;
+					break;
+				}
+			}
+			if (found) {
+				if (arg_debug || arg_debug_whitelists)
+					printf("Skip nowhitelisted path %s\n", fname);
+				*entry->data = 0;
+				free(fname);
+				continue;
+			}
+		}	
 
 		// mark symbolic links
 		if (is_link(new_name))

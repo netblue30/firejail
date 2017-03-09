@@ -43,7 +43,15 @@ _firejail()
             _filedir
             return 0
             ;;
+        --noblacklist)
+            _filedir
+            return 0
+            ;;
         --whitelist)
+            _filedir
+            return 0
+            ;;
+        --nowhitelist)
             _filedir
             return 0
             ;;

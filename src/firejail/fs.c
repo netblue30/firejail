@@ -255,7 +255,9 @@ void fs_blacklist(void) {
 		char *ptr;
 
 		// whitelist commands handled by fs_whitelist()
-		if (strncmp(entry->data, "whitelist ", 10) == 0 || *entry->data == '\0') {
+		if (strncmp(entry->data, "whitelist ", 10) == 0 || 
+		    strncmp(entry->data, "nowhitelist ", 12) == 0 ||
+		   *entry->data == '\0') {
 			entry = entry->next;
 			continue;
 		}

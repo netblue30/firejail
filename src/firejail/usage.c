@@ -127,6 +127,7 @@ void usage(void) {
 	printf("    --noroot - install a user namespace with only the current user.\n");
 #endif
 	printf("    --nonewprivs - sets the NO_NEW_PRIVS prctl.\n");
+	printf("    --nowhitelist=filename - disable whitelist for file or directory .\n");
 	printf("    --output=logfile - stdout logging and log rotation.\n");
 	printf("    --overlay - mount a filesystem overlay on top of the current filesystem.\n");
 	printf("    --overlay-named=name - mount a filesystem overlay on top of the current\n");

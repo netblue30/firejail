@@ -103,6 +103,12 @@ If the file name matches file_name, the file will not be blacklisted in any blac
 Example: "noblacklist ${HOME}/.mozilla"
 
 .TP
+\fBnowhitelist file_name
+If the file name matches file_name, the file will not be whitelisted in any whitelist commands that follow.
+
+Example: "nowhitelist ~/.config"
+
+.TP
 \fBignore
 Ignore command.
 

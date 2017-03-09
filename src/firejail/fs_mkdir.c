@@ -57,8 +57,6 @@ static void mkdir_recursive(char *path) {
 
 void fs_mkdir(const char *name) {
 	EUID_ASSERT();
-printf("****************************\n");
-
 	
 	// check directory name
 	invalid_filename(name);

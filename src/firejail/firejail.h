@@ -650,6 +650,7 @@ void x11_start(int argc, char **argv);
 void x11_start_xpra(int argc, char **argv);
 void x11_start_xephyr(int argc, char **argv);
 void x11_block(void);
+void x11_start_xvfb(int argc, char **argv);
 
 // ls.c
 enum {

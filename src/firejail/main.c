@@ -1269,6 +1269,14 @@ int main(int argc, char **argv) {
 			else
 				exit_err_feature("whitelist");
 		}
+		else if (strncmp(argv[i], "--nowhitelist=", 14) == 0) {
+			char *line;
+			if (asprintf(&line, "nowhitelist %s", argv[i] + 14) == -1)
+				errExit("asprintf");
+			
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
+		}
 #endif		
 
 		else if (strncmp(argv[i], "--read-only=", 12) == 0) {

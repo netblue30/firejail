@@ -161,7 +161,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 31\n";exit}
-	"exiting"
+	"cannot sync with peer"
 }
 sleep 1
 

@@ -183,6 +183,9 @@ Added AppImage type 2 support, and support for passing command line arguments to
 
               $ vncviewer
 
+       --nowhitelist=dirname_or_filename
+              Disable whitelist for this directory or file.
+
 `````
 ## New Profiles
 xiphos, Tor Browser Bundle, display (imagemagik), Wire, mumble, zoom, Guayadeque, qemu, keypass2,

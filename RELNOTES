@@ -15,6 +15,7 @@ firejail (0.9.44.9) baseline; urgency=low
   * bugfix: updated Keepass(x) profiles
   * bugfix: firemon --nowrap problem
   * bugfix: document firemon --nowrap in man page and in --help option
+  * bugfix: bash completion for --noblacklist command
   * enhancement: --output cleanup
   * enhancement: updated copyright statement in all files
  -- netblue30 <netblue30@yahoo.com>  Sat, 28 Jan 2017 10:00:00 -0500

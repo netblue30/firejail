@@ -471,7 +471,13 @@ void fs_noexec(const char *dir) {
 	}
 }
 
-
+// Disable /mnt, /media, /run/mount and /run/media access
+void fs_mnt(void) {
+	disable_file(BLACKLIST_FILE, "/mnt");
+	disable_file(BLACKLIST_FILE, "/media");
+	disable_file(BLACKLIST_FILE, "/run/mount");
+	disable_file(BLACKLIST_FILE, "//run/media");
+}
 
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {

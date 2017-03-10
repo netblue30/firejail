@@ -419,6 +419,7 @@ void profile_read(const char *fname);
 int profile_check_line(char *ptr, int lineno, const char *fname);
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str);
+void fs_mnt(void);
 
 // list.c
 void list(void);
@@ -682,6 +683,7 @@ enum {
 	CFG_FIREJAIL_PROMPT,
 	CFG_FOLLOW_SYMLINK_AS_USER,
 	CFG_FOLLOW_SYMLINK_PRIVATE_BIN,
+	CFG_DISABLE_MNT,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

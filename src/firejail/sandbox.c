@@ -759,11 +759,17 @@ int sandbox(void* sandbox_arg) {
 		netns_mounts(arg_netns);
 	
 	//****************************
-	// update /proc, /sys, /dev, /boot directorymy
+	// update /proc, /sys, /dev, /boot directory
 	//****************************
 	if (checkcfg(CFG_REMOUNT_PROC_SYS))
 		fs_proc_sys_dev_boot();
 	
+	//****************************
+	// handle /mnt and /media
+	//****************************
+	if (checkcfg(CFG_DISABLE_MNT))
+		fs_mnt();
+
 	//****************************
 	// apply the profile file
 	//****************************

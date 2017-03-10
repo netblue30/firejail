@@ -43,10 +43,11 @@ int checkcfg(int val) {
 		for (i = 0; i < CFG_MAX; i++)
 			cfg_val[i] = 1; // most of them are enabled by default
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
-		cfg_val[CFG_FORCE_NONEWPRIVS] = 0; // disabled by default
-		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0; // disabled by default
-		cfg_val[CFG_FIREJAIL_PROMPT] = 0; // disabled by default
-		cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0; // disabled by default
+		cfg_val[CFG_FORCE_NONEWPRIVS] = 0;
+		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
+		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
+		cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0;
+		cfg_val[CFG_DISABLE_MNT] = 0;
 		
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -311,6 +312,14 @@ int checkcfg(int val) {
 					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 1;
 				else if (strcmp(ptr + 21, "no") == 0)
 					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
+				else
+					goto errout;
+			}
+			else if (strncmp(ptr, "disable-mnt ", 12) == 0) {
+				if (strcmp(ptr + 12, "yes") == 0)
+					cfg_val[CFG_DISABLE_MNT] = 1;
+				else if (strcmp(ptr + 12, "no") == 0)
+					cfg_val[CFG_DISABLE_MNT] = 0;
 				else
 					goto errout;
 			}

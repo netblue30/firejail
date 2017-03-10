@@ -32,7 +32,8 @@ firejail (0.9.45) baseline; urgency=low
   * feature: follow-symlink-private-bin option in /etc/firejail/firejail.config
   * feature: xvfb X11 server support (--x11=xvfb)
   * feature: allow /tmp directory in mkdir and mkfile profile commands
-  * feature: implemented --noblacklist command
+  * feature: implemented --noblacklist command, profile support
+  * feature: config support to disable access to /mnt and /media (disable-mnt)
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,

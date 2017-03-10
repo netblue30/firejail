@@ -970,8 +970,19 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		ptr += 7;
 	else if (strncmp(ptr, "tmpfs ", 6) == 0) {
 		if (getuid() != 0) {
-			fprintf(stderr, "Error: tmpfs available only when running the sandbox as root\n");
-			exit(1);
+			// allow a non-root user  to mount tmpfs in user home directory, links are not allowed
+			invalid_filename(ptr + 6);
+			char *newfname = expand_home(ptr + 6, cfg.homedir);
+			assert(newfname);
+			if (is_link(newfname)) {
+				fprintf(stderr, "Error: for regular user, tmpfs is not available for symbolic links\n");
+				exit(1);	
+			}
+			if (strncmp(newfname, cfg.homedir, strlen(cfg.homedir)) != 0) {
+				fprintf(stderr, "Error: for regular user, tmpfs is available only for files in user home directory\n");
+				exit(1);	
+			}
+			free(newfname);
 		}
 		ptr += 6;
 	}

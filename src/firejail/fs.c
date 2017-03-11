@@ -237,6 +237,7 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 
 // blacklist files or directories by mounting empty files on top of them
 void fs_blacklist(void) {
+printf("here: start fs_blacklist\n");
 	char *homedir = cfg.homedir;
 	assert(homedir);
 	ProfileEntry *entry = cfg.profile;
@@ -479,8 +480,19 @@ void fs_mnt(void) {
 	disable_file(BLACKLIST_FILE, "//run/media");
 }
 
+
+void fs_cache(void) {
+printf("here: deploy ~/.cache tmpfs\n");
+	char *cache;
+	if (asprintf(&cache, "%s/.cache", cfg.homedir) == -1)
+		errExit("asprintf");
+	disable_file(MOUNT_TMPFS, cache);
+	free(cache);
+}
+
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {
+printf("here: fs_proc_sys_boot\n");
 	if (arg_debug)
 		printf("Remounting /proc and /proc/sys filesystems\n");
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
@@ -618,6 +630,7 @@ static void disable_config(void) {
 
 // build a basic read-only filesystem
 void fs_basic_fs(void) {
+printf("here: start fs_basic_fs\n");
 	uid_t uid = getuid();
 	
 	if (arg_debug)

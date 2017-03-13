@@ -283,6 +283,7 @@ blacklist ${HOME}/.weechat
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.xiphos
+blacklist ${HOME}/.xmms
 blacklist ${HOME}/.xonotic
 blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom

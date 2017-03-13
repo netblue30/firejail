@@ -16,5 +16,5 @@ seccomp
 shell none
 
 private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
-private-dev
+#private-dev
 private-tmp

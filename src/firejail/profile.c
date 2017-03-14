@@ -1055,7 +1055,8 @@ void profile_read(const char *fname) {
 	}
 	if (access(fname, R_OK)) {
 		// if the file ends in ".local", do not exit
-		char *ptr = strstr(fname, ".local");
+		const char *base = gnu_basename(fname);
+		char *ptr = strstr(base, ".local");
 		if (ptr && strlen(ptr) == 6)
 			return;
 		

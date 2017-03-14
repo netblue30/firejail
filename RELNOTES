@@ -17,6 +17,8 @@ firejail (0.9.44.9) baseline; urgency=low
   * bugfix: document firemon --nowrap in man page and in --help option
   * bugfix: bash completion for --noblacklist command
   * bugfix: vlc profile fix
+  * bugfix: fixed handling of .local profile files when the software is installed
+    in ~/.local directory
   * enhancement: --output cleanup
   * enhancement: updated copyright statement in all files
  -- netblue30 <netblue30@yahoo.com>  Sat, 28 Jan 2017 10:00:00 -0500

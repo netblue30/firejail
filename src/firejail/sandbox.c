@@ -773,7 +773,8 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// deploy a tmpfs on ~/.cache directory
 	//****************************
-	fs_cache();
+	if (checkcfg(CFG_CACHE_TMPFS))
+		fs_cache();
 
 
 	//****************************

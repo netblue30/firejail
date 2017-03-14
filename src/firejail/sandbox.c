@@ -208,6 +208,11 @@ static int monitor_application(pid_t app_pid) {
 		while(rv != monitored_pid);
 		if (arg_debug)
 			printf("Sandbox monitor: waitpid %u retval %d status %d\n", monitored_pid, rv, status);
+		if (rv == -1) { // we can get here if we have processes joining the sandbox (ECHILD)
+			if (arg_debug)
+				perror("waitpid");
+			sleep(1);
+		}
 
 		// if /proc is not remounted, we cannot check /proc directory,
 		// for now we just get out of here

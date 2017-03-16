@@ -18,5 +18,5 @@ shell none
 tracelog
 
 private-bin qpdfview
-private-tmp
+#private-tmp - mask KDE problems
 private-dev

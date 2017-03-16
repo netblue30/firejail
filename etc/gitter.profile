@@ -17,4 +17,4 @@ shell none
 
 private-bin gitter
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

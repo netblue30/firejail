@@ -17,4 +17,4 @@ tracelog
 
 private-dev
 private-bin xviewer
-private-tmp
+#private-tmp - mask KDE problems

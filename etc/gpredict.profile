@@ -22,4 +22,4 @@ tracelog
 
 private-bin gpredict
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

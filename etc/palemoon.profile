@@ -28,7 +28,7 @@ tracelog
 
 private-bin palemoon
 private-opt palemoon
-private-tmp
+#private-tmp - mask KDE problems
 
 # These are uncommented in the Firefox profile. If you run into trouble you may
 # want to uncomment (some of) them.

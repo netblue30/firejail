@@ -19,4 +19,4 @@ tracelog
 
 private-bin xplayer,xplayer-audio-preview,xplayer-video-thumbnailer
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

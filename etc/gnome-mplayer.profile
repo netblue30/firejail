@@ -14,4 +14,4 @@ shell none
 
 private-bin gnome-mplayer
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

@@ -12,6 +12,6 @@ nosound
 no3d
 private-etc passwd,group,localtime
 hostname unrar
-private-tmp
+#private-tmp - mask KDE problems
 blacklist /tmp/.X11-unix
 

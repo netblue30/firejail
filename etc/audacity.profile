@@ -18,4 +18,4 @@ tracelog
 
 private-bin audacity
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

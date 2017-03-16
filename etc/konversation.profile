@@ -12,4 +12,4 @@ noroot
 seccomp
 protocol unix,inet,inet6
 
-private-tmp
+#private-tmp - mask KDE problems

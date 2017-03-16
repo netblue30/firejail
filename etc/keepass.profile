@@ -24,5 +24,5 @@ seccomp
 netfilter
 shell none
 
-private-tmp
+#private-tmp - mask KDE problems
 private-dev

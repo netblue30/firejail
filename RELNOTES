@@ -19,8 +19,10 @@ firejail (0.9.44.9) baseline; urgency=low
   * bugfix: vlc profile fix
   * bugfix: fixed handling of .local profile files when the software is installed
     in ~/.local directory
-  * enhancement: --output cleanup
-  * enhancement: updated copyright statement in all files
+  * bugfix: temprarely remove private-tmp from all profiles, until a fix for
+    for .Xauthority file handling in KDE is available
+  * maintenance: --output cleanup
+  * maintenance: updated copyright statement in all files
  -- netblue30 <netblue30@yahoo.com>  Sat, 28 Jan 2017 10:00:00 -0500
 
 firejail (0.9.44.8) baseline; urgency=low

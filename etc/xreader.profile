@@ -20,4 +20,4 @@ tracelog
 
 private-bin xreader, xreader-previewer, xreader-thumbnailer
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

@@ -25,4 +25,4 @@ include /etc/firejail/whitelist-common.inc
 private-bin hexchat
 #debug note: private-bin requires perl, python, etc on some systems
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

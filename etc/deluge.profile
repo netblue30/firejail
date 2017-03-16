@@ -16,5 +16,5 @@ seccomp
 shell none
 #private-bin deluge,sh,python,uname
 private-dev
-private-tmp
+#private-tmp - mask KDE problems
 

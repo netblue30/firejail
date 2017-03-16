@@ -13,7 +13,7 @@ noroot
 protocol unix
 seccomp
 private-dev
-private-tmp
+#private-tmp - mask KDE problems
 net none
 
 

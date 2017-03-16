@@ -14,4 +14,4 @@ seccomp
 shell none
 tracelog
 
-private-tmp
+#private-tmp - mask KDE problems

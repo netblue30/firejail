@@ -16,5 +16,5 @@ seccomp
 shell none
 
 private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
-#private-dev
-private-tmp
+#private-dev - disabled in order to allow palying dvds from /dev/sr0
+#private-tmp - mask KDE problems

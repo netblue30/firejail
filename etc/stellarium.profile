@@ -25,4 +25,4 @@ tracelog
 
 private-bin stellarium
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

@@ -12,7 +12,7 @@ noroot
 seccomp
 shell none
 tracelog
-private-tmp
+#private-tmp - mask KDE problems
 private-dev
 noexec ${HOME}
 noexec /tmp

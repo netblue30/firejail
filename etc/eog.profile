@@ -19,5 +19,5 @@ shell none
 private-bin eog
 private-dev
 private-etc fonts
-private-tmp
+#private-tmp - mask KDE problems
 

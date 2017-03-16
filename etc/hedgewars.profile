@@ -15,7 +15,7 @@ seccomp
 tracelog
 
 private-dev
-private-tmp
+#private-tmp - mask KDE problems
 
 mkdir     ~/.hedgewars
 whitelist ~/.hedgewars

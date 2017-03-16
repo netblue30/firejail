@@ -13,7 +13,7 @@ whitelist ${HOME}/Downloads
 
 protocol unix,inet,inet6,netlink
 private-dev
-private-tmp
+#private-tmp - mask KDE problems
 private-etc fonts,resolv.conf,ld.so.conf,ld.so.cache,localtime
 name slack
 blacklist /var

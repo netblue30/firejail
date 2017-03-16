@@ -19,4 +19,4 @@ tracelog
 private-bin fairymax,gnome-chess,hoichess
 private-dev
 private-etc fonts,gnome-chess
-private-tmp
+#private-tmp - mask KDE problems

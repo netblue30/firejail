@@ -18,4 +18,4 @@ tracelog
 
 private-bin dosbox
 private-dev
-private-tmp
+#private-tmp - mask KDE problems

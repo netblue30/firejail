@@ -35,4 +35,4 @@ shell none
 #private-bin python2.7 gajim
 #private-etc fonts
 private-dev
-#private-tmp
+#private-tmp - mask KDE problems

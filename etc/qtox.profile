@@ -20,4 +20,4 @@ shell none
 tracelog
 
 private-bin qtox
-private-tmp
+#private-tmp - mask KDE problems

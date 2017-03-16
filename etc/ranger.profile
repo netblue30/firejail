@@ -19,6 +19,6 @@ protocol unix
 seccomp
 nosound
 
-private-tmp
+#private-tmp - mask KDE problems
 private-dev
 

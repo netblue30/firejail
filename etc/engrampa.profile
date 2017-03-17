@@ -13,7 +13,6 @@ nogroups
 nonewprivs
 noroot
 nosound
-no3d
 protocol unix
 seccomp
 netfilter

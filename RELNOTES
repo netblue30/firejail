@@ -1,4 +1,4 @@
-firejail (0.9.44.9) baseline; urgency=low
+firejail (0.9.44.10) baseline; urgency=low
   * security: when using --x11=xorg and --net, incorrect processing of
     the return code of /usr/bin/xauth could end up in starting the
     sandbox without X11 security extension installed. Problem found/fixed
@@ -23,7 +23,7 @@ firejail (0.9.44.9) baseline; urgency=low
     .Xauthority file handling in KDE becomes available
   * maintenance: --output cleanup
   * maintenance: updated copyright statement in all files
- -- netblue30 <netblue30@yahoo.com>  Sat, 28 Jan 2017 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sat, 18 Mar 2017 10:00:00 -0500
 
 firejail (0.9.44.8) baseline; urgency=low
   * bugfix: fix broken PulseAudio support

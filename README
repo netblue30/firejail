@@ -155,6 +155,7 @@ SYN-cook (https://github.com/SYN-cook)
 	- disable-common.inc fixes
 	- blacklist GNOME keyring and Konqueror
 	- fixed Keepass(x) profiles
+	- Engrampa profile
 thewisenerd (https://github.com/thewisenerd)
 	- appimage: pass commandline arguments
 KOLANICH (https://github.com/KOLANICH)

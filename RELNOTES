@@ -17,8 +17,8 @@ firejail (0.9.44.10) baseline; urgency=low
   * bugfix: document firemon --nowrap in man page and in --help option
   * bugfix: bash completion for --noblacklist command
   * bugfix: vlc profile fix
-  * bugfix: fixed handling of .local profile files when the software is installed
-    in ~/.local directory
+  * bugfix: fixed handling of .local profile files when the software is
+    installed in ~/.local directory
   * bugfix: temporarily remove private-tmp from all profiles, until a fix for
     .Xauthority file handling in KDE becomes available
   * maintenance: --output cleanup

@@ -134,6 +134,7 @@ blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.config/ranger
 blacklist ${HOME}/.config/redshift.conf
+blacklist ${HOME}/.config/scribus
 blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/spotify
@@ -197,6 +198,8 @@ blacklist ${HOME}/.kde/share/config/konquerorrc
 blacklist ${HOME}/.kde/share/config/okularpartrc
 blacklist ${HOME}/.kde/share/config/okularrc
 blacklist ${HOME}/.killingfloor
+blacklist ${HOME}/.kino-history
+blacklist ${HOME}/.kinorc
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
@@ -232,6 +235,7 @@ blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/qpdfview
+blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/telepathy
@@ -289,5 +293,3 @@ blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom
 blacklist ${HOME}/wallet.dat
 blacklist /tmp/ssh-*
-blacklist ${HOME}/.kinorc
-blacklist ${HOME}/.kino-history

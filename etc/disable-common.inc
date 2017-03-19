@@ -20,6 +20,7 @@ blacklist ${HOME}/.kde4/Autostart
 blacklist ${HOME}/.kde4/share/autostart
 blacklist ${HOME}/.kde/Autostart
 blacklist ${HOME}/.kde/share/autostart
+blacklist ${HOME}/.config/autostart-scripts
 blacklist ${HOME}/.config/plasma-workspace/shutdown
 blacklist ${HOME}/.config/plasma-workspace/env
 blacklist ${HOME}/.config/lxsession/LXDE/autostart

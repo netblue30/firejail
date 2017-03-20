@@ -1,4 +1,4 @@
-# This file is overwritten during software install. 
+# This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-common.local
 
@@ -230,6 +230,7 @@ blacklist ${PATH}/pantheon-terminal
 blacklist ${PATH}/roxterm
 blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
+blacklist ${PATH}/tilix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
 #konsole doesn't seem to have this problem - last tested on Ubuntu 16.04

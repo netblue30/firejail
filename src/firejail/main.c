@@ -2472,32 +2472,34 @@ int main(int argc, char **argv) {
 	 	sprintf(ptr, "%d %d 1\n", gid, gid);
 	 	ptr += strlen(ptr);
 	 	
-	 	//  add tty group
-	 	gid_t g = get_group_id("tty");
-	 	if (g) {
-	 		sprintf(ptr, "%d %d 1\n", g, g);
-	 		ptr += strlen(ptr);
-	 	}
-	 	
-	 	//  add audio group
-	 	g = get_group_id("audio");
-	 	if (g) {
-	 		sprintf(ptr, "%d %d 1\n", g, g);
-	 		ptr += strlen(ptr);
-	 	}
-	 	
-	 	//  add video group
-	 	g = get_group_id("video");
-	 	if (g) {
-	 		sprintf(ptr, "%d %d 1\n", g, g);
-	 		ptr += strlen(ptr);
-	 	}
-	 	
-	 	//  add games group
-	 	g = get_group_id("games");
-	 	if (g) {
-	 		sprintf(ptr, "%d %d 1\n", g, g);
-	 	}
+	 	if (!arg_nogroups) {
+		 	//  add tty group
+		 	gid_t g = get_group_id("tty");
+		 	if (g) {
+		 		sprintf(ptr, "%d %d 1\n", g, g);
+		 		ptr += strlen(ptr);
+		 	}
+		 	
+		 	//  add audio group
+		 	g = get_group_id("audio");
+		 	if (g) {
+		 		sprintf(ptr, "%d %d 1\n", g, g);
+		 		ptr += strlen(ptr);
+		 	}
+		 	
+		 	//  add video group
+		 	g = get_group_id("video");
+		 	if (g) {
+		 		sprintf(ptr, "%d %d 1\n", g, g);
+		 		ptr += strlen(ptr);
+		 	}
+		 	
+		 	//  add games group
+		 	g = get_group_id("games");
+		 	if (g) {
+		 		sprintf(ptr, "%d %d 1\n", g, g);
+		 	}
+		 }
 	 	
  		EUID_ROOT();
 	 	update_map(gidmap, map_path);

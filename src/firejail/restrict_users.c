@@ -167,7 +167,7 @@ static void sanitize_passwd(void) {
 		int rv = sscanf(ptr, "%d:", &uid);
 		if (rv == 0 || uid < 0)
 			goto errout;
-		if (uid < UID_MIN) {
+		if (uid < UID_MIN || uid == 65534) { // on Debian platforms user nobody is 65534
 			fprintf(fpout, "%s", buf);
 			continue;
 		}
@@ -299,7 +299,7 @@ static void sanitize_group(void) {
 		int rv = sscanf(ptr, "%d:", &gid);
 		if (rv == 0 || gid < 0)
 			goto errout;
-		if (gid < GID_MIN) {
+		if (gid < GID_MIN || gid == 65534) { // on Debian platforms 65534 is group nogroup
 			if (copy_line(fpout, buf, ptr))
 				goto errout;
 			continue;

@@ -106,6 +106,7 @@ SYN-cook (https://github.com/SYN-cook)
 	- fixed Keepass(x) profiles
 	- Engrampa profile
 	- Scribus profile
+	- autostart blacklist for KDE
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature

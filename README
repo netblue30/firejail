@@ -2,11 +2,11 @@ Firejail  is  a  SUID sandbox program that reduces the risk of security
 breaches by restricting the running environment of  untrusted  applications
 using Linux namespaces and seccomp-bpf. It includes sandbox profiles for
 Iceweasel/Mozilla Firefox, Chromium, Midori, Opera, Evince, Transmission,
-VLC, Audoacious, Clementine, Rhythmbox, Totem, Deluge, qBittorrent.
+VLC, Audacious, Clementine, Rhythmbox, Totem, Deluge, qBittorrent.
 DeaDBeeF, Dropbox, Empathy, FileZilla, IceCat, Thunderbird/Icedove,
-Pidgin, Quassel and XChat.
+Pidgin, Quassel, and XChat.
 
-Firejail also expands the restricted shell facility found  in  bash  by adding 
+Firejail also expands the restricted shell facility found  in  bash  by adding
 Linux  namespace support. It supports sandboxing specific users upon login.
 
 Download: http://sourceforge.net/projects/firejail/files/
@@ -196,7 +196,7 @@ greigdp (https://github.com/greigdp)
 GSI (https://github.com/GSI)
 	- added Uzbl browser profile
 hamzadis (https://github.com/hamzadis)
-	- added --overlay-named=name and --overlay-path=path	
+	- added --overlay-named=name and --overlay-path=path
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Icaro Perseo (https://github.com/icaroperseo)
@@ -421,5 +421,5 @@ Zack Weinberg (https://github.com/zackw)
 	- follow link support in --private-bin
 	- wait_for_other function rewrite
 	- xvfb X11 server support
-	
+
 Copyright (C) 2014-2017 Firejail Authors

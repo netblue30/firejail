@@ -3,16 +3,17 @@
 include /etc/firejail/warzone2100.local
 
 # Firejail profile for warzone2100
-# Currently supports warzone2100-3.1
-noblacklist ~/.warzone2100-3.1
+noblacklist ~/.warzone2100-3.*
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 # Whitelist
-mkdir ~/.warzone2100-3.1
+#mkdir ~/.warzone2100-3.1
 whitelist ~/.warzone2100-3.1
+#mkdir ~/.warzone2100-3.2
+whitelist ~/.warzone2100-3.2
 
 # Call these options
 caps.drop all

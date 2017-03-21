@@ -1,4 +1,4 @@
-# This file is overwritten during software install. 
+# This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-programs.local
 
@@ -282,7 +282,7 @@ blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.vst
 blacklist ${HOME}/.w3m
-blacklist ${HOME}/.warzone2100-3.1
+blacklist ${HOME}/.warzone2100-3.*
 blacklist ${HOME}/.weechat
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wine64

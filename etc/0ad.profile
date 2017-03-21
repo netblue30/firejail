@@ -3,7 +3,6 @@
 include /etc/firejail/0ad.local
 
 # Firejail profile for 0ad.
-noblacklist ~/.cache/0ad
 noblacklist ~/.config/0ad
 noblacklist ~/.local/share/0ad
 include /etc/firejail/disable-common.inc
@@ -12,9 +11,6 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 # Whitelists
-mkdir ~/.cache/0ad
-whitelist ~/.cache/0ad
-
 mkdir ~/.config/0ad
 whitelist ~/.config/0ad
 

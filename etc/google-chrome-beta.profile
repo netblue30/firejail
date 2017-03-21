@@ -4,7 +4,6 @@ include /etc/firejail/google-chrome-beta.local
 
 # Google Chrome beta browser profile
 noblacklist ~/.config/google-chrome-beta
-noblacklist ~/.cache/google-chrome-beta
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -18,8 +17,6 @@ netfilter
 whitelist ${DOWNLOADS}
 mkdir ~/.config/google-chrome-beta
 whitelist ~/.config/google-chrome-beta
-mkdir ~/.cache/google-chrome-beta
-whitelist ~/.cache/google-chrome-beta
 mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc

@@ -4,7 +4,6 @@ include /etc/firejail/google-chrome.local
 
 # Google Chrome browser profile
 noblacklist ~/.config/google-chrome
-noblacklist ~/.cache/google-chrome
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -18,8 +17,6 @@ netfilter
 whitelist ${DOWNLOADS}
 mkdir ~/.config/google-chrome
 whitelist ~/.config/google-chrome
-mkdir ~/.cache/google-chrome
-whitelist ~/.cache/google-chrome
 mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc

@@ -4,7 +4,6 @@ include /etc/firejail/opera-beta.local
 
 # Opera-beta browser profile
 noblacklist ~/.config/opera-beta
-noblacklist ~/.cache/opera-beta
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -15,8 +14,6 @@ netfilter
 whitelist ${DOWNLOADS}
 mkdir ~/.config/opera-beta
 whitelist ~/.config/opera-beta
-mkdir ~/.cache/opera-beta
-whitelist ~/.cache/opera-beta
 mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc

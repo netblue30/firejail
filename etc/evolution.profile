@@ -5,7 +5,6 @@ include /etc/firejail/evolution.local
 # evolution profile
 noblacklist ~/.config/evolution
 noblacklist ~/.local/share/evolution
-noblacklist ~/.cache/evolution
 noblacklist ~/.pki
 noblacklist ~/.pki/nssdb
 noblacklist ~/.gnupg

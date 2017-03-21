@@ -3,8 +3,6 @@
 include /etc/firejail/simple-scan.local
 
 # simple-scan profile
-noblacklist ~/.cache/simple-scan
-
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

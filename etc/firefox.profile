@@ -4,7 +4,6 @@ include /etc/firejail/firefox.local
 
 # Firejail profile for Mozilla Firefox (Iceweasel in Debian)
 noblacklist ~/.mozilla
-noblacklist ~/.cache/mozilla
 noblacklist ~/.config/qpdfview
 noblacklist ~/.local/share/qpdfview
 noblacklist ~/.kde/share/apps/okular
@@ -25,8 +24,6 @@ tracelog
 whitelist ${DOWNLOADS}
 mkdir ~/.mozilla
 whitelist ~/.mozilla
-mkdir ~/.cache/mozilla/firefox
-whitelist ~/.cache/mozilla/firefox
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.vimperatorrc
@@ -35,7 +32,6 @@ whitelist ~/.pentadactylrc
 whitelist ~/.pentadactyl
 whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
-whitelist ~/.cache/gnome-mplayer/plugin
 mkdir ~/.pki
 whitelist ~/.pki
 whitelist ~/.lastpass

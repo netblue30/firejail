@@ -14,8 +14,6 @@ mkdir ~/.config/psi+
 whitelist ~/.config/psi+
 mkdir ~/.local/share/psi+
 whitelist ~/.local/share/psi+
-mkdir ~/.cache/psi+
-whitelist ~/.cache/psi+
 
 caps.drop all
 netfilter

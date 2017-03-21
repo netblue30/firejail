@@ -4,7 +4,6 @@ include /etc/firejail/franz.local
 
 # Franz profile
 noblacklist ~/.config/Franz
-noblacklist ~/.cache/Franz
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -21,8 +20,6 @@ seccomp
 whitelist ${DOWNLOADS}
 mkdir ~/.config/Franz
 whitelist ~/.config/Franz
-mkdir ~/.cache/Franz
-whitelist ~/.cache/Franz
 mkdir ~/.pki
 whitelist ~/.pki
 

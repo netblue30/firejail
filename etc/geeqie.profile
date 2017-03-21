@@ -3,7 +3,6 @@
 include /etc/firejail/geeqie.local
 
 # Firejail profile for Geeqie
-noblacklist ~/.cache/geeqie
 noblacklist ~/.config/geeqie
 noblacklist ~/.local/share/geeqie
 include /etc/firejail/disable-common.inc

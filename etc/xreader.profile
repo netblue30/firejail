@@ -4,7 +4,6 @@ include /etc/firejail/xreader.local
 
 # Xreader profile
 noblacklist ~/.config/xreader
-noblacklist ~/.cache/xreader
 noblacklist ~/.local/share
 
 include /etc/firejail/disable-common.inc

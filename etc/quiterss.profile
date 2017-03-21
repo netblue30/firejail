@@ -2,7 +2,6 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/quiterss.local
 
-noblacklist ${HOME}/.cache/QuiteRss
 noblacklist ${HOME}/.config/QuiteRss
 noblacklist ${HOME}/.config/QuiteRssrc
 noblacklist ${HOME}/.local/share/QuiteRss
@@ -19,8 +18,6 @@ whitelist ${HOME}/.config/QuiteRssrc
 mkdir ~/.local/share/data
 mkdir ~/.local/share/data/QuiteRss
 whitelist ${HOME}/.local/share/data/QuiteRss
-mkdir ~/.cache/QuiteRss
-whitelist ${HOME}/.cache/QuiteRss
 
 caps.drop all
 netfilter

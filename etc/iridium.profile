@@ -4,7 +4,6 @@ include /etc/firejail/iridium.local
 
 # Iridium browser profile
 noblacklist ~/.config/iridium
-noblacklist ~/.cache/iridium
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 
@@ -17,8 +16,6 @@ netfilter
 whitelist ${DOWNLOADS}
 mkdir ~/.config/iridium
 whitelist ~/.config/iridium
-mkdir ~/.cache/iridium
-whitelist ~/.cache/iridium
 mkdir ~/.pki
 whitelist ~/.pki
 

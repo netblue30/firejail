@@ -6,10 +6,8 @@ include /etc/firejail/gjs.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
-noblacklist ~/.cache/org.gnome.Books
 noblacklist ~/.config/libreoffice
 noblacklist ~/.local/share/gnome-photos
-noblacklist ~/.cache/libgweather
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

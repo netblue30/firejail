@@ -4,7 +4,6 @@ include /etc/firejail/opera.local
 
 # Opera browser profile
 noblacklist ~/.config/opera
-noblacklist ~/.cache/opera
 noblacklist ~/.opera
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
@@ -16,8 +15,6 @@ netfilter
 whitelist ${DOWNLOADS}
 mkdir ~/.config/opera
 whitelist ~/.config/opera
-mkdir ~/.cache/opera
-whitelist ~/.cache/opera
 mkdir ~/.opera
 whitelist ~/.opera
 mkdir ~/.pki

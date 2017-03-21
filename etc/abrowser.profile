@@ -4,7 +4,6 @@ include /etc/firejail/abrowser.local
 
 # Firejail profile for Abrowser
 noblacklist ~/.mozilla
-noblacklist ~/.cache/mozilla
 noblacklist ~/.pki
 noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
@@ -22,8 +21,6 @@ tracelog
 whitelist ${DOWNLOADS}
 mkdir ~/.mozilla
 whitelist ~/.mozilla
-mkdir ~/.cache/mozilla/abrowser
-whitelist ~/.cache/mozilla/abrowser
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.vimperatorrc
@@ -32,7 +29,6 @@ whitelist ~/.pentadactylrc
 whitelist ~/.pentadactyl
 whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
-whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
 whitelist ~/.lastpass
 

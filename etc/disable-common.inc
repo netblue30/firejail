@@ -19,7 +19,6 @@ blacklist /etc/X11/Xsession.d/
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.xsession
 blacklist ${HOME}/.xsessionrc
-blacklist ${HOME}/.profile
 blacklist ${HOME}/.xprofile
 blacklist ${HOME}/.gnomerc
 blacklist ${HOME}/.config/autostart
@@ -102,6 +101,7 @@ read-only ${HOME}/.zsh_files
 read-only ${HOME}/.tcshrc
 read-only ${HOME}/.cshrc
 read-only ${HOME}/.csh_files
+read-only ${HOME}/.profile
 read-only ${HOME}/.forward
 read-only ${HOME}/.login
 read-only ${HOME}/.logout

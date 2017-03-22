@@ -41,8 +41,6 @@ blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/arkrc
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
-blacklist ${HOME}/.config/autostart
-blacklist ${HOME}/.config/autostart/dropbox.desktop
 blacklist ${HOME}/.config/aweather
 blacklist ${HOME}/.config/blender
 blacklist ${HOME}/.config/bless

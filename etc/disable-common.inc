@@ -7,19 +7,27 @@ blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
 blacklist-nolog ${HOME}/.bash_history
 blacklist ${HOME}/.local/share/systemd
+blacklist ${HOME}/.config/systemd
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.macromedia
 read-only ${HOME}/.local/share/applications
 
 # X11 session autostart
 blacklist ${HOME}/.xinitrc
+blacklist ${HOME}/.xserverrc
+blacklist /etc/X11/Xsession.d/
+blacklist ${HOME}/.Xsession
+blacklist ${HOME}/.xsession
+blacklist ${HOME}/.xsessionrc
 blacklist ${HOME}/.xprofile
+blacklist ${HOME}/.gnomerc
 blacklist ${HOME}/.config/autostart
 blacklist /etc/xdg/autostart
 blacklist ${HOME}/.kde4/Autostart
 blacklist ${HOME}/.kde4/share/autostart
 blacklist ${HOME}/.kde/Autostart
 blacklist ${HOME}/.kde/share/autostart
+blacklist ${HOME}/.local/share/autostart
 blacklist ${HOME}/.config/autostart-scripts
 blacklist ${HOME}/.config/plasma-workspace/shutdown
 blacklist ${HOME}/.config/plasma-workspace/env
@@ -27,8 +35,6 @@ blacklist ${HOME}/.config/lxsession/LXDE/autostart
 blacklist ${HOME}/.fluxbox/startup
 blacklist ${HOME}/.config/openbox/autostart
 blacklist ${HOME}/.config/openbox/environment
-blacklist ${HOME}/.gnomerc
-blacklist /etc/X11/Xsession.d/
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
 
 # VirtualBox
@@ -78,8 +84,6 @@ blacklist /etc/rc.local
 blacklist /etc/anacrontab
 
 # Startup files
-read-only ${HOME}/.xinitrc
-read-only ${HOME}/.xserverrc
 read-only ${HOME}/.antigen
 read-only ${HOME}/.bash_login
 read-only ${HOME}/.bashrc

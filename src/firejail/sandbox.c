@@ -742,6 +742,20 @@ int sandbox(void* sandbox_arg) {
 		else {
 			// private-tmp is implemented as a whitelist
 			EUID_USER();
+			// check XAUTHORITY file, KDE keeps it under /tmp
+			char *xauth = getenv("XAUTHORITY");
+			if (xauth) {
+				char *rp = realpath(xauth, NULL);
+				if (rp && strncmp(rp, "/tmp/", 5) == 0) {
+					char *cmd;
+					if (asprintf(&cmd, "whitelist %s", rp) == -1)
+						errExit("asprintf");
+					profile_add(cmd); // profile_add does not duplicate the string
+				}
+				if (rp)
+					free(rp);
+			}
+			// whitelist x11 directory
 			profile_add("whitelist /tmp/.X11-unix");
 			EUID_ROOT();
 		}

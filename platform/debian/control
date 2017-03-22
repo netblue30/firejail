@@ -4,6 +4,7 @@ Architecture: amd64
 Maintainer: netblue30 <netblue30@yahoo.com>
 Installed-Size: 272
 Depends: libc6
+Suggests: python, python3
 Section: admin
 Priority: extra
 Homepage: http://github.com/netblue30/firejail
@@ -17,4 +18,3 @@ Description: Linux namepaces sandbox program.
  Firejail also expands the restricted shell facility found in bash by
  adding Linux namespace support. It also supports sandboxing SSH users
  upon login.
-

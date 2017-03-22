@@ -58,7 +58,7 @@ If you keep your Firejail profiles in a public repository, please give us a link
 
 * https://github.com/triceratops1/fe
 
-Use this issue to request new profiles: https://github.com/netblue30/firejail/issues/825
+Use this issue to request new profiles: https://github.com/netblue30/firejail/issues/1139
 `````
 
 `````

@@ -1076,6 +1076,11 @@
 	{"preadv", __NR_preadv},
 #endif
 #endif
+#ifdef SYS_preadv2
+#ifdef __NR_preadv2
+	{"preadv2", __NR_preadv2},
+#endif
+#endif
 #ifdef SYS_prlimit64
 #ifdef __NR_prlimit64
 	{"prlimit64", __NR_prlimit64},
@@ -1124,6 +1129,11 @@
 #ifdef SYS_pwritev
 #ifdef __NR_pwritev
 	{"pwritev", __NR_pwritev},
+#endif
+#endif
+#ifdef SYS_pwritev2
+#ifdef __NR_pwritev2
+	{"pwritev2", __NR_pwritev2},
 #endif
 #endif
 #ifdef SYS_query_module
@@ -1892,6 +1902,7 @@
 #endif
 #endif
 #endif
+//#endif
 #if defined __x86_64__ && defined __LP64__
 #ifdef SYS__sysctl
 #ifdef __NR__sysctl
@@ -2828,6 +2839,11 @@
 	{"preadv", __NR_preadv},
 #endif
 #endif
+#ifdef SYS_preadv2
+#ifdef __NR_preadv2
+	{"preadv2", __NR_preadv2},
+#endif
+#endif
 #ifdef SYS_prlimit64
 #ifdef __NR_prlimit64
 	{"prlimit64", __NR_prlimit64},
@@ -2866,6 +2882,11 @@
 #ifdef SYS_pwritev
 #ifdef __NR_pwritev
 	{"pwritev", __NR_pwritev},
+#endif
+#endif
+#ifdef SYS_pwritev2
+#ifdef __NR_pwritev2
+	{"pwritev2", __NR_pwritev2},
 #endif
 #endif
 #ifdef SYS_query_module
@@ -3529,6 +3550,7 @@
 #endif
 #endif
 #endif
+//#endif
 #if defined __x86_64__ && defined __ILP32__
 #ifdef SYS_accept
 #ifdef __NR_accept
@@ -4430,6 +4452,11 @@
 	{"preadv", __NR_preadv},
 #endif
 #endif
+#ifdef SYS_preadv2
+#ifdef __NR_preadv2
+	{"preadv2", __NR_preadv2},
+#endif
+#endif
 #ifdef SYS_prlimit64
 #ifdef __NR_prlimit64
 	{"prlimit64", __NR_prlimit64},
@@ -4468,6 +4495,11 @@
 #ifdef SYS_pwritev
 #ifdef __NR_pwritev
 	{"pwritev", __NR_pwritev},
+#endif
+#endif
+#ifdef SYS_pwritev2
+#ifdef __NR_pwritev2
+	{"pwritev2", __NR_pwritev2},
 #endif
 #endif
 #ifdef SYS_quotactl
@@ -5111,3 +5143,5 @@
 #endif
 #endif
 #endif
+//#endif
+

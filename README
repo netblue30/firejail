@@ -351,6 +351,9 @@ SYN-cook (https://github.com/SYN-cook)
 	- Engrampa profile
 	- Scribus profile
 	- autostart blacklist for KDE
+	- blacklist startup scripts
+startx2017 (https://github.com/startx2017)
+	- syscall list update
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

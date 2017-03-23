@@ -354,6 +354,7 @@ SYN-cook (https://github.com/SYN-cook)
 	- blacklist startup scripts
 startx2017 (https://github.com/startx2017)
 	- syscall list update
+	- enable/disable join support in /etc/firejail/firejail.config
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

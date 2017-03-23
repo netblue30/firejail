@@ -82,6 +82,7 @@ echo "TESTING: seccomp chown (test/root/seccomp-chown.exp)"
 #********************************
 echo "TESTING: firejail configuration (test/root/checkcfg.exp)"
 ./checkcfg.exp
+cp ../../etc/firejail.config /etc/firejail/.
 
 echo "TESTING: tmpfs (test/root/option_tmpfs.exp)"
 ./option_tmpfs.exp

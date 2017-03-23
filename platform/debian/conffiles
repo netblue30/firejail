@@ -132,6 +132,7 @@
 /etc/firejail/mcabber.profile
 /etc/firejail/mediainfo.profile
 /etc/firejail/midori.profile
+/etc/firejail/mousepad.profile
 /etc/firejail/mpv.profile
 /etc/firejail/mumble.profile
 /etc/firejail/mupdf.profile

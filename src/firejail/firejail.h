@@ -686,6 +686,7 @@ enum {
 	CFG_FOLLOW_SYMLINK_PRIVATE_BIN,
 	CFG_DISABLE_MNT,
 	CFG_CACHE_TMPFS,
+	CFG_JOIN,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

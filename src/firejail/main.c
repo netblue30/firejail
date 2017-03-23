@@ -615,23 +615,27 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 #endif
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
-		logargs(argc, argv);
-
-		if (arg_shell_none) {
-			if (argc <= (i+1)) {
-				fprintf(stderr, "Error: --shell=none set, but no command specified\n");
-				exit(1);
+		if (checkcfg(CFG_JOIN) || getuid() == 0) {
+			logargs(argc, argv);
+	
+			if (arg_shell_none) {
+				if (argc <= (i+1)) {
+					fprintf(stderr, "Error: --shell=none set, but no command specified\n");
+					exit(1);
+				}
+				cfg.original_program_index = i + 1;
 			}
-			cfg.original_program_index = i + 1;
+	
+			if (!cfg.shell && !arg_shell_none)
+				cfg.shell = guess_shell();
+	
+			// join sandbox by pid or by name
+			pid_t pid = read_pid(argv[i] + 7);
+			join(pid, argc, argv, i + 1);
+			exit(0);
 		}
-
-		if (!cfg.shell && !arg_shell_none)
-			cfg.shell = guess_shell();
-
-		// join sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 7);
-		join(pid, argc, argv, i + 1);
-		exit(0);
+		else
+			exit_err_feature("join");
 
 	}
 	else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {

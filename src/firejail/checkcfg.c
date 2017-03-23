@@ -92,6 +92,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// join
+			else if (strncmp(ptr, "join ", 5) == 0) {
+				if (strcmp(ptr + 5, "yes") == 0)
+					cfg_val[CFG_JOIN] = 1;
+				else if (strcmp(ptr + 5, "no") == 0)
+					cfg_val[CFG_JOIN] = 0;
+				else
+					goto errout;
+			}
 			// x11
 			else if (strncmp(ptr, "x11 ", 4) == 0) {
 				if (strcmp(ptr + 4, "yes") == 0)

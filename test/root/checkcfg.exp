@@ -98,6 +98,45 @@ expect {
 	"noroot feature is disabled in Firejail configuration file\r"
 }
 
+# error exit
+send --  "echo \"join no\" > /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"cache-tmpfs no\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"file-transfer no\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"x11 no\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"firejail-prompt yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"follow-symlink-as-user yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"follow-symlink-private-bin yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"force-nonewprivs yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"seccomp no\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"restricted-network yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"xephyr-window-title yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"quiet-by-default yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"chroot-desktop no\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"private-bin-no-local yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"disable-mnt yes\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "echo \"blablabla\" >> /etc/firejail/firejail.config\r"
+after 100
+send --  "firejail --noprofile --force\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"invalid line\r"
+}
+
 send --  "exit\r"
 after 100
 

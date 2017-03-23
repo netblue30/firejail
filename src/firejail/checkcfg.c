@@ -291,6 +291,10 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
 					arg_quiet = 1;
+				else if (strcmp(ptr + 17, "no") == 0)
+					arg_quiet = 0;
+				else
+					goto errout;
 			}
 			// remount /proc and /sys
 			else if (strncmp(ptr, "remount-proc-sys ", 17) == 0) {
@@ -413,16 +417,16 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- networking support is %s\n",
-#ifdef HAVE_NETWORK
+	printf("\t- git install support is %s\n",
+#ifdef HAVE_GIT_INSTALL
 		"enabled"
 #else
 		"disabled"
 #endif
 		);
 
-	printf("\t- git install support is %s\n",
-#ifdef HAVE_GIT_INSTALL
+	printf("\t- networking support is %s\n",
+#ifdef HAVE_NETWORK
 		"enabled"
 #else
 		"disabled"

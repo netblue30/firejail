@@ -12,6 +12,8 @@ include /etc/firejail/disable-programs.inc
 # include /etc/firejail/disable-devel.inc
 #
 
+caps.drop all
+noroot
 netfilter
 
 whitelist ${DOWNLOADS}

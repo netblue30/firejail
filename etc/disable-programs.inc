@@ -29,6 +29,7 @@ blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/Meltytech
+blacklist ${HOME}/.config/Mousepad
 blacklist ${HOME}/.config/Mumble
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc

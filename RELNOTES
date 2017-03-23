@@ -26,7 +26,7 @@ firejail (0.9.45) baseline; urgency=low
   * feature: AppImage type 2 support
   * feature: pass command line arguments to appimages
   * feature: allow non-seccomp setup for OverlayFS sandboxes - more work to come
-  * feature: added a number o Python scripts for handling sandboxes
+  * feature: added a number of Python scripts for handling sandboxes
   * feature: allow local customization using .local files under /etc/firejail
   * feature: follow-symlink-as-user runtime config option in /etc/firejail/firejail.config
   * feature: follow-symlink-private-bin option in /etc/firejail/firejail.config
@@ -44,7 +44,7 @@ firejail (0.9.45) baseline; urgency=low
   * new profiles: Gnome Contacts, JD-GUI, Lollypop, MultiMC5, PDFSam, Pithos,
   * new profies: Xonotic, wireshark, keepassx2, QupZilla, FossaMail,
   * new profiles: Uzbl browser, iridium browser, Thunar, Geeqie, Engrampa
-  * new profiles: Scribus
+  * new profiles: Scribus, mousepad
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
 

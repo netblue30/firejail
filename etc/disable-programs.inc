@@ -264,7 +264,6 @@ blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
-blacklist ${HOME}/.pki
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.remmina

@@ -2,7 +2,7 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-passwdmgr.local
 
-blacklist ${HOME}/.pki/nssdb
+blacklist ${HOME}/.pki
 blacklist ${HOME}/.lastpass
 blacklist ${HOME}/.keepassx
 blacklist ${HOME}/.keepass

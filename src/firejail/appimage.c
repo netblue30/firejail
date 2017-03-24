@@ -148,8 +148,12 @@ void appimage_clear(void) {
 		int rv = 0;
 		for (i = 0; i < 5; i++) {
 			rv = umount2(mntdir, MNT_FORCE);
-			if (rv == 0)
+			if (rv == 0) {
+				if (!arg_quiet)
+					printf("AppImage unmounted\n");
+				
 				break;
+			}
 			if (rv == -1 && errno == EBUSY) {
 				if (!arg_quiet)
 					printf("Warning: EBUSY error trying to unmount %s\n", mntdir);			

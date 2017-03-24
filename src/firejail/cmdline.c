@@ -153,6 +153,9 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 			errExit("malloc");
 	
 	quote_cmdline(*command_line, *window_title, len, argc, argv, index);
+	
+	if (arg_debug)
+		printf("Building quoted command line: %s\n", *command_line);
 
 	assert(*command_line);
 	assert(*window_title);
@@ -163,7 +166,9 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 	// the program should exit with an error before entering this function
 	assert(index != -1);
 
-//	unsigned argcount = argc - index;
+	if (arg_debug)
+		printf("Building AppImage command line: %s\n", *command_line);
+
 
 	int len1 = cmdline_length(argc, argv, index);  // length of argv w/o changes
 	int len2 = cmdline_length(1, &argv[index], 0); // apptest.AppImage
@@ -197,6 +202,9 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 	// 'fix' command_line now
 	if (asprintf(command_line, "'%s' %s", tmp1, command_line_tmp + len2) == -1)
 		errExit("asprintf");
+
+	if (arg_debug)
+		printf("AppImage quoted command line: %s\n", *command_line);
 
 	// free strdup
 	free(tmp1);

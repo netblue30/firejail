@@ -865,6 +865,14 @@ int sandbox(void* sandbox_arg) {
 			}
 		}
 	}
+	if (arg_debug) {
+		char *cpath = get_current_dir_name();
+		if (cpath) {
+			printf("Current directory: %s\n", cpath);
+			free(cpath);
+		}
+	}
+	
 	
 	// set nice
 	if (arg_nice) {

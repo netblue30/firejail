@@ -6,8 +6,9 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+set appimage_id $spawn_id
 
-send -- "firejail --appimage Leafpad-0.8.18.1.glibc2.4-x86_64.AppImage\r"
+send -- "firejail --name=appimage-test --appimage Leafpad-0.8.18.1.glibc2.4-x86_64.AppImage\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
@@ -79,7 +80,13 @@ after 100
 
 spawn $env(SHELL)
 send -- "firejail --shutdown=appimage-test\r"
-sleep 3
+set spawn_id $appimage_id
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"AppImage unmounted"
+}
+
+after 100
 
 puts "\nall done\n"
 

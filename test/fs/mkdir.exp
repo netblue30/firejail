@@ -17,4 +17,11 @@ expect {
 send -- "rm -rf ~/.firejail_test\r"
 after 100
 
+send -- "firejail --profile=mkdir2.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"only directories in user home or /tmp"
+}
+after 100
+
 puts "\nall done\n"

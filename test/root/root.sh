@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set a new firejail config file
-cp firejail.config /etc/firejail/firejail.config
+#cp firejail.config /etc/firejail/firejail.config
 
 #********************************
 # servers
@@ -84,6 +84,9 @@ echo "TESTING: firejail configuration (test/root/checkcfg.exp)"
 ./checkcfg.exp
 cp ../../etc/firejail.config /etc/firejail/.
 
+echo "TESTING: cgroup (test/root/cgroup.exp)"
+./cgroup.exp
+
 echo "TESTING: tmpfs (test/root/option_tmpfs.exp)"
 ./option_tmpfs.exp
 
@@ -117,5 +120,5 @@ else
 fi
 
 # restore the default config file
-cp ../../etc/firejail.config /etc/firejail/firejail.config
+#cp ../../etc/firejail.config /etc/firejail/firejail.config
 

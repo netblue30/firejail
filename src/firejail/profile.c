@@ -608,7 +608,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	
 	// hosts-file
 	if (strncmp(ptr, "hosts-file ", 11) == 0) {
-		cfg.hosts_file = fs_check_hosts_fiile(ptr + 11);
+		cfg.hosts_file = fs_check_hosts_file(ptr + 11);
 		return 0;
 	}
 	

@@ -31,6 +31,11 @@
 static char *devloop = NULL;	// device file 
 static char *mntdir = NULL;	// mount point in /tmp directory
 
+static void err_loop(void) {
+	fprintf(stderr, "Error: cannot configure loopback device\n");
+	exit(1);
+}
+
 void appimage_set(const char *appimage) {
 	assert(appimage);
 	assert(devloop == NULL);	// don't call this twice!
@@ -61,35 +66,27 @@ void appimage_set(const char *appimage) {
 	// find or allocate a free loop device to use
 	EUID_ROOT();
 	int cfd = open("/dev/loop-control", O_RDWR);
-	if (cfd == -1) {
-		fprintf(stderr, "Error: /dev/loop-control interface is not supported by your kernel\n");
-		exit(1);
-	}
+	if (cfd == -1)
+		err_loop();
 	int devnr = ioctl(cfd, LOOP_CTL_GET_FREE);
-	if (devnr == -1) {
-		fprintf(stderr, "Error: cannot allocate a new loopback device\n");
-		exit(1);
-	}
+	if (devnr == -1)
+		err_loop();
 	close(cfd);
 	if (asprintf(&devloop, "/dev/loop%d", devnr) == -1)
 		errExit("asprintf");
 		
 	int lfd = open(devloop, O_RDONLY);
-	if (lfd == -1) {
-		fprintf(stderr, "Error: cannot open %s\n", devloop);
-		exit(1);
-	}
-	if (ioctl(lfd, LOOP_SET_FD, ffd) == -1) {
-		fprintf(stderr, "Error: cannot configure the loopback device\n");
-		exit(1);
-	}
+	if (lfd == -1)
+		err_loop();
+	if (ioctl(lfd, LOOP_SET_FD, ffd) == -1)
+		err_loop();
 	
 	if (size) {
 		struct loop_info64 info;
 		memset(&info, 0, sizeof(struct loop_info64));
 		info.lo_offset = size;
 		if (ioctl(lfd,  LOOP_SET_STATUS64, &info) == -1)
-			errExit("configure appimage offset");
+			err_loop();
 	}
 	
 	close(lfd);

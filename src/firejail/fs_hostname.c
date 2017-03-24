@@ -127,7 +127,7 @@ void fs_resolvconf(void) {
 	}
 }
 
-char *fs_check_hosts_fiile(const char *fname) {
+char *fs_check_hosts_file(const char *fname) {
 	assert(fname);
 	invalid_filename(fname);
 	char *rv = expand_home(fname, cfg.homedir);
@@ -151,6 +151,9 @@ void fs_store_hosts_file(void) {
 }
 
 void fs_mount_hosts_file(void) {
+	if (arg_debug)
+		printf("Loading user hosts file\n");
+
 	// check /etc/hosts file
 	struct stat s;
 	if (stat("/etc/hosts", &s) == -1)

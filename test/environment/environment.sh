@@ -10,6 +10,12 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 echo "TESTING: DNS (test/environment/dns.exp)"
 ./dns.exp
 
+echo "TESTING: machine-id (test/environment/machineid.exp)"
+./machineid.exp
+
+echo "TESTING: hosts file (test/environment/hostfile.exp)"
+./hostfile.exp
+
 echo "TESTING: doubledash (test/environment/doubledash.exp"
 mkdir -- -testdir
 touch -- -testdir/ttt

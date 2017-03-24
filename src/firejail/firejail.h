@@ -542,7 +542,7 @@ void fs_trace(void);
 // fs_hostname.c
 void fs_hostname(const char *hostname);
 void fs_resolvconf(void);
-char *fs_check_hosts_fiile(const char *fname);
+char *fs_check_hosts_file(const char *fname);
 void fs_store_hosts_file(void);
 void fs_mount_hosts_file(void);
 

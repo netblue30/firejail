@@ -34,7 +34,9 @@ void fs_machineid(void) {
 	// if --machine-id flag is inactive, do nothing
 	if (arg_machineid == 0)
 		return;
-
+	if (arg_debug)
+		printf("Generating a new machine-id\n");
+		
 	// init random number generator
 	srand(time(NULL));
 	

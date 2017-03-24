@@ -1969,7 +1969,7 @@ int main(int argc, char **argv) {
 		}
 		
 		else if (strncmp(argv[i], "--hosts-file=", 13) == 0)
-			cfg.hosts_file = fs_check_hosts_fiile(argv[i] + 13);
+			cfg.hosts_file = fs_check_hosts_file(argv[i] + 13);
 
 #ifdef HAVE_NETWORK
 		else if (strcmp(argv[i], "--netfilter") == 0) {

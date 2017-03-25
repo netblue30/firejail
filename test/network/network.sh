@@ -11,6 +11,9 @@ sudo ./configure
 echo "TESTING: firemon interface (firemon-interfaces.exp)"
 sudo ./firemon-interfaces.exp
 
+echo "TESTING: netns (netns.exp)"
+./netns.exp
+
 echo "TESTING: print dns (dns-print.exp)"
 ./dns-print.exp
 

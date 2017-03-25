@@ -14,6 +14,10 @@ noblacklist ~/.thunderbird
 mkdir ~/.thunderbird
 whitelist ~/.thunderbird
 
+noblacklist ~/.icedove
+mkdir ~/.icedove
+whitelist ~/.icedove
+
 # allow browsers
 ignore private-tmp
 include /etc/firejail/firefox.profile

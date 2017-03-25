@@ -24,12 +24,12 @@ else
 	echo "TESTING SKIP: transmission-gtk not found"
 fi
 
-which icedove
+which thunderbird
 if [ "$?" -eq 0 ];
 then
-	echo "TESTING: icedove x11 xorg"
-	./icedove.exp
+	echo "TESTING: thunderbird x11 xorg"
+	./thunderbird.exp
 else
-	echo "TESTING SKIP: icedove not found"
+	echo "TESTING SKIP: thunderbird not found"
 fi
 

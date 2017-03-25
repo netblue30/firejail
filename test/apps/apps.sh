@@ -106,13 +106,13 @@ else
 	echo "TESTING SKIP: gthumb not found"
 fi
 
-which icedove
+which thunderbird
 if [ "$?" -eq 0 ];
 then
-	echo "TESTING: icedove"
-	./icedove.exp
+	echo "TESTING: thunderbird"
+	./thunderbird.exp
 else
-	echo "TESTING SKIP: icedove not found"
+	echo "TESTING SKIP: thunderbird not found"
 fi
 
 which vlc

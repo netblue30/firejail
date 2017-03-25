@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --x11=xorg --ignore=net --ignore=netfilter --ignore=iprange icedove\r"
+send -- "firejail --name=test --x11=xorg --ignore=net --ignore=netfilter --ignore=iprange thunderbird\r"
 sleep 10
 
 spawn $env(SHELL)
@@ -18,7 +18,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"icedove"
+	"thunderbird"
 }
 sleep 1
 
@@ -46,7 +46,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"icedove"
+	"thunderbird"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -64,7 +64,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6.0\n";exit}
-	"icedove"
+	"thunderbird"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

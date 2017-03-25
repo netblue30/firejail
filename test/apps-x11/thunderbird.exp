@@ -7,16 +7,8 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail icedove\r"
-expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/icedove.profile"
-}
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
-}
-sleep 5
+send -- "firejail --name=test --x11 thunderbird\r"
+sleep 10
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
@@ -26,9 +18,9 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"icedove"
+	"thunderbird"
 }
-after 100
+sleep 1
 
 # grsecurity exit
 send -- "file /proc/sys/kernel/grsecurity\r"
@@ -50,7 +42,11 @@ send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
-	":firejail icedove"
+	":firejail"
+}
+expect {
+	timeout {puts "TESTING ERROR 5.0\n";exit}
+	"thunderbird"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -60,15 +56,19 @@ expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
 	"name=blablabla"
 }
-after 100
+sleep 2
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail icedove"
+	":firejail"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.0\n";exit}
+	"thunderbird"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
-	"CapBnd:"
+	"CapBnd"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.2\n";exit}
@@ -78,7 +78,9 @@ expect {
 	timeout {puts "TESTING ERROR 6.3\n";exit}
 	"name=blablabla"
 }
-after 100
+sleep 1
+send -- "firejail --shutdown=test\r"
+sleep 3
 
 puts "\nall done\n"
 

@@ -25,3 +25,6 @@ ip link add link eth0 name eth0.6 type vlan id 6
 ip link add link eth0 name eth0.7 type vlan id 7
 /sbin/ifconfig eth0.7 10.10.207.10/24 up
 
+# network namespace
+ip netns add red
+

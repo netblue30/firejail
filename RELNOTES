@@ -34,9 +34,6 @@ firejail (0.9.45) baseline; urgency=low
   * feature: allow /tmp directory in mkdir and mkfile profile commands
   * feature: implemented --noblacklist command, profile support
   * feature: config support to disable access to /mnt and /media (disable-mnt)
-  * feature: allow tmpfs for regular users for files in home directory
-  * feature: mount a tmpfs on top of ~/.cache directory by default
-  * feature: config support to disable tmpfs mounting on ~/.cache (cache-tmpfs)
   * feature: config support to disable join (join)
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,

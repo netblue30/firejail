@@ -481,15 +481,21 @@ void fs_mnt(void) {
 
 
 void fs_cache(void) {
-#if 0
 	if (arg_debug)
 		printf("Deploy ~/.cache tmpfs\n");
 	char *cache;
 	if (asprintf(&cache, "%s/.cache", cfg.homedir) == -1)
 		errExit("asprintf");
+	if (is_link(cache)) {
+		fprintf(stderr, "Error: ~/.cache directory is a symbolik link\n");
+		exit(1);
+	}
 	disable_file(MOUNT_TMPFS, cache);
+	if (is_link(cache)) {
+		fprintf(stderr, "Error: ~/.cache directory is a symbolik link\n");
+		exit(1);
+	}
 	free(cache);
-#endif
 }
 
 // mount /proc and /sys directories

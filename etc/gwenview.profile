@@ -16,7 +16,7 @@ caps.drop all
 nogroups
 nonewprivs
 noroot
-protocol unix,netlink
+protocol unix
 seccomp
 tracelog
 

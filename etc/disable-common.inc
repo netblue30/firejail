@@ -165,6 +165,7 @@ blacklist ${HOME}/*.key
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.mutt/muttrc
 blacklist ${HOME}/.msmtprc
+blacklist ${HOME}/.pki
 blacklist /etc/shadow
 blacklist /etc/gshadow
 blacklist /etc/passwd-

@@ -20,6 +20,7 @@ blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/Atom
+blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Franz
@@ -72,6 +73,7 @@ blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
 blacklist ${HOME}./config/gpicview
 blacklist ${HOME}/.config/gthumb
+blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/hexchat
 blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.config/jd-gui.cfg
@@ -89,6 +91,7 @@ blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
+blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/psi+
@@ -225,12 +228,12 @@ blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
-blacklist ${HOME}/.pki
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.retroshare
 blacklist ${HOME}/.scribus
+blacklist ${HOME}/.scribusrc
 blacklist ${HOME}/.steam
 blacklist ${HOME}/.steampath
 blacklist ${HOME}/.steampid

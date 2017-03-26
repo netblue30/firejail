@@ -5,8 +5,14 @@ include /etc/firejail/scribus.local
 # Firejail profile for Scribus
 noblacklist ~/.scribus
 noblacklist ~/.config/scribus
+noblacklist ~/.config/scribusrc
 noblacklist ~/.local/share/scribus
 noblacklist ~/.gimp*
+
+# Support for PDF readers (Scribus 1.5 and higher)
+noblacklist ~/.kde/share/apps/okular
+noblacklist ~/.kde/share/config/okularrc
+noblacklist ~/.kde/share/config/okularpartrc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

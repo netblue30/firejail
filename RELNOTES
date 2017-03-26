@@ -41,7 +41,7 @@ firejail (0.9.45) baseline; urgency=low
   * new profiles: Gnome Contacts, JD-GUI, Lollypop, MultiMC5, PDFSam, Pithos,
   * new profies: Xonotic, wireshark, keepassx2, QupZilla, FossaMail,
   * new profiles: Uzbl browser, iridium browser, Thunar, Geeqie, Engrampa
-  * new profiles: Scribus, mousepad
+  * new profiles: Scribus, mousepad, gpicview
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
 

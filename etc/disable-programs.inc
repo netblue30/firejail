@@ -70,6 +70,7 @@ blacklist ${HOME}/.config/gedit
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
+blacklist ${HOME}./config/gpicview
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/hexchat
 blacklist ${HOME}/.config/inox

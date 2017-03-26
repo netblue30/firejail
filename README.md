@@ -112,7 +112,7 @@ Added AppImage type 2 support, and support for passing command line arguments to
 
               Example:
               $ firejail --hosts-file=~/myhosts firefox
-             
+
       --writable-var-log
               Use the real /var/log directory, not  a  clone.  By  default,  a
               tmpfs  is  mounted  on top of /var/log directory, and a skeleton
@@ -120,7 +120,7 @@ Added AppImage type 2 support, and support for passing command line arguments to
 
               Example:
               $ sudo firejail --writable-var-log
-              
+
        --git-install
               Download, compile and install mainline git version  of  Firejail
               from  the  official  repository  on  GitHub.   The  software  is
@@ -195,4 +195,4 @@ goobox, gpa, gpg, gpg-agent, highlight, img2txt, k3b, kate, lynx, mediainfo, nau
 simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, w3m, xfburn, xpra, wget,
 xed, pluma, Cryptocat, Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5,
 PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser, xmms, iridium browser,
-Kino, Thunar, Geeqie, Engrampa, Scribus, mousepad
+Kino, Thunar, Geeqie, Engrampa, Scribus, mousepad, gpicview

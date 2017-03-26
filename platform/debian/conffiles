@@ -90,6 +90,7 @@
 /etc/firejail/gpa.profile
 /etc/firejail/gpg-agent.profile
 /etc/firejail/gpg.profile
+/etc/firejail/gpicview.profile
 /etc/firejail/gpredict.profile
 /etc/firejail/gtar.profile
 /etc/firejail/gthumb.profile

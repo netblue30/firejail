@@ -295,30 +295,45 @@ static void set(void) {
 }
 
 static void fix_desktop_files(void) {
+	struct stat sb;
+
+	// check user
 	if (getuid() == 0) {
-		fprintf(stderr, "Error: you should run --fix as user\n");
+		fprintf(stderr, "Error: this option is not supported for root user; please run as a regular user.\n");
 		exit(1);
 	}
-
 	char *homedir = getenv("HOME");
 	if (!homedir)
 		errExit("getenv");
-
+		
+	// destination
+	// create ~/.local/share/applications directory if necessary
 	char *user_apps_dir;
 	if (asprintf(&user_apps_dir, "%s/.local/share/applications", homedir) == -1)
 		errExit("asprintf");
+	if (stat(user_apps_dir, &sb) == -1) {
+		int rv = mkdir(user_apps_dir, 0700);
+		if (rv) {
+			fprintf(stderr, "Error: cannot create ~/.local/application directory\n");
+			perror("mkdir");
+			exit(1);
+		}
+		rv = chmod(user_apps_dir, 0700);
+		(void) rv;
+	}	
 
+	// source
 	DIR *dir = opendir("/usr/share/applications");
 	if (!dir) {
 		perror("Error: cannot open /usr/share/applications directory");
 		exit(1);
 	}
-
 	if (chdir("/usr/share/applications")) {
 		perror("Error: cannot chdir to /usr/share/applications");
 		exit(1);
 	}
 
+	// copy
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
 		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
@@ -337,8 +352,6 @@ static void fix_desktop_files(void) {
 		// skip links
 		if (is_link(filename))
 			continue;
-
-		struct stat sb;
 		if (stat(filename, &sb) == -1)
 			errExit("stat");
 

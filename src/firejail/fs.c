@@ -481,6 +481,7 @@ void fs_mnt(void) {
 
 
 void fs_cache(void) {
+#if 0
 	if (arg_debug)
 		printf("Deploy ~/.cache tmpfs\n");
 	char *cache;
@@ -496,6 +497,7 @@ void fs_cache(void) {
 		exit(1);
 	}
 	free(cache);
+#endif
 }
 
 // mount /proc and /sys directories

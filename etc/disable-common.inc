@@ -19,7 +19,6 @@ blacklist /etc/X11/Xsession.d/
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.xsession
 blacklist ${HOME}/.xsessionrc
-blacklist ${HOME}/.profile
 blacklist ${HOME}/.xprofile
 blacklist ${HOME}/.gnomerc
 blacklist /etc/xdg/autostart

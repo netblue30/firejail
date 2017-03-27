@@ -45,12 +45,15 @@ blacklist ${HOME}/.fluxbox/startup
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
 
 # KDE config
+blacklist ${HOME}/.kde4/share/apps/solid
 blacklist ${HOME}/.kde4/share/config/*.notifyrc
 blacklist ${HOME}/.kde4/share/config/khotkeysrc
+blacklist ${HOME}/.kde/share/apps/solid
 blacklist ${HOME}/.kde/share/config/*.notifyrc
 blacklist ${HOME}/.kde/share/config/khotkeysrc
 blacklist ${HOME}/.config/*.notifyrc
 blacklist ${HOME}/.config/khotkeysrc
+blacklist ${HOME}/.local/share/solid
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox

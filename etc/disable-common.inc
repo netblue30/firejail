@@ -53,6 +53,7 @@ blacklist ${HOME}/.kde/share/config/*.notifyrc
 blacklist ${HOME}/.kde/share/config/khotkeysrc
 blacklist ${HOME}/.config/*.notifyrc
 blacklist ${HOME}/.config/khotkeysrc
+blacklist ${HOME}/.local/share/kglobalaccel
 blacklist ${HOME}/.local/share/solid
 
 # VirtualBox

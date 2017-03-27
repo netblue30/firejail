@@ -82,6 +82,7 @@ blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/kateschemarc
 blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
+blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/midori

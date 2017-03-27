@@ -19,23 +19,42 @@ blacklist /etc/X11/Xsession.d/
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.xsession
 blacklist ${HOME}/.xsessionrc
+blacklist ${HOME}/.profile
 blacklist ${HOME}/.xprofile
 blacklist ${HOME}/.gnomerc
-blacklist ${HOME}/.config/autostart
 blacklist /etc/xdg/autostart
+blacklist ${HOME}/.config/autostart
+blacklist ${HOME}/.local/share/autostart
+blacklist ${HOME}/.kde4/share/config/startupconfig
+blacklist ${HOME}/.kde4/env
 blacklist ${HOME}/.kde4/Autostart
 blacklist ${HOME}/.kde4/share/autostart
+blacklist ${HOME}/.kde4/shutdown
+blacklist ${HOME}/.kde/share/config/startupconfig
+blacklist ${HOME}/.kde/env
 blacklist ${HOME}/.kde/Autostart
 blacklist ${HOME}/.kde/share/autostart
-blacklist ${HOME}/.local/share/autostart
+blacklist ${HOME}/.kde/shutdown
+blacklist ${HOME}/.config/startupconfig
 blacklist ${HOME}/.config/autostart-scripts
-blacklist ${HOME}/.config/plasma-workspace/shutdown
 blacklist ${HOME}/.config/plasma-workspace/env
+blacklist ${HOME}/.config/plasma-workspace/shutdown
 blacklist ${HOME}/.config/lxsession/LXDE/autostart
-blacklist ${HOME}/.fluxbox/startup
 blacklist ${HOME}/.config/openbox/autostart
 blacklist ${HOME}/.config/openbox/environment
+blacklist ${HOME}/.fluxbox/startup
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
+
+# KDE config
+blacklist ${HOME}/.kde4/share/config/*.notifyrc
+blacklist ${HOME}/.kde4/share/config/khotkeysrc
+blacklist ${HOME}/.kde4/share/config/ksmserverrc
+blacklist ${HOME}/.kde/share/config/*.notifyrc
+blacklist ${HOME}/.kde/share/config/khotkeysrc
+blacklist ${HOME}/.kde/share/config/ksmserverrc
+blacklist ${HOME}/.config/*.notifyrc
+blacklist ${HOME}/.config/khotkeysrc
+blacklist ${HOME}/.config/ksmserverrc
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox

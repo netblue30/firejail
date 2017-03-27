@@ -45,14 +45,18 @@ blacklist ${HOME}/.fluxbox/startup
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
 
 # KDE config
+# to make blacklisting krunnerrc effective, disable the KRunner command line plugin
 blacklist ${HOME}/.kde4/share/apps/solid
 blacklist ${HOME}/.kde4/share/config/*.notifyrc
 blacklist ${HOME}/.kde4/share/config/khotkeysrc
+blacklist ${HOME}/.kde4/share/config/krunnerrc
 blacklist ${HOME}/.kde/share/apps/solid
 blacklist ${HOME}/.kde/share/config/*.notifyrc
 blacklist ${HOME}/.kde/share/config/khotkeysrc
+blacklist ${HOME}/.kde/share/config/krunnerrc
 blacklist ${HOME}/.config/*.notifyrc
 blacklist ${HOME}/.config/khotkeysrc
+blacklist ${HOME}/.config/krunnerrc
 blacklist ${HOME}/.local/share/kglobalaccel
 blacklist ${HOME}/.local/share/solid
 
@@ -258,8 +262,8 @@ blacklist ${PATH}/terminix
 blacklist ${PATH}/tilix
 blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
-#konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
-#blacklist ${PATH}/konsole
+# konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
+# blacklist ${PATH}/konsole
 
 # kernel files
 blacklist /vmlinuz*

@@ -49,7 +49,6 @@ blacklist ${HOME}/.kde4/share/config/*.notifyrc
 blacklist ${HOME}/.kde4/share/config/khotkeysrc
 blacklist ${HOME}/.kde/share/config/*.notifyrc
 blacklist ${HOME}/.kde/share/config/khotkeysrc
-blacklist ${HOME}/.kde/share/config/ksmserverrc
 blacklist ${HOME}/.config/*.notifyrc
 blacklist ${HOME}/.config/khotkeysrc
 

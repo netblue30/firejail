@@ -105,15 +105,15 @@ else
         echo "TESTING SKIP: ibus not configured"
 fi
 
-echo "TESTING: rlimit (test/rlimit/rlimit.exp)"
+echo "TESTING: rlimit (test/environment/rlimit.exp)"
 ./rlimit.exp
 
-echo "TESTING: rlimit profile (test/rlimit/rlimit-profile.exp)"
+echo "TESTING: rlimit profile (test/environment/rlimit-profile.exp)"
 ./rlimit-profile.exp
 
-echo "TESTING: rlimit errors (test/rlimit/rlimit-bad.exp)"
+echo "TESTING: rlimit errors (test/environment/rlimit-bad.exp)"
 ./rlimit-bad.exp
 
-echo "TESTING: rlimit errors profile (test/rlimit/rlimit-bad-profile.exp)"
+echo "TESTING: rlimit errors profile (test/environment/rlimit-bad-profile.exp)"
 ./rlimit-bad-profile.exp
 

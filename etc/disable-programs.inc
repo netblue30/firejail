@@ -48,6 +48,7 @@ blacklist ${HOME}/.config/blender
 blacklist ${HOME}/.config/bless
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
+blacklist ${HOME}/.config/caja
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.config/chromium
 blacklist ${HOME}/.config/qupzilla

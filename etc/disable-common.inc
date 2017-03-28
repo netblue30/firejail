@@ -15,7 +15,7 @@ read-only ${HOME}/.local/share/applications
 # X11 session autostart
 blacklist ${HOME}/.xinitrc
 blacklist ${HOME}/.xserverrc
-blacklist /etc/X11/Xsession.d/
+blacklist /etc/X11/Xsession.d
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.xsession
 blacklist ${HOME}/.xsessionrc
@@ -45,19 +45,23 @@ blacklist ${HOME}/.fluxbox/startup
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
 
 # KDE config
-# to make blacklisting krunnerrc effective, disable the KRunner command line plugin
 blacklist ${HOME}/.kde4/share/apps/solid
+blacklist ${HOME}/.kde4/share/apps/konsole
 blacklist ${HOME}/.kde4/share/config/*.notifyrc
 blacklist ${HOME}/.kde4/share/config/khotkeysrc
 blacklist ${HOME}/.kde4/share/config/krunnerrc
+blacklist ${HOME}/.kde4/share/kde4/services
 blacklist ${HOME}/.kde/share/apps/solid
+blacklist ${HOME}/.kde/share/apps/konsole
 blacklist ${HOME}/.kde/share/config/*.notifyrc
 blacklist ${HOME}/.kde/share/config/khotkeysrc
 blacklist ${HOME}/.kde/share/config/krunnerrc
+blacklist ${HOME}/.kde/share/kde4/services
 blacklist ${HOME}/.config/*.notifyrc
 blacklist ${HOME}/.config/khotkeysrc
 blacklist ${HOME}/.config/krunnerrc
 blacklist ${HOME}/.local/share/kglobalaccel
+blacklist ${HOME}/.local/share/konsole
 blacklist ${HOME}/.local/share/solid
 
 # VirtualBox

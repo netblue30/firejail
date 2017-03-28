@@ -8,27 +8,27 @@ match_max 100000
 send -- "firejail --profile=rlimit-bad1.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Invalid rlimit option"
+	"invalid rlimit"
 }
 after 100
 
 send -- "firejail --profile=rlimit-bad2.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Invalid rlimit option"
+	"invalid rlimit"
 }
 after 100
 
 send -- "firejail --profile=rlimit-bad3.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Invalid rlimit option"
+	"invalid rlimit"
 }
 after 100
 send -- "firejail --profile=rlimit-bad4.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"Invalid rlimit option"
+	"invalid rlimit"
 }
 after 100
 

@@ -790,13 +790,6 @@ int sandbox(void* sandbox_arg) {
 		fs_mnt();
 
 	//****************************
-	// deploy a tmpfs on ~/.cache directory
-	//****************************
-	if (checkcfg(CFG_CACHE_TMPFS))
-		fs_cache();
-
-
-	//****************************
 	// apply the profile file
 	//****************************
 	// apply all whitelist commands ... 

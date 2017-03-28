@@ -74,15 +74,6 @@ int checkcfg(int val) {
 			if (!ptr)
 				continue;
 			
-			// mount tmpfs on top of ~/.cache directory
-			if (strncmp(ptr, "cache-tmpfs ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_CACHE_TMPFS] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_CACHE_TMPFS] = 0;
-				else
-					goto errout;
-			}
 			// file transfer	
 			else if (strncmp(ptr, "file-transfer ", 14) == 0) {
 				if (strcmp(ptr + 14, "yes") == 0)

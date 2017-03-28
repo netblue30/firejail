@@ -34,4 +34,4 @@ expect {
 	"home"
 }
 after 100
-puts "\n"
+puts "\nall done\n"

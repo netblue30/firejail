@@ -874,27 +874,23 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// rlimit
 	if (strncmp(ptr, "rlimit", 6) == 0) {
 		if (strncmp(ptr, "rlimit-nofile ", 14) == 0) {
-			ptr += 14;
 			check_unsigned(ptr + 14, "Error: invalid rlimit in profile file: ");
-			sscanf(ptr, "%llu", &cfg.rlimit_nofile);
+			sscanf(ptr + 14, "%llu", &cfg.rlimit_nofile);
 			arg_rlimit_nofile = 1;
 		}
 		else if (strncmp(ptr, "rlimit-nproc ", 13) == 0) {
-			ptr += 13;
 			check_unsigned(ptr + 13, "Error: invalid rlimit in profile file: ");
-			sscanf(ptr, "%llu", &cfg.rlimit_nproc);
+			sscanf(ptr + 13, "%llu", &cfg.rlimit_nproc);
 			arg_rlimit_nproc = 1;
 		}
 		else if (strncmp(ptr, "rlimit-fsize ", 13) == 0) {
-			ptr += 13;
 			check_unsigned(ptr + 13, "Error: invalid rlimit in profile file: ");
-			sscanf(ptr, "%llu", &cfg.rlimit_fsize);
+			sscanf(ptr + 13, "%llu", &cfg.rlimit_fsize);
 			arg_rlimit_fsize = 1;
 		}
 		else if (strncmp(ptr, "rlimit-sigpending ", 18) == 0) {
-			ptr += 18;
 			check_unsigned(ptr + 18, "Error: invalid rlimit in profile file: ");
-			sscanf(ptr, "%llu", &cfg.rlimit_sigpending);
+			sscanf(ptr + 18, "%llu", &cfg.rlimit_sigpending);
 			arg_rlimit_sigpending = 1;
 		}
 		else {

@@ -407,7 +407,6 @@ void fs_overlayfs(void);
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir);
 void fs_check_chroot_dir(const char *rootdir);
-void fs_cache(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -685,7 +684,6 @@ enum {
 	CFG_FOLLOW_SYMLINK_AS_USER,
 	CFG_FOLLOW_SYMLINK_PRIVATE_BIN,
 	CFG_DISABLE_MNT,
-	CFG_CACHE_TMPFS,
 	CFG_JOIN,
 	CFG_MAX // this should always be the last entry
 };

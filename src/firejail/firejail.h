@@ -234,10 +234,10 @@ typedef struct config_t {
 	char *protocol;			// protocol list
 
 	// rlimits
-	unsigned rlimit_nofile;
-	unsigned rlimit_nproc;
-	unsigned rlimit_fsize;
-	unsigned rlimit_sigpending;
+	long long unsigned rlimit_nofile;
+	long long unsigned rlimit_nproc;
+	long long unsigned rlimit_fsize;
+	long long unsigned rlimit_sigpending;
 	
 	// cpu affinity, nice and control groups
 	uint32_t cpus;
@@ -462,7 +462,7 @@ int is_dir(const char *fname);
 int is_link(const char *fname);
 char *line_remove_spaces(const char *buf);
 char *split_comma(char *str);
-int not_unsigned(const char *str);
+void check_unsigned(const char *str, const char *msg);
 int find_child(pid_t parent, pid_t *child);
 void check_private_dir(void);
 void update_map(char *mapping, char *map_file);

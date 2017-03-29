@@ -8,6 +8,7 @@ include /etc/firejail/nautilus.local
  # is already a nautilus process running on gnome desktops firejail will have no effect.
 
 noblacklist ~/.config/nautilus
+noblacklist ~/.local/share/nautilus
 
 include /etc/firejail/disable-common.inc
 # nautilus needs to be able to start arbitrary applications so we cannot blacklist their files

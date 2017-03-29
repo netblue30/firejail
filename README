@@ -355,6 +355,8 @@ SYN-cook (https://github.com/SYN-cook)
 	- autostart blacklist for KDE
 	- blacklist startup scripts
 	- various profile updates
+	- blacklist lots of KDE files
+	- blacklist nautilus and nemo in ~/.local/share/
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- enable/disable join support in /etc/firejail/firejail.config

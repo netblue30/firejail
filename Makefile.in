@@ -266,6 +266,10 @@ test-appimage:
 test-network:
 	cd test/network; ./network.sh | grep TESTING
 
+# requires the same setup as test-network
+test-stress:
+	cd test/stress; ./stress.sh | grep TESTING
+	
 # Tesets running a root user
 test-root:
 	cd test/root; su -c ./root.sh | grep TESTING

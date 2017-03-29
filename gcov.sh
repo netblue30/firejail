@@ -45,6 +45,10 @@ make test-network
 generate
 sleep 2
 
+make test-stress
+generate
+sleep 2
+
 make test-appimage
 generate
 sleep 2

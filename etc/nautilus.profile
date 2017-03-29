@@ -4,7 +4,8 @@ include /etc/firejail/nautilus.local
 
 # nautilus profile
 
-# Nautilus is started by systemd on most systems. Therefore it is not firejailed by default. Since there is already a nautilus process running on gnome desktops firejail will have no effect.
+# Nautilus is started by systemd on most systems. Therefore it is not firejailed by default. Since there
+ # is already a nautilus process running on gnome desktops firejail will have no effect.
 
 noblacklist ~/.config/nautilus
 

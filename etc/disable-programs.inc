@@ -90,6 +90,7 @@ blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/nautilus
+blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta

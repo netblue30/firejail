@@ -14,6 +14,7 @@ noblacklist ~/mail
 noblacklist ~/Mail
 noblacklist ~/sent
 noblacklist ~/postponed
+noblacklist ~/.cache/mutt
 noblacklist ~/.w3m
 noblacklist ~/.elinks
 noblacklist ~/.vim

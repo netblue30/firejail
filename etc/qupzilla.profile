@@ -4,6 +4,7 @@ include /etc/firejail/qupzilla.local
 
 # Firejail profile for Qupzilla web browser
 noblacklist ${HOME}/.config/qupzilla
+noblacklist ${HOME}/.cache/qupzilla
 include /etc/firejail/disable-mgmt.inc
 include /etc/firejail/disable-secret.inc
 include /etc/firejail/disable-common.inc
@@ -16,6 +17,7 @@ tracelog
 noroot
 whitelist ${DOWNLOADS}
 whitelist ~/.config/qupzilla
+whitelist ~/.cache/qupzilla
 include /etc/firejail/whitelist-common.inc
 
 # experimental features

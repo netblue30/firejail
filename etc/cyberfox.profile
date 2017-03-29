@@ -4,6 +4,7 @@ include /etc/firejail/cyberfox.local
 
 # Firejail profile for Cyberfox (based on Mozilla Firefox)
 noblacklist ~/.8pecxstudios
+noblacklist ~/.cache/8pecxstudios
 noblacklist ~/.pki
 noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
@@ -21,6 +22,8 @@ tracelog
 whitelist ${DOWNLOADS}
 mkdir ~/.8pecxstudios
 whitelist ~/.8pecxstudios
+mkdir ~/.cache/8pecxstudios
+whitelist ~/.cache/8pecxstudios
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.vimperatorrc
@@ -29,6 +32,7 @@ whitelist ~/.pentadactylrc
 whitelist ~/.pentadactyl
 whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
+whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
 whitelist ~/.lastpass
 

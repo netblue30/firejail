@@ -4,6 +4,7 @@ include /etc/firejail/transmission-qt.local
 
 # transmission-qt bittorrent profile
 noblacklist ${HOME}/.config/transmission
+noblacklist ${HOME}/.cache/transmission
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

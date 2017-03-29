@@ -4,6 +4,7 @@ include /etc/firejail/chromium.local
 
 # Chromium browser profile
 noblacklist ~/.config/chromium
+noblacklist ~/.cache/chromium
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -17,6 +18,8 @@ netfilter
 whitelist ${DOWNLOADS}
 mkdir ~/.config/chromium
 whitelist ~/.config/chromium
+mkdir ~/.cache/chromium
+whitelist ~/.cache/chromium
 mkdir ~/.pki
 whitelist ~/.pki
 

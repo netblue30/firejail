@@ -5,6 +5,7 @@ include /etc/firejail/gnome-books.local
 # gnome-books profile
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
+noblacklist ~/.cache/org.gnome.Books
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

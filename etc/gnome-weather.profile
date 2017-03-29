@@ -5,6 +5,7 @@ include /etc/firejail/gnome-weather.local
 # gnome-weather profile
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
+noblacklist ~/.cache/libgweather
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

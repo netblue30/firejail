@@ -5,7 +5,9 @@ include /etc/firejail/gajim.local
 # Firejail profile for Gajim
 noblacklist ${HOME}/.local/share/gajim
 noblacklist ${HOME}/.config/gajim
+noblacklist ${HOME}/.cache/gajim
 
+mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.local/share/gajim
 mkdir ${HOME}/.config/gajim
 mkdir ${HOME}/Downloads
@@ -15,6 +17,7 @@ mkdir ${HOME}/.local/lib/python2.7/site-packages/
 whitelist ${HOME}/.local/lib/python2.7/site-packages/
 read-only ${HOME}/.local/lib/python2.7/site-packages/
 
+whitelist ${HOME}/.cache/gajim
 whitelist ${HOME}/.local/share/gajim
 whitelist ${HOME}/.config/gajim
 whitelist ${HOME}/Downloads

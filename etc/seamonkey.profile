@@ -4,6 +4,7 @@ include /etc/firejail/seamonkey.local
 
 # Firejail profile for Seamoneky based off Mozilla Firefox
 noblacklist ~/.mozilla
+noblacklist ~/.cache/mozilla
 noblacklist ~/.pki
 noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
@@ -21,6 +22,8 @@ tracelog
 whitelist ${DOWNLOADS}
 mkdir ~/.mozilla/seamonkey
 whitelist ~/.mozilla/seamonkey
+mkdir ~/.cache/mozilla/seamonkey
+whitelist ~/.cache/mozilla/seamonkey
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.vimperatorrc
@@ -29,6 +32,7 @@ whitelist ~/.pentadactylrc
 whitelist ~/.pentadactyl
 whitelist ~/.keysnail.js
 whitelist ~/.config/gnome-mplayer
+whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
 whitelist ~/.lastpass
 include /etc/firejail/whitelist-common.inc

@@ -3,6 +3,7 @@
 include /etc/firejail/0ad.local
 
 # Firejail profile for 0ad.
+noblacklist ~/.cache/0ad
 noblacklist ~/.config/0ad
 noblacklist ~/.local/share/0ad
 include /etc/firejail/disable-common.inc
@@ -16,6 +17,9 @@ whitelist ~/.config/0ad
 
 mkdir ~/.local/share/0ad
 whitelist ~/.local/share/0ad
+
+mkdir ~/.cache/0ad
+whitelist ~/.cache/0ad
 
 caps.drop all
 netfilter

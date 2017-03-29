@@ -4,6 +4,7 @@ include /etc/firejail/palemoon.local
 
 # Firejail profile for Pale Moon
 noblacklist ~/.moonchild productions/pale moon
+noblacklist ~/.cache/moonchild productions/pale moon
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -12,6 +13,8 @@ include /etc/firejail/whitelist-common.inc
 whitelist ${DOWNLOADS}
 mkdir ~/.moonchild productions
 whitelist ~/.moonchild productions
+mkdir ~/.cache/moonchild productions/pale moon
+whitelist ~/.cache/moonchild productions/pale moon
 
 caps.drop all
 netfilter
@@ -37,6 +40,7 @@ private-tmp
 #whitelist ~/.pentadactyl
 #whitelist ~/.keysnail.js
 #whitelist ~/.config/gnome-mplayer
+#whitelist ~/.cache/gnome-mplayer/plugin
 #whitelist ~/.pki
 #whitelist ~/.lastpass
 

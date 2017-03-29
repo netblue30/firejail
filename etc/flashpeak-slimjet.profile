@@ -10,6 +10,7 @@ include /etc/firejail/flashpeak-slimjet.local
 #  firejail flashpeak-slimjet --no-sandbox
 #
 noblacklist ~/.config/slimjet
+noblacklist ~/.cache/slimjet
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -28,6 +29,8 @@ seccomp
 whitelist ${DOWNLOADS}
 mkdir ~/.config/slimjet
 whitelist ~/.config/slimjet
+mkdir ~/.cache/slimjet
+whitelist ~/.cache/slimjet
 mkdir ~/.pki
 whitelist ~/.pki
 

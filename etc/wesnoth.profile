@@ -4,6 +4,7 @@ include /etc/firejail/wesnoth.local
 
 # Whitelist-based profile for "Battle for Wesnoth" (game).
 noblacklist ${HOME}/.config/wesnoth
+noblacklist ${HOME}/.cache/wesnoth
 noblacklist ${HOME}/.local/share/wesnoth
 
 include /etc/firejail/disable-common.inc
@@ -22,6 +23,8 @@ private-tmp
 
 mkdir ${HOME}/.local/share/wesnoth
 mkdir ${HOME}/.config/wesnoth
+mkdir ${HOME}/.cache/wesnoth
 whitelist ${HOME}/.local/share/wesnoth
 whitelist ${HOME}/.config/wesnoth
+whitelist ${HOME}/.cache/wesnoth
 include /etc/firejail/whitelist-common.inc

@@ -14,6 +14,10 @@ noblacklist ~/.icedove
 mkdir ~/.icedove
 whitelist ~/.icedove
 
+noblacklist ~/.cache/icedove
+mkdir ~/.cache/icedove
+whitelist ~/.cache/icedove
+
 # allow browsers
 ignore private-tmp
 include /etc/firejail/firefox.profile

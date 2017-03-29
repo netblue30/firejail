@@ -4,6 +4,7 @@ include /etc/firejail/netsurf.local
 
 # Firejail profile for Mozilla Firefox (Iceweasel in Debian)
 noblacklist ~/.config/netsurf
+noblacklist ~/.cache/netsurf
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -19,5 +20,7 @@ tracelog
 whitelist ${DOWNLOADS}
 mkdir ~/.config/netsurf
 whitelist ~/.config/netsurf
+mkdir ~/.cache/netsurf
+whitelist ~/.cache/netsurf
 
 include /etc/firejail/whitelist-common.inc

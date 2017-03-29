@@ -4,6 +4,7 @@ include /etc/firejail/spotify.local
 
 # Spotify media player profile
 noblacklist ${HOME}/.config/spotify
+noblacklist ${HOME}/.cache/spotify
 noblacklist ${HOME}/.local/share/spotify
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -15,6 +16,8 @@ mkdir ${HOME}/.config/spotify
 whitelist ${HOME}/.config/spotify
 mkdir ${HOME}/.local/share/spotify
 whitelist ${HOME}/.local/share/spotify
+mkdir ${HOME}/.cache/spotify
+whitelist ${HOME}/.cache/spotify
 
 caps.drop all
 netfilter

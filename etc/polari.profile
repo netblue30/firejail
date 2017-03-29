@@ -15,6 +15,8 @@ mkdir ${HOME}/.local/share/TpLogger
 whitelist ${HOME}/.local/share/TpLogger
 mkdir ${HOME}/.config/telepathy-account-widgets
 whitelist ${HOME}/.config/telepathy-account-widgets
+mkdir ${HOME}/.cache/telepathy
+whitelist ${HOME}/.cache/telepathy
 mkdir ${HOME}/.purple
 whitelist ${HOME}/.purple
 include /etc/firejail/whitelist-common.inc

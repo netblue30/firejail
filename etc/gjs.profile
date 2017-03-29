@@ -8,6 +8,8 @@ include /etc/firejail/gjs.local
 
 noblacklist ~/.config/libreoffice
 noblacklist ~/.local/share/gnome-photos
+noblacklist ~/.cache/org.gnome.Books
+noblacklist ~/.cache/libgweather
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

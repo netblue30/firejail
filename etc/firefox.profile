@@ -7,6 +7,7 @@ noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
 noblacklist ~/.config/qpdfview
 noblacklist ~/.local/share/qpdfview
+noblacklist ~/.kde4/share/apps/okular
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.pki
 noblacklist ~/.lastpass
@@ -41,6 +42,7 @@ whitelist ~/.pki
 whitelist ~/.lastpass
 whitelist ~/.config/qpdfview
 whitelist ~/.local/share/qpdfview
+whitelist ~/.kde4/share/apps/okular
 whitelist ~/.kde/share/apps/okular
 
 # silverlight

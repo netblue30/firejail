@@ -8,6 +8,8 @@ include /etc/firejail/dolphin.local
 
 noblacklist ~/.config/dolphinrc
 noblacklist ~/.local/share/dolphin
+noblacklist ~/.kde4/share/kde4/services
+noblacklist ~/.kde/share/kde4/services
 
 include /etc/firejail/disable-common.inc
 # dolphin needs to be able to start arbitrary applications so we cannot blacklist their files
@@ -28,4 +30,3 @@ protocol unix
 # private-dev
 # private-tmp
 # private-etc
-

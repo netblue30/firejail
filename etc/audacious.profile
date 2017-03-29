@@ -20,5 +20,4 @@ shell none
 tracelog
 
 private-bin audacious
-private-dev
 private-tmp

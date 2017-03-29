@@ -10,6 +10,9 @@ noblacklist ~/.local/share/scribus
 noblacklist ~/.gimp*
 
 # Support for PDF readers (Scribus 1.5 and higher)
+noblacklist ~/.kde4/share/apps/okular
+noblacklist ~/.kde4/share/config/okularrc
+noblacklist ~/.kde4/share/config/okularpartrc
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.kde/share/config/okularrc
 noblacklist ~/.kde/share/config/okularpartrc

@@ -3,6 +3,10 @@
 include /etc/firejail/okular.local
 
 # KDE okular profile
+noblacklist ~/.kde4/share/apps/okular
+noblacklist ~/.kde4/share/config/okularrc
+noblacklist ~/.kde4/share/config/okularpartrc
+read-only   ~/.kde4/share/config/kdeglobals
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.kde/share/config/okularrc
 noblacklist ~/.kde/share/config/okularpartrc
@@ -24,6 +28,6 @@ shell none
 tracelog
 
 # private-bin okular,kbuildsycoca4,kbuildsycoca5  
-# private-etc X11
+# private-etc fonts,X11
 private-dev
 private-tmp

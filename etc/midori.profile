@@ -2,16 +2,46 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/midori.local
 
-# Midori browser profile
-noblacklist ${HOME}/.config/midori
+# Midori profile
+noblacklist ~/.config/midori
+noblacklist ~/.local/share/midori
+noblacklist ~/.local/share/webkit
+noblacklist ~/.local/share/webkitgtk
+noblacklist ~/.pki
+noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 
+mkdir ~/.config/midori
+whitelist ~/.config/midori
+
+mkdir ~/.cache/midori
+whitelist ~/.cache/midori
+
+mkdir ~/.local/share/midori
+whitelist ~/.local/share/midori
+
+mkdir ~/.local/share/webkit
+whitelist ~/.local/share/webkit
+
+mkdir ~/.local/share/webkitgtk
+whitelist ~/.local/share/webkitgtk
+
+whitelist ${DOWNLOADS}
+whitelist ~/.config/gnome-mplayer
+whitelist ~/.cache/gnome-mplayer/plugin
+mkdir ~/.pki
+whitelist ~/.pki
+whitelist ~/.lastpass
+
+
 caps.drop all
 netfilter
 nonewprivs
-# noroot - noroot break midori on Ubuntu 14.04
-protocol unix,inet,inet6
+# noroot - porblems on Ubuntu 14.04
+protocol unix,inet,inet6,netlink
 seccomp
+tracelog
+
 

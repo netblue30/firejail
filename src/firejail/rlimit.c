@@ -33,7 +33,7 @@ void set_rlimits(void) {
 		if (setrlimit(RLIMIT_NOFILE, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
-			printf("Config rlimit: number of open file descriptors %u\n", cfg.rlimit_nofile);
+			printf("Config rlimit: number of open file descriptors %llu\n", cfg.rlimit_nofile);
 	}
 
 	if (arg_rlimit_nproc) {
@@ -45,7 +45,7 @@ void set_rlimits(void) {
 		if (setrlimit(RLIMIT_NPROC, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
-			printf("Config rlimit: number of processes %u\n", cfg.rlimit_nproc);
+			printf("Config rlimit: number of processes %llu\n", cfg.rlimit_nproc);
 	}
 	
 	if (arg_rlimit_fsize) {
@@ -57,7 +57,7 @@ void set_rlimits(void) {
 		if (setrlimit(RLIMIT_FSIZE, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
-			printf("Config rlimit: maximum file size %u\n", cfg.rlimit_fsize);
+			printf("Config rlimit: maximum file size %llu\n", cfg.rlimit_fsize);
 	}
 	
 	if (arg_rlimit_sigpending) {
@@ -69,6 +69,6 @@ void set_rlimits(void) {
 		if (setrlimit(RLIMIT_SIGPENDING, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
-			printf("Config rlimit: maximum number of signals pending %u\n", cfg.rlimit_sigpending);
+			printf("Config rlimit: maximum number of signals pending %llu\n", cfg.rlimit_sigpending);
 	}
 }

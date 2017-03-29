@@ -63,6 +63,7 @@ blacklist ${HOME}/.config/krunnerrc
 blacklist ${HOME}/.local/share/kglobalaccel
 blacklist ${HOME}/.local/share/konsole
 blacklist ${HOME}/.local/share/solid
+blacklist ${HOME}/.local/share/kservices5
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox

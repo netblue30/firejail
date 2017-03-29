@@ -358,6 +358,8 @@ SYN-cook (https://github.com/SYN-cook)
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- enable/disable join support in /etc/firejail/firejail.config
+	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
+	- firejail.config cleanup
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

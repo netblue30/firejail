@@ -29,6 +29,7 @@
 /etc/firejail/cpio.profile
 /etc/firejail/cryptocat.profile
 /etc/firejail/Cryptocat.profile
+/etc/firejail/cvlc.profile
 /etc/firejail/cyberfox.profile
 /etc/firejail/deadbeef.profile
 /etc/firejail/default.profile

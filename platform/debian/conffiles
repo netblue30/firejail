@@ -113,6 +113,7 @@
 /etc/firejail/keepass2.profile
 /etc/firejail/keepassx.profile
 /etc/firejail/keepassx2.profile
+/etc/firejail/keepassxc.profile
 /etc/firejail/kmail.profile
 /etc/firejail/konversation.profile
 /etc/firejail/less.profile

@@ -2,7 +2,7 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/vlc.local
 
-# VLC media player profile
+# Firejail profile for CVLC
 noblacklist ${HOME}/.config/vlc
 
 include /etc/firejail/disable-common.inc

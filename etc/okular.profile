@@ -6,11 +6,9 @@ include /etc/firejail/okular.local
 noblacklist ~/.kde4/share/apps/okular
 noblacklist ~/.kde4/share/config/okularrc
 noblacklist ~/.kde4/share/config/okularpartrc
-read-only   ~/.kde4/share/config/kdeglobals
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.kde/share/config/okularrc
 noblacklist ~/.kde/share/config/okularpartrc
-read-only   ~/.kde/share/config/kdeglobals
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

@@ -3,6 +3,8 @@
 include /etc/firejail/gwenview.local
 
 # KDE gwenview profile
+noblacklist ~/.kde4/share/apps/gwenview
+noblacklist ~/.kde4/share/config/gwenviewrc
 noblacklist ~/.kde/share/apps/gwenview
 noblacklist ~/.kde/share/config/gwenviewrc
 noblacklist ~/.config/gwenviewrc

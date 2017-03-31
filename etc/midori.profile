@@ -8,7 +8,6 @@ noblacklist ~/.local/share/midori
 noblacklist ~/.local/share/webkit
 noblacklist ~/.local/share/webkitgtk
 noblacklist ~/.pki
-noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

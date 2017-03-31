@@ -35,6 +35,7 @@ firejail (0.9.45) baseline; urgency=low
   * feature: implemented --noblacklist command, profile support
   * feature: config support to disable access to /mnt and /media (disable-mnt)
   * feature: config support to disable join (join)
+  * feature: disabled Go, Rust, and OpenSSL in disable-devel.conf
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,

@@ -90,12 +90,9 @@ static void add_default_list(int fd, int allow_debuggers) {
 #ifdef SYS_process_vm_writev
 	filter_add_blacklist(fd, SYS_process_vm_writev, 0);
 #endif
-
-	// mknod removed in 0.9.29 - it brakes Zotero extension
-	//#ifdef SYS_mknod
-	//		filter_add_blacklist(SYS_mknod, 0);
-	//#endif
-
+//#ifdef SYS_mknod - emoved in 0.9.29 - it breaks Zotero extension
+//		filter_add_blacklist(SYS_mknod, 0);
+//#endif
 #ifdef SYS_sysfs
 	filter_add_blacklist(fd, SYS_sysfs, 0);
 #endif
@@ -192,6 +189,57 @@ static void add_default_list(int fd, int allow_debuggers) {
 #ifdef SYS_get_kernel_syms
 	filter_add_blacklist(fd, SYS_get_kernel_syms, 0);
 #endif
+
+// 0.9.45
+#ifdef SYS_bpf
+	filter_add_blacklist(fd, SYS_bpf, 0);
+#endif
+#ifdef SYS_clock_settime
+	filter_add_blacklist(fd, SYS_clock_settime, 0);
+#endif
+//#ifdef SYS_clone - in use by Firejail
+//	filter_add_blacklist(fd, SYS_clone, 0);
+//#endif
+#ifdef SYS_personality
+	filter_add_blacklist(fd, SYS_personality, 0);
+#endif
+#ifdef SYS_process_vm_writev
+	filter_add_blacklist(fd, SYS_process_vm_writev, 0);
+#endif
+#ifdef SYS_query_module
+	filter_add_blacklist(fd, SYS_query_module, 0);
+#endif
+//#ifdef SYS_quotactl - in use by Firefox
+//	filter_add_blacklist(fd, SYS_quotactl, 0);
+//#endif
+//#ifdef SYS_setns - in use by Firejail
+//	filter_add_blacklist(fd, SYS_setns, 0);
+//#endif
+#ifdef SYS_settimeofday
+	filter_add_blacklist(fd, SYS_settimeofday, 0);
+#endif
+#ifdef SYS_stime
+	filter_add_blacklist(fd, SYS_stime, 0);
+#endif
+#ifdef SYS_umount
+	filter_add_blacklist(fd, SYS_umount, 0);
+#endif
+//#ifdef SYS_unshare - in use by Firejail
+//	filter_add_blacklist(fd, SYS_unshare, 0);
+//#endif
+#ifdef SYS_userfaultfd
+	filter_add_blacklist(fd, SYS_userfaultfd, 0);
+#endif
+#ifdef SYS_ustat
+	filter_add_blacklist(fd, SYS_ustat, 0);
+#endif
+#ifdef SYS_vm86
+	filter_add_blacklist(fd, SYS_vm86, 0);
+#endif
+#ifdef SYS_vm86old
+	filter_add_blacklist(fd, SYS_vm86old, 0);
+#endif
+
 }
 
 // default list

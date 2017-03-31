@@ -15,10 +15,11 @@ rm noblacklist.profile
 rm env.profile
 for i in `seq 1 100`;
 do
-	echo $i
 	echo "hello" > ~/fj-stress-test/testfile$i
 	echo "blacklist ~/fj-stress-test/testfile$i" >> blacklist.profile
+	echo "blacklist \${PATH}/sh" >> blacklist.profile
 	echo "noblacklist ~/fj-stress-test/testfile$i" >> noblacklist.profile
+	echo "noblacklist \${PATH}/sh" >> noblacklist.profile
 	echo "env FJSTRESS$i=stress" >> env.profile
 done
 echo "include blacklist.profile" >> noblacklist.profile
@@ -30,6 +31,7 @@ echo "TESTING: stress env (/test/stress/env.exp)"
 ./env.exp
 
 rm -fr ~/fj-stress-test
+
 rm blacklist.profile
 rm noblacklist.profile
 rm env.profile

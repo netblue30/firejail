@@ -438,8 +438,8 @@ void fs_whitelist(void) {
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			// whitelisting home directory is disabled if --private option is present
 			if (arg_private) {
-				if (arg_debug || arg_debug_whitelists)
-					printf("Removed whitelist path %s, --private option is present\n", entry->data);
+				if (!arg_quiet)
+					printf("Warning: \"%s\" disabled by --private\n", entry->data);
 
 				*entry->data = '\0';
 				continue;

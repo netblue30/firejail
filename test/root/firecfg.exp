@@ -43,4 +43,12 @@ expect {
 	"/usr/local/bin/firefox"
 }
 after 100
+
+send -- "firecfg --fix\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"this option is not supported for root user"
+}
+
+after 100
 puts "\nall done\n"

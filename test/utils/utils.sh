@@ -112,3 +112,8 @@ echo "TESTING: firemon interface (test/utils/firemon-interface.exp)"
 echo "TESTING: firemon name (test/utils/firemon-name.exp)"
 ./firemon-name.exp
 
+echo "TESTING: firecfg --fix (test/utils/firecfg-fix.exp)"
+mv ~/.local/share/applications ~/firejail-test-local-apps
+./firecfg-fix.exp
+rm -fr ~/.local/share/applications
+mv ~/firejail-test-local-apps ~/.local/share/applications

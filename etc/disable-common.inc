@@ -6,11 +6,8 @@ include /etc/firejail/disable-common.local
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
 blacklist-nolog ${HOME}/.bash_history
-blacklist ${HOME}/.local/share/systemd
-blacklist ${HOME}/.config/systemd
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.macromedia
-read-only ${HOME}/.local/share/applications
 
 # X11 session autostart
 blacklist ${HOME}/.xinitrc
@@ -73,6 +70,10 @@ blacklist ${HOME}/.local/share/konsole
 blacklist ${HOME}/.local/share/kservices5
 blacklist ${HOME}/.local/share/plasma
 blacklist ${HOME}/.local/share/solid
+
+# systemd
+blacklist ${HOME}/.local/share/systemd
+blacklist ${HOME}/.config/systemd
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox
@@ -177,9 +178,11 @@ read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
 
 # Make the contents of ~/.local read-only,
-#  except the commonly-used ~/.local/share
+#  except the commonly-used ~/.local/share,
+#   but including ~/.local/share/applications
 read-only  ${HOME}/.local
 read-write ${HOME}/.local/share
+read-only  ${HOME}/.local/share/applications
 
 # top secret
 blacklist ${HOME}/.ecryptfs

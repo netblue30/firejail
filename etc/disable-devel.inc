@@ -65,3 +65,17 @@ blacklist /usr/lib/ruby
 #blacklist /usr/local/lib/python3*
 #blacklist /usr/share/python3*
 #blacklist /usr/include/python3*
+
+#Go
+blacklist /usr/bin/go
+blacklist /usr/bin/gofmt
+blacklist /usr/bin/gccgo
+
+#Rust
+blacklist /usr/bin/rust-gdb
+blacklist /usr/bin/rust-lldb
+blacklist /usr/bin/rustc
+
+#OpenSSL
+blacklist /usr/bin/openssl
+blacklist /usr/bin/openssl-1.0

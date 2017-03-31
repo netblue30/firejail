@@ -10,7 +10,6 @@ noblacklist ~/.local/share/qpdfview
 noblacklist ~/.kde4/share/apps/okular
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.pki
-noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

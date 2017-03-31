@@ -6,7 +6,6 @@ include /etc/firejail/icecat.local
 noblacklist ~/.mozilla
 noblacklist ~/.cache/mozilla
 noblacklist ~/.pki
-noblacklist ~/.lastpass
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

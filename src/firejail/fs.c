@@ -168,6 +168,8 @@ static void disable_file(OPERATION op, const char *filename) {
 				errExit("mounting tmpfs");
 			/* coverity[toctou] */
 			if (chown(fname, s.st_uid, s.st_gid) == -1)
+				errExit("mounting tmpfs chown");
+			if (chmod(fname, s.st_mode) == -1)
 				errExit("mounting tmpfs chmod");
 			last_disable = SUCCESSFUL;
 			fs_logger2("tmpfs", fname);

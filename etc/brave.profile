@@ -5,6 +5,10 @@ include /etc/firejail/brave.local
 # Profile for Brave browser
 noblacklist ~/.config/brave
 noblacklist ~/.pki
+
+# brave uses gpg for built-in password manager
+noblacklist ~/.gnupg
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

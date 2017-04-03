@@ -74,7 +74,7 @@ _firejail()
 
     # if $COMP_CONFIGURE_HINTS is not null, then completions of the form
     # --option=SETTING will include 'SETTING' as a contextual hint
-    [[ "$cur" != -* ]] && _filedir && return 0
+    [[ "$cur" != -* ]] && _command && return 0
 
     if [[ -n $COMP_CONFIGURE_HINTS ]]; then
         COMPREPLY=( $( compgen -W "$( $1 --help 2>&1 | \

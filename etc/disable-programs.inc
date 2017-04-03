@@ -236,6 +236,7 @@ blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
+blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.mozilla/seamonkey
 blacklist ${HOME}/.mpdconf

@@ -2,6 +2,7 @@ firejail (0.9.38.11) baseline; urgency=low
   * development
   * bugfix: set correct mode for --tmpfs
   * bugfix: accept program names in firejail bash completion
+  * bugfix: added --force option to --help screen
   * enhancement: updated copyright statement in all files
   * enhancement: --output cleanup
  -- netblue30 <netblue30@yahoo.com>  Sat, 4 Mar 2017 10:00:00 -0500

@@ -99,6 +99,8 @@ void usage(void) {
 	printf("\t\tby PID.\n\n");
 	
 	printf("\t--env=name=value - set environment variable in the new sandbox\n\n");
+	printf("    --force - attempt to start a new sandbox inside the existing sandbox.\n");
+
 	printf("\t--fs.print=name - print the filesystem log for the sandbox identified\n");
 	printf("\t\tby name.\n\n");
 	printf("\t--fs.print=pid - print the filesystem log  for the sandbox identified\n");

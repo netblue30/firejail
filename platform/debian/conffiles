@@ -203,8 +203,9 @@
 /etc/firejail/uudeview.profile
 /etc/firejail/vim.profile
 /etc/firejail/virtualbox.profile
-/etc/firejail/vivaldi-beta.profile
 /etc/firejail/vivaldi.profile
+/etc/firejail/vivaldi-beta.profile
+/etc/firejail/vivaldi-stable.profile
 /etc/firejail/vlc.profile
 /etc/firejail/w3m.profile
 /etc/firejail/warzone2100.profile

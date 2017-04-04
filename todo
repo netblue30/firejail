@@ -1,7 +1,0 @@
-add --nosound to --help
---force
---git-install
---git-uninstall
---join-or-start
---netns
---private-opt

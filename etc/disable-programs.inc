@@ -218,6 +218,7 @@ blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/nautilus
 blacklist ${HOME}/.local/share/nemo
+blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/qpdfview

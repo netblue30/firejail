@@ -9,6 +9,7 @@ noblacklist ~/.kde/share/apps/gwenview
 noblacklist ~/.kde/share/config/gwenviewrc
 noblacklist ~/.config/gwenviewrc
 noblacklist ~/.config/org.kde.gwenviewrc
+noblacklist ~/.local/share/org.kde.gwenview
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

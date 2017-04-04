@@ -74,6 +74,7 @@ void usage(void) {
 	printf("    --dns.print=name|pid - print DNS configuration.\n");
 	
 	printf("    --env=name=value - set environment variable.\n");
+	printf("    --force - attempt to start a new sandbox inside the existing sandbox.\n");
 	printf("    --fs.print=name|pid - print the filesystem log.\n");
 	printf("    --get=name|pid filename - get a file from sandbox container.\n");
 #ifdef HAVE_GIT_INSTALL
@@ -98,6 +99,7 @@ void usage(void) {
 #ifdef HAVE_NETWORK	
 	printf("    --join-network=name|pid - join the network namespace.\n");
 #endif
+	printf("    --join-or-start=name|pid - join the sandbox or start a new one.\n");
 	printf("    --list - list all sandboxes.\n");
 	printf("    --ls=name|pid dir_or_filename - list files in sandbox container.\n");
 #ifdef HAVE_NETWORK	
@@ -115,6 +117,7 @@ void usage(void) {
 	printf("    --net=none - enable a new, unconnected network namespace.\n");
 	printf("    --netfilter[=filename] - enable the default client network filter.\n");
 	printf("    --netfilter6=filename - enable the IPv6 network filter.\n");
+	printf("    --netns=name - Run the program in a named, persistent network namespace.\n");
 	printf("    --netstats - monitor network statistics.\n");
 #endif
 	printf("    --nice=value - set nice value.\n");
@@ -122,11 +125,12 @@ void usage(void) {
 	printf("    --noblacklist=filename - disable blacklist for file or directory .\n");
 	printf("    --noexec=filename - remount the file or directory noexec nosuid and nodev.\n");
 	printf("    --nogroups - disable supplementary groups.\n");
+	printf("    --nonewprivs - sets the NO_NEW_PRIVS prctl.\n");
 	printf("    --noprofile - do not use a security profile.\n");
 #ifdef HAVE_USERNS		 	
 	printf("    --noroot - install a user namespace with only the current user.\n");
 #endif
-	printf("    --nonewprivs - sets the NO_NEW_PRIVS prctl.\n");
+	printf("    --nosound - disable sound system.\n");
 	printf("    --nowhitelist=filename - disable whitelist for file or directory .\n");
 	printf("    --output=logfile - stdout logging and log rotation.\n");
 	printf("    --overlay - mount a filesystem overlay on top of the current filesystem.\n");
@@ -147,6 +151,7 @@ void usage(void) {
 	printf("    --private-etc=file,directory - build a new /etc in a temporary\n");
 	printf("\tfilesystem, and copy the files and directories in the list.\n");
 	printf("    --private-tmp - mount a tmpfs on top of /tmp directory.\n");
+	printf("    --private-opt=file,directory - build a new /opt in a temporary filesystem.\n");
 	printf("    --profile=filename - use a custom profile.\n");
 	printf("    --profile-path=directory - use this directory to look for profile files.\n");
 	printf("    --protocol=protocol,protocol,protocol - enable protocol filter.\n");

@@ -3,4 +3,4 @@
 include /etc/firejail/vivaldi-beta.local
 
 # Vivaldi Beta browser profile
-include /etc/firejail/vivaldi.profile
+include /etc/firejail/vivaldi-stable.profile

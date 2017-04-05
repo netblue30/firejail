@@ -362,6 +362,7 @@ SYN-cook (https://github.com/SYN-cook)
 	- blacklist lots of KDE files
 	- blacklist nautilus and nemo in ~/.local/share/
 	- added mediathekview profile
+	- blacklist attic and borg
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- updated default seccomp filters - added  bpf, clock_settime, personality, process_vm_writev, query_module,

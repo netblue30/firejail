@@ -15,6 +15,7 @@ blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.atom
+blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
 blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.claws-mail
@@ -46,6 +47,7 @@ blacklist ${HOME}/.config/audacious
 blacklist ${HOME}/.config/aweather
 blacklist ${HOME}/.config/blender
 blacklist ${HOME}/.config/bless
+blacklist ${HOME}/.config/borg
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/caja
@@ -288,6 +290,8 @@ blacklist ${HOME}/.cache/8pecxstudios
 blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/attic
+blacklist ${HOME}/.cache/borg
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/qupzilla

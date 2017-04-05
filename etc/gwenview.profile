@@ -27,5 +27,5 @@ private-dev
 
 # Experimental:
 #shell none
-#private-bin gwenview
+#private-bin gwenview,kbuildsycoca4,gimp,gimp-2.8
 #private-etc X11

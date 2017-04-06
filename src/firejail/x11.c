@@ -356,6 +356,7 @@ void x11_start_xvfb(int argc, char **argv) {
 		(void) rv;
 	}
 
+	assert(display_str);
 	setenv("DISPLAY", display_str, 1);
 	// run attach command
 	jail = fork();

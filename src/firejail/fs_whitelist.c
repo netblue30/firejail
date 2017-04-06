@@ -567,6 +567,10 @@ void fs_whitelist(void) {
 		free(fname);
 		entry = entry->next;
 	}
+	
+	// release nowhitelist memory
+	assert(nowhitelist);
+	free(nowhitelist);
 		
 	// /home/user
 	if (home_dir) {

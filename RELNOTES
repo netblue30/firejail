@@ -1,18 +1,8 @@
 firejail (0.9.45) baseline; urgency=low
   * development version, work in progress
-  * Gentoo compile patch
-  * security: --bandwidth root shell found by Martin Carpenter (CVE-2017-5207)
-  * security: disabled --allow-debuggers when running on kernel
-    versions prior to 4.8; a kernel bug in ptrace system call
-    allows a full bypass of seccomp filter; problem reported by Lizzie Dixon
-    (CVE-2017-5206)
-  * security: overwrite /etc/resolv.conf found by Martin Carpenter (CVE-2016-10118)
-  * security: TOCTOU exploit for --get and --put found by Daniel Hodson
-  * security: invalid environment exploit found by Martin Carpenter (CVE-2016-10122)
   * security: split most of networking code in a separate executable
   * security: split seccomp filter code configuration in a separate executable
   * security: split file copying in private option in a separate executable
-  * security: root exploit found by Sebastian Krahmer (CVE-2017-5180)
   * feature: disable gnupg and systemd directories under /run/user
   * feature: test coverage (gcov) support
   * feature: allow root user access to /dev/shm (--noblacklist=/dev/shm)
@@ -45,6 +35,77 @@ firejail (0.9.45) baseline; urgency=low
   * new profiles: Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
+
+firejail (0.9.44.10) baseline; urgency=low
+  * security: when using --x11=xorg and --net, incorrect processing of
+    the return code of /usr/bin/xauth could end up in starting the
+    sandbox without X11 security extension installed. Problem found/fixed
+    by Zack Weinberg
+  * bugfix: ~/.pki directory whitelisted and later blacklisted. This affects 
+    most browsers, and disables the custom certificates installed by the user
+  * bugfix: firecfg config fix
+  * bugfix: gajim security profile fix
+  * bugfix: man page fix
+  * bugfix: force-nonewprivs fix for /etc/firejail/firejail.config
+  * bugfix: xephyr-extra-params fix for /etc/firejail/firejail.config
+  * bugfix: memory corruption in noblacklist processing
+  * bugfix: --quiet fix for Arch and Fedora systems
+  * bugfix: updated Keepass(x) profiles
+  * bugfix: firemon --nowrap problem
+  * bugfix: document firemon --nowrap in man page and in --help option
+  * bugfix: bash completion for --noblacklist command
+  * bugfix: vlc profile fix
+  * bugfix: fixed handling of .local profile files when the software is
+    installed in ~/.local directory
+  * bugfix: temporarily remove private-tmp from all profiles, until a fix for
+    .Xauthority file handling in KDE becomes available
+  * maintenance: --output cleanup
+  * maintenance: updated copyright statement in all files
+ -- netblue30 <netblue30@yahoo.com>  Sat, 18 Mar 2017 10:00:00 -0500
+
+firejail (0.9.44.8) baseline; urgency=low
+  * bugfix: fix broken PulseAudio support
+ -- netblue30 <netblue30@yahoo.com>  Wed, 18 Jan 2017 10:00:00 -0500
+
+firejail (0.9.44.6) baseline; urgency=low
+  * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week,
+     new CVE code assigned after release: CVE-2017-5940
+  * security: major cleanup of file copying code
+  * security: tightening the rules for --chroot and --overlay features
+  * bugfix: ported Gentoo compile patch
+  * bugfix: Nvidia drivers bug in --private-dev
+  * bugfix: fix ASSERT_PERMS_FD macro
+  * feature: allow local customization using .local files under /etc/firejail
+    backported from our development branch
+  * feature: spoof machine-id backported from our development branch
+ -- netblue30 <netblue30@yahoo.com>  Sun, 15 Jan 2017 10:00:00 -0500
+
+firejail (0.9.44.4) baseline; urgency=low
+  * security: --bandwidth root shell found by Martin Carpenter (CVE-2017-5207)
+  * security: disabled --allow-debuggers when running on kernel
+    versions prior to 4.8; a kernel bug in ptrace system call
+    allows a full bypass of seccomp filter; problem reported by Lizzie Dixon
+    (CVE-2017-5206)
+  * security: root exploit found by Sebastian Krahmer (CVE-2017-5180)
+ -- netblue30 <netblue30@yahoo.com>  Sat, 7 Jan 2017 10:00:00 -0500
+
+firejail (0.9.44.2) baseline; urgency=low
+  * security: overwrite /etc/resolv.conf found by Martin Carpenter (CVE-2016-10118)
+  * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
+  * security: invalid environment exploit found by Martin Carpenter (CVE-2016-10122)
+  * security: several security enhancements
+  * bugfix: crashing VLC by pressing Ctrl-O
+  * bugfix: use user configured icons in KDE
+  * bugfix: mkdir and mkfile are not applied to private directories
+  * bugfix: cannot open files on Deluge running under KDE
+  * bugfix: --private=dir where dir is the user home directory
+  * bugfix: cannot start Vivaldi browser
+  * bugfix: cannot start mupdf
+  * bugfix: ssh profile problems
+  * bugfix: --quiet
+  * bugfix: quiet in git profile
+  * bugfix: memory corruption
+ -- netblue30 <netblue30@yahoo.com>  Fri, 2 Dec 2016 08:00:00 -0500
 
 firejail (0.9.44) baseline; urgency=low
   * CVE-2016-9016 submitted by Aleksey Manevich
@@ -153,6 +214,37 @@ firejail (0.9.40) baseline; urgency=low
   * build rpm packages using "make rpms"
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Sun, 29 May 2016 08:00:00 -0500
+
+firejail (0.9.38.10) baseline; urgency=low
+  * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week
+     new CVE code assigned after release: CVE-2017-5940
+  * security: tightening the rules for --chroot
+  * bugfix: ported Gentoo compile patch
+  * bugfix: fix ASSERT_PERMS_FD macro
+ -- netblue30 <netblue30@yahoo.com>  Sun, 15 Jan 2017 10:00:00 -0500
+
+firejail (0.9.38.8) baseline; urgency=low
+  * security: root exploit found by Sebastian Krahmer (CVE-2017-5180)
+ -- netblue30 <netblue30@yahoo.com>  Sat, 7 Jan 2017 10:00:00 -0500
+
+firejail (0.9.38.6) baseline; urgency=low
+  * security: overwrite /etc/resolv.conf found by Martin Carpenter (CVE-2016-10118)
+  * bugfix: crashing VLC by pressing Ctrl-O
+ -- netblue30 <netblue30@yahoo.com>  Fri, 16 Dec 2016 10:00:00 -0500
+
+firejail (0.9.38.4) baseline; urgency=low
+  * CVE-2016-7545 submitted by Aleksey Manevich
+  * bugfixes 
+ -- netblue30 <netblue30@yahoo.com>  Mon, 10 Oct 2016 10:00:00 -0500
+
+firejail (0.9.38.2) baseline; urgency=low
+  * security: --whitelist deleted files, submitted by Vasya Novikov
+  * security: disable x32 ABI, submitted by Jann Horn
+  * security: tighten --chroot, submitted by Jann Horn
+  * security: terminal sandbox escape, submitted by Stephan Sokolow
+  * feature: clean local overlay storage directory (--overlay-clean)
+  * bugfixes
+ -- netblue30 <netblue30@yahoo.com>  Tue, 23 Aug 2016 10:00:00 -0500
 
 firejail (0.9.38) baseline; urgency=low
   * IPv6 support (--ip6 and --netfilter6)

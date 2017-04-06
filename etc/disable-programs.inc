@@ -45,6 +45,8 @@ blacklist ${HOME}/.config/arkrc
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
 blacklist ${HOME}/.config/aweather
+blacklist ${HOME}/.config/baloofilerc
+blacklist ${HOME}/.config/baloorc
 blacklist ${HOME}/.config/blender
 blacklist ${HOME}/.config/bless
 blacklist ${HOME}/.config/borg
@@ -159,6 +161,7 @@ blacklist ${HOME}/.kde4/share/apps/khtml
 blacklist ${HOME}/.kde4/share/apps/konqsidebartng
 blacklist ${HOME}/.kde4/share/apps/konqueror
 blacklist ${HOME}/.kde4/share/apps/okular
+blacklist ${HOME}/.kde4/share/config/baloofilerc
 blacklist ${HOME}/.kde4/share/config/gwenviewrc
 blacklist ${HOME}/.kde4/share/config/k3brc
 blacklist ${HOME}/.kde4/share/config/kcookiejarrc
@@ -174,6 +177,7 @@ blacklist ${HOME}/.kde/share/apps/khtml
 blacklist ${HOME}/.kde/share/apps/konqsidebartng
 blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/okular
+blacklist ${HOME}/.kde/share/config/baloofilerc
 blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.kde/share/config/k3brc
 blacklist ${HOME}/.kde/share/config/kcookiejarrc
@@ -202,6 +206,7 @@ blacklist ${HOME}/.local/share/SuperHexagon
 blacklist ${HOME}/.local/share/Terraria
 blacklist ${HOME}/.local/share/TpLogger
 blacklist ${HOME}/.local/share/aspyr-media
+blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/data/Mumble
 blacklist ${HOME}/.local/share/dolphin

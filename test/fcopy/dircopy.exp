@@ -83,7 +83,8 @@ after 100
 send -- "ls -al dest\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
-	"drwxr-xr-x"
+	"drwxr-xr-x" { puts "umask 0022\n" }
+	"drwxrwxr-x" { puts "umask 0002\n" }
 }
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
@@ -99,7 +100,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
-	"rwxr-xr-x"
+	"rwxr-xr-x" { puts "umask 0022\n" }
+	"rwxrwxr-x" { puts "umask 0002\n" }
 }
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
@@ -107,7 +109,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
-	"rw-r--r--"
+	"rw-r--r--" { puts "umask 0022\n" }
+	"rw-rw-r--" { puts "umask 0002\n" }
 }
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}

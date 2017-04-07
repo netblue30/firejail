@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.44"
+VERSION="0.9.45"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -19,11 +19,25 @@ install -m 755 /usr/bin/firecfg firejail-$VERSION/usr/bin/.
 
 mkdir -p  firejail-$VERSION/usr/lib/firejail
 install -m 755 /usr/lib/firejail/faudit  firejail-$VERSION/usr/lib/firejail/.
+install -m 755 /usr/lib/firejail/fcopy  firejail-$VERSION/usr/lib/firejail/.
+install -m 755 /usr/lib/firejail/fgit-install.sh  firejail-$VERSION/usr/lib/firejail/.
+install -m 755 /usr/lib/firejail/fgit-uninstall.sh  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/firecfg.config  firejail-$VERSION/usr/lib/firejail/.
+# Python 3  is not available on CentOS
+#install -m 755 /usr/lib/firejail/fix_private-bin.py  firejail-$VERSION/usr/lib/firejail/.
+#install -m 755 /usr/lib/firejail/fjclip.py  firejail-$VERSION/usr/lib/firejail/.
+#install -m 755 /usr/lib/firejail/fjdisplay.py  firejail-$VERSION/usr/lib/firejail/.
+#install -m 755 /usr/lib/firejail/fjresize.py  firejail-$VERSION/usr/lib/firejail/.
+install -m 755 /usr/lib/firejail/fnet  firejail-$VERSION/usr/lib/firejail/.
+install -m 755 /usr/lib/firejail/fseccomp  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/fshaper.sh  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/ftee  firejail-$VERSION/usr/lib/firejail/.
-install -m 644 /usr/lib/firejail/libtrace.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libtracelog.so  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/libtrace.so  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/seccomp  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/seccomp.amd64  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/seccomp.debug  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/seccomp.i386  firejail-$VERSION/usr/lib/firejail/.
 
 mkdir -p firejail-$VERSION/usr/share/man/man1
 install -m 644 /usr/share/man/man1/firejail.1.gz firejail-$VERSION/usr/share/man/man1/.
@@ -40,175 +54,7 @@ install -m 644 /usr/share/doc/firejail/README firejail-$VERSION/usr/share/doc/pa
 install -m 644 /usr/share/doc/firejail/RELNOTES firejail-$VERSION/usr/share/doc/packages/firejail/.
 
 mkdir -p firejail-$VERSION/etc/firejail
-install -m 644 /etc/firejail/0ad.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/abrowser.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/atom-beta.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/atom.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/atril.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/audacious.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/audacity.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/aweather.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/bitlbee.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/brave.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/cherrytree.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/chromium-browser.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/chromium.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/clementine.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/cmus.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/conkeror.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/corebird.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/cpio.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/cyberfox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/Cyberfox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/deadbeef.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/default.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/deluge.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/dillo.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/disable-common.inc firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/disable-devel.inc firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/disable-passwdmgr.inc firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/disable-programs.inc firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/dnscrypt-proxy.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/dnsmasq.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/dosbox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/dropbox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/empathy.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/eom.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/epiphany.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/evince.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/fbreader.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/file.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/filezilla.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/firefox-esr.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/firefox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/firejail.config firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/flashpeak-slimjet.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/franz.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gajim.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gitter.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gnome-chess.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gnome-mplayer.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/google-chrome-beta.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/google-chrome.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/google-chrome-stable.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/google-chrome-unstable.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/google-play-music-desktop-player.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gpredict.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gtar.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gthumb.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gwenview.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gzip.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/hedgewars.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/hexchat.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/icecat.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/icedove.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/iceweasel.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/inox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/jitsi.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/kmail.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/konversation.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/less.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/libreoffice.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/localc.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/lodraw.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/loffice.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/lofromtemplate.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/login.users firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/loimpress.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/lomath.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/loweb.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/lowriter.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/lxterminal.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/mathematica.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/Mathematica.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/mcabber.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/midori.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/mpv.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/mupen64plus.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/netsurf.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/nolocal.net firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/okular.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/openbox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/opera-beta.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/opera.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/palemoon.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/parole.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/pidgin.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/pix.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/polari.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/psi-plus.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/qbittorrent.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/qtox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/quassel.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/quiterss.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/qutebrowser.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/rhythmbox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/rtorrent.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/seamonkey-bin.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/seamonkey.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/server.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/skypeforlinux.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/skype.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/slack.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/snap.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/soffice.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/spotify.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/ssh.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/steam.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/stellarium.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/strings.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/tar.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/telegram.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/Telegram.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/thunderbird.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/totem.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/transmission-gtk.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/transmission-qt.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/uget-gtk.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/unbound.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/unrar.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/unzip.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/uudeview.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/vivaldi-beta.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/vivaldi.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/vlc.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/warzone2100.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/webserver.net firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/weechat-curses.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/weechat.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/wesnoth.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/whitelist-common.inc firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/wine.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/xchat.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/xplayer.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/xreader.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/xviewer.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/xzdec.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/xz.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/zathura.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/7z.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/keepass.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/keepassx.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/claws-mail.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/mutt.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/git.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/emacs.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/vim.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/xpdf.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/virtualbox.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/openshot.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/flowblade.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/eog.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/evolution.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/feh.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/gimp.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/inkscape.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/luminance-hdr.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/mupdf.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/qpdfview.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/ranger.profile firejail-$VERSION/etc/firejail/.
-install -m 644 /etc/firejail/synfigstudio.profile firejail-$VERSION/etc/firejail/.
-
+install -m 644 /etc/firejail/* firejail-$VERSION/etc/firejail/.
 
 mkdir -p firejail-$VERSION/usr/share/bash-completion/completions
 install -m 644 /usr/share/bash-completion/completions/firejail  firejail-$VERSION/usr/share/bash-completion/completions/.
@@ -257,177 +103,269 @@ cp -a * %{buildroot}
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(-,root,root,-)
-%config(noreplace) %{_sysconfdir}/%{name}/0ad.profile
-%config(noreplace) %{_sysconfdir}/%{name}/abrowser.profile
-%config(noreplace) %{_sysconfdir}/%{name}/atom-beta.profile
-%config(noreplace) %{_sysconfdir}/%{name}/atom.profile
-%config(noreplace) %{_sysconfdir}/%{name}/atril.profile
-%config(noreplace) %{_sysconfdir}/%{name}/audacious.profile
-%config(noreplace) %{_sysconfdir}/%{name}/audacity.profile
-%config(noreplace) %{_sysconfdir}/%{name}/aweather.profile
-%config(noreplace) %{_sysconfdir}/%{name}/bitlbee.profile
-%config(noreplace) %{_sysconfdir}/%{name}/brave.profile
-%config(noreplace) %{_sysconfdir}/%{name}/cherrytree.profile
-%config(noreplace) %{_sysconfdir}/%{name}/chromium-browser.profile
-%config(noreplace) %{_sysconfdir}/%{name}/chromium.profile
-%config(noreplace) %{_sysconfdir}/%{name}/clementine.profile
-%config(noreplace) %{_sysconfdir}/%{name}/cmus.profile
-%config(noreplace) %{_sysconfdir}/%{name}/conkeror.profile
-%config(noreplace) %{_sysconfdir}/%{name}/corebird.profile
-%config(noreplace) %{_sysconfdir}/%{name}/cpio.profile
-%config(noreplace) %{_sysconfdir}/%{name}/cyberfox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/Cyberfox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/deadbeef.profile
-%config(noreplace) %{_sysconfdir}/%{name}/default.profile
-%config(noreplace) %{_sysconfdir}/%{name}/deluge.profile
-%config(noreplace) %{_sysconfdir}/%{name}/dillo.profile
-%config(noreplace) %{_sysconfdir}/%{name}/disable-common.inc
-%config(noreplace) %{_sysconfdir}/%{name}/disable-devel.inc
-%config(noreplace) %{_sysconfdir}/%{name}/disable-passwdmgr.inc
-%config(noreplace) %{_sysconfdir}/%{name}/disable-programs.inc
-%config(noreplace) %{_sysconfdir}/%{name}/dnscrypt-proxy.profile
-%config(noreplace) %{_sysconfdir}/%{name}/dnsmasq.profile
-%config(noreplace) %{_sysconfdir}/%{name}/dosbox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/dropbox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/empathy.profile
-%config(noreplace) %{_sysconfdir}/%{name}/eom.profile
-%config(noreplace) %{_sysconfdir}/%{name}/epiphany.profile
-%config(noreplace) %{_sysconfdir}/%{name}/evince.profile
-%config(noreplace) %{_sysconfdir}/%{name}/fbreader.profile
-%config(noreplace) %{_sysconfdir}/%{name}/file.profile
-%config(noreplace) %{_sysconfdir}/%{name}/filezilla.profile
-%config(noreplace) %{_sysconfdir}/%{name}/firefox-esr.profile
-%config(noreplace) %{_sysconfdir}/%{name}/firefox.profile
+%{_sysconfdir}/%{name}/0ad.profile
+%{_sysconfdir}/%{name}/abrowser.profile
+%{_sysconfdir}/%{name}/atom-beta.profile
+%{_sysconfdir}/%{name}/atom.profile
+%{_sysconfdir}/%{name}/atril.profile
+%{_sysconfdir}/%{name}/audacious.profile
+%{_sysconfdir}/%{name}/audacity.profile
+%{_sysconfdir}/%{name}/aweather.profile
+%{_sysconfdir}/%{name}/bitlbee.profile
+%{_sysconfdir}/%{name}/brave.profile
+%{_sysconfdir}/%{name}/cherrytree.profile
+%{_sysconfdir}/%{name}/chromium-browser.profile
+%{_sysconfdir}/%{name}/chromium.profile
+%{_sysconfdir}/%{name}/clementine.profile
+%{_sysconfdir}/%{name}/cmus.profile
+%{_sysconfdir}/%{name}/conkeror.profile
+%{_sysconfdir}/%{name}/corebird.profile
+%{_sysconfdir}/%{name}/cpio.profile
+%{_sysconfdir}/%{name}/cyberfox.profile
+%{_sysconfdir}/%{name}/Cyberfox.profile
+%{_sysconfdir}/%{name}/deadbeef.profile
+%{_sysconfdir}/%{name}/default.profile
+%{_sysconfdir}/%{name}/deluge.profile
+%{_sysconfdir}/%{name}/dillo.profile
+%{_sysconfdir}/%{name}/disable-common.inc
+%{_sysconfdir}/%{name}/disable-devel.inc
+%{_sysconfdir}/%{name}/disable-passwdmgr.inc
+%{_sysconfdir}/%{name}/disable-programs.inc
+%{_sysconfdir}/%{name}/dnscrypt-proxy.profile
+%{_sysconfdir}/%{name}/dnsmasq.profile
+%{_sysconfdir}/%{name}/dosbox.profile
+%{_sysconfdir}/%{name}/dropbox.profile
+%{_sysconfdir}/%{name}/empathy.profile
+%{_sysconfdir}/%{name}/eom.profile
+%{_sysconfdir}/%{name}/epiphany.profile
+%{_sysconfdir}/%{name}/evince.profile
+%{_sysconfdir}/%{name}/fbreader.profile
+%{_sysconfdir}/%{name}/file.profile
+%{_sysconfdir}/%{name}/filezilla.profile
+%{_sysconfdir}/%{name}/firefox-esr.profile
+%{_sysconfdir}/%{name}/firefox.profile
 %config(noreplace) %{_sysconfdir}/%{name}/firejail.config
-%config(noreplace) %{_sysconfdir}/%{name}/flashpeak-slimjet.profile
-%config(noreplace) %{_sysconfdir}/%{name}/franz.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gajim.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gitter.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gnome-chess.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gnome-mplayer.profile
-%config(noreplace) %{_sysconfdir}/%{name}/google-chrome-beta.profile
-%config(noreplace) %{_sysconfdir}/%{name}/google-chrome.profile
-%config(noreplace) %{_sysconfdir}/%{name}/google-chrome-stable.profile
-%config(noreplace) %{_sysconfdir}/%{name}/google-chrome-unstable.profile
-%config(noreplace) %{_sysconfdir}/%{name}/google-play-music-desktop-player.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gpredict.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gtar.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gthumb.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gwenview.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gzip.profile
-%config(noreplace) %{_sysconfdir}/%{name}/hedgewars.profile
-%config(noreplace) %{_sysconfdir}/%{name}/hexchat.profile
-%config(noreplace) %{_sysconfdir}/%{name}/icecat.profile
-%config(noreplace) %{_sysconfdir}/%{name}/icedove.profile
-%config(noreplace) %{_sysconfdir}/%{name}/iceweasel.profile
-%config(noreplace) %{_sysconfdir}/%{name}/inox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/jitsi.profile
-%config(noreplace) %{_sysconfdir}/%{name}/kmail.profile
-%config(noreplace) %{_sysconfdir}/%{name}/konversation.profile
-%config(noreplace) %{_sysconfdir}/%{name}/less.profile
-%config(noreplace) %{_sysconfdir}/%{name}/libreoffice.profile
-%config(noreplace) %{_sysconfdir}/%{name}/localc.profile
-%config(noreplace) %{_sysconfdir}/%{name}/lodraw.profile
-%config(noreplace) %{_sysconfdir}/%{name}/loffice.profile
-%config(noreplace) %{_sysconfdir}/%{name}/lofromtemplate.profile
+%{_sysconfdir}/%{name}/flashpeak-slimjet.profile
+%{_sysconfdir}/%{name}/franz.profile
+%{_sysconfdir}/%{name}/gajim.profile
+%{_sysconfdir}/%{name}/gitter.profile
+%{_sysconfdir}/%{name}/gnome-chess.profile
+%{_sysconfdir}/%{name}/gnome-mplayer.profile
+%{_sysconfdir}/%{name}/google-chrome-beta.profile
+%{_sysconfdir}/%{name}/google-chrome.profile
+%{_sysconfdir}/%{name}/google-chrome-stable.profile
+%{_sysconfdir}/%{name}/google-chrome-unstable.profile
+%{_sysconfdir}/%{name}/google-play-music-desktop-player.profile
+%{_sysconfdir}/%{name}/gpredict.profile
+%{_sysconfdir}/%{name}/gtar.profile
+%{_sysconfdir}/%{name}/gthumb.profile
+%{_sysconfdir}/%{name}/gwenview.profile
+%{_sysconfdir}/%{name}/gzip.profile
+%{_sysconfdir}/%{name}/hedgewars.profile
+%{_sysconfdir}/%{name}/hexchat.profile
+%{_sysconfdir}/%{name}/icecat.profile
+%{_sysconfdir}/%{name}/icedove.profile
+%{_sysconfdir}/%{name}/iceweasel.profile
+%{_sysconfdir}/%{name}/inox.profile
+%{_sysconfdir}/%{name}/jitsi.profile
+%{_sysconfdir}/%{name}/kmail.profile
+%{_sysconfdir}/%{name}/konversation.profile
+%{_sysconfdir}/%{name}/less.profile
+%{_sysconfdir}/%{name}/libreoffice.profile
+%{_sysconfdir}/%{name}/localc.profile
+%{_sysconfdir}/%{name}/lodraw.profile
+%{_sysconfdir}/%{name}/loffice.profile
+%{_sysconfdir}/%{name}/lofromtemplate.profile
 %config(noreplace) %{_sysconfdir}/%{name}/login.users
-%config(noreplace) %{_sysconfdir}/%{name}/loimpress.profile
-%config(noreplace) %{_sysconfdir}/%{name}/lomath.profile
-%config(noreplace) %{_sysconfdir}/%{name}/loweb.profile
-%config(noreplace) %{_sysconfdir}/%{name}/lowriter.profile
-%config(noreplace) %{_sysconfdir}/%{name}/lxterminal.profile
-%config(noreplace) %{_sysconfdir}/%{name}/mathematica.profile
-%config(noreplace) %{_sysconfdir}/%{name}/Mathematica.profile
-%config(noreplace) %{_sysconfdir}/%{name}/mcabber.profile
-%config(noreplace) %{_sysconfdir}/%{name}/midori.profile
-%config(noreplace) %{_sysconfdir}/%{name}/mpv.profile
-%config(noreplace) %{_sysconfdir}/%{name}/mupen64plus.profile
-%config(noreplace) %{_sysconfdir}/%{name}/netsurf.profile
-%config(noreplace) %{_sysconfdir}/%{name}/nolocal.net
-%config(noreplace) %{_sysconfdir}/%{name}/okular.profile
-%config(noreplace) %{_sysconfdir}/%{name}/openbox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/opera-beta.profile
-%config(noreplace) %{_sysconfdir}/%{name}/opera.profile
-%config(noreplace) %{_sysconfdir}/%{name}/palemoon.profile
-%config(noreplace) %{_sysconfdir}/%{name}/parole.profile
-%config(noreplace) %{_sysconfdir}/%{name}/pidgin.profile
-%config(noreplace) %{_sysconfdir}/%{name}/pix.profile
-%config(noreplace) %{_sysconfdir}/%{name}/polari.profile
-%config(noreplace) %{_sysconfdir}/%{name}/psi-plus.profile
-%config(noreplace) %{_sysconfdir}/%{name}/qbittorrent.profile
-%config(noreplace) %{_sysconfdir}/%{name}/qtox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/quassel.profile
-%config(noreplace) %{_sysconfdir}/%{name}/quiterss.profile
-%config(noreplace) %{_sysconfdir}/%{name}/qutebrowser.profile
-%config(noreplace) %{_sysconfdir}/%{name}/rhythmbox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/rtorrent.profile
-%config(noreplace) %{_sysconfdir}/%{name}/seamonkey-bin.profile
-%config(noreplace) %{_sysconfdir}/%{name}/seamonkey.profile
-%config(noreplace) %{_sysconfdir}/%{name}/server.profile
-%config(noreplace) %{_sysconfdir}/%{name}/skypeforlinux.profile
-%config(noreplace) %{_sysconfdir}/%{name}/skype.profile
-%config(noreplace) %{_sysconfdir}/%{name}/slack.profile
-%config(noreplace) %{_sysconfdir}/%{name}/snap.profile
-%config(noreplace) %{_sysconfdir}/%{name}/soffice.profile
-%config(noreplace) %{_sysconfdir}/%{name}/spotify.profile
-%config(noreplace) %{_sysconfdir}/%{name}/ssh.profile
-%config(noreplace) %{_sysconfdir}/%{name}/steam.profile
-%config(noreplace) %{_sysconfdir}/%{name}/stellarium.profile
-%config(noreplace) %{_sysconfdir}/%{name}/strings.profile
-%config(noreplace) %{_sysconfdir}/%{name}/tar.profile
-%config(noreplace) %{_sysconfdir}/%{name}/telegram.profile
-%config(noreplace) %{_sysconfdir}/%{name}/Telegram.profile
-%config(noreplace) %{_sysconfdir}/%{name}/thunderbird.profile
-%config(noreplace) %{_sysconfdir}/%{name}/totem.profile
-%config(noreplace) %{_sysconfdir}/%{name}/transmission-gtk.profile
-%config(noreplace) %{_sysconfdir}/%{name}/transmission-qt.profile
-%config(noreplace) %{_sysconfdir}/%{name}/uget-gtk.profile
-%config(noreplace) %{_sysconfdir}/%{name}/unbound.profile
-%config(noreplace) %{_sysconfdir}/%{name}/unrar.profile
-%config(noreplace) %{_sysconfdir}/%{name}/unzip.profile
-%config(noreplace) %{_sysconfdir}/%{name}/uudeview.profile
-%config(noreplace) %{_sysconfdir}/%{name}/vivaldi-beta.profile
-%config(noreplace) %{_sysconfdir}/%{name}/vivaldi.profile
-%config(noreplace) %{_sysconfdir}/%{name}/vlc.profile
-%config(noreplace) %{_sysconfdir}/%{name}/warzone2100.profile
-%config(noreplace) %{_sysconfdir}/%{name}/webserver.net
-%config(noreplace) %{_sysconfdir}/%{name}/weechat-curses.profile
-%config(noreplace) %{_sysconfdir}/%{name}/weechat.profile
-%config(noreplace) %{_sysconfdir}/%{name}/wesnoth.profile
-%config(noreplace) %{_sysconfdir}/%{name}/whitelist-common.inc
-%config(noreplace) %{_sysconfdir}/%{name}/wine.profile
-%config(noreplace) %{_sysconfdir}/%{name}/xchat.profile
-%config(noreplace) %{_sysconfdir}/%{name}/xplayer.profile
-%config(noreplace) %{_sysconfdir}/%{name}/xreader.profile
-%config(noreplace) %{_sysconfdir}/%{name}/xviewer.profile
-%config(noreplace) %{_sysconfdir}/%{name}/xzdec.profile
-%config(noreplace) %{_sysconfdir}/%{name}/xz.profile
-%config(noreplace) %{_sysconfdir}/%{name}/zathura.profile
-%config(noreplace) %{_sysconfdir}/%{name}/7z.profile
-%config(noreplace) %{_sysconfdir}/%{name}/keepass.profile
-%config(noreplace) %{_sysconfdir}/%{name}/keepassx.profile
-%config(noreplace) %{_sysconfdir}/%{name}/claws-mail.profile
-%config(noreplace) %{_sysconfdir}/%{name}/mutt.profile
-%config(noreplace) %{_sysconfdir}/%{name}/git.profile
-%config(noreplace) %{_sysconfdir}/%{name}/emacs.profile
-%config(noreplace) %{_sysconfdir}/%{name}/vim.profile
-%config(noreplace) %{_sysconfdir}/%{name}/xpdf.profile
-%config(noreplace) %{_sysconfdir}/%{name}/virtualbox.profile
-%config(noreplace) %{_sysconfdir}/%{name}/openshot.profile
-%config(noreplace) %{_sysconfdir}/%{name}/flowblade.profile
-%config(noreplace) %{_sysconfdir}/%{name}/eog.profile
-%config(noreplace) %{_sysconfdir}/%{name}/evolution.profile
-%config(noreplace) %{_sysconfdir}/%{name}/feh.profile
-%config(noreplace) %{_sysconfdir}/%{name}/inkscape.profile
-%config(noreplace) %{_sysconfdir}/%{name}/gimp.profile
-%config(noreplace) %{_sysconfdir}/%{name}/luminance-hdr.profile
-%config(noreplace) %{_sysconfdir}/%{name}/mupdf.profile
-%config(noreplace) %{_sysconfdir}/%{name}/qpdfview.profile
-%config(noreplace) %{_sysconfdir}/%{name}/ranger.profile
-%config(noreplace) %{_sysconfdir}/%{name}/synfigstudio.profile
+%{_sysconfdir}/%{name}/loimpress.profile
+%{_sysconfdir}/%{name}/lomath.profile
+%{_sysconfdir}/%{name}/loweb.profile
+%{_sysconfdir}/%{name}/lowriter.profile
+%{_sysconfdir}/%{name}/lxterminal.profile
+%{_sysconfdir}/%{name}/mathematica.profile
+%{_sysconfdir}/%{name}/Mathematica.profile
+%{_sysconfdir}/%{name}/mcabber.profile
+%{_sysconfdir}/%{name}/midori.profile
+%{_sysconfdir}/%{name}/mpv.profile
+%{_sysconfdir}/%{name}/mupen64plus.profile
+%{_sysconfdir}/%{name}/netsurf.profile
+%{_sysconfdir}/%{name}/nolocal.net
+%{_sysconfdir}/%{name}/okular.profile
+%{_sysconfdir}/%{name}/openbox.profile
+%{_sysconfdir}/%{name}/opera-beta.profile
+%{_sysconfdir}/%{name}/opera.profile
+%{_sysconfdir}/%{name}/palemoon.profile
+%{_sysconfdir}/%{name}/parole.profile
+%{_sysconfdir}/%{name}/pidgin.profile
+%{_sysconfdir}/%{name}/pix.profile
+%{_sysconfdir}/%{name}/polari.profile
+%{_sysconfdir}/%{name}/psi-plus.profile
+%{_sysconfdir}/%{name}/qbittorrent.profile
+%{_sysconfdir}/%{name}/qtox.profile
+%{_sysconfdir}/%{name}/quassel.profile
+%{_sysconfdir}/%{name}/quiterss.profile
+%{_sysconfdir}/%{name}/qutebrowser.profile
+%{_sysconfdir}/%{name}/rhythmbox.profile
+%{_sysconfdir}/%{name}/rtorrent.profile
+%{_sysconfdir}/%{name}/seamonkey-bin.profile
+%{_sysconfdir}/%{name}/seamonkey.profile
+%{_sysconfdir}/%{name}/server.profile
+%{_sysconfdir}/%{name}/skypeforlinux.profile
+%{_sysconfdir}/%{name}/skype.profile
+%{_sysconfdir}/%{name}/slack.profile
+%{_sysconfdir}/%{name}/snap.profile
+%{_sysconfdir}/%{name}/soffice.profile
+%{_sysconfdir}/%{name}/spotify.profile
+%{_sysconfdir}/%{name}/ssh.profile
+%{_sysconfdir}/%{name}/steam.profile
+%{_sysconfdir}/%{name}/stellarium.profile
+%{_sysconfdir}/%{name}/strings.profile
+%{_sysconfdir}/%{name}/tar.profile
+%{_sysconfdir}/%{name}/telegram.profile
+%{_sysconfdir}/%{name}/Telegram.profile
+%{_sysconfdir}/%{name}/thunderbird.profile
+%{_sysconfdir}/%{name}/totem.profile
+%{_sysconfdir}/%{name}/transmission-gtk.profile
+%{_sysconfdir}/%{name}/transmission-qt.profile
+%{_sysconfdir}/%{name}/uget-gtk.profile
+%{_sysconfdir}/%{name}/unbound.profile
+%{_sysconfdir}/%{name}/unrar.profile
+%{_sysconfdir}/%{name}/unzip.profile
+%{_sysconfdir}/%{name}/uudeview.profile
+%{_sysconfdir}/%{name}/vivaldi-beta.profile
+%{_sysconfdir}/%{name}/vivaldi.profile
+%{_sysconfdir}/%{name}/vlc.profile
+%{_sysconfdir}/%{name}/warzone2100.profile
+%{_sysconfdir}/%{name}/webserver.net
+%{_sysconfdir}/%{name}/weechat-curses.profile
+%{_sysconfdir}/%{name}/weechat.profile
+%{_sysconfdir}/%{name}/wesnoth.profile
+%{_sysconfdir}/%{name}/whitelist-common.inc
+%{_sysconfdir}/%{name}/wine.profile
+%{_sysconfdir}/%{name}/xchat.profile
+%{_sysconfdir}/%{name}/xplayer.profile
+%{_sysconfdir}/%{name}/xreader.profile
+%{_sysconfdir}/%{name}/xviewer.profile
+%{_sysconfdir}/%{name}/xzdec.profile
+%{_sysconfdir}/%{name}/xz.profile
+%{_sysconfdir}/%{name}/zathura.profile
+%{_sysconfdir}/%{name}/7z.profile
+%{_sysconfdir}/%{name}/keepass.profile
+%{_sysconfdir}/%{name}/keepassx.profile
+%{_sysconfdir}/%{name}/claws-mail.profile
+%{_sysconfdir}/%{name}/mutt.profile
+%{_sysconfdir}/%{name}/git.profile
+%{_sysconfdir}/%{name}/emacs.profile
+%{_sysconfdir}/%{name}/vim.profile
+%{_sysconfdir}/%{name}/xpdf.profile
+%{_sysconfdir}/%{name}/virtualbox.profile
+%{_sysconfdir}/%{name}/openshot.profile
+%{_sysconfdir}/%{name}/flowblade.profile
+%{_sysconfdir}/%{name}/eog.profile
+%{_sysconfdir}/%{name}/evolution.profile
+%{_sysconfdir}/%{name}/feh.profile
+%{_sysconfdir}/%{name}/inkscape.profile
+%{_sysconfdir}/%{name}/gimp.profile
+%{_sysconfdir}/%{name}/luminance-hdr.profile
+%{_sysconfdir}/%{name}/mupdf.profile
+%{_sysconfdir}/%{name}/qpdfview.profile
+%{_sysconfdir}/%{name}/ranger.profile
+%{_sysconfdir}/%{name}/synfigstudio.profile
+# 0.9.45
+%{_sysconfdir}/%{name}/Cryptocat.profile
+%{_sysconfdir}/%{name}/FossaMail.profile
+%{_sysconfdir}/%{name}/Thunar.profile
+%{_sysconfdir}/%{name}/VirtualBox.profile
+%{_sysconfdir}/%{name}/Wire.profile
+%{_sysconfdir}/%{name}/amarok.profile
+%{_sysconfdir}/%{name}/ark.profile
+%{_sysconfdir}/%{name}/atool.profile
+%{_sysconfdir}/%{name}/bleachbit.profile
+%{_sysconfdir}/%{name}/bless.profile
+%{_sysconfdir}/%{name}/brasero.profile
+%{_sysconfdir}/%{name}/cryptocat.profile
+%{_sysconfdir}/%{name}/cvlc.profile
+%{_sysconfdir}/%{name}/display.profile
+%{_sysconfdir}/%{name}/dolphin.profile
+%{_sysconfdir}/%{name}/dragon.profile
+%{_sysconfdir}/%{name}/elinks.profile
+%{_sysconfdir}/%{name}/enchant.profile
+%{_sysconfdir}/%{name}/engrampa.profile
+%{_sysconfdir}/%{name}/exiftool.profile
+%{_sysconfdir}/%{name}/file-roller.profile
+%{_sysconfdir}/%{name}/fossamail.profile
+%{_sysconfdir}/%{name}/gedit.profile
+%{_sysconfdir}/%{name}/geeqie.profile
+%{_sysconfdir}/%{name}/gjs.profile
+%{_sysconfdir}/%{name}/gnome-2048.profile
+%{_sysconfdir}/%{name}/gnome-books.profile
+%{_sysconfdir}/%{name}/gnome-calculator.profile
+%{_sysconfdir}/%{name}/gnome-clocks.profile
+%{_sysconfdir}/%{name}/gnome-contacts.profile
+%{_sysconfdir}/%{name}/gnome-documents.profile
+%{_sysconfdir}/%{name}/gnome-maps.profile
+%{_sysconfdir}/%{name}/gnome-music.profile
+%{_sysconfdir}/%{name}/gnome-photos.profile
+%{_sysconfdir}/%{name}/gnome-weather.profile
+%{_sysconfdir}/%{name}/goobox.profile
+%{_sysconfdir}/%{name}/gpa.profile
+%{_sysconfdir}/%{name}/gpg-agent.profile
+%{_sysconfdir}/%{name}/gpg.profile
+%{_sysconfdir}/%{name}/gpicview.profile
+%{_sysconfdir}/%{name}/guayadeque.profile
+%{_sysconfdir}/%{name}/highlight.profile
+%{_sysconfdir}/%{name}/img2txt.profile
+%{_sysconfdir}/%{name}/iridium-browser.profile
+%{_sysconfdir}/%{name}/iridium.profile
+%{_sysconfdir}/%{name}/jd-gui.profile
+%{_sysconfdir}/%{name}/k3b.profile
+%{_sysconfdir}/%{name}/kate.profile
+%{_sysconfdir}/%{name}/keepass2.profile
+%{_sysconfdir}/%{name}/keepassx2.profile
+%{_sysconfdir}/%{name}/keepassxc.profile
+%{_sysconfdir}/%{name}/kino.profile
+%{_sysconfdir}/%{name}/lollypop.profile
+%{_sysconfdir}/%{name}/lynx.profile
+%{_sysconfdir}/%{name}/mediainfo.profile
+%{_sysconfdir}/%{name}/mediathekview.profile
+%{_sysconfdir}/%{name}/mousepad.profile
+%{_sysconfdir}/%{name}/multimc5.profile
+%{_sysconfdir}/%{name}/mumble.profile
+%{_sysconfdir}/%{name}/nautilus.profile
+%{_sysconfdir}/%{name}/odt2txt.profile
+%{_sysconfdir}/%{name}/pdfsam.profile
+%{_sysconfdir}/%{name}/pdftotext.profile
+%{_sysconfdir}/%{name}/pithos.profile
+%{_sysconfdir}/%{name}/pluma.profile
+%{_sysconfdir}/%{name}/qemu-launcher.profile
+%{_sysconfdir}/%{name}/qemu-system-x86_64.profile
+%{_sysconfdir}/%{name}/qupzilla.profile
+%{_sysconfdir}/%{name}/scribus.profile
+%{_sysconfdir}/%{name}/simple-scan.profile
+%{_sysconfdir}/%{name}/skanlite.profile
+%{_sysconfdir}/%{name}/ssh-agent.profile
+%{_sysconfdir}/%{name}/start-tor-browser.profile
+%{_sysconfdir}/%{name}/thunar.profile
+%{_sysconfdir}/%{name}/tracker.profile
+%{_sysconfdir}/%{name}/transmission-cli.profile
+%{_sysconfdir}/%{name}/transmission-show.profile
+%{_sysconfdir}/%{name}/uzbl-browser.profile
+%{_sysconfdir}/%{name}/vivaldi-stable.profile
+%{_sysconfdir}/%{name}/w3m.profile
+%{_sysconfdir}/%{name}/wget.profile
+%{_sysconfdir}/%{name}/wire.profile
+%{_sysconfdir}/%{name}/wireshark.profile
+%{_sysconfdir}/%{name}/xed.profile
+%{_sysconfdir}/%{name}/xfburn.profile
+%{_sysconfdir}/%{name}/xiphos.profile
+%{_sysconfdir}/%{name}/xmms.profile
+%{_sysconfdir}/%{name}/xonotic-glx.profile
+%{_sysconfdir}/%{name}/xonotic-sdl.profile
+%{_sysconfdir}/%{name}/xonotic.profile
+%{_sysconfdir}/%{name}/xpra.profile
+%{_sysconfdir}/%{name}/zoom.profile
 
 /usr/bin/firejail
 /usr/bin/firemon
@@ -439,6 +377,19 @@ rm -rf %{buildroot}
 /usr/lib/firejail/ftee
 /usr/lib/firejail/firecfg.config
 /usr/lib/firejail/fshaper.sh
+/usr/lib/firejail/fcopy
+/usr/lib/firejail/fgit-install.sh
+/usr/lib/firejail/fgit-uninstall.sh
+#/usr/lib/firejail/fix_private-bin.py
+#/usr/lib/firejail/fjclip.py
+#/usr/lib/firejail/fjdisplay.py
+#/usr/lib/firejail/fjresize.py
+/usr/lib/firejail/fnet
+/usr/lib/firejail/fseccomp
+/usr/lib/firejail/seccomp
+/usr/lib/firejail/seccomp.amd64
+/usr/lib/firejail/seccomp.debug
+/usr/lib/firejail/seccomp.i386
 
 /usr/share/doc/packages/firejail/COPYING
 /usr/share/doc/packages/firejail/README

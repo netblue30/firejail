@@ -340,7 +340,8 @@ static void fix_desktop_files(void) {
 			continue;
 
 		// skip if not regular file or link
-		if (entry->d_type != DT_REG && entry->d_type != DT_LNK)
+		// d_type is not available on some file systems
+		if (entry->d_type != DT_REG && entry->d_type != DT_LNK && entry->d_type != DT_UNKNOWN)
 			continue;
 
 		// skip if not .desktop file

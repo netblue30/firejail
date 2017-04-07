@@ -19,7 +19,7 @@ after 100
 send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"dest/"
+	"dest"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -31,7 +31,8 @@ after 100
 send -- "ls -al dest\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"rwxr-xr-x"
+	"rwxr-xr-x" { puts "umask 0022\n" }
+	"rwxrwxr-x" { puts "umask 0002\n" }
 }
 after 100
 

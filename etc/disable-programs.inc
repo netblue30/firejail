@@ -96,6 +96,8 @@ blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
+blacklist ${HOME}/.config/okularpartrc
+blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/org.kde.gwenviewrc
@@ -225,6 +227,7 @@ blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/nautilus
 blacklist ${HOME}/.local/share/nemo
+blacklist ${HOME}/.local/share/okular
 blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/psi+

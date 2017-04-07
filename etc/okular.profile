@@ -28,7 +28,7 @@ seccomp
 shell none
 tracelog
 
-# private-bin okular,kbuildsycoca4,kbuildsycoca5,lpr
+# private-bin okular,kbuildsycoca4,lpr
 # private-etc fonts,X11
 private-dev
 private-tmp

@@ -1,4 +1,4 @@
-firejail (0.9.45) baseline; urgency=low
+firejail (0.9.46-rc1) baseline; urgency=low
   * development version, work in progress
   * security: split most of networking code in a separate executable
   * security: split seccomp filter code configuration in a separate executable

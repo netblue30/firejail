@@ -43,6 +43,7 @@ whitelist ~/.config/qpdfview
 whitelist ~/.local/share/qpdfview
 whitelist ~/.kde4/share/apps/okular
 whitelist ~/.kde/share/apps/okular
+whitelist ~/.cache/fish
 
 # silverlight
 whitelist ~/.wine-pipelight

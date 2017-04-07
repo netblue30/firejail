@@ -9,16 +9,19 @@ firejail (0.9.45) baseline; urgency=low
   * feature: private /opt directory (--private-opt, profile support)
   * feature: private /srv directory (--private-srv, profile support)
   * feature: spoof machine-id (--machine-id, profile support)
-  * feature: allow blacklists under --private (--allow-private-blacklist, profile support)
+  * feature: allow blacklists under --private (--allow-private-blacklist,
+    profile support)
   * feature: user-defined /etc/hosts file (--hosts-file, profile support)
-  * feature: support for the real /var/log directory (--writable-var-log, profile support)
+  * feature: support for the real /var/log directory (--writable-var-log,
+    profile support)
   * feature: config support for firejail prompt in terminals
   * feature: AppImage type 2 support
   * feature: pass command line arguments to appimages
   * feature: allow non-seccomp setup for OverlayFS sandboxes - more work to come
   * feature: added a number of Python scripts for handling sandboxes
   * feature: allow local customization using .local files under /etc/firejail
-  * feature: follow-symlink-as-user runtime config option in /etc/firejail/firejail.config
+  * feature: follow-symlink-as-user runtime config option in 
+    /etc/firejail/firejail.config
   * feature: follow-symlink-private-bin option in /etc/firejail/firejail.config
   * feature: xvfb X11 server support (--x11=xvfb)
   * feature: allow /tmp directory in mkdir and mkfile profile commands
@@ -34,7 +37,7 @@ firejail (0.9.45) baseline; urgency=low
   * new profiles: Uzbl browser, iridium browser, Thunar, Geeqie, Engrampa
   * new profiles: Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Sun, 23 Oct 2016 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Fri, 7 Apr 2017 08:00:00 -0500
 
 firejail (0.9.44.10) baseline; urgency=low
   * security: when using --x11=xorg and --net, incorrect processing of

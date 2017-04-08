@@ -9,6 +9,7 @@ noblacklist ~/.config/qpdfview
 noblacklist ~/.local/share/qpdfview
 noblacklist ~/.kde4/share/apps/okular
 noblacklist ~/.kde/share/apps/okular
+noblacklist ~/.local/share/okular
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -43,6 +44,7 @@ whitelist ~/.config/qpdfview
 whitelist ~/.local/share/qpdfview
 whitelist ~/.kde4/share/apps/okular
 whitelist ~/.kde/share/apps/okular
+whitelist ~/.local/share/okular
 
 # silverlight
 whitelist ~/.wine-pipelight

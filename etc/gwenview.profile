@@ -21,11 +21,11 @@ nonewprivs
 noroot
 protocol unix
 seccomp
+shell none
 tracelog
 
+private-bin gwenview,kbuildsycoca4,gimp,gimp-2.8
 private-dev
 
 # Experimental:
-#shell none
-#private-bin gwenview
 #private-etc X11

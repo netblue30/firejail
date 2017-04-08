@@ -9,6 +9,9 @@ noblacklist ~/.kde4/share/config/okularpartrc
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.kde/share/config/okularrc
 noblacklist ~/.kde/share/config/okularpartrc
+noblacklist ~/.local/share/okular
+noblacklist ~/.config/okularrc
+noblacklist ~/.config/okularpartrc
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -25,7 +28,7 @@ seccomp
 shell none
 tracelog
 
-# private-bin okular,kbuildsycoca4,kbuildsycoca5  
+# private-bin okular,kbuildsycoca4,lpr
 # private-etc fonts,X11
 private-dev
 private-tmp

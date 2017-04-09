@@ -165,6 +165,7 @@ blacklist ${HOME}/.kde4/share/apps/konqsidebartng
 blacklist ${HOME}/.kde4/share/apps/konqueror
 blacklist ${HOME}/.kde4/share/apps/okular
 blacklist ${HOME}/.kde4/share/config/baloofilerc
+blacklist ${HOME}/.kde4/share/config/baloorc
 blacklist ${HOME}/.kde4/share/config/gwenviewrc
 blacklist ${HOME}/.kde4/share/config/k3brc
 blacklist ${HOME}/.kde4/share/config/kcookiejarrc
@@ -181,6 +182,7 @@ blacklist ${HOME}/.kde/share/apps/konqsidebartng
 blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/baloofilerc
+blacklist ${HOME}/.kde/share/config/baloorc
 blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.kde/share/config/k3brc
 blacklist ${HOME}/.kde/share/config/kcookiejarrc

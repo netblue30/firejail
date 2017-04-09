@@ -5,7 +5,7 @@
 import os, re, shlex, subprocess, sys
 
 def run(srcdir, args):
-  os.chdir(srcdir)
+  if srcdir: os.chdir(srcdir)
 
   dry_run=False
   escaped_args=[]
@@ -41,11 +41,34 @@ if __name__ == '__main__':
   if len(sys.argv) == 2 and sys.argv[1] == '--help':
     print('''Build a .deb of firejail with custom configure options
 
-usage: {script} [--only-fix-mkdeb] [CONFIGURE_OPTIONS [...]]
+usage:
+{script} [--fj-src=SRCDIR] [--only-fix-mkdeb] [CONFIGURE_OPTIONS [...]]
 
+ --fj-src=SRCDIR: manually specify the location of firejail source tree
+                  as SRCDIR.  If not specified, looks in the script's
+                  parent directory and the current working directory,
+                  in that order.
  --only-fix-mkdeb: don't run configure or make after modifying mkdeb.sh
  CONFIGURE_OPTIONS: arguments for configure
 '''.format(script=sys.argv[0]))
     sys.exit(0)
   else:
-    sys.exit(run(os.path.dirname(os.path.abspath(sys.argv[0]+'/..')), sys.argv[1:]))
+    # Find the source directory
+    srcdir=None
+    args=sys.argv[1:]
+    for a in args:
+      if a.startswith('--fj-src='):
+        args.remove(a)
+        srcdir=a[9:]
+        break
+    if not(srcdir):
+      # srcdir not manually specified, try to auto-detect
+      srcdir=os.path.dirname(os.path.abspath(sys.argv[0]+'/..'))
+      if not(os.path.isfile(srcdir+'/mkdeb.sh')):
+        # Script is probably installed.  Check the cwd.
+        if os.path.isfile('./mkdeb.sh'):
+          srcdir=None
+        else:
+          print('Error: Could not find the firejail source tree.  Exiting.')
+          sys.exit(1)
+    sys.exit(run(srcdir, args))

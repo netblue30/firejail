@@ -23,10 +23,8 @@ protocol unix
 # Baloo makes ioprio_set system calls, which are blacklisted by default.
 # That's why we need to disable seccomp
 #seccomp
-# The Baloo file daemon can be isolated from X11. If there is an X11
-# abstract Unix socket, it must be disabled first by passing "-nolisten local"
-# to the X server. See the Firejail manual for further instructions
-#x11 none
+
+blacklist /tmp/.X11-unix
 
 private-dev
 private-tmp

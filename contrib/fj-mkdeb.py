@@ -45,9 +45,9 @@ usage:
 {script} [--fj-src=SRCDIR] [--only-fix-mkdeb] [CONFIGURE_OPTIONS [...]]
 
  --fj-src=SRCDIR: manually specify the location of firejail source tree
-                  as SRCDIR.  If not specified, looks in the script's
-                  parent directory and the current working directory,
-                  in that order.
+                  as SRCDIR.  If not specified, looks in the parent directory
+                  of the directory where this script is located, and then the
+                  current working directory, in that order.
  --only-fix-mkdeb: don't run configure or make after modifying mkdeb.sh
  CONFIGURE_OPTIONS: arguments for configure
 '''.format(script=sys.argv[0]))

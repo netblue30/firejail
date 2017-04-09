@@ -14,6 +14,7 @@
 /etc/firejail/audacious.profile
 /etc/firejail/audacity.profile
 /etc/firejail/aweather.profile
+/etc/firejail/baloo_file.profile
 /etc/firejail/bitlbee.profile
 /etc/firejail/bleachbit.profile
 /etc/firejail/brasero.profile

@@ -366,7 +366,7 @@ SYN-cook (https://github.com/SYN-cook)
 	- added mediathekview profile
 	- blacklist attic and borg
 	- cleaned up Okular and Gwenview profiles
-	- blacklist baloo config files
+	- added baloo_file profile
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- updated default seccomp filters - added  bpf, clock_settime, personality, process_vm_writev, query_module,

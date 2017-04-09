@@ -245,6 +245,8 @@ KellerFuchs (https://github.com/KellerFuchs)
 	- make ~/.local read-only
 KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
+laniakea64 (https://github.com/laniakea64)
+	- added fj-mkdeb.py script to build deb packages
 Lari Rauno (https://github.com/tuutti)
 	- qutebrowser profile fixes
 Laurent Declercq (https://github.com/nuxwin)

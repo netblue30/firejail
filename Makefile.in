@@ -96,6 +96,7 @@ realinstall:
 	install -c -m 0755 contrib/fjclip.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjdisplay.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjresize.py $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/fj-mkdeb.py $(DESTDIR)/$(libdir)/firejail/.
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.

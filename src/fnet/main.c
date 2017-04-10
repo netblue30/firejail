@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnet.h"
+int arg_quiet = 0;
 
 static void usage(void) {
 	printf("Usage:\n");
@@ -47,6 +48,10 @@ printf("\n");
 		return 1;
 	}
 
+	char *quiet = getenv("FIREJAIL_QUIET");
+	if (quiet && strcmp(quiet, "yes") == 0)
+		arg_quiet = 1;
+		
 	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
 		usage();
 		return 0;

@@ -1153,8 +1153,7 @@ $ firejail \-\-overlay-tmpfs firefox
 
 .TP
 \fB\-\-overlay-clean
-Clean all overlays stored in $HOME/.firejail directory. Overlays created with --overlay-path=path
-outside $HOME/.firejail will not be deleted.
+Clean all overlays stored in $HOME/.firejail directory.
 .br
 
 .br

@@ -29,11 +29,11 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * feature: config support to disable access to /mnt and /media (disable-mnt)
   * feature: config support to disable join (join)
   * feature: disabled Go, Rust, and OpenSSL in disable-devel.conf
-  * new profiles: xiphos, Tor Browser Bundle, display (imagemagik), Wire,
+  * new profiles: xiphos, Tor Browser Bundle, display (imagemagick), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,
   * new profiles: Gnome Contacts, JD-GUI, Lollypop, MultiMC5, PDFSam, Pithos,
-  * new profies: Xonotic, wireshark, keepassx2, QupZilla, FossaMail,
+  * new profiles: Xonotic, wireshark, keepassx2, QupZilla, FossaMail,
   * new profiles: Uzbl browser, iridium browser, Thunar, Geeqie, Engrampa,
   * new profiles: Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView,
   * new profiles: baloo_file

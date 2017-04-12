@@ -200,6 +200,11 @@ int sbox_run(unsigned filter, int num, ...) {
 			drop_privs(1);
 
 		clearenv();
+		
+		// --quiet is passed as an environment variable
+		if (arg_quiet)
+			setenv("FIREJAIL_QUIET", "yes", 1);
+		
 		if (arg[0])	// get rid of scan-build warning
 			execvp(arg[0], arg);
 		else

@@ -25,6 +25,9 @@
 #include <assert.h>
 #include "../include/common.h"
 
+// main.c
+extern int arg_quiet;
+
 // syscall.c
 void syscall_print(void);
 int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg), int fd, int arg);

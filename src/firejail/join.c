@@ -176,7 +176,7 @@ static void extract_user_namespace(pid_t pid) {
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
 	char *homedir = cfg.homedir;
-	
+
 	extract_command(argc, argv, index);
 	signal (SIGTERM, signal_handler);
 
@@ -189,7 +189,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			pid_t child;
 			if (find_child(pid, &child) == 0) {
 				pid = child;
-				printf("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
+				if (!arg_quiet)
+					printf("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
 			}
 		}
 		free(comm);

@@ -26,6 +26,9 @@
 #include <assert.h>
 #include "../include/common.h"
 
+// main.c
+extern int arg_quiet;
+
 // veth.c
 int net_create_veth(const char *dev, const char *nsdev, unsigned pid);
 int net_create_macvlan(const char *dev, const char *parent, unsigned pid);

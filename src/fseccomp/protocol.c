@@ -89,7 +89,8 @@ static struct sock_filter *find_protocol_domain(const char *p) {
 
 void protocol_print(void) {
 #ifndef SYS_socket
-	fprintf(stderr, "Warning fseccomp: firejail --protocol not supported on this platform\n");
+	if (!arg_quiet)
+		fprintf(stderr, "Warning fseccomp: firejail --protocol not supported on this platform\n");
 	return;
 #endif
 
@@ -107,7 +108,8 @@ void protocol_build_filter(const char *prlist, const char *fname) {
 	assert(fname);
 
 #ifndef SYS_socket
-	fprintf(stderr, "Warning fseccomp: --protocol not supported on this platform\n");
+	if (!arg_quiet)
+		fprintf(stderr, "Warning fseccomp: --protocol not supported on this platform\n");
 	return;
 #else
 	// build the filter

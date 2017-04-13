@@ -97,7 +97,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		return;
 	if (stat(fname, &s) == -1) {
 		if (arg_debug)
-			printf("Warning: %s does not exist, skipping...\n", fname);
+			fwarning("%s does not exist, skipping...\n", fname);
 		free(fname);
 		return;
 	}
@@ -108,8 +108,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		if ((strcmp(fname, "/bin") == 0 || strcmp(fname, "/usr/bin") == 0) &&
 		      is_link(filename) &&
 		      S_ISDIR(s.st_mode)) {
-		      	if (!arg_quiet)
-				fprintf(stderr, "Warning: %s directory link was not blacklisted\n", filename);
+			fwarning("%s directory link was not blacklisted\n", filename);
 		}
 		else {
 			if (arg_debug) {
@@ -175,7 +174,7 @@ static void disable_file(OPERATION op, const char *filename) {
 			fs_logger2("tmpfs", fname);
 		}
 		else
-			printf("Warning: %s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
+			fwarning("%s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
 	}
 	else
 		assert(0);
@@ -444,8 +443,7 @@ static void fs_rdwr(const char *dir) {
 		// if the file is outside /home directory, allow only root user
 		uid_t u = getuid();
 		if (u != 0 && s.st_uid != u) {
-			if (!arg_quiet)
-				fprintf(stderr, "Warning: you are not allowed to change %s to read-write\n", dir);
+			fwarning("you are not allowed to change %s to read-write\n", dir);
 			return;
 		}
 		
@@ -501,9 +499,9 @@ void fs_proc_sys_dev_boot(void) {
 	if (arg_debug)
 		printf("Remounting /sys directory\n");
 	if (umount2("/sys", MNT_DETACH) < 0)
-		fprintf(stderr, "Warning: failed to unmount /sys\n");
+		fwarning("failed to unmount /sys\n");
 	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
-		fprintf(stderr, "Warning: failed to mount /sys\n");
+		fwarning("failed to mount /sys\n");
 	else
 		fs_logger("remount /sys");
 		
@@ -913,7 +911,8 @@ void fs_overlayfs(void) {
 		// issue #263 end code
 		//***************************
 	}
-	printf("OverlayFS configured in %s directory\n", basedir);
+	if (!arg_quiet)
+		printf("OverlayFS configured in %s directory\n", basedir);
 	
 	// mount-bind dev directory
 	if (arg_debug)
@@ -943,7 +942,7 @@ void fs_overlayfs(void) {
 		if (asprintf(&x11, "%s/tmp/.X11-unix", oroot) == -1)
 			errExit("asprintf");
 		if (mount("/tmp/.X11-unix", x11, NULL, MS_BIND|MS_REC, NULL) < 0)
-			fprintf(stderr, "Warning: cannot mount /tmp/.X11-unix in overlay\n");
+			fwarning("cannot mount /tmp/.X11-unix in overlay\n");
 		else
 			fs_logger("whitelist /tmp/.X11-unix");
 		free(x11);
@@ -1172,7 +1171,7 @@ void fs_chroot(const char *rootdir) {
 			exit(1);
 		}
 		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
-			fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
+			fwarning("/etc/resolv.conf not initialized\n");
 	}
 	
 	// chroot into the new directory

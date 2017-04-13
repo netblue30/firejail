@@ -352,7 +352,7 @@ void fs_whitelist(void) {
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
 			else {
-				if (!nowhitelist_flag) {
+				if (!nowhitelist_flag && !arg_quiet) {
 					fprintf(stderr, "***\n");
 					fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
 					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
@@ -438,8 +438,7 @@ void fs_whitelist(void) {
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			// whitelisting home directory is disabled if --private option is present
 			if (arg_private) {
-				if (!arg_quiet)
-					printf("Warning: \"%s\" disabled by --private\n", entry->data);
+				fwarning("\"%s\" disabled by --private\n", entry->data);
 
 				*entry->data = '\0';
 				continue;

@@ -39,11 +39,11 @@ static void mkdir_recursive(char *path) {
 		if (stat(subdir, &s) == -1) {
 			/* coverity[toctou] */
 			if (mkdir(subdir, 0700) == -1) {
-				fprintf(stderr, "Warning: cannot create %s directory\n", subdir);
+				fwarning("cannot create %s directory\n", subdir);
 				return;
 			}
 		} else if (!S_ISDIR(s.st_mode)) {
-			fprintf(stderr, "Warning: '%s' exists, but is no directory\n", subdir);
+			fwarning("'%s exists, but is not a directory\n", subdir);
 			return;
 		}
 		if (chdir(subdir)) {

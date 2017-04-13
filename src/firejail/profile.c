@@ -64,8 +64,7 @@ int profile_find(const char *name, const char *dir) {
 //***************************************************
 
 static void warning_feature_disabled(const char *feature) {
-	if (!arg_quiet)
- 		fprintf(stderr, "Warning: %s feature is disabled in Firejail configuration file\n", feature);
+	fwarning("%s feature is disabled in Firejail configuration file\n", feature);
 }
 
 
@@ -513,8 +512,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			if (cfg.protocol) {
-				if (!arg_quiet)
-					fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", ptr + 9);
+				fwarning("a protocol list is present, the new list \"%s\" will not be installed\n", ptr + 9);
 				return 0;
 			}
 			

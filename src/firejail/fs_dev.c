@@ -72,7 +72,7 @@ static void deventry_mount(void) {
 				struct stat s;
 				if (stat(dev[i].run_fname, &s) == -1) {
 					if (arg_debug)
-						printf("Warning: cannot stat %s file\n", dev[i].run_fname);
+						fwarning("cannot stat %s file\n", dev[i].run_fname);
 					i++;
 					continue;
 				}
@@ -254,7 +254,7 @@ void fs_dev_shm(void) {
 			free(lnk);
 		}
 		else {
-			fprintf(stderr, "Warning: /dev/shm not mounted\n");
+			fwarning("/dev/shm not mounted\n");
 			dbg_test_dir("/dev/shm");
 		}
 			

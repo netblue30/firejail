@@ -155,15 +155,14 @@ void appimage_clear(void) {
 				break;
 			}
 			if (rv == -1 && errno == EBUSY) {
-				if (!arg_quiet)
-					printf("Warning: EBUSY error trying to unmount %s\n", mntdir);			
+				fwarning("EBUSY error trying to unmount %s\n", mntdir);
 				sleep(2);
 				continue;
 			}
 			
 			// rv = -1
 			if (!arg_quiet) {
-				printf("Warning: error trying to unmount %s\n", mntdir);
+				fwarning("error trying to unmount %s\n", mntdir);
 				perror("umount");
 			}
 		}

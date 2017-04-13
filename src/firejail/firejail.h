@@ -21,6 +21,7 @@
 #define FIREJAIL_H
 #include "../include/common.h"
 #include "../include/euid_common.h"
+#include <stdarg.h>
 
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
@@ -446,6 +447,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr);
 uint32_t arp_assign(const char *dev, Bridge *br);
 
 // util.c
+void fwarning(char* fmt, ...);
 void drop_privs(int nogroups);
 int mkpath_as_root(const char* path);
 void extract_command_name(int index, char **argv);

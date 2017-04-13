@@ -107,8 +107,8 @@ void protocol_print_filter(pid_t pid) {
 		printf("%s\n", cfg.protocol);
 	exit(0);
 #else
-        fprintf(stderr, "Warning: --protocol not supported on this platform\n");
-        return;
+	fwarning("--protocol not supported on this platform\n");
+	return;
 #endif  
 }
 

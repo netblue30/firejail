@@ -119,7 +119,7 @@ static int store_xauthority(void) {
 	struct stat s;
 	if (stat(src, &s) == 0) {
 		if (is_link(src)) {
-			fprintf(stderr, "Warning: invalid .Xauthority file\n");
+			fwarning("invalid .Xauthority file\n");
 			return 0;
 		}
 

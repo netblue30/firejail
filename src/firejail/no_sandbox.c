@@ -118,7 +118,7 @@ int check_kernel_procs(void) {
 		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
-			fprintf(stderr, "Warning: cannot open %s\n", fname);
+			fwarning("cannot open %s\n", fname);
 			free(fname);
 			continue;
 		}
@@ -126,7 +126,7 @@ int check_kernel_procs(void) {
 		// read file
 		char buf[100];
 		if (fgets(buf, 10, fp) == NULL) {
-			fprintf(stderr, "Warning: cannot read %s\n", fname);
+			fwarning("cannot read %s\n", fname);
 			fclose(fp);
 			free(fname);
 			continue;
@@ -171,7 +171,7 @@ void run_no_sandbox(int argc, char **argv) {
 		    strcmp(argv[i], "--zsh") == 0 ||
 		    strcmp(argv[i], "--shell=none") == 0 ||
 		    strncmp(argv[i], "--shell=", 8) == 0)
-			fprintf(stderr, "Warning: shell-related command line options are disregarded - using SHELL environment variable\n");
+			fwarning("shell-related command line options are disregarded - using SHELL environment variable\n");
 	}
 
 	// use $SHELL to get shell used in sandbox
@@ -225,9 +225,8 @@ void run_no_sandbox(int argc, char **argv) {
 		command = cfg.shell;
 	else
 		command = argv[prog_index];
-	if (!arg_quiet)
-		fprintf(stderr, "Warning: an existing sandbox was detected. "
-			"%s will run without any additional sandboxing features\n", command);
+	fwarning("an existing sandbox was detected. "
+		"%s will run without any additional sandboxing features\n", command);
 
 	arg_quiet = 1;
 	start_application();

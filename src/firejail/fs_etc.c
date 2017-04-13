@@ -81,7 +81,7 @@ static int check_dir_or_file(const char *fname) {
 	struct stat s;
 	if (stat(fname, &s) == -1) {
 		if (arg_debug)
-			printf("Warning: file %s not found.\n", fname);
+			fwarning("file %s not found.\n", fname);
 		return 0;
 	}
 
@@ -109,8 +109,7 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 	if (asprintf(&src,  "%s/%s", private_dir, fname) == -1)
 		errExit("asprintf");
 	if (check_dir_or_file(src) == 0) {
-		if (!arg_quiet)
-			fprintf(stderr, "Warning: skipping %s for private %s\n", fname, private_dir);
+		fwarning("skipping %s for private %s\n", fname, private_dir);
 		free(src);
 		return;
 	}

@@ -391,8 +391,8 @@ static void enforce_filters(void) {
 	}
 	
 	// disable all capabilities
-	if ((arg_caps_default_filter || arg_caps_list) && !arg_quiet)
-		fprintf(stderr, "Warning: all capabilities disabled for a regular user in chroot\n");
+	if (arg_caps_default_filter || arg_caps_list)
+		fwarning("all capabilities disabled for a regular user in chroot\n");
 	arg_caps_drop_all = 1;
 	
 	// drop all supplementary groups; /etc/group file inside chroot
@@ -525,8 +525,7 @@ int sandbox(void* sandbox_arg) {
 		if (cfg.defaultgw) {
 			// set the default route
 			if (net_add_route(0, 0, cfg.defaultgw)) {
-				if (!arg_quiet)
-					fprintf(stderr, "Warning: cannot configure default route\n");
+				fwarning("cannot configure default route\n");
 				gw_cfg_failed = 1;
 			}
 		}
@@ -655,17 +654,17 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private) {
 		if (cfg.home_private) {	// --private=
 			if (cfg.chrootdir)
-				fprintf(stderr, "Warning: private=directory feature is disabled in chroot\n");
+				fwarning("private=directory feature is disabled in chroot\n");
 			else if (arg_overlay)
-				fprintf(stderr, "Warning: private=directory feature is disabled in overlay\n");
+				fwarning("private=directory feature is disabled in overlay\n");
 			else
 				fs_private_homedir();
 		}
 		else if (cfg.home_private_keep) { // --private-home=
 			if (cfg.chrootdir)
-				fprintf(stderr, "Warning: private-home= feature is disabled in chroot\n");
+				fwarning("private-home= feature is disabled in chroot\n");
 			else if (arg_overlay)
-				fprintf(stderr, "Warning: private-home= feature is disabled in overlay\n");
+				fwarning("private-home= feature is disabled in overlay\n");
 			else
 				fs_private_home_list();
 		}
@@ -675,18 +674,18 @@ int sandbox(void* sandbox_arg) {
 
 	if (arg_private_dev) {
 		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: private-dev feature is disabled in chroot\n");
+			fwarning("private-dev feature is disabled in chroot\n");
 		else if (arg_overlay)
-			fprintf(stderr, "Warning: private-dev feature is disabled in overlay\n");
+			fwarning("private-dev feature is disabled in overlay\n");
 		else
 			fs_private_dev();
 	}
 		
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: private-etc feature is disabled in chroot\n");
+			fwarning("private-etc feature is disabled in chroot\n");
 		else if (arg_overlay)
-			fprintf(stderr, "Warning: private-etc feature is disabled in overlay\n");
+			fwarning("private-etc feature is disabled in overlay\n");
 		else {
 			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
 			// create /etc/ld.so.preload file again
@@ -697,9 +696,9 @@ int sandbox(void* sandbox_arg) {
 	
 	if (arg_private_opt) {
 		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: private-opt feature is disabled in chroot\n");
+			fwarning("private-opt feature is disabled in chroot\n");
 		else if (arg_overlay)
-			fprintf(stderr, "Warning: private-opt feature is disabled in overlay\n");
+			fwarning("private-opt feature is disabled in overlay\n");
 		else {
 			fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
 		}
@@ -707,9 +706,9 @@ int sandbox(void* sandbox_arg) {
 	
 	if (arg_private_srv) {
 		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: private-srv feature is disabled in chroot\n");
+			fwarning("private-srv feature is disabled in chroot\n");
 		else if (arg_overlay)
-			fprintf(stderr, "Warning: private-srv feature is disabled in overlay\n");
+			fwarning("private-srv feature is disabled in overlay\n");
 		else {
 			fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
 		}
@@ -717,9 +716,9 @@ int sandbox(void* sandbox_arg) {
 	
 	if (arg_private_bin) {
 		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: private-bin feature is disabled in chroot\n");
+			fwarning("private-bin feature is disabled in chroot\n");
 		else if (arg_overlay)
-			fprintf(stderr, "Warning: private-bin feature is disabled in overlay\n");
+			fwarning("private-bin feature is disabled in overlay\n");
 		else {
 			// for --x11=xorg we need to add xauth command
 			if (arg_x11_xorg) {
@@ -736,9 +735,9 @@ int sandbox(void* sandbox_arg) {
 	
 	if (arg_private_tmp) {
 		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: private-tmp feature is disabled in chroot\n");
+			fwarning("private-tmp feature is disabled in chroot\n");
 		else if (arg_overlay)
-			fprintf(stderr, "Warning: private-tmp feature is disabled in overlay\n");
+			fwarning("private-tmp feature is disabled in overlay\n");
 		else {
 			// private-tmp is implemented as a whitelist
 			EUID_USER();
@@ -794,9 +793,9 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// apply all whitelist commands ... 
 	if (cfg.chrootdir)
-		fprintf(stderr, "Warning: whitelist feature is disabled in chroot\n");
+		fwarning("whitelist feature is disabled in chroot\n");
 	else if (arg_overlay)
-		fprintf(stderr, "Warning: whitelist feature is disabled in overlay\n");
+		fwarning("whitelist feature is disabled in overlay\n");
 	else
 		fs_whitelist();
 	
@@ -873,8 +872,7 @@ int sandbox(void* sandbox_arg) {
 		int rv = nice(cfg.nice);
 		(void) rv;
 		if (errno) {
-			if (!arg_quiet)
-				fprintf(stderr, "Warning: cannot set nice value\n");
+			fwarning("cannot set nice value\n");
 			errno = 0;
 		}
 	}
@@ -930,8 +928,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
-			if (!arg_quiet)
-				fprintf(stderr, "Warning: cannot create a new user namespace, going forward without it...\n");
+			fwarning("cannot create a new user namespace, going forward without it...\n");
 			drop_privs(arg_nogroups);
 			arg_noroot = 0;
 		}
@@ -963,7 +960,7 @@ int sandbox(void* sandbox_arg) {
 		int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
 
 		if(no_new_privs != 0 && !arg_quiet)
-			fprintf(stderr, "Warning: NO_NEW_PRIVS disabled, it requires a Linux kernel version 3.5 or newer.\n");
+			fwarning("NO_NEW_PRIVS disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		else if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");
 	}

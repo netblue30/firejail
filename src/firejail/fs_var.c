@@ -143,7 +143,7 @@ void fs_var_log(void) {
 		fs_logger("touch /var/log/btmp");
 	}
 	else
-		fprintf(stderr, "Warning: cannot hide /var/log directory\n");
+		fwarning("cannot hide /var/log directory\n");
 }
 
 void fs_var_lib(void) {
@@ -269,7 +269,7 @@ void fs_var_lock(void) {
 			fs_logger("tmpfs /var/lock");
 		}
 		else {
-			fprintf(stderr, "Warning: /var/lock not mounted\n");
+			fwarning("/var/lock not mounted\n");
 			dbg_test_dir("/var/lock");
 		}
 	}
@@ -287,7 +287,7 @@ void fs_var_tmp(void) {
 		}
 	}
 	else {
-		fprintf(stderr, "Warning: /var/tmp not mounted\n");
+		fwarning("/var/tmp not mounted\n");
 		dbg_test_dir("/var/tmp");
 	}
 }
@@ -300,7 +300,7 @@ void fs_var_utmp(void) {
 	if (stat(UTMP_FILE, &s) == 0)
 		utmp_group = s.st_gid;
 	else {
-		fprintf(stderr, "Warning: cannot find /var/run/utmp\n");
+		fwarning("cannot find /var/run/utmp\n");
 		return;
 	}
 

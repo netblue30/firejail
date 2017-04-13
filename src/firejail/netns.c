@@ -103,7 +103,7 @@ void netns_mounts(const char *nsname) {
 		    asprintf(&etc_name, "/etc/%s", entry->d_name) < 0)
 			errExit("asprintf");
 		if (mount(netns_name, etc_name, "none", MS_BIND, 0) < 0) {
-			fprintf(stderr, "Warning: bind %s -> %s failed: %s\n",
+			fwarning("bind %s -> %s failed: %s\n",
 				netns_name, etc_name, strerror(errno));
 		}
 		free(netns_name);

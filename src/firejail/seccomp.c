@@ -90,7 +90,7 @@ int seccomp_load(const char *fname) {
 		.filter = filter,
 	};
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return 1;
 	}
 	

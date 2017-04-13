@@ -59,14 +59,14 @@ void drop_privs(int nogroups) {
 		}
 
 		if (rv == -1) {
-			fprintf(stderr, "Warning: cannot extract supplementary group list, dropping them\n");
+			fwarning("cannot extract supplementary group list, dropping them\n");
 			if (setgroups(0, NULL) < 0)
 				errExit("setgroups");
 		}
 		else {
 			rv = setgroups(ngroups, groups);
 			if (rv) {
-				fprintf(stderr, "Warning: cannot set supplementary group list, dropping them\n");
+				fwarning("cannot set supplementary group list, dropping them\n");
 				if (setgroups(0, NULL) < 0)
 					errExit("setgroups");
 			}
@@ -113,6 +113,18 @@ int mkpath_as_root(const char* path) {
 
 	free(file_path);
 	return 0;
+}
+
+void fwarning(char* fmt, ...) {
+printf("arg_quiet %d\n", arg_quiet);
+	if (arg_quiet)
+		return;
+		
+	va_list args;
+	va_start(args,fmt);
+	fprintf(stderr, "Warning: ");
+	vfprintf(stderr, fmt, args);
+	va_end(args);
 }
 
 
@@ -197,14 +209,14 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 	// open source
 	int src = open(srcname, O_RDONLY);
 	if (src < 0) {
-		fprintf(stderr, "Warning: cannot open source file %s, file not copied\n", srcname);
+		fwarning("cannot open source file %s, file not copied\n", srcname);
 		return -1;
 	}
 
 	// open destination
 	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {
-		fprintf(stderr, "Warning: cannot open destination file %s, file not copied\n", destname);
+		fwarning("cannot open destination file %s, file not copied\n", destname);
 		close(src);
 		return -1;
 	}
@@ -233,7 +245,7 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 		// copy, set permissions and ownership
 		int rv = copy_file(srcname, destname, uid, gid, mode); // already a regular user
 		if (rv)
-			fprintf(stderr, "Warning: cannot copy %s\n", srcname);
+			fwarning("cannot copy %s\n", srcname);
 #ifdef HAVE_GCOV
 		__gcov_flush();
 #endif
@@ -247,7 +259,7 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 	// open destination
 	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {
-		fprintf(stderr, "Warning: cannot open destination file %s, file not copied\n", destname);
+		fwarning("cannot open destination file %s, file not copied\n", destname);
 		return;
 	}
 
@@ -260,10 +272,10 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 
 		int src = open(srcname, O_RDONLY);
 		if (src < 0) {
-			fprintf(stderr, "Warning: cannot open source file %s, file not copied\n", srcname);
+			fwarning("cannot open source file %s, file not copied\n", srcname);
 		} else {
 			if (copy_file_by_fd(src, dst)) {
-				fprintf(stderr, "Warning: cannot copy %s\n", srcname);
+				fwarning("cannot copy %s\n", srcname);
 			}
 			close(src);
 		}
@@ -794,8 +806,7 @@ void flush_stdin(void) {
 		int cnt = 0;
 		int rv = ioctl(STDIN_FILENO, FIONREAD, &cnt);
 		if (rv == 0 && cnt) {
-			if (!arg_quiet)
-				printf("Warning: removing %d bytes from stdin\n", cnt);
+			fwarning("removing %d bytes from stdin\n", cnt);
 			rv = ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
 			(void) rv;
 		}

@@ -272,8 +272,7 @@ void check_user_namespace(void) {
 	return;
 
 errout:
-	if (!arg_quiet || arg_debug)
-		fprintf(stderr, "Warning: noroot option is not available\n");
+	fwarning("noroot option is not available\n");
 	arg_noroot = 0;
 
 }
@@ -1074,8 +1073,7 @@ int main(int argc, char **argv) {
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (cfg.protocol) {
-					if (!arg_quiet)
-						fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", argv[i] + 11);
+					fwarning("a protocol list is present, the new list \"%s\" will not be installed\n", argv[i] + 11);
 				}
 				else {
 					// store list
@@ -1708,8 +1706,7 @@ int main(int argc, char **argv) {
 					errExit("strdup");
 				
 				if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac, &intf->mtu)) {
-					if (!arg_quiet || arg_debug)
-						fprintf(stderr, "Warning:  interface %s is not configured\n", intf->dev);
+					fwarning("interface %s is not configured\n", intf->dev);
 				}
 				intf->configured = 1;
 			}
@@ -2186,8 +2183,7 @@ int main(int argc, char **argv) {
 
 	// check trace configuration
 	if (arg_trace && arg_tracelog) {
-		if (!arg_quiet || arg_debug)
-			fprintf(stderr, "Warning: --trace and --tracelog are mutually exclusive; --tracelog disabled\n");
+		fwarning("--trace and --tracelog are mutually exclusive; --tracelog disabled\n");
 	}
 	
 	// check user namespace (--noroot) options
@@ -2273,12 +2269,10 @@ int main(int argc, char **argv) {
 	// use default.profile as the default
 	if (!custom_profile && !arg_noprofile) {
 		if (cfg.chrootdir) {
-			if (!arg_quiet || arg_debug)
-				fprintf(stderr, "Warning: default profile disabled by --chroot option\n");
+			fwarning("default profile disabled by --chroot option\n");
 		}
 		else if (arg_overlay) {
-			if (!arg_quiet || arg_debug)
-				fprintf(stderr, "Warning: default profile disabled by --overlay option\n");
+			fwarning("default profile disabled by --overlay option\n");
 		}
 		else {
 			// try to load a default profile
@@ -2346,13 +2340,11 @@ int main(int argc, char **argv) {
 		errExit("pipe");
 
 	if (arg_noroot && arg_overlay) {
-		if (!arg_quiet || arg_debug)
-			fprintf(stderr, "Warning: --overlay and --noroot are mutually exclusive, noroot disabled\n");
+		fwarning("--overlay and --noroot are mutually exclusive, noroot disabled\n");
 		arg_noroot = 0;
 	}
 	else if (arg_noroot && cfg.chrootdir) {
-		if (!arg_quiet || arg_debug)
-			fprintf(stderr, "Warning: --chroot and --noroot are mutually exclusive, noroot disabled\n");
+		fwarning("--chroot and --noroot are mutually exclusive, noroot disabled\n");
 		arg_noroot = 0;
 	}
 

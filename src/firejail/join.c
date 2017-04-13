@@ -308,7 +308,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			int rv = nice(cfg.nice);
 			(void) rv;
 			if (errno) {
-				fprintf(stderr, "Warning: cannot set nice value\n");
+				fwarning("cannot set nice value\n");
 				errno = 0;
 			}
 		}

@@ -116,7 +116,6 @@ int mkpath_as_root(const char* path) {
 }
 
 void fwarning(char* fmt, ...) {
-printf("arg_quiet %d\n", arg_quiet);
 	if (arg_quiet)
 		return;
 		

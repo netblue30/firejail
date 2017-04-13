@@ -28,13 +28,9 @@ x11 xorg
 private-dev
 private-tmp
 
-# Experimental: make home directory read-only and allow writing only
-# to Baloo configuration files and databases
+# Make home directory read-only and allow writing only to Baloo's database.
+# Note: Baloo will not be able to update the first run key in its configuration files.
+# Older versions will issue a warning message.
 #read-only  ${HOME}
-#read-write ${HOME}/.kde4/share/config/baloofilerc
-#read-write ${HOME}/.kde4/share/config/baloorc
-#read-write ${HOME}/.kde/share/config/baloofilerc
-#read-write ${HOME}/.kde/share/config/baloorc
-#read-write ${HOME}/.config/baloofilerc
 #read-write ${HOME}/.local/share/baloo
 #read-write ${HOME}/.local/share/akonadi/search_db

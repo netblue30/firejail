@@ -49,6 +49,14 @@ expect {
 }
 after 100
 
+# check /sys directory
+send -- "ls /sys\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"block"
+}
+after 100
+
 
 puts "all done\n"
 

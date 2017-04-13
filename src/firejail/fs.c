@@ -502,12 +502,10 @@ void fs_proc_sys_dev_boot(void) {
 		printf("Remounting /sys directory\n");
 	if (umount2("/sys", MNT_DETACH) < 0)
 		fprintf(stderr, "Warning: failed to unmount /sys\n");
-	else {
-		if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
-			fprintf(stderr, "Warning: failed to mount /sys\n");
-		else
-			fs_logger("remount /sys");
-	}
+	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
+		fprintf(stderr, "Warning: failed to mount /sys\n");
+	else
+		fs_logger("remount /sys");
 		
 	disable_file(BLACKLIST_FILE, "/sys/firmware");
 	disable_file(BLACKLIST_FILE, "/sys/hypervisor");

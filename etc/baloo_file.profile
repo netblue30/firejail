@@ -30,6 +30,7 @@ private-tmp
 
 # Make home directory read-only and allow writing only to Baloo's database.
 # Note: Baloo will not be able to update the first run key in its configuration files.
+# Older versions will issue a warning message.
 #read-only  ${HOME}
 #read-write ${HOME}/.local/share/baloo
 #read-write ${HOME}/.local/share/akonadi/search_db

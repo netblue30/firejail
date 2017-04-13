@@ -17,6 +17,8 @@ NAME=@PACKAGE_NAME@
 PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
 HAVE_APPARMOR=@HAVE_APPARMOR@
+HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
+HAVE_GIT_INSTALL=@HAVE_GIT_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 
 uids.h:; ./mkuid.sh
@@ -94,11 +96,13 @@ endif
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
+ifeq($(HAVE_CONTRIB_INSTALL),yes)
 	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjclip.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjdisplay.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjresize.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fj-mkdeb.py $(DESTDIR)/$(libdir)/firejail/.
+endif
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.

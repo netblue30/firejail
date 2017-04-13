@@ -625,6 +625,7 @@ ac_includes_default="\
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 HAVE_SECCOMP_H
+HAVE_CONTRIB_INSTALL
 HAVE_GIT_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
@@ -713,6 +714,7 @@ enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
 enable_git_install
+enable_contrib_install
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1352,6 +1354,8 @@ Optional Features:
                           enable busybox workaround
   --enable-gcov           Gcov instrumentation
   --enable-git-install    enable git install feature
+  --enable-contrib-install
+                          install contrib scripts
 
 Some influential environment variables:
   CC          C compiler command
@@ -3728,6 +3732,20 @@ if test "x$enable_git_install" = "xyes"; then :
 
 fi
 
+HAVE_CONTRIB_INSTALL="yes"
+# Check whether --enable-contrib-install was given.
+if test "${enable_contrib_install+set}" = set; then :
+  enableval=$enable_contrib_install;
+fi
+
+if test "x$enable_contrib_install" = "xno"; then :
+  HAVE_CONTRIB_INSTALL="no"
+else
+  HAVE_CONTRIB_INSTALL="yes"
+
+fi
+
+
 # checking pthread library
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
 $as_echo_n "checking for main in -lpthread... " >&6; }
@@ -4991,6 +5009,7 @@ echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
+echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
 echo
 
 

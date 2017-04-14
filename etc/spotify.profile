@@ -28,7 +28,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin spotify
+private-bin spotify,bash,sh
 private-etc fonts,machine-id,pulse,resolv.conf
 private-dev
 private-tmp

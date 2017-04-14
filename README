@@ -274,6 +274,8 @@ Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
 mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
+mustaqimM (https://github.com/mustaqimM)
+    - added profile for Nylas Mail
 n1trux (https://github.com/n1trux)
 	- fix flashpeak-slimjet profile typos
 netblue30 (netblue30@yahoo.com)

@@ -145,6 +145,7 @@
 /etc/firejail/nautilus.profile
 /etc/firejail/netsurf.profile
 /etc/firejail/nolocal.net
+/etc/firejail/nylas.profile
 /etc/firejail/odt2txt.profile
 /etc/firejail/okular.profile
 /etc/firejail/openbox.profile

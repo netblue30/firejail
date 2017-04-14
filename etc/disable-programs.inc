@@ -33,6 +33,7 @@ blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mousepad
 blacklist ${HOME}/.config/Mumble
+blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Slack
@@ -260,6 +261,7 @@ blacklist ${HOME}/.mutt
 blacklist ${HOME}/.mutt/muttrc
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.nv
+blacklist $(HOME)/.nylas-mail
 blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.opera

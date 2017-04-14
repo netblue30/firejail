@@ -261,7 +261,7 @@ blacklist ${HOME}/.mutt
 blacklist ${HOME}/.mutt/muttrc
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.nv
-blacklist $(HOME)/.nylas-mail
+blacklist ${HOME}/.nylas-mail
 blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.opera

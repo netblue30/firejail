@@ -215,6 +215,7 @@ blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/data/Mumble
+blacklist ${HOME}./local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution

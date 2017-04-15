@@ -354,6 +354,7 @@ SpotComms (https://github.com/SpotComms)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
 	- added PDFSam, Pithos, and Xonotic profiles
 	- disabled Go, Rust, and OpenSSL in disable-devel.conf
+    - added dino profile
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes

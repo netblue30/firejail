@@ -5,22 +5,23 @@ include /etc/firejail/dino.local
 # Firejail profile for Dino
 noblacklist ${HOME}/.local/share/dino
 
-mkdir ${HOME}/.local/share/dino
-mkdir ${HOME}/Downloads
-
-whitelist ${HOME}/.local/share/dino
-whitelist ${HOME}/Downloads
-
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-devel.inc
+
+whitelist ${HOME}/Downloads
+mkdir ${HOME}/.local/share/dino
+whitelist ${HOME}/.local/share/dino
 
 caps.drop all
+machine-id
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
+nosound
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -29,7 +30,3 @@ private-bin dino
 #private-etc fonts #breaks server connection
 private-dev
 private-tmp
-machine-id
-
-no3d
-nosound

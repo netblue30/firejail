@@ -196,4 +196,4 @@ simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, 
 xed, pluma, Cryptocat, Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5,
 PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser, xmms, iridium browser,
 Kino, Thunar, Geeqie, Engrampa, Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView, baloo_file,
-Nylas
+Nylas,dino

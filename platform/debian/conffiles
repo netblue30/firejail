@@ -36,6 +36,7 @@
 /etc/firejail/default.profile
 /etc/firejail/deluge.profile
 /etc/firejail/dillo.profile
+/etc/firejail/dino.profile
 /etc/firejail/disable-common.inc
 /etc/firejail/disable-devel.inc
 /etc/firejail/disable-passwdmgr.inc

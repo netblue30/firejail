@@ -18,7 +18,19 @@ include /etc/firejail/disable-devel.inc
 #Options
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
-protocol unix,inet,inet6
+protocol unix           
 seccomp
+shell none
+
+private-dev
+private-etc fonts,mono
+private-tmp
+
+noexec ${HOME}
+noexec /tmp
+
+no3d
+nosound

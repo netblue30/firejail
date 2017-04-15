@@ -17,7 +17,12 @@ nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp
+shell none
 tracelog
 
 private-dev
 # whitelist /tmp/.X11-unix/
+
+noexec ${HOME}
+noexec /tmp
+

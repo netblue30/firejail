@@ -16,6 +16,7 @@ include /etc/firejail/disable-devel.inc
 
 #Options
 caps.drop all
+net none
 netfilter
 nogroups
 nonewprivs

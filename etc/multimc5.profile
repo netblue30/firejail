@@ -30,7 +30,7 @@ nogroups
 nonewprivs
 noroot
 #protocol unix,inet,inet6
-seccomp
+#seccomp
 shell none
 
 private-dev

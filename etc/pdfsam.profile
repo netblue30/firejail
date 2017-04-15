@@ -16,9 +16,11 @@ include /etc/firejail/disable-devel.inc
 caps.drop all
 net none
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
+nosound
 protocol unix
 seccomp
 shell none
@@ -28,6 +30,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-no3d
-nosound

@@ -17,6 +17,7 @@ include /etc/firejail/whitelist-common.inc
 #Options
 caps.drop all
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
@@ -29,5 +30,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-no3d

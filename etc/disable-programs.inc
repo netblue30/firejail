@@ -18,6 +18,7 @@ blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
 blacklist ${HOME}/.bcast5
+blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/Atom
@@ -107,6 +108,7 @@ blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/qpdfview
+blacklist ${HOME}/.config/qt5ct
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.config/ranger
 blacklist ${HOME}/.config/redshift.conf

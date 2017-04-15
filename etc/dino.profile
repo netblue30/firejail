@@ -30,3 +30,6 @@ private-bin dino
 #private-etc fonts #breaks server connection
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

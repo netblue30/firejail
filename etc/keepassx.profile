@@ -15,6 +15,7 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 net none
+no3d
 nogroups
 nonewprivs
 noroot
@@ -28,3 +29,6 @@ private-bin keepassx
 private-etc fonts
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

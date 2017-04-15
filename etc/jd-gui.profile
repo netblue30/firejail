@@ -20,7 +20,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
-#protocol unix
+protocol unix
 seccomp
 shell none
 

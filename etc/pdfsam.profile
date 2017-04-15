@@ -18,7 +18,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
-#protocol unix,inet,inet6
+protocol unix
 seccomp
 shell none
 
@@ -29,4 +29,4 @@ noexec ${HOME}
 noexec /tmp
 
 no3d
-#nosound
+nosound

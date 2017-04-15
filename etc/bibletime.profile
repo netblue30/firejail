@@ -3,20 +3,22 @@
 include /etc/firejail/bibletime.local
 
 # Firejail profile for BibleTime
-noblacklist ~/.sword
 noblacklist ~/.bibletime
+noblacklist ~/.config/qt5ct
+noblacklist ~/.sword
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ${HOME}/.config/qt5ct
-whitelist ${HOME}/.sword
-whitelist ${HOME}/.bibletime
-
 blacklist ~/.bashrc
 blacklist ~/.Xauthority
+
+whitelist ${HOME}/.bibletime
+whitelist ${HOME}/.config/qt5ct
+whitelist ${HOME}/.sword
+
 
 caps.drop all
 netfilter

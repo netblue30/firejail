@@ -32,10 +32,10 @@ expect {
 	"123"
 }
 
-send -- "rm /tmp/firejal-deleteme\r"
+send -- "rm -v /tmp/firejal-deleteme\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"0"
+	"removed"
 }
 after 100
 

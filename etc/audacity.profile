@@ -11,7 +11,9 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+net none
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
@@ -23,3 +25,6 @@ tracelog
 private-bin audacity
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

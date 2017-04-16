@@ -23,6 +23,7 @@
 #include <glob.h>
 #include <dirent.h>
 #include <fcntl.h>
+#include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -301,7 +302,7 @@ void fs_private(void) {
 		if (mkdir(homedir, S_IRWXU) == -1) {
 			if (mkpath_as_root(homedir) == -1)
 				errExit("mkpath");
-			if (mkdir(homedir, S_IRWXU) == -1)
+			if (mkdir(homedir, S_IRWXU) == -1 && errno != EEXIST)
 				errExit("mkdir");
 		}
 		if (chown(homedir, u, g) < 0)

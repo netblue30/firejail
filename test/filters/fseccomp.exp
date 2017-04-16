@@ -8,39 +8,39 @@ spawn $env(SHELL)
 match_max 100000
 
 after 100
-send -- "/usr/lib/firejail/fseccomp debug-syscalls\r"
+send -- "fseccomp debug-syscalls\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"1	- write"
 }
 
 after 100
-send -- "/usr/lib/firejail/fseccomp debug-errnos\r"
+send -- "fseccomp debug-errnos\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"1	- EPERM"
 }
 
 after 100
-send -- "/usr/lib/firejail/fseccomp debug-protocols\r"
+send -- "fseccomp debug-protocols\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"unix, inet, inet6, netlink, packet,"
 }
 
 after 100
-send -- "/usr/lib/firejail/fseccomp protocol build unix,inet seccomp-test-file\r"
+send -- "fseccomp protocol build unix,inet seccomp-test-file\r"
 after 100
-send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+send -- "fseccomp print seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 4.1\n";exit}
 	"WHITELIST 41 socket"
 }
 
 after 100
-send -- "/usr/lib/firejail/fseccomp secondary 64 seccomp-test-file\r"
+send -- "fseccomp secondary 64 seccomp-test-file\r"
 after 100
-send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+send -- "fseccomp print seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
 	"BLACKLIST 165 mount"
@@ -55,9 +55,9 @@ expect {
 }
 
 after 100
-send -- "/usr/lib/firejail/fseccomp default seccomp-test-file\r"
+send -- "fseccomp default seccomp-test-file\r"
 after 100
-send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+send -- "fseccomp print seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
 	"BLACKLIST 165 mount"
@@ -72,9 +72,9 @@ expect {
 }
 
 after 100
-send -- "/usr/lib/firejail/fseccomp drop seccomp-test-file chmod,chown\r"
+send -- "fseccomp drop seccomp-test-file chmod,chown\r"
 after 100
-send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+send -- "fseccomp print seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 7.1\n";exit}
 	"BLACKLIST 165 mount" {puts "TESTING ERROR 7.2\n";exit}
@@ -91,9 +91,9 @@ expect {
 }
 
 after 100
-send -- "/usr/lib/firejail/fseccomp default drop seccomp-test-file chmod,chown\r"
+send -- "fseccomp default drop seccomp-test-file chmod,chown\r"
 after 100
-send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+send -- "fseccomp print seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 8.1\n";exit}
 	"BLACKLIST 165 mount"
@@ -115,9 +115,9 @@ expect {
 	"RETURN_ALLOW"
 }
 after 100
-send -- "/usr/lib/firejail/fseccomp keep seccomp-test-file chmod,chown\r"
+send -- "fseccomp keep seccomp-test-file chmod,chown\r"
 after 100
-send -- "/usr/lib/firejail/fseccomp print seccomp-test-file\r"
+send -- "fseccomp print seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 9.1\n";exit}
 	"WHITELIST 90 chmod"

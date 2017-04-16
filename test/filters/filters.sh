@@ -6,6 +6,13 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+if [ -f /etc/debian_version ]; then
+	libdir=$(dirname "$(dpkg -L firejail | grep fseccomp)")
+	export PATH="$PATH:$libdir"
+else
+	export PATH="$PATH:/usr/lib/firejail"
+fi
+
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp
 

@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "/usr/lib/firejail/fcopy\r"
+send -- "fcopy\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"arguments missing"
@@ -18,7 +18,7 @@ expect {
 }
 after 100
 
-send -- "/usr/lib/firejail/fcopy foo\r"
+send -- "fcopy foo\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"arguments missing"
@@ -29,14 +29,14 @@ expect {
 }
 after 100
 
-send -- "/usr/lib/firejail/fcopy f%oo1 foo2\r"
+send -- "fcopy f%oo1 foo2\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"invalid source file name"
 }
 after 100
 
-send -- "/usr/lib/firejail/fcopy foo1 f,oo2\r"
+send -- "fcopy foo1 f,oo2\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"invalid dest file name"

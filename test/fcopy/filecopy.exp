@@ -13,7 +13,7 @@ match_max 100000
 send -- "rm -fr dest/*\r"
 after 100
 
-send -- "/usr/lib/firejail/fcopy dircopy.exp dest\r"
+send -- "fcopy dircopy.exp dest\r"
 after 100
 
 send -- "find dest\r"

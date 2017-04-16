@@ -35,7 +35,7 @@ expect {
 after 100
 
 
-send -- "firejail --audit=/usr/lib/firejail/faudit\r"
+send -- "firejail --audit\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"Firejail Audit"

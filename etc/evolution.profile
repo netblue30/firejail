@@ -9,6 +9,7 @@ noblacklist ~/.cache/evolution
 noblacklist ~/.pki
 noblacklist ~/.pki/nssdb
 noblacklist ~/.gnupg
+noblacklist ~/.bogofilter
 
 noblacklist /var/spool/mail
 noblacklist /var/mail
@@ -20,6 +21,7 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
@@ -30,3 +32,6 @@ shell none
 
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

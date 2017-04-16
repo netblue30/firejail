@@ -16,6 +16,7 @@ include /etc/firejail/disable-passwdmgr.inc
 # To use KeePassHTTP, comment out `net none`
 caps.drop all
 net none
+no3d
 nogroups
 nonewprivs
 noroot
@@ -25,6 +26,9 @@ seccomp
 shell none
 
 private-bin keepassxc
-private-etc fonts
 private-dev
+private-etc fonts
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

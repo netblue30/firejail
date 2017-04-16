@@ -14,36 +14,36 @@ expect {
 }
 sleep 1
 
-send -- "ls -l ~/ | wc -l\r"
+send -- "ls -l ~\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"0"
 }
 
-send -- "ls -l /tmp | wc -l\r"
+send -- "ls -l /tmp\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"0"
 }
 
-send -- "ls -l /media | wc -l\r"
+send -- "ls -l /media\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"0"
 }
 
-send -- "ls -l /var | wc -l\r"
+send -- "ls -l /var\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"0"
 }
 
-send -- "ls -l /dev | wc -l\r"
+send -- "ls -l /dev\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"0"
 }
-send -- "ls -l /opt | wc -l\r"
+send -- "ls -l /opt\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"0"

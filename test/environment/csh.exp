@@ -14,7 +14,7 @@ expect {
 }
 sleep 1
 
-send -- "find /home\r"
+send -- "find ~\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	".cshrc"

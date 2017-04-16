@@ -36,7 +36,8 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * new profiles: Xonotic, wireshark, keepassx2, QupZilla, FossaMail,
   * new profiles: Uzbl browser, iridium browser, Thunar, Geeqie, Engrampa,
   * new profiles: Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView,
-  * new profiles: baloo_file, Nylas, dino, BibleTime, viewnior
+  * new profiles: baloo_file, Nylas, dino, BibleTime, viewnior, Kodi, viking,
+  * new profiles: youtube-dl, meld
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Fri, 7 Apr 2017 08:00:00 -0500
 

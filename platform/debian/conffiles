@@ -119,6 +119,7 @@
 /etc/firejail/keepassx2.profile
 /etc/firejail/keepassxc.profile
 /etc/firejail/kmail.profile
+/etc/firejail/kodi.profile
 /etc/firejail/konversation.profile
 /etc/firejail/less.profile
 /etc/firejail/libreoffice.profile
@@ -137,6 +138,7 @@
 /etc/firejail/mathematica.profile
 /etc/firejail/mcabber.profile
 /etc/firejail/mediainfo.profile
+/etc/firejail/meld.profile
 /etc/firejail/midori.profile
 /etc/firejail/mousepad.profile
 /etc/firejail/mpv.profile
@@ -206,6 +208,7 @@
 /etc/firejail/unzip.profile
 /etc/firejail/uudeview.profile
 /etc/firejail/viewnior.profile
+/etc/firejail/viking.profile
 /etc/firejail/vim.profile
 /etc/firejail/virtualbox.profile
 /etc/firejail/vivaldi.profile
@@ -233,6 +236,7 @@
 /etc/firejail/xviewer.profile
 /etc/firejail/xz.profile
 /etc/firejail/xzdec.profile
+/etc/firejail/youtube-dl.profile
 /etc/firejail/zathura.profile
 /etc/firejail/zoom.profile
 /etc/firejail/wget.profile

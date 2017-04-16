@@ -199,6 +199,7 @@ blacklist ${HOME}/.kde/share/config/okularrc
 blacklist ${HOME}/.killingfloor
 blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc
+blacklist ${HOME}/.kodi
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
@@ -231,6 +232,7 @@ blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/lollypop
+blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/nautilus
@@ -287,6 +289,8 @@ blacklist ${HOME}/.synfig
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.ts3client
+blacklist ${HOME}/.viking
+blacklist ${HOME}/.viking-maps
 blacklist ${HOME}/.vst
 blacklist ${HOME}/.w3m
 blacklist ${HOME}/.warzone2100-3.*

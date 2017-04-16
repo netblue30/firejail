@@ -4,7 +4,6 @@ include /etc/firejail/kodi.local
 
 # Firejail profile for kodi
 noblacklist ${HOME}/.kodi
-mkdir ${HOME}/.kodi
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

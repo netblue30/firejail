@@ -13,9 +13,9 @@ include /etc/firejail/disable-programs.inc
 whitelist ${HOME}/Downloads
 mkdir ${HOME}/.local/share/dino
 whitelist ${HOME}/.local/share/dino
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
-machine-id
 netfilter
 no3d
 nogroups

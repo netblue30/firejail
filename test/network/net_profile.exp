@@ -38,13 +38,15 @@ sleep 1
 send -- "ip route show\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"10.10.30.0/24 dev eth1  proto kernel  scope link  src 10.10.30.50"
+	"10.10.30.0/24 dev eth1  proto kernel  scope link  src 10.10.30.50" {puts "old iproute2\n";}
+	"10.10.30.0/24 dev eth1 proto kernel scope link src 10.10.30.50" {puts "new iproute2\n";}
 }
 
 send -- "ip route show\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"10.10.40.0/24 dev eth2  proto kernel  scope link  src 10.10.40.100"
+	"10.10.40.0/24 dev eth2  proto kernel  scope link  src 10.10.40.100" {puts "old iproute2\n";}
+	"10.10.40.0/24 dev eth2 proto kernel scope link src 10.10.40.100" {puts "new iproute2\n";}
 }
 
 

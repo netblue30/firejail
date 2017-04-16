@@ -27,8 +27,9 @@ expect {
 	"eth0.5"
 }
 expect {
-	timeout {puts "TESTING ERROR 2n";exit}
-	"Link"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Link" {puts "old net-tools\n";}
+	"flags" {puts "new net-tools\n";}
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -47,7 +48,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Link"
+	"Link" {puts "old net-tools\n";}
+	"flags" {puts "new net-tools\n";}
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}

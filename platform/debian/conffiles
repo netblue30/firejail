@@ -205,6 +205,7 @@
 /etc/firejail/unrar.profile
 /etc/firejail/unzip.profile
 /etc/firejail/uudeview.profile
+/etc/firejail/viewnior.profile
 /etc/firejail/vim.profile
 /etc/firejail/virtualbox.profile
 /etc/firejail/vivaldi.profile

@@ -124,6 +124,7 @@ blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/uGet
+blacklist ${HOME}/.config/viewnior
 blacklist ${HOME}/.config/vivaldi
 blacklist ${HOME}/.config/vlc
 blacklist ${HOME}/.config/wesnoth

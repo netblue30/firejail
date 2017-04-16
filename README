@@ -356,6 +356,8 @@ SpotComms (https://github.com/SpotComms)
 	- added PDFSam, Pithos, and Xonotic profiles
 	- disabled Go, Rust, and OpenSSL in disable-devel.conf
 	- added dino profile
+	- added Kodi profile
+	- lots of profile hardening
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes

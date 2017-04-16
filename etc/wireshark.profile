@@ -18,6 +18,7 @@ include /etc/firejail/disable-passwdmgr.inc
 #protocol unix,inet,inet6,netlink
 
 netfilter
+no3d
 nogroups
 nonewprivs
 nosound
@@ -28,3 +29,6 @@ tracelog
 #private-bin wireshark
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

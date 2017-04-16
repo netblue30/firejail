@@ -19,6 +19,7 @@ caps.drop all
 netfilter
 #net none                                     
 no3d
+nogroups
 nonewprivs
 noroot
 nosound

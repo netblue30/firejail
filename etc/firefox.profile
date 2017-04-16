@@ -21,6 +21,7 @@ nonewprivs
 noroot
 protocol unix,inet,inet6,netlink
 seccomp
+shell none
 tracelog
 
 whitelist ${DOWNLOADS}
@@ -59,3 +60,6 @@ include /etc/firejail/whitelist-common.inc
 #private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,firefox,mime.types,mailcap,asound.conf,pulse
 private-dev 
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

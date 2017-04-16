@@ -10,11 +10,11 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
+no3d
+nogroups
 nonewprivs
 noroot
-nogroups
 nosound
-no3d
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -22,7 +22,9 @@ shell none
 blacklist /tmp/.X11-unix
 
 # private-bin wget
-# private-etc resolv.conf
 private-dev
+# private-etc resolv.conf
 private-tmp
 
+noexec ${HOME}
+noexec /tmp

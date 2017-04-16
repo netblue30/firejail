@@ -41,7 +41,11 @@ expect {
 }
 after 100
 
-send -- "ls -al ~\r"
+send -- "find ~ | LC_ALL=C sort\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	".Xauthority"
+}
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	".asoundrc"
@@ -49,10 +53,6 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	".bashrc"
-}
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	".Xauthority"
 }
 after 100
 

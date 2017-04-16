@@ -16,11 +16,7 @@ expect {
 }
 sleep 1
 
-send -- "find ~\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"_firejail_test_file"
-}
+send -- "find ~ | LC_ALL=C sort\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"_firejail_test_dir"
@@ -40,6 +36,10 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"_firejail_test_dir/dir1/dir2/dir3/file1"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"_firejail_test_file"
 }
 after 100
 send -- "exit\r"

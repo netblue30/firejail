@@ -113,7 +113,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		else {
 			if (arg_debug) {
 				if (strcmp(filename, fname))
-					printf("Disable %s (requesterd %s)\n", fname, filename);
+					printf("Disable %s (requested %s)\n", fname, filename);
 				else
 					printf("Disable %s\n", fname);
 			}

@@ -6,6 +6,7 @@
 /etc/firejail/Wire.profile
 /etc/firejail/abrowser.profile
 /etc/firejail/amarok.profile
+/etc/firejail/arduino.profile
 /etc/firejail/ark.profile
 /etc/firejail/atom-beta.profile
 /etc/firejail/atom.profile

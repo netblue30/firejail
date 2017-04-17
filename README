@@ -360,6 +360,7 @@ SpotComms (https://github.com/SpotComms)
 	- lots of profile tightening
 	- added viking, youtube-dl, meld profiles
 	- more profile tightening
+	- added Arduino profile
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes

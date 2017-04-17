@@ -102,7 +102,7 @@ static struct sock_filter *find_protocol_domain(const char *p) {
 // --debug-protocols
 void protocol_list(void) {
 #ifndef SYS_socket
-	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+	fwarning("--protocol not supported on this platform\n");
 	return;
 #endif
 
@@ -120,7 +120,7 @@ void protocol_store(const char *prlist) {
 	assert(prlist);
 	
 	if (cfg.protocol) {
-		fprintf(stderr, "Warning: a protocol list is present, the new list \"%s\" will not be installed\n", prlist);
+		fwarning("a protocol list is present, the new list \"%s\" will not be installed\n", prlist);
 		return;
 	}
 	
@@ -160,8 +160,8 @@ void protocol_filter(void) {
 
 #ifndef SYS_socket
 	(void) find_protocol_domain;
-        fprintf(stderr, "Warning: --protocol not supported on this platform\n");
-        return;
+	fwarning("--protocol not supported on this platform\n");
+	return;
 #else
 	// build the filter
 	struct sock_filter filter[32];	// big enough
@@ -256,7 +256,7 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 	};
 
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return;
 	}
 #endif // SYS_socket	
@@ -322,7 +322,7 @@ void protocol_print_filter_name(const char *name) {
 
 	protocol_print_filter(pid);
 #else
-	fprintf(stderr, "Warning: --protocol not supported on this platform\n");
+	fwarning("--protocol not supported on this platform\n");
 	return;
 #endif
 }
@@ -375,8 +375,8 @@ void protocol_print_filter(pid_t pid) {
 		printf("%s\n", cfg.protocol);
 	exit(0);
 #else
-        fprintf(stderr, "Warning: --protocol not supported on this platform\n");
-        return;
+	fwarning("--protocol not supported on this platform\n");
+	return;
 #endif  
 }
 

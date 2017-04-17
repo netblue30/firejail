@@ -320,7 +320,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 	uint32_t range = ~ifmask + 1; // the number of potential addresses
 	// this software is not supported for /31 networks
 	if (range < 4) {
-		fprintf(stderr, "Warning: this option is not supported for /31 networks\n");
+		fwarning("this option is not supported for /31 networks\n");
 		close(sock);
 		return;
 	}

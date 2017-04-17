@@ -82,7 +82,7 @@ int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg)
 			*ptr = '\0';
 			int nr = syscall_find_name(start);
 			if (nr == -1)
-				fprintf(stderr, "Warning: syscall %s not found\n", start);
+				fwarning("syscall %s not found\n", start);
 			else if (callback != NULL)
 				callback(nr, arg);
 				
@@ -93,7 +93,7 @@ int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg)
 	if (*start != '\0') {
 		int nr = syscall_find_name(start);
 		if (nr == -1)
-			fprintf(stderr, "Warning: syscall %s not found\n", start);
+			fwarning("syscall %s not found\n", start);
 		else if (callback != NULL)
 			callback(nr, arg);
 	}

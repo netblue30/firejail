@@ -312,7 +312,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_private_etc = 1;
 		else {
 			arg_private_etc = 0;
-			fprintf(stderr, "Warning: private-etc disabled, no file found\n");
+			fwarning("private-etc disabled, no file found\n");
 		}
 		
 		return 0;

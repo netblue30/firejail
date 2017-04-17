@@ -57,14 +57,14 @@ void drop_privs(int nogroups) {
 		}
 
 		if (rv == -1) {
-			fprintf(stderr, "Warning: cannot extract supplementary group list, dropping them\n");
+			fwarning("cannot extract supplementary group list, dropping them\n");
 			if (setgroups(0, NULL) < 0)
 				errExit("setgroups");
 		}
 		else {
 			rv = setgroups(ngroups, groups);
 			if (rv) {
-				fprintf(stderr, "Warning: cannot set supplementary group list, dropping them\n");
+				fwarning("cannot set supplementary group list, dropping them\n");
 				if (setgroups(0, NULL) < 0)
 					errExit("setgroups");
 			}
@@ -115,6 +115,16 @@ int mkpath_as_root(const char* path) {
 	return 0;
 }
 
+void fwarning(char* fmt, ...) {
+	if (arg_quiet)
+		return;
+
+	va_list args;
+	va_start(args,fmt);
+	fprintf(stderr, "Warning: ");
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+}
 
 
 void logsignal(int s) {
@@ -179,14 +189,14 @@ int copy_file(const char *srcname, const char *destname) {
 	// open source
 	int src = open(srcname, O_RDONLY);
 	if (src < 0) {
-		fprintf(stderr, "Warning: cannot open %s, file not copied\n", srcname);
+		fwarning("cannot open %s, file not copied\n", srcname);
 		return -1;
 	}
 
 	// open destination
 	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {
-		fprintf(stderr, "Warning: cannot open %s, file not copied\n", destname);
+		fwarning("cannot open %s, file not copied\n", destname);
 		close(src);
 		return -1;
 	}
@@ -226,7 +236,7 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 		// copy, set permissions and ownership
 		int rv = copy_file(srcname, destname); // already a regular user
 		if (rv)
-			fprintf(stderr, "Warning: cannot copy %s\n", srcname);
+			fwarning("cannot copy %s\n", srcname);
 		else {
 			if (chown(destname, uid, gid) == -1)
 				errExit("chown");
@@ -697,8 +707,7 @@ void flush_stdin(void) {
 		int cnt = 0;
 		ioctl(STDIN_FILENO, FIONREAD, &cnt);
 		if (cnt) {
-			if (!arg_quiet)
-				printf("Warning: removing %d bytes from stdin\n", cnt);
+			fwarning("removing %d bytes from stdin\n", cnt);
 			ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
 		}
 	}

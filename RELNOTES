@@ -3,6 +3,7 @@ firejail (0.9.38.11) baseline; urgency=low
   * bugfix: set correct mode for --tmpfs
   * bugfix: accept program names in firejail bash completion
   * bugfix: added --force option to --help screen
+  * bugfix: --quiet option
   * enhancement: updated copyright statement in all files
   * enhancement: --output cleanup
   * enhancement: quiet support in profile files

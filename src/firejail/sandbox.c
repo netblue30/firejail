@@ -357,7 +357,7 @@ int sandbox(void* sandbox_arg) {
 			
 			// disable all capabilities
 			if (arg_caps_default_filter || arg_caps_list)
-				fprintf(stderr, "Warning: all capabilities disabled for a regular user during chroot\n");
+				fwarning("all capabilities disabled for a regular user during chroot\n");
 			arg_caps_drop_all = 1;
 			
 			// drop all supplementary groups; /etc/group file inside chroot
@@ -404,7 +404,7 @@ int sandbox(void* sandbox_arg) {
 		fs_private_dev();
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: private-etc feature is disabled in chroot\n");
+			fwarning("private-etc feature is disabled in chroot\n");
 		else {
 			fs_private_etc_list();
 			// create /etc/ld.so.preload file again
@@ -414,7 +414,7 @@ int sandbox(void* sandbox_arg) {
 	}
 	if (arg_private_bin) {
 		if (cfg.chrootdir)
-			fprintf(stderr, "Warning: private-bin feature is disabled in chroot\n");
+			fwarning("private-bin feature is disabled in chroot\n");
 		else
 			fs_private_bin_list();
 	}
@@ -483,7 +483,7 @@ int sandbox(void* sandbox_arg) {
 		if (cfg.defaultgw) {
 			// set the default route
 			if (net_add_route(0, 0, cfg.defaultgw))
-				fprintf(stderr, "Warning: cannot configure default route\n");
+				fwarning("cannot configure default route\n");
 		}
 		
 		// enable interfaces

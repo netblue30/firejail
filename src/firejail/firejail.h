@@ -20,6 +20,7 @@
 #ifndef FIREJAIL_H
 #define FIREJAIL_H
 #include "../include/common.h"
+#include <stdarg.h>
 
 // filesystem
 #define RUN_FIREJAIL_DIR	"/run/firejail"
@@ -381,6 +382,7 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid);
 int net_move_interface(const char *dev, unsigned pid);
 
 // util.c
+void fwarning(char* fmt, ...);
 void drop_privs(int nogroups);
 int mkpath_as_root(const char* path);
 void extract_command_name(int index, char **argv);

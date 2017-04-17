@@ -265,44 +265,44 @@ void caps_print(void) {
 int caps_default_filter(void) {
 	// drop capabilities
 	if (prctl(PR_CAPBSET_DROP, CAP_SYS_MODULE, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_MODULE");
+		fwarning("cannot drop CAP_SYS_MODULE");
 	else if (arg_debug)
 		printf("Drop CAP_SYS_MODULE\n");
 
 	if (prctl(PR_CAPBSET_DROP, CAP_SYS_RAWIO, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_RAWIO");
+		fwarning("cannot drop CAP_SYS_RAWIO");
 	else if (arg_debug)
 		printf("Drop CAP_SYS_RAWIO\n");
 
 	if (prctl(PR_CAPBSET_DROP, CAP_SYS_BOOT, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_BOOT");
+		fwarning("cannot drop CAP_SYS_BOOT");
 	else if (arg_debug)
 		printf("Drop CAP_SYS_BOOT\n");
 
 	if (prctl(PR_CAPBSET_DROP, CAP_SYS_NICE, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_NICE");
+		fwarning("cannot drop CAP_SYS_NICE");
 	else if (arg_debug)
 		printf("Drop CAP_SYS_NICE\n");
 
 	if (prctl(PR_CAPBSET_DROP, CAP_SYS_TTY_CONFIG, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_TTY_CONFIG");
+		fwarning("cannot drop CAP_SYS_TTY_CONFIG");
 	else if (arg_debug)
 		printf("Drop CAP_SYS_TTY_CONFIG\n");
 
 #ifdef CAP_SYSLOG
 	if (prctl(PR_CAPBSET_DROP, CAP_SYSLOG, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYSLOG");
+		fwarning("cannot drop CAP_SYSLOG");
 	else if (arg_debug)
 		printf("Drop CAP_SYSLOG\n");
 #endif
 
 	if (prctl(PR_CAPBSET_DROP, CAP_MKNOD, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_MKNOD");
+		fwarning("cannot drop CAP_MKNOD");
 	else if (arg_debug)
 		printf("Drop CAP_MKNOD\n");
 
 	if (prctl(PR_CAPBSET_DROP, CAP_SYS_ADMIN, 0, 0, 0) && arg_debug)
-		fprintf(stderr, "Warning: cannot drop CAP_SYS_ADMIN");
+		fwarning("cannot drop CAP_SYS_ADMIN");
 	else if (arg_debug)
 		printf("Drop CAP_SYS_ADMIN\n");
 

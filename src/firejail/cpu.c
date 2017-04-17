@@ -101,7 +101,7 @@ void load_cpu(const char *fname) {
 		fclose(fp);
 	}
 	else
-		fprintf(stderr, "Warning: cannot load cpu affinity mask\n");
+		fwarning("cannot load cpu affinity mask\n");
 }
 
 void set_cpu_affinity(void) {
@@ -117,18 +117,14 @@ void set_cpu_affinity(void) {
 	}
 	
         	if (sched_setaffinity(0, sizeof(mask), &mask) == -1) {
-        		fprintf(stderr, "Warning: cannot set cpu affinity\n");
-        		fprintf(stderr, "  ");
-        		perror("sched_setaffinity");
+        		fwarning("cannot set cpu affinity\n");
         	}
         	
         	// verify cpu affinity
 	cpu_set_t mask2;
 	CPU_ZERO(&mask2);
         	if (sched_getaffinity(0, sizeof(mask2), &mask2) == -1) {
-        		fprintf(stderr, "Warning: cannot verify cpu affinity\n");
-        		fprintf(stderr, "   ");
-        		perror("sched_getaffinity");
+        		fwarning("cannot verify cpu affinity\n");
         	}
         	else if (arg_debug) {
 	        	if (CPU_EQUAL(&mask, &mask2))

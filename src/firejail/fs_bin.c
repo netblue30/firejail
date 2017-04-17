@@ -55,7 +55,7 @@ static char *check_dir_or_file(const char *name) {
 	}
 
 	if (!fname) {
-//		fprintf(stderr, "Warning: file %s not found\n", name);
+//		fwarning("file %s not found\n", name);
 		return NULL;
 	}
 	
@@ -105,7 +105,7 @@ void fs_check_bin_list(void) {
 	}
 	
 	if (*newlist == '\0') {
-		fprintf(stderr, "Warning: no --private-bin list executable found, option disabled\n");
+		fwarning("no --private-bin list executable found, option disabled\n");
 		cfg.bin_private_keep = NULL;
 		arg_private_bin = 0;
 		free(newlist);
@@ -115,7 +115,7 @@ void fs_check_bin_list(void) {
 		assert(ptr);
 		*ptr = '\0';
 		if (notfound)
-			fprintf(stderr, "Warning: not all executables from --private-bin list were found. The current list is %s\n", newlist);
+			fwarning("not all executables from --private-bin list were found. The current list is %s\n", newlist);
 		
 		cfg.bin_private_keep = newlist;
 	}

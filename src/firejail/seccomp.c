@@ -612,7 +612,7 @@ int seccomp_filter_drop(int enforce_seccomp) {
 			exit(1);
 		}
 		else
-			fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+			fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 
 		return 1;
 	}
@@ -653,7 +653,7 @@ int seccomp_filter_keep(void) {
 	};
 
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return 1;
 	}
 	else if (arg_debug) {
@@ -694,7 +694,7 @@ int seccomp_filter_errno(void) {
 	};
 
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return 1;
 	}
 	else if (arg_debug) {
@@ -717,7 +717,7 @@ void seccomp_set(void) {
 	};
 	
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		fprintf(stderr, "Warning: seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		return;
 	}
 	else if (arg_debug) {

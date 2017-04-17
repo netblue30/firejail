@@ -226,7 +226,7 @@ void fs_dev_shm(void) {
 			free(lnk);
 		}
 		else {
-			fprintf(stderr, "Warning: /dev/shm not mounted\n");
+			fwarning("/dev/shm not mounted\n");
 			dbg_test_dir("/dev/shm");
 		}
 			

@@ -189,7 +189,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	char* fname = realpath(filename, NULL);
 	if (fname == NULL && errno != EACCES) {
 		if (arg_debug)
-			printf("Warning: %s is an invalid file, skipping...\n", filename);
+			fwarning("%s is an invalid file, skipping...\n", filename);
 		return;
 	}
 	if (fname == NULL && errno == EACCES) {
@@ -216,7 +216,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		}
 		else {
 			if (arg_debug)
-				printf("Warning: %s is an invalid file, skipping...\n", filename);
+				fwarning("%s is an invalid file, skipping...\n", filename);
 		}
 				
 		return;
@@ -226,7 +226,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	struct stat s;
 	if (stat(fname, &s) == -1) {
 		if (arg_debug)
-			printf("Warning: %s does not exist, skipping...\n", fname);
+			fwarning("%s does not exist, skipping...\n", fname);
 		free(fname);
 		return;
 	}
@@ -237,7 +237,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		if ((strcmp(fname, "/bin") == 0 || strcmp(fname, "/usr/bin") == 0) &&
 		      is_link(filename) &&
 		      S_ISDIR(s.st_mode))
-			fprintf(stderr, "Warning: %s directory link was not blacklisted\n", filename);
+			fwarning("%s directory link was not blacklisted\n", filename);
 			
 		else {
 			if (arg_debug)
@@ -286,7 +286,7 @@ static void disable_file(OPERATION op, const char *filename) {
 			fs_logger2("mount tmpfs on", fname);
 		}
 		else
-			printf("Warning: %s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
+			fwarning("%s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
 	}
 	else
 		assert(0);
@@ -505,7 +505,7 @@ void fs_rdonly_noexit(const char *dir) {
 		if (mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
 			merr = 1;
 		if (merr)
-			fprintf(stderr, "Warning: cannot mount %s read-only\n", dir); 
+			fwarning("cannot mount %s read-only\n", dir); 
 		else
 			fs_logger2("read-only", dir);
 	}
@@ -534,9 +534,9 @@ void fs_proc_sys_dev_boot(void) {
 	if (arg_debug)
 		printf("Remounting /sys directory\n");
 	if (umount2("/sys", MNT_DETACH) < 0) 
-		fprintf(stderr, "Warning: failed to unmount /sys\n");
+		fwarning("failed to unmount /sys\n");
 	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
-		fprintf(stderr, "Warning: failed to mount /sys\n");
+		fwarning("failed to mount /sys\n");
 	else
 		fs_logger("remount /sys");
 		
@@ -986,7 +986,7 @@ void fs_chroot(const char *rootdir) {
 		exit(1);
 	}
 	if (copy_file("/etc/resolv.conf", fname) == -1) // root needed
-		fprintf(stderr, "Warning: /etc/resolv.conf not initialized\n");
+		fwarning("/etc/resolv.conf not initialized\n");
 	else {
 		if (chown("/etc/resolv.conf", 0, 0) == -1)
 			errExit("chown");

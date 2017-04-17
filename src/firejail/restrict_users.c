@@ -68,7 +68,7 @@ static void sanitize_home(void) {
 	struct stat s;
 	if (stat(cfg.homedir, &s) == -1) {
 		// cannot find home directory, just return
-		fprintf(stderr, "Warning: cannot find home directory\n");
+		fwarning("cannot find home directory\n");
 		return;
 	}
 	
@@ -196,7 +196,7 @@ static void sanitize_passwd(void) {
 	return;	
 	
 errout:
-	fprintf(stderr, "Warning: failed to clean up /etc/passwd\n");
+	fwarning("failed to clean up /etc/passwd\n");
 	if (fpin)
 		fclose(fpin);
 	if (fpout)
@@ -328,7 +328,7 @@ static void sanitize_group(void) {
 	return;	
 	
 errout:
-	fprintf(stderr, "Warning: failed to clean up /etc/group\n");
+	fwarning("failed to clean up /etc/group\n");
 	if (fpin)
 		fclose(fpin);
 	if (fpout)

@@ -62,7 +62,7 @@ void pulseaudio_disable(void) {
 		// sleep 2 seconds and try again
 		sleep(2);
 		if (!(dir = opendir("/tmp"))) {
-			fprintf(stderr, "Warning: cannot open /tmp directory. PulseAudio sockets are not disabled\n");
+			fwarning("cannot open /tmp directory. PulseAudio sockets are not disabled\n");
 			return;
 		}
 	}

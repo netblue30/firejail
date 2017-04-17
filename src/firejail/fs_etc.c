@@ -37,7 +37,7 @@ static int check_dir_or_file(const char *name) {
 		printf("Checking %s\n", fname);		
 	if (stat(fname, &s) == -1) {
 		if (arg_debug)
-			printf("Warning: file %s not found.\n", fname);
+			fwarning("file %s not found.\n", fname);
 		return 0;
 	}
 	

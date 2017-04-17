@@ -249,7 +249,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	else {
 		if (arg_debug || arg_debug_whitelists) {
-			fprintf(stderr, "Warning: %s is an invalid file, skipping...\n", path);
+			fwarning("%s is an invalid file, skipping...\n", path);
 		}
 		return;
 	}
@@ -616,7 +616,7 @@ void fs_whitelist(void) {
 
 				int rv = symlink(entry->data + 10, entry->link);
 				if (rv)
-					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
+					fwarning("cannot create symbolic link %s\n", entry->link);
 				else if (arg_debug || arg_debug_whitelists)
 					printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
 			}

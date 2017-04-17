@@ -98,6 +98,12 @@ Ignore command.
 
 Example: "ignore seccomp"
 
+.TP
+\fBquiet
+Disable Firejail's output. This should be the first uncommented command in the profile file.
+
+Example: "quiet"
+
 .SH Filesystem
 These profile entries define a chroot filesystem built on top of the existing
 host filesystem. Each line describes a file element that is removed from

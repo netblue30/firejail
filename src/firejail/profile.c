@@ -485,8 +485,7 @@ void profile_read(const char *fname) {
 		exit(1);
 	}
 
-	if (!arg_quiet)
-		fprintf(stderr, "Reading profile %s\n", fname);
+	int msg_printed = 0;
 
 	// read the file line by line
 	char buf[MAX_READ + 1];
@@ -504,6 +503,18 @@ void profile_read(const char *fname) {
 			continue;
 		}
 		
+		// process quiet
+		if (strcmp(ptr, "quiet") == 0) {
+			arg_quiet = 1;
+			free(ptr);
+			continue;
+		}
+		if (!msg_printed) {
+			if (!arg_quiet)
+				fprintf(stderr, "Reading profile %s\n", fname);
+			msg_printed = 1;
+		}
+
 		// process include
 		if (strncmp(ptr, "include ", 8) == 0) {
 			include_level++;

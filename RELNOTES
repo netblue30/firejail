@@ -5,6 +5,7 @@ firejail (0.9.38.11) baseline; urgency=low
   * bugfix: added --force option to --help screen
   * enhancement: updated copyright statement in all files
   * enhancement: --output cleanup
+  * enhancement: quiet support in profile files
  -- netblue30 <netblue30@yahoo.com>  Sat, 4 Mar 2017 10:00:00 -0500
 
 firejail (0.9.38.10) baseline; urgency=low

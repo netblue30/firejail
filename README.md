@@ -35,8 +35,8 @@ FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 This is a long term support branch, extending support for 0.9.38 release at least until May 2018.
 There will be no new features, only small bugfixes and security issues.
 
-Current released version is 0.9.38.2
+Current released version is 0.9.38.10
 
-Current development version is 0.9.38.3
+Current development version is 0.9.38.11
 
 

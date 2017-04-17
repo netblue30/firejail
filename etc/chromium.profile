@@ -8,12 +8,8 @@ noblacklist ~/.cache/chromium
 noblacklist ~/.pki
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
-
 # chromium is distributed with a perl script on Arch
 # include /etc/firejail/disable-devel.inc
-#
-
-netfilter
 
 whitelist ${DOWNLOADS}
 mkdir ~/.config/chromium
@@ -27,3 +23,14 @@ whitelist ~/.pki
 whitelist ~/.config/chromium-flags.conf
 
 include /etc/firejail/whitelist-common.inc
+
+ipc-namespace
+netfilter
+nogroups
+shell none
+
+private-dev
+private-tmp
+
+noexec ${HOME}
+noexec /tmp

@@ -3,7 +3,8 @@
 include /etc/firejail/qtox.local
 
 # qTox instant messaging profile
-noblacklist ${HOME}/.config/tox
+noblacklist ~/.config/tox
+noblacklist ~/.config/qt5ct
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -11,6 +12,8 @@ include /etc/firejail/disable-passwdmgr.inc
 
 mkdir ${HOME}/.config/tox
 whitelist ${HOME}/.config/tox
+mkdir ${HOME}/.config/qt5ct
+whitelist ${HOME}/.config/qt5ct
 whitelist ${DOWNLOADS}
 
 caps.drop all

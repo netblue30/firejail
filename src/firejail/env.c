@@ -115,8 +115,9 @@ void env_defaults(void) {
 	if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
 		errExit("setenv");
 	
-	// if this is a terminal, set window title
-	printf("\033]0;Firejail\007\n");
+	// set the window title
+	if (!arg_quiet)
+		printf("\033]0;Firejail\007\n");
 }
 
 // parse and store the environment setting 

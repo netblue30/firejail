@@ -30,7 +30,7 @@ shell none
 
 private-bin gnome-calculator
 private-dev
-private-etc fonts
+#private-etc fonts
 private-tmp
 
 noexec ${HOME}

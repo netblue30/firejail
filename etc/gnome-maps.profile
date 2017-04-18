@@ -5,7 +5,7 @@ include /etc/firejail/gnome-maps.local
 # gnome-maps profile
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
-
+noblacklist ${HOME}/.cache/champlain
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc

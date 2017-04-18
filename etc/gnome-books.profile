@@ -26,4 +26,4 @@ tracelog
 # private-bin gjs gnome-books
 private-tmp
 private-dev
-private-etc fonts
+#private-etc fonts

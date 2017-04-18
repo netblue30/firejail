@@ -11,6 +11,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 
 caps.drop all
+ipc-namespace
 netfilter
 nogroups
 nonewprivs

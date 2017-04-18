@@ -11,6 +11,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+ipc-namespace
+net none
 nogroups
 nonewprivs
 noroot
@@ -22,6 +24,9 @@ shell none
 tracelog
 
 # private-bin brasero
-# private-tmp
 # private-dev
 # private-etc fonts
+# private-tmp
+
+noexec ${HOME}
+noexec /tmp

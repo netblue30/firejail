@@ -361,6 +361,8 @@ SpotComms (https://github.com/SpotComms)
 	- added viking, youtube-dl, meld profiles
 	- more profile tightening
 	- added Arduino profile
+	- profile hardening
+	- firecfg enhancements
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes

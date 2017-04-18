@@ -22,6 +22,7 @@ include /etc/firejail/whitelist-common.inc
 
 #Options
 caps.drop all
+ipc-namespace
 netfilter
 nogroups
 nonewprivs

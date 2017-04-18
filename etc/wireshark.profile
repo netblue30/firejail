@@ -17,6 +17,7 @@ include /etc/firejail/disable-passwdmgr.inc
 #noroot 
 #protocol unix,inet,inet6,netlink
 
+ipc-namespace
 netfilter
 no3d
 nogroups

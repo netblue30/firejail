@@ -29,4 +29,5 @@ private-dev
 #private-tmp #Breaks when exiting
 
 noexec ${HOME}
+noexec ${HOME}/.local/share
 noexec /tmp

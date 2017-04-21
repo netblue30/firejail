@@ -24,4 +24,5 @@ private-dev
 # whitelist /tmp/.X11-unix/
 
 noexec ${HOME}
+noexec ${HOME}/.local/share
 noexec /tmp

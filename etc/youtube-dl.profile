@@ -26,4 +26,5 @@ quiet
 private-dev
 
 noexec ${HOME}
+noexec ${HOME}/.local/share
 noexec /tmp

@@ -17,6 +17,7 @@ protocol unix
 seccomp
 
 noexec ${HOME}
+noexec ${HOME}/.local/share
 noexec /tmp
 
 private-dev

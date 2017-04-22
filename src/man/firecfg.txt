@@ -5,12 +5,14 @@ Firecfg \- Desktop configuration program for Firejail software.
 firecfg [OPTIONS]
 .SH DESCRIPTION
 Firecfg is the desktop configuration utility for Firejail software. The utility
-creates several symbolic links to firejail executable. This allows the user to
-sandbox applications automatically, just by clicking on a regular desktop
+creates several symbolic links to firejail executable in /usr/local/bin.
+
+Firecfg also checks .desktop files in /usr/share/applications/, 
+replaces the full path by program name, and writes the  result to $HOME/.local/share/applications/.
+This allows the user to sandbox applications automatically, just by clicking on regular desktop
 menus and icons.
 
-The symbolic links are placed in /usr/local/bin. For more information, see
-\fBDESKTOP INTEGRATION\fR section in \fBman 1 firejail\fR.
+For more information, see \fBDESKTOP INTEGRATION\fR section in \fBman 1 firejail\fR.
 
 .SH OPTIONS
 .TP
@@ -25,9 +27,6 @@ Print options end exit.
 .TP
 \fB\-\-list
 List all firejail symbolic links
-.TP
-\fB\-\-fix
-Fix .desktop files. Some .desktop files use full path to executable. Firecfg will check .desktop files in /usr/share/applications/, replace full path by name if it is in PATH, and write result to $HOME/.local/share/applications/.
 .TP
 \fB\-\-version
 Print program version and exit.
@@ -59,14 +58,6 @@ $ sudo firecfg --clean
 /usr/local/bin/firefox removed
 .br
 /usr/local/bin/vlc removed
-.br
-[...]
-.br
-$ firecfg --fix
-.br
-/home/user/.local/share/applications/chromium.desktop created
-.br
-/home/user/.local/share/applications/vlc.desktop created
 .br
 [...]
 

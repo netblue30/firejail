@@ -29,6 +29,8 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/mman.h>
+#include <pwd.h>
+
 #include "../include/common.h"
 static int arg_debug = 0;
 
@@ -45,7 +47,6 @@ static void usage(void) {
 	printf("   --debug - print debug messages.\n\n");
 	printf("   --help, -? - this help screen.\n\n");
 	printf("   --list - list all firejail symbolic links.\n\n");
-	printf("   --fix - fix .desktop files.\n\n");
 	printf("   --version - print program version and exit.\n\n");
 	printf("Example:\n\n");
 	printf("   $ sudo firecfg\n");
@@ -59,10 +60,6 @@ static void usage(void) {
 	printf("   $ sudo firecfg --clean\n");
 	printf("   /usr/local/bin/firefox removed\n");
 	printf("   /usr/local/bin/vlc removed\n");
-	printf("   [...]\n");
-	printf("   $ firecfg --fix\n");
-	printf("   /home/user/.local/share/applications/chromium.desktop created\n");
-	printf("   /home/user/.local/share/applications/vlc.desktop created\n");
 	printf("   [...]\n");
 	printf("\n");
 	printf("License GPL version 2 or later\n");
@@ -221,7 +218,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 	
 	struct stat s;
 	if (stat(fname, &s) == 0) {
-		printf("%s is already present, skipping...\n", fname);
+		printf("   %s is already present, skipping...\n", name);
 	}
 	else {
 		int rv = symlink(firejail_exec, fname);
@@ -230,19 +227,14 @@ static void set_file(const char *name, const char *firejail_exec) {
 			perror("symlink");
 		}
 		else
-			printf("%s created\n", fname);
+			printf("   %s created\n", name);
 	}
 	
 	free(fname);
 }
 
 #define MAX_BUF 1024
-static void set(void) {
-	if (getuid() != 0) {
-		fprintf(stderr, "Error: you need to be root to run this command\n");
-		exit(1);
-	}
-
+static void set_links(void) {
 	char *cfgfile;
 	if (asprintf(&cfgfile, "%s/firejail/firecfg.config", LIBDIR) == -1)
 		errExit("asprintf");
@@ -256,6 +248,7 @@ static void set(void) {
 		fprintf(stderr, "Error: cannot open %s\n", cfgfile);
 		exit(1);
 	}
+	printf("Configuring symlinks in /usr/local/bin\n");
 	
 	char buf[MAX_BUF];
 	int lineno = 0;
@@ -294,7 +287,8 @@ static void set(void) {
 	free(firejail_exec);
 }
 
-static void fix_desktop_files(void) {
+static void fix_desktop_files(char *homedir) {
+	assert(homedir);
 	struct stat sb;
 
 	// check user
@@ -302,9 +296,6 @@ static void fix_desktop_files(void) {
 		fprintf(stderr, "Error: this option is not supported for root user; please run as a regular user.\n");
 		exit(1);
 	}
-	char *homedir = getenv("HOME");
-	if (!homedir)
-		errExit("getenv");
 		
 	// destination
 	// create ~/.local/share/applications directory if necessary
@@ -333,6 +324,7 @@ static void fix_desktop_files(void) {
 		exit(1);
 	}
 
+	printf("\nFixing desktop files in ~/.local/shared/applications\n");
 	// copy
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
@@ -370,7 +362,7 @@ static void fix_desktop_files(void) {
 		// check format
 		if (strstr(buf, "[Desktop Entry]\n") == NULL) {
 			if (arg_debug)
-				fprintf(stderr, "/usr/share/applications/%s - SKIPPED: wrong format?\n", filename);
+				printf("   %s - SKIPPED: wrong format?\n", filename);
 			munmap(buf, sb.st_size + 1);
 			continue;
 		}
@@ -379,7 +371,7 @@ static void fix_desktop_files(void) {
 		char *ptr1 = strstr(buf,"\nExec=");
 		if (!ptr1 || strlen(ptr1) < 7) {
 			if (arg_debug)
-				fprintf(stderr, "/usr/share/applications/%s - SKIPPED: wrong format?\n", filename);
+				printf("   %s - SKIPPED: wrong format?\n", filename);
 			munmap(buf, sb.st_size + 1);
 			continue;
 		}
@@ -390,13 +382,13 @@ static void fix_desktop_files(void) {
 		// or with the name of the executable only
 		if (execname[0] != '/') {
 			if (arg_debug)
-				fprintf(stderr, "/usr/share/applications/%s - already OK\n", filename);
+				printf("   %s - already OK\n", filename);
 			continue;
 		}
 		// executable name can be quoted, this is rare and currently unsupported, TODO
 		if (execname[0] == '"') {
 			if (arg_debug)
-				fprintf(stderr, "/usr/share/applications/%s - skipped: path quoting unsupported\n", filename);
+				printf("   %s - skipped: path quoting unsupported\n", filename);
 			continue;
 		}
 
@@ -423,7 +415,7 @@ static void fix_desktop_files(void) {
 
 		// check if basename in PATH
 		if (!which(bname)) {
-			fprintf(stderr, "/usr/share/applications/%s - skipped, %s not in PATH\n", filename, bname);
+			printf("   %s - skipped, %s not in PATH\n", filename, bname);
 			continue;
 		}
 
@@ -435,14 +427,14 @@ static void fix_desktop_files(void) {
 		free(outname);
 
 		if (fd1 == -1) {
-			fprintf(stderr, "%s/%s skipped: %s\n", user_apps_dir, filename, strerror(errno));
+			printf("   %s skipped: %s\n", filename, strerror(errno));
 			munmap(buf, sb.st_size + 1);
 			continue;
 		}
 
 		FILE *outfile = fdopen(fd1, "w");
 		if (!outfile) {
-			fprintf(stderr, "%s/%s skipped: %s\n", user_apps_dir, filename, strerror(errno));
+			printf("   %s skipped: %s\n", filename, strerror(errno));
 			munmap(buf, sb.st_size + 1);
 			close(fd1);
 			continue;
@@ -460,7 +452,7 @@ static void fix_desktop_files(void) {
 		fclose(outfile);
 		munmap(buf, sb.st_size + 1);
 
-		printf("%s/%s created\n", user_apps_dir, filename);
+		printf("   %s created\n", filename);
 	}
 
 	closedir(dir);
@@ -491,10 +483,6 @@ int main(int argc, char **argv) {
 			list();
 			return 0;
 		}
-		else if (strcmp(argv[i], "--fix") == 0) {
-			fix_desktop_files();
-			return 0;
-		}
 		else {
 			fprintf(stderr, "Error: invalid command line option\n");
 			usage();
@@ -502,8 +490,45 @@ int main(int argc, char **argv) {
 		}
 	}
 	
-	set();
+	// set symlinks in /usr/local/bin
+	if (getuid() != 0) {
+		fprintf(stderr, "Error: you need to be root to run this command\n");
+		exit(1);
+	}
+	set_links();
+
+
+
+	// switch to the local user, and fix desktop files
+	char *user = getlogin();
+	if (!user)
+		goto errexit;
+	if (user) {
+		// find home directory
+		struct passwd *pw = getpwnam(user);
+		if (!pw)
+			goto errexit;
+		char *home = pw->pw_dir;
+		if (!home)
+			goto errexit;
+			
+		// drop permissions
+		if (setgroups(0, NULL) < 0)
+			errExit("setgroups");
+		// set uid/gid
+		if (setgid(pw->pw_gid) < 0)
+			errExit("setgid");
+		if (setuid(pw->pw_uid) < 0)
+			errExit("setuid");
+		if (arg_debug)
+			printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
+		fix_desktop_files(home);
+	}
 	
 	return 0;
+
+errexit:
+	fprintf(stderr, "Error: cannot set desktop files in ~/.local/share/applications\n");
+	return 1;
 }
 

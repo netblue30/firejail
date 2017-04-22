@@ -1985,6 +1985,8 @@ $ firejail --tree
       1221:netblue:/usr/lib/firefox/firefox
 .RE
 
+For more information, see \fBman 1 firecfg\fR.
+
 .SH APPARMOR
 .TP
 AppArmor support is disabled by default at compile time. Use --enable-apparmor configuration option to enable it:

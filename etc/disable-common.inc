@@ -186,6 +186,7 @@ read-only ${HOME}/.npm-packages
 #   but including ~/.local/share/applications
 read-only  ${HOME}/.local
 read-write ${HOME}/.local/share
+noexec     ${HOME}/.local/share
 read-only  ${HOME}/.local/share/applications
 
 # top secret

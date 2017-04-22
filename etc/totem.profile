@@ -23,7 +23,7 @@ shell none
 
 private-bin totem
 private-dev
-private-etc fonts
+#private-etc fonts
 private-tmp
 
 noexec ${HOME}

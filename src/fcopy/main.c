@@ -322,6 +322,12 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 
+	// trim trailing chars
+	if (src[strlen(src) - 1] == '/')
+		src[strlen(src) - 1] = '\0';
+	if (dest[strlen(dest) - 1] == '/')
+		dest[strlen(dest) - 1] = '\0';
+
 	// check the two files; remove ending /
 	int len = strlen(src);
 	if (src[len - 1] == '/')

@@ -200,7 +200,8 @@ static char *check(const char *src) {
 		goto errexit;
 
 	// check uid
-	if (s.st_uid != getuid() || s.st_gid != getgid())
+	// checking gid will fail for files with a larger group such as /usr/bin/mutt_dotlock
+	if (s.st_uid != getuid()/* || s.st_gid != getgid()*/)
 		goto errexit;
 
 	// dir, link, regular file

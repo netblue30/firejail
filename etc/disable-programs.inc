@@ -76,6 +76,7 @@ blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/gedit
+blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
@@ -104,10 +105,12 @@ blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
+blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/psi+
+blacklist ${HOME}/.config/ristretto
 blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/qt5ct
 blacklist ${HOME}/.config/qutebrowser
@@ -135,6 +138,9 @@ blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.config/xed
 blacklist ${HOME}/.config/xfburn
 blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
+blacklist ${HOME}/.config/xfce4/xfce4-notes.rc
+blacklist ${HOME}/.config/xfce4/xfce4-notes.gtkrc
+blacklist ${HOME}/.config/xfce4-dict
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
@@ -242,6 +248,7 @@ blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/nautilus
 blacklist ${HOME}/.local/share/nemo
 blacklist ${HOME}/.local/share/okular
+blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/psi+
@@ -256,6 +263,7 @@ blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan
 blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/xplayer
+blacklist ${HOME}/.local/share/notes
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.lv2

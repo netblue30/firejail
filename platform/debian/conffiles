@@ -271,3 +271,8 @@
 /etc/firejail/akregator.profile
 /etc/firejail/kcalc.profile
 /etc/firejail/ktorrent.profile
+/etc/firejail/globaltime.profile
+/etc/firejail/orage.profile
+/etc/firejail/ristretto.profile
+/etc/firejail/xfce4-dict.profile
+/etc/firejail/xfce4-notes.profile

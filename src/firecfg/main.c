@@ -26,6 +26,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <grp.h>
 #include <string.h>
 #include <errno.h>
 #include <sys/mman.h>
@@ -287,6 +288,25 @@ static void set_links(void) {
 	free(firejail_exec);
 }
 
+int have_profile(const char *filename) {
+	// remove .desktop extension
+	char *f1 = strdup(filename);
+	if (!f1)
+		errExit("strdup");	
+	f1[strlen(filename) - 8] = '\0';
+
+	// build profile name
+	char *profname;
+	if (asprintf(&profname, "%s/%s.profile", SYSCONFDIR, f1) == -1)
+		errExit("asprintf");
+
+	struct stat s;
+	int rv = stat(profname, &s);
+	free(f1);
+	free(profname);
+	return (rv == 0)? 1: 0;
+}
+
 static void fix_desktop_files(char *homedir) {
 	assert(homedir);
 	struct stat sb;
@@ -324,7 +344,7 @@ static void fix_desktop_files(char *homedir) {
 		exit(1);
 	}
 
-	printf("\nFixing desktop files in ~/.local/shared/applications\n");
+	printf("\nFixing desktop files in %s\n", user_apps_dir);
 	// copy
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
@@ -347,6 +367,10 @@ static void fix_desktop_files(char *homedir) {
 			continue;
 		if (stat(filename, &sb) == -1)
 			errExit("stat");
+
+		// no profile in /etc/firejail, no desktop file fixing
+		if (!have_profile(filename))
+			continue;
 
 		/* coverity[toctou] */
 		int fd = open(filename, O_RDONLY);
@@ -501,17 +525,24 @@ int main(int argc, char **argv) {
 
 	// switch to the local user, and fix desktop files
 	char *user = getlogin();
-	if (!user)
-		goto errexit;
+	if (!user) {
+		user = getenv("SUDO_USER");
+		if (!user) {
+			goto errexit;
+		}
+	}
+
 	if (user) {
 		// find home directory
 		struct passwd *pw = getpwnam(user);
-		if (!pw)
+		if (!pw) {
 			goto errexit;
+		}
 		char *home = pw->pw_dir;
-		if (!home)
+		if (!home) {
 			goto errexit;
-			
+		}
+
 		// drop permissions
 		if (setgroups(0, NULL) < 0)
 			errExit("setgroups");
@@ -528,7 +559,7 @@ int main(int argc, char **argv) {
 	return 0;
 
 errexit:
-	fprintf(stderr, "Error: cannot set desktop files in ~/.local/share/applications\n");
+	fprintf(stderr, "Error: cannot detect login user in order to set desktop files in ~/.local/share/applications\n");
 	return 1;
 }
 

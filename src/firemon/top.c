@@ -238,7 +238,7 @@ void top(void) {
 		
 		// set pid table
 		int i;
-		int itv = 5; // 5 second  interval
+		int itv = 1; // 1 second  interval
 		pid_read(0);
 
 		// start cpu measurements

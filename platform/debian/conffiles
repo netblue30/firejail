@@ -268,3 +268,6 @@
 /etc/firejail/engrampa.profile
 /etc/firejail/scribus.profile
 /etc/firejail/mediathekview.profile
+/etc/firejail/akregator.profile
+/etc/firejail/kcalc.profile
+/etc/firejail/ktorrent.profile

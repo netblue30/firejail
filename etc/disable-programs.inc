@@ -21,6 +21,7 @@ blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.config/0ad
+blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Brackets
@@ -179,6 +180,7 @@ blacklist ${HOME}/.kde4/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde4/share/config/konquerorrc
 blacklist ${HOME}/.kde4/share/config/okularpartrc
 blacklist ${HOME}/.kde4/share/config/okularrc
+blacklist ${HOME}/.kde4/share/config/ktorrentrc
 blacklist ${HOME}/.kde/share/apps/gwenview
 blacklist ${HOME}/.kde/share/apps/kcookiejar
 blacklist ${HOME}/.kde/share/apps/khtml
@@ -196,6 +198,7 @@ blacklist ${HOME}/.kde/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde/share/config/konquerorrc
 blacklist ${HOME}/.kde/share/config/okularpartrc
 blacklist ${HOME}/.kde/share/config/okularrc
+blacklist ${HOME}/.kde/share/config/ktorrentrc
 blacklist ${HOME}/.killingfloor
 blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc
@@ -207,6 +210,7 @@ blacklist ${HOME}/.local/.share/maps-places.json
 blacklist ${HOME}/.local/lib/python2.7/site-packages
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
+blacklist ${HOME}/.local/share/akregator
 blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/QuiteRss

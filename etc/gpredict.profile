@@ -23,6 +23,9 @@ seccomp
 shell none
 tracelog
 
+noexec ${HOME}
+noexec /tmp
+
 private-bin gpredict
 private-etc fonts,resolv.conf
 private-dev

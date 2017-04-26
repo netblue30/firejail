@@ -277,3 +277,7 @@
 /etc/firejail/xfce4-dict.profile
 /etc/firejail/xfce4-notes.profile
 /etc/firejail/pcmanfm.profile
+/etc/firejail/dia.profile
+/etc/firejail/fontforge.profile
+/etc/firejail/geany.profile
+/etc/firejail/hugin.profile

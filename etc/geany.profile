@@ -1,10 +1,8 @@
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/default.local
+include /etc/firejail/geany.local
 
-################################
-# Generic GUI application profile
-################################
+noblacklist ${HOME}/.config/geany
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
@@ -19,10 +17,10 @@ seccomp
 #
 # depending on you usage, you can enable some of the commands below: 
 #
-# nogroups
-# shell none
+nogroups
+shell none
 # private-bin program
 # private-etc none
-# private-dev
-# private-tmp
-# nosound
+private-dev
+private-tmp
+

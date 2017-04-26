@@ -74,6 +74,7 @@ blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/gajim
+blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/gedit
 blacklist ${HOME}/.config/globaltime
@@ -148,6 +149,7 @@ blacklist ${HOME}/.config/xviewer
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
+blacklist ${HOME}/.dia
 blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox-dist
@@ -158,6 +160,7 @@ blacklist ${HOME}/.emacs.d
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
+blacklist ${HOME}/.FontForge
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.git-credential-cache
 blacklist ${HOME}/.gitconfig
@@ -167,6 +170,7 @@ blacklist ${HOME}/.googleearth/myplaces.backup.kml
 blacklist ${HOME}/.googleearth/myplaces.kml
 blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hedgewars
+blacklist ${HOME}/.hugin
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.jitsi

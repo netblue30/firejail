@@ -1,11 +1,9 @@
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/Thunar.local
+include /etc/firejail/pcmanfm.local
 
-# Firejail profile for thunar
-noblacklist ~/.config/Thunar
-noblacklist ~/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
-
+noblacklist ~/.config/pcmanfm
+noblacklist ~/.config/libfm
 include /etc/firejail/disable-common.inc
 #include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -29,3 +27,4 @@ tracelog
 # private-etc none
 # private-dev
 # private-tmp
+

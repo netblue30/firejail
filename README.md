@@ -66,12 +66,69 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 `````
 
 `````
+## Desktop integration
+
+All --fix functionality is done by default in firecfg, --fix option was removed. Clicking on a program
+in desktop manager menu should start the program automatically in a sandbox, if a profile
+is available in /etc/firejail. We cover about 270 different applications in this moment on all major desktop managers.
+
+Thunar (XFCE) and PCManFM (LXDE) file managers symlinks are installed in /usr/local/bin by firecfg. 
+File managers are usually started by default at login time, and will be sandboxed.
+Clicking on a file in the file manager will start the corresponding program in the same sandbox as the file manager.
+For example, clicking on a video file will start a sandboxed VLC running the video.
+We support in this moment XFCE and LXDE, MATE will come next, followed by KDE and Gnome.
+
 ## AppImage
 
 Added AppImage type 2 support, and support for passing command line arguments to appimages.
 `````
 
 `````
+## X11 sandboxing support
+In this release we add support for Xvfb (X virtual framebuffer), an in-memory X display server.
+Xvfb allows the user to run graphical applications without a display (e.g., browser tests on a CI server)
+while also having the ability to take screenshots.
+
+
+       --x11=xvfb
+              Start  Xvfb  X11  server  and attach the sandbox to this server.
+              Xvfb, short for X virtual framebuffer,  performs  all  graphical
+              operations  in memory without showing any screen output. Xvfb is
+              mainly used for remote access and software testing  on  headless
+              servers.
+
+              On Debian platforms Xvfb is installed with the command sudo apt-
+              get install xvfb.  This feature is not available when running as
+              root.
+
+              Example: remote VNC access
+
+              On  the  server we start a sandbox using Xvfb and openbox window
+              manager. The default size of Xvfb screen is 800x600 - it can  be
+              changed  in  /etc/firejail/firejail.config  (xvfb-screen).  Some
+              sort of networking (--net) is required in order to  isolate  the
+              abstract sockets used by other X servers.
+
+              $ firejail --net=none --x11=xvfb openbox
+
+              *** Attaching to Xvfb display 792 ***
+
+              Reading profile /etc/firejail/openbox.profile
+              Reading profile /etc/firejail/disable-common.inc
+              Reading profile /etc/firejail/disable-common.local
+              Parent pid 5400, child pid 5401
+
+              On  the  server  we also start a VNC server and attach it to the
+              display handled by our Xvfb server (792).
+
+              $ x11vnc -display :792
+
+              On the client machine we start a VNC viewer and use it  to  con‐
+              nect to our server:
+
+              $ vncviewer
+
+
 ## New command line options
 `````
       --private-opt=file,directory
@@ -145,43 +202,6 @@ Added AppImage type 2 support, and support for passing command line arguments to
 
               $ firejail --git-uninstall
 
-       --x11=xvfb
-              Start  Xvfb  X11  server  and attach the sandbox to this server.
-              Xvfb, short for X virtual framebuffer,  performs  all  graphical
-              operations  in memory without showing any screen output. Xvfb is
-              mainly used for remote access and software testing  on  headless
-              servers.
-
-              On Debian platforms Xvfb is installed with the command sudo apt-
-              get install xvfb.  This feature is not available when running as
-              root.
-
-              Example: remote VNC access
-
-              On  the  server we start a sandbox using Xvfb and openbox window
-              manager. The default size of Xvfb screen is 800x600 - it can  be
-              changed  in  /etc/firejail/firejail.config  (xvfb-screen).  Some
-              sort of networking (--net) is required in order to  isolate  the
-              abstract sockets used by other X servers.
-
-              $ firejail --net=none --x11=xvfb openbox
-
-              *** Attaching to Xvfb display 792 ***
-
-              Reading profile /etc/firejail/openbox.profile
-              Reading profile /etc/firejail/disable-common.inc
-              Reading profile /etc/firejail/disable-common.local
-              Parent pid 5400, child pid 5401
-
-              On  the  server  we also start a VNC server and attach it to the
-              display handled by our Xvfb server (792).
-
-              $ x11vnc -display :792
-
-              On the client machine we start a VNC viewer and use it  to  con‐
-              nect to our server:
-
-              $ vncviewer
 
        --nowhitelist=dirname_or_filename
               Disable whitelist for this directory or file.
@@ -196,5 +216,5 @@ simple-scan, skanlite, ssh-agent, tracker, transmission-cli, transmission-show, 
 xed, pluma, Cryptocat, Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5,
 PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser, xmms, iridium browser,
 Kino, Thunar, Geeqie, Engrampa, Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView, baloo_file,
-Nylas, dino, BibleTime, viewnior, Kodi, viking, youtube-dl, meld, Arduino, akregator, kcalc, ktorrent,
-Orage Globaltime, Orage Clendar, xfce4-notes, xfce4-dict, Ristretto
+Nylas, dino, BibleTime, viewnior, Kodi, viking, youtube-dl, meld, Arduino, Akregator, KCalc, KTorrent,
+Orage Globaltime, Orage Clendar, xfce4-notes, xfce4-dict, Ristretto, PCManFM

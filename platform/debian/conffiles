@@ -276,3 +276,4 @@
 /etc/firejail/ristretto.profile
 /etc/firejail/xfce4-dict.profile
 /etc/firejail/xfce4-notes.profile
+/etc/firejail/pcmanfm.profile

@@ -107,6 +107,7 @@ blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.kde.gwenviewrc
+blacklist ${HOME}/.config/pcmanfm
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/psi+

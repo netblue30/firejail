@@ -16,7 +16,7 @@ protocol unix,inet,inet6
 seccomp
 
 #
-# depending on you usage, you can enable some of the commands below: 
+# depending on your usage, you can enable some of the commands below: 
 #
 nogroups
 shell none

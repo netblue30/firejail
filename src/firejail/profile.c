@@ -830,6 +830,80 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+
+#ifdef HAVE_OVERLAYFS
+	if (strncmp(ptr, "overlay-named ", 14) == 0) {
+		if (checkcfg(CFG_OVERLAYFS)) {
+			if (cfg.chrootdir) {
+				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+				exit(1);
+			}
+			struct stat s;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+				exit(1);
+			}
+			arg_overlay = 1;
+			arg_overlay_keep = 1;
+			arg_overlay_reuse = 1;
+
+			char *subdirname = ptr + 14;
+			if (subdirname == '\0') {
+				fprintf(stderr, "Error: invalid overlay option\n");
+				exit(1);
+			}
+
+			// check name
+			invalid_filename(subdirname);
+			if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
+				fprintf(stderr, "Error: invalid overlay name\n");
+				exit(1);
+			}
+			cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
+		}
+
+		return 0;
+	} else if (strcmp(ptr, "overlay-tmpfs") == 0) {
+		if (checkcfg(CFG_OVERLAYFS)) {
+			if (cfg.chrootdir) {
+				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+				exit(1);
+			}
+			struct stat s;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+				exit(1);
+			}
+			arg_overlay = 1;
+
+			return 0;
+		}
+	} else if (strcmp(ptr, "overlay") == 0) {
+		if (checkcfg(CFG_OVERLAYFS)) {
+			if (cfg.chrootdir) {
+				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+				exit(1);
+			}
+			struct stat s;
+			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+				exit(1);
+			}
+			arg_overlay = 1;
+			arg_overlay_keep = 1;
+
+			char *subdirname;
+			if (asprintf(&subdirname, "%d", getpid()) == -1)
+				errExit("asprintf");
+			cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
+
+			free(subdirname);
+
+			return 0;
+		}
+	}
+#endif
+
 	// filesystem bind
 	if (strncmp(ptr, "bind ", 5) == 0) {
 #ifdef HAVE_BIND		

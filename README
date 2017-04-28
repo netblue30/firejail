@@ -332,6 +332,9 @@ Reiner Herrmann (https://github.com/reinerh)
 	- moved build to .xz
 	- detached signatures for source archive
 	- recursive mkdir
+Remco Verhoef (https://github.com/nl5887)
+	- add overlay configuration to profiles
+	- prevent running shells recursively
 rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Ruan (https://github.com/ruany)
@@ -379,6 +382,7 @@ SYN-cook (https://github.com/SYN-cook)
 	- blacklist attic and borg
 	- cleaned up Okular and Gwenview profiles
 	- added baloo_file profile
+	- k3b profile update
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- updated default seccomp filters - added  bpf, clock_settime, personality, process_vm_writev, query_module,

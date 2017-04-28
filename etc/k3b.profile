@@ -3,23 +3,24 @@
 include /etc/firejail/k3b.local
 
 # k3b profile
+noblacklist ~/.kde4/share/config/k3brc
+noblacklist ~/.kde/share/config/k3brc
+noblacklist ~/.config/k3brc
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-netfilter
-nogroups
+no3d
 nonewprivs
 noroot
 nosound
 shell none
 seccomp
 protocol unix
+tracelog
 
 # private-bin 
-# private-dev
 # private-tmp
 # private-etc
-

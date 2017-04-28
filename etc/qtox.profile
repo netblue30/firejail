@@ -26,5 +26,8 @@ seccomp
 shell none
 tracelog
 
+noexec ${HOME}
+noexec /tmp
+
 private-bin qtox
 private-tmp

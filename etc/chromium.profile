@@ -29,7 +29,7 @@ netfilter
 nogroups
 shell none
 
-private-dev
+# private-dev - prevents video calls going out
 private-tmp
 
 noexec ${HOME}

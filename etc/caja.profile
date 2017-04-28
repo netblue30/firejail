@@ -5,7 +5,7 @@ include /etc/firejail/caja.local
 # Caja profile for Firejail
 
 # Caja is started by systemd on most systems. Therefore it is not firejailed by default. Since there
- # is already a caja process running on MATE desktops firejail will have no effect.
+# is already a caja process running on MATE desktops firejail will have no effect.
 
 noblacklist ~/.config/caja
 noblacklist ~/.local/share/caja

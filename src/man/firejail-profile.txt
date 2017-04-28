@@ -189,6 +189,18 @@ The file is created if it doesn't already exist.
 \fBnoexec file_or_directory
 Remount the file or the directory noexec, nodev and nosuid.
 .TP
+\fBoverlay
+Mount  a  filesystem  overlay  on top of the current filesystem.
+The overlay is stored in $HOME/.firejail/<PID>  directory.
+.TP
+\fBoverlay-named name
+Mount  a  filesystem  overlay  on top of the current filesystem.
+The overlay is stored in $HOME/.firejail/name  directory.
+.TP
+\fBoverlay-tmpfs
+Mount  a  filesystem  overlay  on top of the current filesystem.
+All filesystem  modifications are discarded when the sandbox is closed.
+.TP
 \fBprivate
 Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is

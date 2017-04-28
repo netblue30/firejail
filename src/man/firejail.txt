@@ -1136,8 +1136,8 @@ $ firejail \-\-overlay-named=jail1 firefox
 
 .TP
 \fB\-\-overlay-tmpfs
-Mount a filesystem overlay on top of the current filesystem. All filesystem modifications go into the overlay,
-and are discarded when the sandbox is closed.
+Mount a filesystem overlay on top of the current filesystem. All filesystem modifications
+are discarded when the sandbox is closed.
 .br
 
 .br

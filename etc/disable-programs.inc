@@ -74,6 +74,7 @@ blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/gajim
+blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/gedit

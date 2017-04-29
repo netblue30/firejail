@@ -73,6 +73,7 @@
 /etc/firejail/flowblade.profile
 /etc/firejail/franz.profile
 /etc/firejail/gajim.profile
+/etc/firejail/galculator.profile
 /etc/firejail/gedit.profile
 /etc/firejail/gimp.profile
 /etc/firejail/git.profile

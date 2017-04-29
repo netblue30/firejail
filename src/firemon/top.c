@@ -28,6 +28,21 @@ static unsigned pgs_rss = 0;
 static unsigned pgs_shared = 0;
 static unsigned clocktick = 0;
 static unsigned long long sysuptime = 0;
+static int pgsz = 0;
+static uid_t cached_uid = 0;
+static char *cached_user_name = NULL;
+
+static char *get_user_name(uid_t uid) {
+	if (cached_user_name == NULL) {
+		cached_uid = uid;
+		cached_user_name = pid_get_user_name(uid);
+		return strdup(cached_user_name);
+	}
+	else if (uid == cached_uid)
+		return strdup(cached_user_name);
+	else		
+		return pid_get_user_name(uid);
+}
 
 static char *get_header(void) {
 	char *rv;
@@ -89,11 +104,13 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 			else
 				ptrcmd = "";
 		}
+		else if (strncmp(cmd, "/usr/bin/firejail", 17) == 0)
+			ptrcmd = cmd + 9;
 		else
 			ptrcmd = cmd;
 		
 		// user
-		char *user = pid_get_user_name(pids[index].uid);
+		char *user = get_user_name(pids[index].uid);
 		char *ptruser;
 		if (user)
 			ptruser = user;
@@ -101,7 +118,8 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 			ptruser = "";
 			
 		// memory
-		int pgsz = getpagesize();
+		if (pgsz == 0)
+			pgsz = getpagesize();
 		char rss[10];
 		snprintf(rss, 10, "%u", pgs_rss * pgsz / 1024);
 		char shared[10];
@@ -249,7 +267,7 @@ void top(void) {
 				pid_store_cpu(i, 0, &utime, &stime);
 		}
 		
-		// wait 5 seconds
+		// wait 1 second
 		firemon_sleep(itv);
 		
 		// grab screen size

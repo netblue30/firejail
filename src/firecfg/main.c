@@ -218,10 +218,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 		errExit("asprintf");
 	
 	struct stat s;
-	if (stat(fname, &s) == 0) {
-		printf("   %s is already present, skipping...\n", name);
-	}
-	else {
+	if (stat(fname, &s) != 0) {
 		int rv = symlink(firejail_exec, fname);
 		if (rv) {
 			fprintf(stderr, "Error: cannot create %s symbolic link\n", fname);

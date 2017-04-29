@@ -392,6 +392,7 @@ startx2017 (https://github.com/startx2017)
 	- firejail.config cleanup
 	- --quiet fixes
 	- 0.9.38-LTS branch maintainer
+	- firemon --top speed-up
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

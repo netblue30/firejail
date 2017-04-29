@@ -96,6 +96,8 @@ blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/mate/eom
+blacklist ${HOME}/.config/mate/mate-dictionary
+blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus

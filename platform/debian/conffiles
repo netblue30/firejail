@@ -281,3 +281,8 @@
 /etc/firejail/fontforge.profile
 /etc/firejail/geany.profile
 /etc/firejail/hugin.profile
+/etc/firejail/mate-calc.profile
+/etc/firejail/mate-calculator.profile
+/etc/firejail/mate-color-select.profile
+/etc/firejail/mate-dictionary.profile
+

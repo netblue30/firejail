@@ -21,6 +21,7 @@
 /etc/firejail/bleachbit.profile
 /etc/firejail/brasero.profile
 /etc/firejail/brave.profile
+/etc/firejail/caja.profile
 /etc/firejail/cherrytree.profile
 /etc/firejail/chromium-browser.profile
 /etc/firejail/chromium.profile

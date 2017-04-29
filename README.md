@@ -217,4 +217,5 @@ xed, pluma, Cryptocat, Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-G
 PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser, xmms, iridium browser,
 Kino, Thunar, Geeqie, Engrampa, Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView, baloo_file,
 Nylas, dino, BibleTime, viewnior, Kodi, viking, youtube-dl, meld, Arduino, Akregator, KCalc, KTorrent,
-Orage Globaltime, Orage Clendar, xfce4-notes, xfce4-dict, Ristretto, PCManFM, Dia, FontForge, Geany, Hugin, mate-calc, mate-dictionary, mate-color-select
+Orage Globaltime, Orage Clendar, xfce4-notes, xfce4-dict, Ristretto, PCManFM, Dia, FontForge, Geany, Hugin,
+mate-calc, mate-dictionary, mate-color-select, caja

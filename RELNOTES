@@ -30,6 +30,7 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * feature: config support to disable join (join)
   * feature: disabled Go, Rust, and OpenSSL in disable-devel.conf
   * feature: support overlay, overlay-named and overlay-tmpfs in profile files
+  * feature: allow PulseAudio sockets in --private-tmp
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagick), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,

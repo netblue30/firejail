@@ -1278,13 +1278,25 @@ Example:
 
 .TP
 \fB\-\-private-tmp
-Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
+Mount an empty temporary filesystem on top of /tmp directory whitelisting X11 and PulseAudio sockets.
 .br
 
 .br
 Example:
 .br
 $ firejail \-\-private-tmp
+.br
+$ ls -al /tmp
+.br
+drwxrwxrwt  4 nobody nogroup   80 Apr 30 11:46 .
+.br
+drwxr-xr-x 30 nobody nogroup 4096 Apr 26 22:18 ..
+.br
+drwx------  2 nobody nogroup 4096 Apr 30 10:52 pulse-PKdhtXMmr18n
+.br
+drwxrwxrwt  2 nobody nogroup 4096 Apr 30 10:52 .X11-unix
+.br
+
 
 .TP
 \fB\-\-profile=filename

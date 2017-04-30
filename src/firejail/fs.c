@@ -1214,4 +1214,46 @@ void fs_chroot(const char *rootdir) {
 }
 #endif
 
+// this function is called from sandbox.c before blacklist/whitelist functions
+void fs_private_tmp(void) {
+	// check XAUTHORITY file, KDE keeps it under /tmp
+	char *xauth = getenv("XAUTHORITY");
+	if (xauth) {
+		char *rp = realpath(xauth, NULL);
+		if (rp && strncmp(rp, "/tmp/", 5) == 0) {
+			char *cmd;
+			if (asprintf(&cmd, "whitelist %s", rp) == -1)
+				errExit("asprintf");
+			profile_add(cmd); // profile_add does not duplicate the string
+		}
+		if (rp)
+			free(rp);
+	}
+	
+	// whitelist x11 directory
+	profile_add("whitelist /tmp/.X11-unix");
+	
+	// whitelist any pulse* file in /tmp directory
+	// some distros use PulseAudio sockets under /tmp instead of the socket in /urn/user
+	DIR *dir;
+	if (!(dir = opendir("/tmp"))) {
+		// sleep 2 seconds and try again
+		sleep(2);
+		if (!(dir = opendir("/tmp"))) {
+			return;
+		}
+	}
 
+	struct dirent *entry;
+	while ((entry = readdir(dir))) {
+		if (strncmp(entry->d_name, "pulse-", 6) == 0) {
+			char *cmd;
+			if (asprintf(&cmd, "whitelist /tmp/%s", entry->d_name) == -1)
+				errExit("asprintf");
+			profile_add(cmd); // profile_add does not duplicate the string
+		}
+	}
+	closedir(dir);
+
+
+}

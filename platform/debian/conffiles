@@ -287,7 +287,7 @@
 /etc/firejail/mate-calculator.profile
 /etc/firejail/mate-color-select.profile
 /etc/firejail/mate-dictionary.profile
-/etc/firejail/nemo
-/etc/firejail/gnome-font-viewer
-/etc/firejail/gucharmap
+/etc/firejail/nemo.profile
+/etc/firejail/gnome-font-viewer.profile
+/etc/firejail/gucharmap.profile
 

@@ -76,7 +76,7 @@ Thunar (XFCE) and PCManFM (LXDE) file managers symlinks are installed in /usr/lo
 File managers are usually started by default at login time, and will be sandboxed.
 Clicking on a file in the file manager will start the corresponding program in the same sandbox as the file manager.
 For example, clicking on a video file will start a sandboxed VLC running the video.
-We support in this moment XFCE and LXDE, MATE will come next, followed by KDE and Gnome.
+We support in this moment XFCE, LXDE, MATE and Cinnamon.
 
 ## AppImage
 
@@ -218,4 +218,4 @@ PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser
 Kino, Thunar, Geeqie, Engrampa, Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView, baloo_file,
 Nylas, dino, BibleTime, viewnior, Kodi, viking, youtube-dl, meld, Arduino, Akregator, KCalc, KTorrent,
 Orage Globaltime, Orage Clendar, xfce4-notes, xfce4-dict, Ristretto, PCManFM, Dia, FontForge, Geany, Hugin,
-mate-calc, mate-dictionary, mate-color-select, caja, galculator
+mate-calc, mate-dictionary, mate-color-select, caja, galculator, Nemo, gnome-font-viewer, gucharmap

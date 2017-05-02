@@ -236,6 +236,7 @@ blacklist ${HOME}/.local/share/Terraria
 blacklist ${HOME}/.local/share/TpLogger
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/baloo
+blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/data/Mumble
 blacklist ${HOME}./local/share/dino
@@ -255,7 +256,9 @@ blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/nautilus
+blacklist ${HOME}/.local/share/nautilus-python
 blacklist ${HOME}/.local/share/nemo
+blacklist ${HOME}/.local/share/nemo-python
 blacklist ${HOME}/.local/share/okular
 blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview

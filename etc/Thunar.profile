@@ -5,6 +5,7 @@ include /etc/firejail/Thunar.local
 # Firejail profile for thunar
 noblacklist ~/.config/Thunar
 noblacklist ~/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
+noblacklist ${HOME}/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
 #include /etc/firejail/disable-programs.inc

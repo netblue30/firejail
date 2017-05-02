@@ -9,6 +9,7 @@ include /etc/firejail/caja.local
 
 noblacklist ~/.config/caja
 noblacklist ~/.local/share/caja
+noblacklist ${HOME}/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
 # caja needs to be able to start arbitrary applications so we cannot blacklist their files

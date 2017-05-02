@@ -181,13 +181,19 @@ read-only ${HOME}/.gem
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
 
+###########################
+# The following block breaks trash functionality in file managers
+##########################
 # Make the contents of ~/.local read-only,
 #  except the commonly-used ~/.local/share,
 #   but including ~/.local/share/applications
-read-only  ${HOME}/.local
-read-write ${HOME}/.local/share
-noexec     ${HOME}/.local/share
+#read-only  ${HOME}/.local
+#read-write ${HOME}/.local/share
+#noexec     ${HOME}/.local/share
 read-only  ${HOME}/.local/share/applications
+blacklist ${HOME}/.local/share/Trash
+
+
 
 # top secret
 blacklist ${HOME}/.ecryptfs

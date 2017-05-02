@@ -4,6 +4,8 @@ include /etc/firejail/nemo.local
 
 noblacklist ${HOME}/.local/share/nemo
 noblacklist ${HOME}/.config/nemo
+noblacklist ${HOME}/.local/share/Trash
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-devel.inc

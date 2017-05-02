@@ -43,7 +43,7 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * new profiles: Orage Globaltime, Orage Clendar, xfce4-notes, xfce4-dict,
   * new profiles: Ristretto, PCManFM, Dia, FontForge, Geany, Hugin,
   * new profiles: mate-calc, mate-dictionary, mate-color-select, caja,
-  * new profiles: galculator, Nemo, gnome-font-viewer, gucharmap
+  * new profiles: galculator, Nemo, gnome-font-viewer, gucharmap, knotes
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Fri, 7 Apr 2017 08:00:00 -0500
 

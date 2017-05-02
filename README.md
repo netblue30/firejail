@@ -69,14 +69,14 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 ## Desktop integration
 
 All --fix functionality is done by default in firecfg, --fix option was removed. Clicking on a program
-in desktop manager menu should start the program automatically in a sandbox, if a profile
-is available in /etc/firejail. We cover about 270 different applications in this moment on all major desktop managers.
+in desktop manager menu should start the program automatically in a sandbox if a profile
+is available in /etc/firejail. We cover about 300 different applications in this moment on all major desktop managers.
 
-Thunar (XFCE) and PCManFM (LXDE) file managers symlinks are installed in /usr/local/bin by firecfg. 
+Symlinks for the common file managers are installed in /usr/local/bin by firecfg. 
 File managers are usually started by default at login time, and will be sandboxed.
 Clicking on a file in the file manager will start the corresponding program in the same sandbox as the file manager.
 For example, clicking on a video file will start a sandboxed VLC running the video.
-We support in this moment XFCE, LXDE, MATE and Cinnamon.
+We support in this moment XFCE, LXDE, MATE, Cinnamon and KDE.
 
 ## AppImage
 
@@ -218,4 +218,5 @@ PDFSam, Pithos, Xonotic, wireshark, keepassx2, QupZilla, FossaMail, Uzbl browser
 Kino, Thunar, Geeqie, Engrampa, Scribus, mousepad, gpicview, keepassxc, cvlc, MediathekView, baloo_file,
 Nylas, dino, BibleTime, viewnior, Kodi, viking, youtube-dl, meld, Arduino, Akregator, KCalc, KTorrent,
 Orage Globaltime, Orage Clendar, xfce4-notes, xfce4-dict, Ristretto, PCManFM, Dia, FontForge, Geany, Hugin,
-mate-calc, mate-dictionary, mate-color-select, caja, galculator, Nemo, gnome-font-viewer, gucharmap
+mate-calc, mate-dictionary, mate-color-select, caja, galculator, Nemo, gnome-font-viewer, gucharmap,
+knotes

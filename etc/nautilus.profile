@@ -10,6 +10,7 @@ include /etc/firejail/nautilus.local
 noblacklist ~/.config/nautilus
 noblacklist ~/.local/share/nautilus
 noblacklist ~/.local/share/nautilus-python
+noblacklist ~/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
 # nautilus needs to be able to start arbitrary applications so we cannot blacklist their files

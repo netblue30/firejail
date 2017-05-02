@@ -8,8 +8,8 @@ include /etc/firejail/caja.local
 # is already a caja process running on MATE desktops firejail will have no effect.
 
 noblacklist ~/.config/caja
-noblacklist ~/.local/share/caja
-noblacklist ${HOME}/.local/share/Trash
+noblacklist ~/.local/share/caja-python
+noblacklist ~/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
 # caja needs to be able to start arbitrary applications so we cannot blacklist their files

@@ -34,6 +34,7 @@
 
 #include "../include/common.h"
 static int arg_debug = 0;
+#define MAX_BUF 1024
 
 static void usage(void) {
 	printf("firecfg - version %s\n\n", VERSION);
@@ -46,6 +47,7 @@ static void usage(void) {
 	printf("Usage: firecfg [OPTIONS]\n\n");
 	printf("   --clean - remove all firejail symbolic links.\n\n");
 	printf("   --debug - print debug messages.\n\n");
+	printf("   --fix-sound - create ~/.config/pulse/client.conf file.\n\n");
 	printf("   --help, -? - this help screen.\n\n");
 	printf("   --list - list all firejail symbolic links.\n\n");
 	printf("   --version - print program version and exit.\n\n");
@@ -65,6 +67,49 @@ static void usage(void) {
 	printf("\n");
 	printf("License GPL version 2 or later\n");
 	printf("Homepage: http://firejail.wordpress.com\n\n");
+}
+
+static void sound(void) {
+	struct passwd *pw = getpwuid(getuid());
+	if (!pw) {
+		goto errexit;
+	}
+	char *home = pw->pw_dir;
+	if (!home) {
+		goto errexit;
+	}
+	
+	// the input file is /etc/pulse/client.conf
+	FILE *fpin = fopen("/etc/pulse/client.conf", "r");
+	if (!fpin) {
+		fprintf(stderr, "PulseAudio is not available on this platform, there is nothing to fix...\n");
+		return;
+	}
+
+	// the dest is PulseAudio user config file
+	char *fname;
+	if (asprintf(&fname, "%s/.config/pulse/client.conf", home) == -1)
+		errExit("asprintf");
+	FILE *fpout = fopen(fname, "w");
+	free(fname);
+	if (!fpout)
+		goto errexit;
+		
+	// copy default config
+	char buf[MAX_BUF];
+	while (fgets(buf, MAX_BUF, fpin))
+		fputs(buf, fpout);
+	
+	// disable shm
+	fprintf(fpout, "\nenable-shm = no\n");
+	fclose(fpin);
+	fclose(fpout);
+	printf("PulseAudio configured, please logout and login back again\n");
+	return;	
+
+errexit:
+	fprintf(stderr, "Error: cannot configure sound file\n");
+	exit(1);
 }
 
 // return 1 if the program is found
@@ -231,7 +276,6 @@ static void set_file(const char *name, const char *firejail_exec) {
 	free(fname);
 }
 
-#define MAX_BUF 1024
 static void set_links(void) {
 	char *cfgfile;
 	if (asprintf(&cfgfile, "%s/firejail/firecfg.config", LIBDIR) == -1)
@@ -504,6 +548,10 @@ int main(int argc, char **argv) {
 			list();
 			return 0;
 		}
+		else if (strcmp(argv[i], "--fix-sound") == 0) {
+			sound();
+			return 0;
+		}
 		else {
 			fprintf(stderr, "Error: invalid command line option\n");
 			usage();
@@ -513,8 +561,9 @@ int main(int argc, char **argv) {
 	
 	// set symlinks in /usr/local/bin
 	if (getuid() != 0) {
-		fprintf(stderr, "Error: you need to be root to run this command\n");
-		exit(1);
+		fprintf(stderr, "Error: cannot set the symbolic links in /usr/local/bin\n");
+		fprintf(stderr, "The proper way to run this command is \"sudo firecfg\".\n");
+		return 1;
 	}
 	set_links();
 

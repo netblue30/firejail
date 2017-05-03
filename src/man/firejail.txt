@@ -1997,7 +1997,7 @@ $ firejail --tree
       1221:netblue:/usr/lib/firefox/firefox
 .RE
 
-For more information, see \fBman 1 firecfg\fR.
+We provide a tool that automates all this integration, please see \fBman 1 firecfg\fR for more details.
 
 .SH APPARMOR
 .TP

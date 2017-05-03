@@ -1,23 +1,49 @@
 .TH FIRECFG 1 "MONTH YEAR" "VERSION" "firecfg man page"
 .SH NAME
-Firecfg \- Desktop configuration program for Firejail software.
+Firecfg \- Desktop integration utility for Firejail software.
 .SH SYNOPSIS
 firecfg [OPTIONS]
 .SH DESCRIPTION
-Firecfg is the desktop configuration utility for Firejail software. The utility
-creates several symbolic links to firejail executable in /usr/local/bin.
+Firecfg is the desktop integration utility for Firejail sandbox. 
+It allows the user to sandbox applications automatically by
+clicking on desktop manager icons and menus.
 
-Firecfg also checks .desktop files in /usr/share/applications/, 
-replaces the full path by program name, and writes the  result to $HOME/.local/share/applications/.
-This allows the user to sandbox applications automatically, just by clicking on regular desktop
-menus and icons.
+The integration covers:
+.br
+.PP
+.RS
+- programs started in a terminal - typing "firefox" would be enough to start a sandboxed Firefox browser
+.br
 
-For more information, see \fBDESKTOP INTEGRATION\fR section in \fBman 1 firejail\fR.
+.br
+- programs started by clicking on desktop manager menus - all major desktop managers are supported
+.br
+
+.br
+- programs started by clicking on file icons in file manager - only Cinnamon, KDE, LXDE, MATE and XFCE
+desktop managers are supported in this moment
+.RE
+
+This brings us as very close to full desktop integration.
+
+To set it up, run "sudo firecfg" after installing
+Firejail software, and logout/login for the integration to take effect. "sudo firecfg" should also be run after
+you install new programs. If the program is supported by Firejail, the symbolic link in /usr/local/bin
+will be created. For a list of programs supported by default run "ls /etc/firejail".
+
+For user-driven manual integration, see \fBDESKTOP INTEGRATION\fR section in \fBman 1 firejail\fR.
 
 .SH OPTIONS
 .TP
 \fB\-\-clean
 Remove all firejail symbolic links.
+.TP
+\fB\-\-fix-sound
+Create a proper ~/.config/pulse/client.conf file without shm support. On some PulseAudio versions,
+shared memory support (shm) breaks the process ID namespace. PulseAudio software was designed
+a long time ago, and the introduction of PID namespace in Linux kernel breaks their design. This was
+reportedly fixed in PulseAudio version 9. If you have sound problems on your system, run
+"firecfg --fix-sound" command in a terminal, followed by logout/login in order to apply the changes.
 .TP
 \fB\-\-debug
 Print debug messages.

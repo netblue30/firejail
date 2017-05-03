@@ -6,6 +6,7 @@ include /etc/firejail/whitelist-common.local
 whitelist ~/.XCompose
 whitelist ~/.config/mimeapps.list
 whitelist ~/.icons
+whitelist ~/.local/share/icons
 whitelist ~/.config/user-dirs.dirs
 read-only ~/.config/user-dirs.dirs
 whitelist ~/.asoundrc

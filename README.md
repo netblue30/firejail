@@ -72,8 +72,7 @@ All --fix functionality is done by default in firecfg, --fix option was removed.
 in desktop manager menu should start the program automatically in a sandbox if a profile
 is available in /etc/firejail. We cover about 300 different applications in this moment on all major desktop managers.
 
-Symlinks for the common file managers are installed in /usr/local/bin by firecfg. 
-File managers are usually started by default at login time, and will be sandboxed.
+Profiles for file managers are available, however they must be manually enabled due to security concerns.
 Clicking on a file in the file manager will start the corresponding program in the same sandbox as the file manager.
 For example, clicking on a video file will start a sandboxed VLC running the video.
 We support in this moment XFCE, LXDE, MATE, Cinnamon and KDE.

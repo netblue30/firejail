@@ -6,6 +6,8 @@ include /etc/firejail/keepass.local
 noblacklist ${HOME}/.keepass
 noblacklist ${HOME}/.config/keepass
 noblacklist ${HOME}/.config/KeePass
+noblacklist ${HOME}/.local/share/keepass
+noblacklist ${HOME}/.local/share/KeePass
 noblacklist ${HOME}/*.kdbx
 noblacklist ${HOME}/*.kdb
  

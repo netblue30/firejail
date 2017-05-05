@@ -36,6 +36,7 @@ blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mousepad
 blacklist ${HOME}/.config/Mumble
 blacklist ${HOME}/.config/Nylas Mail
+blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Slack
@@ -58,9 +59,9 @@ blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/caja
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.config/chromium
-blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/chromium-dev
 blacklist ${HOME}/.config/chromium-flags.conf
+blacklist ${HOME}/.config/clipit
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
@@ -96,7 +97,9 @@ blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/knotesrc
+blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
+blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
 blacklist ${HOME}/.config/mate-calc
@@ -119,6 +122,7 @@ blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/ristretto
 blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/qt5ct
+blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.config/ranger
 blacklist ${HOME}/.config/redshift.conf
@@ -147,6 +151,7 @@ blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 blacklist ${HOME}/.config/xfce4/xfce4-notes.rc
 blacklist ${HOME}/.config/xfce4/xfce4-notes.gtkrc
 blacklist ${HOME}/.config/xfce4-dict
+blacklist ${HOME}/.config/xmms2
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
@@ -238,6 +243,7 @@ blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cdprojektred
+blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/data/Mumble
 blacklist ${HOME}./local/share/dino
 blacklist ${HOME}/.local/share/dolphin
@@ -370,3 +376,4 @@ blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/xreader
+blacklist ${HOME}/.cache/xmms2

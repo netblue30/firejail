@@ -291,3 +291,8 @@
 /etc/firejail/gnome-font-viewer.profile
 /etc/firejail/gucharmap.profile
 /etc/firejail/knotes.profile
+/etc/firejail/clipit.profile
+/etc/firejail/leafpad.profile
+/etc/firejail/lximage-qt.profile
+/etc/firejail/lxmusic.profile
+/etc/firejail/qlipper.profile

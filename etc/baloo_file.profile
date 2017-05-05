@@ -28,9 +28,11 @@ x11 xorg
 private-dev
 private-tmp
 
-# Make home directory read-only and allow writing only to Baloo's database.
-# Note: Baloo will not be able to update the first run key in its configuration files.
-# Older versions will issue a warning message.
+noexec ${HOME}
+noexec /tmp
+
+# Make home directory read-only and allow writing only to ~/.local/share
+# Note: Baloo will not be able to update the "first run" key in its configuration files.
 #read-only  ${HOME}
-#read-write ${HOME}/.local/share/baloo
-#read-write ${HOME}/.local/share/akonadi/search_db
+#read-write ${HOME}/.local/share
+#noexec     ${HOME}/.local/share

@@ -463,6 +463,9 @@ Zack Weinberg (https://github.com/zackw)
 	- rework fcopy, --follow-link support in fcopy
 	- follow link support in --private-bin
 	- wait_for_other function rewrite
-	- xvfb X11 server support
+	- Xvfb X11 server support
+	- Xvfb and Xephyr profiles, modified Xpra profile
+	- support for sandboxing Xpra, Xvfb and Xephyr in independent sandboxes when started
+	  with firejail --x11
 
 Copyright (C) 2014-2017 Firejail Authors

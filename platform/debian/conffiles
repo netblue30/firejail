@@ -296,3 +296,5 @@
 /etc/firejail/lximage-qt.profile
 /etc/firejail/lxmusic.profile
 /etc/firejail/qlipper.profile
+/etc/firejail/Xvfb.profile
+/etc/firejail/Xephyr.profile

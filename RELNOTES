@@ -32,6 +32,8 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * feature: support overlay, overlay-named and overlay-tmpfs in profile files
   * feature: allow PulseAudio sockets in --private-tmp
   * feature: --fix-sound support in firecfg
+  * feature: added support for sandboxing Xpra, Xvfb and Xephyr in 
+    independent sandboxes when started with firejail --x11
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagick), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,
@@ -45,7 +47,7 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * new profiles: Ristretto, PCManFM, Dia, FontForge, Geany, Hugin,
   * new profiles: mate-calc, mate-dictionary, mate-color-select, caja,
   * new profiles: galculator, Nemo, gnome-font-viewer, gucharmap, knotes
-  * new profiles: clipit, leafpad, lximage-qt, lxmusic, qlipper
+  * new profiles: clipit, leafpad, lximage-qt, lxmusic, qlipper, Xvfb, Xephyr
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Fri, 7 Apr 2017 08:00:00 -0500
 

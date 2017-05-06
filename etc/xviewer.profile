@@ -4,6 +4,7 @@ include /etc/firejail/xviewer.local
 
 # xviewer profile
 noblacklist ~/.config/xviewer
+noblacklist ~/steam/steam/userdata
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

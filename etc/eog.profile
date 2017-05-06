@@ -4,6 +4,7 @@ include /etc/firejail/eog.local
 
 # eog (gnome image viewer) profile
 noblacklist ~/.config/eog
+noblacklist ~/steam/steam/userdata
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

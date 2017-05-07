@@ -3,7 +3,7 @@
 include /etc/firejail/risretto.local
 
 noblacklist ${HOME}/.config/ristretto
-noblacklist ~/steam/steam/userdata
+noblacklist ~/.steam
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

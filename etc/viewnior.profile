@@ -4,7 +4,7 @@ include /etc/firejail/viewnior.local
 
 # Firejail profile for viewnior
 noblacklist ~/.config/viewnior
-noblacklist ~/steam/steam/userdata
+noblacklist ~/.steam
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

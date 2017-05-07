@@ -5,6 +5,7 @@ include /etc/firejail/pix.local
 # Firejail profile for pix
 noblacklist ${HOME}/.config/pix
 noblacklist ${HOME}/.local/share/pix
+noblacklist ~/.steam
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

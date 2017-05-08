@@ -34,6 +34,7 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * feature: --fix-sound support in firecfg
   * feature: added support for sandboxing Xpra, Xvfb and Xephyr in 
     independent sandboxes when started with firejail --x11
+  * feature: support for Xpra extra params in firejail config file
   * new profiles: xiphos, Tor Browser Bundle, display (imagemagick), Wire,
   * new profiles: mumble, zoom, Guayadeque, qemu, keypass2, xed, pluma,
   * new profiles: Cryptocat, Bless, Gnome 2048, Gnome Calculator,

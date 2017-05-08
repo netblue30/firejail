@@ -27,6 +27,7 @@ static int initialized = 0;
 static int cfg_val[CFG_MAX];
 char *xephyr_screen = "800x600";
 char *xephyr_extra_params = "";
+char *xpra_extra_params = "";
 char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
@@ -248,14 +249,23 @@ int checkcfg(int val) {
 			}
 				
 			// Xephyr command extra parameters
-			else if (strncmp(ptr, "xephyr-extra-params ", 19) == 0) {
+			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
 				if (*xephyr_extra_params != '\0')
 					goto errout;
-				xephyr_extra_params = strdup(ptr + 19);
+				xephyr_extra_params = strdup(ptr + 20);
 				if (!xephyr_extra_params)
 					errExit("strdup");
 			}
 			
+			// xpra server extra parameters
+			else if (strncmp(ptr, "xpra-extra-params ", 18) == 0) {
+				if (*xpra_extra_params != '\0')
+					goto errout;
+				xpra_extra_params = strdup(ptr + 18);
+				if (!xpra_extra_params)
+					errExit("strdup");
+			}
+
 			// Xvfb screen size
             		else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
 				// expecting three numbers separated by x's

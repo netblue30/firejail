@@ -239,8 +239,8 @@ void x11_start_xvfb(int argc, char **argv) {
 
 	// parse xvfb_extra_params
 	// very basic quoting support
-	char *temp = strdup(xephyr_extra_params);
-	if (*xephyr_extra_params != '\0') {
+	char *temp = strdup(xvfb_extra_params);
+	if (*xvfb_extra_params != '\0') {
 		if (!temp)
 			errExit("strdup");
 		bool dquote = false;
@@ -267,6 +267,7 @@ void x11_start_xvfb(int argc, char **argv) {
 			exit(1);
 		}
 
+		server_argv[pos++] = temp;
 		for (i = 0; i < (int) strlen(xvfb_extra_params)-1; i++) {
 			if (pos >= (sizeof(server_argv)/sizeof(*server_argv)) - 2) {
 				fprintf(stderr, "Error: arg count limit exceeded while parsing xvfb_extra_params\n");
@@ -284,12 +285,12 @@ void x11_start_xvfb(int argc, char **argv) {
 
 	if (arg_debug) {
 		size_t i = 0;
-		printf("xvfb server:");
+		printf("\n*** Starting xvfb server:");
 		while (server_argv[i]!=NULL) {
 			printf(" \"%s\"", server_argv[i]);
 			i++;
 		}
-		putchar('\n');
+		printf(" ***\n\n");
 	}
 
 	// remove --x11 arg
@@ -307,12 +308,12 @@ void x11_start_xvfb(int argc, char **argv) {
 
 	if (arg_debug) {
 		size_t i = 0;
-		printf("xvfb client:");
+		printf("\n*** Stating xvfb client:");
 		while (jail_argv[i]!=NULL) {
 			printf(" \"%s\"", jail_argv[i]);
 			i++;
 		}
-		putchar('\n');
+		printf(" ***\n\n");
 	}
 
 	server = fork();
@@ -471,13 +472,18 @@ void x11_start_xephyr(int argc, char **argv) {
 			exit(1);
 		}
 
+		server_argv[pos++] = temp;
 		for (i = 0; i < (int) strlen(xephyr_extra_params)-1; i++) {
 			if (pos >= (sizeof(server_argv)/sizeof(*server_argv)) - 2) {
 				fprintf(stderr, "Error: arg count limit exceeded while parsing xephyr_extra_params\n");
 				exit(1);
 			}
-			if (temp[i] == '\0' && (temp[i+1] == '\"' || temp[i+1] == '\'')) server_argv[pos++] = temp + i + 2;
-			else if (temp[i] == '\0' && temp[i+1] != '\0') server_argv[pos++] = temp + i + 1;
+			if (temp[i] == '\0' && (temp[i+1] == '\"' || temp[i+1] == '\'')) {
+				server_argv[pos++] = temp + i + 2;
+			}
+			else if (temp[i] == '\0' && temp[i+1] != '\0') {
+				server_argv[pos++] = temp + i + 1;
+			}
 		}
 	}
 
@@ -490,12 +496,12 @@ void x11_start_xephyr(int argc, char **argv) {
 
 	if (arg_debug) {
 		size_t i = 0;
-		printf("xephyr server:");
+		printf("\n*** Starting xephyr server:");
 		while (server_argv[i]!=NULL) {
 			printf(" \"%s\"", server_argv[i]);
 			i++;
 		}
-		putchar('\n');
+		printf(" ***\n\n");
 	}
 
 	// remove --x11 arg
@@ -513,12 +519,12 @@ void x11_start_xephyr(int argc, char **argv) {
 
 	if (arg_debug) {
 		size_t i = 0;
-		printf("xephyr client:");
+		printf("*** Starting xephyr client:");
 		while (jail_argv[i]!=NULL) {
 			printf(" \"%s\"", jail_argv[i]);
 			i++;
 		}
-		putchar('\n');
+		printf(" ***\n\n");
 	}
 
 	server = fork();
@@ -631,7 +637,74 @@ void x11_start_xpra(int argc, char **argv) {
 		errExit("asprintf");
 
 	// build the start command
-	char *server_argv[] = { "xpra", "start", display_str, "--no-daemon",  NULL };
+	char *server_argv[256] = {		  // rest initialyzed to NULL
+		 "xpra", "start", display_str, "--no-daemon", 
+	};
+	unsigned pos = 0;
+	while (server_argv[pos] != NULL) pos++;
+
+	assert(xpra_extra_params);		  // should be "" if empty
+
+	// parse xephyr_extra_params
+	// very basic quoting support
+	char *temp = strdup(xpra_extra_params);
+	if (*xpra_extra_params != '\0') {
+		if (!temp)
+			errExit("strdup");
+		bool dquote = false;
+		bool squote = false;
+		for (i = 0; i < (int) strlen(xpra_extra_params); i++) {
+			if (temp[i] == '\"') {
+				dquote = !dquote;
+						  // replace closing quote by \0
+				if (dquote) temp[i] = '\0';
+			}
+			if (temp[i] == '\'') {
+				squote = !squote;
+						  // replace closing quote by \0
+				if (squote) temp[i] = '\0';
+			}
+			if (!dquote && !squote && temp[i] == ' ') temp[i] = '\0';
+			if (dquote && squote) {
+				fprintf(stderr, "Error: mixed quoting found while parsing xpra_extra_params\n");
+				exit(1);
+			}
+		}
+		if (dquote) {
+			fprintf(stderr, "Error: unclosed quote found while parsing xpra_extra_params\n");
+			exit(1);
+		}
+
+		server_argv[pos++] = temp;
+		for (i = 0; i < (int) strlen(xpra_extra_params)-1; i++) {
+			if (pos >= (sizeof(server_argv)/sizeof(*server_argv)) - 2) {
+				fprintf(stderr, "Error: arg count limit exceeded while parsing xpra_extra_params\n");
+				exit(1);
+			}
+			if (temp[i] == '\0' && (temp[i+1] == '\"' || temp[i+1] == '\'')) {
+				server_argv[pos++] = temp + i + 2;
+			}
+			else if (temp[i] == '\0' && temp[i+1] != '\0') {
+				server_argv[pos++] = temp + i + 1;
+			}
+		}
+	}
+
+	server_argv[pos++] = NULL;
+
+						  // no overrun
+	assert(pos < (sizeof(server_argv)/sizeof(*server_argv)));
+	assert(server_argv[pos-1] == NULL);	  // last element is null
+	
+	if (arg_debug) {
+		size_t i = 0;
+		printf("\n*** Starting xpra server: ");
+		while (server_argv[i]!=NULL) {
+			printf(" \"%s\"", server_argv[i]);
+			i++;
+		}
+		printf(" ***\n\n");
+	}
 
 	int fd_null = -1;
 	if (arg_quiet) {
@@ -716,7 +789,7 @@ void x11_start_xpra(int argc, char **argv) {
 
 	// build jail command
 	char *firejail_argv[argc+2];
-	int pos = 0;
+	pos = 0;
 	for (i = 0; i < argc; i++) {
 		if (strncmp(argv[i], "--x11", 5) == 0)
 			continue;

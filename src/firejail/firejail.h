@@ -692,6 +692,7 @@ enum {
 };
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
+extern char *xpra_extra_params;
 extern char *xvfb_screen;
 extern char *xvfb_extra_params;
 extern char *netfilter_default;

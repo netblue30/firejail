@@ -274,6 +274,22 @@ void start_audit(void) {
 	exit(1);
 }
 
+static void print_time(void) {
+	if (start_timestamp) {
+		unsigned long long end_timestamp = getticks();
+		// measure 1 ms
+		usleep(1000);
+		unsigned long long onems = getticks() - end_timestamp;
+		if (onems) {
+			printf("Child process initialized in %.02f ms\n", 
+				(float) (end_timestamp - start_timestamp) / (float) onems);
+			return;
+		}
+	}
+
+	printf("Child process initialized\n");
+}
+
 void start_application(void) {
 //if (setsid() == -1)
 //errExit("setsid");
@@ -315,7 +331,7 @@ void start_application(void) {
 		}
 
 		if (!arg_command && !arg_quiet)
-			printf("Child process initialized\n");
+			print_time();
 
 #ifdef HAVE_GCOV
 	__gcov_dump();
@@ -366,7 +382,7 @@ void start_application(void) {
 		}
 
 		if (!arg_command && !arg_quiet)
-			printf("Child process initialized\n");
+			print_time();
 #ifdef HAVE_GCOV
 	__gcov_dump();
 #endif

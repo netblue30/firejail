@@ -37,15 +37,6 @@
 #include <net/if.h>
 #include <sys/utsname.h>
 
-#if 0
-#include <sys/times.h>
-{
-struct tms tm;
-clock_t systick = times(&tm);
-printf("time %s:%d %u\n", __FILE__, __LINE__, (uint32_t) systick);
-}
-#endif
-
 uid_t firejail_uid = 0;
 gid_t firejail_gid = 0;
 
@@ -127,6 +118,7 @@ char *fullargv[MAX_ARGS];			// expanded argv for restricted shell
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
+unsigned long long start_timestamp;
 
 static void set_name_file(pid_t pid);
 static void delete_name_file(pid_t pid);
@@ -825,6 +817,11 @@ int main(int argc, char **argv) {
 	int custom_profile = 0;	// custom profile loaded
 	char *custom_profile_dir = NULL; // custom profile directory
 	int arg_noprofile = 0; // use default.profile if none other found/specified
+
+
+	// get starting timestamp
+	start_timestamp = getticks();
+
 
 	// build /run/firejail directory structure
 	preproc_build_firejail_dir();

@@ -354,6 +354,7 @@ extern int login_shell;
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
 extern pid_t sandbox_pid;
+extern unsigned long long start_timestamp;
 
 #define MAX_ARGS 128		// maximum number of command arguments (argc)
 extern char *fullargv[MAX_ARGS];

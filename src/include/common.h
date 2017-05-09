@@ -109,6 +109,17 @@ static inline int mac_not_zero(const unsigned char mac[6]) {
 	return 0;
 }
 
+// rtdsc timestamp on x86-64/amd64  processors
+static inline unsigned long long getticks(void) {
+#if defined(__x86_64__)
+	unsigned a, d; 
+	asm volatile("rdtsc" : "=a" (a), "=d" (d)); 
+	return ((unsigned long long)a) | (((unsigned long long)d) << 32); 
+#else
+	return 0; // not implemented
+#endif
+}
+
 int join_namespace(pid_t pid, char *type);
 int name2pid(const char *name, pid_t *pid);
 char *pid_proc_comm(const pid_t pid);

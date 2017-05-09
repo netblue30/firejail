@@ -298,3 +298,5 @@
 /etc/firejail/qlipper.profile
 /etc/firejail/Xvfb.profile
 /etc/firejail/Xephyr.profile
+/etc/firejail/blender.profile
+/etc/firejail/2048-qt.profile

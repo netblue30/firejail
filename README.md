@@ -219,4 +219,4 @@ Kino, Thunar, Geeqie, Engrampa, Scribus, mousepad, gpicview, keepassxc, cvlc, Me
 Nylas, dino, BibleTime, viewnior, Kodi, viking, youtube-dl, meld, Arduino, Akregator, KCalc, KTorrent,
 Orage Globaltime, Orage Clendar, xfce4-notes, xfce4-dict, Ristretto, PCManFM, Dia, FontForge, Geany, Hugin,
 mate-calc, mate-dictionary, mate-color-select, caja, galculator, Nemo, gnome-font-viewer, gucharmap,
-knotes, clipit, leafpad, lximage-qt, lxmusic, qlipper, Xvfb, Xephyr 
+knotes, clipit, leafpad, lximage-qt, lxmusic, qlipper, Xvfb, Xephyr, Blender, 2048-qt 

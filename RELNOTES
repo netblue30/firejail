@@ -49,6 +49,7 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * new profiles: mate-calc, mate-dictionary, mate-color-select, caja,
   * new profiles: galculator, Nemo, gnome-font-viewer, gucharmap, knotes
   * new profiles: clipit, leafpad, lximage-qt, lxmusic, qlipper, Xvfb, Xephyr
+  * new profiles: Blender, 2048-qt
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Fri, 7 Apr 2017 08:00:00 -0500
 

@@ -394,6 +394,7 @@ startx2017 (https://github.com/startx2017)
 	- --quiet fixes
 	- 0.9.38-LTS branch maintainer
 	- firemon --top speed-up
+	- Blender and 2048-qt profiles
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

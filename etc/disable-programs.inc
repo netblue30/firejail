@@ -21,6 +21,7 @@ blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.config/0ad
+blacklist ${HOME}/.config/2048-qt
 blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
@@ -151,6 +152,7 @@ blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 blacklist ${HOME}/.config/xfce4/xfce4-notes.rc
 blacklist ${HOME}/.config/xfce4/xfce4-notes.gtkrc
 blacklist ${HOME}/.config/xfce4-dict
+blacklist ${HOME}/.config/xiaoyong
 blacklist ${HOME}/.config/xmms2
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.config/xreader

@@ -300,3 +300,5 @@
 /etc/firejail/Xephyr.profile
 /etc/firejail/blender.profile
 /etc/firejail/2048-qt.profile
+/etc/firejail/gimp-2.8.profile
+

@@ -115,6 +115,10 @@ static inline unsigned long long getticks(void) {
 	unsigned a, d; 
 	asm volatile("rdtsc" : "=a" (a), "=d" (d)); 
 	return ((unsigned long long)a) | (((unsigned long long)d) << 32); 
+#elif defined(__i386__)
+	unsigned long long ret;
+	__asm__ __volatile__("rdtsc" : "=A" (ret));
+	return ret;
 #else
 	return 0; // not implemented
 #endif

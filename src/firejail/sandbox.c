@@ -907,12 +907,14 @@ int sandbox(void* sandbox_arg) {
 	// set seccomp //todo: push it down after drop_privs and/or configuring noroot
 #ifdef HAVE_SECCOMP
 	// install protocol filter
+#ifdef SYS_SOCKET
 	if (cfg.protocol) {
 		if (arg_debug)
 			printf("Install protocol filter: %s\n", cfg.protocol);
 		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter	
 		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
 	}
+#endif
 
 	// if a keep list is available, disregard the drop list
 	if (arg_seccomp == 1) {

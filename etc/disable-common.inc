@@ -190,10 +190,8 @@ read-only ${HOME}/.npm-packages
 #read-only  ${HOME}/.local
 #read-write ${HOME}/.local/share
 #noexec     ${HOME}/.local/share
-read-only  ${HOME}/.local/share/applications
+read-only ${HOME}/.local/share/applications
 blacklist ${HOME}/.local/share/Trash
-
-
 
 # top secret
 blacklist ${HOME}/.ecryptfs
@@ -296,3 +294,7 @@ blacklist ${PATH}/urxvtcd
 # kernel files
 blacklist /vmlinuz*
 blacklist /initrd*
+
+# completing noexec ${HOME} and noexec /tmp
+noexec ${HOME}/.config/pulse
+noexec /tmp/.X11-unix

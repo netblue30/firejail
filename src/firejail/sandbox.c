@@ -789,7 +789,23 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	if (checkcfg(CFG_DISABLE_MNT))
 		fs_mnt();
+	
+	//****************************
+	// nosound/no3d and fix for pulseaudio 7.0
+	//****************************
+	if (arg_nosound) {
+		// disable pulseaudio
+		pulseaudio_disable();
 
+		// disable /dev/snd
+		fs_dev_disable_sound();
+	}
+	else
+		pulseaudio_init();
+	
+	if (arg_no3d)
+		fs_dev_disable_3d();
+	
 	//****************************
 	// apply the profile file
 	//****************************
@@ -809,22 +825,6 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	if (arg_trace || arg_tracelog)
 		fs_trace();
-		
-	//****************************
-	// nosound/no3d and fix for pulseaudio 7.0
-	//****************************
-	if (arg_nosound) {
-		// disable pulseaudio
-		pulseaudio_disable();
-
-		// disable /dev/snd
-		fs_dev_disable_sound();
-	}
-	else
-		pulseaudio_init();
-	
-	if (arg_no3d)
-		fs_dev_disable_3d();
 	
 	//****************************
 	// set dns

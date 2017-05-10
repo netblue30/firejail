@@ -22,6 +22,8 @@
 #include "firejail.h"
 #include "../include/seccomp.h"
 
+static int err_printed = 0;
+
 char *seccomp_check_list(const char *str) {
 	assert(str);
 	if (strlen(str) == 0) {
@@ -90,7 +92,9 @@ int seccomp_load(const char *fname) {
 		.filter = filter,
 	};
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		if (!err_printed)
+			fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		err_printed = 1;
 		return 1;
 	}
 	

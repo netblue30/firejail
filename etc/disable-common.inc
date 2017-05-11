@@ -292,6 +292,6 @@ blacklist ${PATH}/urxvtcd
 blacklist /vmlinuz*
 blacklist /initrd*
 
-# completing noexec ${HOME} and noexec /tmp
+# complement noexec ${HOME} and noexec /tmp
 noexec ${HOME}/.config/pulse
 noexec /tmp/.X11-unix

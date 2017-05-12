@@ -10,7 +10,7 @@ include /etc/firejail/xvfb.local
 #    $ sudo ln -s /usr/bin/firejail /usr/local/bin/Xvfb
 #
 # We have this functionality disabled by default because it creates problems on
-# some Linux distributions.
+# some Linux distributions. Also, older versions of Xpra use Xvfb.
 #
 
 

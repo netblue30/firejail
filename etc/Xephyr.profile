@@ -4,13 +4,11 @@ include /etc/firejail/Xephyr.local
 
 #
 # This profile will sandbox Xephyr server itself when used with firejail --x11=xephyr.
-# The target program is sandboxed with its own profile. By default the this functionality
-# is disabled. To enable it, create a firejail-Xephyr  symlink in /usr/local/bin:
+# To enable it, create a firejail-Xephyr  symlink in /usr/local/bin:
 #
 #    $ sudo ln -s /usr/bin/firejail /usr/local/bin/Xephyr
 #
-# We have this functionality disabled by default because it creates problems on
-# some Linux distributions.
+# or run "sudo firecfg"
 #
 
 

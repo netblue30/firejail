@@ -5,14 +5,11 @@ include /etc/firejail/xpra.local
 
 #
 # This profile will sandbox Xpra server itself when used with firejail --x11=xpra.
-# The target program is sandboxed with its own profile. By default the this functionality
-# is disabled. To enable it, create a firejail-xpra  symlink in /usr/local/bin:
+# To enable it, create a firejail-xpra  symlink in /usr/local/bin:
 #
 #    $ sudo ln -s /usr/bin/firejail /usr/local/bin/xpra
 #
-# We have this functionality disabled by default because it creates problems on
-# some Linux distributions.
-#
+# or run "sudo firecfg"
 
 # private home directory doesn't work on some distros, so we go for a regular home
 #private
@@ -36,6 +33,7 @@ protocol unix
 
 private-dev
 private-tmp
+# older Xpra versions also use Xvfb
 #private-bin xpra,python,Xvfb,Xorg,sh,xkbcomp,xauth,dbus-launch,pactl,ldconfig,which,strace,bash,cat,ls
 #private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname,machine-id,xpra,X11
 

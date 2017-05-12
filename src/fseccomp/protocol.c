@@ -60,6 +60,7 @@ static char *protocol[] = {
 	NULL
 };
 
+#ifdef SYS_socket
 static struct sock_filter protocol_filter_command[] = {
 	WHITELIST(AF_UNIX),
 	WHITELIST(AF_INET),
@@ -67,6 +68,7 @@ static struct sock_filter protocol_filter_command[] = {
 	WHITELIST(AF_NETLINK),
 	WHITELIST(AF_PACKET)
 };
+#endif
 // Note: protocol[] and protocol_filter_command are synchronized
 
 // command length
@@ -75,6 +77,7 @@ struct sock_filter whitelist[] = {
 };
 unsigned whitelist_len = sizeof(whitelist) / sizeof(struct sock_filter);
 
+#ifdef SYS_socket
 static struct sock_filter *find_protocol_domain(const char *p) {
 	int i = 0;
 	while (protocol[i] != NULL) {
@@ -85,7 +88,7 @@ static struct sock_filter *find_protocol_domain(const char *p) {
 
 	return NULL;
 }	
-
+#endif
 
 void protocol_print(void) {
 #ifndef SYS_socket

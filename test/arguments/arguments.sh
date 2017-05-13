@@ -6,6 +6,7 @@ if [ -f /etc/debian_version ]; then
 else
 	export PATH="$PATH:/usr/lib/firejail"
 fi
+export PATH="$PATH:/usr/lib/firejail"
 
 echo "TESTING: 1. regular bash session"
 ./bashrun.exp

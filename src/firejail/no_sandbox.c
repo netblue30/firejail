@@ -230,8 +230,5 @@ void run_no_sandbox(int argc, char **argv) {
 
 	arg_quiet = 1;
 
-  // we don't want to run a shell, otherwise it will be recursively
-  arg_shell_none = 1;
-
 	start_application();
 }

@@ -8,7 +8,8 @@ match_max 100000
 send -- "firejail --profile=/etc/firejail/firefox.profile --allow-debuggers strace ls\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	"Child process initialized" { puts "\n"}
+	"is disabled on Linux kernels prior to 4.8" { puts "TESTING SKIP: kernel too old\n"; exit }
 }
 expect {
         timeout {puts "TESTING ERROR 1\n";exit}

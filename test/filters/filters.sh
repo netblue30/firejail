@@ -13,6 +13,8 @@ else
 	export PATH="$PATH:/usr/lib/firejail"
 fi
 
+export PATH="$PATH:/usr/lib/firejail"
+
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp
 

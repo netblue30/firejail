@@ -43,7 +43,7 @@
 #ifdef HAVE_APPARMOR
 #include <sys/apparmor.h>
 #endif
-
+#include <syscall.h>
 
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
@@ -907,7 +907,7 @@ int sandbox(void* sandbox_arg) {
 	// set seccomp //todo: push it down after drop_privs and/or configuring noroot
 #ifdef HAVE_SECCOMP
 	// install protocol filter
-#ifdef SYS_SOCKET
+#ifdef SYS_socket
 	if (cfg.protocol) {
 		if (arg_debug)
 			printf("Install protocol filter: %s\n", cfg.protocol);

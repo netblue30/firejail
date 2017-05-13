@@ -798,7 +798,7 @@ void x11_start_xpra(int argc, char **argv) {
 	}
 	firejail_argv[pos] = NULL;
 
-	assert(pos < (argc+2));
+	assert((int) pos < (argc+2));
 	assert(!firejail_argv[pos]);
 
 	// start jail

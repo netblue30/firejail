@@ -568,6 +568,7 @@ void x11_start_xephyr(int argc, char **argv) {
 		(void) rv;
 	}
 
+	assert(display_str);
 	setenv("DISPLAY", display_str, 1);
 	// run attach command
 	jail = fork();
@@ -785,6 +786,7 @@ void x11_start_xpra(int argc, char **argv) {
 		_exit(1);
 	}
 
+	assert(display_str);
 	setenv("DISPLAY", display_str, 1);
 
 	// build jail command

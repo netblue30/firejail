@@ -1,5 +1,4 @@
-firejail (0.9.46-rc1) baseline; urgency=low
-  * development version, work in progress
+firejail (0.9.46) baseline; urgency=low
   * security: split most of networking code in a separate executable
   * security: split seccomp filter code configuration in a separate executable
   * security: split file copying in private option in a separate executable
@@ -53,7 +52,7 @@ firejail (0.9.46-rc1) baseline; urgency=low
   * new profiles: clipit, leafpad, lximage-qt, lxmusic, qlipper, Xvfb, Xephyr
   * new profiles: Blender, 2048-qt
   * bugfixes
- -- netblue30 <netblue30@yahoo.com>  Fri, 7 Apr 2017 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 14 May 2017 08:00:00 -0500
 
 firejail (0.9.44.10) baseline; urgency=low
   * security: when using --x11=xorg and --net, incorrect processing of

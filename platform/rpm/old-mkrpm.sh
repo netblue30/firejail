@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.46~rc1"
+VERSION="0.9.46"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -366,6 +366,50 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/xonotic.profile
 %{_sysconfdir}/%{name}/xpra.profile
 %{_sysconfdir}/%{name}/zoom.profile
+%{_sysconfdir}/%{name}/2048-qt.profile
+%{_sysconfdir}/%{name}/Xephyr.profile
+%{_sysconfdir}/%{name}/Xvfb.profile
+%{_sysconfdir}/%{name}/akregator.profile
+%{_sysconfdir}/%{name}/arduino.profile
+%{_sysconfdir}/%{name}/baloo_file.profile
+%{_sysconfdir}/%{name}/bibletime.profile
+%{_sysconfdir}/%{name}/blender.profile
+%{_sysconfdir}/%{name}/caja.profile
+%{_sysconfdir}/%{name}/clipit.profile
+%{_sysconfdir}/%{name}/dia.profile
+%{_sysconfdir}/%{name}/dino.profile
+%{_sysconfdir}/%{name}/fontforge.profile
+%{_sysconfdir}/%{name}/galculator.profile
+%{_sysconfdir}/%{name}/geany.profile
+%{_sysconfdir}/%{name}/gimp-2.8.profile
+%{_sysconfdir}/%{name}/globaltime.profile
+%{_sysconfdir}/%{name}/gnome-font-viewer.profile
+%{_sysconfdir}/%{name}/gucharmap.profile
+%{_sysconfdir}/%{name}/hugin.profile
+%{_sysconfdir}/%{name}/kcalc.profile
+%{_sysconfdir}/%{name}/knotes.profile
+%{_sysconfdir}/%{name}/kodi.profile
+%{_sysconfdir}/%{name}/ktorrent.profile
+%{_sysconfdir}/%{name}/leafpad.profile
+%{_sysconfdir}/%{name}/lximage-qt.profile
+%{_sysconfdir}/%{name}/lxmusic.profile
+%{_sysconfdir}/%{name}/mate-calc.profile
+%{_sysconfdir}/%{name}/mate-calculator.profile
+%{_sysconfdir}/%{name}/mate-color-select.profile
+%{_sysconfdir}/%{name}/mate-dictionary.profile
+%{_sysconfdir}/%{name}/meld.profile
+%{_sysconfdir}/%{name}/nemo.profile
+%{_sysconfdir}/%{name}/nylas.profile
+%{_sysconfdir}/%{name}/orage.profile
+%{_sysconfdir}/%{name}/pcmanfm.profile
+%{_sysconfdir}/%{name}/qlipper.profile
+%{_sysconfdir}/%{name}/ristretto.profile
+%{_sysconfdir}/%{name}/viewnior.profile
+%{_sysconfdir}/%{name}/viking.profile
+%{_sysconfdir}/%{name}/xfce4-dict.profile
+%{_sysconfdir}/%{name}/xfce4-notes.profile
+%{_sysconfdir}/%{name}/youtube-dl.profile
+  
 
 /usr/bin/firejail
 /usr/bin/firemon
@@ -407,7 +451,7 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
-* Fri Apr 7 2017  netblue30 <netblue30@yahoo.com> 0.9.46~rc1
+* Mon May 15 2017  netblue30 <netblue30@yahoo.com> 0.9.46-1
 
 * Fri Oct 21 2016  netblue30 <netblue30@yahoo.com> 0.9.44-1
   - CVE-2016-7545 submitted by Aleksey Manevich

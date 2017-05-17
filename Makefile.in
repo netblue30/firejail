@@ -16,6 +16,7 @@ VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
+HAVE_SECCOMP=@HAVE_SECCOMP@
 HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 HAVE_GIT_INSTALL=@HAVE_GIT_INSTALL@
@@ -39,10 +40,12 @@ $(MANPAGES): $(wildcard src/man/*.txt)
 man: $(MANPAGES)
 
 filters: src/fseccomp
+ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	src/fseccomp/fseccomp default seccomp
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
 	src/fseccomp/fseccomp secondary 32 seccomp.i386
 	src/fseccomp/fseccomp secondary 64 seccomp.amd64
+endif
 
 clean:
 	for dir in $(APPS) $(MYLIBS); do \
@@ -87,15 +90,18 @@ ifeq ($(HAVE_GIT_INSTALL),-DHAVE_GIT_INSTALL)
 	install -c -m 0755 src/fgit/fgit-install.sh $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fgit/fgit-uninstall.sh $(DESTDIR)/$(libdir)/firejail/.
 endif
+
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fcopy/fcopy $(DESTDIR)/$(libdir)/firejail/.
+ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
+	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
+endif
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjclip.py $(DESTDIR)/$(libdir)/firejail/.
@@ -240,7 +246,9 @@ test-environment:
 	cd test/environment; ./environment.sh | grep TESTING
 
 test-filters:
+ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	cd test/filters; ./filters.sh | grep TESTING
+endif
 
 test-arguments:
 	cd test/arguments; ./arguments.sh | grep TESTING

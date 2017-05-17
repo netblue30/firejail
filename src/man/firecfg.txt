@@ -20,16 +20,14 @@ The integration covers:
 .br
 
 .br
-- programs started by clicking on file icons in file manager - only Cinnamon, KDE, LXDE, MATE and XFCE
+- programs started by clicking on file icons in file manager - only Cinnamon, KDE, LXDE/LXQT, MATE and XFCE
 desktop managers are supported in this moment
 .RE
 
-This brings us as very close to full desktop integration.
-
-To set it up, run "sudo firecfg" after installing
-Firejail software, and logout/login for the integration to take effect. "sudo firecfg" should also be run after
-you install new programs. If the program is supported by Firejail, the symbolic link in /usr/local/bin
-will be created. For a list of programs supported by default run "ls /etc/firejail".
+To set it up, run "sudo firecfg" after installing Firejail software.
+The same command should also be run after
+installing new programs. If the program is supported by Firejail, the symbolic link in /usr/local/bin
+will be created. For a full list of programs supported by default run "cat /usr/lib/firejail/firecfg.config".
 
 For user-driven manual integration, see \fBDESKTOP INTEGRATION\fR section in \fBman 1 firejail\fR.
 

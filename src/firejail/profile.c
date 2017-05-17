@@ -1089,12 +1089,8 @@ void profile_read(const char *fname) {
 	}
 
 	// check file
-	if (strlen(fname) == 0) {
-		fprintf(stderr, "Error: invalid profile file\n");
-		exit(1);
-	}
 	invalid_filename(fname);
-	if (is_dir(fname) || is_link(fname) || strstr(fname, "..")) {
+	if (strlen(fname) == 0 || is_dir(fname)) {
 		fprintf(stderr, "Error: invalid profile file\n");
 		exit(1);
 	}

@@ -35,7 +35,7 @@ Maintainer:
 Committers
 - Fred-Barclay (https://github.com/Fred-Barclay)
 - Reiner Herrmann (https://github.com/reinerh)
-- startx2017 (https://github.com/startx2017) - 0.9.38-LTS branch maintainer
+- startx2017 (https://github.com/startx2017) - 0.9.38-LTS and *bugfixes branches maintainer
 - netblue30 (netblue30@yahoo.com)
 
 
@@ -132,6 +132,7 @@ dshmgh (https://github.com/dshmgh)
 Duncan Overbruck (https://github.com/Duncaen)
 	- musl libc fix
 	- utmp fix
+	- fix install for --disable-seccomp software configurations
 emacsomancer (https://github.com/emacsomancer)
 	- added profile for Conkeror browser
 eventyrer (https://github.com/eventyrer)
@@ -384,6 +385,7 @@ SYN-cook (https://github.com/SYN-cook)
 	- cleaned up Okular and Gwenview profiles
 	- added baloo_file profile
 	- k3b profile update
+	- noexec changes
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- updated default seccomp filters - added  bpf, clock_settime, personality, process_vm_writev, query_module,

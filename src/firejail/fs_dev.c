@@ -54,6 +54,16 @@ static DevEntry dev[] = {
 	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1},
 	{"/dev/nvidia-modeset", RUN_DEV_DIR "/nvidia-modeset", 0, 1},
 	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", 0, 1},
+	{"/dev/video0", RUN_DEV_DIR "/video0", 0, 1},
+	{"/dev/video1", RUN_DEV_DIR "/video1", 0, 1},
+	{"/dev/video2", RUN_DEV_DIR "/video2", 0, 1},
+	{"/dev/video3", RUN_DEV_DIR "/video3", 0, 1},
+	{"/dev/video4", RUN_DEV_DIR "/video4", 0, 1},
+	{"/dev/video5", RUN_DEV_DIR "/video5", 0, 1},
+	{"/dev/video6", RUN_DEV_DIR "/video6", 0, 1},
+	{"/dev/video7", RUN_DEV_DIR "/video7", 0, 1},
+	{"/dev/video8", RUN_DEV_DIR "/video8", 0, 1},
+	{"/dev/video9", RUN_DEV_DIR "/video9", 0, 1},
 	{NULL, NULL, 0, 0}
 };
 

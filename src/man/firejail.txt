@@ -1218,7 +1218,7 @@ bash  cat  ls  sed
 
 .TP
 \fB\-\-private-dev
-Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, snd, urandom, log and shm devices are available.
+Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log and shm devices are available.
 .br
 
 .br

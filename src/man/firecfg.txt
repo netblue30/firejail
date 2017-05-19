@@ -35,6 +35,13 @@ For user-driven manual integration, see \fBDESKTOP INTEGRATION\fR section in \fB
 .TP
 \fB\-\-clean
 Remove all firejail symbolic links.
+
+.TP
+\fB\-\-fix
+Fix .desktop files. Some .desktop files use full path to executable. Firecfg will check .desktop files in
+/usr/share/applications/, replace full path by name if it is in PATH, and write result to $HOME/.local/share/applications/.
+This action is done by default when running "sudo firecfg". We have it as a separate option for regular users.
+
 .TP
 \fB\-\-fix-sound
 Create a proper ~/.config/pulse/client.conf file without shm support. On some PulseAudio versions,

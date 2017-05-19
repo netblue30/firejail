@@ -47,6 +47,7 @@ static void usage(void) {
 	printf("Usage: firecfg [OPTIONS]\n\n");
 	printf("   --clean - remove all firejail symbolic links.\n\n");
 	printf("   --debug - print debug messages.\n\n");
+	printf("   --fix - fix .desktop files.\n\n");
 	printf("   --fix-sound - create ~/.config/pulse/client.conf file.\n\n");
 	printf("   --help, -? - this help screen.\n\n");
 	printf("   --list - list all firejail symbolic links.\n\n");
@@ -542,6 +543,19 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--clean") == 0) {
 			clear();
+			return 0;
+		}
+		else if (strcmp(argv[i], "--fix") == 0) {
+			// find home directory
+			struct passwd *pw = getpwuid(getuid());
+			if (!pw) {
+				goto errexit;
+			}
+			char *home = pw->pw_dir;
+			if (!home) {
+				goto errexit;
+			}
+			fix_desktop_files(home);
 			return 0;
 		}
 		else if (strcmp(argv[i], "--list") == 0) {

@@ -302,6 +302,7 @@ Peter Hogg (https://github.com/pigmonkey)
 	- rtorrent profile
 	- bitlbee profile fixes
 	- mutt profile fixes
+	- fixes for youtube-dl in mpv profile
 Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
 pirate486743186 (https://github.com/pirate486743186)
@@ -368,6 +369,7 @@ SpotComms (https://github.com/SpotComms)
 	- added Arduino profile
 	- profile hardening
 	- firecfg enhancements
+	- fixed vlc profile
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes
@@ -471,5 +473,5 @@ Zack Weinberg (https://github.com/zackw)
 	- support for sandboxing Xpra, Xvfb and Xephyr in independent sandboxes when started
 	  with firejail --x11
 	- support for xpra-extra-params in firejail.config
-	
+
 Copyright (C) 2014-2017 Firejail Authors

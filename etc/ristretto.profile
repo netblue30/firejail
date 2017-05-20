@@ -3,6 +3,7 @@
 include /etc/firejail/risretto.local
 
 noblacklist ${HOME}/.config/ristretto
+noblacklist ~/.Steam
 noblacklist ~/.steam
 
 include /etc/firejail/disable-common.inc
@@ -17,7 +18,7 @@ protocol unix,inet,inet6
 seccomp
 
 #
-# depending on your usage, you can enable some of the commands below: 
+# depending on your usage, you can enable some of the commands below:
 #
 nogroups
 shell none
@@ -25,4 +26,3 @@ shell none
 # private-etc none
 private-dev
 # private-tmp
-

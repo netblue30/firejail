@@ -10,6 +10,9 @@ blacklist ${HOME}/.LuminanceHDR
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Natron
 blacklist ${HOME}/.Skype
+blacklist ${HOME}/.Steam
+blacklist ${HOME}/.Steampath
+blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.Wolfram Research

@@ -3,7 +3,9 @@
 include /etc/firejail/wine.local
 
 # wine profile
+noblacklist ${HOME}/.Steam
 noblacklist ${HOME}/.steam
+noblacklist ${HOME}/.local/share/Steam
 noblacklist ${HOME}/.local/share/steam
 noblacklist ${HOME}/.wine
 

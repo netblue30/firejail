@@ -4,6 +4,7 @@ include /etc/firejail/gthumb.local
 
 # gthumb profile
 noblacklist ${HOME}/.config/gthumb
+noblacklist ~/.Steam
 noblacklist ~/.steam
 
 include /etc/firejail/disable-common.inc

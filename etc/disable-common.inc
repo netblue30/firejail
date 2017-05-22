@@ -6,6 +6,7 @@ include /etc/firejail/disable-common.local
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.*_history
 blacklist-nolog ${HOME}/.bash_history
+blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.macromedia
 
@@ -142,6 +143,8 @@ read-only ${HOME}/.zsh_files
 read-only ${HOME}/.tcshrc
 read-only ${HOME}/.cshrc
 read-only ${HOME}/.csh_files
+read-only ${HOME}/.config/fish
+read-only ${HOME}/.local/share/fish
 read-only ${HOME}/.profile
 read-only ${HOME}/.forward
 read-only ${HOME}/.login

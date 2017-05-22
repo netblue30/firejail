@@ -28,8 +28,8 @@ int profile_find(const char *name, const char *dir) {
 	EUID_ASSERT();
 	assert(name);
 	assert(dir);
-	
-	int rv = 0;	
+
+	int rv = 0;
 	DIR *dp;
 	char *pname;
 	if (asprintf(&pname, "%s.profile", name) == -1)
@@ -74,17 +74,17 @@ static void warning_feature_disabled(const char *feature) {
 // return 0 if the command was already executed inside the function
 int profile_check_line(char *ptr, int lineno, const char *fname) {
 	EUID_ASSERT();
-	
+
 	// check ignore list
 	int i;
 	for (i = 0; i < MAX_PROFILE_IGNORE; i++) {
 		if (cfg.profile_ignore[i] == NULL)
 			break;
-		
+
 		if (strncmp(ptr, cfg.profile_ignore[i], strlen(cfg.profile_ignore[i])) == 0)
 			return 0;	// ignore line
 	}
-	
+
 	if (strncmp(ptr, "ignore ", 7) == 0) {
 		char *str = strdup(ptr + 7);
 		if (*str == '\0') {
@@ -94,7 +94,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		// find an empty entry in profile_ignore array
 		int j;
 		for (j = 0; j < MAX_PROFILE_IGNORE; j++) {
-			if (cfg.profile_ignore[j] == NULL) 
+			if (cfg.profile_ignore[j] == NULL)
 				break;
 		}
 		if (j >= MAX_PROFILE_IGNORE) {
@@ -102,18 +102,18 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			exit(1);
 		}
 		// ... and configure it
-		else 
+		else
 			cfg.profile_ignore[j] = str;
 
 		return 0;
 	}
 
-	// mkdir 
+	// mkdir
 	if (strncmp(ptr, "mkdir ", 6) == 0) {
 		fs_mkdir(ptr + 6);
 		return 1;	// process mkdir again while applying blacklists
 	}
-	// mkfile 
+	// mkfile
 	if (strncmp(ptr, "mkfile ", 7) == 0) {
 		fs_mkfile(ptr + 7);
 		return 1;	// process mkfile again while applying blacklists
@@ -166,7 +166,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strcmp(ptr, "shell none") == 0) {
 		arg_shell_none = 1;
 		return 0;
-	}	
+	}
 	else if (strcmp(ptr, "tracelog") == 0) {
 		arg_tracelog = 1;
 		return 0;
@@ -210,6 +210,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_nosound = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "novideo") == 0) {
+		arg_novideo = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "no3d") == 0) {
 		arg_no3d = 1;
 		return 0;
@@ -217,7 +221,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strcmp(ptr, "allow-private-blacklist") == 0) {
 		arg_allow_private_blacklist = 1;
 		return 0;
-	}	
+	}
 	else if (strcmp(ptr, "netfilter") == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK))
@@ -288,7 +292,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: only \"net none\" is allowed to non-root users\n");
 				exit(1);
 			}
-			
+
 			if (strcmp(ptr + 4, "lo") == 0) {
 				fprintf(stderr, "Error: cannot attach to lo device\n");
 				exit(1);
@@ -314,7 +318,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	
+
 	else if (strncmp(ptr, "veth-name ", 10) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
@@ -365,7 +369,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			*secondip = '\0';
 			secondip++;
-			
+
 			// check addresses
 			if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
 			    br->iprange_start >= br->iprange_end) {
@@ -392,7 +396,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: no network device configured\n");
 				exit(1);
 			}
-			
+
 			if (mac_not_zero(br->macsandbox)) {
 				fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
 				exit(1);
@@ -418,7 +422,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: no network device configured\n");
 				exit(1);
 			}
-			
+
 			if (sscanf(ptr + 4, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
 				fprintf(stderr, "Error: invalid mtu value\n");
 				exit(1);
@@ -479,7 +483,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 //				fprintf(stderr, "Error: invalid IP address\n");
 //				exit(1);
 //			}
-			
+
 		}
 		else
 			warning_feature_disabled("networking");
@@ -502,7 +506,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	if (strcmp(ptr, "apparmor") == 0) {
-#ifdef HAVE_APPARMOR		
+#ifdef HAVE_APPARMOR
 		arg_apparmor = 1;
 #endif
 		return 0;
@@ -515,7 +519,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fwarning("a protocol list is present, the new list \"%s\" will not be installed\n", ptr + 9);
 				return 0;
 			}
-			
+
 			// store list
 			cfg.protocol = strdup(ptr + 9);
 			if (!cfg.protocol)
@@ -526,7 +530,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	
+
 	if (strncmp(ptr, "env ", 4) == 0) {
 		env_store(ptr + 4, SETENV);
 		return 0;
@@ -535,7 +539,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		env_store(ptr + 6, RMENV);
 		return 0;
 	}
-	
+
 	// seccomp drop list on top of default list
 	if (strncmp(ptr, "seccomp ", 8) == 0) {
 #ifdef HAVE_SECCOMP
@@ -549,7 +553,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 		return 0;
 	}
-	
+
 	// seccomp drop list without default list
 	if (strncmp(ptr, "seccomp.drop ", 13) == 0) {
 #ifdef HAVE_SECCOMP
@@ -559,7 +563,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else
 			warning_feature_disabled("seccomp");
-#endif		
+#endif
 		return 0;
 	}
 
@@ -572,10 +576,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else
 			warning_feature_disabled("seccomp");
-#endif		
+#endif
 		return 0;
 	}
-	
+
 	// caps drop list
 	if (strncmp(ptr, "caps.drop ", 10) == 0) {
 		arg_caps_drop = 1;
@@ -586,7 +590,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		caps_check_list(arg_caps_list, NULL);
 		return 0;
 	}
-	
+
 	// caps keep list
 	if (strncmp(ptr, "caps.keep ", 10) == 0) {
 		arg_caps_keep = 1;
@@ -603,13 +607,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		cfg.hostname = ptr + 9;
 		return 0;
 	}
-	
+
 	// hosts-file
 	if (strncmp(ptr, "hosts-file ", 11) == 0) {
 		cfg.hosts_file = fs_check_hosts_file(ptr + 11);
 		return 0;
 	}
-	
+
 	// dns
 	if (strncmp(ptr, "dns ", 4) == 0) {
 		uint32_t dns;
@@ -617,7 +621,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Error: invalid DNS server IP address\n");
 			return 1;
 		}
-		
+
 		if (cfg.dns1 == 0)
 			cfg.dns1 = dns;
 		else if (cfg.dns2 == 0)
@@ -630,13 +634,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		return 0;
 	}
-	
+
 	// cpu affinity
 	if (strncmp(ptr, "cpu ", 4) == 0) {
 		read_cpu_list(ptr + 4);
 		return 0;
 	}
-	
+
 	// nice value
 	if (strncmp(ptr, "nice ", 4) == 0) {
 		cfg.nice = atoi(ptr + 5);
@@ -651,7 +655,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		set_cgroup(ptr + 7);
 		return 0;
 	}
-	
+
 	// writable-etc
 	if (strcmp(ptr, "writable-etc") == 0) {
 		if (cfg.etc_private_keep) {
@@ -661,7 +665,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_writable_etc = 1;
 		return 0;
 	}
-	
+
 	if (strcmp(ptr, "machine-id") == 0) {
 		arg_machineid = 1;
 		return 0;
@@ -675,7 +679,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_writable_var_log = 1;
 		return 0;
 	}
-	
+
 	// private directory
 	if (strncmp(ptr, "private ", 8) == 0) {
 		cfg.home_private = ptr + 8;
@@ -717,7 +721,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	
+
 	if (strcmp(ptr, "x11 xpra") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
@@ -736,7 +740,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	
+
 	if (strcmp(ptr, "x11 xvfb") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
@@ -766,15 +770,15 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			else {
 				// start x11
 				x11_start(cfg.original_argc, cfg.original_argv);
-				exit(0);		
+				exit(0);
 			}
 		}
 		else
 			warning_feature_disabled("x11");
-#endif		
+#endif
 		return 0;
 	}
-	
+
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
 		if (arg_writable_etc) {
@@ -788,7 +792,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.etc_private_keep = ptr + 12;
 		}
 		arg_private_etc = 1;
-		
+
 		return 0;
 	}
 
@@ -801,7 +805,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.opt_private_keep = ptr + 12;
 		}
 		arg_private_opt = 1;
-		
+
 		return 0;
 	}
 
@@ -814,7 +818,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.srv_private_keep = ptr + 12;
 		}
 		arg_private_srv = 1;
-		
+
 		return 0;
 	}
 
@@ -906,13 +910,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// filesystem bind
 	if (strncmp(ptr, "bind ", 5) == 0) {
-#ifdef HAVE_BIND		
+#ifdef HAVE_BIND
 		if (checkcfg(CFG_BIND)) {
 			if (getuid() != 0) {
 				fprintf(stderr, "Error: --bind option is available only if running as root\n");
 				exit(1);
 			}
-	
+
 			// extract two directories
 			char *dname1 = ptr + 5;
 			char *dname2 = split_comma(dname1); // this inserts a '0 to separate the two dierctories
@@ -920,7 +924,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: missing second directory for bind\n");
 				exit(1);
 			}
-			
+
 			// check directories
 			invalid_filename(dname1);
 			invalid_filename(dname2);
@@ -932,14 +936,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Symbolic links are not allowed for bind command\n");
 				exit(1);
 			}
-			
+
 			// insert comma back
 			*(dname2 - 1) = ',';
 			return 1;
 		}
 		else
 			warning_feature_disabled("bind");
-#endif		
+#endif
 		return 0;
 	}
 
@@ -969,8 +973,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Invalid rlimit option on line %d\n", lineno);
 			exit(1);
 		}
-		
-		return 0;		
+
+		return 0;
 	}
 
 	if (strncmp(ptr, "join-or-start ", 14) == 0) {
@@ -1005,14 +1009,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "noblacklist ", 12) == 0)
 		ptr += 12;
 	else if (strncmp(ptr, "whitelist ", 10) == 0) {
-#ifdef HAVE_WHITELIST		
+#ifdef HAVE_WHITELIST
 		if (checkcfg(CFG_WHITELIST)) {
 			arg_whitelist = 1;
 			ptr += 10;
 		}
 		else
 			return 0;
-#else		
+#else
 		return 0;
 #endif
 	}
@@ -1058,13 +1062,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str) {
 	EUID_ASSERT();
-	
+
 	ProfileEntry *prf = malloc(sizeof(ProfileEntry));
 	if (!prf)
 		errExit("malloc");
 	memset(prf, 0, sizeof(ProfileEntry));
 	prf->next = NULL;
-	prf->data = str;	
+	prf->data = str;
 
 	// add prf to the list
 	if (cfg.profile == NULL) {
@@ -1081,11 +1085,11 @@ void profile_add(char *str) {
 static int include_level = 0;
 void profile_read(const char *fname) {
 	EUID_ASSERT();
-	
+
 	// exit program if maximum include level was reached
 	if (include_level > MAX_INCLUDE_LEVEL) {
 		fprintf(stderr, "Error: maximum profile include level was reached\n");
-		exit(1);	
+		exit(1);
 	}
 
 	// check file
@@ -1100,7 +1104,7 @@ void profile_read(const char *fname) {
 		char *ptr = strstr(base, ".local");
 		if (ptr && strlen(ptr) == 6)
 			return;
-		
+
 		fprintf(stderr, "Error: cannot access profile file\n");
 		exit(1);
 	}
@@ -1114,7 +1118,7 @@ void profile_read(const char *fname) {
 				return;
 		}
 	}
-	
+
 	// open profile file:
 	FILE *fp = fopen(fname, "r");
 	if (fp == NULL) {
@@ -1133,13 +1137,13 @@ void profile_read(const char *fname) {
 		char *ptr = line_remove_spaces(buf);
 		if (ptr == NULL)
 			continue;
-		
+
 		// comments
 		if (*ptr == '#' || *ptr == '\0') {
 			free(ptr);
 			continue;
 		}
-		
+
 		// process quiet
 		if (strcmp(ptr, "quiet") == 0) {
 			arg_quiet = 1;
@@ -1155,13 +1159,13 @@ void profile_read(const char *fname) {
 		// process include
 		if (strncmp(ptr, "include ", 8) == 0) {
 			include_level++;
-			
+
 			// extract profile filename and new skip params
 			char *newprofile = ptr + 8; // profile name
-			
+
 			// expand ${HOME}/ in front of the new profile file
 			char *newprofile2 = expand_home(newprofile, cfg.homedir);
-			
+
 			// recursivity
 			profile_read((newprofile2)? newprofile2:newprofile);
 			include_level--;
@@ -1170,7 +1174,7 @@ void profile_read(const char *fname) {
 			free(ptr);
 			continue;
 		}
-		
+
 		// verify syntax, exit in case of error
 		if (profile_check_line(ptr, lineno, fname))
 			profile_add(ptr);

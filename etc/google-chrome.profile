@@ -13,6 +13,7 @@ include /etc/firejail/disable-programs.inc
 # include /etc/firejail/disable-devel.inc
 #
 
+caps.keep sys_chroot,sys_admin
 netfilter
 
 whitelist ${DOWNLOADS}

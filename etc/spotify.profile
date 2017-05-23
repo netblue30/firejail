@@ -50,4 +50,3 @@ blacklist /root
 blacklist /sbin
 blacklist /srv
 blacklist /sys
-blacklist /var

@@ -852,7 +852,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_overlay_reuse = 1;
 
 			char *subdirname = ptr + 14;
-			if (subdirname == '\0') {
+			if (*subdirname == '\0') {
 				fprintf(stderr, "Error: invalid overlay option\n");
 				exit(1);
 			}

@@ -26,7 +26,7 @@
 #include <fcntl.h>
 #include <pwd.h>
 #ifndef _BSD_SOURCE
-#define _BSD_SOURCE 
+#define _BSD_SOURCE
 #endif
 #include <sys/sysmacros.h>
 #include <sys/types.h>
@@ -35,6 +35,7 @@ typedef struct {
 	const char *dev_fname;
 	const char *run_fname;
 	int sound;
+	int video;
 	int hw3d;
 } DevEntry;
 
@@ -93,16 +94,16 @@ static void deventry_mount(void) {
 					fclose(fp);
 				}
 			}
-				
+
 			if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mounting dev file");
 			fs_logger2("whitelist", dev[i].dev_fname);
 		}
-		
-		i++;	
+
+		i++;
 	}
 }
-	
+
 static void create_char_dev(const char *path, mode_t mode, int major, int minor) {
 	dev_t dev = makedev(major, minor);
 	if (mknod(path, S_IFCHR | mode, dev) == -1)
@@ -112,7 +113,7 @@ static void create_char_dev(const char *path, mode_t mode, int major, int minor)
 	ASSERT_PERMS(path, 0, 0, mode);
 
 	return;
-	
+
 errexit:
 	fprintf(stderr, "Error: cannot create %s device\n", path);
 	exit(1);
@@ -161,7 +162,7 @@ void fs_private_dev(void){
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
 	fs_logger("tmpfs /dev");
-	
+
 	deventry_mount();
 
 	// bring back /dev/log
@@ -174,11 +175,11 @@ void fs_private_dev(void){
 				errExit("mounting /dev/log");
 			fs_logger("clone /dev/log");
 		}
-	}		
+	}
 	if (mount(RUN_RO_DIR, RUN_DEV_DIR, "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("disable /dev/snd");
 
-	
+
 	// create /dev/shm
 	if (arg_debug)
 		printf("Create /dev/shm directory\n");
@@ -267,24 +268,24 @@ void fs_dev_shm(void) {
 			fwarning("/dev/shm not mounted\n");
 			dbg_test_dir("/dev/shm");
 		}
-			
+
 	}
 }
-#endif	
+#endif
 
 static void disable_file_or_dir(const char *fname) {
 	if (arg_debug)
 		printf("disable %s\n", fname);
 	struct stat s;
 	if (stat(fname, &s) != -1) {
-		if (is_dir(fname)) {	
+		if (is_dir(fname)) {
 			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 				errExit("disable directory");
 		}
 		else {
 			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 				errExit("disable file");
-		}		
+		}
 	}
 	fs_logger2("blacklist", fname);
 
@@ -294,6 +295,15 @@ void fs_dev_disable_sound(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].sound)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_video(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].video)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}

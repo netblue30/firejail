@@ -147,9 +147,9 @@ typedef struct bridge_t {
 	uint32_t mask;		// interface device mask
 	uint8_t mac[6];		// interface mac address
 	int mtu;		// interface mtu
-	
+
 	char *veth_name;	// veth name for the device connected to the bridge
-	
+
 	// inside the sandbox
 	char *devsandbox;	// name of the device inside the sandbox
 	uint32_t ipsandbox;	// ip address inside the sandbox
@@ -157,7 +157,7 @@ typedef struct bridge_t {
 	uint8_t macsandbox[6]; // mac address inside the sandbox
 	uint32_t iprange_start;// iprange arp scan start range
 	uint32_t iprange_end;	// iprange arp scan end range
-	
+
 	// flags
 	uint8_t arg_ip_none;	// --ip=none
 	uint8_t macvlan;	// set by --net=eth0 (or eth1, ...); reset by --net=br0 (or br1, ...)
@@ -171,14 +171,14 @@ typedef struct interface_t {
 	uint32_t mask;
 	uint8_t mac[6];
 	int mtu;
-	
+
 	uint8_t configured;
 } Interface;
 
 typedef struct profile_entry_t {
 	struct profile_entry_t *next;
 	char *data;	// command
-	
+
 	// whitelist command parameters
 	char *link;	// link name - set if the file is a link
 	unsigned home_dir:1;	// whitelist in /home/user directory
@@ -195,10 +195,10 @@ typedef struct config_t {
 	// user data
 	char *username;
 	char *homedir;
-	
+
 	// filesystem
 	ProfileEntry *profile;
-#define MAX_PROFILE_IGNORE 32	
+#define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
 	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory
@@ -239,12 +239,12 @@ typedef struct config_t {
 	long long unsigned rlimit_nproc;
 	long long unsigned rlimit_fsize;
 	long long unsigned rlimit_sigpending;
-	
+
 	// cpu affinity, nice and control groups
 	uint32_t cpus;
 	int nice;
 	char *cgroup;
-	
+
 
 	// command line
 	char *command_line;
@@ -331,6 +331,7 @@ extern int arg_private_tmp;	// private tmp directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
+extern int arg_novideo; //disable video devices in /dev
 extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting
 extern int arg_join_network;	// join only the network namespace
@@ -724,7 +725,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // bitmapped filters for sbox_run
 #define SBOX_ROOT (1 << 0)			// run the sandbox as root
 #define SBOX_USER (1 << 1)			// run the sandbox as a regular user
-#define SBOX_SECCOMP (1 << 2)		// install seccomp 
+#define SBOX_SECCOMP (1 << 2)		// install seccomp
 #define SBOX_CAPS_NONE (1 << 3)		// drop all capabilities
 #define SBOX_CAPS_NETWORK (1 << 4)	// caps filter for programs running network programs
 #define SBOX_ALLOW_STDIN (1 << 5)		// don't close stdin
@@ -739,4 +740,3 @@ void git_install();
 void git_uninstall();
 
 #endif
-

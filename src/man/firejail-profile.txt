@@ -50,7 +50,7 @@ Parent pid 8553, child pid 8554
 .br
 Child process initialized
 .br
-[...] 
+[...]
 .br
 
 .br
@@ -92,7 +92,7 @@ Example: "include ${CFG}/firefox.profile" will load "/etc/firejail/firefox.profi
 
 System configuration files in ${CFG} are overwritten during software installation.
 Persistent configuration at system level is handled in ".local" files. For every
-profile file in ${CFG} directory, the user can create a corresponding .local file 
+profile file in ${CFG} directory, the user can create a corresponding .local file
 storing modifications to the persistent configuration. Persistent .local files
 are included at the start of regular profile files.
 
@@ -255,7 +255,7 @@ Blacklist violations logged to syslog.
 \fBwhitelist file_or_directory
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
 whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
-everything else is discarded when the sandbox is closed. The top directory could be 
+everything else is discarded when the sandbox is closed. The top directory could be
 user home, /dev, /media, /mnt, /opt, /srv, /var, and /tmp.
 .br
 
@@ -405,6 +405,8 @@ Enable IPC namespace.
 \fBnosound
 Disable sound system.
 .TP
+\fBnovideo
+Disable video devices.
 \fBno3d
 Disable 3D hardware acceleration.
 
@@ -533,7 +535,7 @@ really need network access.
 
 .TP
 \fBveth-name name
-Use this name for the interface connected to the bridge for --net=bridge_interface commands, 
+Use this name for the interface connected to the bridge for --net=bridge_interface commands,
 instead of the default one.
 
 .SH Other
@@ -585,6 +587,3 @@ Homepage: http://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-login\fR\|(5)
-
-
-

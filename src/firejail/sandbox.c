@@ -17,7 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-	
+
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/wait.h>
@@ -65,7 +65,7 @@ static void sandbox_handler(int sig){
 			FILE *fp = fopen(monfile, "r");
 			if (!fp)
 				break;
-				
+
 			char c;
 			size_t count = fread(&c, 1, 1, fp);
 			fclose(fp);
@@ -78,7 +78,7 @@ static void sandbox_handler(int sig){
 			monsec--;
 		}
 		free(monfile);
-		
+
 	}
 
 
@@ -115,7 +115,7 @@ void save_nogroups(void) {
 		fprintf(stderr, "Error: cannot save nogroups state\n");
 		exit(1);
 	}
-	
+
 }
 
 static void sandbox_if_up(Bridge *br) {
@@ -132,7 +132,7 @@ static void sandbox_if_up(Bridge *br) {
 			fprintf(stderr, "Error: %d.%d.%d.%d is interface %s address.\n", PRINT_IP(br->ipsandbox), br->dev);
 			exit(1);
 		}
-		
+
 		// just assign the address
 		assert(br->ipsandbox);
 		if (arg_debug)
@@ -149,19 +149,19 @@ static void sandbox_if_up(Bridge *br) {
 				fprintf(stderr, "Error: %d.%d.%d.%d is interface %s address.\n", PRINT_IP(br->ipsandbox), br->dev);
 				exit(1);
 			}
-			
+
 			uint32_t rv = arp_check(dev, br->ipsandbox, br->ip);
 			if (rv) {
 				fprintf(stderr, "Error: the address %d.%d.%d.%d is already in use.\n", PRINT_IP(br->ipsandbox));
 				exit(1);
 			}
 		}
-			
+
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
 		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
 	}
-	
+
 	if (br->ip6sandbox)
 		 net_if_ip6(dev, br->ip6sandbox);
 }
@@ -171,14 +171,14 @@ static void chk_chroot(void) {
 	char *mycont = getenv("container");
 	if (mycont)
 		return;
-	
+
 	// check if this is a regular chroot
 	struct stat s;
 	if (stat("/", &s) == 0) {
 		if (s.st_ino != 2)
 			return;
 	}
-	
+
 	fprintf(stderr, "Error: cannot mount filesystem as slave\n");
 	exit(1);
 }
@@ -238,7 +238,7 @@ static int monitor_application(pid_t app_pid) {
 				continue;
 			if (pid == 1)
 				continue;
-			
+
 			// todo: make this generic
 			// Dillo browser leaves a dpid process running, we need to shut it down
 			int found = 0;
@@ -268,7 +268,7 @@ void start_audit(void) {
 	char *audit_prog;
 	if (asprintf(&audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
 		errExit("asprintf");
-	assert(getenv("LD_PRELOAD") == NULL);	
+	assert(getenv("LD_PRELOAD") == NULL);
 	execl(audit_prog, audit_prog, NULL);
 	perror("execl");
 	exit(1);
@@ -281,7 +281,7 @@ static void print_time(void) {
 		usleep(1000);
 		unsigned long long onems = getticks() - end_timestamp;
 		if (onems) {
-			printf("Child process initialized in %.02f ms\n", 
+			printf("Child process initialized in %.02f ms\n",
 				(float) (end_timestamp - start_timestamp) / (float) onems);
 			return;
 		}
@@ -301,7 +301,7 @@ void start_application(void) {
 		printf("starting application\n");
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
 	}
-	
+
 	//****************************************
 	// audit
 	//****************************************
@@ -405,12 +405,12 @@ static void enforce_filters(void) {
 		free(cfg.seccomp_list_keep);
 		cfg.seccomp_list_keep = NULL;
 	}
-	
+
 	// disable all capabilities
 	if (arg_caps_default_filter || arg_caps_list)
 		fwarning("all capabilities disabled for a regular user in chroot\n");
 	arg_caps_drop_all = 1;
-	
+
 	// drop all supplementary groups; /etc/group file inside chroot
 	// is controlled by a regular usr
 	arg_nogroups = 1;
@@ -424,12 +424,12 @@ int sandbox(void* sandbox_arg) {
 
 	pid_t child_pid = getpid();
 	if (arg_debug)
-		printf("Initializing child process\n");	
+		printf("Initializing child process\n");
 
  	// close each end of the unused pipes
  	close(parent_to_child_fds[1]);
  	close(child_to_parent_fds[0]);
- 
+
  	// wait for parent to do base setup
  	wait_for_other(parent_to_child_fds[0]);
 
@@ -454,7 +454,7 @@ int sandbox(void* sandbox_arg) {
 	}
 	// ... and mount a tmpfs on top of /run/firejail/mnt directory
 	preproc_mount_mnt_dir();
-	
+
 	//****************************
 	// log sandbox data
 	//****************************
@@ -463,12 +463,12 @@ int sandbox(void* sandbox_arg) {
 	fs_logger2int("sandbox pid:", (int) sandbox_pid);
 	if (cfg.chrootdir)
 		fs_logger("sandbox filesystem: chroot");
-	else if (arg_overlay)	
+	else if (arg_overlay)
 		fs_logger("sandbox filesystem: overlay");
 	else
 		fs_logger("sandbox filesystem: local");
 	fs_logger("install mount namespace");
-	
+
 	//****************************
 	// netfilter
 	//****************************
@@ -496,23 +496,23 @@ int sandbox(void* sandbox_arg) {
 	else if (any_bridge_configured() || any_interface_configured()) {
 		// configure lo and eth0...eth3
 		net_if_up("lo");
-		
+
 		if (mac_not_zero(cfg.bridge0.macsandbox))
 			net_config_mac(cfg.bridge0.devsandbox, cfg.bridge0.macsandbox);
 		sandbox_if_up(&cfg.bridge0);
-		
+
 		if (mac_not_zero(cfg.bridge1.macsandbox))
 			net_config_mac(cfg.bridge1.devsandbox, cfg.bridge1.macsandbox);
 		sandbox_if_up(&cfg.bridge1);
-		
+
 		if (mac_not_zero(cfg.bridge2.macsandbox))
 			net_config_mac(cfg.bridge2.devsandbox, cfg.bridge2.macsandbox);
 		sandbox_if_up(&cfg.bridge2);
-		
+
 		if (mac_not_zero(cfg.bridge3.macsandbox))
 			net_config_mac(cfg.bridge3.devsandbox, cfg.bridge3.macsandbox);
 		sandbox_if_up(&cfg.bridge3);
-		
+
 
 		// moving an interface in a namespace using --interface will reset the interface configuration;
 		// we need to put the configuration back
@@ -520,23 +520,23 @@ int sandbox(void* sandbox_arg) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
 			net_config_interface(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
-		}			
+		}
 		if (cfg.interface1.configured && cfg.interface1.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
 			net_config_interface(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
-		}			
+		}
 		if (cfg.interface2.configured && cfg.interface2.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
 			net_config_interface(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
-		}			
+		}
 		if (cfg.interface3.configured && cfg.interface3.ip) {
 			if (arg_debug)
 				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
 			net_config_interface(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);
-		}			
-			
+		}
+
 		// add a default route
 		if (cfg.defaultgw) {
 			// set the default route
@@ -549,7 +549,7 @@ int sandbox(void* sandbox_arg) {
 		if (arg_debug)
 			printf("Network namespace enabled\n");
 	}
-	
+
 
 	// print network configuration
 	if (!arg_quiet) {
@@ -561,7 +561,7 @@ int sandbox(void* sandbox_arg) {
 					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, PATH_FNET, "printif", "scan");
 				else
 					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif", "scan");
-				
+
 			}
 			if (cfg.defaultgw != 0) {
 				if (gw_cfg_failed)
@@ -585,7 +585,7 @@ int sandbox(void* sandbox_arg) {
 	}
 	else
 		env_ibus_load();
-	
+
 	//****************************
 	// fs pre-processing:
 	//  - build seccomp filters
@@ -602,7 +602,7 @@ int sandbox(void* sandbox_arg) {
 		if (rv)
 			exit(rv);
 	}
-#endif	
+#endif
 
 	// trace pre-install
 	if (arg_trace || arg_tracelog)
@@ -622,13 +622,13 @@ int sandbox(void* sandbox_arg) {
 		enforce_filters();
 #ifdef HAVE_SECCOMP
 		enforce_seccomp = 1;
-#endif		
+#endif
 	}
 
-#ifdef HAVE_CHROOT		
+#ifdef HAVE_CHROOT
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
-		
+
 		// force caps and seccomp if not started as root
 		if (getuid() != 0) {
 			enforce_filters();
@@ -638,14 +638,14 @@ int sandbox(void* sandbox_arg) {
 		}
 		else
 			arg_seccomp = 1;
-						
+
 		//****************************
 		// trace pre-install, this time inside chroot
 		//****************************
 		if (arg_trace || arg_tracelog)
 			fs_trace_preload();
 	}
-	else 
+	else
 #endif
 #ifdef HAVE_OVERLAYFS
 	if (arg_overlay)	{
@@ -663,7 +663,7 @@ int sandbox(void* sandbox_arg) {
 	else
 #endif
 		fs_basic_fs();
-	
+
 	//****************************
 	// private mode
 	//****************************
@@ -696,7 +696,7 @@ int sandbox(void* sandbox_arg) {
 		else
 			fs_private_dev();
 	}
-		
+
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
 			fwarning("private-etc feature is disabled in chroot\n");
@@ -709,7 +709,7 @@ int sandbox(void* sandbox_arg) {
 				fs_trace_preload();
 		}
 	}
-	
+
 	if (arg_private_opt) {
 		if (cfg.chrootdir)
 			fwarning("private-opt feature is disabled in chroot\n");
@@ -719,7 +719,7 @@ int sandbox(void* sandbox_arg) {
 			fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
 		}
 	}
-	
+
 	if (arg_private_srv) {
 		if (cfg.chrootdir)
 			fwarning("private-srv feature is disabled in chroot\n");
@@ -729,7 +729,7 @@ int sandbox(void* sandbox_arg) {
 			fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
 		}
 	}
-	
+
 	if (arg_private_bin) {
 		if (cfg.chrootdir)
 			fwarning("private-bin feature is disabled in chroot\n");
@@ -748,7 +748,7 @@ int sandbox(void* sandbox_arg) {
 			fs_private_bin_list();
 		}
 	}
-	
+
 	if (arg_private_tmp) {
 		if (cfg.chrootdir)
 			fwarning("private-tmp feature is disabled in chroot\n");
@@ -762,7 +762,7 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	
+
 	//****************************
 	// hosts and hostname
 	//****************************
@@ -777,19 +777,19 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	if (arg_netns)
 		netns_mounts(arg_netns);
-	
+
 	//****************************
 	// update /proc, /sys, /dev, /boot directory
 	//****************************
 	if (checkcfg(CFG_REMOUNT_PROC_SYS))
 		fs_proc_sys_dev_boot();
-	
+
 	//****************************
 	// handle /mnt and /media
 	//****************************
 	if (checkcfg(CFG_DISABLE_MNT))
 		fs_mnt();
-	
+
 	//****************************
 	// nosound/no3d and fix for pulseaudio 7.0
 	//****************************
@@ -802,35 +802,43 @@ int sandbox(void* sandbox_arg) {
 	}
 	else
 		pulseaudio_init();
-	
+
 	if (arg_no3d)
 		fs_dev_disable_3d();
-	
+
+	//****************************
+	// novideo
+	//****************************
+	if (arg_novideo) {
+		// disable /dev/video*
+		fs_dev_disable_video();
+	}
+
 	//****************************
 	// apply the profile file
 	//****************************
-	// apply all whitelist commands ... 
+	// apply all whitelist commands ...
 	if (cfg.chrootdir)
 		fwarning("whitelist feature is disabled in chroot\n");
 	else if (arg_overlay)
 		fwarning("whitelist feature is disabled in overlay\n");
 	else
 		fs_whitelist();
-	
+
 	// ... followed by blacklist commands
 	fs_blacklist(); // mkdir and mkfile are processed all over again
-	
+
 	//****************************
 	// install trace
 	//****************************
 	if (arg_trace || arg_tracelog)
 		fs_trace();
-	
+
 	//****************************
 	// set dns
 	//****************************
 	fs_resolvconf();
-	
+
 	//****************************
 	// fs post-processing
 	//****************************
@@ -846,7 +854,7 @@ int sandbox(void* sandbox_arg) {
 		if (chdir(cfg.cwd) == 0)
 			cwd = 1;
 	}
-	
+
 	if (!cwd) {
 		if (chdir("/") < 0)
 			errExit("chdir");
@@ -866,8 +874,8 @@ int sandbox(void* sandbox_arg) {
 			free(cpath);
 		}
 	}
-	
-	
+
+
 	// set nice
 	if (arg_nice) {
 		errno = 0;
@@ -878,12 +886,12 @@ int sandbox(void* sandbox_arg) {
 			errno = 0;
 		}
 	}
-	
+
 	// clean /tmp/.X11-unix sockets
 	fs_x11();
 	if (arg_x11_xorg)
 		x11_xorg();
-	
+
 	//****************************
 	// set security filters
 	//****************************
@@ -899,7 +907,7 @@ int sandbox(void* sandbox_arg) {
 		save_cpu(); // save cpu affinity mask to CPU_CFG file
 		set_cpu_affinity();
 	}
-	
+
 	// save cgroup in CGROUP_CFG file
 	if (cfg.cgroup)
 		save_cgroup();
@@ -911,7 +919,7 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.protocol) {
 		if (arg_debug)
 			printf("Install protocol filter: %s\n", cfg.protocol);
-		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter	
+		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
 		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
 	}
 #endif
@@ -939,12 +947,12 @@ int sandbox(void* sandbox_arg) {
 	}
 	else
 		drop_privs(arg_nogroups);
-	
+
 	// notify parent that new user namespace has been created so a proper
  	// UID/GID map can be setup
  	notify_other(child_to_parent_fds[1]);
  	close(child_to_parent_fds[1]);
- 
+
  	// wait for parent to finish setting up a proper UID/GID map
  	wait_for_other(parent_to_child_fds[0]);
  	close(parent_to_child_fds[0]);
@@ -956,7 +964,7 @@ int sandbox(void* sandbox_arg) {
 			printf("noroot user namespace installed\n");
 		set_caps();
 	}
-	
+
 	//****************************************
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
@@ -989,7 +997,7 @@ int sandbox(void* sandbox_arg) {
 			else if (arg_debug)
 				printf("AppArmor enabled\n");
 		}
-#endif		
+#endif
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		start_application();	// start app
 	}

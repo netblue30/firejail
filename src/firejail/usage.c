@@ -36,10 +36,10 @@ void usage(void) {
 	printf("    --apparmor - enable AppArmor confinement.\n");
 	printf("    --appimage - sandbox an AppImage application.\n");
 	printf("    --audit[=test-program] - audit the sandbox.\n");
-#ifdef HAVE_NETWORK	
+#ifdef HAVE_NETWORK
 	printf("    --bandwidth=name|pid - set bandwidth limits.\n");
 #endif
-#ifdef HAVE_BIND		
+#ifdef HAVE_BIND
 	printf("    --bind=dirname1,dirname2 - mount-bind dirname1 on top of dirname2.\n");
 	printf("    --bind=filename1,filename2 - mount-bind filename1 on top of filename2.\n");
 #endif
@@ -51,7 +51,7 @@ void usage(void) {
 	printf("    --caps.keep=capability,capability - whitelist capabilities filter.\n");
 	printf("    --caps.print=name|pid - print the caps filter.\n");
 	printf("    --cgroup=tasks-file - place the sandbox in the specified control group.\n");
-#ifdef HAVE_CHROOT		
+#ifdef HAVE_CHROOT
 	printf("    --chroot=dirname - chroot into directory.\n");
 #endif
 	printf("    --cpu=cpu-number,cpu-number - set cpu affinity.\n");
@@ -64,15 +64,15 @@ void usage(void) {
 	printf("    --debug-errnos - print all recognized error numbers.\n");
 	printf("    --debug-protocols - print all recognized protocols.\n");
 	printf("    --debug-syscalls - print all recognized system calls.\n");
-#ifdef HAVE_WHITELIST	
+#ifdef HAVE_WHITELIST
 	printf("    --debug-whitelists - debug whitelisting.\n");
 #endif
-#ifdef HAVE_NETWORK	
+#ifdef HAVE_NETWORK
 	printf("    --defaultgw=address - configure default gateway.\n");
 #endif
 	printf("    --dns=address - set DNS server.\n");
 	printf("    --dns.print=name|pid - print DNS configuration.\n");
-	
+
 	printf("    --env=name=value - set environment variable.\n");
 	printf("    --force - attempt to start a new sandbox inside the existing sandbox.\n");
 	printf("    --fs.print=name|pid - print the filesystem log.\n");
@@ -86,7 +86,7 @@ void usage(void) {
 	printf("    --hostname=name - set sandbox hostname.\n");
 	printf("    --hosts-file=file - use file as /etc/hosts.\n");
 	printf("    --ignore=command - ignore command in profile files.\n");
-#ifdef HAVE_NETWORK	
+#ifdef HAVE_NETWORK
 	printf("    --interface=name - move interface in sandbox.\n");
 	printf("    --ip=address - set interface IP address.\n");
 	printf("    --ip=none - no IP address and no default gateway are configured.\n");
@@ -96,21 +96,21 @@ void usage(void) {
 	printf("    --ipc-namespace - enable a new IPC namespace.\n");
 	printf("    --join=name|pid - join the sandbox.\n");
 	printf("    --join-filesystem=name|pid - join the mount namespace.\n");
-#ifdef HAVE_NETWORK	
+#ifdef HAVE_NETWORK
 	printf("    --join-network=name|pid - join the network namespace.\n");
 #endif
 	printf("    --join-or-start=name|pid - join the sandbox or start a new one.\n");
 	printf("    --list - list all sandboxes.\n");
 	printf("    --ls=name|pid dir_or_filename - list files in sandbox container.\n");
-#ifdef HAVE_NETWORK	
+#ifdef HAVE_NETWORK
 	printf("    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n");
 #endif
 	printf("    --machine-id - preserve /etc/machine-id\n");
-#ifdef HAVE_NETWORK	
+#ifdef HAVE_NETWORK
 	printf("    --mtu=number - set interface MTU.\n");
 #endif
 	printf("    --name=name - set sandbox name.\n");
-#ifdef HAVE_NETWORK	
+#ifdef HAVE_NETWORK
 	printf("    --net=bridgename - enable network namespaces and connect to this bridge.\n");
 	printf("    --net=ethernet_interface - enable network namespaces and connect to this\n");
 	printf("\tEthernet interface.\n");
@@ -127,17 +127,18 @@ void usage(void) {
 	printf("    --nogroups - disable supplementary groups.\n");
 	printf("    --nonewprivs - sets the NO_NEW_PRIVS prctl.\n");
 	printf("    --noprofile - do not use a security profile.\n");
-#ifdef HAVE_USERNS		 	
+#ifdef HAVE_USERNS
 	printf("    --noroot - install a user namespace with only the current user.\n");
 #endif
 	printf("    --nosound - disable sound system.\n");
+	printf("    --novideo - disable video devices.\n");
 	printf("    --nowhitelist=filename - disable whitelist for file or directory .\n");
 	printf("    --output=logfile - stdout logging and log rotation.\n");
 	printf("    --overlay - mount a filesystem overlay on top of the current filesystem.\n");
 	printf("    --overlay-named=name - mount a filesystem overlay on top of the current\n");
 	printf("\tfilesystem, and store it in name directory.\n");
 	printf("    --overlay-tmpfs - mount a temporary filesystem overlay on top of the current\n");
-	printf("\tfilesystem.\n");   
+	printf("\tfilesystem.\n");
 	printf("    --overlay-clean - clean all overlays stored in $HOME/.firejail directory.\n");
 	printf("    --private - temporary home directory.\n");
 	printf("    --private=directory - use directory as user home.\n");
@@ -169,9 +170,9 @@ void usage(void) {
 	printf("    --rlimit-sigpending=number - set the maximum number of pending signals\n");
 	printf("\tfor a process.\n");
 	printf("    --rmenv=name - remove environment variable in the new sandbox.\n");
-#ifdef HAVE_NETWORK	
+#ifdef HAVE_NETWORK
 	printf("    --scan - ARP-scan all the networks from inside a network namespace.\n");
-#endif	
+#endif
 #ifdef HAVE_SECCOMP
 	printf("    --seccomp - enable seccomp filter and apply the default blacklist.\n");
 	printf("    --seccomp=syscall,syscall,syscall - enable seccomp filter, blacklist the\n");
@@ -195,12 +196,12 @@ void usage(void) {
 	printf("\tdirectoires blacklisted by the security profile.\n");
 	printf("    --tree - print a tree of all sandboxed processes.\n");
 	printf("    --version - print program version and exit.\n");
-#ifdef HAVE_NETWORK	
-	printf("    --veth-name=name - use this name for the interface connected to the bridge.\n"); 
-#endif	
-#ifdef HAVE_WHITELIST	
+#ifdef HAVE_NETWORK
+	printf("    --veth-name=name - use this name for the interface connected to the bridge.\n");
+#endif
+#ifdef HAVE_WHITELIST
 	printf("    --whitelist=filename - whitelist directory or file.\n");
-#endif	
+#endif
 	printf("    --writable-etc - /etc directory is mounted read-write.\n");
 	printf("    --writable-var - /var directory is mounted read-write.\n");
 	printf("    --writable-var-log - use the real /var/log directory, not a clone.\n");

@@ -1332,7 +1332,7 @@ int main(int argc, char **argv) {
 				arg_overlay_reuse = 1;
 
 				char *subdirname = argv[i] + 16;
-				if (subdirname == '\0') {
+				if (*subdirname == '\0') {
 					fprintf(stderr, "Error: invalid overlay option\n");
 					exit(1);
 				}

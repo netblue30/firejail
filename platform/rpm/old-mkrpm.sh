@@ -409,7 +409,7 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/xfce4-dict.profile
 %{_sysconfdir}/%{name}/xfce4-notes.profile
 %{_sysconfdir}/%{name}/youtube-dl.profile
-  
+
 
 /usr/bin/firejail
 /usr/bin/firemon
@@ -446,7 +446,7 @@ rm -rf %{buildroot}
 /usr/share/bash-completion/completions/firejail
 /usr/share/bash-completion/completions/firemon
 /usr/share/bash-completion/completions/firecfg
- 
+
 %post
 chmod u+s /usr/bin/firejail
 
@@ -463,7 +463,7 @@ chmod u+s /usr/bin/firejail
   - feature: support starting/joining sandbox is a single command
     (--join-or-start)
   - feature: X11 detection support for --audit
-  - feature: assign a name to the interface connected to the bridge 
+  - feature: assign a name to the interface connected to the bridge
     (--veth-name)
   - feature: all user home directories are visible (--allusers)
   - feature: add files to sandbox container (--put)
@@ -534,4 +534,3 @@ rpm -qpl RPMS/x86_64/firejail-$VERSION-1.x86_64.rpm
 cd ..
 rm -f firejail-$VERSION-1.x86_64.rpm
 cp rpmbuild/RPMS/x86_64/firejail-$VERSION-1.x86_64.rpm .
-

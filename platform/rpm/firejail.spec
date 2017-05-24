@@ -52,4 +52,3 @@ rm -rf %{buildroot}
 %{_mandir}/man5/__NAME__-login.5.gz
 %{_mandir}/man5/__NAME__-profile.5.gz
 %config %{_sysconfdir}/__NAME__
-

@@ -18,4 +18,3 @@ parts:
         plugin: nil
         snap:
         - usr/lib/firejail/faudit
-

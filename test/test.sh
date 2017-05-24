@@ -67,5 +67,3 @@ echo "TESTING: firemon --arp (firemon-arp.exp)"
 
 echo "TESTING: firemon --route (firemon-route.exp)"
 ./firemon-route.exp
-
-

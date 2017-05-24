@@ -7,4 +7,3 @@ net br2
 ip 10.10.40.100
 net br3
 defaultgw 10.10.20.2
-

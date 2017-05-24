@@ -100,4 +100,3 @@ send -- "rm -f ~/_firejail_test*\r"
 after 100
 
 puts "\nall done\n"
-

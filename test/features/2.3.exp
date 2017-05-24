@@ -111,7 +111,7 @@ if { $overlay == "overlay" } {
 		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
-	
+
 	send -- "dig google.com\r"
 	expect {
 		timeout {puts "TESTING ERROR 3\n";exit}
@@ -126,7 +126,7 @@ if { $overlay == "overlay" } {
 		"SERVER"
 	}
 	after 100
-	
+
 	send -- "/sbin/ifconfig\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.4\n";exit}
@@ -145,17 +145,17 @@ if { $overlay == "overlay" } {
 		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 3
-	
+
 	send -- "firejail --noprofile  --net=eth0 --ip=192.168.1.244 --overlay --dns=8.8.8.8 --dns=8.8.4.4\r"
 	expect {
 		timeout {puts "TESTING ERROR 2\n";exit}
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "dig google.com\r"
 	expect {
 		timeout {puts "TESTING ERROR 3\n";exit}
@@ -170,7 +170,7 @@ if { $overlay == "overlay" } {
 		"SERVER"
 	}
 	after 100
-	
+
 	send -- "/sbin/ifconfig\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.4\n";exit}
@@ -189,7 +189,7 @@ if { $overlay == "overlay" } {
 		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 3
 }
@@ -205,7 +205,7 @@ if { $chroot == "chroot" } {
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "dig google.com\r"
 	expect {
 		timeout {puts "TESTING ERROR 5\n";exit}
@@ -220,7 +220,7 @@ if { $chroot == "chroot" } {
 		"SERVER:"
 	}
 	after 100
-	
+
 	send -- "/sbin/ifconfig\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.4\n";exit}
@@ -239,17 +239,17 @@ if { $chroot == "chroot" } {
 		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 3
-	
+
 	send -- "firejail --noprofile --net=eth0 --ip=192.168.1.244 --chroot=/tmp/chroot --dns=8.8.8.8 --dns=8.8.4.4\r"
 	expect {
 		timeout {puts "TESTING ERROR 4\n";exit}
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "dig google.com\r"
 	expect {
 		timeout {puts "TESTING ERROR 5\n";exit}
@@ -264,7 +264,7 @@ if { $chroot == "chroot" } {
 		"SERVER:"
 	}
 	after 100
-	
+
 	send -- "/sbin/ifconfig\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.4\n";exit}
@@ -283,7 +283,7 @@ if { $chroot == "chroot" } {
 		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 1
 }

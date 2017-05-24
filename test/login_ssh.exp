@@ -17,7 +17,7 @@ expect {
 		set pass $expect_out(1,string)
 		send -- "$pass\r"
 		puts "TESTING: password sent to the server"
-	}	
+	}
 	"Child process initialized"
 }
 sleep 1

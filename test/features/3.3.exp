@@ -40,7 +40,7 @@ if { $overlay == "overlay" } {
 		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
-	
+
 	send -- "cd ~/.config\r"
 	expect {
 		timeout {puts "TESTING ERROR 3\n";exit}
@@ -61,7 +61,7 @@ if { $chroot == "chroot" } {
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "cd ~/.config\r"
 	expect {
 		timeout {puts "TESTING ERROR 5\n";exit}

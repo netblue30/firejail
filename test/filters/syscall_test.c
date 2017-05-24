@@ -45,14 +45,14 @@ int main(int argc, char **argv) {
 		}
 		else
 			close(sock);
-			
+
 		printf("testing socket AF_UNIX\n");
 		if ((sock = socket(AF_UNIX, SOCK_STREAM, 0)) < 0) {
 			perror("socket");
 		}
 		else
 			close(sock);
-			
+
 		// root needed to be able to handle this
 		printf("testing socket AF_PACKETX\n");
 		if ((sock = socket(AF_PACKET, SOCK_DGRAM, htons(ETH_P_ARP))) < 0) {

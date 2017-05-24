@@ -39,4 +39,3 @@ send -- "exit\r"
 after 100
 
 puts "\n"
-

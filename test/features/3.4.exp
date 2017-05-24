@@ -83,13 +83,13 @@ if { $overlay == "overlay" } {
 		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
-	
+
 	send -- "ls -al | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
 		"6"
 	}
-	
+
 	send -- "ls -al .bashrc\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.2\n";exit}
@@ -117,7 +117,7 @@ if { $overlay == "overlay" } {
 		timeout {puts "TESTING ERROR 3.7\n";exit}
 		".Xauthority"
 	}
-	
+
 	send -- "ls -al | grep .config\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.8\n";exit}
@@ -147,13 +147,13 @@ if { $chroot == "chroot" } {
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "ls -al | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.1\n";exit}
 		"6"
 	}
-	
+
 	send -- "ls -al .bashrc\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.2\n";exit}
@@ -181,7 +181,7 @@ if { $chroot == "chroot" } {
 		timeout {puts "TESTING ERROR 5.7\n";exit}
 		".Xauthority"
 	}
-	
+
 	send -- "ls -al | grep .config\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.8\n";exit}

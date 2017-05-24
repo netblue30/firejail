@@ -59,7 +59,3 @@ C - chroot filesystem
 3.10 whitelist tmp
 	- O not working on Arch Linux - todo
 3.11 mkdir
-
-
-
-	

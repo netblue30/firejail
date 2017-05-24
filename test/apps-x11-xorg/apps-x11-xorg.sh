@@ -32,4 +32,3 @@ then
 else
 	echo "TESTING SKIP: thunderbird not found"
 fi
-

@@ -111,6 +111,3 @@ rm -f ~/fjtest-file-lnk
 rm -f /tmp/fjtest-file
 rm -fr /tmp/fjtest-dir
 rm -fr ~/_firejail_test_*
-
-
-

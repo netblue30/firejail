@@ -39,4 +39,3 @@ rm env.profile
 # network arp testing
 echo "TESTING: macvlan (test/stress/net_macvlan.exp)"
 ./net_macvlan.exp
-

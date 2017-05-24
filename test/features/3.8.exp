@@ -41,13 +41,13 @@ if { $overlay == "overlay" } {
 		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
-	
+
 	send -- "ls -l /usr/bin | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
 		"6"
 	}
-	
+
 
 	after 100
 	send -- "exit\r"
@@ -68,13 +68,13 @@ if { $chroot == "chroot" } {
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "ls -l /usr/bin | wc -l\r"
 	expect {
 		timeout {puts "TESTING ERROR 6\n";exit}
 		"9"
 	}
-	
+
 	after 100
 	send -- "exit\r"
 	sleep 1

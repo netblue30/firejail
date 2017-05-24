@@ -81,6 +81,5 @@ sleep 1
 send -- "firejail --shutdown=test\r"
 sleep 3
 
- 
-puts "\nall done\n"
 
+puts "\nall done\n"

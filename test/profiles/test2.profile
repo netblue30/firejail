@@ -1,4 +1,4 @@
 caps	
-seccomp 
-  private   
+seccomp
+  private
   include test.profile

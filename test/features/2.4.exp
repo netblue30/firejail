@@ -99,15 +99,15 @@ if { $overlay == "overlay" } {
 		"Child process initialized" {puts "normal system\n"}
 	}
 	sleep 1
-	
+
 	send -- "ping -c 3 10.10.20.1\r"
 	expect {
 		timeout {puts "TESTING ERROR 3\n";exit}
 		" packets transmitted, 3 received, 0% packet loss"
 	}
 	sleep 1
-	
-	
+
+
 	send -- "/sbin/ifconfig\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.4\n";exit}
@@ -126,25 +126,25 @@ if { $overlay == "overlay" } {
 		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 1
-	
+
 	send -- "firejail --noprofile  --net=br0 --ip=10.10.20.4 --overlay\r"
 	expect {
 		timeout {puts "TESTING ERROR 2\n";exit}
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "ping -c 3 10.10.20.1\r"
 	expect {
 		timeout {puts "TESTING ERROR 3\n";exit}
 		" packets transmitted, 3 received, 0% packet loss"
 	}
 	sleep 1
-	
-	
+
+
 	send -- "/sbin/ifconfig\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.4\n";exit}
@@ -163,7 +163,7 @@ if { $overlay == "overlay" } {
 		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 1
 }
@@ -179,7 +179,7 @@ if { $chroot == "chroot" } {
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "/sbin/ifconfig\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.4\n";exit}
@@ -198,17 +198,17 @@ if { $chroot == "chroot" } {
 		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 1
-	
+
 	send -- "firejail --noprofile --net=br0 --ip=10.10.20.4 --chroot=/tmp/chroot\r"
 	expect {
 		timeout {puts "TESTING ERROR 4\n";exit}
 		"Child process initialized"
 	}
 	sleep 1
-	
+
 	send -- "/sbin/ifconfig\r"
 	expect {
 		timeout {puts "TESTING ERROR 5.4\n";exit}
@@ -227,7 +227,7 @@ if { $chroot == "chroot" } {
 		"UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 1
 }

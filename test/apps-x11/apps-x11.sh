@@ -22,7 +22,7 @@ then
 	echo "TESTING: xterm x11 xpra"
 	./xterm-xpra.exp
 	fi
-	
+
 	which Xephyr
 	if [ "$?" -eq 0 ];
 	then
@@ -85,4 +85,3 @@ then
 else
 	echo "TESTING SKIP: thunderbird not found"
 fi
-

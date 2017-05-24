@@ -121,4 +121,3 @@ fi
 
 # restore the default config file
 #cp ../../etc/firejail.config /etc/firejail/firejail.config
-

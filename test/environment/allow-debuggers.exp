@@ -29,7 +29,7 @@ expect {
 expect {
         timeout {puts "TESTING ERROR 4\n";exit}
         "ioctl"
-}       
+}
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"exit_group"
@@ -38,4 +38,3 @@ after 100
 
 
 puts "\nall done\n"
-

@@ -31,9 +31,9 @@ echo "TESTING: fscheck blacklist"
 ./fscheck-blacklist.exp
 
 
-rm -fr fscheck-dir 
-rm -fr fscheck-dir-link 
-rm -fr fscheck-file-link 
+rm -fr fscheck-dir
+rm -fr fscheck-dir-link
+rm -fr fscheck-file-link
 rm -fr fscheck-file
 rm -fr fscheck-file-hard1
 rm -fr fscheck-file-hard2

@@ -20,7 +20,7 @@ send -- "diff -s firejail_t1 firejail_t2\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"firejail_t1 and firejail_t2 are identical"
-} 
+}
 
 send -- "rm firejail_t*\r"
 sleep 1

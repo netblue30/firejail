@@ -177,4 +177,3 @@ then
 else
 	echo "TESTING SKIP: wine not found"
 fi
-

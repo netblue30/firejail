@@ -17,4 +17,3 @@ after 100
 send -- "q\r"
 after 100
 puts "\n"
-

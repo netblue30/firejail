@@ -83,5 +83,3 @@ expect {
 	"home" {puts "regular user\n"}
 	"root" {puts "root user\n"}
 }
-
-

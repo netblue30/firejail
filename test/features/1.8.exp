@@ -107,7 +107,7 @@ if { $overlay == "overlay" } {
 		"Permission denied"
 	}
 	after 100
-	
+
 	send -- "exit\r"
 	sleep 1
 }

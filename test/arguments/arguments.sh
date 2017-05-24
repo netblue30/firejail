@@ -25,5 +25,3 @@ echo "TESTING: 4. --output option"
 ./outrun.exp
 rm out
 rm out.*
-
-

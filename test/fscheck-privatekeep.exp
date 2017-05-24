@@ -44,7 +44,7 @@ expect {
 }
 after 100
 
-# file 
+# file
 #send -- "firejail --net=br0 --private-home=fscheck-file\r"
 #expect {
 #	timeout {puts "TESTING ERROR 2.1\n";exit}

@@ -37,7 +37,7 @@ expect {
 }
 
 # todo: remove exit and fix it
-exit 
+exit
 
 expect {
 	timeout {puts "TESTING ERROR 3.3.1\n";exit}

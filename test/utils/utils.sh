@@ -111,4 +111,3 @@ echo "TESTING: firemon interface (test/utils/firemon-interface.exp)"
 
 echo "TESTING: firemon name (test/utils/firemon-name.exp)"
 ./firemon-name.exp
-

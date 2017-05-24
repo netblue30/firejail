@@ -76,4 +76,3 @@ send -- "exit\r"
 after 100
 
 puts "\nall done\n"
-

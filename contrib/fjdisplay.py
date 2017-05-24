@@ -16,7 +16,7 @@ def getfirejails():
         namematch = re.search('--name=(\w+\S*)',line)
         if namematch:
           name = namematch.group(1)
-        displaymatch = re.search('DISPLAY (:\d+)',line) 
+        displaymatch = re.search('DISPLAY (:\d+)',line)
         if displaymatch:
           firejails[name] = displaymatch.group(1)
     return firejails

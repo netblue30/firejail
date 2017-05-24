@@ -18,7 +18,7 @@ example:
 if len(sys.argv) == 2:
     out = subprocess.check_output(['xrandr','--display',fjdisplay.getdisplay(sys.argv[1])])
     print(out)
-elif len(sys.argv) == 3: 
+elif len(sys.argv) == 3:
     out = subprocess.check_output(['xrandr','--display',fjdisplay.getdisplay(sys.argv[1]),'--output','default','--mode',sys.argv[2]])
     print(out)
 else:

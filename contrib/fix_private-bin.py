@@ -36,18 +36,18 @@ def fixSymlinkedBins(files, replMap):
 	Used to add filenames to private-bin directives of files if the ones present are mentioned in replMap
 	replMap is a dict where key is the marker filename and value is the filename to add
 	"""
-	
+
 	rxs=dict()
 	for (old,new) in replMap.items():
 		rxs[old]=re.compile("\\b"+old+"\\b")
 		rxs[new]=re.compile("\\b"+new+"\\b")
 	#print(rxs)
-	
+
 	for filename in files:
 		lines=None
 		with open(filename,"r") as file:
 			lines=file.readlines()
-		
+
 		shouldUpdate=False
 		for (i,line) in enumerate(lines):
 			if privRx.search(line):
@@ -56,7 +56,7 @@ def fixSymlinkedBins(files, replMap):
 						lines[i]=rxs[old].sub(old+","+new, line)
 						shouldUpdate=True
 						print(lines[i])
-		
+
 		if shouldUpdate:
 			with open(filename,"w") as file:
 				file.writelines(lines)
@@ -132,7 +132,7 @@ def main():
 	if len(sys.argv)>2 or (len(sys.argv)==2 and (sys.argv[1] == '-h' or sys.argv[1] == '--help') ):
 		printHelp()
 		exit(1)
-	
+
 	profilesPath=None
 	if len(sys.argv)==2:
 		if os.path.isdir(sys.argv[1]):

@@ -10,10 +10,10 @@ firemon --x11 to see available running x11 firejails. firejail names can be shor
 to least ambiguous. for example 'work-libreoffice' can be shortened to 'work' if no
 other firejails name starts with 'work'.
 warning: browsers are dangerous. clipboards from browsers are dangerous.  see
-https://github.com/dxa4481/Pastejacking 
+https://github.com/dxa4481/Pastejacking
 fjclip.py strips whitespace from both
 ends, but does nothing else to protect you.  use a simple gui text editor like
-gedit if you want to see what your pasting.""" 
+gedit if you want to see what your pasting."""
 
 if len(sys.argv) != 3 or sys.argv == '-h' or sys.argv == '--help':
     print(usage)

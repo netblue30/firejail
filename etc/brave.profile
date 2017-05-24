@@ -39,4 +39,3 @@ whitelist ~/.lastpass
 whitelist ~/.config/lastpass
 
 include /etc/firejail/whitelist-common.inc
-

@@ -2,4 +2,3 @@
 include /etc/firejail/globals.local
 
 #include /etc/firejail/mate-calc.profile
-

@@ -27,4 +27,3 @@
 -A INPUT -p udp --sport 53 -j ACCEPT
 
 COMMIT
-

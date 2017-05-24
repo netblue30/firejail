@@ -7,4 +7,3 @@ include /etc/firejail/seamonkey-bin.local
 
 # Firejail profile for Seamonkey based off Mozilla Firefox
 include /etc/firejail/seamonkey.profile
-

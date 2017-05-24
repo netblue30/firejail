@@ -23,8 +23,7 @@ nosound
 shell none
 x11 xorg
 
-private-bin display 
+private-bin display
 private-tmp
 private-dev
 private-etc none
-

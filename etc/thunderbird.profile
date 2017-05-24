@@ -29,4 +29,3 @@ whitelist ~/.cache/thunderbird
 ignore private-tmp
 include /etc/firejail/firefox.profile
 #include /etc/firejail/chromium.profile - chromium runs as suid!
-

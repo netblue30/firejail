@@ -30,6 +30,3 @@ private-bin highlight
 # private-etc none
 private-tmp
 private-dev
-
-
-

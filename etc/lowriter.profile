@@ -9,4 +9,3 @@ include /etc/firejail/lowriter.local
 # LibreOffice profile
 ################################
 include /etc/firejail/libreoffice.profile
-

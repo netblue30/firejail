@@ -27,4 +27,3 @@ protocol unix
 private-dev
 private-tmp
 # private-etc
-

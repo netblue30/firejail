@@ -9,4 +9,3 @@ include /etc/firejail/soffice.local
 # LibreOffice profile
 ################################
 include /etc/firejail/libreoffice.profile
-

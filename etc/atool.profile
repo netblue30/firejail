@@ -30,5 +30,3 @@ blacklist /tmp/.X11-unix
 private-tmp
 private-dev
 private-etc none
-
-

@@ -27,7 +27,7 @@ shell none
 tracelog
 
 #
-# depending on your usage, you can enable some of the commands below: 
+# depending on your usage, you can enable some of the commands below:
 #
 # private-bin program
 # private-etc none

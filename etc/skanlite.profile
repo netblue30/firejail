@@ -25,4 +25,3 @@ seccomp
 # private-dev
 # private-tmp
 # private-etc
-

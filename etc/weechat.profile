@@ -19,4 +19,4 @@ seccomp
 
 # no private-bin support for various reasons:
 # Plugins loaded: alias, aspell, charset, exec, fifo, guile, irc,
-# logger, lua, perl, python, relay, ruby, script, tcl, trigger, xferloading plugins 
+# logger, lua, perl, python, relay, ruby, script, tcl, trigger, xferloading plugins

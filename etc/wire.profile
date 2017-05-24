@@ -27,4 +27,4 @@ private-tmp
 private-dev
 
 # Note: the current beta version of wire is located in /opt/Wire/wire and therefore not in PATH.
-# To use wire with firejail run "firejail /opt/Wire/wire" 
+# To use wire with firejail run "firejail /opt/Wire/wire"

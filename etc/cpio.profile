@@ -7,7 +7,7 @@ include /etc/firejail/cpio.local
 
 # cpio profile
 # /sbin and /usr/sbin are visible inside the sandbox
-# /boot is not visible and /var is heavily modified 
+# /boot is not visible and /var is heavily modified
 quiet
 noblacklist /sbin
 noblacklist /usr/sbin
@@ -26,4 +26,3 @@ nosound
 no3d
 
 blacklist /tmp/.X11-unix
-

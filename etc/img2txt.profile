@@ -27,5 +27,3 @@ tracelog
 private-tmp
 private-dev
 #private-etc none
-
-

@@ -30,7 +30,3 @@ private-bin mediainfo
 private-tmp
 private-dev
 private-etc none
-
-
-
-

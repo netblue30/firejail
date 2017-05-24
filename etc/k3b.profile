@@ -24,6 +24,6 @@ seccomp
 protocol unix
 tracelog
 
-# private-bin 
+# private-bin
 # private-tmp
 # private-etc

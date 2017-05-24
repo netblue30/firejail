@@ -9,4 +9,3 @@ include /etc/firejail/loimpress.local
 # LibreOffice profile
 ################################
 include /etc/firejail/libreoffice.profile
-

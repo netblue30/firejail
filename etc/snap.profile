@@ -15,5 +15,3 @@ include /etc/firejail/disable-passwdmgr.inc
 whitelist ~/snap
 whitelist ${DOWNLOADS}
 include /etc/firejail/whitelist-common.inc
-
-

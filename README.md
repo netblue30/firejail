@@ -70,6 +70,3 @@ Release 0.9.46 was moved on 0.9.46-bugfixes branch: https://github.com/netblue30
 
 All profiles include /etc/firejail/globals.local for persistent customizations across all applications. For example, you
 can set here a global DNS "dns 8.8.8.8". The file is not overwritten during install.
-
-
-

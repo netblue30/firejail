@@ -25,7 +25,7 @@ firejail (0.9.46) baseline; urgency=low
   * feature: allow non-seccomp setup for OverlayFS sandboxes - more work to come
   * feature: added a number of Python scripts for handling sandboxes
   * feature: allow local customization using .local files under /etc/firejail
-  * feature: follow-symlink-as-user runtime config option in 
+  * feature: follow-symlink-as-user runtime config option in
     /etc/firejail/firejail.config
   * feature: follow-symlink-private-bin option in /etc/firejail/firejail.config
   * feature: xvfb X11 server support (--x11=xvfb)
@@ -37,7 +37,7 @@ firejail (0.9.46) baseline; urgency=low
   * feature: support overlay, overlay-named and overlay-tmpfs in profile files
   * feature: allow PulseAudio sockets in --private-tmp
   * feature: --fix-sound support in firecfg
-  * feature: added support for sandboxing Xpra, Xvfb and Xephyr in 
+  * feature: added support for sandboxing Xpra, Xvfb and Xephyr in
     independent sandboxes when started with firejail --x11
   * feature: enable automatic X server sandboxing for --x11=xpra
     and --x11=xephyr
@@ -65,7 +65,7 @@ firejail (0.9.44.10) baseline; urgency=low
     the return code of /usr/bin/xauth could end up in starting the
     sandbox without X11 security extension installed. Problem found/fixed
     by Zack Weinberg
-  * bugfix: ~/.pki directory whitelisted and later blacklisted. This affects 
+  * bugfix: ~/.pki directory whitelisted and later blacklisted. This affects
     most browsers, and disables the custom certificates installed by the user
   * bugfix: firecfg config fix
   * bugfix: gajim security profile fix
@@ -258,7 +258,7 @@ firejail (0.9.38.6) baseline; urgency=low
 
 firejail (0.9.38.4) baseline; urgency=low
   * CVE-2016-7545 submitted by Aleksey Manevich
-  * bugfixes 
+  * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Mon, 10 Oct 2016 10:00:00 -0500
 
 firejail (0.9.38.2) baseline; urgency=low

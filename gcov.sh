@@ -85,11 +85,11 @@ make test-apps-x11
 generate
 sleep 2
 
-make test-apps-x11-xorg 
+make test-apps-x11-xorg
 generate
 sleep 2
 
-make test-filters 
+make test-filters
 generate
 sleep 2
 

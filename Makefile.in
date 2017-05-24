@@ -122,11 +122,11 @@ endif
 	done
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc
-ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)	
+ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
 	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"
 	install -c -m 0644 etc/firejail-default $(DESTDIR)/$(sysconfdir)/apparmor.d/.
-endif	
+endif
 	# man pages
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man1
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man5
@@ -174,7 +174,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firejail
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
-	
+
 DISTFILES = "src etc platform contrib configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
 DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
@@ -211,7 +211,7 @@ rpms:
 
 extras: all
 	$(MAKE) -C extras/firetools
-	
+
 cppcheck: clean
 	cppcheck --force .
 
@@ -238,7 +238,7 @@ test-apps-x11-xorg:
 
 test-sysutils:
 	cd test/sysutils; ./sysutils.sh | grep TESTING
-	
+
 test-utils:
 	cd test/utils; ./utils.sh | grep TESTING
 
@@ -252,13 +252,13 @@ endif
 
 test-arguments:
 	cd test/arguments; ./arguments.sh | grep TESTING
-	
+
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
 
 test-fcopy:
 	cd test/fcopy; ./fcopy.sh | grep TESTING
-	
+
 test: test-profiles test-fcopy test-fs test-utils  test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
 	echo "TEST COMPLETE"
 
@@ -284,11 +284,11 @@ test-network:
 # requires the same setup as test-network
 test-stress:
 	cd test/stress; ./stress.sh | grep TESTING
-	
+
 # Tesets running a root user
 test-root:
 	cd test/root; su -c ./root.sh | grep TESTING
-	
+
 # OverlayFS is not available on all platforms
 test-overlay:
 	cd test/overlay; ./overlay.sh | grep TESTING
@@ -297,4 +297,3 @@ test-overlay:
 
 test-all: test-root test-chroot test-network test-appimage test-overlay
 	echo "TEST COMPLETE"
-	

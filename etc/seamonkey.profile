@@ -22,10 +22,10 @@ seccomp
 tracelog
 
 whitelist ${DOWNLOADS}
-mkdir ~/.mozilla/seamonkey
-whitelist ~/.mozilla/seamonkey
-mkdir ~/.cache/mozilla/seamonkey
-whitelist ~/.cache/mozilla/seamonkey
+mkdir ~/.mozilla
+whitelist ~/.mozilla
+mkdir ~/.cache/mozilla
+whitelist ~/.cache/mozilla
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.vimperatorrc

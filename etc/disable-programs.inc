@@ -294,7 +294,6 @@ blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.mozilla
-blacklist ${HOME}/.mozilla/seamonkey
 blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.multimc5

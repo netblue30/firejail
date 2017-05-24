@@ -29,4 +29,3 @@ seccomp
 seccomp.debug
 seccomp.i386
 seccomp.amd64
-

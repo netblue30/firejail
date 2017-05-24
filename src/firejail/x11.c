@@ -639,7 +639,7 @@ void x11_start_xpra(int argc, char **argv) {
 
 	// build the start command
 	char *server_argv[256] = {		  // rest initialyzed to NULL
-		 "xpra", "start", display_str, "--no-daemon", 
+		 "xpra", "start", display_str, "--no-daemon",
 	};
 	unsigned pos = 0;
 	while (server_argv[pos] != NULL) pos++;
@@ -696,7 +696,7 @@ void x11_start_xpra(int argc, char **argv) {
 						  // no overrun
 	assert(pos < (sizeof(server_argv)/sizeof(*server_argv)));
 	assert(server_argv[pos-1] == NULL);	  // last element is null
-	
+
 	if (arg_debug) {
 		size_t i = 0;
 		printf("\n*** Starting xpra server: ");
@@ -820,7 +820,7 @@ void x11_start_xpra(int argc, char **argv) {
 		printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
 
 	sleep(1); // adding a delay in order to let the server start
-	
+
 	// wait for jail or server to end
 	while (1) {
 		pid_t pid = wait(NULL);

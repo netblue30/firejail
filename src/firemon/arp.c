@@ -24,7 +24,7 @@ static void print_arp(const char *fname) {
 	FILE *fp = fopen(fname, "r");
 	if (!fp)
 		return;
-	
+
 	printf("  ARP Table:\n");
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
@@ -54,7 +54,7 @@ static void print_arp(const char *fname) {
 		int rv = sscanf(start, "%s %s %s %s %s %s\n", ip, type, flags, mac, mask, device);
 		if (rv != 6)
 			continue;
-		
+
 		// destination ip
 		unsigned a, b, c, d;
 		if (sscanf(ip, "%u.%u.%u.%u", &a, &b, &c, &d) != 4 || a > 255 || b > 255 || c > 255 || d > 255)
@@ -67,14 +67,14 @@ static void print_arp(const char *fname) {
 			printf("     %d.%d.%d.%d dev %s lladdr %s REACHABLE\n",
 				PRINT_IP(destip), device, mac);
 	}
-	
+
 	fclose(fp);
 
 }
 
 void arp(pid_t pid, int print_procs) {
 	pid_read(pid);
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -93,5 +93,3 @@ void arp(pid_t pid, int print_procs) {
 	}
 	printf("\n");
 }
-
-

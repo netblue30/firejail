@@ -46,7 +46,7 @@ static char *client_filter =
 void check_netfilter_file(const char *fname) {
 	EUID_ASSERT();
 	invalid_filename(fname);
-	
+
 	if (is_dir(fname) || is_link(fname) || strstr(fname, "..") || access(fname, R_OK )) {
 		fprintf(stderr, "Error: invalid network filter file %s\n", fname);
 		exit(1);
@@ -95,14 +95,14 @@ void netfilter(const char *fname) {
 	// push filter
 	if (arg_debug)
 		printf("Installing network filter:\n%s\n", filter);
-		
+
 	// first run of iptables on this platform installs a number of kernel modules such as ip_tables, x_tables, iptable_filter
 	// we run this command with caps and seccomp disabled in order to allow the loading of these modules
 	sbox_run(SBOX_ROOT /* | SBOX_CAPS_NETWORK | SBOX_SECCOMP*/ | SBOX_STDIN_FROM_FILE, 1, iptables_restore);
 	unlink(SBOX_STDIN_FILE);
 
 	// debug
-	if (arg_debug) 
+	if (arg_debug)
 		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, iptables, "-vL");
 
 	if (allocated)
@@ -113,7 +113,7 @@ void netfilter(const char *fname) {
 void netfilter6(const char *fname) {
 	if (fname == NULL)
 		return;
-		
+
 	// find iptables command
 	char *ip6tables = NULL;
 	char *ip6tables_restore = NULL;
@@ -149,7 +149,7 @@ void netfilter6(const char *fname) {
 	// we run this command with caps and seccomp disabled in order to allow the loading of these modules
 	sbox_run(SBOX_ROOT | /* SBOX_CAPS_NETWORK | SBOX_SECCOMP | */ SBOX_STDIN_FROM_FILE, 1, ip6tables_restore);
 	unlink(SBOX_STDIN_FILE);
-	
+
 	// debug
 	if (arg_debug)
 		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, ip6tables, "-vL");

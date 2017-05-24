@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 
@@ -21,7 +21,7 @@ int main(void) {
 		fprintf(stderr, "Error: cannot connect to socket\n");
 		return 1;
 	}
-	
+
 	printf("connected to %s\n", socketpath);
 	close(s);
 

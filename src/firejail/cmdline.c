@@ -28,7 +28,7 @@
 
 static int cmdline_length(int argc, char **argv, int index) {
 	assert(index != -1);
-	
+
 	unsigned i,j;
 	int len = 0;
 	unsigned argcnt = argc - index;
@@ -91,7 +91,7 @@ static void quote_cmdline(char *command_line, char *window_title, int len, int a
 				if (j > 0 && argv[i + index][j-1] == '\'') {
 					ptr1--;
 					sprintf(ptr1, "\'\"");
-				} 
+				}
 				// this first in series
 				else
 				{
@@ -151,9 +151,9 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 	*window_title = malloc(len + 1);
 	if (!*window_title)
 			errExit("malloc");
-	
+
 	quote_cmdline(*command_line, *window_title, len, argc, argv, index);
-	
+
 	if (arg_debug)
 		printf("Building quoted command line: %s\n", *command_line);
 

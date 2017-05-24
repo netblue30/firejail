@@ -39,12 +39,12 @@ int is_container(const char *str) {
 // returns 1 if we are running under LXC
 int check_namespace_virt(void) {
 	EUID_ASSERT();
-	
+
 	// check container environment variable
 	char *str = getenv("container");
 	if (str && is_container(str))
 		return 1;
-	
+
 	// check PID 1 container environment variable
 	EUID_ROOT();
 	FILE *fp = fopen("/proc/1/environ", "r");
@@ -62,7 +62,7 @@ int check_namespace_virt(void) {
 					break;
 			}
 			buf[i] = '\0';
-			
+
 			// check env var name
 			if (strncmp(buf, "container=", 10) == 0) {
 				// found it
@@ -74,10 +74,10 @@ int check_namespace_virt(void) {
 			}
 //			printf("i %d c %d, buf #%s#\n", i, c, buf);
 		}
-		
+
 		fclose(fp);
 	}
-		
+
 	EUID_USER();
 	return 0;
 }
@@ -104,7 +104,7 @@ int check_kernel_procs(void) {
 
 	// look at the first 10 processes
 	// if a kernel process is found, return 1
-	for (i = 1; i <= 10; i++) { 
+	for (i = 1; i <= 10; i++) {
 		struct stat s;
 		char *fname;
 		if (asprintf(&fname, "/proc/%d/comm", i) == -1)
@@ -113,7 +113,7 @@ int check_kernel_procs(void) {
 			free(fname);
 			continue;
 		}
-		
+
 		// open file
 		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "r");
@@ -122,7 +122,7 @@ int check_kernel_procs(void) {
 			free(fname);
 			continue;
 		}
-		
+
 		// read file
 		char buf[100];
 		if (fgets(buf, 10, fp) == NULL) {
@@ -135,7 +135,7 @@ int check_kernel_procs(void) {
 		char *ptr;
 		if ((ptr = strchr(buf, '\n')) != NULL)
 			*ptr = '\0';
-		
+
 		// check process name against the kernel list
 		int j = 0;
 		while (kern_proc[j] != NULL) {
@@ -148,7 +148,7 @@ int check_kernel_procs(void) {
 			}
 			j++;
 		}
-		
+
 		fclose(fp);
 		free(fname);
 	}

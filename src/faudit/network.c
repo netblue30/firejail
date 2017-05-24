@@ -35,15 +35,15 @@ static void check_ssh(void) {
 	struct sockaddr_in server;
 	server.sin_addr.s_addr = inet_addr("127.0.0.1");
 	server.sin_family = AF_INET;
-	server.sin_port = htons(22);	
-	
+	server.sin_port = htons(22);
+
 	if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
 		printf("GOOD: SSH server not available on localhost.\n");
 	else {
 		printf("MAYBE: an SSH server is accessible on localhost. ");
 		printf("It could be a good idea to create a new network namespace using \"--net=none\" or \"--net=eth0\".\n");
 	}
-	
+
 	close(sock);
 }
 
@@ -59,15 +59,15 @@ static void check_http(void) {
 	struct sockaddr_in server;
 	server.sin_addr.s_addr = inet_addr("127.0.0.1");
 	server.sin_family = AF_INET;
-	server.sin_port = htons(80);	
-	
+	server.sin_port = htons(80);
+
 	if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
 		printf("GOOD: HTTP server not available on localhost.\n");
 	else {
 		printf("MAYBE: an HTTP server is accessible on localhost. ");
 		printf("It could be a good idea to create a new network namespace using \"--net=none\" or \"--net=eth0\".\n");
 	}
-	
+
 	close(sock);
 }
 
@@ -88,12 +88,12 @@ void check_netlink(void) {
 		close(sock);
 		return;
 	}
-	
+
 	close(sock);
 	printf("MAYBE: I can connect to netlink socket. Network utilities such as iproute2 will work fine in the sandbox. ");
 	printf("You can use \"--protocol\" to disable the socket.\n");
 }
-	
+
 void network_test(void) {
 	check_ssh();
 	check_http();

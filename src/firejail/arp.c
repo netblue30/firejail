@@ -47,7 +47,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
 		fprintf(stderr, "Error: invalid network device name %s\n", dev);
 		exit(1);
 	}
-	
+
 	if (arg_debug)
 		printf("Trying %d.%d.%d.%d ...\n", PRINT_IP(destaddr));
 
@@ -66,7 +66,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
 	if (ioctl(sock, SIOCGIFHWADDR, &ifr) < 0)
 		errExit("ioctl");
 	close(sock);
-	
+
 	// configure layer2 socket address information
 	struct sockaddr_ll addr;
 	memset(&addr, 0, sizeof(addr));
@@ -105,7 +105,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
 	if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
 		errExit("send");
 	fflush(0);
-		
+
 	// wait not more than one second for an answer
 	fd_set fds;
 	FD_ZERO(&fds);
@@ -130,7 +130,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
 				close(sock);
 				return -1;
 			}
-			
+
 			// parse the incoming packet
 			if ((unsigned int) len < 14 + sizeof(ArpHdr))
 				continue;
@@ -147,7 +147,7 @@ int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
 				memcpy(&ip, hdr.target_ip, 4);
 				if (ip != srcaddr) {
 					continue;
-				}					
+				}
 				close(sock);
 				return -1;
 			}
@@ -180,13 +180,13 @@ static uint32_t arp_random(const char *dev, Bridge *br) {
 		return 0; // the user will have to set the IP address manually
 	range -= 2; // subtract the network address and the broadcast address
 	uint32_t start = (ifip & ifmask) + 1;
-	
+
 	// adjust range based on --iprange params
 	if (br->iprange_start && br->iprange_end) {
 		start = br->iprange_start;
 		range = br->iprange_end - br->iprange_start;
 	}
-		
+
 	if (arg_debug)
 		printf("IP address range from %d.%d.%d.%d to %d.%d.%d.%d\n",
 			PRINT_IP(start), PRINT_IP(start + range));
@@ -198,13 +198,13 @@ static uint32_t arp_random(const char *dev, Bridge *br) {
 		dest = start + ((uint32_t) rand()) % range;
 		if (dest == ifip)	// do not allow the interface address
 			continue;		// try again
-		
+
 		// if we've made it up to here, we have a valid address
 		break;
 	}
 	if (i == 10)	// we failed 10 times
 		return 0;
-	
+
 	// check address
 	uint32_t rv = arp_check(dev, dest, ifip);
 	if (!rv)
@@ -237,7 +237,7 @@ static uint32_t arp_sequential(const char *dev, Bridge *br) {
 	uint32_t last = dest + range - 1;
 	if (br->iprange_end)
 		last = br->iprange_end;
-	
+
 	if (arg_debug)
 		printf("Trying IP address range from %d.%d.%d.%d to %d.%d.%d.%d\n",
 			PRINT_IP(dest), PRINT_IP(last));
@@ -272,19 +272,17 @@ uint32_t arp_assign(const char *dev, Bridge *br) {
 	ip = arp_random(dev, br);
 	if (!ip)
 		ip = arp_random(dev, br);
-		
+
 	// try all possible IP addresses one by one
 	if (!ip)
 		ip = arp_sequential(dev, br);
-	
+
 	// print result
 	if (!ip) {
 		fprintf(stderr, "Error: cannot assign an IP address; it looks like all of them are in use.\n");
 		logerr("Cannot assign an IP address; it looks like all of them are in use.");
 		exit(1);
 	}
-	
+
 	return ip;
 }
-
-

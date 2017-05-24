@@ -29,7 +29,7 @@ void x11_test(void) {
 
 	if (check_unix("@/tmp/.X11-unix/X0") == 0)
 		printf("MAYBE: X11 socket @/tmp/.X11-unix/X0 is available\n");
-		
+
 	// check all unix sockets in /tmp/.X11-unix directory
 	DIR *dir;
 	if (!(dir = opendir("/tmp/.X11-unix"))) {
@@ -39,7 +39,7 @@ void x11_test(void) {
 			;
 		}
 	}
-	
+
 	if (dir == NULL)
 		printf("GOOD: cannot open /tmp/.X11-unix directory\n");
 	else {

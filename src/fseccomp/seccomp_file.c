@@ -24,7 +24,7 @@
 static void write_to_file(int fd, void *data, int size) {
 	assert(data);
 	assert(size);
-	
+
 	int written = 0;
 	while (written < size) {
 		int rv = write(fd, (unsigned char *) data + written, size - written);
@@ -69,7 +69,7 @@ void filter_init(int fd) {
 
 void filter_add_whitelist(int fd, int syscall, int arg) {
 	(void) arg;
-	
+
 	struct sock_filter filter[] = {
 		WHITELIST(syscall)
 	};
@@ -78,7 +78,7 @@ void filter_add_whitelist(int fd, int syscall, int arg) {
 
 void filter_add_blacklist(int fd, int syscall, int arg) {
 	(void) arg;
-	
+
 	struct sock_filter filter[] = {
 		BLACKLIST(syscall)
 	};
@@ -105,4 +105,3 @@ void filter_end_whitelist(int fd) {
 	};
 	write_to_file(fd, filter, sizeof(filter));
 }
-

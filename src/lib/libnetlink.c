@@ -1,16 +1,16 @@
 /* file extracted from iproute2 software package
  *
  * Original source code:
- * 
+ *
  * Information:
  *     http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
- * 
+ *
  * Download:
  *     http://www.kernel.org/pub/linux/utils/net/iproute2/
- * 
+ *
  * Repository:
  *     git://git.kernel.org/pub/scm/linux/kernel/git/shemminger/iproute2.git
- * 
+ *
  * License: GPL v2
  *
  * Original copyright header
@@ -166,7 +166,7 @@ int rtnl_send_check(struct rtnl_handle *rth, const void *buf, int len)
 			struct nlmsgerr *err = (struct nlmsgerr*)NLMSG_DATA(h);
 			if (h->nlmsg_len < NLMSG_LENGTH(sizeof(struct nlmsgerr)))
 				fprintf(stderr, "ERROR truncated\n");
-			else 
+			else
 				errno = -err->error;
 			return -1;
 		}
@@ -600,7 +600,7 @@ if (type == IFLA_LINK) {
 	for (i = 0; i < alen; i++)
 		printf("%02x, ", *((unsigned char *)data + i));
 	printf("\n");
-}	
+}
 else if (type == IFLA_IFNAME) {
 	printf("IFLA_IFNAME\n");
 	printf("\tdata - #%s#\n", data);
@@ -615,8 +615,8 @@ else if (type == IFLA_ADDRESS) {
 	printf("\n");
 }
 else if (type == IFLA_BROADCAST) printf("IFLA_BROADCAST or IFLA_INFO_DATA\n");
-	
-printf("\tdata length: %d\n", alen);	
+
+printf("\tdata length: %d\n", alen);
 #endif
 
 	int len = RTA_LENGTH(alen);

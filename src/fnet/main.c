@@ -41,7 +41,7 @@ int i;
 for (i = 0; i < argc; i++)
 	printf("*%s* ", argv[i]);
 printf("\n");
-}	
+}
 #endif
 	if (argc < 2) {
 		usage();
@@ -51,7 +51,7 @@ printf("\n");
 	char *quiet = getenv("FIREJAIL_QUIET");
 	if (quiet && strcmp(quiet, "yes") == 0)
 		arg_quiet = 1;
-		
+
 	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
 		usage();
 		return 0;

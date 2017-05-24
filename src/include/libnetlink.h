@@ -1,16 +1,16 @@
 /* file extracted from iproute2 software package
  *
  * Original source code:
- * 
+ *
  * Information:
  *     http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
- * 
+ *
  * Download:
  *     http://www.kernel.org/pub/linux/utils/net/iproute2/
- * 
+ *
  * Repository:
  *     git://git.kernel.org/pub/scm/linux/kernel/git/shemminger/iproute2.git
- * 
+ *
  * License: GPL v2
  */
 
@@ -161,4 +161,3 @@ extern int rtnl_from_file(FILE *, rtnl_filter_t handler,
 #endif
 
 #endif /* __LIBNETLINK_H__ */
-

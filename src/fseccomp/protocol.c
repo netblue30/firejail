@@ -87,7 +87,7 @@ static struct sock_filter *find_protocol_domain(const char *p) {
 	}
 
 	return NULL;
-}	
+}
 #endif
 
 void protocol_print(void) {
@@ -119,7 +119,7 @@ void protocol_build_filter(const char *prlist, const char *fname) {
 	struct sock_filter filter[32];	// big enough
 	memset(&filter[0], 0, sizeof(filter));
 	uint8_t *ptr = (uint8_t *) &filter[0];
-	
+
 	// header
 	struct sock_filter filter_start[] = {
 		VALIDATE_ARCHITECTURE,
@@ -153,7 +153,7 @@ printf("whitelist_len %u, struct sock_filter len %u\n", whitelist_len, (unsigned
 	char *token = strtok(tmplist, ",");
 	if (!token)
 		errExit("strtok");
-		
+
 	while (token) {
 		struct sock_filter *domain = find_protocol_domain(token);
 		if (domain == NULL) {
@@ -179,7 +179,7 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 #endif
 
 
-	}	
+	}
 	free(tmplist);
 
 	// add end of filter
@@ -201,14 +201,14 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 	}
 	printf("\n");
 }
-#endif	
+#endif
 	// save filter to file
 	int dst = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {
 		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
 		exit(1);
 	}
-	
+
 	int size = (int) ((uintptr_t) ptr - (uintptr_t) (filter));
 	int written = 0;
 	while (written < size) {
@@ -220,5 +220,5 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 		written += rv;
 	}
 	close(dst);
-#endif // SYS_socket	
+#endif // SYS_socket
 }

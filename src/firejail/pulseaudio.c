@@ -27,17 +27,17 @@
 static void disable_file(const char *path, const char *file) {
 	assert(file);
 	assert(path);
-	
+
 	struct stat s;
 	char *fname;
 	if (asprintf(&fname, "%s/%s", path, file) == -1)
 		errExit("asprintf");
 	if (stat(fname, &s) == -1)
 		goto doexit;
-		
+
 	if (arg_debug)
 		printf("Disable%s\n", fname);
-		
+
 	if (S_ISDIR(s.st_mode)) {
 		if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
@@ -71,7 +71,7 @@ void pulseaudio_disable(void) {
 		errExit("asprintf");
 	disable_file(path, "pulse/native");
 	free(path);
-		
+
 
 
 	// blacklist any pulse* file in /tmp directory
@@ -99,11 +99,11 @@ void pulseaudio_disable(void) {
 // disable shm in pulseaudio
 void pulseaudio_init(void) {
 	struct stat s;
-	
+
 	// do we have pulseaudio in the system?
 	if (stat("/etc/pulse/client.conf", &s) == -1)
 		return;
-	 
+
  	// create the new user pulseaudio directory
 	int rv = mkdir(RUN_PULSE_DIR, 0700);
 	(void) rv; // in --chroot mode the directory can already be there
@@ -134,7 +134,7 @@ void pulseaudio_init(void) {
 		if (child == 0) {
 			// drop privileges
 			drop_privs(0);
-	
+
 			int rv = mkdir(dir1, 0755);
 			if (rv == 0) {
 				if (set_perms(dir1, getuid(), getgid(), 0755))
@@ -156,7 +156,7 @@ void pulseaudio_init(void) {
 		}
 	}
 	free(dir1);
-	
+
 	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(dir1, &s) == -1) {
@@ -166,7 +166,7 @@ void pulseaudio_init(void) {
 		if (child == 0) {
 			// drop privileges
 			drop_privs(0);
-	
+
 			int rv = mkdir(dir1, 0700);
 			if (rv == 0) {
 				if (set_perms(dir1, getuid(), getgid(), 0700))
@@ -188,8 +188,8 @@ void pulseaudio_init(void) {
 		}
 	}
 	free(dir1);
-	
-	
+
+
 	// if we have ~/.config/pulse mount the new directory, else set environment variable
 	char *homeusercfg;
 	if (asprintf(&homeusercfg, "%s/.config/pulse", cfg.homedir) == -1)
@@ -204,7 +204,7 @@ void pulseaudio_init(void) {
 		if (setenv("PULSE_CLIENTCONFIG", pulsecfg, 1) < 0)
 			errExit("setenv");
 	}
-		
+
 	free(pulsecfg);
 	free(homeusercfg);
 }

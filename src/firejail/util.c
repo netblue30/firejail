@@ -118,7 +118,7 @@ int mkpath_as_root(const char* path) {
 void fwarning(char* fmt, ...) {
 	if (arg_quiet)
 		return;
-		
+
 	va_list args;
 	va_start(args,fmt);
 	fprintf(stderr, "Warning: ");
@@ -786,7 +786,7 @@ static int remove_callback(const char *fpath, const struct stat *sb, int typefla
 	(void) sb;
 	(void) typeflag;
 	(void) ftwbuf;
-	
+
 	int rv = remove(fpath);
 	if (rv)
 		perror(fpath);
@@ -816,7 +816,7 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 	assert(dir);
 	mode &= 07777;
 	struct stat s;
-	
+
 	if (stat(dir, &s)) {
 		if (arg_debug)
 			printf("Creating empty %s directory\n", dir);
@@ -862,7 +862,7 @@ int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
 void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 	assert(fname);
 	mode &= 07777;
-#if 0	
+#if 0
 	printf("fname %s, uid %d, gid %d, mode %x - ", fname, uid, gid, (unsigned) mode);
 	if (S_ISLNK(mode))
 		printf("l");
@@ -886,7 +886,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 	printf( (mode & S_IWOTH) ? "w" : "-");
 	printf( (mode & S_IXOTH) ? "x" : "-");
 	printf("\n");
-#endif	
+#endif
 	if (mkdir(fname, mode) == -1 ||
 	    chmod(fname, mode) == -1 ||
 	    chown(fname, uid, gid)) {
@@ -899,7 +899,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 
 char *read_text_file_or_exit(const char *fname) {
 	assert(fname);
-	
+
 	// open file
 	int fd = open(fname, O_RDONLY);
 	if (fd == -1) {
@@ -912,7 +912,7 @@ char *read_text_file_or_exit(const char *fname) {
 		goto errexit;
 	if (lseek(fd, 0 , SEEK_SET) == -1)
 		goto errexit;
-	
+
 	// allocate memory
 	char *data = malloc(size + 1);	  // + '\0'
 	if (data == NULL)
@@ -928,11 +928,11 @@ char *read_text_file_or_exit(const char *fname) {
 		}
 		rd += rv;
 	}
-	
+
 	// close file
 	close(fd);
 	return data;
-	
+
 errexit:
 	close(fd);
 	fprintf(stderr, "Error: cannot read %s\n", fname);

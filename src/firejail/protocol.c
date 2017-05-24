@@ -34,7 +34,7 @@ void protocol_filter_save(void) {
 
 void protocol_filter_load(const char *fname) {
 	assert(fname);
-	
+
 	// read protocol filter configuration from PROTOCOL_CFG
 	FILE *fp = fopen(fname, "r");
 	if (!fp)
@@ -48,7 +48,7 @@ void protocol_filter_load(const char *fname) {
 		return;
 	}
 	fclose(fp);
-	
+
 	char *ptr = strchr(buf, '\n');
 	if (ptr)
 		*ptr = '\0';
@@ -61,7 +61,7 @@ void protocol_filter_load(const char *fname) {
 // --protocol.print
 void protocol_print_filter(pid_t pid) {
 	EUID_ASSERT();
-	
+
 	(void) pid;
 #ifdef SYS_socket
 	// if the pid is that of a firejail  process, use the pid of the first child process
@@ -109,7 +109,7 @@ void protocol_print_filter(pid_t pid) {
 #else
 	fwarning("--protocol not supported on this platform\n");
 	return;
-#endif  
+#endif
 }
 
 

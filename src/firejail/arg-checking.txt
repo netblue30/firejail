@@ -49,7 +49,7 @@ arg checking:
 	- checking no link
 	- checking no ".."
 	- unit test
-	
+
 8. --private=dirname
 	- supported in profiles
 	- expand "~"
@@ -58,7 +58,7 @@ arg checking:
 	- checking no ".."
 	- check same owner
 	- unit test
-	
+
 9. --private-home=filelist
 	- supported in profiles
 	- checking no ".."
@@ -66,7 +66,7 @@ arg checking:
 	- checking same owner
 	- checking no link
 	- unit test
-	
+
 10. --netfilter=filename
 	- supported in profiles
 	- check access as real GID/UID
@@ -74,7 +74,7 @@ arg checking:
 	- checking no link
 	- checking no ".."
 	- unit test
-		
+
 11. --shell=filename
 	- not supported in profiles
 	- check access as real GID/UID
@@ -82,4 +82,3 @@ arg checking:
 	- checking no link
 	- checking no ".."
 	- unit test
-		

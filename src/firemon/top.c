@@ -23,7 +23,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-       
+
 static unsigned pgs_rss = 0;
 static unsigned pgs_shared = 0;
 static unsigned clocktick = 0;
@@ -40,7 +40,7 @@ static char *get_user_name(uid_t uid) {
 	}
 	else if (uid == cached_uid)
 		return strdup(cached_user_name);
-	else		
+	else
 		return pid_get_user_name(uid);
 }
 
@@ -49,7 +49,7 @@ static char *get_header(void) {
 	if (asprintf(&rv, "%-5.5s %-9.9s %-8.8s %-8.8s %-5.5s %-4.4s %-9.9s %s",
 		"PID", "User", "RES(KiB)", "SHR(KiB)", "CPU%", "Prcs", "Uptime", "Command") == -1)
 		errExit("asprintf");
-	
+
 	return rv;
 }
 
@@ -66,7 +66,7 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 	struct stat s;
 	if (stat(procdir, &s) == -1)
 		return NULL;
-	
+
 	if (pids[index].level == 1) {
 		pgs_rss = 0;
 		pgs_shared = 0;
@@ -74,7 +74,7 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 		*stime = 0;
 		*cnt = 0;
 	}
-	
+
 	(*cnt)++;
 	pid_getmem(index, &pgs_rss, &pgs_shared);
 	unsigned utmp;
@@ -82,8 +82,8 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 	pid_get_cpu_time(index, &utmp, &stmp);
 	*utime += utmp;
 	*stime += stmp;
-	
-	
+
+
 	int i;
 	for (i = index + 1; i < max_pids; i++) {
 		if (pids[i].parent == (pid_t)index)
@@ -108,7 +108,7 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 			ptrcmd = cmd + 9;
 		else
 			ptrcmd = cmd;
-		
+
 		// user
 		char *user = get_user_name(pids[index].uid);
 		char *ptruser;
@@ -116,7 +116,7 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 			ptruser = user;
 		else
 			ptruser = "";
-			
+
 		// memory
 		if (pgsz == 0)
 			pgsz = getpagesize();
@@ -124,7 +124,7 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 		snprintf(rss, 10, "%u", pgs_rss * pgsz / 1024);
 		char shared[10];
 		snprintf(shared, 10, "%u", pgs_shared * pgsz / 1024);
-		
+
 		// uptime
 		unsigned long long uptime = pid_get_start_time(index);
 		if (clocktick == 0)
@@ -140,7 +140,7 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 		unsigned hour = uptime;
 		char uptime_str[50];
 		snprintf(uptime_str, 50, "%02u:%02u:%02u", hour, min, sec);
-		
+
 		// cpu
 		itv *= clocktick;
 		float ud = (float) (*utime - pids[index].utime) / itv * 100;
@@ -153,18 +153,18 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 		// process count
 		char prcs_str[10];
 		snprintf(prcs_str, 10, "%d", *cnt);
-		
+
 		if (asprintf(&rv, "%-5.5s %-9.9s %-8.8s %-8.8s %-5.5s %-4.4s %-9.9s %s",
 		                 pidstr, ptruser, rss, shared, cpu_str, prcs_str, uptime_str, ptrcmd) == -1)
 			errExit("asprintf");
-		
+
 		if (cmd)
 			free(cmd);
 		if (user)
 			free(user);
-		
+
 	}
-	
+
 	return rv;
 }
 
@@ -174,7 +174,7 @@ typedef struct node_t {
 	char *line;
 	float cpu;
 } Node;
-	
+
 static Node *head = NULL;
 
 static void head_clear(void) {
@@ -186,7 +186,7 @@ static void head_clear(void) {
 		free(ptr);
 		ptr = next;
 	}
-	
+
 	head = NULL;
 }
 
@@ -198,14 +198,14 @@ static void head_add(float cpu, char *line) {
 	node->line = line;
 	node->cpu = cpu;
 	node->next = NULL;
-	
+
 	// insert in first list position
 	if (head == NULL || head->cpu < cpu) {
 		node->next = head;
 		head = node;
 		return;
 	}
-	
+
 	// insert in the right place
 	Node *ptr = head;
 	while (1) {
@@ -215,14 +215,14 @@ static void head_add(float cpu, char *line) {
 			ptr->next = node;
 			return;
 		}
-		
+
 		// current position
 		if (current->cpu < cpu) {
 			ptr->next = node;
 			node->next = current;
 			return;
 		}
-		
+
 		ptr = current;
 	}
 }
@@ -233,10 +233,10 @@ void head_print(int col, int row) {
 	while (ptr) {
 		if (current >= row)
 			break;
-			
+
 		if (strlen(ptr->line) > (size_t)col)
 			ptr->line[col] = '\0';
-			
+
 		if (ptr->next == NULL || current == (row - 1)) {
 			printf("%s", ptr->line);
 			fflush(0);
@@ -253,7 +253,7 @@ void top(void) {
 	while (1) {
 		// clear linked list
 		head_clear();
-		
+
 		// set pid table
 		int i;
 		int itv = 1; // 1 second  interval
@@ -266,10 +266,10 @@ void top(void) {
 			if (pids[i].level == 1)
 				pid_store_cpu(i, 0, &utime, &stime);
 		}
-		
+
 		// wait 1 second
 		firemon_sleep(itv);
-		
+
 		// grab screen size
 		struct winsize sz;
 		int row = 24;
@@ -288,7 +288,7 @@ void top(void) {
 		if (row > 0)
 			row--;
 		free(header);
-		
+
 		// find system uptime
 		FILE *fp = fopen("/proc/uptime", "r");
 		if (fp) {
@@ -315,4 +315,3 @@ void top(void) {
 #endif
 	}
 }
-

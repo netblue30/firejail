@@ -3,5 +3,3 @@ all:
 
 debug:
 	gcc -ggdb -shared -DDEBUG -fPIC loader.c -o loader.so
-
-

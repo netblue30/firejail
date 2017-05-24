@@ -32,7 +32,7 @@ void pid_test(void) {
 
 	// look at the first 10 processes
 	int not_visible = 1;
-	for (i = 1; i <= 10; i++) { 
+	for (i = 1; i <= 10; i++) {
 		struct stat s;
 		char *fname;
 		if (asprintf(&fname, "/proc/%d/comm", i) == -1)
@@ -41,7 +41,7 @@ void pid_test(void) {
 			free(fname);
 			continue;
 		}
-		
+
 		// open file
 		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "r");
@@ -49,7 +49,7 @@ void pid_test(void) {
 			free(fname);
 			continue;
 		}
-		
+
 		// read file
 		char buf[100];
 		if (fgets(buf, 10, fp) == NULL) {
@@ -63,7 +63,7 @@ void pid_test(void) {
 		char *ptr;
 		if ((ptr = strchr(buf, '\n')) != NULL)
 			*ptr = '\0';
-		
+
 		// check process name against the kernel list
 		int j = 0;
 		while (kern_proc[j] != NULL) {
@@ -76,7 +76,7 @@ void pid_test(void) {
 			}
 			j++;
 		}
-		
+
 		fclose(fp);
 		free(fname);
 	}
@@ -86,7 +86,7 @@ void pid_test(void) {
 		printf("BAD: Process %d is not running in a PID namespace.\n", pid);
 	else
 		printf("GOOD: process %d is running in a PID namespace.\n", pid);
-	
+
 	// try to guess the type of container/sandbox
 	char *str = getenv("container");
 	if (str)

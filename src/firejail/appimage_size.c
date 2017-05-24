@@ -156,5 +156,3 @@ getout:
 	close(fd);
 	return size;
 }
-
-

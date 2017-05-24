@@ -49,33 +49,33 @@ int checkcfg(int val) {
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
-		
+
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
 		fp = fopen(fname, "r");
 		if (!fp) {
-#ifdef HAVE_GLOBALCFG			
+#ifdef HAVE_GLOBALCFG
 			fprintf(stderr, "Error: Firejail configuration file %s not found\n", fname);
 			exit(1);
 #else
 			initialized = 1;
 			return	cfg_val[val];
-#endif	
+#endif
 		}
-		
+
 		// read configuration file
 		char buf[MAX_READ];
 		while (fgets(buf,MAX_READ, fp)) {
 			line++;
-			if (*buf == '#' || *buf == '\n') 
+			if (*buf == '#' || *buf == '\n')
 				continue;
 
-			// parse line				
+			// parse line
 			ptr = line_remove_spaces(buf);
 			if (!ptr)
 				continue;
-			
-			// file transfer	
+
+			// file transfer
 			else if (strncmp(ptr, "file-transfer ", 14) == 0) {
 				if (strcmp(ptr + 14, "yes") == 0)
 					cfg_val[CFG_FILE_TRANSFER] = 1;
@@ -209,14 +209,14 @@ int checkcfg(int val) {
 				char *end = strchr(fname, ' ');
 				if (end)
 					*end = '\0';
-				
+
 				// is the file present?
 				struct stat s;
 				if (stat(fname, &s) == -1) {
 					fprintf(stderr, "Error: netfilter-default file %s not available\n", fname);
 					exit(1);
 				}
-				
+
 				if (netfilter_default)
 					goto errout;
 				netfilter_default = strdup(fname);
@@ -225,7 +225,7 @@ int checkcfg(int val) {
 				if (arg_debug)
 					printf("netfilter default file %s\n", fname);
 			}
-			
+
 			// Xephyr screen size
 			else if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
 				// expecting two numbers and an x between them
@@ -237,7 +237,7 @@ int checkcfg(int val) {
 				if (asprintf(&xephyr_screen, "%dx%d", n1, n2) == -1)
 					errExit("asprintf");
 			}
-	
+
 			// xephyr window title
 			else if (strncmp(ptr, "xephyr-window-title ", 20) == 0) {
 				if (strcmp(ptr + 20, "yes") == 0)
@@ -247,7 +247,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-				
+
 			// Xephyr command extra parameters
 			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
 				if (*xephyr_extra_params != '\0')
@@ -256,7 +256,7 @@ int checkcfg(int val) {
 				if (!xephyr_extra_params)
 					errExit("strdup");
 			}
-			
+
 			// xpra server extra parameters
 			else if (strncmp(ptr, "xpra-extra-params ", 18) == 0) {
 				if (*xpra_extra_params != '\0')
@@ -287,7 +287,7 @@ int checkcfg(int val) {
 				if (!xvfb_extra_params)
 					errExit("strdup");
 			}
-			
+
 			// quiet by default
 			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
@@ -355,9 +355,9 @@ int checkcfg(int val) {
 		fclose(fp);
 		initialized = 1;
 	}
-	
+
 	return cfg_val[val];
-	
+
 errout:
 	assert(ptr);
 	free(ptr);
@@ -477,5 +477,5 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-		
+
 }

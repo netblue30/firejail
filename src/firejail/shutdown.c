@@ -25,7 +25,7 @@
 
 void shut(pid_t pid) {
 	EUID_ASSERT();
-	
+
 	pid_t parent = pid;
 	// if the pid is that of a firejail  process, use the pid of a child process inside the sandbox
 	EUID_ROOT();
@@ -57,11 +57,11 @@ void shut(pid_t pid) {
 			exit(1);
 		}
 	}
-	
+
 	EUID_ROOT();
 	printf("Sending SIGTERM to %u\n", pid);
 	kill(pid, SIGTERM);
-	
+
 	// wait for not more than 10 seconds
 	sleep(2);
 	int monsec = 8;
@@ -76,7 +76,7 @@ void shut(pid_t pid) {
 			killdone = 1;
 			break;
 		}
-		
+
 		char c;
 		size_t count = fread(&c, 1, 1, fp);
 		fclose(fp);
@@ -102,6 +102,6 @@ void shut(pid_t pid) {
 			kill(parent, SIGKILL);
 		}
 	}
-	
+
 	clear_run_files(parent);
 }

@@ -26,7 +26,7 @@ static int filter_cnt = 0;
 
 static void load_seccomp(const char *fname) {
 	assert(fname);
-	
+
 	// open filter file
 	int fd = open(fname, O_RDONLY);
 	if (fd == -1)
@@ -40,7 +40,7 @@ static void load_seccomp(const char *fname) {
 		goto errexit;
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	filter_cnt = entries;
-	
+
 	// read filter
 	filter = malloc(size);
 	if (filter == NULL)
@@ -53,7 +53,7 @@ static void load_seccomp(const char *fname) {
 			goto errexit;
 		rd += rv;
 	}
-	
+
 	// close file
 	close(fd);
 	return;
@@ -67,7 +67,7 @@ errexit:
 void filter_print(const char *fname) {
 	assert(fname);
 	load_seccomp(fname);
-	
+
 	// start filter
 	struct sock_filter start[] = {
 		VALIDATE_ARCHITECTURE,
@@ -86,7 +86,7 @@ void filter_print(const char *fname) {
 		printf("Invalid seccomp filter %s\n", fname);
 		return;
 	}
-	
+
 	// loop trough blacklists
 	int i = 4;
 	while (i < filter_cnt) {

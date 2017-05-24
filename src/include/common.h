@@ -64,7 +64,7 @@ static inline int atoip(const char *str, uint32_t *ip) {
 
 	if (sscanf(str, "%u.%u.%u.%u", &a, &b, &c, &d) != 4 || a > 255 || b > 255 || c > 255 || d > 255)
 		return 1;
-		
+
 	*ip = a * 0x1000000 + b * 0x10000 + c * 0x100 + d;
 	return 0;
 }
@@ -91,7 +91,7 @@ static inline int atomac(char *str, unsigned char macAddr[6]) {
 	for (i = 0; i < 6; i++) {
 		if (mac[i] > 0xff)
 			return 1;
-			
+
 		macAddr[i] = (unsigned char) mac[i];
 	}
 
@@ -105,16 +105,16 @@ static inline int mac_not_zero(const unsigned char mac[6]) {
 		if (mac[i] != 0)
 			return 1;
 	}
-	
+
 	return 0;
 }
 
 // rtdsc timestamp on x86-64/amd64  processors
 static inline unsigned long long getticks(void) {
 #if defined(__x86_64__)
-	unsigned a, d; 
-	asm volatile("rdtsc" : "=a" (a), "=d" (d)); 
-	return ((unsigned long long)a) | (((unsigned long long)d) << 32); 
+	unsigned a, d;
+	asm volatile("rdtsc" : "=a" (a), "=d" (d));
+	return ((unsigned long long)a) | (((unsigned long long)d) << 32);
 #elif defined(__i386__)
 	unsigned long long ret;
 	__asm__ __volatile__("rdtsc" : "=A" (ret));

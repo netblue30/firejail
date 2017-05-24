@@ -19,7 +19,7 @@
  */
 
 #ifdef HAVE_GIT_INSTALL
- 
+
 #include "firejail.h"
 #include <sys/utsname.h>
 #include <sched.h>
@@ -46,7 +46,7 @@ static void sbox_ns(void) {
 		errExit("setgid/getgid");
 	if (setuid(getuid()) < 0)
 		errExit("setuid/getuid");
-	assert(getenv("LD_PRELOAD") == NULL);	
+	assert(getenv("LD_PRELOAD") == NULL);
 
 	printf("Running as "); fflush(0);
 	int rv = system("whoami");
@@ -55,16 +55,16 @@ static void sbox_ns(void) {
 	rv = system("ls -l /tmp");
 	(void) rv;
 }
-		
+
 
 void git_install(void) {
 	// redirect to "/usr/bin/firejail --noprofile --private-tmp /usr/lib/firejail/fgit-install.sh"
 	EUID_ASSERT();
 	EUID_ROOT();
-	
+
 	// install a mount namespace with a tmpfs on top of /tmp
 	sbox_ns();
-	
+
 	// run command
 	const char *cmd = LIBDIR "/firejail/fgit-install.sh";
 	int rv = system(cmd);
@@ -76,15 +76,15 @@ void git_uninstall(void) {
 	// redirect to "/usr/bin/firejail --noprofile --private-tmp /usr/lib/firejail/fgit-install.sh"
 	EUID_ASSERT();
 	EUID_ROOT();
-	
+
 	// install a mount namespace with a tmpfs on top of /tmp
 	sbox_ns();
-	
+
 	// run command
 	const char *cmd = LIBDIR "/firejail/fgit-uninstall.sh";
 	int rv = system(cmd);
 	(void) rv;
 	exit(0);
 }
-	
+
 #endif // HAVE_GIT_INSTALL

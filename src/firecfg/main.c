@@ -79,7 +79,7 @@ static void sound(void) {
 	if (!home) {
 		goto errexit;
 	}
-	
+
 	// the input file is /etc/pulse/client.conf
 	FILE *fpin = fopen("/etc/pulse/client.conf", "r");
 	if (!fpin) {
@@ -95,18 +95,18 @@ static void sound(void) {
 	free(fname);
 	if (!fpout)
 		goto errexit;
-		
+
 	// copy default config
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fpin))
 		fputs(buf, fpout);
-	
+
 	// disable shm
 	fprintf(fpout, "\nenable-shm = no\n");
 	fclose(fpin);
 	fclose(fpout);
 	printf("PulseAudio configured, please logout and login back again\n");
-	return;	
+	return;
 
 errexit:
 	fprintf(stderr, "Error: cannot configure sound file\n");
@@ -116,18 +116,18 @@ errexit:
 // return 1 if the program is found
 static int find(const char *program, const char *directory) {
 	int retval = 0;
-	
+
 	char *fname;
 	if (asprintf(&fname, "/%s/%s", directory, program) == -1)
 		errExit("asprintf");
-		
+
 	struct stat s;
 	if (stat(fname, &s) == 0) {
 	     	if (arg_debug)
 	     		printf("found %s in directory %s\n", program, directory);
 		retval = 1;
 	}
-		
+
 	free(fname);
 	return retval;
 }
@@ -140,14 +140,14 @@ static int which(const char *program) {
 	     find(program, "/sbin") || find(program, "/usr/sbin") ||
 	     find(program, "/usr/games"))
 		return 1;
-		
+
 	// check environment
 	char *path1 = getenv("PATH");
 	if (path1) {
 		char *path2 = strdup(path1);
 		if (!path2)
 			errExit("strdup");
-		
+
 		// use path2 to count the entries
 		char *ptr = strtok(path2, ":");
 		while (ptr) {
@@ -159,7 +159,7 @@ static int which(const char *program) {
 		}
 		free(path2);
 	}
-	
+
 	return 0;
 }
 
@@ -193,11 +193,11 @@ static void list(void) {
 	while ((entry = readdir(dir)) != NULL) {
 		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
 			continue;
-		
+
 		char *fullname;
 		if (asprintf(&fullname, "/usr/local/bin/%s", entry->d_name) == -1)
 			errExit("asprintf");
-			
+
 		if (is_link(fullname)) {
 			char* fname = realpath(fullname, NULL);
 			if (fname) {
@@ -208,7 +208,7 @@ static void list(void) {
 		}
 		free(fullname);
 	}
-			
+
 	closedir(dir);
 	free(firejail_exec);
 }
@@ -233,11 +233,11 @@ static void clear(void) {
 	while ((entry = readdir(dir)) != NULL) {
 		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
 			continue;
-		
+
 		char *fullname;
 		if (asprintf(&fullname, "/usr/local/bin/%s", entry->d_name) == -1)
 			errExit("asprintf");
-			
+
 		if (is_link(fullname)) {
 			char* fname = realpath(fullname, NULL);
 			if (fname) {
@@ -250,7 +250,7 @@ static void clear(void) {
 		}
 		free(fullname);
 	}
-			
+
 	closedir(dir);
 	free(firejail_exec);
 }
@@ -262,7 +262,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 	char *fname;
 	if (asprintf(&fname, "/usr/local/bin/%s", name) == -1)
 		errExit("asprintf");
-	
+
 	struct stat s;
 	if (stat(fname, &s) != 0) {
 		int rv = symlink(firejail_exec, fname);
@@ -273,7 +273,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 		else
 			printf("   %s created\n", name);
 	}
-	
+
 	free(fname);
 }
 
@@ -292,7 +292,7 @@ static void set_links(void) {
 		exit(1);
 	}
 	printf("Configuring symlinks in /usr/local/bin\n");
-	
+
 	char buf[MAX_BUF];
 	int lineno = 0;
 	while (fgets(buf, MAX_BUF,fp)) {
@@ -305,18 +305,18 @@ static void set_links(void) {
 			fprintf(stderr, "Error: invalid line %d in %s\n", lineno, cfgfile);
 			exit(1);
 		}
-		
+
 		// remove \n
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-			
+
 		// trim spaces
 		ptr = buf;
 		while (*ptr == ' ' || *ptr == '\t')
 			ptr++;
 		char *start = ptr;
-		
+
 		// empty line
 		if (*start == '\0')
 			continue;
@@ -334,7 +334,7 @@ int have_profile(const char *filename) {
 	// remove .desktop extension
 	char *f1 = strdup(filename);
 	if (!f1)
-		errExit("strdup");	
+		errExit("strdup");
 	f1[strlen(filename) - 8] = '\0';
 
 	// build profile name
@@ -358,7 +358,7 @@ static void fix_desktop_files(char *homedir) {
 		fprintf(stderr, "Error: this option is not supported for root user; please run as a regular user.\n");
 		exit(1);
 	}
-		
+
 	// destination
 	// create ~/.local/share/applications directory if necessary
 	char *user_apps_dir;
@@ -373,7 +373,7 @@ static void fix_desktop_files(char *homedir) {
 		}
 		rv = chmod(user_apps_dir, 0700);
 		(void) rv;
-	}	
+	}
 
 	// source
 	DIR *dir = opendir("/usr/share/applications");
@@ -527,7 +527,7 @@ static void fix_desktop_files(char *homedir) {
 
 int main(int argc, char **argv) {
 	int i;
-	
+
 	for (i = 1; i < argc; i++) {
 		// default options
 		if (strcmp(argv[i], "--help") == 0 ||
@@ -572,7 +572,7 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 	}
-	
+
 	// set symlinks in /usr/local/bin
 	if (getuid() != 0) {
 		fprintf(stderr, "Error: cannot set the symbolic links in /usr/local/bin\n");
@@ -615,11 +615,10 @@ int main(int argc, char **argv) {
 			printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
 		fix_desktop_files(home);
 	}
-	
+
 	return 0;
 
 errexit:
 	fprintf(stderr, "Error: cannot detect login user in order to set desktop files in ~/.local/share/applications\n");
 	return 1;
 }
-

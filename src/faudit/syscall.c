@@ -33,7 +33,7 @@ extern int pivot_root(const char *new_root, const char *put_old);
 
 void syscall_helper(int argc, char **argv) {
 	(void) argc;
-	
+
 	if (strcmp(argv[2], "mount") == 0) {
 		int rv = mount(NULL, NULL, NULL, 0, NULL);
 		(void) rv;
@@ -87,7 +87,7 @@ void syscall_helper(int argc, char **argv) {
 
 void syscall_run(const char *name) {
 	assert(prog);
-	
+
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -96,7 +96,7 @@ void syscall_run(const char *name) {
 		perror("execl");
 		_exit(1);
 	}
-		
+
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
 }

@@ -39,28 +39,28 @@ static struct sock_filter filter[] = {
 #endif
 
 	// syscall list
-#ifdef SYS_mount		
+#ifdef SYS_mount
 	BLACKLIST(SYS_mount),  // mount/unmount filesystems
 #endif
-#ifdef SYS_umount2		
+#ifdef SYS_umount2
 	BLACKLIST(SYS_umount2),
 #endif
-#ifdef SYS_ptrace 		
+#ifdef SYS_ptrace
 	BLACKLIST(SYS_ptrace), // trace processes
 #endif
-#ifdef SYS_kexec_file_load		
+#ifdef SYS_kexec_file_load
 	BLACKLIST(SYS_kexec_file_load),
 #endif
-#ifdef SYS_kexec_load		
+#ifdef SYS_kexec_load
 	BLACKLIST(SYS_kexec_load), // loading a different kernel
 #endif
-#ifdef SYS_name_to_handle_at		
+#ifdef SYS_name_to_handle_at
 	BLACKLIST(SYS_name_to_handle_at),
 #endif
-#ifdef SYS_open_by_handle_at		
+#ifdef SYS_open_by_handle_at
 	BLACKLIST(SYS_open_by_handle_at), // open by handle
 #endif
-#ifdef SYS_init_module		
+#ifdef SYS_init_module
 	BLACKLIST(SYS_init_module), // kernel module handling
 #endif
 #ifdef SYS_finit_module // introduced in 2013
@@ -69,31 +69,31 @@ static struct sock_filter filter[] = {
 #ifdef SYS_create_module
 	BLACKLIST(SYS_create_module),
 #endif
-#ifdef SYS_delete_module		
+#ifdef SYS_delete_module
 	BLACKLIST(SYS_delete_module),
 #endif
-#ifdef SYS_iopl		
+#ifdef SYS_iopl
 	BLACKLIST(SYS_iopl), // io permissions
 #endif
-#ifdef 	SYS_ioperm	
+#ifdef 	SYS_ioperm
 	BLACKLIST(SYS_ioperm),
 #endif
-#ifdef SYS_iopl		
+#ifdef SYS_iopl
 	BLACKLIST(SYS_iopl), // io permissions
 #endif
-#ifdef 	SYS_ioprio_set	
+#ifdef 	SYS_ioprio_set
 	BLACKLIST(SYS_ioprio_set),
 #endif
 #ifdef SYS_ni_syscall // new io permissions call on arm devices
 	BLACKLIST(SYS_ni_syscall),
 #endif
-#ifdef SYS_swapon		
+#ifdef SYS_swapon
 	BLACKLIST(SYS_swapon), // swap on/off
 #endif
-#ifdef SYS_swapoff		
+#ifdef SYS_swapoff
 	BLACKLIST(SYS_swapoff),
 #endif
-#ifdef SYS_syslog		
+#ifdef SYS_syslog
 	BLACKLIST(SYS_syslog), // kernel printk control
 #endif
 	RETURN_ALLOW
@@ -113,7 +113,7 @@ typedef struct sbox_config {
 
 int sbox_run(unsigned filter, int num, ...) {
 	EUID_ROOT();
-	
+
 	int i;
 	va_list valist;
 	va_start(valist, num);
@@ -124,7 +124,7 @@ int sbox_run(unsigned filter, int num, ...) {
 		arg[i] = va_arg(valist, char*);
 	arg[i] = NULL;
 	va_end(valist);
-	
+
 	if (arg_debug) {
 		printf("sbox run: ");
 		for (i = 0; i <= num; i++)
@@ -138,7 +138,7 @@ int sbox_run(unsigned filter, int num, ...) {
 	if (child == 0) {
 		// clean the new process
 		clearenv();
-		
+
 		if (filter & SBOX_STDIN_FROM_FILE) {
 			int fd;
 			if((fd = open(SBOX_STDIN_FILE, O_RDONLY)) == -1) {
@@ -154,7 +154,7 @@ int sbox_run(unsigned filter, int num, ...) {
 			else // the user could run the sandbox without /dev/null
 				close(STDIN_FILENO);
 		}
-		
+
 		// close all other file descriptors
 		int max = 20; // getdtablesize() is overkill for a firejail process
 		for (i = 3; i < max; i++)
@@ -163,10 +163,10 @@ int sbox_run(unsigned filter, int num, ...) {
 		if (arg_debug) {
 			printf("sbox file descriptors:\n");
 			int rv = system("ls -l /proc/self/fd");
-			(void) rv;	
+			(void) rv;
 		}
 
-		umask(027);	
+		umask(027);
 
 		// apply filters
 		if (filter & SBOX_CAPS_NONE) {
@@ -178,7 +178,7 @@ int sbox_run(unsigned filter, int num, ...) {
 			set |=  ((uint64_t) 1) << CAP_NET_RAW;
 			caps_set(set);
 #endif
-		}	
+		}
 
 		if (filter & SBOX_SECCOMP) {
 			if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
@@ -200,11 +200,11 @@ int sbox_run(unsigned filter, int num, ...) {
 			drop_privs(1);
 
 		clearenv();
-		
+
 		// --quiet is passed as an environment variable
 		if (arg_quiet)
 			setenv("FIREJAIL_QUIET", "yes", 1);
-		
+
 		if (arg[0])	// get rid of scan-build warning
 			execvp(arg[0], arg);
 		else
@@ -221,6 +221,6 @@ int sbox_run(unsigned filter, int num, ...) {
 		fprintf(stderr, "Error: failed to run %s\n", arg[0]);
 		exit(1);
 	}
-	
+
 	return status;
 }

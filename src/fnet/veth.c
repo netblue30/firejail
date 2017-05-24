@@ -1,16 +1,16 @@
 /* code based on iproute2 ip/iplink.c, modified to be included in firejail project
  *
  * Original source code:
- * 
+ *
  * Information:
  *     http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
- * 
+ *
  * Download:
  *     http://www.kernel.org/pub/linux/utils/net/iproute2/
- * 
+ *
  * Repository:
  *     git://git.kernel.org/pub/scm/linux/kernel/git/shemminger/iproute2.git
- * 
+ *
  * License: GPL v2
  *
  * Original copyright header
@@ -112,7 +112,7 @@ int net_create_veth(const char *dev, const char *nsdev, unsigned pid) {
 		exit(2);
 
 	rtnl_close(&rth);
-	
+
 	return 0;
 }
 
@@ -134,13 +134,13 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	req.n.nlmsg_flags = NLM_F_REQUEST|NLM_F_CREATE|NLM_F_EXCL;
 	req.n.nlmsg_type = RTM_NEWLINK;
 	req.i.ifi_family = 0;
-	
+
 	// find parent ifindex
 	int parent_ifindex = if_nametoindex(parent);
 	if (parent_ifindex <= 0) {
 		fprintf(stderr, "Error: cannot find network device %s\n", parent);
 		exit(1);
-	}			
+	}
 
 	// add parent
 	addattr_l(&req.n, sizeof(req), IFLA_LINK, &parent_ifindex, 4);
@@ -148,7 +148,7 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	// add new interface name
 	len = strlen(dev) + 1;
 	addattr_l(&req.n, sizeof(req), IFLA_IFNAME, dev, len);
-	
+
 	// place the interface in child namespace
 	addattr_l (&req.n, sizeof(req), IFLA_NET_NS_PID, &pid, 4);
 
@@ -176,7 +176,7 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 		exit(2);
 
 	rtnl_close(&rth);
-	
+
 	return 0;
 }
 
@@ -197,7 +197,7 @@ int net_move_interface(const char *dev, unsigned pid) {
 	req.n.nlmsg_flags = NLM_F_REQUEST;
 	req.n.nlmsg_type = RTM_NEWLINK;
 	req.i.ifi_family = 0;
-	
+
 	// find ifindex
 	int ifindex = if_nametoindex(dev);
 	if (ifindex <= 0) {
@@ -205,7 +205,7 @@ int net_move_interface(const char *dev, unsigned pid) {
 		exit(1);
 	}
 	req.i.ifi_index = ifindex;
-				
+
 	// place the interface in child namespace
 	addattr_l (&req.n, sizeof(req), IFLA_NET_NS_PID, &pid, 4);
 
@@ -214,7 +214,7 @@ int net_move_interface(const char *dev, unsigned pid) {
 		exit(2);
 
 	rtnl_close(&rth);
-	
+
 	return 0;
 }
 

@@ -43,7 +43,7 @@ int syscall_find_name(const char *name) {
 		if (strcmp(name, syslist[i].name) == 0)
 			return syslist[i].nr;
 	}
-	
+
 	return -1;
 }
 
@@ -54,7 +54,7 @@ char *syscall_find_nr(int nr) {
 		if (nr == syslist[i].nr)
 			return syslist[i].name;
 	}
-	
+
 	return "unknown";
 }
 
@@ -75,7 +75,7 @@ static void syscall_process_name(const char *name, int *syscall_nr, int *error_n
 	if (strlen(name) == 0)
 		goto error;
 	*error_nr = -1;
-	
+
 	// syntax check
 	char *str = strdup(name);
 	if (!str)
@@ -101,7 +101,7 @@ static void syscall_process_name(const char *name, int *syscall_nr, int *error_n
 
 	free(str);
 	return;
-	
+
 error:
 	fprintf(stderr, "Error fseccomp: invalid syscall list entry %s\n", name);
 	exit(1);
@@ -142,7 +142,7 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 		}
 		ptr = strtok(NULL, ",");
 	}
-	
+
 	free(str);
 	return 0;
 }

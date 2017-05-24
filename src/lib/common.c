@@ -37,7 +37,7 @@ int join_namespace(pid_t pid, char *type) {
 	char *path;
 	if (asprintf(&path, "/proc/%u/ns/%s", pid, type) == -1)
 		errExit("asprintf");
-	
+
 	int fd = open(path, O_RDONLY);
 	if (fd < 0)
 		goto errout;
@@ -55,14 +55,14 @@ errout:
 	free(path);
 	fprintf(stderr, "Error: cannot join namespace %s\\n", type);
 	return -1;
-	
+
 }
 
 // return 1 if error
 // this function requires root access - todo: fix it!
 int name2pid(const char *name, pid_t *pid) {
 	pid_t parent = getpid();
-	
+
 	DIR *dir;
 	if (!(dir = opendir("/proc"))) {
 		// sleep 2 seconds and try again
@@ -72,7 +72,7 @@ int name2pid(const char *name, pid_t *pid) {
 			exit(1);
 		}
 	}
-	
+
 	struct dirent *entry;
 	char *end;
 	while ((entry = readdir(dir))) {
@@ -91,7 +91,7 @@ int name2pid(const char *name, pid_t *pid) {
 			}
 			free(comm);
 		}
-		
+
 		// look for the sandbox name in /run/firejail/name/<PID>
 		// todo: use RUN_FIREJAIL_NAME_DIR define from src/firejail/firejail.h
 		char *fname;
@@ -249,10 +249,10 @@ int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid) {
 			break;
 		if (strncmp(arg, "--", 2) != 0)
 			break;
-		
+
 		if (strcmp(arg, "--x11=xorg") == 0)
 			return 0;
-		
+
 		// check x11 xpra or xephyr
 		if (strncmp(arg, "--x11", 5) == 0)
 			return 1;
@@ -267,7 +267,7 @@ int pid_hidepid(void) {
 	FILE *fp = fopen("/proc/mounts", "r");
 	if (!fp)
 		return 1;
-		
+
 	char buf[BUFLEN];
 	while (fgets(buf, BUFLEN, fp)) {
 		if (strstr(buf, "proc /proc proc")) {
@@ -278,10 +278,7 @@ int pid_hidepid(void) {
 			return 0;
 		}
 	}
-	
+
 	fclose(fp);
 	return 0;
 }
-
-
-

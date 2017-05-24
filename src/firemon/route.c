@@ -36,7 +36,7 @@ static IfList *list_find(uint32_t ip, uint32_t mask) {
 			return ptr;
 		ptr = ptr->next;
 	}
-	
+
 	return NULL;
 }
 
@@ -47,15 +47,15 @@ static void extract_if(const char *fname) {
 		free(ifs);
 		ifs = tmp;
 	}
-	assert(ifs == NULL);	
-	
+	assert(ifs == NULL);
+
 	FILE *fp = fopen(fname, "r");
 	if (!fp)
 		return;
-	
+
 	char buf[MAXBUF];
 	int state = 0;	// 0 -wait for Local
-			// 
+			//
 	while (fgets(buf, MAXBUF, fp)) {
 		// remove blanks, \n
 		char *ptr = buf;
@@ -67,7 +67,7 @@ static void extract_if(const char *fname) {
 		ptr = strchr(ptr, '\n');
 		if (ptr)
 			*ptr = '\0';
-			
+
 		if (state == 0) {
 			if (strncmp(buf, "Local:", 6) == 0) {
 				state = 1;
@@ -105,7 +105,7 @@ static void extract_if(const char *fname) {
 			}
 		}
 	}
-	
+
 	fclose(fp);
 
 
@@ -115,7 +115,7 @@ static void print_route(const char *fname) {
 	FILE *fp = fopen(fname, "r");
 	if (!fp)
 		return;
-	
+
 	printf("  Route table:\n");
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
@@ -147,7 +147,7 @@ static void print_route(const char *fname) {
 		int rv = sscanf(start, "%s %s %s %s %s %s %s %s\n", ifname, destination, gateway, flags, refcnt, use, metric, mask);
 		if (rv != 8)
 			continue;
-		
+
 		// destination ip
 		uint32_t destip;
 		sscanf(destination, "%x", &destip);
@@ -158,7 +158,7 @@ static void print_route(const char *fname) {
 		uint32_t gw;
 		sscanf(gateway, "%x", &gw);
 		gw = ntohl(gw);
-		
+
 //		printf("#%s# #%s# #%s# #%s# #%s# #%s# #%s# #%s#\n", ifname, destination, gateway, flags, refcnt, use, metric, mask);
 		if (gw != 0)
 			printf("     %u.%u.%u.%u/%u via %u.%u.%u.%u, dev %s, metric %s\n",
@@ -176,14 +176,14 @@ static void print_route(const char *fname) {
 			}
 		}
 	}
-	
+
 	fclose(fp);
 
 }
 
 void route(pid_t pid, int print_procs) {
 	pid_read(pid);
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -207,5 +207,3 @@ void route(pid_t pid, int print_procs) {
 	}
 	printf("\n");
 }
-
-

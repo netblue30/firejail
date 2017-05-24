@@ -63,7 +63,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (asprintf(&fname, "%s/.cshrc", homedir) == -1)
 			errExit("asprintf");
 		struct stat s;
-		
+
 		// don't copy it if we already have the file
 		if (stat(fname, &s) == 0)
 			return;
@@ -88,7 +88,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			errExit("asprintf");
 		struct stat s;
 		// don't copy it if we already have the file
-		if (stat(fname, &s) == 0) 
+		if (stat(fname, &s) == 0)
 			return;
 		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
 			fprintf(stderr, "Error: invalid %s file\n", fname);
@@ -113,10 +113,10 @@ static int store_xauthority(void) {
 		SET_PERMS_STREAM(fp, getuid(), getgid(), 0600);
 		fclose(fp);
 	}
-	
+
 	if (asprintf(&src, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	
+
 	struct stat s;
 	if (stat(src, &s) == 0) {
 		if (is_link(src)) {
@@ -128,7 +128,7 @@ static int store_xauthority(void) {
 		fs_logger2("clone", dest);
 		return 1; // file copied
 	}
-	
+
 	return 0;
 }
 
@@ -143,10 +143,10 @@ static int store_asoundrc(void) {
 		SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);
 		fclose(fp);
 	}
-	
+
 	if (asprintf(&src, "%s/.asoundrc", cfg.homedir) == -1)
 		errExit("asprintf");
-	
+
 	struct stat s;
 	if (stat(src, &s) == 0) {
 		if (is_link(src)) {
@@ -168,7 +168,7 @@ static int store_asoundrc(void) {
 		fs_logger2("clone", dest);
 		return 1; // file copied
 	}
-	
+
 	return 0;
 }
 
@@ -178,7 +178,7 @@ static void copy_xauthority(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	
+
 	// if destination is a symbolic link, exit the sandbox!!!
 	if (is_link(dest)) {
 		fprintf(stderr, "Error: %s is a symbolic link\n", dest);
@@ -187,7 +187,7 @@ static void copy_xauthority(void) {
 
 	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
 	fs_logger2("clone", dest);
-	
+
 	// delete the temporary file
 	unlink(src);
 }
@@ -198,7 +198,7 @@ static void copy_asoundrc(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.asoundrc", cfg.homedir) == -1)
 		errExit("asprintf");
-	
+
 	// if destination is a symbolic link, exit the sandbox!!!
 	if (is_link(dest)) {
 		fprintf(stderr, "Error: %s is a symbolic link\n", dest);
@@ -222,10 +222,10 @@ void fs_private_homedir(void) {
 	char *private_homedir = cfg.home_private;
 	assert(homedir);
 	assert(private_homedir);
-	
+
 	int xflag = store_xauthority();
 	int aflag = store_asoundrc();
-	
+
 	uid_t u = getuid();
 	gid_t g = getgid();
 
@@ -258,7 +258,7 @@ void fs_private_homedir(void) {
 			errExit("mounting home directory");
 		fs_logger("tmpfs /home");
 	}
-	
+
 
 	skel(homedir, u, g);
 	if (xflag)
@@ -309,7 +309,7 @@ void fs_private(void) {
 			errExit("chown");
 		fs_logger2("mkdir", homedir);
 	}
-	
+
 	skel(homedir, u, g);
 	if (xflag)
 		copy_xauthority();
@@ -322,12 +322,12 @@ void fs_private(void) {
 void fs_check_private_dir(void) {
 	EUID_ASSERT();
 	invalid_filename(cfg.home_private);
-	
+
 	// Expand the home directory
 	char *tmp = expand_home(cfg.home_private, cfg.homedir);
 	cfg.home_private = realpath(tmp, NULL);
 	free(tmp);
-	
+
 	if (!cfg.home_private
 	 || !is_dir(cfg.home_private)
 	 || is_link(cfg.home_private)
@@ -383,7 +383,7 @@ static char *check_dir_or_file(const char *name) {
 	// we allow only files in user home directory or symbolic links to files or directories owned by the user
 	struct stat s;
 	if (lstat(fname, &s) == 0 && S_ISLNK(s.st_mode)) {
-		if (stat(fname, &s) == 0) {	
+		if (stat(fname, &s) == 0) {
 			if (s.st_uid != getuid()) {
 				fprintf(stderr, "Error: symbolic link %s to file or directory not owned by the user\n", fname);
 				exit(1);
@@ -404,7 +404,7 @@ static char *check_dir_or_file(const char *name) {
 			fprintf(stderr, "Error: invalid file %s\n", name);
 			exit(1);
 		}
-		
+
 		// only top files and directories in user home are allowed
 		char *ptr = rname + strlen(cfg.homedir);
 		assert(*ptr != '\0');
@@ -480,7 +480,7 @@ void fs_private_home_list(void) {
 	char *dlist = strdup(cfg.home_private_keep);
 	if (!dlist)
 		errExit("strdup");
-	
+
 	char *ptr = strtok(dlist, ",");
 	duplicate(ptr);
 	while ((ptr = strtok(NULL, ",")) != NULL)

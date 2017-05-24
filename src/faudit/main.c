@@ -24,19 +24,19 @@ int main(int argc, char **argv) {
 	// make test-arguments helper
 	if (getenv("FIREJAIL_TEST_ARGUMENTS")) {
 		printf("Arguments:\n");
-	
+
 		int i;
 		for (i = 0; i < argc; i++) {
 			printf("#%s#\n", argv[i]);
 		}
-		
+
 		return 0;
 	}
 
 
 	if (argc != 1) {
 		int i;
-		
+
 		for (i = 1; i < argc; i++) {
 			if (strcmp(argv[i], "syscall")) {
 				syscall_helper(argc, argv);
@@ -56,16 +56,16 @@ int main(int argc, char **argv) {
 			errExit("strdup");
 	}
 	printf("INFO: starting %s.\n", prog);
-	
-	
+
+
 	// check pid namespace
 	pid_test();
 	printf("\n");
-	
+
 	// check seccomp
 	seccomp_test();
 	printf("\n");
-	
+
 	// check capabilities
 	caps_test();
 	printf("\n");
@@ -73,11 +73,11 @@ int main(int argc, char **argv) {
 	// check some well-known problematic files and directories
 	files_test();
 	printf("\n");
-	
+
 	// network
 	network_test();
 	printf("\n");
-	
+
 	// dbus
 	dbus_test();
 	printf("\n");

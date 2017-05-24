@@ -25,7 +25,7 @@
 void save_cgroup(void) {
 	if (cfg.cgroup == NULL)
 		return;
-	
+
 	FILE *fp = fopen(RUN_CGROUP_CFG, "w");
 	if (fp) {
 		fprintf(fp, "%s", cfg.cgroup);
@@ -36,7 +36,7 @@ void save_cgroup(void) {
 	}
 	else
 		goto errout;
-	
+
 	return;
 
 errout:
@@ -58,7 +58,7 @@ void load_cgroup(const char *fname) {
 		}
 		else
 			goto errout;
-		
+
 		fclose(fp);
 		return;
 	}
@@ -71,34 +71,34 @@ errout:
 
 void set_cgroup(const char *path) {
 	EUID_ASSERT();
-	
+
 	invalid_filename(path);
-	
+
 	// path starts with /sys/fs/cgroup
 	if (strncmp(path, "/sys/fs/cgroup", 14) != 0)
 		goto errout;
-	
+
 	// path ends in tasks
 	char *ptr = strstr(path, "tasks");
 	if (!ptr)
 		goto errout;
 	if (*(ptr + 5) != '\0')
 		goto errout;
-	
+
 	// no .. traversal
 	ptr = strstr(path, "..");
 	if (ptr)
 		goto errout;
-	
+
 	// tasks file exists
 	struct stat s;
 	if (stat(path, &s) == -1)
 		goto errout;
-	
+
 	// task file belongs to the user running the sandbox
 	if (s.st_uid != getuid() && s.st_gid != getgid())
 		goto errout2;
-		
+
 	// add the task to cgroup
 	/* coverity[toctou] */
 	FILE *fp = fopen(path,	"a");
@@ -110,10 +110,10 @@ void set_cgroup(const char *path) {
 	fclose(fp);
 	return;
 
-errout:		
+errout:
 	fprintf(stderr, "Error: invalid cgroup\n");
 	exit(1);
-errout2:		
+errout2:
 	fprintf(stderr, "Error: you don't have permissions to use this control group\n");
 	exit(1);
 }

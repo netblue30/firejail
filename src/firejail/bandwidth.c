@@ -58,30 +58,30 @@ IFBW *ifbw_find(const char *dev) {
 	assert(dev);
 	int len = strlen(dev);
 	assert(len);
-	
+
 	if (ifbw == NULL)
 		return NULL;
-	
+
 	IFBW *ptr = ifbw;
 	while (ptr) {
 		if (strncmp(ptr->txt, dev, len) == 0 && ptr->txt[len] == ':')
 			return ptr;
 		ptr = ptr->next;
 	}
-	
+
 	return NULL;
 }
 
 void ifbw_remove(IFBW *r) {
 	if (ifbw == NULL)
 		return;
-	
+
 	// remove the first element
 	if (ifbw == r) {
 		ifbw = ifbw->next;
 		return;
 	}
-	
+
 	// walk the list
 	IFBW *ptr = ifbw->next;
 	IFBW *prev = ifbw;
@@ -90,11 +90,11 @@ void ifbw_remove(IFBW *r) {
 			prev->next = ptr->next;
 			return;
 		}
-		
+
 		prev = ptr;
 		ptr = ptr->next;
-	}	
-	
+	}
+
 	return;
 }
 
@@ -106,10 +106,10 @@ int fibw_count(void) {
 		rv++;
 		ptr = ptr->next;
 	}
-	
+
 	return rv;
 }
-	
+
 
 //***********************************
 // run file handling
@@ -118,7 +118,7 @@ static void bandwidth_create_run_file(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
 		errExit("asprintf");
-	
+
 	// if the file already exists, do nothing
 	struct stat s;
 	if (stat(fname, &s) == 0) {
@@ -137,7 +137,7 @@ static void bandwidth_create_run_file(pid_t pid) {
 		fprintf(stderr, "Error: cannot create bandwidth file\n");
 		exit(1);
 	}
-	
+
 	free(fname);
 }
 
@@ -162,7 +162,7 @@ void network_set_run_file(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d-netmap", RUN_FIREJAIL_NETWORK_DIR, (int) pid) == -1)
 		errExit("asprintf");
-	
+
 	// create an empty file and set mod and ownership
 	FILE *fp = fopen(fname, "w");
 	if (fp) {
@@ -182,7 +182,7 @@ void network_set_run_file(pid_t pid) {
 		fprintf(stderr, "Error: cannot create network map file\n");
 		exit(1);
 	}
-	
+
 	free(fname);
 }
 
@@ -204,7 +204,7 @@ static void read_bandwidth_file(pid_t pid) {
 				*ptr = '\0';
 			if (strlen(buf) == 0)
 				continue;
-			
+
 			// create a new IFBW entry
 			IFBW *ifbw_new = malloc(sizeof(IFBW));
 			if (!ifbw_new)
@@ -213,12 +213,12 @@ static void read_bandwidth_file(pid_t pid) {
 			ifbw_new->txt = strdup(buf);
 			if (!ifbw_new->txt)
 				errExit("strdup");
-			
+
 			// add it to the linked list
 			ifbw_add(ifbw_new);
-		}	
-		
-		fclose(fp);		
+		}
+
+		fclose(fp);
 	}
 }
 
@@ -256,17 +256,17 @@ errout:
 // remove interface from run file
 void bandwidth_remove(pid_t pid, const char *dev) {
 	bandwidth_create_run_file(pid);
-	
+
 	// read bandwidth file
 	read_bandwidth_file(pid);
-	
+
 	// find the element and remove it
 	IFBW *elem = ifbw_find(dev);
 	if (elem) {
 		ifbw_remove(elem);
 		write_bandwidth_file(pid) ;
 	}
-	
+
 	// remove the file if there are no entries in the list
 	if (ifbw == NULL) {
 		 bandwidth_del_run_file(pid);
@@ -282,7 +282,7 @@ void bandwidth_set(pid_t pid, const char *dev, int down, int up) {
 	char *txt;
 	if (asprintf(&txt, "%s: RX %dKB/s, TX %dKB/s", dev, down, up) == -1)
 		errExit("asprintf");
-	
+
 	// read bandwidth file
 	read_bandwidth_file(pid);
 
@@ -300,7 +300,7 @@ void bandwidth_set(pid_t pid, const char *dev, int down, int up) {
 			errExit("malloc");
 		memset(ifbw_new, 0, sizeof(IFBW));
 		ifbw_new->txt = txt;
-		
+
 		// add it to the linked list
 		ifbw_add(ifbw_new);
 	}
@@ -330,7 +330,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		exit(1);
 	}
 	free(comm);
-	
+
 	// check network namespace
 	char *name;
 	if (asprintf(&name, "/run/firejail/network/%d-netmap", pid) == -1)
@@ -376,7 +376,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 			fprintf(stderr, "Error: cannot read network map file %s\n", fname);
 			exit(1);
 		}
-		
+
 		char buf[1024];
 		int len = strlen(dev);
 		while (fgets(buf, 1024, fp)) {
@@ -402,7 +402,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		free(fname);
 		fclose(fp);
 	}
-	
+
 	// build fshaper.sh command
 	char *cmd = NULL;
 	if (devname) {
@@ -442,7 +442,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	arg[3] = NULL;
 	clearenv();
 	execvp(arg[0], arg);
-	
+
 	// it will never get here
 	errExit("execvp");
 }

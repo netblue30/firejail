@@ -50,8 +50,8 @@ int net_get_mtu(const char *ifname) {
 	if (arg_debug)
 		printf("MTU of %s is %d.\n", ifname, ifr.ifr_mtu);
 	close(s);
-	
-	
+
+
 	return mtu;
 }
 
@@ -84,10 +84,10 @@ int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t ma
 	assert(bridge);
 	assert(ip);
 	assert(mask);
-	
+
 	if (arg_debug)
 		printf("get interface %s configuration\n", bridge);
-		
+
 	int rv = -1;
 	struct ifaddrs *ifaddr, *ifa;
 
@@ -110,7 +110,7 @@ int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t ma
 				net_get_mac(ifa->ifa_name, mac);
 				*mtu = net_get_mtu(bridge);
 			}
-			
+
 			rv = 0;
 			break;
 		}
@@ -126,9 +126,9 @@ void net_if_up(const char *ifname) {
 		fprintf(stderr, "Error: invalid network device name %s\n", ifname);
 		exit(1);
 	}
-	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, 
+	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3,
 		PATH_FNET, "ifup", ifname);
-}	
+}
 
 
 // configure interface ipv6 address
@@ -138,8 +138,8 @@ void net_if_ip6(const char *ifname, const char *addr6) {
 		fprintf(stderr, "Error: invalid IPv6 address %s\n", addr6);
 		exit(1);
 	}
-	
-	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 5, 
+
+	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 5,
 		PATH_FNET, "config", "ipv6", ifname, addr6);
 
 }
@@ -187,19 +187,19 @@ uint32_t network_get_defaultgw(void) {
 	FILE *fp = fopen("/proc/self/net/route", "r");
 	if (!fp)
 		errExit("fopen");
-	
+
 	char buf[BUFSIZE];
 	uint32_t retval = 0;
 	while (fgets(buf, BUFSIZE, fp)) {
 		if (strncmp(buf, "Iface", 5) == 0)
 			continue;
-		
+
 		char *ptr = buf;
 		while (*ptr != ' ' && *ptr != '\t')
 			ptr++;
 		while (*ptr == ' ' || *ptr == '\t')
 			ptr++;
-			
+
 		unsigned dest;
 		unsigned gw;
 		int rv = sscanf(ptr, "%x %x", &dest, &gw);
@@ -219,9 +219,9 @@ int net_config_mac(const char *ifname, const unsigned char mac[6]) {
 		mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]) == -1)
 		errExit("asprintf");
 
-	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 5, 
+	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 5,
 		PATH_FNET, "config", "mac", ifname, macstr);
-	
+
 	free(macstr);
 	return 0;
 }
@@ -237,7 +237,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
-	
+
 	if (ioctl(sock, SIOCGIFHWADDR, &ifr) == -1)
 		errExit("ioctl");
 	memcpy(mac, ifr.ifr_hwaddr.sa_data, 6);
@@ -248,7 +248,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
 
 void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu) {
 	assert(dev);
-	
+
 	char *ipstr;
 	if (asprintf(&ipstr, "%llu", (long long unsigned) ip) == -1)
 		errExit("asprintf");
@@ -260,12 +260,11 @@ void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu) 
 	char *mtustr;
 	if (asprintf(&mtustr, "%d", mtu) == -1)
 		errExit("asprintf");
-	
-	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 7, 
+
+	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 7,
 		PATH_FNET, "config", "interface", dev, ipstr, maskstr, mtustr);
 
 	free(ipstr);
 	free(maskstr);
 	free(mtustr);
 }
-

@@ -58,11 +58,11 @@ void fs_trace(void) {
 		fprintf(fp, "%s/firejail/libtracelog.so\n", LIBDIR);
 		if (!arg_quiet)
 			printf("Blacklist violations are logged to syslog\n");
-	}	
+	}
 
 	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	fclose(fp);
-	
+
 	// mount the new preload file
 	if (arg_debug)
 		printf("Mount the new ld.so.preload file\n");
@@ -70,4 +70,3 @@ void fs_trace(void) {
 		errExit("mount bind ld.so.preload");
 	fs_logger("create /etc/ld.so.preload");
 }
-

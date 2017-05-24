@@ -52,7 +52,7 @@ typedef struct list_elem_t {
 #define HMASK 0x0ff
 ListElem *storage[HMASK + 1];
 
-// djb2 
+// djb2
 static inline uint32_t hash(const char *str) {
 	uint32_t hash = 5381;
 	int c;
@@ -70,10 +70,10 @@ static void storage_add(const char *str) {
 	if (!str) {
 #ifdef DEBUG
 		printf("null pointer passed to storage_add\n");
-#endif			
+#endif
 		return;
 	}
-	
+
 	ListElem *ptr = malloc(sizeof(ListElem));
 	if (!ptr) {
 		fprintf(stderr, "Error: cannot allocate memory\n");
@@ -85,7 +85,7 @@ static void storage_add(const char *str) {
 		free(ptr);
 		return;
 	}
-	
+
 	// insert it into the hash table
 	uint32_t h = hash(ptr->path);
 	ptr->next = storage[h];
@@ -147,11 +147,11 @@ static char *storage_find(const char *str) {
 		}
 		ptr = ptr->next;
 	}
-	
+
 	if (allocated)
 		free((char *) tofind);
 #ifdef DEBUG
-	printf("storage not found\n");		
+	printf("storage not found\n");
 #endif
 	return NULL;
 }
@@ -168,7 +168,7 @@ static char *sandbox_name_str = NULL;
 static void load_blacklist(void) {
 	if (blacklist_loaded)
 		return;
-	
+
 	// open filesystem log
 	if (!orig_fopen)
 		orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
@@ -204,7 +204,7 @@ static void load_blacklist(void) {
 	}
 	fclose(fp);
 	blacklist_loaded = 1;
-#ifdef DEBUG	
+#ifdef DEBUG
 	printf("Monitoring %d blacklists\n", cnt);
 	{
 		int i;
@@ -215,7 +215,7 @@ static void load_blacklist(void) {
 				cnt++;
 				ptr = ptr->next;
 			}
-			
+
 			if ((i % 16) == 0)
 				printf("\n");
 			printf("%02d ", cnt);
@@ -232,8 +232,8 @@ static void sendlog(const char *name, const char *call, const char *path) {
 		printf("null pointer passed to sendlog\n");
 #endif
 		return;
-	}		
-		
+	}
+
 	openlog ("firejail", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 	if (sandbox_pid_str && sandbox_name_str)
 		syslog (LOG_INFO, "blacklist violation - sandbox %s, name %s, exe %s, syscall %s, path %s",
@@ -266,10 +266,10 @@ static char myname[MAXNAME];
 static int nameinit = 0;
 static char *name(void) {
 	if (!nameinit) {
-		
+
 		// initialize the name of the process based on /proc/PID/comm
 		memset(myname, 0, MAXNAME);
-		
+
 		pid_t p = pid();
 		char *fname;
 		if (asprintf(&fname, "/proc/%u/comm", p) == -1)
@@ -286,17 +286,17 @@ static char *name(void) {
 			free(fname);
 			return "unknown";
 		}
-		
+
 		// clean '\n'
 		char *ptr = strchr(myname, '\n');
 		if (ptr)
 			*ptr = '\0';
-			
+
 		fclose(fp);
 		free(fname);
 		nameinit = 1;
 	}
-	
+
 	return myname;
 }
 
@@ -313,10 +313,10 @@ int open(const char *pathname, int flags, mode_t mode) {
 #endif
 	if (!orig_open)
 		orig_open = (orig_open_t)dlsym(RTLD_NEXT, "open");
-	
+
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_open(pathname, flags, mode);
@@ -337,7 +337,7 @@ int open64(const char *pathname, int flags, mode_t mode) {
 		orig_open64 = (orig_open64_t)dlsym(RTLD_NEXT, "open64");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_open64(pathname, flags, mode);
@@ -357,7 +357,7 @@ int openat(int dirfd, const char *pathname, int flags, mode_t mode) {
 		orig_openat = (orig_openat_t)dlsym(RTLD_NEXT, "openat");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_openat(dirfd, pathname, flags, mode);
@@ -374,7 +374,7 @@ int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 		orig_openat64 = (orig_openat64_t)dlsym(RTLD_NEXT, "openat64");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_openat64(dirfd, pathname, flags, mode);
@@ -391,7 +391,7 @@ FILE *fopen(const char *pathname, const char *mode) {
 		orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	FILE *rv = orig_fopen(pathname, mode);
@@ -407,7 +407,7 @@ FILE *fopen64(const char *pathname, const char *mode) {
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	FILE *rv = orig_fopen64(pathname, mode);
@@ -427,7 +427,7 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 		orig_freopen = (orig_freopen_t)dlsym(RTLD_NEXT, "freopen");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	FILE *rv = orig_freopen(pathname, mode, stream);
@@ -445,7 +445,7 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 		orig_freopen64 = (orig_freopen64_t)dlsym(RTLD_NEXT, "freopen64");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	FILE *rv = orig_freopen64(pathname, mode, stream);
@@ -464,7 +464,7 @@ int unlink(const char *pathname) {
 		orig_unlink = (orig_unlink_t)dlsym(RTLD_NEXT, "unlink");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_unlink(pathname);
@@ -481,7 +481,7 @@ int unlinkat(int dirfd, const char *pathname, int flags) {
 		orig_unlinkat = (orig_unlinkat_t)dlsym(RTLD_NEXT, "unlinkat");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_unlinkat(dirfd, pathname, flags);
@@ -499,7 +499,7 @@ int mkdir(const char *pathname, mode_t mode) {
 		orig_mkdir = (orig_mkdir_t)dlsym(RTLD_NEXT, "mkdir");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_mkdir(pathname, mode);
@@ -516,7 +516,7 @@ int mkdirat(int dirfd, const char *pathname, mode_t mode) {
 		orig_mkdirat = (orig_mkdirat_t)dlsym(RTLD_NEXT, "mkdirat");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_mkdirat(dirfd, pathname, mode);
@@ -533,7 +533,7 @@ int rmdir(const char *pathname) {
 		orig_rmdir = (orig_rmdir_t)dlsym(RTLD_NEXT, "rmdir");
 	if (!blacklist_loaded)
 		load_blacklist();
-		
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_rmdir(pathname);
@@ -551,7 +551,7 @@ int stat(const char *pathname, struct stat *buf) {
 		orig_stat = (orig_stat_t)dlsym(RTLD_NEXT, "stat");
 	if (!blacklist_loaded)
 		load_blacklist();
-			
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_stat(pathname, buf);
@@ -569,7 +569,7 @@ int stat64(const char *pathname, struct stat64 *buf) {
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
 	if (!blacklist_loaded)
 		load_blacklist();
-			
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_stat64(pathname, buf);
@@ -587,7 +587,7 @@ int lstat(const char *pathname, struct stat *buf) {
 		orig_lstat = (orig_lstat_t)dlsym(RTLD_NEXT, "lstat");
 	if (!blacklist_loaded)
 		load_blacklist();
-			
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_lstat(pathname, buf);
@@ -605,7 +605,7 @@ int lstat64(const char *pathname, struct stat64 *buf) {
 		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
 	if (!blacklist_loaded)
 		load_blacklist();
-			
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_lstat64(pathname, buf);
@@ -624,7 +624,7 @@ int access(const char *pathname, int mode) {
 		orig_access = (orig_access_t)dlsym(RTLD_NEXT, "access");
 	if (!blacklist_loaded)
 		load_blacklist();
-			
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	int rv = orig_access(pathname, mode);
@@ -642,7 +642,7 @@ DIR *opendir(const char *pathname) {
 		orig_opendir = (orig_opendir_t)dlsym(RTLD_NEXT, "opendir");
 	if (!blacklist_loaded)
 		load_blacklist();
-			
+
 	if (storage_find(pathname))
 		sendlog(name(), __FUNCTION__, pathname);
 	DIR *rv = orig_opendir(pathname);

@@ -112,5 +112,3 @@ Homepage: http://firejail.wordpress.com
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5)
-
-

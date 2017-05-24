@@ -42,4 +42,3 @@ clean:; rm -f *.o firejail firejail.1 firejail.1.gz *.gcov *.gcda *.gcno
 
 distclean: clean
 	rm -fr Makefile
-

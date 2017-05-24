@@ -257,7 +257,7 @@ void seccomp_default(const char *fname, int allow_debuggers) {
 	filter_init(fd);
 	add_default_list(fd, allow_debuggers);
 	filter_end_blacklist(fd);
-	
+
 	// close file
 	close(fd);
 }
@@ -281,7 +281,7 @@ void seccomp_drop(const char *fname, char *list, int allow_debuggers) {
 		exit(1);
 	}
 	filter_end_blacklist(fd);
-	
+
 	// close file
 	close(fd);
 }
@@ -305,7 +305,7 @@ void seccomp_default_drop(const char *fname, char *list, int allow_debuggers) {
 		exit(1);
 	}
 	filter_end_blacklist(fd);
-	
+
 	// close file
 	close(fd);
 }
@@ -326,15 +326,14 @@ void seccomp_keep(const char *fname, char *list) {
 	filter_add_whitelist(fd, SYS_setgroups, 0);
 	filter_add_whitelist(fd, SYS_dup, 0);
 	filter_add_whitelist(fd, SYS_prctl, 0);
-	
+
 	if (syscall_check_list(list, filter_add_whitelist, fd, 0)) {
 		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 		exit(1);
 	}
-	
+
 	filter_end_whitelist(fd);
-	
+
 	// close file
 	close(fd);
 }
-

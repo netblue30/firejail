@@ -33,13 +33,13 @@ static Env *envlist = NULL;
 
 static void env_add(Env *env) {
 	env->next = NULL;
-	
+
 	// add the new entry at the end of the list
 	if (envlist == NULL) {
 		envlist = env;
 		return;
 	}
-	
+
 	Env *ptr = envlist;
 	while (1) {
 		if (ptr->next == NULL) {
@@ -77,7 +77,7 @@ void env_ibus_load(void) {
 			continue;
 		if (strlen(ptr) != 6)
 			continue;
-		
+
 		// open the file
 		char *fname;
 		if (asprintf(&fname, "%s/%s", dirname, entry->d_name) == -1)
@@ -86,7 +86,7 @@ void env_ibus_load(void) {
 		free(fname);
 		if (!fp)
 			continue;
-			
+
 		// read the file
 		const int maxline = 4096;
 		char buf[maxline];
@@ -137,24 +137,24 @@ void env_defaults(void) {
 		if (prompt && strcmp(prompt, "yes") == 0)
 			set_prompt = 1;
 	}
-	
+
 	if (set_prompt) {
 		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
 		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
 			errExit("setenv");
 	}
-	
+
 	// set the window title
 	if (!arg_quiet)
 		printf("\033]0;firejail %s\007", cfg.window_title);
 	fflush(0);
 }
 
-// parse and store the environment setting 
+// parse and store the environment setting
 void env_store(const char *str, ENV_OP op) {
 	EUID_ASSERT();
 	assert(str);
-	
+
 	// some basic checking
 	if (*str == '\0')
 		goto errexit;
@@ -182,11 +182,11 @@ void env_store(const char *str, ENV_OP op) {
 		env->value = ptr2 + 1;
 	}
 	env->op = op;
-	
+
 	// add entry to the list
 	env_add(env);
 	return;
-	
+
 errexit:
 	fprintf(stderr, "Error: invalid --env setting\n");
 	exit(1);
@@ -195,7 +195,7 @@ errexit:
 // set env variables in the new sandbox process
 void env_apply(void) {
 	Env *env = envlist;
-	
+
 	while (env) {
 		if (env->op == SETENV) {
 			if (setenv(env->name, env->value, 1) < 0)

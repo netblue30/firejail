@@ -35,27 +35,27 @@ void preproc_build_firejail_dir(void) {
 	if (stat(RUN_FIREJAIL_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_DIR, 0755);
 	}
-	
+
 	if (stat(RUN_FIREJAIL_NETWORK_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_NETWORK_DIR, 0755);
 	}
-	
+
 	if (stat(RUN_FIREJAIL_BANDWIDTH_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_BANDWIDTH_DIR, 0755);
 	}
-		
+
 	if (stat(RUN_FIREJAIL_NAME_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_NAME_DIR, 0755);
 	}
-	
+
 	if (stat(RUN_FIREJAIL_X11_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_X11_DIR, 0755);
 	}
-	
+
 	if (stat(RUN_FIREJAIL_APPIMAGE_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_APPIMAGE_DIR, 0755);
 	}
-	
+
 	if (stat(RUN_MNT_DIR, &s)) {
 		create_empty_dir_as_root(RUN_MNT_DIR, 0755);
 	}
@@ -74,7 +74,7 @@ void preproc_mount_mnt_dir(void) {
 			errExit("mounting /run/firejail/mnt");
 		tmpfs_mounted = 1;
 		fs_logger2("tmpfs", RUN_MNT_DIR);
-		
+
 		//copy defaultl seccomp files
 		copy_file(PATH_SECCOMP_I386, RUN_SECCOMP_I386, getuid(), getgid(), 0644); // root needed
 		copy_file(PATH_SECCOMP_AMD64, RUN_SECCOMP_AMD64, getuid(), getgid(), 0644); // root needed
@@ -82,7 +82,7 @@ void preproc_mount_mnt_dir(void) {
 			copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
 		else
 			copy_file(PATH_SECCOMP_DEFAULT, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
-			
+
 		// as root, create an empty RUN_SECCOMP_PROTOCOL file
 		create_empty_file_as_root(RUN_SECCOMP_PROTOCOL, 0644);
 		if (set_perms(RUN_SECCOMP_PROTOCOL, getuid(), getgid(), 0644))

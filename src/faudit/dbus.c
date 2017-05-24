@@ -28,7 +28,7 @@ int check_unix(const char *sockfile) {
 
 	// open socket
 	int sock = socket(AF_UNIX, SOCK_STREAM, 0);
-	if (sock == -1) 
+	if (sock == -1)
 		return rv;
 
 	// connect
@@ -41,7 +41,7 @@ int check_unix(const char *sockfile) {
 		remote.sun_path[0] = '\0';
 	if (connect(sock, (struct sockaddr *)&remote, len) == 0)
 		rv = 0;
-	
+
 	close(sock);
 	return rv;
 }
@@ -60,7 +60,7 @@ void dbus_test(void) {
 			*sockfile = '@';
 			char *ptr = strchr(sockfile, ',');
 			if (ptr)
-				*ptr = '\0';	
+				*ptr = '\0';
 			rv = check_unix(sockfile);
 			*sockfile = '@';
 			if (rv == 0)
@@ -83,13 +83,10 @@ void dbus_test(void) {
 			printf("UGLY: session bus configured for TCP communication.\n");
 		else
 			printf("GOOD: cannot find a D-Bus socket\n");
-			
-			
+
+
 		free(bus);
 	}
 	else
 		printf("GOOD: DBUS_SESSION_BUS_ADDRESS environment variable not configured.");
 }
-
-
-

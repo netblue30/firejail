@@ -21,7 +21,7 @@
 
 void tree(pid_t pid) {
 	pid_read(pid);
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -30,4 +30,3 @@ void tree(pid_t pid) {
 	}
 	printf("\n");
 }
-

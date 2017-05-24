@@ -31,7 +31,7 @@ static void print_seccomp(int pid) {
 		free(file);
 		return;
 	}
-	
+
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "Seccomp:", 8) == 0) {
@@ -43,10 +43,10 @@ static void print_seccomp(int pid) {
 	fclose(fp);
 	free(file);
 }
-			
+
 void seccomp(pid_t pid, int print_procs) {
 	pid_read(pid);	// include all processes
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -60,4 +60,3 @@ void seccomp(pid_t pid, int print_procs) {
 	}
 	printf("\n");
 }
-

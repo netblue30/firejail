@@ -26,13 +26,13 @@
 static void set_cpu(const char *str) {
 	if (strlen(str) == 0)
 		return;
-	
+
 	int val = atoi(str);
 	if (val < 0 || val >= 32) {
 		fprintf(stderr, "Error: invalid cpu number. Accepted values are between 0 and 31.\n");
 		exit(1);
 	}
-	
+
 	uint32_t mask = 1;
 	int i;
 	for (i = 0; i < val; i++, mask <<= 1);
@@ -41,11 +41,11 @@ static void set_cpu(const char *str) {
 
 void read_cpu_list(const char *str) {
 	EUID_ASSERT();
-	
+
 	char *tmp = strdup(str);
 	if (tmp == NULL)
 		errExit("strdup");
-	
+
 	char *ptr = tmp;
 	while (*ptr != '\0') {
 		if (*ptr == ',' || isdigit(*ptr))
@@ -56,7 +56,7 @@ void read_cpu_list(const char *str) {
 		}
 		ptr++;
 	}
-	
+
 	char *start = tmp;
 	ptr = tmp;
 	while (*ptr != '\0') {
@@ -107,17 +107,17 @@ void set_cpu_affinity(void) {
 	// set cpu affinity
 	cpu_set_t mask;
 	CPU_ZERO(&mask);
-	
+
 	int i;
 	uint32_t m = 1;
 	for (i = 0; i < 32; i++, m <<= 1) {
 		if (cfg.cpus & m)
 			CPU_SET(i, &mask);
 	}
-	
+
 	if (sched_setaffinity(0, sizeof(mask), &mask) == -1)
 		fwarning("cannot set cpu affinity\n");
-        	
+
         	// verify cpu affinity
 	cpu_set_t mask2;
 	CPU_ZERO(&mask2);
@@ -147,7 +147,7 @@ static void print_cpu(int pid) {
 		return;
 	}
 
-#define MAXBUF 4096	
+#define MAXBUF 4096
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "Cpus_allowed_list:", 18) == 0) {
@@ -164,7 +164,7 @@ static void print_cpu(int pid) {
 
 void cpu_print_filter(pid_t pid) {
 	EUID_ASSERT();
-	
+
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	EUID_ROOT();	// grsecurity
 	char *comm = pid_proc_comm(pid);
@@ -192,4 +192,3 @@ void cpu_print_filter(pid_t pid) {
 	print_cpu(pid);
 	exit(0);
 }
-

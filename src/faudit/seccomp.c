@@ -24,7 +24,7 @@ static int extract_seccomp(int *val) {
 	FILE *fp = fopen("/proc/self/status", "r");
 	if (!fp)
 		return 1;
-	
+
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "Seccomp:\t", 8) == 0) {
@@ -44,12 +44,12 @@ static int extract_seccomp(int *val) {
 void seccomp_test(void) {
 	int seccomp_status;
 	int rv = extract_seccomp(&seccomp_status);
-	
+
 	if (rv) {
 		printf("INFO: cannot extract seccomp configuration on this platform.\n");
 		return;
 	}
-	
+
 	if (seccomp_status == 0) {
 		printf("BAD: seccomp disabled. Use \"firejail --seccomp\" to enable it.\n");
 	}
@@ -67,10 +67,10 @@ void seccomp_test(void) {
 
 		printf("ptrace... "); fflush(0);
 		syscall_run("ptrace");
-		
+
 		printf("swapon... "); fflush(0);
 		syscall_run("swapon");
-		
+
 		printf("swapoff... "); fflush(0);
 		syscall_run("swapoff");
 
@@ -79,20 +79,20 @@ void seccomp_test(void) {
 
 		printf("delete_module... "); fflush(0);
 		syscall_run("delete_module");
-		
+
 		printf("chroot... "); fflush(0);
 		syscall_run("chroot");
-		
+
 		printf("pivot_root... "); fflush(0);
 		syscall_run("pivot_root");
-		
+
 #if defined(__i386__) || defined(__x86_64__)
 		printf("iopl... "); fflush(0);
 		syscall_run("iopl");
-		
+
 		printf("ioperm... "); fflush(0);
 		syscall_run("ioperm");
-#endif	
+#endif
 		printf("\n");
 	}
 	else

@@ -48,7 +48,7 @@ static void release_all(void) {
 	}
 	dirlist = NULL;
 }
-	
+
 static void build_list(const char *srcdir) {
 	// extract current /var/log directory data
 	struct dirent *dir;
@@ -77,7 +77,7 @@ static void build_list(const char *srcdir) {
 //				s.st_uid,
 //				s.st_gid,
 //				dir->d_name);
-			
+
 			DirData *ptr = malloc(sizeof(DirData));
 			if (ptr == NULL)
 				errExit("malloc");
@@ -87,8 +87,8 @@ static void build_list(const char *srcdir) {
 			ptr->st_uid = s.st_uid;
 			ptr->st_gid = s.st_gid;
 			ptr->next = dirlist;
-			dirlist = ptr;		
-		}			
+			dirlist = ptr;
+		}
 	}
 	closedir(d);
 }
@@ -102,10 +102,10 @@ static void build_dirs(void) {
 		ptr = ptr->next;
 	}
 }
-	
+
 void fs_var_log(void) {
 	build_list("/var/log");
-	
+
 	// note: /var/log is not created here, if it does not exist, this section fails.
 	// create /var/log if it doesn't exit
 	if (is_dir("/var/log")) {
@@ -114,17 +114,17 @@ void fs_var_log(void) {
 		gid_t wtmp_group = 0;
 		if (stat("/var/log/wtmp", &s) == 0)
 			wtmp_group = s.st_gid;
-		
+
 		// mount a tmpfs on top of /var/log
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/log\n");
 		if (mount("tmpfs", "/var/log", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/log");
 		fs_logger("tmpfs /var/log");
-		
+
 		build_dirs();
 		release_all();
-		
+
 		// create an empty /var/log/wtmp file
 		/* coverity[toctou] */
 		FILE *fp = fopen("/var/log/wtmp", "w");
@@ -133,7 +133,7 @@ void fs_var_log(void) {
 			fclose(fp);
 		}
 		fs_logger("touch /var/log/wtmp");
-			
+
 		// create an empty /var/log/btmp file
 		fp = fopen("/var/log/btmp", "w");
 		if (fp) {
@@ -148,7 +148,7 @@ void fs_var_log(void) {
 
 void fs_var_lib(void) {
 	struct stat s;
-	
+
 	// ISC DHCP multiserver
 	if (stat("/var/lib/dhcp", &s) == 0) {
 		if (arg_debug)
@@ -156,10 +156,10 @@ void fs_var_lib(void) {
 		if (mount("tmpfs", "/var/lib/dhcp", "tmpfs", MS_NOSUID |  MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/dhcp");
 		fs_logger("tmpfs /var/lib/dhcp");
-			
+
 		// isc dhcp server requires a /var/lib/dhcp/dhcpd.leases file
 		FILE *fp = fopen("/var/lib/dhcp/dhcpd.leases", "w");
-		
+
 		if (fp) {
 			fprintf(fp, "\n");
 			SET_PERMS_STREAM(fp, 0, 0, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
@@ -175,7 +175,7 @@ void fs_var_lib(void) {
 		if (mount("tmpfs", "/var/lib/nginx", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/nginx");
 		fs_logger("tmpfs /var/lib/nginx");
-	}			
+	}
 
 	// net-snmp multiserver
 	if (stat("/var/lib/snmp", &s) == 0) {
@@ -184,7 +184,7 @@ void fs_var_lib(void) {
 		if (mount("tmpfs", "/var/lib/snmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/snmp");
 		fs_logger("tmpfs /var/lib/snmp");
-	}			
+	}
 
 	// this is where sudo remembers its state
 	if (stat("/var/lib/sudo", &s) == 0) {
@@ -193,7 +193,7 @@ void fs_var_lib(void) {
 		if (mount("tmpfs", "/var/lib/sudo", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/sudo");
 		fs_logger("tmpfs /var/lib/sudo");
-	}			
+	}
 }
 
 void fs_var_cache(void) {
@@ -205,7 +205,7 @@ void fs_var_cache(void) {
 		if (mount("tmpfs", "/var/cache/apache2", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/apache2");
 		fs_logger("tmpfs /var/cache/apache2");
-	}			
+	}
 
 	if (stat("/var/cache/lighttpd", &s) == 0) {
 		if (arg_debug)
@@ -221,13 +221,13 @@ void fs_var_cache(void) {
 			uid = p->pw_uid;
 			gid = p->pw_gid;
 		}
-		
+
 		mkdir_attr("/var/cache/lighttpd/compress", 0755, uid, gid);
 		fs_logger("mkdir /var/cache/lighttpd/compress");
 
 		mkdir_attr("/var/cache/lighttpd/uploads", 0755, uid, gid);
 		fs_logger("/var/cache/lighttpd/uploads");
-	}			
+	}
 }
 
 void dbg_test_dir(const char *dir) {
@@ -312,7 +312,7 @@ void fs_var_utmp(void) {
 	FILE *fp = fopen(RUN_UTMP_FILE, "w");
 	if (!fp)
 		errExit("fopen");
-		
+
 	// read current utmp
 	struct utmp *u;
 	struct utmp u_boot;
@@ -324,12 +324,12 @@ void fs_var_utmp(void) {
 		}
 	}
 	endutent();
-			
+
 	// save new utmp file
 	fwrite(&u_boot, sizeof(u_boot), 1, fp);
 	SET_PERMS_STREAM(fp, 0, utmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
 	fclose(fp);
-	
+
 	// mount the new utmp file
 	if (arg_debug)
 		printf("Mount the new utmp file\n");

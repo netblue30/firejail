@@ -39,10 +39,10 @@ static char *paths[] = {
 // return 1 if found, 0 if not found
 static char *check_dir_or_file(const char *name) {
 	assert(name);
-	
+
 	struct stat s;
 	char *fname = NULL;
-	
+
 	int i = 0;
 	while (paths[i]) {
 		// private-bin-no-local can be disabled in /etc/firejail/firejail.config
@@ -50,12 +50,12 @@ static char *check_dir_or_file(const char *name) {
 			i++;
 			continue;
 		}
-		
-		// check file		
+
+		// check file
 		if (asprintf(&fname, "%s/%s", paths[i], name) == -1)
 			errExit("asprintf");
 		if (arg_debug)
-			printf("Checking %s/%s\n", paths[i], name);		
+			printf("Checking %s/%s\n", paths[i], name);
 		if (stat(fname, &s) == 0 && !S_ISDIR(s.st_mode)) { // do not allow directories
 			// check symlink to firejail executable in /usr/local/bin
 			if (strcmp(paths[i], "/usr/local/bin") == 0 && is_link(fname)) {
@@ -74,11 +74,11 @@ static char *check_dir_or_file(const char *name) {
 					}
 					free(actual_path);
 				}
-				
-			}		
+
+			}
 			break; // file found
 		}
-		
+
 		free(fname);
 		fname = NULL;
 		i++;
@@ -89,7 +89,7 @@ static char *check_dir_or_file(const char *name) {
 			fwarning("file %s not found\n", name);
 		return NULL;
 	}
-	
+
 	free(fname);
 	return paths[i];
 }
@@ -109,7 +109,7 @@ static void duplicate(char *fname) {
 	char *full_path;
 	if (asprintf(&full_path, "%s/%s", path, fname) == -1)
 		errExit("asprintf");
-	
+
 	// copy the file
 	if (checkcfg(CFG_FOLLOW_SYMLINK_PRIVATE_BIN))
 		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, RUN_BIN_DIR);
@@ -123,10 +123,10 @@ static void duplicate(char *fname) {
 void fs_private_bin_list(void) {
 	char *private_list = cfg.bin_private_keep;
 	assert(private_list);
-	
+
 	// create /run/firejail/mnt/bin directory
 	mkdir_attr(RUN_BIN_DIR, 0755, 0, 0);
-	
+
 	if (arg_debug)
 		printf("Copying files in the new bin directory\n");
 
@@ -134,12 +134,12 @@ void fs_private_bin_list(void) {
 	char *dlist = strdup(private_list);
 	if (!dlist)
 		errExit("strdup");
-	
+
 	char *ptr = strtok(dlist, ",");
 	duplicate(ptr);
 	while ((ptr = strtok(NULL, ",")) != NULL)
 		duplicate(ptr);
-	free(dlist);	
+	free(dlist);
 		fs_logger_print();
 
 	// mount-bind
@@ -157,4 +157,3 @@ void fs_private_bin_list(void) {
 		i++;
 	}
 }
-

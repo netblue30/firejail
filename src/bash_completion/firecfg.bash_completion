@@ -34,6 +34,3 @@ _firecfg()
     fi
 } &&
 complete -F _firecfg firecfg
-
-
-

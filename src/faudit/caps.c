@@ -26,7 +26,7 @@ static int extract_caps(uint64_t *val) {
 	FILE *fp = fopen("/proc/self/status", "r");
 	if (!fp)
 		return 1;
-	
+
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "CapBnd:\t", 8) == 0) {
@@ -47,7 +47,7 @@ static int extract_caps(uint64_t *val) {
 static int check_capability(uint64_t map, int cap) {
 	int i;
 	uint64_t mask = 1ULL;
-	
+
 	for (i = 0; i < 64; i++, mask <<= 1) {
 		if ((i == cap) && (mask & map))
 			return 1;
@@ -58,22 +58,21 @@ static int check_capability(uint64_t map, int cap) {
 
 void caps_test(void) {
 	uint64_t caps_val;
-	
+
 	if (extract_caps(&caps_val)) {
 		printf("SKIP: cannot extract capabilities on this platform.\n");
 		return;
 	}
-	
+
 	if (caps_val) {
 		printf("BAD: the capability map is %llx, it should be all zero. ", (unsigned long long) caps_val);
 		printf("Use \"firejail --caps.drop=all\" to fix it.\n");
-		
+
 		if (check_capability(caps_val, CAP_SYS_ADMIN))
 			printf("UGLY: CAP_SYS_ADMIN is enabled.\n");
 		if (check_capability(caps_val, CAP_SYS_BOOT))
 			printf("UGLY: CAP_SYS_BOOT is enabled.\n");
 	}
 	else
-		printf("GOOD: all capabilities are disabled.\n"); 
+		printf("GOOD: all capabilities are disabled.\n");
 }
-

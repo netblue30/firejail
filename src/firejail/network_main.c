@@ -50,7 +50,7 @@ void net_configure_bridge(Bridge *br, char *dev_name) {
 			if (asprintf(&newname, "%s-%u", br->devsandbox, getpid()) == -1)
 				errExit("asprintf");
 			br->devsandbox = newname;
-		}			
+		}
 		else {
 			fprintf(stderr, "Error: cannot find network device %s\n", br->dev);
 			exit(1);
@@ -72,7 +72,7 @@ void net_configure_bridge(Bridge *br, char *dev_name) {
 			printf("macvlan parent device %s at %d.%d.%d.%d/%d\n",
 				br->dev, PRINT_IP(br->ip), mask2bits(br->mask));
 	}
-	
+
 	uint32_t range = ~br->mask + 1;		  // the number of potential addresses
 	// this software is not supported for /31 networks
 	if (range < 4) {
@@ -127,7 +127,7 @@ void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child) {
 	}
 	else
 		dev = br->veth_name;
-		
+
 	char *cstr;
 	if (asprintf(&cstr, "%d", child) == -1)
 		errExit("asprintf");
@@ -249,7 +249,7 @@ void net_dns_print(pid_t pid) {
 		}
 		free(comm);
 	}
-	
+
 	char *fname;
 	EUID_ROOT();
 	if (asprintf(&fname, "/proc/%d/root/etc/resolv.conf", pid) == -1)
@@ -261,7 +261,7 @@ void net_dns_print(pid_t pid) {
 		fprintf(stderr, "Error: cannot access /etc/resolv.conf\n");
 		exit(1);
 	}
-	
+
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp))
 		printf("%s", buf);
@@ -284,21 +284,21 @@ void network_main(pid_t child) {
 		else
 			sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge0.devsandbox, cfg.bridge0.dev, cstr);
 	}
-	
+
 	if (cfg.bridge1.configured) {
 		if (cfg.bridge1.macvlan == 0)
 			net_configure_veth_pair(&cfg.bridge1, "eth1", child);
 		else
 			sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge1.devsandbox, cfg.bridge1.dev, cstr);
 	}
-	
+
 	if (cfg.bridge2.configured) {
 		if (cfg.bridge2.macvlan == 0)
 			net_configure_veth_pair(&cfg.bridge2, "eth2", child);
 		else
 			sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 6, PATH_FNET, "create", "macvlan", cfg.bridge2.devsandbox, cfg.bridge2.dev, cstr);
 	}
-	
+
 	if (cfg.bridge3.configured) {
 		if (cfg.bridge3.macvlan == 0)
 			net_configure_veth_pair(&cfg.bridge3, "eth3", child);

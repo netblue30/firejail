@@ -44,11 +44,11 @@ static char *resolve_downloads(int nowhitelist_flag) {
 	while (dentry[i] != NULL) {
 		if (asprintf(&fname, "%s/%s", cfg.homedir, dentry[i]) == -1)
 			errExit("asprintf");
-		
+
 		if (stat(fname, &s) == 0) {
 			if (arg_debug || arg_debug_whitelists)
 				printf("Downloads directory resolved as \"%s\"\n", fname);
-			
+
 			char *rv;
 			if (nowhitelist_flag) {
 				if (asprintf(&rv, "nowhitelist ~/%s", dentry[i]) == -1)
@@ -72,14 +72,14 @@ static char *resolve_downloads(int nowhitelist_flag) {
 	if (!fp) {
 		free(fname);
 		return NULL;
-	}		
+	}
 	free(fname);
-	
+
 	// extract downloads directory
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		char *ptr = buf;
-		
+
 		// skip blanks
 		while (*ptr == ' ' || *ptr == '\t')
 			ptr++;
@@ -97,15 +97,15 @@ static char *resolve_downloads(int nowhitelist_flag) {
 				if (strlen(ptr1) != 0) {
 					if (arg_debug || arg_debug_whitelists)
 						printf("Downloads directory resolved as \"%s\"\n", ptr1);
-				
+
 					if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
 						errExit("asprintf");
-					
+
 					if (stat(fname, &s) == -1) {
 						free(fname);
 						goto errout;
 					}
-				
+
 					char *rv;
 					if (nowhitelist_flag) {
 						if (asprintf(&rv, "nowhitelist ~/%s", ptr + 24) == -1)
@@ -122,7 +122,7 @@ static char *resolve_downloads(int nowhitelist_flag) {
 			}
 		}
 	}
-	
+
 	fclose(fp);
 	return NULL;
 
@@ -131,13 +131,13 @@ errout:
 	fprintf(stderr, "*** Error: Downloads directory was not found in user home.\n");
 	fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
 	fprintf(stderr, "***\n");
-	
+
 	return NULL;
 }
 
 static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
-	
+
 	mode |= 0111;
 
 	// create directories with uid/gid as root or as current user if inside home directory
@@ -168,13 +168,13 @@ static int mkpath(const char* path, mode_t mode) {
 			if (set_perms(file_path, uid, gid, mode))
 				errExit("set_perms");
 			done = 1;
-		}			
+		}
 
 		*p='/';
 	}
 	if (done)
 		fs_logger2("mkpath", path);
-	
+
 	free(file_path);
 	return 0;
 }
@@ -187,14 +187,14 @@ static void whitelist_path(ProfileEntry *entry) {
 	char *wfile = NULL;
 
 	if (entry->home_dir) {
-		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {		
+		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			fname = path + strlen(cfg.homedir);
 			if (*fname == '\0')
 				goto errexit;
 		}
 		else
 			fname = path;
-	
+
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
 	}
@@ -202,7 +202,7 @@ static void whitelist_path(ProfileEntry *entry) {
 		fname = path + 4; // strlen("/tmp")
 		if (*fname == '\0')
 			goto errexit;
-	
+
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
 	}
@@ -210,7 +210,7 @@ static void whitelist_path(ProfileEntry *entry) {
 		fname = path + 6; // strlen("/media")
 		if (*fname == '\0')
 			goto errexit;
-	
+
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MEDIA_DIR, fname) == -1)
 			errExit("asprintf");
 	}
@@ -226,7 +226,7 @@ static void whitelist_path(ProfileEntry *entry) {
 		fname = path + 4; // strlen("/var")
 		if (*fname == '\0')
 			goto errexit;
-	
+
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_VAR_DIR, fname) == -1)
 			errExit("asprintf");
 	}
@@ -234,7 +234,7 @@ static void whitelist_path(ProfileEntry *entry) {
 		fname = path + 4; // strlen("/dev")
 		if (*fname == '\0')
 			goto errexit;
-	
+
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_DEV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
@@ -242,7 +242,7 @@ static void whitelist_path(ProfileEntry *entry) {
 		fname = path + 4; // strlen("/opt")
 		if (*fname == '\0')
 			goto errexit;
-	
+
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_OPT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
@@ -263,18 +263,18 @@ static void whitelist_path(ProfileEntry *entry) {
 	else {
 		return;
 	}
-	
+
 	// create the path if necessary
 	mkpath(path, s.st_mode);
 	fs_logger2("whitelist", path);
 
 	// process directory
-	if (S_ISDIR(s.st_mode)) {	
+	if (S_ISDIR(s.st_mode)) {
 		// create directory
 		int rv = mkdir(path, 0755);
 		(void) rv;
 	}
-	
+
 	// process regular file
 	else {
 		if (access(path, R_OK)) {
@@ -291,7 +291,7 @@ static void whitelist_path(ProfileEntry *entry) {
 		else
 			return; // the file is already present
 	}
-	
+
 	// mount
 	if (mount(wfile, path, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
@@ -328,11 +328,11 @@ void fs_whitelist(void) {
 	char **nowhitelist = calloc(nowhitelist_m, sizeof(*nowhitelist));
 	if (nowhitelist == NULL)
 		errExit("failed allocating memory for nowhitelist entries");
-	
+
 	// verify whitelist files, extract symbolic links, etc.
 	while (entry) {
 		int nowhitelist_flag = 0;
-	
+
 		// handle only whitelist and nowhitelist commands
 		if (strncmp(entry->data, "whitelist ", 10) == 0)
 			nowhitelist_flag = 0;
@@ -412,16 +412,16 @@ void fs_whitelist(void) {
 				else if (strncmp(new_name, "/srv/", 5) == 0)
 					opt_dir = 1;
 			}
-			
+
 			*entry->data = '\0';
 			continue;
 		}
-		
+
 		if (nowhitelist_flag) {
 			// store the path in nowhitelist array
 			if (arg_debug || arg_debug_whitelists)
 				printf("Storing nowhitelist %s\n", fname);
-				
+
 			if (nowhitelist_c >= nowhitelist_m) {
 				nowhitelist_m *= 2;
 				nowhitelist = realloc(nowhitelist, sizeof(*nowhitelist) * nowhitelist_m);
@@ -432,8 +432,8 @@ void fs_whitelist(void) {
 			*entry->data = 0;
 			continue;
 		}
-		
-		
+
+
 		// check for supported directories
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			// whitelisting home directory is disabled if --private option is present
@@ -544,7 +544,7 @@ void fs_whitelist(void) {
 				free(fname);
 				continue;
 			}
-		}	
+		}
 
 		// mark symbolic links
 		if (is_link(new_name))
@@ -566,29 +566,29 @@ void fs_whitelist(void) {
 		free(fname);
 		entry = entry->next;
 	}
-	
+
 	// release nowhitelist memory
 	assert(nowhitelist);
 	free(nowhitelist);
-		
+
 	// /home/user
 	if (home_dir) {
 		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
 		mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
 		if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
-	
+
 		// mount a tmpfs and initialize /home/user
 		 fs_private();
 	}
-	
+
 	// /tmp mountpoint
 	if (tmp_dir) {
-		// keep a copy of real /tmp directory in  
+		// keep a copy of real /tmp directory in
 		mkdir_attr(RUN_WHITELIST_TMP_DIR, 1777, 0, 0);
 		if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
-	
+
 		// mount tmpfs on /tmp
 		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /tmp directory\n");
@@ -596,7 +596,7 @@ void fs_whitelist(void) {
 			errExit("mounting tmpfs on /tmp");
 		fs_logger("tmpfs /tmp");
 	}
-	
+
 	// /media mountpoint
 	if (media_dir) {
 		// some distros don't have a /media directory
@@ -606,7 +606,7 @@ void fs_whitelist(void) {
 			mkdir_attr(RUN_WHITELIST_MEDIA_DIR, 0755, 0, 0);
 			if (mount("/media", RUN_WHITELIST_MEDIA_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
-	
+
 			// mount tmpfs on /media
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /media directory\n");
@@ -646,7 +646,7 @@ void fs_whitelist(void) {
 		mkdir_attr(RUN_WHITELIST_VAR_DIR, 0755, 0, 0);
 		if (mount("/var", RUN_WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
-	
+
 		// mount tmpfs on /var
 		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /var directory\n");
@@ -661,7 +661,7 @@ void fs_whitelist(void) {
 		mkdir_attr(RUN_WHITELIST_DEV_DIR, 0755, 0, 0);
 		if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount bind");
-	
+
 		// mount tmpfs on /dev
 		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /dev directory\n");
@@ -676,7 +676,7 @@ void fs_whitelist(void) {
 		mkdir_attr(RUN_WHITELIST_OPT_DIR, 0755, 0, 0);
 		if (mount("/opt", RUN_WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
-	
+
 		// mount tmpfs on /opt
 		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /opt directory\n");
@@ -707,7 +707,7 @@ void fs_whitelist(void) {
 	}
 
 
-	
+
 	// go through profile rules again, and interpret whitelist commands
 	entry = cfg.profile;
 	while (entry) {
@@ -719,7 +719,7 @@ void fs_whitelist(void) {
 
 //printf("here %d#%s#\n", __LINE__, entry->data);
 		// whitelist the real file
-		if (strcmp(entry->data, "whitelist /run") == 0 && 
+		if (strcmp(entry->data, "whitelist /run") == 0 &&
 		    (strcmp(entry->link, "/var/run") == 0 || strcmp(entry->link, "/var/lock") == 0)) {
 			int rv = symlink(entry->data + 10, entry->link);
 			if (rv)
@@ -729,7 +729,7 @@ void fs_whitelist(void) {
 		}
 		else {
 			whitelist_path(entry);
-	
+
 			// create the link if any
 			if (entry->link) {
 				// if the link is already there, do not bother
@@ -737,7 +737,7 @@ void fs_whitelist(void) {
 				if (stat(entry->link, &s) != 0) {
 					// create the path if necessary
 					mkpath(entry->link, s.st_mode);
-	
+
 					int rv = symlink(entry->data + 10, entry->link);
 					if (rv)
 						fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
@@ -756,7 +756,7 @@ void fs_whitelist(void) {
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_HOME_USER_DIR);
 	}
-	
+
 	// mask the real /tmp directory, currently mounted on RUN_WHITELIST_TMP_DIR
 	if (tmp_dir) {
 		if (mount("tmpfs", RUN_WHITELIST_TMP_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
@@ -808,7 +808,7 @@ void fs_whitelist(void) {
 
 	if (new_name)
 		free(new_name);
-		
+
 	return;
 
 errexit:

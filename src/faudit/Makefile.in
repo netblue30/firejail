@@ -22,4 +22,3 @@ clean:; rm -f *.o faudit
 
 distclean: clean
 	rm -fr Makefile
-

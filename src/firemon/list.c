@@ -21,7 +21,7 @@
 
 void list(void) {
 	pid_read(0);	// include all processes
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -29,4 +29,3 @@ void list(void) {
 			pid_print_list(i, arg_nowrap);
 	}
 }
-

@@ -36,20 +36,20 @@ void fs_machineid(void) {
 		return;
 	if (arg_debug)
 		printf("Generating a new machine-id\n");
-		
+
 	// init random number generator
 	srand(time(NULL));
-	
+
 	// generate random id
 	mid.u32[0] = rand();
 	mid.u32[1] = rand();
 	mid.u32[2] = rand();
 	mid.u32[3] = rand();
-	
+
 	// UUID version 4 and DCE variant
 	mid.u8[6] = (mid.u8[6] & 0x0F) | 0x40;
 	mid.u8[8] = (mid.u8[8] & 0x3F) | 0x80;
-	
+
 	// write it in a file
 	FILE *fp = fopen(RUN_MACHINEID, "w");
 	if (!fp)
@@ -58,7 +58,7 @@ void fs_machineid(void) {
 	fclose(fp);
 	if (set_perms(RUN_MACHINEID, 0, 0, 0444))
 		errExit("set_perms");
-		
+
 
 	struct stat s;
 	if (stat("/etc/machine-id", &s) == 0) {
@@ -93,7 +93,7 @@ static int check_dir_or_file(const char *fname) {
 	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || !is_link(fname))
 		return 1;	// normal exit
 
-errexit:	
+errexit:
 	fprintf(stderr, "Error: invalid file type, %s.\n", fname);
 	exit(1);
 }
@@ -116,7 +116,7 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 
 	if (arg_debug)
 		printf("copying %s to private %s\n", src, private_dir);
-		
+
 	struct stat s;
 	if (stat(src, &s) == 0 && S_ISDIR(s.st_mode)) {
 		// create the directory in RUN_ETC_DIR
@@ -139,11 +139,11 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	assert(private_dir);
 	assert(private_run_dir);
 	assert(private_list);
-	
+
 	// create /run/firejail/mnt/etc directory
 	mkdir_attr(private_run_dir, 0755, 0, 0);
 	fs_logger2("tmpfs", private_dir);
-	
+
 	fs_logger_print();	// save the current log
 
 
@@ -157,21 +157,20 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 		char *dlist = strdup(private_list);
 		if (!dlist)
 			errExit("strdup");
-	
+
 
 		char *ptr = strtok(dlist, ",");
 		duplicate(ptr, private_dir, private_run_dir);
-	
+
 		while ((ptr = strtok(NULL, ",")) != NULL)
 			duplicate(ptr, private_dir, private_run_dir);
-		free(dlist);	
+		free(dlist);
 		fs_logger_print();
 	}
-	
+
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
 	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);
 }
-

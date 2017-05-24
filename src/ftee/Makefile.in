@@ -24,4 +24,3 @@ clean:; rm -f *.o ftee *.gcov *.gcda *.gcno
 
 distclean: clean
 	rm -fr Makefile
-

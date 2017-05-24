@@ -24,7 +24,7 @@
 
 void run_symlink(int argc, char **argv) {
 	EUID_ASSERT();
-	
+
 	char *program = strrchr(argv[0], '/');
 	if (program)
 		program += 1;
@@ -40,7 +40,7 @@ void run_symlink(int argc, char **argv) {
 		fprintf(stderr, "Error: PATH environment variable not set\n");
 		exit(1);
 	}
-	
+
 	char *path = strdup(p);
 	if (!path)
 		errExit("strdup");
@@ -105,8 +105,8 @@ void run_symlink(int argc, char **argv) {
 		a[i + 2] = argv[i + 1];
 	}
 	a[i + 2] = NULL;
-	assert(getenv("LD_PRELOAD") == NULL);	
-	execvp(a[0], a); 
+	assert(getenv("LD_PRELOAD") == NULL);
+	execvp(a[0], a);
 
 	perror("execvp");
 	exit(1);

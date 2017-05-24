@@ -40,7 +40,7 @@ static void check_if_name(const char *ifname) {
 void net_bridge_add_interface(const char *bridge, const char *dev) {
 	check_if_name(bridge);
 	check_if_name(dev);
-	
+
 	// somehow adding the interface to the bridge resets MTU on bridge device!!!
 	// workaround: restore MTU on the bridge device
 	// todo: put a real fix in
@@ -82,7 +82,7 @@ void net_bridge_add_interface(const char *bridge, const char *dev) {
 // bring interface up
 void net_if_up(const char *ifname) {
 	check_if_name(ifname);
-	
+
 	int sock = socket(AF_INET,SOCK_DGRAM,0);
 	if (sock < 0)
 		errExit("socket");
@@ -139,8 +139,8 @@ int net_get_mtu(const char *ifname) {
 	if (ioctl(s, SIOCGIFMTU, (caddr_t)&ifr) == 0)
 		mtu = ifr.ifr_mtu;
 	close(s);
-	
-	
+
+
 	return mtu;
 }
 
@@ -197,7 +197,7 @@ void net_ifprint(int scan) {
 			sprintf(ipstr, "%d.%d.%d.%d", PRINT_IP(ip));
 			char maskstr[30];
 			sprintf(maskstr, "%d.%d.%d.%d", PRINT_IP(mask));
-			
+
 			// mac address
 			unsigned char mac[6];
 			net_get_mac(ifa->ifa_name, mac);
@@ -207,7 +207,7 @@ void net_ifprint(int scan) {
 			else
 				sprintf(macstr, "%02x:%02x:%02x:%02x:%02x:%02x", PRINT_MAC(mac));
 
-			// print				
+			// print
 			printf("%-17.17s%-19.19s%-17.17s%-17.17s%-6.6s\n",
 				ifa->ifa_name, macstr, ipstr, maskstr, status);
 
@@ -240,7 +240,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
-	
+
 	if (ioctl(sock, SIOCGIFHWADDR, &ifr) == -1)
 		errExit("ioctl");
 	memcpy(mac, ifr.ifr_hwaddr.sa_data, 6);
@@ -262,7 +262,7 @@ void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu) {
 	ifr.ifr_addr.sa_family = AF_INET;
 
 	((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr = htonl(ip);
-	if (ioctl( sock, SIOCSIFADDR, &ifr ) < 0) 
+	if (ioctl( sock, SIOCSIFADDR, &ifr ) < 0)
 		errExit("ioctl");
 
 	if (ip != 0) {
@@ -270,7 +270,7 @@ void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu) {
 		if (ioctl( sock, SIOCSIFNETMASK, &ifr ) < 0)
 			errExit("ioctl");
 	}
-	
+
 	// configure mtu
 	if (mtu > 0) {
 		ifr.ifr_mtu = mtu;
@@ -295,7 +295,7 @@ int net_if_mac(const char *ifname, const unsigned char mac[6]) {
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
 	memcpy(ifr.ifr_hwaddr.sa_data, mac, 6);
-	
+
 	if (ioctl(sock, SIOCSIFHWADDR, &ifr) == -1)
 		errExit("ioctl");
 	close(sock);
@@ -315,7 +315,7 @@ void net_if_ip6(const char *ifname, const char *addr6) {
 		fprintf(stderr, "Error fnet: invalid IPv6 address %s\n", addr6);
 		exit(1);
 	}
-	
+
 	// extract prefix
 	unsigned long prefix;
 	char *ptr;
@@ -367,6 +367,6 @@ void net_if_ip6(const char *ifname, const char *addr6) {
 		perror("ioctl SIOCSIFADDR");
 		exit(1);
 	}
-	
+
 	close(sock);
 }

@@ -28,7 +28,7 @@ void seccomp_secondary_64(const char *fname) {
 		EXAMINE_SYSCALL,
 		BLACKLIST(165), // mount
 		BLACKLIST(166), // umount2
-// todo: implement --allow-debuggers		
+// todo: implement --allow-debuggers
 		BLACKLIST(101), // ptrace
 		BLACKLIST(246), // kexec_load
 		BLACKLIST(304), // open_by_handle_at
@@ -77,7 +77,7 @@ void seccomp_secondary_64(const char *fname) {
 		BLACKLIST(169), // reboot
 		BLACKLIST(180), // nfsservctl
 		BLACKLIST(177), // get_kernel_syms
-		
+
 		RETURN_ALLOW
 	};
 
@@ -87,7 +87,7 @@ void seccomp_secondary_64(const char *fname) {
 		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
 		exit(1);
 	}
-	
+
 	int size = (int) sizeof(filter);
 	int written = 0;
 	while (written < size) {
@@ -109,7 +109,7 @@ void seccomp_secondary_32(const char *fname) {
 		EXAMINE_SYSCALL,
 		BLACKLIST(21), // mount
 		BLACKLIST(52), // umount2
-// todo: implement --allow-debuggers		
+// todo: implement --allow-debuggers
 		BLACKLIST(26), // ptrace
 		BLACKLIST(283), // kexec_load
 		BLACKLIST(341), // name_to_handle_at
@@ -157,7 +157,7 @@ void seccomp_secondary_32(const char *fname) {
 		BLACKLIST(88), // reboot
 		BLACKLIST(169), // nfsservctl
 		BLACKLIST(130), // get_kernel_syms
-		
+
 		RETURN_ALLOW
 	};
 
@@ -167,7 +167,7 @@ void seccomp_secondary_32(const char *fname) {
 		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
 		exit(1);
 	}
-	
+
 	int size = (int) sizeof(filter);
 	int written = 0;
 	while (written < size) {
@@ -180,4 +180,3 @@ void seccomp_secondary_32(const char *fname) {
 	}
 	close(dst);
 }
-

@@ -17,7 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-	
+
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -36,7 +36,7 @@ static char *c_uid_name = NULL;
 
 static void print_file_or_dir(const char *path, const char *fname, int separator) {
 	assert(fname);
-	
+
 	char *name;
 	if (separator) {
 		if (asprintf(&name, "%s/%s", path, fname) == -1)
@@ -46,7 +46,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 		if (asprintf(&name, "%s%s", path, fname) == -1)
 			errExit("asprintf");
 	}
-	
+
 	struct stat s;
 	if (stat(name, &s) == -1) {
 		if (lstat(name, &s) == -1) {
@@ -78,7 +78,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 	printf( (s.st_mode & S_IWOTH) ? "w" : "-");
 	printf( (s.st_mode & S_IXOTH) ? "x" : "-");
 	printf(" ");
-		
+
 	// user name
 	char *username;
 	int allocated = 0;
@@ -100,7 +100,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 			if (!username)
 				errExit("asprintf");
 		}
-		
+
 		if (c_uid == 0) {
 			c_uid = s.st_uid;
 			c_uid_name = strdup(username);
@@ -108,7 +108,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 				errExit("asprintf");
 		}
 	}
-	
+
 	// print user name, 8 chars maximum
 	int len = strlen(username);
 	if (len > 8) {
@@ -121,7 +121,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 		printf(" ");
 	if (allocated)
 		free(username);
-	
+
 
 	// group name
 	char *groupname;
@@ -141,7 +141,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 				errExit("asprintf");
 		}
 	}
-	
+
 	// print grup name, 8 chars maximum
 	len = strlen(groupname);
 	if (len > 8) {
@@ -159,7 +159,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 		errExit("asprintf");
 	printf("%11.10s %s\n", sz, fname);
 	free(sz);
-	
+
 }
 
 static void print_directory(const char *path) {
@@ -168,7 +168,7 @@ static void print_directory(const char *path) {
 	if (stat(path, &s) == -1)
 		return;
 	assert(S_ISDIR(s.st_mode));
-	
+
 	struct dirent **namelist;
 	int i;
 	int n;
@@ -200,7 +200,7 @@ char *expand_path(const char *path) {
 		// assume the file is in current working directory
 		if (asprintf(&fname, "%s/%s", cfg.cwd, path) == -1)
 			errExit("asprintf");
-	}		
+	}
 	return fname;
 }
 
@@ -241,7 +241,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		printf("file1 %s\n", fname1);
 		printf("file2 %s\n", fname2);
 	}
-		
+
 	// sandbox root directory
 	char *rootdir;
 	if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)
@@ -254,7 +254,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			errExit("chroot");
 		if (chdir("/") < 0)
 			errExit("chdir");
-		
+
 		// drop privileges
 		drop_privs(0);
 
@@ -271,8 +271,8 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		}
 		if (arg_debug)
 			printf("realpath %s\n", rp);
-		
-	
+
+
 		// list directory contents
 		struct stat s;
 		if (stat(rp, &s) == -1) {
@@ -283,7 +283,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			char *dir;
 			if (asprintf(&dir, "%s/", rp) == -1)
 				errExit("asprintf");
-			
+
 			print_directory(dir);
 			free(dir);
 		}
@@ -299,7 +299,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		}
 		free(rp);
 	}
-	
+
 	// get file from sandbox and store it in the current directory
 	else if (op == SANDBOX_FS_GET) {
 		char *src_fname =fname1;
@@ -320,7 +320,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			SET_PERMS_FD(fd, getuid(), getgid(), 0600);
 			close(fd);
 		}
-		
+
 		// copy the source file into the temporary file - we need to chroot
 		pid_t child = fork();
 		if (child < 0)
@@ -331,10 +331,10 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 				errExit("chroot");
 			if (chdir("/") < 0)
 				errExit("chdir");
-			
+
 			// drop privileges
 			drop_privs(0);
-			
+
 			// copy the file
 			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
@@ -352,7 +352,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			unlink(tmp_fname);
 			exit(1);
 		}
-		
+
 		// copy the temporary file into the destionation file
 		child = fork();
 		if (child < 0)
@@ -360,7 +360,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		if (child == 0) {
 			// drop privileges
 			drop_privs(0);
-			
+
 			// copy the file
 			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
@@ -378,7 +378,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			unlink(tmp_fname);
 			exit(1);
 		}
-		
+
 		// remove the temporary file
 		unlink(tmp_fname);
 		EUID_USER();
@@ -401,7 +401,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		}
 		SET_PERMS_FD(fd, getuid(), getgid(), 0600);
 		close(fd);
-	
+
 		// copy the source file into the temporary file - we need to chroot
 		pid_t child = fork();
 		if (child < 0)
@@ -409,7 +409,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		if (child == 0) {
 			// drop privileges
 			drop_privs(0);
-			
+
 			// copy the file
 			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
@@ -427,7 +427,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			unlink(tmp_fname);
 			exit(1);
 		}
-		
+
 		// copy the temporary file into the destionation file
 		child = fork();
 		if (child < 0)
@@ -438,10 +438,10 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 				errExit("chroot");
 			if (chdir("/") < 0)
 				errExit("chdir");
-			
+
 			// drop privileges
 			drop_privs(0);
-			
+
 			// copy the file
 			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
@@ -459,7 +459,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			unlink(tmp_fname);
 			exit(1);
 		}
-		
+
 		// remove the temporary file
 		unlink(tmp_fname);
 		EUID_USER();

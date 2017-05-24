@@ -48,12 +48,12 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 
 //	printf("Scanning interface %s (%d.%d.%d.%d/%d)\n",
 //		dev, PRINT_IP(ifip & ifmask), mask2bits(ifmask));
-			
+
 	if (strlen(dev) > IFNAMSIZ) {
 		fprintf(stderr, "Error: invalid network device name %s\n", dev);
 		exit(1);
 	}
-	
+
 	// find interface mac address
 	int sock;
 	if ((sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW)) < 0)
@@ -70,7 +70,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 	// open layer2 socket
 	if ((sock = socket(PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 0)
 		errExit("socket");
-	
+
 	// try all possible ip addresses in ascending order
 	uint32_t range = ~ifmask + 1; // the number of potential addresses
 	// this software is not supported for /31 networks
@@ -90,7 +90,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 	struct timeval ts;
 	ts.tv_sec = 2; // 2 seconds receive timeout
 	ts.tv_usec = 0;
-	
+
 	while (1) {
 		fd_set rfds;
 		FD_ZERO(&rfds);
@@ -101,21 +101,21 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 		int maxfd = sock;
 
 		uint8_t frame[ETH_FRAME_LEN]; // includes eht header, vlan, and crc
-		memset(frame, 0, ETH_FRAME_LEN);	
+		memset(frame, 0, ETH_FRAME_LEN);
 
 		int nready;
 		if (dest < last)
 			nready = select(maxfd + 1,  &rfds, &wfds, (fd_set *) 0, NULL);
-		else		
+		else
 			nready = select(maxfd + 1,  &rfds,  (fd_set *) 0, (fd_set *) 0, &ts);
-		
+
 		if (nready < 0)
 			errExit("select");
-			
+
 		if (nready == 0) { // timeout
 			break;
 		}
-		
+
 		if (FD_ISSET(sock, &wfds) && dest < last) {
 			// configure layer2 socket address information
 			struct sockaddr_ll addr;
@@ -125,7 +125,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 			addr.sll_family = AF_PACKET;
 			memcpy (addr.sll_addr, mac, 6);
 			addr.sll_halen = htons(6);
-		
+
 			// build the arp packet header
 			ArpHdr hdr;
 			memset(&hdr, 0, sizeof(hdr));
@@ -138,7 +138,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 			memcpy(hdr.sender_ip, (uint8_t *)&src, 4);
 			uint32_t dst = htonl(dest);
 			memcpy(hdr.target_ip, (uint8_t *)&dst, 4);
-		
+
 			// build ethernet frame
 			uint8_t frame[ETH_FRAME_LEN]; // includes eht header, vlan, and crc
 			memset(frame, 0, sizeof(frame));
@@ -147,16 +147,16 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 			frame[12] = ETH_P_ARP / 256;
 			frame[13] = ETH_P_ARP % 256;
 			memcpy (frame + 14, &hdr, sizeof(hdr));
-		
+
 			// send packet
 			int len;
 			if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
 				errExit("send");
-//printf("send %d bytes to %d.%d.%d.%d\n", len, PRINT_IP(dest));		
+//printf("send %d bytes to %d.%d.%d.%d\n", len, PRINT_IP(dest));
 			fflush(0);
 			dest++;
 		}
-		
+
 		if (FD_ISSET(sock, &rfds)) {
 			// read the incoming packet
 			int len = recvfrom(sock, frame, ETH_FRAME_LEN, 0, NULL, NULL);
@@ -185,24 +185,21 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 					continue;
 				memcpy(&ip, hdr.sender_ip, 4);
 				ip = ntohl(ip);
-				
+
 				if (ip == last_ip) // filter duplicates
 					continue;
 				last_ip = ip;
-					
+
 				// printing
 				if (header_printed == 0) {
 					printf("   Network scan:\n");
 					header_printed = 1;
 				}
 				printf("   %02x:%02x:%02x:%02x:%02x:%02x\t%d.%d.%d.%d\n",
-					PRINT_MAC(hdr.sender_mac), PRINT_IP(ip));									
+					PRINT_MAC(hdr.sender_mac), PRINT_IP(ip));
 			}
 		}
 	}
-	
+
 	close(sock);
 }
-
-
-

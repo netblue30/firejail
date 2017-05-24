@@ -33,7 +33,7 @@ static void print_cgroup(int pid) {
 		free(file);
 		return;
 	}
-	
+
 	char buf[MAXBUF];
 	if (fgets(buf, MAXBUF, fp)) {
 		printf("  %s", buf);
@@ -43,10 +43,10 @@ static void print_cgroup(int pid) {
 	fclose(fp);
 	free(file);
 }
-			
+
 void cgroup(pid_t pid, int print_procs) {
 	pid_read(pid);
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -60,4 +60,3 @@ void cgroup(pid_t pid, int print_procs) {
 	}
 	printf("\n");
 }
-

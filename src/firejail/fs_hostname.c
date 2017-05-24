@@ -27,7 +27,7 @@
 
 void fs_hostname(const char *hostname) {
 	struct stat s;
-	
+
 	// create a new /etc/hostname
 	if (stat("/etc/hostname", &s) == 0) {
 		if (arg_debug)
@@ -40,7 +40,7 @@ void fs_hostname(const char *hostname) {
 			errExit("mount bind /etc/hostname");
 		fs_logger("create /etc/hostname");
 	}
-	
+
 	// create a new /etc/hosts
 	if (cfg.hosts_file == NULL && stat("/etc/hosts", &s) == 0) {
 		if (arg_debug)
@@ -56,7 +56,7 @@ void fs_hostname(const char *hostname) {
 			fclose(fp1);
 			goto errexit;
 		}
-		
+
 		char buf[4096];
 		int done = 0;
 		while (fgets(buf, sizeof(buf), fp1)) {
@@ -64,7 +64,7 @@ void fs_hostname(const char *hostname) {
 			char *ptr = strchr(buf, '\n');
 			if (ptr)
 				*ptr = '\0';
-				
+
 			// copy line
 			if (strstr(buf, "127.0.0.1") && done == 0) {
 				done = 1;
@@ -77,7 +77,7 @@ void fs_hostname(const char *hostname) {
 		// mode and owner
 		SET_PERMS_STREAM(fp2, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 		fclose(fp2);
-		
+
 		// bind-mount the file on top of /etc/hostname
 		fs_mount_hosts_file();
 	}
@@ -93,7 +93,7 @@ void fs_resolvconf(void) {
 		return;
 
 	struct stat s;
-	
+
 	// create a new /etc/hostname
 	if (stat("/etc/resolv.conf", &s) == 0) {
 		if (arg_debug)
@@ -103,7 +103,7 @@ void fs_resolvconf(void) {
 			fprintf(stderr, "Error: cannot create %s\n", RUN_RESOLVCONF_FILE);
 			exit(1);
 		}
-		
+
 		if (cfg.dns1)
 			fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
 		if (cfg.dns2)
@@ -115,7 +115,7 @@ void fs_resolvconf(void) {
 		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 
 		fclose(fp);
-		
+
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_RESOLVCONF_FILE, "/etc/resolv.conf", NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind /etc/resolv.conf");
@@ -135,7 +135,7 @@ char *fs_check_hosts_file(const char *fname) {
 	// no a link
 	if (is_link(rv))
 		goto errexit;
-	
+
 	// the user has read access to the file
 	if (access(rv, R_OK))
 		goto errexit;
@@ -175,4 +175,3 @@ errexit:
 	fprintf(stderr, "Error: invalid /etc/hosts file\n");
 	exit(1);
 }
-

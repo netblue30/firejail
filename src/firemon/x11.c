@@ -21,17 +21,17 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-			
+
 void x11(pid_t pid, int print_procs) {
 	pid_read(pid);
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {
 			if (print_procs || pid == 0)
 				pid_print_list(i, arg_nowrap);
-			
+
 			char *x11file;
 			// todo: use macro from src/firejail/firejail.h for /run/firejail/x11 directory
 			if (asprintf(&x11file, "/run/firejail/x11/%d", i) == -1)
@@ -53,4 +53,3 @@ void x11(pid_t pid, int print_procs) {
 	}
 	printf("\n");
 }
-

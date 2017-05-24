@@ -47,7 +47,7 @@ static void log_rotate(const char *fname) {
 	strcpy(name1, fname);
 	strcpy(name2, fname);
 	fflush(0);
-	
+
 	// delete filename.5
 	sprintf(name1 + index, ".5");
 	if (stat(name1, &s) == 0) {
@@ -55,7 +55,7 @@ static void log_rotate(const char *fname) {
 		if (rv == -1)
 			perror("unlink");
 	}
-	
+
 	// move files 1 to 4 down one position
 	sprintf(name2 + index, ".4");
 	if (stat(name2, &s) == 0) {
@@ -96,14 +96,14 @@ static void log_rotate(const char *fname) {
 		if (rv == -1)
 			perror("rename");
 	}
-	
+
 	free(name1);
 	free(name2);
 }
 
 static void log_write(const unsigned char *str, int len, const char *fname) {
 	assert(fname);
-	
+
 	if (out_fp == NULL) {
 		out_fp = fopen(fname, "w");
 		if (!out_fp) {
@@ -112,7 +112,7 @@ static void log_write(const unsigned char *str, int len, const char *fname) {
 		}
 		out_cnt = 0;
 	}
-	
+
 	// rotate files
 	out_cnt += len;
 	if (out_cnt >= out_max) {
@@ -127,9 +127,9 @@ static void log_write(const unsigned char *str, int len, const char *fname) {
 			exit(1);
 		}
 		out_cnt = len;
-	}				
-		
-	fwrite(str, len, 1, out_fp);	
+	}
+
+	fwrite(str, len, 1, out_fp);
 	fflush(0);
 }
 
@@ -139,7 +139,7 @@ static int is_dir(const char *fname) {
 	assert(fname);
 	if (*fname == '\0')
 		return 0;
-	
+
 	// if fname doesn't end in '/', add one
 	int rv;
 	struct stat s;
@@ -150,14 +150,14 @@ static int is_dir(const char *fname) {
 		if (asprintf(&tmp, "%s/", fname) == -1) {
 			fprintf(stderr, "Error: cannot allocate memory, %s:%d\n", __FILE__, __LINE__);
 			exit(1);
-		}		
+		}
 		rv = stat(tmp, &s);
 		free(tmp);
 	}
-	
+
 	if (rv == -1)
 		return 0;
-		
+
 	if (S_ISDIR(s.st_mode))
 		return 1;
 
@@ -199,13 +199,13 @@ int main(int argc, char **argv) {
 	// do not accept directories, links, and files with ".."
 	if (strstr(fname, "..") || is_link(fname) || is_dir(fname))
 		goto errexit;
-	
+
 	struct stat s;
 	if (stat(fname, &s) == 0) {
 		// check permissions
 		if (s.st_uid != getuid() || s.st_gid != getgid())
 			goto errexit;
-		
+
 		// check hard links
 		if (s.st_nlink != 1)
 			goto errexit;
@@ -229,11 +229,11 @@ int main(int argc, char **argv) {
 			continue;
 		if (n <= 0)
 			break;
-		
+
 		fwrite(buf, n, 1, stdout);
 		log_write(buf, n, fname);
 	}
-	
+
 	log_close();
 	return 0;
 

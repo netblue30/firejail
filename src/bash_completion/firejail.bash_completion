@@ -109,6 +109,3 @@ _firejail()
 
 } &&
 complete -F _firejail firejail
-
-
-

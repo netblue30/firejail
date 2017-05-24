@@ -24,7 +24,7 @@
 
 void check_output(int argc, char **argv) {
 	EUID_ASSERT();
-	
+
 	int i;
 	int outindex = 0;
 
@@ -49,7 +49,7 @@ void check_output(int argc, char **argv) {
 		fprintf(stderr, "Error: invalid output file. Links, directories and files with \"..\" are not allowed.\n");
 		exit(1);
 	}
-	
+
 	struct stat s;
 	if (stat(outfile, &s) == 0) {
 		// check permissions
@@ -57,7 +57,7 @@ void check_output(int argc, char **argv) {
 			fprintf(stderr, "Error: the output file needs to be owned by the current user.\n");
 			exit(1);
 		}
-		
+
 		// check hard links
 		if (s.st_nlink != 1) {
 			fprintf(stderr, "Error: no hard links allowed.\n");
@@ -71,11 +71,11 @@ void check_output(int argc, char **argv) {
 		len += strlen(argv[i]) + 1; // + ' '
 	}
 	len += 100 + strlen(LIBDIR) + strlen(outfile); // tee command
-	
+
 	char *cmd = malloc(len + 1); // + '\0'
 	if (!cmd)
 		errExit("malloc");
-	
+
 	char *ptr = cmd;
 	for (i = 0; i < argc; i++) {
 		if (strncmp(argv[i], "--output=", 9) == 0)
@@ -91,7 +91,7 @@ void check_output(int argc, char **argv) {
 	a[2] = cmd;
 	a[3] = NULL;
 
-	execvp(a[0], a); 
+	execvp(a[0], a);
 
 	perror("execvp");
 	exit(1);

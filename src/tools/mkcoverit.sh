@@ -29,7 +29,7 @@ then
 	pwd
 	./configure --prefix=/usr
 	cd ..
-	
+
 else
 	echo "Error: firetools source archive missing"
 	exit 1

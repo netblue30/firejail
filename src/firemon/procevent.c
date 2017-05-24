@@ -40,12 +40,12 @@ static int pid_is_firejail(pid_t pid) {
 	printf("%s: %d, pid %d\n", __FUNCTION__, __LINE__, pid);
 #endif
 	uid_t rv = 0;
-	
+
 	// open /proc/self/comm
 	char *file;
 	if (asprintf(&file, "/proc/%u/comm", pid) == -1)
 		errExit("asprintf");
-	
+
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
@@ -58,7 +58,7 @@ static int pid_is_firejail(pid_t pid) {
 		if (strncmp(buf, "firejail", 8) == 0)
 			rv = 1;
 	}
-	
+
 #ifdef DEBUG_PRCTL
 	printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
 #endif
@@ -76,7 +76,7 @@ static int pid_is_firejail(pid_t pid) {
 			goto doexit;
 		}
 		free(fname);
-	
+
 		// read file
 #define BUFLEN 4096
 		unsigned char buffer[BUFLEN];
@@ -90,16 +90,16 @@ static int pid_is_firejail(pid_t pid) {
 		}
 		buffer[len] = '\0';
 		close(fd);
-	
+
 		// list of firejail arguments that don't trigger sandbox creation
-		// the initial -- is not included 
+		// the initial -- is not included
 		char *exclude_args[] = {
 			"ls", "list", "tree", "x11", "help", "version", "top", "netstats", "debug-syscalls",
-			"debug-errnos", "debug-protocols", "protocol.print",  "debug.caps", 
+			"debug-errnos", "debug-protocols", "protocol.print",  "debug.caps",
 			"shutdown", "bandwidth", "caps.print", "cpu.print", "debug-caps",
 			"fs.print", "get", "overlay-clean", NULL
 		};
-		
+
 		int i;
 		char *start;
 		int first = 1;
@@ -114,30 +114,30 @@ static int pid_is_firejail(pid_t pid) {
 			if (strncmp(start, "--", 2) != 0)
 				break;
 			start += 2;
-			
+
 			// clan starting with =
 			char *ptr = strchr(start, '=');
 			if (ptr)
 				*ptr = '\0';
-			
+
 			// look into exclude list
 			int j = 0;
 			while (exclude_args[j] != NULL) {
 				if (strcmp(start, exclude_args[j]) == 0) {
 					rv = 0;
 #ifdef DEBUG_PRCTL
-printf("start=#%s#,  ptr=#%s#, flip rv %d\n", start, ptr, rv);				
+printf("start=#%s#,  ptr=#%s#, flip rv %d\n", start, ptr, rv);
 #endif
 					break;
 				}
 				j++;
 			}
-			
+
 			start = (char *) buffer + i + 1;
 		}
 	}
 
-doexit:	
+doexit:
 	fclose(fp);
 	free(file);
 #ifdef DEBUG_PRCTL
@@ -187,7 +187,7 @@ static int procevent_netlink_setup(void) {
 
 	if (writev(sock, iov, 3) == -1)
 		goto errexit;
-	
+
 	return sock;
 errexit:
 	fprintf(stderr, "Error: netlink socket problem\n");
@@ -209,29 +209,29 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 		__gcov_flush();
 #endif
 
-#define BUFFSIZE 4096 
+#define BUFFSIZE 4096
 		char __attribute__ ((aligned(NLMSG_ALIGNTO)))buf[BUFFSIZE];
-		
+
 		fd_set readfds;
 		int max;
 		FD_ZERO(&readfds);
 		FD_SET(sock, &readfds);
 		max = sock;
 		max++;
-		
+
 		int rv = select(max, &readfds, NULL, NULL, &tv);
 		if (rv == -1) {
 			fprintf(stderr, "recv: %s\n", strerror(errno));
 			return -1;
 		}
-		
+
 		// timeout
 		if (rv == 0) {
 			tv.tv_sec = 30;
 			tv.tv_usec = 0;
 			continue;
 		}
-		
+
 
 		if ((len = recv(sock, buf, sizeof(buf), 0)) == 0) {
 			return 0;
@@ -304,7 +304,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 					}
 					sprintf(lineptr, " exec");
 					break;
-					
+
 				case PROC_EVENT_EXIT:
 					if (proc_ev->event_data.exit.process_pid !=
 					    proc_ev->event_data.exit.process_tgid)
@@ -317,7 +317,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 					remove_pid = 1;
 					sprintf(lineptr, " exit");
 					break;
-					
+
 				case PROC_EVENT_UID:
 					pid = proc_ev->event_data.id.process_tgid;
 #ifdef DEBUG_PRCTL
@@ -363,11 +363,11 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 					continue;
 				}
 			}
-				
+
 			lineptr += strlen(lineptr);
 			sprintf(lineptr, " %u", pid);
 			lineptr += strlen(lineptr);
-			
+
 			char *user = pids[pid].user;
 			if (!user)
 				user = pid_get_user_name(pids[pid].uid);
@@ -376,7 +376,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 				sprintf(lineptr, " (%s)", user);
 				lineptr += strlen(lineptr);
 			}
-			
+
 
 			int sandbox_closed = 0; // exit sandbox flag
 			char *cmd = pids[pid].cmd;
@@ -409,11 +409,11 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 				lineptr += strlen(lineptr);
 			}
 			(void) lineptr;
-			
+
 			// print the event
-			printf("%s", line);			
+			printf("%s", line);
 			fflush(0);
-			
+
 			// unflag pid for exit events
 			if (remove_pid) {
 				if (pids[pid].user)
@@ -433,15 +433,15 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 				else
 					printf("\tchild %u\n", child);
 			}
-			
+
 			// on uid events the uid is changing
 			if (proc_ev->what == PROC_EVENT_UID) {
 				if (pids[pid].user)
 					free(pids[pid].user);
 				pids[pid].user = 0;
-				pids[pid].uid = pid_get_uid(pid); 
+				pids[pid].uid = pid_get_uid(pid);
 			}
-			
+
 			if (sandbox_closed)
 				exit(0);
 		}

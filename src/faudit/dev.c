@@ -26,19 +26,19 @@ void dev_test(void) {
 		fprintf(stderr, "Error: cannot open /dev directory\n");
 		return;
 	}
-	
+
 	struct dirent *entry;
 	printf("INFO: files visible in /dev directory: ");
 	int cnt = 0;
 	while ((entry = readdir(dir)) != NULL) {
 		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
 			continue;
-		
+
 		printf("%s, ", entry->d_name);
 		cnt++;
 	}
 	printf("\n");
-	
+
 	if (cnt > 20)
 		printf("MAYBE: /dev directory seems to be fully populated. Use --private-dev or --whitelist to restrict the access.\n");
 	else

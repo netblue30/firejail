@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
 	// open test file
 	char *fname = argv[1];
 	FILE *fp = fopen(fname, "r");
-	
+
 	// read test file
 	char buf[MAXBUF];
 	int line = 0;
@@ -80,22 +80,22 @@ int main(int argc, char **argv) {
 			*ptr ='\0';
 		if (*start == '\0')
 			continue;
-		
+
 		// skip comments
 		if (*start == '#')
 			continue;
 		ptr = strchr(start, '#');
 		if (ptr)
 			*ptr = '\0';
-					
-		// extract exit status		
+
+		// extract exit status
 		int status;
 		int rv = sscanf(start, "%d\n", &status);
 		if (rv != 1) {
 			fprintf(stderr, "Error: invalid line %d in %s\n", line, fname);
 			exit(1);
 		}
-		
+
 		// extract command
 		char *cmd = strchr(start, ' ');
 		if (!cmd) {
@@ -124,21 +124,21 @@ int main(int argc, char **argv) {
 		// parent
 		else {
 			int exit_status;
-			
+
 			alarm(TIMEOUT);
 			pid = waitpid(pid, &exit_status, 0);
 			if (pid == -1) {
 				perror("waitpid");
 				exit(1);
 			}
-			
+
 			if (WEXITSTATUS(exit_status) != status)
 				printf("ERROR TESTING: %s\n", cmd);
 		}
-		
+
 		fflush(0);
 	}
 	fclose(fp);
-	
+
 	return 0;
 }

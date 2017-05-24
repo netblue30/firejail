@@ -35,7 +35,7 @@ static char *get_header(void) {
 	if (asprintf(&rv, "%-5.5s %-9.9s %-10.10s %-10.10s %s",
 		"PID", "User", "RX(KB/s)", "TX(KB/s)", "Command") == -1)
 		errExit("asprintf");
-	
+
 	return rv;
 }
 
@@ -59,7 +59,7 @@ void get_stats(int parent) {
 		free(fname);
 		goto errexit;
 	}
-	
+
 	char buf[MAXBUF];
 	long long unsigned rx = 0;
 	long long unsigned tx = 0;
@@ -68,19 +68,19 @@ void get_stats(int parent) {
 			continue;
 		if (strncmp(buf, " face", 5) == 0)
 			continue;
-		
+
 		char *ptr = buf;
 		while (*ptr != '\0' && *ptr != ':') {
 			ptr++;
 		}
-		
+
 		if (*ptr == '\0') {
 			fclose(fp);
 			free(fname);
 			goto errexit;
 		}
 		ptr++;
-		
+
 		long long unsigned rxval;
 		long long unsigned txval;
 		unsigned a, b, c, d, e, f, g;
@@ -101,7 +101,7 @@ void get_stats(int parent) {
 	fclose(fp);
 	return;
 
-errexit:		
+errexit:
 	pids[parent].rx = 0;
 	pids[parent].tx = 0;
 	pids[parent].rx_delta = 0;
@@ -121,7 +121,7 @@ static void print_proc(int index, int itv, int col) {
 	}
 	else
 		ptrcmd = cmd;
-	
+
 	// check network namespace
 	char *name;
 	if (asprintf(&name, "/run/firejail/network/%d-netmap", index) == -1)
@@ -145,35 +145,35 @@ static void print_proc(int index, int itv, int col) {
 		ptruser = user;
 	else
 		ptruser = "";
-		
+
 
 	float rx_kbps = ((float) pids[index].rx_delta / 1000) / itv;
 	char ptrrx[15];
 	sprintf(ptrrx, "%.03f", rx_kbps);
-	
+
 	float tx_kbps = ((float) pids[index].tx_delta / 1000) / itv;
 	char ptrtx[15];
 	sprintf(ptrtx, "%.03f", tx_kbps);
-	
+
 	char buf[1024 + 1];
 	snprintf(buf, 1024, "%-5.5s %-9.9s %-10.10s %-10.10s %s",
 		pidstr, ptruser, ptrrx, ptrtx, ptrcmd);
 	if (col < 1024)
 		buf[col] = '\0';
 	printf("%s\n", buf);
-	
+
 	if (cmd)
 		free(cmd);
 	if (user)
 		free(user);
-	
+
 }
 
 void netstats(void) {
 	pid_read(0);	// include all processes
-	
+
 	printf("Displaying network statistics only for sandboxes using a new network namespace.\n");
-	
+
 	// print processes
 	while (1) {
 		// set pid table
@@ -186,10 +186,10 @@ void netstats(void) {
 			if (pids[i].level == 1)
 				get_stats(i);
 		}
-		
+
 		// wait 5 seconds
 		firemon_sleep(itv);
-		
+
 		// grab screen size
 		struct winsize sz;
 		int row = 24;
@@ -198,7 +198,7 @@ void netstats(void) {
 			col = sz.ws_col;
 			row = sz.ws_row;
 		}
-		
+
 		// start printing
 		firemon_clrscr();
 		char *header = get_header();
@@ -221,4 +221,3 @@ void netstats(void) {
 #endif
 	}
 }
-

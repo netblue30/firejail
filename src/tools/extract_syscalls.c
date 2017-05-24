@@ -28,14 +28,14 @@ int main(int argc, char **argv) {
 		printf("usage: %s /usr/include/x86_64-linux-gnu/bits/syscall.h\n", argv[0]);
 		return 1;
 	}
-	
+
 	//open file
 	FILE *fp = fopen(argv[1], "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open file\n");
 		return 1;
 	}
-	
+
 	// read file
 	char buf[BUFMAX];
 	while (fgets(buf, BUFMAX, fp)) {
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 		char *end = strchr(start, '\n');
 		if (end)
 			*end = '\0';
-		
+
 		// parsing
 		if (strncmp(start, "# error", 7) == 0)
 			continue;
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 			*(ptr2 - 1) = '\0';
-			
+
 			char *ptr3 = ptr1;
 			while (*ptr3 != ' ' && *ptr3 != '\t' && *ptr3 != '\0')
 				ptr3++;
@@ -75,17 +75,17 @@ int main(int argc, char **argv) {
 			while (*ptr3 != ' ' && *ptr3 != '\t' && *ptr3 != '\0')
 				ptr3++;
 			*ptr3 = '\0';
-			
+
 			ptr3 = ptr1;
 			while (*ptr3 != '_')
 				ptr3++;
 			ptr3++;
-			
+
 			printf("#ifdef %s\n", ptr1);
 			printf("#ifdef %s\n", ptr2);
 			printf("\t{\"%s\", %s},\n", ptr3, ptr2);
-			printf("#endif\n");			
-			printf("#endif\n");			
+			printf("#endif\n");
+			printf("#endif\n");
 		}
 	}
 	fclose(fp);

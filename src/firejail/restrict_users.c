@@ -56,23 +56,23 @@ static USER_LIST *ulist_find(const char *user) {
 			return ptr;
 		ptr = ptr->next;
 	}
-	
+
 	return NULL;
 }
 
 static void sanitize_home(void) {
 	assert(getuid() != 0);	// this code works only for regular users
-	
+
 	if (arg_debug)
 		printf("Cleaning /home directory\n");
-	
+
 	struct stat s;
 	if (stat(cfg.homedir, &s) == -1) {
 		// cannot find home directory, just return
 		fwarning("cannot find home directory\n");
 		return;
 	}
-	
+
 	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
 		errExit("mkdir");
 
@@ -93,7 +93,7 @@ static void sanitize_home(void) {
 			errExit("mkdir");
 	}
 	fs_logger2("mkdir", cfg.homedir);
-	
+
 	// set mode and ownership
 	if (set_perms(cfg.homedir, s.st_uid, s.st_gid, s.st_mode))
 		errExit("set_perms");
@@ -108,7 +108,7 @@ static void sanitize_home(void) {
 	fs_logger2("tmpfs", RUN_WHITELIST_HOME_DIR);
 	if (!arg_private)
 		fs_logger2("whitelist", cfg.homedir);
-	
+
 }
 
 static void sanitize_passwd(void) {
@@ -133,7 +133,7 @@ static void sanitize_passwd(void) {
 	fpout = fopen(RUN_PASSWD_FILE, "w");
 	if (!fpout)
 		goto errout;
-	
+
 	// read the file line by line
 	char buf[MAXBUF];
 	uid_t myuid = getuid();
@@ -141,12 +141,12 @@ static void sanitize_passwd(void) {
 		// comments and empty lines
 		if (*buf == '\0' || *buf == '#')
 			continue;
-		
+
 		// sample line:
 		// 	www-data:x:33:33:www-data:/var/www:/bin/sh
 		// drop lines with uid > 1000 and not the current user
 		char *ptr = buf;
-		
+
 		// advance to uid
 		while (*ptr != ':' && *ptr != '\0')
 			ptr++;
@@ -190,9 +190,9 @@ static void sanitize_passwd(void) {
 	if (mount(RUN_PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
 	fs_logger("create /etc/passwd");
-	
-	return;	
-	
+
+	return;
+
 errout:
 	fwarning("failed to clean up /etc/passwd\n");
 	if (fpin)
@@ -206,7 +206,7 @@ static int copy_line(FILE *fpout, char *buf, char *ptr) {
 	// fpout: GROUP_FILE
 	// buf: pulse:x:115:netblue,bingo
 	// ptr: 115:neblue,bingo
-	
+
 	while (*ptr != ':' && *ptr != '\0')
 		ptr++;
 	if (*ptr == '\0')
@@ -217,7 +217,7 @@ static int copy_line(FILE *fpout, char *buf, char *ptr) {
 		fprintf(fpout, "%s", buf);
 		return 0;
 	}
-	
+
 	// print what we have so far
 	char tmp = *ptr;
 	*ptr = '\0';
@@ -266,7 +266,7 @@ static void sanitize_group(void) {
 	fpout = fopen(RUN_GROUP_FILE, "w");
 	if (!fpout)
 		goto errout;
-	
+
 	// read the file line by line
 	char buf[MAXBUF];
 	gid_t mygid = getgid();
@@ -274,12 +274,12 @@ static void sanitize_group(void) {
 		// comments and empty lines
 		if (*buf == '\0' || *buf == '#')
 			continue;
-		
+
 		// sample line:
 		// 	pulse:x:115:netblue,bingo
 		// drop lines with uid > 1000 and not the current user group
 		char *ptr = buf;
-		
+
 		// advance to uid
 		while (*ptr != ':' && *ptr != '\0')
 			ptr++;
@@ -318,9 +318,9 @@ static void sanitize_group(void) {
 	if (mount(RUN_GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
 	fs_logger("create /etc/group");
-	
-	return;	
-	
+
+	return;
+
 errout:
 	fwarning("failed to clean up /etc/group\n");
 	if (fpin)
@@ -332,7 +332,7 @@ errout:
 void restrict_users(void) {
 	if (arg_allusers)
 		return;
-		
+
 	// only in user mode
 	if (getuid()) {
 		if (strncmp(cfg.homedir, "/home/", 6) == 0) {

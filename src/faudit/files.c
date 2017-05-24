@@ -26,7 +26,7 @@ static char *homedir = NULL;
 
 static void check_home_file(const char *name) {
 	assert(homedir);
-	
+
 	char *fname;
 	if (asprintf(&fname, "%s/%s", homedir, name) ==  -1)
 		errExit("asprintf");
@@ -37,7 +37,7 @@ static void check_home_file(const char *name) {
 	}
 	else
 		printf("GOOD: I cannot access files in %s directory.\n", fname);
-	
+
 	free(fname);
 }
 
@@ -47,14 +47,14 @@ void files_test(void) {
 		fprintf(stderr, "Error: cannot retrieve user account information\n");
 		return;
 	}
-	
+
 	username = strdup(pw->pw_name);
 	if (!username)
 		errExit("strdup");
 	homedir = strdup(pw->pw_dir);
 	if (!homedir)
 		errExit("strdup");
-	
+
 	// check access to .ssh directory
 	check_home_file(".ssh");
 
@@ -66,10 +66,10 @@ void files_test(void) {
 
 	// check access to Chromium browser directory
 	check_home_file(".config/chromium");
-	
+
 	// check access to Debian Icedove directory
 	check_home_file(".icedove");
-	
+
 	// check access to Thunderbird directory
 	check_home_file(".thunderbird");
 }

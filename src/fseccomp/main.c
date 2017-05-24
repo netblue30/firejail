@@ -46,7 +46,7 @@ int i;
 for (i = 0; i < argc; i++)
         printf("*%s* ", argv[i]);
 printf("\n");
-}       
+}
 #endif
 	if (argc < 2) {
 		usage();
@@ -56,7 +56,7 @@ printf("\n");
 	char *quiet = getenv("FIREJAIL_QUIET");
 	if (quiet && strcmp(quiet, "yes") == 0)
 		arg_quiet = 1;
-		
+
 	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
 		usage();
 		return 0;
@@ -71,7 +71,7 @@ printf("\n");
 		protocol_build_filter(argv[3], argv[4]);
 	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "64") == 0)
 		seccomp_secondary_64(argv[3]);
-	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "32") == 0) 
+	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "32") == 0)
 		seccomp_secondary_32(argv[3]);
 	else if (argc == 3 && strcmp(argv[1], "default") == 0)
 		seccomp_default(argv[2], 0);

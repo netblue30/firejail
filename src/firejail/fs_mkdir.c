@@ -57,7 +57,7 @@ static void mkdir_recursive(char *path) {
 
 void fs_mkdir(const char *name) {
 	EUID_ASSERT();
-	
+
 	// check directory name
 	invalid_filename(name);
 	char *expanded = expand_home(name, cfg.homedir);
@@ -93,11 +93,11 @@ void fs_mkdir(const char *name) {
 
 doexit:
 	free(expanded);
-}	
+}
 
 void fs_mkfile(const char *name) {
 	EUID_ASSERT();
-	
+
 	// check file name
 	invalid_filename(name);
 	char *expanded = expand_home(name, cfg.homedir);
@@ -115,7 +115,7 @@ void fs_mkfile(const char *name) {
 
 	// create file
 	touch_file_as_user(expanded, getuid(), getgid(), 0600);
-	
+
 doexit:
 	free(expanded);
 }

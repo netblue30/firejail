@@ -47,7 +47,7 @@ void set_rlimits(void) {
 		if (arg_debug)
 			printf("Config rlimit: number of processes %llu\n", cfg.rlimit_nproc);
 	}
-	
+
 	if (arg_rlimit_fsize) {
 		rl.rlim_cur = (rlim_t) cfg.rlimit_fsize;
 		rl.rlim_max = (rlim_t) cfg.rlimit_fsize;
@@ -59,7 +59,7 @@ void set_rlimits(void) {
 		if (arg_debug)
 			printf("Config rlimit: maximum file size %llu\n", cfg.rlimit_fsize);
 	}
-	
+
 	if (arg_rlimit_sigpending) {
 		rl.rlim_cur = (rlim_t) cfg.rlimit_sigpending;
 		rl.rlim_max = (rlim_t) cfg.rlimit_sigpending;

@@ -32,7 +32,7 @@ static void print_caps(int pid) {
 		free(file);
 		return;
 	}
-	
+
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "CapBnd:", 7) == 0) {
@@ -44,10 +44,10 @@ static void print_caps(int pid) {
 	fclose(fp);
 	free(file);
 }
-			
+
 void caps(pid_t pid, int print_procs) {
 	pid_read(pid);	// include all processes
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -61,4 +61,3 @@ void caps(pid_t pid, int print_procs) {
 	}
 	printf("\n");
 }
-

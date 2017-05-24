@@ -28,7 +28,7 @@
 #include <linux/loop.h>
 #include <errno.h>
 
-static char *devloop = NULL;	// device file 
+static char *devloop = NULL;	// device file
 static char *mntdir = NULL;	// mount point in /tmp directory
 
 static void err_loop(void) {
@@ -40,7 +40,7 @@ void appimage_set(const char *appimage) {
 	assert(appimage);
 	assert(devloop == NULL);	// don't call this twice!
 	EUID_ASSERT();
-	
+
 #ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
 	// check appimage file
 	invalid_filename(appimage);
@@ -74,13 +74,13 @@ void appimage_set(const char *appimage) {
 	close(cfd);
 	if (asprintf(&devloop, "/dev/loop%d", devnr) == -1)
 		errExit("asprintf");
-		
+
 	int lfd = open(devloop, O_RDONLY);
 	if (lfd == -1)
 		err_loop();
 	if (ioctl(lfd, LOOP_SET_FD, ffd) == -1)
 		err_loop();
-	
+
 	if (size) {
 		struct loop_info64 info;
 		memset(&info, 0, sizeof(struct loop_info64));
@@ -88,7 +88,7 @@ void appimage_set(const char *appimage) {
 		if (ioctl(lfd,  LOOP_SET_STATUS64, &info) == -1)
 			err_loop();
 	}
-	
+
 	close(lfd);
 	close(ffd);
 	EUID_USER();
@@ -99,13 +99,13 @@ void appimage_set(const char *appimage) {
 	EUID_ROOT();
 	mkdir_attr(mntdir, 0700, getuid(), getgid());
 	EUID_USER();
-	
+
 	// mount
 	char *mode;
 	if (asprintf(&mode, "mode=700,uid=%d,gid=%d", getuid(), getgid()) == -1)
 		errExit("asprintf");
 	EUID_ROOT();
-	
+
 	if (size == 0) {
 		if (mount(devloop, mntdir, "iso9660",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
 			errExit("mounting appimage");
@@ -128,7 +128,7 @@ void appimage_set(const char *appimage) {
 	// build new command line
 	if (asprintf(&cfg.command_line, "%s/AppRun", mntdir) == -1)
 		errExit("asprintf");
-	
+
 	free(mode);
 #ifdef HAVE_GCOV
 	__gcov_flush();
@@ -151,7 +151,7 @@ void appimage_clear(void) {
 			if (rv == 0) {
 				if (!arg_quiet)
 					printf("AppImage unmounted\n");
-				
+
 				break;
 			}
 			if (rv == -1 && errno == EBUSY) {
@@ -159,14 +159,14 @@ void appimage_clear(void) {
 				sleep(2);
 				continue;
 			}
-			
+
 			// rv = -1
 			if (!arg_quiet) {
 				fwarning("error trying to unmount %s\n", mntdir);
 				perror("umount");
 			}
 		}
-		
+
 		if (rv == 0) {
 			rmdir(mntdir);
 			free(mntdir);

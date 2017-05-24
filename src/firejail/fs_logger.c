@@ -17,7 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-	
+
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -47,7 +47,7 @@ static inline void insertmsg(FsMsg *ptr) {
 		last = ptr;
 		return;
 	}
-	
+
 	assert(last);
 	last->next = ptr;
 	last = ptr;
@@ -91,14 +91,14 @@ void fs_logger3(const char *msg1, const char *msg2, const char *msg3) {
 void fs_logger_print(void) {
 	if (!head)
 		return;
-	
+
 	FILE *fp = fopen(RUN_FSLOGGER_FILE, "a");
 	if (!fp) {
-		perror("fopen");		
+		perror("fopen");
 		return;
 	}
 	SET_PERMS_STREAM_NOERR(fp, getuid(), getgid(), 0644);
-	
+
 	FsMsg *ptr = head;
 	while (ptr) {
 		fprintf(fp, "%s\n", ptr->msg);
@@ -162,7 +162,7 @@ void fs_logger_print_log(pid_t pid) {
 		fprintf(stderr, "Error: Cannot open filesystem log\n");
 		exit(1);
 	}
-	
+
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp))
 		printf("%s", buf);

@@ -19,13 +19,13 @@ if [ "$1" = "--clear" ]; then
 		usage
 		exit
 	fi
-	
+
 	DEV=$2
 	echo "Removing bandwith limits"
 	/sbin/tc qdisc del dev $DEV root  2> /dev/null > /dev/null
 	/sbin/tc qdisc del dev $DEV ingress 2> /dev/null > /dev/null
 	exit
-	
+
 fi
 
 if [ "$1" = "--set" ]; then
@@ -38,22 +38,22 @@ if [ "$1" = "--set" ]; then
 		usage
 		exit
 	fi
-	
+
 	DEV=$2
 	echo "Configuring interface $DEV "
-	
+
 	IN=$3
 	IN=$((${IN} * 8))
 	echo "Download speed  ${IN}kbps"
-	
+
 	OUT=$4
 	OUT=$((${OUT} * 8))
 	echo "Upload speed  ${OUT}kbps"
-	
+
 	echo "cleaning limits"
 	/sbin/tc qdisc del dev $DEV root  2> /dev/null > /dev/null
 	/sbin/tc qdisc del dev $DEV ingress 2> /dev/null > /dev/null
-	
+
 	echo "configuring tc ingress"
 	/sbin/tc qdisc add dev $DEV handle ffff: ingress #2> /dev/null > /dev/null
 	/sbin/tc filter add dev $DEV parent ffff: protocol ip prio 50 u32 match ip src \
@@ -63,7 +63,7 @@ if [ "$1" = "--set" ]; then
 	/sbin/tc qdisc add dev $DEV root tbf rate ${OUT}kbit latency 25ms burst 10k #2> /dev/null > /dev/null
 	exit
 fi
-	
+
 echo "Error: missing parameters"
 usage
 exit 1

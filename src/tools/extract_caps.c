@@ -29,14 +29,14 @@ int main(int argc, char **argv) {
 		printf("usage: %s /usr/include/linux/capability.h\n", argv[0]);
 		return 1;
 	}
-	
+
 	//open file
 	FILE *fp = fopen(argv[1], "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open file\n");
 		return 1;
 	}
-	
+
 	// read file
 	char buf[BUFMAX];
 	while (fgets(buf, BUFMAX, fp)) {
@@ -47,12 +47,12 @@ int main(int argc, char **argv) {
 		char *end = strchr(start, '\n');
 		if (end)
 			*end = '\0';
-		
+
 		// parsing
 		if (strncmp(start, "#define CAP_", 12) == 0) {
 			if (strstr(start, "CAP_LAST_CAP"))
 				break;
-			
+
 			char *ptr1 = start + 8;
 			char *ptr2 = ptr1;
 			while (*ptr2 == ' ' || *ptr2 == '\t')
@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
 			while (*ptr2 != ' ' && *ptr2 != '\t')
 				ptr2++;
 			*ptr2 = '\0';
-			
+
 			ptr2 = strdup(ptr1);
 			assert(ptr2);
 			ptr2 += 4;
@@ -69,14 +69,14 @@ int main(int argc, char **argv) {
 				*ptr3 = tolower(*ptr3);
 				ptr3++;
 			}
-			
-			
+
+
 			printf("#ifdef %s\n", ptr1);
 			printf("\t{\"%s\", %s },\n", ptr2, ptr1);
 			printf("#endif\n");
-			
+
 		}
-		
+
 	}
 	fclose(fp);
 	return 0;

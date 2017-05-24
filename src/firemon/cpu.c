@@ -33,7 +33,7 @@ static void print_cpu(int pid) {
 		free(file);
 		return;
 	}
-	
+
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "Cpus_allowed_list:", 18) == 0) {
@@ -45,10 +45,10 @@ static void print_cpu(int pid) {
 	fclose(fp);
 	free(file);
 }
-			
+
 void cpu(pid_t pid, int print_procs) {
 	pid_read(pid);
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -62,4 +62,3 @@ void cpu(pid_t pid, int print_procs) {
 	}
 	printf("\n");
 }
-

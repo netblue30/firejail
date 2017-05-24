@@ -154,12 +154,12 @@ static CapsEntry capslist[] = {
 // not in Debian 7
 #ifdef CAP_BLOCK_SUSPEND
 	{"block_suspend", CAP_BLOCK_SUSPEND },
-#else	
+#else
 	{"block_suspend", 36 },
 #endif
 #ifdef CAP_AUDIT_READ
 	{"audit_read", CAP_AUDIT_READ },
-#else	
+#else
 	{"audit_read", 37 },
 #endif
 
@@ -176,7 +176,7 @@ static int caps_find_name(const char *name) {
 		if (strcmp(name, capslist[i].name) == 0)
 			return capslist[i].nr;
 	}
-	
+
 	return -1;
 }
 
@@ -205,32 +205,32 @@ void caps_check_list(const char *clist, void (*callback)(int)) {
 				goto errexit;
 			else if (callback != NULL)
 				callback(nr);
-				
+
 			start = ptr + 1;
 		}
 		ptr++;
 	}
 	if (*start != '\0') {
 		int nr = caps_find_name(start);
-		if (nr == -1) 
+		if (nr == -1)
 			goto errexit;
 		else if (callback != NULL)
 			callback(nr);
 	}
 
-	free(str);	
+	free(str);
 	return;
 
 errexit:
 	fprintf(stderr, "Error: capability \"%s\" not found\n", start);
-	exit(1);	
+	exit(1);
 }
 
 void caps_print(void) {
 	EUID_ASSERT();
 	int i;
 	int elems = sizeof(capslist) / sizeof(capslist[0]);
-	
+
 	// check current caps supported by the kernel
 	int cnt = 0;
 	unsigned long cap;
@@ -242,7 +242,7 @@ void caps_print(void) {
 	}
 	EUID_USER();
 	printf("Your kernel supports %d capabilities.\n", cnt);
-	
+
 	for (i = 0; i < elems; i++) {
 		printf("%d\t- %s\n", capslist[i].nr, capslist[i].name);
 	}
@@ -300,7 +300,7 @@ int caps_default_filter(void) {
 
 errexit:
 	fprintf(stderr, "Error: cannot drop capabilities\n");
-	exit(1);	
+	exit(1);
 }
 
 void caps_drop_all(void) {
@@ -359,7 +359,7 @@ void caps_keep_list(const char *clist) {
 #define MAXBUF 4098
 static uint64_t extract_caps(int pid) {
 	EUID_ASSERT();
-	
+
 	char *file;
 	if (asprintf(&file, "/proc/%d/status", pid) == -1)
 		errExit("asprintf");
@@ -369,7 +369,7 @@ static uint64_t extract_caps(int pid) {
 	EUID_USER();	// grsecurity
 	if (!fp)
 		goto errexit;
-	
+
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "CapBnd:\t", 8) == 0) {
@@ -383,7 +383,7 @@ static uint64_t extract_caps(int pid) {
 	}
 	fclose(fp);
 
-errexit:	
+errexit:
 	free(file);
 	fprintf(stderr, "Error: cannot read caps configuration\n");
 	exit(1);
@@ -391,7 +391,7 @@ errexit:
 
 void caps_print_filter(pid_t pid) {
 	EUID_ASSERT();
-	
+
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	EUID_ROOT();	// grsecurity
 	char *comm = pid_proc_comm(pid);

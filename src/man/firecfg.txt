@@ -4,7 +4,7 @@ Firecfg \- Desktop integration utility for Firejail software.
 .SH SYNOPSIS
 firecfg [OPTIONS]
 .SH DESCRIPTION
-Firecfg is the desktop integration utility for Firejail sandbox. 
+Firecfg is the desktop integration utility for Firejail sandbox.
 It allows the user to sandbox applications automatically by
 clicking on desktop manager icons and menus.
 
@@ -102,5 +102,3 @@ Homepage: http://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5)
-
-

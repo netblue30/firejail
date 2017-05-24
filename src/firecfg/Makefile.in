@@ -37,4 +37,3 @@ clean:; rm -f *.o firecfg firecfg.1 firecfg.1.gz *.gcov *.gcda *.gcno
 
 distclean: clean
 	rm -fr Makefile
-

@@ -24,7 +24,7 @@
 #include <sys/prctl.h>
 #include <grp.h>
 #include <sys/stat.h>
- 
+
 static int arg_route = 0;
 static int arg_arp = 0;
 static int arg_tree = 0;
@@ -49,7 +49,7 @@ static void my_handler(int s){
 
 	if (terminal_set)
 		tcsetattr(0, TCSANOW, &tlocal);
-	exit(0); 
+	exit(0);
 }
 
 // find the first child process for the specified pid
@@ -60,7 +60,7 @@ int find_child(int id) {
 		if (pids[i].level == 2 && pids[i].parent == id)
 			return i;
 	}
-	
+
 	return -1;
 }
 
@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
 			printf("firemon version %s\n\n", VERSION);
 			return 0;
 		}
-		
+
 		// options without a pid argument
 		else if (strcmp(argv[i], "--top") == 0)
 			arg_top = 1;
@@ -131,7 +131,7 @@ int main(int argc, char **argv) {
 			if (getuid() != 0 && stat("/proc/sys/kernel/grsecurity", &s) == 0) {
 				fprintf(stderr, "Error: this feature is not available on Grsecurity systems\n");
 				exit(1);
-			}	
+			}
 			arg_netstats = 1;
 		}
 
@@ -166,17 +166,17 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
-		
+
 		// etc
 		else if (strcmp(argv[i], "--nowrap") == 0)
 			arg_nowrap = 1;
-		
+
 		// invalid option
 		else if (*argv[i] == '-') {
-			fprintf(stderr, "Error: invalid option\n");		
+			fprintf(stderr, "Error: invalid option\n");
 			return 1;
 		}
-		
+
 		// PID argument
 		else {
 			// this should be a pid number
@@ -199,9 +199,9 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Error: /proc is mounted hidepid, you would need to be root to run this command\n");
 		exit(1);
 	}
-	
+
 	if (arg_top) {
-		top(); 
+		top();
 		return 0;
 	}
 	if (arg_list) {
@@ -210,9 +210,9 @@ int main(int argc, char **argv) {
 	}
 	if (arg_netstats) {
 		netstats();
-		return 0;		
+		return 0;
 	}
-	
+
 	// cumulative options
 	int print_procs = 1;
 	if (arg_tree) {
@@ -251,9 +251,9 @@ int main(int argc, char **argv) {
 		arp((pid_t) pid, print_procs);
 		print_procs = 0;
 	}
-	
+
 	if (print_procs)
 		procevent((pid_t) pid);
-		
+
 	return 0;
 }

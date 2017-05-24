@@ -64,13 +64,13 @@ static void net_ifprint(void) {
 					memset(&ifr, 0, sizeof(ifr));
 					strncpy(ifr.ifr_name,  ifa->ifa_name, IFNAMSIZ);
 					int rv = ioctl (fd, SIOCGIFHWADDR, &ifr);
-					
+
 					if (rv == 0)
 						printf("     %s UP, %02x:%02x:%02x:%02x:%02x:%02x\n",
 							ifa->ifa_name, PRINT_MAC((unsigned char *) &ifr.ifr_hwaddr.sa_data));
 					else
 						printf("     %s UP\n", ifa->ifa_name);
-					
+
 					printf("          tx/rx: %u/%u packets,  %u/%u bytes\n",
 						stats->tx_packets, stats->rx_packets,
 						stats->tx_bytes, stats->rx_bytes);
@@ -78,7 +78,7 @@ static void net_ifprint(void) {
 			}
 			else
 				printf("     %s DOWN\n", ifa->ifa_name);
-		}			
+		}
 	}
 
 
@@ -139,7 +139,7 @@ static void print_sandbox(pid_t pid) {
 	pid_t child = fork();
 	if (child == -1)
 		return;
-	
+
 	if (child == 0) {
 		int rv = join_namespace(pid, "net");
 		if (rv)
@@ -150,14 +150,14 @@ static void print_sandbox(pid_t pid) {
 #endif
 		_exit(0);
 	}
-	
+
 	// wait for the child to finish
 	waitpid(child, NULL, 0);
 }
 
 void interface(pid_t pid, int print_procs) {
 	pid_read(pid); // a pid of 0 will include all processes
-	
+
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
@@ -172,4 +172,3 @@ void interface(pid_t pid, int print_procs) {
 	}
 	printf("\n");
 }
-

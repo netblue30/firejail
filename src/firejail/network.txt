@@ -40,10 +40,10 @@ main() {
 		else if --ip
 			br = last bridge configured
 			br->ipsandbox = ip address extracted from argv[i]
-		else if --defaultgw 
+		else if --defaultgw
 			cfg.defaultgw = ip address extracted from argv[i]
 	}
-		
+
 	net_check_cfg(); // check the validity of network configuration so far
 
 	if (any bridge configured) {
@@ -51,29 +51,29 @@ main() {
 		for each bridge
 			net_configure_sandbox_ip(br)
 	}
-	
+
 	clone (new network namespace if any bridge configured or --net=none)
-	
+
 	if (any bridge configured) {
 		for each bridge
 			net_configure_veth_pair
-	}		
+	}
 
 	notify child init is done
-	
+
 	if (any bridge configured) {
 		for each bridge
 			net_bridge_wait_ip
 		unlock /var/lock/firejail.lock file
 	}
-	
+
 	wait on child
 	exit
 }
 
 
 ******************************************************
-* macvlan notes	
+* macvlan notes
 ******************************************************
 Configure a macvlan interface
 

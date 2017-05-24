@@ -44,7 +44,7 @@ int restricted_shell(const char *user) {
 
 		// remove empty spaces at the beginning of the line
 		char *ptr = buf;
-		while (*ptr == ' ' || *ptr == '\t') { 
+		while (*ptr == ' ' || *ptr == '\t') {
 			ptr++;
 		}
 		if (*ptr == '\n' || *ptr == '#')
@@ -53,7 +53,7 @@ int restricted_shell(const char *user) {
 		//
 		// parse line
 		//
-		
+
 		// extract users
 		char *usr = ptr;
 		char *args = strchr(usr, ':');
@@ -61,13 +61,13 @@ int restricted_shell(const char *user) {
 			fprintf(stderr, "Error: users.conf line %d\n", lineno);
 			exit(1);
 		}
-		
+
 		*args = '\0';
 		args++;
 		ptr = strchr(args, '\n');
 		if (ptr)
 			*ptr = '\0';
-		
+
 		// extract firejail command line arguments
 		char *ptr2 = args;
 		int found = 0;
@@ -81,7 +81,7 @@ int restricted_shell(const char *user) {
 		// if nothing follows, continue
 		if (!found)
 			continue;
-		
+
 		// user name globbing
 		if (fnmatch(usr, user, 0) == 0) {
 		    	// process program arguments
@@ -102,8 +102,8 @@ int restricted_shell(const char *user) {
 					fclose(fp);
 				}
 				EUID_USER();}
-#endif				
-		    		
+#endif
+
 		    		if (*ptr != '\0') {
 		    			// go to the end of the word
 			    		while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
@@ -128,6 +128,5 @@ int restricted_shell(const char *user) {
 	}
 	fclose(fp);
 
-	return 0;   
+	return 0;
 }
-

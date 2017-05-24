@@ -24,7 +24,7 @@
 #include <pwd.h>
 #include <sys/ioctl.h>
 #include <dirent.h>
-       
+
 #define PIDS_BUFLEN 4096
 //Process pids[max_pids];
 Process *pids = NULL;
@@ -36,14 +36,14 @@ void pid_getmem(unsigned pid, unsigned *rss, unsigned *shared) {
 	char *file;
 	if (asprintf(&file, "/proc/%u/statm", pid) == -1)
 		errExit("asprintf");
-		
+
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		free(file);
 		return;
 	}
 	free(file);
-	
+
 	unsigned a, b, c;
 	if (3 != fscanf(fp, "%u %u %u", &a, &b, &c)) {
 		fclose(fp);
@@ -67,7 +67,7 @@ void pid_get_cpu_time(unsigned pid, unsigned *utime, unsigned *stime) {
 		return;
 	}
 	free(file);
-	
+
 	char line[PIDS_BUFLEN];
 	if (fgets(line, PIDS_BUFLEN - 1, fp)) {
 		char *ptr = line;
@@ -84,7 +84,7 @@ void pid_get_cpu_time(unsigned pid, unsigned *utime, unsigned *stime) {
 			goto myexit;
 	}
 
-myexit:	
+myexit:
 	fclose(fp);
 }
 
@@ -100,7 +100,7 @@ unsigned long long pid_get_start_time(unsigned pid) {
 		return 0;
 	}
 	free(file);
-	
+
 	char line[PIDS_BUFLEN];
 	unsigned long long retval = 0;
 	if (fgets(line, PIDS_BUFLEN - 1, fp)) {
@@ -117,7 +117,7 @@ unsigned long long pid_get_start_time(unsigned pid) {
 		if (1 != sscanf(ptr, "%llu", &retval))
 			goto myexit;
 	}
-	
+
 myexit:
 	fclose(fp);
 	return retval;
@@ -154,12 +154,12 @@ uid_t pid_get_uid(pid_t pid) {
 			}
 			if (*ptr == '\0')
 				goto doexit;
-				
+
 			rv = atoi(ptr);
 			break; // break regardless!
 		}
 	}
-doexit:	
+doexit:
 	fclose(fp);
 	free(file);
 	return rv;
@@ -187,7 +187,7 @@ static void print_elem(unsigned index, int nowrap) {
 	if (user ==NULL)
 		user = "";
 	if (cmd) {
-		if (col < 4 || nowrap) 
+		if (col < 4 || nowrap)
 			printf("%s%u:%s:%s\n", indent, index, user, cmd);
 		else {
 			char *out;
@@ -201,7 +201,7 @@ static void print_elem(unsigned index, int nowrap) {
 			printf("%s", out);
 			free(out);
 		}
-				
+
 		free(cmd);
 	}
 	else {
@@ -220,7 +220,7 @@ void pid_print_tree(unsigned index, unsigned parent, int nowrap) {
 
 	// Remove unused parameter warning
 	(void)parent;
-	
+
 	unsigned i;
 	for (i = index + 1; i < (unsigned)max_pids; i++) {
 		if (pids[i].parent == (pid_t)index)
@@ -246,13 +246,13 @@ void pid_store_cpu(unsigned index, unsigned parent, unsigned *utime, unsigned *s
 
 	// Remove unused parameter warning
 	(void)parent;
-	
+
 	unsigned utmp = 0;
 	unsigned stmp = 0;
 	pid_get_cpu_time(index, &utmp, &stmp);
 	*utime += utmp;
 	*stime += stmp;
-	
+
 	unsigned i;
 	for (i = index + 1; i < (unsigned)max_pids; i++) {
 		if (pids[i].parent == (pid_t)index)
@@ -293,7 +293,7 @@ void pid_read(pid_t mon_pid) {
 			exit(1);
 		}
 	}
-	
+
 	pid_t child = -1;
 	struct dirent *entry;
 	char *end;
@@ -308,7 +308,7 @@ void pid_read(pid_t mon_pid) {
 		// skip PID 1 just in case we run a sandbox-in-sandbox
 		if (pid == 1)
 			continue;
-			
+
 		// open stat file
 		char *file;
 		if (asprintf(&file, "/proc/%u/status", pid) == -1)

@@ -48,7 +48,7 @@ static void extract_command(int argc, char **argv, int index) {
 		if (index >= argc)
 			return;
 	}
-		
+
 	// first argv needs to be a valid command
 	if (arg_doubledash == 0 && *argv[index] == '-') {
 		fprintf(stderr, "Error: invalid option %s after --join\n", argv[index]);
@@ -66,7 +66,7 @@ static void extract_nogroups(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_GROUPS_CFG) == -1)
 		errExit("asprintf");
-		
+
 	struct stat s;
 	if (stat(fname, &s) == -1)
 		return;
@@ -79,11 +79,11 @@ static void extract_cpu(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CPU_CFG) == -1)
 		errExit("asprintf");
-		
+
 	struct stat s;
 	if (stat(fname, &s) == -1)
 		return;
-	
+
 	// there is a CPU_CFG file, load it!
 	load_cpu(fname);
 	free(fname);
@@ -93,11 +93,11 @@ static void extract_cgroup(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CGROUP_CFG) == -1)
 		errExit("asprintf");
-		
+
 	struct stat s;
 	if (stat(fname, &s) == -1)
 		return;
-	
+
 	// there is a cgroup file CGROUP_CFG, load it!
 	load_cgroup(fname);
 	free(fname);
@@ -127,7 +127,7 @@ static void extract_caps_seccomp(pid_t pid) {
 				apply_seccomp = 1;
 			break;
 		}
-		else if (strncmp(buf, "CapBnd:", 7) == 0) {		
+		else if (strncmp(buf, "CapBnd:", 7) == 0) {
 			char *ptr = buf + 7;
 			unsigned long long val;
 			sscanf(ptr, "%llx", &val);
@@ -149,7 +149,7 @@ static void extract_user_namespace(pid_t pid) {
 	    stat("/proc/self/gid_map", &s3) == 0);
 	else
 		return;
-			
+
 	// read uid map
 	char *uidmap;
 	if (asprintf(&uidmap, "/proc/%u/uid_map", pid) == -1)
@@ -215,11 +215,11 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		extract_nogroups(pid);
 		extract_user_namespace(pid);
 	}
-	
+
 	// set cgroup
 	if (cfg.cgroup)	// not available for uid 0
 		set_cgroup(cfg.cgroup);
-		
+
 	// join namespaces
 	if (arg_join_network) {
 		if (join_namespace(pid, "net"))
@@ -246,14 +246,14 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		char *rootdir;
 		if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)
 			errExit("asprintf");
-			
+
 		int rv;
 		if (!arg_join_network) {
 			rv = chroot(rootdir); // this will fail for processes in sandboxes not started with --chroot option
 			if (rv == 0)
 				printf("changing root to %s\n", rootdir);
 		}
-		
+
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		if (chdir("/") < 0)
 			errExit("chdir");
@@ -265,11 +265,11 @@ void join(pid_t pid, int argc, char **argv, int index) {
 					errExit("chdir");
 			}
 		}
-		
+
 		// set cpu affinity
 		if (cfg.cpus)	// not available for uid 0
 			set_cpu_affinity();
-					
+
 		// set caps filter
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
@@ -278,9 +278,9 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		if (getuid() != 0)
 			protocol_filter_load(RUN_PROTOCOL_CFG);
 		if (cfg.protocol) {	// not available for uid 0
-			seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter	
+			seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
 		}
-				
+
 		// set seccomp filter
 		if (apply_seccomp == 1)	// not available for uid 0
 			seccomp_load(RUN_SECCOMP_CFG);
@@ -298,7 +298,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			if (apply_caps == 1)	// not available for uid 0
 				caps_set(caps);
 		}
-		else 
+		else
 			drop_privs(arg_nogroups);	// nogroups not available for uid 0
 
 
@@ -349,6 +349,3 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	flush_stdin();
 	exit(0);
 }
-
-
-

@@ -167,7 +167,7 @@ static ErrnoEntry errnolist[] = {
 	{"ENOTSUP", ENOTSUP},
 #ifdef 	ENOATTR
 	{"ENOATTR", ENOATTR},
-#endif	
+#endif
 };
 
 int errno_find_name(const char *name) {

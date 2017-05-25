@@ -20,7 +20,7 @@ whitelist ${HOME}/.local/share/data/Mumble
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
-ipc-namespace
+#ipc-namespace
 netfilter
 no3d
 nonewprivs

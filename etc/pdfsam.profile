@@ -17,7 +17,7 @@ include /etc/firejail/disable-devel.inc
 
 #Options
 caps.drop all
-ipc-namespace
+#ipc-namespace
 net none
 netfilter
 no3d

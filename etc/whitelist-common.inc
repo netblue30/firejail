@@ -30,6 +30,8 @@ whitelist ~/.config/gtk-3.0
 whitelist ~/.themes
 whitelist ~/.kde/share/config/gtkrc
 whitelist ~/.kde/share/config/gtkrc-2.0
+whitelist ~/.gnome2
+whitelist ~/.gnome2-private
 
 # dconf
 mkdir ~/.config/dconf

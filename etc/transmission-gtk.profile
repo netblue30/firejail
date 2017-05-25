@@ -14,6 +14,13 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
+mkdir ~/.config/transmission
+whitelist ~/.config/transmission
+mkdir ~/.cache/transmission
+whitelist ~/.cache/transmission
+whitelist  ${DOWNLOADS}
+include /etc/firejail/whitelist-common.inc
+
 caps.drop all
 netfilter
 nonewprivs

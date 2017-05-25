@@ -7,10 +7,23 @@ include /etc/firejail/qbittorrent.local
 
 # qbittorrent bittorrent profile
 noblacklist ~/.config/qt5ct
+noblacklist ~/.config/qBittorrent
+noblacklist ~/.cache/qBittorrent
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+
+mkdir ~/.local/share/data/qBittorrent
+whitelist ~/.local/share/data/qBittorrent
+whitelist ~/.config/qt5ct
+mkdir ~/.config/qBittorrent
+whitelist ~/.config/qBittorrent
+mkdir ~/.cache/qBittorrent
+whitelist ~/.cache/qBittorrent
+whitelist  ${DOWNLOADS}
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 machine-id

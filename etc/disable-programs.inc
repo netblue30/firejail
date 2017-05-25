@@ -69,6 +69,7 @@ blacklist ${HOME}/.config/clipit
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
+blacklist ${HOME}/.config/deluge
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/enchant
@@ -124,6 +125,7 @@ blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/ristretto
+blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/qt5ct
 blacklist ${HOME}/.config/qupzilla
@@ -369,6 +371,7 @@ blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta
 blacklist ${HOME}/.cache/org.gnome.Books
+blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet

@@ -5,12 +5,19 @@ include /etc/firejail/globals.local
 # Persistent customizations should go in a .local file.
 include /etc/firejail/deluge.local
 
-# deluge bittorrernt client profile
+# deluge bittorrent client profile
+noblacklist ${HOME}/.config/deluge
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 # deluge is using python on Debian
 #include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+
+mkdir ${HOME}/.config/deluge
+whitelist ${HOME}/.config/deluge
+whitelist  ${DOWNLOADS}
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter

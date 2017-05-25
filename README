@@ -415,6 +415,7 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- fixed small variable glitch in stat64() / lstat64() (libtracelog)
 	- added lstat() / lstat64() support to libtrace
 	- include mkuid.sh in make dist
+	- cppcheck bugfixes
 Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Tomasz Jan Góralczyk (https://github.com/tjg)

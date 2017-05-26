@@ -1474,35 +1474,19 @@ Enable seccomp filter, blacklist the default list and the syscalls specified by 
 Example:
 .br
 $ firejail \-\-seccomp=utime,utimensat,utimes firefox
-.TP
-\fB\-\-seccomp.drop=syscall,syscall,syscall
-Enable seccomp filter, and blacklist the syscalls specified by the command.
+.br
+
+.br
+Instead of dropping the syscall, a specific error number can be returned
+using \fBsyscall:errorno\fR syntax.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-seccomp.drop=utime,utimensat,utimes
-.TP
-\fB\-\-seccomp.keep=syscall,syscall,syscall
-Enable seccomp filter, and whitelist the syscalls specified by the command.
-.br
 
 .br
-Example:
-.br
-$ firejail \-\-shell=none \-\-seccomp.keep=poll,select,[...] transmission-gtk
-.TP
-\fB\-\-seccomp.<errno>=syscall,syscall,syscall
-Enable seccomp filter, and return errno for the syscalls specified by the command.
-.br
-
-.br
-Example: a Bash shell where deleting files is disabled
-.br
-
-.br
-$ firejail --seccomp.eperm=unlinkat
+$ firejail \-\-seccomp=unlinkat:ENOENT,utimensat,utimes
 .br
 Parent pid 10662, child pid 10663
 .br
@@ -1513,6 +1497,55 @@ $ touch testfile
 $ rm testfile
 .br
 rm: cannot remove `testfile': Operation not permitted
+.br
+
+.TP
+\fB\-\-seccomp.drop=syscall,syscall,syscall
+Enable seccomp filter, and blacklist the syscalls specified by the command.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-seccomp.drop=utime,utimensat,utimes
+.br
+
+.br
+Instead of dropping the syscall, a specific error number can be returned
+using \fBsyscall:errorno\fR syntax.
+.br
+
+.br
+Example:
+.br
+
+.br
+$ firejail \-\-seccomp.drop=unlinkat:ENOENT,utimensat,utimes
+.br
+Parent pid 10662, child pid 10663
+.br
+Child process initialized
+.br
+$ touch testfile
+.br
+$ rm testfile
+.br
+rm: cannot remove `testfile': Operation not permitted
+.br
+
+
+
+
+
+.TP
+\fB\-\-seccomp.keep=syscall,syscall,syscall
+Enable seccomp filter, and whitelist the syscalls specified by the command.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-shell=none \-\-seccomp.keep=poll,select,[...] transmission-gtk
 
 .TP
 \fB\-\-seccomp.print=name|PID

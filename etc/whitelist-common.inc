@@ -10,6 +10,7 @@ whitelist ~/.local/share/icons
 whitelist ~/.config/user-dirs.dirs
 read-only ~/.config/user-dirs.dirs
 whitelist ~/.asoundrc
+whitelist ~/.config/pulse/client.conf
 whitelist ~/.config/Trolltech.conf
 
 # fonts

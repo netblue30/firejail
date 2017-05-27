@@ -39,12 +39,9 @@ private-etc fonts,machine-id,pulse,resolv.conf
 private-dev
 private-tmp
 
-blacklist ${HOME}/.Xauthority
 blacklist ${HOME}/.bashrc
 blacklist /boot
 blacklist /lost+found
-blacklist /media
-blacklist /mnt
 blacklist /opt
 blacklist /root
 blacklist /sbin

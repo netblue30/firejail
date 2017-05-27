@@ -791,6 +791,20 @@ int sandbox(void* sandbox_arg) {
 		fs_mnt();
 
 	//****************************
+	// apply the profile file
+	//****************************
+	// apply all whitelist commands ...
+	if (cfg.chrootdir)
+		fwarning("whitelist feature is disabled in chroot\n");
+	else if (arg_overlay)
+		fwarning("whitelist feature is disabled in overlay\n");
+	else
+		fs_whitelist();
+
+	// ... followed by blacklist commands
+	fs_blacklist(); // mkdir and mkfile are processed all over again
+
+	//****************************
 	// nosound/no3d and fix for pulseaudio 7.0
 	//****************************
 	if (arg_nosound) {
@@ -813,20 +827,6 @@ int sandbox(void* sandbox_arg) {
 		// disable /dev/video*
 		fs_dev_disable_video();
 	}
-
-	//****************************
-	// apply the profile file
-	//****************************
-	// apply all whitelist commands ...
-	if (cfg.chrootdir)
-		fwarning("whitelist feature is disabled in chroot\n");
-	else if (arg_overlay)
-		fwarning("whitelist feature is disabled in overlay\n");
-	else
-		fs_whitelist();
-
-	// ... followed by blacklist commands
-	fs_blacklist(); // mkdir and mkfile are processed all over again
 
 	//****************************
 	// install trace

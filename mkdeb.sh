@@ -30,7 +30,7 @@ echo "install size $SIZE"
 echo "*****************************************"
 
 mv $INSTALL_DIR/usr/share/doc/firejail/RELNOTES $INSTALL_DIR/usr/share/doc/firejail/changelog.Debian
-gzip -9 $INSTALL_DIR/usr/share/doc/firejail/changelog.Debian
+gzip -9 -n $INSTALL_DIR/usr/share/doc/firejail/changelog.Debian
 rm $INSTALL_DIR/usr/share/doc/firejail/COPYING
 cp platform/debian/copyright $INSTALL_DIR/usr/share/doc/firejail/.
 mkdir -p $DEBIAN_CTRL_DIR

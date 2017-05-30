@@ -3,11 +3,11 @@ include /etc/firejail/globals.local
 
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/cyberfox.local
+include /etc/firejail/waterfox.local
 
-# Firejail profile for Cyberfox (based on Mozilla Firefox)
-noblacklist ~/.8pecxstudios
-noblacklist ~/.cache/8pecxstudios
+# Firejail profile for Waterfox (based on Mozilla Firefox)
+noblacklist ~/.mozilla
+noblacklist ~/.cache/mozilla
 noblacklist ~/.config/qpdfview
 noblacklist ~/.local/share/qpdfview
 noblacklist ~/.kde4/share/apps/okular
@@ -19,7 +19,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 
 caps.drop all
-# ipc-namespace crashes cyberfox on some setups
+# ipc-namespace crashes waterfox on some setups
 netfilter
 nogroups
 nonewprivs
@@ -30,10 +30,10 @@ shell none
 tracelog
 
 whitelist ${DOWNLOADS}
-mkdir ~/.8pecxstudios
-whitelist ~/.8pecxstudios
-mkdir ~/.cache/8pecxstudios
-whitelist ~/.cache/8pecxstudios
+mkdir ~/.mozilla
+whitelist ~/.mozilla
+mkdir ~/.cache/mozilla/firefox
+whitelist ~/.cache/mozilla/firefox
 whitelist ~/dwhelper
 whitelist ~/.zotero
 whitelist ~/.vimperatorrc
@@ -61,8 +61,8 @@ whitelist ~/.config/pipelight-silverlight5.1
 include /etc/firejail/whitelist-common.inc
 
 # experimental features
-#private-bin cyberfox,which,sh,dbus-launch,dbus-send,env
-#private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,cyberfox,mime.types,mailcap,asound.conf,pulse
+#private-bin waterfox,which,sh,dbus-launch,dbus-send,env
+#private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,waterfox,mime.types,mailcap,asound.conf,pulse
 # private-dev might prevent video calls going out
 private-dev
 private-tmp

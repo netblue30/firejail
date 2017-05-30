@@ -1,6 +1,8 @@
 firejail (0.9.47) baseline; urgency=low
   * work in progress
   * added /etc/firejail/globals.local for global customizations
+  * whitelisted Transmission, Deluge, qBitTorrent, KTorrent
+  * new profiles: vym, darktable, Waterfox
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Tue, 23 May 2017 08:00:00 -0500
 

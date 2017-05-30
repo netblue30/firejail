@@ -76,4 +76,4 @@ The plan is to have all bittorrent clients whitelisted in the next release.**
 
 ## New profiles
 
-vym, darktable
+vym, darktable, Waterfox

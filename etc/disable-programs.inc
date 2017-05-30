@@ -35,6 +35,7 @@ blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Google
 blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/INRIA
+blacklist ${HOME}/.config/InSilmaril
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mousepad

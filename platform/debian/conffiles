@@ -301,3 +301,5 @@
 /etc/firejail/youtube-dl.profile
 /etc/firejail/zathura.profile
 /etc/firejail/zoom.profile
+/etc/firejail/vym.profile
+/etc/firejail/darktable.profile

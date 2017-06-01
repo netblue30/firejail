@@ -90,7 +90,7 @@ blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
-blacklist ${HOME}./config/gpicview
+blacklist ${HOME}/.config/gpicview
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/hexchat
@@ -256,7 +256,7 @@ blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/data/Mumble
-blacklist ${HOME}./local/share/dino
+blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution

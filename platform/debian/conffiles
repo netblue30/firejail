@@ -49,6 +49,7 @@
 /etc/firejail/default.profile
 /etc/firejail/deluge.profile
 /etc/firejail/dia.profile
+/etc/firejail/digikam.profile
 /etc/firejail/dillo.profile
 /etc/firejail/dino.profile
 /etc/firejail/disable-common.inc
@@ -304,4 +305,3 @@
 /etc/firejail/vym.profile
 /etc/firejail/darktable.profile
 /etc/firejail/waterfox.profile
-/etc/firejail/digikam

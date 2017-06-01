@@ -71,6 +71,7 @@ blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge
+blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/enchant
@@ -200,6 +201,7 @@ blacklist ${HOME}/.kde4/share/apps/okular
 blacklist ${HOME}/.kde4/share/config/baloofilerc
 blacklist ${HOME}/.kde4/share/config/baloorc
 blacklist ${HOME}/.kde4/share/config/gwenviewrc
+blacklist ${HOME}/.kde4/share/config/digikam
 blacklist ${HOME}/.kde4/share/config/k3brc
 blacklist ${HOME}/.kde4/share/config/kcookiejarrc
 blacklist ${HOME}/.kde4/share/config/khtmlrc
@@ -217,6 +219,7 @@ blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/baloofilerc
 blacklist ${HOME}/.kde/share/config/baloorc
+blacklist ${HOME}/.kde/share/config/digikam
 blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.kde/share/config/k3brc
 blacklist ${HOME}/.kde/share/config/kcookiejarrc

@@ -1,5 +1,7 @@
 firejail (0.9.47) baseline; urgency=low
   * work in progress
+  * modifs: AppArmor made optional; a warning is printed on the screen
+    if the sandbox fails to load the AppArmor profile
   * added /etc/firejail/globals.local for global customizations
   * whitelisted Transmission, Deluge, qBitTorrent, KTorrent
   * new profiles: vym, darktable, Waterfox

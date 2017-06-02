@@ -86,10 +86,6 @@ void run_symlink(int argc, char **argv) {
 
 
 	// start the argv[0] program in a new sandbox
-	char *firejail;
-	if (asprintf(&firejail, "%s/bin/firejail", PREFIX) == -1)
-		errExit("asprintf");
-
 	// drop privileges
 	if (setgid(getgid()) < 0)
 		errExit("setgid/getgid");
@@ -98,7 +94,7 @@ void run_symlink(int argc, char **argv) {
 
 	// run command
 	char *a[3 + argc];
-	a[0] = firejail;
+	a[0] =PATH_FIREJAIL;
 	a[1] = program;
 	int i;
 	for (i = 0; i < (argc - 1); i++) {

@@ -718,6 +718,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // programs
 #define PATH_FNET (LIBDIR "/firejail/fnet")
 #define PATH_FIREMON (PREFIX "/bin/firemon")
+#define PATH_FIREJAIL (PREFIX "/bin/firejail")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
 #define PATH_FCOPY (LIBDIR "/firejail/fcopy")
 #define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"

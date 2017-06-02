@@ -32,6 +32,7 @@
 /etc/firejail/brasero.profile
 /etc/firejail/brave.profile
 /etc/firejail/caja.profile
+/etc/firejail/catfish.profile
 /etc/firejail/cherrytree.profile
 /etc/firejail/chromium-browser.profile
 /etc/firejail/chromium.profile

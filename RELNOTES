@@ -4,7 +4,8 @@ firejail (0.9.47) baseline; urgency=low
     please use ~/Downloads directory for saving files
   * modifs: AppArmor made optional; a warning is printed on the screen
     if the sandbox fails to load the AppArmor profile
-  * added /etc/firejail/globals.local for global customizations
+  * feature: added /etc/firejail/globals.local for global customizations
+  * feature: profile support in overlayfs mode
   * new profiles: vym, darktable, Waterfox, digiKam, Catfish
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Tue, 23 May 2017 08:00:00 -0500

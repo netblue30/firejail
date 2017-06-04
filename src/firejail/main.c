@@ -2272,9 +2272,9 @@ int main(int argc, char **argv) {
 		if (cfg.chrootdir) {
 			fwarning("default profile disabled by --chroot option\n");
 		}
-		else if (arg_overlay) {
-			fwarning("default profile disabled by --overlay option\n");
-		}
+//		else if (arg_overlay) {
+//			fwarning("default profile disabled by --overlay option\n");
+//		}
 		else {
 			// try to load a default profile
 			char *profile_name = DEFAULT_USER_PROFILE;

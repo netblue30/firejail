@@ -18,6 +18,7 @@ blacklist /tmp/.X11-unix
 no3d
 nosound
 seccomp
+caps
 
 private
 private-dev

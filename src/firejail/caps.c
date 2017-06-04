@@ -248,10 +248,17 @@ void caps_print(void) {
 	}
 }
 
+// drop discretionary access control capabilities by default in all sandboxes
+void caps_drop_dac_override(void) {
+	if (prctl(PR_CAPBSET_DROP, CAP_DAC_OVERRIDE, 0, 0, 0));
+	else if (arg_debug)
+		printf("Drop CAP_DAC_OVERRIDE\n");
 
+	if (prctl(PR_CAPBSET_DROP, CAP_DAC_READ_SEARCH, 0, 0, 0));
+	else if (arg_debug)
+		printf("Drop CAP_DAC_READ_SEARCH\n");
+}
 
-
-// enabled by default
 int caps_default_filter(void) {
 	// drop capabilities
 	if (prctl(PR_CAPBSET_DROP, CAP_SYS_MODULE, 0, 0, 0))

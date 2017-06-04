@@ -242,6 +242,9 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
+		// drop discretionary access control capabilities by default
+		caps_drop_dac_override();
+		
 		// chroot into /proc/PID/root directory
 		char *rootdir;
 		if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)

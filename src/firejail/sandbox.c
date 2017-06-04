@@ -99,6 +99,9 @@ static void set_caps(void) {
 		caps_keep_list(arg_caps_list);
 	else if (arg_caps_default_filter)
 		caps_default_filter();
+	
+	// drop discretionary access control capabilities by default
+	caps_drop_dac_override();
 }
 
 void save_nogroups(void) {
@@ -896,8 +899,7 @@ int sandbox(void* sandbox_arg) {
 	// set security filters
 	//****************************
 	// set capabilities
-//	if (!arg_noroot)
-		set_caps();
+	set_caps();
 
 	// set rlimits
 	set_rlimits();

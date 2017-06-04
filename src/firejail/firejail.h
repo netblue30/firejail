@@ -533,6 +533,7 @@ void caps_check_list(const char *clist, void (*callback)(int));
 void caps_drop_list(const char *clist);
 void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);
+void caps_drop_dac_override(void);
 
 // syscall.c
 const char *syscall_find_nr(int nr);

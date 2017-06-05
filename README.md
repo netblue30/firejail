@@ -69,10 +69,10 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 All profiles include /etc/firejail/globals.local for persistent customizations across all applications. For example, you
 can set here a global DNS "dns 8.8.8.8". The file is not overwritten during software install.
 
-**The following BitTorrent clients have been whitelisted: Transmission, Deluge, qBitTorrent, KTorrent. Configuration files and
-~/Downloads directory are real, everything else is placed on a temporary filesystem and discarded when the
-sandboxed is closed. Please configure your client to put downloaded files in ~/Download directory. 
-The plan is to have all bittorrent clients whitelisted in the next release.**
+The following BitTorrent clients have been whitelisted: Transmission, Deluge, qBitTorrent, KTorrent.
+Configuration files and ~/Downloads directory are real, everything else is placed on a temporary 
+filesystem and discarded when the sandboxed is closed. **Please configure your client to put 
+downloaded files in ~/Downloads directory.**  The plan is to have all bittorrent clients whitelisted in the next release.
 
 ## New profiles
 

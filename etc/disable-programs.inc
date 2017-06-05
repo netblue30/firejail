@@ -87,6 +87,7 @@ blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/gedit
+blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta

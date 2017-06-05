@@ -26,6 +26,7 @@ shell none
 # if you are not using external plugins, you can enable noexec statement below
 # noexec ${HOME}
 
+noexec ${HOME}/.local/share
 noexec /tmp
 
 private-dev

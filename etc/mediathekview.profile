@@ -22,6 +22,7 @@ seccomp
 tracelog
 
 noexec ${HOME}
+noexec ${HOME}/.local/share
 noexec /tmp
 
 private-dev

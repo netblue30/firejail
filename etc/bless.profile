@@ -37,4 +37,5 @@ private-etc fonts,mono
 private-tmp
 
 noexec ${HOME}
+noexec ${HOME}/.local/share
 noexec /tmp

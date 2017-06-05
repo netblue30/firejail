@@ -29,4 +29,5 @@ shell none
 private-tmp
 
 noexec ${HOME}
+noexec ${HOME}/.local/share
 noexec /tmp

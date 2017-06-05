@@ -28,4 +28,5 @@ private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
 private-tmp
 
 noexec ${HOME}
+noexec ${HOME}/.local/share
 noexec /tmp

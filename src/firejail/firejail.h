@@ -500,6 +500,7 @@ void fs_dev_shm(void);
 void fs_private_dev(void);
 void fs_dev_disable_sound(void);
 void fs_dev_disable_3d(void);
+void fs_dev_disable_video(void);
 
 // fs_home.c
 // private mode (--private)

@@ -100,7 +100,7 @@ static void set_caps(void) {
 	else if (arg_caps_default_filter)
 		caps_default_filter();
 	
-	// drop discretionary access control capabilities by default
+	// drop discretionary access control capabilities for root sandboxes
 	caps_drop_dac_override();
 }
 

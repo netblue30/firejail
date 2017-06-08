@@ -1,3 +1,4 @@
+quiet
 # Persistent global definitions go here
 include /etc/firejail/globals.local
 
@@ -6,7 +7,6 @@ include /etc/firejail/globals.local
 include /etc/firejail/ssh-agent.local
 
 # ssh-agent
-quiet
 noblacklist ~/.ssh
 noblacklist /tmp/ssh-*
 noblacklist /etc/ssh

@@ -1,3 +1,4 @@
+quiet
 # Persistent global definitions go here
 include /etc/firejail/globals.local
 
@@ -6,7 +7,6 @@ include /etc/firejail/globals.local
 include /etc/firejail/git.local
 
 # git profile
-quiet
 noblacklist ~/.gitconfig
 noblacklist ~/.ssh
 noblacklist ~/.gnupg

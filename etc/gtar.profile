@@ -1,3 +1,4 @@
+quiet
 # Persistent global definitions go here
 include /etc/firejail/globals.local
 
@@ -6,5 +7,4 @@ include /etc/firejail/globals.local
 include /etc/firejail/gtar.local
 
 # gtar profile
-quiet
 include /etc/firejail/tar.profile

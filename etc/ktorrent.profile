@@ -8,6 +8,8 @@ include /etc/firejail/ktorrent.local
 ################################
 # Generic GUI application profile
 ################################
+noblacklist ~/.config/ktorrentrc
+noblacklist ~/.local/share/ktorrent
 noblacklist ~/.kde/share/config/ktorrentrc
 noblacklist ~/.kde4/share/config/ktorrentrc
 noblacklist ~/.kde/share/apps/ktorrent
@@ -16,7 +18,10 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-
+mkfile ~/.config/ktorrentrc
+whitelist ~/.config/ktorrentrc
+mkdir ~/.local/share/ktorrent
+whitelist ~/.local/share/ktorrent
 mkdir ~/.kde/share/config/ktorrentrc
 whitelist ~/.kde/share/config/ktorrentrc
 mkdir ~/.kde4/share/config/ktorrentrc

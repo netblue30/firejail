@@ -106,6 +106,7 @@ blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/knotesrc
+blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/lximage-qt
@@ -270,6 +271,7 @@ blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/kate
+blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/multimc5

@@ -326,7 +326,8 @@ void fs_var_utmp(void) {
 	endutent();
 
 	// save new utmp file
-	fwrite(&u_boot, sizeof(u_boot), 1, fp);
+	int rv = fwrite(&u_boot, sizeof(u_boot), 1, fp);
+	(void) rv;
 	SET_PERMS_STREAM(fp, 0, utmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
 	fclose(fp);
 

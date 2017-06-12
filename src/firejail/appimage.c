@@ -31,17 +31,19 @@
 static char *devloop = NULL;	// device file
 static char *mntdir = NULL;	// mount point in /tmp directory
 
+#ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
 static void err_loop(void) {
 	fprintf(stderr, "Error: cannot configure loopback device\n");
 	exit(1);
 }
+#endif
 
 void appimage_set(const char *appimage) {
 	assert(appimage);
 	assert(devloop == NULL);	// don't call this twice!
 	EUID_ASSERT();
 
-#ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
+#ifdef LOOP_CTL_GET_FREE
 	// check appimage file
 	invalid_filename(appimage);
 	if (access(appimage, R_OK) == -1) {

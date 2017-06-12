@@ -989,7 +989,6 @@ int sandbox(void* sandbox_arg) {
 	if (app_pid == 0) {
 #ifdef HAVE_APPARMOR
 		if (arg_apparmor) {
-			int done = 0;
 			errno = 0;
 			if (aa_change_onexec("firejail-default")) {
 				fwarning("Cannot confine the application using AppArmor.\n"

@@ -52,7 +52,7 @@ static DevEntry dev[] = {
 	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7", 0, 1, 0},
 	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", 0, 1, 0},
 	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", 0, 1, 0},
-	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1},
+	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1, 0},
 	{"/dev/nvidia-modeset", RUN_DEV_DIR "/nvidia-modeset", 0, 1, 0},
 	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", 0, 1, 0},
 	{"/dev/video0", RUN_DEV_DIR "/video0", 0, 0, 1}, // video camera devices

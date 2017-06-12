@@ -3,6 +3,7 @@ firejail (0.9.48) baseline; urgency=low
     please use ~/Downloads directory for saving files
   * modifs: AppArmor made optional; a warning is printed on the screen
     if the sandbox fails to load the AppArmor profile
+  * feature: --novideo
   * feature: drop discretionary access control capabilities for
     root sandboxes
   * feature: added /etc/firejail/globals.local for global customizations

@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 		int i;
 
 		for (i = 1; i < argc; i++) {
-			if (strcmp(argv[i], "syscall")) {
+			if (strcmp(argv[i], "syscall") == 0) {
 				syscall_helper(argc, argv);
 				return 0;
 			}

@@ -14,6 +14,7 @@ caps.drop all
 netfilter
 nonewprivs
 noroot
+novideo
 protocol unix,inet,inet6
 seccomp
 

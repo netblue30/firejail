@@ -16,6 +16,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+novideo
 protocol unix
 seccomp
 netfilter

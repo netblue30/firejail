@@ -14,6 +14,7 @@ include /etc/firejail/disable-passwdmgr.inc
 caps
 nonewprivs
 noroot
+novideo
 protocol unix,inet,inet6
 seccomp
 

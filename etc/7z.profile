@@ -15,6 +15,8 @@ blacklist /tmp/.X11-unix
 
 tracelog
 net none
+nosound
+novideo
 shell none
 private-dev
 nosound

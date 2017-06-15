@@ -20,6 +20,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+novideo
 seccomp
 protocol unix,inet,inet6,netlink
 tracelog

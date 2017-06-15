@@ -21,6 +21,7 @@ no3d
 nogroups
 nonewprivs
 noroot
+novideo
 protocol unix
 seccomp
 shell none

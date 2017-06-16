@@ -140,6 +140,7 @@ blacklist ${HOME}/.config/redshift.conf
 blacklist ${HOME}/.config/scribus
 blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
+blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/synfig
@@ -306,6 +307,7 @@ blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.mpdconf
+blacklist ${HOME}/.mplayer
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.mutt

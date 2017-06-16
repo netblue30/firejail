@@ -401,9 +401,11 @@ startx2017 (https://github.com/startx2017)
 	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
 	- firejail.config cleanup
 	- --quiet fixes
-	- 0.9.38-LTS branch maintainer
+	- bugfixes branches maintainer
 	- firemon --top speed-up
 	- Blender and 2048-qt profiles
+	- handbrake profile
+	- mplayer and smplayer profiles
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

@@ -4,10 +4,10 @@ include /etc/firejail/globals.local
 
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/wget.local
+include /etc/firejail/curl.local
 
-# wget profile
-noblacklist ~/.wgetrc
+# curl profile
+noblacklist ~/.curlrc
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
@@ -26,7 +26,7 @@ shell none
 
 blacklist /tmp/.X11-unix
 
-# private-bin wget
+# private-bin curl
 private-dev
 # private-etc resolv.conf
 private-tmp

@@ -307,3 +307,4 @@
 /etc/firejail/darktable.profile
 /etc/firejail/waterfox.profile
 /etc/firejail/handbrake.profile
+/etc/firejail/curl.profile

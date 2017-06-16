@@ -170,6 +170,7 @@ blacklist ${HOME}/.config/xviewer
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
+blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dia
 blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dosbox
@@ -339,6 +340,7 @@ blacklist ${HOME}/.vst
 blacklist ${HOME}/.w3m
 blacklist ${HOME}/.warzone2100-3.*
 blacklist ${HOME}/.weechat
+blacklist ${HOME}/.wgetrc
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.xiphos

@@ -63,3 +63,8 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 
 `````
 # Current development version: 0.9.49
+
+## New profiles:
+
+curl
+

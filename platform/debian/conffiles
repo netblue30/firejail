@@ -308,3 +308,5 @@
 /etc/firejail/waterfox.profile
 /etc/firejail/handbrake.profile
 /etc/firejail/curl.profile
+/etc/firejail/mplayer.profile
+/etc/firejail/smplayer.profile

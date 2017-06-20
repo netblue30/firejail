@@ -310,3 +310,5 @@
 /etc/firejail/curl.profile
 /etc/firejail/mplayer.profile
 /etc/firejail/smplayer.profile
+/etc/firejail/ebook-viewer.profile
+/etc/firejail/calibre.profile

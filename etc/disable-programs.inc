@@ -62,6 +62,7 @@ blacklist ${HOME}/.config/borg
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/caja
+blacklist ${HOME}/.config/calibre
 blacklist ${HOME}/.config/catfish
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.config/chromium
@@ -361,6 +362,7 @@ blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/borg
+blacklist ${HOME}/.cache/calibre
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/qupzilla

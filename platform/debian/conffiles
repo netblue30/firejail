@@ -312,3 +312,5 @@
 /etc/firejail/smplayer.profile
 /etc/firejail/ebook-viewer.profile
 /etc/firejail/calibre.profile
+/etc/firejail/handbrake-gtk.profile
+/etc/firejail/ghb.profile

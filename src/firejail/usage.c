@@ -220,7 +220,7 @@ void usage(void) {
 	printf("\tstart Mozilla Firefox\n");
 	printf("    $ firejail --debug firefox\n");
 	printf("\tdebug Firefox sandbox\n");
-	printf("    $ firejail --private --sna=8.8.8.8 firefox\n");
+	printf("    $ firejail --private --dns=8.8.8.8 firefox\n");
 	printf("\tstart Firefox with a new, empty home directory, and a well-known DNS\n");
 	printf("\tserver setting.\n");
 	printf("    $ firejail --net=eth0 firefox\n");

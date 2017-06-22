@@ -17,6 +17,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+machine-id
 net none
 no3d
 nogroups
@@ -28,8 +29,8 @@ seccomp
 shell none
 tracelog
 
-private-bin keepassx
-private-etc fonts
+private-bin keepassx,keepassx2
+private-etc fonts,machine-id
 private-dev
 private-tmp
 

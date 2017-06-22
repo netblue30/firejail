@@ -639,7 +639,7 @@ void x11_start_xpra(int argc, char **argv) {
 
 	// build the start command
 	char *server_argv[256] = {		  // rest initialyzed to NULL
-		 "xpra", "start", display_str, "--no-daemon",
+		 "xpra", "start", display_str, "--no-daemon", "--use-display",
 	};
 	unsigned pos = 0;
 	while (server_argv[pos] != NULL) pos++;
@@ -736,7 +736,7 @@ void x11_start_xpra(int argc, char **argv) {
 	}
 
 	// add a small delay, on some systems it takes some time for the server to start
-	sleep(1);
+	sleep(5);
 
 	// check X11 socket
 	char *fname;

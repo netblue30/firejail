@@ -3,27 +3,29 @@ include /etc/firejail/globals.local
 
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/engrampa.local
+include /etc/firejail/mplayer.local
 
-# engrampa profile
+# mplayer profile
+noblacklist ${HOME}/.mplayer
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-nogroups
+#ipc-namespace
+netfilter
+# nogroups
 nonewprivs
 noroot
-nosound
-novideo
-protocol unix
+protocol unix,inet,inet6,netlink
 seccomp
-netfilter
 shell none
-tracelog
 
-# private-bin engrampa
-# private-tmp
 private-dev
-# private-etc fonts
+private-tmp
+private-bin mplayer
+
+noexec ${HOME}
+noexec /tmp

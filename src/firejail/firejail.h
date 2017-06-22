@@ -500,6 +500,7 @@ void fs_dev_shm(void);
 void fs_private_dev(void);
 void fs_dev_disable_sound(void);
 void fs_dev_disable_3d(void);
+void fs_dev_disable_video(void);
 
 // fs_home.c
 // private mode (--private)
@@ -533,6 +534,7 @@ void caps_check_list(const char *clist, void (*callback)(int));
 void caps_drop_list(const char *clist);
 void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);
+void caps_drop_dac_override(void);
 
 // syscall.c
 const char *syscall_find_nr(int nr);
@@ -718,6 +720,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // programs
 #define PATH_FNET (LIBDIR "/firejail/fnet")
 #define PATH_FIREMON (PREFIX "/bin/firemon")
+#define PATH_FIREJAIL (PREFIX "/bin/firejail")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
 #define PATH_FCOPY (LIBDIR "/firejail/fcopy")
 #define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"

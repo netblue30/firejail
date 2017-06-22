@@ -1,3 +1,4 @@
+quiet
 # Persistent global definitions go here
 include /etc/firejail/globals.local
 
@@ -6,7 +7,6 @@ include /etc/firejail/globals.local
 include /etc/firejail/7z.local
 
 # 7zip crompression tool profile
-quiet
 ignore noroot
 
 include /etc/firejail/default.profile
@@ -15,6 +15,8 @@ blacklist /tmp/.X11-unix
 
 tracelog
 net none
+nosound
+novideo
 shell none
 private-dev
 nosound

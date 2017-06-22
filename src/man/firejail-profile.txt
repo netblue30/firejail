@@ -407,6 +407,7 @@ Disable sound system.
 .TP
 \fBnovideo
 Disable video devices.
+.TP
 \fBno3d
 Disable 3D hardware acceleration.
 

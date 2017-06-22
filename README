@@ -116,6 +116,7 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- added guayadeque profile
 	- added VirtualBox.profile
 	- various other profile fixes
+	- added digiKam profile
 Daan Bakker (https://github.com/dbakker)
 	- protect shell startup files
 Dara Adib (https://github.com/daradib)
@@ -186,6 +187,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added mousepad, qpicview, and cvlc profiles
 	- added BibleTime profile
 	- added caja and galculator profiles
+	- added Catfish profile
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)
 	- ARM support
 	- profile fixes
@@ -399,9 +401,11 @@ startx2017 (https://github.com/startx2017)
 	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
 	- firejail.config cleanup
 	- --quiet fixes
-	- 0.9.38-LTS branch maintainer
+	- bugfixes branches maintainer
 	- firemon --top speed-up
 	- Blender and 2048-qt profiles
+	- handbrake profile
+	- mplayer and smplayer profiles
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

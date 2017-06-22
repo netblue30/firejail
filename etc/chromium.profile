@@ -34,7 +34,7 @@ nogroups
 shell none
 
 private-dev
-private-tmp
+#private-tmp - problems with multiple browser sessions
 
 noexec ${HOME}
 noexec /tmp

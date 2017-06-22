@@ -62,6 +62,8 @@ blacklist ${HOME}/.config/borg
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/caja
+blacklist ${HOME}/.config/calibre
+blacklist ${HOME}/.config/catfish
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.config/chromium
 blacklist ${HOME}/.config/chromium-dev
@@ -71,6 +73,7 @@ blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge
+blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/enchant
@@ -85,11 +88,12 @@ blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/gedit
+blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
-blacklist ${HOME}./config/gpicview
+blacklist ${HOME}/.config/gpicview
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/hexchat
@@ -103,6 +107,7 @@ blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/knotesrc
+blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/lximage-qt
@@ -136,6 +141,7 @@ blacklist ${HOME}/.config/redshift.conf
 blacklist ${HOME}/.config/scribus
 blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
+blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/synfig
@@ -166,6 +172,7 @@ blacklist ${HOME}/.config/xviewer
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
+blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dia
 blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dosbox
@@ -200,6 +207,7 @@ blacklist ${HOME}/.kde4/share/apps/okular
 blacklist ${HOME}/.kde4/share/config/baloofilerc
 blacklist ${HOME}/.kde4/share/config/baloorc
 blacklist ${HOME}/.kde4/share/config/gwenviewrc
+blacklist ${HOME}/.kde4/share/config/digikam
 blacklist ${HOME}/.kde4/share/config/k3brc
 blacklist ${HOME}/.kde4/share/config/kcookiejarrc
 blacklist ${HOME}/.kde4/share/config/khtmlrc
@@ -217,6 +225,7 @@ blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/baloofilerc
 blacklist ${HOME}/.kde/share/config/baloorc
+blacklist ${HOME}/.kde/share/config/digikam
 blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.kde/share/config/k3brc
 blacklist ${HOME}/.kde/share/config/kcookiejarrc
@@ -253,7 +262,7 @@ blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/data/Mumble
-blacklist ${HOME}./local/share/dino
+blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
@@ -265,6 +274,7 @@ blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/kate
+blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/multimc5
@@ -298,6 +308,7 @@ blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.mpdconf
+blacklist ${HOME}/.mplayer
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.mutt
@@ -332,6 +343,7 @@ blacklist ${HOME}/.vst
 blacklist ${HOME}/.w3m
 blacklist ${HOME}/.warzone2100-3.*
 blacklist ${HOME}/.weechat
+blacklist ${HOME}/.wgetrc
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.xiphos
@@ -350,6 +362,7 @@ blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/borg
+blacklist ${HOME}/.cache/calibre
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/qupzilla

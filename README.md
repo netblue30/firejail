@@ -62,18 +62,9 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 `````
 
 `````
-# Current development version: 0.9.47
+# Current development version: 0.9.49
 
-## Profile changes
+## New profiles:
 
-All profiles include /etc/firejail/globals.local for persistent customizations across all applications. For example, you
-can set here a global DNS "dns 8.8.8.8". The file is not overwritten during software install.
+curl, mplayer2, SMPlayer, Calibre, ebook-viewer
 
-**The following BitTorrent clients have been whitelisted: Transmission, Deluge, qBitTorrent, KTorrent. Configuration files and
-~/Downloads directory are real, everything else is placed on a temporary filesystem and discarded when the
-sandboxed is closed. Please configure your client to put downloaded files in ~/Download directory. 
-The plan is to have all bittorrent clients whitelisted in the next release.**
-
-## New profiles
-
-vym, darktable

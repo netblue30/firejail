@@ -3,27 +3,28 @@ include /etc/firejail/globals.local
 
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/engrampa.local
+include /etc/firejail/handbrake.local
 
-# engrampa profile
+noblacklist ~/.config/ghb
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-nogroups
+netfilter
 nonewprivs
 noroot
-nosound
-novideo
-protocol unix
+# netlink required!
+protocol unix,inet,inet6,netlink
 seccomp
-netfilter
-shell none
-tracelog
 
-# private-bin engrampa
-# private-tmp
-private-dev
-# private-etc fonts
+#
+# depending on your usage, you can enable some of the commands below:
+#
+nogroups
+shell none
+# private-bin program
+# private-etc none
+#private-dev
+private-tmp
+nosound

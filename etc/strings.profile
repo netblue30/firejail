@@ -1,3 +1,4 @@
+quiet
 # Persistent global definitions go here
 include /etc/firejail/globals.local
 
@@ -6,7 +7,6 @@ include /etc/firejail/globals.local
 include /etc/firejail/strings.local
 
 # strings profile
-quiet
 ignore noroot
 include /etc/firejail/default.profile
 

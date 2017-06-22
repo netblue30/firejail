@@ -1,3 +1,4 @@
+quiet
 # Persistent global definitions go here
 include /etc/firejail/globals.local
 
@@ -24,7 +25,6 @@ protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
-quiet
 
 private-dev
 

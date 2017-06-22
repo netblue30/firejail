@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.46"
+VERSION="0.9.48"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -409,6 +409,13 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/xfce4-dict.profile
 %{_sysconfdir}/%{name}/xfce4-notes.profile
 %{_sysconfdir}/%{name}/youtube-dl.profile
+%{_sysconfdir}/%{name}/catfish.profile
+%{_sysconfdir}/%{name}/darktable.profile
+%{_sysconfdir}/%{name}/digikam.profile
+%{_sysconfdir}/%{name}/handbrake.profile
+%{_sysconfdir}/%{name}/vym.profile
+%{_sysconfdir}/%{name}/waterfox.profile
+
 
 
 /usr/bin/firejail
@@ -451,6 +458,8 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Mon Jun 12 2017  netblue30 <netblue30@yahoo.com> 0.9.48-1
+
 * Mon May 15 2017  netblue30 <netblue30@yahoo.com> 0.9.46-1
 
 * Fri Oct 21 2016  netblue30 <netblue30@yahoo.com> 0.9.44-1

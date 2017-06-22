@@ -129,7 +129,8 @@ static void log_write(const unsigned char *str, int len, const char *fname) {
 		out_cnt = len;
 	}
 
-	fwrite(str, len, 1, out_fp);
+	int rv = fwrite(str, len, 1, out_fp);
+	(void) rv;
 	fflush(0);
 }
 
@@ -230,7 +231,8 @@ int main(int argc, char **argv) {
 		if (n <= 0)
 			break;
 
-		fwrite(buf, n, 1, stdout);
+		int rv = fwrite(buf, n, 1, stdout);
+		(void) rv;
 		log_write(buf, n, fname);
 	}
 

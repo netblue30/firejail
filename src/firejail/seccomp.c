@@ -68,7 +68,7 @@ int seccomp_load(const char *fname) {
 		goto errexit;
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	if (arg_debug)
-		printf("reading %d seccomp entries from %s\n", entries, fname);
+		printf("configuring %d seccomp entries from %s\n", entries, fname);
 
 	// read filter
 	struct sock_filter *filter = malloc(size);
@@ -205,6 +205,8 @@ int seccomp_filter_keep(void) {
 		printf("seccomp filter configured\n");
 
 
+	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0)
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FSECCOMP, "print", RUN_SECCOMP_CFG);
 	return seccomp_load(RUN_SECCOMP_CFG);
 }
 

@@ -32,6 +32,7 @@
 /etc/firejail/brasero.profile
 /etc/firejail/brave.profile
 /etc/firejail/caja.profile
+/etc/firejail/catfish.profile
 /etc/firejail/cherrytree.profile
 /etc/firejail/chromium-browser.profile
 /etc/firejail/chromium.profile
@@ -49,6 +50,7 @@
 /etc/firejail/default.profile
 /etc/firejail/deluge.profile
 /etc/firejail/dia.profile
+/etc/firejail/digikam.profile
 /etc/firejail/dillo.profile
 /etc/firejail/dino.profile
 /etc/firejail/disable-common.inc
@@ -303,3 +305,12 @@
 /etc/firejail/zoom.profile
 /etc/firejail/vym.profile
 /etc/firejail/darktable.profile
+/etc/firejail/waterfox.profile
+/etc/firejail/handbrake.profile
+/etc/firejail/curl.profile
+/etc/firejail/mplayer.profile
+/etc/firejail/smplayer.profile
+/etc/firejail/ebook-viewer.profile
+/etc/firejail/calibre.profile
+/etc/firejail/handbrake-gtk.profile
+/etc/firejail/ghb.profile

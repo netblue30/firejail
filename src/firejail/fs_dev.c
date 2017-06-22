@@ -35,37 +35,37 @@ typedef struct {
 	const char *dev_fname;
 	const char *run_fname;
 	int sound;
-	int video;
 	int hw3d;
+	int video;
 } DevEntry;
 
 static DevEntry dev[] = {
-	{"/dev/snd", RUN_DEV_DIR "/snd", 1, 0},	// sound device
-	{"/dev/dri", RUN_DEV_DIR "/dri", 0, 1},		// 3d device
-	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", 0, 1},
-	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", 0, 1},
-	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2", 0, 1},
-	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3", 0, 1},
-	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4", 0, 1},
-	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5", 0, 1},
-	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6", 0, 1},
-	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7", 0, 1},
-	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", 0, 1},
-	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", 0, 1},
-	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1},
-	{"/dev/nvidia-modeset", RUN_DEV_DIR "/nvidia-modeset", 0, 1},
-	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", 0, 1},
-	{"/dev/video0", RUN_DEV_DIR "/video0", 0, 1},
-	{"/dev/video1", RUN_DEV_DIR "/video1", 0, 1},
-	{"/dev/video2", RUN_DEV_DIR "/video2", 0, 1},
-	{"/dev/video3", RUN_DEV_DIR "/video3", 0, 1},
-	{"/dev/video4", RUN_DEV_DIR "/video4", 0, 1},
-	{"/dev/video5", RUN_DEV_DIR "/video5", 0, 1},
-	{"/dev/video6", RUN_DEV_DIR "/video6", 0, 1},
-	{"/dev/video7", RUN_DEV_DIR "/video7", 0, 1},
-	{"/dev/video8", RUN_DEV_DIR "/video8", 0, 1},
-	{"/dev/video9", RUN_DEV_DIR "/video9", 0, 1},
-	{NULL, NULL, 0, 0}
+	{"/dev/snd", RUN_DEV_DIR "/snd", 1, 0, 0},	// sound device
+	{"/dev/dri", RUN_DEV_DIR "/dri", 0, 1, 0},		// 3d device
+	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", 0, 1, 0},
+	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", 0, 1, 0},
+	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2", 0, 1, 0},
+	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3", 0, 1, 0},
+	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4", 0, 1, 0},
+	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5", 0, 1, 0},
+	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6", 0, 1, 0},
+	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7", 0, 1, 0},
+	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", 0, 1, 0},
+	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", 0, 1, 0},
+	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1, 0},
+	{"/dev/nvidia-modeset", RUN_DEV_DIR "/nvidia-modeset", 0, 1, 0},
+	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", 0, 1, 0},
+	{"/dev/video0", RUN_DEV_DIR "/video0", 0, 0, 1}, // video camera devices
+	{"/dev/video1", RUN_DEV_DIR "/video1", 0, 0, 1},
+	{"/dev/video2", RUN_DEV_DIR "/video2", 0, 0, 1},
+	{"/dev/video3", RUN_DEV_DIR "/video3", 0, 0, 1},
+	{"/dev/video4", RUN_DEV_DIR "/video4", 0, 0, 1},
+	{"/dev/video5", RUN_DEV_DIR "/video5", 0, 0, 1},
+	{"/dev/video6", RUN_DEV_DIR "/video6", 0, 0, 1},
+	{"/dev/video7", RUN_DEV_DIR "/video7", 0, 0, 1},
+	{"/dev/video8", RUN_DEV_DIR "/video8", 0, 0, 1},
+	{"/dev/video9", RUN_DEV_DIR "/video9", 0, 0, 1},
+	{NULL, NULL, 0, 0, 0}
 };
 
 static void deventry_mount(void) {

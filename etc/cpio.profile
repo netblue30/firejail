@@ -1,3 +1,4 @@
+quiet
 # Persistent global definitions go here
 include /etc/firejail/globals.local
 
@@ -8,7 +9,6 @@ include /etc/firejail/cpio.local
 # cpio profile
 # /sbin and /usr/sbin are visible inside the sandbox
 # /boot is not visible and /var is heavily modified
-quiet
 noblacklist /sbin
 noblacklist /usr/sbin
 include /etc/firejail/disable-common.inc

@@ -25,6 +25,11 @@ noblacklist ~/.cache/thunderbird
 mkdir ~/.cache/thunderbird
 whitelist ~/.cache/thunderbird
 
+whitelist ~/.config/mimeapps.list
+read-only ~/.config/mimeapps.list
+whitelist ~/.local/share/applications
+read-only ~/.local/share/applications
+
 # allow browsers
 ignore private-tmp
 include /etc/firejail/firefox.profile

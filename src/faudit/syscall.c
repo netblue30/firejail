@@ -34,6 +34,9 @@ extern int pivot_root(const char *new_root, const char *put_old);
 void syscall_helper(int argc, char **argv) {
 	(void) argc;
 
+	if (argc < 3)
+		return;
+
 	if (strcmp(argv[2], "mount") == 0) {
 		int rv = mount(NULL, NULL, NULL, 0, NULL);
 		(void) rv;

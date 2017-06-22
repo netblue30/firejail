@@ -1,3 +1,4 @@
+quiet
 # Persistent global definitions go here
 include /etc/firejail/globals.local
 
@@ -6,7 +7,7 @@ include /etc/firejail/globals.local
 include /etc/firejail/wget.local
 
 # wget profile
-quiet
+noblacklist ~/.wgetrc
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc

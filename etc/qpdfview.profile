@@ -6,7 +6,7 @@ include /etc/firejail/globals.local
 include /etc/firejail/qpdfview.local
 
 # qpdfview profile
-noblacklist ${HOME}./config/qt5ct
+noblacklist ${HOME}/.config/qt5ct
 noblacklist ${HOME}/.config/qpdfview
 noblacklist ${HOME}/.local/share/qpdfview
 

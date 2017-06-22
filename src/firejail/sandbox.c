@@ -99,6 +99,9 @@ static void set_caps(void) {
 		caps_keep_list(arg_caps_list);
 	else if (arg_caps_default_filter)
 		caps_default_filter();
+	
+	// drop discretionary access control capabilities for root sandboxes
+	caps_drop_dac_override();
 }
 
 void save_nogroups(void) {
@@ -896,8 +899,7 @@ int sandbox(void* sandbox_arg) {
 	// set security filters
 	//****************************
 	// set capabilities
-//	if (!arg_noroot)
-		set_caps();
+	set_caps();
 
 	// set rlimits
 	set_rlimits();
@@ -989,10 +991,9 @@ int sandbox(void* sandbox_arg) {
 		if (arg_apparmor) {
 			errno = 0;
 			if (aa_change_onexec("firejail-default")) {
-				fprintf(stderr, "Error: cannot confine the application using AppArmor.\n");
-				fprintf(stderr, "Maybe firejail-default AppArmor profile is not loaded into the kernel.\n");
-				fprintf(stderr, "As root, run \"aa-enforce firejail-default\" to load it.\n");
-				exit(1);
+				fwarning("Cannot confine the application using AppArmor.\n"
+					"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
+					"As root, run \"aa-enforce firejail-default\" to load it.\n");
 			}
 			else if (arg_debug)
 				printf("AppArmor enabled\n");

@@ -360,7 +360,7 @@ Set the maximum number of files that can be opened by a process to 500.
 \fBrlimit-sigpending 200
 Set the maximum number of processes that can be created for the real user ID of the calling process to 200.
 .TP
-\fBcpu 1,2,3
+\fBcpu 0,1,2
 Use only CPU cores 0, 1 and 2.
 .TP
 \fBnice -5

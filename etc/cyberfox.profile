@@ -13,7 +13,10 @@ noblacklist ~/.local/share/qpdfview
 noblacklist ~/.kde4/share/apps/okular
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.local/share/okular
+noblacklist ~/.config/okularpartrc
+noblacklist ~/.config/okularrc
 noblacklist ~/.pki
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -48,6 +51,8 @@ whitelist ~/.pki
 whitelist ~/.lastpass
 whitelist ~/.config/qpdfview
 whitelist ~/.local/share/qpdfview
+whitelist ~/.config/okularrc
+whitelist ~/.config/okularpartrc
 whitelist ~/.kde4/share/apps/okular
 whitelist ~/.kde/share/apps/okular
 whitelist ~/.local/share/okular

@@ -34,7 +34,7 @@ shell none
 noexec ${HOME}
 noexec /tmp
 
-private-bin spotify,bash,sh
+private-bin spotify,bash,sh,dash
 private-etc fonts,machine-id,pulse,resolv.conf
 private-dev
 private-tmp

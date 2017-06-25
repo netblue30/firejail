@@ -275,8 +275,10 @@ void top(void) {
 		int row = 24;
 		int col = 80;
 		if (!ioctl(STDIN_FILENO, TIOCGWINSZ, &sz)) {
-			col = sz.ws_col;
-			row = sz.ws_row;
+			if (sz.ws_col > 0 && sz.ws_row > 0) {
+				col = sz.ws_col;
+				row = sz.ws_row;
+			}
 		}
 
 		// start printing

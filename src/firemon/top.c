@@ -274,7 +274,7 @@ void top(void) {
 		struct winsize sz;
 		int row = 24;
 		int col = 80;
-		if (!ioctl(0, TIOCGWINSZ, &sz)) {
+		if (!ioctl(STDIN_FILENO, TIOCGWINSZ, &sz)) {
 			col = sz.ws_col;
 			row = sz.ws_row;
 		}

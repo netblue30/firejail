@@ -8,6 +8,10 @@ include /etc/firejail/steam.local
 # Steam profile (applies to games/apps launched from Steam as well)
 noblacklist ${HOME}/.Steam
 noblacklist ${HOME}/.steam
+noblacklist ${HOME}/.Steampath
+noblacklist ${HOME}/.steampath
+noblacklist ${HOME}/.Steampid
+noblacklist ${HOME}/.steampid
 noblacklist ${HOME}/.local/share/Steam
 noblacklist ${HOME}/.local/share/steam
 include /etc/firejail/disable-common.inc

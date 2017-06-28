@@ -377,6 +377,8 @@ SpotComms (https://github.com/SpotComms)
 	- profile hardening
 	- firecfg enhancements
 	- fixed vlc profile
+	- fixed wget profile
+	- fixed firecfg.config file
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes

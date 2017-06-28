@@ -29,7 +29,7 @@ blacklist /tmp/.X11-unix
 # private-bin wget
 private-dev
 # private-etc resolv.conf
-private-tmp
+# private-tmp
 
 noexec ${HOME}
 noexec /tmp

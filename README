@@ -411,6 +411,7 @@ startx2017 (https://github.com/startx2017)
 	- Blender and 2048-qt profiles
 	- handbrake profile
 	- mplayer and smplayer profiles
+	- kwrite profile
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

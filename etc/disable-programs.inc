@@ -274,6 +274,7 @@ blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/kate
+blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/meld

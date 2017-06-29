@@ -97,5 +97,5 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 
 ## New profiles:
 
-curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite, Geary
+curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite, Geary, Liferea
 

@@ -53,6 +53,15 @@ $ firejail transmission-gtk   # starting Transmission BitTorrent
 $ firejail vlc                # starting VideoLAN Client
 $ sudo firejail /etc/init.d/nginx start
 `````
+Run "firejail --list" in a terminal to list all active sandboxes. Example:
+`````
+$ firejail --list
+1617:netblue:/usr/bin/firejail /usr/bin/firefox-esr 
+7719:netblue:/usr/bin/firejail /usr/bin/transmission-qt 
+7779:netblue:/usr/bin/firejail /usr/bin/galculator 
+7874:netblue:/usr/bin/firejail /usr/bin/vlc --started-from-file file:///home/netblue/firejail-whitelist.mp4 
+7916:netblue:firejail --list 
+`````
 
 ## Desktop integration
 
@@ -84,7 +93,7 @@ If you keep additional Firejail security profiles in a public repository, please
 
 * https://github.com/triceratops1/fe
 
-Use this issue to request new profiles: #1139
+Use this issue to request new profiles: [#1139](https://github.com/netblue30/firejail/issues/1139)
 `````
 
 `````

@@ -3,7 +3,7 @@ include /etc/firejail/globals.local
 
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/geray.local
+include /etc/firejail/geary.local
 
 # Firejail profile for Gnome Geary
 # Users have Geary set to open a browser by clicking a link in an email

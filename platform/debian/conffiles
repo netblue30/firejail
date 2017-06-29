@@ -315,3 +315,4 @@
 /etc/firejail/handbrake-gtk.profile
 /etc/firejail/ghb.profile
 /etc/firejail/kwrite.profile
+/etc/firejail/geary.profile

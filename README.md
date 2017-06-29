@@ -66,5 +66,5 @@ Use this issue to request new profiles: https://github.com/netblue30/firejail/is
 
 ## New profiles:
 
-curl, mplayer2, SMPlayer, Calibre, ebook-viewer
+curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite, Geary
 

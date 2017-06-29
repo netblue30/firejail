@@ -268,6 +268,7 @@ blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
 blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/gajim
+blacklist ${HOME}/.local/share/geary
 blacklist ${HOME}/.local/share/geeqie
 blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess

@@ -314,4 +314,4 @@
 /etc/firejail/calibre.profile
 /etc/firejail/handbrake-gtk.profile
 /etc/firejail/ghb.profile
-/etc/firejail/kwrite
+/etc/firejail/kwrite.profile

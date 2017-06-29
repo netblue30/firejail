@@ -13,15 +13,7 @@ such as Mozilla Firefox, Chromium, VLC, Transmission etc.
 
 The sandbox is lightweight, the overhead is low. There are no complicated configuration files to edit,
 no socket connections open, no daemons running in the background. All security features are
-implemented directly in Linux kernel and available on any Linux computer. To start the sandbox,
-prefix your command with “firejail”:
-
-`````
-$ firejail firefox            # starting Mozilla Firefox
-$ firejail transmission-gtk   # starting Transmission BitTorrent
-$ firejail vlc                # starting VideoLAN Client
-$ sudo firejail /etc/init.d/nginx start
-`````
+implemented directly in Linux kernel and available on any Linux computer. 
 
 [![About Firejail](video.png)](http://www.youtube.com/watch?v=Yk1HVPOeoTc)
 
@@ -50,15 +42,49 @@ On Debian/Ubuntu you will need to install git and a compiler:
 $ sudo apt-get install git build-essential
 `````
 
-## User submitted profile repositories
 
-If you keep your Firejail profiles in a public repository, please give us a link:
+## Running the sandbox
+
+To start the sandbox, prefix your command with “firejail”:
+
+`````
+$ firejail firefox            # starting Mozilla Firefox
+$ firejail transmission-gtk   # starting Transmission BitTorrent
+$ firejail vlc                # starting VideoLAN Client
+$ sudo firejail /etc/init.d/nginx start
+`````
+
+## Desktop integration
+
+Integrate your sandbox into your desktop by running the following two commands:
+`````
+$ firecfg --fix-sound
+$ sudo firecfg
+`````
+
+The first command solves some shared memory/PID namespace bugs in PulseAudio software prior to version 9. 
+The second command integrates Firejail into your desktop. You would need to logout and login back to apply 
+PulseAudio changes.
+
+Start your programs the way you are used to: desktop manager menus, file manager, desktop launchers. 
+The integration applies to any program supported by default by Firejail. There are about 250 default applications 
+in current Firejail version, and the number goes up with every new release. 
+We keep the application list in [/usr/lib/firejail/firecfg.config](https://github.com/netblue30/firejail/blob/master/src/firecfg/firecfg.config) file.
+`````
+
+`````
+## Security profiles
+
+Most Firejail command line options can be passed to the sandbox using profile files.
+You can find the profiles for all supported applications in [/etc/firejail](https://github.com/netblue30/firejail/tree/master/etc) directory.
+
+If you keep additional Firejail security profiles in a public repository, please give us a link:
 
 * https://github.com/chiraag-nataraj/firejail-profiles
 
 * https://github.com/triceratops1/fe
 
-Use this issue to request new profiles: https://github.com/netblue30/firejail/issues/1139
+Use this issue to request new profiles: #1139
 `````
 
 `````

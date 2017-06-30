@@ -138,6 +138,8 @@ emacsomancer (https://github.com/emacsomancer)
 	- added profile for Conkeror browser
 eventyrer (https://github.com/eventyrer)
 	- update gnome-mplayer.profile
+Fabian Würfl (https://github.com/BafDyce)
+	- fixed race condition when creating a new directory
 Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
 Franco (nextime) Lanza (https://github.com/nextime)

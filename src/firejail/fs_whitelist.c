@@ -34,6 +34,7 @@ static char *dentry[] = {
 	NULL
 };
 
+#define EMPTY_STRING ("")
 #define MAXBUF 4098
 static char *resolve_downloads(int nowhitelist_flag) {
 	char *fname;
@@ -359,7 +360,7 @@ void fs_whitelist(void) {
 					fprintf(stderr, "*** \tPlease create a proper Downloads directory for your application.\n");
 					fprintf(stderr, "***\n");
 				}
-				*entry->data = '\0';
+				entry->data = EMPTY_STRING;
 				continue;
 			}
 		}
@@ -413,7 +414,7 @@ void fs_whitelist(void) {
 					opt_dir = 1;
 			}
 
-			*entry->data = '\0';
+			entry->data = EMPTY_STRING;
 			continue;
 		}
 
@@ -429,7 +430,7 @@ void fs_whitelist(void) {
 					errExit("failed increasing memory for nowhitelist entries");
 			}
 			nowhitelist[nowhitelist_c++] = fname;
-			*entry->data = 0;
+			entry->data = EMPTY_STRING;
 			continue;
 		}
 
@@ -440,7 +441,7 @@ void fs_whitelist(void) {
 			if (arg_private) {
 				fwarning("\"%s\" disabled by --private\n", entry->data);
 
-				*entry->data = '\0';
+				entry->data = EMPTY_STRING;
 				continue;
 			}
 
@@ -540,7 +541,7 @@ void fs_whitelist(void) {
 			if (found) {
 				if (arg_debug || arg_debug_whitelists)
 					printf("Skip nowhitelisted path %s\n", fname);
-				*entry->data = 0;
+				entry->data = EMPTY_STRING;
 				free(fname);
 				continue;
 			}

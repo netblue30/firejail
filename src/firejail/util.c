@@ -821,7 +821,9 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 		if (arg_debug)
 			printf("Creating empty %s directory\n", dir);
 		/* coverity[toctou] */
-		if (mkdir(dir, mode) == -1)
+		// don't fail if directory already exists. This can be the case in a race
+		// condition, when two jails launch at the same time. See #1013
+		if (mkdir(dir, mode) == -1 && errno != EEXIST)
 			errExit("mkdir");
 		if (set_perms(dir, 0, 0, mode))
 			errExit("set_perms");

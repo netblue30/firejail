@@ -239,6 +239,8 @@ Joan Figueras (https://github.com/figue)
 	- added abrowser profile
 	- added Google-Play-Music-Desktop-Player
 	- added cyberfox profile
+John Mullee (https://github.com/jmullee)
+	- fix empty-string assignment in whitelisting code
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile

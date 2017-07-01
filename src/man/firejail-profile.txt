@@ -231,7 +231,7 @@ Set the maximum number of processes that can be created for the real user ID of 
 Set the CPU cores available for this sandbox using \fBcpu\fR command. Examples:
 
 .TP
-cpu 1,2,3
+cpu 0,1,2
 Use only CPU cores 0, 1 and 2.
 
 .SH Control Groups

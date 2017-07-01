@@ -19,20 +19,15 @@ expect {
 }
 sleep 3
 
-
 spawn $env(SHELL)
-send --  "firejail --shutdown=jointesting;pwd\r"
+send --  "firejail --list\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"profile=name.profile"
+}
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"home"
-}
-sleep 5
-
-send --  "firejail --list;pwd\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"jointesting" {puts "TESTING ERROR 5\n";exit}
-	"home"
+	"join=jointesting"
 }
 sleep 1
 

@@ -26,17 +26,16 @@ sleep 2
 send -- "/sbin/ifconfig\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"inet6 addr"
+	"inet6"
 }
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"2001:db8:0:f101::1/64"
+	timeout {puts "TESTING ERROR 5.1\n";exit}
+	"2001:db8:0:f101::1"
 }
 expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"Scope:Global"
+	timeout {puts "TESTING ERROR 5.2\n";exit}
+	"64"
 }
-
 
 puts "\nall done\n"
 

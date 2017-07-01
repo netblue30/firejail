@@ -28,7 +28,8 @@ sleep 1
 send -- "ls -a ~ | wc\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"4"
+	"4" {puts "ok\n"}
+	"5" {puts "ok\n"}
 }
 
 sleep 1

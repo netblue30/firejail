@@ -39,15 +39,12 @@ expect {
 	[lindex $argv 0]
 }
 
-send -- "ls -al | wc -l;pwd\r"
+send -- "ls -al | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"5" {puts "normal system\n";}
 	"4" {puts "OpenSUSE\n";}
-}
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"home"
+	"6" {puts "asoundrc\n";}
 }
 
 puts "\n"

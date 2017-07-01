@@ -22,4 +22,4 @@ seccomp
 
 # to test
 shell none
-private-bin mpv,youtube-dl,python,python2.7,python3.6
+private-bin mpv,youtube-dl,python,python2.7,python3.6,env

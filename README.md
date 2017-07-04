@@ -95,6 +95,16 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.49
 
+## New command options:
+`````
+      --disable-mnt
+              Disable /mnt, /media, /run/mount and /run/media access.
+
+              Example:
+              $ firejail --disable-mnt firefox
+`````
+
+
 ## New profiles:
 
 curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite, Geary, Liferea

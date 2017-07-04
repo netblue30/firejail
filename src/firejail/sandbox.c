@@ -790,7 +790,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// handle /mnt and /media
 	//****************************
-	if (checkcfg(CFG_DISABLE_MNT))
+	if (arg_disable_mnt || checkcfg(CFG_DISABLE_MNT))
 		fs_mnt();
 
 	//****************************

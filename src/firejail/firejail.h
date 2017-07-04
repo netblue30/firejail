@@ -350,6 +350,7 @@ extern int arg_x11_block;	// block X11
 extern int arg_x11_xorg;	// use X11 security extention
 extern int arg_allusers;	// all user home directories visible
 extern int arg_machineid;	// preserve /etc/machine-id
+extern int arg_disable_mnt;	// disable /mnt and /media
 
 extern int login_shell;
 extern int parent_to_child_fds[2];

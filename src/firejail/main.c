@@ -107,7 +107,8 @@ int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
 int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
-int arg_writable_var_log;			// writable /var/log
+int arg_writable_var_log = 0;		// writable /var/log
+int arg_disable_mnt = 0;			// disable /mnt and /media
 
 int login_shell = 0;
 
@@ -1291,6 +1292,8 @@ int main(int argc, char **argv) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
+		else if (strcmp(argv[i], "--disable-mnt") == 0)
+			arg_disable_mnt = 1;
 #ifdef HAVE_OVERLAYFS
 		else if (strcmp(argv[i], "--overlay") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {

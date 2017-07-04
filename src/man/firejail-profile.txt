@@ -161,6 +161,9 @@ Mount-bind directory1 on top of directory2. This option is only available when r
 \fBbind file1,file2
 Mount-bind file1 on top of file2. This option is only available when running as root.
 .TP
+\fBdisable-mnt
+Disable /mnt, /media, /run/mount and /run/media access.
+.TP
 \fBmkdir directory
 Create a directory in user home or under /tmp before the sandbox is started.
 The directory is created if it doesn't already exist.

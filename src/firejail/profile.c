@@ -1001,6 +1001,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "disable-mnt") == 0) {
+		arg_disable_mnt = 1;
+		return 0;
+	}
+
 	// rest of filesystem
 	if (strncmp(ptr, "blacklist ", 10) == 0)
 		ptr += 10;

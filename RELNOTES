@@ -1,5 +1,6 @@
 firejail (0.9.49) baseline; urgency=low
   * work in progress!
+  * feature: per-profile disable-mnt
   * new profiles: curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite,
   * new profiles: Geary, Liferea
   * bugfixes

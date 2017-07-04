@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 include /etc/firejail/youtube-dl.local
 
 # Firejail profile for youtube-dl
+noblacklist ${HOME}/.netrc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

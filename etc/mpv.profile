@@ -7,6 +7,7 @@ include /etc/firejail/mpv.local
 
 # mpv media player profile
 noblacklist ${HOME}/.config/mpv
+noblacklist ${HOME}/.netrc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

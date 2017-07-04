@@ -31,7 +31,7 @@ shell none
 
 private-bin keepassxc
 private-dev
-private-etc fonts
+private-etc fonts,ld.so.cache
 private-tmp
 
 noexec ${HOME}

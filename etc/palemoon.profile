@@ -29,8 +29,8 @@ seccomp
 shell none
 tracelog
 
-private-bin palemoon
-private-opt palemoon
+#private-bin palemoon
+#private-opt palemoon
 private-tmp
 
 # These are uncommented in the Firefox profile. If you run into trouble you may

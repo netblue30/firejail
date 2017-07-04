@@ -71,6 +71,7 @@ include /etc/firejail/whitelist-common.inc
 # private-dev might prevent video calls going out
 private-dev
 private-tmp
+#disable-mnt
 
 noexec ${HOME}
 noexec /tmp

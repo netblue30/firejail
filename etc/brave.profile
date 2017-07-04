@@ -23,6 +23,8 @@ netfilter
 #protocol unix,inet,inet6,netlink
 #seccomp
 
+#disable-mnt
+
 whitelist ${DOWNLOADS}
 
 mkdir ~/.config/brave

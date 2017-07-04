@@ -19,6 +19,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+#novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none

@@ -14,10 +14,12 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+no3d
 nogroups
 nonewprivs
 noroot
 nosound
+novideo
 protocol unix
 seccomp
 shell none
@@ -27,3 +29,7 @@ private-bin fairymax,gnome-chess,hoichess
 private-dev
 private-etc fonts,gnome-chess
 private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

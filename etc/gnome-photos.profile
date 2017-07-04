@@ -31,3 +31,6 @@ tracelog
 private-tmp
 private-dev
 # private-etc fonts
+
+noexec ${HOME}
+noexec /tmp

@@ -35,6 +35,7 @@ shell none
 
 private-dev
 #private-tmp - problems with multiple browser sessions
+#disable-mnt
 
 noexec ${HOME}
 noexec /tmp

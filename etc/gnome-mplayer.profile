@@ -22,3 +22,7 @@ shell none
 # private-bin gnome-mplayer,mplayer
 private-dev
 private-tmp
+
+
+noexec ${HOME}
+noexec /tmp

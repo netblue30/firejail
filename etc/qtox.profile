@@ -34,3 +34,4 @@ noexec /tmp
 
 private-bin qtox
 private-tmp
+disable-mnt

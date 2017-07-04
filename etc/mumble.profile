@@ -33,6 +33,7 @@ tracelog
 
 private-bin mumble
 private-tmp
+disable-mnt
 
 noexec ${HOME}
 noexec /tmp

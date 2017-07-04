@@ -17,3 +17,9 @@ nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp
+
+private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

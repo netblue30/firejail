@@ -11,11 +11,15 @@ ignore noroot
 include /etc/firejail/default.profile
 
 net none
-nosound
 no3d
+nosound
+novideo
 shell none
 tracelog
 
 blacklist /tmp/.X11-unix
 
 private-dev
+
+noexec ${HOME}
+noexec /tmp

@@ -22,6 +22,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+novideo
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -35,6 +36,7 @@ private-bin hexchat
 #debug note: private-bin requires perl, python, etc on some systems
 private-dev
 private-tmp
+disable-mnt
 
 noexec ${HOME}
 noexec /tmp

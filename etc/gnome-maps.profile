@@ -19,6 +19,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+novideo
 protocol unix,inet,inet6
 seccomp
 netfilter
@@ -29,3 +30,7 @@ tracelog
 private-tmp
 private-dev
 # private-etc fonts
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

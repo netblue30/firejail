@@ -33,3 +33,4 @@ tracelog
 private-bin stellarium
 private-dev
 private-tmp
+disable-mnt

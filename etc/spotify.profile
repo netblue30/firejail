@@ -38,6 +38,7 @@ private-bin spotify,bash,sh,dash
 private-etc fonts,machine-id,pulse,resolv.conf
 private-dev
 private-tmp
+disable-mnt
 
 blacklist ${HOME}/.bashrc
 blacklist /boot

@@ -22,3 +22,4 @@ shell none
 tracelog
 
 private-tmp
+disable-mnt

@@ -23,6 +23,7 @@ tracelog
 
 private-dev
 private-tmp
+disable-mnt
 
 mkdir     ~/.hedgewars
 whitelist ~/.hedgewars

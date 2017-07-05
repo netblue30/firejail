@@ -16,3 +16,9 @@ netfilter
 noroot
 seccomp
 protocol unix,inet,inet6,netlink
+
+private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

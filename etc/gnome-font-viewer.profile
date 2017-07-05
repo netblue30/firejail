@@ -5,25 +5,26 @@ include /etc/firejail/globals.local
 # Persistent customizations should go in a .local file.
 include /etc/firejail/gnome-font-viewer.local
 
-private
-#include /etc/firejail/disable-common.inc
-#include /etc/firejail/disable-programs.inc
-#include /etc/firejail/disable-passwdmgr.inc
+#Blacklist Paths
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-devel.inc
 
+#Options
 caps.drop all
 netfilter
+no3d
 nonewprivs
 noroot
+nosound
+novideo
 protocol unix,inet,inet6
 seccomp
 
-#
-# depending on your usage, you can enable some of the commands below: 
-#
-nogroups
-shell none
-# private-bin program
-# private-etc none
-# private-dev
-# private-tmp
-nosound
+private-dev
+private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

@@ -34,6 +34,7 @@ private-bin gnome-calculator
 private-dev
 #private-etc fonts
 private-tmp
+disable-mnt
 
 noexec ${HOME}
 noexec /tmp

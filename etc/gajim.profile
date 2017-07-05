@@ -43,3 +43,4 @@ shell none
 #private-etc fonts
 private-dev
 #private-tmp
+disable-mnt

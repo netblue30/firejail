@@ -37,6 +37,7 @@ shell none
 private-bin xonotic-sdl,xonotic-glx,blind-id
 private-dev
 private-tmp
+disable-mnt
 
 noexec ${HOME}
 noexec /tmp

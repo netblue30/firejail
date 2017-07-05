@@ -39,5 +39,6 @@ tracelog
 private-bin quiterss
 private-dev
 #private-etc X11,ssl
+disable-mnt
 
 include /etc/firejail/whitelist-common.inc

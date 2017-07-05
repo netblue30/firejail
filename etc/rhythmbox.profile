@@ -13,9 +13,11 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
+#no3d
 nogroups
 nonewprivs
 noroot
+novideo
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -24,3 +26,6 @@ tracelog
 private-bin rhythmbox
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

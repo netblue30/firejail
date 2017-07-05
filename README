@@ -386,6 +386,7 @@ SpotComms (https://github.com/SpotComms)
 	- fixed vlc profile
 	- fixed wget profile
 	- fixed firecfg.config file
+	- added novideo and disable-mnt support in all profile files
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes

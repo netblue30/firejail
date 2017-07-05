@@ -18,7 +18,6 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 machine-id
-net none
 no3d
 nogroups
 nonewprivs

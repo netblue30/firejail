@@ -22,7 +22,6 @@ private
 
 caps.drop all
 # Xvfb needs to be allowed access to the abstract Unix socket namespace.
-#net none
 nogroups
 nonewprivs
 # In noroot mode, Xvfb cannot create a socket in the real /tmp/.X11-unix.

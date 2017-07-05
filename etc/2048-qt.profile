@@ -7,24 +7,25 @@ include /etc/firejail/2048-qt.local
 
 noblacklist ~/.config/xiaoyong
 noblacklist ~/.config/2048-qt
+
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
-netfilter
+#ipc-namespace
+nogroups
 nonewprivs
 noroot
-protocol unix,inet,inet6
+novideo
+protocol unix
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-nogroups
 shell none
-# private-bin program
-# private-etc none
-# private-dev
-# private-tmp
-nosound
+
+private-dev
+private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

@@ -25,7 +25,6 @@ noroot
 #nosound - KWrite is using ALSA!
 protocol unix
 seccomp
-netfilter
 shell none
 tracelog
 

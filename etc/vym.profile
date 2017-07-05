@@ -6,25 +6,26 @@ include /etc/firejail/globals.local
 include /etc/firejail/vym.local
 
 noblacklist ./.config/InSilmaril
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
+no3d
+nogroups
 nonewprivs
 noroot
-# no network connectivity
+nosound
+novideo
 protocol unix
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-nogroups
 shell none
-# private-bin vym
-# private-etc none
+
 private-dev
 private-tmp
-nosound
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

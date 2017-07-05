@@ -19,7 +19,6 @@ nosound
 novideo
 protocol unix
 seccomp
-netfilter
 shell none
 tracelog
 

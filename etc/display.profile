@@ -14,8 +14,6 @@ include /etc/firejail/disable-passwdmgr.inc
 caps.drop all
 seccomp
 protocol unix
-netfilter
-net none
 nonewprivs
 noroot
 nogroups

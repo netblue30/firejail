@@ -23,7 +23,6 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 # xpra needs to be allowed access to the abstract Unix socket namespace.
-#net none
 nogroups
 nonewprivs
 # In noroot mode, xpra cannot create a socket in the real /tmp/.X11-unix.

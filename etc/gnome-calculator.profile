@@ -30,6 +30,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+private
 private-bin gnome-calculator
 private-dev
 #private-etc fonts

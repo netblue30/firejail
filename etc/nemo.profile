@@ -16,18 +16,14 @@ include /etc/firejail/disable-devel.inc
 
 caps.drop all
 netfilter
+no3d
 nonewprivs
 noroot
+nosound
+novideo
 protocol unix,inet,inet6
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-nogroups
 shell none
-# private-bin program
-# private-etc none
-# private-dev
-# private-tmp
-# nosound
+
+noexec ${HOME}
+noexec /tmp

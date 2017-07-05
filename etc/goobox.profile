@@ -17,7 +17,6 @@ nonewprivs
 noroot
 protocol unix
 seccomp
-netfilter
 shell none
 tracelog
 

@@ -13,7 +13,6 @@ noblacklist ~/.config/catfish
 include /etc/firejail/disable-devel.inc
 
 caps.drop all
-net none
 no3d
 nogroups
 nonewprivs

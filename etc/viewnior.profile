@@ -19,7 +19,6 @@ blacklist ~/.bashrc
 blacklist ~/.Xauthority
 
 caps.drop all
-net none
 nogroups
 nonewprivs
 noroot

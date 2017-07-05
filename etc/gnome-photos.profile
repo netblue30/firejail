@@ -23,7 +23,6 @@ noroot
 nosound
 protocol unix
 seccomp
-netfilter
 shell none
 tracelog
 

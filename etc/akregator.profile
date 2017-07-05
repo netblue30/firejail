@@ -5,28 +5,30 @@ include /etc/firejail/globals.local
 # Persistent customizations should go in a .local file.
 include /etc/firejail/akregator.local
 
-################################
-# Generic GUI application profile
-################################
 noblacklist ${HOME}/.config/akregatorrc
 noblacklist ${HOME}/.local/share/akregator
+
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+#ipc-namespace
 netfilter
+no3d
+nogroups
 nonewprivs
 noroot
+#nosound
+novideo
 protocol unix,inet,inet6
 seccomp
+shell none
 
-#
-# depending on your usage, you can enable some of the commands below:
-#
-# nogroups
-# shell none
-# private-bin program
-# private-etc none
-# private-dev
-# private-tmp
+private-dev
+private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

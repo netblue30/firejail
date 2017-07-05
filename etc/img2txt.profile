@@ -18,8 +18,6 @@ noroot
 nosound
 protocol unix
 seccomp
-netfilter
-net none
 shell none
 tracelog
 

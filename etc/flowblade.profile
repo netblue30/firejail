@@ -8,13 +8,23 @@ include /etc/firejail/flowblade.local
 # FlowBlade profile
 noblacklist ${HOME}/.flowblade
 noblacklist ${HOME}/.config/flowblade
+
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink
 seccomp
+shell none
+
+private-dev
+private-tmp
+
+noexec ${HOME}
+noexec /tmp

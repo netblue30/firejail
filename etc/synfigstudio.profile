@@ -8,19 +8,24 @@ include /etc/firejail/synfigstudio.local
 # synfigstudio
 noblacklist ${HOME}/.config/synfig
 noblacklist ${HOME}/.synfig
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
+nogroups
 nonewprivs
 noroot
+nosound
+novideo
 protocol unix
 seccomp
-
-noexec ${HOME}
-noexec /tmp
+shell none
 
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

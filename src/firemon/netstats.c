@@ -29,6 +29,20 @@
 // ip -s link: device stats
 // ss -s: socket stats
 
+static uid_t cached_uid = 0;
+static char *cached_user_name = NULL;
+
+static char *get_user_name(uid_t uid) {
+	if (cached_user_name == NULL) {
+		cached_uid = uid;
+		cached_user_name = pid_get_user_name(uid);
+		return strdup(cached_user_name);
+	}
+	else if (uid == cached_uid)
+		return strdup(cached_user_name);
+	else
+		return pid_get_user_name(uid);
+}
 
 static char *get_header(void) {
 	char *rv;
@@ -151,7 +165,7 @@ static void print_proc(int index, int itv, int col) {
 	snprintf(pidstr, 10, "%u", index);
 
 	// user
-	char *user = pid_get_user_name(pids[index].uid);
+	char *user = get_user_name(pids[index].uid);
 	char *ptruser;
 	if (user)
 		ptruser = user;
@@ -190,7 +204,7 @@ void netstats(void) {
 	while (1) {
 		// set pid table
 		int i;
-		int itv = 5; 	// 5 second  interval
+		int itv = 1; 	// 1 second  interval
 		pid_read(0);
 
 		// start rx/tx measurements
@@ -199,7 +213,7 @@ void netstats(void) {
 				get_stats(i);
 		}
 
-		// wait 5 seconds
+		// wait 1 seconds
 		firemon_sleep(itv);
 
 		// grab screen size

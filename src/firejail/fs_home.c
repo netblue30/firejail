@@ -284,9 +284,13 @@ void fs_private(void) {
 	// mask /home
 	if (arg_debug)
 		printf("Mounting a new /home directory\n");
-	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-		errExit("mounting home directory");
-	fs_logger("tmpfs /home");
+	if (u == 0 && arg_allusers) // allow --allusers when starting the sandbox as root
+		;
+	else {
+		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mounting home directory");
+		fs_logger("tmpfs /home");
+	}
 
 	// mask /root
 	if (arg_debug)

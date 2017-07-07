@@ -266,10 +266,11 @@ int main(int argc, char **argv) {
 		print_procs = 0;
 	}
 
-	if (getuid() == 0)
+	if (getuid() == 0) {
 		if (!arg_tree)
 			tree((pid_t) pid);
 		procevent((pid_t) pid);
+	}
 
 	return 0;
 }

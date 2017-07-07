@@ -449,26 +449,12 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 	return 0;
 }
 
-static void procevent_print_pids(void) {
-	// print files
-	int i;
-	for (i = 0; i < max_pids; i++) {
-		if (pids[i].level == 1)
-			pid_print_tree(i, 0, 1);
-	}
-	printf("\n");
-}
-
 void procevent(pid_t pid) {
 	// need to be root for this
 	if (getuid() != 0) {
 		fprintf(stderr, "Error: you need to be root to get process events\n");
 		exit(1);
 	}
-
-	// read and print sandboxed processes
-	pid_read(pid);
-	procevent_print_pids();
 
 	// monitor using netlink
 	int sock = procevent_netlink_setup();

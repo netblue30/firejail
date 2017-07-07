@@ -48,6 +48,7 @@ void cgroup(pid_t pid, int print_procs) {
 	pid_read(pid);
 
 	// print processes
+	printf("  cgroup: ");
 	int i;
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {

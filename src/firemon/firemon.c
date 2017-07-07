@@ -201,16 +201,30 @@ int main(int argc, char **argv) {
 	}
 
 	if (arg_top) {
-		top();
+		top();	// print all sandboxes, --name disregarded
 		return 0;
 	}
 	if (arg_list) {
-		list();
+		list();	// print all sandboxes, --name disregarded
 		return 0;
 	}
 	if (arg_netstats) {
-		netstats();
+		netstats();	// print all sandboxes, --name disregarded
 		return 0;
+	}
+
+	// if --name requested without other options, print all data
+	if (pid && !arg_tree &&  !arg_cpu && !arg_seccomp && !arg_caps &&
+	    !arg_cgroup && !arg_x11 && !arg_interface && !arg_route && !arg_arp) {
+		arg_tree = 1;
+		arg_cpu = 1;
+		arg_seccomp = 1;
+		arg_caps = 1;
+		arg_cgroup = 1;
+		arg_x11 = 1;
+		arg_interface = 1;
+		arg_route = 1;
+		arg_arp = 1;
 	}
 
 	// cumulative options
@@ -239,7 +253,7 @@ int main(int argc, char **argv) {
 		x11((pid_t) pid, print_procs);
 		print_procs = 0;
 	}
-	if (arg_interface) {
+	if (arg_interface && getuid() == 0) {
 		interface((pid_t) pid, print_procs);
 		print_procs = 0;
 	}
@@ -252,7 +266,9 @@ int main(int argc, char **argv) {
 		print_procs = 0;
 	}
 
-	if (print_procs)
+	if (getuid() == 0)
+		if (!arg_tree)
+			tree((pid_t) pid);
 		procevent((pid_t) pid);
 
 	return 0;

@@ -109,7 +109,17 @@ errexit:
 }
 
 
+static char *firejail_exec = NULL;
+static int firejail_exec_len = 0;
+static int firejail_exec_prefix_len = 0;
 static void print_proc(int index, int itv, int col) {
+	if (!firejail_exec) {
+		if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
+			errExit("asprintf");
+		firejail_exec_len = strlen(firejail_exec);
+		firejail_exec_prefix_len = strlen(PREFIX) + 5;
+	}
+
 	// command
 	char *cmd = pid_proc_cmdline(index);
 	char *ptrcmd;
@@ -119,6 +129,8 @@ static void print_proc(int index, int itv, int col) {
 		else
 			ptrcmd = "";
 	}
+	else if (strncmp(cmd, firejail_exec, firejail_exec_len) == 0)
+		ptrcmd = cmd + firejail_exec_prefix_len;
 	else
 		ptrcmd = cmd;
 

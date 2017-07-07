@@ -54,6 +54,9 @@ static char *get_header(void) {
 }
 
 
+static char *firejail_exec = NULL;
+static int firejail_exec_len = 0;
+static int firejail_exec_prefix_len = 0;
 // recursivity!!!
 static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigned *stime, unsigned itv, float *cpu, int *cnt) {
 	char *rv = NULL;
@@ -90,6 +93,13 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 			print_top(i, index, utime, stime, itv, cpu, cnt);
 	}
 
+	if (!firejail_exec) {
+		if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
+			errExit("asprintf");
+		firejail_exec_len = strlen(firejail_exec);
+		firejail_exec_prefix_len = strlen(PREFIX) + 5;
+	}
+
 	if (pids[index].level == 1) {
 		// pid
 		char pidstr[10];
@@ -104,8 +114,8 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 			else
 				ptrcmd = "";
 		}
-		else if (strncmp(cmd, "/usr/bin/firejail", 17) == 0)
-			ptrcmd = cmd + 9;
+		else if (strncmp(cmd, firejail_exec, firejail_exec_len) == 0)
+			ptrcmd = cmd + firejail_exec_prefix_len;
 		else
 			ptrcmd = cmd;
 

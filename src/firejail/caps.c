@@ -250,7 +250,7 @@ void caps_print(void) {
 
 // drop discretionary access control capabilities for root sandboxes
 void caps_drop_dac_override(void) {
-	if (getuid() == 0) {
+	if (getuid() == 0 && !arg_noprofile) {
 		if (prctl(PR_CAPBSET_DROP, CAP_DAC_OVERRIDE, 0, 0, 0));
 		else if (arg_debug)
 			printf("Drop CAP_DAC_OVERRIDE\n");

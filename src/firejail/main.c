@@ -109,6 +109,7 @@ int arg_machineid = 0;				// preserve /etc/machine-id
 int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_disable_mnt = 0;			// disable /mnt and /media
+int arg_noprofile = 0; // use default.profile if none other found/specified
 
 int login_shell = 0;
 
@@ -818,7 +819,6 @@ int main(int argc, char **argv) {
 	int option_force = 0;
 	int custom_profile = 0;	// custom profile loaded
 	char *custom_profile_dir = NULL; // custom profile directory
-	int arg_noprofile = 0; // use default.profile if none other found/specified
 
 
 	// get starting timestamp

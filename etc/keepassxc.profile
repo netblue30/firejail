@@ -8,8 +8,8 @@ include /etc/firejail/keepassxc.local
 # Firejail profile for KeepassXC
 noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.keepassxc
-noblacklist ${HOME}/.*kdbx
-noblacklist ${HOME}/.*kdb
+noblacklist ${HOME}/*.kdbx
+noblacklist ${HOME}/*.kdb
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -25,6 +25,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+novideo
 protocol unix
 seccomp
 shell none

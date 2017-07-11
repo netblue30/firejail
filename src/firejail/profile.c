@@ -81,8 +81,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (cfg.profile_ignore[i] == NULL)
 			break;
 
-		if (strncmp(ptr, cfg.profile_ignore[i], strlen(cfg.profile_ignore[i])) == 0)
-			return 0;	// ignore line
+		int len = strlen(cfg.profile_ignore[i]);
+		if (strncmp(ptr, cfg.profile_ignore[i], len) == 0) {
+			// full word match
+			if (*(ptr + len) == '\0' || *(ptr + len) == ' ')
+				return 0;	// ignore line
+		}
 	}
 
 	if (strncmp(ptr, "ignore ", 7) == 0) {

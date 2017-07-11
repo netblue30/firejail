@@ -123,40 +123,48 @@ void seccomp_filter_64(void) {
 
 // drop filter for seccomp option
 int seccomp_filter_drop(int enforce_seccomp) {
-	// default seccomp
-	if (cfg.seccomp_list_drop == NULL && cfg.seccomp_list == NULL) {
+printf("cfg.seccomp_list %p, cfg.seccomp_list_drop %p\n", cfg.seccomp_list, cfg.seccomp_list_drop);
+	// if we have multiple seccomp commands, only one of them is executed
+	// in the following order:
+	//	- seccomp.drop list
+	//	- seccomp list
+	//	- seccomp
+	if (cfg.seccomp_list_drop == NULL) {
+		// default seccomp
+		if (cfg.seccomp_list == NULL) {
 #if defined(__x86_64__)
-		seccomp_filter_32();
+			seccomp_filter_32();
 #endif
 #if defined(__i386__)
-		seccomp_filter_64();
+			seccomp_filter_64();
 #endif
-	}
-	// default seccomp filter with additional drop list
-	else if (cfg.seccomp_list && cfg.seccomp_list_drop == NULL) {
+		}
+		// default seccomp filter with additional drop list
+		else { // cfg.seccomp_list != NULL
 #if defined(__x86_64__)
-		seccomp_filter_32();
+			seccomp_filter_32();
 #endif
 #if defined(__i386__)
-		seccomp_filter_64();
+			seccomp_filter_64();
 #endif
-		if (arg_debug)
-			printf("Build default+drop seccomp filter\n");
+			if (arg_debug)
+				printf("Build default+drop seccomp filter\n");
 
-		// build the seccomp filter as a regular user
-		int rv;
-		if (arg_allow_debuggers)
-			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
-				PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, cfg.seccomp_list, "allow-debuggers");
-		else
-			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
-				PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, cfg.seccomp_list);
-		if (rv)
-			exit(rv);
+			// build the seccomp filter as a regular user
+			int rv;
+			if (arg_allow_debuggers)
+				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
+					PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, cfg.seccomp_list, "allow-debuggers");
+			else
+				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
+					PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, cfg.seccomp_list);
+			if (rv)
+				exit(rv);
+		}
 	}
 
 	// drop list without defaults - secondary filters are not installed
-	else if (cfg.seccomp_list == NULL && cfg.seccomp_list_drop) {
+	else { // cfg.seccomp_list_drop != NULL
 		if (arg_debug)
 			printf("Build drop seccomp filter\n");
 
@@ -171,9 +179,6 @@ int seccomp_filter_drop(int enforce_seccomp) {
 
 		if (rv)
 			exit(rv);
-	}
-	else {
-		assert(0);
 	}
 
 	// load the filter

@@ -29,7 +29,9 @@ noroot
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
-tracelog
+
+# tracelog disabled as it breaks integrated browser
+#tracelog
 
 private-dev
 private-tmp

@@ -123,7 +123,6 @@ void seccomp_filter_64(void) {
 
 // drop filter for seccomp option
 int seccomp_filter_drop(int enforce_seccomp) {
-printf("cfg.seccomp_list %p, cfg.seccomp_list_drop %p\n", cfg.seccomp_list, cfg.seccomp_list_drop);
 	// if we have multiple seccomp commands, only one of them is executed
 	// in the following order:
 	//	- seccomp.drop list

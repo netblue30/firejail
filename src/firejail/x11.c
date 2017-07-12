@@ -639,7 +639,7 @@ void x11_start_xpra(int argc, char **argv) {
 
 	// build the start command
 	char *server_argv[256] = {		  // rest initialyzed to NULL
-		 "xpra", "start", display_str, "--no-daemon", "--use-display",
+		 "xpra", "start", display_str, "--no-daemon",
 	};
 	unsigned pos = 0;
 	while (server_argv[pos] != NULL) pos++;

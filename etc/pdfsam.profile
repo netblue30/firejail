@@ -8,6 +8,7 @@ include /etc/firejail/pdfsam.local
 #
 #Profile for pdfsam
 #
+noblacklist ${HOME}/.java
 
 #Blacklist Paths
 include /etc/firejail/disable-common.inc

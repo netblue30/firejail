@@ -8,6 +8,7 @@ include /etc/firejail/arduino.local
 # Firejail profile for arduino
 noblacklist ${HOME}/.arduino15
 noblacklist ${HOME}/Arduino
+noblacklist ${HOME}/.java
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

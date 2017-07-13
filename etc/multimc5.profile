@@ -10,6 +10,7 @@ include /etc/firejail/multimc5.local
 #
 
 #No Blacklist Paths
+noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/multimc5
 noblacklist ${HOME}/.multimc5
 

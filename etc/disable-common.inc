@@ -296,5 +296,4 @@ blacklist /vmlinuz*
 blacklist /initrd*
 
 # complement noexec ${HOME} and noexec /tmp
-noexec ${HOME}/.config/pulse
 noexec /tmp/.X11-unix

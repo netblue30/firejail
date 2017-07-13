@@ -10,6 +10,7 @@ include /etc/firejail/jd-gui.local
 #
 
 noblacklist ${HOME}/.config/jd-gui.cfg
+noblacklist ${HOME}/.java
 
 #Blacklist Paths
 include /etc/firejail/disable-common.inc

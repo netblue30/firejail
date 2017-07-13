@@ -6,6 +6,7 @@ include /etc/firejail/globals.local
 include /etc/firejail/steam.local
 
 # Steam profile (applies to games/apps launched from Steam as well)
+noblacklist ${HOME}/.java
 noblacklist ${HOME}/.Steam
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.Steampath

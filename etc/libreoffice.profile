@@ -7,6 +7,7 @@ include /etc/firejail/libreoffice.local
 
 # Firejail profile for LibreOffice
 noblacklist ~/.config/libreoffice
+noblacklist ${HOME}/.java
 noblacklist /usr/local/sbin
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

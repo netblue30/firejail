@@ -14,6 +14,7 @@
 /etc/firejail/abrowser.profile
 /etc/firejail/akregator.profile
 /etc/firejail/amarok.profile
+/etc/firejail/android-studio.profile
 /etc/firejail/arduino.profile
 /etc/firejail/ark.profile
 /etc/firejail/atom-beta.profile
@@ -136,6 +137,7 @@
 /etc/firejail/icecat.profile
 /etc/firejail/icedove.profile
 /etc/firejail/iceweasel.profile
+/etc/firejail/idea.sh.profile
 /etc/firejail/img2txt.profile
 /etc/firejail/inkscape.profile
 /etc/firejail/inox.profile

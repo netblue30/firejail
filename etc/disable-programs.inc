@@ -4,8 +4,10 @@ include /etc/firejail/disable-programs.local
 
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
+blacklist ${HOME}/.AndroidStudio*
 blacklist ${HOME}/.Atom
 blacklist ${HOME}/.FBReader
+blacklist ${HOME}/.IdeaIC*
 blacklist ${HOME}/.LuminanceHDR
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Natron
@@ -16,6 +18,7 @@ blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.Wolfram Research
+blacklist ${HOME}/.android
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
@@ -192,11 +195,13 @@ blacklist ${HOME}/.googleearth/Cache/
 blacklist ${HOME}/.googleearth/Temp/
 blacklist ${HOME}/.googleearth/myplaces.backup.kml
 blacklist ${HOME}/.googleearth/myplaces.kml
+blacklist ${HOME}/.gradle
 blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.hugin
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.inkscape
+blacklist ${HOME}/.java
 blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.kde4/share/apps/gwenview
 blacklist ${HOME}/.kde4/share/apps/kcookiejar
@@ -249,6 +254,7 @@ blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/akregator
 blacklist ${HOME}/.local/share/Empathy
+noblacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet
@@ -338,6 +344,7 @@ blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.thunderbird
+blacklist ${HOME}/.tooling
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.viking
 blacklist ${HOME}/.viking-maps

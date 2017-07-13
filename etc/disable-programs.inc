@@ -387,6 +387,7 @@ blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta
 blacklist ${HOME}/.cache/org.gnome.Books
+blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/simple-scan

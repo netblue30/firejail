@@ -209,6 +209,7 @@
 /etc/firejail/pcmanfm.profile
 /etc/firejail/pdfsam.profile
 /etc/firejail/pdftotext.profile
+/etc/firejail/peek.profile
 /etc/firejail/pidgin.profile
 /etc/firejail/pithos.profile
 /etc/firejail/pix.profile
@@ -233,6 +234,7 @@
 /etc/firejail/seamonkey-bin.profile
 /etc/firejail/seamonkey.profile
 /etc/firejail/server.profile
+/etc/firejail/silentarmy.profile
 /etc/firejail/simple-scan.profile
 /etc/firejail/skanlite.profile
 /etc/firejail/skype.profile

@@ -13,7 +13,6 @@ noblacklist ${HOME}/.gradle
 noblacklist ${HOME}/.IdeaIC*
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
-noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
 
 include /etc/firejail/disable-common.inc

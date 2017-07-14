@@ -254,7 +254,7 @@ blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/akregator
 blacklist ${HOME}/.local/share/Empathy
-noblacklist ${HOME}/.local/share/JetBrains
+blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet

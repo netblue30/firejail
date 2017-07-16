@@ -9,6 +9,8 @@ include /etc/firejail/chromium.local
 noblacklist ~/.config/chromium
 noblacklist ~/.cache/chromium
 noblacklist ~/.pki
+# specific to Arch
+noblacklist ~/.config/chromium-flags.conf
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 # chromium is distributed with a perl script on Arch
@@ -21,8 +23,6 @@ mkdir ~/.cache/chromium
 whitelist ~/.cache/chromium
 mkdir ~/.pki
 whitelist ~/.pki
-
-# specific to Arch
 whitelist ~/.config/chromium-flags.conf
 
 include /etc/firejail/whitelist-common.inc

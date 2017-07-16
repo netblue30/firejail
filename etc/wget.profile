@@ -32,5 +32,6 @@ private-dev
 # private-etc resolv.conf
 # private-tmp
 
+read-write /var/lib/rkhunter/tmp
 noexec ${HOME}
 noexec /tmp

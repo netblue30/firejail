@@ -215,7 +215,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	}
 	drop_privs(0);
 
-	// check xephyr
+	// check xvfb
 	if (!program_in_path("Xvfb")) {
 		fprintf(stderr, "\nError: Xvfb program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xvfb\n");
@@ -263,7 +263,7 @@ void x11_start_xvfb(int argc, char **argv) {
 			}
 		}
 		if (dquote) {
-			fprintf(stderr, "Error: unclosed quote found while parsing xephyr_extra_params\n");
+			fprintf(stderr, "Error: unclosed quote found while parsing xvfb_extra_params\n");
 			exit(1);
 		}
 
@@ -331,7 +331,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	}
 
 	if (arg_debug)
-		printf("xephyr server pid %d\n", server);
+		printf("xvfb server pid %d\n", server);
 
 	// check X11 socket
 	char *fname;
@@ -346,7 +346,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	};
 
 	if (n == 10) {
-		fprintf(stderr, "Error: failed to start xephyr\n");
+		fprintf(stderr, "Error: failed to start xvfb\n");
 		exit(1);
 	}
 	free(fname);

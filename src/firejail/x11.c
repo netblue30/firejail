@@ -398,6 +398,27 @@ void x11_start_xvfb(int argc, char **argv) {
 }
 
 
+
+static char *extract_setting(int argc, char **argv, const char *argument) {
+	int i;
+	int len = strlen(argument);
+
+	for (i = 1; i < argc; i++) {
+		if (strncmp(argv[i], argument, len) == 0) {
+			return argv[i] + len;
+		}
+
+		// detect end of firejail params
+		if (strcmp(argv[i], "--") == 0)
+			break;
+		if (strncmp(argv[i], "--", 2) != 0)
+			break;
+	}
+
+	return NULL;
+}
+
+
 //$ Xephyr -ac -br -noreset -screen 800x600 :22 &
 //$ DISPLAY=:22 firejail --net=eth0 --blacklist=/tmp/.X11-unix/x0 firefox
 void x11_start_xephyr(int argc, char **argv) {
@@ -406,6 +427,11 @@ void x11_start_xephyr(int argc, char **argv) {
 	struct stat s;
 	pid_t jail = 0;
 	pid_t server = 0;
+
+	// default xephyr screen can be overwriten by a --xephyr-screen= command line option
+	char *newscreen = extract_setting(argc, argv, "--xephyr-screen=");
+	if (newscreen)
+		xephyr_screen = newscreen;
 
 	setenv("FIREJAIL_X11", "yes", 1);
 

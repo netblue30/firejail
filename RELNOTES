@@ -1,6 +1,7 @@
 firejail (0.9.49) baseline; urgency=low
   * work in progress!
-  * feature: per-profile disable-mnt
+  * feature: per-profile disable-mnt (--disable-mnt)
+  * feature: per-profile support to set X11 Xephyr screen size (--xephyr-screen)
   * new profiles: curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite,
   * new profiles: Geary, Liferea, peek, silentarmy, IntelliJ IDEA,
   * new profiles: Android Studio

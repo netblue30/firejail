@@ -341,6 +341,21 @@ Enable X11 sandboxing with Xpra server.
 .TP
 \fBx11 xvfb
 Enable X11 sandboxing with Xvfb server.
+.TP
+\fBxephyr-screen WIDTHxHEIGHT
+Set screen size for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
+.br
+
+.br
+Example:
+.br
+
+.br
+xephyr-screen 640x480
+.br
+x11 xephyr
+
+
 
 .SH Resource limits, CPU affinity, Control Groups
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.

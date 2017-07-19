@@ -102,6 +102,16 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 
               Example:
               $ firejail --disable-mnt firefox
+
+       --xephyr-screen=WIDTHxHEIGHT
+              Set screen size for --x11=xephyr. The setting will overwrite the
+              default set in  /etc/firejail/firejail.config  for  the  current
+              sandbox.  Run  xrandr  to get a list of supported resolutions on
+              your computer.
+
+              Example:
+              $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 fire‐
+              fox
 `````
 
 

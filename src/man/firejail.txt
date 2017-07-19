@@ -1980,7 +1980,17 @@ On the client machine we start a VNC viewer and use it to connect to our server:
 $ vncviewer
 .br
 
+.TP
+\fB\-\-xephyr-screen=WIDTHxHEIGHT
+Set screen size for --x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
+for the current sandbox. Run xrandr to get a list of supported resolutions on your computer.
+.br
 
+.br
+Example:
+.br
+$ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
+.br
 
 .TP
 \fB\-\-zsh

@@ -205,6 +205,7 @@ void usage(void) {
 	printf("    --writable-etc - /etc directory is mounted read-write.\n");
 	printf("    --writable-var - /var directory is mounted read-write.\n");
 	printf("    --writable-var-log - use the real /var/log directory, not a clone.\n");
+#ifdef HAVE_X11
 	printf("    --x11 - enable X11 sandboxing. The software checks first if Xpra is\n");
 	printf("\tinstalled, then it checks if Xephyr is installed. If all fails, it will\n");
 	printf("\tattempt to use X11 security extension.\n");
@@ -213,6 +214,8 @@ void usage(void) {
 	printf("    --x11=xorg - enable X11 security extension.\n");
 	printf("    --x11=xpra - enable Xpra X11 server.\n");
 	printf("    --x11=xvfb - enable Xvfb X11 server.\n");
+	printf("    --xephyr-screen=WIDTHxHEIGHT - set screen size for --x11=xephyr.\n");
+#endif
 	printf("    --zsh - use /usr/bin/zsh as default shell.\n");
 	printf("\n");
 	printf("Examples:\n");

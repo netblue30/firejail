@@ -440,6 +440,8 @@ Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Tomasz Jan Góralczyk (https://github.com/tjg)
 	- fixed Steam profile
+Topi Miettinen (https://github.com/topimiettinen)
+	- improve mount handling, fix /run/user handling
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature

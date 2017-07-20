@@ -187,7 +187,6 @@ read-only ${HOME}/.npm-packages
 # The following block breaks trash functionality in file managers
 #read-only  ${HOME}/.local
 #read-write ${HOME}/.local/share
-#noexec     ${HOME}/.local/share
 blacklist   ${HOME}/.local/share/Trash
 
 # Write-protection for desktop entries
@@ -296,5 +295,5 @@ blacklist /vmlinuz*
 blacklist /initrd*
 
 # complement noexec ${HOME} and noexec /tmp
-noexec ${HOME}/.config/pulse
+noexec ${HOME}/.local/share
 noexec /tmp/.X11-unix

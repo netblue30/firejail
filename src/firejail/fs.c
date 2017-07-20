@@ -560,7 +560,7 @@ void fs_proc_sys_dev_boot(void) {
 	struct stat s;
 
 	char *fname;
-	if (asprintf(&fname, "/run/usr/%d", getuid()) == -1)
+	if (asprintf(&fname, "/run/user/%d", getuid()) == -1)
 		errExit("asprintf");
 	if (is_dir(fname)) { // older distros don't have this directory
 		// disable /run/user/{uid}/gnupg

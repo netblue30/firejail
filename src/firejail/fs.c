@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
+#include <sys/statvfs.h>
 #include <sys/wait.h>
 #include <linux/limits.h>
 #include <fnmatch.h>
@@ -414,6 +415,15 @@ void fs_blacklist(void) {
         free(noblacklist);
 }
 
+static int get_mount_flags(const char *path, unsigned long *flags) {
+	struct statvfs buf;
+
+	if (statvfs(path, &buf) < 0)
+		return -errno;
+	*flags = buf.f_flag;
+	return 0;
+}
+
 //***********************************************
 // mount namespace
 //***********************************************
@@ -425,10 +435,15 @@ void fs_rdonly(const char *dir) {
 	struct stat s;
 	int rv = stat(dir, &s);
 	if (rv == 0) {
+		unsigned long flags = 0;
+		get_mount_flags(dir, &flags);
+		if ((flags & MS_RDONLY) == MS_RDONLY)
+			return;
+		flags |= MS_RDONLY;
 		// mount --bind /bin /bin
 		// mount --bind -o remount,ro /bin
 		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_REC, NULL) < 0)
+		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
 			errExit("mount read-only");
 		fs_logger2("read-only", dir);
 	}
@@ -449,8 +464,13 @@ static void fs_rdwr(const char *dir) {
 
 		// mount --bind /bin /bin
 		// mount --bind -o remount,rw /bin
+		unsigned long flags = 0;
+		get_mount_flags(dir, &flags);
+		if ((flags & MS_RDONLY) == 0)
+			return;
+		flags &= ~MS_RDONLY;
 		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
+		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
 			errExit("mount read-write");
 		fs_logger2("read-write", dir);
 	}
@@ -464,8 +484,13 @@ void fs_noexec(const char *dir) {
 	if (rv == 0) {
 		// mount --bind /bin /bin
 		// mount --bind -o remount,ro /bin
+		unsigned long flags = 0;
+		get_mount_flags(dir, &flags);
+		if ((flags & (MS_NOEXEC|MS_NODEV|MS_NOSUID)) == (MS_NOEXEC|MS_NODEV|MS_NOSUID))
+			return;
+		flags |= MS_NOEXEC|MS_NODEV|MS_NOSUID;
 		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		    mount(NULL, dir, NULL, MS_BIND|MS_REMOUNT|MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_REC, NULL) < 0)
+		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
 			errExit("mount noexec");
 		fs_logger2("noexec", dir);
 	}

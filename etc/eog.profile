@@ -9,6 +9,7 @@ include /etc/firejail/eog.local
 noblacklist ~/.config/eog
 noblacklist ~/.Steam
 noblacklist ~/.steam
+noblacklist ~/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

@@ -849,6 +849,18 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	// private /lib list of files
+	if (strncmp(ptr, "private-lib ", 12) == 0) {
+		if (cfg.lib_private_keep) {
+			if (asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, ptr + 12) < 0 )
+				errExit("asprintf");
+		} else {
+			cfg.lib_private_keep = ptr + 12;
+		}
+		arg_private_lib = 1;
+		return 0;
+	}
+
 
 #ifdef HAVE_OVERLAYFS
 	if (strncmp(ptr, "overlay-named ", 14) == 0) {

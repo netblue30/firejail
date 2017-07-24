@@ -811,6 +811,16 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
+	if (arg_private_lib) {
+		if (cfg.chrootdir)
+			fwarning("private-lib feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fwarning("private-lib feature is disabled in overlay\n");
+		else {
+			fs_private_lib();
+		}
+	}
+
 	if (arg_private_tmp) {
 		if (cfg.chrootdir)
 			fwarning("private-tmp feature is disabled in chroot\n");

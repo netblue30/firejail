@@ -85,6 +85,7 @@ int arg_private_opt = 0;			// private opt directory
 int arg_private_srv = 0;			// private srv directory
 int arg_private_bin = 0;			// private bin directory
 int arg_private_tmp = 0;			// private tmp directory
+int arg_private_lib = 0;			// private lib directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
 int arg_nosound = 0;				// disable sound
@@ -1621,6 +1622,15 @@ int main(int argc, char **argv) {
 			} else
 				cfg.bin_private_keep = argv[i] + 14;
 			arg_private_bin = 1;
+		}
+		else if (strncmp(argv[i], "--private-lib=", 14) == 0) {
+			// extract private lib list (if any)
+			if (cfg.lib_private_keep) {
+				if (asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, argv[i] + 14) < 0 )
+					errExit("asprintf");
+			} else
+				cfg.lib_private_keep = argv[i] + 14;
+			arg_private_lib = 1;
 		}
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;

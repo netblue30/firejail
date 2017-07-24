@@ -1232,6 +1232,34 @@ $ ls /bin
 bash  cat  ls  sed
 
 .TP
+\fB\-\-private-lib=file,file
+Build a new /lib in a temporary filesystem. For command to be executed,
+the shell (if \-\-shell=none is not used), and the listed libraries
+find out dynamic libraries and copy them to the /lib directory.
+If no listed file is found, /lib directory will be empty and no programs will be able to execute.
+The same directory is also bind-mounted over /lib64 and /usr/lib.
+All modifications are discarded when the sandbox is closed.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noprofile \-\-shell=none \-\-private-lib= \-\-private-bin=ls /bin/ls /lib /bin
+.br
+Parent pid 15733, child pid 15734
+.br
+Child process initialized in 69.61 ms
+.br
+/bin:
+.br
+ls
+.br
+.br
+/lib:
+.br
+ld-linux-x86-64.so.2  libc.so.6  libdl.so.2  libpcre.so.3  libpthread.so.0  libselinux.so.1
+
+.TP
 \fB\-\-private-dev
 Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log and shm devices are available.
 .br

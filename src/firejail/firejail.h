@@ -48,6 +48,7 @@
 #define RUN_SRV_DIR	"/run/firejail/mnt/srv"
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
+#define RUN_LIB_DIR	"/run/firejail/mnt/lib"
 
 #define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
 #define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
@@ -207,6 +208,7 @@ typedef struct config_t {
 	char *opt_private_keep;	// keep list for private opt directory
 	char *srv_private_keep;	// keep list for private srv directory
 	char *bin_private_keep;	// keep list for private bin directory
+	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *overlay_dir;
 	char *private_template; // template dir for tmpfs home
@@ -328,6 +330,7 @@ extern int arg_private_opt;	// private opt directory
 extern int arg_private_srv;	// private srv directory
 extern int arg_private_bin;	// private bin directory
 extern int arg_private_tmp;	// private tmp directory
+extern int arg_private_lib;	// private lib directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
@@ -623,6 +626,9 @@ void pulseaudio_disable(void);
 
 // fs_bin.c
 void fs_private_bin_list(void);
+
+// fs_lib.c
+void fs_private_lib(void);
 
 // protocol.c
 void protocol_filter_save(void);

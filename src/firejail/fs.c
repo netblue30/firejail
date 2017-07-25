@@ -515,7 +515,7 @@ void fs_proc_sys_dev_boot(void) {
 
 	// remount /proc/sys readonly
 	if (mount("/proc/sys", "/proc/sys", NULL, MS_BIND | MS_REC, NULL) < 0 ||
-	    mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_REC, NULL) < 0)
+	    mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mounting /proc/sys");
 	fs_logger("read-only /proc/sys");
 

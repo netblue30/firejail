@@ -114,6 +114,15 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
               fox
 `````
 
+## Default seccomp list update
+
+The following syscalls have been added: 
+afs_syscall, bdflush, break, ftime, getpmsg, gtty, lock, mpx, pciconfig_iobase, pciconfig_read,
+pciconfig_write, prof, profil, putpmsg, rtas, s390_runtime_instr, s390_mmio_read, s390_mmio_write,
+security, setdomainname,  sethostname, sgetmask, ssetmask, stty, subpage_prot, switch_endian,
+ulimit, vhangup, vserver. This brings us to a total of 91 syscalls blacklisted by default.
+
+
 
 ## New profiles:
 

@@ -1458,7 +1458,12 @@ remap_file_pages, mbind, get_mempolicy, set_mempolicy,
 migrate_pages, move_pages, vmsplice, chroot,
 tuxcall, reboot, mfsservctl, get_kernel_syms,
 bpf, clock_settime, personality, process_vm_writev, query_module,
-settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
+settimeofday, stime, umount, userfaultfd, ustat, vm86, vm86old,
+afs_syscall, bdflush, break, ftime, getpmsg, gtty, lock, mpx, pciconfig_iobase, pciconfig_read,
+pciconfig_write, prof, profil, putpmsg, rtas, s390_runtime_instr, s390_mmio_read, s390_mmio_write,
+security, setdomainname,  sethostname, sgetmask, ssetmask, stty, subpage_prot, switch_endian,
+ulimit, vhangup and vserver
+
 .br
 
 .br

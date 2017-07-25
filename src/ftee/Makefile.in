@@ -1,5 +1,6 @@
 all: ftee
 
+CC=@CC@
 PREFIX=@prefix@
 VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@

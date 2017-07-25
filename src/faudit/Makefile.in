@@ -1,5 +1,6 @@
 all: faudit
 
+CC=@CC@
 PREFIX=@prefix@
 VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@

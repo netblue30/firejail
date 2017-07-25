@@ -240,6 +240,97 @@ static void add_default_list(int fd, int allow_debuggers) {
 	filter_add_blacklist(fd, SYS_vm86old, 0);
 #endif
 
+#ifdef SYS_afs_syscall
+	filter_add_blacklist(fd, SYS_afs_syscall, 0);
+#endif
+#ifdef SYS_bdflush
+	filter_add_blacklist(fd, SYS_bdflush, 0);
+#endif
+#ifdef SYS_break
+	filter_add_blacklist(fd, SYS_break, 0);
+#endif
+#ifdef SYS_ftime
+	filter_add_blacklist(fd, SYS_ftime, 0);
+#endif
+#ifdef SYS_getpmsg
+	filter_add_blacklist(fd, SYS_getpmsg, 0);
+#endif
+#ifdef SYS_gtty
+	filter_add_blacklist(fd, SYS_gtty, 0);
+#endif
+#ifdef SYS_lock
+	filter_add_blacklist(fd, SYS_lock, 0);
+#endif
+#ifdef SYS_mpx
+	filter_add_blacklist(fd, SYS_mpx, 0);
+#endif
+#ifdef SYS_pciconfig_iobase
+	filter_add_blacklist(fd, SYS_pciconfig_iobase, 0);
+#endif
+#ifdef SYS_pciconfig_read
+	filter_add_blacklist(fd, SYS_pciconfig_read, 0);
+#endif
+#ifdef SYS_pciconfig_write
+	filter_add_blacklist(fd, SYS_pciconfig_write, 0);
+#endif
+#ifdef SYS_prof
+	filter_add_blacklist(fd, SYS_prof, 0);
+#endif
+#ifdef SYS_profil
+	filter_add_blacklist(fd, SYS_profil, 0);
+#endif
+#ifdef SYS_putpmsg
+	filter_add_blacklist(fd, SYS_putpmsg, 0);
+#endif
+#ifdef SYS_rtas
+	filter_add_blacklist(fd, SYS_rtas, 0);
+#endif
+#ifdef SYS_s390_runtime_instr
+	filter_add_blacklist(fd, SYS_s390_runtime_instr, 0);
+#endif
+#ifdef SYS_s390_mmio_read
+	filter_add_blacklist(fd, SYS_s390_mmio_read, 0);
+#endif
+#ifdef SYS_s390_mmio_write
+	filter_add_blacklist(fd, SYS_s390_mmio_write, 0);
+#endif
+#ifdef SYS_security
+	filter_add_blacklist(fd, SYS_security, 0);
+#endif
+#ifdef SYS_setdomainname
+	filter_add_blacklist(fd, SYS_setdomainname, 0);
+#endif
+#ifdef SYS_sethostname
+	filter_add_blacklist(fd, SYS_sethostname, 0);
+#endif
+#ifdef SYS_sgetmask
+	filter_add_blacklist(fd, SYS_sgetmask, 0);
+#endif
+#ifdef SYS_ssetmask
+	filter_add_blacklist(fd, SYS_ssetmask, 0);
+#endif
+#ifdef SYS_stty
+	filter_add_blacklist(fd, SYS_stty, 0);
+#endif
+#ifdef SYS_subpage_prot
+	filter_add_blacklist(fd, SYS_subpage_prot, 0);
+#endif
+#ifdef SYS_switch_endian
+	filter_add_blacklist(fd, SYS_switch_endian, 0);
+#endif
+#ifdef SYS_sys_debug_setcontext
+	filter_add_blacklist(fd, SYS_sys_debug_setcontext, 0);
+#endif
+#ifdef SYS_ulimit
+	filter_add_blacklist(fd, SYS_ulimit, 0);
+#endif
+#ifdef SYS_vhangup
+	filter_add_blacklist(fd, SYS_vhangup, 0);
+#endif
+#ifdef SYS_vserver
+	filter_add_blacklist(fd, SYS_vserver, 0);
+#endif
+
 }
 
 // default list

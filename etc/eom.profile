@@ -7,7 +7,9 @@ include /etc/firejail/eom.local
 
 # Firejail profile for Eye of Mate (eom)
 noblacklist ~/.config/mate/eom
+noblacklist ~/.Steam
 noblacklist ~/.steam
+noblacklist ~/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -28,3 +30,6 @@ tracelog
 private-bin eom
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

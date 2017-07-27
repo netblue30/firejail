@@ -9,6 +9,7 @@ include /etc/firejail/xviewer.local
 noblacklist ~/.config/xviewer
 noblacklist ~/.Steam
 noblacklist ~/.steam
+noblacklist ~/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -28,3 +29,6 @@ tracelog
 private-dev
 private-bin xviewer
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

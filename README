@@ -42,6 +42,8 @@ Committers
 
 Firejail Authors (alphabetical order)
 
+Aidan Gauland (https://github.com/aidalgol)
+	- added electron and riot-web profiles
 Akhil Hans Maulloo (https://github.com/kouul)
 	- xz profile
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
@@ -302,6 +304,8 @@ Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
+Panzerfather (https://github.com/Panzerfather)
+	- allow eog to access user's trash
 Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
 	- user namespace implementation
 Paupiah Yash (https://github.com/CaffeinatedStud)

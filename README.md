@@ -13,7 +13,7 @@ such as Mozilla Firefox, Chromium, VLC, Transmission etc.
 
 The sandbox is lightweight, the overhead is low. There are no complicated configuration files to edit,
 no socket connections open, no daemons running in the background. All security features are
-implemented directly in Linux kernel and available on any Linux computer. 
+implemented directly in Linux kernel and available on any Linux computer.
 
 [![About Firejail](video.png)](http://www.youtube.com/watch?v=Yk1HVPOeoTc)
 
@@ -54,11 +54,11 @@ $ sudo firejail /etc/init.d/nginx start
 Run "firejail --list" in a terminal to list all active sandboxes. Example:
 `````
 $ firejail --list
-1617:netblue:/usr/bin/firejail /usr/bin/firefox-esr 
-7719:netblue:/usr/bin/firejail /usr/bin/transmission-qt 
-7779:netblue:/usr/bin/firejail /usr/bin/galculator 
-7874:netblue:/usr/bin/firejail /usr/bin/vlc --started-from-file file:///home/netblue/firejail-whitelist.mp4 
-7916:netblue:firejail --list 
+1617:netblue:/usr/bin/firejail /usr/bin/firefox-esr
+7719:netblue:/usr/bin/firejail /usr/bin/transmission-qt
+7779:netblue:/usr/bin/firejail /usr/bin/galculator
+7874:netblue:/usr/bin/firejail /usr/bin/vlc --started-from-file file:///home/netblue/firejail-whitelist.mp4
+7916:netblue:firejail --list
 `````
 
 ## Desktop integration
@@ -69,13 +69,13 @@ $ firecfg --fix-sound
 $ sudo firecfg
 `````
 
-The first command solves some shared memory/PID namespace bugs in PulseAudio software prior to version 9. 
-The second command integrates Firejail into your desktop. You would need to logout and login back to apply 
+The first command solves some shared memory/PID namespace bugs in PulseAudio software prior to version 9.
+The second command integrates Firejail into your desktop. You would need to logout and login back to apply
 PulseAudio changes.
 
-Start your programs the way you are used to: desktop manager menus, file manager, desktop launchers. 
-The integration applies to any program supported by default by Firejail. There are about 250 default applications 
-in current Firejail version, and the number goes up with every new release. 
+Start your programs the way you are used to: desktop manager menus, file manager, desktop launchers.
+The integration applies to any program supported by default by Firejail. There are about 250 default applications
+in current Firejail version, and the number goes up with every new release.
 We keep the application list in [/usr/lib/firejail/firecfg.config](https://github.com/netblue30/firejail/blob/master/src/firecfg/firecfg.config) file.
 
 ## Security profiles
@@ -116,7 +116,7 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 
 ## Default seccomp list update
 
-The following syscalls have been added: 
+The following syscalls have been added:
 afs_syscall, bdflush, break, ftime, getpmsg, gtty, lock, mpx, pciconfig_iobase, pciconfig_read,
 pciconfig_write, prof, profil, putpmsg, rtas, s390_runtime_instr, s390_mmio_read, s390_mmio_write,
 security, setdomainname,  sethostname, sgetmask, ssetmask, stty, subpage_prot, switch_endian,
@@ -126,5 +126,5 @@ ulimit, vhangup, vserver. This brings us to a total of 91 syscalls blacklisted b
 
 ## New profiles:
 
-curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite, Geary, Liferea, peek, silentarmy, IntelliJ IDEA, Android Studio
-
+curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite, Geary, Liferea, peek, silentarmy,
+IntelliJ IDEA, Android Studio, electron, riot-web

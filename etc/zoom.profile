@@ -17,7 +17,7 @@ include /etc/firejail/disable-devel.inc
 
 mkdir ~/.zoom
 whitelist ~/.zoom
-
+whitelist ~/.cache/zoom
 
 caps.drop all
 netfilter

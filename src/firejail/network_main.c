@@ -314,7 +314,7 @@ void network_main(pid_t child) {
 		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface1.dev, cstr);
 	}
 	if (cfg.interface2.configured) {
-		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface3.dev, cstr);
+		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface2.dev, cstr);
 	}
 	if (cfg.interface3.configured) {
 		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 4, PATH_FNET, "moveif", cfg.interface3.dev, cstr);

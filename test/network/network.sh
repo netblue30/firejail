@@ -75,9 +75,6 @@ echo "TESTING: network default gateway test 3 (net_defaultgw3.exp)"
 echo "TESTING: scan (net_scan.exp)"
 ./net_scan.exp
 
-echo "TESTING: mtu (mtu.exp)"
-./mtu.exp
-
 echo "TESTING: interface (interface.exp)"
 ./interface.exp
 

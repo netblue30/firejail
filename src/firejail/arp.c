@@ -42,7 +42,10 @@ typedef struct arp_hdr_t {
 
 
 // returns 0 if the address is not in use, -1 otherwise
-int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr) {
+int arp_check(const char *dev, uint32_t destaddr) {
+	// RFC 5227 - using a source IP address of 0 for probing
+	uint32_t srcaddr = 0;
+
 	if (strlen(dev) > IFNAMSIZ) {
 		fprintf(stderr, "Error: invalid network device name %s\n", dev);
 		exit(1);
@@ -206,7 +209,7 @@ static uint32_t arp_random(const char *dev, Bridge *br) {
 		return 0;
 
 	// check address
-	uint32_t rv = arp_check(dev, dest, ifip);
+	uint32_t rv = arp_check(dev, dest);
 	if (!rv)
 		return dest;
 	return 0;
@@ -248,7 +251,7 @@ static uint32_t arp_sequential(const char *dev, Bridge *br) {
 			dest++;
 			continue;
 		}
-		uint32_t rv = arp_check(dev, dest, ifip);
+		uint32_t rv = arp_check(dev, dest);
 		if (!rv)
 			return dest;
 		dest++;

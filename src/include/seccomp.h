@@ -115,6 +115,15 @@ struct seccomp_data {
      BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, AUDIT_ARCH_I386, 1, 0), \
      BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
+#if defined(__x86_64__)
+// handle X32 ABI
+#define X32_SYSCALL_BIT 0x40000000
+#define HANDLE_X32 \
+		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, X32_SYSCALL_BIT, 1, 0), \
+		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, 0, 1, 0), \
+		RETURN_ERRNO(EPERM)
+#endif
+
 #define EXAMINE_SYSCALL BPF_STMT(BPF_LD+BPF_W+BPF_ABS,	\
 		 (offsetof(struct seccomp_data, nr)))
 

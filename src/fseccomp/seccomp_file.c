@@ -37,22 +37,15 @@ static void write_to_file(int fd, void *data, int size) {
 }
 
 void filter_init(int fd) {
+	struct sock_filter filter[] = {
+		VALIDATE_ARCHITECTURE,
 #if defined(__x86_64__)
-#define X32_SYSCALL_BIT 0x40000000
-	struct sock_filter filter[] = {
-		VALIDATE_ARCHITECTURE,
 		EXAMINE_SYSCALL,
-		// handle X32 ABI
-		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, X32_SYSCALL_BIT, 1, 0),
-		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, 0, 1, 0),
-		RETURN_ERRNO(EPERM)
-	};
+		HANDLE_X32
 #else
-	struct sock_filter filter[] = {
-		VALIDATE_ARCHITECTURE,
 		EXAMINE_SYSCALL
-	};
 #endif
+	};
 
 #if 0
 {

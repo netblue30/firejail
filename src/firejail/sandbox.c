@@ -1001,6 +1001,11 @@ int sandbox(void* sandbox_arg) {
 		else
 			seccomp_filter_drop(enforce_seccomp);
 	}
+	if (arg_memory_deny_write_execute) {
+		if (arg_debug)
+			printf("Install memory write&execute filter\n");
+		seccomp_load(RUN_SECCOMP_MDWX);	// install filter
+	}
 #endif
 
 	//****************************************

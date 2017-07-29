@@ -19,7 +19,10 @@
 */
 #include "fseccomp.h"
 #include "../include/seccomp.h"
+#include <sys/mman.h>
+#include <sys/shm.h>
 #include <sys/syscall.h>
+#include <sys/types.h>
 
 static void add_default_list(int fd, int allow_debuggers) {
 #ifdef SYS_mount
@@ -424,6 +427,57 @@ void seccomp_keep(const char *fname, char *list) {
 	}
 
 	filter_end_whitelist(fd);
+
+	// close file
+	close(fd);
+}
+
+void memory_deny_write_execute(const char *fname) {
+	// open file
+	int fd = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (fd < 0) {
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
+		exit(1);
+	}
+
+	filter_init(fd);
+
+	// build filter
+	static const struct sock_filter filter[] = {
+#ifndef __x86_64__
+		// block old multiplexing mmap syscall for i386
+		BLACKLIST(SYS_mmap),
+#endif
+		// block mmap(,,x|PROT_WRITE|PROT_EXEC) so W&X memory can't be created
+#ifndef __x86_64__
+		// mmap2 is used for mmap on i386 these days
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_mmap2, 0, 5),
+#else
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_mmap, 0, 5),
+#endif
+		EXAMINE_ARGUMENT(2),
+		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_WRITE|PROT_EXEC),
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_WRITE|PROT_EXEC, 0, 1),
+		KILL_PROCESS,
+		RETURN_ALLOW,
+		// block mprotect(,,PROT_EXEC) so writable memory can't be turned into executable
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_mprotect, 0, 5),
+		EXAMINE_ARGUMENT(2),
+		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_EXEC),
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
+		KILL_PROCESS,
+		RETURN_ALLOW,
+		// block shmat(,,x|SHM_EXEC) so W&X shared memory can't be created
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_shmat, 0, 5),
+		EXAMINE_ARGUMENT(2),
+		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, SHM_EXEC),
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SHM_EXEC, 0, 1),
+		KILL_PROCESS,
+		RETURN_ALLOW
+	};
+	write_to_file(fd, filter, sizeof(filter));
+
+	filter_end_blacklist(fd);
 
 	// close file
 	close(fd);

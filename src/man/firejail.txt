@@ -740,6 +740,12 @@ Example:
 $ firejail \-\-machine-id
 
 .TP
+\fB\-\-memory-deny-write-execute
+Install a seccomp filter to block attempts to create memory mappings
+that are both writable and executable, to change mappings to be
+executable or to create executable shared memory.
+
+.TP
 \fB\-\-mtu=number
 Assign a MTU value to the last network interface defined by a \-\-net option.
 .br

@@ -21,7 +21,7 @@
 #include "../include/seccomp.h"
 #include <sys/syscall.h>
 
-static void write_to_file(int fd, void *data, int size) {
+void write_to_file(int fd, const void *data, int size) {
 	assert(data);
 	assert(size);
 

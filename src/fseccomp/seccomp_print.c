@@ -69,9 +69,14 @@ void filter_print(const char *fname) {
 	load_seccomp(fname);
 
 	// start filter
-	struct sock_filter start[] = {
+	const struct sock_filter start[] = {
 		VALIDATE_ARCHITECTURE,
+#if defined(__x86_64__)
+		EXAMINE_SYSCALL,
+		HANDLE_X32
+#else
 		EXAMINE_SYSCALL
+#endif
 	};
 
 	// print sizes
@@ -80,7 +85,10 @@ void filter_print(const char *fname) {
 	// test the start of the filter
 	if (memcmp(&start[0], filter, sizeof(start)) == 0) {
 		printf("  VALIDATE_ARCHITECTURE\n");
-		printf("  EXAMINE_SYSCAL\n");
+		printf("  EXAMINE_SYSCALL\n");
+#if defined(__x86_64__)
+		printf("  HANDLE_X32\n");
+#endif
 	}
 	else {
 		printf("Invalid seccomp filter %s\n", fname);
@@ -88,34 +96,36 @@ void filter_print(const char *fname) {
 	}
 
 	// loop trough blacklists
-	int i = 4;
+	int i = sizeof(start) / sizeof(struct sock_filter);
 	while (i < filter_cnt) {
 		// minimal parsing!
-		unsigned char *ptr = (unsigned char *) &filter[i];
-		int *nr = (int *) (ptr + 4);
-		if (*ptr	== 0x15 && *(ptr +14) == 0xff && *(ptr + 15) == 0x7f ) {
-			printf("  WHITELIST %d %s\n", *nr, syscall_find_nr(*nr));
+		struct sock_filter *s = (struct sock_filter *) &filter[i];
+		if (s->code == BPF_JMP+BPF_JEQ+BPF_K && (s + 1)->code == BPF_RET+BPF_K && (s + 1)->k == SECCOMP_RET_ALLOW ) {
+			printf("  WHITELIST %d %s\n", s->k, syscall_find_nr(s->k));
 			i += 2;
 		}
-		else if (*ptr	== 0x15 && *(ptr +14) == 0 && *(ptr + 15) == 0) {
-			printf("  BLACKLIST %d %s\n", *nr, syscall_find_nr(*nr));
+		else if (s->code == BPF_JMP+BPF_JEQ+BPF_K && (s + 1)->code == BPF_RET+BPF_K && (s + 1)->k == SECCOMP_RET_KILL ) {
+			printf("  BLACKLIST %d %s\n", s->k, syscall_find_nr(s->k));
 			i += 2;
 		}
-		else if (*ptr	== 0x15 && *(ptr +14) == 0x5 && *(ptr + 15) == 0) {
-			int err = *(ptr + 13) << 8 | *(ptr + 12);
-			printf("  ERRNO %d %s %d %s\n", *nr, syscall_find_nr(*nr), err, errno_find_nr(err));
+		else if (s->code == BPF_JMP+BPF_JEQ+BPF_K && (s + 1)->code == BPF_RET+BPF_K && ((s + 1)->k & ~SECCOMP_RET_DATA) == SECCOMP_RET_ERRNO) {
+			printf("  BLACKLIST_ERRNO %d %s %d %s\n", s->k, syscall_find_nr(s->k), (s + 1)->k & SECCOMP_RET_DATA, errno_find_nr((s + 1)->k & SECCOMP_RET_DATA));
 			i += 2;
 		}
-		else if (*ptr == 0x06 && *(ptr +6) == 0 && *(ptr + 7) == 0 ) {
+		else if (s->code == BPF_RET+BPF_K && (s->k & ~SECCOMP_RET_DATA) == SECCOMP_RET_ERRNO) {
+			printf("  RETURN_ERRNO %d %s\n", s->k & SECCOMP_RET_DATA, errno_find_nr(s->k & SECCOMP_RET_DATA));
+			i++;
+		}
+		else if (s->code == BPF_RET+BPF_K && s->k == SECCOMP_RET_KILL) {
 			printf("  KILL_PROCESS\n");
 			i++;
 		}
-		else if (*ptr == 0x06 && *(ptr +6) == 0xff && *(ptr + 7) == 0x7f ) {
+		else if (s->code == BPF_RET+BPF_K && s->k == SECCOMP_RET_ALLOW) {
 			printf("  RETURN_ALLOW\n");
 			i++;
 		}
 		else {
-			printf("  UNKNOWN ENTRY!!!\n");
+			printf("  UNKNOWN ENTRY %x!\n", s->code);
 			i++;
 		}
 	}

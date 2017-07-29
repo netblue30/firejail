@@ -446,6 +446,7 @@ void shut(pid_t pid);
 int restricted_shell(const char *user);
 
 // arp.c
+void arp_announce(const char *dev, Bridge *br);
 // returns 0 if the address is not in use, -1 otherwise
 int arp_check(const char *dev, uint32_t destaddr);
 // assign an IP address using arp scanning
@@ -672,6 +673,7 @@ enum {
 void sandboxfs(int op, pid_t pid, const char *path1, const char *path2);
 
 // checkcfg.c
+#define DEFAULT_ARP_PROBES 2
 enum {
 	CFG_FILE_TRANSFER = 0,
 	CFG_X11,
@@ -694,6 +696,7 @@ enum {
 	CFG_FOLLOW_SYMLINK_PRIVATE_BIN,
 	CFG_DISABLE_MNT,
 	CFG_JOIN,
+	CFG_ARP_PROBES,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

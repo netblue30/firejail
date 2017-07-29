@@ -141,6 +141,7 @@ static void sandbox_if_up(Bridge *br) {
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
 		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
+		arp_announce(dev, br);
 	}
 	else if (br->arg_ip_none == 0 && br->macvlan == 1) {
 		// reassign the macvlan address
@@ -163,6 +164,7 @@ static void sandbox_if_up(Bridge *br) {
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
 		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
+		arp_announce(dev, br);
 	}
 
 	if (br->ip6sandbox)

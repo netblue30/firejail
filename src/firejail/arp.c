@@ -41,10 +41,11 @@ typedef struct arp_hdr_t {
 } ArpHdr;
 
 
-// returns 0 if the address is not in use, -1 otherwise
-int arp_check(const char *dev, uint32_t destaddr) {
-	// RFC 5227 - using a source IP address of 0 for probing
-	uint32_t srcaddr = 0;
+// gracious arp announcing our address
+void arp_announce(const char *dev, Bridge *br) {
+	// RFC 5227 - using a source and destination IP address of the interface
+	uint32_t srcaddr = br->ipsandbox;
+	uint32_t destaddr = br->ipsandbox;
 
 	if (strlen(dev) > IFNAMSIZ) {
 		fprintf(stderr, "Error: invalid network device name %s\n", dev);
@@ -52,7 +53,7 @@ int arp_check(const char *dev, uint32_t destaddr) {
 	}
 
 	if (arg_debug)
-		printf("Trying %d.%d.%d.%d ...\n", PRINT_IP(destaddr));
+		printf("Announce %d.%d.%d.%d ...\n", PRINT_IP(destaddr));
 
 	// find interface address
 	int sock;
@@ -108,26 +109,107 @@ int arp_check(const char *dev, uint32_t destaddr) {
 	if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
 		errExit("send");
 	fflush(0);
+	close(sock);
+}
 
-	// wait not more than one second for an answer
+
+
+// returns 0 if the address is not in use, -1 otherwise
+int arp_check(const char *dev, uint32_t destaddr) {
+	// RFC 5227 - using a source IP address of 0 for probing
+	uint32_t srcaddr = 0;
+
+	if (strlen(dev) > IFNAMSIZ) {
+		fprintf(stderr, "Error: invalid network device name %s\n", dev);
+		exit(1);
+	}
+
+	if (arg_debug)
+		printf("Trying %d.%d.%d.%d ...\n", PRINT_IP(destaddr));
+
+	// find interface address
+	int sock;
+	if ((sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW)) < 0)
+		errExit("socket");
+
+	srcaddr = htonl(srcaddr);
+	destaddr = htonl(destaddr);
+
+	// Find interface MAC address
+	struct ifreq ifr;
+	memset(&ifr, 0, sizeof (ifr));
+	strncpy(ifr.ifr_name, dev, IFNAMSIZ);
+	if (ioctl(sock, SIOCGIFHWADDR, &ifr) < 0)
+		errExit("ioctl");
+	close(sock);
+
+	// configure layer2 socket address information
+	struct sockaddr_ll addr;
+	memset(&addr, 0, sizeof(addr));
+	if ((addr.sll_ifindex = if_nametoindex(dev)) == 0)
+		errExit("if_nametoindex");
+	addr.sll_family = AF_PACKET;
+	memcpy (addr.sll_addr, ifr.ifr_hwaddr.sa_data, 6);
+	addr.sll_halen = htons(6);
+
+	// build the arp packet header
+	ArpHdr hdr;
+	memset(&hdr, 0, sizeof(hdr));
+	hdr.htype = htons(1);
+	hdr.ptype = htons(ETH_P_IP);
+	hdr.hlen = 6;
+	hdr.plen = 4;
+	hdr.opcode = htons(1); //ARPOP_REQUEST
+	memcpy(hdr.sender_mac, ifr.ifr_hwaddr.sa_data, 6);
+	memcpy(hdr.sender_ip, (uint8_t *)&srcaddr, 4);
+	memcpy(hdr.target_ip, (uint8_t *)&destaddr, 4);
+
+	// build ethernet frame
+	uint8_t frame[ETH_FRAME_LEN]; // includes eth header, vlan, and crc
+	memset(frame, 0, sizeof(frame));
+	frame[0] = frame[1] = frame[2] = frame[3] = frame[4] = frame[5] = 0xff;
+	memcpy(frame + 6, ifr.ifr_hwaddr.sa_data, 6);
+	frame[12] = ETH_P_ARP / 256;
+	frame[13] = ETH_P_ARP % 256;
+	memcpy (frame + 14, &hdr, sizeof(hdr));
+
+	// open layer2 socket
+	if ((sock = socket(PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 0)
+		errExit("socket");
+
+	int len;
+	if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
+		errExit("send");
+	fflush(0);
+
+	// send two probes at 0.5 seconds interva;
+	int  cnt = checkcfg(CFG_ARP_PROBES);
+	uint8_t framerx[ETH_FRAME_LEN]; // includes eth header, vlan, and crc
 	fd_set fds;
 	FD_ZERO(&fds);
 	FD_SET(sock, &fds);
 	int maxfd = sock;
 	struct timeval ts;
-	ts.tv_sec = 1; // 1 second wait time
-	ts.tv_usec = 0;
+	ts.tv_sec = 0; // 0.5 seconds wait time
+	ts.tv_usec = 500000;
 	while (1) {
 		int nready = select(maxfd + 1,  &fds, (fd_set *) 0, (fd_set *) 0, &ts);
 		if (nready < 0)
 			errExit("select");
 		else if (nready == 0) { // timeout
-			close(sock);
-			return 0;
+			if (--cnt <= 0) {
+				close(sock);
+				return 0;
+			}
+			if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
+				errExit("send");
+			ts.tv_sec = 0; // 0.5 seconds wait time
+			ts.tv_usec = 500000;
+			fflush(0);
 		}
 		else {
 			// read the incoming packet
-			int len = recvfrom(sock, frame, ETH_FRAME_LEN, 0, NULL, NULL);
+			int len = recvfrom(sock, framerx, ETH_FRAME_LEN, 0, NULL, NULL);
 			if (len < 0) {
 				perror("recvfrom");
 				close(sock);
@@ -137,9 +219,9 @@ int arp_check(const char *dev, uint32_t destaddr) {
 			// parse the incoming packet
 			if ((unsigned int) len < 14 + sizeof(ArpHdr))
 				continue;
-			if (frame[12] != (ETH_P_ARP / 256) || frame[13] != (ETH_P_ARP % 256))
+			if (framerx[12] != (ETH_P_ARP / 256) || framerx[13] != (ETH_P_ARP % 256))
 				continue;
-			memcpy(&hdr, frame + 14, sizeof(ArpHdr));
+			memcpy(&hdr, framerx + 14, sizeof(ArpHdr));
 			if (hdr.opcode == htons(1))
 				continue;
 			if (hdr.opcode == htons(2)) {

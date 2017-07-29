@@ -49,6 +49,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
+		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -267,7 +268,7 @@ int checkcfg(int val) {
 			}
 
 			// Xvfb screen size
-            		else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
+	            		else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
 				// expecting three numbers separated by x's
 				unsigned int n1;
 				unsigned int n2;
@@ -345,6 +346,13 @@ int checkcfg(int val) {
 					cfg_val[CFG_DISABLE_MNT] = 0;
 				else
 					goto errout;
+			}
+			// arp probes
+			else if (strncmp(ptr, "arp-probes ", 11) == 0) {
+				int arp_probes = atoi(ptr + 11);
+				if (arp_probes <= 1 || arp_probes > 30)
+					goto errout;
+				cfg_val[CFG_ARP_PROBES] = arp_probes;
 			}
 			else
 				goto errout;

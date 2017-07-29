@@ -66,6 +66,7 @@
 /etc/firejail/dragon.profile
 /etc/firejail/dropbox.profile
 /etc/firejail/elinks.profile
+/etc/firejail/electron.profile
 /etc/firejail/emacs.profile
 /etc/firejail/empathy.profile
 /etc/firejail/enchant.profile
@@ -230,6 +231,7 @@
 /etc/firejail/qutebrowser.profile
 /etc/firejail/ranger.profile
 /etc/firejail/rhythmbox.profile
+/etc/firejail/riot-web.profile
 /etc/firejail/ristretto.profile
 /etc/firejail/rtorrent.profile
 /etc/firejail/scribus.profile
@@ -264,6 +266,7 @@
 /etc/firejail/transmission-show.profile
 /etc/firejail/uget-gtk.profile
 /etc/firejail/unbound.profile
+/etc/firejail/unknown-horizons.profile
 /etc/firejail/unrar.profile
 /etc/firejail/unzip.profile
 /etc/firejail/uudeview.profile

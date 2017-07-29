@@ -449,6 +449,7 @@ Tom Mellor (https://github.com/kalegrill)
 Tomasz Jan Góralczyk (https://github.com/tjg)
 	- fixed Steam profile
 Topi Miettinen (https://github.com/topimiettinen)
+	- improved seccomp printing
 	- improve mount handling, fix /run/user handling
 	- /proc/sys can be nosuid,noexec,nodev
 	- seccomp default list update

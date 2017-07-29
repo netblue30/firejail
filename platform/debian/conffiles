@@ -321,3 +321,9 @@
 /etc/firejail/kwrite.profile
 /etc/firejail/geary.profile
 /etc/firejail/liferea.profile
+/etc/firejail/etr.profile
+/etc/firejail/frozen-bubble.profile
+/etc/firejail/open-invaders.profile
+/etc/firejail/pingus.profile
+/etc/firejail/simutrans.profile
+/etc/firejail/supertux2.profile

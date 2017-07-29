@@ -19,6 +19,7 @@
 */
 
 #ifdef HAVE_SECCOMP
+#include <sys/mman.h>
 #include "firejail.h"
 #include "../include/seccomp.h"
 
@@ -64,24 +65,14 @@ int seccomp_load(const char *fname) {
 	int size = lseek(fd, 0, SEEK_END);
 	if (size == -1)
 		goto errexit;
-	if (lseek(fd, 0 , SEEK_SET) == -1)
-		goto errexit;
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	if (arg_debug)
 		printf("configuring %d seccomp entries from %s\n", entries, fname);
 
 	// read filter
-	struct sock_filter *filter = malloc(size);
-	if (filter == NULL)
+	struct sock_filter *filter = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+	if (filter == MAP_FAILED)
 		goto errexit;
-	memset(filter, 0, size);
-	int rd = 0;
-	while (rd < size) {
-		int rv = read(fd, (unsigned char *) filter + rd, size - rd);
-		if (rv == -1)
-			goto errexit;
-		rd += rv;
-	}
 
 	// close file
 	close(fd);
@@ -91,14 +82,16 @@ int seccomp_load(const char *fname) {
 		.len = entries,
 		.filter = filter,
 	};
+	int r = 0;
 	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
 		if (!err_printed)
 			fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		err_printed = 1;
-		return 1;
+		r = 1;
 	}
 
-	return 0;
+	munmap(filter, size);
+	return r;
 
 errexit:
 	fprintf(stderr, "Error: cannot read %s\n", fname);
@@ -194,7 +187,7 @@ int seccomp_filter_drop(int enforce_seccomp) {
 		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
 			PATH_FSECCOMP, "print", RUN_SECCOMP_CFG);
 
-	return seccomp_load(RUN_SECCOMP_CFG);
+	return 0;
 }
 
 // keep filter for seccomp option

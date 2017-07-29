@@ -45,6 +45,7 @@ ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
 	src/fseccomp/fseccomp secondary 32 seccomp.i386
 	src/fseccomp/fseccomp secondary 64 seccomp.amd64
+	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
 endif
 
 clean:
@@ -52,7 +53,7 @@ clean:
 		$(MAKE) -C $$dir clean; \
 	done
 	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
-	rm -f seccomp seccomp.debug seccomp.i386 seccomp.amd64
+	rm -f seccomp seccomp.debug seccomp.i386 seccomp.amd64 seccomp.mdwx
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
 	rm -f test/utils/lstesting
@@ -101,6 +102,7 @@ ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.mdwx $(DESTDIR)/$(libdir)/firejail/.
 endif
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.

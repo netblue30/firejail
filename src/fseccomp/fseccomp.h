@@ -48,6 +48,7 @@ void seccomp_secondary_64(const char *fname);
 void seccomp_secondary_32(const char *fname);
 
 // seccomp_file.c
+void write_to_file(int fd, const void *data, int size);
 void filter_init(int fd);
 void filter_add_whitelist(int fd, int syscall, int arg);
 void filter_add_blacklist(int fd, int syscall, int arg);
@@ -64,6 +65,8 @@ void seccomp_drop(const char *fname, char *list, int allow_debuggers);
 void seccomp_default_drop(const char *fname, char *list, int allow_debuggers);
 // whitelisted filter
 void seccomp_keep(const char *fname, char *list);
+// block writable and executable memory
+void memory_deny_write_execute(const char *fname);
 
 // seccomp_print
 void filter_print(const char *fname);

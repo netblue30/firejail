@@ -35,6 +35,7 @@ static void usage(void) {
 	printf("\tfseccomp default drop file list\n");
 	printf("\tfseccomp default drop file list allow-debuggers\n");
 	printf("\tfseccomp keep file list\n");
+	printf("\tfseccomp memory-deny-write-execute file\n");
 	printf("\tfseccomp print file\n");
 }
 
@@ -87,6 +88,8 @@ printf("\n");
 		seccomp_default_drop(argv[3], argv[4], 1);
 	else if (argc == 4 && strcmp(argv[1], "keep") == 0)
 		seccomp_keep(argv[2], argv[3]);
+	else if (argc == 3 && strcmp(argv[1], "memory-deny-write-execute") == 0)
+		memory_deny_write_execute(argv[2]);
 	else if (argc == 3 && strcmp(argv[1], "print") == 0)
 		filter_print(argv[2]);
 	else {

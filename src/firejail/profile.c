@@ -595,6 +595,17 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	// memory deny write&execute
+	if (strncmp(ptr, "memory-deny-write-execute ", sizeof("memory-deny-write-execute ") - 1) == 0) {
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP))
+			arg_memory_deny_write_execute = 1;
+		else
+			warning_feature_disabled("seccomp");
+#endif
+		return 0;
+	}
+
 	// caps drop list
 	if (strncmp(ptr, "caps.drop ", 10) == 0) {
 		arg_caps_drop = 1;

@@ -53,10 +53,12 @@
 #define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
 #define RUN_SECCOMP_AMD64	"/run/firejail/mnt/seccomp.amd64"	// amd64 filter installed on i386 architectures
 #define RUN_SECCOMP_I386	"/run/firejail/mnt/seccomp.i386"		// i386 filter installed on amd64 architectures
+#define RUN_SECCOMP_MDWX	"/run/firejail/mnt/seccomp.mdwx"		// filter for memory-deny-write-execute
 #define PATH_SECCOMP_DEFAULT (LIBDIR "/firejail/seccomp")			// default filter built during make
 #define PATH_SECCOMP_DEFAULT_DEBUG (LIBDIR "/firejail/seccomp.debug")	// default filter built during make
 #define PATH_SECCOMP_AMD64 (LIBDIR "/firejail/seccomp.amd64")		// amd64 filter built during make
 #define PATH_SECCOMP_I386 (LIBDIR "/firejail/seccomp.i386")			// i386 filter built during make
+#define PATH_SECCOMP_MDWX (LIBDIR "/firejail/seccomp.mdwx")		// filter for memory-deny-write-execute built during make
 
 
 #define RUN_DEV_DIR		"/run/firejail/mnt/dev"
@@ -352,6 +354,7 @@ extern int arg_allusers;	// all user home directories visible
 extern int arg_machineid;	// preserve /etc/machine-id
 extern int arg_disable_mnt;	// disable /mnt and /media
 extern int arg_noprofile;	// use default.profile if none other found/specified
+extern int arg_memory_deny_write_execute;	// block writable and executable memory
 
 extern int login_shell;
 extern int parent_to_child_fds[2];

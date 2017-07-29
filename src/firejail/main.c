@@ -110,6 +110,7 @@ int arg_allow_private_blacklist = 0; 		// blacklist things in private directorie
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_disable_mnt = 0;			// disable /mnt and /media
 int arg_noprofile = 0; // use default.profile if none other found/specified
+int arg_memory_deny_write_execute = 0;		// block writable and executable memory
 
 int login_shell = 0;
 
@@ -1141,6 +1142,12 @@ int main(int argc, char **argv) {
 				arg_seccomp = 1;
 				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
 			}
+			else
+				exit_err_feature("seccomp");
+		}
+		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
+			if (checkcfg(CFG_SECCOMP))
+				arg_memory_deny_write_execute = 1;
 			else
 				exit_err_feature("seccomp");
 		}

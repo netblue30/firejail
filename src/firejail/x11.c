@@ -685,20 +685,12 @@ void x11_start_xpra(int argc, char **argv) {
 	char *start_child_prefix = "--start-child=";
 	char *start_child;
 	start_child = malloc(total_length + strlen(start_child_prefix) + fpos + 2);
-	printf("START_CHILD: %s\n", start_child);
-	printf("START_CHILD_PREFIX: %s\n", start_child_prefix);
 	strcpy(start_child,start_child_prefix);
-	printf("START_CHILD: %s\n", start_child);
 	for(i = 0; i < fpos; i++) {
-	  printf("%s\n",firejail_argv[i]);
 	  strncat(start_child,firejail_argv[i],strlen(firejail_argv[i]));
 	  if(i != fpos - 1)
 	    strncat(start_child," ",strlen(" "));
 	}
-
-	/* strncat(start_child,"\'",strlen("\'")); */
-
-	printf("START_CHILD: %s\n", start_child);
 
 	server_argv[spos++] = start_child;
 
@@ -870,6 +862,15 @@ void x11_start_xpra(int argc, char **argv) {
 
 	/* sleep(1); // adding a delay in order to let the server start */
 
+	// wait for server to end
+	while (1) {
+	  pid_t pid = wait(NULL);
+	  if (pid == server) {
+	    free(start_child);
+	    exit(0);
+	  }
+	}
+	
 	// wait for jail or server to end
 	/* while (1) { */
 	/* 	pid_t pid = wait(NULL); */

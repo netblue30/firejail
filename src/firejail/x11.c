@@ -685,6 +685,12 @@ void x11_start_xpra(int argc, char **argv) {
 	char *start_child_prefix = "--start-child=";
 	char *start_child;
 	start_child = malloc(total_length + strlen(start_child_prefix) + fpos + 2);
+	if (start_child == NULL)
+	  {
+	    fprintf(stderr, "Error: unable to allocate start_child to assemble command\n");
+	    exit(1);
+	  }
+	    
 	strcpy(start_child,start_child_prefix);
 	for(i = 0; i < fpos; i++) {
 	  strncat(start_child,firejail_argv[i],strlen(firejail_argv[i]));

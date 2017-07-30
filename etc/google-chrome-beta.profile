@@ -16,8 +16,6 @@ include /etc/firejail/disable-programs.inc
 # include /etc/firejail/disable-devel.inc
 #
 
-netfilter
-
 whitelist ${DOWNLOADS}
 mkdir ~/.config/google-chrome-beta
 whitelist ~/.config/google-chrome-beta
@@ -26,6 +24,16 @@ whitelist ~/.cache/google-chrome-beta
 mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
+
+caps.keep sys_chroot,sys_admin
+#ipc-namespace
+netfilter
+nogroups
+shell none
+
+private-dev
+#private-tmp - problems with multiple browser sessions
+#disable-mnt
 
 noexec ${HOME}
 noexec /tmp

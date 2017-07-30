@@ -29,5 +29,6 @@ tracelog
 private-dev
 # private-etc fonts
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

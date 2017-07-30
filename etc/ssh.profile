@@ -31,5 +31,6 @@ tracelog
 private-dev
 #private-tmp #Breaks when exiting
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

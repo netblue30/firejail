@@ -28,5 +28,6 @@ shell none
 # private-tmp
 # private-etc
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

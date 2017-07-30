@@ -28,3 +28,5 @@ tracelog
 private-tmp
 private-dev
 private-etc none
+
+memory-deny-write-execute

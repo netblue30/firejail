@@ -35,5 +35,6 @@ private-bin mumble
 private-tmp
 disable-mnt
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

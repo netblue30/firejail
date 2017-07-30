@@ -173,6 +173,61 @@ static void monitor_application(pid_t app_pid) {
 
 }
 
+// check execute permissions for the program
+// this is done typically by the shell
+// we are here because of --shell=none
+// we duplicate execvp functionality (man execvp):
+//	[...] if  the  specified
+//	filename  does  not contain a slash (/) character. The file is sought
+//	in the colon-separated list of directory pathnames  specified  in  the
+//	PATH  environment  variable.
+static int ok_to_run(const char *program) {
+	if (strstr(program, "/")) {
+		if (access(program, X_OK) == 0) // it will also dereference symlinks
+			return 1;
+	}
+	else { // search $PATH
+		char *path1 = getenv("PATH");
+		if (path1) {
+			if (arg_debug)
+				printf("Searching $PATH for %s\n", program);
+			char *path2 = strdup(path1);
+			if (!path2)
+				errExit("strdup");
+
+			// use path2 to count the entries
+			char *ptr = strtok(path2, ":");
+			while (ptr) {
+				char *fname;
+
+				if (asprintf(&fname, "%s/%s", ptr, program) == -1)
+					errExit("asprintf");
+				if (arg_debug)
+					printf("trying #%s#\n", fname);
+
+				struct stat s;
+				int rv = stat(fname, &s);
+				if (rv == 0) {
+					if (access(fname, X_OK) == 0) {
+						free(path2);
+						free(fname);
+						return 1;
+					}
+					else
+						fprintf(stderr, "Error: execute permission denied for %s\n", fname);
+
+					free(fname);
+					break;
+				}
+
+				free(fname);
+				ptr = strtok(NULL, ":");
+			}
+			free(path2);
+		}
+	}
+	return 0;
+}
 
 static void start_application(void) {
 	// set environment
@@ -196,9 +251,20 @@ static void start_application(void) {
 			}
 		}
 
+		if (cfg.original_program_index == 0) {
+			fprintf(stderr, "Error: --shell=none configured, but no program specified\n");
+			exit(1);
+		}
+
 		if (!arg_command && !arg_quiet)
 			printf("Child process initialized\n");
-		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
+
+		int rv = ok_to_run(cfg.original_argv[cfg.original_program_index]);
+		if (rv)
+			execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
+		else
+			fprintf(stderr, "Error: no suitable %s executable found\n", cfg.original_argv[cfg.original_program_index]);
+		exit(1);
 	}
 	//****************************************
 	// start the program using a shell

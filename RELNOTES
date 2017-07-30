@@ -1,5 +1,6 @@
 firejail (0.9.38.11) baseline; urgency=low
   * development
+  * bugfix: detect correct execute permissions for --shell=none
   * bugfix: use an IP address of 0 when ARP-probing for unused IP addresses
   * bugfix: fix cpu entry in firejail-profile man page
   * bugfix: set correct mode for --tmpfs

@@ -42,3 +42,6 @@ private-dev
 disable-mnt
 
 include /etc/firejail/whitelist-common.inc
+
+noexec ${HOME}
+noexec /tmp

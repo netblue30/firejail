@@ -22,3 +22,6 @@ whitelist ~/.config/vivaldi
 mkdir ~/.cache/vivaldi
 whitelist ~/.cache/vivaldi
 include /etc/firejail/whitelist-common.inc
+
+noexec ${HOME}
+noexec /tmp

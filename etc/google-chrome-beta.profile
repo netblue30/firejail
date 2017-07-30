@@ -26,3 +26,6 @@ whitelist ~/.cache/google-chrome-beta
 mkdir ~/.pki
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
+
+noexec ${HOME}
+noexec /tmp

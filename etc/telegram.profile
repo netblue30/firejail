@@ -5,7 +5,7 @@ include /etc/firejail/globals.local
 # Persistent customizations should go in a .local file.
 include /etc/firejail/telegram.local
 
-# Telegram IRC profile
+# Telegram profile
 noblacklist ${HOME}/.TelegramDesktop
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc

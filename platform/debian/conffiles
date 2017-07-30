@@ -16,6 +16,7 @@
 /etc/firejail/amarok.profile
 /etc/firejail/android-studio.profile
 /etc/firejail/arduino.profile
+/etc/firejail/arm.profile
 /etc/firejail/ark.profile
 /etc/firejail/atom-beta.profile
 /etc/firejail/atom.profile

@@ -398,8 +398,9 @@ SpotComms (https://github.com/SpotComms)
 	- fixed wget profile
 	- fixed firecfg.config file
 	- added novideo and disable-mnt support in all profile files
-    	- added Peek and silent profiles
+	- added Peek and silent profiles
 	- added IntelliJ IDEA and Android Studio profiles
+    - added arm profile
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes

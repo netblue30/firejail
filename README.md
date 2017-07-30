@@ -129,5 +129,5 @@ ulimit, vhangup, vserver. This brings us to a total of 91 syscalls blacklisted b
 curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite, Geary, Liferea, peek, silentarmy,
 IntelliJ IDEA, Android Studio, electron, riot-web,
 Extreme Tux Racer, Frozen Bubble, Open Invaders, Pingus, Simutrans, SuperTux,
-telegram-desktop
+telegram-desktop, arm
 

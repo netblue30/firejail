@@ -596,7 +596,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	// memory deny write&execute
-	if (strncmp(ptr, "memory-deny-write-execute ", sizeof("memory-deny-write-execute ") - 1) == 0) {
+	if (strcmp(ptr, "memory-deny-write-execute") == 0) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))
 			arg_memory_deny_write_execute = 1;
@@ -861,12 +861,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	// private /lib list of files
-	if (strncmp(ptr, "private-lib ", 12) == 0) {
-		if (cfg.lib_private_keep) {
-			if (asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, ptr + 12) < 0 )
-				errExit("asprintf");
-		} else {
-			cfg.lib_private_keep = ptr + 12;
+	if (strncmp(ptr, "private-lib", 11) == 0) {
+		if (ptr[11] == ' ') {
+			if (cfg.lib_private_keep) {
+				if (ptr[12] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, ptr + 12) < 0)
+					errExit("asprintf");
+			} else {
+				cfg.lib_private_keep = ptr + 12;
+			}
 		}
 		arg_private_lib = 1;
 		return 0;

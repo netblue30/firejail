@@ -1630,13 +1630,15 @@ int main(int argc, char **argv) {
 				cfg.bin_private_keep = argv[i] + 14;
 			arg_private_bin = 1;
 		}
-		else if (strncmp(argv[i], "--private-lib=", 14) == 0) {
+		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
 			// extract private lib list (if any)
-			if (cfg.lib_private_keep) {
-				if (asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.lib_private_keep = argv[i] + 14;
+			if (argv[i][13] == '=') {
+				if (cfg.lib_private_keep) {
+					if (argv[i][14] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, argv[i] + 14) < 0)
+						errExit("asprintf");
+				} else
+					cfg.lib_private_keep = argv[i] + 14;
+			}
 			arg_private_lib = 1;
 		}
 		else if (strcmp(argv[i], "--private-tmp") == 0) {

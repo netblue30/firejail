@@ -155,7 +155,6 @@ static void copy_libs_for_lib(const char *lib, const char *private_run_dir) {
 
 void fs_private_lib(void) {
 	char *private_list = cfg.lib_private_keep;
-	assert(private_list);
 
 	// create /run/firejail/mnt/lib directory
 	mkdir_attr(RUN_LIB_DIR, 0755, 0, 0);
@@ -169,9 +168,9 @@ void fs_private_lib(void) {
 		copy_libs_for_exe(cfg.shell, RUN_LIB_DIR);
 
 	// for the listed libs
-	if (*private_list != '\0') {
+	if (private_list && *private_list != '\0') {
 		if (arg_debug)
-			printf("Copying extra files in the new lib directory:\n");
+			printf("Copying extra files (%s) in the new lib directory:\n", private_list);
 
 		char *dlist = strdup(private_list);
 		if (!dlist)

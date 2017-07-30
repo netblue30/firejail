@@ -94,7 +94,7 @@ void net_configure_sandbox_ip(Bridge *br) {
 			exit(1);
 		}
 		// send an ARP request and check if there is anybody on this IP address
-		if (arp_check(br->dev, br->ipsandbox, br->ip)) {
+		if (arp_check(br->dev, br->ipsandbox)) {
 			fprintf(stderr, "Error: IP address %d.%d.%d.%d is already in use\n", PRINT_IP(br->ipsandbox));
 			exit(1);
 		}

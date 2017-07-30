@@ -370,7 +370,7 @@ int restricted_shell(const char *user);
 
 // arp.c
 // returns 0 if the address is not in use, -1 otherwise
-int arp_check(const char *dev, uint32_t destaddr, uint32_t srcaddr);
+int arp_check(const char *dev, uint32_t destaddr);
 // assign an IP address using arp scanning
 uint32_t arp_assign(const char *dev, Bridge *br);
 // scan interface (--scan option)

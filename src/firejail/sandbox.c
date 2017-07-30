@@ -95,7 +95,7 @@ static void sandbox_if_up(Bridge *br) {
 				exit(1);
 			}
 			
-			uint32_t rv = arp_check(dev, br->ipsandbox, br->ip);
+			uint32_t rv = arp_check(dev, br->ipsandbox);
 			if (rv) {
 				fprintf(stderr, "Error: the address %d.%d.%d.%d is already in use.\n", PRINT_IP(br->ipsandbox));
 				exit(1);

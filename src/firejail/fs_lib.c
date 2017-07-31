@@ -185,6 +185,12 @@ void fs_private_lib(void) {
 		fs_logger_print();
 	}
 
+	// for our trace and tracelog libs
+	if (arg_trace)
+		duplicate(LIBDIR "/firejail/libtrace.so", RUN_LIB_DIR);
+	else if (arg_tracelog)
+		duplicate(LIBDIR "/firejail/libtracelog.so", RUN_LIB_DIR);
+
 	if (arg_debug)
 		printf("Mount-bind %s on top of /lib /lib64 /usr/lib\n", RUN_LIB_DIR);
 	if (mount(RUN_LIB_DIR, "/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||

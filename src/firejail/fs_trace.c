@@ -51,11 +51,15 @@ void fs_trace(void) {
 	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "w");
 	if (!fp)
 		errExit("fopen");
+	const char *prefix = LIBDIR "/firejail";
+	if (arg_private_lib)
+		prefix = RUN_LIB_DIR;
+
 	if (arg_trace) {
-		fprintf(fp, "%s/firejail/libtrace.so\n", LIBDIR);
+		fprintf(fp, "%s/libtrace.so\n", prefix);
 	}
 	else if (arg_tracelog) {
-		fprintf(fp, "%s/firejail/libtracelog.so\n", LIBDIR);
+		fprintf(fp, "%s/libtracelog.so\n", prefix);
 		if (!arg_quiet)
 			printf("Blacklist violations are logged to syslog\n");
 	}

@@ -71,6 +71,10 @@ profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 /proc/@{PID}/mounts r,
 /proc/@{PID}/mountinfo r,
 /proc/@{PID}/oom_score_adj r,
+/proc/@{PID}/auxv r,
+/proc/@{PID}/net/dev r,
+/proc/@{PID}/loginuid r,
+/proc/@{PID}/environ r,
 
 ##########
 # Allow running programs only from well-known system directories. If you need

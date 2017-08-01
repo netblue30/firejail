@@ -130,7 +130,8 @@ static void copy_libs_for_exe(const char *exe, const char *private_run_dir) {
 }
 
 static void copy_libs_for_lib(const char *lib, const char *private_run_dir) {
-	for (int i = 0; lib_paths[i]; i++) {
+	int i;
+	for (i = 0; lib_paths[i]; i++) {
 		char *fname;
 		if (asprintf(&fname, "%s/%s", lib_paths[i], lib) == -1)
 			errExit("asprintf");

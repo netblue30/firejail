@@ -19,9 +19,9 @@
 */
 
 #ifdef HAVE_SECCOMP
-#include <sys/mman.h>
 #include "firejail.h"
 #include "../include/seccomp.h"
+#include <sys/mman.h>
 
 static int err_printed = 0;
 

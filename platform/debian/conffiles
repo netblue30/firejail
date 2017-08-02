@@ -230,6 +230,7 @@
 /etc/firejail/quiterss.profile
 /etc/firejail/qupzilla.profile
 /etc/firejail/qutebrowser.profile
+/etc/firejail/rambox.profile
 /etc/firejail/ranger.profile
 /etc/firejail/rhythmbox.profile
 /etc/firejail/riot-web.profile

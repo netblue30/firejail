@@ -11,7 +11,7 @@ firejail (0.9.49) baseline; urgency=low
   * new profiles: Geary, Liferea, peek, silentarmy, IntelliJ IDEA,
   * new profiles: Android Studio, electron, riot-web, Extreme Tux Racer,
   * new profiles: Frozen Bubble, Open Invaders, Pingus, Simutrans, SuperTux
-  * new profiles: telegram-desktop, arm
+  * new profiles: telegram-desktop, arm, rambox
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Mon, 12 Jun 2017 20:00:00 -0500
 

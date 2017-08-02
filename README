@@ -403,6 +403,7 @@ SpotComms (https://github.com/SpotComms)
 	- added Peek and silent profiles
 	- added IntelliJ IDEA and Android Studio profiles
     - added arm profile
+    - lots of profile improvements/tightening
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes

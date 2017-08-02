@@ -706,6 +706,7 @@ enum {
 	CFG_DISABLE_MNT,
 	CFG_JOIN,
 	CFG_ARP_PROBES,
+	CFG_XPRA_ATTACH,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

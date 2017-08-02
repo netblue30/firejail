@@ -398,7 +398,6 @@ void x11_start_xvfb(int argc, char **argv) {
 }
 
 
-
 static char *extract_setting(int argc, char **argv, const char *argument) {
 	int i;
 	int len = strlen(argument);
@@ -635,37 +634,258 @@ void x11_start_xephyr(int argc, char **argv) {
 }
 
 
-void x11_start_xpra(int argc, char **argv) {
+void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	EUID_ASSERT();
 	int i;
 	struct stat s;
 	pid_t client = 0;
 	pid_t server = 0;
 
-	setenv("FIREJAIL_X11", "yes", 1);
+	// build the start command
+	char *server_argv[256] = {		  // rest initialyzed to NULL
+		"xpra", "start", display_str, "--no-daemon",
+	};
+	unsigned pos = 0;
+	while (server_argv[pos] != NULL) pos++;
 
-	// unfortunately, xpra does a number of weird things when started by root user!!!
-	if (getuid() == 0) {
-		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
+	assert(xpra_extra_params);		  // should be "" if empty
+
+	// parse xephyr_extra_params
+	// very basic quoting support
+	char *temp = strdup(xpra_extra_params);
+	if (*xpra_extra_params != '\0') {
+		if (!temp)
+			errExit("strdup");
+		bool dquote = false;
+		bool squote = false;
+		for (i = 0; i < (int) strlen(xpra_extra_params); i++) {
+			if (temp[i] == '\"') {
+				dquote = !dquote;
+						  // replace closing quote by \0
+				if (dquote) temp[i] = '\0';
+			}
+			if (temp[i] == '\'') {
+				squote = !squote;
+						  // replace closing quote by \0
+				if (squote) temp[i] = '\0';
+			}
+			if (!dquote && !squote && temp[i] == ' ') temp[i] = '\0';
+			if (dquote && squote) {
+				fprintf(stderr, "Error: mixed quoting found while parsing xpra_extra_params\n");
+				exit(1);
+			}
+		}
+		if (dquote) {
+			fprintf(stderr, "Error: unclosed quote found while parsing xpra_extra_params\n");
+			exit(1);
+		}
+
+		server_argv[pos++] = temp;
+		for (i = 0; i < (int) strlen(xpra_extra_params)-1; i++) {
+			if (pos >= (sizeof(server_argv)/sizeof(*server_argv)) - 2) {
+				fprintf(stderr, "Error: arg count limit exceeded while parsing xpra_extra_params\n");
+				exit(1);
+			}
+			if (temp[i] == '\0' && (temp[i+1] == '\"' || temp[i+1] == '\'')) {
+				server_argv[pos++] = temp + i + 2;
+			}
+			else if (temp[i] == '\0' && temp[i+1] != '\0') {
+				server_argv[pos++] = temp + i + 1;
+			}
+		}
+	}
+
+	server_argv[pos++] = NULL;
+
+						  // no overrun
+	assert(pos < (sizeof(server_argv)/sizeof(*server_argv)));
+	assert(server_argv[pos-1] == NULL);	  // last element is null
+
+	if (arg_debug) {
+		size_t i = 0;
+		printf("\n*** Starting xpra server: ");
+		while (server_argv[i]!=NULL) {
+			printf(" \"%s\"", server_argv[i]);
+			i++;
+		}
+		printf(" ***\n\n");
+	}
+
+	int fd_null = -1;
+	if (arg_quiet) {
+		fd_null = open("/dev/null", O_RDWR);
+		if (fd_null == -1)
+			errExit("open");
+	}
+
+	// start
+	server = fork();
+	if (server < 0)
+		errExit("fork");
+	if (server == 0) {
+		if (arg_debug)
+			printf("Starting xpra...\n");
+
+		if (arg_quiet && fd_null != -1) {
+			dup2(fd_null,0);
+			dup2(fd_null,1);
+			dup2(fd_null,2);
+		}
+
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);
+		execvp(server_argv[0], server_argv);
+		perror("execvp");
+		_exit(1);
+	}
+
+	// add a small delay, on some systems it takes some time for the server to start
+	sleep(5);
+
+	// check X11 socket
+	char *fname;
+	if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1)
+		errExit("asprintf");
+	int n = 0;
+	// wait for x11 server to start
+	while (++n < 10) {
+		sleep(1);
+		if (stat(fname, &s) == 0)
+			break;
+	}
+
+	if (n == 10) {
+		fprintf(stderr, "Error: failed to start xpra\n");
 		exit(1);
 	}
-	drop_privs(0);
+	free(fname);
 
-	// check xpra
-	if (!program_in_path("xpra")) {
-		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
-		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
-		exit(0);
+	if (arg_debug) {
+		printf("X11 sockets: "); fflush(0);
+		int rv = system("ls /tmp/.X11-unix");
+		(void) rv;
 	}
 
-	int display = random_display_number();
-	char *display_str;
-	if (asprintf(&display_str, ":%d", display) == -1)
-		errExit("asprintf");
+	// build attach command
+	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str, NULL };
+
+	// run attach command
+	client = fork();
+	if (client < 0)
+		errExit("fork");
+	if (client == 0) {
+		if (arg_quiet && fd_null != -1) {
+			dup2(fd_null,0);
+			dup2(fd_null,1);
+			dup2(fd_null,2);
+		}
+
+		if (!arg_quiet)
+			printf("\n*** Attaching to xpra display %d ***\n\n", display);
+
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);
+		execvp(attach_argv[0], attach_argv);
+		perror("execvp");
+		_exit(1);
+	}
+
+	assert(display_str);
+	setenv("DISPLAY", display_str, 1);
+
+	// build jail command
+	char *firejail_argv[argc+2];
+	pos = 0;
+	for (i = 0; i < argc; i++) {
+		if (strncmp(argv[i], "--x11", 5) == 0)
+			continue;
+		firejail_argv[pos] = argv[i];
+		pos++;
+	}
+	firejail_argv[pos] = NULL;
+
+	assert((int) pos < (argc+2));
+	assert(!firejail_argv[pos]);
+
+	// start jail
+	pid_t jail = fork();
+	if (jail < 0)
+		errExit("fork");
+	if (jail == 0) {
+		// running without privileges - see drop_privs call above
+		assert(getenv("LD_PRELOAD") == NULL);
+		if (firejail_argv[0])		  // shut up llvm scan-build
+			execvp(firejail_argv[0], firejail_argv);
+		perror("execvp");
+		exit(1);
+	}
+
+	if (!arg_quiet)
+		printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
+
+	sleep(1);				  // adding a delay in order to let the server start
+
+	// wait for jail or server to end
+	while (1) {
+		pid_t pid = wait(NULL);
+
+		if (pid == jail) {
+			char *stop_argv[] = { "xpra", "stop", display_str, NULL };
+			pid_t stop = fork();
+			if (stop < 0)
+				errExit("fork");
+			if (stop == 0) {
+				if (arg_quiet && fd_null != -1) {
+					dup2(fd_null,0);
+					dup2(fd_null,1);
+					dup2(fd_null,2);
+				}
+				// running without privileges - see drop_privs call above
+				assert(getenv("LD_PRELOAD") == NULL);
+				execvp(stop_argv[0], stop_argv);
+				perror("execvp");
+				_exit(1);
+			}
+
+			// wait for xpra server to stop, 10 seconds limit
+			while (++n < 10) {
+				sleep(1);
+				pid = waitpid(server, NULL, WNOHANG);
+				if (pid == server)
+					break;
+			}
+
+			if (arg_debug) {
+				if (n == 10)
+					printf("failed to stop xpra server gratefully\n");
+				else
+					printf("xpra server successfully stopped in %d secs\n", n);
+			}
+
+			// kill xpra server and xpra client
+			kill(client, SIGTERM);
+			kill(server, SIGTERM);
+			exit(0);
+		}
+		else if (pid == server) {
+			// kill firejail process
+			kill(jail, SIGTERM);
+			// kill xpra client (should die with server, but...)
+			kill(client, SIGTERM);
+			exit(0);
+		}
+	}
+}
+
+
+void x11_start_xpra_new(int argc, char **argv, char *display_str) {
+	EUID_ASSERT();
+	int i;
+	pid_t server = 0;
 
 	// build the start command
 	char *server_argv[256] = {		  // rest initialyzed to NULL
-	  "xpra", "start", display_str, "--daemon=no", "--attach=yes", "--exit-with-children=yes"
+		"xpra", "start", display_str, "--daemon=no", "--attach=yes", "--exit-with-children=yes"
 	};
 	unsigned spos = 0;
 	unsigned fpos = 0;
@@ -685,17 +905,16 @@ void x11_start_xpra(int argc, char **argv) {
 	char *start_child_prefix = "--start-child=";
 	char *start_child;
 	start_child = malloc(total_length + strlen(start_child_prefix) + fpos + 2);
-	if (start_child == NULL)
-	  {
-	    fprintf(stderr, "Error: unable to allocate start_child to assemble command\n");
-	    exit(1);
-	  }
-	    
+	if (start_child == NULL) {
+		fprintf(stderr, "Error: unable to allocate start_child to assemble command\n");
+		exit(1);
+	}
+
 	strcpy(start_child,start_child_prefix);
-	for(i = 0; i < fpos; i++) {
-	  strncat(start_child,firejail_argv[i],strlen(firejail_argv[i]));
-	  if(i != fpos - 1)
-	    strncat(start_child," ",strlen(" "));
+	for(i = 0; (unsigned) i < fpos; i++) {
+		strncat(start_child,firejail_argv[i],strlen(firejail_argv[i]));
+		if((unsigned) i != fpos - 1)
+			strncat(start_child," ",strlen(" "));
 	}
 
 	server_argv[spos++] = start_child;
@@ -756,8 +975,6 @@ void x11_start_xpra(int argc, char **argv) {
 	assert(spos < (sizeof(server_argv)/sizeof(*server_argv)));
 	assert(server_argv[spos-1] == NULL);	  // last element is null
 
-	
-
 	if (arg_debug) {
 		size_t i = 0;
 		printf("\n*** Starting xpra server: ");
@@ -796,137 +1013,45 @@ void x11_start_xpra(int argc, char **argv) {
 		_exit(1);
 	}
 
-	/* // add a small delay, on some systems it takes some time for the server to start */
-	/* sleep(5); */
-
-	/* // check X11 socket */
-	/* char *fname; */
-	/* if (asprintf(&fname, "/tmp/.X11-unix/X%d", display) == -1) */
-	/* 	errExit("asprintf"); */
-	/* int n = 0; */
-	/* // wait for x11 server to start */
-	/* while (++n < 10) { */
-	/* 	sleep(1); */
-	/* 	if (stat(fname, &s) == 0) */
-	/* 		break; */
-	/* } */
-
-	/* if (n == 10) { */
-	/* 	fprintf(stderr, "Error: failed to start xpra\n"); */
-	/* 	exit(1); */
-	/* } */
-	/* free(fname); */
-
-	/* if (arg_debug) { */
-	/* 	printf("X11 sockets: "); fflush(0); */
-	/* 	int rv = system("ls /tmp/.X11-unix"); */
-	/* 	(void) rv; */
-	/* } */
-
-	/* // build attach command */
-	/* char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str, NULL }; */
-
-	/* // run attach command */
-	/* client = fork(); */
-	/* if (client < 0) */
-	/* 	errExit("fork"); */
-	/* if (client == 0) { */
-	/* 	if (arg_quiet && fd_null != -1) { */
-	/* 		dup2(fd_null,0); */
-	/* 		dup2(fd_null,1); */
-	/* 		dup2(fd_null,2); */
-	/* 	} */
-
-	/* 	if (!arg_quiet) */
-	/* 		printf("\n*** Attaching to xpra display %d ***\n\n", display); */
-
-	/* 	// running without privileges - see drop_privs call above */
-	/* 	assert(getenv("LD_PRELOAD") == NULL); */
-	/* 	execvp(attach_argv[0], attach_argv); */
-	/* 	perror("execvp"); */
-	/* 	_exit(1); */
-	/* } */
-
-	/* assert(display_str); */
-	/* setenv("DISPLAY", display_str, 1); */
-
-	/* // start jail */
-	/* pid_t jail = fork(); */
-	/* if (jail < 0) */
-	/* 	errExit("fork"); */
-	/* if (jail == 0) { */
-	/* 	// running without privileges - see drop_privs call above */
-	/* 	assert(getenv("LD_PRELOAD") == NULL); */
-	/* 	if (firejail_argv[0])		  // shut up llvm scan-build */
-	/* 		execvp(firejail_argv[0], firejail_argv); */
-	/* 	perror("execvp"); */
-	/* 	exit(1); */
-	/* } */
-
-	/* if (!arg_quiet) */
-	/* 	printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail); */
-
-	/* sleep(1); // adding a delay in order to let the server start */
-
 	// wait for server to end
 	while (1) {
-	  pid_t pid = wait(NULL);
-	  if (pid == server) {
-	    free(start_child);
-	    exit(0);
-	  }
+		pid_t pid = wait(NULL);
+		if (pid == server) {
+			free(start_child);
+			exit(0);
+		}
 	}
+}
+
+
+void x11_start_xpra(int argc, char **argv) {
+	EUID_ASSERT();
+
+	setenv("FIREJAIL_X11", "yes", 1);
+
+	// unfortunately, xpra does a number of weird things when started by root user!!!
+	if (getuid() == 0) {
+		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
+		exit(1);
+	}
+	drop_privs(0);
+
+	// check xpra
+	if (!program_in_path("xpra")) {
+		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
+		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
+		exit(0);
+	}
+
+	int display = random_display_number();
+	char *display_str;
+	if (asprintf(&display_str, ":%d", display) == -1)
+		errExit("asprintf");
 	
-	// wait for jail or server to end
-	/* while (1) { */
-	/* 	pid_t pid = wait(NULL); */
-
-	/* 	if (pid == jail) { */
-	/* 		char *stop_argv[] = { "xpra", "stop", display_str, NULL }; */
-	/* 		pid_t stop = fork(); */
-	/* 		if (stop < 0) */
-	/* 			errExit("fork"); */
-	/* 		if (stop == 0) { */
-	/* 			if (arg_quiet && fd_null != -1) { */
-	/* 				dup2(fd_null,0); */
-	/* 				dup2(fd_null,1); */
-	/* 				dup2(fd_null,2); */
-	/* 			} */
-	/* 			// running without privileges - see drop_privs call above */
-	/* 			assert(getenv("LD_PRELOAD") == NULL); */
-	/* 			execvp(stop_argv[0], stop_argv); */
-	/* 			perror("execvp"); */
-	/* 			_exit(1); */
-	/* 		} */
-
-	/* 		// wait for xpra server to stop, 10 seconds limit */
-	/* 		while (++n < 10) { */
-	/* 			sleep(1); */
-	/* 			pid = waitpid(server, NULL, WNOHANG); */
-	/* 			if (pid == server) */
-	/* 				break; */
-	/* 		} */
-
-	/* 		if (arg_debug) { */
-	/* 			if (n == 10) */
-	/* 				printf("failed to stop xpra server gratefully\n"); */
-	/* 			else */
-	/* 				printf("xpra server successfully stopped in %d secs\n", n); */
-	/* 		} */
-
-	/* 		// kill xpra server and xpra client */
-	/* 		kill(client, SIGTERM); */
-	/* 		kill(server, SIGTERM); */
-	/* 		exit(0); */
-	/* 	} */
-	/* 	else if (pid == server) { */
-	/* 		// kill firejail process */
-	/* 		kill(jail, SIGTERM); */
-	/* 		// kill xpra client (should die with server, but...) */
-	/* 		kill(client, SIGTERM); */
-	/* 		exit(0); */
-	/* 	} */
-	/* } */
+	if (checkcfg(CFG_XPRA_ATTACH))
+		x11_start_xpra_new(argc, argv, display_str);
+	else
+		x11_start_xpra_old(argc, argv, display, display_str);
 }
 
 

@@ -50,6 +50,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
+		cfg_val[CFG_XPRA_ATTACH] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -354,9 +355,18 @@ int checkcfg(int val) {
 					goto errout;
 				cfg_val[CFG_ARP_PROBES] = arp_probes;
 			}
+			// xpra-attach
+			else if (strncmp(ptr, "xpra-attach ", 12) == 0) {
+				if (strcmp(ptr + 12, "yes") == 0)
+					cfg_val[CFG_XPRA_ATTACH] = 1;
+				else if (strcmp(ptr + 12, "no") == 0)
+					cfg_val[CFG_XPRA_ATTACH] = 0;
+				else
+					goto errout;
+			}
 			else
 				goto errout;
-
+			
 			free(ptr);
 		}
 

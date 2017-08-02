@@ -109,6 +109,8 @@ Cat (https://github.com/ecat3)
 	- prevent tmux connecting to an existing session
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
+chiraag-nataraj (https://github.com/chiraag-nataraj)
+	- support for newer Xpra versions (2.1+)
 Christian Stadelmann (https://github.com/genodeftest)
 	- profile fixes
 	- evolution profile fix
@@ -491,6 +493,8 @@ vismir2 (https://github.com/vismir2)
 	- claws-mail, mutt, git, emacs, vim profiles
 	- lots of profile fixes
 	-  support for truecrypt and zuluCrypt
+Vladimir Schowalter (https://github.com/VladimirSchowalter20)
+	- apparmor profile enhancements
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 yumkam (https://github.com/yumkam)

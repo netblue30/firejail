@@ -114,6 +114,24 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
               fox
 `````
 
+## /etc/firejail/firejail.config
+
+`````
+# Number of ARP probes sent when assigning an IP address for --net option,
+# default 2. This is a partial implementation of RFC 5227. A 0.5 seconds
+# timeout is implemented for each probe. Increase this number to 4 if your
+# local layer 2 network uses RSTP (IEEE 802.1w). Permitted values are
+# between 1 and 30.
+# arp-probes 2
+
+# Enable this option if you have a version of Xpra that supports --attach switch
+# for start command, default disabled.
+# xpra-attach no
+
+
+`````
+
+
 ## Default seccomp list update
 
 The following syscalls have been added:

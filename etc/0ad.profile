@@ -38,3 +38,6 @@ tracelog
 private-dev
 private-tmp
 disable-mnt
+
+noexec ${HOME}
+noexec /tmp

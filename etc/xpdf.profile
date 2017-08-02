@@ -9,17 +9,26 @@ include /etc/firejail/xpdf.local
 # xpdf application profile
 ################################
 noblacklist ${HOME}/.xpdfrc
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+no3d
+nogroups
 nonewprivs
 noroot
+nosound
+novideo
 protocol unix
-shell none
 seccomp
+shell none
 
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

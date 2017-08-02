@@ -13,13 +13,25 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-caps.drop all
-nonewprivs
-noroot
-netfilter
-protocol unix,inet,inet6,netlink
-seccomp
-
 #whitelist ~/.pulse
 #whitelist ~/.config/pulse
 whitelist ~/.config/Google Play Music Desktop Player
+
+caps.drop all
+#ipc-namespace
+netfilter
+no3d
+nogroups
+nonewprivs
+noroot
+novideo
+protocol unix,inet,inet6,netlink
+seccomp
+shell none
+
+private-dev
+private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

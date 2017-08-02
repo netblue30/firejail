@@ -23,3 +23,5 @@ shell none
 tracelog
 
 private-tmp
+
+noexec /tmp

@@ -20,10 +20,28 @@ noblacklist ~/.cache/liferea
 mkdir ~/.cache/liferea
 whitelist ~/.cache/liferea
 
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-common.inc
-include /etc/firejail/default.profile
 
+caps.drop all
+#ipc-namespace
+netfilter
+#no3d
 nogroups
+nonewprivs
+noroot
+#nosound
+novideo
+protocol unix,inet,inet6
+seccomp
 shell none
+
 private-dev
 private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

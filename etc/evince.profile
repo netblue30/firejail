@@ -16,7 +16,6 @@ include /etc/firejail/disable-passwdmgr.inc
 caps.drop all
 #ipc-namespace
 netfilter
-#net none - creates some problems on some distributions
 no3d
 nogroups
 nonewprivs
@@ -34,5 +33,6 @@ private-etc fonts
 # evince needs access to /tmp/mozilla* to work in firefox
 # private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

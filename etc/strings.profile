@@ -18,3 +18,5 @@ shell none
 tracelog
 private-dev
 blacklist /tmp/.X11-unix
+
+memory-deny-write-execute

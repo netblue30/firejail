@@ -15,7 +15,6 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 #ipc-namespace
-net none
 nogroups
 nonewprivs
 noroot
@@ -31,5 +30,6 @@ tracelog
 # private-etc fonts
 # private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

@@ -21,5 +21,6 @@ blacklist /tmp/.X11-unix
 
 private-dev
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

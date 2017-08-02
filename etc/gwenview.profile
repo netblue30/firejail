@@ -32,3 +32,6 @@ private-dev
 
 # Experimental:
 #private-etc X11
+
+noexec ${HOME}
+noexec /tmp

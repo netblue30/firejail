@@ -22,7 +22,6 @@ include /etc/firejail/disable-devel.inc
 caps.drop all
 #ipc-namespace
 net none
-netfilter
 no3d
 nogroups
 nonewprivs

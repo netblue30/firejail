@@ -16,7 +16,6 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-# To use KeePassHTTP, comment out `net none`
 caps.drop all
 #ipc-namespace
 net none
@@ -35,5 +34,6 @@ private-dev
 private-etc fonts,ld.so.cache
 private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

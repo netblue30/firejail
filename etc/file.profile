@@ -13,7 +13,6 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 hostname file
-netfilter
 net none
 no3d
 nogroups

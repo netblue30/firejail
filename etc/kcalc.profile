@@ -5,27 +5,27 @@ include /etc/firejail/globals.local
 # Persistent customizations should go in a .local file.
 include /etc/firejail/kcalc.local
 
-################################
-# Generic GUI application profile
-################################
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
+nogroups
 nonewprivs
 noroot
-protocol unix,inet,inet6
+nosound
+novideo
+protocol unix
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-private
-nogroups
 shell none
-# private-bin program
-# private-etc none
+
+private
 private-dev
 private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

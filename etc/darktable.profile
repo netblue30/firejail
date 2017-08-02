@@ -8,23 +8,24 @@ include /etc/firejail/darktable.local
 noblacklist ~/.cache/darktable
 noblacklist ~/.config/darktable
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+#ipc-namespace
 netfilter
+nogroups
 nonewprivs
 noroot
+nosound
+novideo
 protocol unix,inet,inet6
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-# nogroups
 shell none
-# private-bin program
-# private-etc none
-# private-dev
+
+private-dev
 private-tmp
-nosound
+
+noexec ${HOME}
+noexec /tmp

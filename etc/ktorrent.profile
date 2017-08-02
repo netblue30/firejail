@@ -5,16 +5,15 @@ include /etc/firejail/globals.local
 # Persistent customizations should go in a .local file.
 include /etc/firejail/ktorrent.local
 
-################################
-# Generic GUI application profile
-################################
 noblacklist ~/.config/ktorrentrc
 noblacklist ~/.local/share/ktorrent
 noblacklist ~/.kde/share/config/ktorrentrc
 noblacklist ~/.kde4/share/config/ktorrentrc
 noblacklist ~/.kde/share/apps/ktorrent
 noblacklist ~/.kde4/share/apps/ktorrent
+
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
@@ -36,17 +35,18 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+no3d
+nogroups
 nonewprivs
 noroot
+nosound
+novideo
 protocol unix,inet,inet6
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-nogroups
 shell none
-# private-bin program
-# private-etc none
+
 private-dev
-# private-tmp
+private-tmp
+
+noexec ${HOME}
+noexec /tmp

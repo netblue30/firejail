@@ -9,18 +9,28 @@ include /etc/firejail/cherrytree.local
 noblacklist /usr/bin/python2*
 noblacklist /usr/lib/python3*
 noblacklist ${HOME}/.config/cherrytree
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+#ipc-namespace
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
 nosound
 novideo
-seccomp
 protocol unix,inet,inet6,netlink
+seccomp
+shell none
 tracelog
+
+private-dev
+private-tmp
+
+noexec ${HOME}
+noexec /tmp

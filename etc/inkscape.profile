@@ -8,6 +8,7 @@ include /etc/firejail/inkscape.local
 # inkscape
 noblacklist ${HOME}/.inkscape
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
@@ -17,11 +18,13 @@ nogroups
 nonewprivs
 noroot
 nosound
+novideo
 protocol unix
 seccomp
-
-noexec ${HOME}
-noexec /tmp
+shell none
 
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

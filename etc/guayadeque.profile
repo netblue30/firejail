@@ -24,3 +24,6 @@ shell none
 private-bin guayadeque
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

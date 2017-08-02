@@ -8,23 +8,27 @@ include /etc/firejail/xfce4-notes.local
 noblacklist ${HOME}/.config/xfce4/xfce4-notes.rc
 noblacklist ${HOME}/.config/xfce4/xfce4-notes.gtkrc
 noblacklist ${HOME}/.local/share/notes
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
+nogroups
 nonewprivs
 noroot
-protocol unix,inet,inet6
+nosound
+novideo
+protocol unix
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-nogroups
 shell none
-# private-bin program
-# private-etc none
+
 private-dev
-# private-tmp
+private-tmp
+disable-mnt
+
+noexec ${HOME}
+noexec /tmp

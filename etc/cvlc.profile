@@ -27,3 +27,5 @@ tracelog
 #private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
 private-dev
 private-tmp
+
+memory-deny-write-execute

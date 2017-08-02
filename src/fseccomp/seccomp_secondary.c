@@ -67,7 +67,9 @@ void seccomp_secondary_64(const char *fname) {
 		BLACKLIST(210), // io_cancel
 		BLACKLIST(216), // remap_file_pages
 		BLACKLIST(237), // mbind
-		BLACKLIST(239), // get_mempolicy
+// breaking Firefox nightly when playing youtube videos
+// TODO: test again when firefox sandbox is finally released
+//		BLACKLIST(239), // get_mempolicy
 		BLACKLIST(238), // set_mempolicy
 		BLACKLIST(256), // migrate_pages
 		BLACKLIST(279), // move_pages
@@ -148,7 +150,9 @@ void seccomp_secondary_32(const char *fname) {
 		BLACKLIST(249), // io_cancel
 		BLACKLIST(257), // remap_file_pages
 		BLACKLIST(274), // mbind
-		BLACKLIST(275), // get_mempolicy
+// breaking Firefox nightly when playing youtube videos
+// TODO: test again when firefox sandbox is finally released
+//		BLACKLIST(275), // get_mempolicy
 		BLACKLIST(276), // set_mempolicy
 		BLACKLIST(294), // migrate_pages
 		BLACKLIST(317), // move_pages

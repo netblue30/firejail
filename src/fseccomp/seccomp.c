@@ -162,9 +162,13 @@ static void add_default_list(int fd, int allow_debuggers) {
 #ifdef SYS_mbind
 	filter_add_blacklist(fd, SYS_mbind, 0);
 #endif
-#ifdef SYS_get_mempolicy
-	filter_add_blacklist(fd, SYS_get_mempolicy, 0);
-#endif
+
+// breaking Firefox nightly when playing youtube videos
+// TODO: test again when firefox sandbox is finally released
+//#ifdef SYS_get_mempolicy
+//	filter_add_blacklist(fd, SYS_get_mempolicy, 0);
+//#endif
+
 #ifdef SYS_set_mempolicy
 	filter_add_blacklist(fd, SYS_set_mempolicy, 0);
 #endif

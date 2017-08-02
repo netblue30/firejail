@@ -140,6 +140,9 @@ pciconfig_write, prof, profil, putpmsg, rtas, s390_runtime_instr, s390_mmio_read
 security, setdomainname,  sethostname, sgetmask, ssetmask, stty, subpage_prot, switch_endian,
 ulimit, vhangup, vserver. This brings us to a total of 91 syscalls blacklisted by default.
 
+get_mempolicy syscall was temporarily removed from the default seccomp list. It seems to break
+playing youtube videos on Firefox Nightly.
+
 
 
 ## New profiles:

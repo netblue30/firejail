@@ -15,6 +15,7 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 #ipc-namespace
+netfilter
 no3d
 nogroups
 nonewprivs

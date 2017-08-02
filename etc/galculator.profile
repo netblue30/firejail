@@ -17,6 +17,7 @@ mkdir ~/.config/galculator
 whitelist ~/.config/galculator
 
 caps.drop all
+net none
 nogroups
 nonewprivs
 noroot

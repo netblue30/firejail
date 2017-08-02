@@ -13,6 +13,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
+netfilter
 nogroups
 nonewprivs
 noroot

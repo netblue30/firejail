@@ -32,7 +32,7 @@ noroot
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
-tracelog
+#tracelog
 
 private-dev
 private-tmp

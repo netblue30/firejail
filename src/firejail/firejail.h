@@ -49,6 +49,7 @@
 #define RUN_BIN_DIR	"/run/firejail/mnt/bin"
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
 #define RUN_LIB_DIR	"/run/firejail/mnt/lib"
+#define RUN_LIB_FILE	"/run/firejail/mnt/libfiles"
 
 #define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
 #define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
@@ -739,6 +740,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
 #define PATH_FCOPY (LIBDIR "/firejail/fcopy")
 #define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"
+#define PATH_FLDD (LIBDIR "/firejail/fldd")
 
 // bitmapped filters for sbox_run
 #define SBOX_ROOT (1 << 0)			// run the sandbox as root

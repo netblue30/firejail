@@ -177,7 +177,7 @@ fi
 
 AC_OUTPUT(Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile \
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile \
-src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile)
+src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile)
 
 echo
 echo "Configuration options:"

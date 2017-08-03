@@ -70,7 +70,7 @@ blacklist ${HOME}/.config/krunnerrc
 blacklist ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
 blacklist ${HOME}/.local/share/kglobalaccel
 blacklist ${HOME}/.local/share/konsole
-blacklist ${HOME}/.local/share/kservices5
+read-only ${HOME}/.local/share/kservices5
 blacklist ${HOME}/.local/share/kwin
 blacklist ${HOME}/.local/share/plasma
 blacklist ${HOME}/.local/share/solid

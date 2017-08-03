@@ -12,6 +12,7 @@ noblacklist ~/.kde/share/apps/gwenview
 noblacklist ~/.kde/share/config/gwenviewrc
 noblacklist ~/.config/gwenviewrc
 noblacklist ~/.config/org.kde.gwenviewrc
+noblacklist ~/.local/share/gwenview
 noblacklist ~/.local/share/org.kde.gwenview
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -27,7 +28,7 @@ seccomp
 shell none
 tracelog
 
-private-bin gwenview,kbuildsycoca4,gimp,gimp-2.8
+private-bin gwenview,kbuildsycoca4,kbuildsycoca5,gimp,gimp-2.8
 private-dev
 
 # Experimental:

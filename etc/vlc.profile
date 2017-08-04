@@ -23,10 +23,10 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
+private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc,vlc-wrapper
 private-dev
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute - breaks playing videos
 noexec ${HOME}
 noexec /tmp

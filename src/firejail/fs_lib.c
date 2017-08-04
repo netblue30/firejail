@@ -23,24 +23,51 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+static const char * const lib_paths[] = {
+	"/lib",
+	"/lib/x86_64-linux-gnu",
+	"/lib64",
+	"/usr/lib",
+	"/usr/lib/x86_64-linux-gnu",
+	LIBDIR,
+	"/usr/local/lib",
+	NULL
+}; // Note: this array is duplicated in src/fldd/main.c
+
+static void copy_libs(const char *exe, const char *dir, const char *file);
+
 static void duplicate(const char *fname, const char *private_run_dir) {
 	if (arg_debug)
 		printf("copying %s to private %s\n", fname, private_run_dir);
 	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", fname, private_run_dir);
 }
 
-static void copy_libs(const char *exe, const char *dir, const char *file) {
+
+// requires full path for exe
+static void copy_exe(const char *exe, const char *dir, const char *file) {
+	// if exe does not exist or the user does not have read access to it
+	// print a warning and exit the function.
+	if (access(exe, R_OK)) {
+		fwarning("cannot find %s executable for private-lib, skipping...\n", exe);
+		return;
+	}
+
+	copy_libs(exe, dir, file);
+}
+
+// requires full path for lib
+static void copy_libs(const char *lib, const char *dir, const char *output_file) {
 	// create an empty RUN_LIB_FILE and allow the user to write to it
-	unlink(file); // in case is there
-	create_empty_file_as_root(file, 0644);
-	if (chown(file, getuid(), getgid()))
+	unlink(output_file); // in case is there
+	create_empty_file_as_root(output_file, 0644);
+	if (chown(output_file, getuid(), getgid()))
 		errExit("chown");
 		
 	// run fldd to extact the list of file
-	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, exe, file);
+	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, lib, output_file);
 	
 	// open the list of libraries and install them on by one
-	FILE *fp = fopen(file, "r");
+	FILE *fp = fopen(output_file, "r");
 	if (!fp)
 		errExit("fopen");
 
@@ -56,22 +83,67 @@ static void copy_libs(const char *exe, const char *dir, const char *file) {
 	fclose(fp);
 }
 
+// return 1 if the file is valid
+static char *valid_library(const char *lib) {
+	// filename check
+	int len = strlen(lib);
+	if (strcspn(lib, "\\&!?\"'<>%^(){}[];,*") != (size_t)len ||
+	    strstr(lib, "..")) {
+		fprintf(stderr, "Error: \"%s\" is an invalid library\n", lib);
+		exit(1);
+	}
+	
+	// find the library
+	int i;
+	for (i = 0; lib_paths[i]; i++) {
+		char *fname;
+		if (asprintf(&fname, "%s/%s", lib_paths[i], lib) == -1)
+			errExit("asprintf");
+		
+		// existing file owned by root
+		struct stat s;
+		if (stat(fname, &s) == 0 && s.st_uid == 0) {
+			return fname;
+		}
+		free(fname);
+	}
+
+	fwarning("%s library not found, skipping...\n", lib);	
+	return NULL;
+}
+
 
 void fs_private_lib(void) {
-//	char *private_list = cfg.lib_private_keep;
+	char *private_list = cfg.lib_private_keep;
+
+	if (arg_debug)
+		printf("Starting private-lib processing: program %s, shell %s\n",
+			(cfg.original_program_index > 0)? cfg.original_argv[cfg.original_program_index]: "none",
+			(arg_shell_none)? "none": cfg.shell);
 
 	// create /run/firejail/mnt/lib directory
 	mkdir_attr(RUN_LIB_DIR, 0755, 0, 0);
 
+	//  fix libselinux linking problem on Debian stretch; the library is
+	//  linked in most  basic command utilities (ls, cp, find etc.), and it
+	//  seems to have a path hardlinked under /lib/x86_64-linux-gnu directory.
+	struct stat s;
+	if (stat("/lib/x86_64-linux-gnu/libselinux.so.1", &s) == 0) {
+		mkdir_attr(RUN_LIB_DIR "/x86_64-linux-gnu", 0755, 0, 0);
+		duplicate("/lib/x86_64-linux-gnu/libselinux.so.1", RUN_LIB_DIR "/x86_64-linux-gnu");
+	}
+
 	// copy the libs in the new lib directory for the main exe
 	if (cfg.original_program_index > 0)
-		copy_libs(cfg.original_argv[cfg.original_program_index], RUN_LIB_DIR, RUN_LIB_FILE);
+		copy_exe(cfg.original_argv[cfg.original_program_index], RUN_LIB_DIR, RUN_LIB_FILE);
 
 	// for the shell
-	if (!arg_shell_none)
-		copy_libs(cfg.shell, RUN_LIB_DIR, RUN_LIB_FILE);
+	if (!arg_shell_none) {
+		copy_exe(cfg.shell, RUN_LIB_DIR, RUN_LIB_FILE);
+		// a shell is useless without ls command
+		copy_libs("/bin/ls", RUN_LIB_DIR, RUN_LIB_FILE);
+	}
 
-#if 0 // TODO - work in progress
 	// for the listed libs
 	if (private_list && *private_list != '\0') {
 		if (arg_debug)
@@ -82,14 +154,24 @@ void fs_private_lib(void) {
 			errExit("strdup");
 
 		char *ptr = strtok(dlist, ",");
-		copy_libs_for_lib(ptr, RUN_LIB_DIR);
+		char *lib = valid_library(ptr);
+		if (lib) {
+			duplicate(lib, RUN_LIB_DIR);
+			copy_libs(lib, RUN_LIB_DIR, RUN_LIB_FILE);
+			free(lib);
+		}
 
-		while ((ptr = strtok(NULL, ",")) != NULL)
-			copy_libs_for_lib(ptr, RUN_LIB_DIR);
+		while ((ptr = strtok(NULL, ",")) != NULL) {
+			lib = valid_library(ptr);
+			if (lib) {
+				duplicate(lib, RUN_LIB_DIR);
+				copy_libs(lib, RUN_LIB_DIR, RUN_LIB_FILE);
+				free(lib);
+			}
+		}
 		free(dlist);
 		fs_logger_print();
 	}
-#endif
 
 	// for our trace and tracelog libs
 	if (arg_trace)

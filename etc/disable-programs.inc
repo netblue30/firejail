@@ -136,6 +136,7 @@ blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/ristretto
 blacklist ${HOME}/.config/qBittorrent
+blacklist ${HOME}/.config/qBittorrentrc
 blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/qt5ct
 blacklist ${HOME}/.config/qupzilla
@@ -284,6 +285,7 @@ blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
+blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/ktorrentrc

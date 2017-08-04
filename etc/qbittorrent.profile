@@ -8,6 +8,7 @@ include /etc/firejail/qbittorrent.local
 # qbittorrent bittorrent profile
 noblacklist ~/.config/qt5ct
 noblacklist ~/.config/qBittorrent
+noblacklist ~/.config/qBittorrentrc
 noblacklist ~/.cache/qBittorrent
 
 include /etc/firejail/disable-common.inc
@@ -20,6 +21,7 @@ whitelist ~/.local/share/data/qBittorrent
 whitelist ~/.config/qt5ct
 mkdir ~/.config/qBittorrent
 whitelist ~/.config/qBittorrent
+whitelist ~/.config/qBittorrentrc
 mkdir ~/.cache/qBittorrent
 whitelist ~/.cache/qBittorrent
 whitelist  ${DOWNLOADS}

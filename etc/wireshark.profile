@@ -23,14 +23,15 @@ include /etc/firejail/disable-passwdmgr.inc
 #ipc-namespace
 netfilter
 no3d
-nogroups
-nonewprivs
+# nogroups - breaks unprivileged wireshark usage
+# nonewprivs - breaks unprivileged wireshark usage
 nosound
-seccomp
+# seccomp - breaks unprivileged wireshark usage
 shell none
 tracelog
 
 #private-bin wireshark
+# private-etc fonts,group,hosts,machine-id,passwd
 private-dev
 private-tmp
 

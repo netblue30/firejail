@@ -28,7 +28,7 @@ seccomp
 shell none
 tracelog
 
-private-bin gwenview,kbuildsycoca4,kbuildsycoca5,gimp,gimp-2.8
+private-bin gwenview,kbuildsycoca4,gimp,gimp-2.8
 private-dev
 
 # Experimental:

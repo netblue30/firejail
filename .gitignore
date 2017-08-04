@@ -24,8 +24,10 @@ src/faudit/faudit
 src/fnet/fnet
 src/fseccomp/fseccomp
 src/fcopy/fcopy
+src/fldd/fldd
 uids.h
 seccomp
 seccomp.debug
 seccomp.i386
 seccomp.amd64
+seccomp.mdwx

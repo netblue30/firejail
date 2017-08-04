@@ -862,15 +862,19 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// private /lib list of files
 	if (strncmp(ptr, "private-lib", 11) == 0) {
-		if (ptr[11] == ' ') {
-			if (cfg.lib_private_keep) {
-				if (ptr[12] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, ptr + 12) < 0)
-					errExit("asprintf");
-			} else {
-				cfg.lib_private_keep = ptr + 12;
+		if (checkcfg(CFG_PRIVATE_LIB)) {
+			if (ptr[11] == ' ') {
+				if (cfg.lib_private_keep) {
+					if (ptr[12] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, ptr + 12) < 0)
+						errExit("asprintf");
+				} else {
+					cfg.lib_private_keep = ptr + 12;
+				}
 			}
+			arg_private_lib = 1;
 		}
-		arg_private_lib = 1;
+		else
+			warning_feature_disabled("private-lib");
 		return 0;
 	}
 

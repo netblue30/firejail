@@ -41,5 +41,5 @@ seccomp
 #shell none
 #private-bin qbittorrent
 private-dev
-#private-etc X11,fonts,xdg,resolv.conf
+# private-etc X11,fonts,xdg,resolv.conf
 private-tmp

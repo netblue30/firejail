@@ -34,29 +34,26 @@ static const char * const lib_paths[] = {
 	NULL
 }; // Note: this array is duplicated in src/fldd/main.c
 
-static void copy_libs(const char *exe, const char *dir, const char *file);
-
 static void duplicate(const char *fname, const char *private_run_dir) {
 	if (arg_debug)
 		printf("copying %s to private %s\n", fname, private_run_dir);
-	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", fname, private_run_dir);
+
+	// copy only root-owned files
+	struct stat s;
+	if (stat(fname, &s) == 0 && s.st_uid == 0)
+		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", fname, private_run_dir);
 }
 
 
-// requires full path for exe
-static void copy_exe(const char *exe, const char *dir, const char *file) {
-	// if exe does not exist or the user does not have read access to it
+// requires full path for lib
+static void copy_libs(const char *lib, const char *private_run_dir, const char *output_file) {
+	// if library/executable does not exist or the user does not have read access to it
 	// print a warning and exit the function.
-	if (access(exe, R_OK)) {
-		fwarning("cannot find %s executable for private-lib, skipping...\n", exe);
+	if (access(lib, R_OK)) {
+		fwarning("cannot find %s for private-lib, skipping...\n", lib);
 		return;
 	}
 
-	copy_libs(exe, dir, file);
-}
-
-// requires full path for lib
-static void copy_libs(const char *lib, const char *dir, const char *output_file) {
 	// create an empty RUN_LIB_FILE and allow the user to write to it
 	unlink(output_file); // in case is there
 	create_empty_file_as_root(output_file, 0644);
@@ -78,13 +75,35 @@ static void copy_libs(const char *lib, const char *dir, const char *output_file)
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-		duplicate(buf, dir);		
+		duplicate(buf, private_run_dir);
 	}
 	fclose(fp);
 }
 
+static void copy_directory(const char *full_path, const char *dir_name, const char *private_run_dir) {
+	char *dest;
+	if (asprintf(&dest, "%s/%s", private_run_dir, dir_name) == -1)
+		errExit("asprintf");
+
+	// do nothing if the directory is already there
+	struct stat s;
+	if (stat(dest, &s) == 0) {
+		free(dest);
+		return;
+	}
+
+	// create new directory and mount the original on top of it
+	mkdir_attr(dest, 0755, 0, 0);
+
+	if (mount(full_path, dest, NULL, MS_BIND|MS_REC, NULL) < 0 ||
+	    mount(NULL, dest, NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
+		errExit("mount bind");
+	fs_logger2("mount", full_path);
+	free(dest);
+}
+
 // return 1 if the file is valid
-static char *valid_library(const char *lib) {
+static char *valid_file(const char *lib) {
 	// filename check
 	int len = strlen(lib);
 	if (strcspn(lib, "\\&!?\"'<>%^(){}[];,*") != (size_t)len ||
@@ -135,11 +154,11 @@ void fs_private_lib(void) {
 
 	// copy the libs in the new lib directory for the main exe
 	if (cfg.original_program_index > 0)
-		copy_exe(cfg.original_argv[cfg.original_program_index], RUN_LIB_DIR, RUN_LIB_FILE);
+		copy_libs(cfg.original_argv[cfg.original_program_index], RUN_LIB_DIR, RUN_LIB_FILE);
 
 	// for the shell
 	if (!arg_shell_none) {
-		copy_exe(cfg.shell, RUN_LIB_DIR, RUN_LIB_FILE);
+		copy_libs(cfg.shell, RUN_LIB_DIR, RUN_LIB_FILE);
 		// a shell is useless without ls command
 		copy_libs("/bin/ls", RUN_LIB_DIR, RUN_LIB_FILE);
 	}
@@ -154,18 +173,26 @@ void fs_private_lib(void) {
 			errExit("strdup");
 
 		char *ptr = strtok(dlist, ",");
-		char *lib = valid_library(ptr);
+		char *lib = valid_file(ptr);
 		if (lib) {
-			duplicate(lib, RUN_LIB_DIR);
-			copy_libs(lib, RUN_LIB_DIR, RUN_LIB_FILE);
+			if (is_dir(lib))
+				copy_directory(lib, ptr, RUN_LIB_DIR);
+			else {
+				duplicate(lib, RUN_LIB_DIR);
+				copy_libs(lib, RUN_LIB_DIR, RUN_LIB_FILE);
+			}
 			free(lib);
 		}
 
 		while ((ptr = strtok(NULL, ",")) != NULL) {
-			lib = valid_library(ptr);
+			lib = valid_file(ptr);
 			if (lib) {
-				duplicate(lib, RUN_LIB_DIR);
-				copy_libs(lib, RUN_LIB_DIR, RUN_LIB_FILE);
+				if (is_dir(lib))
+					copy_directory(lib, ptr, RUN_LIB_DIR);
+				else {
+					duplicate(lib, RUN_LIB_DIR);
+					copy_libs(lib, RUN_LIB_DIR, RUN_LIB_FILE);
+				}
 				free(lib);
 			}
 		}

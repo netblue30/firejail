@@ -105,7 +105,7 @@ static void copy_libs_for_exe(const char *exe) {
 	f = open(exe, O_RDONLY);
 	if (f < 0) {
 		if (!arg_quiet)
-			fprintf(stderr, "Warning fldd: cannot open %s\n", exe);
+			fprintf(stderr, "Warning fldd: cannot open %s, skipping...\n", exe);
 		return;
 	}
 	
@@ -202,7 +202,10 @@ static void copy_libs_for_lib(const char *lib) {
 		}
 		free(fname);
 	}
-	errExit("library not found");
+
+	// log a  warning and continue
+	if (!arg_quiet)
+		fprintf(stderr, "Warning fldd: cannot find %s, skipping...\n", lib);
 }
 
 static void usage(void) {

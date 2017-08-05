@@ -24,9 +24,11 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+# no3d
 nogroups
 nonewprivs
 noroot
+# nosound
 novideo
 protocol unix,inet,inet6
 seccomp
@@ -38,7 +40,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# no3d
-# nosound

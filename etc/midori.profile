@@ -36,9 +36,7 @@ include /etc/firejail/whitelist-common.inc
 caps.drop all
 netfilter
 nonewprivs
+# noroot - problems on Ubuntu 14.04
 protocol unix,inet,inet6,netlink
 seccomp
 tracelog
-
-# CLOBBERED COMMENTS
-# noroot - porblems on Ubuntu 14.04

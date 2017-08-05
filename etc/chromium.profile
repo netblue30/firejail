@@ -11,6 +11,7 @@ noblacklist ~/.config/chromium-flags.conf
 noblacklist ~/.pki
 
 include /etc/firejail/disable-common.inc
+# chromium is distributed with a perl script on Arch
 # include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
@@ -34,8 +35,3 @@ private-dev
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# chromium is distributed with a perl script on Arch
-# disable-mnt
-# specific to Arch

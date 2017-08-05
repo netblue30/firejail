@@ -5,6 +5,7 @@ include /etc/firejail/ranger.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# noblacklist /usr/bin/cpan*
 noblacklist /usr/bin/perl
 noblacklist /usr/lib/perl*
 noblacklist /usr/share/perl*
@@ -25,6 +26,3 @@ protocol unix
 seccomp
 
 private-dev
-
-# CLOBBERED COMMENTS
-# noblacklist /usr/bin/cpan*

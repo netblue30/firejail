@@ -8,6 +8,7 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.VirtualBox
 noblacklist ${HOME}/.config/VirtualBox
 noblacklist ${HOME}/VirtualBox VMs
+# noblacklist /usr/bin/virtualbox
 noblacklist /usr/lib/virtualbox
 noblacklist /usr/lib64/virtualbox
 
@@ -23,6 +24,3 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
-
-# CLOBBERED COMMENTS
-# noblacklist /usr/bin/virtualbox

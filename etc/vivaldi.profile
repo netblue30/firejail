@@ -29,6 +29,3 @@ private-dev
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# disable-mnt

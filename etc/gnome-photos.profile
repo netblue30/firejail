@@ -5,6 +5,8 @@ include /etc/firejail/gnome-photos.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
+
 noblacklist ~/.local/share/gnome-photos
 
 include /etc/firejail/disable-common.inc
@@ -30,6 +32,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them

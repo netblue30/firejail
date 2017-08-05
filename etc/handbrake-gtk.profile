@@ -3,6 +3,3 @@
 
 
 include /etc/firejail/handbrake.profile
-
-# CLOBBERED COMMENTS
-# HandBrake

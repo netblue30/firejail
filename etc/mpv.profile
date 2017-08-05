@@ -25,6 +25,3 @@ tracelog
 
 private-bin mpv,youtube-dl,python,python2.7,python3.6,env
 private-dev
-
-# CLOBBERED COMMENTS
-# to test

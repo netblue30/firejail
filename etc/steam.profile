@@ -14,6 +14,7 @@ noblacklist ${HOME}/.local/share/steam
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.steampath
 noblacklist ${HOME}/.steampid
+# with >=llvm-4 mesa drivers need llvm stuff
 noblacklist /usr/lib/llvm*
 
 include /etc/firejail/disable-common.inc
@@ -26,15 +27,12 @@ netfilter
 nogroups
 nonewprivs
 noroot
+# novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
+# tracelog disabled as it breaks integrated browser
+# tracelog
 
 private-dev
 private-tmp
-
-# CLOBBERED COMMENTS
-# novideo
-# tracelog
-# tracelog disabled as it breaks integrated browser
-# with >=llvm-4 mesa drivers need llvm stuff

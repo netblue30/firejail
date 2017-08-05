@@ -5,6 +5,8 @@ include /etc/firejail/gjs.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
+
 noblacklist ~/.cache/libgweather
 noblacklist ~/.cache/org.gnome.Books
 noblacklist ~/.config/libreoffice
@@ -29,6 +31,3 @@ tracelog
 private-dev
 # private-etc fonts
 private-tmp
-
-# CLOBBERED COMMENTS
-# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them

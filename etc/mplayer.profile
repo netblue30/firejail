@@ -14,6 +14,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+# nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink
@@ -26,6 +27,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# nogroups

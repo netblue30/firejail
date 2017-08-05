@@ -12,6 +12,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+# mkdir ~/.warzone2100-3.1
+# mkdir ~/.warzone2100-3.2
 whitelist ~/.warzone2100-3.1
 whitelist ~/.warzone2100-3.2
 include /etc/firejail/whitelist-common.inc
@@ -30,8 +32,3 @@ disable-mnt
 private-bin warzone2100
 private-dev
 private-tmp
-
-# CLOBBERED COMMENTS
-# Call these options
-# mkdir ~/.warzone2100-3.1
-# mkdir ~/.warzone2100-3.2

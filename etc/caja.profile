@@ -5,6 +5,9 @@ include /etc/firejail/caja.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# Caja is started by systemd on most systems. Therefore it is not firejailed by default. Since there
+# is already a caja process running on MATE desktops firejail will have no effect.
+
 noblacklist ~/.config/caja
 noblacklist ~/.local/share/Trash
 noblacklist ~/.local/share/caja-python
@@ -24,12 +27,8 @@ seccomp
 shell none
 tracelog
 
+# caja needs to be able to start arbitrary applications so we cannot blacklist their files
 # private-bin caja
 # private-dev
 # private-etc fonts
 # private-tmp
-
-# CLOBBERED COMMENTS
-# Caja is started by systemd on most systems. Therefore it is not firejailed by default. Since there
-# caja needs to be able to start arbitrary applications so we cannot blacklist their files
-# is already a caja process running on MATE desktops firejail will have no effect.

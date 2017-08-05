@@ -28,11 +28,9 @@ tracelog
 private-bin evince,evince-previewer,evince-thumbnailer
 private-dev
 private-etc fonts
+# evince needs access to /tmp/mozilla* to work in firefox
 # private-tmp
 
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# evince needs access to /tmp/mozilla* to work in firefox

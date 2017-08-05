@@ -32,6 +32,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# cherrytree note taking application

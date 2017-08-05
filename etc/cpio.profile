@@ -25,7 +25,3 @@ shell none
 tracelog
 
 private-dev
-
-# CLOBBERED COMMENTS
-# /boot is not visible and /var is heavily modified
-# /sbin and /usr/sbin are visible inside the sandbox

@@ -17,7 +17,6 @@ noroot
 protocol unix,inet,inet6
 seccomp
 
-# CLOBBERED COMMENTS
+# no private-bin support for various reasons:
 # Plugins loaded: alias, aspell, charset, exec, fifo, guile, irc,
 # logger, lua, perl, python, relay, ruby, script, tcl, trigger, xferloading plugins
-# no private-bin support for various reasons:

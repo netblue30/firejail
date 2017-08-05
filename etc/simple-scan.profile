@@ -20,12 +20,10 @@ noroot
 nosound
 protocol unix,inet,inet6
 shell none
+# seccomp
 tracelog
 
 # private-bin simple-scan
 # private-dev
 # private-etc fonts
 # private-tmp
-
-# CLOBBERED COMMENTS
-# seccomp

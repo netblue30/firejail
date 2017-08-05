@@ -12,9 +12,15 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+# caps.drop all
 netfilter
 no3d
+# nogroups - breaks unprivileged wireshark usage
+# nonewprivs - breaks unprivileged wireshark usage
+# noroot
 nosound
+# protocol unix,inet,inet6,netlink
+# seccomp - breaks unprivileged wireshark usage
 shell none
 tracelog
 
@@ -25,11 +31,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# caps.drop all
-# nogroups - breaks unprivileged wireshark usage
-# nonewprivs - breaks unprivileged wireshark usage
-# noroot
-# protocol unix,inet,inet6,netlink
-# seccomp - breaks unprivileged wireshark usage

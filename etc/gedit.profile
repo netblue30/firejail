@@ -5,6 +5,8 @@ include /etc/firejail/gedit.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# when gedit is started via gnome-shell, firejail is not applied because systemd will start it
+
 noblacklist ~/.config/gedit
 
 include /etc/firejail/disable-common.inc
@@ -31,6 +33,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# when gedit is started via gnome-shell, firejail is not applied because systemd will start it

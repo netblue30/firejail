@@ -32,6 +32,3 @@ private-dev
 # private-tmp
 
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# nosound

@@ -28,6 +28,3 @@ private-dev
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# whitelist /tmp/.X11-unix/

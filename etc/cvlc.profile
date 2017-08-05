@@ -22,11 +22,9 @@ seccomp
 shell none
 tracelog
 
+# clvc doesn't like private-bin
 # private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
 private-dev
 private-tmp
 
 memory-deny-write-execute
-
-# CLOBBERED COMMENTS
-# clvc doesn't like private-bin

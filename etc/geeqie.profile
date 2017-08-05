@@ -26,6 +26,3 @@ shell none
 # private-bin geeqie
 private-dev
 # private-etc X11
-
-# CLOBBERED COMMENTS
-# Experimental:

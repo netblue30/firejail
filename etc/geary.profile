@@ -5,6 +5,9 @@ include /etc/firejail/geary.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# Users have Geary set to open a browser by clicking a link in an email
+# We are not allowed to blacklist browser-specific directories
+
 noblacklist ~/.gnupg
 noblacklist ~/.local/share/geary
 
@@ -21,9 +24,5 @@ ignore private-tmp
 read-only ~/.config/mimeapps.list
 read-only ~/.local/share/applications
 
-include /etc/firejail/firefox.profile
-
-# CLOBBERED COMMENTS
-# Users have Geary set to open a browser by clicking a link in an email
-# We are not allowed to blacklist browser-specific directories
 # allow browsers
+include /etc/firejail/firefox.profile

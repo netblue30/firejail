@@ -22,6 +22,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+# nosound - KWrite is using ALSA!
 protocol unix
 seccomp
 shell none
@@ -31,6 +32,3 @@ tracelog
 private-dev
 # private-etc fonts
 private-tmp
-
-# CLOBBERED COMMENTS
-# nosound - KWrite is using ALSA!

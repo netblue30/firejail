@@ -5,6 +5,8 @@ include /etc/firejail/gnome-books.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
+
 noblacklist ~/.cache/org.gnome.Books
 
 include /etc/firejail/disable-common.inc
@@ -32,6 +34,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them

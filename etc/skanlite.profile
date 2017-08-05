@@ -17,6 +17,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+# protocol unix,inet,inet6
 seccomp
 shell none
 
@@ -24,6 +25,3 @@ shell none
 # private-dev
 # private-etc
 # private-tmp
-
-# CLOBBERED COMMENTS
-# protocol unix,inet,inet6

@@ -5,6 +5,8 @@ include /etc/firejail/tracker.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# Tracker is started by systemd on most systems. Therefore it is not firejailed by default
+
 blacklist /tmp/.X11-unix
 
 include /etc/firejail/disable-common.inc
@@ -28,6 +30,3 @@ tracelog
 # private-dev
 # private-etc fonts
 # private-tmp
-
-# CLOBBERED COMMENTS
-# Tracker is started by systemd on most systems. Therefore it is not firejailed by default

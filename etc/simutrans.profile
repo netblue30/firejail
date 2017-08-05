@@ -28,7 +28,3 @@ shell none
 private-dev
 # private-etc none
 private-tmp
-
-# CLOBBERED COMMENTS
-# depending on your usage, you can enable some of the commands below:
-# nosound

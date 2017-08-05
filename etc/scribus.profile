@@ -5,6 +5,7 @@ include /etc/firejail/scribus.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# Support for PDF readers (Scribus 1.5 and higher)
 noblacklist ~/.config/okularpartrc
 noblacklist ~/.config/okularrc
 noblacklist ~/.config/scribus
@@ -35,6 +36,3 @@ tracelog
 
 private-dev
 # private-tmp
-
-# CLOBBERED COMMENTS
-# Support for PDF readers (Scribus 1.5 and higher)

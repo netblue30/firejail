@@ -12,6 +12,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+# whitelist ~/.config/pulse
+# whitelist ~/.pulse
 whitelist ~/.config/Google Play Music Desktop Player
 include /etc/firejail/whitelist-common.inc
 
@@ -32,7 +34,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# whitelist ~/.config/pulse
-# whitelist ~/.pulse

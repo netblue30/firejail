@@ -12,6 +12,26 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
+# These are uncommented in the Firefox profile. If you run into trouble you may
+# want to uncomment (some of) them.
+#whitelist ~/dwhelper
+#whitelist ~/.zotero
+#whitelist ~/.vimperatorrc
+#whitelist ~/.vimperator
+#whitelist ~/.pentadactylrc
+#whitelist ~/.pentadactyl
+#whitelist ~/.keysnail.js
+#whitelist ~/.config/gnome-mplayer
+#whitelist ~/.cache/gnome-mplayer/plugin
+#whitelist ~/.pki
+#whitelist ~/.lastpass
+
+# For silverlight
+#whitelist ~/.wine-pipelight
+#whitelist ~/.wine-pipelight64
+#whitelist ~/.config/pipelight-widevine
+#whitelist ~/.config/pipelight-silverlight5.1
+
 mkdir ~/.cache/moonchild productions/pale moon
 mkdir ~/.moonchild productions
 whitelist ${DOWNLOADS}
@@ -34,22 +54,3 @@ tracelog
 # private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
 # private-opt palemoon
 private-tmp
-
-# CLOBBERED COMMENTS
-# For silverlight
-# want to uncomment (some of) them.
-# whitelist ~/.cache/gnome-mplayer/plugin
-# whitelist ~/.config/gnome-mplayer
-# whitelist ~/.config/pipelight-silverlight5.1
-# whitelist ~/.config/pipelight-widevine
-# whitelist ~/.keysnail.js
-# whitelist ~/.lastpass
-# whitelist ~/.pentadactyl
-# whitelist ~/.pentadactylrc
-# whitelist ~/.pki
-# whitelist ~/.vimperator
-# whitelist ~/.vimperatorrc
-# whitelist ~/.wine-pipelight
-# whitelist ~/.wine-pipelight64
-# whitelist ~/.zotero
-# whitelist ~/dwhelper

@@ -17,12 +17,10 @@ nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6
+# seccomp
 shell none
 
 # private-bin amarok
 private-dev
 # private-etc none
 private-tmp
-
-# CLOBBERED COMMENTS
-# seccomp

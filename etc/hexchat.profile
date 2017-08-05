@@ -6,6 +6,8 @@ include /etc/firejail/hexchat.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/hexchat
+# noblacklist /usr/lib/python2*
+# noblacklist /usr/lib/python3*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -29,15 +31,10 @@ shell none
 tracelog
 
 disable-mnt
+# debug note: private-bin requires perl, python, etc on some systems
 private-bin hexchat
 private-dev
 private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# Currently in testing (may not work for all users)
-# debug note: private-bin requires perl, python, etc on some systems
-# noblacklist /usr/lib/python2*
-# noblacklist /usr/lib/python3*

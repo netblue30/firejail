@@ -5,6 +5,9 @@ include /etc/firejail/thunderbird.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# Users have thunderbird set to open a browser by clicking a link in an email
+# We are not allowed to blacklist browser-specific directories
+
 noblacklist ~/.cache/thunderbird
 noblacklist ~/.gnupg
 noblacklist ~/.icedove
@@ -27,9 +30,5 @@ ignore private-tmp
 read-only ~/.config/mimeapps.list
 read-only ~/.local/share/applications
 
-include /etc/firejail/firefox.profile
-
-# CLOBBERED COMMENTS
-# Users have thunderbird set to open a browser by clicking a link in an email
-# We are not allowed to blacklist browser-specific directories
 # allow browsers
+include /etc/firejail/firefox.profile

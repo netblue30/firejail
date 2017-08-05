@@ -12,8 +12,6 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+# noroot - somehow this breaks on Debian Jessie!
 protocol unix,inet,inet6
 seccomp
-
-# CLOBBERED COMMENTS
-# noroot - somehow this breaks on Debian Jessie!

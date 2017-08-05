@@ -9,6 +9,7 @@ noblacklist ~/.cache/iridium
 noblacklist ~/.config/iridium
 
 include /etc/firejail/disable-common.inc
+# chromium/iridium is distributed with a perl script on Arch
 # include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
@@ -22,6 +23,3 @@ whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 
 netfilter
-
-# CLOBBERED COMMENTS
-# chromium/iridium is distributed with a perl script on Arch

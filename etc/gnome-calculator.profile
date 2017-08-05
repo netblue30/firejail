@@ -33,6 +33,3 @@ private-tmp
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# net none

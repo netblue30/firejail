@@ -13,6 +13,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+# you'll need to manually whitelist ROM files
 mkdir ${HOME}/.config/mupen64plus
 mkdir ${HOME}/.local/share/mupen64plus
 whitelist ${HOME}/.config/mupen64plus/
@@ -24,6 +25,3 @@ net none
 nonewprivs
 noroot
 seccomp
-
-# CLOBBERED COMMENTS
-# manually whitelist ROM files

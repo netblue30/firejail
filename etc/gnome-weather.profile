@@ -5,6 +5,8 @@ include /etc/firejail/gnome-weather.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
+
 noblacklist ~/.cache/libgweather
 
 include /etc/firejail/disable-common.inc
@@ -33,6 +35,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# CLOBBERED COMMENTS
-# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them

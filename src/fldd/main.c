@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 netblue30 (netblue30@yahoo.com)
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -43,7 +43,7 @@
 static int arg_quiet = 0;
 static void copy_libs_for_lib(const char *lib);
 
-static const char * const lib_paths[] = {
+static const char * const default_lib_paths[] = {
 	"/lib",
 	"/lib/x86_64-linux-gnu",
 	"/lib64",
@@ -59,12 +59,10 @@ typedef struct storage_t {
 	struct storage_t *next;
 	const char *name;
 } Storage;
-static Storage *head;
+static Storage *libs, *lib_paths;
 
 // return 1 if found
-static int storage_find(const char *name) {
-	Storage *ptr = head;
-	
+static int storage_find(Storage *ptr, const char *name) {
 	while (ptr) {
 		if (strcmp(ptr->name, name) == 0)
 			return 1;
@@ -74,31 +72,36 @@ static int storage_find(const char *name) {
 	return 0;
 }
 
-static void storage_add(const char *name) {
-	if (storage_find(name))
+static void storage_add(Storage **head, const char *name) {
+	if (storage_find(*head, name))
 		return;
 
 	Storage *s = malloc(sizeof(Storage));
 	if (!s)
 		errExit("malloc");
-	s->next = head;
-	head = s;
+	s->next = *head;
+	*head = s;
 	s->name = strdup(name);
 	if (!s->name)
 		errExit("strdup");
 }
 
 
-static void storage_print(int fd) {
-	Storage *ptr = head;
-	
+static void storage_print(Storage *ptr, int fd) {
 	while (ptr) {
 		dprintf(fd, "%s\n", ptr->name);
 		ptr = ptr->next;
 	}
 }
 
+static bool ptr_ok(const void *ptr, const void *base, const void *end, const char *name) {
+	bool r;
 
+	r = (ptr >= base && ptr <= end);
+	if (!r && !arg_quiet)
+		fprintf(stderr, "Warning: fldd: bad pointer %s\n", name);
+	return r;
+}
 
 static void copy_libs_for_exe(const char *exe) {
 	int f;
@@ -110,13 +113,14 @@ static void copy_libs_for_exe(const char *exe) {
 	}
 	
 	struct stat s;
-	char *base = NULL;
+	char *base = NULL, *end;
 	if (fstat(f, &s) == -1)
 		goto error_close;
 	base = mmap(0, s.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, f, 0);
 	if (base == MAP_FAILED)
 		goto error_close;
 
+	end = base + s.st_size;
 
 	Elf_Ehdr *ebuf = (Elf_Ehdr *)base;
 	if (strncmp((const char *)ebuf->e_ident, ELFMAG, SELFMAG) != 0) {
@@ -126,24 +130,31 @@ static void copy_libs_for_exe(const char *exe) {
 	}
 
 	Elf_Phdr *pbuf = (Elf_Phdr *)(base + sizeof(*ebuf));
-	while (ebuf->e_phnum-- > 0) {
+	while (ebuf->e_phnum-- > 0 && ptr_ok(pbuf, base, end, "pbuf")) {
 		switch (pbuf->p_type) {
 		case PT_INTERP:
 			// dynamic loader ld-linux.so
-			storage_add(base + pbuf->p_offset);
+			if (!ptr_ok(base + pbuf->p_offset, base, end, "base + pbuf->p_offset"))
+				goto close;
+
+			storage_add(&libs, base + pbuf->p_offset);
 			break;
 		}
 		pbuf++;
 	}
 
 	Elf_Shdr *sbuf = (Elf_Shdr *)(base + ebuf->e_shoff);
+	if (!ptr_ok(sbuf, base, end, "sbuf"))
+		goto close;
 
 	// Find strings section
 	char *strbase = NULL;
 	int sections = ebuf->e_shnum;
-	while (sections-- > 0) {
+	while (sections-- > 0 && ptr_ok(sbuf, base, end, "sbuf")) {
 		if (sbuf->sh_type == SHT_STRTAB) {
 			strbase = base + sbuf->sh_offset;
+			if (!ptr_ok(strbase, base, end, "strbase"))
+				goto close;
 			break;
 		}
 		sbuf++;
@@ -153,7 +164,7 @@ static void copy_libs_for_exe(const char *exe) {
 
 	// Find dynamic section
 	sections = ebuf->e_shnum;
-	while (sections-- > 0) {
+	while (sections-- > 0 && ptr_ok(sbuf, base, end, "sbuf")) {
 // TODO: running fldd on large gui programs (fldd /usr/bin/transmission-qt)
 // crash on accessing memory location sbuf->sh_type if sbuf->sh_type in the previous section was 0 (SHT_NULL)
 // for now we just exit the while loop - this is probably incorrect
@@ -161,14 +172,32 @@ static void copy_libs_for_exe(const char *exe) {
 		if (sbuf->sh_type == SHT_NULL)
 			break;
 		if (sbuf->sh_type == SHT_DYNAMIC) {
-			// Find DT_NEEDED tags
 			Elf_Dyn *dbuf = (Elf_Dyn *)(base + sbuf->sh_offset);
-			while (sbuf->sh_size >= sizeof(*dbuf)) {
+			if (!ptr_ok(dbuf, base, end, "dbuf"))
+				goto close;
+			// Find DT_RPATH/DT_RUNPATH tags first
+			long size = sbuf->sh_size;
+			while (size >= sizeof(*dbuf) && ptr_ok(dbuf, base, end, "dbuf")) {
+				if (dbuf->d_tag == DT_RPATH || dbuf->d_tag ==  DT_RUNPATH) {
+					const char *searchpath = strbase + dbuf->d_un.d_ptr;
+					if (!ptr_ok(searchpath, base, end, "searchpath"))
+						goto close;
+					storage_add(&lib_paths, searchpath);
+				}
+				size -= sizeof(*dbuf);
+				dbuf++;
+			}
+			// Find DT_NEEDED tags
+			dbuf = (Elf_Dyn *)(base + sbuf->sh_offset);
+			size = sbuf->sh_size;
+			while (size >= sizeof(*dbuf) && ptr_ok(dbuf, base, end, "dbuf")) {
 				if (dbuf->d_tag == DT_NEEDED) {
 					const char *lib = strbase + dbuf->d_un.d_ptr;
+					if (!ptr_ok(lib, base, end, "lib"))
+						goto close;
 					copy_libs_for_lib(lib);
 				}
-				sbuf->sh_size -= sizeof(*dbuf);
+				size -= sizeof(*dbuf);
 				dbuf++;
 			}
 		}
@@ -186,14 +215,14 @@ static void copy_libs_for_exe(const char *exe) {
 }
 
 static void copy_libs_for_lib(const char *lib) {
-	int i;
-	for (i = 0; lib_paths[i]; i++) {
+	Storage *lib_path;
+	for (lib_path = lib_paths; lib_path; lib_path = lib_path->next) {
 		char *fname;
-		if (asprintf(&fname, "%s/%s", lib_paths[i], lib) == -1)
+		if (asprintf(&fname, "%s/%s", lib_path->name, lib) == -1)
 			errExit("asprintf");
 		if (access(fname, R_OK) == 0) {
-			if (!storage_find(fname)) {
-				storage_add(fname);
+			if (!storage_find(libs, fname)) {
+				storage_add(&libs, fname);
 				// libs may need other libs
 				copy_libs_for_exe(fname);
 			}
@@ -206,6 +235,12 @@ static void copy_libs_for_lib(const char *lib) {
 	// log a  warning and continue
 	if (!arg_quiet)
 		fprintf(stderr, "Warning fldd: cannot find %s, skipping...\n", lib);
+}
+
+static void lib_paths_init(void) {
+	int i;
+	for (i = 0; default_lib_paths[i]; i++)
+		storage_add(&lib_paths, default_lib_paths[i]);
 }
 
 static void usage(void) {
@@ -255,9 +290,10 @@ printf("\n");
 			exit(1);
 		}
 	}
-	
+
+	lib_paths_init();
 	copy_libs_for_exe(argv[1]);
-	storage_print(fd);	
+	storage_print(libs, fd);
 	if (argc == 3)
 		close(fd);
 		

@@ -16,11 +16,15 @@ include /etc/firejail/disable-passwdmgr.inc
 
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp
+tracelog
 
 # to test
+# ipc-namespace
 shell none
 private-bin mpv,youtube-dl,python,python2.7,python3.6,env
+private-dev

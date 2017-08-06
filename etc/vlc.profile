@@ -27,6 +27,6 @@ private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
 private-dev
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute - breaks playing videos
 noexec ${HOME}
 noexec /tmp

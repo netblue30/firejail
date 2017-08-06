@@ -94,7 +94,7 @@ static char *check_dir_or_file(const char *name) {
 	return paths[i];
 }
 
-static void duplicate(char *fname) {
+static void duplicate(char *fname, FILE *fplist) {
 	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
@@ -109,6 +109,9 @@ static void duplicate(char *fname) {
 	char *full_path;
 	if (asprintf(&full_path, "%s/%s", path, fname) == -1)
 		errExit("asprintf");
+
+	if (fplist)
+		fprintf(fplist, "%s\n", full_path);
 
 	// copy the file
 	if (checkcfg(CFG_FOLLOW_SYMLINK_PRIVATE_BIN))
@@ -135,12 +138,21 @@ void fs_private_bin_list(void) {
 	if (!dlist)
 		errExit("strdup");
 
+	// save a list of private-bin files in order to bring in private-libs later
+	FILE *fplist = NULL;
+	if (arg_private_lib) {
+		fplist = fopen(RUN_LIB_BIN, "w");
+		if (!fplist)
+			errExit("fopen");
+	}
+
 	char *ptr = strtok(dlist, ",");
-	duplicate(ptr);
+	duplicate(ptr, fplist);
 	while ((ptr = strtok(NULL, ",")) != NULL)
-		duplicate(ptr);
+		duplicate(ptr, fplist);
 	free(dlist);
-		fs_logger_print();
+	fs_logger_print();
+	fclose(fplist);
 
 	// mount-bind
 	int i = 0;

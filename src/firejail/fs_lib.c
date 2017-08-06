@@ -23,6 +23,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#define MAXBUF 4096
+
 static const char * const lib_paths[] = {
 	"/lib",
 	"/lib/x86_64-linux-gnu",
@@ -68,7 +70,6 @@ static void copy_libs(const char *lib, const char *private_run_dir, const char *
 	if (!fp)
 		errExit("fopen");
 
-#define MAXBUF 4096
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		// remove \n
@@ -198,6 +199,22 @@ void fs_private_lib(void) {
 		}
 		free(dlist);
 		fs_logger_print();
+	}
+
+	// for private-bin files
+	if (arg_private_bin) {
+		FILE *fp = fopen(RUN_LIB_BIN, "r");
+		if (fp) {
+			char buf[MAXBUF];
+			while (fgets(buf, MAXBUF, fp)) {
+				// remove \n
+				char *ptr = strchr(buf, '\n');
+				if (ptr)
+					*ptr = '\0';
+				copy_libs(buf, RUN_LIB_DIR, RUN_LIB_FILE);
+			}
+		}
+		fclose(fp);
 	}
 
 	// for our trace and tracelog libs

@@ -24,7 +24,7 @@ seccomp
 tracelog
 
 # to test
-ipc-namespace
+# ipc-namespace
 shell none
 private-bin mpv,youtube-dl,python,python2.7,python3.6,env
 private-dev

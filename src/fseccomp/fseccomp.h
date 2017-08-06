@@ -31,8 +31,7 @@ extern int arg_quiet;
 // syscall.c
 void syscall_print(void);
 int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg), int fd, int arg);
-int syscall_find_name(const char *name);
-char *syscall_find_nr(int nr);
+const char *syscall_find_nr(int nr);
 
 // errno.c
 void errno_print(void);

@@ -21,11 +21,16 @@
 #include <sys/syscall.h>
 
 typedef struct {
-	char *name;
+	const char * const name;
 	int nr;
 } SyscallEntry;
 
-static SyscallEntry syslist[] = {
+typedef struct {
+	const char * const name;
+	const char * const list;
+} SyscallGroupList;
+
+static const SyscallEntry syslist[] = {
 //
 // code generated using tools/extract-syscall
 //
@@ -35,8 +40,302 @@ static SyscallEntry syslist[] = {
 //
 }; // end of syslist
 
+static const SyscallGroupList sysgroups[] = {
+	{ .name = "@default", .list =
+#ifdef SYS_mount
+	  "mount,"
+#endif
+#ifdef SYS_umount2
+	  "umount2,"
+#endif
+#ifdef SYS_kexec_load
+	  "kexec_load,"
+#endif
+#ifdef SYS_kexec_file_load
+	  "kexec_file_load,"
+#endif
+#ifdef SYS_open_by_handle_at
+	  "open_by_handle_at,"
+#endif
+#ifdef SYS_name_to_handle_at
+	  "name_to_handle_at,"
+#endif
+#ifdef SYS_init_module
+	  "init_module,"
+#endif
+#ifdef SYS_finit_module
+	  "finit_module,"
+#endif
+#ifdef SYS_create_module
+	  "create_module,"
+#endif
+#ifdef SYS_delete_module
+	  "delete_module,"
+#endif
+#ifdef SYS_iopl
+	  "iopl,"
+#endif
+#ifdef SYS_ioperm
+	  "ioperm,"
+#endif
+#ifdef SYS_ioprio_set
+	  "ioprio_set,"
+#endif
+#ifdef SYS_ni_syscall
+	  "ni_syscall,"
+#endif
+#ifdef SYS_swapon
+	  "swapon,"
+#endif
+#ifdef SYS_swapoff
+	  "swapoff,"
+#endif
+#ifdef SYS_syslog
+	  "syslog,"
+#endif
+#ifdef SYS_process_vm_writev
+	  "process_vm_writev,"
+#endif
+#ifdef SYS_sysfs
+	  "sysfs,"
+#endif
+#ifdef SYS__sysctl
+	  "_sysctl,"
+#endif
+#ifdef SYS_adjtimex
+	  "adjtimex,"
+#endif
+#ifdef SYS_clock_adjtime
+	  "clock_adjtime,"
+#endif
+#ifdef SYS_lookup_dcookie
+	  "lookup_dcookie,"
+#endif
+#ifdef SYS_perf_event_open
+	  "perf_event_open,"
+#endif
+#ifdef SYS_fanotify_init
+	  "fanotify_init,"
+#endif
+#ifdef SYS_kcmp
+	  "kcmp,"
+#endif
+#ifdef SYS_add_key
+	  "add_key,"
+#endif
+#ifdef SYS_request_key
+	  "request_key,"
+#endif
+#ifdef SYS_keyctl
+	  "keyctl,"
+#endif
+#ifdef SYS_uselib
+	  "uselib,"
+#endif
+#ifdef SYS_acct
+	  "acct,"
+#endif
+#ifdef SYS_modify_ldt
+	  "modify_ldt,"
+#endif
+#ifdef SYS_pivot_root
+	  "pivot_root,"
+#endif
+#ifdef SYS_io_setup
+	  "io_setup,"
+#endif
+#ifdef SYS_io_destroy
+	  "io_destroy,"
+#endif
+#ifdef SYS_io_getevents
+	  "io_getevents,"
+#endif
+#ifdef SYS_io_submit
+	  "io_submit,"
+#endif
+#ifdef SYS_io_cancel
+	  "io_cancel,"
+#endif
+#ifdef SYS_remap_file_pages
+	  "remap_file_pages,"
+#endif
+#ifdef SYS_mbind
+	  "mbind,"
+#endif
+#ifdef SYS_set_mempolicy
+	  "set_mempolicy,"
+#endif
+#ifdef SYS_migrate_pages
+	  "migrate_pages,"
+#endif
+#ifdef SYS_move_pages
+	  "move_pages,"
+#endif
+#ifdef SYS_vmsplice
+	  "vmsplice,"
+#endif
+#ifdef SYS_chroot
+	  "chroot,"
+#endif
+#ifdef SYS_tuxcall
+	  "tuxcall,"
+#endif
+#ifdef SYS_reboot
+	  "reboot,"
+#endif
+#ifdef SYS_nfsservctl
+	  "nfsservctl,"
+#endif
+#ifdef SYS_get_kernel_syms
+	  "get_kernel_syms,"
+#endif
+#ifdef SYS_bpf
+	  "bpf,"
+#endif
+#ifdef SYS_clock_settime
+	  "clock_settime,"
+#endif
+#ifdef SYS_personality
+	  "personality,"
+#endif
+#ifdef SYS_process_vm_writev
+	  "process_vm_writev,"
+#endif
+#ifdef SYS_query_module
+	  "query_module,"
+#endif
+#ifdef SYS_settimeofday
+	  "settimeofday,"
+#endif
+#ifdef SYS_stime
+	  "stime,"
+#endif
+#ifdef SYS_umount
+	  "umount,"
+#endif
+#ifdef SYS_userfaultfd
+	  "userfaultfd,"
+#endif
+#ifdef SYS_ustat
+	  "ustat,"
+#endif
+#ifdef SYS_vm86
+	  "vm86,"
+#endif
+#ifdef SYS_vm86old
+	  "vm86old,"
+#endif
+#ifdef SYS_afs_syscall
+	  "afs_syscall,"
+#endif
+#ifdef SYS_bdflush
+	  "bdflush,"
+#endif
+#ifdef SYS_break
+	  "break,"
+#endif
+#ifdef SYS_ftime
+	  "ftime,"
+#endif
+#ifdef SYS_getpmsg
+	  "getpmsg,"
+#endif
+#ifdef SYS_gtty
+	  "gtty,"
+#endif
+#ifdef SYS_lock
+	  "lock,"
+#endif
+#ifdef SYS_mpx
+	  "mpx,"
+#endif
+#ifdef SYS_pciconfig_iobase
+	  "pciconfig_iobase,"
+#endif
+#ifdef SYS_pciconfig_read
+	  "pciconfig_read,"
+#endif
+#ifdef SYS_pciconfig_write
+	  "pciconfig_write,"
+#endif
+#ifdef SYS_prof
+	  "prof,"
+#endif
+#ifdef SYS_profil
+	  "profil,"
+#endif
+#ifdef SYS_putpmsg
+	  "putpmsg,"
+#endif
+#ifdef SYS_rtas
+	  "rtas,"
+#endif
+#ifdef SYS_s390_runtime_instr
+	  "s390_runtime_instr,"
+#endif
+#ifdef SYS_s390_mmio_read
+	  "s390_mmio_read,"
+#endif
+#ifdef SYS_s390_mmio_write
+	  "s390_mmio_write,"
+#endif
+#ifdef SYS_security
+	  "security,"
+#endif
+#ifdef SYS_setdomainname
+	  "setdomainname,"
+#endif
+#ifdef SYS_sethostname
+	  "sethostname,"
+#endif
+#ifdef SYS_sgetmask
+	  "sgetmask,"
+#endif
+#ifdef SYS_ssetmask
+	  "ssetmask,"
+#endif
+#ifdef SYS_stty
+	  "stty,"
+#endif
+#ifdef SYS_subpage_prot
+	  "subpage_prot,"
+#endif
+#ifdef SYS_switch_endian
+	  "switch_endian,"
+#endif
+#ifdef SYS_sys_debug_setcontext
+	  "sys_debug_setcontext,"
+#endif
+#ifdef SYS_ulimit
+	  "ulimit,"
+#endif
+#ifdef SYS_vhangup
+	  "vhangup,"
+#endif
+#ifdef SYS_vserver
+	  "vserver"
+#endif
+	},
+	{ .name = "@default-nodebuggers", .list =
+	  "@default,"
+#ifdef SYS_ptrace
+	  "ptrace,"
+#endif
+#ifdef SYS_process_vm_readv
+	  "process_vm_readv"
+#endif
+	},
+	{ .name = "@default-keep", .list =
+	  "dup,"
+	  "prctl,"
+	  "setgid,"
+	  "setgroups,"
+	  "setuid"
+	}
+};
+
 // return -1 if error, or syscall number
-int syscall_find_name(const char *name) {
+static int syscall_find_name(const char *name) {
 	int i;
 	int elems = sizeof(syslist) / sizeof(syslist[0]);
 	for (i = 0; i < elems; i++) {
@@ -47,7 +346,7 @@ int syscall_find_name(const char *name) {
 	return -1;
 }
 
-char *syscall_find_nr(int nr) {
+const char *syscall_find_nr(int nr) {
 	int i;
 	int elems = sizeof(syslist) / sizeof(syslist[0]);
 	for (i = 0; i < elems; i++) {
@@ -65,6 +364,17 @@ void syscall_print(void) {
 		printf("%d\t- %s\n", syslist[i].nr, syslist[i].name);
 	}
 	printf("\n");
+}
+
+static const char *syscall_find_group(const char *name) {
+	int i;
+	int elems = sizeof(sysgroups) / sizeof(sysgroups[0]);
+	for (i = 0; i < elems; i++) {
+		if (strcmp(name, sysgroups[i].name) == 0)
+			return sysgroups[i].list;
+	}
+
+	return NULL;
 }
 
 // allowed input:
@@ -92,7 +402,10 @@ static void syscall_process_name(const char *name, int *syscall_nr, int *error_n
 		goto error;
 	}
 
-	*syscall_nr = syscall_find_name(syscall_name);
+	if (*syscall_name == '$')
+		*syscall_nr = strtol(syscall_name + 1, NULL, 0);
+	else
+		*syscall_nr = syscall_find_name(syscall_name);
 	if (error_name) {
 		*error_nr = errno_find_name(error_name);
 		if (*error_nr == -1)
@@ -120,7 +433,8 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 	if (!str)
 		errExit("strdup");
 
-	char *ptr =strtok(str, ",");
+	char *saveptr;
+	char *ptr = strtok_r(str, ",", &saveptr);
 	if (ptr == NULL) {
 		fprintf(stderr, "Error fseccomp: empty syscall lists are not allowed\n");
 		exit(1);
@@ -129,18 +443,28 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 	while (ptr) {
 		int syscall_nr;
 		int error_nr;
-		syscall_process_name(ptr, &syscall_nr, &error_nr);
-		if (syscall_nr == -1) {
-			if (!arg_quiet)
-				fprintf(stderr, "Warning fseccomp: syscall \"%s\" not available on this platform\n", ptr);
+		if (*ptr == '@') {
+			const char *new_list = syscall_find_group(ptr);
+			if (!new_list) {
+				fprintf(stderr, "Error fseccomp: unknown syscall group %s\n", ptr);
+				exit(1);
+			}
+			syscall_check_list(new_list, callback, fd, arg);
 		}
-		else if (callback != NULL) {
-			if (error_nr != -1)
-				filter_add_errno(fd, syscall_nr, error_nr);
-			else
-				callback(fd, syscall_nr, arg);
+		else {
+			syscall_process_name(ptr, &syscall_nr, &error_nr);
+			if (syscall_nr == -1) {
+				if (!arg_quiet)
+					fprintf(stderr, "Warning fseccomp: syscall \"%s\" not available on this platform\n", ptr);
+			}
+			else if (callback != NULL) {
+				if (error_nr != -1)
+					filter_add_errno(fd, syscall_nr, error_nr);
+				else
+					callback(fd, syscall_nr, arg);
+			}
 		}
-		ptr = strtok(NULL, ",");
+		ptr = strtok_r(NULL, ",", &saveptr);
 	}
 
 	free(str);

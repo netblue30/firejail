@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 netblue30 (netblue30@yahoo.com)
+ * Copyright (C) 2014-2017 Firejail Authors
  *
  * This file is part of firejail project
  *

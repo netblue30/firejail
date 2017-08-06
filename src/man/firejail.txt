@@ -1501,10 +1501,11 @@ ulimit, vhangup and vserver.
 
 .br
 To help creating useful seccomp filters more easily, the following
-system call groups are defined: @default, @default-nodebuggers and
-@default-keep. In addtion, a system call can be specified by its
-number instead of name with prefix $, so for example $165 would be
-equal to mount on i386.
+system call groups are defined: @clock, @cpu-emulation, @debug,
+@default, @default-nodebuggers, @default-keep, @module, @obsolete,
+@privileged, @raw-io, @reboot, @resources and @swap. In addtion, a
+system call can be specified by its number instead of name with prefix
+$, so for example $165 would be equal to mount on i386.
 
 .br
 System architecture is not strictly imposed. The filter is applied

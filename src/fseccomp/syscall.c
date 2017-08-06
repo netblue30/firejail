@@ -41,42 +41,72 @@ static const SyscallEntry syslist[] = {
 }; // end of syslist
 
 static const SyscallGroupList sysgroups[] = {
+	{ .name = "@clock", .list =
+#ifdef SYS_adjtimex
+	  "adjtimex,"
+#endif
+#ifdef SYS_clock_adjtime
+	  "clock_adjtime,"
+#endif
+#ifdef SYS_clock_settime
+	  "clock_settime,"
+#endif
+#ifdef SYS_settimeofday
+	  "settimeofday,"
+#endif
+#ifdef SYS_stime
+	  "stime"
+#endif
+	},
+	{ .name = "@cpu-emulation", .list =
+#ifdef SYS_modify_ldt
+	  "modify_ldt,"
+#endif
+#ifdef SYS_subpage_prot
+	  "subpage_prot,"
+#endif
+#ifdef SYS_switch_endian
+	  "switch_endian,"
+#endif
+#ifdef SYS_vm86
+	  "vm86,"
+#endif
+#ifdef SYS_vm86old
+	  "vm86old"
+#endif
+	},
+	{ .name = "@debug", .list =
+#ifdef SYS_lookup_dcookie
+	  "lookup_dcookie,"
+#endif
+#ifdef SYS_perf_event_open
+	  "perf_event_open,"
+#endif
+#ifdef SYS_process_vm_writev
+	  "process_vm_writev,"
+#endif
+#ifdef SYS_rtas
+	  "rtas,"
+#endif
+#ifdef SYS_s390_runtime_instr
+	  "s390_runtime_instr,"
+#endif
+#ifdef SYS_sys_debug_setcontext
+	  "sys_debug_setcontext,"
+#endif
+	},
 	{ .name = "@default", .list =
-#ifdef SYS_mount
-	  "mount,"
-#endif
-#ifdef SYS_umount2
-	  "umount2,"
-#endif
-#ifdef SYS_kexec_load
-	  "kexec_load,"
-#endif
-#ifdef SYS_kexec_file_load
-	  "kexec_file_load,"
-#endif
+	  "@cpu-emulation,"
+	  "@debug,"
+	  "@module,"
+	  "@obsolete,"
+	  "@privileged,"
+	  "@resources,"
 #ifdef SYS_open_by_handle_at
 	  "open_by_handle_at,"
 #endif
 #ifdef SYS_name_to_handle_at
 	  "name_to_handle_at,"
-#endif
-#ifdef SYS_init_module
-	  "init_module,"
-#endif
-#ifdef SYS_finit_module
-	  "finit_module,"
-#endif
-#ifdef SYS_create_module
-	  "create_module,"
-#endif
-#ifdef SYS_delete_module
-	  "delete_module,"
-#endif
-#ifdef SYS_iopl
-	  "iopl,"
-#endif
-#ifdef SYS_ioperm
-	  "ioperm,"
 #endif
 #ifdef SYS_ioprio_set
 	  "ioprio_set,"
@@ -84,35 +114,8 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_ni_syscall
 	  "ni_syscall,"
 #endif
-#ifdef SYS_swapon
-	  "swapon,"
-#endif
-#ifdef SYS_swapoff
-	  "swapoff,"
-#endif
 #ifdef SYS_syslog
 	  "syslog,"
-#endif
-#ifdef SYS_process_vm_writev
-	  "process_vm_writev,"
-#endif
-#ifdef SYS_sysfs
-	  "sysfs,"
-#endif
-#ifdef SYS__sysctl
-	  "_sysctl,"
-#endif
-#ifdef SYS_adjtimex
-	  "adjtimex,"
-#endif
-#ifdef SYS_clock_adjtime
-	  "clock_adjtime,"
-#endif
-#ifdef SYS_lookup_dcookie
-	  "lookup_dcookie,"
-#endif
-#ifdef SYS_perf_event_open
-	  "perf_event_open,"
 #endif
 #ifdef SYS_fanotify_init
 	  "fanotify_init,"
@@ -128,18 +131,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_keyctl
 	  "keyctl,"
-#endif
-#ifdef SYS_uselib
-	  "uselib,"
-#endif
-#ifdef SYS_acct
-	  "acct,"
-#endif
-#ifdef SYS_modify_ldt
-	  "modify_ldt,"
-#endif
-#ifdef SYS_pivot_root
-	  "pivot_root,"
 #endif
 #ifdef SYS_io_setup
 	  "io_setup,"
@@ -159,161 +150,17 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_remap_file_pages
 	  "remap_file_pages,"
 #endif
-#ifdef SYS_mbind
-	  "mbind,"
-#endif
-#ifdef SYS_set_mempolicy
-	  "set_mempolicy,"
-#endif
-#ifdef SYS_migrate_pages
-	  "migrate_pages,"
-#endif
-#ifdef SYS_move_pages
-	  "move_pages,"
-#endif
 #ifdef SYS_vmsplice
 	  "vmsplice,"
 #endif
-#ifdef SYS_chroot
-	  "chroot,"
-#endif
-#ifdef SYS_tuxcall
-	  "tuxcall,"
-#endif
-#ifdef SYS_reboot
-	  "reboot,"
-#endif
-#ifdef SYS_nfsservctl
-	  "nfsservctl,"
-#endif
-#ifdef SYS_get_kernel_syms
-	  "get_kernel_syms,"
-#endif
-#ifdef SYS_bpf
-	  "bpf,"
-#endif
-#ifdef SYS_clock_settime
-	  "clock_settime,"
-#endif
 #ifdef SYS_personality
 	  "personality,"
-#endif
-#ifdef SYS_process_vm_writev
-	  "process_vm_writev,"
-#endif
-#ifdef SYS_query_module
-	  "query_module,"
-#endif
-#ifdef SYS_settimeofday
-	  "settimeofday,"
-#endif
-#ifdef SYS_stime
-	  "stime,"
 #endif
 #ifdef SYS_umount
 	  "umount,"
 #endif
 #ifdef SYS_userfaultfd
-	  "userfaultfd,"
-#endif
-#ifdef SYS_ustat
-	  "ustat,"
-#endif
-#ifdef SYS_vm86
-	  "vm86,"
-#endif
-#ifdef SYS_vm86old
-	  "vm86old,"
-#endif
-#ifdef SYS_afs_syscall
-	  "afs_syscall,"
-#endif
-#ifdef SYS_bdflush
-	  "bdflush,"
-#endif
-#ifdef SYS_break
-	  "break,"
-#endif
-#ifdef SYS_ftime
-	  "ftime,"
-#endif
-#ifdef SYS_getpmsg
-	  "getpmsg,"
-#endif
-#ifdef SYS_gtty
-	  "gtty,"
-#endif
-#ifdef SYS_lock
-	  "lock,"
-#endif
-#ifdef SYS_mpx
-	  "mpx,"
-#endif
-#ifdef SYS_pciconfig_iobase
-	  "pciconfig_iobase,"
-#endif
-#ifdef SYS_pciconfig_read
-	  "pciconfig_read,"
-#endif
-#ifdef SYS_pciconfig_write
-	  "pciconfig_write,"
-#endif
-#ifdef SYS_prof
-	  "prof,"
-#endif
-#ifdef SYS_profil
-	  "profil,"
-#endif
-#ifdef SYS_putpmsg
-	  "putpmsg,"
-#endif
-#ifdef SYS_rtas
-	  "rtas,"
-#endif
-#ifdef SYS_s390_runtime_instr
-	  "s390_runtime_instr,"
-#endif
-#ifdef SYS_s390_mmio_read
-	  "s390_mmio_read,"
-#endif
-#ifdef SYS_s390_mmio_write
-	  "s390_mmio_write,"
-#endif
-#ifdef SYS_security
-	  "security,"
-#endif
-#ifdef SYS_setdomainname
-	  "setdomainname,"
-#endif
-#ifdef SYS_sethostname
-	  "sethostname,"
-#endif
-#ifdef SYS_sgetmask
-	  "sgetmask,"
-#endif
-#ifdef SYS_ssetmask
-	  "ssetmask,"
-#endif
-#ifdef SYS_stty
-	  "stty,"
-#endif
-#ifdef SYS_subpage_prot
-	  "subpage_prot,"
-#endif
-#ifdef SYS_switch_endian
-	  "switch_endian,"
-#endif
-#ifdef SYS_sys_debug_setcontext
-	  "sys_debug_setcontext,"
-#endif
-#ifdef SYS_ulimit
-	  "ulimit,"
-#endif
-#ifdef SYS_vhangup
-	  "vhangup,"
-#endif
-#ifdef SYS_vserver
-	  "vserver"
+	  "userfaultfd"
 #endif
 	},
 	{ .name = "@default-nodebuggers", .list =
@@ -331,6 +178,187 @@ static const SyscallGroupList sysgroups[] = {
 	  "setgid,"
 	  "setgroups,"
 	  "setuid"
+	},
+	{ .name = "@module", .list =
+#ifdef SYS_delete_module
+	  "delete_module,"
+#endif
+#ifdef SYS_finit_module
+	  "finit_module,"
+#endif
+#ifdef SYS_init_module
+	  "init_module"
+#endif
+	},
+	{ .name = "@obsolete", .list =
+#ifdef SYS__sysctl
+	  "_sysctl,"
+#endif
+#ifdef SYS_afs_syscall
+	  "afs_syscall,"
+#endif
+#ifdef SYS_bdflush
+	  "bdflush,"
+#endif
+#ifdef SYS_break
+	  "break,"
+#endif
+#ifdef SYS_create_module
+	  "create_module,"
+#endif
+#ifdef SYS_ftime
+	  "ftime,"
+#endif
+#ifdef SYS_get_kernel_syms
+	  "get_kernel_syms,"
+#endif
+#ifdef SYS_getpmsg
+	  "getpmsg,"
+#endif
+#ifdef SYS_gtty
+	  "gtty,"
+#endif
+#ifdef SYS_lock
+	  "lock,"
+#endif
+#ifdef SYS_mpx
+	  "mpx,"
+#endif
+#ifdef SYS_prof
+	  "prof,"
+#endif
+#ifdef SYS_profil
+	  "profil,"
+#endif
+#ifdef SYS_putpmsg
+	  "putpmsg,"
+#endif
+#ifdef SYS_query_module
+	  "query_module,"
+#endif
+#ifdef SYS_security
+	  "security,"
+#endif
+#ifdef SYS_sgetmask
+	  "sgetmask,"
+#endif
+#ifdef SYS_ssetmask
+	  "ssetmask,"
+#endif
+#ifdef SYS_stty
+	  "stty,"
+#endif
+#ifdef SYS_sysfs
+	  "sysfs,"
+#endif
+#ifdef SYS_tuxcall
+	  "tuxcall,"
+#endif
+#ifdef SYS_ulimit
+	  "ulimit,"
+#endif
+#ifdef SYS_uselib
+	  "uselib,"
+#endif
+#ifdef SYS_ustat
+	  "ustat,"
+#endif
+#ifdef SYS_vserver
+	  "vserver"
+#endif
+	},
+	{ .name = "@privileged", .list =
+	  "@clock,"
+	  "@module,"
+	  "@raw-io,"
+	  "@reboot,"
+	  "@swap,"
+#ifdef SYS_acct
+	  "acct,"
+#endif
+#ifdef SYS_bpf
+	  "bpf,"
+#endif
+#ifdef SYS_chroot
+	  "chroot,"
+#endif
+#ifdef SYS_mount
+	  "mount,"
+#endif
+#ifdef SYS_nfsservctl
+	  "nfsservctl,"
+#endif
+#ifdef SYS_pivot_root
+	  "pivot_root,"
+#endif
+#ifdef SYS_setdomainname
+	  "setdomainname,"
+#endif
+#ifdef SYS_sethostname
+	  "sethostname,"
+#endif
+#ifdef SYS_umount2
+	  "umount2,"
+#endif
+#ifdef SYS_vhangup
+	  "vhangup"
+#endif
+	},
+	{ .name = "@raw-io", .list =
+#ifdef SYS_ioperm
+	  "ioperm,"
+#endif
+#ifdef SYS_iopl
+	  "iopl,"
+#endif
+#ifdef SYS_pciconfig_iobase
+	  "pciconfig_iobase,"
+#endif
+#ifdef SYS_pciconfig_read
+	  "pciconfig_read,"
+#endif
+#ifdef SYS_pciconfig_write
+	  "pciconfig_write,"
+#endif
+#ifdef SYS_s390_mmio_read
+	  "s390_mmio_read,"
+#endif
+#ifdef SYS_s390_mmio_write
+	  "s390_mmio_write"
+#endif
+	},
+	{ .name = "@reboot", .list =
+#ifdef SYS_kexec_load
+	  "kexec_load,"
+#endif
+#ifdef SYS_kexec_file_load
+	  "kexec_file_load,"
+#endif
+#ifdef SYS_reboot
+	  "reboot,"
+#endif
+	},
+	{ .name = "@resources", .list =
+#ifdef SYS_set_mempolicy
+	  "set_mempolicy,"
+#endif
+#ifdef SYS_migrate_pages
+	  "migrate_pages,"
+#endif
+#ifdef SYS_move_pages
+	  "move_pages,"
+#endif
+#ifdef SYS_mbind
+	  "mbind"
+#endif
+	},
+	{ .name = "@swap", .list =
+#ifdef SYS_swapon
+	  "swapon,"
+#endif
+#ifdef SYS_swapoff
+	  "swapoff"
+#endif
 	}
 };
 

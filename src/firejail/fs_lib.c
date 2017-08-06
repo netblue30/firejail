@@ -99,6 +99,7 @@ static void copy_directory(const char *full_path, const char *dir_name, const ch
 	if (mount(full_path, dest, NULL, MS_BIND|MS_REC, NULL) < 0 ||
 	    mount(NULL, dest, NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	fs_logger2("clone", full_path);
 	fs_logger2("mount", full_path);
 	free(dest);
 }
@@ -229,15 +230,26 @@ void fs_private_lib(void) {
 	if (mount(RUN_LIB_DIR, "/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||
 	    mount(NULL, "/lib", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	fs_logger2("tmpfs", "/lib");
 	fs_logger("mount /lib");
 
 	if (mount(RUN_LIB_DIR, "/lib64", NULL, MS_BIND|MS_REC, NULL) < 0 ||
 	    mount(NULL, "/lib64", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	fs_logger2("tmpfs", "/lib64");
 	fs_logger("mount /lib64");
 
 	if (mount(RUN_LIB_DIR, "/usr/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||
 	    mount(NULL, "/usr/lib", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	fs_logger2("tmpfs", "/usr/lib");
 	fs_logger("mount /usr/lib");
+
+	// for amd64 only - we'll deal with i386 later
+	if (mount(RUN_RO_DIR, "/lib32", "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("disable file");
+	fs_logger("blacklist-nolog /lib32");
+	if (mount(RUN_RO_DIR, "/libx32", "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("disable file");
+	fs_logger("blacklist-nolog /libx32");
 }

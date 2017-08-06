@@ -52,7 +52,7 @@ read-only ${HOME}/.kde4/share/config/kdeglobals
 blacklist ${HOME}/.kde4/share/config/khotkeysrc
 blacklist ${HOME}/.kde4/share/config/krunnerrc
 blacklist ${HOME}/.kde4/share/config/plasma-desktop-appletsrc
-blacklist ${HOME}/.kde4/share/kde4/services
+read-only ${HOME}/.kde4/share/kde4/services
 blacklist ${HOME}/.kde/share/apps/konsole
 blacklist ${HOME}/.kde/share/apps/kwin
 blacklist ${HOME}/.kde/share/apps/plasma
@@ -62,7 +62,7 @@ read-only ${HOME}/.kde/share/config/kdeglobals
 blacklist ${HOME}/.kde/share/config/khotkeysrc
 blacklist ${HOME}/.kde/share/config/krunnerrc
 blacklist ${HOME}/.kde/share/config/plasma-desktop-appletsrc
-blacklist ${HOME}/.kde/share/kde4/services
+read-only ${HOME}/.kde/share/kde4/services
 blacklist ${HOME}/.config/*.notifyrc
 read-only ${HOME}/.config/kdeglobals
 blacklist ${HOME}/.config/khotkeysrc

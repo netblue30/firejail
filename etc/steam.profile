@@ -5,6 +5,9 @@ include /etc/firejail/globals.local
 # Persistent customizations should go in a .local file.
 include /etc/firejail/steam.local
 
+# with >=llvm-4 mesa drivers need llvm stuff
+noblacklist /usr/lib/llvm*
+
 # Steam profile (applies to games/apps launched from Steam as well)
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.Steam

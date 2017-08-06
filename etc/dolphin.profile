@@ -11,8 +11,6 @@ include /etc/firejail/dolphin.local
 
 noblacklist ~/.config/dolphinrc
 noblacklist ~/.local/share/dolphin
-noblacklist ~/.kde4/share/kde4/services
-noblacklist ~/.kde/share/kde4/services
 noblacklist ${HOME}/.local/share/Trash
 
 include /etc/firejail/disable-common.inc

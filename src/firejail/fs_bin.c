@@ -152,7 +152,8 @@ void fs_private_bin_list(void) {
 		duplicate(ptr, fplist);
 	free(dlist);
 	fs_logger_print();
-	fclose(fplist);
+    if (fplist)
+        fclose(fplist);
 
 	// mount-bind
 	int i = 0;

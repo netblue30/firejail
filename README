@@ -385,8 +385,10 @@ Simon Peter (https://github.com/probonopd)
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH
-sshirokov (http://sourceforge.net/u/yshirokov/profile/)
-	- Patch to output "Reading profile" to stderr instead of stdout
+smithsohu (https://github.com/smitsohu)
+	- read-only kde4 services directory
+soredake (https://github.com/soredake)
+	- fix steam startup with >=llvm-4
 SpotComms (https://github.com/SpotComms)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
 	- added PDFSam, Pithos, and Xonotic profiles
@@ -405,8 +407,13 @@ SpotComms (https://github.com/SpotComms)
 	- added novideo and disable-mnt support in all profile files
 	- added Peek and silent profiles
 	- added IntelliJ IDEA and Android Studio profiles
-    - added arm profile
-    - lots of profile improvements/tightening
+	- added arm profile
+	- lots of profile improvements/tightening
+	- added apktool, baobab, dex2jar, gitg, hashcat, obs, picard, remmina, sdat2img,
+	soundconverter, sqlitebrowser, and truecraft profiles
+	- added gnome-twitch profile
+sshirokov (http://sourceforge.net/u/yshirokov/profile/)
+	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes
@@ -501,6 +508,8 @@ vismir2 (https://github.com/vismir2)
 	-  support for truecrypt and zuluCrypt
 Vladimir Schowalter (https://github.com/VladimirSchowalter20)
 	- apparmor profile enhancements
+	- various KDE profile enhancements
+	read-only kde5 services directory
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 yumkam (https://github.com/yumkam)

@@ -412,6 +412,7 @@ SpotComms (https://github.com/SpotComms)
 	- added apktool, baobab, dex2jar, gitg, hashcat, obs, picard, remmina, sdat2img,
 	soundconverter, sqlitebrowser, and truecraft profiles
 	- added gnome-twitch profile
+	- Unified all 341 profiles 
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)

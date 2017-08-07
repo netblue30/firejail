@@ -1,28 +1,27 @@
+# Firejail profile for cpio
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/cpio.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/cpio.local
+blacklist /tmp/.X11-unix
 
-# cpio profile
-# /sbin and /usr/sbin are visible inside the sandbox
-# /boot is not visible and /var is heavily modified
 noblacklist /sbin
 noblacklist /usr/sbin
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-passwdmgr.inc
 
-private-dev
-seccomp
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
 caps.drop all
 net none
+net none
+no3d
+nosound
+seccomp
 shell none
 tracelog
-net none
-nosound
-no3d
 
-blacklist /tmp/.X11-unix
+private-dev

@@ -1,11 +1,10 @@
-# Persistent global definitions go here
+# Firejail profile for peek
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/peek.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/peek.local
-
-# Firejail profile for Peek
 noblacklist ${HOME}/.cache/peek
 
 include /etc/firejail/disable-common.inc
@@ -25,7 +24,7 @@ protocol unix
 seccomp
 shell none
 
-#private-bin peek,convert,ffmpeg
+# private-bin peek,convert,ffmpeg
 private-dev
 private-tmp
 

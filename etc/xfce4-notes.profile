@@ -1,12 +1,12 @@
-# Persistent global definitions go here
+# Firejail profile for xfce4-notes
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/xfce4-notes.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/xfce4-notes.local
-
-noblacklist ${HOME}/.config/xfce4/xfce4-notes.rc
 noblacklist ${HOME}/.config/xfce4/xfce4-notes.gtkrc
+noblacklist ${HOME}/.config/xfce4/xfce4-notes.rc
 noblacklist ${HOME}/.local/share/notes
 
 include /etc/firejail/disable-common.inc
@@ -26,9 +26,9 @@ protocol unix
 seccomp
 shell none
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp

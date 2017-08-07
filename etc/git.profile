@@ -1,35 +1,34 @@
+# Firejail profile for git
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/git.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/git.local
+blacklist /tmp/.X11-unix
 
-# git profile
-noblacklist ~/.gitconfig
-noblacklist ~/.ssh
-noblacklist ~/.gnupg
 noblacklist ~/.emacs
 noblacklist ~/.emacs.d
-noblacklist ~/.viminfo
+noblacklist ~/.gitconfig
+noblacklist ~/.gnupg
+noblacklist ~/.ssh
 noblacklist ~/.vim
+noblacklist ~/.viminfo
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
 nosound
-no3d
 protocol unix,inet,inet6
 seccomp
 shell none
-
-blacklist /tmp/.X11-unix
 
 private-dev

@@ -1,9 +1,9 @@
-# Persistent global definitions go here
+# Firejail profile for iceweasel
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/iceweasel.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/iceweasel.local
 
-# Firejail profile for Mozilla Firefox (Iceweasel in Debian)
 include /etc/firejail/firefox.profile

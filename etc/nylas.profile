@@ -1,22 +1,21 @@
-# Persistent global definitions go here
+# Firejail profile for nylas
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/nylas.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/nylas.local
-
-# Firejail profile for Nylas Mail
 noblacklist ~/.config/Nylas Mail
 noblacklist ~/.nylas-mail
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
+whitelist ${DOWNLOADS}
 whitelist ~/.config/Nylas Mail
 whitelist ~/.nylas-mail
-whitelist ${DOWNLOADS}
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

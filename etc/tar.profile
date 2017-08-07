@@ -1,18 +1,15 @@
+# Firejail profile for tar
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Persistent local customizations
 include /etc/firejail/tar.local
-
-# tar profile
-ignore noroot
-include /etc/firejail/default.profile
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 
 hostname tar
+ignore noroot
 net none
 no3d
 nosound
@@ -23,3 +20,5 @@ tracelog
 private-bin sh,bash,dash,tar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop
 private-dev
 private-etc passwd,group,localtime
+
+include /etc/firejail/default.profile

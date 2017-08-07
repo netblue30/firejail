@@ -1,17 +1,20 @@
-# Persistent global definitions go here
+# Firejail profile for hedgewars
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/hedgewars.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/hedgewars.local
-
-# whitelist profile for Hedgewars (game)
 noblacklist ${HOME}/.hedgewars
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
+mkdir     ~/.hedgewars
+whitelist ~/.hedgewars
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -21,10 +24,6 @@ noroot
 seccomp
 tracelog
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
-
-mkdir     ~/.hedgewars
-whitelist ~/.hedgewars
-include /etc/firejail/whitelist-common.inc

@@ -1,34 +1,32 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for tracker
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/tracker.local
-
-# tracker profile
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 # Tracker is started by systemd on most systems. Therefore it is not firejailed by default
 
+blacklist /tmp/.X11-unix
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
 nosound
-no3d
 protocol unix
 seccomp
 shell none
 tracelog
 
-blacklist /tmp/.X11-unix
-
 # private-bin tracker
-# private-tmp
 # private-dev
 # private-etc fonts
+# private-tmp

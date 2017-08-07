@@ -1,24 +1,21 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for caja
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/caja.local
-
-# Caja profile for Firejail
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 # Caja is started by systemd on most systems. Therefore it is not firejailed by default. Since there
 # is already a caja process running on MATE desktops firejail will have no effect.
 
 noblacklist ~/.config/caja
-noblacklist ~/.local/share/caja-python
 noblacklist ~/.local/share/Trash
+noblacklist ~/.local/share/caja-python
 
 include /etc/firejail/disable-common.inc
-# caja needs to be able to start arbitrary applications so we cannot blacklist their files
-#include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+# include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
@@ -30,7 +27,8 @@ seccomp
 shell none
 tracelog
 
+# caja needs to be able to start arbitrary applications so we cannot blacklist their files
 # private-bin caja
-# private-tmp
 # private-dev
 # private-etc fonts
+# private-tmp

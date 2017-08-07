@@ -1,24 +1,23 @@
-# Persistent global definitions go here
+# Firejail profile for warzone2100
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/warzone2100.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/warzone2100.local
-
-# Firejail profile for warzone2100
 noblacklist ~/.warzone2100-3.*
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-# Whitelist
-#mkdir ~/.warzone2100-3.1
+# mkdir ~/.warzone2100-3.1
+# mkdir ~/.warzone2100-3.2
 whitelist ~/.warzone2100-3.1
-#mkdir ~/.warzone2100-3.2
 whitelist ~/.warzone2100-3.2
+include /etc/firejail/whitelist-common.inc
 
-# Call these options
 caps.drop all
 netfilter
 nogroups
@@ -29,7 +28,7 @@ seccomp
 shell none
 tracelog
 
+disable-mnt
 private-bin warzone2100
 private-dev
 private-tmp
-disable-mnt

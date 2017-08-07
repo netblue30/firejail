@@ -1,17 +1,16 @@
-# Persistent global definitions go here
+# Firejail profile for skype
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/skype.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/skype.local
-
-# Skype profile
 noblacklist ${HOME}/.Skype
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
@@ -22,9 +21,9 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp

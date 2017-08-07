@@ -1,22 +1,23 @@
+# Firejail profile for strings
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/strings.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/strings.local
+blacklist /tmp/.X11-unix
 
-# strings profile
 ignore noroot
-include /etc/firejail/default.profile
-
 net none
 no3d
 nosound
 novideo
 shell none
 tracelog
+
 private-dev
-blacklist /tmp/.X11-unix
 
 memory-deny-write-execute
+
+include /etc/firejail/default.profile

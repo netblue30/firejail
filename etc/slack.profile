@@ -1,20 +1,25 @@
-# Persistent global definitions go here
+# Firejail profile for slack
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/slack.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/slack.local
+blacklist /var
 
-# Firejail profile for Slack
 noblacklist ${HOME}/.config/Slack
 noblacklist ${HOME}/Downloads
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-blacklist /var
+mkdir ${HOME}/.config
+mkdir ${HOME}/.config/Slack
+whitelist ${HOME}/.config/Slack
+whitelist ${HOME}/Downloads
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 name slack
@@ -26,14 +31,8 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
+disable-mnt
 private-bin slack
 private-dev
 private-etc fonts,resolv.conf,ld.so.conf,ld.so.cache,localtime
 private-tmp
-disable-mnt
-
-mkdir ${HOME}/.config
-mkdir ${HOME}/.config/Slack
-whitelist ${HOME}/.config/Slack
-whitelist ${HOME}/Downloads
-include /etc/firejail/whitelist-common.inc

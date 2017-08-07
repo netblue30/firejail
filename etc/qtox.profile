@@ -1,23 +1,24 @@
-# Persistent global definitions go here
+# Firejail profile for qtox
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/qtox.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/qtox.local
-
-# qTox instant messaging profile
-noblacklist ~/.config/tox
 noblacklist ~/.config/qt5ct
+noblacklist ~/.config/tox
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-mkdir ${HOME}/.config/tox
-whitelist ${HOME}/.config/tox
 mkdir ${HOME}/.config/qt5ct
-whitelist ${HOME}/.config/qt5ct
+mkdir ${HOME}/.config/tox
 whitelist ${DOWNLOADS}
+whitelist ${HOME}/.config/qt5ct
+whitelist ${HOME}/.config/tox
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -29,9 +30,9 @@ seccomp
 shell none
 tracelog
 
-noexec ${HOME}
-noexec /tmp
-
+disable-mnt
 private-bin qtox
 private-tmp
-disable-mnt
+
+noexec ${HOME}
+noexec /tmp

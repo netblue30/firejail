@@ -1,21 +1,19 @@
-# Persistent global definitions go here
+# Firejail profile for totem
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/totem.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/totem.local
-
-# Totem media player profile
 noblacklist ~/.config/totem
 noblacklist ~/.local/share/totem
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-#ipc-namespace
 netfilter
 nogroups
 nonewprivs
@@ -26,7 +24,7 @@ shell none
 
 private-bin totem
 private-dev
-#private-etc fonts
+# private-etc fonts
 private-tmp
 
 noexec ${HOME}

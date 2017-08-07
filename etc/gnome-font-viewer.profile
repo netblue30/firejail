@@ -1,17 +1,16 @@
-# Persistent global definitions go here
+# Firejail profile for gnome-font-viewer
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/gnome-font-viewer.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/gnome-font-viewer.local
 
-#Blacklist Paths
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-#Options
 caps.drop all
 netfilter
 no3d
@@ -22,9 +21,9 @@ novideo
 protocol unix,inet,inet6
 seccomp
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp

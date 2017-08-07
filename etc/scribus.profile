@@ -1,32 +1,30 @@
-# Persistent global definitions go here
+# Firejail profile for scribus
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/scribus.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/scribus.local
-
-# Firejail profile for Scribus
-noblacklist ~/.scribus
+# Support for PDF readers (Scribus 1.5 and higher)
+noblacklist ~/.config/okularpartrc
+noblacklist ~/.config/okularrc
 noblacklist ~/.config/scribus
 noblacklist ~/.config/scribusrc
-noblacklist ~/.local/share/scribus
 noblacklist ~/.gimp*
-
-# Support for PDF readers (Scribus 1.5 and higher)
-noblacklist ~/.kde4/share/apps/okular
-noblacklist ~/.kde4/share/config/okularrc
-noblacklist ~/.kde4/share/config/okularpartrc
 noblacklist ~/.kde/share/apps/okular
-noblacklist ~/.kde/share/config/okularrc
 noblacklist ~/.kde/share/config/okularpartrc
+noblacklist ~/.kde/share/config/okularrc
+noblacklist ~/.kde4/share/apps/okular
+noblacklist ~/.kde4/share/config/okularpartrc
+noblacklist ~/.kde4/share/config/okularrc
 noblacklist ~/.local/share/okular
-noblacklist ~/.config/okularrc
-noblacklist ~/.config/okularpartrc
+noblacklist ~/.local/share/scribus
+noblacklist ~/.scribus
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 nonewprivs
@@ -37,4 +35,4 @@ seccomp
 tracelog
 
 private-dev
-#private-tmp
+# private-tmp

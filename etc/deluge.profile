@@ -1,22 +1,20 @@
-# Persistent global definitions go here
+# Firejail profile for deluge
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/deluge.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/deluge.local
-
-# deluge bittorrent client profile
 noblacklist ${HOME}/.config/deluge
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-# deluge is using python on Debian
-#include /etc/firejail/disable-devel.inc
+# include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.config/deluge
-whitelist ${HOME}/.config/deluge
 whitelist  ${DOWNLOADS}
+whitelist ${HOME}/.config/deluge
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
@@ -27,8 +25,9 @@ nosound
 novideo
 protocol unix,inet,inet6
 seccomp
-
 shell none
-#private-bin deluge,sh,python,uname
+
+# deluge is using python on Debian
+# private-bin deluge,sh,python,uname
 private-dev
 private-tmp

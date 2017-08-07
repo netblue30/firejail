@@ -1,24 +1,24 @@
-# Persistent global definitions go here
+# Firejail profile for mupen64plus
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/mupen64plus.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/mupen64plus.local
-
-# mupen64plus profile
-# manually whitelist ROM files
 noblacklist ${HOME}/.config/mupen64plus
 noblacklist ${HOME}/.local/share/mupen64plus
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-mkdir ${HOME}/.local/share/mupen64plus
-whitelist ${HOME}/.local/share/mupen64plus/
+# you'll need to manually whitelist ROM files
 mkdir ${HOME}/.config/mupen64plus
+mkdir ${HOME}/.local/share/mupen64plus
 whitelist ${HOME}/.config/mupen64plus/
+whitelist ${HOME}/.local/share/mupen64plus/
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 net none

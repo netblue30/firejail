@@ -1,42 +1,33 @@
-# Persistent global definitions go here
+# Firejail profile for gnome-2048
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/gnome-2048.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/gnome-2048.local
-
-#
-#Profile for gnome-2048
-#
-
-#No Blacklist Paths
 noblacklist ${HOME}/.local/share/gnome-2048
 
-#Blacklist Paths
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-#Whitelist Paths
 mkdir ${HOME}/.local/share/gnome-2048
 whitelist ${HOME}/.local/share/gnome-2048
 include /etc/firejail/whitelist-common.inc
 
-#Options
 caps.drop all
 netfilter
 no3d
 nonewprivs
 noroot
-#nosound
 novideo
 protocol unix,inet,inet6
 seccomp
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp

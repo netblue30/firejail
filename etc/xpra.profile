@@ -1,10 +1,9 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for xpra
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/xpra.local
-
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 #
 # This profile will sandbox Xpra server itself when used with firejail --x11=xpra.
@@ -14,12 +13,15 @@ include /etc/firejail/xpra.local
 #
 # or run "sudo firecfg"
 
-# private home directory doesn't work on some distros, so we go for a regular home
-#private
+blacklist /media
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
+whitelist /var/lib/xkb
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 # xpra needs to be allowed access to the abstract Unix socket namespace.
@@ -28,17 +30,14 @@ nonewprivs
 # In noroot mode, xpra cannot create a socket in the real /tmp/.X11-unix.
 #noroot
 nosound
-shell none
-seccomp
 protocol unix
+seccomp
+shell none
 
-
-private-dev
-private-tmp
+# private home directory doesn't work on some distros, so we go for a regular home
+# private
 # older Xpra versions also use Xvfb
-#private-bin xpra,python,Xvfb,Xorg,sh,xkbcomp,xauth,dbus-launch,pactl,ldconfig,which,strace,bash,cat,ls
-#private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname,machine-id,xpra,X11
-
-blacklist /media
-whitelist /var/lib/xkb
-
+# private-bin xpra,python,Xvfb,Xorg,sh,xkbcomp,xauth,dbus-launch,pactl,ldconfig,which,strace,bash,cat,ls
+private-dev
+# private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname,machine-id,xpra,X11
+private-tmp

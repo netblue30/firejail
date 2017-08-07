@@ -1,9 +1,5 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
+# Firejail profile alias for google-chrome
+# This file is overwritten after every install/update
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/google-chrome-stable.local
 
-# Google Chrome browser profile
 include /etc/firejail/google-chrome.profile

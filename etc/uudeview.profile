@@ -1,17 +1,14 @@
+# Firejail profile for uudeview
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Persistent local customizations
 include /etc/firejail/uudeview.local
-
-# uudeview profile
-ignore noroot
-include /etc/firejail/default.profile
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 
 hostname uudeview
+ignore noroot
 net none
 nosound
 shell none
@@ -20,3 +17,5 @@ tracelog
 private-bin uudeview
 private-dev
 private-etc ld.so.preload
+
+include /etc/firejail/default.profile

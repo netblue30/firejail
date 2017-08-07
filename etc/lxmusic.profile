@@ -1,9 +1,9 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for lxmusic
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/lxmusic.local
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ~/.cache/xmms2
 noblacklist ~/.config/xmms2

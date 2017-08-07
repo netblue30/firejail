@@ -1,23 +1,20 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for gedit
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/gedit.local
-
-# gedit profile
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 # when gedit is started via gnome-shell, firejail is not applied because systemd will start it
 
 noblacklist ~/.config/gedit
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-#include /etc/firejail/disable-devel.inc
+# include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-#ipc-namespace
 net none
 no3d
 nogroups

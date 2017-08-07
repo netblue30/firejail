@@ -1,9 +1,9 @@
-# Persistent global definitions go here
+# Firejail profile for Xvfb
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/Xvfb.local
+# Persistent global definitions
 include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/xvfb.local
 
 #
 # This profile will sandbox Xvfb server itself when used with firejail --x11=xvfb.
@@ -16,9 +16,10 @@ include /etc/firejail/xvfb.local
 # some Linux distributions. Also, older versions of Xpra use Xvfb.
 #
 
+blacklist /media
 
-# using a private home directory
-private
+whitelist /var/lib/xkb
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 # Xvfb needs to be allowed access to the abstract Unix socket namespace.
@@ -27,15 +28,14 @@ nonewprivs
 # In noroot mode, Xvfb cannot create a socket in the real /tmp/.X11-unix.
 #noroot
 nosound
-shell none
-seccomp
 protocol unix
+seccomp
+shell none
 
+# using a private home directory
+private
+# private-bin Xvfb,sh,xkbcomp
+# private-bin Xvfb,sh,xkbcomp,strace,bash,cat,ls
 private-dev
-private-tmp
 private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname
-#private-bin Xvfb,sh,xkbcomp,strace,bash,cat,ls
-#private-bin Xvfb,sh,xkbcomp
-
-blacklist /media
-whitelist /var/lib/xkb
+private-tmp

@@ -1,15 +1,16 @@
+# Firejail profile for file
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/file.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/file.local
+blacklist /tmp/.X11-unix
 
-# file profile
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 hostname file
@@ -17,7 +18,6 @@ net none
 no3d
 nogroups
 nonewprivs
-#noroot
 nosound
 protocol unix
 seccomp
@@ -25,8 +25,6 @@ shell none
 tracelog
 x11 none
 
-blacklist /tmp/.X11-unix
-
-private-dev
 private-bin file
+private-dev
 private-etc magic.mgc,magic,localtime

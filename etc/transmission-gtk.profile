@@ -1,24 +1,23 @@
-# Persistent global definitions go here
+# Firejail profile for transmission-gtk
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/transmission-gtk.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/transmission-gtk.local
-
-# transmission-gtk bittorrent profile
-noblacklist ${HOME}/.config/transmission
 noblacklist ${HOME}/.cache/transmission
+noblacklist ${HOME}/.config/transmission
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-mkdir ~/.config/transmission
-whitelist ~/.config/transmission
 mkdir ~/.cache/transmission
-whitelist ~/.cache/transmission
+mkdir ~/.config/transmission
 whitelist  ${DOWNLOADS}
+whitelist ~/.cache/transmission
+whitelist ~/.config/transmission
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

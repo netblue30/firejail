@@ -1,9 +1,5 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
+# Firejail profile alias for handbrake
+# This file is overwritten after every install/update
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/handbrake-gtk.local
 
-# HandBrake
 include /etc/firejail/handbrake.profile

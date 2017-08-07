@@ -1,25 +1,24 @@
-# Persistent global definitions go here
+# Firejail profile for inox
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/inox.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/inox.local
-
-# Inox browser profile
-noblacklist ~/.config/inox
 noblacklist ~/.cache/inox
+noblacklist ~/.config/inox
 noblacklist ~/.pki
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 
-netfilter
-
-whitelist ${DOWNLOADS}
-mkdir ~/.config/inox
-whitelist ~/.config/inox
 mkdir ~/.cache/inox
-whitelist ~/.cache/inox
+mkdir ~/.config/inox
 mkdir ~/.pki
+whitelist ${DOWNLOADS}
+whitelist ~/.cache/inox
+whitelist ~/.config/inox
 whitelist ~/.pki
-
 include /etc/firejail/whitelist-common.inc
+
+netfilter

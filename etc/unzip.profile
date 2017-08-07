@@ -1,17 +1,15 @@
+# Firejail profile for unzip
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/unzip.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/unzip.local
-
-# unzip profile
-ignore noroot
-include /etc/firejail/default.profile
 blacklist /tmp/.X11-unix
 
 hostname unzip
+ignore noroot
 net none
 no3d
 nosound
@@ -21,3 +19,5 @@ tracelog
 private-bin unzip
 private-dev
 private-etc passwd,group,localtime
+
+include /etc/firejail/default.profile

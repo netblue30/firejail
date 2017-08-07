@@ -1,9 +1,9 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for xfce4-dict
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/xfce4-dict.local
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/xfce4-dict
 
@@ -24,9 +24,9 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp

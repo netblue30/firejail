@@ -1,23 +1,21 @@
-# Persistent global definitions go here
+# Firejail profile for eog
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/eog.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/eog.local
-
-# eog (gnome image viewer) profile
-noblacklist ~/.config/eog
 noblacklist ~/.Steam
-noblacklist ~/.steam
+noblacklist ~/.config/eog
 noblacklist ~/.local/share/Trash
+noblacklist ~/.steam
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-#ipc-namespace
 net none
 no3d
 nogroups

@@ -1,27 +1,25 @@
-# Persistent global definitions go here
+# Firejail profile for psi-plus
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/psi-plus.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/psi-plus.local
-
-# Firejail profile for Psi+
 noblacklist ${HOME}/.config/psi+
 noblacklist ${HOME}/.local/share/psi+
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-whitelist ${DOWNLOADS}
-mkdir ~/.config/psi+
-whitelist ~/.config/psi+
-mkdir ~/.local/share/psi+
-whitelist ~/.local/share/psi+
 mkdir ~/.cache/psi+
+mkdir ~/.config/psi+
+mkdir ~/.local/share/psi+
+whitelist ${DOWNLOADS}
 whitelist ~/.cache/psi+
-
+whitelist ~/.config/psi+
+whitelist ~/.local/share/psi+
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
@@ -35,9 +33,9 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp

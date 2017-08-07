@@ -1,20 +1,20 @@
-# Persistent global definitions go here
+# Firejail profile for galculator
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/galculator.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/firejail.local
-
-# Firejail profile for XYZ
 noblacklist ~/.config/galculator
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 mkdir ~/.config/galculator
 whitelist ~/.config/galculator
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 net none

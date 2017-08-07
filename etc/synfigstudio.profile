@@ -1,11 +1,10 @@
-# Persistent global definitions go here
+# Firejail profile for synfigstudio
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/synfigstudio.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/synfigstudio.local
-
-# synfigstudio
 noblacklist ${HOME}/.config/synfig
 noblacklist ${HOME}/.synfig
 

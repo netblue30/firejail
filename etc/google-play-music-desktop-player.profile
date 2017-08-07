@@ -1,24 +1,23 @@
-# Persistent global definitions go here
+# Firejail profile for google-play-music-desktop-player
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/google-play-music-desktop-player.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/google-play-music-desktop-player.local
-
-# Google Play Music desktop player profile
 noblacklist ~/.config/Google Play Music Desktop Player
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-#whitelist ~/.pulse
-#whitelist ~/.config/pulse
+# whitelist ~/.config/pulse
+# whitelist ~/.pulse
 whitelist ~/.config/Google Play Music Desktop Player
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
-#ipc-namespace
 netfilter
 no3d
 nogroups
@@ -29,9 +28,9 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp

@@ -1,16 +1,20 @@
-# Persistent global definitions go here
+# Firejail profile for uget-gtk
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/uget-gtk.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/uget-gtk.local
-
-# uGet profile
 noblacklist ${HOME}/.config/uGet
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-programs.inc
+
+mkdir ~/.config/uGet
+whitelist ${DOWNLOADS}
+whitelist ~/.config/uGet
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -24,8 +28,3 @@ shell none
 private-bin uget-gtk
 private-dev
 private-tmp
-
-whitelist ${DOWNLOADS}
-mkdir ~/.config/uGet
-whitelist ~/.config/uGet
-include /etc/firejail/whitelist-common.inc

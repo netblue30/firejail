@@ -1,33 +1,31 @@
-# Persistent global definitions go here
+# Firejail profile for odt2txt
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/odt2txt.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/odt2txt.local
+blacklist /tmp/.X11-unix
 
-# odt2txt profile
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+no3d
 nogroups
 nonewprivs
 noroot
 nosound
 protocol unix
 seccomp
-no3d
 shell none
 tracelog
 
-blacklist /tmp/.X11-unix
-
 private-bin odt2txt
-private-tmp
 private-dev
 private-etc none
-
+private-tmp
 read-only ${HOME}

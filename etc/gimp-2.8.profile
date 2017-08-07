@@ -1,8 +1,5 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
+# Firejail profile alias for gimp
+# This file is overwritten after every install/update
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/gimp-2.8.local
 
 include /etc/firejail/gimp.profile

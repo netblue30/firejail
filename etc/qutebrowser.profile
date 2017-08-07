@@ -1,16 +1,25 @@
-# Persistent global definitions go here
+# Firejail profile for qutebrowser
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/qutebrowser.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/qutebrowser.local
-
-# Firejail profile for Qutebrowser (Qt5-Webkit+Python) browser
-noblacklist ~/.config/qutebrowser
 noblacklist ~/.cache/qutebrowser
+noblacklist ~/.config/qutebrowser
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-programs.inc
+
+mkdir ~/.cache/qutebrowser
+mkdir ~/.config/qutebrowser
+mkdir ~/.local/share/qutebrowser
+whitelist ${DOWNLOADS}
+whitelist ~/.cache/qutebrowser
+whitelist ~/.config/qutebrowser
+whitelist ~/.local/share/qutebrowser
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -19,12 +28,3 @@ noroot
 protocol unix,inet,inet6,netlink
 seccomp
 tracelog
-
-whitelist ${DOWNLOADS}
-mkdir ~/.config/qutebrowser
-whitelist ~/.config/qutebrowser
-mkdir ~/.cache/qutebrowser
-whitelist ~/.cache/qutebrowser
-mkdir ~/.local/share/qutebrowser
-whitelist ~/.local/share/qutebrowser
-include /etc/firejail/whitelist-common.inc

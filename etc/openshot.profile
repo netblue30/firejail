@@ -1,11 +1,10 @@
-# Persistent global definitions go here
+# Firejail profile for openshot
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/openshot.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/openshot.local
-
-# OpenShot profile
 noblacklist ${HOME}/.openshot
 noblacklist ${HOME}/.openshot_qt
 

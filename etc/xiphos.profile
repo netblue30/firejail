@@ -1,11 +1,13 @@
-# Persistent global definitions go here
+# Firejail profile for xiphos
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/xiphos.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/xiphos.local
+blacklist ~/.Xauthority
+blacklist ~/.bashrc
 
-# Firejail profile for xiphos
 noblacklist ~/.sword
 noblacklist ~/.xiphos
 
@@ -14,8 +16,9 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-blacklist ~/.bashrc
-blacklist ~/.Xauthority
+whitelist ${HOME}/.sword
+whitelist ${HOME}/.xiphos
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -29,9 +32,6 @@ shell none
 tracelog
 
 private-bin xiphos
-private-etc fonts,resolv.conf,sword
 private-dev
+private-etc fonts,resolv.conf,sword
 private-tmp
-
-whitelist ${HOME}/.sword
-whitelist ${HOME}/.xiphos

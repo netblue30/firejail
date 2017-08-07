@@ -1,9 +1,9 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for quiterss
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/quiterss.local
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.cache/QuiteRss
 noblacklist ${HOME}/.config/QuiteRss
@@ -11,19 +11,20 @@ noblacklist ${HOME}/.config/QuiteRssrc
 noblacklist ${HOME}/.local/share/QuiteRss
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
-whitelist ${HOME}/quiterssfeeds.opml
+mkdir ~/.cache/QuiteRss
 mkdir ~/.config/QuiteRss
-whitelist ${HOME}/.config/QuiteRss/
-whitelist ${HOME}/.config/QuiteRssrc
 mkdir ~/.local/share/data
 mkdir ~/.local/share/data/QuiteRss
-whitelist ${HOME}/.local/share/data/QuiteRss
-mkdir ~/.cache/QuiteRss
 whitelist ${HOME}/.cache/QuiteRss
+whitelist ${HOME}/.config/QuiteRss/
+whitelist ${HOME}/.config/QuiteRssrc
+whitelist ${HOME}/.local/share/data/QuiteRss
+whitelist ${HOME}/quiterssfeeds.opml
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -36,12 +37,10 @@ seccomp
 shell none
 tracelog
 
+disable-mnt
 private-bin quiterss
 private-dev
-#private-etc X11,ssl
-disable-mnt
-
-include /etc/firejail/whitelist-common.inc
+# private-etc X11,ssl
 
 noexec ${HOME}
 noexec /tmp

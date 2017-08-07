@@ -1,18 +1,15 @@
-# Persistent global definitions go here
+# Firejail profile for parole
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/parole.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/parole.local
 
-# Profile for Parole, the default XFCE4 media player
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
-
-private-etc passwd,group,fonts
-private-bin parole,dbus-launch
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
@@ -21,3 +18,6 @@ noroot
 protocol unix,inet,inet6
 seccomp
 shell none
+
+private-bin parole,dbus-launch
+private-etc passwd,group,fonts

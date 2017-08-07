@@ -1,20 +1,18 @@
-# Persistent global definitions go here
+# Firejail profile for mplayer
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/mplayer.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/mplayer.local
-
-# mplayer profile
 noblacklist ${HOME}/.mplayer
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-#ipc-namespace
 netfilter
 # nogroups
 nonewprivs
@@ -23,9 +21,9 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
+private-bin mplayer
 private-dev
 private-tmp
-private-bin mplayer
 
 noexec ${HOME}
 noexec /tmp

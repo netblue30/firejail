@@ -1,43 +1,36 @@
-# Persistent global definitions go here
+# Firejail profile for brave
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/brave.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/brave.local
-
-# Profile for Brave browser
 noblacklist ~/.config/brave
-noblacklist ~/.pki
-
 # brave uses gpg for built-in password manager
 noblacklist ~/.gnupg
+noblacklist ~/.pki
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
-
-#caps.drop all
-netfilter
-#nonewprivs
-#noroot
-#protocol unix,inet,inet6,netlink
-#seccomp
-
-#disable-mnt
-
-whitelist ${DOWNLOADS}
+include /etc/firejail/disable-programs.inc
 
 mkdir ~/.config/brave
-whitelist ~/.config/brave
 mkdir ~/.pki
-whitelist ~/.pki
-
-# lastpass, keepass
-# for keepass we additionally need to whitelist our .kdbx password database
-whitelist ~/.keepass
-whitelist ~/.config/keepass
+whitelist ${DOWNLOADS}
 whitelist ~/.config/KeePass
-whitelist ~/.lastpass
+whitelist ~/.config/brave
+whitelist ~/.config/keepass
 whitelist ~/.config/lastpass
-
+whitelist ~/.keepass
+whitelist ~/.lastpass
+whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
+
+# caps.drop all
+netfilter
+# nonewprivs
+# noroot
+# protocol unix,inet,inet6,netlink
+# seccomp
+
+# disable-mnt

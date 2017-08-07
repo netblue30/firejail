@@ -1,12 +1,11 @@
+# Firejail profile for hashcat
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/hashcat.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/hashcat.local
-
-# Firejail profile for Hashcat
 noblacklist ${HOME}/.hashcat
 
 include /etc/firejail/disable-common.inc

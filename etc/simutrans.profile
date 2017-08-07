@@ -1,41 +1,34 @@
-# Persistent global definitions go here
+# Firejail profile for simutrans
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/simutrans.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/simutrans.local
-
-################################
-# simutrans profile
-################################
-
 noblacklist ~/.simutrans
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
 mkdir ~/.simutrans
 whitelist ~/.simutrans
 include /etc/firejail/whitelist-common.inc
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-passwdmgr.inc
-
 caps.drop all
+net none
+nogroups
 nonewprivs
 noroot
 protocol unix
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-net none
-nogroups
 shell none
-#private-bin simutrans
-# private-etc none
+
+# private-bin simutrans
 private-dev
+# private-etc none
 private-tmp
+
+# CLOBBERED COMMENTS
+# depending on your usage, you can enable some of the commands below:
 # nosound
-
-
-
-

@@ -1,11 +1,10 @@
-# Persistent global definitions go here
+# Firejail profile for obs
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/obs.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/obs.local
-
-# Firejail profile for OBS Studio
 noblacklist ${HOME}/.config/obs-studio
 
 include /etc/firejail/disable-common.inc

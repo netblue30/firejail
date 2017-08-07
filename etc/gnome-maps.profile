@@ -1,20 +1,19 @@
-# Persistent global definitions go here
+# Firejail profile for gnome-maps
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/gnome-maps.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/gnome-maps.local
-
-# gnome-maps profile
-
-# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 noblacklist ${HOME}/.cache/champlain
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
+netfilter
 nogroups
 nonewprivs
 noroot
@@ -22,15 +21,17 @@ nosound
 novideo
 protocol unix,inet,inet6
 seccomp
-netfilter
 shell none
 tracelog
 
+disable-mnt
 # private-bin gjs gnome-maps
-private-tmp
 private-dev
 # private-etc fonts
-disable-mnt
+private-tmp
 
 noexec ${HOME}
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them

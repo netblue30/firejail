@@ -1,23 +1,22 @@
+# Firejail profile for 7z
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Persistent local customizations
 include /etc/firejail/7z.local
-
-# 7zip crompression tool profile
-ignore noroot
-
-include /etc/firejail/default.profile
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 
-tracelog
+ignore noroot
 net none
+no3d
+nosound
 nosound
 novideo
 shell none
+tracelog
+
 private-dev
-nosound
-no3d
+
+include /etc/firejail/default.profile

@@ -1,16 +1,14 @@
-# Persistent global definitions go here
+# Firejail profile for idea.sh
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/idea.sh.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/idea.sh.local
-
-# Firejail profile for IntelliJ IDEA Community Edition
-
+noblacklist ${HOME}/.IdeaIC*
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.gradle
-noblacklist ${HOME}/.IdeaIC*
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh
@@ -25,13 +23,15 @@ netfilter
 nogroups
 nonewprivs
 noroot
-#nosound
 novideo
 protocol unix,inet,inet6
 seccomp
 shell none
 
 private-dev
-#private-tmp
+# private-tmp
 
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# nosound

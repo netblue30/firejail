@@ -1,50 +1,49 @@
-# Persistent global definitions go here
+# Firejail profile for mutt
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/mutt.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/mutt.local
+blacklist /tmp/.X11-unix
 
-# mutt email client profile
-noblacklist ~/.muttrc
-noblacklist ~/.mutt
-noblacklist ~/.mutt/muttrc
-noblacklist ~/.mailcap
-noblacklist ~/.gnupg
-noblacklist ~/.mail
 noblacklist ~/.Mail
-noblacklist ~/mail
-noblacklist ~/Mail
-noblacklist ~/sent
-noblacklist ~/postponed
+noblacklist ~/.bogofilter
 noblacklist ~/.cache/mutt
-noblacklist ~/.w3m
 noblacklist ~/.elinks
-noblacklist ~/.vim
-noblacklist ~/.vimrc
-noblacklist ~/.viminfo
 noblacklist ~/.emacs
 noblacklist ~/.emacs.d
-noblacklist ~/.signature
-noblacklist ~/.bogofilter
+noblacklist ~/.gnupg
+noblacklist ~/.mail
+noblacklist ~/.mailcap
 noblacklist ~/.msmtprc
+noblacklist ~/.mutt
+noblacklist ~/.mutt/muttrc
+noblacklist ~/.muttrc
+noblacklist ~/.signature
+noblacklist ~/.vim
+noblacklist ~/.viminfo
+noblacklist ~/.vimrc
+noblacklist ~/.w3m
+noblacklist ~/Mail
+noblacklist ~/mail
+noblacklist ~/postponed
+noblacklist ~/sent
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
 nosound
-no3d
 protocol unix,inet,inet6
 seccomp
 shell none
-
-blacklist /tmp/.X11-unix
 
 private-dev

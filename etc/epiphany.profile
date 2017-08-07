@@ -1,26 +1,25 @@
-# Persistent global definitions go here
+# Firejail profile for epiphany
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/epiphany.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/epiphany.local
-
-# Epiphany browser profile
+noblacklist ${HOME}/.cache/epiphany
 noblacklist ${HOME}/.config/epiphany
 noblacklist ${HOME}/.local/share/epiphany
-noblacklist ${HOME}/.cache/epiphany
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-programs.inc
 
-whitelist ${DOWNLOADS}
-mkdir ${HOME}/.local/share/epiphany
-whitelist ${HOME}/.local/share/epiphany
-mkdir ${HOME}/.config/epiphany
-whitelist ${HOME}/.config/epiphany
 mkdir ${HOME}/.cache/epiphany
+mkdir ${HOME}/.config/epiphany
+mkdir ${HOME}/.local/share/epiphany
+whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/epiphany
+whitelist ${HOME}/.config/epiphany
+whitelist ${HOME}/.local/share/epiphany
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

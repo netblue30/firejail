@@ -1,26 +1,26 @@
-# Persistent global definitions go here
+# Firejail profile for polari
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/polari.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/polari.local
 
-# Polari IRC profile
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-programs.inc
 
-mkdir ${HOME}/.local/share/Empathy
-whitelist ${HOME}/.local/share/Empathy
-mkdir ${HOME}/.local/share/telepathy
-whitelist ${HOME}/.local/share/telepathy
-mkdir ${HOME}/.local/share/TpLogger
-whitelist ${HOME}/.local/share/TpLogger
-mkdir ${HOME}/.config/telepathy-account-widgets
-whitelist ${HOME}/.config/telepathy-account-widgets
 mkdir ${HOME}/.cache/telepathy
-whitelist ${HOME}/.cache/telepathy
+mkdir ${HOME}/.config/telepathy-account-widgets
+mkdir ${HOME}/.local/share/Empathy
+mkdir ${HOME}/.local/share/TpLogger
+mkdir ${HOME}/.local/share/telepathy
 mkdir ${HOME}/.purple
+whitelist ${HOME}/.cache/telepathy
+whitelist ${HOME}/.config/telepathy-account-widgets
+whitelist ${HOME}/.local/share/Empathy
+whitelist ${HOME}/.local/share/TpLogger
+whitelist ${HOME}/.local/share/telepathy
 whitelist ${HOME}/.purple
 include /etc/firejail/whitelist-common.inc
 
@@ -36,9 +36,9 @@ seccomp
 shell none
 tracelog
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp

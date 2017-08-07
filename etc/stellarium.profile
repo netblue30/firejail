@@ -1,23 +1,23 @@
-# Persistent global definitions go here
+# Firejail profile for stellarium
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/stellarium.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/stellarium.local
-
-# Firejail profile for Stellarium.
-noblacklist ~/.stellarium
 noblacklist ~/.config/stellarium
+noblacklist ~/.stellarium
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-# Whitelist
-mkdir ~/.stellarium
-whitelist ~/.stellarium
 mkdir ~/.config/stellarium
+mkdir ~/.stellarium
 whitelist ~/.config/stellarium
+whitelist ~/.stellarium
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -30,7 +30,7 @@ seccomp
 shell none
 tracelog
 
+disable-mnt
 private-bin stellarium
 private-dev
 private-tmp
-disable-mnt

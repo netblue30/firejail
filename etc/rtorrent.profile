@@ -1,15 +1,15 @@
-# Persistent global definitions go here
+# Firejail profile for rtorrent
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/rtorrent.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/rtorrent.local
 
-# rtorrent bittorrent profile
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
@@ -18,8 +18,8 @@ noroot
 nosound
 protocol unix,inet,inet6
 seccomp
-
 shell none
+
 private-bin rtorrent
 private-dev
 private-tmp

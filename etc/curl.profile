@@ -1,19 +1,20 @@
+# Firejail profile for curl
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/curl.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/curl.local
+blacklist /tmp/.X11-unix
 
-# curl profile
 noblacklist ~/.curlrc
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-#ipc-namespace
 netfilter
 no3d
 nogroups
@@ -23,8 +24,6 @@ nosound
 protocol unix,inet,inet6
 seccomp
 shell none
-
-blacklist /tmp/.X11-unix
 
 # private-bin curl
 private-dev

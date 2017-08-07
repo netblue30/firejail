@@ -1,39 +1,38 @@
-# Persistent global definitions go here
+# Firejail profile for google-chrome-beta
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/google-chrome-beta.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/google-chrome-beta.local
-
-# Google Chrome beta browser profile
-noblacklist ~/.config/google-chrome-beta
 noblacklist ~/.cache/google-chrome-beta
+noblacklist ~/.config/google-chrome-beta
 noblacklist ~/.pki
+
 include /etc/firejail/disable-common.inc
+# include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-# chromium is distributed with a perl script on Arch
-# include /etc/firejail/disable-devel.inc
-#
-
-whitelist ${DOWNLOADS}
-mkdir ~/.config/google-chrome-beta
-whitelist ~/.config/google-chrome-beta
 mkdir ~/.cache/google-chrome-beta
-whitelist ~/.cache/google-chrome-beta
+mkdir ~/.config/google-chrome-beta
 mkdir ~/.pki
+whitelist ${DOWNLOADS}
+whitelist ~/.cache/google-chrome-beta
+whitelist ~/.config/google-chrome-beta
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 
 caps.keep sys_chroot,sys_admin
-#ipc-namespace
 netfilter
 nogroups
 shell none
 
 private-dev
-#private-tmp - problems with multiple browser sessions
-#disable-mnt
+# private-tmp - problems with multiple browser sessions
 
 noexec ${HOME}
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# chromium is distributed with a perl script on Arch
+# disable-mnt

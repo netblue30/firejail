@@ -1,47 +1,44 @@
-# Persistent global definitions go here
-include /etc/firejail/global.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for liferea
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/liferea.local
-
-#######################
-# profile for Liferea #
-#######################
-noblacklist ~/.config/liferea
-mkdir ~/.config/liferea
-whitelist ~/.config/liferea
-
-noblacklist ~/.local/share/liferea
-mkdir ~/.local/share/liferea
-whitelist ~/.local/share/liferea
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ~/.cache/liferea
-mkdir ~/.cache/liferea
-whitelist ~/.cache/liferea
+noblacklist ~/.config/liferea
+noblacklist ~/.local/share/liferea
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+
+mkdir ~/.cache/liferea
+mkdir ~/.config/liferea
+mkdir ~/.local/share/liferea
+whitelist ~/.cache/liferea
+whitelist ~/.config/liferea
+whitelist ~/.local/share/liferea
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
-#ipc-namespace
 netfilter
-#no3d
 nogroups
 nonewprivs
 noroot
-#nosound
 novideo
 protocol unix,inet,inet6
 seccomp
 shell none
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# no3d
+# nosound

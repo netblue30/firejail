@@ -1,28 +1,28 @@
-# Persistent global definitions go here
+# Firejail profile for opera
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/opera.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/opera.local
-
-# Opera browser profile
+noblacklist ~/.cache/opera
 noblacklist ~/.config/opera
 noblacklist ~/.opera
-noblacklist ~/.cache/opera
 noblacklist ~/.pki
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-programs.inc
 
-netfilter
-
-whitelist ${DOWNLOADS}
-mkdir ~/.config/opera
-whitelist ~/.config/opera
-mkdir ~/.opera
 mkdir ~/.cache/opera
-whitelist ~/.cache/opera
-whitelist ~/.opera
+mkdir ~/.config/opera
+mkdir ~/.opera
 mkdir ~/.pki
+whitelist ${DOWNLOADS}
+whitelist ~/.cache/opera
+whitelist ~/.config/opera
+whitelist ~/.opera
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
+
+netfilter

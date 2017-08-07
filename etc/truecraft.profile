@@ -1,11 +1,10 @@
-# Persistent global definitions go here
+# Firejail profile for truecraft
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/truecraft.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/truecraft.local
-
-# Firejail profile for TrueCraft
 noblacklist ${HOME}/.config/mono
 noblacklist ${HOME}/.config/truecraft
 
@@ -15,8 +14,8 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.config/mono
-whitelist ${HOME}/.config/mono
 mkdir ${HOME}/.config/truecraft
+whitelist ${HOME}/.config/mono
 whitelist ${HOME}/.config/truecraft
 include /etc/firejail/whitelist-common.inc
 

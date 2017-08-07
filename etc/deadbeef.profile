@@ -1,20 +1,18 @@
-# Persistent global definitions go here
+# Firejail profile for deadbeef
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/deadbeef.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/deadbeef.local
-
-# DeaDBeeF media player profile
 noblacklist ${HOME}/.config/deadbeef
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-#ipc-namespace
 netfilter
 no3d
 nogroups

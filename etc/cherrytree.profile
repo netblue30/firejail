@@ -1,22 +1,20 @@
-# Persistent global definitions go here
+# Firejail profile for cherrytree
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/cherrytree.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/cherrytree.local
-
-# cherrytree note taking application
+noblacklist ${HOME}/.config/cherrytree
 noblacklist /usr/bin/python2*
 noblacklist /usr/lib/python3*
-noblacklist ${HOME}/.config/cherrytree
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-#ipc-namespace
 netfilter
 no3d
 nogroups
@@ -34,3 +32,6 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# cherrytree note taking application

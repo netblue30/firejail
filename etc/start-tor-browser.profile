@@ -1,11 +1,11 @@
-# Persistent global definitions go here
+# Firejail profile for start-tor-browser
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/start-tor-browser.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/start-tor-browser.local
 
-# Firejail profile for the Tor Brower Bundle
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
@@ -22,6 +22,6 @@ shell none
 tracelog
 
 private-bin bash,dash,sh,grep,tail,env,gpg,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf
-private-etc fonts
 private-dev
+private-etc fonts
 private-tmp

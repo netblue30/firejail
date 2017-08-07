@@ -1,17 +1,27 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/uzbl-browser.local
-
 # Firejail profile for uzbl-browser
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/uzbl-browser.local
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ~/.config/uzbl
 noblacklist ~/.gnupg
+
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-programs.inc
+
+mkdir ~/.config/uzbl
+mkdir ~/.gnupg
+mkdir ~/.local/share/uzbl
+mkdir ~/.password-store
+whitelist ${DOWNLOADS}
+whitelist ~/.config/uzbl
+whitelist ~/.gnupg
+whitelist ~/.local/share/uzbl
+whitelist ~/.password-store
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -20,17 +30,3 @@ noroot
 protocol unix,inet,inet6
 seccomp
 tracelog
-
-mkdir ~/.config/uzbl
-whitelist ~/.config/uzbl
-mkdir ~/.local/share/uzbl
-whitelist ~/.local/share/uzbl
-
-whitelist ${DOWNLOADS}
-
-mkdir ~/.gnupg
-whitelist ~/.gnupg
-mkdir ~/.password-store
-whitelist ~/.password-store
-
-include /etc/firejail/whitelist-common.inc

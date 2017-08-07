@@ -1,11 +1,9 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for android-studio
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/android-studio.local
-
-# Firejail profile for Android Studio
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.AndroidStudio*
 noblacklist ${HOME}/.android
@@ -25,13 +23,15 @@ netfilter
 nogroups
 nonewprivs
 noroot
-#nosound
 novideo
 protocol unix,inet,inet6
 seccomp
 shell none
 
 private-dev
-#private-tmp
+# private-tmp
 
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# nosound

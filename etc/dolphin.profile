@@ -1,34 +1,33 @@
-# Persistent global definitions go here
+# Firejail profile for dolphin
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/dolphin.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/dolphin.local
-
-# dolphin profile
-
-# warning: firejail is currently not effectively constraining dolphin since used services are started by kdeinit5
-
+noblacklist ${HOME}/.local/share/Trash
 noblacklist ~/.config/dolphinrc
 noblacklist ~/.local/share/dolphin
-noblacklist ${HOME}/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
-# dolphin needs to be able to start arbitrary applications so we cannot blacklist their files
-#include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+# include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
 nogroups
 nonewprivs
 noroot
-shell none
-seccomp
 protocol unix
+seccomp
+shell none
 
 # private-bin
 # private-dev
-# private-tmp
 # private-etc
+# private-tmp
+
+# CLOBBERED COMMENTS
+# dolphin needs to be able to start arbitrary applications so we cannot blacklist their files
+# warning: firejail is currently not effectively constraining dolphin since used services are started by kdeinit5

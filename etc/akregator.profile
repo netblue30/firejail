@@ -1,34 +1,35 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for akregator
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/akregator.local
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/akregatorrc
 noblacklist ${HOME}/.local/share/akregator
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
-#ipc-namespace
 netfilter
 no3d
 nogroups
 nonewprivs
 noroot
-#nosound
 novideo
 protocol unix,inet,inet6
 seccomp
 shell none
 
+disable-mnt
 private-dev
 private-tmp
-disable-mnt
 
 noexec ${HOME}
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# nosound

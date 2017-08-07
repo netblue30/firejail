@@ -1,28 +1,27 @@
-# Persistent global definitions go here
+# Firejail profile for mcabber
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/mcabber.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/mcabber.local
-
-# mcabber profile
 noblacklist ${HOME}/.mcabber
 noblacklist ${HOME}/.mcabberrc
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
 nonewprivs
 noroot
+nosound
 protocol inet,inet6
 seccomp
+shell none
 
 private-bin mcabber
-private-etc null
 private-dev
-shell none
-nosound
+private-etc null

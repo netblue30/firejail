@@ -1,40 +1,33 @@
-# Persistent global definitions go here
+# Firejail profile for unknown-horizons
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/unknown-horizons.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/unknown-horizons.local
-
-################################
-# Extreme Tux Racer profile
-################################
-
 noblacklist ~/.unknown-horizons
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
 mkdir ~/.unknown-horizons
 whitelist ~/.unknown-horizons
 include /etc/firejail/whitelist-common.inc
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-passwdmgr.inc
-
 caps.drop all
+nogroups
 nonewprivs
 noroot
 protocol unix,netlink,inet,inet6
 seccomp
-
-#
-# depending on your usage, you can enable some of the commands below:
-#
-nogroups
 shell none
-#private-bin unknown-horizons
-# private-etc none
+
+# private-bin unknown-horizons
 private-dev
+# private-etc none
 private-tmp
+
+# CLOBBERED COMMENTS
+# depending on your usage, you can enable some of the commands below:
 # nosound
-
-
-
-

@@ -1,36 +1,35 @@
-# Persistent global definitions go here
+# Firejail profile for thunderbird
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/thunderbird.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/thunderbird.local
-
-# Firejail profile for Mozilla Thunderbird
-# Users have thunderbird set to open a browser by clicking a link in an email
-# We are not allowed to blacklist browser-specific directories
-
-noblacklist ~/.gnupg
-mkdir ~/.gnupg
-whitelist ~/.gnupg
-
-noblacklist ~/.thunderbird
-mkdir ~/.thunderbird
-whitelist ~/.thunderbird
-
-noblacklist ~/.icedove
-mkdir ~/.icedove
-whitelist ~/.icedove
-
 noblacklist ~/.cache/thunderbird
-mkdir ~/.cache/thunderbird
-whitelist ~/.cache/thunderbird
+noblacklist ~/.gnupg
+noblacklist ~/.icedove
+noblacklist ~/.thunderbird
 
+mkdir ~/.cache/thunderbird
+mkdir ~/.gnupg
+mkdir ~/.icedove
+mkdir ~/.thunderbird
+whitelist ~/.cache/thunderbird
 whitelist ~/.config/mimeapps.list
-read-only ~/.config/mimeapps.list
+whitelist ~/.gnupg
+whitelist ~/.icedove
 whitelist ~/.local/share/applications
+whitelist ~/.thunderbird
+include /etc/firejail/whitelist-common.inc
+
+ignore private-tmp
+
+read-only ~/.config/mimeapps.list
 read-only ~/.local/share/applications
 
-# allow browsers
-ignore private-tmp
 include /etc/firejail/firefox.profile
-#include /etc/firejail/chromium.profile - chromium runs as suid!
+
+# CLOBBERED COMMENTS
+# Users have thunderbird set to open a browser by clicking a link in an email
+# We are not allowed to blacklist browser-specific directories
+# allow browsers

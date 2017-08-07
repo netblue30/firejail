@@ -1,19 +1,18 @@
+# Firejail profile for ssh
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/ssh.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/ssh.local
-
-# ssh client
-noblacklist ~/.ssh
-noblacklist /tmp/ssh-*
 noblacklist /etc/ssh
+noblacklist /tmp/ssh-*
+noblacklist ~/.ssh
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace
@@ -29,8 +28,11 @@ shell none
 tracelog
 
 private-dev
-#private-tmp #Breaks when exiting
+# private-tmp # Breaks when exiting
 
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# ssh client

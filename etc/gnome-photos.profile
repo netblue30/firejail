@@ -1,20 +1,16 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for gnome-photos
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/gnome-photos.local
-
-# gnome-photos profile
-
-# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ~/.local/share/gnome-photos
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
@@ -28,9 +24,12 @@ shell none
 tracelog
 
 # private-bin gjs gnome-photos
-private-tmp
 private-dev
 # private-etc fonts
+private-tmp
 
 noexec ${HOME}
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them

@@ -1,28 +1,27 @@
-# Persistent global definitions go here
+# Firejail profile for iridium
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/iridium.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/iridium.local
-
-# Iridium browser profile
-noblacklist ~/.config/iridium
 noblacklist ~/.cache/iridium
+noblacklist ~/.config/iridium
+
 include /etc/firejail/disable-common.inc
+# include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-# chromium/iridium is distributed with a perl script on Arch
-# include /etc/firejail/disable-devel.inc
-#
+mkdir ~/.cache/iridium
+mkdir ~/.config/iridium
+mkdir ~/.pki
+whitelist ${DOWNLOADS}
+whitelist ~/.cache/iridium
+whitelist ~/.config/iridium
+whitelist ~/.pki
+include /etc/firejail/whitelist-common.inc
 
 netfilter
 
-whitelist ${DOWNLOADS}
-mkdir ~/.config/iridium
-whitelist ~/.config/iridium
-mkdir ~/.cache/iridium
-whitelist ~/.cache/iridium
-mkdir ~/.pki
-whitelist ~/.pki
-
-include /etc/firejail/whitelist-common.inc
+# CLOBBERED COMMENTS
+# chromium/iridium is distributed with a perl script on Arch

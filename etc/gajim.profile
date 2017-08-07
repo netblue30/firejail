@@ -1,34 +1,30 @@
-# Persistent global definitions go here
+# Firejail profile for gajim
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/gajim.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/gajim.local
-
-# Firejail profile for Gajim
-noblacklist ${HOME}/.local/share/gajim
-noblacklist ${HOME}/.config/gajim
 noblacklist ${HOME}/.cache/gajim
-
-mkdir ${HOME}/.cache/gajim
-mkdir ${HOME}/.local/share/gajim
-mkdir ${HOME}/.config/gajim
-mkdir ${HOME}/Downloads
-
-# Allow the local python 2.7 site packages, in case any plugins are using these
-mkdir ${HOME}/.local/lib/python2.7/site-packages/
-whitelist ${HOME}/.local/lib/python2.7/site-packages/
-read-only ${HOME}/.local/lib/python2.7/site-packages/
-
-whitelist ${HOME}/.cache/gajim
-whitelist ${HOME}/.local/share/gajim
-whitelist ${HOME}/.config/gajim
-whitelist ${HOME}/Downloads
+noblacklist ${HOME}/.config/gajim
+noblacklist ${HOME}/.local/share/gajim
 
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-devel.inc
+
+mkdir ${HOME}/.cache/gajim
+mkdir ${HOME}/.config/gajim
+mkdir ${HOME}/.local/lib/python2.7/site-packages/
+mkdir ${HOME}/.local/share/gajim
+mkdir ${HOME}/Downloads
+whitelist ${HOME}/.cache/gajim
+whitelist ${HOME}/.config/gajim
+whitelist ${HOME}/.local/lib/python2.7/site-packages/
+whitelist ${HOME}/.local/share/gajim
+whitelist ${HOME}/Downloads
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -39,8 +35,12 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-#private-bin python2.7 gajim
-#private-etc fonts
-private-dev
-#private-tmp
 disable-mnt
+# private-bin python2.7 gajim
+private-dev
+# private-etc fonts
+# private-tmp
+read-only ${HOME}/.local/lib/python2.7/site-packages/
+
+# CLOBBERED COMMENTS
+# Allow the local python 2.7 site packages, in case any plugins are using these

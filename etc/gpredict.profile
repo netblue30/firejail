@@ -1,19 +1,19 @@
-# Persistent global definitions go here
+# Firejail profile for gpredict
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/gpredict.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/gpredict.local
-
-# Firejail profile for gpredict.
 noblacklist ~/.config/Gpredict
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-# Whitelist
 whitelist ~/.config/Gpredict
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -26,10 +26,10 @@ seccomp
 shell none
 tracelog
 
+private-bin gpredict
+private-dev
+private-etc fonts,resolv.conf
+private-tmp
+
 noexec ${HOME}
 noexec /tmp
-
-private-bin gpredict
-private-etc fonts,resolv.conf
-private-dev
-private-tmp

@@ -1,10 +1,5 @@
-quiet
-# Persistent global definitions go here
-include /etc/firejail/globals.local
+# Firejail profile alias for tar
+# This file is overwritten after every install/update
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/gtar.local
 
-# gtar profile
 include /etc/firejail/tar.profile

@@ -1,15 +1,14 @@
+# Firejail profile for less
+# This file is overwritten after every install/update
 quiet
-# Persistent global definitions go here
+# Persistent local customizations
+include /etc/firejail/less.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/less.local
+blacklist /tmp/.X11-unix
 
-# less profile
 ignore noroot
-include /etc/firejail/default.profile
-
 net none
 no3d
 nosound
@@ -17,10 +16,10 @@ novideo
 shell none
 tracelog
 
-blacklist /tmp/.X11-unix
-
 private-dev
 
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
+
+include /etc/firejail/default.profile

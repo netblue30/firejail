@@ -1,26 +1,26 @@
-# Persistent global definitions go here
+# Firejail profile for flashpeak-slimjet
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/flashpeak-slimjet.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/flashpeak-slimjet.local
-
-# SlimJet browser profile
-# This is a whitelisted profile, the internal browser sandbox
-# is disabled because it requires sudo password. The command
-# to run it is as follows:
-#
-#  firejail flashpeak-slimjet --no-sandbox
-#
-noblacklist ~/.config/slimjet
 noblacklist ~/.cache/slimjet
+noblacklist ~/.config/slimjet
 noblacklist ~/.pki
+
 include /etc/firejail/disable-common.inc
+# include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-# chromium is distributed with a perl script on Arch
-# include /etc/firejail/disable-devel.inc
-#
+mkdir ~/.cache/slimjet
+mkdir ~/.config/slimjet
+mkdir ~/.pki
+whitelist ${DOWNLOADS}
+whitelist ~/.cache/slimjet
+whitelist ~/.config/slimjet
+whitelist ~/.pki
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -29,12 +29,8 @@ noroot
 protocol unix,inet,inet6,netlink
 seccomp
 
-whitelist ${DOWNLOADS}
-mkdir ~/.config/slimjet
-whitelist ~/.config/slimjet
-mkdir ~/.cache/slimjet
-whitelist ~/.cache/slimjet
-mkdir ~/.pki
-whitelist ~/.pki
-
-include /etc/firejail/whitelist-common.inc
+# CLOBBERED COMMENTS
+#  firejail flashpeak-slimjet --no-sandbox
+# chromium is distributed with a perl script on Arch
+# is disabled because it requires sudo password. The command
+# to run it is as follows:

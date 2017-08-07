@@ -1,18 +1,20 @@
-# Persistent global definitions go here
+# Firejail profile for atool
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/atool.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/atool.local
+blacklist /tmp/.X11-unix
 
-# atool profile
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 # include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
@@ -20,13 +22,10 @@ nosound
 novideo
 protocol unix
 seccomp
-no3d
 shell none
 tracelog
 
-blacklist /tmp/.X11-unix
-
 # private-bin atool
-private-tmp
 private-dev
 private-etc none
+private-tmp

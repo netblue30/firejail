@@ -1,22 +1,20 @@
-# Persistent global definitions go here
+# Firejail profile for fossamail
+# This file is overwritten after every install/update
+# Persistent local customizations
+include /etc/firejail/fossamail.local
+# Persistent global definitions
 include /etc/firejail/globals.local
 
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
-include /etc/firejail/fossamail.local
-
-# Firejail profile for FossaMail
-
-noblacklist ~/.gnupg
-mkdir ~/.gnupg
-whitelist ~/.gnupg
-
-noblacklist ~/.fossamail
-mkdir ~/.fossamail
-whitelist ~/.fossamail
-
 noblacklist ~/.cache/fossamail
+noblacklist ~/.fossamail
+noblacklist ~/.gnupg
+
 mkdir ~/.cache/fossamail
+mkdir ~/.fossamail
+mkdir ~/.gnupg
 whitelist ~/.cache/fossamail
+whitelist ~/.fossamail
+whitelist ~/.gnupg
+include /etc/firejail/whitelist-common.inc
 
 include /etc/firejail/firefox.profile

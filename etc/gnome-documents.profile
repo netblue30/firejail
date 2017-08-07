@@ -1,20 +1,16 @@
-# Persistent global definitions go here
-include /etc/firejail/globals.local
-
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile for gnome-documents
+# This file is overwritten after every install/update
+# Persistent local customizations
 include /etc/firejail/gnome-documents.local
-
-# gnome-documents profile
-
-# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
+# Persistent global definitions
+include /etc/firejail/globals.local
 
 noblacklist ~/.config/libreoffice
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
@@ -29,8 +25,11 @@ seccomp
 shell none
 tracelog
 
-private-tmp
 private-dev
+private-tmp
 
 noexec ${HOME}
 noexec /tmp
+
+# CLOBBERED COMMENTS
+# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them

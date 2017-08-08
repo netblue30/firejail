@@ -32,6 +32,7 @@ blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Brackets
+blacklist ${HOME}/.config/Clementine
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/Gitter

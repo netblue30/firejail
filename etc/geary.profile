@@ -13,7 +13,6 @@ noblacklist ~/.local/share/geary
 
 mkdir ~/.gnupg
 mkdir ~/.local/share/geary
-whitelist ~/.config/mimeapps.list
 whitelist ~/.gnupg
 whitelist ~/.local/share/applications
 whitelist ~/.local/share/geary

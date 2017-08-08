@@ -18,7 +18,6 @@ mkdir ~/.gnupg
 mkdir ~/.icedove
 mkdir ~/.thunderbird
 whitelist ~/.cache/thunderbird
-whitelist ~/.config/mimeapps.list
 whitelist ~/.gnupg
 whitelist ~/.icedove
 whitelist ~/.local/share/applications

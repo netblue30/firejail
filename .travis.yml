@@ -5,3 +5,5 @@ sudo: yes
 script:
   - ( cd firejail ; ./configure && make && sudo make install-strip )
   - find /usr/local
+  - ( cd /usr/local , tar cfvj * firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2 . )
+  - ls

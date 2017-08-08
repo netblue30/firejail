@@ -1,6 +1,6 @@
 language: c
 dist: trusty
-sudo: false
+sudo: true
 
 script:
   - ( cd firejail ; ./configure --prefix=/usr && make && sudo make install-strip DESTDIR=$(readlink -f appdir) )

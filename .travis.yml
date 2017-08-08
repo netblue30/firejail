@@ -1,0 +1,7 @@
+language: c
+dist: trusty
+sudo: yes
+
+script:
+  - ( cd firejail ; ./configure && make && sudo make install-strip )
+  - find /usr/local

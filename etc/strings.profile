@@ -17,7 +17,9 @@ novideo
 shell none
 tracelog
 
+private-bin strings
 private-dev
+private-lib
 
 memory-deny-write-execute
 

@@ -24,6 +24,7 @@ protocol unix
 seccomp
 shell none
 
+private-bin apktool,bash,java,dirname,basename,expr
 private-dev
 
 noexec ${HOME}

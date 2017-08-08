@@ -22,6 +22,7 @@ seccomp
 shell none
 tracelog
 
+private-bin obs
 private-dev
 private-tmp
 

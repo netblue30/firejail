@@ -31,6 +31,7 @@ nogroups
 notv
 shell none
 
+# private-bin chromium,chromium-browser,chromedriver
 private-dev
 # private-tmp - problems with multiple browser sessions
 

@@ -7,8 +7,10 @@ include /etc/firejail/hashcat.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.hashcat
+noblacklist /usr/include
 
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -25,6 +27,7 @@ seccomp
 shell none
 
 disable-mnt
+private-bin hashcat
 private-dev
 private-tmp
 

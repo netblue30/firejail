@@ -26,6 +26,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+private-bin gitg,git,ssh
 private-dev
 private-tmp
 

@@ -3,7 +3,9 @@ dist: trusty
 sudo: true
 
 script:
+  - sudo apt-get -y install expect
   - ( cd firejail ; ./configure --prefix=/usr && make && sudo make install && make test )
   - ( cd firejail ; sudo make install-strip DESTDIR=$(readlink -f appdir) )
   - ( cd appdir/ ; tar cfvj ../firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2 . )
   - curl --upload-file ./firejail-*.tar.bz2 https://transfer.sh/firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2
+  - # Could use https://github.com/probonopd/uploadtool to upload to GitHub Releases instead

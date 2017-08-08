@@ -18,7 +18,6 @@ mkdir ~/.gnupg
 mkdir ~/.icedove
 mkdir ~/.thunderbird
 whitelist ~/.cache/thunderbird
-whitelist ~/.config/mimeapps.list
 whitelist ~/.gnupg
 whitelist ~/.icedove
 whitelist ~/.local/share/applications
@@ -28,7 +27,6 @@ include /etc/firejail/whitelist-common.inc
 ignore private-tmp
 
 read-only ~/.config/mimeapps.list
-read-only ~/.local/share/applications
 
 # allow browsers
 include /etc/firejail/firefox.profile

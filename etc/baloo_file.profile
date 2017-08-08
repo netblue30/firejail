@@ -36,6 +36,6 @@ noexec /tmp
 
 # Make home directory read-only and allow writing only to ~/.local/share
 # Note: Baloo will not be able to update the "first run" key in its configuration files.
-# noexec     ${HOME}/.local/share
 # read-only  ${HOME}
 # read-write ${HOME}/.local/share
+# noexec     ${HOME}/.local/share

@@ -6,6 +6,7 @@ include /etc/firejail/mediathekview.local
 include /etc/firejail/globals.local
 
 noblacklist ~/.config/vlc
+noblacklist ~/.java
 noblacklist ~/.mediathek3
 
 include /etc/firejail/disable-common.inc
@@ -17,6 +18,7 @@ caps.drop all
 netfilter
 nonewprivs
 noroot
+novideo
 protocol unix,inet,inet6
 seccomp
 tracelog

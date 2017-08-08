@@ -23,6 +23,7 @@ caps.drop all
 nogroups
 nonewprivs
 noroot
+novideo
 protocol unix
 seccomp
 shell none

@@ -13,7 +13,6 @@ noblacklist ~/.local/share/geary
 
 mkdir ~/.gnupg
 mkdir ~/.local/share/geary
-whitelist ~/.config/mimeapps.list
 whitelist ~/.gnupg
 whitelist ~/.local/share/applications
 whitelist ~/.local/share/geary
@@ -22,7 +21,6 @@ include /etc/firejail/whitelist-common.inc
 ignore private-tmp
 
 read-only ~/.config/mimeapps.list
-read-only ~/.local/share/applications
 
 # allow browsers
 include /etc/firejail/firefox.profile

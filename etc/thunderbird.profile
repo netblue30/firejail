@@ -27,7 +27,6 @@ include /etc/firejail/whitelist-common.inc
 ignore private-tmp
 
 read-only ~/.config/mimeapps.list
-read-only ~/.local/share/applications
 
 # allow browsers
 include /etc/firejail/firefox.profile

@@ -3,7 +3,7 @@ dist: trusty
 sudo: true
 
 script:
-  - ( cd firejail ; ./configure && make --prefix=/usr && sudo make install && make test )
-  - ( cd firejail ; ./configure --prefix=/usr && make && sudo make install-strip DESTDIR=$(readlink -f appdir) )
+  - ( cd firejail ; ./configure --prefix=/usr && make && sudo make install && make test )
+  - ( cd firejail ; sudo make install-strip DESTDIR=$(readlink -f appdir) )
   - ( cd appdir/ ; tar cfvj ../firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2 . )
   - curl --upload-file ./firejail-*.tar.bz2 https://transfer.sh/firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2

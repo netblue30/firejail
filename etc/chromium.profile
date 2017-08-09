@@ -11,8 +11,7 @@ noblacklist ~/.config/chromium-flags.conf
 noblacklist ~/.pki
 
 include /etc/firejail/disable-common.inc
-# chromium is distributed with a perl script on Arch
-# include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ~/.cache/chromium

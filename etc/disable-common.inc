@@ -185,9 +185,9 @@ read-only ${HOME}/.npm-packages
 read-only ${HOME}/bin
 
 # The following block breaks trash functionality in file managers
-#noexec     ${HOME}/.local/share
 #read-only  ${HOME}/.local
 #read-write ${HOME}/.local/share
+#noexec     ${HOME}/.local/share
 blacklist   ${HOME}/.local/share/Trash
 
 # Write-protection for desktop entries

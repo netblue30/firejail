@@ -22,7 +22,8 @@ seccomp
 shell none
 
 private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
-private-dev
+# DVB (Digital Video Broadcast) devices stop working with private-dev
+# private-dev
 private-tmp
 
 noexec ${HOME}

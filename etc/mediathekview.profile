@@ -5,9 +5,14 @@ include /etc/firejail/mediathekview.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ~/.config/mpv
+noblacklist ~/.config/smplayer
+noblacklist ~/.config/totem
 noblacklist ~/.config/vlc
 noblacklist ~/.java
+noblacklist ~/.local/share/totem
 noblacklist ~/.mediathek3
+noblacklist ~/.mplayer
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

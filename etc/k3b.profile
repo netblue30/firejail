@@ -19,6 +19,7 @@ no3d
 nonewprivs
 noroot
 nosound
+novideo
 protocol unix
 seccomp
 shell none

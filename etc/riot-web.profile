@@ -10,4 +10,5 @@ noblacklist ~/.config/Riot
 whitelist ~/.config/Riot
 include /etc/firejail/whitelist-common.inc
 
+# Redirect
 include /etc/firejail/electron.profile

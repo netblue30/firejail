@@ -6,4 +6,5 @@ include /etc/firejail/iceweasel.local
 include /etc/firejail/globals.local
 
 
+# Redirect
 include /etc/firejail/firefox.profile

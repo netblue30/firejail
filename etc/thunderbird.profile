@@ -29,4 +29,5 @@ ignore private-tmp
 read-only ~/.config/mimeapps.list
 
 # allow browsers
+# Redirect
 include /etc/firejail/firefox.profile

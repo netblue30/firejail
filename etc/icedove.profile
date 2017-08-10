@@ -23,4 +23,5 @@ include /etc/firejail/whitelist-common.inc
 ignore private-tmp
 
 # allow browsers
+# Redirect
 include /etc/firejail/firefox.profile

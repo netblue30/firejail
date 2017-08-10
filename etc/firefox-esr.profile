@@ -6,4 +6,5 @@ include /etc/firejail/firefox-esr.local
 include /etc/firejail/globals.local
 
 
+# Redirect
 include /etc/firejail/firefox.profile

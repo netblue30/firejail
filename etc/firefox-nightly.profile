@@ -6,4 +6,5 @@ include /etc/firejail/firefox-nightly.local
 include /etc/firejail/globals.local
 
 
+# Redirect
 include /etc/firejail/firefox.profile

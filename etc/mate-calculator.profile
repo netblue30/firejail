@@ -5,3 +5,5 @@ include /etc/firejail/mate-calculator.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# Redirect
+include include /etc/firejail/mate-calc.profile

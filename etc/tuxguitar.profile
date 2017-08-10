@@ -19,12 +19,12 @@ no3d
 nonewprivs
 noroot
 novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 tracelog
 
 private-dev
 private-tmp
 
-noexec ${HOME}
+# noexec ${HOME} - tuxguitar versions > 1.2 fail to launch
 noexec /tmp

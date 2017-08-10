@@ -23,6 +23,7 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
+disable-mnt
 private-dev
 private-tmp
 

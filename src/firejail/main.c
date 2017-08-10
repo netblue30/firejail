@@ -112,7 +112,7 @@ int arg_writable_var_log = 0;		// writable /var/log
 int arg_disable_mnt = 0;			// disable /mnt and /media
 int arg_noprofile = 0; // use default.profile if none other found/specified
 int arg_memory_deny_write_execute = 0;		// block writable and executable memory
-
+int arg_notv = 0;	// --notv
 int login_shell = 0;
 
 
@@ -1676,22 +1676,20 @@ int main(int argc, char **argv) {
 				exit_err_feature("noroot");
 		}
 #endif
-		else if (strcmp(argv[i], "--nonewprivs") == 0) {
+		else if (strcmp(argv[i], "--nonewprivs") == 0)
 			arg_nonewprivs = 1;
-		}
 		else if (strncmp(argv[i], "--env=", 6) == 0)
 			env_store(argv[i] + 6, SETENV);
 		else if (strncmp(argv[i], "--rmenv=", 8) == 0)
 			env_store(argv[i] + 8, RMENV);
-		else if (strcmp(argv[i], "--nosound") == 0) {
+		else if (strcmp(argv[i], "--nosound") == 0)
 			arg_nosound = 1;
-		}
-		else if (strcmp(argv[i], "--novideo") == 0) {
+		else if (strcmp(argv[i], "--novideo") == 0)
 			arg_novideo = 1;
-		}
-		else if (strcmp(argv[i], "--no3d") == 0) {
+		else if (strcmp(argv[i], "--no3d") == 0)
 			arg_no3d = 1;
-		}
+		else if (strcmp(argv[i], "--notv") == 0)
+			arg_notv = 1;
 
 		//*************************************
 		// network

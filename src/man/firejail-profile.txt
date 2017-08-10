@@ -423,6 +423,9 @@ Enable IPC namespace.
 \fBnosound
 Disable sound system.
 .TP
+\fBnotv
+Disable DVB (Digital Video Brodcasting) TV devices.
+.TP
 \fBnovideo
 Disable video devices.
 .TP

@@ -876,7 +876,7 @@ int sandbox(void* sandbox_arg) {
 	fs_blacklist(); // mkdir and mkfile are processed all over again
 
 	//****************************
-	// nosound/no3d and fix for pulseaudio 7.0
+	// nosound/no3d/notv/novideo and fix for pulseaudio 7.0
 	//****************************
 	if (arg_nosound) {
 		// disable pulseaudio
@@ -891,9 +891,9 @@ int sandbox(void* sandbox_arg) {
 	if (arg_no3d)
 		fs_dev_disable_3d();
 
-	//****************************
-	// novideo
-	//****************************
+	if (arg_notv)
+		fs_dev_disable_tv();
+
 	if (arg_novideo) {
 		// disable /dev/video*
 		fs_dev_disable_video();

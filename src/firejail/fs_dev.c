@@ -31,42 +31,50 @@
 #include <sys/sysmacros.h>
 #include <sys/types.h>
 
+// device type
+typedef enum {
+	DEV_NONE = 0,
+	DEV_SOUND,
+	DEV_3D,
+	DEV_VIDEO,
+	DEV_TV,
+} DEV_TYPE;
+
+
 typedef struct {
 	const char *dev_fname;
 	const char *run_fname;
-	int sound;
-	int hw3d;
-	int video;
+	DEV_TYPE  type;
 } DevEntry;
 
 static DevEntry dev[] = {
-	{"/dev/snd", RUN_DEV_DIR "/snd", 1, 0, 0},	// sound device
-	{"/dev/dri", RUN_DEV_DIR "/dri", 0, 1, 0},		// 3d device
-	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", 0, 1, 0},
-	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", 0, 1, 0},
-	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2", 0, 1, 0},
-	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3", 0, 1, 0},
-	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4", 0, 1, 0},
-	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5", 0, 1, 0},
-	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6", 0, 1, 0},
-	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7", 0, 1, 0},
-	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", 0, 1, 0},
-	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", 0, 1, 0},
-	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", 0, 1, 0},
-	{"/dev/nvidia-modeset", RUN_DEV_DIR "/nvidia-modeset", 0, 1, 0},
-	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", 0, 1, 0},
-	{"/dev/video0", RUN_DEV_DIR "/video0", 0, 0, 1}, // video camera devices
-	{"/dev/video1", RUN_DEV_DIR "/video1", 0, 0, 1},
-	{"/dev/video2", RUN_DEV_DIR "/video2", 0, 0, 1},
-	{"/dev/video3", RUN_DEV_DIR "/video3", 0, 0, 1},
-	{"/dev/video4", RUN_DEV_DIR "/video4", 0, 0, 1},
-	{"/dev/video5", RUN_DEV_DIR "/video5", 0, 0, 1},
-	{"/dev/video6", RUN_DEV_DIR "/video6", 0, 0, 1},
-	{"/dev/video7", RUN_DEV_DIR "/video7", 0, 0, 1},
-	{"/dev/video8", RUN_DEV_DIR "/video8", 0, 0, 1},
-	{"/dev/video9", RUN_DEV_DIR "/video9", 0, 0, 1},
-	{"/dev/dvb", RUN_DEV_DIR "/dvb", 0, 0, 0}, // DVB (Digital Video Brodcasting) - TV device
-	{NULL, NULL, 0, 0, 0}
+	{"/dev/snd", RUN_DEV_DIR "/snd", DEV_SOUND},	// sound device
+	{"/dev/dri", RUN_DEV_DIR "/dri", DEV_3D},		// 3d device
+	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", DEV_3D},
+	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", DEV_3D},
+	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2", DEV_3D},
+	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3", DEV_3D},
+	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4", DEV_3D},
+	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5", DEV_3D},
+	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6", DEV_3D},
+	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7", DEV_3D},
+	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", DEV_3D},
+	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", DEV_3D},
+	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", DEV_3D},
+	{"/dev/nvidia-modeset", RUN_DEV_DIR "/nvidia-modeset", DEV_3D},
+	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", DEV_3D},
+	{"/dev/video0", RUN_DEV_DIR "/video0", DEV_VIDEO}, // video camera devices
+	{"/dev/video1", RUN_DEV_DIR "/video1", DEV_VIDEO},
+	{"/dev/video2", RUN_DEV_DIR "/video2", DEV_VIDEO},
+	{"/dev/video3", RUN_DEV_DIR "/video3", DEV_VIDEO},
+	{"/dev/video4", RUN_DEV_DIR "/video4", DEV_VIDEO},
+	{"/dev/video5", RUN_DEV_DIR "/video5", DEV_VIDEO},
+	{"/dev/video6", RUN_DEV_DIR "/video6", DEV_VIDEO},
+	{"/dev/video7", RUN_DEV_DIR "/video7", DEV_VIDEO},
+	{"/dev/video8", RUN_DEV_DIR "/video8", DEV_VIDEO},
+	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
+	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Brodcasting) - TV device
+	{NULL, NULL, DEV_NONE}
 };
 
 static void deventry_mount(void) {
@@ -295,7 +303,7 @@ static void disable_file_or_dir(const char *fname) {
 void fs_dev_disable_sound(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
-		if (dev[i].sound)
+		if (dev[i].type == DEV_SOUND)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}
@@ -304,7 +312,7 @@ void fs_dev_disable_sound(void) {
 void fs_dev_disable_video(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
-		if (dev[i].video)
+		if (dev[i].type == DEV_VIDEO)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}
@@ -313,7 +321,16 @@ void fs_dev_disable_video(void) {
 void fs_dev_disable_3d(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
-		if (dev[i].hw3d)
+		if (dev[i].type == DEV_3D)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_tv(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_TV)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}

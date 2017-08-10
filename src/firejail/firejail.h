@@ -360,6 +360,7 @@ extern int arg_machineid;	// preserve /etc/machine-id
 extern int arg_disable_mnt;	// disable /mnt and /media
 extern int arg_noprofile;	// use default.profile if none other found/specified
 extern int arg_memory_deny_write_execute;	// block writable and executable memory
+extern int arg_notv;	// --notv
 
 extern int login_shell;
 extern int parent_to_child_fds[2];
@@ -512,6 +513,7 @@ void fs_private_dev(void);
 void fs_dev_disable_sound(void);
 void fs_dev_disable_3d(void);
 void fs_dev_disable_video(void);
+void fs_dev_disable_tv(void);
 
 // fs_home.c
 // private mode (--private)

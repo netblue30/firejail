@@ -1084,6 +1084,16 @@ Example:
 $ firejail \-\-nosound firefox
 
 .TP
+\fB\-\-notv
+Disable DVB (Digital Video Brodcasting) TV devices.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-notv vlc
+
+.TP
 \fB\-\-novideo
 Disable video devices.
 .br

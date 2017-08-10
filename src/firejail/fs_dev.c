@@ -73,7 +73,7 @@ static DevEntry dev[] = {
 	{"/dev/video7", RUN_DEV_DIR "/video7", DEV_VIDEO},
 	{"/dev/video8", RUN_DEV_DIR "/video8", DEV_VIDEO},
 	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
-	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Brodcasting) - TV device
+	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
 	{NULL, NULL, DEV_NONE}
 };
 

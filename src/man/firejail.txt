@@ -1085,7 +1085,7 @@ $ firejail \-\-nosound firefox
 
 .TP
 \fB\-\-notv
-Disable DVB (Digital Video Brodcasting) TV devices.
+Disable DVB (Digital Video Broadcasting) TV devices.
 .br
 
 .br

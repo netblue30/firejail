@@ -14,7 +14,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-net none
+# net none - breaks internet for tuxguitar versions 1.3 and higher
 no3d
 nonewprivs
 noroot
@@ -26,5 +26,5 @@ tracelog
 private-dev
 private-tmp
 
-# noexec ${HOME} - tuxguitar versions > 1.2 fail to launch
+# noexec ${HOME} - tuxguitar versions 1.3 and higher might fail to launch
 noexec /tmp

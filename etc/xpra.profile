@@ -21,7 +21,8 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 whitelist /var/lib/xkb
-include /etc/firejail/whitelist-common.inc
+# whitelisting home directory, or including whitelist-common.inc
+# will crash xpra on some platforms
 
 caps.drop all
 # xpra needs to be allowed access to the abstract Unix socket namespace.
@@ -30,6 +31,8 @@ nonewprivs
 # In noroot mode, xpra cannot create a socket in the real /tmp/.X11-unix.
 #noroot
 nosound
+notv
+novideo
 protocol unix
 seccomp
 shell none
@@ -41,4 +44,3 @@ shell none
 private-dev
 # private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname,machine-id,xpra,X11
 private-tmp
-notv

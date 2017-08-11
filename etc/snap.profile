@@ -14,3 +14,4 @@ include /etc/firejail/disable-programs.inc
 whitelist ${DOWNLOADS}
 whitelist ~/snap
 include /etc/firejail/whitelist-common.inc
+notv

@@ -34,3 +34,4 @@ disable-mnt
 private-bin stellarium
 private-dev
 private-tmp
+notv

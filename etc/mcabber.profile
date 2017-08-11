@@ -25,3 +25,4 @@ shell none
 private-bin mcabber
 private-dev
 private-etc null
+notv

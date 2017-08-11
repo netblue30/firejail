@@ -30,3 +30,4 @@ noroot
 protocol unix,inet,inet6
 seccomp
 tracelog
+notv

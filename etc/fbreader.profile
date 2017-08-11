@@ -24,3 +24,4 @@ shell none
 private-bin fbreader,FBReader
 private-dev
 private-tmp
+notv

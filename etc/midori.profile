@@ -40,3 +40,4 @@ nonewprivs
 protocol unix,inet,inet6,netlink
 seccomp
 tracelog
+notv

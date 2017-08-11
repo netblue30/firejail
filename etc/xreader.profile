@@ -27,3 +27,4 @@ tracelog
 private-bin xreader, xreader-previewer, xreader-thumbnailer
 private-dev
 private-tmp
+notv

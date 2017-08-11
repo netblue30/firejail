@@ -27,3 +27,4 @@ netfilter
 nonewprivs
 protocol unix,inet,inet6
 seccomp
+notv

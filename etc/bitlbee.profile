@@ -29,3 +29,4 @@ private-tmp
 read-write /var/lib/bitlbee
 
 noexec /tmp
+notv

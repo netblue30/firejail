@@ -22,6 +22,8 @@ include /etc/firejail/disable-programs.inc
 caps
 no3d
 nosound
+notv
+novideo
 seccomp
 
 # disable-mnt

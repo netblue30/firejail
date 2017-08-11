@@ -39,3 +39,4 @@ private-dev
 private-tmp
 
 noexec /tmp
+notv

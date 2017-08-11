@@ -28,3 +28,4 @@ shell none
 
 noexec ${HOME}
 noexec /tmp
+notv

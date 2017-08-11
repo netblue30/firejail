@@ -18,3 +18,4 @@ whitelist ~/.gnupg
 include /etc/firejail/whitelist-common.inc
 
 include /etc/firejail/firefox.profile
+notv

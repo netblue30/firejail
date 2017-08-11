@@ -29,3 +29,4 @@ private-etc fonts
 private-tmp
 # mupdf will never write anything
 read-only ${HOME}
+notv

@@ -20,3 +20,4 @@ tracelog
 private-dev
 
 include /etc/firejail/default.profile
+notv

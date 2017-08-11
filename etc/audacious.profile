@@ -25,3 +25,4 @@ tracelog
 
 private-bin audacious
 private-tmp
+notv

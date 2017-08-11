@@ -49,3 +49,4 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
+notv

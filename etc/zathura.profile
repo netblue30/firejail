@@ -29,3 +29,4 @@ private-etc fonts
 private-tmp
 read-only ~/
 read-write ~/.local/share/zathura/
+notv

@@ -25,3 +25,4 @@ private-bin bash,dash,sh,grep,tail,env,gpg,id,readlink,dirname,test,mkdir,ln,sed
 private-dev
 private-etc fonts
 private-tmp
+notv

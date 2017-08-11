@@ -19,3 +19,4 @@ seccomp.drop mount,umount2,ptrace,kexec_load,kexec_file_load,open_by_handle_at,i
 
 private
 private-dev
+notv

@@ -21,3 +21,4 @@ private-dev
 private-etc passwd,group,localtime
 
 include /etc/firejail/default.profile
+notv

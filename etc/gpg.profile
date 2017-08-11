@@ -28,3 +28,4 @@ tracelog
 
 # private-bin gpg,gpg-agent
 private-dev
+notv

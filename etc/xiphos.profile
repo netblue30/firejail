@@ -35,3 +35,4 @@ private-bin xiphos
 private-dev
 private-etc fonts,resolv.conf,sword
 private-tmp
+notv

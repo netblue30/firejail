@@ -27,3 +27,4 @@ private-tmp
 
 # noexec ${HOME} - tuxguitar may fail to launch
 noexec /tmp
+notv

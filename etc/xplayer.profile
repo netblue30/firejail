@@ -26,3 +26,4 @@ tracelog
 private-bin xplayer,xplayer-audio-preview,xplayer-video-thumbnailer
 private-dev
 private-tmp
+notv

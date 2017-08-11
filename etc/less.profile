@@ -27,3 +27,4 @@ noexec /tmp
 writable-var-log
 
 include /etc/firejail/default.profile
+notv

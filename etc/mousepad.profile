@@ -26,3 +26,4 @@ tracelog
 private-bin mousepad
 private-dev
 private-tmp
+notv

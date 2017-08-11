@@ -47,3 +47,4 @@ tracelog
 
 noexec ${HOME}
 noexec /tmp
+notv

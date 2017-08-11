@@ -33,3 +33,4 @@ tracelog
 private-bin transmission-qt
 private-dev
 private-tmp
+notv

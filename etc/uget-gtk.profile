@@ -28,3 +28,4 @@ shell none
 private-bin uget-gtk
 private-dev
 private-tmp
+notv

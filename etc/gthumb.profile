@@ -27,3 +27,4 @@ tracelog
 private-bin gthumb
 private-dev
 private-tmp
+notv

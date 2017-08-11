@@ -23,3 +23,4 @@ shell none
 
 private-bin xmms
 private-dev
+notv

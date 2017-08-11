@@ -21,3 +21,4 @@ nogroups
 nonewprivs
 noroot
 seccomp
+notv

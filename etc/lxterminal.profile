@@ -15,3 +15,4 @@ netfilter
 # noroot - somehow this breaks on Debian Jessie!
 protocol unix,inet,inet6
 seccomp
+notv

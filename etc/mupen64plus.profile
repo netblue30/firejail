@@ -25,3 +25,4 @@ net none
 nonewprivs
 noroot
 seccomp
+notv

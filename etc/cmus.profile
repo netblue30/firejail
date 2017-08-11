@@ -22,3 +22,4 @@ shell none
 
 private-bin cmus
 private-etc group
+notv

@@ -29,3 +29,4 @@ tracelog
 # private-bin bash,catfish,env,locate,ls,mlocate,python,python2,python2.7,python3,python3.5,python3.5m,python3m
 # private-dev
 # private-tmp
+notv

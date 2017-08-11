@@ -18,3 +18,4 @@ protocol unix,inet,inet6
 seccomp
 
 # private-bin requires perl, python, etc.
+notv

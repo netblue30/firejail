@@ -30,3 +30,4 @@ seccomp
 
 private-dev
 private-tmp
+notv

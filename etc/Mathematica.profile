@@ -24,3 +24,4 @@ caps.drop all
 nonewprivs
 noroot
 seccomp
+notv

@@ -27,3 +27,4 @@ tracelog
 private-bin qpdfview
 private-dev
 private-tmp
+notv

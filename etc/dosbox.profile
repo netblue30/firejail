@@ -25,3 +25,4 @@ tracelog
 private-bin dosbox
 private-dev
 private-tmp
+notv

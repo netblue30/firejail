@@ -27,3 +27,4 @@ private-bin gpicview
 private-dev
 private-etc fonts
 private-tmp
+notv

@@ -25,3 +25,4 @@ protocol unix
 seccomp
 shell none
 tracelog
+notv

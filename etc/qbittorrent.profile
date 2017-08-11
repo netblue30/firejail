@@ -41,3 +41,4 @@ seccomp
 private-dev
 # private-etc X11,fonts,xdg,resolv.conf
 private-tmp
+notv

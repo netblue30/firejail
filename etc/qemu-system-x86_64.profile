@@ -23,3 +23,4 @@ tracelog
 private-tmp
 
 noexec /tmp
+notv

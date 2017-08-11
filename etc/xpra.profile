@@ -41,3 +41,4 @@ shell none
 private-dev
 # private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname,machine-id,xpra,X11
 private-tmp
+notv

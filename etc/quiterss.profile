@@ -44,3 +44,4 @@ private-dev
 
 noexec ${HOME}
 noexec /tmp
+notv

@@ -29,3 +29,4 @@ private-tmp
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
+notv

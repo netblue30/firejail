@@ -28,3 +28,4 @@ private-tmp
 # if you are not using external plugins, you can enable noexec statement below
 # noexec ${HOME}
 noexec /tmp
+notv

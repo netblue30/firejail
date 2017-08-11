@@ -21,6 +21,8 @@ nonewprivs
 noroot
 # nosound
 # novideo
+# notv
+# no3d
 protocol unix,inet,inet6
 seccomp
 # shell none

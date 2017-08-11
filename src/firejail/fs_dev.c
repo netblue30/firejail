@@ -82,31 +82,39 @@ static void deventry_mount(void) {
 	while (dev[i].dev_fname != NULL) {
 		struct stat s;
 		if (stat(dev[i].run_fname, &s) == 0) {
-			int dir = is_dir(dev[i].run_fname);
-			if (arg_debug)
-				printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
-			if (dir) {
-				mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
-			}
-			else {
-				struct stat s;
-				if (stat(dev[i].run_fname, &s) == -1) {
-					if (arg_debug)
-						fwarning("cannot stat %s file\n", dev[i].run_fname);
-					i++;
-					continue;
+			
+			// check device type and subsystem configuration
+			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
+			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
+			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
+			    (dev[i].type == DEV_TV && arg_notv == 0)) {
+			
+				int dir = is_dir(dev[i].run_fname);
+				if (arg_debug)
+					printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
+				if (dir) {
+					mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
 				}
-				FILE *fp = fopen(dev[i].dev_fname, "w");
-				if (fp) {
-					fprintf(fp, "\n");
-					SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
-					fclose(fp);
+				else {
+					struct stat s;
+					if (stat(dev[i].run_fname, &s) == -1) {
+						if (arg_debug)
+							fwarning("cannot stat %s file\n", dev[i].run_fname);
+						i++;
+						continue;
+					}
+					FILE *fp = fopen(dev[i].dev_fname, "w");
+					if (fp) {
+						fprintf(fp, "\n");
+						SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
+						fclose(fp);
+					}
 				}
+	
+				if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
+					errExit("mounting dev file");
+				fs_logger2("whitelist", dev[i].dev_fname);
 			}
-
-			if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
-				errExit("mounting dev file");
-			fs_logger2("whitelist", dev[i].dev_fname);
 		}
 
 		i++;
@@ -149,7 +157,7 @@ void fs_private_dev(void){
 	// keep a copy of dev directory
 	mkdir_attr(RUN_DEV_DIR, 0755, 0, 0);
 	if (mount("/dev", RUN_DEV_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mounting /dev/dri");
+		errExit("mounting /dev");
 
 	// create DEVLOG_FILE
 	int have_devlog = 0;
@@ -172,6 +180,7 @@ void fs_private_dev(void){
 		errExit("mounting /dev");
 	fs_logger("tmpfs /dev");
 
+	// optional devices: sound, video cards etc...
 	deventry_mount();
 
 	// bring back /dev/log
@@ -186,8 +195,7 @@ void fs_private_dev(void){
 		}
 	}
 	if (mount(RUN_RO_DIR, RUN_DEV_DIR, "none", MS_BIND, "mode=400,gid=0") < 0)
-		errExit("disable /dev/snd");
-
+		errExit("disable run dev directory");
 
 	// create /dev/shm
 	if (arg_debug)
@@ -195,7 +203,7 @@ void fs_private_dev(void){
 	mkdir_attr("/dev/shm", 01777, 0, 0);
 	fs_logger("mkdir /dev/shm");
 
-	// create devices
+	// create default devices
 	create_char_dev("/dev/zero", 0666, 1, 5); // mknod -m 666 /dev/zero c 1 5
 	fs_logger("mknod /dev/zero");
 	create_char_dev("/dev/null", 0666, 1, 3); // mknod -m 666 /dev/null c 1 3

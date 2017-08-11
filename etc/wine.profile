@@ -20,5 +20,5 @@ netfilter
 nogroups
 nonewprivs
 noroot
-seccomp
 notv
+seccomp

@@ -20,6 +20,7 @@ net none
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,netlink
 seccomp
 shell none
@@ -28,4 +29,3 @@ shell none
 private-dev
 # private-etc none
 private-tmp
-notv

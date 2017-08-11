@@ -18,6 +18,7 @@ netfilter
 nonewprivs
 noroot
 nosound
+notv
 protocol inet,inet6
 seccomp
 shell none
@@ -25,4 +26,3 @@ shell none
 private-bin mcabber
 private-dev
 private-etc null
-notv

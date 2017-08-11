@@ -25,6 +25,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
@@ -34,4 +35,3 @@ disable-mnt
 private-bin stellarium
 private-dev
 private-tmp
-notv

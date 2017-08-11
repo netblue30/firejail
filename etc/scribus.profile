@@ -30,6 +30,7 @@ caps.drop all
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix
 seccomp
@@ -37,4 +38,3 @@ tracelog
 
 private-dev
 # private-tmp
-notv

@@ -19,6 +19,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix
 seccomp
@@ -34,4 +35,3 @@ private-etc fonts
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
-notv

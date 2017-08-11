@@ -12,6 +12,7 @@ ignore noroot
 net none
 no3d
 nosound
+notv
 novideo
 shell none
 tracelog
@@ -21,4 +22,3 @@ private-dev
 memory-deny-write-execute
 
 include /etc/firejail/default.profile
-notv

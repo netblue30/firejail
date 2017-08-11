@@ -19,6 +19,7 @@ no3d
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix
 seccomp
@@ -28,4 +29,3 @@ tracelog
 # private-bin
 # private-etc
 # private-tmp
-notv

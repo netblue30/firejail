@@ -16,13 +16,13 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 # ipc-namespace
 netfilter
+# no3d
 # nogroups
 nonewprivs
 noroot
 # nosound
-# novideo
 # notv
-# no3d
+# novideo
 protocol unix,inet,inet6
 seccomp
 # shell none

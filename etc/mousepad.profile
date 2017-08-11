@@ -18,6 +18,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix
 seccomp
 shell none
@@ -26,4 +27,3 @@ tracelog
 private-bin mousepad
 private-dev
 private-tmp
-notv

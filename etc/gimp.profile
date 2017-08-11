@@ -17,6 +17,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix
 seccomp
 shell none
@@ -28,4 +29,3 @@ private-tmp
 # if you are not using external plugins, you can enable noexec statement below
 # noexec ${HOME}
 noexec /tmp
-notv

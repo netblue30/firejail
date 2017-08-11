@@ -12,7 +12,7 @@ ignore noroot
 net none
 no3d
 nosound
-nosound
+notv
 novideo
 shell none
 tracelog
@@ -20,4 +20,3 @@ tracelog
 private-dev
 
 include /etc/firejail/default.profile
-notv

@@ -23,6 +23,7 @@ caps.drop all
 nogroups
 nonewprivs
 noroot
+notv
 novideo
 protocol unix
 seccomp
@@ -35,4 +36,3 @@ private-dev
 
 noexec ${HOME}
 noexec /tmp
-notv

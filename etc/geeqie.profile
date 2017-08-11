@@ -19,6 +19,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix
 seccomp
 shell none
@@ -26,4 +27,3 @@ shell none
 # private-bin geeqie
 private-dev
 # private-etc X11
-notv

@@ -18,6 +18,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 seccomp
 shell none
 tracelog
@@ -25,4 +26,3 @@ tracelog
 private-bin xed
 private-dev
 private-tmp
-notv

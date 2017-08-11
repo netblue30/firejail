@@ -18,6 +18,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix
 seccomp
@@ -27,4 +28,3 @@ tracelog
 private-bin atril, atril-previewer, atril-thumbnailer
 private-dev
 private-tmp
-notv

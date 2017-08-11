@@ -18,6 +18,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
@@ -25,4 +26,3 @@ shell none
 private-bin gitter
 private-dev
 private-tmp
-notv

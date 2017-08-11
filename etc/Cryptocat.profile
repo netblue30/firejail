@@ -18,10 +18,10 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
 private-dev
 private-tmp
-notv

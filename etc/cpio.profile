@@ -20,9 +20,9 @@ net none
 net none
 no3d
 nosound
+notv
 seccomp
 shell none
 tracelog
 
 private-dev
-notv

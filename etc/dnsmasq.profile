@@ -18,10 +18,10 @@ netfilter
 no3d
 nonewprivs
 nosound
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 
 disable-mnt
 private
 private-dev
-notv

@@ -17,6 +17,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix
 seccomp
 shell none
@@ -25,4 +26,3 @@ private-bin feh
 private-dev
 private-etc feh
 private-tmp
-notv

@@ -12,9 +12,11 @@ ignore noroot
 net none
 no3d
 nosound
+notv
 novideo
 shell none
 tracelog
+writable-var-log
 
 # The user can have a custom coloring scritps configured in ~/.lessfilter.
 # Enable private-bin if you are not using any filter.
@@ -24,7 +26,5 @@ private-dev
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
-writable-var-log
 
 include /etc/firejail/default.profile
-notv

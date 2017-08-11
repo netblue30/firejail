@@ -22,6 +22,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix
 # Baloo makes ioprio_set system calls, which are blacklisted by default.
@@ -39,4 +40,3 @@ noexec /tmp
 # read-only  ${HOME}
 # read-write ${HOME}/.local/share
 # noexec     ${HOME}/.local/share
-notv

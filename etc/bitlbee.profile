@@ -17,6 +17,7 @@ netfilter
 no3d
 nonewprivs
 nosound
+notv
 novideo
 protocol unix,inet,inet6
 seccomp
@@ -29,4 +30,3 @@ private-tmp
 read-write /var/lib/bitlbee
 
 noexec /tmp
-notv

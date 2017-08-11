@@ -28,6 +28,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
@@ -38,4 +39,3 @@ tracelog
 private-dev
 private-etc fonts,resolv.conf,sword,sword.conf,passwd
 private-tmp
-notv

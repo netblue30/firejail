@@ -16,6 +16,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6
 # seccomp
 shell none
@@ -24,4 +25,3 @@ shell none
 private-dev
 # private-etc none
 private-tmp
-notv

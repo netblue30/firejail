@@ -17,10 +17,10 @@ netfilter
 no3d
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6
 seccomp
 shell none
 
 private-bin xmms
 private-dev
-notv

@@ -15,10 +15,10 @@ caps.drop all
 netfilter
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6
 seccomp
 shell none
 
 private-bin parole,dbus-launch
 private-etc passwd,group,fonts
-notv

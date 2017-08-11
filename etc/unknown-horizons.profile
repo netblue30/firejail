@@ -19,6 +19,7 @@ caps.drop all
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,netlink,inet,inet6
 seccomp
 shell none
@@ -27,4 +28,3 @@ shell none
 private-dev
 # private-etc none
 private-tmp
-notv

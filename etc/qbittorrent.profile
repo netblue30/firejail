@@ -33,6 +33,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 # shell none
@@ -41,4 +42,3 @@ seccomp
 private-dev
 # private-etc X11,fonts,xdg,resolv.conf
 private-tmp
-notv

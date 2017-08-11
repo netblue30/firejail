@@ -26,6 +26,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -35,4 +36,3 @@ private-bin xiphos
 private-dev
 private-etc fonts,resolv.conf,sword
 private-tmp
-notv

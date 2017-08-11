@@ -24,5 +24,5 @@ caps.drop all
 net none
 nonewprivs
 noroot
-seccomp
 notv
+seccomp

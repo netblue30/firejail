@@ -19,6 +19,7 @@ no3d
 # nonewprivs - breaks unprivileged wireshark usage
 # noroot
 nosound
+notv
 # protocol unix,inet,inet6,netlink
 # seccomp - breaks unprivileged wireshark usage
 shell none
@@ -31,4 +32,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-notv

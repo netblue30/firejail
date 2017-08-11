@@ -22,6 +22,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -31,4 +32,3 @@ tracelog
 private-dev
 # private-etc fonts
 private-tmp
-notv

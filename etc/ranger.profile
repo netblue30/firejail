@@ -22,8 +22,8 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix
 seccomp
 
 private-dev
-notv

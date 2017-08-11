@@ -22,6 +22,7 @@ netfilter
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix,inet,inet6
 seccomp
@@ -31,4 +32,3 @@ shell none
 # private-bin deluge,sh,python,uname
 private-dev
 private-tmp
-notv

@@ -30,8 +30,8 @@ include /etc/firejail/whitelist-common.inc
 netfilter
 # nonewprivs
 # noroot
+notv
 # protocol unix,inet,inet6,netlink
 # seccomp
 
 # disable-mnt
-notv

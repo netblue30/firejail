@@ -44,6 +44,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
@@ -54,4 +55,3 @@ tracelog
 # private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
 # private-opt palemoon
 private-tmp
-notv

@@ -357,6 +357,7 @@ blacklist ${HOME}/.tconn
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tooling
 blacklist ${HOME}/.ts3client
+blacklist ${HOME}/.tuxguitar*
 blacklist ${HOME}/.unknow-horizons
 blacklist ${HOME}/.viking
 blacklist ${HOME}/.viking-maps

@@ -298,6 +298,7 @@
 /etc/firejail/transmission-qt.profile
 /etc/firejail/transmission-show.profile
 /etc/firejail/truecraft.profile
+/etc/firejail/tuxguitar.profile
 /etc/firejail/uget-gtk.profile
 /etc/firejail/unbound.profile
 /etc/firejail/unknown-horizons.profile

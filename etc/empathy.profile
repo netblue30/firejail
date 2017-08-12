@@ -15,6 +15,6 @@ netfilter
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6
 seccomp
-notv

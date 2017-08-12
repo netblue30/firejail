@@ -23,6 +23,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
@@ -32,4 +33,3 @@ disable-mnt
 private-bin warzone2100
 private-dev
 private-tmp
-notv

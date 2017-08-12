@@ -18,6 +18,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -25,4 +26,3 @@ tracelog
 
 # private-bin gpa,gpg
 private-dev
-notv

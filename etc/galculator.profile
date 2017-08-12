@@ -22,6 +22,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix
 seccomp
 shell none
@@ -31,4 +32,3 @@ private-bin galculator
 private-dev
 private-etc fonts
 private-tmp
-notv

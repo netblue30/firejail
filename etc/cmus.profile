@@ -16,10 +16,10 @@ caps.drop all
 netfilter
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6
 seccomp
 shell none
 
 private-bin cmus
 private-etc group
-notv

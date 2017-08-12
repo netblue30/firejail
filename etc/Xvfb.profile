@@ -28,6 +28,7 @@ nonewprivs
 # In noroot mode, Xvfb cannot create a socket in the real /tmp/.X11-unix.
 #noroot
 nosound
+notv
 protocol unix
 seccomp
 shell none
@@ -39,4 +40,3 @@ private
 private-dev
 private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname
 private-tmp
-notv

@@ -17,10 +17,10 @@ netfilter
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 tracelog
 
 private-dev
 # private-tmp
-notv

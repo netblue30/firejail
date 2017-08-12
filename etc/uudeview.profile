@@ -11,6 +11,7 @@ hostname uudeview
 ignore noroot
 net none
 nosound
+notv
 shell none
 tracelog
 
@@ -19,4 +20,3 @@ private-dev
 private-etc ld.so.preload
 
 include /etc/firejail/default.profile
-notv

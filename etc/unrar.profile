@@ -13,6 +13,7 @@ ignore noroot
 net none
 no3d
 nosound
+notv
 shell none
 tracelog
 
@@ -22,4 +23,3 @@ private-etc passwd,group,localtime
 private-tmp
 
 include /etc/firejail/default.profile
-notv

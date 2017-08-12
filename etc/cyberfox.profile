@@ -55,6 +55,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
@@ -68,4 +69,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-notv

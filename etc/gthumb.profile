@@ -19,6 +19,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix
 seccomp
 shell none
@@ -27,4 +28,3 @@ tracelog
 private-bin gthumb
 private-dev
 private-tmp
-notv

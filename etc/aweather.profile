@@ -22,6 +22,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix,inet,inet6
 seccomp
@@ -31,4 +32,3 @@ tracelog
 private-bin aweather
 private-dev
 private-tmp
-notv

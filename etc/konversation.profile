@@ -15,8 +15,8 @@ caps.drop all
 netfilter
 nogroups
 noroot
+notv
 protocol unix,inet,inet6
 seccomp
 
 private-tmp
-notv

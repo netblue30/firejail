@@ -17,6 +17,7 @@ caps.drop all
 no3d
 nonewprivs
 noroot
+notv
 novideo
 protocol unix,inet,inet6
 seccomp
@@ -27,4 +28,3 @@ private-tmp
 
 # noexec ${HOME} - tuxguitar may fail to launch
 noexec /tmp
-notv

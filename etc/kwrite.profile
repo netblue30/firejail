@@ -23,6 +23,7 @@ nogroups
 nonewprivs
 noroot
 # nosound - KWrite is using ALSA!
+notv
 novideo
 protocol unix
 seccomp
@@ -33,4 +34,3 @@ tracelog
 private-dev
 # private-etc fonts
 private-tmp
-notv

@@ -14,8 +14,8 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6
 seccomp
 
 # private-bin requires perl, python, etc.
-notv

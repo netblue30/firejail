@@ -19,6 +19,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 novideo
 protocol unix
 seccomp
@@ -29,4 +30,3 @@ private-bin pdftotext
 private-dev
 private-etc none
 private-tmp
-notv

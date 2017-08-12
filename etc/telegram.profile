@@ -15,6 +15,7 @@ caps.drop all
 netfilter
 nonewprivs
 noroot
+notv
 protocol unix,inet,inet6
 seccomp
 
@@ -23,4 +24,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-notv

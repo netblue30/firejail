@@ -18,6 +18,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix,inet,inet6
 shell none
 # seccomp
@@ -27,4 +28,3 @@ tracelog
 # private-dev
 # private-etc fonts
 # private-tmp
-notv

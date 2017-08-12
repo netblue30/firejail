@@ -19,6 +19,7 @@ nogroups
 nonewprivs
 noroot
 nosound
+notv
 protocol unix
 seccomp
 shell none
@@ -29,4 +30,3 @@ private-etc fonts
 private-tmp
 read-only ~/
 read-write ~/.local/share/zathura/
-notv

@@ -894,10 +894,11 @@ int sandbox(void* sandbox_arg) {
 	if (arg_notv)
 		fs_dev_disable_tv();
 
-	if (arg_novideo) {
-		// disable /dev/video*
+	if (arg_nodvd)
+		fs_dev_disable_dvd();
+
+	if (arg_novideo)
 		fs_dev_disable_video();
-	}
 
 	//****************************
 	// install trace

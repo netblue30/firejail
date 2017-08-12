@@ -411,6 +411,9 @@ env LD_LIBRARY_PATH=/opt/test/lib
 env CFLAGS="-W -Wall -Werror"
 
 .TP
+\fBnodvd
+Disable DVD and audio CD devices.
+.TP
 \fBnogroups
 Disable supplementary user groups
 .TP

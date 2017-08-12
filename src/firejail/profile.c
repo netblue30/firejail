@@ -229,6 +229,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_notv = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "nodvd") == 0) {
+		arg_nodvd = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "novideo") == 0) {
 		arg_novideo = 1;
 		return 0;

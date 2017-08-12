@@ -38,6 +38,7 @@ typedef enum {
 	DEV_3D,
 	DEV_VIDEO,
 	DEV_TV,
+	DEV_DVD,
 } DEV_TYPE;
 
 
@@ -74,6 +75,7 @@ static DevEntry dev[] = {
 	{"/dev/video8", RUN_DEV_DIR "/video8", DEV_VIDEO},
 	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
+	{"/dev/sr0", RUN_DEV_DIR "/sr0", DEV_DVD}, // for DVD and audio CD players
 	{NULL, NULL, DEV_NONE}
 };
 
@@ -87,7 +89,8 @@ static void deventry_mount(void) {
 			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
 			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
-			    (dev[i].type == DEV_TV && arg_notv == 0)) {
+			    (dev[i].type == DEV_TV && arg_notv == 0) ||
+			    (dev[i].type == DEV_DVD && arg_nodvd == 0)) {
 			
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)
@@ -251,6 +254,14 @@ void fs_private_dev(void){
 	create_link("/proc/self/fd/1", "/dev/stdout");
 	create_link("/proc/self/fd/2", "/dev/stderr");
 #endif
+
+	// symlinks for DVD/CD players
+	if (stat("/dev/sr0", &s) == 0) {
+		create_link("/dev/sr0", "/dev/cdrom");
+		create_link("/dev/sr0", "/dev/cdrw");
+		create_link("/dev/sr0", "/dev/dvd");
+		create_link("/dev/sr0", "/dev/dvdrw");
+	}
 }
 
 
@@ -339,6 +350,15 @@ void fs_dev_disable_tv(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_TV)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_dvd(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_DVD)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}

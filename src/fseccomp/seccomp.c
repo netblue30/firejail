@@ -27,9 +27,9 @@
 static void add_default_list(int fd, int allow_debuggers) {
 	int r;
 	if (!allow_debuggers)
-		r = syscall_check_list("@default-nodebuggers", filter_add_blacklist, fd, 0);
+		r = syscall_check_list("@default-nodebuggers", filter_add_blacklist, fd, 0, NULL);
 	else
-		r = syscall_check_list("@default", filter_add_blacklist, fd, 0);
+		r = syscall_check_list("@default", filter_add_blacklist, fd, 0, NULL);
 
 	assert(r == 0);
 //#ifdef SYS_mknod - emoved in 0.9.29 - it breaks Zotero extension
@@ -56,7 +56,7 @@ void seccomp_default(const char *fname, int allow_debuggers) {
 		exit(1);
 	}
 
-	// build filter
+	// build filter (no post-exec filter needed because default list is fine for us)
 	filter_init(fd);
 	add_default_list(fd, allow_debuggers);
 	filter_end_blacklist(fd);
@@ -66,44 +66,94 @@ void seccomp_default(const char *fname, int allow_debuggers) {
 }
 
 // drop list
-void seccomp_drop(const char *fname, char *list, int allow_debuggers) {
-	assert(fname);
+void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_debuggers) {
+	assert(fname1);
+	assert(fname2);
 	(void) allow_debuggers; // todo: to implemnet it
 
-	// open file
-	int fd = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	// open file for pre-exec filter
+	int fd = open(fname1, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd < 0) {
-		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname1);
 		exit(1);
 	}
 
-	// build filter
+	// build pre-exec filter: don't blacklist any syscalls in @default-keep
 	filter_init(fd);
-	if (syscall_check_list(list, filter_add_blacklist, fd, 0)) {
+	char *prelist, *postlist;
+	syscalls_in_list(list, "@default-keep", fd, &prelist, &postlist);
+	if (prelist)
+		if (syscall_check_list(prelist, filter_add_blacklist, fd, 0, NULL)) {
+			fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
+			exit(1);
+		}
+	filter_end_whitelist(fd);
+	// close file
+	close(fd);
+
+	if (!postlist)
+		return;
+
+	// open file for post-exec filter
+	fd = open(fname2, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (fd < 0) {
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname2);
+		exit(1);
+	}
+
+	// build post-exec filter: blacklist remaining syscalls
+	filter_init(fd);
+	if (syscall_check_list(postlist, filter_add_blacklist, fd, 0, NULL)) {
 		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 		exit(1);
 	}
-	filter_end_blacklist(fd);
+	filter_end_whitelist(fd);
 
 	// close file
 	close(fd);
 }
 
 // default+drop
-void seccomp_default_drop(const char *fname, char *list, int allow_debuggers) {
-	assert(fname);
+void seccomp_default_drop(const char *fname1, const char *fname2, char *list, int allow_debuggers) {
+	assert(fname1);
+	assert(fname2);
 
 	// open file
-	int fd = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	int fd = open(fname1, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd < 0) {
-		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname1);
 		exit(1);
 	}
 
-	// build filter
+	// build pre-exec filter: blacklist @default, don't blacklist
+	// any listed syscalls in @default-keep
 	filter_init(fd);
 	add_default_list(fd, allow_debuggers);
-	if (syscall_check_list(list, filter_add_blacklist, fd, 0)) {
+	char *prelist, *postlist;
+	syscalls_in_list(list, "@default-keep", fd, &prelist, &postlist);
+	if (prelist)
+		if (syscall_check_list(prelist, filter_add_blacklist, fd, 0, NULL)) {
+			fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
+			exit(1);
+		}
+	filter_end_blacklist(fd);
+
+	// close file
+	close(fd);
+
+	if (!postlist)
+		return;
+
+	// open file for post-exec filter
+	fd = open(fname2, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (fd < 0) {
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname2);
+		exit(1);
+	}
+
+	// build post-exec filter: blacklist remaining syscalls
+	filter_init(fd);
+	if (syscall_check_list(postlist, filter_add_blacklist, fd, 0, NULL)) {
 		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 		exit(1);
 	}
@@ -113,22 +163,42 @@ void seccomp_default_drop(const char *fname, char *list, int allow_debuggers) {
 	close(fd);
 }
 
-void seccomp_keep(const char *fname, char *list) {
-	// open file
-	int fd = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+void seccomp_keep(const char *fname1, const char *fname2, char *list) {
+	// open file for pre-exec filter
+	int fd = open(fname1, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd < 0) {
-		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname1);
 		exit(1);
 	}
 
-	// build filter
+	// build pre-exec filter: whitelist also @default-keep
 	filter_init(fd);
 	// these syscalls are used by firejail after the seccomp filter is initialized
 	int r;
-	r = syscall_check_list("@default-keep", filter_add_whitelist, fd, 0);
+	r = syscall_check_list("@default-keep", filter_add_whitelist, fd, 0, NULL);
 	assert(r == 0);
 
-	if (syscall_check_list(list, filter_add_whitelist, fd, 0)) {
+	if (syscall_check_list(list, filter_add_whitelist, fd, 0, NULL)) {
+		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
+		exit(1);
+	}
+
+	filter_end_whitelist(fd);
+
+	// close file
+	close(fd);
+
+	// open file for post-exec filter
+	fd = open(fname2, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (fd < 0) {
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname2);
+		exit(1);
+	}
+
+	// build post-exec filter: whitelist without @default-keep
+	filter_init(fd);
+
+	if (syscall_check_list(list, filter_add_whitelist, fd, 0, NULL)) {
 		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 		exit(1);
 	}

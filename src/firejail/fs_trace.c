@@ -63,6 +63,11 @@ void fs_trace(void) {
 		if (!arg_quiet)
 			printf("Blacklist violations are logged to syslog\n");
 	}
+	if (arg_seccomp_postexec) {
+		fprintf(fp, "%s/libpostexecseccomp.so\n", prefix);
+		if (!arg_quiet)
+			printf("Post-exec seccomp protector enabled\n");
+	}
 
 	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	fclose(fp);

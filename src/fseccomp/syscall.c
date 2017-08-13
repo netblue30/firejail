@@ -17,7 +17,9 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#define _GNU_SOURCE
 #include "fseccomp.h"
+#include <stdio.h>
 #include <sys/syscall.h>
 
 typedef struct {
@@ -29,6 +31,13 @@ typedef struct {
 	const char * const name;
 	const char * const list;
 } SyscallGroupList;
+
+typedef struct {
+	const char *slist;
+	char *prelist, *postlist;
+	bool found;
+	int syscall;
+} SyscallCheckList;
 
 static const SyscallEntry syslist[] = {
 //
@@ -174,6 +183,7 @@ static const SyscallGroupList sysgroups[] = {
 	},
 	{ .name = "@default-keep", .list =
 	  "dup,"
+	  "execve,"
 	  "prctl,"
 	  "setgid,"
 	  "setgroups,"
@@ -449,7 +459,7 @@ error:
 }
 
 // return 1 if error, 0 if OK
-int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg), int fd, int arg) {
+int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg, void *ptrarg), int fd, int arg, void *ptrarg) {
 	// don't allow empty lists
 	if (slist == NULL || *slist == '\0') {
 		fprintf(stderr, "Error fseccomp: empty syscall lists are not allowed\n");
@@ -477,7 +487,7 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 				fprintf(stderr, "Error fseccomp: unknown syscall group %s\n", ptr);
 				exit(1);
 			}
-			syscall_check_list(new_list, callback, fd, arg);
+			syscall_check_list(new_list, callback, fd, arg, ptrarg);
 		}
 		else {
 			syscall_process_name(ptr, &syscall_nr, &error_nr);
@@ -487,9 +497,9 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 			}
 			else if (callback != NULL) {
 				if (error_nr != -1)
-					filter_add_errno(fd, syscall_nr, error_nr);
+					filter_add_errno(fd, syscall_nr, error_nr, ptrarg);
 				else
-					callback(fd, syscall_nr, arg);
+					callback(fd, syscall_nr, arg, ptrarg);
 			}
 		}
 		ptr = strtok_r(NULL, ",", &saveptr);
@@ -497,4 +507,50 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 
 	free(str);
 	return 0;
+}
+
+static void find_syscall(int fd, int syscall, int arg, void *ptrarg) {
+	(void)fd;
+	SyscallCheckList *ptr = ptrarg;
+	if (syscall == ptr->syscall)
+		ptr->found = true;
+}
+
+// go through list2 and find matches for problem syscall
+static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg) {
+	(void)arg;
+	SyscallCheckList *ptr = ptrarg;
+	SyscallCheckList sl;
+	sl.found = false;
+	sl.syscall = syscall;
+	syscall_check_list(ptr->slist, find_syscall, fd, 0, &sl);
+	// if found in the problem list, add to post-exec list
+	if (sl.found)
+		if (ptr->postlist) {
+			if (asprintf(&ptr->postlist, "%s,%s", ptr->postlist, syscall_find_nr(syscall)) == -1)
+				errExit("asprintf");
+		}
+		else
+			ptr->postlist = strdup(syscall_find_nr(syscall));
+	else // no problem, add to pre-exec list
+		if (ptr->prelist) {
+			if (asprintf(&ptr->prelist, "%s,%s", ptr->prelist, syscall_find_nr(syscall)) == -1)
+				errExit("asprintf");
+		}
+		else
+			ptr->prelist = strdup(syscall_find_nr(syscall));
+}
+
+// go through list and find matches for syscalls in list @default-keep
+void syscalls_in_list(const char *list, const char *slist, int fd, char **prelist, char **postlist) {
+	SyscallCheckList sl;
+	// these syscalls are used by firejail after the seccomp filter is initialized
+	sl.slist = slist;
+	sl.prelist = NULL;
+	sl.postlist = NULL;
+	syscall_check_list(list, syscall_in_list, 0, 0, &sl);
+	if (!arg_quiet)
+		printf("list in: %s, check list: %s prelist: %s, postlist: %s\n", list, sl.slist, sl.prelist, sl.postlist);
+	*prelist = sl.prelist;
+	*postlist = sl.postlist;
 }

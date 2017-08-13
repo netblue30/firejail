@@ -60,8 +60,9 @@ void filter_init(int fd) {
 	write_to_file(fd, filter, sizeof(filter));
 }
 
-void filter_add_whitelist(int fd, int syscall, int arg) {
+void filter_add_whitelist(int fd, int syscall, int arg, void *ptrarg) {
 	(void) arg;
+	(void) ptrarg;
 
 	struct sock_filter filter[] = {
 		WHITELIST(syscall)
@@ -69,8 +70,9 @@ void filter_add_whitelist(int fd, int syscall, int arg) {
 	write_to_file(fd, filter, sizeof(filter));
 }
 
-void filter_add_blacklist(int fd, int syscall, int arg) {
+void filter_add_blacklist(int fd, int syscall, int arg, void *ptrarg) {
 	(void) arg;
+	(void) ptrarg;
 
 	struct sock_filter filter[] = {
 		BLACKLIST(syscall)
@@ -78,7 +80,8 @@ void filter_add_blacklist(int fd, int syscall, int arg) {
 	write_to_file(fd, filter, sizeof(filter));
 }
 
-void filter_add_errno(int fd, int syscall, int arg) {
+void filter_add_errno(int fd, int syscall, int arg, void *ptrarg) {
+	(void) ptrarg;
 	struct sock_filter filter[] = {
 		BLACKLIST_ERRNO(syscall, arg)
 	};

@@ -57,6 +57,7 @@
 #define RUN_SECCOMP_AMD64	"/run/firejail/mnt/seccomp.amd64"	// amd64 filter installed on i386 architectures
 #define RUN_SECCOMP_I386	"/run/firejail/mnt/seccomp.i386"		// i386 filter installed on amd64 architectures
 #define RUN_SECCOMP_MDWX	"/run/firejail/mnt/seccomp.mdwx"		// filter for memory-deny-write-execute
+#define RUN_SECCOMP_POSTEXEC	"/run/firejail/mnt/seccomp.postexec"		// filter for post-exec library
 #define PATH_SECCOMP_DEFAULT (LIBDIR "/firejail/seccomp")			// default filter built during make
 #define PATH_SECCOMP_DEFAULT_DEBUG (LIBDIR "/firejail/seccomp.debug")	// default filter built during make
 #define PATH_SECCOMP_AMD64 (LIBDIR "/firejail/seccomp.amd64")		// amd64 filter built during make
@@ -305,6 +306,7 @@ extern int arg_overlay_keep;	// place overlay diff in a known directory
 extern int arg_overlay_reuse;	// allow the reuse of overlays
 
 extern int arg_seccomp;	// enable default seccomp filter
+extern int arg_seccomp_postexec;	// need postexec ld.preload library?
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list
@@ -553,8 +555,6 @@ void caps_drop_dac_override(void);
 
 // syscall.c
 const char *syscall_find_nr(int nr);
-// return -1 if error, 0 if no error
-int syscall_check_list(const char *slist, void (*callback)(int syscall, int arg), int arg);
 
 // fs_trace.c
 void fs_trace_preload(void);

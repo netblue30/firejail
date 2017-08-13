@@ -30,8 +30,9 @@ extern int arg_quiet;
 
 // syscall.c
 void syscall_print(void);
-int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg), int fd, int arg);
+int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg, void *ptrarg), int fd, int arg, void *ptrarg);
 const char *syscall_find_nr(int nr);
+void syscalls_in_list(const char *list, const char *slist, int fd, char **prelist, char **postlist);
 
 // errno.c
 void errno_print(void);
@@ -49,9 +50,9 @@ void seccomp_secondary_32(const char *fname);
 // seccomp_file.c
 void write_to_file(int fd, const void *data, int size);
 void filter_init(int fd);
-void filter_add_whitelist(int fd, int syscall, int arg);
-void filter_add_blacklist(int fd, int syscall, int arg);
-void filter_add_errno(int fd, int syscall, int arg);
+void filter_add_whitelist(int fd, int syscall, int arg, void *ptrarg);
+void filter_add_blacklist(int fd, int syscall, int arg, void *ptrarg);
+void filter_add_errno(int fd, int syscall, int arg, void *ptrarg);
 void filter_end_blacklist(int fd);
 void filter_end_whitelist(int fd);
 
@@ -59,11 +60,11 @@ void filter_end_whitelist(int fd);
 // default list
 void seccomp_default(const char *fname, int allow_debuggers);
 // drop list
-void seccomp_drop(const char *fname, char *list, int allow_debuggers);
+void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_debuggers);
 // default+drop list
-void seccomp_default_drop(const char *fname, char *list, int allow_debuggers);
+void seccomp_default_drop(const char *fname1, const char *fname2, char *list, int allow_debuggers);
 // whitelisted filter
-void seccomp_keep(const char *fname, char *list);
+void seccomp_keep(const char *fname1, const char *fname2, char *list);
 // block writable and executable memory
 void memory_deny_write_execute(const char *fname);
 

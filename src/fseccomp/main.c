@@ -30,11 +30,11 @@ static void usage(void) {
 	printf("\tfseccomp secondary 32 file\n");
 	printf("\tfseccomp default file\n");
 	printf("\tfseccomp default file allow-debuggers\n");
-	printf("\tfseccomp drop file list\n");
-	printf("\tfseccomp drop file list allow-debuggers\n");
-	printf("\tfseccomp default drop file list\n");
-	printf("\tfseccomp default drop file list allow-debuggers\n");
-	printf("\tfseccomp keep file list\n");
+	printf("\tfseccomp drop file1 file2 list\n");
+	printf("\tfseccomp drop file1 file2 list allow-debuggers\n");
+	printf("\tfseccomp default drop file1 file2 list\n");
+	printf("\tfseccomp default drop file1 file2 list allow-debuggers\n");
+	printf("\tfseccomp keep file1 file2 list\n");
 	printf("\tfseccomp memory-deny-write-execute file\n");
 	printf("\tfseccomp print file\n");
 }
@@ -78,16 +78,16 @@ printf("\n");
 		seccomp_default(argv[2], 0);
 	else if (argc == 4 && strcmp(argv[1], "default") == 0 && strcmp(argv[3], "allow-debuggers") == 0)
 		seccomp_default(argv[2], 1);
-	else if (argc == 4 && strcmp(argv[1], "drop") == 0)
-		seccomp_drop(argv[2], argv[3], 0);
-	else if (argc == 5 && strcmp(argv[1], "drop") == 0 && strcmp(argv[4], "allow-debuggers") == 0)
-		seccomp_drop(argv[2], argv[3], 1);
-	else if (argc == 5 && strcmp(argv[1], "default") == 0 && strcmp(argv[2], "drop") == 0)
-		seccomp_default_drop(argv[3], argv[4], 0);
-	else if (argc == 6 && strcmp(argv[1], "default") == 0 && strcmp(argv[2], "drop") == 0 && strcmp(argv[5], "allow-debuggers") == 0)
-		seccomp_default_drop(argv[3], argv[4], 1);
-	else if (argc == 4 && strcmp(argv[1], "keep") == 0)
-		seccomp_keep(argv[2], argv[3]);
+	else if (argc == 5 && strcmp(argv[1], "drop") == 0)
+		seccomp_drop(argv[2], argv[3], argv[4], 0);
+	else if (argc == 6 && strcmp(argv[1], "drop") == 0 && strcmp(argv[5], "allow-debuggers") == 0)
+		seccomp_drop(argv[2], argv[3], argv[4], 1);
+	else if (argc == 6 && strcmp(argv[1], "default") == 0 && strcmp(argv[2], "drop") == 0)
+		seccomp_default_drop(argv[3], argv[4], argv[5], 0);
+	else if (argc == 7 && strcmp(argv[1], "default") == 0 && strcmp(argv[2], "drop") == 0 && strcmp(argv[6], "allow-debuggers") == 0)
+		seccomp_default_drop(argv[3], argv[4], argv[5], 1);
+	else if (argc == 5 && strcmp(argv[1], "keep") == 0)
+		seccomp_keep(argv[2], argv[3], argv[4]);
 	else if (argc == 3 && strcmp(argv[1], "memory-deny-write-execute") == 0)
 		memory_deny_write_execute(argv[2]);
 	else if (argc == 3 && strcmp(argv[1], "print") == 0)

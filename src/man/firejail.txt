@@ -1578,6 +1578,32 @@ $ rm testfile
 rm: cannot remove `testfile': Operation not permitted
 .br
 
+.br
+If the blocked system calls would also block Firejail from operating,
+they are handled by adding a preloaded library which performs seccomp
+system calls later.
+.br
+
+.br
+Example:
+.br
+
+.br
+$ firejail \-\-noprofile \-\-shell=none \-\-seccomp=execve bash
+.br
+Parent pid 32751, child pid 32752
+.br
+Post-exec seccomp protector enabled
+.br
+list in: execve, check list: @default-keep prelist: (null), postlist: execve
+.br
+Child process initialized in 46.44 ms
+.br
+$ ls
+.br
+Bad system call
+.br
+
 .TP
 \fB\-\-seccomp.drop=syscall,syscall,syscall
 Enable seccomp filter, and blacklist the syscalls specified by the command.

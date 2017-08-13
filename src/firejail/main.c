@@ -56,6 +56,7 @@ int arg_overlay_keep = 0;			// place overlay diff in a known directory
 int arg_overlay_reuse = 0;			// allow the reuse of overlays
 
 int arg_seccomp = 0;				// enable default seccomp filter
+int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
 
 int arg_caps_default_filter = 0;			// enable default capabilities filter
 int arg_caps_drop = 0;				// drop list

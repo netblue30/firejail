@@ -23,3 +23,4 @@ private-etc passwd,group,localtime
 private-tmp
 
 include /etc/firejail/default.profile
+nodvd

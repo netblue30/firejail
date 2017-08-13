@@ -28,3 +28,4 @@ tracelog
 disable-mnt
 private-dev
 private-tmp
+nodvd

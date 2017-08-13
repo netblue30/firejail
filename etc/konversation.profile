@@ -20,3 +20,4 @@ protocol unix,inet,inet6
 seccomp
 
 private-tmp
+nodvd

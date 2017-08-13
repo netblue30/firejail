@@ -25,3 +25,4 @@ seccomp
 disable-mnt
 private
 private-dev
+nodvd

@@ -28,3 +28,4 @@ tracelog
 private-bin gthumb
 private-dev
 private-tmp
+nodvd

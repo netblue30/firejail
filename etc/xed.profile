@@ -26,3 +26,4 @@ tracelog
 private-bin xed
 private-dev
 private-tmp
+nodvd

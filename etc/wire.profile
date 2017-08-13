@@ -29,3 +29,4 @@ shell none
 disable-mnt
 private-dev
 private-tmp
+nodvd

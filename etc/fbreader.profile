@@ -25,3 +25,4 @@ shell none
 private-bin fbreader,FBReader
 private-dev
 private-tmp
+nodvd

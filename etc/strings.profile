@@ -22,3 +22,4 @@ private-dev
 memory-deny-write-execute
 
 include /etc/firejail/default.profile
+nodvd

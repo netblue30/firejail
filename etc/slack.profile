@@ -37,3 +37,4 @@ private-bin slack
 private-dev
 private-etc fonts,resolv.conf,ld.so.conf,ld.so.cache,localtime
 private-tmp
+nodvd

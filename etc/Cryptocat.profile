@@ -25,3 +25,4 @@ shell none
 
 private-dev
 private-tmp
+nodvd

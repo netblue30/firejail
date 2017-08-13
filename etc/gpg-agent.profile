@@ -29,3 +29,4 @@ tracelog
 
 # private-bin gpg-agent,gpg
 private-dev
+nodvd

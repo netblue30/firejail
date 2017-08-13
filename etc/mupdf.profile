@@ -31,3 +31,4 @@ private-tmp
 
 # mupdf will never write anything
 read-only ${HOME}
+nodvd

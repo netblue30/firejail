@@ -35,3 +35,4 @@ noroot
 notv
 protocol unix,inet,inet6,netlink
 seccomp
+nodvd

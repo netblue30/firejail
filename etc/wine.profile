@@ -22,3 +22,4 @@ nonewprivs
 noroot
 notv
 seccomp
+nodvd

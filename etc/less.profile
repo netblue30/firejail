@@ -28,3 +28,4 @@ noexec ${HOME}
 noexec /tmp
 
 include /etc/firejail/default.profile
+nodvd

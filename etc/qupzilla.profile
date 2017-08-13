@@ -27,3 +27,4 @@ seccomp
 tracelog
 
 # private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
+nodvd

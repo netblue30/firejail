@@ -27,3 +27,4 @@ protocol unix
 seccomp
 shell none
 tracelog
+nodvd

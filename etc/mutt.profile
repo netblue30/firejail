@@ -48,3 +48,4 @@ seccomp
 shell none
 
 private-dev
+nodvd

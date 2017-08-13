@@ -30,3 +30,4 @@ private-dev
 private-etc none
 private-tmp
 read-only ${HOME}
+nodvd

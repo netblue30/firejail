@@ -28,3 +28,4 @@ shell none
 private-dev
 # private-etc
 private-tmp
+nodvd

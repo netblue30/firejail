@@ -29,3 +29,4 @@ tracelog
 private-bin pix
 private-dev
 private-tmp
+nodvd

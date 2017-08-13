@@ -30,3 +30,4 @@ private-etc none
 private-tmp
 
 memory-deny-write-execute
+nodvd

@@ -28,3 +28,4 @@ nonewprivs
 notv
 protocol unix,inet,inet6
 seccomp
+nodvd

@@ -26,3 +26,4 @@ tracelog
 private-bin pluma
 private-dev
 private-tmp
+nodvd

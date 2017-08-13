@@ -35,3 +35,4 @@ notv
 # seccomp
 
 # disable-mnt
+nodvd

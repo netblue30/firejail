@@ -20,3 +20,4 @@ private-dev
 private-etc ld.so.preload
 
 include /etc/firejail/default.profile
+nodvd

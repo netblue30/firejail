@@ -48,3 +48,4 @@ tracelog
 
 noexec ${HOME}
 noexec /tmp
+nodvd

@@ -39,3 +39,4 @@ tracelog
 private-dev
 private-etc fonts,resolv.conf,sword,sword.conf,passwd
 private-tmp
+nodvd

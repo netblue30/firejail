@@ -32,3 +32,4 @@ tracelog
 private-bin aweather
 private-dev
 private-tmp
+nodvd

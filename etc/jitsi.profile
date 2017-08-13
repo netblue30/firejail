@@ -24,3 +24,4 @@ tracelog
 
 disable-mnt
 private-tmp
+nodvd

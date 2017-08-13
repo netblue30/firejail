@@ -24,3 +24,4 @@ shell none
 private-bin rtorrent
 private-dev
 private-tmp
+nodvd

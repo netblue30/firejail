@@ -22,3 +22,4 @@ shell none
 
 private-bin parole,dbus-launch
 private-etc passwd,group,fonts
+nodvd

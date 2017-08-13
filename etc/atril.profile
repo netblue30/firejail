@@ -28,3 +28,4 @@ tracelog
 private-bin atril, atril-previewer, atril-thumbnailer
 private-dev
 private-tmp
+nodvd

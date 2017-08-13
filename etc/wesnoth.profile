@@ -31,3 +31,4 @@ seccomp
 
 private-dev
 private-tmp
+nodvd

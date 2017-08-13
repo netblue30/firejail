@@ -27,3 +27,4 @@ protocol unix
 seccomp
 
 private-dev
+nodvd

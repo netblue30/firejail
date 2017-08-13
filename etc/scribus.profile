@@ -38,3 +38,4 @@ tracelog
 
 private-dev
 # private-tmp
+nodvd

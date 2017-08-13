@@ -27,3 +27,4 @@ notv
 protocol unix,inet,inet6
 seccomp
 tracelog
+nodvd

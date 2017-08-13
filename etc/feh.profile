@@ -26,3 +26,4 @@ private-bin feh
 private-dev
 private-etc feh
 private-tmp
+nodvd

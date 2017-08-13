@@ -24,3 +24,4 @@ tracelog
 private-tmp
 
 noexec /tmp
+nodvd

@@ -27,3 +27,4 @@ include /etc/firejail/whitelist-common.inc
 
 netfilter
 notv
+nodvd

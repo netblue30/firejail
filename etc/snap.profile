@@ -15,3 +15,4 @@ whitelist ${DOWNLOADS}
 whitelist ~/snap
 include /etc/firejail/whitelist-common.inc
 notv
+nodvd

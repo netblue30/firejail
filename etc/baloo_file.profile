@@ -40,3 +40,4 @@ noexec /tmp
 # read-only  ${HOME}
 # read-write ${HOME}/.local/share
 # noexec     ${HOME}/.local/share
+nodvd

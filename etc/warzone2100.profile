@@ -33,3 +33,4 @@ disable-mnt
 private-bin warzone2100
 private-dev
 private-tmp
+nodvd

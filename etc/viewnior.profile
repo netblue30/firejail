@@ -33,3 +33,4 @@ private-bin viewnior
 private-dev
 private-etc fonts
 private-tmp
+nodvd

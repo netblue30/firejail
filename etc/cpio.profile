@@ -26,3 +26,4 @@ shell none
 tracelog
 
 private-dev
+nodvd

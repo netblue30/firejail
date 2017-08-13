@@ -20,3 +20,4 @@ include /etc/firejail/whitelist-common.inc
 notv
 
 include /etc/firejail/firefox.profile
+nodvd

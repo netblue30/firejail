@@ -18,16 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "libpostexecseccomp.h"
+#include "../include/seccomp.h"
 #include <fcntl.h>
-#include <linux/audit.h>
-#include <linux/bpf.h>
 #include <linux/filter.h>
-#include <linux/seccomp.h>
 #include <sys/mman.h>
 #include <sys/prctl.h>
-#include <sys/ptrace.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <unistd.h>
 
 __attribute__((constructor))

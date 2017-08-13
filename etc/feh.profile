@@ -13,6 +13,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -26,4 +27,3 @@ private-bin feh
 private-dev
 private-etc feh
 private-tmp
-nodvd

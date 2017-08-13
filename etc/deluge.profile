@@ -19,6 +19,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nonewprivs
 noroot
 nosound
@@ -32,4 +33,3 @@ shell none
 # private-bin deluge,sh,python,uname
 private-dev
 private-tmp
-nodvd

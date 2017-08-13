@@ -13,6 +13,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -24,4 +25,3 @@ tracelog
 
 disable-mnt
 private-tmp
-nodvd

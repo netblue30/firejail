@@ -15,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nodvd
 nonewprivs
 noroot
 nosound
@@ -26,4 +27,3 @@ shell none
 private-bin mcabber
 private-dev
 private-etc null
-nodvd

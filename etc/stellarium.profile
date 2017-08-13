@@ -21,6 +21,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -35,4 +36,3 @@ disable-mnt
 private-bin stellarium
 private-dev
 private-tmp
-nodvd

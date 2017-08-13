@@ -17,6 +17,7 @@ include /etc/firejail/disable-passwdmgr.inc
 caps.drop all
 net none
 no3d
+nodvd
 nonewprivs
 noroot
 nosound
@@ -26,4 +27,3 @@ protocol unix
 seccomp
 shell none
 tracelog
-nodvd

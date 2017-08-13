@@ -14,6 +14,7 @@ include /etc/firejail/disable-passwdmgr.inc
 caps.drop all
 net none
 no3d
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -30,4 +31,3 @@ private-tmp
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
-nodvd

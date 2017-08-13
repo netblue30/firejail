@@ -15,6 +15,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -27,4 +28,3 @@ shell none
 # private-bin geeqie
 private-dev
 # private-etc X11
-nodvd

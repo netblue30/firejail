@@ -14,6 +14,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -29,4 +30,3 @@ private-dev
 private-tmp
 
 memory-deny-write-execute
-nodvd

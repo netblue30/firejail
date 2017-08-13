@@ -19,9 +19,9 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 netfilter
 no3d
+nodvd
 nonewprivs
 noroot
 notv
 protocol unix,inet,inet6
 seccomp
-nodvd

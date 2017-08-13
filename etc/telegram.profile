@@ -13,6 +13,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nodvd
 nonewprivs
 noroot
 notv
@@ -24,4 +25,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-nodvd

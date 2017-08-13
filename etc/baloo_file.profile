@@ -18,6 +18,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -40,4 +41,3 @@ noexec /tmp
 # read-only  ${HOME}
 # read-write ${HOME}/.local/share
 # noexec     ${HOME}/.local/share
-nodvd

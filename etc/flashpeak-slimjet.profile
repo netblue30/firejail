@@ -30,9 +30,9 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nonewprivs
 noroot
 notv
 protocol unix,inet,inet6,netlink
 seccomp
-nodvd

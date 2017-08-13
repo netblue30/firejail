@@ -18,6 +18,7 @@ caps.drop all
 ipc-namespace
 netfilter
 no3d
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -34,4 +35,3 @@ private-dev
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
-nodvd

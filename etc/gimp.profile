@@ -13,6 +13,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -29,4 +30,3 @@ private-tmp
 # if you are not using external plugins, you can enable noexec statement below
 # noexec ${HOME}
 noexec /tmp
-nodvd

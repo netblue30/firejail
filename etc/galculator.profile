@@ -18,6 +18,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 net none
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -32,4 +33,3 @@ private-bin galculator
 private-dev
 private-etc fonts
 private-tmp
-nodvd

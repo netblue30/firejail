@@ -19,6 +19,7 @@ caps.drop all
 net none
 net none
 no3d
+nodvd
 nosound
 notv
 seccomp
@@ -26,4 +27,3 @@ shell none
 tracelog
 
 private-dev
-nodvd

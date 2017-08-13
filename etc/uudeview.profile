@@ -10,6 +10,7 @@ include /etc/firejail/globals.local
 hostname uudeview
 ignore noroot
 net none
+nodvd
 nosound
 notv
 shell none
@@ -20,4 +21,3 @@ private-dev
 private-etc ld.so.preload
 
 include /etc/firejail/default.profile
-nodvd

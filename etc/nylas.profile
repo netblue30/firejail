@@ -20,6 +20,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -30,4 +31,3 @@ seccomp
 shell none
 
 private-dev
-nodvd

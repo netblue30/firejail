@@ -15,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 
 netfilter
 no3d
+nodvd
 nonewprivs
 nosound
 notv
@@ -30,4 +31,3 @@ private-tmp
 read-write /var/lib/bitlbee
 
 noexec /tmp
-nodvd

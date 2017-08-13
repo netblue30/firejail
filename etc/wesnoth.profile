@@ -23,6 +23,7 @@ whitelist ${HOME}/.local/share/wesnoth
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
+nodvd
 nonewprivs
 noroot
 notv
@@ -31,4 +32,3 @@ seccomp
 
 private-dev
 private-tmp
-nodvd

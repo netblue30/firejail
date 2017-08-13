@@ -17,6 +17,7 @@ include /etc/firejail/disable-passwdmgr.inc
 caps.drop all
 netfilter
 no3d
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -29,4 +30,3 @@ shell none
 
 noexec ${HOME}
 noexec /tmp
-nodvd

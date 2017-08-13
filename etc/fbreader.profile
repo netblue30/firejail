@@ -14,6 +14,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nodvd
 nonewprivs
 noroot
 nosound
@@ -25,4 +26,3 @@ shell none
 private-bin fbreader,FBReader
 private-dev
 private-tmp
-nodvd

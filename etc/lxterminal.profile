@@ -13,7 +13,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 netfilter
 # noroot - somehow this breaks on Debian Jessie!
+nodvd
 notv
 protocol unix,inet,inet6
 seccomp
-nodvd

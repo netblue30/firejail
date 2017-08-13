@@ -21,8 +21,8 @@ whitelist ~/Documents/Wolfram Mathematica
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
+nodvd
 nonewprivs
 noroot
 notv
 seccomp
-nodvd

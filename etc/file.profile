@@ -16,6 +16,7 @@ caps.drop all
 hostname file
 net none
 no3d
+nodvd
 nogroups
 nonewprivs
 nosound
@@ -29,4 +30,3 @@ x11 none
 private-bin file
 private-dev
 private-etc magic.mgc,magic,localtime
-nodvd

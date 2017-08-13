@@ -12,6 +12,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+nodvd
 nonewprivs
 noroot
 notv
@@ -19,4 +20,3 @@ protocol unix,inet,inet6
 seccomp
 
 # private-bin requires perl, python, etc.
-nodvd

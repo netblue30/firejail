@@ -14,6 +14,7 @@ include /etc/firejail/disable-devel.inc
 caps.drop all
 net none
 no3d
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -30,4 +31,3 @@ tracelog
 # private-bin bash,catfish,env,locate,ls,mlocate,python,python2,python2.7,python3,python3.5,python3.5m,python3m
 # private-dev
 # private-tmp
-nodvd

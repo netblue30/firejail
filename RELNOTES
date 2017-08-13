@@ -1,6 +1,6 @@
 firejail (0.9.49) baseline; urgency=low
   * work in progress!
-  * modif: --output split in two commands: --output and --output-stderr
+  * modif: --output split in two commands, --output and --output-stderr
   * feature: per-profile disable-mnt (--disable-mnt)
   * feature: per-profile support to set X11 Xephyr screen size (--xephyr-screen)
   * enhancement: /proc/sys mounting

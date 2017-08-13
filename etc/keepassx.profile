@@ -19,6 +19,7 @@ caps.drop all
 machine-id
 net none
 no3d
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -37,4 +38,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-nodvd

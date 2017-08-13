@@ -13,6 +13,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -28,4 +29,3 @@ tracelog
 private-dev
 # private-etc fonts
 # private-tmp
-nodvd

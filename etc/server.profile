@@ -21,6 +21,7 @@ include /etc/firejail/disable-programs.inc
 
 caps
 no3d
+nodvd
 nosound
 notv
 novideo
@@ -37,4 +38,3 @@ private-tmp
 # memory-deny-write-execute
 # noexec ${HOME}
 # noexec /tmp
-nodvd

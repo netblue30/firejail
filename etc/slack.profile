@@ -24,6 +24,7 @@ include /etc/firejail/whitelist-common.inc
 caps.drop all
 name slack
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -37,4 +38,3 @@ private-bin slack
 private-dev
 private-etc fonts,resolv.conf,ld.so.conf,ld.so.cache,localtime
 private-tmp
-nodvd

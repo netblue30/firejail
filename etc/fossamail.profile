@@ -17,7 +17,7 @@ whitelist ~/.fossamail
 whitelist ~/.gnupg
 include /etc/firejail/whitelist-common.inc
 
+nodvd
 notv
 
 include /etc/firejail/firefox.profile
-nodvd

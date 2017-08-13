@@ -18,6 +18,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -28,4 +29,3 @@ tracelog
 disable-mnt
 private-dev
 private-tmp
-nodvd

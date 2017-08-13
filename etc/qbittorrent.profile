@@ -29,6 +29,7 @@ include /etc/firejail/whitelist-common.inc
 caps.drop all
 machine-id
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -42,4 +43,3 @@ seccomp
 private-dev
 # private-etc X11,fonts,xdg,resolv.conf
 private-tmp
-nodvd

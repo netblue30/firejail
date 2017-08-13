@@ -16,6 +16,7 @@ include /etc/firejail/disable-programs.inc
 caps
 netfilter
 no3d
+nodvd
 nonewprivs
 nosound
 notv
@@ -25,4 +26,3 @@ seccomp
 disable-mnt
 private
 private-dev
-nodvd

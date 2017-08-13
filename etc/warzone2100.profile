@@ -20,6 +20,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -33,4 +34,3 @@ disable-mnt
 private-bin warzone2100
 private-dev
 private-tmp
-nodvd

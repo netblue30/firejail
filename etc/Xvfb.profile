@@ -23,6 +23,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 # Xvfb needs to be allowed access to the abstract Unix socket namespace.
+nodvd
 nogroups
 nonewprivs
 # In noroot mode, Xvfb cannot create a socket in the real /tmp/.X11-unix.
@@ -40,4 +41,3 @@ private
 private-dev
 private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname
 private-tmp
-nodvd

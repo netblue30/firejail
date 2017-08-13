@@ -13,6 +13,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nodvd
 nonewprivs
 noroot
 nosound
@@ -24,4 +25,3 @@ shell none
 private-bin rtorrent
 private-dev
 private-tmp
-nodvd

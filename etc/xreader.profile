@@ -15,6 +15,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -28,4 +29,3 @@ tracelog
 private-bin xreader, xreader-previewer, xreader-thumbnailer
 private-dev
 private-tmp
-nodvd

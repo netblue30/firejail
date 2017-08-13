@@ -17,6 +17,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 netfilter
 no3d
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -29,4 +30,3 @@ tracelog
 
 # private-bin gpg,gpg-agent
 private-dev
-nodvd

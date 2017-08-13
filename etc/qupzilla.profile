@@ -20,6 +20,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 noroot
 notv
 protocol unix,inet,inet6,netlink
@@ -27,4 +28,3 @@ seccomp
 tracelog
 
 # private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
-nodvd

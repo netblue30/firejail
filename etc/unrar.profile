@@ -12,6 +12,7 @@ hostname unrar
 ignore noroot
 net none
 no3d
+nodvd
 nosound
 notv
 shell none
@@ -23,4 +24,3 @@ private-etc passwd,group,localtime
 private-tmp
 
 include /etc/firejail/default.profile
-nodvd

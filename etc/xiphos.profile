@@ -22,6 +22,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -36,4 +37,3 @@ private-bin xiphos
 private-dev
 private-etc fonts,resolv.conf,sword
 private-tmp
-nodvd

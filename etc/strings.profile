@@ -11,6 +11,7 @@ blacklist /tmp/.X11-unix
 ignore noroot
 net none
 no3d
+nodvd
 nosound
 notv
 novideo
@@ -24,4 +25,3 @@ private-lib
 memory-deny-write-execute
 
 include /etc/firejail/default.profile
-nodvd

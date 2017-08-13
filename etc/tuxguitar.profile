@@ -15,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 no3d
+nodvd
 nonewprivs
 noroot
 notv
@@ -28,4 +29,3 @@ private-tmp
 
 # noexec ${HOME} - tuxguitar may fail to launch
 noexec /tmp
-nodvd

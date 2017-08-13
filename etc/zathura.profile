@@ -15,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -30,4 +31,3 @@ private-etc fonts
 private-tmp
 read-only ~/
 read-write ~/.local/share/zathura/
-nodvd

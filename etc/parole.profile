@@ -13,6 +13,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nodvd
 nonewprivs
 noroot
 notv
@@ -22,4 +23,3 @@ shell none
 
 private-bin parole,dbus-launch
 private-etc passwd,group,fonts
-nodvd

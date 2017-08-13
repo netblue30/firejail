@@ -16,6 +16,7 @@ whitelist ~/.unknown-horizons
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -28,4 +29,3 @@ shell none
 private-dev
 # private-etc none
 private-tmp
-nodvd

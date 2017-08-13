@@ -14,6 +14,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nodvd
 nonewprivs
 noroot
 nosound
@@ -25,4 +26,3 @@ shell none
 private-bin filezilla,uname,sh,bash,dash,python,lsb_release,fzputtygen,fzsftp
 private-dev
 private-tmp
-nodvd

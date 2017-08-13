@@ -11,6 +11,7 @@ blacklist /tmp/.X11-unix
 ignore noroot
 net none
 no3d
+nodvd
 nosound
 notv
 novideo
@@ -20,4 +21,3 @@ tracelog
 private-dev
 
 include /etc/firejail/default.profile
-nodvd

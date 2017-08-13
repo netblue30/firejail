@@ -24,6 +24,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.keep sys_chroot,sys_admin
 netfilter
+nodvd
 nogroups
 notv
 shell none
@@ -33,4 +34,3 @@ private-dev
 
 noexec ${HOME}
 noexec /tmp
-nodvd

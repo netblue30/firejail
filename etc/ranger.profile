@@ -18,6 +18,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -27,4 +28,3 @@ protocol unix
 seccomp
 
 private-dev
-nodvd

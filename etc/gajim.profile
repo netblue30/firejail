@@ -28,6 +28,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -43,4 +44,3 @@ private-dev
 # private-tmp
 # Allow the local python 2.7 site packages, in case any plugins are using these
 read-only ${HOME}/.local/lib/python2.7/site-packages/
-nodvd

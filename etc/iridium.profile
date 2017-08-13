@@ -23,5 +23,5 @@ whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 
 netfilter
-notv
 nodvd
+notv

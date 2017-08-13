@@ -24,6 +24,7 @@ protocol unix
 seccomp
 shell none
 
+private-bin baobab
 private-dev
 private-tmp
 

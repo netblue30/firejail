@@ -25,6 +25,7 @@ seccomp
 shell none
 
 disable-mnt
+# private-bin pithos,python,python3,python3.6
 private-dev
 private-tmp
 

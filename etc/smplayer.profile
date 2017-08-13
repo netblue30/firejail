@@ -22,7 +22,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin smplayer,mplayer
+private-bin smplayer,mplayer,mpv
 private-dev
 private-tmp
 

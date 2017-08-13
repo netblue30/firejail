@@ -27,10 +27,16 @@ void check_output(int argc, char **argv) {
 
 	int i;
 	int outindex = 0;
-
+	int enable_stderr = 0;
+	
 	for (i = 1; i < argc; i++) {
 		if (strncmp(argv[i], "--output=", 9) == 0) {
 			outindex = i;
+			break;
+		}
+		if (strncmp(argv[i], "--output-stderr=", 16) == 0) {
+			outindex = i;
+			enable_stderr = 1;
 			break;
 		}
 	}
@@ -40,9 +46,9 @@ void check_output(int argc, char **argv) {
 
 	// check filename
 	drop_privs(0);
-	char *outfile = NULL;
-	invalid_filename(argv[outindex] + 9);
-	outfile = argv[outindex] + 9;
+	char *outfile = argv[outindex];
+	outfile += (enable_stderr)? 16:9;
+	invalid_filename(outfile);
 
 	// do not accept directories, links, and files with ".."
 	if (strstr(outfile, "..") || is_link(outfile) || is_dir(outfile)) {
@@ -80,9 +86,15 @@ void check_output(int argc, char **argv) {
 	for (i = 0; i < argc; i++) {
 		if (strncmp(argv[i], "--output=", 9) == 0)
 			continue;
+		if (strncmp(argv[i], "--output-stderr=", 16) == 0)
+			continue;
 		ptr += sprintf(ptr, "%s ", argv[i]);
 	}
-	sprintf(ptr, "2>&1 | %s/firejail/ftee %s", LIBDIR, outfile);
+	
+	if (enable_stderr)
+		sprintf(ptr, "2>&1 | %s/firejail/ftee %s", LIBDIR, outfile);
+	else
+		sprintf(ptr, " | %s/firejail/ftee %s", LIBDIR, outfile);
 
 	// run command
 	char *a[4];

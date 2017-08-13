@@ -1139,6 +1139,10 @@ $ ls -l sandboxlog*
 -rw-r--r-- 1 netblue netblue 511488 Jun  2 07:48 sandboxlog.5
 
 .TP
+\fB\-\-output-stderr=logfile
+Similar to \-\-output, but stderr is also stored.
+
+.TP
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.

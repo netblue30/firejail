@@ -112,6 +112,10 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
               Example:
               $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 fire‐
               fox
+
+       --output-stderr=logfile
+              Similar to --output, but stderr is also stored.
+
 `````
 
 ## /etc/firejail/firejail.config

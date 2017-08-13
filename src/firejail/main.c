@@ -1022,7 +1022,7 @@ int main(int argc, char **argv) {
 	}
 	else {
 		// check --output option and execute it;
-		check_output(argc, argv); // the function will not return if --output option was found
+		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
 	}
 
 

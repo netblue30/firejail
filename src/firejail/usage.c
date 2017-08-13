@@ -134,11 +134,12 @@ void usage(void) {
 	printf("    --novideo - disable video devices.\n");
 	printf("    --nowhitelist=filename - disable whitelist for file or directory .\n");
 	printf("    --output=logfile - stdout logging and log rotation.\n");
+	printf("    --output-stderr=logfile - stdout and stderr logging and log rotation.\n");
 	printf("    --overlay - mount a filesystem overlay on top of the current filesystem.\n");
 	printf("    --overlay-named=name - mount a filesystem overlay on top of the current\n");
 	printf("\tfilesystem, and store it in name directory.\n");
-	printf("    --overlay-tmpfs - mount a temporary filesystem overlay on top of the current\n");
-	printf("\tfilesystem.\n");
+	printf("    --overlay-tmpfs - mount a temporary filesystem overlay on top of the\n");
+	printf("\tcurrent filesystem.\n");
 	printf("    --overlay-clean - clean all overlays stored in $HOME/.firejail directory.\n");
 	printf("    --private - temporary home directory.\n");
 	printf("    --private=directory - use directory as user home.\n");

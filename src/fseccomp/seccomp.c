@@ -87,7 +87,7 @@ void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_
 			fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 			exit(1);
 		}
-	filter_end_whitelist(fd);
+	filter_end_blacklist(fd);
 	// close file
 	close(fd);
 
@@ -107,7 +107,7 @@ void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_
 		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 		exit(1);
 	}
-	filter_end_whitelist(fd);
+	filter_end_blacklist(fd);
 
 	// close file
 	close(fd);

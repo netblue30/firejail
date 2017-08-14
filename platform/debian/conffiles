@@ -4,6 +4,7 @@
 /etc/firejail/Cryptocat.profile
 /etc/firejail/Cyberfox.profile
 /etc/firejail/FossaMail.profile
+/etc/firejail/Gitter.profile
 /etc/firejail/Mathematica.profile
 /etc/firejail/Telegram.profile
 /etc/firejail/Thunar.profile
@@ -93,6 +94,7 @@
 /etc/firejail/filezilla.profile
 /etc/firejail/firefox-esr.profile
 /etc/firejail/firefox.profile
+/etc/firejail/firefox-nightly.profile
 /etc/firejail/firejail.config
 /etc/firejail/flashpeak-slimjet.profile
 /etc/firejail/flowblade.profile
@@ -291,6 +293,7 @@
 /etc/firejail/telegram.profile
 /etc/firejail/thunar.profile
 /etc/firejail/thunderbird.profile
+/etc/firejail/torbrowser-launcher.profile
 /etc/firejail/totem.profile
 /etc/firejail/tracker.profile
 /etc/firejail/transmission-cli.profile

@@ -1,4 +1,5 @@
 # Firejail
+[![Build Status](https://travis-ci.org/netblue30/firejail.svg?branch=master)](https://travis-ci.org/netblue30/firejail)
 
 Firejail is a SUID sandbox program that reduces the risk of security breaches by restricting
 the running environment of untrusted applications using Linux namespaces, seccomp-bpf

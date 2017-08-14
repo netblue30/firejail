@@ -384,6 +384,7 @@ Simon Peter (https://github.com/probonopd)
 	- set $APPIMAGE and $APPDIR environment variables
 	- AppImage version detection
 	- Leafppad type v1 and v2 appimage packages in test/appimage
+	- GitHub/Travis CI integration
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH

@@ -5,6 +5,7 @@ include /etc/firejail/gitter.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ~/.config/autostart
 noblacklist ~/.config/Gitter
 
 include /etc/firejail/disable-common.inc

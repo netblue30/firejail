@@ -4,8 +4,4 @@ sudo: true
 
 script:
   - sudo apt-get -y install expect csh zsh
-  - ( cd firejail ; ./configure --prefix=/usr && make && sudo make install && make test-travis )
-  - ( cd firejail ; sudo make install-strip DESTDIR=$(readlink -f appdir) )
-  - ( cd appdir/ ; tar cfvj ../firejail-travis-build.tar.bz2 . )
-  - curl --upload-file ./firejail-*.tar.bz2 https://transfer.sh/firejail-travis-build.tar.bz2
-  - # Could use https://github.com/probonopd/uploadtool to upload to GitHub Releases instead
+  - ( cd firejail ; ./configure --prefix=/usr --enable-git-install && make && sudo make install && make test-travis )

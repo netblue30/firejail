@@ -28,6 +28,8 @@ Documentation: https://firejail.wordpress.com/documentation-2/
 
 FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
 
+Travis-CI status: https://travis-ci.org/netblue30/firejail
+
 
 ## Compile and install
 `````
@@ -94,6 +96,10 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 
 `````
 # Current development version: 0.9.49
+
+## Travis-CI integration
+
+Check the status of the latest build here: https://travis-ci.org/netblue30/firejail
 
 ## New command options:
 `````

@@ -28,12 +28,37 @@
 static int apply_caps = 0;
 static uint64_t caps = 0;
 static int apply_seccomp = 0;
+static unsigned display = 0;
 #define BUFLEN 4096
 
 static void signal_handler(int sig){
 	flush_stdin();
 
 	exit(sig);
+}
+
+
+
+static void extract_x11_display(pid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
+		errExit("asprintf");
+
+	FILE *fp = fopen(fname, "r");
+	free(fname);
+	if (!fp)
+		return;
+
+	if (1 != fscanf(fp, "%d", &display)) {
+		fprintf(stderr, "Error: cannot read X11 display file\n");
+		return;
+	}
+
+	// check display range
+	if (display < X11_DISPLAY_START || display > X11_DISPLAY_END) {
+		fprintf(stderr, "Error: invalid X11 display range\n");
+		return;
+	}
 }
 
 static void extract_command(int argc, char **argv, int index) {
@@ -176,6 +201,7 @@ static void extract_user_namespace(pid_t pid) {
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
 	char *homedir = cfg.homedir;
+	pid_t parent = pid;
 
 	extract_command(argc, argv, index);
 	signal (SIGTERM, signal_handler);
@@ -205,6 +231,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			exit(1);
 		}
 	}
+
+	extract_x11_display(parent);
 
 	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
@@ -316,7 +344,16 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			}
 		}
 
+		// set environment, add x11 display
 		env_defaults();
+		if (display) {
+			char *display_str;
+			if (asprintf(&display_str, ":%d", display) == -1)
+				errExit("asprintf");
+			setenv("DISPLAY", display_str, 1);
+			free(display_str);
+		}
+
 		if (cfg.command_line == NULL) {
 			assert(cfg.shell);
 			cfg.command_line = cfg.shell;

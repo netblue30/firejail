@@ -134,11 +134,7 @@ static int random_display_number(void) {
 		errExit("socket");
 
 	for (i = 0; i < 100; i++) {
-		// We try display numbers in the range 21 through 1000.
-		// Normal X servers typically use displays in the 0-10 range;
-		// ssh's X11 forwarding uses 10-20, and login screens
-		// (e.g. gdm3) may use displays above 1000.
-		display = rand() % 979 + 21;
+		display = rand() % (X11_DISPLAY_END - X11_DISPLAY_START) + X11_DISPLAY_START;
 
 		// The display number might be claimed by a server listening
 		// in _either_ the normal or the abstract namespace; they

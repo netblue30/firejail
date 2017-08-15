@@ -670,6 +670,15 @@ void fs_mkdir(const char *name);
 void fs_mkfile(const char *name);
 
 // x11.c
+
+// X11 display range as assigned by --x11 options
+//     We try display numbers in the range 21 through 1000.
+//     Normal X servers typically use displays in the 0-10 range;
+//     ssh's X11 forwarding uses 10-20, and login screens
+//     (e.g. gdm3) may use displays above 1000.
+#define X11_DISPLAY_START 21
+#define X11_DISPLAY_END 1000
+
 void fs_x11(void);
 int x11_display(void);
 void x11_start(int argc, char **argv);

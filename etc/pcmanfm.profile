@@ -15,7 +15,7 @@ include /etc/firejail/disable-passwdmgr.inc
 # include /etc/firejail/disable-programs.inc
 
 caps.drop all
-net none
+# net none - see issue #1467, computer:/// location broken
 no3d
 nodvd
 nonewprivs

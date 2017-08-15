@@ -511,6 +511,7 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 
 static void find_syscall(int fd, int syscall, int arg, void *ptrarg) {
 	(void)fd;
+	(void) arg;
 	SyscallCheckList *ptr = ptrarg;
 	if (syscall == ptr->syscall)
 		ptr->found = true;
@@ -518,6 +519,7 @@ static void find_syscall(int fd, int syscall, int arg, void *ptrarg) {
 
 // go through list2 and find matches for problem syscall
 static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg) {
+	(void) fd;
 	(void)arg;
 	SyscallCheckList *ptr = ptrarg;
 	SyscallCheckList sl;
@@ -543,6 +545,7 @@ static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg) {
 
 // go through list and find matches for syscalls in list @default-keep
 void syscalls_in_list(const char *list, const char *slist, int fd, char **prelist, char **postlist) {
+	(void) fd;
 	SyscallCheckList sl;
 	// these syscalls are used by firejail after the seccomp filter is initialized
 	sl.slist = slist;

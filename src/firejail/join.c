@@ -51,8 +51,10 @@ static void extract_x11_display(pid_t pid) {
 
 	if (1 != fscanf(fp, "%d", &display)) {
 		fprintf(stderr, "Error: cannot read X11 display file\n");
+		fclose(fp);
 		return;
 	}
+	fclose(fp);
 
 	// check display range
 	if (display < X11_DISPLAY_START || display > X11_DISPLAY_END) {

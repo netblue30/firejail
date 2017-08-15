@@ -176,7 +176,7 @@ static void copy_libs_for_exe(const char *exe) {
 			if (!ptr_ok(dbuf, base, end, "dbuf"))
 				goto close;
 			// Find DT_RPATH/DT_RUNPATH tags first
-			long size = sbuf->sh_size;
+			unsigned long size = sbuf->sh_size;
 			while (size >= sizeof(*dbuf) && ptr_ok(dbuf, base, end, "dbuf")) {
 				if (dbuf->d_tag == DT_RPATH || dbuf->d_tag ==  DT_RUNPATH) {
 					const char *searchpath = strbase + dbuf->d_un.d_ptr;

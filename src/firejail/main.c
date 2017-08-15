@@ -129,7 +129,6 @@ unsigned long long start_timestamp;
 
 static void set_name_file(pid_t pid);
 static void delete_name_file(pid_t pid);
-static void set_x11_file(pid_t pid, int display);
 static void delete_x11_file(pid_t pid);
 
 void clear_run_files(pid_t pid) {
@@ -738,7 +737,7 @@ static void delete_name_file(pid_t pid) {
 	free(fname);
 }
 
-static void set_x11_file(pid_t pid, int display) {
+void set_x11_file(pid_t pid, int display) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
 		errExit("asprintf");

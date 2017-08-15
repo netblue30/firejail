@@ -376,6 +376,7 @@ extern char *fullargv[MAX_ARGS];
 extern int fullargc;
 
 // main.c
+void set_x11_file(pid_t pid, int display);
 void check_user_namespace(void);
 char *guess_shell(void);
 

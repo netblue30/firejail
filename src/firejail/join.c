@@ -61,6 +61,11 @@ static void extract_x11_display(pid_t pid) {
 		fprintf(stderr, "Error: invalid X11 display range\n");
 		return;
 	}
+
+	// store the display number for join process in /run/firejail/x11
+	EUID_ROOT();
+	set_x11_file(getpid(), display);
+	EUID_USER();
 }
 
 static void extract_command(int argc, char **argv, int index) {

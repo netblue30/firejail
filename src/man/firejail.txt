@@ -1004,6 +1004,11 @@ sandbox. For root user supplementary groups are always disabled.
 .br
 
 .br
+Note: By default all regular user groups are removed with the exception of the current user. This can be changed
+using \-\-allusers command option.
+.br
+
+.br
 Example:
 .br
 $ id

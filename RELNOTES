@@ -9,6 +9,8 @@ firejail (0.9.49) baseline; urgency=low
   * enhancement: support for newer Xpra versions (2.1+) -
      set "xpra-attach yes" in /etc/firejail/firejail.config
   * enhancement: all profiles use a standard layout style
+  * enhancement: disable CDROM/DVD drive (--nodvd)
+  * enhancement: disable DVD devices (--notv)
   * new profiles: curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite,
   * new profiles: Geary, Liferea, peek, silentarmy, IntelliJ IDEA,
   * new profiles: Android Studio, electron, riot-web, Extreme Tux Racer,

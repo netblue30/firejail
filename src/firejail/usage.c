@@ -148,8 +148,8 @@ void usage(void) {
 	printf("\tthe new home.\n");
 	printf("    --private-bin=file,file - build a new /bin in a temporary filesystem,\n");
 	printf("\tand copy the programs in the list.\n");
-	printf("    --private-dev - create a new /dev directory. Only dri, null, full, zero,\n");
-	printf("\ttty, pst, ptms, random, snd, urandom, log and shm devices are available.\n");
+	printf("    --private-dev - create a new /dev directory with a small number of\n");
+	printf("\tcommon device files.\n");
 	printf("    --private-etc=file,directory - build a new /etc in a temporary\n");
 	printf("\tfilesystem, and copy the files and directories in the list.\n");
 	printf("    --private-tmp - mount a tmpfs on top of /tmp directory.\n");
@@ -158,10 +158,11 @@ void usage(void) {
 	printf("    --profile-path=directory - use this directory to look for profile files.\n");
 	printf("    --protocol=protocol,protocol,protocol - enable protocol filter.\n");
 	printf("    --protocol.print=name|pid - print the protocol filter.\n");
-	printf("    --put=name|pid src-filename dest-filename - put a file in sandbox container.\n");
+	printf("    --put=name|pid src-filename dest-filename - put a file in sandbox\n");
+	printf("\tcontainer.\n");
 	printf("    --quiet - turn off Firejail's output.\n");
 	printf("    --read-only=filename - set directory or file read-only..\n");
-	printf("    --read-write=filename - set directory or file read-write..\n");
+	printf("    --read-write=filename - set directory or file read-write.\n");
 	printf("    --rlimit-fsize=number - set the maximum file size that can be created\n");
 	printf("\tby a process.\n");
 	printf("    --rlimit-nofile=number - set the maximum number of files that can be\n");

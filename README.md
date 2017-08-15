@@ -123,6 +123,17 @@ Check the status of the latest build here: https://travis-ci.org/netblue30/firej
        --output-stderr=logfile
               Similar to --output, but stderr is also stored.
 
+      --notv Disable DVB (Digital Video Broadcasting) TV devices.
+
+              Example:
+              $ firejail --notv vlc
+
+       --nodvd
+              Disable DVD and audio CD devices.
+
+              Example:
+              $ firejail --nodvd
+
 `````
 
 ## /etc/firejail/firejail.config

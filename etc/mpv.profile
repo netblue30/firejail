@@ -23,5 +23,5 @@ seccomp
 shell none
 tracelog
 
-private-bin mpv,youtube-dl,python,python2.7,python3.6,env
+private-bin mpv,youtube-dl,python,python2.7,python3,python3.5,python3.6,env
 private-dev

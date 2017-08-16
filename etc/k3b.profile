@@ -16,7 +16,6 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 no3d
-nodvd
 nonewprivs
 noroot
 nosound

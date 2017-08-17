@@ -135,8 +135,12 @@ static char *valid_file(const char *lib) {
 
 
 void fs_private_lib(void) {
-	char *private_list = cfg.lib_private_keep;
+#ifndef __x86_64__
+	fwarning("private-lib feature is currently available only on amd64 platforms\n");
+	return;
+#endif
 
+	char *private_list = cfg.lib_private_keep;
 	if (arg_debug)
 		printf("Starting private-lib processing: program %s, shell %s\n",
 			(cfg.original_program_index > 0)? cfg.original_argv[cfg.original_program_index]: "none",

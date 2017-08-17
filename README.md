@@ -139,6 +139,34 @@ Check the status of the latest build here: https://travis-ci.org/netblue30/firej
               mappings  that are both writable and executable, to change map‐
               pings to be executable or to create executable shared memory.
 
+       --private-lib=file,directory
+              This  feature  is currently under heavy development. Only amd64
+              platforms are supported at this moment.  The idea is to build a
+              new /lib in a temporary filesystem, with only the library files
+              necessary to run the application.  It could be as simple as:
+
+              $ firejail --private-lib galculator
+
+              but it gets complicated really fast:
+
+              $   firejail   --private-lib=x86_64-linux-gnu/xed,x86_64-linux-
+              gnu/gdk-pixbuf-2.0,libenchant.so.1,librsvg-2.so.2 xed
+
+              The feature is integrated with --private-bin:
+
+              $ firejail --private-lib --private-bin=bash,ls,ps
+              $ ls /lib
+              ld-linux-x86-64.so.2  libgpg-error.so.0  libprocps.so.6 libsys‐
+              temd.so.0
+              libc.so.6 liblz4.so.1 libpthread.so.0 libtinfo.so.5
+              libdl.so.2 liblzma.so.5 librt.so.1 x86_64-linux-gnu
+              libgcrypt.so.20 libpcre.so.3 libselinux.so.1
+              $ ps
+               PID TTY          TIME CMD
+                  1 pts/0    00:00:00 firejail
+                 45 pts/0    00:00:00 bash
+                 48 pts/0    00:00:00 ps
+              $
 
 `````
 

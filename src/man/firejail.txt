@@ -1272,32 +1272,55 @@ $ ls /bin
 bash  cat  ls  sed
 
 .TP
-\fB\-\-private-lib=file,file
-Build a new /lib in a temporary filesystem. For command to be executed,
-the shell (if \-\-shell=none is not used), and the listed libraries
-find out dynamic libraries and copy them to the /lib directory.
-If no listed file is found, /lib directory will be empty and no programs will be able to execute.
-The same directory is also bind-mounted over /lib64 and /usr/lib.
-All modifications are discarded when the sandbox is closed.
+\fB\-\-private-lib=file,directory
+This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
+The idea is to build a new /lib in a temporary filesystem,
+with only the library files necessary to run the application.
+It could be as simple as:
 .br
 
 .br
-Example:
+$ firejail --private-lib galculator
 .br
-$ firejail \-\-noprofile \-\-shell=none \-\-private-lib= \-\-private-bin=ls /bin/ls /lib /bin
+
 .br
-Parent pid 15733, child pid 15734
+but it gets complicated really fast:
 .br
-Child process initialized in 69.61 ms
+
 .br
-/bin:
+$ firejail --private-lib=x86_64-linux-gnu/xed,x86_64-linux-gnu/gdk-pixbuf-2.0,libenchant.so.1,librsvg-2.so.2 xed
 .br
-ls
+
 .br
+The feature is integrated with \-\-private-bin:
 .br
-/lib:
+
 .br
-ld-linux-x86-64.so.2  libc.so.6  libdl.so.2  libpcre.so.3  libpthread.so.0  libselinux.so.1
+$ firejail --private-lib --private-bin=bash,ls,ps
+.br
+$ ls /lib
+.br
+ld-linux-x86-64.so.2 libgpg-error.so.0 libprocps.so.6 libsystemd.so.0
+.br
+libc.so.6 liblz4.so.1 libpthread.so.0 libtinfo.so.5
+.br
+libdl.so.2 liblzma.so.5 librt.so.1 x86_64-linux-gnu
+.br
+libgcrypt.so.20 libpcre.so.3 libselinux.so.1
+.br
+$ ps
+.br
+ PID TTY          TIME CMD
+.br
+    1 pts/0    00:00:00 firejail
+.br
+   45 pts/0    00:00:00 bash
+.br
+   48 pts/0    00:00:00 ps
+.br
+$ 
+.br
+
 
 .TP
 \fB\-\-private-dev

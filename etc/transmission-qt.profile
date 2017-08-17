@@ -35,3 +35,5 @@ tracelog
 private-bin transmission-qt
 private-dev
 private-tmp
+
+memory-deny-write-execute

@@ -134,6 +134,12 @@ Check the status of the latest build here: https://travis-ci.org/netblue30/firej
               Example:
               $ firejail --nodvd
 
+      --memory-deny-write-execute
+              Install a seccomp filter to block  attempts  to  create  memory
+              mappings  that are both writable and executable, to change map‐
+              pings to be executable or to create executable shared memory.
+
+
 `````
 
 ## /etc/firejail/firejail.config

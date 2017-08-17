@@ -312,6 +312,11 @@ Enable seccomp filter and blacklist  the system calls in the list.
 \fBseccomp.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list.
 .TP
+\fBmemory-deny-write-execute
+Install a seccomp filter to block attempts to create memory mappings
+that are both writable and executable, to change mappings to be
+executable or to create executable shared memory.
+.TP
 \fBnonewprivs
 Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
 cannot acquire new privileges using execve(2);  in particular,

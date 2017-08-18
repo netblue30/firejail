@@ -15,6 +15,9 @@ fi
 
 export PATH="$PATH:/usr/lib/firejail"
 
+echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"
+./memwrexe.exp
+
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp
 

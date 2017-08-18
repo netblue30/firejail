@@ -237,6 +237,7 @@ void memory_deny_write_execute(const char *fname) {
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_WRITE|PROT_EXEC, 0, 1),
 		KILL_PROCESS,
 		RETURN_ALLOW,
+
 		// block mprotect(,,PROT_EXEC) so writable memory can't be turned into executable
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_mprotect, 0, 5),
 		EXAMINE_ARGUMENT(2),
@@ -244,6 +245,9 @@ void memory_deny_write_execute(const char *fname) {
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
 		KILL_PROCESS,
 		RETURN_ALLOW,
+
+// shmat is not implemented as a syscall on some platforms (i386, possibly arm)
+#ifdef SYS_shmat
 		// block shmat(,,x|SHM_EXEC) so W&X shared memory can't be created
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_shmat, 0, 5),
 		EXAMINE_ARGUMENT(2),
@@ -251,6 +255,7 @@ void memory_deny_write_execute(const char *fname) {
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SHM_EXEC, 0, 1),
 		KILL_PROCESS,
 		RETURN_ALLOW
+#endif
 	};
 	write_to_file(fd, filter, sizeof(filter));
 

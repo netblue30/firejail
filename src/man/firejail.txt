@@ -744,7 +744,15 @@ $ firejail \-\-machine-id
 \fB\-\-memory-deny-write-execute
 Install a seccomp filter to block attempts to create memory mappings
 that are both writable and executable, to change mappings to be
-executable or to create executable shared memory.
+executable, or to create executable shared memory. The filter examines
+the arguments of mmap, mmap2, mprotect and shmat system calls
+and kills the process if necessary.
+.br
+
+.br
+Note: shmat is not implemented
+as a system call on some platforms including i386, and it cannot be
+handled by seccomp-bpf.
 
 .TP
 \fB\-\-mtu=number

@@ -1,0 +1,34 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2017 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --memory-deny-write-execute ./memwrexe mmap\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"mmap successful" {puts "TESTING ERROR 2\n";exit}
+	"Parent is shutting down"
+}
+after 100
+
+send --  "firejail --memory-deny-write-execute ./memwrexe mprotect\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"mprotect successful" {puts "TESTING ERROR 12\n";exit}
+	"Parent is shutting down"
+}
+
+after 100
+puts "\nall done\n"

@@ -72,7 +72,7 @@ expect {
 }
 
 after 100
-send -- "fseccomp drop seccomp-test-file chmod,chown\r"
+send -- "fseccomp drop seccomp-test-file tmpfile chmod,chown\r"
 after 100
 send -- "fseccomp print seccomp-test-file\r"
 expect {
@@ -91,7 +91,7 @@ expect {
 }
 
 after 100
-send -- "fseccomp default drop seccomp-test-file chmod,chown\r"
+send -- "fseccomp default drop seccomp-test-file tmpfile chmod,chown\r"
 after 100
 send -- "fseccomp print seccomp-test-file\r"
 expect {
@@ -115,7 +115,7 @@ expect {
 	"RETURN_ALLOW"
 }
 after 100
-send -- "fseccomp keep seccomp-test-file chmod,chown\r"
+send -- "fseccomp keep seccomp-test-file tmpfile chmod,chown\r"
 after 100
 send -- "fseccomp print seccomp-test-file\r"
 expect {

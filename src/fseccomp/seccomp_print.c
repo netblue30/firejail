@@ -63,13 +63,14 @@ errexit:
 	exit(1);
 }
 
-// debug filter
-void filter_print(const char *fname) {
-	assert(fname);
-	load_seccomp(fname);
+static int detect_filter_type(void) {
+	// the filter ishould already be load in filter variable
+	assert(filter);
 
-	// start filter
-	const struct sock_filter start[] = {
+	printf("SECCOMP Filter\n");
+	
+	// testing for main seccomp filter, protocol, mdwe - platform architecture
+	const struct sock_filter start_main[] = {
 		VALIDATE_ARCHITECTURE,
 #if defined(__x86_64__)
 		EXAMINE_SYSCALL,
@@ -78,25 +79,56 @@ void filter_print(const char *fname) {
 		EXAMINE_SYSCALL
 #endif
 	};
-
-	// print sizes
-	printf("SECCOMP Filter:\n");
-
-	// test the start of the filter
-	if (memcmp(&start[0], filter, sizeof(start)) == 0) {
+	
+	if (memcmp(&start_main[0], filter, sizeof(start_main)) == 0) {
 		printf("  VALIDATE_ARCHITECTURE\n");
 		printf("  EXAMINE_SYSCALL\n");
 #if defined(__x86_64__)
 		printf("  HANDLE_X32\n");
 #endif
+		return sizeof(start_main) / sizeof(struct sock_filter);
 	}
-	else {
+	
+	
+	// testing for secondare amd64 filter
+	const struct sock_filter start_secondary_64[] = {
+		VALIDATE_ARCHITECTURE,
+		EXAMINE_SYSCALL,
+	};
+	
+	if (memcmp(&start_secondary_64[0], filter, sizeof(start_secondary_64)) == 0) {
+		printf("  VALIDATE_ARCHITECTURE_64\n");
+		printf("  EXAMINE_SYSCALL\n");
+		return sizeof(start_secondary_64) / sizeof(struct sock_filter);
+	}
+	
+	// testing for secondare i386 filter
+	const struct sock_filter start_secondary_32[] = {
+		VALIDATE_ARCHITECTURE_32,
+		EXAMINE_SYSCALL,
+	};
+	
+	if (memcmp(&start_secondary_32[0], filter, sizeof(start_secondary_32)) == 0) {
+		printf("  VALIDATE_ARCHITECTURE_32\n");
+		printf("  EXAMINE_SYSCALL\n");
+		return sizeof(start_secondary_32) / sizeof(struct sock_filter);
+	}
+	
+	return 0; // filter unrecognized
+}
+
+// debug filter
+void filter_print(const char *fname) {
+	assert(fname);
+	load_seccomp(fname);
+
+	int i = detect_filter_type();
+	if (i == 0) {
 		printf("Invalid seccomp filter %s\n", fname);
 		return;
 	}
-
-	// loop trough blacklists
-	int i = sizeof(start) / sizeof(struct sock_filter);
+	
+	// loop trough the rest of commands
 	while (i < filter_cnt) {
 		// minimal parsing!
 		struct sock_filter *s = (struct sock_filter *) &filter[i];

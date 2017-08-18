@@ -207,4 +207,5 @@ curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite, Geary, Liferea, peek, s
 IntelliJ IDEA, Android Studio, electron, riot-web,
 Extreme Tux Racer, Frozen Bubble, Open Invaders, Pingus, Simutrans, SuperTux,
 telegram-desktop, arm, rambox, apktool, baobab, dex2jar, gitg, hashcat, obs, picard,
-remmina, sdat2img, soundconverter, sqlitebrowse, truecraft, gnome-twitch
+remmina, sdat2img, soundconverter, sqlitebrowse, truecraft, gnome-twitch, tuxguitar,
+musescore

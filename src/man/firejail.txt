@@ -830,7 +830,7 @@ $ firejail \-\-net=none vlc
 .br
 
 .br
-Note: \-\-net=none could crush the application on some platforms.
+Note: \-\-net=none can crash the application on some platforms.
 In these cases, it can be replaced with \-\-protocol=unix.
 
 .TP

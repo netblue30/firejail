@@ -44,6 +44,8 @@ blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mousepad
 blacklist ${HOME}/.config/Mumble
+blacklist ${HOME}/.config/MusE
+blacklist ${HOME}/.config/MuseScore
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
@@ -274,6 +276,8 @@ blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/data/Mumble
+blacklist ${HOME}/.local/share/data/MusE
+blacklist ${HOME}/.local/share/data/MuseScore
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/epiphany

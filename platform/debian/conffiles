@@ -216,6 +216,7 @@
 /etc/firejail/mumble.profile
 /etc/firejail/mupdf.profile
 /etc/firejail/mupen64plus.profile
+/etc/firejail/musescore.profile
 /etc/firejail/mutt.profile
 /etc/firejail/nautilus.profile
 /etc/firejail/nemo.profile

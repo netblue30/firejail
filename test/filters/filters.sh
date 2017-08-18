@@ -15,8 +15,12 @@ fi
 
 export PATH="$PATH:/usr/lib/firejail"
 
-echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"
-./memwrexe.exp
+if [ "$(uname -m)" = "x86_64" ]; then
+    echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"
+    ./memwrexe.exp
+else
+    echo "TESTING SKIP: memwrexe binary only running on x86_64."
+fi
 
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp

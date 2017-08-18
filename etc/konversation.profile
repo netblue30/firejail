@@ -15,9 +15,12 @@ caps.drop all
 netfilter
 nodvd
 nogroups
+nonewprivs
 noroot
 notv
+novideo
 protocol unix,inet,inet6
 seccomp
+tracelog
 
 private-tmp

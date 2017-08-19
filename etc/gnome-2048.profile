@@ -18,7 +18,6 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
-no3d
 nodvd
 nonewprivs
 noroot

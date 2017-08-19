@@ -126,6 +126,8 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- added VirtualBox.profile
 	- various other profile fixes
 	- added digiKam profile
+da2x (https://github.com/da2x)
+	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
 	- protect shell startup files
 Dara Adib (https://github.com/daradib)
@@ -223,6 +225,7 @@ hamzadis (https://github.com/hamzadis)
 hawkey116477 (https://github.com/hawkeye116477)
 	- added Waterfox profile
 	- updated Cyberfox profile
+	- updated Waterfox profile
 Helmut Grohne (https://github.com/helmutg)
 	-  compiler support in the build system - Debian bug #869707
 Holger Heinz (https://github.com/hheinz)
@@ -338,6 +341,9 @@ Pixel Fairy (https://github.com/xahare)
 	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
 PizzaDude (https://github.com/pizzadude)
 	- add mpv support to smplayer
+	- added profile for torbrowser-launcher
+probonopd (https://github.com/probonopd)
+	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)
 	- added FossaMail profile
 pstn (https://github.com/pstn)
@@ -390,6 +396,11 @@ sinkuu (https://github.com/sinkuu)
 	- fix symlink invocation for programs placing symlinks in $PATH
 smithsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
+	- enhanced mediathekview profile
+	- added tuxguitar profile
+	- removed nodvd from k3b profile
+	- profile hardening
+	- added MuseScore profile
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 SpotComms (https://github.com/SpotComms)
@@ -415,7 +426,10 @@ SpotComms (https://github.com/SpotComms)
 	- added apktool, baobab, dex2jar, gitg, hashcat, obs, picard, remmina, sdat2img,
 	soundconverter, sqlitebrowser, and truecraft profiles
 	- added gnome-twitch profile
-	- Unified all 341 profiles 
+	- Unified all 341 profiles
+	- profile tightening with private-bin
+	- fix notv and nodvd placement
+	- added novideo and noexec /tmp to Tor browser profile
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)

@@ -430,6 +430,7 @@ SpotComms (https://github.com/SpotComms)
 	- profile tightening with private-bin
 	- fix notv and nodvd placement
 	- added novideo and noexec /tmp to Tor browser profile
+	- fixed Gnome 2048 on wayland
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)

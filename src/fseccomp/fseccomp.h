@@ -46,6 +46,7 @@ void protocol_build_filter(const char *prlist, const char *fname);
 // seccomp_secondary.c
 void seccomp_secondary_64(const char *fname);
 void seccomp_secondary_32(const char *fname);
+void seccomp_secondary_block(const char *fname);
 
 // seccomp_file.c
 void write_to_file(int fd, const void *data, int size);

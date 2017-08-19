@@ -57,6 +57,7 @@ int arg_overlay_reuse = 0;			// allow the reuse of overlays
 
 int arg_seccomp = 0;				// enable default seccomp filter
 int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
+int arg_seccomp_block_secondary = 0;		// block any secondary architectures
 
 int arg_caps_default_filter = 0;			// enable default capabilities filter
 int arg_caps_drop = 0;				// drop list
@@ -1143,6 +1144,13 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
+			}
+			else
+				exit_err_feature("seccomp");
+		}
+		else if (strcmp(argv[i], "--seccomp.block-secondary") == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				arg_seccomp_block_secondary = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -2238,6 +2246,10 @@ int main(int argc, char **argv) {
 			exit(1);
 		}
 	}
+
+	// enable seccomp if only seccomp.block-secondary was specified
+	if (arg_seccomp_block_secondary)
+		arg_seccomp = 1;
 
 	// log command
 	logargs(argc, argv);

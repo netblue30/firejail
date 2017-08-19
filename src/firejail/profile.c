@@ -577,6 +577,16 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "seccomp.block-secondary") == 0) {
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP)) {
+			arg_seccomp_block_secondary = 1;
+		}
+		else
+			warning_feature_disabled("seccomp");
+#endif
+		return 0;
+	}
 	// seccomp drop list without default list
 	if (strncmp(ptr, "seccomp.drop ", 13) == 0) {
 #ifdef HAVE_SECCOMP

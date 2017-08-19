@@ -30,4 +30,5 @@ seccomp
 seccomp.debug
 seccomp.i386
 seccomp.amd64
+seccomp.block_secondary
 seccomp.mdwx

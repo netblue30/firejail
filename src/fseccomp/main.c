@@ -28,6 +28,7 @@ static void usage(void) {
 	printf("\tfseccomp protocol build list file\n");
 	printf("\tfseccomp secondary 64 file\n");
 	printf("\tfseccomp secondary 32 file\n");
+	printf("\tfseccomp secondary block file\n");
 	printf("\tfseccomp default file\n");
 	printf("\tfseccomp default file allow-debuggers\n");
 	printf("\tfseccomp drop file1 file2 list\n");
@@ -74,6 +75,8 @@ printf("\n");
 		seccomp_secondary_64(argv[3]);
 	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "32") == 0)
 		seccomp_secondary_32(argv[3]);
+	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "block") == 0)
+		seccomp_secondary_block(argv[3]);
 	else if (argc == 3 && strcmp(argv[1], "default") == 0)
 		seccomp_default(argv[2], 0);
 	else if (argc == 4 && strcmp(argv[1], "default") == 0 && strcmp(argv[3], "allow-debuggers") == 0)

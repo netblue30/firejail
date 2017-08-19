@@ -113,6 +113,25 @@ static int detect_filter_type(void) {
 		printf("  EXAMINE_SYSCALL\n");
 		return sizeof(start_secondary_32) / sizeof(struct sock_filter);
 	}
+
+	const struct sock_filter start_secondary_block[] = {
+		VALIDATE_ARCHITECTURE_KILL,
+#if defined(__x86_64__)
+		EXAMINE_SYSCALL,
+		HANDLE_X32_KILL,
+#else
+		EXAMINE_SYSCALL
+#endif
+	};
+
+	if (memcmp(&start_secondary_block[0], filter, sizeof(start_secondary_block)) == 0) {
+		printf("  VALIDATE_ARCHITECTURE_KILL\n");
+		printf("  EXAMINE_SYSCALL\n");
+#if defined(__x86_64__)
+		printf("  HANDLE_X32_KILL\n");
+#endif
+		return sizeof(start_secondary_block) / sizeof(struct sock_filter);
+	}
 	
 	return 0; // filter unrecognized
 }

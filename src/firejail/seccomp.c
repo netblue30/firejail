@@ -118,7 +118,7 @@ errexit:
 }
 
 // i386 filter installed on amd64 architectures
-void seccomp_filter_32(void) {
+static void seccomp_filter_32(void) {
 	if (seccomp_load(RUN_SECCOMP_I386) == 0) {
 		if (arg_debug)
 			printf("Dual i386/amd64 seccomp filter configured\n");
@@ -126,10 +126,17 @@ void seccomp_filter_32(void) {
 }
 
 // amd64 filter installed on i386 architectures
-void seccomp_filter_64(void) {
+static void seccomp_filter_64(void) {
 	if (seccomp_load(RUN_SECCOMP_AMD64) == 0) {
 		if (arg_debug)
 			printf("Dual i386/amd64 seccomp filter configured\n");
+	}
+}
+
+static void seccomp_filter_block_secondary(void) {
+	if (seccomp_load(RUN_SECCOMP_BLOCK_SECONDARY) == 0) {
+		if (arg_debug)
+			printf("Secondary arch blocking seccomp filter configured\n");
 	}
 }
 
@@ -143,21 +150,29 @@ int seccomp_filter_drop(int enforce_seccomp) {
 	if (cfg.seccomp_list_drop == NULL) {
 		// default seccomp
 		if (cfg.seccomp_list == NULL) {
+			if (arg_seccomp_block_secondary)
+				seccomp_filter_block_secondary();
+			else {
 #if defined(__x86_64__)
-			seccomp_filter_32();
+				seccomp_filter_32();
 #endif
 #if defined(__i386__)
-			seccomp_filter_64();
+				seccomp_filter_64();
 #endif
+			}
 		}
 		// default seccomp filter with additional drop list
 		else { // cfg.seccomp_list != NULL
+			if (arg_seccomp_block_secondary)
+				seccomp_filter_block_secondary();
+			else {
 #if defined(__x86_64__)
-			seccomp_filter_32();
+				seccomp_filter_32();
 #endif
 #if defined(__i386__)
-			seccomp_filter_64();
+				seccomp_filter_64();
 #endif
+			}
 			if (arg_debug)
 				printf("Build default+drop seccomp filter\n");
 
@@ -175,7 +190,10 @@ int seccomp_filter_drop(int enforce_seccomp) {
 	}
 
 	// drop list without defaults - secondary filters are not installed
+	// except when secondary architectures are explicitly blocked
 	else { // cfg.seccomp_list_drop != NULL
+		if (arg_seccomp_block_secondary)
+			seccomp_filter_block_secondary();
 		if (arg_debug)
 			printf("Build drop seccomp filter\n");
 
@@ -216,6 +234,11 @@ int seccomp_filter_drop(int enforce_seccomp) {
 
 // keep filter for seccomp option
 int seccomp_filter_keep(void) {
+	// secondary filters are not installed except when secondary
+	// architectures are explicitly blocked
+	if (arg_seccomp_block_secondary)
+		seccomp_filter_block_secondary();
+
 	if (arg_debug)
 		printf("Build drop seccomp filter\n");
 

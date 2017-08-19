@@ -19,7 +19,28 @@
 */
 #include "fseccomp.h"
 #include "../include/seccomp.h"
+#include <sys/personality.h>
 #include <sys/syscall.h>
+
+static void write_filter(const char *fname, size_t size, const void *filter) {
+	// save filter to file
+	int dst = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (dst < 0) {
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
+		exit(1);
+	}
+
+	size_t written = 0;
+	while (written < size) {
+		ssize_t rv = write(dst, (unsigned char *) filter + written, size - written);
+		if (rv == -1) {
+			fprintf(stderr, "Error fseccomp: cannot write %s file\n", fname);
+			exit(1);
+		}
+		written += rv;
+	}
+	close(dst);
+}
 
 void seccomp_secondary_64(const char *fname) {
 	// hardcoded syscall values
@@ -84,23 +105,7 @@ void seccomp_secondary_64(const char *fname) {
 	};
 
 	// save filter to file
-	int dst = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (dst < 0) {
-		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
-		exit(1);
-	}
-
-	int size = (int) sizeof(filter);
-	int written = 0;
-	while (written < size) {
-		int rv = write(dst, (unsigned char *) filter + written, size - written);
-		if (rv == -1) {
-			fprintf(stderr, "Error fseccomp: cannot write %s file\n", fname);
-			exit(1);
-		}
-		written += rv;
-	}
-	close(dst);
+	write_filter(fname, sizeof(filter), filter);
 }
 
 // i386 filter installed on amd64 architectures
@@ -166,21 +171,47 @@ void seccomp_secondary_32(const char *fname) {
 	};
 
 	// save filter to file
-	int dst = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (dst < 0) {
-		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
-		exit(1);
-	}
+	write_filter(fname, sizeof(filter), filter);
+}
 
-	int size = (int) sizeof(filter);
-	int written = 0;
-	while (written < size) {
-		int rv = write(dst, (unsigned char *) filter + written, size - written);
-		if (rv == -1) {
-			fprintf(stderr, "Error fseccomp: cannot write %s file\n", fname);
-			exit(1);
-		}
-		written += rv;
-	}
-	close(dst);
+#define jmp_from_to(from_addr, to_addr) ((to_addr) - (from_addr) - 1)
+
+#if __BYTE_ORDER == __BIG_ENDIAN
+#define MSW 0
+#define LSW (sizeof(int))
+#else
+#define MSW (sizeof(int))
+#define LSW 0
+#endif
+
+void seccomp_secondary_block(const char *fname) {
+	struct sock_filter filter[] = {
+		// block other architectures
+		VALIDATE_ARCHITECTURE_KILL,
+		EXAMINE_SYSCALL,
+#if defined(__x86_64__)
+		// block x32
+		HANDLE_X32_KILL,
+#endif
+		// block personality(2) where domain != PER_LINUX or 0xffffffff (query current personality)
+		// 0: if  personality(2), continue to 1, else goto 7 (allow)
+		BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, SYS_personality, 0, jmp_from_to(0, 7)),
+		// 1: get LSW of system call argument 0
+		BPF_STMT(BPF_LD + BPF_W + BPF_ABS, (offsetof(struct seccomp_data, args[0])) + LSW),
+		// 2: if LSW(arg0) == PER_LINUX, goto step 4, else continue to 3
+		BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, PER_LINUX, jmp_from_to(2, 4), 0),
+		// 3: if LSW(arg0) == 0xffffffff, continue to 4, else goto 6 (kill)
+		BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, 0xffffffff, 0, jmp_from_to(3, 6)),
+		// 4: get MSW of system call argument 0
+		BPF_STMT(BPF_LD + BPF_W + BPF_ABS, (offsetof(struct seccomp_data, args[0])) + MSW),
+		// 5: if MSW(arg0) == 0, goto 7 (allow) else continue to 6 (kill)
+		BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, 0, jmp_from_to(5, 7), 0),
+		// 6:
+		KILL_PROCESS,
+		// 7:
+		RETURN_ALLOW
+	};
+
+	// save filter to file
+	write_filter(fname, sizeof(filter), filter);
 }

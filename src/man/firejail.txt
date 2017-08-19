@@ -1572,9 +1572,10 @@ system call can be specified by its number instead of name with prefix
 $, so for example $165 would be equal to mount on i386.
 
 .br
-System architecture is not strictly imposed. The filter is applied
-at run time only if the correct architecture was detected. For the case of I386 and AMD64
-both 32-bit and 64-bit filters are installed.
+System architecture is strictly imposed only if flag
+\-\-seccomp.block_secondary is used. The filter is applied at run time
+only if the correct architecture was detected. For the case of I386
+and AMD64 both 32-bit and 64-bit filters are installed.
 .br
 
 .br
@@ -1643,6 +1644,14 @@ Child process initialized in 46.44 ms
 $ ls
 .br
 Bad system call
+.br
+
+.TP
+\fB\-\-seccomp.block_secondary
+Enable seccomp filter and filter system call architectures so that
+only the native architecture is allowed. For example, on amd64, i386
+and x32 system calls are blocked as well as changing the execution
+domain with personality(2) system call.
 .br
 
 .TP

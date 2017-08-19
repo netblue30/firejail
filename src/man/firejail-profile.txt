@@ -310,6 +310,10 @@ Enable seccomp filter and blacklist the syscalls in the default list. See man 1 
 \fBseccomp syscall,syscall,syscall
 Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter.
 .TP
+\fBseccomp.block-secondary
+Enable seccomp filter and filter system call architectures
+so that only the native architecture is allowed.
+.TP
 \fBseccomp.drop syscall,syscall,syscall
 Enable seccomp filter and blacklist  the system calls in the list.
 .TP

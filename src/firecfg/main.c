@@ -579,6 +579,26 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "The proper way to run this command is \"sudo firecfg\".\n");
 		return 1;
 	}
+	else {
+		// create /usr/local directory if it doesn't exist (Solus distro)
+		struct stat s;
+		if (stat("/usr/local", &s) != 0) {
+			printf("Creating /usr/local directory\n");
+			int rv = mkdir("/usr/local", 0755);
+			if (rv != 0) {
+				fprintf(stderr, "Error: cannot create /usr/local directory\n");
+				return 1;
+			}
+		}
+		if (stat("/usr/local/bin", &s) != 0) {
+			printf("Creating /usr/local directory\n");
+			int rv = mkdir("/usr/local/bin", 0755);
+			if (rv != 0) {
+				fprintf(stderr, "Error: cannot create /usr/local/bin directory\n");
+				return 1;
+			}
+		}
+	}
 	set_links();
 
 

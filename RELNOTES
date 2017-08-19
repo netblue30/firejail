@@ -13,6 +13,7 @@ firejail (0.9.49) baseline; urgency=low
   * enhancement: support for newer Xpra versions (2.1+) -
      set "xpra-attach yes" in /etc/firejail/firejail.config
   * enhancement: all profiles use a standard layout style
+  * enhancement: create /usr/local for firecfg if the directory doesn't exist
   * new profiles: curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite,
   * new profiles: Geary, Liferea, peek, silentarmy, IntelliJ IDEA,
   * new profiles: Android Studio, electron, riot-web, Extreme Tux Racer,

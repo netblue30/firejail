@@ -6,6 +6,7 @@ include /etc/firejail/waterfox.local
 include /etc/firejail/globals.local
 
 noblacklist ~/.cache/mozilla
+noblacklist ~/.cache/waterfox
 noblacklist ~/.config/okularpartrc
 noblacklist ~/.config/okularrc
 noblacklist ~/.config/qpdfview
@@ -14,6 +15,7 @@ noblacklist ~/.kde4/share/apps/okular
 noblacklist ~/.local/share/okular
 noblacklist ~/.local/share/qpdfview
 noblacklist ~/.mozilla
+noblacklist ~/.waterfox
 noblacklist ~/.pki
 
 include /etc/firejail/disable-common.inc
@@ -22,10 +24,13 @@ include /etc/firejail/disable-programs.inc
 
 mkdir ~/.cache/mozilla/firefox
 mkdir ~/.mozilla
+mkdir ~/.cache/waterfox
+mkdir ~/.waterfox
 mkdir ~/.pki
 whitelist ${DOWNLOADS}
 whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.cache/mozilla/firefox
+whitelist ~/.cache/waterfox
 whitelist ~/.config/gnome-mplayer
 whitelist ~/.config/okularpartrc
 whitelist ~/.config/okularrc
@@ -39,6 +44,7 @@ whitelist ~/.lastpass
 whitelist ~/.local/share/okular
 whitelist ~/.local/share/qpdfview
 whitelist ~/.mozilla
+whitelist ~/.waterfox
 whitelist ~/.pentadactyl
 whitelist ~/.pentadactylrc
 whitelist ~/.pki

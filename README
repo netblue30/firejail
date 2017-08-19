@@ -401,6 +401,7 @@ smithsohu (https://github.com/smitsohu)
 	- removed nodvd from k3b profile
 	- profile hardening
 	- added MuseScore profile
+	- fixed device discovery for simple-scan
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 SpotComms (https://github.com/SpotComms)

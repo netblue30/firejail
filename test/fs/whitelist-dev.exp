@@ -38,67 +38,84 @@ expect {
 }
 after 100
 
+set have_dvd 0
 send -- "ls -l /dev\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"dvd" {puts "OK\n"}
+	"dvd" {set have_dvd 1}
 }
 after 100
 
+
+set have_dri 0
 send -- "ls -l /dev\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"dri" {puts "OK\n"}
+	"dri" {set have_dri 1}
 }
 after 100
 
+set have_snd 0
 send -- "ls -l /dev\r"
 expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"snd" {puts "OK\n"}
+	"snd" {set have_snd 1}
 }
 after 100
 
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --private-dev --nosound ls /dev\r"
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"Child process initialized"
+if { $have_snd > 0 } {
+	puts "TESTING --private-dev --nosound\n"
+	send -- "firejail --private-dev --nosound ls /dev\r"
+	expect {
+		timeout {puts "TESTING ERROR 7\n";exit}
+		"Child process initialized"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 8\n";exit}
+		"snd" {puts "TESTING ERROR 9\n";exit}
+		"Parent is shutting down"
+	}
+	after 100
+} else {
+	puts "TESTING skip --private-dev --nosound, no /dev/snd device available\n"
 }
-expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
-	"snd" {puts "TESTING ERROR 9\n";exit}
-	"Parent is shutting down"
-}
-sleep 1
 
-send -- "firejail --private-dev --nodvd ls /dev\r"
-expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
-	"Child process initialized"
+if { $have_dvd > 0 } {
+	puts "TESTING --private-dev --nodvd\n"
+	send -- "firejail --private-dev --nodvd ls /dev\r"
+	expect {
+		timeout {puts "TESTING ERROR 10\n";exit}
+		"Child process initialized"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 11\n";exit}
+		"dvd" {puts "TESTING ERROR 12\n";exit}
+		"cdrom" {puts "TESTING ERROR 13\n";exit}
+		"dvdrom" {puts "TESTING ERROR 14\n";exit}
+		"cdrw" {puts "TESTING ERROR 15\n";exit}
+		"dvdrw" {puts "TESTING ERROR 16\n";exit}
+		"Parent is shutting down"
+	}
+	after 100
+} else {
+	puts "TESTING skip --private-dev --nodvd, no /dev/dvd device available\n"
 }
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	"dvd" {puts "TESTING ERROR 12\n";exit}
-	"cdrom" {puts "TESTING ERROR 13\n";exit}
-	"dvdrom" {puts "TESTING ERROR 14\n";exit}
-	"cdrw" {puts "TESTING ERROR 15\n";exit}
-	"dvdrw" {puts "TESTING ERROR 16\n";exit}
-	"Parent is shutting down"
-}
-sleep 1
 
-send -- "firejail --private-dev --no3d ls /dev\r"
-expect {
-	timeout {puts "TESTING ERROR 17\n";exit}
-	"Child process initialized"
-}
-expect {
-	timeout {puts "TESTING ERROR 18\n";exit}
-	"dri" {puts "TESTING ERROR 19\n";exit}
-	"Parent is shutting down"
+if { $have_dri > 0 } {
+	puts "TESTING --private-dev --no3d\n"
+	send -- "firejail --private-dev --no3d ls /dev\r"
+	expect {
+		timeout {puts "TESTING ERROR 17\n";exit}
+		"Child process initialized"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 18\n";exit}
+		"dri" {puts "TESTING ERROR 19\n";exit}
+		"Parent is shutting down"
+	}
+	after 100
+} else {
+	puts "TESTING skip --private-dev --no3d, no /dev/dri device available\n"
 }
 
 after 100

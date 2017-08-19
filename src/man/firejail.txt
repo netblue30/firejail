@@ -1687,7 +1687,7 @@ rm: cannot remove `testfile': Operation not permitted
 \fB\-\-seccomp.keep=syscall,syscall,syscall
 Enable seccomp filter, and whitelist the syscalls specified by the
 command. The system calls needed by Firejail (group @default-keep:
-dup, prctl, setgid, setgroups, setuid) are always whitelisted.
+prctl, execve) are handled with the preload library.
 .br
 
 .br

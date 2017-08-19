@@ -182,12 +182,8 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@default-keep", .list =
-	  "dup,"
 	  "execve,"
-	  "prctl,"
-	  "setgid,"
-	  "setgroups,"
-	  "setuid"
+	  "prctl"
 	},
 	{ .name = "@module", .list =
 #ifdef SYS_delete_module

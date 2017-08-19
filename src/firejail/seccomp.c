@@ -23,6 +23,13 @@
 #include "../include/seccomp.h"
 #include <sys/mman.h>
 
+typedef struct filter_list {
+	struct filter_list *next;
+	struct sock_fprog prog;
+} FilterList;
+
+static FilterList *filter_list_head = NULL;
+
 static int err_printed = 0;
 
 char *seccomp_check_list(const char *str) {
@@ -52,6 +59,24 @@ char *seccomp_check_list(const char *str) {
 	return rv;
 }
 
+// install seccomp filters
+int seccomp_install_filters(void) {
+	int r = 0;
+	FilterList *fl = filter_list_head;
+	if (fl) {
+		prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+
+		for (; fl; fl = fl->next) {
+			if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &fl->prog)) {
+				if (!err_printed)
+					fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
+				err_printed = 1;
+				r = 1;
+			}
+		}
+	}
+	return r;
+}
 
 int seccomp_load(const char *fname) {
 	assert(fname);
@@ -77,22 +102,16 @@ int seccomp_load(const char *fname) {
 	// close file
 	close(fd);
 
-	// install filter
-	struct sock_fprog prog = {
-		.len = entries,
-		.filter = filter,
-	};
-	int r = 0;
-	if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog) || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
-		if (!err_printed)
-			fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
-		err_printed = 1;
-		r = 1;
+	FilterList *fl = malloc(sizeof(FilterList));
+	if (!fl) {
+		fprintf(stderr, "Error: cannot allocate memory\n");
+		exit(1);
 	}
-
-	munmap(filter, size);
-	return r;
-
+	fl->next = filter_list_head;
+	fl->prog.len = entries;
+	fl->prog.filter = filter;
+	filter_list_head = fl;
+	return 0;
 errexit:
 	fprintf(stderr, "Error: cannot read %s\n", fname);
 	exit(1);

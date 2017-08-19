@@ -321,6 +321,9 @@ void x11_start_xvfb(int argc, char **argv) {
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
+#endif
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -365,6 +368,9 @@ void x11_start_xvfb(int argc, char **argv) {
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
+#endif
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
 		_exit(1);
@@ -557,6 +563,9 @@ void x11_start_xephyr(int argc, char **argv) {
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
+#endif
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -601,6 +610,9 @@ void x11_start_xephyr(int argc, char **argv) {
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
+#endif
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
 		_exit(1);
@@ -730,6 +742,9 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
+#endif
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -781,6 +796,9 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
+#endif
 		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
 		_exit(1);
@@ -810,6 +828,9 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	if (jail == 0) {
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
+#endif
 		if (firejail_argv[0])		  // shut up llvm scan-build
 			execvp(firejail_argv[0], firejail_argv);
 		perror("execvp");
@@ -838,6 +859,9 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 				}
 				// running without privileges - see drop_privs call above
 				assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+				seccomp_install_filters();
+#endif
 				execvp(stop_argv[0], stop_argv);
 				perror("execvp");
 				_exit(1);
@@ -1004,6 +1028,9 @@ void x11_start_xpra_new(int argc, char **argv, char *display_str) {
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
+#endif
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -1140,6 +1167,9 @@ void x11_xorg(void) {
 		clearenv();
 #ifdef HAVE_GCOV
 		__gcov_flush();
+#endif
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
 #endif
 		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-v", "-f", tmpfname,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);

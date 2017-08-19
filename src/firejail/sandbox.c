@@ -274,6 +274,9 @@ void start_audit(void) {
 	if (asprintf(&audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
 		errExit("asprintf");
 	assert(getenv("LD_PRELOAD") == NULL);
+#ifdef HAVE_SECCOMP
+	seccomp_install_filters();
+#endif
 	execl(audit_prog, audit_prog, NULL);
 	perror("execl");
 	exit(1);
@@ -367,7 +370,10 @@ void start_application(void) {
 	if (arg_audit) {
 		assert(arg_audit_prog);
 #ifdef HAVE_GCOV
-	__gcov_dump();
+		__gcov_dump();
+#endif
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
 #endif
 		execl(arg_audit_prog, arg_audit_prog, NULL);
 	}
@@ -394,7 +400,10 @@ void start_application(void) {
 
 		int rv = ok_to_run(cfg.original_argv[cfg.original_program_index]);
 #ifdef HAVE_GCOV
-	__gcov_dump();
+		__gcov_dump();
+#endif
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
 #endif
 		if (rv)
 			execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
@@ -447,7 +456,10 @@ void start_application(void) {
 		if (!arg_command && !arg_quiet)
 			print_time();
 #ifdef HAVE_GCOV
-	__gcov_dump();
+		__gcov_dump();
+#endif
+#ifdef HAVE_SECCOMP
+		seccomp_install_filters();
 #endif
 		execvp(arg[0], arg);
 	}
@@ -988,7 +1000,7 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.cgroup)
 		save_cgroup();
 
-	// set seccomp //todo: push it down after drop_privs and/or configuring noroot
+	// set seccomp
 #ifdef HAVE_SECCOMP
 	// install protocol filter
 #ifdef SYS_socket

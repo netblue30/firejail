@@ -536,6 +536,7 @@ void fs_private_home_list(void);
 
 // seccomp.c
 char *seccomp_check_list(const char *str);
+int seccomp_install_filters(void);
 int seccomp_load(const char *fname);
 void seccomp_filter_32(void);
 void seccomp_filter_64(void);

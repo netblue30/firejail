@@ -213,6 +213,7 @@ blacklist ${HOME}/.mutt/muttrc
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.netrc
 blacklist ${HOME}/.pki
+blacklist ${HOME}/.password-store
 blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/.ssh
 blacklist /etc/group+

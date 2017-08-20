@@ -6,7 +6,7 @@ firejail (0.9.49) baseline; urgency=low
   * feature: --memory-deny-write-execute seccomp feature
   * feature: private /lib directory (--private-lib)
   * feature: disable CDROM/DVD drive (--nodvd)
-  * feature: disable DVD devices (--notv)
+  * feature: disable DVB devices (--notv)
   * enhancement: print all seccomp filters under --debug
   * enhancement: /proc/sys mounting
   * enhancement: default seccomp list update

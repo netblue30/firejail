@@ -7,6 +7,7 @@ firejail (0.9.49) baseline; urgency=low
   * feature: private /lib directory (--private-lib)
   * feature: disable CDROM/DVD drive (--nodvd)
   * feature: disable DVD devices (--notv)
+  * enhancement: print all seccomp filters under --debug
   * enhancement: /proc/sys mounting
   * enhancement: default seccomp list update
   * enhancement: rework IP address assingment for --net options

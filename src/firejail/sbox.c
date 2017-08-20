@@ -205,9 +205,6 @@ int sbox_run(unsigned filter, int num, ...) {
 		if (arg_quiet)
 			setenv("FIREJAIL_QUIET", "yes", 1);
 
-#ifdef HAVE_SECCOMP
-		seccomp_install_filters();
-#endif
 		if (arg[0])	// get rid of scan-build warning
 			execvp(arg[0], arg);
 		else

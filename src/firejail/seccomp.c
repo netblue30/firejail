@@ -26,6 +26,7 @@
 typedef struct filter_list {
 	struct filter_list *next;
 	struct sock_fprog prog;
+	const char *fname;
 } FilterList;
 
 static FilterList *filter_list_head = NULL;
@@ -67,6 +68,10 @@ int seccomp_install_filters(void) {
 		prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
 
 		for (; fl; fl = fl->next) {
+			assert(fl->fname);
+			if (arg_debug)
+				printf("Installing %s seccomp filter\n", fl->fname);
+
 			if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &fl->prog)) {
 				if (!err_printed)
 					fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
@@ -92,7 +97,7 @@ int seccomp_load(const char *fname) {
 		goto errexit;
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	if (arg_debug)
-		printf("configuring %d seccomp entries from %s\n", entries, fname);
+		printf("configuring %d seccomp entries in %s\n", entries, fname);
 
 	// read filter
 	struct sock_filter *filter = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
@@ -110,7 +115,16 @@ int seccomp_load(const char *fname) {
 	fl->next = filter_list_head;
 	fl->prog.len = entries;
 	fl->prog.filter = filter;
+	fl->fname = strdup(fname);
+	if (fl->fname == NULL)
+		errExit("strdup");
 	filter_list_head = fl;
+
+	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
+		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
+			PATH_FSECCOMP, "print", fname);
+	}
+
 	return 0;
 errexit:
 	fprintf(stderr, "Error: cannot read %s\n", fname);
@@ -221,12 +235,12 @@ int seccomp_filter_drop(int enforce_seccomp) {
 	}
 
 	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
-		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-			PATH_FSECCOMP, "print", RUN_SECCOMP_CFG);
 		struct stat st;
-		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0)
-		    sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-			     PATH_FSECCOMP, "print", RUN_SECCOMP_POSTEXEC);
+		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0) {
+			printf("configuring postexec seccomp filter in %s\n", RUN_SECCOMP_POSTEXEC);
+			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
+				  PATH_FSECCOMP, "print", RUN_SECCOMP_POSTEXEC);
+		}
 	}
 
 	return 0;

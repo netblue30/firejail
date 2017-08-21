@@ -21,6 +21,7 @@ nonewprivs
 noroot
 nosound
 notv
+novideo
 protocol unix
 seccomp
 shell none
@@ -29,3 +30,5 @@ tracelog
 private-bin qpdfview
 private-dev
 private-tmp
+
+memory-deny-write-execute

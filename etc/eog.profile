@@ -16,7 +16,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-net none
+# net none - makes settings immutable
 no3d
 nodvd
 nogroups

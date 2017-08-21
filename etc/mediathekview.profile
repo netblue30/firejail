@@ -9,8 +9,10 @@ noblacklist ~/.config/mpv
 noblacklist ~/.config/smplayer
 noblacklist ~/.config/totem
 noblacklist ~/.config/vlc
+noblacklist ~/.config/xplayer
 noblacklist ~/.java
 noblacklist ~/.local/share/totem
+noblacklist ~/.local/share/xplayer
 noblacklist ~/.mediathek3
 noblacklist ~/.mplayer
 
@@ -22,6 +24,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 netfilter
 nodvd
+nogroups
 nonewprivs
 noroot
 notv

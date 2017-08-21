@@ -18,8 +18,11 @@ export PATH="$PATH:/usr/lib/firejail"
 if [ "$(uname -m)" = "x86_64" ]; then
     echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"
     ./memwrexe.exp
+elif [ "$(uname -m)" = "i686" ]; then
+    echo "TESTING: memory-deny-write-execute (test/filters/memwrexe-32.exp)"
+    ./memwrexe-32.exp
 else
-    echo "TESTING SKIP: memwrexe binary only running on x86_64."
+    echo "TESTING SKIP: memwrexe binary only running on x86_64 and i686."
 fi
 
 echo "TESTING: debug options (test/filters/debug.exp)"
@@ -57,8 +60,11 @@ echo "TESTING: seccomp bad empty (test/filters/seccomp-bad-empty.exp)"
 if [ "$(uname -m)" = "x86_64" ]; then
 	echo "TESTING: seccomp debug  (test/filters/seccomp-debug.exp)"
 	./seccomp-debug.exp
+elif [ "$(uname -m)" = "i686" ]; then
+	echo "TESTING: seccomp debug  (test/filters/seccomp-debug-32.exp)"
+	./seccomp-debug-32.exp
 else
-        echo "TESTING SKIP: protocol, running only on x86_64"
+        echo "TESTING SKIP: protocol, running only on x86_64 and i686"
 fi
 
 echo "TESTING: seccomp errno (test/filters/seccomp-errno.exp)"

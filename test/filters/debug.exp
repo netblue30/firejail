@@ -38,7 +38,8 @@ after 100
 send --  "firejail --debug-protocols\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"unix, inet, inet6, netlink, packet"
+	"unix, inet, inet6, netlink, packet" {puts "OK\n"}
+	"protocol not supported on this platform" {puts "OK\n"}
 }
 after 100
 

@@ -245,6 +245,8 @@ Ivan Kozik (https://github.com/ivan)
 	- speed up sandbox exit
 Jaykishan Mutkawoa (https://github.com/jmutkawoa)
 	- cpio profile
+James Elford (https://github.com/jelford)
+	- pass password manager support
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)
@@ -293,6 +295,9 @@ mahdi1234 (https://github.com/mahdi1234)
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support
+Martin Dosch (spam-debian@mdosch.de)
+	- support for gnome-shell integration addon in Firefox
+	  (Bug-Debian: https://bugs.debian.org/872720)
 Matt Parnell (https://github.com/ilikenwf)
 	- whitelisting for core firefox related functionality
 Mattias Wadman (https://github.com/wader)

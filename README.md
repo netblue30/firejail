@@ -168,6 +168,12 @@ Check the status of the latest build here: https://travis-ci.org/netblue30/firej
                  48 pts/0    00:00:00 ps
               $
 
+       --seccomp.block_secondary
+              Enable seccomp filter and filter system call  architectures  so
+              that  only  the native architecture is allowed. For example, on
+              amd64, i386 and x32 system calls are blocked as well as  chang‐
+              ing the execution domain with personality(2) system call.
+
 `````
 
 ## /etc/firejail/firejail.config

@@ -54,8 +54,12 @@ fi
 echo "TESTING: seccomp bad empty (test/filters/seccomp-bad-empty.exp)"
 ./seccomp-bad-empty.exp
 
-echo "TESTING: seccomp debug  (test/filters/seccomp-debug.exp)"
-./seccomp-debug.exp
+if [ "$(uname -m)" = "x86_64" ]; then
+	echo "TESTING: seccomp debug  (test/filters/seccomp-debug.exp)"
+	./seccomp-debug.exp
+else
+        echo "TESTING SKIP: protocol, running only on x86_64"
+fi
 
 echo "TESTING: seccomp errno (test/filters/seccomp-errno.exp)"
 ./seccomp-errno.exp

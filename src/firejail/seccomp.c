@@ -132,20 +132,24 @@ errexit:
 }
 
 // i386 filter installed on amd64 architectures
+#if defined(__x86_64__)
 static void seccomp_filter_32(void) {
 	if (seccomp_load(RUN_SECCOMP_I386) == 0) {
 		if (arg_debug)
 			printf("Dual i386/amd64 seccomp filter configured\n");
 	}
 }
+#endif
 
 // amd64 filter installed on i386 architectures
+#if defined(__i386__)
 static void seccomp_filter_64(void) {
 	if (seccomp_load(RUN_SECCOMP_AMD64) == 0) {
 		if (arg_debug)
 			printf("Dual i386/amd64 seccomp filter configured\n");
 	}
 }
+#endif
 
 static void seccomp_filter_block_secondary(void) {
 	if (seccomp_load(RUN_SECCOMP_BLOCK_SECONDARY) == 0) {

@@ -30,7 +30,7 @@ tracelog
 
 private-bin xreader,xreader-previewer,xreader-thumbnailer
 private-dev
-private-etc fonts
+# private-etc fonts
 # xreader needs access to /tmp/mozilla* to work in firefox
 # private-tmp
 

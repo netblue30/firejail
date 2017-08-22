@@ -492,10 +492,15 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 					fprintf(stderr, "Warning fseccomp: syscall \"%s\" not available on this platform\n", ptr);
 			}
 			else if (callback != NULL) {
-				if (error_nr != -1)
+				if (error_nr != -1 && fd != 0) {
 					filter_add_errno(fd, syscall_nr, error_nr, ptrarg);
-				else
+				}
+				else if (error_nr != -1 && fd == 0) {
+					callback(fd, syscall_nr, error_nr, ptrarg);
+				}
+				else {
 					callback(fd, syscall_nr, arg, ptrarg);
+				}
 			}
 		}
 		ptr = strtok_r(NULL, ",", &saveptr);
@@ -523,20 +528,34 @@ static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg) {
 	sl.syscall = syscall;
 	syscall_check_list(ptr->slist, find_syscall, fd, 0, &sl);
 	// if found in the problem list, add to post-exec list
-	if (sl.found)
+	if (sl.found) {
 		if (ptr->postlist) {
 			if (asprintf(&ptr->postlist, "%s,%s", ptr->postlist, syscall_find_nr(syscall)) == -1)
 				errExit("asprintf");
 		}
 		else
 			ptr->postlist = strdup(syscall_find_nr(syscall));
-	else // no problem, add to pre-exec list
+	}
+	else { // no problem, add to pre-exec list
+		// build syscall:error_no
+		char *newcall;
+		if (arg != 0) {
+			if (asprintf(&newcall, "%s:%s", syscall_find_nr(syscall), errno_find_nr(arg)) == -1)
+				errExit("asprintf");
+		}
+		else {
+			newcall = strdup(syscall_find_nr(syscall));
+			if (!newcall)
+				errExit("strdup");
+		}
+
 		if (ptr->prelist) {
-			if (asprintf(&ptr->prelist, "%s,%s", ptr->prelist, syscall_find_nr(syscall)) == -1)
+			if (asprintf(&ptr->prelist, "%s,%s", ptr->prelist, newcall) == -1)
 				errExit("asprintf");
 		}
 		else
-			ptr->prelist = strdup(syscall_find_nr(syscall));
+			ptr->prelist = newcall;
+	}
 }
 
 // go through list and find matches for syscalls in list @default-keep

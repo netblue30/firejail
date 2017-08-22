@@ -14,7 +14,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
-nogroups
+# nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink
@@ -27,4 +27,7 @@ tracelog
 private-dev
 private-tmp
 
-memory-deny-write-execute
+# mdwe is disabled due to breaking hardware accelerated decoding
+# memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

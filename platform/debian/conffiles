@@ -220,6 +220,7 @@
 /etc/firejail/mutt.profile
 /etc/firejail/nautilus.profile
 /etc/firejail/nemo.profile
+/etc/firejail/neverball.profile
 /etc/firejail/netsurf.profile
 /etc/firejail/nolocal.net
 /etc/firejail/nylas.profile

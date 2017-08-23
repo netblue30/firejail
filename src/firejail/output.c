@@ -102,10 +102,6 @@ void check_output(int argc, char **argv) {
 	a[1] = "-c";
 	a[2] = cmd;
 	a[3] = NULL;
-
-#ifdef HAVE_SECCOMP
-	seccomp_install_filters();
-#endif
 	execvp(a[0], a);
 
 	perror("execvp");

@@ -441,9 +441,6 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	arg[2] = cmd;
 	arg[3] = NULL;
 	clearenv();
-#ifdef HAVE_SECCOMP
-	seccomp_install_filters();
-#endif
 	execvp(arg[0], arg);
 
 	// it will never get here

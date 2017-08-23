@@ -269,19 +269,6 @@ static int monitor_application(pid_t app_pid) {
 	return status;
 }
 
-void start_audit(void) {
-	char *audit_prog;
-	if (asprintf(&audit_prog, "%s/firejail/faudit", LIBDIR) == -1)
-		errExit("asprintf");
-	assert(getenv("LD_PRELOAD") == NULL);
-#ifdef HAVE_SECCOMP
-	seccomp_install_filters();
-#endif
-	execl(audit_prog, audit_prog, NULL);
-	perror("execl");
-	exit(1);
-}
-
 static void print_time(void) {
 	if (start_timestamp) {
 		unsigned long long end_timestamp = getticks();

@@ -106,6 +106,10 @@ void usage(void) {
 	printf("    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n");
 #endif
 	printf("    --machine-id - preserve /etc/machine-id\n");
+#ifdef HAVE_SECCOMP
+	printf("    --memory-deny-write-execute - seccomp filter to block attempts to create\n");
+	printf("\tmemory mappings  that are both writable and executable.\n");
+#endif
 #ifdef HAVE_NETWORK
 	printf("    --mtu=number - set interface MTU.\n");
 #endif
@@ -179,12 +183,11 @@ void usage(void) {
 	printf("    --seccomp - enable seccomp filter and apply the default blacklist.\n");
 	printf("    --seccomp=syscall,syscall,syscall - enable seccomp filter, blacklist the\n");
 	printf("\tdefault syscall list and the syscalls specified by the command.\n");
+	printf("    --seccomp.block-secondary - build only the native architecture filters.\n");
 	printf("    --seccomp.drop=syscall,syscall,syscall - enable seccomp filter, and\n");
 	printf("\tblacklist the syscalls specified by the command.\n");
 	printf("    --seccomp.keep=syscall,syscall,syscall - enable seccomp filter, and\n");
 	printf("\twhitelist the syscalls specified by the command.\n");
-	printf("    --seccomp.<errno>=syscall,syscall,syscall - enable seccomp filter, and\n");
-	printf("\treturn errno for the syscalls specified by the command.\n");
 	printf("    --seccomp.print=name|pid - print the seccomp filter for the sandbox\n");
 	printf("\tidentified by name or PID.\n");
 #endif

@@ -1573,7 +1573,7 @@ $, so for example $165 would be equal to mount on i386.
 
 .br
 System architecture is strictly imposed only if flag
-\-\-seccomp.block_secondary is used. The filter is applied at run time
+\-\-seccomp.block-secondary is used. The filter is applied at run time
 only if the correct architecture was detected. For the case of I386
 and AMD64 both 32-bit and 64-bit filters are installed.
 .br

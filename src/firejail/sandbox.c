@@ -465,7 +465,9 @@ static void enforce_filters(void) {
 	// force default seccomp inside the chroot, no keep or drop list
 	// the list build on top of the default drop list is kept intact
 	arg_seccomp = 1;
+#ifdef HAVE_SECCOMP
 	enforce_seccomp = 1;
+#endif
 	if (cfg.seccomp_list_drop) {
 		free(cfg.seccomp_list_drop);
 		cfg.seccomp_list_drop = NULL;

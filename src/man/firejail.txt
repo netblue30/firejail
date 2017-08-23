@@ -1587,14 +1587,16 @@ Example:
 .br
 $ firejail \-\-seccomp
 .TP
-\fB\-\-seccomp=syscall,syscall,syscall
-Enable seccomp filter, blacklist the default list (@default) and the syscalls specified by the command.
+\fB\-\-seccomp=syscall,@group
+Enable seccomp filter, blacklist the default list (@default) and the syscalls or syscall groups specified by the command.
 .br
 
 .br
 Example:
 .br
 $ firejail \-\-seccomp=utime,utimensat,utimes firefox
+.br
+$ firejail \-\-seccomp=@clock,mkdir,unlinkat transmission-gtk
 .br
 
 .br
@@ -1604,9 +1606,6 @@ using \fBsyscall:errorno\fR syntax.
 
 .br
 Example:
-.br
-
-.br
 $ firejail \-\-seccomp=unlinkat:ENOENT,utimensat,utimes
 .br
 Parent pid 10662, child pid 10663
@@ -1628,8 +1627,6 @@ system calls later.
 
 .br
 Example:
-.br
-
 .br
 $ firejail \-\-noprofile \-\-shell=none \-\-seccomp=execve bash
 .br
@@ -1655,14 +1652,14 @@ domain with personality(2) system call.
 .br
 
 .TP
-\fB\-\-seccomp.drop=syscall,syscall,syscall
-Enable seccomp filter, and blacklist the syscalls specified by the command.
+\fB\-\-seccomp.drop=syscall,@group
+Enable seccomp filter, and blacklist the syscalls or the syscall groups specified by the command.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-seccomp.drop=utime,utimensat,utimes
+$ firejail \-\-seccomp.drop=utime,utimensat,utimes,@clock
 .br
 
 .br
@@ -1672,8 +1669,6 @@ using \fBsyscall:errorno\fR syntax.
 
 .br
 Example:
-.br
-
 .br
 $ firejail \-\-seccomp.drop=unlinkat:ENOENT,utimensat,utimes
 .br

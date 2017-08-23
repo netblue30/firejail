@@ -25,4 +25,7 @@ shell none
 tracelog
 
 private-bin audacious
+private-dev
 private-tmp
+
+memory-deny-write-execute

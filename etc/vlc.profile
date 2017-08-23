@@ -25,5 +25,7 @@ private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
 private-dev
 private-tmp
 
+# mdwe is disabled due to breaking hardware accelerated decoding
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

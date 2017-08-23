@@ -23,4 +23,5 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
+private-dev
 private-tmp

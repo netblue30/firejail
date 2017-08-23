@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.48"
+VERSION="0.9.49"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -34,10 +34,13 @@ install -m 755 /usr/lib/firejail/fshaper.sh  firejail-$VERSION/usr/lib/firejail/
 install -m 755 /usr/lib/firejail/ftee  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libtracelog.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libtrace.so  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/libpostexecseccomp.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/seccomp  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/seccomp.amd64  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/seccomp.debug  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/seccomp.i386  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/seccomp.block_secondary  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/seccomp.mdwx  firejail-$VERSION/usr/lib/firejail/.
 
 mkdir -p firejail-$VERSION/usr/share/man/man1
 install -m 644 /usr/share/man/man1/firejail.1.gz firejail-$VERSION/usr/share/man/man1/.
@@ -415,6 +418,56 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/handbrake.profile
 %{_sysconfdir}/%{name}/vym.profile
 %{_sysconfdir}/%{name}/waterfox.profile
+# 0.9.49
+%{_sysconfdir}/%{name}/Gitter.profile
+%{_sysconfdir}/%{name}/android-studio.profile
+%{_sysconfdir}/%{name}/apktool.profile
+%{_sysconfdir}/%{name}/arm.profile
+%{_sysconfdir}/%{name}/baobab.profile
+%{_sysconfdir}/%{name}/calibre.profile
+%{_sysconfdir}/%{name}/curl.profile
+%{_sysconfdir}/%{name}/dex2jar.profile
+%{_sysconfdir}/%{name}/ebook-viewer.profile
+%{_sysconfdir}/%{name}/electron.profile
+%{_sysconfdir}/%{name}/etr.profile
+%{_sysconfdir}/%{name}/firefox-nightly.profile
+%{_sysconfdir}/%{name}/frozen-bubble.profile
+%{_sysconfdir}/%{name}/geary.profile
+%{_sysconfdir}/%{name}/ghb.profile
+%{_sysconfdir}/%{name}/gitg.profile
+%{_sysconfdir}/%{name}/gnome-twitch.profile
+%{_sysconfdir}/%{name}/handbrake-gtk.profile
+%{_sysconfdir}/%{name}/hashcat.profile
+%{_sysconfdir}/%{name}/idea.sh.profile
+%{_sysconfdir}/%{name}/kwrite.profile
+%{_sysconfdir}/%{name}/liferea.profile
+%{_sysconfdir}/%{name}/mplayer.profile
+%{_sysconfdir}/%{name}/musescore.profile
+%{_sysconfdir}/%{name}/neverball.profile
+%{_sysconfdir}/%{name}/obs.profile
+%{_sysconfdir}/%{name}/open-invaders.profile
+%{_sysconfdir}/%{name}/peek.profile
+%{_sysconfdir}/%{name}/picard.profile
+%{_sysconfdir}/%{name}/pingus.profile
+%{_sysconfdir}/%{name}/rambox.profile
+%{_sysconfdir}/%{name}/remmina.profile
+%{_sysconfdir}/%{name}/riot-web.profile
+%{_sysconfdir}/%{name}/sdat2img.profile
+%{_sysconfdir}/%{name}/silentarmy.profile
+%{_sysconfdir}/%{name}/simutrans.profile
+%{_sysconfdir}/%{name}/smplayer.profile
+%{_sysconfdir}/%{name}/soundconverter.profile
+%{_sysconfdir}/%{name}/sqlitebrowser.profile
+%{_sysconfdir}/%{name}/supertux2.profile
+%{_sysconfdir}/%{name}/telegram-desktop.profile
+%{_sysconfdir}/%{name}/torbrowser-launcher.profile
+%{_sysconfdir}/%{name}/truecraft.profile
+%{_sysconfdir}/%{name}/tuxguitar.profile
+%{_sysconfdir}/%{name}/unknown-horizons.profile
+%{_sysconfdir}/%{name}/wireshark-gtk.profile
+%{_sysconfdir}/%{name}/wireshark-qt.profile
+
+
 
 
 
@@ -424,6 +477,7 @@ rm -rf %{buildroot}
 
 /usr/lib/firejail/libtrace.so
 /usr/lib/firejail/libtracelog.so
+/usr/lib/firejail/libpostexecseccomp.so
 /usr/lib/firejail/faudit
 /usr/lib/firejail/ftee
 /usr/lib/firejail/firecfg.config
@@ -441,6 +495,8 @@ rm -rf %{buildroot}
 /usr/lib/firejail/seccomp.amd64
 /usr/lib/firejail/seccomp.debug
 /usr/lib/firejail/seccomp.i386
+/usr/lib/firejail/seccomp.block_secondary
+/usr/lib/firejail/seccomp.mdwx
 
 /usr/share/doc/packages/firejail/COPYING
 /usr/share/doc/packages/firejail/README

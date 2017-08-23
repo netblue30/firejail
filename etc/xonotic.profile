@@ -31,6 +31,7 @@ shell none
 disable-mnt
 private-bin xonotic-sdl,xonotic-glx,blind-id
 private-dev
+private-etc asound.conf,ca-certificates,drirc,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,pulse,resolv.conf,ssl
 private-tmp
 
 noexec ${HOME}

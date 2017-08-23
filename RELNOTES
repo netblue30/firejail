@@ -24,8 +24,8 @@ firejail (0.9.49) baseline; urgency=low
   * new profiles: Android Studio, electron, riot-web, Extreme Tux Racer,
   * new profiles: Frozen Bubble, Open Invaders, Pingus, Simutrans, SuperTux
   * new profiles: telegram-desktop, arm, rambox, apktool, baobab, dex2jar, gitg,
-  * new profiles: hashcat, obs, picard, remmina, sdat2img, soundconverter
-  * new profiles: truecraft, gnome-twitch, tuxguitar, musescore, sqlitebrowse
+  * new profiles: hashcat, obs, picard, remmina, sdat2img, soundconverter, sqlitebrowse,
+  * new profiles: truecraft, gnome-twitch, tuxguitar, musescore
   * bugfixes
  -- netblue30 <netblue30@yahoo.com>  Mon, 12 Jun 2017 20:00:00 -0500
 

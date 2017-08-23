@@ -45,6 +45,12 @@
 #endif
 #include <syscall.h>
 
+
+#ifdef HAVE_SECCOMP
+int enforce_seccomp = 0;
+#endif
+
+
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
 	if (!arg_quiet) {
@@ -459,6 +465,7 @@ static void enforce_filters(void) {
 	// force default seccomp inside the chroot, no keep or drop list
 	// the list build on top of the default drop list is kept intact
 	arg_seccomp = 1;
+	enforce_seccomp = 1;
 	if (cfg.seccomp_list_drop) {
 		free(cfg.seccomp_list_drop);
 		cfg.seccomp_list_drop = NULL;
@@ -681,27 +688,16 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// configure filesystem
 	//****************************
-#ifdef HAVE_SECCOMP
-	int enforce_seccomp = 0;
-#endif
-	if (arg_appimage) {
+	if (arg_appimage)
 		enforce_filters();
-#ifdef HAVE_SECCOMP
-		enforce_seccomp = 1;
-#endif
-	}
 
 #ifdef HAVE_CHROOT
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
 
 		// force caps and seccomp if not started as root
-		if (getuid() != 0) {
+		if (getuid() != 0)
 			enforce_filters();
-#ifdef HAVE_SECCOMP
-			enforce_seccomp = 1;
-#endif
-		}
 		else
 			arg_seccomp = 1;
 
@@ -717,12 +713,8 @@ int sandbox(void* sandbox_arg) {
 	if (arg_overlay)	{
 		fs_overlayfs();
 		// force caps and seccomp if not started as root
-		if (getuid() != 0) {
+		if (getuid() != 0)
 			enforce_filters();
-#ifdef HAVE_SECCOMP
-			enforce_seccomp = 1;
-#endif
-		}
 		else
 			arg_seccomp = 1;
 	}
@@ -1004,7 +996,7 @@ int sandbox(void* sandbox_arg) {
 		if (cfg.seccomp_list_keep)
 			seccomp_filter_keep();
 		else
-			seccomp_filter_drop(enforce_seccomp);
+			seccomp_filter_drop();
 	}
 
 	if (arg_debug) {

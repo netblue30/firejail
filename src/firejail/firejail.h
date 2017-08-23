@@ -541,7 +541,7 @@ void fs_private_home_list(void);
 char *seccomp_check_list(const char *str);
 int seccomp_install_filters(void);
 int seccomp_load(const char *fname);
-int seccomp_filter_drop(int enforce_seccomp);
+int seccomp_filter_drop(void);
 int seccomp_filter_keep(void);
 void seccomp_print_filter(pid_t pid);
 

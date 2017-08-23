@@ -30,8 +30,8 @@ typedef struct filter_list {
 } FilterList;
 
 static FilterList *filter_list_head = NULL;
-
 static int err_printed = 0;
+extern int enforce_seccomp;
 
 char *seccomp_check_list(const char *str) {
 	assert(str);
@@ -73,6 +73,12 @@ int seccomp_install_filters(void) {
 				printf("Installing %s seccomp filter\n", fl->fname);
 
 			if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &fl->prog)) {
+
+				if (enforce_seccomp) {
+					fprintf(stderr, "Error: a seccomp-enabled Linux kernel is required, exiting...\n");
+					exit(1);
+				}
+
 				if (!err_printed)
 					fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 				err_printed = 1;
@@ -159,7 +165,7 @@ static void seccomp_filter_block_secondary(void) {
 }
 
 // drop filter for seccomp option
-int seccomp_filter_drop(int enforce_seccomp) {
+int seccomp_filter_drop(void) {
 	// if we have multiple seccomp commands, only one of them is executed
 	// in the following order:
 	//	- seccomp.drop list
@@ -232,10 +238,6 @@ int seccomp_filter_drop(int enforce_seccomp) {
 	if (seccomp_load(RUN_SECCOMP_CFG) == 0) {
 		if (arg_debug)
 			printf("seccomp filter configured\n");
-	}
-	else if (enforce_seccomp) {
-		fprintf(stderr, "Error: a seccomp-enabled Linux kernel is required, exiting...\n");
-		exit(1);
 	}
 
 	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {

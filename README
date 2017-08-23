@@ -404,7 +404,7 @@ smithsohu (https://github.com/smitsohu)
 	- enhanced mediathekview profile
 	- added tuxguitar profile
 	- removed nodvd from k3b profile
-	- profile hardening
+	- lots of profile hardening and fixes
 	- added MuseScore profile
 	- fixed device discovery for simple-scan
 soredake (https://github.com/soredake)
@@ -417,9 +417,8 @@ SpotComms (https://github.com/SpotComms)
 	- added Kodi profile
 	- lots of profile tightening
 	- added viking, youtube-dl, meld profiles
-	- more profile tightening
 	- added Arduino profile
-	- profile hardening
+	- lots of profile hardening and fixing
 	- firecfg enhancements
 	- fixed vlc profile
 	- fixed wget profile
@@ -437,6 +436,9 @@ SpotComms (https://github.com/SpotComms)
 	- fix notv and nodvd placement
 	- added novideo and noexec /tmp to Tor browser profile
 	- fixed Gnome 2048 on wayland
+	- added Neverball profile
+	- hardern /var
+	- profile standard layout
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)

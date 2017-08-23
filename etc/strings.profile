@@ -18,9 +18,8 @@ novideo
 shell none
 tracelog
 
-private-bin strings
+# private-bin strings - breaking on Debian
 private-dev
-private-lib
 
 memory-deny-write-execute
 

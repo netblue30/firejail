@@ -1006,6 +1006,14 @@ int sandbox(void* sandbox_arg) {
 		else
 			seccomp_filter_drop(enforce_seccomp);
 	}
+
+	if (arg_debug) {
+		printf("\nSeccomp files:\n");
+		int rv = system("ls -l /run/firejail/mnt/seccomp*\n");
+		(void) rv;
+		printf("\n");
+	}
+
 	if (arg_memory_deny_write_execute) {
 		if (arg_debug)
 			printf("Install memory write&execute filter\n");

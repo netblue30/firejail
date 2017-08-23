@@ -188,6 +188,12 @@ void seccomp_keep(const char *fname1, const char *fname2, char *list) {
 	// close file
 	close(fd);
 
+#if 0
+// There is something very wrong here with the file descriptors, "ls -l /proc/self/fd" will show no file
+// after running this code. We don't need the postexec filter in this case anyway.
+printf("@@seccomp_keep start %s %s %s\n", fname1, fname2, list);
+system("ls -l /proc/self/fd");
+printf("@@seccomp_keep start %s %s %s\n", fname1, fname2, list);
 	// open file for post-exec filter
 	fd = open(fname2, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd < 0) {
@@ -207,6 +213,10 @@ void seccomp_keep(const char *fname1, const char *fname2, char *list) {
 
 	// close file
 	close(fd);
+printf("@@seccomp_keep end %s %s %s\n", fname1, fname2, list);
+system("ls -l /proc/self/fd");
+printf("@@seccomp_keep end %s %s %s\n", fname1, fname2, list);
+#endif
 }
 
 void memory_deny_write_execute(const char *fname) {

@@ -222,5 +222,12 @@ int sbox_run(unsigned filter, int num, ...) {
 		exit(1);
 	}
 
+#if 0
+printf("** sbox run out *********************************\n");
+system("ls -l /run/firejail/mnt\n");
+system("ls -l /proc/self/fd");
+printf("** sbox run out *********************************\n");
+#endif
+
 	return status;
 }

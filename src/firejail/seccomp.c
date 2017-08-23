@@ -258,23 +258,36 @@ int seccomp_filter_keep(void) {
 		seccomp_filter_block_secondary();
 
 	if (arg_debug)
-		printf("Build drop seccomp filter\n");
+		printf("Build keep seccomp filter\n");
 
 	// build the seccomp filter as a regular user
-	sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
+	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
 		 PATH_FSECCOMP, "keep", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list_keep);
+
+	if (rv) {
+		fprintf(stderr, "Error: cannot configure seccomp filter\n");
+		exit(rv);
+	}
+
 	if (arg_debug)
 		printf("seccomp filter configured\n");
 
-
-	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
-		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FSECCOMP, "print", RUN_SECCOMP_CFG);
-		struct stat st;
-		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0)
-		    sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FSECCOMP, "print", RUN_SECCOMP_POSTEXEC);
+	// load the filter
+	if (seccomp_load(RUN_SECCOMP_CFG) == 0) {
+		if (arg_debug)
+			printf("seccomp filter configured\n");
 	}
 
-	return seccomp_load(RUN_SECCOMP_CFG);
+	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
+		struct stat st;
+		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0) {
+			printf("configuring postexec seccomp filter in %s\n", RUN_SECCOMP_POSTEXEC);
+			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
+				  PATH_FSECCOMP, "print", RUN_SECCOMP_POSTEXEC);
+		}
+	}
+
+	return 0;
 }
 
 void seccomp_print_filter(pid_t pid) {

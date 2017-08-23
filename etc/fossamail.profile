@@ -17,7 +17,6 @@ whitelist ~/.fossamail
 whitelist ~/.gnupg
 include /etc/firejail/whitelist-common.inc
 
-nodvd
-notv
-
+# allow browsers
+# Redirect
 include /etc/firejail/firefox.profile

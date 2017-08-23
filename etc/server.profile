@@ -13,6 +13,8 @@ blacklist /tmp/.X11-unix
 
 noblacklist /sbin
 noblacklist /usr/sbin
+# noblacklist /var/log
+# noblacklist /var/opt
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc

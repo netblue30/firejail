@@ -16,12 +16,15 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+# net none - makes settings immutable
+no3d
 nodvd
 nogroups
 nonewprivs
 noroot
 nosound
 notv
+novideo
 protocol unix
 seccomp
 shell none
@@ -29,7 +32,9 @@ tracelog
 
 private-bin xviewer
 private-dev
+private-etc fonts
 private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

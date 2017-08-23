@@ -5,12 +5,17 @@ include /etc/firejail/steam.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.Steam
-noblacklist ${HOME}/.Steampath
-noblacklist ${HOME}/.Steampid
 noblacklist ${HOME}/.java
+noblacklist ${HOME}/.killingfloor
+noblacklist ${HOME}/.local/share/3909/PapersPlease
+noblacklist ${HOME}/.local/share/aspyr-media
+noblacklist ${HOME}/.local/share/cdprojektred
+noblacklist ${HOME}/.local/share/feral-interactive
 noblacklist ${HOME}/.local/share/Steam
-noblacklist ${HOME}/.local/share/steam
+noblacklist ${HOME}/.local/share/SuperHexagon
+noblacklist ${HOME}/.local/share/Terraria
+noblacklist ${HOME}/.local/share/vpltd
+noblacklist ${HOME}/.local/share/vulkan
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.steampath
 noblacklist ${HOME}/.steampid
@@ -29,12 +34,15 @@ nogroups
 nonewprivs
 noroot
 notv
-# novideo
+# novideo should be commented for VR
+novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
 # tracelog disabled as it breaks integrated browser
 # tracelog
 
+# private-dev should be commented for controllers
 private-dev
+private-etc asound.conf,ca-certificates,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,lsb-release,machine-id,mime.types,passwd,pulse,resolv.conf,ssl
 private-tmp

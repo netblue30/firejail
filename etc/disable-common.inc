@@ -107,15 +107,27 @@ blacklist ${PATH}/zuluCrypt-cli
 blacklist ${PATH}/zuluMount-cli
 
 # var
+blacklist /var/cache/apt
+blacklist /var/cache/pacman
+blacklist /var/lib/apt
+blacklist /var/lib/clamav
+blacklist /var/lib/dkms
 blacklist /var/lib/mysql/mysql.sock
 blacklist /var/lib/mysqld/mysql.sock
+blacklist /var/lib/pacman
+blacklist /var/lib/systemd
+blacklist /var/lib/upower
+blacklist /var/log
 blacklist /var/mail
+blacklist /var/opt
 blacklist /var/run/acpid.socket
 blacklist /var/run/docker.sock
 blacklist /var/run/minissdpd.sock
 blacklist /var/run/mysql/mysqld.sock
 blacklist /var/run/mysqld/mysqld.sock
 blacklist /var/run/rpcbind.sock
+blacklist /var/run/screens
+blacklist /var/run/systemd
 blacklist /var/spool/anacron
 blacklist /var/spool/cron
 

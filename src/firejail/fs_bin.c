@@ -95,20 +95,34 @@ static char *check_dir_or_file(const char *name) {
 }
 
 static void duplicate(char *fname, FILE *fplist) {
-	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
+	if (*fname == '~' || strstr(fname, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
 	invalid_filename(fname);
 
-	char *path = check_dir_or_file(fname);
-	if (!path)
-		return;
-
-	// expand path, just in case this is a symbolic link
 	char *full_path;
-	if (asprintf(&full_path, "%s/%s", path, fname) == -1)
-		errExit("asprintf");
+	if (*fname == '/') {
+		// If the absolute filename is indicated, directly use it. This
+		// is required for the following three cases:
+		//  - if user's $PATH order is not the same as the above
+		//    paths[] variable order
+		//  - if for example /usr/bin/which is a symlink to /bin/which,
+		//    because in this case the result is a symlink pointing to
+		//    itself due to the file name being the same.
+		//  - if user wants to add a binary, which is not in the above
+		//    paths[] variable
+		if (asprintf(&full_path, "%s", fname) == -1)
+			errExit("asprintf");
+	} else {
+		// Find the standard directory (by looping through paths[])
+		// where the filename fname is located
+		char *path = check_dir_or_file(fname);
+		if (!path)
+			return;
+		if (asprintf(&full_path, "%s/%s", path, fname) == -1)
+			errExit("asprintf");
+	}
 
 	if (fplist)
 		fprintf(fplist, "%s\n", full_path);

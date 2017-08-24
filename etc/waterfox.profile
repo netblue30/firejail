@@ -12,6 +12,7 @@ noblacklist ~/.config/okularrc
 noblacklist ~/.config/qpdfview
 noblacklist ~/.kde/share/apps/okular
 noblacklist ~/.kde4/share/apps/okular
+noblacklist ~/.local/share/gnome-shell/extensions
 noblacklist ~/.local/share/okular
 noblacklist ~/.local/share/qpdfview
 noblacklist ~/.mozilla
@@ -41,6 +42,7 @@ whitelist ~/.kde/share/apps/okular
 whitelist ~/.kde4/share/apps/okular
 whitelist ~/.keysnail.js
 whitelist ~/.lastpass
+whitelist ~/.local/share/gnome-shell/extensions
 whitelist ~/.local/share/okular
 whitelist ~/.local/share/qpdfview
 whitelist ~/.mozilla

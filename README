@@ -283,6 +283,8 @@ Lari Rauno (https://github.com/tuutti)
 	- qutebrowser profile fixes
 Laurent Declercq (https://github.com/nuxwin)
 	- fixed test for shell interpreter in chroots
+LaurentGH (https://github.com/LaurentGH)
+	- allow private-bin parameters to be absolute paths
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 maces (https://github.com/maces)

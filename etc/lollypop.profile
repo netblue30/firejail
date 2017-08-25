@@ -25,7 +25,7 @@ seccomp
 shell none
 
 private-dev
-private-etc fonts
+private-etc asound.conf,ca-certificates,fonts,host.conf,hostname,hosts,pulse,resolv.conf,ssl
 private-tmp
 
 noexec ${HOME}

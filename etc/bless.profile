@@ -26,7 +26,7 @@ protocol unix
 seccomp
 shell none
 
-# private-bin bless,sh,bash,mono
+# private-bin bless,dash,sh,bash,mono
 private-dev
 private-etc fonts,mono
 private-tmp

@@ -13,6 +13,7 @@ firejail (0.9.49) baseline; urgency=low
      set "xpra-attach yes" in /etc/firejail/firejail.config
   * enhancement: all profiles use a standard layout style
   * enhancement: create /usr/local for firecfg if the directory doesn't exist
+  * enhancement: allow full paths in --private-bin
   * seccomp feature: --memory-deny-write-execute
   * seccomp feature: seccomp post-exec
   * seccomp feature: block secondary architecture (--seccomp.block_secondary)

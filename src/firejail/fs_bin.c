@@ -94,6 +94,58 @@ static char *check_dir_or_file(const char *name) {
 	return paths[i];
 }
 
+
+// return 1 if the file is in paths[]
+static int valid_full_path_file(const char *name) {
+	assert(name);
+
+	char *full_name = realpath(name, NULL);
+	if (!full_name)
+		goto errexit;
+	char *fname = strrchr(full_name, '/');
+	if (!fname)
+		goto errexit;
+	if (++fname == '\0')
+		goto errexit;
+
+	int i = 0;
+	int found = 0;
+	while (paths[i]) {
+		// private-bin-no-local can be disabled in /etc/firejail/firejail.config
+		if (checkcfg(CFG_PRIVATE_BIN_NO_LOCAL) && strstr(paths[i], "local/")) {
+			i++;
+			continue;
+		}
+
+		// check file
+		char *full_name2;
+		if (asprintf(&full_name2, "%s/%s", paths[i], fname) == -1)
+			errExit("asprintf");
+
+		if (strcmp(full_name, full_name2) == 0) {
+			free(full_name2);
+			found = 1;
+			break;
+		}
+
+		free(full_name2);
+		i++;
+	}
+
+	if (!found)
+		goto errexit;
+
+	free(full_name);
+	return 1;
+
+errexit:
+	if (arg_debug)
+		fwarning("file %s not found\n", name);
+	if (full_name)
+		free(full_name);
+	return 0;
+}
+
 static void duplicate(char *fname, FILE *fplist) {
 	if (*fname == '~' || strstr(fname, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
@@ -110,11 +162,15 @@ static void duplicate(char *fname, FILE *fplist) {
 		//  - if for example /usr/bin/which is a symlink to /bin/which,
 		//    because in this case the result is a symlink pointing to
 		//    itself due to the file name being the same.
-		//  - if user wants to add a binary, which is not in the above
-		//    paths[] variable
-		if (asprintf(&full_path, "%s", fname) == -1)
-			errExit("asprintf");
-	} else {
+
+		if (!valid_full_path_file(fname))
+			return;
+
+		full_path = strdup(fname);
+		if (!full_path)
+			errExit("strdup");
+	}
+	else {
 		// Find the standard directory (by looping through paths[])
 		// where the filename fname is located
 		char *path = check_dir_or_file(fname);

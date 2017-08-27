@@ -60,31 +60,31 @@ expect {
 
 send -- "ls /bin\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"ping" {puts "TESTING ERROR 6\n";exit}
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"ping" {puts "TESTING ERROR 12\n";exit}
 	"sh"
 }
 send -- "exit\r"
 after 100
 
 
-send -- "firejail --private-bin=/etc/shadow\r"
+send -- "firejail --debug --private-bin=/etc/shadow \r"
 expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
-	"invalid filename"
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"Warning: file /etc/shadow not found"
 }
 after 100
 
 send -- "firejail --private-bin=\"bla;bla\"\r"
 expect {
-	timeout {puts "TESTING ERROR 9\n";exit}
+	timeout {puts "TESTING ERROR 14\n";exit}
 	"is an invalid filename"
 }
 after 100
 
 send -- "firejail --private-etc=../bin/ls\r"
 expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
+	timeout {puts "TESTING ERROR 15\n";exit}
 	"is an invalid filename"
 }
 

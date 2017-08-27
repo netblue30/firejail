@@ -296,6 +296,7 @@ blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/meld
+blacklist ${HOME}/.local/share/multimc
 blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
 blacklist ${HOME}/.local/share/nautilus

@@ -10,7 +10,7 @@ firejail (0.9.50~rc1) baseline; urgency=low
   * enhancement: /proc/sys mounting
   * enhancement: rework IP address assingment for --net options
   * enhancement: support for newer Xpra versions (2.1+) -
-     set "xpra-attach yes" in /etc/firejail/firejail.config
+     set xpra-attach yes in /etc/firejail/firejail.config
   * enhancement: all profiles use a standard layout style
   * enhancement: create /usr/local for firecfg if the directory doesn't exist
   * enhancement: allow full paths in --private-bin

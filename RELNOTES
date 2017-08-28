@@ -1,4 +1,4 @@
-firejail (0.9.49) baseline; urgency=low
+firejail (0.9.50~rc1) baseline; urgency=low
   * work in progress!
   * modif: --output split in two commands, --output and --output-stderr
   * feature: per-profile disable-mnt (--disable-mnt)

@@ -20,6 +20,7 @@ nodvd
 nonewprivs
 nosound
 notv
+novideo
 protocol unix,inet,inet6,netlink
 seccomp
 

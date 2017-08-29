@@ -18,6 +18,7 @@ no3d
 nonewprivs
 noroot
 notv
+novideo
 protocol unix,inet,inet6
 seccomp
 shell none

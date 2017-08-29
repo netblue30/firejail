@@ -22,6 +22,7 @@ no3d
 nodvd
 nosound
 notv
+novideo
 seccomp
 shell none
 tracelog

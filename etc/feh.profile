@@ -13,17 +13,19 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+no3d
 nodvd
 nogroups
 nonewprivs
 noroot
 nosound
 notv
+novideo
 protocol unix
 seccomp
 shell none
 
-private-bin feh
+private-bin feh,jpegexiforient,jpegtran
 private-dev
 private-etc feh
 private-tmp

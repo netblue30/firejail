@@ -1,5 +1,4 @@
-firejail (0.9.38.11) baseline; urgency=low
-  * development
+firejail (0.9.38.12) baseline; urgency=low
   * bugfix: detect correct execute permissions for --shell=none
   * bugfix: use an IP address of 0 when ARP-probing for unused IP addresses
   * bugfix: fix cpu entry in firejail-profile man page
@@ -11,7 +10,7 @@ firejail (0.9.38.11) baseline; urgency=low
   * enhancement: quiet support in profile files
   * maintenance: updated copyright statement in all files
   * maintenance: testing suite update for Debian "stretch"
- -- netblue30 <netblue30@yahoo.com>  Sat, 4 Mar 2017 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Tue, 29 Aug 2017 10:00:00 -0500
 
 firejail (0.9.38.10) baseline; urgency=low
   * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week

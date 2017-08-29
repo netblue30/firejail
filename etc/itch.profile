@@ -5,14 +5,18 @@ include /etc/firejail/itch.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/itch
+# itch.io has native firejail/sandboxing support bundled in
+# See https://itch.io/docs/itch/using/sandbox/linux.html
+
+noblacklist ${HOME}/.config/itch
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ~/.config/itch
-
+mkdir ${HOME}/.config/itch
+whitelist ${HOME}/.config/itch
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
@@ -22,6 +26,7 @@ nogroups
 nonewprivs
 noroot
 notv
+novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
@@ -29,5 +34,4 @@ shell none
 private-dev
 private-tmp
 
-noexec ${HOME}
 noexec /tmp

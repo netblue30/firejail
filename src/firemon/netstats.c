@@ -161,8 +161,8 @@ static void print_proc(int index, int itv, int col) {
 	}
 
 	// pid
-	char pidstr[10];
-	snprintf(pidstr, 10, "%u", index);
+	char pidstr[11];
+	snprintf(pidstr, 11, "%d", index);
 
 	// user
 	char *user = get_user_name(pids[index].uid);

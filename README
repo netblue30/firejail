@@ -35,13 +35,16 @@ Maintainer:
 Committers
 - Fred-Barclay (https://github.com/Fred-Barclay)
 - Reiner Herrmann (https://github.com/reinerh)
-- startx2017 (https://github.com/startx2017) - 0.9.38-LTS branch maintainer
+- startx2017 (https://github.com/startx2017) - 0.9.38-LTS and *bugfixes branches maintainer
+- Topi Miettinen (https://github.com/topimiettinen)
 - netblue30 (netblue30@yahoo.com)
 
 
 
 Firejail Authors (alphabetical order)
 
+Aidan Gauland (https://github.com/aidalgol)
+	- added electron and riot-web profiles
 Akhil Hans Maulloo (https://github.com/kouul)
 	- xz profile
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
@@ -71,6 +74,8 @@ Andrey Alekseenko (https://github.com/al42and)
 	- fixed Skype profile
 andrew160 (https://github.com/andrew160)
 	- profile and man pages fixes
+announ (https://github.com/announ)
+	- mpv and youtube-dl profile fixes
 Austin S. Hemmelgarn (https://github.com/Ferroin)
 	- unbound profile update
 avoidr (https://github.com/avoidr)
@@ -99,10 +104,14 @@ Bruno Nova (https://github.com/brunonova)
 	- bash arguments fix
 BytesTuner (https://github.com/BytesTuner)
 	- provided keepassxc profile
+caoliver (https://github.com/caoliver)
+	- network system fixes
 Cat (https://github.com/ecat3)
 	- prevent tmux connecting to an existing session
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
+chiraag-nataraj (https://github.com/chiraag-nataraj)
+	- support for newer Xpra versions (2.1+)
 Christian Stadelmann (https://github.com/genodeftest)
 	- profile fixes
 	- evolution profile fix
@@ -116,6 +125,9 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- added guayadeque profile
 	- added VirtualBox.profile
 	- various other profile fixes
+	- added digiKam profile
+da2x (https://github.com/da2x)
+	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
 	- protect shell startup files
 Dara Adib (https://github.com/daradib)
@@ -132,14 +144,20 @@ dshmgh (https://github.com/dshmgh)
 Duncan Overbruck (https://github.com/Duncaen)
 	- musl libc fix
 	- utmp fix
+	- fix install for --disable-seccomp software configurations
 emacsomancer (https://github.com/emacsomancer)
 	- added profile for Conkeror browser
 eventyrer (https://github.com/eventyrer)
 	- update gnome-mplayer.profile
+Fabian Würfl (https://github.com/BafDyce)
+	- fixed race condition when creating a new directory
+	- Liferea profile
 Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template/--private-home
+fuelflo (https://github.com/fuelflo)
+    - added rambox profile
 Fred-Barclay (https://github.com/Fred-Barclay)
 	- lots of profile fixes
 	- added Vivaldi, Atril profiles
@@ -183,7 +201,9 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- tighten keepassx
 	- added Thunar profile
 	- added mousepad, qpicview, and cvlc profiles
-	- added BibleTime and profiles
+	- added BibleTime profile
+	- added caja and galculator profiles
+	- added Catfish profile
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)
 	- ARM support
 	- profile fixes
@@ -202,6 +222,12 @@ GSI (https://github.com/GSI)
 	- added Uzbl browser profile
 hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path
+hawkey116477 (https://github.com/hawkeye116477)
+	- added Waterfox profile
+	- updated Cyberfox profile
+	- updated Waterfox profile
+Helmut Grohne (https://github.com/helmutg)
+	-  compiler support in the build system - Debian bug #869707
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Icaro Perseo (https://github.com/icaroperseo)
@@ -219,6 +245,8 @@ Ivan Kozik (https://github.com/ivan)
 	- speed up sandbox exit
 Jaykishan Mutkawoa (https://github.com/jmutkawoa)
 	- cpio profile
+James Elford (https://github.com/jelford)
+	- pass password manager support
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)
@@ -229,6 +257,8 @@ Joan Figueras (https://github.com/figue)
 	- added abrowser profile
 	- added Google-Play-Music-Desktop-Player
 	- added cyberfox profile
+John Mullee (https://github.com/jmullee)
+	- fix empty-string assignment in whitelisting code
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -253,16 +283,23 @@ Lari Rauno (https://github.com/tuutti)
 	- qutebrowser profile fixes
 Laurent Declercq (https://github.com/nuxwin)
 	- fixed test for shell interpreter in chroots
+LaurentGH (https://github.com/LaurentGH)
+	- allow private-bin parameters to be absolute paths
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 maces (https://github.com/maces)
 	- Franz messenger profile
+Madura A (https://github.com/manushanga)
+	- floader
 mahdi1234 (https://github.com/mahdi1234)
 	- cherrytree profile
 	- Seamonkey profiles
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support
+Martin Dosch (spam-debian@mdosch.de)
+	- support for gnome-shell integration addon in Firefox
+	  (Bug-Debian: https://bugs.debian.org/872720)
 Matt Parnell (https://github.com/ilikenwf)
 	- whitelisting for core firefox related functionality
 Mattias Wadman (https://github.com/wader)
@@ -284,6 +321,8 @@ Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
+Panzerfather (https://github.com/Panzerfather)
+	- allow eog to access user's trash
 Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
 	- user namespace implementation
 Paupiah Yash (https://github.com/CaffeinatedStud)
@@ -300,12 +339,18 @@ Peter Hogg (https://github.com/pigmonkey)
 	- rtorrent profile
 	- bitlbee profile fixes
 	- mutt profile fixes
+	- fixes for youtube-dl in mpv profile
 Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
 pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile
 Pixel Fairy (https://github.com/xahare)
 	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
+PizzaDude (https://github.com/pizzadude)
+	- add mpv support to smplayer
+	- added profile for torbrowser-launcher
+probonopd (https://github.com/probonopd)
+	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)
 	- added FossaMail profile
 pstn (https://github.com/pstn)
@@ -320,8 +365,11 @@ Rahiel Kasim (https://github.com/rahiel)
 	- Mathematica profile
 	- whitelisted Dropbox profile
 	- whitelisted keysnail config for firefox
+	- added telegram-desktop profile
 Rahul Golam (https://github.com/technoLord)
 	- strings profile
+Raphaël Droz (https://github.com/drzraf)
+	- zoom profile fixes
 Reiner Herrmann (https://github.com/reinerh)
 	- a number of build patches
 	- man page fixes
@@ -332,6 +380,9 @@ Reiner Herrmann (https://github.com/reinerh)
 	- moved build to .xz
 	- detached signatures for source archive
 	- recursive mkdir
+Remco Verhoef (https://github.com/nl5887)
+	- add overlay configuration to profiles
+	- prevent running shells recursively
 rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Ruan (https://github.com/ruany)
@@ -346,11 +397,20 @@ Simon Peter (https://github.com/probonopd)
 	- set $APPIMAGE and $APPDIR environment variables
 	- AppImage version detection
 	- Leafppad type v1 and v2 appimage packages in test/appimage
+	- GitHub/Travis CI integration
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH
-sshirokov (http://sourceforge.net/u/yshirokov/profile/)
-	- Patch to output "Reading profile" to stderr instead of stdout
+smithsohu (https://github.com/smitsohu)
+	- read-only kde4 services directory
+	- enhanced mediathekview profile
+	- added tuxguitar profile
+	- removed nodvd from k3b profile
+	- lots of profile hardening and fixes
+	- added MuseScore profile
+	- fixed device discovery for simple-scan
+soredake (https://github.com/soredake)
+	- fix steam startup with >=llvm-4
 SpotComms (https://github.com/SpotComms)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
 	- added PDFSam, Pithos, and Xonotic profiles
@@ -359,8 +419,30 @@ SpotComms (https://github.com/SpotComms)
 	- added Kodi profile
 	- lots of profile tightening
 	- added viking, youtube-dl, meld profiles
-	- more profile tightening
 	- added Arduino profile
+	- lots of profile hardening and fixing
+	- firecfg enhancements
+	- fixed vlc profile
+	- fixed wget profile
+	- fixed firecfg.config file
+	- added novideo and disable-mnt support in all profile files
+	- added Peek and silent profiles
+	- added IntelliJ IDEA and Android Studio profiles
+	- added arm profile
+	- lots of profile improvements/tightening
+	- added apktool, baobab, dex2jar, gitg, hashcat, obs, picard, remmina, sdat2img,
+	soundconverter, sqlitebrowser, and truecraft profiles
+	- added gnome-twitch profile
+	- Unified all 341 profiles
+	- profile tightening with private-bin
+	- fix notv and nodvd placement
+	- added novideo and noexec /tmp to Tor browser profile
+	- fixed Gnome 2048 on wayland
+	- added Neverball profile
+	- hardern /var
+	- profile standard layout
+sshirokov (http://sourceforge.net/u/yshirokov/profile/)
+	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes
 	- disable-common.inc fixes
@@ -377,6 +459,9 @@ SYN-cook (https://github.com/SYN-cook)
 	- blacklist attic and borg
 	- cleaned up Okular and Gwenview profiles
 	- added baloo_file profile
+	- k3b profile update
+	- noexec changes
+	- gnome-calculator changes
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- updated default seccomp filters - added  bpf, clock_settime, personality, process_vm_writev, query_module,
@@ -385,7 +470,12 @@ startx2017 (https://github.com/startx2017)
 	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
 	- firejail.config cleanup
 	- --quiet fixes
-	- 0.9.38-LTS branch maintainer
+	- bugfixes branches maintainer
+	- firemon --top speed-up
+	- Blender and 2048-qt profiles
+	- handbrake profile
+	- mplayer and smplayer profiles
+	- kwrite and geary profiles
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified
@@ -399,10 +489,18 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- fixed small variable glitch in stat64() / lstat64() (libtracelog)
 	- added lstat() / lstat64() support to libtrace
 	- include mkuid.sh in make dist
+	- cppcheck bugfixes
 Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Tomasz Jan Góralczyk (https://github.com/tjg)
 	- fixed Steam profile
+Topi Miettinen (https://github.com/topimiettinen)
+	- improved seccomp printing
+	- improve mount handling, fix /run/user handling
+	- /proc/sys can be nosuid,noexec,nodev
+	- seccomp default list update
+	- improve loading of seccomp filter and memory-deny-write-execute feature
+	- private-lib feature
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature
@@ -437,6 +535,10 @@ vismir2 (https://github.com/vismir2)
 	- claws-mail, mutt, git, emacs, vim profiles
 	- lots of profile fixes
 	-  support for truecrypt and zuluCrypt
+Vladimir Schowalter (https://github.com/VladimirSchowalter20)
+	- apparmor profile enhancements
+	- various KDE profile enhancements
+	read-only kde5 services directory
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 yumkam (https://github.com/yumkam)
@@ -455,6 +557,10 @@ Zack Weinberg (https://github.com/zackw)
 	- rework fcopy, --follow-link support in fcopy
 	- follow link support in --private-bin
 	- wait_for_other function rewrite
-	- xvfb X11 server support
+	- Xvfb X11 server support
+	- Xvfb and Xephyr profiles, modified Xpra profile
+	- support for sandboxing Xpra, Xvfb and Xephyr in independent sandboxes when started
+	  with firejail --x11
+	- support for xpra-extra-params in firejail.config
 
 Copyright (C) 2014-2017 Firejail Authors

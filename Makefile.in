@@ -2,7 +2,7 @@ all: apps man filters
 MYLIBS = src/lib
 APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fcopy src/fldd src/libpostexecseccomp
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
-SECCOMP_FILTERS = seccomp seccomp.debug seccomp.i386 seccomp.amd64 seccomp.block_secondary seccomp.mwdx
+SECCOMP_FILTERS = seccomp seccomp.debug seccomp.i386 seccomp.amd64 seccomp.block_secondary seccomp.mdwx
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@

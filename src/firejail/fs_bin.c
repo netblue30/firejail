@@ -105,7 +105,7 @@ static int valid_full_path_file(const char *name) {
 	char *fname = strrchr(full_name, '/');
 	if (!fname)
 		goto errexit;
-	if (++fname == '\0')
+	if (*(++fname) == '\0')
 		goto errexit;
 
 	int i = 0;

@@ -20,6 +20,7 @@ nonewprivs
 noroot
 nosound
 notv
+novideo
 protocol inet,inet6
 seccomp
 shell none

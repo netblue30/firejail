@@ -26,4 +26,5 @@ nodvd
 nonewprivs
 noroot
 notv
+novideo
 seccomp

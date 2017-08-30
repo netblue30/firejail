@@ -15,6 +15,7 @@ no3d
 nodvd
 nosound
 notv
+novideo
 shell none
 tracelog
 

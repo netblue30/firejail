@@ -26,6 +26,7 @@ nonewprivs
 noroot
 nosound
 notv
+novideo
 protocol unix
 seccomp
 shell none

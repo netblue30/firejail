@@ -30,3 +30,7 @@ x11 none
 private-bin file
 private-dev
 private-etc magic.mgc,magic,localtime
+
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

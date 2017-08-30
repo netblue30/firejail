@@ -13,6 +13,7 @@ net none
 nodvd
 nosound
 notv
+novideo
 shell none
 tracelog
 

@@ -6,6 +6,7 @@ firejail (0.9.38.12) baseline; urgency=low
   * bugfix: accept program names in firejail bash completion
   * bugfix: added --force option to --help screen
   * bugfix: --quiet option
+  * bugfix: truncated output in snprintf
   * enhancement: --output cleanup
   * enhancement: quiet support in profile files
   * maintenance: updated copyright statement in all files

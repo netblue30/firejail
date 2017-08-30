@@ -7,6 +7,7 @@ firejail (0.9.38.12) baseline; urgency=low
   * bugfix: added --force option to --help screen
   * bugfix: --quiet option
   * bugfix: truncated output in snprintf
+  * bugfix: fix handling of /dev/shm in whitelists
   * enhancement: --output cleanup
   * enhancement: quiet support in profile files
   * maintenance: updated copyright statement in all files

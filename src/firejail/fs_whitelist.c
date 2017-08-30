@@ -417,11 +417,14 @@ void fs_whitelist(void) {
 		else if (strncmp(new_name, "/dev/", 5) == 0) {
 			entry->dev_dir = 1;
 			dev_dir = 1;
-			// both path and absolute path are under /dev
-			if (strncmp(fname, "/dev/", 5) != 0) {
-				if (arg_debug)
-					fprintf(stderr, "Debug %d: fname #%s#\n", __LINE__, fname);
-				goto errexit;
+			// special handling for /dev/shm
+			// on some platforms (Debian wheezy, Ubuntu 14.04), it is a symlink to /run/shm
+			if (strcmp(new_name, "/dev/shm") == 0 && strcmp(fname, "/run/shm") == 0);
+			else {
+				// both path and absolute path are under /dev
+				if (strncmp(fname, "/dev/", 5) != 0) {
+					goto errexit;
+				}
 			}
 		}
 		else if (strncmp(new_name, "/opt/", 5) == 0) {

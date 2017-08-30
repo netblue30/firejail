@@ -203,12 +203,12 @@ void memory_deny_write_execute(const char *fname) {
 
 	// build filter
 	static const struct sock_filter filter[] = {
-#ifndef __x86_64__
+#ifdef __i386__
 		// block old multiplexing mmap syscall for i386
 		BLACKLIST(SYS_mmap),
 #endif
 		// block mmap(,,x|PROT_WRITE|PROT_EXEC) so W&X memory can't be created
-#ifndef __x86_64__
+#ifdef __i386__
 		// mmap2 is used for mmap on i386 these days
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_mmap2, 0, 5),
 #else

@@ -368,12 +368,12 @@ void fs_whitelist(void) {
 		// replace ~/ or ${HOME} into /home/username
 		new_name = expand_home(dataptr, cfg.homedir);
 		assert(new_name);
-		if (arg_debug)
+		if (arg_debug || arg_debug_whitelists)
 			fprintf(stderr, "Debug %d: new_name #%s#, %s\n", __LINE__, new_name, (nowhitelist_flag)? "nowhitelist": "whitelist");
 
 		// valid path referenced to filesystem root
 		if (*new_name != '/') {
-			if (arg_debug)
+			if (arg_debug || arg_debug_whitelists)
 				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
 		}
@@ -417,6 +417,8 @@ void fs_whitelist(void) {
 			entry->data = EMPTY_STRING;
 			continue;
 		}
+		else if (arg_debug_whitelists)
+			printf("real path %s\n", fname);
 
 		if (nowhitelist_flag) {
 			// store the path in nowhitelist array
@@ -501,9 +503,15 @@ void fs_whitelist(void) {
 		else if (strncmp(new_name, "/dev/", 5) == 0) {
 			entry->dev_dir = 1;
 			dev_dir = 1;
-			// both path and absolute path are under /dev
-			if (strncmp(fname, "/dev/", 5) != 0) {
-				goto errexit;
+
+			// special handling for /dev/shm
+			// on some platforms (Debian wheezy, Ubuntu 14.04), it is a symlink to /run/shm
+			if (strcmp(new_name, "/dev/shm") == 0 && strcmp(fname, "/run/shm") == 0);
+			else {
+				// both path and absolute path are under /dev
+				if (strncmp(fname, "/dev/", 5) != 0) {
+					goto errexit;
+				}
 			}
 		}
 		else if (strncmp(new_name, "/opt/", 5) == 0) {
@@ -706,7 +714,6 @@ void fs_whitelist(void) {
 		else
 			srv_dir = 0;
 	}
-
 
 
 	// go through profile rules again, and interpret whitelist commands

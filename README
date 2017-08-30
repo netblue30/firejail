@@ -409,6 +409,7 @@ smithsohu (https://github.com/smitsohu)
 	- lots of profile hardening and fixes
 	- added MuseScore profile
 	- fixed device discovery for simple-scan
+	- add novideo support in all profiles
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 SpotComms (https://github.com/SpotComms)

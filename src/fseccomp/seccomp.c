@@ -191,6 +191,21 @@ void seccomp_keep(const char *fname1, const char *fname2, char *list) {
 	close(fd);
 }
 
+#if defined(__x86_64__) || defined(__aarch64__) || defined(__powerpc64__)
+# define filter_syscall SYS_mmap
+# undef block_syscall
+#elif defined(__i386__)
+# define filter_syscall SYS_mmap2
+# define block_syscall SYS_mmap
+#elif defined(__arm__)
+# define filter_syscall SYS_mmap2
+# undef block_syscall
+#else
+# warning "Platform does not support seccomp memory-deny-write-execute filter yet"
+# undef filter_syscall
+# undef block_syscall
+#endif
+
 void memory_deny_write_execute(const char *fname) {
 	// open file
 	int fd = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -203,22 +218,19 @@ void memory_deny_write_execute(const char *fname) {
 
 	// build filter
 	static const struct sock_filter filter[] = {
-#ifdef __i386__
+#ifdef block_syscall
 		// block old multiplexing mmap syscall for i386
-		BLACKLIST(SYS_mmap),
+		BLACKLIST(block_syscall),
 #endif
+#ifdef filter_syscall
 		// block mmap(,,x|PROT_WRITE|PROT_EXEC) so W&X memory can't be created
-#ifdef __i386__
-		// mmap2 is used for mmap on i386 these days
-		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_mmap2, 0, 5),
-#else
-		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_mmap, 0, 5),
-#endif
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, filter_syscall, 0, 5),
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_WRITE|PROT_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_WRITE|PROT_EXEC, 0, 1),
 		KILL_PROCESS,
 		RETURN_ALLOW,
+#endif
 
 		// block mprotect(,,PROT_EXEC) so writable memory can't be turned into executable
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_mprotect, 0, 5),
@@ -228,7 +240,7 @@ void memory_deny_write_execute(const char *fname) {
 		KILL_PROCESS,
 		RETURN_ALLOW,
 
-// shmat is not implemented as a syscall on some platforms (i386, possibly arm)
+// shmat is not implemented as a syscall on some platforms (i386, powerpc64, powerpc64le)
 #ifdef SYS_shmat
 		// block shmat(,,x|SHM_EXEC) so W&X shared memory can't be created
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_shmat, 0, 5),

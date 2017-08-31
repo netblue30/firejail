@@ -21,6 +21,7 @@ nogroups
 nonewprivs
 nosound
 notv
+novideo
 protocol unix
 seccomp
 shell none

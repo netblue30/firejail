@@ -10,6 +10,11 @@ noblacklist ~/.config/MuseScore
 noblacklist ~/.local/share/data/MusE
 noblacklist ~/.local/share/data/MuseScore
 
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
 caps.drop all
 netfilter
 no3d

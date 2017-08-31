@@ -5,6 +5,8 @@ include /etc/firejail/dnsmasq.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /tmp/.X11-unix
+
 noblacklist /sbin
 noblacklist /usr/sbin
 
@@ -14,7 +16,6 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps
-netfilter
 no3d
 nodvd
 nonewprivs

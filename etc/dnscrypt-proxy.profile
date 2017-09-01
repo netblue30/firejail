@@ -29,4 +29,4 @@ private
 private-dev
 
 # mdwe may break dnscrypt-proxy modules/plugins
-memory-deny-write-execute
+# memory-deny-write-execute

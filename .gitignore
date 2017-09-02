@@ -28,7 +28,7 @@ src/fldd/fldd
 uids.h
 seccomp
 seccomp.debug
-seccomp.i386
-seccomp.amd64
+seccomp.32
+seccomp.64
 seccomp.block_secondary
 seccomp.mdwx

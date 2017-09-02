@@ -108,7 +108,7 @@ void seccomp_secondary_64(const char *fname) {
 	write_filter(fname, sizeof(filter), filter);
 }
 
-// i386 filter installed on amd64 architectures
+// 32 bit arch filter installed on 64 bit architectures
 void seccomp_secondary_32(const char *fname) {
 	// hardcoded syscall values
 	struct sock_filter filter[] = {

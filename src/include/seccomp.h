@@ -91,10 +91,64 @@ struct seccomp_data {
 
 #if defined(__i386__)
 # define ARCH_NR	AUDIT_ARCH_I386
+# define ARCH_32	AUDIT_ARCH_I386
+# define ARCH_64	AUDIT_ARCH_X86_64
 #elif defined(__x86_64__)
 # define ARCH_NR	AUDIT_ARCH_X86_64
+# define ARCH_32	AUDIT_ARCH_I386
+# define ARCH_64	AUDIT_ARCH_X86_64
+#elif defined(__aarch64__)
+# define ARCH_NR	AUDIT_ARCH_AARCH64
+# define ARCH_32	AUDIT_ARCH_ARM
+# define ARCH_64	AUDIT_ARCH_AARCH64
 #elif defined(__arm__)
 # define ARCH_NR	AUDIT_ARCH_ARM
+# define ARCH_32	AUDIT_ARCH_ARM
+# define ARCH_64	AUDIT_ARCH_AARCH64
+#elif defined(__mips__) && __BYTE_ORDER == __BIG_ENDIAN && _MIPS_SIM == _MIPS_SIM_ABI32
+# define ARCH_NR	AUDIT_ARCH_MIPS
+# define ARCH_32	AUDIT_ARCH_MIPS
+# define ARCH_64	AUDIT_ARCH_MIPS64
+#elif defined(__mips__) && __BYTE_ORDER == __LITTLE_ENDIAN && _MIPS_SIM == _MIPS_SIM_ABI32
+# define ARCH_NR	AUDIT_ARCH_MIPSEL
+# define ARCH_32	AUDIT_ARCH_MIPSEL
+# define ARCH_64	AUDIT_ARCH_MIPSEL64
+#elif defined(__mips__) && __BYTE_ORDER == __BIG_ENDIAN && _MIPS_SIM == _MIPS_SIM_ABI64
+# define ARCH_NR	AUDIT_ARCH_MIPS64
+# define ARCH_32	AUDIT_ARCH_MIPS
+# define ARCH_64	AUDIT_ARCH_MIPS64
+#elif defined(__mips__) && __BYTE_ORDER == __LITTLE_ENDIAN && _MIPS_SIM == _MIPS_SIM_ABI64
+# define ARCH_NR	AUDIT_ARCH_MIPSEL64
+# define ARCH_32	AUDIT_ARCH_MIPSEL
+# define ARCH_64	AUDIT_ARCH_MIPSEL64
+#elif defined(__mips__) && __BYTE_ORDER == __BIG_ENDIAN && _MIPS_SIM == _MIPS_SIM_NABI32
+# define ARCH_NR	AUDIT_ARCH_MIPS64N32
+# define ARCH_32	AUDIT_ARCH_MIPS64N32
+# define ARCH_64	AUDIT_ARCH_MIPS64
+#elif defined(__mips__) && __BYTE_ORDER == __LITTLE_ENDIAN && _MIPS_SIM == _MIPS_SIM_NABI32
+# define ARCH_NR	AUDIT_ARCH_MIPSEL64N32
+# define ARCH_32	AUDIT_ARCH_MIPSEL64N32
+# define ARCH_64	AUDIT_ARCH_MIPSEL64
+#elif defined(__powerpc64__) && __BYTE_ORDER == __BIG_ENDIAN
+# define ARCH_NR	AUDIT_ARCH_PPC64
+# define ARCH_32	AUDIT_ARCH_PPC
+# define ARCH_64	AUDIT_ARCH_PPC64
+#elif defined(__powerpc64__) && __BYTE_ORDER == __LITTLE_ENDIAN
+# define ARCH_NR	AUDIT_ARCH_PPC64LE
+# define ARCH_32	AUDIT_ARCH_PPC
+# define ARCH_64	AUDIT_ARCH_PPC64LE
+#elif defined(__powerpc__)
+# define ARCH_NR	AUDIT_ARCH_PPC
+# define ARCH_32	AUDIT_ARCH_PPC
+# define ARCH_64	AUDIT_ARCH_PPC64LE
+#elif defined(__s390x__)
+# define ARCH_NR	AUDIT_ARCH_S390X
+# define ARCH_32	AUDIT_ARCH_S390
+# define ARCH_64	AUDIT_ARCH_S390X
+#elif defined(__s390__)
+# define ARCH_NR	AUDIT_ARCH_S390
+# define ARCH_32	AUDIT_ARCH_S390
+# define ARCH_64	AUDIT_ARCH_S390X
 #else
 # warning "Platform does not support seccomp filter yet"
 # define ARCH_NR	0
@@ -112,12 +166,12 @@ struct seccomp_data {
 
 #define VALIDATE_ARCHITECTURE_64 \
      BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
-     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, AUDIT_ARCH_X86_64, 1, 0), \
+     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_64, 1, 0), \
      BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
 #define VALIDATE_ARCHITECTURE_32 \
      BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
-     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, AUDIT_ARCH_I386, 1, 0), \
+     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_32, 1, 0), \
      BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
 #if defined(__x86_64__)

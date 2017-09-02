@@ -31,7 +31,7 @@ expect {
 after 100
 
 
-# amd64 architecture
+# 64 bit architecture
 send --  "firejail --debug sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
@@ -43,7 +43,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter"
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
@@ -55,18 +55,18 @@ expect {
 }
 after 100
 
-# amd64 architecture - ignore seccomp
+# 64 bit architecture - ignore seccomp
 send --  "firejail --debug --ignore=seccomp sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
 	"Installing /run/firejail/mnt/seccomp seccomp filter" {puts "TESTING ERROR 11\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter" {puts "TESTING ERROR 12\n";exit}
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 12\n";exit}
 	"Child process initialized"
 }
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
 	"Installing /run/firejail/mnt/seccomp seccomp filter" {puts "TESTING ERROR 14\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter" {puts "TESTING ERROR 15\n";exit}
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 15\n";exit}
 	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
 }
 expect {
@@ -75,7 +75,7 @@ expect {
 }
 after 100
 
-# amd64 architecture - ignore protocol
+# 64 bit architecture - ignore protocol
 send --  "firejail --debug --ignore=protocol sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
@@ -90,7 +90,7 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 21\n";exit}
 	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter" {puts "TESTING ERROR 22\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter"
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 23\n";exit}
@@ -114,21 +114,21 @@ expect {
 }
 
 
-# amd64 architecture - seccomp.block-secondary
+# 64 bit architecture - seccomp.block-secondary
 send --  "firejail --debug --seccomp.block-secondary sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 27\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter" {puts "TESTING ERROR 28\n";exit}
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 28\n";exit}
 	"Child process initialized"
 }
 expect {
 	timeout {puts "TESTING ERROR 29\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter" {puts "TESTING ERROR 30\n";exit}
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 30\n";exit}
 	"Installing /run/firejail/mnt/seccomp seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 31\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter" {puts "TESTING ERROR 32\n";exit}
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 32\n";exit}
 	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
 }
 expect {
@@ -137,16 +137,16 @@ expect {
 }
 after 100
 
-# amd64 architecture - seccomp.block-secondary, profile
+# 64 bit architecture - seccomp.block-secondary, profile
 send --  "firejail --debug --profile=block-secondary.profile sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 33\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter" {puts "TESTING ERROR 34\n";exit}
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 34\n";exit}
 	"Child process initialized"
 }
 expect {
 	timeout {puts "TESTING ERROR 35\n";exit}
-	"Installing /run/firejail/mnt/seccomp.i386 seccomp filter" {puts "TESTING ERROR 35\n";exit}
+	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 35\n";exit}
 	"Installing /run/firejail/mnt/seccomp seccomp filter"
 }
 expect {

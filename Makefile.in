@@ -2,7 +2,7 @@ all: apps man filters
 MYLIBS = src/lib
 APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fcopy src/fldd src/libpostexecseccomp
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
-SECCOMP_FILTERS = seccomp seccomp.debug seccomp.i386 seccomp.amd64 seccomp.block_secondary seccomp.mdwx
+SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.64 seccomp.block_secondary seccomp.mdwx
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -43,8 +43,8 @@ filters: src/fseccomp
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	src/fseccomp/fseccomp default seccomp
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
-	src/fseccomp/fseccomp secondary 32 seccomp.i386
-	src/fseccomp/fseccomp secondary 64 seccomp.amd64
+	src/fseccomp/fseccomp secondary 32 seccomp.32
+	src/fseccomp/fseccomp secondary 64 seccomp.64
 	src/fseccomp/fseccomp secondary block seccomp.block_secondary
 	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
 endif
@@ -103,8 +103,8 @@ ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp.i386 $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp.amd64 $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.32 $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.64 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.block_secondary $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.mdwx $(DESTDIR)/$(libdir)/firejail/.
 endif

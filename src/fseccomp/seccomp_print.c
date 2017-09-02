@@ -90,7 +90,7 @@ static int detect_filter_type(void) {
 	}
 	
 	
-	// testing for secondare amd64 filter
+	// testing for secondary 64 bit filter
 	const struct sock_filter start_secondary_64[] = {
 		VALIDATE_ARCHITECTURE_64,
 		EXAMINE_SYSCALL,
@@ -102,7 +102,7 @@ static int detect_filter_type(void) {
 		return sizeof(start_secondary_64) / sizeof(struct sock_filter);
 	}
 	
-	// testing for secondare i386 filter
+	// testing for secondary 32 bit filter
 	const struct sock_filter start_secondary_32[] = {
 		VALIDATE_ARCHITECTURE_32,
 		EXAMINE_SYSCALL,

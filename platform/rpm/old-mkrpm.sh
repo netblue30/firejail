@@ -36,9 +36,9 @@ install -m 644 /usr/lib/firejail/libtracelog.so  firejail-$VERSION/usr/lib/firej
 install -m 644 /usr/lib/firejail/libtrace.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libpostexecseccomp.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/seccomp  firejail-$VERSION/usr/lib/firejail/.
-install -m 644 /usr/lib/firejail/seccomp.amd64  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/seccomp.64  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/seccomp.debug  firejail-$VERSION/usr/lib/firejail/.
-install -m 644 /usr/lib/firejail/seccomp.i386  firejail-$VERSION/usr/lib/firejail/.
+install -m 644 /usr/lib/firejail/seccomp.32  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/seccomp.block_secondary  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/seccomp.mdwx  firejail-$VERSION/usr/lib/firejail/.
 
@@ -492,9 +492,9 @@ rm -rf %{buildroot}
 /usr/lib/firejail/fnet
 /usr/lib/firejail/fseccomp
 /usr/lib/firejail/seccomp
-/usr/lib/firejail/seccomp.amd64
+/usr/lib/firejail/seccomp.64
 /usr/lib/firejail/seccomp.debug
-/usr/lib/firejail/seccomp.i386
+/usr/lib/firejail/seccomp.32
 /usr/lib/firejail/seccomp.block_secondary
 /usr/lib/firejail/seccomp.mdwx
 

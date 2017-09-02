@@ -106,6 +106,7 @@ blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/hexchat
 blacklist ${HOME}/.config/inox
+blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/k3brc
 blacklist ${HOME}/.config/katepartrc

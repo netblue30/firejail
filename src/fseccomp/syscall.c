@@ -83,6 +83,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_vm86old
 	  "vm86old"
 #endif
+#if !defined(SYS_modify_ldt) && !defined(SYS_subpage_prot) && !defined(SYS_switch_endian) && !defined(SYS_vm86) && !defined(SYS_vm86old)
+	  "__dummy_syscall__" // workaround for arm64, s390x and sparc64 which don't have any of above defined and empty syscall lists are not allowed
+#endif
 	},
 	{ .name = "@debug", .list =
 #ifdef SYS_lookup_dcookie
@@ -102,9 +105,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_sys_debug_setcontext
 	  "sys_debug_setcontext,"
-#endif
-#if !defined(SYS_lookup_dcookie) && !defined(SYS_perf_event_open) && !defined(SYS_process_vm_writev) && !defined(SYS_rtas) && !defined(SYS_s390_runtime_instr) && !defined(SYS_sys_debug_setcontext)
-	  "__dummy_syscall__" // workaround for arm64, s390x and sparc64 which don't have any of above defined and empty syscall lists are not allowed
 #endif
 	},
 	{ .name = "@default", .list =

@@ -174,6 +174,15 @@ Check the status of the latest build here: https://travis-ci.org/netblue30/firej
               amd64, i386 and x32 system calls are blocked as well as  chang‐
               ing the execution domain with personality(2) system call.
 
+       --profile.print=name|pid
+              Print  the  name of the profile file for the sandbox identified
+              by name or or PID.
+
+              Example:
+              $ firejail --profile.print=browser
+              /etc/firejail/firefox.profile
+
+
 `````
 
 ## /etc/firejail/firejail.config

@@ -1424,6 +1424,19 @@ Example:
 $ firejail \-\-profile=myprofile
 
 .TP
+\fB\-\-profile.print=name|pid
+Print the name of the profile file for the sandbox identified by name or or PID.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-profile.print=browser
+.br
+/etc/firejail/firefox.profile
+.br
+
+.TP
 \fB\-\-profile-path=directory
 Use this directory to look for profile files. Use an absolute path or a path in the home directory starting with ~/.
 For more information, see \fBSECURITY PROFILES\fR section below and \fBRELOCATING PROFILE FILES\fR in

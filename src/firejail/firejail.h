@@ -34,6 +34,7 @@
 #define RUN_FIREJAIL_X11_DIR	"/run/firejail/x11"
 #define RUN_FIREJAIL_NETWORK_DIR	"/run/firejail/network"
 #define RUN_FIREJAIL_BANDWIDTH_DIR	"/run/firejail/bandwidth"
+#define RUN_FIREJAIL_PROFILE_DIR		"/run/firejail/profile"
 #define RUN_NETWORK_LOCK_FILE	"/run/firejail/firejail.lock"
 #define RUN_RO_DIR	"/run/firejail/firejail.ro.dir"
 #define RUN_RO_FILE	"/run/firejail/firejail.ro.file"
@@ -410,6 +411,7 @@ void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
 // preproc.c
 void preproc_build_firejail_dir(void);
 void preproc_mount_mnt_dir(void);
+void preproc_clean_run(void);
 
 // fs.c
 // blacklist files or directoies by mounting empty files on top of them

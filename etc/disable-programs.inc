@@ -178,6 +178,8 @@ blacklist ${HOME}/.config/xmms2
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
+blacklist ${HOME}/.config/yandex-browser
+blacklist ${HOME}/.config/yandex-browser-beta
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
@@ -427,3 +429,5 @@ blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/xmms2
 blacklist ${HOME}/.cache/xreader
+blacklist ${HOME}/.cache/yandex-browser
+blacklist ${HOME}/.cache/yandex-browser-beta

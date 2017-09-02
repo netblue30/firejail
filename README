@@ -410,6 +410,7 @@ smithsohu (https://github.com/smitsohu)
 	- added MuseScore profile
 	- fixed device discovery for simple-scan
 	- add novideo support in many profiles
+	- improve server profiles, harden musescore
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 SpotComms (https://github.com/SpotComms)
@@ -442,6 +443,7 @@ SpotComms (https://github.com/SpotComms)
 	- added Neverball profile
 	- hardern /var
 	- profile standard layout
+	- Spotify and itch.io profile fixes
 sshirokov (http://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)

@@ -536,6 +536,8 @@ vismir2 (https://github.com/vismir2)
 	- claws-mail, mutt, git, emacs, vim profiles
 	- lots of profile fixes
 	-  support for truecrypt and zuluCrypt
+Vladimir Gorelov (https://github.com/larkvirtual)
+	- added Yandex browser profile
 Vladimir Schowalter (https://github.com/VladimirSchowalter20)
 	- apparmor profile enhancements
 	- various KDE profile enhancements

@@ -159,6 +159,7 @@ void usage(void) {
 	printf("    --private-tmp - mount a tmpfs on top of /tmp directory.\n");
 	printf("    --private-opt=file,directory - build a new /opt in a temporary filesystem.\n");
 	printf("    --profile=filename - use a custom profile.\n");
+	printf("    --profile.print=name|pid - print the name of profile file.\n");
 	printf("    --profile-path=directory - use this directory to look for profile files.\n");
 	printf("    --protocol=protocol,protocol,protocol - enable protocol filter.\n");
 	printf("    --protocol.print=name|pid - print the protocol filter.\n");

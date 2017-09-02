@@ -20,6 +20,8 @@
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 static int tmpfs_mounted = 0;
 
@@ -46,6 +48,10 @@ void preproc_build_firejail_dir(void) {
 
 	if (stat(RUN_FIREJAIL_NAME_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_NAME_DIR, 0755);
+	}
+
+	if (stat(RUN_FIREJAIL_PROFILE_DIR, &s)) {
+		create_empty_dir_as_root(RUN_FIREJAIL_PROFILE_DIR, 0755);
 	}
 
 	if (stat(RUN_FIREJAIL_X11_DIR, &s)) {
@@ -98,3 +104,77 @@ void preproc_mount_mnt_dir(void) {
 			errExit("set_perms");
 	}
 }
+
+// clean run directory
+void preproc_clean_run(void) {
+	int max_pids=32769;
+	int start_pid = 100;
+	// extract real max_pids
+	FILE *fp = fopen("/proc/sys/kernel/pid_max", "r");
+	if (fp) {
+		int val;
+		if (fscanf(fp, "%d", &val) == 1) {
+			if (val >= max_pids)
+				max_pids = val + 1;
+		}
+		fclose(fp);
+	}
+	int *pidarr = malloc(max_pids * sizeof(int));
+	if (!pidarr)
+		errExit("malloc");
+
+	memset(pidarr, 0, max_pids * sizeof(int));
+
+	// open /proc directory
+	DIR *dir;
+	if (!(dir = opendir("/proc"))) {
+		// sleep 2 seconds and try again
+		sleep(2);
+		if (!(dir = opendir("/proc"))) {
+			fprintf(stderr, "Error: cannot open /proc directory\n");
+			exit(1);
+		}
+	}
+
+	// read /proc and populate pidarr with all active processes
+	struct dirent *entry;
+	char *end;
+	while ((entry = readdir(dir)) != NULL) {
+		pid_t pid = strtol(entry->d_name, &end, 10);
+		pid %= max_pids;
+		if (end == entry->d_name || *end)
+			continue;
+	
+		if (pid < start_pid)
+			continue;
+		pidarr[pid] = 1;
+	}
+	closedir(dir);
+
+	// open /run/firejail/profile directory
+	if (!(dir = opendir(RUN_FIREJAIL_PROFILE_DIR))) {
+		// sleep 2 seconds and try again
+		sleep(2);
+		if (!(dir = opendir(RUN_FIREJAIL_PROFILE_DIR))) {
+			fprintf(stderr, "Error: cannot open %s directory\n", RUN_FIREJAIL_PROFILE_DIR);
+			exit(1);
+		}
+	}
+
+	// read /run/firejail/profile directory and clean leftover files
+	while ((entry = readdir(dir)) != NULL) {
+		pid_t pid = strtol(entry->d_name, &end, 10);
+		pid %= max_pids;
+		if (end == entry->d_name || *end)
+			continue;
+	
+		if (pid < start_pid)
+			continue;
+		if (pidarr[pid] == 0)
+			clear_run_files(pid);
+	}
+	closedir(dir);
+
+	free(pidarr);
+}
+

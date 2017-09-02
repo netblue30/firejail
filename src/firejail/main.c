@@ -130,13 +130,20 @@ unsigned long long start_timestamp;
 
 static void set_name_file(pid_t pid);
 static void delete_name_file(pid_t pid);
+static void delete_profile_file(pid_t pid);
 static void delete_x11_file(pid_t pid);
 
 void clear_run_files(pid_t pid) {
 	bandwidth_del_run_file(pid);		// bandwidth file
 	network_del_run_file(pid);		// network map file
 	delete_name_file(pid);
+	delete_profile_file(pid);
 	delete_x11_file(pid);
+}
+
+static void clear_atexit(void) {
+	EUID_ROOT();
+	clear_run_files(getpid());
 }
 
 static void myexit(int rv) {
@@ -465,6 +472,26 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 #endif
+	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
+		pid_t pid = read_pid(argv[i] + 16);
+
+		// print /run/firejail/profile/<PID> file
+		char *fname;
+		if (asprintf(&fname, RUN_FIREJAIL_PROFILE_DIR "/%d", pid) == -1)
+			errExit("asprintf");
+		FILE *fp = fopen(fname, "r");
+		if (!fp) {
+			fprintf(stderr, "Error: sandbox %s not found\n", argv[i] + 16);
+			exit(1);
+		}
+#define MAXBUF 4096
+		char buf[MAXBUF];
+		if (fgets(buf, MAXBUF, fp))
+			printf("%s", buf);
+		fclose(fp);
+		exit(0);
+		
+	}
 	else if (strncmp(argv[i], "--cpu.print=", 12) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid = read_pid(argv[i] + 12);
@@ -738,6 +765,15 @@ static void delete_name_file(pid_t pid) {
 	free(fname);
 }
 
+static void delete_profile_file(pid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_PROFILE_DIR, pid) == -1)
+		errExit("asprintf");
+	int rv = unlink(fname);
+	(void) rv;
+	free(fname);
+}
+
 void set_x11_file(pid_t pid, int display) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
@@ -825,12 +861,14 @@ int main(int argc, char **argv) {
 	char *custom_profile_dir = NULL; // custom profile directory
 
 
+	atexit(clear_atexit);
+
 	// get starting timestamp
 	start_timestamp = getticks();
 
-
 	// build /run/firejail directory structure
 	preproc_build_firejail_dir();
+	preproc_clean_run();
 
 	if (check_arg(argc, argv, "--quiet"))
 		arg_quiet = 1;
@@ -2554,13 +2592,9 @@ int main(int argc, char **argv) {
 		close(lockfd);
 	}
 
-	// create name file under /run/firejail
-
-
 	// handle CTRL-C in parent
 	signal (SIGINT, my_handler);
 	signal (SIGTERM, my_handler);
-
 
 	// wait for the child to finish
 	EUID_USER();

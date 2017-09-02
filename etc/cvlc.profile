@@ -5,7 +5,7 @@ include /etc/firejail/cvlc.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# clvc doesn't like private-bin
+# cvlc doesn't like private-bin
 ignore private-bin
 
 # Redirect

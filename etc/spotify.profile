@@ -6,10 +6,7 @@ include /etc/firejail/spotify.local
 include /etc/firejail/globals.local
 
 blacklist ${HOME}/.bashrc
-blacklist /boot
 blacklist /lost+found
-blacklist /opt
-blacklist /root
 blacklist /sbin
 blacklist /srv
 blacklist /sys

@@ -28,5 +28,5 @@ disable-mnt
 private
 private-dev
 
-# mdwe may break dnscrypt-proxy modules/plugins
+# mdwe can break modules/plugins
 # memory-deny-write-execute

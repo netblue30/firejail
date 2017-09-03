@@ -17,6 +17,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps
+# caps.keep net_admin,net_bind_service,net_raw,dac_override,setgid,setuid
 no3d
 nodvd
 nonewprivs

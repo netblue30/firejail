@@ -33,13 +33,10 @@
 extern uid_t firejail_uid;
 extern uid_t firejail_gid;
 
-
-
 static inline void EUID_ROOT(void) {
-	if (seteuid(0) == -1)
-		fprintf(stderr, "Warning: cannot switch euid to root\n");
-	if (setegid(0) == -1)
-		fprintf(stderr, "Warning: cannot switch egid to root\n");
+	int rv = seteuid(0);
+	rv = setegid(0);
+	(void) rv;
 }
 
 static inline void EUID_USER(void) {

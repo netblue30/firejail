@@ -19,7 +19,10 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
-# nogroups
+nodvd
+notv
+novideo
+nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink

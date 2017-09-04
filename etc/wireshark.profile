@@ -12,7 +12,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-caps.keep net_admin,net_raw
+caps.keep dac_override,net_admin,net_raw
 netfilter
 no3d
 # nogroups - breaks unprivileged wireshark usage

@@ -110,7 +110,6 @@ static const SyscallGroupList sysgroups[] = {
 	{ .name = "@default", .list =
 	  "@cpu-emulation,"
 	  "@debug,"
-	  "@module,"
 	  "@obsolete,"
 	  "@privileged,"
 	  "@resources,"

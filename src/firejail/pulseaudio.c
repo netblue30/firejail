@@ -195,7 +195,8 @@ void pulseaudio_init(void) {
 	if (asprintf(&homeusercfg, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(homeusercfg, &s) == 0) {
-		if (mount(RUN_PULSE_DIR, homeusercfg, "none", MS_BIND, NULL) < 0)
+		if (mount(RUN_PULSE_DIR, homeusercfg, "none", MS_BIND, NULL) < 0 ||
+		    mount(NULL, homeusercfg, NULL, MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_BIND|MS_REMOUNT, NULL) < 0)
 			errExit("mount pulseaudio");
 		fs_logger2("tmpfs", homeusercfg);
 	}

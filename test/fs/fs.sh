@@ -28,6 +28,9 @@ echo "TESTING: kmsg access (test/fs/kmsg.exp)"
 echo "TESTING: read/write /var/tmp (test/fs/fs_var_tmp.exp)"
 ./fs_var_tmp.exp
 
+echo "TESTING: private-lib (test/fs/private-lib.exp)"
+./private-lib.exp
+
 echo "TESTING: read/write /var/lock (test/fs/fs_var_lock.exp)"
 ./fs_var_lock.exp
 

@@ -265,6 +265,11 @@ printf("\n");
 	}
 
 
+	if (strcmp(argv[1], "--help") == 0) {
+		usage();
+		return 0;
+	}
+
 	// check program access
 	if (access(argv[1], R_OK)) {
 		fprintf(stderr, "Error fldd: cannot access %s\n", argv[1]);

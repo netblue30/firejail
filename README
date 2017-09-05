@@ -411,6 +411,8 @@ smithsohu (https://github.com/smitsohu)
 	- fixed device discovery for simple-scan
 	- add novideo support in many profiles
 	- improve server profiles, harden musescore
+	- snap profile cleanup
+	- tighten some capability sets further
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 SpotComms (https://github.com/SpotComms)

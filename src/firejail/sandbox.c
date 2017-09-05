@@ -107,7 +107,9 @@ static void set_caps(void) {
 		caps_default_filter();
 	
 	// drop discretionary access control capabilities for root sandboxes
-	caps_drop_dac_override();
+	// if caps.keep, the user has to set it manually in the list
+	if (!arg_caps_keep)
+		caps_drop_dac_override();
 }
 
 void save_nogroups(void) {

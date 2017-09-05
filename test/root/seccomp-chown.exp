@@ -14,33 +14,32 @@ expect {
 }
 sleep 2
 
-send -- "touch testfile;pwd\r"
+send -- "touch testfile; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"/root" {puts "running as root"}
-	"/home"
+	"done"
 }
+after 100
 
-send -- "ls -l testfile;pwd\r"
+send -- "ls -l testfile; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"testfile"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"/root" {puts "running as root"}
-	"/home"
+	"done"
 }
+after 100
 
-send -- "chown netblue:netblue testfile;pwd\r"
+send -- "chown netblue:netblue testfile; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Bad system call"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"/root" {puts "running as root"}
-	"/home"
+	"done"
 }
 
 

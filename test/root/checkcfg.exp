@@ -88,6 +88,7 @@ expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
 	"noroot feature is disabled in Firejail configuration file\r"
 }
+sleep 1
 
 # netfilter-default
 send --  "echo \"netfilter-default blablabla\" > /etc/firejail/firejail.config\r"
@@ -97,6 +98,7 @@ expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
 	"netfilter-default file blablabla not available\r"
 }
+after 100
 
 # strings
 send --  "echo \"xephyr-screen 800x600\" > /etc/firejail/firejail.config\r"
@@ -104,17 +106,15 @@ after 100
 send --  "echo \"xvfb-screen 800x600x24\" >> /etc/firejail/firejail.config\r"
 after 100
 send --  "echo \"xvfb-extra-params blablabla\" >> /etc/firejail/firejail.config\r"
-after 100
-send --  "firejail --noprofile\r"
+sleep 1
+send --  "firejail --noprofile echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"Child process initialized\r"
+	"done\r"
 }
-after 100
-send -- "exit\r"
-after 100
+sleep 1
 
-# error exit
+after 100
 send --  "echo \"join no\" > /etc/firejail/firejail.config\r"
 after 100
 send --  "echo \"cache-tmpfs no\" >> /etc/firejail/firejail.config\r"

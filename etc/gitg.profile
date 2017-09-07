@@ -31,6 +31,7 @@ private-bin gitg,git,ssh
 private-dev
 private-tmp
 
-memory-deny-write-execute
+# mdwe breaks diff in older versions
+#memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

@@ -128,10 +128,12 @@ static char *resolve_downloads(int nowhitelist_flag) {
 	return NULL;
 
 errout:
-	fprintf(stderr, "***\n");
-	fprintf(stderr, "*** Error: Downloads directory was not found in user home.\n");
-	fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
-	fprintf(stderr, "***\n");
+	if (!arg_private) {
+		fprintf(stderr, "***\n");
+		fprintf(stderr, "*** Error: Downloads directory was not found in user home.\n");
+		fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
+		fprintf(stderr, "***\n");
+	}
 
 	return NULL;
 }
@@ -353,7 +355,7 @@ void fs_whitelist(void) {
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
 			else {
-				if (!nowhitelist_flag && !arg_quiet) {
+				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
 					fprintf(stderr, "***\n");
 					fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
 					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
@@ -441,7 +443,8 @@ void fs_whitelist(void) {
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			// whitelisting home directory is disabled if --private option is present
 			if (arg_private) {
-				fwarning("\"%s\" disabled by --private\n", entry->data);
+				if (arg_debug || arg_debug_whitelists)
+					printf("\"%s\" disabled by --private\n", entry->data);
 
 				entry->data = EMPTY_STRING;
 				continue;

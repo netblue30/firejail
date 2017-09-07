@@ -81,6 +81,7 @@ void preproc_mount_mnt_dir(void) {
 		tmpfs_mounted = 1;
 		fs_logger2("tmpfs", RUN_MNT_DIR);
 
+#ifdef HAVE_SECCOMP
 		if (arg_seccomp_block_secondary)
 			copy_file(PATH_SECCOMP_BLOCK_SECONDARY, RUN_SECCOMP_BLOCK_SECONDARY, getuid(), getgid(), 0644); // root needed
 		else {
@@ -102,6 +103,7 @@ void preproc_mount_mnt_dir(void) {
 		create_empty_file_as_root(RUN_SECCOMP_POSTEXEC, 0644);
 		if (set_perms(RUN_SECCOMP_POSTEXEC, getuid(), getgid(), 0644))
 			errExit("set_perms");
+#endif
 	}
 }
 

@@ -209,6 +209,7 @@
 /etc/firejail/mediathekview.profile
 /etc/firejail/meld.profile
 /etc/firejail/midori.profile
+/etc/firejail/minetest.profile
 /etc/firejail/mousepad.profile
 /etc/firejail/mplayer.profile
 /etc/firejail/mpv.profile

@@ -330,6 +330,7 @@ blacklist ${HOME}/.lv2
 blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
+blacklist ${HOME}/.minetest
 blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.mplayer

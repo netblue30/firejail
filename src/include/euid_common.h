@@ -35,7 +35,7 @@ extern uid_t firejail_gid;
 
 static inline void EUID_ROOT(void) {
 	int rv = seteuid(0);
-	rv = setegid(0);
+	rv |= setegid(0);
 	(void) rv;
 }
 

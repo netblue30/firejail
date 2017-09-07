@@ -223,4 +223,4 @@ IntelliJ IDEA, Android Studio, electron, riot-web,
 Extreme Tux Racer, Frozen Bubble, Open Invaders, Pingus, Simutrans, SuperTux,
 telegram-desktop, arm, rambox, apktool, baobab, dex2jar, gitg, hashcat, obs, picard,
 remmina, sdat2img, soundconverter, sqlitebrowse, truecraft, gnome-twitch, tuxguitar,
-musescore, neverball, Yandex Browser
+musescore, neverball, Yandex Browser, minetest

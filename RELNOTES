@@ -1,5 +1,9 @@
-firejail (0.9.50~rc1) baseline; urgency=low
+firejail (0.9.51) baseline; urgency=low
   * work in progress!
+ -- netblue30 <netblue30@yahoo.com>  Mon, 12 Jun 2017 20:00:00 -0500
+
+firejail (0.9.50~rc1) baseline; urgency=low
+  * release pending!
   * modif: --output split in two commands, --output and --output-stderr
   * feature: per-profile disable-mnt (--disable-mnt)
   * feature: per-profile support to set X11 Xephyr screen size (--xephyr-screen)

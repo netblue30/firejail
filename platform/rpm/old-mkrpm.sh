@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.50~rc1"
+VERSION="0.9.50"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -28,6 +28,7 @@ install -m 644 /usr/lib/firejail/firecfg.config  firejail-$VERSION/usr/lib/firej
 #install -m 755 /usr/lib/firejail/fjclip.py  firejail-$VERSION/usr/lib/firejail/.
 #install -m 755 /usr/lib/firejail/fjdisplay.py  firejail-$VERSION/usr/lib/firejail/.
 #install -m 755 /usr/lib/firejail/fjresize.py  firejail-$VERSION/usr/lib/firejail/.
+install -m 755 /usr/lib/firejail/fldd  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/fnet  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/fseccomp  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/fshaper.sh  firejail-$VERSION/usr/lib/firejail/.
@@ -466,6 +467,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/unknown-horizons.profile
 %{_sysconfdir}/%{name}/wireshark-gtk.profile
 %{_sysconfdir}/%{name}/wireshark-qt.profile
+%{_sysconfdir}/%{name}/itch.profile
+%{_sysconfdir}/%{name}/minetest.profile
+%{_sysconfdir}/%{name}/yandex-browser.profile
 
 
 
@@ -490,6 +494,7 @@ rm -rf %{buildroot}
 #/usr/lib/firejail/fjdisplay.py
 #/usr/lib/firejail/fjresize.py
 /usr/lib/firejail/fnet
+/usr/lib/firejail/fldd
 /usr/lib/firejail/fseccomp
 /usr/lib/firejail/seccomp
 /usr/lib/firejail/seccomp.64
@@ -514,7 +519,7 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
-* Mon Aug 28 2017  netblue30 <netblue30@yahoo.com> 0.9.50~rc1-1
+* Fri Sep 8 2017  netblue30 <netblue30@yahoo.com> 0.9.50-1
 
 * Mon Jun 12 2017  netblue30 <netblue30@yahoo.com> 0.9.48-1
 

@@ -11,7 +11,11 @@ noblacklist ~/.config/okularpartrc
 noblacklist ~/.config/okularrc
 noblacklist ~/.config/qpdfview
 noblacklist ~/.kde/share/apps/okular
+noblacklist ~/.kde/share/config/okularpartrc
+noblacklist ~/.kde/share/config/okularrc
 noblacklist ~/.kde4/share/apps/okular
+noblacklist ~/.kde4/share/config/okularpartrc
+noblacklist ~/.kde4/share/config/okularrc
 noblacklist ~/.local/share/gnome-shell/extensions
 noblacklist ~/.local/share/okular
 noblacklist ~/.local/share/qpdfview
@@ -39,7 +43,11 @@ whitelist ~/.config/pipelight-silverlight5.1
 whitelist ~/.config/pipelight-widevine
 whitelist ~/.config/qpdfview
 whitelist ~/.kde/share/apps/okular
+whitelist ~/.kde/share/config/okularpartrc
+whitelist ~/.kde/share/config/okularrc
 whitelist ~/.kde4/share/apps/okular
+whitelist ~/.kde4/share/config/okularpartrc
+whitelist ~/.kde4/share/config/okularrc
 whitelist ~/.keysnail.js
 whitelist ~/.lastpass
 whitelist ~/.local/share/gnome-shell/extensions
@@ -72,7 +80,6 @@ tracelog
 
 # private-bin waterfox,which,sh,dbus-launch,dbus-send,env
 private-dev
-# private-dev might prevent video calls going out
 # private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,waterfox,mime.types,mailcap,asound.conf,pulse
 private-tmp
 

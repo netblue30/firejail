@@ -274,6 +274,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_vserver
 	  "vserver"
 #endif
+#if !defined(SYS__sysctl) && !defined(SYS_afs_syscall) && !defined(SYS_bdflush) && !defined(SYS_break) && !defined(SYS_create_module) && !defined(SYS_ftime) && !defined(SYS_get_kernel_syms) && !defined(SYS_getpmsg) && !defined(SYS_gtty) && !defined(SYS_lock) && !defined(SYS_mpx) && !defined(SYS_prof) && !defined(SYS_profil) && !defined(SYS_putpmsg) && !defined(SYS_query_module) && !defined(SYS_security) && !defined(SYS_sgetmask) && !defined(SYS_ssetmask) && !defined(SYS_stty) && !defined(SYS_sysfs) && !defined(SYS_tuxcall) && !defined(SYS_ulimit) && !defined(SYS_uselib) && !defined(SYS_ustat) && !defined(SYS_vserver)
+	  "__dummy_syscall__" // workaround for arm64 which doesn't have any of above defined and empty syscall lists are not allowed
+#endif
 	},
 	{ .name = "@privileged", .list =
 	  "@clock,"
@@ -333,6 +336,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_s390_mmio_write
 	  "s390_mmio_write"
+#endif
+#if !defined(SYS_ioperm) && !defined(SYS_iopl) && !defined(SYS_pciconfig_iobase) && !defined(SYS_pciconfig_read) && !defined(SYS_pciconfig_write) && !defined(SYS_s390_mmio_read) && !defined(SYS_s390_mmio_write)
+	  "__dummy_syscall__" // workaround for s390x which doesn't have any of above defined and empty syscall lists are not allowed
 #endif
 	},
 	{ .name = "@reboot", .list =

@@ -149,9 +149,35 @@ struct seccomp_data {
 # define ARCH_NR	AUDIT_ARCH_S390
 # define ARCH_32	AUDIT_ARCH_S390
 # define ARCH_64	AUDIT_ARCH_S390X
+#elif defined(__sh64__) && __BYTE_ORDER == __BIG_ENDIAN
+# define ARCH_NR	AUDIT_ARCH_SH64
+# define ARCH_32	AUDIT_ARCH_SH
+# define ARCH_64	AUDIT_ARCH_SH64
+#elif defined(__sh64__) && __BYTE_ORDER == __LITTLE_ENDIAN
+# define ARCH_NR	AUDIT_ARCH_SHEL64
+# define ARCH_32	AUDIT_ARCH_SHEL
+# define ARCH_64	AUDIT_ARCH_SHEL64
+#elif defined(__sh__) && __BYTE_ORDER == __BIG_ENDIAN
+# define ARCH_NR	AUDIT_ARCH_SH
+# define ARCH_32	AUDIT_ARCH_SH
+# define ARCH_64	AUDIT_ARCH_SH64
+#elif defined(__sh__) && __BYTE_ORDER == __LITTLE_ENDIAN
+# define ARCH_NR	AUDIT_ARCH_SHEL
+# define ARCH_32	AUDIT_ARCH_SHEL
+# define ARCH_64	AUDIT_ARCH_SHEL64
+#elif defined(__sparc64__)
+# define ARCH_NR	AUDIT_ARCH_SPARC64
+# define ARCH_32	AUDIT_ARCH_SPARC
+# define ARCH_64	AUDIT_ARCH_SPARC64
+#elif defined(__sparc__)
+# define ARCH_NR	AUDIT_ARCH_SPARC
+# define ARCH_32	AUDIT_ARCH_SPARC
+# define ARCH_64	AUDIT_ARCH_SPARC64
 #else
 # warning "Platform does not support seccomp filter yet"
 # define ARCH_NR	0
+# define ARCH_32	0
+# define ARCH_64	0
 #endif
 
 #define VALIDATE_ARCHITECTURE \

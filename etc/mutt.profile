@@ -7,6 +7,8 @@ include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 
+noblacklist /var/mail
+noblacklist /var/spool/mail
 noblacklist ~/.Mail
 noblacklist ~/.bogofilter
 noblacklist ~/.cache/mutt
@@ -31,7 +33,7 @@ noblacklist ~/postponed
 noblacklist ~/sent
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
+# include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

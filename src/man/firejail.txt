@@ -1131,7 +1131,7 @@ Disable whitelist for this directory or file.
 
 .TP
 \fB\-\-output=logfile
-stdout logging and log rotation. Copy stdout and stderr to logfile, and keep the size of the file under 500KB using log
+stdout logging and log rotation. Copy stdout to logfile, and keep the size of the file under 500KB using log
 rotation. Five files with prefixes .1 to .5 are used in rotation.
 .br
 

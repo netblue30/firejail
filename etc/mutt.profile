@@ -7,6 +7,8 @@ include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 
+noblacklist /var/mail
+noblacklist /var/spool/mail
 noblacklist ~/.Mail
 noblacklist ~/.bogofilter
 noblacklist ~/.cache/mutt

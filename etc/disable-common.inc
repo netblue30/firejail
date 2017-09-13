@@ -130,6 +130,7 @@ blacklist /var/run/screens
 blacklist /var/run/systemd
 blacklist /var/spool/anacron
 blacklist /var/spool/cron
+blacklist /var/spool/mail
 
 # etc
 blacklist /etc/anacrontab

@@ -11,6 +11,8 @@ whitelist ~/.config/user-dirs.dirs
 read-only ~/.config/user-dirs.dirs
 whitelist ~/.asoundrc
 whitelist ~/.config/Trolltech.conf
+whitelist ~/.local/share/mime
+whitelist ~/.drirc
 
 # fonts
 whitelist ~/.fonts
@@ -25,9 +27,11 @@ whitelist ~/.cache/fontconfig
 # gtk
 whitelist ~/.gtkrc
 whitelist ~/.gtkrc-2.0
+whitelist ~/.gtk-2.0
 whitelist ~/.config/gtk-2.0
 whitelist ~/.config/gtk-3.0
 whitelist ~/.themes
+whitelist ~/.local/share/themes
 whitelist ~/.kde/share/config/gtkrc
 whitelist ~/.kde/share/config/gtkrc-2.0
 whitelist ~/.gnome2

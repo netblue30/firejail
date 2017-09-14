@@ -78,6 +78,9 @@ read-only ${HOME}/.local/share/kservices5
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
+blacklist /var/lib/systemd
+# blacklist /var/run/systemd
+#  - creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox
@@ -115,7 +118,6 @@ blacklist /var/lib/dkms
 blacklist /var/lib/mysql/mysql.sock
 blacklist /var/lib/mysqld/mysql.sock
 blacklist /var/lib/pacman
-blacklist /var/lib/systemd
 blacklist /var/lib/upower
 blacklist /var/log
 blacklist /var/mail
@@ -127,7 +129,6 @@ blacklist /var/run/mysql/mysqld.sock
 blacklist /var/run/mysqld/mysqld.sock
 blacklist /var/run/rpcbind.sock
 blacklist /var/run/screens
-blacklist /var/run/systemd
 blacklist /var/spool/anacron
 blacklist /var/spool/cron
 blacklist /var/spool/mail

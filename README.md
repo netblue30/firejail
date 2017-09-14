@@ -96,8 +96,14 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 
 `````
-# 0.9.50 release pending
-
-Development moved on  0.9.50-bugfixes branch: https://github.com/netblue30/firejail/tree/0.9.50-bugfixes
-
 # Current development version: 0.9.51
+
+## New command line options
+`````
+      --writable-run-user
+              This    options    disables   the   default   blacklisting   of
+              run/user/$UID/systemd and /run/user/$UID/gnupg.
+
+              Example:
+              $ sudo firejail --writable-run-user
+`````

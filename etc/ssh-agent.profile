@@ -25,3 +25,4 @@ noroot
 notv
 protocol unix,inet,inet6
 seccomp
+writable-run-user

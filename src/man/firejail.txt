@@ -1965,6 +1965,16 @@ Example:
 $ sudo firejail --writable-etc
 
 .TP
+\fB\-\-writable-run-user
+This options disables the default blacklisting of run/user/$UID/systemd and /run/user/$UID/gnupg.
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --writable-run-user
+
+.TP
 \fB\-\-writable-var
 Mount /var directory read-write.
 .br

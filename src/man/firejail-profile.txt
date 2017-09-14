@@ -273,6 +273,9 @@ the same top directory. For user home, both the link and the real file should be
 \fBwritable-etc
 Mount /etc directory read-write.
 .TP
+\fBwritable-run-user
+Disable the default blacklisting of run/user/$UID/systemd and /run/user/$UID/gnupg.
+.TP
 \fBwritable-var
 Mount /var directory read-write.
 .TP

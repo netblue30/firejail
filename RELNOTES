@@ -1,6 +1,7 @@
 firejail (0.9.51) baseline; urgency=low
   * work in progress!
- -- netblue30 <netblue30@yahoo.com>  Mon, 12 Jun 2017 20:00:00 -0500
+  * feature: --writable-run-user
+ -- netblue30 <netblue30@yahoo.com>  Thu, 14 Sep 2017 20:00:00 -0500
 
 firejail (0.9.50~rc1) baseline; urgency=low
   * release pending!

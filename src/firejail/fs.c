@@ -582,33 +582,35 @@ void fs_proc_sys_dev_boot(void) {
 
 
 	// disable various ipc sockets in /run/user
-	struct stat s;
-
-	char *fname;
-	if (asprintf(&fname, "/run/user/%d", getuid()) == -1)
-		errExit("asprintf");
-	if (is_dir(fname)) { // older distros don't have this directory
-		// disable /run/user/{uid}/gnupg
-		char *fnamegpg;
-		if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
+	if (!arg_writable_run_user) {
+		struct stat s;
+	
+		char *fname;
+		if (asprintf(&fname, "/run/user/%d", getuid()) == -1)
 			errExit("asprintf");
-		if (stat(fnamegpg, &s) == -1)
-		    mkdir_attr(fnamegpg, 0700, getuid(), getgid());
-		if (stat(fnamegpg, &s) == 0)
-			disable_file(BLACKLIST_FILE, fnamegpg);
-		free(fnamegpg);
-
-		// disable /run/user/{uid}/systemd
-		char *fnamesysd;
-		if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
-			errExit("asprintf");
-		if (stat(fnamesysd, &s) == -1)
-			mkdir_attr(fnamesysd, 0755, getuid(), getgid());
-		if (stat(fnamesysd, &s) == 0)
-			disable_file(BLACKLIST_FILE, fnamesysd);
-		free(fnamesysd);
+		if (is_dir(fname)) { // older distros don't have this directory
+			// disable /run/user/{uid}/gnupg
+			char *fnamegpg;
+			if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
+				errExit("asprintf");
+			if (stat(fnamegpg, &s) == -1)
+			    mkdir_attr(fnamegpg, 0700, getuid(), getgid());
+			if (stat(fnamegpg, &s) == 0)
+				disable_file(BLACKLIST_FILE, fnamegpg);
+			free(fnamegpg);
+	
+			// disable /run/user/{uid}/systemd
+			char *fnamesysd;
+			if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
+				errExit("asprintf");
+			if (stat(fnamesysd, &s) == -1)
+				mkdir_attr(fnamesysd, 0755, getuid(), getgid());
+			if (stat(fnamesysd, &s) == 0)
+				disable_file(BLACKLIST_FILE, fnamesysd);
+			free(fnamesysd);
+		}
+		free(fname);
 	}
-	free(fname);
 
 	if (getuid() != 0) {
 		// disable /dev/kmsg and /proc/kmsg

@@ -100,6 +100,8 @@ int arg_nice = 0;				// nice value configured
 int arg_ipc = 0;					// enable ipc namespace
 int arg_writable_etc = 0;			// writable etc
 int arg_writable_var = 0;			// writable var
+int arg_writable_run_user = 0;			// writable /run/user
+int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
 int arg_audit = 0;				// audit
 char *arg_audit_prog = NULL;			// audit
@@ -110,7 +112,6 @@ int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
 int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
-int arg_writable_var_log = 0;		// writable /var/log
 int arg_disable_mnt = 0;			// disable /mnt and /media
 int arg_noprofile = 0; // use default.profile if none other found/specified
 int arg_memory_deny_write_execute = 0;		// block writable and executable memory
@@ -1559,6 +1560,9 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
+		}
+		else if (strcmp(argv[i], "--writable-run-user") == 0) {
+			arg_writable_run_user = 1;
 		}
 		else if (strcmp(argv[i], "--writable-var-log") == 0) {
 			arg_writable_var_log = 1;

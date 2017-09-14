@@ -13,17 +13,18 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
 nogroups
 nonewprivs
 noroot
 notv
 novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
 
 # private-bin goobox
-# private-dev
+private-dev
 # private-etc fonts
 # private-tmp

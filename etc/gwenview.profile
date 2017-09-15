@@ -35,5 +35,6 @@ private-bin gwenview,kbuildsycoca4,gimp,gimp-2.8
 private-dev
 # private-etc X11
 
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

@@ -39,5 +39,6 @@ private-dev
 # private-etc fonts,X11
 private-tmp
 
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

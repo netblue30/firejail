@@ -29,3 +29,6 @@ shell none
 private-dev
 # private-etc
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

@@ -18,11 +18,11 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ~/.kde/share/apps/ktorrent
-mkdir ~/.kde/share/config/ktorrentrc
 mkdir ~/.kde4/share/apps/ktorrent
-mkdir ~/.kde4/share/config/ktorrentrc
 mkdir ~/.local/share/ktorrent
 mkfile ~/.config/ktorrentrc
+mkfile ~/.kde/share/config/ktorrentrc
+mkfile ~/.kde4/share/config/ktorrentrc
 whitelist  ${DOWNLOADS}
 whitelist ~/.config/ktorrentrc
 whitelist ~/.kde/share/apps/ktorrent
@@ -49,5 +49,6 @@ shell none
 private-dev
 private-tmp
 
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

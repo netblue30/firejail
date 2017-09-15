@@ -413,6 +413,7 @@ smithsohu (https://github.com/smitsohu)
 	- improve server profiles, harden musescore
 	- snap profile cleanup
 	- tighten some capability sets further
+	- enhance mutt, goobox, baloo and clementine profiles
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 SpotComms (https://github.com/SpotComms)

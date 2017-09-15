@@ -350,10 +350,12 @@ static int ok_to_run(const char *program) {
 	return 0;
 }
 
-void start_application(void) {
+void start_application(int no_sandbox) {
 	// set environment
-	env_defaults();
-	env_apply();
+	if (no_sandbox == 0) {
+		env_defaults();
+		env_apply();
+	}
 	if (arg_debug) {
 		printf("starting application\n");
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
@@ -1082,7 +1084,7 @@ int sandbox(void* sandbox_arg) {
 		}
 #endif
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
-		start_application();	// start app
+		start_application(0);	// start app
 	}
 
 	int status = monitor_application(app_pid);	// monitor application

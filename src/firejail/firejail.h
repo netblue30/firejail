@@ -387,7 +387,7 @@ char *guess_shell(void);
 
 // sandbox.c
 int sandbox(void* sandbox_arg);
-void start_application(void);
+void start_application(int no_sandbox);
 
 // network_main.c
 void net_configure_bridge(Bridge *br, char *dev_name);

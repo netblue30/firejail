@@ -13,6 +13,9 @@ whitelist ~/.asoundrc
 whitelist ~/.config/Trolltech.conf
 whitelist ~/.local/share/mime
 whitelist ~/.drirc
+whitelist ~/.mime.types
+whitelist ~/.local/share/applications
+read-only ~/.local/share/applications
 
 # fonts
 whitelist ~/.fonts
@@ -23,6 +26,7 @@ whitelist ~/.fonts.conf.d
 whitelist ~/.local/share/fonts
 whitelist ~/.config/fontconfig
 whitelist ~/.cache/fontconfig
+whitelist ~/.pangorc
 
 # gtk
 whitelist ~/.gtkrc

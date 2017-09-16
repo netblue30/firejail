@@ -27,7 +27,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin natron
+private-bin natron,Natron,NatronRenderer
 
 noexec ${HOME}
 noexec /tmp

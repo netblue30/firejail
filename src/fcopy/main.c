@@ -22,6 +22,7 @@
 #include <fcntl.h>
 #include <ftw.h>
 #include <errno.h>
+#include <pwd.h>
 
 int arg_quiet = 0;
 static int arg_follow_link = 0;
@@ -199,17 +200,29 @@ static char *check(const char *src) {
 	if (!rsrc || stat(rsrc, &s) == -1)
 		goto errexit;
 
-	// check uid
+	// on systems with systemd-resolved installed /etc/resolve.conf is a symlink to
+	//    /run/systemd/resolve/resolv.conf; this file is owned by systemd-resolve user
 	// checking gid will fail for files with a larger group such as /usr/bin/mutt_dotlock
-	if (s.st_uid != getuid()/* || s.st_gid != getgid()*/)
-		goto errexit;
+	uid_t user = getuid();
+	if (user == 0 && strcmp(rsrc, "/run/systemd/resolve/resolv.conf") == 0) {
+		// check user systemd-resolve
+		struct passwd *p = getpwnam("systemd-resolve");
+		if (!p)
+			goto errexit;
+		if (s.st_uid != user && s.st_uid != p->pw_uid)
+			goto errexit;
+	}
+	else {
+		if (s.st_uid != user /* || s.st_gid != getgid()*/)
+			goto errexit;
+	}
 
 	// dir, link, regular file
 	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || S_ISLNK(s.st_mode))
 		return rsrc;			  // normal exit from the function
 
 errexit:
-	fprintf(stderr, "Error fcopy: invalid file %s\n", src);
+	fprintf(stderr, "Edddddrror fcopy: invalid file %s\n", src);
 	exit(1);
 }
 

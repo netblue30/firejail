@@ -20,6 +20,7 @@ mkdir ~/.config/VirtualBox
 mkdir ~/VirtualBox VMs
 whitelist ~/.config/VirtualBox
 whitelist ~/VirtualBox VMs
+whitelist ${DOWNLOADS}
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

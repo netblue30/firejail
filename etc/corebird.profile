@@ -13,8 +13,20 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
 nodvd
+nogroups
+nonewprivs
 noroot
 notv
+novideo
 protocol unix,inet,inet6
 seccomp
+shell none
+
+# private-bin corebird
+private-dev
+private-tmp
+
+noexec ${HOME}
+noexec /tmp

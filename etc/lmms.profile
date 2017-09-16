@@ -5,17 +5,13 @@ include /etc/firejail/lmms.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
 
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.lmmsrc.xml
-whitelist ${HOME}/Music
-whitelist ${HOME}/lmms
-whitelist /tmp/.X11-unix
-include /etc/firejail/whitelist-common.inc
+noblacklist ${HOME}/.lmmsrc.xml
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace

@@ -5,17 +5,13 @@ include /etc/firejail/freecad.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
-blacklist /usr/local/bin
-blacklist /usr/local/sbin
 
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/FreeCAD
-whitelist ${HOME}/Documents
-include /etc/firejail/whitelist-common.inc
+noblacklist ${HOME}/.config/FreeCAD
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace
@@ -29,7 +25,7 @@ shell none
 
 private-bin freecad,freecadcmd
 private-dev
-private-etc fonts,passwd,alternatives,X11
+#private-etc fonts,passwd,alternatives,X11
 private-tmp
 
 noexec ${HOME}

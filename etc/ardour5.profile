@@ -5,19 +5,16 @@ include /etc/firejail/ardour5.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
-blacklist /usr/local/bin
 
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/ardour4
-whitelist ${HOME}/.config/ardour5
-whitelist ${HOME}/.lv2
-whitelist ${HOME}/.vst
-whitelist ${HOME}/Documents
-include /etc/firejail/whitelist-common.inc
+noblacklist ${HOME}/.config/ardour4
+noblacklist ${HOME}/.config/ardour5
+noblacklist ${HOME}/.lv2
+noblacklist ${HOME}/.vst
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace
@@ -27,9 +24,9 @@ noroot
 seccomp
 shell none
 
-private-bin sh,ardour5,ardour5-copy-mixer,ardour5-export,ardour5-fix_bbtppq,grep,sed,ldd,nm
+#private-bin sh,ardour5,ardour5-copy-mixer,ardour5-export,ardour5-fix_bbtppq,grep,sed,ldd,nm
 private-dev
-private-etc pulse,X11,alternatives,ardour4,ardour5,fonts
+#private-etc pulse,X11,alternatives,ardour4,ardour5,fonts
 private-tmp
 
 noexec /home

@@ -8,6 +8,7 @@ include /etc/firejail/globals.local
 # How to use:
 # Create a script called anything (e.g. mytor)
 # with the following contents:
+
 # #!/bin/bash
 # TORCMD="tor --defaults-torrc /usr/share/tor/tor-service-defaults-torrc -f /etc/tor/torrc --RunAsDaemon 1"
 # sudo -b daemon -f -d -- firejail --profile=/home/<username>/.config/firejail/tor.profile $TORCMD
@@ -15,10 +16,10 @@ include /etc/firejail/globals.local
 # You'll also likely want to disable the system service (if it exists)
 # Run mytor (or whatever you called the script above) whenever you want to start tor
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.keep setuid,setgid,net_bind_service,dac_read_search
 ipc-namespace
@@ -29,7 +30,6 @@ nosound
 seccomp
 shell none
 writable-var
-x11 none
 
 private
 private-bin tor,bash

@@ -5,18 +5,16 @@ include /etc/firejail/amule.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
-blacklist /usr/local/bin
-blacklist /usr/local/sbin
+
+noblacklist ${HOME}/.aMule
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.aMule
-whitelist ${HOME}/.gtkrc-2.0
-whitelist ${HOME}/.gtkrc.mine
-whitelist ${HOME}/.themes
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
@@ -29,5 +27,4 @@ shell none
 
 private-bin amule
 private-dev
-private-etc fonts,hosts
 private-tmp

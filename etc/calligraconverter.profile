@@ -2,4 +2,4 @@
 # This file is overwritten after every install/update
 
 
-include ${HOME}/.config/firejail/calligra.profile
+include /etc/firejail/calligra.profile

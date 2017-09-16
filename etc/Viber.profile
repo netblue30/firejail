@@ -6,21 +6,15 @@ include /etc/firejail/Viber.local
 include /etc/firejail/globals.local
 
 
+noblacklist ${HOME}/.ViberPC
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.ViberPC
-whitelist /dev/dri
-whitelist /dev/full
-whitelist /dev/null
-whitelist /dev/ptmx
-whitelist /dev/pts
-whitelist /dev/random
-whitelist /dev/shm
-whitelist /dev/snd
-whitelist /dev/tty
-whitelist /dev/urandom
-whitelist /dev/video0
-whitelist /dev/zero
-whitelist /opt/viber
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

@@ -5,16 +5,18 @@ include /etc/firejail/google-earth.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
+noblacklist ${HOME}/.config/Google
+noblacklist ${HOME}/.googleearth 
 
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
+mkdir ${HOME}/.config/Google
+mkdir ${HOME}/.googleearth
 whitelist ${HOME}/.config/Google
-whitelist ${HOME}/.googleearth/Cache/
-whitelist ${HOME}/.googleearth/Temp/
-whitelist ${HOME}/.googleearth/myplaces.backup.kml
-whitelist ${HOME}/.googleearth/myplaces.kml
-whitelist /tmp/.X11-unix
+whitelist ${HOME}/.googleearth
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
@@ -26,7 +28,7 @@ shell none
 
 private-bin google-earth,sh,grep,sed,ls,dirname
 private-dev
-private-etc fonts,resolv.conf,X11,alternatives,pulse
+#private-etc fonts,resolv.conf,X11,alternatives,pulse
 
-noexec /home
+noexec ${HOME}
 noexec /tmp

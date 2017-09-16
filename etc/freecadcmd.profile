@@ -2,4 +2,4 @@
 # This file is overwritten after every install/update
 
 
-include ${HOME}/.config/firejail/freecad.profile
+include /etc/firejail/freecad.profile

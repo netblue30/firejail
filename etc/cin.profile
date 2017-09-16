@@ -5,16 +5,12 @@ include /etc/firejail/cin.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
+noblacklist ${HOME}/.bcast5
 
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.bcast5
-whitelist ${HOME}/Videos
-whitelist /tmp/.X11-unix
-include /etc/firejail/whitelist-common.inc
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace
@@ -26,7 +22,7 @@ shell none
 
 private-bin cin
 private-dev
-private-etc fonts,pulse
+#private-etc fonts,pulse
 
 noexec /home
 noexec /tmp

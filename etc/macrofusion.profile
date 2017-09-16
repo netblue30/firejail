@@ -6,12 +6,12 @@ include /etc/firejail/macrofusion.local
 include /etc/firejail/globals.local
 
 
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/gtk-3.0
-whitelist ${HOME}/.config/mfusion
-whitelist ${HOME}/.themes
-whitelist ${HOME}/Pictures
-include /etc/firejail/whitelist-common.inc
+noblacklist ${HOME}/.config/mfusion
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace
@@ -22,7 +22,7 @@ noroot
 seccomp
 shell none
 
-private-bin python3,macrofusion,env,enfuse,exiftool,align_image_stack
+#private-bin python3,macrofusion,env,enfuse,exiftool,align_image_stack
 private-dev
-private-etc fonts
+#private-etc fonts
 private-tmp

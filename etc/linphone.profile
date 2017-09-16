@@ -5,13 +5,16 @@ include /etc/firejail/linphone.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
+noblacklist ${HOME}/.linphone-history.db
+noblacklist ${HOME}/.linphonerc
 
-whitelist ${HOME}/.gtkrc-2.0
-whitelist ${HOME}/.gtkrc.mine
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
+
+mkfile ${HOME}/.linphone-history.db
+mkfile ${HOME}/.linphonerc
 whitelist ${HOME}/.linphone-history.db
 whitelist ${HOME}/.linphonerc
 whitelist ${HOME}/Downloads

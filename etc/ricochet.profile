@@ -5,14 +5,16 @@ include /etc/firejail/ricochet.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
+
+noblacklist ${HOME}/.local/share/Ricochet
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.local/share/Ricochet
-whitelist /tmp/.X11-unix
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
@@ -24,7 +26,7 @@ shell none
 
 private-bin ricochet,tor
 private-dev
-private-etc fonts,tor,X11,alternatives
+#private-etc fonts,tor,X11,alternatives
 
 noexec /home
 noexec /tmp

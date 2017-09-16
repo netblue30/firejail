@@ -1,27 +1,21 @@
-# Firejail profile for dooble
+# Firejail profile for dooble-qt4
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/dooble.local
+include /etc/firejail/dooble-qt4.local
 # Persistent global definitions
 include /etc/firejail/globals.local
+
 
 noblacklist ~/.dooble
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.dooble
-mkdir ~/usr/lib/dooble-qt4
+mkdir ${HOME}/.dooble
 whitelist ${DOWNLOADS}
-whitelist ~/.config/keepassx
-whitelist ~/.config/lastpass
 whitelist ~/.dooble
-whitelist ~/.keepassx
-whitelist ~/.lastpass
-whitelist ~/keepassx.kdbx
-whitelist ~/usr/lib/dooble
-whitelist ~/usr/lib/dooble-qt4
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

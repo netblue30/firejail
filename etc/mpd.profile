@@ -5,22 +5,17 @@ include /etc/firejail/mpd.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
 
-whitelist ${HOME}/.config/pulse/
-whitelist ${HOME}/.mpdconf
-whitelist ${HOME}/.pulse/
-whitelist ${HOME}/Music
-whitelist ${HOME}/mpd
-include /etc/firejail/whitelist-common.inc
+noblacklist ${HOME}/.mpdconf
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 noroot
 seccomp
 
-private-bin mpd,bash
+#private-bin mpd,bash
 private-dev
-read-only ${HOME}/Music/

@@ -5,20 +5,13 @@ include /etc/firejail/imagej.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /boot
-blacklist /media
-blacklist /mnt
-blacklist /opt
-blacklist /usr/local/bin
-blacklist /usr/local/sbin
 
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.gtkrc-2.0
-whitelist ${HOME}/.gtkrc.mine
-whitelist ${HOME}/.imagej
-whitelist ${HOME}/.themes
-whitelist ${HOME}/Pictures
-include /etc/firejail/whitelist-common.inc
+noblacklist ${HOME}/.imagej
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace

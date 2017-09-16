@@ -5,13 +5,13 @@ include /etc/firejail/shotcut.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /usr/local/bin
 
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/Meltytech
-whitelist ${HOME}/Videos
-whitelist /tmp/.X11-unix
-include /etc/firejail/whitelist-common.inc
+noblacklist ${HOME}/.config/Meltytech
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
@@ -22,7 +22,7 @@ shell none
 
 private-bin shotcut,melt,qmelt,nice
 private-dev
-private-etc X11,alternatives,pulse,fonts
+#private-etc X11,alternatives,pulse,fonts
 
 noexec ${HOME}
 noexec /tmp

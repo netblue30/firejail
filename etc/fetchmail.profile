@@ -12,11 +12,18 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+netfilter
+no3d
+nodvd
 nogroups
+nonewprivs
 noroot
 nosound
+notv
+novideo
+protocol unix,inet,inet6
 seccomp
+shell none
 
 # private-bin fetchmail,procmail,bash,chmod
 private-dev
-# private-etc passwd,hosts,resolv.conf

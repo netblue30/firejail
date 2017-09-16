@@ -23,16 +23,25 @@ include /etc/firejail/disable-programs.inc
 
 caps.keep setuid,setgid,net_bind_service,dac_read_search
 ipc-namespace
+netfilter
 no3d
+nodvd
 nogroups
 nonewprivs
 nosound
+notv
+novideo
+protocol unix,inet,inet6
 seccomp
 shell none
 writable-var
 
+disable-mnt
 private
 private-bin tor,bash
 private-dev
 private-etc tor,passwd
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

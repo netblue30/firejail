@@ -21,14 +21,19 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 ipc-namespace
+netfilter
+nodvd
 nogroups
+nonewprivs
 noroot
+notv
+novideo
+protocol unix,inet,inet6
 seccomp
 shell none
 
 private-bin google-earth,sh,grep,sed,ls,dirname
 private-dev
-#private-etc fonts,resolv.conf,X11,alternatives,pulse
 
 noexec ${HOME}
 noexec /tmp

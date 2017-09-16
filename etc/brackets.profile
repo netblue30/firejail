@@ -14,12 +14,16 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-# Comment out or use --ignore=net if you want to install extensions or themes
-net none
-# Disable these if you use live preview (until I figure out a workaround)
-# Doing so should be relatively safe since there is no network access
+netfilter
+nodvd
+nogroups
+nonewprivs
 noroot
+nosound
+notv
+novideo
+protocol unix,inet,inet6
 seccomp
+shell none
 
-private-bin bash,brackets,readlink,dirname,google-chrome,cat
 private-dev

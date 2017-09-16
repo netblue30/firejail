@@ -19,12 +19,21 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 ipc-namespace
+netfilter
+no3d
+nodvd
 nogroups
 nonewprivs
 noroot
+nosound
+notv
+novideo
 seccomp
 shell none
 
 private-bin amule
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

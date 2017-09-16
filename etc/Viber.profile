@@ -19,11 +19,16 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 ipc-namespace
+netfilter
+nodvd
 nogroups
+nonewprivs
 noroot
+notv
 seccomp
 shell none
 
+disable-mnt
 private-bin sh,dig,awk
 private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf
 private-tmp

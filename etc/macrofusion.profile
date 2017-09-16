@@ -16,13 +16,20 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 ipc-namespace
 net none
+nodvd
 nogroups
 nonewprivs
 noroot
+nosound
+notv
+novideo
+protocol unix
 seccomp
 shell none
 
 #private-bin python3,macrofusion,env,enfuse,exiftool,align_image_stack
 private-dev
-#private-etc fonts
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

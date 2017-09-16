@@ -17,10 +17,18 @@ whitelist ${HOME}/.tor-browser-en
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
+netfilter
+nodvd
+nogroups
+nonewprivs
 noroot
+notv
+novideo
+protocol unix,inet,inet6
 seccomp
 shell none
 
+disable-mnt
 private-bin bash,grep,sed,tail,tor-browser-en,env,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf,file,expr
 private-tmp
 

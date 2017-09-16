@@ -14,7 +14,13 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 ipc-namespace
 net none
+nodvd
+nogroups
+nonewprivs
 noroot
+notv
+novideo
+protocol unix
 seccomp
 shell none
 

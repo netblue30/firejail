@@ -19,8 +19,11 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 ipc-namespace
 net none
+nodvd
 nogroups
+nonewprivs
 noroot
+notv
 seccomp
 shell none
 
@@ -29,5 +32,5 @@ private-dev
 #private-etc pulse,X11,alternatives,ardour4,ardour5,fonts
 private-tmp
 
-noexec /home
+noexec ${HOME}
 noexec /tmp

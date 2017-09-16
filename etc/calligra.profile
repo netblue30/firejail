@@ -12,15 +12,18 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace
-net none
+nodvd
 nogroups
+nonewprivs
 noroot
+notv
+novideo
+protocol unix
 seccomp
 shell none
 
 private-bin calligra,calligraauthor,calligraconverter,calligraflow,calligraplan,calligraplanwork,calligrasheets,calligrastage,calligrawords,dbus-launch
 private-dev
-#private-etc fonts,passwd,alternatives,X11
 
-noexec /home
+noexec ${HOME}
 noexec /tmp

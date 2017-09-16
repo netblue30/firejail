@@ -15,14 +15,17 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 ipc-namespace
 net none
+nodvd
 nogroups
+nonewprivs
+notv
 noroot
+protocol unix
 seccomp
 shell none
 
 private-bin cin
 private-dev
-#private-etc fonts,pulse
 
-noexec /home
+noexec ${HOME}
 noexec /tmp

@@ -19,7 +19,23 @@ whitelist ${HOME}/.ts3client
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
+ipc-namespace
 netfilter
+no3d
+nodvd
+nogroups
+nonewprivs
 noroot
+notv
+novideo
 protocol unix,inet,inet6
 seccomp
+shell none
+
+disable-mnt
+private
+private-dev
+private-tmp
+
+noexec ${HOME}
+noexec /tmp

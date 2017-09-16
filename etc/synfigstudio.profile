@@ -26,6 +26,7 @@ protocol unix
 seccomp
 shell none
 
+#private-bin synfigstudio
 private-dev
 private-tmp
 

@@ -27,6 +27,7 @@ protocol unix
 seccomp
 shell none
 
+#private-bin inkscape
 private-dev
 private-tmp
 

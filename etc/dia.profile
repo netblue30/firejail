@@ -27,6 +27,7 @@ seccomp
 shell none
 
 disable-mnt
+#private-bin dia
 private-dev
 private-tmp
 

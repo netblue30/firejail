@@ -318,6 +318,7 @@ blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/supertux2
 blacklist ${HOME}/.local/share/telepathy
+blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser
 blacklist ${HOME}/.local/share/totem
 blacklist ${HOME}/.local/share/vpltd

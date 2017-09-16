@@ -208,7 +208,10 @@ blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.git-credential-cache
 blacklist ${HOME}/.gitconfig
-blacklist ${HOME}/.googleearth
+blacklist ${HOME}/.googleearth/Cache/
+blacklist ${HOME}/.googleearth/Temp/
+blacklist ${HOME}/.googleearth/myplaces.backup.kml
+blacklist ${HOME}/.googleearth/myplaces.kml
 blacklist ${HOME}/.gradle
 blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hedgewars

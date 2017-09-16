@@ -7,9 +7,9 @@ include /etc/firejail/globals.local
 
 
 noblacklist ${HOME}/.Natron
-noblacklist ${HOME}/.cache/INRIA/Natron/
-noblacklist ${HOME}/.config/INRIA/
-noblacklist /opt/natron/
+noblacklist ${HOME}/.cache/INRIA/Natron
+noblacklist ${HOME}/.config/INRIA
+noblacklist /opt/natron
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

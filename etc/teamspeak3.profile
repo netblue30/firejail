@@ -5,7 +5,6 @@ include /etc/firejail/teamspeak3.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${DOWNLOADS}
 noblacklist ${HOME}/.ts3client
 
 include /etc/firejail/disable-common.inc
@@ -33,7 +32,6 @@ seccomp
 shell none
 
 disable-mnt
-private
 private-dev
 private-tmp
 

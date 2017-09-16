@@ -28,5 +28,5 @@ shell none
 private-dev
 private-tmp
 
-noexec /home
+noexec ${HOME}
 noexec /tmp

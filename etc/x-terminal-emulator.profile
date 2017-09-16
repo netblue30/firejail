@@ -12,6 +12,7 @@ net none
 netfilter
 nogroups
 noroot
+protocol unix
 seccomp
 
 private-dev

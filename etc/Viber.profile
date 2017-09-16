@@ -25,11 +25,12 @@ nogroups
 nonewprivs
 noroot
 notv
+protocol unix,inet,inet6
 seccomp
 shell none
 
 disable-mnt
-private-bin sh,dig,awk
+private-bin sh,bash,dash,dig,awk,Viber
 private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf
 private-tmp
 

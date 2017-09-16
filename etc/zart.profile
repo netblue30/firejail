@@ -19,7 +19,6 @@ nogroups
 nonewprivs
 noroot
 notv
-novideo
 protocol unix
 seccomp
 shell none

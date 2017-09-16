@@ -17,7 +17,6 @@ caps.drop all
 netfilter
 no3d
 nodvd
-nogroups
 nonewprivs
 noroot
 notv

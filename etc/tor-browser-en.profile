@@ -1,35 +1,6 @@
-# Firejail profile for tor-browser-en
+# Firejail profile alias for torbrowser-launcher
 # This file is overwritten after every install/update
-# Persistent local customizations
-include /etc/firejail/tor-browser-en.local
-# Persistent global definitions
-include /etc/firejail/globals.local
 
 
-noblacklist ${HOME}/.tor-browser-en
-
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-
-whitelist ${HOME}/.tor-browser-en
-include /etc/firejail/whitelist-common.inc
-
-caps.drop all
-netfilter
-nodvd
-nogroups
-nonewprivs
-noroot
-notv
-novideo
-protocol unix,inet,inet6
-seccomp
-shell none
-
-disable-mnt
-private-bin bash,grep,sed,tail,tor-browser-en,env,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf,file,expr
-private-tmp
-
-noexec /tmp
+# Redirect
+include /etc/firejail/torbrowser-launcher.profile

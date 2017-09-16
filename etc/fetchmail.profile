@@ -25,5 +25,5 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-# private-bin fetchmail,procmail,bash,chmod
+#private-bin fetchmail,procmail,bash,chmod
 private-dev

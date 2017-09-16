@@ -213,7 +213,7 @@ static char *check(const char *src) {
 			goto errexit;
 	}
 	else {
-		if (s.st_uid != user /* || s.st_gid != getgid()*/)
+		if (s.st_uid != user)
 			goto errexit;
 	}
 
@@ -222,7 +222,7 @@ static char *check(const char *src) {
 		return rsrc;			  // normal exit from the function
 
 errexit:
-	fprintf(stderr, "Edddddrror fcopy: invalid file %s\n", src);
+	fprintf(stderr, "Error fcopy: invalid file %s\n", src);
 	exit(1);
 }
 

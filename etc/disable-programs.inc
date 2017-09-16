@@ -17,8 +17,10 @@ blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
 blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
+blacklist ${HOME}/.ViberPC
 blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.Wolfram Research
+blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.atom
@@ -35,6 +37,7 @@ blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/Clementine
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Franz
+blacklist ${HOME}/.config/FreeCAD
 blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Google
 blacklist ${HOME}/.config/Gpredict
@@ -124,6 +127,7 @@ blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
+blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
@@ -188,6 +192,7 @@ blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dia
 blacklist ${HOME}/.dillo
+blacklist ${HOME}/.dooble
 blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox-dist
 blacklist ${HOME}/.electrum*
@@ -203,15 +208,13 @@ blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.git-credential-cache
 blacklist ${HOME}/.gitconfig
-blacklist ${HOME}/.googleearth/Cache/
-blacklist ${HOME}/.googleearth/Temp/
-blacklist ${HOME}/.googleearth/myplaces.backup.kml
-blacklist ${HOME}/.googleearth/myplaces.kml
+blacklist ${HOME}/.googleearth
 blacklist ${HOME}/.gradle
 blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.hugin
 blacklist ${HOME}/.icedove
+blacklist ${HOME}/.imagej
 blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.java
 blacklist ${HOME}/.jitsi
@@ -410,6 +413,7 @@ blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
 blacklist ${HOME}/.cache/icedove
+blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/midori

@@ -24,7 +24,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin corebird
+# private-bin corebird
 private-dev
 private-tmp
 

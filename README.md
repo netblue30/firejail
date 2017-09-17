@@ -104,7 +104,7 @@ $ firejail --build appname
 `````
 The command builds a whitelisted profile. If /usr/bin/strace is installed on the system, it also
 builds a whitelisted seccomp profile. The program is run in a very relaxed sandbox,
-with only --caps.drop=all and --nonewprivs. Only programs that don't rise privileges are supported
+with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported
 in order to allow strace to run. Chromium and Chromium-based browsers will not work.
 
 Example:

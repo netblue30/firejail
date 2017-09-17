@@ -98,6 +98,64 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.51
 
+## Profile build  tool
+`````
+$ firejail --build appname
+`````
+The command builds a whitelisted profile. If /usr/bin/strace is installed on the system, it also
+builds a whitelisted seccomp profile. The program is run in a very relaxed sandbox,
+with only --caps.drop=all and --nonewprivs. Only programs that don't rise privileges are supported
+in order to allow strace to run. Chromium and Chromium-based browsers will not work.
+
+Example:
+`````
+$ firejail --build vlc ~/Videos/test.mp4
+
+[...]
+
+############################################
+# vlc profile
+############################################
+# Persistent global definitions
+# include /etc/firejail/globals.local
+
+### basic blacklisting
+include /etc/firejail/disable-common.inc
+# include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+# include /etc/firejail/disable-programs.inc
+
+### home directory whitelisting
+whitelist ~/Videos
+whitelist ~/.local/share/vlc
+whitelist ~/.config/vlc
+include /etc/firejail/whitelist-common.inc
+
+### filesystem
+private-tmp
+private-dev
+private-etc vdpau_wrapper.cfg,udev,drirc,fonts,xdg,gtk-3.0,machine-id,selinux,
+whitelist /var/lib/menu-xdg
+
+### security filters
+caps.drop all
+nonewprivs
+seccomp
+# seccomp.keep futex,poll,rt_sigtimedwait,ioctl,fdatasync,stat,writev,read,recvmsg,mprotect,write,sendto,clock_nanosleep,open,dup3,mmap,rt_sigprocmask,close,fstat,lstat,lseek,munmap,brk,rt_sigaction,rt_sigreturn,access,madvise,shmget,shmat,shmctl,alarm,getpid,socket,connect,recvfrom,sendmsg,shutdown,getsockname,getpeername,setsockopt,getsockopt,clone,execve,uname,shmdt,fcntl,flock,ftruncate,getdents,rename,mkdir,unlink,readlink,chmod,getrlimit,sysinfo,getuid,getgid,setuid,setgid,geteuid,getegid,getppid,getpgrp,setresuid,getresuid,setresgid,getresgid,statfs,fstatfs,prctl,arch_prctl,sched_getaffinity,set_tid_address,fadvise64,clock_getres,tgkill,set_robust_list,eventfd2,pipe2,getrandom,memfd_create
+# 82 syscalls total
+# Probably you will need to add more syscalls to seccomp.keep. Look for
+# seccomp errors in /var/log/syslog or /var/log/audit/audit.log while
+# running your sandbox.
+
+### network
+protocol unix,netlink,
+net none
+
+### environment
+shell none
+$
+````
+
 ## New command line options
 `````
       --writable-run-user

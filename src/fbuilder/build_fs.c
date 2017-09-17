@@ -148,7 +148,11 @@ void build_etc(const char *fname) {
 //*******************************************
 static FileDB *var_out = NULL;
 static void var_callback(char *ptr) {
-	if (strncmp(ptr, "/var/lib/menu-xdg", 17) == 0)
+	if (strcmp(ptr, "/var/lib") == 0)
+		;
+	else if (strcmp(ptr, "/var/cache") == 0)
+		;
+	else if (strncmp(ptr, "/var/lib/menu-xdg", 17) == 0)
 		var_out = filedb_add(var_out, "/var/lib/menu-xdg");
 	else if (strncmp(ptr, "/var/cache/fontconfig", 21) == 0)
 		var_out = filedb_add(var_out, "/var/cache/fontconfig");

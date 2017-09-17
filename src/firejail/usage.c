@@ -44,6 +44,7 @@ void usage(void) {
 	printf("    --bind=filename1,filename2 - mount-bind filename1 on top of filename2.\n");
 #endif
 	printf("    --blacklist=filename - blacklist directory or file.\n");
+	printf("    --build - build a whitelisted profile for the application.\n");
 	printf("    -c - execute command and exit.\n");
 	printf("    --caps - enable default Linux capabilities filter.\n");
 	printf("    --caps.drop=all - drop all capabilities.\n");

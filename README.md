@@ -98,6 +98,11 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.51
 
+## Whitelisting /var
+
+Add "include /etc/firejail/whitelist-var-common.inc" to an application profile and test it. If it's working,
+send a pull request. I did it so far for some more common applications like Firefox, Chromium etc.
+
 ## Profile build  tool
 `````
 $ firejail --build appname

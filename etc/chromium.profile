@@ -23,6 +23,7 @@ whitelist ~/.config/chromium
 whitelist ~/.config/chromium-flags.conf
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.keep sys_chroot,sys_admin
 netfilter

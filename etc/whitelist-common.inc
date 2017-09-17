@@ -16,6 +16,7 @@ whitelist ~/.drirc
 whitelist ~/.mime.types
 whitelist ~/.local/share/applications
 read-only ~/.local/share/applications
+whitelist ~/.config/ibus
 
 # fonts
 whitelist ~/.fonts

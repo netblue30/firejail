@@ -362,6 +362,7 @@ blacklist ${HOME}/.steampath
 blacklist ${HOME}/.steampid
 blacklist ${HOME}/.stellarium
 blacklist ${HOME}/.subversion
+blacklist ${HOME}/.surf
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig

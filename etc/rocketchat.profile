@@ -1,13 +1,13 @@
-# Firejail profile for riot-web
+# Firejail profile for rocketchat
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/riot-web.local
+include /etc/firejail/rocketchat.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/Riot
+noblacklist ${HOME}/.config/Rocket.Chat
 
-whitelist ${HOME}/.config/Riot
+whitelist ${HOME}/.config/Rocket.Chat
 include /etc/firejail/whitelist-common.inc
 
 # Redirect

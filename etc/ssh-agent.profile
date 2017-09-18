@@ -16,6 +16,7 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+shell none
 caps.drop all
 netfilter
 no3d

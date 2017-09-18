@@ -173,7 +173,7 @@ $
 
 ## New profiles:
 
-terasology, surf, rocketchat, clamscan, dlamdscan, clamdtop, freshclam, xmr-stak-cpu,
+terasology, surf, rocketchat, clamscan, clamdscan, clamdtop, freshclam, xmr-stak-cpu,
 amule, ardour4, ardour5, brackets, calligra, calligraauthor, calligraconverter,
 calligraflow, calligraplan, calligraplanwork, calligrasheets, calligrastage,
 calligrawords, cin, dooble, dooble-qt4, fetchmail, freecad, freecadcmd, google-earth,

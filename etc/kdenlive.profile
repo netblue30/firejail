@@ -1,11 +1,10 @@
-# Firejail profile for dia
+# Firejail profile for kdenlive
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/dia.local
+include /etc/firejail/kdenlive.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dia
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -13,23 +12,19 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
-no3d
+net none
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
-novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
 
-disable-mnt
-#private-bin dia
+private-bin kdenlive,kdenlive_render,dbus-launch,melt,ffmpeg,ffplay,ffprobe,dvdauthor,genisoimage,vlc,xine,kdeinit5,kshell5,kdeinit5_shutdown,kdeinit5_wrapper,kdeinit4,kshell4,kdeinit4_shutdown,kdeinit4_wrapper
 private-dev
-private-tmp
+#private-etc fonts,alternatives,X11,pulse,passwd
 
 noexec ${HOME}
 noexec /tmp

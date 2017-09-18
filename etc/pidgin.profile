@@ -27,3 +27,6 @@ tracelog
 private-bin pidgin
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

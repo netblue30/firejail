@@ -1,26 +1,26 @@
-# Firejail profile for torbrowser-launcher
+# Firejail profile for teamspeak3
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/torbrowser-launcher.local
+include /etc/firejail/teamspeak3.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.tor-browser-en
-noblacklist ~/.config/torbrowser
-noblacklist ~/.local/share/torbrowser
+noblacklist ${HOME}/.ts3client
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ~/.tor-browser-en
-whitelist ~/.config/torbrowser
-whitelist ~/.local/share/torbrowser
+mkdir ${HOME}/.ts3client
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.ts3client
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
+ipc-namespace
 netfilter
+no3d
 nodvd
 nogroups
 nonewprivs
@@ -30,11 +30,10 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
-tracelog
 
-private-bin bash,cp,dash,dirname,env,expr,file,getconf,gpg,grep,id,ln,mkdir,python,python2.7,readlink,rm,sed,sh,tail,test,tor-browser-en,torbrowser-launcher
+disable-mnt
 private-dev
-private-etc fonts
 private-tmp
 
+noexec ${HOME}
 noexec /tmp

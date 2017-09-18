@@ -1,11 +1,12 @@
-# Firejail profile for dia
+# Firejail profile for imagej
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/dia.local
+include /etc/firejail/imagej.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dia
+
+noblacklist ${HOME}/.imagej
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -13,8 +14,8 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
-no3d
+ipc-namespace
+net none
 nodvd
 nogroups
 nonewprivs
@@ -26,8 +27,7 @@ protocol unix
 seccomp
 shell none
 
-disable-mnt
-#private-bin dia
+private-bin imagej,bash,grep,sort,tail,tr,cut,whoami,hostname,uname,mkdir,ls,touch,free,awk,update-java-alternatives,basename,xprop,rm,ln
 private-dev
 private-tmp
 

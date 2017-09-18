@@ -1,22 +1,21 @@
-# Firejail profile for torbrowser-launcher
+# Firejail profile for dooble
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/torbrowser-launcher.local
+include /etc/firejail/dooble-qt4.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.tor-browser-en
-noblacklist ~/.config/torbrowser
-noblacklist ~/.local/share/torbrowser
+
+noblacklist ${HOME}/.dooble
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ~/.tor-browser-en
-whitelist ~/.config/torbrowser
-whitelist ~/.local/share/torbrowser
+mkdir ${HOME}/.dooble
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.dooble
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
@@ -27,14 +26,14 @@ nonewprivs
 noroot
 notv
 novideo
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
 
-private-bin bash,cp,dash,dirname,env,expr,file,getconf,gpg,grep,id,ln,mkdir,python,python2.7,readlink,rm,sed,sh,tail,test,tor-browser-en,torbrowser-launcher
+disable-mnt
 private-dev
-private-etc fonts
 private-tmp
 
+noexec ${HOME}
 noexec /tmp

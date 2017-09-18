@@ -1,11 +1,10 @@
-# Firejail profile for dia
+# Firejail profile for fetchmail
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/dia.local
+include /etc/firejail/fetchmail.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dia
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -22,14 +21,9 @@ noroot
 nosound
 notv
 novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
 
-disable-mnt
-#private-bin dia
+#private-bin fetchmail,procmail,bash,chmod
 private-dev
-private-tmp
-
-noexec ${HOME}
-noexec /tmp

@@ -1,20 +1,20 @@
-# Firejail profile for dia
+# Firejail profile for brackets
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/dia.local
+include /etc/firejail/brackets.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dia
+noblacklist ${HOME}/.config/Brackets
+noblacklist /opt/brackets/
+noblacklist /opt/google/
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
-no3d
 nodvd
 nogroups
 nonewprivs
@@ -22,14 +22,8 @@ noroot
 nosound
 notv
 novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
 
-disable-mnt
-#private-bin dia
 private-dev
-private-tmp
-
-noexec ${HOME}
-noexec /tmp

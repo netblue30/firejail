@@ -1,11 +1,12 @@
-# Firejail profile for dia
+# Firejail profile for lmms
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/dia.local
+include /etc/firejail/lmms.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dia
+
+noblacklist ${HOME}/.lmmsrc.xml
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -13,21 +14,19 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
+ipc-namespace
+net none
 no3d
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
 novideo
 protocol unix
 seccomp
 shell none
 
-disable-mnt
-#private-bin dia
 private-dev
 private-tmp
 

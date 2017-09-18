@@ -1,26 +1,26 @@
-# Firejail profile for torbrowser-launcher
+# Firejail profile for ricochet
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/torbrowser-launcher.local
+include /etc/firejail/ricochet.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.tor-browser-en
-noblacklist ~/.config/torbrowser
-noblacklist ~/.local/share/torbrowser
+
+noblacklist ${HOME}/.local/share/Ricochet
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ~/.tor-browser-en
-whitelist ~/.config/torbrowser
-whitelist ~/.local/share/torbrowser
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.local/share/Ricochet
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
+ipc-namespace
 netfilter
+no3d
 nodvd
 nogroups
 nonewprivs
@@ -30,11 +30,11 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
-tracelog
 
-private-bin bash,cp,dash,dirname,env,expr,file,getconf,gpg,grep,id,ln,mkdir,python,python2.7,readlink,rm,sed,sh,tail,test,tor-browser-en,torbrowser-launcher
+disable-mnt
+private-bin ricochet,tor
 private-dev
-private-etc fonts
-private-tmp
+#private-etc fonts,tor,X11,alternatives
 
+noexec ${HOME}
 noexec /tmp

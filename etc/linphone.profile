@@ -1,26 +1,28 @@
-# Firejail profile for torbrowser-launcher
+# Firejail profile for linphone
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/torbrowser-launcher.local
+include /etc/firejail/linphone.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.tor-browser-en
-noblacklist ~/.config/torbrowser
-noblacklist ~/.local/share/torbrowser
+noblacklist ${HOME}/.linphone-history.db
+noblacklist ${HOME}/.linphonerc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ~/.tor-browser-en
-whitelist ~/.config/torbrowser
-whitelist ~/.local/share/torbrowser
+mkfile ${HOME}/.linphone-history.db
+mkfile ${HOME}/.linphonerc
+whitelist ${HOME}/.linphone-history.db
+whitelist ${HOME}/.linphonerc
+whitelist ${HOME}/Downloads
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+no3d
 nodvd
 nogroups
 nonewprivs
@@ -30,11 +32,10 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
-tracelog
 
-private-bin bash,cp,dash,dirname,env,expr,file,getconf,gpg,grep,id,ln,mkdir,python,python2.7,readlink,rm,sed,sh,tail,test,tor-browser-en,torbrowser-launcher
+disable-mnt
 private-dev
-private-etc fonts
 private-tmp
 
+noexec ${HOME}
 noexec /tmp

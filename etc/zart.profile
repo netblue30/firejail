@@ -1,11 +1,10 @@
-# Firejail profile for dia
+# Firejail profile for zart
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/dia.local
+include /etc/firejail/zart.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dia
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -13,23 +12,19 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
-no3d
+ipc-namespace
+net none
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
-novideo
 protocol unix
 seccomp
 shell none
 
-disable-mnt
-#private-bin dia
+private-bin zart,ffmpeg,melt,ffprobe,ffplay
 private-dev
-private-tmp
 
 noexec ${HOME}
 noexec /tmp

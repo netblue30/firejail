@@ -1,11 +1,15 @@
-# Firejail profile for dia
+# Firejail profile for natron
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/dia.local
+include /etc/firejail/natron.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dia
+
+noblacklist ${HOME}/.Natron
+noblacklist ${HOME}/.cache/INRIA/Natron
+noblacklist ${HOME}/.config/INRIA
+noblacklist /opt/natron
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -14,22 +18,16 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
-no3d
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
-novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
 
-disable-mnt
-#private-bin dia
-private-dev
-private-tmp
+private-bin natron,Natron,NatronRenderer
 
 noexec ${HOME}
 noexec /tmp

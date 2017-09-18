@@ -38,5 +38,6 @@ protocol unix
 seccomp
 tracelog
 
+#private-bin scribus,gs
 private-dev
 # private-tmp

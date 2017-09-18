@@ -509,6 +509,8 @@ Topi Miettinen (https://github.com/topimiettinen)
 	- seccomp default list update
 	- improve loading of seccomp filter and memory-deny-write-execute feature
 	- private-lib feature
+user1024 (user1024@tut.by)
+	- electron profile whitelisting
 valoq (https://github.com/valoq)
 	- lots of profile fixes
 	- added support for /srv in --whitelist feature

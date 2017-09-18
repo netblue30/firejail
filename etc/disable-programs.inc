@@ -51,6 +51,7 @@ blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Riot
+blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox

@@ -22,6 +22,7 @@ whitelist ~/.config/VirtualBox
 whitelist ~/VirtualBox VMs
 whitelist ${DOWNLOADS}
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

@@ -170,3 +170,7 @@ $
               Example:
               $ sudo firejail --writable-run-user
 `````
+
+## New profiles:
+
+terasology, surf, rocketchat, clamscan, dlamdscan, clamdtop, freshclam, xmr-stak-cpu

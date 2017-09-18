@@ -1,20 +1,22 @@
-# Firejail profile for silentarmy
+# Firejail profile for xmr-stak-cpu
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/silentarmy.local
+include /etc/firejail/xmr-stak-cpu.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
 
 include /etc/firejail/disable-common.inc
-# include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+ipc-namespace
 netfilter
+no3d
 nodvd
 nogroups
 nonewprivs
@@ -28,10 +30,13 @@ shell none
 
 disable-mnt
 private
-# private-bin silentarmy,sa-solver,python3
+private-bin xmr-stak-cpu
 private-dev
+private-etc xmr-stak-cpu.json
+private-lib
 private-opt none
 private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

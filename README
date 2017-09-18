@@ -247,6 +247,7 @@ Jaykishan Mutkawoa (https://github.com/jmutkawoa)
 	- cpio profile
 James Elford (https://github.com/jelford)
 	- pass password manager support
+	- removed shell none from ssh-agent configuration, fixing the infinit loop
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)
@@ -416,6 +417,7 @@ smithsohu (https://github.com/smitsohu)
 	- enhance mutt, goobox, baloo and clementine profiles
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
+	- fix handling of STEAM_RUNTIME_PREFER_HOST_LIBRARIES in steam profile
 SpotComms (https://github.com/SpotComms)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
 	- added PDFSam, Pithos, and Xonotic profiles

@@ -21,9 +21,10 @@ novideo
 protocol unix
 seccomp
 shell none
+net none
 
 private-bin calligra,calligraauthor,calligraconverter,calligraflow,calligraplan,calligraplanwork,calligrasheets,calligrastage,calligrawords,dbus-launch
 private-dev
 
-noexec ${HOME}
+#noexec ${HOME}
 noexec /tmp

@@ -28,6 +28,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+net none
 
 private-bin evince,evince-previewer,evince-thumbnailer
 private-dev

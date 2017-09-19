@@ -25,8 +25,9 @@ novideo
 protocol unix
 seccomp
 shell none
+net none
 
-#private-bin synfigstudio
+#private-bin synfigstudio,synfig,ffmpeg
 private-dev
 private-tmp
 

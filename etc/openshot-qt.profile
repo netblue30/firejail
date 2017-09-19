@@ -1,18 +1,17 @@
-# Firejail profile for inkscape
+# Firejail profile for openshot
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/inkscape.local
+include /etc/firejail/openshot.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.inkscape
+noblacklist ${HOME}/.openshot
+noblacklist ${HOME}/.openshot_qt
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
-
-include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter
@@ -20,14 +19,11 @@ nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
-novideo
-protocol unix
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin inkscape,potrace
 private-dev
 private-tmp
 

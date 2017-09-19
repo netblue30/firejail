@@ -5,6 +5,8 @@ include /etc/firejail/atom.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noexec ${HOME}
+noexec /tmp
 noblacklist ~/.atom
 noblacklist ~/.config/Atom
 
@@ -23,6 +25,7 @@ notv
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
+net none
 shell none
 
 private-dev

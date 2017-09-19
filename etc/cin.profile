@@ -24,7 +24,7 @@ protocol unix
 seccomp
 shell none
 
-#private-bin cin
+private-bin cin
 private-dev
 
 noexec ${HOME}

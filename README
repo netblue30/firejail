@@ -112,6 +112,10 @@ creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
 chiraag-nataraj (https://github.com/chiraag-nataraj)
 	- support for newer Xpra versions (2.1+)
+	- added Viber, amule, ardour5, brackets, calligra, cin, fetchmail profiles
+	- added freecad, google-earth, imagej, kdenlive, linphone, lmms profiles
+	- added macrofusion, mpd, natron, ricochet, shotcut, tor-browser-en profiles
+	- added tor, x-terminal-emulator, zart profiles
 Christian Stadelmann (https://github.com/genodeftest)
 	- profile fixes
 	- evolution profile fix
@@ -241,6 +245,8 @@ Impyy (https://github.com/Impyy)
 	- added mumble profile
 irregulator (https://github.com/irregulator)
 	- thunderbird profile fixes for debian stretch
+Irvine (https://github.com/Irvinehimself)
+	- added conky profile
 Ivan Kozik (https://github.com/ivan)
 	- speed up sandbox exit
 Jaykishan Mutkawoa (https://github.com/jmutkawoa)
@@ -307,6 +313,8 @@ Mattias Wadman (https://github.com/wader)
 	- seccomp errno filter support
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
+melvinvermeeren (https://github.com/melvinvermeeren)
+	- added teamspeak3 profile
 Michael Haas (https://github.com/mhaas)
 	- bugfixes
 Mike Frysinger (vapier@gentoo.org)
@@ -320,6 +328,8 @@ n1trux (https://github.com/n1trux)
 netblue30 (netblue30@yahoo.com)
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
+nyancat18 (https://github.com/nyancat18)
+	- added ardour4, dooble, karbon, krita profiles
 Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
 Panzerfather (https://github.com/Panzerfather)

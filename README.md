@@ -114,12 +114,12 @@ in order to allow strace to run. Chromium and Chromium-based browsers will not w
 
 Example:
 `````
-$ firejail --build vlc ~/Videos/test.mp4
+$ firejail --build /usr/bin/vlc ~/Videos/test.mp4
 
 [...]
 
 ############################################
-# vlc profile
+# /usr/bin/vlc profile
 ############################################
 # Persistent global definitions
 # include /etc/firejail/globals.local
@@ -141,13 +141,14 @@ private-tmp
 private-dev
 private-etc vdpau_wrapper.cfg,udev,drirc,fonts,xdg,gtk-3.0,machine-id,selinux,
 whitelist /var/lib/menu-xdg
+# private-bin vlc,
 
 ### security filters
 caps.drop all
 nonewprivs
 seccomp
-# seccomp.keep futex,poll,rt_sigtimedwait,ioctl,fdatasync,stat,writev,read,recvmsg,mprotect,write,sendto,clock_nanosleep,open,dup3,mmap,rt_sigprocmask,close,fstat,lstat,lseek,munmap,brk,rt_sigaction,rt_sigreturn,access,madvise,shmget,shmat,shmctl,alarm,getpid,socket,connect,recvfrom,sendmsg,shutdown,getsockname,getpeername,setsockopt,getsockopt,clone,execve,uname,shmdt,fcntl,flock,ftruncate,getdents,rename,mkdir,unlink,readlink,chmod,getrlimit,sysinfo,getuid,getgid,setuid,setgid,geteuid,getegid,getppid,getpgrp,setresuid,getresuid,setresgid,getresgid,statfs,fstatfs,prctl,arch_prctl,sched_getaffinity,set_tid_address,fadvise64,clock_getres,tgkill,set_robust_list,eventfd2,pipe2,getrandom,memfd_create
-# 82 syscalls total
+# seccomp.keep futex,poll,rt_sigtimedwait,ioctl,fdatasync,read,writev,sendmsg,sendto,write,recvmsg,mmap,mprotect,getpid,stat,clock_nanosleep,munmap,close,access,lseek,fcntl,open,fstat,lstat,brk,rt_sigaction,rt_sigprocmask,rt_sigreturn,madvise,shmget,shmat,shmctl,alarm,socket,connect,recvfrom,shutdown,getsockname,getpeername,setsockopt,getsockopt,clone,execve,uname,shmdt,flock,ftruncate,getdents,rename,mkdir,unlink,readlink,chmod,getrlimit,sysinfo,getuid,getgid,geteuid,getegid,getresuid,getresgid,statfs,fstatfs,prctl,arch_prctl,sched_getaffinity,set_tid_address,fadvise64,clock_getres,tgkill,set_robust_list,eventfd2,dup3,pipe2,getrandom,memfd_create
+# 76 syscalls total
 # Probably you will need to add more syscalls to seccomp.keep. Look for
 # seccomp errors in /var/log/syslog or /var/log/audit/audit.log while
 # running your sandbox.

@@ -673,3 +673,15 @@ int setresgid(gid_t rgid, gid_t egid, gid_t sgid) {
 
 	return rv;
 }
+
+// every time a new process is started, this gets called
+// it can be used to build things like private-bin
+__attribute__((constructor))
+static void log_exec(int argc, char** argv) {
+	static char buf[PATH_MAX + 1];
+	int rv = readlink("/proc/self/exe", buf, PATH_MAX);
+	if (rv != -1) {
+		buf[rv] = '\0';	// readlink does not add a '\0' at the end
+		printf("%u:%s:exec %s:0\n", pid(), name(), buf);
+	}
+}

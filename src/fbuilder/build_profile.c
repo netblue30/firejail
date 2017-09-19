@@ -33,6 +33,7 @@ static char *cmdlist[] = {
 	"--caps.drop=all",
 	"--nonewprivs",
 	"--trace",
+	"--shell=none",
 	"/usr/bin/strace", // also used as a marker in build_profile()
 	"-c",
 	"-f",
@@ -56,8 +57,6 @@ static void clear_tmp_files(void) {
 }
 
 void build_profile(int argc, char **argv, int index) {
-	unlink("/tmp/strace-output");
-
 	// next index is the application name
 	if (index >= argc) {
 		fprintf(stderr, "Error: application name missing\n");
@@ -136,6 +135,7 @@ void build_profile(int argc, char **argv, int index) {
 		build_dev(TRACE_OUTPUT);
 		build_etc(TRACE_OUTPUT);
 		build_var(TRACE_OUTPUT);
+		build_bin(TRACE_OUTPUT);
 		printf("\n");
 
 		printf("### security filters\n");

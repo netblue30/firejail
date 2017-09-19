@@ -330,23 +330,39 @@ static void set_links(void) {
 	free(firejail_exec);
 }
 
-int have_profile(const char *filename) {
+// look for a profile file in /etc/firejail diectory and in homedir/.config/firejail directory
+static int have_profile(const char *filename, const char *homedir) {
+	assert(filename);
+	assert(homedir);
+printf("test #%s# #%s#\n", filename, homedir);
+
 	// remove .desktop extension
 	char *f1 = strdup(filename);
 	if (!f1)
 		errExit("strdup");
 	f1[strlen(filename) - 8] = '\0';
+printf("#%s#\n", f1);
 
 	// build profile name
-	char *profname;
-	if (asprintf(&profname, "%s/%s.profile", SYSCONFDIR, f1) == -1)
+	char *profname1;
+	char *profname2;
+	if (asprintf(&profname1, "%s/%s.profile", SYSCONFDIR, f1) == -1)
 		errExit("asprintf");
+	if (asprintf(&profname2, "%s/./configure/firejail/%s.profile", homedir, f1) == -1)
+		errExit("asprintf");
+printf("#%s#\n", profname1);
+printf("#%s#\n", profname2);
 
-	struct stat s;
-	int rv = stat(profname, &s);
+	int rv = 0;
+	if (access(profname1, R_OK) == 0)
+		rv = 1;
+	else if (access(profname2, R_OK) == 0)
+		rv == 1;
+		
 	free(f1);
-	free(profname);
-	return (rv == 0)? 1: 0;
+	free(profname1);
+	free(profname2);
+	return rv;
 }
 
 static void fix_desktop_files(char *homedir) {
@@ -411,7 +427,7 @@ static void fix_desktop_files(char *homedir) {
 			errExit("stat");
 
 		// no profile in /etc/firejail, no desktop file fixing
-		if (!have_profile(filename))
+		if (!have_profile(filename, homedir))
 			continue;
 
 		/* coverity[toctou] */

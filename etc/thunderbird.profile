@@ -20,7 +20,6 @@ mkdir ~/.thunderbird
 whitelist ~/.cache/thunderbird
 whitelist ~/.gnupg
 whitelist ~/.icedove
-whitelist ~/.local/share/applications
 whitelist ~/.thunderbird
 include /etc/firejail/whitelist-common.inc
 

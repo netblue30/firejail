@@ -334,14 +334,12 @@ static void set_links(void) {
 static int have_profile(const char *filename, const char *homedir) {
 	assert(filename);
 	assert(homedir);
-printf("test #%s# #%s#\n", filename, homedir);
 
 	// remove .desktop extension
 	char *f1 = strdup(filename);
 	if (!f1)
 		errExit("strdup");
 	f1[strlen(filename) - 8] = '\0';
-printf("#%s#\n", f1);
 
 	// build profile name
 	char *profname1;
@@ -350,8 +348,6 @@ printf("#%s#\n", f1);
 		errExit("asprintf");
 	if (asprintf(&profname2, "%s/./configure/firejail/%s.profile", homedir, f1) == -1)
 		errExit("asprintf");
-printf("#%s#\n", profname1);
-printf("#%s#\n", profname2);
 
 	int rv = 0;
 	if (access(profname1, R_OK) == 0)

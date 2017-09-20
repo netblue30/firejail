@@ -849,6 +849,24 @@ static int check_arg(int argc, char **argv, const char *argument) {
 	return found;
 }
 
+static void run_builder(int argc, char **argv) {
+	EUID_ASSERT();
+
+	// drop privileges
+	if (setgid(getgid()) < 0)
+		errExit("setgid/getgid");
+	if (setuid(getuid()) < 0)
+		errExit("setuid/getuid");
+	assert(getenv("LD_PRELOAD") == NULL);
+	
+	argv[0] = LIBDIR "/firejail/fbuilder";
+	execvp(argv[0], argv);
+
+	perror("execvp");
+	exit(1);
+}
+
+
 //*******************************************
 // Main program
 //*******************************************
@@ -907,6 +925,10 @@ int main(int argc, char **argv) {
 		git_uninstall(); // this function will not return
 #endif
 
+	// profile builder
+	if (check_arg(argc, argv, "--build"))
+		run_builder(argc, argv); // this function will not return
+		
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
 		run_symlink(argc, argv); // this function will not return

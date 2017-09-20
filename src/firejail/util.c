@@ -196,7 +196,7 @@ static int copy_file_by_fd(int src, int dst) {
 			done += rv;
 		}
 	}
-	fflush(0);
+//	fflush(0);
 	return 0;
 }
 

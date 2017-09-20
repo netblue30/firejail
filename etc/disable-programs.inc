@@ -17,8 +17,10 @@ blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
 blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
+blacklist ${HOME}/.ViberPC
 blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.Wolfram Research
+blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.atom
@@ -35,6 +37,7 @@ blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/Clementine
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Franz
+blacklist ${HOME}/.config/FreeCAD
 blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Google
 blacklist ${HOME}/.config/Gpredict
@@ -51,6 +54,7 @@ blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Riot
+blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
@@ -123,6 +127,7 @@ blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
+blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
@@ -187,6 +192,7 @@ blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dia
 blacklist ${HOME}/.dillo
+blacklist ${HOME}/.dooble
 blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox-dist
 blacklist ${HOME}/.electrum*
@@ -211,6 +217,7 @@ blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.hugin
 blacklist ${HOME}/.icedove
+blacklist ${HOME}/.imagej
 blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.java
 blacklist ${HOME}/.jitsi
@@ -318,6 +325,7 @@ blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/supertux2
 blacklist ${HOME}/.local/share/telepathy
+blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser
 blacklist ${HOME}/.local/share/totem
 blacklist ${HOME}/.local/share/vpltd
@@ -360,6 +368,7 @@ blacklist ${HOME}/.steampath
 blacklist ${HOME}/.steampid
 blacklist ${HOME}/.stellarium
 blacklist ${HOME}/.subversion
+blacklist ${HOME}/.surf
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
@@ -407,6 +416,7 @@ blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
 blacklist ${HOME}/.cache/icedove
+blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/midori

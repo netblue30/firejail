@@ -25,6 +25,7 @@ src/fnet/fnet
 src/fseccomp/fseccomp
 src/fcopy/fcopy
 src/fldd/fldd
+src/fbuilder/fbuilder
 uids.h
 seccomp
 seccomp.debug

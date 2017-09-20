@@ -98,6 +98,70 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.51
 
+## Whitelisting /var
+
+Add "include /etc/firejail/whitelist-var-common.inc" to an application profile and test it. If it's working,
+send a pull request. I did it so far for some more common applications like Firefox, Chromium etc.
+
+## Profile build  tool
+`````
+$ firejail --build appname
+`````
+The command builds a whitelisted profile. If /usr/bin/strace is installed on the system, it also
+builds a whitelisted seccomp profile. The program is run in a very relaxed sandbox,
+with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported
+in order to allow strace to run. Chromium and Chromium-based browsers will not work.
+
+Example:
+`````
+$ firejail --build /usr/bin/vlc ~/Videos/test.mp4
+
+[...]
+
+############################################
+# /usr/bin/vlc profile
+############################################
+# Persistent global definitions
+# include /etc/firejail/globals.local
+
+### basic blacklisting
+include /etc/firejail/disable-common.inc
+# include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
+# include /etc/firejail/disable-programs.inc
+
+### home directory whitelisting
+whitelist ~/Videos
+whitelist ~/.local/share/vlc
+whitelist ~/.config/vlc
+include /etc/firejail/whitelist-common.inc
+
+### filesystem
+private-tmp
+private-dev
+private-etc vdpau_wrapper.cfg,udev,drirc,fonts,xdg,gtk-3.0,machine-id,selinux,
+whitelist /var/lib/menu-xdg
+# private-bin vlc,
+
+### security filters
+caps.drop all
+nonewprivs
+seccomp
+# seccomp.keep futex,poll,rt_sigtimedwait,ioctl,fdatasync,read,writev,sendmsg,sendto,write,recvmsg,mmap,mprotect,getpid,stat,clock_nanosleep,munmap,close,access,lseek,fcntl,open,fstat,lstat,brk,rt_sigaction,rt_sigprocmask,rt_sigreturn,madvise,shmget,shmat,shmctl,alarm,socket,connect,recvfrom,shutdown,getsockname,getpeername,setsockopt,getsockopt,clone,execve,uname,shmdt,flock,ftruncate,getdents,rename,mkdir,unlink,readlink,chmod,getrlimit,sysinfo,getuid,getgid,geteuid,getegid,getresuid,getresgid,statfs,fstatfs,prctl,arch_prctl,sched_getaffinity,set_tid_address,fadvise64,clock_getres,tgkill,set_robust_list,eventfd2,dup3,pipe2,getrandom,memfd_create
+# 76 syscalls total
+# Probably you will need to add more syscalls to seccomp.keep. Look for
+# seccomp errors in /var/log/syslog or /var/log/audit/audit.log while
+# running your sandbox.
+
+### network
+protocol unix,netlink,
+net none
+
+### environment
+shell none
+$
+`````
+
 ## New command line options
 `````
       --writable-run-user
@@ -107,3 +171,13 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
               Example:
               $ sudo firejail --writable-run-user
 `````
+
+## New profiles:
+
+terasology, surf, rocketchat, clamscan, clamdscan, clamdtop, freshclam, xmr-stak-cpu,
+amule, ardour4, ardour5, brackets, calligra, calligraauthor, calligraconverter,
+calligraflow, calligraplan, calligraplanwork, calligrasheets, calligrastage,
+calligrawords, cin, dooble, dooble-qt4, fetchmail, freecad, freecadcmd, google-earth,
+imagej, karbon, kdenlive, krita, linphone, lmms, macrofusion, mpd, natron, Natron,
+ricochet, shotcut, teamspeak3, tor, tor-browser-en, Viber, x-terminal-emulator, zart,
+conky

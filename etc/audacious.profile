@@ -15,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
 notv

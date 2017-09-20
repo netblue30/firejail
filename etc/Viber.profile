@@ -1,36 +1,37 @@
-# Firejail profile for smtube
+# Firejail profile for Viber
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/smtube.local
+include /etc/firejail/Viber.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/smplayer
-noblacklist ${HOME}/.config/smtube
-noblacklist ${HOME}/.config/mpv
-noblacklist ${HOME}/.mplayer
-noblacklist ${HOME}/.config/vlc
-noblacklist ${HOME}/.local/share/vlc
+
+noblacklist ${HOME}/.ViberPC
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.ViberPC
+include /etc/firejail/whitelist-common.inc
+
 caps.drop all
+ipc-namespace
 netfilter
 nodvd
-notv
-novideo
 nogroups
 nonewprivs
 noroot
-protocol unix,inet,inet6,netlink
+notv
+protocol unix,inet,inet6
 seccomp
 shell none
 
-#no private-bin because users can add their own players to smtube and that would prevent that
-private-dev
+disable-mnt
+private-bin sh,bash,dash,dig,awk,Viber
+private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf
 private-tmp
 
 noexec ${HOME}

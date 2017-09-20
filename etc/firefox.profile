@@ -59,6 +59,7 @@ whitelist ~/.wine-pipelight64
 whitelist ~/.zotero
 whitelist ~/dwhelper
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

@@ -2,13 +2,15 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-common.local
 
-# History files in $HOME
+# History files and clipboard managers in $HOME
 blacklist-nolog ${HOME}/.*_history
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.bash_history
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.macromedia
+blacklist-nolog /tmp/clipmenu*   
+blacklist-nolog ${HOME}/.cache/greenclip*
 
 # X11 session autostart
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs

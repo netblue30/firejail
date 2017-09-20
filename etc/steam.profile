@@ -21,6 +21,8 @@ noblacklist ${HOME}/.steampath
 noblacklist ${HOME}/.steampid
 # with >=llvm-4 mesa drivers need llvm stuff
 noblacklist /usr/lib/llvm*
+# needed for STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 to work
+noblacklist /sbin
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -44,5 +46,5 @@ shell none
 
 # private-dev should be commented for controllers
 private-dev
-private-etc asound.conf,ca-certificates,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,lsb-release,machine-id,mime.types,passwd,pulse,resolv.conf,ssl
+private-etc asound.conf,ca-certificates,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,localtime,lsb-release,machine-id,mime.types,passwd,pulse,resolv.conf,ssl
 private-tmp

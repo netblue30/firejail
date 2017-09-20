@@ -1,6 +1,6 @@
 all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fcopy src/fldd src/libpostexecseccomp
+APPS = src/firejail src/firemon src/firecfg src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fbuilder src/fcopy src/fldd src/libpostexecseccomp
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.64 seccomp.block_secondary seccomp.mdwx
 
@@ -99,6 +99,7 @@ endif
 	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fcopy/fcopy $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fldd/fldd $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fbuilder/fbuilder $(DESTDIR)/$(libdir)/firejail/.
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp $(DESTDIR)/$(libdir)/firejail/.
@@ -169,6 +170,7 @@ install-strip: all
 	strip src/fseccomp/fseccomp
 	strip src/fcopy/fcopy
 	strip src/fldd/fldd
+	strip src/fbuilder/fbuilder
 	$(MAKE) realinstall
 
 uninstall:

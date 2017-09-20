@@ -1338,13 +1338,13 @@ $ ps
 .br
    48 pts/0    00:00:00 ps
 .br
-$ 
+$
 .br
 
 
 .TP
 \fB\-\-private-dev
-Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log and shm devices are available.
+Create a new /dev directory. Only disc, dri, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log and shm devices are available.
 .br
 
 .br
@@ -1358,7 +1358,7 @@ Child process initialized
 .br
 $ ls /dev
 .br
-dri  full  log  null  ptmx  pts  random  shm  snd  tty  urandom  zero
+cdrom  cdrw  dri  dvd  dvdrw  full  log  null  ptmx  pts  random  shm  snd  sr0  tty  urandom  zero
 .br
 $
 .TP

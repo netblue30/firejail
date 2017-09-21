@@ -82,6 +82,7 @@ blacklist ${HOME}/.config/chromium-dev
 blacklist ${HOME}/.config/chromium-flags.conf
 blacklist ${HOME}/.config/clipit
 blacklist ${HOME}/.config/cmus
+blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge

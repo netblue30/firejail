@@ -31,6 +31,7 @@
 #include <errno.h>
 #include <sys/mman.h>
 #include <pwd.h>
+#include <dirent.h>
 
 #include "../include/common.h"
 static int arg_debug = 0;
@@ -277,7 +278,8 @@ static void set_file(const char *name, const char *firejail_exec) {
 	free(fname);
 }
 
-static void set_links(void) {
+// parse /usr/lib/firejail/firecfg.cfg file
+static void set_links_firecfg(void) {
 	char *cfgfile;
 	if (asprintf(&cfgfile, "%s/firejail/firecfg.config", LIBDIR) == -1)
 		errExit("asprintf");
@@ -286,12 +288,13 @@ static void set_links(void) {
 	if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
 		errExit("asprintf");
 
+	// parse /usr/lib/firejail/firecfg.cfg file
 	FILE *fp = fopen(cfgfile, "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open %s\n", cfgfile);
 		exit(1);
 	}
-	printf("Configuring symlinks in /usr/local/bin\n");
+	printf("Configuring symlinks in /usr/local/bin based on firecfg.config\n");
 
 	char buf[MAX_BUF];
 	int lineno = 0;
@@ -330,10 +333,68 @@ static void set_links(void) {
 	free(firejail_exec);
 }
 
+// parse ~/.config/firejail/ directory
+static void set_links_homedir(const char *homedir) {
+	assert(homedir);
+
+	// check firejail config directory
+	char *dirname;
+	if (asprintf(&dirname, "%s/.config/firejail", homedir) == -1)
+		errExit("asprintf");
+	struct stat s;
+	if (stat(dirname, &s) != 0) {
+		free(dirname);
+		return;
+	}
+
+	char *firejail_exec;
+	if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
+		errExit("asprintf");
+
+	// parse ~/.config/firejail/ directory
+	printf("\nConfiguring symlinks in /usr/local/bin based on local firejail config directory\n");
+
+	DIR *dir = opendir(dirname);
+	if (!dir) {
+		fprintf(stderr, "Error: cannot open ~/.config/firejail directory\n");
+		free(dirname);
+		return;
+	}
+
+	struct dirent *entry;
+	while ((entry = readdir(dir))) {
+		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+			continue;
+
+		char *exec = strdup(entry->d_name);
+		if (!exec)
+			errExit("strdup");
+		char *ptr = strrchr(exec, '.');
+		if (!ptr) {
+			free(exec);
+			continue;
+		}
+		if (strcmp(ptr, ".profile") != 0) {
+			free(exec);
+			continue;
+		}
+
+		*ptr = '\0';
+		set_file(exec, firejail_exec);
+		free(exec);
+	}
+	closedir(dir);
+
+	free(firejail_exec);
+}
+
 // look for a profile file in /etc/firejail diectory and in homedir/.config/firejail directory
 static int have_profile(const char *filename, const char *homedir) {
 	assert(filename);
 	assert(homedir);
+
+	if (arg_debug)
+		printf("checking profile for %s\n", filename);
 
 	// remove .desktop extension
 	char *f1 = strdup(filename);
@@ -346,14 +407,20 @@ static int have_profile(const char *filename, const char *homedir) {
 	char *profname2;
 	if (asprintf(&profname1, "%s/%s.profile", SYSCONFDIR, f1) == -1)
 		errExit("asprintf");
-	if (asprintf(&profname2, "%s/./configure/firejail/%s.profile", homedir, f1) == -1)
+	if (asprintf(&profname2, "%s/.config/firejail/%s.profile", homedir, f1) == -1)
 		errExit("asprintf");
 
 	int rv = 0;
-	if (access(profname1, R_OK) == 0)
+	if (access(profname1, R_OK) == 0) {
+		if (arg_debug)
+			printf("found %s\n", profname1);
 		rv = 1;
-	else if (access(profname2, R_OK) == 0)
-		rv == 1;
+	}
+	else if (access(profname2, R_OK) == 0) {
+		if (arg_debug)
+			printf("found %s\n", profname2);
+		rv = 1;
+	}
 		
 	free(f1);
 	free(profname1);
@@ -611,7 +678,7 @@ int main(int argc, char **argv) {
 			}
 		}
 	}
-	set_links();
+	set_links_firecfg();
 
 
 
@@ -634,6 +701,9 @@ int main(int argc, char **argv) {
 		if (!home) {
 			goto errexit;
 		}
+
+		// running as root
+		set_links_homedir(home);
 
 		// drop permissions
 		if (setgroups(0, NULL) < 0)

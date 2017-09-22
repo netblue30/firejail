@@ -25,6 +25,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin gitter
+private-bin bash,env,gitter
+private-opt Gitter
 private-dev
 private-tmp

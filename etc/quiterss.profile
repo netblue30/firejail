@@ -23,6 +23,7 @@ whitelist ${HOME}/.cache/QuiteRss
 whitelist ${HOME}/.config/QuiteRss/
 whitelist ${HOME}/.config/QuiteRssrc
 whitelist ${HOME}/.local/share/data/QuiteRss
+whitelist ${HOME}/.local/share/QuiteRss
 whitelist ${HOME}/quiterssfeeds.opml
 include /etc/firejail/whitelist-common.inc
 

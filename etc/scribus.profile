@@ -36,6 +36,7 @@ notv
 novideo
 protocol unix
 seccomp
+net none
 tracelog
 
 #private-bin scribus,gs

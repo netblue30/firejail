@@ -27,5 +27,5 @@ shell none
 #private-bin shotcut,melt,qmelt,nice
 private-dev
 
-noexec ${HOME}
+#noexec ${HOME}
 noexec /tmp

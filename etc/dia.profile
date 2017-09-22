@@ -25,6 +25,7 @@ novideo
 protocol unix
 seccomp
 shell none
+net none
 
 disable-mnt
 #private-bin dia

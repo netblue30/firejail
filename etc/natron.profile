@@ -26,6 +26,7 @@ notv
 protocol unix,inet,inet6
 seccomp
 shell none
+net none
 
 private-bin natron,Natron,NatronRenderer
 

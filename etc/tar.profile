@@ -18,6 +18,7 @@ notv
 novideo
 shell none
 tracelog
+caps.drop all
 
 # support compressed archives
 private-bin sh,bash,dash,tar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop

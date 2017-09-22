@@ -1,21 +1,18 @@
-# Firejail profile for inkscape
+# Firejail profile for krita
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/inkscape.local
+include /etc/firejail/krita.local
 # Persistent global definitions
 include /etc/firejail/globals.local
-
-noblacklist ${HOME}/.inkscape
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-include /etc/firejail/whitelist-var-common.inc
-
 caps.drop all
-netfilter
+ipc-namespace
+net none
 nodvd
 nogroups
 nonewprivs
@@ -27,9 +24,10 @@ protocol unix
 seccomp
 shell none
 
-private-bin inkscape,potrace
 private-dev
 private-tmp
 
+
+whitelist  ~/.config/Pinta
 noexec ${HOME}
 noexec /tmp

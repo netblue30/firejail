@@ -26,5 +26,5 @@ private-bin kdenlive,kdenlive_render,dbus-launch,melt,ffmpeg,ffplay,ffprobe,dvda
 private-dev
 #private-etc fonts,alternatives,X11,pulse,passwd
 
-noexec ${HOME}
+#noexec ${HOME}
 noexec /tmp

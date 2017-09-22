@@ -24,3 +24,7 @@ include /etc/firejail/whitelist-common.inc
 netfilter
 nodvd
 notv
+nogroups
+noroot
+shell none
+caps.keep sys_chroot,sys_admin

@@ -18,6 +18,7 @@ notv
 novideo
 shell none
 tracelog
+caps.drop all
 
 private-bin unrar
 private-dev

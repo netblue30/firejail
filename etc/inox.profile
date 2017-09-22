@@ -21,10 +21,10 @@ whitelist ~/.config/inox
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
 
+caps.keep sys_chroot,sys_admin
 netfilter
 nodvd
-notv
 nogroups
 noroot
+notv
 shell none
-caps.keep sys_chroot,sys_admin

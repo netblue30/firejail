@@ -14,7 +14,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
+net none
 nodvd
 nogroups
 nonewprivs
@@ -25,7 +25,6 @@ novideo
 protocol unix
 seccomp
 shell none
-net none
 
 #private-bin synfigstudio,synfig,ffmpeg
 private-dev

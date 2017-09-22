@@ -13,7 +13,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
+net none
 no3d
 nodvd
 nogroups
@@ -25,7 +25,6 @@ novideo
 protocol unix
 seccomp
 shell none
-net none
 
 disable-mnt
 #private-bin dia

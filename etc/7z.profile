@@ -17,7 +17,6 @@ notv
 novideo
 shell none
 tracelog
-caps.drop all
 
 private-dev
 

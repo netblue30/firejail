@@ -27,6 +27,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+net none
 nodvd
 nogroups
 nonewprivs
@@ -36,7 +37,6 @@ notv
 novideo
 protocol unix
 seccomp
-net none
 tracelog
 
 #private-bin scribus,gs

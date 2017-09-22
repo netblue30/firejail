@@ -23,6 +23,7 @@ notv
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
+# net none
 shell none
 
 private-dev

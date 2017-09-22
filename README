@@ -274,6 +274,10 @@ jrabe (https://github.com/jrabe)
 	- Polari profile
 	- qTox profile
 	- X11 fixes
+juan (https://github.com/nyancat18)
+	- fixed Kdenlive, Shotcut profiles
+	- new profiles for Cinelerra, Cliqz, Bluefish
+	- profile hardening
 Kaan Genç (https://github.com/SeriousBug)
 	- dynamic allocation of noblacklist buffer
 KellerFuchs (https://github.com/KellerFuchs)

@@ -28,6 +28,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+# net none breaks AppArmor on Ubuntu systems
 
 private-bin evince,evince-previewer,evince-thumbnailer
 private-dev

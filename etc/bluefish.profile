@@ -1,7 +1,7 @@
 # Firejail profile for bluefish
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/pluma.local
+include /etc/firejail/bluefish.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 

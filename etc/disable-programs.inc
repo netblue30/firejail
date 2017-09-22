@@ -81,6 +81,7 @@ blacklist ${HOME}/.config/chromium
 blacklist ${HOME}/.config/chromium-dev
 blacklist ${HOME}/.config/chromium-flags.conf
 blacklist ${HOME}/.config/clipit
+blacklist ${HOME}/.config/cliqz
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/darktable
@@ -142,6 +143,7 @@ blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/pcmanfm
+blacklist ${HOME}/.config/Pinta
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/psi+
@@ -408,6 +410,7 @@ blacklist ${HOME}/.cache/calibre
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/chromium-dev
+blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/darktable
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution

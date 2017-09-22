@@ -1,24 +1,20 @@
-# Firejail profile for pinta
+# Firejail profile for uefitool
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/pinta.local
+include /etc/firejail/uefitool.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-
-noblacklist ${HOME}/.config/Pinta
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ${HOME}/.config/Pinta
-include /etc/firejail/whitelist-common.inc
-
 caps.drop all
 ipc-namespace
 net none
+no3d
 nodvd
 nogroups
 nonewprivs

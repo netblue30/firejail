@@ -1,7 +1,7 @@
-# Firejail profile for firefox
+# Firejail profile for cliqz
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/firefox.local
+include /etc/firejail/cliqz.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 

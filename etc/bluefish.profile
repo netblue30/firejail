@@ -1,11 +1,10 @@
-# Firejail profile for pluma
+# Firejail profile for bluefish
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pluma.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/pluma
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -29,7 +28,6 @@ tracelog
 
 private-bin bluefish
 private-dev
-# private-etc fonts
 private-tmp
 
 noexec ${HOME}

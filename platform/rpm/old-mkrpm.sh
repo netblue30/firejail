@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.50"
+VERSION="0.9.51"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -33,6 +33,7 @@ install -m 755 /usr/lib/firejail/fnet  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/fseccomp  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/fshaper.sh  firejail-$VERSION/usr/lib/firejail/.
 install -m 755 /usr/lib/firejail/ftee  firejail-$VERSION/usr/lib/firejail/.
+install -m 755 /usr/lib/firejail/fbuilder  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libtracelog.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libtrace.so  firejail-$VERSION/usr/lib/firejail/.
 install -m 644 /usr/lib/firejail/libpostexecseccomp.so  firejail-$VERSION/usr/lib/firejail/.
@@ -470,11 +471,66 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/itch.profile
 %{_sysconfdir}/%{name}/minetest.profile
 %{_sysconfdir}/%{name}/yandex-browser.profile
-
-
-
-
-
+# 0.9.51
+%{_sysconfdir}/%{name}/Natron.profile
+%{_sysconfdir}/%{name}/Viber.profile
+%{_sysconfdir}/%{name}/amule.profile
+%{_sysconfdir}/%{name}/arch-audit.profile
+%{_sysconfdir}/%{name}/ardour4.profile
+%{_sysconfdir}/%{name}/ardour5.profile
+%{_sysconfdir}/%{name}/bluefish.profile
+%{_sysconfdir}/%{name}/brackets.profile
+%{_sysconfdir}/%{name}/calligra.profile
+%{_sysconfdir}/%{name}/calligraauthor.profile
+%{_sysconfdir}/%{name}/calligraconverter.profile
+%{_sysconfdir}/%{name}/calligraflow.profile
+%{_sysconfdir}/%{name}/calligraplan.profile
+%{_sysconfdir}/%{name}/calligraplanwork.profile
+%{_sysconfdir}/%{name}/calligrasheets.profile
+%{_sysconfdir}/%{name}/calligrastage.profile
+%{_sysconfdir}/%{name}/calligrawords.profile
+%{_sysconfdir}/%{name}/cin.profile
+%{_sysconfdir}/%{name}/cinelerra.profile
+%{_sysconfdir}/%{name}/clamav.profile
+%{_sysconfdir}/%{name}/clamdscan.profile
+%{_sysconfdir}/%{name}/clamdtop.profile
+%{_sysconfdir}/%{name}/clamscan.profile
+%{_sysconfdir}/%{name}/cliqz.profile
+%{_sysconfdir}/%{name}/conky.profile
+%{_sysconfdir}/%{name}/dooble-qt4.profile
+%{_sysconfdir}/%{name}/dooble.profile
+%{_sysconfdir}/%{name}/fetchmail.profile
+%{_sysconfdir}/%{name}/ffmpeg.profile
+%{_sysconfdir}/%{name}/freecad.profile
+%{_sysconfdir}/%{name}/freecadcmd.profile
+%{_sysconfdir}/%{name}/freshclam.profile
+%{_sysconfdir}/%{name}/google-earth.profile
+%{_sysconfdir}/%{name}/imagej.profile
+%{_sysconfdir}/%{name}/karbon.profile
+%{_sysconfdir}/%{name}/kdenlive.profile
+%{_sysconfdir}/%{name}/krita.profile
+%{_sysconfdir}/%{name}/linphone.profile
+%{_sysconfdir}/%{name}/lmms.profile
+%{_sysconfdir}/%{name}/macrofusion.profile
+%{_sysconfdir}/%{name}/mpd.profile
+%{_sysconfdir}/%{name}/natron.profile
+%{_sysconfdir}/%{name}/openshot-qt.profile
+%{_sysconfdir}/%{name}/pinta.profile
+%{_sysconfdir}/%{name}/ricochet.profile
+%{_sysconfdir}/%{name}/rocketchat.profile
+%{_sysconfdir}/%{name}/shotcut.profile
+%{_sysconfdir}/%{name}/smtube.profile
+%{_sysconfdir}/%{name}/surf.profile
+%{_sysconfdir}/%{name}/teamspeak3.profile
+%{_sysconfdir}/%{name}/terasology.profile
+%{_sysconfdir}/%{name}/tor-browser-en.profile
+%{_sysconfdir}/%{name}/tor.profile
+%{_sysconfdir}/%{name}/uefitool.profile
+%{_sysconfdir}/%{name}/whitelist-var-common.inc
+%{_sysconfdir}/%{name}/x-terminal-emulator.profile
+%{_sysconfdir}/%{name}/xmr-stak-cpu.profile
+%{_sysconfdir}/%{name}/zart.profile
+ 
 /usr/bin/firejail
 /usr/bin/firemon
 /usr/bin/firecfg
@@ -484,6 +540,7 @@ rm -rf %{buildroot}
 /usr/lib/firejail/libpostexecseccomp.so
 /usr/lib/firejail/faudit
 /usr/lib/firejail/ftee
+/usr/lib/firejail/fbuilder
 /usr/lib/firejail/firecfg.config
 /usr/lib/firejail/fshaper.sh
 /usr/lib/firejail/fcopy
@@ -519,6 +576,8 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
+* Sat Sep 23 2017  netblue30 <netblue30@yahoo.com> 0.9.51-1
+
 * Fri Sep 8 2017  netblue30 <netblue30@yahoo.com> 0.9.50-1
 
 * Mon Jun 12 2017  netblue30 <netblue30@yahoo.com> 0.9.48-1

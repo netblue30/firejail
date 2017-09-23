@@ -19,7 +19,7 @@ tar -xJvf $CODE_ARCHIVE
 #mkdir -p $INSTALL_DIR
 cd $CODE_DIR
 ./configure --prefix=/usr --enable-git-install
-make
+make -j2
 mkdir debian
 DESTDIR=debian make install-strip
 
@@ -43,7 +43,7 @@ cp platform/debian/conffiles $DEBIAN_CTRL_DIR/.
 find $INSTALL_DIR  -type d | xargs chmod 755
 cd $CODE_DIR
 fakeroot dpkg-deb --build debian
-lintian debian.deb
+lintian --no-tag-display-limit debian.deb
 mv debian.deb ../firejail_$2_1_amd64.deb
 echo "if building a 32bit package, rename the deb file manually"
 cd ..

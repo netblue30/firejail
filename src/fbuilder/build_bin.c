@@ -82,7 +82,11 @@ static void process_bin(const char *fname) {
 		if (!ptr2)
 			continue;
 		*ptr2 = '\0';
-		
+
+		// skip strace
+		if (strcmp(ptr, "strace") == 0)
+			continue;
+
 		bin_out = filedb_add(bin_out, ptr);
 	}
 	

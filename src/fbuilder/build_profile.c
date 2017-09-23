@@ -75,7 +75,8 @@ void build_profile(int argc, char **argv, int index) {
 	int len = (int) sizeof(cmdlist) / sizeof(char*) + argc - index + 1;
 	if (arg_debug)
 		printf("command len %d + %d + 1\n", (int) (sizeof(cmdlist) / sizeof(char*)), argc - index);
-	char *cmd[len]; 
+	char *cmd[len];
+	cmd[0] = cmdlist[0];	// explicit assignemnt to clean scan-build error
 	
 	// build command
 	int i = 0;
@@ -89,6 +90,7 @@ void build_profile(int argc, char **argv, int index) {
 	int i2 = index;
 	for (; i < (len - 1); i++, i2++)
 		cmd[i] = argv[i2];
+	assert(i < len);
 	cmd[i] = NULL;
 
 	if (arg_debug) {
@@ -101,7 +103,9 @@ void build_profile(int argc, char **argv, int index) {
 	if (child == -1)
 		errExit("fork");
 	if (child == 0) {
+		assert(cmd[0]);
 		int rv = execvp(cmd[0], cmd);
+		(void) rv;
 		errExit("execv");
 	}
 	

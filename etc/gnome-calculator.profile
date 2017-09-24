@@ -28,10 +28,8 @@ seccomp
 shell none
 
 disable-mnt
-private
 private-bin gnome-calculator
 private-dev
-# private-etc fonts
 private-tmp
 
 memory-deny-write-execute

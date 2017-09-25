@@ -19,33 +19,15 @@
 */
 
 #include "firecfg.h"
+#include <ctype.h>
 
-// look for a profile file in /etc/firejail diectory and in homedir/.config/firejail directory
-static int have_profile(const char *filename, const char *homedir) {
-	assert(filename);
-	assert(homedir);
-
-	if (arg_debug)
-		printf("checking profile for %s\n", filename);
-
-	// remove .desktop extension; if file name starts with org.gnome... remove it
-	char *f1;
-	if (strncmp(filename, "org.gnome.", 10) == 0)
-		f1 = strdup(filename + 10);
-	else
-		f1 = strdup(filename);
-	if (!f1)
-		errExit("strdup");
-	f1[strlen(f1) - 8] = '\0';
-	if (arg_debug)
-		printf("looking for a profile for %s - %s\n", filename, f1);
-
+static int check_profile(const char *name, const char *homedir) {
 	// build profile name
 	char *profname1;
 	char *profname2;
-	if (asprintf(&profname1, "%s/%s.profile", SYSCONFDIR, f1) == -1)
+	if (asprintf(&profname1, "%s/%s.profile", SYSCONFDIR, name) == -1)
 		errExit("asprintf");
-	if (asprintf(&profname2, "%s/.config/firejail/%s.profile", homedir, f1) == -1)
+	if (asprintf(&profname2, "%s/.config/firejail/%s.profile", homedir, name) == -1)
 		errExit("asprintf");
 
 	int rv = 0;
@@ -60,11 +42,54 @@ static int have_profile(const char *filename, const char *homedir) {
 		rv = 1;
 	}
 		
-	if (arg_debug)
-		printf("Profile for %s %s\n", f1, (rv)? "found": "not found");
-	free(f1);
 	free(profname1);
 	free(profname2);
+	return rv;
+}
+
+
+// look for a profile file in /etc/firejail diectory and in homedir/.config/firejail directory
+static int have_profile(const char *filename, const char *homedir) {
+	assert(filename);
+	assert(homedir);
+
+	if (arg_debug)
+		printf("checking profile for %s\n", filename);
+
+	// we get strange names here, such as .org.gnom.gedit.desktop, com.uploadedlobster.peek.desktop,
+	// or io.github.Pithos.desktop; extract the word before .desktop
+	
+	char *tmpfname = strdup(filename);
+	if (!tmpfname)
+		errExit("strdup");
+		
+	// check .desktop extension
+	int len = strlen(tmpfname);
+	if (len <= 8)
+		return 0;
+	if (strcmp(tmpfname + len - 8, ".desktop"))
+		return 0;
+	tmpfname[len - 8] = '\0';
+	
+	// extract last word
+	char *last_word = strrchr(tmpfname, '.');
+	if (last_word)
+		last_word++;
+	else
+		last_word = tmpfname;
+	
+	// try lowercase
+	last_word[0] = tolower(last_word[0]);
+	int rv = check_profile(last_word, homedir);
+	if (rv) {
+		free(tmpfname);
+		return rv;
+	}
+	
+	// try uppercase
+	last_word[0] = toupper(last_word[0]);
+	rv = check_profile(last_word, homedir);
+	free(tmpfname);
 	return rv;
 }
 
@@ -174,33 +199,35 @@ void fix_desktop_files(char *homedir) {
 			continue;
 		}
 
-
 		// try to decide if we need to covert this file
 		char *change_exec = NULL;
 		int change_dbus = 0;
+
+		if (strstr(buf, "\nDBusActivatable=true"))
+			change_dbus = 1;
 
 		// https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s06.html
 		// The executable program can either be specified with its full path
 		// or with the name of the executable only
 		if (execname[0] == '/') {
-			char *end_name = strchr(execname, ' ');
-			if (end_name) {
-				*end_name = '\0';
-				char *start_name = strrchr(execname, '/');
-				if (start_name) {
-					start_name++;
-					// check if we have the executable on the regular path
-					if (which(start_name)) {
-						change_exec = strdup(start_name);
-						if (!change_exec)
-							errExit("strdup");
-					}
+			// mark end of line
+			char *end = strchr(execname, '\n');
+			if (end)
+				*end = '\0';
+			end = strchr(execname, ' ');
+			if (end)
+				*end = '\0';
+			char *start_name = strrchr(execname, '/');
+			if (start_name) {
+				start_name++;
+				// check if we have the executable on the regular path
+				if (which(start_name)) {
+					change_exec = strdup(start_name);
+					if (!change_exec)
+						errExit("strdup");
 				}
 			}
 		}
-		
-		if (strstr(buf, "\nDBusActivatable=true"))
-			change_dbus = 1;
 		
 		if (change_exec == NULL && change_dbus == 0) {
 			munmap(buf, sb.st_size + 1);
@@ -242,9 +269,12 @@ void fix_desktop_files(char *homedir) {
 				fprintf(fpout, "DBusActivatable=false\n");
 			else if (change_exec && strncmp(fbuf, "Exec=", 5) == 0) {
 				char *start_params = strchr(fbuf + 5, ' ');
-				assert(start_params);
-				start_params++;
-				fprintf(fpout, "Exec=%s %s", change_exec, start_params);
+				if (start_params) {
+					start_params++;
+					fprintf(fpout, "Exec=%s %s", change_exec, start_params);
+				}
+				else
+					fprintf(fpout, "Exec=%s\n", change_exec);
 			}
 			else
 				fprintf(fpout, "%s", fbuf);	

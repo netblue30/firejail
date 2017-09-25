@@ -222,6 +222,8 @@ blacklist ${HOME}/.hugin
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.imagej
 blacklist ${HOME}/.inkscape
+blacklist ${HOME}/.jack-server
+blacklist ${HOME}/.jack-settings
 blacklist ${HOME}/.java
 blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.kde/share/apps/gwenview
@@ -362,6 +364,8 @@ blacklist ${HOME}/.pingus
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.remmina
+blacklist ${HOME}/.repo_.gitconfig.json
+blacklist ${HOME}/.repoconfig
 blacklist ${HOME}/.retroshare
 blacklist ${HOME}/.scribus
 blacklist ${HOME}/.scribusrc

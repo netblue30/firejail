@@ -9,6 +9,8 @@ noblacklist ${HOME}/.IdeaIC*
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.gradle
+noblacklist ${HOME}/.jack-server
+noblacklist ${HOME}/.jack-settings
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh

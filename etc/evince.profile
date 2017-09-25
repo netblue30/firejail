@@ -15,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+# net none breaks AppArmor on Ubuntu systems
 netfilter
 no3d
 nodvd
@@ -28,7 +29,6 @@ protocol unix
 seccomp
 shell none
 tracelog
-# net none breaks AppArmor on Ubuntu systems
 
 private-bin evince,evince-previewer,evince-thumbnailer
 private-dev

@@ -31,6 +31,7 @@ whitelist ~/.kde4/share/apps/ktorrent
 whitelist ~/.kde4/share/config/ktorrentrc
 whitelist ~/.local/share/ktorrent
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

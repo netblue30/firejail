@@ -9,7 +9,6 @@ blacklist /tmp/.X11-unix
 
 noblacklist /sbin
 noblacklist /usr/sbin
-noblacklist /var/log
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -31,4 +30,4 @@ private
 private-dev
 
 # mdwe can break modules/plugins
-# memory-deny-write-execute
+memory-deny-write-execute

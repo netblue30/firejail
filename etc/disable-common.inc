@@ -120,7 +120,8 @@ blacklist /var/lib/mysql/mysql.sock
 blacklist /var/lib/mysqld/mysql.sock
 blacklist /var/lib/pacman
 blacklist /var/lib/upower
-blacklist /var/log
+# blacklist /var/log - a virtual /var/log directory (mostly empty) is buid up by default for
+#          every sandbox, unless --writeble-var-log switch is activated
 blacklist /var/mail
 blacklist /var/opt
 blacklist /var/run/acpid.socket

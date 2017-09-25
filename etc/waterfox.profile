@@ -65,6 +65,7 @@ whitelist ~/.wine-pipelight64
 whitelist ~/.zotero
 whitelist ~/dwhelper
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter
@@ -78,7 +79,8 @@ seccomp
 shell none
 tracelog
 
-# private-bin waterfox,which,sh,dbus-launch,dbus-send,env
+# waterfox requires a shell to launch on Arch. We can possibly remove sh though.
+# private-bin waterfox,which,sh,dbus-launch,dbus-send,env,dash,bash
 private-dev
 # private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,waterfox,mime.types,mailcap,asound.conf,pulse
 private-tmp

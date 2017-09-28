@@ -143,6 +143,7 @@ blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/pcmanfm
+blacklist ${HOME}/.config/pdfmod
 blacklist ${HOME}/.config/Pinta
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
@@ -435,6 +436,7 @@ blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta
 blacklist ${HOME}/.cache/org.gnome.Books
+blacklist ${HOME}/.cache/pdfmod
 blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla

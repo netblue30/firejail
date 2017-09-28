@@ -36,7 +36,7 @@ nosound
 notv
 novideo
 protocol unix,inet,inet6
-seccomp
+#seccomp
 shell none
 
 private-tmp

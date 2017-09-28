@@ -1111,9 +1111,19 @@ void fs_check_chroot_dir(const char *rootdir) {
 			exit(1);
 		}
 	}
-	if (is_link(name)) {
-		fprintf(stderr, "Error: invalid %s file\n", name);
+	else {
+		fprintf(stderr, "Error: chroot /etc/resolv.conf not found\n");
 		exit(1);
+	}
+	// on Arch /etc/resolv.conf could be a symlink to /run/systemd/resolve/resolv.conf
+	// on Ubuntu 17.04 /etc/resolv.conf could be a symlink to /run/resolveconf/resolv.conf
+	if (is_link(name)) {
+		// check the link points in chroot
+		char *rname = realpath(name, NULL);
+		if (!rname || strncmp(rname, rootdir, strlen(rootdir)) != 0) {
+			fprintf(stderr, "Error: chroot /etc/resolv.conf is pointing outside chroot\n");
+			exit(1);
+		}
 	}
 	free(name);
 
@@ -1186,17 +1196,11 @@ void fs_chroot(const char *rootdir) {
 			errExit("mount bind");
 
 		// copy /etc/resolv.conf in chroot directory
-		// if resolv.conf in chroot is a symbolic link, this will fail
-		// no exit on error, let the user deal with the problem
 		char *fname;
 		if (asprintf(&fname, "%s/etc/resolv.conf", rootdir) == -1)
 			errExit("asprintf");
 		if (arg_debug)
 			printf("Updating /etc/resolv.conf in %s\n", fname);
-		if (is_link(fname)) {
-			fprintf(stderr, "Error: invalid %s file\n", fname);
-			exit(1);
-		}
 		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
 			fwarning("/etc/resolv.conf not initialized\n");
 	}

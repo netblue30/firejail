@@ -48,7 +48,6 @@ rm -rf %{buildroot}
 %{_mandir}/man1/__NAME__.1.gz
 %{_mandir}/man1/firecfg.1.gz
 %{_mandir}/man1/firemon.1.gz
-%{_mandir}/man5/__NAME__-config.5.gz
 %{_mandir}/man5/__NAME__-login.5.gz
 %{_mandir}/man5/__NAME__-profile.5.gz
 %config %{_sysconfdir}/__NAME__

@@ -27,7 +27,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin inkscape,potrace
+# private-bin inkscape,potrace - problems on Debian stretch
 private-dev
 private-tmp
 

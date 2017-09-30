@@ -1,7 +1,7 @@
 # Firejail profile for gnome-ring
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/default.local
+include /etc/firejail/gnome-ring.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
@@ -11,6 +11,8 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace

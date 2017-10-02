@@ -931,7 +931,7 @@ int main(int argc, char **argv) {
 		
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
-		run_symlink(argc, argv); // this function will not return
+		run_symlink(argc, argv); // if symlink detected, this function will not return
 
 	// check if we already have a sandbox running
 	// If LXC is detected, start firejail sandbox

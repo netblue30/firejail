@@ -1978,7 +1978,7 @@ $ sudo firejail --writable-etc
 
 .TP
 \fB\-\-writable-run-user
-Disable the default blacklisting of run/user/$UID/systemd and /run/user/$UID/gnupg.
+Disable the default blacklisting of /run/user/$UID/systemd and /run/user/$UID/gnupg.
 .br
 
 .br

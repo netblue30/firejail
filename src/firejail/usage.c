@@ -210,6 +210,8 @@ void usage(void) {
 	printf("    --whitelist=filename - whitelist directory or file.\n");
 #endif
 	printf("    --writable-etc - /etc directory is mounted read-write.\n");
+	printf("    --writable-run-user - allow access to /run/user/$UID/systemd and\n");
+ 	printf("\t/run/user/$UID/gnupg.\n");
 	printf("    --writable-var - /var directory is mounted read-write.\n");
 	printf("    --writable-var-log - use the real /var/log directory, not a clone.\n");
 #ifdef HAVE_X11

@@ -78,6 +78,8 @@ andrew160 (https://github.com/andrew160)
 	- profile and man pages fixes
 announ (https://github.com/announ)
 	- mpv and youtube-dl profile fixes
+Antonio Russo (https://github.com/aerusso)
+	- enumerate root directories in apparmor profile
 Austin S. Hemmelgarn (https://github.com/Ferroin)
 	- unbound profile update
 avoidr (https://github.com/avoidr)

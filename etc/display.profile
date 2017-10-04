@@ -11,6 +11,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+include /etc/firejail/whitelist-var-common.inc
+
 caps.drop all
 net none
 nodvd
@@ -22,9 +24,9 @@ notv
 protocol unix
 seccomp
 shell none
-x11 xorg
+# x11 xorg - problems on kubuntu 17.04
 
-private-bin display
+# private-bin display - requires python
 private-dev
-private-etc none
+# private-etc none - on Debian-based systems display is a symlink in /etc/alternatives
 private-tmp

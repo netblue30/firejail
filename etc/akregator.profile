@@ -19,6 +19,8 @@ whitelist ${HOME}/.config/akregatorrc
 whitelist ${HOME}/.local/share/akregator
 include /etc/firejail/whitelist-common.inc
 
+include /etc/firejail/whitelist-var-common.inc
+
 caps.drop all
 netfilter
 no3d
@@ -28,7 +30,7 @@ nonewprivs
 noroot
 notv
 novideo
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 

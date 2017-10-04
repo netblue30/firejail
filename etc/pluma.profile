@@ -12,8 +12,11 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+include /etc/firejail/whitelist-var-common.inc
+
 caps.drop all
 # net none - makes settings immutable
+machine-id
 no3d
 nodvd
 nogroups
@@ -32,5 +35,6 @@ private-dev
 # private-etc fonts
 private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

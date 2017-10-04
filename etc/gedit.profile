@@ -19,6 +19,7 @@ include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 # net none - makes settings immutable
+machine-id
 no3d
 nodvd
 nogroups
@@ -37,5 +38,6 @@ private-dev
 # private-etc fonts
 private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

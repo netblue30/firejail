@@ -21,6 +21,7 @@ whitelist ~/.cache/google-chrome
 whitelist ~/.config/google-chrome
 whitelist ~/.pki
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.keep sys_chroot,sys_admin
 netfilter

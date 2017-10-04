@@ -16,8 +16,10 @@ include /etc/firejail/disable-programs.inc
 mkdir ~/.config/hexchat
 whitelist ~/.config/hexchat
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+machine-id
 netfilter
 no3d
 nodvd
@@ -38,5 +40,6 @@ private-bin hexchat
 private-dev
 private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

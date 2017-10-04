@@ -18,8 +18,10 @@ mkdir ~/.stellarium
 whitelist ~/.config/stellarium
 whitelist ~/.stellarium
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+machine-id
 netfilter
 nodvd
 nogroups
@@ -36,3 +38,6 @@ disable-mnt
 private-bin stellarium
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

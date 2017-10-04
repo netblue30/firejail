@@ -22,9 +22,11 @@ whitelist ~/.gnupg
 whitelist ~/.icedove
 whitelist ~/.thunderbird
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 ignore private-tmp
-
+machine-id
+disable-mnt
 read-only ~/.config/mimeapps.list
 
 # allow browsers

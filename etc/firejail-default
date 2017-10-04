@@ -23,7 +23,7 @@ profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 # enough to run "top" or "ps aux".
 ##########
 / r,
-/[^proc,^sys]** mrwlk,
+/{usr,bin,dev,etc,home,lib,media,mnt,opt,srv,tmp,var}** mrwlk,
 /{,var/}run/ r,
 /{,var/}run/** r,
 /{,var/}run/user/**/dconf/ rw,

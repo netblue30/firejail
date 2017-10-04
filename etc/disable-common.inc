@@ -290,6 +290,7 @@ blacklist /tmp/.lxterminal-socket*
 blacklist /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
+blacklist ${PATH}/lxterminal
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
 blacklist ${PATH}/lilyterm

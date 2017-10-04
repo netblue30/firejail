@@ -10,9 +10,10 @@ firejail (0.9.38.12) baseline; urgency=low
   * bugfix: fix handling of /dev/shm in whitelists
   * enhancement: --output cleanup
   * enhancement: quiet support in profile files
+  * maintenance: updated terminal support in disable-common.inc
   * maintenance: updated copyright statement in all files
   * maintenance: testing suite update for Debian "stretch"
- -- netblue30 <netblue30@yahoo.com>  Tue, 29 Aug 2017 10:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Wed, 4 Oct 2017 10:00:00 -0500
 
 firejail (0.9.38.10) baseline; urgency=low
   * security: new fix for CVE-2017-5180 reported by Sebastian Krahmer last week

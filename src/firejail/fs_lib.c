@@ -22,6 +22,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <dirent.h>
 
 #define MAXBUF 4096
 
@@ -133,6 +134,85 @@ static char *valid_file(const char *lib) {
 	return NULL;
 }
 
+// standard libc libraries based on Debian's libc6 package
+// selinux seems to be linked in most command line utilities
+// locale (/usr/lib/locale) - without it, the program will default to "C" locale
+typedef struct liblist_t {
+	const char *name;
+	int len;
+} LibList;
+
+static LibList libc_list[] = {
+//	{ "locale", 0 },   hardcoded!
+	{ "libselinux.so.", 0 },
+	{ "ld-linux-x86-64.so.", 0 },
+	{ "libanl.so.", 0 },
+	{ "libc.so.", 0 },
+	{ "libcidn.so.", 0 },
+	{ "libcrypt.so.", 0 },
+	{ "libdl.so.", 0 },
+	{ "libm.so.", 0 },
+	{ "libmemusage.so", 0 },
+	{ "libmvec.so.", 0 },
+	{ "libnsl.so.", 0 },
+	{ "libnss_compat.so.", 0 },
+	{ "libnss_dns.so.", 0 },
+	{ "libnss_files.so.", 0 },
+	{ "libnss_hesiod.so.", 0 },
+	{ "libnss_nisplus.so.", 0 },
+	{ "libnss_nis.so.", 0 },
+	{ "libpthread.so.", 0 },
+	{ "libresolv.so.", 0 },
+	{ "librt.so.", 0 },
+	{ "libthread_db.so.", 0 },
+	{ "libutil.so.", 0 },
+	{ NULL, 0}
+};
+
+static int find(const char *name) {
+	assert(name);
+
+	int i = 0;
+	while (libc_list[i].name) {
+		if (libc_list[i].len == 0)
+			libc_list[i].len = strlen(libc_list[i].name);
+		if (strncmp(name, libc_list[i].name, libc_list[i].len) == 0)
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
+// compare the files in dirname against liblist above
+static void walk_directory(const char *dirname, const char *destdir) {
+	assert(dirname);
+	assert(destdir);
+
+	DIR *dir = opendir(dirname);
+	if (dir) {
+		struct dirent *entry;
+		while ((entry = readdir(dir)) != NULL) {
+			if (strcmp(entry->d_name, ".") == 0)
+				continue;
+			if (strcmp(entry->d_name, "..") == 0)
+				continue;
+			
+			if (find(entry->d_name)) {
+				char *fname;
+				if (asprintf(&fname, "%s/%s", dirname, entry->d_name) == -1)
+					errExit("asprintf");
+
+				if (is_dir(fname))
+					copy_directory(fname, entry->d_name, RUN_LIB_DIR);
+				else
+					duplicate(fname, destdir);
+			}
+		}
+		closedir(dir);
+	}
+	else
+		fprintf(stderr, "Error: cannot open %s in order to set --private-lib\n", dirname);
+}
 
 void fs_private_lib(void) {
 #ifndef __x86_64__
@@ -149,14 +229,13 @@ void fs_private_lib(void) {
 	// create /run/firejail/mnt/lib directory
 	mkdir_attr(RUN_LIB_DIR, 0755, 0, 0);
 
-	//  fix libselinux linking problem on Debian stretch; the library is
-	//  linked in most  basic command utilities (ls, cp, find etc.), and it
-	//  seems to have a path hardlinked under /lib/x86_64-linux-gnu directory.
 	struct stat s;
-	if (stat("/lib/x86_64-linux-gnu/libselinux.so.1", &s) == 0) {
+	if (stat("/lib/x86_64-linux-gnu", &s) == 0) {
 		mkdir_attr(RUN_LIB_DIR "/x86_64-linux-gnu", 0755, 0, 0);
-		duplicate("/lib/x86_64-linux-gnu/libselinux.so.1", RUN_LIB_DIR "/x86_64-linux-gnu");
+		walk_directory("/lib/x86_64-linux-gnu", RUN_LIB_DIR "/x86_64-linux-gnu");
 	}
+	if (stat("/usr/lib/locale", &s) == 0)
+		copy_directory("/usr/lib/locale", "locale", RUN_LIB_DIR);
 
 	// copy the libs in the new lib directory for the main exe
 	if (cfg.original_program_index > 0)

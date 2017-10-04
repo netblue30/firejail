@@ -94,12 +94,12 @@ static void storage_print(Storage *ptr, int fd) {
 	}
 }
 
-static bool ptr_ok(const void *ptr, const void *base, const void *end, const char *name) {
+static bool ptr_ok(const void *ptr, const void *base, const void *end, const char *name, const char *exe) {
 	bool r;
 
 	r = (ptr >= base && ptr <= end);
 	if (!r && !arg_quiet)
-		fprintf(stderr, "Warning: fldd: bad pointer %s\n", name);
+		fprintf(stderr, "Warning: fldd: bad pointer %s for %s\n", name, exe);
 	return r;
 }
 
@@ -130,11 +130,11 @@ static void copy_libs_for_exe(const char *exe) {
 	}
 
 	Elf_Phdr *pbuf = (Elf_Phdr *)(base + sizeof(*ebuf));
-	while (ebuf->e_phnum-- > 0 && ptr_ok(pbuf, base, end, "pbuf")) {
+	while (ebuf->e_phnum-- > 0 && ptr_ok(pbuf, base, end, "pbuf", exe)) {
 		switch (pbuf->p_type) {
 		case PT_INTERP:
 			// dynamic loader ld-linux.so
-			if (!ptr_ok(base + pbuf->p_offset, base, end, "base + pbuf->p_offset"))
+			if (!ptr_ok(base + pbuf->p_offset, base, end, "base + pbuf->p_offset", exe))
 				goto close;
 
 			storage_add(&libs, base + pbuf->p_offset);
@@ -144,16 +144,16 @@ static void copy_libs_for_exe(const char *exe) {
 	}
 
 	Elf_Shdr *sbuf = (Elf_Shdr *)(base + ebuf->e_shoff);
-	if (!ptr_ok(sbuf, base, end, "sbuf"))
+	if (!ptr_ok(sbuf, base, end, "sbuf", exe))
 		goto close;
 
 	// Find strings section
 	char *strbase = NULL;
 	int sections = ebuf->e_shnum;
-	while (sections-- > 0 && ptr_ok(sbuf, base, end, "sbuf")) {
+	while (sections-- > 0 && ptr_ok(sbuf, base, end, "sbuf", exe)) {
 		if (sbuf->sh_type == SHT_STRTAB) {
 			strbase = base + sbuf->sh_offset;
-			if (!ptr_ok(strbase, base, end, "strbase"))
+			if (!ptr_ok(strbase, base, end, "strbase", exe))
 				goto close;
 			break;
 		}
@@ -164,7 +164,7 @@ static void copy_libs_for_exe(const char *exe) {
 
 	// Find dynamic section
 	sections = ebuf->e_shnum;
-	while (sections-- > 0 && ptr_ok(sbuf, base, end, "sbuf")) {
+	while (sections-- > 0 && ptr_ok(sbuf, base, end, "sbuf", exe)) {
 // TODO: running fldd on large gui programs (fldd /usr/bin/transmission-qt)
 // crash on accessing memory location sbuf->sh_type if sbuf->sh_type in the previous section was 0 (SHT_NULL)
 // for now we just exit the while loop - this is probably incorrect
@@ -173,14 +173,14 @@ static void copy_libs_for_exe(const char *exe) {
 			break;
 		if (sbuf->sh_type == SHT_DYNAMIC) {
 			Elf_Dyn *dbuf = (Elf_Dyn *)(base + sbuf->sh_offset);
-			if (!ptr_ok(dbuf, base, end, "dbuf"))
+			if (!ptr_ok(dbuf, base, end, "dbuf", exe))
 				goto close;
 			// Find DT_RPATH/DT_RUNPATH tags first
 			unsigned long size = sbuf->sh_size;
-			while (size >= sizeof(*dbuf) && ptr_ok(dbuf, base, end, "dbuf")) {
+			while (size >= sizeof(*dbuf) && ptr_ok(dbuf, base, end, "dbuf", exe)) {
 				if (dbuf->d_tag == DT_RPATH || dbuf->d_tag ==  DT_RUNPATH) {
 					const char *searchpath = strbase + dbuf->d_un.d_ptr;
-					if (!ptr_ok(searchpath, base, end, "searchpath"))
+					if (!ptr_ok(searchpath, base, end, "searchpath", exe))
 						goto close;
 					storage_add(&lib_paths, searchpath);
 				}
@@ -190,10 +190,10 @@ static void copy_libs_for_exe(const char *exe) {
 			// Find DT_NEEDED tags
 			dbuf = (Elf_Dyn *)(base + sbuf->sh_offset);
 			size = sbuf->sh_size;
-			while (size >= sizeof(*dbuf) && ptr_ok(dbuf, base, end, "dbuf")) {
+			while (size >= sizeof(*dbuf) && ptr_ok(dbuf, base, end, "dbuf", exe)) {
 				if (dbuf->d_tag == DT_NEEDED) {
 					const char *lib = strbase + dbuf->d_un.d_ptr;
-					if (!ptr_ok(lib, base, end, "lib"))
+					if (!ptr_ok(lib, base, end, "lib", exe))
 						goto close;
 					copy_libs_for_lib(lib);
 				}

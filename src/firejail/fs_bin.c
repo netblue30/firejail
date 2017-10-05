@@ -94,7 +94,6 @@ static char *check_dir_or_file(const char *name) {
 	return paths[i];
 }
 
-
 // return 1 if the file is in paths[]
 static int valid_full_path_file(const char *name) {
 	assert(name);
@@ -186,8 +185,20 @@ static void duplicate(char *fname, FILE *fplist) {
 	// copy the file
 	if (checkcfg(CFG_FOLLOW_SYMLINK_PRIVATE_BIN))
 		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, RUN_BIN_DIR);
-	else
+	else {
+		// if full_path is simlink, and the link is in our path, copy both
+		if (is_link(full_path)) {
+			char *actual_path = realpath(full_path, NULL);
+			if (actual_path) {
+				if (valid_full_path_file(actual_path))
+					sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, actual_path, RUN_BIN_DIR);
+				free(actual_path);
+			}
+		}
+
 		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
+	}
+
 	fs_logger2("clone", fname);
 	free(full_path);
 }

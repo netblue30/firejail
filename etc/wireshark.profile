@@ -12,18 +12,19 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+# caps.drop all
 caps.keep dac_override,net_admin,net_raw
 netfilter
 no3d
-# nogroups - breaks unprivileged wireshark usage
-# nonewprivs - breaks unprivileged wireshark usage
+# nogroups - breaks network traffic capture for unprivileged users
+# nonewprivs - breaks network traffic capture for unprivileged users
 # noroot
 nodvd
 nosound
 notv
 novideo
 # protocol unix,inet,inet6,netlink
-# seccomp - breaks unprivileged wireshark usage
+# seccomp - breaks network traffic capture for unprivileged users
 shell none
 tracelog
 

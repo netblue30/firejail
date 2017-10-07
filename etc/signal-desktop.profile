@@ -1,4 +1,4 @@
-# Firejail profile for sinal-desktop
+# Firejail profile for signal-desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/signal-desktop.local

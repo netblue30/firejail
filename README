@@ -270,6 +270,8 @@ Joan Figueras (https://github.com/figue)
 	- added cyberfox profile
 John Mullee (https://github.com/jmullee)
 	- fix empty-string assignment in whitelisting code
+Jonas Heinrich (https://github.com/onny)
+	- added signal-dekstop profile
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -292,6 +294,8 @@ KellerFuchs (https://github.com/KellerFuchs)
 	- make ~/.local read-only
 KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
+Kunal Mehta (https://github.com/legoktm)
+	- converted all links to https in manpages
 laniakea64 (https://github.com/laniakea64)
 	- added fj-mkdeb.py script to build deb packages
 Lari Rauno (https://github.com/tuutti)

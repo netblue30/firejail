@@ -33,7 +33,7 @@ tracelog
 private-bin evince,evince-previewer,evince-thumbnailer
 private-dev
 private-etc fonts
-private-etc
+private-lib
 # evince needs access to /tmp/mozilla* to work in firefox
 # private-tmp
 

@@ -29,7 +29,9 @@ shell none
 
 disable-mnt
 private
+private-bin kcalc
 private-dev
+private-lib
 private-tmp
 
 noexec ${HOME}

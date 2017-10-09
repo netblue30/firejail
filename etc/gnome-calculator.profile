@@ -30,6 +30,7 @@ shell none
 disable-mnt
 private-bin gnome-calculator
 private-dev
+private-lib
 private-tmp
 
 memory-deny-write-execute

@@ -34,4 +34,5 @@ tracelog
 private-bin galculator
 private-dev
 private-etc fonts
+private-lib
 private-tmp

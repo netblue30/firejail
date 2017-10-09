@@ -28,7 +28,10 @@ protocol unix
 seccomp
 shell none
 
+private-bin leafpad
 private-dev
+private-lib
+private-tmp
 
 noexec ${HOME}
 noexec /tmp

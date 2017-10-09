@@ -415,3 +415,4 @@
 /etc/firejail/x-terminal-emulator.profile
 /etc/firejail/xmr-stak-cpu.profile
 /etc/firejail/zart.profile
+/etc/firejail/xcalc.profile

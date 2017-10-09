@@ -16,7 +16,7 @@ whitelist ${HOME}/.cache/mate-calc
 whitelist ${HOME}/.config/caja
 whitelist ${HOME}/.config/gtk-3.0
 whitelist ${HOME}/.config/dconf
-whitelist ${HOME}./config/mate-menu
+whitelist ${HOME}/.config/mate-menu
 whitelist ${HOME}/.themes
 
 caps.drop all

@@ -36,6 +36,7 @@ tracelog
 
 private-bin transmission-gtk
 private-dev
+private-lib
 private-tmp
 
 memory-deny-write-execute

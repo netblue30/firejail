@@ -47,7 +47,9 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+private-bin ktorrent
 private-dev
+private-lib
 private-tmp
 
 # memory-deny-write-execute

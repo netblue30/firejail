@@ -38,6 +38,7 @@ disable-mnt
 # debug note: private-bin requires perl, python, etc on some systems
 private-bin hexchat
 private-dev
+private-lib
 private-tmp
 
 memory-deny-write-execute

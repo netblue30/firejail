@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ */
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
@@ -35,39 +35,79 @@ static const char * const lib_paths[] = {
 	LIBDIR,
 	"/usr/local/lib",
 	NULL
-}; // Note: this array is duplicated in src/fldd/main.c
+};						  // Note: this array is duplicated in src/fldd/main.c
 
-static void duplicate(const char *fname, const char *private_run_dir) {
-	if (arg_debug)
-		printf("copying %s to private %s\n", fname, private_run_dir);
+extern void fslib_install_stdc(void);
+extern void fslib_install_system(void);
 
-	// copy only root-owned files
+static int lib_cnt = 0;
+static int dir_cnt = 0;
+
+
+static char *build_dest_dir(const char *full_path) {
+	assert(full_path);
+	if (strstr(full_path, "/x86_64-linux-gnu/"))
+		return RUN_LIB_DIR "/x86_64-linux-gnu";
+	return RUN_LIB_DIR;
+}
+
+// copy fname in private_run_dir
+void fslib_duplicate(const char *full_path) {
+	assert(full_path);
 	struct stat s;
-	if (stat(fname, &s) == 0 && s.st_uid == 0)
-		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", fname, private_run_dir);
+	if (stat(full_path, &s) != 0 || s.st_uid != 0 || access(full_path, R_OK))
+		return;
+
+	char *dest_dir = build_dest_dir(full_path);
+
+	// don't copy it if the file is already there
+	char *ptr = strrchr(full_path, '/');
+	if (!ptr)
+		return;
+	ptr++;
+	if (*ptr == '\0')
+		return;
+
+	char *name;
+	if (asprintf(&name, "%s/%s", dest_dir, ptr) == -1)
+		errExit("asprintf");
+	if (stat(name, &s) == 0) {
+		free(name);
+		return;
+	}
+	free(name);
+	
+	if (arg_debug)
+		printf("copying %s to private %s\n", full_path, dest_dir);
+
+	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, dest_dir);
+	lib_cnt++;
 }
 
 
 // requires full path for lib
-static void copy_libs(const char *lib, const char *private_run_dir, const char *output_file) {
+// it could be a library or an executable
+// lib is not copied, only libraries used by it
+void fslib_copy_libs(const char *full_path) {
 	// if library/executable does not exist or the user does not have read access to it
 	// print a warning and exit the function.
-	if (access(lib, R_OK)) {
-		fwarning("cannot find %s for private-lib, skipping...\n", lib);
+	if (access(full_path, R_OK)) {
+		if (arg_debug)
+			printf("cannot find %s for private-lib, skipping...\n", full_path);
 		return;
 	}
 
 	// create an empty RUN_LIB_FILE and allow the user to write to it
-	unlink(output_file); // in case is there
-	create_empty_file_as_root(output_file, 0644);
-	if (chown(output_file, getuid(), getgid()))
+	unlink(RUN_LIB_FILE);			  // in case is there
+	create_empty_file_as_root(RUN_LIB_FILE, 0644);
+	if (chown(RUN_LIB_FILE, getuid(), getgid()))
 		errExit("chown");
-		
-	// run fldd to extact the list of file
-	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, lib, output_file);
-	
+
+	// run fldd to extact the list of files
+	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
+
 	// open the list of libraries and install them on by one
-	FILE *fp = fopen(output_file, "r");
+	FILE *fp = fopen(RUN_LIB_FILE, "r");
 	if (!fp)
 		errExit("fopen");
 
@@ -77,18 +117,30 @@ static void copy_libs(const char *lib, const char *private_run_dir, const char *
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-		duplicate(buf, private_run_dir);
+		fslib_duplicate(buf);
 	}
 	fclose(fp);
 }
 
-static void copy_directory(const char *full_path, const char *dir_name, const char *private_run_dir) {
-	char *dest;
-	if (asprintf(&dest, "%s/%s", private_run_dir, dir_name) == -1)
-		errExit("asprintf");
+
+void fslib_copy_dir(const char *full_path) {
+	assert(full_path);
+	// do nothing if the directory does not exist or is not owned by root
+	struct stat s;
+	if (stat(full_path, &s) != 0 || s.st_uid != 0 || !S_ISDIR(s.st_mode) || access(full_path, R_OK))
+		return;
+
+	char *dir_name = strrchr(full_path, '/');
+	assert(dir_name);
+	dir_name++;
+	assert(*dir_name != '\0');
+
+
 
 	// do nothing if the directory is already there
-	struct stat s;
+	char *dest;
+	if (asprintf(&dest, "%s/%s", build_dest_dir(full_path), dir_name) == -1)
+		errExit("asprintf");
 	if (stat(dest, &s) == 0) {
 		free(dest);
 		return;
@@ -98,120 +150,84 @@ static void copy_directory(const char *full_path, const char *dir_name, const ch
 	mkdir_attr(dest, 0755, 0, 0);
 
 	if (mount(full_path, dest, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-	    mount(NULL, dest, NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
+		mount(NULL, dest, NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger2("clone", full_path);
 	fs_logger2("mount", full_path);
+	dir_cnt++;
 	free(dest);
 }
+
 
 // return 1 if the file is valid
 static char *valid_file(const char *lib) {
 	// filename check
 	int len = strlen(lib);
 	if (strcspn(lib, "\\&!?\"'<>%^(){}[];,*") != (size_t)len ||
-	    strstr(lib, "..")) {
+	strstr(lib, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid library\n", lib);
 		exit(1);
 	}
-	
+
 	// find the library
 	int i;
 	for (i = 0; lib_paths[i]; i++) {
 		char *fname;
 		if (asprintf(&fname, "%s/%s", lib_paths[i], lib) == -1)
 			errExit("asprintf");
-		
-		// existing file owned by root
+
+		// existing file owned by root, read access
 		struct stat s;
-		if (stat(fname, &s) == 0 && s.st_uid == 0) {
+		if (stat(fname, &s) == 0 && s.st_uid == 0 && !access(fname, R_OK)) {
 			return fname;
 		}
 		free(fname);
 	}
 
-	fwarning("%s library not found, skipping...\n", lib);	
+	fwarning("%s library not found, skipping...\n", lib);
 	return NULL;
 }
 
-// standard libc libraries based on Debian's libc6 package
-// selinux seems to be linked in most command line utilities
-// locale (/usr/lib/locale) - without it, the program will default to "C" locale
-typedef struct liblist_t {
-	const char *name;
-	int len;
-} LibList;
 
-static LibList libc_list[] = {
-//	{ "locale", 0 },   hardcoded!
-	{ "libselinux.so.", 0 },
-	{ "ld-linux-x86-64.so.", 0 },
-	{ "libanl.so.", 0 },
-	{ "libc.so.", 0 },
-	{ "libcidn.so.", 0 },
-	{ "libcrypt.so.", 0 },
-	{ "libdl.so.", 0 },
-	{ "libm.so.", 0 },
-	{ "libmemusage.so", 0 },
-	{ "libmvec.so.", 0 },
-	{ "libnsl.so.", 0 },
-	{ "libnss_compat.so.", 0 },
-	{ "libnss_dns.so.", 0 },
-	{ "libnss_files.so.", 0 },
-	{ "libnss_hesiod.so.", 0 },
-	{ "libnss_nisplus.so.", 0 },
-	{ "libnss_nis.so.", 0 },
-	{ "libpthread.so.", 0 },
-	{ "libresolv.so.", 0 },
-	{ "librt.so.", 0 },
-	{ "libthread_db.so.", 0 },
-	{ "libutil.so.", 0 },
-	{ NULL, 0}
-};
+static void mount_directories(void) {
+	if (arg_debug)
+		printf("Mount-bind %s on top of /lib /lib64 /usr/lib\n", RUN_LIB_DIR);
 
-static int find(const char *name) {
-	assert(name);
-
-	int i = 0;
-	while (libc_list[i].name) {
-		if (libc_list[i].len == 0)
-			libc_list[i].len = strlen(libc_list[i].name);
-		if (strncmp(name, libc_list[i].name, libc_list[i].len) == 0)
-			return 1;
-		i++;
+	if (is_dir("/lib")) {
+		if (mount(RUN_LIB_DIR, "/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||
+			mount(NULL, "/lib", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
+			errExit("mount bind");
+		fs_logger2("tmpfs", "/lib");
+		fs_logger("mount /lib");
 	}
-	return 0;
-}
 
-// compare the files in dirname against liblist above
-static void walk_directory(const char *dirname, const char *destdir) {
-	assert(dirname);
-	assert(destdir);
-
-	DIR *dir = opendir(dirname);
-	if (dir) {
-		struct dirent *entry;
-		while ((entry = readdir(dir)) != NULL) {
-			if (strcmp(entry->d_name, ".") == 0)
-				continue;
-			if (strcmp(entry->d_name, "..") == 0)
-				continue;
-			
-			if (find(entry->d_name)) {
-				char *fname;
-				if (asprintf(&fname, "%s/%s", dirname, entry->d_name) == -1)
-					errExit("asprintf");
-
-				if (is_dir(fname))
-					copy_directory(fname, entry->d_name, RUN_LIB_DIR);
-				else
-					duplicate(fname, destdir);
-			}
-		}
-		closedir(dir);
+	if (is_dir("/lib64")) {
+		if (mount(RUN_LIB_DIR, "/lib64", NULL, MS_BIND|MS_REC, NULL) < 0 ||
+			mount(NULL, "/lib64", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
+			errExit("mount bind");
+		fs_logger2("tmpfs", "/lib64");
+		fs_logger("mount /lib64");
 	}
-	else
-		fprintf(stderr, "Error: cannot open %s in order to set --private-lib\n", dirname);
+
+	if (is_dir("/usr/lib")) {
+		if (mount(RUN_LIB_DIR, "/usr/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||
+			mount(NULL, "/usr/lib", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
+			errExit("mount bind");
+		fs_logger2("tmpfs", "/usr/lib");
+		fs_logger("mount /usr/lib");
+	}
+
+	// for amd64 only - we'll deal with i386 later
+	if (is_dir("/lib32")) {
+		if (mount(RUN_RO_DIR, "/lib32", "none", MS_BIND, "mode=400,gid=0") < 0)
+			errExit("disable file");
+		fs_logger("blacklist-nolog /lib32");
+	}
+	if (is_dir("/libx32")) {
+		if (mount(RUN_RO_DIR, "/libx32", "none", MS_BIND, "mode=400,gid=0") < 0)
+			errExit("disable file");
+		fs_logger("blacklist-nolog /libx32");
+	}
 }
 
 void fs_private_lib(void) {
@@ -219,39 +235,35 @@ void fs_private_lib(void) {
 	fwarning("private-lib feature is currently available only on amd64 platforms\n");
 	return;
 #endif
-
 	char *private_list = cfg.lib_private_keep;
 	if (arg_debug)
 		printf("Starting private-lib processing: program %s, shell %s\n",
 			(cfg.original_program_index > 0)? cfg.original_argv[cfg.original_program_index]: "none",
-			(arg_shell_none)? "none": cfg.shell);
+		(arg_shell_none)? "none": cfg.shell);
 
 	// create /run/firejail/mnt/lib directory
 	mkdir_attr(RUN_LIB_DIR, 0755, 0, 0);
 
-	struct stat s;
-	if (stat("/lib/x86_64-linux-gnu", &s) == 0) {
-		mkdir_attr(RUN_LIB_DIR "/x86_64-linux-gnu", 0755, 0, 0);
-		walk_directory("/lib/x86_64-linux-gnu", RUN_LIB_DIR "/x86_64-linux-gnu");
-	}
-	if (stat("/usr/lib/locale", &s) == 0)
-		copy_directory("/usr/lib/locale", "locale", RUN_LIB_DIR);
+	// install standard C libraries
+	fslib_install_stdc();
+
+	timetrace_start();
 
 	// copy the libs in the new lib directory for the main exe
 	if (cfg.original_program_index > 0)
-		copy_libs(cfg.original_argv[cfg.original_program_index], RUN_LIB_DIR, RUN_LIB_FILE);
+		fslib_copy_libs(cfg.original_argv[cfg.original_program_index]);
 
 	// for the shell
 	if (!arg_shell_none) {
-		copy_libs(cfg.shell, RUN_LIB_DIR, RUN_LIB_FILE);
+		fslib_copy_libs(cfg.shell);
 		// a shell is useless without ls command
-		copy_libs("/bin/ls", RUN_LIB_DIR, RUN_LIB_FILE);
+		fslib_copy_libs("/bin/ls");
 	}
 
 	// for the listed libs
 	if (private_list && *private_list != '\0') {
 		if (arg_debug)
-			printf("Copying extra files (%s) in the new lib directory:\n", private_list);
+			printf("Copying extra files (%s) in the new lib directory\n", private_list);
 
 		char *dlist = strdup(private_list);
 		if (!dlist)
@@ -261,10 +273,10 @@ void fs_private_lib(void) {
 		char *lib = valid_file(ptr);
 		if (lib) {
 			if (is_dir(lib))
-				copy_directory(lib, ptr, RUN_LIB_DIR);
+				fslib_copy_dir(lib);
 			else {
-				duplicate(lib, RUN_LIB_DIR);
-				copy_libs(lib, RUN_LIB_DIR, RUN_LIB_FILE);
+				fslib_duplicate(lib);
+				fslib_copy_libs(lib);
 			}
 			free(lib);
 		}
@@ -273,10 +285,10 @@ void fs_private_lib(void) {
 			lib = valid_file(ptr);
 			if (lib) {
 				if (is_dir(lib))
-					copy_directory(lib, ptr, RUN_LIB_DIR);
+					fslib_copy_dir(lib);
 				else {
-					duplicate(lib, RUN_LIB_DIR);
-					copy_libs(lib, RUN_LIB_DIR, RUN_LIB_FILE);
+					fslib_duplicate(lib);
+					fslib_copy_libs(lib);
 				}
 				free(lib);
 			}
@@ -295,54 +307,63 @@ void fs_private_lib(void) {
 				char *ptr = strchr(buf, '\n');
 				if (ptr)
 					*ptr = '\0';
-				copy_libs(buf, RUN_LIB_DIR, RUN_LIB_FILE);
+
+				// copy libraries for this program
+				fslib_copy_libs(buf);
+
+				// load program data from /usr/lib/program or from /usr/lib/x86_64-linux-gnu
+				ptr = strrchr(buf, '/');
+				if (ptr && *(ptr + 1) != '\0') {
+					ptr++;
+
+					// /usr/lib/program
+					char *name;
+					if (asprintf(&name, "/usr/lib/%s", ptr) == -1)
+						errExit("asprintf");
+					struct stat s;
+					if (is_dir(name)) {
+						fslib_copy_dir(name);
+						fslib_copy_libs(name);
+					}
+					free(name);
+
+					// /usr/lib/x86_linux-gnu - debian & frriends
+					if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr) == -1)
+						errExit("asprintf");
+					if (is_dir(name)) {
+						fslib_copy_dir(name);
+						fslib_copy_libs(name);
+					}
+					free(name);
+
+					// /usr/lib64 - CentOS, Fedora
+					if (asprintf(&name, "/usr/lib64/%s", ptr) == -1)
+						errExit("asprintf");
+					if (is_dir(name)) {
+						fslib_copy_dir(name);
+						fslib_copy_libs(name);
+					}
+					free(name);
+				}
 			}
 		}
 		fclose(fp);
 	}
+	if (!arg_quiet)
+		fprintf(stderr, "Program libraries installed in %0.2f ms\n", timetrace_end());
+
+	// install the reset of the system libraries
+	fslib_install_system();
+
+	if (!arg_quiet)
+		fprintf(stderr, "Installed %d libraries and %d directories\n", lib_cnt, dir_cnt);
 
 	// for our trace and tracelog libs
 	if (arg_trace)
-		duplicate(LIBDIR "/firejail/libtrace.so", RUN_LIB_DIR);
+		fslib_duplicate(LIBDIR "/firejail/libtrace.so");
 	else if (arg_tracelog)
-		duplicate(LIBDIR "/firejail/libtracelog.so", RUN_LIB_DIR);
+		fslib_duplicate(LIBDIR "/firejail/libtracelog.so");
 
-	if (arg_debug)
-		printf("Mount-bind %s on top of /lib /lib64 /usr/lib\n", RUN_LIB_DIR);
-
-    if (is_dir("/lib")) {
-    	if (mount(RUN_LIB_DIR, "/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||
-	        mount(NULL, "/lib", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
-            errExit("mount bind");
-    	fs_logger2("tmpfs", "/lib");
-	    fs_logger("mount /lib");
-    }
-
-    if (is_dir("/lib64")) {	
-        if (mount(RUN_LIB_DIR, "/lib64", NULL, MS_BIND|MS_REC, NULL) < 0 ||
-    	    mount(NULL, "/lib64", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
-    		errExit("mount bind");
-    	fs_logger2("tmpfs", "/lib64");
-    	fs_logger("mount /lib64");
-    }
-
-    if (is_dir("/usr/lib")) {
-    	if (mount(RUN_LIB_DIR, "/usr/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||
-	        mount(NULL, "/usr/lib", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
-            errExit("mount bind");
-       fs_logger2("tmpfs", "/usr/lib");
-    	fs_logger("mount /usr/lib");
-    }
-
-	// for amd64 only - we'll deal with i386 later
-    if (is_dir("/lib32")) {
-    	if (mount(RUN_RO_DIR, "/lib32", "none", MS_BIND, "mode=400,gid=0") < 0)
-    		errExit("disable file");
-    	fs_logger("blacklist-nolog /lib32");
-    }
-    if (is_dir("/libx32")) {
-    	if (mount(RUN_RO_DIR, "/libx32", "none", MS_BIND, "mode=400,gid=0") < 0)
-	    	errExit("disable file");
-	    fs_logger("blacklist-nolog /libx32");
-    }
+	// mount lib filesystem
+	mount_directories();
 }

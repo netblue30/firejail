@@ -39,11 +39,12 @@ notv
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-# shell none
+shell none
 
-# private-bin qbittorrent
+private-bin qbittorrent
 private-dev
 # private-etc X11,fonts,xdg,resolv.conf
+private-lib
 private-tmp
 
 memory-deny-write-execute

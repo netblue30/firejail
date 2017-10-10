@@ -52,8 +52,9 @@ static const char * const default_lib_paths[] = {
 	"/usr/lib/x86_64-linux-gnu",
 	LIBDIR,
 	"/usr/local/lib",
+    "/usr/lib/x86_64-linux-gnu/mesa", // libGL.so is sometimes a symlink into this directory
 	NULL
-}; // Note: this array is duplicated in src/firejail/fs_lib.c
+};
 
 
 typedef struct storage_t {

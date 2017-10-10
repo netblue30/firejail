@@ -239,6 +239,9 @@ scan-build: clean
 test-profiles:
 	cd test/profiles; ./profiles.sh | grep TESTING
 
+test-private-lib:
+	cd test/private-lib; ./private-lib.sh | grep TESTING
+
 test-apps:
 	cd test/apps; ./apps.sh | grep TESTING
 
@@ -271,7 +274,7 @@ test-fs:
 test-fcopy:
 	cd test/fcopy; ./fcopy.sh | grep TESTING
 
-test: test-profiles test-fcopy test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+test: test-profiles test-private-lib test-fcopy test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
 	echo "TEST COMPLETE"
 
 test-travis: test-profiles test-fcopy test-fs test-utils test-sysutils test-environment test-filters test-arguments

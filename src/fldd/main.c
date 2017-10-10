@@ -53,6 +53,8 @@ static const char * const default_lib_paths[] = {
 	LIBDIR,
 	"/usr/local/lib",
     "/usr/lib/x86_64-linux-gnu/mesa", // libGL.so is sometimes a symlink into this directory
+    "/usr/lib/x86_64-linux-gnu/mesa-egl", // libGL.so is sometimes a symlink into this directory
+    "/usr/lib/x86_64-linux-gnu/plasma-discover",
 	NULL
 };
 

@@ -20,6 +20,7 @@ blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.ViberPC
 blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.Wolfram Research
+blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
 blacklist ${HOME}/.arduino15

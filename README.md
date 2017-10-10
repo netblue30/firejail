@@ -181,4 +181,4 @@ calligrawords, cin, dooble, dooble-qt4, fetchmail, freecad, freecadcmd, google-e
 imagej, karbon, kdenlive, krita, linphone, lmms, macrofusion, mpd, natron, Natron,
 ricochet, shotcut, teamspeak3, tor, tor-browser-en, Viber, x-terminal-emulator, zart,
 conky, arch-audit, ffmpeg, bluefish, cliqz, cinelerra, openshot-qt, pinta, uefitool,
-aosp, pdfmod, gnome-ring, signal-dekstop, xcalc
+aosp, pdfmod, gnome-ring, signal-dekstop, xcalc, zaproxy

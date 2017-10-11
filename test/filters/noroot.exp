@@ -11,6 +11,7 @@ send -- "firejail --noprofile --noroot --caps.drop=all --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"cannot create a new user namespace" {puts "TESTING SKIP: user namespace not available\n"; exit}
+	"noroot option is not available" {puts "TESTING SKIP: user namespace not available\n"; exit}
 	"Child process initialized"
 }
 sleep 1

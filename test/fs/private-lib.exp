@@ -14,7 +14,7 @@ expect {
 }
 after 100
 
-send -- "find /bin; echo done\r"
+send -- "cd /bin; find .; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"rm" {puts "TESTING ERROR 3\n";exit}
@@ -23,7 +23,7 @@ expect {
 }
 after 100
 
-send -- "find /lib; echo done\r"
+send -- "cd /lib; find .; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"modules" {puts "TESTING ERROR 6\n";exit}
@@ -32,7 +32,7 @@ expect {
 }
 after 100
 
-send -- "find /usr/lib; echo done\r"
+send -- "cd /usr/lib; find .; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"grub" {puts "TESTING ERROR 9\n";exit}

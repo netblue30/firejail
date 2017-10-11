@@ -851,6 +851,7 @@ static int check_arg(int argc, char **argv, const char *argument) {
 
 static void run_builder(int argc, char **argv) {
 	EUID_ASSERT();
+	(void) argc;
 
 	// drop privileges
 	if (setgid(getgid()) < 0)

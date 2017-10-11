@@ -260,7 +260,7 @@ static void dev_callback(char *ptr) {
 void build_dev(const char *fname) {
 	assert(fname);
 	
-	process_files(fname, "/tmp", tmp_callback);
+	process_files(fname, "/dev", dev_callback);
 	
 	if (dev_out == NULL)
 		printf("private-dev\n");

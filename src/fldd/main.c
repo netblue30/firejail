@@ -101,6 +101,7 @@ static void storage_print(Storage *ptr, int fd) {
 
 static bool ptr_ok(const void *ptr, const void *base, const void *end, const char *name) {
 	bool r;
+	(void) name;
 
 	r = (ptr >= base && ptr < end);
 	return r;

@@ -320,7 +320,6 @@ void fs_private_lib(void) {
 					char *name;
 					if (asprintf(&name, "/usr/lib/%s", ptr) == -1)
 						errExit("asprintf");
-					struct stat s;
 					if (is_dir(name)) {
 						fslib_copy_dir(name);
 						fslib_copy_libs(name);

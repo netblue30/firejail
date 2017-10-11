@@ -72,14 +72,14 @@ void build_profile(int argc, char **argv, int index) {
 		have_strace = 1;
 	
 	// calculate command length
-	int len = (int) sizeof(cmdlist) / sizeof(char*) + argc - index + 1;
+	unsigned len = (int) sizeof(cmdlist) / sizeof(char*) + argc - index + 1;
 	if (arg_debug)
 		printf("command len %d + %d + 1\n", (int) (sizeof(cmdlist) / sizeof(char*)), argc - index);
 	char *cmd[len];
 	cmd[0] = cmdlist[0];	// explicit assignemnt to clean scan-build error
 	
 	// build command
-	int i = 0;
+	unsigned i = 0;
 	for (i = 0; i < (int) sizeof(cmdlist) / sizeof(char*); i++) {
 		// skip strace if not installed
 		if (have_strace == 0 && strcmp(cmdlist[i], "/usr/bin/strace") == 0)

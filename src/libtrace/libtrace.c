@@ -678,6 +678,8 @@ int setresgid(gid_t rgid, gid_t egid, gid_t sgid) {
 // it can be used to build things like private-bin
 __attribute__((constructor))
 static void log_exec(int argc, char** argv) {
+	(void) argc;
+	(void) argv;
 	static char buf[PATH_MAX + 1];
 	int rv = readlink("/proc/self/exe", buf, PATH_MAX);
 	if (rv != -1) {

@@ -49,7 +49,7 @@ shell none
 
 private-bin ktorrent
 private-dev
-private-lib
+# private-lib - problems on Arch
 private-tmp
 
 # memory-deny-write-execute

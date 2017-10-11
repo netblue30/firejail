@@ -5,7 +5,8 @@
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
-LIST="evince galculator gnome-calculator hexchat kcalc ktorrent leafpad mousepad qbittorrent transmission-gtk transmission-qt xcalc"
+# LIST="evince galculator gnome-calculator hexchat kcalc ktorrent leafpad mousepad qbittorrent transmission-gtk transmission-qt xcalc"
+LIST="evince galculator gnome-calculator hexchat leafpad mousepad transmission-gtk xcalc"
 
 
 for app in $LIST; do
@@ -18,4 +19,3 @@ for app in $LIST; do
 		echo "TESTING SKIP: $app not found"
 	fi
 done
-exit	

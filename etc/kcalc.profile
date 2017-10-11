@@ -31,7 +31,7 @@ disable-mnt
 private
 private-bin kcalc
 private-dev
-private-lib
+# private-lib - problems on Arch
 private-tmp
 
 noexec ${HOME}

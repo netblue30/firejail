@@ -191,14 +191,14 @@ SysLib syslibs[] = {
 		"",	// dir2
 		"Enchant (speller)"	// message
 	},
-	{
+	{ // Qt5 - lots of problems on Arch Linux, Qt5 version 5.9.1 - disabled in all apps profiles
 		"libQt5",	// library
 		0, 0,	// len and found flag
 		"qt5",	// dir1
 		"gdk-pixbuf-2.0",	// dir2
 		"Qt5, GdkPixbuf"	// message
 	},
-	{
+	{ // Qt4
 		"libQtCore",	// library
 		0, 0,	// len and found flag
 		"qt4",	// dir1

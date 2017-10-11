@@ -32,6 +32,7 @@ tracelog
 private-bin atril, atril-previewer, atril-thumbnailer
 private-dev
 private-etc fonts,ld.so.cache
+private-lib
 # atril needs access to /tmp/mozilla* to work in firefox
 # private-tmp
 

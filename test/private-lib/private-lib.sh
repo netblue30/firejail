@@ -5,7 +5,7 @@
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
-LIST="evince galculator gnome-calculator hexchat leafpad mousepad transmission-gtk xcalc"
+LIST="evince galculator gnome-calculator hexchat leafpad mousepad transmission-gtk xcalc atril"
 
 
 for app in $LIST; do

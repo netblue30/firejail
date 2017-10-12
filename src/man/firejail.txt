@@ -2262,8 +2262,13 @@ programs and scripts from user home or other directories writable by the user is
 .br
 
 .br
+- Allow access to files only in the following standard directories: /bin, /dev, /etc, /home, /lib*, /media, /mnt, /opt,
+/proc, /root, /run, /sbin, /srv, /sys, /tmp, /usr, and /var
+.br
+
+.br
 - Disable D-Bus. D-Bus has long been a huge security hole, and most programs don't use it anyway.
-You should have no problems running Chromium or Firefox.
+You should have no problems running Chromium or Firefox. This feature is available only on Ubuntu kernels.
 
 .TP
 To enable AppArmor confinement on top of your current Firejail security features, pass \fB\-\-apparmor\fR flag to Firejail command line. You can also include \fBapparmor\fR command in a Firejail profile file. Example:

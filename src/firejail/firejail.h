@@ -249,6 +249,7 @@ typedef struct config_t {
 	long long unsigned rlimit_nproc;
 	long long unsigned rlimit_fsize;
 	long long unsigned rlimit_sigpending;
+	long long unsigned rlimit_as;
 
 	// cpu affinity, nice and control groups
 	uint32_t cpus;
@@ -324,6 +325,7 @@ extern int arg_rlimit_nofile;	// rlimit nofile
 extern int arg_rlimit_nproc;	// rlimit nproc
 extern int arg_rlimit_fsize;	// rlimit fsize
 extern int arg_rlimit_sigpending;// rlimit sigpending
+extern int arg_rlimit_as;	//rlimit as
 extern int arg_nogroups;	// disable supplementary groups
 extern int arg_nonewprivs;	// set the NO_NEW_PRIVS prctl
 extern int arg_noroot;		// create a new user namespace and disable root user

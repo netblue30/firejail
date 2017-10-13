@@ -240,7 +240,7 @@ static void globbing(char *fname, FILE *fplist) {
 		size_t j;
 		for (j = 0; j < globbuf.gl_pathc; j++) {
 			assert(globbuf.gl_pathv[j]);
-			// testing for GLOB_NOCHECK - no pattern mached returns the origingal pattern
+			// testing for GLOB_NOCHECK - no pattern matched returns the original pattern
 			if (strcmp(globbuf.gl_pathv[j], pattern) == 0)
 				continue;
 

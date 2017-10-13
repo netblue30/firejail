@@ -41,7 +41,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin google-earth,sh,bash,dash,grep,sed,ls,dirname
+private-bin google-earth,sh,bash,grep,sed,ls,dirname
 private-dev
 
 noexec ${HOME}

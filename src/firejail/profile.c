@@ -925,7 +925,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 
 			// check name
-			invalid_filename(subdirname);
+			invalid_filename(subdirname, 0); // no globbing
 			if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
 				fprintf(stderr, "Error: invalid overlay name\n");
 				exit(1);
@@ -993,8 +993,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 
 			// check directories
-			invalid_filename(dname1);
-			invalid_filename(dname2);
+			invalid_filename(dname1, 0); // no globbing
+			invalid_filename(dname2, 0); // no globbing
 			if (strstr(dname1, "..") || strstr(dname2, "..")) {
 				fprintf(stderr, "Error: invalid file name.\n");
 				exit(1);
@@ -1118,7 +1118,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	// some characters just don't belong in filenames
-	invalid_filename(ptr);
+	invalid_filename(ptr, 1); // globbing
 	if (strstr(ptr, "..")) {
 		if (lineno == 0)
 			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
@@ -1165,7 +1165,7 @@ void profile_read(const char *fname) {
 	}
 
 	// check file
-	invalid_filename(fname);
+	invalid_filename(fname, 0); // no globbing
 	if (strlen(fname) == 0 || is_dir(fname)) {
 		fprintf(stderr, "Error: invalid profile file\n");
 		exit(1);

@@ -45,7 +45,7 @@ void appimage_set(const char *appimage) {
 
 #ifdef LOOP_CTL_GET_FREE
 	// check appimage file
-	invalid_filename(appimage);
+	invalid_filename(appimage, 0); // no globbing
 	if (access(appimage, R_OK) == -1) {
 		fprintf(stderr, "Error: cannot access AppImage file\n");
 		exit(1);

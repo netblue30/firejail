@@ -72,7 +72,7 @@ errout:
 void set_cgroup(const char *path) {
 	EUID_ASSERT();
 
-	invalid_filename(path);
+	invalid_filename(path, 0); // no globbing
 
 	// path starts with /sys/fs/cgroup
 	if (strncmp(path, "/sys/fs/cgroup", 14) != 0)

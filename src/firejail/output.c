@@ -48,7 +48,7 @@ void check_output(int argc, char **argv) {
 	drop_privs(0);
 	char *outfile = argv[outindex];
 	outfile += (enable_stderr)? 16:9;
-	invalid_filename(outfile);
+	invalid_filename(outfile, 0); // no globbing
 
 	// do not accept directories, links, and files with ".."
 	if (strstr(outfile, "..") || is_link(outfile) || is_dir(outfile)) {

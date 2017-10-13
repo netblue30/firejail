@@ -129,7 +129,7 @@ void fs_resolvconf(void) {
 
 char *fs_check_hosts_file(const char *fname) {
 	assert(fname);
-	invalid_filename(fname);
+	invalid_filename(fname, 0); // no globbing
 	char *rv = expand_home(fname, cfg.homedir);
 
 	// no a link

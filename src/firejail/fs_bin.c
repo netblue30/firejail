@@ -153,7 +153,7 @@ static void duplicate(char *fname, FILE *fplist) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
-	invalid_filename(fname);
+	invalid_filename(fname, 0); // no globbing
 
 	char *full_path;
 	if (*fname == '/') {

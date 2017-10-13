@@ -103,7 +103,7 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
-	invalid_filename(fname);
+	invalid_filename(fname, 0); // no globbing
 
 	char *src;
 	if (asprintf(&src,  "%s/%s", private_dir, fname) == -1)

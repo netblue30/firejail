@@ -325,7 +325,7 @@ void fs_private(void) {
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void) {
 	EUID_ASSERT();
-	invalid_filename(cfg.home_private);
+	invalid_filename(cfg.home_private, 0); // no globbing
 
 	// Expand the home directory
 	char *tmp = expand_home(cfg.home_private, cfg.homedir);
@@ -367,7 +367,7 @@ static char *check_dir_or_file(const char *name) {
 	assert(name);
 
 	// basic checks
-	invalid_filename(name);
+	invalid_filename(name, 0); // no globbing
 	if (arg_debug)
 		printf("Private home: checking %s\n", name);
 

@@ -747,7 +747,7 @@ uid_t pid_get_uid(pid_t pid) {
 }
 
 
-void invalid_filename(const char *fname) {
+void invalid_filename(const char *fname, int globbing) {
 //	EUID_ASSERT();
 	assert(fname);
 	const char *ptr = fname;
@@ -763,10 +763,19 @@ void invalid_filename(const char *fname) {
 		return;
 
 	int len = strlen(ptr);
-	// file globbing ('*') is allowed
-	if (strcspn(ptr, "\\&!?\"'<>%^(){}[];,") != (size_t)len) {
-		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
-		exit(1);
+	
+	if (globbing) {
+		// file globbing ('*?[]') is allowed
+		if (strcspn(ptr, "\\&!\"'<>%^(){};,") != (size_t)len) {
+			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
+			exit(1);
+		}
+	}
+	else {
+		if (strcspn(ptr, "\\&!?\"'<>%^(){};,*[]") != (size_t)len) {
+			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
+			exit(1);
+		}
 	}
 }
 

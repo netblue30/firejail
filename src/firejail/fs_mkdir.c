@@ -59,7 +59,7 @@ void fs_mkdir(const char *name) {
 	EUID_ASSERT();
 
 	// check directory name
-	invalid_filename(name);
+	invalid_filename(name, 0); // no globbing
 	char *expanded = expand_home(name, cfg.homedir);
 	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0 &&
 	    strncmp(expanded, "/tmp", 4) != 0) {
@@ -99,7 +99,7 @@ void fs_mkfile(const char *name) {
 	EUID_ASSERT();
 
 	// check file name
-	invalid_filename(name);
+	invalid_filename(name, 0); // no globbing
 	char *expanded = expand_home(name, cfg.homedir);
 	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0 &&
 	    strncmp(expanded, "/tmp", 4) != 0) {

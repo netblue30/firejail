@@ -26,7 +26,7 @@ protocol unix
 seccomp
 shell none
 
-# private-bin sdat2img,env,python,python3,python3.6
+# private-bin sdat2img,env,python*
 private-dev
 
 noexec ${HOME}

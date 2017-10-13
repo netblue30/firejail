@@ -30,6 +30,6 @@ seccomp
 shell none
 
 # deluge is using python on Debian
-# private-bin deluge,sh,python,uname
+# private-bin deluge,sh,python*,uname
 private-dev
 private-tmp

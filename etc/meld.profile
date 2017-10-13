@@ -26,7 +26,7 @@ protocol unix
 seccomp
 shell none
 
-# private-bin meld,python*
+private-bin meld,python*
 private-dev
 private-tmp
 

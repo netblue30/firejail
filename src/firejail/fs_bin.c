@@ -248,6 +248,7 @@ static void globbing(char *fname, FILE *fplist) {
 		}
 
 		globfree(&globbuf);
+		free(pattern);
 		i++;
 	}
 }

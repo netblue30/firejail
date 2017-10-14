@@ -41,6 +41,11 @@ static void copy_file(const char *srcname, const char *destname, mode_t mode, ui
 	assert(destname);
 	mode &= 07777;
 
+	// don't copy the file if it is already there
+	struct stat s;
+	if (stat(destname, &s) == 0)
+		return;
+
 	// open source
 	int src = open(srcname, O_RDONLY);
 	if (src < 0) {
@@ -113,10 +118,18 @@ void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid,
 	(void) mode;
 	(void) uid;
 	(void) gid;
+
+	// if the link is already there, don't create it
+	struct stat s;
+	if (stat(linkpath, &s) == 0)
+	       return;	
+
 	char *rp = realpath(target, NULL);
 	if (rp) {
-		if (symlink(rp, linkpath) == -1)
+		if (symlink(rp, linkpath) == -1) {
+			free(rp);
 			goto errout;
+		}
 		free(rp);
 	}
 	else
@@ -127,6 +140,7 @@ errout:
 	if (!arg_quiet)
 		fprintf(stderr, "Warning fcopy: cannot create symbolic link %s\n", target);
 }
+
 
 
 static int first = 1;

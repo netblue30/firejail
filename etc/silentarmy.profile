@@ -28,7 +28,7 @@ shell none
 
 disable-mnt
 private
-# private-bin silentarmy,sa-solver,python*
+private-bin silentarmy,sa-solver,python*
 private-dev
 private-opt none
 private-tmp

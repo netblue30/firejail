@@ -38,7 +38,7 @@ seccomp
 shell none
 
 disable-mnt
-# private-bin python2.7 gajim
+private-bin python2.7,gajim
 private-dev
 # private-etc fonts
 # private-tmp

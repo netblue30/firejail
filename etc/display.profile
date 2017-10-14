@@ -26,7 +26,7 @@ seccomp
 shell none
 # x11 xorg - problems on kubuntu 17.04
 
-# private-bin display - requires python
+private-bin display,python*
 private-dev
 # private-etc none - on Debian-based systems display is a symlink in /etc/alternatives
 private-tmp

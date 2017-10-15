@@ -71,4 +71,16 @@ void set_rlimits(void) {
 		if (arg_debug)
 			printf("Config rlimit: maximum number of signals pending %llu\n", cfg.rlimit_sigpending);
 	}
+
+	if (arg_rlimit_as) {
+		rl.rlim_cur = (rlim_t) cfg.rlimit_as;
+		rl.rlim_max = (rlim_t) cfg.rlimit_as;
+#ifdef HAVE_GCOV
+		__gcov_dump();
+#endif
+        if (setrlimit(RLIMIT_AS, &rl) == -1)
+			errExit("setrlimit");
+		if (arg_debug)
+			printf("Config rlimit: maximum virtual memory %llu\n", cfg.rlimit_as);
+	}
 }

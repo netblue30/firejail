@@ -1036,6 +1036,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			sscanf(ptr + 18, "%llu", &cfg.rlimit_sigpending);
 			arg_rlimit_sigpending = 1;
 		}
+		else if (strncmp(ptr, "rlimit-as ", 10) == 0) {
+			check_unsigned(ptr + 10, "Error: invalid rlimit in profile file: ");
+			sscanf(ptr + 10, "%llu", &cfg.rlimit_as);
+			arg_rlimit_as = 1;
+		}
 		else {
 			fprintf(stderr, "Invalid rlimit option on line %d\n", lineno);
 			exit(1);

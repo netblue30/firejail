@@ -462,6 +462,8 @@ static void duplicate(char *name) {
 // 	set skel files,
 // 	restore .Xauthority
 void fs_private_home_list(void) {
+	timetrace_start();
+
 	char *homedir = cfg.homedir;
 	char *private_list = cfg.home_private_keep;
 	assert(homedir);
@@ -519,4 +521,8 @@ void fs_private_home_list(void) {
 		copy_xauthority();
 	if (aflag)
 		copy_asoundrc();
+
+	if (!arg_quiet)
+		fprintf(stderr, "Home directory installed in %0.2f ms\n", timetrace_end());
+
 }

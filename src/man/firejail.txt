@@ -1540,6 +1540,10 @@ $ firejail --read-only=~/test --read-write=~/test/a
 
 
 .TP
+\fB\-\-rlimit-as=number
+Set the maximum size of the process's virtual memory (address space) in bytes.
+
+.TP
 \fB\-\-rlimit-fsize=number
 Set the maximum file size that can be created by a process.
 .TP

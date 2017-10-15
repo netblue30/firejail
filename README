@@ -123,6 +123,8 @@ chiraag-nataraj (https://github.com/chiraag-nataraj)
 Christian Stadelmann (https://github.com/genodeftest)
 	- profile fixes
 	- evolution profile fix
+Clayton Williams (https://github.com/gosre)
+	- addition of RLIMIT_AS
 curiosity-seeker (https://github.com/curiosity-seeker)
 	- tightening unbound and dnscrypt-proxy profiles
 	- correct and tighten QuiteRss profile

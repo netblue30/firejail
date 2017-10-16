@@ -197,7 +197,6 @@
 /etc/firejail/luminance-hdr.profile
 /etc/firejail/lximage-qt.profile
 /etc/firejail/lxmusic.profile
-/etc/firejail/lxterminal.profile
 /etc/firejail/lynx.profile
 /etc/firejail/mate-calc.profile
 /etc/firejail/mate-calculator.profile

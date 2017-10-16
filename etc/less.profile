@@ -20,8 +20,9 @@ tracelog
 writable-var-log
 
 # The user can have a custom coloring scritps configured in ~/.lessfilter.
-# Enable private-bin if you are not using any filter.
+# Enable private-bin and private-lib if you are not using any filter.
 # private-bin less
+# private-lib
 private-dev
 
 memory-deny-write-execute

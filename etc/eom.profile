@@ -35,6 +35,7 @@ tracelog
 private-bin eom
 private-dev
 private-etc fonts
+private-lib
 private-tmp
 
 memory-deny-write-execute

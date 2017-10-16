@@ -140,7 +140,7 @@ Example:
 # firejail \-\-bind=/config/etc/passwd,/etc/passwd
 .TP
 \fB\-\-blacklist=dirname_or_filename
-Blacklist directory or file.
+Blacklist directory or file. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 
 .br
@@ -1009,7 +1009,7 @@ Example:
 $ firejail \-\-nodvd
 .TP
 \fB\-\-noexec=dirname_or_filename
-Remount directory or file noexec, nodev and nosuid.
+Remount directory or file noexec, nodev and nosuid. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 
 .br
@@ -1275,7 +1275,8 @@ $ firejail \-\-private-home=.mozilla firefox
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
 If no listed file is found, /bin directory will be empty.
 The same directory is also bind-mounted over /sbin, /usr/bin, /usr/sbin and /usr/local/bin.
-All modifications are discarded when the sandbox is closed.
+All modifications are discarded when the sandbox is closed. File globbing is supported,
+see \fBFILE GLOBBING\fR section for more details.
 .br
 
 .br
@@ -1505,7 +1506,7 @@ Put a file in sandbox container, see \fBFILE TRANSFER\fR section for more detail
 Turn off Firejail's output.
 .TP
 \fB\-\-read-only=dirname_or_filename
-Set directory or file read-only.
+Set directory or file read-only. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 
 .br
@@ -1526,7 +1527,8 @@ $ firejail --whitelist=~/work --read-only=~ --read-only=~/work
 .TP
 \fB\-\-read-write=dirname_or_filename
 Set directory or file read-write. Only files or directories belonging to the current user are allowed for
-this operation. Example:
+this operation. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
+Example:
 .br
 
 .br
@@ -1536,6 +1538,10 @@ $ touch ~/test/a
 .br
 $ firejail --read-only=~/test --read-write=~/test/a
 
+
+.TP
+\fB\-\-rlimit-as=number
+Set the maximum size of the process's virtual memory (address space) in bytes.
 
 .TP
 \fB\-\-rlimit-fsize=number
@@ -1833,6 +1839,7 @@ $ firejail \-\-shutdown=3272
 .TP
 \fB\-\-tmpfs=dirname
 Mount a tmpfs filesystem on directory dirname. This option is available only when running the sandbox as root.
+File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 
 .br
@@ -2233,6 +2240,40 @@ $ firejail --tree
 .RE
 
 We provide a tool that automates all this integration, please see \fBman 1 firecfg\fR for more details.
+
+.SH FILE GLOBBING
+.TP
+Globbing is the operation that expands a wildcard pattern into the list of pathnames matching the pattern. Matching is defined by:
+.br
+
+.br
+- '?' matches any character
+.br
+- '*' matches any string
+.br
+- '[' denotes a range of characters
+.br
+.TP
+The gobing feature is implemented using glibc glob command. For more information on the wildcard syntax see man 7 glob.
+.br
+
+.br
+.TP
+The following command line options are supported: \-\-blacklist, \-\-private-bin, \-\-noexec, \-\-read-only, \-\-read-write, and \-\-tmpfs.
+.br
+
+.br
+.TP
+Examples:
+.br
+
+.br
+$ firejail --private-bin=sh,bash,python*
+.br
+$ firejail --blacklist=~/dir[1234]
+.br
+$ firejail --read-only=~/dir[1-4]
+.br
 
 .SH APPARMOR
 .TP

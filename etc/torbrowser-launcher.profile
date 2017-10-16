@@ -32,7 +32,7 @@ seccomp
 shell none
 tracelog
 
-private-bin bash,cp,dash,dirname,env,expr,file,getconf,gpg,grep,id,ln,mkdir,python,python2.7,readlink,rm,sed,sh,tail,test,tor-browser-en,torbrowser-launcher
+private-bin bash,cp,dirname,env,expr,file,getconf,gpg,grep,id,ln,mkdir,python*,readlink,rm,sed,sh,tail,test,tor-browser-en,torbrowser-launcher
 private-dev
 private-etc fonts
 private-tmp

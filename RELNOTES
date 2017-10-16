@@ -3,11 +3,11 @@ firejail (0.9.51) baseline; urgency=low
   * enhancement: support Firejail user config directory in firecfg
   * enhancement: disable DBus activation in firecfg
   * enhancement; enumerate root directories in apparmor profile
-  * feature: systemd-resolvd integration
+  * feature: systemd-resolved integration
   * feature: whitelisting /var directory in most profiles
   * feature: GTK2, GTK3 and Qt4 private-lib support
   * feature: test deployment of private-lib for the following
-    applications: evince, galculator, gnome-calculator, hexchat,
+    applications: evince, galculator, gnome-calculator,
     leafpad, mousepad, transmission-gtk, xcalc, xmr-stak-cpu,
     atril, mate-color-select
   * feature: --writable-run-user

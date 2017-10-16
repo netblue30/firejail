@@ -33,7 +33,7 @@ shell none
 tracelog
 
 disable-mnt
-# private-bin arm,tor,sh,bash,dash,python2,python2.7,ps,lsof,ldconfig
+private-bin arm,tor,sh,bash,python*,ps,lsof,ldconfig
 private-dev
 private-etc tor,passwd
 private-tmp

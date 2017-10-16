@@ -76,6 +76,11 @@ read-only ${HOME}/.kde4/share/kde4/services
 read-only ${HOME}/.kde4/share/config/kdeglobals
 read-only ${HOME}/.local/share/kservices5
 
+# kdeinit sockets
+blacklist /run/user/*/kdeinit*
+blacklist /run/user/*/ksocket-*/kdeinit*
+blacklist /tmp/ksocket-*/kdeinit*
+
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd

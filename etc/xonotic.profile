@@ -29,7 +29,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin bash,blind-id,darkplaces-glx,darkplaces-sdl,dash,dirname,grep,ldd,netstat,ps,readlink,sh,uname,xonotic,xonotic-glx,xonotic-linux32-dedicated,xonotic-linux32-glx,xonotic-linux32-sdl,xonotic-linux64-dedicated,xonotic-linux64-glx,xonotic-linux64-sdl,xonotic-sdl
+private-bin bash,blind-id,darkplaces-glx,darkplaces-sdl,dirname,grep,ldd,netstat,ps,readlink,sh,uname,xonotic,xonotic-glx,xonotic-linux32-dedicated,xonotic-linux32-glx,xonotic-linux32-sdl,xonotic-linux64-dedicated,xonotic-linux64-glx,xonotic-linux64-sdl,xonotic-sdl
 private-dev
 # private-etc breaks audio on some distros
 #private-etc asound.conf,ca-certificates,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pulse,resolv.conf,ssl

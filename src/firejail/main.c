@@ -71,7 +71,7 @@ int arg_rlimit_nofile = 0;			// rlimit nofile
 int arg_rlimit_nproc = 0;			// rlimit nproc
 int arg_rlimit_fsize = 0;				// rlimit fsize
 int arg_rlimit_sigpending = 0;			// rlimit fsize
-int arg_rlimit_as = 0;					// rlimit as
+int arg_rlimit_as = 0;				// rlimit as
 int arg_nogroups = 0;				// disable supplementary groups
 int arg_nonewprivs = 0;			// set the NO_NEW_PRIVS prctl
 int arg_noroot = 0;				// create a new user namespace and disable root user
@@ -572,7 +572,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				exit(1);
 			}
 			char *path = argv[i + 1];
-			 invalid_filename(path);
+			 invalid_filename(path, 0); // no globbing
 			 if (strstr(path, "..")) {
 			 	fprintf(stderr, "Error: invalid file name %s\n", path);
 			 	exit(1);
@@ -596,13 +596,13 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				exit(1);
 			}
 			char *path1 = argv[i + 1];
-			 invalid_filename(path1);
+			 invalid_filename(path1, 0); // no globbing
 			 if (strstr(path1, "..")) {
 			 	fprintf(stderr, "Error: invalid file name %s\n", path1);
 			 	exit(1);
 			 }
 			char *path2 = argv[i + 2];
-			 invalid_filename(path2);
+			 invalid_filename(path2, 0); // no globbing
 			 if (strstr(path2, "..")) {
 			 	fprintf(stderr, "Error: invalid file name %s\n", path2);
 			 	exit(1);
@@ -626,7 +626,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				exit(1);
 			}
 			char *path = argv[i + 1];
-			 invalid_filename(path);
+			 invalid_filename(path, 0); // no globbing
 			 if (strstr(path, "..")) {
 			 	fprintf(stderr, "Error: invalid file name %s\n", path);
 			 	exit(1);
@@ -1271,6 +1271,11 @@ int main(int argc, char **argv) {
 			sscanf(argv[i] + 20, "%llu", &cfg.rlimit_sigpending);
 			arg_rlimit_sigpending = 1;
 		}
+		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
+			check_unsigned(argv[i] + 12, "Error: invalid rlimit");
+			sscanf(argv[i] + 12, "%llu", &cfg.rlimit_as);
+			arg_rlimit_as = 1;
+		}
 		else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)
 			arg_ipc = 1;
 		else if (strncmp(argv[i], "--cpu=", 6) == 0)
@@ -1434,7 +1439,7 @@ int main(int argc, char **argv) {
 				}
 
 				// check name
-				invalid_filename(subdirname);
+				invalid_filename(subdirname, 0); // no globbing
 				if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
 					fprintf(stderr, "Error: invalid overlay name\n");
 					exit(1);
@@ -1483,7 +1488,7 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			custom_profile_dir = expand_home(argv[i] + 15, cfg.homedir);
-			invalid_filename(custom_profile_dir);
+			invalid_filename(custom_profile_dir, 0); // no globbing
 			if (!is_dir(custom_profile_dir) || is_link(custom_profile_dir) || strstr(custom_profile_dir, "..")) {
 				fprintf(stderr, "Error: invalid profile path\n");
 				exit(1);
@@ -1542,7 +1547,7 @@ int main(int argc, char **argv) {
 				}
 
 
-				invalid_filename(argv[i] + 9);
+				invalid_filename(argv[i] + 9, 0); // no globbing
 
 				// extract chroot dirname
 				cfg.chrootdir = argv[i] + 9;
@@ -2193,7 +2198,7 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --shell=none was already specified.\n");
 				return 1;
 			}
-			invalid_filename(argv[i] + 8);
+			invalid_filename(argv[i] + 8, 0); // no globbing
 
 			if (cfg.shell) {
 				fprintf(stderr, "Error: only one user shell can be specified\n");

@@ -23,6 +23,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <glob.h>
 
 static char *paths[] = {
 	"/usr/local/bin",
@@ -146,11 +147,13 @@ errexit:
 }
 
 static void duplicate(char *fname, FILE *fplist) {
+	assert(fname);
+
 	if (*fname == '~' || strstr(fname, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
-	invalid_filename(fname);
+	invalid_filename(fname, 0); // no globbing
 
 	char *full_path;
 	if (*fname == '/') {
@@ -203,6 +206,52 @@ static void duplicate(char *fname, FILE *fplist) {
 	free(full_path);
 }
 
+static void globbing(char *fname, FILE *fplist) {
+	assert(fname);
+
+	// go directly to duplicate() if no globbing char is present - see man 7 glob
+	if (strrchr(fname, '*') == NULL &&
+	    strrchr(fname, '[') == NULL &&
+	    strrchr(fname, '?') == NULL)
+		return duplicate(fname, fplist);
+
+	// loop through paths[]
+	int i = 0;
+	while (paths[i]) {
+		// private-bin-no-local can be disabled in /etc/firejail/firejail.config
+		if (checkcfg(CFG_PRIVATE_BIN_NO_LOCAL) && strstr(paths[i], "local/")) {
+			i++;
+			continue;
+		}
+
+		// check file
+		char *pattern;
+		if (asprintf(&pattern, "%s/%s", paths[i], fname) == -1)
+			errExit("asprintf");
+
+		// globbing
+		glob_t globbuf;
+		int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT | GLOB_PERIOD, NULL, &globbuf);
+		if (globerr) {
+			fprintf(stderr, "Error: failed to glob private-bin pattern %s\n", pattern);
+			exit(1);
+		}
+
+		size_t j;
+		for (j = 0; j < globbuf.gl_pathc; j++) {
+			assert(globbuf.gl_pathv[j]);
+			// testing for GLOB_NOCHECK - no pattern matched returns the original pattern
+			if (strcmp(globbuf.gl_pathv[j], pattern) == 0)
+				continue;
+
+			duplicate(globbuf.gl_pathv[j], fplist);
+		}
+
+		globfree(&globbuf);
+		free(pattern);
+		i++;
+	}
+}
 
 void fs_private_bin_list(void) {
 	char *private_list = cfg.bin_private_keep;
@@ -228,9 +277,9 @@ void fs_private_bin_list(void) {
 	}
 
 	char *ptr = strtok(dlist, ",");
-	duplicate(ptr, fplist);
+	globbing(ptr, fplist);
 	while ((ptr = strtok(NULL, ",")) != NULL)
-		duplicate(ptr, fplist);
+		globbing(ptr, fplist);
 	free(dlist);
 	fs_logger_print();
 	if (fplist)

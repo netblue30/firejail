@@ -27,7 +27,7 @@ seccomp
 shell none
 tracelog
 
-# private-bin gnome-music,python3
+private-bin gnome-music,python*
 private-dev
 # private-etc fonts
 private-tmp

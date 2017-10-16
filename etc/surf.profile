@@ -26,7 +26,7 @@ seccomp
 shell none
 tracelog
 
-private-bin ls,surf,sh,dash,bash,curl,dmenu,printf,sed,sleep,st,stterm,xargs,xprop
+private-bin ls,surf,sh,bash,curl,dmenu,printf,sed,sleep,st,stterm,xargs,xprop
 private-dev
 private-etc passwd,group,hosts,resolv.conf,fonts,ssl
 private-tmp

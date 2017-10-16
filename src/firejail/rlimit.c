@@ -78,7 +78,7 @@ void set_rlimits(void) {
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-        if (setrlimit(RLIMIT_AS, &rl) == -1)
+		if (setrlimit(RLIMIT_AS, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
 			printf("Config rlimit: maximum virtual memory %llu\n", cfg.rlimit_as);

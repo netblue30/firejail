@@ -103,7 +103,7 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
-	invalid_filename(fname);
+	invalid_filename(fname, 0); // no globbing
 
 	char *src;
 	if (asprintf(&src,  "%s/%s", private_dir, fname) == -1)
@@ -140,6 +140,8 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	assert(private_run_dir);
 	assert(private_list);
 
+	timetrace_start();
+
 	// create /run/firejail/mnt/etc directory
 	mkdir_attr(private_run_dir, 0755, 0, 0);
 	fs_logger2("tmpfs", private_dir);
@@ -173,4 +175,7 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);
+
+	if (!arg_quiet)
+		fprintf(stderr, "Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }

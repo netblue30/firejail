@@ -45,7 +45,7 @@ static char *client_filter =
 
 void check_netfilter_file(const char *fname) {
 	EUID_ASSERT();
-	invalid_filename(fname);
+	invalid_filename(fname, 0); // no globbing
 
 	if (is_dir(fname) || is_link(fname) || strstr(fname, "..") || access(fname, R_OK )) {
 		fprintf(stderr, "Error: invalid network filter file %s\n", fname);

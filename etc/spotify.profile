@@ -40,7 +40,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin spotify,bash,sh,dash
+private-bin spotify,bash,sh
 private-dev
 private-etc fonts,machine-id,pulse,resolv.conf
 private-opt spotify

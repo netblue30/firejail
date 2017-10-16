@@ -27,6 +27,10 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.4\n";exit}
+	"Max address space         123456789012         123456789012"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.5\n";exit}
 	"Max pending signals       200                  200"
 }
 after 100

@@ -31,4 +31,5 @@ tracelog
 private-bin gpicview
 private-dev
 private-etc fonts
+private-lib
 private-tmp

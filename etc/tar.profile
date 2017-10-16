@@ -23,5 +23,6 @@ tracelog
 private-bin sh,bash,tar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop
 private-dev
 private-etc passwd,group,localtime
+private-lib
 
 include /etc/firejail/default.profile

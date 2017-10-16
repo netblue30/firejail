@@ -34,6 +34,7 @@ shell none
 private-bin eog
 private-dev
 private-etc fonts
+private-lib
 private-tmp
 
 memory-deny-write-execute

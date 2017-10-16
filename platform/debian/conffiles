@@ -415,3 +415,8 @@
 /etc/firejail/xmr-stak-cpu.profile
 /etc/firejail/zart.profile
 /etc/firejail/xcalc.profile
+/etc/firejail/aosp.profile
+/etc/firejail/gnome-ring.profile
+/etc/firejail/pdfmod.profile
+/etc/firejail/signal-desktop.profile
+/etc/firejail/zaproxy.profile

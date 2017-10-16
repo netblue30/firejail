@@ -10,8 +10,6 @@ script:
   - ( sudo dpkg -P firejail )
   - ( cd firejail ; ./configure --prefix=/usr --enable-git-install && make && sudo make install && make test-travis )
   - ( cd firejail ; sudo make install-strip DESTDIR=$(readlink -f appdir) )
-  - ( cd firejail ; ./configure --prefix=/usr --enable-git-install && make && sudo make install && make test-travis )
-  - ( cd firejail ; sudo make install-strip DESTDIR=$(readlink -f appdir) )
   # If successful, build release tarball
   - ( cd appdir/ ; tar cfvj ../firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2 . )
   - curl --upload-file ./firejail-*.tar.bz2 https://transfer.sh/firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2

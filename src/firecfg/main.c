@@ -91,7 +91,8 @@ static void list(void) {
 	free(firejail_exec);
 }
 
-static void clear(void) {
+static void clean(void) {
+	printf("Removing all firejail symlinks:\n");
 	if (getuid() != 0) {
 		fprintf(stderr, "Error: you need to be root to run this command\n");
 		exit(1);
@@ -120,8 +121,11 @@ static void clear(void) {
 			char* fname = realpath(fullname, NULL);
 			if (fname) {
 				if (strcmp(fname, firejail_exec) == 0) {
-					printf("%s removed\n", fullname);
+					char *ptr = strrchr(fullname, '/');
+					assert(ptr);
+					ptr++;
 					unlink(fullname);
+					printf("   %s removed\n", ptr);
 				}
 				free(fname);
 			}
@@ -131,6 +135,7 @@ static void clear(void) {
 
 	closedir(dir);
 	free(firejail_exec);
+	printf("\n");
 }
 
 static void set_file(const char *name, const char *firejail_exec) {
@@ -283,7 +288,7 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else if (strcmp(argv[i], "--clean") == 0) {
-			clear();
+			clean();
 			return 0;
 		}
 		else if (strcmp(argv[i], "--fix") == 0) {
@@ -340,6 +345,7 @@ int main(int argc, char **argv) {
 			}
 		}
 	}
+	clean();
 	set_links_firecfg();
 
 

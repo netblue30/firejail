@@ -413,7 +413,7 @@ void fs_whitelist(void) {
 				else if (strncmp(new_name, "/opt/", 5) == 0)
 					opt_dir = 1;
 				else if (strncmp(new_name, "/srv/", 5) == 0)
-					opt_dir = 1;
+					srv_dir = 1;
 			}
 
 			entry->data = EMPTY_STRING;

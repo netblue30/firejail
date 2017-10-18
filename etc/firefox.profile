@@ -76,7 +76,10 @@ tracelog
 # firefox requires a shell to launch on Arch.
 # private-bin firefox,which,sh,dbus-launch,dbus-send,env,bash
 private-dev
-private-etc iceweasel,ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,firefox,mime.types,mailcap,asound.conf,pulse
+
+# private-etc below works fine on most distributions. There are some problems on CentOS.
+# private-etc iceweasel,ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,firefox,mime.types,mailcap,asound.conf,pulse
+
 private-tmp
 
 noexec ${HOME}

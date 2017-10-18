@@ -6,7 +6,7 @@ Installed-Size: 2024
 Depends: libc6
 Suggests: python, python3
 Section: admin
-Priority: extra
+Priority: optional
 Homepage: http://github.com/netblue30/firejail
 Description: Linux namepaces sandbox program.
  Firejail  is  a  SUID sandbox program that reduces the risk of security

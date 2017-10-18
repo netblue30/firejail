@@ -39,7 +39,7 @@ sed "s/FIREJAILVER/$2/g"  platform/debian/control > $DEBIAN_CTRL_DIR/control
 mkdir -p $INSTALL_DIR/usr/share/lintian/overrides/
 cp platform/debian/firejail.lintian-overrides $INSTALL_DIR/usr/share/lintian/overrides/firejail
 
-cp platform/debian/conffiles $DEBIAN_CTRL_DIR/.
+find $INSTALL_DIR/etc -type f | sed "s,^$INSTALL_DIR,," | LC_ALL=C sort > $DEBIAN_CTRL_DIR/conffiles
 find $INSTALL_DIR  -type d | xargs chmod 755
 cd $CODE_DIR
 fakeroot dpkg-deb --build debian

@@ -14,6 +14,7 @@ include /etc/firejail/disable-programs.inc
 mkdir ~/.etr
 whitelist ~/.etr
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 net none

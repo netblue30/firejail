@@ -14,6 +14,7 @@ include /etc/firejail/disable-programs.inc
 mkdir ~/.local/share/supertux2
 whitelist ~/.local/share/supertux2
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 net none

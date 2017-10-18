@@ -23,3 +23,5 @@ notv
 novideo
 protocol unix,inet,inet6
 seccomp
+
+private-dev

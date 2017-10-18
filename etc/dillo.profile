@@ -18,6 +18,7 @@ whitelist ${DOWNLOADS}
 whitelist ~/.dillo
 whitelist ~/.fltk
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter
@@ -28,3 +29,6 @@ notv
 protocol unix,inet,inet6
 seccomp
 tracelog
+
+private-dev
+private-tmp

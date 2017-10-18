@@ -17,6 +17,7 @@ include /etc/firejail/disable-programs.inc
 whitelist ~/.warzone2100-3.1
 whitelist ~/.warzone2100-3.2
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

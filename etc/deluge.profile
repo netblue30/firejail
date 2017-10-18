@@ -16,6 +16,7 @@ mkdir ${HOME}/.config/deluge
 whitelist  ${DOWNLOADS}
 whitelist ${HOME}/.config/deluge
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

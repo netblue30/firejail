@@ -14,6 +14,7 @@ include /etc/firejail/disable-programs.inc
 mkdir ~/.frozen-bubble
 whitelist ~/.frozen-bubble
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 net none

@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 noblacklist ~/.config/gwenviewrc
 noblacklist ~/.config/org.kde.gwenviewrc
+noblacklist ~/.gimp*
 noblacklist ~/.kde/share/apps/gwenview
 noblacklist ~/.kde/share/config/gwenviewrc
 noblacklist ~/.kde4/share/apps/gwenview
@@ -33,7 +34,7 @@ seccomp
 shell none
 tracelog
 
-private-bin gwenview,kbuildsycoca4,gimp,gimp-2.8
+private-bin gwenview,kbuildsycoca4,gimp,gimp-2.*
 private-dev
 # private-etc X11
 

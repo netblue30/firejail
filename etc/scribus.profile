@@ -39,8 +39,9 @@ notv
 novideo
 protocol unix
 seccomp
+shell none
 tracelog
 
-#private-bin scribus,gs
+# private-bin scribus,gs,gimp,gimp-2.*
 private-dev
-# private-tmp
+private-tmp

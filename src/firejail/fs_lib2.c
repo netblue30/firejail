@@ -184,6 +184,13 @@ SysLib syslibs[] = {
 		"",	// dir2
 		"GIRepository"	// message
 	},
+	{ // GIO
+		"libgio",	// library
+		0, 0,	// len and found flag
+		"gio",	// dir1
+		"",	// dir2
+		"GIO"	// message
+	},
 	{ // Enchant speller
 		"libenchant.so.",	// library
 		0, 0,	// len and found flag

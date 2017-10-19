@@ -29,5 +29,5 @@ tracelog
 
 private-bin mousepad
 private-dev
-private-lib gio
+private-lib
 private-tmp

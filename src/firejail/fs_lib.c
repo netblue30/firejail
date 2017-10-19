@@ -274,10 +274,9 @@ void fs_private_lib(void) {
 		if (lib) {
 			if (is_dir(lib))
 				fslib_copy_dir(lib);
-			else {
-				fslib_duplicate(lib);
+			else
 				fslib_copy_libs(lib);
-			}
+			fslib_copy_libs(lib);
 			free(lib);
 		}
 
@@ -286,10 +285,9 @@ void fs_private_lib(void) {
 			if (lib) {
 				if (is_dir(lib))
 					fslib_copy_dir(lib);
-				else {
+				else
 					fslib_duplicate(lib);
-					fslib_copy_libs(lib);
-				}
+				fslib_copy_libs(lib);
 				free(lib);
 			}
 		}

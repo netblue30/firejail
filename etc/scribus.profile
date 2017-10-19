@@ -42,6 +42,6 @@ seccomp
 shell none
 tracelog
 
-# private-bin scribus,gs,gimp,gimp-2.*
+# private-bin scribus,gs,gimp*
 private-dev
 private-tmp

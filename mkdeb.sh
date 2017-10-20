@@ -44,16 +44,6 @@ find $INSTALL_DIR  -type d | xargs chmod 755
 cd $CODE_DIR
 fakeroot dpkg-deb --build debian
 lintian --no-tag-display-limit debian.deb
-arch=$( getconf LONG_BIT )
-if [ $arch = 64 ]
-then
-	mv debian.deb ../firejail_$2_1_amd64.deb
-elif [ $arch = 32 ]
-then
-	mv debian.deb ../firejail_$2_1_i386.deb
-# Fallback to 64-bit package.
-else
-	mv debian.deb ../firejail_$2_1_amd64.deb
-fi
+mv debian.deb ../firejail_$2_1_$(dpkg-architecture -qDEB_HOST_ARCH).deb
 cd ..
 rm -fr $CODE_DIR

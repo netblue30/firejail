@@ -31,6 +31,7 @@ include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -38,6 +39,7 @@ notv
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
+tracelog
 
 disable-mnt
 private-bin spotify,bash,sh

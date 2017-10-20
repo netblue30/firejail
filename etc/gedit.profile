@@ -36,6 +36,7 @@ tracelog
 # private-bin gedit
 private-dev
 # private-etc fonts
+private-lib gedit
 private-tmp
 
 noexec ${HOME}

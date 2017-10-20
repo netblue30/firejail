@@ -33,6 +33,7 @@ tracelog
 private-bin pluma
 private-dev
 # private-etc fonts
+private-lib pluma
 private-tmp
 
 memory-deny-write-execute

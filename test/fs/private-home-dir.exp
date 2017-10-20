@@ -74,32 +74,6 @@ sleep 1
 
 send -- "firejail --debug --noprofile --blacklist=~/test_dir_2 --private=~/_firejail_test_dir_\r"
 expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"Not blacklist"
-}
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"test_dir_2"
-}
-expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
-	"Child process initialized"
-}
-
-sleep 1
-
-send -- "find ~\r"
-expect {
-	timeout {puts "TESTING ERROR 9\n";exit}
-	"testfile"
-}
-after 100
-
-send -- "exit\r"
-sleep 1
-
-send -- "firejail --debug --noprofile --allow-private-blacklist --blacklist=~/test_dir_2 --private=~/_firejail_test_dir_\r"
-expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
 	"Disable"
 }

@@ -1600,7 +1600,8 @@ int main(int argc, char **argv) {
 			arg_machineid = 1;
 		}
 		else if (strcmp(argv[i], "--allow-private-blacklist") == 0) {
-			arg_allow_private_blacklist = 1;
+			if (!arg_quiet)
+				fprintf(stderr, "--allow-private-blacklist was deprecated\n");
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;

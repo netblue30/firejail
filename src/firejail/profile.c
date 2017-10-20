@@ -242,7 +242,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "allow-private-blacklist") == 0) {
-		arg_allow_private_blacklist = 1;
+		if (!arg_quiet)
+			fprintf(stderr, "--allow-private-blacklist was deprecated\n");
 		return 0;
 	}
 	else if (strcmp(ptr, "netfilter") == 0) {

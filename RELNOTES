@@ -1,5 +1,8 @@
 firejail (0.9.51) baseline; urgency=low
   * work in progress!
+  * modif: --allow-private-blacklists was deprecated; blacklisting,
+    read-only, read-write, tmpfs and noexec are allowed in
+    private home directories
   * enhancement: support Firejail user config directory in firecfg
   * enhancement: disable DBus activation in firecfg
   * enhancement; enumerate root directories in apparmor profile

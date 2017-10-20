@@ -298,7 +298,6 @@ void clear_run_files(pid_t pid);
 
 extern int arg_private;		// mount private /home
 extern int arg_private_template; // private /home template
-extern int arg_allow_private_blacklist;  // blacklist things in private directories
 extern int arg_debug;		// print debug messages
 extern int arg_debug_check_filename;		// print debug messages for filename checking
 extern int arg_debug_blacklists;	// print debug messages for blacklists

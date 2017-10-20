@@ -220,14 +220,6 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 			}
 		}
 
-		// We don't usually need to blacklist things in private home directories
-		if (okay_to_blacklist
-		 && cfg.homedir
-		 && arg_private
-		 && (!arg_allow_private_blacklist)
-		 && (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0))
-			okay_to_blacklist = false;
-
 		if (okay_to_blacklist)
 			disable_file(op, path);
 		else if (arg_debug)

@@ -202,7 +202,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->tmp_dir) {
-		fname = path + 4; // strlen("/tmp")
+		fname = path + 5; // strlen("/tmp/")
 		if (*fname == '\0')
 			goto errexit;
 
@@ -210,7 +210,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->media_dir) {
-		fname = path + 6; // strlen("/media")
+		fname = path + 7; // strlen("/media/")
 		if (*fname == '\0')
 			goto errexit;
 
@@ -218,7 +218,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->mnt_dir) {
-		fname = path + 4; // strlen("/mnt")
+		fname = path + 5; // strlen("/mnt/")
 		if (*fname == '\0')
 			goto errexit;
 
@@ -226,7 +226,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->var_dir) {
-		fname = path + 4; // strlen("/var")
+		fname = path + 5; // strlen("/var/")
 		if (*fname == '\0')
 			goto errexit;
 
@@ -234,7 +234,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->dev_dir) {
-		fname = path + 4; // strlen("/dev")
+		fname = path + 5; // strlen("/dev/")
 		if (*fname == '\0')
 			goto errexit;
 
@@ -242,7 +242,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->opt_dir) {
-		fname = path + 4; // strlen("/opt")
+		fname = path + 5; // strlen("/opt/")
 		if (*fname == '\0')
 			goto errexit;
 
@@ -250,7 +250,7 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->srv_dir) {
-		fname = path + 4; // strlen("/srv")
+		fname = path + 5; // strlen("/srv/")
 		if (*fname == '\0')
 			goto errexit;
 
@@ -258,23 +258,31 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->etc_dir) {
-		fname = path + 4; // strlen("/etc")
+		fname = path + 5; // strlen("/etc/")
 		if (*fname == '\0')
 			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_ETC_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	else if (entry->share_dir) {
+		fname = path + 11; // strlen("/usr/share/")
+		if (*fname == '\0')
+			goto errexit;
+
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SHARE_DIR, fname) == -1)
+			errExit("asprintf");
+	}
 
 	// check if the file exists
+	assert(wfile);	
 	struct stat s;
-	if (wfile && stat(wfile, &s) == 0) {
+	if (stat(wfile, &s) == 0) {
 		if (arg_debug || arg_debug_whitelists)
 			printf("Whitelisting %s\n", path);
 	}
-	else {
+	else
 		return;
-	}
 
 	// create the path if necessary
 	mkpath(path, s.st_mode);
@@ -335,6 +343,7 @@ void fs_whitelist(void) {
 	int opt_dir = 0;		// /opt directory flag
 	int srv_dir = 0;                // /srv directory flag
 	int etc_dir = 0;                // /etc directory flag
+	int share_dir = 0;                // /usr/share directory flag
 
 	size_t nowhitelist_c = 0;
 	size_t nowhitelist_m = 32;
@@ -426,6 +435,8 @@ void fs_whitelist(void) {
 					srv_dir = 1;
 				else if (strncmp(new_name, "/etc/", 5) == 0)
 					etc_dir = 1;
+				else if (strncmp(new_name, "/usr/share/", 11) == 0)
+					share_dir = 1;
 			}
 
 			entry->data = EMPTY_STRING;
@@ -557,6 +568,13 @@ void fs_whitelist(void) {
 				if (strncmp(fname, "/etc/", 5) != 0)
 					goto errexit;
 			}
+		}
+		else if (strncmp(new_name, "/usr/share/", 11) == 0) {
+			entry->share_dir = 1;
+			share_dir = 1;
+			// both path and absolute path are under /etc
+			if (strncmp(fname, "/usr/share/", 11) != 0)
+				goto errexit;
 		}
 		else {
 			goto errexit;
@@ -764,6 +782,27 @@ void fs_whitelist(void) {
 			etc_dir = 0;
 	}
 
+	// /usr/share mountpoint
+	if (share_dir) {
+		// check if /usr/share directory exists
+		struct stat s;
+		if (stat("/usr/share", &s) == 0) {
+			// keep a copy of real /usr/share directory in RUN_WHITELIST_ETC_DIR
+			mkdir_attr(RUN_WHITELIST_SHARE_DIR, 0755, 0, 0);
+			if (mount("/usr/share", RUN_WHITELIST_SHARE_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+
+			// mount tmpfs on /srv
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /usr/share directory\n");
+			if (mount("tmpfs", "/usr/share", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /usr/share");
+			fs_logger("tmpfs /usr/share");
+		}
+		else
+			share_dir = 0;
+	}
+
 
 	// go through profile rules again, and interpret whitelist commands
 	entry = cfg.profile;
@@ -868,6 +907,13 @@ void fs_whitelist(void) {
 		if (mount("tmpfs", RUN_WHITELIST_ETC_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_ETC_DIR);
+	}
+
+	// mask the real /usr/share directory, currently mounted on RUN_WHITELIST_SHARE_DIR
+	if (share_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_SHARE_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_SHARE_DIR);
 	}
 
 	if (new_name)

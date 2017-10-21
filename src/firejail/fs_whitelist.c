@@ -257,6 +257,15 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SRV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	else if (entry->etc_dir) {
+		fname = path + 4; // strlen("/etc")
+		if (*fname == '\0')
+			goto errexit;
+
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_ETC_DIR, fname) == -1)
+			errExit("asprintf");
+	}
+
 	// check if the file exists
 	struct stat s;
 	if (wfile && stat(wfile, &s) == 0) {
@@ -325,6 +334,7 @@ void fs_whitelist(void) {
 	int dev_dir = 0;		// /dev directory flag
 	int opt_dir = 0;		// /opt directory flag
 	int srv_dir = 0;                // /srv directory flag
+	int etc_dir = 0;                // /etc directory flag
 
 	size_t nowhitelist_c = 0;
 	size_t nowhitelist_m = 32;
@@ -414,6 +424,8 @@ void fs_whitelist(void) {
 					opt_dir = 1;
 				else if (strncmp(new_name, "/srv/", 5) == 0)
 					srv_dir = 1;
+				else if (strncmp(new_name, "/etc/", 5) == 0)
+					etc_dir = 1;
 			}
 
 			entry->data = EMPTY_STRING;
@@ -531,6 +543,19 @@ void fs_whitelist(void) {
 			// both path and absolute path are under /srv
 			if (strncmp(fname, "/srv/", 5) != 0) {
 				goto errexit;
+			}
+		}
+		else if (strncmp(new_name, "/etc/", 5) == 0) {
+			entry->etc_dir = 1;
+			etc_dir = 1;
+			// special handling for some of the symlinks
+			if (strcmp(new_name, "/etc/localtime") == 0);
+			else if (strcmp(new_name, "/etc/mtab") == 0);
+			else if (strcmp(new_name, "/etc/os-release") == 0);
+			// both path and absolute path are under /etc
+			else {
+				if (strncmp(fname, "/etc/", 5) != 0)
+					goto errexit;
 			}
 		}
 		else {
@@ -718,6 +743,27 @@ void fs_whitelist(void) {
 			srv_dir = 0;
 	}
 
+	// /etc mountpoint
+	if (etc_dir) {
+		// check if /etc directory exists
+		struct stat s;
+		if (stat("/etc", &s) == 0) {
+			// keep a copy of real /etc directory in RUN_WHITELIST_ETC_DIR
+			mkdir_attr(RUN_WHITELIST_ETC_DIR, 0755, 0, 0);
+			if (mount("/etc", RUN_WHITELIST_ETC_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+
+			// mount tmpfs on /srv
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /etc directory\n");
+			if (mount("tmpfs", "/etc", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /etc");
+			fs_logger("tmpfs /etc");
+		}
+		else
+			etc_dir = 0;
+	}
+
 
 	// go through profile rules again, and interpret whitelist commands
 	entry = cfg.profile;
@@ -815,6 +861,13 @@ void fs_whitelist(void) {
 		if (mount("tmpfs", RUN_WHITELIST_SRV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_SRV_DIR);
+	}
+
+	// mask the real /etc directory, currently mounted on RUN_WHITELIST_ETC_DIR
+	if (etc_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_ETC_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_ETC_DIR);
 	}
 
 	if (new_name)

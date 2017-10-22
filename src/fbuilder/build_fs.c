@@ -178,16 +178,22 @@ void build_var(const char *fname) {
 static FileDB *share_out = NULL;
 static void share_callback(char *ptr) {
 	// extract the directory:
-	// "/usr/share/bash-completion/bash_completion"  becomes "/usr/share/bash-completion"
 	assert(strncmp(ptr, "/usr/share", 10) == 0);
 	char *p1 = ptr + 10;
 	if (*p1 != '/')
 		return;
 	p1++;
+	if (*p1 == '/')	// double '/'
+		p1++;
+	if (*p1 == '\0')
+		return;
+
+	// "/usr/share/bash-completion/bash_completion"  becomes "/usr/share/bash-completion"
 	char *p2 = strchr(p1, '/');
 	if (p2)
 		*p2 = '\0';
 
+	// store the file
 	share_out = filedb_add(share_out, ptr);
 }
 

@@ -114,12 +114,13 @@ void build_bin(const char *fname) {
 	}
 
 	if (bin_out) {
-		printf("# private-bin ");
+		printf("private-bin ");
 		FileDB *ptr = bin_out;
 		while (ptr) {
 			printf("%s,", ptr->fname);
 			ptr = ptr->next;
 		}
 		printf("\n");
+		printf("# private-lib\n");
 	}
 }

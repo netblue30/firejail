@@ -273,7 +273,7 @@ Joan Figueras (https://github.com/figue)
 John Mullee (https://github.com/jmullee)
 	- fix empty-string assignment in whitelisting code
 Jonas Heinrich (https://github.com/onny)
-	- added signal-dekstop profile
+	- added signal-desktop profile
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile

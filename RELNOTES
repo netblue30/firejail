@@ -30,7 +30,7 @@ firejail (0.9.51) baseline; urgency=low
       google-earth,imagej, karbon, kdenlive, krita, linphone, lmms, macrofusion,
       mpd, natron, Natron, ricochet, shotcut, teamspeak3, tor, tor-browser-en, 
       Viber, x-terminal-emulator, zart, conky, arch-audit, ffmpeg, bluefish, cliqz,
-      cinelerra, openshot-qt, pinta, uefitool, aosp, pdfmod, gnome-ring, signal-dekstop,
+      cinelerra, openshot-qt, pinta, uefitool, aosp, pdfmod, gnome-ring, signal-desktop,
       xcalc, zaproxy
    
  -- netblue30 <netblue30@yahoo.com>  Thu, 14 Sep 2017 20:00:00 -0500
@@ -268,7 +268,7 @@ firejail (0.9.42) baseline; urgency=low
   * feature: option to fix desktop files (firecfg --fix)
   * compile time: Busybox support (--enable-busybox-workaround)
   * compile time: disable overlayfs (--disable-overlayfs)
-  * compile time: disable whitlisting (--disable-whitelist)
+  * compile time: disable whitelisting (--disable-whitelist)
   * compile time: disable global config (--disable-globalcfg)
   * run time: enable/disable overlayfs (overlayfs yes/no)
   * run time: enable/disable  quiet as default (quiet-by-default yes/no)

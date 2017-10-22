@@ -103,7 +103,7 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 Add "include /etc/firejail/whitelist-var-common.inc" to an application profile and test it. If it's working,
 send a pull request. I did it so far for some more common applications like Firefox, Chromium etc.
 
-Added globbing support for --private-bin. Added whitlisting support for /etc and /usr/share. 
+Added globbing support for --private-bin. Added whitelisting support for /etc and /usr/share.
 
 --private-lib was enhanced to autodetect GTK2, GTK3 and Qt4 libraries. We do a test run with this option enabled
 for the following applications: evince, galculator, gnome-calculator,
@@ -190,7 +190,7 @@ calligrawords, cin, dooble, dooble-qt4, fetchmail, freecad, freecadcmd, google-e
 imagej, karbon, kdenlive, krita, linphone, lmms, macrofusion, mpd, natron, Natron,
 ricochet, shotcut, teamspeak3, tor, tor-browser-en, Viber, x-terminal-emulator, zart,
 conky, arch-audit, ffmpeg, bluefish, cliqz, cinelerra, openshot-qt, pinta, uefitool,
-aosp, pdfmod, gnome-ring, signal-dekstop, xcalc, zaproxy
+aosp, pdfmod, gnome-ring, signal-desktop, xcalc, zaproxy
 
 Upstreamed many profiles from the following sources: https://github.com/chiraag-nataraj/firejail-profiles,
 https://github.com/nyancat18/fe, and https://aur.archlinux.org/packages/firejail-profiles.

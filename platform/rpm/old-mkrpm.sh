@@ -641,7 +641,7 @@ chmod u+s /usr/bin/firejail
   - feature: option to fix desktop files (firecfg --fix)
   - compile time: Busybox support (--enable-busybox-workaround)
   - compile time: disable overlayfs (--disable-overlayfs)
-  - compile time: disable whitlisting (--disable-whitelist)
+  - compile time: disable whitelisting (--disable-whitelist)
   - compile time: disable global config (--disable-globalcfg)
   - run time: enable/disable overlayfs (overlayfs yes/no)
   - run time: enable/disable  quiet as default (quiet-by-default yes/no)

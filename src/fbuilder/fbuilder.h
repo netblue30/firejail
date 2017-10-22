@@ -32,24 +32,24 @@
 extern int arg_debug;
 
 // build_profile.c
-void build_profile(int argc, char **argv, int index);
+void build_profile(int argc, char **argv, int index, FILE *fp);
 
 // build_seccomp.c
-void build_seccomp(const char *fname);
-void build_protocol(const char *fname);
+void build_seccomp(const char *fname, FILE *fp);
+void build_protocol(const char *fname, FILE *fp);
 
 // build_fs.c
-void build_etc(const char *fname);
-void build_var(const char *fname);
-void build_tmp(const char *fname);
-void build_dev(const char *fname);
-void build_share(const char *fname);
+void build_etc(const char *fname, FILE *fp);
+void build_var(const char *fname, FILE *fp);
+void build_tmp(const char *fname, FILE *fp);
+void build_dev(const char *fname, FILE *fp);
+void build_share(const char *fname, FILE *fp);
 
 // build_bin.c
-void build_bin(const char *fname);
+void build_bin(const char *fname, FILE *fp);
 
 // build_home.c
-void build_home(const char *fname);
+void build_home(const char *fname, FILE *fp);
 
 // utils.c
 int is_dir(const char *fname);
@@ -64,6 +64,6 @@ typedef struct filedb_t {
 
 FileDB *filedb_add(FileDB *head, const char *fname);
 FileDB *filedb_find(FileDB *head, const char *fname);
-void filedb_print(FileDB *head, const char *prefix);
+void filedb_print(FileDB *head, const char *prefix, FILE *fp);
 
 #endif

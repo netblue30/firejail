@@ -98,14 +98,23 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.51
 
-## Whitelisting /var
+## Whitelisting, globbing etc.
 
 Add "include /etc/firejail/whitelist-var-common.inc" to an application profile and test it. If it's working,
 send a pull request. I did it so far for some more common applications like Firefox, Chromium etc.
 
+Added globbing support for --private-bin. Added whitlisting support for /etc and /usr/share. 
+
+--private-lib was enhanced to autodetect GTK2, GTK3 and Qt4 libraries. We do a test run with this option enabled
+for the following applications: evince, galculator, gnome-calculator,
+    leafpad, mousepad, transmission-gtk, xcalc, xmr-stak-cpu,
+    atril, mate-color-select, tar, file, strings, gpicview,
+    eom, eog, gedit, pluma
+
 ## Profile build  tool
 `````
 $ firejail --build appname
+$ firejail --build=appname.profile appname
 `````
 The command builds a whitelisted profile. If /usr/bin/strace is installed on the system, it also
 builds a whitelisted seccomp profile. The program is run in a very relaxed sandbox,
@@ -182,3 +191,6 @@ imagej, karbon, kdenlive, krita, linphone, lmms, macrofusion, mpd, natron, Natro
 ricochet, shotcut, teamspeak3, tor, tor-browser-en, Viber, x-terminal-emulator, zart,
 conky, arch-audit, ffmpeg, bluefish, cliqz, cinelerra, openshot-qt, pinta, uefitool,
 aosp, pdfmod, gnome-ring, signal-dekstop, xcalc, zaproxy
+
+Upstreamed many profiles from the following sources: https://github.com/chiraag-nataraj/firejail-profiles,
+https://github.com/nyancat18/fe, and https://aur.archlinux.org/packages/firejail-profiles.

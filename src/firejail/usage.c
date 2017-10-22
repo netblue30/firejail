@@ -45,6 +45,7 @@ void usage(void) {
 #endif
 	printf("    --blacklist=filename - blacklist directory or file.\n");
 	printf("    --build - build a whitelisted profile for the application.\n");
+	printf("    --build=filename - build a whitelisted profile for the application.\n");
 	printf("    -c - execute command and exit.\n");
 	printf("    --caps - enable default Linux capabilities filter.\n");
 	printf("    --caps.drop=all - drop all capabilities.\n");

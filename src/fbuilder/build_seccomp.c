@@ -20,11 +20,12 @@
 
 #include "fbuilder.h"
 
-void build_seccomp(const char *fname) {
+void build_seccomp(const char *fname, FILE *fp) {
 	assert(fname);
+	assert(fp);
 	
-	FILE *fp = fopen(fname, "r");
-	if (!fp) {
+	FILE *fp2 = fopen(fname, "r");
+	if (!fp2) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);
 		exit(1);
 	}
@@ -33,7 +34,7 @@ void build_seccomp(const char *fname) {
 	int line = 1;
 	int position = 0;
 	int cnt = 0;
-	while (fgets(buf, MAX_BUF, fp)) {
+	while (fgets(buf, MAX_BUF, fp2)) {
 		// remove \n
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
@@ -62,20 +63,20 @@ void build_seccomp(const char *fname) {
 				break;
 			
 			if (line == 3)
-				printf("# seccomp.keep %s", buf + position);
+				fprintf(fp, "# seccomp.keep %s", buf + position);
 			else
-				printf(",%s", buf + position);
+				fprintf(fp, ",%s", buf + position);
 			cnt++;
 		}
 		line++;
 	}
-	printf("\n");
-	printf("# %d syscalls total\n", cnt);
-	printf("# Probably you will need to add more syscalls to seccomp.keep. Look for\n");
-	printf("# seccomp errors in /var/log/syslog or /var/log/audit/audit.log while\n");
-	printf("# running your sandbox.\n");
+	fprintf(fp, "\n");
+	fprintf(fp, "# %d syscalls total\n", cnt);
+	fprintf(fp, "# Probably you will need to add more syscalls to seccomp.keep. Look for\n");
+	fprintf(fp, "# seccomp errors in /var/log/syslog or /var/log/audit/audit.log while\n");
+	fprintf(fp, "# running your sandbox.\n");
 
-	fclose(fp);
+	fclose(fp2);
 }
 
 //***************************************
@@ -141,7 +142,7 @@ static void process_protocol(const char *fname) {
 
 
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
-void build_protocol(const char *fname) {
+void build_protocol(const char *fname, FILE *fp) {
 	assert(fname);
 	
 	// run fname
@@ -161,31 +162,31 @@ void build_protocol(const char *fname) {
 	
 	int net = 0;
 	if (unix_s || inet || inet6 || netlink || packet) {
-		printf("protocol ");
+		fprintf(fp, "protocol ");
 		if (unix_s)
-			printf("unix,");
+			fprintf(fp, "unix,");
 		if (inet) {
-			printf("inet,");
+			fprintf(fp, "inet,");
 			net = 1;
 		}
 		if (inet6) {
-			printf("inet6,");
+			fprintf(fp, "inet6,");
 			net = 1;
 		}
 		if (netlink)
-			printf("netlink,");
+			fprintf(fp, "netlink,");
 		if (packet) {
-			printf("packet");
+			fprintf(fp, "packet");
 			net = 1;
 		}
-		printf("\n");
+		fprintf(fp, "\n");
 	}
 
 	if (net == 0)
-		printf("net none\n");
+		fprintf(fp, "net none\n");
 	else {
-		printf("# net eth0\n");
-		printf("netfilter\n");
+		fprintf(fp, "# net eth0\n");
+		fprintf(fp, "netfilter\n");
 	}
 }
 

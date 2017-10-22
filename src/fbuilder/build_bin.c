@@ -95,7 +95,7 @@ static void process_bin(const char *fname) {
 
 
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
-void build_bin(const char *fname) {
+void build_bin(const char *fname, FILE *fp) {
 	assert(fname);
 	
 	// run fname
@@ -114,13 +114,13 @@ void build_bin(const char *fname) {
 	}
 
 	if (bin_out) {
-		printf("private-bin ");
+		fprintf(fp, "private-bin ");
 		FileDB *ptr = bin_out;
 		while (ptr) {
-			printf("%s,", ptr->fname);
+			fprintf(fp, "%s,", ptr->fname);
 			ptr = ptr->next;
 		}
-		printf("\n");
-		printf("# private-lib\n");
+		fprintf(fp, "\n");
+		fprintf(fp, "# private-lib\n");
 	}
 }

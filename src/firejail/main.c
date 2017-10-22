@@ -831,13 +831,21 @@ char *guess_shell(void) {
 	return shell;
 }
 
-static int check_arg(int argc, char **argv, const char *argument) {
+static int check_arg(int argc, char **argv, const char *argument, int strict) {
 	int i;
 	int found = 0;
 	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], argument) == 0) {
-			found = 1;
-			break;
+		if (strict) {
+			if (strcmp(argv[i], argument) == 0) {
+				found = 1;
+				break;
+			}
+		}
+		else {
+			if (strncmp(argv[i], argument, strlen(argument)) == 0) {
+				found = 1;
+				break;
+			}
 		}
 
 		// detect end of firejail params
@@ -891,9 +899,9 @@ int main(int argc, char **argv) {
 	preproc_build_firejail_dir();
 	preproc_clean_run();
 
-	if (check_arg(argc, argv, "--quiet"))
+	if (check_arg(argc, argv, "--quiet", 1))
 		arg_quiet = 1;
-	if (check_arg(argc, argv, "--allow-debuggers")) {
+	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
 		// check kernel version
 		struct utsname u;
 		int rv = uname(&u);
@@ -921,14 +929,14 @@ int main(int argc, char **argv) {
 
 #ifdef HAVE_GIT_INSTALL
 	// process git-install and git-uninstall
-	if (check_arg(argc, argv, "--git-install"))
+	if (check_arg(argc, argv, "--git-install", 1))
 		git_install(); // this function will not return
-	if (check_arg(argc, argv, "--git-uninstall"))
+	if (check_arg(argc, argv, "--git-uninstall", 1))
 		git_uninstall(); // this function will not return
 #endif
 
 	// profile builder
-	if (check_arg(argc, argv, "--build"))
+	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
 		run_builder(argc, argv); // this function will not return
 		
 	// check argv[0] symlink wrapper if this is not a login shell
@@ -946,10 +954,10 @@ int main(int argc, char **argv) {
 		EUID_USER();
 		if (rv == 0) {
 			// if --force option is passed to the program, disregard the existing sandbox
-			if (check_arg(argc, argv, "--force"))
+			if (check_arg(argc, argv, "--force", 1))
 				option_force = 1;
 			else {
-				if (check_arg(argc, argv, "--version")) {
+				if (check_arg(argc, argv, "--version", 1)) {
 					printf("firejail version %s\n", VERSION);
 					exit(0);
 				}
@@ -966,7 +974,7 @@ int main(int argc, char **argv) {
 	EUID_ROOT();
 	if (geteuid()) {
 		// only --version is supported without SUID support
-		if (check_arg(argc, argv, "--version")) {
+		if (check_arg(argc, argv, "--version", 1)) {
 			printf("firejail version %s\n", VERSION);
 			exit(0);
 		}

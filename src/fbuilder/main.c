@@ -22,7 +22,7 @@ int arg_debug = 0;
 
 static void usage(void) {
 	printf("Firejail profile builder\n");
-	printf("Usage: firejail [--debug] --build program-and-arguments\n");
+	printf("Usage: firejail [--debug] --build[=profile-file] program-and-arguments\n");
 }
 
 int main(int argc, char **argv) {
@@ -38,6 +38,8 @@ printf("\n");
 
 	int i;
 	int prog_index = 0;
+	FILE *fp = stdout;
+	int prof_file = 0;
 	
 	// parse arguments and extract program index
 	for (i = 1; i < argc; i++) {
@@ -49,6 +51,22 @@ printf("\n");
 			arg_debug = 1;
 		else if (strcmp(argv[i], "--build") == 0)
 			; // do nothing, this is passed down from firejail
+		else if (strncmp(argv[i], "--build=", 8) == 0) {
+			// this option is only supported for non-root users
+			if (getuid() == 0) {
+				fprintf(stderr, "Error fbuild: --build=profile-name is not supported for root user.\n");
+				exit(1);
+			}
+			
+			// check file access
+			fp = fopen(argv[i] + 8, "w");
+			if (!fp) {
+				fprintf(stderr, "Error fbuild: cannot open profile file.\n");
+				exit(1);
+			}
+			prof_file = 1;
+			// do nothing, this is passed down from firejail
+		}
 		else {
 			if (*argv[i] == '-') {
 				fprintf(stderr, "Error fbuilder: invalid program\n");
@@ -63,9 +81,13 @@ printf("\n");
 	if (prog_index == 0) {
 		fprintf(stderr, "Error fbuilder: program and arguments required\n");
 		usage();
+		if (prof_file)
+			fclose(fp);
 		exit(1);
 	}
 	
-	build_profile(argc, argv, prog_index);
+	build_profile(argc, argv, prog_index, fp);
+	if (prof_file)
+		fclose(fp);
 	return 0;
 }

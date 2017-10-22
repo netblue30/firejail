@@ -69,10 +69,10 @@ FileDB *filedb_add(FileDB *head, const char *fname) {
 	return entry;
 };
 
-void filedb_print(FileDB *head, const char *prefix) {
+void filedb_print(FileDB *head, const char *prefix, FILE *fp) {
 	FileDB *ptr = head;
 	while (ptr) {
-		printf("%s%s\n", prefix, ptr->fname);
+		fprintf(fp, "%s%s\n", prefix, ptr->fname);
 		ptr = ptr->next;
 	}
 }

@@ -56,7 +56,7 @@ static void clear_tmp_files(void) {
 
 }
 
-void build_profile(int argc, char **argv, int index) {
+void build_profile(int argc, char **argv, int index, FILE *fp) {
 	// next index is the application name
 	if (index >= argc) {
 		fprintf(stderr, "Error: application name missing\n");
@@ -116,51 +116,51 @@ void build_profile(int argc, char **argv, int index) {
 
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
 		printf("\n\n\n");
-		printf("############################################\n");
-		printf("# %s profile\n", argv[index]);
-		printf("############################################\n");
-		printf("# Persistent global definitions\n");
-		printf("# include /etc/firejail/globals.local\n");
-		printf("\n");
+		fprintf(fp, "############################################\n");
+		fprintf(fp, "# %s profile\n", argv[index]);
+		fprintf(fp, "############################################\n");
+		fprintf(fp, "# Persistent global definitions\n");
+		fprintf(fp, "# include /etc/firejail/globals.local\n");
+		fprintf(fp, "\n");
 		
-		printf("### basic blacklisting\n");
-		printf("include /etc/firejail/disable-common.inc\n");
-		printf("# include /etc/firejail/disable-devel.inc\n");
-		printf("include /etc/firejail/disable-passwdmgr.inc\n");
-		printf("# include /etc/firejail/disable-programs.inc\n");
-		printf("\n");
+		fprintf(fp, "### basic blacklisting\n");
+		fprintf(fp, "include /etc/firejail/disable-common.inc\n");
+		fprintf(fp, "# include /etc/firejail/disable-devel.inc\n");
+		fprintf(fp, "include /etc/firejail/disable-passwdmgr.inc\n");
+		fprintf(fp, "# include /etc/firejail/disable-programs.inc\n");
+		fprintf(fp, "\n");
 		
-		printf("### home directory whitelisting\n");
-		build_home(TRACE_OUTPUT);
-		printf("\n");
+		fprintf(fp, "### home directory whitelisting\n");
+		build_home(TRACE_OUTPUT, fp);
+		fprintf(fp, "\n");
 		
-		printf("### filesystem\n");
-		build_tmp(TRACE_OUTPUT);
-		build_dev(TRACE_OUTPUT);
-		build_etc(TRACE_OUTPUT);
-		build_var(TRACE_OUTPUT);
-		build_bin(TRACE_OUTPUT);
-		build_share(TRACE_OUTPUT);
-		printf("\n");
+		fprintf(fp, "### filesystem\n");
+		build_tmp(TRACE_OUTPUT, fp);
+		build_dev(TRACE_OUTPUT, fp);
+		build_etc(TRACE_OUTPUT, fp);
+		build_var(TRACE_OUTPUT, fp);
+		build_bin(TRACE_OUTPUT, fp);
+		build_share(TRACE_OUTPUT, fp);
+		fprintf(fp, "\n");
 
-		printf("### security filters\n");
-		printf("caps.drop all\n");
-		printf("nonewprivs\n");
-		printf("seccomp\n");
+		fprintf(fp, "### security filters\n");
+		fprintf(fp, "caps.drop all\n");
+		fprintf(fp, "nonewprivs\n");
+		fprintf(fp, "seccomp\n");
 		if (have_strace)
-			build_seccomp(STRACE_OUTPUT);
+			build_seccomp(STRACE_OUTPUT, fp);
 		else {
-			printf("# If you install strace on your system, Firejail will also create a\n");
-			printf("# whitelisted seccomp filter.\n");
+			fprintf(fp, "# If you install strace on your system, Firejail will also create a\n");
+			fprintf(fp, "# whitelisted seccomp filter.\n");
 		}
-		printf("\n");
+		fprintf(fp, "\n");
 
-		printf("### network\n");
-		build_protocol(TRACE_OUTPUT);
-		printf("\n");
+		fprintf(fp, "### network\n");
+		build_protocol(TRACE_OUTPUT, fp);
+		fprintf(fp, "\n");
 		
-		printf("### environment\n");
-		printf("shell none\n");
+		fprintf(fp, "### environment\n");
+		fprintf(fp, "shell none\n");
 
 	}
 	else {

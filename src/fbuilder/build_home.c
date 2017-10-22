@@ -158,7 +158,7 @@ void process_home(const char *fname, char *home, int home_len) {
 
 
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
-void build_home(const char *fname) {
+void build_home(const char *fname, FILE *fp) {
 	assert(fname);
 		
 	// load whitelist common
@@ -190,10 +190,10 @@ void build_home(const char *fname) {
 	
 	// print the out list if any
 	if (db_out) {
-		filedb_print(db_out, "whitelist ~/");
-		printf("include /etc/firejail/whitelist-common.inc\n");
+		filedb_print(db_out, "whitelist ~/", fp);
+		fprintf(fp, "include /etc/firejail/whitelist-common.inc\n");
 	}
 	else
-		printf("private\n");
+		fprintf(fp, "private\n");
 
 }

@@ -218,7 +218,7 @@ static char *check(const char *src) {
 	//    /run/systemd/resolve/resolv.conf; this file is owned by systemd-resolve user
 	// checking gid will fail for files with a larger group such as /usr/bin/mutt_dotlock
 	uid_t user = getuid();
-	if (user == 0 && strcmp(rsrc, "/run/systemd/resolve/resolv.conf") == 0) {
+	if (user == 0 && strncmp(rsrc, "/run/systemd/resolve/", 21) == 0) {
 		// check user systemd-resolve
 		struct passwd *p = getpwnam("systemd-resolve");
 		if (!p)

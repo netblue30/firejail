@@ -5,6 +5,7 @@ include /etc/firejail/gedit.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# blacklist /run/user/*/bus - makes settings immutable
 
 noblacklist ${HOME}/.config/enchant
 noblacklist ${HOME}/.config/gedit

@@ -5,6 +5,8 @@ include /etc/firejail/synfigstudio.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ${HOME}/.config/synfig
 noblacklist ${HOME}/.synfig
 

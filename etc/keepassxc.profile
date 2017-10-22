@@ -5,6 +5,8 @@ include /etc/firejail/keepassxc.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ${HOME}/*.kdb
 noblacklist ${HOME}/*.kdbx
 noblacklist ${HOME}/.config/keepassxc

@@ -5,6 +5,7 @@ include /etc/firejail/shotcut.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.config/Meltytech
 

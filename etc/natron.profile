@@ -5,6 +5,7 @@ include /etc/firejail/natron.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.Natron
 noblacklist ${HOME}/.cache/INRIA/Natron
@@ -17,7 +18,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-netfilter
+net none
 nodvd
 nogroups
 nonewprivs
@@ -26,7 +27,6 @@ notv
 protocol unix,inet,inet6
 seccomp
 shell none
-net none
 
 private-bin natron,Natron,NatronRenderer
 

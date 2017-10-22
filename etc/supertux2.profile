@@ -5,6 +5,8 @@ include /etc/firejail/supertux2.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ~/.local/share/supertux2
 
 include /etc/firejail/disable-common.inc

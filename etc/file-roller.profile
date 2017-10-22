@@ -5,6 +5,7 @@ include /etc/firejail/file-roller.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# blacklist /run/user/*/bus - makes settings immutable
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

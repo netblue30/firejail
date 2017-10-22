@@ -6,6 +6,7 @@ include /etc/firejail/uudeview.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 
 hostname uudeview
 ignore noroot

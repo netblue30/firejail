@@ -5,6 +5,8 @@ include /etc/firejail/bless.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ${HOME}/.config/bless
 
 include /etc/firejail/disable-common.inc

@@ -5,6 +5,7 @@ include /etc/firejail/ardour5.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.config/ardour4
 noblacklist ${HOME}/.config/ardour5

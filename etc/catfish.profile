@@ -7,7 +7,11 @@ include /etc/firejail/globals.local
 
 # We can't blacklist much since catfish
 # is for finding files/content
+
+blacklist /run/user/*/bus
+
 noblacklist ~/.config/catfish
+
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc

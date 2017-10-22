@@ -5,6 +5,8 @@ include /etc/firejail/jd-gui.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ${HOME}/.config/jd-gui.cfg
 noblacklist ${HOME}/.java
 

@@ -6,6 +6,7 @@ include /etc/firejail/gzip.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 blacklist /tmp/.X11-unix
 
 ignore noroot

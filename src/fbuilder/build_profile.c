@@ -140,6 +140,7 @@ void build_profile(int argc, char **argv, int index) {
 		build_etc(TRACE_OUTPUT);
 		build_var(TRACE_OUTPUT);
 		build_bin(TRACE_OUTPUT);
+		build_share(TRACE_OUTPUT);
 		printf("\n");
 
 		printf("### security filters\n");

@@ -43,6 +43,7 @@ void build_etc(const char *fname);
 void build_var(const char *fname);
 void build_tmp(const char *fname);
 void build_dev(const char *fname);
+void build_share(const char *fname);
 
 // build_bin.c
 void build_bin(const char *fname);

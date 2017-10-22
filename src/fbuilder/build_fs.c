@@ -171,6 +171,37 @@ void build_var(const char *fname) {
 		filedb_print(var_out, "whitelist ");
 }
 
+
+//*******************************************
+// usr/share directory
+//*******************************************
+static FileDB *share_out = NULL;
+static void share_callback(char *ptr) {
+	// extract the directory:
+	// "/usr/share/bash-completion/bash_completion"  becomes "/usr/share/bash-completion"
+	assert(strncmp(ptr, "/usr/share", 10) == 0);
+	char *p1 = ptr + 10;
+	if (*p1 != '/')
+		return;
+	p1++;
+	char *p2 = strchr(p1, '/');
+	if (p2)
+		*p2 = '\0';
+
+	share_out = filedb_add(share_out, ptr);
+}
+
+void build_share(const char *fname) {
+	assert(fname);
+
+	process_files(fname, "/usr/share", share_callback);
+
+	if (share_out == NULL)
+		printf("blacklist /usr/share\n");
+	else
+		filedb_print(share_out, "whitelist ");
+}
+
 //*******************************************
 // tmp directory
 //*******************************************

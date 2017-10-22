@@ -5,6 +5,8 @@ include /etc/firejail/mate-calc.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ${HOME}/.config/mate-calc
 
 include /etc/firejail/disable-common.inc

@@ -5,6 +5,8 @@ include /etc/firejail/zathura.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ~/.config/zathura
 noblacklist ~/.local/share/zathura
 

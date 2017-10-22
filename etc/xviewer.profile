@@ -5,6 +5,8 @@ include /etc/firejail/xviewer.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# blacklist /run/user/*/bus - makes settings immutable
+
 noblacklist ~/.Steam
 noblacklist ~/.config/xviewer
 noblacklist ~/.local/share/Trash

@@ -5,6 +5,8 @@ include /etc/firejail/peek.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ${HOME}/.cache/peek
 
 include /etc/firejail/disable-common.inc

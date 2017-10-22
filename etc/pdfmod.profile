@@ -5,6 +5,7 @@ include /etc/firejail/pdfmod.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.cache/pdfmod
 noblacklist ${HOME}/.config/pdfmod

@@ -5,6 +5,8 @@ include /etc/firejail/evince.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# blacklist /run/user/*/bus
+
 noblacklist ~/.config/evince
 
 include /etc/firejail/disable-common.inc

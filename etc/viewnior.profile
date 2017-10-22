@@ -5,6 +5,7 @@ include /etc/firejail/viewnior.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 blacklist ~/.Xauthority
 blacklist ~/.bashrc
 

@@ -5,6 +5,7 @@ include /etc/firejail/imagej.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.imagej
 

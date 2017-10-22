@@ -5,6 +5,8 @@ include /etc/firejail/xed.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# blacklist /run/user/*/bus - makes settings immutable
+
 noblacklist ${HOME}/.config/xed
 
 include /etc/firejail/disable-common.inc

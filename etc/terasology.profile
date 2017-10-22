@@ -5,6 +5,7 @@ include /etc/firejail/default.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/terasology

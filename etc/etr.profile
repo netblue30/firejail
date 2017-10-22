@@ -5,6 +5,8 @@ include /etc/firejail/etr.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
+
 noblacklist ~/.etr
 
 include /etc/firejail/disable-common.inc

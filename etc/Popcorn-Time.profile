@@ -10,6 +10,7 @@ noblacklist ~/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ~/.cache/Popcorn-Time
@@ -27,6 +28,8 @@ netfilter
 nodvd
 nogroups
 notv
+novideo
+seccomp
 shell none
 
 private-dev

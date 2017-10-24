@@ -35,4 +35,5 @@ private-dev
 private-tmp
 
 noexec ${HOME}
-noexec /tmp
+# noexec /tmp breaks mpris support
+#noexec /tmp

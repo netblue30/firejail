@@ -172,6 +172,7 @@ void usage(void) {
 	printf("    --read-write=filename - set directory or file read-write.\n");
 	printf("    --rlimit-as=number - set the maximum size of the process's virtual memory\n");
 	printf("\t(address space) in bytes.\n");
+	printf("    --rlimit-cpu=number - set the maximum CPU time in seconds.\n");
 	printf("    --rlimit-fsize=number - set the maximum file size that can be created\n");
 	printf("\tby a process.\n");
 	printf("    --rlimit-nofile=number - set the maximum number of files that can be\n");

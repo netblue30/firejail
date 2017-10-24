@@ -67,6 +67,7 @@ char *arg_caps_list = NULL;			// optional caps list
 
 int arg_trace = 0;				// syscall tracing support
 int arg_tracelog = 0;				// blacklist tracing support
+int arg_rlimit_cpu = 0;				// rlimit max cpu time
 int arg_rlimit_nofile = 0;			// rlimit nofile
 int arg_rlimit_nproc = 0;			// rlimit nproc
 int arg_rlimit_fsize = 0;				// rlimit fsize
@@ -1259,6 +1260,11 @@ int main(int argc, char **argv) {
 			arg_trace = 1;
 		else if (strcmp(argv[i], "--tracelog") == 0)
 			arg_tracelog = 1;
+		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
+			check_unsigned(argv[i] + 13, "Error: invalid rlimit");
+			sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);
+			arg_rlimit_cpu = 1;
+		}
 		else if (strncmp(argv[i], "--rlimit-nofile=", 16) == 0) {
 			check_unsigned(argv[i] + 16, "Error: invalid rlimit");
 			sscanf(argv[i] + 16, "%llu", &cfg.rlimit_nofile);

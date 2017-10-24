@@ -24,6 +24,18 @@
 void set_rlimits(void) {
 	// resource limits
 	struct rlimit rl;
+	if (arg_rlimit_cpu) {
+		rl.rlim_cur = (rlim_t) cfg.rlimit_cpu;
+		rl.rlim_max = (rlim_t) cfg.rlimit_cpu;
+#ifdef HAVE_GCOV
+		__gcov_dump();
+#endif
+		if (setrlimit(RLIMIT_CPU, &rl) == -1)
+			errExit("setrlimit");
+		if (arg_debug)
+			printf("Config rlimit: max cpu time %llu\n", cfg.rlimit_cpu);
+	}
+
 	if (arg_rlimit_nofile) {
 		rl.rlim_cur = (rlim_t) cfg.rlimit_nofile;
 		rl.rlim_max = (rlim_t) cfg.rlimit_nofile;

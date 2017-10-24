@@ -249,6 +249,7 @@ typedef struct config_t {
 	char *protocol;			// protocol list
 
 	// rlimits
+	long long unsigned rlimit_cpu;
 	long long unsigned rlimit_nofile;
 	long long unsigned rlimit_nproc;
 	long long unsigned rlimit_fsize;
@@ -324,6 +325,7 @@ extern char *arg_caps_list;		// optional caps list
 
 extern int arg_trace;		// syscall tracing support
 extern int arg_tracelog;	// blacklist tracing support
+extern int arg_rlimit_cpu;	// rlimit cpu
 extern int arg_rlimit_nofile;	// rlimit nofile
 extern int arg_rlimit_nproc;	// rlimit nproc
 extern int arg_rlimit_fsize;	// rlimit fsize

@@ -1547,6 +1547,15 @@ $ firejail --read-only=~/test --read-write=~/test/a
 Set the maximum size of the process's virtual memory (address space) in bytes.
 
 .TP
+\fB\-\-rlimit-cpu=number
+Set the maximum limit, in seconds, for the amount of CPU time each
+sandboxed process  can consume. When the limit is reached, the processes are killed.
+
+The CPU limit is a limit on CPU seconds rather than elapsed time. CPU seconds is basically how many seconds
+the CPU has been in use and does not necessarily directly relate to the elapsed time. Linux kernel keeps
+track of CPU seconds for each process independently.
+
+.TP
 \fB\-\-rlimit-fsize=number
 Set the maximum file size that can be created by a process.
 .TP

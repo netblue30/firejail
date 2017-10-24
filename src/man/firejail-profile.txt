@@ -385,6 +385,9 @@ Examples:
 \fBrlimit-as 123456789012
 Set he maximum size of the process's virtual memory to 123456789012 bytes.
 .TP
+\fBrlimit-cpu 123
+Set he maximum CPU time in seconds.
+.TP
 \fBrlimit-fsize 1024
 Set the maximum file size that can be created by a process to 1024 bytes.
 .TP

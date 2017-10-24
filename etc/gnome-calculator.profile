@@ -1,5 +1,6 @@
 # Firejail profile for gnome-calculator
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include /etc/firejail/gnome-calculator.local
 # Persistent global definitions

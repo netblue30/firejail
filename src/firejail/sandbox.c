@@ -201,6 +201,14 @@ static int monitor_application(pid_t app_pid) {
 	signal (SIGTERM, sandbox_handler);
 	EUID_USER();
 
+	// handle --timeout
+	int options = 0;;
+	unsigned timeout = 0;
+	if (cfg.timeout) {
+		options = WNOHANG;
+		timeout = cfg.timeout;
+	}
+
 	int status = 0;
 	while (monitored_pid) {
 		usleep(20000);
@@ -214,9 +222,19 @@ static int monitor_application(pid_t app_pid) {
 
 		pid_t rv;
 		do {
-			rv = waitpid(-1, &status, 0);
+			rv = waitpid(-1, &status, options);
 			if (rv == -1)
 				break;
+
+			// handle --timeout
+			if (options && --timeout == 0)  {
+				kill(-1, SIGTERM);
+				flush_stdin();
+				sleep(1);
+				_exit(1);
+			}
+
+			sleep(1);
 		}
 		while(rv != monitored_pid);
 		if (arg_debug)

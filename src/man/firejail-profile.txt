@@ -408,6 +408,9 @@ Set a nice value of -5 to all processes running inside the sandbox.
 .TP
 \fBcgroup /sys/fs/cgroup/g1/tasks
 The sandbox is placed in g1 control group.
+.TP
+\fBtimeout hh:mm:ss
+Kill the sandbox automatically after the time has elapsed. The time is specified in hours/minutes/seconds format.
 
 .SH User Environment
 .TP

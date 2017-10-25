@@ -1054,7 +1054,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 		return 0;
 	}
-
+	
+	if (strncmp(ptr, "timeout ", 8) == 0) {
+		cfg.timeout = extract_timeout(ptr +8);
+		return 0;
+	}
+	
 	if (strncmp(ptr, "join-or-start ", 14) == 0) {
 		// try to join by name only
 		pid_t pid;

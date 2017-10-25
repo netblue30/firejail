@@ -949,3 +949,17 @@ errexit:
 	fprintf(stderr, "Error: cannot read %s\n", fname);
 	exit(1);
 }
+
+
+unsigned extract_timeout(const char *str) {
+	unsigned s;
+	unsigned m;
+	unsigned h;
+	int rv = sscanf(str, "%02u:%02u:%02u", &h, &m, &s);
+	if (rv != 3) {
+		fprintf(stderr, "Error: invalid timeout, please use a hh:mm:ss format\n");
+		exit(1);
+	}
+
+	return h * 3600 + m * 60 + s;
+}

@@ -2156,6 +2156,8 @@ int main(int argc, char **argv) {
 		//*************************************
 		// command
 		//*************************************
+		else if (strncmp(argv[i], "--timeout=", 10) == 0)
+			cfg.timeout = extract_timeout(argv[i] + 10);
 		else if (strcmp(argv[i], "--audit") == 0) {
 			arg_audit_prog = LIBDIR "/firejail/faudit";
 			arg_audit = 1;

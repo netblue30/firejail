@@ -255,6 +255,7 @@ typedef struct config_t {
 	long long unsigned rlimit_fsize;
 	long long unsigned rlimit_sigpending;
 	long long unsigned rlimit_as;
+	unsigned timeout;	// maximum time elapsed before killing the sandbox
 
 	// cpu affinity, nice and control groups
 	uint32_t cpus;
@@ -513,6 +514,7 @@ void create_empty_file_as_root(const char *dir, mode_t mode);
 int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 char *read_text_file_or_exit(const char *fname);
+unsigned extract_timeout(const char *str);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

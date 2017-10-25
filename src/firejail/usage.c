@@ -200,6 +200,8 @@ void usage(void) {
 	printf("    --shell=none - run the program directly without a user shell.\n");
 	printf("    --shell=program - set default user shell.\n");
 	printf("    --shutdown=name|pid - shutdown the sandbox identified by name or PID.\n");
+	printf("    --timeout=hh:mm:ss - kill the sandbox automatically after the time\n");
+	printf("\thas elapsed.\n");
 	printf("    --tmpfs=dirname - mount a tmpfs filesystem on directory dirname.\n");
 	printf("    --top - monitor the most CPU-intensive sandboxes.\n");
 	printf("    --trace - trace open, access and connect system calls.\n");

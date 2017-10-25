@@ -17,6 +17,9 @@ firejail (0.9.51) baseline; urgency=low
     atril, mate-color-select, tar, file, strings, gpicview,
     eom, eog, gedit, pluma
   * feature: --writable-run-user
+  * feature: --rlimit-as
+  * feature: --rlimit-cpu
+  * feature: --timeout
   * feature: profile build tool (--build)
   * new profiles: upstreamed many profiles from the following sources:
      https://github.com/chiraag-nataraj/firejail-profiles,

@@ -171,7 +171,7 @@ shell none
 $
 `````
 
-## New command line options
+## New command line and profile options
 `````
       --writable-run-user
               This    options    disables   the   default   blacklisting   of
@@ -179,6 +179,28 @@ $
 
               Example:
               $ sudo firejail --writable-run-user
+
+       --rlimit-as=number
+              Set the maximum size of the process's virtual  memory  (address
+              space) in bytes.
+
+       --rlimit-cpu=number
+              Set  the  maximum limit, in seconds, for the amount of CPU time
+              each sandboxed process  can consume. When the limit is reached,
+              the processes are killed.
+
+              The  CPU  limit  is  a limit on CPU seconds rather than elapsed
+              time. CPU seconds is basically how many  seconds  the  CPU  has
+              been  in  use  and  does not necessarily directly relate to the
+              elapsed time. Linux kernel keeps track of CPU seconds for  each
+              process independently.
+
+       --timeout=hh:mm:ss
+              Kill  the sandbox automatically after the time has elapsed. The
+              time is specified in hours/minutes/seconds format.
+
+              $ firejail --timeout=01:30:00 firefox
+
 `````
 
 ## New profiles:

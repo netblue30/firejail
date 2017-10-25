@@ -15,7 +15,6 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
-machine-id
 netfilter
 # nogroups
 nonewprivs

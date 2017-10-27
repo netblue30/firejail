@@ -233,8 +233,6 @@ static int monitor_application(pid_t app_pid) {
 				sleep(1);
 				_exit(1);
 			}
-
-			sleep(1);
 		}
 		while(rv != monitored_pid);
 		if (arg_debug)

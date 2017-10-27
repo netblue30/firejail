@@ -888,8 +888,6 @@ int main(int argc, char **argv) {
 	int option_cgroup = 0;
 	int option_force = 0;
 	int custom_profile = 0;	// custom profile loaded
-	char *custom_profile_dir = NULL; // custom profile directory
-
 
 	atexit(clear_atexit);
 
@@ -1497,22 +1495,8 @@ int main(int argc, char **argv) {
 			free(ppath);
 		}
 		else if (strncmp(argv[i], "--profile-path=", 15) == 0) {
-			if (arg_noprofile) {
-				fprintf(stderr, "Error: --noprofile and --profile-path options are mutually exclusive\n");
-				exit(1);
-			}
-			custom_profile_dir = expand_home(argv[i] + 15, cfg.homedir);
-			invalid_filename(custom_profile_dir, 0); // no globbing
-			if (!is_dir(custom_profile_dir) || is_link(custom_profile_dir) || strstr(custom_profile_dir, "..")) {
-				fprintf(stderr, "Error: invalid profile path\n");
-				exit(1);
-			}
-
-			// access call checks as real UID/GID, not as effective UID/GID
-			if (access(custom_profile_dir, R_OK)) {
-				fprintf(stderr, "Error: cannot access profile directory\n");
-				return 1;
-			}
+			if (!arg_quiet)
+				fprintf(stderr, "Warning: --profile-path has been deprecated\n");
 		}
 		else if (strcmp(argv[i], "--noprofile") == 0) {
 			if (custom_profile) {
@@ -2398,11 +2382,7 @@ int main(int argc, char **argv) {
 		}
 		if (!custom_profile) {
 			// look for a user profile in /etc/firejail directory
-			int rv;
-			if (custom_profile_dir)
-				rv = profile_find(cfg.command_name, custom_profile_dir);
-			else
-				rv = profile_find(cfg.command_name, SYSCONFDIR);
+			int rv = profile_find(cfg.command_name, SYSCONFDIR);
 			custom_profile = rv;
 		}
 	}
@@ -2430,13 +2410,10 @@ int main(int argc, char **argv) {
 			custom_profile = profile_find(profile_name, usercfgdir);
 			free(usercfgdir);
 
-			if (!custom_profile) {
+			if (!custom_profile)
 				// look for the profile in /etc/firejail directory
-				if (custom_profile_dir)
-					custom_profile = profile_find(profile_name, custom_profile_dir);
-				else
-					custom_profile = profile_find(profile_name, SYSCONFDIR);
-			}
+				custom_profile = profile_find(profile_name, SYSCONFDIR);
+
 			if (!custom_profile) {
 				fprintf(stderr, "Error: no default.profile installed\n");
 				exit(1);

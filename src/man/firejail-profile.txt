@@ -594,37 +594,6 @@ instead of the default one.
 Join the sandbox identified by name or start a new one.
 Same as "firejail --join=sandboxname" command if sandbox with specified name exists, otherwise same as "name sandboxname".
 
-.SH RELOCATING PROFILES
-For various reasons some users might want to keep the profile files in a different directory.
-Using \fB--profile-path\fR command line option, Firejail can be instructed to look for profiles
-into this directory.
-
-This is an example of relocating the profile files into a new
-directory, /home/netblue/myprofiles. Start by creating the new directory and copy all
-the profile files in:
-.br
-
-.br
-$ mkdir ~/myprofiles && cd ~/myprofiles && cp /etc/firejail/* .
-.br
-
-.br
-Using \fBsed\fR utility, modify the absolute paths for \fBinclude\fR commands:
-.br
-
-.br
-$ sed -i "s/\\/etc\\/firejail/\\/home\\/netblue\\/myprofiles/g" *.profile
-.br
-$ sed -i "s/\\/etc\\/firejail/\\/home\\/netblue\\/myprofiles/g" *.inc
-.br
-
-.br
-Start Firejail using the new path:
-.br
-
-.br
-$ firejail --profile-path=~/myprofiles
-
 .SH FILES
 /etc/firejail/filename.profile, $HOME/.config/firejail/filename.profile
 

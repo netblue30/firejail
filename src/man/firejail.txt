@@ -1451,21 +1451,6 @@ $ firejail \-\-profile.print=browser
 .br
 /etc/firejail/firefox.profile
 .br
-
-.TP
-\fB\-\-profile-path=directory
-Use this directory to look for profile files. Use an absolute path or a path in the home directory starting with ~/.
-For more information, see \fBSECURITY PROFILES\fR section below and \fBRELOCATING PROFILE FILES\fR in
-\fBman 5 firejail-profile\fR.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-profile-path=~/myprofiles
-.br
-$ firejail \-\-profile-path=/home/netblue/myprofiles
-
 .TP
 \fB\-\-protocol=protocol,protocol,protocol
 Enable protocol filter. The filter is based on seccomp and checks the first argument to socket system call.

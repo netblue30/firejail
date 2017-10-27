@@ -4,6 +4,7 @@ firejail (0.9.51) baseline; urgency=low
     read-only, read-write, tmpfs and noexec are allowed in
     private home directories
   * modif: remount-proc-sys deprecated from firejail.config
+  * modif: --profile-path deprecated
   * enhancement: support Firejail user config directory in firecfg
   * enhancement: disable DBus activation in firecfg
   * enhancement; enumerate root directories in apparmor profile

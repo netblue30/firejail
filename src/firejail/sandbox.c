@@ -245,12 +245,6 @@ static int monitor_application(pid_t app_pid) {
 			sleep(1);
 		}
 
-		// if /proc is not remounted, we cannot check /proc directory,
-		// for now we just get out of here
-		// todo: find another way of checking child processes!
-		if (!checkcfg(CFG_REMOUNT_PROC_SYS))
-			break;
-
 		DIR *dir;
 		if (!(dir = opendir("/proc"))) {
 			// sleep 2 seconds and try again
@@ -872,8 +866,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// update /proc, /sys, /dev, /boot directory
 	//****************************
-	if (checkcfg(CFG_REMOUNT_PROC_SYS))
-		fs_proc_sys_dev_boot();
+	fs_proc_sys_dev_boot();
 
 	//****************************
 	// handle /mnt and /media

@@ -1615,7 +1615,7 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--allow-private-blacklist") == 0) {
 			if (!arg_quiet)
-				fprintf(stderr, "--allow-private-blacklist was deprecated\n");
+				fprintf(stderr, "Warning: --allow-private-blacklist was deprecated\n");
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;

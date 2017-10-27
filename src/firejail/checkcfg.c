@@ -299,14 +299,9 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			// remount /proc and /sys
 			else if (strncmp(ptr, "remount-proc-sys ", 17) == 0) {
-				if (strcmp(ptr + 17, "yes") == 0)
-					cfg_val[CFG_REMOUNT_PROC_SYS] = 1;
-				else if (strcmp(ptr + 17, "no") == 0)
-					cfg_val[CFG_REMOUNT_PROC_SYS] = 0;
-				else
-					goto errout;
+				if (!arg_quiet)
+					fprintf(stderr, "Warning: remount-proc-sys from firejail.config was deprecated\n");
 			}
 			else if (strncmp(ptr, "overlayfs ", 10) == 0) {
 				if (strcmp(ptr + 10, "yes") == 0)

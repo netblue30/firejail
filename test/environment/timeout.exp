@@ -1,0 +1,31 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2017 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "time firejail --timeout=00:00:05\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+sleep 3
+send -- "env\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"container=firejail"
+}
+
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"m5."  {puts "5 seconds"}
+	"m6."  {puts "6 seconds"}
+	"m7." {puts "7 seconds"}
+}
+
+puts "\nall done\n"

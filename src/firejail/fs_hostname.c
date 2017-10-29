@@ -94,7 +94,7 @@ void fs_resolvconf(void) {
 
 	struct stat s;
 
-	// create a new /etc/hostname
+	// create a new /etc/resolv.conf
 	if (stat("/etc/resolv.conf", &s) == 0) {
 		if (arg_debug)
 			printf("Creating a new /etc/resolv.conf file\n");

@@ -227,11 +227,15 @@ static int monitor_application(pid_t app_pid) {
 				break;
 
 			// handle --timeout
-			if (options && --timeout == 0)  {
-				kill(-1, SIGTERM);
-				flush_stdin();
-				sleep(1);
-				_exit(1);
+			if (options) {
+				if (--timeout == 0)  {
+					kill(-1, SIGTERM);
+					flush_stdin();
+					sleep(1);
+					_exit(1);
+				}
+				else
+					sleep(1);
 			}
 		}
 		while(rv != monitored_pid);

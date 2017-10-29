@@ -7,6 +7,9 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
 
+echo "TESTING: timeout (test/environment/timeout.exp)"
+./timeout.exp
+
 echo "TESTING: DNS (test/environment/dns.exp)"
 ./dns.exp
 

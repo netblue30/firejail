@@ -33,8 +33,7 @@ tracelog
 private-bin xreader,xreader-previewer,xreader-thumbnailer
 private-dev
 private-etc fonts,ld.so.cache
-# xreader needs access to /tmp/mozilla* to work in firefox
-# private-tmp
+private-tmp
 
 memory-deny-write-execute
 noexec ${HOME}

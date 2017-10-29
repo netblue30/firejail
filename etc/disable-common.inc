@@ -76,10 +76,11 @@ read-only ${HOME}/.kde4/share/kde4/services
 read-only ${HOME}/.kde4/share/config/kdeglobals
 read-only ${HOME}/.local/share/kservices5
 
-# kdeinit sockets
-blacklist /run/user/*/kdeinit*
-blacklist /run/user/*/ksocket-*/kdeinit*
-blacklist /tmp/ksocket-*/kdeinit*
+# kdeinit socket
+blacklist /run/user/*/kdeinit5__*
+# blacklist /run/user/*/ksocket-*/kdeinit4__*
+# blacklist /tmp/ksocket-*/kdeinit4__*
+#  - causes issues when kdeinit4 gets killed; enable on KDE Plasma 4
 
 # systemd
 blacklist ${HOME}/.config/systemd

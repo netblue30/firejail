@@ -5,7 +5,7 @@ include /etc/firejail/calligra.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
+# blacklist /run/user/*/bus
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -14,7 +14,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace
-net none
+# net none
 nodvd
 nogroups
 nonewprivs
@@ -25,8 +25,8 @@ protocol unix
 seccomp
 shell none
 
-private-bin calligra,calligraauthor,calligraconverter,calligraflow,calligraplan,calligraplanwork,calligrasheets,calligrastage,calligrawords,dbus-launch
+private-bin calligra,calligraauthor,calligraconverter,calligraflow,calligraplan,calligraplanwork,calligrasheets,calligrastage,calligrawords,dbus-launch,kbuildsycoca4,kdeinit4
 private-dev
 
-#noexec ${HOME}
+# noexec ${HOME}
 noexec /tmp

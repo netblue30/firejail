@@ -18,6 +18,7 @@ whitelist ${DOWNLOADS}
 whitelist ~/.cache/vivaldi
 whitelist ~/.config/vivaldi
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.keep sys_chroot,sys_admin
 netfilter

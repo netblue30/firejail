@@ -36,8 +36,7 @@ private-bin evince,evince-previewer,evince-thumbnailer
 private-dev
 private-etc fonts
 private-lib
-# evince needs access to /tmp/mozilla* to work in firefox
-# private-tmp
+private-tmp
 
 memory-deny-write-execute
 noexec ${HOME}

@@ -19,7 +19,7 @@ expect {
 	BLACKLIST {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
 }
-sleep 1
+after 100
 send -- "exit\r"
 sleep 1
 
@@ -28,23 +28,58 @@ expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
 }
-sleep 1
+after 100
 
 send -- "ps aux | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"5"
 }
+after 100
+send -- "exit\r"
 sleep 1
+
+send -- "firejail --ignore=private --ignore=shell --profile=ignore.profile \r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Child process initialized"
+}
+after 100
+
+send -- "ps aux | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"5"
+}
+after 100
 send -- "exit\r"
 sleep 1
 
 send -- "firejail --debug --profile=ignore2.profile\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	BLACKLIST {puts "TESTING ERROR 6\n";exit}
+	timeout {puts "TESTING ERROR 7\n";exit}
+	BLACKLIST {puts "TESTING ERROR 8\n";exit}
 	"Child process initialized"
 }
 
 after 100
+send -- "exit\r"
+sleep 1
+
+send -- "firejail --ignore=quiet --ignore=shell --profile=ignore.profile \r"
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"Child process initialized"
+}
+after 100
+
+send -- "ps aux | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"5"
+}
+after 100
+send -- "exit\r"
+after 100
+
 puts "\nall done\n"

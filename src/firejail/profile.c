@@ -69,13 +69,7 @@ static void warning_feature_disabled(const char *feature) {
 }
 
 
-
-// check profile line; if line == 0, this was generated from a command line option
-// return 1 if the command is to be added to the linked list of profile commands
-// return 0 if the command was already executed inside the function
-int profile_check_line(char *ptr, int lineno, const char *fname) {
-	EUID_ASSERT();
-
+static int is_in_ignore_list(char *ptr) {
 	// check ignore list
 	int i;
 	for (i = 0; i < MAX_PROFILE_IGNORE; i++) {
@@ -86,9 +80,23 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (strncmp(ptr, cfg.profile_ignore[i], len) == 0) {
 			// full word match
 			if (*(ptr + len) == '\0' || *(ptr + len) == ' ')
-				return 0;	// ignore line
+				return 1;	// ignore line
 		}
 	}
+
+	return 0;
+}
+
+
+// check profile line; if line == 0, this was generated from a command line option
+// return 1 if the command is to be added to the linked list of profile commands
+// return 0 if the command was already executed inside the function
+int profile_check_line(char *ptr, int lineno, const char *fname) {
+	EUID_ASSERT();
+
+	// check ignore list
+	if (is_in_ignore_list(ptr))
+		return 0;
 
 	if (strncmp(ptr, "ignore ", 7) == 0) {
 		char *str = strdup(ptr + 7);
@@ -1256,8 +1264,12 @@ void profile_read(const char *fname) {
 		}
 
 		// process quiet
+		// todo: a quiet in the profile file cannot be disabled by --ignore on command line
 		if (strcmp(ptr, "quiet") == 0) {
-			arg_quiet = 1;
+			if (is_in_ignore_list(ptr))
+				arg_quiet = 0;
+			else
+				arg_quiet = 1;
 			free(ptr);
 			continue;
 		}

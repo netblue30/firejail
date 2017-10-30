@@ -18,7 +18,8 @@ after 100
 send -- "firejail --profile=$argv echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"done"
+	"done" {puts "all fine"}
+	"no suitable echo executable found" {puts "echo not found"}
 }
-after 100
+#after 100
 puts "\n"

@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/Cryptocat.profile
+include /etc/firejail/Cryptocat.profile

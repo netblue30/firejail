@@ -15,6 +15,7 @@ expect {
 }
 after 100
 send -- "stty -echo\r"
+after 100
 
 send -- "cd /bin; find .\; echo done\r"
 expect {

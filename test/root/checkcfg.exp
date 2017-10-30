@@ -107,6 +107,8 @@ send --  "echo \"xvfb-screen 800x600x24\" >> /etc/firejail/firejail.config\r"
 after 100
 send --  "echo \"xvfb-extra-params blablabla\" >> /etc/firejail/firejail.config\r"
 sleep 1
+send -- "stty -echo\r"
+after 100
 send --  "firejail --noprofile echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}

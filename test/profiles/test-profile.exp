@@ -13,6 +13,8 @@ if { $argc != 1 } {
 	exit
 }
 
+send -- "stty -echo\r"
+after 100
 send -- "firejail --profile=$argv echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

@@ -14,6 +14,8 @@ expect {
 }
 sleep 2
 
+send -- "stty -echo\r"
+after 100
 send -- "cd ~; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

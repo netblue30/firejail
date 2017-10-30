@@ -12,6 +12,8 @@ expect {
 	"Child process initialized" {puts "found\n"}
 }
 sleep 1
+send -- "stty -echo\r"
+after 100
 
 send -- "echo xyzxyzxyz > ~/_firejail_test_file; echo done\r"
 expect {
@@ -51,6 +53,8 @@ expect {
 }
 sleep 1
 
+send -- "stty -echo\r"
+after 100
 send -- "cat  ~/_firejail_test_file; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}

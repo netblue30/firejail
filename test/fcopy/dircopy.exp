@@ -118,6 +118,8 @@ expect {
 }
 after 100
 
+send -- "stty -echo\r"
+after 100
 send -- "diff -q src/a/b/file4 dest/a/b/file4; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 16\n";exit}

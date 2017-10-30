@@ -18,6 +18,9 @@ sleep 1
 send -- "bash\r"
 sleep 1
 
+send -- "stty -echo\r"
+after 100
+
 # no default gateway configured
 send -- "netstat -rn;echo done\r"
 expect {

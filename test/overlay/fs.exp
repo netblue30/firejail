@@ -13,6 +13,8 @@ expect {
 }
 sleep 1
 
+send -- "stty -echo\r"
+after 100
 send -- "echo xyzxyzxyz > ~/_firejail_test_file; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -20,6 +22,8 @@ expect {
 }
 after 100
 
+send -- "stty -echo\r"
+after 100
 send -- "cat  ~/_firejail_test_file; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -34,6 +38,8 @@ after 100
 send -- "exit\r"
 sleep 2
 
+send -- "stty -echo\r"
+after 100
 send -- "cat  ~/_firejail_test_file; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}

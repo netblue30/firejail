@@ -54,6 +54,9 @@ expect {
 }
 sleep 1
 
+send -- "stty -echo\r"
+after 100
+
 send -- "firejail --bandwidth=test status; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}

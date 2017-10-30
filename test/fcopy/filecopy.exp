@@ -35,6 +35,8 @@ expect {
 	"rwxrwxr-x" { puts "umask 0002\n" }
 }
 after 100
+send -- "stty -echo\r"
+after 100
 
 send -- "diff -q dircopy.exp dest/dircopy.exp; echo done\r"
 expect {

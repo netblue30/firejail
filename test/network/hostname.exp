@@ -13,6 +13,8 @@ expect {
 	"Child process initialized"
 }
 sleep 1
+send -- "stty -echo\r"
+after 100
 
 send -- "ping -c 3 bingo; echo done\r"
 expect {

@@ -16,6 +16,8 @@ expect {
 sleep 2
 
 spawn $env(SHELL)
+send -- "stty -echo\r"
+after 100
 send --  "firejail --shutdown=shutdowntesting; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}

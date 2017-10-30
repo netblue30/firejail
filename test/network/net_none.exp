@@ -19,6 +19,9 @@ sleep 1
 # test default gw
 send -- "bash\r"
 sleep 1
+send -- "stty -echo\r"
+after 100
+
 send -- "netstat -rn; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

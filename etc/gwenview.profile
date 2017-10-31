@@ -5,6 +5,8 @@ include /etc/firejail/gwenview.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# blacklist /run/user/*/bus
+
 noblacklist ~/.config/gwenviewrc
 noblacklist ~/.config/org.kde.gwenviewrc
 noblacklist ~/.gimp*
@@ -23,6 +25,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+# net none
 nodvd
 nogroups
 nonewprivs
@@ -34,7 +37,7 @@ seccomp
 shell none
 tracelog
 
-private-bin gwenview,kbuildsycoca4,gimp*
+private-bin gwenview,gimp*,kbuildsycoca4
 private-dev
 # private-etc X11
 

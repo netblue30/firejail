@@ -5,6 +5,8 @@ include /etc/firejail/okular.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# blacklist /run/user/*/bus
+
 noblacklist ~/.config/okularpartrc
 noblacklist ~/.config/okularrc
 noblacklist ~/.kde/share/apps/okular
@@ -23,6 +25,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+# net none
 netfilter
 nodvd
 nogroups
@@ -36,9 +39,9 @@ seccomp
 shell none
 tracelog
 
-# private-bin okular,kbuildsycoca4,kdeinit4,lpr
+private-bin okular,kbuildsycoca4,kdeinit4,lpr
 private-dev
-# private-etc fonts,X11
+private-etc cups,fonts
 # private-tmp - on KDE we need access to the real /tmp for data exchange with thunderbird
 
 # memory-deny-write-execute

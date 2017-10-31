@@ -47,6 +47,8 @@ blacklist /etc/xdg/autostart
 blacklist ${HOME}/.config/*.notifyrc
 blacklist ${HOME}/.config/khotkeysrc
 blacklist ${HOME}/.config/krunnerrc
+blacklist ${HOME}/.config/kwinrc
+blacklist ${HOME}/.config/kwinrulesrc
 blacklist ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
 blacklist ${HOME}/.kde/share/apps/konsole
 blacklist ${HOME}/.kde/share/apps/kwin
@@ -55,25 +57,32 @@ blacklist ${HOME}/.kde/share/apps/solid
 blacklist ${HOME}/.kde/share/config/*.notifyrc
 blacklist ${HOME}/.kde/share/config/khotkeysrc
 blacklist ${HOME}/.kde/share/config/krunnerrc
+blacklist ${HOME}/.kde/share/config/kwinrc
+blacklist ${HOME}/.kde/share/config/kwinrulesrc
 blacklist ${HOME}/.kde/share/config/plasma-desktop-appletsrc
-blacklist ${HOME}/.kde4/share/apps/plasma
 blacklist ${HOME}/.kde4/share/apps/konsole
 blacklist ${HOME}/.kde4/share/apps/kwin
-blacklist ${HOME}/.kde4/share/config/krunnerrc
-blacklist ${HOME}/.kde4/share/config/plasma-desktop-appletsrc
-blacklist ${HOME}/.kde4/share/config/khotkeysrc
+blacklist ${HOME}/.kde4/share/apps/plasma
 blacklist ${HOME}/.kde4/share/apps/solid
 blacklist ${HOME}/.kde4/share/config/*.notifyrc
+blacklist ${HOME}/.kde4/share/config/khotkeysrc
+blacklist ${HOME}/.kde4/share/config/krunnerrc
+blacklist ${HOME}/.kde4/share/config/kwinrc
+blacklist ${HOME}/.kde4/share/config/kwinrulesrc
+blacklist ${HOME}/.kde4/share/config/plasma-desktop-appletsrc
 blacklist ${HOME}/.local/share/kglobalaccel
 blacklist ${HOME}/.local/share/konsole
 blacklist ${HOME}/.local/share/kwin
 blacklist ${HOME}/.local/share/plasma
 blacklist ${HOME}/.local/share/solid
 read-only ${HOME}/.config/kdeglobals
+read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.kde/share/config/kdeglobals
+read-only ${HOME}/.kde/share/config/kioslaverc
 read-only ${HOME}/.kde/share/kde4/services
-read-only ${HOME}/.kde4/share/kde4/services
 read-only ${HOME}/.kde4/share/config/kdeglobals
+read-only ${HOME}/.kde4/share/config/kioslaverc
+read-only ${HOME}/.kde4/share/kde4/services
 read-only ${HOME}/.local/share/kservices5
 
 # kdeinit socket

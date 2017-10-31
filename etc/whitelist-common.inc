@@ -52,9 +52,12 @@ whitelist ~/.config/dconf
 
 # qt/kde
 whitelist ~/.config/kdeglobals
+whitelist ~/.config/kioslaverc
 whitelist ~/.kde/share/config/oxygenrc
 whitelist ~/.kde/share/config/kdeglobals
+whitelist ~/.kde/share/config/kioslaverc
 whitelist ~/.kde/share/icons
 whitelist ~/.kde4/share/config/oxygenrc
 whitelist ~/.kde4/share/config/kdeglobals
+whitelist ~/.kde4/share/config/kioslaverc
 whitelist ~/.kde4/share/icons

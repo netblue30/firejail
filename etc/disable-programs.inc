@@ -230,6 +230,7 @@ blacklist ${HOME}/.java
 blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.kde/share/apps/gwenview
 blacklist ${HOME}/.kde/share/apps/kcookiejar
+blacklist ${HOME}/.kde/share/apps/kget
 blacklist ${HOME}/.kde/share/apps/khtml
 blacklist ${HOME}/.kde/share/apps/konqsidebartng
 blacklist ${HOME}/.kde/share/apps/konqueror
@@ -241,6 +242,7 @@ blacklist ${HOME}/.kde/share/config/digikam
 blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.kde/share/config/k3brc
 blacklist ${HOME}/.kde/share/config/kcookiejarrc
+blacklist ${HOME}/.kde/share/config/kgetrc
 blacklist ${HOME}/.kde/share/config/khtmlrc
 blacklist ${HOME}/.kde/share/config/konq_history
 blacklist ${HOME}/.kde/share/config/konqsidebartngrc
@@ -251,6 +253,7 @@ blacklist ${HOME}/.kde/share/config/okularpartrc
 blacklist ${HOME}/.kde/share/config/okularrc
 blacklist ${HOME}/.kde4/share/apps/gwenview
 blacklist ${HOME}/.kde4/share/apps/kcookiejar
+blacklist ${HOME}/.kde4/share/apps/kget
 blacklist ${HOME}/.kde4/share/apps/khtml
 blacklist ${HOME}/.kde4/share/apps/konqueror
 blacklist ${HOME}/.kde4/share/apps/konqsidebartng
@@ -262,14 +265,15 @@ blacklist ${HOME}/.kde4/share/config/digikam
 blacklist ${HOME}/.kde4/share/config/gwenviewrc
 blacklist ${HOME}/.kde4/share/config/k3brc
 blacklist ${HOME}/.kde4/share/config/kcookiejarrc
+blacklist ${HOME}/.kde4/share/config/kgetrc
 blacklist ${HOME}/.kde4/share/config/khtmlrc
 blacklist ${HOME}/.kde4/share/config/konq_history
 blacklist ${HOME}/.kde4/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde4/share/config/konquerorrc
 blacklist ${HOME}/.kde4/share/config/kopeterc
+blacklist ${HOME}/.kde4/share/config/ktorrentrc
 blacklist ${HOME}/.kde4/share/config/okularpartrc
 blacklist ${HOME}/.kde4/share/config/okularrc
-blacklist ${HOME}/.kde4/share/config/ktorrentrc
 blacklist ${HOME}/.killingfloor
 blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc

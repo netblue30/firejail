@@ -212,7 +212,7 @@ calligrawords, cin, dooble, dooble-qt4, fetchmail, freecad, freecadcmd, google-e
 imagej, karbon, kdenlive, krita, linphone, lmms, macrofusion, mpd, natron, Natron,
 ricochet, shotcut, teamspeak3, tor, tor-browser-en, Viber, x-terminal-emulator, zart,
 conky, arch-audit, ffmpeg, bluefish, cliqz, cinelerra, openshot-qt, pinta, uefitool,
-aosp, pdfmod, gnome-ring, signal-desktop, xcalc, zaproxy, kopete
+aosp, pdfmod, gnome-ring, signal-desktop, xcalc, zaproxy, kopete, kget
 
 Upstreamed many profiles from the following sources: https://github.com/chiraag-nataraj/firejail-profiles,
 https://github.com/nyancat18/fe, and https://aur.archlinux.org/packages/firejail-profiles.

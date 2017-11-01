@@ -92,39 +92,90 @@ void fs_resolvconf(void) {
 	if (cfg.dns1 == 0)
 		return;
 
-	struct stat s;
+	if (arg_debug)
+		printf("mirroring /etc directory\n");
+	if (mkdir(RUN_DNS_ETC, 0755))
+		errExit("mkdir");
+	fs_logger("tmpfs /etc");
 
-	// create a new /etc/resolv.conf
-	if (stat("/etc/resolv.conf", &s) == 0) {
-		if (arg_debug)
-			printf("Creating a new /etc/resolv.conf file\n");
-		FILE *fp = fopen(RUN_RESOLVCONF_FILE, "w");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot create %s\n", RUN_RESOLVCONF_FILE);
-			exit(1);
+	DIR *dir = opendir("/etc");
+	if (!dir)
+		errExit("opendir");
+
+	struct stat s;
+	struct dirent *entry;
+	while ((entry = readdir(dir))) {
+		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+			continue;
+		// for resolv.conf we create a brand new file
+		if (strcmp(entry->d_name, "resolv.conf") == 0)
+			continue;
+//		printf("linking %s\n", entry->d_name);
+
+		char *src;
+		if (asprintf(&src, "/etc/%s", entry->d_name) == -1)
+			errExit("asprintf");
+		if (stat(src, &s) != 0) {
+			free(src);
+			continue;
 		}
 
-		if (cfg.dns1)
-			fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
-		if (cfg.dns2)
-			fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
-		if (cfg.dns3)
-			fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
+		char *dest;
+		if (asprintf(&dest, "%s/%s", RUN_DNS_ETC, entry->d_name) == -1)
+			errExit("asprintf");
 
-		// mode and owner
-		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+		if (is_link(src)) {
+			char *rp =realpath(src, NULL);
+			if (rp == NULL) {
+				free(src);
+				free(dest);
+				continue;
+			}
+			if (symlink(rp, dest))
+				errExit("symlink");
+		}
+		else if (S_ISDIR(s.st_mode))
+			create_empty_dir_as_root(dest, s.st_mode);
+		else
+			create_empty_file_as_root(dest, s.st_mode);
+		// bind-mount src on top of dest
+		if (mount(src, dest, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount bind mirroring /etc");
+		fs_logger2("clone", src);
 
-		fclose(fp);
-
-		// bind-mount the file on top of /etc/hostname
-		if (mount(RUN_RESOLVCONF_FILE, "/etc/resolv.conf", NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind /etc/resolv.conf");
-		fs_logger("create /etc/resolv.conf");
+		free(src);
+		free(dest);
 	}
-	else {
-		fprintf(stderr, "Error: cannot set DNS servers, /etc/resolv.conf file is missing\n");
+	closedir(dir);
+
+	// mount bind our private etc directory on top of /etc
+	if (arg_debug)
+		printf("Mount-bind %s on top of /etc\n", RUN_DNS_ETC);
+	if (mount(RUN_DNS_ETC, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind mirroring /etc");
+	fs_logger("mount /etc");
+
+	if (arg_debug)
+		printf("Creating a new /etc/resolv.conf file\n");
+	FILE *fp = fopen("/etc/resolv.conf", "w");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot create /etc/resolv.conf file\n");
 		exit(1);
 	}
+
+	if (cfg.dns1)
+		fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
+	if (cfg.dns2)
+		fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
+	if (cfg.dns3)
+		fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
+
+	// mode and owner
+	SET_PERMS_STREAM(fp, 0, 0, 0644);
+
+	fclose(fp);
+
+	fs_logger("create /etc/resolv.conf");
 }
 
 char *fs_check_hosts_file(const char *fname) {

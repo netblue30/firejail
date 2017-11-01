@@ -52,6 +52,8 @@
 #define RUN_LIB_DIR	"/run/firejail/mnt/lib"
 #define RUN_LIB_FILE	"/run/firejail/mnt/libfiles"
 #define RUN_LIB_BIN	"/run/firejail/mnt/binfiles"
+#define RUN_DNS_ETC	"/run/firejail/mnt/dns-etc"
+
 
 #define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
 #define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter

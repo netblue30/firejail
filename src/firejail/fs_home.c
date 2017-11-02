@@ -50,6 +50,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat("/etc/skel/.zshrc", &s) == 0) {
 			copy_file_as_user("/etc/skel/.zshrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.zshrc");
+			fs_logger2("clone", fname);
 		}
 		else {
 			touch_file_as_user(fname, u, g, 0644);
@@ -74,6 +75,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat("/etc/skel/.cshrc", &s) == 0) {
 			copy_file_as_user("/etc/skel/.cshrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.cshrc");
+			fs_logger2("clone", fname);
 		}
 		else {
 			touch_file_as_user(fname, u, g, 0644);
@@ -97,6 +99,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		if (stat("/etc/skel/.bashrc", &s) == 0) {
 			copy_file_as_user("/etc/skel/.bashrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.bashrc");
+			fs_logger2("clone", fname);
 		}
 		free(fname);
 	}
@@ -312,6 +315,7 @@ void fs_private(void) {
 		if (chown(homedir, u, g) < 0)
 			errExit("chown");
 		fs_logger2("mkdir", homedir);
+		fs_logger2("tmpfs", homedir);
 	}
 
 	skel(homedir, u, g);
@@ -500,6 +504,7 @@ void fs_private_home_list(void) {
 
 	if (mount(RUN_HOME_DIR, homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	fs_logger2("tmpfs", homedir);
 
 	if (uid != 0) {
 		// mask /root

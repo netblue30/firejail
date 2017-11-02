@@ -43,6 +43,21 @@ extern void fslib_install_system(void);
 static int lib_cnt = 0;
 static int dir_cnt = 0;
 
+static void report_duplication(const char *full_path) {
+	char *fname = strrchr(full_path, '/');
+	if (fname && *(++fname) != '\0') {
+		// report the file on all bin paths
+		int i = 0;	
+		while (lib_paths[i]) {
+			char *p;
+			if (asprintf(&p, "%s/%s", lib_paths[i], fname) == -1)
+				errExit("asprintf");
+			fs_logger2("clone", p);
+			free(p);
+			i++;
+		}
+	}
+}
 
 static char *build_dest_dir(const char *full_path) {
 	assert(full_path);
@@ -81,6 +96,7 @@ void fslib_duplicate(const char *full_path) {
 		printf("copying %s to private %s\n", full_path, dest_dir);
 
 	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, dest_dir);
+	report_duplication(full_path);
 	lib_cnt++;
 }
 

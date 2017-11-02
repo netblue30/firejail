@@ -147,6 +147,7 @@ void pulseaudio_init(void) {
 		}
 		// wait for the child to finish
 		waitpid(child, NULL, 0);
+		fs_logger2("create", dir1);
 	}
 	else {
 		// make sure the directory is owned by the user
@@ -179,6 +180,7 @@ void pulseaudio_init(void) {
 		}
 		// wait for the child to finish
 		waitpid(child, NULL, 0);
+		fs_logger2("create", dir1);
 	}
 	else {
 		// make sure the directory is owned by the user
@@ -199,6 +201,11 @@ void pulseaudio_init(void) {
 		    mount(NULL, homeusercfg, NULL, MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_BIND|MS_REMOUNT, NULL) < 0)
 			errExit("mount pulseaudio");
 		fs_logger2("tmpfs", homeusercfg);
+		char *p;
+		if (asprintf(&p, "%s/client.conf", homeusercfg) == -1)
+			errExit("asprintf");
+		fs_logger2("create", p);
+		free(p);
 	}
 	else {
 		// set environment

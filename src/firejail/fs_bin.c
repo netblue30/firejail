@@ -146,6 +146,19 @@ errexit:
 	return 0;
 }
 
+static void report_duplication(const char *fname) {
+	// report the file on all bin paths
+	int i = 0;	
+	while (paths[i]) {
+		char *p;
+		if (asprintf(&p, "%s/%s", paths[i], fname) == -1)
+			errExit("asprintf");
+		fs_logger2("clone", p);
+		free(p);
+		i++;
+	}
+}
+
 static void duplicate(char *fname, FILE *fplist) {
 	assert(fname);
 
@@ -193,17 +206,20 @@ static void duplicate(char *fname, FILE *fplist) {
 		if (is_link(full_path)) {
 			char *actual_path = realpath(full_path, NULL);
 			if (actual_path) {
-				if (valid_full_path_file(actual_path))
+				if (valid_full_path_file(actual_path)) {
 					sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, actual_path, RUN_BIN_DIR);
+					char *f = strrchr(actual_path, '/');
+					if (f && *(++f) !='\0')
+						report_duplication(f);
+				}
 				free(actual_path);
 			}
 		}
 
 		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
 	}
-
-	fs_logger2("clone", fname);
 	free(full_path);
+	report_duplication(fname);
 }
 
 static void globbing(char *fname, FILE *fplist) {

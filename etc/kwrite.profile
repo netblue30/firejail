@@ -12,6 +12,7 @@ noblacklist ~/.config/katerc
 noblacklist ~/.config/kateschemarc
 noblacklist ~/.config/katesyntaxhighlightingrc
 noblacklist ~/.config/katevirc
+noblacklist ~/.config/kwriterc
 noblacklist ~/.local/share/kwrite
 
 include /etc/firejail/disable-common.inc

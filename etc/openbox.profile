@@ -6,7 +6,7 @@ include /etc/firejail/openbox.local
 include /etc/firejail/globals.local
 
 # all applications started in OpenBox will run in this profile
-
+noblacklist ${HOME}/.config/openbox
 include /etc/firejail/disable-common.inc
 
 caps.drop all

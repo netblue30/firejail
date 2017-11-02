@@ -6,8 +6,8 @@ include /etc/firejail/cherrytree.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/cherrytree
-noblacklist /usr/bin/python2*
-noblacklist /usr/lib/python3*
+#noblacklist /usr/bin/python2*
+#noblacklist /usr/lib/python3*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -7,8 +7,8 @@ include /etc/firejail/globals.local
 
 noblacklist ~/.config/midori
 noblacklist ~/.local/share/midori
-noblacklist ~/.local/share/webkit
-noblacklist ~/.local/share/webkitgtk
+# noblacklist ~/.local/share/webkit
+# noblacklist ~/.local/share/webkitgtk
 noblacklist ~/.pki
 
 include /etc/firejail/disable-common.inc

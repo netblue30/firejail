@@ -6,7 +6,9 @@ include /etc/firejail/atril.local
 include /etc/firejail/globals.local
 
 noblacklist ~/.config/atril
-noblacklist ~/.local/share
+
+#noblacklist ~/.local/share
+# it seems to use only ~/.local/share/webkitgtk
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -6,6 +6,8 @@ include /etc/firejail/inkscape.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.inkscape
+noblacklist ${HOME}/.config/inkscape
+
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -6,8 +6,8 @@ include /etc/firejail/brackets.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/Brackets
-noblacklist /opt/brackets/
-noblacklist /opt/google/
+#noblacklist /opt/brackets/
+#noblacklist /opt/google/
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

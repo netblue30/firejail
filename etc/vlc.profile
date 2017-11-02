@@ -6,6 +6,7 @@ include /etc/firejail/vlc.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/vlc
+noblacklist ${HOME}/.local/share/vlc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

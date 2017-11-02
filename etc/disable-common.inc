@@ -155,6 +155,17 @@ blacklist /etc/anacrontab
 blacklist /etc/cron*
 blacklist /etc/profile.d
 blacklist /etc/rc.local
+# rc1.d, rc2.d, ...
+blacklist /etc/rc?.d
+blacklist /etc/kernel*
+blacklist /etc/grub*
+blacklist /etc/dkms
+blacklist /etc/apparmor*
+blacklist /etc/selinux
+blacklist /etc/modules*
+blacklist /etc/logrotate*
+blacklist /etc/adduser.conf
+blacklist ${HOME}/.config/openbox
 
 # Startup files
 read-only ${HOME}/.antigen
@@ -201,6 +212,7 @@ read-only ${HOME}/.nano
 read-only ${HOME}/.reportbugrc
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.vim
+read-only ${HOME}/.viminfo
 read-only ${HOME}/.vimrc
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver

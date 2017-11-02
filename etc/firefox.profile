@@ -19,7 +19,7 @@ noblacklist ~/.kde4/share/apps/okular
 noblacklist ~/.kde4/share/config/kgetrc
 noblacklist ~/.kde4/share/config/okularpartrc
 noblacklist ~/.kde4/share/config/okularrc
-noblacklist ~/.local/share/gnome-shell/extensions
+# noblacklist ~/.local/share/gnome-shell/extensions
 noblacklist ~/.local/share/okular
 noblacklist ~/.local/share/qpdfview
 noblacklist ~/.mozilla

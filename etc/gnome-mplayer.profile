@@ -5,6 +5,7 @@ include /etc/firejail/gnome-mplayer.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ~/.config/gnome-mplayer
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

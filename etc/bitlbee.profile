@@ -7,7 +7,7 @@ include /etc/firejail/globals.local
 
 noblacklist /sbin
 noblacklist /usr/sbin
-noblacklist /var/log
+# noblacklist /var/log
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

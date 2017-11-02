@@ -7,7 +7,7 @@ include /etc/firejail/globals.local
 
 noblacklist ~/.cache/xreader
 noblacklist ~/.config/xreader
-noblacklist ~/.local/share
+# noblacklist ~/.local/share
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

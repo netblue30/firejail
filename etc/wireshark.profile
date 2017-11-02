@@ -6,6 +6,8 @@ include /etc/firejail/wireshark.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/wireshark
+noblacklist ${HOME}/.wireshark
+
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

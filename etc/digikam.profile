@@ -5,6 +5,7 @@ include /etc/firejail/digikam.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.config/digikam
 noblacklist ${HOME}/.config/digikamrc
 noblacklist ${HOME}/.kde/share/apps/digikam
 noblacklist ${HOME}/.kde4/share/apps/digikam

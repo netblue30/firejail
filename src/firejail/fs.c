@@ -183,9 +183,23 @@ static void disable_file(OPERATION op, const char *filename) {
 	free(fname);
 }
 
+// check noblacklist statements not matched by a proper blacklist in disable-*.inc files
+static int nbcheck_start = 0;
+static size_t nbcheck_size = 0;
+static int *nbcheck = NULL;
+
 // Treat pattern as a shell glob pattern and blacklist matching files
 static void globbing(OPERATION op, const char *pattern, const char *noblacklist[], size_t noblacklist_len) {
 	assert(pattern);
+
+	if (nbcheck_start == 0) {
+		nbcheck_start = 1;
+		nbcheck_size = noblacklist_len;
+		nbcheck = malloc(sizeof(int) * noblacklist_len);
+		if (nbcheck == NULL)
+			errExit("malloc");
+		memset(nbcheck, 0, sizeof(int) * noblacklist_len);
+	}
 
 	glob_t globbuf;
 	// Profiles contain blacklists for files that might not exist on a user's machine.
@@ -212,6 +226,8 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 				continue;
 			else if (result == 0) {
 				okay_to_blacklist = false;
+				if (j < nbcheck_size)	// noblacklist checking
+					nbcheck[j] = 1;
 				break;
 			}
 			else {
@@ -403,8 +419,21 @@ void fs_blacklist(void) {
 	}
 
 	size_t i;
-	for (i = 0; i < noblacklist_c; i++) free(noblacklist[i]);
-        free(noblacklist);
+	// noblacklist checking
+	for (i = 0; i < nbcheck_size; i++)
+		if (!arg_quiet && !nbcheck[i])
+			printf("TESTING warning: noblacklist %s not matched by a proper blacklist command in disable*.inc\n",
+				 noblacklist[i]);
+
+	// free memory
+	if (nbcheck) {
+		free(nbcheck);
+		nbcheck = NULL;
+		nbcheck_size = 0;
+	}
+	for (i = 0; i < noblacklist_c; i++)
+		free(noblacklist[i]);
+	free(noblacklist);
 }
 
 static int get_mount_flags(const char *path, unsigned long *flags) {

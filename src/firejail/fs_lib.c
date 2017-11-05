@@ -69,6 +69,9 @@ static char *build_dest_dir(const char *full_path) {
 // copy fname in private_run_dir
 void fslib_duplicate(const char *full_path) {
 	assert(full_path);
+	if (arg_debug)
+		printf("fslib_duplicate %s\n", full_path);
+
 	struct stat s;
 	if (stat(full_path, &s) != 0 || s.st_uid != 0 || access(full_path, R_OK))
 		return;
@@ -105,6 +108,10 @@ void fslib_duplicate(const char *full_path) {
 // it could be a library or an executable
 // lib is not copied, only libraries used by it
 void fslib_copy_libs(const char *full_path) {
+	assert(full_path);
+	if (arg_debug)
+		printf("fslib_copy_libs %s\n", full_path);
+
 	// if library/executable does not exist or the user does not have read access to it
 	// print a warning and exit the function.
 	if (access(full_path, R_OK)) {
@@ -120,6 +127,8 @@ void fslib_copy_libs(const char *full_path) {
 		errExit("chown");
 
 	// run fldd to extact the list of files
+	if (arg_debug)
+		printf("runing fldd %s\n", full_path);
 	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
 
 	// open the list of libraries and install them on by one
@@ -141,6 +150,9 @@ void fslib_copy_libs(const char *full_path) {
 
 void fslib_copy_dir(const char *full_path) {
 	assert(full_path);
+	if (arg_debug)
+		printf("fslib_copy_dir %s\n", full_path);
+
 	// do nothing if the directory does not exist or is not owned by root
 	struct stat s;
 	if (stat(full_path, &s) != 0 || s.st_uid != 0 || !S_ISDIR(s.st_mode) || access(full_path, R_OK))
@@ -150,8 +162,6 @@ void fslib_copy_dir(const char *full_path) {
 	assert(dir_name);
 	dir_name++;
 	assert(*dir_name != '\0');
-
-
 
 	// do nothing if the directory is already there
 	char *dest;
@@ -371,12 +381,17 @@ void fs_private_lib(void) {
 	if (!arg_quiet)
 		fprintf(stderr, "Installed %d libraries and %d directories\n", lib_cnt, dir_cnt);
 
-	// for our trace and tracelog libs
-	if (arg_trace)
-		fslib_duplicate(LIBDIR "/firejail/libtrace.so");
-	else if (arg_tracelog)
-		fslib_duplicate(LIBDIR "/firejail/libtracelog.so");
+	// bring in firejail directory for --trace options
+	fslib_copy_dir(LIBDIR "/firejail");
 
+	// ... and for sandbox in sandbox functionality
+	fslib_copy_libs(LIBDIR "/firejail/faudit");
+	fslib_copy_libs(LIBDIR "/firejail/fbuilder");
+	fslib_copy_libs(LIBDIR "/firejail/fcopy");
+	fslib_copy_libs(LIBDIR "/firejail/fldd");
+	fslib_copy_libs(LIBDIR "/firejail/fnet");
+	fslib_copy_libs(LIBDIR "/firejail/fseccomp");
+	fslib_copy_libs(LIBDIR "/firejail/ftee");
 	// mount lib filesystem
 	mount_directories();
 }

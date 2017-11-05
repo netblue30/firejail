@@ -122,8 +122,6 @@ void fslib_install_stdc(void) {
 		fprintf(stderr, "Standard C library installed in %0.2f ms\n", timetrace_end());
 }
 
-void fslib_install_locale(void);
-
 
 //***************************************************************
 // various system libraries

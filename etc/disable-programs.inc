@@ -150,6 +150,7 @@ blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
+blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/opera
@@ -480,6 +481,7 @@ blacklist ${HOME}/.cache/midori
 noblacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla
 blacklist ${HOME}/.cache/mutt
+blacklist ${HOME}/.cache/nheko/nheko
 blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta

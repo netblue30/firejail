@@ -255,6 +255,7 @@ blacklist ${HOME}/.kde/share/apps/khtml
 blacklist ${HOME}/.kde/share/apps/konqsidebartng
 blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/kopete
+blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/apps/khtml
 blacklist ${HOME}/.kde/share/apps/ktorrent
 blacklist ${HOME}/.kde/share/config/baloofilerc
@@ -478,7 +479,7 @@ blacklist ${HOME}/.cache/iridium
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/midori
-noblacklist ${HOME}/.cache/moonchild productions/pale moon
+blacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla
 blacklist ${HOME}/.cache/mutt
 blacklist ${HOME}/.cache/nheko/nheko

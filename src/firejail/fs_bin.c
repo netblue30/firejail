@@ -99,17 +99,17 @@ static char *check_dir_or_file(const char *name) {
 static int valid_full_path_file(const char *name) {
 	assert(name);
 
-	char *full_name = realpath(name, NULL);
-	if (!full_name)
+	char *real_path = realpath(name, NULL);
+	if (!real_path)
 		goto errexit;
-	char *fname = strrchr(full_name, '/');
+	char *fname = strrchr(real_path, '/');
 	if (!fname)
 		goto errexit;
 	if (*(++fname) == '\0')
 		goto errexit;
 
-	int i = 0;
 	int found = 0;
+	int i = 0;
 	while (paths[i]) {
 		// private-bin-no-local can be disabled in /etc/firejail/firejail.config
 		if (checkcfg(CFG_PRIVATE_BIN_NO_LOCAL) && strstr(paths[i], "local/")) {
@@ -118,31 +118,33 @@ static int valid_full_path_file(const char *name) {
 		}
 
 		// check file
-		char *full_name2;
-		if (asprintf(&full_name2, "%s/%s", paths[i], fname) == -1)
+		char *path;
+		if (asprintf(&path, "%s/%s", paths[i], fname) == -1)
 			errExit("asprintf");
 
-		if (strcmp(full_name, full_name2) == 0) {
-			free(full_name2);
-			found = 1;
+		if (strcmp(real_path, path) == 0) {
+			free(path);
+			// checking access
+			if (access(real_path, X_OK) == 0)
+				found = 1;
 			break;
 		}
 
-		free(full_name2);
+		free(path);
 		i++;
 	}
 
 	if (!found)
 		goto errexit;
 
-	free(full_name);
+	free(real_path);
 	return 1;
 
 errexit:
 	if (arg_debug)
 		fwarning("file %s not found\n", name);
-	if (full_name)
-		free(full_name);
+	if (real_path)
+		free(real_path);
 	return 0;
 }
 
@@ -171,13 +173,9 @@ static void duplicate(char *fname, FILE *fplist) {
 	char *full_path;
 	if (*fname == '/') {
 		// If the absolute filename is indicated, directly use it. This
-		// is required for the following three cases:
+		// is required for the following cases:
 		//  - if user's $PATH order is not the same as the above
 		//    paths[] variable order
-		//  - if for example /usr/bin/which is a symlink to /bin/which,
-		//    because in this case the result is a symlink pointing to
-		//    itself due to the file name being the same.
-
 		if (!valid_full_path_file(fname))
 			return;
 
@@ -207,6 +205,7 @@ static void duplicate(char *fname, FILE *fplist) {
 			char *actual_path = realpath(full_path, NULL);
 			if (actual_path) {
 				if (valid_full_path_file(actual_path)) {
+					// copy the real file pointed by symlink
 					sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, actual_path, RUN_BIN_DIR);
 					char *f = strrchr(actual_path, '/');
 					if (f && *(++f) !='\0')
@@ -215,7 +214,7 @@ static void duplicate(char *fname, FILE *fplist) {
 				free(actual_path);
 			}
 		}
-
+		// copy a file or a symlink
 		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
 	}
 	free(full_path);

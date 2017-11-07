@@ -35,7 +35,7 @@ shell none
 
 private-bin keepassxc
 private-dev
-private-etc fonts,ld.so.cache
+private-etc fonts,ld.so.cache,machine-id
 private-tmp
 
 memory-deny-write-execute

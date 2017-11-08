@@ -6,6 +6,7 @@ blacklist ${HOME}/.config/KeePass
 blacklist ${HOME}/.config/keepass
 blacklist ${HOME}/.config/keepassx
 blacklist ${HOME}/.config/keepassxc
+blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.keepass
 blacklist ${HOME}/.keepassx
 blacklist ${HOME}/.keepassxc

@@ -64,6 +64,7 @@ void usage(void) {
 	printf("    --debug-caps - print all recognized capabilities.\n");
 	printf("    --debug-check-filename - debug filename checking.\n");
 	printf("    --debug-errnos - print all recognized error numbers.\n");
+	printf("    --debug-private-lib - debug for --private-lib option.\n");
 	printf("    --debug-protocols - print all recognized protocols.\n");
 	printf("    --debug-syscalls - print all recognized system calls.\n");
 #ifdef HAVE_WHITELIST

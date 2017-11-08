@@ -23,7 +23,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
-
 #define MAXBUF 4096
 
 static const char * const lib_paths[] = {
@@ -69,8 +68,6 @@ static char *build_dest_dir(const char *full_path) {
 // copy fname in private_run_dir
 void fslib_duplicate(const char *full_path) {
 	assert(full_path);
-	if (arg_debug)
-		printf("fslib_duplicate %s\n", full_path);
 
 	struct stat s;
 	if (stat(full_path, &s) != 0 || s.st_uid != 0 || access(full_path, R_OK))
@@ -95,7 +92,7 @@ void fslib_duplicate(const char *full_path) {
 	}
 	free(name);
 	
-	if (arg_debug)
+	if (arg_debug || arg_debug_private_lib)
 		printf("copying %s to private %s\n", full_path, dest_dir);
 
 	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, dest_dir);
@@ -109,13 +106,13 @@ void fslib_duplicate(const char *full_path) {
 // lib is not copied, only libraries used by it
 void fslib_copy_libs(const char *full_path) {
 	assert(full_path);
-	if (arg_debug)
+	if (arg_debug || arg_debug_private_lib)
 		printf("fslib_copy_libs %s\n", full_path);
 
 	// if library/executable does not exist or the user does not have read access to it
 	// print a warning and exit the function.
 	if (access(full_path, R_OK)) {
-		if (arg_debug)
+		if (arg_debug || arg_debug_private_lib)
 			printf("cannot find %s for private-lib, skipping...\n", full_path);
 		return;
 	}
@@ -127,7 +124,7 @@ void fslib_copy_libs(const char *full_path) {
 		errExit("chown");
 
 	// run fldd to extact the list of files
-	if (arg_debug)
+	if (arg_debug || arg_debug_private_lib)
 		printf("runing fldd %s\n", full_path);
 	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
 
@@ -150,7 +147,7 @@ void fslib_copy_libs(const char *full_path) {
 
 void fslib_copy_dir(const char *full_path) {
 	assert(full_path);
-	if (arg_debug)
+	if (arg_debug || arg_debug_private_lib)
 		printf("fslib_copy_dir %s\n", full_path);
 
 	// do nothing if the directory does not exist or is not owned by root
@@ -216,7 +213,7 @@ static char *valid_file(const char *lib) {
 
 
 static void mount_directories(void) {
-	if (arg_debug)
+	if (arg_debug || arg_debug_private_lib)
 		printf("Mount-bind %s on top of /lib /lib64 /usr/lib\n", RUN_LIB_DIR);
 
 	if (is_dir("/lib")) {
@@ -262,7 +259,7 @@ void fs_private_lib(void) {
 	return;
 #endif
 	char *private_list = cfg.lib_private_keep;
-	if (arg_debug)
+	if (arg_debug || arg_debug_private_lib)
 		printf("Starting private-lib processing: program %s, shell %s\n",
 			(cfg.original_program_index > 0)? cfg.original_argv[cfg.original_program_index]: "none",
 		(arg_shell_none)? "none": cfg.shell);
@@ -288,7 +285,7 @@ void fs_private_lib(void) {
 
 	// for the listed libs
 	if (private_list && *private_list != '\0') {
-		if (arg_debug)
+		if (arg_debug || arg_debug_private_lib)
 			printf("Copying extra files (%s) in the new lib directory\n", private_list);
 
 		char *dlist = strdup(private_list);

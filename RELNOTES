@@ -13,6 +13,7 @@ firejail (0.9.51) baseline; urgency=low
   * feature: systemd-resolved integration
   * feature: whitelisting /var directory in most profiles
   * feature: GTK2, GTK3 and Qt4 private-lib support
+  * feature: --debug-private-lib
   * feature: test deployment of private-lib for the following
     applications: evince, galculator, gnome-calculator,
     leafpad, mousepad, transmission-gtk, xcalc, xmr-stak-cpu,

@@ -356,6 +356,9 @@ Example:
 .br
 $ firejail \-\-debug-errnos
 .TP
+\fB\-\-debug-private-lib
+Debug messages for --private-lib option.
+.TP
 \fB\-\-debug-protocols
 Print all recognized protocols in the current Firejail software build and exit.
 .br

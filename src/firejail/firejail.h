@@ -310,6 +310,7 @@ extern int arg_debug;		// print debug messages
 extern int arg_debug_check_filename;		// print debug messages for filename checking
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
+extern int arg_debug_private_lib;	// print debug messages for private-lib
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
 extern int arg_overlay;		// overlay option

@@ -100,16 +100,22 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 
 ## Whitelisting, globbing etc.
 
-Add "include /etc/firejail/whitelist-var-common.inc" to an application profile and test it. If it's working,
-send a pull request. I did it so far for some more common applications like Firefox, Chromium etc.
+We deployed a whitelist for /var directory ("include /etc/firejail/whitelist-var-common.inc").
+It is currently done for 115 applications.
 
-Added globbing support for --private-bin. Added whitelisting support for /etc and /usr/share.
+We added globbing support for --private-bin and whitelisting support for /etc and /usr/share.
 
---private-lib was enhanced to autodetect GTK2, GTK3 and Qt4 libraries. We do a test run with this option enabled
+--private-lib was enhanced to autodetect GTK2, GTK3 and Qt4 libraries. In the next release we do a test run with this option enabled
 for the following applications: evince, galculator, gnome-calculator,
     leafpad, mousepad, transmission-gtk, xcalc, xmr-stak-cpu,
     atril, mate-color-select, tar, file, strings, gpicview,
     eom, eog, gedit, pluma
+
+Just for fun, this is a private-bin/private-lib Firefox running on Debian 9:
+`````
+$ firejail --private-bin=firefox,firefox-esr,sh,which --private-lib=firefox-esr firefox
+````
+
 
 ## Profile build  tool
 `````
@@ -200,6 +206,9 @@ $
               time is specified in hours/minutes/seconds format.
 
               $ firejail --timeout=01:30:00 firefox
+
+      --debug-private-lib
+              Debug messages for --private-lib option.
 
 `````
 

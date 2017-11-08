@@ -1,8 +1,8 @@
 #!/bin/sh
 # Purpose: Fetch, compile, and install firejail from GitHub source. For
-#			Debian-based distros only (Ubuntu, Mint, etc).
+# Debian-based distros only (Ubuntu, Mint, etc).
 set -e
-git clone --depth=1 https://www.github.com/netblue30/firejail.git
+git clone --depth=1 https://github.com/netblue30/firejail.git
 cd firejail
 ./configure --prefix=/usr
 make deb

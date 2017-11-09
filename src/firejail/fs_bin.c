@@ -182,29 +182,24 @@ static void duplicate(char *fname, FILE *fplist) {
 	if (fplist)
 		fprintf(fplist, "%s\n", full_path);
 
-	// copy the file
-	if (checkcfg(CFG_FOLLOW_SYMLINK_PRIVATE_BIN))
-		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, RUN_BIN_DIR);
-	else {
-		// if full_path is simlink, and the link is in our path, copy both
-		if (is_link(full_path)) {
-			char *actual_path = realpath(full_path, NULL);
-			if (actual_path) {
-				if (valid_full_path_file(actual_path)) {
-					// solving problems such as /bin/sh -> /bin/dash
-					// copy the real file pointed by symlink
-					sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, actual_path, RUN_BIN_DIR);
-					char *f = strrchr(actual_path, '/');
-					if (f && *(++f) !='\0')
-						report_duplication(f);
-				}
-				free(actual_path);
+	// if full_path is symlink, and the link is in our path, copy both the file and the symlink
+	if (is_link(full_path)) {
+		char *actual_path = realpath(full_path, NULL);
+		if (actual_path) {
+			if (valid_full_path_file(actual_path)) {
+				// solving problems such as /bin/sh -> /bin/dash
+				// copy the real file pointed by symlink
+				sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, actual_path, RUN_BIN_DIR);
+				char *f = strrchr(actual_path, '/');
+				if (f && *(++f) !='\0')
+					report_duplication(f);
 			}
+			free(actual_path);
 		}
-
-		// copy a file or a symlink
-		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
 	}
+
+	// copy a file or a symlink
+	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
 	free(full_path);
 	report_duplication(fname);
 }

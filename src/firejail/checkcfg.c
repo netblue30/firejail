@@ -47,7 +47,6 @@ int checkcfg(int val) {
 		cfg_val[CFG_FORCE_NONEWPRIVS] = 0;
 		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
-		cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
 		cfg_val[CFG_XPRA_ATTACH] = 0;
@@ -151,12 +150,8 @@ int checkcfg(int val) {
 			}
 			// follow symlink in private-bin command
 			else if (strncmp(ptr, "follow-symlink-private-bin ", 27) == 0) {
-				if (strcmp(ptr + 27, "yes") == 0)
-					cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 1;
-				else if (strcmp(ptr + 27, "no") == 0)
-					cfg_val[CFG_FOLLOW_SYMLINK_PRIVATE_BIN] = 0;
-				else
-					goto errout;
+				if (!arg_quiet)
+					fprintf(stderr, "Warning:follow-symlink-private-bin from firejail.config was deprecated\n");
 			}
 			// nonewprivs
 			else if (strncmp(ptr, "force-nonewprivs ", 17) == 0) {

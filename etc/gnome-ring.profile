@@ -22,12 +22,12 @@ nogroups
 nonewprivs
 noroot
 notv
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
 disable-mnt
-private-dev
+# private-dev
 private-tmp
 
 noexec ${HOME}

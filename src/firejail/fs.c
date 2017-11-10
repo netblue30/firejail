@@ -1123,7 +1123,9 @@ void fs_check_chroot_dir(const char *rootdir) {
 	}
 	free(name);
 
-	// check /etc/resolv.conf
+	// there should be no checking on <chrootdir>/etc/resolv.conf
+	// the file is replaced with the real /etc/resolv.conf anyway
+#if 0
 	if (asprintf(&name, "%s/etc/resolv.conf", rootdir) == -1)
 		errExit("asprintf");
 	if (stat(name, &s) == 0) {
@@ -1147,6 +1149,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 		}
 	}
 	free(name);
+#endif
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {
@@ -1222,6 +1225,7 @@ void fs_chroot(const char *rootdir) {
 			errExit("asprintf");
 		if (arg_debug)
 			printf("Updating /etc/resolv.conf in %s\n", fname);
+		unlink(fname);
 		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
 			fwarning("/etc/resolv.conf not initialized\n");
 	}

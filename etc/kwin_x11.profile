@@ -36,5 +36,4 @@ private-dev
 private-etc drirc,xdg
 private-tmp
 
-noexec ${HOME}
 noexec /tmp

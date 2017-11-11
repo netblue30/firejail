@@ -17,8 +17,7 @@ blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.config/autostart
 blacklist ${HOME}/.config/autostart-scripts
 blacklist ${HOME}/.config/lxsession/LXDE/autostart
-blacklist ${HOME}/.config/openbox/autostart
-blacklist ${HOME}/.config/openbox/environment
+blacklist ${HOME}/.config/openbox
 blacklist ${HOME}/.config/plasma-workspace/env
 blacklist ${HOME}/.config/plasma-workspace/shutdown
 blacklist ${HOME}/.config/startupconfig
@@ -165,7 +164,6 @@ blacklist /etc/selinux
 blacklist /etc/modules*
 blacklist /etc/logrotate*
 blacklist /etc/adduser.conf
-blacklist ${HOME}/.config/openbox
 
 # Startup files
 read-only ${HOME}/.antigen

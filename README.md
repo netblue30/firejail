@@ -114,7 +114,7 @@ for the following applications: evince, galculator, gnome-calculator,
 Just for fun, this is a private-bin/private-lib Firefox running on Debian 9:
 `````
 $ firejail --private-bin=firefox,firefox-esr,sh,which --private-lib=firefox-esr firefox
-````
+`````
 
 
 ## Profile build  tool
@@ -221,7 +221,8 @@ calligrawords, cin, dooble, dooble-qt4, fetchmail, freecad, freecadcmd, google-e
 imagej, karbon, kdenlive, krita, linphone, lmms, macrofusion, mpd, natron, Natron,
 ricochet, shotcut, teamspeak3, tor, tor-browser-en, Viber, x-terminal-emulator, zart,
 conky, arch-audit, ffmpeg, bluefish, cliqz, cinelerra, openshot-qt, pinta, uefitool,
-aosp, pdfmod, gnome-ring, signal-desktop, xcalc, zaproxy, kopete, kget, nheko, Enpass
+aosp, pdfmod, gnome-ring, signal-desktop, xcalc, zaproxy, kopete, kget, nheko, Enpass,
+kwin_x11, krunner
 
 Upstreamed many profiles from the following sources: https://github.com/chiraag-nataraj/firejail-profiles,
 https://github.com/nyancat18/fe, and https://aur.archlinux.org/packages/firejail-profiles.

@@ -38,7 +38,8 @@ firejail (0.9.51) baseline; urgency=low
       mpd, natron, Natron, ricochet, shotcut, teamspeak3, tor, tor-browser-en,
       Viber, x-terminal-emulator, zart, conky, arch-audit, ffmpeg, bluefish,
       cinelerra, openshot-qt, pinta, uefitool, aosp, pdfmod, gnome-ring,
-      xcalc, zaproxy, kopete, cliqz, signal-desktop, kget, nheko, Enpass
+      xcalc, zaproxy, kopete, cliqz, signal-desktop, kget, nheko, Enpass,
+      kwin_x11, krunner
 
  -- netblue30 <netblue30@yahoo.com>  Thu, 9 Nov 2017 08:00:00 -0500
 

@@ -34,6 +34,7 @@ tracelog
 
 disable-mnt
 private-bin qtox
+private-dev
 private-tmp
 
 noexec ${HOME}

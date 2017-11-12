@@ -33,7 +33,8 @@ tracelog
 disable-mnt
 private-bin kwin_x11
 private-dev
-private-etc drirc,xdg
+private-etc drirc,ld.so.cache,xdg
 private-tmp
 
+# noexec ${HOME}
 noexec /tmp

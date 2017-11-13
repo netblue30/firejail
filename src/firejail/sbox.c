@@ -104,13 +104,6 @@ static struct sock_fprog prog = {
 	.filter = filter,
 };
 
-typedef struct sbox_config {
-	char *name;
-	char *path;
-	unsigned filters;
-} SboxConfig;
-
-
 int sbox_run(unsigned filter, int num, ...) {
 	EUID_ROOT();
 
@@ -142,7 +135,7 @@ int sbox_run(unsigned filter, int num, ...) {
 		if (filter & SBOX_STDIN_FROM_FILE) {
 			int fd;
 			if((fd = open(SBOX_STDIN_FILE, O_RDONLY)) == -1) {
-				fprintf(stderr,"Error: cannot open /tmp/netfilter\n");
+				fprintf(stderr,"Error: cannot open %s\n", SBOX_STDIN_FILE);
 				exit(1);
 			}
 			dup2(fd,STDIN_FILENO);

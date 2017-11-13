@@ -24,33 +24,24 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
-static char *client_filter =
-"*filter\n"
-":INPUT DROP [0:0]\n"
-":FORWARD DROP [0:0]\n"
-":OUTPUT ACCEPT [0:0]\n"
-"-A INPUT -i lo -j ACCEPT\n"
-"-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT\n"
-"# echo replay is handled by -m state RELATED/ESTABLISHED below\n"
-"#-A INPUT -p icmp --icmp-type echo-reply -j ACCEPT\n"
-"-A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT\n"
-"-A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT\n"
-"-A INPUT -p icmp --icmp-type echo-request -j ACCEPT \n"
-"# disable STUN\n"
-"-A OUTPUT -p udp --dport 3478 -j DROP\n"
-"-A OUTPUT -p udp --dport 3479 -j DROP\n"
-"-A OUTPUT -p tcp --dport 3478 -j DROP\n"
-"-A OUTPUT -p tcp --dport 3479 -j DROP\n"
-"COMMIT\n";
 
 void check_netfilter_file(const char *fname) {
 	EUID_ASSERT();
-	invalid_filename(fname, 0); // no globbing
 
-	if (is_dir(fname) || is_link(fname) || strstr(fname, "..") || access(fname, R_OK )) {
-		fprintf(stderr, "Error: invalid network filter file %s\n", fname);
+	char *tmp = strdup(fname);
+	if (!tmp)
+		errExit("strdup");
+	char *ptr = strchr(tmp, ',');
+	if (ptr)
+		*ptr = '\0';
+
+	invalid_filename(tmp, 0); // no globbing
+
+	if (is_dir(tmp) || is_link(tmp) || strstr(tmp, "..") || access(tmp, R_OK )) {
+		fprintf(stderr, "Error: invalid network filter file %s\n", tmp);
 		exit(1);
 	}
+	free(tmp);
 }
 
 
@@ -72,29 +63,15 @@ void netfilter(const char *fname) {
 		return;
 	}
 
-	// read filter
-	char *filter = client_filter;
-	int allocated = 0;
-	if (netfilter_default)
-		fname = netfilter_default;
-	if (fname) {
-		filter = read_text_file_or_exit(fname);
-		allocated = 1;
-	}
+	// create an empty user-owned SBOX_STDIN_FILE
+	create_empty_file_as_root(SBOX_STDIN_FILE, 0644);
+	if (set_perms(SBOX_STDIN_FILE, getuid(), getgid(), 0644))
+		errExit("set_perms");
 
-	// create the filter file
-	FILE *fp = fopen(SBOX_STDIN_FILE, "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s\n", SBOX_STDIN_FILE);
-		exit(1);
-	}
-	fprintf(fp, "%s\n", filter);
-	fclose(fp);
-
-
-	// push filter
-	if (arg_debug)
-		printf("Installing network filter:\n%s\n", filter);
+	if (fname == NULL)
+		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FNETFILTER, SBOX_STDIN_FILE);
+	else
+		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FNETFILTER, fname, SBOX_STDIN_FILE);
 
 	// first run of iptables on this platform installs a number of kernel modules such as ip_tables, x_tables, iptable_filter
 	// we run this command with caps and seccomp disabled in order to allow the loading of these modules
@@ -105,8 +82,6 @@ void netfilter(const char *fname) {
 	if (arg_debug)
 		sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, iptables, "-vL");
 
-	if (allocated)
-		free(filter);
 	return;
 }
 

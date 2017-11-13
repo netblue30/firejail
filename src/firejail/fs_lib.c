@@ -387,6 +387,7 @@ void fs_private_lib(void) {
 	fslib_copy_libs(LIBDIR "/firejail/fcopy");
 	fslib_copy_libs(LIBDIR "/firejail/fldd");
 	fslib_copy_libs(LIBDIR "/firejail/fnet");
+	fslib_copy_libs(LIBDIR "/firejail/fnetfilter");
 	fslib_copy_libs(LIBDIR "/firejail/fseccomp");
 	fslib_copy_libs(LIBDIR "/firejail/ftee");
 	// mount lib filesystem

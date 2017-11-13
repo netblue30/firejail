@@ -766,7 +766,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // sbox.c
 // programs
 #define PATH_FNET (LIBDIR "/firejail/fnet")
-#define PATH_FNETFILTER (LIBDIR "/firejail/fnetfilter")
+#define PATH_FNETFILTER (LIBDIR "/firejail/fnetfilter#define PATH_FNET (LIBDIR "/firejail/fnet")
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FIREJAIL (PREFIX "/bin/firejail")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")

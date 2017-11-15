@@ -429,6 +429,18 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("networking");
 		exit(0);
 	}
+	else if (strncmp(argv[i], "--netfilter.print=", 18) == 0) {
+		// extract pid or sandbox name
+		pid_t pid = read_pid(argv[i] + 18);
+		netfilter_print(pid, 0);
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--netfilter6.print=", 19) == 0) {
+		// extract pid or sandbox name
+		pid_t pid = read_pid(argv[i] + 19);
+		netfilter_print(pid, 1);
+		exit(0);
+	}
 #endif
 	//*************************************
 	// independent commands - the program will exit!

@@ -516,7 +516,6 @@ void create_empty_dir_as_root(const char *dir, mode_t mode);
 void create_empty_file_as_root(const char *dir, mode_t mode);
 int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
-char *read_text_file_or_exit(const char *fname);
 unsigned extract_timeout(const char *str);
 
 // fs_var.c
@@ -607,6 +606,7 @@ void check_output(int argc, char **argv);
 void check_netfilter_file(const char *fname);
 void netfilter(const char *fname);
 void netfilter6(const char *fname);
+void netfilter_print(pid_t pid, int ipv6);
 
 // netns.c
 void check_netns(const char *nsname);
@@ -766,7 +766,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // sbox.c
 // programs
 #define PATH_FNET (LIBDIR "/firejail/fnet")
-#define PATH_FNETFILTER (LIBDIR "/firejail/fnetfilter#define PATH_FNET (LIBDIR "/firejail/fnet")
+#define PATH_FNETFILTER (LIBDIR "/firejail/fnetfilter")
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FIREJAIL (PREFIX "/bin/firejail")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")

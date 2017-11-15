@@ -858,10 +858,13 @@ be created and configured using "ip netns".
 
 .TP
 \fB\-\-netfilter
-Enable a default client network filter in the new network namespace.
-New network namespaces are created using \-\-net option. If a new network namespaces is not created,
-\-\-netfilter option does nothing.
-The default filter is as follows:
+Enable a default firewall if a new network namespace is created inside the sandbox.
+This option has no effect for sandboxes using the system network namespace. 
+.br
+
+.br
+The default firewall is optimized for regular desktop applications. No incoming
+connections are accepted:
 .br
 
 .br
@@ -904,19 +907,18 @@ Example:
 $ firejail \-\-net=eth0 \-\-netfilter firefox
 .TP
 \fB\-\-netfilter=filename
-Enable the network filter specified by filename in the new network namespace. The filter file format
-is the format of iptables-save and iptable-restore commands.
-New network namespaces are created using \-\-net option. If a new network namespaces is not created,
-\-\-netfilter option does nothing.
+Enable the firewall specified by filename if a new network namespace is created inside the sandbox.
+This option has no effect for sandboxes using the system network namespace.
 .br
 
 .br
-The following filters are available in /etc/firejail directory:
+Please use the regular iptables-save/iptables-restore format for the filter file. The following
+examples are available in /etc/firejail directory:
 .br
 
 .br
 .B webserver.net
-is a webserver filter that allows access only to TCP ports 80 and 443.
+is a webserver firewall that allows access only to TCP ports 80 and 443.
 Example:
 .br
 
@@ -928,7 +930,7 @@ $ firejail --netfilter=/etc/firejail/webserver.net --net=eth0 \\
 
 .br
 .B nolocal.net
-is a client filter that disable access to local network. Example:
+is a desktop client firewall that disable access to local network. Example:
 .br
 
 .br
@@ -936,11 +938,31 @@ $ firejail --netfilter=/etc/firejail/nolocal.net \\
 .br
 --net=eth0 firefox
 .TP
+\fB\-\-netfilter.print=name|pid
+Print the firewall installed in the sandbox specified by name or PID. Example:
+.br
+
+.br
+$ firejail --net=browser --net=eth0 --netfilter firefox &
+.br
+$ firejail --netfilter.print=browser
+
+.TP
 \fB\-\-netfilter6=filename
-Enable the IPv6 network filter specified by filename in the new network namespace. The filter file format
-is the format of ip6tables-save and ip6table-restore commands.
-New network namespaces are created using \-\-net option. If a new network namespaces is not created,
-\-\-netfilter6 option does nothing.
+Enable the IPv6 firewall specified by filename if a new network namespace is created inside the sandbox.
+This option has no effect for sandboxes using the system network namespace.
+Please use the regular iptables-save/iptables-restore format for the filter file. 
+
+.TP
+\fB\-\-netfilter6.print=name|pid
+Print the IPv6 firewall installed in the sandbox specified by name or PID. Example:
+.br
+
+.br
+$ firejail --net=browser --net=eth0 --netfilter firefox &
+.br
+$ firejail --netfilter6.print=browser
+
 .TP
 \fB\-\-netstats
 Monitor network namespace statistics, see \fBMONITORING\fR section for more details.

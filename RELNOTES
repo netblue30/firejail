@@ -25,6 +25,8 @@ firejail (0.9.51) baseline; urgency=low
   * feature: --rlimit-cpu
   * feature: --timeout
   * feature: profile build tool (--build)
+  * feature: --netfilter.print
+  * feature: --netfilter6.print
   * new profiles: upstreamed many profiles from the following sources:
      https://github.com/chiraag-nataraj/firejail-profiles,
      https://github.com/nyancat18/fe,

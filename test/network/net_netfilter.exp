@@ -11,7 +11,7 @@ match_max 100000
 send -- "firejail --debug --noprofile --net=br0 --ip=10.10.20.5 --netfilter\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Installing network filter"
+	"Installing firewall"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -51,7 +51,7 @@ sleep 1
 send -- "firejail --debug --noprofile --net=br0 --ip=10.10.20.5 --netfilter=netfilter.filter\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Installing network filter"
+	"Installing firewall"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
@@ -71,7 +71,7 @@ sleep 1
 send -- "firejail --debug --net=br0 --ip=10.10.20.5 --profile=netfilter.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"Installing network filter"
+	"Installing firewall"
 }
 expect {
 	timeout {puts "TESTING ERROR 7.1\n";exit}

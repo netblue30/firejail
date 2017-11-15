@@ -10,7 +10,7 @@ match_max 100000
 send -- "firejail --debug --noprofile --net=br0 --ip6=2001:0db8:0:f101::1/64 --netfilter6=ipv6.net\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Installing network filter"
+	"Installing IPv6 firewall"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -46,10 +46,12 @@ send -- "exit\r"
 sleep 2
 
 
+
+
 send -- "firejail --debug --profile=ip6.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"Installing network filter"
+	"Installing IPv6 firewall"
 }
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
@@ -82,7 +84,17 @@ expect {
 }
 
 send -- "exit\r"
+sleep 2
+
+send -- "firejail --debug --netfilter6=ipv6.net\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"Installing IPv6 firewall" {puts "TESTING ERROR 12\n";exit}
+	"Child process initialized"
+}
+after 100
+send -- "exit\r"
+
 
 after 100
-
 puts "\nall done\n"

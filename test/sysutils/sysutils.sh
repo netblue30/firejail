@@ -77,3 +77,12 @@ then
 else
 	echo "TESTING SKIP: tar not found"
 fi
+
+which ping
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: ping"
+	./ping.exp
+else
+	echo "TESTING SKIP: ping not found"
+fi

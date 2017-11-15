@@ -255,6 +255,7 @@ irregulator (https://github.com/irregulator)
 	- thunderbird profile fixes for debian stretch
 Irvine (https://github.com/Irvinehimself)
 	- added conky profile
+	- added ping, bsdtar, makepkg (Arch), archaudit-report, cower (Arch) profiles
 Ivan Kozik (https://github.com/ivan)
 	- speed up sandbox exit
 Jaykishan Mutkawoa (https://github.com/jmutkawoa)

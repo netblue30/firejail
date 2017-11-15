@@ -168,7 +168,7 @@ install-strip: all
 	strip src/ftee/ftee
 	strip src/faudit/faudit
 	strip src/fnet/fnet
-	strip src/fnet/fnetfilter
+	strip src/fnetfilter/fnetfilter
 	strip src/fseccomp/fseccomp
 	strip src/fcopy/fcopy
 	strip src/fldd/fldd

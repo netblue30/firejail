@@ -5,17 +5,17 @@ include /etc/firejail/warzone2100.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.warzone2100-3.*
+noblacklist ${HOME}/.warzone2100-3.*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-# mkdir ~/.warzone2100-3.1
-# mkdir ~/.warzone2100-3.2
-whitelist ~/.warzone2100-3.1
-whitelist ~/.warzone2100-3.2
+# mkdir ${HOME}/.warzone2100-3.1
+# mkdir ${HOME}/.warzone2100-3.2
+whitelist ${HOME}/.warzone2100-3.1
+whitelist ${HOME}/.warzone2100-3.2
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

@@ -5,8 +5,8 @@ include /etc/firejail/gitter.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/autostart
-noblacklist ~/.config/Gitter
+noblacklist ${HOME}/.config/autostart
+noblacklist ${HOME}/.config/Gitter
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -14,8 +14,8 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 whitelist ${DOWNLOADS}
-whitelist ~/.config/autostart
-whitelist ~/.config/Gitter
+whitelist ${HOME}/.config/autostart
+whitelist ${HOME}/.config/Gitter
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all

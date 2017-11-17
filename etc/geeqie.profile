@@ -5,9 +5,9 @@ include /etc/firejail/geeqie.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/geeqie
-noblacklist ~/.config/geeqie
-noblacklist ~/.local/share/geeqie
+noblacklist ${HOME}/.cache/geeqie
+noblacklist ${HOME}/.config/geeqie
+noblacklist ${HOME}/.local/share/geeqie
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

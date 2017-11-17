@@ -7,8 +7,8 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/pix
 noblacklist ${HOME}/.local/share/pix
-noblacklist ~/.Steam
-noblacklist ~/.steam
+noblacklist ${HOME}/.Steam
+noblacklist ${HOME}/.steam
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

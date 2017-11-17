@@ -5,18 +5,18 @@ include /etc/firejail/vivaldi.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/vivaldi
-noblacklist ~/.config/vivaldi
+noblacklist ${HOME}/.cache/vivaldi
+noblacklist ${HOME}/.config/vivaldi
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/vivaldi
-mkdir ~/.config/vivaldi
+mkdir ${HOME}/.cache/vivaldi
+mkdir ${HOME}/.config/vivaldi
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/vivaldi
-whitelist ~/.config/vivaldi
+whitelist ${HOME}/.cache/vivaldi
+whitelist ${HOME}/.config/vivaldi
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

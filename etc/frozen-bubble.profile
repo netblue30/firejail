@@ -7,14 +7,14 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-noblacklist ~/.frozen-bubble
+noblacklist ${HOME}/.frozen-bubble
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.frozen-bubble
-whitelist ~/.frozen-bubble
+mkdir ${HOME}/.frozen-bubble
+whitelist ${HOME}/.frozen-bubble
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

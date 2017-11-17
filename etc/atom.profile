@@ -7,8 +7,8 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
 
-noblacklist ~/.atom
-noblacklist ~/.config/Atom
+noblacklist ${HOME}/.atom
+noblacklist ${HOME}/.config/Atom
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

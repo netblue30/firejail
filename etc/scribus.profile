@@ -8,20 +8,20 @@ include /etc/firejail/globals.local
 blacklist /run/user/*/bus
 
 # Support for PDF readers comes with Scribus 1.5 and higher
-noblacklist ~/.config/okularpartrc
-noblacklist ~/.config/okularrc
-noblacklist ~/.config/scribus
-noblacklist ~/.config/scribusrc
-noblacklist ~/.gimp*
-noblacklist ~/.kde/share/apps/okular
-noblacklist ~/.kde/share/config/okularpartrc
-noblacklist ~/.kde/share/config/okularrc
-noblacklist ~/.kde4/share/apps/okular
-noblacklist ~/.kde4/share/config/okularpartrc
-noblacklist ~/.kde4/share/config/okularrc
-noblacklist ~/.local/share/okular
-noblacklist ~/.local/share/scribus
-noblacklist ~/.scribus
+noblacklist ${HOME}/.config/okularpartrc
+noblacklist ${HOME}/.config/okularrc
+noblacklist ${HOME}/.config/scribus
+noblacklist ${HOME}/.config/scribusrc
+noblacklist ${HOME}/.gimp*
+noblacklist ${HOME}/.kde/share/apps/okular
+noblacklist ${HOME}/.kde/share/config/okularpartrc
+noblacklist ${HOME}/.kde/share/config/okularrc
+noblacklist ${HOME}/.kde4/share/apps/okular
+noblacklist ${HOME}/.kde4/share/config/okularpartrc
+noblacklist ${HOME}/.kde4/share/config/okularrc
+noblacklist ${HOME}/.local/share/okular
+noblacklist ${HOME}/.local/share/scribus
+noblacklist ${HOME}/.scribus
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

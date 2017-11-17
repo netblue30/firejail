@@ -5,7 +5,7 @@ include /etc/firejail/lximage-qt.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/lximage-qt
+noblacklist ${HOME}/.config/lximage-qt
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -7,8 +7,8 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-noblacklist ~/.config/zathura
-noblacklist ~/.local/share/zathura
+noblacklist ${HOME}/.config/zathura
+noblacklist ${HOME}/.local/share/zathura
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -31,5 +31,5 @@ private-bin zathura
 private-dev
 private-etc fonts
 private-tmp
-read-only ~/
-read-write ~/.local/share/zathura/
+read-only ${HOME}/
+read-write ${HOME}/.local/share/zathura/

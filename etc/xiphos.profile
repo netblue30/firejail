@@ -5,11 +5,11 @@ include /etc/firejail/xiphos.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist ~/.Xauthority
-blacklist ~/.bashrc
+blacklist ${HOME}/.Xauthority
+blacklist ${HOME}/.bashrc
 
-noblacklist ~/.sword
-noblacklist ~/.xiphos
+noblacklist ${HOME}/.sword
+noblacklist ${HOME}/.xiphos
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -5,21 +5,21 @@ include /etc/firejail/franz.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/Franz
-noblacklist ~/.config/Franz
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/Franz
+noblacklist ${HOME}/.config/Franz
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/Franz
-mkdir ~/.config/Franz
-mkdir ~/.pki
+mkdir ${HOME}/.cache/Franz
+mkdir ${HOME}/.config/Franz
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/Franz
-whitelist ~/.config/Franz
-whitelist ~/.pki
+whitelist ${HOME}/.cache/Franz
+whitelist ${HOME}/.config/Franz
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

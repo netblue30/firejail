@@ -5,8 +5,8 @@ include /etc/firejail/calibre.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/calibre
-noblacklist ~/.config/calibre
+noblacklist ${HOME}/.cache/calibre
+noblacklist ${HOME}/.config/calibre
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc

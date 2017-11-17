@@ -6,8 +6,8 @@ include /etc/firejail/gthumb.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/gthumb
-noblacklist ~/.Steam
-noblacklist ~/.steam
+noblacklist ${HOME}/.Steam
+noblacklist ${HOME}/.steam
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

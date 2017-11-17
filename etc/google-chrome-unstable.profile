@@ -5,21 +5,21 @@ include /etc/firejail/google-chrome-unstable.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/google-chrome-unstable
-noblacklist ~/.config/google-chrome-unstable
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/google-chrome-unstable
+noblacklist ${HOME}/.config/google-chrome-unstable
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/google-chrome-unstable
-mkdir ~/.config/google-chrome-unstable
-mkdir ~/.pki
+mkdir ${HOME}/.cache/google-chrome-unstable
+mkdir ${HOME}/.config/google-chrome-unstable
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/google-chrome-unstable
-whitelist ~/.config/google-chrome-unstable
-whitelist ~/.pki
+whitelist ${HOME}/.cache/google-chrome-unstable
+whitelist ${HOME}/.config/google-chrome-unstable
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 
 caps.keep sys_chroot,sys_admin

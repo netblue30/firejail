@@ -5,18 +5,18 @@ include /etc/firejail/stellarium.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/stellarium
-noblacklist ~/.stellarium
+noblacklist ${HOME}/.config/stellarium
+noblacklist ${HOME}/.stellarium
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.config/stellarium
-mkdir ~/.stellarium
-whitelist ~/.config/stellarium
-whitelist ~/.stellarium
+mkdir ${HOME}/.config/stellarium
+mkdir ${HOME}/.stellarium
+whitelist ${HOME}/.config/stellarium
+whitelist ${HOME}/.stellarium
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

@@ -5,9 +5,9 @@ include /etc/firejail/claws-mail.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.claws-mail
-noblacklist ~/.gnupg
-noblacklist ~/.signature
+noblacklist ${HOME}/.claws-mail
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.signature
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

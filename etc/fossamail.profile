@@ -5,16 +5,16 @@ include /etc/firejail/fossamail.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/fossamail
-noblacklist ~/.fossamail
-noblacklist ~/.gnupg
+noblacklist ${HOME}/.cache/fossamail
+noblacklist ${HOME}/.fossamail
+noblacklist ${HOME}/.gnupg
 
-mkdir ~/.cache/fossamail
-mkdir ~/.fossamail
-mkdir ~/.gnupg
-whitelist ~/.cache/fossamail
-whitelist ~/.fossamail
-whitelist ~/.gnupg
+mkdir ${HOME}/.cache/fossamail
+mkdir ${HOME}/.fossamail
+mkdir ${HOME}/.gnupg
+whitelist ${HOME}/.cache/fossamail
+whitelist ${HOME}/.fossamail
+whitelist ${HOME}/.gnupg
 include /etc/firejail/whitelist-common.inc
 
 # allow browsers

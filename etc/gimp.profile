@@ -30,7 +30,7 @@ shell none
 private-dev
 private-tmp
 
-# gimp plugins are installed by the user in ~/.gimp-2.8/plug-ins/ directory
+# gimp plugins are installed by the user in ${HOME}/.gimp-2.8/plug-ins/ directory
 # if you are not using external plugins, you can enable noexec statement below
 # noexec ${HOME}
 noexec /tmp

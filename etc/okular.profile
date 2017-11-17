@@ -7,15 +7,15 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
 
-noblacklist ~/.config/okularpartrc
-noblacklist ~/.config/okularrc
-noblacklist ~/.kde/share/apps/okular
-noblacklist ~/.kde/share/config/okularpartrc
-noblacklist ~/.kde/share/config/okularrc
-noblacklist ~/.kde4/share/apps/okular
-noblacklist ~/.kde4/share/config/okularpartrc
-noblacklist ~/.kde4/share/config/okularrc
-noblacklist ~/.local/share/okular
+noblacklist ${HOME}/.config/okularpartrc
+noblacklist ${HOME}/.config/okularrc
+noblacklist ${HOME}/.kde/share/apps/okular
+noblacklist ${HOME}/.kde/share/config/okularpartrc
+noblacklist ${HOME}/.kde/share/config/okularrc
+noblacklist ${HOME}/.kde4/share/apps/okular
+noblacklist ${HOME}/.kde4/share/config/okularpartrc
+noblacklist ${HOME}/.kde4/share/config/okularrc
+noblacklist ${HOME}/.local/share/okular
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

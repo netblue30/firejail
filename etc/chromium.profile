@@ -5,23 +5,23 @@ include /etc/firejail/chromium.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/chromium
-noblacklist ~/.config/chromium
-noblacklist ~/.config/chromium-flags.conf
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/chromium
+noblacklist ${HOME}/.config/chromium
+noblacklist ${HOME}/.config/chromium-flags.conf
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/chromium
-mkdir ~/.config/chromium
-mkdir ~/.pki
+mkdir ${HOME}/.cache/chromium
+mkdir ${HOME}/.config/chromium
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/chromium
-whitelist ~/.config/chromium
-whitelist ~/.config/chromium-flags.conf
-whitelist ~/.pki
+whitelist ${HOME}/.cache/chromium
+whitelist ${HOME}/.config/chromium
+whitelist ${HOME}/.config/chromium-flags.conf
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

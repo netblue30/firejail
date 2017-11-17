@@ -5,18 +5,18 @@ include /etc/firejail/rambox.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/Rambox
-noblacklist ~/.pki
+noblacklist ${HOME}/.config/Rambox
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.config/Rambox
-mkdir ~/.pki
+mkdir ${HOME}/.config/Rambox
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.config/Rambox
-whitelist ~/.pki
+whitelist ${HOME}/.config/Rambox
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

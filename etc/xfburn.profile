@@ -5,7 +5,7 @@ include /etc/firejail/xfburn.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/xfburn
+noblacklist ${HOME}/.config/xfburn
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

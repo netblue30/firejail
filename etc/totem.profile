@@ -5,8 +5,8 @@ include /etc/firejail/totem.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/totem
-noblacklist ~/.local/share/totem
+noblacklist ${HOME}/.config/totem
+noblacklist ${HOME}/.local/share/totem
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -5,7 +5,7 @@ include /etc/firejail/gnome-chess.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.local/share/gnome-chess
+noblacklist ${HOME}/.local/share/gnome-chess
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

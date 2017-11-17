@@ -5,8 +5,8 @@ include /etc/firejail/qtox.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/qt5ct
-noblacklist ~/.config/tox
+noblacklist ${HOME}/.config/qt5ct
+noblacklist ${HOME}/.config/tox
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

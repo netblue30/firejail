@@ -5,16 +5,16 @@ include /etc/firejail/signal-desktop.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/Signal
+noblacklist ${HOME}/.config/Signal
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-passwdmgr.inc
 
-mkdir ~/.config/Signal
+mkdir ${HOME}/.config/Signal
 whitelist ${DOWNLOADS}
-whitelist ~/.config/Signal
+whitelist ${HOME}/.config/Signal
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc 
 

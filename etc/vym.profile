@@ -5,7 +5,7 @@ include /etc/firejail/vym.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/InSilmaril
+noblacklist ${HOME}/.config/InSilmaril
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -7,7 +7,7 @@ include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 
-noblacklist ~/.gnupg
+noblacklist ${HOME}/.gnupg
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

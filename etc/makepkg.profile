@@ -5,8 +5,8 @@
 # for potential issues and their solutions when Firejailing makepkg
 
 # This profile could be significantly strengthened by adding the following to makepkg.local
-# whitelist ~/<Your Build Folder>
-# whitelist ~/.gnupg
+# whitelist ${HOME}/<Your Build Folder>
+# whitelist ${HOME}/.gnupg
 
 quiet
 # Persistent local customizations
@@ -16,15 +16,15 @@ include /etc/firejail/globals.local
 
 
 # Enable severely restricted access to ${HOME}/.gnupg
-noblacklist ~/.gnupg
-read-only ~/.gnupg/gpg.conf
-read-only ~/.gnupg/trustdb.gpg
-read-only ~/.gnupg/pubring.kbx
-blacklist ~/.gnupg/random_seed
-blacklist ~/.gnupg/pubring.kbx~
-blacklist ~/.gnupg/private-keys-v1.d
-blacklist ~/.gnupg/crls.d
-blacklist ~/.gnupg/openpgp-revocs.d
+noblacklist ${HOME}/.gnupg
+read-only ${HOME}/.gnupg/gpg.conf
+read-only ${HOME}/.gnupg/trustdb.gpg
+read-only ${HOME}/.gnupg/pubring.kbx
+blacklist ${HOME}/.gnupg/random_seed
+blacklist ${HOME}/.gnupg/pubring.kbx~
+blacklist ${HOME}/.gnupg/private-keys-v1.d
+blacklist ${HOME}/.gnupg/crls.d
+blacklist ${HOME}/.gnupg/openpgp-revocs.d
 
 
 # Need to be able to read /var/lib/pacman, {Note no capabilities so automatically read-only}

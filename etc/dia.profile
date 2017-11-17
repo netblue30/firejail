@@ -7,7 +7,7 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-noblacklist ~/.dia
+noblacklist ${HOME}/.dia
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

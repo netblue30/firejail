@@ -7,14 +7,14 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-noblacklist ~/.pingus
+noblacklist ${HOME}/.pingus
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.pingus
-whitelist ~/.pingus
+mkdir ${HOME}/.pingus
+whitelist ${HOME}/.pingus
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

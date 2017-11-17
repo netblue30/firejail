@@ -7,7 +7,7 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-noblacklist ~/.config/gpicview
+noblacklist ${HOME}/.config/gpicview
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -5,20 +5,20 @@ include /etc/firejail/inox.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/inox
-noblacklist ~/.config/inox
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/inox
+noblacklist ${HOME}/.config/inox
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/inox
-mkdir ~/.config/inox
-mkdir ~/.pki
+mkdir ${HOME}/.cache/inox
+mkdir ${HOME}/.config/inox
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/inox
-whitelist ~/.config/inox
-whitelist ~/.pki
+whitelist ${HOME}/.cache/inox
+whitelist ${HOME}/.config/inox
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

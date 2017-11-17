@@ -5,7 +5,7 @@ include /etc/firejail/enchant.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/enchant
+noblacklist ${HOME}/.config/enchant
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

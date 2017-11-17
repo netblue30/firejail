@@ -5,7 +5,7 @@ include /etc/firejail/jitsi.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.jitsi
+noblacklist ${HOME}/.jitsi
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

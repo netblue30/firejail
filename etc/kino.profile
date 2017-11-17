@@ -5,8 +5,8 @@ include /etc/firejail/kino.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.kino-history
-noblacklist ~/.kinorc
+noblacklist ${HOME}/.kino-history
+noblacklist ${HOME}/.kinorc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

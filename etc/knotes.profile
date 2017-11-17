@@ -5,7 +5,7 @@ include /etc/firejail/knotes.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/knotesrc
+noblacklist ${HOME}/.config/knotesrc
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc

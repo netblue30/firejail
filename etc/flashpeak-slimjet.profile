@@ -10,21 +10,21 @@ include /etc/firejail/globals.local
 # to run it is as follows:
 #  firejail flashpeak-slimjet --no-sandbox
 
-noblacklist ~/.cache/slimjet
-noblacklist ~/.config/slimjet
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/slimjet
+noblacklist ${HOME}/.config/slimjet
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/slimjet
-mkdir ~/.config/slimjet
-mkdir ~/.pki
+mkdir ${HOME}/.cache/slimjet
+mkdir ${HOME}/.config/slimjet
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/slimjet
-whitelist ~/.config/slimjet
-whitelist ~/.pki
+whitelist ${HOME}/.cache/slimjet
+whitelist ${HOME}/.config/slimjet
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

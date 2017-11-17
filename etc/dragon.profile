@@ -5,7 +5,7 @@ include /etc/firejail/dragon.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/dragonplayerrc
+noblacklist ${HOME}/.config/dragonplayerrc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

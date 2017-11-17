@@ -8,18 +8,18 @@ include /etc/firejail/globals.local
 # Users have Geary set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories
 
-noblacklist ~/.gnupg
-noblacklist ~/.local/share/geary
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.local/share/geary
 
-mkdir ~/.gnupg
-mkdir ~/.local/share/geary
-whitelist ~/.gnupg
-whitelist ~/.local/share/geary
+mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.local/share/geary
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.local/share/geary
 include /etc/firejail/whitelist-common.inc
 
 ignore private-tmp
 
-read-only ~/.config/mimeapps.list
+read-only ${HOME}/.config/mimeapps.list
 
 # allow browsers
 # Redirect

@@ -5,8 +5,8 @@ include /etc/firejail/tuxguitar.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.java
-noblacklist ~/.tuxguitar*
+noblacklist ${HOME}/.java
+noblacklist ${HOME}/.tuxguitar*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

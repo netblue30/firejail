@@ -2,8 +2,8 @@
 # This file is overwritten after every install/update
 
 # This profile could be significantly strengthened by adding the following to cower.local
-# whitelist ~/<Your Build Folder>
-# whitelist ~/.config/cower/
+# whitelist ${HOME}/<Your Build Folder>
+# whitelist ${HOME}/.config/cower/
 
 quiet
 
@@ -12,8 +12,8 @@ include /etc/firejail/cower.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/cower/config
-read-only ~/.config/cower/config
+noblacklist ${HOME}/.config/cower/config
+read-only ${HOME}/.config/cower/config
 
 noblacklist /var/lib/pacman
 

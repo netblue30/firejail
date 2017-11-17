@@ -5,22 +5,22 @@ include /etc/firejail/uzbl-browser.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/uzbl
-noblacklist ~/.gnupg
+noblacklist ${HOME}/.config/uzbl
+noblacklist ${HOME}/.gnupg
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.config/uzbl
-mkdir ~/.gnupg
-mkdir ~/.local/share/uzbl
-mkdir ~/.password-store
+mkdir ${HOME}/.config/uzbl
+mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.local/share/uzbl
+mkdir ${HOME}/.password-store
 whitelist ${DOWNLOADS}
-whitelist ~/.config/uzbl
-whitelist ~/.gnupg
-whitelist ~/.local/share/uzbl
-whitelist ~/.password-store
+whitelist ${HOME}/.config/uzbl
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.local/share/uzbl
+whitelist ${HOME}/.password-store
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

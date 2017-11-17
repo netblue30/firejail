@@ -5,16 +5,16 @@ include /etc/firejail/google-play-music-desktop-player.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/Google Play Music Desktop Player
+noblacklist ${HOME}/.config/Google Play Music Desktop Player
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-# whitelist ~/.config/pulse
-# whitelist ~/.pulse
-whitelist ~/.config/Google Play Music Desktop Player
+# whitelist ${HOME}/.config/pulse
+# whitelist ${HOME}/.pulse
+whitelist ${HOME}/.config/Google Play Music Desktop Player
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

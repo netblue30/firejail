@@ -7,7 +7,7 @@ include /etc/firejail/globals.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
-noblacklist ~/.config/libreoffice
+noblacklist ${HOME}/.config/libreoffice
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

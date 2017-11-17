@@ -5,7 +5,7 @@ include /etc/firejail/mousepad.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/Mousepad
+noblacklist ${HOME}/.config/Mousepad
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

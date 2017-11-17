@@ -16,10 +16,10 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.config/VirtualBox
-mkdir ~/VirtualBox VMs
-whitelist ~/.config/VirtualBox
-whitelist ~/VirtualBox VMs
+mkdir ${HOME}/.config/VirtualBox
+mkdir ${HOME}/VirtualBox VMs
+whitelist ${HOME}/.config/VirtualBox
+whitelist ${HOME}/VirtualBox VMs
 whitelist ${DOWNLOADS}
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc

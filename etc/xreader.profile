@@ -5,9 +5,9 @@ include /etc/firejail/xreader.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/xreader
-noblacklist ~/.config/xreader
-# noblacklist ~/.local/share
+noblacklist ${HOME}/.cache/xreader
+noblacklist ${HOME}/.config/xreader
+# noblacklist ${HOME}/.local/share
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

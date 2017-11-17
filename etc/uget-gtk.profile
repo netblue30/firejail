@@ -11,9 +11,9 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.config/uGet
+mkdir ${HOME}/.config/uGet
 whitelist ${DOWNLOADS}
-whitelist ~/.config/uGet
+whitelist ${HOME}/.config/uGet
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

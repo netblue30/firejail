@@ -7,7 +7,7 @@ include /etc/firejail/globals.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
-noblacklist ~/.local/share/gnome-photos
+noblacklist ${HOME}/.local/share/gnome-photos
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

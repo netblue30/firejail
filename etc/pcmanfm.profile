@@ -8,8 +8,8 @@ include /etc/firejail/globals.local
 # blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.local/share/Trash
-# noblacklist ~/.config/libfm - disable-programs.inc is disabled, see below
-# noblacklist ~/.config/pcmanfm
+# noblacklist ${HOME}/.config/libfm - disable-programs.inc is disabled, see below
+# noblacklist ${HOME}/.config/pcmanfm
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

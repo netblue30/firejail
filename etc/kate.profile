@@ -7,12 +7,12 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
 
-noblacklist ~/.config/katepartrc
-noblacklist ~/.config/katerc
-noblacklist ~/.config/kateschemarc
-noblacklist ~/.config/katesyntaxhighlightingrc
-noblacklist ~/.config/katevirc
-noblacklist ~/.local/share/kate
+noblacklist ${HOME}/.config/katepartrc
+noblacklist ${HOME}/.config/katerc
+noblacklist ${HOME}/.config/kateschemarc
+noblacklist ${HOME}/.config/katesyntaxhighlightingrc
+noblacklist ${HOME}/.config/katevirc
+noblacklist ${HOME}/.local/share/kate
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc

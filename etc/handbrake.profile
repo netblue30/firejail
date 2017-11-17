@@ -5,7 +5,7 @@ include /etc/firejail/handbrake.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/ghb
+noblacklist ${HOME}/.config/ghb
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

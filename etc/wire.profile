@@ -8,8 +8,8 @@ include /etc/firejail/globals.local
 # Note: the current beta version of wire is located in /opt/Wire/wire and therefore not in PATH.
 # To use wire with firejail run "firejail /opt/Wire/wire"
 
-noblacklist ~/.config/Wire
-noblacklist ~/.config/wire
+noblacklist ${HOME}/.config/Wire
+noblacklist ${HOME}/.config/wire
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -7,10 +7,10 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus - makes settings immutable
 
-noblacklist ~/.Steam
-noblacklist ~/.config/mate/eom
-noblacklist ~/.local/share/Trash
-noblacklist ~/.steam
+noblacklist ${HOME}/.Steam
+noblacklist ${HOME}/.config/mate/eom
+noblacklist ${HOME}/.local/share/Trash
+noblacklist ${HOME}/.steam
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

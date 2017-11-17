@@ -5,8 +5,8 @@ include /etc/firejail/2048-qt.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/2048-qt
-noblacklist ~/.config/xiaoyong
+noblacklist ${HOME}/.config/2048-qt
+noblacklist ${HOME}/.config/xiaoyong
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

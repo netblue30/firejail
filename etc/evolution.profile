@@ -7,12 +7,12 @@ include /etc/firejail/globals.local
 
 noblacklist /var/mail
 noblacklist /var/spool/mail
-# noblacklist ~/.bogofilter
-noblacklist ~/.cache/evolution
-noblacklist ~/.config/evolution
-noblacklist ~/.gnupg
-noblacklist ~/.local/share/evolution
-noblacklist ~/.pki
+# noblacklist ${HOME}/.bogofilter
+noblacklist ${HOME}/.cache/evolution
+noblacklist ${HOME}/.config/evolution
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.local/share/evolution
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -5,10 +5,10 @@ include /etc/firejail/atril.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/atril
+noblacklist ${HOME}/.config/atril
 
-#noblacklist ~/.local/share
-# it seems to use only ~/.local/share/webkitgtk
+#noblacklist ${HOME}/.local/share
+# it seems to use only ${HOME}/.local/share/webkitgtk
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

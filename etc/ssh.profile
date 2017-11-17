@@ -8,7 +8,7 @@ include /etc/firejail/globals.local
 
 noblacklist /etc/ssh
 noblacklist /tmp/ssh-*
-noblacklist ~/.ssh
+noblacklist ${HOME}/.ssh
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

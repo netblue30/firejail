@@ -5,31 +5,31 @@ include /etc/firejail/ktorrent.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/ktorrentrc
-noblacklist ~/.kde/share/apps/ktorrent
-noblacklist ~/.kde/share/config/ktorrentrc
-noblacklist ~/.kde4/share/apps/ktorrent
-noblacklist ~/.kde4/share/config/ktorrentrc
-noblacklist ~/.local/share/ktorrent
+noblacklist ${HOME}/.config/ktorrentrc
+noblacklist ${HOME}/.kde/share/apps/ktorrent
+noblacklist ${HOME}/.kde/share/config/ktorrentrc
+noblacklist ${HOME}/.kde4/share/apps/ktorrent
+noblacklist ${HOME}/.kde4/share/config/ktorrentrc
+noblacklist ${HOME}/.local/share/ktorrent
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.kde/share/apps/ktorrent
-mkdir ~/.kde4/share/apps/ktorrent
-mkdir ~/.local/share/ktorrent
-mkfile ~/.config/ktorrentrc
-mkfile ~/.kde/share/config/ktorrentrc
-mkfile ~/.kde4/share/config/ktorrentrc
+mkdir ${HOME}/.kde/share/apps/ktorrent
+mkdir ${HOME}/.kde4/share/apps/ktorrent
+mkdir ${HOME}/.local/share/ktorrent
+mkfile ${HOME}/.config/ktorrentrc
+mkfile ${HOME}/.kde/share/config/ktorrentrc
+mkfile ${HOME}/.kde4/share/config/ktorrentrc
 whitelist  ${DOWNLOADS}
-whitelist ~/.config/ktorrentrc
-whitelist ~/.kde/share/apps/ktorrent
-whitelist ~/.kde/share/config/ktorrentrc
-whitelist ~/.kde4/share/apps/ktorrent
-whitelist ~/.kde4/share/config/ktorrentrc
-whitelist ~/.local/share/ktorrent
+whitelist ${HOME}/.config/ktorrentrc
+whitelist ${HOME}/.kde/share/apps/ktorrent
+whitelist ${HOME}/.kde/share/config/ktorrentrc
+whitelist ${HOME}/.kde4/share/apps/ktorrent
+whitelist ${HOME}/.kde4/share/config/ktorrentrc
+whitelist ${HOME}/.local/share/ktorrent
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

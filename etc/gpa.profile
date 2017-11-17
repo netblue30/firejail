@@ -5,7 +5,7 @@ include /etc/firejail/gpa.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.gnupg
+noblacklist ${HOME}/.gnupg
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

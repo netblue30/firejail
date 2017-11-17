@@ -5,7 +5,7 @@ include /etc/firejail/dosbox.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dosbox
+noblacklist ${HOME}/.dosbox
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

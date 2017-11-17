@@ -5,14 +5,14 @@ include /etc/firejail/unknown-horizons.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.unknown-horizons
+noblacklist ${HOME}/.unknown-horizons
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.unknown-horizons
-whitelist ~/.unknown-horizons
+mkdir ${HOME}/.unknown-horizons
+whitelist ${HOME}/.unknown-horizons
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

@@ -8,7 +8,7 @@ include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 
-noblacklist ~/.curlrc
+noblacklist ${HOME}/.curlrc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

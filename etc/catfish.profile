@@ -10,7 +10,7 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-noblacklist ~/.config/catfish
+noblacklist ${HOME}/.config/catfish
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc

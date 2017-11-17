@@ -5,15 +5,15 @@ include /etc/firejail/zoom.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/zoomus.conf
+noblacklist ${HOME}/.config/zoomus.conf
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.zoom
-whitelist ~/.cache/zoom
-whitelist ~/.zoom
+mkdir ${HOME}/.zoom
+whitelist ${HOME}/.cache/zoom
+whitelist ${HOME}/.zoom
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

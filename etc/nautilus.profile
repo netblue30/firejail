@@ -8,10 +8,10 @@ include /etc/firejail/globals.local
 # Nautilus is started by systemd on most systems. Therefore it is not firejailed by default. Since there
 # is already a nautilus process running on gnome desktops firejail will have no effect.
 
-noblacklist ~/.config/nautilus
-noblacklist ~/.local/share/Trash
-noblacklist ~/.local/share/nautilus
-noblacklist ~/.local/share/nautilus-python
+noblacklist ${HOME}/.config/nautilus
+noblacklist ${HOME}/.local/share/Trash
+noblacklist ${HOME}/.local/share/nautilus
+noblacklist ${HOME}/.local/share/nautilus-python
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

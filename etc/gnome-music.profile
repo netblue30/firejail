@@ -5,7 +5,7 @@ include /etc/firejail/gnome-music.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.local/share/gnome-music
+noblacklist ${HOME}/.local/share/gnome-music
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

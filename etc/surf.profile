@@ -5,13 +5,13 @@ include /etc/firejail/surf.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.surf
+noblacklist ${HOME}/.surf
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.surf
+mkdir ${HOME}/.surf
 whitelist ${DOWNLOADS}
 include /etc/firejail/whitelist-common.inc
 

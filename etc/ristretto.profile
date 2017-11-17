@@ -6,8 +6,8 @@ include /etc/firejail/ristretto.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/ristretto
-noblacklist ~/.Steam
-noblacklist ~/.steam
+noblacklist ${HOME}/.Steam
+noblacklist ${HOME}/.steam
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

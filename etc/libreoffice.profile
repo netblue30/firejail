@@ -7,7 +7,7 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.java
 noblacklist /usr/local/sbin
-noblacklist ~/.config/libreoffice
+noblacklist ${HOME}/.config/libreoffice
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

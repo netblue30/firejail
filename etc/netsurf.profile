@@ -5,18 +5,18 @@ include /etc/firejail/netsurf.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/netsurf
-noblacklist ~/.config/netsurf
+noblacklist ${HOME}/.cache/netsurf
+noblacklist ${HOME}/.config/netsurf
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/netsurf
-mkdir ~/.config/netsurf
+mkdir ${HOME}/.cache/netsurf
+mkdir ${HOME}/.config/netsurf
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/netsurf
-whitelist ~/.config/netsurf
+whitelist ${HOME}/.cache/netsurf
+whitelist ${HOME}/.config/netsurf
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

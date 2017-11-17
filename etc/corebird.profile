@@ -5,7 +5,7 @@ include /etc/firejail/corebird.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/corebird
+noblacklist ${HOME}/.config/corebird
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

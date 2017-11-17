@@ -10,17 +10,17 @@ noblacklist ${HOME}/.conkeror.mozdev.org
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ~/.conkeror.mozdev.org
-whitelist ~/.conkerorrc
-whitelist ~/.gtkrc-2.0
-whitelist ~/.lastpass
-whitelist ~/.pentadactyl
-whitelist ~/.pentadactylrc
-whitelist ~/.vimperator
-whitelist ~/.vimperatorrc
-whitelist ~/.zotero
-whitelist ~/Downloads
-whitelist ~/dwhelper
+whitelist ${HOME}/.conkeror.mozdev.org
+whitelist ${HOME}/.conkerorrc
+whitelist ${HOME}/.gtkrc-2.0
+whitelist ${HOME}/.lastpass
+whitelist ${HOME}/.pentadactyl
+whitelist ${HOME}/.pentadactylrc
+whitelist ${HOME}/.vimperator
+whitelist ${HOME}/.vimperatorrc
+whitelist ${HOME}/.zotero
+whitelist ${HOME}/Downloads
+whitelist ${HOME}/dwhelper
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

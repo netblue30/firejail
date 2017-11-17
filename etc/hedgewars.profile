@@ -12,8 +12,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir     ~/.hedgewars
-whitelist ~/.hedgewars
+mkdir     ${HOME}/.hedgewars
+whitelist ${HOME}/.hedgewars
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

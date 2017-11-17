@@ -5,15 +5,15 @@ include /etc/firejail/aweather.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/aweather
+noblacklist ${HOME}/.config/aweather
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.config/aweather
-whitelist ~/.config/aweather
+mkdir ${HOME}/.config/aweather
+whitelist ${HOME}/.config/aweather
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

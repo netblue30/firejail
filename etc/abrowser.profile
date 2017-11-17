@@ -5,34 +5,34 @@ include /etc/firejail/abrowser.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/mozilla
-noblacklist ~/.mozilla
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.mozilla
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/mozilla/abrowser
-mkdir ~/.mozilla
+mkdir ${HOME}/.cache/mozilla/abrowser
+mkdir ${HOME}/.mozilla
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/gnome-mplayer/plugin
-whitelist ~/.cache/mozilla/abrowser
-whitelist ~/.config/gnome-mplayer
-whitelist ~/.config/pipelight-silverlight5.1
-whitelist ~/.config/pipelight-widevine
-whitelist ~/.keysnail.js
-whitelist ~/.lastpass
-whitelist ~/.mozilla
-whitelist ~/.pentadactyl
-whitelist ~/.pentadactylrc
-whitelist ~/.pki
-whitelist ~/.vimperator
-whitelist ~/.vimperatorrc
-whitelist ~/.wine-pipelight
-whitelist ~/.wine-pipelight64
-whitelist ~/.zotero
-whitelist ~/dwhelper
+whitelist ${HOME}/.cache/gnome-mplayer/plugin
+whitelist ${HOME}/.cache/mozilla/abrowser
+whitelist ${HOME}/.config/gnome-mplayer
+whitelist ${HOME}/.config/pipelight-silverlight5.1
+whitelist ${HOME}/.config/pipelight-widevine
+whitelist ${HOME}/.keysnail.js
+whitelist ${HOME}/.lastpass
+whitelist ${HOME}/.mozilla
+whitelist ${HOME}/.pentadactyl
+whitelist ${HOME}/.pentadactylrc
+whitelist ${HOME}/.pki
+whitelist ${HOME}/.vimperator
+whitelist ${HOME}/.vimperatorrc
+whitelist ${HOME}/.wine-pipelight
+whitelist ${HOME}/.wine-pipelight64
+whitelist ${HOME}/.zotero
+whitelist ${HOME}/dwhelper
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

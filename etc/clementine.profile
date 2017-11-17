@@ -5,7 +5,7 @@ include /etc/firejail/clementine.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/Clementine
+noblacklist ${HOME}/.config/Clementine
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

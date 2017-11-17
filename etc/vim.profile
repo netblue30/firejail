@@ -5,9 +5,9 @@ include /etc/firejail/vim.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.vim
-noblacklist ~/.viminfo
-noblacklist ~/.vimrc
+noblacklist ${HOME}/.vim
+noblacklist ${HOME}/.viminfo
+noblacklist ${HOME}/.vimrc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

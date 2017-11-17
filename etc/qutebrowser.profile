@@ -5,20 +5,20 @@ include /etc/firejail/qutebrowser.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/qutebrowser
-noblacklist ~/.config/qutebrowser
+noblacklist ${HOME}/.cache/qutebrowser
+noblacklist ${HOME}/.config/qutebrowser
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/qutebrowser
-mkdir ~/.config/qutebrowser
-mkdir ~/.local/share/qutebrowser
+mkdir ${HOME}/.cache/qutebrowser
+mkdir ${HOME}/.config/qutebrowser
+mkdir ${HOME}/.local/share/qutebrowser
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/qutebrowser
-whitelist ~/.config/qutebrowser
-whitelist ~/.local/share/qutebrowser
+whitelist ${HOME}/.cache/qutebrowser
+whitelist ${HOME}/.config/qutebrowser
+whitelist ${HOME}/.local/share/qutebrowser
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

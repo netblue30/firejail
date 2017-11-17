@@ -8,13 +8,13 @@ include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 
-noblacklist ~/.emacs
-noblacklist ~/.emacs.d
-noblacklist ~/.gitconfig
-noblacklist ~/.gnupg
-noblacklist ~/.ssh
-noblacklist ~/.vim
-noblacklist ~/.viminfo
+noblacklist ${HOME}/.emacs
+noblacklist ${HOME}/.emacs.d
+noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.ssh
+noblacklist ${HOME}/.vim
+noblacklist ${HOME}/.viminfo
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

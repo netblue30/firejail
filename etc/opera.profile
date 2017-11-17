@@ -5,24 +5,24 @@ include /etc/firejail/opera.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/opera
-noblacklist ~/.config/opera
-noblacklist ~/.opera
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/opera
+noblacklist ${HOME}/.config/opera
+noblacklist ${HOME}/.opera
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/opera
-mkdir ~/.config/opera
-mkdir ~/.opera
-mkdir ~/.pki
+mkdir ${HOME}/.cache/opera
+mkdir ${HOME}/.config/opera
+mkdir ${HOME}/.opera
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/opera
-whitelist ~/.config/opera
-whitelist ~/.opera
-whitelist ~/.pki
+whitelist ${HOME}/.cache/opera
+whitelist ${HOME}/.config/opera
+whitelist ${HOME}/.opera
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 
 netfilter

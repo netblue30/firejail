@@ -5,7 +5,7 @@ include /etc/firejail/simple-scan.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/simple-scan
+noblacklist ${HOME}/.cache/simple-scan
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

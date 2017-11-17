@@ -5,14 +5,14 @@ include /etc/firejail/gpredict.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/Gpredict
+noblacklist ${HOME}/.config/Gpredict
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ~/.config/Gpredict
+whitelist ${HOME}/.config/Gpredict
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

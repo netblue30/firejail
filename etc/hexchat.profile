@@ -13,8 +13,8 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.config/hexchat
-whitelist ~/.config/hexchat
+mkdir ${HOME}/.config/hexchat
+whitelist ${HOME}/.config/hexchat
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

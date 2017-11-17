@@ -5,7 +5,7 @@ include /etc/firejail/blender.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/blender
+noblacklist ${HOME}/.config/blender
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

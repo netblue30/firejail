@@ -5,10 +5,10 @@ include /etc/firejail/kget.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.kde/share/apps/kget
-noblacklist ~/.kde/share/config/kgetrc
-noblacklist ~/.kde4/share/apps/kget
-noblacklist ~/.kde4/share/config/kgetrc
+noblacklist ${HOME}/.kde/share/apps/kget
+noblacklist ${HOME}/.kde/share/config/kgetrc
+noblacklist ${HOME}/.kde4/share/apps/kget
+noblacklist ${HOME}/.kde4/share/config/kgetrc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

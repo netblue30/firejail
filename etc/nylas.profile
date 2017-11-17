@@ -5,8 +5,8 @@ include /etc/firejail/nylas.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/Nylas Mail
-noblacklist ~/.nylas-mail
+noblacklist ${HOME}/.config/Nylas Mail
+noblacklist ${HOME}/.nylas-mail
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -14,8 +14,8 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 whitelist ${DOWNLOADS}
-whitelist ~/.config/Nylas Mail
-whitelist ~/.nylas-mail
+whitelist ${HOME}/.config/Nylas Mail
+whitelist ${HOME}/.nylas-mail
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

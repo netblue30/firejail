@@ -5,7 +5,7 @@ include /etc/firejail/qemu-launcher.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.qemu-launcher
+noblacklist ${HOME}/.qemu-launcher
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

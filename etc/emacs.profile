@@ -5,8 +5,8 @@ include /etc/firejail/emacs.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.emacs
-noblacklist ~/.emacs.d
+noblacklist ${HOME}/.emacs
+noblacklist ${HOME}/.emacs.d
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc

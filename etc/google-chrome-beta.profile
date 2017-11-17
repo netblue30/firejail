@@ -5,21 +5,21 @@ include /etc/firejail/google-chrome-beta.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/google-chrome-beta
-noblacklist ~/.config/google-chrome-beta
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/google-chrome-beta
+noblacklist ${HOME}/.config/google-chrome-beta
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/google-chrome-beta
-mkdir ~/.config/google-chrome-beta
-mkdir ~/.pki
+mkdir ${HOME}/.cache/google-chrome-beta
+mkdir ${HOME}/.config/google-chrome-beta
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/google-chrome-beta
-whitelist ~/.config/google-chrome-beta
-whitelist ~/.pki
+whitelist ${HOME}/.cache/google-chrome-beta
+whitelist ${HOME}/.config/google-chrome-beta
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 
 caps.keep sys_chroot,sys_admin

@@ -5,21 +5,21 @@ include /etc/firejail/liferea.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/liferea
-noblacklist ~/.config/liferea
-noblacklist ~/.local/share/liferea
+noblacklist ${HOME}/.cache/liferea
+noblacklist ${HOME}/.config/liferea
+noblacklist ${HOME}/.local/share/liferea
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/liferea
-mkdir ~/.config/liferea
-mkdir ~/.local/share/liferea
-whitelist ~/.cache/liferea
-whitelist ~/.config/liferea
-whitelist ~/.local/share/liferea
+mkdir ${HOME}/.cache/liferea
+mkdir ${HOME}/.config/liferea
+mkdir ${HOME}/.local/share/liferea
+whitelist ${HOME}/.cache/liferea
+whitelist ${HOME}/.config/liferea
+whitelist ${HOME}/.local/share/liferea
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

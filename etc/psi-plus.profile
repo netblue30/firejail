@@ -13,13 +13,13 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/psi+
-mkdir ~/.config/psi+
-mkdir ~/.local/share/psi+
+mkdir ${HOME}/.cache/psi+
+mkdir ${HOME}/.config/psi+
+mkdir ${HOME}/.local/share/psi+
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/psi+
-whitelist ~/.config/psi+
-whitelist ~/.local/share/psi+
+whitelist ${HOME}/.cache/psi+
+whitelist ${HOME}/.config/psi+
+whitelist ${HOME}/.local/share/psi+
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

@@ -5,27 +5,27 @@ include /etc/firejail/yandex-browser.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.cache/yandex-browser
-noblacklist ~/.cache/yandex-browser-beta
-noblacklist ~/.config/yandex-browser
-noblacklist ~/.config/yandex-browser-beta
-noblacklist ~/.pki
+noblacklist ${HOME}/.cache/yandex-browser
+noblacklist ${HOME}/.cache/yandex-browser-beta
+noblacklist ${HOME}/.config/yandex-browser
+noblacklist ${HOME}/.config/yandex-browser-beta
+noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/yandex-browser
-mkdir ~/.cache/yandex-browser-beta
-mkdir ~/.config/yandex-browser
-mkdir ~/.config/yandex-browser-beta
-mkdir ~/.pki
+mkdir ${HOME}/.cache/yandex-browser
+mkdir ${HOME}/.cache/yandex-browser-beta
+mkdir ${HOME}/.config/yandex-browser
+mkdir ${HOME}/.config/yandex-browser-beta
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/yandex-browser
-whitelist ~/.cache/yandex-browser-beta
-whitelist ~/.config/yandex-browser
-whitelist ~/.config/yandex-browser-beta
-whitelist ~/.pki
+whitelist ${HOME}/.cache/yandex-browser
+whitelist ${HOME}/.cache/yandex-browser-beta
+whitelist ${HOME}/.config/yandex-browser
+whitelist ${HOME}/.config/yandex-browser-beta
+whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 
 caps.keep sys_chroot,sys_admin

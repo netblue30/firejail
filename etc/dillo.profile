@@ -5,18 +5,18 @@ include /etc/firejail/dillo.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.dillo
+noblacklist ${HOME}/.dillo
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.dillo
-mkdir ~/.fltk
+mkdir ${HOME}/.dillo
+mkdir ${HOME}/.fltk
 whitelist ${DOWNLOADS}
-whitelist ~/.dillo
-whitelist ~/.fltk
+whitelist ${HOME}/.dillo
+whitelist ${HOME}/.fltk
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

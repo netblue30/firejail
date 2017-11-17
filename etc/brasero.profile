@@ -5,7 +5,7 @@ include /etc/firejail/brasero.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/brasero
+noblacklist ${HOME}/.config/brasero
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

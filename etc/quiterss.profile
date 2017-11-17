@@ -15,10 +15,10 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.cache/QuiteRss
-mkdir ~/.config/QuiteRss
-mkdir ~/.local/share/data
-mkdir ~/.local/share/data/QuiteRss
+mkdir ${HOME}/.cache/QuiteRss
+mkdir ${HOME}/.config/QuiteRss
+mkdir ${HOME}/.local/share/data
+mkdir ${HOME}/.local/share/data/QuiteRss
 whitelist ${HOME}/.cache/QuiteRss
 whitelist ${HOME}/.config/QuiteRss/
 whitelist ${HOME}/.config/QuiteRssrc

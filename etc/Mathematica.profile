@@ -13,11 +13,11 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-mkdir ~/.Mathematica
-mkdir ~/.Wolfram Research
-whitelist ~/.Mathematica
-whitelist ~/.Wolfram Research
-whitelist ~/Documents/Wolfram Mathematica
+mkdir ${HOME}/.Mathematica
+mkdir ${HOME}/.Wolfram Research
+whitelist ${HOME}/.Mathematica
+whitelist ${HOME}/.Wolfram Research
+whitelist ${HOME}/Documents/Wolfram Mathematica
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all

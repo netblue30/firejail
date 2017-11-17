@@ -6,6 +6,7 @@ include /etc/firejail/dropbox.local
 include /etc/firejail/globals.local
 
 noblacklist ~/.config/autostart
+noblacklist ~/.dropbox
 noblacklist ~/.dropbox-dist
 
 include /etc/firejail/disable-common.inc

@@ -1,0 +1,52 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2017 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "rm outfile\r"
+after 100
+
+send -- "fnetfilter test1.net outfile\r"
+after 100
+
+send -- "cat outfile\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"test1"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"*filter"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"INPUT -m state --state RELATED,ESTABLISHED"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"disable STUN"
+}
+after 100
+
+send -- "fnetfilter foo outfile\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"cannot open foo"
+}
+after 100
+
+send -- "fnetfilter test1.net outlocked\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"cannot open outlocked"
+}
+after 100
+
+send -- "rm outfile\r"
+after 100
+
+puts "\nall done\n"

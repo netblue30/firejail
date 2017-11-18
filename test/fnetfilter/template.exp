@@ -1,0 +1,82 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2017 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "rm outfile\r"
+after 100
+
+send -- "fnetfilter test2.net,icmp-type,destination-unreachable,time-exceeded,echo-request,3478,3479 outfile\r"
+after 100
+
+send -- "cat outfile\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"*filter"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"INPUT -m state --state RELATED,ESTABLISHED"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"icmp-type echo-reply"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"icmp-type destination-unreachable"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"icmp-type time-exceeded"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"icmp-type echo-request"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"dport 3478"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"dport 3479"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"dport 3478"
+}
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"dport 3479"
+}
+after 100
+
+send -- "fnetfilter test2.net,icmp-type,destination-unreachable,time-exceeded,echo-request outfile\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"ARG5 on line 14 was not defined"
+}
+after 100
+
+send -- "fnetfilter test2.net,icmp-type,destination-unreachable,time-exceeded,echo-request\r"
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"invalid destination file in netfilter command"
+}
+after 100
+
+send -- "fnetfilter test3.net,44 outfile\r"
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"invalid template argument on line 1"
+}
+after 100
+send -- "rm outfile\r"
+after 100
+
+puts "\nall done\n"

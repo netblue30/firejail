@@ -1,0 +1,44 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2017 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --net=br1 --ip=10.10.30.10 --name=test1 --netfilter=/etc/firejail/tcpserver.net,5555 ./tcpserver 5555\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+spawn $env(SHELL)
+send -- "telnet 10.10.30.10 5555\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Connected to 10.10.30.10"
+}
+sleep 1
+
+send "sdfklsjadfl;ksadjfl;sdkfj\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"response"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Connection closed"
+}
+sleep 1
+
+send -- "telnet 10.10.30.10 5556\r"
+expect {
+	timeout {puts "OK\n"}
+	"Connected to 10.10.30.10" {puts "TESTING ERROR 6\n";exit}
+	"dikasdfjasdjf"
+}
+
+after 100
+puts "all done\n"

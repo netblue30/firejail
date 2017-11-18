@@ -210,18 +210,27 @@ $
       --debug-private-lib
               Debug messages for --private-lib option.
 
+       --netfilter=filename,arg1,arg2,arg3 ...
+              This  is  the  template  version of the previous command. $ARG1,
+              $ARG2, $ARG3 ... in the firewall script are replaced with  arg1,
+              arg2,  arg3  ...  passed on the command line. Up to 16 arguments
+              are supported.  Example:
+
+              $ firejail --net=eth0 --ip=192.168.1.105 \
+              --netfilter=/etc/firejail/tcpserver.net,5001 server-program
+
        --netfilter.print=name|pid
               Print  the  firewall installed in the sandbox specified by name
               or PID. Example:
 
-              $ firejail --net=browser --net=eth0 --netfilter firefox &
+              $ firejail --name=browser --net=eth0 --netfilter firefox &
               $ firejail --netfilter.print=browser
 
        --netfilter6.print=name|pid
               Print the IPv6 firewall installed in the sandbox  specified  by
               name or PID. Example:
 
-              $ firejail --net=browser --net=eth0 --netfilter firefox &
+              $ firejail --name=browser --net=eth0 --netfilter firefox &
               $ firejail --netfilter6.print=browser
 
 `````

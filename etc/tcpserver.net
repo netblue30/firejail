@@ -1,0 +1,27 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+
+###################################################################
+# Simple tcp filter template. $ARG1 is the port number.
+#
+# Usage:  $ARG1 in this template is replaced by 5001 from command line below
+#
+#   firejail --net=eth0 --ip=192.168.1.105 --netfilter=/etc/firejail/tcpserver.net,5001 server-program
+#      
+###################################################################
+
+# allow server traffic
+-A INPUT -p tcp --dport $ARG1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport $ARG1 -m state --state ESTABLISHED -j ACCEPT
+
+# allow incoming ping
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+-A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
+
+# allow outgoing DNS
+-A OUTPUT -p udp --dport 53 -j ACCEPT
+-A INPUT -p udp --sport 53 -j ACCEPT
+
+COMMIT

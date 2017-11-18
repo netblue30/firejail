@@ -24,7 +24,6 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
-
 void check_netfilter_file(const char *fname) {
 	EUID_ASSERT();
 
@@ -43,7 +42,6 @@ void check_netfilter_file(const char *fname) {
 	}
 	free(tmp);
 }
-
 
 void netfilter(const char *fname) {
 	// find iptables command
@@ -150,6 +148,16 @@ void netfilter_print(pid_t pid, int ipv6) {
 	}
 	free(comm);
 
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
+			exit(1);
+		}
+	}
+
 	// check network namespace
 	char *name;
 	if (asprintf(&name, "/run/firejail/network/%d-netmap", pid) == -1)
@@ -196,4 +204,3 @@ void netfilter_print(pid_t pid, int ipv6) {
 
 	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, iptables, "-vL");
 }
-

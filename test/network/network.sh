@@ -8,6 +8,12 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
 sudo ./configure
 
+echo "TESTING: netfilter template (netfilter-template.exp)"
+rm -f ./tcpserver
+gcc -o tcpserver tcpserver.c
+./netfilter-template.exp
+rm ./tcpserver
+
 echo "TESTING: firemon interface (firemon-interfaces.exp)"
 sudo ./firemon-interfaces.exp
 

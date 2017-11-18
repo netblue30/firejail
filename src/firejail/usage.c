@@ -122,7 +122,7 @@ void usage(void) {
 	printf("    --net=ethernet_interface - enable network namespaces and connect to this\n");
 	printf("\tEthernet interface.\n");
 	printf("    --net=none - enable a new, unconnected network namespace.\n");
-	printf("    --netfilter[=filename] - enable firewall.\n");
+	printf("    --netfilter[=filename,arg1,arg2,arg3 ...] - enable firewall.\n");
 	printf("    --netfilter.print=name|pid - print the firewall.\n");
 	printf("    --netfilter6=filename - enable IPv6 firewall.\n");
 	printf("    --netfilter6.print=name|pid - print the IPv6 firewall.\n");

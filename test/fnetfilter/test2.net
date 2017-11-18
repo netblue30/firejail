@@ -1,0 +1,19 @@
+*filter
+# test2
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+# echo replay is handled by -m state RELATED/ESTABLISHED above
+#-A INPUT -p icmp --$ARG1 echo-reply -j ACCEPT
+-A INPUT -p icmp --$ARG1 $ARG2 -j ACCEPT
+-A INPUT -p icmp --$ARG1 $ARG3 -j ACCEPT
+-A INPUT -p icmp --$ARG1 $ARG4 -j ACCEPT 
+# disable STUN
+-A OUTPUT -p udp --dport $ARG5 -j DROP
+-A OUTPUT -p udp --dport $ARG6 -j DROP
+-A OUTPUT -p tcp --dport $ARG5 -j DROP
+-A OUTPUT -p tcp --dport $ARG6 -j DROP
+COMMIT
+

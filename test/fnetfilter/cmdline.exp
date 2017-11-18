@@ -1,0 +1,37 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2017 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "fnetfilter\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Usage:"
+}
+after 100
+
+send -- "fnetfilter -h\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Usage:"
+}
+after 100
+
+send -- "fnetfilter -h a b c d\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Usage:"
+}
+after 100
+
+send -- "fnetfilter a b c d\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Usage:"
+}
+after 100
+puts "\nall done\n"

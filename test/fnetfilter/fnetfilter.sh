@@ -13,6 +13,8 @@ fi
 
 export PATH="$PATH:/usr/lib/firejail"
 
+chmod 400 outlocked
+
 echo "TESTING: fnetfilter cmdline (test/fnetfilter/cmdline.exp)"
 ./cmdline.exp
 

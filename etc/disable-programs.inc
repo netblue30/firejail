@@ -134,6 +134,7 @@ blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/kwriterc
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/knotesrc
+blacklist ${HOME}/.config/konversationrc
 blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
@@ -270,6 +271,7 @@ blacklist ${HOME}/.kde/share/config/khtmlrc
 blacklist ${HOME}/.kde/share/config/konq_history
 blacklist ${HOME}/.kde/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde/share/config/konquerorrc
+blacklist ${HOME}/.kde/share/config/konversationrc
 blacklist ${HOME}/.kde/share/config/kopeterc
 blacklist ${HOME}/.kde/share/config/ktorrentrc
 blacklist ${HOME}/.kde/share/config/okularpartrc
@@ -295,6 +297,7 @@ blacklist ${HOME}/.kde4/share/config/khtmlrc
 blacklist ${HOME}/.kde4/share/config/konq_history
 blacklist ${HOME}/.kde4/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde4/share/config/konquerorrc
+blacklist ${HOME}/.kde4/share/config/konversationrc
 blacklist ${HOME}/.kde4/share/config/kopeterc
 blacklist ${HOME}/.kde4/share/config/ktorrentrc
 blacklist ${HOME}/.kde4/share/config/okularpartrc

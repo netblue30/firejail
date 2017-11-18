@@ -37,7 +37,7 @@ seccomp
 shell none
 tracelog
 
-private-bin gwenview,gimp*,kbuildsycoca4
+private-bin gwenview,gimp*,kbuildsycoca4,kdeinit4
 private-dev
 # private-etc X11
 

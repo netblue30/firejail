@@ -18,8 +18,7 @@ blacklist ${HOME}/.config/autostart
 blacklist ${HOME}/.config/autostart-scripts
 blacklist ${HOME}/.config/lxsession/LXDE/autostart
 blacklist ${HOME}/.config/openbox
-blacklist ${HOME}/.config/plasma-workspace/env
-blacklist ${HOME}/.config/plasma-workspace/shutdown
+blacklist ${HOME}/.config/plasma-workspace
 blacklist ${HOME}/.config/startupconfig
 blacklist ${HOME}/.fluxbox/startup
 blacklist ${HOME}/.gnomerc
@@ -256,6 +255,7 @@ blacklist ${HOME}/.netrc
 blacklist ${HOME}/.pki
 blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/.ssh
+blacklist ${HOME}/.vaults
 blacklist /etc/group+
 blacklist /etc/group-
 blacklist /etc/gshadow

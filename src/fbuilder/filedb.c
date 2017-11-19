@@ -24,14 +24,14 @@ FileDB *filedb_find(FileDB *head, const char *fname) {
 	FileDB *ptr = head;
 	int found = 0;
 	int len = strlen(fname);
-	
+
 	while (ptr) {
 		// exact name
 		if (strcmp(fname, ptr->fname) == 0) {
 			found = 1;
 			break;
 		}
-		
+
 		// parent directory in the list
 		if (len > ptr->len &&
 		    fname[ptr->len] == '/' &&
@@ -42,10 +42,10 @@ FileDB *filedb_find(FileDB *head, const char *fname) {
 
 		ptr = ptr->next;
 	}
-	
+
 	if (found)
 		return ptr;
-	
+
 	return NULL;
 }
 
@@ -55,7 +55,7 @@ FileDB *filedb_add(FileDB *head, const char *fname) {
 	// don't add it if it is already there or if the parent directory is already in the list
 	if (filedb_find(head, fname))
 		return head;
-	
+
 	// add a new entry
 	FileDB *entry = malloc(sizeof(FileDB));
 	if (!entry)

@@ -25,23 +25,23 @@ static void process_file(const char *fname, const char *dir, void (*callback)(ch
 	assert(fname);
 	assert(dir);
 	assert(callback);
-	
+
 	int dir_len = strlen(dir);
-	
+
 	// process trace file
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);
 		exit(1);
 	}
-	
+
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
 		// remove \n
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-	
+
 		// parse line: 4:galculator:access /etc/fonts/conf.d:0
 		// number followed by :
 		ptr = buf;
@@ -78,10 +78,10 @@ static void process_file(const char *fname, const char *dir, void (*callback)(ch
 		if (!ptr2)
 			continue;
 		*ptr2 = '\0';
-		
+
 		callback(ptr);
 	}
-	
+
 	fclose(fp);
 }
 
@@ -90,10 +90,10 @@ static void process_files(const char *fname, const char *dir, void (*callback)(c
 	assert(fname);
 	assert(dir);
 	assert(callback);
-	
+
 	// run fname
 	process_file(fname, dir, callback);
-	
+
 	// run all the rest
 	struct stat s;
 	int i;
@@ -127,9 +127,9 @@ static void etc_callback(char *ptr) {
 
 void build_etc(const char *fname, FILE *fp) {
 	assert(fname);
-	
+
 	process_files(fname, "/etc", etc_callback);
-	
+
 	fprintf(fp, "private-etc ");
 	if (etc_out == NULL)
 		fprintf(fp, "none\n");
@@ -140,7 +140,7 @@ void build_etc(const char *fname, FILE *fp) {
 			ptr = ptr->next;
 		}
 		fprintf(fp, "\n");
-	}	
+	}
 }
 
 //*******************************************
@@ -164,7 +164,7 @@ void build_var(const char *fname, FILE *fp) {
 	assert(fname);
 
 	process_files(fname, "/var", var_callback);
-	
+
 	if (var_out == NULL)
 		fprintf(fp, "blacklist /var\n");
 	else
@@ -218,9 +218,9 @@ static void tmp_callback(char *ptr) {
 
 void build_tmp(const char *fname, FILE *fp) {
 	assert(fname);
-	
+
 	process_files(fname, "/tmp", tmp_callback);
-	
+
 	if (tmp_out == NULL)
 		fprintf(fp, "private-tmp\n");
 	else {
@@ -247,7 +247,7 @@ static char *dev_skip[] = {
 	"/dev/random",
 	"/dev/urandom",
 	"/dev/tty",
-	"/dev/snd", 
+	"/dev/snd",
 	"/dev/dri",
 	"/dev/pts",
 	"/dev/nvidia0",
@@ -296,9 +296,9 @@ static void dev_callback(char *ptr) {
 
 void build_dev(const char *fname, FILE *fp) {
 	assert(fname);
-	
+
 	process_files(fname, "/dev", dev_callback);
-	
+
 	if (dev_out == NULL)
 		fprintf(fp, "private-dev\n");
 	else {

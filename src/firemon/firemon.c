@@ -56,15 +56,15 @@ static void my_handler(int s){
 // return -1 if not found
 //
 // Example:
-//14776:netblue:/usr/bin/firejail /usr/bin/transmission-qt 
-//  14777:netblue:/usr/bin/firejail /usr/bin/transmission-qt 
-//    14792:netblue:/usr/bin/transmission-qt 
+//14776:netblue:/usr/bin/firejail /usr/bin/transmission-qt
+//  14777:netblue:/usr/bin/firejail /usr/bin/transmission-qt
+//    14792:netblue:/usr/bin/transmission-qt
 // We need 14792, the first real sandboxed process
 int find_child(int id) {
 	int i;
 	int first_child = -1;
 
-	// find the first child	
+	// find the first child
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 2 && pids[i].parent == id) {
 			first_child = i;
@@ -74,13 +74,13 @@ int find_child(int id) {
 
 	if (first_child == -1)
 		return -1;
-	
+
 	// find the second child
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 3 && pids[i].parent == first_child)
 			return i;
 	}
-	
+
 	return -1;
 }
 

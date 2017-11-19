@@ -181,7 +181,7 @@ printf("\n");
 	}
 
 	char *destfile = (argc == 3)? argv[2]: argv[1];
-	char *command = (argc == 3)? argv[1]: NULL;	
+	char *command = (argc == 3)? argv[1]: NULL;
 //printf("command %s\n", command);
 //printf("destfile %s\n", destfile);
 	// destfile is a real filename
@@ -208,6 +208,6 @@ printf("\n");
 		else
 			copy(command, destfile);
 	}
-	
+
 	return 0;
 }

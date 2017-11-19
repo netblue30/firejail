@@ -364,7 +364,7 @@ int checkcfg(int val) {
 			}
 			else
 				goto errout;
-			
+
 			free(ptr);
 		}
 

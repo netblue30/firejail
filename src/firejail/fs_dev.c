@@ -84,14 +84,14 @@ static void deventry_mount(void) {
 	while (dev[i].dev_fname != NULL) {
 		struct stat s;
 		if (stat(dev[i].run_fname, &s) == 0) {
-			
+
 			// check device type and subsystem configuration
 			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
 			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
 			    (dev[i].type == DEV_TV && arg_notv == 0) ||
 			    (dev[i].type == DEV_DVD && arg_nodvd == 0)) {
-			
+
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)
 					printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
@@ -113,7 +113,7 @@ static void deventry_mount(void) {
 						fclose(fp);
 					}
 				}
-	
+
 				if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
 					errExit("mounting dev file");
 				fs_logger2("whitelist", dev[i].dev_fname);

@@ -23,13 +23,13 @@
 void build_seccomp(const char *fname, FILE *fp) {
 	assert(fname);
 	assert(fp);
-	
+
 	FILE *fp2 = fopen(fname, "r");
 	if (!fp2) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);
 		exit(1);
 	}
-	
+
 	char buf[MAX_BUF];
 	int line = 1;
 	int position = 0;
@@ -39,7 +39,7 @@ void build_seccomp(const char *fname, FILE *fp) {
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-		
+
 		// first line:
 		//% time     seconds  usecs/call     calls    errors syscall
 		if (line == 1) {
@@ -61,7 +61,7 @@ void build_seccomp(const char *fname, FILE *fp) {
 			// get out on the next "----" line
 			if (*buf == '-')
 				break;
-			
+
 			if (line == 3)
 				fprintf(fp, "# seccomp.keep %s", buf + position);
 			else
@@ -89,21 +89,21 @@ int netlink = 0;
 int packet = 0;
 static void process_protocol(const char *fname) {
 	assert(fname);
-	
+
 	// process trace file
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);
 		exit(1);
 	}
-	
+
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
 		// remove \n
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-	
+
 		// parse line: 4:galculator:access /etc/fonts/conf.d:0
 		// number followed by :
 		ptr = buf;
@@ -136,7 +136,7 @@ static void process_protocol(const char *fname) {
 		else if (strncmp(ptr, "AF_PACKET ", 9) == 0)
 			packet = 1;
 	}
-	
+
 	fclose(fp);
 }
 
@@ -144,10 +144,10 @@ static void process_protocol(const char *fname) {
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
 void build_protocol(const char *fname, FILE *fp) {
 	assert(fname);
-	
+
 	// run fname
 	process_protocol(fname);
-	
+
 	// run all the rest
 	struct stat s;
 	int i;
@@ -159,7 +159,7 @@ void build_protocol(const char *fname, FILE *fp) {
 			process_protocol(newname);
 		free(newname);
 	}
-	
+
 	int net = 0;
 	if (unix_s || inet || inet6 || netlink || packet) {
 		fprintf(fp, "protocol ");

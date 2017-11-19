@@ -859,7 +859,7 @@ be created and configured using "ip netns".
 .TP
 \fB\-\-netfilter
 Enable a default firewall if a new network namespace is created inside the sandbox.
-This option has no effect for sandboxes using the system network namespace. 
+This option has no effect for sandboxes using the system network namespace.
 .br
 
 .br
@@ -970,7 +970,7 @@ $ firejail --netfilter.print=browser
 \fB\-\-netfilter6=filename
 Enable the IPv6 firewall specified by filename if a new network namespace is created inside the sandbox.
 This option has no effect for sandboxes using the system network namespace.
-Please use the regular iptables-save/iptables-restore format for the filter file. 
+Please use the regular iptables-save/iptables-restore format for the filter file.
 
 .TP
 \fB\-\-netfilter6.print=name|pid

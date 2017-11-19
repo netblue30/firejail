@@ -165,7 +165,7 @@ void seccomp_default_drop(const char *fname1, const char *fname2, char *list, in
 
 void seccomp_keep(const char *fname1, const char *fname2, char *list) {
 	(void) fname2;
-	
+
 	// open file for pre-exec filter
 	int fd = open(fname1, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd < 0) {

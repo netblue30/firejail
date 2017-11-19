@@ -29,7 +29,7 @@ static void load_whitelist_common(void) {
 		fprintf(stderr, "Error: cannot open whitelist-common.inc\n");
 		exit(1);
 	}
-	
+
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
 		if (strncmp(buf, "whitelist ~/", 12) != 0)
@@ -39,33 +39,33 @@ static void load_whitelist_common(void) {
 		if (!ptr)
 			continue;
 		*ptr = '\0';
-		
+
 		// add the file to skip list
 		db_skip = filedb_add(db_skip, fn);
 	}
-	
-	fclose(fp);	
+
+	fclose(fp);
 }
 
 void process_home(const char *fname, char *home, int home_len) {
 	assert(fname);
 	assert(home);
 	assert(home_len);
-	
+
 	// process trace file
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);
 		exit(1);
 	}
-	
+
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
 		// remove \n
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-	
+
 		// parse line: 4:galculator:access /etc/fonts/conf.d:0
 		// number followed by :
 		ptr = buf;
@@ -107,8 +107,8 @@ void process_home(const char *fname, char *home, int home_len) {
 		if (strcmp(ptr, home) == 0)
 			continue;
 		ptr += home_len + 1;
-		
-		// skip files handled automatically by firejail 
+
+		// skip files handled automatically by firejail
 		if (strcmp(ptr, ".Xauthority") == 0 ||
 		    strcmp(ptr, ".Xdefaults-debian") == 0 ||
 		    strncmp(ptr, ".config/pulse/", 13) == 0 ||
@@ -116,8 +116,8 @@ void process_home(const char *fname, char *home, int home_len) {
 		    strncmp(ptr, ".bash_hist", 10) == 0 ||
 		    strcmp(ptr, ".bashrc") == 0)
 			continue;
-		
-		
+
+
 		// try to find the relevant directory for this file
 		char *dir = extract_dir(ptr);
 		char *toadd = (dir)? dir: ptr;
@@ -160,7 +160,7 @@ void process_home(const char *fname, char *home, int home_len) {
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
 void build_home(const char *fname, FILE *fp) {
 	assert(fname);
-		
+
 	// load whitelist common
 	load_whitelist_common();
 
@@ -172,10 +172,10 @@ void build_home(const char *fname, FILE *fp) {
 	if (!home)
 		errExit("getpwuid");
 	int home_len = strlen(home);
-	
+
 	// run fname
 	process_home(fname, home, home_len);
-	
+
 	// run all the rest
 	struct stat s;
 	int i;
@@ -187,7 +187,7 @@ void build_home(const char *fname, FILE *fp) {
 			process_home(newname, home, home_len);
 		free(newname);
 	}
-	
+
 	// print the out list if any
 	if (db_out) {
 		filedb_print(db_out, "whitelist ~/", fp);

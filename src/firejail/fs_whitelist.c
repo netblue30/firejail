@@ -275,7 +275,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 
 	// check if the file exists
-	assert(wfile);	
+	assert(wfile);
 	struct stat s;
 	if (stat(wfile, &s) == 0) {
 		if (arg_debug || arg_debug_whitelists)

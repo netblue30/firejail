@@ -605,7 +605,7 @@ void fs_proc_sys_dev_boot(void) {
 	// disable various ipc sockets in /run/user
 	if (!arg_writable_run_user) {
 		struct stat s;
-	
+
 		char *fname;
 		if (asprintf(&fname, "/run/user/%d", getuid()) == -1)
 			errExit("asprintf");
@@ -619,7 +619,7 @@ void fs_proc_sys_dev_boot(void) {
 			if (stat(fnamegpg, &s) == 0)
 				disable_file(BLACKLIST_FILE, fnamegpg);
 			free(fnamegpg);
-	
+
 			// disable /run/user/{uid}/systemd
 			char *fnamesysd;
 			if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)

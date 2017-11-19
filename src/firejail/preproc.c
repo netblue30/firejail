@@ -146,7 +146,7 @@ void preproc_clean_run(void) {
 		pid %= max_pids;
 		if (end == entry->d_name || *end)
 			continue;
-	
+
 		if (pid < start_pid)
 			continue;
 		pidarr[pid] = 1;
@@ -169,7 +169,7 @@ void preproc_clean_run(void) {
 		pid %= max_pids;
 		if (end == entry->d_name || *end)
 			continue;
-	
+
 		if (pid < start_pid)
 			continue;
 		if (pidarr[pid] == 0)

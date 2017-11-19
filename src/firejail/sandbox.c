@@ -105,7 +105,7 @@ static void set_caps(void) {
 		caps_keep_list(arg_caps_list);
 	else if (arg_caps_default_filter)
 		caps_default_filter();
-	
+
 	// drop discretionary access control capabilities for root sandboxes
 	// if caps.keep, the user has to set it manually in the list
 	if (!arg_caps_keep)

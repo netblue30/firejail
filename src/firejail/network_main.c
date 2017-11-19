@@ -262,14 +262,14 @@ void net_dns_print(pid_t pid) {
 		caps_drop_all();
 		if (chdir("/") < 0)
 			errExit("chdir");
-		
+
 		// access /etc/resolv.conf
 		FILE *fp = fopen("/etc/resolv.conf", "r");
 		if (!fp) {
 			fprintf(stderr, "Error: cannot access /etc/resolv.conf\n");
 			exit(1);
 		}
-	
+
 		char buf[MAXBUF];
 		while (fgets(buf, MAXBUF, fp))
 			printf("%s", buf);

@@ -46,7 +46,7 @@ static void report_duplication(const char *full_path) {
 	char *fname = strrchr(full_path, '/');
 	if (fname && *(++fname) != '\0') {
 		// report the file on all bin paths
-		int i = 0;	
+		int i = 0;
 		while (lib_paths[i]) {
 			char *p;
 			if (asprintf(&p, "%s/%s", lib_paths[i], fname) == -1)
@@ -91,7 +91,7 @@ void fslib_duplicate(const char *full_path) {
 		return;
 	}
 	free(name);
-	
+
 	if (arg_debug || arg_debug_private_lib)
 		printf("copying %s to private %s\n", full_path, dest_dir);
 

@@ -25,7 +25,7 @@
 #include <pwd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
- 
+
 
 #define MAX_BUF 4096
 // main.c

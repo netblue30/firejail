@@ -88,7 +88,7 @@ static void stdc(const char *dirname) {
 				continue;
 			if (strcmp(entry->d_name, "..") == 0)
 				continue;
-			
+
 			if (find_libc_list(entry->d_name)) {
 				char *fname;
 				if (asprintf(&fname, "%s/%s", dirname, entry->d_name) == -1)
@@ -105,7 +105,7 @@ void fslib_install_stdc(void) {
 	// install standard C libraries
 	struct stat s;
 	char *stdclib = "/lib64";		  // CentOS, Fedora, Arch
-	
+
 	if (stat("/lib/x86_64-linux-gnu", &s) == 0) {	// Debian & friends
 		mkdir_attr(RUN_LIB_DIR "/x86_64-linux-gnu", 0755, 0, 0);
 		stdclib = "/lib/x86_64-linux-gnu";
@@ -219,13 +219,13 @@ SysLib syslibs[] = {
 		""	// message
 	}
 };
-	
+
 void fslib_install_system(void) {
 	// look for installed libraries
 	DIR *dir = opendir(RUN_LIB_DIR "/x86_64-linux-gnu");
 	if (!dir)
 		dir = opendir(RUN_LIB_DIR);
-	
+
 	if (dir) {
 		struct dirent *entry;
 		while ((entry = readdir(dir)) != NULL) {
@@ -238,12 +238,12 @@ void fslib_install_system(void) {
 			while (ptr->library) {
 				if (ptr->len == 0)
 					ptr->len = strlen(ptr->library);
-				
+
 				if (strncmp(entry->d_name, ptr->library, ptr->len) == 0) {
 					ptr->found = 1;
 					break;
 				}
-				
+
 				ptr++;
 			}
 
@@ -281,7 +281,7 @@ void fslib_install_system(void) {
 				}
 			}
 			free(name);
-			
+
 			if (*ptr->dir2 != '\0') {
 				// Debian & friends
 				if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr->dir2) == -1)
@@ -302,7 +302,7 @@ void fslib_install_system(void) {
 				}
 				free(name);
 			}
-			
+
 			if (!arg_quiet)
 				fprintf(stderr, "%s installed in %0.2f ms\n", ptr->message, timetrace_end());
 		}

@@ -763,7 +763,7 @@ void invalid_filename(const char *fname, int globbing) {
 		return;
 
 	int len = strlen(ptr);
-	
+
 	if (globbing) {
 		// file globbing ('*?[]') is allowed
 		if (strcspn(ptr, "\\&!\"'<>%^(){};,") != (size_t)len) {

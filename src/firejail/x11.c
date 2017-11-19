@@ -1043,7 +1043,7 @@ void x11_start_xpra(int argc, char **argv) {
 	char *display_str;
 	if (asprintf(&display_str, ":%d", display) == -1)
 		errExit("asprintf");
-	
+
 	if (checkcfg(CFG_XPRA_ATTACH))
 		x11_start_xpra_new(argc, argv, display_str);
 	else

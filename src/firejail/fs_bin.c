@@ -136,7 +136,7 @@ static int valid_full_path_file(const char *name) {
 
 static void report_duplication(const char *fname) {
 	// report the file on all bin paths
-	int i = 0;	
+	int i = 0;
 	while (paths[i]) {
 		char *p;
 		if (asprintf(&p, "%s/%s", paths[i], fname) == -1)

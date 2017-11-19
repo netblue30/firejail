@@ -122,7 +122,7 @@ void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid,
 	// if the link is already there, don't create it
 	struct stat s;
 	if (stat(linkpath, &s) == 0)
-	       return;	
+	       return;
 
 	char *rp = realpath(target, NULL);
 	if (rp) {

@@ -115,7 +115,7 @@ static void copy_libs_for_exe(const char *exe) {
 			fprintf(stderr, "Warning fldd: cannot open %s, skipping...\n", exe);
 		return;
 	}
-	
+
 	struct stat s;
 	char *base = NULL, *end;
 	if (fstat(f, &s) == -1)
@@ -217,7 +217,7 @@ static void copy_libs_for_exe(const char *exe) {
  close:
 	if (base)
 		munmap(base, s.st_size);
-			
+
 	close(f);
 }
 
@@ -335,7 +335,7 @@ printf("\n");
 		usage();
 		return 0;
 	}
-	
+
 	int fd = STDOUT_FILENO;
 	// attempt to open the file
 	if (argc == 3) {

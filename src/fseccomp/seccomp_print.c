@@ -68,7 +68,7 @@ static int detect_filter_type(void) {
 	assert(filter);
 
 	printf("SECCOMP Filter\n");
-	
+
 	// testing for main seccomp filter, protocol, mdwe - platform architecture
 	const struct sock_filter start_main[] = {
 		VALIDATE_ARCHITECTURE,
@@ -79,7 +79,7 @@ static int detect_filter_type(void) {
 		EXAMINE_SYSCALL
 #endif
 	};
-	
+
 	if (memcmp(&start_main[0], filter, sizeof(start_main)) == 0) {
 		printf("  VALIDATE_ARCHITECTURE\n");
 		printf("  EXAMINE_SYSCALL\n");
@@ -88,26 +88,26 @@ static int detect_filter_type(void) {
 #endif
 		return sizeof(start_main) / sizeof(struct sock_filter);
 	}
-	
-	
+
+
 	// testing for secondary 64 bit filter
 	const struct sock_filter start_secondary_64[] = {
 		VALIDATE_ARCHITECTURE_64,
 		EXAMINE_SYSCALL,
 	};
-	
+
 	if (memcmp(&start_secondary_64[0], filter, sizeof(start_secondary_64)) == 0) {
 		printf("  VALIDATE_ARCHITECTURE_64\n");
 		printf("  EXAMINE_SYSCALL\n");
 		return sizeof(start_secondary_64) / sizeof(struct sock_filter);
 	}
-	
+
 	// testing for secondary 32 bit filter
 	const struct sock_filter start_secondary_32[] = {
 		VALIDATE_ARCHITECTURE_32,
 		EXAMINE_SYSCALL,
 	};
-	
+
 	if (memcmp(&start_secondary_32[0], filter, sizeof(start_secondary_32)) == 0) {
 		printf("  VALIDATE_ARCHITECTURE_32\n");
 		printf("  EXAMINE_SYSCALL\n");
@@ -132,7 +132,7 @@ static int detect_filter_type(void) {
 #endif
 		return sizeof(start_secondary_block) / sizeof(struct sock_filter);
 	}
-	
+
 	return 0; // filter unrecognized
 }
 
@@ -146,7 +146,7 @@ void filter_print(const char *fname) {
 		printf("Invalid seccomp filter %s\n", fname);
 		return;
 	}
-	
+
 	// loop trough the rest of commands
 	while (i < filter_cnt) {
 		// minimal parsing!

@@ -16,7 +16,7 @@ mkdir ${HOME}/.config/Signal
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/Signal
 include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc 
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

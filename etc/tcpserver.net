@@ -9,7 +9,7 @@
 # Usage:  $ARG1 in this template is replaced by 5001 from command line below
 #
 #   firejail --net=eth0 --ip=192.168.1.105 --netfilter=/etc/firejail/tcpserver.net,5001 server-program
-#      
+#
 ###################################################################
 
 # allow server traffic

@@ -41,7 +41,7 @@ static int check_profile(const char *name, const char *homedir) {
 			printf("found %s\n", profname2);
 		rv = 1;
 	}
-		
+
 	free(profname1);
 	free(profname2);
 	return rv;
@@ -58,11 +58,11 @@ static int have_profile(const char *filename, const char *homedir) {
 
 	// we get strange names here, such as .org.gnom.gedit.desktop, com.uploadedlobster.peek.desktop,
 	// or io.github.Pithos.desktop; extract the word before .desktop
-	
+
 	char *tmpfname = strdup(filename);
 	if (!tmpfname)
 		errExit("strdup");
-		
+
 	// check .desktop extension
 	int len = strlen(tmpfname);
 	if (len <= 8)
@@ -70,14 +70,14 @@ static int have_profile(const char *filename, const char *homedir) {
 	if (strcmp(tmpfname + len - 8, ".desktop"))
 		return 0;
 	tmpfname[len - 8] = '\0';
-	
+
 	// extract last word
 	char *last_word = strrchr(tmpfname, '.');
 	if (last_word)
 		last_word++;
 	else
 		last_word = tmpfname;
-	
+
 	// try lowercase
 	last_word[0] = tolower(last_word[0]);
 	int rv = check_profile(last_word, homedir);
@@ -85,7 +85,7 @@ static int have_profile(const char *filename, const char *homedir) {
 		free(tmpfname);
 		return rv;
 	}
-	
+
 	// try uppercase
 	last_word[0] = toupper(last_word[0]);
 	rv = check_profile(last_word, homedir);
@@ -228,12 +228,12 @@ void fix_desktop_files(char *homedir) {
 				}
 			}
 		}
-		
+
 		if (change_exec == NULL && change_dbus == 0) {
 			munmap(buf, sb.st_size + 1);
 			continue;
 		}
-		
+
 		munmap(buf, sb.st_size + 1);
 
 		//****************************************************
@@ -247,13 +247,13 @@ void fix_desktop_files(char *homedir) {
 			printf("   %s skipped: file exists\n", filename);
 			continue;
 		}
-		
+
 		FILE *fpin = fopen(filename, "r");
 		if (!fpin) {
 			fprintf(stderr, "Error: cannot open /usr/share/applications/%s\n", filename);
 			continue;
 		}
-		
+
 		FILE *fpout = fopen(outname, "w");
 		if (!fpout) {
 			fprintf(stderr, "Error: cannot open ~/.local/share/applications/%s\n", outname);
@@ -277,9 +277,9 @@ void fix_desktop_files(char *homedir) {
 					fprintf(fpout, "Exec=%s\n", change_exec);
 			}
 			else
-				fprintf(fpout, "%s", fbuf);	
+				fprintf(fpout, "%s", fbuf);
 		}
-		
+
 		if (change_exec)
 			free(change_exec);
 		fclose(fpin);

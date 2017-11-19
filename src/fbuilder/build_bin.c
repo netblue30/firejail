@@ -23,21 +23,21 @@ static FileDB *bin_out = NULL;
 
 static void process_bin(const char *fname) {
 	assert(fname);
-	
+
 	// process trace file
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);
 		exit(1);
 	}
-	
+
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
 		// remove \n
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-	
+
 		// parse line: 4:galculator:access /etc/fonts/conf.d:0
 		// number followed by :
 		ptr = buf;
@@ -89,7 +89,7 @@ static void process_bin(const char *fname) {
 
 		bin_out = filedb_add(bin_out, ptr);
 	}
-	
+
 	fclose(fp);
 }
 
@@ -97,10 +97,10 @@ static void process_bin(const char *fname) {
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
 void build_bin(const char *fname, FILE *fp) {
 	assert(fname);
-	
+
 	// run fname
 	process_bin(fname);
-	
+
 	// run all the rest
 	struct stat s;
 	int i;

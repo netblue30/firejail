@@ -43,7 +43,7 @@ static char *cmdlist[] = {
 static void clear_tmp_files(void) {
 	unlink(STRACE_OUTPUT);
 	unlink(TRACE_OUTPUT);
-	
+
 	// run all the rest
 	int i;
 	for (i = 1; i <= 5; i++) {
@@ -62,22 +62,22 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(stderr, "Error: application name missing\n");
 		exit(1);
 	}
-	
+
 	// clean /tmp files
 	clear_tmp_files();
-	
+
 	// detect strace
 	int have_strace = 0;
 	if (access("/usr/bin/strace", X_OK) == 0)
 		have_strace = 1;
-	
+
 	// calculate command length
 	unsigned len = (int) sizeof(cmdlist) / sizeof(char*) + argc - index + 1;
 	if (arg_debug)
 		printf("command len %d + %d + 1\n", (int) (sizeof(cmdlist) / sizeof(char*)), argc - index);
 	char *cmd[len];
 	cmd[0] = cmdlist[0];	// explicit assignemnt to clean scan-build error
-	
+
 	// build command
 	unsigned i = 0;
 	for (i = 0; i < (int) sizeof(cmdlist) / sizeof(char*); i++) {
@@ -97,7 +97,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		for (i = 0; i < len; i++)
 			printf("\t%s\n", cmd[i]);
 	}
-	
+
 	// fork and execute
 	pid_t child = fork();
 	if (child == -1)
@@ -108,7 +108,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		(void) rv;
 		errExit("execv");
 	}
-	
+
 	// wait for all processes to finish
 	int status;
 	if (waitpid(child, &status, 0) != child)
@@ -122,18 +122,18 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "# Persistent global definitions\n");
 		fprintf(fp, "# include /etc/firejail/globals.local\n");
 		fprintf(fp, "\n");
-		
+
 		fprintf(fp, "### basic blacklisting\n");
 		fprintf(fp, "include /etc/firejail/disable-common.inc\n");
 		fprintf(fp, "# include /etc/firejail/disable-devel.inc\n");
 		fprintf(fp, "include /etc/firejail/disable-passwdmgr.inc\n");
 		fprintf(fp, "# include /etc/firejail/disable-programs.inc\n");
 		fprintf(fp, "\n");
-		
+
 		fprintf(fp, "### home directory whitelisting\n");
 		build_home(TRACE_OUTPUT, fp);
 		fprintf(fp, "\n");
-		
+
 		fprintf(fp, "### filesystem\n");
 		build_tmp(TRACE_OUTPUT, fp);
 		build_dev(TRACE_OUTPUT, fp);
@@ -158,7 +158,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "### network\n");
 		build_protocol(TRACE_OUTPUT, fp);
 		fprintf(fp, "\n");
-		
+
 		fprintf(fp, "### environment\n");
 		fprintf(fp, "shell none\n");
 

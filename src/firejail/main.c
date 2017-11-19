@@ -506,7 +506,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			printf("%s", buf);
 		fclose(fp);
 		exit(0);
-		
+
 	}
 	else if (strncmp(argv[i], "--cpu.print=", 12) == 0) {
 		// join sandbox by pid or by name
@@ -882,7 +882,7 @@ static void run_builder(int argc, char **argv) {
 	if (setuid(getuid()) < 0)
 		errExit("setuid/getuid");
 	assert(getenv("LD_PRELOAD") == NULL);
-	
+
 	argv[0] = LIBDIR "/firejail/fbuilder";
 	execvp(argv[0], argv);
 
@@ -950,7 +950,7 @@ int main(int argc, char **argv) {
 	// profile builder
 	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
 		run_builder(argc, argv); // this function will not return
-		
+
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
 		run_symlink(argc, argv); // if symlink detected, this function will not return

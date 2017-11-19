@@ -40,7 +40,7 @@ printf("\n");
 	int prog_index = 0;
 	FILE *fp = stdout;
 	int prof_file = 0;
-	
+
 	// parse arguments and extract program index
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-?") ==0) {
@@ -57,7 +57,7 @@ printf("\n");
 				fprintf(stderr, "Error fbuild: --build=profile-name is not supported for root user.\n");
 				exit(1);
 			}
-			
+
 			// check file access
 			fp = fopen(argv[i] + 8, "w");
 			if (!fp) {
@@ -77,7 +77,7 @@ printf("\n");
 			break;
 		}
 	}
-	
+
 	if (prog_index == 0) {
 		fprintf(stderr, "Error fbuilder: program and arguments required\n");
 		usage();
@@ -85,7 +85,7 @@ printf("\n");
 			fclose(fp);
 		exit(1);
 	}
-	
+
 	build_profile(argc, argv, prog_index, fp);
 	if (prof_file)
 		fclose(fp);

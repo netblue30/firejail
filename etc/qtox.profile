@@ -19,8 +19,10 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/qt5ct
 whitelist ${HOME}/.config/tox
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+ipc-namespace
 netfilter
 nodvd
 nogroups
@@ -34,6 +36,7 @@ tracelog
 
 disable-mnt
 private-bin qtox
+private-etc fonts,resolv.conf
 private-dev
 private-tmp
 

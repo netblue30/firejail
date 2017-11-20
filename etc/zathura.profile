@@ -5,7 +5,7 @@ include /etc/firejail/zathura.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
+# blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.config/zathura
 noblacklist ${HOME}/.local/share/zathura
@@ -16,7 +16,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-net none
+# net none
 nodvd
 nogroups
 nonewprivs

@@ -16,6 +16,8 @@ whitelist ${HOME}/.drirc
 whitelist ${HOME}/.mime.types
 whitelist ${HOME}/.local/share/applications
 read-only ${HOME}/.local/share/applications
+whitelist ${HOME}/.config/pkcs11
+read-only ${HOME}/.config/pkcs11
 whitelist ${HOME}/.config/ibus
 
 # fonts

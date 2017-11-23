@@ -48,6 +48,7 @@ blacklist ${HOME}/.config/krunnerrc
 blacklist ${HOME}/.config/kwinrc
 blacklist ${HOME}/.config/kwinrulesrc
 blacklist ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
+blacklist ${HOME}/.config/plasmavaultrc
 blacklist ${HOME}/.kde/share/apps/konsole
 blacklist ${HOME}/.kde/share/apps/kwin
 blacklist ${HOME}/.kde/share/apps/plasma

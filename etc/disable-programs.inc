@@ -309,7 +309,6 @@ blacklist ${HOME}/.kodi
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
-blacklist ${HOME}/.local/.share/maps-places.json
 blacklist ${HOME}/.local/lib/python2.7/site-packages
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
@@ -353,6 +352,7 @@ blacklist ${HOME}/.local/share/ktorrent
 blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/lollypop
+blacklist ${HOME}/.local/share/maps-places.json
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
 blacklist ${HOME}/.local/share/multimc

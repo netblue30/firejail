@@ -41,7 +41,7 @@ tracelog
 
 private-bin okular,kbuildsycoca4,kdeinit4,lpr
 private-dev
-private-etc alternatives,cups,fonts,machine-id
+private-etc alternatives,cups,fonts,ld.so.cache,machine-id
 # private-tmp - on KDE we need access to the real /tmp for data exchange with thunderbird
 
 # memory-deny-write-execute

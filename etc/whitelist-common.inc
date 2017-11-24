@@ -55,6 +55,7 @@ whitelist ${HOME}/.config/dconf
 # qt/kde
 whitelist ${HOME}/.config/kdeglobals
 whitelist ${HOME}/.config/kioslaverc
+whitelist ${HOME}/.config/qt5ct
 whitelist ${HOME}/.kde/share/config/oxygenrc
 whitelist ${HOME}/.kde/share/config/kdeglobals
 whitelist ${HOME}/.kde/share/config/kioslaverc

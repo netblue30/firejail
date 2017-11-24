@@ -8,7 +8,6 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.cache/qBittorrent
 noblacklist ${HOME}/.config/qBittorrent
 noblacklist ${HOME}/.config/qBittorrentrc
-noblacklist ${HOME}/.config/qt5ct
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -22,7 +21,6 @@ whitelist  ${DOWNLOADS}
 whitelist ${HOME}/.cache/qBittorrent
 whitelist ${HOME}/.config/qBittorrent
 whitelist ${HOME}/.config/qBittorrentrc
-whitelist ${HOME}/.config/qt5ct
 whitelist ${HOME}/.local/share/data/qBittorrent
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc

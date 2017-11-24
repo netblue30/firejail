@@ -9,7 +9,6 @@ blacklist ${HOME}/.Xauthority
 blacklist ${HOME}/.bashrc
 
 noblacklist ${HOME}/.bibletime
-noblacklist ${HOME}/.config/qt5ct
 noblacklist ${HOME}/.sword
 
 include /etc/firejail/disable-common.inc
@@ -18,7 +17,6 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 whitelist ${HOME}/.bibletime
-whitelist ${HOME}/.config/qt5ct
 whitelist ${HOME}/.sword
 include /etc/firejail/whitelist-common.inc
 

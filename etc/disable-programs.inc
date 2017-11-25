@@ -405,6 +405,7 @@ blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
+blacklist ${HOME}/.passwd-s3fs
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
@@ -412,6 +413,7 @@ blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig
 blacklist ${HOME}/.retroshare
+blacklist ${HOME}/.s3cmd
 blacklist ${HOME}/.scribus
 blacklist ${HOME}/.scribusrc
 blacklist ${HOME}/.simutrans

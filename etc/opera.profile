@@ -28,3 +28,5 @@ include /etc/firejail/whitelist-common.inc
 netfilter
 nodvd
 notv
+
+disable-mnt

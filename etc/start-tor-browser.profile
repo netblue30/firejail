@@ -24,6 +24,7 @@ seccomp
 shell none
 tracelog
 
+disable-mnt
 private-bin bash,sh,grep,tail,env,gpg,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf
 private-dev
 private-etc fonts

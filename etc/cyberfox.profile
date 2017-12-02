@@ -62,9 +62,10 @@ seccomp
 shell none
 tracelog
 
+disable-mnt
 # private-bin cyberfox,which,sh,dbus-launch,dbus-send,env
 private-dev
-# private-dev might prevent video calls going out
+private-dev
 # private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,cyberfox,mime.types,mailcap,asound.conf,pulse
 private-tmp
 

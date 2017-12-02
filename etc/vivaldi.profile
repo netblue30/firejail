@@ -27,6 +27,7 @@ nogroups
 notv
 shell none
 
+disable-mnt
 private-dev
 # private-tmp - problems with multiple browser sessions
 

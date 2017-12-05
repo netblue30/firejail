@@ -19,6 +19,7 @@ include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace
+machine-id
 net none
 no3d
 nodvd

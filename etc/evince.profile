@@ -17,6 +17,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+machine-id
 # net none breaks AppArmor on Ubuntu systems
 netfilter
 no3d

@@ -23,6 +23,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.keep setuid,setgid,net_bind_service,dac_read_search
 ipc-namespace
+machine-id
 netfilter
 no3d
 nodvd

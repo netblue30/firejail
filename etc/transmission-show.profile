@@ -16,6 +16,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+machine-id
 net none
 nodvd
 nonewprivs

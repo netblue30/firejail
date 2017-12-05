@@ -70,7 +70,8 @@ include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
-machine-id
+# machine-id breaks pulse audio; if shoud work fine in setups where sound is not required
+#machine-id
 netfilter
 nodvd
 nogroups

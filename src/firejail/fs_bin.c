@@ -40,7 +40,6 @@ static char *paths[] = {
 // return 1 if found, 0 if not found
 static char *check_dir_or_file(const char *name) {
 	assert(name);
-
 	struct stat s;
 	char *fname = NULL;
 
@@ -162,8 +161,10 @@ static void duplicate(char *fname, FILE *fplist) {
 		// is required for the following cases:
 		//  - if user's $PATH order is not the same as the above
 		//    paths[] variable order
-		if (!valid_full_path_file(fname))
+		if (!valid_full_path_file(fname)) {
+			fwarning("invalid private-bin path %s\n", fname);
 			return;
+		}
 
 		full_path = strdup(fname);
 		if (!full_path)

@@ -183,7 +183,7 @@ void netfilter_print(pid_t pid, int ipv6) {
 
 	// find iptables executable
 	char *iptables = NULL;
-	char *iptables_restore = NULL;
+//	char *iptables_restore = NULL;
 	if (ipv6) {
 		if (stat("/sbin/ip6tables", &s) == 0)
 			iptables = "/sbin/ip6tables";

@@ -68,10 +68,10 @@ send -- "exit\r"
 after 100
 
 
-send -- "firejail --debug --private-bin=/etc/shadow \r"
+send -- "firejail --private-bin=/etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"Warning: file /etc/shadow not found"
+	"Warning: invalid private-bin path /etc/shadow"
 }
 after 100
 

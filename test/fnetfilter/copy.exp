@@ -16,11 +16,11 @@ after 100
 send -- "cat outfile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"test1"
+	"*filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"*filter"
+	"test1"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}

@@ -1,5 +1,5 @@
 *filter
-# test2
+# test1
 :INPUT DROP [0:0]
 :FORWARD DROP [0:0]
 :OUTPUT ACCEPT [0:0]
@@ -9,7 +9,7 @@
 #-A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
 -A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT
 -A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT
--A INPUT -p icmp --icmp-type echo-request -j ACCEPT 
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 # disable STUN
 -A OUTPUT -p udp --dport 3478 -j DROP
 -A OUTPUT -p udp --dport 3479 -j DROP

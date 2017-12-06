@@ -16,7 +16,11 @@ sleep 1
 send -- "cat /proc/self/status | grep Cpus\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Cpus_allowed_list:	0"
+	"Cpus"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"_allowed_list:	0"
 }
 after 100
 send -- "exit\r"
@@ -25,7 +29,7 @@ sleep 1
 
 send -- "firejail --name=test --cpu=1\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
 }
 sleep 1
@@ -33,8 +37,12 @@ sleep 1
 spawn $env(SHELL)
 send -- "firejail --cpu.print=test\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Cpus_allowed_list:	1"
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Cpus"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"_allowed_list:	1"
 }
 after 100
 puts "\nall done\n"

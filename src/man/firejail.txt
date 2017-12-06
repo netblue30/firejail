@@ -416,7 +416,10 @@ Use this option if you don't trust the DNS setup on your network.
 Example:
 .br
 $ firejail \-\-dns=8.8.8.8 \-\-dns=8.8.4.4 firefox
+.br
 
+.br
+Note: this feature is not supported on systemd-resolved setups.
 .TP
 \fB\-\-dns.print=name|pid
 Print DNS configuration for a sandbox identified by name or by PID.

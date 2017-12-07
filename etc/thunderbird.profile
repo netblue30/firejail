@@ -26,8 +26,8 @@ include /etc/firejail/whitelist-var-common.inc
 
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 ignore private-tmp
-machine-id
-disable-mnt
+# machine-id breaks pulse audio; if should work fine in setups where sound is not required
+#machine-id
 read-only ${HOME}/.config/mimeapps.list
 
 # allow browsers

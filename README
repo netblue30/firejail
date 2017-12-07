@@ -142,6 +142,7 @@ Daan Bakker (https://github.com/dbakker)
 	- protect shell startup files
 Danil Semelenov (https://github.com/sgtpep)
 	- blacklist the Electron Cash Wallet
+	- blacklist s3cmd and s3fs configs
 Dara Adib (https://github.com/daradib)
 	- ssh profile fix
 	- evince profile fix
@@ -449,6 +450,7 @@ soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 	- fix handling of STEAM_RUNTIME_PREFER_HOST_LIBRARIES in steam profile
 	- fix keepassxc.profile
+	- fix qtox.profile
 SpotComms (https://github.com/SpotComms)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
 	- added PDFSam, Pithos, and Xonotic profiles

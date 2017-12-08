@@ -125,7 +125,7 @@ void fslib_copy_libs(const char *full_path) {
 
 	// run fldd to extact the list of files
 	if (arg_debug || arg_debug_private_lib)
-		printf("runing fldd %s\n", full_path);
+		printf("running fldd %s\n", full_path);
 	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
 
 	// open the list of libraries and install them on by one

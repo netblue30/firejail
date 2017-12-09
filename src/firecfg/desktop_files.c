@@ -109,7 +109,20 @@ void fix_desktop_files(char *homedir) {
 	if (asprintf(&user_apps_dir, "%s/.local/share/applications", homedir) == -1)
 		errExit("asprintf");
 	if (stat(user_apps_dir, &sb) == -1) {
-		int rv = mkdir(user_apps_dir, 0700);
+		char *tmp;
+		if (asprintf(&tmp, "%s/.local", homedir) == -1)
+			errExit("asprintf");
+		int rv = mkdir(tmp, 0755);
+		(void) rv;
+		free(tmp);
+		
+		if (asprintf(&tmp, "%s/.local/share", homedir) == -1)
+			errExit("asprintf");
+		rv = mkdir(tmp, 0755);
+		(void) rv;
+		free(tmp);
+	
+		rv = mkdir(user_apps_dir, 0700);
 		if (rv) {
 			fprintf(stderr, "Error: cannot create ~/.local/application directory\n");
 			perror("mkdir");

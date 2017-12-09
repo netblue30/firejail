@@ -243,6 +243,7 @@ blacklist ${HOME}/.caff
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/keybase
 blacklist ${HOME}/.ecryptfs
+blacklist ${HOME}/.fetchmailrc
 blacklist ${HOME}/.gnome2/keyrings
 blacklist ${HOME}/.gnupg
 blacklist ${HOME}/.kde/share/apps/kwallet

@@ -394,9 +394,6 @@ blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.mplayer
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.multimc5
-blacklist ${HOME}/.mutt
-blacklist ${HOME}/.mutt/muttrc
-blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.neverball
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail

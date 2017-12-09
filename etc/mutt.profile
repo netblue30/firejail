@@ -20,7 +20,6 @@ noblacklist ${HOME}/.mail
 noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.msmtprc
 noblacklist ${HOME}/.mutt
-noblacklist ${HOME}/.mutt/muttrc
 noblacklist ${HOME}/.muttrc
 noblacklist ${HOME}/.signature
 noblacklist ${HOME}/.vim

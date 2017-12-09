@@ -251,7 +251,7 @@ blacklist ${HOME}/.kde4/share/apps/kwallet
 blacklist ${HOME}/.local/share/keyrings
 blacklist ${HOME}/.local/share/kwalletd
 blacklist ${HOME}/.msmtprc
-blacklist ${HOME}/.mutt/muttrc
+blacklist ${HOME}/.mutt
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.netrc
 blacklist ${HOME}/.pki

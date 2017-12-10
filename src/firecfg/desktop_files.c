@@ -108,6 +108,7 @@ void fix_desktop_files(char *homedir) {
 	char *user_apps_dir;
 	if (asprintf(&user_apps_dir, "%s/.local/share/applications", homedir) == -1)
 		errExit("asprintf");
+	printf("\nFixing desktop files in %s\n", user_apps_dir);
 	if (stat(user_apps_dir, &sb) == -1) {
 		char *tmp;
 		if (asprintf(&tmp, "%s/.local", homedir) == -1)
@@ -115,18 +116,19 @@ void fix_desktop_files(char *homedir) {
 		int rv = mkdir(tmp, 0755);
 		(void) rv;
 		free(tmp);
-		
+
 		if (asprintf(&tmp, "%s/.local/share", homedir) == -1)
 			errExit("asprintf");
 		rv = mkdir(tmp, 0755);
 		(void) rv;
 		free(tmp);
-	
+
 		rv = mkdir(user_apps_dir, 0700);
 		if (rv) {
-			fprintf(stderr, "Error: cannot create ~/.local/application directory\n");
 			perror("mkdir");
-			exit(1);
+			fprintf(stderr, "Warning: cannot create ~/.local/share/application directory, desktop files fixing skipped...\n");
+			free(user_apps_dir);
+			return;
 		}
 		rv = chmod(user_apps_dir, 0700);
 		(void) rv;
@@ -135,15 +137,18 @@ void fix_desktop_files(char *homedir) {
 	// source
 	DIR *dir = opendir("/usr/share/applications");
 	if (!dir) {
-		perror("Error: cannot open /usr/share/applications directory");
-		exit(1);
+		perror("opendir");
+		fprintf(stderr, "Warning: cannot open /usr/share/applications directory, desktop files fixing skipped...\n");
+		free(user_apps_dir);
+		return;
 	}
 	if (chdir("/usr/share/applications")) {
-		perror("Error: cannot chdir to /usr/share/applications");
-		exit(1);
+		perror("chdir");
+		fprintf(stderr, "Warning: cannot chdir to /usr/share/applications, desktop files fixing skipped...\n");
+		free(user_apps_dir);
+		return;
 	}
 
-	printf("\nFixing desktop files in %s\n", user_apps_dir);
 	// copy
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
@@ -177,7 +182,7 @@ void fix_desktop_files(char *homedir) {
 		/* coverity[toctou] */
 		int fd = open(filename, O_RDONLY);
 		if (fd == -1) {
-			fprintf(stderr, "Error: cannot open /usr/share/applications/%s\n", filename);
+			fprintf(stderr, "Warning: cannot open /usr/share/applications/%s\n", filename);
 			continue;
 		}
 
@@ -263,13 +268,13 @@ void fix_desktop_files(char *homedir) {
 
 		FILE *fpin = fopen(filename, "r");
 		if (!fpin) {
-			fprintf(stderr, "Error: cannot open /usr/share/applications/%s\n", filename);
+			fprintf(stderr, "Warning: cannot open /usr/share/applications/%s\n", filename);
 			continue;
 		}
 
 		FILE *fpout = fopen(outname, "w");
 		if (!fpout) {
-			fprintf(stderr, "Error: cannot open ~/.local/share/applications/%s\n", outname);
+			fprintf(stderr, "Warning: cannot open ~/.local/share/applications/%s\n", outname);
 			fclose(fpin);
 			continue;
 		}

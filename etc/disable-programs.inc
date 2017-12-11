@@ -368,6 +368,7 @@ blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/qpdfview
+blacklist ${HOME}/.local/share/qutebrowser
 blacklist ${HOME}/.local/share/remmina
 blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/spotify

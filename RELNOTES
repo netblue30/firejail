@@ -49,6 +49,39 @@ firejail (0.9.52) baseline; urgency=low
       cower (Arch), kdeinit4
  -- netblue30 <netblue30@yahoo.com>  Thu, 7 Dec 2017 08:00:00 -0500
 
+firejail (0.9.50) baseline; urgency=low
+  * modif: --output split in two commands, --output and --output-stderr
+  * feature: per-profile disable-mnt (--disable-mnt)
+  * feature: per-profile support to set X11 Xephyr screen size (--xephyr-screen)
+  * feature: private /lib directory (--private-lib)
+  * feature: disable CDROM/DVD drive (--nodvd)
+  * feature: disable DVB devices (--notv)
+  * feature: --profile.print
+  * enhancement: print all seccomp filters under --debug
+  * enhancement: /proc/sys mounting
+  * enhancement: rework IP address assingment for --net options
+  * enhancement: support for newer Xpra versions (2.1+) -
+     set xpra-attach yes in /etc/firejail/firejail.config
+  * enhancement: all profiles use a standard layout style
+  * enhancement: create /usr/local for firecfg if the directory doesn't exist
+  * enhancement: allow full paths in --private-bin
+  * seccomp feature: --memory-deny-write-execute
+  * seccomp feature: seccomp post-exec
+  * seccomp feature: block secondary architecture (--seccomp.block_secondary)
+  * seccomp feature: seccomp syscall groups
+  * seccomp enhancement: print all seccomp filters under --debug
+  * seccomp enhancement: default seccomp list update
+  * new profiles: curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite,
+  * new profiles: Geary, Liferea, peek, silentarmy, IntelliJ IDEA,
+  * new profiles: Android Studio, electron, riot-web, Extreme Tux Racer,
+  * new profiles: Frozen Bubble, Open Invaders, Pingus, Simutrans, SuperTux
+  * new profiles: telegram-desktop, arm, rambox, apktool, baobab, dex2jar, gitg,
+  * new profiles: hashcat, obs, picard, remmina, sdat2img, soundconverter
+  * new profiles: truecraft, gnome-twitch, tuxguitar, musescore, neverball
+  * new profiles: sqlitebrowse, Yandex Browser, minetest
+  * bugfixes
+ -- netblue30   Thu, 7 Sep 2017 08:00:00 -0500
+
 firejail (0.9.50~rc1) baseline; urgency=low
   * release pending!
   * modif: --output split in two commands, --output and --output-stderr

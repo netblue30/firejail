@@ -1,4 +1,8 @@
 firejail (0.9.52) baseline; urgency=low
+  * work in progress
+ -- netblue30 <netblue30@yahoo.com>  Tue, 12 Dec 2017 08:00:00 -0500
+
+firejail (0.9.52) baseline; urgency=low
   * modif: --allow-private-blacklists was deprecated; blacklisting,
     read-only, read-write, tmpfs and noexec are allowed in
     private home directories
@@ -43,7 +47,6 @@ firejail (0.9.52) baseline; urgency=low
       xcalc, zaproxy, kopete, cliqz, signal-desktop, kget, nheko, Enpass,
       kwin_x11, krunner, ping, bsdtar, makepkg (Arch), archaudit-report
       cower (Arch), kdeinit4
-
  -- netblue30 <netblue30@yahoo.com>  Thu, 7 Dec 2017 08:00:00 -0500
 
 firejail (0.9.50~rc1) baseline; urgency=low

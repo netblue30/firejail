@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.9.51"
+VERSION="0.9.52"
 rm -fr ~/rpmbuild
 rm -f firejail-$VERSION-1.x86_64.rpm
 
@@ -188,7 +188,6 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/lomath.profile
 %{_sysconfdir}/%{name}/loweb.profile
 %{_sysconfdir}/%{name}/lowriter.profile
-%{_sysconfdir}/%{name}/lxterminal.profile
 %{_sysconfdir}/%{name}/mathematica.profile
 %{_sysconfdir}/%{name}/Mathematica.profile
 %{_sysconfdir}/%{name}/mcabber.profile
@@ -471,7 +470,7 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/itch.profile
 %{_sysconfdir}/%{name}/minetest.profile
 %{_sysconfdir}/%{name}/yandex-browser.profile
-# 0.9.51
+# 0.9.52
 %{_sysconfdir}/%{name}/Natron.profile
 %{_sysconfdir}/%{name}/Viber.profile
 %{_sysconfdir}/%{name}/amule.profile
@@ -530,6 +529,28 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}/x-terminal-emulator.profile
 %{_sysconfdir}/%{name}/xmr-stak-cpu.profile
 %{_sysconfdir}/%{name}/zart.profile
+%{_sysconfdir}/%{name}/aosp.profile
+%{_sysconfdir}/%{name}/archaudit-report.profile
+%{_sysconfdir}/%{name}/bnox.profile
+%{_sysconfdir}/%{name}/bsdtar.profile
+%{_sysconfdir}/%{name}/cower.profile
+%{_sysconfdir}/%{name}/dnox.profile
+%{_sysconfdir}/%{name}/enpass.profile
+%{_sysconfdir}/%{name}/gnome-ring.profile
+%{_sysconfdir}/%{name}/kdeinit4.profile
+%{_sysconfdir}/%{name}/kget.profile
+%{_sysconfdir}/%{name}/kopete.profile
+%{_sysconfdir}/%{name}/krunner.profile
+%{_sysconfdir}/%{name}/kwin_x11.profile
+%{_sysconfdir}/%{name}/makepkg.profile
+%{_sysconfdir}/%{name}/nheko.profile
+%{_sysconfdir}/%{name}/pdfmod.profile
+%{_sysconfdir}/%{name}/ping.profile
+%{_sysconfdir}/%{name}/runenpass.sh.profile
+%{_sysconfdir}/%{name}/signal-desktop.profile
+%{_sysconfdir}/%{name}/tcpserver.net
+%{_sysconfdir}/%{name}/xcalc.profile
+%{_sysconfdir}/%{name}/zaproxy.profile
  
 /usr/bin/firejail
 /usr/bin/firemon
@@ -576,7 +597,7 @@ rm -rf %{buildroot}
 chmod u+s /usr/bin/firejail
 
 %changelog
-* Sat Sep 23 2017  netblue30 <netblue30@yahoo.com> 0.9.51-1
+* Tue Dec 12 2017  netblue30 <netblue30@yahoo.com> 0.9.52-1
 
 * Fri Sep 8 2017  netblue30 <netblue30@yahoo.com> 0.9.50-1
 

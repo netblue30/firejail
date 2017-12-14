@@ -23,6 +23,7 @@
 #include <string.h>
 #include <dlfcn.h>
 #include <sys/types.h>
+#include <limits.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

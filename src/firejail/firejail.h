@@ -484,6 +484,7 @@ uint32_t arp_assign(const char *dev, Bridge *br);
 
 // util.c
 void fwarning(char* fmt, ...);
+void fmessage(char* fmt, ...);
 void drop_privs(int nogroups);
 int mkpath_as_root(const char* path);
 void extract_command_name(int index, char **argv);

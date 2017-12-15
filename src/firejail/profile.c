@@ -250,8 +250,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "allow-private-blacklist") == 0) {
-		if (!arg_quiet)
-			fprintf(stderr, "Warning: --allow-private-blacklist was deprecated\n");
+		fmessage("--allow-private-blacklist was deprecated\n");
 		return 0;
 	}
 	else if (strcmp(ptr, "netfilter") == 0) {
@@ -1274,8 +1273,7 @@ void profile_read(const char *fname) {
 			continue;
 		}
 		if (!msg_printed) {
-			if (!arg_quiet)
-				fprintf(stderr, "Reading profile %s\n", fname);
+			fmessage("Reading profile %s\n", fname);
 			msg_printed = 1;
 		}
 

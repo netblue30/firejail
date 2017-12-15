@@ -369,14 +369,12 @@ void fs_private_lib(void) {
 		}
 		fclose(fp);
 	}
-	if (!arg_quiet)
-		fprintf(stderr, "Program libraries installed in %0.2f ms\n", timetrace_end());
+	fmessage("Program libraries installed in %0.2f ms\n", timetrace_end());
 
 	// install the reset of the system libraries
 	fslib_install_system();
 
-	if (!arg_quiet)
-		fprintf(stderr, "Installed %d libraries and %d directories\n", lib_cnt, dir_cnt);
+	fmessage("Installed %d libraries and %d directories\n", lib_cnt, dir_cnt);
 
 	// bring in firejail directory for --trace options
 	fslib_copy_dir(LIBDIR "/firejail");

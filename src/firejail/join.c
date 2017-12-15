@@ -222,8 +222,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			pid_t child;
 			if (find_child(pid, &child) == 0) {
 				pid = child;
-				if (!arg_quiet)
-					printf("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
+				fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
 			}
 		}
 		free(comm);

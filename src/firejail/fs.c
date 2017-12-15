@@ -959,8 +959,7 @@ void fs_overlayfs(void) {
 		// issue #263 end code
 		//***************************
 	}
-	if (!arg_quiet)
-		printf("OverlayFS configured in %s directory\n", basedir);
+	fmessage("OverlayFS configured in %s directory\n", basedir);
 
 	// mount-bind dev directory
 	if (arg_debug)

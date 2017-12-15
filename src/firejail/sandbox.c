@@ -53,10 +53,7 @@ int enforce_seccomp = 0;
 
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
-	if (!arg_quiet) {
-		printf("\nChild received signal %d, shutting down the sandbox...\n", sig);
-		fflush(0);
-	}
+	fmessage("\nChild received signal %d, shutting down the sandbox...\n", sig);
 
 	// broadcast sigterm to all processes in the group
 	kill(-1, SIGTERM);
@@ -298,13 +295,13 @@ static void print_time(void) {
 		usleep(1000);
 		unsigned long long onems = getticks() - end_timestamp;
 		if (onems) {
-			printf("Child process initialized in %.02f ms\n",
+			fmessage("Child process initialized in %.02f ms\n",
 				(float) (end_timestamp - start_timestamp) / (float) onems);
 			return;
 		}
 	}
 
-	printf("Child process initialized\n");
+	fmessage("Child process initialized\n");
 }
 
 
@@ -503,8 +500,7 @@ static void enforce_filters(void) {
 	// drop all supplementary groups; /etc/group file inside chroot
 	// is controlled by a regular usr
 	arg_nogroups = 1;
-	if (!arg_quiet)
-		printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
+	fmessage("Dropping all Linux capabilities and enforcing default seccomp filter\n");
 }
 
 int sandbox(void* sandbox_arg) {
@@ -642,28 +638,27 @@ int sandbox(void* sandbox_arg) {
 	// print network configuration
 	if (!arg_quiet) {
 		if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
-			printf("\n");
+			fmessage("\n");
 			if (any_bridge_configured() || any_interface_configured()) {
-//				net_ifprint();
 				if (arg_scan)
 					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, PATH_FNET, "printif", "scan");
 				else
-					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif", "scan");
+					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif");
 
 			}
 			if (cfg.defaultgw != 0) {
 				if (gw_cfg_failed)
-					printf("Default gateway configuration failed\n");
+					fmessage("Default gateway configuration failed\n");
 				else
-					printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+					fmessage("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
 			}
 			if (cfg.dns1 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
+				fmessage("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
 			if (cfg.dns2 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
+				fmessage("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
 			if (cfg.dns3 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
-			printf("\n");
+				fmessage("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
+			fmessage("\n");
 		}
 	}
 

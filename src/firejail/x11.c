@@ -360,8 +360,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	if (jail < 0)
 		errExit("fork");
 	if (jail == 0) {
-		if (!arg_quiet)
-			printf("\n*** Attaching to Xvfb display %d ***\n\n", display);
+		fmessage("\n*** Attaching to Xvfb display %d ***\n\n", display);
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
@@ -776,8 +775,7 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 			dup2(fd_null,2);
 		}
 
-		if (!arg_quiet)
-			printf("\n*** Attaching to xpra display %d ***\n\n", display);
+		fmessage("\n*** Attaching to xpra display %d ***\n\n", display);
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
@@ -816,8 +814,7 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 		exit(1);
 	}
 
-	if (!arg_quiet)
-		printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
+	fmessage("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
 
 	sleep(1);				  // adding a delay in order to let the server start
 

@@ -24,10 +24,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <stdarg.h>
 #include "../include/common.h"
 
 // main.c
 extern int arg_quiet;
+extern void fmessage(char* fmt, ...); // TODO: this function is duplicated in src/firejail/util.c
 
 // veth.c
 int net_create_veth(const char *dev, const char *nsdev, unsigned pid);

@@ -126,6 +126,16 @@ void fwarning(char* fmt, ...) {
 	va_end(args);
 }
 
+void fmessage(char* fmt, ...) { // TODO: this function is duplicated in src/fnet/interface.c
+	if (arg_quiet)
+		return;
+
+	va_list args;
+	va_start(args,fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+	fflush(0);
+}
 
 void logsignal(int s) {
 	if (!arg_debug)

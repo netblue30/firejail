@@ -151,8 +151,7 @@ void appimage_clear(void) {
 		for (i = 0; i < 5; i++) {
 			rv = umount2(mntdir, MNT_FORCE);
 			if (rv == 0) {
-				if (!arg_quiet)
-					printf("AppImage unmounted\n");
+				fmessage("AppImage unmounted\n");
 
 				break;
 			}

@@ -20,6 +20,18 @@
 #include "fnet.h"
 int arg_quiet = 0;
 
+void fmessage(char* fmt, ...) { // TODO: this function is duplicated in src/firejail/util.c
+	if (arg_quiet)
+		return;
+
+	va_list args;
+	va_start(args,fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+	fflush(0);
+}
+
+
 static void usage(void) {
 	printf("Usage:\n");
 	printf("\tfnet create veth dev1 dev2 bridge child\n");

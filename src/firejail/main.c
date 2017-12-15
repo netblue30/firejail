@@ -152,8 +152,8 @@ static void clear_atexit(void) {
 
 static void myexit(int rv) {
 	logmsg("exiting...");
-	if (!arg_command && !arg_quiet)
-		printf("\nParent is shutting down, bye...\n");
+	if (!arg_command)
+		fmessage("\nParent is shutting down, bye...\n");
 
 
 	// delete sandbox files in shared memory
@@ -166,10 +166,7 @@ static void myexit(int rv) {
 
 static void my_handler(int s){
 	EUID_ROOT();
-	if (!arg_quiet) {
-		printf("\nParent received signal %d, shutting down the child process...\n", s);
-		fflush(0);
-	}
+	fmessage("\nParent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
 	kill(child, SIGTERM);
 	myexit(1);
@@ -1129,7 +1126,7 @@ int main(int argc, char **argv) {
 			if (!arg_quiet) {
 				arg_debug = 1;
 				if (option_force)
-					printf("Entering sandbox-in-sandbox mode\n");
+					fmessage("Entering sandbox-in-sandbox mode\n");
 			}
 		}
 		else if (strcmp(argv[i], "--debug-check-filename") == 0)
@@ -1510,8 +1507,7 @@ int main(int argc, char **argv) {
 			free(ppath);
 		}
 		else if (strncmp(argv[i], "--profile-path=", 15) == 0) {
-			if (!arg_quiet)
-				fprintf(stderr, "Warning: --profile-path has been deprecated\n");
+			fwarning("--profile-path has been deprecated\n");
 		}
 		else if (strcmp(argv[i], "--noprofile") == 0) {
 			if (custom_profile) {
@@ -1613,8 +1609,7 @@ int main(int argc, char **argv) {
 			arg_machineid = 1;
 		}
 		else if (strcmp(argv[i], "--allow-private-blacklist") == 0) {
-			if (!arg_quiet)
-				fprintf(stderr, "Warning: --allow-private-blacklist was deprecated\n");
+			fwarning("--allow-private-blacklist was deprecated\n");
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;
@@ -2434,8 +2429,8 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 
-			if (custom_profile && !arg_quiet)
-				printf("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
+			if (custom_profile)
+				fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 		}
 	}
 
@@ -2518,7 +2513,7 @@ int main(int argc, char **argv) {
 	EUID_USER();
 
 	if (!arg_command && !arg_quiet) {
-		printf("Parent pid %u, child pid %u\n", sandbox_pid, child);
+		fmessage("Parent pid %u, child pid %u\n", sandbox_pid, child);
 		// print the path of the new log directory
 		if (getuid() == 0) // only for root
 			printf("The new log directory is /proc/%d/root/var/log\n", child);

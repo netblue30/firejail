@@ -192,10 +192,10 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 
 				// printing
 				if (header_printed == 0) {
-					printf("   Network scan:\n");
+					fmessage("   Network scan:\n");
 					header_printed = 1;
 				}
-				printf("   %02x:%02x:%02x:%02x:%02x:%02x\t%d.%d.%d.%d\n",
+				fmessage("   %02x:%02x:%02x:%02x:%02x:%02x\t%d.%d.%d.%d\n",
 					PRINT_MAC(hdr.sender_mac), PRINT_IP(ip));
 			}
 		}

@@ -176,6 +176,5 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);
 
-	if (!arg_quiet)
-		fprintf(stderr, "Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
+	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }

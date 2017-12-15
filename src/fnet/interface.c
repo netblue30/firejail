@@ -172,7 +172,7 @@ void net_ifprint(int scan) {
 	if (getifaddrs(&ifaddr) == -1)
 		errExit("getifaddrs");
 
-	printf("%-17.17s%-19.19s%-17.17s%-17.17s%-6.6s\n",
+	fmessage("%-17.17s%-19.19s%-17.17s%-17.17s%-6.6s\n",
 		"Interface", "MAC", "IP", "Mask", "Status");
 	// walk through the linked list
 	for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
@@ -208,7 +208,7 @@ void net_ifprint(int scan) {
 				sprintf(macstr, "%02x:%02x:%02x:%02x:%02x:%02x", PRINT_MAC(mac));
 
 			// print
-			printf("%-17.17s%-19.19s%-17.17s%-17.17s%-6.6s\n",
+			fmessage("%-17.17s%-19.19s%-17.17s%-17.17s%-6.6s\n",
 				ifa->ifa_name, macstr, ipstr, maskstr, status);
 
 			// network scanning

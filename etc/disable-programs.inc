@@ -318,6 +318,7 @@ blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet
 blacklist ${HOME}/.local/share/Steam
 blacklist ${HOME}/.local/share/SuperHexagon
+blacklist ${HOME}/.local/share/TelegramDesktop
 blacklist ${HOME}/.local/share/Terraria
 blacklist ${HOME}/.local/share/TpLogger
 blacklist ${HOME}/.local/share/akregator

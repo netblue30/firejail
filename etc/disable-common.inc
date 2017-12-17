@@ -218,6 +218,7 @@ read-only ${HOME}/_exrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
+read-only ${HOME}/.homesick
 
 # Make directories commonly found in $PATH read-only
 read-only ${HOME}/.gem

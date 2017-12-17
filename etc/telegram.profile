@@ -6,6 +6,7 @@ include /etc/firejail/telegram.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.TelegramDesktop
+noblacklist ${HOME}/.local/share/TelegramDesktop
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

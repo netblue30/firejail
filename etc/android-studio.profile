@@ -35,4 +35,5 @@ shell none
 private-dev
 # private-tmp
 
-noexec /tmp
+# noexec /tmp breaks 'Android Profiler'
+#noexec /tmp

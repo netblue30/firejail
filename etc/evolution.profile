@@ -21,7 +21,8 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
-no3d
+# no3d breaks under wayland
+#no3d
 nodvd
 nogroups
 nonewprivs

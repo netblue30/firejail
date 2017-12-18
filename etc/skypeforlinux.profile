@@ -24,7 +24,7 @@ seccomp
 shell none
 
 disable-mnt
-private-dev
+#private-dev
 private-tmp
 
 noexec ${HOME}

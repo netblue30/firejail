@@ -232,9 +232,13 @@ int main(int argc, char **argv) {
 		netstats();	// print all sandboxes, --name disregarded
 		return 0;
 	}
+	if (arg_tree) {
+		tree(0);
+		return 0;
+	}
 
 	// if --name requested without other options, print all data
-	if (pid && !arg_tree &&  !arg_cpu && !arg_seccomp && !arg_caps &&
+	if (pid && !arg_cpu && !arg_seccomp && !arg_caps &&
 	    !arg_cgroup && !arg_x11 && !arg_interface && !arg_route && !arg_arp) {
 		arg_tree = 1;
 		arg_cpu = 1;
@@ -249,10 +253,6 @@ int main(int argc, char **argv) {
 
 	// cumulative options
 	int print_procs = 1;
-	if (arg_tree) {
-		tree((pid_t) pid);
-		print_procs = 0;
-	}
 	if (arg_cpu) {
 		cpu((pid_t) pid, print_procs);
 		print_procs = 0;
@@ -285,10 +285,10 @@ int main(int argc, char **argv) {
 		arp((pid_t) pid, print_procs);
 		print_procs = 0;
 	}
+	(void) print_procs;
 
 	if (getuid() == 0) {
-		if (!arg_tree)
-			tree((pid_t) pid);
+		tree((pid_t) pid);	// pid initialized as zero, will print the tree for all processes if a specific pid was not requested
 		procevent((pid_t) pid);
 	}
 

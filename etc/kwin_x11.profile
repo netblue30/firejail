@@ -33,8 +33,11 @@ tracelog
 disable-mnt
 private-bin kwin_x11
 private-dev
-private-etc drirc,ld.so.cache,machine-id,xdg
+private-etc drirc,fonts,ld.so.cache,machine-id,xdg
 private-tmp
 
-# noexec ${HOME}
+# disable QML disk caching as it conflicts with the noexec constraints below
+env QML_DISABLE_DISK_CACHE=1
+
+noexec ${HOME}
 noexec /tmp

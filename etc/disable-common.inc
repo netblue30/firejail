@@ -194,6 +194,9 @@ read-only ${HOME}/.zshenv
 read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
 
+# Remote access
+read-only ${HOME}/.ssh/authorized_keys
+
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.dotfiles

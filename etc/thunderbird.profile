@@ -10,16 +10,16 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.cache/thunderbird
 noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.icedove
+# noblacklist ${HOME}/.icedove
 noblacklist ${HOME}/.thunderbird
 
 mkdir ${HOME}/.cache/thunderbird
 mkdir ${HOME}/.gnupg
-mkdir ${HOME}/.icedove
+# mkdir ${HOME}/.icedove
 mkdir ${HOME}/.thunderbird
 whitelist ${HOME}/.cache/thunderbird
 whitelist ${HOME}/.gnupg
-whitelist ${HOME}/.icedove
+# whitelist ${HOME}/.icedove
 whitelist ${HOME}/.thunderbird
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc

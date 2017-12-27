@@ -143,6 +143,7 @@ Daan Bakker (https://github.com/dbakker)
 Danil Semelenov (https://github.com/sgtpep)
 	- blacklist the Electron Cash Wallet
 	- blacklist s3cmd and s3fs configs
+	- blacklist Ethereum, Monero wallets
 Dara Adib (https://github.com/daradib)
 	- ssh profile fix
 	- evince profile fix

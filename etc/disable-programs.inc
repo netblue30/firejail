@@ -2,6 +2,7 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-programs.local
 
+blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*

@@ -224,6 +224,7 @@ blacklist ${HOME}/.elinks
 blacklist ${HOME}/.emacs
 blacklist ${HOME}/.emacs
 blacklist ${HOME}/.emacs.d
+blacklist ${HOME}/.ethereum
 blacklist ${HOME}/.etr
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.flowblade

@@ -126,9 +126,9 @@ int seccomp_load(const char *fname) {
 		errExit("strdup");
 	filter_list_head = fl;
 
-	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
-		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-			PATH_FSECCOMP, "print", fname);
+	if (arg_debug && access(PATH_FSEC_PRINT, X_OK) == 0) {
+		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
+			PATH_FSEC_PRINT, fname);
 	}
 
 	return 0;
@@ -240,12 +240,12 @@ int seccomp_filter_drop(void) {
 			printf("seccomp filter configured\n");
 	}
 
-	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
+	if (arg_debug && access(PATH_FSEC_PRINT, X_OK) == 0) {
 		struct stat st;
 		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0) {
 			printf("configuring postexec seccomp filter in %s\n", RUN_SECCOMP_POSTEXEC);
-			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-				  PATH_FSECCOMP, "print", RUN_SECCOMP_POSTEXEC);
+			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
+				  PATH_FSEC_PRINT, RUN_SECCOMP_POSTEXEC);
 		}
 	}
 
@@ -280,12 +280,12 @@ int seccomp_filter_keep(void) {
 			printf("seccomp filter configured\n");
 	}
 
-	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
+	if (arg_debug && access(PATH_FSEC_PRINT, X_OK) == 0) {
 		struct stat st;
 		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0) {
 			printf("configuring postexec seccomp filter in %s\n", RUN_SECCOMP_POSTEXEC);
-			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-				  PATH_FSECCOMP, "print", RUN_SECCOMP_POSTEXEC);
+			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
+				  PATH_FSEC_PRINT, RUN_SECCOMP_POSTEXEC);
 		}
 	}
 
@@ -332,7 +332,7 @@ void seccomp_print_filter(pid_t pid) {
 	}
 
 	// read and print the filter - run this as root, the user doesn't have access
-	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FSECCOMP, "print", fname);
+	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 2, PATH_FSEC_PRINT, fname);
 	free(fname);
 
 	exit(0);

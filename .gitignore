@@ -23,6 +23,7 @@ src/tags
 src/faudit/faudit
 src/fnet/fnet
 src/fnetfilter/fnetfilter
+src/fsec-print/fsec-print
 src/fseccomp/fseccomp
 src/fcopy/fcopy
 src/fldd/fldd

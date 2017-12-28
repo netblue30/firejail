@@ -67,6 +67,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+// From /usr/include/linux/filter.h
+//struct sock_filter {	/* Filter block */
+//	__u16	code;   /* Actual filter code */
+//	__u8	jt;	/* Jump true */
+//	__u8	jf;	/* Jump false */
+//	__u32	k;      /* Generic multiuse field */
+//};
+
 #include <sys/prctl.h>
 #ifndef PR_SET_NO_NEW_PRIVS
 # define PR_SET_NO_NEW_PRIVS 38
@@ -81,6 +89,7 @@
 #define SECCOMP_RET_ALLOW	0x7fff0000U
 #define SECCOMP_RET_ERRNO	0x00050000U
 #define SECCOMP_RET_DATA        0x0000ffffU
+
 struct seccomp_data {
     int nr;
     __u32 arch;
@@ -88,6 +97,11 @@ struct seccomp_data {
     __u64 args[6];
 };
 #endif
+
+#ifndef SECCOMP_RET_LOG
+#define SECCOMP_RET_LOG		0x7ffc0000U
+#endif
+
 
 #if defined(__i386__)
 # define ARCH_NR	AUDIT_ARCH_I386

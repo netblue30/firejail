@@ -31,15 +31,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"SECCOMP Filter"
-}
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"BLACKLIST"
+	"seccomp entries in /run/firejail/mnt/seccomp"
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"mount"
+	"jeq mount"
 }
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}

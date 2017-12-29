@@ -233,7 +233,7 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 	if (arg_tree) {
-		tree(0);
+		tree(pid);
 		return 0;
 	}
 

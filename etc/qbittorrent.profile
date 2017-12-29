@@ -39,12 +39,12 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin qbittorrent
+private-bin qbittorrent,python*
 private-dev
 # private-etc X11,fonts,xdg,resolv.conf
 # private-lib - problems on Arch
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute - problems on  Arch, see #1690 on GitHub repo
 noexec ${HOME}
 noexec /tmp

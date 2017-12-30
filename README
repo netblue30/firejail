@@ -69,6 +69,9 @@ Aleksey Manevich (https://github.com/manevich)
 	- x11 xpra, xphyr, none profile commands
 	- added --join-or-start command
 	- CVE-2016-7545
+Alexander Gerasiov (https://github.com/gerasiov)
+	- read-only ~/.ssh/authorized_keys
+	- profile updates
 Alexander Stein (https://github.com/ajstein)
 	- added profile for qutebrowser
 Andrey Alekseenko (https://github.com/al42and)
@@ -101,6 +104,8 @@ Bader Zaidan (https://github.com/BaderSZ)
 	- Telegram profile
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
+bn0785ac (https://github.com/bn0785ac)
+	- fixed bnox, dnox profiles
 BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
 Bruno Nova (https://github.com/brunonova)
@@ -153,6 +158,8 @@ dewbasaur (https://github.com/dewbasaur)
 	- block access to history files
 	- Firefox PDF.js exploit (CVE-2015-4495) fixes
 	- Steam profile
+DiGitHubCap (https://github.com/DiGitHubCap)
+	- deluge profile fix
 dshmgh (https://github.com/dshmgh)
 	- overlayfs fix for systems with /home mounted on a separate partition
 Duncan Overbruck (https://github.com/Duncaen)
@@ -168,6 +175,8 @@ Fabian Würfl (https://github.com/BafDyce)
 	- Liferea profile
 Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
+floxo (https://github.com/floxo)
+	- fixed qml disk cache issue
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template/--private-home
 fuelflo (https://github.com/fuelflo)
@@ -333,6 +342,8 @@ Mattias Wadman (https://github.com/wader)
 	- seccomp errno filter support
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
+maxice8 (https://github.com/maxice8)
+	- fixed missing header
 melvinvermeeren (https://github.com/melvinvermeeren)
 	- added teamspeak3 profile
 Michael Haas (https://github.com/mhaas)

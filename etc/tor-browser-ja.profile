@@ -1,4 +1,4 @@
-# Firejail profile for tor-browser-en from the Arch User Repository:
+# Firejail profile for tor-browser-ja from the Arch User Repository:
 
 
 blacklist /usr/local/bin
@@ -8,8 +8,8 @@ blacklist /mnt
 blacklist /opt
 blacklist /var
 
-private-bin bash,grep,sed,tail,tor-browser-en,env,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf,file,expr
-whitelist ${HOME}/.tor-browser-en
+private-bin bash,grep,sed,tail,tor-browser-ja,env,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf,file,expr
+whitelist ${HOME}/.tor-browser-ja
 whitelist /dev/dri
 whitelist /dev/full
 whitelist /dev/null

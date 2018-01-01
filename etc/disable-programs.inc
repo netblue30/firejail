@@ -430,7 +430,7 @@ blacklist ${HOME}/.synfig
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tooling
-blacklist ${HOME}/.tor-browser-en
+blacklist ${HOME}/.tor-browser-*
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.tuxguitar*
 blacklist ${HOME}/.unknown-horizons

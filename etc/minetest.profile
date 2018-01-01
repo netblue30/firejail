@@ -32,6 +32,8 @@ shell none
 disable-mnt
 private-bin minetest
 private-dev
+# private-etc needs to be updated, see #1702
+#private-etc asound.conf,ca-certificates,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pulse,resolv.conf,ssl
 private-tmp
 
 noexec ${HOME}

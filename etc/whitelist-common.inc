@@ -52,6 +52,7 @@ mkdir ${HOME}/.config/dconf
 whitelist ${HOME}/.config/dconf
 
 # qt/kde
+whitelist ${HOME}/.config/Kvantum
 whitelist ${HOME}/.config/Trolltech.conf
 whitelist ${HOME}/.config/kdeglobals
 whitelist ${HOME}/.config/kioslaverc
@@ -64,3 +65,4 @@ whitelist ${HOME}/.kde4/share/config/kdeglobals
 whitelist ${HOME}/.kde4/share/config/kioslaverc
 whitelist ${HOME}/.kde4/share/config/oxygenrc
 whitelist ${HOME}/.kde4/share/icons
+whitelist ${HOME}/.local/share/qt5ct

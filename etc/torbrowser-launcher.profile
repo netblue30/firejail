@@ -5,7 +5,6 @@ include /etc/firejail/torbrowser-launcher.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.tor-browser-en
 noblacklist ${HOME}/.config/torbrowser
 noblacklist ${HOME}/.local/share/torbrowser
 
@@ -14,7 +13,6 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-whitelist ${HOME}/.tor-browser-en
 whitelist ${HOME}/.config/torbrowser
 whitelist ${HOME}/.local/share/torbrowser
 include /etc/firejail/whitelist-common.inc

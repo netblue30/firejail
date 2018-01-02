@@ -3823,7 +3823,7 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
-ac_config_files="$ac_config_files Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile"
+ac_config_files="$ac_config_files Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4549,6 +4549,7 @@ do
     "src/fseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/fseccomp/Makefile" ;;
     "src/fldd/Makefile") CONFIG_FILES="$CONFIG_FILES src/fldd/Makefile" ;;
     "src/libpostexecseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/libpostexecseccomp/Makefile" ;;
+    "src/fsec-optimize/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-optimize/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

@@ -1,6 +1,6 @@
 all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/fsec-print src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fbuilder src/fcopy src/fldd src/libpostexecseccomp
+APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fbuilder src/fcopy src/fldd src/libpostexecseccomp
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.64 seccomp.block_secondary seccomp.mdwx
 
@@ -42,9 +42,13 @@ man: $(MANPAGES)
 filters: src/fseccomp
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	src/fseccomp/fseccomp default seccomp
+	src/fsec-optimize/fsec-optimize seccomp
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
+	src/fsec-optimize/fsec-optimize seccomp.debug
 	src/fseccomp/fseccomp secondary 32 seccomp.32
+	src/fsec-optimize/fsec-optimize seccomp.32
 	src/fseccomp/fseccomp secondary 64 seccomp.64
+	src/fsec-optimize/fsec-optimize seccomp.64
 	src/fseccomp/fseccomp secondary block seccomp.block_secondary
 	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
 endif

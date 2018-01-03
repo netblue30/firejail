@@ -104,8 +104,13 @@ Bader Zaidan (https://github.com/BaderSZ)
 	- Telegram profile
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
+bitfreak25 (https://github.com/bitfreak25)
+	- added PlayOnLinux profile
+	- minetest profile fix
+	- added sylpheed profile
 bn0785ac (https://github.com/bn0785ac)
 	- fixed bnox, dnox profiles
+	- support all tor-browser langpacks
 BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
 Bruno Nova (https://github.com/brunonova)
@@ -149,6 +154,7 @@ Danil Semelenov (https://github.com/sgtpep)
 	- blacklist the Electron Cash Wallet
 	- blacklist s3cmd and s3fs configs
 	- blacklist Ethereum, Monero wallets
+	- blacklist Dash Core wallet
 Dara Adib (https://github.com/daradib)
 	- ssh profile fix
 	- evince profile fix
@@ -367,6 +373,8 @@ Panzerfather (https://github.com/Panzerfather)
 	- allow eog to access user's trash
 Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
 	- user namespace implementation
+Paul Moore <pmoore@redhat.com>
+	-src/fsec-print/print.c extracted from libseccomp software package
 Paupiah Yash (https://github.com/CaffeinatedStud)
 	- gzip  profile
 Peter Millerchip (https://github.com/pmillerchip)

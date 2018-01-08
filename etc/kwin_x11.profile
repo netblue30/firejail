@@ -36,8 +36,5 @@ private-dev
 private-etc drirc,fonts,ld.so.cache,machine-id,xdg
 private-tmp
 
-# disable QML disk caching as it conflicts with the noexec constraints below
-env QML_DISABLE_DISK_CACHE=1
-
 noexec ${HOME}
 noexec /tmp

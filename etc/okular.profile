@@ -43,10 +43,7 @@ tracelog
 private-bin okular,kbuildsycoca4,kdeinit4,lpr
 private-dev
 private-etc alternatives,cups,fonts,ld.so.cache,machine-id
-# private-tmp - on KDE we need access to the real /tmp for data exchange with thunderbird
-
-# disable QML disk caching as it conflicts with the noexec constraints below
-env QML_DISABLE_DISK_CACHE=1
+# private-tmp - on KDE we need access to the real /tmp for data exchange with email clients
 
 # memory-deny-write-execute
 noexec ${HOME}

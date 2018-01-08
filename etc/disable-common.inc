@@ -344,4 +344,5 @@ blacklist /initrd*
 blacklist /vmlinuz*
 
 # complement noexec ${HOME} and noexec /tmp
+env QML_DISABLE_DISK_CACHE=1
 noexec /tmp/.X11-unix

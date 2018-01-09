@@ -341,28 +341,22 @@ void fs_private_lib(void) {
 					char *name;
 					if (asprintf(&name, "/usr/lib/%s", ptr) == -1)
 						errExit("asprintf");
-					if (is_dir(name)) {
+					if (is_dir(name))
 						fslib_copy_dir(name);
-						fslib_copy_libs(name);
-					}
 					free(name);
 
 					// /usr/lib/x86_linux-gnu - debian & frriends
 					if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr) == -1)
 						errExit("asprintf");
-					if (is_dir(name)) {
+					if (is_dir(name))
 						fslib_copy_dir(name);
-						fslib_copy_libs(name);
-					}
 					free(name);
 
 					// /usr/lib64 - CentOS, Fedora
 					if (asprintf(&name, "/usr/lib64/%s", ptr) == -1)
 						errExit("asprintf");
-					if (is_dir(name)) {
+					if (is_dir(name))
 						fslib_copy_dir(name);
-						fslib_copy_libs(name);
-					}
 					free(name);
 				}
 			}

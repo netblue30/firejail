@@ -162,6 +162,7 @@ blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/pcmanfm
 blacklist ${HOME}/.config/pdfmod
 blacklist ${HOME}/.config/Pinta
+blacklist ${HOME}/.config/pitivi
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/psi+

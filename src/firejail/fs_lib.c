@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *

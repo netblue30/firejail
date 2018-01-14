@@ -155,6 +155,7 @@ blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
+blacklist ${HOME}/.config/onionshare
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage

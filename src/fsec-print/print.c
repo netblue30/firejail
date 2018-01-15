@@ -305,7 +305,6 @@ static void bpf_decode_args(const struct sock_filter *bpf, unsigned int line) {
 }
 
 void print(struct sock_filter *filter, int entries) {
-	unsigned int line = 0;
 	int i;
 
 	/* header */

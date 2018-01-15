@@ -91,7 +91,7 @@ static int optimize_blacklists(struct sock_filter *filter, int entries) {
 
 	// step 3: add the new ret KILL, and recalculate entries
 	filter_step2[j].code = BPF_RET + BPF_K;
-	filter_step2[j].k == SECCOMP_RET_KILL;
+	filter_step2[j].k = SECCOMP_RET_KILL;
 	entries = j + 1;
 
 	// step 4: recalculate jumps

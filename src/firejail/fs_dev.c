@@ -319,7 +319,7 @@ static void disable_file_or_dir(const char *fname) {
 }
 
 void fs_dev_disable_sound(void) {
-	int i = 0;
+	unsigned i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_SOUND)
 			disable_file_or_dir(dev[i].dev_fname);

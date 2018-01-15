@@ -78,7 +78,7 @@ printf("\n");
 		return 1;
 	}
 	size = write(fd, outfilter, entries * sizeof(struct sock_filter));
-	if (size != entries * sizeof(struct sock_filter)) {
+	if (size != (int) (entries * sizeof(struct sock_filter))) {
 		fprintf(stderr, "Error: cannot write output file\n");
 		return 1;
 	}

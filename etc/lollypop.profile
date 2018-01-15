@@ -25,7 +25,7 @@ seccomp
 shell none
 
 private-dev
-private-etc asound.conf,ca-certificates,fonts,host.conf,hostname,hosts,pulse,resolv.conf,ssl
+private-etc asound.conf,ca-certificates,fonts,host.conf,hostname,hosts,pulse,resolv.conf,ssl,pki
 private-tmp
 
 noexec ${HOME}

@@ -36,5 +36,5 @@ shell none
 disable-mnt
 private-bin slack
 private-dev
-private-etc asound.conf,ca-certificates,fonts,group,passwd,pulse,resolv.conf,ssl,ld.so.conf,ld.so.cache,localtime
+private-etc asound.conf,ca-certificates,fonts,group,passwd,pulse,resolv.conf,ssl,ld.so.conf,ld.so.cache,localtime,pki
 private-tmp

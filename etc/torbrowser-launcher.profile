@@ -33,7 +33,7 @@ tracelog
 disable-mnt
 private-bin bash,cp,dirname,env,expr,file,getconf,gpg,grep,id,ln,mkdir,python*,readlink,rm,sed,sh,tail,test,tor-browser-en,torbrowser-launcher
 private-dev
-private-etc fonts,hostname,hosts,resolv.conf,pki,ssl,ca-certificates
+private-etc fonts,hostname,hosts,resolv.conf,pki,ssl,ca-certificates,crypto-policies
 private-tmp
 
 noexec /tmp

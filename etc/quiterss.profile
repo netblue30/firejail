@@ -44,7 +44,7 @@ tracelog
 disable-mnt
 private-bin quiterss
 private-dev
-# private-etc X11,ssl,pki,ca-certificates
+# private-etc X11,ssl,pki,ca-certificates,crypto-policies
 
 noexec ${HOME}
 noexec /tmp

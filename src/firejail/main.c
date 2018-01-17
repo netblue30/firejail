@@ -2064,20 +2064,24 @@ int main(int argc, char **argv) {
 		}
 #endif
 		else if (strncmp(argv[i], "--dns=", 6) == 0) {
-			uint32_t dns;
-			if (atoip(argv[i] + 6, &dns)) {
-				fprintf(stderr, "Error: invalid DNS server IP address\n");
-				return 1;
+			if (check_ip46_address(argv[i] + 6) == 0) {
+				fprintf(stderr, "Error: invalid DNS server IPv4 or IPv6 address\n");
+				exit(1);
 			}
+			char *dns = strdup(argv[i] + 6);
+			if (!dns)
+				errExit("strdup");
 
-			if (cfg.dns1 == 0)
+			if (cfg.dns1 == NULL)
 				cfg.dns1 = dns;
-			else if (cfg.dns2 == 0)
+			else if (cfg.dns2 == NULL)
 				cfg.dns2 = dns;
-			else if (cfg.dns3 == 0)
+			else if (cfg.dns3 == NULL)
 				cfg.dns3 = dns;
+			else if (cfg.dns4 == NULL)
+				cfg.dns4 = dns;
 			else {
-				fprintf(stderr, "Error: up to 3 DNS servers can be specified\n");
+				fprintf(stderr, "Error: up to 4 DNS servers can be specified\n");
 				return 1;
 			}
 		}

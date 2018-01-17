@@ -240,9 +240,10 @@ typedef struct config_t {
 	Interface interface1;
 	Interface interface2;
 	Interface interface3;
-	uint32_t dns1;	// up to 3 IP addresses for dns servers
-	uint32_t dns2;
-	uint32_t dns3;
+	char *dns1;	// up to 3 IP (v4/v6) addresses for dns servers
+	char *dns2;
+	char *dns3;
+	char *dns4;
 
 	// seccomp
 	char *seccomp_list;//  optional seccomp list on top of default filter
@@ -409,6 +410,7 @@ void net_dns_print(pid_t pid);
 void network_main(pid_t child);
 
 // network.c
+int check_ip46_address(const char *addr);
 void net_if_up(const char *ifname);
 void net_if_down(const char *ifname);
 void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);

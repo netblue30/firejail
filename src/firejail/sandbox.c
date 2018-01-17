@@ -652,12 +652,14 @@ int sandbox(void* sandbox_arg) {
 				else
 					fmessage("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
 			}
-			if (cfg.dns1 != 0)
-				fmessage("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
-			if (cfg.dns2 != 0)
-				fmessage("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
-			if (cfg.dns3 != 0)
-				fmessage("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
+			if (cfg.dns1 != NULL)
+				fmessage("DNS server %s\n", cfg.dns1);
+			if (cfg.dns2 != NULL)
+				fmessage("DNS server %s\n", cfg.dns2);
+			if (cfg.dns3 != NULL)
+				fmessage("DNS server %s\n", cfg.dns3);
+			if (cfg.dns4 != NULL)
+				fmessage("DNS server %s\n", cfg.dns4);
 			fmessage("\n");
 		}
 	}

@@ -28,6 +28,21 @@
 #include <net/route.h>
 #include <linux/if_bridge.h>
 
+// return 1 if addr is a IPv4 or IPv6 address
+int check_ip46_address(const char *addr) {
+	// check ipv4 address
+	uint32_t tmp;
+	if (atoip(addr, &tmp) == 0)
+		return 1;
+
+	// check ipv6 address
+	struct in6_addr result;
+	if (inet_pton(AF_INET6, addr, &result) == 1)
+		return 1;
+
+	// failed
+	return 0;
+}
 
 int net_get_mtu(const char *ifname) {
 	int mtu = 0;

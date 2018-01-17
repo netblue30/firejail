@@ -1,6 +1,6 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
-  * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed
+  * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed, discord-canary
  -- netblue30 <netblue30@yahoo.com>  Tue, 12 Dec 2017 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low

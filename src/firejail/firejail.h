@@ -240,7 +240,7 @@ typedef struct config_t {
 	Interface interface1;
 	Interface interface2;
 	Interface interface3;
-	char *dns1;	// up to 3 IP (v4/v6) addresses for dns servers
+	char *dns1;	// up to 4 IP (v4/v6) addresses for dns servers
 	char *dns2;
 	char *dns3;
 	char *dns4;

@@ -27,6 +27,7 @@ src/fnet/fnet
 src/fnetfilter/fnetfilter
 src/fsec-print/fsec-print
 src/fseccomp/fseccomp
+src/fsec-optimize/fsec-optimize
 src/fcopy/fcopy
 src/fldd/fldd
 src/fbuilder/fbuilder

@@ -31,7 +31,7 @@ profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 /{,var/}run/user/**/pulse/ rw,
 /{,var/}run/user/**/pulse/** rw,
 /{,var/}run/user/**/*.slave-socket rwl,
-/{,var/}run/user/**/\#@{PID} rw,
+/{,var/}run/user/**/#@{PID} rw,
 /{,var/}run/user/**/orcexec.* rwkm,
 /{,var/}run/firejail/mnt/fslogger r,
 /{,var/}run/firejail/appimage r,

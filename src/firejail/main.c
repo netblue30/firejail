@@ -2034,18 +2034,20 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: no network device configured\n");
 					exit(1);
 				}
-				if (br->arg_ip_none || br->ip6sandbox) {
+				if (br->ip6sandbox) {
 					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
 					exit(1);
 				}
 
 				// configure this IP address for the last bridge defined
-				// todo: verify ipv6 syntax
-				br->ip6sandbox = argv[i] + 6;
-//				if (atoip(argv[i] + 5, &br->ipsandbox)) {
-//					fprintf(stderr, "Error: invalid IP address\n");
-//					exit(1);
-//				}
+				if (check_ip46_address(argv[i] + 6) == 0) {
+					fprintf(stderr, "Error: invalid IPv6 address\n");
+					exit(1);
+				}
+
+				br->ip6sandbox = strdup(argv[i] + 6);
+				if (br->ip6sandbox == NULL)
+					errExit("strdup");
 			}
 			else
 				exit_err_feature("networking");

@@ -37,8 +37,27 @@ int check_ip46_address(const char *addr) {
 
 	// check ipv6 address
 	struct in6_addr result;
-	if (inet_pton(AF_INET6, addr, &result) == 1)
+
+	char *tmpstr = strdup(addr);
+	if (!tmpstr)
+		errExit("strdup");
+	char *ptr = strchr(tmpstr, '/');
+	if (ptr) {
+		*ptr = '\0';
+		ptr++;
+		int mask = atoi(ptr);
+		// check the network mask
+		if (mask < 0 || mask > 128) {
+			free(tmpstr);
+			return 0;
+		}
+	}
+	if (inet_pton(AF_INET6, tmpstr, &result) == 1) {
+		free(tmpstr);
 		return 1;
+	}
+
+	free(tmpstr);
 
 	// failed
 	return 0;

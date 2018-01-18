@@ -36,7 +36,7 @@ tracelog
 private-bin evince,evince-previewer,evince-thumbnailer
 private-dev
 private-etc fonts
-private-lib
+#private-lib - seems to be breaking on Gnome Shell 3.26.2, Mutter WM, issue 1711
 private-tmp
 
 memory-deny-write-execute

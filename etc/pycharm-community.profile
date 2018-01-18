@@ -6,6 +6,7 @@ include /etc/firejail/pycharm-community.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/snap
+noblacklist ${HOME}/.PyCharmCE*
 noblacklist ${HOME}/.java
 
 include /etc/firejail/disable-common.inc

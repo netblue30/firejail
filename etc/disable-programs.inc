@@ -13,6 +13,7 @@ blacklist ${HOME}/.IdeaIC*
 blacklist ${HOME}/.LuminanceHDR
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Natron
+blacklist ${HOME}/.PyCharm*
 blacklist ${HOME}/.Skype
 blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath

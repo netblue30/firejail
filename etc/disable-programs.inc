@@ -3,6 +3,7 @@
 include /etc/firejail/disable-programs.local
 
 blacklist ${HOME}/Monero/wallets
+blacklist ${HOME}/snap
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*

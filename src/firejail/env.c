@@ -116,8 +116,12 @@ void env_ibus_load(void) {
 
 // default sandbox env variables
 void env_defaults(void) {
-	// fix qt 4.8
+	// Qt fixes
 	if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
+		errExit("setenv");
+	if (setenv("QML_DISABLE_DISK_CACHE", "1", 1) < 0)
+		errExit("setenv");
+	if (setenv("QTWEBENGINE_DISABLE_SANDBOX", "1", 1) < 0)
 		errExit("setenv");
 //	if (setenv("MOZ_NO_REMOTE, "1", 1) < 0)
 //		errExit("setenv");

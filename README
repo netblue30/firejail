@@ -594,6 +594,7 @@ Vasya Novikov (https://github.com/vn971)
 	- fixed firecfg clean/clear issue
 	- found the ugliest bug so far
 	- seccomp debug description in man page
+	- seccomp syscall list update for glibc 2.26-10
 Veeti Paananen (https://github.com/veeti)
 	- fixed Spotify profile
 vismir2 (https://github.com/vismir2)

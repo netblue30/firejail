@@ -1,5 +1,6 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
+  * seccomp syscall list update for glibc 2.26-10
   * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed, discord-canary
   * new profiles: pycharm-community, pycharm-professional
  -- netblue30 <netblue30@yahoo.com>  Tue, 12 Dec 2017 08:00:00 -0500

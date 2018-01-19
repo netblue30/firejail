@@ -40,4 +40,5 @@ private-dev
 # private-lib - problems on Arch
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute - problems on Qt 5.10.0, KDE Frameworks 5.41.0
+

@@ -36,3 +36,5 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
+
+env QTWEBENGINE_DISABLE_SANDBOX=1

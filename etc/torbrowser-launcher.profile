@@ -16,6 +16,7 @@ include /etc/firejail/disable-programs.inc
 whitelist ${HOME}/.config/torbrowser
 whitelist ${HOME}/.local/share/torbrowser
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

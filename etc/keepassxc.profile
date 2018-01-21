@@ -11,6 +11,8 @@ noblacklist ${HOME}/*.kdb
 noblacklist ${HOME}/*.kdbx
 noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.keepassxc
+# 2.2.4 needs this path when compiled with "Native messaging browser extension"
+noblacklist ${HOME}/.mozilla
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -38,6 +40,7 @@ private-dev
 private-etc fonts,ld.so.cache,machine-id
 private-tmp
 
-memory-deny-write-execute
+# 2.2.4 crashes on database open
+#memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

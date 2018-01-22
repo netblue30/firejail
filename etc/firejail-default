@@ -75,7 +75,7 @@ owner /proc/@{PID}/mounts r,
 owner /proc/@{PID}/mountinfo r,
 owner /proc/@{PID}/oom_score_adj r,
 owner /proc/@{PID}/auxv r,
-owner /proc/@{PID}/net/dev r,
+/proc/@{PID}/net/dev r,
 owner /proc/@{PID}/loginuid r,
 owner /proc/@{PID}/environ r,
 

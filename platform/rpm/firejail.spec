@@ -35,12 +35,7 @@ rm -rf %{buildroot}
 %attr(4755, -, -) %{_bindir}/__NAME__
 %{_bindir}/firecfg
 %{_bindir}/firemon
-%{_libdir}/__NAME__/firecfg.config
-%{_libdir}/__NAME__/ftee
-%{_libdir}/__NAME__/faudit
-%{_libdir}/__NAME__/fshaper.sh
-%{_libdir}/__NAME__/libtrace.so
-%{_libdir}/__NAME__/libtracelog.so
+%{_libdir}/__NAME__
 %{_datarootdir}/bash-completion/completions/__NAME__
 %{_datarootdir}/bash-completion/completions/firecfg
 %{_datarootdir}/bash-completion/completions/firemon

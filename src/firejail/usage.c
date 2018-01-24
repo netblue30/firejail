@@ -34,6 +34,7 @@ void usage(void) {
 	printf("\thome directories.\n");
 	printf("    --allusers - all user home directories are visible inside the sandbox.\n");
 	printf("    --apparmor - enable AppArmor confinement.\n");
+	printf("    --apparmor.print=name|pid - print apparmor status.\n");
 	printf("    --appimage - sandbox an AppImage application.\n");
 	printf("    --audit[=test-program] - audit the sandbox.\n");
 #ifdef HAVE_NETWORK

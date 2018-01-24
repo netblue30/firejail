@@ -27,6 +27,7 @@ void usage(void) {
 	printf("are also being monitored. On Grsecurity systems only root user\n");
 	printf("can run this program.\n\n");
 	printf("Options:\n");
+	printf("\t--apparmor - print AppArmor confinement status for each sandbox.\n\n");
 	printf("\t--arp - print ARP table for each sandbox.\n\n");
 	printf("\t--caps - print capabilities configuration for each sandbox.\n\n");
 	printf("\t--cgroup - print control group information for each sandbox.\n\n");

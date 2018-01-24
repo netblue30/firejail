@@ -83,4 +83,7 @@ void netstats(void);
 // x11.c
 void x11(pid_t pid, int print_procs);
 
+//apparmor.c
+void apparmor(pid_t pid, int print_procs);
+
 #endif

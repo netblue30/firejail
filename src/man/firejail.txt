@@ -111,6 +111,21 @@ $ firejail --appimage krita-3.0-x86_64.appimage
 $ firejail --appimage --private krita-3.0-x86_64.appimage
 .br
 $ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
+
+.TP
+\fB\-\-apparmor.print=name|pid
+Print the AppArmor confinement status for the sandbox identified by name or by PID.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-apparmor.print=browser
+.br
+5074:netblue:/usr/bin/firejail /usr/bin/firefox-esr
+.br
+  AppArmor: firejail-default enforce
+
 .TP
 \fB\-\-audit
 Audit the sandbox, see \fBAUDIT\fR section for more details.

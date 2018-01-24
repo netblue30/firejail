@@ -37,6 +37,7 @@ static int arg_x11 = 0;
 static int arg_top = 0;
 static int arg_list = 0;
 static int arg_netstats = 0;
+static int arg_apparmor = 0;
 int arg_nowrap = 0;
 
 static struct termios tlocal;	// startup terminal setting
@@ -178,6 +179,8 @@ int main(int argc, char **argv) {
 			arg_route = 1;
 		else if (strcmp(argv[i], "--arp") == 0)
 			arg_arp = 1;
+		else if (strcmp(argv[i], "--apparmor") == 0)
+			arg_apparmor = 1;
 
 		else if (strncmp(argv[i], "--name=", 7) == 0) {
 			char *name = argv[i] + 7;
@@ -238,7 +241,7 @@ int main(int argc, char **argv) {
 	}
 
 	// if --name requested without other options, print all data
-	if (pid && !arg_cpu && !arg_seccomp && !arg_caps &&
+	if (pid && !arg_cpu && !arg_seccomp && !arg_caps && !arg_apparmor &&
 	    !arg_cgroup && !arg_x11 && !arg_interface && !arg_route && !arg_arp) {
 		arg_tree = 1;
 		arg_cpu = 1;
@@ -249,6 +252,7 @@ int main(int argc, char **argv) {
 		arg_interface = 1;
 		arg_route = 1;
 		arg_arp = 1;
+		arg_apparmor = 1;
 	}
 
 	// cumulative options
@@ -263,6 +267,10 @@ int main(int argc, char **argv) {
 	}
 	if (arg_caps) {
 		caps((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_apparmor) {
+		apparmor((pid_t) pid, print_procs);
 		print_procs = 0;
 	}
 	if (arg_cgroup) {

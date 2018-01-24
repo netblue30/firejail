@@ -10,6 +10,9 @@ these processes are also being monitored. On Grsecurity systems only root user
 can run this program.
 .SH OPTIONS
 .TP
+\fB\-\-apparmor
+Print AppArmor confinement status for each sandbox.
+.TP
 \fB\-\-arp
 Print ARP table for each sandbox.
 .TP

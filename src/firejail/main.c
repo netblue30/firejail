@@ -511,6 +511,16 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		cpu_print_filter(pid);
 		exit(0);
 	}
+	else if (strncmp(argv[i], "--apparmor.print=", 12) == 0) {
+		// join sandbox by pid or by name
+		pid_t pid = read_pid(argv[i] + 17);
+		char *pidstr;
+		if (asprintf(&pidstr, "%u", pid) == -1)
+			errExit("asprintf");
+		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FIREMON, "--apparmor", pidstr);
+		free(pidstr);
+		exit(0);
+	}
 	else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid = read_pid(argv[i] + 13);

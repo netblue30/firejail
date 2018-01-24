@@ -19,13 +19,17 @@ profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 #dbus,
 
 ##########
-# Mask /proc and /sys information leakage. The configuration here is barely
-# enough to run "top" or "ps aux".
+# Line starting with /run/firejail/mnt/oroot deal with --overlay sandboxes
 ##########
 / r,
 /{usr,bin,sbin,dev,etc,home,root,lib,media,mnt,opt,srv,tmp,var}** mrwlk,
+/run/firejail/mnt/oroot/{usr,bin,sbin,dev,etc,home,root,lib,media,mnt,opt,srv,tmp,var}** mrwlk,
+
 /{,var/}run/ r,
 /{,var/}run/** r,
+/run/firejail/mnt/oroot/{,var/}run/ r,
+/run/firejail/mnt/oroot/{,var/}run/** r,
+
 owner /{,var/}run/user/**/dconf/ rw,
 owner /{,var/}run/user/**/dconf/user rw,
 owner /{,var/}run/user/**/pulse/ rw,
@@ -33,13 +37,32 @@ owner /{,var/}run/user/**/pulse/** rw,
 owner /{,var/}run/user/**/*.slave-socket rwl,
 owner /{,var/}run/user/**/#@{PID} rw,
 owner /{,var/}run/user/**/orcexec.* rwkm,
+owner /run/firejail/mnt/oroot/{,var/}run/user/**/dconf/ rw,
+owner /run/firejail/mnt/oroot/{,var/}run/user/**/dconf/user rw,
+owner /run/firejail/mnt/oroot/{,var/}run/user/**/pulse/ rw,
+owner /run/firejail/mnt/oroot/{,var/}run/user/**/pulse/** rw,
+owner /run/firejail/mnt/oroot/{,var/}run/user/**/*.slave-socket rwl,
+owner /run/firejail/mnt/oroot/{,var/}run/user/**/#@{PID} rw,
+owner /run/firejail/mnt/oroot/{,var/}run/user/**/orcexec.* rwkm,
+
 /{,var/}run/firejail/mnt/fslogger r,
 /{,var/}run/firejail/appimage r,
 /{,var/}run/firejail/appimage/** r,
 /{,var/}run/firejail/appimage/** ix,
+/run/firejail/mnt/oroot/{,var/}run/firejail/mnt/fslogger r,
+/run/firejail/mnt/oroot/{,var/}run/firejail/appimage r,
+/run/firejail/mnt/oroot/{,var/}run/firejail/appimage/** r,
+/run/firejail/mnt/oroot/{,var/}run/firejail/appimage/** ix,
+
 /{run,dev}/shm/ r,
 owner /{run,dev}/shm/** rmwk,
+/run/firejail/mnt/oroot/{run,dev}/shm/ r,
+owner /run/firejail/mnt/oroot/{run,dev}/shm/** rmwk,
 
+##########
+# Mask /proc and /sys information leakage. The configuration here is barely
+# enough to run "top" or "ps aux".
+##########
 /proc/ r,
 /proc/meminfo r,
 /proc/cpuinfo r,
@@ -96,6 +119,18 @@ owner /{run,dev}/shm/** rmwk,
 /opt/** r,
 /opt/** ix,
 #/home/** ix,
+/run/firejail/mnt/oroot/lib/** ix,
+/run/firejail/mnt/oroot/lib64/** ix,
+/run/firejail/mnt/oroot/bin/** ix,
+/run/firejail/mnt/oroot/sbin/** ix,
+/run/firejail/mnt/oroot/usr/bin/** ix,
+/run/firejail/mnt/oroot/usr/sbin/** ix,
+/run/firejail/mnt/oroot/usr/local/** ix,
+/run/firejail/mnt/oroot/usr/lib/** ix,
+/run/firejail/mnt/oroot/usr/games/** ix,
+/run/firejail/mnt/oroot/opt/ r,
+/run/firejail/mnt/oroot/opt/** r,
+/run/firejail/mnt/oroot/opt/** ix,
 
 ##########
 # Allow all networking functionality, and control it from Firejail.

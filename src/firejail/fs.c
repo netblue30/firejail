@@ -829,9 +829,7 @@ void fs_overlayfs(void) {
 	if (major == 3 && minor < 18)
 		oldkernel = 1;
 
-	char *oroot;
-	if(asprintf(&oroot, "%s/oroot", RUN_MNT_DIR) == -1)
-		errExit("asprintf");
+	char *oroot = RUN_OVERLAY_ROOT;
 	mkdir_attr(oroot, 0755, 0, 0);
 
 	struct stat s;
@@ -1028,7 +1026,6 @@ void fs_overlayfs(void) {
 
 	// cleanup and exit
 	free(option);
-	free(oroot);
 	free(odiff);
 }
 #endif

@@ -1230,9 +1230,15 @@ void fs_chroot(const char *rootdir) {
 #ifdef HAVE_GCOV
 	__gcov_flush();
 #endif
+	// mount the chroot dir on top of /run/firejail/mnt/oroot in order to reuse the apparmor rules for overlay
+	// and chroot into this new directory
 	if (arg_debug)
 		printf("Chrooting into %s\n", rootdir);
-	if (chroot(rootdir) < 0)
+	char *oroot = RUN_OVERLAY_ROOT;
+	mkdir_attr(oroot, 0755, 0, 0);
+	if (mount(rootdir, oroot, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting rootdir oroot");
+	if (chroot(oroot) < 0)
 		errExit("chroot");
 
 	// create all other /run/firejail files and directories

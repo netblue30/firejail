@@ -453,6 +453,7 @@ blacklist ${HOME}/.wireshark
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.xiphos
 blacklist ${HOME}/.xmms
+blacklist ${HOME}/.xmr-stak
 blacklist ${HOME}/.xonotic
 blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom

@@ -416,6 +416,7 @@ blacklist ${HOME}/.passwd-s3fs
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
+blacklist ${HOME}/.redeclipse
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig

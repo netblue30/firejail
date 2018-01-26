@@ -18,9 +18,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firemon.h"
-#include <sys/apparmor.h>
 
 #ifdef HAVE_APPARMOR
+#include <sys/apparmor.h>
+
 static void print_apparmor(int pid) {
 	char *label = NULL;
 	char *mode = NULL;

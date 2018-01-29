@@ -416,6 +416,7 @@ blacklist ${HOME}/.passwd-s3fs
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
+blacklist ${HOME}/.redeclipse
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig
@@ -453,6 +454,7 @@ blacklist ${HOME}/.wireshark
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.xiphos
 blacklist ${HOME}/.xmms
+blacklist ${HOME}/.xmr-stak
 blacklist ${HOME}/.xonotic
 blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom

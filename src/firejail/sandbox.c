@@ -763,14 +763,8 @@ int sandbox(void* sandbox_arg) {
 			fs_private();
 	}
 
-	if (arg_private_dev) {
-		if (cfg.chrootdir)
-			fwarning("private-dev feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-dev feature is disabled in overlay\n");
-		else
-			fs_private_dev();
-	}
+	if (arg_private_dev)
+		fs_private_dev();
 
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
@@ -835,16 +829,10 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	if (arg_private_tmp) {
-		if (cfg.chrootdir)
-			fwarning("private-tmp feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-tmp feature is disabled in overlay\n");
-		else {
-			// private-tmp is implemented as a whitelist
-			EUID_USER();
-			fs_private_tmp();
-			EUID_ROOT();
-		}
+		// private-tmp is implemented as a whitelist
+		EUID_USER();
+		fs_private_tmp();
+		EUID_ROOT();
 	}
 
 	//****************************
@@ -877,12 +865,7 @@ int sandbox(void* sandbox_arg) {
 	// apply the profile file
 	//****************************
 	// apply all whitelist commands ...
-	if (cfg.chrootdir)
-		fwarning("whitelist feature is disabled in chroot\n");
-	else if (arg_overlay)
-		fwarning("whitelist feature is disabled in overlay\n");
-	else
-		fs_whitelist();
+	fs_whitelist();
 
 	// ... followed by blacklist commands
 	fs_blacklist(); // mkdir and mkfile are processed all over again

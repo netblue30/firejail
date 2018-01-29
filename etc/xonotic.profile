@@ -15,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 mkdir ${HOME}/.xonotic
 whitelist ${HOME}/.xonotic
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

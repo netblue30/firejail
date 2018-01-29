@@ -6,6 +6,7 @@ include /etc/firejail/hexchat.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/hexchat
+noblacklist /usr/share/perl*
 # noblacklist /usr/lib/python2*
 # noblacklist /usr/lib/python3*
 

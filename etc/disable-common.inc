@@ -74,6 +74,7 @@ blacklist ${HOME}/.local/share/konsole
 blacklist ${HOME}/.local/share/kwin
 blacklist ${HOME}/.local/share/plasma
 blacklist ${HOME}/.local/share/solid
+read-only ${HOME}/.cache/ksycoca5_*
 read-only ${HOME}/.config/kdeglobals
 read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.kde/share/config/kdeglobals

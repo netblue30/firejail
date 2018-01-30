@@ -5,6 +5,7 @@ include /etc/firejail/kwin_x11.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.cache/kwin
 noblacklist ${HOME}/.config/kwinrc
 noblacklist ${HOME}/.config/kwinrulesrc
 noblacklist ${HOME}/.local/share/kwin

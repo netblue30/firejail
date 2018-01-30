@@ -490,6 +490,10 @@ blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
+blacklist ${HOME}/.cache/kscreenlocker_greet
+blacklist ${HOME}/.cache/ksmserver-logout-greeter
+blacklist ${HOME}/.cache/ksplashqml
+blacklist ${HOME}/.cache/kwin
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/midori
@@ -503,6 +507,7 @@ blacklist ${HOME}/.cache/opera-beta
 blacklist ${HOME}/.cache/org.gnome.Books
 blacklist ${HOME}/.cache/pdfmod
 blacklist ${HOME}/.cache/peek
+blacklist ${HOME}/.cache/plasmashell
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser

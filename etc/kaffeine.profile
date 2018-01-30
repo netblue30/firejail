@@ -5,12 +5,12 @@ include /etc/firejail/kaffeine.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ~/.config/kaffeinerc
-noblacklist ~/.kde/share/apps/kaffeine
-noblacklist ~/.kde/share/config/kaffeinerc
-noblacklist ~/.kde4/share/apps/kaffeine
-noblacklist ~/.kde4/share/config/kaffeinerc
-noblacklist ~/.local/share/kaffeine
+noblacklist ${HOME}/.config/kaffeinerc
+noblacklist ${HOME}/.kde/share/apps/kaffeine
+noblacklist ${HOME}/.kde/share/config/kaffeinerc
+noblacklist ${HOME}/.kde4/share/apps/kaffeine
+noblacklist ${HOME}/.kde4/share/config/kaffeinerc
+noblacklist ${HOME}/.local/share/kaffeine
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

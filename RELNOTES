@@ -6,7 +6,7 @@ firejail (0.9.53) baseline; urgency=low
   * private-dev support for overlay and chroot sandboxes
   * private-tmp support for overlay and chroot sandboxes
   * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed, discord-canary
-  * new profiles: pycharm-community, pycharm-professional
+  * new profiles: pycharm-community, pycharm-professional, kaffeine
  -- netblue30 <netblue30@yahoo.com>  Tue, 12 Dec 2017 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low

@@ -129,6 +129,7 @@ blacklist ${HOME}/.config/iridium
 blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/k3brc
+blacklist ${HOME}/.config/kaffeinerc
 blacklist ${HOME}/.config/katepartrc
 blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/kateschemarc
@@ -258,6 +259,7 @@ blacklist ${HOME}/.java
 blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.kde/share/apps/digikam
 blacklist ${HOME}/.kde/share/apps/gwenview
+blacklist ${HOME}/.kde/share/apps/kaffeine
 blacklist ${HOME}/.kde/share/apps/kcookiejar
 blacklist ${HOME}/.kde/share/apps/kget
 blacklist ${HOME}/.kde/share/apps/khtml
@@ -272,6 +274,7 @@ blacklist ${HOME}/.kde/share/config/baloorc
 blacklist ${HOME}/.kde/share/config/digikam
 blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.kde/share/config/k3brc
+blacklist ${HOME}/.kde/share/config/kaffeinerc
 blacklist ${HOME}/.kde/share/config/kcookiejarrc
 blacklist ${HOME}/.kde/share/config/kgetrc
 blacklist ${HOME}/.kde/share/config/khtmlrc
@@ -285,6 +288,7 @@ blacklist ${HOME}/.kde/share/config/okularpartrc
 blacklist ${HOME}/.kde/share/config/okularrc
 blacklist ${HOME}/.kde4/share/apps/digikam
 blacklist ${HOME}/.kde4/share/apps/gwenview
+blacklist ${HOME}/.kde4/share/apps/kaffeine
 blacklist ${HOME}/.kde4/share/apps/kcookiejar
 blacklist ${HOME}/.kde4/share/apps/kget
 blacklist ${HOME}/.kde4/share/apps/khtml
@@ -298,6 +302,7 @@ blacklist ${HOME}/.kde4/share/config/baloofilerc
 blacklist ${HOME}/.kde4/share/config/digikam
 blacklist ${HOME}/.kde4/share/config/gwenviewrc
 blacklist ${HOME}/.kde4/share/config/k3brc
+blacklist ${HOME}/.kde4/share/config/kaffeinerc
 blacklist ${HOME}/.kde4/share/config/kcookiejarrc
 blacklist ${HOME}/.kde4/share/config/kgetrc
 blacklist ${HOME}/.kde4/share/config/khtmlrc
@@ -354,6 +359,7 @@ blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/gnome-ring
 blacklist ${HOME}/.local/share/gnome-twitch
 blacklist ${HOME}/.local/share/gwenview
+blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/ktorrent

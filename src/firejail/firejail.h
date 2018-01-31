@@ -513,7 +513,7 @@ const char *gnu_basename(const char *path);
 uid_t pid_get_uid(pid_t pid);
 void invalid_filename(const char *fname, int globbing);
 uid_t get_group_id(const char *group);
-int remove_directory(const char *path);
+int remove_overlay_directory(void);
 void flush_stdin(void);
 void create_empty_dir_as_root(const char *dir, mode_t mode);
 void create_empty_file_as_root(const char *dir, mode_t mode);

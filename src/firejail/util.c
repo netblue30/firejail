@@ -800,21 +800,55 @@ uid_t get_group_id(const char *group) {
 	return gid;
 }
 
-
+static int len_homedir = 0;
 static int remove_callback(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf) {
 	(void) sb;
 	(void) typeflag;
 	(void) ftwbuf;
+	assert(fpath);
 
-	int rv = remove(fpath);
-	if (rv)
-		perror(fpath);
+	if (len_homedir == 0)
+		len_homedir = strlen(cfg.homedir);
 
-	return rv;
+	char *rp = realpath(fpath, NULL);	// this should never fail!
+	if (!rp)
+		return 1;
+	if (strncmp(rp, cfg.homedir, len_homedir) != 0)
+		return 1;
+	free(rp);
+
+	if (remove(fpath)) {	// removes the link not the actual file
+		fprintf(stderr, "Error: cannot remove file %s\n", fpath);
+		exit(1);
+	}
+
+	return 0;
 }
 
 
-int remove_directory(const char *path) {
+int remove_overlay_directory(void) {
+	sleep(1);
+
+	char *path;
+	if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+
+	// deal with obvious problems such as symlinks and root ownership
+	if (is_link(path)) {
+		fprintf(stderr, "Error: cannot follow symbolic link\n");
+		exit(1);
+	}
+	if (access(path, R_OK | W_OK | X_OK) == -1) {
+		fprintf(stderr, "Error: cannot access ~/.firejail directory\n");
+		exit(1);
+	}
+
+	EUID_ROOT();
+	if (setreuid(0, 0) < 0 ||
+	    setregid(0, 0) < 0)
+		errExit("setreuid/setregid");
+	errno = 0;
+
 	// FTW_PHYS - do not follow symbolic links
 	return nftw(path, remove_callback, 64, FTW_DEPTH | FTW_PHYS);
 }

@@ -314,16 +314,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifdef HAVE_OVERLAYFS
 	else if (strcmp(argv[i], "--overlay-clean") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
-			char *path;
-			if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
-				errExit("asprintf");
-			EUID_ROOT();
-			if (setreuid(0, 0) < 0 ||
-			    setregid(0, 0) < 0)
-				errExit("setreuid/setregid");
-			errno = 0;
-			if (remove_directory(path))
-				errExit("remove_directory");
+			if (remove_overlay_directory()) {
+				fprintf(stderr, "Error: cannot remove overlay directory\n");
+				exit(1);
+			}
 		}
 		else
 			exit_err_feature("overlayfs");
@@ -1429,6 +1423,11 @@ int main(int argc, char **argv) {
 #ifdef HAVE_OVERLAYFS
 		else if (strcmp(argv[i], "--overlay") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
+				if (arg_overlay) {
+					fprintf(stderr, "Error: only one overlay command is allowed\n");
+					exit(1);
+				}
+
 				if (cfg.chrootdir) {
 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);
@@ -1453,6 +1452,10 @@ int main(int argc, char **argv) {
 		}
 		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
+				if (arg_overlay) {
+					fprintf(stderr, "Error: only one overlay command is allowed\n");
+					exit(1);
+				}
 				if (cfg.chrootdir) {
 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);
@@ -1485,6 +1488,10 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
+				if (arg_overlay) {
+					fprintf(stderr, "Error: only one overlay command is allowed\n");
+					exit(1);
+				}
 				if (cfg.chrootdir) {
 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);

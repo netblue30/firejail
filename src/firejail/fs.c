@@ -725,7 +725,7 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 		errExit("asprintf");
 
 	if (is_link(dirname)) {
-		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+		fprintf(stderr, "Error: ~/.firejail directory is a symbolic link\n");
 		exit(1);
 	}
 	if (stat(dirname, &s) == -1) {
@@ -753,7 +753,7 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 		}
 	}
 	else if (s.st_uid != getuid()) {
-		fprintf(stderr, "Error: invalid ~/.firejail directory\n");
+		fprintf(stderr, "Error: ~/.firejail directory is not owned by the current user\n");
 		exit(1);
 	}
 	free(dirname);
@@ -837,6 +837,7 @@ void fs_overlayfs(void) {
 	if (arg_overlay_keep) {
 		// set base for working and diff directories
 		basedir = cfg.overlay_dir;
+		assert(basedir);
 
 		// does the overlay exist?
 		if (stat(basedir, &s) == 0) {

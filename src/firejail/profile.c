@@ -920,6 +920,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_OVERLAYFS
 	if (strncmp(ptr, "overlay-named ", 14) == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
+			if (arg_overlay) {
+				fprintf(stderr, "Error: only one overlay command is allowed\n");
+				exit(1);
+			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
@@ -951,6 +955,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	} else if (strcmp(ptr, "overlay-tmpfs") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
+			if (arg_overlay) {
+				fprintf(stderr, "Error: only one overlay command is allowed\n");
+				exit(1);
+			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
@@ -966,6 +974,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 	} else if (strcmp(ptr, "overlay") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
+			if (arg_overlay) {
+				fprintf(stderr, "Error: only one overlay command is allowed\n");
+				exit(1);
+			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);

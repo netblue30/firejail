@@ -8,6 +8,7 @@ blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.cache/greenclip*
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
+blacklist-nolog ${HOME}/.local/share/klipper
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog /tmp/clipmenu*
 

@@ -5,12 +5,15 @@ include /etc/firejail/krunner.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# start a program in krunner: program will run with this generic profile
-# open a file in krunner: file viewer will run with its own profile (if firejailed automatically)
+# - programs started in krunner run with this generic profile.
+# - when a file is opened in krunner, the file viewer runs in its own sandbox
+#   with its own profile, if it is sandboxed automatically.
 
+# noblacklist ${HOME}/.cache/krunner
 noblacklist ${HOME}/.config/krunnerrc
 noblacklist ${HOME}/.kde/share/config/krunnerrc
 noblacklist ${HOME}/.kde4/share/config/krunnerrc
+# noblacklist ${HOME}/.local/share/baloo
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc
@@ -21,6 +24,7 @@ include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter
+nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6

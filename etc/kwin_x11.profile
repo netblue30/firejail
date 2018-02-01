@@ -34,7 +34,7 @@ tracelog
 disable-mnt
 private-bin kwin_x11
 private-dev
-private-etc drirc,fonts,ld.so.cache,machine-id,xdg
+private-etc drirc,fonts,kde5rc,ld.so.cache,machine-id,xdg
 private-tmp
 
 noexec ${HOME}

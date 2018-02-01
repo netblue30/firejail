@@ -483,6 +483,7 @@ blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/chromium-dev
 blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/darktable
+blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/fossamail
@@ -496,6 +497,7 @@ blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
+blacklist ${HOME}/.cache/krunner
 blacklist ${HOME}/.cache/kscreenlocker_greet
 blacklist ${HOME}/.cache/ksmserver-logout-greeter
 blacklist ${HOME}/.cache/ksplashqml

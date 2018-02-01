@@ -16,6 +16,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 whitelist /var/lib/unbound
+whitelist /var/run
 
 caps.keep net_bind_service,setgid,setuid,sys_chroot,sys_resource
 no3d

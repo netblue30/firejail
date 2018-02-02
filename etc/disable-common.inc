@@ -7,6 +7,8 @@ blacklist-nolog ${HOME}/.*_history
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.cache/greenclip*
 blacklist-nolog ${HOME}/.history
+blacklist-nolog ${HOME}/.kde/share/apps/klipper
+blacklist-nolog ${HOME}/.kde4/share/apps/klipper
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/klipper
 blacklist-nolog ${HOME}/.macromedia
@@ -49,6 +51,7 @@ blacklist ${HOME}/.config/krunnerrc
 blacklist ${HOME}/.config/kwinrc
 blacklist ${HOME}/.config/kwinrulesrc
 blacklist ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
+blacklist ${HOME}/.config/plasmashellrc
 blacklist ${HOME}/.config/plasmavaultrc
 blacklist ${HOME}/.kde/share/apps/konsole
 blacklist ${HOME}/.kde/share/apps/kwin

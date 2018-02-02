@@ -135,6 +135,7 @@ blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/kateschemarc
 blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
+blacklist ${HOME}/.config/klipperrc
 blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/kwriterc
 blacklist ${HOME}/.config/kdeconnect
@@ -278,6 +279,7 @@ blacklist ${HOME}/.kde/share/config/kaffeinerc
 blacklist ${HOME}/.kde/share/config/kcookiejarrc
 blacklist ${HOME}/.kde/share/config/kgetrc
 blacklist ${HOME}/.kde/share/config/khtmlrc
+blacklist ${HOME}/.kde/share/config/klipperrc
 blacklist ${HOME}/.kde/share/config/konq_history
 blacklist ${HOME}/.kde/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde/share/config/konquerorrc
@@ -306,6 +308,7 @@ blacklist ${HOME}/.kde4/share/config/kaffeinerc
 blacklist ${HOME}/.kde4/share/config/kcookiejarrc
 blacklist ${HOME}/.kde4/share/config/kgetrc
 blacklist ${HOME}/.kde4/share/config/khtmlrc
+blacklist ${HOME}/.kde4/share/config/klipperrc
 blacklist ${HOME}/.kde4/share/config/konq_history
 blacklist ${HOME}/.kde4/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde4/share/config/konquerorrc

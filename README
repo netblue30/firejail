@@ -597,6 +597,8 @@ Vasya Novikov (https://github.com/vn971)
 	- seccomp syscall list update for glibc 2.26-10
 Veeti Paananen (https://github.com/veeti)
 	- fixed Spotify profile
+Vincent43 (https://github.com/Vincent43)
+	- apparmor enhancements
 vismir2 (https://github.com/vismir2)
 	- feh, ranger, 7z, keepass, keepassx and zathura profiles
 	- claws-mail, mutt, git, emacs, vim profiles

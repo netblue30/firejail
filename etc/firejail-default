@@ -8,14 +8,16 @@
 # We don't know if this definition is available outside Debian and Ubuntu, so
 # we declare our own here.
 ##########
-@{PID}={[1-9],[1-9][0-9],[1-9][0-9][0-9],[1-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9][0-9]}
+@{PID}={[1-9],[1-9][0-9],[1-9][0-9][0-9],[1-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9][0-9],[1-4][0-9][0-9][0-9][0-9][0-9][0-9]}
 
 profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 
 ##########
-# D-Bus is a huge security hole. Uncomment this line if you need D-Bus
+# D-Bus is a huge security hole. Uncomment those lines if you need D-Bus
 # functionality.
 ##########
+##include <abstractions/dbus-strict>
+##include <abstractions/dbus-session-strict>
 #dbus,
 
 ##########

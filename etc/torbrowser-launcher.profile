@@ -13,6 +13,8 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+mkdir ${HOME}/.config/torbrowser
+mkdir ${HOME}/.local/share/torbrowser
 whitelist ${HOME}/.config/torbrowser
 whitelist ${HOME}/.local/share/torbrowser
 include /etc/firejail/whitelist-common.inc

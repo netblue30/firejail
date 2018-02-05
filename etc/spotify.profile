@@ -42,7 +42,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin spotify,bash,sh
+private-bin spotify,bash,sh,zenity
 private-dev
 private-etc fonts,machine-id,pulse,resolv.conf
 private-opt spotify

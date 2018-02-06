@@ -39,7 +39,7 @@ tracelog
 
 private-bin gwenview,gimp*,kbuildsycoca4,kdeinit4
 private-dev
-# private-etc fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
+private-etc fonts,gimp,gtk-2.0,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
 
 # memory-deny-write-execute
 noexec ${HOME}

@@ -55,13 +55,16 @@ whitelist ${HOME}/.config/dconf
 whitelist ${HOME}/.config/Kvantum
 whitelist ${HOME}/.config/Trolltech.conf
 whitelist ${HOME}/.config/kdeglobals
+whitelist ${HOME}/.config/kio_httprc
 whitelist ${HOME}/.config/kioslaverc
 whitelist ${HOME}/.config/qt5ct
 whitelist ${HOME}/.kde/share/config/kdeglobals
+whitelist ${HOME}/.kde/share/config/kio_httprc
 whitelist ${HOME}/.kde/share/config/kioslaverc
 whitelist ${HOME}/.kde/share/config/oxygenrc
 whitelist ${HOME}/.kde/share/icons
 whitelist ${HOME}/.kde4/share/config/kdeglobals
+whitelist ${HOME}/.kde4/share/config/kio_httprc
 whitelist ${HOME}/.kde4/share/config/kioslaverc
 whitelist ${HOME}/.kde4/share/config/oxygenrc
 whitelist ${HOME}/.kde4/share/icons

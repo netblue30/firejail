@@ -80,11 +80,15 @@ blacklist ${HOME}/.local/share/plasma
 blacklist ${HOME}/.local/share/solid
 read-only ${HOME}/.cache/ksycoca5_*
 read-only ${HOME}/.config/kdeglobals
+read-only ${HOME}/.config/kio_httprc
+read-only ${HOME}/.config/kiorc
 read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.kde/share/config/kdeglobals
+read-only ${HOME}/.kde/share/config/kio_httprc
 read-only ${HOME}/.kde/share/config/kioslaverc
 read-only ${HOME}/.kde/share/kde4/services
 read-only ${HOME}/.kde4/share/config/kdeglobals
+read-only ${HOME}/.kde4/share/config/kio_httprc
 read-only ${HOME}/.kde4/share/config/kioslaverc
 read-only ${HOME}/.kde4/share/kde4/services
 read-only ${HOME}/.local/share/kservices5

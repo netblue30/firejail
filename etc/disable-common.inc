@@ -245,6 +245,7 @@ read-only ${HOME}/bin
 blacklist   ${HOME}/.local/share/Trash
 
 # Write-protection for desktop entries
+read-only ${HOME}/.config/menus
 read-only ${HOME}/.local/share/applications
 
 # top secret

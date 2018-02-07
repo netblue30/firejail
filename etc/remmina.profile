@@ -5,6 +5,7 @@ include /etc/firejail/remmina.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.remmina
 noblacklist ${HOME}/.config/remmina
 noblacklist ${HOME}/.local/share/remmina
 noblacklist ${HOME}/.ssh

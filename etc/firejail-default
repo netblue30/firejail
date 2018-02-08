@@ -104,16 +104,16 @@ owner /run/firejail/mnt/oroot/{run,dev}/shm/** rmwk,
 /proc/@{PID}/mem r,
 /proc/@{PID}/mounts r,
 /proc/@{PID}/mountinfo r,
-owner /proc/@{PID}/oom_adj w,
+deny /proc/@{PID}/oom_adj w,
 /proc/@{PID}/oom_score_adj r,
-owner /proc/@{PID}/oom_score_adj w,
+deny /proc/@{PID}/oom_score_adj w,
 /proc/@{PID}/auxv r,
 /proc/@{PID}/net/dev r,
 /proc/@{PID}/loginuid r,
 /proc/@{PID}/environ r,
 
-# Needed for chromium
-ptrace (trace tracedby),
+# Needed by chromium crash handler. Uncomment if you need it.
+#ptrace (trace tracedby),
 
 ##########
 # Allow running programs only from well-known system directories. If you need

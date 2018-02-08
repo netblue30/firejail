@@ -84,11 +84,13 @@ read-only ${HOME}/.config/kio_httprc
 read-only ${HOME}/.config/kiorc
 read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.config/ksslcablacklist
+read-only ${HOME}/.kde/share/apps/kssl
 read-only ${HOME}/.kde/share/config/kdeglobals
 read-only ${HOME}/.kde/share/config/kio_httprc
 read-only ${HOME}/.kde/share/config/kioslaverc
 read-only ${HOME}/.kde/share/config/ksslcablacklist
 read-only ${HOME}/.kde/share/kde4/services
+read-only ${HOME}/.kde4/share/apps/kssl
 read-only ${HOME}/.kde4/share/config/kdeglobals
 read-only ${HOME}/.kde4/share/config/kio_httprc
 read-only ${HOME}/.kde4/share/config/kioslaverc

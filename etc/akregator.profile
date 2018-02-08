@@ -17,6 +17,7 @@ mkfile ${HOME}/.config/akregatorrc
 mkdir ${HOME}/.local/share/akregator
 whitelist ${HOME}/.config/akregatorrc
 whitelist ${HOME}/.local/share/akregator
+whitelist ${HOME}/.local/share/kssl
 include /etc/firejail/whitelist-common.inc
 
 include /etc/firejail/whitelist-var-common.inc

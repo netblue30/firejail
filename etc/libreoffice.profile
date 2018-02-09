@@ -34,3 +34,5 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
+
+join-or-start libreoffice

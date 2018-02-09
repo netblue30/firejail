@@ -101,4 +101,5 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 ## New profiles
 
 Basilisk browser, Tor Browser language packs, PlayOnLinux, sylpheed, discord-canary,
-pycharm-community, pycharm-professional, Pitivi, OnionShare, Fritzing, Kaffeine, pdfchain
+pycharm-community, pycharm-professional, Pitivi, OnionShare, Fritzing, Kaffeine, pdfchain,
+tilp

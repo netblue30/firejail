@@ -445,6 +445,7 @@ blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.thunderbird
+blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling
 blacklist ${HOME}/.tor-browser-*
 blacklist ${HOME}/.ts3client

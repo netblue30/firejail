@@ -11,6 +11,7 @@ noblacklist ${HOME}/.gnupg
 
 mkdir ${HOME}/.config/brave
 whitelist ${HOME}/.config/brave
+whitelist ${HOME}/.gnupg
 
 # Redirect
 include /etc/firejail/chromium-common.profile

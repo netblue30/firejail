@@ -98,6 +98,15 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.53
 
+## Browser profile unification
+
+All Chromium and Firefox browsers have been unified to instead extend
+chromium-common.profile and firefox-common.profile respectively.
+This allows for reduced maintenance and ease of adding new browsers.
+NOTE: All users of Firefox-based browsers who use addons and plugins
+that read/write from ${HOME} will need to uncomment the includes for
+firefox-common-addons.inc in firefox-common.profile.
+
 ## New profiles
 
 Basilisk browser, Tor Browser language packs, PlayOnLinux, sylpheed, discord-canary,

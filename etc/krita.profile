@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
 noblacklist ${HOME}/.config/kritarc
+noblacklist ${HOME}/.local/share/krita
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

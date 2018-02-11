@@ -6,6 +6,9 @@ include /etc/firejail/kdenlive.local
 include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
+noblacklist ${HOME}/.cache/kdenlive
+noblacklist ${HOME}/.config/kdenliverc
+noblacklist ${HOME}/.local/share/kdenlive
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

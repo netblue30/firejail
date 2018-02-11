@@ -135,6 +135,7 @@ blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/kateschemarc
 blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
+blacklist ${HOME}/.config/kdenliverc
 blacklist ${HOME}/.config/klipperrc
 blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/kwriterc
@@ -346,6 +347,7 @@ blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/data/Mumble
 blacklist ${HOME}/.local/share/data/MusE
 blacklist ${HOME}/.local/share/data/MuseScore
+blacklist ${HOME}/.local/share/data/qBittorrent
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/epiphany
@@ -364,6 +366,8 @@ blacklist ${HOME}/.local/share/gnome-twitch
 blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kate
+blacklist ${HOME}/.local/share/kdenlive
+blacklist ${HOME}/.local/share/krita
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/ktorrent
 blacklist ${HOME}/.local/share/kwrite
@@ -475,6 +479,7 @@ blacklist /tmp/ssh-*
 # ~/.cache directory
 blacklist ${HOME}/.cache/0ad
 blacklist ${HOME}/.cache/8pecxstudios
+blacklist ${HOME}/.cache/Clementine
 blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
@@ -501,6 +506,7 @@ blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
+blacklist ${HOME}/.cache/kdenlive
 blacklist ${HOME}/.cache/krunner
 blacklist ${HOME}/.cache/kscreenlocker_greet
 blacklist ${HOME}/.cache/ksmserver-logout-greeter

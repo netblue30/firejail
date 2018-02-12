@@ -20,8 +20,9 @@ whitelist ${HOME}/.mozilla
 whitelist ${HOME}/.waterfox
 
 # waterfox requires a shell to launch on Arch. We can possibly remove sh though.
-# private-bin waterfox,which,sh,dbus-launch,dbus-send,env,bash
-# private-etc ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,waterfox,mime.types,mailcap,asound.conf,pulse,pki,crypto-policies
+#private-bin waterfox,which,sh,dbus-launch,dbus-send,env,bash
+# private-etc must first be enabled in firefox-common.profile
+#private-etc waterfox
 
 # Redirect
 include /etc/firejail/firefox-common.profile

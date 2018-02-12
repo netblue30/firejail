@@ -13,7 +13,8 @@ mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/abrowser
 whitelist ${HOME}/.mozilla
 
-# private-etc ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,abrowser,firefox,mime.types,mailcap,asound.conf,pulse,pki,crypto-policies
+# private-etc must first be enabled in firefox-common.profile
+#private-etc abrowser
 
 
 # Redirect

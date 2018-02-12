@@ -13,9 +13,10 @@ mkdir ${HOME}/.moonchild productions
 whitelist ${HOME}/.cache/moonchild productions/pale moon
 whitelist ${HOME}/.moonchild productions
 
-# private-bin palemoon
-# private-etc ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,palemoon,mime.types,mailcap,asound.conf,pulse,pki,crypto-policies
-# private-opt palemoon
+#private-bin palemoon
+# private-etc must first be enabled in firefox-common.profile
+#private-etc palemoon
+#private-opt palemoon
 
 # Redirect
 include /etc/firejail/firefox-common.profile

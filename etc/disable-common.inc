@@ -45,7 +45,6 @@ blacklist /etc/X11/Xsession.d
 blacklist /etc/xdg/autostart
 
 # KDE config
-blacklist ${HOME}/.config/*.notifyrc
 blacklist ${HOME}/.config/khotkeysrc
 blacklist ${HOME}/.config/krunnerrc
 blacklist ${HOME}/.config/kwinrc
@@ -57,7 +56,6 @@ blacklist ${HOME}/.kde/share/apps/konsole
 blacklist ${HOME}/.kde/share/apps/kwin
 blacklist ${HOME}/.kde/share/apps/plasma
 blacklist ${HOME}/.kde/share/apps/solid
-blacklist ${HOME}/.kde/share/config/*.notifyrc
 blacklist ${HOME}/.kde/share/config/khotkeysrc
 blacklist ${HOME}/.kde/share/config/krunnerrc
 blacklist ${HOME}/.kde/share/config/kwinrc
@@ -67,7 +65,6 @@ blacklist ${HOME}/.kde4/share/apps/konsole
 blacklist ${HOME}/.kde4/share/apps/kwin
 blacklist ${HOME}/.kde4/share/apps/plasma
 blacklist ${HOME}/.kde4/share/apps/solid
-blacklist ${HOME}/.kde4/share/config/*.notifyrc
 blacklist ${HOME}/.kde4/share/config/khotkeysrc
 blacklist ${HOME}/.kde4/share/config/krunnerrc
 blacklist ${HOME}/.kde4/share/config/kwinrc
@@ -79,18 +76,21 @@ blacklist ${HOME}/.local/share/kwin
 blacklist ${HOME}/.local/share/plasma
 blacklist ${HOME}/.local/share/solid
 read-only ${HOME}/.cache/ksycoca5_*
+read-only ${HOME}/.config/*notifyrc
 read-only ${HOME}/.config/kdeglobals
 read-only ${HOME}/.config/kio_httprc
 read-only ${HOME}/.config/kiorc
 read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.config/ksslcablacklist
 read-only ${HOME}/.kde/share/apps/kssl
+read-only ${HOME}/.kde/share/config/*notifyrc
 read-only ${HOME}/.kde/share/config/kdeglobals
 read-only ${HOME}/.kde/share/config/kio_httprc
 read-only ${HOME}/.kde/share/config/kioslaverc
 read-only ${HOME}/.kde/share/config/ksslcablacklist
 read-only ${HOME}/.kde/share/kde4/services
 read-only ${HOME}/.kde4/share/apps/kssl
+read-only ${HOME}/.kde4/share/config/*notifyrc
 read-only ${HOME}/.kde4/share/config/kdeglobals
 read-only ${HOME}/.kde4/share/config/kio_httprc
 read-only ${HOME}/.kde4/share/config/kioslaverc

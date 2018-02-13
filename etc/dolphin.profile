@@ -8,7 +8,8 @@ include /etc/firejail/globals.local
 # warning: firejail is currently not effectively constraining dolphin since used services are started by kdeinit5
 
 noblacklist ${HOME}/.local/share/Trash
-# noblacklist ${HOME}/.config/dolphinrc - diable-programs.inc is disabled, see below
+# noblacklist ${HOME}/.cache/dolphin - disable-programs.inc is disabled, see below
+# noblacklist ${HOME}/.config/dolphinrc
 # noblacklist ${HOME}/.local/share/dolphin
 
 include /etc/firejail/disable-common.inc

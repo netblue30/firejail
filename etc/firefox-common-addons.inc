@@ -2,6 +2,7 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/firefox-common-addons.local
 
+noblacklist ${HOME}/.config/kgetrc
 noblacklist ${HOME}/.config/okularpartrc
 noblacklist ${HOME}/.config/okularrc
 noblacklist ${HOME}/.config/qpdfview
@@ -16,11 +17,13 @@ noblacklist ${HOME}/.kde4/share/config/kgetrc
 noblacklist ${HOME}/.kde4/share/config/okularpartrc
 noblacklist ${HOME}/.kde4/share/config/okularrc
 # noblacklist ${HOME}/.local/share/gnome-shell/extensions
+noblacklist ${HOME}/.local/share/kget
 noblacklist ${HOME}/.local/share/okular
 noblacklist ${HOME}/.local/share/qpdfview
 
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.config/gnome-mplayer
+whitelist ${HOME}/.config/kgetrc
 whitelist ${HOME}/.config/okularpartrc
 whitelist ${HOME}/.config/okularrc
 whitelist ${HOME}/.config/pipelight-silverlight5.1
@@ -39,6 +42,7 @@ whitelist ${HOME}/.kde4/share/config/okularrc
 whitelist ${HOME}/.keysnail.js
 whitelist ${HOME}/.lastpass
 whitelist ${HOME}/.local/share/gnome-shell/extensions
+whitelist ${HOME}/.local/share/kget
 whitelist ${HOME}/.local/share/okular
 whitelist ${HOME}/.local/share/qpdfview
 whitelist ${HOME}/.pentadactyl

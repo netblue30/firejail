@@ -136,6 +136,7 @@ blacklist ${HOME}/.config/kateschemarc
 blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdenliverc
+blacklist ${HOME}/.config/kgetrc
 blacklist ${HOME}/.config/klipperrc
 blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/kwriterc
@@ -367,6 +368,7 @@ blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kdenlive
+blacklist ${HOME}/.local/share/kget
 blacklist ${HOME}/.local/share/krita
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/ktorrent
@@ -493,6 +495,7 @@ blacklist ${HOME}/.cache/chromium-dev
 blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/darktable
 blacklist ${HOME}/.cache/discover
+blacklist ${HOME}/.cache/dolphin
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/fossamail
@@ -507,6 +510,7 @@ blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
 blacklist ${HOME}/.cache/kdenlive
+blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/krunner
 blacklist ${HOME}/.cache/kscreenlocker_greet
 blacklist ${HOME}/.cache/ksmserver-logout-greeter
@@ -520,6 +524,7 @@ blacklist ${HOME}/.cache/mozilla
 blacklist ${HOME}/.cache/mutt
 blacklist ${HOME}/.cache/nheko/nheko
 blacklist ${HOME}/.cache/netsurf
+blacklist ${HOME}/.cache/okular
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta
 blacklist ${HOME}/.cache/org.gnome.Books
@@ -532,6 +537,7 @@ blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
 blacklist ${HOME}/.cache/spotify
+blacklist ${HOME}/.cache/systemsettings
 blacklist ${HOME}/.cache/telepathy
 blacklist ${HOME}/.cache/thunderbird
 blacklist ${HOME}/.cache/torbrowser

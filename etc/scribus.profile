@@ -8,6 +8,7 @@ include /etc/firejail/globals.local
 blacklist /run/user/*/bus
 
 # Support for PDF readers comes with Scribus 1.5 and higher
+noblacklist ${HOME}/.cache/okular
 noblacklist ${HOME}/.config/okularpartrc
 noblacklist ${HOME}/.config/okularrc
 noblacklist ${HOME}/.config/scribus

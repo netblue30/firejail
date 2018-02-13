@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
 
+noblacklist ${HOME}/.cache/okular
 noblacklist ${HOME}/.config/okularpartrc
 noblacklist ${HOME}/.config/okularrc
 noblacklist ${HOME}/.kde/share/apps/okular

@@ -36,7 +36,7 @@ Committers
 - Fred-Barclay (https://github.com/Fred-Barclay)
 - Reiner Herrmann (https://github.com/reinerh)
 - smithsohu (https://github.com/smitsohu)
-- SpotComms (https://github.com/SpotComms)
+- SkewedZeppelin (https://github.com/SkewedZeppelin)
 - startx2017 (https://github.com/startx2017) - 0.9.38-LTS and *bugfixes branches maintainer
 - Topi Miettinen (https://github.com/topimiettinen)
 - netblue30 (netblue30@yahoo.com)
@@ -475,7 +475,7 @@ soredake (https://github.com/soredake)
 	- fix qtox.profile
 	- add ocaltime to private-etc to make qtox show correct time
 	- fixes for the keepassxc 2.2.5 version
-SpotComms (https://github.com/SpotComms)
+SkewedZeppelin (https://github.com/SkewedZeppelin)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
 	- added PDFSam, Pithos, and Xonotic profiles
 	- disabled Go, Rust, and OpenSSL in disable-devel.conf

@@ -57,52 +57,16 @@ owner /run/firejail/mnt/oroot/{run,dev}/shm/** rmwk,
 /{,var/}run/firejail/profile/@{PID} w,
 
 ##########
-# Mask /proc and /sys information leakage. The configuration here is barely
-# enough to run "top" or "ps aux".
+# Allow /proc and /sys read-only access.
+# Blacklisting is controlled from Firejail.
 ##########
 /proc/ r,
-/proc/meminfo r,
-/proc/cpuinfo r,
-/proc/filesystems r,
-/proc/uptime r,
-/proc/loadavg r,
-/proc/stat r,
-/proc/sys/kernel/pid_max r,
-/proc/sys/kernel/shmmax r,
-/proc/sys/kernel/yama/ptrace_scope r,
-/proc/sys/vm/overcommit_memory r,
-/proc/sys/vm/overcommit_ratio r,
-/proc/sys/kernel/random/uuid r,
+/proc/** r,
+deny /proc/** w,
 
 /sys/ r,
-/sys/bus/ r,
-/sys/bus/** r,
-/sys/class/ r,
-/sys/class/** r,
-/sys/devices/ r,
-/sys/devices/** r,
-
-/proc/@{PID}/ r,
-/proc/@{PID}/fd/ r,
-/proc/@{PID}/task/ r,
-/proc/@{PID}/cmdline r,
-/proc/@{PID}/comm r,
-/proc/@{PID}/stat r,
-/proc/@{PID}/statm r,
-/proc/@{PID}/status r,
-/proc/@{PID}/task/@{PID}/stat r,
-/proc/@{PID}/task/@{PID}/status r,
-/proc/@{PID}/maps r,
-/proc/@{PID}/mem r,
-/proc/@{PID}/mounts r,
-/proc/@{PID}/mountinfo r,
-deny /proc/@{PID}/oom_adj w,
-/proc/@{PID}/oom_score_adj r,
-deny /proc/@{PID}/oom_score_adj w,
-/proc/@{PID}/auxv r,
-/proc/@{PID}/net/dev r,
-/proc/@{PID}/loginuid r,
-/proc/@{PID}/environ r,
+/sys/** r,
+deny /sys/** w,
 
 # Needed by chromium crash handler. Uncomment if you need it.
 #ptrace (trace tracedby),

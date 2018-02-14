@@ -33,7 +33,7 @@ tracelog
 
 disable-mnt
 private-bin qtox
-private-etc fonts,resolv.conf,ld.so.cache
+private-etc fonts,resolv.conf,ld.so.cache,localtime
 private-dev
 private-tmp
 

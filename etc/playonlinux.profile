@@ -15,7 +15,8 @@ noblacklist ${HOME}/.PlayOnLinux
 noblacklist ${PATH}/nc
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
+# playonlinux uses perl
+# include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all

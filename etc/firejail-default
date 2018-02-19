@@ -66,17 +66,22 @@ owner /run/firejail/mnt/oroot/{run,dev}/shm/** rmwk,
 
 ##########
 # Allow /proc and /sys read-only access.
-# Blacklisting is controlled from Firejail.
+# Blacklisting is controlled from userspace Firejail.
 ##########
 /proc/ r,
 /proc/** r,
-deny /proc/** w,
+# Uncomment to silence all denied write warnings
+#deny /proc/** w,
+deny /proc/@{PID}/oom_adj w,
+deny /proc/@{PID}/oom_score_adj w,
 
 /sys/ r,
 /sys/** r,
-deny /sys/** w,
+# Uncomment to silence all denied write warnings
+#deny /sys/** w,
 
-# Needed by chromium crash handler. Uncomment if you need it.
+# Allows to attach to a running program and modify the process memory.
+# May be needed by chromium crash handler. Uncomment if you need it.
 #ptrace (trace tracedby),
 
 ##########

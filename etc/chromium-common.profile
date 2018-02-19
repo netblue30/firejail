@@ -23,6 +23,7 @@ nodvd
 nogroups
 notv
 shell none
+apparmor
 
 disable-mnt
 private-dev

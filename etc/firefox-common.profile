@@ -33,6 +33,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
+apparmor
 
 disable-mnt
 private-dev

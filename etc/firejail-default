@@ -21,6 +21,12 @@ profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 #dbus,
 
 ##########
+# Allows to attach to a running program and modify the process memory.
+# May be needed by chromium crash handler. Uncomment if you need it.
+##########
+#ptrace (trace tracedby),
+
+##########
 # Line starting with /run/firejail/mnt/oroot deal with --overlay sandboxes
 ##########
 / r,
@@ -53,6 +59,10 @@ owner /{run,dev}/shm/** rmwk,
 /run/firejail/mnt/oroot/{run,dev}/shm/ r,
 owner /run/firejail/mnt/oroot/{run,dev}/shm/** rmwk,
 
+# Allow logging Firejail blacklist violations to journal
+/{,var/}run/systemd/journal/socket w,
+/{,var/}run/systemd/journal/dev-log w,
+
 # Needed for wine
 /{,var/}run/firejail/profile/@{PID} w,
 
@@ -71,10 +81,6 @@ deny /proc/@{PID}/oom_score_adj w,
 /sys/** r,
 # Uncomment to silence all denied write warnings
 #deny /sys/** w,
-
-# Allows to attach to a running program and modify the process memory.
-# May be needed by chromium crash handler. Uncomment if you need it.
-#ptrace (trace tracedby),
 
 ##########
 # Allow running programs only from well-known system directories. If you need
@@ -107,7 +113,7 @@ deny /proc/@{PID}/oom_score_adj w,
 /run/firejail/mnt/oroot/opt/** ix,
 
 ##########
-# Allow acces to cups printing socket
+# Allow acces to cups printing socket.
 ##########
 /run/cups/cups.sock w,
 

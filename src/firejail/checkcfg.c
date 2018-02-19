@@ -103,6 +103,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// apparmor
+			else if (strncmp(ptr, "apparmor ", 9) == 0) {
+				if (strcmp(ptr + 9, "yes") == 0)
+					cfg_val[CFG_APPARMOR] = 1;
+				else if (strcmp(ptr + 9, "no") == 0)
+					cfg_val[CFG_APPARMOR] = 0;
+				else
+					goto errout;
+			}
 			// bind
 			else if (strncmp(ptr, "bind ", 5) == 0) {
 				if (strcmp(ptr + 5, "yes") == 0)

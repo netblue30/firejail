@@ -16,7 +16,7 @@ The sandbox is lightweight, the overhead is low. There are no complicated config
 no socket connections open, no daemons running in the background. All security features are
 implemented directly in Linux kernel and available on any Linux computer.
 
-[![About Firejail](video.png)](http://www.youtube.com/watch?v=Yk1HVPOeoTc)
+[![Firejail Firefox Demo](video.png)](https://www.youtube.com/watch?v=kCnAxD144nU)
 
 
 Project webpage: https://firejail.wordpress.com/

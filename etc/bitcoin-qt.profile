@@ -13,12 +13,12 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.bitcoin
-whitelist ${HOME}/.bitcoin
-
 mkdir ${HOME}/.config/Bitcoin
+whitelist ${HOME}/.bitcoin
 whitelist ${HOME}/.config/Bitcoin
 
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 machine-id
@@ -38,8 +38,10 @@ tracelog
 
 private-bin bitcoin-qt
 private-dev
-#private-etc fonts  # Causes problem with loading of libGL.so
-#private-lib  # Works, but QT complains about OpenSSL a bit.
+# Causes problem with loading of libGL.so
+#private-etc fonts
+# Works, but QT complains about OpenSSL a bit.
+#private-lib
 private-tmp
 
 memory-deny-write-execute

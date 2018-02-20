@@ -111,4 +111,4 @@ firefox-common-addons.inc in firefox-common.profile.
 
 Basilisk browser, Tor Browser language packs, PlayOnLinux, sylpheed, discord-canary,
 pycharm-community, pycharm-professional, Pitivi, OnionShare, Fritzing, Kaffeine, pdfchain,
-tilp, vivaldi-snapshot
+tilp, vivaldi-snapshot, bitcoin-qt

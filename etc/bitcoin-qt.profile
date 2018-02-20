@@ -6,7 +6,6 @@ include /etc/firejail/bitcoin-qt.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.bitcoin
-noblacklist ${HOME}/.config/Bitcoin
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -20,7 +19,6 @@ mkdir ${HOME}/.config/Bitcoin
 whitelist ${HOME}/.config/Bitcoin
 
 include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 machine-id
@@ -41,7 +39,7 @@ tracelog
 private-bin bitcoin-qt
 private-dev
 #private-etc fonts  # Causes problem with loading of libGL.so
-#private-lib
+#private-lib  # Works, but QT complains about OpenSSL a bit.
 private-tmp
 
 memory-deny-write-execute

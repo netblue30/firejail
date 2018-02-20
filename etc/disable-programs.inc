@@ -201,6 +201,7 @@ blacklist ${HOME}/.config/uGet
 blacklist ${HOME}/.config/uzbl
 blacklist ${HOME}/.config/viewnior
 blacklist ${HOME}/.config/vivaldi
+blacklist ${HOME}/.config/vivaldi-snapshot
 blacklist ${HOME}/.config/vlc
 blacklist ${HOME}/.config/wesnoth
 blacklist ${HOME}/.config/wire
@@ -543,6 +544,7 @@ blacklist ${HOME}/.cache/thunderbird
 blacklist ${HOME}/.cache/torbrowser
 blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/vivaldi
+blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/xmms2

@@ -15,6 +15,8 @@ include /etc/firejail/disable-programs.inc
 mkdir ${HOME}/.bitcoin
 whitelist ${HOME}/.bitcoin
 
+whitelist ${HOME}/.bitcoin-testnet
+
 mkdir ${HOME}/.config/Bitcoin
 whitelist ${HOME}/.config/Bitcoin
 

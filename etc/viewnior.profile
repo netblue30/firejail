@@ -6,7 +6,6 @@ include /etc/firejail/viewnior.local
 include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
-blacklist ${HOME}/.Xauthority
 blacklist ${HOME}/.bashrc
 
 noblacklist ${HOME}/.Steam

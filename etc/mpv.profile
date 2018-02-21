@@ -24,6 +24,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
+apparmor
 
 private-bin mpv,youtube-dl,python*,env
 private-dev

@@ -1799,59 +1799,159 @@ Example:
 .br
 $ firejail \-\-name=browser firefox &
 .br
-$ firejail \-\-seccomp.print=browser
+$ firejail --seccomp.print=browser
 .br
-SECCOMP Filter:
+ line  OP JT JF    K
 .br
-  VALIDATE_ARCHITECTURE
+=================================
 .br
-  EXAMINE_SYSCALL
+ 0000: 20 00 00 00000004   ld  data.architecture
 .br
-  BLACKLIST 165 mount
+ 0001: 15 01 00 c000003e   jeq ARCH_64 0003 (false 0002)
 .br
-  BLACKLIST 166 umount2
+ 0002: 06 00 00 7fff0000   ret ALLOW
 .br
-  BLACKLIST 101 ptrace
+ 0003: 20 00 00 00000000   ld  data.syscall-number
 .br
-  BLACKLIST 246 kexec_load
+ 0004: 35 01 00 40000000   jge X32_ABI true:0006 (false 0005)
 .br
-  BLACKLIST 304 open_by_handle_at
+ 0005: 35 01 00 00000000   jge read 0007 (false 0006)
 .br
-  BLACKLIST 175 init_module
+ 0006: 06 00 00 00050001   ret ERRNO(1)
 .br
-  BLACKLIST 176 delete_module
+ 0007: 15 41 00 0000009a   jeq modify_ldt 0049 (false 0008)
 .br
-  BLACKLIST 172 iopl
+ 0008: 15 40 00 000000d4   jeq lookup_dcookie 0049 (false 0009)
 .br
-  BLACKLIST 173 ioperm
+ 0009: 15 3f 00 0000012a   jeq perf_event_open 0049 (false 000a)
 .br
-  BLACKLIST 167 swapon
+ 000a: 15 3e 00 00000137   jeq process_vm_writev 0049 (false 000b)
 .br
-  BLACKLIST 168 swapoff
+ 000b: 15 3d 00 0000009c   jeq _sysctl 0049 (false 000c)
 .br
-  BLACKLIST 103 syslog
+ 000c: 15 3c 00 000000b7   jeq afs_syscall 0049 (false 000d)
 .br
-  BLACKLIST 310 process_vm_readv
+ 000d: 15 3b 00 000000ae   jeq create_module 0049 (false 000e)
 .br
-  BLACKLIST 311 process_vm_writev
+ 000e: 15 3a 00 000000b1   jeq get_kernel_syms 0049 (false 000f)
 .br
-  BLACKLIST 133 mknod
+ 000f: 15 39 00 000000b5   jeq getpmsg 0049 (false 0010)
 .br
-  BLACKLIST 139 sysfs
+ 0010: 15 38 00 000000b6   jeq putpmsg 0049 (false 0011)
 .br
-  BLACKLIST 156 _sysctl
+ 0011: 15 37 00 000000b2   jeq query_module 0049 (false 0012)
 .br
-  BLACKLIST 159 adjtimex
+ 0012: 15 36 00 000000b9   jeq security 0049 (false 0013)
 .br
-  BLACKLIST 305 clock_adjtime
+ 0013: 15 35 00 0000008b   jeq sysfs 0049 (false 0014)
 .br
-  BLACKLIST 212 lookup_dcookie
+ 0014: 15 34 00 000000b8   jeq tuxcall 0049 (false 0015)
 .br
-  BLACKLIST 298 perf_event_open
+ 0015: 15 33 00 00000086   jeq uselib 0049 (false 0016)
 .br
-  BLACKLIST 300 fanotify_init
+ 0016: 15 32 00 00000088   jeq ustat 0049 (false 0017)
 .br
-  RETURN_ALLOW
+ 0017: 15 31 00 000000ec   jeq vserver 0049 (false 0018)
+.br
+ 0018: 15 30 00 0000009f   jeq adjtimex 0049 (false 0019)
+.br
+ 0019: 15 2f 00 00000131   jeq clock_adjtime 0049 (false 001a)
+.br
+ 001a: 15 2e 00 000000e3   jeq clock_settime 0049 (false 001b)
+.br
+ 001b: 15 2d 00 000000a4   jeq settimeofday 0049 (false 001c)
+.br
+ 001c: 15 2c 00 000000b0   jeq delete_module 0049 (false 001d)
+.br
+ 001d: 15 2b 00 00000139   jeq finit_module 0049 (false 001e)
+.br
+ 001e: 15 2a 00 000000af   jeq init_module 0049 (false 001f)
+.br
+ 001f: 15 29 00 000000ad   jeq ioperm 0049 (false 0020)
+.br
+ 0020: 15 28 00 000000ac   jeq iopl 0049 (false 0021)
+.br
+ 0021: 15 27 00 000000f6   jeq kexec_load 0049 (false 0022)
+.br
+ 0022: 15 26 00 00000140   jeq kexec_file_load 0049 (false 0023)
+.br
+ 0023: 15 25 00 000000a9   jeq reboot 0049 (false 0024)
+.br
+ 0024: 15 24 00 000000a7   jeq swapon 0049 (false 0025)
+.br
+ 0025: 15 23 00 000000a8   jeq swapoff 0049 (false 0026)
+.br
+ 0026: 15 22 00 000000a3   jeq acct 0049 (false 0027)
+.br
+ 0027: 15 21 00 00000141   jeq bpf 0049 (false 0028)
+.br
+ 0028: 15 20 00 000000a1   jeq chroot 0049 (false 0029)
+.br
+ 0029: 15 1f 00 000000a5   jeq mount 0049 (false 002a)
+.br
+ 002a: 15 1e 00 000000b4   jeq nfsservctl 0049 (false 002b)
+.br
+ 002b: 15 1d 00 0000009b   jeq pivot_root 0049 (false 002c)
+.br
+ 002c: 15 1c 00 000000ab   jeq setdomainname 0049 (false 002d)
+.br
+ 002d: 15 1b 00 000000aa   jeq sethostname 0049 (false 002e)
+.br
+ 002e: 15 1a 00 000000a6   jeq umount2 0049 (false 002f)
+.br
+ 002f: 15 19 00 00000099   jeq vhangup 0049 (false 0030)
+.br
+ 0030: 15 18 00 000000ee   jeq set_mempolicy 0049 (false 0031)
+.br
+ 0031: 15 17 00 00000100   jeq migrate_pages 0049 (false 0032)
+.br
+ 0032: 15 16 00 00000117   jeq move_pages 0049 (false 0033)
+.br
+ 0033: 15 15 00 000000ed   jeq mbind 0049 (false 0034)
+.br
+ 0034: 15 14 00 00000130   jeq open_by_handle_at 0049 (false 0035)
+.br
+ 0035: 15 13 00 0000012f   jeq name_to_handle_at 0049 (false 0036)
+.br
+ 0036: 15 12 00 000000fb   jeq ioprio_set 0049 (false 0037)
+.br
+ 0037: 15 11 00 00000067   jeq syslog 0049 (false 0038)
+.br
+ 0038: 15 10 00 0000012c   jeq fanotify_init 0049 (false 0039)
+.br
+ 0039: 15 0f 00 00000138   jeq kcmp 0049 (false 003a)
+.br
+ 003a: 15 0e 00 000000f8   jeq add_key 0049 (false 003b)
+.br
+ 003b: 15 0d 00 000000f9   jeq request_key 0049 (false 003c)
+.br
+ 003c: 15 0c 00 000000fa   jeq keyctl 0049 (false 003d)
+.br
+ 003d: 15 0b 00 000000ce   jeq io_setup 0049 (false 003e)
+.br
+ 003e: 15 0a 00 000000cf   jeq io_destroy 0049 (false 003f)
+.br
+ 003f: 15 09 00 000000d0   jeq io_getevents 0049 (false 0040)
+.br
+ 0040: 15 08 00 000000d1   jeq io_submit 0049 (false 0041)
+.br
+ 0041: 15 07 00 000000d2   jeq io_cancel 0049 (false 0042)
+.br
+ 0042: 15 06 00 000000d8   jeq remap_file_pages 0049 (false 0043)
+.br
+ 0043: 15 05 00 00000116   jeq vmsplice 0049 (false 0044)
+.br
+ 0044: 15 04 00 00000087   jeq personality 0049 (false 0045)
+.br
+ 0045: 15 03 00 00000143   jeq userfaultfd 0049 (false 0046)
+.br
+ 0046: 15 02 00 00000065   jeq ptrace 0049 (false 0047)
+.br
+ 0047: 15 01 00 00000136   jeq process_vm_readv 0049 (false 0048)
+.br
+ 0048: 06 00 00 7fff0000   ret ALLOW
+.br
+ 0049: 06 00 01 00000000   ret KILL
 .br
 $
 .TP

@@ -98,6 +98,125 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.53
 
+## Seccomp development
+
+Replaced the our seccomp disassembler with a real disassembler lifted from
+libseccomp (GPLv2, Paul Moore, Red Hat). The code is in src/fsec-print directory.
+`````
+$ firejail --seccomp.print=browser
+ line  OP JT JF    K
+=================================
+ 0000: 20 00 00 00000004   ld  data.architecture
+ 0001: 15 01 00 c000003e   jeq ARCH_64 0003 (false 0002)
+ 0002: 06 00 00 7fff0000   ret ALLOW
+ 0003: 20 00 00 00000000   ld  data.syscall-number
+ 0004: 35 01 00 40000000   jge X32_ABI true:0006 (false 0005)
+ 0005: 35 01 00 00000000   jge read 0007 (false 0006)
+ 0006: 06 00 00 00050001   ret ERRNO(1)
+ 0007: 15 41 00 0000009a   jeq modify_ldt 0049 (false 0008)
+ 0008: 15 40 00 000000d4   jeq lookup_dcookie 0049 (false 0009)
+ 0009: 15 3f 00 0000012a   jeq perf_event_open 0049 (false 000a)
+ 000a: 15 3e 00 00000137   jeq process_vm_writev 0049 (false 000b)
+ 000b: 15 3d 00 0000009c   jeq _sysctl 0049 (false 000c)
+ 000c: 15 3c 00 000000b7   jeq afs_syscall 0049 (false 000d)
+ 000d: 15 3b 00 000000ae   jeq create_module 0049 (false 000e)
+ 000e: 15 3a 00 000000b1   jeq get_kernel_syms 0049 (false 000f)
+ 000f: 15 39 00 000000b5   jeq getpmsg 0049 (false 0010)
+ 0010: 15 38 00 000000b6   jeq putpmsg 0049 (false 0011)
+ 0011: 15 37 00 000000b2   jeq query_module 0049 (false 0012)
+ 0012: 15 36 00 000000b9   jeq security 0049 (false 0013)
+ 0013: 15 35 00 0000008b   jeq sysfs 0049 (false 0014)
+ 0014: 15 34 00 000000b8   jeq tuxcall 0049 (false 0015)
+ 0015: 15 33 00 00000086   jeq uselib 0049 (false 0016)
+ 0016: 15 32 00 00000088   jeq ustat 0049 (false 0017)
+ 0017: 15 31 00 000000ec   jeq vserver 0049 (false 0018)
+ 0018: 15 30 00 0000009f   jeq adjtimex 0049 (false 0019)
+ 0019: 15 2f 00 00000131   jeq clock_adjtime 0049 (false 001a)
+ 001a: 15 2e 00 000000e3   jeq clock_settime 0049 (false 001b)
+ 001b: 15 2d 00 000000a4   jeq settimeofday 0049 (false 001c)
+ 001c: 15 2c 00 000000b0   jeq delete_module 0049 (false 001d)
+ 001d: 15 2b 00 00000139   jeq finit_module 0049 (false 001e)
+ 001e: 15 2a 00 000000af   jeq init_module 0049 (false 001f)
+ 001f: 15 29 00 000000ad   jeq ioperm 0049 (false 0020)
+ 0020: 15 28 00 000000ac   jeq iopl 0049 (false 0021)
+ 0021: 15 27 00 000000f6   jeq kexec_load 0049 (false 0022)
+ 0022: 15 26 00 00000140   jeq kexec_file_load 0049 (false 0023)
+ 0023: 15 25 00 000000a9   jeq reboot 0049 (false 0024)
+ 0024: 15 24 00 000000a7   jeq swapon 0049 (false 0025)
+ 0025: 15 23 00 000000a8   jeq swapoff 0049 (false 0026)
+ 0026: 15 22 00 000000a3   jeq acct 0049 (false 0027)
+ 0027: 15 21 00 00000141   jeq bpf 0049 (false 0028)
+ 0028: 15 20 00 000000a1   jeq chroot 0049 (false 0029)
+ 0029: 15 1f 00 000000a5   jeq mount 0049 (false 002a)
+ 002a: 15 1e 00 000000b4   jeq nfsservctl 0049 (false 002b)
+ 002b: 15 1d 00 0000009b   jeq pivot_root 0049 (false 002c)
+ 002c: 15 1c 00 000000ab   jeq setdomainname 0049 (false 002d)
+ 002d: 15 1b 00 000000aa   jeq sethostname 0049 (false 002e)
+ 002e: 15 1a 00 000000a6   jeq umount2 0049 (false 002f)
+ 002f: 15 19 00 00000099   jeq vhangup 0049 (false 0030)
+ 0030: 15 18 00 000000ee   jeq set_mempolicy 0049 (false 0031)
+ 0031: 15 17 00 00000100   jeq migrate_pages 0049 (false 0032)
+ 0032: 15 16 00 00000117   jeq move_pages 0049 (false 0033)
+ 0033: 15 15 00 000000ed   jeq mbind 0049 (false 0034)
+ 0034: 15 14 00 00000130   jeq open_by_handle_at 0049 (false 0035)
+ 0035: 15 13 00 0000012f   jeq name_to_handle_at 0049 (false 0036)
+ 0036: 15 12 00 000000fb   jeq ioprio_set 0049 (false 0037)
+ 0037: 15 11 00 00000067   jeq syslog 0049 (false 0038)
+ 0038: 15 10 00 0000012c   jeq fanotify_init 0049 (false 0039)
+ 0039: 15 0f 00 00000138   jeq kcmp 0049 (false 003a)
+ 003a: 15 0e 00 000000f8   jeq add_key 0049 (false 003b)
+ 003b: 15 0d 00 000000f9   jeq request_key 0049 (false 003c)
+ 003c: 15 0c 00 000000fa   jeq keyctl 0049 (false 003d)
+ 003d: 15 0b 00 000000ce   jeq io_setup 0049 (false 003e)
+ 003e: 15 0a 00 000000cf   jeq io_destroy 0049 (false 003f)
+ 003f: 15 09 00 000000d0   jeq io_getevents 0049 (false 0040)
+ 0040: 15 08 00 000000d1   jeq io_submit 0049 (false 0041)
+ 0041: 15 07 00 000000d2   jeq io_cancel 0049 (false 0042)
+ 0042: 15 06 00 000000d8   jeq remap_file_pages 0049 (false 0043)
+ 0043: 15 05 00 00000116   jeq vmsplice 0049 (false 0044)
+ 0044: 15 04 00 00000087   jeq personality 0049 (false 0045)
+ 0045: 15 03 00 00000143   jeq userfaultfd 0049 (false 0046)
+ 0046: 15 02 00 00000065   jeq ptrace 0049 (false 0047)
+ 0047: 15 01 00 00000136   jeq process_vm_readv 0049 (false 0048)
+ 0048: 06 00 00 7fff0000   ret ALLOW
+ 0049: 06 00 01 00000000   ret KILL
+`````
+We are also introducing a seccomp optimizer, to be run directly on seccomp machine code
+filters produced by Firejail. The code is in src/fsec-optimize. Currently only the default seccomp
+filters built at compile time are run trough the optimizer. It will be extended and applied at run
+time on all filters.
+
+
+## AppArmor development
+
+AppArmor features are supported on overlayfs and chroot sandboxes.
+
+We are in the process of streamlining our AppArmor profile. The restrictions for /proc, /sys
+and /run/user directories were moved out of the profile into firejail executable.
+
+We intend to start apparmor by default for browsers, torrent clients and media players.
+So far we cover Firefox (firefox-common.profile), Chromium (chromium-common.profile),
+transmission-qt, transmission-gtk, vlc and mpv.
+
+"apparmor yes/no" flag in /etc/firejail/firejail.config file allows the user to enable/disable apparmor functionality globally
+By default the flag is enabled.
+
+Checking apparmor status:
+`````
+$ firejail --apparmor.print=browser
+2146:netblue:/usr/bin/firejail /usr/bin/firefox-esr
+  AppArmor: firejail-default enforce
+
+$ firemon --apparmor
+2072:netblue:firejail --chroot=/chroot/sid --net=eth0
+  AppArmor: unconfined
+2146:netblue:/usr/bin/firejail /usr/bin/firefox-esr
+  AppArmor: firejail-default enforce
+4835:netblue:/usr/bin/firejail /usr/bin/vlc
+  AppArmor: firejail-default enforce
+`````
+
+
 ## Browser profile unification
 
 All Chromium and Firefox browsers have been unified to instead extend

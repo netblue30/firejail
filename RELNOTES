@@ -1,13 +1,27 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
+  * modif: restrictions for /proc, /sys and /run/user directories
+     are moved from AppArmor profile into firejail executable
+  * modif: unifying Chromium and Firefox browsers profiles.
+     All users of Firefox-based browsers who use addons and plugins
+     that read/write from ${HOME} will need to uncomment the includes for
+     firefox-common-addons.inc in firefox-common.profile.
+  * AppArmor support for overlayfs and chroot sandboxes
+  * Enable AppArmor by default for Firefox, Chromium, Transmission
+     VLC and mpv
+  * firejail --apparmor.print option
+  * firemon --apparmor option
+  * apparmor yes/no flag in /etc/firejail/firejail.config
   * seccomp syscall list update for glibc 2.26-10
+  * seccomp disassembler for --seccomp.print option
+  * seccomp machine code optimizer for default seccomp filters
   * IPv6 DNS support
   * whitelist support for overlay and chroot sandboxes
   * private-dev support for overlay and chroot sandboxes
   * private-tmp support for overlay and chroot sandboxes
   * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed,
-  * new profiles: discord-canary, pycharm-community, pycharm-professional, kaffeine,
-  * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt
+  * new profiles: discord-canary, pycharm-community, pycharm-professional,
+  * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt, kaffeine,
  -- netblue30 <netblue30@yahoo.com>  Tue, 12 Dec 2017 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low

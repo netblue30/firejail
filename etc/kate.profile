@@ -40,3 +40,5 @@ tracelog
 private-dev
 # private-etc fonts
 private-tmp
+
+join-or-start kate

@@ -113,7 +113,7 @@ deny /proc/@{PID}/oom_score_adj w,
 /run/firejail/mnt/oroot/opt/** ix,
 
 ##########
-# Allow acces to cups printing socket.
+# Allow access to cups printing socket.
 ##########
 /run/cups/cups.sock w,
 
@@ -132,7 +132,8 @@ network raw,
 signal,
 
 ##########
-# We let Firejail deal with capabilities.
+# We let Firejail deal with capabilities,
+# but mac_admin should be dropped in any case.
 ##########
 capability chown,
 capability dac_override,
@@ -167,7 +168,7 @@ capability audit_write,
 capability audit_control,
 capability setfcap,
 capability mac_override,
-capability mac_admin,
+#capability mac_admin,
 
 ##########
 # We let Firejail deal with mount/umount functionality.

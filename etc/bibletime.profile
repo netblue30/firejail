@@ -5,7 +5,6 @@ include /etc/firejail/bibletime.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist ${HOME}/.Xauthority
 blacklist ${HOME}/.bashrc
 
 noblacklist ${HOME}/.bibletime

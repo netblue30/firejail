@@ -43,6 +43,7 @@ blacklist ${HOME}/.xsession
 blacklist ${HOME}/.xsessionrc
 blacklist /etc/X11/Xsession.d
 blacklist /etc/xdg/autostart
+read-only ${HOME}/.Xauthority
 
 # KDE config
 blacklist ${HOME}/.config/khotkeysrc

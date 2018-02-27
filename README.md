@@ -98,6 +98,20 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.53
 
+## AppImage development
+
+Support for private-bin, private-lib and shell none has been disabled while running AppImage archives.
+This allows us to use our regular profile files for appimages. We don't have a way to extract the name
+of the executable, so the profile will have to be passed on the command line. Example:
+`````
+$ firejail --profile=/etc/firejail/kdenlive.profile --appimage --apparmor ~/bin/Kdenlive-17.12.0d-x86_64.AppImage
+`````
+Also, we have full AppArmor support for AppImages:
+`````
+
+$ firejail --apparmor --appimage ~/bin/Kdenlive-17.12.0d-x86_64.AppImage
+`````
+
 ## Seccomp development
 
 Replaced the our seccomp disassembler with a real disassembler lifted from

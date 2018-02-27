@@ -799,7 +799,8 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	if (arg_private_bin) {
+	// private-bin is disabled for appimages
+	if (arg_private_bin && !arg_appimage) {
 		if (cfg.chrootdir)
 			fwarning("private-bin feature is disabled in chroot\n");
 		else if (arg_overlay)
@@ -818,7 +819,8 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	if (arg_private_lib) {
+	// private-lib is disabled for appimages
+	if (arg_private_lib && !arg_appimage) {
 		if (cfg.chrootdir)
 			fwarning("private-lib feature is disabled in chroot\n");
 		else if (arg_overlay)

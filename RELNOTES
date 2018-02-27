@@ -1,5 +1,8 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
+  * modif: support for private-bin, private-lib and shell none has been
+     disabled while running AppImage archives in order to be able to use
+     our regular profile files with AppImages.
   * modif: restrictions for /proc, /sys and /run/user directories
      are moved from AppArmor profile into firejail executable
   * modif: unifying Chromium and Firefox browsers profiles.
@@ -7,6 +10,7 @@ firejail (0.9.53) baseline; urgency=low
      that read/write from ${HOME} will need to uncomment the includes for
      firefox-common-addons.inc in firefox-common.profile.
   * AppArmor support for overlayfs and chroot sandboxes
+  * AppArmor support for AppImages
   * Enable AppArmor by default for Firefox, Chromium, Transmission
      VLC and mpv
   * firejail --apparmor.print option

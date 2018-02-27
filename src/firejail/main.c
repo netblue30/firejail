@@ -2321,6 +2321,9 @@ int main(int argc, char **argv) {
 				cfg.command_name = strdup(argv[i]);
 				if (!cfg.command_name)
 					errExit("strdup");
+
+				// disable shell=* for appimages
+				arg_shell_none = 0;
 			}
 			else
 				extract_command_name(i, argv);

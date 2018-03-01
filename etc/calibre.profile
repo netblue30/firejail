@@ -30,7 +30,6 @@ seccomp
 shell none
 tracelog
 
-# private-bin
 private-dev
 private-tmp
 

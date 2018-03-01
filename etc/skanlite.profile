@@ -29,5 +29,4 @@ shell none
 
 # private-bin skanlite,kbuildsycoca4,kdeinit4
 # private-dev
-# private-etc
 # private-tmp

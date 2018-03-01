@@ -27,7 +27,6 @@ shell none
 
 private-bin dragon
 private-dev
-# private-etc
 private-tmp
 
 noexec ${HOME}

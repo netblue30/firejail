@@ -28,6 +28,4 @@ seccomp
 shell none
 tracelog
 
-# private-bin
-# private-etc
 # private-tmp

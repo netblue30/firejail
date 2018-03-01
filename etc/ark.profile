@@ -30,9 +30,7 @@ protocol unix
 seccomp
 shell none
 
-# private-bin
 private-dev
-# private-etc
 private-tmp
 
 noexec ${HOME}

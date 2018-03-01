@@ -26,9 +26,7 @@ protocol unix
 seccomp
 shell none
 
-# private-bin
-# private-dev
-# private-etc
+private-dev
 # private-tmp
 
 memory-deny-write-execute

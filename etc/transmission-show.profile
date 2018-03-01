@@ -29,7 +29,6 @@ seccomp
 shell none
 tracelog
 
-# private-bin
 private-dev
 private-etc none
 private-tmp

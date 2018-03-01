@@ -26,7 +26,7 @@ firejail (0.9.53) baseline; urgency=low
   * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed,
   * new profiles: discord-canary, pycharm-community, pycharm-professional,
   * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt, kaffeine,
- -- netblue30 <netblue30@yahoo.com>  Tue, 12 Dec 2017 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Thu, 1 Mar 2018 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low
   * modif: --allow-private-blacklists was deprecated; blacklisting,
@@ -106,7 +106,7 @@ firejail (0.9.50) baseline; urgency=low
   * new profiles: truecraft, gnome-twitch, tuxguitar, musescore, neverball
   * new profiles: sqlitebrowse, Yandex Browser, minetest
   * bugfixes
- -- netblue30   Thu, 7 Sep 2017 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sat, 30 Sep 2017 08:00:00 -0500
 
 firejail (0.9.50~rc1) baseline; urgency=low
   * release pending!

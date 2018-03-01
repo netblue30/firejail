@@ -49,3 +49,5 @@ private-etc alternatives,cups,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
 # memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
+
+join-or-start okular

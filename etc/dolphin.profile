@@ -34,3 +34,5 @@ shell none
 # private-dev
 # private-etc
 # private-tmp
+
+join-or-start dolphin

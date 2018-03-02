@@ -54,7 +54,6 @@ blacklist ${HOME}/.config/kwinrulesrc
 blacklist ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
 blacklist ${HOME}/.config/plasmashellrc
 blacklist ${HOME}/.config/plasmavaultrc
-blacklist ${HOME}/.kde/share/apps/konsole
 blacklist ${HOME}/.kde/share/apps/kwin
 blacklist ${HOME}/.kde/share/apps/plasma
 blacklist ${HOME}/.kde/share/apps/solid
@@ -64,7 +63,6 @@ blacklist ${HOME}/.kde/share/config/ksslcertificatemanager
 blacklist ${HOME}/.kde/share/config/kwinrc
 blacklist ${HOME}/.kde/share/config/kwinrulesrc
 blacklist ${HOME}/.kde/share/config/plasma-desktop-appletsrc
-blacklist ${HOME}/.kde4/share/apps/konsole
 blacklist ${HOME}/.kde4/share/apps/kwin
 blacklist ${HOME}/.kde4/share/apps/plasma
 blacklist ${HOME}/.kde4/share/apps/solid
@@ -75,7 +73,6 @@ blacklist ${HOME}/.kde4/share/config/kwinrc
 blacklist ${HOME}/.kde4/share/config/kwinrulesrc
 blacklist ${HOME}/.kde4/share/config/plasma-desktop-appletsrc
 blacklist ${HOME}/.local/share/kglobalaccel
-blacklist ${HOME}/.local/share/konsole
 blacklist ${HOME}/.local/share/kwin
 blacklist ${HOME}/.local/share/plasma
 blacklist ${HOME}/.local/share/solid
@@ -86,6 +83,7 @@ read-only ${HOME}/.config/kio_httprc
 read-only ${HOME}/.config/kiorc
 read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.config/ksslcablacklist
+read-only ${HOME}/.kde/share/apps/konsole
 read-only ${HOME}/.kde/share/apps/kssl
 read-only ${HOME}/.kde/share/config/*notifyrc
 read-only ${HOME}/.kde/share/config/kdeglobals
@@ -93,6 +91,7 @@ read-only ${HOME}/.kde/share/config/kio_httprc
 read-only ${HOME}/.kde/share/config/kioslaverc
 read-only ${HOME}/.kde/share/config/ksslcablacklist
 read-only ${HOME}/.kde/share/kde4/services
+read-only ${HOME}/.kde4/share/apps/konsole
 read-only ${HOME}/.kde4/share/apps/kssl
 read-only ${HOME}/.kde4/share/config/*notifyrc
 read-only ${HOME}/.kde4/share/config/kdeglobals
@@ -100,6 +99,7 @@ read-only ${HOME}/.kde4/share/config/kio_httprc
 read-only ${HOME}/.kde4/share/config/kioslaverc
 read-only ${HOME}/.kde4/share/config/ksslcablacklist
 read-only ${HOME}/.kde4/share/kde4/services
+read-only ${HOME}/.local/share/konsole
 read-only ${HOME}/.local/share/kservices5
 read-only ${HOME}/.local/share/kssl
 

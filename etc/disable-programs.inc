@@ -40,6 +40,7 @@ blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/Clementine
+blacklist ${HOME}/.config/Code
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
@@ -461,6 +462,7 @@ blacklist ${HOME}/.tuxguitar*
 blacklist ${HOME}/.unknown-horizons
 blacklist ${HOME}/.viking
 blacklist ${HOME}/.viking-maps
+blacklist ${HOME}/.vscode
 blacklist ${HOME}/.vst
 blacklist ${HOME}/.w3m
 blacklist ${HOME}/.warzone2100-3.*

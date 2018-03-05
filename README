@@ -317,6 +317,8 @@ KellerFuchs (https://github.com/KellerFuchs)
 	- added support for .local profile files in /etc/firejail
 	- fixed Cryptocat profile
 	- make ~/.local read-only
+Kishore96in (https://github.com/Kishore96in)
+	- added falkon profile
 KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
 Kunal Mehta (https://github.com/legoktm)

@@ -107,6 +107,7 @@ blacklist ${HOME}/.config/eog
 blacklist ${HOME}/.config/epiphany
 blacklist ${HOME}/.config/evince
 blacklist ${HOME}/.config/evolution
+blacklist ${HOME}/.config/falkon
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/gajim
@@ -502,6 +503,7 @@ blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/dolphin
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
+blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/geeqie

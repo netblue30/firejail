@@ -13,5 +13,8 @@ mkdir ${HOME}/.config/brave
 whitelist ${HOME}/.config/brave
 whitelist ${HOME}/.gnupg
 
+# noexec /tmp is included in chromium-common.profile and breaks Brave
+ignore noexec /tmp
+
 # Redirect
 include /etc/firejail/chromium-common.profile

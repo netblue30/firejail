@@ -402,7 +402,19 @@ void fs_whitelist(void) {
 
 		// extract the absolute path of the file
 		// realpath function will fail with ENOENT if the file is not found
-		char *fname = realpath(new_name, NULL);
+		// special processing for /dev/fd, /dev/stdin, /dev/stdout and /dev/stderr
+		char *fname;
+		if (strcmp(new_name, "/dev/fd") == 0)
+			fname = strdup("/proc/self/fd");
+		else if (strcmp(new_name, "/dev/stdin") == 0)
+			fname = strdup("/proc/self/fd/0");
+		else if (strcmp(new_name, "/dev/stdout") == 0)
+			fname = strdup("/proc/self/fd/1");
+		else if (strcmp(new_name, "/dev/stderr") == 0)
+			fname = strdup("/proc/self/fd/2");
+		else
+			fname = realpath(new_name, NULL);
+
 		if (!fname) {
 			// file not found, blank the entry in the list and continue
 			if (arg_debug || arg_debug_whitelists) {
@@ -533,6 +545,11 @@ void fs_whitelist(void) {
 			// special handling for /dev/shm
 			// on some platforms (Debian wheezy, Ubuntu 14.04), it is a symlink to /run/shm
 			if (strcmp(new_name, "/dev/shm") == 0 && strcmp(fname, "/run/shm") == 0);
+			// special processing for /proc/self/fd files
+			else if (strcmp(new_name, "/dev/fd") == 0 && strcmp(fname, "/proc/self/fd") == 0);
+			else if (strcmp(new_name, "/dev/stdin") == 0 && strcmp(fname, "/proc/self/fd/0") == 0);
+			else if (strcmp(new_name, "/dev/stdout") == 0 && strcmp(fname, "/proc/self/fd/1") == 0);
+			else if (strcmp(new_name, "/dev/stderr") == 0 && strcmp(fname, "/proc/self/fd/2") == 0);
 			else {
 				// both path and absolute path are under /dev
 				if (strncmp(fname, "/dev/", 5) != 0) {

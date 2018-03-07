@@ -39,6 +39,6 @@ private-etc fonts
 #private-lib - seems to be breaking on Gnome Shell 3.26.2, Mutter WM, issue 1711
 private-tmp
 
-memory-deny-write-execute
+#memory-deny-write-execute - breaks application on Archlinux, issue 1803
 noexec ${HOME}
 noexec /tmp

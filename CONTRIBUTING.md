@@ -16,6 +16,7 @@ we can handle the report more easily:
  the `--noprofile` argument.
  For example, if `firejail firefox` does not work, please also run `firejail --noprofile firefox` and
  let us know if it runs correctly or not.
+ - You may also try disabling various options provided in `/etc/firejail/<ProgramName.profile>` until you find out which one causes problems. It will significantly help to find solution for your issue.
 
 We take security bugs very seriously. If you believe you have found one, please report it by
 emailing us at netblue30@yahoo.com

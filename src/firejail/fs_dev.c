@@ -141,16 +141,15 @@ errexit:
 }
 
 static void create_link(const char *oldpath, const char *newpath) {
-	if (symlink(oldpath, newpath) == -1)
-		goto errexit;
-	if (chown(newpath, 0, 0) < 0)
-		goto errexit;
+	if (symlink(oldpath, newpath) == -1) {
+		fprintf(stderr, "Error: cannot create %s device\n", newpath);
+		exit(1);
+	}
+
+	if (chown(newpath, 0, 0) < 0);
+
 	fs_logger2("create", newpath);
 	return;
-
-errexit:
-	fprintf(stderr, "Error: cannot create %s device\n", newpath);
-	exit(1);
 }
 
 static void empty_dev_shm(void) {

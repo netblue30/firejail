@@ -30,11 +30,10 @@ void run_symlink(int argc, char **argv) {
 		program += 1;
 	else
 		program = argv[0];
-	if (strcmp(program, "firejail") == 0)
+	if (strcmp(program, "firejail") == 0) // this is a regular "firejail program" sandbox starting
 		return;
 
-	// find the real program
-	// probably the first entry returend by "which -a" is a symlink - use the second entry!
+	// find the real program by looking in PATH
 	char *p = getenv("PATH");
 	if (!p) {
 		fprintf(stderr, "Error: PATH environment variable not set\n");
@@ -84,6 +83,12 @@ void run_symlink(int argc, char **argv) {
 
 	free(selfpath);
 
+	// desktop integration is not supported for root user; instead, the original program is started
+	if (getuid() == 0) {
+		argv[0] = program;
+		execv(program, argv);
+		exit(1);
+	}
 
 	// start the argv[0] program in a new sandbox
 	// drop privileges

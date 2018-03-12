@@ -26,6 +26,7 @@ include /etc/firejail/globals.local
 caps.drop all
 # net none
 netfilter
+no3d
 nodvd
 nogroups
 nonewprivs
@@ -38,9 +39,12 @@ seccomp
 shell none
 tracelog
 
-# private-bin kate
+private-bin kate
 private-dev
 # private-etc fonts
 private-tmp
+
+noexec ${HOME}
+noexec /tmp
 
 join-or-start kate

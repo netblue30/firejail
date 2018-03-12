@@ -18,23 +18,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 #include "firejail.h"
+#include "../include/ldd_utils.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
 #define MAXBUF 4096
-
-static const char * const lib_paths[] = {
-	"/lib",
-	"/lib/x86_64-linux-gnu",
-	"/lib64",
-	"/usr/lib",
-	"/usr/lib/x86_64-linux-gnu",
-	LIBDIR,
-	"/usr/local/lib",
-	NULL
-};						  // Note: this array is duplicated in src/fldd/main.c
 
 extern void fslib_install_stdc(void);
 extern void fslib_install_system(void);
@@ -47,9 +37,9 @@ static void report_duplication(const char *full_path) {
 	if (fname && *(++fname) != '\0') {
 		// report the file on all bin paths
 		int i = 0;
-		while (lib_paths[i]) {
+		while (default_lib_paths[i]) {
 			char *p;
-			if (asprintf(&p, "%s/%s", lib_paths[i], fname) == -1)
+			if (asprintf(&p, "%s/%s", default_lib_paths[i], fname) == -1)
 				errExit("asprintf");
 			fs_logger2("clone", p);
 			free(p);
@@ -194,19 +184,24 @@ static char *valid_file(const char *lib) {
 
 	// find the library
 	int i;
-	for (i = 0; lib_paths[i]; i++) {
+	for (i = 0; default_lib_paths[i]; i++) {
 		char *fname;
-		if (asprintf(&fname, "%s/%s", lib_paths[i], lib) == -1)
+		if (asprintf(&fname, "%s/%s", default_lib_paths[i], lib) == -1)
 			errExit("asprintf");
 
 		// existing file owned by root, read access
 		struct stat s;
 		if (stat(fname, &s) == 0 && s.st_uid == 0 && !access(fname, R_OK)) {
-			return fname;
+			if (is_dir(fname))
+				return fname;
+			// for regular libraries check if it is 64bit
+			if (is_lib_64(fname))
+				return fname;
+			// if not 64bit, continue searching
 		}
 		free(fname);
 	}
-
+printf("not found %s\n", lib);
 	fwarning("%s library not found, skipping...\n", lib);
 	return NULL;
 }
@@ -268,25 +263,33 @@ void fs_private_lib(void) {
 	mkdir_attr(RUN_LIB_DIR, 0755, 0, 0);
 
 	// install standard C libraries
+	if (arg_debug || arg_debug_private_lib)
+		printf("*** Installing standard C library\n");
 	fslib_install_stdc();
 
+	// start timetrace
 	timetrace_start();
 
 	// copy the libs in the new lib directory for the main exe
-	if (cfg.original_program_index > 0)
+	if (cfg.original_program_index > 0) {
+		if (arg_debug || arg_debug_private_lib)
+			printf("*** Installing sandboxed program libraries\n");
 		fslib_copy_libs(cfg.original_argv[cfg.original_program_index]);
+	}
 
 	// for the shell
 	if (!arg_shell_none) {
+		if (arg_debug || arg_debug_private_lib)
+			printf("*** Installing shell libraries\n");
 		fslib_copy_libs(cfg.shell);
 		// a shell is useless without ls command
 		fslib_copy_libs("/bin/ls");
 	}
 
-	// for the listed libs
+	// for the listed libs and directories
 	if (private_list && *private_list != '\0') {
 		if (arg_debug || arg_debug_private_lib)
-			printf("Copying extra files (%s) in the new lib directory\n", private_list);
+			printf("*** Processing private-lib files (%s)\n", private_list);
 
 		char *dlist = strdup(private_list);
 		if (!dlist)
@@ -322,6 +325,8 @@ void fs_private_lib(void) {
 
 	// for private-bin files
 	if (arg_private_bin) {
+		if (arg_debug || arg_debug_private_lib)
+			printf("*** Processing private-bin files\n");
 		FILE *fp = fopen(RUN_LIB_BIN, "r");
 		if (fp) {
 			char buf[MAXBUF];
@@ -368,6 +373,8 @@ void fs_private_lib(void) {
 	fmessage("Program libraries installed in %0.2f ms\n", timetrace_end());
 
 	// install the reset of the system libraries
+	if (arg_debug || arg_debug_private_lib)
+		printf("*** Installing system libraries\n");
 	fslib_install_system();
 
 	fmessage("Installed %d libraries and %d directories\n", lib_cnt, dir_cnt);

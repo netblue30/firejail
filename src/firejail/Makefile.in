@@ -36,8 +36,8 @@ LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/pid.h ../include/seccomp.h ../include/syscall.h
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-firejail: $(OBJS) ../lib/libnetlink.o ../lib/common.o
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o $(LIBS) $(EXTRA_LDFLAGS)
+firejail: $(OBJS) ../lib/libnetlink.o ../lib/common.o ../lib/ldd_utils.o
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/ldd_utils.o $(LIBS) $(EXTRA_LDFLAGS)
 
 clean:; rm -f *.o firejail firejail.1 firejail.1.gz *.gcov *.gcda *.gcno
 

@@ -7,23 +7,26 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
 
-noblacklist ${HOME}/.config/katepartrc
-noblacklist ${HOME}/.config/katerc
-noblacklist ${HOME}/.config/kateschemarc
-noblacklist ${HOME}/.config/katesyntaxhighlightingrc
-noblacklist ${HOME}/.config/katevirc
-noblacklist ${HOME}/.local/share/kate
+# warning: full filesystem access is granted, allows system administration. Uncomment below  if you want.
 
-include /etc/firejail/disable-common.inc
+# noblacklist ${HOME}/.config/katepartrc
+# noblacklist ${HOME}/.config/katerc
+# noblacklist ${HOME}/.config/kateschemarc
+# noblacklist ${HOME}/.config/katesyntaxhighlightingrc
+# noblacklist ${HOME}/.config/katevirc
+# noblacklist ${HOME}/.local/share/kate
+
+# include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+# include /etc/firejail/disable-passwdmgr.inc
+# include /etc/firejail/disable-programs.inc
 
-include /etc/firejail/whitelist-var-common.inc
+# include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 # net none
 netfilter
+no3d
 nodvd
 nogroups
 nonewprivs
@@ -36,9 +39,12 @@ seccomp
 shell none
 tracelog
 
-# private-bin kate
+private-bin kate
 private-dev
 # private-etc fonts
 private-tmp
+
+noexec ${HOME}
+noexec /tmp
 
 join-or-start kate

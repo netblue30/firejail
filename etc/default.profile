@@ -8,6 +8,9 @@ include /etc/firejail/globals.local
 # generic gui profile
 # depending on your usage, you can enable some of the commands below:
 
+# required under CentOS 7
+noblacklist /etc/profile.d
+
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc

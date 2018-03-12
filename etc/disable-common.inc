@@ -171,8 +171,7 @@ blacklist /var/spool/mail
 # etc
 blacklist /etc/anacrontab
 blacklist /etc/cron*
-# on CentOS 7 /etc/profile.d/vte.sh is required by bash
-#blacklist /etc/profile.d
+blacklist /etc/profile.d
 blacklist /etc/rc.local
 # rc1.d, rc2.d, ...
 blacklist /etc/rc?.d

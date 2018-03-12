@@ -6,6 +6,7 @@ include /etc/firejail/aosp.local
 include /etc/firejail/globals.local
 
 
+noblacklist /etc/profile.d
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.bash_history
 noblacklist ${HOME}/.gitconfig

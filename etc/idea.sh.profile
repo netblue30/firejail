@@ -5,6 +5,7 @@ include /etc/firejail/idea.sh.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist /etc/profile.d
 noblacklist ${HOME}/.IdeaIC*
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.gitconfig

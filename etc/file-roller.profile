@@ -34,6 +34,6 @@ private-dev
 # private-etc fonts
 # private-tmp
 
-memory-deny-write-execute
+#memory-deny-write-execute  - breaks on Arch
 noexec ${HOME}
 noexec /tmp

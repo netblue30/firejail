@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus - makes settings immutable
 
+noblacklist /etc/profile.d
 noblacklist ${HOME}/.config/enchant
 noblacklist ${HOME}/.config/gedit
 noblacklist ${HOME}/.gitconfig

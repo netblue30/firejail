@@ -5,6 +5,7 @@ include /etc/firejail/pycharm-community.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist /etc/profile.d
 noblacklist ${HOME}/snap
 noblacklist ${HOME}/.PyCharmCE*
 noblacklist ${HOME}/.java

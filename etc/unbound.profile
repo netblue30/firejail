@@ -18,7 +18,7 @@ include /etc/firejail/disable-programs.inc
 whitelist /var/lib/unbound
 whitelist /var/run
 
-caps.keep net_bind_service,setgid,setuid,sys_chroot,sys_resource
+caps.keep net_admin,net_bind_service,setgid,setuid,sys_chroot,sys_resource
 no3d
 nodvd
 nonewprivs

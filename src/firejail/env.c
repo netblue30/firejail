@@ -147,6 +147,11 @@ void env_defaults(void) {
 		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
 			errExit("setenv");
 	}
+	else {
+		// remove PROMPT_COMMAND
+		if (setenv("PROMPT_COMMAND", " ", 1) < 0)
+			errExit("setenv");
+	}
 
 	// set the window title
 	if (!arg_quiet)

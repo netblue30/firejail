@@ -16,7 +16,7 @@ noblacklist ${HOME}/.config/kwriterc
 noblacklist ${HOME}/.local/share/kwrite
 
 include /etc/firejail/disable-common.inc
-# include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -37,9 +37,9 @@ seccomp
 shell none
 tracelog
 
-# private-bin kwrite
+private-bin kwrite,kbuildsycoca4,kdeinit4
 private-dev
-# private-etc fonts
+# private-etc fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
 private-tmp
 
 join-or-start kwrite

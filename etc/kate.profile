@@ -38,7 +38,7 @@ tracelog
 
 # private-bin kate
 private-dev
-# private-etc fonts
+# private-etc fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
 private-tmp
 
 join-or-start kate

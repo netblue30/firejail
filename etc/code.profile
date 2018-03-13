@@ -5,6 +5,7 @@ include /etc/firejail/code.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist /etc/profile.d
 noblacklist ${HOME}/.vscode
 noblacklist ${HOME}/.config/Code
 

@@ -7,7 +7,6 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
 
-noblacklist /etc/profile.d
 noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
 

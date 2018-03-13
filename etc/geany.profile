@@ -5,7 +5,6 @@ include /etc/firejail/geany.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist /etc/profile.d
 noblacklist ${HOME}/.config/geany
 
 include /etc/firejail/disable-common.inc

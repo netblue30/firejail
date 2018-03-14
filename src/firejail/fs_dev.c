@@ -281,10 +281,12 @@ void fs_private_dev(void){
 	fs_logger("clone /dev/pts");
 
 	// stdin, stdout, stderr
+#if 0
 	create_link("/proc/self/fd", "/dev/fd");
 	create_link("/proc/self/fd/0", "/dev/stdin");
 	create_link("/proc/self/fd/1", "/dev/stdout");
 	create_link("/proc/self/fd/2", "/dev/stderr");
+#endif
 
 	// symlinks for DVD/CD players
 	if (stat("/dev/sr0", &s) == 0) {

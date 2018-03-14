@@ -38,8 +38,7 @@ private-dev
 private-etc fonts
 
 #private-lib - seems to be breaking on Gnome Shell 3.26.2, Mutter WM, issue 1711
-# testing private-lib all over again - problem with 32bit libraries found and fixed for CentOS
-private-lib evince,libpoppler-glib.so.8
+#private-lib evince,libpoppler-glib.so.8
 
 private-tmp
 

@@ -149,7 +149,7 @@ void env_defaults(void) {
 	}
 	else {
 		// remove PROMPT_COMMAND
-		if (setenv("PROMPT_COMMAND", " ", 1) < 0)
+		if (setenv("PROMPT_COMMAND", ":", 1) < 0) // unsetenv() will not work here, bash still picks it up from somewhere
 			errExit("setenv");
 	}
 

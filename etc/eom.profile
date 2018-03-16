@@ -33,6 +33,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+apparmor
 
 private-bin eom
 private-dev

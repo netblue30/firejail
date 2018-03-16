@@ -32,6 +32,7 @@ novideo
 protocol unix
 seccomp
 shell none
+apparmor
 
 private-bin eog
 private-dev

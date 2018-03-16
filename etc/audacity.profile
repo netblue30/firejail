@@ -29,6 +29,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+apparmor
 
 private-bin audacity
 private-dev

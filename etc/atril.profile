@@ -31,6 +31,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+apparmor
 
 private-bin atril, atril-previewer, atril-thumbnailer
 private-dev

@@ -28,6 +28,7 @@ novideo
 protocol unix
 seccomp
 shell none
+apparmor
 
 # private-bin inkscape,potrace - problems on Debian stretch
 private-dev

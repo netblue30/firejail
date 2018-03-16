@@ -25,6 +25,7 @@ notv
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
+apparmor
 
 private-dev
 private-tmp

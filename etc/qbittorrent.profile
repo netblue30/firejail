@@ -39,6 +39,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
+apparmor
 
 private-bin qbittorrent,python*
 private-dev

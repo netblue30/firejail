@@ -27,6 +27,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+apparmor
 
 disable-mnt
 private-bin gnome-calculator

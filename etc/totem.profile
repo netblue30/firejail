@@ -23,6 +23,7 @@ noroot
 protocol unix,inet,inet6
 seccomp
 shell none
+apparmor
 
 private-bin totem
 private-dev

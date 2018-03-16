@@ -32,6 +32,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+apparmor
 
 private-bin galculator
 private-dev

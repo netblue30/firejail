@@ -207,13 +207,15 @@ AppArmor features are supported on overlayfs and chroot sandboxes.
 
 We are in the process of streamlining our AppArmor profile. The restrictions for /proc, /sys
 and /run/user directories were moved out of the profile into firejail executable.
+We are also adding a "apparmor yes/no" flag in /etc/firejail/firejail.config file allows the user to
+enable/disable apparmor functionality globally. By default the flag is enabled.
 
-We intend to start apparmor by default for browsers, torrent clients and media players.
-So far we cover Firefox (firefox-common.profile), Chromium (chromium-common.profile),
-transmission-qt, transmission-gtk, vlc and mpv.
-
-"apparmor yes/no" flag in /etc/firejail/firejail.config file allows the user to enable/disable apparmor functionality globally
-By default the flag is enabled.
+AppArmor deployment: we are starting apparmor by default for the following programs:
+- web browsers: firefox (firefox-common.profile), chromium (chromium-common.profile)
+- torrent clients: transmission-qt, transmission-gtk, qbittorrent
+- media players: vlc, mpv, audacious, totem, rhythmbox
+- media editing: kdenlive, audacity, handbrake, gimp, inkscape, krita, openshot
+- etc.: atril, gnome-calculator, galculator, eom, eog
 
 Checking apparmor status:
 `````

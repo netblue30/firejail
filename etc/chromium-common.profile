@@ -17,13 +17,13 @@ whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.keep sys_chroot,sys_admin
 netfilter
 nodvd
 nogroups
 notv
 shell none
-apparmor
 
 disable-mnt
 private-dev

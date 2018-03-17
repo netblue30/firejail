@@ -17,6 +17,7 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 machine-id
 no3d
@@ -31,7 +32,6 @@ protocol unix
 seccomp
 shell none
 tracelog
-apparmor
 
 private-bin atril, atril-previewer, atril-thumbnailer
 private-dev

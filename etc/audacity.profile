@@ -16,6 +16,7 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 #net none
 no3d
@@ -29,7 +30,6 @@ protocol unix
 seccomp
 shell none
 tracelog
-apparmor
 
 private-bin audacity
 private-dev

@@ -26,6 +26,7 @@ whitelist ${HOME}/.local/share/data/qBittorrent
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 machine-id
 netfilter
@@ -39,7 +40,6 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
-apparmor
 
 private-bin qbittorrent,python*
 private-dev

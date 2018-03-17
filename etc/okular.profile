@@ -25,6 +25,7 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 machine-id
 # net none
@@ -40,7 +41,6 @@ protocol unix
 seccomp
 shell none
 tracelog
-apparmor
 
 private-bin okular,kbuildsycoca4,kdeinit4,lpr
 private-dev

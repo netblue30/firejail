@@ -21,6 +21,7 @@ whitelist ${HOME}/.config/transmission
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 machine-id
 netfilter
@@ -34,7 +35,6 @@ protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
-apparmor
 
 private-bin transmission-qt
 private-dev
@@ -42,4 +42,3 @@ private-dev
 private-tmp
 
 # memory-deny-write-execute - problems on Qt 5.10.0, KDE Frameworks 5.41.0
-

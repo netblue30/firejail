@@ -12,6 +12,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+apparmor
 caps.drop all
 netfilter
 nogroups
@@ -21,7 +22,6 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
-apparmor
 
 private-dev
 private-tmp

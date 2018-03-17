@@ -146,7 +146,7 @@ static void create_link(const char *oldpath, const char *newpath) {
 		exit(1);
 	}
 
-	if (chown(newpath, 0, 0) < 0);
+	if (chown(newpath, 0, 0) < 0) {;}
 
 	fs_logger2("create", newpath);
 	return;

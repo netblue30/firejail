@@ -103,5 +103,5 @@ void shut(pid_t pid) {
 		}
 	}
 
-	clear_run_files(parent);
+	delete_run_files(parent);
 }

@@ -173,7 +173,7 @@ void preproc_clean_run(void) {
 		if (pid < start_pid)
 			continue;
 		if (pidarr[pid] == 0)
-			clear_run_files(pid);
+			delete_run_files(pid);
 	}
 	closedir(dir);
 

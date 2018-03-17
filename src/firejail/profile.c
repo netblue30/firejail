@@ -1241,27 +1241,8 @@ void profile_read(const char *fname) {
 	}
 
 	// save the name of the file for --profile.print option
-	if (include_level == 0) {
-		char *runfile;
-		if (asprintf(&runfile, "%s/%d", RUN_FIREJAIL_PROFILE_DIR, getpid()) == -1)
-			errExit("asprintf");
-
-		EUID_ROOT();
-		// the file is deleted first
-		FILE *fp = fopen(runfile, "w");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot create %s\n", runfile);
-			exit(1);
-		}
-		fprintf(fp, "%s\n", fname);
-
-		// mode and ownership
-		SET_PERMS_STREAM(fp, 0, 0, 0644);
-		fclose(fp);
-		EUID_USER();
-		free(runfile);
-	}
-
+	if (include_level == 0)
+		set_profile_run_file(getpid(), fname);
 
 	int msg_printed = 0;
 

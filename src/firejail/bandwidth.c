@@ -141,22 +141,6 @@ static void bandwidth_create_run_file(pid_t pid) {
 	free(fname);
 }
 
-// delete bandwidth file
-void bandwidth_del_run_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
-		errExit("asprintf");
-	unlink(fname);
-	free(fname);
-}
-
-void network_del_run_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d-netmap", RUN_FIREJAIL_NETWORK_DIR, (int) pid) == -1)
-		errExit("asprintf");
-	unlink(fname);
-	free(fname);
-}
 
 void network_set_run_file(pid_t pid) {
 	char *fname;
@@ -268,9 +252,8 @@ void bandwidth_remove(pid_t pid, const char *dev) {
 	}
 
 	// remove the file if there are no entries in the list
-	if (ifbw == NULL) {
-		 bandwidth_del_run_file(pid);
-	}
+	if (ifbw == NULL)
+		 delete_bandwidth_run_file(pid);
 }
 
 // add interface to run file

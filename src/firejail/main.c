@@ -132,22 +132,9 @@ static pid_t child = 0;
 pid_t sandbox_pid;
 unsigned long long start_timestamp;
 
-static void set_name_file(pid_t pid);
-static void delete_name_file(pid_t pid);
-static void delete_profile_file(pid_t pid);
-static void delete_x11_file(pid_t pid);
-
-void clear_run_files(pid_t pid) {
-	bandwidth_del_run_file(pid);		// bandwidth file
-	network_del_run_file(pid);		// network map file
-	delete_name_file(pid);
-	delete_profile_file(pid);
-	delete_x11_file(pid);
-}
-
 static void clear_atexit(void) {
 	EUID_ROOT();
-	clear_run_files(getpid());
+	delete_run_files(getpid());
 }
 
 static void myexit(int rv) {
@@ -158,7 +145,7 @@ static void myexit(int rv) {
 
 	// delete sandbox files in shared memory
 	EUID_ROOT();
-	clear_run_files(sandbox_pid);
+	delete_run_files(sandbox_pid);
 	appimage_clear();
 	flush_stdin();
 	exit(rv);
@@ -755,68 +742,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 
 }
 
-static void set_name_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, pid) == -1)
-		errExit("asprintf");
 
-	// the file is deleted first
-	FILE *fp = fopen(fname, "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot create %s\n", fname);
-		exit(1);
-	}
-	fprintf(fp, "%s\n", cfg.name);
-
-	// mode and ownership
-	SET_PERMS_STREAM(fp, 0, 0, 0644);
-	fclose(fp);
-}
-
-static void delete_name_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, pid) == -1)
-		errExit("asprintf");
-	int rv = unlink(fname);
-	(void) rv;
-	free(fname);
-}
-
-static void delete_profile_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_PROFILE_DIR, pid) == -1)
-		errExit("asprintf");
-	int rv = unlink(fname);
-	(void) rv;
-	free(fname);
-}
-
-void set_x11_file(pid_t pid, int display) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
-		errExit("asprintf");
-
-	// the file is deleted first
-	FILE *fp = fopen(fname, "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot create %s\n", fname);
-		exit(1);
-	}
-	fprintf(fp, "%d\n", display);
-
-	// mode and ownership
-	SET_PERMS_STREAM(fp, 0, 0, 0644);
-	fclose(fp);
-}
-
-static void delete_x11_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
-		errExit("asprintf");
-	int rv = unlink(fname);
-	(void) rv;
-	free(fname);
-}
 
 char *guess_shell(void) {
 	char *shell = NULL;
@@ -1002,10 +928,7 @@ int main(int argc, char **argv) {
 
 	// check firejail directories
 	EUID_ROOT();
-	bandwidth_del_run_file(sandbox_pid);
-	network_del_run_file(sandbox_pid);
-	delete_name_file(sandbox_pid);
-	delete_x11_file(sandbox_pid);
+	delete_run_files(sandbox_pid);
 
 	EUID_USER();
 
@@ -2506,10 +2429,10 @@ int main(int argc, char **argv) {
 	// set name file
 	EUID_ROOT();
 	if (cfg.name)
-		set_name_file(sandbox_pid);
+		set_name_run_file(sandbox_pid);
 	int display = x11_display();
 	if (display > 0)
-		set_x11_file(sandbox_pid, display);
+		set_x11_run_file(sandbox_pid, display);
 	EUID_USER();
 
 	// clone environment

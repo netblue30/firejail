@@ -22,6 +22,7 @@
 #include "../include/common.h"
 #include "../include/euid_common.h"
 #include <stdarg.h>
+#include <sys/stat.h>
 
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
@@ -303,7 +304,6 @@ static inline int any_interface_configured(void) {
 	else
 		return 0;
 }
-void clear_run_files(pid_t pid);
 
 extern int arg_private;		// mount private /home
 extern int arg_private_template; // private /home template
@@ -393,7 +393,6 @@ extern char *fullargv[MAX_ARGS];
 extern int fullargc;
 
 // main.c
-void set_x11_file(pid_t pid, int display);
 void check_user_namespace(void);
 char *guess_shell(void);
 
@@ -617,9 +616,7 @@ void netns(const char *nsname);
 void netns_mounts(const char *nsname);
 
 // bandwidth.c
-void bandwidth_del_run_file(pid_t pid);
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up);
-void network_del_run_file(pid_t pid);
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
@@ -791,9 +788,15 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 
-
 // git.c
 void git_install();
 void git_uninstall();
+
+// run_files.c
+void delete_run_files(pid_t pid);
+void delete_bandwidth_run_file(pid_t pid);
+void set_name_run_file(pid_t pid);
+void set_x11_run_file(pid_t pid, int display);
+void set_profile_run_file(pid_t pid, const char *fname);
 
 #endif

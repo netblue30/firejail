@@ -64,7 +64,7 @@ static void extract_x11_display(pid_t pid) {
 
 	// store the display number for join process in /run/firejail/x11
 	EUID_ROOT();
-	set_x11_file(getpid(), display);
+	set_x11_run_file(getpid(), display);
 	EUID_USER();
 }
 

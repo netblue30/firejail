@@ -29,6 +29,7 @@ novideo
 protocol unix
 seccomp
 shell none
+apparmor
 
 private-dev
 private-tmp

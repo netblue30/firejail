@@ -28,6 +28,9 @@ blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.arm
+blacklist ${HOME}/.asunder_album_genre
+blacklist ${HOME}/.asunder_album_title
+blacklist ${HOME}/.asunder_album_artist
 blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
@@ -74,6 +77,7 @@ blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/arkrc
+blacklist ${HOME}/.config/asunder
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
 blacklist ${HOME}/.config/aweather

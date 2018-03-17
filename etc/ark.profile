@@ -16,6 +16,7 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 # net none
 netfilter
@@ -29,7 +30,6 @@ novideo
 protocol unix
 seccomp
 shell none
-apparmor
 
 private-dev
 private-tmp

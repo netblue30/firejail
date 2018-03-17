@@ -14,6 +14,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 no3d
@@ -27,7 +28,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
-apparmor
 
 disable-mnt
 private-bin gnome-calculator

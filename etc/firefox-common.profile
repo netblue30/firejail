@@ -20,6 +20,7 @@ whitelist ${HOME}/.pki
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 # machine-id breaks pulse audio; it should work fine in setups where sound is not required
 #machine-id
@@ -33,7 +34,6 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
-apparmor
 
 disable-mnt
 private-dev

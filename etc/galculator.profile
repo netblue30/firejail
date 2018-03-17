@@ -19,6 +19,7 @@ whitelist ${HOME}/.config/galculator
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 net none
 nodvd
@@ -32,7 +33,6 @@ protocol unix
 seccomp
 shell none
 tracelog
-apparmor
 
 private-bin galculator
 private-dev

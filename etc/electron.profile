@@ -11,6 +11,7 @@ include /etc/firejail/disable-programs.inc
 
 whitelist ${DOWNLOADS}
 
+apparmor
 caps.drop all
 netfilter
 nodvd
@@ -20,4 +21,3 @@ noroot
 notv
 protocol unix,inet,inet6,netlink
 seccomp
-apparmor

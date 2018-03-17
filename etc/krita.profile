@@ -14,6 +14,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+apparmor
 caps.drop all
 ipc-namespace
 # net none
@@ -27,7 +28,6 @@ novideo
 protocol unix
 seccomp
 shell none
-apparmor
 
 private-dev
 private-tmp

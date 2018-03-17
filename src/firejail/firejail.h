@@ -36,7 +36,8 @@
 #define RUN_FIREJAIL_NETWORK_DIR	"/run/firejail/network"
 #define RUN_FIREJAIL_BANDWIDTH_DIR	"/run/firejail/bandwidth"
 #define RUN_FIREJAIL_PROFILE_DIR		"/run/firejail/profile"
-#define RUN_NETWORK_LOCK_FILE	"/run/firejail/firejail.lock"
+#define RUN_NETWORK_LOCK_FILE	"/run/firejail/firejail-network.lock"
+#define RUN_DIRECTORY_LOCK_FILE	"/run/firejail/firejail-run.lock"
 #define RUN_RO_DIR	"/run/firejail/firejail.ro.dir"
 #define RUN_RO_FILE	"/run/firejail/firejail.ro.file"
 #define RUN_MNT_DIR	"/run/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created

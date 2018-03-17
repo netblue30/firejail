@@ -824,7 +824,8 @@ static void run_builder(int argc, char **argv) {
 int main(int argc, char **argv) {
 	int i;
 	int prog_index = -1;			  // index in argv where the program command starts
-	int lockfd = -1;
+	int lockfd_network = -1;
+	int lockfd_directory = -1;
 	int option_cgroup = 0;
 	int option_force = 0;
 	int custom_profile = 0;	// custom profile loaded
@@ -2393,11 +2394,11 @@ int main(int argc, char **argv) {
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
 		EUID_ROOT();
-		lockfd = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
-		if (lockfd != -1) {
-			int rv = fchown(lockfd, 0, 0);
+		lockfd_network = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+		if (lockfd_network != -1) {
+			int rv = fchown(lockfd_network, 0, 0);
 			(void) rv;
-			flock(lockfd, LOCK_EX);
+			flock(lockfd_network, LOCK_EX);
 		}
 
 		check_network(&cfg.bridge0);
@@ -2426,13 +2427,21 @@ int main(int argc, char **argv) {
 	}
 
 
-	// set name file
+	// set name and x11 run files
 	EUID_ROOT();
+	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+	if (lockfd_directory != -1) {
+		int rv = fchown(lockfd_directory, 0, 0);
+		(void) rv;
+		flock(lockfd_directory, LOCK_EX);
+	}
 	if (cfg.name)
 		set_name_run_file(sandbox_pid);
 	int display = x11_display();
 	if (display > 0)
 		set_x11_run_file(sandbox_pid, display);
+	flock(lockfd_directory, LOCK_UN);
+	close(lockfd_directory);
 	EUID_USER();
 
 	// clone environment
@@ -2573,9 +2582,9 @@ int main(int argc, char **argv) {
  	close(parent_to_child_fds[1]);
 
  	EUID_ROOT();
-	if (lockfd != -1) {
-		flock(lockfd, LOCK_UN);
-		close(lockfd);
+	if (lockfd_network != -1) {
+		flock(lockfd_network, LOCK_UN);
+		close(lockfd_network);
 	}
 
 	// handle CTRL-C in parent

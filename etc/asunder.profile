@@ -19,6 +19,7 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 # nogroups
@@ -27,7 +28,7 @@ noroot
 protocol unix,inet,inet6
 seccomp
 shell none
-apparmor
+
 
 #private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
 private-dev

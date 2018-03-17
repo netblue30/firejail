@@ -35,6 +35,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+apparmor
 
 # private-bin kate
 private-dev

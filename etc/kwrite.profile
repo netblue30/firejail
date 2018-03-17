@@ -36,6 +36,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+apparmor
 
 private-bin kwrite,kbuildsycoca4,kdeinit4
 private-dev

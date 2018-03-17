@@ -21,6 +21,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
+apparmor
 
 private-dev
 private-tmp

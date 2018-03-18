@@ -835,12 +835,24 @@ int main(int argc, char **argv) {
 	// get starting timestamp
 	start_timestamp = getticks();
 
-	// build /run/firejail directory structure
-	preproc_build_firejail_dir();
-	preproc_clean_run();
-
 	if (check_arg(argc, argv, "--quiet", 1))
 		arg_quiet = 1;
+
+	// build /run/firejail directory structure
+	preproc_build_firejail_dir();
+	char *container_name = getenv("container");
+	if (!container_name || strcmp(container_name, "firejail")) {
+		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+		if (lockfd_directory != -1) {
+			int rv = fchown(lockfd_directory, 0, 0);
+			(void) rv;
+			flock(lockfd_directory, LOCK_EX);
+		}
+		preproc_clean_run();
+		flock(lockfd_directory, LOCK_UN);
+		close(lockfd_directory);
+	}
+
 	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
 		// check kernel version
 		struct utsname u;

@@ -107,6 +107,31 @@ void preproc_mount_mnt_dir(void) {
 	}
 }
 
+static void clean_dir(const char *name, int *pidarr, int start_pid, int max_pids) {
+	DIR *dir;
+	if (!(dir = opendir(name))) {
+		fwarning("cannot clean %s directory\n", name);
+		return; // we live to fight another day!
+	}
+
+	// clean leftover files
+	struct dirent *entry;
+	char *end;
+	while ((entry = readdir(dir)) != NULL) {
+		pid_t pid = strtol(entry->d_name, &end, 10);
+		pid %= max_pids;
+		if (end == entry->d_name || *end)
+			continue;
+
+		if (pid < start_pid)
+			continue;
+		if (pidarr[pid] == 0)
+			delete_run_files(pid);
+	}
+	closedir(dir);
+}
+
+
 // clean run directory
 void preproc_clean_run(void) {
 	int max_pids=32769;
@@ -153,29 +178,9 @@ void preproc_clean_run(void) {
 	}
 	closedir(dir);
 
-	// open /run/firejail/profile directory
-	if (!(dir = opendir(RUN_FIREJAIL_PROFILE_DIR))) {
-		// sleep 2 seconds and try again
-		sleep(2);
-		if (!(dir = opendir(RUN_FIREJAIL_PROFILE_DIR))) {
-			fprintf(stderr, "Error: cannot open %s directory\n", RUN_FIREJAIL_PROFILE_DIR);
-			exit(1);
-		}
-	}
-
-	// read /run/firejail/profile directory and clean leftover files
-	while ((entry = readdir(dir)) != NULL) {
-		pid_t pid = strtol(entry->d_name, &end, 10);
-		pid %= max_pids;
-		if (end == entry->d_name || *end)
-			continue;
-
-		if (pid < start_pid)
-			continue;
-		if (pidarr[pid] == 0)
-			delete_run_files(pid);
-	}
-	closedir(dir);
+	// clean profile and name directories
+	clean_dir(RUN_FIREJAIL_PROFILE_DIR, pidarr, start_pid, max_pids);
+	clean_dir(RUN_FIREJAIL_NAME_DIR, pidarr, start_pid, max_pids);
 
 	free(pidarr);
 }

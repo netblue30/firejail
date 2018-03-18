@@ -40,7 +40,7 @@ tracelog
 
 private-bin kwrite,kbuildsycoca4,kdeinit4
 private-dev
-# private-etc fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
+private-etc fonts,kde4rc,kde5rc,ld.so.cache,machine-id,pulse,xdg
 private-tmp
 
 join-or-start kwrite

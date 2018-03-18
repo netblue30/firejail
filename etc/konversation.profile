@@ -26,8 +26,10 @@ notv
 novideo
 protocol unix,inet,inet6
 seccomp
+shell none
 tracelog
 
+private-bin konversation,kbuildsycoca4
 private-dev
 private-tmp
 

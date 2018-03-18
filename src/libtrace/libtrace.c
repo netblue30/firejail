@@ -34,7 +34,6 @@
  #include <dirent.h>
 #include <limits.h>
 
-
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
 static orig_fopen_t orig_fopen = NULL;

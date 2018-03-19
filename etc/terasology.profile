@@ -1,7 +1,7 @@
 # Firejail profile for terasology
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/default.local
+include /etc/firejail/terasology.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 

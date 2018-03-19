@@ -10,6 +10,7 @@ blacklist /run/user/*/bus
 noblacklist ${HOME}/.local/share/supertux2
 
 include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -29,6 +30,7 @@ protocol unix,netlink
 seccomp
 shell none
 
+disable-mnt
 # private-bin supertux2
 private-dev
 # private-etc none

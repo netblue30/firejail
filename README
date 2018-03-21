@@ -235,6 +235,8 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added BibleTime profile
 	- added caja and galculator profiles
 	- added Catfish profile
+g3ngr33n (https://github.com/g3ngr33n)
+	- fix musl compilation
 G4JC (http://sourceforge.net/u/gaming4jc/profile/)
 	- ARM support
 	- profile fixes

@@ -31,7 +31,7 @@
 #include <sys/un.h>
 #include <sys/stat.h>
 #include <syslog.h>
- #include <dirent.h>
+#include <dirent.h>
 #include <limits.h>
 
 // break recursivity on fopen call

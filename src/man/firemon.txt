@@ -50,7 +50,8 @@ Print route table for each sandbox.
 Print seccomp configuration for each sandbox.
 .TP
 \fB\-\-top
-Monitor the most CPU-intensive sandboxes.
+Monitor the most CPU-intensive sandboxes. This command  is similar to
+the regular UNIX top command, however it applies only to sandboxes.
 .TP
 \fB\-\-tree
 Print a tree of all sandboxed processes.
@@ -63,19 +64,11 @@ Print program version and exit.
 Print X11 display number.
 
 .PP
-Option \-\-list prints a list of all sandboxes. The format
-for each entry is as follows:
+The format for each listed sandbox entry is as follows:
 
-	PID:USER:Command
+	PID:USER:Sandbox Name:Command
 
-Option \-\-tree prints the tree of processes running in the sandbox. The format
-for each process entry is as follows:
-
-	PID:USER:Command
-
-Option \-\-top is similar to the UNIX top command, however it applies only to
-sandboxes. Listed below are the available fields (columns) in alphabetical
-order:
+Listed below are the available fields (columns) in various firemon commands in alphabetical order:
 
 .TP
 Command
@@ -95,6 +88,9 @@ RES
 Resident Memory Size (KiB), sandbox non-swapped physical memory.
 It is a sum of the RES values for all processes running in the sandbox.
 .TP
+Sandbox Name
+The name of the sandbox, if any.
+.TP
 SHR
 Shared Memory Size (KiB), it reflects memory shared with other
 processes. It is a sum of the SHR values for all processes running
@@ -103,7 +99,7 @@ in the sandbox, including the controlling process.
 Uptime
 Sandbox running time in hours:minutes:seconds format.
 .TP
-User
+USER
 The owner of the sandbox.
 
 .SH LICENSE

@@ -254,7 +254,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-caps.print=3272
 
@@ -309,7 +309,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-cpu.print=3272
 
@@ -453,7 +453,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-dns.print=3272
 
@@ -492,7 +492,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-fs.print=3272
 
@@ -662,7 +662,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-join=3272
 
@@ -749,11 +749,11 @@ Example:
 .br
 $ firejail \-\-list
 .br
-7015:netblue:firejail firefox
+7015:netblue:browser:firejail firefox
 .br
-7056:netblue:firejail \-\-net=eth0 transmission-gtk
+7056:netblue:torrent:firejail \-\-net=eth0 transmission-gtk
 .br
-7064:netblue:firejail \-\-noroot xterm
+7064:netblue::firejail \-\-noroot xterm
 .br
 $
 .TP
@@ -1543,7 +1543,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-protocol.print=3272
 .br
@@ -1992,7 +1992,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-shutdown=3272
 .TP
@@ -2598,12 +2598,12 @@ Limitations: audit feature is not implemented for --x11 commands.
 Option \-\-list prints a list of all sandboxes. The format
 for each process entry is as follows:
 
-	PID:USER:Command
+	PID:USER:Sandbox Name:Command
 
 Option \-\-tree prints the tree of processes running in the sandbox. The format
 for each process entry is as follows:
 
-	PID:USER:Command
+	PID:USER:Sandbox Name:Command
 
 Option \-\-top is similar to the UNIX top command, however it applies only to
 sandboxes.
@@ -2635,6 +2635,9 @@ It is a sum of the RES values for all processes running in the sandbox.
 RX(KB/s)
 Network receive speed.
 .TP
+Sandbox Name
+The name of the sandbox, if any.
+.TP
 SHR
 Shared Memory Size (KiB), it reflects memory shared with other
 processes. It is a sum of the SHR values for all processes running
@@ -2646,7 +2649,7 @@ Network transmit speed.
 Uptime
 Sandbox running time in hours:minutes:seconds format.
 .TP
-User
+USER
 The owner of the sandbox.
 
 .SH SECURITY PROFILES

@@ -75,6 +75,22 @@
 //	__u32	k;      /* Generic multiuse field */
 //};
 
+// for old platforms (Debian "wheezy", etc.)
+#ifndef BPF_MOD
+#define BPF_MOD 0x90
+#endif
+#ifndef BPF_XOR
+#define BPF_XOR 0xa0
+#endif
+#ifndef SECCOMP_RET_ACTION
+#define SECCOMP_RET_ACTION 0x7fff0000U
+#endif
+#ifndef SECCOMP_RET_TRACE
+#define SECCOMP_RET_TRACE 0x7ff00000U
+#endif
+
+
+
 #include <sys/prctl.h>
 #ifndef PR_SET_NO_NEW_PRIVS
 # define PR_SET_NO_NEW_PRIVS 38

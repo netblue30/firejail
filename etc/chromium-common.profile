@@ -5,6 +5,7 @@ include /etc/firejail/chromium-common.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
@@ -31,3 +32,6 @@ private-dev
 
 noexec ${HOME}
 noexec /tmp
+
+# the file dialog needs to work without d-bus
+env NO_CHROME_KDE_FILE_DIALOG=1

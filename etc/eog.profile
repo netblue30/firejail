@@ -5,7 +5,8 @@ include /etc/firejail/eog.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus - makes settings immutable
+# following line makes settings immutable
+blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.Steam
 noblacklist ${HOME}/.config/eog
@@ -19,9 +20,11 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+# following line makes settings immutable
 apparmor
 caps.drop all
-# net none - makes settings immutable
+# following line makes settings immutable
+net none
 no3d
 nodvd
 nogroups

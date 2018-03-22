@@ -16,6 +16,7 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+# apparmor
 caps.drop all
 no3d
 nodvd

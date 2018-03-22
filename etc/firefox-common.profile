@@ -8,6 +8,7 @@ include /etc/firejail/globals.local
 # uncomment the following line to allow access to common programs/addons/plugins
 #include /etc/firejail/firefox-common-addons.inc
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc

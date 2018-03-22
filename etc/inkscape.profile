@@ -5,9 +5,9 @@ include /etc/firejail/inkscape.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.inkscape
 noblacklist ${HOME}/.config/inkscape
-
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -18,6 +18,7 @@ include /etc/firejail/whitelist-var-common.inc
 
 apparmor
 caps.drop all
+net none
 netfilter
 nodvd
 nogroups

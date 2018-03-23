@@ -10,7 +10,8 @@ noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
 
 include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
+# libreoffice uses java; if you don't care about java functionality, uncomment this line;
+#include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

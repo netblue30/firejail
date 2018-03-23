@@ -25,6 +25,7 @@ HAVE_PRIVATE_HOME=@HAVE_PRIVATE_HOME@
 HAVE_GCOV=@HAVE_GCOV@
 HAVE_GIT_INSTALL=@HAVE_GIT_INSTALL@
 EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
+EXTRA_CFLAGS +=@EXTRA_CFLAGS@
 
 H_FILE_LIST       = $(sort $(wildcard *.[h]))
 C_FILE_LIST       = $(sort $(wildcard *.c))
@@ -34,7 +35,7 @@ CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"'  $(HAVE_GCOV
 LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/pid.h ../include/seccomp.h ../include/syscall.h
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 firejail: $(OBJS) ../lib/libnetlink.o ../lib/common.o ../lib/ldd_utils.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/ldd_utils.o $(LIBS) $(EXTRA_LDFLAGS)

@@ -73,6 +73,7 @@ blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
+blacklist ${HOME}/.config/akonadi*
 blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
@@ -106,6 +107,7 @@ blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/digikamrc
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
+blacklist ${HOME}/.config/emailidentities
 blacklist ${HOME}/.config/enchant
 blacklist ${HOME}/.config/eog
 blacklist ${HOME}/.config/epiphany
@@ -144,6 +146,7 @@ blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdenliverc
 blacklist ${HOME}/.config/kgetrc
 blacklist ${HOME}/.config/klipperrc
+blacklist ${HOME}/.config/kmail2rc
 blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/kwriterc
 blacklist ${HOME}/.config/kdeconnect
@@ -346,12 +349,14 @@ blacklist ${HOME}/.local/share/SuperHexagon
 blacklist ${HOME}/.local/share/TelegramDesktop
 blacklist ${HOME}/.local/share/Terraria
 blacklist ${HOME}/.local/share/TpLogger
+blacklist ${HOME}/.local/share/akonadi/*
 blacklist ${HOME}/.local/share/akregator
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit
+blacklist ${HOME}/.local/share/contacts
 blacklist ${HOME}/.local/share/data/Mumble
 blacklist ${HOME}/.local/share/data/MusE
 blacklist ${HOME}/.local/share/data/MuseScore
@@ -376,11 +381,13 @@ blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kdenlive
 blacklist ${HOME}/.local/share/kget
+blacklist ${HOME}/.local/share/kmail2
 blacklist ${HOME}/.local/share/krita
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/ktorrent
 blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/liferea
+blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/maps-places.json
 blacklist ${HOME}/.local/share/meld
@@ -495,6 +502,7 @@ blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/borg
 blacklist ${HOME}/.cache/calibre

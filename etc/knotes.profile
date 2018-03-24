@@ -5,10 +5,12 @@ include /etc/firejail/knotes.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.config/akonadi*
 noblacklist ${HOME}/.config/knotesrc
+noblacklist ${HOME}/.local/share/akonadi/*
 
 include /etc/firejail/disable-common.inc
-# include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -22,10 +24,14 @@ nonewprivs
 noroot
 nosound
 notv
+novideo
 protocol unix
 seccomp
 shell none
 tracelog
 
 private-dev
-#private-tmp - problems on kubuntu 17.04
+# private-tmp - interrupts connection to akonadi
+
+noexec ${HOME}
+noexec /tmp

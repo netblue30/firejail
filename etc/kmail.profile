@@ -5,6 +5,18 @@ include /etc/firejail/kmail.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# akonadi with mysql backend fails to run inside this sandbox
+# and should be started in advance
+
+noblacklist ${HOME}/.cache/akonadi*
+noblacklist ${HOME}/.config/akonadi*
+noblacklist ${HOME}/.config/baloorc
+noblacklist ${HOME}/.config/emailidentities
+noblacklist ${HOME}/.config/kmail2rc
+noblacklist ${HOME}/.local/share/akonadi/*
+noblacklist ${HOME}/.local/share/contacts
+noblacklist ${HOME}/.local/share/kmail2
+noblacklist ${HOME}/.local/share/local-mail
 noblacklist ${HOME}/.gnupg
 
 include /etc/firejail/disable-common.inc
@@ -22,11 +34,14 @@ nosound
 notv
 novideo
 protocol unix,inet,inet6,netlink
-# blacklisting of chroot system calls breaks kmail
-seccomp.drop @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@resources,@swap,acct,add_key,bpf,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,kcmp,keyctl,mount,name_to_handle_at,nfsservctl,ni_syscall,open_by_handle_at,personality,pivot_root,process_vm_readv,ptrace,remap_file_pages,request_key,setdomainname,sethostname,syslog,umount,umount2,userfaultfd,vhangup,vmsplice
+# we need to allow chroot and ioprio_set system calls
+seccomp.drop @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@resources,@swap,acct,add_key,bpf,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,kcmp,keyctl,mount,name_to_handle_at,nfsservctl,ni_syscall,open_by_handle_at,personality,pivot_root,process_vm_readv,ptrace,remap_file_pages,request_key,setdomainname,sethostname,syslog,umount,umount2,userfaultfd,vhangup,vmsplice
 # tracelog
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user
 
 private-dev
-# private-tmp - breaks akonadi and opening of email attachments
+# private-tmp - interrupts connection to akonadi, breaks opening of email attachments
+
+noexec ${HOME}
+noexec /tmp

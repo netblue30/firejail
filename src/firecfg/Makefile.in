@@ -19,6 +19,7 @@ HAVE_X11=@HAVE_X11@
 HAVE_FILE_TRANSFER=@HAVE_FILE_TRANSFER@
 HAVE_GCOV=@HAVE_GCOV@
 EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
+EXTRA_CFLAGS +=@EXTRA_CFLAGS@
 
 
 H_FILE_LIST       = $(sort $(wildcard *.[h]))
@@ -29,7 +30,7 @@ CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' $(HAVE_GCOV)
 LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/pid.h
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 firecfg: $(OBJS) ../lib/common.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o $(LIBS) $(EXTRA_LDFLAGS)

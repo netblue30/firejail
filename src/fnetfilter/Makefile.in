@@ -24,7 +24,7 @@ HAVE_OVERLAYFS=@HAVE_OVERLAYFS@
 HAVE_PRIVATE_HOME=@HAVE_PRIVATE_HOME@
 EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
 HAVE_GCOV=@HAVE_GCOV@
-EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
+EXTRA_CFLAGS +=@EXTRA_CFLAGS@
 
 H_FILE_LIST       = $(sort $(wildcard *.[h]))
 C_FILE_LIST       = $(sort $(wildcard *.c))
@@ -34,7 +34,7 @@ CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' $(HAVE_GCOV)
 LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/syscall.h
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 fnetfilter: $(OBJS)
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)

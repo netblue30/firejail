@@ -26,8 +26,9 @@ firejail (0.9.53) baseline; urgency=low
   * added sandbox name support in firemon
   * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed,
   * new profiles: discord-canary, pycharm-community, pycharm-professional,
-  * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt, kaffeine, VS Code,
-  * new profiles: falkon, gnome-builder, asunder, akonadi_control
+  * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt, kaffeine,
+  * new profiles: falkon, gnome-builder, asunder, VS Code, gnome-recipes
+  * new profiles: akonadi_control
  -- netblue30 <netblue30@yahoo.com>  Thu, 1 Mar 2018 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low

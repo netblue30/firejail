@@ -646,6 +646,7 @@ EGREP
 GREP
 CPP
 HAVE_APPARMOR
+EXTRA_CFLAGS
 RANLIB
 INSTALL_DATA
 INSTALL_SCRIPT
@@ -2099,7 +2100,6 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 #AC_CONFIG_HEADERS([config.h])
 
-
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -3105,6 +3105,31 @@ else
 fi
 
 
+HAVE_SPECTRE="no"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Spectre mitigation support in gcc compiler" >&5
+$as_echo_n "checking for Spectre mitigation support in gcc compiler... " >&6; }
+if test "$CC" = "gcc"; then :
+
+	HAVE_SPECTRE="yes"
+	$CC -mindirect-branch=thunk -c dummy.c || HAVE_SPECTRE="no"
+	rm -f dummy.o
+
+fi
+if test "$HAVE_SPECTRE" = "yes"; then :
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	EXTRA_CFLAGS+=" -mindirect-branch=thunk "
+
+fi
+if test "$HAVE_SPECTRE" = "no"; then :
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ... not available" >&5
+$as_echo "... not available" >&6; }
+
+fi
+
+
 HAVE_APPARMOR=""
 # Check whether --enable-apparmor was given.
 if test "${enable_apparmor+set}" = set; then :
@@ -3117,7 +3142,6 @@ if test "x$enable_apparmor" = "xyes"; then :
 
 
 fi
-
 
 
 ac_ext=c
@@ -3531,7 +3555,7 @@ fi
 fi
 if test "x$enable_apparmor" = "xyes"; then :
 
-	EXTRA_LDFLAGS+="-lapparmor "
+	EXTRA_LDFLAGS+=" -lapparmor "
 
 fi
 
@@ -3725,7 +3749,7 @@ fi
 if test "x$enable_gcov" = "xyes"; then :
 
 	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS+="-lgcov --coverage "
+	EXTRA_LDFLAGS+=" -lgcov --coverage "
 
 
 fi
@@ -5024,7 +5048,9 @@ echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   git install support: $HAVE_GIT_INSTALL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
+echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
+echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"

@@ -5,8 +5,6 @@ include /etc/firejail/gnome-recipes.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-mkdir ${HOME}/.cache/gnome-recipes
-whitelist ${HOME}/.cache/gnome-recipes
 
 noblacklist ${HOME}/.local/share/gnome-recipes
 
@@ -14,7 +12,11 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+
+mkdir ${HOME}/.cache/gnome-recipes
+whitelist ${HOME}/.cache/gnome-recipes
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace

@@ -3,12 +3,10 @@ AC_INIT(firejail, 0.9.53, netblue30@yahoo.com, , http://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 #AC_CONFIG_HEADERS([config.h])
 
-
 AC_PROG_CC
 #AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_RANLIB
-
 
 HAVE_SPECTRE="no"
 AC_MSG_CHECKING(for Spectre mitigation support in gcc compiler)
@@ -19,13 +17,12 @@ AS_IF([test "$CC" = "gcc"], [
 ])
 AS_IF([test "$HAVE_SPECTRE" = "yes"], [
 	AC_MSG_RESULT(yes)
-	EXTRA_CFLAGS+="-mindirect-branch=thunk"
+	EXTRA_CFLAGS+=" -mindirect-branch=thunk "
 ])
 AS_IF([test "$HAVE_SPECTRE" = "no"], [
 	AC_MSG_RESULT(... not available)
 ])
 AC_SUBST([EXTRA_CFLAGS])
-
 
 HAVE_APPARMOR=""
 AC_ARG_ENABLE([apparmor],
@@ -35,13 +32,12 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 	AC_SUBST(HAVE_APPARMOR)
 ])
 
-
 AS_IF([test "x$enable_apparmor" = "xyes"], [
 	AC_CHECK_HEADER(sys/apparmor.h, , [AC_MSG_ERROR(
 	[Couldn't find sys/apparmor.h... please install apparmor user space library and development files] )])
 ])
 AS_IF([test "x$enable_apparmor" = "xyes"], [
-	EXTRA_LDFLAGS+="-lapparmor "
+	EXTRA_LDFLAGS+=" -lapparmor "
 ])
 AC_SUBST([EXTRA_LDFLAGS])
 
@@ -160,7 +156,7 @@ AC_ARG_ENABLE([gcov],
     AS_HELP_STRING([--enable-gcov], [Gcov instrumentation]))
 AS_IF([test "x$enable_gcov" = "xyes"], [
 	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS+="-lgcov --coverage "
+	EXTRA_LDFLAGS+=" -lgcov --coverage "
 	AC_SUBST(HAVE_GCOV)
 ])
 

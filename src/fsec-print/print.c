@@ -269,7 +269,7 @@ static void bpf_decode_args(const struct sock_filter *bpf, unsigned int line) {
 				 native_arch = (ARCH_NR == ARCH_64)? 1: 0;
 			}
 			else if (bpf->k == X32_SYSCALL_BIT)
-				printf("X32_ABI true:%.4x (false %.4x)",
+				printf("X32_ABI %.4x (false %.4x)",
 				       (line + 1) + bpf->jt,
 				       (line + 1) + bpf->jf);
 			else if (name)

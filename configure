@@ -2100,7 +2100,6 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 #AC_CONFIG_HEADERS([config.h])
 
-
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -3106,7 +3105,6 @@ else
 fi
 
 
-
 HAVE_SPECTRE="no"
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Spectre mitigation support in gcc compiler" >&5
 $as_echo_n "checking for Spectre mitigation support in gcc compiler... " >&6; }
@@ -3121,7 +3119,7 @@ if test "$HAVE_SPECTRE" = "yes"; then :
 
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	EXTRA_CFLAGS+="-mindirect-branch=thunk"
+	EXTRA_CFLAGS+=" -mindirect-branch=thunk "
 
 fi
 if test "$HAVE_SPECTRE" = "no"; then :
@@ -3130,7 +3128,6 @@ if test "$HAVE_SPECTRE" = "no"; then :
 $as_echo "... not available" >&6; }
 
 fi
-
 
 
 HAVE_APPARMOR=""
@@ -3145,7 +3142,6 @@ if test "x$enable_apparmor" = "xyes"; then :
 
 
 fi
-
 
 
 ac_ext=c
@@ -3559,7 +3555,7 @@ fi
 fi
 if test "x$enable_apparmor" = "xyes"; then :
 
-	EXTRA_LDFLAGS+="-lapparmor "
+	EXTRA_LDFLAGS+=" -lapparmor "
 
 fi
 
@@ -3753,7 +3749,7 @@ fi
 if test "x$enable_gcov" = "xyes"; then :
 
 	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS+="-lgcov --coverage "
+	EXTRA_LDFLAGS+=" -lgcov --coverage "
 
 
 fi

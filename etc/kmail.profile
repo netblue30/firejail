@@ -5,8 +5,8 @@ include /etc/firejail/kmail.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# akonadi with mysql backend fails to run inside this sandbox
-# and should be started in advance
+# if akonadi has a mysql backend, starting it inside this sandbox will fail
+# one solution is to have akonadi already running when kmail is launched
 
 noblacklist ${HOME}/.cache/akonadi*
 noblacklist ${HOME}/.config/akonadi*
@@ -24,6 +24,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+# apparmor
 caps.drop all
 netfilter
 nodvd

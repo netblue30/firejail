@@ -20,6 +20,7 @@
 
 #include "firejail.h"
 #include "../include/pid.h"
+#define BUFLEN 4096
 
 static void delete_x11_run_file(pid_t pid) {
 	char *fname;
@@ -74,7 +75,36 @@ void delete_run_files(pid_t pid) {
 	delete_profile_run_file(pid);
 }
 
+static char *newname(char *name) {
+	char *rv;
+	pid_t pid;
+
+	// try the name
+	if (name2pid(name, &pid))
+		return name;
+
+	// try name-1 to 9
+	int i;
+	for (i = 1; i < 10; i++) {
+		if (asprintf(&rv, "%s-%d", name, i) == -1)
+			errExit("asprintf");
+		if (name2pid(rv, &pid)) {
+			fwarning("Sandbox name changed to %s\n", rv);
+			return rv;
+		}
+		free(rv);
+	}
+
+	// return name-pid
+	if (asprintf(&rv, "%s-%d", name, getpid()) == -1)
+		errExit("asprintf");
+	return rv;
+}
+
+
 void set_name_run_file(pid_t pid) {
+	cfg.name = newname(cfg.name);
+
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, pid) == -1)
 		errExit("asprintf");

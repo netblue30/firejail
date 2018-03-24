@@ -369,6 +369,7 @@ blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
+blacklist ${HOME}/.local/share/gnome-recipes
 blacklist ${HOME}/.local/share/gnome-ring
 blacklist ${HOME}/.local/share/gnome-twitch
 blacklist ${HOME}/.local/share/gwenview

@@ -14,7 +14,6 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
@@ -40,10 +39,6 @@ private-etc fonts
 
 #private-lib - seems to be breaking on Gnome Shell 3.26.2, Mutter WM, issue 1711
 #private-lib evince,libpoppler-glib.so.8
-# the below works on Arch Linux (same Gnome Shell & Mutter)
-# leaving commented as it seems private-lib is currently under development
-# offered here to (try to) help with that
-#private-lib evince,gdk-pixbuf-2.0,gio,gvfs/libgvfscommon.so,libgconf-2.so.4,libpoppler-glib.so.8,librsvg-2.so.2
 
 private-tmp
 

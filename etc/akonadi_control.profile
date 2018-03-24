@@ -16,7 +16,7 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
- 
+
 include /etc/firejail/whitelist-var-common.inc
 
 # depending on your setup it might be possible to
@@ -39,6 +39,6 @@ tracelog
 
 private-dev
 # private-tmp - breaks programs that depend on akonadi
- 
+
 noexec ${HOME}
 noexec /tmp

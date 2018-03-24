@@ -98,6 +98,52 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.53
 
+## Spectre mitigation
+
+If your gcc compiler version supports it, -mindirect-branch=thunk is inserted into EXTRA_CFLAGS during software configuration.
+The patch was introduced in gcc version 8, and it was backported to gcc 7. You'll also find it
+on older versions, for example on Debian stable running on gcc 6.3.0.  This is how you check it:
+`````
+$ ./configure --prefix=/usr
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables...
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for ranlib... ranlib
+checking for Spectre mitigation support in gcc compiler... yes
+[...]
+Configuration options:
+   prefix: /usr
+   sysconfdir: /etc
+   seccomp: -DHAVE_SECCOMP
+   <linux/seccomp.h>: -DHAVE_SECCOMP_H
+   apparmor:
+   global config: -DHAVE_GLOBALCFG
+   chroot: -DHAVE_CHROOT
+   bind: -DHAVE_BIND
+   network: -DHAVE_NETWORK
+   user namespace: -DHAVE_USERNS
+   X11 sandboxing support: -DHAVE_X11
+   whitelisting: -DHAVE_WHITELIST
+   private home support: -DHAVE_PRIVATE_HOME
+   file transfer support: -DHAVE_FILE_TRANSFER
+   overlayfs support: -DHAVE_OVERLAYFS
+   git install support:
+   busybox workaround: no
+   Spectre compiler patch: yes
+   EXTRA_LDFLAGS:
+   EXTRA_CFLAGS:  -mindirect-branch=thunk
+   fatal warnings:
+   Gcov instrumentation:
+   Install contrib scripts: yes
+`````
+
 ## AppImage development
 
 Support for private-bin, private-lib and shell none has been disabled while running AppImage archives.

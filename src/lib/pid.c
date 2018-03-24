@@ -188,10 +188,11 @@ static void print_elem(unsigned index, int nowrap) {
 	uid_t uid = pids[index].uid;
 	char *cmd = pid_proc_cmdline(index);
 	char *user = pid_get_user_name(uid);
-	char *allocated = user;
+	char *user_allocated = user;
 
 	// extract sandbox name - pid == index
 	char *sandbox_name = "";
+	char *sandbox_name_allocated = NULL;
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, index) == -1)
 		errExit("asprintf");
@@ -202,6 +203,7 @@ static void print_elem(unsigned index, int nowrap) {
 			sandbox_name = malloc(s.st_size + 1);
 			if (!sandbox_name)
 				errExit("malloc");
+			sandbox_name_allocated = sandbox_name;
 			char *rv = fgets(sandbox_name, s.st_size + 1, fp);
 			if (!rv)
 				*sandbox_name = '\0';
@@ -241,8 +243,10 @@ static void print_elem(unsigned index, int nowrap) {
 		else
 			printf("%s%u:\n", indent, index);
 	}
-	if (allocated)
-		free(allocated);
+	if (user_allocated)
+		free(user_allocated);
+	if (sandbox_name_allocated)
+		free(sandbox_name_allocated);
 }
 
 // recursivity!!!

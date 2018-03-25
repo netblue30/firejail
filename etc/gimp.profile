@@ -12,6 +12,7 @@ noblacklist ${HOME}/.gimp*
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/whitelist-common.inc
 
 include /etc/firejail/whitelist-var-common.inc
 

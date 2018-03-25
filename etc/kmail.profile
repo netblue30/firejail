@@ -5,7 +5,7 @@ include /etc/firejail/kmail.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# if akonadi has a mysql backend, starting it inside this sandbox will fail
+# if akonadi has a mysql backend, starting it inside this sandbox will fail.
 # one solution is to have akonadi already running when kmail is launched
 
 noblacklist ${HOME}/.cache/akonadi*
@@ -15,6 +15,7 @@ noblacklist ${HOME}/.config/emailidentities
 noblacklist ${HOME}/.config/kmail2rc
 noblacklist ${HOME}/.local/share/akonadi/*
 noblacklist ${HOME}/.local/share/contacts
+noblacklist ${HOME}/.local/share/emailidentities
 noblacklist ${HOME}/.local/share/kmail2
 noblacklist ${HOME}/.local/share/local-mail
 noblacklist ${HOME}/.gnupg

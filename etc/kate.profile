@@ -42,4 +42,7 @@ private-dev
 # private-etc fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
 private-tmp
 
+# noexec ${HOME}
+noexec /tmp
+
 join-or-start kate

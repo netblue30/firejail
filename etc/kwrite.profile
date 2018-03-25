@@ -43,4 +43,7 @@ private-dev
 private-etc fonts,kde4rc,kde5rc,ld.so.cache,machine-id,pulse,xdg
 private-tmp
 
+noexec ${HOME}
+noexec /tmp
+
 join-or-start kwrite

@@ -293,4 +293,5 @@ firefox-common-addons.inc in firefox-common.profile.
 Basilisk browser, Tor Browser language packs, PlayOnLinux, sylpheed, discord-canary,
 pycharm-community, pycharm-professional, Pitivi, OnionShare, Fritzing, Kaffeine, pdfchain,
 tilp, vivaldi-snapshot, bitcoin-qt, VS Code, falkon, gnome-builder, lobase, asunder,
-gnome-recipes, akonadi_control, blender-2.8, thunderbird-beta
+gnome-recipes, akonadi_control, evince-previewer, evince-thumbnailer, blender-2.8,
+thunderbird-beta

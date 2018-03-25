@@ -363,6 +363,7 @@ blacklist ${HOME}/.local/share/data/MuseScore
 blacklist ${HOME}/.local/share/data/qBittorrent
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
+blacklist ${HOME}/.local/share/emailidentities
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
 blacklist ${HOME}/.local/share/feral-interactive
@@ -405,6 +406,7 @@ blacklist ${HOME}/.local/share/okular
 blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
+blacklist ${HOME}/.local/share/plasma_notes
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/qutebrowser

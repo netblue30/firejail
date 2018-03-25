@@ -75,6 +75,7 @@ blacklist ${HOME}/.kde4/share/config/plasma-desktop-appletsrc
 blacklist ${HOME}/.local/share/kglobalaccel
 blacklist ${HOME}/.local/share/kwin
 blacklist ${HOME}/.local/share/plasma
+blacklist ${HOME}/.local/share/plasmashell
 blacklist ${HOME}/.local/share/solid
 read-only ${HOME}/.cache/ksycoca5_*
 read-only ${HOME}/.config/*notifyrc

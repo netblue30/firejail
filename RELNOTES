@@ -29,7 +29,8 @@ firejail (0.9.53) baseline; urgency=low
   * new profiles: discord-canary, pycharm-community, pycharm-professional,
   * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt, kaffeine,
   * new profiles: falkon, gnome-builder, asunder, VS Code, gnome-recipes
-  * new profiles: akonadi_control
+  * new profiles: akonadi_controle, evince-previewer, evince-thumbnailer
+
  -- netblue30 <netblue30@yahoo.com>  Thu, 1 Mar 2018 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low

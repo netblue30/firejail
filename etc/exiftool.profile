@@ -9,7 +9,8 @@ include /etc/firejail/globals.local
 blacklist /run/user/*/bus
 blacklist /tmp/.X11-unix
 
-noblacklist /usr/bin/perl
+# Allow access to perl
+noblacklist ${PATH}/perl
 noblacklist /usr/lib/perl*
 noblacklist /usr/share/perl*
 

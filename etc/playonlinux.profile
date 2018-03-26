@@ -14,6 +14,13 @@ noblacklist ${HOME}/.PlayOnLinux
 # nc is needed to run playonlinux
 noblacklist ${PATH}/nc
 
+# Allow access to perl
+noblacklist ${PATH}/cpan*
+noblacklist ${PATH}/core_perl
+noblacklist ${PATH}/perl
+noblacklist /usr/lib/perl*
+noblacklist /usr/share/perl*
+
 include /etc/firejail/disable-common.inc
 # playonlinux uses perl
 include /etc/firejail/disable-devel.inc

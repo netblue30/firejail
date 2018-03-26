@@ -6,6 +6,12 @@ include /etc/firejail/dex2jar.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# Allow access to java
+noblacklist ${PATH}/java
+noblacklist /usr/lib/java
+noblacklist /etc/java
+noblacklist /usr/share/java
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc

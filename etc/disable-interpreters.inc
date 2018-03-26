@@ -1,0 +1,38 @@
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+include /etc/firejail/disable-interpreters.local
+
+# Node
+${PATH}/node
+/usr/include/node
+
+# Perl
+blacklist ${PATH}/cpan*
+blacklist ${PATH}/core_perl
+blacklist ${PATH}/perl
+blacklist /usr/lib/perl*
+blacklist /usr/share/perl*
+
+# PHP
+blacklist ${PATH}/php*
+blacklist /usr/lib/php*
+blacklist /usr/share/php*
+
+# Ruby
+blacklist ${PATH}/ruby
+blacklist /usr/lib/ruby
+
+# Programs using python: deluge, firefox addons, filezilla, cherrytree, xchat, hexchat, libreoffice, scribus
+# Python 2
+blacklist ${PATH}/python2*
+blacklist /usr/include/python2*
+blacklist /usr/lib/python2*
+blacklist /usr/local/lib/python2*
+blacklist /usr/share/python2*
+
+# Python 3
+blacklist ${PATH}/python3*
+blacklist /usr/include/python3*
+blacklist /usr/lib/python3*
+blacklist /usr/local/lib/python3*
+blacklist /usr/share/python3*

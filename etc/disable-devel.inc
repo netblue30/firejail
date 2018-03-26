@@ -36,35 +36,11 @@ blacklist /usr/lib/tcc
 blacklist ${PATH}/valgrind*
 blacklist /usr/lib/valgrind
 
-# Perl
-blacklist ${PATH}/cpan*
-blacklist ${PATH}/perl
-blacklist /usr/lib/perl*
-blacklist /usr/share/perl*
-
-# PHP
-blacklist ${PATH}/php*
-blacklist /usr/lib/php*
-blacklist /usr/share/php*
-
-# Ruby
-blacklist ${PATH}/ruby
-blacklist /usr/lib/ruby
-
-# Programs using python: deluge, firefox addons, filezilla, cherrytree, xchat, hexchat, libreoffice, scribus
-# Python 2
-#blacklist ${PATH}/python2*
-#blacklist /usr/include/python2*
-#blacklist /usr/lib/python2*
-#blacklist /usr/local/lib/python2*
-#blacklist /usr/share/python2*
-#
-# Python 3
-#blacklist ${PATH}/python3*
-#blacklist /usr/include/python3*
-#blacklist /usr/lib/python3*
-#blacklist /usr/local/lib/python3*
-#blacklist /usr/share/python3*
+# Java
+${PATH}/java
+/usr/lib/java
+/etc/java
+/usr/share/java
 
 #Go
 blacklist ${PATH}/gccgo

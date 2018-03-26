@@ -7,7 +7,8 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/akonadi*
 noblacklist ${HOME}/.config/knotesrc
-noblacklist ${HOME}/.local/share/akonadi/*
+noblacklist ${HOME}/.local/share/akonadi*
+noblacklist /tmp/akonadi-*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -349,7 +349,7 @@ blacklist ${HOME}/.local/share/SuperHexagon
 blacklist ${HOME}/.local/share/TelegramDesktop
 blacklist ${HOME}/.local/share/Terraria
 blacklist ${HOME}/.local/share/TpLogger
-blacklist ${HOME}/.local/share/akonadi/*
+blacklist ${HOME}/.local/share/akonadi*
 blacklist ${HOME}/.local/share/akregator
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/baloo
@@ -495,6 +495,7 @@ blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom
 blacklist ${HOME}/Arduino
 blacklist ${HOME}/wallet.dat
+blacklist /tmp/akonadi-*
 blacklist /tmp/ssh-*
 
 # ~/.cache directory

@@ -7,9 +7,13 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.cache/akonadi*
 noblacklist ${HOME}/.config/akonadi*
 noblacklist ${HOME}/.config/baloorc
-noblacklist ${HOME}/.local/share/akonadi/*
+noblacklist ${HOME}/.config/emailidentities
+noblacklist ${HOME}/.config/kmail2rc
+noblacklist ${HOME}/.local/share/akonadi*
 noblacklist ${HOME}/.local/share/contacts
 noblacklist ${HOME}/.local/share/local-mail
+noblacklist ${HOME}/.local/share/notes
+noblacklist /tmp/akonadi-*
 noblacklist /usr/sbin
 
 include /etc/firejail/disable-common.inc
@@ -19,8 +23,8 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
-# depending on your setup it might be possible to
-# enable some of the commented options below
+# the default mysqld-akonadi apparmor profile in debian and ubuntu
+# is not compatible with the commented options below
 
 # apparmor
 caps.drop all
@@ -30,7 +34,7 @@ netfilter
 nodvd
 nogroups
 # nonewprivs
-# noroot
+noroot
 nosound
 notv
 novideo

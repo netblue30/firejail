@@ -37,10 +37,10 @@ blacklist ${PATH}/valgrind*
 blacklist /usr/lib/valgrind
 
 # Java
-${PATH}/java
-/usr/lib/java
-/etc/java
-/usr/share/java
+blacklist ${PATH}/java
+blacklist /usr/lib/java
+blacklist /etc/java
+blacklist /usr/share/java
 
 #Go
 blacklist ${PATH}/gccgo

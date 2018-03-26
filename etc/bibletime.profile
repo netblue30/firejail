@@ -21,6 +21,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

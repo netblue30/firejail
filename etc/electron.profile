@@ -14,6 +14,7 @@ whitelist ${DOWNLOADS}
 apparmor
 caps.drop all
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

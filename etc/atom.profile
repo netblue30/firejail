@@ -17,6 +17,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 # net none
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

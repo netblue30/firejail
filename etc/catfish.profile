@@ -23,6 +23,7 @@ include /etc/firejail/whitelist-var-common.inc
 caps.drop all
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

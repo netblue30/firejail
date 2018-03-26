@@ -5,6 +5,7 @@ include /etc/firejail/transmission-qt.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.cache/transmission
 noblacklist ${HOME}/.config/transmission
 

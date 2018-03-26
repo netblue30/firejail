@@ -5,6 +5,7 @@ include /etc/firejail/chromium-common.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc

@@ -5,6 +5,7 @@ include /etc/firejail/qbittorrent.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.cache/qBittorrent
 noblacklist ${HOME}/.config/qBittorrent
 noblacklist ${HOME}/.config/qBittorrentrc

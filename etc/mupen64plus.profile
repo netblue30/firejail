@@ -13,6 +13,7 @@ noblacklist ${HOME}/.local/share/mupen64plus
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 # you'll need to manually whitelist ROM files

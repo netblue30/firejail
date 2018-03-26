@@ -14,6 +14,7 @@ noblacklist ${HOME}/.local/share/Trash
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 # dolphin needs to be able to start arbitrary applications so we cannot blacklist their files
 # include /etc/firejail/disable-programs.inc

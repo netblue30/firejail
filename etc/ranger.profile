@@ -7,14 +7,15 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-# noblacklist /usr/bin/cpan*
-noblacklist /usr/bin/perl
+# noblacklist ${PATH}/cpan*
+noblacklist ${PATH}/perl
 noblacklist /usr/lib/perl*
 noblacklist /usr/share/perl*
 noblacklist ${HOME}/.config/ranger
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

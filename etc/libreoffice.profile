@@ -10,8 +10,9 @@ noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
 
 # libreoffice uses java; if you don't care about java functionality,
-# comment the next four lines
+# comment the next five lines
 noblacklist ${PATH}/java
+noblacklist ${PATH}/javac
 noblacklist /usr/lib/java
 noblacklist /etc/java
 noblacklist /usr/share/java

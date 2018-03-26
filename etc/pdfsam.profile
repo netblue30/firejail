@@ -7,9 +7,11 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-# Allow access to java
 noblacklist ${HOME}/.java
+
+# Allow access to java
 noblacklist ${PATH}/java
+noblacklist ${PATH}/javac
 noblacklist /usr/lib/java
 noblacklist /etc/java
 noblacklist /usr/share/java

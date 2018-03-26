@@ -38,6 +38,7 @@ blacklist /usr/lib/valgrind
 
 # Java
 blacklist ${PATH}/java
+blacklist ${PATH}/javac
 blacklist /usr/lib/java
 blacklist /etc/java
 blacklist /usr/share/java

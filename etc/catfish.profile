@@ -7,7 +7,8 @@ include /etc/firejail/globals.local
 
 # We can't blacklist much since catfish
 # is for finding files/content
-noblacklist ${HOME}/.config/catfish]
+
+noblacklist ${HOME}/.config/catfish
 
 # Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*

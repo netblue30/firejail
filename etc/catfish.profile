@@ -10,7 +10,7 @@ include /etc/firejail/globals.local
 
 blacklist /run/user/*/bus
 
-noblacklist ${HOME}/.config/catfish]
+noblacklist ${HOME}/.config/catfish
 
 # Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*

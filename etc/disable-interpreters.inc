@@ -2,7 +2,7 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-interpreters.local
 
-# Node
+# Node.js
 ${PATH}/node
 /usr/include/node
 

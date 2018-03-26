@@ -7,6 +7,8 @@ include /etc/firejail/globals.local
 
 # Allow access to java
 noblacklist ${HOME}/.java
+
+# Allow access to java
 noblacklist ${PATH}/java
 noblacklist /usr/lib/java
 noblacklist /etc/java

@@ -5,7 +5,7 @@ include /etc/firejail/gimp.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
+# blacklist /run/user/*/bus - makes settings immutable
 
 noblacklist ${HOME}/.gimp*
 

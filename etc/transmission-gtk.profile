@@ -25,6 +25,7 @@ apparmor
 caps.drop all
 machine-id
 netfilter
+nodbus
 nodvd
 nonewprivs
 noroot

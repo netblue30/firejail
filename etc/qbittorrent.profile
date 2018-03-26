@@ -30,6 +30,7 @@ apparmor
 caps.drop all
 machine-id
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

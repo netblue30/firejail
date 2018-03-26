@@ -249,6 +249,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_no3d = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "nodbus") == 0) {
+		arg_nodbus = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "allow-private-blacklist") == 0) {
 		fmessage("--allow-private-blacklist was deprecated\n");
 		return 0;
@@ -549,7 +553,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			if (cfg.protocol) {
-				fwarning("a protocol list is present, the new list \"%s\" will not be installed\n", ptr + 9);
+				fwarning("two protocol lists are present, \"%s\" will be installed\n", cfg.protocol);
 				return 0;
 			}
 

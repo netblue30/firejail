@@ -297,26 +297,6 @@ void fs_private_dev(void){
 	}
 }
 
-
-
-static void disable_file_or_dir(const char *fname) {
-	if (arg_debug)
-		printf("disable %s\n", fname);
-	struct stat s;
-	if (stat(fname, &s) != -1) {
-		if (is_dir(fname)) {
-			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable directory");
-		}
-		else {
-			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable file");
-		}
-	}
-	fs_logger2("blacklist", fname);
-
-}
-
 void fs_dev_disable_sound(void) {
 	unsigned i = 0;
 	while (dev[i].dev_fname != NULL) {

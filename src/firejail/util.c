@@ -21,6 +21,7 @@
 #include "firejail.h"
 #include <ftw.h>
 #include <sys/stat.h>
+#include <sys/mount.h>
 #include <fcntl.h>
 #include <syslog.h>
 #include <errno.h>
@@ -964,3 +965,33 @@ unsigned extract_timeout(const char *str) {
 
 	return h * 3600 + m * 60 + s;
 }
+
+void disable_file_or_dir(const char *fname) {
+	if (arg_debug)
+		printf("blacklist %s\n", fname);
+	struct stat s;
+	if (stat(fname, &s) != -1) {
+		if (is_dir(fname)) {
+			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				errExit("disable directory");
+		}
+		else {
+			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				errExit("disable file");
+		}
+	}
+	fs_logger2("blacklist", fname);
+}
+
+void disable_file_path(const char *path, const char *file) {
+	assert(file);
+	assert(path);
+
+	char *fname;
+	if (asprintf(&fname, "%s/%s", path, file) == -1)
+		errExit("asprintf");
+
+	disable_file_or_dir(fname);
+	free(fname);
+}
+

@@ -382,6 +382,7 @@ extern int arg_noprofile;	// use default.profile if none other found/specified
 extern int arg_memory_deny_write_execute;	// block writable and executable memory
 extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
+extern int arg_nodbus; // -nodbus
 
 extern int login_shell;
 extern int parent_to_child_fds[2];
@@ -520,6 +521,8 @@ void create_empty_file_as_root(const char *dir, mode_t mode);
 int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 unsigned extract_timeout(const char *str);
+void disable_file_or_dir(const char *fname);
+void disable_file_path(const char *path, const char *file);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log
@@ -799,5 +802,8 @@ void delete_bandwidth_run_file(pid_t pid);
 void set_name_run_file(pid_t pid);
 void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
+
+// dbus.c
+void dbus_session_disable(void);
 
 #endif

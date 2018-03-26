@@ -24,52 +24,24 @@
 #include <dirent.h>
 #include <sys/wait.h>
 
-static void disable_file(const char *path, const char *file) {
-	assert(file);
-	assert(path);
-
-	struct stat s;
-	char *fname;
-	if (asprintf(&fname, "%s/%s", path, file) == -1)
-		errExit("asprintf");
-	if (stat(fname, &s) == -1)
-		goto doexit;
-
-	if (arg_debug)
-		printf("Disable%s\n", fname);
-
-	if (S_ISDIR(s.st_mode)) {
-		if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-			errExit("disable file");
-	}
-	else {
-		if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-			errExit("disable file");
-	}
-	fs_logger2("blacklist", fname);
-
-doexit:
-	free(fname);
-}
-
 // disable pulseaudio socket
 void pulseaudio_disable(void) {
 	if (arg_debug)
 		printf("disable pulseaudio\n");
 	// blacklist user config directory
-	disable_file(cfg.homedir, ".config/pulse");
+	disable_file_path(cfg.homedir, ".config/pulse");
 
 
 	// blacklist pulseaudio socket in XDG_RUNTIME_DIR
 	char *name = getenv("XDG_RUNTIME_DIR");
 	if (name)
-		disable_file(name, "pulse/native");
+		disable_file_path(name, "pulse/native");
 
 	// try the default location anyway
 	char *path;
 	if (asprintf(&path, "/run/user/%d", getuid()) == -1)
 		errExit("asprintf");
-	disable_file(path, "pulse/native");
+	disable_file_path(path, "pulse/native");
 	free(path);
 
 
@@ -87,12 +59,11 @@ void pulseaudio_disable(void) {
 	struct dirent *entry;
 	while ((entry = readdir(dir))) {
 		if (strncmp(entry->d_name, "pulse-", 6) == 0) {
-			disable_file("/tmp", entry->d_name);
+			disable_file_path("/tmp", entry->d_name);
 		}
 	}
 
 	closedir(dir);
-
 }
 
 

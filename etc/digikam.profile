@@ -5,6 +5,7 @@ include /etc/firejail/digikam.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# blacklist /run/user/*/bus
 noblacklist ${HOME}/.config/digikam
 noblacklist ${HOME}/.config/digikamrc
 noblacklist ${HOME}/.kde/share/apps/digikam
@@ -20,6 +21,7 @@ include /etc/firejail/whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

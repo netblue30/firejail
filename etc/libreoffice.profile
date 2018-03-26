@@ -5,6 +5,7 @@ include /etc/firejail/libreoffice.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.java
 noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
@@ -21,6 +22,7 @@ apparmor
 caps.drop all
 machine-id
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

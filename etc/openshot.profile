@@ -5,6 +5,7 @@ include /etc/firejail/openshot.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.openshot
 noblacklist ${HOME}/.openshot_qt
 
@@ -18,6 +19,7 @@ include /etc/firejail/whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

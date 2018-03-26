@@ -5,6 +5,7 @@ include /etc/firejail/audacious.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.config/Audaciousrc
 noblacklist ${HOME}/.config/audacious
 
@@ -18,6 +19,7 @@ include /etc/firejail/whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
+nodbus
 nogroups
 nonewprivs
 noroot

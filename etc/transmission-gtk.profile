@@ -5,6 +5,7 @@ include /etc/firejail/transmission-gtk.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+blacklist /run/user/*/bus
 noblacklist ${HOME}/.cache/transmission
 noblacklist ${HOME}/.config/transmission
 
@@ -25,6 +26,7 @@ apparmor
 caps.drop all
 machine-id
 netfilter
+nodbus
 nodvd
 nonewprivs
 noroot

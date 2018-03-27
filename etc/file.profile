@@ -6,7 +6,6 @@ include /etc/firejail/file.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
 blacklist /tmp/.X11-unix
 
 include /etc/firejail/disable-common.inc
@@ -17,6 +16,7 @@ caps.drop all
 hostname file
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

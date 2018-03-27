@@ -5,7 +5,6 @@ include /etc/firejail/krita.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus
 noblacklist ${HOME}/.config/kritarc
 noblacklist ${HOME}/.local/share/krita
 
@@ -18,6 +17,7 @@ apparmor
 caps.drop all
 ipc-namespace
 # net none
+# nodbus
 nodvd
 nogroups
 nonewprivs

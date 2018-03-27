@@ -259,9 +259,12 @@ enable/disable apparmor functionality globally. By default the flag is enabled.
 AppArmor deployment: we are starting apparmor by default for the following programs:
 - web browsers: firefox (firefox-common.profile), chromium (chromium-common.profile)
 - torrent clients: transmission-qt, transmission-gtk, qbittorrent
-- media players: vlc, mpv, audacious, totem, rhythmbox
+- media players: vlc, mpv, audacious, totem, rhythmbox, kodi, smplayer, xplayer
 - media editing: kdenlive, audacity, handbrake, gimp, inkscape, krita, openshot
-- etc.: atril, gnome-calculator, galculator, eom, eog
+- image viewers: eom, eog, gwenview, xviewer
+- archive managers: ark, engrampa, file-roller
+- text editors: gedit, kwrite, pluma, xed
+- etc.: digikam, gnome-calculator, galculator, kcalc, okular, libreoffice, asunder
 
 Checking apparmor status:
 `````

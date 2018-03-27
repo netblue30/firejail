@@ -5,8 +5,6 @@ include /etc/firejail/ardour5.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.config/ardour4
 noblacklist ${HOME}/.config/ardour5
 noblacklist ${HOME}/.lv2
@@ -20,6 +18,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 ipc-namespace
 net none
+nodbus
 nodvd
 nogroups
 nonewprivs

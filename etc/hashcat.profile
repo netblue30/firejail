@@ -6,8 +6,6 @@ include /etc/firejail/hashcat.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.hashcat
 noblacklist /usr/include
 
@@ -18,6 +16,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+nodbus
 nodvd
 nogroups
 nonewprivs

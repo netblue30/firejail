@@ -5,8 +5,6 @@ include /etc/firejail/zathura.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.config/zathura
 noblacklist ${HOME}/.local/share/zathura
 
@@ -17,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 # net none
+# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -31,5 +30,6 @@ private-bin zathura
 private-dev
 private-etc fonts
 private-tmp
+
 read-only ${HOME}/
 read-write ${HOME}/.local/share/zathura/

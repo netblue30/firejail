@@ -5,8 +5,6 @@ include /etc/firejail/mupen64plus.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.config/mupen64plus
 noblacklist ${HOME}/.local/share/mupen64plus
 
@@ -24,6 +22,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 net none
+nodbus
 nodvd
 nonewprivs
 noroot

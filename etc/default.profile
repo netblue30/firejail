@@ -17,6 +17,7 @@ caps.drop all
 # ipc-namespace
 netfilter
 # no3d
+# nodbus
 # nodvd
 # nogroups
 nonewprivs

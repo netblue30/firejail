@@ -5,8 +5,6 @@ include /etc/firejail/terasology.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/terasology
 
@@ -25,6 +23,7 @@ caps.drop all
 ipc-namespace
 net none
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

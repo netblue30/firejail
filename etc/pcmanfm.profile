@@ -5,8 +5,6 @@ include /etc/firejail/pcmanfm.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.local/share/Trash
 # noblacklist ${HOME}/.config/libfm - disable-programs.inc is disabled, see below
 # noblacklist ${HOME}/.config/pcmanfm
@@ -19,6 +17,7 @@ include /etc/firejail/disable-passwdmgr.inc
 caps.drop all
 # net none - see issue #1467, computer:/// location broken
 no3d
+# nodbus
 nodvd
 nonewprivs
 noroot

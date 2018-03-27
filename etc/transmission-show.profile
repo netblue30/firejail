@@ -5,8 +5,6 @@ include /etc/firejail/transmission-show.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.cache/transmission
 noblacklist ${HOME}/.config/transmission
 
@@ -18,6 +16,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 machine-id
 net none
+nodbus
 nodvd
 nonewprivs
 noroot

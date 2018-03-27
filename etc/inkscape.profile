@@ -18,7 +18,8 @@ include /etc/firejail/whitelist-var-common.inc
 
 apparmor
 caps.drop all
-netfilter
+net none
+nodbus
 nodvd
 nogroups
 nonewprivs

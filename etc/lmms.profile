@@ -5,8 +5,6 @@ include /etc/firejail/lmms.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.lmmsrc.xml
 
 include /etc/firejail/disable-common.inc
@@ -18,6 +16,7 @@ caps.drop all
 ipc-namespace
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

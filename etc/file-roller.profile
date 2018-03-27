@@ -5,8 +5,6 @@ include /etc/firejail/file-roller.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus - makes settings immutable
-
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
@@ -14,9 +12,13 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+# following line makes settings immutable
+apparmor
 caps.drop all
-# net none - makes settings immutable
+net none
 no3d
+# following line makes settings immutable
+nodbus
 nodvd
 nogroups
 nonewprivs

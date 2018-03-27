@@ -5,7 +5,6 @@ include /etc/firejail/viewnior.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
 blacklist ${HOME}/.bashrc
 
 noblacklist ${HOME}/.Steam
@@ -20,6 +19,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

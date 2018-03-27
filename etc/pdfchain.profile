@@ -5,9 +5,6 @@ include /etc/firejail/pdfchain.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-
-blacklist /run/user/*/bus
-
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-devel.inc
@@ -19,6 +16,7 @@ caps.drop all
 ipc-namespace
 net none
 no3d
+nodbus
 nogroups
 nonewprivs
 noroot

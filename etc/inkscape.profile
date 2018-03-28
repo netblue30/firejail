@@ -5,9 +5,9 @@ include /etc/firejail/inkscape.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.inkscape
+noblacklist ${HOME}/.cache/inkscape
 noblacklist ${HOME}/.config/inkscape
-
+noblacklist ${HOME}/.inkscape
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

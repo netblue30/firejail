@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 # blacklist /run/user/*/bus
 
+noblacklist ${HOME}/.config/katemetainfos
 noblacklist ${HOME}/.config/katepartrc
 noblacklist ${HOME}/.config/katerc
 noblacklist ${HOME}/.config/kateschemarc

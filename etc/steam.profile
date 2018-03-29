@@ -48,6 +48,10 @@ shell none
 # tracelog disabled as it breaks integrated browser
 #tracelog
 
+# private-bin is disabled while in testing, but has been tested working with multiple games
+#private-bin awk,basename,bash,bsdtar,bzip2,cat,chmod,cksum,cmp,comm,compress,convert,cp,curl,cut,date,dbus-launch,dbus-send,dbus-test-tool,desktop-file-edit,desktop-file-install,desktop-file-validate,dirname,echo,env,eog,eom,expr,file,find,getopt,grep,gtar,gthumb,gzip,head,hostname,id,java,java-config,lbzip2,ldconfig,ldd,ln,ls,lsb_release,lspci,lsof,lz4,lzip,lzma,lzop,md5sum,mkdir,mktemp,mv,netstat,pix,ps,pulseaudio,readlink,realpath,rm,sed,sh,sha1sum,sha256sum,sha512sum,sleep,sort,steam,steamdeps,steam-native,steam-runtime,sum,tail,tar,test,touch,tr,umask,uname,update-desktop-database,viewnior,wget,which,whoami,xterm,xviewer,xz,zenity
+# extra interpreters are available which might be needed for select games
+#private-bin mono,python*
 # private-dev should be commented for controllers
 private-dev
 # private-etc breaks a small selection of games on some systems, comment to support those

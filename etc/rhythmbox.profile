@@ -19,7 +19,7 @@ caps.drop all
 netfilter
 # no3d
 # following line makes settings immutable
-nodbus
+# nodbus
 nogroups
 nonewprivs
 noroot

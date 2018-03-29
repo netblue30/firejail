@@ -20,7 +20,7 @@ apparmor
 caps.drop all
 netfilter
 # following line makes settings immutable
-nodbus
+# nodbus
 nogroups
 nonewprivs
 noroot

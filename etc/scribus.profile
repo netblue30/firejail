@@ -48,5 +48,5 @@ tracelog
 private-dev
 private-tmp
 
-# noexec ${HOME}
+noexec ${HOME}
 noexec /tmp

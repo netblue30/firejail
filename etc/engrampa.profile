@@ -18,7 +18,7 @@ caps.drop all
 net none
 no3d
 # following line makes settings immutable
-nodbus
+# nodbus
 nodvd
 nogroups
 nonewprivs

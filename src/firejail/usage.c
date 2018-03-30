@@ -132,7 +132,9 @@ void usage(void) {
 #endif
 	printf("    --nice=value - set nice value.\n");
 	printf("    --no3d - disable 3D hardware acceleration.\n");
-	printf("    --noblacklist=filename - disable blacklist for file or directory .\n");
+	printf("    --noblacklist=filename - disable blacklist for file or directory.\n");
+	printf("    --nodbus - disable D-Bus access.\n");
+	printf("    --nodvd - disable DVD and audio CD devices.\n");
 	printf("    --noexec=filename - remount the file or directory noexec nosuid and nodev.\n");
 	printf("    --nogroups - disable supplementary groups.\n");
 	printf("    --nonewprivs - sets the NO_NEW_PRIVS prctl.\n");

@@ -1064,6 +1064,17 @@ $ nc dict.org 2628
 220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
 .br
 .TP
+\fB\-\-nodbus
+Disable D-Bus access. Only the regular UNIX socket is handled by this command. To
+disable the abstract socket you would need to request a new network namespace using
+\-\-net command. Another option is to remove unix from \-\-protocol set.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-nodbus \-\-net=none
+.TP
 \fB\-\-nodvd
 Disable DVD and audio CD devices.
 .br

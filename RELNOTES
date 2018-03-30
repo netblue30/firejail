@@ -9,11 +9,11 @@ firejail (0.9.53) baseline; urgency=low
      All users of Firefox-based browsers who use addons and plugins
      that read/write from ${HOME} will need to uncomment the includes for
      firefox-common-addons.inc in firefox-common.profile.
-  * Spectre mitigation patch for gcc compiler
+  * Spectre mitigation patch for gcc and clang compiler
+  * D-Bus handling (--nodbus)
   * AppArmor support for overlayfs and chroot sandboxes
   * AppArmor support for AppImages
-  * Enable AppArmor by default for Firefox, Chromium, Transmission
-     VLC and mpv
+  * Enable AppArmor by default for a large number of programs
   * firejail --apparmor.print option
   * firemon --apparmor option
   * apparmor yes/no flag in /etc/firejail/firejail.config

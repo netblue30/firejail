@@ -143,6 +143,19 @@ Configuration options:
    Gcov instrumentation:
    Install contrib scripts: yes
 `````
+This feature is also supported for LLVM/clang compiler
+
+## New command line options
+`````
+       --nodbus
+              Disable D-Bus access. Only the regular UNIX socket is handled by
+              this command. To disable the abstract socket you would  need  to
+              request  a  new  network  namespace using --net command. Another
+              option is to remove unix from --protocol set.
+
+              Example:
+              $ firejail --nodbus --net=none
+`````
 
 ## AppImage development
 

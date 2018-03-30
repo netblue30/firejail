@@ -385,6 +385,7 @@ blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kdenlive
 blacklist ${HOME}/.local/share/kget
 blacklist ${HOME}/.local/share/kmail2
+blacklist ${HOME}/.local/share/knotes
 blacklist ${HOME}/.local/share/krita
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/ktorrent

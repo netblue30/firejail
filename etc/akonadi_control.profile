@@ -23,8 +23,8 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
-# the default mysqld-akonadi apparmor profile in debian and ubuntu
-# is not compatible with the commented options below
+# disabled options below are not compatible with the apparmor profile for mysqld-akonadi.
+# this affects ubuntu and debian currently
 
 # apparmor
 caps.drop all

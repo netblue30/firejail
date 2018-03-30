@@ -18,7 +18,7 @@ include /etc/firejail/whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# nodbus
+# nodbus - problems with KDE
 # nogroups
 nonewprivs
 noroot

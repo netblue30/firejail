@@ -11,6 +11,7 @@ include /etc/firejail/globals.local
 
 # noblacklist ${HOME}/.cache/krunner
 # noblacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite
+# noblacklist ${HOME}/.config/chromium
 noblacklist ${HOME}/.config/krunnerrc
 noblacklist ${HOME}/.kde/share/config/krunnerrc
 noblacklist ${HOME}/.kde4/share/config/krunnerrc

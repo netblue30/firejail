@@ -6,6 +6,9 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+echo "TESTING: build (test/utils/build.exp)"
+./build.exp
+
 echo "TESTING: audit (test/utils/audit.exp)"
 ./audit.exp
 

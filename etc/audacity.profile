@@ -18,7 +18,7 @@ apparmor
 caps.drop all
 net none
 no3d
-# nodbus
+# nodbus - problems on Fedora 27
 nodvd
 nogroups
 nonewprivs

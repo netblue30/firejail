@@ -23,7 +23,6 @@ include /etc/firejail/whitelist-var-common.inc
 apparmor
 caps.drop all
 net none
-netfilter
 no3d
 nodbus
 nodvd

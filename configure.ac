@@ -9,15 +9,21 @@ AC_PROG_INSTALL
 AC_PROG_RANLIB
 
 HAVE_SPECTRE="no"
-AC_MSG_CHECKING(for Spectre mitigation support in gcc compiler)
+AC_MSG_CHECKING(for Spectre mitigation support in gcc or clang compiler)
 AS_IF([test "$CC" = "gcc"], [
 	HAVE_SPECTRE="yes"
 	$CC -mindirect-branch=thunk -c dummy.c || HAVE_SPECTRE="no"
 	rm -f dummy.o
+	EXTRA_CFLAGS+=" -mindirect-branch=thunk "
+])
+AS_IF([test "$CC" = "clang"], [
+	HAVE_SPECTRE="yes"
+	$CC -mretpoline -c dummy.c || HAVE_SPECTRE="no"
+	rm -f dummy.o
+	EXTRA_CFLAGS+=" -mretpoline "
 ])
 AS_IF([test "$HAVE_SPECTRE" = "yes"], [
 	AC_MSG_RESULT(yes)
-	EXTRA_CFLAGS+=" -mindirect-branch=thunk "
 ])
 AS_IF([test "$HAVE_SPECTRE" = "no"], [
 	AC_MSG_RESULT(... not available)

@@ -85,6 +85,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// dbus
+			else if (strncmp(ptr, "dbus ", 5) == 0) {
+				if (strcmp(ptr + 5, "yes") == 0)
+					cfg_val[CFG_DBUS] = 1;
+				else if (strcmp(ptr + 5, "no") == 0)
+					cfg_val[CFG_DBUS] = 0;
+				else
+					goto errout;
+			}
 			// join
 			else if (strncmp(ptr, "join ", 5) == 0) {
 				if (strcmp(ptr + 5, "yes") == 0)

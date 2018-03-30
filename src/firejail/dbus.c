@@ -20,6 +20,11 @@
 #include "firejail.h"
 
 void dbus_session_disable(void) {
+	if (!checkcfg(CFG_DBUS)) {
+		fwarning("D-Bus handling is disabled in Firejail configuration file\n");
+		return;
+	}
+
 	char *path;
 	if (asprintf(&path, "/run/user/%d/bus", getuid()) == -1)
 		errExit("asprintf");

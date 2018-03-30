@@ -744,6 +744,7 @@ enum {
 	CFG_XPRA_ATTACH,
 	CFG_PRIVATE_LIB,
 	CFG_APPARMOR,
+	CFG_DBUS,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

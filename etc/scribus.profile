@@ -5,8 +5,6 @@ include /etc/firejail/scribus.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 # Support for PDF readers comes with Scribus 1.5 and higher
 noblacklist ${HOME}/.cache/okular
 noblacklist ${HOME}/.config/okularpartrc
@@ -33,6 +31,7 @@ include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 net none
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -48,3 +47,6 @@ tracelog
 # private-bin scribus,gs,gimp*
 private-dev
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

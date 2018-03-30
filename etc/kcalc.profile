@@ -20,9 +20,11 @@ whitelist ${HOME}/.kde4/share/config/kcalcrc
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
-netfilter
+net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

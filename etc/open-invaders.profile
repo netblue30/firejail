@@ -5,8 +5,6 @@ include /etc/firejail/open-invaders.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.openinvaders
 
 include /etc/firejail/disable-common.inc
@@ -20,6 +18,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 net none
+nodbus
 nodvd
 nogroups
 nonewprivs

@@ -5,8 +5,6 @@ include /etc/firejail/pdfmod.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.cache/pdfmod
 noblacklist ${HOME}/.config/pdfmod
 
@@ -22,6 +20,7 @@ ipc-namespace
 machine-id
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

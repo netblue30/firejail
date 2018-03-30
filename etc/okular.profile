@@ -5,8 +5,6 @@ include /etc/firejail/okular.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.cache/okular
 noblacklist ${HOME}/.config/okularpartrc
 noblacklist ${HOME}/.config/okularrc
@@ -30,6 +28,7 @@ caps.drop all
 machine-id
 # net none
 netfilter
+# nodbus
 nodvd
 nogroups
 nonewprivs

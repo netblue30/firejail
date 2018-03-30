@@ -5,8 +5,6 @@ include /etc/firejail/freecad.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.config/FreeCAD
 
 include /etc/firejail/disable-common.inc
@@ -17,6 +15,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 ipc-namespace
 net none
+nodbus
 nodvd
 nogroups
 nonewprivs

@@ -5,8 +5,6 @@ include /etc/firejail/pluma.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus - makes settings immutable
-
 noblacklist ${HOME}/.config/pluma
 
 include /etc/firejail/disable-common.inc
@@ -16,10 +14,12 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+# apparmor - makes settings immutable
 caps.drop all
-# net none - makes settings immutable
 machine-id
+# net none - makes settings immutable
 no3d
+# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs

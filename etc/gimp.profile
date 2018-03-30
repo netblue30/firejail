@@ -5,8 +5,6 @@ include /etc/firejail/gimp.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.gimp*
 
 include /etc/firejail/disable-common.inc
@@ -15,9 +13,10 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
-apparmor
+# apparmor - makes settings immutable
 caps.drop all
-net none
+# net none - makes settings immutable
+# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs

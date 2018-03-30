@@ -6,7 +6,6 @@ include /etc/firejail/cpio.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
 blacklist /tmp/.X11-unix
 
 noblacklist /sbin
@@ -19,6 +18,7 @@ include /etc/firejail/disable-programs.inc
 caps.drop all
 net none
 no3d
+nodbus
 nodvd
 nonewprivs
 nosound

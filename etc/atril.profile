@@ -18,7 +18,7 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
-apparmor
+# apparmor
 caps.drop all
 machine-id
 no3d

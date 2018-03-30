@@ -5,8 +5,6 @@ include /etc/firejail/simutrans.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.simutrans
 
 include /etc/firejail/disable-common.inc
@@ -20,6 +18,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 net none
+nodbus
 nodvd
 nogroups
 nonewprivs

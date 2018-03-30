@@ -5,8 +5,6 @@ include /etc/firejail/kate.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.config/katemetainfos
 noblacklist ${HOME}/.config/katepartrc
 noblacklist ${HOME}/.config/katerc
@@ -22,9 +20,10 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
-apparmor
+# apparmor
 caps.drop all
 # net none
+# nodbus
 netfilter
 nodvd
 nogroups

@@ -6,12 +6,11 @@ include /etc/firejail/clamav.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 caps.drop all
 ipc-namespace
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

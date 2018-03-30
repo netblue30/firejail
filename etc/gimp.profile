@@ -13,10 +13,10 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+apparmor
 caps.drop all
-# net none - makes settings immutable
-# nodbus - makes settings immutable
+net none
+nodbus
 nodvd
 nogroups
 nonewprivs

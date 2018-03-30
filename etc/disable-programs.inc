@@ -138,6 +138,7 @@ blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/k3brc
 blacklist ${HOME}/.config/kaffeinerc
+blacklist ${HOME}/.config/katemetainfos
 blacklist ${HOME}/.config/katepartrc
 blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/kateschemarc
@@ -507,6 +508,7 @@ blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/akonadi*
+blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/borg
 blacklist ${HOME}/.cache/calibre
@@ -529,11 +531,14 @@ blacklist ${HOME}/.cache/google-chrome-unstable
 blacklist ${HOME}/.cache/gnome-twitch
 blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/INRIA/Natron
+blacklist ${HOME}/.cache/inkscape
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
 blacklist ${HOME}/.cache/kdenlive
 blacklist ${HOME}/.cache/kinfocenter
+blacklist ${HOME}/.cache/kmail2
 blacklist ${HOME}/.cache/krunner
+blacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite
 blacklist ${HOME}/.cache/kscreenlocker_greet
 blacklist ${HOME}/.cache/ksmserver-logout-greeter
 blacklist ${HOME}/.cache/ksplashqml
@@ -566,6 +571,7 @@ blacklist ${HOME}/.cache/torbrowser
 blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
+blacklist ${HOME}/.cache/vlc
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/xmms2

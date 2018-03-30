@@ -5,6 +5,7 @@ include /etc/firejail/vlc.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.cache/vlc
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.local/share/vlc
 

@@ -10,10 +10,12 @@ include /etc/firejail/globals.local
 #   with its own profile, if it is sandboxed automatically.
 
 # noblacklist ${HOME}/.cache/krunner
+# noblacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite
 noblacklist ${HOME}/.config/krunnerrc
 noblacklist ${HOME}/.kde/share/config/krunnerrc
 noblacklist ${HOME}/.kde4/share/config/krunnerrc
 # noblacklist ${HOME}/.local/share/baloo
+# noblacklist ${HOME}/.mozilla
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc

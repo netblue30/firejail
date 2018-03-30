@@ -9,6 +9,7 @@ include /etc/firejail/globals.local
 # one solution is to have akonadi already running when kmail is started
 
 noblacklist ${HOME}/.cache/akonadi*
+noblacklist ${HOME}/.cache/kmail2
 noblacklist ${HOME}/.config/akonadi*
 noblacklist ${HOME}/.config/baloorc
 noblacklist ${HOME}/.config/emailidentities

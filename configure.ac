@@ -14,13 +14,17 @@ AS_IF([test "$CC" = "gcc"], [
 	HAVE_SPECTRE="yes"
 	$CC -mindirect-branch=thunk -c dummy.c || HAVE_SPECTRE="no"
 	rm -f dummy.o
-	EXTRA_CFLAGS+=" -mindirect-branch=thunk "
+	AS_IF([test "$HAVE_SPECTRE" = "yes"], [
+		EXTRA_CFLAGS+=" -mindirect-branch=thunk "
+	])
 ])
 AS_IF([test "$CC" = "clang"], [
 	HAVE_SPECTRE="yes"
 	$CC -mretpoline -c dummy.c || HAVE_SPECTRE="no"
 	rm -f dummy.o
-	EXTRA_CFLAGS+=" -mretpoline "
+	AS_IF([test "$HAVE_SPECTRE" = "yes"], [
+		EXTRA_CFLAGS+=" -mretpoline "
+	])
 ])
 AS_IF([test "$HAVE_SPECTRE" = "yes"], [
 	AC_MSG_RESULT(yes)

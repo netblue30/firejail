@@ -3106,20 +3106,36 @@ fi
 
 
 HAVE_SPECTRE="no"
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Spectre mitigation support in gcc compiler" >&5
-$as_echo_n "checking for Spectre mitigation support in gcc compiler... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Spectre mitigation support in gcc or clang compiler" >&5
+$as_echo_n "checking for Spectre mitigation support in gcc or clang compiler... " >&6; }
 if test "$CC" = "gcc"; then :
 
 	HAVE_SPECTRE="yes"
 	$CC -mindirect-branch=thunk -c dummy.c || HAVE_SPECTRE="no"
 	rm -f dummy.o
+	if test "$HAVE_SPECTRE" = "yes"; then :
+
+		EXTRA_CFLAGS+=" -mindirect-branch=thunk "
+
+fi
+
+fi
+if test "$CC" = "clang"; then :
+
+	HAVE_SPECTRE="yes"
+	$CC -mretpoline -c dummy.c || HAVE_SPECTRE="no"
+	rm -f dummy.o
+	if test "$HAVE_SPECTRE" = "yes"; then :
+
+		EXTRA_CFLAGS+=" -mretpoline "
+
+fi
 
 fi
 if test "$HAVE_SPECTRE" = "yes"; then :
 
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	EXTRA_CFLAGS+=" -mindirect-branch=thunk "
 
 fi
 if test "$HAVE_SPECTRE" = "no"; then :

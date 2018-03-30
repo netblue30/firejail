@@ -16,7 +16,8 @@ include /etc/firejail/whitelist-var-common.inc
 
 # apparmor - makes settings immutable
 caps.drop all
-# net none - makes settings immutable
+# net none
+netfilter
 no3d
 # nodbus - makes settings immutable
 nodvd

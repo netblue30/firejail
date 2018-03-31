@@ -7,6 +7,7 @@ include /etc/firejail/disable-devel.local
 # GCC
 #blacklist /usr/lib/gcc	- seems to create problems on Gentoo
 blacklist ${PATH}/as
+blacklist ${PATH}/cc
 blacklist ${PATH}/c++*
 blacklist ${PATH}/c8*
 blacklist ${PATH}/c9*

@@ -1,18 +1,4 @@
-CC=@CC@
-PREFIX=@prefix@
-VERSION=@PACKAGE_VERSION@
-NAME=@PACKAGE_NAME@
-HAVE_FATAL_WARNINGS=@HAVE_FATAL_WARNINGS@
-HAVE_GCOV=@HAVE_GCOV@
-EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
-EXTRA_CFLAGS +=@EXTRA_CFLAGS@
-
-H_FILE_LIST       = $(sort $(wildcard *.[h]))
-C_FILE_LIST       = $(sort $(wildcard *.c))
-OBJS = $(C_FILE_LIST:.c=.o)
-BINOBJS =  $(foreach file, $(OBJS), $file)
-CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -DLIBDIR='"$(libdir)"' $(HAVE_GCOV) -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIC -Wformat -Wformat-security
-LDFLAGS:=-pic -Wl,-z,relro -Wl,-z,now
+include ../common.mk
 
 all: $(OBJS)
 

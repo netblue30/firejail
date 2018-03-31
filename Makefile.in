@@ -75,7 +75,7 @@ distclean: clean
 	for dir in $(APPS) $(MYLIBS); do \
 		$(MAKE) -C $$dir distclean; \
 	done
-	rm -fr Makefile autom4te.cache config.log config.status config.h uids.h dummy.o
+	rm -fr Makefile autom4te.cache config.log config.status config.h uids.h dummy.o src/common.mk
 
 realinstall:
 	# firejail executable
@@ -177,6 +177,7 @@ install-strip: all
 	strip src/fnetfilter/fnetfilter
 	strip src/fseccomp/fseccomp
 	strip src/fsec-print/fsec-print
+	strip src/fsec-optimize/fsec-optimize
 	strip src/fcopy/fcopy
 	strip src/fldd/fldd
 	strip src/fbuilder/fbuilder

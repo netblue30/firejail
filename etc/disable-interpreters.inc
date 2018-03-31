@@ -2,6 +2,12 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-interpreters.local
 
+# Lua
+blacklist ${PATH}/lua*
+blacklist /usr/lib/lua
+blacklist /usr/include/lua*
+blacklist /usr/share/lua
+
 # Node.js
 ${PATH}/node
 /usr/include/node

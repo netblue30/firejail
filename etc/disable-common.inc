@@ -297,6 +297,13 @@ blacklist /etc/ssh
 blacklist /home/.ecryptfs
 blacklist /var/backup
 
+# cloud provider configuration
+blacklist ${HOME}/.aws
+blacklist ${HOME}/.boto
+blacklist /etc/boto.cfg
+blacklist ${HOME}/.config/gcloud
+blacklist ${HOME}/.kube
+
 # system directories
 blacklist /sbin
 blacklist /usr/local/sbin

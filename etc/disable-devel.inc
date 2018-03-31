@@ -16,10 +16,10 @@ blacklist ${PATH}/g++*
 blacklist ${PATH}/gcc*
 blacklist ${PATH}/gdb
 blacklist ${PATH}/ld
-blacklist ${PATH}/x86_64-unknown-linux-gnu-gcc*
-blacklist ${PATH}/x86_64-linux-gnu-g++*
-blacklist ${PATH}/x86_64-linux-gnu-gcc*
-blacklist ${PATH}/x86_64-unknown-linux-gnu-g++*
+blacklist ${PATH}/*-gcc*
+blacklist ${PATH}/*-g++*
+blacklist ${PATH}/*-gcc*
+blacklist ${PATH}/*-g++*
 blacklist /usr/include
 
 # clang/llvm

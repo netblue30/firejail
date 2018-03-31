@@ -5,6 +5,11 @@ include /etc/firejail/ranger.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+<<<<<<< HEAD
+=======
+blacklist /run/user/*/bus
+
+>>>>>>> 2862c209e71265292a7c107e21055f1cff41b656
 # noblacklist ${PATH}/cpan*
 noblacklist ${PATH}/perl
 noblacklist /usr/lib/perl*

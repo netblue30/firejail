@@ -9,8 +9,8 @@ blacklist /usr/include/lua*
 blacklist /usr/share/lua
 
 # Node.js
-${PATH}/node
-/usr/include/node
+blacklist ${PATH}/node
+blacklist /usr/include/node
 
 # Perl
 blacklist ${PATH}/cpan*

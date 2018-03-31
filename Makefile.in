@@ -107,6 +107,7 @@ endif
 	install -c -m 0755 src/fbuilder/fbuilder $(DESTDIR)/$(libdir)/firejail/.
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	install -c -m 0755 src/fsec-print/fsec-print $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fsec-optimize/fsec-optimize $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.

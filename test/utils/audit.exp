@@ -76,4 +76,24 @@ expect {
 }
 after 100
 
+# run audit executable without a sandbox
+send -- "faudit\r"
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"is not running in a PID namespace"
+}
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	"BAD: seccomp disabled"
+}
+expect {
+	timeout {puts "TESTING ERROR 15\n";exit}
+	"BAD: the capability map is"
+}
+expect {
+	timeout {puts "TESTING ERROR 16\n";exit}
+	"MAYBE: /dev directory seems to be fully populated"
+}
+after 100
+
 puts "\nall done\n"

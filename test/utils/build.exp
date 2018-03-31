@@ -7,7 +7,15 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --build ls ~\r"
+send -- "firejail --build cat ~/firejail-test-file-7699\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"whitelist ~/firejail-test-file-7699"
+}
+expect {
+	timeout {puts "TESTING ERROR 0.1\n";exit}
+	"include /etc/firejail/whitelist-common.inc"
+}
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"private-tmp"
@@ -22,7 +30,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"private-bin ls,"
+	"private-bin cat,"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}

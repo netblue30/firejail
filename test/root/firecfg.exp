@@ -13,7 +13,7 @@ sleep 1
 send --  "firecfg --clean\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"/usr/local/bin/firefox removed"
+	"less removed"
 }
 sleep 1
 
@@ -30,11 +30,11 @@ sleep 1
 send --  "firecfg\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"firefox created"
+	"less created"
 }
 sleep 1
 
-send -- "file /usr/local/bin/firefox\r"
+send -- "file /usr/local/bin/less\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"symbolic link to /usr/bin/firejail"
@@ -44,7 +44,7 @@ sleep 1
 send -- "firecfg --list\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"/usr/local/bin/firefox"
+	"/usr/local/bin/less"
 }
 sleep 1
 

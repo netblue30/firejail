@@ -6,8 +6,16 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+if [ -f /etc/debian_version ]; then
+	libdir=$(dirname "$(dpkg -L firejail | grep faudit)")
+	export PATH="$PATH:$libdir"
+fi
+export PATH="$PATH:/usr/lib/firejail"
+
+echo "testing" > ~/firejail-test-file-7699
 echo "TESTING: build (test/utils/build.exp)"
 ./build.exp
+rm -f ~/firejail-test-file-7699
 
 echo "TESTING: audit (test/utils/audit.exp)"
 ./audit.exp

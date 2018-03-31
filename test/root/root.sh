@@ -110,13 +110,13 @@ echo "TESTING: firemon events (test/root/firemon-events.exp)"
 #********************************
 # firecfg
 #********************************
-which firefox
+which less
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: firecfg (test/root/firecfg.exp)"
 	./firecfg.exp
 else
-	echo "TESTING SKIP: firecfg, firefox not found"
+	echo "TESTING SKIP: firecfg, less not found"
 fi
 
 # restore the default config file

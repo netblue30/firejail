@@ -308,4 +308,4 @@ Basilisk browser, Tor Browser language packs, PlayOnLinux, sylpheed, discord-can
 pycharm-community, pycharm-professional, Pitivi, OnionShare, Fritzing, Kaffeine, pdfchain,
 tilp, vivaldi-snapshot, bitcoin-qt, VS Code, falkon, gnome-builder, lobase, asunder,
 gnome-recipes, akonadi_control, evince-previewer, evince-thumbnailer, blender-2.8,
-thunderbird-beta, ncdu, gnome-logs
+thunderbird-beta, ncdu, gnome-logs, gcloud

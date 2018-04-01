@@ -287,6 +287,8 @@ Jaykishan Mutkawoa (https://github.com/jmutkawoa)
 James Elford (https://github.com/jelford)
 	- pass password manager support
 	- removed shell none from ssh-agent configuration, fixing the infinit loop
+	- added gcloud profile
+	- blacklist sensitive cloud provider files in disable-common
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)

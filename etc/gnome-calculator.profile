@@ -6,7 +6,6 @@ include /etc/firejail/gnome-calculator.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
@@ -32,7 +31,7 @@ shell none
 disable-mnt
 private-bin gnome-calculator
 private-dev
-private-lib
+private-lib gdk-pixbuf-2.0,gio,girepository-1.0,gvfs,libgconf-2.so.4,libgnutls.so.30,libplotinus.so,libproxy.so.1,librsvg-2.so.2,libxml2.so.2
 private-tmp
 
 #memory-deny-write-execute  - breaks on Arch

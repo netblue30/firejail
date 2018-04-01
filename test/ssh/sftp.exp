@@ -21,17 +21,17 @@ send -- "echo 12345 > testfile\r"
 after 100
 send -- "sftp firejail-test@0\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 1\n";exit}
 	"Connected to 0"
 }
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"sftp>"
 }
 after 100
 send -- "put testfile\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"100%"
 }
 after 100
@@ -41,14 +41,14 @@ sleep 1
 
 send -- "ssh firejail-test@0\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"Child process initialized" {puts "OK\n"}
 	"an existing sandbox was detected" {puts "OK\n"}
 }
 sleep 1
 send -- "cat testfile\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"12345"
 }
 after 100
@@ -59,17 +59,17 @@ send -- "rm testfile\r"
 after 100
 send -- "sftp firejail-test@0\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 6\n";exit}
 	"Connected to 0"
 }
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 7\n";exit}
 	"sftp>"
 }
 after 100
 send -- "get testfile\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 8\n";exit}
 	"100%"
 }
 after 100
@@ -77,7 +77,7 @@ send -- "exit\r"
 sleep 1
 send -- "cat testfile\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
+	timeout {puts "TESTING ERROR 9\n";exit}
 	"12345"
 }
 after 100

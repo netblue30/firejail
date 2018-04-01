@@ -80,6 +80,9 @@ echo "TESTING: join (test/root/join.exp)"
 echo "TESTING: git-install (test/root/git.exp)"
 ./git.exp
 
+echo "TESTING: login-nobody (test/root/login_nobody.exp)"
+./login_nobody.exp
+
 #********************************
 # seccomp
 #********************************

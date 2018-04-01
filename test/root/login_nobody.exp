@@ -1,0 +1,35 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2018 Firejail Authors
+# License GPL v2
+
+set timeout 10
+cd /home
+spawn $env(SHELL)
+match_max 100000
+
+send --  "su - nobody -s /usr/bin/firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+after 100
+
+send -- "cat /proc/self/status | grep Seccomp\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"2"
+}
+after 100
+
+send -- "cat /proc/self/status | grep CapBnd\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"0000000000000000"
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+puts "\nall done\n"

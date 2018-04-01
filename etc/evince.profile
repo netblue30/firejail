@@ -38,6 +38,8 @@ private-etc fonts
 
 #private-lib - seems to be breaking on Gnome Shell 3.26.2, Mutter WM, issue 1711
 #private-lib evince,libpoppler-glib.so.8
+# private-lib fix slipped through the cracks of earlier, reverted commit
+private-lib evince,gdk-pixbuf-2.0,gio,gvfs/libgvfscommon.so,libgconf-2.so.4,libpoppler-glib.so.8,librsvg-2.so.2
 
 private-tmp
 

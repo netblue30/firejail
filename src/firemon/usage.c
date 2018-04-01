@@ -19,62 +19,65 @@
 */
 #include "firemon.h"
 
+static char *help_str =
+	"Usage: firemon [OPTIONS] [PID]\n\n"
+	"Monitor processes started in a Firejail sandbox. Without any PID specified,\n"
+	"all processes started by Firejail are monitored. Descendants of these processes\n"
+	"are also being monitored. On Grsecurity systems only root user\n"
+	"can run this program.\n\n"
+	"Options:\n"
+	"\t--apparmor - print AppArmor confinement status for each sandbox.\n\n"
+	"\t--arp - print ARP table for each sandbox.\n\n"
+	"\t--caps - print capabilities configuration for each sandbox.\n\n"
+	"\t--cgroup - print control group information for each sandbox.\n\n"
+	"\t--cpu - print CPU affinity for each sandbox.\n\n"
+	"\t--help, -? - this help screen.\n\n"
+	"\t--interface - print network interface information for each sandbox.\n\n"
+	"\t--list - list all sandboxes.\n\n"
+	"\t--name=name - print information only about named sandbox.\n\n"
+	"\t--netstats - monitor network statistics for sandboxes creating a new\n"
+	"\t\tnetwork namespace.\n\n"
+	"\t--nowrap - enable line wrapping in terminals.\n\n"
+	"\t--route - print route table for each sandbox.\n\n"
+	"\t--seccomp - print seccomp configuration for each sandbox.\n\n"
+	"\t--tree - print a tree of all sandboxed processes.\n\n"
+	"\t--top - monitor the most CPU-intensive sandboxes.\n\n"
+	"\t--version - print program version and exit.\n\n"
+
+	"Without any options, firemon monitors all fork, exec, id change, and exit\n"
+	"events in the sandbox. Monitoring a specific PID is also supported.\n\n"
+
+	"Option --list prints a list of all sandboxes. The format for each entry is as\n"
+	"follows:\n\n"
+	"\tPID:USER:Command\n\n"
+
+	"Option --tree prints the tree of processes running in the sandbox. The format\n"
+	"for each process entry is as follows:\n\n"
+	"\tPID:USER:Command\n\n"
+
+	"Option --top is similar to the UNIX top command, however it applies only to\n"
+	"sandboxes. Listed below are the available fields (columns) in alphabetical\n"
+	"order:\n\n"
+	"\tCommand - command used to start the sandbox.\n"
+	"\tCPU%% - CPU usage, the sandbox share of the elapsed CPU time since the\n"
+	"\t       last screen update\n"
+	"\tPID - Unique process ID for the task controlling the sandbox.\n"
+	"\tPrcs - number of processes running in sandbox, including the\n"
+	"\t       controlling process.\n"
+	"\tRES - Resident Memory Size (KiB), sandbox non-swapped physical memory.\n"
+	"\t      It is a sum of the RES values for all processes running in the\n"
+	"\t      sandbox.\n"
+	"\tSHR - Shared Memory Size (KiB), it reflects memory shared with other\n"
+	"\t      processes. It is a sum of the SHR values for all processes\n"
+	"\t      running in the sandbox, including the controlling process.\n"
+	"\tUptime - sandbox running time in hours:minutes:seconds format.\n"
+	"\tUser - The owner of the sandbox.\n"
+	"\n"
+	"License GPL version 2 or later\n"
+	"Homepage: http://firejail.wordpress.com\n"
+	"\n";
+
 void usage(void) {
 	printf("firemon - version %s\n", VERSION);
-	printf("Usage: firemon [OPTIONS] [PID]\n\n");
-	printf("Monitor processes started in a Firejail sandbox. Without any PID specified,\n");
-	printf("all processes started by Firejail are monitored. Descendants of these processes\n");
-	printf("are also being monitored. On Grsecurity systems only root user\n");
-	printf("can run this program.\n\n");
-	printf("Options:\n");
-	printf("\t--apparmor - print AppArmor confinement status for each sandbox.\n\n");
-	printf("\t--arp - print ARP table for each sandbox.\n\n");
-	printf("\t--caps - print capabilities configuration for each sandbox.\n\n");
-	printf("\t--cgroup - print control group information for each sandbox.\n\n");
-	printf("\t--cpu - print CPU affinity for each sandbox.\n\n");
-	printf("\t--help, -? - this help screen.\n\n");
-	printf("\t--interface - print network interface information for each sandbox.\n\n");
-	printf("\t--list - list all sandboxes.\n\n");
-	printf("\t--name=name - print information only about named sandbox.\n\n");
-	printf("\t--netstats - monitor network statistics for sandboxes creating a new\n");
-	printf("\t\tnetwork namespace.\n\n");
-	printf("\t--nowrap - enable line wrapping in terminals.\n\n");
-	printf("\t--route - print route table for each sandbox.\n\n");
-	printf("\t--seccomp - print seccomp configuration for each sandbox.\n\n");
-	printf("\t--tree - print a tree of all sandboxed processes.\n\n");
-	printf("\t--top - monitor the most CPU-intensive sandboxes.\n\n");
-	printf("\t--version - print program version and exit.\n\n");
-
-	printf("Without any options, firemon monitors all fork, exec, id change, and exit events\n");
-	printf("in the sandbox. Monitoring a specific PID is also supported.\n\n");
-
-	printf("Option --list prints a list of all sandboxes. The format for each entry is as\n");
-	printf("follows:\n\n");
-	printf("\tPID:USER:Command\n\n");
-
-	printf("Option --tree prints the tree of processes running in the sandbox. The format\n");
-	printf("for each process entry is as follows:\n\n");
-	printf("\tPID:USER:Command\n\n");
-
-	printf("Option --top is similar to the UNIX top command, however it applies only to\n");
-	printf("sandboxes. Listed below are the available fields (columns) in alphabetical\n");
-	printf("order:\n\n");
-	printf("\tCommand - command used to start the sandbox.\n");
-	printf("\tCPU%% - CPU usage, the sandbox share of the elapsed CPU time since the\n");
-	printf("\t       last screen update\n");
-	printf("\tPID - Unique process ID for the task controlling the sandbox.\n");
-	printf("\tPrcs - number of processes running in sandbox, including the controlling\n");
-	printf("\t       process.\n");
-	printf("\tRES - Resident Memory Size (KiB), sandbox non-swapped physical memory.\n");
-	printf("\t      It is a sum of the RES values for all processes running in the\n");
-	printf("\t      sandbox.\n");
-	printf("\tSHR - Shared Memory Size (KiB), it reflects memory shared with other\n");
-	printf("\t      processes. It is a sum of the SHR values for all processes running\n");
-	printf("\t      in the sandbox, including the controlling process.\n");
-	printf("\tUptime - sandbox running time in hours:minutes:seconds format.\n");
-	printf("\tUser - The owner of the sandbox.\n");
-	printf("\n");
-	printf("License GPL version 2 or later\n");
-	printf("Homepage: http://firejail.wordpress.com\n");
-	printf("\n");
+	puts(help_str);
 }

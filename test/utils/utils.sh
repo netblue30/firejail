@@ -13,9 +13,13 @@ fi
 export PATH="$PATH:/usr/lib/firejail"
 
 echo "testing" > ~/firejail-test-file-7699
+echo "testing" > /tmp/firejail-test-file-7699
+echo "testing" > /var/tmp/firejail-test-file-7699
 echo "TESTING: build (test/utils/build.exp)"
 ./build.exp
 rm -f ~/firejail-test-file-7699
+rm -f /tmp/firejail-test-file-7699
+rm -f /var/tmp/firejail-test-file-7699
 
 echo "TESTING: audit (test/utils/audit.exp)"
 ./audit.exp

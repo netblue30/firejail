@@ -21,38 +21,41 @@
 #include "firecfg.h"
 int arg_debug = 0;
 
+static char *usage_str =
+	"Firecfg is the desktop configuration utility for Firejail software. The utility\n"
+	"creates several symbolic links to firejail executable. This allows the user to\n"
+	"sandbox applications automatically, just by clicking on a regular desktop\n"
+	"menus and icons.\n\n"
+	"The symbolic links are placed in /usr/local/bin. For more information, see\n"
+	"DESKTOP INTEGRATION section in man 1 firejail.\n\n"
+	"Usage: firecfg [OPTIONS]\n\n"
+	"   --clean - remove all firejail symbolic links.\n\n"
+	"   --debug - print debug messages.\n\n"
+	"   --fix - fix .desktop files.\n\n"
+	"   --fix-sound - create ~/.config/pulse/client.conf file.\n\n"
+	"   --help, -? - this help screen.\n\n"
+	"   --list - list all firejail symbolic links.\n\n"
+	"   --version - print program version and exit.\n\n"
+	"Example:\n\n"
+	"   $ sudo firecfg\n"
+	"   /usr/local/bin/firefox created\n"
+	"   /usr/local/bin/vlc created\n"
+	"   [...]\n"
+	"   $ firecfg --list\n"
+	"   /usr/local/bin/firefox\n"
+	"   /usr/local/bin/vlc\n"
+	"   [...]\n"
+	"   $ sudo firecfg --clean\n"
+	"   /usr/local/bin/firefox removed\n"
+	"   /usr/local/bin/vlc removed\n"
+	"   [...]\n"
+	"\n"
+	"License GPL version 2 or later\n"
+	"Homepage: http://firejail.wordpress.com\n\n";
+
 static void usage(void) {
 	printf("firecfg - version %s\n\n", VERSION);
-	printf("Firecfg is the desktop configuration utility for Firejail software. The utility\n");
-	printf("creates several symbolic links to firejail executable. This allows the user to\n");
-	printf("sandbox applications automatically, just by clicking on a regular desktop\n");
-	printf("menus and icons.\n\n");
-	printf("The symbolic links are placed in /usr/local/bin. For more information, see\n");
-	printf("DESKTOP INTEGRATION section in man 1 firejail.\n\n");
-	printf("Usage: firecfg [OPTIONS]\n\n");
-	printf("   --clean - remove all firejail symbolic links.\n\n");
-	printf("   --debug - print debug messages.\n\n");
-	printf("   --fix - fix .desktop files.\n\n");
-	printf("   --fix-sound - create ~/.config/pulse/client.conf file.\n\n");
-	printf("   --help, -? - this help screen.\n\n");
-	printf("   --list - list all firejail symbolic links.\n\n");
-	printf("   --version - print program version and exit.\n\n");
-	printf("Example:\n\n");
-	printf("   $ sudo firecfg\n");
-	printf("   /usr/local/bin/firefox created\n");
-	printf("   /usr/local/bin/vlc created\n");
-	printf("   [...]\n");
-	printf("   $ firecfg --list\n");
-	printf("   /usr/local/bin/firefox\n");
-	printf("   /usr/local/bin/vlc\n");
-	printf("   [...]\n");
-	printf("   $ sudo firecfg --clean\n");
-	printf("   /usr/local/bin/firefox removed\n");
-	printf("   /usr/local/bin/vlc removed\n");
-	printf("   [...]\n");
-	printf("\n");
-	printf("License GPL version 2 or later\n");
-	printf("Homepage: http://firejail.wordpress.com\n\n");
+	puts(usage_str);
 }
 
 

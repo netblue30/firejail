@@ -136,15 +136,9 @@ void fix_desktop_files(char *homedir) {
 
 	// source
 	DIR *dir = opendir("/usr/share/applications");
-	if (!dir) {
+	if (!dir || chdir("/usr/share/applications")) {
 		perror("opendir");
-		fprintf(stderr, "Warning: cannot open /usr/share/applications directory, desktop files fixing skipped...\n");
-		free(user_apps_dir);
-		return;
-	}
-	if (chdir("/usr/share/applications")) {
-		perror("chdir");
-		fprintf(stderr, "Warning: cannot chdir to /usr/share/applications, desktop files fixing skipped...\n");
+		fprintf(stderr, "Warning: cannot access /usr/share/applications directory, desktop files fixing skipped...\n");
 		free(user_apps_dir);
 		return;
 	}

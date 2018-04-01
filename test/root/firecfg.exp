@@ -7,10 +7,10 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firecfg\r"
+send -- "firecfg --debug\r"
 sleep 1
 
-send --  "firecfg --clean\r"
+send --  "firecfg --debug --clean\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"less removed"
@@ -27,7 +27,7 @@ expect {
 }
 sleep 1
 
-send --  "firecfg\r"
+send --  "firecfg --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"less created"

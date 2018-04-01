@@ -34,7 +34,7 @@ generate() {
 gcov_init
 lcov -q --capture -d src/firejail -d src/firemon -d src/faudit -d src/fbuilder -d  src/fcopy -d  src/fnetfilter -d src/fsec-print -d src/fsec-optimize -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg -d src/fldd  --output-file gcov-file-old
 
-#make test-environment
+#make test-utils
 #generate
 #sleep 2
 #exit

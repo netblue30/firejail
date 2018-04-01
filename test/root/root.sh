@@ -11,10 +11,8 @@ which less
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: firecfg (test/root/firecfg.exp)"
-	rm -fr /home/netblue/.local/share/applications-store
 	mv /home/netblue/.local/share/applications /home/netblue/.local/share/applications-store
 	./firecfg.exp
-	rm -fr /home/netblue/.local/share/applications
 	mv /home/netblue/.local/share/applications-store /home/netblue/.local/share/applications
 else
 	echo "TESTING SKIP: firecfg, less not found"

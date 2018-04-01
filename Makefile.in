@@ -299,6 +299,10 @@ test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sy
 # with them you will need to restart your computer.
 ##########################################
 
+# a firejail-test account is required, public/private key setup
+test-ssh:
+	cd test/ssh; ./ssh.sh | grep TESTING
+
 # requires root access
 test-chroot:
 	cd test/chroot; ./chroot.sh | grep testing

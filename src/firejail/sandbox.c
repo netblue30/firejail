@@ -889,7 +889,7 @@ int sandbox(void* sandbox_arg) {
 		// disable /dev/snd
 		fs_dev_disable_sound();
 	}
-	else
+	else if (!arg_noautopulse)
 		pulseaudio_init();
 
 	if (arg_no3d)

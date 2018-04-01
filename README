@@ -247,6 +247,7 @@ geg2048 (https://github.com/geg2048)
 glitsj16 (https://github.com/glitsj16)
 	- evince-previewer, evince-thumbnailer profiles
 	- gnome-recipes, gnome-logs profiles
+	- fixed private-lib for gnome-calculator
 graywolf (https://github.com/graywolf)
 	- spelling fix
 greigdp (https://github.com/greigdp)

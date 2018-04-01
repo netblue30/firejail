@@ -28,6 +28,7 @@ shell none
 private-dev
 # private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute breaks some systems, see issue #1850
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

@@ -20,6 +20,15 @@ rm -f ~/firejail-test-file-7699
 echo "TESTING: audit (test/utils/audit.exp)"
 ./audit.exp
 
+echo "TESTING: name (test/utils/name.exp)"
+./name.exp
+
+echo "TESTING: command (test/utils/command.exp)"
+./command.exp
+
+echo "TESTING: profile.print (test/utils/profile_print.exp)"
+./profile_print.exp
+
 echo "TESTING: version (test/utils/version.exp)"
 ./version.exp
 

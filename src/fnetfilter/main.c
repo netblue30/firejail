@@ -50,19 +50,20 @@ static void usage(void) {
 	printf("\tfnetfilter netfilter-command destination-file\n");
 }
 
+static void err_exit_cannot_open_file(const char *fname) {
+	fprintf(stderr, "Error fnetfilter: cannot open %s\n", fname);
+	exit(1);
+}
+
 
 static void copy(const char *src, const char *dest) {
 	FILE *fp1 = fopen(src, "r");
-	if (!fp1) {
-		fprintf(stderr, "Error fnetfilter: cannot open %s\n", src);
-		exit(1);
-	}
+	if (!fp1)
+		err_exit_cannot_open_file(src);
 
 	FILE *fp2 = fopen(dest, "w");
-	if (!fp2) {
-		fprintf(stderr, "Error fnetfilter: cannot open %s\n", dest);
-		exit(1);
-	}
+	if (!fp2)
+		err_exit_cannot_open_file(dest);
 
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp1))
@@ -106,16 +107,12 @@ for (i = 0; i < argcnt; i++)
 
 	// open the files
 	FILE *fp1 = fopen(src, "r");
-	if (!fp1) {
-		fprintf(stderr, "Error fnetfilter: cannot open %s\n", src);
-		exit(1);
-	}
+	if (!fp1)
+		err_exit_cannot_open_file(src);
 
 	FILE *fp2 = fopen(dest, "w");
-	if (!fp2) {
-		fprintf(stderr, "Error fnetfilter: cannot open %s\n", dest);
-		exit(1);
-	}
+	if (!fp2)
+		err_exit_cannot_open_file(dest);
 
 	int line = 0;
 	char buf[MAXBUF];
@@ -186,19 +183,15 @@ printf("\n");
 //printf("destfile %s\n", destfile);
 	// destfile is a real filename
 	int len = strlen(destfile);
-	if (strcspn(destfile, "\\&!?\"'<>%^(){};,*[]") != (size_t)len) {
-		fprintf(stderr, "Error fnetfilter: invalid destination file in netfilter command\n");
-		exit(1);
-	}
+	if (strcspn(destfile, "\\&!?\"'<>%^(){};,*[]") != (size_t)len)
+		err_exit_cannot_open_file(destfile);
 
 	// handle default config (command = NULL, destfile)
 	if (command == NULL) {
 		// create a default filter file
 		FILE *fp = fopen(destfile, "w");
-		if (!fp) {
-			fprintf(stderr, "Error fnetfilter: cannot open %s\n", destfile);
-			exit(1);
-		}
+		if (!fp)
+			err_exit_cannot_open_file(destfile);
 		fprintf(fp, "%s\n", default_filter);
 		fclose(fp);
 	}

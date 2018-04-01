@@ -30,6 +30,20 @@ expect {
 	"/bin/zsh"
 }
 send -- "exit\r"
+sleep 1
+
+send -- "firejail --shell=none --zsh\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"shell=none was already specified"
+}
+after 100
+
+send -- "firejail --zsh --shell=none\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"a shell was already specified"
+}
 after 100
 
 puts "\nall done\n"

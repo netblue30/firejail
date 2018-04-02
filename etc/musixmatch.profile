@@ -1,12 +1,9 @@
 # Firejail profile for Musixmatch
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/default.local
+include /etc/firejail/musixmatch.local
 # Persistent global definitions
 include /etc/firejail/globals.local
-
-# generic gui profile
-# depending on your usage, you can enable some of the commands below:
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

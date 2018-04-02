@@ -630,6 +630,7 @@ HAVE_GIT_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
 HAVE_FATAL_WARNINGS
+HAVE_SUID
 HAVE_WHITELIST
 HAVE_FILE_TRANSFER
 HAVE_X11
@@ -712,6 +713,7 @@ enable_userns
 enable_x11
 enable_file_transfer
 enable_whitelist
+enable_suid
 enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
@@ -1362,6 +1364,7 @@ Optional Features:
   --disable-x11           disable X11 sandboxing support
   --disable-file-transfer disable file transfer
   --disable-whitelist     disable whitelist
+  --disable-suid          install as a non-SUID executable
   --enable-fatal-warnings -W -Wall -Werror
   --enable-busybox-workaround
                           enable busybox workaround
@@ -3729,6 +3732,20 @@ if test "x$enable_whitelist" != "xno"; then :
 
 fi
 
+HAVE_SUID=""
+# Check whether --enable-suid was given.
+if test "${enable_suid+set}" = set; then :
+  enableval=$enable_suid;
+fi
+
+if test "x$enable_suid" = "xno"; then :
+  HAVE_SUID="no"
+else
+  HAVE_SUID="yes"
+
+fi
+
+
 HAVE_FATAL_WARNINGS=""
 # Check whether --enable-fatal_warnings was given.
 if test "${enable_fatal_warnings+set}" = set; then :
@@ -5071,4 +5088,5 @@ echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
+echo "   Install as a SUID executable: $HAVE_SUID"
 echo

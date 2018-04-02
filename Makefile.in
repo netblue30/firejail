@@ -21,6 +21,7 @@ HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 HAVE_GIT_INSTALL=@HAVE_GIT_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
+HAVE_SUID=@HAVE_SUID@
 
 uids.h:; ./mkuid.sh
 
@@ -81,7 +82,9 @@ realinstall:
 	# firejail executable
 	install -m 0755 -d $(DESTDIR)/$(bindir)
 	install -c -m 0755 src/firejail/firejail $(DESTDIR)/$(bindir)/.
+ifeq ($(HAVE_SUID),yes)
 	chmod u+s $(DESTDIR)/$(bindir)/firejail
+endif
 	# firemon executable
 	install -c -m 0755 src/firemon/firemon $(DESTDIR)/$(bindir)/.
 	# firecfg executable

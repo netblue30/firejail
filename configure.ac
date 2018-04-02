@@ -144,6 +144,15 @@ AS_IF([test "x$enable_whitelist" != "xno"], [
 	AC_SUBST(HAVE_WHITELIST)
 ])
 
+HAVE_SUID=""
+AC_ARG_ENABLE([suid],
+    AS_HELP_STRING([--disable-suid], [install as a non-SUID executable]))
+AS_IF([test "x$enable_suid" = "xno"],
+	[HAVE_SUID="no"],
+	[HAVE_SUID="yes"]
+)
+AC_SUBST(HAVE_SUID)
+
 HAVE_FATAL_WARNINGS=""
 AC_ARG_ENABLE([fatal_warnings],
     AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror]))
@@ -228,4 +237,5 @@ echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
+echo "   Install as a SUID executable: $HAVE_SUID"
 echo

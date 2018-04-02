@@ -12,10 +12,14 @@ noblacklist ${HOME}/.cache/akonadi*
 noblacklist ${HOME}/.cache/kmail2
 noblacklist ${HOME}/.config/akonadi*
 noblacklist ${HOME}/.config/baloorc
+noblacklist ${HOME}/.config/emaildefaults
 noblacklist ${HOME}/.config/emailidentities
 noblacklist ${HOME}/.config/kmail2rc
+noblacklist ${HOME}/.config/mailtransports
+noblacklist ${HOME}/.config/specialmailcollectionsrc
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.local/share/akonadi*
+noblacklist ${HOME}/.local/share/apps/korganizer
 noblacklist ${HOME}/.local/share/contacts
 noblacklist ${HOME}/.local/share/emailidentities
 noblacklist ${HOME}/.local/share/kmail2

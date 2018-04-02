@@ -107,6 +107,7 @@ blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/digikamrc
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
+blacklist ${HOME}/.config/emaildefaults
 blacklist ${HOME}/.config/emailidentities
 blacklist ${HOME}/.config/enchant
 blacklist ${HOME}/.config/eog
@@ -158,6 +159,7 @@ blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
 blacklist ${HOME}/.config/lximage-qt
+blacklist ${HOME}/.config/mailtransports
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
@@ -198,6 +200,7 @@ blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/smtube
+blacklist ${HOME}/.config/specialmailcollectionsrc
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/synfig
@@ -352,6 +355,7 @@ blacklist ${HOME}/.local/share/Terraria
 blacklist ${HOME}/.local/share/TpLogger
 blacklist ${HOME}/.local/share/akonadi*
 blacklist ${HOME}/.local/share/akregator
+blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/caja-python

@@ -7,9 +7,13 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.cache/akonadi*
 noblacklist ${HOME}/.config/akonadi*
 noblacklist ${HOME}/.config/baloorc
+noblacklist ${HOME}/.config/emaildefaults
 noblacklist ${HOME}/.config/emailidentities
 noblacklist ${HOME}/.config/kmail2rc
+noblacklist ${HOME}/.config/mailtransports
+noblacklist ${HOME}/.config/specialmailcollectionsrc
 noblacklist ${HOME}/.local/share/akonadi*
+noblacklist ${HOME}/.local/share/apps/korganizer
 noblacklist ${HOME}/.local/share/contacts
 noblacklist ${HOME}/.local/share/local-mail
 noblacklist ${HOME}/.local/share/notes

@@ -42,4 +42,5 @@ private-dev
 private-lib
 private-tmp
 
-memory-deny-write-execute
+# Causes freeze during opening file dialog in Archlinux, see issue #1855
+# memory-deny-write-execute

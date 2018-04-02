@@ -357,6 +357,7 @@ extern int arg_private_lib;	// private lib directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
+extern int arg_noautopulse; // disable automatic ~/.config/pulse init
 extern int arg_novideo; //disable video devices in /dev
 extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting

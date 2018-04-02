@@ -1199,6 +1199,17 @@ Example:
 $ firejail \-\-nosound firefox
 
 .TP
+\fB\-\-noautopulse
+Disable automatic ~/.config/pulse init, for complex setups such as remote
+pulse servers or non-standard socket paths.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noautopulse firefox
+
+.TP
 \fB\-\-notv
 Disable DVB (Digital Video Broadcasting) TV devices.
 .br

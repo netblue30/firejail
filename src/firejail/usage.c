@@ -143,6 +143,7 @@ void usage(void) {
 	printf("    --noroot - install a user namespace with only the current user.\n");
 #endif
 	printf("    --nosound - disable sound system.\n");
+	printf("    --noautopulse - disable automatic ~/.config/pulse init.\n");
 	printf("    --novideo - disable video devices.\n");
 	printf("    --nowhitelist=filename - disable whitelist for file or directory .\n");
 	printf("    --output=logfile - stdout logging and log rotation.\n");

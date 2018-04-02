@@ -94,6 +94,7 @@ int arg_private_lib = 0;			// private lib directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
 int arg_nosound = 0;				// disable sound
+int arg_noautopulse = 0;			// disable automatic ~/.config/pulse init
 int arg_novideo = 0;			//disable video devices in /dev
 int arg_no3d;					// disable 3d hardware acceleration
 int arg_quiet = 0;				// no output for scripting
@@ -1727,6 +1728,8 @@ int main(int argc, char **argv) {
 			env_store(argv[i] + 8, RMENV);
 		else if (strcmp(argv[i], "--nosound") == 0)
 			arg_nosound = 1;
+		else if (strcmp(argv[i], "--noautopulse") == 0)
+			arg_noautopulse = 1;
 		else if (strcmp(argv[i], "--novideo") == 0)
 			arg_novideo = 1;
 		else if (strcmp(argv[i], "--no3d") == 0)

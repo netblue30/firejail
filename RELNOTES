@@ -1,5 +1,6 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
+  * add --noautopulse to disable automatic ~/.config/pulse (for complex setups)
   * modif: support for private-bin, private-lib and shell none has been
      disabled while running AppImage archives in order to be able to use
      our regular profile files with AppImages.
@@ -31,6 +32,7 @@ firejail (0.9.53) baseline; urgency=low
   * new profiles: falkon, gnome-builder, asunder, VS Code, gnome-recipes
   * new profiles: akonadi_controle, evince-previewer, evince-thumbnailer,
   * new profiles: blender-2.8, thunderbird-beta, ncdu, gnome-logs, gcloud
+  * new profiles: musixmatch
  -- netblue30 <netblue30@yahoo.com>  Thu, 1 Mar 2018 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low

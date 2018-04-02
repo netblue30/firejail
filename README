@@ -34,10 +34,10 @@ Maintainer:
 
 Committers
 - Fred-Barclay (https://github.com/Fred-Barclay)
-- Reiner Herrmann (https://github.com/reinerh)
+- Reiner Herrmann (https://github.com/reinerh - Debian/Ubuntu maintainer)
 - smithsohu (https://github.com/smitsohu)
 - SkewedZeppelin (https://github.com/SkewedZeppelin)
-- startx2017 (https://github.com/startx2017) - 0.9.38-LTS and *bugfixes branches maintainer
+- startx2017 (https://github.com/startx2017) - 0.9.38-LTS and *bugfixes branches maintainer)
 - Topi Miettinen (https://github.com/topimiettinen)
 - Vincent43 (https://github.com/Vincent43)
 - netblue30 (netblue30@yahoo.com)
@@ -247,6 +247,7 @@ geg2048 (https://github.com/geg2048)
 glitsj16 (https://github.com/glitsj16)
 	- evince-previewer, evince-thumbnailer profiles
 	- gnome-recipes, gnome-logs profiles
+	- fixed private-lib for gnome-calculator
 graywolf (https://github.com/graywolf)
 	- spelling fix
 greigdp (https://github.com/greigdp)
@@ -275,6 +276,8 @@ iiotx (https://github.com/iiotx)
 	- use generic.profile by default
 Impyy (https://github.com/Impyy)
 	- added mumble profile
+intika (https://github.com/intika)
+	- added musixmatch profile
 irregulator (https://github.com/irregulator)
 	- thunderbird profile fixes for debian stretch
 Irvine (https://github.com/Irvinehimself)
@@ -361,8 +364,9 @@ Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
 maxice8 (https://github.com/maxice8)
 	- fixed missing header
-melvinvermeeren (https://github.com/melvinvermeeren)
+Melvin Vermeeren (https://github.com/melvinvermeeren)
 	- added teamspeak3 profile
+	- added --noautopulse command line option
 Michael Haas (https://github.com/mhaas)
 	- bugfixes
 Mike Frysinger (vapier@gentoo.org)

@@ -10,6 +10,7 @@ noblacklist ${HOME}/.moonchild productions/basilisk
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-programs.inc
 
 # These are uncommented in the Firefox profile. If you run into trouble you may

@@ -5,8 +5,15 @@ include /etc/firejail/knotes.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# knotes has problems launching akonadi in debian and ubuntu.
-# one solution is to have akonadi already running when knotes is started
+noblacklist ${HOME}/.config/akonadi*
+noblacklist ${HOME}/.config/knotesrc
+noblacklist ${HOME}/.local/share/akonadi/*
+
+include /etc/firejail/disable-common.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
+include /etc/firejail/disable-passwdmgr.inc
+include /etc/firejail/disable-programs.inc
 
 noblacklist ${HOME}/.config/knotesrc
 noblacklist ${HOME}/.local/share/knotes

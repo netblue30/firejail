@@ -9,9 +9,15 @@ noblacklist ${HOME}/.java
 noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
 
+# libreoffice uses java; if you don't care about java functionality,
+# comment the next four lines
+noblacklist ${PATH}/java
+noblacklist /usr/lib/java
+noblacklist /etc/java
+noblacklist /usr/share/java
+
 include /etc/firejail/disable-common.inc
-# libreoffice uses java; if you don't care about java functionality, uncomment this line;
-#include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

@@ -8,6 +8,7 @@ include /etc/firejail/globals.local
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all

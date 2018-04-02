@@ -5,6 +5,7 @@ include /etc/firejail/gimp.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.config/GIMP
 noblacklist ${HOME}/.gimp*
 
 include /etc/firejail/disable-common.inc

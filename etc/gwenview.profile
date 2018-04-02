@@ -5,6 +5,7 @@ include /etc/firejail/gwenview.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.config/GIMP
 noblacklist ${HOME}/.config/gwenviewrc
 noblacklist ${HOME}/.config/org.kde.gwenviewrc
 noblacklist ${HOME}/.gimp*

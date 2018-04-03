@@ -830,16 +830,23 @@ int main(int argc, char **argv) {
 	int lockfd_directory = -1;
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
-
 	atexit(clear_atexit);
 
-	// get starting timestamp
-	start_timestamp = getticks();
+	// drop permissions by default and rise them when required
+	EUID_INIT();
+	EUID_USER();
 
+	// check if the user is allowed to use firejail
+	init_cfg(argc, argv);
+
+	// get starting timestamp, process --quiet
+	start_timestamp = getticks();
 	if (check_arg(argc, argv, "--quiet", 1))
 		arg_quiet = 1;
 
+
 	// build /run/firejail directory structure
+	EUID_ROOT();
 	preproc_build_firejail_dir();
 	char *container_name = getenv("container");
 	if (!container_name || strcmp(container_name, "firejail")) {
@@ -853,7 +860,10 @@ int main(int argc, char **argv) {
 		flock(lockfd_directory, LOCK_UN);
 		close(lockfd_directory);
 	}
+	EUID_USER();
 
+
+	// process allow-debuggers
 	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
 		// check kernel version
 		struct utsname u;
@@ -874,11 +884,12 @@ int main(int argc, char **argv) {
 		}
 
 		arg_allow_debuggers = 1;
+		char *cmd = strdup("noblacklist ${PATH}/strace");
+		if (!cmd)
+			errExit("strdup");
+		profile_add(cmd);
 	}
 
-	// drop permissions by default and rise them when required
-	EUID_INIT();
-	EUID_USER();
 
 #ifdef HAVE_GIT_INSTALL
 	// process git-install and git-uninstall
@@ -916,28 +927,12 @@ int main(int argc, char **argv) {
 			assert(0);
 		}
 	}
+	EUID_ASSERT();
 
-	// check root/suid
-	EUID_ROOT();
-	if (geteuid()) {
-		// only --version is supported without SUID support
-		if (check_arg(argc, argv, "--version", 1)) {
-			printf("firejail version %s\n", VERSION);
-			exit(0);
-		}
-
-		fprintf(stderr, "Error: cannot rise privileges\n");
-		exit(1);
-	}
-	EUID_USER();
-
-	// initialize globals
-	init_cfg(argc, argv);
 
 	// check firejail directories
 	EUID_ROOT();
 	delete_run_files(sandbox_pid);
-
 	EUID_USER();
 
 	//check if the parent is sshd daemon
@@ -991,6 +986,7 @@ int main(int argc, char **argv) {
 			free(comm);
 		}
 	}
+	EUID_ASSERT();
 
 	// is this a login shell, or a command passed by sshd, insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
@@ -1040,26 +1036,19 @@ int main(int argc, char **argv) {
 		// check --output option and execute it;
 		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
 	}
+	EUID_ASSERT();
 
 
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))
 		arg_nonewprivs = 1;
 
-	if (arg_allow_debuggers) {
-		char *cmd = strdup("noblacklist ${PATH}/strace");
-		if (!cmd)
-			errExit("strdup");
-		profile_add(cmd);
-	}
-
 	// parse arguments
 	for (i = 1; i < argc; i++) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
 
-		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet) {
+		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet)
 			arg_debug = 1;
-		}
 		else if (strcmp(argv[i], "--debug-check-filename") == 0)
 			arg_debug_check_filename = 1;
 		else if (strcmp(argv[i], "--debug-blacklists") == 0)
@@ -2260,6 +2249,7 @@ int main(int argc, char **argv) {
 			break;
 		}
 	}
+	EUID_ASSERT();
 
 	// prog_index could still be -1 if no program was specified
 	if (prog_index == -1 && arg_shell_none) {
@@ -2388,6 +2378,7 @@ int main(int argc, char **argv) {
 				fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 		}
 	}
+	EUID_ASSERT();
 
 	// block X11 sockets
 	if (arg_x11_block)
@@ -2415,6 +2406,7 @@ int main(int argc, char **argv) {
 		network_set_run_file(sandbox_pid);
 		EUID_USER();
 	}
+	EUID_ASSERT();
 
  	// create the parent-child communication pipe
  	if (pipe(parent_to_child_fds) < 0)
@@ -2466,6 +2458,7 @@ int main(int argc, char **argv) {
 	else if (arg_debug)
 		printf("Using the local network stack\n");
 
+	EUID_ASSERT();
 	EUID_ROOT();
 	child = clone(sandbox,
 		child_stack + STACK_SIZE,
@@ -2506,6 +2499,7 @@ int main(int argc, char **argv) {
 		waitpid(net_child, NULL, 0);
 		EUID_USER();
 	}
+	EUID_ASSERT();
 
  	// close each end of the unused pipes
  	close(parent_to_child_fds[0]);
@@ -2581,6 +2575,7 @@ int main(int argc, char **argv) {
 	 	EUID_USER();
 	 	free(map_path);
  	}
+	EUID_ASSERT();
 
  	// notify child that UID/GID mapping is complete
  	notify_other(parent_to_child_fds[1]);

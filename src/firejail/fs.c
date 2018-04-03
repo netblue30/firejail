@@ -707,8 +707,6 @@ void fs_basic_fs(void) {
 	restrict_users();
 
 	// when starting as root, firejail config is not disabled;
-	// this mode could be used to install and test new software by chaining
-	// firejail sandboxes (firejail --force)
 	if (uid)
 		disable_config();
 }
@@ -1020,8 +1018,6 @@ void fs_overlayfs(void) {
 	restrict_users();
 
 	// when starting as root, firejail config is not disabled;
-	// this mode could be used to install and test new software by chaining
-	// firejail sandboxes (firejail --force)
 	if (getuid() != 0)
 		disable_config();
 
@@ -1265,8 +1261,6 @@ void fs_chroot(const char *rootdir) {
 		restrict_users();
 
 		// when starting as root, firejail config is not disabled;
-		// this mode could be used to install and test new software by chaining
-		// firejail sandboxes (firejail --force)
 		if (getuid() != 0)
 			disable_config();
 	}

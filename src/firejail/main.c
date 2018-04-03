@@ -829,7 +829,6 @@ int main(int argc, char **argv) {
 	int lockfd_network = -1;
 	int lockfd_directory = -1;
 	int option_cgroup = 0;
-	int option_force = 0;
 	int custom_profile = 0;	// custom profile loaded
 
 	atexit(clear_atexit);
@@ -900,27 +899,21 @@ int main(int argc, char **argv) {
 	// check if we already have a sandbox running
 	// If LXC is detected, start firejail sandbox
 	// otherwise try to detect a PID namespace by looking under /proc for specific kernel processes and:
-	//	- if --force flag is set, start firejail sandbox
-	//	-- if --force flag is not set, start the application in a /bin/bash shell
+	//	- start the application in a /bin/bash shell
 	if (check_namespace_virt() == 0) {
 		EUID_ROOT();
 		int rv = check_kernel_procs();
 		EUID_USER();
 		if (rv == 0) {
-			// if --force option is passed to the program, disregard the existing sandbox
-			if (check_arg(argc, argv, "--force", 1))
-				option_force = 1;
-			else {
-				if (check_arg(argc, argv, "--version", 1)) {
-					printf("firejail version %s\n", VERSION);
-					exit(0);
-				}
-
-				// start the program directly without sandboxing
-				run_no_sandbox(argc, argv);
-				// it will never get here!
-				assert(0);
+			if (check_arg(argc, argv, "--version", 1)) {
+				printf("firejail version %s\n", VERSION);
+				exit(0);
 			}
+
+			// start the program directly without sandboxing
+			run_no_sandbox(argc, argv);
+			// it will never get here!
+			assert(0);
 		}
 	}
 
@@ -1064,12 +1057,8 @@ int main(int argc, char **argv) {
 	for (i = 1; i < argc; i++) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
 
-		if (strcmp(argv[i], "--debug") == 0) {
-			if (!arg_quiet) {
-				arg_debug = 1;
-				if (option_force)
-					fmessage("Entering sandbox-in-sandbox mode\n");
-			}
+		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet) {
+			arg_debug = 1;
 		}
 		else if (strcmp(argv[i], "--debug-check-filename") == 0)
 			arg_debug_check_filename = 1;
@@ -1083,8 +1072,6 @@ int main(int argc, char **argv) {
 			arg_quiet = 1;
 			arg_debug = 0;
 		}
-		else if (strcmp(argv[i], "--force") == 0)
-			;
 		else if (strcmp(argv[i], "--allow-debuggers") == 0) {
 			// already handled
 		}

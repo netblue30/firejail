@@ -76,7 +76,6 @@ static char *usage_str =
 	"    --dns=address - set DNS server.\n"
 	"    --dns.print=name|pid - print DNS configuration.\n"
 	"    --env=name=value - set environment variable.\n"
-	"    --force - attempt to start a new sandbox inside the existing sandbox.\n"
 	"    --fs.print=name|pid - print the filesystem log.\n"
 	"    --get=name|pid filename - get a file from sandbox container.\n"
 #ifdef HAVE_GIT_INSTALL

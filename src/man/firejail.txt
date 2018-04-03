@@ -468,13 +468,6 @@ Example:
 $ firejail \-\-env=LD_LIBRARY_PATH=/opt/test/lib
 
 .TP
-\fB\-\-force
-By default, if Firejail is started in an existing sandbox, it will run the program in a bash shell.
-This option disables this behavior, and attempts to start Firejail in the existing sandbox.
-There could be lots of reasons for it to fail, for example if the existing sandbox disables
-admin capabilities, SUID binaries, or if it runs seccomp.
-
-.TP
 \fB\-\-fs.print=name|print
 Print the filesystem log for the sandbox identified by name or by PID.
 .br

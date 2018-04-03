@@ -1,6 +1,6 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
-  * add --noautopulse to disable automatic ~/.config/pulse (for complex setups)
+  * --force depercated
   * modif: support for private-bin, private-lib and shell none has been
      disabled while running AppImage archives in order to be able to use
      our regular profile files with AppImages.
@@ -10,6 +10,7 @@ firejail (0.9.53) baseline; urgency=low
      All users of Firefox-based browsers who use addons and plugins
      that read/write from ${HOME} will need to uncomment the includes for
      firefox-common-addons.inc in firefox-common.profile.
+  * add --noautopulse to disable automatic ~/.config/pulse (for complex setups)
   * Spectre mitigation patch for gcc and clang compiler
   * D-Bus handling (--nodbus)
   * AppArmor support for overlayfs and chroot sandboxes

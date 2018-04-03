@@ -21,6 +21,7 @@ whitelist ${HOME}/.sword
 include /etc/firejail/whitelist-common.inc
 
 caps.drop all
+machine-id
 netfilter
 nodbus
 nodvd
@@ -37,5 +38,5 @@ tracelog
 
 # private-bin bibletime,qt5ct
 private-dev
-private-etc fonts,resolv.conf,sword,sword.conf,passwd
+private-etc fonts,resolv.conf,sword,sword.conf,passwd,machine-id
 private-tmp

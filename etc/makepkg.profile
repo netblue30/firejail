@@ -41,7 +41,7 @@ no3d
 nodvd
 nogroups
 nonewprivs
-# noroot is only disabled to allow the creation of kernel headers from an official pckgbuild.
+# noroot is only disabled to allow the creation of kernel headers from an official PKGBUILD.
 #noroot
 nosound
 notv

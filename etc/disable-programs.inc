@@ -168,6 +168,7 @@ blacklist ${HOME}/.config/mate/mate-dictionary
 blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mono
+blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/nautilus

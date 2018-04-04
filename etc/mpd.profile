@@ -5,8 +5,8 @@ include /etc/firejail/mpd.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-
 noblacklist ${HOME}/.mpdconf
+noblacklist ${HOME}/.config/mpd
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

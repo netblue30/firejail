@@ -7,6 +7,13 @@ include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/cpan*
+noblacklist ${PATH}/core_perl
+noblacklist ${PATH}/perl
+noblacklist /usr/lib/perl*
+noblacklist /usr/share/perl*
+
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc

@@ -10,6 +10,7 @@ noblacklist ${HOME}/.moonchild productions/pale moon
 
 mkdir ${HOME}/.cache/moonchild productions/pale moon
 mkdir ${HOME}/.moonchild productions
+whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/moonchild productions/pale moon
 whitelist ${HOME}/.moonchild productions
 

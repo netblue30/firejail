@@ -48,6 +48,7 @@ read-only ${HOME}/.Xauthority
 # KDE config
 blacklist ${HOME}/.config/khotkeysrc
 blacklist ${HOME}/.config/krunnerrc
+blacklist ${HOME}/.config/kscreenlockerrc
 blacklist ${HOME}/.config/ksslcertificatemanager
 blacklist ${HOME}/.config/kwinrc
 blacklist ${HOME}/.config/kwinrulesrc
@@ -59,6 +60,7 @@ blacklist ${HOME}/.kde/share/apps/plasma
 blacklist ${HOME}/.kde/share/apps/solid
 blacklist ${HOME}/.kde/share/config/khotkeysrc
 blacklist ${HOME}/.kde/share/config/krunnerrc
+blacklist ${HOME}/.kde/share/config/kscreensaverrc
 blacklist ${HOME}/.kde/share/config/ksslcertificatemanager
 blacklist ${HOME}/.kde/share/config/kwinrc
 blacklist ${HOME}/.kde/share/config/kwinrulesrc
@@ -68,6 +70,7 @@ blacklist ${HOME}/.kde4/share/apps/plasma
 blacklist ${HOME}/.kde4/share/apps/solid
 blacklist ${HOME}/.kde4/share/config/khotkeysrc
 blacklist ${HOME}/.kde4/share/config/krunnerrc
+blacklist ${HOME}/.kde4/share/config/kscreensaverrc
 blacklist ${HOME}/.kde4/share/config/ksslcertificatemanager
 blacklist ${HOME}/.kde4/share/config/kwinrc
 blacklist ${HOME}/.kde4/share/config/kwinrulesrc

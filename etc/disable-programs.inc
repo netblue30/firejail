@@ -48,6 +48,7 @@ blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
 blacklist ${HOME}/.config/Fritzing
+blacklist ${HOME}/.config/GIMP
 blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Google
 blacklist ${HOME}/.config/Google Play Music Desktop Player
@@ -149,6 +150,7 @@ blacklist ${HOME}/.config/kdenliverc
 blacklist ${HOME}/.config/kgetrc
 blacklist ${HOME}/.config/klipperrc
 blacklist ${HOME}/.config/kmail2rc
+blacklist ${HOME}/.config/kmailsearchindexingrc
 blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/kwriterc
 blacklist ${HOME}/.config/kdeconnect

@@ -15,6 +15,7 @@ noblacklist ${HOME}/.config/baloorc
 noblacklist ${HOME}/.config/emaildefaults
 noblacklist ${HOME}/.config/emailidentities
 noblacklist ${HOME}/.config/kmail2rc
+noblacklist ${HOME}/.config/kmailsearchindexingrc
 noblacklist ${HOME}/.config/mailtransports
 noblacklist ${HOME}/.config/specialmailcollectionsrc
 noblacklist ${HOME}/.gnupg

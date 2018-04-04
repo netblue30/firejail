@@ -78,11 +78,6 @@ static char *usage_str =
 	"    --env=name=value - set environment variable.\n"
 	"    --fs.print=name|pid - print the filesystem log.\n"
 	"    --get=name|pid filename - get a file from sandbox container.\n"
-#ifdef HAVE_GIT_INSTALL
-	"    --git-install - download, compile and install mainline git version\n"
-	"\tof Firejail.\n"
-	"    --git-uninstall - uninstall mainline git version of Firejail\n"
-#endif
 	"    --help, -? - this help screen.\n"
 	"    --hostname=name - set sandbox hostname.\n"
 	"    --hosts-file=file - use file as /etc/hosts.\n"

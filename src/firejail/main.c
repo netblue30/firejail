@@ -890,15 +890,6 @@ int main(int argc, char **argv) {
 		profile_add(cmd);
 	}
 
-
-#ifdef HAVE_GIT_INSTALL
-	// process git-install and git-uninstall
-	if (check_arg(argc, argv, "--git-install", 1))
-		git_install(); // this function will not return
-	if (check_arg(argc, argv, "--git-uninstall", 1))
-		git_uninstall(); // this function will not return
-#endif
-
 	// profile builder
 	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
 		run_builder(argc, argv); // this function will not return

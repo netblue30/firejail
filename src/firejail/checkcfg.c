@@ -450,14 +450,6 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- git install support is %s\n",
-#ifdef HAVE_GIT_INSTALL
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- networking support is %s\n",
 #ifdef HAVE_NETWORK
 		"enabled"

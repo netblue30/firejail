@@ -179,15 +179,6 @@ AS_IF([test "x$enable_gcov" = "xyes"], [
 	AC_SUBST(HAVE_GCOV)
 ])
 
-
-HAVE_GIT_INSTALL=""
-AC_ARG_ENABLE([git-install],
-    AS_HELP_STRING([--enable-git-install], [enable git install feature]))
-AS_IF([test "x$enable_git_install" = "xyes"], [
-	HAVE_GIT_INSTALL="-DHAVE_GIT_INSTALL"
-	AC_SUBST(HAVE_GIT_INSTALL)
-])
-
 HAVE_CONTRIB_INSTALL="yes"
 AC_ARG_ENABLE([contrib-install],
     AS_HELP_STRING([--enable-contrib-install], [install contrib scripts]))
@@ -229,7 +220,6 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
-echo "   git install support: $HAVE_GIT_INSTALL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

@@ -626,7 +626,6 @@ ac_subst_vars='LTLIBOBJS
 LIBOBJS
 HAVE_SECCOMP_H
 HAVE_CONTRIB_INSTALL
-HAVE_GIT_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
 HAVE_FATAL_WARNINGS
@@ -717,7 +716,6 @@ enable_suid
 enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
-enable_git_install
 enable_contrib_install
 '
       ac_precious_vars='build_alias
@@ -1369,7 +1367,6 @@ Optional Features:
   --enable-busybox-workaround
                           enable busybox workaround
   --enable-gcov           Gcov instrumentation
-  --enable-git-install    enable git install feature
   --enable-contrib-install
                           install contrib scripts
 
@@ -3787,20 +3784,6 @@ if test "x$enable_gcov" = "xyes"; then :
 
 fi
 
-
-HAVE_GIT_INSTALL=""
-# Check whether --enable-git-install was given.
-if test "${enable_git_install+set}" = set; then :
-  enableval=$enable_git_install;
-fi
-
-if test "x$enable_git_install" = "xyes"; then :
-
-	HAVE_GIT_INSTALL="-DHAVE_GIT_INSTALL"
-
-
-fi
-
 HAVE_CONTRIB_INSTALL="yes"
 # Check whether --enable-contrib-install was given.
 if test "${enable_contrib_install+set}" = set; then :
@@ -5080,7 +5063,6 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
-echo "   git install support: $HAVE_GIT_INSTALL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

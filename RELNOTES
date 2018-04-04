@@ -1,6 +1,7 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
-  * --force depercated
+  * modif: --force depercated
+  * modif: --git-install and --git-uninstall deprecated
   * modif: support for private-bin, private-lib and shell none has been
      disabled while running AppImage archives in order to be able to use
      our regular profile files with AppImages.
@@ -10,6 +11,8 @@ firejail (0.9.53) baseline; urgency=low
      All users of Firefox-based browsers who use addons and plugins
      that read/write from ${HOME} will need to uncomment the includes for
      firefox-common-addons.inc in firefox-common.profile.
+  * modif: split disable-devel.inc into disable-devel and
+     disable-interpreters.inc
   * add --noautopulse to disable automatic ~/.config/pulse (for complex setups)
   * Spectre mitigation patch for gcc and clang compiler
   * D-Bus handling (--nodbus)

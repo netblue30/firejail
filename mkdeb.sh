@@ -18,7 +18,7 @@ echo "*****************************************"
 tar -xJvf $CODE_ARCHIVE
 #mkdir -p $INSTALL_DIR
 cd $CODE_DIR
-./configure --prefix=/usr --enable-git-install
+./configure --prefix=/usr
 make -j2
 mkdir debian
 DESTDIR=debian make install-strip

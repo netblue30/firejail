@@ -19,7 +19,6 @@ DOCDIR=@docdir@
 HAVE_SECCOMP=@HAVE_SECCOMP@
 HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
-HAVE_GIT_INSTALL=@HAVE_GIT_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
 
@@ -96,10 +95,6 @@ endif
 	install -c -m 0644 src/libpostexecseccomp/libpostexecseccomp.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
-ifeq ($(HAVE_GIT_INSTALL),-DHAVE_GIT_INSTALL)
-	install -c -m 0755 src/fgit/fgit-install.sh $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fgit/fgit-uninstall.sh $(DESTDIR)/$(libdir)/firejail/.
-endif
 
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.

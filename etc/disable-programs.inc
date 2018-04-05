@@ -441,6 +441,7 @@ blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.minetest
 blacklist ${HOME}/.mozilla
+blacklist ${HOME}/.mpd
 blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.mplayer
 blacklist ${HOME}/.msmtprc

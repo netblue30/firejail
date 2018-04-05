@@ -468,7 +468,7 @@ Example:
 $ firejail \-\-env=LD_LIBRARY_PATH=/opt/test/lib
 
 .TP
-\fB\-\-fs.print=name|print
+\fB\-\-fs.print=name|pid
 Print the filesystem log for the sandbox identified by name or by PID.
 .br
 
@@ -633,7 +633,7 @@ If a program is specified, the program is run in the sandbox. This command is av
 Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox.
 
 .TP
-\fB\-\-join-network=name|PID
+\fB\-\-join-network=name|pid
 Join the network namespace of the sandbox identified by name. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. This command is available only to root user.
 Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox. Example:
@@ -1772,7 +1772,7 @@ Example:
 $ firejail \-\-shell=none \-\-seccomp.keep=poll,select,[...] transmission-gtk
 
 .TP
-\fB\-\-seccomp.print=name|PID
+\fB\-\-seccomp.print=name|pid
 Print the seccomp filter for the sandbox identified by name or PID.
 .br
 
@@ -1957,7 +1957,7 @@ shell.
 Example:
 $firejail \-\-shell=/bin/dash script.sh
 .TP
-\fB\-\-shutdown=name|PID
+\fB\-\-shutdown=name|pid
 Shutdown the sandbox identified by name or PID.
 .br
 

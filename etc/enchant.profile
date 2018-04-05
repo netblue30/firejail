@@ -15,6 +15,8 @@ include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
+no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -27,7 +29,11 @@ seccomp
 shell none
 tracelog
 
-# private-bin enchant
-# private-dev
-# private-etc fonts
-# private-tmp
+# private-bin enchant, enchant-*
+private-dev
+private-etc none
+private-tmp
+
+# memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

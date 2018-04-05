@@ -19,6 +19,7 @@
  */
 #include "firejail.h"
 #include "../include/pid.h"
+#include "../include/firejail_user.h"
 #define _GNU_SOURCE
 #include <sys/utsname.h>
 #include <sched.h>
@@ -228,6 +229,15 @@ static void init_cfg(int argc, char **argv) {
 		exit(1);
 	}
 	cfg.cwd = getcwd(NULL, 0);
+
+	// chack user database
+	if (!firejail_user_check(cfg.username)) {
+		fprintf(stderr, "Error: the user is not allowed to use Firejail. "
+			"Please add the user in %s/firejail.users file, "
+			"either by running \"sudo firecfg\", or by editing the file directly."
+			"See \"man firejail-users\" for more details.\n", SYSCONFDIR);
+		exit(1);
+	}
 
 	// initialize random number generator
 	sandbox_pid = getpid();
@@ -830,7 +840,6 @@ int main(int argc, char **argv) {
 	int lockfd_directory = -1;
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
-	atexit(clear_atexit);
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -844,9 +853,11 @@ int main(int argc, char **argv) {
 	if (check_arg(argc, argv, "--quiet", 1))
 		arg_quiet = 1;
 
+	// cleanup at exit
+	EUID_ROOT();
+	atexit(clear_atexit);
 
 	// build /run/firejail directory structure
-	EUID_ROOT();
 	preproc_build_firejail_dir();
 	char *container_name = getenv("container");
 	if (!container_name || strcmp(container_name, "firejail")) {

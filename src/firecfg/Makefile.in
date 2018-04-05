@@ -2,11 +2,11 @@ all: firecfg
 
 include ../common.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/pid.h
+%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/firejail_user.h ../include/pid.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-firecfg: $(OBJS) ../lib/common.o
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o $(LIBS) $(EXTRA_LDFLAGS)
+firecfg: $(OBJS) ../lib/common.o ../lib/firejail_user.o
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/firejail_user.o $(LIBS) $(EXTRA_LDFLAGS)
 
 clean:; rm -f *.o firecfg *.gcov *.gcda *.gcno
 

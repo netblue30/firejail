@@ -19,6 +19,7 @@
 */
 
 #include "firecfg.h"
+#include "../include/firejail_user.h"
 int arg_debug = 0;
 
 static char *usage_str =
@@ -29,6 +30,7 @@ static char *usage_str =
 	"The symbolic links are placed in /usr/local/bin. For more information, see\n"
 	"DESKTOP INTEGRATION section in man 1 firejail.\n\n"
 	"Usage: firecfg [OPTIONS]\n\n"
+	"   --add-users user [user] - add the users to Firejail access database\n"
 	"   --clean - remove all firejail symbolic links.\n\n"
 	"   --debug - print debug messages.\n\n"
 	"   --fix - fix .desktop files.\n\n"
@@ -315,6 +317,19 @@ int main(int argc, char **argv) {
 			sound();
 			return 0;
 		}
+		else if (strcmp(argv[i], "--add-users") == 0) {
+			int j;
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: you need to be root to use this option\n");
+				exit(1);
+			}
+
+			for (j = i + 1; j < argc; j++) {
+				printf("Adding user %s to Firejail access database in %s/firejail.users\n", argv[j], SYSCONFDIR);
+				firejail_user_add(argv[j]);
+			}
+			return 0;
+		}
 		else {
 			fprintf(stderr, "Error: invalid command line option\n");
 			usage();
@@ -353,7 +368,7 @@ int main(int argc, char **argv) {
 
 
 
-	// switch to the local user, and fix desktop files
+	// user setup
 	char *user = getlogin();
 	if (!user) {
 		user = getenv("SUDO_USER");
@@ -362,6 +377,13 @@ int main(int argc, char **argv) {
 		}
 	}
 
+	// add user to firejail access database
+	if (user) {
+		printf("\nAdding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
+		firejail_user_add(user);
+	}
+
+	// switch to the local user, and fix desktop files
 	if (user) {
 		// find home directory
 		struct passwd *pw = getpwnam(user);

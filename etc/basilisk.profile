@@ -1,12 +1,12 @@
-# Firejail profile for palemoon
+# Firejail profile for basilisk
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/palemoon.local
+include /etc/firejail/basilisk.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.cache/moonchild productions/pale moon
-noblacklist ${HOME}/.moonchild productions/pale moon
+noblacklist ${HOME}/.cache/moonchild productions/basilisk
+noblacklist ${HOME}/.moonchild productions/basilisk
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -32,10 +32,10 @@ include /etc/firejail/disable-programs.inc
 #whitelist ${HOME}/.config/pipelight-widevine
 #whitelist ${HOME}/.config/pipelight-silverlight5.1
 
-mkdir ${HOME}/.cache/moonchild productions/pale moon
+mkdir ${HOME}/.cache/moonchild productions/basilisk
 mkdir ${HOME}/.moonchild productions
 whitelist ${DOWNLOADS}
-whitelist ${HOME}/.cache/moonchild productions/pale moon
+whitelist ${HOME}/.cache/moonchild productions/basilisk
 whitelist ${HOME}/.moonchild productions
 include /etc/firejail/whitelist-common.inc
 
@@ -51,10 +51,11 @@ seccomp
 shell none
 tracelog
 
-# private-bin palemoon
-# private-dev (disabled for now as it will interfere with webcam use in palemoon)
+# private-bin basilisk
+# private-dev (disabled for now as it will interfere with webcam use in basilisk)
 # private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
-# private-opt palemoon
+# private-opt basilisk
 private-tmp
 
 disable-mnt
+

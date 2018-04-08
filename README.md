@@ -122,7 +122,7 @@ DESCRIPTION
        Use  a  text editor to add or remove users from the list. You can also
        use firecfg --add-users command. Example:
 
-            $ sudo firecfg --add-users dusting lucas mike eleven
+            $ sudo firecfg --add-users dustin lucas mike eleven
 
        By default, running firecfg creates the file and adds the current user
        to the list. Example:

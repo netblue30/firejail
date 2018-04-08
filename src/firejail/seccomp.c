@@ -210,6 +210,11 @@ int seccomp_filter_drop(void) {
 					      PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list);
 			if (rv)
 				exit(rv);
+
+			// optimize the new filter
+			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSEC_OPTIMIZE, RUN_SECCOMP_CFG);
+			if (rv)
+				exit(rv);
 		}
 	}
 
@@ -230,6 +235,11 @@ int seccomp_filter_drop(void) {
 			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
 				PATH_FSECCOMP, "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list_drop);
 
+		if (rv)
+			exit(rv);
+
+		// optimize the drop filter
+		rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSEC_OPTIMIZE, RUN_SECCOMP_CFG);
 		if (rv)
 			exit(rv);
 	}

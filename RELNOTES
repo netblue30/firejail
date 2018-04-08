@@ -13,6 +13,8 @@ firejail (0.9.53) baseline; urgency=low
      firefox-common-addons.inc in firefox-common.profile.
   * modif: split disable-devel.inc into disable-devel and
      disable-interpreters.inc
+  * Firejail user access database (/etc/firejail/firejail.users,
+     man firejail-users)
   * add --noautopulse to disable automatic ~/.config/pulse (for complex setups)
   * Spectre mitigation patch for gcc and clang compiler
   * D-Bus handling (--nodbus)

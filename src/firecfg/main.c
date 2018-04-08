@@ -30,7 +30,7 @@ static char *usage_str =
 	"The symbolic links are placed in /usr/local/bin. For more information, see\n"
 	"DESKTOP INTEGRATION section in man 1 firejail.\n\n"
 	"Usage: firecfg [OPTIONS]\n\n"
-	"   --add-users user [user] - add the users to Firejail access database\n"
+	"   --add-users user [user] - add the users to Firejail user access database.\n\n"
 	"   --clean - remove all firejail symbolic links.\n\n"
 	"   --debug - print debug messages.\n\n"
 	"   --fix - fix .desktop files.\n\n"

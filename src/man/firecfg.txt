@@ -48,7 +48,7 @@ The following actions are implemented by default by running sudo firecfg:
 .SH OPTIONS
 .TP
 \fB\-\-add-users user [user]
-Add the list of users to Firejail user access databaseRemove all firejail symbolic links.
+Add the list of users to Firejail user access database.
 
 Example:
 .br

@@ -17,7 +17,6 @@ whitelist ${HOME}/.moonchild productions
 # Basilisk can use the full firejail seccomp filter (unlike firefox >= 60)
 ignore seccomp.drop
 seccomp
-shell none
 
 #private-bin basilisk
 # private-etc must first be enabled in firefox-common.profile

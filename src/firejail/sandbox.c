@@ -1022,19 +1022,17 @@ int sandbox(void* sandbox_arg) {
 #endif
 
 	//****************************************
-	// drop privileges or create a new user namespace
+	// create a new user namespace
+	//     - too early to drop privileges
 	//****************************************
 	save_nogroups();
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
 			fwarning("cannot create a new user namespace, going forward without it...\n");
-			drop_privs(arg_nogroups);
 			arg_noroot = 0;
 		}
 	}
-	else
-		drop_privs(arg_nogroups);
 
 	// notify parent that new user namespace has been created so a proper
  	// UID/GID map can be setup
@@ -1066,8 +1064,9 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	//****************************************
-	// fork the application and monitor it
+	// drop privileges, fork the application and monitor it
 	//****************************************
+	drop_privs(arg_nogroups);
 	pid_t app_pid = fork();
 	if (app_pid == -1)
 		errExit("fork");
@@ -1085,6 +1084,7 @@ int sandbox(void* sandbox_arg) {
 				printf("AppArmor enabled\n");
 		}
 #endif
+
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		start_application(0);	// start app
 	}

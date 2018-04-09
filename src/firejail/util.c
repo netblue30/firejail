@@ -32,6 +32,61 @@
 #include <sys/wait.h>
 
 #define MAX_GROUPS 1024
+
+static void clean_supplementary_groups(gid_t gid) {
+	assert(cfg.username);
+	gid_t groups[MAX_GROUPS];
+	int ngroups = MAX_GROUPS;
+
+	int rv = getgrouplist(cfg.username, gid, groups, &ngroups);
+	if (rv == -1)
+		goto clean_all;
+
+	// clean supplementary group list
+	// allow only tty, audio, video, games
+	gid_t new_groups[MAX_GROUPS];
+	int new_ngroups = 0;
+	char *allowed[] = {
+		"tty",
+		"audio",
+		"video",
+		"games",
+		NULL
+	};
+
+	int i = 0;
+	while (allowed[i]) {
+		gid_t g = get_group_id(allowed[i]);
+	 	if (g) {
+			int j;
+			for (j = 0; j < ngroups; j++) {
+				if (g == groups[j]) {
+					new_groups[new_ngroups] = g;
+					new_ngroups++;
+					break;
+				}
+			}
+		}
+		i++;
+	}
+
+	if (new_ngroups) {
+		rv = setgroups(new_ngroups, new_groups);
+		if (rv)
+			goto clean_all;
+	}
+	else
+		goto clean_all;
+
+	return;
+
+clean_all:
+	fwarning("cleaning all supplementary groups\n");
+	if (setgroups(0, NULL) < 0)
+		errExit("setgroups");
+}
+
+
 // drop privileges
 // - for root group or if nogroups is set, supplementary groups are not configured
 void drop_privs(int nogroups) {
@@ -45,34 +100,8 @@ void drop_privs(int nogroups) {
 		if (arg_debug)
 			printf("Username %s, no supplementary groups\n", cfg.username);
 	}
-	else {
-		assert(cfg.username);
-		gid_t groups[MAX_GROUPS];
-		int ngroups = MAX_GROUPS;
-		int rv = getgrouplist(cfg.username, gid, groups, &ngroups);
-
-		if (arg_debug && rv) {
-			printf("Username %s, groups ", cfg.username);
-			int i;
-			for (i = 0; i < ngroups; i++)
-				printf("%u, ", groups[i]);
-			printf("\n");
-		}
-
-		if (rv == -1) {
-			fwarning("cannot extract supplementary group list, dropping them\n");
-			if (setgroups(0, NULL) < 0)
-				errExit("setgroups");
-		}
-		else {
-			rv = setgroups(ngroups, groups);
-			if (rv) {
-				fwarning("cannot set supplementary group list, dropping them\n");
-				if (setgroups(0, NULL) < 0)
-					errExit("setgroups");
-			}
-		}
-	}
+	else if (arg_noroot)
+		clean_supplementary_groups(gid);
 
 	// set uid/gid
 	if (setgid(getgid()) < 0)

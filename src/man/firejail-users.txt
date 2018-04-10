@@ -1,0 +1,45 @@
+.TH FIREJAIL-USERS 5 "MONTH YEAR" "VERSION" "firejail.users man page"
+.SH NAME
+firejail.users \- Firejail user access database
+
+.SH DESCRIPTION
+/etc/firejail/firejail.users lists the users allowed to run firejail SUID executable.
+If the file is not present in the system, all users are allowed to use the sandbox.
+root user is allowed by default.
+
+Example:
+
+	$ cat /etc/firejail/firejail.users
+.br
+	dustin
+.br
+	lucas
+.br
+	mike
+.br
+	eleven
+
+Use a text editor to add or remove users from the list. You can also use firecfg \-\-add-users
+command. Example:
+
+	$ sudo firecfg --add-users dustin lucas mike eleven
+
+By default, running firecfg creates the file and adds the current user to the list. Example:
+
+	$ sudo firecfg
+
+See \fBman 1 firecfg\fR for details.
+
+.SH FILES
+/etc/firejail/firejail.users
+
+.SH LICENSE
+Firejail is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+.PP
+Homepage: https://firejail.wordpress.com
+.SH SEE ALSO
+\&\flfirejail\fR\|(1),
+\&\flfiremon\fR\|(1),
+\&\flfirecfg\fR\|(1),
+\&\flfirejail-profile\fR\|(5)
+\&\flfirejail-login\fR\|(5)

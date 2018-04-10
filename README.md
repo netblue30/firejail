@@ -98,6 +98,57 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 # Current development version: 0.9.53
 
+## Firejail user access database
+`````
+$ man firejail-users
+FIREJAIL-USERS(5)          firejail.users man page          FIREJAIL-USERS(5)
+
+NAME
+       firejail.users - Firejail user access database
+
+DESCRIPTION
+       /etc/firejail/firejail.users  lists  the users allowed to run firejail
+       SUID executable.  If the file is not present in the system, all  users
+       are allowed to use the sandbox.  root user is allowed by default.
+
+       Example:
+
+            $ cat /etc/firejail/firejail.users
+            dustin
+            lucas
+            mike
+            eleven
+
+       Use  a  text editor to add or remove users from the list. You can also
+       use firecfg --add-users command. Example:
+
+            $ sudo firecfg --add-users dustin lucas mike eleven
+
+       By default, running firecfg creates the file and adds the current user
+       to the list. Example:
+
+            $ sudo firecfg
+
+       See man 1 firecfg for details.
+
+FILES
+       /etc/firejail/firejail.users
+
+LICENSE
+       Firejail  is  free  software; you can redistribute it and/or modify it
+       under the terms of the GNU General Public License as published by  the
+       Free Software Foundation; either version 2 of the License, or (at your
+       option) any later version.
+
+       Homepage: https://firejail.wordpress.com
+
+SEE ALSO
+       firejail(1),  firemon(1),  firecfg(1),  firejail-profile(5)  firejail-
+       login(5)
+
+0.9.53                             Apr 2018                 FIREJAIL-USERS(5)
+`````
+
 ## Spectre mitigation
 
 If your gcc compiler version supports it, -mindirect-branch=thunk is inserted into EXTRA_CFLAGS during software configuration.
@@ -155,6 +206,14 @@ This feature is also supported for LLVM/clang compiler
 
               Example:
               $ firejail --nodbus --net=none
+
+       --noautopulse
+              Disable automatic ~/.config/pulse init, for complex setups such
+              as remote pulse servers or non-standard socket paths.
+
+              Example:
+              $ firejail --noautopulse firefox
+
 `````
 
 ## AppImage development
@@ -308,4 +367,5 @@ Basilisk browser, Tor Browser language packs, PlayOnLinux, sylpheed, discord-can
 pycharm-community, pycharm-professional, Pitivi, OnionShare, Fritzing, Kaffeine, pdfchain,
 tilp, vivaldi-snapshot, bitcoin-qt, VS Code, falkon, gnome-builder, lobase, asunder,
 gnome-recipes, akonadi_control, evince-previewer, evince-thumbnailer, blender-2.8,
-thunderbird-beta, ncdu, gnome-logs, gcloud, musixmatch
+thunderbird-beta, ncdu, gnome-logs, gcloud, musixmatch, gunzip, bunzip2,
+enchant, enchant-2, enchant-lsmod, enchant-lsmod-2

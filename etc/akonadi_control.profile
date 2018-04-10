@@ -34,8 +34,8 @@ include /etc/firejail/whitelist-var-common.inc
 # apparmor
 caps.drop all
 ipc-namespace
-no3d
 netfilter
+no3d
 nodvd
 nogroups
 # nonewprivs

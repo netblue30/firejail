@@ -205,6 +205,7 @@ blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/smtube
 blacklist ${HOME}/.config/specialmailcollectionsrc
 blacklist ${HOME}/.config/spotify
+blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.config/telepathy-account-widgets
@@ -440,6 +441,8 @@ blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.minetest
+blacklist ${HOME}/.moonchild productions/basilisk
+blacklist ${HOME}/.moonchild productions/pale moon
 blacklist ${HOME}/.mozilla
 blacklist ${HOME}/.mpd
 blacklist ${HOME}/.mpdconf
@@ -555,6 +558,7 @@ blacklist ${HOME}/.cache/kwin
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/midori
+blacklist ${HOME}/.cache/moonchild productions/basilisk
 blacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla
 blacklist ${HOME}/.cache/mutt

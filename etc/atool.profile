@@ -38,5 +38,5 @@ tracelog
 
 # private-bin atool
 private-dev
-private-etc none
+private-etc passwd,group
 private-tmp

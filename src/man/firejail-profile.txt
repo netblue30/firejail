@@ -232,7 +232,7 @@ All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.
-This feature is still under development, see man 1 firejail for some examples.
+This feature is still under development, see \fBman 1 firejail\fR for some examples.
 .TP
 \fBprivate-opt file,directory
 Build a new /optin a temporary
@@ -610,3 +610,4 @@ Homepage: https://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-login\fR\|(5)
+\&\flfirejail-users\fR\|(5)

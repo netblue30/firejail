@@ -248,6 +248,9 @@ glitsj16 (https://github.com/glitsj16)
 	- evince-previewer, evince-thumbnailer profiles
 	- gnome-recipes, gnome-logs profiles
 	- fixed private-lib for gnome-calculator
+	- gunzip, bunzip2 profiles
+	- enchant, enchat-2, enchant-lsmod, enchant-lsmod-2 profiles
+	- atool, soundconvertor, mpd, gnome-calculator, makepkg profile fixes
 graywolf (https://github.com/graywolf)
 	- spelling fix
 greigdp (https://github.com/greigdp)

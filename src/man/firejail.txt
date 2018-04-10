@@ -2691,7 +2691,7 @@ Child process initialized
 [...]
 .RE
 
-See man 5 firejail-profile for profile file syntax information.
+See \fBman 5 firejail-profile\fR for profile file syntax information.
 
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
@@ -2739,3 +2739,4 @@ Homepage: https://firejail.wordpress.com
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5)
+\&\flfirejail-users\fR\|(5)

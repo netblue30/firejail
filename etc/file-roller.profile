@@ -17,7 +17,7 @@ apparmor
 caps.drop all
 net none
 no3d
-nodbus
+# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs

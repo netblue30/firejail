@@ -37,7 +37,6 @@ static void clean_supplementary_groups(gid_t gid) {
 	assert(cfg.username);
 	gid_t groups[MAX_GROUPS];
 	int ngroups = MAX_GROUPS;
-
 	int rv = getgrouplist(cfg.username, gid, groups, &ngroups);
 	if (rv == -1)
 		goto clean_all;
@@ -74,6 +73,13 @@ static void clean_supplementary_groups(gid_t gid) {
 		rv = setgroups(new_ngroups, new_groups);
 		if (rv)
 			goto clean_all;
+
+		if (arg_debug) {
+			printf("Supplementary groups: ");
+			for (i = 0; i < new_ngroups; i++)
+				printf("%d ", new_groups[i]);
+			printf("\n");
+		}
 	}
 	else
 		goto clean_all;
@@ -92,13 +98,15 @@ clean_all:
 void drop_privs(int nogroups) {
 	EUID_ROOT();
 	gid_t gid = getgid();
+	if (arg_debug)
+		printf("Drop privileges: pid %d, uid %d, gid %d, nogroups %d\n",  getpid(), getuid(), gid, nogroups);
 
 	// configure supplementary groups
 	if (gid == 0 || nogroups) {
 		if (setgroups(0, NULL) < 0)
 			errExit("setgroups");
 		if (arg_debug)
-			printf("Username %s, no supplementary groups\n", cfg.username);
+			printf("No supplementary groups\n");
 	}
 	else if (arg_noroot)
 		clean_supplementary_groups(gid);

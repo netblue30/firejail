@@ -153,12 +153,13 @@ int sbox_run(unsigned filter, int num, ...) {
 		for (i = 3; i < max; i++)
 			close(i); // close open files
 
+#if 0
 		if (arg_debug) {
 			printf("sbox file descriptors:\n");
 			int rv = system("ls -l /proc/self/fd");
 			(void) rv;
 		}
-
+#endif
 		umask(027);
 
 		// apply filters

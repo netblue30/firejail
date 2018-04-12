@@ -997,6 +997,10 @@ int sandbox(void* sandbox_arg) {
 		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
 		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
 	}
+	else {
+		int rv = unlink(RUN_SECCOMP_PROTOCOL);
+		(void) rv;
+	}
 #endif
 
 	// if a keep list is available, disregard the drop list
@@ -1005,6 +1009,31 @@ int sandbox(void* sandbox_arg) {
 			seccomp_filter_keep();
 		else
 			seccomp_filter_drop();
+
+		// clean unused filters
+#if defined(__LP64__)
+		int rv = unlink(RUN_SECCOMP_64);
+#endif
+#if defined(__ILP32__)
+		int rv = unlink(RUN_SECCOMP_32);
+#endif
+		(void) rv;
+	}
+	else { // clean seccomp files under /run/firejail/mnt
+		int rv = unlink(RUN_SECCOMP_CFG);
+		rv |= unlink(RUN_SECCOMP_64);
+		rv |= unlink(RUN_SECCOMP_32);
+		(void) rv;
+	}
+
+	if (arg_memory_deny_write_execute) {
+		if (arg_debug)
+			printf("Install memory write&execute filter\n");
+		seccomp_load(RUN_SECCOMP_MDWX);	// install filter
+	}
+	else {
+		int rv = unlink(RUN_SECCOMP_MDWX);
+		(void) rv;
 	}
 
 	if (arg_debug) {
@@ -1012,12 +1041,6 @@ int sandbox(void* sandbox_arg) {
 		int rv = system("ls -l /run/firejail/mnt/seccomp*\n");
 		(void) rv;
 		printf("\n");
-	}
-
-	if (arg_memory_deny_write_execute) {
-		if (arg_debug)
-			printf("Install memory write&execute filter\n");
-		seccomp_load(RUN_SECCOMP_MDWX);	// install filter
 	}
 #endif
 

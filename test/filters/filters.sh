@@ -28,6 +28,9 @@ fi
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp
 
+echo "TESTING: seccomp run files (test/filters/seccomp-run-files.exp)"
+./seccomp-run-files.exp
+
 echo "TESTING: noroot (test/filters/noroot.exp)"
 ./noroot.exp
 

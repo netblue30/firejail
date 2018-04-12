@@ -165,10 +165,10 @@ capability sys_time,
 capability sys_tty_config,
 capability mknod,
 capability lease,
-capability audit_write,
-capability audit_control,
+#capability audit_write,
+#capability audit_control,
 capability setfcap,
-capability mac_override,
+#capability mac_override,
 #capability mac_admin,
 
 ##########

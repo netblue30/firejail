@@ -1035,13 +1035,6 @@ int sandbox(void* sandbox_arg) {
 		int rv = unlink(RUN_SECCOMP_MDWX);
 		(void) rv;
 	}
-
-	if (arg_debug) {
-		printf("\nSeccomp files:\n");
-		int rv = system("ls -l /run/firejail/mnt/seccomp*\n");
-		(void) rv;
-		printf("\n");
-	}
 #endif
 
 	//****************************************

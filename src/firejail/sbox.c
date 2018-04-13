@@ -153,13 +153,6 @@ int sbox_run(unsigned filter, int num, ...) {
 		for (i = 3; i < max; i++)
 			close(i); // close open files
 
-#if 0
-		if (arg_debug) {
-			printf("sbox file descriptors:\n");
-			int rv = system("ls -l /proc/self/fd");
-			(void) rv;
-		}
-#endif
 		umask(027);
 
 		// apply filters
@@ -215,13 +208,6 @@ int sbox_run(unsigned filter, int num, ...) {
 		fprintf(stderr, "Error: failed to run %s\n", arg[0]);
 		exit(1);
 	}
-
-#if 0
-printf("** sbox run out *********************************\n");
-system("ls -l /run/firejail/mnt\n");
-system("ls -l /proc/self/fd");
-printf("** sbox run out *********************************\n");
-#endif
 
 	return status;
 }

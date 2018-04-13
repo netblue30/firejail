@@ -347,12 +347,6 @@ void x11_start_xvfb(int argc, char **argv) {
 	}
 	free(fname);
 
-	if (arg_debug) {
-		printf("X11 sockets: "); fflush(0);
-		int rv = system("ls /tmp/.X11-unix");
-		(void) rv;
-	}
-
 	assert(display_str);
 	setenv("DISPLAY", display_str, 1);
 	// run attach command
@@ -582,12 +576,6 @@ void x11_start_xephyr(int argc, char **argv) {
 	}
 	free(fname);
 
-	if (arg_debug) {
-		printf("X11 sockets: "); fflush(0);
-		int rv = system("ls /tmp/.X11-unix");
-		(void) rv;
-	}
-
 	assert(display_str);
 	setenv("DISPLAY", display_str, 1);
 	// run attach command
@@ -754,12 +742,6 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 		exit(1);
 	}
 	free(fname);
-
-	if (arg_debug) {
-		printf("X11 sockets: "); fflush(0);
-		int rv = system("ls /tmp/.X11-unix");
-		(void) rv;
-	}
 
 	// build attach command
 	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str, NULL };

@@ -24,9 +24,9 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 
-private-bin discord,sh,xdg-mime
+private-bin discord,sh,xdg-mime,tr,sed,echo,head,cut,xdg-open,grep,egrep,iceweasel,firefox,seamonkey,epiphany,konqueror,chromium,google-chrome
 private-dev
-private-etc fonts
+private-etc fonts,machine-id
 private-tmp
 
 noexec ${HOME}

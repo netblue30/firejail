@@ -5,36 +5,27 @@ cd /home
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --profile=/etc/firejail/firefox.profile --allow-debuggers strace ls\r"
+send -- "firejail --allow-debuggers\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized" { puts "\n"}
 	"is disabled on Linux kernels prior to 4.8" { puts "TESTING SKIP: kernel too old\n"; exit }
 }
+after 100
+
+send -- "strace ls\r"
 expect {
-        timeout {puts "TESTING ERROR 1\n";exit}
-        "ioctl"
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"open"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"exit_group"
 }
 after 100
+send -- "exit\r"
+sleep 1
 
-send -- "firejail --allow-debuggers --profile=/etc/firejail/firefox.profile strace ls\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
-}
-expect {
-        timeout {puts "TESTING ERROR 4\n";exit}
-        "ioctl"
-}
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"exit_group"
-}
-after 100
 
 
 puts "\nall done\n"

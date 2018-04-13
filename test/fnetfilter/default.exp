@@ -31,7 +31,7 @@ after 100
 send -- "fnetfilter test1.net,33\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"invalid destination file in netfilter command"
+	"cannot open test1.net,33"
 }
 after 100
 send -- "rm outfile\r"

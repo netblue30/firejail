@@ -66,7 +66,7 @@ after 100
 send -- "fnetfilter test2.net,icmp-type,destination-unreachable,time-exceeded,echo-request\r"
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
-	"invalid destination file in netfilter command"
+	"cannot open test2.net,"
 }
 after 100
 

@@ -68,9 +68,6 @@ fi
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
 
-echo "TESTING: firejail in firejail - force new sandbox (test/environment/firejail-in-firejail2.exp)"
-./firejail-in-firejail2.exp
-
 which aplay
 if [ "$?" -eq 0 ];
 then

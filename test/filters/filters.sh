@@ -31,6 +31,9 @@ echo "TESTING: debug options (test/filters/debug.exp)"
 echo "TESTING: seccomp run files (test/filters/seccomp-run-files.exp)"
 ./seccomp-run-files.exp
 
+echo "TESTING: seccomp postexec (test/filters/seccomp-postexec.exp)"
+./seccomp-postexec.exp
+
 echo "TESTING: noroot (test/filters/noroot.exp)"
 ./noroot.exp
 

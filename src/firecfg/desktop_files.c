@@ -163,8 +163,6 @@ void fix_desktop_files(char *homedir) {
 		// skip links
 		if (is_link(filename))
 			continue;
-		if (stat(filename, &sb) == -1)
-			errExit("stat");
 
 		// no profile in /etc/firejail, no desktop file fixing
 		if (!have_profile(filename, homedir))
@@ -173,23 +171,33 @@ void fix_desktop_files(char *homedir) {
 		//****************************************************
 		// load the file in memory and do some basic checking
 		//****************************************************
-		/* coverity[toctou] */
-		int fd = open(filename, O_RDONLY);
-		if (fd == -1) {
+		FILE *fp = fopen(filename, "r");
+		if (!fp) {
 			fprintf(stderr, "Warning: cannot open /usr/share/applications/%s\n", filename);
 			continue;
 		}
 
-		char *buf = mmap(NULL, sb.st_size + 1, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
-		if (buf == MAP_FAILED)
-			errExit("mmap");
-		close(fd);
+		fseek(fp, 0, SEEK_END);
+		size_t size = ftell(fp);
+		fseek(fp, 0, SEEK_SET);
+		char *buf = malloc(size + 1);
+		if (!buf)
+			errExit("malloc");
+
+		size_t loaded = fread(buf, size, 1, fp);
+		fclose(fp);
+		if (loaded != 1) {
+			fprintf(stderr, "Warning: cannot read /usr/share/applications/%s\n", filename);
+			free(buf);
+			continue;
+		}
+		buf[size] = '\0';
 
 		// check format
 		if (strstr(buf, "[Desktop Entry]\n") == NULL) {
 			if (arg_debug)
 				printf("   %s - skipped: wrong format?\n", filename);
-			munmap(buf, sb.st_size + 1);
+			free(buf);
 			continue;
 		}
 
@@ -198,7 +206,7 @@ void fix_desktop_files(char *homedir) {
 		if (!ptr || strlen(ptr) < 7) {
 			if (arg_debug)
 				printf("   %s - skipped: wrong format?\n", filename);
-			munmap(buf, sb.st_size + 1);
+			free(buf);
 			continue;
 		}
 
@@ -207,7 +215,7 @@ void fix_desktop_files(char *homedir) {
 		if (execname[0] == '"') {
 			if (arg_debug)
 				printf("   %s - skipped: path quoting unsupported\n", filename);
-			munmap(buf, sb.st_size + 1);
+			free(buf);
 			continue;
 		}
 
@@ -241,12 +249,9 @@ void fix_desktop_files(char *homedir) {
 			}
 		}
 
-		if (change_exec == NULL && change_dbus == 0) {
-			munmap(buf, sb.st_size + 1);
+		free(buf);
+		if (change_exec == NULL && change_dbus == 0)
 			continue;
-		}
-
-		munmap(buf, sb.st_size + 1);
 
 		//****************************************************
 		// generate output file

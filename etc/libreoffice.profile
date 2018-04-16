@@ -24,7 +24,7 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-var-common.inc
 
 apparmor
-#caps.drop all
+caps.drop all
 machine-id
 netfilter
 #nodbus
@@ -34,7 +34,7 @@ nogroups
 noroot
 notv
 #protocol unix,inet,inet6
-#seccomp
+seccomp
 shell none
 tracelog
 

@@ -27,13 +27,13 @@ apparmor
 caps.drop all
 machine-id
 netfilter
-nodbus
+#nodbus
 nodvd
 nogroups
-nonewprivs
+#nonewprivs
 noroot
 notv
-protocol unix,inet,inet6
+#protocol unix,inet,inet6
 seccomp
 shell none
 tracelog

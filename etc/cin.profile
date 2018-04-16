@@ -18,15 +18,15 @@ ipc-namespace
 net none
 nodbus
 nodvd
-nogroups
-nonewprivs
+#nogroups
+#nonewprivs
 notv
 noroot
 protocol unix
-seccomp
+#seccomp
 shell none
 
-private-bin cin,ffmpeg
+#private-bin cin,ffmpeg
 private-dev
 
 noexec ${HOME}

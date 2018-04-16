@@ -14,6 +14,7 @@ firejail-*.tar.xz
 firejail-login.5
 firejail-profile.5
 firejail-config.5
+firejail-users.5
 firejail.1
 firemon.1
 firecfg.1

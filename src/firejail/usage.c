@@ -77,7 +77,9 @@ static char *usage_str =
 	"    --dns.print=name|pid - print DNS configuration.\n"
 	"    --env=name=value - set environment variable.\n"
 	"    --fs.print=name|pid - print the filesystem log.\n"
+#ifdef HAVE_FILE_TRANSFER
 	"    --get=name|pid filename - get a file from sandbox container.\n"
+#endif
 	"    --help, -? - this help screen.\n"
 	"    --hostname=name - set sandbox hostname.\n"
 	"    --hosts-file=file - use file as /etc/hosts.\n"
@@ -97,7 +99,9 @@ static char *usage_str =
 #endif
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
 	"    --list - list all sandboxes.\n"
+#ifdef HAVE_FILE_TRANSFER
 	"    --ls=name|pid dir_or_filename - list files in sandbox container.\n"
+#endif
 #ifdef HAVE_NETWORK
 	"    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n"
 #endif
@@ -164,8 +168,10 @@ static char *usage_str =
 	"    --profile-path=directory - use this directory to look for profile files.\n"
 	"    --protocol=protocol,protocol,protocol - enable protocol filter.\n"
 	"    --protocol.print=name|pid - print the protocol filter.\n"
+#ifdef HAVE_FILE_TRANSFER
 	"    --put=name|pid src-filename dest-filename - put a file in sandbox\n"
 	"\tcontainer.\n"
+#endif
 	"    --quiet - turn off Firejail's output.\n"
 	"    --read-only=filename - set directory or file read-only..\n"
 	"    --read-write=filename - set directory or file read-write.\n"

@@ -647,12 +647,6 @@ void env_ibus_load(void);
 // fs_whitelist.c
 void fs_whitelist(void);
 
-// errno.c
-int errno_highest_nr(void);
-int errno_find_name(const char *name);
-char *errno_find_nr(int nr);
-void errno_print(void);
-
 // pulseaudio.c
 void pulseaudio_init(void);
 void pulseaudio_disable(void);
@@ -794,10 +788,6 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
-
-// git.c
-void git_install();
-void git_uninstall();
 
 // run_files.c
 void delete_run_files(pid_t pid);

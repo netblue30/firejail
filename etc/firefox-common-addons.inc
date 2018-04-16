@@ -53,3 +53,12 @@ whitelist ${HOME}/.wine-pipelight
 whitelist ${HOME}/.wine-pipelight64
 whitelist ${HOME}/.zotero
 whitelist ${HOME}/dwhelper
+
+# GNOME Shell integration (chrome-gnome-shell) needs dbus and python 3 (blacklisted by disable-interpreters.inc)
+ignore nodbus
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python3*
+
+# Flash plugin
+# private-etc below works fine on most distributions. There are some problems on CentOS.
+#private-etc ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,mime.types,mailcap,asound.conf,pulse,pki,crypto-policies,ld.so.cache,adobe

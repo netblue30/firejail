@@ -116,6 +116,10 @@ blacklist /run/user/*/kdeinit5__*
 # blacklist /tmp/ksocket-*/kdeinit4__*
 #  - causes issues when kdeinit4 gets killed; enable on KDE Plasma 4
 
+# gnome
+# contains extensions, last used times of applications, and notifications
+blacklist ${HOME}/.local/share/gnome-shell
+
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd

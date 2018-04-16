@@ -16,7 +16,6 @@ noblacklist ${HOME}/.kde4/share/apps/okular
 noblacklist ${HOME}/.kde4/share/config/kgetrc
 noblacklist ${HOME}/.kde4/share/config/okularpartrc
 noblacklist ${HOME}/.kde4/share/config/okularrc
-# noblacklist ${HOME}/.local/share/gnome-shell/extensions
 noblacklist ${HOME}/.local/share/kget
 noblacklist ${HOME}/.local/share/okular
 noblacklist ${HOME}/.local/share/qpdfview
@@ -41,7 +40,6 @@ whitelist ${HOME}/.kde4/share/config/okularpartrc
 whitelist ${HOME}/.kde4/share/config/okularrc
 whitelist ${HOME}/.keysnail.js
 whitelist ${HOME}/.lastpass
-whitelist ${HOME}/.local/share/gnome-shell/extensions
 whitelist ${HOME}/.local/share/kget
 whitelist ${HOME}/.local/share/okular
 whitelist ${HOME}/.local/share/qpdfview
@@ -55,10 +53,12 @@ whitelist ${HOME}/.zotero
 whitelist ${HOME}/dwhelper
 
 # GNOME Shell integration (chrome-gnome-shell) needs dbus and python 3 (blacklisted by disable-interpreters.inc)
+noblacklist ${HOME}/.local/share/gnome-shell/extensions
+whitelist ${HOME}/.local/share/gnome-shell/extensions
 ignore nodbus
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python3*
 
 # Flash plugin
-# private-etc below works fine on most distributions. There are some problems on CentOS.
-#private-etc ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,mime.types,mailcap,asound.conf,pulse,pki,crypto-policies,ld.so.cache,adobe
+# private-etc must first be enabled in firefox-common.profile and in profiles including it.
+#private-etc adobe

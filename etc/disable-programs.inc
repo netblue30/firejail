@@ -429,6 +429,7 @@ blacklist ${HOME}/.local/share/telepathy
 blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser
 blacklist ${HOME}/.local/share/totem
+blacklist ${HOME}/.local/share/uzbl
 blacklist ${HOME}/.local/share/vlc
 blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan

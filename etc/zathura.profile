@@ -15,6 +15,7 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
+machine-id
 # net none
 # nodbus
 nodvd
@@ -29,7 +30,7 @@ shell none
 
 private-bin zathura
 private-dev
-private-etc fonts
+private-etc fonts,machine-id
 private-tmp
 
 read-only ${HOME}/

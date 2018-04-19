@@ -23,7 +23,9 @@ nodvd
 notv
 noroot
 protocol unix
-#seccomp
+
+#if a 1-2% gap per thread hurts you, feel free to comment seccomp
+seccomp
 shell none
 
 #private-bin cin,ffmpeg

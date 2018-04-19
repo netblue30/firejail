@@ -24,7 +24,7 @@ notv
 noroot
 protocol unix
 
-#if a 1-2% gap per thread hurts you, feel free to comment seccomp
+#if an 1-2% gap per thread hurts you, feel free to comment seccomp
 seccomp
 shell none
 

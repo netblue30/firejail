@@ -314,15 +314,6 @@ $ firejail \-\-list
 $ firejail \-\-cpu.print=3272
 
 .TP
-\fB\-\-csh
-Use /bin/csh as default user shell.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-csh
-.TP
 \fB\-\-debug\fR
 Print debug messages.
 .br
@@ -351,15 +342,6 @@ Print all recognized capabilities in the current Firejail software build and exi
 Example:
 .br
 $ firejail \-\-debug-caps
-.TP
-\fB\-\-debug-check-filename\fR
-Debug filename checking.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-debug-check-filename firefox
 
 .TP
 \fB\-\-debug-errnos
@@ -1949,8 +1931,7 @@ $ firejail \-\-shell=none script.sh
 \fB\-\-shell=program
 Set default user shell. Use this shell to run the application using \-c shell option.
 For example "firejail \-\-shell=/bin/dash firefox" will start Mozilla Firefox as "/bin/dash \-c firefox".
-By default Bash shell (/bin/bash) is used. Options such as \-\-zsh and \-\-csh can also set the default
-shell.
+By default Bash shell (/bin/bash) is used.
 .br
 
 .br
@@ -2323,16 +2304,6 @@ Example:
 .br
 $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
 .br
-
-.TP
-\fB\-\-zsh
-Use /usr/bin/zsh as default user shell.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-zsh
 
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.

@@ -45,6 +45,12 @@ int firejail_user_check(const char *name) {
 	if (strcmp(name, "root") == 0)
 		return 1;
 
+	// user nobody disabled by default
+	if (strcmp(name, "nobody") == 0) {
+		fprintf(stderr, "Error: user nobody is not allowed to run the sandbox\n");
+		exit(1);
+	}
+
 	// check file existence
 	char *fname = get_fname();
 	if (access(fname, F_OK)) {

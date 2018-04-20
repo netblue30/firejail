@@ -800,9 +800,6 @@ void invalid_filename(const char *fname, int globbing) {
 	assert(fname);
 	const char *ptr = fname;
 
-	if (arg_debug_check_filename)
-		printf("Checking filename %s\n", fname);
-
 	if (strncmp(ptr, "${HOME}", 7) == 0)
 		ptr = fname + 7;
 	else if (strncmp(ptr, "${PATH}", 7) == 0)

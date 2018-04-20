@@ -309,7 +309,6 @@ static inline int any_interface_configured(void) {
 extern int arg_private;		// mount private /home
 extern int arg_private_template; // private /home template
 extern int arg_debug;		// print debug messages
-extern int arg_debug_check_filename;		// print debug messages for filename checking
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
 extern int arg_debug_private_lib;	// print debug messages for private-lib
@@ -576,9 +575,6 @@ void caps_drop_list(const char *clist);
 void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);
 void caps_drop_dac_override(void);
-
-// syscall.c
-const char *syscall_find_nr(int nr);
 
 // fs_trace.c
 void fs_trace_preload(void);

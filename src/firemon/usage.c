@@ -43,6 +43,7 @@ static char *help_str =
 	"\t--tree - print a tree of all sandboxed processes.\n\n"
 	"\t--top - monitor the most CPU-intensive sandboxes.\n\n"
 	"\t--version - print program version and exit.\n\n"
+	"\t--x11 - print X11 display number.\n\n"
 
 	"Without any options, firemon monitors all fork, exec, id change, and exit\n"
 	"events in the sandbox. Monitoring a specific PID is also supported.\n\n"

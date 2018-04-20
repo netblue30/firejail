@@ -47,7 +47,6 @@ Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_private_template = 0; // mount private /home using a template
 int arg_debug = 0;				// print debug messages
-int arg_debug_check_filename = 0;		// print debug messages for filename checking
 int arg_debug_blacklists = 0;			// print debug messages for blacklists
 int arg_debug_whitelists = 0;			// print debug messages for whitelists
 int arg_debug_private_lib = 0;			// print debug messages for private-lib
@@ -1051,8 +1050,6 @@ int main(int argc, char **argv) {
 
 		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet)
 			arg_debug = 1;
-		else if (strcmp(argv[i], "--debug-check-filename") == 0)
-			arg_debug_check_filename = 1;
 		else if (strcmp(argv[i], "--debug-blacklists") == 0)
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
@@ -1439,9 +1436,6 @@ int main(int argc, char **argv) {
 			custom_profile = 1;
 			free(ppath);
 		}
-		else if (strncmp(argv[i], "--profile-path=", 15) == 0) {
-			fwarning("--profile-path has been deprecated\n");
-		}
 		else if (strcmp(argv[i], "--noprofile") == 0) {
 			if (custom_profile) {
 				fprintf(stderr, "Error: --profile and --noprofile options are mutually exclusive\n");
@@ -1540,9 +1534,6 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--machine-id") == 0) {
 			arg_machineid = 1;
-		}
-		else if (strcmp(argv[i], "--allow-private-blacklist") == 0) {
-			fwarning("--allow-private-blacklist was deprecated\n");
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;
@@ -2117,29 +2108,6 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--appimage") == 0)
 			arg_appimage = 1;
-		else if (strcmp(argv[i], "--csh") == 0) {
-			if (arg_shell_none) {
-
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				return 1;
-			}
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one default user shell can be specified\n");
-				return 1;
-			}
-			cfg.shell = "/bin/csh";
-		}
-		else if (strcmp(argv[i], "--zsh") == 0) {
-			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				return 1;
-			}
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one default user shell can be specified\n");
-				return 1;
-			}
-			cfg.shell = "/bin/zsh";
-		}
 		else if (strcmp(argv[i], "--shell=none") == 0) {
 			arg_shell_none = 1;
 			if (cfg.shell) {

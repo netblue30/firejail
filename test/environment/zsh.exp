@@ -1,49 +1,31 @@
 #!/usr/bin/expect -f
-# This file is part of Firejail project
-# Copyright (C) 2014-2018 Firejail Authors
-# License GPL v2
 
 set timeout 10
+cd /home
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --private --tracelog --zsh\r"
+send -- "firejail --private --shell=/bin/zsh\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "find ~\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	".zshrc"
-}
-
 send -- "env | grep SHELL;pwd\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
+	timeout {puts "TESTING ERROR 1\n";exit}
 	"SHELL"
 }
 expect {
-	timeout {puts "TESTING ERROR 2.1\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"/bin/zsh"
 }
-send -- "exit\r"
-sleep 1
-
-send -- "firejail --shell=none --zsh\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"shell=none was already specified"
+	"home"
 }
-after 100
-
-send -- "firejail --zsh --shell=none\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"a shell was already specified"
-}
+send -- "exit\r"
 after 100
 
 puts "\nall done\n"

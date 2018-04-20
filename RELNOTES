@@ -41,7 +41,9 @@ firejail (0.9.53) baseline; urgency=low
   * new profiles: akonadi_controle, evince-previewer, evince-thumbnailer,
   * new profiles: blender-2.8, thunderbird-beta, ncdu, gnome-logs, gcloud
   * new profiles: musixmatch, gunzip, bunzip2, enchant-lsmod, enchant-lsmod-2
-  * new profiles: enchant, enchant-2
+  * new profiles: enchant, enchant-2, Discord, acat, adiff, als, apack
+  * new profiles: arepack, aunpack profiles
+
  -- netblue30 <netblue30@yahoo.com>  Thu, 1 Mar 2018 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low

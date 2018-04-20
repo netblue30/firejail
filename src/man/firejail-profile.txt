@@ -223,7 +223,8 @@ Build a new /bin in a temporary filesystem, and copy the programs in the list.
 The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
 .TP
 \fBprivate-dev
-Create a new /dev directory. Only dri, null, full, zero, tty, pts, ptmx, random, urandom, log and shm devices are available.
+Create a new /dev directory. Only disc, dri, null, full, zero, tty, pts, ptmx,
+random, snd, urandom, video, log and shm devices are available.
 .TP
 \fBprivate-etc file,directory
 Build a new /etc in a temporary
@@ -447,6 +448,12 @@ Run the program directly, without a shell.
 .TP
 \fBipc-namespace
 Enable IPC namespace.
+.TP
+\fBnodbus
+Disable D-Bus access. Only the regular UNIX socket is handled by
+this command. To disable the abstract socket, you would need to
+request a new network namespace using the net command. Another
+option is to remove unix from protocol set.
 .TP
 \fBnosound
 Disable sound system.

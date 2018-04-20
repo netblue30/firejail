@@ -21,10 +21,10 @@ profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 #dbus,
 
 ##########
-# Allows to attach to a running program and modify the process memory.
-# May be needed by chromium crash handler. Uncomment if you need it.
+# With ptrace it is possible to inspect and hijack running programs. Usually this
+# is needed only for debugging. To allow ptrace, uncomment the following line
 ##########
-#ptrace (trace tracedby),
+#ptrace,
 
 ##########
 # Line starting with /run/firejail/mnt/oroot deal with --overlay sandboxes
@@ -133,8 +133,8 @@ network raw,
 signal,
 
 ##########
-# We let Firejail deal with capabilities,
-# but mac_admin should be dropped in any case.
+# We let Firejail deal with capabilities, but ensure that
+# some AppArmor related capabilities will not be available.
 ##########
 capability chown,
 capability dac_override,

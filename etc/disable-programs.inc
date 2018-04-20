@@ -8,6 +8,7 @@ blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*
 blacklist ${HOME}/.Atom
+blacklist ${HOME}/.CLion*
 blacklist ${HOME}/.FBReader
 blacklist ${HOME}/.FontForge
 blacklist ${HOME}/.IdeaIC*

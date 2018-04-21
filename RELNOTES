@@ -1,7 +1,7 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
-  * modif: --force depercated
-  * modif: --csg, --zsh deprecated
+  * modif: --force deprecated
+  * modif: --csh, --zsh deprecated
   * modif: --debug-check-filename deprecated
   * modif: --git-install and --git-uninstall deprecated
   * modif: support for private-bin, private-lib and shell none has been

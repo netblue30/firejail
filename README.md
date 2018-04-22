@@ -369,4 +369,4 @@ tilp, vivaldi-snapshot, bitcoin-qt, VS Code, falkon, gnome-builder, lobase, asun
 gnome-recipes, akonadi_control, evince-previewer, evince-thumbnailer, blender-2.8,
 thunderbird-beta, ncdu, gnome-logs, gcloud, musixmatch, gunzip, bunzip2,
 enchant, enchant-2, enchant-lsmod, enchant-lsmod-2, Discord,
-acat, adiff, als, apack, arepack, aunpack profiles
+acat, adiff, als, apack, arepack, aunpack profiles, ppsspp, scallion

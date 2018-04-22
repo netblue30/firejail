@@ -233,7 +233,7 @@ static void init_cfg(int argc, char **argv) {
 	if (!firejail_user_check(cfg.username)) {
 		fprintf(stderr, "Error: the user is not allowed to use Firejail. "
 			"Please add the user in %s/firejail.users file, "
-			"either by running \"sudo firecfg\", or by editing the file directly."
+			"either by running \"sudo firecfg\", or by editing the file directly.\n"
 			"See \"man firejail-users\" for more details.\n", SYSCONFDIR);
 		exit(1);
 	}

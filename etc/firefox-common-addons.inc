@@ -53,8 +53,8 @@ whitelist ${HOME}/.zotero
 whitelist ${HOME}/dwhelper
 
 # GNOME Shell integration (chrome-gnome-shell) needs dbus and python 3 (blacklisted by disable-interpreters.inc)
-noblacklist ${HOME}/.local/share/gnome-shell/extensions
-whitelist ${HOME}/.local/share/gnome-shell/extensions
+noblacklist ${HOME}/.local/share/gnome-shell
+whitelist ${HOME}/.local/share/gnome-shell
 ignore nodbus
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python3*

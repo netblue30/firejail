@@ -52,6 +52,8 @@ static void env_add(Env *env) {
 
 // load IBUS env variables
 void env_ibus_load(void) {
+	EUID_ASSERT();
+
 	// check ~/.config/ibus/bus directory
 	char *dirname;
 	if (asprintf(&dirname, "%s/.config/ibus/bus", cfg.homedir) == -1)

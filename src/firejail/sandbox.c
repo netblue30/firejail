@@ -668,10 +668,11 @@ int sandbox(void* sandbox_arg) {
 	if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {
 		// do nothing - there are problems with ibus version 1.5.11
 	}
-	else
+	else {
 		EUID_USER();
 		env_ibus_load();
 		EUID_ROOT();
+	}
 
 	//****************************
 	// fs pre-processing:

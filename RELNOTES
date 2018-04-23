@@ -1,9 +1,9 @@
 firejail (0.9.53) baseline; urgency=low
   * work in progress
-  * modif: --force deprecated
-  * modif: --csh, --zsh deprecated
-  * modif: --debug-check-filename deprecated
-  * modif: --git-install and --git-uninstall deprecated
+  * modif: --force removed
+  * modif: --csh, --zsh removed
+  * modif: --debug-check-filename removed
+  * modif: --git-install and --git-uninstall removed
   * modif: support for private-bin, private-lib and shell none has been
      disabled while running AppImage archives in order to be able to use
      our regular profile files with AppImages.

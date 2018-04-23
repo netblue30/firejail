@@ -25,8 +25,8 @@ HAVE_SUID=@HAVE_SUID@
 uids.h:; ./mkuid.sh
 
 .PHONY: mylibs $(MYLIBS)
-mylibs: $(MYLIBS) uids.h
-$(MYLIBS):
+mylibs: $(MYLIBS)
+$(MYLIBS): uids.h
 	$(MAKE) -C $@
 
 .PHONY: apps $(APPS)

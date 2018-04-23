@@ -701,17 +701,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			cfg.original_program_index = i + 1;
 		}
 
-#if 0 // todo: redo it
 		// try to join by name only
 		pid_t pid;
-		if (!name2pid(argv[i] + 16, &pid)) {
+		if (!read_pid(argv[i] + 16, &pid)) {
 			if (!cfg.shell && !arg_shell_none)
 				cfg.shell = guess_shell();
 
 			join(pid, argc, argv, i + 1);
 			exit(0);
 		}
-#endif
 		// if there no such sandbox continue argument processing
 	}
 #ifdef HAVE_NETWORK

@@ -671,7 +671,7 @@ void fs_logger_change_owner(void);
 void fs_logger_print_log(pid_t pid);
 
 // run_symlink.c
-void run_symlink(int argc, char **argv);
+void run_symlink(int argc, char **argv, int run_as_is);
 
 // paths.c
 char **build_paths(void);

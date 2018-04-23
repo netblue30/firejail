@@ -5,7 +5,11 @@ firejail.users \- Firejail user access database
 .SH DESCRIPTION
 /etc/firejail/firejail.users lists the users allowed to run firejail SUID executable.
 If the file is not present in the system, all users are allowed to use the sandbox.
-root user is allowed by default, user nobody is denied access by default.
+root user is allowed by default. Other system users (users with an ID below UID_MIN value
+defined in /etc/login.defs, typically 1000) are not allowed to start the sandbox.
+
+If the user is not allowed to start the sandbox, Firejail will attempt to run the
+program without sandboxing it.
 
 Example:
 

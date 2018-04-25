@@ -7,8 +7,6 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.WebStorm*
 noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.jack-server
-noblacklist ${HOME}/.jack-settings
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh
@@ -17,6 +15,8 @@ noblacklist ${HOME}/.tooling
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 
 caps.drop all
 netfilter

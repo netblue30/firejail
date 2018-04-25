@@ -28,6 +28,7 @@ blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
+blacklist ${HOME}/.anydesk
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.arm
 blacklist ${HOME}/.asunder_album_genre

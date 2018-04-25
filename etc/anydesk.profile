@@ -5,14 +5,17 @@ include /etc/firejail/anydesk.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-mkdir ${HOME}/.anydesk
-whitelist ${HOME}/.anydesk
+noblacklist ${HOME}/.anydesk
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-interpreters.inc
+
+mkdir ${HOME}/.anydesk
+whitelist ${HOME}/.anydesk
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter

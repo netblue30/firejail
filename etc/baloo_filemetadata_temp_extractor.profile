@@ -6,6 +6,7 @@ include /etc/firejail/baloo_filemetadata_temp_extractor.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+ignore read-write
 read-only ${HOME}
 
 # Redirect

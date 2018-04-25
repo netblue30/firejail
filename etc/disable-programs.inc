@@ -23,6 +23,7 @@ blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.ViberPC
 blacklist ${HOME}/.VirtualBox
+blacklist ${HOME}/.WebStorm*
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule

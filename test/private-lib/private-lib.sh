@@ -9,7 +9,7 @@ LIST="evince galculator gnome-calculator leafpad mousepad transmission-gtk xcalc
 
 
 for app in $LIST; do
-	which $app
+	which $app 2>/dev/null
 	if [ "$?" -eq 0 ];
 	then
 		echo "TESTING: private-lib $app"

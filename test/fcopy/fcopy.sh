@@ -11,7 +11,7 @@ if [ -f /etc/debian_version ]; then
 	export PATH="$PATH:$libdir"
 fi
 
-export PATH="$PATH:/usr/lib/firejail"
+export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
 mkdir dest
 

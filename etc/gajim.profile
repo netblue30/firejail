@@ -9,7 +9,7 @@ noblacklist ${HOME}/.cache/gajim
 noblacklist ${HOME}/.config/gajim
 noblacklist ${HOME}/.local/share/gajim
 
-# Allow python2.7 (blacklisted by disable-interpreters.inc)
+# Allow Python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python3*
 
@@ -43,5 +43,5 @@ shell none
 disable-mnt
 private-bin python,gajim
 private-dev
-private-etc fonts
+private-etc alsa,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
 private-tmp

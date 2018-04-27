@@ -348,7 +348,6 @@ blacklist ${HOME}/.kodi
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
-blacklist ${HOME}/.local/lib/python2.7/site-packages
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Empathy

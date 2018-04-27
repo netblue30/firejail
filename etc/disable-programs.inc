@@ -506,6 +506,7 @@ blacklist ${HOME}/.wine
 blacklist ${HOME}/.wireshark
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.xiphos
+blacklist ${HOME}/.xmind
 blacklist ${HOME}/.xmms
 blacklist ${HOME}/.xmr-stak
 blacklist ${HOME}/.xonotic

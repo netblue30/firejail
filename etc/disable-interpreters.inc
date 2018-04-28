@@ -12,6 +12,9 @@ blacklist /usr/share/lua
 blacklist ${PATH}/node
 blacklist /usr/include/node
 
+# nvm
+blacklist ${HOME}/.nvm
+
 # Perl
 blacklist ${PATH}/cpan*
 blacklist ${PATH}/core_perl

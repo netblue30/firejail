@@ -6,11 +6,16 @@ include /etc/firejail/webstorm.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.WebStorm*
+noblacklist ${HOME}/.android
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.gradle
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
+
+noblacklist ${PATH}/node
+noblacklist ${HOME}/.nvm
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
@@ -31,6 +36,4 @@ seccomp
 shell none
 
 private-dev
-# private-tmp
-
-noexec /tmp
+private-tmp

@@ -340,10 +340,8 @@ printf("\n");
 	else {
 		if (is_lib_64(argv[1]))
 			parse_elf(argv[1]);
-		else {
-			fprintf(stderr, "Error fldd: %s is not a 64bit program/library\n", argv[1]);
-			exit(1);
-		}
+		else
+			fprintf(stderr, "Warning fldd: %s is not a 64bit program/library\n", argv[1]);
 	}
 
 

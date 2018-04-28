@@ -377,20 +377,12 @@ void fs_private_lib(void) {
 		printf("*** Installing system libraries\n");
 	fslib_install_system();
 
-	fmessage("Installed %d libraries and %d directories\n", lib_cnt, dir_cnt);
+	fmessage("Installed %d %s and %d %s\n", lib_cnt, (lib_cnt == 1)? "library": "libraries",
+		dir_cnt, (dir_cnt == 1)? "directory": "directories");
 
-	// bring in firejail directory for --trace options
+	// bring in firejail directory for --trace and seccomp post exec
 	fslib_copy_dir(LIBDIR "/firejail");
 
-	// ... and for sandbox in sandbox functionality
-	fslib_copy_libs(LIBDIR "/firejail/faudit");
-	fslib_copy_libs(LIBDIR "/firejail/fbuilder");
-	fslib_copy_libs(LIBDIR "/firejail/fcopy");
-	fslib_copy_libs(LIBDIR "/firejail/fldd");
-	fslib_copy_libs(LIBDIR "/firejail/fnet");
-	fslib_copy_libs(LIBDIR "/firejail/fnetfilter");
-	fslib_copy_libs(LIBDIR "/firejail/fseccomp");
-	fslib_copy_libs(LIBDIR "/firejail/ftee");
 	// mount lib filesystem
 	mount_directories();
 }

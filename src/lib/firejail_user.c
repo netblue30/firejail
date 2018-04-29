@@ -47,7 +47,8 @@ int firejail_user_check(const char *name) {
 		return 1;
 
 	// other system users will run the program as is
-	if (getuid() < UID_MIN || strcmp(name, "nobody") == 0)
+	uid_t uid = getuid();
+	if ((uid < UID_MIN && uid != 0) || strcmp(name, "nobody") == 0)
 		return 0;
 
 	// check file existence

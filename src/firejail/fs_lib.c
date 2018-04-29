@@ -201,7 +201,7 @@ static char *valid_file(const char *lib) {
 		}
 		free(fname);
 	}
-printf("not found %s\n", lib);
+
 	fwarning("%s library not found, skipping...\n", lib);
 	return NULL;
 }

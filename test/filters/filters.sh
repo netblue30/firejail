@@ -9,9 +9,9 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 if [ -f /etc/debian_version ]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep fseccomp)")
 	export PATH="$PATH:$libdir"
-else
-	export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 fi
+export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
+
 
 if [ "$(uname -m)" = "x86_64" ]; then
     echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"

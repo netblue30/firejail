@@ -316,6 +316,16 @@ static void whitelist_path(ProfileEntry *entry) {
 	if (mount(wfile, path, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 
+	// check the last mount operation
+	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
+
+	// No mounts are allowed on top level directories. A destination such as "/etc" is very bad!
+	//  - there should be more than one '/' char in dest string
+	if (mptr->dir == strrchr(mptr->dir, '/')) {
+		fprintf(stderr, "Error: invalid mount on top of %s\n", mptr->dir);
+		exit(1);
+	}
+
 	free(wfile);
 	return;
 
@@ -856,6 +866,15 @@ void fs_whitelist(void) {
 						fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
 					else if (arg_debug || arg_debug_whitelists)
 						printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+
+					// check again for files in /tmp directory
+					if (strncmp(entry->link, "/tmp/", 5) == 0) {
+						char *path = realpath(entry->link, NULL);
+						if (path == NULL || strncmp(path, "/tmp/", 5) != 0) {
+							fprintf(stderr, "Error: invalid symbolic link %s\n", entry->link);
+							exit(1);
+						}
+					}
 				}
 			}
 		}

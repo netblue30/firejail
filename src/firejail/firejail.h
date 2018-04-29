@@ -524,6 +524,16 @@ unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 
+// Get info regarding the last kernel mount operation.
+// The return value points to a static area, and will be overwritten by subsequent calls.
+// The function does an exit(1) if anything goes wrong.
+typedef struct {
+	char *fsname;
+	char *dir;
+} MountData;
+MountData *get_last_mount(void);
+
+
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log
 void fs_var_lib(void);	// various other fixes for software in /var directory

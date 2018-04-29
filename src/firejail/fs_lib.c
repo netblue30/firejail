@@ -352,7 +352,7 @@ void fs_private_lib(void) {
 						fslib_copy_dir(name);
 					free(name);
 
-					// /usr/lib/x86_linux-gnu - debian & frriends
+					// /usr/lib/x86_linux-gnu - debian & friends
 					if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr) == -1)
 						errExit("asprintf");
 					if (is_dir(name))

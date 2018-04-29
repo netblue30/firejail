@@ -30,11 +30,11 @@ netfilter
 nodbus
 nodvd
 nogroups
-nonewprivs
+#nonewprivs - potential fix for Ubuntu 18.04/Debian 10
 noroot
 notv
-protocol unix,inet,inet6
-seccomp
+#protocol unix,inet,inet6  - potential fix for Ubuntu 18.04/Debian 10
+#seccomp  - potential fix for Ubuntu 18.04/Debian 10
 shell none
 tracelog
 

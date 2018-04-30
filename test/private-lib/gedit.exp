@@ -6,14 +6,17 @@
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
-set appimage_id $spawn_id
 
-send -- "firejail --name=appimage-test --debug --appimage Leafpad-0.8.17-x86_64.AppImage\r"
+send -- "firejail /usr/bin/gedit\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Reading profile /etc/firejail/gedit.profile"
+}
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
 }
-sleep 2
+sleep 3
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
@@ -23,7 +26,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"appimage Leafpad"
+	"gedit"
 }
 after 100
 
@@ -35,7 +38,6 @@ expect {
 	"cannot open" {puts "grsecurity not present\n"}
 }
 
-
 send -- "firejail --name=blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -44,11 +46,11 @@ expect {
 sleep 2
 
 spawn $env(SHELL)
-send -- "firemon --seccomp --nowrap\r"
+send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
-	"appimage Leafpad"
+	":firejail /usr/bin/gedit"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -59,10 +61,10 @@ expect {
 	"name=blablabla"
 }
 after 100
-send -- "firemon --caps --nowrap\r"
+send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"appimage Leafpad"
+	":firejail /usr/bin/gedit"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
@@ -76,17 +78,6 @@ expect {
 	timeout {puts "TESTING ERROR 6.3\n";exit}
 	"name=blablabla"
 }
-after 100
-
-spawn $env(SHELL)
-send -- "firejail --shutdown=appimage-test\r"
-
-set spawn_id $appimage_id
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"AppImage unmounted"
-}
-
 after 100
 
 puts "\nall done\n"

@@ -47,7 +47,6 @@ Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_private_template = 0; // mount private /home using a template
 int arg_debug = 0;				// print debug messages
-int arg_debug_check_filename = 0;		// print debug messages for filename checking
 int arg_debug_blacklists = 0;			// print debug messages for blacklists
 int arg_debug_whitelists = 0;			// print debug messages for whitelists
 int arg_debug_private_lib = 0;			// print debug messages for private-lib
@@ -162,37 +161,47 @@ static void my_handler(int s){
 	myexit(1);
 }
 
-static pid_t extract_pid(const char *name) {
+// return 1 if error, 0 if a valid pid was found
+static int extract_pid(const char *name, pid_t *pid) {
+	int retval = 0;
 	EUID_ASSERT();
 	if (!name || strlen(name) == 0) {
 		fprintf(stderr, "Error: invalid sandbox name\n");
 		exit(1);
 	}
 
-	pid_t pid;
 	EUID_ROOT();
-	if (name2pid(name, &pid)) {
+	if (name2pid(name, pid)) {
+		retval = 1;
+	}
+	EUID_USER();
+	return retval;
+}
+
+// return 1 if error, 0 if a valid pid was found
+static int read_pid(const char *name, pid_t *pid) {
+	char *endptr;
+	errno = 0;
+	long int pidtmp = strtol(name, &endptr, 10);
+	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
+		|| (errno != 0 && pidtmp == 0)) {
+		return extract_pid(name,pid);
+	}
+	// endptr points to '\0' char in name if the entire string is valid
+	if (endptr == NULL || endptr[0]!='\0') {
+		return extract_pid(name,pid);
+	}
+	*pid =(pid_t)pidtmp;
+	return 0;
+}
+
+static pid_t require_pid(const char *name) {
+	pid_t pid;
+	if (read_pid(name,&pid)) {
 		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
 		exit(1);
 	}
-	EUID_USER();
 	return pid;
-}
-
-
-static pid_t read_pid(const char *str) {
-	char *endptr;
-	errno = 0;
-	long int pidtmp = strtol(str, &endptr, 10);
-	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
-		|| (errno != 0 && pidtmp == 0)) {
-		return extract_pid(str);
-	}
-	// endptr points to '\0' char in str if the entire string is valid
-	if (endptr == NULL || endptr[0]!='\0') {
-		return extract_pid(str);
-	}
-	return (pid_t)pidtmp;
 }
 
 // init configuration
@@ -230,12 +239,15 @@ static void init_cfg(int argc, char **argv) {
 	}
 	cfg.cwd = getcwd(NULL, 0);
 
-	// chack user database
+	// check user database
 	if (!firejail_user_check(cfg.username)) {
 		fprintf(stderr, "Error: the user is not allowed to use Firejail. "
 			"Please add the user in %s/firejail.users file, "
-			"either by running \"sudo firecfg\", or by editing the file directly."
+			"either by running \"sudo firecfg\", or by editing the file directly.\n"
 			"See \"man firejail-users\" for more details.\n", SYSCONFDIR);
+
+		// attempt to run the program as is
+		run_symlink(argc, argv, 1);
 		exit(1);
 	}
 
@@ -412,7 +424,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			}
 
 			// extract pid or sandbox name
-			pid_t pid = read_pid(argv[i] + 12);
+			pid_t pid = require_pid(argv[i] + 12);
 			bandwidth_pid(pid, cmd, dev, down, up);
 		}
 		else
@@ -421,13 +433,13 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strncmp(argv[i], "--netfilter.print=", 18) == 0) {
 		// extract pid or sandbox name
-		pid_t pid = read_pid(argv[i] + 18);
+		pid_t pid = require_pid(argv[i] + 18);
 		netfilter_print(pid, 0);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--netfilter6.print=", 19) == 0) {
 		// extract pid or sandbox name
-		pid_t pid = read_pid(argv[i] + 19);
+		pid_t pid = require_pid(argv[i] + 19);
 		netfilter_print(pid, 1);
 		exit(0);
 	}
@@ -456,7 +468,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			// print seccomp filter for a sandbox specified by pid or by name
-			pid_t pid = read_pid(argv[i] + 16);
+			pid_t pid = require_pid(argv[i] + 16);
 			seccomp_print_filter(pid);
 		}
 		else
@@ -470,7 +482,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			// print seccomp filter for a sandbox specified by pid or by name
-			pid_t pid = read_pid(argv[i] + 17);
+			pid_t pid = require_pid(argv[i] + 17);
 			protocol_print_filter(pid);
 		}
 		else
@@ -479,7 +491,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 #endif
 	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
-		pid_t pid = read_pid(argv[i] + 16);
+		pid_t pid = require_pid(argv[i] + 16);
 
 		// print /run/firejail/profile/<PID> file
 		char *fname;
@@ -500,13 +512,13 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strncmp(argv[i], "--cpu.print=", 12) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 12);
+		pid_t pid = require_pid(argv[i] + 12);
 		cpu_print_filter(pid);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--apparmor.print=", 12) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 17);
+		pid_t pid = require_pid(argv[i] + 17);
 		char *pidstr;
 		if (asprintf(&pidstr, "%u", pid) == -1)
 			errExit("asprintf");
@@ -516,19 +528,19 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 13);
+		pid_t pid = require_pid(argv[i] + 13);
 		caps_print_filter(pid);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--fs.print=", 11) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 11);
+		pid_t pid = require_pid(argv[i] + 11);
 		fs_logger_print_log(pid);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
 		// join sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 12);
+		pid_t pid = require_pid(argv[i] + 12);
 		net_dns_print(pid);
 		exit(0);
 	}
@@ -593,7 +605,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 
 			// get file
-			pid_t pid = read_pid(argv[i] + 6);
+			pid_t pid = require_pid(argv[i] + 6);
 			sandboxfs(SANDBOX_FS_GET, pid, path, NULL);
 			exit(0);
 		}
@@ -623,7 +635,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 
 			// get file
-			pid_t pid = read_pid(argv[i] + 6);
+			pid_t pid = require_pid(argv[i] + 6);
 			sandboxfs(SANDBOX_FS_PUT, pid, path1, path2);
 			exit(0);
 		}
@@ -647,7 +659,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 
 			// list directory contents
-			pid_t pid = read_pid(argv[i] + 5);
+			pid_t pid = require_pid(argv[i] + 5);
 			sandboxfs(SANDBOX_FS_LS, pid, path, NULL);
 			exit(0);
 		}
@@ -671,7 +683,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				cfg.shell = guess_shell();
 
 			// join sandbox by pid or by name
-			pid_t pid = read_pid(argv[i] + 7);
+			pid_t pid = require_pid(argv[i] + 7);
 			join(pid, argc, argv, i + 1);
 			exit(0);
 		}
@@ -692,17 +704,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			cfg.original_program_index = i + 1;
 		}
 
-#if 0 // todo: redo it
 		// try to join by name only
 		pid_t pid;
-		if (!name2pid(argv[i] + 16, &pid)) {
+		if (!read_pid(argv[i] + 16, &pid)) {
 			if (!cfg.shell && !arg_shell_none)
 				cfg.shell = guess_shell();
 
 			join(pid, argc, argv, i + 1);
 			exit(0);
 		}
-#endif
 		// if there no such sandbox continue argument processing
 	}
 #ifdef HAVE_NETWORK
@@ -719,7 +729,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				cfg.shell = guess_shell();
 
 			// join sandbox by pid or by name
-			pid_t pid = read_pid(argv[i] + 15);
+			pid_t pid = require_pid(argv[i] + 15);
 			join(pid, argc, argv, i + 1);
 		}
 		else
@@ -739,7 +749,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			cfg.shell = guess_shell();
 
 		// join sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 18);
+		pid_t pid = require_pid(argv[i] + 18);
 		join(pid, argc, argv, i + 1);
 		exit(0);
 	}
@@ -747,7 +757,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		logargs(argc, argv);
 
 		// shutdown sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 11);
+		pid_t pid = require_pid(argv[i] + 11);
 		shut(pid);
 		exit(0);
 	}
@@ -907,7 +917,7 @@ int main(int argc, char **argv) {
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
-		run_symlink(argc, argv); // if symlink detected, this function will not return
+		run_symlink(argc, argv, 0); // if symlink detected, this function will not return
 
 	// check if we already have a sandbox running
 	// If LXC is detected, start firejail sandbox
@@ -1051,8 +1061,6 @@ int main(int argc, char **argv) {
 
 		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet)
 			arg_debug = 1;
-		else if (strcmp(argv[i], "--debug-check-filename") == 0)
-			arg_debug_check_filename = 1;
 		else if (strcmp(argv[i], "--debug-blacklists") == 0)
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
@@ -1439,9 +1447,6 @@ int main(int argc, char **argv) {
 			custom_profile = 1;
 			free(ppath);
 		}
-		else if (strncmp(argv[i], "--profile-path=", 15) == 0) {
-			fwarning("--profile-path has been deprecated\n");
-		}
 		else if (strcmp(argv[i], "--noprofile") == 0) {
 			if (custom_profile) {
 				fprintf(stderr, "Error: --profile and --noprofile options are mutually exclusive\n");
@@ -1540,9 +1545,6 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--machine-id") == 0) {
 			arg_machineid = 1;
-		}
-		else if (strcmp(argv[i], "--allow-private-blacklist") == 0) {
-			fwarning("--allow-private-blacklist was deprecated\n");
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;
@@ -2117,29 +2119,6 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--appimage") == 0)
 			arg_appimage = 1;
-		else if (strcmp(argv[i], "--csh") == 0) {
-			if (arg_shell_none) {
-
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				return 1;
-			}
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one default user shell can be specified\n");
-				return 1;
-			}
-			cfg.shell = "/bin/csh";
-		}
-		else if (strcmp(argv[i], "--zsh") == 0) {
-			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				return 1;
-			}
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one default user shell can be specified\n");
-				return 1;
-			}
-			cfg.shell = "/bin/zsh";
-		}
 		else if (strcmp(argv[i], "--shell=none") == 0) {
 			arg_shell_none = 1;
 			if (cfg.shell) {

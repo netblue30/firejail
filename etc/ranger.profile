@@ -5,11 +5,19 @@ include /etc/firejail/ranger.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.config/ranger
+
+# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
+
+# Allow perl
 # noblacklist ${PATH}/cpan*
 noblacklist ${PATH}/perl
 noblacklist /usr/lib/perl*
 noblacklist /usr/share/perl*
-noblacklist ${HOME}/.config/ranger
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

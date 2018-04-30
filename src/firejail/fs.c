@@ -29,6 +29,11 @@
 #include <fcntl.h>
 #include <errno.h>
 
+// check noblacklist statements not matched by a proper blacklist in disable-*.inc files
+//#define TEST_NO_BLACKLIST_MATCHING
+
+
+
 static void fs_rdwr(const char *dir);
 
 
@@ -183,15 +188,17 @@ static void disable_file(OPERATION op, const char *filename) {
 	free(fname);
 }
 
-// check noblacklist statements not matched by a proper blacklist in disable-*.inc files
+#ifdef TEST_NO_BLACKLIST_MATCHING
 static int nbcheck_start = 0;
 static size_t nbcheck_size = 0;
 static int *nbcheck = NULL;
+#endif
 
 // Treat pattern as a shell glob pattern and blacklist matching files
 static void globbing(OPERATION op, const char *pattern, const char *noblacklist[], size_t noblacklist_len) {
 	assert(pattern);
 
+#ifdef TEST_NO_BLACKLIST_MATCHING
 	if (nbcheck_start == 0) {
 		nbcheck_start = 1;
 		nbcheck_size = noblacklist_len;
@@ -200,6 +207,7 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 			errExit("malloc");
 		memset(nbcheck, 0, sizeof(int) * noblacklist_len);
 	}
+#endif
 
 	glob_t globbuf;
 	// Profiles contain blacklists for files that might not exist on a user's machine.
@@ -226,8 +234,10 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 				continue;
 			else if (result == 0) {
 				okay_to_blacklist = false;
+#ifdef TEST_NO_BLACKLIST_MATCHING
 				if (j < nbcheck_size)	// noblacklist checking
 					nbcheck[j] = 1;
+#endif
 				break;
 			}
 			else {
@@ -419,6 +429,7 @@ void fs_blacklist(void) {
 	}
 
 	size_t i;
+#ifdef TEST_NO_BLACKLIST_MATCHING
 	// noblacklist checking
 	for (i = 0; i < nbcheck_size; i++)
 		if (!arg_quiet && !nbcheck[i])
@@ -431,6 +442,7 @@ void fs_blacklist(void) {
 		nbcheck = NULL;
 		nbcheck_size = 0;
 	}
+#endif
 	for (i = 0; i < noblacklist_c; i++)
 		free(noblacklist[i]);
 	free(noblacklist);

@@ -800,9 +800,6 @@ void invalid_filename(const char *fname, int globbing) {
 	assert(fname);
 	const char *ptr = fname;
 
-	if (arg_debug_check_filename)
-		printf("Checking filename %s\n", fname);
-
 	if (strncmp(ptr, "${HOME}", 7) == 0)
 		ptr = fname + 7;
 	else if (strncmp(ptr, "${PATH}", 7) == 0)
@@ -1032,3 +1029,39 @@ void disable_file_path(const char *path, const char *file) {
 	free(fname);
 }
 
+#define MAX_BUF 4096
+static char mbuf[MAX_BUF];
+static MountData mdata;
+
+// Get info regarding the last kernel mount operation.
+// The return value points to a static area, and will be overwritten by subsequent calls.
+// The function does an exit(1) if anything goes wrong.
+MountData *get_last_mount(void) {
+	// open /proc/self/mounts
+	FILE *fp = fopen("/proc/self/mounts", "r");
+	if (!fp)
+		goto errexit;
+
+	mbuf[0] = '\0';
+	while (fgets(mbuf, MAX_BUF, fp));
+	fclose(fp);
+	if (arg_debug || arg_debug_whitelists)
+		printf("%s", mbuf);
+
+	// there should be no reason to have a new mount on top of a top level directory
+	mdata.fsname = mbuf;
+	mdata.dir = strstr(mbuf, " ");
+	if (!mdata.dir)
+		goto errexit;
+	mdata.dir++;
+	char *end = strstr(mdata.dir, " ");
+	if (!end)
+		goto errexit;
+	*end = '\0';
+
+	return &mdata;
+
+errexit:
+	fprintf(stderr, "Error: cannot read /proc/self/mounts");
+	exit(1);
+}

@@ -5,11 +5,11 @@
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
-LIST="evince galculator gnome-calculator leafpad mousepad transmission-gtk xcalc atril gpicview eom eog"
+LIST="evince galculator gnome-calculator gedit leafpad mousepad pluma transmission-gtk xcalc atril gpicview eom eog"
 
 
 for app in $LIST; do
-	which $app
+	which $app 2>/dev/null
 	if [ "$?" -eq 0 ];
 	then
 		echo "TESTING: private-lib $app"

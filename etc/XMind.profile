@@ -1,12 +1,11 @@
-# Firejail profile for zathura
+# Firejail profile for XMind
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/zathura.local
+include /etc/firejail/XMind.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/zathura
-noblacklist ${HOME}/.local/share/zathura
+noblacklist ${HOME}/.xmind
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -14,24 +13,26 @@ include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+mkdir ${HOME}/.xmind
+whitelist ${HOME}/.xmind
+whitelist ${DOWNLOADS}
+include /etc/firejail/whitelist-common.inc
+
 caps.drop all
-machine-id
-# net none
-# nodbus
+netfilter
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin zathura
-private-dev
-private-etc fonts,machine-id
+disable-mnt
+private-bin XMind,sh,cp
 private-tmp
+private-dev
 
-read-only ${HOME}/
-read-write ${HOME}/.local/share/zathura/
+noexec ${HOME}
+noexec /tmp

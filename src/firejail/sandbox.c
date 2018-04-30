@@ -668,8 +668,11 @@ int sandbox(void* sandbox_arg) {
 	if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {
 		// do nothing - there are problems with ibus version 1.5.11
 	}
-	else
+	else {
+		EUID_USER();
 		env_ibus_load();
+		EUID_ROOT();
+	}
 
 	//****************************
 	// fs pre-processing:
@@ -925,6 +928,8 @@ int sandbox(void* sandbox_arg) {
 	// set application environment
 	//****************************
 	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
+
+	EUID_USER();
 	int cwd = 0;
 	if (cfg.cwd) {
 		if (chdir(cfg.cwd) == 0)
@@ -951,7 +956,7 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-
+	EUID_ROOT();
 	// set nice
 	if (arg_nice) {
 		errno = 0;
@@ -980,7 +985,9 @@ int sandbox(void* sandbox_arg) {
 	// set cpu affinity
 	if (cfg.cpus) {
 		save_cpu(); // save cpu affinity mask to CPU_CFG file
+		EUID_USER();
 		set_cpu_affinity();
+		EUID_ROOT();
 	}
 
 	// save cgroup in CGROUP_CFG file

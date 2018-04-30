@@ -8,6 +8,7 @@ blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*
 blacklist ${HOME}/.Atom
+blacklist ${HOME}/.CLion*
 blacklist ${HOME}/.FBReader
 blacklist ${HOME}/.FontForge
 blacklist ${HOME}/.IdeaIC*
@@ -22,10 +23,12 @@ blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.ViberPC
 blacklist ${HOME}/.VirtualBox
+blacklist ${HOME}/.WebStorm*
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
+blacklist ${HOME}/.anydesk
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.arm
 blacklist ${HOME}/.asunder_album_genre
@@ -188,6 +191,7 @@ blacklist ${HOME}/.config/Pinta
 blacklist ${HOME}/.config/pitivi
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
+blacklist ${HOME}/.config/ppsspp
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
@@ -344,7 +348,6 @@ blacklist ${HOME}/.kodi
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
-blacklist ${HOME}/.local/lib/python2.7/site-packages
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Empathy
@@ -429,6 +432,7 @@ blacklist ${HOME}/.local/share/telepathy
 blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser
 blacklist ${HOME}/.local/share/totem
+blacklist ${HOME}/.local/share/uzbl
 blacklist ${HOME}/.local/share/vlc
 blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan
@@ -501,6 +505,7 @@ blacklist ${HOME}/.wine
 blacklist ${HOME}/.wireshark
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.xiphos
+blacklist ${HOME}/.xmind
 blacklist ${HOME}/.xmms
 blacklist ${HOME}/.xmr-stak
 blacklist ${HOME}/.xonotic

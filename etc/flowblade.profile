@@ -8,6 +8,12 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.config/flowblade
 noblacklist ${HOME}/.flowblade
 
+# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc

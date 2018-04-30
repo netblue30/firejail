@@ -84,6 +84,7 @@ announ (https://github.com/announ)
 	- mpv and youtube-dl profile fixes
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
+	- fix join-or-start
 Austin S. Hemmelgarn (https://github.com/Ferroin)
 	- unbound profile update
 avoidr (https://github.com/avoidr)
@@ -251,6 +252,11 @@ glitsj16 (https://github.com/glitsj16)
 	- gunzip, bunzip2 profiles
 	- enchant, enchat-2, enchant-lsmod, enchant-lsmod-2 profiles
 	- atool, soundconvertor, mpd, gnome-calculator, makepkg profile fixes
+	- acat, adiff, als, apack, arepack, aunpack profiles,
+	- fix sqlitebrowser blacklist
+	- spelling fixes
+	- bitblbee profile fixes
+	- fix firefox common addons
 graywolf (https://github.com/graywolf)
 	- spelling fix
 greigdp (https://github.com/greigdp)
@@ -295,6 +301,11 @@ James Elford (https://github.com/jelford)
 	- removed shell none from ssh-agent configuration, fixing the infinit loop
 	- added gcloud profile
 	- blacklist sensitive cloud provider files in disable-common
+Jean Lucas (https://github.com/flacks)
+	- fix Discord profile
+	- add AnyDesk profile
+	- add WebStorm profile
+	- add XMind profile
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)

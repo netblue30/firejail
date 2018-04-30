@@ -167,9 +167,7 @@ void run_no_sandbox(int argc, char **argv) {
 	for (i = 0; i < argc; i++) {
 		if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
- 		else if (strcmp(argv[i], "--csh") == 0 ||
-		    strcmp(argv[i], "--zsh") == 0 ||
-		    strcmp(argv[i], "--shell=none") == 0 ||
+ 		else if (strcmp(argv[i], "--shell=none") == 0 ||
 		    strncmp(argv[i], "--shell=", 8) == 0)
 			fwarning("shell-related command line options are disregarded - using SHELL environment variable\n");
 	}

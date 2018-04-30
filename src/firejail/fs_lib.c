@@ -201,7 +201,7 @@ static char *valid_file(const char *lib) {
 		}
 		free(fname);
 	}
-printf("not found %s\n", lib);
+
 	fwarning("%s library not found, skipping...\n", lib);
 	return NULL;
 }
@@ -352,7 +352,7 @@ void fs_private_lib(void) {
 						fslib_copy_dir(name);
 					free(name);
 
-					// /usr/lib/x86_linux-gnu - debian & frriends
+					// /usr/lib/x86_linux-gnu - debian & friends
 					if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr) == -1)
 						errExit("asprintf");
 					if (is_dir(name))
@@ -377,20 +377,12 @@ void fs_private_lib(void) {
 		printf("*** Installing system libraries\n");
 	fslib_install_system();
 
-	fmessage("Installed %d libraries and %d directories\n", lib_cnt, dir_cnt);
+	fmessage("Installed %d %s and %d %s\n", lib_cnt, (lib_cnt == 1)? "library": "libraries",
+		dir_cnt, (dir_cnt == 1)? "directory": "directories");
 
-	// bring in firejail directory for --trace options
+	// bring in firejail directory for --trace and seccomp post exec
 	fslib_copy_dir(LIBDIR "/firejail");
 
-	// ... and for sandbox in sandbox functionality
-	fslib_copy_libs(LIBDIR "/firejail/faudit");
-	fslib_copy_libs(LIBDIR "/firejail/fbuilder");
-	fslib_copy_libs(LIBDIR "/firejail/fcopy");
-	fslib_copy_libs(LIBDIR "/firejail/fldd");
-	fslib_copy_libs(LIBDIR "/firejail/fnet");
-	fslib_copy_libs(LIBDIR "/firejail/fnetfilter");
-	fslib_copy_libs(LIBDIR "/firejail/fseccomp");
-	fslib_copy_libs(LIBDIR "/firejail/ftee");
 	// mount lib filesystem
 	mount_directories();
 }

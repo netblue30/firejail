@@ -7,7 +7,7 @@
 #********************************
 # firecfg
 #********************************
-which less
+which less 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: firecfg (test/root/firecfg.exp)"

@@ -309,7 +309,6 @@ static inline int any_interface_configured(void) {
 extern int arg_private;		// mount private /home
 extern int arg_private_template; // private /home template
 extern int arg_debug;		// print debug messages
-extern int arg_debug_check_filename;		// print debug messages for filename checking
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
 extern int arg_debug_private_lib;	// print debug messages for private-lib
@@ -525,6 +524,16 @@ unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 
+// Get info regarding the last kernel mount operation.
+// The return value points to a static area, and will be overwritten by subsequent calls.
+// The function does an exit(1) if anything goes wrong.
+typedef struct {
+	char *fsname;
+	char *dir;
+} MountData;
+MountData *get_last_mount(void);
+
+
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log
 void fs_var_lib(void);	// various other fixes for software in /var directory
@@ -576,9 +585,6 @@ void caps_drop_list(const char *clist);
 void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);
 void caps_drop_dac_override(void);
-
-// syscall.c
-const char *syscall_find_nr(int nr);
 
 // fs_trace.c
 void fs_trace_preload(void);
@@ -675,7 +681,7 @@ void fs_logger_change_owner(void);
 void fs_logger_print_log(pid_t pid);
 
 // run_symlink.c
-void run_symlink(int argc, char **argv);
+void run_symlink(int argc, char **argv, int run_as_is);
 
 // paths.c
 char **build_paths(void);

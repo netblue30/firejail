@@ -1078,7 +1078,7 @@ void x11_xorg(void) {
 	// check xauth utility is present in the system
 	struct stat s;
 	if (stat("/usr/bin/xauth", &s) == -1) {
-		fprintf(stderr, "Error: xauth utility not found in PATH.  Please install it:\n"
+		fprintf(stderr, "Error: xauth utility not found in /usr/bin. Please install it:\n"
 			"   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
 		exit(1);
 	}

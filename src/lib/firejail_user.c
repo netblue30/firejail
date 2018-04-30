@@ -28,6 +28,7 @@
 #include "../include/common.h"
 #include <sys/types.h>
 #include <pwd.h>
+#include "../../uids.h"
 
 #define MAXBUF 4098
 static inline char *get_fname(void) {
@@ -41,9 +42,14 @@ static inline char *get_fname(void) {
 int firejail_user_check(const char *name) {
 	assert(name);
 
-	// root allowed by default
+	// root is allowed to run firejail by default
 	if (strcmp(name, "root") == 0)
 		return 1;
+
+	// other system users will run the program as is
+	uid_t uid = getuid();
+	if ((uid < UID_MIN && uid != 0) || strcmp(name, "nobody") == 0)
+		return 0;
 
 	// check file existence
 	char *fname = get_fname();

@@ -9,11 +9,9 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 if [ -f /etc/debian_version ]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep fseccomp)")
 	export PATH="$PATH:$libdir"
-else
-	export PATH="$PATH:/usr/lib/firejail"
 fi
+export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
-export PATH="$PATH:/usr/lib/firejail"
 
 if [ "$(uname -m)" = "x86_64" ]; then
     echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"
@@ -79,7 +77,7 @@ echo "TESTING: seccomp errno (test/filters/seccomp-errno.exp)"
 echo "TESTING: seccomp su (test/filters/seccomp-su.exp)"
 ./seccomp-su.exp
 
-which strace
+which strace 2>/dev/null
 if [ $? -eq 0 ]; then
         echo "TESTING: seccomp ptrace (test/filters/seccomp-ptrace.exp)"
         ./seccomp-ptrace.exp

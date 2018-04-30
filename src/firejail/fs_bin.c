@@ -25,6 +25,8 @@
 #include <unistd.h>
 #include <glob.h>
 
+static int prog_cnt = 0;
+
 static char *paths[] = {
 	"/usr/local/bin",
 	"/usr/bin",
@@ -191,6 +193,7 @@ static void duplicate(char *fname, FILE *fplist) {
 				// solving problems such as /bin/sh -> /bin/dash
 				// copy the real file pointed by symlink
 				sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, actual_path, RUN_BIN_DIR);
+				prog_cnt++;
 				char *f = strrchr(actual_path, '/');
 				if (f && *(++f) !='\0')
 					report_duplication(f);
@@ -201,6 +204,7 @@ static void duplicate(char *fname, FILE *fplist) {
 
 	// copy a file or a symlink
 	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
+	prog_cnt++;
 	free(full_path);
 	report_duplication(fname);
 }
@@ -256,6 +260,9 @@ void fs_private_bin_list(void) {
 	char *private_list = cfg.bin_private_keep;
 	assert(private_list);
 
+	// start timetrace
+	timetrace_start();
+
 	// create /run/firejail/mnt/bin directory
 	mkdir_attr(RUN_BIN_DIR, 0755, 0, 0);
 
@@ -298,4 +305,5 @@ void fs_private_bin_list(void) {
 		}
 		i++;
 	}
+	fmessage("%d %s installed in %0.2f ms\n", prog_cnt, (prog_cnt == 1)? "program": "programs", timetrace_end());
 }

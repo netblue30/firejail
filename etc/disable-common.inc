@@ -116,6 +116,10 @@ blacklist /run/user/*/kdeinit5__*
 # blacklist /tmp/ksocket-*/kdeinit4__*
 #  - causes issues when kdeinit4 gets killed; enable on KDE Plasma 4
 
+# gnome
+# contains extensions, last used times of applications, and notifications
+blacklist ${HOME}/.local/share/gnome-shell
+
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
@@ -160,7 +164,7 @@ blacklist /var/lib/mysql/mysql.sock
 blacklist /var/lib/mysqld/mysql.sock
 blacklist /var/lib/pacman
 blacklist /var/lib/upower
-# blacklist /var/log - a virtual /var/log directory (mostly empty) is buid up by default for
+# blacklist /var/log - a virtual /var/log directory (mostly empty) is build up by default for
 #          every sandbox, unless --writeble-var-log switch is activated
 blacklist /var/mail
 blacklist /var/opt

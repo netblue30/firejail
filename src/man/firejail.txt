@@ -314,15 +314,6 @@ $ firejail \-\-list
 $ firejail \-\-cpu.print=3272
 
 .TP
-\fB\-\-csh
-Use /bin/csh as default user shell.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-csh
-.TP
 \fB\-\-debug\fR
 Print debug messages.
 .br
@@ -351,15 +342,6 @@ Print all recognized capabilities in the current Firejail software build and exi
 Example:
 .br
 $ firejail \-\-debug-caps
-.TP
-\fB\-\-debug-check-filename\fR
-Debug filename checking.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-debug-check-filename firefox
 
 .TP
 \fB\-\-debug-errnos
@@ -1620,20 +1602,16 @@ $ firejail \-\-net=eth0 \-\-scan
 .TP
 \fB\-\-seccomp
 Enable seccomp filter and blacklist the syscalls in the default list (@default). The default list is as follows:
-mount, umount2, ptrace, kexec_load, kexec_file_load, name_to_handle_at, open_by_handle_at, create_module, init_module, finit_module, delete_module,
-iopl, ioperm, ioprio_set, swapon, swapoff, syslog, process_vm_readv, process_vm_writev,
-sysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie, perf_event_open, fanotify_init, kcmp,
-add_key, request_key, keyctl, uselib, acct, modify_ldt, pivot_root, io_setup,
-io_destroy, io_getevents, io_submit, io_cancel,
-remap_file_pages, mbind, set_mempolicy,
-migrate_pages, move_pages, vmsplice, chroot,
-tuxcall, reboot, mfsservctl, get_kernel_syms,
-bpf, clock_settime, personality, process_vm_writev, query_module,
-settimeofday, stime, umount, userfaultfd, ustat, vm86, vm86old,
-afs_syscall, bdflush, break, ftime, getpmsg, gtty, lock, mpx, pciconfig_iobase, pciconfig_read,
-pciconfig_write, prof, profil, putpmsg, rtas, s390_runtime_instr, s390_mmio_read, s390_mmio_write,
-security, setdomainname,  sethostname, sgetmask, ssetmask, stty, subpage_prot, switch_endian,
-ulimit, vhangup and vserver.
+_sysctl, acct, add_key, adjtimex, afs_syscall, bdflush, bpf, break, chroot, clock_adjtime, clock_settime,
+create_module, delete_module, fanotify_init, finit_module, ftime, get_kernel_syms, getpmsg, gtty, init_module,
+io_cancel, io_destroy, io_getevents, io_setup, io_submit, ioperm, iopl, ioprio_set, kcmp, kexec_file_load,
+kexec_load, keyctl, lock, lookup_dcookie, mbind, mfsservctl, migrate_pages, modify_ldt, mount, move_pages, mpx,
+name_to_handle_at, open_by_handle_at, pciconfig_iobase, pciconfig_read, pciconfig_write, perf_event_open,
+personality, pivot_root, process_vm_readv, process_vm_writev, process_vm_writev, prof, profil, ptrace, putpmsg,
+query_module, reboot, remap_file_pages, request_key, rtas, s390_mmio_read, s390_mmio_write, s390_runtime_instr,
+security, set_mempolicy, setdomainname, sethostname, settimeofday, sgetmask, ssetmask, stime, stty, subpage_prot,
+swapoff, swapon, switch_endian, sysfs, syslog, tuxcall, ulimit, umount, umount2, uselib, userfaultfd, ustat, vhangup,
+vm86, vm86old, vmsplice and vserver.
 
 .br
 To help creating useful seccomp filters more easily, the following
@@ -1716,7 +1694,7 @@ Bad system call
 .br
 
 .TP
-\fB\-\-seccomp.block_secondary
+\fB\-\-seccomp.block-secondary
 Enable seccomp filter and filter system call architectures so that
 only the native architecture is allowed. For example, on amd64, i386
 and x32 system calls are blocked as well as changing the execution
@@ -1949,8 +1927,7 @@ $ firejail \-\-shell=none script.sh
 \fB\-\-shell=program
 Set default user shell. Use this shell to run the application using \-c shell option.
 For example "firejail \-\-shell=/bin/dash firefox" will start Mozilla Firefox as "/bin/dash \-c firefox".
-By default Bash shell (/bin/bash) is used. Options such as \-\-zsh and \-\-csh can also set the default
-shell.
+By default Bash shell (/bin/bash) is used.
 .br
 
 .br
@@ -2323,16 +2300,6 @@ Example:
 .br
 $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
 .br
-
-.TP
-\fB\-\-zsh
-Use /usr/bin/zsh as default user shell.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-zsh
 
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.

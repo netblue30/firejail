@@ -10,7 +10,7 @@ LIST="firefox midori chromium opera transmission-qt qbittorrent uget-gtk filezil
 LIST+="vlc fbreader deluge gnome-mplayer xchat wine kcalc ktorrent hexchat"
 
 for app in $LIST; do
-	which $app
+	which $app 2>/dev/null
 	if [ "$?" -eq 0 ];
 	then
 		echo "TESTING: $app"

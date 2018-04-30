@@ -23,20 +23,22 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
-apparmor
+# Ubuntu 18.04 uses its own apparmor profile
+# uncomment the next line if you are not on Ubuntu
+#apparmor
 caps.drop all
 machine-id
 netfilter
 nodbus
 nodvd
 nogroups
-#nonewprivs - potential fix for Ubuntu 18.04/Debian 10
+#nonewprivs - fix for Ubuntu 18.04/Debian 10
 noroot
 notv
-#protocol unix,inet,inet6  - potential fix for Ubuntu 18.04/Debian 10
-#seccomp  - potential fix for Ubuntu 18.04/Debian 10
+#protocol unix,inet,inet6  - fix for Ubuntu 18.04/Debian 10
+#seccomp  - fix for Ubuntu 18.04/Debian 10
 shell none
-tracelog
+#tracelog - problems reported by Ubuntu 18.04 apparmor profile in /var/log/syslog
 
 private-dev
 private-tmp

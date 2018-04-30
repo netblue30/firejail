@@ -17,7 +17,7 @@ include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
-apparmor
+#apparmor - on Ubuntu 18.04 it refuses to start without dbus access
 caps.drop all
 netfilter
 # nodbus - problems with KDE

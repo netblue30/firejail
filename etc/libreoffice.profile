@@ -29,7 +29,7 @@ include /etc/firejail/whitelist-var-common.inc
 caps.drop all
 machine-id
 netfilter
-nodbus
+#nodbus
 nodvd
 nogroups
 #nonewprivs - fix for Ubuntu 18.04/Debian 10

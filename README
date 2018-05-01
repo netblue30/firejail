@@ -114,6 +114,8 @@ bn0785ac (https://github.com/bn0785ac)
 	- fixed bnox, dnox profiles
 	- support all tor-browser langpacks
 	- chromium canary (inox-family) fixes
+	- allow multithreading for cin and natron
+	- fix dbus access for libreoffice on KDE
 BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
 Bruno Nova (https://github.com/brunonova)

@@ -5,7 +5,7 @@ include /etc/firejail/natron.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-#fixing it
+# Allow access to python
 noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*

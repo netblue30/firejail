@@ -1048,11 +1048,12 @@ MountData *get_last_mount(void) {
 	if (arg_debug || arg_debug_whitelists)
 		printf("%s", mbuf);
 
-	// there should be no reason to have a new mount on top of a top level directory
+	// extract filesystem name and directory
 	mdata.fsname = mbuf;
 	mdata.dir = strstr(mbuf, " ");
 	if (!mdata.dir)
 		goto errexit;
+	*mdata.dir = '\0';
 	mdata.dir++;
 	char *end = strstr(mdata.dir, " ");
 	if (!end)

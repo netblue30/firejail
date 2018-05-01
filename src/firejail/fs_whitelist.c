@@ -37,6 +37,7 @@ static char *dentry[] = {
 #define EMPTY_STRING ("")
 #define MAXBUF 4098
 static char *resolve_downloads(int nowhitelist_flag) {
+	EUID_ASSERT();
 	char *fname;
 	struct stat s;
 
@@ -362,6 +363,7 @@ void fs_whitelist(void) {
 		errExit("failed allocating memory for nowhitelist entries");
 
 	// verify whitelist files, extract symbolic links, etc.
+	EUID_USER();
 	while (entry) {
 		int nowhitelist_flag = 0;
 
@@ -653,6 +655,7 @@ void fs_whitelist(void) {
 	assert(nowhitelist);
 	free(nowhitelist);
 
+	EUID_ROOT();
 	// /home/user
 	if (home_dir) {
 		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR

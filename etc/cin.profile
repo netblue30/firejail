@@ -19,7 +19,7 @@ net none
 nodbus
 nodvd
 #nogroups
-#nonewprivs
+nonewprivs
 notv
 noroot
 protocol unix

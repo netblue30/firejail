@@ -1193,6 +1193,14 @@ void x11_xorg(void) {
 	// just  in case...
 	if (set_perms(dest, getuid(), getgid(), 0600))
 		errExit("set_perms");
+
+	// check /proc/self/mounts to confirm the mount is ok
+	MountData *mptr = get_last_mount();
+	if (strncmp(mptr->dir,dest,strlen(dest)) != 0) {
+		fprintf(stderr, "Error: invalid mount on top of %s (should be %s)\n", mptr->dir, dest);
+		exit(1);
+	}
+
 	free(dest);
 #endif
 }

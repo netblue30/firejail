@@ -162,22 +162,34 @@ void pulseaudio_init(void) {
 	}
 	free(dir1);
 
-
 	// if we have ~/.config/pulse mount the new directory, else set environment variable
 	char *homeusercfg;
 	if (asprintf(&homeusercfg, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(homeusercfg, &s) == 0) {
+		if (is_link(homeusercfg)) {
+			fprintf(stderr, "Error: user .config/pulse is a symbolic link\n");
+			exit(1);
+		}
 		if (mount(RUN_PULSE_DIR, homeusercfg, "none", MS_BIND, NULL) < 0 ||
 		    mount(NULL, homeusercfg, NULL, MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_BIND|MS_REMOUNT, NULL) < 0)
 			errExit("mount pulseaudio");
 		fs_logger2("tmpfs", homeusercfg);
+
+		// check /proc/self/mounts to confirm the mount is ok
+		MountData *mptr = get_last_mount();
+		if (strncmp(mptr->dir,homeusercfg,strlen(homeusercfg)) != 0) {
+			fprintf(stderr, "Error: invalid mount on top of %s (should be %s)\n", mptr->dir, homeusercfg);
+			exit(1);
+		}
+
 		char *p;
 		if (asprintf(&p, "%s/client.conf", homeusercfg) == -1)
 			errExit("asprintf");
 		fs_logger2("create", p);
 		free(p);
 	}
+
 	else {
 		// set environment
 		if (setenv("PULSE_CLIENTCONFIG", pulsecfg, 1) < 0)

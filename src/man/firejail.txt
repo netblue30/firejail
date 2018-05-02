@@ -2129,6 +2129,16 @@ Example:
 $ sudo firejail --writable-var
 
 .TP
+\fB\-\-keep-var-tmp
+/var/tmp directory is untouched.
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --keep-var-tmp
+
+.TP
 \fB\-\-writable-var-log
 Use the real /var/log directory, not a clone. By default, a tmpfs is mounted on top of /var/log
 directory, and a skeleton filesystem is created based on the original /var/log.

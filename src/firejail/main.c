@@ -104,6 +104,7 @@ int arg_nice = 0;				// nice value configured
 int arg_ipc = 0;					// enable ipc namespace
 int arg_writable_etc = 0;			// writable etc
 int arg_writable_var = 0;			// writable var
+int arg_keep_var_tmp = 0;                       // don't overwrite /var/tmp
 int arg_writable_run_user = 0;			// writable /run/user
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
@@ -1536,6 +1537,9 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
+		}
+		else if (strcmp(argv[1], "--keep-var-tmp") == 0) {
+		        arg_keep_var_tmp = 1;
 		}
 		else if (strcmp(argv[i], "--writable-run-user") == 0) {
 			arg_writable_run_user = 1;

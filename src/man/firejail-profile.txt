@@ -280,6 +280,9 @@ Disable the default blacklisting of run/user/$UID/systemd and /run/user/$UID/gnu
 \fBwritable-var
 Mount /var directory read-write.
 .TP
+\fBkeep-var-tmp
+/var/tmp directory is untouched.
+.TP
 \fBwritable-var-log
 Use the real /var/log directory, not a clone. By default, a tmpfs is mounted on top of /var/log
 directory, and a skeleton filesystem is created based on the original /var/log.

@@ -678,6 +678,16 @@ Same as "firejail --join=name" if sandbox with specified name exists, otherwise 
 Note that in contrary to other join options there is respective profile option.
 
 .TP
+\fB\-\-keep-var-tmp
+/var/tmp directory is untouched.
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-var-tmp
+
+.TP
 \fB\-\-ls=name|pid dir_or_filename
 List files in sandbox container, see \fBFILE TRANSFER\fR section for more details.
 
@@ -2127,16 +2137,6 @@ Mount /var directory read-write.
 Example:
 .br
 $ sudo firejail --writable-var
-
-.TP
-\fB\-\-keep-var-tmp
-/var/tmp directory is untouched.
-.br
-
-.br
-Example:
-.br
-$ sudo firejail --keep-var-tmp
 
 .TP
 \fB\-\-writable-var-log

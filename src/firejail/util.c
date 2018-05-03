@@ -1037,32 +1037,61 @@ static MountData mdata;
 // The return value points to a static area, and will be overwritten by subsequent calls.
 // The function does an exit(1) if anything goes wrong.
 MountData *get_last_mount(void) {
-	// open /proc/self/mounts
-	FILE *fp = fopen("/proc/self/mounts", "r");
+	// open /proc/self/mountinfo
+	FILE *fp = fopen("/proc/self/mountinfo", "r");
 	if (!fp)
 		goto errexit;
 
 	mbuf[0] = '\0';
 	while (fgets(mbuf, MAX_BUF, fp));
 	fclose(fp);
-	if (arg_debug || arg_debug_whitelists)
+	if (arg_debug)
 		printf("%s", mbuf);
 
-	// extract filesystem name and directory
-	mdata.fsname = mbuf;
-	mdata.dir = strstr(mbuf, " ");
-	if (!mdata.dir)
+	// extract filesystem name, directory and filesystem type
+	// examples:
+	//	587 543 8:1 /tmp /etc rw,relatime master:1 - ext4 /dev/sda1 rw,errors=remount-ro,data=ordered
+	//		mdata.fsname: /tmp
+	//		mdata.dir: /etc
+	//		mdata.fstype: ext4
+	//	585 564 0:76 / /home/netblue/.cache rw,nosuid,nodev - tmpfs tmpfs rw
+	//		mdata.fsname: /
+	//		mdata.dir: /home/netblue/.cache
+	//		mdata.fstype: tmpfs
+	memset(&mdata, 0, sizeof(mdata));
+	char *ptr = strtok(mbuf, " ");
+	if (!ptr)
 		goto errexit;
-	*mdata.dir = '\0';
-	mdata.dir++;
-	char *end = strstr(mdata.dir, " ");
-	if (!end)
-		goto errexit;
-	*end = '\0';
 
+	int cnt = 1;
+	while ((ptr = strtok(NULL, " ")) != NULL) {
+		cnt++;
+		if (cnt == 4)
+			mdata.fsname = ptr;
+		else if (cnt == 5) {
+			mdata.dir = ptr;
+			break;
+		}
+	}
+
+	ptr = strtok(NULL, "-");
+	if (!ptr)
+		goto errexit;
+
+	ptr = strtok(NULL, " ");
+	if (!ptr)
+		goto errexit;
+	mdata.fstype = ptr++;
+
+	if (mdata.fsname == NULL ||
+	    mdata.dir == NULL ||
+	    mdata.fstype == NULL)
+		goto errexit;
+	if (arg_debug)
+		printf("fsname=%s dir=%s fstype=%s\n", mdata.fsname, mdata.dir, mdata.fstype);
 	return &mdata;
 
 errexit:
-	fprintf(stderr, "Error: cannot read /proc/self/mounts");
+	fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
 	exit(1);
 }

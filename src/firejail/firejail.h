@@ -525,12 +525,13 @@ unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 
-// Get info regarding the last kernel mount operation.
+// Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.
 // The function does an exit(1) if anything goes wrong.
 typedef struct {
-	char *fsname;
-	char *dir;
+	char *fsname; // the pathname of the directory in the filesystem which forms the root of this mount
+	char *dir;	// mount destination
+	char *fstype; // filesystem type
 } MountData;
 MountData *get_last_mount(void);
 

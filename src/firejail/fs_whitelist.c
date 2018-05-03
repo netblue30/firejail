@@ -27,6 +27,12 @@
 #include <fcntl.h>
 #include <errno.h>
 
+// mountinfo functionality test;
+// 1. enable TEST_MOUNTINFO definition
+// 2. set a symlink in /tmp: ln -s /etc /tmp/etc
+// 3. run firejail --debug --whitelist=/tmp/etc
+//#define TEST_MOUNTINFO
+
 static char *dentry[] = {
 	"Downloads",
 	"Загрузки",
@@ -204,8 +210,10 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	else if (entry->tmp_dir) {
 		fname = path + 5; // strlen("/tmp/")
+#ifndef TEST_MOUNTINFO
 		if (*fname == '\0')
 			goto errexit;
+#endif
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
@@ -516,10 +524,13 @@ void fs_whitelist(void) {
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {
 			entry->tmp_dir = 1;
 			tmp_dir = 1;
+
+#ifndef TEST_MOUNTINFO
 			// both path and absolute path are under /tmp
 			if (strncmp(fname, "/tmp/", 5) != 0) {
 				goto errexit;
 			}
+#endif
 		}
 		else if (strncmp(new_name, "/media/", 7) == 0) {
 			entry->media_dir = 1;

@@ -198,6 +198,12 @@ This feature is also supported for LLVM/clang compiler
 
 ## New command line options
 `````
+       --keep-var-tmp
+              /var/tmp directory is untouched.
+
+	      Example:
+	      $ firejail --keep-var-tmp
+
        --nodbus
               Disable D-Bus access. Only the regular UNIX socket is handled by
               this command. To disable the abstract socket you would  need  to

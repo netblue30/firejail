@@ -94,6 +94,7 @@ static char *usage_str =
 	"    --join-network=name|pid - join the network namespace.\n"
 #endif
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
+	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER
 	"    --ls=name|pid dir_or_filename - list files in sandbox container.\n"

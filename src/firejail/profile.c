@@ -738,6 +738,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_writable_var = 1;
 		return 0;
 	}
+	// don't overwrite /var/tmp
+	if (strcmp(ptr, "keep-var-tmp") == 0) {
+		arg_keep_var_tmp = 1;
+		return 0;
+	}
 	// writable-run-user
 	if (strcmp(ptr, "writable-run-user") == 0) {
 		arg_writable_run_user = 1;

@@ -19,6 +19,8 @@ net none
 no3d
 nodbus
 nodvd
+# When using 'volatile' storage (https://www.freedesktop.org/software/systemd/man/journald.conf.html),
+# comment both 'nogroups' and 'noroot'
 nogroups
 nonewprivs
 noroot
@@ -32,7 +34,7 @@ shell none
 disable-mnt
 private-bin gnome-logs
 private-dev
-private-etc fonts,localtime
+private-etc fonts,localtime,machine-id
 private-lib gdk-pixbuf-2.0,gio,gvfs/libgvfscommon.so,libgconf-2.so.4,librsvg-2.so.2
 private-tmp
 writable-var-log

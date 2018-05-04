@@ -1194,9 +1194,9 @@ void x11_xorg(void) {
 	if (set_perms(dest, getuid(), getgid(), 0600))
 		errExit("set_perms");
 
-	// check /proc/self/mounts to confirm the mount is ok
+	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
-	if (strncmp(mptr->dir,dest,strlen(dest)) != 0) {
+	if (strncmp(mptr->fstype, "tmpfs", 5) != 0 || strncmp(mptr->dir, dest, strlen(dest)) != 0) {
 		fprintf(stderr, "Error: invalid mount on top of %s (should be %s)\n", mptr->dir, dest);
 		exit(1);
 	}

@@ -24,4 +24,7 @@ private-bin unzip
 private-dev
 private-etc passwd,group,localtime
 
+# GNOME Shell integration (chrome-gnome-shell)
+noblacklist ${HOME}/.local/share/gnome-shell
+
 include /etc/firejail/default.profile

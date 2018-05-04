@@ -178,8 +178,12 @@ void pulseaudio_init(void) {
 
 		// check /proc/self/mountinfo to confirm the mount is ok
 		MountData *mptr = get_last_mount();
-		if (strncmp(mptr->fstype, "tmpfs", 5) != 0 || strncmp(mptr->dir, homeusercfg, strlen(homeusercfg)) != 0) {
+		if (strncmp(mptr->dir, homeusercfg, strlen(homeusercfg)) != 0) {
 			fprintf(stderr, "Error: invalid mount on top of %s (should be %s)\n", mptr->dir, homeusercfg);
+			exit(1);
+		}
+		if (strncmp(mptr->fstype, "tmpfs", 5) != 0) {
+			fprintf(stderr, "Error: invalid mount on top of %s (filesystem type is %s)\n", mptr->dir, mptr->fstype);
 			exit(1);
 		}
 

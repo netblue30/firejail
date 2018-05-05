@@ -367,8 +367,8 @@ void fs_private_lib(void) {
 					free(name);
 				}
 			}
+			fclose(fp);
 		}
-		fclose(fp);
 	}
 	fmessage("Program libraries installed in %0.2f ms\n", timetrace_end());
 

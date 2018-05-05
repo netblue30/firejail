@@ -888,6 +888,7 @@ void fs_whitelist(void) {
 							fprintf(stderr, "Error: invalid symbolic link %s\n", entry->link);
 							exit(1);
 						}
+						free(path);
 					}
 				}
 			}

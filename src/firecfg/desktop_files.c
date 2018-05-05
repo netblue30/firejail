@@ -65,10 +65,14 @@ static int have_profile(const char *filename, const char *homedir) {
 
 	// check .desktop extension
 	int len = strlen(tmpfname);
-	if (len <= 8)
+	if (len <= 8) {
+		free(tmpfname);
 		return 0;
-	if (strcmp(tmpfname + len - 8, ".desktop"))
+	}
+	if (strcmp(tmpfname + len - 8, ".desktop")) {
+		free(tmpfname);
 		return 0;
+	}
 	tmpfname[len - 8] = '\0';
 
 	// extract last word

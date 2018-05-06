@@ -1,4 +1,4 @@
-firejail (0.9.53) baseline; urgency=low
+firejail (0.9.54~rc1) baseline; urgency=low
   * work in progress
   * modif: --force removed
   * modif: --csh, --zsh removed
@@ -44,7 +44,7 @@ firejail (0.9.53) baseline; urgency=low
   * new profiles: enchant, enchant-2, Discord, acat, adiff, als, apack,
   * new profiles: arepack, aunpack profiles, ppsspp, scallion, clion,
   * new profiles: baloo_filemetadata_temp_extractor, AnyDesk, webstorm, xmind
- -- netblue30 <netblue30@yahoo.com>  Thu, 1 Mar 2018 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 6 May 2018 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low
   * modif: --allow-private-blacklists was deprecated; blacklisting,

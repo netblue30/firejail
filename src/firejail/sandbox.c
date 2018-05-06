@@ -1017,18 +1017,9 @@ int sandbox(void* sandbox_arg) {
 		else
 			seccomp_filter_drop();
 
-		// clean unused filters
-#if defined(__LP64__)
-		int rv = unlink(RUN_SECCOMP_64);
-#endif
-#if defined(__ILP32__)
-		int rv = unlink(RUN_SECCOMP_32);
-#endif
-		(void) rv;
 	}
 	else { // clean seccomp files under /run/firejail/mnt
 		int rv = unlink(RUN_SECCOMP_CFG);
-		rv |= unlink(RUN_SECCOMP_64);
 		rv |= unlink(RUN_SECCOMP_32);
 		(void) rv;
 	}

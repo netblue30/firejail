@@ -70,8 +70,6 @@ printf("\n");
 		protocol_print();
 	else if (argc == 5 && strcmp(argv[1], "protocol") == 0 && strcmp(argv[2], "build") == 0)
 		protocol_build_filter(argv[3], argv[4]);
-	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "64") == 0)
-		seccomp_secondary_64(argv[3]);
 	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "32") == 0)
 		seccomp_secondary_32(argv[3]);
 	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "block") == 0)

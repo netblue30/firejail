@@ -138,6 +138,7 @@ errexit:
 }
 
 // 32 bit arch filter installed on 64 bit architectures
+#if defined(__x86_64__)
 #if defined(__LP64__)
 static void seccomp_filter_32(void) {
 	if (seccomp_load(RUN_SECCOMP_32) == 0) {
@@ -146,15 +147,6 @@ static void seccomp_filter_32(void) {
 	}
 }
 #endif
-
-// 64 bit arch filter installed on 32 bit architectures
-#if defined(__ILP32__)
-static void seccomp_filter_64(void) {
-	if (seccomp_load(RUN_SECCOMP_64) == 0) {
-		if (arg_debug)
-			printf("Dual 32/64 bit seccomp filter configured\n");
-	}
-}
 #endif
 
 static void seccomp_filter_block_secondary(void) {
@@ -177,11 +169,10 @@ int seccomp_filter_drop(void) {
 			if (arg_seccomp_block_secondary)
 				seccomp_filter_block_secondary();
 			else {
+#if defined(__x86_64__)
 #if defined(__LP64__)
 				seccomp_filter_32();
 #endif
-#if defined(__ILP32__)
-				seccomp_filter_64();
 #endif
 			}
 		}
@@ -190,11 +181,10 @@ int seccomp_filter_drop(void) {
 			if (arg_seccomp_block_secondary)
 				seccomp_filter_block_secondary();
 			else {
+#if defined(__x86_64__)
 #if defined(__LP64__)
 				seccomp_filter_32();
 #endif
-#if defined(__ILP32__)
-				seccomp_filter_64();
 #endif
 			}
 			if (arg_debug)

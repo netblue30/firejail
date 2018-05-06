@@ -38,23 +38,6 @@ expect {
 }
 
 after 100
-send -- "fseccomp secondary 64 seccomp-test-file\r"
-after 100
-send -- "fsec-print seccomp-test-file\r"
-expect {
-	timeout {puts "TESTING ERROR 5.1\n";exit}
-	"jeq mount"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.2\n";exit}
-	"jeq umount2"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.3\n";exit}
-	"ret ALLOW"
-}
-
-after 100
 send -- "fseccomp default seccomp-test-file\r"
 after 100
 send -- "fsec-print seccomp-test-file\r"

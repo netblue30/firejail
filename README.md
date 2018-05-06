@@ -96,7 +96,7 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 `````
 
 `````
-# Current development version: 0.9.53
+# Current development version: 0.9.54~rc2
 
 ## Firejail user access database
 `````

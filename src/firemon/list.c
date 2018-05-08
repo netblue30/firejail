@@ -25,6 +25,8 @@ void list(void) {
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
+		if (i == skip_process)
+			continue;
 		if (pids[i].level == 1)
 			pid_print_list(i, arg_nowrap);
 	}

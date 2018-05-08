@@ -273,6 +273,8 @@ void top(void) {
 		unsigned utime = 0;
 		unsigned stime = 0;
 		for (i = 0; i < max_pids; i++) {
+			if (i == skip_process)
+				continue;
 			if (pids[i].level == 1)
 				pid_store_cpu(i, 0, &utime, &stime);
 		}
@@ -313,6 +315,8 @@ void top(void) {
 
 		// print processes
 		for (i = 0; i < max_pids; i++) {
+			if (i == skip_process)
+				continue;
 			if (pids[i].level == 1) {
 				float cpu = 0;
 				int cnt = 0; // process count

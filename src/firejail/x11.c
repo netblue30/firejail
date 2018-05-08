@@ -1196,14 +1196,10 @@ void x11_xorg(void) {
 
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
-	if (strncmp(mptr->dir, dest, strlen(dest)) != 0) {
-		fprintf(stderr, "Error: invalid mount on top of %s (should be %s)\n", mptr->dir, dest);
-		exit(1);
-	}
-	if (strncmp(mptr->fstype, "tmpfs", 5) != 0) {
-		fprintf(stderr, "Error: invalid mount on top of %s (filesystem type is %s)\n", mptr->dir, mptr->fstype);
-		exit(1);
-	}
+	if (strncmp(mptr->dir, dest, strlen(dest)) != 0)
+		errLogExit("invalid mount on top of %s (should be %s)\n", mptr->dir, dest);
+	if (strncmp(mptr->fstype, "tmpfs", 5) != 0)
+		errLogExit("invalid mount on top of %s (filesystem type is %s)\n", mptr->dir, mptr->fstype);
 	free(dest);
 #endif
 }

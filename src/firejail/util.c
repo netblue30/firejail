@@ -43,15 +43,13 @@ void errLogExit(char* fmt, ...) {
 	char *msg1;
 	char *msg2;
 	if (vasprintf(&msg1, fmt, args) != -1 &&
-	    asprintf(&msg2, "Access error: pid %d, last mount %s %s %s - %s", getuid(), m->fsname, m->dir, m->fstype, msg1) != -1)
+	    asprintf(&msg2, "Access error: pid %d, last mount name:%s dir:%s type:%s - %s", getuid(), m->fsname, m->dir, m->fstype, msg1) != -1)
 		syslog(LOG_CRIT, "%s", msg2);
+	va_end(args);
 	closelog();
 
-	fprintf(stderr, "Access error pid %d - ", getuid());
-	vfprintf(stderr, fmt, args);
-	va_end(args);
-
 	sleep(2);
+	fprintf(stderr, "%s\n", msg2);
 	exit(1);
 }
 

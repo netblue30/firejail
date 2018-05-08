@@ -485,6 +485,7 @@ int arp_check(const char *dev, uint32_t destaddr);
 uint32_t arp_assign(const char *dev, Bridge *br);
 
 // util.c
+void errLogExit(char* fmt, ...);
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);
 void drop_privs(int nogroups);

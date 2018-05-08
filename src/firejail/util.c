@@ -33,6 +33,28 @@
 
 #define MAX_GROUPS 1024
 
+// send the error to /var/log/auth.log and exit after a small delay
+void errLogExit(char* fmt, ...) {
+	va_list args;
+	va_start(args,fmt);
+	openlog("firejail", LOG_NDELAY | LOG_PID, LOG_AUTH);
+	MountData *m = get_last_mount();
+
+	char *msg1;
+	char *msg2;
+	if (vasprintf(&msg1, fmt, args) != -1 &&
+	    asprintf(&msg2, "Access error: pid %d, last mount %s %s %s - %s", getuid(), m->fsname, m->dir, m->fstype, msg1) != -1)
+		syslog(LOG_CRIT, "%s", msg2);
+	closelog();
+
+	fprintf(stderr, "Access error pid %d - ", getuid());
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+
+	sleep(2);
+	exit(1);
+}
+
 static void clean_supplementary_groups(gid_t gid) {
 	assert(cfg.username);
 	gid_t groups[MAX_GROUPS];
@@ -869,14 +891,10 @@ int remove_overlay_directory(void) {
 		errExit("asprintf");
 
 	// deal with obvious problems such as symlinks and root ownership
-	if (is_link(path)) {
-		fprintf(stderr, "Error: cannot follow symbolic link\n");
-		exit(1);
-	}
-	if (access(path, R_OK | W_OK | X_OK) == -1) {
-		fprintf(stderr, "Error: cannot access ~/.firejail directory\n");
-		exit(1);
-	}
+	if (is_link(path))
+		errLogExit("overlay directory is a symlink\n");
+	if (access(path, R_OK | W_OK | X_OK) == -1)
+		errLogExit("no access to overlay directory\n");
 
 	EUID_ROOT();
 	if (setreuid(0, 0) < 0 ||

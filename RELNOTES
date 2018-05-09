@@ -34,6 +34,7 @@ firejail (0.9.54~rc1) baseline; urgency=low
   * private-dev support for overlay and chroot sandboxes
   * private-tmp support for overlay and chroot sandboxes
   * added sandbox name support in firemon
+  * firemon/prctl enhancements
   * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed,
   * new profiles: discord-canary, pycharm-community, pycharm-professional,
   * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt, kaffeine,

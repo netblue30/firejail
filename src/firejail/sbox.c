@@ -166,6 +166,13 @@ int sbox_run(unsigned filter, int num, ...) {
 			caps_set(set);
 #endif
 		}
+		else if (filter & SBOX_CAPS_HIDEPID) {
+#ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
+			uint64_t set = ((uint64_t) 1) << CAP_SYS_PTRACE;
+			set |=  ((uint64_t) 1) << CAP_SYS_PACCT;
+			caps_set(set);
+#endif
+		}
 
 		if (filter & SBOX_SECCOMP) {
 			if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {

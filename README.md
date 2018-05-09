@@ -376,4 +376,4 @@ gnome-recipes, akonadi_control, evince-previewer, evince-thumbnailer, blender-2.
 thunderbird-beta, ncdu, gnome-logs, gcloud, musixmatch, gunzip, bunzip2, enchant,
 enchant-2, enchant-lsmod, enchant-lsmod-2, Discord, acat, adiff, als, apack, arepack,
 aunpack profiles, ppsspp, scallion, clion, baloo_filemetadata_temp_extractor,
-AnyDesk, webstorm, xmind
+AnyDesk, webstorm, xmind, qmmp, sayonara

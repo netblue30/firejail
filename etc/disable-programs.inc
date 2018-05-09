@@ -16,6 +16,7 @@ blacklist ${HOME}/.LuminanceHDR
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Natron
 blacklist ${HOME}/.PyCharm*
+blacklist ${HOME}/.Sayonara
 blacklist ${HOME}/.Skype
 blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
@@ -465,6 +466,7 @@ blacklist ${HOME}/.passwd-s3fs
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
+blacklist ${HOME}/.qmmp
 blacklist ${HOME}/.redeclipse
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json

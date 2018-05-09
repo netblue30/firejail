@@ -792,6 +792,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define SBOX_CAPS_NETWORK (1 << 4)	// caps filter for programs running network programs
 #define SBOX_ALLOW_STDIN (1 << 5)		// don't close stdin
 #define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
+#define SBOX_CAPS_HIDEPID (1 << 7)	// hidepid caps filter for running firemon
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);

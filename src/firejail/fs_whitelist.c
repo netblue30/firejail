@@ -196,6 +196,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	const char *fname;
 	char *wfile = NULL;
 
+	EUID_USER();
 	if (entry->home_dir) {
 		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			fname = path + strlen(cfg.homedir);
@@ -290,9 +291,12 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (arg_debug || arg_debug_whitelists)
 			printf("Whitelisting %s\n", path);
 	}
-	else
+	else {
+		EUID_ROOT();
 		return;
+	}
 
+	EUID_ROOT();
 	// create the path if necessary
 	mkpath(path, s.st_mode);
 	fs_logger2("whitelist", path);

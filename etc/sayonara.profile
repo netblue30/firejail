@@ -5,13 +5,12 @@ include /etc/firejail/sayonara.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.Sayonara
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
-
-noblacklist ~/.Sayonara
 
 caps.drop all
 netfilter

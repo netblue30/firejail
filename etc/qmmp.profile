@@ -5,13 +5,12 @@ include /etc/firejail/qmmp.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.qmmp
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
-
-noblacklist ~/.qmmp
 
 caps.drop all
 netfilter

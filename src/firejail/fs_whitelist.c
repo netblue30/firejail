@@ -283,6 +283,14 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SHARE_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	else if (entry->module_dir) {
+		fname = path + 12; // strlen("/sys/module/")
+		if (*fname == '\0')
+			goto errexit;
+
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MODULE_DIR, fname) == -1)
+			errExit("asprintf");
+	}
 
 	// check if the file exists
 	assert(wfile);
@@ -365,6 +373,7 @@ void fs_whitelist(void) {
 	int srv_dir = 0;                // /srv directory flag
 	int etc_dir = 0;                // /etc directory flag
 	int share_dir = 0;                // /usr/share directory flag
+	int module_dir = 0;                // /sys/module directory flag
 
 	size_t nowhitelist_c = 0;
 	size_t nowhitelist_m = 32;
@@ -471,6 +480,8 @@ void fs_whitelist(void) {
 					etc_dir = 1;
 				else if (strncmp(new_name, "/usr/share/", 11) == 0)
 					share_dir = 1;
+				else if (strncmp(new_name, "/sys/module/", 12) == 0)
+					module_dir = 1;
 			}
 
 			entry->data = EMPTY_STRING;
@@ -616,6 +627,13 @@ void fs_whitelist(void) {
 			share_dir = 1;
 			// both path and absolute path are under /etc
 			if (strncmp(fname, "/usr/share/", 11) != 0)
+				goto errexit;
+		}
+		else if (strncmp(new_name, "/sys/module/", 12) == 0) {
+			entry->module_dir = 1;
+			module_dir = 1;
+			// both path and absolute path are under /sys/module
+			if (strncmp(fname, "/sys/module/", 12) != 0)
 				goto errexit;
 		}
 		else {
@@ -846,6 +864,27 @@ void fs_whitelist(void) {
 			share_dir = 0;
 	}
 
+	// /sys/module mountpoint
+	if (module_dir) {
+		// check if /sys/module directory exists
+		struct stat s;
+		if (stat("/sys/module", &s) == 0) {
+			// keep a copy of real /sys/module directory in RUN_WHITELIST_MODULE_DIR
+			mkdir_attr(RUN_WHITELIST_MODULE_DIR, 0755, 0, 0);
+			if (mount("/sys/module", RUN_WHITELIST_MODULE_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+
+			// mount tmpfs on /sys/module
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /sys/module directory\n");
+			if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /sys/module");
+			fs_logger("tmpfs /sys/module");
+		}
+		else
+			module_dir = 0;
+	}
+
 
 	// go through profile rules again, and interpret whitelist commands
 	entry = cfg.profile;
@@ -965,6 +1004,13 @@ void fs_whitelist(void) {
 		if (mount("tmpfs", RUN_WHITELIST_SHARE_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_SHARE_DIR);
+	}
+
+	// mask the real /sys/module directory, currently mounted on RUN_WHITELIST_MODULE_DIR
+	if (module_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_MODULE_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_MODULE_DIR);
 	}
 
 	if (new_name)

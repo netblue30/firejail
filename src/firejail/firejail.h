@@ -85,6 +85,7 @@
 #define RUN_WHITELIST_SRV_DIR   "/run/firejail/mnt/orig-srv"
 #define RUN_WHITELIST_ETC_DIR   "/run/firejail/mnt/orig-etc"
 #define RUN_WHITELIST_SHARE_DIR   "/run/firejail/mnt/orig-share"
+#define RUN_WHITELIST_MODULE_DIR   "/run/firejail/mnt/orig-module"
 
 #define RUN_XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
 #define RUN_XAUTHORITY_SEC_FILE	"/run/firejail/mnt/sec.Xauthority"
@@ -204,6 +205,7 @@ typedef struct profile_entry_t {
 	unsigned srv_dir:1;	// whitelist in /srv directory
 	unsigned etc_dir:1;	// whitelist in /etc directory
 	unsigned share_dir:1;	// whitelist in /usr/share directory
+	unsigned module_dir:1;	// whitelist in /sys/module directory
 }ProfileEntry;
 
 typedef struct config_t {

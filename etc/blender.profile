@@ -19,6 +19,11 @@ include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+# Allow usage of AMD GPU by OpenCL
+noblacklist /sys/module
+whitelist /sys/module/amdgpu
+read-only /sys/module/amdgpu
+
 caps.drop all
 netfilter
 nodvd

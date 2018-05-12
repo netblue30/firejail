@@ -9,7 +9,9 @@ noblacklist ${HOME}/.cache/MusicBrainz
 noblacklist ${HOME}/.config/MusicBrainz
 
 # Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
 
 include /etc/firejail/disable-common.inc

@@ -436,6 +436,7 @@ PizzaDude (https://github.com/pizzadude)
 	- add mpv support to smplayer
 	- added profile for torbrowser-launcher
 	- added profile for sayonara and qmmp
+	- remove tracelog from Firefox profile
 probonopd (https://github.com/probonopd)
 	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)
@@ -470,6 +471,10 @@ Reiner Herrmann (https://github.com/reinerh)
 Remco Verhoef (https://github.com/nl5887)
 	- add overlay configuration to profiles
 	- prevent running shells recursively
+RD PROJEKT (https://github.com/RDProjekt)
+	- noblacklist support for /sys/module directory
+	- whitelist support for /sys/module directory
+	- support AMD GPU by OpenCL in Blender
 rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Ruan (https://github.com/ruany)

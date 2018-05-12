@@ -267,7 +267,7 @@ Blacklist violations logged to syslog.
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
 whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
 everything else is discarded when the sandbox is closed. The top directory could be
-user home, /dev, /media, /mnt, /opt, /srv, /var, and /tmp.
+user home, /dev, /etc, /media, /mnt, /opt, /srv, /sys/module, /usr/share, /var, and /tmp.
 .br
 
 .br

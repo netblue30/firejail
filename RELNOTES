@@ -35,6 +35,8 @@ firejail (0.9.54~rc1) baseline; urgency=low
   * private-tmp support for overlay and chroot sandboxes
   * added sandbox name support in firemon
   * firemon/prctl enhancements
+  * noblacklist support for /sys/module directory
+  * whitelist support for /sys/module directory
   * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed,
   * new profiles: discord-canary, pycharm-community, pycharm-professional,
   * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt, kaffeine,

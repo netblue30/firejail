@@ -13,5 +13,8 @@ mkdir ${HOME}/.config/vivaldi
 whitelist ${HOME}/.cache/vivaldi
 whitelist ${HOME}/.config/vivaldi
 
+# nodbus breaks vivaldi sync
+ignore nodbus
+
 # Redirect
 include /etc/firejail/chromium-common.profile

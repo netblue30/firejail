@@ -94,7 +94,7 @@ If you keep additional Firejail security profiles in a public repository, please
 
 Use this issue to request new profiles: [#1139](https://github.com/netblue30/firejail/issues/1139)
 
-We also keep a list of fixes for previous released versions in etc-fixes directory.
+We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory .
 `````
 
 `````

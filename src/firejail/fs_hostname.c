@@ -124,6 +124,7 @@ void fs_resolvconf(void) {
 		if (asprintf(&dest, "%s/%s", RUN_DNS_ETC, entry->d_name) == -1)
 			errExit("asprintf");
 
+		int symlink_done = 0;
 		if (is_link(src)) {
 			char *rp =realpath(src, NULL);
 			if (rp == NULL) {
@@ -133,14 +134,19 @@ void fs_resolvconf(void) {
 			}
 			if (symlink(rp, dest))
 				errExit("symlink");
+			else
+				symlink_done = 1;
 		}
 		else if (S_ISDIR(s.st_mode))
 			create_empty_dir_as_root(dest, s.st_mode);
 		else
 			create_empty_file_as_root(dest, s.st_mode);
+
 		// bind-mount src on top of dest
-		if (mount(src, dest, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind mirroring /etc");
+		if (!symlink_done) {
+			if (mount(src, dest, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind mirroring /etc");
+		}
 		fs_logger2("clone", src);
 
 		free(src);

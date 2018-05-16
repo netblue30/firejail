@@ -1190,10 +1190,7 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
-	// just  in case...
-	if (set_perms(dest, getuid(), getgid(), 0600))
-		errExit("set_perms");
-
+	
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, dest) != 0)

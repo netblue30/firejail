@@ -38,7 +38,8 @@ tracelog
 # private-bin gedit
 private-dev
 # private-etc fonts
-private-lib gedit,libgspell-1.so.1,gconv,aspell
+# private-lib temporarily disabled pending code fixes
+#private-lib gedit,libgspell-1.so.1,gconv,aspell
 private-tmp
 
 noexec ${HOME}

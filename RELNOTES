@@ -1,5 +1,4 @@
-firejail (0.9.54~rc1) baseline; urgency=low
-  * work in progress
+firejail (0.9.54) baseline; urgency=low
   * modif: --force removed
   * modif: --csh, --zsh removed
   * modif: --debug-check-filename removed
@@ -48,7 +47,7 @@ firejail (0.9.54~rc1) baseline; urgency=low
   * new profiles: arepack, aunpack profiles, ppsspp, scallion, clion,
   * new profiles: baloo_filemetadata_temp_extractor, AnyDesk, webstorm, xmind,
   * new profiles: qmmp, sayonara
- -- netblue30 <netblue30@yahoo.com>  Sun, 6 May 2018 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Wed, 16 May 2018 08:00:00 -0500
 
 firejail (0.9.52) baseline; urgency=low
   * modif: --allow-private-blacklists was deprecated; blacklisting,

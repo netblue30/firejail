@@ -41,7 +41,7 @@ void errLogExit(char* fmt, ...) {
 	MountData *m = get_last_mount();
 
 	char *msg1;
-	char *msg2;
+	char *msg2  = "Access error";
 	if (vasprintf(&msg1, fmt, args) != -1 &&
 	    asprintf(&msg2, "Access error: pid %d, last mount name:%s dir:%s type:%s - %s", getuid(), m->fsname, m->dir, m->fstype, msg1) != -1)
 		syslog(LOG_CRIT, "%s", msg2);

@@ -242,12 +242,17 @@ void memory_deny_write_execute(const char *fname) {
 
 		// same for pkey_mprotect(,,PROT_EXEC), where available
 #ifdef SYS_pkey_mprotect
+#ifdef __NR_pkey_mprotect
+// RasPi 2 (kernel 4.14.37) seems to have SYS_pkey_mprotect #defined as __NR_pkey_mprotect
+// but no __NR_pkey_mprotect defined?
+// issue #1948
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_pkey_mprotect, 0, 5),
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
 		KILL_PROCESS,
 		RETURN_ALLOW,
+#endif
 #endif
 
 // shmat is not implemented as a syscall on some platforms (i386, powerpc64, powerpc64le)

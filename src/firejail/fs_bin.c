@@ -148,7 +148,7 @@ static void report_duplication(const char *fname) {
 	}
 }
 
-static void duplicate(char *fname, FILE *fplist) {
+static void duplicate(char *fname) {
 	assert(fname);
 
 	if (*fname == '~' || strstr(fname, "..")) {
@@ -182,8 +182,18 @@ static void duplicate(char *fname, FILE *fplist) {
 			errExit("asprintf");
 	}
 
-	if (fplist)
-		fprintf(fplist, "%s\n", full_path);
+	// add to private-lib list
+	if (cfg.bin_private_lib == NULL) {
+		if (asprintf(&cfg.bin_private_lib, "%s,%s",fname, full_path) == -1)
+			errExit("asprinf");
+	}
+	else {
+		char *tmp;
+		if (asprintf(&tmp, "%s,%s,%s", cfg.bin_private_lib, fname, full_path) == -1)
+			errExit("asprinf");
+		free(cfg.bin_private_lib);
+		cfg.bin_private_lib = tmp;
+	}
 
 	// if full_path is symlink, and the link is in our path, copy both the file and the symlink
 	if (is_link(full_path)) {
@@ -209,14 +219,14 @@ static void duplicate(char *fname, FILE *fplist) {
 	report_duplication(fname);
 }
 
-static void globbing(char *fname, FILE *fplist) {
+static void globbing(char *fname) {
 	assert(fname);
 
 	// go directly to duplicate() if no globbing char is present - see man 7 glob
 	if (strrchr(fname, '*') == NULL &&
 	    strrchr(fname, '[') == NULL &&
 	    strrchr(fname, '?') == NULL)
-		return duplicate(fname, fplist);
+		return duplicate(fname);
 
 	// loop through paths[]
 	int i = 0;
@@ -247,7 +257,7 @@ static void globbing(char *fname, FILE *fplist) {
 			if (strcmp(globbuf.gl_pathv[j], pattern) == 0)
 				continue;
 
-			duplicate(globbuf.gl_pathv[j], fplist);
+			duplicate(globbuf.gl_pathv[j]);
 		}
 
 		globfree(&globbuf);
@@ -274,22 +284,12 @@ void fs_private_bin_list(void) {
 	if (!dlist)
 		errExit("strdup");
 
-	// save a list of private-bin files in order to bring in private-libs later
-	FILE *fplist = NULL;
-	if (arg_private_lib) {
-		fplist = fopen(RUN_LIB_BIN, "w");
-		if (!fplist)
-			errExit("fopen");
-	}
-
 	char *ptr = strtok(dlist, ",");
-	globbing(ptr, fplist);
+	globbing(ptr);
 	while ((ptr = strtok(NULL, ",")) != NULL)
-		globbing(ptr, fplist);
+		globbing(ptr);
 	free(dlist);
 	fs_logger_print();
-	if (fplist)
-		fclose(fplist);
 
 	// mount-bind
 	int i = 0;

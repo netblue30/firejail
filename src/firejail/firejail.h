@@ -53,7 +53,6 @@
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
 #define RUN_LIB_DIR	"/run/firejail/mnt/lib"
 #define RUN_LIB_FILE	"/run/firejail/mnt/libfiles"
-#define RUN_LIB_BIN	"/run/firejail/mnt/binfiles"
 #define RUN_DNS_ETC	"/run/firejail/mnt/dns-etc"
 
 
@@ -224,6 +223,7 @@ typedef struct config_t {
 	char *opt_private_keep;	// keep list for private opt directory
 	char *srv_private_keep;	// keep list for private srv directory
 	char *bin_private_keep;	// keep list for private bin directory
+	char *bin_private_lib;	// executable list sent by private-bin to private-lib
 	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *overlay_dir;

@@ -24,11 +24,11 @@
 #include <fcntl.h>
 
 const char * const default_lib_paths[] = {
-	"/lib",
-	"/lib/x86_64-linux-gnu",
-	"/lib64",
+	"/usr/lib/x86_64-linux-gnu",	// Debian & friends
+	"/lib/x86_64-linux-gnu",		// CentOS, Fedora
 	"/usr/lib",
-	"/usr/lib/x86_64-linux-gnu",
+	"/lib",
+	"/lib64",
 	LIBDIR,
 	"/usr/local/lib",
 	"/usr/lib/x86_64-linux-gnu/mesa", // libGL.so is sometimes a symlink into this directory
@@ -43,7 +43,7 @@ int is_lib_64(const char *exe) {
 	int fd = open(exe, O_RDONLY);
 	if (fd < 0)
 		return 0;
-	
+
 	unsigned char buf[EI_NIDENT];
 	ssize_t len = 0;
 	while (len < EI_NIDENT) {

@@ -12,7 +12,7 @@ noblacklist ${HOME}/.local/share/xplayer
 noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
-noblacklist /usr/lib/python3
+noblacklist /usr/lib/python3*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

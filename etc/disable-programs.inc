@@ -110,6 +110,8 @@ blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge
 blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/digikamrc
+blacklist ${HOME}/.config/discord
+blacklist ${HOME}/.config/discordcanary
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/emaildefaults

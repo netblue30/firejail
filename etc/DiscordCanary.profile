@@ -1,7 +1,7 @@
-# Firejail profile for discord-canary
+# Firejail profile for DiscordCanary
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/discord-canary.local
+include /etc/firejail/DiscordCanary.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
@@ -11,8 +11,8 @@ noblacklist ${HOME}/.config/discordcanary
 mkdir ${HOME}/.config/discordcanary
 whitelist ${HOME}/.config/discordcanary
 
-private-bin discord-canary
-private-opt discord-canary
+private-bin DiscordCanary
+private-opt DiscordCanary
 
 #Redirect
 include /etc/firejail/discord-common.profile

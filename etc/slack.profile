@@ -35,7 +35,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin slack
+private-bin slack,locale
 private-dev
 private-etc asound.conf,ca-certificates,fonts,group,passwd,pulse,resolv.conf,ssl,ld.so.conf,ld.so.cache,localtime,pki,crypto-policies
 private-tmp

@@ -39,5 +39,6 @@ shell none
 private-dev
 private-tmp
 
-noexec ${HOME}
+# noexec ${HOME} may break krita, see issue #1953
+# noexec ${HOME}
 noexec /tmp

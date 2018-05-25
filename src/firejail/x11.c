@@ -1149,15 +1149,6 @@ void x11_xorg(void) {
 		exit(1);
 	}
 
-	// ensure the file has the correct permissions and move it
-	// into the correct location.
-	if (stat(tmpfname, &s) == -1) {
-		fprintf(stderr, "Error: .Xauthority file was not created\n");
-		exit(1);
-	}
-	if (set_perms(tmpfname, getuid(), getgid(), 0600))
-		errExit("set_perms");
-
 	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
 	// automatically when the sandbox is closed (rename doesn't work)
 						  // root needed
@@ -1165,8 +1156,7 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
-	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
-		errExit("set_perms");
+	ASSERT_PERMS(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600);
 	/* coverity[toctou] */
 	unlink(tmpfname);
 	umount("/tmp");
@@ -1190,7 +1180,7 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
-	
+
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, dest) != 0)

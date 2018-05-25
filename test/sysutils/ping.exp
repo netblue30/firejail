@@ -7,6 +7,13 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+send -- "ping -c 3 yahoo.com\r"
+expect {
+	timeout {puts "TESTING SKIP: no internet connection\n";exit}
+	"3 packets transmitted, 3 received"
+}
+after 100
+
 send -- "firejail ping -c 3 yahoo.com\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

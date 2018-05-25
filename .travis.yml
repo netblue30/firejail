@@ -1,5 +1,5 @@
 language: c
-dist: trusty
+dist: bionic
 sudo: true
 
 script:

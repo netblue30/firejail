@@ -35,7 +35,7 @@ shell none
 disable-mnt
 private-bin gnome-calculator
 private-dev
-private-lib gdk-pixbuf-2.0,gio,girepository-1.0,gvfs,libgconf-2.so.4,libgnutls.so.30,libproxy.so.1,librsvg-2.so.2,libxml2.so.2
+private-lib gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*,libgnutls.so.*,libproxy.so.*,librsvg-2.so.*,libxml2.so.*
 private-tmp
 
 #memory-deny-write-execute  - breaks on Arch

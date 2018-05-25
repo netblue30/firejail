@@ -1,4 +1,10 @@
 firejail (0.9.54) baseline; urgency=low
+  * work in progress
+  * support full paths in private-lib
+  * globbing support in private-lib
+ -- netblue30 <netblue30@yahoo.com>  Fri, 5 May 2018 08:00:00 -0500
+
+firejail (0.9.54) baseline; urgency=low
   * modif: --force removed
   * modif: --csh, --zsh removed
   * modif: --debug-check-filename removed

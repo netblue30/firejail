@@ -38,7 +38,7 @@ tracelog
 # private-bin gedit
 private-dev
 # private-etc fonts
-private-lib /usr/bin/gedit,libtinfo.so.5,libreadline.so.7,gedit,libgspell-1.so.1,gconv,aspell
+private-lib /usr/bin/gedit,libtinfo.so.*,libreadline.so.*,gedit,libgspell-1.so.*,gconv,aspell
 private-tmp
 
 noexec ${HOME}

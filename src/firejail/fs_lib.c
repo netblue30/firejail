@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <glob.h>
 #define MAXBUF 4096
 
 extern void fslib_install_stdc(void);
@@ -171,59 +172,76 @@ void fslib_copy_dir(const char *full_path) {
 	free(dest);
 }
 
+// fname should be a vallid full path at this point
+static void load_library(const char *fname) {
+	assert(fname);
+	assert(*fname == '/');
 
+	// existing file owned by root, read access
+	struct stat s;
+	if (stat(fname, &s) == 0 && s.st_uid == 0 && !access(fname, R_OK)) {
+		// load directories, regular 64 bit libraries, and 64 bit executables
+		if (is_dir(fname) || is_lib_64(fname)) {
+			if (is_dir(fname))
+				fslib_copy_dir(fname);
+			else {
+				if (strstr(fname, ".so") ||
+				    access(fname, X_OK) != 0) // don't duplicate executables, just install the libraries
+					fslib_duplicate(fname);
+
+				fslib_copy_libs(fname);
+			}
+		}
+	}
+}
 
 static void install_list_entry(const char *lib) {
-	char *fname = NULL;
-
 	// filename check
 	int len = strlen(lib);
-	if (strcspn(lib, "\\&!?\"'<>%^(){}[];,*") != (size_t)len ||
+	if (strcspn(lib, "\\&!?\"'<>%^(){}[];,") != (size_t)len ||
 	strstr(lib, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid library\n", lib);
 		exit(1);
 	}
 
 	// if this is a full path, use it as is
-	if (*lib == '/') {
-		fname = strdup(lib);
-		goto load_library;
-	}
+	if (*lib == '/')
+		return load_library(lib);
 
 
 	// find the library
 	int i;
 	for (i = 0; default_lib_paths[i]; i++) {
+		char *fname = NULL;
 		if (asprintf(&fname, "%s/%s", default_lib_paths[i], lib) == -1)
 			errExit("asprintf");
 
-		// existing file owned by root, read access
-		struct stat s;
-		if (stat(fname, &s) == 0 && s.st_uid == 0 && !access(fname, R_OK)) {
-			// load directories and regular 64 bit libraries
-			if (is_dir(fname) || is_lib_64(fname))
-				goto load_library;
-			// if not 64bit, continue searching
+#define DO_GLOBBING
+#ifdef DO_GLOBBING
+		// globbing
+		glob_t globbuf;
+		int globerr = glob(fname, GLOB_NOCHECK | GLOB_NOSORT | GLOB_PERIOD, NULL, &globbuf);
+		if (globerr) {
+			fprintf(stderr, "Error: failed to glob private-lib pattern %s\n", fname);
+			exit(1);
 		}
+		size_t j;
+		for (j = 0; j < globbuf.gl_pathc; j++) {
+			assert(globbuf.gl_pathv[j]);
+//printf("glob %s\n", globbuf.gl_pathv[j]);
+			// GLOB_NOCHECK - no pattern matched returns the original pattern; try to load it anyway
+			load_library(globbuf.gl_pathv[j]);
+		}
+
+		globfree(&globbuf);
+#else
+		load_library(fname);
+#endif
 		free(fname);
 	}
 
 //	fwarning("%s library not found, skipping...\n", lib);
 	return;
-
-load_library:
-	if (fname) {
-		if (is_dir(fname))
-			fslib_copy_dir(fname);
-		else {
-			if (strstr(fname, ".so") ||
-			    access(fname, X_OK) != 0) // don't duplicate executables
-				fslib_duplicate(fname);
-
-			fslib_copy_libs(fname);
-		}
-		free(fname);
-	}
 }
 
 

@@ -35,7 +35,7 @@ disable-mnt
 private-bin gnome-logs
 private-dev
 private-etc fonts,localtime,machine-id
-private-lib gdk-pixbuf-2.0,gio,gvfs/libgvfscommon.so,libgconf-2.so.4,librsvg-2.so.2
+private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 writable-var-log
 

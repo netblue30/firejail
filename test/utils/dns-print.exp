@@ -21,7 +21,7 @@ expect {
 	"nameserver 1.2.3.4"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"nameserver ::2"
 }
 after 100

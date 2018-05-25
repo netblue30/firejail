@@ -35,6 +35,7 @@ rm $INSTALL_DIR/usr/share/doc/firejail/COPYING
 install -m644 platform/debian/copyright $INSTALL_DIR/usr/share/doc/firejail/.
 mkdir -p $DEBIAN_CTRL_DIR
 sed "s/FIREJAILVER/$2/g"  platform/debian/control.$(dpkg-architecture -qDEB_HOST_ARCH) > $DEBIAN_CTRL_DIR/control
+chmod 644 $DEBIAN_CTRL_DIR/control
 
 mkdir -p $INSTALL_DIR/usr/share/lintian/overrides/
 install -m644 platform/debian/firejail.lintian-overrides $INSTALL_DIR/usr/share/lintian/overrides/firejail

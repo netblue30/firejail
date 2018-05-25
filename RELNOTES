@@ -2,7 +2,7 @@ firejail (0.9.55) baseline; urgency=low
   * work in progress
   * support full paths in private-lib
   * globbing support in private-lib
- -- netblue30 <netblue30@yahoo.com>  Sat, 5 May 2018 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Fri, 25 May 2018 08:00:00 -0500
 
 firejail (0.9.54) baseline; urgency=low
   * modif: --force removed

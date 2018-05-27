@@ -559,7 +559,7 @@ blacklist ${HOME}/.cache/kdenlive
 blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/kmail2
 blacklist ${HOME}/.cache/krunner
-blacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite
+blacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/kscreenlocker_greet
 blacklist ${HOME}/.cache/ksmserver-logout-greeter
 blacklist ${HOME}/.cache/ksplashqml
@@ -580,6 +580,7 @@ blacklist ${HOME}/.cache/org.gnome.Books
 blacklist ${HOME}/.cache/pdfmod
 blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/plasmashell
+blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser

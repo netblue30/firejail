@@ -72,7 +72,7 @@ owner /run/firejail/mnt/oroot/{run,dev}/shm/** rmwk,
 ##########
 /proc/ r,
 /proc/** r,
-owner /proc/[0-9]*/{uid_map,gid_map,setgroups} w,
+/proc/[0-9]*/{uid_map,gid_map,setgroups} w,
 # Uncomment to silence all denied write warnings
 #deny /proc/** w,
 deny /proc/@{PID}/oom_adj w,

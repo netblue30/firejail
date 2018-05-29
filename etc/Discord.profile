@@ -14,4 +14,5 @@ whitelist ${HOME}/.config/discord
 private-bin Discord
 private-opt Discord
 
+#Redirect
 include /etc/firejail/discord-common.profile

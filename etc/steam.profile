@@ -60,7 +60,7 @@ shell none
 #private-bin awk,basename,bash,bsdtar,bzip2,cat,chmod,cksum,cmp,comm,compress,cp,curl,cut,date,dbus-launch,dbus-send,desktop-file-edit,desktop-file-install,desktop-file-validate,dirname,echo,env,expr,file,find,getopt,grep,gtar,gzip,head,hostname,id,lbzip2,ldconfig,ldd,ln,ls,lsb_release,lspci,lsof,lz4,lzip,lzma,lzop,md5sum,mkdir,mktemp,mv,netstat,ps,pulseaudio,readlink,realpath,rm,sed,sh,sha1sum,sha256sum,sha512sum,sleep,sort,steam,steamdeps,steam-native,steam-runtime,sum,tail,tar,test,touch,tr,umask,uname,update-desktop-database,wc,wget,which,whoami,xterm,xz,zenity
 # extra programs are available which might be needed for select games
 #private-bin java,java-config,mono,python*
-# picture viewers are are needed for viewing screenshots
+# picture viewers are needed for viewing screenshots
 #private-bin eog,eom,gthumb,pix,viewnior,xviewer
 
 # private-dev should be commented for controllers

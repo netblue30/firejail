@@ -37,7 +37,7 @@ private-bin evince,evince-previewer,evince-thumbnailer
 private-dev
 private-etc fonts
 
-private-lib evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*
+private-lib evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*
 
 private-tmp
 

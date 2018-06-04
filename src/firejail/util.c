@@ -1111,3 +1111,53 @@ errexit:
 	fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
 	exit(1);
 }
+
+// The returned file descriptor should be suitable for privileged operations on
+// user controlled paths. Passed flags are ignored if path is a top level directory.
+int safe_fd(const char *path, int flags) {
+	assert(path);
+	int fd;
+
+	// work with a copy of path
+	char *dup = strdup(path);
+	if (dup == NULL)
+		errExit("strdup");
+	if (*dup != '/')
+		errExit("relative path"); // or empty string
+
+	char *p = strrchr(dup, '/');
+	if (p == NULL)
+		errExit("strrchr");
+	if (*(p + 1) == '\0')
+		errExit("trailing slash"); // or root dir
+
+	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (parentfd == -1)
+		errExit("open");
+
+	// if there is more than one path segment, keep the last one for later
+	if (p != dup)
+		*p = '\0';
+
+	// traverse the path, return -1 if a symlink is encountered
+	char *tok = strtok(dup, "/");
+	if (tok == NULL)
+		errExit("strtok");
+	while (tok) {
+		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		close(parentfd);
+		if (fd == -1) {
+			free(dup);
+			return -1;
+		}
+		parentfd = fd;
+		tok = strtok(NULL, "/");
+	}
+	if (p != dup) {
+		// open last path segment
+		fd = openat(parentfd, p + 1, flags|O_NOFOLLOW);
+		close(parentfd);
+	}
+	free(dup);
+	return fd; // -1 if open failed
+}

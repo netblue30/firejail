@@ -308,6 +308,7 @@ static inline int any_interface_configured(void) {
 
 extern int arg_private;		// mount private /home
 extern int arg_private_template; // private /home template
+extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
@@ -447,6 +448,7 @@ void fs_overlayfs(void);
 void fs_chroot(const char *rootdir);
 void fs_check_chroot_dir(const char *rootdir);
 void fs_private_tmp(void);
+void fs_private_cache(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -525,6 +527,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
+int safe_fd(const char *path, int flags);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.

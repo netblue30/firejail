@@ -20,6 +20,8 @@
 #ifndef FIREJAIL_USER_H
 #define FIREJAIL_USER_H
 
+extern int uid_min;
+extern int gid_min;
 
 // returns 1 if the user is found in the database or if the database was not created
 int firejail_user_check(const char *name);

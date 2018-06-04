@@ -26,11 +26,70 @@
 // One username per line in the file
 
 #include "../include/common.h"
+#include "../include/firejail_user.h"
 #include <sys/types.h>
 #include <pwd.h>
-#include "../../uids.h"
 
 #define MAXBUF 4098
+
+// minimum values for uid and gid extracted from /etc/login.defs
+int uid_min = 0;
+int gid_min = 0;
+
+static void init_uid_gid_min(void) {
+	if (uid_min != 0 && gid_min != 0)
+		return;
+
+	// read the real values from login.def
+	FILE *fp = fopen("/etc/login.defs", "r");
+	if (!fp)
+		goto errexit;
+
+	char buf[MAXBUF];
+	while (fgets(buf, MAXBUF, fp)) {
+		// comments
+		if (*buf == '#')
+			continue;
+		// skip empty space
+		char *ptr = buf;
+		while (*ptr == ' ' || *ptr == '\t')
+			ptr++;
+
+		if (strncmp(ptr, "UID_MIN", 7) == 0) {
+			int rv = sscanf(ptr + 7, "%d", &uid_min);
+			if (rv != 1 || uid_min < 0) {
+				fclose(fp);
+				goto errexit;
+			}
+		}
+		else if (strncmp(ptr, "GID_MIN", 7) == 0) {
+			int rv = sscanf(ptr + 7, "%d", &gid_min);
+			if (rv != 1 || gid_min < 0) {
+				fclose(fp);
+				goto errexit;
+			}
+		}
+
+		if (uid_min != 0 && gid_min != 0)
+			break;
+
+	}
+	fclose(fp);
+
+	if (uid_min == 0 || gid_min == 0)
+		goto errexit;
+//printf("uid_min %d, gid_min %d\n", uid_min, gid_min);
+
+	return;
+
+errexit:
+	fprintf(stderr, "Error: cannot read UID_MIN and/or GID_MIN from /etc/login.defs, using 1000 by default\n");
+	uid_min = 1000;
+	gid_min = 1000;
+}
+
+
+
 static inline char *get_fname(void) {
 	char *fname;
 	if (asprintf(&fname, "%s/firejail.users", SYSCONFDIR) == -1)
@@ -38,9 +97,11 @@ static inline char *get_fname(void) {
 	return fname;
 }
 
+
 // returns 1 if the user is found in the database or if the database was not created
 int firejail_user_check(const char *name) {
 	assert(name);
+	init_uid_gid_min();
 
 	// root is allowed to run firejail by default
 	if (strcmp(name, "root") == 0)
@@ -48,7 +109,8 @@ int firejail_user_check(const char *name) {
 
 	// other system users will run the program as is
 	uid_t uid = getuid();
-	if ((uid < UID_MIN && uid != 0) || strcmp(name, "nobody") == 0)
+	assert(uid_min > 0);
+	if (((int) uid < uid_min && uid != 0) || strcmp(name, "nobody") == 0)
 		return 0;
 
 	// check file existence

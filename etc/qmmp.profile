@@ -26,7 +26,7 @@ seccomp
 shell none
 tracelog
 
-private-bin qmmp
+private-bin qmmp,tar,unzip,bzip2,gzip
 private-dev
 private-tmp
 

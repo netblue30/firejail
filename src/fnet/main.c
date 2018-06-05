@@ -41,8 +41,8 @@ static void usage(void) {
 	printf("\tfnet printif scan\n");
 	printf("\tfnet config interface dev ip mask mtu\n");
 	printf("\tfnet config mac addr\n");
-	printf("\tfnet config ipv6 dev ipn");
-	printf("\tfmet ifup dev\n");
+	printf("\tfnet config ipv6 dev ip\n");
+	printf("\tfnet ifup dev\n");
 }
 
 int main(int argc, char **argv) {

@@ -795,6 +795,7 @@ IP address and a default gateway will be assigned automatically
 to the sandbox. The IP address is verified using ARP before
 assignment. The address configured as default gateway is the
 default gateway of the host. Up to four \-\-net options can be specified.
+Support for ipvlan driver was introduced in Linux kernel 3.19.
 .br
 
 .br

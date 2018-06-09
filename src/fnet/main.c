@@ -90,14 +90,38 @@ printf("\n");
 	}
 	else if (argc == 6 && strcmp(argv[1], "create") == 0 && strcmp(argv[2], "macvlan") == 0) {
 		// use ipvlan for wireless devices
-		struct stat s;
-		char *fname;
-		if (asprintf(&fname, "/sys/class/net/%s/wireless", argv[4]) == -1)
-			errExit("asprintf");
-		if (stat(fname, &s) == 0) // wireless
-			net_create_ipvlan(argv[3], argv[4], atoi(argv[5]));
-		else // regular ethernet
+		// ipvlan driver was introduced in Linux kernel 3.19
+		// detect both compile time and run time
+#ifndef IPVLAN_MODE_L2	// compile time
+		net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
+#else
+		// check kernel version
+		struct utsname u;
+		int rv = uname(&u);
+		if (rv != 0)
+			errExit("uname");
+		int major;
+		int minor;
+		if (2 != sscanf(u.release, "%d.%d", &major, &minor)) {
+			fprintf(stderr, "Error fnet: cannot extract Linux kernel version: %s\n", u.version);
+			exit(1);
+		}
+
+		if (arg_debug)
+			printf("Linux kernel version %d.%d\n", major, minor);
+		if (major <= 3 && minor < 18)
 			net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
+		else {
+			struct stat s;
+			char *fname;
+			if (asprintf(&fname, "/sys/class/net/%s/wireless", argv[4]) == -1)
+				errExit("asprintf");
+			if (stat(fname, &s) == 0) // wireless
+				net_create_ipvlan(argv[3], argv[4], atoi(argv[5]));
+			else // regular ethernet
+				net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
+		}
+#endif
 	}
 	else if (argc == 7 && strcmp(argv[1], "config") == 0 && strcmp(argv[2], "interface") == 0) {
 		char *dev = argv[3];

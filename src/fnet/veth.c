@@ -176,6 +176,7 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	return 0;
 }
 
+#ifdef IPVLAN_MODE_L2
 int net_create_ipvlan(const char *dev, const char *parent, unsigned pid) {
 	int len;
 	struct iplink_req req;
@@ -237,7 +238,7 @@ int net_create_ipvlan(const char *dev, const char *parent, unsigned pid) {
 
 	return 0;
 }
-
+#endif
 
 // move the interface dev in namespace of program pid
 // when the interface is moved, netlink does not preserve interface configuration

@@ -165,8 +165,66 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	addattr_l (&req.n, sizeof(req), IFLA_INFO_KIND, &macvlan_type, 4);
 
 	data->rta_len = (void *)NLMSG_TAIL(&req.n) - (void *)data;
-//	req.n.nlmsg_len += sizeof(struct ifinfomsg);
+	linkinfo->rta_len = (void *)NLMSG_TAIL(&req.n) - (void *)linkinfo;
 
+	// send message
+	if (rtnl_talk(&rth, &req.n, 0, 0, NULL) < 0)
+		exit(2);
+
+	rtnl_close(&rth);
+
+	return 0;
+}
+
+int net_create_ipvlan(const char *dev, const char *parent, unsigned pid) {
+	int len;
+	struct iplink_req req;
+	assert(dev);
+	assert(parent);
+
+	if (rtnl_open(&rth, 0) < 0) {
+		fprintf(stderr, "cannot open netlink\n");
+		exit(1);
+	}
+
+	memset(&req, 0, sizeof(req));
+
+	req.n.nlmsg_len = NLMSG_LENGTH(sizeof(struct ifinfomsg));
+	req.n.nlmsg_flags = NLM_F_REQUEST|NLM_F_CREATE|NLM_F_EXCL;
+	req.n.nlmsg_type = RTM_NEWLINK;
+	req.i.ifi_family = 0;
+
+	// find parent ifindex
+	int parent_ifindex = if_nametoindex(parent);
+	if (parent_ifindex <= 0) {
+		fprintf(stderr, "Error: cannot find network device %s\n", parent);
+		exit(1);
+	}
+
+	// add parent
+	addattr_l(&req.n, sizeof(req), IFLA_LINK, &parent_ifindex, 4);
+
+	// add new interface name
+	len = strlen(dev) + 1;
+	addattr_l(&req.n, sizeof(req), IFLA_IFNAME, dev, len);
+
+	// place the interface in child namespace
+	addattr_l (&req.n, sizeof(req), IFLA_NET_NS_PID, &pid, 4);
+
+
+	// add  link info for the new interface
+	struct rtattr *linkinfo = NLMSG_TAIL(&req.n);
+	addattr_l(&req.n, sizeof(req), IFLA_LINKINFO, NULL, 0);
+	addattr_l(&req.n, sizeof(req), IFLA_INFO_KIND, "ipvlan", strlen("ipvlan"));
+
+	// set macvlan bridge mode
+	struct rtattr * data = NLMSG_TAIL(&req.n);
+	addattr_l(&req.n, sizeof(req), IFLA_INFO_DATA, NULL, 0);
+	int macvlan_type = IPVLAN_MODE_L2;
+	addattr_l (&req.n, sizeof(req), IFLA_INFO_KIND, &macvlan_type, 2);
+
+	data->rta_len = (void *)NLMSG_TAIL(&req.n) - (void *)data;
+//	req.n.nlmsg_len += sizeof(struct ifinfomsg);
 
 	data->rta_len = (void *)NLMSG_TAIL(&req.n) - (void *)data;
 	linkinfo->rta_len = (void *)NLMSG_TAIL(&req.n) - (void *)linkinfo;
@@ -179,6 +237,7 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 
 	return 0;
 }
+
 
 // move the interface dev in namespace of program pid
 // when the interface is moved, netlink does not preserve interface configuration

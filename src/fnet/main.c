@@ -18,6 +18,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnet.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+
 int arg_quiet = 0;
 
 void fmessage(char* fmt, ...) { // TODO: this function is duplicated in src/firejail/util.c
@@ -86,7 +89,15 @@ printf("\n");
 		net_if_up(argv[3]);
 	}
 	else if (argc == 6 && strcmp(argv[1], "create") == 0 && strcmp(argv[2], "macvlan") == 0) {
-		net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
+		// use ipvlan for wireless devices
+		struct stat s;
+		char *fname;
+		if (asprintf(&fname, "/sys/class/net/%s/wireless", argv[4]) == -1)
+			errExit("asprintf");
+		if (stat(fname, &s) == 0) // wireless
+			net_create_ipvlan(argv[3], argv[4], atoi(argv[5]));
+		else // regular ethernet
+			net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
 	}
 	else if (argc == 7 && strcmp(argv[1], "config") == 0 && strcmp(argv[2], "interface") == 0) {
 		char *dev = argv[3];

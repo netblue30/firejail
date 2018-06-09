@@ -22,7 +22,6 @@
 #include <ftw.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
-#include <fcntl.h>
 #include <syslog.h>
 #include <errno.h>
 #include <dirent.h>
@@ -30,6 +29,12 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <sys/wait.h>
+
+// on Debian 7 we are missing O_PATH definition
+#include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH		010000000
+#endif
 
 #define MAX_GROUPS 1024
 

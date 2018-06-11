@@ -24,6 +24,13 @@
 #include <dirent.h>
 #include <sys/wait.h>
 
+// on Debian 7 we are missing O_PATH definition
+#include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH		010000000
+#endif
+
+
 // disable pulseaudio socket
 void pulseaudio_disable(void) {
 	if (arg_debug)
@@ -72,14 +79,19 @@ void pulseaudio_init(void) {
 	struct stat s;
 
 	// do we have pulseaudio in the system?
-	if (stat("/etc/pulse/client.conf", &s) == -1)
+	if (stat("/etc/pulse/client.conf", &s) == -1) {
+		if (arg_debug)
+			printf("/etc/pulse/client.conf not found\n");
 		return;
+	}
 
- 	// create the new user pulseaudio directory
-	int rv = mkdir(RUN_PULSE_DIR, 0700);
-	(void) rv; // in --chroot mode the directory can already be there
-	if (set_perms(RUN_PULSE_DIR, getuid(), getgid(), 0700))
-		errExit("set_perms");
+	// create the new user pulseaudio directory
+	if (mkdir(RUN_PULSE_DIR, 0700) == -1)
+		errExit("mkdir");
+	// make it a mount point and add mount flags
+	if (mount(RUN_PULSE_DIR, RUN_PULSE_DIR, NULL, MS_BIND, NULL) < 0 ||
+		mount(NULL, RUN_PULSE_DIR, NULL, MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_BIND|MS_REMOUNT, NULL) < 0)
+		errExit("mount RUN_PULSE_DIR");
 
 	// create the new client.conf file
 	char *pulsecfg = NULL;
@@ -93,12 +105,15 @@ void pulseaudio_init(void) {
 	fprintf(fp, "%s", "\nenable-shm = no\n");
 	SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);
 	fclose(fp);
+	// hand over the directory to the user
+	if (set_perms(RUN_PULSE_DIR, getuid(), getgid(), 0700))
+		errExit("set_perms");
 
 	// create ~/.config/pulse directory if not present
 	char *dir1;
 	if (asprintf(&dir1, "%s/.config", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (stat(dir1, &s) == -1) {
+	if (lstat(dir1, &s) == -1) {
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -121,9 +136,12 @@ void pulseaudio_init(void) {
 		fs_logger2("create", dir1);
 	}
 	else {
-		// make sure the directory is owned by the user
-		if (s.st_uid != getuid()) {
-			fprintf(stderr, "Error: user .config directory is not owned by the current user\n");
+		// we expect a user owned directory
+		if (!S_ISDIR(s.st_mode) || s.st_uid != getuid()) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: user .config is a symbolic link\n");
+			else
+				fprintf(stderr, "Error: user .config is not a directory owned by the current user\n");
 			exit(1);
 		}
 	}
@@ -131,7 +149,7 @@ void pulseaudio_init(void) {
 
 	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (stat(dir1, &s) == -1) {
+	if (lstat(dir1, &s) == -1) {
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -154,33 +172,42 @@ void pulseaudio_init(void) {
 		fs_logger2("create", dir1);
 	}
 	else {
-		// make sure the directory is owned by the user
-		if (s.st_uid != getuid()) {
-			fprintf(stderr, "Error: user .config/pulse directory is not owned by the current user\n");
+		// we expect a user owned directory
+		if (!S_ISDIR(s.st_mode) || s.st_uid != getuid()) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: user .config/pulse is a symbolic link\n");
+			else
+				fprintf(stderr, "Error: user .config/pulse is not a directory owned by the current user\n");
 			exit(1);
 		}
 	}
 	free(dir1);
 
-	// if we have ~/.config/pulse mount the new directory, else set environment variable
+	// if we have ~/.config/pulse mount the new directory, else set environment variable.
 	char *homeusercfg;
 	if (asprintf(&homeusercfg, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (stat(homeusercfg, &s) == 0) {
-		if (is_link(homeusercfg)) {
-			fprintf(stderr, "Error: user .config/pulse is a symbolic link\n");
-			exit(1);
-		}
-		if (mount(RUN_PULSE_DIR, homeusercfg, "none", MS_BIND, NULL) < 0 ||
-		    mount(NULL, homeusercfg, NULL, MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_BIND|MS_REMOUNT, NULL) < 0)
+		// get a file descriptor for ~/.config/pulse, fails if there is any symlink
+		int fd = safe_fd(homeusercfg, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (fd == -1)
+			errExit("safe_fd");
+		// confirm the actual mount destination is owned by the user
+		if (fstat(fd, &s) == -1 || s.st_uid != getuid())
+			errExit("fstat");
+
+		// mount via the link in /proc/self/fd
+		char *proc;
+		if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+			errExit("asprintf");
+		if (mount(RUN_PULSE_DIR, proc, "none", MS_BIND, NULL) < 0)
 			errExit("mount pulseaudio");
 		fs_logger2("tmpfs", homeusercfg);
-
+		free(proc);
+		close(fd);
 		// check /proc/self/mountinfo to confirm the mount is ok
 		MountData *mptr = get_last_mount();
-		if (strcmp(mptr->dir, homeusercfg) != 0)
-			errLogExit("invalid pulseaudio mount");
-		if (strcmp(mptr->fstype, "tmpfs") != 0)
+		if (strcmp(mptr->dir, homeusercfg) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
 			errLogExit("invalid pulseaudio mount");
 
 		char *p;

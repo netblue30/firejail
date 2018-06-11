@@ -22,7 +22,6 @@
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -31,6 +30,13 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <limits.h>
+
+// on Debian 7 we are missing O_PATH definition
+#include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH		010000000
+#endif
+
 
 // Parse the DISPLAY environment variable and return a display number.
 // Returns -1 if DISPLAY is not set, or is set to anything other than :ddd.
@@ -1095,7 +1101,7 @@ void x11_xorg(void) {
 	}
 
 	// temporarily mount a tempfs on top of /tmp directory
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 		errExit("mounting /tmp");
 
 	// create the temporary .Xauthority file
@@ -1156,38 +1162,48 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
-	ASSERT_PERMS(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600);
 	/* coverity[toctou] */
 	unlink(tmpfname);
 	umount("/tmp");
 
 	// Ensure there is already a file in the usual location, so that bind-mount below will work.
-	// todo: fix TOCTOU races, currently managed by imposing /usr/bin/xauth as executable
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (stat(dest, &s) == -1) {
-		// create an .Xauthority file
+	if (lstat(dest, &s) == -1)
 		touch_file_as_user(dest, getuid(), getgid(), 0600);
-	}
-	if (is_link(dest)) {
-		fprintf(stderr, "Error: .Xauthority is a symbolic link\n");
+
+	// get a file descriptor for .Xauthority
+	fd = safe_fd(dest, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1)
+		errExit("safe_fd");
+	// check if the actual mount destination is a user owned regular file
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode) || s.st_uid != getuid()) {
+		if (S_ISLNK(s.st_mode))
+			fprintf(stderr, "Error: .Xauthority is a symbolic link\n");
+		else
+			fprintf(stderr, "Error: .Xauthority is not a user owned regular file\n");
 		exit(1);
 	}
 
-	// mount
-	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
+	// mount via the link in /proc/self/fd
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(RUN_XAUTHORITY_SEC_FILE, proc, "none", MS_BIND, "mode=0600") == -1) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
-
+	free(proc);
+	close(fd);
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
-	if (strcmp(mptr->dir, dest) != 0)
-		errLogExit("invalid .Xauthority mount");
-	if (strcmp(mptr->fstype, "tmpfs") != 0)
+	if (strcmp(mptr->dir, dest) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
 		errLogExit("invalid .Xauthority mount");
 
+	ASSERT_PERMS(dest, getuid(), getgid(), 0600);
 	free(dest);
 #endif
 }

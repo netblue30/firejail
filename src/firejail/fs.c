@@ -1199,63 +1199,61 @@ void fs_check_chroot_dir(const char *rootdir) {
 void fs_chroot(const char *rootdir) {
 	assert(rootdir);
 
-	if (checkcfg(CFG_CHROOT_DESKTOP)) {
-		// mount-bind a /dev in rootdir
-		char *newdev;
-		if (asprintf(&newdev, "%s/dev", rootdir) == -1)
+	// mount-bind a /dev in rootdir
+	char *newdev;
+	if (asprintf(&newdev, "%s/dev", rootdir) == -1)
+		errExit("asprintf");
+	if (arg_debug)
+		printf("Mounting /dev on %s\n", newdev);
+	if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /dev");
+	free(newdev);
+
+	// x11
+	if (getenv("FIREJAIL_X11")) {
+		char *newx11;
+		if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
 			errExit("asprintf");
 		if (arg_debug)
-			printf("Mounting /dev on %s\n", newdev);
-		if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting /dev");
-		free(newdev);
-
-		// x11
-		if (getenv("FIREJAIL_X11")) {
-			char *newx11;
-			if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
-				errExit("asprintf");
-			if (arg_debug)
-				printf("Mounting /tmp/.X11-unix on %s\n", newx11);
-			if (mount("/tmp/.X11-unix", newx11, NULL, MS_BIND|MS_REC, NULL) < 0)
-				errExit("mounting /tmp/.X11-unix");
-			free(newx11);
-		}
-
-		// some older distros don't have a /run directory
-		// create one by default
-		// create /run/firejail directory in chroot
-		char *rundir;
-		if (asprintf(&rundir, "%s/run", rootdir) == -1)
-			errExit("asprintf");
-		if (is_link(rundir)) {
-			fprintf(stderr, "Error: invalid run directory inside chroot\n");
-			exit(1);
-		}
-		create_empty_dir_as_root(rundir, 0755);
-		free(rundir);
-		if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
-			errExit("asprintf");
-		create_empty_dir_as_root(rundir, 0755);
-		free(rundir);
-
-		// create /run/firejail/mnt directory in chroot and mount the current one
-		if (asprintf(&rundir, "%s%s", rootdir, RUN_MNT_DIR) == -1)
-			errExit("asprintf");
-		create_empty_dir_as_root(rundir, 0755);
-		if (mount(RUN_MNT_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind");
-
-		// copy /etc/resolv.conf in chroot directory
-		char *fname;
-		if (asprintf(&fname, "%s/etc/resolv.conf", rootdir) == -1)
-			errExit("asprintf");
-		if (arg_debug)
-			printf("Updating /etc/resolv.conf in %s\n", fname);
-		unlink(fname);
-		if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
-			fwarning("/etc/resolv.conf not initialized\n");
+			printf("Mounting /tmp/.X11-unix on %s\n", newx11);
+		if (mount("/tmp/.X11-unix", newx11, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting /tmp/.X11-unix");
+		free(newx11);
 	}
+
+	// some older distros don't have a /run directory
+	// create one by default
+	// create /run/firejail directory in chroot
+	char *rundir;
+	if (asprintf(&rundir, "%s/run", rootdir) == -1)
+		errExit("asprintf");
+	if (is_link(rundir)) {
+		fprintf(stderr, "Error: invalid run directory inside chroot\n");
+		exit(1);
+	}
+	create_empty_dir_as_root(rundir, 0755);
+	free(rundir);
+	if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
+		errExit("asprintf");
+	create_empty_dir_as_root(rundir, 0755);
+	free(rundir);
+
+	// create /run/firejail/mnt directory in chroot and mount the current one
+	if (asprintf(&rundir, "%s%s", rootdir, RUN_MNT_DIR) == -1)
+		errExit("asprintf");
+	create_empty_dir_as_root(rundir, 0755);
+	if (mount(RUN_MNT_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind");
+
+	// copy /etc/resolv.conf in chroot directory
+	char *fname;
+	if (asprintf(&fname, "%s/etc/resolv.conf", rootdir) == -1)
+		errExit("asprintf");
+	if (arg_debug)
+		printf("Updating /etc/resolv.conf in %s\n", fname);
+	unlink(fname);
+	if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
+		fwarning("/etc/resolv.conf not initialized\n");
 
 	// chroot into the new directory
 #ifdef HAVE_GCOV
@@ -1275,30 +1273,28 @@ void fs_chroot(const char *rootdir) {
 	// create all other /run/firejail files and directories
 	preproc_build_firejail_dir();
 
-	if (checkcfg(CFG_CHROOT_DESKTOP)) {
-		// update /var directory in order to support multiple sandboxes running on the same root directory
+	// update /var directory in order to support multiple sandboxes running on the same root directory
 //		if (!arg_private_dev)
 //			fs_dev_shm();
-		fs_var_lock();
-		if (!arg_keep_var_tmp)
-		        fs_var_tmp();
-		if (!arg_writable_var_log)
-			fs_var_log();
-		else
-			fs_rdwr("/var/log");
+	fs_var_lock();
+	if (!arg_keep_var_tmp)
+	        fs_var_tmp();
+	if (!arg_writable_var_log)
+		fs_var_log();
+	else
+		fs_rdwr("/var/log");
 
-		fs_var_lib();
-		fs_var_cache();
-		fs_var_utmp();
-		fs_machineid();
+	fs_var_lib();
+	fs_var_cache();
+	fs_var_utmp();
+	fs_machineid();
 
-		// don't leak user information
-		restrict_users();
+	// don't leak user information
+	restrict_users();
 
-		// when starting as root, firejail config is not disabled;
-		if (getuid() != 0)
-			disable_config();
-	}
+	// when starting as root, firejail config is not disabled;
+	if (getuid() != 0)
+		disable_config();
 }
 #endif
 

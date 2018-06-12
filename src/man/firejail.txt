@@ -1174,6 +1174,16 @@ Example:
 $ firejail \-\-notv vlc
 
 .TP
+\fB\-\-nousb
+Disable USB devices.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-nousb
+
+.TP
 \fB\-\-novideo
 Disable video devices.
 .br

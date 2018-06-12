@@ -102,7 +102,7 @@ static void deventry_mount(void) {
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
 			    (dev[i].type == DEV_TV && arg_notv == 0) ||
 			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
-			    (dev[i].type == DEV_USB)) {
+			    (dev[i].type == DEV_USB && arg_nousb == 0)) {
 
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)
@@ -366,6 +366,15 @@ void fs_dev_disable_dvd(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_DVD)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_usb(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_USB)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}

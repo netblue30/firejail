@@ -383,6 +383,7 @@ extern int arg_noprofile;	// use default.profile if none other found/specified
 extern int arg_memory_deny_write_execute;	// block writable and executable memory
 extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
+extern int arg_nousb;   // --nousb
 extern int arg_nodbus; // -nodbus
 
 extern int login_shell;
@@ -557,6 +558,7 @@ void fs_dev_disable_3d(void);
 void fs_dev_disable_video(void);
 void fs_dev_disable_tv(void);
 void fs_dev_disable_dvd(void);
+void fs_dev_disable_usb(void);
 
 // fs_home.c
 // private mode (--private)

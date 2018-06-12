@@ -90,7 +90,7 @@ void pulseaudio_init(void) {
 		errExit("mkdir");
 	// make it a mount point and add mount flags
 	if (mount(RUN_PULSE_DIR, RUN_PULSE_DIR, NULL, MS_BIND, NULL) < 0 ||
-		mount(NULL, RUN_PULSE_DIR, NULL, MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_BIND|MS_REMOUNT, NULL) < 0)
+	    mount(NULL, RUN_PULSE_DIR, NULL, MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_BIND|MS_REMOUNT, NULL) < 0)
 		errExit("mount RUN_PULSE_DIR");
 
 	// create the new client.conf file

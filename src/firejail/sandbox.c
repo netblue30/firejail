@@ -908,8 +908,8 @@ int sandbox(void* sandbox_arg) {
 	if (arg_nodvd)
 		fs_dev_disable_dvd();
 
-	if (arg_nousb)
-	        fs_dev_disable_usb();
+	if (arg_nou2f)
+	        fs_dev_disable_u2f();
 
 	if (arg_novideo)
 		fs_dev_disable_video();

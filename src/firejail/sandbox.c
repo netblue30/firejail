@@ -833,14 +833,9 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	if (arg_private_cache) {
-		if (cfg.chrootdir)
-			fwarning("private-cache feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-cache feature is disabled in overlay\n");
-		else
-			fs_private_cache();
-	}
+	// private cache directory by default
+	if (checkcfg(CFG_PRIVATE_CACHE))
+		fs_private_cache();
 
 	if (arg_private_tmp) {
 		// private-tmp is implemented as a whitelist

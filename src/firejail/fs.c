@@ -1350,15 +1350,15 @@ void fs_private_cache(void) {
 	// check if ~/.cache is a valid destination
 	struct stat s;
 	if (is_link(cache)) {
-		fwarning("~/.cache is a symbolic link, tmpfs not mounted\n");
+		fwarning("user .cache is a symbolic link, tmpfs not mounted\n");
 		return;
 	}
 	if (stat(cache, &s) == -1 || !S_ISDIR(s.st_mode)) {
-		fwarning("no ~/.cache directory found, tmpfs not mounted\n");
+		fwarning("no user .cache directory found, tmpfs not mounted\n");
 		return;
 	}
 	if (s.st_uid != getuid()) {
-		fwarning("~/.cache is not owned by user, tmpfs not mounted\n");
+		fwarning("user .cache is not owned by current user, tmpfs not mounted\n");
 		return;
 	}
 

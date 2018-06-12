@@ -39,6 +39,7 @@ typedef enum {
 	DEV_VIDEO,
 	DEV_TV,
 	DEV_DVD,
+	DEV_USB,
 } DEV_TYPE;
 
 
@@ -76,6 +77,7 @@ static DevEntry dev[] = {
 	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
 	{"/dev/sr0", RUN_DEV_DIR "/sr0", DEV_DVD}, // for DVD and audio CD players
+	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_USB},	// USB devices such as Yubikey, U2F
 	{NULL, NULL, DEV_NONE}
 };
 
@@ -84,13 +86,13 @@ static void deventry_mount(void) {
 	while (dev[i].dev_fname != NULL) {
 		struct stat s;
 		if (stat(dev[i].run_fname, &s) == 0) {
-
 			// check device type and subsystem configuration
 			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
 			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
 			    (dev[i].type == DEV_TV && arg_notv == 0) ||
-			    (dev[i].type == DEV_DVD && arg_nodvd == 0)) {
+			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
+			    (dev[i].type == DEV_USB)) {
 
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)

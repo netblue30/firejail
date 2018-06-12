@@ -77,6 +77,16 @@ static DevEntry dev[] = {
 	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
 	{"/dev/sr0", RUN_DEV_DIR "/sr0", DEV_DVD}, // for DVD and audio CD players
+	{"/dev/hidraw0", RUN_DEV_DIR "/hidraw0", DEV_USB},
+	{"/dev/hidraw1", RUN_DEV_DIR "/hidraw1", DEV_USB},
+	{"/dev/hidraw2", RUN_DEV_DIR "/hidraw2", DEV_USB},
+	{"/dev/hidraw3", RUN_DEV_DIR "/hidraw3", DEV_USB},
+	{"/dev/hidraw4", RUN_DEV_DIR "/hidraw4", DEV_USB},
+	{"/dev/hidraw5", RUN_DEV_DIR "/hidraw5", DEV_USB},
+	{"/dev/hidraw6", RUN_DEV_DIR "/hidraw6", DEV_USB},
+	{"/dev/hidraw7", RUN_DEV_DIR "/hidraw7", DEV_USB},
+	{"/dev/hidraw8", RUN_DEV_DIR "/hidraw8", DEV_USB},
+	{"/dev/hidraw9", RUN_DEV_DIR "/hidraw9", DEV_USB},
 	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_USB},	// USB devices such as Yubikey, U2F
 	{NULL, NULL, DEV_NONE}
 };

@@ -99,3 +99,6 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 `````
 # Current development version: 0.9.55
+
+## New profiles
+Microsoft Office Online

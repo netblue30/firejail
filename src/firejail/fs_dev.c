@@ -171,19 +171,7 @@ static void empty_dev_shm(void) {
 	fs_logger("create /dev/shm");
 }
 
-static void process_dev_shm(void) {
-	// Jack audio keeps an Unix socket under (/dev/shm/jack_default_1000_0 or /dev/shm/jack/...)
-	// looking for jack socket
-	glob_t globbuf;
-	int globerr = glob(RUN_DEV_DIR "/shm/jack*", GLOB_NOSORT, NULL, &globbuf);
-	if (globerr) {
-		empty_dev_shm();
-		return;
-	}
-	globfree(&globbuf);
-
-	// if we got here, it means we have a jack server installed
-	// mount-bind the old /dev/shm
+static void mount_dev_shm(void) {
 	mkdir_attr("/dev/shm", 01777, 0, 0);
 	int rv = mount(RUN_DEV_DIR "/shm", "/dev/shm", "none", MS_BIND, "mode=01777,gid=0");
 	if (rv == -1) {
@@ -192,6 +180,23 @@ static void process_dev_shm(void) {
 		empty_dev_shm();
 		return;
 	}
+}
+
+static void process_dev_shm(void) {
+	// Jack audio keeps an Unix socket under (/dev/shm/jack_default_1000_0 or /dev/shm/jack/...)
+	// looking for jack socket
+	glob_t globbuf;
+	int globerr = glob(RUN_DEV_DIR "/shm/jack*", GLOB_NOSORT, NULL, &globbuf);
+	if (globerr && !arg_keep_dev_shm) {
+		empty_dev_shm();
+		return;
+	}
+	globfree(&globbuf);
+
+	// if we got here, it means we have a jack server installed
+	// mount-bind the old /dev/shm
+	mount_dev_shm();
+
 }
 
 

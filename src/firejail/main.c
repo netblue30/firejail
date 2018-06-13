@@ -85,6 +85,7 @@ char *arg_netns = NULL;			// "ip netns"-created network namespace to use
 int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
+int arg_keep_dev_shm = 0;                       // preserve /dev/shm
 int arg_private_etc = 0;			// private etc directory
 int arg_private_opt = 0;			// private opt directory
 int arg_private_srv = 0;			// private srv directory
@@ -1601,6 +1602,9 @@ int main(int argc, char **argv) {
 #endif
 		else if (strcmp(argv[i], "--private-dev") == 0) {
 			arg_private_dev = 1;
+		}
+		else if (strcmp(argv[i], "--keep-dev-shm") == 0) {
+			arg_keep_dev_shm = 1;
 		}
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
 			if (arg_writable_etc) {

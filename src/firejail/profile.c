@@ -221,6 +221,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_private_dev = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "keep-dev-shm") == 0) {
+		arg_keep_dev_shm = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "private-tmp") == 0) {
 		arg_private_tmp = 1;
 		return 0;

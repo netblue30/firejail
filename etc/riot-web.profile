@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/Riot
 
+mkdir ${HOME}/.config/Riot
 whitelist ${HOME}/.config/Riot
 include /etc/firejail/whitelist-common.inc
 

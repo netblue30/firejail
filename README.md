@@ -100,5 +100,35 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 # Current development version: 0.9.55
 
+## Mounting a temporary filesystem on top of ~/.cache directory by default
+
+To disable it globally, set "private-cache no" in /etc/firejail/firejail.config.
+
+
+## New commands:
+`````
+      (wireless support for --net)
+      --net=ethernet_interface|wireless_interface
+              Enable a new network namespace and connect it to this  ethernet
+              interface  using  the  standard  Linux  macvlan|ipvaln  driver.
+              Unless specified  with  option  --ip  and  --defaultgw,  an  IP
+              address and a default gateway will be assigned automatically to
+              the sandbox. The  IP  address  is  verified  using  ARP  before
+              assignment.  The  address  configured as default gateway is the
+              default gateway of the host. Up to four --net  options  can  be
+              specified.   Support  for ipvlan driver was introduced in Linux
+              kernel 3.19.
+
+              Example:
+              $ firejail --net=eth0 --ip=192.168.1.80 --dns=8.8.8.8 firefox
+              $ firejail --net=wlan0 firefox
+
+      --nou2f
+              Disable U2F devices.
+
+              Example:
+              $ firejail --nou2f
+`````
+
 ## New profiles
 Microsoft Office Online, riot-desktop, gnome-mpv

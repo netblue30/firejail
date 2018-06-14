@@ -228,7 +228,6 @@ blacklist ${HOME}/.config/vivaldi
 blacklist ${HOME}/.config/vivaldi-snapshot
 blacklist ${HOME}/.config/vlc
 blacklist ${HOME}/.config/wesnoth
-blacklist ${HOME}/.config/wire
 blacklist ${HOME}/.config/wireshark
 blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.config/xed

@@ -24,6 +24,7 @@ writable-var-log
 # Enable private-bin and private-lib if you are not using any filter.
 # private-bin less
 # private-lib
+private-cache
 private-dev
 
 memory-deny-write-execute

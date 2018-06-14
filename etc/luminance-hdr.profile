@@ -28,6 +28,7 @@ shell none
 tracelog
 
 #private-bin luminance-hdr,luminance-hdr-cli,align_image_stack
+private-cache
 private-dev
 private-tmp
 

@@ -31,4 +31,5 @@ shell none
 tracelog
 
 disable-mnt
+private-cache
 private-tmp

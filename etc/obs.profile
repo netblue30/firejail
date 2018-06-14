@@ -25,6 +25,7 @@ shell none
 tracelog
 
 private-bin obs
+private-cache
 private-dev
 private-tmp
 

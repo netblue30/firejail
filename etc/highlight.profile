@@ -30,6 +30,7 @@ shell none
 tracelog
 
 private-bin highlight
+private-cache
 private-dev
 # private-etc none
 private-tmp

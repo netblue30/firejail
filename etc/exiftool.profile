@@ -36,6 +36,7 @@ shell none
 tracelog
 
 # private-bin exiftool,perl
+private-cache
 private-dev
 private-etc none
 private-tmp

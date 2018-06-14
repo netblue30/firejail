@@ -34,6 +34,7 @@ seccomp
 shell none
 
 private-bin dex2jar,java,sh,bash,expr,dirname,ls,uname,grep
+private-cache
 private-dev
 
 noexec ${HOME}

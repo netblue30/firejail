@@ -28,6 +28,7 @@ seccomp
 shell none
 
 private-bin totem
+private-cache
 private-dev
 # private-etc fonts
 private-tmp

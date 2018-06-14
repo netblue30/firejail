@@ -26,5 +26,6 @@ seccomp
 shell none
 
 private-bin rtorrent
+private-cache
 private-dev
 private-tmp

@@ -29,6 +29,7 @@ seccomp
 shell none
 
 private-bin gitg,git,ssh
+private-cache
 private-dev
 private-tmp
 

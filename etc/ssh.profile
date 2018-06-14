@@ -29,6 +29,7 @@ seccomp
 shell none
 tracelog
 
+private-cache
 private-dev
 # private-tmp # Breaks when exiting
 

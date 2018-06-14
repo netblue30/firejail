@@ -27,6 +27,7 @@ shell none
 tracelog
 
 # private-bin brasero
+private-cache
 # private-dev
 # private-etc fonts
 # private-tmp

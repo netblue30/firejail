@@ -30,6 +30,7 @@ shell none
 
 disable-mnt
 #private-bin dia
+private-cache
 private-dev
 private-tmp
 

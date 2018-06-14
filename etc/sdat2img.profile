@@ -34,6 +34,7 @@ seccomp
 shell none
 
 private-bin sdat2img,env,python*
+private-cache
 private-dev
 
 noexec ${HOME}

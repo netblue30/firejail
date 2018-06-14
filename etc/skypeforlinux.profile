@@ -25,6 +25,7 @@ seccomp
 shell none
 
 disable-mnt
+private-cache
 # private-dev - needs /dev/disk
 private-tmp
 

@@ -22,4 +22,5 @@ seccomp
 shell none
 
 private-bin parole,dbus-launch
+private-cache
 private-etc passwd,group,fonts

@@ -28,6 +28,7 @@ seccomp
 shell none
 
 #private-bin mpd,bash
+private-cache
 private-dev
 private-tmp
 

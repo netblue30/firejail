@@ -31,4 +31,5 @@ shell none
 tracelog
 
 # private-bin gpg-agent,gpg
+private-cache
 private-dev

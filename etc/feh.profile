@@ -27,6 +27,7 @@ seccomp
 shell none
 
 private-bin feh,jpegexiforient,jpegtran
+private-cache
 private-dev
 private-etc feh
 private-tmp

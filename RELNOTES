@@ -1,9 +1,7 @@
 firejail (0.9.55) baseline; urgency=low
   * work in progress
   * modif: removed CFG_CHROOT_DESKTOP configuration option
-  * mounting a temporary filesystem on top of ~/.cache directory by default.
-    To disable it globally, set "private-cache no" in
-    /etc/firejail/firejail.config.
+  * add --private-cache to support private ~/.cache
   * support full paths in private-lib
   * globbing support in private-lib
   * new profiles: ms-excel, ms-office, ms-onenote, ms-outlook, ms-powerpoint

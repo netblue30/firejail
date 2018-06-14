@@ -29,6 +29,7 @@ seccomp
 shell none
 
 private-bin freecad,freecadcmd
+private-cache
 private-dev
 private-tmp
 

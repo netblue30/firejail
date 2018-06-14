@@ -32,6 +32,7 @@ shell none
 
 disable-mnt
 private
+private-cache
 private-bin arch-audit
 private-dev
 private-tmp

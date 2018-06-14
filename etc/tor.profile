@@ -41,6 +41,7 @@ writable-var
 disable-mnt
 private
 private-bin tor,bash
+private-cache
 private-dev
 private-etc tor,passwd
 private-tmp

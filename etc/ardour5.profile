@@ -30,6 +30,7 @@ seccomp
 shell none
 
 #private-bin sh,ardour4,ardour5,ardour5-copy-mixer,ardour5-export,ardour5-fix_bbtppq,grep,sed,ldd,nm
+private-cache
 private-dev
 #private-etc pulse,X11,alternatives,ardour4,ardour5,fonts
 private-tmp

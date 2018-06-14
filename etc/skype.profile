@@ -26,6 +26,7 @@ shell none
 
 disable-mnt
 #private-bin skype,bash
+private-cache
 private-dev
 private-tmp
 

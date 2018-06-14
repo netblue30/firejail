@@ -29,6 +29,7 @@ seccomp
 shell none
 
 #private-bin cin,ffmpeg
+private-cache
 private-dev
 
 noexec ${HOME}

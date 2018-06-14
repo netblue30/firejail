@@ -36,6 +36,7 @@ seccomp
 shell none
 tracelog
 
+private-cache
 # private-bin atool
 private-dev
 private-etc passwd,group

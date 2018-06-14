@@ -29,6 +29,7 @@ seccomp
 shell none
 
 private-bin zathura
+private-cache
 private-dev
 private-etc fonts,machine-id
 private-tmp

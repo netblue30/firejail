@@ -28,6 +28,7 @@ seccomp
 shell none
 
 private-bin meld,python*
+private-cache
 private-dev
 private-tmp
 

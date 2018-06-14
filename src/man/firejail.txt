@@ -1322,6 +1322,17 @@ Example:
 $ firejail \-\-private-home=.mozilla firefox
 
 .TP
+\fB\-\-private-cache
+Mount an empty temporary filesystem on top of the .cache directory in user home. All
+modifications are discarded when the sandbox is closed.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-private-cache openbox
+
+.TP
 \fB\-\-private-bin=file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
 If no listed file is found, /bin directory will be empty.

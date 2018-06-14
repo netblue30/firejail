@@ -132,6 +132,7 @@ blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gnome-mplayer
+blacklist ${HOME}/.config/gnome-mpv
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable

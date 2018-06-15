@@ -310,7 +310,7 @@ Jean Lucas (https://github.com/flacks)
 	- add WebStorm profile
 	- add XMind profile
 	- add nvm to list of disabled interpreters
-	- fixes for tor-browser-en
+	- fixes for tor-browser-* profiles
 	- alias for riot-desktop
 	- add gnome-mpv profile
 Jericho (https://github.com/attritionorg)

@@ -100,11 +100,6 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 # Current development version: 0.9.55
 
-## Mounting a temporary filesystem on top of ~/.cache directory by default
-
-To disable it globally, set "private-cache no" in /etc/firejail/firejail.config.
-
-
 ## New commands:
 `````
       (wireless support for --net)
@@ -128,6 +123,14 @@ To disable it globally, set "private-cache no" in /etc/firejail/firejail.config.
 
               Example:
               $ firejail --nou2f
+
+      --private-cache
+               Mount an empty temporary filesystem on top of the .cache
+               directory in user home. All modifications are discarded
+               when the sandbox is closed.
+
+              Example:
+              $ firejail --private-cache
 `````
 
 ## New profiles

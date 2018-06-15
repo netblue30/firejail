@@ -29,5 +29,6 @@ shell none
 tracelog
 
 private-bin gthumb
+private-cache
 private-dev
 private-tmp

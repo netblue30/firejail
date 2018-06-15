@@ -31,6 +31,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
+private-cache
 private-dev
 private-tmp
 

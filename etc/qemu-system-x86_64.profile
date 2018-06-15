@@ -22,6 +22,7 @@ seccomp
 shell none
 tracelog
 
+private-cache
 private-tmp
 
 noexec /tmp

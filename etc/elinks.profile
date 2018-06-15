@@ -31,6 +31,7 @@ shell none
 tracelog
 
 # private-bin elinks
+private-cache
 private-dev
 # private-etc none
 private-tmp

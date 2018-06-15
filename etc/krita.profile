@@ -36,6 +36,7 @@ protocol unix
 seccomp
 shell none
 
+private-cache
 private-dev
 private-tmp
 

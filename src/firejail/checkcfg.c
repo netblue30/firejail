@@ -175,15 +175,6 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			// private-cache
-			else if (strncmp(ptr, "private-cache ", 14) == 0) {
-				if (strcmp(ptr + 14, "yes") == 0)
-					cfg_val[CFG_PRIVATE_CACHE] = 1;
-				else if (strcmp(ptr + 14, "no") == 0)
-					cfg_val[CFG_PRIVATE_CACHE] = 0;
-				else
-					goto errout;
-			}
 			// seccomp
 			else if (strncmp(ptr, "seccomp ", 8) == 0) {
 				if (strcmp(ptr + 8, "yes") == 0)

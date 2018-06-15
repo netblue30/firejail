@@ -29,6 +29,7 @@ seccomp
 shell none
 
 private-dev
+private-cache
 private-tmp
 
 noexec ${HOME}

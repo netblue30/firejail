@@ -18,6 +18,7 @@ shell none
 tracelog
 
 private-bin uudeview
+private-cache
 private-dev
 private-etc ld.so.preload
 

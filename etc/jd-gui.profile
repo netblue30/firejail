@@ -36,6 +36,7 @@ seccomp
 shell none
 
 private-bin jd-gui,sh,bash
+private-cache
 private-dev
 private-tmp
 

@@ -33,6 +33,7 @@ seccomp
 # disable-mnt
 # private
 # private-bin program
+# private-cache
 # private-dev
 # private-etc none
 # private-lib

@@ -35,6 +35,7 @@ seccomp
 shell none
 
 private-bin python*,macrofusion,env,enfuse,exiftool,align_image_stack
+private-cache
 private-dev
 private-tmp
 

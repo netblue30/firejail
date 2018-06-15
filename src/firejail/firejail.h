@@ -308,6 +308,7 @@ static inline int any_interface_configured(void) {
 
 extern int arg_private;		// mount private /home
 extern int arg_private_template; // private /home template
+extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
@@ -753,7 +754,6 @@ enum {
 	CFG_PRIVATE_LIB,
 	CFG_APPARMOR,
 	CFG_DBUS,
-	CFG_PRIVATE_CACHE,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

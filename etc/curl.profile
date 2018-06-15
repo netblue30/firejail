@@ -29,6 +29,7 @@ seccomp
 shell none
 
 # private-bin curl
+private-cache
 private-dev
 # private-etc resolv.conf
 private-tmp

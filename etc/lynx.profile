@@ -29,6 +29,7 @@ shell none
 tracelog
 
 # private-bin lynx
+private-cache
 private-dev
 # private-etc none
 private-tmp

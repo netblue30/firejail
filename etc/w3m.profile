@@ -31,6 +31,7 @@ shell none
 tracelog
 
 # private-bin w3m
+private-cache
 private-dev
 private-etc resolv.conf,ssl,pki,ca-certificates,crypto-policies
 private-tmp

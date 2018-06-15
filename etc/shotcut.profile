@@ -26,6 +26,7 @@ seccomp
 shell none
 
 #private-bin shotcut,melt,qmelt,nice
+private-cache
 private-dev
 
 #noexec ${HOME}

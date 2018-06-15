@@ -27,6 +27,7 @@ seccomp
 
 disable-mnt
 private
+private-cache
 private-dev
 private-tmp
 read-write /var/lib/bitlbee

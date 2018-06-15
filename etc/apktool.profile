@@ -26,6 +26,7 @@ seccomp
 shell none
 
 private-bin apktool,bash,java,dirname,basename,expr,sh
+private-cache
 private-dev
 
 noexec ${HOME}

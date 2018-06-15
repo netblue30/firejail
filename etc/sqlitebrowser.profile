@@ -29,6 +29,7 @@ seccomp
 shell none
 
 private-bin sqlitebrowser
+private-cache
 private-dev
 private-tmp
 

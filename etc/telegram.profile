@@ -23,6 +23,7 @@ protocol unix,inet,inet6
 seccomp
 
 disable-mnt
+private-cache
 private-tmp
 
 noexec ${HOME}

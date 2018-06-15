@@ -30,6 +30,7 @@ shell none
 tracelog
 
 private-bin odt2txt
+private-cache
 private-dev
 private-etc none
 private-tmp

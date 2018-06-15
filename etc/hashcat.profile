@@ -31,6 +31,7 @@ shell none
 
 disable-mnt
 private-bin hashcat
+private-cache
 private-dev
 private-tmp
 

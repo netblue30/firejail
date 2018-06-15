@@ -29,6 +29,7 @@ seccomp
 shell none
 
 # private-bin bless,sh,bash,mono
+private-cache
 private-dev
 private-etc fonts,mono
 private-tmp

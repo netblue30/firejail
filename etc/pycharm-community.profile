@@ -32,6 +32,7 @@ tracelog
 
 # private-etc fonts,passwd - minimal required to run but will probably break
 # program!
+private-cache
 private-dev
 private-tmp
 

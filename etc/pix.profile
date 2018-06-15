@@ -30,5 +30,6 @@ shell none
 tracelog
 
 private-bin pix
+private-cache
 private-dev
 private-tmp

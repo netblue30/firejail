@@ -33,6 +33,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+private-cache
 private-dev
 private-tmp
 

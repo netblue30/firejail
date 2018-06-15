@@ -34,6 +34,7 @@ shell none
 tracelog
 
 private-bin viewnior
+private-cache
 private-dev
 private-etc fonts
 private-tmp

@@ -28,6 +28,7 @@ tracelog
 
 disable-mnt
 private-bin tilp
+private-cache
 private-etc fonts
 private-tmp
 

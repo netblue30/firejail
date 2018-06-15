@@ -27,6 +27,7 @@ shell none
 tracelog
 
 # private-bin img2txt
+private-cache
 private-dev
 # private-etc none
 private-tmp

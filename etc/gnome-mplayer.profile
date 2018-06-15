@@ -22,6 +22,7 @@ seccomp
 shell none
 
 # private-bin gnome-mplayer,mplayer
+private-cache
 private-dev
 private-tmp
 

@@ -29,6 +29,7 @@ seccomp
 shell none
 
 disable-mnt
+private-cache
 private-dev
 private-tmp
 

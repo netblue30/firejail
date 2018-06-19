@@ -8,6 +8,11 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.config/wireshark
 noblacklist ${HOME}/.wireshark
 
+# Wireshark can use Lua for scripting
+noblacklist ${PATH}/lua*
+noblacklist /usr/lib/lua
+noblacklist /usr/include/lua*
+noblacklist /usr/share/lua
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

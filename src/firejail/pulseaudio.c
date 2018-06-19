@@ -23,13 +23,7 @@
 #include <sys/mount.h>
 #include <dirent.h>
 #include <sys/wait.h>
-
-// on Debian 7 we are missing O_PATH definition
 #include <fcntl.h>
-#ifndef O_PATH
-#define O_PATH		010000000
-#endif
-
 
 // disable pulseaudio socket
 void pulseaudio_disable(void) {

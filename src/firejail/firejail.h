@@ -227,7 +227,6 @@ typedef struct config_t {
 	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *overlay_dir;
-	char *private_template; // template dir for tmpfs home
 
 	// networking
 	char *name;		// sandbox name
@@ -307,7 +306,6 @@ static inline int any_interface_configured(void) {
 }
 
 extern int arg_private;		// mount private /home
-extern int arg_private_template; // private /home template
 extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages
 extern int arg_debug_blacklists;	// print debug messages for blacklists
@@ -567,12 +565,8 @@ void fs_dev_disable_u2f(void);
 void fs_private(void);
 // private mode (--private=homedir)
 void fs_private_homedir(void);
-// private template (--private-template=templatedir)
-void fs_private_template(void);
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void);
-// check new private template home directory (--private-template= option) exit if it fails
-void fs_check_private_template(void);
 void fs_private_home_list(void);
 
 

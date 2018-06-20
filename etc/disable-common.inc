@@ -383,3 +383,12 @@ blacklist /vmlinuz*
 
 # complement noexec ${HOME} and noexec /tmp
 noexec /tmp/.X11-unix
+
+# flatpak
+blacklist ${HOME}/*.config/flatpak
+blacklist ${HOME}/*.var
+blacklist ${HOME}/*.local/share/flatpak
+blacklist /var/lib/flatpak
+blacklist /usr/share/flatpak
+# most of the time bwrap is SUID binary
+blacklist /usr/bin/bwrap

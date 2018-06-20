@@ -3,7 +3,8 @@
 # Persistent local customizations
 include /etc/firejail/discord-common.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+# already included by caller profile
+#include /etc/firejail/globals.local
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

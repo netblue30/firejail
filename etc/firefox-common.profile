@@ -3,7 +3,8 @@
 # Persistent local customizations
 include /etc/firejail/firefox-common.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+# already included by caller profile
+#include /etc/firejail/globals.local
 
 # uncomment the following line to allow access to common programs/addons/plugins
 #include /etc/firejail/firefox-common-addons.inc

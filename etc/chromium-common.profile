@@ -3,7 +3,8 @@
 # Persistent local customizations
 include /etc/firejail/chromium-common.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+# already included by caller profile
+#include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.pki
 

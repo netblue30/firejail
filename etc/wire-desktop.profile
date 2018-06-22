@@ -13,6 +13,12 @@ include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+mkdir ${HOME}/.config/Wire
+whitelist ${HOME}/.config/Wire
+whitelist ${DOWNLOADS}
+
+include /etc/firejail/whitelist-common.inc
+
 caps.drop all
 netfilter
 nodvd
@@ -28,6 +34,7 @@ shell none
 # it is not in PATH. To use Wire with firejail, run "firejail /opt/wire-desktop/wire-desktop"
 
 private-bin wire-desktop
-disable-mnt
 private-dev
+private-etc fonts,machine-id
+disable-mnt
 private-tmp

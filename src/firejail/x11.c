@@ -514,7 +514,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	assert(pos < (sizeof(server_argv)/sizeof(*server_argv)));
 	assert(server_argv[pos-1] == NULL);	  // last element is null
 
-	if (arg_debug) {
+	{
 		size_t i = 0;
 		printf("\n*** Starting xephyr server:");
 		while (server_argv[i]!=NULL) {

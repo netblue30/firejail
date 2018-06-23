@@ -4,7 +4,8 @@ quiet
 # Persistent local customizations
 include /etc/firejail/uudeview.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+# added by included default.profile
+#include /etc/firejail/globals.local
 
 hostname uudeview
 ignore noroot

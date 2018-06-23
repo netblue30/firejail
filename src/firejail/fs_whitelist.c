@@ -582,7 +582,7 @@ void fs_whitelist(void) {
 			// on some platforms (Debian wheezy, Ubuntu 14.04), it is a symlink to /run/shm
 			if (strcmp(new_name, "/dev/shm") == 0 && strcmp(fname, "/run/shm") == 0);
 			// special handling for /dev/log, which can be a symlink to /run/systemd/journal/dev-log
-			if (strcmp(new_name, "/dev/log") == 0 && strcmp(fname, "/run/systemd/journal/dev-log") == 0);
+			else if (strcmp(new_name, "/dev/log") == 0 && strcmp(fname, "/run/systemd/journal/dev-log") == 0);
 			// special processing for /proc/self/fd files
 			else if (strcmp(new_name, "/dev/fd") == 0 && strcmp(fname, "/proc/self/fd") == 0);
 			else if (strcmp(new_name, "/dev/stdin") == 0 && strcmp(fname, "/proc/self/fd/0") == 0);

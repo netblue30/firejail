@@ -4,7 +4,8 @@ quiet
 # Persistent local customizations
 include /etc/firejail/strings.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+# added by included default.profile
+#include /etc/firejail/globals.local
 
 blacklist /tmp/.X11-unix
 

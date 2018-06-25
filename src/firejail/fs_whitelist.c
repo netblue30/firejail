@@ -196,7 +196,6 @@ static void whitelist_path(ProfileEntry *entry) {
 	const char *fname;
 	char *wfile = NULL;
 
-	EUID_USER();
 	if (entry->home_dir) {
 		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			fname = path + strlen(cfg.homedir);
@@ -204,7 +203,8 @@ static void whitelist_path(ProfileEntry *entry) {
 				goto errexit;
 		}
 		else
-			fname = path;
+			// symlink pointing outside /home, skip the mount
+			return;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
@@ -236,17 +236,27 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->var_dir) {
-		fname = path + 5; // strlen("/var/")
-		if (*fname == '\0')
-			goto errexit;
+		if (strncmp(path, "/var/", 5) == 0) {
+			fname = path + 5; // strlen("/var/")
+			if (*fname == '\0')
+				goto errexit;
+		}
+		else
+			// symlink pointing outside /var, skip the mount
+			return;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_VAR_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->dev_dir) {
-		fname = path + 5; // strlen("/dev/")
-		if (*fname == '\0')
-			goto errexit;
+		if (strncmp(path, "/dev/", 5) == 0) {
+			fname = path + 5; // strlen("/dev/")
+			if (*fname == '\0')
+				goto errexit;
+		}
+		else
+			// symlink pointing outside /dev, skip the mount
+			return;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_DEV_DIR, fname) == -1)
 			errExit("asprintf");
@@ -268,9 +278,14 @@ static void whitelist_path(ProfileEntry *entry) {
 			errExit("asprintf");
 	}
 	else if (entry->etc_dir) {
-		fname = path + 5; // strlen("/etc/")
-		if (*fname == '\0')
-			goto errexit;
+		if (strncmp(path, "/etc/", 5) == 0) {
+			fname = path + 5; // strlen("/etc/")
+			if (*fname == '\0')
+				goto errexit;
+		}
+		else
+			// symlink pointing outside /etc, skip the mount
+			return;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_ETC_DIR, fname) == -1)
 			errExit("asprintf");
@@ -293,6 +308,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 
 	// check if the file exists
+	EUID_USER();
 	assert(wfile);
 	struct stat s;
 	if (stat(wfile, &s) == 0) {
@@ -300,11 +316,12 @@ static void whitelist_path(ProfileEntry *entry) {
 			printf("Whitelisting %s\n", path);
 	}
 	else {
+		free(wfile);
 		EUID_ROOT();
 		return;
 	}
-
 	EUID_ROOT();
+
 	// create the path if necessary
 	mkpath(path, s.st_mode);
 	fs_logger2("whitelist", path);
@@ -329,8 +346,10 @@ static void whitelist_path(ProfileEntry *entry) {
 			SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
 			fclose(fp);
 		}
-		else
+		else {
+			free(wfile);
 			return; // the file is already present
+		}
 	}
 
 	// mount
@@ -565,19 +584,20 @@ void fs_whitelist(void) {
 			entry->var_dir = 1;
 			var_dir = 1;
 			// both path and absolute path are under /var
-			// exceptions: /var/run and /var/lock
-			if (strcmp(new_name, "/var/run")== 0)
-				;
-			else if (strcmp(new_name, "/var/lock")== 0)
-				;
-			else if (strncmp(fname, "/var/", 5) != 0) {
-				goto errexit;
+			// exceptions: /var/tmp, /var/run and /var/lock
+			if (strcmp(new_name, "/var/run")== 0 && strcmp(fname, "/run") == 0);
+			else if (strcmp(new_name, "/var/lock")== 0 && strcmp(fname, "/run/lock") == 0);
+			else if (strcmp(new_name, "/var/tmp")== 0 && strcmp(fname, "/tmp") == 0);
+			else {
+				// both path and absolute path are under /var
+				if (strncmp(fname, "/var/", 5) != 0) {
+					goto errexit;
+				}
 			}
 		}
 		else if (strncmp(new_name, "/dev/", 5) == 0) {
 			entry->dev_dir = 1;
 			dev_dir = 1;
-
 			// special handling for /dev/shm
 			// on some platforms (Debian wheezy, Ubuntu 14.04), it is a symlink to /run/shm
 			if (strcmp(new_name, "/dev/shm") == 0 && strcmp(fname, "/run/shm") == 0);

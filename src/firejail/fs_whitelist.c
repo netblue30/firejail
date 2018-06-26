@@ -306,10 +306,10 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MODULE_DIR, fname) == -1)
 			errExit("asprintf");
 	}
+	assert(wfile);
 
 	// check if the file exists
 	EUID_USER();
-	assert(wfile);
 	struct stat s;
 	if (stat(wfile, &s) == 0) {
 		if (arg_debug || arg_debug_whitelists)
@@ -919,38 +919,28 @@ void fs_whitelist(void) {
 
 //printf("here %d#%s#\n", __LINE__, entry->data);
 		// whitelist the real file
-		if (strcmp(entry->data, "whitelist /run") == 0 &&
-		    (strcmp(entry->link, "/var/run") == 0 || strcmp(entry->link, "/var/lock") == 0)) {
-			int rv = symlink(entry->data + 10, entry->link);
-			if (rv)
-				fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
-			else if (arg_debug || arg_debug_whitelists)
-				printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
-		}
-		else {
-			whitelist_path(entry);
+		whitelist_path(entry);
 
-			// create the link if any
-			if (entry->link) {
-				// if the link is already there, do not bother
-				struct stat s;
-				if (stat(entry->link, &s) != 0) {
-					// create the path if necessary
-					mkpath(entry->link, s.st_mode);
+		// create the link if any
+		if (entry->link) {
+			// if the link is already there, do not bother
+			struct stat s;
+			if (stat(entry->link, &s) != 0) {
+				// create the path if necessary
+				mkpath(entry->link, s.st_mode);
 
-					int rv = symlink(entry->data + 10, entry->link);
-					if (rv)
-						fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
-					else if (arg_debug || arg_debug_whitelists)
-						printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+				int rv = symlink(entry->data + 10, entry->link);
+				if (rv)
+					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
+				else if (arg_debug || arg_debug_whitelists)
+					printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
 
-					// check again for files in /tmp directory
-					if (strncmp(entry->link, "/tmp/", 5) == 0) {
-						char *path = realpath(entry->link, NULL);
-						if (path == NULL || strncmp(path, "/tmp/", 5) != 0)
-							errLogExit("invalid whitelist symlink %s\n", entry->link);
-						free(path);
-					}
+				// check again for files in /tmp directory
+				if (strncmp(entry->link, "/tmp/", 5) == 0) {
+					char *path = realpath(entry->link, NULL);
+					if (path == NULL || strncmp(path, "/tmp/", 5) != 0)
+						errLogExit("invalid whitelist symlink %s\n", entry->link);
+					free(path);
 				}
 			}
 		}

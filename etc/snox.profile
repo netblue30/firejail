@@ -8,8 +8,8 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.cache/snox
 noblacklist ${HOME}/.config/snox
 
-mkdir ${HOME}/.cache/dnox
-mkdir ${HOME}/.config/dnox
+#mkdir ${HOME}/.cache/dnox
+#mkdir ${HOME}/.config/dnox
 mkdir ${HOME}/.cache/snox
 mkdir ${HOME}/.config/snox
 whitelist ${HOME}/.cache/snox

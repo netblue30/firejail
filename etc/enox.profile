@@ -8,8 +8,8 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.cache/Enox
 noblacklist ${HOME}/.config/Enox
 
-mkdir ${HOME}/.cache/dnox
-mkdir ${HOME}/.config/dnox
+#mkdir ${HOME}/.cache/dnox
+#mkdir ${HOME}/.config/dnox
 mkdir ${HOME}/.cache/Enox
 mkdir ${HOME}/.config/Enox
 whitelist ${HOME}/.cache/Enox

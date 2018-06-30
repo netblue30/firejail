@@ -1,21 +1,23 @@
-# Firejail profile for wire
+# Firejail profile for wire-desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/wire.local
+include /etc/firejail/wire-desktop.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# Note: the current beta version of wire is located in /opt/Wire/wire and therefore not in PATH.
-# To use wire with firejail run "firejail /opt/Wire/wire"
-
 noblacklist ${HOME}/.config/Wire
-noblacklist ${HOME}/.config/wire
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+
+mkdir ${HOME}/.config/Wire
+whitelist ${HOME}/.config/Wire
+whitelist ${DOWNLOADS}
+
+include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -28,7 +30,11 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-disable-mnt
-private-cache
+# Note: The current version of Wire is located in /opt/wire-desktop/wire-desktop, and therefore
+# it is not in PATH. To use Wire with firejail, run "firejail /opt/wire-desktop/wire-desktop"
+
+private-bin wire-desktop
 private-dev
+private-etc fonts,machine-id
+disable-mnt
 private-tmp

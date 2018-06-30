@@ -104,7 +104,7 @@
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
 #define DEFAULT_ROOT_PROFILE	"server"
-#define MAX_INCLUDE_LEVEL 6		// include levels in profile files
+#define MAX_INCLUDE_LEVEL 16		// include levels in profile files
 
 
 #define ASSERT_PERMS(file, uid, gid, mode) \

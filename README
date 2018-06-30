@@ -117,6 +117,7 @@ bn0785ac (https://github.com/bn0785ac)
 	- chromium canary (inox-family) fixes
 	- allow multithreading for cin and natron
 	- fix dbus access for libreoffice on KDE
+	- fix inox, add snox profile
 BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
 Bruno Nova (https://github.com/brunonova)

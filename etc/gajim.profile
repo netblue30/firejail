@@ -12,6 +12,7 @@ noblacklist ${HOME}/.local/share/gajim
 # Allow Python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python3*
+noblacklist /usr/lib64/python3*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -38,10 +39,9 @@ noroot
 notv
 protocol unix,inet,inet6
 seccomp
-shell none
 
 disable-mnt
-private-bin python,gajim
+private-bin python,python3,sh,gpg,gpg2,gajim
 private-dev
 private-etc alsa,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
 private-tmp

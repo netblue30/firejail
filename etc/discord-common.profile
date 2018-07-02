@@ -26,7 +26,7 @@ seccomp
 
 private-bin sh,xdg-mime,tr,sed,echo,head,cut,xdg-open,grep,egrep
 private-dev
-private-etc fonts,machine-id
+private-etc fonts,machine-id,localtime,ld.so.cache
 private-tmp
 
 noexec ${HOME}

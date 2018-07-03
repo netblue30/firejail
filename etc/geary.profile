@@ -12,11 +12,14 @@ noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.local/share/geary
 
 mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.config/geary
 mkdir ${HOME}/.local/share/geary
 whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.config/geary
 whitelist ${HOME}/.local/share/geary
 include /etc/firejail/whitelist-common.inc
 
+ignore dbus
 ignore private-tmp
 
 read-only ${HOME}/.config/mimeapps.list

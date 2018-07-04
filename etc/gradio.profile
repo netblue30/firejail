@@ -5,10 +5,8 @@ include /etc/firejail/gradio.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.cache/gradio
 noblacklist ${HOME}/.local/share/gradio
-mkdir ${HOME}/.local/share/gradio
-whitelist ${HOME}/.local/share/gradio
-whitelist ${HOME}/.cache/gradio
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -16,6 +14,10 @@ include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+mkdir ${HOME}/.cache/gradio
+mkdir ${HOME}/.local/share/gradio
+whitelist ${HOME}/.cache/gradio
+whitelist ${HOME}/.local/share/gradio
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

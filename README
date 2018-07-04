@@ -9,7 +9,7 @@ Pidgin, Quassel, and XChat.
 Firejail also expands the restricted shell facility found  in  bash  by adding
 Linux  namespace support. It supports sandboxing specific users upon login.
 
-Download: http://sourceforge.net/projects/firejail/files/
+Download: https://sourceforge.net/projects/firejail/files/
 Build and install: ./configure && make && sudo make install
 Documentation and support: https://firejail.wordpress.com/
 Development: https://github.com/netblue30/firejail
@@ -123,6 +123,9 @@ BogDan Vatra (https://github.com/bog-dan-ro)
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix
+Bundy01 (https://github.com/Bundy01)
+	- fixup geary
+	- add gradio profile
 BytesTuner (https://github.com/BytesTuner)
 	- provided keepassxc profile
 caoliver (https://github.com/caoliver)
@@ -242,7 +245,7 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Catfish profile
 g3ngr33n (https://github.com/g3ngr33n)
 	- fix musl compilation
-G4JC (http://sourceforge.net/u/gaming4jc/profile/)
+G4JC (https://sourceforge.net/u/gaming4jc/profile/)
 	- ARM support
 	- profile fixes
 Gaman Gabriel (https://github.com/stelariusinfinitek)
@@ -409,7 +412,7 @@ Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
 Panzerfather (https://github.com/Panzerfather)
 	- allow eog to access user's trash
-Patrick Toomey (http://sourceforge.net/u/ptoomey/profile/)
+Patrick Toomey (https://sourceforge.net/u/ptoomey/profile/)
 	- user namespace implementation
 Paul Moore <pmoore@redhat.com>
 	-src/fsec-print/print.c extracted from libseccomp software package
@@ -549,7 +552,7 @@ SkewedZeppelin (https://github.com/SkewedZeppelin)
 	- hardern /var
 	- profile standard layout
 	- Spotify and itch.io profile fixes
-sshirokov (http://sourceforge.net/u/yshirokov/profile/)
+sshirokov (https://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)
 	- keepass/keepassx browser fixes

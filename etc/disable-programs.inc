@@ -393,6 +393,7 @@ blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/gnome-recipes
 blacklist ${HOME}/.local/share/gnome-ring
 blacklist ${HOME}/.local/share/gnome-twitch
+blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kate
@@ -550,6 +551,7 @@ blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
 blacklist ${HOME}/.cache/gnome-twitch
+blacklist ${HOME}/.cache/gradio
 blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/inkscape

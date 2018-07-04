@@ -12,6 +12,7 @@ noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.local/share/geary
 
 mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.config/geary
 mkdir ${HOME}/.local/share/geary
 
 whitelist ${HOME}/.gnupg

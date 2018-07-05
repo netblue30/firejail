@@ -197,111 +197,83 @@ static void whitelist_path(ProfileEntry *entry) {
 	char *wfile = NULL;
 
 	if (entry->home_dir) {
-		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {
-			fname = path + strlen(cfg.homedir);
-			if (*fname == '\0')
-				goto errexit;
-		}
-		else
+		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) != 0)
 			// symlink pointing outside /home, skip the mount
 			return;
+
+		fname = path + strlen(cfg.homedir);
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->tmp_dir) {
 		fname = path + 5; // strlen("/tmp/")
-#ifndef TEST_MOUNTINFO
-		if (*fname == '\0')
-			errLogExit("whitelisting /tmp problem");
-#endif
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->media_dir) {
 		fname = path + 7; // strlen("/media/")
-		if (*fname == '\0')
-			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MEDIA_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->mnt_dir) {
 		fname = path + 5; // strlen("/mnt/")
-		if (*fname == '\0')
-			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MNT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->var_dir) {
-		if (strncmp(path, "/var/", 5) == 0) {
-			fname = path + 5; // strlen("/var/")
-			if (*fname == '\0')
-				goto errexit;
-		}
-		else
+		if (strncmp(path, "/var/", 5) != 0)
 			// symlink pointing outside /var, skip the mount
 			return;
+
+		fname = path + 5; // strlen("/var/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_VAR_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->dev_dir) {
-		if (strncmp(path, "/dev/", 5) == 0) {
-			fname = path + 5; // strlen("/dev/")
-			if (*fname == '\0')
-				goto errexit;
-		}
-		else
+		if (strncmp(path, "/dev/", 5) != 0)
 			// symlink pointing outside /dev, skip the mount
 			return;
+
+		fname = path + 5; // strlen("/dev/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_DEV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->opt_dir) {
 		fname = path + 5; // strlen("/opt/")
-		if (*fname == '\0')
-			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_OPT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->srv_dir) {
 		fname = path + 5; // strlen("/srv/")
-		if (*fname == '\0')
-			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SRV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->etc_dir) {
-		if (strncmp(path, "/etc/", 5) == 0) {
-			fname = path + 5; // strlen("/etc/")
-			if (*fname == '\0')
-				goto errexit;
-		}
-		else
+		if (strncmp(path, "/etc/", 5) != 0)
 			// symlink pointing outside /etc, skip the mount
 			return;
+
+		fname = path + 5; // strlen("/etc/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_ETC_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->share_dir) {
 		fname = path + 11; // strlen("/usr/share/")
-		if (*fname == '\0')
-			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SHARE_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	else if (entry->module_dir) {
 		fname = path + 12; // strlen("/sys/module/")
-		if (*fname == '\0')
-			goto errexit;
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MODULE_DIR, fname) == -1)
 			errExit("asprintf");
@@ -366,10 +338,6 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	free(wfile);
 	return;
-
-errexit:
-	fprintf(stderr, "Error: file %s is not in the whitelisted directory\n", path);
-	exit(1);
 }
 
 
@@ -934,14 +902,6 @@ void fs_whitelist(void) {
 					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
 				else if (arg_debug || arg_debug_whitelists)
 					printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
-
-				// check again for files in /tmp directory
-				if (strncmp(entry->link, "/tmp/", 5) == 0) {
-					char *path = realpath(entry->link, NULL);
-					if (path == NULL || strncmp(path, "/tmp/", 5) != 0)
-						errLogExit("invalid whitelist symlink %s\n", entry->link);
-					free(path);
-				}
 			}
 		}
 

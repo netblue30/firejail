@@ -1116,20 +1116,26 @@ errexit:
 // user controlled paths. Passed flags are ignored if path is a top level directory.
 int safe_fd(const char *path, int flags) {
 	assert(path);
-	int fd;
+	int fd = -1;
 
 	// work with a copy of path
 	char *dup = strdup(path);
 	if (dup == NULL)
 		errExit("strdup");
-	if (*dup != '/')
-		errExit("relative path"); // or empty string
+	// reject relative path and empty string
+	if (*dup != '/') {
+		fprintf(stderr, "Error: invalid pathname: %s\n", path);
+		exit(1);
+	}
 
 	char *p = strrchr(dup, '/');
 	if (p == NULL)
 		errExit("strrchr");
-	if (*(p + 1) == '\0')
-		errExit("trailing slash"); // or root dir
+	// reject trailing slash and root dir
+	if (*(p + 1) == '\0') {
+		fprintf(stderr, "Error: invalid pathname: %s\n", path);
+		exit(1);
+	}
 
 	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (parentfd == -1)

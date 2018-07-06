@@ -191,7 +191,7 @@ static int mkpath(const char* path, mode_t mode) {
 
 static void whitelist_path(ProfileEntry *entry) {
 	assert(entry);
-	char *path = entry->data + 10;
+	const char *path = entry->data + 10;
 	assert(path);
 	const char *fname;
 	char *wfile = NULL;
@@ -280,68 +280,103 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	assert(wfile);
 
-	// check if the file exists
+	// check if the file exists, confirm again there is no symlink
 	EUID_USER();
-	struct stat s;
-	if (stat(wfile, &s) == 0) {
-		if (arg_debug || arg_debug_whitelists)
-			printf("Whitelisting %s\n", path);
-	}
-	else {
+	int fd = safe_fd(wfile, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1) {
 		free(wfile);
 		EUID_ROOT();
 		return;
 	}
-	EUID_ROOT();
+	struct stat wfilestat;
+	if (fstat(fd, &wfilestat) == -1)
+		errExit("fstat");
+	if (S_ISLNK(wfilestat.st_mode)) {
+		fprintf(stderr, "Error: unexpected symbolic link %s\n", path);
+		exit(1);
+	}
+	close(fd);
 
-	// create the path if necessary
-	mkpath(path, s.st_mode);
+	if (arg_debug || arg_debug_whitelists)
+		printf("Whitelisting %s\n", path);
 	fs_logger2("whitelist", path);
 
-	// process directory
-	if (S_ISDIR(s.st_mode)) {
-		// create directory
-		int rv = mkdir(path, 0755);
-		(void) rv;
-	}
-
-	// process regular file
-	else {
-		if (access(path, R_OK)) {
-			// create an empty file
-			FILE *fp = fopen(path, "w");
-			if (!fp) {
-				fprintf(stderr, "Error: cannot create empty file in home directory\n");
+	// create the path if necessary
+	EUID_ROOT();
+	struct stat s;
+	if (stat(path, &s) == -1) {
+		mkpath(path, 0755);
+		if (S_ISDIR(wfilestat.st_mode)) {
+			int rv = mkdir(path, 0755);
+			if (rv) {
+				fprintf(stderr, "Error: cannot create directory %s\n", path);
 				exit(1);
 			}
-			// set file properties
-			SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
-			fclose(fp);
 		}
 		else {
+			int fd2 = open(path, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR|S_IWUSR);
+			if (fd2 == -1) {
+				fprintf(stderr, "Error: cannot create empty file %s\n", path);
+				exit(1);
+			}
+			close(fd2);
+		}
+	}
+	else {
+		if (!S_ISDIR(s.st_mode)) {
 			free(wfile);
 			return; // the file is already present
 		}
 	}
 
-	// mount
-	if (mount(wfile, path, NULL, MS_BIND|MS_REC, NULL) < 0)
+	// get a file descriptor for path; if path contains anything other than directories
+	// or a regular file, assume it is whitelisted already
+	int fd3 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd3 == -1) {
+		free(wfile);
+		return;
+	}
+	if (fstat(fd3, &s) == -1)
+		errExit("fstat");
+	if (!(S_ISDIR(s.st_mode) || S_ISREG(s.st_mode))) {
+		free(wfile);
+		close(fd3);
+		return;
+	}
+
+	// mount via the link in /proc/self/fd
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd3) == -1)
+		errExit("asprintf");
+	if (mount(wfile, proc, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	free(proc);
+	close(fd3);
 
 	// check the last mount operation
 	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
 
+	if (strncmp(mptr->dir, path, strlen(path)) != 0)
+		errLogExit("invalid whitelist mount");
 	// No mounts are allowed on top level directories. A destination such as "/etc" is very bad!
 	//  - there should be more than one '/' char in dest string
 	if (mptr->dir == strrchr(mptr->dir, '/'))
-		errLogExit("invalid whitelist mount\n");
+		errLogExit("invalid whitelist mount");
+	// confirm the correct file is mounted on path
+	int fd4 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd4 == -1)
+		errExit("safe_fd");
+	if (fstat(fd4, &s) == -1)
+		errExit("fstat");
+	if (s.st_dev != wfilestat.st_dev || s.st_ino != wfilestat.st_ino)
+		errLogExit("invalid whitelist mount");
+	close(fd4);
 
 	free(wfile);
 	return;
 }
 
 
-// whitelist for /home/user directory
 void fs_whitelist(void) {
 	char *homedir = cfg.homedir;
 	assert(homedir);
@@ -370,6 +405,7 @@ void fs_whitelist(void) {
 
 	// verify whitelist files, extract symbolic links, etc.
 	EUID_USER();
+	struct stat s;
 	while (entry) {
 		int nowhitelist_flag = 0;
 
@@ -512,10 +548,14 @@ void fs_whitelist(void) {
 					__LINE__, fname, cfg.homedir);
 
 			// both path and absolute path are under /home
-			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0) {
+			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0) {
+				// entire home directory is not allowed
+				if (*(fname + strlen(cfg.homedir)) != '/')
+					goto errexit;
+			}
+			else {
 				if (checkcfg(CFG_FOLLOW_SYMLINK_AS_USER)) {
 					// check if the file is owned by the user
-					struct stat s;
 					if (stat(fname, &s) == 0 && s.st_uid != getuid())
 						goto errexit;
 				}
@@ -677,20 +717,25 @@ void fs_whitelist(void) {
 	free(nowhitelist);
 
 	EUID_ROOT();
-	// /home/user
+	// /home/user mountpoint
 	if (home_dir) {
-		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
-		mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
-		if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind");
+		// check if /home/user directory exists
+		if (stat(cfg.homedir, &s) == 0) {
+			// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
+			mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
+			if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
 
-		// mount a tmpfs and initialize /home/user
-		 fs_private();
+			// mount a tmpfs and initialize /home/user
+			fs_private();
+		}
+		else
+			home_dir = 0;
 	}
 
 	// /tmp mountpoint
 	if (tmp_dir) {
-		// keep a copy of real /tmp directory in
+		// keep a copy of real /tmp directory in RUN_WHITELIST_TMP_DIR
 		mkdir_attr(RUN_WHITELIST_TMP_DIR, 1777, 0, 0);
 		if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mount bind");
@@ -706,7 +751,6 @@ void fs_whitelist(void) {
 	// /media mountpoint
 	if (media_dir) {
 		// some distros don't have a /media directory
-		struct stat s;
 		if (stat("/media", &s) == 0) {
 			// keep a copy of real /media directory in RUN_WHITELIST_MEDIA_DIR
 			mkdir_attr(RUN_WHITELIST_MEDIA_DIR, 0755, 0, 0);
@@ -727,7 +771,6 @@ void fs_whitelist(void) {
 	// /mnt mountpoint
 	if (mnt_dir) {
 		// check if /mnt directory exists
-		struct stat s;
 		if (stat("/mnt", &s) == 0) {
 			// keep a copy of real /mnt directory in RUN_WHITELIST_MNT_DIR
 			mkdir_attr(RUN_WHITELIST_MNT_DIR, 0755, 0, 0);
@@ -778,23 +821,27 @@ void fs_whitelist(void) {
 
 	// /opt mountpoint
 	if (opt_dir) {
-		// keep a copy of real /opt directory in RUN_WHITELIST_OPT_DIR
-		mkdir_attr(RUN_WHITELIST_OPT_DIR, 0755, 0, 0);
-		if (mount("/opt", RUN_WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind");
+		// check if /opt directory exists
+		if (stat("/opt", &s) == 0) {
+			// keep a copy of real /opt directory in RUN_WHITELIST_OPT_DIR
+			mkdir_attr(RUN_WHITELIST_OPT_DIR, 0755, 0, 0);
+			if (mount("/opt", RUN_WHITELIST_OPT_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
 
-		// mount tmpfs on /opt
-		if (arg_debug || arg_debug_whitelists)
-			printf("Mounting tmpfs on /opt directory\n");
-		if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mounting tmpfs on /opt");
-		fs_logger("tmpfs /opt");
+			// mount tmpfs on /opt
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /opt directory\n");
+			if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /opt");
+			fs_logger("tmpfs /opt");
+		}
+		else
+			opt_dir = 0;
 	}
 
 	// /srv mountpoint
 	if (srv_dir) {
 		// check if /srv directory exists
-		struct stat s;
 		if (stat("/srv", &s) == 0) {
 			// keep a copy of real /srv directory in RUN_WHITELIST_SRV_DIR
 			mkdir_attr(RUN_WHITELIST_SRV_DIR, 0755, 0, 0);
@@ -815,7 +862,6 @@ void fs_whitelist(void) {
 	// /etc mountpoint
 	if (etc_dir) {
 		// check if /etc directory exists
-		struct stat s;
 		if (stat("/etc", &s) == 0) {
 			// keep a copy of real /etc directory in RUN_WHITELIST_ETC_DIR
 			mkdir_attr(RUN_WHITELIST_ETC_DIR, 0755, 0, 0);
@@ -836,7 +882,6 @@ void fs_whitelist(void) {
 	// /usr/share mountpoint
 	if (share_dir) {
 		// check if /usr/share directory exists
-		struct stat s;
 		if (stat("/usr/share", &s) == 0) {
 			// keep a copy of real /usr/share directory in RUN_WHITELIST_ETC_DIR
 			mkdir_attr(RUN_WHITELIST_SHARE_DIR, 0755, 0, 0);
@@ -857,7 +902,6 @@ void fs_whitelist(void) {
 	// /sys/module mountpoint
 	if (module_dir) {
 		// check if /sys/module directory exists
-		struct stat s;
 		if (stat("/sys/module", &s) == 0) {
 			// keep a copy of real /sys/module directory in RUN_WHITELIST_MODULE_DIR
 			mkdir_attr(RUN_WHITELIST_MODULE_DIR, 0755, 0, 0);
@@ -892,10 +936,9 @@ void fs_whitelist(void) {
 		// create the link if any
 		if (entry->link) {
 			// if the link is already there, do not bother
-			struct stat s;
-			if (stat(entry->link, &s) != 0) {
+			if (lstat(entry->link, &s) != 0) {
 				// create the path if necessary
-				mkpath(entry->link, s.st_mode);
+				mkpath(entry->link, 0755);
 
 				int rv = symlink(entry->data + 10, entry->link);
 				if (rv)

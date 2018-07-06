@@ -281,28 +281,28 @@ static void whitelist_path(ProfileEntry *entry) {
 	assert(wfile);
 
 	// check if the file exists, confirm again there is no symlink
+	struct stat wfilestat;
+#ifndef TEST_MOUNTINFO
 	EUID_USER();
 	int fd = safe_fd(wfile, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	EUID_ROOT();
 	if (fd == -1) {
 		free(wfile);
-		EUID_ROOT();
 		return;
 	}
-	struct stat wfilestat;
 	if (fstat(fd, &wfilestat) == -1)
 		errExit("fstat");
-	if (S_ISLNK(wfilestat.st_mode)) {
-		fprintf(stderr, "Error: unexpected symbolic link %s\n", path);
-		exit(1);
-	}
 	close(fd);
+	if (S_ISLNK(wfilestat.st_mode)) {
+		free(wfile);
+		return;
+	}
+#endif
 
 	if (arg_debug || arg_debug_whitelists)
 		printf("Whitelisting %s\n", path);
-	fs_logger2("whitelist", path);
 
 	// create the path if necessary
-	EUID_ROOT();
 	struct stat s;
 	if (stat(path, &s) == -1) {
 		mkpath(path, 0755);
@@ -328,6 +328,8 @@ static void whitelist_path(ProfileEntry *entry) {
 			return; // the file is already present
 		}
 	}
+
+	fs_logger2("whitelist", path);
 
 	// get a file descriptor for path; if path contains anything other than directories
 	// or a regular file, assume it is whitelisted already
@@ -356,8 +358,8 @@ static void whitelist_path(ProfileEntry *entry) {
 	// check the last mount operation
 	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
 
-	if (strncmp(mptr->dir, path, strlen(path)) != 0)
-		errLogExit("invalid whitelist mount");
+	//if (strncmp(mptr->dir, path, strlen(path)) != 0) - temporarily disabled, problems with paths that have empty spaces
+	//	errLogExit("invalid whitelist mount");
 	// No mounts are allowed on top level directories. A destination such as "/etc" is very bad!
 	//  - there should be more than one '/' char in dest string
 	if (mptr->dir == strrchr(mptr->dir, '/'))
@@ -549,7 +551,7 @@ void fs_whitelist(void) {
 
 			// both path and absolute path are under /home
 			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0) {
-				// entire home directory is not allowed
+				// avoid naming issues, also entire home dirs are not allowed
 				if (*(fname + strlen(cfg.homedir)) != '/')
 					goto errexit;
 			}

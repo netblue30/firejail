@@ -1,6 +1,10 @@
 firejail (0.9.55) baseline; urgency=low
   * work in progress
   * modif: removed CFG_CHROOT_DESKTOP configuration option
+  * support wireless devices in --net option
+  * allow IP address configuration if the parent interface specified
+     by --net is not configured (--netmask)
+  * disable U2F devices (--nou2f)
   * add --private-cache to support private ~/.cache
   * support full paths in private-lib
   * globbing support in private-lib

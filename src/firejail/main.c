@@ -1980,6 +1980,38 @@ int main(int argc, char **argv) {
 				exit_err_feature("networking");
 		}
 
+		else if (strncmp(argv[i], "--netmask=", 10) == 0) {
+			if (checkcfg(CFG_NETWORK)) {
+				Bridge *br = last_bridge_configured();
+				if (br == NULL) {
+					fprintf(stderr, "Error: no network device configured\n");
+					exit(1);
+				}
+				if (br->arg_ip_none || br->masksandbox) {
+					fprintf(stderr, "Error: cannot configure the network mask twice for the same interface\n");
+					exit(1);
+				}
+
+				// configure this network mask for the last bridge defined
+				if (atoip(argv[i] + 10, &br->masksandbox)) {
+					fprintf(stderr, "Error: invalid  network mask\n");
+					exit(1);
+				}
+
+				// if the bridge is not configured, use this mask as the bridge mask
+				if (br->mask == 0)
+					br->mask = br->masksandbox;
+				else {
+					fprintf(stderr, "Error: interface %s already has a network mask defined; "
+						"please remove --netmask\n",
+						br->dev);
+					exit(1);
+				}
+			}
+			else
+				exit_err_feature("networking");
+		}
+
 		else if (strncmp(argv[i], "--ip6=", 6) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
 				Bridge *br = last_bridge_configured();

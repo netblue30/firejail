@@ -61,25 +61,27 @@ void net_configure_bridge(Bridge *br, char *dev_name) {
 	// allow unconfigured interfaces
 	if (net_get_if_addr(br->dev, &br->ip, &br->mask, br->mac, &br->mtu)) {
 		fwarning("the network interface %s is not configured\n", br->dev);
-		br->configured = 1;
-		br->arg_ip_none = 1;
-		return;
+// don't configure an ip address on unconfigured interfaces
+//		br->arg_ip_none = 1;
 	}
-	if (arg_debug) {
-		if (br->macvlan == 0)
-			printf("Bridge device %s at %d.%d.%d.%d/%d\n",
-				br->dev, PRINT_IP(br->ip), mask2bits(br->mask));
-		else
-			printf("macvlan parent device %s at %d.%d.%d.%d/%d\n",
-				br->dev, PRINT_IP(br->ip), mask2bits(br->mask));
+	else {
+		if (arg_debug) {
+			if (br->macvlan == 0)
+				printf("Bridge device %s at %d.%d.%d.%d/%d\n",
+					br->dev, PRINT_IP(br->ip), mask2bits(br->mask));
+			else
+				printf("macvlan parent device %s at %d.%d.%d.%d/%d\n",
+					br->dev, PRINT_IP(br->ip), mask2bits(br->mask));
+		}
+
+		uint32_t range = ~br->mask + 1;		  // the number of potential addresses
+		// this software is not supported for /31 networks
+		if (range < 4) {
+			fprintf(stderr, "Error: the software is not supported for /31 networks\n");
+			exit(1);
+		}
 	}
 
-	uint32_t range = ~br->mask + 1;		  // the number of potential addresses
-	// this software is not supported for /31 networks
-	if (range < 4) {
-		fprintf(stderr, "Error: the software is not supported for /31 networks\n");
-		exit(1);
-	}
 	br->configured = 1;
 }
 
@@ -91,7 +93,7 @@ void net_configure_sandbox_ip(Bridge *br) {
 
 	if (br->arg_ip_none)
 		br->ipsandbox = 0;
-	else if (br->ipsandbox) {
+	else if (br->ipsandbox && br->ip && br->mask) {
 		// check network range
 		char *rv = in_netrange(br->ipsandbox, br->ip, br->mask);
 		if (rv) {
@@ -104,9 +106,20 @@ void net_configure_sandbox_ip(Bridge *br) {
 			exit(1);
 		}
 	}
-	else
+	else if (br->ipsandbox && br->masksandbox) {
+		// send an ARP request and check if there is anybody on this IP address
+		if (arp_check(br->dev, br->ipsandbox)) {
+			fprintf(stderr, "Error: IP address %d.%d.%d.%d is already in use\n", PRINT_IP(br->ipsandbox));
+			exit(1);
+		}
+	}
+	else if (br->ip && br->mask)
 		// ip address assigned by arp-scan for a bridge device
 		br->ipsandbox = arp_assign(br->dev, br); //br->ip, br->mask);
+	else {
+		br->ipsandbox = 0;
+		br->arg_ip_none = 1;
+	}
 }
 
 
@@ -148,21 +161,29 @@ void check_default_gw(uint32_t defaultgw) {
 	assert(defaultgw);
 
 	if (cfg.bridge0.configured) {
+		if (cfg.bridge0.ip == 0 && cfg.bridge0.ipsandbox)
+			return;
 		char *rv = in_netrange(defaultgw, cfg.bridge0.ip, cfg.bridge0.mask);
 		if (rv == 0)
 			return;
 	}
 	if (cfg.bridge1.configured) {
+		if (cfg.bridge1.ip == 0 && cfg.bridge1.ipsandbox)
+			return;
 		char *rv = in_netrange(defaultgw, cfg.bridge1.ip, cfg.bridge1.mask);
 		if (rv == 0)
 			return;
 	}
 	if (cfg.bridge2.configured) {
+		if (cfg.bridge2.ip == 0 && cfg.bridge2.ipsandbox)
+			return;
 		char *rv = in_netrange(defaultgw, cfg.bridge2.ip, cfg.bridge2.mask);
 		if (rv == 0)
 			return;
 	}
 	if (cfg.bridge3.configured) {
+		if (cfg.bridge3.ip == 0 && cfg.bridge3.ipsandbox)
+			return;
 		char *rv = in_netrange(defaultgw, cfg.bridge3.ip, cfg.bridge3.mask);
 		if (rv == 0)
 			return;

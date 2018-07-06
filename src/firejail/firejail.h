@@ -166,6 +166,7 @@ typedef struct bridge_t {
 	// inside the sandbox
 	char *devsandbox;	// name of the device inside the sandbox
 	uint32_t ipsandbox;	// ip address inside the sandbox
+	uint32_t masksandbox;	// network mask inside the sandbox
 	char *ip6sandbox;	// ipv6 address inside the sandbox
 	uint8_t macsandbox[6]; // mac address inside the sandbox
 	uint32_t iprange_start;// iprange arp scan start range

@@ -481,6 +481,40 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	else if (strncmp(ptr, "netmask ", 8) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			if (br->arg_ip_none || br->masksandbox) {
+				fprintf(stderr, "Error: cannot configure the network mask twice for the same interface\n");
+				exit(1);
+			}
+
+			// configure this network mask for the last bridge defined
+			if (atoip(ptr + 8, &br->masksandbox)) {
+				fprintf(stderr, "Error: invalid  network mask\n");
+				exit(1);
+			}
+
+			// if the bridge is not configured, use this mask as the bridge mask
+			if (br->mask == 0)
+				br->mask = br->masksandbox;
+			else {
+				fprintf(stderr, "Error: interface %s already has a network mask defined; "
+					"please remove --netmask\n",
+					br->dev);
+				exit(1);
+			}
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
 	else if (strncmp(ptr, "ip ", 3) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {

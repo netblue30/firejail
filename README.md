@@ -118,6 +118,19 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               $ firejail --net=eth0 --ip=192.168.1.80 --dns=8.8.8.8 firefox
               $ firejail --net=wlan0 firefox
 
+       --netmask=address
+              Use this option when you want to assign an IP address in a  new
+              namespace  and  the  parent interface specified by --net is not
+              configured. An IP address and  a  default  gateway  address
+              also  have  to be added. By default the new namespace interface
+              comes without IP address and default gateway configured.  Exam‐
+              ple:
+
+              $ sudo /sbin/brctl addbr br0
+              $ sudo /sbin/ifconfig br0 up
+              $     firejail     --ip=10.10.20.67     --netmask=255.255.255.0
+              --defaultgw=10.10.20.1
+
       --nou2f
               Disable U2F devices.
 

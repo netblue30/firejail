@@ -824,11 +824,6 @@ Note: \-\-net=none can crash the application on some platforms.
 In these cases, it can be replaced with \-\-protocol=unix.
 
 .TP
-\fB\-\-netns=name
-Run the program in a named, persistent network namespace.  These can
-be created and configured using "ip netns".
-
-.TP
 \fB\-\-netfilter
 Enable a default firewall if a new network namespace is created inside the sandbox.
 This option has no effect for sandboxes using the system network namespace.
@@ -953,6 +948,26 @@ Print the IPv6 firewall installed in the sandbox specified by name or PID. Examp
 $ firejail --name=browser --net=eth0 --netfilter firefox &
 .br
 $ firejail --netfilter6.print=browser
+
+.TP
+\fB\-\-netmask=address
+Use this option when you want to assign an IP address in a new namespace and
+the parent interface specified by --net is not configured. An IP address and
+a default gateway address also have to be added. By default the new namespace
+interface comes without IP address and default gateway configured. Example:
+.br
+
+.br
+$ sudo /sbin/brctl addbr br0
+.br
+$ sudo /sbin/ifconfig br0 up
+.br
+$ firejail --ip=10.10.20.67 --netmask=255.255.255.0 --defaultgw=10.10.20.1
+
+.TP
+\fB\-\-netns=name
+Run the program in a named, persistent network namespace.  These can
+be created and configured using "ip netns".
 
 .TP
 \fB\-\-netstats

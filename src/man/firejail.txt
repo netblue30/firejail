@@ -678,6 +678,16 @@ Same as "firejail --join=name" if sandbox with specified name exists, otherwise 
 Note that in contrary to other join options there is respective profile option.
 
 .TP
+\fB\-\-keep-dev-shm
+/dev/shm directory is untouched (even with --private-dev)
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-dev-shm --private-dev
+
+.TP
 \fB\-\-keep-var-tmp
 /var/tmp directory is untouched.
 .br

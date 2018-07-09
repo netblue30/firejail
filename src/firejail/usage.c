@@ -94,6 +94,7 @@ static char *usage_str =
 	"    --join-network=name|pid - join the network namespace.\n"
 #endif
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
+        "    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER
@@ -212,7 +213,7 @@ static char *usage_str =
 	"    --top - monitor the most CPU-intensive sandboxes.\n"
 	"    --trace - trace open, access and connect system calls.\n"
 	"    --tracelog - add a syslog message for every access to files or\n"
-	"\tdirectoires blacklisted by the security profile.\n"
+	"\tdirectories blacklisted by the security profile.\n"
 	"    --tree - print a tree of all sandboxed processes.\n"
 	"    --version - print program version and exit.\n"
 #ifdef HAVE_NETWORK

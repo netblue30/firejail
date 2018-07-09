@@ -233,6 +233,9 @@ The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
 Create a new /dev directory. Only disc, dri, null, full, zero, tty, pts, ptmx,
 random, snd, urandom, video, log and shm devices are available.
 .TP
+\fBkeep-dev-shm
+/dev/shm directory is untouched (even with private-dev).
+.TP
 \fBprivate-etc file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.

@@ -164,9 +164,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_vmsplice
 	  "vmsplice,"
 #endif
-#ifdef SYS_personality
-	  "personality,"
-#endif
 #ifdef SYS_umount
 	  "umount,"
 #endif
@@ -178,6 +175,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "@default,"
 #ifdef SYS_ptrace
 	  "ptrace,"
+#endif
+#ifdef SYS_personality
+	  "personality,"
 #endif
 #ifdef SYS_process_vm_readv
 	  "process_vm_readv"

@@ -381,6 +381,9 @@ blacklist ${PATH}/xfce4-terminal.wrapper
 blacklist /initrd*
 blacklist /vmlinuz*
 
+# snapshot files
+blacklist /.snapshots
+
 # complement noexec ${HOME} and noexec /tmp
 noexec /tmp/.X11-unix
 

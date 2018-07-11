@@ -118,7 +118,8 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               $ firejail --net=eth0 --ip=192.168.1.80 --dns=8.8.8.8 firefox
               $ firejail --net=wlan0 firefox
 
-      --net=tap_interface
+       (tunneling support)
+       --net=tap_interface
               Enable a new network namespace and connect it to this  ethernet
               tap  interface  using the standard Linux macvlan driver. If the
               tap interface is not configured, the sandbox will  not  try  to

@@ -816,6 +816,20 @@ $ firejail \-\-net=eth0 \-\-ip=192.168.1.80 \-\-dns=8.8.8.8 firefox
 $ firejail \-\-net=wlan0 firefox
 
 .TP
+\fB\-\-net=tap_interface
+Enable a new network namespace and connect it
+to this ethernet tap interface using the standard Linux macvlan
+driver. If the tap interface is not configured, the sandbox
+will not try to configure the interface inside the sandbox.
+Please use \-\-ip, \-\-netmask and \-\-defaultgw to specify the configuration.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=tap0 \-\-ip=10.10.20.80 \-\-netmask=255.255.255.0 \-\-defaultgw=10.10.20.1 firefox
+
+.TP
 \fB\-\-net=none
 Enable a new, unconnected network namespace. The only interface
 available in the new namespace is a new loopback interface (lo).

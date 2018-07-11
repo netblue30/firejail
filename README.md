@@ -118,6 +118,17 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               $ firejail --net=eth0 --ip=192.168.1.80 --dns=8.8.8.8 firefox
               $ firejail --net=wlan0 firefox
 
+      --net=tap_interface
+              Enable a new network namespace and connect it to this  ethernet
+              tap  interface  using the standard Linux macvlan driver. If the
+              tap interface is not configured, the sandbox will  not  try  to
+              configure  the  interface inside the sandbox.  Please use --ip,
+              --netmask and --defaultgw to specify the configuration.
+
+              Example:
+              $ firejail --net=tap0 --ip=10.10.20.80  --netmask=255.255.255.0
+              --defaultgw=10.10.20.1 firefox
+
        --netmask=address
               Use this option when you want to assign an IP address in a  new
               namespace  and  the  parent interface specified by --net is not
@@ -131,7 +142,13 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               $     firejail     --ip=10.10.20.67     --netmask=255.255.255.0
               --defaultgw=10.10.20.1
 
-      --nou2f
+       --keep-dev-shm
+              /dev/shm directory is untouched (even with --private-dev)
+
+              Example:
+              $ firejail --keep-dev-shm --private-dev
+
+     --nou2f
               Disable U2F devices.
 
               Example:

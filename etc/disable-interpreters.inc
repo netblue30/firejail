@@ -39,6 +39,8 @@ blacklist /usr/lib/python2*
 blacklist /usr/local/lib/python2*
 blacklist /usr/share/python2*
 
+# You will want to add noblacklist for python3 stuff in the firefox and/or chromium profiles if you use the Gnome connector (see Issue #2026)
+
 # Python 3
 blacklist ${PATH}/python3*
 blacklist /usr/include/python3*

@@ -22,6 +22,7 @@ include /etc/firejail/whitelist-var-common.inc
 apparmor
 caps.keep sys_chroot,sys_admin
 netfilter
+# Breaks Gnome connector - disable if you use that
 nodbus
 nodvd
 nogroups

@@ -27,6 +27,7 @@ caps.drop all
 # machine-id breaks pulse audio; it should work fine in setups where sound is not required
 #machine-id
 netfilter
+# Breaks Gnome connector - disable if you use that
 nodbus
 nodvd
 nogroups

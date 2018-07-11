@@ -83,6 +83,9 @@ deny /proc/@{PID}/oom_score_adj w,
 # Uncomment to silence all denied write warnings
 #deny /sys/** w,
 
+# Blacklist snapshots
+deny /**/.snapshots/ rwx,
+
 ##########
 # Allow running programs only from well-known system directories. If you need
 # to run programs from your home directory, uncomment /home line.

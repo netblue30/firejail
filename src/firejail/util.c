@@ -1045,6 +1045,40 @@ void disable_file_path(const char *path, const char *file) {
 	free(fname);
 }
 
+// Restore empty spaces in pathnames extracted from /proc/self/mountinfo
+static void unmangle_path(char *path) {
+	int i, decimal;
+	char *worker;
+
+	char *p = strchr(path, '\\');
+	while (p) {
+		// convert octal to decimal
+		decimal = 0;
+		for (i = 1; i < 4; i++) {
+			worker = p + i;
+			// there are always three octal digits
+			if (*worker < '0' || *worker > '7') {
+				fprintf(stderr, "Error: bad escape sequence\n");
+				exit(1);
+			}
+			decimal += *worker - '0';
+			if (i < 3)
+				decimal *= 8;
+		}
+		// do the replacement
+		if (decimal == ' ') {
+			*p = ' ';
+			worker = p;
+			do {
+			worker++;
+			*worker = *(worker + 3);
+			} while (*worker);
+		}
+
+		p = strchr(p + 1, '\\');
+	}
+}
+
 #define MAX_BUF 4096
 static char mbuf[MAX_BUF];
 static MountData mdata;
@@ -1103,6 +1137,10 @@ MountData *get_last_mount(void) {
 	    mdata.dir == NULL ||
 	    mdata.fstype == NULL)
 		goto errexit;
+
+	unmangle_path(mdata.fsname);
+	unmangle_path(mdata.dir);
+
 	if (arg_debug)
 		printf("fsname=%s dir=%s fstype=%s\n", mdata.fsname, mdata.dir, mdata.fstype);
 	return &mdata;

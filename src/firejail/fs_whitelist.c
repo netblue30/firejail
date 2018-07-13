@@ -358,8 +358,8 @@ static void whitelist_path(ProfileEntry *entry) {
 	// check the last mount operation
 	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
 
-	//if (strncmp(mptr->dir, path, strlen(path)) != 0) - temporarily disabled, problems with paths that have empty spaces
-	//	errLogExit("invalid whitelist mount");
+	if (strncmp(mptr->dir, path, strlen(path)) != 0)
+		errLogExit("invalid whitelist mount");
 	// No mounts are allowed on top level directories. A destination such as "/etc" is very bad!
 	//  - there should be more than one '/' char in dest string
 	if (mptr->dir == strrchr(mptr->dir, '/'))

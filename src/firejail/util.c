@@ -1058,20 +1058,19 @@ static void unmangle_path(char *path) {
 			worker = p + i;
 			// there are always three octal digits
 			if (*worker < '0' || *worker > '7') {
-				fprintf(stderr, "Error: bad escape sequence\n");
+				fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
 				exit(1);
 			}
-			decimal += *worker - '0';
-			if (i < 3)
-				decimal *= 8;
+			decimal = (*worker - '0' + decimal) * 8;
 		}
+		decimal /= 8;
 		// do the replacement
 		if (decimal == ' ') {
 			*p = ' ';
 			worker = p;
 			do {
-			worker++;
-			*worker = *(worker + 3);
+				worker++;
+				*worker = *(worker + 3);
 			} while (*worker);
 		}
 

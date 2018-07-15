@@ -98,6 +98,7 @@
 #define RUN_PASSWD_FILE		"/run/firejail/mnt/passwd"
 #define RUN_GROUP_FILE		"/run/firejail/mnt/group"
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
+#define RUN_UMASK_FILE		"/run/firejail/mnt/umask"
 #define RUN_OVERLAY_ROOT	"/run/firejail/mnt/oroot"
 
 
@@ -391,6 +392,7 @@ extern int login_shell;
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
 extern pid_t sandbox_pid;
+extern mode_t orig_umask;
 extern unsigned long long start_timestamp;
 
 #define MAX_ARGS 128		// maximum number of command arguments (argc)

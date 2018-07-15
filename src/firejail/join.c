@@ -205,6 +205,22 @@ static void extract_user_namespace(pid_t pid) {
 	free(uidmap);
 }
 
+static void extract_umask(pid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_UMASK_FILE) == -1)
+		errExit("asprintf");
+
+	FILE *fp = fopen(fname, "re");
+	free(fname);
+	if (!fp)
+		return;
+	if (fscanf(fp, "%4o", &orig_umask) < 1) {
+		fprintf(stderr, "Error: cannot read umask\n");
+		exit(1);
+	}
+	fclose(fp);
+}
+
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
 	char *homedir = cfg.homedir;
@@ -253,6 +269,9 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	// set cgroup
 	if (cfg.cgroup)	// not available for uid 0
 		set_cgroup(cfg.cgroup);
+
+	// get umask, it will be set by start_application()
+	extract_umask(pid);
 
 	// join namespaces
 	if (arg_join_network) {

@@ -135,6 +135,7 @@ char *fullargv[MAX_ARGS];			// expanded argv for restricted shell
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
+mode_t orig_umask = 022;
 unsigned long long start_timestamp;
 
 static void clear_atexit(void) {
@@ -833,7 +834,9 @@ static void run_builder(int argc, char **argv) {
 		errExit("setgid/getgid");
 	if (setuid(getuid()) < 0)
 		errExit("setuid/getuid");
+
 	assert(getenv("LD_PRELOAD") == NULL);
+	umask(orig_umask);
 
 	argv[0] = LIBDIR "/firejail/fbuilder";
 	execvp(argv[0], argv);
@@ -857,6 +860,9 @@ int main(int argc, char **argv) {
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
+
+	// sanitize the umask
+	orig_umask = umask(022);
 
 	// check if the user is allowed to use firejail
 	init_cfg(argc, argv);
@@ -991,9 +997,10 @@ int main(int argc, char **argv) {
 							EUID_USER();}
 #endif
 
-						    	drop_privs(1);
-						    	int rv = system(argv[2]);
-						    	exit(rv);
+							drop_privs(1);
+							umask(orig_umask);
+							int rv = system(argv[2]);
+							exit(rv);
 						}
 					}
 				}

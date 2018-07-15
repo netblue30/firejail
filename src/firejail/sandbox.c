@@ -126,6 +126,19 @@ void save_nogroups(void) {
 
 }
 
+void save_umask(void) {
+	FILE *fp = fopen(RUN_UMASK_FILE, "wxe");
+	if (fp) {
+		fprintf(fp, "%o\n", orig_umask);
+		SET_PERMS_STREAM(fp, 0, 0, 0644); // assume mode 0644
+		fclose(fp);
+	}
+	else {
+		fprintf(stderr, "Error: cannot save umask\n");
+		exit(1);
+	}
+}
+
 static void sandbox_if_up(Bridge *br) {
 	assert(br);
 	if (!br->configured)
@@ -367,6 +380,9 @@ void start_application(int no_sandbox) {
 		env_defaults();
 		env_apply();
 	}
+	// restore original umask
+	umask(orig_umask);
+
 	if (arg_debug) {
 		printf("starting application\n");
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
@@ -553,6 +569,11 @@ int sandbox(void* sandbox_arg) {
 	else
 		fs_logger("sandbox filesystem: local");
 	fs_logger("install mount namespace");
+
+	//****************************
+	// save the umask
+	//****************************
+	save_umask();
 
 	//****************************
 	// netfilter

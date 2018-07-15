@@ -149,7 +149,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               Example:
               $ firejail --keep-dev-shm --private-dev
 
-     --nou2f
+       --nou2f
               Disable U2F devices.
 
               Example:

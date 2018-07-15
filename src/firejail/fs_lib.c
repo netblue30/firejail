@@ -246,6 +246,7 @@ static void install_list_entry(const char *lib) {
 
 
 void fslib_install_list(const char *lib_list) {
+	assert(lib_list);
 	if (arg_debug || arg_debug_private_lib)
 		printf("    fslib_install_list  %s\n", lib_list);
 
@@ -353,7 +354,7 @@ void fs_private_lib(void) {
 	}
 
 	// for private-bin files
-	if (arg_private_bin) {
+	if (arg_private_bin && cfg.bin_private_lib && *cfg.bin_private_lib != '\0') {
 		if (arg_debug || arg_debug_private_lib)
 			printf("Processing private-bin files\n");
 		fslib_install_list(cfg.bin_private_lib);

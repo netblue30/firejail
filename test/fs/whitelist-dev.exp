@@ -56,6 +56,9 @@ expect {
 	"16" {puts "OK\n"}
 	"17" {puts "OK\n"}
 	"18" {puts "OK\n"}
+	"19" {puts "OK\n"}
+	"20" {puts "OK\n"}
+	"21" {puts "OK\n"}
 }
 after 100
 

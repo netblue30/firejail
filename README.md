@@ -155,7 +155,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               Example:
               $ firejail --nou2f
 
-      --private-cache
+       --private-cache
                Mount an empty temporary filesystem on top of the .cache
                directory in user home. All modifications are discarded
                when the sandbox is closed.

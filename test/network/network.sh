@@ -8,6 +8,9 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
 sudo ./configure
 
+echo "TESTING: unconfigured network (net_unconfigured.exp)"
+./net_unconfigured.exp
+
 echo "TESTING: netfilter template (netfilter-template.exp)"
 rm -f ./tcpserver
 gcc -o tcpserver tcpserver.c

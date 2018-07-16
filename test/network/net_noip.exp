@@ -39,6 +39,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
+	"10.10.20" {puts "TESTING ERROR 7\n";exit}
 	"done"
 }
 send -- "exit\r"

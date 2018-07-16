@@ -149,13 +149,13 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               Example:
               $ firejail --keep-dev-shm --private-dev
 
-     --nou2f
+       --nou2f
               Disable U2F devices.
 
               Example:
               $ firejail --nou2f
 
-      --private-cache
+       --private-cache
                Mount an empty temporary filesystem on top of the .cache
                directory in user home. All modifications are discarded
                when the sandbox is closed.

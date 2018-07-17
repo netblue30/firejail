@@ -408,7 +408,6 @@ int sandbox(void* sandbox_arg);
 void start_application(int no_sandbox);
 
 // network_main.c
-void net_configure_bridge(Bridge *br, char *dev_name);
 void net_configure_sandbox_ip(Bridge *br);
 void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
 void net_check_cfg(void);

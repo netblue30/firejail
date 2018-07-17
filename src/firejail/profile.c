@@ -358,7 +358,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
 				exit(1);
 			}
-			net_configure_bridge(br, ptr + 4);
+			br->dev = ptr + 4;
+			br->configured = 1;
 		}
 		else
 			warning_feature_disabled("networking");
@@ -421,10 +422,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
 			    br->iprange_start >= br->iprange_end) {
 				fprintf(stderr, "Error: invalid IP range\n");
-				exit(1);
-			}
-			if (in_netrange(br->iprange_start, br->ip, br->mask) || in_netrange(br->iprange_end, br->ip, br->mask)) {
-				fprintf(stderr, "Error: IP range addresses not in network range\n");
 				exit(1);
 			}
 		}

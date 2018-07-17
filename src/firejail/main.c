@@ -265,7 +265,7 @@ static void check_network(Bridge *br) {
 	assert(br);
 	if (br->macvlan == 0) // for bridge devices check network range or arp-scan and assign address
 		net_configure_sandbox_ip(br);
-	else if (br->ipsandbox && br->ip && br->mask) { // for macvlan check network range
+	else if (br->ipsandbox) { // for macvlan check network range
 		char *rv = in_netrange(br->ipsandbox, br->ip, br->mask);
 		if (rv) {
 			fprintf(stderr, "%s", rv);
@@ -1848,7 +1848,8 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
 					return 1;
 				}
-				net_configure_bridge(br, argv[i] + 6);
+				br->dev = argv[i] + 6;
+				br->configured = 1;
 			}
 			else
 				exit_err_feature("networking");
@@ -1911,10 +1912,6 @@ int main(int argc, char **argv) {
 				if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
 				    br->iprange_start >= br->iprange_end) {
 					fprintf(stderr, "Error: invalid IP range\n");
-					return 1;
-				}
-				if (in_netrange(br->iprange_start, br->ip, br->mask) || in_netrange(br->iprange_end, br->ip, br->mask)) {
-					fprintf(stderr, "Error: IP range addresses not in network range\n");
 					return 1;
 				}
 			}
@@ -1994,24 +1991,14 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: no network device configured\n");
 					exit(1);
 				}
-				if (br->arg_ip_none || br->masksandbox) {
+				if (br->arg_ip_none || br->mask) {
 					fprintf(stderr, "Error: cannot configure the network mask twice for the same interface\n");
 					exit(1);
 				}
 
 				// configure this network mask for the last bridge defined
-				if (atoip(argv[i] + 10, &br->masksandbox)) {
+				if (atoip(argv[i] + 10, &br->mask)) {
 					fprintf(stderr, "Error: invalid  network mask\n");
-					exit(1);
-				}
-
-				// if the bridge is not configured, use this mask as the bridge mask
-				if (br->mask == 0)
-					br->mask = br->masksandbox;
-				else {
-					fprintf(stderr, "Error: interface %s already has a network mask defined; "
-						"please remove --netmask\n",
-						br->dev);
 					exit(1);
 				}
 			}
@@ -2431,10 +2418,14 @@ int main(int argc, char **argv) {
 			flock(lockfd_network, LOCK_EX);
 		}
 
-		check_network(&cfg.bridge0);
-		check_network(&cfg.bridge1);
-		check_network(&cfg.bridge2);
-		check_network(&cfg.bridge3);
+		if (cfg.bridge0.configured && cfg.bridge0.arg_ip_none == 0)
+			check_network(&cfg.bridge0);
+		if (cfg.bridge1.configured && cfg.bridge1.arg_ip_none == 0)
+			check_network(&cfg.bridge1);
+		if (cfg.bridge2.configured && cfg.bridge2.arg_ip_none == 0)
+			check_network(&cfg.bridge2);
+		if (cfg.bridge3.configured && cfg.bridge3.arg_ip_none == 0)
+			check_network(&cfg.bridge3);
 
 		// save network mapping in shared memory
 		network_set_run_file(sandbox_pid);

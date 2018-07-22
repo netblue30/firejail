@@ -27,4 +27,11 @@ noroot
 nosound
 notv
 protocol unix,inet,inet6,netlink
-seccom
+seccomp
+disable-mnt
+private-dev
+private-tmp
+private-etc ca-certificates,fonts,host.conf,hostname,hosts,resolv.conf,ssl,pki,crypto-policies,xdg
+
+noexec ${HOME}
+noexec /tmp

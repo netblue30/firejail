@@ -521,7 +521,7 @@ blacklist ${HOME}/wallet.dat
 blacklist /tmp/akonadi-*
 blacklist /tmp/ssh-*
 
-# ~/.cache directory
+# ${HOME}/.cache directory
 blacklist ${HOME}/.cache/0ad
 blacklist ${HOME}/.cache/8pecxstudios
 blacklist ${HOME}/.cache/Clementine

@@ -15,8 +15,8 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 whitelist ${DOWNLOADS}
-whitelist ~/.cache/falkon
-whitelist ~/.config/falkon
+whitelist ${HOME}/.cache/falkon
+whitelist ${HOME}/.config/falkon
 include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 

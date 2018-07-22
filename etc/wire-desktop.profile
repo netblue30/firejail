@@ -35,6 +35,6 @@ shell none
 
 private-bin wire-desktop
 private-dev
-private-etc fonts,machine-id
+private-etc fonts,machine-id,resolv.conf
 disable-mnt
 private-tmp

@@ -950,6 +950,8 @@ void x11_start_xpra_new(int argc, char **argv, char *display_str) {
 		}
 	}
 
+	server_argv[spos++] = NULL;
+
 	assert((int) fpos < (argc+2));
 	assert(!firejail_argv[fpos]);
 						  // no overrun

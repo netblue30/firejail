@@ -12,6 +12,9 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 include /etc/firejail/whitelist-var-common.inc
+
+mkdir ${HOME}/Standard Notes Backups
+mkdir ${HOME}/.config/Standard Notes
 whitelist ${HOME}/Standard Notes Backups
 whitelist ${HOME}/.config/Standard Notes
 

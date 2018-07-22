@@ -3,6 +3,7 @@
 include /etc/firejail/disable-programs.local
 
 blacklist ${HOME}/Monero/wallets
+blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/snap
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
@@ -75,6 +76,7 @@ blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/Signal
 blacklist ${HOME}/.config/Slack
+blacklist ${HOME}/.config/Standard Notes
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire

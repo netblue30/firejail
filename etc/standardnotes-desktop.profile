@@ -11,12 +11,11 @@ include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-include /etc/firejail/whitelist-var-common.inc
-
 mkdir ${HOME}/Standard Notes Backups
 mkdir ${HOME}/.config/Standard Notes
 whitelist ${HOME}/Standard Notes Backups
 whitelist ${HOME}/.config/Standard Notes
+include /etc/firejail/whitelist-var-common.inc
 
 apparmor
 caps.drop all
@@ -31,6 +30,7 @@ nosound
 notv
 protocol unix,inet,inet6,netlink
 seccomp
+
 disable-mnt
 private-dev
 private-tmp

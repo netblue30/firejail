@@ -646,6 +646,8 @@ Vasya Novikov (https://github.com/vn971)
 	- seccomp syscall list update for glibc 2.26-10
 Veeti Paananen (https://github.com/veeti)
 	- fixed Spotify profile
+veloute (https://github.com/veloute)
+	- added standardnotes profile
 Vincent43 (https://github.com/Vincent43)
 	- apparmor enhancements
 vismir2 (https://github.com/vismir2)

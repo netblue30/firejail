@@ -47,33 +47,7 @@ static char *resolve_downloads(int nowhitelist_flag) {
 	char *fname;
 	struct stat s;
 
-	// try a well known download directory name
-	int i = 0;
-	while (dentry[i] != NULL) {
-		if (asprintf(&fname, "%s/%s", cfg.homedir, dentry[i]) == -1)
-			errExit("asprintf");
-
-		if (stat(fname, &s) == 0) {
-			if (arg_debug || arg_debug_whitelists)
-				printf("Downloads directory resolved as \"%s\"\n", fname);
-
-			char *rv;
-			if (nowhitelist_flag) {
-				if (asprintf(&rv, "nowhitelist ~/%s", dentry[i]) == -1)
-					errExit("asprintf");
-			}
-			else {
-				if (asprintf(&rv, "whitelist ~/%s", dentry[i]) == -1)
-					errExit("asprintf");
-			}
-			free(fname);
-			return rv;
-		}
-		free(fname);
-		i++;
-	}
-
-	// try a name form ~/.config/user-dirs.dirs
+	// try a name from ~/.config/user-dirs.dirs
 	if (asprintf(&fname, "%s/.config/user-dirs.dirs", cfg.homedir) == -1)
 		errExit("asprintf");
 	FILE *fp = fopen(fname, "r");
@@ -129,6 +103,32 @@ static char *resolve_downloads(int nowhitelist_flag) {
 					goto errout;
 			}
 		}
+	}
+
+	// try a well known download directory name
+	int i = 0;
+	while (dentry[i] != NULL) {
+		if (asprintf(&fname, "%s/%s", cfg.homedir, dentry[i]) == -1)
+			errExit("asprintf");
+
+		if (stat(fname, &s) == 0) {
+			if (arg_debug || arg_debug_whitelists)
+				printf("Downloads directory resolved as \"%s\"\n", fname);
+
+			char *rv;
+			if (nowhitelist_flag) {
+				if (asprintf(&rv, "nowhitelist ~/%s", dentry[i]) == -1)
+					errExit("asprintf");
+			}
+			else {
+				if (asprintf(&rv, "whitelist ~/%s", dentry[i]) == -1)
+					errExit("asprintf");
+			}
+			free(fname);
+			return rv;
+		}
+		free(fname);
+		i++;
 	}
 
 	fclose(fp);

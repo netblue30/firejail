@@ -826,6 +826,16 @@ void invalid_filename(const char *fname, int globbing) {
 		ptr = fname + 7;
 	else if (strcmp(fname, "${DOWNLOADS}") == 0)
 		return;
+	else if (strcmp(fname, "${MUSIC}") == 0)
+		return;
+	else if (strcmp(fname, "${VIDEOS}") == 0)
+		return;
+	else if (strcmp(fname, "${PICTURES}") == 0)
+		return;
+	else if (strcmp(fname, "${DESKTOP}") == 0)
+		return;
+	else if (strcmp(fname, "${DOCUMENTS}") == 0)
+		return;
 
 	int len = strlen(ptr);
 

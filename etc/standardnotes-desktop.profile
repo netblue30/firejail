@@ -5,6 +5,9 @@ include /etc/firejail/standardnotes-desktop.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/Standard Notes Backups
+noblacklist ${HOME}/.config/Standard Notes
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc

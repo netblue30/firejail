@@ -6,6 +6,7 @@ include /etc/firejail/dosbox.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.dosbox
+noblacklist ${DOCUMENTS}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

@@ -8,6 +8,7 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.arduino15
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/Arduino
+noblacklist ${DOCUMENTS}
 
 # Allow access to java
 noblacklist ${PATH}/java
@@ -20,6 +21,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 netfilter

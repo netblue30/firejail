@@ -15,6 +15,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
 no3d

@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/wireshark
 noblacklist ${HOME}/.wireshark
+noblacklist ${DOCUMENTS}
 
 # Wireshark can use Lua for scripting
 noblacklist ${PATH}/lua*
@@ -19,6 +20,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 

@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.cache/MusicBrainz
 noblacklist ${HOME}/.config/MusicBrainz
+noblacklist ${MUSIC}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*
@@ -19,6 +20,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 no3d

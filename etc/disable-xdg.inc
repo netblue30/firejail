@@ -2,9 +2,11 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-xdg.local
 
-#blacklist ${DESKTOP}
 blacklist ${DOCUMENTS}
-#blacklist ${DOWNLOADS}
 blacklist ${MUSIC}
 blacklist ${PICTURES}
 blacklist ${VIDEOS}
+
+# The following should be considered catch-all directories
+#blacklist ${DESKTOP}
+#blacklist ${DOWNLOADS}

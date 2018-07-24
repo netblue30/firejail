@@ -6,11 +6,13 @@ include /etc/firejail/qmmp.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.qmmp
+noblacklist ${MUSIC}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 netfilter

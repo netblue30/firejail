@@ -6,6 +6,9 @@ include /etc/firejail/kodi.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.kodi
+noblacklist ${MUSIC}
+noblacklist ${PICTURES}
+noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*
@@ -18,6 +21,7 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 

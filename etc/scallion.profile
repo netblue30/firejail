@@ -10,11 +10,13 @@ noblacklist ${PATH}/llvm*
 noblacklist /usr/lib/llvm*
 noblacklist ${PATH}/openssl
 noblacklist ${PATH}/openssl-1.0
+noblacklist ${DOCUMENTS}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 

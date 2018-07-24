@@ -15,12 +15,14 @@ noblacklist ${HOME}/.kde4/share/apps/okular
 noblacklist ${HOME}/.kde4/share/config/okularpartrc
 noblacklist ${HOME}/.kde4/share/config/okularrc
 noblacklist ${HOME}/.local/share/okular
+noblacklist ${DOCUMENTS}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 

@@ -7,12 +7,15 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.mplayer
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 

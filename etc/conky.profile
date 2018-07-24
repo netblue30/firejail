@@ -5,12 +5,14 @@ include /etc/firejail/conky.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${PICTURES}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 ipc-namespace

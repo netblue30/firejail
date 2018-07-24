@@ -9,12 +9,15 @@ noblacklist ${HOME}/.config/ardour4
 noblacklist ${HOME}/.config/ardour5
 noblacklist ${HOME}/.lv2
 noblacklist ${HOME}/.vst
+noblacklist ${DOCUMENTS}
+noblacklist ${MUSIC}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 ipc-namespace

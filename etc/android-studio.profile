@@ -15,10 +15,12 @@ noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
+noblacklist ${DOCUMENTS}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 netfilter

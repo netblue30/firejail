@@ -14,6 +14,11 @@ include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+mkdir ${HOME}/.config/2048-qt
+mkdir ${HOME}/.config/xiaoyong
+whitelist ${HOME}/.config/2048-qt
+whitelist ${HOME}/.config/xiaoyong
+include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all

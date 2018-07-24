@@ -4,7 +4,7 @@ include /etc/firejail/disable-xdg.local
 
 #blacklist ${DESKTOP}
 blacklist ${DOCUMENTS}
-blacklist ${DOWNLOADS}
+#blacklist ${DOWNLOADS}
 blacklist ${MUSIC}
 blacklist ${PICTURES}
 blacklist ${VIDEOS}

@@ -5,6 +5,8 @@ include /etc/firejail/flameshot.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${PICTURES}
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
@@ -29,6 +31,7 @@ seccomp
 shell none
 
 disable-mnt
+private-bin flameshot
 private-cache
 private-dev
 private-tmp

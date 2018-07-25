@@ -28,6 +28,7 @@ caps.drop all
 #machine-id
 netfilter
 # Breaks Gnome connector - disable if you use that
+# Also seems to break Ubuntu titlebar menu
 nodbus
 nodvd
 nogroups

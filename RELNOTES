@@ -11,7 +11,7 @@ firejail (0.9.55) baseline; urgency=low
   * globbing support in private-lib
   * new profiles: ms-excel, ms-office, ms-onenote, ms-outlook, ms-powerpoint
   * new profiles: ms-skype, ms-word, riot-desktop, gnome-mpv, snox, gradio
-  * new profiles: standardnotes-desktop, shellcheck, patch
+  * new profiles: standardnotes-desktop, shellcheck, patch, flameshot
  -- netblue30 <netblue30@yahoo.com>  Fri, 25 May 2018 08:00:00 -0500
 
 firejail (0.9.54) baseline; urgency=low

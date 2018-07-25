@@ -33,6 +33,7 @@ shell none
 disable-mnt
 private-bin flameshot
 private-cache
+private-etc fonts,ca-certificates,ld.so.conf,resolv.conf,ssl
 private-dev
 private-tmp
 

@@ -29,6 +29,7 @@ apparmor
 caps.drop all
 netfilter
 nodbus
+# Seems to cause issues with Nvidia drivers sometimes
 nogroups
 nonewprivs
 noroot

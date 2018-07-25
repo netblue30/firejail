@@ -11,6 +11,7 @@ noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.mplayer
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.local/share/vlc
+noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
 
 include /etc/firejail/disable-common.inc

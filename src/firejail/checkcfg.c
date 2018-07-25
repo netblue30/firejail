@@ -486,12 +486,4 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-	printf("\t- Wireless interface support is %s\n",
-#ifdef IPVLAN_MODE_L2
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 }

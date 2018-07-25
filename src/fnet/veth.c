@@ -50,6 +50,13 @@
 #include <linux/veth.h>
 #include <net/if.h>
 
+// Debian Jessie and distributions before that don't have support for IPVLAN
+// in /usr/include/linux/if_link.h. We only need a definition for IPVLAN_MODE_L2.
+// The kernel version detection happens at run time.
+#ifndef IFLA_IPVLAN_MAX
+#define IPVLAN_MODE_L2 0
+#endif
+
 struct iplink_req
 {
 	struct nlmsghdr         n;
@@ -176,7 +183,6 @@ int net_create_macvlan(const char *dev, const char *parent, unsigned pid) {
 	return 0;
 }
 
-#ifdef IPVLAN_MODE_L2
 int net_create_ipvlan(const char *dev, const char *parent, unsigned pid) {
 	int len;
 	struct iplink_req req;
@@ -238,7 +244,6 @@ int net_create_ipvlan(const char *dev, const char *parent, unsigned pid) {
 
 	return 0;
 }
-#endif
 
 // move the interface dev in namespace of program pid
 // when the interface is moved, netlink does not preserve interface configuration

@@ -20,6 +20,7 @@
 #include "fnet.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/utsname.h>
 
 int arg_quiet = 0;
 
@@ -91,10 +92,7 @@ printf("\n");
 	else if (argc == 6 && strcmp(argv[1], "create") == 0 && strcmp(argv[2], "macvlan") == 0) {
 		// use ipvlan for wireless devices
 		// ipvlan driver was introduced in Linux kernel 3.19
-		// detect both compile time and run time
-#ifndef IPVLAN_MODE_L2	// compile time
-		net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
-#else
+
 		// check kernel version
 		struct utsname u;
 		int rv = uname(&u);
@@ -107,8 +105,6 @@ printf("\n");
 			exit(1);
 		}
 
-		if (arg_debug)
-			printf("Linux kernel version %d.%d\n", major, minor);
 		if (major <= 3 && minor < 18)
 			net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
 		else {
@@ -121,7 +117,6 @@ printf("\n");
 			else // regular ethernet
 				net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
 		}
-#endif
 	}
 	else if (argc == 7 && strcmp(argv[1], "config") == 0 && strcmp(argv[2], "interface") == 0) {
 		char *dev = argv[3];

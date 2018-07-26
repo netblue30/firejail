@@ -307,39 +307,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "net none") == 0) {
-#ifdef HAVE_NETWORK
-		if (checkcfg(CFG_NETWORK)) {
-			arg_nonetwork  = 1;
-			cfg.bridge0.configured = 0;
-			cfg.bridge1.configured = 0;
-			cfg.bridge2.configured = 0;
-			cfg.bridge3.configured = 0;
-			cfg.interface0.configured = 0;
-			cfg.interface1.configured = 0;
-			cfg.interface2.configured = 0;
-			cfg.interface3.configured = 0;
-		}
-		else
-			warning_feature_disabled("networking");
-#endif
+		arg_nonetwork  = 1;
+		cfg.bridge0.configured = 0;
+		cfg.bridge1.configured = 0;
+		cfg.bridge2.configured = 0;
+		cfg.bridge3.configured = 0;
+		cfg.interface0.configured = 0;
+		cfg.interface1.configured = 0;
+		cfg.interface2.configured = 0;
+		cfg.interface3.configured = 0;
 		return 0;
 	}
 	else if (strncmp(ptr, "net ", 4) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
-#ifdef HAVE_NETWORK_RESTRICTED
-			// compile time restricted networking
-			if (getuid() != 0) {
-				fprintf(stderr, "Error: only \"net none\" is allowed to non-root users\n");
-				exit(1);
-			}
-#endif
-			// run time restricted networking
-			if (checkcfg(CFG_RESTRICTED_NETWORK) && getuid() != 0) {
-				fprintf(stderr, "Error: only \"net none\" is allowed to non-root users\n");
-				exit(1);
-			}
-
 			if (strcmp(ptr + 4, "lo") == 0) {
 				fprintf(stderr, "Error: cannot attach to lo device\n");
 				exit(1);

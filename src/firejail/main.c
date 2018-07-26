@@ -1745,22 +1745,21 @@ int main(int argc, char **argv) {
 		//*************************************
 		// network
 		//*************************************
+		else if (strcmp(argv[i], "--net=none") == 0) {
+			arg_nonetwork  = 1;
+			cfg.bridge0.configured = 0;
+			cfg.bridge1.configured = 0;
+			cfg.bridge2.configured = 0;
+			cfg.bridge3.configured = 0;
+			cfg.interface0.configured = 0;
+			cfg.interface1.configured = 0;
+			cfg.interface2.configured = 0;
+			cfg.interface3.configured = 0;
+			continue;
+		}
 #ifdef HAVE_NETWORK
 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
-#ifdef HAVE_NETWORK_RESTRICTED
-				// compile time restricted networking
-				if (getuid() != 0) {
-					fprintf(stderr, "Error: --interface is allowed only to root user\n");
-					exit(1);
-				}
-#endif
-				// run time restricted networking
-				if (checkcfg(CFG_RESTRICTED_NETWORK) && getuid() != 0) {
-					fprintf(stderr, "Error: --interface is allowed only to root user\n");
-					exit(1);
-				}
-
 				// checks
 				if (arg_nonetwork) {
 					fprintf(stderr, "Error: --network=none and --interface are incompatible\n");
@@ -1818,18 +1817,6 @@ int main(int argc, char **argv) {
 					continue;
 				}
 
-#ifdef HAVE_NETWORK_RESTRICTED
-				// compile time restricted networking
-				if (getuid() != 0) {
-					fprintf(stderr, "Error: only --net=none is allowed to non-root users\n");
-					exit(1);
-				}
-#endif
-				// run time restricted networking
-				if (checkcfg(CFG_RESTRICTED_NETWORK) && getuid() != 0) {
-					fprintf(stderr, "Error: only --net=none is allowed to non-root users\n");
-					exit(1);
-				}
 				if (strcmp(argv[i] + 6, "lo") == 0) {
 					fprintf(stderr, "Error: cannot attach to lo device\n");
 					exit(1);
@@ -2072,18 +2059,6 @@ int main(int argc, char **argv) {
 
 #ifdef HAVE_NETWORK
 		else if (strcmp(argv[i], "--netfilter") == 0) {
-#ifdef HAVE_NETWORK_RESTRICTED
-			// compile time restricted networking
-			if (getuid() != 0) {
-				fprintf(stderr, "Error: --netfilter is only allowed for root\n");
-				exit(1);
-			}
-#endif
-			// run time restricted networking
-			if (checkcfg(CFG_RESTRICTED_NETWORK) && getuid() != 0) {
-				fprintf(stderr, "Error: --netfilter is only allowed for root\n");
-				exit(1);
-			}
 			if (checkcfg(CFG_NETWORK)) {
 				arg_netfilter = 1;
 			}
@@ -2092,18 +2067,6 @@ int main(int argc, char **argv) {
 		}
 
 		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
-#ifdef HAVE_NETWORK_RESTRICTED
-			// compile time restricted networking
-			if (getuid() != 0) {
-				fprintf(stderr, "Error: --netfilter is only allowed for root\n");
-				exit(1);
-			}
-#endif
-			// run time restricted networking
-			if (checkcfg(CFG_RESTRICTED_NETWORK) && getuid() != 0) {
-				fprintf(stderr, "Error: --netfilter is only allowed for root\n");
-				exit(1);
-			}
 			if (checkcfg(CFG_NETWORK)) {
 				arg_netfilter = 1;
 				arg_netfilter_file = argv[i] + 12;

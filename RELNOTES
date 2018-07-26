@@ -1,6 +1,9 @@
 firejail (0.9.55) baseline; urgency=low
   * work in progress
   * modif: removed CFG_CHROOT_DESKTOP configuration option
+  * modif: removed compile time --enable-network=restricted
+  * modif: --net=none allowed even if networking was disabled at compile
+     time or at run time
   * support wireless devices in --net option
   * support tap devices in --net option (tunneling support)
   * allow IP address configuration if the parent interface specified

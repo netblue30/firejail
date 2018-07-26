@@ -102,13 +102,8 @@ AS_IF([test "x$enable_globalcfg" != "xno"], [
 HAVE_NETWORK=""
 AC_ARG_ENABLE([network],
     AS_HELP_STRING([--disable-network], [disable network]))
-AC_ARG_ENABLE([network],
-    AS_HELP_STRING([--enable-network=restricted], [ restrict --net= to root only]))
 AS_IF([test "x$enable_network" != "xno"], [
 	HAVE_NETWORK="-DHAVE_NETWORK"
-	AS_IF([test "x$enable_network" = "xrestricted"], [
-	       HAVE_NETWORK="$HAVE_NETWORK -DHAVE_NETWORK_RESTRICTED"
-	])
 	AC_SUBST(HAVE_NETWORK)
 ])
 

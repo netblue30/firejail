@@ -373,6 +373,13 @@ int checkcfg(int val) {
 		initialized = 1;
 	}
 
+
+	// merge CFG_RESTRICTED_NETWORK into CFG_NETWORK
+	if (val == CFG_NETWORK) {
+		if (cfg_val[CFG_RESTRICTED_NETWORK] && getuid() != 0)
+			return 0;
+	}
+
 	return cfg_val[val];
 
 errout:
@@ -442,10 +449,6 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-
-#ifdef HAVE_NETWORK_RESTRICTED
-	printf("\t- networking features are available only to root user\n");
-#endif
 
 	printf("\t- overlayfs support is %s\n",
 #ifdef HAVE_OVERLAYFS

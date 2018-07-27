@@ -28,9 +28,6 @@ echo "TESTING: kmsg access (test/fs/kmsg.exp)"
 echo "TESTING: read/write /var/tmp (test/fs/fs_var_tmp.exp)"
 ./fs_var_tmp.exp
 
-echo "TESTING: private-lib (test/fs/private-lib.exp)"
-./private-lib.exp
-
 echo "TESTING: read/write /var/lock (test/fs/fs_var_lock.exp)"
 ./fs_var_lock.exp
 
@@ -39,9 +36,6 @@ echo "TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)"
 
 echo "TESTING: private (test/fs/private.exp)"
 ./private.exp
-
-echo "TESTING: private home (test/fs/private-home.exp)"
-./private-home.exp
 
 echo "TESTING: private home dir (test/fs/private-home-dir.exp)"
 ./private-home-dir.exp
@@ -54,9 +48,6 @@ echo "TESTING: private-etc (test/fs/private-etc.exp)"
 
 echo "TESTING: empty private-etc (test/fs/private-etc-empty.exp)"
 ./private-etc-empty.exp
-
-echo "TESTING: private-bin (test/fs/private-bin.exp)"
-./private-bin.exp
 
 echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 ./whitelist-empty.exp

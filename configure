@@ -3103,6 +3103,10 @@ else
 fi
 
 
+# LTS marker
+EXTRA_CFLAGS+=" -DLTS "
+
+
 HAVE_SPECTRE="no"
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Spectre mitigation support in gcc or clang compiler" >&5
 $as_echo_n "checking for Spectre mitigation support in gcc or clang compiler... " >&6; }

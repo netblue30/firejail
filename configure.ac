@@ -8,6 +8,10 @@ AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_RANLIB
 
+# LTS marker
+EXTRA_CFLAGS+=" -DLTS "
+
+
 HAVE_SPECTRE="no"
 AC_MSG_CHECKING(for Spectre mitigation support in gcc or clang compiler)
 AS_IF([test "$CC" = "gcc"], [

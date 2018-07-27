@@ -1,6 +1,6 @@
 all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fbuilder src/fcopy src/fldd src/libpostexecseccomp
+APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/fnet src/fseccomp src/fcopy src/libpostexecseccomp
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx
 
@@ -93,12 +93,9 @@ endif
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
 
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fnetfilter/fnetfilter $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fcopy/fcopy $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fldd/fldd $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fbuilder/fbuilder $(DESTDIR)/$(libdir)/firejail/.
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	install -c -m 0755 src/fsec-print/fsec-print $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fsec-optimize/fsec-optimize $(DESTDIR)/$(libdir)/firejail/.
@@ -108,13 +105,6 @@ ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	install -c -m 0644 seccomp.32 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.block_secondary $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.mdwx $(DESTDIR)/$(libdir)/firejail/.
-endif
-ifeq ($(HAVE_CONTRIB_INSTALL),yes)
-	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 contrib/fjclip.py $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 contrib/fjdisplay.py $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 contrib/fjresize.py $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 contrib/fj-mkdeb.py $(DESTDIR)/$(libdir)/firejail/.
 endif
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)
@@ -165,15 +155,12 @@ install-strip: all
 	strip src/libtracelog/libtracelog.so
 	strip src/libpostexecseccomp/libpostexecseccomp.so
 	strip src/ftee/ftee
-	strip src/faudit/faudit
 	strip src/fnet/fnet
 	strip src/fnetfilter/fnetfilter
 	strip src/fseccomp/fseccomp
 	strip src/fsec-print/fsec-print
 	strip src/fsec-optimize/fsec-optimize
 	strip src/fcopy/fcopy
-	strip src/fldd/fldd
-	strip src/fbuilder/fbuilder
 	$(MAKE) realinstall
 
 uninstall:
@@ -190,7 +177,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 
-DISTFILES = "src etc platform contrib configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh COPYING README RELNOTES"
+DISTFILES = "src etc platform configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh COPYING README RELNOTES"
 DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
 
 dist:
@@ -213,9 +200,6 @@ deb: dist
 
 snap: all
 	cd platform/snap; ./snap.sh
-
-install-snap: snap
-	sudo snap remove faudit; sudo snap install faudit*.snap
 
 test-compile: dist
 	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
@@ -242,17 +226,8 @@ scan-build: clean
 test-profiles:
 	cd test/profiles; ./profiles.sh | grep TESTING
 
-test-private-lib:
-	cd test/private-lib; ./private-lib.sh | grep TESTING
-
 test-apps:
 	cd test/apps; ./apps.sh | grep TESTING
-
-test-apps-x11:
-	cd test/apps-x11; ./apps-x11.sh | grep TESTING
-
-test-apps-x11-xorg:
-	cd test/apps-x11-xorg; ./apps-x11-xorg.sh | grep TESTING
 
 test-sysutils:
 	cd test/sysutils; ./sysutils.sh | grep TESTING
@@ -280,7 +255,7 @@ test-fcopy:
 test-fnetfilter:
 	cd test/fnetfilter; ./fnetfilter.sh | grep TESTING
 
-test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+test: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-filters test-arguments
 	echo "TEST COMPLETE"
 
 test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-filters test-arguments
@@ -295,10 +270,6 @@ test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sy
 # a firejail-test account is required, public/private key setup
 test-ssh:
 	cd test/ssh; ./ssh.sh | grep TESTING
-
-# requires root access
-test-chroot:
-	cd test/chroot; ./chroot.sh | grep testing
 
 # Huge appimage files, not included in "make dist" archive
 test-appimage:
@@ -316,10 +287,6 @@ test-stress:
 # Tesets running a root user
 test-root:
 	cd test/root; su -c ./root.sh | grep TESTING
-
-# OverlayFS is not available on all platforms
-test-overlay:
-	cd test/overlay; ./overlay.sh | grep TESTING
 
 # For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"
 

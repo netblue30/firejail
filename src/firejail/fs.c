@@ -740,7 +740,7 @@ void fs_basic_fs(void) {
 }
 
 
-
+#ifndef LTS
 #ifdef HAVE_OVERLAYFS
 char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 	struct stat s;
@@ -1292,6 +1292,7 @@ void fs_chroot(const char *rootdir) {
 		disable_config();
 }
 #endif
+#endif // LTS
 
 // this function is called from sandbox.c before blacklist/whitelist functions
 void fs_private_tmp(void) {

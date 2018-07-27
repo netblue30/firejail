@@ -339,6 +339,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 #endif
+#ifndef LTS
 #ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -373,6 +374,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("x11");
 	}
 #endif
+#endif // LTS
 #ifdef HAVE_NETWORK
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -825,6 +827,7 @@ static int check_arg(int argc, char **argv, const char *argument, int strict) {
 	return found;
 }
 
+#ifndef LTS
 static void run_builder(int argc, char **argv) {
 	EUID_ASSERT();
 	(void) argc;
@@ -844,7 +847,7 @@ static void run_builder(int argc, char **argv) {
 	perror("execvp");
 	exit(1);
 }
-
+#endif // LTS
 
 //*******************************************
 // Main program
@@ -920,10 +923,11 @@ int main(int argc, char **argv) {
 		profile_add(cmd);
 	}
 
+#ifndef LTS
 	// profile builder
 	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
 		run_builder(argc, argv); // this function will not return
-
+#endif // LTS
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
 		run_symlink(argc, argv, 0); // if symlink detected, this function will not return
@@ -1354,6 +1358,7 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--disable-mnt") == 0)
 			arg_disable_mnt = 1;
+#ifndef LTS
 #ifdef HAVE_OVERLAYFS
 		else if (strcmp(argv[i], "--overlay") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
@@ -1441,6 +1446,7 @@ int main(int argc, char **argv) {
 				exit_err_feature("overlayfs");
 		}
 #endif
+#endif //LTS
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
 			// multiple profile files are allowed!
 
@@ -1489,6 +1495,7 @@ int main(int argc, char **argv) {
 			else
 				cfg.profile_ignore[j] = argv[i] + 9;
 		}
+#ifndef LTS
 #ifdef HAVE_CHROOT
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
 			if (checkcfg(CFG_CHROOT)) {
@@ -1537,6 +1544,7 @@ int main(int argc, char **argv) {
 				exit_err_feature("chroot");
 		}
 #endif
+#endif // LTS
 		else if (strcmp(argv[i], "--writable-etc") == 0) {
 			if (cfg.etc_private_keep) {
 				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
@@ -1583,6 +1591,7 @@ int main(int argc, char **argv) {
 			}
 			arg_private = 1;
 		}
+#ifndef LTS
 #ifdef HAVE_PRIVATE_HOME
 		else if (strncmp(argv[i], "--private-home=", 15) == 0) {
 			if (checkcfg(CFG_PRIVATE_HOME)) {
@@ -1607,6 +1616,7 @@ int main(int argc, char **argv) {
 				exit_err_feature("private-home");
 		}
 #endif
+#endif //LTS
 		else if (strcmp(argv[i], "--private-dev") == 0) {
 			arg_private_dev = 1;
 		}
@@ -1657,6 +1667,7 @@ int main(int argc, char **argv) {
 				cfg.srv_private_keep = argv[i] + 14;
 			arg_private_srv = 1;
 		}
+#ifndef LTS
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			// extract private bin list
 			if (*(argv[i] + 14) == '\0') {
@@ -1685,6 +1696,7 @@ int main(int argc, char **argv) {
 			else
 				exit_err_feature("private-lib");
 		}
+#endif // LTS
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}
@@ -2100,6 +2112,7 @@ int main(int argc, char **argv) {
 		//*************************************
 		else if (strncmp(argv[i], "--timeout=", 10) == 0)
 			cfg.timeout = extract_timeout(argv[i] + 10);
+#ifndef LTS
 		else if (strcmp(argv[i], "--audit") == 0) {
 			arg_audit_prog = LIBDIR "/firejail/faudit";
 			arg_audit = 1;
@@ -2120,6 +2133,7 @@ int main(int argc, char **argv) {
 			}
 			arg_audit = 1;
 		}
+#endif // LTS
 		else if (strcmp(argv[i], "--appimage") == 0)
 			arg_appimage = 1;
 		else if (strcmp(argv[i], "--shell=none") == 0) {
@@ -2364,10 +2378,11 @@ int main(int argc, char **argv) {
 	}
 	EUID_ASSERT();
 
+#ifndef LTS
 	// block X11 sockets
 	if (arg_x11_block)
 		x11_block();
-
+#endif //LTS
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
 
@@ -2422,9 +2437,11 @@ int main(int argc, char **argv) {
 	}
 	if (cfg.name)
 		set_name_run_file(sandbox_pid);
+#ifndef LTS
 	int display = x11_display();
 	if (display > 0)
 		set_x11_run_file(sandbox_pid, display);
+#endif
 	flock(lockfd_directory, LOCK_UN);
 	close(lockfd_directory);
 	EUID_USER();

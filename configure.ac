@@ -178,15 +178,6 @@ AS_IF([test "x$enable_gcov" = "xyes"], [
 	AC_SUBST(HAVE_GCOV)
 ])
 
-HAVE_CONTRIB_INSTALL="yes"
-AC_ARG_ENABLE([contrib-install],
-    AS_HELP_STRING([--enable-contrib-install], [install contrib scripts]))
-AS_IF([test "x$enable_contrib_install" = "xno"],
-	[HAVE_CONTRIB_INSTALL="no"],
-	[HAVE_CONTRIB_INSTALL="yes"]
-)
-AC_SUBST(HAVE_CONTRIB_INSTALL)
-
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
 AC_CHECK_HEADER(pthread.h,,AC_MSG_ERROR([*** POSIX thread support not installed ***]))
@@ -199,8 +190,8 @@ if test "$prefix" = /usr; then
 fi
 
 AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
-src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
-src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile)
+src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fsec-print/Makefile \
+src/ftee/Makefile src/fseccomp/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile)
 
 echo
 echo "Configuration options:"
@@ -225,6 +216,5 @@ echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
-echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
 echo "   Install as a SUID executable: $HAVE_SUID"
 echo

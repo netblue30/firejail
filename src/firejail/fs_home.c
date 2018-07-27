@@ -364,6 +364,7 @@ void fs_check_private_dir(void) {
 	}
 }
 
+#ifndef LTS
 //***********************************************************************************
 // --private-home
 //***********************************************************************************
@@ -531,3 +532,4 @@ void fs_private_home_list(void) {
 		fprintf(stderr, "Home directory installed in %0.2f ms\n", timetrace_end());
 
 }
+#endif //LTS

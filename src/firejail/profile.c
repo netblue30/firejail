@@ -198,6 +198,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_private = 1;
 		return 0;
 	}
+#ifndef LTS
 	if (strncmp(ptr, "private-home ", 13) == 0) {
 #ifdef HAVE_PRIVATE_HOME
 		if (checkcfg(CFG_PRIVATE_HOME)) {
@@ -213,6 +214,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
+#endif //LTS
 	else if (strcmp(ptr, "allusers") == 0) {
 		arg_allusers = 1;
 		return 0;
@@ -790,6 +792,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+#ifndef LTS
 	if (strcmp(ptr, "x11 xephyr") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
@@ -875,7 +878,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-
+#endif //LTS
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
 		if (arg_writable_etc) {
@@ -949,7 +952,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-
+#ifndef LTS
 #ifdef HAVE_OVERLAYFS
 	if (strncmp(ptr, "overlay-named ", 14) == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
@@ -1034,6 +1037,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 	}
 #endif
+#endif // LTS
 
 	// filesystem bind
 	if (strncmp(ptr, "bind ", 5) == 0) {

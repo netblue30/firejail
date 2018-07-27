@@ -625,7 +625,6 @@ ac_includes_default="\
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 HAVE_SECCOMP_H
-HAVE_CONTRIB_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
 HAVE_FATAL_WARNINGS
@@ -716,7 +715,6 @@ enable_suid
 enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
-enable_contrib_install
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1365,8 +1363,6 @@ Optional Features:
   --enable-busybox-workaround
                           enable busybox workaround
   --enable-gcov           Gcov instrumentation
-  --enable-contrib-install
-                          install contrib scripts
 
 Some influential environment variables:
   CC          C compiler command
@@ -3776,20 +3772,6 @@ if test "x$enable_gcov" = "xyes"; then :
 
 fi
 
-HAVE_CONTRIB_INSTALL="yes"
-# Check whether --enable-contrib-install was given.
-if test "${enable_contrib_install+set}" = set; then :
-  enableval=$enable_contrib_install;
-fi
-
-if test "x$enable_contrib_install" = "xno"; then :
-  HAVE_CONTRIB_INSTALL="no"
-else
-  HAVE_CONTRIB_INSTALL="yes"
-
-fi
-
-
 # checking pthread library
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
 $as_echo_n "checking for main in -lpthread... " >&6; }
@@ -3855,7 +3837,7 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
-ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile"
+ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fsec-print/Makefile src/ftee/Makefile src/fseccomp/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4575,12 +4557,9 @@ do
     "src/libtrace/Makefile") CONFIG_FILES="$CONFIG_FILES src/libtrace/Makefile" ;;
     "src/libtracelog/Makefile") CONFIG_FILES="$CONFIG_FILES src/libtracelog/Makefile" ;;
     "src/firecfg/Makefile") CONFIG_FILES="$CONFIG_FILES src/firecfg/Makefile" ;;
-    "src/fbuilder/Makefile") CONFIG_FILES="$CONFIG_FILES src/fbuilder/Makefile" ;;
     "src/fsec-print/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-print/Makefile" ;;
     "src/ftee/Makefile") CONFIG_FILES="$CONFIG_FILES src/ftee/Makefile" ;;
-    "src/faudit/Makefile") CONFIG_FILES="$CONFIG_FILES src/faudit/Makefile" ;;
     "src/fseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/fseccomp/Makefile" ;;
-    "src/fldd/Makefile") CONFIG_FILES="$CONFIG_FILES src/fldd/Makefile" ;;
     "src/libpostexecseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/libpostexecseccomp/Makefile" ;;
     "src/fsec-optimize/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-optimize/Makefile" ;;
 
@@ -5061,6 +5040,5 @@ echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
-echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
 echo "   Install as a SUID executable: $HAVE_SUID"
 echo

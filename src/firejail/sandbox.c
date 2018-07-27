@@ -391,6 +391,7 @@ void start_application(int no_sandbox) {
 	//****************************************
 	// audit
 	//****************************************
+#ifndef LTS
 	if (arg_audit) {
 		assert(arg_audit_prog);
 #ifdef HAVE_GCOV
@@ -404,7 +405,9 @@ void start_application(int no_sandbox) {
 	//****************************************
 	// start the program without using a shell
 	//****************************************
-	else if (arg_shell_none) {
+	else
+#endif // LTS
+	if (arg_shell_none) {
 		if (arg_debug) {
 			int i;
 			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
@@ -732,6 +735,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_appimage)
 		enforce_filters();
 
+#ifndef LTS
 #ifdef HAVE_CHROOT
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
@@ -761,6 +765,7 @@ int sandbox(void* sandbox_arg) {
 	}
 	else
 #endif
+#endif // LTS
 		fs_basic_fs();
 
 	//****************************
@@ -775,6 +780,7 @@ int sandbox(void* sandbox_arg) {
 			else
 				fs_private_homedir();
 		}
+#ifndef LTS
 		else if (cfg.home_private_keep) { // --private-home=
 			if (cfg.chrootdir)
 				fwarning("private-home= feature is disabled in chroot\n");
@@ -784,6 +790,7 @@ int sandbox(void* sandbox_arg) {
 				fs_private_home_list();
 		}
 		else // --private
+#endif //LTS
 			fs_private();
 	}
 
@@ -823,6 +830,7 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
+#ifndef LTS
 	// private-bin is disabled for appimages
 	if (arg_private_bin && !arg_appimage) {
 		if (cfg.chrootdir)
@@ -853,6 +861,7 @@ int sandbox(void* sandbox_arg) {
 			fs_private_lib();
 		}
 	}
+#endif // LTS
 
 	if (arg_private_cache) {
 		if (cfg.chrootdir)
@@ -1001,10 +1010,12 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
+#ifndef LTS
 	// clean /tmp/.X11-unix sockets
 	fs_x11();
 	if (arg_x11_xorg)
 		x11_xorg();
+#endif //LTS
 
 	//****************************
 	// set security filters

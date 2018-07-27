@@ -789,8 +789,8 @@ int sandbox(void* sandbox_arg) {
 			else
 				fs_private_home_list();
 		}
-		else // --private
 #endif //LTS
+		else // --private
 			fs_private();
 	}
 

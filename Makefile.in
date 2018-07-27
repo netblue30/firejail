@@ -178,7 +178,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 
 DISTFILES = "src etc platform configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh COPYING README RELNOTES"
-DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
+DISTFILES_TEST = "test/apps test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
 dist:
 	mv config.status config.status.old
@@ -290,5 +290,5 @@ test-root:
 
 # For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"
 
-test-all: test-root test-chroot test-network test-appimage test-overlay
+test-all: test-root test-network test-appimage
 	echo "TEST COMPLETE"

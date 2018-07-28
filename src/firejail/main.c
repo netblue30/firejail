@@ -1623,6 +1623,7 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--keep-dev-shm") == 0) {
 			arg_keep_dev_shm = 1;
 		}
+#ifndef LTS
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
 			if (arg_writable_etc) {
 				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
@@ -1667,7 +1668,7 @@ int main(int argc, char **argv) {
 				cfg.srv_private_keep = argv[i] + 14;
 			arg_private_srv = 1;
 		}
-#ifndef LTS
+
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			// extract private bin list
 			if (*(argv[i] + 14) == '\0') {

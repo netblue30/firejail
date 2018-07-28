@@ -74,6 +74,7 @@ void fs_machineid(void) {
 	}
 }
 
+#ifndef LTS
 // return 0 if file not found, 1 if found
 static int check_dir_or_file(const char *fname) {
 	assert(fname);
@@ -178,3 +179,4 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 
 	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }
+#endif

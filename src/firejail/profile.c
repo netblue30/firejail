@@ -878,7 +878,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-#endif //LTS
+
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
 		if (arg_writable_etc) {
@@ -952,7 +952,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-#ifndef LTS
 #ifdef HAVE_OVERLAYFS
 	if (strncmp(ptr, "overlay-named ", 14) == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {

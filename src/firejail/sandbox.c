@@ -797,6 +797,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_dev)
 		fs_private_dev();
 
+#ifndef LTS
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
 			fwarning("private-etc feature is disabled in chroot\n");
@@ -830,7 +831,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-#ifndef LTS
 	// private-bin is disabled for appimages
 	if (arg_private_bin && !arg_appimage) {
 		if (cfg.chrootdir)

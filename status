@@ -2,7 +2,7 @@ Phase 1
 - starting from main as of Jul 27
 - removing chroot, overlayfs, x11, private-bin, private-lib
 - removing private-home, audit, build
-- remove private-etc
+- remove private-etc, private-srv, private-opt, rlimit-*
 
-main: 14739, LTS; 11890
+main: 14739, LTS; 11447
 

@@ -1077,6 +1077,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+#ifndef LTS
 	// rlimit
 	if (strncmp(ptr, "rlimit", 6) == 0) {
 		if (strncmp(ptr, "rlimit-nofile ", 14) == 0) {
@@ -1116,6 +1117,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 		return 0;
 	}
+#endif
 
 	if (strncmp(ptr, "timeout ", 8) == 0) {
 		cfg.timeout = extract_timeout(ptr +8);
@@ -1186,13 +1188,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		ptr += 6;
 	}
 	else {
-		if (lineno == 0)
+		if (lineno == 0) {
 			fprintf(stderr, "Error: \"%s\" as a command line option is invalid\n", ptr);
-		else if (fname != NULL)
-			fprintf(stderr, "Error: line %d in %s is invalid\n", lineno, fname);
-		else
-			fprintf(stderr, "Error: line %d in the custom profile is invalid\n", lineno);
-		exit(1);
+			exit(1);
+		}
+		else {
+			fwarning("\"%s\" is not supported in LTS build\n", ptr);
+			return 0;
+		}
 	}
 
 	// some characters just don't belong in filenames

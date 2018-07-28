@@ -1,6 +1,6 @@
 all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/fnet src/fseccomp src/fcopy src/libpostexecseccomp
+APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/fnet src/fseccomp src/libpostexecseccomp
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx
 
@@ -95,7 +95,6 @@ endif
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fnetfilter/fnetfilter $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fcopy/fcopy $(DESTDIR)/$(libdir)/firejail/.
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	install -c -m 0755 src/fsec-print/fsec-print $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fsec-optimize/fsec-optimize $(DESTDIR)/$(libdir)/firejail/.
@@ -160,7 +159,6 @@ install-strip: all
 	strip src/fseccomp/fseccomp
 	strip src/fsec-print/fsec-print
 	strip src/fsec-optimize/fsec-optimize
-	strip src/fcopy/fcopy
 	$(MAKE) realinstall
 
 uninstall:
@@ -178,7 +176,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 
 DISTFILES = "src etc platform configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh COPYING README RELNOTES"
-DISTFILES_TEST = "test/apps test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
+DISTFILES_TEST = "test/apps test/root test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
 dist:
 	mv config.status config.status.old
@@ -249,16 +247,13 @@ test-arguments:
 test-fs:
 	cd test/fs; ./fs.sh | grep TESTING
 
-test-fcopy:
-	cd test/fcopy; ./fcopy.sh | grep TESTING
-
 test-fnetfilter:
 	cd test/fnetfilter; ./fnetfilter.sh | grep TESTING
 
-test: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-filters test-arguments
+test: test-profiles test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-filters test-arguments
 	echo "TEST COMPLETE"
 
-test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-filters test-arguments
+test-travis: test-profiles test-fnetfilter test-fs test-utils test-sysutils test-environment test-filters test-arguments
 	echo "TEST COMPLETE"
 
 ##########################################

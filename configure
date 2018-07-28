@@ -3837,7 +3837,7 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
-ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fsec-print/Makefile src/ftee/Makefile src/fseccomp/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile"
+ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fsec-print/Makefile src/ftee/Makefile src/fseccomp/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4549,7 +4549,6 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/common.mk") CONFIG_FILES="$CONFIG_FILES src/common.mk" ;;
     "src/lib/Makefile") CONFIG_FILES="$CONFIG_FILES src/lib/Makefile" ;;
-    "src/fcopy/Makefile") CONFIG_FILES="$CONFIG_FILES src/fcopy/Makefile" ;;
     "src/fnet/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnet/Makefile" ;;
     "src/firejail/Makefile") CONFIG_FILES="$CONFIG_FILES src/firejail/Makefile" ;;
     "src/fnetfilter/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnetfilter/Makefile" ;;

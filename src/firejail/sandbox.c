@@ -1023,9 +1023,6 @@ int sandbox(void* sandbox_arg) {
 	// set capabilities
 	set_caps();
 
-	// set rlimits
-	set_rlimits();
-
 	// set cpu affinity
 	if (cfg.cpus) {
 		save_cpu(); // save cpu affinity mask to CPU_CFG file

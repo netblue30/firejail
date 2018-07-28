@@ -1212,6 +1212,7 @@ int main(int argc, char **argv) {
 			arg_trace = 1;
 		else if (strcmp(argv[i], "--tracelog") == 0)
 			arg_tracelog = 1;
+#ifndef LTS
 		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
 			check_unsigned(argv[i] + 13, "Error: invalid rlimit");
 			sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);
@@ -1242,6 +1243,7 @@ int main(int argc, char **argv) {
 			sscanf(argv[i] + 12, "%llu", &cfg.rlimit_as);
 			arg_rlimit_as = 1;
 		}
+#endif
 		else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)
 			arg_ipc = 1;
 		else if (strncmp(argv[i], "--cpu=", 6) == 0)

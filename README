@@ -487,6 +487,8 @@ rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
+Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
+	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
 	- rewrite globbing code to fix various minor issues
 	- added noblacklist command for profile files

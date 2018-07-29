@@ -37,7 +37,7 @@ tracelog
 
 private-bin xviewer
 private-dev
-private-etc fonts
+#private-etc fonts
 private-lib
 private-tmp
 

@@ -32,7 +32,7 @@ shell none
 
 disable-mnt
 private-bin sh,bash,dig,awk,Viber
-private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf,pki,ca-certificates,crypto-policies
+private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf,pki,ca-certificates,crypto-policies,machine-id,asound.conf
 private-tmp
 
 noexec ${HOME}

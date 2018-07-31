@@ -26,4 +26,4 @@ seccomp
 shell none
 
 private-bin cmus
-private-etc group
+private-etc group,machine-id,pulse,asound.conf

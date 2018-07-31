@@ -30,7 +30,7 @@ seccomp
 
 disable-mnt
 private-dev
-private-etc none
+private-etc none,machine-id,pulse,asound.conf
 
 noexec ${HOME}
 noexec /tmp

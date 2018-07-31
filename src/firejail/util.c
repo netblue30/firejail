@@ -132,7 +132,7 @@ char *resolve_xdg(int flags, const char *var, size_t length, const char *prnt) {
   return NULL;
   
  errout:
-  if (!arg_private) {
+  if (!arg_private && arg_debug) {
     fprintf(stderr, "***\n");
     fprintf(stderr, "*** Error: %s directory was not found in user home.\n",prnt);
     fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
@@ -863,7 +863,7 @@ void notify_other(int fd) {
 char *expand_home(const char *path, const char* homedir) {
 	assert(path);
 	assert(homedir);
-	
+
 	int called_as_root = 0;
 
 	if(geteuid() == 0)
@@ -995,7 +995,7 @@ char *expand_home(const char *path, const char* homedir) {
 	}
 
 	else if (strncmp(path, "${DOCUMENTS}", 12) == 0) {
-	  char *tmp = resolve_xdg(arg_debug, "XDG_DOCUMENTS_DIR=\"$HOME/", 24, "Documents");
+	  char *tmp = resolve_xdg(arg_debug, "XDG_DOCUMENTS_DIR=\"$HOME/", 25, "Documents");
 	  char *tmp2 = resolve_hardcoded(arg_debug, doentry, "Documents");
 	  if(tmp) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 12) == -1)

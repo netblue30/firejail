@@ -32,6 +32,140 @@
 #include <fcntl.h>
 
 #define MAX_GROUPS 1024
+#define MAXBUF 4098
+
+char *dentry[] = {
+  "Downloads",
+  "Загрузки",
+  "Téléchargement",
+  NULL
+};
+
+char *mentry[] = {
+  "Music",
+  "Музыка",
+  "Musique",
+  NULL
+};
+
+char *ventry[] = {
+  "Videos",
+  "Видео",
+  "Vidéos",
+  NULL
+};
+
+char *pentry[] = {
+  "Pictures",
+  "Изображения",
+  "Photos",
+  NULL
+};
+
+char *deentry[] = {
+  "Desktop",
+  "Рабочий стол",
+  "Bureau",
+  NULL
+};
+
+char *doentry[] = {
+  "Documents",
+  "Документы",
+  "Documents",
+  NULL
+};
+
+char *resolve_xdg(int flags, const char *var, size_t length, const char *prnt) {
+  /* EUID_ASSERT(); */
+  char *fname;
+  struct stat s;
+  
+  if (asprintf(&fname, "%s/.config/user-dirs.dirs", cfg.homedir) == -1)
+    errExit("asprintf");
+  FILE *fp = fopen(fname, "r");
+  if (!fp) {
+    free(fname);
+    return NULL;
+  }
+  free(fname);
+
+  char buf[MAXBUF];
+  while (fgets(buf, MAXBUF, fp)) {
+    char *ptr = buf;
+
+    // skip blanks
+    while (*ptr == ' ' || *ptr == '\t')
+      ptr++;
+    if (*ptr == '\0' || *ptr == '\n' || *ptr == '#')
+      continue;
+
+    if (strncmp(ptr, var, length) == 0) {
+      char *ptr1 = ptr + length;
+      char *ptr2 = strchr(ptr1, '"');
+      if (ptr2) {
+	fclose(fp);
+	*ptr2 = '\0';
+	if (flags)
+	  printf("extracted %s from ~/.config/user-dirs.dirs\n", ptr1);
+	if (strlen(ptr1) != 0) {
+	  if (flags)
+	    printf("%s ",prnt);
+	    printf("directory resolved as \"%s\"\n", ptr1);
+
+	  if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
+	    errExit("asprintf");
+
+	  if (stat(fname, &s) == -1) {
+	    free(fname);
+	    goto errout;
+	  }
+	  free(fname);
+	  return ptr1;
+	}
+	else
+	  goto errout;
+      }
+    }
+  }
+
+  fclose(fp);
+  return NULL;
+  
+ errout:
+  if (!arg_private) {
+    fprintf(stderr, "***\n");
+    fprintf(stderr, "*** Error: %s directory was not found in user home.\n",prnt);
+    fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
+    fprintf(stderr, "***\n");
+  }
+  return NULL;
+}
+
+char *resolve_hardcoded(int flags, char *entries[], const char *prnt) {
+  /* EUID_ASSERT(); */
+  char *fname;
+  struct stat s;
+
+  int i = 0;
+  while (entries[i] != NULL) {
+    if (asprintf(&fname, "%s/%s", cfg.homedir, entries[i]) == -1)
+      errExit("asprintf");
+
+    if (stat(fname, &s) == 0) {
+      if (flags) {
+	printf("%s ", prnt);
+	printf("directory resolved as \"%s\"\n", fname);
+      }
+      free(fname);
+      return entries[i];
+    }
+    free(fname);
+    i++;
+  }
+
+  return NULL;
+}
 
 // send the error to /var/log/auth.log and exit after a small delay
 void errLogExit(char* fmt, ...) {
@@ -740,14 +874,104 @@ char *expand_home(const char *path, const char* homedir) {
 		return new_name;
 	}
 	else if (*path == '~') {
-		if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
-			errExit("asprintf");
-		return new_name;
+	  if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
+	    errExit("asprintf");
+	  return new_name;
 	}
 	else if (strncmp(path, "${CFG}", 6) == 0) {
-		if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
-			errExit("asprintf");
-		return new_name;
+	  if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
+	    errExit("asprintf");
+	  return new_name;
+	}
+
+	else if (strncmp(path, "${DOWNLOADS}", 12) == 0) {
+	  char *tmp = resolve_xdg(arg_debug, "XDG_DOWNLOAD_DIR=\"$HOME/", 24, "Downloads");
+	  char *tmp2 = resolve_hardcoded(arg_debug, dentry, "Downloads");
+	  if(tmp) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 12) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	  else if(tmp2) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 12) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	}
+
+	else if (strncmp(path, "${MUSIC}", 8) == 0) {
+	  char *tmp = resolve_xdg(arg_debug, "XDG_MUSIC_DIR=\"$HOME/", 21, "Music");
+	  char *tmp2 = resolve_hardcoded(arg_debug, mentry, "Music");
+	  if(tmp) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 8) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	  else if(tmp2) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 8) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	}
+
+	else if (strncmp(path, "${VIDEOS}", 9) == 0) {
+	  char *tmp = resolve_xdg(arg_debug, "XDG_VIDEOS_DIR=\"$HOME/", 22, "Videos");
+	  char *tmp2 = resolve_hardcoded(arg_debug, ventry, "Videos");
+	  if(tmp) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 9) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	  else if(tmp2) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 9) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	}
+
+	else if (strncmp(path, "${PICTURES}", 11) == 0) {
+	  char *tmp = resolve_xdg(arg_debug, "XDG_PICTURES_DIR=\"$HOME/", 24, "Pictures");
+	  char *tmp2 = resolve_hardcoded(arg_debug, pentry, "Pictures");
+	  if(tmp) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 11) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	  else if(tmp2) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 11) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	}
+
+	else if (strncmp(path, "${DESKTOP}", 10) == 0) {
+	  char *tmp = resolve_xdg(arg_debug, "XDG_DESKTOP_DIR=\"$HOME/", 24, "Desktop");
+	  char *tmp2 = resolve_hardcoded(arg_debug, deentry, "Desktop");
+	  if(tmp) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 10) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	  else if(tmp2) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 10) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	}
+
+	else if (strncmp(path, "${DOCUMENTS}", 12) == 0) {
+	  char *tmp = resolve_xdg(arg_debug, "XDG_DOCUMENTS_DIR=\"$HOME/", 24, "Documents");
+	  char *tmp2 = resolve_hardcoded(arg_debug, doentry, "Documents");
+	  if(tmp) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 12) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
+	  else if(tmp2) {
+	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 12) == -1)
+	      errExit("asprintf");
+	    return new_name;
+	  }
 	}
 
 	char *rv = strdup(path);

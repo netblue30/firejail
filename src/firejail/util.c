@@ -77,7 +77,6 @@ char *doentry[] = {
 };
 
 char *resolve_xdg(int flags, const char *var, size_t length, const char *prnt) {
-  /* EUID_ASSERT(); */
   char *fname;
   struct stat s;
   
@@ -143,7 +142,6 @@ char *resolve_xdg(int flags, const char *var, size_t length, const char *prnt) {
 }
 
 char *resolve_hardcoded(int flags, char *entries[], const char *prnt) {
-  /* EUID_ASSERT(); */
   char *fname;
   struct stat s;
 
@@ -865,22 +863,39 @@ void notify_other(int fd) {
 char *expand_home(const char *path, const char* homedir) {
 	assert(path);
 	assert(homedir);
+	
+	int called_as_root = 0;
+
+	if(geteuid() == 0)
+	  called_as_root = 1;
+	
+	if(called_as_root) {
+	  EUID_USER();
+	}
+
+	EUID_ASSERT();
 
 	// Replace home macro
 	char *new_name = NULL;
 	if (strncmp(path, "${HOME}", 7) == 0) {
 		if (asprintf(&new_name, "%s%s", homedir, path + 7) == -1)
 			errExit("asprintf");
+		if(called_as_root)
+		  EUID_ROOT();
 		return new_name;
 	}
 	else if (*path == '~') {
 	  if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
 	    errExit("asprintf");
+	  if(called_as_root)
+	    EUID_ROOT();
 	  return new_name;
 	}
 	else if (strncmp(path, "${CFG}", 6) == 0) {
 	  if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
 	    errExit("asprintf");
+	  if(called_as_root)
+	    EUID_ROOT();
 	  return new_name;
 	}
 
@@ -890,11 +905,15 @@ char *expand_home(const char *path, const char* homedir) {
 	  if(tmp) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 12) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	  else if(tmp2) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 12) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	}
@@ -905,11 +924,15 @@ char *expand_home(const char *path, const char* homedir) {
 	  if(tmp) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 8) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	  else if(tmp2) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 8) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	}
@@ -920,11 +943,15 @@ char *expand_home(const char *path, const char* homedir) {
 	  if(tmp) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 9) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	  else if(tmp2) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 9) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	}
@@ -935,11 +962,15 @@ char *expand_home(const char *path, const char* homedir) {
 	  if(tmp) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 11) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	  else if(tmp2) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 11) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	}
@@ -950,11 +981,15 @@ char *expand_home(const char *path, const char* homedir) {
 	  if(tmp) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 10) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	  else if(tmp2) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 10) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	}
@@ -965,11 +1000,15 @@ char *expand_home(const char *path, const char* homedir) {
 	  if(tmp) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 12) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	  else if(tmp2) {
 	    if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 12) == -1)
 	      errExit("asprintf");
+	    if(called_as_root)
+	      EUID_ROOT();
 	    return new_name;
 	  }
 	}
@@ -977,6 +1016,10 @@ char *expand_home(const char *path, const char* homedir) {
 	char *rv = strdup(path);
 	if (!rv)
 		errExit("strdup");
+
+	if(called_as_root)
+	  EUID_ROOT();
+	
 	return rv;
 }
 

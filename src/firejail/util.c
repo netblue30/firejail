@@ -1059,54 +1059,71 @@ void disable_file_path(const char *path, const char *file) {
 // user controlled paths. Passed flags are ignored if path is a top level directory.
 int safe_fd(const char *path, int flags) {
 	assert(path);
-	int fd = -1;
+
+	// reject empty string, relative path
+	if (*path != '/')
+		goto errexit;
+	// reject ".."
+	if (strstr(path, ".."))
+		goto errexit;
 
 	// work with a copy of path
 	char *dup = strdup(path);
 	if (dup == NULL)
 		errExit("strdup");
-	// reject relative path and empty string
-	if (*dup != '/') {
-		fprintf(stderr, "Error: invalid pathname: %s\n", path);
-		exit(1);
-	}
 
 	char *p = strrchr(dup, '/');
 	if (p == NULL)
 		errExit("strrchr");
-	// reject trailing slash and root dir
-	if (*(p + 1) == '\0') {
-		fprintf(stderr, "Error: invalid pathname: %s\n", path);
-		exit(1);
-	}
+	// reject trailing slash, root directory
+	if (*(p + 1) == '\0')
+		goto errexit;
+	// reject trailing dot
+	if (*(p + 1) == '.' && *(p + 2) == '\0')
+		goto errexit;
+	// if there is more than one path segment, keep the last one for later
+	if (p != dup)
+		*p = '\0';
 
 	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (parentfd == -1)
 		errExit("open");
 
-	// if there is more than one path segment, keep the last one for later
-	if (p != dup)
-		*p = '\0';
-
-	// traverse the path, return -1 if a symlink is encountered
+	// traverse the path and return -1 if a symlink is encountered
+	int entered = 0;
+	int fd = -1;
 	char *tok = strtok(dup, "/");
-	if (tok == NULL)
-		errExit("strtok");
 	while (tok) {
+		// skip all "/./"
+		if (strcmp(tok, ".") == 0) {
+			tok = strtok(NULL, "/");
+			continue;
+		}
+		entered = 1;
+
+		// open the directory
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		close(parentfd);
 		if (fd == -1) {
 			free(dup);
 			return -1;
 		}
+
 		parentfd = fd;
 		tok = strtok(NULL, "/");
 	}
 	if (p != dup) {
+		// consistent flags for top level directories (////foo, /.///foo)
+		if (!entered)
+			flags = O_PATH|O_DIRECTORY|O_CLOEXEC;
 		// open last path segment
 		fd = openat(parentfd, p + 1, flags|O_NOFOLLOW);
 		close(parentfd);
 	}
 	free(dup);
 	return fd; // -1 if open failed
+
+errexit:
+	fprintf(stderr, "Error: cannot open \"%s\", invalid filename\n", path);
+	exit(1);
 }

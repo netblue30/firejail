@@ -38,7 +38,7 @@ tracelog
 
 private-bin gnome-music,python*
 private-dev
-# private-etc fonts
+# private-etc fonts,machine-id,pulse,asound.conf
 private-tmp
 
 noexec ${HOME}

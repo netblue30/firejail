@@ -33,7 +33,7 @@ shell none
 private-bin totem
 private-cache
 private-dev
-# private-etc fonts
+# private-etc fonts,machine-id,pulse,asound.conf
 private-tmp
 
 noexec ${HOME}

@@ -491,6 +491,15 @@ int arp_check(const char *dev, uint32_t destaddr);
 uint32_t arp_assign(const char *dev, Bridge *br);
 
 // util.c
+extern char *dentry[];
+extern char *mentry[];
+extern char *ventry[];
+extern char *pentry[];
+extern char *deentry[];
+extern char *doentry[];
+
+char *resolve_xdg(int flags, const char *var, size_t length, const char *prnt);
+char *resolve_hardcoded(int flags, char *entries[], const char *prnt);
 void errLogExit(char* fmt, ...);
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);

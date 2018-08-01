@@ -39,7 +39,7 @@ tracelog
 
 private-bin xplayer,xplayer-audio-preview,xplayer-video-thumbnailer
 private-dev
-# private-etc fonts
+# private-etc fonts,machine-id,pulse,asound.conf
 private-tmp
 
 noexec ${HOME}

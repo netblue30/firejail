@@ -33,159 +33,20 @@
 // 3. run firejail --debug --whitelist=/tmp/etc
 //#define TEST_MOUNTINFO
 
-static char *dentry[] = {
-  "Downloads",
-  "Загрузки",
-  "Téléchargement",
-  NULL
-};
-
-static char *mentry[] = {
-  "Music",
-  "Музыка",
-  "Musique",
-  NULL
-};
-
-static char *ventry[] = {
-  "Videos",
-  "Видео",
-  "Vidéos",
-  NULL
-};
-
-static char *pentry[] = {
-  "Pictures",
-  "Изображения",
-  "Photos",
-  NULL
-};
-
-static char *deentry[] = {
-  "Desktop",
-  "Рабочий стол",
-  "Bureau",
-  NULL
-};
-
-static char *doentry[] = {
-  "Documents",
-  "Документы",
-  "Documents",
-  NULL
-};
-
 #define EMPTY_STRING ("")
 #define MAXBUF 4098
 
-static char *resolve_xdg(int nowhitelist_flag, const char *var, size_t length, const char *prnt) {
-  EUID_ASSERT();
-  char *fname;
-  struct stat s;
-  
-  if (asprintf(&fname, "%s/.config/user-dirs.dirs", cfg.homedir) == -1)
-    errExit("asprintf");
-  FILE *fp = fopen(fname, "r");
-  if (!fp) {
-    free(fname);
-    return NULL;
-  }
-  free(fname);
-
-  char buf[MAXBUF];
-  while (fgets(buf, MAXBUF, fp)) {
-    char *ptr = buf;
-
-    // skip blanks
-    while (*ptr == ' ' || *ptr == '\t')
-      ptr++;
-    if (*ptr == '\0' || *ptr == '\n' || *ptr == '#')
-      continue;
-
-    if (strncmp(ptr, var, length) == 0) {
-      char *ptr1 = ptr + length;
-      char *ptr2 = strchr(ptr1, '"');
-      if (ptr2) {
-	fclose(fp);
-	*ptr2 = '\0';
-	if (arg_debug || arg_debug_whitelists)
-	  printf("extracted %s from ~/.config/user-dirs.dirs\n", ptr1);
-	if (strlen(ptr1) != 0) {
-	  if (arg_debug || arg_debug_whitelists)
-	    printf("%s ",prnt);
-	    printf("directory resolved as \"%s\"\n", ptr1);
-
-	  if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
-	    errExit("asprintf");
-
-	  if (stat(fname, &s) == -1) {
-	    free(fname);
-	    goto errout;
-	  }
-
-	  char *rv;
-	  if (nowhitelist_flag) {
-	    if (asprintf(&rv, "nowhitelist ~/%s", ptr + length) == -1)
-	      errExit("asprintf");
-	  }
-	  else {
-	    if (asprintf(&rv, "whitelist ~/%s", ptr + length) == -1)
-	      errExit("asprintf");
-	  }
-	  return rv;
-	}
-	else
-	  goto errout;
-      }
-    }
-  }
-
-  fclose(fp);
-  return NULL;
-  
- errout:
-  if (!arg_private) {
-    fprintf(stderr, "***\n");
-    fprintf(stderr, "*** Error: %s directory was not found in user home.\n",prnt);
-    fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
-    fprintf(stderr, "***\n");
-  }
-  return NULL;
-}
-
-static char *resolve_hardcoded(int nowhitelist_flag, char *entries[], const char *prnt) {
-  EUID_ASSERT();
-  char *fname;
-  struct stat s;
-
-  int i = 0;
-  while (entries[i] != NULL) {
-    if (asprintf(&fname, "%s/%s", cfg.homedir, entries[i]) == -1)
+char *parse_nowhitelist(int nowhitelist_flag, char *ptr1) {
+  char *rv;
+  if (nowhitelist_flag) {
+    if (asprintf(&rv, "nowhitelist ~/%s", ptr1) == -1)
       errExit("asprintf");
-
-    if (stat(fname, &s) == 0) {
-      if (arg_debug || arg_debug_whitelists) {
-	printf("%s ", prnt);
-	printf("directory resolved as \"%s\"\n", fname);
-      }
-
-      char *rv;
-      if (nowhitelist_flag) {
-	if (asprintf(&rv, "nowhitelist ~/%s", entries[i]) == -1)
-	  errExit("asprintf");
-      }
-      else {
-	if (asprintf(&rv, "whitelist ~/%s", entries[i]) == -1)
-	  errExit("asprintf");
-      }
-      free(fname);
-      return rv;
-    }
-    free(fname);
-    i++;
   }
-
-  return NULL;
+  else {
+    if (asprintf(&rv, "whitelist ~/%s", ptr1) == -1)
+      errExit("asprintf");
+  }
+  return rv;
 }
 
 static int mkpath(const char* path, mode_t mode) {
@@ -467,39 +328,43 @@ void fs_whitelist(void) {
 
 		// resolve ${DOWNLOADS}
 		if (strcmp(dataptr, "${DOWNLOADS}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_DOWNLOAD_DIR=\"$HOME/", 24, "Downloads");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, dentry, "Downloads");
-			if (tmp) {
-				entry->data = tmp;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2) {
-			  entry->data = tmp2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Downloads directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
+		  char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DOWNLOAD_DIR=\"$HOME/", 24, "Downloads");
+		  char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+		  char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, dentry, "Downloads");
+		  char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+		  if (tmp1 && tmpw1) {
+		    entry->data = tmpw1;
+		    dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
+		  }
+		  else if (tmp2 && tmpw2) {
+		    entry->data = tmpw2;
+		    dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
+		  }
+		  else {
+		    if (!nowhitelist_flag && !arg_quiet && !arg_private) {
+		      fprintf(stderr, "***\n");
+		      fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
+		      fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
+		      fprintf(stderr, "*** \tPlease create a proper Downloads directory for your application.\n");
+		      fprintf(stderr, "***\n");
+		    }
+		    entry->data = EMPTY_STRING;
+		    continue;
+		  }
 		}
 
 		// resolve ${MUSIC}
 		if (strcmp(dataptr, "${MUSIC}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_MUSIC_DIR=\"$HOME/", 21, "Music");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, mentry, "Music");
-			if (tmp) {
-				entry->data = tmp;
+			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_MUSIC_DIR=\"$HOME/", 21, "Music");
+			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, mentry, "Music");
+			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			if (tmp1 && tmpw1) {
+				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
-			else if (tmp2) {
-			  entry->data = tmp2;
+			else if (tmp2 && tmpw2) {
+			  entry->data = tmpw2;
 			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
 			else {
@@ -517,14 +382,16 @@ void fs_whitelist(void) {
 
 		// resolve ${VIDEOS}
 		if (strcmp(dataptr, "${VIDEOS}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_VIDEOS_DIR=\"$HOME/", 22, "Videos");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, ventry, "Videos");
-			if (tmp) {
-				entry->data = tmp;
+			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_VIDEOS_DIR=\"$HOME/", 22, "Videos");
+			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, ventry, "Videos");
+			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			if (tmp1 && tmpw1) {
+				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
-			else if (tmp2) {
-			  entry->data = tmp2;
+			else if (tmp2 && tmpw2) {
+			  entry->data = tmpw2;
 			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
 			else {
@@ -542,14 +409,16 @@ void fs_whitelist(void) {
 
 		// resolve ${PICTURES}
 		if (strcmp(dataptr, "${PICTURES}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_PICTURES_DIR=\"$HOME/", 24, "Pictures");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, pentry, "Pictures");
-			if (tmp) {
-				entry->data = tmp;
+			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_PICTURES_DIR=\"$HOME/", 24, "Pictures");
+			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, pentry, "Pictures");
+			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			if (tmp1 && tmpw1) {
+				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
-			else if (tmp2) {
-			  entry->data = tmp2;
+			else if (tmp2 && tmpw2) {
+			  entry->data = tmpw2;
 			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
 			else {
@@ -567,14 +436,16 @@ void fs_whitelist(void) {
 
 		// resolve ${DESKTOP}
 		if (strcmp(dataptr, "${DESKTOP}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_DESKTOP_DIR=\"$HOME/", 24, "Desktop");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, deentry, "Desktop");
-			if (tmp) {
-				entry->data = tmp;
+			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DESKTOP_DIR=\"$HOME/", 24, "Desktop");
+			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, deentry, "Desktop");
+			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			if (tmp1 && tmpw1) {
+				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
-			else if (tmp2) {
-			  entry->data = tmp2;
+			else if (tmp2 && tmpw2) {
+			  entry->data = tmpw2;
 			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
 			else {
@@ -592,14 +463,16 @@ void fs_whitelist(void) {
 
 		// resolve ${DOCUMENTS}
 		if (strcmp(dataptr, "${DOCUMENTS}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_DOCUMENTS_DIR=\"$HOME/", 25, "Documents");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, doentry, "Documents");
-			if (tmp) {
-				entry->data = tmp;
+			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DOCUMENTS_DIR=\"$HOME/", 25, "Documents");
+			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, doentry, "Documents");
+			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			if (tmp1 && tmpw1) {
+				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
-			else if (tmp2) {
-			  entry->data = tmp2;
+			else if (tmp2 && tmpw2) {
+			  entry->data = tmpw2;
 			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
 			else {

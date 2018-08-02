@@ -371,9 +371,13 @@ void fs_whitelist(void) {
 		// resolve ${DOWNLOADS}
 		if (strcmp(dataptr, "${DOWNLOADS}") == 0) {
 		  char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DOWNLOAD_DIR=\"$HOME/", 24, "Downloads");
-		  char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+		  char *tmpw1 = NULL;
+		  if (tmp1 != NULL)
+		    tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
 		  char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, dentry, "Downloads");
-		  char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+		  char *tmpw2 = NULL;
+		  if (tmp2 != NULL)
+		    tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
 		  if (tmp1 && tmpw1) {
 		    entry->data = tmpw1;
 		    dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
@@ -398,9 +402,13 @@ void fs_whitelist(void) {
 		// resolve ${MUSIC}
 		if (strcmp(dataptr, "${MUSIC}") == 0) {
 			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_MUSIC_DIR=\"$HOME/", 21, "Music");
-			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmpw1 = NULL;
+			if (tmp1 != NULL)
+			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
 			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, mentry, "Music");
-			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			char *tmpw2 = NULL;
+			if (tmp2 != NULL)
+			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
 			if (tmp1 && tmpw1) {
 				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
@@ -425,9 +433,13 @@ void fs_whitelist(void) {
 		// resolve ${VIDEOS}
 		if (strcmp(dataptr, "${VIDEOS}") == 0) {
 			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_VIDEOS_DIR=\"$HOME/", 22, "Videos");
-			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmpw1 = NULL;
+			if (tmp1 != NULL)
+			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
 			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, ventry, "Videos");
-			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			char *tmpw2 = NULL;
+			if (tmp2 != NULL)
+			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
 			if (tmp1 && tmpw1) {
 				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
@@ -452,9 +464,13 @@ void fs_whitelist(void) {
 		// resolve ${PICTURES}
 		if (strcmp(dataptr, "${PICTURES}") == 0) {
 			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_PICTURES_DIR=\"$HOME/", 24, "Pictures");
-			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmpw1 = NULL;
+			if (tmp1 != NULL)
+			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
 			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, pentry, "Pictures");
-			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			char *tmpw2 = NULL;
+			if (tmp2 != NULL)
+			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
 			if (tmp1 && tmpw1) {
 				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
@@ -479,9 +495,13 @@ void fs_whitelist(void) {
 		// resolve ${DESKTOP}
 		if (strcmp(dataptr, "${DESKTOP}") == 0) {
 			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DESKTOP_DIR=\"$HOME/", 24, "Desktop");
-			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmpw1 = NULL;
+			if (tmp1 != NULL)
+			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
 			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, deentry, "Desktop");
-			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			char *tmpw2 = NULL;
+			if (tmp2 != NULL)
+			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
 			if (tmp1 && tmpw1) {
 				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
@@ -506,9 +526,13 @@ void fs_whitelist(void) {
 		// resolve ${DOCUMENTS}
 		if (strcmp(dataptr, "${DOCUMENTS}") == 0) {
 			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DOCUMENTS_DIR=\"$HOME/", 25, "Documents");
-			char *tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
+			char *tmpw1 = NULL;
+			if (tmp1 != NULL)
+			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
 			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, doentry, "Documents");
-			char *tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
+			char *tmpw2 = NULL;
+			if (tmp2 != NULL)
+			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
 			if (tmp1 && tmpw1) {
 				entry->data = tmpw1;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;

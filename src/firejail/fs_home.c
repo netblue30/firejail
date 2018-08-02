@@ -290,6 +290,8 @@ void fs_private(void) {
 	if (u == 0 && arg_allusers) // allow --allusers when starting the sandbox as root
 		;
 	else {
+		if (arg_allusers)
+			fwarning("--allusers disabled by --private or --whitelist\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
 		fs_logger("tmpfs /home");

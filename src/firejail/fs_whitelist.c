@@ -51,46 +51,75 @@ char *parse_nowhitelist(int nowhitelist_flag, char *ptr1) {
 
 static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
-
 	mode |= 0111;
 
 	// create directories with uid/gid as root or as current user if inside home directory
-	uid_t uid = getuid();
-	gid_t gid = getgid();
-	if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) != 0) {
-		uid = 0;
-		gid = 0;
+	if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {
+		EUID_USER();
 	}
 
 	// work on a copy of the path
-	char *file_path = strdup(path);
-	if (!file_path)
+	char *dup = strdup(path);
+	if (!dup)
 		errExit("strdup");
 
-	char* p;
+	// don't create the last path element
+	char *p = strrchr(dup, '/');
+	if (!p)
+		errExit("strrchr");
+	*p = '\0';
+
+	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (parentfd == -1)
+		errExit("open");
+
+	// traverse the path, return -1 if a symlink is encountered
 	int done = 0;
-	for (p=strchr(file_path+1, '/'); p; p=strchr(p+1, '/')) {
-		*p='\0';
-		if (mkdir(file_path, mode)==-1) {
+	int fd = -1;
+	char *tok = strtok(dup, "/");
+	if (!tok)
+		errExit("strtok");
+	while (tok) {
+		// skip all instances of "/./"
+		if (strcmp(tok, ".") == 0) {
+			tok = strtok(NULL, "/");
+			continue;
+		}
+		// create the directory if necessary
+		if (mkdirat(parentfd, tok, mode) == -1) {
 			if (errno != EEXIST) {
-				*p='/';
-				free(file_path);
+				if (arg_debug || arg_debug_whitelists)
+					perror("mkdir");
+				close(parentfd);
+				free(dup);
+				EUID_ROOT();
 				return -1;
 			}
 		}
-		else {
-			if (set_perms(file_path, uid, gid, mode))
-				errExit("set_perms");
+		else
 			done = 1;
+		// open the directory
+		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (fd == -1) {
+			if (arg_debug || arg_debug_whitelists)
+				perror("open");
+			close(parentfd);
+			free(dup);
+			EUID_ROOT();
+			return -1;
 		}
-
-		*p='/';
+		// move on to next path segment
+		close(parentfd);
+		parentfd = fd;
+		tok = strtok(NULL, "/");
 	}
+
 	if (done)
 		fs_logger2("mkpath", path);
 
-	free(file_path);
-	return 0;
+	free(dup);
+	EUID_ROOT();
+	return fd;
 }
 
 static void whitelist_path(ProfileEntry *entry) {
@@ -184,13 +213,18 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	assert(wfile);
 
-	// check if the file exists, confirm again there is no symlink
+	if (arg_debug || arg_debug_whitelists)
+		printf("Whitelisting %s\n", path);
+
+	// confirm again the mount source exists and there is no symlink
 	struct stat wfilestat;
 #ifndef TEST_MOUNTINFO
 	EUID_USER();
 	int fd = safe_fd(wfile, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	EUID_ROOT();
 	if (fd == -1) {
+		if (arg_debug || arg_debug_whitelists)
+			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
 		free(wfile);
 		return;
 	}
@@ -198,57 +232,64 @@ static void whitelist_path(ProfileEntry *entry) {
 		errExit("fstat");
 	close(fd);
 	if (S_ISLNK(wfilestat.st_mode)) {
+		if (arg_debug || arg_debug_whitelists)
+			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
 		free(wfile);
 		return;
 	}
 #endif
 
-	if (arg_debug || arg_debug_whitelists)
-		printf("Whitelisting %s\n", path);
+	// create path of the mount target if necessary
+	int fd2 = mkpath(path, 0755);
+	if (fd2 == -1) {
+		// something went wrong during path creation or a symlink was found;
+		// if there is a symlink somewhere in the path of the mount target,
+		// assume the file is whitelisted already
+		if (arg_debug || arg_debug_whitelists)
+			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+		free(wfile);
+		return;
+	}
 
-	// create the path if necessary
-	struct stat s;
-	if (stat(path, &s) == -1) {
-		mkpath(path, 0755);
-		if (S_ISDIR(wfilestat.st_mode)) {
-			int rv = mkdir(path, 0755);
-			if (rv) {
-				fprintf(stderr, "Error: cannot create directory %s\n", path);
-				exit(1);
-			}
-		}
-		else {
-			int fd2 = open(path, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR|S_IWUSR);
-			if (fd2 == -1) {
-				fprintf(stderr, "Error: cannot create empty file %s\n", path);
-				exit(1);
+	// get file name of the mount target
+	const char *file = gnu_basename(path);
+
+	// create the mount target if necessary and open it, a symlink is rejected
+	int fd3 = -1;
+	if (S_ISDIR(wfilestat.st_mode)) {
+		// directory foo can exist already:
+		// firejail --whitelist=/foo/bar --whitelist=/foo
+		if (mkdirat(fd2, file, 0755) == -1 && errno != EEXIST) {
+			if (arg_debug || arg_debug_whitelists) {
+				perror("mkdir");
+				printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
 			}
 			close(fd2);
+			free(wfile);
+			return;
 		}
+		fd3 = openat(fd2, file, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	}
 	else {
-		if (!S_ISDIR(s.st_mode)) {
-			free(wfile);
-			return; // the file is already present
-		}
+		// create an empty file, fails with EEXIST if it is whitelisted already:
+		// firejail --whitelist=/foo --whitelist=/foo/bar
+		fd3 = openat(fd2, file, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR|S_IWUSR);
 	}
+
+	if (fd3 == -1) {
+		if (arg_debug || arg_debug_whitelists) {
+			if (errno != EEXIST) {
+				perror("open");
+				printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+			}
+		}
+		close(fd2);
+		free(wfile);
+		return;
+	}
+	close(fd2);
 
 	fs_logger2("whitelist", path);
-
-	// get a file descriptor for path; if path contains anything other than directories
-	// or a regular file, assume it is whitelisted already
-	int fd3 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd3 == -1) {
-		free(wfile);
-		return;
-	}
-	if (fstat(fd3, &s) == -1)
-		errExit("fstat");
-	if (!(S_ISDIR(s.st_mode) || S_ISREG(s.st_mode))) {
-		free(wfile);
-		close(fd3);
-		return;
-	}
 
 	// mount via the link in /proc/self/fd
 	char *proc;
@@ -272,6 +313,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	int fd4 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd4 == -1)
 		errExit("safe_fd");
+	struct stat s;
 	if (fstat(fd4, &s) == -1)
 		errExit("fstat");
 	if (s.st_dev != wfilestat.st_dev || s.st_ino != wfilestat.st_ino)
@@ -501,6 +543,14 @@ void fs_whitelist(void) {
 			goto errexit;
 		}
 
+		// no trailing slash and no trailing dot
+		char *p = strrchr(new_name, '/');
+		if (!p)
+			errExit("strrchr");
+		if (*(p + 1) == '\0')
+			goto errexit;
+		if (*(p + 1) == '.' && *(p + 2) == '\0')
+			goto errexit;
 
 		// extract the absolute path of the file
 		// realpath function will fail with ENOENT if the file is not found
@@ -577,7 +627,6 @@ void fs_whitelist(void) {
 			continue;
 		}
 
-
 		// check for supported directories
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			// whitelisting home directory is disabled if --private option is present
@@ -597,7 +646,7 @@ void fs_whitelist(void) {
 
 			// both path and absolute path are under /home
 			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0) {
-				// avoid naming issues, also entire home dirs are not allowed
+				// entire home directory is not allowed
 				if (*(fname + strlen(cfg.homedir)) != '/')
 					goto errexit;
 			}
@@ -744,7 +793,7 @@ void fs_whitelist(void) {
 			entry->link = new_name;
 		else {
 			free(new_name);
-			new_name = NULL;
+			entry->link = NULL;
 		}
 
 		// change file name in entry->data
@@ -774,7 +823,7 @@ void fs_whitelist(void) {
 			if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 
-			// mount a tmpfs and initialize /home/user
+			// mount a tmpfs and initialize /home/user, overrides --allusers
 			fs_private();
 		}
 		else
@@ -986,14 +1035,29 @@ void fs_whitelist(void) {
 			// if the link is already there, do not bother
 			if (lstat(entry->link, &s) != 0) {
 				// create the path if necessary
-				mkpath(entry->link, 0755);
-
-				int rv = symlink(entry->data + 10, entry->link);
-				if (rv)
-					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
+				int fd = mkpath(entry->link, 0755);
+				if (fd == -1) {
+					if (arg_debug || arg_debug_whitelists)
+						printf("Debug %d: cannot create symbolic link %s\n", __LINE__, entry->link);
+					free(entry->link);
+					entry = entry->next;
+					continue;
+				}
+				// get file name of symlink
+				const char *file = gnu_basename(entry->link);
+				// create the link
+				int rv = symlinkat(entry->data + 10, fd, file);
+				if (rv) {
+					if (arg_debug || arg_debug_whitelists) {
+						perror("symlink");
+						printf("Debug %d: cannot create symbolic link %s\n", __LINE__, entry->link);
+					}
+				}
 				else if (arg_debug || arg_debug_whitelists)
 					printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+				close(fd);
 			}
+			free(entry->link);
 		}
 
 		entry = entry->next;
@@ -1075,9 +1139,6 @@ void fs_whitelist(void) {
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_MODULE_DIR);
 	}
-
-	if (new_name)
-		free(new_name);
 
 	return;
 

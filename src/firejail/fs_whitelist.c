@@ -566,7 +566,7 @@ void fs_whitelist(void) {
 		if ((end - new_name) > 1) {
 			end--;
 			while (*end == '/' ||
-				  (*end == '.' && *(end - 1) == '/')) {
+			      (*end == '.' && *(end - 1) == '/')) {
 				*end = '\0';
 				end--;
 				if (end == new_name)

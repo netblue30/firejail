@@ -451,6 +451,7 @@ void fs_chroot(const char *rootdir);
 void fs_check_chroot_dir(const char *rootdir);
 void fs_private_tmp(void);
 void fs_private_cache(void);
+void fs_mnt(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -463,7 +464,7 @@ void profile_read(const char *fname);
 int profile_check_line(char *ptr, int lineno, const char *fname);
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str);
-void fs_mnt(void);
+void profile_add_ignore(const char *str);
 
 // list.c
 void list(void);

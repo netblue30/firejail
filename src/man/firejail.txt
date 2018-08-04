@@ -509,7 +509,8 @@ Ignore command in profile file.
 Example:
 .br
 $ firejail \-\-ignore=shell --ignore=seccomp firefox
-
+.br
+$ firejail \-\-ignore="net eth0" firefox
 .TP
 \fB\-\-interface=interface
 Move interface in a new network namespace. Up to four --interface options can be specified.

@@ -29,8 +29,7 @@
 
 // mountinfo functionality test;
 // 1. enable TEST_MOUNTINFO definition
-// 2. set a symlink in /tmp: ln -s /etc /tmp/etc
-// 3. run firejail --debug --whitelist=/tmp/etc
+// 2. run firejail --whitelist=/any/directory
 //#define TEST_MOUNTINFO
 
 #define EMPTY_STRING ("")
@@ -218,7 +217,6 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	// confirm again the mount source exists and there is no symlink
 	struct stat wfilestat;
-#ifndef TEST_MOUNTINFO
 	EUID_USER();
 	int fd = safe_fd(wfile, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	EUID_ROOT();
@@ -237,6 +235,10 @@ static void whitelist_path(ProfileEntry *entry) {
 		free(wfile);
 		return;
 	}
+
+#ifdef TEST_MOUNTINFO
+	printf("TEST_MOUNTINFO\n");
+	path = "/etc/.";
 #endif
 
 	// create path of the mount target if necessary
@@ -557,6 +559,21 @@ void fs_whitelist(void) {
 		// replace ~/ or ${HOME} into /home/username
 		new_name = expand_home(dataptr, cfg.homedir);
 		assert(new_name);
+
+		// trim trailing slashes or dots
+		char *end = strrchr(new_name, '\0');
+		assert(end);
+		if ((end - new_name) > 1) {
+			end--;
+			while (*end == '/' ||
+			      (*end == '.' && *(end - 1) == '/')) {
+				*end = '\0';
+				end--;
+				if (end == new_name)
+					break;
+			}
+		}
+
 		if (arg_debug || arg_debug_whitelists)
 			fprintf(stderr, "Debug %d: new_name #%s#, %s\n", __LINE__, new_name, (nowhitelist_flag)? "nowhitelist": "whitelist");
 
@@ -566,15 +583,6 @@ void fs_whitelist(void) {
 				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
 		}
-
-		// no trailing slash and no trailing dot
-		char *p = strrchr(new_name, '/');
-		if (!p)
-			errExit("strrchr");
-		if (*(p + 1) == '\0')
-			goto errexit;
-		if (*(p + 1) == '.' && *(p + 2) == '\0')
-			goto errexit;
 
 		// extract the absolute path of the file
 		// realpath function will fail with ENOENT if the file is not found
@@ -686,12 +694,10 @@ void fs_whitelist(void) {
 			entry->tmp_dir = 1;
 			tmp_dir = 1;
 
-#ifndef TEST_MOUNTINFO
 			// both path and absolute path are under /tmp
 			if (strncmp(fname, "/tmp/", 5) != 0) {
 				goto errexit;
 			}
-#endif
 		}
 		else if (strncmp(new_name, "/media/", 7) == 0) {
 			entry->media_dir = 1;

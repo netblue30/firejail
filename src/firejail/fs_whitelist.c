@@ -370,185 +370,21 @@ void fs_whitelist(void) {
 		}
 		char *dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 
-		// resolve ${DOWNLOADS}
-		if (strcmp(dataptr, "${DOWNLOADS}") == 0) {
-		  char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DOWNLOAD_DIR=\"$HOME/", 24, "Downloads");
-		  char *tmpw1 = NULL;
-		  if (tmp1 != NULL)
-		    tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
-		  char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, dentry, "Downloads");
-		  char *tmpw2 = NULL;
-		  if (tmp2 != NULL)
-		    tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
-		  if (tmp1 && tmpw1) {
-		    entry->data = tmpw1;
-		    dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-		  }
-		  else if (tmp2 && tmpw2) {
-		    entry->data = tmpw2;
-		    dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-		  }
-		  else {
-		    if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-		      fprintf(stderr, "***\n");
-		      fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
-		      fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-		      fprintf(stderr, "*** \tPlease create a proper Downloads directory for your application.\n");
-		      fprintf(stderr, "***\n");
-		    }
-		    entry->data = EMPTY_STRING;
-		    continue;
-		  }
-		}
+		// resolve macros
+		if (is_macro(dataptr)) {
+			char *tmp = resolve_macro(dataptr);
+			if (tmp != NULL)
+				tmp = parse_nowhitelist(nowhitelist_flag, tmp);
 
-		// resolve ${MUSIC}
-		if (strcmp(dataptr, "${MUSIC}") == 0) {
-			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_MUSIC_DIR=\"$HOME/", 21, "Music");
-			char *tmpw1 = NULL;
-			if (tmp1 != NULL)
-			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
-			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, mentry, "Music");
-			char *tmpw2 = NULL;
-			if (tmp2 != NULL)
-			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
-			if (tmp1 && tmpw1) {
-				entry->data = tmpw1;
+			if (tmp) {
+				entry->data = tmp;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2 && tmpw2) {
-			  entry->data = tmpw2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
 			else {
 				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
 					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Music directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Music directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// resolve ${VIDEOS}
-		if (strcmp(dataptr, "${VIDEOS}") == 0) {
-			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_VIDEOS_DIR=\"$HOME/", 22, "Videos");
-			char *tmpw1 = NULL;
-			if (tmp1 != NULL)
-			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
-			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, ventry, "Videos");
-			char *tmpw2 = NULL;
-			if (tmp2 != NULL)
-			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
-			if (tmp1 && tmpw1) {
-				entry->data = tmpw1;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2 && tmpw2) {
-			  entry->data = tmpw2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Videos directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Videos directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// resolve ${PICTURES}
-		if (strcmp(dataptr, "${PICTURES}") == 0) {
-			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_PICTURES_DIR=\"$HOME/", 24, "Pictures");
-			char *tmpw1 = NULL;
-			if (tmp1 != NULL)
-			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
-			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, pentry, "Pictures");
-			char *tmpw2 = NULL;
-			if (tmp2 != NULL)
-			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
-			if (tmp1 && tmpw1) {
-				entry->data = tmpw1;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2 && tmpw2) {
-			  entry->data = tmpw2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Pictures directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Pictures directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// resolve ${DESKTOP}
-		if (strcmp(dataptr, "${DESKTOP}") == 0) {
-			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DESKTOP_DIR=\"$HOME/", 24, "Desktop");
-			char *tmpw1 = NULL;
-			if (tmp1 != NULL)
-			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
-			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, deentry, "Desktop");
-			char *tmpw2 = NULL;
-			if (tmp2 != NULL)
-			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
-			if (tmp1 && tmpw1) {
-				entry->data = tmpw1;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2 && tmpw2) {
-			  entry->data = tmpw2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Desktop directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Desktop directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// resolve ${DOCUMENTS}
-		if (strcmp(dataptr, "${DOCUMENTS}") == 0) {
-			char *tmp1 = resolve_xdg(arg_debug || arg_debug_whitelists, "XDG_DOCUMENTS_DIR=\"$HOME/", 25, "Documents");
-			char *tmpw1 = NULL;
-			if (tmp1 != NULL)
-			  tmpw1 = parse_nowhitelist(nowhitelist_flag, tmp1);
-			char *tmp2 = resolve_hardcoded(arg_debug || arg_debug_whitelists, doentry, "Documents");
-			char *tmpw2 = NULL;
-			if (tmp2 != NULL)
-			  tmpw2 = parse_nowhitelist(nowhitelist_flag, tmp2);
-			if (tmp1 && tmpw1) {
-				entry->data = tmpw1;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2 && tmpw2) {
-			  entry->data = tmpw2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Documents directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Documents directory for your application.\n");
+					fprintf(stderr, "*** Warning: cannot whitelist %s directory\n", dataptr);
+					fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
 					fprintf(stderr, "***\n");
 				}
 				entry->data = EMPTY_STRING;

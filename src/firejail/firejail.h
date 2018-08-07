@@ -491,16 +491,14 @@ int arp_check(const char *dev, uint32_t destaddr);
 // assign an IP address using arp scanning
 uint32_t arp_assign(const char *dev, Bridge *br);
 
-// util.c
-extern char *dentry[];
-extern char *mentry[];
-extern char *ventry[];
-extern char *pentry[];
-extern char *deentry[];
-extern char *doentry[];
+// macros.c
+char *expand_home(const char *path, const char *homedir);
+char *resolve_macro(const char *name);
+void invalid_filename(const char *fname, int globbing);
+int is_macro(const char *name);
 
-char *resolve_xdg(int flags, const char *var, size_t length, const char *prnt);
-char *resolve_hardcoded(int flags, char *entries[], const char *prnt);
+
+// util.c
 void errLogExit(char* fmt, ...);
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);
@@ -525,10 +523,8 @@ void check_private_dir(void);
 void update_map(char *mapping, char *map_file);
 void wait_for_other(int fd);
 void notify_other(int fd);
-char *expand_home(const char *path, const char* homedir);
 const char *gnu_basename(const char *path);
 uid_t pid_get_uid(pid_t pid);
-void invalid_filename(const char *fname, int globbing);
 uid_t get_group_id(const char *group);
 int remove_overlay_directory(void);
 void flush_stdin(void);

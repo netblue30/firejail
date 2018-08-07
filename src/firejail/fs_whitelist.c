@@ -35,6 +35,7 @@
 #define EMPTY_STRING ("")
 #define MAXBUF 4098
 
+// returns mallocated memory
 char *parse_nowhitelist(int nowhitelist_flag, char *ptr1) {
   char *rv;
   if (nowhitelist_flag) {

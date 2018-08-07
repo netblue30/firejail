@@ -69,7 +69,7 @@ Macro macro[] = {
 };
 
 // return -1 if not found
-int macro_id(const char *name) {
+static int macro_id(const char *name) {
 	int i = 0;
 	while (macro[i].name != NULL) {
 		if (strcmp(name, macro[i].name) == 0)
@@ -90,6 +90,7 @@ int is_macro(const char *name) {
 	return 0;
 }
 
+// returns mallocated memory
 static char *resolve_xdg(const char *var) {
 	char *fname;
 	struct stat s;
@@ -145,6 +146,7 @@ static char *resolve_xdg(const char *var) {
 	return NULL;
 }
 
+// returns mallocated memory
 static char *resolve_hardcoded(char *entries[]) {
 	char *fname;
 	struct stat s;
@@ -156,7 +158,10 @@ static char *resolve_hardcoded(char *entries[]) {
 
 		if (stat(fname, &s) == 0) {
 			free(fname);
-			return entries[i];
+			char *rv = strdup(entries[i]);
+			if (!rv)
+				errExit("strdup");
+			return rv;
 		}
 		free(fname);
 		i++;
@@ -165,6 +170,7 @@ static char *resolve_hardcoded(char *entries[]) {
 	return NULL;
 }
 
+// returns mallocated memory
 char *resolve_macro(const char *name) {
 	char *rv = NULL;
 	int id = macro_id(name);
@@ -223,121 +229,18 @@ char *expand_home(const char *path, const char *homedir) {
 			EUID_ROOT();
 		return new_name;
 	}
-#if 0
-	else if (strncmp(path, "${DOWNLOADS}", 12) == 0) {
-		char *tmp = resolve_xdg("XDG_DOWNLOAD_DIR=\"$HOME/", 24, "Downloads");
-		char *tmp2 = resolve_hardcoded(dentry, "Downloads");
-		if(tmp) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 12) == -1)
+	else {
+		char *directory = resolve_macro(path);
+		if (directory) {
+			if (asprintf(&new_name, "%s/%s", cfg.homedir, directory) == -1)
 				errExit("asprintf");
 			if(called_as_root)
 				EUID_ROOT();
-			return new_name;
-		}
-		else if(tmp2) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 12) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
+			free(directory);
 			return new_name;
 		}
 	}
 
-	else if (strncmp(path, "${MUSIC}", 8) == 0) {
-		char *tmp = resolve_xdg("XDG_MUSIC_DIR=\"$HOME/", 21, "Music");
-		char *tmp2 = resolve_hardcoded(mentry, "Music");
-		if(tmp) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 8) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-		else if(tmp2) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 8) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-	}
-
-	else if (strncmp(path, "${VIDEOS}", 9) == 0) {
-		char *tmp = resolve_xdg("XDG_VIDEOS_DIR=\"$HOME/", 22, "Videos");
-		char *tmp2 = resolve_hardcoded(ventry, "Videos");
-		if(tmp) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 9) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-		else if(tmp2) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 9) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-	}
-
-	else if (strncmp(path, "${PICTURES}", 11) == 0) {
-		char *tmp = resolve_xdg("XDG_PICTURES_DIR=\"$HOME/", 24, "Pictures");
-		char *tmp2 = resolve_hardcoded(pentry, "Pictures");
-		if(tmp) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 11) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-		else if(tmp2) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 11) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-	}
-
-	else if (strncmp(path, "${DESKTOP}", 10) == 0) {
-		char *tmp = resolve_xdg("XDG_DESKTOP_DIR=\"$HOME/", 24, "Desktop");
-		char *tmp2 = resolve_hardcoded(deentry, "Desktop");
-		if(tmp) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 10) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-		else if(tmp2) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 10) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-	}
-
-	else if (strncmp(path, "${DOCUMENTS}", 12) == 0) {
-		char *tmp = resolve_xdg("XDG_DOCUMENTS_DIR=\"$HOME/", 25, "Documents");
-		char *tmp2 = resolve_hardcoded(doentry, "Documents");
-		if(tmp) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp, path + 12) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-		else if(tmp2) {
-			if (asprintf(&new_name, "%s/%s%s", homedir, tmp2, path + 12) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			return new_name;
-		}
-	}
-#endif
 	char *rv = strdup(path);
 	if (!rv)
 		errExit("strdup");

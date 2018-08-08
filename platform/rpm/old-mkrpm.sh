@@ -84,7 +84,7 @@ Release: 1
 License: GPL+
 Group: Development/Tools
 SOURCE0 : %{name}-%{version}.tar.gz
-URL: http://firejail.wordpress.com
+URL: https://firejail.wordpress.com
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 

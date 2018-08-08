@@ -583,7 +583,7 @@ PACKAGE_TARNAME='firejail'
 PACKAGE_VERSION='0.9.55'
 PACKAGE_STRING='firejail 0.9.55'
 PACKAGE_BUGREPORT='netblue30@yahoo.com'
-PACKAGE_URL='http://firejail.wordpress.com'
+PACKAGE_URL='https://firejail.wordpress.com'
 
 ac_unique_file="src/firejail/main.c"
 # Factoring default headers for most tests.
@@ -1382,7 +1382,7 @@ Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
 
 Report bugs to <netblue30@yahoo.com>.
-firejail home page: <http://firejail.wordpress.com>.
+firejail home page: <https://firejail.wordpress.com>.
 _ACEOF
 ac_status=$?
 fi
@@ -4443,7 +4443,7 @@ Configuration files:
 $config_files
 
 Report bugs to <netblue30@yahoo.com>.
-firejail home page: <http://firejail.wordpress.com>."
+firejail home page: <https://firejail.wordpress.com>."
 
 _ACEOF
 cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1

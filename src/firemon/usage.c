@@ -75,7 +75,7 @@ static char *help_str =
 	"\tUser - The owner of the sandbox.\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: http://firejail.wordpress.com\n"
+	"Homepage: https://firejail.wordpress.com\n"
 	"\n";
 
 void usage(void) {

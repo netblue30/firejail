@@ -31,7 +31,8 @@ seccomp
 shell none
 
 private-bin totem
-private-cache
+# totem needs access to ~/.cache/tracker or it exits
+#private-cache
 private-dev
 # private-etc fonts,machine-id,pulse,asound.conf
 private-tmp

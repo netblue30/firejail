@@ -33,8 +33,8 @@ shell none
 # Note: The current version of Wire is located in /opt/wire-desktop/wire-desktop, and therefore
 # it is not in PATH. To use Wire with firejail, run "firejail /opt/wire-desktop/wire-desktop"
 
+disable-mnt
 private-bin wire-desktop
 private-dev
-private-etc fonts,machine-id,resolv.conf
-disable-mnt
+private-etc fonts,machine-id,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp

@@ -26,4 +26,4 @@ shell none
 
 private-bin parole,dbus-launch
 private-cache
-private-etc passwd,group,fonts,machine-id,pulse,asound.conf
+private-etc passwd,group,fonts,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies

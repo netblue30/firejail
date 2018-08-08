@@ -24,9 +24,9 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 
-private-bin sh,xdg-mime,tr,sed,echo,head,cut,xdg-open,grep,egrep
+private-bin sh,xdg-mime,tr,sed,echo,head,cut,xdg-open,grep,egrep,bash,zsh
 private-dev
-private-etc fonts,machine-id,localtime,ld.so.cache
+private-etc fonts,machine-id,localtime,ld.so.cache,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

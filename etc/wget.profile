@@ -32,7 +32,7 @@ shell none
 
 # private-bin wget
 private-dev
-# private-etc resolv.conf
+# private-etc resolv.conf,ca-certificates,ssl,pki,crypto-policies
 # private-tmp
 
 noexec ${HOME}

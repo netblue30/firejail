@@ -34,7 +34,7 @@ tracelog
 
 disable-mnt
 private-bin qtox
-private-etc fonts,resolv.conf,ld.so.cache,localtime
+private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,crypto-policies
 private-dev
 private-tmp
 

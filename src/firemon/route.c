@@ -144,7 +144,7 @@ static void print_route(const char *fname) {
 		char use[64];
 		char metric[64];
 		char mask[64];
-		int rv = sscanf(start, "%s %s %s %s %s %s %s %s\n", ifname, destination, gateway, flags, refcnt, use, metric, mask);
+		int rv = sscanf(start, "%63s %63s %63s %63s %63s %63s %63s %63s\n", ifname, destination, gateway, flags, refcnt, use, metric, mask);
 		if (rv != 8)
 			continue;
 
@@ -161,7 +161,7 @@ static void print_route(const char *fname) {
 
 //		printf("#%s# #%s# #%s# #%s# #%s# #%s# #%s# #%s#\n", ifname, destination, gateway, flags, refcnt, use, metric, mask);
 		if (gw != 0)
-			printf("     %u.%u.%u.%u/%u via %u.%u.%u.%u, dev %s, metric %s\n",
+			printf("     %d.%d.%d.%d/%u via %d.%d.%d.%d, dev %s, metric %s\n",
 				PRINT_IP(destip), mask2bits(destmask),
 				PRINT_IP(gw),
 				ifname,
@@ -169,7 +169,7 @@ static void print_route(const char *fname) {
 		else { // this is an interface
 			IfList *ifentry = list_find(destip, destmask);
 			if (ifentry) {
-				printf("     %u.%u.%u.%u/%u, dev %s, scope link src %d.%d.%d.%d\n",
+				printf("     %d.%d.%d.%d/%u, dev %s, scope link src %d.%d.%d.%d\n",
 					PRINT_IP(destip), mask2bits(destmask),
 					ifname,
 					PRINT_IP(ifentry->ip));

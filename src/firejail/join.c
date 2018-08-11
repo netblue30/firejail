@@ -49,7 +49,7 @@ static void extract_x11_display(pid_t pid) {
 	if (!fp)
 		return;
 
-	if (1 != fscanf(fp, "%d", &display)) {
+	if (1 != fscanf(fp, "%u", &display)) {
 		fprintf(stderr, "Error: cannot read X11 display file\n");
 		fclose(fp);
 		return;

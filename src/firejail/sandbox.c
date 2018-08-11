@@ -250,7 +250,7 @@ static int monitor_application(pid_t app_pid) {
 		}
 		while(rv != monitored_pid);
 		if (arg_debug)
-			printf("Sandbox monitor: waitpid %u retval %d status %d\n", monitored_pid, rv, status);
+			printf("Sandbox monitor: waitpid %d retval %d status %d\n", monitored_pid, rv, status);
 		if (rv == -1) { // we can get here if we have processes joining the sandbox (ECHILD)
 			if (arg_debug)
 				perror("waitpid");
@@ -294,7 +294,7 @@ static int monitor_application(pid_t app_pid) {
 		closedir(dir);
 
 		if (monitored_pid != 0 && arg_debug)
-			printf("Sandbox monitor: monitoring %u\n", monitored_pid);
+			printf("Sandbox monitor: monitoring %d\n", monitored_pid);
 	}
 
 	// return the latest exit status.

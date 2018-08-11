@@ -93,9 +93,6 @@ void profile_add_ignore(const char *str) {
 		fprintf(stderr, "Error: invalid ignore option\n");
 		exit(1);
 	}
-	char *ptr = strdup(str);
-	if (!ptr)
-		errExit("strdup");
 
 	// find an empty entry in profile_ignore array
 	int i;

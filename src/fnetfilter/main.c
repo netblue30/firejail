@@ -125,7 +125,7 @@ for (i = 0; i < argcnt; i++)
 			else {
 				// parsing
 				int index = 0;
-				int rv = sscanf(ptr, "$ARG%u", &index) ;
+				int rv = sscanf(ptr, "$ARG%d", &index) ;
 				if (rv != 1) {
 					fprintf(stderr, "Error fnetfilter: invalid template argument on line %d\n", line);
 					exit(1);

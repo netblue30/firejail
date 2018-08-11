@@ -65,8 +65,7 @@ static int mkpath(const char* path, mode_t mode) {
 
 	// don't create the last path element
 	char *p = strrchr(dup, '/');
-	if (!p)
-		errExit("strrchr");
+	assert(p);
 	*p = '\0';
 
 	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
@@ -77,8 +76,7 @@ static int mkpath(const char* path, mode_t mode) {
 	int done = 0;
 	int fd = -1;
 	char *tok = strtok(dup, "/");
-	if (!tok)
-		errExit("strtok");
+	assert(tok); // path is no top level directory
 	while (tok) {
 		// skip all instances of "/./"
 		if (strcmp(tok, ".") == 0) {
@@ -398,7 +396,7 @@ void fs_whitelist(void) {
 		assert(new_name);
 
 		// trim trailing slashes or dots
-		char *end = strrchr(new_name, '\0');
+		char *end = strchr(new_name, '\0');
 		assert(end);
 		if ((end - new_name) > 1) {
 			end--;

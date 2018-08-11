@@ -34,6 +34,7 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 		return;
 
 	// drop privileges
+	EUID_ROOT();
 	if (setgid(getgid()) < 0)
 		errExit("setgid/getgid");
 	if (setuid(getuid()) < 0)

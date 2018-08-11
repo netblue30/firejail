@@ -1006,8 +1006,7 @@ int safe_fd(const char *path, int flags) {
 		errExit("strdup");
 
 	char *p = strrchr(dup, '/');
-	if (p == NULL)
-		errExit("strrchr");
+	assert(p);
 	// reject trailing slash, root directory
 	if (*(p + 1) == '\0')
 		goto errexit;

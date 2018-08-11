@@ -198,6 +198,10 @@ char *expand_path(const char *path) {
 	}
 	else {
 		// assume the file is in current working directory
+		if (!cfg.cwd) {
+			fprintf(stderr, "Error: current working directory has been deleted\n");
+			exit(1);
+		}
 		if (asprintf(&fname, "%s/%s", cfg.cwd, path) == -1)
 			errExit("asprintf");
 	}
@@ -206,6 +210,7 @@ char *expand_path(const char *path) {
 
 void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 	EUID_ASSERT();
+	assert(path1);
 
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	EUID_ROOT();

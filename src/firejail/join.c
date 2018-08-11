@@ -214,7 +214,7 @@ static void extract_umask(pid_t pid) {
 	free(fname);
 	if (!fp)
 		return;
-	if (fscanf(fp, "%4o", &orig_umask) < 1) {
+	if (fscanf(fp, "%3o", &orig_umask) < 1) {
 		fprintf(stderr, "Error: cannot read umask\n");
 		exit(1);
 	}

@@ -241,7 +241,10 @@ static void init_cfg(int argc, char **argv) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
+
 	cfg.cwd = getcwd(NULL, 0);
+	if (!cfg.cwd && errno != ENOENT)
+		errExit("getcwd");
 
 	// check user database
 	if (!firejail_user_check(cfg.username)) {
@@ -830,6 +833,7 @@ static void run_builder(int argc, char **argv) {
 	(void) argc;
 
 	// drop privileges
+	EUID_ROOT();
 	if (setgid(getgid()) < 0)
 		errExit("setgid/getgid");
 	if (setuid(getuid()) < 0)

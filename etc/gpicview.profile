@@ -1,5 +1,5 @@
 # Firejail profile for gpicview
-# Description: lightweight image viewer
+# Description: Lightweight image viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gpicview.local

@@ -1,5 +1,5 @@
 # Firejail profile for apktool
-# Description: tool for reverse engineering Android apk files
+# Description: Tool for reverse engineering Android apk files
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

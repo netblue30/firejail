@@ -1,5 +1,5 @@
 # Firejail profile for bleachbit
-# Description: delete unnecessary files from the system
+# Description: Delete unnecessary files from the system
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/bleachbit.local

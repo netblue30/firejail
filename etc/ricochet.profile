@@ -1,5 +1,4 @@
 # Firejail profile for ricochet
-# Description: multi-user networked version of the Ricochet Robots game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/ricochet.local

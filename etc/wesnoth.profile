@@ -1,5 +1,5 @@
 # Firejail profile for wesnoth
-# Description: fantasy turn-based strategy game - complete suite (metapackage)
+# Description: Fantasy turn-based strategy game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/wesnoth.local

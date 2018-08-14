@@ -1,5 +1,5 @@
 # Firejail profile for bitcoin-qt
-# Description: Bitcoin is a peer-to-peer network based digital currency - Qt
+# Description: Bitcoin is a peer-to-peer network based digital currency
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/bitcoin-qt.local

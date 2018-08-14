@@ -1,5 +1,5 @@
 # Firejail profile for bibletime
-# Description: bible study tool for Qt
+# Description: Bible study tool
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/bibletime.local

@@ -1,5 +1,5 @@
 # Firejail profile for galculator
-# Description: scientific calculator
+# Description: Scientific calculator
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/galculator.local

@@ -1,5 +1,5 @@
 # Firejail profile for fontforge
-# Description: font editor
+# Description: Font editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/fontforge.local

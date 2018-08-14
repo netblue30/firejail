@@ -1,5 +1,5 @@
 # Firejail profile for kcalc
-# Description: simple and scientific calculator
+# Description: Simple and scientific calculator
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kcalc.local

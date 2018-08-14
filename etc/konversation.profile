@@ -1,5 +1,5 @@
 # Firejail profile for konversation
-# Description: user friendly Internet Relay Chat (IRC) client for KDE
+# Description: User friendly Internet Relay Chat (IRC) client for KDE
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/konversation.local

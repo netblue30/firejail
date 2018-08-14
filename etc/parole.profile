@@ -1,5 +1,5 @@
 # Firejail profile for parole
-# Description: media player based on GStreamer framework
+# Description: Media player based on GStreamer framework
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/parole.local

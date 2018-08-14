@@ -1,5 +1,5 @@
 # Firejail profile for gnome-chess
-# Description: simple chess game
+# Description: Simple chess game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-chess.local

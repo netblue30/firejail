@@ -1,5 +1,5 @@
 # Firejail profile for transmission-cli
-# Description: lightweight BitTorrent client (command line programs)
+# Description: Lightweight BitTorrent client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/transmission-cli.local

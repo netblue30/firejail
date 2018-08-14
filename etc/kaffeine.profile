@@ -1,5 +1,5 @@
 # Firejail profile for kaffeine
-# Description: versatile media player for KDE
+# Description: Versatile media player for KDE
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kaffeine.local

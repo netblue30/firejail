@@ -1,5 +1,5 @@
 # Firejail profile for engrampa
-# Description: archive manager for MATE
+# Description: Archive manager for MATE
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/engrampa.local

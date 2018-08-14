@@ -1,5 +1,4 @@
 # Firejail profile for qupzilla
-# Description: transitional package for qupzilla
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/qupzilla.local

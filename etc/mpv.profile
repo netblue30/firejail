@@ -1,5 +1,5 @@
 # Firejail profile for mpv
-# Description: video player based on MPlayer/mplayer2
+# Description: Video player based on MPlayer/mplayer2
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mpv.local

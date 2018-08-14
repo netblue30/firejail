@@ -1,5 +1,5 @@
 # Firejail profile for ssh
-# Description: secure shell client and server (metapackage)
+# Description: Secure shell client and server
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

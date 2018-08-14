@@ -1,5 +1,4 @@
 # Firejail profile for bsdtar
-# Description: transitional dummy package for moving bsdtar to libarchive-tools
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

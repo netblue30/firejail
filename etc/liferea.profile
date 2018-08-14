@@ -1,5 +1,5 @@
 # Firejail profile for liferea
-# Description: feed/news/podcast client with plugin support
+# Description: Feed/news/podcast client with plugin support
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/liferea.local

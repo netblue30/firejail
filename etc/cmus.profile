@@ -1,5 +1,5 @@
 # Firejail profile for cmus
-# Description: lightweight ncurses audio player
+# Description: Lightweight ncurses audio player
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/cmus.local

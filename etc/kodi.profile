@@ -1,5 +1,5 @@
 # Firejail profile for kodi
-# Description: Open Source Home Theatre (executable binaries)
+# Description: Open Source Home Theatre
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kodi.local

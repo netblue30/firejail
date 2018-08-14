@@ -1,5 +1,5 @@
 # Firejail profile for inkscape
-# Description: vector-based drawing program
+# Description: Vector-based drawing program
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/inkscape.local

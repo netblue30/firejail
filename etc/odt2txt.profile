@@ -1,5 +1,5 @@
 # Firejail profile for odt2txt
-# Description: simple converter from OpenDocument Text to plain text
+# Description: Simple converter from OpenDocument Text to plain text
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/odt2txt.local

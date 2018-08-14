@@ -1,5 +1,5 @@
 # Firejail profile for conky
-# Description: highly configurable system monitor (transitional package)
+# Description: Highly configurable system monitor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/conky.local

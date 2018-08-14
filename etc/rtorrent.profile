@@ -1,5 +1,5 @@
 # Firejail profile for rtorrent
-# Description: ncurses BitTorrent client based on LibTorrent from rakshasa
+# Description: Ncurses BitTorrent client based on LibTorrent from rakshasa
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/rtorrent.local

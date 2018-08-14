@@ -1,5 +1,5 @@
 # Firejail profile for kget
-# Description: download manager
+# Description: Download manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kget.local

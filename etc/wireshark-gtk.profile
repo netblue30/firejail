@@ -1,5 +1,5 @@
 # Firejail profile alias for wireshark
-# Description: a free network protocol analyzer for Unix/Linux and Windows - GTK frontend
+# Description: Network protocol analyzer
 # This file is overwritten after every install/update
 
 

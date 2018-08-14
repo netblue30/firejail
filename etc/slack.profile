@@ -1,5 +1,4 @@
 # Firejail profile for slack
-# Description: configuration management program for lazy admins
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/slack.local

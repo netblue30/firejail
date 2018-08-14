@@ -1,5 +1,5 @@
 # Firejail profile for playonlinux
-# Description: front-end for Wine
+# Description: Front-end for Wine
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/playonlinux.local

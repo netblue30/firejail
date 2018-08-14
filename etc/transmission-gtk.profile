@@ -1,5 +1,5 @@
 # Firejail profile for transmission-gtk
-# Description: lightweight BitTorrent client (GTK+ interface)
+# Description: Lightweight BitTorrent client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/transmission-gtk.local

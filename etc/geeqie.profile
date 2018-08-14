@@ -1,5 +1,5 @@
 # Firejail profile for geeqie
-# Description: image viewer using GTK+
+# Description: Image viewer using GTK+
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/geeqie.local

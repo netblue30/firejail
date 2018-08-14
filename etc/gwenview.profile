@@ -1,5 +1,5 @@
 # Firejail profile for gwenview
-# Description: image viewer
+# Description: Image viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gwenview.local

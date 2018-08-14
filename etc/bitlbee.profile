@@ -1,5 +1,5 @@
 # Firejail profile for bitlbee
-# Description: IRC to other chat networks gateway (default version)
+# Description: IRC to other chat networks gateway
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/bitlbee.local

@@ -1,5 +1,5 @@
 # Firejail profile for ark
-# Description: archive utility
+# Description: Archive utility
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/ark.local

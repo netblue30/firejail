@@ -1,5 +1,5 @@
 # Firejail profile for unbound
-# Description: validating, recursive, caching DNS resolver
+# Description: Validating, recursive, caching DNS resolver
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/unbound.local

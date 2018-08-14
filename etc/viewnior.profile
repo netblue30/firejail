@@ -1,5 +1,5 @@
 # Firejail profile for viewnior
-# Description: simple, fast and elegant image viewer
+# Description: Simple, fast and elegant image viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/viewnior.local

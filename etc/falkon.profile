@@ -1,5 +1,5 @@
 # Firejail profile for falkon
-# Description: lightweight web browser based on Qt WebEngine
+# Description: Lightweight web browser based on Qt WebEngine
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/falkon.local

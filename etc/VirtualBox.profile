@@ -1,5 +1,5 @@
 # Firejail profile alias for virtualbox
-# Description: Powerful x86 virtualization for enterprise as well as home use
+# Description: x86 virtualization solution
 # This file is overwritten after every install/update
 
 

@@ -1,5 +1,5 @@
 # Firejail profile for mplayer
-# Description: movie player for Unix-like systems
+# Description: Movie player for Unix-like systems
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mplayer.local

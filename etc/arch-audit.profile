@@ -1,4 +1,5 @@
 # Firejail profile for arch-audit
+# Description: An utility like pkg-audit based on Arch CVE Monitoring Team data
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

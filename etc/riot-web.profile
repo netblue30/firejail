@@ -1,4 +1,5 @@
 # Firejail profile for riot-web
+# Description: A glossy Matrix collaboration client for the web.
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/riot-web.local

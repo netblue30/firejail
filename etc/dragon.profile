@@ -1,4 +1,5 @@
 # Firejail profile for dragon
+# Description: A multimedia player where the focus is on simplicity, instead of features
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/dragon.local

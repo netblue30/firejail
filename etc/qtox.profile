@@ -1,4 +1,5 @@
 # Firejail profile for qtox
+# Description: Powerful Tox client written in C++/Qt that follows the Tox design guidelines
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/qtox.local

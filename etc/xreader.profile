@@ -1,4 +1,5 @@
 # Firejail profile for xreader
+# Description: Document viewer for files like PDF and Postscript. X-Apps Project.
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xreader.local

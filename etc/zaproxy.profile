@@ -1,4 +1,5 @@
 # Firejail profile for zaproxy
+# Description: Integrated penetration testing tool for finding vulnerabilities in web applications
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/zaproxy.local

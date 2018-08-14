@@ -1,4 +1,5 @@
 # Firejail profile for electrum
+# Description: Lightweight Bitcoin wallet
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/electrum.local

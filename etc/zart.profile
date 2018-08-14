@@ -1,4 +1,5 @@
 # Firejail profile for zart
+# Description: A GUI for G'MIC real-time manipulations on the output of a webcam
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/zart.local

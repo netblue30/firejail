@@ -1,4 +1,5 @@
 # Firejail profile for teamspeak3
+# Description: TeamSpeak is software for quality voice communication via the Internet
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/teamspeak3.local

@@ -9,7 +9,6 @@ blacklist ${HOME}/.bashrc
 blacklist /lost+found
 blacklist /sbin
 blacklist /srv
-blacklist /sys
 
 noblacklist ${HOME}/.cache/spotify
 noblacklist ${HOME}/.config/spotify

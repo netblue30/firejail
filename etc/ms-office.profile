@@ -36,7 +36,7 @@ tracelog
 
 disable-mnt
 private-bin bash,fonts,env,jak,ms-office,python*,sh
-private-etc ca-certificates,resolv.conf,ssl
+private-etc resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-dev
 private-tmp
 

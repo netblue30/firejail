@@ -32,5 +32,5 @@ tracelog
 # private-bin lynx
 private-cache
 private-dev
-# private-etc none
+# private-etc ca-certificates,ssl,pki,crypto-policies
 private-tmp

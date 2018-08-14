@@ -35,7 +35,7 @@ shell none
 disable-mnt
 private-bin dino
 private-dev
-# private-etc fonts # breaks server connection
+# private-etc fonts,ca-certificates,ssl,pki,crypto-policies # breaks server connection
 private-tmp
 
 noexec ${HOME}

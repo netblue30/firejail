@@ -35,7 +35,7 @@ tracelog
 disable-mnt
 # private-bin gjs gnome-maps
 private-dev
-# private-etc fonts
+# private-etc fonts,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

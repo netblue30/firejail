@@ -1,14 +1,17 @@
-# Firejail profile for totem
+# Firejail profile for electrum
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/totem.local
+include /etc/firejail/electrum.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/totem
-noblacklist ${HOME}/.local/share/totem
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+noblacklist ${HOME}/.electrum
+
+# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -17,24 +20,32 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-xdg.inc
 
+mkdir ${HOME}/.electrum
+whitelist ${HOME}/.electrum
+include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
-# apparmor - makes settings immutable
 caps.drop all
+ipc-namespace
 netfilter
-# nodbus - makes settings immutable
+no3d
+#nodbus
+nodvd
 nogroups
 nonewprivs
 noroot
+nosound
+notv
+novideo
 protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin totem
-# totem needs access to ~/.cache/tracker or it exits
-#private-cache
+disable-mnt
+private-bin electrum,python*
+private-cache
 private-dev
-# private-etc fonts,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc fonts,dconf,ca-certificates,ssl,pki,crypto-policies,machine-id
 private-tmp
 
 noexec ${HOME}

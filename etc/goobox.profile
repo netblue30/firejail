@@ -29,5 +29,5 @@ tracelog
 
 # private-bin goobox
 private-dev
-# private-etc fonts
+# private-etc fonts,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
 # private-tmp

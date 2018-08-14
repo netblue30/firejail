@@ -31,7 +31,7 @@ shell none
 # private-bin curl
 private-cache
 private-dev
-# private-etc resolv.conf
+# private-etc resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

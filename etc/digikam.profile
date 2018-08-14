@@ -36,7 +36,7 @@ shell none
 
 # private-bin program
 # private-dev - prevents libdc1394 loading; this lib is used to connect to a camera device
-# private-etc none
+# private-etc ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

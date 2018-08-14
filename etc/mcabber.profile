@@ -28,4 +28,4 @@ shell none
 
 private-bin mcabber
 private-dev
-private-etc null
+private-etc ca-certificates,ssl,pki,crypto-policies

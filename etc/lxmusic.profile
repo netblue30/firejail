@@ -1,4 +1,5 @@
 # Firejail profile for lxmusic
+# Description: LXDE music player
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/lxmusic.local

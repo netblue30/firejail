@@ -1,4 +1,5 @@
 # Firejail profile for gnome-logs
+# Description: viewer for the systemd journal.
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-logs.local

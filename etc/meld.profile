@@ -1,4 +1,5 @@
 # Firejail profile for meld
+# Description: graphical tool to diff and merge files
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/meld.local

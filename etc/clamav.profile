@@ -1,4 +1,5 @@
 # Firejail profile for clamav
+# Description: anti-virus utility for Unix - command-line interface
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

@@ -1,4 +1,5 @@
 # Firejail profile for open-invaders
+# Description: Space Invaders clone
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/open-invaders.local

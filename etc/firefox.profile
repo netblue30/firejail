@@ -1,4 +1,5 @@
 # Firejail profile for firefox
+# Description: Safe and easy web browser from Mozilla
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/firefox.local

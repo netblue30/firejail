@@ -1,4 +1,5 @@
 # Firejail profile for mutt
+# Description: text-based mailreader supporting MIME, GPG, PGP and threading
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mutt.local

@@ -1,4 +1,5 @@
 # Firejail profile for viking
+# Description: GPS data editor, analyzer and viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/viking.local

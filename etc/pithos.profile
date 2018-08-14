@@ -1,4 +1,5 @@
 # Firejail profile for pithos
+# Description: Pandora Radio client for the GNOME desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pithos.local

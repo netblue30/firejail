@@ -1,4 +1,5 @@
 # Firejail profile for torbrowser-launcher
+# Description: helps download and run the Tor Browser Bundle
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/torbrowser-launcher.local

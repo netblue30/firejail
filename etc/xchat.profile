@@ -1,4 +1,5 @@
 # Firejail profile for xchat
+# Description: IRC client for X similar to AmIRC
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xchat.local

@@ -1,4 +1,5 @@
 # Firejail profile for git
+# Description: fast, scalable, distributed revision control system
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

@@ -1,4 +1,5 @@
 # Firejail profile for thunderbird
+# Description: Email, RSS and newsgroup client with integrated spam filter
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/thunderbird.local

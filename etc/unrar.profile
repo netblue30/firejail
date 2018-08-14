@@ -1,4 +1,5 @@
 # Firejail profile for unrar
+# Description: Unarchiver for .rar files (non-free version)
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

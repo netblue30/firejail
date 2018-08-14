@@ -1,4 +1,5 @@
 # Firejail profile for pidgin
+# Description: graphical multi-protocol instant messaging client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pidgin.local

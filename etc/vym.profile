@@ -1,4 +1,5 @@
 # Firejail profile for vym
+# Description: mindmapping tool
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/vym.local

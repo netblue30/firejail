@@ -1,4 +1,5 @@
 # Firejail profile for uudeview
+# Description: Smart multi-file multi-part decoder (command line)
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

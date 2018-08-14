@@ -1,4 +1,5 @@
 # Firejail profile for xiphos
+# Description: environment for Bible reading, study, and research
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xiphos.local

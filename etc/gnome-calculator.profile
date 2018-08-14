@@ -1,4 +1,5 @@
 # Firejail profile for gnome-calculator
+# Description: GNOME desktop calculator
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

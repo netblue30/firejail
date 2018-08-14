@@ -1,4 +1,5 @@
 # Firejail profile for luminance-hdr
+# Description: graphical user interface providing a workflow for HDR imaging
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/luminance-hdr.local

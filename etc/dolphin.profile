@@ -1,4 +1,5 @@
 # Firejail profile for dolphin
+# Description: file manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/dolphin.local

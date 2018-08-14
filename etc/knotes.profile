@@ -1,4 +1,5 @@
 # Firejail profile for knotes
+# Description: sticky notes application
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/knotes.local

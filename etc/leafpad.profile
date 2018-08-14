@@ -1,4 +1,5 @@
 # Firejail profile for leafpad
+# Description: GTK+ based simple text editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/leafpad.local

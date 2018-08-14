@@ -1,4 +1,5 @@
 # Firejail profile for zathura
+# Description: document viewer with a minimalistic interface
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/zathura.local

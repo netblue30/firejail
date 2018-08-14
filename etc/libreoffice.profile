@@ -1,4 +1,5 @@
 # Firejail profile for libreoffice
+# Description: office productivity suite (metapackage)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/libreoffice.local

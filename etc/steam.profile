@@ -1,4 +1,5 @@
 # Firejail profile for steam
+# Description: Valve's Steam digital software delivery system
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/steam.local

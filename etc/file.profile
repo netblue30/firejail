@@ -1,4 +1,5 @@
 # Firejail profile for file
+# Description: Recognize the type of data in a file using "magic" numbers
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

@@ -1,4 +1,5 @@
 # Firejail profile for redeclipse
+# Description: free, casual arena shooter
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/redeclipse.local

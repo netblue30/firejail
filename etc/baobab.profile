@@ -1,4 +1,5 @@
 # Firejail profile for baobab
+# Description: GNOME disk usage analyzer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/baobab.local

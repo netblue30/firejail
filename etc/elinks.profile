@@ -1,4 +1,5 @@
 # Firejail profile for elinks
+# Description: advanced text-mode WWW browser
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/elinks.local

@@ -1,4 +1,5 @@
 # Firejail profile for sqlitebrowser
+# Description: GUI editor for SQLite databases
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/sqlitebrowser.local

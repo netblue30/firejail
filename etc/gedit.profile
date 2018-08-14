@@ -1,4 +1,5 @@
 # Firejail profile for gedit
+# Description: official text editor of the GNOME desktop environment
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gedit.local

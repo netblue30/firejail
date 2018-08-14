@@ -1,4 +1,5 @@
 # Firejail profile for qutebrowser
+# Description: Keyboard-driven, vim-like browser based on PyQt5
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/qutebrowser.local

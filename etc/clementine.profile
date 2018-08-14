@@ -1,4 +1,5 @@
 # Firejail profile for clementine
+# Description: modern music player and library organizer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/clementine.local

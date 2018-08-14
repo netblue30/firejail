@@ -1,4 +1,5 @@
 # Firejail profile for flowblade
+# Description: non-linear video editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/flowblade.local

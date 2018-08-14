@@ -1,4 +1,5 @@
 # Firejail profile for gimp
+# Description: GNU Image Manipulation Program
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gimp.local

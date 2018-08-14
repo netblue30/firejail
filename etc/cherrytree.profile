@@ -1,4 +1,5 @@
 # Firejail profile for cherrytree
+# Description: hierarchical note taking application
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/cherrytree.local

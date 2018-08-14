@@ -1,4 +1,5 @@
 # Firejail profile for amarok
+# Description: easy to use media player based on the KDE Platform
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/amarok.local

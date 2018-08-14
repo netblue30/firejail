@@ -1,4 +1,5 @@
 # Firejail profile for pdfmod
+# Description: simple tool for modifying PDF documents
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pdfmod.local

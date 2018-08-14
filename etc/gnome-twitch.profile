@@ -1,4 +1,5 @@
 # Firejail profile for gnome-twitch
+# Description: GNOME Twitch app for watching Twitch.tv streams without a browser or flash
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-twitch.local

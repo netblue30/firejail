@@ -1,4 +1,5 @@
 # Firejail profile for audacity
+# Description: fast, cross-platform audio editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/audacity.local

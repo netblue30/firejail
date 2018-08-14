@@ -1,4 +1,5 @@
 # Firejail profile for asounder
+# Description: graphical audio CD ripper and encoder
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/asunder.local

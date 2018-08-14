@@ -1,4 +1,5 @@
 # Firejail profile for pcmanfm
+# Description: extremely fast and lightweight file manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pcmanfm.local

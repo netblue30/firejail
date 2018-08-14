@@ -1,4 +1,5 @@
 # Firejail profile for gnome-mpv
+# Description: simple GTK+ frontend for mpv
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-mpv.local

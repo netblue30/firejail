@@ -1,4 +1,5 @@
 # Firejail profile for calibre
+# Description: powerful and easy to use e-book manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/calibre.local

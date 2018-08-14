@@ -1,4 +1,5 @@
 # Firejail profile for xxd
+# Description: tool to make (or reverse) a hex dump
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xxd.local

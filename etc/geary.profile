@@ -1,4 +1,5 @@
 # Firejail profile for geary
+# Description: lightweight email client designed for the GNOME desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/geary.local

@@ -1,4 +1,5 @@
 # Firejail profile for geany
+# Description: fast and lightweight IDE
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/geany.local

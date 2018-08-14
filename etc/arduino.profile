@@ -1,4 +1,5 @@
 # Firejail profile for arduino
+# Description: AVR development board IDE and built-in libraries
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/arduino.local

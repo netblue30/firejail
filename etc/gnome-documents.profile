@@ -1,4 +1,5 @@
 # Firejail profile for gnome-documents
+# Description: Document manager for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-documents.local

@@ -1,4 +1,5 @@
 # Firejail profile for gpg
+# Description: GNU Privacy Guard -- minimalist public key operations
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gpg.local

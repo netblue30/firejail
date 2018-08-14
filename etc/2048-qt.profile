@@ -1,4 +1,5 @@
 # Firejail profile for 2048-qt
+# Description: mathematics based puzzle game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/2048-qt.local

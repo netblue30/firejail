@@ -1,4 +1,5 @@
 # Firejail profile for youtube-dl
+# Description: downloader of videos from YouTube and other sites
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

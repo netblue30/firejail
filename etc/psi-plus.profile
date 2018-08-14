@@ -1,4 +1,5 @@
 # Firejail profile for psi-plus
+# Description: Qt-based XMPP/Jabber client (basic version)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/psi-plus.local

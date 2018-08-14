@@ -1,4 +1,5 @@
 # Firejail profile for weechat
+# Description: Fast, light and extensible chat client (metapackage)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/weechat.local

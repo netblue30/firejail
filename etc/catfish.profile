@@ -1,4 +1,5 @@
 # Firejail profile for catfish
+# Description: File searching tool which is configurable via the command line
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/catfish.local

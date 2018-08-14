@@ -1,4 +1,5 @@
 # Firejail profile for gnome-weather
+# Description: access current conditions and forecasts
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-weather.local

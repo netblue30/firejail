@@ -1,4 +1,5 @@
 # Firejail profile for wireshark
+# Description: network traffic analyzer - meta-package
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/wireshark.local

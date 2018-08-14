@@ -1,4 +1,5 @@
 # Firejail profile for ristretto
+# Description: lightweight picture-viewer for the Xfce desktop environment
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/ristretto.local

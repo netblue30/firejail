@@ -1,4 +1,5 @@
 # Firejail profile for qmmp
+# Description: feature-rich audio player with support of many formats
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/qmmp.local

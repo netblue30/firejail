@@ -1,4 +1,5 @@
 # Firejail profile for nemo
+# Description: File manager and graphical shell for Cinnamon
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/nemo.local

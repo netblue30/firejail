@@ -1,4 +1,5 @@
 # Firejail profile for darktable
+# Description: virtual lighttable and darkroom for photographers
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/darktable.local

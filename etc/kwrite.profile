@@ -1,4 +1,5 @@
 # Firejail profile for kwrite
+# Description: simple text editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kwrite.local

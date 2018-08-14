@@ -1,4 +1,5 @@
 # Firejail profile for skanlite
+# Description: image scanner based on the KSane backend
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/skanlite.local

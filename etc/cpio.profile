@@ -1,4 +1,5 @@
 # Firejail profile for cpio
+# Description: GNU cpio -- a program to manage archives of files
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

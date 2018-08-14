@@ -1,4 +1,5 @@
 # Firejail profile for xfce4-notes
+# Description: Notes application for the Xfce4 desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xfce4-notes.local

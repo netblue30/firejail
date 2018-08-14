@@ -1,4 +1,5 @@
 # Firejail profile for mate-calc
+# Description: MATE desktop calculator
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mate-calc.local

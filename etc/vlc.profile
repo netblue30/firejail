@@ -1,4 +1,5 @@
 # Firejail profile for vlc
+# Description: multimedia player and streamer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/vlc.local

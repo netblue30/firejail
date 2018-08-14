@@ -49,6 +49,9 @@ echo "TESTING: private-etc (test/fs/private-etc.exp)"
 echo "TESTING: empty private-etc (test/fs/private-etc-empty.exp)"
 ./private-etc-empty.exp
 
+echo "TESTING: macros (test/fs/macro..exp)"
+./macro.exp
+
 echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 ./whitelist-empty.exp
 

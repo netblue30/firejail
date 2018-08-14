@@ -32,6 +32,9 @@
 #include <fcntl.h>
 
 #define MAX_GROUPS 1024
+#define MAXBUF 4098
+
+
 
 // send the error to /var/log/auth.log and exit after a small delay
 void errLogExit(char* fmt, ...) {
@@ -723,38 +726,6 @@ void notify_other(int fd) {
 }
 
 
-// This function takes a pathname supplied by the user and expands '~' and
-// '${HOME}' at the start, to refer to a path relative to the user's home
-// directory (supplied).
-// The return value is allocated using malloc and must be freed by the caller.
-// The function returns NULL if there are any errors.
-char *expand_home(const char *path, const char* homedir) {
-	assert(path);
-	assert(homedir);
-
-	// Replace home macro
-	char *new_name = NULL;
-	if (strncmp(path, "${HOME}", 7) == 0) {
-		if (asprintf(&new_name, "%s%s", homedir, path + 7) == -1)
-			errExit("asprintf");
-		return new_name;
-	}
-	else if (*path == '~') {
-		if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
-			errExit("asprintf");
-		return new_name;
-	}
-	else if (strncmp(path, "${CFG}", 6) == 0) {
-		if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
-			errExit("asprintf");
-		return new_name;
-	}
-
-	char *rv = strdup(path);
-	if (!rv)
-		errExit("strdup");
-	return rv;
-}
 
 
 // Equivalent to the GNU version of basename, which is incompatible with
@@ -815,44 +786,6 @@ uid_t pid_get_uid(pid_t pid) {
 }
 
 
-void invalid_filename(const char *fname, int globbing) {
-//	EUID_ASSERT();
-	assert(fname);
-	const char *ptr = fname;
-
-	if (strncmp(ptr, "${HOME}", 7) == 0)
-		ptr = fname + 7;
-	else if (strncmp(ptr, "${PATH}", 7) == 0)
-		ptr = fname + 7;
-	else if (strcmp(fname, "${DOWNLOADS}") == 0)
-		return;
-	else if (strcmp(fname, "${MUSIC}") == 0)
-		return;
-	else if (strcmp(fname, "${VIDEOS}") == 0)
-		return;
-	else if (strcmp(fname, "${PICTURES}") == 0)
-		return;
-	else if (strcmp(fname, "${DESKTOP}") == 0)
-		return;
-	else if (strcmp(fname, "${DOCUMENTS}") == 0)
-		return;
-
-	int len = strlen(ptr);
-
-	if (globbing) {
-		// file globbing ('*?[]') is allowed
-		if (strcspn(ptr, "\\&!\"'<>%^(){};,") != (size_t)len) {
-			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
-			exit(1);
-		}
-	}
-	else {
-		if (strcspn(ptr, "\\&!?\"'<>%^(){};,*[]") != (size_t)len) {
-			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
-			exit(1);
-		}
-	}
-}
 
 
 uid_t get_group_id(const char *group) {
@@ -1059,54 +992,70 @@ void disable_file_path(const char *path, const char *file) {
 // user controlled paths. Passed flags are ignored if path is a top level directory.
 int safe_fd(const char *path, int flags) {
 	assert(path);
-	int fd = -1;
+
+	// reject empty string, relative path
+	if (*path != '/')
+		goto errexit;
+	// reject ".."
+	if (strstr(path, ".."))
+		goto errexit;
 
 	// work with a copy of path
 	char *dup = strdup(path);
 	if (dup == NULL)
 		errExit("strdup");
-	// reject relative path and empty string
-	if (*dup != '/') {
-		fprintf(stderr, "Error: invalid pathname: %s\n", path);
-		exit(1);
-	}
 
 	char *p = strrchr(dup, '/');
-	if (p == NULL)
-		errExit("strrchr");
-	// reject trailing slash and root dir
-	if (*(p + 1) == '\0') {
-		fprintf(stderr, "Error: invalid pathname: %s\n", path);
-		exit(1);
-	}
+	assert(p);
+	// reject trailing slash, root directory
+	if (*(p + 1) == '\0')
+		goto errexit;
+	// reject trailing dot
+	if (*(p + 1) == '.' && *(p + 2) == '\0')
+		goto errexit;
+	// if there is more than one path segment, keep the last one for later
+	if (p != dup)
+		*p = '\0';
 
 	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (parentfd == -1)
 		errExit("open");
 
-	// if there is more than one path segment, keep the last one for later
-	if (p != dup)
-		*p = '\0';
-
-	// traverse the path, return -1 if a symlink is encountered
+	// traverse the path and return -1 if a symlink is encountered
+	int entered = 0;
+	int fd = -1;
 	char *tok = strtok(dup, "/");
-	if (tok == NULL)
-		errExit("strtok");
 	while (tok) {
+		// skip all "/./"
+		if (strcmp(tok, ".") == 0) {
+			tok = strtok(NULL, "/");
+			continue;
+		}
+		entered = 1;
+
+		// open the directory
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		close(parentfd);
 		if (fd == -1) {
 			free(dup);
 			return -1;
 		}
+
 		parentfd = fd;
 		tok = strtok(NULL, "/");
 	}
 	if (p != dup) {
+		// consistent flags for top level directories (////foo, /.///foo)
+		if (!entered)
+			flags = O_PATH|O_DIRECTORY|O_CLOEXEC;
 		// open last path segment
 		fd = openat(parentfd, p + 1, flags|O_NOFOLLOW);
 		close(parentfd);
 	}
 	free(dup);
 	return fd; // -1 if open failed
+
+errexit:
+	fprintf(stderr, "Error: cannot open \"%s\", invalid filename\n", path);
+	exit(1);
 }

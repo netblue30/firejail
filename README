@@ -243,6 +243,8 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added BibleTime profile
 	- added caja and galculator profiles
 	- added Catfish profile
+Frederik Olesen (https://github.com/Freso)
+	- added many vim profiles
 g3ngr33n (https://github.com/g3ngr33n)
 	- fix musl compilation
 G4JC (https://sourceforge.net/u/gaming4jc/profile/)
@@ -318,6 +320,7 @@ Jean Lucas (https://github.com/flacks)
 	- alias for riot-desktop
 	- add gnome-mpv profile
 	- fix wire profile
+	- add Beaker profile
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)
@@ -487,6 +490,8 @@ rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
+Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
+	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
 	- rewrite globbing code to fix various minor issues
 	- added noblacklist command for profile files

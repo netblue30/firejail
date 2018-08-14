@@ -53,7 +53,7 @@ static char *usage_str =
 	"   [...]\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: http://firejail.wordpress.com\n\n";
+	"Homepage: https://firejail.wordpress.com\n\n";
 
 static void usage(void) {
 	printf("firecfg - version %s\n\n", VERSION);

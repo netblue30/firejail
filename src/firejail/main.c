@@ -241,7 +241,10 @@ static void init_cfg(int argc, char **argv) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
+
 	cfg.cwd = getcwd(NULL, 0);
+	if (!cfg.cwd && errno != ENOENT)
+		errExit("getcwd");
 
 	// check user database
 	if (!firejail_user_check(cfg.username)) {
@@ -833,6 +836,7 @@ static void run_builder(int argc, char **argv) {
 	(void) argc;
 
 	// drop privileges
+	EUID_ROOT();
 	if (setgid(getgid()) < 0)
 		errExit("setgid/getgid");
 	if (setuid(getuid()) < 0)
@@ -1477,25 +1481,7 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: please use --profile after --ignore\n");
 				exit(1);
 			}
-
-			if (*(argv[i] + 9) == '\0') {
-				fprintf(stderr, "Error: invalid ignore option\n");
-				exit(1);
-			}
-
-			// find an empty entry in profile_ignore array
-			int j;
-			for (j = 0; j < MAX_PROFILE_IGNORE; j++) {
-				if (cfg.profile_ignore[j] == NULL)
-					break;
-			}
-			if (j >= MAX_PROFILE_IGNORE) {
-				fprintf(stderr, "Error: maximum %d --ignore options are permitted\n", MAX_PROFILE_IGNORE);
-				exit(1);
-			}
-			// ... and configure it
-			else
-				cfg.profile_ignore[j] = argv[i] + 9;
+			profile_add_ignore(argv[i] + 9);
 		}
 #ifndef LTS
 #ifdef HAVE_CHROOT
@@ -1670,7 +1656,6 @@ int main(int argc, char **argv) {
 				cfg.srv_private_keep = argv[i] + 14;
 			arg_private_srv = 1;
 		}
-
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			// extract private bin list
 			if (*(argv[i] + 14) == '\0') {

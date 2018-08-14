@@ -29,207 +29,95 @@
 
 // mountinfo functionality test;
 // 1. enable TEST_MOUNTINFO definition
-// 2. set a symlink in /tmp: ln -s /etc /tmp/etc
-// 3. run firejail --debug --whitelist=/tmp/etc
+// 2. run firejail --whitelist=/any/directory
 //#define TEST_MOUNTINFO
-
-static char *dentry[] = {
-  "Downloads",
-  "Загрузки",
-  "Téléchargement",
-  NULL
-};
-
-static char *mentry[] = {
-  "Music",
-  "Музыка",
-  "Musique",
-  NULL
-};
-
-static char *ventry[] = {
-  "Videos",
-  "Видео",
-  "Vidéos",
-  NULL
-};
-
-static char *pentry[] = {
-  "Pictures",
-  "Изображения",
-  "Photos",
-  NULL
-};
-
-static char *deentry[] = {
-  "Desktop",
-  "Рабочий стол",
-  "Bureau",
-  NULL
-};
-
-static char *doentry[] = {
-  "Documents",
-  "Документы",
-  "Documents",
-  NULL
-};
 
 #define EMPTY_STRING ("")
 #define MAXBUF 4098
 
-static char *resolve_xdg(int nowhitelist_flag, const char *var, size_t length, const char *prnt) {
-  EUID_ASSERT();
-  char *fname;
-  struct stat s;
-  
-  if (asprintf(&fname, "%s/.config/user-dirs.dirs", cfg.homedir) == -1)
-    errExit("asprintf");
-  FILE *fp = fopen(fname, "r");
-  if (!fp) {
-    free(fname);
-    return NULL;
-  }
-  free(fname);
-
-  char buf[MAXBUF];
-  while (fgets(buf, MAXBUF, fp)) {
-    char *ptr = buf;
-
-    // skip blanks
-    while (*ptr == ' ' || *ptr == '\t')
-      ptr++;
-    if (*ptr == '\0' || *ptr == '\n' || *ptr == '#')
-      continue;
-
-    if (strncmp(ptr, var, length) == 0) {
-      char *ptr1 = ptr + length;
-      char *ptr2 = strchr(ptr1, '"');
-      if (ptr2) {
-	fclose(fp);
-	*ptr2 = '\0';
-	if (arg_debug || arg_debug_whitelists)
-	  printf("extracted %s from ~/.config/user-dirs.dirs\n", ptr1);
-	if (strlen(ptr1) != 0) {
-	  if (arg_debug || arg_debug_whitelists)
-	    printf("%s ",prnt);
-	    printf("directory resolved as \"%s\"\n", ptr1);
-
-	  if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
-	    errExit("asprintf");
-
-	  if (stat(fname, &s) == -1) {
-	    free(fname);
-	    goto errout;
-	  }
-
-	  char *rv;
-	  if (nowhitelist_flag) {
-	    if (asprintf(&rv, "nowhitelist ~/%s", ptr + length) == -1)
-	      errExit("asprintf");
-	  }
-	  else {
-	    if (asprintf(&rv, "whitelist ~/%s", ptr + length) == -1)
-	      errExit("asprintf");
-	  }
-	  return rv;
-	}
-	else
-	  goto errout;
-      }
-    }
-  }
-
-  fclose(fp);
-  return NULL;
-  
- errout:
-  if (!arg_private) {
-    fprintf(stderr, "***\n");
-    fprintf(stderr, "*** Error: %s directory was not found in user home.\n",prnt);
-    fprintf(stderr, "*** \tAny files saved by the program, will be lost when the sandbox is closed.\n");
-    fprintf(stderr, "***\n");
-  }
-  return NULL;
-}
-
-static char *resolve_hardcoded(int nowhitelist_flag, char *entries[], const char *prnt) {
-  EUID_ASSERT();
-  char *fname;
-  struct stat s;
-
-  int i = 0;
-  while (entries[i] != NULL) {
-    if (asprintf(&fname, "%s/%s", cfg.homedir, entries[i]) == -1)
+// returns mallocated memory
+char *parse_nowhitelist(int nowhitelist_flag, char *ptr1) {
+  char *rv;
+  if (nowhitelist_flag) {
+    if (asprintf(&rv, "nowhitelist ~/%s", ptr1) == -1)
       errExit("asprintf");
-
-    if (stat(fname, &s) == 0) {
-      if (arg_debug || arg_debug_whitelists) {
-	printf("%s ", prnt);
-	printf("directory resolved as \"%s\"\n", fname);
-      }
-
-      char *rv;
-      if (nowhitelist_flag) {
-	if (asprintf(&rv, "nowhitelist ~/%s", entries[i]) == -1)
-	  errExit("asprintf");
-      }
-      else {
-	if (asprintf(&rv, "whitelist ~/%s", entries[i]) == -1)
-	  errExit("asprintf");
-      }
-      free(fname);
-      return rv;
-    }
-    free(fname);
-    i++;
   }
-
-  return NULL;
+  else {
+    if (asprintf(&rv, "whitelist ~/%s", ptr1) == -1)
+      errExit("asprintf");
+  }
+  return rv;
 }
 
 static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
-
 	mode |= 0111;
 
 	// create directories with uid/gid as root or as current user if inside home directory
-	uid_t uid = getuid();
-	gid_t gid = getgid();
-	if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) != 0) {
-		uid = 0;
-		gid = 0;
+	if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {
+		EUID_USER();
 	}
 
 	// work on a copy of the path
-	char *file_path = strdup(path);
-	if (!file_path)
+	char *dup = strdup(path);
+	if (!dup)
 		errExit("strdup");
 
-	char* p;
+	// don't create the last path element
+	char *p = strrchr(dup, '/');
+	assert(p);
+	*p = '\0';
+
+	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (parentfd == -1)
+		errExit("open");
+
+	// traverse the path, return -1 if a symlink is encountered
 	int done = 0;
-	for (p=strchr(file_path+1, '/'); p; p=strchr(p+1, '/')) {
-		*p='\0';
-		if (mkdir(file_path, mode)==-1) {
+	int fd = -1;
+	char *tok = strtok(dup, "/");
+	assert(tok); // path is no top level directory
+	while (tok) {
+		// skip all instances of "/./"
+		if (strcmp(tok, ".") == 0) {
+			tok = strtok(NULL, "/");
+			continue;
+		}
+		// create the directory if necessary
+		if (mkdirat(parentfd, tok, mode) == -1) {
 			if (errno != EEXIST) {
-				*p='/';
-				free(file_path);
+				if (arg_debug || arg_debug_whitelists)
+					perror("mkdir");
+				close(parentfd);
+				free(dup);
+				EUID_ROOT();
 				return -1;
 			}
 		}
-		else {
-			if (set_perms(file_path, uid, gid, mode))
-				errExit("set_perms");
+		else
 			done = 1;
+		// open the directory
+		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (fd == -1) {
+			if (arg_debug || arg_debug_whitelists)
+				perror("open");
+			close(parentfd);
+			free(dup);
+			EUID_ROOT();
+			return -1;
 		}
-
-		*p='/';
+		// move on to next path segment
+		close(parentfd);
+		parentfd = fd;
+		tok = strtok(NULL, "/");
 	}
+
 	if (done)
 		fs_logger2("mkpath", path);
 
-	free(file_path);
-	return 0;
+	free(dup);
+	EUID_ROOT();
+	return fd;
 }
 
 static void whitelist_path(ProfileEntry *entry) {
@@ -323,13 +211,17 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	assert(wfile);
 
-	// check if the file exists, confirm again there is no symlink
+	if (arg_debug || arg_debug_whitelists)
+		printf("Whitelisting %s\n", path);
+
+	// confirm again the mount source exists and there is no symlink
 	struct stat wfilestat;
-#ifndef TEST_MOUNTINFO
 	EUID_USER();
 	int fd = safe_fd(wfile, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	EUID_ROOT();
 	if (fd == -1) {
+		if (arg_debug || arg_debug_whitelists)
+			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
 		free(wfile);
 		return;
 	}
@@ -337,57 +229,68 @@ static void whitelist_path(ProfileEntry *entry) {
 		errExit("fstat");
 	close(fd);
 	if (S_ISLNK(wfilestat.st_mode)) {
+		if (arg_debug || arg_debug_whitelists)
+			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
 		free(wfile);
 		return;
 	}
+
+#ifdef TEST_MOUNTINFO
+	printf("TEST_MOUNTINFO\n");
+	path = "/etc/.";
 #endif
 
-	if (arg_debug || arg_debug_whitelists)
-		printf("Whitelisting %s\n", path);
+	// create path of the mount target if necessary
+	int fd2 = mkpath(path, 0755);
+	if (fd2 == -1) {
+		// something went wrong during path creation or a symlink was found;
+		// if there is a symlink somewhere in the path of the mount target,
+		// assume the file is whitelisted already
+		if (arg_debug || arg_debug_whitelists)
+			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+		free(wfile);
+		return;
+	}
 
-	// create the path if necessary
-	struct stat s;
-	if (stat(path, &s) == -1) {
-		mkpath(path, 0755);
-		if (S_ISDIR(wfilestat.st_mode)) {
-			int rv = mkdir(path, 0755);
-			if (rv) {
-				fprintf(stderr, "Error: cannot create directory %s\n", path);
-				exit(1);
-			}
-		}
-		else {
-			int fd2 = open(path, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR|S_IWUSR);
-			if (fd2 == -1) {
-				fprintf(stderr, "Error: cannot create empty file %s\n", path);
-				exit(1);
+	// get file name of the mount target
+	const char *file = gnu_basename(path);
+
+	// create the mount target if necessary and open it, a symlink is rejected
+	int fd3 = -1;
+	if (S_ISDIR(wfilestat.st_mode)) {
+		// directory foo can exist already:
+		// firejail --whitelist=/foo/bar --whitelist=/foo
+		if (mkdirat(fd2, file, 0755) == -1 && errno != EEXIST) {
+			if (arg_debug || arg_debug_whitelists) {
+				perror("mkdir");
+				printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
 			}
 			close(fd2);
+			free(wfile);
+			return;
 		}
+		fd3 = openat(fd2, file, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	}
 	else {
-		if (!S_ISDIR(s.st_mode)) {
-			free(wfile);
-			return; // the file is already present
-		}
+		// create an empty file, fails with EEXIST if it is whitelisted already:
+		// firejail --whitelist=/foo --whitelist=/foo/bar
+		fd3 = openat(fd2, file, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR|S_IWUSR);
 	}
+
+	if (fd3 == -1) {
+		if (arg_debug || arg_debug_whitelists) {
+			if (errno != EEXIST) {
+				perror("open");
+				printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+			}
+		}
+		close(fd2);
+		free(wfile);
+		return;
+	}
+	close(fd2);
 
 	fs_logger2("whitelist", path);
-
-	// get a file descriptor for path; if path contains anything other than directories
-	// or a regular file, assume it is whitelisted already
-	int fd3 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd3 == -1) {
-		free(wfile);
-		return;
-	}
-	if (fstat(fd3, &s) == -1)
-		errExit("fstat");
-	if (!(S_ISDIR(s.st_mode) || S_ISREG(s.st_mode))) {
-		free(wfile);
-		close(fd3);
-		return;
-	}
 
 	// mount via the link in /proc/self/fd
 	char *proc;
@@ -411,6 +314,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	int fd4 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd4 == -1)
 		errExit("safe_fd");
+	struct stat s;
 	if (fstat(fd4, &s) == -1)
 		errExit("fstat");
 	if (s.st_dev != wfilestat.st_dev || s.st_ino != wfilestat.st_ino)
@@ -465,149 +369,21 @@ void fs_whitelist(void) {
 		}
 		char *dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 
-		// resolve ${DOWNLOADS}
-		if (strcmp(dataptr, "${DOWNLOADS}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_DOWNLOAD_DIR=\"$HOME/", 24, "Downloads");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, dentry, "Downloads");
-			if (tmp) {
-				entry->data = tmp;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2) {
-			  entry->data = tmp2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Downloads directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Downloads directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
+		// resolve macros
+		if (is_macro(dataptr)) {
+			char *tmp = resolve_macro(dataptr);
+			if (tmp != NULL)
+				tmp = parse_nowhitelist(nowhitelist_flag, tmp);
 
-		// resolve ${MUSIC}
-		if (strcmp(dataptr, "${MUSIC}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_MUSIC_DIR=\"$HOME/", 21, "Music");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, mentry, "Music");
 			if (tmp) {
 				entry->data = tmp;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 			}
-			else if (tmp2) {
-			  entry->data = tmp2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
 			else {
 				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
 					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Music directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Music directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// resolve ${VIDEOS}
-		if (strcmp(dataptr, "${VIDEOS}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_VIDEOS_DIR=\"$HOME/", 22, "Videos");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, ventry, "Videos");
-			if (tmp) {
-				entry->data = tmp;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2) {
-			  entry->data = tmp2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Videos directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Videos directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// resolve ${PICTURES}
-		if (strcmp(dataptr, "${PICTURES}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_PICTURES_DIR=\"$HOME/", 24, "Pictures");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, pentry, "Pictures");
-			if (tmp) {
-				entry->data = tmp;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2) {
-			  entry->data = tmp2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Pictures directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Pictures directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// resolve ${DESKTOP}
-		if (strcmp(dataptr, "${DESKTOP}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_DESKTOP_DIR=\"$HOME/", 24, "Desktop");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, deentry, "Desktop");
-			if (tmp) {
-				entry->data = tmp;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2) {
-			  entry->data = tmp2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Desktop directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Desktop directory for your application.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// resolve ${DOCUMENTS}
-		if (strcmp(dataptr, "${DOCUMENTS}") == 0) {
-			char *tmp = resolve_xdg(nowhitelist_flag, "XDG_DOCUMENTS_DIR=\"$HOME/", 25, "Documents");
-			char *tmp2 = resolve_hardcoded(nowhitelist_flag, doentry, "Documents");
-			if (tmp) {
-				entry->data = tmp;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else if (tmp2) {
-			  entry->data = tmp2;
-			  dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist Documents directory\n");
-					fprintf(stderr, "*** \tAny file saved will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "*** \tPlease create a proper Documents directory for your application.\n");
+					fprintf(stderr, "*** Warning: cannot whitelist %s directory\n", dataptr);
+					fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
 					fprintf(stderr, "***\n");
 				}
 				entry->data = EMPTY_STRING;
@@ -618,6 +394,21 @@ void fs_whitelist(void) {
 		// replace ~/ or ${HOME} into /home/username
 		new_name = expand_home(dataptr, cfg.homedir);
 		assert(new_name);
+
+		// trim trailing slashes or dots
+		char *end = strchr(new_name, '\0');
+		assert(end);
+		if ((end - new_name) > 1) {
+			end--;
+			while (*end == '/' ||
+			      (*end == '.' && *(end - 1) == '/')) {
+				*end = '\0';
+				end--;
+				if (end == new_name)
+					break;
+			}
+		}
+
 		if (arg_debug || arg_debug_whitelists)
 			fprintf(stderr, "Debug %d: new_name #%s#, %s\n", __LINE__, new_name, (nowhitelist_flag)? "nowhitelist": "whitelist");
 
@@ -627,7 +418,6 @@ void fs_whitelist(void) {
 				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
 		}
-
 
 		// extract the absolute path of the file
 		// realpath function will fail with ENOENT if the file is not found
@@ -704,7 +494,6 @@ void fs_whitelist(void) {
 			continue;
 		}
 
-
 		// check for supported directories
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			// whitelisting home directory is disabled if --private option is present
@@ -724,7 +513,7 @@ void fs_whitelist(void) {
 
 			// both path and absolute path are under /home
 			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0) {
-				// avoid naming issues, also entire home dirs are not allowed
+				// entire home directory is not allowed
 				if (*(fname + strlen(cfg.homedir)) != '/')
 					goto errexit;
 			}
@@ -740,12 +529,10 @@ void fs_whitelist(void) {
 			entry->tmp_dir = 1;
 			tmp_dir = 1;
 
-#ifndef TEST_MOUNTINFO
 			// both path and absolute path are under /tmp
 			if (strncmp(fname, "/tmp/", 5) != 0) {
 				goto errexit;
 			}
-#endif
 		}
 		else if (strncmp(new_name, "/media/", 7) == 0) {
 			entry->media_dir = 1;
@@ -871,7 +658,7 @@ void fs_whitelist(void) {
 			entry->link = new_name;
 		else {
 			free(new_name);
-			new_name = NULL;
+			entry->link = NULL;
 		}
 
 		// change file name in entry->data
@@ -901,7 +688,7 @@ void fs_whitelist(void) {
 			if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 
-			// mount a tmpfs and initialize /home/user
+			// mount a tmpfs and initialize /home/user, overrides --allusers
 			fs_private();
 		}
 		else
@@ -1113,14 +900,29 @@ void fs_whitelist(void) {
 			// if the link is already there, do not bother
 			if (lstat(entry->link, &s) != 0) {
 				// create the path if necessary
-				mkpath(entry->link, 0755);
-
-				int rv = symlink(entry->data + 10, entry->link);
-				if (rv)
-					fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
+				int fd = mkpath(entry->link, 0755);
+				if (fd == -1) {
+					if (arg_debug || arg_debug_whitelists)
+						printf("Debug %d: cannot create symbolic link %s\n", __LINE__, entry->link);
+					free(entry->link);
+					entry = entry->next;
+					continue;
+				}
+				// get file name of symlink
+				const char *file = gnu_basename(entry->link);
+				// create the link
+				int rv = symlinkat(entry->data + 10, fd, file);
+				if (rv) {
+					if (arg_debug || arg_debug_whitelists) {
+						perror("symlink");
+						printf("Debug %d: cannot create symbolic link %s\n", __LINE__, entry->link);
+					}
+				}
 				else if (arg_debug || arg_debug_whitelists)
 					printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+				close(fd);
 			}
+			free(entry->link);
 		}
 
 		entry = entry->next;
@@ -1202,9 +1004,6 @@ void fs_whitelist(void) {
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_MODULE_DIR);
 	}
-
-	if (new_name)
-		free(new_name);
 
 	return;
 

@@ -49,7 +49,7 @@ static void extract_x11_display(pid_t pid) {
 	if (!fp)
 		return;
 
-	if (1 != fscanf(fp, "%d", &display)) {
+	if (1 != fscanf(fp, "%u", &display)) {
 		fprintf(stderr, "Error: cannot read X11 display file\n");
 		fclose(fp);
 		return;
@@ -214,7 +214,7 @@ static void extract_umask(pid_t pid) {
 	free(fname);
 	if (!fp)
 		return;
-	if (fscanf(fp, "%4o", &orig_umask) < 1) {
+	if (fscanf(fp, "%3o", &orig_umask) < 1) {
 		fprintf(stderr, "Error: cannot read umask\n");
 		exit(1);
 	}

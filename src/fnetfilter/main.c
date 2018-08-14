@@ -79,13 +79,17 @@ static void process_template(char *src, const char *dest) {
 	*arg_start = '\0';
 	arg_start++;
 	if (*arg_start == '\0') {
-		fprintf(stderr, "Error fnetfilter: you need to provide at least on argument\n");
+		fprintf(stderr, "Error fnetfilter: you need to provide at least one argument\n");
 		exit(1);
 	}
 
 	// extract the arguments from command line
 	char *token = strtok(arg_start, ",");
 	while (token) {
+		if (argcnt == MAXARGS) {
+			fprintf(stderr, "Error fnetfilter: only up to %u arguments are supported\n", (unsigned) MAXARGS);
+			exit(1);
+		}
 		// look for abnormal things
 		int len = strlen(token);
 		if (strcspn(token, "\\&!?\"'<>%^(){};,*[]") != (size_t)len) {
@@ -125,7 +129,7 @@ for (i = 0; i < argcnt; i++)
 			else {
 				// parsing
 				int index = 0;
-				int rv = sscanf(ptr, "$ARG%u", &index) ;
+				int rv = sscanf(ptr, "$ARG%d", &index) ;
 				if (rv != 1) {
 					fprintf(stderr, "Error fnetfilter: invalid template argument on line %d\n", line);
 					exit(1);

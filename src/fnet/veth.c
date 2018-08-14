@@ -3,10 +3,10 @@
  * Original source code:
  *
  * Information:
- *     http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+ *     https://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
  *
  * Download:
- *     http://www.kernel.org/pub/linux/utils/net/iproute2/
+ *     https://www.kernel.org/pub/linux/utils/net/iproute2/
  *
  * Repository:
  *     git://git.kernel.org/pub/scm/linux/kernel/git/shemminger/iproute2.git

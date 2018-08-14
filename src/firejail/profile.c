@@ -87,6 +87,31 @@ static int is_in_ignore_list(char *ptr) {
 	return 0;
 }
 
+void profile_add_ignore(const char *str) {
+	assert(str);
+	if (*str == '\0') {
+		fprintf(stderr, "Error: invalid ignore option\n");
+		exit(1);
+	}
+
+	// find an empty entry in profile_ignore array
+	int i;
+	for (i = 0; i < MAX_PROFILE_IGNORE; i++) {
+		if (cfg.profile_ignore[i] == NULL)
+			break;
+	}
+	if (i >= MAX_PROFILE_IGNORE) {
+		fprintf(stderr, "Error: maximum %d --ignore options are permitted\n", MAX_PROFILE_IGNORE);
+		exit(1);
+	}
+	// ... and configure it
+	else {
+		cfg.profile_ignore[i] = strdup(str);
+		if (!cfg.profile_ignore[i])
+			errExit("strdup");
+	}
+}
+
 
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
@@ -99,25 +124,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 
 	if (strncmp(ptr, "ignore ", 7) == 0) {
-		char *str = strdup(ptr + 7);
-		if (*str == '\0') {
-			fprintf(stderr, "Error: invalid ignore option\n");
-			exit(1);
-		}
-		// find an empty entry in profile_ignore array
-		int j;
-		for (j = 0; j < MAX_PROFILE_IGNORE; j++) {
-			if (cfg.profile_ignore[j] == NULL)
-				break;
-		}
-		if (j >= MAX_PROFILE_IGNORE) {
-			fprintf(stderr, "Error: maximum %d --ignore options are permitted\n", MAX_PROFILE_IGNORE);
-			exit(1);
-		}
-		// ... and configure it
-		else
-			cfg.profile_ignore[j] = str;
-
+		profile_add_ignore(ptr + 7);
 		return 0;
 	}
 
@@ -951,6 +958,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			warning_feature_disabled("private-lib");
 		return 0;
 	}
+
 
 #ifdef HAVE_OVERLAYFS
 	if (strncmp(ptr, "overlay-named ", 14) == 0) {

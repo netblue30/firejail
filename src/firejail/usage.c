@@ -255,7 +255,7 @@ static char *usage_str =
 	"\tlist all running sandboxes\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: http://firejail.wordpress.com\n"
+	"Homepage: https://firejail.wordpress.com\n"
 	"\n";
 
 

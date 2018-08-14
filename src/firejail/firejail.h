@@ -451,6 +451,7 @@ void fs_chroot(const char *rootdir);
 void fs_check_chroot_dir(const char *rootdir);
 void fs_private_tmp(void);
 void fs_private_cache(void);
+void fs_mnt(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -463,7 +464,7 @@ void profile_read(const char *fname);
 int profile_check_line(char *ptr, int lineno, const char *fname);
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str);
-void fs_mnt(void);
+void profile_add_ignore(const char *str);
 
 // list.c
 void list(void);
@@ -490,6 +491,13 @@ int arp_check(const char *dev, uint32_t destaddr);
 // assign an IP address using arp scanning
 uint32_t arp_assign(const char *dev, Bridge *br);
 
+// macros.c
+char *expand_home(const char *path, const char *homedir);
+char *resolve_macro(const char *name);
+void invalid_filename(const char *fname, int globbing);
+int is_macro(const char *name);
+
+
 // util.c
 void errLogExit(char* fmt, ...);
 void fwarning(char* fmt, ...);
@@ -515,10 +523,8 @@ void check_private_dir(void);
 void update_map(char *mapping, char *map_file);
 void wait_for_other(int fd);
 void notify_other(int fd);
-char *expand_home(const char *path, const char* homedir);
 const char *gnu_basename(const char *path);
 uid_t pid_get_uid(pid_t pid);
-void invalid_filename(const char *fname, int globbing);
 uid_t get_group_id(const char *group);
 int remove_overlay_directory(void);
 void flush_stdin(void);

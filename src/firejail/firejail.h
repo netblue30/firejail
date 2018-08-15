@@ -515,6 +515,7 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);
+void trim_trailing_slash_or_dot(char *path);
 char *line_remove_spaces(const char *buf);
 char *split_comma(char *str);
 void check_unsigned(const char *str, const char *msg);

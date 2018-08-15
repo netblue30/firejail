@@ -425,15 +425,48 @@ int is_link(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
+	char *dup = NULL;
 	struct stat s;
 	if (lstat(fname, &s) == 0) {
 		if (S_ISLNK(s.st_mode))
 			return 1;
+		if (S_ISDIR(s.st_mode)) {
+			// remove trailing slashes and single dots and try again
+			dup = strdup(fname);
+			if (!dup)
+				errExit("strdup");
+			trim_trailing_slash_or_dot(dup);
+			if (lstat(dup, &s) == 0) {
+				if (S_ISLNK(s.st_mode)) {
+					free(dup);
+					return 1;
+				}
+			}
+		}
 	}
 
+	free(dup);
 	return 0;
 }
 
+// remove all slashes and single dots from the end of a path
+// for example /foo/bar///././. -> /foo/bar
+void trim_trailing_slash_or_dot(char *path) {
+	assert(path);
+
+	char *end = strchr(path, '\0');
+	assert(end);
+	if ((end - path) > 1) {
+		end--;
+		while (*end == '/' ||
+		      (*end == '.' && *(end - 1) == '/')) {
+			*end = '\0';
+			end--;
+			if (end == path)
+				break;
+		}
+	}
+}
 
 // remove multiple spaces and return allocated memory
 char *line_remove_spaces(const char *buf) {

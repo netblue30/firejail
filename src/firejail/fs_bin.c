@@ -285,6 +285,10 @@ void fs_private_bin_list(void) {
 		errExit("strdup");
 
 	char *ptr = strtok(dlist, ",");
+	if (!ptr) {
+		fprintf(stderr, "Error: invalid private-bin argument\n");
+		exit(1);
+	}
 	globbing(ptr);
 	while ((ptr = strtok(NULL, ",")) != NULL)
 		globbing(ptr);

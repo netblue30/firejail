@@ -196,6 +196,8 @@ static void load_library(const char *fname) {
 }
 
 static void install_list_entry(const char *lib) {
+	assert(lib);
+
 	// filename check
 	int len = strlen(lib);
 	if (strcspn(lib, "\\&!?\"'<>%^(){}[];,") != (size_t)len ||
@@ -255,6 +257,10 @@ void fslib_install_list(const char *lib_list) {
 		errExit("strdup");
 
 	char *ptr = strtok(dlist, ",");
+	if (!ptr) {
+		fprintf(stderr, "Error: invalid private-lib argument\n");
+		exit(1);
+	}
 	install_list_entry(ptr);
 
 	while ((ptr = strtok(NULL, ",")) != NULL)

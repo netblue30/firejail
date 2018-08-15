@@ -494,6 +494,10 @@ void fs_private_home_list(void) {
 		errExit("strdup");
 
 	char *ptr = strtok(dlist, ",");
+	if (!ptr) {
+		fprintf(stderr, "Error: invalid private-home argument\n");
+		exit(1);
+	}
 	duplicate(ptr);
 	while ((ptr = strtok(NULL, ",")) != NULL)
 		duplicate(ptr);

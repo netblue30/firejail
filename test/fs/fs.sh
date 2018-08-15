@@ -6,6 +6,9 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+# These directories are required by some tests:
+mkdir -p ~/Desktop ~/Documents ~/Downloads ~/Music ~/Pictures ~/Videos
+
 rm -fr ~/_firejail_test_*
 echo "TESTING: mkdir/mkfile (test/fs/mkdir_mkfile.exp)"
 ./mkdir_mkfile.exp
@@ -58,7 +61,7 @@ echo "TESTING: empty private-etc (test/fs/private-etc-empty.exp)"
 echo "TESTING: private-bin (test/fs/private-bin.exp)"
 ./private-bin.exp
 
-echo "TESTING: macros (test/fs/macro..exp)"
+echo "TESTING: macros (test/fs/macro.exp)"
 ./macro.exp
 
 echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"

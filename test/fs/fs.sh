@@ -37,8 +37,12 @@ echo "TESTING: private-lib (test/fs/private-lib.exp)"
 echo "TESTING: read/write /var/lock (test/fs/fs_var_lock.exp)"
 ./fs_var_lock.exp
 
-echo "TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)"
-./fs_dev_shm.exp
+if [ -w /dev/shm ]; then
+    echo "TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)"
+    ./fs_dev_shm.exp
+else
+    echo "TESTING SKIP: /dev/shm not writable"
+fi
 
 echo "TESTING: private (test/fs/private.exp)"
 ./private.exp

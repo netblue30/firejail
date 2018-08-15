@@ -1,4 +1,5 @@
 # Firejail profile for ssh
+# Description: Secure shell client and server
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
@@ -37,4 +38,3 @@ memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
 writable-run-user
-

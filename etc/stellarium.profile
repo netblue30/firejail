@@ -1,4 +1,5 @@
 # Firejail profile for stellarium
+# Description: Real-time photo-realistic sky generator
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/stellarium.local

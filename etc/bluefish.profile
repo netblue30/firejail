@@ -1,4 +1,5 @@
 # Firejail profile for bluefish
+# Description: Advanced Gtk+ text editor for web and software development
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/bluefish.local

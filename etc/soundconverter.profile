@@ -1,4 +1,5 @@
 # Firejail profile for soundconverter
+# Description: GNOME application to convert audio files into other formats
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/soundconverter.local

@@ -1,4 +1,5 @@
 # Firejail profile for midori
+# Description: Lightweight web browser
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/midori.local

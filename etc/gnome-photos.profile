@@ -1,4 +1,5 @@
 # Firejail profile for gnome-photos
+# Description: Access, organize and share your photos with GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-photos.local

@@ -1,4 +1,5 @@
 # Firejail profile for simutrans
+# Description: Transportation simulator
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/simutrans.local

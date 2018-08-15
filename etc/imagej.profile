@@ -1,4 +1,5 @@
 # Firejail profile for imagej
+# Description: Image processing program with a focus on microscopy images
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/imagej.local

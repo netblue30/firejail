@@ -1,4 +1,5 @@
 # Firejail profile for tor
+# Description: Anonymizing overlay network for TCP
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/tor.local

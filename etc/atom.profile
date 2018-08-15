@@ -1,4 +1,5 @@
 # Firejail profile for atom
+# Description: A hackable text editor for the 21st Century
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/atom.local

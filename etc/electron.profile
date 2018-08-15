@@ -1,4 +1,5 @@
 # Firejail profile for electron
+# Description: Build cross platform desktop apps with web technologies
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/electron.local

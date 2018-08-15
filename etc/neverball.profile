@@ -1,4 +1,5 @@
 # Firejail profile for neverball
+# Description: 3D floor-tilting game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/neverball.local

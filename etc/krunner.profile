@@ -1,4 +1,5 @@
 # Firejail profile for krunner
+# Description: Framework for providing different actions given a string query
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/krunner.local

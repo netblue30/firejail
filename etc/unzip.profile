@@ -1,4 +1,5 @@
 # Firejail profile for unzip
+# Description: De-archiver for .zip files
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

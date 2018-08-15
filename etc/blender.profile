@@ -1,4 +1,5 @@
 # Firejail profile for blender
+# Description: Very fast and versatile 3D modeller/renderer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/blender.local

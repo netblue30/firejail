@@ -1,4 +1,5 @@
 # Firejail profile for chromium
+# Description: A web browser built for speed, simplicity, and security
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/chromium.local

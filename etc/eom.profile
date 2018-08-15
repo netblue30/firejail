@@ -1,4 +1,5 @@
 # Firejail profile for eom
+# Description: Eye of MATE graphics viewer program
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/eom.local

@@ -1,4 +1,5 @@
 # Firejail profile for less
+# Description: Pager program similar to more
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

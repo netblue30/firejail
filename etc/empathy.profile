@@ -1,4 +1,5 @@
 # Firejail profile for empathy
+# Description: GNOME multi-protocol chat and call client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/empathy.local

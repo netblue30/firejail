@@ -1,4 +1,5 @@
 # Firejail profile for fetchmail
+# Description: SSL enabled POP3, APOP, IMAP mail gatherer/forwarder
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/fetchmail.local

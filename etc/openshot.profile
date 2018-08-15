@@ -1,4 +1,5 @@
 # Firejail profile for openshot
+# Description: Create and edit videos and movies
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/openshot.local

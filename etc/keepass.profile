@@ -1,4 +1,5 @@
 # Firejail profile for keepass
+# Description: An easy-to-use password manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/keepass.local

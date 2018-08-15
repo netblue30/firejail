@@ -1,4 +1,5 @@
 # Firejail profile for gnome-2048
+# Description: Sliding tile puzzle game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-2048.local

@@ -1,4 +1,5 @@
 # Firejail profile for linphone
+# Description: SIP softphone - graphical client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/linphone.local

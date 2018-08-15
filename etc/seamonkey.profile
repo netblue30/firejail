@@ -1,4 +1,5 @@
 # Firejail profile for seamonkey
+# Description: SeaMonkey internet suite
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/seamonkey.local

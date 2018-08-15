@@ -1,4 +1,5 @@
 # Firejail profile for kate
+# Description: Powerful text editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kate.local

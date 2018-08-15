@@ -1,4 +1,5 @@
 # Firejail profile for xfce4-dict
+# Description: Dictionary plugin for Xfce4 panel
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xfce4-dict.local

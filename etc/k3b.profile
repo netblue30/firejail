@@ -1,4 +1,5 @@
 # Firejail profile for k3b
+# Description: Sophisticated CD/DVD burning application
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/k3b.local

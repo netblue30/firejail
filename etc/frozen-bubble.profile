@@ -1,4 +1,5 @@
 # Firejail profile for frozen-bubble
+# Description: Cool game where you pop out the bubbles
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/frozen-bubble.local

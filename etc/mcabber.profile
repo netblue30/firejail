@@ -1,4 +1,5 @@
 # Firejail profile for mcabber
+# Description: Small Jabber (XMPP) console client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mcabber.local

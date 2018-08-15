@@ -1,4 +1,5 @@
 # Firejail profile for freecad
+# Description: Extensible Open Source CAx program
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/freecad.local

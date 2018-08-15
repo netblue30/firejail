@@ -1,4 +1,5 @@
 # Firejail profile for evince
+# Description: Document (PostScript, PDF) viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/evince.local

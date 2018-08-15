@@ -1,4 +1,5 @@
 # Firejail profile for curl
+# Description: Command line tool for transferring data with URL syntax
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

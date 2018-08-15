@@ -1,4 +1,5 @@
 # Firejail profile for keepassxc
+# Description: Cross Platform Password Manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/keepassxc.local

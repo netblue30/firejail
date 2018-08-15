@@ -1,4 +1,5 @@
 # Firejail profile for opera
+# Description: A fast and secure web browser
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/opera.local

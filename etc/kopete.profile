@@ -1,4 +1,5 @@
 # Firejail profile for kopete
+# Description: Instant messaging and chat application
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kopete.local

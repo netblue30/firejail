@@ -1,4 +1,5 @@
 # Firejail profile for hugin
+# Description: Panorama photo stitcher
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/hugin.local

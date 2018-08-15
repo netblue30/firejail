@@ -1,4 +1,5 @@
 # Firejail profile for lollypop
+# Description: Music player for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/lollypop.local

@@ -1,4 +1,5 @@
 # Firejail profile for synfigstudio
+# Description: Vector-based 2D animation package
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/synfigstudio.local

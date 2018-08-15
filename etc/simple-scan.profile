@@ -1,4 +1,5 @@
 # Firejail profile for simple-scan
+# Description: Simple Scanning Utility
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/simple-scan.local

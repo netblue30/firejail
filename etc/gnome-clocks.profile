@@ -1,4 +1,5 @@
 # Firejail profile for gnome-clocks
+# Description: Simple GNOME app with stopwatch, timer, and world clock support
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-clocks.local

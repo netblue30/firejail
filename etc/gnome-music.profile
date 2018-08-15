@@ -1,4 +1,5 @@
 # Firejail profile for gnome-music
+# Description: GNOME music player
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-music.local

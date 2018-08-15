@@ -1,4 +1,5 @@
 # Firejail profile for orage
+# Description: Calendar for Xfce Desktop Environment
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/orage.local

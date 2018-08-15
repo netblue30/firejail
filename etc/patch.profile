@@ -1,4 +1,5 @@
 # Firejail profile for patch
+# Description: Apply a diff file to an original
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

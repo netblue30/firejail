@@ -1,4 +1,5 @@
 # Firejail profile for mousepad
+# Description: Simple Xfce oriented text editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mousepad.local

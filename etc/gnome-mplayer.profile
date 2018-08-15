@@ -1,4 +1,5 @@
 # Firejail profile for gnome-mplayer
+# Description: GTK/Gnome interface around MPlayer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-mplayer.local

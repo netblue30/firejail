@@ -1,4 +1,5 @@
 # Firejail profile for arm
+# Description: Terminal status monitor for Tor relays
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/arm.local

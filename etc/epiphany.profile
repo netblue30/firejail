@@ -1,4 +1,5 @@
 # Firejail profile for epiphany
+# Description: Clone of Boulder Dash game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/epiphany.local

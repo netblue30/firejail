@@ -1,4 +1,5 @@
 # Firejail profile for musescore
+# Description: Free music composition and notation software
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/musescore.local

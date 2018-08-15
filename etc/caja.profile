@@ -1,4 +1,5 @@
 # Firejail profile for caja
+# Description: File manager for the MATE desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/caja.local

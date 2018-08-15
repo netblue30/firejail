@@ -25,6 +25,7 @@ include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 # caps.drop all
 caps.keep dac_override,net_admin,net_raw
 netfilter

@@ -127,6 +127,8 @@ network inet6,
 network unix,
 network netlink,
 network raw,
+# needed for wireshark
+network packet,
 
 ##########
 # There is no equivalent in Firejail for filtering signals.

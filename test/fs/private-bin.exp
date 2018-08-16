@@ -73,14 +73,14 @@ expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
 	"Warning: invalid private-bin path /etc/shadow"
 }
-after 100
+after 300
 
 send -- "firejail --private-bin=\"bla;bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
 	"is an invalid filename"
 }
-after 100
+after 300
 
 send -- "firejail --private-etc=../bin/ls\r"
 expect {
@@ -88,5 +88,5 @@ expect {
 	"is an invalid filename"
 }
 
-after 100
+after 300
 puts "\nall done\n"

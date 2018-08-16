@@ -1633,7 +1633,7 @@ int main(int argc, char **argv) {
 		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
 			// extract private srv list
 			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-etc option\n");
+				fprintf(stderr, "Error: invalid private-srv option\n");
 				exit(1);
 			}
 			if (cfg.srv_private_keep) {

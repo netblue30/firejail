@@ -14,11 +14,7 @@ expect {
 }
 sleep 1
 
-send -- "top -b -n 1\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	$env(USER)
-}
+send -- "top -b -n 1 | awk '{ print \$4, \$12 }'\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"15"
@@ -26,10 +22,6 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"bash"
-}
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	$env(USER)
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
@@ -51,11 +43,7 @@ expect {
 }
 sleep 1
 
-send -- "top -b -n 1\r"
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	$env(USER)
-}
+send -- "top -b -n 1 | awk '{ print \$4, \$12 }'\r"
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
 	"15"
@@ -63,10 +51,6 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
 	"bash"
-}
-expect {
-	timeout {puts "TESTING ERROR 14\n";exit}
-	$env(USER)
 }
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
@@ -90,11 +74,7 @@ expect {
 }
 sleep 1
 
-send -- "top -b -n 1\r"
-expect {
-	timeout {puts "TESTING ERROR 18\n";exit}
-	$env(USER)
-}
+send -- "top -b -n 1 | awk '{ print \$4, \$12 }'\r"
 expect {
 	timeout {puts "TESTING ERROR 19\n";exit}
 	"0"
@@ -102,10 +82,6 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 20\n";exit}
 	"bash"
-}
-expect {
-	timeout {puts "TESTING ERROR 21\n";exit}
-	$env(USER)
 }
 expect {
 	timeout {puts "TESTING ERROR 22\n";exit}

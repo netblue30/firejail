@@ -162,6 +162,7 @@ void build_protocol(char *fname, int fd, FILE *fp) {
 		if (stat(newname, &s) == 0) {
 		  int nfd = open(newname, O_RDONLY);
 		  process_protocol(newname, nfd);
+		  unlink(newname);
 		}
 		free(newname);
 	}

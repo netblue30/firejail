@@ -191,6 +191,7 @@ void build_home(char *fname, FILE *fp, FILE *fpo) {
 		  FILE *nfp = fdopen(nfd, "r");
 		  process_home(newname, nfp, home, home_len);
 		  fclose(nfp);
+		  unlink(newname);
 		}
 		free(newname);
 	}

@@ -108,6 +108,7 @@ static void process_files(char *fname, FILE *fp, const char *dir, void (*callbac
 		  FILE *nfp = fdopen(nfd, "r");
 		  process_file(newname, nfp, dir, callback);
 		  fclose(nfp);
+		  unlink(newname);
 		}
 		free(newname);
 	}

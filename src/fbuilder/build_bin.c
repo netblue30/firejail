@@ -117,6 +117,7 @@ void build_bin(char *fname, FILE *fp, FILE *fpo) {
 		    FILE *nfp = fdopen(nfd, "r");
 		    process_bin(newname, nfp);
 		    fclose(nfp);
+		    unlink(newname);
 		  }
 		free(newname);
 	}

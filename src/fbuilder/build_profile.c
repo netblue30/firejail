@@ -202,6 +202,8 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "shell none\n");
 		
 		fclose(tp);
+		unlink(trace_output);
+		unlink(strace_output);
 
 	}
 	else {

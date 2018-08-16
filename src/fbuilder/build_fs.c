@@ -21,19 +21,20 @@
 #include "fbuilder.h"
 
 // common file processing function, using the callback for each line in the file
-static void process_file(const char *fname, const char *dir, void (*callback)(char *)) {
+static void process_file(char *fname, FILE *fp, const char *dir, void (*callback)(char *)) {
 	assert(fname);
+	assert(fp);
 	assert(dir);
 	assert(callback);
 
 	int dir_len = strlen(dir);
 
 	// process trace file
-	FILE *fp = fopen(fname, "r");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s\n", fname);
-		exit(1);
-	}
+	/* FILE *fp = fdopen(fd, "r"); */
+	/* if (!fp) { */
+	/* 	fprintf(stderr, "Error: cannot open %s\n", fname); */
+	/* 	exit(1); */
+	/* } */
 
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
@@ -82,17 +83,18 @@ static void process_file(const char *fname, const char *dir, void (*callback)(ch
 		callback(ptr);
 	}
 
-	fclose(fp);
+	/* fclose(fp); */
 }
 
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
-static void process_files(const char *fname, const char *dir, void (*callback)(char *)) {
+static void process_files(char *fname, FILE *fp, const char *dir, void (*callback)(char *)) {
 	assert(fname);
+	assert(fp);
 	assert(dir);
 	assert(callback);
 
 	// run fname
-	process_file(fname, dir, callback);
+	process_file(fname, fp, dir, callback);
 
 	// run all the rest
 	struct stat s;
@@ -101,8 +103,12 @@ static void process_files(const char *fname, const char *dir, void (*callback)(c
 		char *newname;
 		if (asprintf(&newname, "%s.%d", fname, i) == -1)
 			errExit("asprintf");
-		if (stat(newname, &s) == 0)
-			process_file(newname, dir, callback);
+		if (stat(newname, &s) == 0) {
+		  int nfd = open(newname, O_RDONLY);
+		  FILE *nfp = fdopen(nfd, "r");
+		  process_file(newname, nfp, dir, callback);
+		  fclose(nfp);
+		}
 		free(newname);
 	}
 }
@@ -125,21 +131,23 @@ static void etc_callback(char *ptr) {
 	etc_out = filedb_add(etc_out, ptr);
 }
 
-void build_etc(const char *fname, FILE *fp) {
+void build_etc(char *fname, FILE *fp, FILE *fpo) {
 	assert(fname);
+	assert(fp);
+	assert(fpo);
 
-	process_files(fname, "/etc", etc_callback);
+	process_files(fname, fp, "/etc", etc_callback);
 
-	fprintf(fp, "private-etc ");
+	fprintf(fpo, "private-etc ");
 	if (etc_out == NULL)
-		fprintf(fp, "none\n");
+		fprintf(fpo, "none\n");
 	else {
 		FileDB *ptr = etc_out;
 		while (ptr) {
-			fprintf(fp, "%s,", ptr->fname);
+			fprintf(fpo, "%s,", ptr->fname);
 			ptr = ptr->next;
 		}
-		fprintf(fp, "\n");
+		fprintf(fpo, "\n");
 	}
 }
 
@@ -160,15 +168,17 @@ static void var_callback(char *ptr) {
 		var_out = filedb_add(var_out, ptr);
 }
 
-void build_var(const char *fname, FILE *fp) {
+void build_var(char *fname, FILE *fp, FILE *fpo) {
 	assert(fname);
+	assert(fp);
+	assert(fpo);
 
-	process_files(fname, "/var", var_callback);
+	process_files(fname, fp, "/var", var_callback);
 
 	if (var_out == NULL)
-		fprintf(fp, "blacklist /var\n");
+		fprintf(fpo, "blacklist /var\n");
 	else
-		filedb_print(var_out, "whitelist ", fp);
+		filedb_print(var_out, "whitelist ", fpo);
 }
 
 
@@ -197,15 +207,17 @@ static void share_callback(char *ptr) {
 	share_out = filedb_add(share_out, ptr);
 }
 
-void build_share(const char *fname, FILE *fp) {
+void build_share(char *fname, FILE *fp, FILE *fpo) {
 	assert(fname);
+	assert(fp);
+	assert(fpo);
 
-	process_files(fname, "/usr/share", share_callback);
+	process_files(fname, fp, "/usr/share", share_callback);
 
 	if (share_out == NULL)
-		fprintf(fp, "blacklist /usr/share\n");
+		fprintf(fpo, "blacklist /usr/share\n");
 	else
-		filedb_print(share_out, "whitelist ", fp);
+		filedb_print(share_out, "whitelist ", fpo);
 }
 
 //*******************************************
@@ -216,21 +228,23 @@ static void tmp_callback(char *ptr) {
 	filedb_add(tmp_out, ptr);
 }
 
-void build_tmp(const char *fname, FILE *fp) {
+void build_tmp(char *fname, FILE *fp, FILE *fpo) {
 	assert(fname);
+	assert(fp);
+	assert(fpo);
 
-	process_files(fname, "/tmp", tmp_callback);
+	process_files(fname, fp, "/tmp", tmp_callback);
 
 	if (tmp_out == NULL)
-		fprintf(fp, "private-tmp\n");
+		fprintf(fpo, "private-tmp\n");
 	else {
-		fprintf(fp, "\n");
-		fprintf(fp, "# private-tmp\n");
-		fprintf(fp, "# File accessed in /tmp directory:\n");
-		fprintf(fp, "# ");
+		fprintf(fpo, "\n");
+		fprintf(fpo, "# private-tmp\n");
+		fprintf(fpo, "# File accessed in /tmp directory:\n");
+		fprintf(fpo, "# ");
 		FileDB *ptr = tmp_out;
 		while (ptr) {
-			fprintf(fp, "%s,", ptr->fname);
+			fprintf(fpo, "%s,", ptr->fname);
 			ptr = ptr->next;
 		}
 		printf("\n");
@@ -294,24 +308,26 @@ static void dev_callback(char *ptr) {
 		filedb_add(dev_out, ptr);
 }
 
-void build_dev(const char *fname, FILE *fp) {
+void build_dev(char *fname, FILE *fp, FILE *fpo) {
 	assert(fname);
+	assert(fp);
+	assert(fpo);
 
-	process_files(fname, "/dev", dev_callback);
+	process_files(fname, fp, "/dev", dev_callback);
 
 	if (dev_out == NULL)
-		fprintf(fp, "private-dev\n");
+		fprintf(fpo, "private-dev\n");
 	else {
-		fprintf(fp, "\n");
-		fprintf(fp, "# private-dev\n");
-		fprintf(fp, "# This is the list of devices accessed (on top of regular private-dev devices:\n");
-		fprintf(fp, "# ");
+		fprintf(fpo, "\n");
+		fprintf(fpo, "# private-dev\n");
+		fprintf(fpo, "# This is the list of devices accessed (on top of regular private-dev devices:\n");
+		fprintf(fpo, "# ");
 		FileDB *ptr = dev_out;
 		while (ptr) {
-			fprintf(fp, "%s,", ptr->fname);
+			fprintf(fpo, "%s,", ptr->fname);
 			ptr = ptr->next;
 		}
-		fprintf(fp, "\n");
+		fprintf(fpo, "\n");
 	}
 }
 

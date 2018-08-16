@@ -47,17 +47,18 @@ static void load_whitelist_common(void) {
 	fclose(fp);
 }
 
-void process_home(const char *fname, char *home, int home_len) {
+void process_home(char *fname, FILE *fp, char *home, int home_len) {
 	assert(fname);
+	assert(fp);
 	assert(home);
 	assert(home_len);
 
 	// process trace file
-	FILE *fp = fopen(fname, "r");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s\n", fname);
-		exit(1);
-	}
+	/* FILE *fp = fdopen(fd, "r"); */
+	/* if (!fp) { */
+	/* 	fprintf(stderr, "Error: cannot open %s\n", fname); */
+	/* 	exit(1); */
+	/* } */
 
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
@@ -153,13 +154,15 @@ void process_home(const char *fname, char *home, int home_len) {
 			free(dir);
 
 	}
-	fclose(fp);
+	/* fclose(fp); */
 }
 
 
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
-void build_home(const char *fname, FILE *fp) {
+void build_home(char *fname, FILE *fp, FILE *fpo) {
 	assert(fname);
+	assert(fp);
+	assert(fpo);
 
 	// load whitelist common
 	load_whitelist_common();
@@ -174,7 +177,7 @@ void build_home(const char *fname, FILE *fp) {
 	int home_len = strlen(home);
 
 	// run fname
-	process_home(fname, home, home_len);
+	process_home(fname, fp, home, home_len);
 
 	// run all the rest
 	struct stat s;
@@ -183,17 +186,21 @@ void build_home(const char *fname, FILE *fp) {
 		char *newname;
 		if (asprintf(&newname, "%s.%d", fname, i) == -1)
 			errExit("asprintf");
-		if (stat(newname, &s) == 0)
-			process_home(newname, home, home_len);
+		if (stat(newname, &s) == 0) {
+		  int nfd = open(newname, O_RDONLY);
+		  FILE *nfp = fdopen(nfd, "r");
+		  process_home(newname, nfp, home, home_len);
+		  fclose(nfp);
+		}
 		free(newname);
 	}
 
 	// print the out list if any
 	if (db_out) {
-		filedb_print(db_out, "whitelist ~/", fp);
-		fprintf(fp, "include /etc/firejail/whitelist-common.inc\n");
+		filedb_print(db_out, "whitelist ~/", fpo);
+		fprintf(fpo, "include /etc/firejail/whitelist-common.inc\n");
 	}
 	else
-		fprintf(fp, "private\n");
+		fprintf(fpo, "private\n");
 
 }

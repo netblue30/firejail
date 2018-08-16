@@ -20,11 +20,12 @@
 
 #include "fbuilder.h"
 
-void build_seccomp(const char *fname, FILE *fp) {
+void build_seccomp(char *fname, int fd, FILE *fp) {
 	assert(fname);
+	assert(fd);
 	assert(fp);
 
-	FILE *fp2 = fopen(fname, "r");
+	FILE *fp2 = fdopen(fd, "r");
 	if (!fp2) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);
 		exit(1);
@@ -87,11 +88,12 @@ int inet = 0;
 int inet6 = 0;
 int netlink = 0;
 int packet = 0;
-static void process_protocol(const char *fname) {
+static void process_protocol(char *fname, int fd) {
 	assert(fname);
+	assert(fd);
 
 	// process trace file
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fdopen(fd, "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);
 		exit(1);
@@ -142,11 +144,13 @@ static void process_protocol(const char *fname) {
 
 
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
-void build_protocol(const char *fname, FILE *fp) {
+void build_protocol(char *fname, int fd, FILE *fp) {
 	assert(fname);
+	assert(fd);
+	assert(fp);
 
 	// run fname
-	process_protocol(fname);
+	process_protocol(fname, fd);
 
 	// run all the rest
 	struct stat s;
@@ -155,8 +159,10 @@ void build_protocol(const char *fname, FILE *fp) {
 		char *newname;
 		if (asprintf(&newname, "%s.%d", fname, i) == -1)
 			errExit("asprintf");
-		if (stat(newname, &s) == 0)
-			process_protocol(newname);
+		if (stat(newname, &s) == 0) {
+		  int nfd = open(newname, O_RDONLY);
+		  process_protocol(newname, nfd);
+		}
 		free(newname);
 	}
 

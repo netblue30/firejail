@@ -20,25 +20,24 @@
 
 #include "fbuilder.h"
 #include <sys/wait.h>
-#include <fcntl.h>
 
-#define TRACE_OUTPUT "/tmp/firejail-trace"
-#define STRACE_OUTPUT "/tmp/firejail-strace"
+#define TRACE_OUTPUT "/tmp/firejail-trace.XXXXXX"
+#define STRACE_OUTPUT "/tmp/firejail-strace.XXXXXX"
 
-static char *cmdlist[] = {
-	"/usr/bin/firejail",
-	"--quiet",
-	"--output=" TRACE_OUTPUT,
-	"--noprofile",
-	"--caps.drop=all",
-	"--nonewprivs",
-	"--trace",
-	"--shell=none",
-	"/usr/bin/strace", // also used as a marker in build_profile()
-	"-c",
-	"-f",
-	"-o" STRACE_OUTPUT,
-};
+/* static char *cmdlist[] = { */
+/* 	"/usr/bin/firejail", */
+/* 	"--quiet", */
+/* 	"--output=" TRACE_OUTPUT, */
+/* 	"--noprofile", */
+/* 	"--caps.drop=all", */
+/* 	"--nonewprivs", */
+/* 	"--trace", */
+/* 	"--shell=none", */
+/* 	"/usr/bin/strace", // also used as a marker in build_profile() */
+/* 	"-c", */
+/* 	"-f", */
+/* 	"-o" STRACE_OUTPUT, */
+/* }; */
 
 static void clear_tmp_files(void) {
 	unlink(STRACE_OUTPUT);
@@ -64,7 +63,47 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	}
 
 	// clean /tmp files
-	clear_tmp_files();
+	/* clear_tmp_files(); */
+
+	char trace_output[] = "/tmp/firejail-trace.XXXXXX";
+	char strace_output[] = "/tmp/firejail-strace.XXXXXX";
+
+	int tfile = mkstemp(trace_output);
+	int stfile = mkstemp(strace_output);
+
+	if(tfile == -1 || stfile == -1)
+	  errExit("mkstemp");
+
+	FILE *tp = fdopen(tfile, "r");
+
+	if (!tp) {
+		fprintf(stderr, "Error: cannot open %s\n", trace_output);
+		exit(1);
+	}
+
+	char *output;
+	char *stroutput;
+	
+	if(asprintf(&output,"--output=%s",trace_output) == -1)
+	  errExit("asprintf");
+
+	if(asprintf(&stroutput,"-o %s",strace_output) == -1)
+	  errExit("asprintf");
+
+	char *cmdlist[] = {
+	  "/usr/bin/firejail",
+	  "--quiet",
+	  output,
+	  "--noprofile",
+	  "--caps.drop=all",
+	  "--nonewprivs",
+	  "--trace",
+	  "--shell=none",
+	  "/usr/bin/strace", // also used as a marker in build_profile()
+	  "-c",
+	  "-f",
+	  stroutput,
+	};
 
 	// detect strace
 	int have_strace = 0;
@@ -131,16 +170,16 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### home directory whitelisting\n");
-		build_home(TRACE_OUTPUT, fp);
+		build_home(trace_output, tp, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### filesystem\n");
-		build_tmp(TRACE_OUTPUT, fp);
-		build_dev(TRACE_OUTPUT, fp);
-		build_etc(TRACE_OUTPUT, fp);
-		build_var(TRACE_OUTPUT, fp);
-		build_bin(TRACE_OUTPUT, fp);
-		build_share(TRACE_OUTPUT, fp);
+		build_tmp(trace_output, tp, fp);
+		build_dev(trace_output, tp, fp);
+		build_etc(trace_output, tp, fp);
+		build_var(trace_output, tp, fp);
+		build_bin(trace_output, tp, fp);
+		build_share(trace_output, tp, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### security filters\n");
@@ -148,7 +187,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "nonewprivs\n");
 		fprintf(fp, "seccomp\n");
 		if (have_strace)
-			build_seccomp(STRACE_OUTPUT, fp);
+		  build_seccomp(strace_output, stfile, fp);
 		else {
 			fprintf(fp, "# If you install strace on your system, Firejail will also create a\n");
 			fprintf(fp, "# whitelisted seccomp filter.\n");
@@ -156,11 +195,13 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### network\n");
-		build_protocol(TRACE_OUTPUT, fp);
+		build_protocol(trace_output, tfile, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### environment\n");
 		fprintf(fp, "shell none\n");
+		
+		fclose(tp);
 
 	}
 	else {

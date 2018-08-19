@@ -170,7 +170,7 @@ void netfilter_print(pid_t pid, int ipv6) {
 
 	// join the network namespace
 	pid_t child;
-	if (find_child(pid, &child) == -1) {
+	if (find_child(pid, &child) == 1) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");
 		exit(1);
 	}

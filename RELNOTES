@@ -16,7 +16,7 @@ firejail (0.9.56~rc1) baseline; urgency=low
   * new profiles: ms-skype, ms-word, riot-desktop, gnome-mpv, snox, gradio,
   * new profiles: standardnotes-desktop, shellcheck, patch, flameshot,
   * new profiles: rview, rvim, vimcat, vimdiff, vimpager, vimtutor, xxd,
-  * new profiles: Beaker, electrum
+  * new profiles: Beaker, electrum, clamtk
  -- netblue30 <netblue30@yahoo.com>  Sat, 11 Aug 2018 08:00:00 -0500
 
 firejail (0.9.54) baseline; urgency=low

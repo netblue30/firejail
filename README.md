@@ -167,4 +167,4 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 ## New profiles
 Microsoft Office Online, riot-desktop, gnome-mpv, snox, gradio, standardnotes-desktop,
 shellcheck, patch, flameshot, rview, rvim, vimcat, vimdiff, vimpager, vimtutor,
-xxd, Beaker, electrum
+xxd, Beaker, electrum, clamtk

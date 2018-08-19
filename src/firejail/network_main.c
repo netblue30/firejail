@@ -283,6 +283,16 @@ void net_dns_print(pid_t pid) {
 		free(comm);
 	}
 
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission denied.\n");
+			exit(1);
+		}
+	}
+
 	EUID_ROOT();
 	if (join_namespace(pid, "mnt"))
 		exit(1);

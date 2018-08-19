@@ -161,6 +161,9 @@ static void set_file(const char *name, const char *firejail_exec) {
 		else
 			printf("   %s created\n", name);
 	}
+	else {
+	  fprintf(stderr, "Warning: cannot create %s - already exists! Skipping...\n", fname);
+	}
 
 	free(fname);
 }

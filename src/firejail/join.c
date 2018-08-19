@@ -240,7 +240,7 @@ static void check_ready_for_join(pid_t pid) {
 	struct stat s;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
-	if (s.st_uid != 0)
+	if (!S_ISREG(s.st_mode) || s.st_uid != 0)
 		goto errexit;
 	// check if it is non-empty
 	char buf[BUFLEN];

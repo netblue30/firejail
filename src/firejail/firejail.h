@@ -100,6 +100,7 @@
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
 #define RUN_UMASK_FILE		"/run/firejail/mnt/umask"
 #define RUN_OVERLAY_ROOT	"/run/firejail/mnt/oroot"
+#define RUN_READY_FOR_JOIN 	"/run/firejail/mnt/ready-for-join"
 
 
 // profiles
@@ -405,7 +406,7 @@ char *guess_shell(void);
 
 // sandbox.c
 int sandbox(void* sandbox_arg);
-void start_application(int no_sandbox);
+void start_application(int no_sandbox, FILE *fp);
 
 // network_main.c
 void net_configure_sandbox_ip(Bridge *br);

@@ -129,7 +129,7 @@ char *pid_proc_comm(const pid_t pid) {
 	// open /proc/pid/cmdline file
 	char *fname;
 	int fd;
-	if (asprintf(&fname, "/proc/%d//comm", pid) == -1)
+	if (asprintf(&fname, "/proc/%d/comm", pid) == -1)
 		return NULL;
 	if ((fd = open(fname, O_RDONLY)) < 0) {
 		free(fname);
@@ -154,6 +154,8 @@ char *pid_proc_comm(const pid_t pid) {
 
 	// return a malloc copy of the command line
 	char *rv = strdup(buffer);
+	if (!rv)
+		return NULL;
 	if (strlen(rv) == 0) {
 		free(rv);
 		return NULL;
@@ -192,6 +194,8 @@ char *pid_proc_cmdline(const pid_t pid) {
 
 	// return a malloc copy of the command line
 	char *rv = strdup((char *) buffer);
+	if (!rv)
+		return NULL;
 	if (strlen(rv) == 0) {
 		free(rv);
 		return NULL;

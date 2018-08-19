@@ -10,6 +10,7 @@ blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.keepass
 blacklist ${HOME}/.keepassx
 blacklist ${HOME}/.keepassxc
+blacklist ${HOME}/.keepassxc-socket
 blacklist ${HOME}/.lastpass
 blacklist ${HOME}/.local/share/KeePass
 blacklist ${HOME}/.local/share/keepass

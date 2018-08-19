@@ -212,14 +212,53 @@ static void extract_umask(pid_t pid) {
 
 	FILE *fp = fopen(fname, "re");
 	free(fname);
-	if (!fp)
-		return;
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open umask file\n");
+		exit(1);
+	}
 	if (fscanf(fp, "%3o", &orig_umask) < 1) {
 		fprintf(stderr, "Error: cannot read umask\n");
 		exit(1);
 	}
 	fclose(fp);
 }
+
+static void ready_for_join(pid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_READY_FOR_JOIN) == -1)
+		errExit("asprintf");
+
+	// check if file "ready-for-join" exists
+	EUID_ROOT();
+	FILE *fp = fopen(fname, "re");
+	EUID_USER();
+	if (!fp)
+		goto errexit;
+	int fd = fileno(fp);
+	if (fd == -1)
+		errExit("fileno");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != 0)
+		goto errexit;
+	// check if it is non-empty
+	char buf[BUFLEN];
+	if (fgets(buf, BUFLEN, fp) == NULL)
+		goto errexit;
+	// confirm "ready" string was written
+	if (strncmp(buf, "ready\n", 6) != 0)
+		goto errexit;
+	fclose(fp);
+	free(fname);
+	return;
+
+errexit:
+	fprintf(stderr, "Error: no valid sandbox\n");
+	exit(1);
+}
+
+
 
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
@@ -231,17 +270,53 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 	// if the pid is that of a firejail  process, use the pid of the first child process
 	EUID_ROOT();
+	errno = 0;
 	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (comm) {
-		if (strcmp(comm, "firejail") == 0) {
-			pid_t child;
-			if (find_child(pid, &child) == 0) {
-				pid = child;
-				fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
-			}
+	if (!comm) {
+		if (errno == ENOENT) {
+			fprintf(stderr, "Error: cannot find process with id %d\n", pid);
+			exit(1);
 		}
-		free(comm);
+		else {
+			fprintf(stderr, "Error: cannot read /proc/%d/comm\n", pid);
+			exit(1);
+		}
+	}
+	EUID_USER();
+	if (strcmp(comm, "firejail") == 0) {
+		pid_t child;
+		if (find_child(pid, &child) == 1) {
+			fprintf(stderr, "Error: found firejail process without a child process\n");
+			exit(1);
+		}
+		fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) child);
+		pid = child;
+	}
+	free(comm);
+
+	// pid must belong to a valid firejail sandbox
+	ready_for_join(pid);
+
+	// walk down the process tree a few nodes, there should be no firejail leaf
+#define MAXNODES 4
+	pid_t current = pid, next;
+	for (int i = 0; i < MAXNODES; i++) {
+		if (find_child(current, &next) == 1) {
+			EUID_ROOT();
+			comm = pid_proc_comm(current);
+			EUID_USER();
+			if (!comm) {
+				fprintf(stderr, "Error: cannot read /proc/%d/comm\n", current);
+				exit(1);
+			}
+			if (strcmp(comm, "firejail") == 0) {
+				fprintf(stderr, "Error: found firejail process without a child process\n");
+				exit(1);
+			}
+			free(comm);
+			break;
+		}
+		current = next;
 	}
 
 	// check privileges for non-root users
@@ -406,7 +481,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		drop_privs(arg_nogroups);
-		start_application(0);
+		start_application(0, NULL);
 
 		// it will never get here!!!
 	}

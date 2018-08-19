@@ -233,5 +233,5 @@ void run_no_sandbox(int argc, char **argv) {
 
 	arg_quiet = 1;
 
-	start_application(1);
+	start_application(1, NULL);
 }

@@ -34,7 +34,7 @@ nonewprivs
 noroot
 nosound
 notv
-novideo
+pnovideo
 protocol unix
 seccomp
 shell none
@@ -48,3 +48,7 @@ private-tmp
 #memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
+
+mkdir ${HOME}/.keepassxc-socket
+
+env TMPDIR=${HOME}/.keepassxc-socket/

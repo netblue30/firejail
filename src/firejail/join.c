@@ -223,7 +223,7 @@ static void extract_umask(pid_t pid) {
 	fclose(fp);
 }
 
-static void ready_for_join(pid_t pid) {
+static void check_ready_for_join(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_READY_FOR_JOIN) == -1)
 		errExit("asprintf");
@@ -295,12 +295,13 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	free(comm);
 
 	// pid must belong to a valid firejail sandbox
-	ready_for_join(pid);
+	check_ready_for_join(pid);
 
 	// walk down the process tree a few nodes, there should be no firejail leaf
 #define MAXNODES 4
 	pid_t current = pid, next;
-	for (int i = 0; i < MAXNODES; i++) {
+	int i;
+	for (i = 0; i < MAXNODES; i++) {
 		if (find_child(current, &next) == 1) {
 			EUID_ROOT();
 			comm = pid_proc_comm(current);

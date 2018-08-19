@@ -39,31 +39,12 @@
 /* 	"-o" STRACE_OUTPUT, */
 /* }; */
 
-static void clear_tmp_files(void) {
-	unlink(STRACE_OUTPUT);
-	unlink(TRACE_OUTPUT);
-
-	// run all the rest
-	int i;
-	for (i = 1; i <= 5; i++) {
-		char *newname;
-		if (asprintf(&newname, "%s.%d", TRACE_OUTPUT, i) == -1)
-			errExit("asprintf");
-		unlink(newname);
-		free(newname);
-	}
-
-}
-
 void build_profile(int argc, char **argv, int index, FILE *fp) {
 	// next index is the application name
 	if (index >= argc) {
 		fprintf(stderr, "Error: application name missing\n");
 		exit(1);
 	}
-
-	// clean /tmp files
-	/* clear_tmp_files(); */
 
 	char trace_output[] = "/tmp/firejail-trace.XXXXXX";
 	char strace_output[] = "/tmp/firejail-strace.XXXXXX";
@@ -83,7 +64,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 
 	char *output;
 	char *stroutput;
-	
+
 	if(asprintf(&output,"--output=%s",trace_output) == -1)
 	  errExit("asprintf");
 
@@ -200,7 +181,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 
 		fprintf(fp, "### environment\n");
 		fprintf(fp, "shell none\n");
-		
+
 		fclose(tp);
 		unlink(trace_output);
 		unlink(strace_output);

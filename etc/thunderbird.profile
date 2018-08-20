@@ -31,6 +31,11 @@ read-only ${HOME}/.config/mimeapps.list
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user
 
+# If you want to read local mail stored in /var/mail, add the following to thunderbird.local:
+# noblacklist /var/mail
+# noblacklist /var/spool/mail
+# writable-var
+
 # allow browsers
 # Redirect
 include /etc/firejail/firefox.profile

@@ -31,3 +31,8 @@ shell none
 
 private-dev
 private-tmp
+
+# If you want to read local mail stored in /var/mail, add the following to claws-mail.local:
+# noblacklist /var/mail
+# noblacklist /var/spool/mail
+# writable-var

@@ -10,7 +10,6 @@ noblacklist ${HOME}/*.kdb
 noblacklist ${HOME}/*.kdbx
 noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.keepassxc
-noblacklist ${HOME}/.keepassxc-socket
 # 2.2.4 needs this path when compiled with "Native messaging browser extension"
 noblacklist ${HOME}/.mozilla
 noblacklist ${DOCUMENTS}
@@ -51,6 +50,4 @@ noexec ${HOME}
 noexec /tmp
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp
-# Make a new directory and have it stored there. Fixes #2062
-mkdir ${HOME}/.keepassxc-socket
-env TMPDIR=${HOME}/.keepassxc-socket/
+join-or-start keepassxc

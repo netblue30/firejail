@@ -478,6 +478,7 @@ void usage(void);
 
 // join.c
 void join(pid_t pid, int argc, char **argv, int index);
+pid_t switch_to_child(pid_t pid);
 
 // shutdown.c
 void shut(pid_t pid);
@@ -538,6 +539,7 @@ unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 int safe_fd(const char *path, int flags);
+int invalid_sandbox(const pid_t pid);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.

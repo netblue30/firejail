@@ -175,6 +175,11 @@ void netfilter_print(pid_t pid, int ipv6) {
 		exit(1);
 	}
 
+	if (invalid_sandbox(child)) {
+		fprintf(stderr, "Error: cannot join the network namespace\n");
+		exit(1);
+	}
+
 	EUID_ROOT();
 	if (join_namespace(child, "net")) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");

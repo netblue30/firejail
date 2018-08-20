@@ -333,6 +333,11 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		exit(1);
 	}
 
+	if (invalid_sandbox(child)) {
+		fprintf(stderr, "Error: cannot join the network namespace\n");
+		exit(1);
+	}
+
 	EUID_ROOT();
 	if (join_namespace(child, "net")) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");

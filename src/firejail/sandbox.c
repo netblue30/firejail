@@ -719,8 +719,11 @@ int sandbox(void* sandbox_arg) {
 #endif
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
+#ifndef LTS
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
-
+#else
+	bool need_preload = arg_seccomp_postexec;
+#endif
 	// trace pre-install
 	if (need_preload)
 		fs_trace_preload();

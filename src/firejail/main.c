@@ -66,8 +66,10 @@ int arg_caps_drop_all = 0;			// drop all capabilities
 int arg_caps_keep = 0;			// keep list
 char *arg_caps_list = NULL;			// optional caps list
 
+#ifndef LTS
 int arg_trace = 0;				// syscall tracing support
 int arg_tracelog = 0;				// blacklist tracing support
+#endif
 int arg_rlimit_cpu = 0;				// rlimit max cpu time
 int arg_rlimit_nofile = 0;			// rlimit nofile
 int arg_rlimit_nproc = 0;			// rlimit nproc
@@ -1062,10 +1064,12 @@ int main(int argc, char **argv) {
 #endif
 		}
 	}
+#ifndef LTS
 	else {
 		// check --output option and execute it;
 		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
 	}
+#endif
 	EUID_ASSERT();
 
 
@@ -1212,11 +1216,11 @@ int main(int argc, char **argv) {
 		}
 
 
+#ifndef LTS
 		else if (strcmp(argv[i], "--trace") == 0)
 			arg_trace = 1;
 		else if (strcmp(argv[i], "--tracelog") == 0)
 			arg_tracelog = 1;
-#ifndef LTS
 		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
 			check_unsigned(argv[i] + 13, "Error: invalid rlimit");
 			sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);
@@ -2243,11 +2247,12 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 
+#ifndef LTS
 	// check trace configuration
 	if (arg_trace && arg_tracelog) {
 		fwarning("--trace and --tracelog are mutually exclusive; --tracelog disabled\n");
 	}
-
+#endif
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
 		if (arg_overlay) {

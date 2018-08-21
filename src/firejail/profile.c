@@ -197,10 +197,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_shell_none = 1;
 		return 0;
 	}
+#ifndef LTS
 	else if (strcmp(ptr, "tracelog") == 0) {
 		arg_tracelog = 1;
 		return 0;
 	}
+#endif
 	else if (strcmp(ptr, "private") == 0) {
 		arg_private = 1;
 		return 0;

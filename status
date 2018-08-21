@@ -1,3 +1,8 @@
+Phase 2
+- Aug 21
+- remove --output --libtrace --libtracelog
+
+
 Phase 1
 - starting from main as of Jul 27
 - removing chroot, overlayfs, x11, private-bin, private-lib

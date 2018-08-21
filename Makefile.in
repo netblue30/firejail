@@ -1,6 +1,6 @@
 all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/fnet src/fseccomp src/libpostexecseccomp
+APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/fnet src/fseccomp src/libpostexecseccomp
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx
 
@@ -86,10 +86,7 @@ endif
 	install -c -m 0755 src/firecfg/firecfg $(DESTDIR)/$(bindir)/.
 	# libraries and plugins
 	install -m 0755 -d $(DESTDIR)/$(libdir)/firejail
-	install -c -m 0644 src/libtrace/libtrace.so $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 src/libtracelog/libtracelog.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 src/libpostexecseccomp/libpostexecseccomp.so $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
 
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
@@ -150,10 +147,7 @@ install-strip: all
 	strip src/firejail/firejail
 	strip src/firemon/firemon
 	strip src/firecfg/firecfg
-	strip src/libtrace/libtrace.so
-	strip src/libtracelog/libtracelog.so
 	strip src/libpostexecseccomp/libpostexecseccomp.so
-	strip src/ftee/ftee
 	strip src/fnet/fnet
 	strip src/fnetfilter/fnetfilter
 	strip src/fseccomp/fseccomp

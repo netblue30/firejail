@@ -26,9 +26,6 @@ cp -- /bin/bash -testdir/.
 ./doubledash.exp
 rm -fr -- -testdir
 
-echo "TESTING: output (test/environment/output.exp)"
-./output.exp
-
 echo "TESTING: extract command (extract_command.exp)"
 ./extract_command.exp
 
@@ -105,14 +102,3 @@ else
         echo "TESTING SKIP: ibus not configured"
 fi
 
-echo "TESTING: rlimit (test/environment/rlimit.exp)"
-./rlimit.exp
-
-echo "TESTING: rlimit profile (test/environment/rlimit-profile.exp)"
-./rlimit-profile.exp
-
-echo "TESTING: rlimit errors (test/environment/rlimit-bad.exp)"
-./rlimit-bad.exp
-
-echo "TESTING: rlimit errors profile (test/environment/rlimit-bad-profile.exp)"
-./rlimit-bad-profile.exp

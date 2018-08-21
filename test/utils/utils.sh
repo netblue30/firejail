@@ -92,11 +92,6 @@ echo "TESTING: join3 (test/utils/join4.exp)"
 echo "TESTING: join profile (test/utils/join-profile.exp)"
 ./join-profile.exp
 
-echo "TESTING: trace (test/utils/trace.exp)"
-rm -f index.html*
-./trace.exp
-rm -f index.html*
-
 echo "TESTING: top (test/utils/top.exp)"
 ./top.exp
 

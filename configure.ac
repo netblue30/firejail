@@ -95,14 +95,6 @@ AS_IF([test "x$enable_userns" != "xno"], [
 	AC_SUBST(HAVE_USERNS)
 ])
 
-HAVE_FILE_TRANSFER=""
-AC_ARG_ENABLE([file-transfer],
-    AS_HELP_STRING([--disable-file-transfer], [disable file transfer]))
-AS_IF([test "x$enable_file_transfer" != "xno"], [
-	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
-	AC_SUBST(HAVE_FILE_TRANSFER)
-])
-
 HAVE_WHITELIST=""
 AC_ARG_ENABLE([whitelist],
     AS_HELP_STRING([--disable-whitelist], [disable whitelist]))
@@ -173,7 +165,6 @@ echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   whitelisting: $HAVE_WHITELIST"
-echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

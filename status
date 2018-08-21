@@ -1,7 +1,7 @@
 Phase 2
 - Aug 21
 - remove --output --libtrace --libtracelog
-
+- remove --ls, --get, --put
 
 Phase 1
 - starting from main as of Jul 27

@@ -630,7 +630,6 @@ BUSYBOX_WORKAROUND
 HAVE_FATAL_WARNINGS
 HAVE_SUID
 HAVE_WHITELIST
-HAVE_FILE_TRANSFER
 HAVE_USERNS
 HAVE_NETWORK
 HAVE_GLOBALCFG
@@ -701,7 +700,6 @@ enable_bind
 enable_globalcfg
 enable_network
 enable_userns
-enable_file_transfer
 enable_whitelist
 enable_suid
 enable_fatal_warnings
@@ -1344,7 +1342,6 @@ Optional Features:
                           present, continue the program using defaults
   --disable-network       disable network
   --disable-userns        disable user namespace
-  --disable-file-transfer disable file transfer
   --disable-whitelist     disable whitelist
   --disable-suid          install as a non-SUID executable
   --enable-fatal-warnings -W -Wall -Werror
@@ -3627,19 +3624,6 @@ if test "x$enable_userns" != "xno"; then :
 
 fi
 
-HAVE_FILE_TRANSFER=""
-# Check whether --enable-file-transfer was given.
-if test "${enable_file_transfer+set}" = set; then :
-  enableval=$enable_file_transfer;
-fi
-
-if test "x$enable_file_transfer" != "xno"; then :
-
-	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
-
-
-fi
-
 HAVE_WHITELIST=""
 # Check whether --enable-whitelist was given.
 if test "${enable_whitelist+set}" = set; then :
@@ -4961,7 +4945,6 @@ echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   whitelisting: $HAVE_WHITELIST"
-echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

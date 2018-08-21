@@ -95,9 +95,6 @@ echo "TESTING: join profile (test/utils/join-profile.exp)"
 echo "TESTING: top (test/utils/top.exp)"
 ./top.exp
 
-echo "TESTING: file transfer (test/utils/ls.exp)"
-./ls.exp
-
 echo "TESTING: firemon seccomp (test/utils/firemon-seccomp.exp)"
 ./firemon-seccomp.exp
 

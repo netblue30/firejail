@@ -598,6 +598,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("networking");
 	}
 #endif
+#ifndef LTS
 #ifdef HAVE_FILE_TRANSFER
 	else if (strncmp(argv[i], "--get=", 6) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
@@ -677,6 +678,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature("file transfer");
 	}
+#endif
 #endif
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
 		if (checkcfg(CFG_JOIN) || getuid() == 0) {

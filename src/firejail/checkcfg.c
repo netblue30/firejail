@@ -76,6 +76,7 @@ int checkcfg(int val) {
 			if (!ptr)
 				continue;
 
+#ifndef LTS
 			// file transfer
 			else if (strncmp(ptr, "file-transfer ", 14) == 0) {
 				if (strcmp(ptr + 14, "yes") == 0)
@@ -85,6 +86,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+#endif
 			// dbus
 			else if (strncmp(ptr, "dbus ", 5) == 0) {
 				if (strcmp(ptr + 5, "yes") == 0)
@@ -103,6 +105,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+#ifndef LTS
 			// x11
 			else if (strncmp(ptr, "x11 ", 4) == 0) {
 				if (strcmp(ptr + 4, "yes") == 0)
@@ -112,6 +115,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+#endif
 			// apparmor
 			else if (strncmp(ptr, "apparmor ", 9) == 0) {
 				if (strcmp(ptr + 9, "yes") == 0)
@@ -139,6 +143,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+#ifndef LTS
 			// chroot
 			else if (strncmp(ptr, "chroot ", 7) == 0) {
 				if (strcmp(ptr + 7, "yes") == 0)
@@ -148,6 +153,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+#endif
 			// prompt
 			else if (strncmp(ptr, "firejail-prompt ", 16) == 0) {
 				if (strcmp(ptr + 16, "yes") == 0)
@@ -236,6 +242,7 @@ int checkcfg(int val) {
 					printf("netfilter default file %s\n", fname);
 			}
 
+#ifndef LTS
 			// Xephyr screen size
 			else if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
 				// expecting two numbers and an x between them
@@ -297,7 +304,7 @@ int checkcfg(int val) {
 				if (!xvfb_extra_params)
 					errExit("strdup");
 			}
-
+#endif
 			// quiet by default
 			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
@@ -307,6 +314,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+#ifndef LTS
 			else if (strncmp(ptr, "overlayfs ", 10) == 0) {
 				if (strcmp(ptr + 10, "yes") == 0)
 					cfg_val[CFG_OVERLAYFS] = 1;
@@ -339,6 +347,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+#endif
 			else if (strncmp(ptr, "disable-mnt ", 12) == 0) {
 				if (strcmp(ptr + 12, "yes") == 0)
 					cfg_val[CFG_DISABLE_MNT] = 1;
@@ -354,6 +363,7 @@ int checkcfg(int val) {
 					goto errout;
 				cfg_val[CFG_ARP_PROBES] = arp_probes;
 			}
+#ifndef LTS
 			// xpra-attach
 			else if (strncmp(ptr, "xpra-attach ", 12) == 0) {
 				if (strcmp(ptr + 12, "yes") == 0)
@@ -363,6 +373,7 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+#endif
 			else
 				goto errout;
 

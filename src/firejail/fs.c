@@ -1382,14 +1382,17 @@ void fs_private_cache(void) {
 	struct stat s;
 	if (is_link(cache)) {
 		fwarning("user .cache is a symbolic link, tmpfs not mounted\n");
+		free(cache);
 		return;
 	}
 	if (stat(cache, &s) == -1 || !S_ISDIR(s.st_mode)) {
 		fwarning("no user .cache directory found, tmpfs not mounted\n");
+		free(cache);
 		return;
 	}
 	if (s.st_uid != getuid()) {
 		fwarning("user .cache is not owned by current user, tmpfs not mounted\n");
+		free(cache);
 		return;
 	}
 

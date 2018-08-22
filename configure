@@ -636,7 +636,6 @@ HAVE_X11
 HAVE_USERNS
 HAVE_NETWORK
 HAVE_GLOBALCFG
-HAVE_BIND
 HAVE_CHROOT
 HAVE_SECCOMP
 HAVE_PRIVATE_HOME
@@ -705,7 +704,6 @@ enable_overlayfs
 enable_private_home
 enable_seccomp
 enable_chroot
-enable_bind
 enable_globalcfg
 enable_network
 enable_userns
@@ -1352,7 +1350,6 @@ Optional Features:
   --disable-private-home  disable private home feature
   --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
-  --disable-bind          disable bind
   --disable-globalcfg     if the global config file firejail.cfg is not
                           present, continue the program using defaults
   --disable-network       disable network
@@ -3626,19 +3623,6 @@ if test "x$enable_chroot" != "xno"; then :
 
 fi
 
-HAVE_BIND=""
-# Check whether --enable-bind was given.
-if test "${enable_bind+set}" = set; then :
-  enableval=$enable_bind;
-fi
-
-if test "x$enable_bind" != "xno"; then :
-
-	HAVE_BIND="-DHAVE_BIND"
-
-
-fi
-
 HAVE_GLOBALCFG=""
 # Check whether --enable-globalcfg was given.
 if test "${enable_globalcfg+set}" = set; then :
@@ -5043,7 +5027,6 @@ echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
-echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"

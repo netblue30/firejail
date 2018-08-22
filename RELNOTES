@@ -2,6 +2,7 @@ firejail (0.9.56~rc1) baseline; urgency=low
   * work in progress
   * modif: removed CFG_CHROOT_DESKTOP configuration option
   * modif: removed compile time --enable-network=restricted
+  * modif: removed compile time --disable-bind
   * modif: --net=none allowed even if networking was disabled at compile
      time or at run time
   * support wireless devices in --net option

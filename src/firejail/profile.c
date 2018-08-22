@@ -1044,7 +1044,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// filesystem bind
 	if (strncmp(ptr, "bind ", 5) == 0) {
-#ifdef HAVE_BIND
 		if (checkcfg(CFG_BIND)) {
 			if (getuid() != 0) {
 				fprintf(stderr, "Error: --bind option is available only if running as root\n");
@@ -1077,7 +1076,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else
 			warning_feature_disabled("bind");
-#endif
 		return 0;
 	}
 

@@ -1270,7 +1270,6 @@ int main(int argc, char **argv) {
 		//*************************************
 		else if (strcmp(argv[i], "--allusers") == 0)
 			arg_allusers = 1;
-#ifdef HAVE_BIND
 		else if (strncmp(argv[i], "--bind=", 7) == 0) {
 			if (checkcfg(CFG_BIND)) {
 				char *line;
@@ -1283,7 +1282,6 @@ int main(int argc, char **argv) {
 			else
 				exit_err_feature("bind");
 		}
-#endif
 		else if (strncmp(argv[i], "--tmpfs=", 8) == 0) {
 			char *line;
 			if (asprintf(&line, "tmpfs %s", argv[i] + 8) == -1)

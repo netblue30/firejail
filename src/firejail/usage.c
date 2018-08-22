@@ -37,10 +37,8 @@ static char *usage_str =
 #ifdef HAVE_NETWORK
 	"    --bandwidth=name|pid - set bandwidth limits.\n"
 #endif
-#ifdef HAVE_BIND
 	"    --bind=dirname1,dirname2 - mount-bind dirname1 on top of dirname2.\n"
 	"    --bind=filename1,filename2 - mount-bind filename1 on top of filename2.\n"
-#endif
 	"    --blacklist=filename - blacklist directory or file.\n"
 	"    --build - build a whitelisted profile for the application.\n"
 	"    --build=filename - build a whitelisted profile for the application.\n"
@@ -153,6 +151,7 @@ static char *usage_str =
 	"    --overlay-clean - clean all overlays stored in $HOME/.firejail directory.\n"
 	"    --private - temporary home directory.\n"
 	"    --private=directory - use directory as user home.\n"
+	"    --private-cache - temporary ~/.cache directory.\n"
 	"    --private-home=file,directory - build a new user home in a temporary\n"
 	"\tfilesystem, and copy the files and directories in the list in\n"
 	"\tthe new home.\n"

@@ -410,14 +410,6 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- bind support is %s\n",
-#ifdef HAVE_BIND
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- chroot support is %s\n",
 #ifdef HAVE_CHROOT
 		"enabled"

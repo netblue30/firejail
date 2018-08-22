@@ -83,14 +83,6 @@ AS_IF([test "x$enable_chroot" != "xno"], [
 	AC_SUBST(HAVE_CHROOT)
 ])
 
-HAVE_BIND=""
-AC_ARG_ENABLE([bind],
-    AS_HELP_STRING([--disable-bind], [disable bind]))
-AS_IF([test "x$enable_bind" != "xno"], [
-	HAVE_BIND="-DHAVE_BIND"
-	AC_SUBST(HAVE_BIND)
-])
-
 HAVE_GLOBALCFG=""
 AC_ARG_ENABLE([globalcfg],
     AS_HELP_STRING([--disable-globalcfg], [if the global config file firejail.cfg is not present, continue the program using defaults]))
@@ -207,7 +199,6 @@ echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
-echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"

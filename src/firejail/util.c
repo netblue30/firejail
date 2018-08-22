@@ -1053,7 +1053,7 @@ int safe_fd(const char *path, int flags) {
 		errExit("open");
 
 	// traverse the path and return -1 if a symlink is encountered
-	int entered = 0;
+	int weird_pathname = 1;
 	int fd = -1;
 	char *tok = strtok(dup, "/");
 	while (tok) {
@@ -1062,7 +1062,7 @@ int safe_fd(const char *path, int flags) {
 			tok = strtok(NULL, "/");
 			continue;
 		}
-		entered = 1;
+		weird_pathname = 0;
 
 		// open the directory
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
@@ -1077,7 +1077,7 @@ int safe_fd(const char *path, int flags) {
 	}
 	if (p != dup) {
 		// consistent flags for top level directories (////foo, /.///foo)
-		if (!entered)
+		if (weird_pathname)
 			flags = O_PATH|O_DIRECTORY|O_CLOEXEC;
 		// open last path segment
 		fd = openat(parentfd, p + 1, flags|O_NOFOLLOW);

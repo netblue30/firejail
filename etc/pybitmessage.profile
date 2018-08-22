@@ -1,10 +1,10 @@
-# Firejail profile for default
+# Firejail profile for pybitmessage
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pybitmessage.local
+# Persistent global definitions
+include /etc/firejail/globals.local
 
-# generic gui profile
-# depending on your usage, you can enable some of the commands below:
 noblacklist /sbin
 noblacklist /usr/local/sbin
 noblacklist /usr/sbin

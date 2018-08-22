@@ -47,7 +47,4 @@ ca-certificates,ssl,pki,crypto-policies
 
 memory-deny-write-execute
 noexec ${HOME}
-noexec /sbin
-noexec /usr/local/sbin
-noexec /usr/sbin
 noexec /tmp

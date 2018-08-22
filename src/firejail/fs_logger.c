@@ -123,12 +123,6 @@ void fs_logger_print_log(pid_t pid) {
 	// in case the pid is that of a firejail process, use the pid of the first child process
 	pid = switch_to_child(pid);
 
-	// now check if the pid belongs to a firejail sandbox
-	if (invalid_sandbox(pid)) {
-		fprintf(stderr, "Error: no valid sandbox\n");
-		exit(1);
-	}
-
 	// check privileges for non-root users
 	uid_t uid = getuid();
 	if (uid != 0) {
@@ -146,7 +140,7 @@ void fs_logger_print_log(pid_t pid) {
 
 	EUID_ROOT();
 	struct stat s;
-	if (stat(fname, &s) == -1) {
+	if (stat(fname, &s) == -1 || s.st_uid != 0) {
 		fprintf(stderr, "Error: Cannot access filesystem log\n");
 		exit(1);
 	}

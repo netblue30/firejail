@@ -209,6 +209,7 @@ read-only ${HOME}/.forward
 read-only ${HOME}/.local/share/fish
 read-only ${HOME}/.login
 read-only ${HOME}/.logout
+read-only ${HOME}/.oh-my-zsh
 read-only ${HOME}/.pam_environment
 read-only ${HOME}/.pgpkey
 read-only ${HOME}/.plan

@@ -41,10 +41,9 @@ shell none
 disable-mnt
 private-bin pybitmessage,python*,sh,ldconfig,env,bash,stat
 private-dev
-private-etc PyBitmessage,PyBitmessage.conf,Trolltech.conf,fonts,gtk-2.0,hosts,ld.so.cache,ld.so.preload,localtime,pki,resolv.conf,selinux,sni-qt.conf,system-fips,xdg
+private-etc PyBitmessage,PyBitmessage.conf,Trolltech.conf,fonts,gtk-2.0,hosts,ld.so.cache,ld.so.preload,localtime,pki,resolv.conf,selinux,sni-qt.conf,system-fips,xdg,ca-certificates,ssl,pki,crypto-policies
 #private-lib
 private-tmp
-ca-certificates,ssl,pki,crypto-policies
 
 memory-deny-write-execute
 noexec ${HOME}

@@ -5,7 +5,6 @@ include /etc/firejail/pybitmessage.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-
 noblacklist /sbin
 noblacklist /usr/local/sbin
 noblacklist /usr/sbin

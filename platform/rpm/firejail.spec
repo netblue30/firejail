@@ -11,7 +11,7 @@ URL: https://github.com/netblue30/firejail
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
-Firejail  is  a  SUID sandbox program that reduces the risk of security
+Firejail is a SUID sandbox program that reduces the risk of security
 breaches by restricting the running environment of untrusted applications
 using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 

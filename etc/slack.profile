@@ -5,8 +5,6 @@ include /etc/firejail/slack.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /var
-
 noblacklist ${HOME}/.config/Slack
 noblacklist ${HOME}/Downloads
 

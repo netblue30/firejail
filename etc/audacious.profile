@@ -23,7 +23,7 @@ apparmor
 caps.drop all
 netfilter
 nodbus
-nogroups
+# nogroups is unfeasible for ALSA since 660 mode is usualy set on /dev/snd/*
 nonewprivs
 noroot
 notv

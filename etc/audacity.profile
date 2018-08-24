@@ -25,7 +25,7 @@ net none
 no3d
 # nodbus - problems on Fedora 27
 nodvd
-nogroups
+# nogroups is unfeasible for ALSA since 660 mode is usualy set on /dev/snd/*
 nonewprivs
 noroot
 notv

@@ -21,7 +21,7 @@ include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter
-# nogroups
+# nogroups is unfeasible for ALSA since 660 mode is usualy set on /dev/snd/*
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink

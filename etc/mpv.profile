@@ -30,8 +30,8 @@ apparmor
 caps.drop all
 netfilter
 nodbus
-# Seems to cause issues with Nvidia drivers sometimes
-nogroups
+# nogroups seems to cause issues with Nvidia drivers sometimes
+# nogroups is unfeasible for ALSA since 660 mode is usualy set on /dev/snd/*
 nonewprivs
 noroot
 protocol unix,inet,inet6

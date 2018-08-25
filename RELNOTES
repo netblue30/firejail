@@ -13,6 +13,7 @@ firejail (0.9.56~rc1) baseline; urgency=low
   * add --private-cache to support private ~/.cache
   * support full paths in private-lib
   * globbing support in private-lib
+  * support for local user directories in firecfg
   * new profiles: ms-excel, ms-office, ms-onenote, ms-outlook, ms-powerpoint,
   * new profiles: ms-skype, ms-word, riot-desktop, gnome-mpv, snox, gradio,
   * new profiles: standardnotes-desktop, shellcheck, patch, flameshot,

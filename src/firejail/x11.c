@@ -1168,7 +1168,7 @@ void x11_xorg(void) {
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (lstat(dest, &s) == -1)
-		touch_file_as_user(dest, getuid(), getgid(), 0600);
+		touch_file_as_user(dest, 0600);
 
 	// get a file descriptor for .Xauthority
 	fd = safe_fd(dest, O_PATH|O_NOFOLLOW|O_CLOEXEC);

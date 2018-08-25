@@ -156,7 +156,6 @@ int mkpath_as_root(const char* path) {
 		*p='\0';
 		if (mkdir(file_path, 0755)==-1) {
 			if (errno != EEXIST) {
-				*p='/';
 				free(file_path);
 				return -1;
 			}
@@ -365,7 +364,7 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 }
 
 // return -1 if error, 0 if no error
-void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
+void touch_file_as_user(const char *fname, mode_t mode) {
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -373,10 +372,10 @@ void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
 		// drop privileges
 		drop_privs(0);
 
-		FILE *fp = fopen(fname, "w");
+		FILE *fp = fopen(fname, "wx");
 		if (fp) {
 			fprintf(fp, "\n");
-			SET_PERMS_STREAM(fp, uid, gid, mode);
+			SET_PERMS_STREAM(fp, -1, -1, mode);
 			fclose(fp);
 		}
 #ifdef HAVE_GCOV
@@ -922,10 +921,8 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 		FILE *fp = fopen(fname, "w");
 		if (!fp)
 			errExit("fopen");
-		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR);
+		SET_PERMS_STREAM(fp, 0, 0, mode);
 		fclose(fp);
-		if (chmod(fname, mode) == -1)
-			errExit("chmod");
 	}
 }
 
@@ -1133,6 +1130,7 @@ int invalid_sandbox(const pid_t pid) {
 	int i;
 	for (i = 0; i < MAXNODES; i++) {
 		if (find_child(current, &next) == 1) {
+			// found a leaf
 			EUID_ROOT();
 			char *comm = pid_proc_comm(current);
 			EUID_USER();

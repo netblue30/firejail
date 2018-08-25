@@ -53,7 +53,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			fs_logger2("clone", fname);
 		}
 		else {
-			touch_file_as_user(fname, u, g, 0644);
+			touch_file_as_user(fname, 0644);
 			fs_logger2("touch", fname);
 		}
 		free(fname);
@@ -78,7 +78,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			fs_logger2("clone", fname);
 		}
 		else {
-			touch_file_as_user(fname, u, g, 0644);
+			touch_file_as_user(fname, 0644);
 			fs_logger2("touch", fname);
 		}
 		free(fname);

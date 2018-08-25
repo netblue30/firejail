@@ -648,10 +648,10 @@ void fs_proc_sys_dev_boot(void) {
 				if (child == 0) {
 					// drop privileges
 					drop_privs(0);
-					if (mkdir(fnamegpg, 0700) == -1)
-						{;} // do nothing
-					if (set_perms(fnamegpg, -1, -1, 0700))
-						{;}
+					if (mkdir(fnamegpg, 0700) == 0) {
+						if (chmod(fnamegpg, 0700) == -1)
+							{;} // do nothing
+					}
 #ifdef HAVE_GCOV
 					__gcov_flush();
 #endif
@@ -676,10 +676,10 @@ void fs_proc_sys_dev_boot(void) {
 				if (child == 0) {
 					// drop privileges
 					drop_privs(0);
-					if (mkdir(fnamesysd, 0755) == -1)
-						{;} // do nothing
-					if (set_perms(fnamesysd, -1, -1, 0755))
-						{;}
+					if (mkdir(fnamesysd, 0755) == 0) {
+						if (chmod(fnamesysd, 0755) == -1)
+							{;} // do nothing
+					}
 #ifdef HAVE_GCOV
 					__gcov_flush();
 #endif

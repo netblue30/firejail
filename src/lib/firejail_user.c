@@ -107,10 +107,8 @@ int firejail_user_check(const char *name) {
 	if (strcmp(name, "root") == 0)
 		return 1;
 
-	// other system users will run the program as is
-	uid_t uid = getuid();
-	assert(uid_min > 0);
-	if (((int) uid < uid_min && uid != 0) || strcmp(name, "nobody") == 0)
+	// user nobody is never allowed
+	if (strcmp(name, "root") == 0)
 		return 0;
 
 	// check file existence
@@ -155,7 +153,7 @@ void firejail_user_add(const char *name) {
 	struct passwd *pw = getpwnam(name);
 	if (!pw) {
 		fprintf(stderr, "Error: user %s not found on this system.\n", name);
-		return;
+		exit(1);
 	}
 
 	// check the user is not already in the database

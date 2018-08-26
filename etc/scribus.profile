@@ -1,4 +1,5 @@
 # Firejail profile for scribus
+# Description: Open Source Desktop Page Layout
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/scribus.local

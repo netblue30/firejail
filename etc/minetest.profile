@@ -1,4 +1,5 @@
 # Firejail profile for minetest
+# Description: Multiplayer infinite-world block sandbox
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/minetest.local

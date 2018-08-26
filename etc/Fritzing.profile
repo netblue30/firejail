@@ -1,4 +1,5 @@
 # Firejail profile for fritzing
+# Description: Easy-to-use electronic design software
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/Fritzing.local

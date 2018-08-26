@@ -21,6 +21,7 @@
 #include "firecfg.h"
 #include "../include/firejail_user.h"
 int arg_debug = 0;
+char *arg_bindir = "/usr/local/bin";
 
 static char *usage_str =
 	"Firecfg is the desktop configuration utility for Firejail software. The utility\n"
@@ -31,6 +32,7 @@ static char *usage_str =
 	"DESKTOP INTEGRATION section in man 1 firejail.\n\n"
 	"Usage: firecfg [OPTIONS]\n\n"
 	"   --add-users user [user] - add the users to Firejail user access database.\n\n"
+	"   --bindir=directory - install in directory instead of /usr/local/bin.\n\n"
 	"   --clean - remove all firejail symbolic links.\n\n"
 	"   --debug - print debug messages.\n\n"
 	"   --fix - fix .desktop files.\n\n"
@@ -62,9 +64,9 @@ static void usage(void) {
 
 
 static void list(void) {
-	DIR *dir = opendir("/usr/local/bin");
+	DIR *dir = opendir(arg_bindir);
 	if (!dir) {
-		fprintf(stderr, "Error: cannot open /usr/local/bin directory\n");
+		fprintf(stderr, "Error: cannot open %s directory\n", arg_bindir);
 		exit(1);
 	}
 
@@ -78,7 +80,7 @@ static void list(void) {
 			continue;
 
 		char *fullname;
-		if (asprintf(&fullname, "/usr/local/bin/%s", entry->d_name) == -1)
+		if (asprintf(&fullname, "%s/%s", arg_bindir, entry->d_name) == -1)
 			errExit("asprintf");
 
 		if (is_link(fullname)) {
@@ -98,14 +100,10 @@ static void list(void) {
 
 static void clean(void) {
 	printf("Removing all firejail symlinks:\n");
-	if (getuid() != 0) {
-		fprintf(stderr, "Error: you need to be root to run this command\n");
-		exit(1);
-	}
 
-	DIR *dir = opendir("/usr/local/bin");
+	DIR *dir = opendir(arg_bindir);
 	if (!dir) {
-		fprintf(stderr, "Error: cannot open /usr/local/bin directory\n");
+		fprintf(stderr, "Error: cannot open %s directory\n", arg_bindir);
 		exit(1);
 	}
 
@@ -119,7 +117,7 @@ static void clean(void) {
 			continue;
 
 		char *fullname;
-		if (asprintf(&fullname, "/usr/local/bin/%s", entry->d_name) == -1)
+		if (asprintf(&fullname, "%s/%s", arg_bindir, entry->d_name) == -1)
 			errExit("asprintf");
 
 		if (is_link(fullname)) {
@@ -129,8 +127,11 @@ static void clean(void) {
 					char *ptr = strrchr(fullname, '/');
 					assert(ptr);
 					ptr++;
-					unlink(fullname);
-					printf("   %s removed\n", ptr);
+					int rv = unlink(fullname);
+					if (rv)
+						fprintf(stderr, "Warning: cannot remove %s\n", fullname);
+					else
+						printf("   %s removed\n", ptr);
 				}
 				free(fname);
 			}
@@ -148,7 +149,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 		return;
 
 	char *fname;
-	if (asprintf(&fname, "/usr/local/bin/%s", name) == -1)
+	if (asprintf(&fname, "%s/%s", arg_bindir, name) == -1)
 		errExit("asprintf");
 
 	struct stat s;
@@ -160,6 +161,9 @@ static void set_file(const char *name, const char *firejail_exec) {
 		}
 		else
 			printf("   %s created\n", name);
+	}
+	else {
+	  fprintf(stderr, "Warning: cannot create %s - already exists! Skipping...\n", fname);
 	}
 
 	free(fname);
@@ -181,7 +185,7 @@ static void set_links_firecfg(void) {
 		fprintf(stderr, "Error: cannot open %s\n", cfgfile);
 		exit(1);
 	}
-	printf("Configuring symlinks in /usr/local/bin based on firecfg.config\n");
+	printf("Configuring symlinks in %s based on firecfg.config\n", arg_bindir);
 
 	char buf[MAX_BUF];
 	int lineno = 0;
@@ -239,7 +243,7 @@ static void set_links_homedir(const char *homedir) {
 		errExit("asprintf");
 
 	// parse ~/.config/firejail/ directory
-	printf("\nConfiguring symlinks in /usr/local/bin based on local firejail config directory\n");
+	printf("\nConfiguring symlinks in %s based on local firejail config directory\n", arg_bindir);
 
 	DIR *dir = opendir(dirname);
 	if (!dir) {
@@ -275,9 +279,68 @@ static void set_links_homedir(const char *homedir) {
 	free(firejail_exec);
 }
 
+static char *get_user(void) {
+	char *user = getlogin();
+	if (!user) {
+		user = getenv("SUDO_USER");
+		if (!user) {
+			fprintf(stderr, "Error: cannot detect login user\n");
+			exit(1);
+		}
+	}
+
+	return user;
+}
+
+static char *get_homedir(const char *user, uid_t *uid, gid_t *gid) {
+	// find home directory
+	struct passwd *pw = getpwnam(user);
+	if (!pw)
+		goto errexit;
+
+	char *home = pw->pw_dir;
+	if (!home)
+		goto errexit;
+
+	*uid = pw->pw_uid;
+	*gid = pw->pw_gid;
+
+	return home;
+
+errexit:
+	fprintf(stderr, "Error: cannot find home directory for user %s\n", user);
+	exit(1);
+}
 
 int main(int argc, char **argv) {
 	int i;
+	int bindir_set = 0;
+
+	// user setup
+	char *user = get_user();
+	uid_t uid;
+	gid_t gid;
+	char *home = get_homedir(user, &uid, &gid);
+
+
+	// check for --bindir
+	for (i = i; i < argc; i++) {
+		if (strncmp(argv[i], "--bindir=", 9) == 0) {
+			if (strncmp(argv[i] + 9, "~/", 2) == 0) {
+				if (asprintf(&arg_bindir, "%s/%s", home, argv[i] + 11) == -1)
+					errExit("asprintf");
+			}
+			else
+				arg_bindir = argv[i] + 9;
+			bindir_set = 1;
+
+			// exit if the directory does not exist, or if we don't have access to it
+			if (access(arg_bindir, R_OK | W_OK | X_OK)) {
+				fprintf(stderr, "Error: directory %s not found\n", arg_bindir);
+				exit(1);
+			}
+		}
+	}
 
 	for (i = 1; i < argc; i++) {
 		// default options
@@ -297,15 +360,6 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else if (strcmp(argv[i], "--fix") == 0) {
-			// find home directory
-			struct passwd *pw = getpwuid(getuid());
-			if (!pw) {
-				goto errexit;
-			}
-			char *home = pw->pw_dir;
-			if (!home) {
-				goto errexit;
-			}
 			fix_desktop_files(home);
 			return 0;
 		}
@@ -331,19 +385,24 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else {
-			fprintf(stderr, "Error: invalid command line option\n");
-			usage();
-			return 1;
+			if (strncmp(argv[i], "--bindir=", 9) != 0) { // already handled
+				fprintf(stderr, "Error: invalid command line option\n");
+				usage();
+				return 1;
+			}
 		}
 	}
 
+	if (arg_debug)
+		printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
+
 	// set symlinks in /usr/local/bin
-	if (getuid() != 0) {
-		fprintf(stderr, "Error: cannot set the symbolic links in /usr/local/bin\n");
+	if (bindir_set == 0 && getuid() != 0) {
+		fprintf(stderr, "Error: cannot set the symbolic links in %s\n", arg_bindir);
 		fprintf(stderr, "The proper way to run this command is \"sudo firecfg\".\n");
 		return 1;
 	}
-	else {
+	else if (bindir_set == 0) {
 		// create /usr/local directory if it doesn't exist (Solus distro)
 		struct stat s;
 		if (stat("/usr/local", &s) != 0) {
@@ -354,66 +413,46 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
-		if (stat("/usr/local/bin", &s) != 0) {
+		if (stat(arg_bindir, &s) != 0) {
 			printf("Creating /usr/local directory\n");
-			int rv = mkdir("/usr/local/bin", 0755);
+			int rv = mkdir(arg_bindir, 0755);
 			if (rv != 0) {
-				fprintf(stderr, "Error: cannot create /usr/local/bin directory\n");
+				fprintf(stderr, "Error: cannot create %s directory\n", arg_bindir);
 				return 1;
 			}
 		}
 	}
+
+	// clear all symlinks
 	clean();
+
+	// set new symlinks based on /usr/lib/firejail/firecfg.cfg
 	set_links_firecfg();
 
-
-
-	// user setup
-	char *user = getlogin();
-	if (!user) {
-		user = getenv("SUDO_USER");
-		if (!user) {
-			goto errexit;
-		}
-	}
-
-	// add user to firejail access database
-	if (user) {
+	// add user to firejail access database - only for root
+	if (user && getuid() == 0) {
 		printf("\nAdding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
 		firejail_user_add(user);
 	}
 
-	// switch to the local user, and fix desktop files
-	if (user) {
-		// find home directory
-		struct passwd *pw = getpwnam(user);
-		if (!pw) {
-			goto errexit;
-		}
-		char *home = pw->pw_dir;
-		if (!home) {
-			goto errexit;
-		}
+	// set new symlinks based on ~/.config/firejail directory
+	set_links_homedir(home);
 
-		// running as root
-		set_links_homedir(home);
-
-		// drop permissions
+	// drop permissions
+	if (getuid() == 0) {
 		if (setgroups(0, NULL) < 0)
 			errExit("setgroups");
-		// set uid/gid
-		if (setgid(pw->pw_gid) < 0)
+		if (setgid(gid) < 0)
 			errExit("setgid");
-		if (setuid(pw->pw_uid) < 0)
+		if (setuid(uid) < 0)
 			errExit("setuid");
-		if (arg_debug)
-			printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
-		fix_desktop_files(home);
 	}
 
-	return 0;
+	if (arg_debug)
+		printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
 
-errexit:
-	fprintf(stderr, "Error: cannot detect login user in order to set desktop files in ~/.local/share/applications\n");
-	return 1;
+	// fix .desktop files in ~/.local/share/applications directory
+	fix_desktop_files(home);
+
+	return 0;
 }

@@ -1,4 +1,5 @@
 # Firejail profile for pingus
+# Description: Free Lemmings(TM) clone
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pingus.local

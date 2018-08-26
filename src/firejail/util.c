@@ -156,7 +156,6 @@ int mkpath_as_root(const char* path) {
 		*p='\0';
 		if (mkdir(file_path, 0755)==-1) {
 			if (errno != EEXIST) {
-				*p='/';
 				free(file_path);
 				return -1;
 			}
@@ -365,7 +364,7 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 }
 
 // return -1 if error, 0 if no error
-void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
+void touch_file_as_user(const char *fname, mode_t mode) {
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -373,10 +372,10 @@ void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
 		// drop privileges
 		drop_privs(0);
 
-		FILE *fp = fopen(fname, "w");
+		FILE *fp = fopen(fname, "wx");
 		if (fp) {
 			fprintf(fp, "\n");
-			SET_PERMS_STREAM(fp, uid, gid, mode);
+			SET_PERMS_STREAM(fp, -1, -1, mode);
 			fclose(fp);
 		}
 #ifdef HAVE_GCOV
@@ -425,15 +424,48 @@ int is_link(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
+	char *dup = NULL;
 	struct stat s;
 	if (lstat(fname, &s) == 0) {
 		if (S_ISLNK(s.st_mode))
 			return 1;
+		if (S_ISDIR(s.st_mode)) {
+			// remove trailing slashes and single dots and try again
+			dup = strdup(fname);
+			if (!dup)
+				errExit("strdup");
+			trim_trailing_slash_or_dot(dup);
+			if (lstat(dup, &s) == 0) {
+				if (S_ISLNK(s.st_mode)) {
+					free(dup);
+					return 1;
+				}
+			}
+		}
 	}
 
+	free(dup);
 	return 0;
 }
 
+// remove all slashes and single dots from the end of a path
+// for example /foo/bar///././. -> /foo/bar
+void trim_trailing_slash_or_dot(char *path) {
+	assert(path);
+
+	char *end = strchr(path, '\0');
+	assert(end);
+	if ((end - path) > 1) {
+		end--;
+		while (*end == '/' ||
+		      (*end == '.' && *(end - 1) == '/')) {
+			*end = '\0';
+			end--;
+			if (end == path)
+				break;
+		}
+	}
+}
 
 // remove multiple spaces and return allocated memory
 char *line_remove_spaces(const char *buf) {
@@ -762,12 +794,14 @@ uid_t pid_get_uid(pid_t pid) {
 	char buf[PIDS_BUFLEN];
 	while (fgets(buf, PIDS_BUFLEN - 1, fp)) {
 		if (strncmp(buf, "Uid:", 4) == 0) {
-			char *ptr = buf + 5;
+			char *ptr = buf + 4;
 			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
 				ptr++;
 			}
-			if (*ptr == '\0')
-				break;
+			if (*ptr == '\0') {
+				fprintf(stderr, "Error: cannot read /proc file\n");
+				exit(1);
+			}
 
 			rv = atoi(ptr);
 			break;			  // break regardless!
@@ -778,10 +812,6 @@ uid_t pid_get_uid(pid_t pid) {
 	free(file);
 	EUID_USER();				  // grsecurity fix
 
-	if (rv == 0) {
-		fprintf(stderr, "Error: cannot read /proc file\n");
-		exit(1);
-	}
 	return rv;
 }
 
@@ -891,10 +921,8 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 		FILE *fp = fopen(fname, "w");
 		if (!fp)
 			errExit("fopen");
-		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR);
+		SET_PERMS_STREAM(fp, 0, 0, mode);
 		fclose(fp);
-		if (chmod(fname, mode) == -1)
-			errExit("chmod");
 	}
 }
 
@@ -1022,7 +1050,7 @@ int safe_fd(const char *path, int flags) {
 		errExit("open");
 
 	// traverse the path and return -1 if a symlink is encountered
-	int entered = 0;
+	int weird_pathname = 1;
 	int fd = -1;
 	char *tok = strtok(dup, "/");
 	while (tok) {
@@ -1031,7 +1059,7 @@ int safe_fd(const char *path, int flags) {
 			tok = strtok(NULL, "/");
 			continue;
 		}
-		entered = 1;
+		weird_pathname = 0;
 
 		// open the directory
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
@@ -1046,7 +1074,7 @@ int safe_fd(const char *path, int flags) {
 	}
 	if (p != dup) {
 		// consistent flags for top level directories (////foo, /.///foo)
-		if (!entered)
+		if (weird_pathname)
 			flags = O_PATH|O_DIRECTORY|O_CLOEXEC;
 		// open last path segment
 		fd = openat(parentfd, p + 1, flags|O_NOFOLLOW);
@@ -1058,4 +1086,67 @@ int safe_fd(const char *path, int flags) {
 errexit:
 	fprintf(stderr, "Error: cannot open \"%s\", invalid filename\n", path);
 	exit(1);
+}
+
+
+// return 1 if the sandbox identified by pid is not fully set up yet or if
+// it is no firejail sandbox at all, return 0 if the sandbox is complete
+int invalid_sandbox(const pid_t pid) {
+	// check if a file "ready-for-join" exists
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_READY_FOR_JOIN) == -1)
+		errExit("asprintf");
+	EUID_ROOT();
+	FILE *fp = fopen(fname, "re");
+	EUID_USER();
+	free(fname);
+	if (!fp)
+		return 1;
+	// regular file owned by root
+	int fd = fileno(fp);
+	if (fd == -1)
+		errExit("fileno");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode) || s.st_uid != 0) {
+		fclose(fp);
+		return 1;
+	}
+	// check if it is non-empty
+	char buf[BUFLEN];
+	if (fgets(buf, BUFLEN, fp) == NULL) {
+		fclose(fp);
+		return 1;
+	}
+	fclose(fp);
+	// confirm "ready" string was written
+	if (strncmp(buf, "ready\n", 6) != 0)
+		return 1;
+
+	// walk down the process tree a few nodes, there should be no firejail leaf
+#define MAXNODES 5
+	pid_t current = pid, next;
+	int i;
+	for (i = 0; i < MAXNODES; i++) {
+		if (find_child(current, &next) == 1) {
+			// found a leaf
+			EUID_ROOT();
+			char *comm = pid_proc_comm(current);
+			EUID_USER();
+			if (!comm) {
+				fprintf(stderr, "Error: cannot read /proc file\n");
+				exit(1);
+			}
+			if (strcmp(comm, "firejail") == 0) {
+				free(comm);
+				return 1;
+			}
+			free(comm);
+			break;
+		}
+		current = next;
+	}
+
+	return 0;
 }

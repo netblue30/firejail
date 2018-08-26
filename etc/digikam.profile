@@ -1,4 +1,5 @@
 # Firejail profile for digikam
+# Description: Digital photo management application for KDE
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/digikam.local

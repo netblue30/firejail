@@ -1,4 +1,5 @@
 # Firejail profile for gjs
+# Description: Mozilla-based javascript bindings for the GNOME platform
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gjs.local

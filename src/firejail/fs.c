@@ -641,8 +641,26 @@ void fs_proc_sys_dev_boot(void) {
 			char *fnamegpg;
 			if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
 				errExit("asprintf");
-			if (stat(fnamegpg, &s) == -1)
-			    mkdir_attr(fnamegpg, 0700, getuid(), getgid());
+			if (stat(fnamegpg, &s) == -1) {
+				pid_t child = fork();
+				if (child < 0)
+					errExit("fork");
+				if (child == 0) {
+					// drop privileges
+					drop_privs(0);
+					if (mkdir(fnamegpg, 0700) == 0) {
+						if (chmod(fnamegpg, 0700) == -1)
+							{;} // do nothing
+					}
+#ifdef HAVE_GCOV
+					__gcov_flush();
+#endif
+					_exit(0);
+				}
+				// wait for the child to finish
+				waitpid(child, NULL, 0);
+				fs_logger2("create", fnamegpg);
+			}
 			if (stat(fnamegpg, &s) == 0)
 				disable_file(BLACKLIST_FILE, fnamegpg);
 			free(fnamegpg);
@@ -651,8 +669,26 @@ void fs_proc_sys_dev_boot(void) {
 			char *fnamesysd;
 			if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
 				errExit("asprintf");
-			if (stat(fnamesysd, &s) == -1)
-				mkdir_attr(fnamesysd, 0755, getuid(), getgid());
+			if (stat(fnamesysd, &s) == -1) {
+				pid_t child = fork();
+				if (child < 0)
+					errExit("fork");
+				if (child == 0) {
+					// drop privileges
+					drop_privs(0);
+					if (mkdir(fnamesysd, 0755) == 0) {
+						if (chmod(fnamesysd, 0755) == -1)
+							{;} // do nothing
+					}
+#ifdef HAVE_GCOV
+					__gcov_flush();
+#endif
+					_exit(0);
+				}
+				// wait for the child to finish
+				waitpid(child, NULL, 0);
+				fs_logger2("create", fnamesysd);
+			}
 			if (stat(fnamesysd, &s) == 0)
 				disable_file(BLACKLIST_FILE, fnamesysd);
 			free(fnamesysd);
@@ -1347,14 +1383,17 @@ void fs_private_cache(void) {
 	struct stat s;
 	if (is_link(cache)) {
 		fwarning("user .cache is a symbolic link, tmpfs not mounted\n");
+		free(cache);
 		return;
 	}
 	if (stat(cache, &s) == -1 || !S_ISDIR(s.st_mode)) {
 		fwarning("no user .cache directory found, tmpfs not mounted\n");
+		free(cache);
 		return;
 	}
 	if (s.st_uid != getuid()) {
 		fwarning("user .cache is not owned by current user, tmpfs not mounted\n");
+		free(cache);
 		return;
 	}
 

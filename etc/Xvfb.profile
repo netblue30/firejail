@@ -1,4 +1,5 @@
 # Firejail profile for Xvfb
+# Description: Virtual Framebuffer 'fake' X server
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/Xvfb.local

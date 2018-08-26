@@ -1,4 +1,5 @@
 # Firejail profile for nheko
+# Description: Desktop IM client for the Matrix protocol
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/nheko.local

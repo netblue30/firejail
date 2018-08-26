@@ -1,4 +1,5 @@
 # Firejail profile for aweather
+# Description: Advanced Weather Monitoring Program
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/aweather.local

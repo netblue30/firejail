@@ -1,4 +1,5 @@
 # Firejail profile for smplayer
+# Description: Complete front-end for MPlayer and mpv
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/smplayer.local

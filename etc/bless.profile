@@ -1,4 +1,5 @@
 # Firejail profile for bless
+# Description: A full featured hexadecimal editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/bless.local

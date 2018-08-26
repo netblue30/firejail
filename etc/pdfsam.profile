@@ -1,4 +1,5 @@
 # Firejail profile for pdfsam
+# Description: PDF Split and Merge
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pdfsam.local

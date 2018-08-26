@@ -1,4 +1,5 @@
 # Firejail profile for kmail
+# Description: Full featured graphical email client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kmail.local

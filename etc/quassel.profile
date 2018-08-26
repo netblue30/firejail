@@ -1,4 +1,5 @@
 # Firejail profile for quassel
+# Description: Distributed IRC client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/quassel.local

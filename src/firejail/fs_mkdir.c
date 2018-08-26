@@ -114,7 +114,7 @@ void fs_mkfile(const char *name) {
 	}
 
 	// create file
-	touch_file_as_user(expanded, getuid(), getgid(), 0600);
+	touch_file_as_user(expanded, 0600);
 
 doexit:
 	free(expanded);

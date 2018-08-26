@@ -1,4 +1,5 @@
 # Firejail profile for akregator
+# Description: RSS/Atom feed aggregator
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/akregator.local

@@ -1,4 +1,5 @@
 # Firejail profile for filezilla
+# Description: Full-featured graphical FTP/FTPS/SFTP client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/filezilla.local

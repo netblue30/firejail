@@ -1,4 +1,5 @@
 # Firejail profile for snap
+# Description: Location of genes from DNA sequence with hidden markov model
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/snap.local

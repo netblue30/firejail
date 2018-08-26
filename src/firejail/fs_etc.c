@@ -100,7 +100,9 @@ errexit:
 }
 
 static void duplicate(const char *fname, const char *private_dir, const char *private_run_dir) {
-	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
+	assert(fname);
+
+	if (*fname == '~' || strchr(fname, '/') || strcmp(fname, "..") == 0) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
@@ -163,6 +165,10 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 
 
 		char *ptr = strtok(dlist, ",");
+		if (!ptr) {
+			fprintf(stderr, "Error: invalid private %s argument\n", private_dir);
+			exit(1);
+		}
 		duplicate(ptr, private_dir, private_run_dir);
 
 		while ((ptr = strtok(NULL, ",")) != NULL)

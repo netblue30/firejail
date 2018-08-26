@@ -1,4 +1,5 @@
 # Firejail profile for flameshot
+# Description: Powerful yet simple-to-use screenshot software
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/flameshot.local

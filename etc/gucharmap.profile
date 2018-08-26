@@ -1,4 +1,5 @@
 # Firejail profile for gucharmap
+# Description: Unicode character picker and font browser
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gucharmap.local

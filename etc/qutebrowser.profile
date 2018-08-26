@@ -1,4 +1,5 @@
 # Firejail profile for qutebrowser
+# Description: Keyboard-driven, vim-like browser based on PyQt5
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/qutebrowser.local
@@ -14,6 +15,9 @@ noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
+
+# with >=llvm-4 mesa drivers need llvm stuff
+noblacklist /usr/lib/llvm*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc

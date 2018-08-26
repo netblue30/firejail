@@ -1,4 +1,5 @@
 # Firejail profile for 0ad
+# Description: Real-time strategy game of ancient warfare
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/0ad.local

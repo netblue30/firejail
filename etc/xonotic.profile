@@ -1,4 +1,5 @@
 # Firejail profile for xonotic
+# Description: A free, fast-paced crossplatform first-person shooter
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xonotic.local

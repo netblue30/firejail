@@ -139,6 +139,18 @@ void save_umask(void) {
 	}
 }
 
+static FILE *create_ready_for_join_file(void) {
+	FILE *fp = fopen(RUN_READY_FOR_JOIN, "wxe");
+	if (fp) {
+		ASSERT_PERMS_STREAM(fp, 0, 0, 0644);
+		return fp;
+	}
+	else {
+		fprintf(stderr, "Error: cannot create %s\n", RUN_READY_FOR_JOIN);
+		exit(1);
+	}
+}
+
 static void sandbox_if_up(Bridge *br) {
 	assert(br);
 	if (!br->configured)
@@ -374,7 +386,7 @@ static int ok_to_run(const char *program) {
 	return 0;
 }
 
-void start_application(int no_sandbox) {
+void start_application(int no_sandbox, FILE *fp) {
 	// set environment
 	if (no_sandbox == 0) {
 		env_defaults();
@@ -394,6 +406,11 @@ void start_application(int no_sandbox) {
 #ifndef LTS
 	if (arg_audit) {
 		assert(arg_audit_prog);
+
+		if (fp) {
+			fprintf(fp, "ready\n");
+			fclose(fp);
+		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
@@ -426,6 +443,11 @@ void start_application(int no_sandbox) {
 			print_time();
 
 		int rv = ok_to_run(cfg.original_argv[cfg.original_program_index]);
+
+		if (fp) {
+			fprintf(fp, "ready\n");
+			fclose(fp);
+		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
@@ -482,6 +504,11 @@ void start_application(int no_sandbox) {
 
 		if (!arg_command && !arg_quiet)
 			print_time();
+
+		if (fp) {
+			fprintf(fp, "ready\n");
+			fclose(fp);
+		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
@@ -1080,6 +1107,13 @@ int sandbox(void* sandbox_arg) {
 #endif
 
 	//****************************************
+	// communicate progress of sandbox set up
+	// to --join
+	//****************************************
+
+	FILE *fp = create_ready_for_join_file();
+
+	//****************************************
 	// create a new user namespace
 	//     - too early to drop privileges
 	//****************************************
@@ -1144,8 +1178,10 @@ int sandbox(void* sandbox_arg) {
 #endif
 
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
-		start_application(0);	// start app
+		start_application(0, fp);	// start app
 	}
+
+	fclose(fp);
 
 	int status = monitor_application(app_pid);	// monitor application
 	flush_stdin();

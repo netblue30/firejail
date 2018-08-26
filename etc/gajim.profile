@@ -1,4 +1,5 @@
 # Firejail profile for gajim
+# Description: GTK+-based Jabber client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gajim.local

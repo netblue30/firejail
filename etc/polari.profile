@@ -1,4 +1,5 @@
 # Firejail profile for polari
+# Description: Internet Relay Chat (IRC) client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/polari.local

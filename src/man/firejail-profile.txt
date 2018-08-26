@@ -113,6 +113,8 @@ Example: "nowhitelist ~/.config"
 Ignore command.
 
 Example: "ignore seccomp"
+.br
+Example: "ignore net ehh0"
 
 .TP
 \fBquiet

@@ -1,4 +1,5 @@
 # Firejail profile for dosbox
+# Description: x86 emulator with Tandy/Herc/CGA/EGA/VGA/SVGA graphics, sound and DOS
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/dosbox.local

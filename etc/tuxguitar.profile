@@ -1,4 +1,5 @@
 # Firejail profile for tuxguitar
+# Description: Multitrack guitar tablature editor and player (gp3 to gp5)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/tuxguitar.local

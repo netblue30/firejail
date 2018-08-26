@@ -1,4 +1,5 @@
 # Firejail profile for dia
+# Description: Diagram editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/dia.local

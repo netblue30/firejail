@@ -1,4 +1,5 @@
 # Firejail profile for highlight
+# Description: Universal source code to formatted text converter
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/highlight.local

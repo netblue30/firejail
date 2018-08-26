@@ -1,4 +1,5 @@
 # Firejail profile for totem
+# Description: Simple media player for the GNOME desktop based on GStreamer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/totem.local

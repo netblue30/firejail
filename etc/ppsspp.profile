@@ -1,4 +1,5 @@
 # Firejail profile for ppsspp
+# Description: A PSP emulator written in C++
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/ppsspp.local

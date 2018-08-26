@@ -212,14 +212,46 @@ static void extract_umask(pid_t pid) {
 
 	FILE *fp = fopen(fname, "re");
 	free(fname);
-	if (!fp)
-		return;
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open umask file\n");
+		exit(1);
+	}
 	if (fscanf(fp, "%3o", &orig_umask) < 1) {
 		fprintf(stderr, "Error: cannot read umask\n");
 		exit(1);
 	}
 	fclose(fp);
 }
+
+pid_t switch_to_child(pid_t pid) {
+	EUID_ROOT();
+	errno = 0;
+	char *comm = pid_proc_comm(pid);
+	if (!comm) {
+		if (errno == ENOENT) {
+			fprintf(stderr, "Error: cannot find process with id %d\n", pid);
+			exit(1);
+		}
+		else {
+			fprintf(stderr, "Error: cannot read /proc file\n");
+			exit(1);
+		}
+	}
+	EUID_USER();
+	if (strcmp(comm, "firejail") == 0) {
+		pid_t child;
+		if (find_child(pid, &child) == 1) {
+			fprintf(stderr, "Error: no valid sandbox\n");
+			exit(1);
+		}
+		fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) child);
+		pid = child;
+	}
+	free(comm);
+	return pid;
+}
+
+
 
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
@@ -229,19 +261,13 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	extract_command(argc, argv, index);
 	signal (SIGTERM, signal_handler);
 
-	// if the pid is that of a firejail  process, use the pid of the first child process
-	EUID_ROOT();
-	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (comm) {
-		if (strcmp(comm, "firejail") == 0) {
-			pid_t child;
-			if (find_child(pid, &child) == 0) {
-				pid = child;
-				fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
-			}
-		}
-		free(comm);
+	// in case the pid is that of a firejail process, use the pid of the first child process
+	pid = switch_to_child(pid);
+
+	// now check if the pid belongs to a firejail sandbox
+	if (invalid_sandbox(pid)) {
+		fprintf(stderr, "Error: no valid sandbox\n");
+		exit(1);
 	}
 
 	// check privileges for non-root users
@@ -406,7 +432,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		drop_privs(arg_nogroups);
-		start_application(0);
+		start_application(0, NULL);
 
 		// it will never get here!!!
 	}

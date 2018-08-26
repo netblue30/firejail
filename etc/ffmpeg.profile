@@ -1,4 +1,5 @@
 # Firejail profile for ffmpeg
+# Description: Tools for transcoding, streaming and playing of multimedia files
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

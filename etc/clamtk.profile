@@ -1,9 +1,7 @@
-# Firejail profile for clamav
-# Description: Anti-virus utility for Unix
+# Firejail profile for clamtk
 # This file is overwritten after every install/update
-quiet
 # Persistent local customizations
-include /etc/firejail/clamav.local
+include /etc/firejail/clamtk.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
@@ -22,11 +20,8 @@ novideo
 protocol unix
 seccomp
 shell none
-tracelog
-x11 none
 
 private-dev
-read-only ${HOME}
 
 memory-deny-write-execute
 noexec ${HOME}

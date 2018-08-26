@@ -1,4 +1,5 @@
 # Firejail profile for dillo
+# Description: Small and fast web browser
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/dillo.local

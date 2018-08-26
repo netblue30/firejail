@@ -1,4 +1,5 @@
 # Firejail profile for transmission-qt
+# Description: Lightweight BitTorrent client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/transmission-qt.local

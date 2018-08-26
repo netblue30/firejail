@@ -1,4 +1,5 @@
 # Firejail profile for keepassxc
+# Description: Cross Platform Password Manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/keepassxc.local
@@ -47,3 +48,6 @@ private-tmp
 #memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
+
+# Mutex is stored in /tmp by default, which is broken by private-tmp
+join-or-start keepassxc

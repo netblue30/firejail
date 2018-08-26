@@ -1,4 +1,5 @@
 # Firejail profile for kdenlive
+# Description: Non-linear video editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kdenlive.local

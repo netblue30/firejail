@@ -149,7 +149,7 @@ uid_t pid_get_uid(pid_t pid) {
 	char buf[PIDS_BUFLEN];
 	while (fgets(buf, PIDS_BUFLEN - 1, fp)) {
 		if (strncmp(buf, "Uid:", 4) == 0) {
-			char *ptr = buf + 5;
+			char *ptr = buf + 4;
 			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
 				ptr++;
 			}
@@ -398,7 +398,7 @@ void pid_read(pid_t mon_pid) {
 				pids[pid].parent = parent;
 			}
 			else if (strncmp(buf, "Uid:", 4) == 0) {
-				char *ptr = buf + 5;
+				char *ptr = buf + 4;
 				while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
 					ptr++;
 				}

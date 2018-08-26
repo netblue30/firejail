@@ -120,19 +120,8 @@ void fs_logger_change_owner(void) {
 void fs_logger_print_log(pid_t pid) {
 	EUID_ASSERT();
 
-	// if the pid is that of a firejail  process, use the pid of the first child process
-	EUID_ROOT();
-	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (comm) {
-		if (strcmp(comm, "firejail") == 0) {
-			pid_t child;
-			if (find_child(pid, &child) == 0) {
-				pid = child;
-			}
-		}
-		free(comm);
-	}
+	// in case the pid is that of a firejail process, use the pid of the first child process
+	pid = switch_to_child(pid);
 
 	// check privileges for non-root users
 	uid_t uid = getuid();
@@ -151,7 +140,7 @@ void fs_logger_print_log(pid_t pid) {
 
 	EUID_ROOT();
 	struct stat s;
-	if (stat(fname, &s) == -1) {
+	if (stat(fname, &s) == -1 || s.st_uid != 0) {
 		fprintf(stderr, "Error: Cannot access filesystem log\n");
 		exit(1);
 	}

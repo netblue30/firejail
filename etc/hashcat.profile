@@ -1,4 +1,5 @@
 # Firejail profile for hashcat
+# Description: World's fastest and most advanced password recovery utility
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

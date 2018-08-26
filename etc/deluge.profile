@@ -1,4 +1,5 @@
 # Firejail profile for deluge
+# Description: BitTorrent client written in Python/PyGTK
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/deluge.local

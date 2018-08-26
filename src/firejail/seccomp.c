@@ -295,18 +295,13 @@ int seccomp_filter_keep(void) {
 void seccomp_print_filter(pid_t pid) {
 	EUID_ASSERT();
 
-	// if the pid is that of a firejail  process, use the pid of the first child process
-	EUID_ROOT();
-	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (comm) {
-		if (strcmp(comm, "firejail") == 0) {
-			pid_t child;
-			if (find_child(pid, &child) == 0) {
-				pid = child;
-			}
-		}
-		free(comm);
+	// in case the pid is that of a firejail process, use the pid of the first child process
+	pid = switch_to_child(pid);
+
+	// now check if the pid belongs to a firejail sandbox
+	if (invalid_sandbox(pid)) {
+		fprintf(stderr, "Error: no valid sandbox\n");
+		exit(1);
 	}
 
 	// check privileges for non-root users

@@ -1,4 +1,5 @@
 # Firejail profile for thunderbird
+# Description: Email, RSS and newsgroup client with integrated spam filter
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/thunderbird.local
@@ -29,6 +30,11 @@ ignore private-tmp
 read-only ${HOME}/.config/mimeapps.list
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user
+
+# If you want to read local mail stored in /var/mail, add the following to thunderbird.local:
+# noblacklist /var/mail
+# noblacklist /var/spool/mail
+# writable-var
 
 # allow browsers
 # Redirect

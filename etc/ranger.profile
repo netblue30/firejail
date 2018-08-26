@@ -1,4 +1,5 @@
 # Firejail profile for ranger
+# Description: File manager with an ncurses frontend written in Python
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/ranger.local

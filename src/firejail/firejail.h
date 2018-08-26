@@ -100,6 +100,7 @@
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
 #define RUN_UMASK_FILE		"/run/firejail/mnt/umask"
 #define RUN_OVERLAY_ROOT	"/run/firejail/mnt/oroot"
+#define RUN_READY_FOR_JOIN 	"/run/firejail/mnt/ready-for-join"
 
 
 // profiles
@@ -405,7 +406,7 @@ char *guess_shell(void);
 
 // sandbox.c
 int sandbox(void* sandbox_arg);
-void start_application(int no_sandbox);
+void start_application(int no_sandbox, FILE *fp);
 
 // network_main.c
 void net_configure_sandbox_ip(Bridge *br);
@@ -477,6 +478,7 @@ void usage(void);
 
 // join.c
 void join(pid_t pid, int argc, char **argv, int index);
+pid_t switch_to_child(pid_t pid);
 
 // shutdown.c
 void shut(pid_t pid);
@@ -512,9 +514,10 @@ void logerr(const char *msg);
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
 void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
 void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
-void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode);
+void touch_file_as_user(const char *fname, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);
+void trim_trailing_slash_or_dot(char *path);
 char *line_remove_spaces(const char *buf);
 char *split_comma(char *str);
 void check_unsigned(const char *str, const char *msg);
@@ -536,6 +539,7 @@ unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 int safe_fd(const char *path, int flags);
+int invalid_sandbox(const pid_t pid);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.

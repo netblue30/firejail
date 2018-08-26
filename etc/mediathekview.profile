@@ -1,4 +1,5 @@
 # Firejail profile for mediathekview
+# Description: View streams from German public television stations
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mediathekview.local

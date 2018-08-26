@@ -1,4 +1,5 @@
 # Firejail profile for gzip
+# Description: GNU compression utilities
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

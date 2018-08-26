@@ -1,4 +1,5 @@
 # Firejail profile for file-roller
+# Description: Archive manager for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/file-roller.local

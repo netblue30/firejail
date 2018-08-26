@@ -1,4 +1,5 @@
 # Firejail profile for evolution
+# Description: Groupware suite with mail client and organizer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/evolution.local

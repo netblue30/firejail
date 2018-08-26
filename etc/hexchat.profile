@@ -1,4 +1,5 @@
 # Firejail profile for hexchat
+# Description: IRC client for X based on X-Chat 2
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/hexchat.local

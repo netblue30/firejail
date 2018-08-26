@@ -1,4 +1,5 @@
 # Firejail profile for tar
+# Description: GNU version of the tar archiving utility
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

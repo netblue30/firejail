@@ -395,19 +395,8 @@ void fs_whitelist(void) {
 		new_name = expand_home(dataptr, cfg.homedir);
 		assert(new_name);
 
-		// trim trailing slashes or dots
-		char *end = strchr(new_name, '\0');
-		assert(end);
-		if ((end - new_name) > 1) {
-			end--;
-			while (*end == '/' ||
-			      (*end == '.' && *(end - 1) == '/')) {
-				*end = '\0';
-				end--;
-				if (end == new_name)
-					break;
-			}
-		}
+		// remove trailing slashes and single dots
+		trim_trailing_slash_or_dot(new_name);
 
 		if (arg_debug || arg_debug_whitelists)
 			fprintf(stderr, "Debug %d: new_name #%s#, %s\n", __LINE__, new_name, (nowhitelist_flag)? "nowhitelist": "whitelist");

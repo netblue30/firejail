@@ -1,4 +1,5 @@
 # Firejail profile for gpa
+# Description: GNU Privacy Assistant (GPA)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gpa.local

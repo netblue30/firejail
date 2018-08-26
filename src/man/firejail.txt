@@ -170,7 +170,7 @@ in order to allow strace to run. Chromium and Chromium-based browsers will not w
 .br
 Example:
 .br
-$ firejail --build=profile-file vlc ~/Videos/test.mp4
+$ firejail --build vlc ~/Videos/test.mp4
 .TP
 \fB\-\-build=profile-file
 The command builds a whitelisted profile, and saves it in profile-file. If /usr/bin/strace is installed on the system, it also
@@ -509,7 +509,8 @@ Ignore command in profile file.
 Example:
 .br
 $ firejail \-\-ignore=shell --ignore=seccomp firefox
-
+.br
+$ firejail \-\-ignore="net eth0" firefox
 .TP
 \fB\-\-interface=interface
 Move interface in a new network namespace. Up to four --interface options can be specified.

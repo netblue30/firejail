@@ -1,4 +1,5 @@
 # Firejail profile for shellcheck
+# Description: Lint tool for shell scripts
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

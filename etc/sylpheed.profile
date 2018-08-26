@@ -1,4 +1,5 @@
 # Firejail profile for sylpheed
+# Description: Light weight e-mail client with GTK+
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/sylpheed.local

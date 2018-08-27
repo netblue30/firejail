@@ -748,11 +748,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+#ifndef LTS
 	// cgroup
 	if (strncmp(ptr, "cgroup ", 7) == 0) {
 		set_cgroup(ptr + 7);
 		return 0;
 	}
+#endif
 
 	// writable-etc
 	if (strcmp(ptr, "writable-etc") == 0) {

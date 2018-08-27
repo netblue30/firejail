@@ -1264,6 +1264,7 @@ int main(int argc, char **argv) {
 				cfg.nice = 0;
 			arg_nice = 1;
 		}
+#ifndef LTS
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
 			if (option_cgroup) {
 				fprintf(stderr, "Error: only a cgroup can be defined\n");
@@ -1276,7 +1277,7 @@ int main(int argc, char **argv) {
 				errExit("strdup");
 			set_cgroup(cfg.cgroup);
 		}
-
+#endif
 		//*************************************
 		// filesystem
 		//*************************************

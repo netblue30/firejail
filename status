@@ -1,7 +1,7 @@
-possible cleanup: --cgroup, --fs.print, --timeout
+possible cleanup: --fs.print, --timeout
 
 usage.c cleanup:
-	--audit, --build, --chroot, --output, --overlay-*, --rlimit*, --trace*, --x11*
+	--audit, --build, --chroot, --output, --overlay-*, --rlimit*, --trace*, --x11*, --ls, --get, --put, --cgroup
 	--private-home, private-etc, private-bin, --private-lib, --private-opt, --private-srv
 
 

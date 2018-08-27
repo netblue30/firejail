@@ -968,6 +968,7 @@ int main(int argc, char **argv) {
 	delete_run_files(sandbox_pid);
 	EUID_USER();
 
+#ifndef LTS
 	//check if the parent is sshd daemon
 	int parent_sshd = 0;
 	{
@@ -1066,12 +1067,11 @@ int main(int argc, char **argv) {
 #endif
 		}
 	}
-#ifndef LTS
 	else {
 		// check --output option and execute it;
 		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
 	}
-#endif
+#endif // LTS
 	EUID_ASSERT();
 
 

@@ -4,12 +4,12 @@ firejail.users \- Firejail user access database
 
 .SH DESCRIPTION
 /etc/firejail/firejail.users lists the users allowed to run firejail SUID executable.
-If the file is not present in the system, all users are allowed to use the sandbox.
-root user is allowed by default. Other system users (users with an ID below UID_MIN value
-defined in /etc/login.defs, typically 1000) are not allowed to start the sandbox.
+root user is allowed by default, user nobody is never allowed.
 
 If the user is not allowed to start the sandbox, Firejail will attempt to run the
 program without sandboxing it.
+
+If the file is not present in the system, all users are allowed to use the sandbox.
 
 Example:
 
@@ -34,11 +34,23 @@ By default, running firecfg creates the file and adds the current user to the li
 
 See \fBman 1 firecfg\fR for details.
 
+.SH ALTERNATIVE SOLUTION
+An alternative way of restricting user access to firejail executable is to create a special firejail user group and
+allow only users in this group to run the sandbox:
+
+	# addgroup firejail
+.br
+	# chown root:firejail /usr/bin/firejail
+.br
+	# chmod 4750 /usr/bin/firejail
+
+
 .SH FILES
 /etc/firejail/firejail.users
 
 .SH LICENSE
-Firejail is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+Firejail is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 .PP
 Homepage: https://firejail.wordpress.com
 .SH SEE ALSO

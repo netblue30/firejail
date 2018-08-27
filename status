@@ -1,3 +1,10 @@
+possible cleanup: --cgroup, --fs.print, --timeout
+
+usage.c cleanup:
+	--audit, --build, --chroot, --output, --overlay-*, --rlimit*, --trace*, --x11*
+	--private-home, private-etc, private-bin, --private-lib, --private-opt, --private-srv
+
+
 main:14864, LTS 10890
 removed restricted-shell
 

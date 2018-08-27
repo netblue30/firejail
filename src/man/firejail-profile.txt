@@ -197,18 +197,6 @@ The file is created if it doesn't already exist.
 \fBnoexec file_or_directory
 Remount the file or the directory noexec, nodev and nosuid.
 .TP
-\fBoverlay
-Mount  a  filesystem  overlay  on top of the current filesystem.
-The overlay is stored in $HOME/.firejail/<PID>  directory.
-.TP
-\fBoverlay-named name
-Mount  a  filesystem  overlay  on top of the current filesystem.
-The overlay is stored in $HOME/.firejail/name  directory.
-.TP
-\fBoverlay-tmpfs
-Mount  a  filesystem  overlay  on top of the current filesystem.
-All filesystem  modifications are discarded when the sandbox is closed.
-.TP
 \fBprivate
 Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is
@@ -217,19 +205,9 @@ closed.
 \fBprivate directory
 Use directory as user home.
 .TP
-\fBprivate-home file,directory
-Build a new user home in a temporary
-filesystem, and copy the files and directories in the list in the
-new home. All modifications are discarded when the sandbox is
-closed.
-.TP
 \fBprivate-cache
 Mount an empty temporary filesystem on top of the .cache directory in user home. All
 modifications are discarded when the sandbox is closed.
-.TP
-\fBprivate-bin file,file
-Build a new /bin in a temporary filesystem, and copy the programs in the list.
-The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
 .TP
 \fBprivate-dev
 Create a new /dev directory. Only disc, dri, null, full, zero, tty, pts, ptmx,
@@ -237,25 +215,6 @@ random, snd, urandom, video, log and shm devices are available.
 .TP
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).
-.TP
-\fBprivate-etc file,directory
-Build a new /etc in a temporary
-filesystem, and copy the files and directories in the list.
-All modifications are discarded when the sandbox is closed.
-.TP
-\fBprivate-lib file,directory
-Build a new /lib directory and bring in the libraries required by the application to run.
-This feature is still under development, see \fBman 1 firejail\fR for some examples.
-.TP
-\fBprivate-opt file,directory
-Build a new /optin a temporary
-filesystem, and copy the files and directories in the list.
-All modifications are discarded when the sandbox is closed.
-.TP
-\fBprivate-srv file,directory
-Build a new /srv in a temporary
-filesystem, and copy the files and directories in the list.
-All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-tmp
 Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
@@ -268,9 +227,6 @@ Make directory or file read-write.
 .TP
 \fBtmpfs directory
 Mount an empty tmpfs filesystem on top of directory. This option is available only when running the sandbox as root.
-.TP
-\fBtracelog
-Blacklist violations logged to syslog.
 .TP
 \fBwhitelist file_or_directory
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
@@ -350,82 +306,26 @@ does not result in an increase of privilege.
 \fBnoroot
 Use this command  to enable an user namespace. The namespace has only one user, the current user.
 There is no root account (uid 0) defined in the namespace.
+
+
+.SH User Environment
+
 .TP
-\fBx11
-Enable X11 sandboxing.
-.TP
-\fBx11 none
-Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and file specified in ${XAUTHORITY} environment variable.
-Remove DISPLAY and XAUTHORITY environment variables.
-Stop with error message if X11 abstract socket will be accessible in jail.
-.TP
-\fBx11 xephyr
-Enable X11 sandboxing with Xephyr server.
-.TP
-\fBx11 xorg
-Enable X11 sandboxing with X11 security extension.
-.TP
-\fBx11 xpra
-Enable X11 sandboxing with Xpra server.
-.TP
-\fBx11 xvfb
-Enable X11 sandboxing with Xvfb server.
-.TP
-\fBxephyr-screen WIDTHxHEIGHT
-Set screen size for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
+\fBcpu cpu-number,cpu-number,cpu-number
+Set CPU affinity. Example:
 .br
 
 .br
-Example:
+cpu 0,1,2
 .br
 
-.br
-xephyr-screen 640x480
-.br
-x11 xephyr
-
-
-
-.SH Resource limits, CPU affinity, Control Groups
-These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
-The limits can be modified inside the sandbox using the regular \fBulimit\fR command. \fBcpu\fR command
-configures the CPU cores available, and \fBcgroup\fR command
-place the sandbox in an existing control group.
-
-Examples:
-
 .TP
-\fBrlimit-as 123456789012
-Set the maximum size of the process's virtual memory to 123456789012 bytes.
-.TP
-\fBrlimit-cpu 123
-Set the maximum CPU time in seconds.
-.TP
-\fBrlimit-fsize 1024
-Set the maximum file size that can be created by a process to 1024 bytes.
-.TP
-\fBrlimit-nproc 1000
-Set the maximum number of processes that can be created for the real user ID of the calling process to 1000.
-.TP
-\fBrlimit-nofile 500
-Set the maximum number of files that can be opened by a process to 500.
-.TP
-\fBrlimit-sigpending 200
-Set the maximum number of processes that can be created for the real user ID of the calling process to 200.
-.TP
-\fBcpu 0,1,2
-Use only CPU cores 0, 1 and 2.
-.TP
-\fBnice -5
-Set a nice value of -5 to all processes running inside the sandbox.
-.TP
-\fBcgroup /sys/fs/cgroup/g1/tasks
-The sandbox is placed in g1 control group.
+\fBnice value
+Set  nice  value  for all processes running inside the sandbox.
 .TP
 \fBtimeout hh:mm:ss
 Kill the sandbox automatically after the time has elapsed. The time is specified in hours/minutes/seconds format.
 
-.SH User Environment
 .TP
 \fBallusers
 All user home directories are visible inside the sandbox. By default, only current user home directory is visible.
@@ -644,5 +544,4 @@ Homepage: https://firejail.wordpress.com
 \&\flfirejail\fR\|(1),
 \&\flfiremon\fR\|(1),
 \&\flfirecfg\fR\|(1),
-\&\flfirejail-login\fR\|(5)
 \&\flfirejail-users\fR\|(5)

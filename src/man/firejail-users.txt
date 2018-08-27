@@ -58,4 +58,3 @@ Homepage: https://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-profile\fR\|(5)
-\&\flfirejail-login\fR\|(5)

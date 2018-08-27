@@ -1,7 +1,7 @@
 all: apps man filters
 MYLIBS = src/lib
 APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/fnet src/fseccomp src/libpostexecseccomp
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-users.5
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx
 
 prefix=@prefix@

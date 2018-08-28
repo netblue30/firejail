@@ -779,19 +779,28 @@ void fs_basic_fs(void) {
 
 #ifdef HAVE_OVERLAYFS
 char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
+	assert(subdirname);
 	struct stat s;
 	char *dirname;
 
-	// create ~/.firejail directory
 	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
-
-	if (is_link(dirname)) {
-		fprintf(stderr, "Error: ~/.firejail directory is a symbolic link\n");
-		exit(1);
+	// check if ~/.firejail already exists
+	if (lstat(dirname, &s) == 0) {
+		if (!S_ISDIR(s.st_mode)) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: ~/.firejail is a symbolic link\n");
+			else
+				fprintf(stderr, "Error: ~/.firejail is not a directory\n");
+			exit(1);
+		}
+		if (s.st_uid != getuid()) {
+			fprintf(stderr, "Error: ~/.firejail directory is not owned by the current user\n");
+			exit(1);
+		}
 	}
-	if (stat(dirname, &s) == -1) {
-		// create directory
+	else {
+		// create ~/.firejail directory
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -805,6 +814,9 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 			if (chmod(dirname, 0700) == -1)
 				errExit("chmod");
 			ASSERT_PERMS(dirname, getuid(), getgid(), 0700);
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 			_exit(0);
 		}
 		// wait for the child to finish
@@ -813,23 +825,27 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 			fprintf(stderr, "Error: cannot create ~/.firejail directory\n");
 			exit(1);
 		}
-	}
-	else if (s.st_uid != getuid()) {
-		fprintf(stderr, "Error: ~/.firejail directory is not owned by the current user\n");
-		exit(1);
+		fs_logger2("create", dirname);
 	}
 	free(dirname);
 
 	// check overlay directory
 	if (asprintf(&dirname, "%s/.firejail/%s", cfg.homedir, subdirname) == -1)
 		errExit("asprintf");
-	if (is_link(dirname)) {
-		fprintf(stderr, "Error: overlay directory is a symbolic link\n");
-		exit(1);
-	}
-	if (allow_reuse == 0) {
-		if (stat(dirname, &s) == 0) {
-			fprintf(stderr, "Error: overlay directory already exists: %s\n", dirname);
+	if (lstat(dirname, &s) == 0) {
+		if (!S_ISDIR(s.st_mode)) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: %s is a symbolic link\n", dirname);
+			else
+				fprintf(stderr, "Error: %s is not a directory\n", dirname);
+			exit(1);
+		}
+		if (s.st_uid != 0) {
+			fprintf(stderr, "Error: overlay directory %s is not owned by the root user\n", dirname);
+			exit(1);
+		}
+		if (allow_reuse == 0) {
+			fprintf(stderr, "Error: overlay directory exists, but reuse is not allowed\n");
 			exit(1);
 		}
 	}
@@ -866,9 +882,11 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 // # umount /root/overlay/root
 
 
-// to do: fix the code below; also, it might work without /dev; impose seccomp/caps filters when not root
+// to do: fix the code below; also, it might work without /dev, but consider keeping /dev/shm; add locking mechanism for overlay-clean
 #include <sys/utsname.h>
 void fs_overlayfs(void) {
+	struct stat s;
+
 	// check kernel version
 	struct utsname u;
 	int rv = uname(&u);
@@ -894,50 +912,78 @@ void fs_overlayfs(void) {
 	char *oroot = RUN_OVERLAY_ROOT;
 	mkdir_attr(oroot, 0755, 0, 0);
 
-	struct stat s;
+	// set base for working and diff directories
 	char *basedir = RUN_MNT_DIR;
+	int basefd = -1;
+
 	if (arg_overlay_keep) {
-		// set base for working and diff directories
 		basedir = cfg.overlay_dir;
 		assert(basedir);
-
-		// does the overlay exist?
-		if (stat(basedir, &s) == 0) {
-			if (arg_overlay_reuse == 0) {
-				fprintf(stderr, "Error: overlay directory exists, but reuse is not allowed\n");
-				exit(1);
-			}
+		// get a file descriptor for ~/.firejail, fails if there is any symlink
+		char *firejail;
+		if (asprintf(&firejail, "%s/.firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		int fd = safe_fd(firejail, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (fd == -1)
+			errExit("safe_fd");
+		free(firejail);
+		// create basedir if it doesn't exist
+		// the new directory will be owned by root
+		const char *dirname = gnu_basename(basedir);
+		if (mkdirat(fd, dirname, 0755) == -1 && errno != EEXIST) {
+			perror("mkdir");
+			fprintf(stderr, "Error: cannot create overlay directory %s\n", basedir);
+			exit(1);
 		}
-		else {
-			/* coverity[toctou] */
-			if (mkdir(basedir, 0755) != 0) {
-				fprintf(stderr, "Error: cannot create overlay directory\n");
-				exit(1);
-			}
-		}
+		// open basedir
+		basefd = openat(fd, dirname, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		close(fd);
+	}
+	else {
+		basefd = open(basedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	}
+	if (basefd == -1) {
+		perror("open");
+		fprintf(stderr, "Error: cannot open overlay directory %s\n", basedir);
+		exit(1);
 	}
 
-	char *odiff;
-	if(asprintf(&odiff, "%s/odiff", basedir) == -1)
-		errExit("asprintf");
+	// confirm once more base is owned by root
+	if (fstat(basefd, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: overlay directory %s is not owned by the root user\n", basedir);
+		exit(1);
+	}
+	// confirm permissions of base are 0755
+	if (((S_IRWXU|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH) & s.st_mode) != (S_IRWXU|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)) {
+		fprintf(stderr, "Error: invalid permissions on overlay directory %s\n", basedir);
+		exit(1);
+	}
 
+	// create diff and work directories inside base
 	// no need to check arg_overlay_reuse
-	if (stat(odiff, &s) != 0) {
-		mkdir_attr(odiff, 0755, 0, 0);
+	char *odiff;
+	if (asprintf(&odiff, "%s/odiff", basedir) == -1)
+		errExit("asprintf");
+	// the new directory will be owned by root
+	if (mkdirat(basefd, "odiff", 0755) == -1 && errno != EEXIST) {
+		perror("mkdir");
+		fprintf(stderr, "Error: cannot create overlay directory %s\n", odiff);
+		exit(1);
 	}
-	else if (set_perms(odiff, 0, 0, 0755))
-		errExit("set_perms");
+	ASSERT_PERMS(odiff, 0, 0, 0755);
 
 	char *owork;
-	if(asprintf(&owork, "%s/owork", basedir) == -1)
+	if (asprintf(&owork, "%s/owork", basedir) == -1)
 		errExit("asprintf");
-
-	// no need to check arg_overlay_reuse
-	if (stat(owork, &s) != 0) {
-		mkdir_attr(owork, 0755, 0, 0);
+	// the new directory will be owned by root
+	if (mkdirat(basefd, "owork", 0755) == -1 && errno != EEXIST) {
+		perror("mkdir");
+		fprintf(stderr, "Error: cannot create overlay directory %s\n", owork);
+		exit(1);
 	}
-	else if (set_perms(owork, 0, 0, 0755))
-		errExit("chown");
+	ASSERT_PERMS(owork, 0, 0, 0755);
 
 	// mount overlayfs
 	if (arg_debug)
@@ -977,43 +1023,48 @@ void fs_overlayfs(void) {
 
 			// BEFORE NEXT, WE NEED TO TEST IF /home has any contents or do we need to mount it?
 			// must create var for oroot/cfg.homedir
-			if (asprintf(&overlayhome,"%s%s",oroot,cfg.homedir) == -1)
+			if (asprintf(&overlayhome, "%s%s", oroot, cfg.homedir) == -1)
 				errExit("asprintf");
-			if (arg_debug) printf ("DEBUG: overlayhome var holds ##%s##\n",overlayhome);
+			if (arg_debug) printf ("DEBUG: overlayhome var holds ##%s##\n", overlayhome);
 
 			// if no homedir in overlay -- create another overlay for /home
-			if (stat(overlayhome, &s) == -1) {
-
-				if(asprintf(&hroot, "%s/oroot/home", RUN_MNT_DIR) == -1)
-					errExit("asprintf");
-
-				if(asprintf(&hdiff, "%s/hdiff", basedir) == -1)
-					errExit("asprintf");
+			if (stat(cfg.homedir, &s) == 0 && stat(overlayhome, &s) == -1) {
 
 				// no need to check arg_overlay_reuse
-				if (stat(hdiff, &s) != 0) {
-					mkdir_attr(hdiff, S_IRWXU | S_IRWXG | S_IRWXO, 0, 0);
-				}
-				else if (set_perms(hdiff, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
-					errExit("set_perms");
-
-				if(asprintf(&hwork, "%s/hwork", basedir) == -1)
+				if (asprintf(&hdiff, "%s/hdiff", basedir) == -1)
 					errExit("asprintf");
+				// the new directory will be owned by root
+				if (mkdirat(basefd, "hdiff", 0755) == -1 && errno != EEXIST) {
+					perror("mkdir");
+					fprintf(stderr, "Error: cannot create overlay directory %s\n", hdiff);
+					exit(1);
+				}
+				ASSERT_PERMS(hdiff, 0, 0, 0755);
 
 				// no need to check arg_overlay_reuse
-				if (stat(hwork, &s) != 0) {
-					mkdir_attr(hwork, S_IRWXU | S_IRWXG | S_IRWXO, 0, 0);
+				if (asprintf(&hwork, "%s/hwork", basedir) == -1)
+					errExit("asprintf");
+				// the new directory will be owned by root
+				if (mkdirat(basefd, "hwork", 0755) == -1 && errno != EEXIST) {
+					perror("mkdir");
+					fprintf(stderr, "Error: cannot create overlay directory %s\n", hwork);
+					exit(1);
 				}
-				else if (set_perms(hwork, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
-					errExit("set_perms");
+				ASSERT_PERMS(hwork, 0, 0, 0755);
 
 				// no homedir in overlay so now mount another overlay for /home
+				if (asprintf(&hroot, "%s/home", oroot) == -1)
+					errExit("asprintf");
 				if (asprintf(&option, "lowerdir=/home,upperdir=%s,workdir=%s", hdiff, hwork) == -1)
 					errExit("asprintf");
 				if (mount("overlay", hroot, "overlay", MS_MGC_VAL, option) < 0)
 					errExit("mounting overlayfs for mounted home directory");
 
 				printf("OverlayFS for /home configured in %s directory\n", basedir);
+				free(hroot);
+				free(hdiff);
+				free(hwork);
+
 			} // stat(overlayhome)
 			free(overlayhome);
 		}
@@ -1021,7 +1072,9 @@ void fs_overlayfs(void) {
 		//***************************
 	}
 	fmessage("OverlayFS configured in %s directory\n", basedir);
+	close(basefd);
 
+	// /dev, /run and /tmp are not covered by the overlay
 	// mount-bind dev directory
 	if (arg_debug)
 		printf("Mounting /dev\n");
@@ -1042,19 +1095,15 @@ void fs_overlayfs(void) {
 		errExit("mounting /run");
 	fs_logger("whitelist /run");
 
-	// mount-bind /tmp/.X11-unix directory
-	if (stat("/tmp/.X11-unix", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting /tmp/.X11-unix\n");
-		char *x11;
-		if (asprintf(&x11, "%s/tmp/.X11-unix", oroot) == -1)
-			errExit("asprintf");
-		if (mount("/tmp/.X11-unix", x11, NULL, MS_BIND|MS_REC, NULL) < 0)
-			fwarning("cannot mount /tmp/.X11-unix in overlay\n");
-		else
-			fs_logger("whitelist /tmp/.X11-unix");
-		free(x11);
-	}
+	// mount-bind tmp directory
+	if (arg_debug)
+		printf("Mounting /tmp\n");
+	char *tmp;
+	if (asprintf(&tmp, "%s/tmp", oroot) == -1)
+		errExit("asprintf");
+	if (mount("/tmp", tmp, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /tmp");
+	fs_logger("whitelist /tmp");
 
 	// chroot in the new filesystem
 #ifdef HAVE_GCOV
@@ -1068,12 +1117,9 @@ void fs_overlayfs(void) {
 //		fs_dev_shm();
 	fs_var_lock();
 	if (!arg_keep_var_tmp)
-	        fs_var_tmp();
+		fs_var_tmp();
 	if (!arg_writable_var_log)
 		fs_var_log();
-	else
-		fs_rdwr("/var/log");
-
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
@@ -1089,6 +1135,10 @@ void fs_overlayfs(void) {
 	// cleanup and exit
 	free(option);
 	free(odiff);
+	free(owork);
+	free(dev);
+	free(run);
+	free(tmp);
 }
 #endif
 

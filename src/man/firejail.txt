@@ -1267,7 +1267,7 @@ Similar to \-\-output, but stderr is also stored.
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail/<PID> directory.
+Directories /run, /tmp and /dev are not covered by the overlay. The overlay is stored in $HOME/.firejail/<PID> directory.
 .br
 
 .br
@@ -1285,8 +1285,8 @@ $ firejail \-\-overlay firefox
 \fB\-\-overlay-named=name
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail/<NAME> directory. The created overlay can be reused between multiple
-sessions.
+Directories /run, /tmp and /dev are not covered by the overlay. The overlay is stored in $HOME/.firejail/<NAME> directory.
+The created overlay can be reused between multiple sessions.
 .br
 
 .br
@@ -1303,7 +1303,8 @@ $ firejail \-\-overlay-named=jail1 firefox
 .TP
 \fB\-\-overlay-tmpfs
 Mount a filesystem overlay on top of the current filesystem. All filesystem modifications
-are discarded when the sandbox is closed.
+are discarded when the sandbox is closed. Directories /run, /tmp and /dev are not covered by the overlay.
+
 .br
 
 .br

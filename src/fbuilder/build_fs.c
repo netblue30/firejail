@@ -213,7 +213,7 @@ void build_share(const char *fname, FILE *fp) {
 //*******************************************
 static FileDB *tmp_out = NULL;
 static void tmp_callback(char *ptr) {
-	filedb_add(tmp_out, ptr);
+	tmp_out = filedb_add(tmp_out, ptr);
 }
 
 void build_tmp(const char *fname, FILE *fp) {
@@ -291,7 +291,7 @@ static void dev_callback(char *ptr) {
 		i++;
 	}
 	if (!found)
-		filedb_add(dev_out, ptr);
+		dev_out = filedb_add(dev_out, ptr);
 }
 
 void build_dev(const char *fname, FILE *fp) {

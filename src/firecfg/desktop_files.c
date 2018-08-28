@@ -144,6 +144,8 @@ void fix_desktop_files(char *homedir) {
 		perror("opendir");
 		fprintf(stderr, "Warning: cannot access /usr/share/applications directory, desktop files fixing skipped...\n");
 		free(user_apps_dir);
+		if (dir)
+			closedir(dir);
 		return;
 	}
 
@@ -266,12 +268,16 @@ void fix_desktop_files(char *homedir) {
 
 		if (stat(outname, &sb) == 0) {
 			printf("   %s skipped: file exists\n", filename);
+			if (change_exec)
+				free(change_exec);
 			continue;
 		}
 
 		FILE *fpin = fopen(filename, "r");
 		if (!fpin) {
 			fprintf(stderr, "Warning: cannot open /usr/share/applications/%s\n", filename);
+			if (change_exec)
+				free(change_exec);
 			continue;
 		}
 
@@ -279,6 +285,8 @@ void fix_desktop_files(char *homedir) {
 		if (!fpout) {
 			fprintf(stderr, "Warning: cannot open ~/.local/share/applications/%s\n", outname);
 			fclose(fpin);
+			if (change_exec)
+				free(change_exec);
 			continue;
 		}
 		fprintf(fpout, "# converted by firecfg\n");

@@ -31,7 +31,7 @@ static void load_seccomp(void) {
 	if (fd == -1)
 		return;
 
-	int size = lseek(fd, 0, SEEK_END);
+	off_t size = lseek(fd, 0, SEEK_END);
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	struct sock_filter *filter = MAP_FAILED;
 	if (size != 0)

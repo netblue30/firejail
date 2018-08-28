@@ -208,4 +208,5 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 
 	// free strdup
 	free(tmp1);
+	free(command_line_tmp);
 }

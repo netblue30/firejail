@@ -1506,9 +1506,14 @@ int main(int argc, char **argv) {
 					return 1;
 				}
 
-				// don't allow "--chroot=/"
 				char *rpath = realpath(cfg.chrootdir, NULL);
-				if (rpath == NULL || strcmp(rpath, "/") == 0) {
+				if (rpath == NULL) {
+					fprintf(stderr, "Error: invalid chroot directory\n");
+					exit(1);
+				}
+				// don't allow "--chroot=/"
+				trim_trailing_slash_or_dot(rpath);
+				if (strcmp(rpath, "/") == 0) {
 					fprintf(stderr, "Error: invalid chroot directory\n");
 					exit(1);
 				}

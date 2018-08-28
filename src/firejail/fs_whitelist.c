@@ -371,10 +371,13 @@ void fs_whitelist(void) {
 
 		// resolve macros
 		if (is_macro(dataptr)) {
-			char *tmp = resolve_macro(dataptr);
-			if (tmp != NULL)
-				tmp = parse_nowhitelist(nowhitelist_flag, tmp);
-
+			char *tmp = resolve_macro(dataptr); // returns allocated mem
+			if (tmp != NULL) {
+				char *tmp1 = parse_nowhitelist(nowhitelist_flag, tmp);
+				assert(tmp1);
+				free(tmp);
+				tmp = tmp1;
+			}
 			if (tmp) {
 				entry->data = tmp;
 				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;

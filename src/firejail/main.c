@@ -2409,8 +2409,10 @@ int main(int argc, char **argv) {
 	int display = x11_display();
 	if (display > 0)
 		set_x11_run_file(sandbox_pid, display);
-	flock(lockfd_directory, LOCK_UN);
-	close(lockfd_directory);
+	if (lockfd_directory != -1) {
+		flock(lockfd_directory, LOCK_UN);
+		close(lockfd_directory);
+	}
 	EUID_USER();
 
 	// clone environment

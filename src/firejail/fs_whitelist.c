@@ -523,6 +523,7 @@ void fs_whitelist(void) {
 
 			// both path and absolute path are under /tmp
 			if (strncmp(fname, "/tmp/", 5) != 0) {
+				free(fname);
 				goto errexit;
 			}
 		}
@@ -531,6 +532,7 @@ void fs_whitelist(void) {
 			media_dir = 1;
 			// both path and absolute path are under /media
 			if (strncmp(fname, "/media/", 7) != 0) {
+				free(fname);
 				goto errexit;
 			}
 		}
@@ -539,6 +541,7 @@ void fs_whitelist(void) {
 			mnt_dir = 1;
 			// both path and absolute path are under /mnt
 			if (strncmp(fname, "/mnt/", 5) != 0) {
+				free(fname);
 				goto errexit;
 			}
 		}
@@ -553,6 +556,7 @@ void fs_whitelist(void) {
 			else {
 				// both path and absolute path are under /var
 				if (strncmp(fname, "/var/", 5) != 0) {
+					free(fname);
 					goto errexit;
 				}
 			}
@@ -573,6 +577,7 @@ void fs_whitelist(void) {
 			else {
 				// both path and absolute path are under /dev
 				if (strncmp(fname, "/dev/", 5) != 0) {
+					free(fname);
 					goto errexit;
 				}
 			}
@@ -582,6 +587,7 @@ void fs_whitelist(void) {
 			opt_dir = 1;
 			// both path and absolute path are under /dev
 			if (strncmp(fname, "/opt/", 5) != 0) {
+				free(fname);
 				goto errexit;
 			}
 		}
@@ -590,6 +596,7 @@ void fs_whitelist(void) {
 			srv_dir = 1;
 			// both path and absolute path are under /srv
 			if (strncmp(fname, "/srv/", 5) != 0) {
+				free(fname);
 				goto errexit;
 			}
 		}
@@ -602,23 +609,29 @@ void fs_whitelist(void) {
 			else if (strcmp(new_name, "/etc/os-release") == 0);
 			// both path and absolute path are under /etc
 			else {
-				if (strncmp(fname, "/etc/", 5) != 0)
+				if (strncmp(fname, "/etc/", 5) != 0) {
+					free(fname);
 					goto errexit;
+				}
 			}
 		}
 		else if (strncmp(new_name, "/usr/share/", 11) == 0) {
 			entry->share_dir = 1;
 			share_dir = 1;
 			// both path and absolute path are under /etc
-			if (strncmp(fname, "/usr/share/", 11) != 0)
+			if (strncmp(fname, "/usr/share/", 11) != 0) {
+				free(fname);
 				goto errexit;
+			}
 		}
 		else if (strncmp(new_name, "/sys/module/", 12) == 0) {
 			entry->module_dir = 1;
 			module_dir = 1;
 			// both path and absolute path are under /sys/module
-			if (strncmp(fname, "/sys/module/", 12) != 0)
+			if (strncmp(fname, "/sys/module/", 12) != 0) {
+				free(fname);
 				goto errexit;
+			}
 		}
 		else {
 			goto errexit;

@@ -184,7 +184,9 @@ void fix_desktop_files(char *homedir) {
 		}
 
 		fseek(fp, 0, SEEK_END);
-		size_t size = ftell(fp);
+		long size = ftell(fp);
+		if (size == -1)
+			errExit("ftell");
 		fseek(fp, 0, SEEK_SET);
 		char *buf = malloc(size + 1);
 		if (!buf)

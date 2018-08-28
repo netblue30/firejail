@@ -36,21 +36,21 @@ extern int arg_debug;
 void build_profile(int argc, char **argv, int index, FILE *fp);
 
 // build_seccomp.c
-void build_seccomp(char *fname, int fd, FILE *fp);
-void build_protocol(char *fname, int fd, FILE *fp);
+void build_seccomp(const char *fname, FILE *fp);
+void build_protocol(const char *fname, FILE *fp);
 
 // build_fs.c
-void build_etc(char *fname, FILE *fp, FILE *fpo);
-void build_var(char *fname, FILE *fp, FILE *fpo);
-void build_tmp(char *fname, FILE *fp, FILE *fpo);
-void build_dev(char *fname, FILE *fp, FILE *fpo);
-void build_share(char *fname, FILE *fp, FILE *fpo);
+void build_etc(const char *fname, FILE *fp);
+void build_var(const char *fname, FILE *fp);
+void build_tmp(const char *fname, FILE *fp);
+void build_dev(const char *fname, FILE *fp);
+void build_share(const char *fname, FILE *fp);
 
 // build_bin.c
-void build_bin(char *fname, FILE *fp, FILE *fpo);
+void build_bin(const char *fname, FILE *fp);
 
 // build_home.c
-void build_home(char *fname, FILE *fp, FILE *fpo);
+void build_home(const char *fname, FILE *fp);
 
 // utils.c
 int is_dir(const char *fname);

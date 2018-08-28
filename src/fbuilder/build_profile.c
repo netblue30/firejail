@@ -51,25 +51,20 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 
 	int tfile = mkstemp(trace_output);
 	int stfile = mkstemp(strace_output);
-
 	if(tfile == -1 || stfile == -1)
-	  errExit("mkstemp");
+		errExit("mkstemp");
 
-	FILE *tp = fdopen(tfile, "r");
+	// close the files, firejail/strace will overwrite them!
+	close(tfile);
+	close(stfile);
 
-	if (!tp) {
-		fprintf(stderr, "Error: cannot open %s\n", trace_output);
-		exit(1);
-	}
 
 	char *output;
 	char *stroutput;
-
 	if(asprintf(&output,"--output=%s",trace_output) == -1)
-	  errExit("asprintf");
-
+		errExit("asprintf");
 	if(asprintf(&stroutput,"-o %s",strace_output) == -1)
-	  errExit("asprintf");
+		errExit("asprintf");
 
 	char *cmdlist[] = {
 	  "/usr/bin/firejail",
@@ -151,16 +146,16 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### home directory whitelisting\n");
-		build_home(trace_output, tp, fp);
+		build_home(trace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### filesystem\n");
-		build_tmp(trace_output, tp, fp);
-		build_dev(trace_output, tp, fp);
-		build_etc(trace_output, tp, fp);
-		build_var(trace_output, tp, fp);
-		build_bin(trace_output, tp, fp);
-		build_share(trace_output, tp, fp);
+		build_tmp(trace_output, fp);
+		build_dev(trace_output, fp);
+		build_etc(trace_output, fp);
+		build_var(trace_output, fp);
+		build_bin(trace_output, fp);
+		build_share(trace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### security filters\n");
@@ -168,7 +163,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "nonewprivs\n");
 		fprintf(fp, "seccomp\n");
 		if (have_strace)
-		  build_seccomp(strace_output, stfile, fp);
+			build_seccomp(strace_output, fp);
 		else {
 			fprintf(fp, "# If you install strace on your system, Firejail will also create a\n");
 			fprintf(fp, "# whitelisted seccomp filter.\n");
@@ -176,13 +171,12 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### network\n");
-		build_protocol(trace_output, tfile, fp);
+		build_protocol(trace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### environment\n");
 		fprintf(fp, "shell none\n");
 
-		fclose(tp);
 		unlink(trace_output);
 		unlink(strace_output);
 

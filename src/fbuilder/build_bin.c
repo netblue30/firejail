@@ -21,16 +21,15 @@
 
 static FileDB *bin_out = NULL;
 
-static void process_bin(char *fname, FILE *fp) {
+static void process_bin(const char *fname) {
 	assert(fname);
-	assert(fp);
 
 	// process trace file
-	/* FILE *fp = fdopen(fd, "r"); */
-	/* if (!fp) { */
-	/* 	fprintf(stderr, "Error: cannot open %s\n", fname); */
-	/* 	exit(1); */
-	/* } */
+	FILE *fp = fopen(fname, "r");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open %s\n", fname);
+		exit(1);
+	}
 
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
@@ -91,18 +90,16 @@ static void process_bin(char *fname, FILE *fp) {
 		bin_out = filedb_add(bin_out, ptr);
 	}
 
-	/* fclose(fp); */
+	fclose(fp);
 }
 
 
 // process fname, fname.1, fname.2, fname.3, fname.4, fname.5
-void build_bin(char *fname, FILE *fp, FILE *fpo) {
+void build_bin(const char *fname, FILE *fp) {
 	assert(fname);
-	assert(fp);
-	assert(fpo);
 
 	// run fname
-	process_bin(fname, fp);
+	process_bin(fname);
 
 	// run all the rest
 	struct stat s;
@@ -112,24 +109,18 @@ void build_bin(char *fname, FILE *fp, FILE *fpo) {
 		if (asprintf(&newname, "%s.%d", fname, i) == -1)
 			errExit("asprintf");
 		if (stat(newname, &s) == 0)
-		  {
-		    int nfd = open(newname, O_RDONLY);
-		    FILE *nfp = fdopen(nfd, "r");
-		    process_bin(newname, nfp);
-		    fclose(nfp);
-		    unlink(newname);
-		  }
+			process_bin(newname);
 		free(newname);
 	}
 
 	if (bin_out) {
-		fprintf(fpo, "private-bin ");
+		fprintf(fp, "private-bin ");
 		FileDB *ptr = bin_out;
 		while (ptr) {
-			fprintf(fpo, "%s,", ptr->fname);
+			fprintf(fp, "%s,", ptr->fname);
 			ptr = ptr->next;
 		}
-		fprintf(fpo, "\n");
-		fprintf(fpo, "# private-lib\n");
+		fprintf(fp, "\n");
+		fprintf(fp, "# private-lib\n");
 	}
 }

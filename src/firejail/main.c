@@ -1500,15 +1500,14 @@ int main(int argc, char **argv) {
 					cfg.chrootdir = tmp;
 				}
 
-				// check chroot dirname exists
-				if (strstr(cfg.chrootdir, "..") || !is_dir(cfg.chrootdir) || is_link(cfg.chrootdir)) {
+				if (strstr(cfg.chrootdir, "..") || is_link(cfg.chrootdir)) {
 					fprintf(stderr, "Error: invalid chroot directory %s\n", cfg.chrootdir);
 					return 1;
 				}
 
-				// don't allow "--chroot=/"
+				// check chroot dirname exists, don't allow "--chroot=/"
 				char *rpath = realpath(cfg.chrootdir, NULL);
-				if (rpath == NULL || strcmp(rpath, "/") == 0) {
+				if (rpath == NULL || !is_dir(rpath) || strcmp(rpath, "/") == 0) {
 					fprintf(stderr, "Error: invalid chroot directory\n");
 					exit(1);
 				}

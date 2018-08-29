@@ -555,6 +555,7 @@ void fs_mnt(void) {
 
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {
+
 	if (arg_debug)
 		printf("Remounting /proc and /proc/sys filesystems\n");
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
@@ -571,9 +572,9 @@ void fs_proc_sys_dev_boot(void) {
 	/* Mount a version of /sys that describes the network namespace */
 	if (arg_debug)
 		printf("Remounting /sys directory\n");
-	// if this is an overlay, just mount a new /sys on top of the upper layer
+	// if this is an overlay, don't try to unmount, just mount a new sysfs
 	if (!arg_overlay) {
-		if (umount2("/sys", MNT_DETACH) < 0)
+		if (umount2("/sys", MNT_DETACH) < 0 && !cfg.chrootdir)
 			fwarning("failed to unmount /sys\n");
 	}
 	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)

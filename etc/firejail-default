@@ -79,7 +79,7 @@ deny /proc/@{PID}/oom_score_adj w,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}games/** ix,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}lib{,32,64}/** ix,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}opt/** ix,
-#/{,run/firejail/mnt/oroot/}{,usr/,usr/local/}home/** ix,
+#/{,run/firejail/mnt/oroot/}home/** ix,
 
 # Appimage support
 /{,run/firejail/mnt/oroot/}{,var/}run/firejail/appimage/** ix,

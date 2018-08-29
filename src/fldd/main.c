@@ -321,7 +321,7 @@ printf("\n");
 	// attempt to open the file
 	if (argc == 3) {
 		fd = open(argv[2], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		if (!fd) {
+		if (fd == -1) {
 			fprintf(stderr, "Error fldd: invalid arguments\n");
 			usage();
 			exit(1);

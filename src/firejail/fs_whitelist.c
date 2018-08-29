@@ -506,14 +506,18 @@ void fs_whitelist(void) {
 			// both path and absolute path are under /home
 			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0) {
 				// entire home directory is not allowed
-				if (*(fname + strlen(cfg.homedir)) != '/')
+				if (*(fname + strlen(cfg.homedir)) != '/') {
+					free(fname);
 					goto errexit;
+				}
 			}
 			else {
 				if (checkcfg(CFG_FOLLOW_SYMLINK_AS_USER)) {
 					// check if the file is owned by the user
-					if (stat(fname, &s) == 0 && s.st_uid != getuid())
+					if (stat(fname, &s) == 0 && s.st_uid != getuid()) {
+						free(fname);
 						goto errexit;
+					}
 				}
 			}
 		}

@@ -60,7 +60,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 		errExit("socket");
 	struct ifreq ifr;
 	memset(&ifr, 0, sizeof (ifr));
-	strncpy(ifr.ifr_name, dev, IFNAMSIZ);
+	strncpy(ifr.ifr_name, dev, IFNAMSIZ - 1);
 	if (ioctl(sock, SIOCGIFHWADDR, &ifr) < 0)
 		errExit("ioctl");
 	close(sock);

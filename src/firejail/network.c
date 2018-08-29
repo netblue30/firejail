@@ -78,7 +78,7 @@ int net_get_mtu(const char *ifname) {
 
 	memset(&ifr, 0, sizeof(ifr));
 	ifr.ifr_addr.sa_family = AF_INET;
-	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
 	if (ioctl(s, SIOCGIFMTU, (caddr_t)&ifr) == 0)
 		mtu = ifr.ifr_mtu;
 	if (arg_debug)
@@ -106,7 +106,7 @@ void net_set_mtu(const char *ifname, int mtu) {
 
 	memset(&ifr, 0, sizeof(ifr));
 	ifr.ifr_addr.sa_family = AF_INET;
-	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
 	ifr.ifr_mtu = mtu;
 	if (ioctl(s, SIOCSIFMTU, (caddr_t)&ifr) != 0)
 		fwarning("cannot set mtu for interface %s\n", ifname);
@@ -269,7 +269,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
               	errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
 	ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
 
 	if (ioctl(sock, SIOCGIFHWADDR, &ifr) == -1)

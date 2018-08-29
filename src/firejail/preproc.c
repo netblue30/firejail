@@ -140,6 +140,8 @@ void preproc_clean_run(void) {
 	if (fp) {
 		int val;
 		if (fscanf(fp, "%d", &val) == 1) {
+			if (val > 4194304)	// this is the max value supported on 64 bit Linux kernels
+				val = 4194304;
 			if (val >= max_pids)
 				max_pids = val + 1;
 		}

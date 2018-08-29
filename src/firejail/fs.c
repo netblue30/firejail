@@ -1160,13 +1160,18 @@ void fs_check_chroot_dir(const char *rootdir) {
 		exit(1);
 	}
 
-	// rootdir has to be owned by root
+	// rootdir has to be owned by root and is not allowed to be world-writable
+	// we checked already if it is a directory
 	if (stat(rootdir, &s) != 0) {
 		fprintf(stderr, "Error: cannot find chroot directory\n");
 		exit(1);
 	}
 	if (s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot directory should be owned by root\n");
+		exit(1);
+	}
+	if ((S_IWOTH & s.st_mode) != 0) {
+		fprintf(stderr, "Error: chroot directory is not allowed to be world-writable\n");
 		exit(1);
 	}
 
@@ -1177,8 +1182,8 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: cannot find /dev in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /dev directory should be owned by root\n");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /dev should be a directory owned by root\n");
 		exit(1);
 	}
 	free(name);
@@ -1190,8 +1195,8 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: cannot find /var/tmp in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /var/tmp directory should be owned by root\n");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /var/tmp should be a directory owned by root\n");
 		exit(1);
 	}
 	free(name);
@@ -1203,8 +1208,8 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: cannot find /proc in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /proc directory should be owned by root\n");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /proc should be a directory owned by root\n");
 		exit(1);
 	}
 	free(name);
@@ -1216,8 +1221,8 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: cannot find /tmp in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /tmp directory should be owned by root\n");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /tmp should be a directory owned by root\n");
 		exit(1);
 	}
 	free(name);
@@ -1229,8 +1234,12 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: cannot find /etc in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /etc directory should be owned by root\n");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /etc should be a directory owned by root\n");
+		exit(1);
+	}
+	if ((S_IWOTH & s.st_mode) != 0) {
+		fprintf(stderr, "Error: chroot /etc is not allowed to be world-writable\n");
 		exit(1);
 	}
 	free(name);
@@ -1272,8 +1281,8 @@ void fs_check_chroot_dir(const char *rootdir) {
 			fprintf(stderr, "Error: cannot find /tmp/.X11-unix in chroot directory\n");
 			exit(1);
 		}
-		if (s.st_uid != 0) {
-			fprintf(stderr, "Error: chroot /tmp/.X11-unix directory should be owned by root\n");
+		if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /tmp/.X11-unix should be a directory owned by root\n");
 			exit(1);
 		}
 		free(name);
@@ -1308,16 +1317,29 @@ void fs_chroot(const char *rootdir) {
 
 	// some older distros don't have a /run directory
 	// create one by default
-	// create /run/firejail directory in chroot
 	char *rundir;
 	if (asprintf(&rundir, "%s/run", rootdir) == -1)
 		errExit("asprintf");
-	if (is_link(rundir)) {
-		fprintf(stderr, "Error: invalid run directory inside chroot\n");
-		exit(1);
+	struct stat s;
+	if (lstat(rundir, &s) == 0) {
+		if (S_ISLNK(s.st_mode)) {
+			fprintf(stderr, "Error: chroot /run is a symbolic link\n");
+			exit(1);
+		}
+		if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /run should be a directory owned by root\n");
+			exit(1);
+		}
+		if ((S_IWOTH & s.st_mode) != 0) {
+			fprintf(stderr, "Error: chroot /run is not allowed to be world-writable\n");
+			exit(1);
+		}
 	}
-	create_empty_dir_as_root(rundir, 0755);
+	else
+		create_empty_dir_as_root(rundir, 0755);
 	free(rundir);
+
+	// create /run/firejail directory in chroot
 	if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
 		errExit("asprintf");
 	create_empty_dir_as_root(rundir, 0755);
@@ -1329,6 +1351,7 @@ void fs_chroot(const char *rootdir) {
 	create_empty_dir_as_root(rundir, 0755);
 	if (mount(RUN_MNT_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	free(rundir);
 
 	// copy /etc/resolv.conf in chroot directory
 	char *fname;
@@ -1339,6 +1362,7 @@ void fs_chroot(const char *rootdir) {
 	unlink(fname);
 	if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
 		fwarning("/etc/resolv.conf not initialized\n");
+	free(fname);
 
 	// chroot into the new directory
 #ifdef HAVE_GCOV

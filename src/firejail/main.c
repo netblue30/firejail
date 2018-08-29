@@ -1502,7 +1502,7 @@ int main(int argc, char **argv) {
 
 				// check chroot dirname exists
 				if (strstr(cfg.chrootdir, "..") || !is_dir(cfg.chrootdir) || is_link(cfg.chrootdir)) {
-					fprintf(stderr, "Error: invalid directory %s\n", cfg.chrootdir);
+					fprintf(stderr, "Error: invalid chroot directory %s\n", cfg.chrootdir);
 					return 1;
 				}
 

@@ -494,6 +494,7 @@ void fs_whitelist(void) {
 					printf("\"%s\" disabled by --private\n", entry->data);
 
 				entry->data = EMPTY_STRING;
+				free(fname);
 				continue;
 			}
 
@@ -638,6 +639,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else {
+			free(fname);
 			goto errexit;
 		}
 

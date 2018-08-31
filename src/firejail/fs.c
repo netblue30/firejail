@@ -1171,7 +1171,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 		exit(1);
 	}
 	if ((S_IWOTH & s.st_mode) != 0) {
-		fprintf(stderr, "Error: chroot directory is not allowed to be world-writable\n");
+		fprintf(stderr, "Error: chroot directory should not be world-writable\n");
 		exit(1);
 	}
 
@@ -1239,7 +1239,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 		exit(1);
 	}
 	if ((S_IWOTH & s.st_mode) != 0) {
-		fprintf(stderr, "Error: chroot /etc is not allowed to be world-writable\n");
+		fprintf(stderr, "Error: chroot /etc should not be world-writable\n");
 		exit(1);
 	}
 	free(name);
@@ -1331,24 +1331,32 @@ void fs_chroot(const char *rootdir) {
 			exit(1);
 		}
 		if ((S_IWOTH & s.st_mode) != 0) {
-			fprintf(stderr, "Error: chroot /run is not allowed to be world-writable\n");
+			fprintf(stderr, "Error: chroot /run should not be world-writable\n");
 			exit(1);
 		}
 	}
-	else
-		create_empty_dir_as_root(rundir, 0755);
+	else {
+		// several sandboxes could race to create /run
+		if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+			errExit("mkdir");
+		ASSERT_PERMS(rundir, 0, 0, 0755);
+	}
 	free(rundir);
 
 	// create /run/firejail directory in chroot
 	if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
 		errExit("asprintf");
-	create_empty_dir_as_root(rundir, 0755);
+	if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+		errExit("mkdir");
+	ASSERT_PERMS(rundir, 0, 0, 0755);
 	free(rundir);
 
 	// create /run/firejail/mnt directory in chroot and mount the current one
 	if (asprintf(&rundir, "%s%s", rootdir, RUN_MNT_DIR) == -1)
 		errExit("asprintf");
-	create_empty_dir_as_root(rundir, 0755);
+	if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+		errExit("mkdir");
+	ASSERT_PERMS(rundir, 0, 0, 0755);
 	if (mount(RUN_MNT_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	free(rundir);
@@ -1373,7 +1381,8 @@ void fs_chroot(const char *rootdir) {
 	if (arg_debug)
 		printf("Chrooting into %s\n", rootdir);
 	char *oroot = RUN_OVERLAY_ROOT;
-	mkdir_attr(oroot, 0755, 0, 0);
+	if (mkdir(oroot, 0755) == -1)
+		errExit("mkdir");
 	if (mount(rootdir, oroot, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting rootdir oroot");
 	if (chroot(oroot) < 0)
@@ -1390,8 +1399,6 @@ void fs_chroot(const char *rootdir) {
 	        fs_var_tmp();
 	if (!arg_writable_var_log)
 		fs_var_log();
-	else
-		fs_rdwr("/var/log");
 
 	fs_var_lib();
 	fs_var_cache();

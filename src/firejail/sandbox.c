@@ -543,7 +543,8 @@ static void enforce_filters(void) {
 	// drop all supplementary groups; /etc/group file inside chroot
 	// is controlled by a regular usr
 	arg_nogroups = 1;
-	fmessage("Dropping all Linux capabilities and enforcing default seccomp filter\n");
+	fmessage("\n** Warning: dropping all Linux capabilities and enforcing  **\n");
+	fmessage("**                  default seccomp filter                 **\n\n");
 }
 
 int sandbox(void* sandbox_arg) {
@@ -744,7 +745,13 @@ int sandbox(void* sandbox_arg) {
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
-
+	// for --appimage, --chroot and --overlay* we replace the seccomp filter with the default one
+	// we also drop all capabilities
+	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay)) {
+		enforce_filters();
+		need_preload = arg_trace || arg_tracelog;
+		arg_seccomp = 1;
+	}
 	// trace pre-install
 	if (need_preload)
 		fs_trace_preload();
@@ -756,18 +763,9 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// configure filesystem
 	//****************************
-	if (arg_appimage)
-		enforce_filters();
-
 #ifdef HAVE_CHROOT
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
-
-		// force caps and seccomp if not started as root
-		if (getuid() != 0)
-			enforce_filters();
-		else
-			arg_seccomp = 1;
 
 		//****************************
 		// trace pre-install, this time inside chroot
@@ -778,14 +776,8 @@ int sandbox(void* sandbox_arg) {
 	else
 #endif
 #ifdef HAVE_OVERLAYFS
-	if (arg_overlay)	{
+	if (arg_overlay)
 		fs_overlayfs();
-		// force caps and seccomp if not started as root
-		if (getuid() != 0)
-			enforce_filters();
-		else
-			arg_seccomp = 1;
-	}
 	else
 #endif
 		fs_basic_fs();

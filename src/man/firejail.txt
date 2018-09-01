@@ -100,7 +100,8 @@ $ firejail --allusers
 Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
 .TP
 \fB\-\-appimage
-Sandbox an AppImage (https://appimage.org/) application.
+Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started as a
+regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -272,8 +273,7 @@ Example:
 \fB\-\-chroot=dirname
 Chroot the sandbox into a root filesystem. Unlike the regular filesystem container,
 the system directories are mounted read-write. If the sandbox is started as a
-regular user, default seccomp and capabilities filters are enabled. This
-option is not available on Grsecurity systems.
+regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -1268,6 +1268,7 @@ Similar to \-\-output, but stderr is also stored.
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
 Directories /run, /tmp and /dev are not covered by the overlay. The overlay is stored in $HOME/.firejail/<PID> directory.
+If the sandbox is started as a regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -1287,6 +1288,7 @@ Mount a filesystem overlay on top of the current filesystem.  Unlike the regular
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
 Directories /run, /tmp and /dev are not covered by the overlay. The overlay is stored in $HOME/.firejail/<NAME> directory.
 The created overlay can be reused between multiple sessions.
+If the sandbox is started as a regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -1304,7 +1306,7 @@ $ firejail \-\-overlay-named=jail1 firefox
 \fB\-\-overlay-tmpfs
 Mount a filesystem overlay on top of the current filesystem. All filesystem modifications
 are discarded when the sandbox is closed. Directories /run, /tmp and /dev are not covered by the overlay.
-
+If the sandbox is started as a regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br

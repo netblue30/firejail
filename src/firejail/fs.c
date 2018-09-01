@@ -1187,7 +1187,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	// check /dev
 	fd = openat(parentfd, "dev", O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot find /dev in chroot directory\n");
+		fprintf(stderr, "Error: cannot open /dev in chroot directory\n");
 		exit(1);
 	}
 	if (fstat(fd, &s) == -1)
@@ -1201,7 +1201,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	// check /var/tmp
 	fd = openat(parentfd, "var/tmp", O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot find /var/tmp in chroot directory\n");
+		fprintf(stderr, "Error: cannot open /var/tmp in chroot directory\n");
 		exit(1);
 	}
 	if (fstat(fd, &s) == -1)
@@ -1215,7 +1215,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	// check /proc
 	fd = openat(parentfd, "proc", O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot find /proc in chroot directory\n");
+		fprintf(stderr, "Error: cannot open /proc in chroot directory\n");
 		exit(1);
 	}
 	if (fstat(fd, &s) == -1)
@@ -1229,7 +1229,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	// check /tmp
 	fd = openat(parentfd, "tmp", O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot find /tmp in chroot directory\n");
+		fprintf(stderr, "Error: cannot open /tmp in chroot directory\n");
 		exit(1);
 	}
 	if (fstat(fd, &s) == -1)
@@ -1243,7 +1243,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	// check /etc
 	fd = openat(parentfd, "etc", O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot find /etc in chroot directory\n");
+		fprintf(stderr, "Error: cannot open /etc in chroot directory\n");
 		exit(1);
 	}
 	if (fstat(fd, &s) == -1)
@@ -1290,7 +1290,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	if (getenv("FIREJAIL_X11")) {
 		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_CLOEXEC);
 		if (fd == -1) {
-			fprintf(stderr, "Error: cannot find /tmp/.X11-unix in chroot directory\n");
+			fprintf(stderr, "Error: cannot open /tmp/.X11-unix in chroot directory\n");
 			exit(1);
 		}
 		if (fstat(fd, &s) == -1)

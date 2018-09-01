@@ -1507,7 +1507,7 @@ int main(int argc, char **argv) {
 
 				// check chroot dirname exists, don't allow "--chroot=/"
 				char *rpath = realpath(cfg.chrootdir, NULL);
-				if (rpath == NULL || !is_dir(rpath) || strcmp(rpath, "/") == 0) {
+				if (rpath == NULL || strcmp(rpath, "/") == 0) {
 					fprintf(stderr, "Error: invalid chroot directory\n");
 					exit(1);
 				}

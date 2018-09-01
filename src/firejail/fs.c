@@ -1148,24 +1148,33 @@ void fs_overlayfs(void) {
 
 
 #ifdef HAVE_CHROOT
-// return 1 if error
+// exit if error
 void fs_check_chroot_dir(const char *rootdir) {
 	EUID_ASSERT();
 	assert(rootdir);
 	struct stat s;
-	char *name;
+	int fd = -1;
+	int parentfd = -1;
 
-	if (strcmp(rootdir, "/tmp") == 0 || strcmp(rootdir, "/var/tmp") == 0) {
-		fprintf(stderr, "Error: invalid chroot directory\n");
+	char *overlay;
+	if (asprintf(&overlay, "%s/.firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (strncmp(rootdir, overlay, strlen(overlay)) == 0) {
+		fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
 		exit(1);
 	}
+	free(overlay);
 
-	// rootdir has to be owned by root and is not allowed to be world-writable
-	// we checked already if it is a directory
-	if (stat(rootdir, &s) != 0) {
-		fprintf(stderr, "Error: cannot find chroot directory\n");
+	// fails if there is any symlink or if rootdir is not a directory
+	parentfd = safe_fd(rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (parentfd == -1) {
+		fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
 		exit(1);
 	}
+	// rootdir has to be owned by root and is not allowed to be world-writable;
+	// this also excludes /tmp, /var/tmp and such
+	if (fstat(parentfd, &s) == -1)
+		errExit("fstat");
 	if (s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot directory should be owned by root\n");
 		exit(1);
@@ -1176,64 +1185,69 @@ void fs_check_chroot_dir(const char *rootdir) {
 	}
 
 	// check /dev
-	if (asprintf(&name, "%s/dev", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
+	fd = openat(parentfd, "dev", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
 		fprintf(stderr, "Error: cannot find /dev in chroot directory\n");
 		exit(1);
 	}
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot /dev should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// check /var/tmp
-	if (asprintf(&name, "%s/var/tmp", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
+	fd = openat(parentfd, "var/tmp", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
 		fprintf(stderr, "Error: cannot find /var/tmp in chroot directory\n");
 		exit(1);
 	}
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot /var/tmp should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// check /proc
-	if (asprintf(&name, "%s/proc", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
+	fd = openat(parentfd, "proc", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
 		fprintf(stderr, "Error: cannot find /proc in chroot directory\n");
 		exit(1);
 	}
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot /proc should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// check /tmp
-	if (asprintf(&name, "%s/tmp", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
+	fd = openat(parentfd, "tmp", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
 		fprintf(stderr, "Error: cannot find /tmp in chroot directory\n");
 		exit(1);
 	}
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot /tmp should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// check /etc
-	if (asprintf(&name, "%s/etc", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
+	fd = openat(parentfd, "etc", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
 		fprintf(stderr, "Error: cannot find /etc in chroot directory\n");
 		exit(1);
 	}
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot /etc should be a directory owned by root\n");
 		exit(1);
@@ -1242,7 +1256,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: chroot /etc should not be world-writable\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// there should be no checking on <chrootdir>/etc/resolv.conf
 	// the file is replaced with the real /etc/resolv.conf anyway
@@ -1274,19 +1288,21 @@ void fs_check_chroot_dir(const char *rootdir) {
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {
-		char *name;
-		if (asprintf(&name, "%s/tmp/.X11-unix", rootdir) == -1)
-			errExit("asprintf");
-		if (stat(name, &s) == -1) {
+		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_CLOEXEC);
+		if (fd == -1) {
 			fprintf(stderr, "Error: cannot find /tmp/.X11-unix in chroot directory\n");
 			exit(1);
 		}
+		if (fstat(fd, &s) == -1)
+			errExit("fstat");
 		if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
 			fprintf(stderr, "Error: chroot /tmp/.X11-unix should be a directory owned by root\n");
 			exit(1);
 		}
-		free(name);
+		close(fd);
 	}
+
+	close(parentfd);
 }
 
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf

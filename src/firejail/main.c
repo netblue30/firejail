@@ -2232,12 +2232,12 @@ int main(int argc, char **argv) {
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
 		if (arg_overlay) {
-			fprintf(stderr, "Error: --overlay and --noroot are mutually exclusive.\n");
-			exit(1);
+			fwarning("--overlay and --noroot are mutually exclusive, --noroot disabled...\n");
+			arg_noroot = 0;
 		}
 		else if (cfg.chrootdir) {
-			fprintf(stderr, "Error: --chroot and --noroot are mutually exclusive.\n");
-			exit(1);
+			fwarning("--chroot and --noroot are mutually exclusive, --noroot disabled...\n");
+			arg_noroot = 0;
 		}
 	}
 
@@ -2311,39 +2311,30 @@ int main(int argc, char **argv) {
 
 	// use default.profile as the default
 	if (!custom_profile && !arg_noprofile) {
-		if (cfg.chrootdir) {
-			fwarning("default profile disabled by --chroot option\n");
+		char *profile_name = DEFAULT_USER_PROFILE;
+		if (getuid() == 0)
+			profile_name = DEFAULT_ROOT_PROFILE;
+		if (arg_debug)
+			printf("Attempting to find %s.profile...\n", profile_name);
+
+		// look for the profile in ~/.config/firejail directory
+		char *usercfgdir;
+		if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		custom_profile = profile_find(profile_name, usercfgdir);
+		free(usercfgdir);
+
+		if (!custom_profile)
+			// look for the profile in /etc/firejail directory
+			custom_profile = profile_find(profile_name, SYSCONFDIR);
+
+		if (!custom_profile) {
+			fprintf(stderr, "Error: no default.profile installed\n");
+			exit(1);
 		}
-//		else if (arg_overlay) {
-//			fwarning("default profile disabled by --overlay option\n");
-//		}
-		else {
-			// try to load a default profile
-			char *profile_name = DEFAULT_USER_PROFILE;
-			if (getuid() == 0)
-				profile_name = DEFAULT_ROOT_PROFILE;
-			if (arg_debug)
-				printf("Attempting to find %s.profile...\n", profile_name);
 
-			// look for the profile in ~/.config/firejail directory
-			char *usercfgdir;
-			if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
-				errExit("asprintf");
-			custom_profile = profile_find(profile_name, usercfgdir);
-			free(usercfgdir);
-
-			if (!custom_profile)
-				// look for the profile in /etc/firejail directory
-				custom_profile = profile_find(profile_name, SYSCONFDIR);
-
-			if (!custom_profile) {
-				fprintf(stderr, "Error: no default.profile installed\n");
-				exit(1);
-			}
-
-			if (custom_profile)
-				fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
-		}
+		if (custom_profile)
+			fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 	}
 	EUID_ASSERT();
 

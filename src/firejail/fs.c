@@ -1160,7 +1160,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	if (asprintf(&overlay, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (strncmp(rootdir, overlay, strlen(overlay)) == 0) {
-		fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
+		fprintf(stderr, "Error: invalid chroot directory: no directories in ~/.firejail are allowed\n");
 		exit(1);
 	}
 	free(overlay);
@@ -1171,7 +1171,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
 		exit(1);
 	}
-	// rootdir has to be owned by root and is not allowed to be world-writable;
+	// rootdir has to be owned by root and is not allowed to be generally writable,
 	// this also excludes /tmp, /var/tmp and such
 	if (fstat(parentfd, &s) == -1)
 		errExit("fstat");
@@ -1179,8 +1179,8 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: chroot directory should be owned by root\n");
 		exit(1);
 	}
-	if ((S_IWOTH & s.st_mode) != 0) {
-		fprintf(stderr, "Error: chroot directory should not be world-writable\n");
+	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+		fprintf(stderr, "Error: only root user should be given write permission on chroot directory\n");
 		exit(1);
 	}
 
@@ -1252,8 +1252,8 @@ void fs_check_chroot_dir(const char *rootdir) {
 		fprintf(stderr, "Error: chroot /etc should be a directory owned by root\n");
 		exit(1);
 	}
-	if ((S_IWOTH & s.st_mode) != 0) {
-		fprintf(stderr, "Error: chroot /etc should not be world-writable\n");
+	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+		fprintf(stderr, "Error: only root user should be given write permission on chroot /etc\n");
 		exit(1);
 	}
 	close(fd);
@@ -1346,8 +1346,8 @@ void fs_chroot(const char *rootdir) {
 			fprintf(stderr, "Error: chroot /run should be a directory owned by root\n");
 			exit(1);
 		}
-		if ((S_IWOTH & s.st_mode) != 0) {
-			fprintf(stderr, "Error: chroot /run should not be world-writable\n");
+		if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+			fprintf(stderr, "Error: only root user should be given write permission on chroot /run\n");
 			exit(1);
 		}
 	}

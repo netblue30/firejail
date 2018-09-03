@@ -20,7 +20,7 @@ firejail (0.9.56~rc1) baseline; urgency=low
   * new profiles: standardnotes-desktop, shellcheck, patch, flameshot,
   * new profiles: rview, rvim, vimcat, vimdiff, vimpager, vimtutor, xxd,
   * new profiles: Beaker, electrum, clamtk, pybitmessage, dig, whois,
-  * new profiles: jdownloader
+  * new profiles: jdownloader, Fluxbox, Blackbox, Awesome, i3
  -- netblue30 <netblue30@yahoo.com>  Sat, 11 Aug 2018 08:00:00 -0500
 
 firejail (0.9.54) baseline; urgency=low

@@ -5,6 +5,7 @@ include /etc/firejail/JDownloader.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+
 noblacklist ${HOME}/.jd
 
 # Allow access to java
@@ -13,7 +14,6 @@ noblacklist /usr/lib/java
 noblacklist /etc/java
 noblacklist /usr/share/java
 
-
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
@@ -21,11 +21,11 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-xdg.inc
 
-include /etc/firejail/whitelist-var-common.inc
-
 mkdir ${HOME}/.jd
 whitelist ${HOME}/.jd
 whitelist ${DOWNLOADS}
+include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace

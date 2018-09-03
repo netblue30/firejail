@@ -287,6 +287,7 @@ blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.jack-server
 blacklist ${HOME}/.jack-settings
 blacklist ${HOME}/.java
+blacklist ${HOME}/.jd
 blacklist ${HOME}/.jitsi
 blacklist ${HOME}/.kde/share/apps/digikam
 blacklist ${HOME}/.kde/share/apps/gwenview

@@ -21,8 +21,11 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-xdg.inc
 
+include /etc/firejail/whitelist-var-common.inc
+
 mkdir ${HOME}/.jd
 whitelist ${HOME}/.jd
+whitelist ${DOWNLOADS}
 
 caps.drop all
 ipc-namespace
@@ -40,7 +43,6 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-disable-mnt
 private-cache
 private-dev
 private-tmp

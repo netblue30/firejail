@@ -860,6 +860,8 @@ int main(int argc, char **argv) {
 	int lockfd_directory = -1;
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
+	int arg_seccomp_cmdline = 0; 	// seccomp requested on command line (used to break --chroot)
+	int arg_caps_cmdline = 0; 	// seccomp requested on command line (used to break --chroot)
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -1144,6 +1146,7 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
+				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1156,6 +1159,7 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
+				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1168,6 +1172,7 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
+				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1186,8 +1191,10 @@ int main(int argc, char **argv) {
 				exit_err_feature("seccomp");
 		}
 #endif
-		else if (strcmp(argv[i], "--caps") == 0)
+		else if (strcmp(argv[i], "--caps") == 0) {
 			arg_caps_default_filter = 1;
+			arg_caps_cmdline = 1;
+		}
 		else if (strcmp(argv[i], "--caps.drop=all") == 0)
 			arg_caps_drop_all = 1;
 		else if (strncmp(argv[i], "--caps.drop=", 12) == 0) {
@@ -1197,6 +1204,7 @@ int main(int argc, char **argv) {
 				errExit("strdup");
 			// verify caps list and exit if problems
 			caps_check_list(arg_caps_list, NULL);
+			arg_caps_cmdline = 1;
 		}
 		else if (strncmp(argv[i], "--caps.keep=", 12) == 0) {
 			arg_caps_keep = 1;
@@ -1205,9 +1213,8 @@ int main(int argc, char **argv) {
 				errExit("strdup");
 			// verify caps list and exit if problems
 			caps_check_list(arg_caps_list, NULL);
+			arg_caps_cmdline = 1;
 		}
-
-
 		else if (strcmp(argv[i], "--trace") == 0)
 			arg_trace = 1;
 		else if (strcmp(argv[i], "--tracelog") == 0)
@@ -2217,6 +2224,14 @@ int main(int argc, char **argv) {
 		}
 	}
 	EUID_ASSERT();
+
+	// exit for --chroot sandboxes when secomp or caps are explicitly specified on command line
+	if (getuid() != 0 && cfg.chrootdir && (arg_seccomp_cmdline || arg_caps_cmdline)) {
+		fprintf(stderr, "Error: for chroot sandboxes, default seccomp and capabilities filters are\n"
+			"enabled by default. Please remove all --seccomp and --caps options from the\n"
+			"command line.\n");
+		exit(1);
+	}
 
 	// prog_index could still be -1 if no program was specified
 	if (prog_index == -1 && arg_shell_none) {

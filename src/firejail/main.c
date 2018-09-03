@@ -771,18 +771,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 
 }
 
-
-
 char *guess_shell(void) {
 	char *shell = NULL;
 	struct stat s;
 
 	shell = getenv("SHELL");
 	if (shell) {
-		// TODO: handle rogue shell variables?
-		if (stat(shell, &s) == 0 && access(shell, R_OK) == 0) {
+		invalid_filename(shell, 0); // no globbing
+		if (!is_dir(shell) && strstr(shell, "..") == NULL && stat(shell, &s) == 0 && access(shell, X_OK) == 0)
 			return shell;
-		}
 	}
 
 	// shells in order of preference
@@ -791,7 +788,7 @@ char *guess_shell(void) {
 	int i = 0;
 	while (shells[i] != NULL) {
 		// access call checks as real UID/GID, not as effective UID/GID
-		if (stat(shells[i], &s) == 0 && access(shells[i], R_OK) == 0) {
+		if (stat(shells[i], &s) == 0 && access(shells[i], X_OK) == 0) {
 			shell = shells[i];
 			break;
 		}
@@ -2142,12 +2139,12 @@ int main(int argc, char **argv) {
 				char *shellpath;
 				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
 					errExit("asprintf");
-				if (access(shellpath, R_OK)) {
+				if (access(shellpath, X_OK)) {
 					fprintf(stderr, "Error: cannot access shell file in chroot\n");
 					exit(1);
 				}
 				free(shellpath);
-			} else if (access(cfg.shell, R_OK)) {
+			} else if (access(cfg.shell, X_OK)) {
 				fprintf(stderr, "Error: cannot access shell file\n");
 				exit(1);
 			}

@@ -860,8 +860,8 @@ int main(int argc, char **argv) {
 	int lockfd_directory = -1;
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
-	int arg_seccomp_cmdline = 0; 	// seccomp requested on command line (used to break --chroot)
-	int arg_caps_cmdline = 0; 	// seccomp requested on command line (used to break --chroot)
+	int arg_seccomp_cmdline = 0; 	// seccomp requested on command line (used to break out of --chroot)
+	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -2183,12 +2183,6 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
-		else if (strcmp(argv[i], "--git-install") == 0 ||
-			strcmp(argv[i], "--git-uninstall") == 0) {
-			fprintf(stderr, "This feature is not enabled in the current build\n");
-			exit(1);
-		}
-
 		else if (strcmp(argv[i], "--") == 0) {
 			// double dash - positional params to follow
 			arg_doubledash = 1;

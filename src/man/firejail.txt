@@ -8,12 +8,6 @@ Start a sandbox:
 firejail [OPTIONS] [program and arguments]
 .RE
 .PP
-File transfer from an existing sandbox
-.PP
-.RS
-firejail {\-\-ls | \-\-get | \-\-put} dir_or_filename
-.RE
-.PP
 Network traffic shaping for an existing sandbox:
 .PP
 .RS
@@ -127,12 +121,6 @@ $ firejail \-\-apparmor.print=browser
   AppArmor: firejail-default enforce
 
 .TP
-\fB\-\-audit
-Audit the sandbox, see \fBAUDIT\fR section for more details.
-.TP
-\fB\-\-audit=test-program
-Audit the sandbox, see \fBAUDIT\fR section for more details.
-.TP
 \fB\-\-bandwidth=name|pid
 Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
 .TP
@@ -159,30 +147,7 @@ $ firejail \-\-blacklist=~/.mozilla
 $ firejail "\-\-blacklist=/home/username/My Virtual Machines"
 .br
 $ firejail \-\-blacklist=/home/username/My\\ Virtual\\ Machines
-.TP
-\fB\-\-build
-The command builds a whitelisted profile. The profile is printed on the screen. If /usr/bin/strace is installed on the system, it also
-builds a whitelisted seccomp profile. The program is run in a very relaxed sandbox,
-with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported
-in order to allow strace to run. Chromium and Chromium-based browsers will not work.
-.br
 
-.br
-Example:
-.br
-$ firejail --build vlc ~/Videos/test.mp4
-.TP
-\fB\-\-build=profile-file
-The command builds a whitelisted profile, and saves it in profile-file. If /usr/bin/strace is installed on the system, it also
-builds a whitelisted seccomp profile. The program is run in a very relaxed sandbox,
-with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported
-in order to allow strace to run. Chromium and Chromium-based browsers will not work.
-.br
-
-.br
-Example:
-.br
-$ firejail --build=vlc.profile vlc ~/Videos/test.mp4
 .TP
 \fB\-c
 Execute command and exit.
@@ -257,29 +222,6 @@ $ firejail \-\-list
 3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-caps.print=3272
-
-.TP
-\fB\-\-cgroup=tasks-file
-Place the sandbox in the specified control group. tasks-file is the full path of cgroup tasks file.
-.br
-
-.br
-Example:
-.br
-# firejail \-\-cgroup=/sys/fs/cgroup/g1/tasks
-
-.TP
-\fB\-\-chroot=dirname
-Chroot the sandbox into a root filesystem. Unlike the regular filesystem container,
-the system directories are mounted read-write. If the sandbox is started as a
-regular user, default seccomp and capabilities filters are enabled. This
-option is not available on Grsecurity systems.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-chroot=/media/ubuntu warzone2100
 
 .TP
 \fB\-\-cpu=cpu-number,cpu-number,cpu-number
@@ -470,10 +412,6 @@ $ firejail \-\-list
 3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-fs.print=3272
-
-.TP
-\fB\-\-get=name|pid filename
-Get a file from sandbox container, see \fBFILE TRANSFER\fR section for more details.
 
 .TP
 \fB\-?\fR, \fB\-\-help\fR
@@ -697,10 +635,6 @@ $ firejail --keep-dev-shm --private-dev
 Example:
 .br
 $ firejail --keep-var-tmp
-
-.TP
-\fB\-\-ls=name|pid dir_or_filename
-List files in sandbox container, see \fBFILE TRANSFER\fR section for more details.
 
 .TP
 \fB\-\-list
@@ -1233,101 +1167,6 @@ Disable video devices.
 Disable whitelist for this directory or file.
 
 .TP
-\fB\-\-output=logfile
-stdout logging and log rotation. Copy stdout to logfile, and keep the size of the file under 500KB using log
-rotation. Five files with prefixes .1 to .5 are used in rotation.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-output=sandboxlog /bin/bash
-.br
-[...]
-.br
-$ ls -l sandboxlog*
-.br
--rw-r--r-- 1 netblue netblue 333890 Jun  2 07:48 sandboxlog
-.br
--rw-r--r-- 1 netblue netblue 511488 Jun  2 07:48 sandboxlog.1
-.br
--rw-r--r-- 1 netblue netblue 511488 Jun  2 07:48 sandboxlog.2
-.br
--rw-r--r-- 1 netblue netblue 511488 Jun  2 07:48 sandboxlog.3
-.br
--rw-r--r-- 1 netblue netblue 511488 Jun  2 07:48 sandboxlog.4
-.br
--rw-r--r-- 1 netblue netblue 511488 Jun  2 07:48 sandboxlog.5
-
-.TP
-\fB\-\-output-stderr=logfile
-Similar to \-\-output, but stderr is also stored.
-
-.TP
-\fB\-\-overlay
-Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
-the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail/<PID> directory.
-.br
-
-.br
-OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18.
-This option is not available on Grsecurity systems.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay firefox
-
-.TP
-\fB\-\-overlay-named=name
-Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
-the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail/<NAME> directory. The created overlay can be reused between multiple
-sessions.
-.br
-
-.br
-OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18.
-This option is not available on Grsecurity systems.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay-named=jail1 firefox
-
-.TP
-\fB\-\-overlay-tmpfs
-Mount a filesystem overlay on top of the current filesystem. All filesystem modifications
-are discarded when the sandbox is closed.
-.br
-
-.br
-OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18.
-This option is not available on Grsecurity systems.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay-tmpfs firefox
-
-.TP
-\fB\-\-overlay-clean
-Clean all overlays stored in $HOME/.firejail directory.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay-clean
-
-.TP
 \fB\-\-private
 Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is
@@ -1349,19 +1188,6 @@ Example:
 $ firejail \-\-private=/home/netblue/firefox-home firefox
 
 .TP
-\fB\-\-private-home=file,directory
-Build a new user home in a temporary
-filesystem, and copy the files and directories in the list in the
-new home. All modifications are discarded when the sandbox is
-closed.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-private-home=.mozilla firefox
-
-.TP
 \fB\-\-private-cache
 Mount an empty temporary filesystem on top of the .cache directory in user home. All
 modifications are discarded when the sandbox is closed.
@@ -1371,79 +1197,6 @@ modifications are discarded when the sandbox is closed.
 Example:
 .br
 $ firejail \-\-private-cache openbox
-
-.TP
-\fB\-\-private-bin=file,file
-Build a new /bin in a temporary filesystem, and copy the programs in the list.
-If no listed file is found, /bin directory will be empty.
-The same directory is also bind-mounted over /sbin, /usr/bin, /usr/sbin and /usr/local/bin.
-All modifications are discarded when the sandbox is closed. File globbing is supported,
-see \fBFILE GLOBBING\fR section for more details.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-private-bin=bash,sed,ls,cat
-.br
-Parent pid 20841, child pid 20842
-.br
-Child process initialized
-.br
-$ ls /bin
-.br
-bash  cat  ls  sed
-
-.TP
-\fB\-\-private-lib=file,directory
-This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
-The idea is to build a new /lib in a temporary filesystem,
-with only the library files necessary to run the application.
-It could be as simple as:
-.br
-
-.br
-$ firejail --private-lib galculator
-.br
-
-.br
-but it gets complicated really fast:
-.br
-
-.br
-$ firejail --private-lib=x86_64-linux-gnu/xed,x86_64-linux-gnu/gdk-pixbuf-2.0,libenchant.so.1,librsvg-2.so.2 xed
-.br
-
-.br
-The feature is integrated with \-\-private-bin:
-.br
-
-.br
-$ firejail --private-lib --private-bin=bash,ls,ps
-.br
-$ ls /lib
-.br
-ld-linux-x86-64.so.2 libgpg-error.so.0 libprocps.so.6 libsystemd.so.0
-.br
-libc.so.6 liblz4.so.1 libpthread.so.0 libtinfo.so.5
-.br
-libdl.so.2 liblzma.so.5 librt.so.1 x86_64-linux-gnu
-.br
-libgcrypt.so.20 libpcre.so.3 libselinux.so.1
-.br
-$ ps
-.br
- PID TTY          TIME CMD
-.br
-    1 pts/0    00:00:00 firejail
-.br
-   45 pts/0    00:00:00 bash
-.br
-   48 pts/0    00:00:00 ps
-.br
-$
-.br
-
 
 .TP
 \fB\-\-private-dev
@@ -1464,46 +1217,6 @@ $ ls /dev
 cdrom  cdrw  dri  dvd  dvdrw  full  log  null  ptmx  pts  random  shm  snd  sr0  tty  urandom  zero
 .br
 $
-.TP
-\fB\-\-private-etc=file,directory
-Build a new /etc in a temporary
-filesystem, and copy the files and directories in the list.
-If no listed file is found, /etc directory will be empty.
-All modifications are discarded when the sandbox is closed.
-.br
-
-.br
-Example:
-.br
-$ firejail --private-etc=group,hostname,localtime, \\
-.br
-nsswitch.conf,passwd,resolv.conf
-
-.TP
-\fB\-\-private-opt=file,directory
-Build a new /opt in a temporary
-filesystem, and copy the files and directories in the list.
-If no listed file is found, /opt directory will be empty.
-All modifications are discarded when the sandbox is closed.
-.br
-
-.br
-Example:
-.br
-$ firejail --private-opt=firefox /opt/firefox/firefox
-
-.TP
-\fB\-\-private-srv=file,directory
-Build a new /srv in a temporary
-filesystem, and copy the files and directories in the list.
-If no listed file is found, /srv directory will be empty.
-All modifications are discarded when the sandbox is closed.
-.br
-
-.br
-Example:
-.br
-# firejail --private-srv=www /etc/init.d/apache2 start
 
 .TP
 \fB\-\-private-tmp
@@ -1586,9 +1299,6 @@ $ firejail \-\-protocol.print=3272
 .br
 unix,inet,inet6,netlink
 .TP
-\fB\-\-put=name|pid src-filename dest-filename
-Put a file in sandbox container, see \fBFILE TRANSFER\fR section for more details.
-.TP
 \fB\-\-quiet
 Turn off Firejail's output.
 .TP
@@ -1624,33 +1334,6 @@ $ mkdir ~/test
 $ touch ~/test/a
 .br
 $ firejail --read-only=~/test --read-write=~/test/a
-
-
-.TP
-\fB\-\-rlimit-as=number
-Set the maximum size of the process's virtual memory (address space) in bytes.
-
-.TP
-\fB\-\-rlimit-cpu=number
-Set the maximum limit, in seconds, for the amount of CPU time each
-sandboxed process  can consume. When the limit is reached, the processes are killed.
-
-The CPU limit is a limit on CPU seconds rather than elapsed time. CPU seconds is basically how many seconds
-the CPU has been in use and does not necessarily directly relate to the elapsed time. Linux kernel keeps
-track of CPU seconds for each process independently.
-
-.TP
-\fB\-\-rlimit-fsize=number
-Set the maximum file size that can be created by a process.
-.TP
-\fB\-\-rlimit-nofile=number
-Set the maximum number of files that can be opened by a process.
-.TP
-\fB\-\-rlimit-nproc=number
-Set the maximum number of processes that can be created for the real user ID of the calling process.
-.TP
-\fB\-\-rlimit-sigpending=number
-Set the maximum number of pending signals for a process.
 
 .TP
 \fB\-\-rmenv=name
@@ -2082,30 +1765,7 @@ Reading profile /etc/firejail/wget.profile
 
 .br
 parent is shutting down, bye...
-.TP
-\fB\-\-tracelog
-This option enables auditing blacklisted files and directories. A message
-is sent to syslog in case the file or the directory is accessed.
-.br
 
-.br
-Example:
-.br
-$ firejail --tracelog firefox
-.br
-
-.br
-Sample messages:
-.br
-$ sudo tail -f /var/log/syslog
-.br
-[...]
-.br
-Dec  3 11:43:25 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox, syscall open64, path /etc/shadow
-.br
-Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox, syscall opendir, path /boot
-.br
-[...]
 .TP
 \fB\-\-tree
 Print a tree of all sandboxed processes, see \fBMONITORING\fR section for more details.
@@ -2212,167 +1872,6 @@ Example:
 .br
 $ sudo firejail --writable-var-log
 
-
-.TP
-\fB\-\-x11
-Sandbox the application using Xpra, Xephyr, Xvfb or Xorg security extension.
-The sandbox will prevents screenshot and keylogger applications started inside the sandbox from accessing
-clients running outside the sandbox.
-Firejail will try first Xpra, and if Xpra is not installed on the system, it will try to find Xephyr.
-If all fails, Firejail will not attempt to use Xvfb or X11 security extension.
-.br
-
-.br
-Xpra, Xephyr and Xvfb modes require a network namespace to be instantiated in order to disable
-X11 abstract Unix socket. If this is not possible, the user can disable the abstract socket
-by adding "-nolisten local" on Xorg command line at system level.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-x11 --net=eth0 firefox
-
-.TP
-\fB\-\-x11=none
-Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified in ${XAUTHORITY} environment variable.
-Remove DISPLAY and XAUTHORITY environment variables.
-Stop with error message if X11 abstract socket will be accessible in jail.
-
-.TP
-\fB\-\-x11=xephyr
-Start Xephyr and attach the sandbox to this server.
-Xephyr is a display server implementing the X11 display server protocol.
-A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
-.br
-
-.br
-Xephyr runs in a window just like any other X11 application. The default window size is 800x600.
-This can be modified in /etc/firejail/firejail.config file.
-.br
-
-.br
-The recommended way to use this feature is to run a window manager inside the sandbox.
-A security profile for OpenBox is provided.
-.br
-
-.br
-Xephyr is developed by Xorg project. On Debian platforms it is installed with the command \fBsudo apt-get install xserver-xephyr\fR.
-This feature is not available when running as root.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-x11=xephyr --net=eth0 openbox
-
-.TP
-\fB\-\-x11=xorg
-Sandbox the application using the untrusted mode implemented by X11 security extension.
-The extension is available in Xorg package
-and it is installed by default on most Linux distributions. It provides support for a simple trusted/untrusted
-connection model. Untrusted clients are restricted in certain ways to prevent them from reading window
-contents of other clients, stealing input events, etc.
-
-The untrusted mode has several limitations. A lot of regular programs  assume they are a trusted X11 clients
-and will crash or lock up when run in untrusted mode. Chromium browser and xterm are two examples.
-Firefox and transmission-gtk seem to be working fine.
-A network namespace is not required for this option.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-x11=xorg firefox
-
-.TP
-\fB\-\-x11=xpra
-Start Xpra (https://xpra.org) and attach the sandbox to this server.
-Xpra is a persistent remote display server and client for forwarding X11 applications and desktop screens.
-A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
-.br
-
-.br
-On Debian platforms Xpra is installed with the command \fBsudo apt-get install xpra\fR.
-This feature is not available when running as root.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-x11=xpra --net=eth0 firefox
-
-
-.TP
-\fB\-\-x11=xvfb
-Start Xvfb X11 server and attach the sandbox to this server.
-Xvfb, short for X virtual framebuffer, performs all graphical operations in memory
-without showing any screen output. Xvfb is mainly used for remote access and software
-testing on headless servers.
-.br
-
-.br
-On Debian platforms Xvfb is installed with the command \fBsudo apt-get install xvfb\fR.
-This feature is not available when running as root.
-.br
-
-.br
-Example: remote VNC access
-.br
-
-.br
-On the server we start a sandbox using Xvfb and openbox
-window manager. The default size of Xvfb screen is 800x600 - it can be changed
-in /etc/firejail/firejail.config (xvfb-screen). Some sort of networking (--net) is required
-in order to isolate the abstract sockets used by other X servers.
-.br
-
-.br
-$ firejail --net=none --x11=xvfb openbox
-.br
-
-.br
-*** Attaching to Xvfb display 792 ***
-.br
-
-.br
-Reading profile /etc/firejail/openbox.profile
-.br
-Reading profile /etc/firejail/disable-common.inc
-.br
-Reading profile /etc/firejail/disable-common.local
-.br
-Parent pid 5400, child pid 5401
-.br
-
-.br
-On the server we also start a VNC server and attach it to the display handled by our
-Xvfb server (792).
-.br
-
-.br
-$ x11vnc -display :792
-.br
-
-.br
-On the client machine we start a VNC viewer and use it to connect to our server:
-.br
-
-.br
-$ vncviewer
-.br
-
-.TP
-\fB\-\-xephyr-screen=WIDTHxHEIGHT
-Set screen size for --x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
-for the current sandbox. Run xrandr to get a list of supported resolutions on your computer.
-.br
-
-.br
-Example:
-.br
-$ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
-.br
 
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.
@@ -2506,54 +2005,6 @@ To enable AppArmor confinement on top of your current Firejail security features
 .br
 $ firejail --apparmor firefox
 
-.SH FILE TRANSFER
-These features allow the user to inspect the filesystem container of an existing sandbox
-and transfer files from the container to the host filesystem.
-
-.TP
-\fB\-\-get=name|pid filename
-Retrieve the container file and store it on the host in the current working directory.
-The container is specified by name or PID.
-
-.TP
-\fB\-\-ls=name|pid dir_or_filename
-List container files. The container is specified by name or PID.
-
-.TP
-\fB\-\-put=name|pid src-filename dest-filename
-Put src-filename in sandbox container.
-The container is specified by name or PID.
-
-.TP
-Examples:
-.br
-
-.br
-$ firejail \-\-name=mybrowser --private firefox
-.br
-
-.br
-$ firejail \-\-ls=mybrowser ~/Downloads
-.br
-drwxr-xr-x netblue  netblue         4096 .
-.br
-drwxr-xr-x netblue  netblue         4096 ..
-.br
--rw-r--r-- netblue  netblue         7847 x11-x305.png
-.br
--rw-r--r-- netblue  netblue         6800 x11-x642.png
-.br
--rw-r--r-- netblue  netblue        34139 xpra-clipboard.png
-.br
-
-.br
-$ firejail \-\-get=mybrowser ~/Downloads/xpra-clipboard.png
-.br
-
-.br
-$ firejail \-\-put=mybrowser xpra-clipboard.png ~/Downloads/xpra-clipboard.png
-.br
-
 .SH TRAFFIC SHAPING
 Network bandwidth is an expensive resource shared among all sandboxes running on a system.
 Traffic shaping allows the user to increase network performance by controlling
@@ -2596,25 +2047,6 @@ Example:
 .br
 	$ firejail \-\-bandwidth=mybrowser clear eth0
 
-.SH AUDIT
-Audit feature allows the user to point out gaps in security profiles. The
-implementation replaces the program to be sandboxed with a test program. By
-default, we use faudit program distributed with Firejail. A custom test program
-can also be supplied by the user. Examples:
-
-Running the default audit program:
-.br
-	$ firejail --audit transmission-gtk
-
-Running a custom audit program:
-.br
-	$ firejail --audit=~/sandbox-test transmission-gtk
-
-In the examples above, the sandbox configures transmission-gtk profile and
-starts the test program. The real program, transmission-gtk, will not be
-started.
-
-Limitations: audit feature is not implemented for --x11 commands.
 
 .SH MONITORING
 Option \-\-list prints a list of all sandboxes. The format
@@ -2778,5 +2210,4 @@ Homepage: https://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
-\&\flfirejail-login\fR\|(5)
 \&\flfirejail-users\fR\|(5)

@@ -76,17 +76,6 @@ int checkcfg(int val) {
 			if (!ptr)
 				continue;
 
-#ifndef LTS
-			// file transfer
-			else if (strncmp(ptr, "file-transfer ", 14) == 0) {
-				if (strcmp(ptr + 14, "yes") == 0)
-					cfg_val[CFG_FILE_TRANSFER] = 1;
-				else if (strcmp(ptr + 14, "no") == 0)
-					cfg_val[CFG_FILE_TRANSFER] = 0;
-				else
-					goto errout;
-			}
-#endif
 			// dbus
 			else if (strncmp(ptr, "dbus ", 5) == 0) {
 				if (strcmp(ptr + 5, "yes") == 0)
@@ -105,17 +94,6 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-#ifndef LTS
-			// x11
-			else if (strncmp(ptr, "x11 ", 4) == 0) {
-				if (strcmp(ptr + 4, "yes") == 0)
-					cfg_val[CFG_X11] = 1;
-				else if (strcmp(ptr + 4, "no") == 0)
-					cfg_val[CFG_X11] = 0;
-				else
-					goto errout;
-			}
-#endif
 			// apparmor
 			else if (strncmp(ptr, "apparmor ", 9) == 0) {
 				if (strcmp(ptr + 9, "yes") == 0)
@@ -143,17 +121,6 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-#ifndef LTS
-			// chroot
-			else if (strncmp(ptr, "chroot ", 7) == 0) {
-				if (strcmp(ptr + 7, "yes") == 0)
-					cfg_val[CFG_CHROOT] = 1;
-				else if (strcmp(ptr + 7, "no") == 0)
-					cfg_val[CFG_CHROOT] = 0;
-				else
-					goto errout;
-			}
-#endif
 			// prompt
 			else if (strncmp(ptr, "firejail-prompt ", 16) == 0) {
 				if (strcmp(ptr + 16, "yes") == 0)
@@ -241,70 +208,6 @@ int checkcfg(int val) {
 				if (arg_debug)
 					printf("netfilter default file %s\n", fname);
 			}
-
-#ifndef LTS
-			// Xephyr screen size
-			else if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
-				// expecting two numbers and an x between them
-				int n1;
-				int n2;
-				int rv = sscanf(ptr + 14, "%dx%d", &n1, &n2);
-				if (rv != 2)
-					goto errout;
-				if (asprintf(&xephyr_screen, "%dx%d", n1, n2) == -1)
-					errExit("asprintf");
-			}
-
-			// xephyr window title
-			else if (strncmp(ptr, "xephyr-window-title ", 20) == 0) {
-				if (strcmp(ptr + 20, "yes") == 0)
-					cfg_val[CFG_XEPHYR_WINDOW_TITLE] = 1;
-				else if (strcmp(ptr + 20, "no") == 0)
-					cfg_val[CFG_XEPHYR_WINDOW_TITLE] = 0;
-				else
-					goto errout;
-			}
-
-			// Xephyr command extra parameters
-			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
-				if (*xephyr_extra_params != '\0')
-					goto errout;
-				xephyr_extra_params = strdup(ptr + 20);
-				if (!xephyr_extra_params)
-					errExit("strdup");
-			}
-
-			// xpra server extra parameters
-			else if (strncmp(ptr, "xpra-extra-params ", 18) == 0) {
-				if (*xpra_extra_params != '\0')
-					goto errout;
-				xpra_extra_params = strdup(ptr + 18);
-				if (!xpra_extra_params)
-					errExit("strdup");
-			}
-
-			// Xvfb screen size
-	            		else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
-				// expecting three numbers separated by x's
-				unsigned int n1;
-				unsigned int n2;
-				unsigned int n3;
-				int rv = sscanf(ptr + 12, "%ux%ux%u", &n1, &n2, &n3);
-				if (rv != 3)
-					goto errout;
-				if (asprintf(&xvfb_screen, "%ux%ux%u", n1, n2, n3) == -1)
-					errExit("asprintf");
-			}
-
-			// Xvfb extra parameters
-			else if (strncmp(ptr, "xvfb-extra-params ", 18) == 0) {
-				if (*xvfb_extra_params != '\0')
-					goto errout;
-				xvfb_extra_params = strdup(ptr + 18);
-				if (!xvfb_extra_params)
-					errExit("strdup");
-			}
-#endif
 			// quiet by default
 			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
@@ -314,40 +217,6 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-#ifndef LTS
-			else if (strncmp(ptr, "overlayfs ", 10) == 0) {
-				if (strcmp(ptr + 10, "yes") == 0)
-					cfg_val[CFG_OVERLAYFS] = 1;
-				else if (strcmp(ptr + 10, "no") == 0)
-					cfg_val[CFG_OVERLAYFS] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "private-home ", 13) == 0) {
-				if (strcmp(ptr + 13, "yes") == 0)
-					cfg_val[CFG_PRIVATE_HOME] = 1;
-				else if (strcmp(ptr + 13, "no") == 0)
-					cfg_val[CFG_PRIVATE_HOME] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "private-lib ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_PRIVATE_LIB] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_PRIVATE_LIB] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "private-bin-no-local ", 21) == 0) {
-				if (strcmp(ptr + 21, "yes") == 0)
-					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 1;
-				else if (strcmp(ptr + 21, "no") == 0)
-					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
-				else
-					goto errout;
-			}
-#endif
 			else if (strncmp(ptr, "disable-mnt ", 12) == 0) {
 				if (strcmp(ptr + 12, "yes") == 0)
 					cfg_val[CFG_DISABLE_MNT] = 1;
@@ -363,17 +232,6 @@ int checkcfg(int val) {
 					goto errout;
 				cfg_val[CFG_ARP_PROBES] = arp_probes;
 			}
-#ifndef LTS
-			// xpra-attach
-			else if (strncmp(ptr, "xpra-attach ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_XPRA_ATTACH] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_XPRA_ATTACH] = 0;
-				else
-					goto errout;
-			}
-#endif
 			else
 				goto errout;
 
@@ -421,22 +279,6 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- bind support is %s\n",
-#ifdef HAVE_BIND
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
-	printf("\t- chroot support is %s\n",
-#ifdef HAVE_CHROOT
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- file and directory whitelisting support is %s\n",
 #ifdef HAVE_WHITELIST
 		"enabled"
@@ -445,32 +287,8 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- file transfer support is %s\n",
-#ifdef HAVE_FILE_TRANSFER
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- networking support is %s\n",
 #ifdef HAVE_NETWORK
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
-	printf("\t- overlayfs support is %s\n",
-#ifdef HAVE_OVERLAYFS
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
-	printf("\t- private-home support is %s\n",
-#ifdef HAVE_PRIVATE_HOME
 		"enabled"
 #else
 		"disabled"
@@ -487,14 +305,6 @@ void print_compiletime_support(void) {
 
 	printf("\t- user namespace support is %s\n",
 #ifdef HAVE_USERNS
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
-	printf("\t- X11 sandboxing support is %s\n",
-#ifdef HAVE_X11
 		"enabled"
 #else
 		"disabled"

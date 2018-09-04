@@ -1061,9 +1061,11 @@ int sandbox(void* sandbox_arg) {
 		EUID_ROOT();
 	}
 
+#ifndef LTS
 	// save cgroup in CGROUP_CFG file
 	if (cfg.cgroup)
 		save_cgroup();
+#endif
 
 	// set seccomp
 #ifdef HAVE_SECCOMP

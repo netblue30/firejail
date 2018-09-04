@@ -968,6 +968,7 @@ int main(int argc, char **argv) {
 	delete_run_files(sandbox_pid);
 	EUID_USER();
 
+#ifndef LTS
 	//check if the parent is sshd daemon
 	int parent_sshd = 0;
 	{
@@ -1066,12 +1067,11 @@ int main(int argc, char **argv) {
 #endif
 		}
 	}
-#ifndef LTS
 	else {
 		// check --output option and execute it;
 		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
 	}
-#endif
+#endif // LTS
 	EUID_ASSERT();
 
 
@@ -1264,6 +1264,7 @@ int main(int argc, char **argv) {
 				cfg.nice = 0;
 			arg_nice = 1;
 		}
+#ifndef LTS
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
 			if (option_cgroup) {
 				fprintf(stderr, "Error: only a cgroup can be defined\n");
@@ -1276,13 +1277,12 @@ int main(int argc, char **argv) {
 				errExit("strdup");
 			set_cgroup(cfg.cgroup);
 		}
-
+#endif
 		//*************************************
 		// filesystem
 		//*************************************
 		else if (strcmp(argv[i], "--allusers") == 0)
 			arg_allusers = 1;
-#ifdef HAVE_BIND
 		else if (strncmp(argv[i], "--bind=", 7) == 0) {
 			if (checkcfg(CFG_BIND)) {
 				char *line;
@@ -1295,7 +1295,6 @@ int main(int argc, char **argv) {
 			else
 				exit_err_feature("bind");
 		}
-#endif
 		else if (strncmp(argv[i], "--tmpfs=", 8) == 0) {
 			char *line;
 			if (asprintf(&line, "tmpfs %s", argv[i] + 8) == -1)

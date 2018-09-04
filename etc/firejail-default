@@ -22,42 +22,30 @@ dbus,
 
 ##########
 # With ptrace it is possible to inspect and hijack running programs. Usually this
-# is needed only for debugging. To allow ptrace, uncomment the following line
+# is needed only for debugging. To allow ptrace, uncomment the following line.
 ##########
 #ptrace,
 
 ##########
-# Line starting with /run/firejail/mnt/oroot deal with --overlay sandboxes
+# Allow read access to whole filesystem and control it from firejail.
 ##########
-/ r,
-/{usr,bin,sbin,dev,etc,home,root,lib,media,mnt,opt,srv,tmp,var}** mrwlk,
-/run/firejail/mnt/oroot/{usr,bin,sbin,dev,etc,home,root,lib,media,mnt,opt,srv,tmp,var}** mrwlk,
+/{,**} rklm,
 
-/{,var/}run/ r,
-/{,var/}run/** r,
-/run/firejail/mnt/oroot/{,var/}run/ r,
-/run/firejail/mnt/oroot/{,var/}run/** r,
+##########
+# Allow write access to paths writable in firejail which aren't used for
+# executing programs. /run, /proc and /sys are handled separately.
+# Line starting with /run/firejail/mnt/oroot deal with --overlay sandboxes.
+##########
+/{,run/firejail/mnt/oroot/}{dev,etc,home,media,mnt,root,srv,tmp,var}/** w,
 
-owner /{,var/}run/user/[0-9]*/** rw,
-owner /{,var/}run/user/[0-9]*/*.slave-socket rwl,
-owner /{,var/}run/user/[0-9]*/orcexec.* rwkm,
-owner /run/firejail/mnt/oroot/{,var/}run/user/[0-9]*/** rw,
-owner /run/firejail/mnt/oroot/{,var/}run/user/[0-9]*/*.slave-socket rwl,
-owner /run/firejail/mnt/oroot/{,var/}run/user/[0-9]*/orcexec.* rwkm,
+##########
+# Whitelist writable paths under /run, /proc and /sys.
+##########
+owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/** w,
+owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/*.slave-socket w,
+owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/orcexec.* w,
 
-/{,var/}run/firejail/mnt/fslogger r,
-/{,var/}run/firejail/appimage r,
-/{,var/}run/firejail/appimage/** r,
-/{,var/}run/firejail/appimage/** ix,
-/run/firejail/mnt/oroot/{,var/}run/firejail/mnt/fslogger r,
-/run/firejail/mnt/oroot/{,var/}run/firejail/appimage r,
-/run/firejail/mnt/oroot/{,var/}run/firejail/appimage/** r,
-/run/firejail/mnt/oroot/{,var/}run/firejail/appimage/** ix,
-
-/{run,dev}/shm/ r,
-owner /{run,dev}/shm/** rmwk,
-/run/firejail/mnt/oroot/{run,dev}/shm/ r,
-owner /run/firejail/mnt/oroot/{run,dev}/shm/** rmwk,
+owner /{,run/firejail/mnt/oroot/}{run,dev}/shm/** w,
 
 # Allow logging Firejail blacklist violations to journal
 /{,var/}run/systemd/journal/socket w,
@@ -66,58 +54,41 @@ owner /run/firejail/mnt/oroot/{run,dev}/shm/** rmwk,
 # Needed for wine
 /{,var/}run/firejail/profile/@{PID} w,
 
-##########
-# Allow /proc and /sys read-only access.
-# Blacklisting is controlled from userspace Firejail.
-##########
-/proc/ r,
-/proc/** r,
+# Allow access to cups printing socket.
+/{,var/}run/cups/cups.sock w,
+
+# Needed for firefox sandbox
 /proc/[0-9]*/{uid_map,gid_map,setgroups} w,
-# Uncomment to silence all denied write warnings
-#deny /proc/** w,
+
+# Silence noise
 deny /proc/@{PID}/oom_adj w,
 deny /proc/@{PID}/oom_score_adj w,
 
-/sys/ r,
-/sys/** r,
+# Uncomment to silence all denied write warnings
+#deny /proc/** w,
+
 # Uncomment to silence all denied write warnings
 #deny /sys/** w,
-
-# Blacklist snapshots
-deny /**/.snapshots/ rwx,
 
 ##########
 # Allow running programs only from well-known system directories. If you need
 # to run programs from your home directory, uncomment /home line.
 ##########
-/lib/** ix,
-/lib64/** ix,
-/bin/** ix,
-/sbin/** ix,
-/usr/bin/** ix,
-/usr/sbin/** ix,
-/usr/local/** ix,
-/usr/lib/** ix,
-/usr/lib64/** ix,
-/usr/games/** ix,
-/opt/** ix,
-#/home/** ix,
-/run/firejail/mnt/oroot/lib/** ix,
-/run/firejail/mnt/oroot/lib64/** ix,
-/run/firejail/mnt/oroot/bin/** ix,
-/run/firejail/mnt/oroot/sbin/** ix,
-/run/firejail/mnt/oroot/usr/bin/** ix,
-/run/firejail/mnt/oroot/usr/sbin/** ix,
-/run/firejail/mnt/oroot/usr/local/** ix,
-/run/firejail/mnt/oroot/usr/lib/** ix,
-/run/firejail/mnt/oroot/usr/lib64/** ix,
-/run/firejail/mnt/oroot/usr/games/** ix,
-/run/firejail/mnt/oroot/opt/** ix,
+/{,run/firejail/mnt/oroot/}{,usr/,usr/local/}bin/** ix,
+/{,run/firejail/mnt/oroot/}{,usr/,usr/local/}sbin/** ix,
+/{,run/firejail/mnt/oroot/}{,usr/,usr/local/}games/** ix,
+/{,run/firejail/mnt/oroot/}{,usr/,usr/local/}lib{,32,64}/** ix,
+/{,run/firejail/mnt/oroot/}{,usr/,usr/local/}opt/** ix,
+#/{,run/firejail/mnt/oroot/}home/** ix,
+
+# Appimage support
+/{,run/firejail/mnt/oroot/}{,var/}run/firejail/appimage/** ix,
 
 ##########
-# Allow access to cups printing socket.
+# Blacklist specific sensitive paths.
 ##########
-/run/cups/cups.sock w,
+# Common backup directory
+deny /**/.snapshots/ rwx,
 
 ##########
 # Allow all networking functionality, and control it from Firejail.

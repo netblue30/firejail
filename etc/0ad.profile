@@ -39,6 +39,7 @@ shell none
 tracelog
 
 disable-mnt
+private-bin 0ad,pyrogenesis,sh,which
 private-dev
 private-tmp
 

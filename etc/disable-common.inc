@@ -17,14 +17,17 @@ blacklist-nolog /tmp/clipmenu*
 # X11 session autostart
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
 blacklist ${HOME}/.Xsession
+blacklist ${HOME}/.blackbox
 blacklist ${HOME}/.config/autostart
 blacklist ${HOME}/.config/autostart-scripts
+blacklist ${HOME}/.config/awesome
+blacklist ${HOME}/.config/i3
 blacklist ${HOME}/.config/lxsession/LXDE/autostart
 blacklist ${HOME}/.config/openbox
 blacklist ${HOME}/.config/plasma-workspace
 blacklist ${HOME}/.config/startupconfig
 blacklist ${HOME}/.config/startupconfigkeys
-blacklist ${HOME}/.fluxbox/startup
+blacklist ${HOME}/.fluxbox
 blacklist ${HOME}/.gnomerc
 blacklist ${HOME}/.kde/Autostart
 blacklist ${HOME}/.kde/env

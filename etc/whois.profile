@@ -1,27 +1,25 @@
-# Firejail profile for gedit
+quiet
+# Firejail profile for whois
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/gedit.local
+include /etc/firejail/whois.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-# blacklist /run/user/*/bus - makes settings immutable
-
-noblacklist ${HOME}/.config/enchant
-noblacklist ${HOME}/.config/gedit
-noblacklist ${HOME}/.gitconfig
-
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc
+# include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+#include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
-# net none - makes settings immutable
-machine-id
+# ipc-namespace
+netfilter
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -29,16 +27,19 @@ noroot
 nosound
 notv
 novideo
-protocol unix
+protocol inet,inet6
 seccomp
 shell none
-tracelog
 
-# private-bin gedit
+disable-mnt
+private
+private-bin sh,bash,whois
+private-cache
 private-dev
-# private-etc fonts
-#private-lib gedit - disabled; problems when running "firejail gedit"; "firejail /usr/bin/gedit" works fine
+# private-etc hosts,services,whois.conf
+private-lib
 private-tmp
 
-noexec ${HOME}
-noexec /tmp
+memory-deny-write-execute
+# noexec ${HOME}
+# noexec /tmp

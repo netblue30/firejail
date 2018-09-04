@@ -1,13 +1,18 @@
-# Firejail profile for evince
-# Description: Document (PostScript, PDF) viewer
+# Firejail profile for JDownloader
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/evince.local
+include /etc/firejail/JDownloader.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/evince
-noblacklist ${DOCUMENTS}
+
+noblacklist ${HOME}/.jd
+
+# Allow access to java
+noblacklist ${PATH}/java
+noblacklist /usr/lib/java
+noblacklist /etc/java
+noblacklist /usr/share/java
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -16,11 +21,14 @@ include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 include /etc/firejail/disable-xdg.inc
 
+mkdir ${HOME}/.jd
+whitelist ${HOME}/.jd
+whitelist ${DOWNLOADS}
+include /etc/firejail/whitelist-common.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
-machine-id
-# net none breaks AppArmor on Ubuntu systems
+ipc-namespace
 netfilter
 no3d
 nodbus
@@ -31,19 +39,13 @@ noroot
 nosound
 notv
 novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
-tracelog
 
-private-bin evince,evince-previewer,evince-thumbnailer
+private-cache
 private-dev
-private-etc fonts
-
-private-lib evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*
-
 private-tmp
 
-#memory-deny-write-execute - breaks application on Archlinux, issue 1803
 noexec ${HOME}
 noexec /tmp

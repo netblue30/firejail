@@ -94,7 +94,8 @@ $ firejail --allusers
 Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
 .TP
 \fB\-\-appimage
-Sandbox an AppImage (https://appimage.org/) application.
+Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started as a
+regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br

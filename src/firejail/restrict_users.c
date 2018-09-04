@@ -41,6 +41,8 @@ static void ulist_add(const char *user) {
 	assert(user);
 
 	USER_LIST *nlist = malloc(sizeof(USER_LIST));
+	if (!nlist)
+		errExit("malloc");
 	memset(nlist, 0, sizeof(USER_LIST));
 	nlist->user = user;
 	nlist->next = ulist;

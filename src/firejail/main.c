@@ -777,18 +777,15 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 
 }
 
-
-
 char *guess_shell(void) {
 	char *shell = NULL;
 	struct stat s;
 
 	shell = getenv("SHELL");
 	if (shell) {
-		// TODO: handle rogue shell variables?
-		if (stat(shell, &s) == 0 && access(shell, R_OK) == 0) {
+		invalid_filename(shell, 0); // no globbing
+		if (!is_dir(shell) && strstr(shell, "..") == NULL && stat(shell, &s) == 0 && access(shell, X_OK) == 0)
 			return shell;
-		}
 	}
 
 	// shells in order of preference
@@ -797,7 +794,7 @@ char *guess_shell(void) {
 	int i = 0;
 	while (shells[i] != NULL) {
 		// access call checks as real UID/GID, not as effective UID/GID
-		if (stat(shells[i], &s) == 0 && access(shells[i], R_OK) == 0) {
+		if (stat(shells[i], &s) == 0 && access(shells[i], X_OK) == 0) {
 			shell = shells[i];
 			break;
 		}
@@ -867,6 +864,8 @@ int main(int argc, char **argv) {
 	int lockfd_directory = -1;
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
+	int arg_seccomp_cmdline = 0; 	// seccomp requested on command line (used to break out of --chroot)
+	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -1154,6 +1153,7 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
+				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1166,6 +1166,7 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
+				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1178,6 +1179,7 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
+				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1196,8 +1198,10 @@ int main(int argc, char **argv) {
 				exit_err_feature("seccomp");
 		}
 #endif
-		else if (strcmp(argv[i], "--caps") == 0)
+		else if (strcmp(argv[i], "--caps") == 0) {
 			arg_caps_default_filter = 1;
+			arg_caps_cmdline = 1;
+		}
 		else if (strcmp(argv[i], "--caps.drop=all") == 0)
 			arg_caps_drop_all = 1;
 		else if (strncmp(argv[i], "--caps.drop=", 12) == 0) {
@@ -1207,6 +1211,7 @@ int main(int argc, char **argv) {
 				errExit("strdup");
 			// verify caps list and exit if problems
 			caps_check_list(arg_caps_list, NULL);
+			arg_caps_cmdline = 1;
 		}
 		else if (strncmp(argv[i], "--caps.keep=", 12) == 0) {
 			arg_caps_keep = 1;
@@ -1215,6 +1220,7 @@ int main(int argc, char **argv) {
 				errExit("strdup");
 			// verify caps list and exit if problems
 			caps_check_list(arg_caps_list, NULL);
+			arg_caps_cmdline = 1;
 		}
 
 
@@ -1516,13 +1522,12 @@ int main(int argc, char **argv) {
 					cfg.chrootdir = tmp;
 				}
 
-				// check chroot dirname exists
-				if (strstr(cfg.chrootdir, "..") || !is_dir(cfg.chrootdir) || is_link(cfg.chrootdir)) {
-					fprintf(stderr, "Error: invalid directory %s\n", cfg.chrootdir);
+				if (strstr(cfg.chrootdir, "..") || is_link(cfg.chrootdir)) {
+					fprintf(stderr, "Error: invalid chroot directory %s\n", cfg.chrootdir);
 					return 1;
 				}
 
-				// don't allow "--chroot=/"
+				// check chroot dirname exists, don't allow "--chroot=/"
 				char *rpath = realpath(cfg.chrootdir, NULL);
 				if (rpath == NULL || strcmp(rpath, "/") == 0) {
 					fprintf(stderr, "Error: invalid chroot directory\n");
@@ -2159,12 +2164,12 @@ int main(int argc, char **argv) {
 				char *shellpath;
 				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
 					errExit("asprintf");
-				if (access(shellpath, R_OK)) {
+				if (access(shellpath, X_OK)) {
 					fprintf(stderr, "Error: cannot access shell file in chroot\n");
 					exit(1);
 				}
 				free(shellpath);
-			} else if (access(cfg.shell, R_OK)) {
+			} else if (access(cfg.shell, X_OK)) {
 				fprintf(stderr, "Error: cannot access shell file\n");
 				exit(1);
 			}
@@ -2200,12 +2205,6 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
-		else if (strcmp(argv[i], "--git-install") == 0 ||
-			strcmp(argv[i], "--git-uninstall") == 0) {
-			fprintf(stderr, "This feature is not enabled in the current build\n");
-			exit(1);
-		}
-
 		else if (strcmp(argv[i], "--") == 0) {
 			// double dash - positional params to follow
 			arg_doubledash = 1;
@@ -2242,6 +2241,14 @@ int main(int argc, char **argv) {
 	}
 	EUID_ASSERT();
 
+	// exit for --chroot sandboxes when secomp or caps are explicitly specified on command line
+	if (getuid() != 0 && cfg.chrootdir && (arg_seccomp_cmdline || arg_caps_cmdline)) {
+		fprintf(stderr, "Error: for chroot sandboxes, default seccomp and capabilities filters are\n"
+			"enabled by default. Please remove all --seccomp and --caps options from the\n"
+			"command line.\n");
+		exit(1);
+	}
+
 	// prog_index could still be -1 if no program was specified
 	if (prog_index == -1 && arg_shell_none) {
 		fprintf(stderr, "Error: shell=none configured, but no program specified\n");
@@ -2257,12 +2264,12 @@ int main(int argc, char **argv) {
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
 		if (arg_overlay) {
-			fprintf(stderr, "Error: --overlay and --noroot are mutually exclusive.\n");
-			exit(1);
+			fwarning("--overlay and --noroot are mutually exclusive, --noroot disabled...\n");
+			arg_noroot = 0;
 		}
 		else if (cfg.chrootdir) {
-			fprintf(stderr, "Error: --chroot and --noroot are mutually exclusive.\n");
-			exit(1);
+			fwarning("--chroot and --noroot are mutually exclusive, --noroot disabled...\n");
+			arg_noroot = 0;
 		}
 	}
 
@@ -2336,39 +2343,30 @@ int main(int argc, char **argv) {
 
 	// use default.profile as the default
 	if (!custom_profile && !arg_noprofile) {
-		if (cfg.chrootdir) {
-			fwarning("default profile disabled by --chroot option\n");
+		char *profile_name = DEFAULT_USER_PROFILE;
+		if (getuid() == 0)
+			profile_name = DEFAULT_ROOT_PROFILE;
+		if (arg_debug)
+			printf("Attempting to find %s.profile...\n", profile_name);
+
+		// look for the profile in ~/.config/firejail directory
+		char *usercfgdir;
+		if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		custom_profile = profile_find(profile_name, usercfgdir);
+		free(usercfgdir);
+
+		if (!custom_profile)
+			// look for the profile in /etc/firejail directory
+			custom_profile = profile_find(profile_name, SYSCONFDIR);
+
+		if (!custom_profile) {
+			fprintf(stderr, "Error: no default.profile installed\n");
+			exit(1);
 		}
-//		else if (arg_overlay) {
-//			fwarning("default profile disabled by --overlay option\n");
-//		}
-		else {
-			// try to load a default profile
-			char *profile_name = DEFAULT_USER_PROFILE;
-			if (getuid() == 0)
-				profile_name = DEFAULT_ROOT_PROFILE;
-			if (arg_debug)
-				printf("Attempting to find %s.profile...\n", profile_name);
 
-			// look for the profile in ~/.config/firejail directory
-			char *usercfgdir;
-			if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
-				errExit("asprintf");
-			custom_profile = profile_find(profile_name, usercfgdir);
-			free(usercfgdir);
-
-			if (!custom_profile)
-				// look for the profile in /etc/firejail directory
-				custom_profile = profile_find(profile_name, SYSCONFDIR);
-
-			if (!custom_profile) {
-				fprintf(stderr, "Error: no default.profile installed\n");
-				exit(1);
-			}
-
-			if (custom_profile)
-				fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
-		}
+		if (custom_profile)
+			fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 	}
 	EUID_ASSERT();
 
@@ -2436,8 +2434,10 @@ int main(int argc, char **argv) {
 	if (display > 0)
 		set_x11_run_file(sandbox_pid, display);
 #endif
-	flock(lockfd_directory, LOCK_UN);
-	close(lockfd_directory);
+	if (lockfd_directory != -1) {
+		flock(lockfd_directory, LOCK_UN);
+		close(lockfd_directory);
+	}
 	EUID_USER();
 
 	// clone environment

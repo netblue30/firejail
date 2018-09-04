@@ -555,6 +555,7 @@ void fs_mnt(void) {
 
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {
+
 	if (arg_debug)
 		printf("Remounting /proc and /proc/sys filesystems\n");
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
@@ -571,8 +572,11 @@ void fs_proc_sys_dev_boot(void) {
 	/* Mount a version of /sys that describes the network namespace */
 	if (arg_debug)
 		printf("Remounting /sys directory\n");
-	if (umount2("/sys", MNT_DETACH) < 0)
-		fwarning("failed to unmount /sys\n");
+	// if this is an overlay, don't try to unmount, just mount a new sysfs
+	if (!arg_overlay) {
+		if (umount2("/sys", MNT_DETACH) < 0 && !cfg.chrootdir)
+			fwarning("failed to unmount /sys\n");
+	}
 	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
 		fwarning("failed to mount /sys\n");
 	else
@@ -779,19 +783,28 @@ void fs_basic_fs(void) {
 #ifndef LTS
 #ifdef HAVE_OVERLAYFS
 char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
+	assert(subdirname);
 	struct stat s;
 	char *dirname;
 
-	// create ~/.firejail directory
 	if (asprintf(&dirname, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
-
-	if (is_link(dirname)) {
-		fprintf(stderr, "Error: ~/.firejail directory is a symbolic link\n");
-		exit(1);
+	// check if ~/.firejail already exists
+	if (lstat(dirname, &s) == 0) {
+		if (!S_ISDIR(s.st_mode)) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: ~/.firejail is a symbolic link\n");
+			else
+				fprintf(stderr, "Error: ~/.firejail is not a directory\n");
+			exit(1);
+		}
+		if (s.st_uid != getuid()) {
+			fprintf(stderr, "Error: ~/.firejail directory is not owned by the current user\n");
+			exit(1);
+		}
 	}
-	if (stat(dirname, &s) == -1) {
-		// create directory
+	else {
+		// create ~/.firejail directory
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -805,6 +818,9 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 			if (chmod(dirname, 0700) == -1)
 				errExit("chmod");
 			ASSERT_PERMS(dirname, getuid(), getgid(), 0700);
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
 			_exit(0);
 		}
 		// wait for the child to finish
@@ -813,23 +829,27 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 			fprintf(stderr, "Error: cannot create ~/.firejail directory\n");
 			exit(1);
 		}
-	}
-	else if (s.st_uid != getuid()) {
-		fprintf(stderr, "Error: ~/.firejail directory is not owned by the current user\n");
-		exit(1);
+		fs_logger2("create", dirname);
 	}
 	free(dirname);
 
 	// check overlay directory
 	if (asprintf(&dirname, "%s/.firejail/%s", cfg.homedir, subdirname) == -1)
 		errExit("asprintf");
-	if (is_link(dirname)) {
-		fprintf(stderr, "Error: overlay directory is a symbolic link\n");
-		exit(1);
-	}
-	if (allow_reuse == 0) {
-		if (stat(dirname, &s) == 0) {
-			fprintf(stderr, "Error: overlay directory already exists: %s\n", dirname);
+	if (lstat(dirname, &s) == 0) {
+		if (!S_ISDIR(s.st_mode)) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: %s is a symbolic link\n", dirname);
+			else
+				fprintf(stderr, "Error: %s is not a directory\n", dirname);
+			exit(1);
+		}
+		if (s.st_uid != 0) {
+			fprintf(stderr, "Error: overlay directory %s is not owned by the root user\n", dirname);
+			exit(1);
+		}
+		if (allow_reuse == 0) {
+			fprintf(stderr, "Error: overlay directory exists, but reuse is not allowed\n");
 			exit(1);
 		}
 	}
@@ -866,9 +886,11 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 // # umount /root/overlay/root
 
 
-// to do: fix the code below; also, it might work without /dev; impose seccomp/caps filters when not root
+// to do: fix the code below; also, it might work without /dev, but consider keeping /dev/shm; add locking mechanism for overlay-clean
 #include <sys/utsname.h>
 void fs_overlayfs(void) {
+	struct stat s;
+
 	// check kernel version
 	struct utsname u;
 	int rv = uname(&u);
@@ -894,50 +916,78 @@ void fs_overlayfs(void) {
 	char *oroot = RUN_OVERLAY_ROOT;
 	mkdir_attr(oroot, 0755, 0, 0);
 
-	struct stat s;
+	// set base for working and diff directories
 	char *basedir = RUN_MNT_DIR;
+	int basefd = -1;
+
 	if (arg_overlay_keep) {
-		// set base for working and diff directories
 		basedir = cfg.overlay_dir;
 		assert(basedir);
-
-		// does the overlay exist?
-		if (stat(basedir, &s) == 0) {
-			if (arg_overlay_reuse == 0) {
-				fprintf(stderr, "Error: overlay directory exists, but reuse is not allowed\n");
-				exit(1);
-			}
+		// get a file descriptor for ~/.firejail, fails if there is any symlink
+		char *firejail;
+		if (asprintf(&firejail, "%s/.firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		int fd = safe_fd(firejail, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (fd == -1)
+			errExit("safe_fd");
+		free(firejail);
+		// create basedir if it doesn't exist
+		// the new directory will be owned by root
+		const char *dirname = gnu_basename(basedir);
+		if (mkdirat(fd, dirname, 0755) == -1 && errno != EEXIST) {
+			perror("mkdir");
+			fprintf(stderr, "Error: cannot create overlay directory %s\n", basedir);
+			exit(1);
 		}
-		else {
-			/* coverity[toctou] */
-			if (mkdir(basedir, 0755) != 0) {
-				fprintf(stderr, "Error: cannot create overlay directory\n");
-				exit(1);
-			}
-		}
+		// open basedir
+		basefd = openat(fd, dirname, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		close(fd);
+	}
+	else {
+		basefd = open(basedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	}
+	if (basefd == -1) {
+		perror("open");
+		fprintf(stderr, "Error: cannot open overlay directory %s\n", basedir);
+		exit(1);
 	}
 
-	char *odiff;
-	if(asprintf(&odiff, "%s/odiff", basedir) == -1)
-		errExit("asprintf");
+	// confirm once more base is owned by root
+	if (fstat(basefd, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: overlay directory %s is not owned by the root user\n", basedir);
+		exit(1);
+	}
+	// confirm permissions of base are 0755
+	if (((S_IRWXU|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH) & s.st_mode) != (S_IRWXU|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)) {
+		fprintf(stderr, "Error: invalid permissions on overlay directory %s\n", basedir);
+		exit(1);
+	}
 
+	// create diff and work directories inside base
 	// no need to check arg_overlay_reuse
-	if (stat(odiff, &s) != 0) {
-		mkdir_attr(odiff, 0755, 0, 0);
+	char *odiff;
+	if (asprintf(&odiff, "%s/odiff", basedir) == -1)
+		errExit("asprintf");
+	// the new directory will be owned by root
+	if (mkdirat(basefd, "odiff", 0755) == -1 && errno != EEXIST) {
+		perror("mkdir");
+		fprintf(stderr, "Error: cannot create overlay directory %s\n", odiff);
+		exit(1);
 	}
-	else if (set_perms(odiff, 0, 0, 0755))
-		errExit("set_perms");
+	ASSERT_PERMS(odiff, 0, 0, 0755);
 
 	char *owork;
-	if(asprintf(&owork, "%s/owork", basedir) == -1)
+	if (asprintf(&owork, "%s/owork", basedir) == -1)
 		errExit("asprintf");
-
-	// no need to check arg_overlay_reuse
-	if (stat(owork, &s) != 0) {
-		mkdir_attr(owork, 0755, 0, 0);
+	// the new directory will be owned by root
+	if (mkdirat(basefd, "owork", 0755) == -1 && errno != EEXIST) {
+		perror("mkdir");
+		fprintf(stderr, "Error: cannot create overlay directory %s\n", owork);
+		exit(1);
 	}
-	else if (set_perms(owork, 0, 0, 0755))
-		errExit("chown");
+	ASSERT_PERMS(owork, 0, 0, 0755);
 
 	// mount overlayfs
 	if (arg_debug)
@@ -977,43 +1027,48 @@ void fs_overlayfs(void) {
 
 			// BEFORE NEXT, WE NEED TO TEST IF /home has any contents or do we need to mount it?
 			// must create var for oroot/cfg.homedir
-			if (asprintf(&overlayhome,"%s%s",oroot,cfg.homedir) == -1)
+			if (asprintf(&overlayhome, "%s%s", oroot, cfg.homedir) == -1)
 				errExit("asprintf");
-			if (arg_debug) printf ("DEBUG: overlayhome var holds ##%s##\n",overlayhome);
+			if (arg_debug) printf ("DEBUG: overlayhome var holds ##%s##\n", overlayhome);
 
 			// if no homedir in overlay -- create another overlay for /home
-			if (stat(overlayhome, &s) == -1) {
-
-				if(asprintf(&hroot, "%s/oroot/home", RUN_MNT_DIR) == -1)
-					errExit("asprintf");
-
-				if(asprintf(&hdiff, "%s/hdiff", basedir) == -1)
-					errExit("asprintf");
+			if (stat(cfg.homedir, &s) == 0 && stat(overlayhome, &s) == -1) {
 
 				// no need to check arg_overlay_reuse
-				if (stat(hdiff, &s) != 0) {
-					mkdir_attr(hdiff, S_IRWXU | S_IRWXG | S_IRWXO, 0, 0);
-				}
-				else if (set_perms(hdiff, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
-					errExit("set_perms");
-
-				if(asprintf(&hwork, "%s/hwork", basedir) == -1)
+				if (asprintf(&hdiff, "%s/hdiff", basedir) == -1)
 					errExit("asprintf");
+				// the new directory will be owned by root
+				if (mkdirat(basefd, "hdiff", 0755) == -1 && errno != EEXIST) {
+					perror("mkdir");
+					fprintf(stderr, "Error: cannot create overlay directory %s\n", hdiff);
+					exit(1);
+				}
+				ASSERT_PERMS(hdiff, 0, 0, 0755);
 
 				// no need to check arg_overlay_reuse
-				if (stat(hwork, &s) != 0) {
-					mkdir_attr(hwork, S_IRWXU | S_IRWXG | S_IRWXO, 0, 0);
+				if (asprintf(&hwork, "%s/hwork", basedir) == -1)
+					errExit("asprintf");
+				// the new directory will be owned by root
+				if (mkdirat(basefd, "hwork", 0755) == -1 && errno != EEXIST) {
+					perror("mkdir");
+					fprintf(stderr, "Error: cannot create overlay directory %s\n", hwork);
+					exit(1);
 				}
-				else if (set_perms(hwork, 0, 0, S_IRWXU  | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
-					errExit("set_perms");
+				ASSERT_PERMS(hwork, 0, 0, 0755);
 
 				// no homedir in overlay so now mount another overlay for /home
+				if (asprintf(&hroot, "%s/home", oroot) == -1)
+					errExit("asprintf");
 				if (asprintf(&option, "lowerdir=/home,upperdir=%s,workdir=%s", hdiff, hwork) == -1)
 					errExit("asprintf");
 				if (mount("overlay", hroot, "overlay", MS_MGC_VAL, option) < 0)
 					errExit("mounting overlayfs for mounted home directory");
 
 				printf("OverlayFS for /home configured in %s directory\n", basedir);
+				free(hroot);
+				free(hdiff);
+				free(hwork);
+
 			} // stat(overlayhome)
 			free(overlayhome);
 		}
@@ -1021,7 +1076,9 @@ void fs_overlayfs(void) {
 		//***************************
 	}
 	fmessage("OverlayFS configured in %s directory\n", basedir);
+	close(basefd);
 
+	// /dev, /run and /tmp are not covered by the overlay
 	// mount-bind dev directory
 	if (arg_debug)
 		printf("Mounting /dev\n");
@@ -1042,19 +1099,15 @@ void fs_overlayfs(void) {
 		errExit("mounting /run");
 	fs_logger("whitelist /run");
 
-	// mount-bind /tmp/.X11-unix directory
-	if (stat("/tmp/.X11-unix", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting /tmp/.X11-unix\n");
-		char *x11;
-		if (asprintf(&x11, "%s/tmp/.X11-unix", oroot) == -1)
-			errExit("asprintf");
-		if (mount("/tmp/.X11-unix", x11, NULL, MS_BIND|MS_REC, NULL) < 0)
-			fwarning("cannot mount /tmp/.X11-unix in overlay\n");
-		else
-			fs_logger("whitelist /tmp/.X11-unix");
-		free(x11);
-	}
+	// mount-bind tmp directory
+	if (arg_debug)
+		printf("Mounting /tmp\n");
+	char *tmp;
+	if (asprintf(&tmp, "%s/tmp", oroot) == -1)
+		errExit("asprintf");
+	if (mount("/tmp", tmp, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /tmp");
+	fs_logger("whitelist /tmp");
 
 	// chroot in the new filesystem
 #ifdef HAVE_GCOV
@@ -1068,12 +1121,9 @@ void fs_overlayfs(void) {
 //		fs_dev_shm();
 	fs_var_lock();
 	if (!arg_keep_var_tmp)
-	        fs_var_tmp();
+		fs_var_tmp();
 	if (!arg_writable_var_log)
 		fs_var_log();
-	else
-		fs_rdwr("/var/log");
-
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
@@ -1089,97 +1139,124 @@ void fs_overlayfs(void) {
 	// cleanup and exit
 	free(option);
 	free(odiff);
+	free(owork);
+	free(dev);
+	free(run);
+	free(tmp);
 }
 #endif
 
 
 #ifdef HAVE_CHROOT
-// return 1 if error
+// exit if error
 void fs_check_chroot_dir(const char *rootdir) {
 	EUID_ASSERT();
 	assert(rootdir);
 	struct stat s;
-	char *name;
+	int fd = -1;
+	int parentfd = -1;
 
-	if (strcmp(rootdir, "/tmp") == 0 || strcmp(rootdir, "/var/tmp") == 0) {
-		fprintf(stderr, "Error: invalid chroot directory\n");
+	char *overlay;
+	if (asprintf(&overlay, "%s/.firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (strncmp(rootdir, overlay, strlen(overlay)) == 0) {
+		fprintf(stderr, "Error: invalid chroot directory: no directories in ~/.firejail are allowed\n");
 		exit(1);
 	}
+	free(overlay);
 
-	// rootdir has to be owned by root
-	if (stat(rootdir, &s) != 0) {
-		fprintf(stderr, "Error: cannot find chroot directory\n");
+	// fails if there is any symlink or if rootdir is not a directory
+	parentfd = safe_fd(rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (parentfd == -1) {
+		fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
 		exit(1);
 	}
+	// rootdir has to be owned by root and is not allowed to be generally writable,
+	// this also excludes /tmp, /var/tmp and such
+	if (fstat(parentfd, &s) == -1)
+		errExit("fstat");
 	if (s.st_uid != 0) {
 		fprintf(stderr, "Error: chroot directory should be owned by root\n");
 		exit(1);
 	}
+	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+		fprintf(stderr, "Error: only root user should be given write permission on chroot directory\n");
+		exit(1);
+	}
 
 	// check /dev
-	if (asprintf(&name, "%s/dev", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: cannot find /dev in chroot directory\n");
+	fd = openat(parentfd, "dev", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot open /dev in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /dev directory should be owned by root\n");
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /dev should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// check /var/tmp
-	if (asprintf(&name, "%s/var/tmp", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: cannot find /var/tmp in chroot directory\n");
+	fd = openat(parentfd, "var/tmp", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot open /var/tmp in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /var/tmp directory should be owned by root\n");
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /var/tmp should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// check /proc
-	if (asprintf(&name, "%s/proc", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: cannot find /proc in chroot directory\n");
+	fd = openat(parentfd, "proc", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot open /proc in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /proc directory should be owned by root\n");
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /proc should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// check /tmp
-	if (asprintf(&name, "%s/tmp", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: cannot find /tmp in chroot directory\n");
+	fd = openat(parentfd, "tmp", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot open /tmp in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /tmp directory should be owned by root\n");
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /tmp should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	close(fd);
 
 	// check /etc
-	if (asprintf(&name, "%s/etc", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: cannot find /etc in chroot directory\n");
+	fd = openat(parentfd, "etc", O_PATH|O_CLOEXEC);
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot open /etc in chroot directory\n");
 		exit(1);
 	}
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /etc directory should be owned by root\n");
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /etc should be a directory owned by root\n");
 		exit(1);
 	}
-	free(name);
+	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+		fprintf(stderr, "Error: only root user should be given write permission on chroot /etc\n");
+		exit(1);
+	}
+	close(fd);
 
 	// there should be no checking on <chrootdir>/etc/resolv.conf
 	// the file is replaced with the real /etc/resolv.conf anyway
@@ -1211,19 +1288,21 @@ void fs_check_chroot_dir(const char *rootdir) {
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {
-		char *name;
-		if (asprintf(&name, "%s/tmp/.X11-unix", rootdir) == -1)
-			errExit("asprintf");
-		if (stat(name, &s) == -1) {
-			fprintf(stderr, "Error: cannot find /tmp/.X11-unix in chroot directory\n");
+		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_CLOEXEC);
+		if (fd == -1) {
+			fprintf(stderr, "Error: cannot open /tmp/.X11-unix in chroot directory\n");
 			exit(1);
 		}
-		if (s.st_uid != 0) {
-			fprintf(stderr, "Error: chroot /tmp/.X11-unix directory should be owned by root\n");
+		if (fstat(fd, &s) == -1)
+			errExit("fstat");
+		if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /tmp/.X11-unix should be a directory owned by root\n");
 			exit(1);
 		}
-		free(name);
+		close(fd);
 	}
+
+	close(parentfd);
 }
 
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
@@ -1254,27 +1333,49 @@ void fs_chroot(const char *rootdir) {
 
 	// some older distros don't have a /run directory
 	// create one by default
-	// create /run/firejail directory in chroot
 	char *rundir;
 	if (asprintf(&rundir, "%s/run", rootdir) == -1)
 		errExit("asprintf");
-	if (is_link(rundir)) {
-		fprintf(stderr, "Error: invalid run directory inside chroot\n");
-		exit(1);
+	struct stat s;
+	if (lstat(rundir, &s) == 0) {
+		if (S_ISLNK(s.st_mode)) {
+			fprintf(stderr, "Error: chroot /run is a symbolic link\n");
+			exit(1);
+		}
+		if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+			fprintf(stderr, "Error: chroot /run should be a directory owned by root\n");
+			exit(1);
+		}
+		if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+			fprintf(stderr, "Error: only root user should be given write permission on chroot /run\n");
+			exit(1);
+		}
 	}
-	create_empty_dir_as_root(rundir, 0755);
+	else {
+		// several sandboxes could race to create /run
+		if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+			errExit("mkdir");
+		ASSERT_PERMS(rundir, 0, 0, 0755);
+	}
 	free(rundir);
+
+	// create /run/firejail directory in chroot
 	if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
 		errExit("asprintf");
-	create_empty_dir_as_root(rundir, 0755);
+	if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+		errExit("mkdir");
+	ASSERT_PERMS(rundir, 0, 0, 0755);
 	free(rundir);
 
 	// create /run/firejail/mnt directory in chroot and mount the current one
 	if (asprintf(&rundir, "%s%s", rootdir, RUN_MNT_DIR) == -1)
 		errExit("asprintf");
-	create_empty_dir_as_root(rundir, 0755);
+	if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+		errExit("mkdir");
+	ASSERT_PERMS(rundir, 0, 0, 0755);
 	if (mount(RUN_MNT_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	free(rundir);
 
 	// copy /etc/resolv.conf in chroot directory
 	char *fname;
@@ -1285,6 +1386,7 @@ void fs_chroot(const char *rootdir) {
 	unlink(fname);
 	if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
 		fwarning("/etc/resolv.conf not initialized\n");
+	free(fname);
 
 	// chroot into the new directory
 #ifdef HAVE_GCOV
@@ -1295,7 +1397,8 @@ void fs_chroot(const char *rootdir) {
 	if (arg_debug)
 		printf("Chrooting into %s\n", rootdir);
 	char *oroot = RUN_OVERLAY_ROOT;
-	mkdir_attr(oroot, 0755, 0, 0);
+	if (mkdir(oroot, 0755) == -1)
+		errExit("mkdir");
 	if (mount(rootdir, oroot, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting rootdir oroot");
 	if (chroot(oroot) < 0)
@@ -1312,8 +1415,6 @@ void fs_chroot(const char *rootdir) {
 	        fs_var_tmp();
 	if (!arg_writable_var_log)
 		fs_var_log();
-	else
-		fs_rdwr("/var/log");
 
 	fs_var_lib();
 	fs_var_cache();

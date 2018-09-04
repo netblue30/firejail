@@ -318,13 +318,14 @@ int main(int argc, char **argv) {
 
 	// user setup
 	char *user = get_user();
+	assert(user);
 	uid_t uid;
 	gid_t gid;
 	char *home = get_homedir(user, &uid, &gid);
 
 
 	// check for --bindir
-	for (i = i; i < argc; i++) {
+	for (i = 1; i < argc; i++) {
 		if (strncmp(argv[i], "--bindir=", 9) == 0) {
 			if (strncmp(argv[i] + 9, "~/", 2) == 0) {
 				if (asprintf(&arg_bindir, "%s/%s", home, argv[i] + 11) == -1)
@@ -430,7 +431,7 @@ int main(int argc, char **argv) {
 	set_links_firecfg();
 
 	// add user to firejail access database - only for root
-	if (user && getuid() == 0) {
+	if (getuid() == 0) {
 		printf("\nAdding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
 		firejail_user_add(user);
 	}

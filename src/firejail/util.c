@@ -828,25 +828,19 @@ uid_t get_group_id(const char *group) {
 	return gid;
 }
 
-static int len_homedir = 0;
+
 static int remove_callback(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf) {
 	(void) sb;
 	(void) typeflag;
 	(void) ftwbuf;
 	assert(fpath);
 
-	if (len_homedir == 0)
-		len_homedir = strlen(cfg.homedir);
-
-	char *rp = realpath(fpath, NULL);	// this should never fail!
-	if (!rp)
-		return 1;
-	if (strncmp(rp, cfg.homedir, len_homedir) != 0)
-		return 1;
-	free(rp);
+	if (strcmp(fpath, ".") == 0)
+		return 0;
 
 	if (remove(fpath)) {	// removes the link not the actual file
-		fprintf(stderr, "Error: cannot remove file %s\n", fpath);
+		perror("remove");
+		fprintf(stderr, "Error: cannot remove file from user .firejail directory: %s\n", fpath);
 		exit(1);
 	}
 
@@ -855,26 +849,64 @@ static int remove_callback(const char *fpath, const struct stat *sb, int typefla
 
 
 int remove_overlay_directory(void) {
+	EUID_ASSERT();
+	struct stat s;
 	sleep(1);
 
 	char *path;
 	if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 
-	// deal with obvious problems such as symlinks and root ownership
-	if (is_link(path))
-		errLogExit("overlay directory is a symlink\n");
-	if (access(path, R_OK | W_OK | X_OK) == -1)
-		errLogExit("no access to overlay directory\n");
+	if (lstat(path, &s) == 0) {
+		// deal with obvious problems such as symlinks and root ownership
+		if (!S_ISDIR(s.st_mode)) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: %s is a symbolic link\n", path);
+			else
+				fprintf(stderr, "Error: %s is not a directory\n", path);
+			exit(1);
+		}
+		if (s.st_uid != getuid()) {
+			fprintf(stderr, "Error: %s is not owned by the current user\n", path);
+			exit(1);
+		}
 
-	EUID_ROOT();
-	if (setreuid(0, 0) < 0 ||
-	    setregid(0, 0) < 0)
-		errExit("setreuid/setregid");
-	errno = 0;
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// open ~/.firejail, fails if there is any symlink
+			int fd = safe_fd(path, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+			if (fd == -1)
+				errExit("safe_fd");
+			// chdir to ~/.firejail
+			if (fchdir(fd) == -1)
+				errExit("fchdir");
+			close(fd);
 
-	// FTW_PHYS - do not follow symbolic links
-	return nftw(path, remove_callback, 64, FTW_DEPTH | FTW_PHYS);
+			EUID_ROOT();
+			// FTW_PHYS - do not follow symbolic links
+			if (nftw(".", remove_callback, 64, FTW_DEPTH | FTW_PHYS) == -1)
+				errExit("nftw");
+
+			EUID_USER();
+			// remove ~/.firejail
+			if (rmdir(path) == -1)
+				errExit("rmdir");
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+		// check if ~/.firejail was deleted
+		if (stat(path, &s) == -1)
+			return 0;
+		else
+			return 1;
+	}
+	return 0;
 }
 
 void flush_stdin(void) {

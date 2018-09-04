@@ -74,7 +74,8 @@ printf("\n");
 	close(fd);
 	return 0;
 errexit:
-	close(fd);
+	if (fd != -1)
+		close(fd);
 	fprintf(stderr, "Error: cannot read %s\n", fname);
 	exit(1);
 

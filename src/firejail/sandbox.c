@@ -546,7 +546,8 @@ static void enforce_filters(void) {
 	// drop all supplementary groups; /etc/group file inside chroot
 	// is controlled by a regular usr
 	arg_nogroups = 1;
-	fmessage("Dropping all Linux capabilities and enforcing default seccomp filter\n");
+	fmessage("\n** Warning: dropping all Linux capabilities and enforcing  **\n");
+	fmessage("**                  default seccomp filter                 **\n\n");
 }
 
 int sandbox(void* sandbox_arg) {
@@ -751,6 +752,17 @@ int sandbox(void* sandbox_arg) {
 #else
 	bool need_preload = arg_seccomp_postexec;
 #endif
+	// for --appimage, --chroot and --overlay* we replace the seccomp filter with the default one
+	// we also drop all capabilities
+	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay)) {
+		enforce_filters();
+#ifdef LTS
+		need_preload = 0;
+#else
+		need_preload = arg_trace || arg_tracelog;
+#endif
+		arg_seccomp = 1;
+	}
 	// trace pre-install
 	if (need_preload)
 		fs_trace_preload();
@@ -762,19 +774,10 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// configure filesystem
 	//****************************
-	if (arg_appimage)
-		enforce_filters();
-
 #ifndef LTS
 #ifdef HAVE_CHROOT
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
-
-		// force caps and seccomp if not started as root
-		if (getuid() != 0)
-			enforce_filters();
-		else
-			arg_seccomp = 1;
 
 		//****************************
 		// trace pre-install, this time inside chroot
@@ -785,14 +788,8 @@ int sandbox(void* sandbox_arg) {
 	else
 #endif
 #ifdef HAVE_OVERLAYFS
-	if (arg_overlay)	{
+	if (arg_overlay)
 		fs_overlayfs();
-		// force caps and seccomp if not started as root
-		if (getuid() != 0)
-			enforce_filters();
-		else
-			arg_seccomp = 1;
-	}
 	else
 #endif
 #endif // LTS
@@ -1052,7 +1049,10 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// set capabilities
 	set_caps();
-
+#ifndef LTS
+	// set rlimits
+	set_rlimits();
+#endif //LTS
 	// set cpu affinity
 	if (cfg.cpus) {
 		save_cpu(); // save cpu affinity mask to CPU_CFG file

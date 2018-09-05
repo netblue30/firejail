@@ -27,7 +27,4 @@ echo "TESTING: fcopy file (test/fcopy/filecopy.exp)"
 echo "TESTING: fcopy link (test/fcopy/linkcopy.exp)"
 ./linkcopy.exp
 
-echo "TESTING: fcopy trailing char (test/copy/trailing.exp)"
-./trailing.exp
-
 rm -fr dest/*

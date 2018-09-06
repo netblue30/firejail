@@ -1008,7 +1008,9 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	EUID_ROOT();
+	// set rlimits
+	set_rlimits();
+
 	// set nice
 	if (arg_nice) {
 		errno = 0;
@@ -1020,6 +1022,7 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
+	EUID_ROOT();
 	// clean /tmp/.X11-unix sockets
 	fs_x11();
 	if (arg_x11_xorg)
@@ -1030,9 +1033,6 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// set capabilities
 	set_caps();
-
-	// set rlimits
-	set_rlimits();
 
 	// set cpu affinity
 	if (cfg.cpus) {

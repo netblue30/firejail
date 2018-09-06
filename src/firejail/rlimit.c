@@ -22,9 +22,15 @@
 #include <sys/resource.h>
 
 void set_rlimits(void) {
+	EUID_ASSERT();
 	// resource limits
 	struct rlimit rl;
 	if (arg_rlimit_cpu) {
+		if (getrlimit(RLIMIT_CPU, &rl) == -1)
+			errExit("getrlimit");
+		if (cfg.rlimit_cpu > rl.rlim_max && getuid() != 0)
+			cfg.rlimit_cpu = rl.rlim_max;
+		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_cpu;
 		rl.rlim_max = (rlim_t) cfg.rlimit_cpu;
 #ifdef HAVE_GCOV
@@ -37,6 +43,11 @@ void set_rlimits(void) {
 	}
 
 	if (arg_rlimit_nofile) {
+		if (getrlimit(RLIMIT_NOFILE, &rl) == -1)
+			errExit("getrlimit");
+		if (cfg.rlimit_nofile > rl.rlim_max && getuid() != 0)
+			cfg.rlimit_nofile = rl.rlim_max;
+		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_nofile;
 		rl.rlim_max = (rlim_t) cfg.rlimit_nofile;
 #ifdef HAVE_GCOV	// gcov-instrumented programs might crash at this point
@@ -49,6 +60,11 @@ void set_rlimits(void) {
 	}
 
 	if (arg_rlimit_nproc) {
+		if (getrlimit(RLIMIT_NPROC, &rl) == -1)
+			errExit("getrlimit");
+		if (cfg.rlimit_nproc > rl.rlim_max && getuid() != 0)
+			cfg.rlimit_nproc = rl.rlim_max;
+		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_nproc;
 		rl.rlim_max = (rlim_t) cfg.rlimit_nproc;
 #ifdef HAVE_GCOV
@@ -61,6 +77,11 @@ void set_rlimits(void) {
 	}
 
 	if (arg_rlimit_fsize) {
+		if (getrlimit(RLIMIT_FSIZE, &rl) == -1)
+			errExit("getrlimit");
+		if (cfg.rlimit_fsize > rl.rlim_max && getuid() != 0)
+			cfg.rlimit_fsize = rl.rlim_max;
+		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_fsize;
 		rl.rlim_max = (rlim_t) cfg.rlimit_fsize;
 #ifdef HAVE_GCOV
@@ -73,6 +94,11 @@ void set_rlimits(void) {
 	}
 
 	if (arg_rlimit_sigpending) {
+		if (getrlimit(RLIMIT_SIGPENDING, &rl) == -1)
+			errExit("getrlimit");
+		if (cfg.rlimit_sigpending > rl.rlim_max && getuid() != 0)
+			cfg.rlimit_sigpending = rl.rlim_max;
+		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_sigpending;
 		rl.rlim_max = (rlim_t) cfg.rlimit_sigpending;
 #ifdef HAVE_GCOV
@@ -85,6 +111,11 @@ void set_rlimits(void) {
 	}
 
 	if (arg_rlimit_as) {
+		if (getrlimit(RLIMIT_AS, &rl) == -1)
+			errExit("getrlimit");
+		if (cfg.rlimit_as > rl.rlim_max && getuid() != 0)
+			cfg.rlimit_as = rl.rlim_max;
+		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_as;
 		rl.rlim_max = (rlim_t) cfg.rlimit_as;
 #ifdef HAVE_GCOV

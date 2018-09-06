@@ -33,7 +33,7 @@
 
 #define MAX_GROUPS 1024
 #define MAXBUF 4098
-
+#define EMPTY_STRING ("")
 
 
 // send the error to /var/log/auth.log and exit after a small delay
@@ -1079,7 +1079,7 @@ int safe_fd(const char *path, int flags) {
 
 	// traverse the path and return -1 if a symlink is encountered
 	int fd = -1;
-	char *current_tok = NULL;
+	char *current_tok = EMPTY_STRING;
 	char *tok = strtok(dup, "/");
 	assert(tok);
 	while (tok) {

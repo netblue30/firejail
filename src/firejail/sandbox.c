@@ -400,30 +400,6 @@ void start_application(int no_sandbox, FILE *fp) {
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
 	}
 
-	//****************************************
-	// audit
-	//****************************************
-#ifndef LTS
-	if (arg_audit) {
-		assert(arg_audit_prog);
-
-		if (fp) {
-			fprintf(fp, "ready\n");
-			fclose(fp);
-		}
-#ifdef HAVE_GCOV
-		__gcov_dump();
-#endif
-#ifdef HAVE_SECCOMP
-		seccomp_install_filters();
-#endif
-		execl(arg_audit_prog, arg_audit_prog, NULL);
-	}
-	//****************************************
-	// start the program without using a shell
-	//****************************************
-	else
-#endif // LTS
 	if (arg_shell_none) {
 		if (arg_debug) {
 			int i;
@@ -747,20 +723,12 @@ int sandbox(void* sandbox_arg) {
 #endif
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
-#ifndef LTS
-	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
-#else
 	bool need_preload = arg_seccomp_postexec;
-#endif
 	// for --appimage, --chroot and --overlay* we replace the seccomp filter with the default one
 	// we also drop all capabilities
 	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay)) {
 		enforce_filters();
-#ifdef LTS
 		need_preload = 0;
-#else
-		need_preload = arg_trace || arg_tracelog;
-#endif
 		arg_seccomp = 1;
 	}
 	// trace pre-install
@@ -774,26 +742,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// configure filesystem
 	//****************************
-#ifndef LTS
-#ifdef HAVE_CHROOT
-	if (cfg.chrootdir) {
-		fs_chroot(cfg.chrootdir);
-
-		//****************************
-		// trace pre-install, this time inside chroot
-		//****************************
-		if (need_preload)
-			fs_trace_preload();
-	}
-	else
-#endif
-#ifdef HAVE_OVERLAYFS
-	if (arg_overlay)
-		fs_overlayfs();
-	else
-#endif
-#endif // LTS
-		fs_basic_fs();
+	fs_basic_fs();
 
 	//****************************
 	// private mode
@@ -807,16 +756,6 @@ int sandbox(void* sandbox_arg) {
 			else
 				fs_private_homedir();
 		}
-#ifndef LTS
-		else if (cfg.home_private_keep) { // --private-home=
-			if (cfg.chrootdir)
-				fwarning("private-home= feature is disabled in chroot\n");
-			else if (arg_overlay)
-				fwarning("private-home= feature is disabled in overlay\n");
-			else
-				fs_private_home_list();
-		}
-#endif //LTS
 		else // --private
 			fs_private();
 	}
@@ -824,71 +763,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_dev)
 		fs_private_dev();
 
-#ifndef LTS
-	if (arg_private_etc) {
-		if (cfg.chrootdir)
-			fwarning("private-etc feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-etc feature is disabled in overlay\n");
-		else {
-			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
-			// create /etc/ld.so.preload file again
-			if (need_preload)
-				fs_trace_preload();
-		}
-	}
-
-	if (arg_private_opt) {
-		if (cfg.chrootdir)
-			fwarning("private-opt feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-opt feature is disabled in overlay\n");
-		else {
-			fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
-		}
-	}
-
-	if (arg_private_srv) {
-		if (cfg.chrootdir)
-			fwarning("private-srv feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-srv feature is disabled in overlay\n");
-		else {
-			fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
-		}
-	}
-
-	// private-bin is disabled for appimages
-	if (arg_private_bin && !arg_appimage) {
-		if (cfg.chrootdir)
-			fwarning("private-bin feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-bin feature is disabled in overlay\n");
-		else {
-			// for --x11=xorg we need to add xauth command
-			if (arg_x11_xorg) {
-				EUID_USER();
-				char *tmp;
-				if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
-					errExit("asprintf");
-				cfg.bin_private_keep = tmp;
-				EUID_ROOT();
-			}
-			fs_private_bin_list();
-		}
-	}
-
-	// private-lib is disabled for appimages
-	if (arg_private_lib && !arg_appimage) {
-		if (cfg.chrootdir)
-			fwarning("private-lib feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-lib feature is disabled in overlay\n");
-		else {
-			fs_private_lib();
-		}
-	}
-#endif // LTS
 
 	if (arg_private_cache) {
 		if (cfg.chrootdir)
@@ -1037,22 +911,11 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-#ifndef LTS
-	// clean /tmp/.X11-unix sockets
-	fs_x11();
-	if (arg_x11_xorg)
-		x11_xorg();
-#endif //LTS
-
 	//****************************
 	// set security filters
 	//****************************
 	// set capabilities
 	set_caps();
-#ifndef LTS
-	// set rlimits
-	set_rlimits();
-#endif //LTS
 	// set cpu affinity
 	if (cfg.cpus) {
 		save_cpu(); // save cpu affinity mask to CPU_CFG file
@@ -1060,12 +923,6 @@ int sandbox(void* sandbox_arg) {
 		set_cpu_affinity();
 		EUID_ROOT();
 	}
-
-#ifndef LTS
-	// save cgroup in CGROUP_CFG file
-	if (cfg.cgroup)
-		save_cgroup();
-#endif
 
 	// set seccomp
 #ifdef HAVE_SECCOMP

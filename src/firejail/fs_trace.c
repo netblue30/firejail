@@ -53,15 +53,6 @@ void fs_trace(void) {
 		errExit("fopen");
 	const char *prefix = LIBDIR "/firejail";
 
-#ifndef LTS
-	if (arg_trace) {
-		fprintf(fp, "%s/libtrace.so\n", prefix);
-	}
-	else if (arg_tracelog) {
-		fprintf(fp, "%s/libtracelog.so\n", prefix);
-		fmessage("Blacklist violations are logged to syslog\n");
-	}
-#endif
 	if (arg_seccomp_postexec) {
 		fprintf(fp, "%s/libpostexecseccomp.so\n", prefix);
 		fmessage("Post-exec seccomp protector enabled\n");

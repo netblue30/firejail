@@ -569,12 +569,7 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.name)
 		fs_logger2("sandbox name:", cfg.name);
 	fs_logger2int("sandbox pid:", (int) sandbox_pid);
-	if (cfg.chrootdir)
-		fs_logger("sandbox filesystem: chroot");
-	else if (arg_overlay)
-		fs_logger("sandbox filesystem: overlay");
-	else
-		fs_logger("sandbox filesystem: local");
+	fs_logger("sandbox filesystem: local");
 	fs_logger("install mount namespace");
 
 	//****************************
@@ -726,7 +721,7 @@ int sandbox(void* sandbox_arg) {
 	bool need_preload = arg_seccomp_postexec;
 	// for --appimage, --chroot and --overlay* we replace the seccomp filter with the default one
 	// we also drop all capabilities
-	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay)) {
+	if (getuid() != 0 && arg_appimage) {
 		enforce_filters();
 		need_preload = 0;
 		arg_seccomp = 1;
@@ -748,14 +743,8 @@ int sandbox(void* sandbox_arg) {
 	// private mode
 	//****************************
 	if (arg_private) {
-		if (cfg.home_private) {	// --private=
-			if (cfg.chrootdir)
-				fwarning("private=directory feature is disabled in chroot\n");
-			else if (arg_overlay)
-				fwarning("private=directory feature is disabled in overlay\n");
-			else
-				fs_private_homedir();
-		}
+		if (cfg.home_private)	// --private=
+			fs_private_homedir();
 		else // --private
 			fs_private();
 	}
@@ -764,14 +753,8 @@ int sandbox(void* sandbox_arg) {
 		fs_private_dev();
 
 
-	if (arg_private_cache) {
-		if (cfg.chrootdir)
-			fwarning("private-cache feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-cache feature is disabled in overlay\n");
-		else
-			fs_private_cache();
-	}
+	if (arg_private_cache)
+		fs_private_cache();
 
 	if (arg_private_tmp) {
 		// private-tmp is implemented as a whitelist

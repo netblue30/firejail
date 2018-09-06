@@ -718,10 +718,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// writable-etc
 	if (strcmp(ptr, "writable-etc") == 0) {
-		if (cfg.etc_private_keep) {
-			fprintf(stderr, "Error: private-etc and writable-etc are mutually exclusive\n");
-			exit(1);
-		}
 		arg_writable_etc = 1;
 		return 0;
 	}
@@ -755,11 +751,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		cfg.home_private = ptr + 8;
 		fs_check_private_dir();
 		arg_private = 1;
-		return 0;
-	}
-
-	if (strcmp(ptr, "x11 none") == 0) {
-		arg_x11_block = 1;
 		return 0;
 	}
 

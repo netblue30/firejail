@@ -49,12 +49,8 @@ int arg_private_cache = 0;		// mount private home/.cache
 int arg_debug = 0;				// print debug messages
 int arg_debug_blacklists = 0;			// print debug messages for blacklists
 int arg_debug_whitelists = 0;			// print debug messages for whitelists
-int arg_debug_private_lib = 0;			// print debug messages for private-lib
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
-int arg_overlay = 0;				// overlay option
-int arg_overlay_keep = 0;			// place overlay diff in a known directory
-int arg_overlay_reuse = 0;			// allow the reuse of overlays
 
 int arg_seccomp = 0;				// enable default seccomp filter
 int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
@@ -66,12 +62,6 @@ int arg_caps_drop_all = 0;			// drop all capabilities
 int arg_caps_keep = 0;			// keep list
 char *arg_caps_list = NULL;			// optional caps list
 
-int arg_rlimit_cpu = 0;				// rlimit max cpu time
-int arg_rlimit_nofile = 0;			// rlimit nofile
-int arg_rlimit_nproc = 0;			// rlimit nproc
-int arg_rlimit_fsize = 0;				// rlimit fsize
-int arg_rlimit_sigpending = 0;			// rlimit fsize
-int arg_rlimit_as = 0;				// rlimit as
 int arg_nogroups = 0;				// disable supplementary groups
 int arg_nonewprivs = 0;			// set the NO_NEW_PRIVS prctl
 int arg_noroot = 0;				// create a new user namespace and disable root user
@@ -84,12 +74,7 @@ int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
 int arg_keep_dev_shm = 0;                       // preserve /dev/shm
-int arg_private_etc = 0;			// private etc directory
-int arg_private_opt = 0;			// private opt directory
-int arg_private_srv = 0;			// private srv directory
-int arg_private_bin = 0;			// private bin directory
 int arg_private_tmp = 0;			// private tmp directory
-int arg_private_lib = 0;			// private lib directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist commad
 int arg_nosound = 0;				// disable sound
@@ -107,12 +92,8 @@ int arg_keep_var_tmp = 0;                       // don't overwrite /var/tmp
 int arg_writable_run_user = 0;			// writable /run/user
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
-int arg_audit = 0;				// audit
-char *arg_audit_prog = NULL;			// audit
 int arg_apparmor = 0;				// apparmor
 int arg_allow_debuggers = 0;			// allow debuggers
-int arg_x11_block = 0;				// block X11
-int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
 int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
@@ -818,8 +799,6 @@ int main(int argc, char **argv) {
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
 			arg_debug_whitelists = 1;
-		else if (strcmp(argv[i], "--debug-private-lib") == 0)
-			arg_debug_private_lib = 1;
 		else if (strcmp(argv[i], "--quiet") == 0) {
 			arg_quiet = 1;
 			arg_debug = 0;
@@ -1072,13 +1051,8 @@ int main(int argc, char **argv) {
 			}
 			profile_add_ignore(argv[i] + 9);
 		}
-		else if (strcmp(argv[i], "--writable-etc") == 0) {
-			if (cfg.etc_private_keep) {
-				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
-				exit(1);
-			}
+		else if (strcmp(argv[i], "--writable-etc") == 0)
 			arg_writable_etc = 1;
-		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
 		}
@@ -1098,11 +1072,6 @@ int main(int argc, char **argv) {
 			arg_private = 1;
 		}
 		else if (strncmp(argv[i], "--private=", 10) == 0) {
-			if (cfg.home_private_keep) {
-				fprintf(stderr, "Error: a private list of files was already defined with --private-home option.\n");
-				exit(1);
-			}
-
 			// extract private home dirname
 			cfg.home_private = argv[i] + 10;
 			if (*cfg.home_private == '\0') {
@@ -1567,16 +1536,7 @@ int main(int argc, char **argv) {
 			}
 
 			// access call checks as real UID/GID, not as effective UID/GID
-			if(cfg.chrootdir) {
-				char *shellpath;
-				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
-					errExit("asprintf");
-				if (access(shellpath, X_OK)) {
-					fprintf(stderr, "Error: cannot access shell file in chroot\n");
-					exit(1);
-				}
-				free(shellpath);
-			} else if (access(cfg.shell, X_OK)) {
+			if (access(cfg.shell, X_OK)) {
 				fprintf(stderr, "Error: cannot access shell file\n");
 				exit(1);
 			}
@@ -1587,11 +1547,6 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: option -c requires an argument\n");
 				return 1;
 			}
-		}
-
-		// unlike all other x11 features, this is available always
-		else if (strcmp(argv[i], "--x11=none") == 0) {
-			arg_x11_block = 1;
 		}
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
 			// NOTE: this is second part of option handler,
@@ -1640,30 +1595,10 @@ int main(int argc, char **argv) {
 	}
 	EUID_ASSERT();
 
-	// exit for --chroot sandboxes when secomp or caps are explicitly specified on command line
-	if (getuid() != 0 && cfg.chrootdir && (arg_seccomp_cmdline || arg_caps_cmdline)) {
-		fprintf(stderr, "Error: for chroot sandboxes, default seccomp and capabilities filters are\n"
-			"enabled by default. Please remove all --seccomp and --caps options from the\n"
-			"command line.\n");
-		exit(1);
-	}
-
 	// prog_index could still be -1 if no program was specified
 	if (prog_index == -1 && arg_shell_none) {
 		fprintf(stderr, "Error: shell=none configured, but no program specified\n");
 		exit(1);
-	}
-
-	// check user namespace (--noroot) options
-	if (arg_noroot) {
-		if (arg_overlay) {
-			fwarning("--overlay and --noroot are mutually exclusive, --noroot disabled...\n");
-			arg_noroot = 0;
-		}
-		else if (cfg.chrootdir) {
-			fwarning("--chroot and --noroot are mutually exclusive, --noroot disabled...\n");
-			arg_noroot = 0;
-		}
 	}
 
 	// enable seccomp if only seccomp.block-secondary was specified
@@ -1796,16 +1731,6 @@ int main(int argc, char **argv) {
  		errExit("pipe");
  	if (pipe(child_to_parent_fds) < 0)
 		errExit("pipe");
-
-	if (arg_noroot && arg_overlay) {
-		fwarning("--overlay and --noroot are mutually exclusive, noroot disabled\n");
-		arg_noroot = 0;
-	}
-	else if (arg_noroot && cfg.chrootdir) {
-		fwarning("--chroot and --noroot are mutually exclusive, noroot disabled\n");
-		arg_noroot = 0;
-	}
-
 
 	// set name and x11 run files
 	EUID_ROOT();

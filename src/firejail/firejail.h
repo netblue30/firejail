@@ -219,17 +219,9 @@ typedef struct config_t {
 	ProfileEntry *profile;
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
-	char *chrootdir;	// chroot directory
+//	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory
-	char *home_private_keep;	// keep list for private home directory
-	char *etc_private_keep;	// keep list for private etc directory
-	char *opt_private_keep;	// keep list for private opt directory
-	char *srv_private_keep;	// keep list for private srv directory
-	char *bin_private_keep;	// keep list for private bin directory
-	char *bin_private_lib;	// executable list sent by private-bin to private-lib
-	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
-	char *overlay_dir;
 
 	// networking
 	char *name;		// sandbox name
@@ -255,13 +247,6 @@ typedef struct config_t {
 	char *seccomp_list_keep;	// seccomp keep list
 	char *protocol;			// protocol list
 
-	// rlimits
-	long long unsigned rlimit_cpu;
-	long long unsigned rlimit_nofile;
-	long long unsigned rlimit_nproc;
-	long long unsigned rlimit_fsize;
-	long long unsigned rlimit_sigpending;
-	long long unsigned rlimit_as;
 	unsigned timeout;	// maximum time elapsed before killing the sandbox
 
 	// cpu affinity, nice and control groups
@@ -313,31 +298,16 @@ extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
-extern int arg_debug_private_lib;	// print debug messages for private-lib
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
-extern int arg_overlay;		// overlay option
-extern int arg_overlay_keep;	// place overlay diff in a known directory
-extern int arg_overlay_reuse;	// allow the reuse of overlays
-
 extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp_postexec;	// need postexec ld.preload library?
 extern int arg_seccomp_block_secondary;	// block any secondary architectures
-
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list
 extern int arg_caps_drop_all;		// drop all capabilities
 extern int arg_caps_keep;		// keep list
 extern char *arg_caps_list;		// optional caps list
-
-extern int arg_trace;		// syscall tracing support
-extern int arg_tracelog;	// blacklist tracing support
-extern int arg_rlimit_cpu;	// rlimit cpu
-extern int arg_rlimit_nofile;	// rlimit nofile
-extern int arg_rlimit_nproc;	// rlimit nproc
-extern int arg_rlimit_fsize;	// rlimit fsize
-extern int arg_rlimit_sigpending;// rlimit sigpending
-extern int arg_rlimit_as;	//rlimit as
 extern int arg_nogroups;	// disable supplementary groups
 extern int arg_nonewprivs;	// set the NO_NEW_PRIVS prctl
 extern int arg_noroot;		// create a new user namespace and disable root user
@@ -350,12 +320,7 @@ extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
 extern int arg_keep_dev_shm;    // preserve /dev/shm
-extern int arg_private_etc;	// private etc directory
-extern int arg_private_opt;	// private opt directory
-extern int arg_private_srv;	// private srv directory
-extern int arg_private_bin;	// private bin directory
 extern int arg_private_tmp;	// private tmp directory
-extern int arg_private_lib;	// private lib directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
@@ -373,12 +338,8 @@ extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
 extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
-extern int arg_audit;		// audit
-extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
 extern int arg_allow_debuggers;	// allow debuggers
-extern int arg_x11_block;	// block X11
-extern int arg_x11_xorg;	// use X11 security extention
 extern int arg_allusers;	// all user home directories visible
 extern int arg_machineid;	// preserve /etc/machine-id
 extern int arg_disable_mnt;	// disable /mnt and /media
@@ -483,9 +444,6 @@ pid_t switch_to_child(pid_t pid);
 // shutdown.c
 void shut(pid_t pid);
 
-// restricted_shell.c
-int restricted_shell(const char *user);
-
 // arp.c
 void arp_announce(const char *dev, Bridge *br);
 // returns 0 if the address is not in use, -1 otherwise
@@ -498,7 +456,6 @@ char *expand_home(const char *path, const char *homedir);
 char *resolve_macro(const char *name);
 void invalid_filename(const char *fname, int globbing);
 int is_macro(const char *name);
-
 
 // util.c
 void errLogExit(char* fmt, ...);
@@ -601,10 +558,6 @@ void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);
 void caps_drop_dac_override(void);
 
-// fs_trace.c
-void fs_trace_preload(void);
-void fs_trace(void);
-
 // fs_hostname.c
 void fs_hostname(const char *hostname);
 void fs_resolvconf(void);
@@ -612,23 +565,12 @@ char *fs_check_hosts_file(const char *fname);
 void fs_store_hosts_file(void);
 void fs_mount_hosts_file(void);
 
-// rlimit.c
-void set_rlimits(void);
-
 // cpu.c
 void read_cpu_list(const char *str);
 void set_cpu_affinity(void);
 void load_cpu(const char *fname);
 void save_cpu(void);
 void cpu_print_filter(pid_t pid);
-
-// cgroup.c
-void save_cgroup(void);
-void load_cgroup(const char *fname);
-void set_cgroup(const char *path);
-
-// output.c
-void check_output(int argc, char **argv);
 
 // netfilter.c
 void check_netfilter_file(const char *fname);
@@ -647,7 +589,6 @@ void network_set_run_file(pid_t pid);
 
 // fs_etc.c
 void fs_machineid(void);
-void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
 
 // no_sandbox.c
 int check_namespace_virt(void);
@@ -672,19 +613,10 @@ void fs_whitelist(void);
 void pulseaudio_init(void);
 void pulseaudio_disable(void);
 
-// fs_bin.c
-void fs_private_bin_list(void);
-
-// fs_lib.c
-void fs_private_lib(void);
-
 // protocol.c
 void protocol_filter_save(void);
 void protocol_filter_load(const char *fname);
 void protocol_print_filter(pid_t pid);
-
-// restrict_users.c
-void restrict_users(void);
 
 // fs_logger.c
 void fs_logger(const char *msg);
@@ -707,32 +639,13 @@ int program_in_path(const char *program);
 void fs_mkdir(const char *name);
 void fs_mkfile(const char *name);
 
-// x11.c
+// fs_trace.c
+void fs_trace_preload(void);
+void fs_trace(void);
 
-// X11 display range as assigned by --x11 options
-//     We try display numbers in the range 21 through 1000.
-//     Normal X servers typically use displays in the 0-10 range;
-//     ssh's X11 forwarding uses 10-20, and login screens
-//     (e.g. gdm3) may use displays above 1000.
-#define X11_DISPLAY_START 21
-#define X11_DISPLAY_END 1000
 
-void fs_x11(void);
-int x11_display(void);
-void x11_start(int argc, char **argv);
-void x11_start_xpra(int argc, char **argv);
-void x11_start_xephyr(int argc, char **argv);
-void x11_block(void);
-void x11_start_xvfb(int argc, char **argv);
-
-// ls.c
-enum {
-	SANDBOX_FS_LS = 0,
-	SANDBOX_FS_GET,
-	SANDBOX_FS_PUT,
-	SANDBOX_FS_MAX // this should always be the last entry
-};
-void sandboxfs(int op, pid_t pid, const char *path1, const char *path2);
+// restrict_users.c
+void restrict_users(void);
 
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2

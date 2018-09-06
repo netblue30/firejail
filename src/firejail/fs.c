@@ -572,11 +572,8 @@ void fs_proc_sys_dev_boot(void) {
 	/* Mount a version of /sys that describes the network namespace */
 	if (arg_debug)
 		printf("Remounting /sys directory\n");
-	// if this is an overlay, don't try to unmount, just mount a new sysfs
-	if (!arg_overlay) {
-		if (umount2("/sys", MNT_DETACH) < 0 && !cfg.chrootdir)
-			fwarning("failed to unmount /sys\n");
-	}
+	if (umount2("/sys", MNT_DETACH) < 0)
+		fwarning("failed to unmount /sys\n");
 	if (mount("sysfs", "/sys", "sysfs", MS_RDONLY|MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_REC, NULL) < 0)
 		fwarning("failed to mount /sys\n");
 	else

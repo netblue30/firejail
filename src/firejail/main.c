@@ -327,19 +327,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		printf("\n");
 		exit(0);
 	}
-#ifdef HAVE_OVERLAYFS
-	else if (strcmp(argv[i], "--overlay-clean") == 0) {
-		if (checkcfg(CFG_OVERLAYFS)) {
-			if (remove_overlay_directory()) {
-				fprintf(stderr, "Error: cannot remove overlay directory\n");
-				exit(1);
-			}
-		}
-		else
-			exit_err_feature("overlayfs");
-		exit(0);
-	}
-#endif
 #ifdef HAVE_NETWORK
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -841,19 +828,6 @@ int main(int argc, char **argv) {
 			// already handled
 		}
 
-
-		//*************************************
-		// x11
-		//*************************************
-
-#ifdef HAVE_X11
-		else if (strncmp(argv[i], "--xephyr-screen=", 14) == 0) {
-			if (checkcfg(CFG_X11))
-				; // the processing is done directly in x11.c
-			else
-				exit_err_feature("x11");
-		}
-#endif
 		//*************************************
 		// filtering
 		//*************************************
@@ -1619,14 +1593,6 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--x11=none") == 0) {
 			arg_x11_block = 1;
 		}
-#ifdef HAVE_X11
-		else if (strcmp(argv[i], "--x11=xorg") == 0) {
-			if (checkcfg(CFG_X11))
-				arg_x11_xorg = 1;
-			else
-				exit_err_feature("x11");
-		}
-#endif
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
 			// NOTE: this is second part of option handler,
 			//		 atempt to find and join sandbox is done in other one

@@ -128,16 +128,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			xephyr_screen = ptr + 14;
-		}
-		else
-			warning_feature_disabled("x11");
-#endif
-		return 0;
-	}
 	// mkdir
 	if (strncmp(ptr, "mkdir ", 6) == 0) {
 		fs_mkdir(ptr + 6);

@@ -19,9 +19,6 @@ Print ARP table for each sandbox.
 \fB\-\-caps
 Print capabilities configuration for each sandbox.
 .TP
-\fB\-\-cgroup
-Print control group information for each sandbox.
-.TP
 \fB\-\-cpu
 Print CPU affinity for each sandbox.
 .TP
@@ -58,10 +55,6 @@ Print a tree of all sandboxed processes.
 .TP
 \fB\-\-version
 Print program version and exit.
-
-.TP
-\fB\-\-x11
-Print X11 display number.
 
 .PP
 The format for each listed sandbox entry is as follows:

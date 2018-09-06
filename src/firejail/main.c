@@ -685,10 +685,7 @@ int main(int argc, char **argv) {
 	int prog_index = -1;			  // index in argv where the program command starts
 	int lockfd_network = -1;
 	int lockfd_directory = -1;
-	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
-	int arg_seccomp_cmdline = 0; 	// seccomp requested on command line (used to break out of --chroot)
-	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -849,7 +846,6 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
-				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -862,7 +858,6 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
-				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -875,7 +870,6 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
-				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -894,10 +888,8 @@ int main(int argc, char **argv) {
 				exit_err_feature("seccomp");
 		}
 #endif
-		else if (strcmp(argv[i], "--caps") == 0) {
+		else if (strcmp(argv[i], "--caps") == 0)
 			arg_caps_default_filter = 1;
-			arg_caps_cmdline = 1;
-		}
 		else if (strcmp(argv[i], "--caps.drop=all") == 0)
 			arg_caps_drop_all = 1;
 		else if (strncmp(argv[i], "--caps.drop=", 12) == 0) {
@@ -907,7 +899,6 @@ int main(int argc, char **argv) {
 				errExit("strdup");
 			// verify caps list and exit if problems
 			caps_check_list(arg_caps_list, NULL);
-			arg_caps_cmdline = 1;
 		}
 		else if (strncmp(argv[i], "--caps.keep=", 12) == 0) {
 			arg_caps_keep = 1;
@@ -916,7 +907,6 @@ int main(int argc, char **argv) {
 				errExit("strdup");
 			// verify caps list and exit if problems
 			caps_check_list(arg_caps_list, NULL);
-			arg_caps_cmdline = 1;
 		}
 
 

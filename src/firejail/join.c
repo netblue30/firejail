@@ -214,7 +214,6 @@ pid_t switch_to_child(pid_t pid) {
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
 	char *homedir = cfg.homedir;
-	pid_t parent = pid;
 
 	extract_command(argc, argv, index);
 	signal (SIGTERM, signal_handler);

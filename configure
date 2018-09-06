@@ -633,7 +633,6 @@ HAVE_WHITELIST
 HAVE_USERNS
 HAVE_NETWORK
 HAVE_GLOBALCFG
-HAVE_BIND
 HAVE_SECCOMP
 EXTRA_LDFLAGS
 EGREP
@@ -696,7 +695,6 @@ ac_user_opts='
 enable_option_checking
 enable_apparmor
 enable_seccomp
-enable_bind
 enable_globalcfg
 enable_network
 enable_userns
@@ -1337,7 +1335,6 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-apparmor       enable apparmor
   --disable-seccomp       disable seccomp
-  --disable-bind          disable bind
   --disable-globalcfg     if the global config file firejail.cfg is not
                           present, continue the program using defaults
   --disable-network       disable network
@@ -3085,8 +3082,6 @@ fi
 
 
 # LTS marker
-EXTRA_CFLAGS+=" -DLTS "
-
 
 HAVE_SPECTRE="no"
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Spectre mitigation support in gcc or clang compiler" >&5
@@ -3568,19 +3563,6 @@ fi
 if test "x$enable_seccomp" != "xno"; then :
 
 	HAVE_SECCOMP="-DHAVE_SECCOMP"
-
-
-fi
-
-HAVE_BIND=""
-# Check whether --enable-bind was given.
-if test "${enable_bind+set}" = set; then :
-  enableval=$enable_bind;
-fi
-
-if test "x$enable_bind" != "xno"; then :
-
-	HAVE_BIND="-DHAVE_BIND"
 
 
 fi
@@ -4941,7 +4923,6 @@ echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
-echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   whitelisting: $HAVE_WHITELIST"

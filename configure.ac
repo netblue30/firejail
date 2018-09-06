@@ -9,8 +9,6 @@ AC_PROG_INSTALL
 AC_PROG_RANLIB
 
 # LTS marker
-EXTRA_CFLAGS+=" -DLTS "
-
 
 HAVE_SPECTRE="no"
 AC_MSG_CHECKING(for Spectre mitigation support in gcc or clang compiler)
@@ -61,14 +59,6 @@ AC_ARG_ENABLE([seccomp],
 AS_IF([test "x$enable_seccomp" != "xno"], [
 	HAVE_SECCOMP="-DHAVE_SECCOMP"
 	AC_SUBST(HAVE_SECCOMP)
-])
-
-HAVE_BIND=""
-AC_ARG_ENABLE([bind],
-    AS_HELP_STRING([--disable-bind], [disable bind]))
-AS_IF([test "x$enable_bind" != "xno"], [
-	HAVE_BIND="-DHAVE_BIND"
-	AC_SUBST(HAVE_BIND)
 ])
 
 HAVE_GLOBALCFG=""
@@ -161,7 +151,6 @@ echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
-echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   whitelisting: $HAVE_WHITELIST"

@@ -92,6 +92,7 @@ int is_macro(const char *name) {
 
 // returns mallocated memory
 static char *resolve_xdg(const char *var) {
+	EUID_ASSERT();
 	char *fname;
 	struct stat s;
 	size_t length = strlen(var);

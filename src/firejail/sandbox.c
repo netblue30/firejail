@@ -882,7 +882,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	EUID_ROOT();
 	// set nice
 	if (arg_nice) {
 		errno = 0;
@@ -893,6 +892,7 @@ int sandbox(void* sandbox_arg) {
 			errno = 0;
 		}
 	}
+	EUID_ROOT();
 
 	//****************************
 	// set security filters

@@ -33,7 +33,7 @@
 
 #define MAX_GROUPS 1024
 #define MAXBUF 4098
-
+#define EMPTY_STRING ("")
 
 
 // send the error to /var/log/auth.log and exit after a small delay
@@ -1049,7 +1049,7 @@ void disable_file_path(const char *path, const char *file) {
 }
 
 // The returned file descriptor should be suitable for privileged operations on
-// user controlled paths. Passed flags are ignored if path is a top level directory.
+// user controlled paths
 int safe_fd(const char *path, int flags) {
 	assert(path);
 
@@ -1059,13 +1059,7 @@ int safe_fd(const char *path, int flags) {
 	// reject ".."
 	if (strstr(path, ".."))
 		goto errexit;
-
-	// work with a copy of path
-	char *dup = strdup(path);
-	if (dup == NULL)
-		errExit("strdup");
-
-	char *p = strrchr(dup, '/');
+	char *p = strrchr(path, '/');
 	assert(p);
 	// reject trailing slash, root directory
 	if (*(p + 1) == '\0')
@@ -1073,45 +1067,54 @@ int safe_fd(const char *path, int flags) {
 	// reject trailing dot
 	if (*(p + 1) == '.' && *(p + 2) == '\0')
 		goto errexit;
-	// if there is more than one path segment, keep the last one for later
-	if (p != dup)
-		*p = '\0';
+
+	// work with a copy of path
+	char *dup = strdup(path);
+	if (!dup)
+		errExit("strdup");
 
 	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (parentfd == -1)
 		errExit("open");
 
 	// traverse the path and return -1 if a symlink is encountered
-	int weird_pathname = 1;
 	int fd = -1;
+	char *current_tok = EMPTY_STRING;
 	char *tok = strtok(dup, "/");
+	assert(tok);
 	while (tok) {
 		// skip all "/./"
 		if (strcmp(tok, ".") == 0) {
 			tok = strtok(NULL, "/");
 			continue;
 		}
-		weird_pathname = 0;
-
-		// open the directory
+		// open the element, assuming it is a directory; this fails with ENOTDIR if it is a symbolic link
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-		close(parentfd);
 		if (fd == -1) {
+			// if the following token is NULL, the current token is the final path element
+			// try again to open it, this time using the passed flags, and return -1 or the descriptor
+			current_tok = tok;
+			tok = strtok(NULL, "/");
+			if (!tok)
+				fd = openat(parentfd, current_tok, flags|O_NOFOLLOW);
+			close(parentfd);
 			free(dup);
-			return -1;
+			return fd; // -1 if open failed
 		}
-
-		parentfd = fd;
+		// move on to next path segment
+		current_tok = tok;
 		tok = strtok(NULL, "/");
+		if (tok) {
+			close(parentfd);
+			parentfd = fd;
+		}
 	}
-	if (p != dup) {
-		// consistent flags for top level directories (////foo, /.///foo)
-		if (weird_pathname)
-			flags = O_PATH|O_DIRECTORY|O_CLOEXEC;
-		// open last path segment
-		fd = openat(parentfd, p + 1, flags|O_NOFOLLOW);
-		close(parentfd);
-	}
+
+	// we are here because the last path element exists and is of file type directory
+	// reopen it using the passed flags
+	close(fd);
+	fd = openat(parentfd, current_tok, flags|O_NOFOLLOW);
+	close(parentfd);
 	free(dup);
 	return fd; // -1 if open failed
 

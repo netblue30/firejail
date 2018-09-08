@@ -333,6 +333,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				caps_set(caps);
 		}
 
+		EUID_USER();
 		// set nice
 		if (arg_nice) {
 			errno = 0;
@@ -345,8 +346,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		// set environment, add x11 display
-		EUID_USER();
-
 		env_defaults();
 		if (display) {
 			char *display_str;

@@ -26,7 +26,8 @@ blacklist /usr/include
 blacklist ${PATH}/clang*
 blacklist ${PATH}/lldb*
 blacklist ${PATH}/llvm*
-blacklist /usr/lib/llvm*
+# see issue #2106 - it disables hardware acceleration in Firefox on Radeon GPU
+# blacklist /usr/lib/llvm*
 
 # tcc - Tiny C Compiler
 blacklist ${PATH}/tcc

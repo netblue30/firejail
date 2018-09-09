@@ -10,6 +10,7 @@ firejail (0.9.56~rc1) baseline; urgency=low
   * support tap devices in --net option (tunneling support)
   * allow IP address configuration if the parent interface specified
      by --net is not configured (--netmask)
+  * support for firetunnel utility
   * disable U2F devices (--nou2f)
   * add --private-cache to support private ~/.cache
   * support full paths in private-lib

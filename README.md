@@ -162,6 +162,24 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
               Example:
               $ firejail --private-cache
+
+       --tunnel[=devname]
+              Connect  the sandbox to a network overlay/VPN tunnel created by
+              firetunnel utility. This options tries first the client side of
+              the  tunnel. If this fails, it tries the server side. If multi‐
+              ple tunnels are active, please specify the tunnel device  using
+              --tunnel=devname.
+
+              The  available  tunnel  devices  are  listed in /etc/firetunnel
+              directory, one file for each device.   The  files  are  regular
+              firejail  profile  files  containing the network configuration,
+              and are created and managed by firetunnel utility.  By  default
+              ftc  is  the  client-side  device  and  fts  is the server-side
+              device. For more information please see man 1 firetunnel.
+
+              Example:
+              $ firejail --tunnel firefox
+
 `````
 
 ## New profiles

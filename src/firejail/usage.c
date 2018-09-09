@@ -214,6 +214,8 @@ static char *usage_str =
 	"    --tracelog - add a syslog message for every access to files or\n"
 	"\tdirectories blacklisted by the security profile.\n"
 	"    --tree - print a tree of all sandboxed processes.\n"
+	"    --tunnel[=devname] - connect the sandbox to a tunnel created by\n"
+	"\tfiretunnel utility.\n"
 	"    --version - print program version and exit.\n"
 #ifdef HAVE_NETWORK
 	"    --veth-name=name - use this name for the interface connected to the bridge.\n"

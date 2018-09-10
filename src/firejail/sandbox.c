@@ -1143,9 +1143,6 @@ int sandbox(void* sandbox_arg) {
 		errExit("fork");
 
 	if (app_pid == 0) {
-		// set rlimits
-		set_rlimits();
-
 #ifdef HAVE_APPARMOR
 		if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
 			errno = 0;
@@ -1158,6 +1155,8 @@ int sandbox(void* sandbox_arg) {
 				printf("AppArmor enabled\n");
 		}
 #endif
+		// set rlimits
+		set_rlimits();
 
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		start_application(0, fp);	// start app

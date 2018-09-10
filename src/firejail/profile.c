@@ -225,7 +225,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "private-cache") == 0) {
-		arg_private_cache = 1;
+		if (checkcfg(CFG_PRIVATE_CACHE))
+			arg_private_cache = 1;
+		else
+			warning_feature_disabled("private-cache");
 		return 0;
 	}
 	else if (strcmp(ptr, "private-dev") == 0) {

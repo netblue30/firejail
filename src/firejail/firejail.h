@@ -724,6 +724,7 @@ void x11_start_xpra(int argc, char **argv);
 void x11_start_xephyr(int argc, char **argv);
 void x11_block(void);
 void x11_start_xvfb(int argc, char **argv);
+void x11_xorg(void);
 
 // ls.c
 enum {
@@ -760,6 +761,7 @@ enum {
 	CFG_PRIVATE_LIB,
 	CFG_APPARMOR,
 	CFG_DBUS,
+	CFG_PRIVATE_CACHE,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;
@@ -770,7 +772,6 @@ extern char *xvfb_extra_params;
 extern char *netfilter_default;
 int checkcfg(int val);
 void print_compiletime_support(void);
-void x11_xorg(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);

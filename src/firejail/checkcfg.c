@@ -323,6 +323,14 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			else if (strncmp(ptr, "private-cache ", 14) == 0) {
+				if (strcmp(ptr + 14, "yes") == 0)
+					cfg_val[CFG_PRIVATE_CACHE] = 1;
+				else if (strcmp(ptr + 14, "no") == 0)
+					cfg_val[CFG_PRIVATE_CACHE] = 0;
+				else
+					goto errout;
+			}
 			else if (strncmp(ptr, "private-lib ", 12) == 0) {
 				if (strcmp(ptr + 12, "yes") == 0)
 					cfg_val[CFG_PRIVATE_LIB] = 1;

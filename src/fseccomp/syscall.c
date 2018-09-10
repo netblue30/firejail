@@ -495,10 +495,7 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 		}
 		else {
 			syscall_process_name(ptr, &syscall_nr, &error_nr);
-			if (syscall_nr == -1) {
-				if (!arg_quiet)
-					fprintf(stderr, "Warning fseccomp: syscall \"%s\" not available on this platform\n", ptr);
-			}
+			if (syscall_nr == -1) {;}
 			else if (callback != NULL) {
 				if (error_nr != -1 && fd != 0) {
 					filter_add_errno(fd, syscall_nr, error_nr, ptrarg);

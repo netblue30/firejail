@@ -650,40 +650,25 @@ void restrict_users(void);
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2
 enum {
-	CFG_FILE_TRANSFER = 0,
-	CFG_X11,
+	CFG_APPARMOR = 0,
+	CFG_ARP_PROBES,
 	CFG_BIND,
-	CFG_USERNS,
-	CFG_CHROOT,
-	CFG_SECCOMP,
-	CFG_NETWORK,
-	CFG_RESTRICTED_NETWORK,
-	CFG_FORCE_NONEWPRIVS,
-	CFG_WHITELIST,
-	CFG_XEPHYR_WINDOW_TITLE,
-	CFG_OVERLAYFS,
-	CFG_PRIVATE_HOME,
-	CFG_PRIVATE_BIN_NO_LOCAL,
+	CFG_DBUS,
+	CFG_DISABLE_MNT,
 	CFG_FIREJAIL_PROMPT,
 	CFG_FOLLOW_SYMLINK_AS_USER,
-	CFG_DISABLE_MNT,
+	CFG_FORCE_NONEWPRIVS,
 	CFG_JOIN,
-	CFG_ARP_PROBES,
-	CFG_XPRA_ATTACH,
-	CFG_PRIVATE_LIB,
-	CFG_APPARMOR,
-	CFG_DBUS,
+	CFG_NETWORK,
+	CFG_RESTRICTED_NETWORK,
+	CFG_SECCOMP,
+	CFG_USERNS,
+	CFG_WHITELIST,
 	CFG_MAX // this should always be the last entry
 };
-extern char *xephyr_screen;
-extern char *xephyr_extra_params;
-extern char *xpra_extra_params;
-extern char *xvfb_screen;
-extern char *xvfb_extra_params;
 extern char *netfilter_default;
 int checkcfg(int val);
 void print_compiletime_support(void);
-void x11_xorg(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);

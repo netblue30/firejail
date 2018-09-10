@@ -1011,6 +1011,33 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--disable-mnt") == 0)
 			arg_disable_mnt = 1;
+		else if (strcmp(argv[i], "--tunnel") == 0) {
+			// try to connect to the default client side of the tunnel
+			// if this fails, try the default server side of the tunnel
+			if (access("/run/firetunnel/ftc", R_OK) == 0)
+				profile_read("/run/firetunnel/ftc");
+			else if (access("/run/firetunnel/fts", R_OK) == 0)
+				profile_read("/run/firetunnel/fts");
+			else {
+				fprintf(stderr, "Error: no default firetunnel found, please specify it using --tunnel=devname option\n");
+				exit(1);
+			}
+		}
+		else if (strncmp(argv[i], "--tunnel=", 9) == 0) {
+			char *fname;
+			if (asprintf(&fname, "/run/firetunnel/%s", argv[i] + 9) == -1)
+				errExit("asprintf");
+			invalid_filename(fname, 0); // no globbing
+			if (access(fname, R_OK) == 0)
+				profile_read(fname);
+			else {
+				fprintf(stderr, "Error: tunnel not found\n");
+				exit(1);
+			}
+		}
+
+
+
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
 			// multiple profile files are allowed!
 

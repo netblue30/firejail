@@ -64,7 +64,7 @@ sleep 1
 send -- "firejail --private=/etc\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"private directory should be owned by the current user"
+	"private directory is not owned by the current user"
 }
 sleep 1
 send -- "mkdir ~/_firejail_test_dir_/test_dir_2\r"

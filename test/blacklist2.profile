@@ -1,1 +1,0 @@
-blacklist dir with space

@@ -25,11 +25,6 @@
 
 static int initialized = 0;
 static int cfg_val[CFG_MAX];
-char *xephyr_screen = "800x600";
-char *xephyr_extra_params = "";
-char *xpra_extra_params = "";
-char *xvfb_screen = "800x600x24";
-char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 
 int checkcfg(int val) {
@@ -45,11 +40,9 @@ int checkcfg(int val) {
 			cfg_val[i] = 1; // most of them are enabled by default
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
 		cfg_val[CFG_FORCE_NONEWPRIVS] = 0;
-		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
-		cfg_val[CFG_XPRA_ATTACH] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -75,25 +68,6 @@ int checkcfg(int val) {
 			ptr = line_remove_spaces(buf);
 			if (!ptr)
 				continue;
-
-			// dbus
-			else if (strncmp(ptr, "dbus ", 5) == 0) {
-				if (strcmp(ptr + 5, "yes") == 0)
-					cfg_val[CFG_DBUS] = 1;
-				else if (strcmp(ptr + 5, "no") == 0)
-					cfg_val[CFG_DBUS] = 0;
-				else
-					goto errout;
-			}
-			// join
-			else if (strncmp(ptr, "join ", 5) == 0) {
-				if (strcmp(ptr + 5, "yes") == 0)
-					cfg_val[CFG_JOIN] = 1;
-				else if (strcmp(ptr + 5, "no") == 0)
-					cfg_val[CFG_JOIN] = 0;
-				else
-					goto errout;
-			}
 			// apparmor
 			else if (strncmp(ptr, "apparmor ", 9) == 0) {
 				if (strcmp(ptr + 9, "yes") == 0)
@@ -102,6 +76,13 @@ int checkcfg(int val) {
 					cfg_val[CFG_APPARMOR] = 0;
 				else
 					goto errout;
+			}
+			// arp probes
+			else if (strncmp(ptr, "arp-probes ", 11) == 0) {
+				int arp_probes = atoi(ptr + 11);
+				if (arp_probes <= 1 || arp_probes > 30)
+					goto errout;
+				cfg_val[CFG_ARP_PROBES] = arp_probes;
 			}
 			// bind
 			else if (strncmp(ptr, "bind ", 5) == 0) {
@@ -112,12 +93,20 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			// user namespace
-			else if (strncmp(ptr, "userns ", 7) == 0) {
-				if (strcmp(ptr + 7, "yes") == 0)
-					cfg_val[CFG_USERNS] = 1;
-				else if (strcmp(ptr + 7, "no") == 0)
-					cfg_val[CFG_USERNS] = 0;
+			// dbus
+			else if (strncmp(ptr, "dbus ", 5) == 0) {
+				if (strcmp(ptr + 5, "yes") == 0)
+					cfg_val[CFG_DBUS] = 1;
+				else if (strcmp(ptr + 5, "no") == 0)
+					cfg_val[CFG_DBUS] = 0;
+				else
+					goto errout;
+			}
+			else if (strncmp(ptr, "disable-mnt ", 12) == 0) {
+				if (strcmp(ptr + 12, "yes") == 0)
+					cfg_val[CFG_DISABLE_MNT] = 1;
+				else if (strcmp(ptr + 12, "no") == 0)
+					cfg_val[CFG_DISABLE_MNT] = 0;
 				else
 					goto errout;
 			}
@@ -148,21 +137,12 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			// seccomp
-			else if (strncmp(ptr, "seccomp ", 8) == 0) {
-				if (strcmp(ptr + 8, "yes") == 0)
-					cfg_val[CFG_SECCOMP] = 1;
-				else if (strcmp(ptr + 8, "no") == 0)
-					cfg_val[CFG_SECCOMP] = 0;
-				else
-					goto errout;
-			}
-			// whitelist
-			else if (strncmp(ptr, "whitelist ", 10) == 0) {
-				if (strcmp(ptr + 10, "yes") == 0)
-					cfg_val[CFG_WHITELIST] = 1;
-				else if (strcmp(ptr + 10, "no") == 0)
-					cfg_val[CFG_WHITELIST] = 0;
+			// join
+			else if (strncmp(ptr, "join ", 5) == 0) {
+				if (strcmp(ptr + 5, "yes") == 0)
+					cfg_val[CFG_JOIN] = 1;
+				else if (strcmp(ptr + 5, "no") == 0)
+					cfg_val[CFG_JOIN] = 0;
 				else
 					goto errout;
 			}
@@ -172,6 +152,15 @@ int checkcfg(int val) {
 					cfg_val[CFG_NETWORK] = 1;
 				else if (strcmp(ptr + 8, "no") == 0)
 					cfg_val[CFG_NETWORK] = 0;
+				else
+					goto errout;
+			}
+			// quiet by default
+			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
+				if (strcmp(ptr + 17, "yes") == 0)
+					arg_quiet = 1;
+				else if (strcmp(ptr + 17, "no") == 0)
+					arg_quiet = 0;
 				else
 					goto errout;
 			}
@@ -208,29 +197,32 @@ int checkcfg(int val) {
 				if (arg_debug)
 					printf("netfilter default file %s\n", fname);
 			}
-			// quiet by default
-			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
-				if (strcmp(ptr + 17, "yes") == 0)
-					arg_quiet = 1;
-				else if (strcmp(ptr + 17, "no") == 0)
-					arg_quiet = 0;
+			// seccomp
+			else if (strncmp(ptr, "seccomp ", 8) == 0) {
+				if (strcmp(ptr + 8, "yes") == 0)
+					cfg_val[CFG_SECCOMP] = 1;
+				else if (strcmp(ptr + 8, "no") == 0)
+					cfg_val[CFG_SECCOMP] = 0;
 				else
 					goto errout;
 			}
-			else if (strncmp(ptr, "disable-mnt ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_DISABLE_MNT] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_DISABLE_MNT] = 0;
+			// user namespace
+			else if (strncmp(ptr, "userns ", 7) == 0) {
+				if (strcmp(ptr + 7, "yes") == 0)
+					cfg_val[CFG_USERNS] = 1;
+				else if (strcmp(ptr + 7, "no") == 0)
+					cfg_val[CFG_USERNS] = 0;
 				else
 					goto errout;
 			}
-			// arp probes
-			else if (strncmp(ptr, "arp-probes ", 11) == 0) {
-				int arp_probes = atoi(ptr + 11);
-				if (arp_probes <= 1 || arp_probes > 30)
+			// whitelist
+			else if (strncmp(ptr, "whitelist ", 10) == 0) {
+				if (strcmp(ptr + 10, "yes") == 0)
+					cfg_val[CFG_WHITELIST] = 1;
+				else if (strcmp(ptr + 10, "no") == 0)
+					cfg_val[CFG_WHITELIST] = 0;
+				else
 					goto errout;
-				cfg_val[CFG_ARP_PROBES] = arp_probes;
 			}
 			else
 				goto errout;

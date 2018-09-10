@@ -104,9 +104,6 @@ echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
 echo "TESTING: firemon cpu (test/utils/firemon-cpu.exp)"
 ./firemon-cpu.exp
 
-echo "TESTING: firemon cgroup (test/utils/firemon-cgroup.exp)"
-./firemon-cgroup.exp
-
 echo "TESTING: firemon version (test/utils/firemon-version.exp)"
 ./firemon-version.exp
 

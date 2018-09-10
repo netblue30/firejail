@@ -604,6 +604,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	// seccomp drop list without default list
+	if (strcmp(ptr, "seccomp.drop") == 0) {
+		fprintf(stderr, "Error: line %d in %s is invalid\n", lineno, fname);
+		exit(1);
+	}
 	if (strncmp(ptr, "seccomp.drop ", 13) == 0) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
@@ -617,6 +621,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	// seccomp keep list
+	if (strcmp(ptr, "seccomp.keep") == 0) {
+		fprintf(stderr, "Error: line %d in %s is invalid\n", lineno, fname);
+		exit(1);
+	}
 	if (strncmp(ptr, "seccomp.keep ", 13) == 0) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {

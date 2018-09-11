@@ -417,6 +417,9 @@ void start_application(int no_sandbox, FILE *fp) {
 		seccomp_install_filters();
 #endif
 		execl(arg_audit_prog, arg_audit_prog, NULL);
+
+		perror("execl");
+		exit(1);
 	}
 	//****************************************
 	// start the program without using a shell

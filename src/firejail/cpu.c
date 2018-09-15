@@ -162,6 +162,7 @@ static void print_cpu(int pid) {
 	free(file);
 }
 
+// allow any user to run --cpu.print
 void cpu_print_filter(pid_t pid) {
 	EUID_ASSERT();
 
@@ -174,15 +175,7 @@ void cpu_print_filter(pid_t pid) {
 		exit(1);
 	}
 
-	// check privileges for non-root users
-	uid_t uid = getuid();
-	if (uid != 0) {
-		uid_t sandbox_uid = pid_get_uid(pid);
-		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission denied.\n");
-			exit(1);
-		}
-	}
+
 
 	print_cpu(pid);
 	exit(0);

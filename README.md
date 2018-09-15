@@ -186,5 +186,5 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 Microsoft Office Online, riot-desktop, gnome-mpv, snox, gradio, standardnotes-desktop,
 shellcheck, patch, flameshot, rview, rvim, vimcat, vimdiff, vimpager, vimtutor,
 xxd, Beaker, electrum, clamtk, pybitmessage, dig, whois, jdownloader,
-Fluxbox, Blackbox, Awesome, i3
+Fluxbox, Blackbox, Awesome, i3, start-tor-browser.desktop
 

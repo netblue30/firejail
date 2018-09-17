@@ -793,13 +793,13 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 	if (lstat(dirname, &s) == 0) {
 		if (!S_ISDIR(s.st_mode)) {
 			if (S_ISLNK(s.st_mode))
-				fprintf(stderr, "Error: ~/.firejail is a symbolic link\n");
+				fprintf(stderr, "Error: %s is a symbolic link\n", dirname);
 			else
-				fprintf(stderr, "Error: ~/.firejail is not a directory\n");
+				fprintf(stderr, "Error: %s is not a directory\n", dirname);
 			exit(1);
 		}
 		if (s.st_uid != getuid()) {
-			fprintf(stderr, "Error: ~/.firejail directory is not owned by the current user\n");
+			fprintf(stderr, "Error: %s is not owned by the current user\n", dirname);
 			exit(1);
 		}
 	}
@@ -1160,7 +1160,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	if (asprintf(&overlay, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 	if (strncmp(rootdir, overlay, strlen(overlay)) == 0) {
-		fprintf(stderr, "Error: invalid chroot directory: no directories in ~/.firejail are allowed\n");
+		fprintf(stderr, "Error: invalid chroot directory: no directories in %s are allowed\n", overlay);
 		exit(1);
 	}
 	free(overlay);

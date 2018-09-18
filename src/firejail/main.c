@@ -523,7 +523,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		cpu_print_filter(pid);
 		exit(0);
 	}
-	else if (strncmp(argv[i], "--apparmor.print=", 12) == 0) {
+	else if (strncmp(argv[i], "--apparmor.print=", 17) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid = require_pid(argv[i] + 17);
 		char *pidstr;
@@ -1094,7 +1094,7 @@ int main(int argc, char **argv) {
 		//*************************************
 
 #ifdef HAVE_X11
-		else if (strncmp(argv[i], "--xephyr-screen=", 14) == 0) {
+		else if (strncmp(argv[i], "--xephyr-screen=", 16) == 0) {
 			if (checkcfg(CFG_X11))
 				; // the processing is done directly in x11.c
 			else

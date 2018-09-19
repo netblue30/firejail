@@ -25,7 +25,7 @@ include /etc/firejail/whitelist-var-common.inc
 caps.drop all
 netfilter
 #nodbus
-#nogroups
+nogroups
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink

@@ -25,8 +25,12 @@ rm -fr ~/_firejail_test_*
 echo "TESTING: /sys/fs access (test/fs/sys_fs.exp)"
 ./sys_fs.exp
 
-echo "TESTING: kmsg access (test/fs/kmsg.exp)"
-./kmsg.exp
+if [ -c /dev/kmsg ]; then
+	echo "TESTING: kmsg access (test/fs/kmsg.exp)"
+	./kmsg.exp
+else
+	echo "TESTING SKIP: /dev/kmsg not available"
+fi
 
 echo "TESTING: read/write /var/tmp (test/fs/fs_var_tmp.exp)"
 ./fs_var_tmp.exp

@@ -115,11 +115,19 @@ echo "TESTING: top (test/utils/top.exp)"
 echo "TESTING: file transfer (test/utils/ls.exp)"
 ./ls.exp
 
-echo "TESTING: firemon seccomp (test/utils/firemon-seccomp.exp)"
-./firemon-seccomp.exp
+if grep -q "^Seccomp.*0" /proc/self/status; then
+	echo "TESTING: firemon seccomp (test/utils/firemon-seccomp.exp)"
+	./firemon-seccomp.exp
+else
+	echo "TESTING SKIP: seccomp already active (test/utils/firemon-seccomp.exp)"
+fi
 
-echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
-./firemon-caps.exp
+if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
+	echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
+	./firemon-caps.exp
+else
+	echo "TESTING SKIP: other capabilities than expected (test/utils/firemon-caps.exp)"
+fi
 
 echo "TESTING: firemon cpu (test/utils/firemon-cpu.exp)"
 ./firemon-cpu.exp

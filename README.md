@@ -27,7 +27,7 @@ Features: https://firejail.wordpress.com/features-3/
 
 Documentation: https://firejail.wordpress.com/documentation-2/
 
-FAQ: https://firejail.wordpress.com/support/frequently-asked-questions/
+FAQ: https://firejail.wordpress.com/support/
 
 Travis-CI status: https://travis-ci.org/netblue30/firejail
 

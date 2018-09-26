@@ -1991,7 +1991,7 @@ During software install, a generic AppArmor profile file, firejail-default, is p
 .br
 
 .br
-# apparmor_parser -r firejail-default
+# apparmor_parser -r /etc/apparmor.d/firejail-default
 .TP
 The installed profile is supplemental for main firejail functions and among other things does the following:
 .br

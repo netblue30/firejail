@@ -29,6 +29,7 @@ whitelist ${HOME}/.cache/liferea
 whitelist ${HOME}/.config/liferea
 whitelist ${HOME}/.local/share/liferea
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

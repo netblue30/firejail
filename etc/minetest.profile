@@ -17,10 +17,12 @@ include /etc/firejail/disable-programs.inc
 mkdir ${HOME}/.minetest
 whitelist ${HOME}/.minetest
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

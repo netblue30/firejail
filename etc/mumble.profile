@@ -20,6 +20,7 @@ mkdir ${HOME}/.local/share/data/Mumble
 whitelist ${HOME}/.config/Mumble
 whitelist ${HOME}/.local/share/data/Mumble
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

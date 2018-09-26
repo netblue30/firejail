@@ -502,6 +502,7 @@ static void enforce_filters(void) {
 	// force default seccomp inside the chroot, no keep or drop list
 	// the list build on top of the default drop list is kept intact
 	arg_seccomp = 1;
+	arg_nonewprivs = 1;
 #ifdef HAVE_SECCOMP
 	enforce_seccomp = 1;
 #endif
@@ -989,9 +990,9 @@ int sandbox(void* sandbox_arg) {
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
 	if (arg_nonewprivs) {
-		int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+		prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
 
-		if(no_new_privs != 0 && !arg_quiet)
+		if (prctl(PR_GET_NO_NEW_PRIVS, 0, 0, 0, 0) != 1)
 			fwarning("NO_NEW_PRIVS disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		else if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");

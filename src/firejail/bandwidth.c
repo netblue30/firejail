@@ -338,6 +338,16 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		exit(1);
 	}
 
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
+			exit(1);
+		}
+	}
+
 	EUID_ROOT();
 	if (join_namespace(child, "net")) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");

@@ -248,7 +248,7 @@ void fs_private_homedir(void) {
 		exit(1);
 	}
 	if ((S_IRWXU & s.st_mode) != S_IRWXU)
-		fwarning("no full permissions for private directory\n");
+		fwarning("no full permissions on private directory\n");
 	// mount via the link in /proc/self/fd
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)

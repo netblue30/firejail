@@ -1987,33 +1987,37 @@ AppArmor support is disabled by default at compile time. Use --enable-apparmor c
 .br
 $ ./configure --prefix=/usr --enable-apparmor
 .TP
-During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The profile needs to be loaded into the kernel by running the following command as root:
+During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The local customizations can be
+placed in /etc/apparmor.d/local/firejail-local. The profile needs to be loaded into the kernel by running the following command as root, reloading
+apparmor.service or rebooting the system:
 .br
 
 .br
-# aa-enforce firejail-default
+# apparmor_parser -r firejail-default
 .TP
-The installed profile tries to replicate some advanced security features inspired by kernel-based Grsecurity:
+The installed profile is supplemental for main firejail functions and among other things does the following:
 .br
 
 .br
-- Prevent information leakage in /proc and /sys directories. The resulting filesystem is barely enough for running
-commands such as "top" and "ps aux".
+- Disable ptrace. With ptrace it is possible to inspect and hijack running programs. Usually this is needed only for debugging.
+You should have no problems running Chromium or Firefox. This feature is available only on Ubuntu kernels.
 .br
 
 .br
-- Allow running programs only from well-known system paths, such as /bin, /sbin, /usr/bin etc. Running
+- Whitelist write access to several files under /run, /proc and /sys.
+.br
+
+.br
+- Allow running programs only from well-known system paths, such as /bin, /sbin, /usr/bin etc. Those paths are available as read-only. Running
 programs and scripts from user home or other directories writable by the user is not allowed.
 .br
 
 .br
-- Allow access to files only in the following standard directories: /bin, /dev, /etc, /home, /lib*, /media, /mnt, /opt,
-/proc, /root, /run, /sbin, /srv, /sys, /tmp, /usr, and /var
+- Prevent using non-standard network sockets. Only unix, inet, inet6, netlink, raw and packet are allowed.
 .br
 
 .br
-- Disable D-Bus. D-Bus has long been a huge security hole, and most programs don't use it anyway.
-You should have no problems running Chromium or Firefox. This feature is available only on Ubuntu kernels.
+- Deny access to known sensitive paths like .snapshots.
 
 .TP
 To enable AppArmor confinement on top of your current Firejail security features, pass \fB\-\-apparmor\fR flag to Firejail command line. You can also include \fBapparmor\fR command in a Firejail profile file. Example:

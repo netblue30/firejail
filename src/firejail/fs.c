@@ -845,6 +845,8 @@ void fs_private_cache(void) {
 		return;
 	}
 
+	if (arg_debug)
+		printf("Mounting tmpfs on %s\n", cache);
 	// get a file descriptor for ~/.cache, fails if there is any symlink
 	int fd = safe_fd(cache, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)

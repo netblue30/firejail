@@ -507,7 +507,7 @@ void fs_whitelist(void) {
 			// both path and absolute path are under /home
 			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0) {
 				// entire home directory is not allowed
-				if (*(fname + strlen(cfg.homedir)) != '/') {
+				if (strlen(fname) == strlen(cfg.homedir)) {
 					free(fname);
 					goto errexit;
 				}

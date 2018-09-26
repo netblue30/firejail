@@ -91,6 +91,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
+	"2" {puts "seccomp already active\n";}
 	"0"
 }
 expect {

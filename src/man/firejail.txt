@@ -2521,10 +2521,6 @@ The installed profile is supplemental for main firejail functions and among othe
 
 .br
 - Deny access to known sensitive paths like .snapshots.
-.br
-
-.br
-- Prevent using non-standard network sockets. Only unix, inet, inet6, netlink, raw and packet are allowed.
 
 .TP
 To enable AppArmor confinement on top of your current Firejail security features, pass \fB\-\-apparmor\fR flag to Firejail command line. You can also include \fBapparmor\fR command in a Firejail profile file. Example:

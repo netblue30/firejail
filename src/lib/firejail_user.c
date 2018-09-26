@@ -108,7 +108,7 @@ int firejail_user_check(const char *name) {
 		return 1;
 
 	// user nobody is never allowed
-	if (strcmp(name, "root") == 0)
+	if (strcmp(name, "nobody") == 0)
 		return 0;
 
 	// check file existence

@@ -22,11 +22,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"blacklist /dev/kmsg"
+	"blacklist /proc/kmsg"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"blacklist /proc/kmsg"
+	"blacklist /bin/su"
 }
 after 100
 puts "\nall done\n"

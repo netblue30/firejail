@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -f /etc/debian_version ]; then
-	libdir=$(dirname "$(dpkg -L firejail | grep faudit)")
-	export PATH="$PATH:$libdir"
-fi
-export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
+export MALLOC_CHECK_=3
+export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
+
+rm -f ./args
+gcc -o args args.c
 
 echo "TESTING: 1. regular bash session"
 ./bashrun.exp
@@ -18,3 +18,5 @@ sleep 1
 echo "TESTING: 3. --join option"
 ./joinrun.exp
 sleep 1
+
+rm ./args

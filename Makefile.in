@@ -190,6 +190,9 @@ asc:; ./mkasc.sh $(VERSION)
 deb: dist
 	./mkdeb.sh $(NAME) $(VERSION)
 
+deb-apparmor: dist
+	./mkdeb-apparmor.sh $(NAME) $(VERSION)
+
 snap: all
 	cd platform/snap; ./snap.sh
 

@@ -26,7 +26,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"blacklist /bin/su"
+	"blacklist /usr/bin/su" {puts "Arch Linux";}
+	"blacklist /bin/su" {puts "Debian"}
 }
 after 100
 puts "\nall done\n"

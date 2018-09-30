@@ -379,8 +379,8 @@ void fs_whitelist(void) {
 				fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
 				fprintf(stderr, "***\n");
 			}
-			free(new_name);
 			entry->data = EMPTY_STRING;
+			free(new_name);
 			continue;
 		}
 
@@ -452,6 +452,7 @@ void fs_whitelist(void) {
 			}
 
 			entry->data = EMPTY_STRING;
+			free(new_name);
 			continue;
 		}
 		else if (arg_debug_whitelists)
@@ -470,6 +471,7 @@ void fs_whitelist(void) {
 			}
 			nowhitelist[nowhitelist_c++] = fname;
 			entry->data = EMPTY_STRING;
+			free(new_name);
 			continue;
 		}
 
@@ -482,6 +484,7 @@ void fs_whitelist(void) {
 
 				entry->data = EMPTY_STRING;
 				free(fname);
+				free(new_name);
 				continue;
 			}
 
@@ -640,6 +643,7 @@ void fs_whitelist(void) {
 					printf("Skip nowhitelisted path %s\n", fname);
 				entry->data = EMPTY_STRING;
 				free(fname);
+				free(new_name);
 				continue;
 			}
 		}

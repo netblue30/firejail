@@ -35,19 +35,6 @@
 #define EMPTY_STRING ("")
 #define MAXBUF 4098
 
-// returns mallocated memory
-char *parse_nowhitelist(int nowhitelist_flag, char *ptr1) {
-  char *rv;
-  if (nowhitelist_flag) {
-    if (asprintf(&rv, "nowhitelist ~/%s", ptr1) == -1)
-      errExit("asprintf");
-  }
-  else {
-    if (asprintf(&rv, "whitelist ~/%s", ptr1) == -1)
-      errExit("asprintf");
-  }
-  return rv;
-}
 
 static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
@@ -369,34 +356,22 @@ void fs_whitelist(void) {
 		}
 		char *dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 
-		// resolve macros
-		if (is_macro(dataptr)) {
-			char *tmp = resolve_macro(dataptr); // returns allocated mem
-			if (tmp != NULL) {
-				char *tmp1 = parse_nowhitelist(nowhitelist_flag, tmp);
-				assert(tmp1);
-				free(tmp);
-				tmp = tmp1;
-			}
-			if (tmp) {
-				entry->data = tmp;
-				dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
-			}
-			else {
-				if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-					fprintf(stderr, "***\n");
-					fprintf(stderr, "*** Warning: cannot whitelist %s directory\n", dataptr);
-					fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
-					fprintf(stderr, "***\n");
-				}
-				entry->data = EMPTY_STRING;
-				continue;
-			}
-		}
-
-		// replace ~/ or ${HOME} into /home/username
+		// replace ~/ or ${HOME} into /home/username or resolve macro
 		new_name = expand_home(dataptr, cfg.homedir);
 		assert(new_name);
+
+		// skip command if resolving the macro was not successful
+		if (is_macro(new_name)) {
+			if (!nowhitelist_flag && !arg_quiet && !arg_private) {
+				fprintf(stderr, "***\n");
+				fprintf(stderr, "*** Warning: cannot whitelist %s directory\n", new_name);
+				fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
+				fprintf(stderr, "***\n");
+			}
+			free(new_name);
+			entry->data = EMPTY_STRING;
+			continue;
+		}
 
 		// remove trailing slashes and single dots
 		trim_trailing_slash_or_dot(new_name);

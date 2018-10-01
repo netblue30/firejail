@@ -21,8 +21,12 @@ rm -f ~/firejail-test-file-7699
 rm -f /tmp/firejail-test-file-7699
 rm -f /var/tmp/firejail-test-file-7699
 
-echo "TESTING: audit (test/utils/audit.exp)"
-./audit.exp
+if [ $(readlink /proc/self) -lt 100 ]; then
+	echo "TESTING SKIP: already running in pid namespace (test/utils/audit.exp)"
+else
+	echo "TESTING: audit (test/utils/audit.exp)"
+	./audit.exp
+fi
 
 echo "TESTING: name (test/utils/name.exp)"
 ./name.exp

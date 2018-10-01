@@ -380,6 +380,7 @@ void fs_whitelist(void) {
 				fprintf(stderr, "***\n");
 			}
 			entry->data = EMPTY_STRING;
+			entry = entry->next;
 			free(new_name);
 			continue;
 		}
@@ -452,6 +453,7 @@ void fs_whitelist(void) {
 			}
 
 			entry->data = EMPTY_STRING;
+			entry = entry->next;
 			free(new_name);
 			continue;
 		}
@@ -471,6 +473,7 @@ void fs_whitelist(void) {
 			}
 			nowhitelist[nowhitelist_c++] = fname;
 			entry->data = EMPTY_STRING;
+			entry = entry->next;
 			free(new_name);
 			continue;
 		}
@@ -483,6 +486,7 @@ void fs_whitelist(void) {
 					printf("\"%s\" disabled by --private\n", entry->data);
 
 				entry->data = EMPTY_STRING;
+				entry = entry->next;
 				free(fname);
 				free(new_name);
 				continue;
@@ -642,6 +646,7 @@ void fs_whitelist(void) {
 				if (arg_debug || arg_debug_whitelists)
 					printf("Skip nowhitelisted path %s\n", fname);
 				entry->data = EMPTY_STRING;
+				entry = entry->next;
 				free(fname);
 				free(new_name);
 				continue;

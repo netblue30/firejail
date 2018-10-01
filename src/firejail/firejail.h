@@ -498,6 +498,7 @@ char *expand_home(const char *path, const char *homedir);
 char *resolve_macro(const char *name);
 void invalid_filename(const char *fname, int globbing);
 int is_macro(const char *name);
+int macro_id(const char *name);
 
 
 // util.c

@@ -372,12 +372,16 @@ void fs_whitelist(void) {
 		assert(new_name);
 
 		// skip command if resolving the macro was not successful
-		if (is_macro(new_name)) {
-			if (!nowhitelist_flag && !arg_quiet && !arg_private) {
-				fprintf(stderr, "***\n");
-				fprintf(stderr, "*** Warning: cannot whitelist %s directory\n", new_name);
-				fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
-				fprintf(stderr, "***\n");
+		if (is_macro(new_name) && macro_id(new_name) > -1) {
+			// mount empty home directory and print a warning
+			if (!nowhitelist_flag && !arg_private) {
+				home_dir = 1;
+				if (!arg_quiet) {
+					fprintf(stderr, "***\n");
+					fprintf(stderr, "*** Warning: cannot whitelist %s directory\n", new_name);
+					fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
+					fprintf(stderr, "***\n");
+				}
 			}
 			entry->data = EMPTY_STRING;
 			entry = entry->next;

@@ -430,7 +430,7 @@ void fs_whitelist(void) {
 
 			// if 1 the file was not found; mount an empty directory
 			if (!nowhitelist_flag) {
-				if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
+				if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0 && new_name[strlen(cfg.homedir)] == '/') {
 					if(!arg_private)
 						home_dir = 1;
 				}

@@ -85,9 +85,6 @@ static char *usage_str =
         "    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --list - list all sandboxes.\n"
-#ifdef HAVE_FILE_TRANSFER
-	"    --ls=name|pid dir_or_filename - list files in sandbox container.\n"
-#endif
 #ifdef HAVE_NETWORK
 	"    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n"
 #endif

@@ -47,6 +47,8 @@ Committers
 
 Firejail Authors (alphabetical order)
 
+1dnrr (https://github.com/1dnrr)
+	- add pybitmessage profile
 Aidan Gauland (https://github.com/aidalgol)
 	- added electron and riot-web profiles
 Akhil Hans Maulloo (https://github.com/kouul)
@@ -321,6 +323,7 @@ Jean Lucas (https://github.com/flacks)
 	- add gnome-mpv profile
 	- fix wire profile
 	- add Beaker profile
+	- fixes for gnome-music
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)
@@ -391,6 +394,8 @@ Mattias Wadman (https://github.com/wader)
 	- seccomp errno filter support
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
+matu3ba (https://github.com/matu3ba)
+	- evince hardening, dbus removed
 maxice8 (https://github.com/maxice8)
 	- fixed missing header
 Melvin Vermeeren (https://github.com/melvinvermeeren)
@@ -654,6 +659,7 @@ Veeti Paananen (https://github.com/veeti)
 veloute (https://github.com/veloute)
 	- added standardnotes profile
 	- added flameshot profile
+	- added jdownloader profile
 Vincent43 (https://github.com/Vincent43)
 	- apparmor enhancements
 vismir2 (https://github.com/vismir2)

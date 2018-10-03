@@ -40,7 +40,7 @@ private-bin evince,evince-previewer,evince-thumbnailer
 private-dev
 private-etc fonts
 
-private-lib x86_64-linux-gnu/evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*,gconv
+private-lib evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*,gconv
 
 private-tmp
 

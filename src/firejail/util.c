@@ -636,33 +636,33 @@ void extract_command_name(int index, char **argv) {
 	if (!cfg.command_name)
 		errExit("strdup");
 
-	// restrict the command name to the first word
-	char *ptr = cfg.command_name;
-	while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
-		ptr++;
-	*ptr = '\0';
-
 	// remove the path: /usr/bin/firefox becomes firefox
-	ptr = strrchr(cfg.command_name, '/');
+	char *basename = cfg.command_name;
+	char *ptr = strrchr(cfg.command_name, '/');
 	if (ptr) {
-		ptr++;
+		basename = ++ptr;
 		if (*ptr == '\0') {
 			fprintf(stderr, "Error: invalid command name\n");
 			exit(1);
 		}
+	}
+	else
+		ptr = basename;
 
-		char *tmp = strdup(ptr);
-		if (!tmp)
+	// restrict the command name to the first word
+	while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
+		ptr++;
+
+	// command name is a substring of cfg.command_name
+	if (basename != cfg.command_name || *ptr != '\0') {
+		*ptr = '\0';
+		
+		basename = strdup(basename);
+		if (!basename)
 			errExit("strdup");
 
-		// limit the command to the first ' '
-		char *ptr2 = tmp;
-		while (*ptr2 != ' ' && *ptr2 != '\0')
-			ptr2++;
-		*ptr2 = '\0';
-
 		free(cfg.command_name);
-		cfg.command_name = tmp;
+		cfg.command_name = basename;
 	}
 }
 

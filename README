@@ -147,6 +147,8 @@ Christian Stadelmann (https://github.com/genodeftest)
 	- evolution profile fix
 Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
+crass (https://github.com/crass)
+	- extract_command_name fixes
 curiosity-seeker (https://github.com/curiosity-seeker)
 	- tightening unbound and dnscrypt-proxy profiles
 	- correct and tighten QuiteRss profile

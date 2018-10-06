@@ -18,6 +18,10 @@ firejail-users.5
 firejail.1
 firemon.1
 firecfg.1
+docs/_build
+docs/_static
+docs/_templates
+!docs/Makefile
 src/firejail/firejail
 src/firemon/firemon
 src/firecfg/firecfg
@@ -40,4 +44,3 @@ seccomp.64
 seccomp.block_secondary
 seccomp.mdwx
 src/common.mk
-

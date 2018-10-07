@@ -273,6 +273,9 @@ blacklist   ${HOME}/.local/share/Trash
 read-only ${HOME}/.config/menus
 read-only ${HOME}/.local/share/applications
 
+# Write-protection for thumbnailer dir
+read-only ${HOME}/.local/share/thumbnailers
+
 # top secret
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.kdbx

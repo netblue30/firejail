@@ -113,6 +113,56 @@ static void sanitize_home(void) {
 
 }
 
+static void sanitize_run(void) {
+	if (arg_debug)
+		printf("Cleaning /run/user directory\n");
+
+	char *runuser;
+	if (asprintf(&runuser, "/run/user/%u", getuid()) == -1)
+		errExit("asprintf");
+
+	struct stat s;
+	if (stat(runuser, &s) == -1) {
+		// cannot find /user/run/$UID directory, just return
+		if (arg_debug)
+			printf("Cannot find %s directory\n", runuser);
+		free(runuser);
+		return;
+	}
+
+	if (mkdir(RUN_WHITELIST_RUN_DIR, 0755) == -1)
+		errExit("mkdir");
+
+	// keep a copy of the /run/user/$UID directory
+	if (mount(runuser, RUN_WHITELIST_RUN_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind");
+
+	// mount tmpfs on /run/user
+	if (mount("tmpfs", "/run/user", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("mount tmpfs");
+	fs_logger("tmpfs /run/user");
+
+	// create new user directory
+	if (mkdir(runuser, 0700) == -1)
+		errExit("mkdir");
+	fs_logger2("mkdir", runuser);
+
+	// set mode and ownership
+	if (set_perms(runuser, getuid(), getgid(), 0700))
+		errExit("set_perms");
+
+	// mount user home directory
+	if (mount(RUN_WHITELIST_RUN_DIR, runuser, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind");
+
+	// mask mirrored /run/user/$UID directory
+	if (mount("tmpfs", RUN_WHITELIST_RUN_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		errExit("mount tmpfs");
+	fs_logger2("tmpfs", RUN_WHITELIST_RUN_DIR);
+
+	free(runuser);
+}
+
 static void sanitize_passwd(void) {
 	struct stat s;
 	if (stat("/etc/passwd", &s) == -1)
@@ -352,6 +402,7 @@ void restrict_users(void) {
 				errExit("mount tmpfs");
 			fs_logger("tmpfs /home");
 		}
+		sanitize_run();
 		sanitize_passwd();
 		sanitize_group();
 	}

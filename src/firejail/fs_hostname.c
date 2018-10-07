@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -89,7 +89,7 @@ errexit:
 }
 
 void fs_resolvconf(void) {
-	if (cfg.dns1 == 0)
+	if (cfg.dns1 == NULL)
 		return;
 
 	if (arg_debug)
@@ -124,6 +124,7 @@ void fs_resolvconf(void) {
 		if (asprintf(&dest, "%s/%s", RUN_DNS_ETC, entry->d_name) == -1)
 			errExit("asprintf");
 
+		int symlink_done = 0;
 		if (is_link(src)) {
 			char *rp =realpath(src, NULL);
 			if (rp == NULL) {
@@ -133,14 +134,19 @@ void fs_resolvconf(void) {
 			}
 			if (symlink(rp, dest))
 				errExit("symlink");
+			else
+				symlink_done = 1;
 		}
 		else if (S_ISDIR(s.st_mode))
 			create_empty_dir_as_root(dest, s.st_mode);
 		else
 			create_empty_file_as_root(dest, s.st_mode);
+
 		// bind-mount src on top of dest
-		if (mount(src, dest, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind mirroring /etc");
+		if (!symlink_done) {
+			if (mount(src, dest, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind mirroring /etc");
+		}
 		fs_logger2("clone", src);
 
 		free(src);
@@ -164,11 +170,13 @@ void fs_resolvconf(void) {
 	}
 
 	if (cfg.dns1)
-		fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
+		fprintf(fp, "nameserver %s\n", cfg.dns1);
 	if (cfg.dns2)
-		fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
+		fprintf(fp, "nameserver %s\n", cfg.dns2);
 	if (cfg.dns3)
-		fprintf(fp, "nameserver %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
+		fprintf(fp, "nameserver %s\n", cfg.dns3);
+	if (cfg.dns4)
+		fprintf(fp, "nameserver %s\n", cfg.dns4);
 
 	// mode and owner
 	SET_PERMS_STREAM(fp, 0, 0, 0644);

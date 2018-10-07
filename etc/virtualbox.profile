@@ -1,4 +1,5 @@
 # Firejail profile for virtualbox
+# Description: x86 virtualization solution
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/virtualbox.local

@@ -4,7 +4,7 @@ set timeout 30
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --dns=8.8.4.4 --dns=8.8.8.8 --dns=4.2.2.1\r"
+send -- "firejail --dns=8.8.4.4 --dns=8.8.8.8 --dns=4.2.2.1 --dns=::2\r"
 expect {
 	timeout {puts "TESTING ERROR 2.1\n";exit}
 	"Child process initialized"
@@ -23,6 +23,10 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 2.4\n";exit}
 	"nameserver 4.2.2.1"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.5\n";exit}
+	"nameserver ::2"
 }
 after 100
 send -- "exit\r"
@@ -50,6 +54,10 @@ expect {
 	"nameserver 4.2.2.1"
 }
 after 100
+expect {
+	timeout {puts "TESTING ERROR 12.5\n";exit}
+	"nameserver ::2"
+}
 send -- "exit\r"
 sleep 1
 

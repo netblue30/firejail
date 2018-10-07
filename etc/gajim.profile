@@ -1,4 +1,5 @@
 # Firejail profile for gajim
+# Description: GTK+-based Jabber client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gajim.local
@@ -9,19 +10,23 @@ noblacklist ${HOME}/.cache/gajim
 noblacklist ${HOME}/.config/gajim
 noblacklist ${HOME}/.local/share/gajim
 
+# Allow Python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python3*
+noblacklist /usr/lib64/python3*
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.config/gajim
-mkdir ${HOME}/.local/lib/python2.7/site-packages/
 mkdir ${HOME}/.local/share/gajim
 mkdir ${HOME}/Downloads
 whitelist ${HOME}/.cache/gajim
 whitelist ${HOME}/.config/gajim
-whitelist ${HOME}/.local/lib/python2.7/site-packages/
 whitelist ${HOME}/.local/share/gajim
 whitelist ${HOME}/Downloads
 include /etc/firejail/whitelist-common.inc
@@ -35,12 +40,9 @@ noroot
 notv
 protocol unix,inet,inet6
 seccomp
-shell none
 
 disable-mnt
-private-bin python2.7,gajim
+private-bin python,python3,sh,gpg,gpg2,gajim
 private-dev
-# private-etc fonts
-# private-tmp
-# Allow the local python 2.7 site packages, in case any plugins are using these
-read-only ${HOME}/.local/lib/python2.7/site-packages/
+private-etc alsa,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
+private-tmp

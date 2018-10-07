@@ -14,3 +14,4 @@ blacklist ${HOME}/.lastpass
 blacklist ${HOME}/.local/share/KeePass
 blacklist ${HOME}/.local/share/keepass
 blacklist ${HOME}/.password-store
+blacklist ${HOME}/.fpm

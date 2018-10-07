@@ -1,13 +1,38 @@
 AC_PREREQ([2.68])
-AC_INIT(firejail, 0.9.51, netblue30@yahoo.com, , http://firejail.wordpress.com)
+AC_INIT(firejail, 0.9.57, netblue30@yahoo.com, , https://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 #AC_CONFIG_HEADERS([config.h])
-
 
 AC_PROG_CC
 #AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_RANLIB
+
+HAVE_SPECTRE="no"
+AC_MSG_CHECKING(for Spectre mitigation support in gcc or clang compiler)
+AS_IF([test "$CC" = "gcc"], [
+	HAVE_SPECTRE="yes"
+	$CC -mindirect-branch=thunk -c dummy.c || HAVE_SPECTRE="no"
+	rm -f dummy.o
+	AS_IF([test "$HAVE_SPECTRE" = "yes"], [
+		EXTRA_CFLAGS+=" -mindirect-branch=thunk "
+	])
+])
+AS_IF([test "$CC" = "clang"], [
+	HAVE_SPECTRE="yes"
+	$CC -mretpoline -c dummy.c || HAVE_SPECTRE="no"
+	rm -f dummy.o
+	AS_IF([test "$HAVE_SPECTRE" = "yes"], [
+		EXTRA_CFLAGS+=" -mretpoline "
+	])
+])
+AS_IF([test "$HAVE_SPECTRE" = "yes"], [
+	AC_MSG_RESULT(yes)
+])
+AS_IF([test "$HAVE_SPECTRE" = "no"], [
+	AC_MSG_RESULT(... not available)
+])
+AC_SUBST([EXTRA_CFLAGS])
 
 HAVE_APPARMOR=""
 AC_ARG_ENABLE([apparmor],
@@ -17,13 +42,12 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 	AC_SUBST(HAVE_APPARMOR)
 ])
 
-
 AS_IF([test "x$enable_apparmor" = "xyes"], [
 	AC_CHECK_HEADER(sys/apparmor.h, , [AC_MSG_ERROR(
 	[Couldn't find sys/apparmor.h... please install apparmor user space library and development files] )])
 ])
 AS_IF([test "x$enable_apparmor" = "xyes"], [
-	EXTRA_LDFLAGS+="-lapparmor "
+	EXTRA_LDFLAGS+=" -lapparmor "
 ])
 AC_SUBST([EXTRA_LDFLAGS])
 
@@ -59,14 +83,6 @@ AS_IF([test "x$enable_chroot" != "xno"], [
 	AC_SUBST(HAVE_CHROOT)
 ])
 
-HAVE_BIND=""
-AC_ARG_ENABLE([bind],
-    AS_HELP_STRING([--disable-bind], [disable bind]))
-AS_IF([test "x$enable_bind" != "xno"], [
-	HAVE_BIND="-DHAVE_BIND"
-	AC_SUBST(HAVE_BIND)
-])
-
 HAVE_GLOBALCFG=""
 AC_ARG_ENABLE([globalcfg],
     AS_HELP_STRING([--disable-globalcfg], [if the global config file firejail.cfg is not present, continue the program using defaults]))
@@ -78,13 +94,8 @@ AS_IF([test "x$enable_globalcfg" != "xno"], [
 HAVE_NETWORK=""
 AC_ARG_ENABLE([network],
     AS_HELP_STRING([--disable-network], [disable network]))
-AC_ARG_ENABLE([network],
-    AS_HELP_STRING([--enable-network=restricted], [ restrict --net= to root only]))
 AS_IF([test "x$enable_network" != "xno"], [
 	HAVE_NETWORK="-DHAVE_NETWORK"
-	AS_IF([test "x$enable_network" = "xrestricted"], [
-	       HAVE_NETWORK="$HAVE_NETWORK -DHAVE_NETWORK_RESTRICTED"
-	])
 	AC_SUBST(HAVE_NETWORK)
 ])
 
@@ -120,6 +131,15 @@ AS_IF([test "x$enable_whitelist" != "xno"], [
 	AC_SUBST(HAVE_WHITELIST)
 ])
 
+HAVE_SUID=""
+AC_ARG_ENABLE([suid],
+    AS_HELP_STRING([--disable-suid], [install as a non-SUID executable]))
+AS_IF([test "x$enable_suid" = "xno"],
+	[HAVE_SUID="no"],
+	[HAVE_SUID="yes"]
+)
+AC_SUBST(HAVE_SUID)
+
 HAVE_FATAL_WARNINGS=""
 AC_ARG_ENABLE([fatal_warnings],
     AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror]))
@@ -142,17 +162,8 @@ AC_ARG_ENABLE([gcov],
     AS_HELP_STRING([--enable-gcov], [Gcov instrumentation]))
 AS_IF([test "x$enable_gcov" = "xyes"], [
 	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS+="-lgcov --coverage "
+	EXTRA_LDFLAGS+=" -lgcov --coverage "
 	AC_SUBST(HAVE_GCOV)
-])
-
-
-HAVE_GIT_INSTALL=""
-AC_ARG_ENABLE([git-install],
-    AS_HELP_STRING([--enable-git-install], [enable git install feature]))
-AS_IF([test "x$enable_git_install" = "xyes"], [
-	HAVE_GIT_INSTALL="-DHAVE_GIT_INSTALL"
-	AC_SUBST(HAVE_GIT_INSTALL)
 ])
 
 HAVE_CONTRIB_INSTALL="yes"
@@ -172,12 +183,12 @@ AC_SUBST(HAVE_SECCOMP_H)
 
 # set sysconfdir
 if test "$prefix" = /usr; then
-	sysconfdir="/etc"
+	test "$sysconfdir" = '${prefix}/etc' && sysconfdir="/etc"
 fi
 
-AC_OUTPUT(Makefile src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
-src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile \
-src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile)
+AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
+src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
+src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile)
 
 echo
 echo "Configuration options:"
@@ -188,7 +199,6 @@ echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
-echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   X11 sandboxing support: $HAVE_X11"
@@ -196,10 +206,12 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
-echo "   git install support: $HAVE_GIT_INSTALL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
+echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
+echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
+echo "   Install as a SUID executable: $HAVE_SUID"
 echo

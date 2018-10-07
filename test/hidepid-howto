@@ -1,0 +1,27 @@
+1. Find an unused user group for hidepid exception:
+
+$ id
+uid=1000(netblue) gid=100(users) groups=100(users),10(wheel),90(network),
+92(audio),93(optical),95(storage),98(power)
+
+From /etc/group I pick up a group I am not part of:
+
+$ cat /etc/group
+[...]
+xmms2:x:618:
+rtkit:x:133:
+vboxsf:x:109:
+git:x:617:
+[...]
+
+I'll use group 618 (xmms2)
+
+2. Set hidepid and allow xmms2 users to bypass hidepid
+
+$ sudo mount -o remount,rw,hidepid=2,gid=618 /proc
+$ cat /proc/mounts | grep proc
+proc /proc proc rw,nosuid,nodev,noexec,relatime,gid=618,hidepid=2 0 0
+
+3. Test "firejail --list", "firejail --top", "firejail --tree", "firejail --netstats"
+
+

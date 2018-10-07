@@ -1,4 +1,5 @@
 # Firejail profile for evolution
+# Description: Groupware suite with mail client and organizer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/evolution.local
@@ -16,12 +17,14 @@ noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
 netfilter
-no3d
+# no3d breaks under wayland
+#no3d
 nodvd
 nogroups
 nonewprivs

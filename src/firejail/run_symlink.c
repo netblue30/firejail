@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -22,7 +22,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void run_symlink(int argc, char **argv) {
+void run_symlink(int argc, char **argv, int run_as_is) {
 	EUID_ASSERT();
 
 	char *program = strrchr(argv[0], '/');
@@ -30,11 +30,17 @@ void run_symlink(int argc, char **argv) {
 		program += 1;
 	else
 		program = argv[0];
-	if (strcmp(program, "firejail") == 0)
+	if (strcmp(program, "firejail") == 0) // this is a regular "firejail program" sandbox starting
 		return;
 
-	// find the real program
-	// probably the first entry returend by "which -a" is a symlink - use the second entry!
+	// drop privileges
+	EUID_ROOT();
+	if (setgid(getgid()) < 0)
+		errExit("setgid/getgid");
+	if (setuid(getuid()) < 0)
+		errExit("setuid/getuid");
+
+	// find the real program by looking in PATH
 	char *p = getenv("PATH");
 	if (!p) {
 		fprintf(stderr, "Error: PATH environment variable not set\n");
@@ -84,15 +90,17 @@ void run_symlink(int argc, char **argv) {
 
 	free(selfpath);
 
+	// restore original umask
+	umask(orig_umask);
+
+	// desktop integration is not supported for root user; instead, the original program is started
+	if (getuid() == 0 || run_as_is) {
+		argv[0] = program;
+		execv(program, argv);
+		exit(1);
+	}
 
 	// start the argv[0] program in a new sandbox
-	// drop privileges
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
-
-	// run command
 	char *a[3 + argc];
 	a[0] =PATH_FIREJAIL;
 	a[1] = program;

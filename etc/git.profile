@@ -1,4 +1,5 @@
 # Firejail profile for git
+# Description: Fast, scalable, distributed revision control system
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
@@ -34,4 +35,5 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+private-cache
 private-dev

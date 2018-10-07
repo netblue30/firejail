@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -13,15 +13,11 @@ after 100
 send --  "firejail --debug sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"SECCOMP Filter"
-}
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"BLACKLIST"
+	"seccomp entries in /run/firejail/mnt/seccomp"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"open_by_handle_at"
+	"jeq open_by_handle_at"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}

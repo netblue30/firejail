@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -58,13 +58,11 @@ void fs_trace(void) {
 	}
 	else if (arg_tracelog) {
 		fprintf(fp, "%s/libtracelog.so\n", prefix);
-		if (!arg_quiet)
-			printf("Blacklist violations are logged to syslog\n");
+		fmessage("Blacklist violations are logged to syslog\n");
 	}
 	if (arg_seccomp_postexec) {
 		fprintf(fp, "%s/libpostexecseccomp.so\n", prefix);
-		if (!arg_quiet)
-			printf("Post-exec seccomp protector enabled\n");
+		fmessage("Post-exec seccomp protector enabled\n");
 	}
 
 	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);

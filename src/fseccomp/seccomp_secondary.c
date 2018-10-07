@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -42,71 +42,6 @@ static void write_filter(const char *fname, size_t size, const void *filter) {
 	close(dst);
 }
 
-void seccomp_secondary_64(const char *fname) {
-	// hardcoded syscall values
-	struct sock_filter filter[] = {
-		VALIDATE_ARCHITECTURE_64,
-		EXAMINE_SYSCALL,
-		BLACKLIST(165), // mount
-		BLACKLIST(166), // umount2
-// todo: implement --allow-debuggers
-		BLACKLIST(101), // ptrace
-		BLACKLIST(246), // kexec_load
-		BLACKLIST(304), // open_by_handle_at
-		BLACKLIST(303), // name_to_handle_at
-		BLACKLIST(174), // create_module
-		BLACKLIST(175), // init_module
-		BLACKLIST(313), // finit_module
-		BLACKLIST(176), // delete_module
-		BLACKLIST(172), // iopl
-		BLACKLIST(173), // ioperm
-		BLACKLIST(251), // ioprio_set
-		BLACKLIST(167), // swapon
-		BLACKLIST(168), // swapoff
-		BLACKLIST(103), // syslog
-		BLACKLIST(310), // process_vm_readv
-		BLACKLIST(311), // process_vm_writev
-		BLACKLIST(139), // sysfs
-		BLACKLIST(156), // _sysctl
-		BLACKLIST(159), // adjtimex
-		BLACKLIST(305), // clock_adjtime
-		BLACKLIST(212), // lookup_dcookie
-		BLACKLIST(298), // perf_event_open
-		BLACKLIST(300), // fanotify_init
-		BLACKLIST(312), // kcmp
-		BLACKLIST(248), // add_key
-		BLACKLIST(249), // request_key
-		BLACKLIST(250), // keyctl
-		BLACKLIST(134), // uselib
-		BLACKLIST(163), // acct
-		BLACKLIST(154), // modify_ldt
-		BLACKLIST(155), // pivot_root
-		BLACKLIST(206), // io_setup
-		BLACKLIST(207), // io_destroy
-		BLACKLIST(208), // io_getevents
-		BLACKLIST(209), // io_submit
-		BLACKLIST(210), // io_cancel
-		BLACKLIST(216), // remap_file_pages
-		BLACKLIST(237), // mbind
-// breaking Firefox nightly when playing youtube videos
-// TODO: test again when firefox sandbox is finally released
-//		BLACKLIST(239), // get_mempolicy
-		BLACKLIST(238), // set_mempolicy
-		BLACKLIST(256), // migrate_pages
-		BLACKLIST(279), // move_pages
-		BLACKLIST(278), // vmsplice
-		BLACKLIST(161), // chroot
-		BLACKLIST(184), // tuxcall
-		BLACKLIST(169), // reboot
-		BLACKLIST(180), // nfsservctl
-		BLACKLIST(177), // get_kernel_syms
-
-		RETURN_ALLOW
-	};
-
-	// save filter to file
-	write_filter(fname, sizeof(filter), filter);
-}
 
 // 32 bit arch filter installed on 64 bit architectures
 void seccomp_secondary_32(const char *fname) {

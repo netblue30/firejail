@@ -1,0 +1,91 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2018 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --build cat ~/firejail-test-file-7699\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"whitelist ~/firejail-test-file-7699"
+}
+expect {
+	timeout {puts "TESTING ERROR 0.1\n";exit}
+	"include /etc/firejail/whitelist-common.inc"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"private-tmp"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"private-dev"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"blacklist /var"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"private-bin cat,"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"caps.drop all"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"nonewprivs"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"seccomp"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"net none"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"shell none"
+}
+after 100
+
+send -- "firejail --build cat /etc/passwd\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"private-etc passwd,"
+}
+after 100
+
+send -- "firejail --build cat /var/tmp/firejail-test-file-7699\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"whitelist /var/tmp/firejail-test-file-7699"
+}
+after 100
+
+send -- "firejail --build man firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"whitelist /usr/share/man"
+}
+after 100
+
+send -- "firejail --build wget blablabla\r"
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"protocol inet"
+}
+after 100
+
+
+send -- "firejail --build cat /tmp/firejail-test-file-7699\r"
+#todo - bug: it comes back with private-tmp
+sleep 1
+
+
+puts "all done\n"

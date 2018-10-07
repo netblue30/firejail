@@ -1,4 +1,5 @@
 # Firejail profile for digikam
+# Description: Digital photo management application for KDE
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/digikam.local
@@ -9,16 +10,21 @@ noblacklist ${HOME}/.config/digikam
 noblacklist ${HOME}/.config/digikamrc
 noblacklist ${HOME}/.kde/share/apps/digikam
 noblacklist ${HOME}/.kde4/share/apps/digikam
+noblacklist ${PICTURES}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
+# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -31,7 +37,7 @@ shell none
 
 # private-bin program
 # private-dev - prevents libdc1394 loading; this lib is used to connect to a camera device
-# private-etc none
+# private-etc ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

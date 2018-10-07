@@ -1,4 +1,5 @@
 # Firejail profile for mcabber
+# Description: Small Jabber (XMPP) console client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mcabber.local
@@ -10,6 +11,7 @@ noblacklist ${HOME}/.mcabberrc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -27,4 +29,4 @@ shell none
 
 private-bin mcabber
 private-dev
-private-etc null
+private-etc ca-certificates,ssl,pki,crypto-policies

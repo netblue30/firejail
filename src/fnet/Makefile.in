@@ -1,40 +1,9 @@
 all: fnet
 
-CC=@CC@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-sysconfdir=@sysconfdir@
-
-VERSION=@PACKAGE_VERSION@
-NAME=@PACKAGE_NAME@
-HAVE_SECCOMP_H=@HAVE_SECCOMP_H@
-HAVE_SECCOMP=@HAVE_SECCOMP@
-HAVE_CHROOT=@HAVE_CHROOT@
-HAVE_BIND=@HAVE_BIND@
-HAVE_FATAL_WARNINGS=@HAVE_FATAL_WARNINGS@
-HAVE_NETWORK=@HAVE_NETWORK@
-HAVE_USERNS=@HAVE_USERNS@
-HAVE_X11=@HAVE_X11@
-HAVE_FILE_TRANSFER=@HAVE_FILE_TRANSFER@
-HAVE_WHITELIST=@HAVE_WHITELIST@
-HAVE_GLOBALCFG=@HAVE_GLOBALCFG@
-HAVE_APPARMOR=@HAVE_APPARMOR@
-HAVE_OVERLAYFS=@HAVE_OVERLAYFS@
-HAVE_PRIVATE_HOME=@HAVE_PRIVATE_HOME@
-EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
-HAVE_GCOV=@HAVE_GCOV@
-EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
-
-H_FILE_LIST       = $(sort $(wildcard *.[h]))
-C_FILE_LIST       = $(sort $(wildcard *.c))
-OBJS = $(C_FILE_LIST:.c=.o)
-BINOBJS =  $(foreach file, $(OBJS), $file)
-CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' $(HAVE_GCOV) -DPREFIX='"$(prefix)"'  -DSYSCONFDIR='"$(sysconfdir)/firejail"' -DLIBDIR='"$(libdir)"' $(HAVE_X11) $(HAVE_PRIVATE_HOME) $(HAVE_APPARMOR) $(HAVE_OVERLAYFS) $(HAVE_SECCOMP) $(HAVE_GLOBALCFG) $(HAVE_SECCOMP_H) $(HAVE_CHROOT) $(HAVE_NETWORK) $(HAVE_USERNS) $(HAVE_BIND) $(HAVE_FILE_TRANSFER) $(HAVE_WHITELIST) -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -pie -Wformat -Wformat-security
-LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
+include ../common.mk
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/libnetlink.h
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 fnet: $(OBJS) ../lib/libnetlink.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/libnetlink.o $(LIBS) $(EXTRA_LDFLAGS)

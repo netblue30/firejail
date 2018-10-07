@@ -1,4 +1,5 @@
 # Firejail profile for unknown-horizons
+# Description: 2D realtime strategy simulation
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/unknown-horizons.local
@@ -27,5 +28,5 @@ shell none
 
 # private-bin unknown-horizons
 private-dev
-# private-etc none
+# private-etc ca-certificates,ssl,pki,crypto-policies
 private-tmp

@@ -1,4 +1,5 @@
 # Firejail profile for warzone2100
+# Description: 3D real time strategy game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/warzone2100.local
@@ -9,6 +10,7 @@ noblacklist ${HOME}/.warzone2100-3.*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

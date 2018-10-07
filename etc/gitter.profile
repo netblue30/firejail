@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/Gitter
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -33,7 +34,7 @@ shell none
 
 disable-mnt
 private-bin bash,env,gitter
-private-etc fonts,pulse,resolv.conf
+private-etc fonts,pulse,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-opt Gitter
 private-dev
 private-tmp

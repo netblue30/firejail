@@ -1,22 +1,23 @@
 # Firejail profile for synfigstudio
+# Description: Vector-based 2D animation package
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/synfigstudio.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.config/synfig
 noblacklist ${HOME}/.synfig
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
 net none
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -29,6 +30,7 @@ seccomp
 shell none
 
 #private-bin synfigstudio,synfig,ffmpeg
+private-cache
 private-dev
 private-tmp
 

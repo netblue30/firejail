@@ -1,4 +1,5 @@
 # Firejail profile for gnome-maps
+# Description: Map application for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-maps.local
@@ -11,8 +12,10 @@ noblacklist ${HOME}/.cache/champlain
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
@@ -33,7 +36,7 @@ tracelog
 disable-mnt
 # private-bin gjs gnome-maps
 private-dev
-# private-etc fonts
+# private-etc fonts,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

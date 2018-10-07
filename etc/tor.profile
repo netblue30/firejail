@@ -1,4 +1,5 @@
 # Firejail profile for tor
+# Description: Anonymizing overlay network for TCP
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/tor.local
@@ -18,11 +19,14 @@ include /etc/firejail/globals.local
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.keep setuid,setgid,net_bind_service,dac_read_search
 ipc-namespace
+machine-id
 netfilter
 no3d
 nodvd
@@ -39,8 +43,9 @@ writable-var
 disable-mnt
 private
 private-bin tor,bash
+private-cache
 private-dev
-private-etc tor,passwd
+private-etc tor,passwd,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

@@ -5,11 +5,11 @@ sudo: true
 script:
   - sudo apt-get -y install expect csh xzdec lintian fakeroot
   # Build Debian package
-  - ( cd firejail; ./configure --prefix=/usr --enable-git-install && make deb && sudo dpkg -i firejail*.deb )
+  - ( ./configure --prefix=/usr && make deb && sudo dpkg -i firejail*.deb )
   # Remove Debian package
   - ( sudo dpkg -P firejail )
-  - ( cd firejail ; ./configure --prefix=/usr --enable-git-install && make && sudo make install && make test-travis )
-  - ( cd firejail ; sudo make install-strip DESTDIR=$(readlink -f appdir) )
+  - ( ./configure --prefix=/usr && make && sudo make install && make test-travis )
+  - ( sudo make install-strip DESTDIR=$(readlink -f appdir) )
   # If successful, build release tarball
   - ( cd appdir/ ; tar cfvj ../firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2 . )
   - curl --upload-file ./firejail-*.tar.bz2 https://transfer.sh/firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2

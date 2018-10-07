@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -60,7 +60,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 		errExit("socket");
 	struct ifreq ifr;
 	memset(&ifr, 0, sizeof (ifr));
-	strncpy(ifr.ifr_name, dev, IFNAMSIZ);
+	strncpy(ifr.ifr_name, dev, IFNAMSIZ - 1);
 	if (ioctl(sock, SIOCGIFHWADDR, &ifr) < 0)
 		errExit("ioctl");
 	close(sock);
@@ -192,10 +192,10 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 
 				// printing
 				if (header_printed == 0) {
-					printf("   Network scan:\n");
+					fmessage("   Network scan:\n");
 					header_printed = 1;
 				}
-				printf("   %02x:%02x:%02x:%02x:%02x:%02x\t%d.%d.%d.%d\n",
+				fmessage("   %02x:%02x:%02x:%02x:%02x:%02x\t%d.%d.%d.%d\n",
 					PRINT_MAC(hdr.sender_mac), PRINT_IP(ip));
 			}
 		}

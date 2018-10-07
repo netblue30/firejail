@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -22,6 +22,7 @@
 #include "../include/common.h"
 #include "../include/euid_common.h"
 #include <stdarg.h>
+#include <sys/stat.h>
 
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
@@ -30,12 +31,13 @@
 #define RUN_FIREJAIL_BASEDIR	"/run"
 #define RUN_FIREJAIL_DIR	"/run/firejail"
 #define RUN_FIREJAIL_APPIMAGE_DIR	"/run/firejail/appimage"
-#define RUN_FIREJAIL_NAME_DIR	"/run/firejail/name"
+#define RUN_FIREJAIL_NAME_DIR	"/run/firejail/name" // also used in src/lib/pid.c - todo: move it in a common place
 #define RUN_FIREJAIL_X11_DIR	"/run/firejail/x11"
 #define RUN_FIREJAIL_NETWORK_DIR	"/run/firejail/network"
 #define RUN_FIREJAIL_BANDWIDTH_DIR	"/run/firejail/bandwidth"
 #define RUN_FIREJAIL_PROFILE_DIR		"/run/firejail/profile"
-#define RUN_NETWORK_LOCK_FILE	"/run/firejail/firejail.lock"
+#define RUN_NETWORK_LOCK_FILE	"/run/firejail/firejail-network.lock"
+#define RUN_DIRECTORY_LOCK_FILE	"/run/firejail/firejail-run.lock"
 #define RUN_RO_DIR	"/run/firejail/firejail.ro.dir"
 #define RUN_RO_FILE	"/run/firejail/firejail.ro.file"
 #define RUN_MNT_DIR	"/run/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
@@ -51,20 +53,17 @@
 #define RUN_PULSE_DIR	"/run/firejail/mnt/pulse"
 #define RUN_LIB_DIR	"/run/firejail/mnt/lib"
 #define RUN_LIB_FILE	"/run/firejail/mnt/libfiles"
-#define RUN_LIB_BIN	"/run/firejail/mnt/binfiles"
 #define RUN_DNS_ETC	"/run/firejail/mnt/dns-etc"
 
 
 #define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
 #define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
-#define RUN_SECCOMP_64	"/run/firejail/mnt/seccomp.64"		// 64bit arch filter installed on 32bit architectures
 #define RUN_SECCOMP_32	"/run/firejail/mnt/seccomp.32"		// 32bit arch filter installed on 64bit architectures
 #define RUN_SECCOMP_MDWX	"/run/firejail/mnt/seccomp.mdwx"		// filter for memory-deny-write-execute
 #define RUN_SECCOMP_BLOCK_SECONDARY	"/run/firejail/mnt/seccomp.block_secondary"	// secondary arch blocking filter
 #define RUN_SECCOMP_POSTEXEC	"/run/firejail/mnt/seccomp.postexec"		// filter for post-exec library
 #define PATH_SECCOMP_DEFAULT (LIBDIR "/firejail/seccomp")			// default filter built during make
 #define PATH_SECCOMP_DEFAULT_DEBUG (LIBDIR "/firejail/seccomp.debug")	// default filter built during make
-#define PATH_SECCOMP_64 (LIBDIR "/firejail/seccomp.64")			// 64bit arch filter built during make
 #define PATH_SECCOMP_32 (LIBDIR "/firejail/seccomp.32")			// 32bit arch filter built during make
 #define PATH_SECCOMP_MDWX (LIBDIR "/firejail/seccomp.mdwx")		// filter for memory-deny-write-execute built during make
 #define PATH_SECCOMP_BLOCK_SECONDARY (LIBDIR "/firejail/seccomp.block_secondary")	// secondary arch blocking filter built during make
@@ -75,6 +74,7 @@
 
 #define RUN_WHITELIST_X11_DIR	"/run/firejail/mnt/orig-x11"
 #define RUN_WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"	// default home directory masking
+#define RUN_WHITELIST_RUN_DIR	"/run/firejail/mnt/orig-run"	// default run directory masking
 #define RUN_WHITELIST_HOME_USER_DIR	"/run/firejail/mnt/orig-home-user"	// home directory whitelisting
 #define RUN_WHITELIST_TMP_DIR	"/run/firejail/mnt/orig-tmp"
 #define RUN_WHITELIST_MEDIA_DIR	"/run/firejail/mnt/orig-media"
@@ -85,6 +85,7 @@
 #define RUN_WHITELIST_SRV_DIR   "/run/firejail/mnt/orig-srv"
 #define RUN_WHITELIST_ETC_DIR   "/run/firejail/mnt/orig-etc"
 #define RUN_WHITELIST_SHARE_DIR   "/run/firejail/mnt/orig-share"
+#define RUN_WHITELIST_MODULE_DIR   "/run/firejail/mnt/orig-module"
 
 #define RUN_XAUTHORITY_FILE	"/run/firejail/mnt/.Xauthority"
 #define RUN_XAUTHORITY_SEC_FILE	"/run/firejail/mnt/sec.Xauthority"
@@ -98,13 +99,15 @@
 #define RUN_PASSWD_FILE		"/run/firejail/mnt/passwd"
 #define RUN_GROUP_FILE		"/run/firejail/mnt/group"
 #define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
-
+#define RUN_UMASK_FILE		"/run/firejail/mnt/umask"
+#define RUN_OVERLAY_ROOT	"/run/firejail/mnt/oroot"
+#define RUN_READY_FOR_JOIN 	"/run/firejail/mnt/ready-for-join"
 
 
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
 #define DEFAULT_ROOT_PROFILE	"server"
-#define MAX_INCLUDE_LEVEL 6		// include levels in profile files
+#define MAX_INCLUDE_LEVEL 16		// include levels in profile files
 
 
 #define ASSERT_PERMS(file, uid, gid, mode) \
@@ -166,6 +169,7 @@ typedef struct bridge_t {
 	// inside the sandbox
 	char *devsandbox;	// name of the device inside the sandbox
 	uint32_t ipsandbox;	// ip address inside the sandbox
+	uint32_t masksandbox;	// network mask inside the sandbox
 	char *ip6sandbox;	// ipv6 address inside the sandbox
 	uint8_t macsandbox[6]; // mac address inside the sandbox
 	uint32_t iprange_start;// iprange arp scan start range
@@ -204,6 +208,7 @@ typedef struct profile_entry_t {
 	unsigned srv_dir:1;	// whitelist in /srv directory
 	unsigned etc_dir:1;	// whitelist in /etc directory
 	unsigned share_dir:1;	// whitelist in /usr/share directory
+	unsigned module_dir:1;	// whitelist in /sys/module directory
 }ProfileEntry;
 
 typedef struct config_t {
@@ -222,10 +227,10 @@ typedef struct config_t {
 	char *opt_private_keep;	// keep list for private opt directory
 	char *srv_private_keep;	// keep list for private srv directory
 	char *bin_private_keep;	// keep list for private bin directory
+	char *bin_private_lib;	// executable list sent by private-bin to private-lib
 	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *overlay_dir;
-	char *private_template; // template dir for tmpfs home
 
 	// networking
 	char *name;		// sandbox name
@@ -240,9 +245,10 @@ typedef struct config_t {
 	Interface interface1;
 	Interface interface2;
 	Interface interface3;
-	uint32_t dns1;	// up to 3 IP addresses for dns servers
-	uint32_t dns2;
-	uint32_t dns3;
+	char *dns1;	// up to 4 IP (v4/v6) addresses for dns servers
+	char *dns2;
+	char *dns3;
+	char *dns4;
 
 	// seccomp
 	char *seccomp_list;//  optional seccomp list on top of default filter
@@ -302,12 +308,10 @@ static inline int any_interface_configured(void) {
 	else
 		return 0;
 }
-void clear_run_files(pid_t pid);
 
 extern int arg_private;		// mount private /home
-extern int arg_private_template; // private /home template
+extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages
-extern int arg_debug_check_filename;		// print debug messages for filename checking
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
 extern int arg_debug_private_lib;	// print debug messages for private-lib
@@ -346,6 +350,7 @@ extern char *arg_netns;		// "ip netns"-created network namespace to use
 extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
+extern int arg_keep_dev_shm;    // preserve /dev/shm
 extern int arg_private_etc;	// private etc directory
 extern int arg_private_opt;	// private opt directory
 extern int arg_private_srv;	// private srv directory
@@ -355,6 +360,7 @@ extern int arg_private_lib;	// private lib directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
+extern int arg_noautopulse; // disable automatic ~/.config/pulse init
 extern int arg_novideo; //disable video devices in /dev
 extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting
@@ -364,6 +370,7 @@ extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_writable_var;	// writable var
+extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
 extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
@@ -380,11 +387,14 @@ extern int arg_noprofile;	// use default.profile if none other found/specified
 extern int arg_memory_deny_write_execute;	// block writable and executable memory
 extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
+extern int arg_nou2f;   // --nou2f
+extern int arg_nodbus; // -nodbus
 
 extern int login_shell;
 extern int parent_to_child_fds[2];
 extern int child_to_parent_fds[2];
 extern pid_t sandbox_pid;
+extern mode_t orig_umask;
 extern unsigned long long start_timestamp;
 
 #define MAX_ARGS 128		// maximum number of command arguments (argc)
@@ -392,16 +402,14 @@ extern char *fullargv[MAX_ARGS];
 extern int fullargc;
 
 // main.c
-void set_x11_file(pid_t pid, int display);
 void check_user_namespace(void);
 char *guess_shell(void);
 
 // sandbox.c
 int sandbox(void* sandbox_arg);
-void start_application(int no_sandbox);
+void start_application(int no_sandbox, FILE *fp);
 
 // network_main.c
-void net_configure_bridge(Bridge *br, char *dev_name);
 void net_configure_sandbox_ip(Bridge *br);
 void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
 void net_check_cfg(void);
@@ -409,6 +417,7 @@ void net_dns_print(pid_t pid);
 void network_main(pid_t child);
 
 // network.c
+int check_ip46_address(const char *addr);
 void net_if_up(const char *ifname);
 void net_if_down(const char *ifname);
 void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
@@ -443,6 +452,8 @@ void fs_overlayfs(void);
 void fs_chroot(const char *rootdir);
 void fs_check_chroot_dir(const char *rootdir);
 void fs_private_tmp(void);
+void fs_private_cache(void);
+void fs_mnt(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -455,7 +466,7 @@ void profile_read(const char *fname);
 int profile_check_line(char *ptr, int lineno, const char *fname);
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str);
-void fs_mnt(void);
+void profile_add_ignore(const char *str);
 
 // list.c
 void list(void);
@@ -468,6 +479,7 @@ void usage(void);
 
 // join.c
 void join(pid_t pid, int argc, char **argv, int index);
+pid_t switch_to_child(pid_t pid);
 
 // shutdown.c
 void shut(pid_t pid);
@@ -482,8 +494,18 @@ int arp_check(const char *dev, uint32_t destaddr);
 // assign an IP address using arp scanning
 uint32_t arp_assign(const char *dev, Bridge *br);
 
+// macros.c
+char *expand_home(const char *path, const char *homedir);
+char *resolve_macro(const char *name);
+void invalid_filename(const char *fname, int globbing);
+int is_macro(const char *name);
+int macro_id(const char *name);
+
+
 // util.c
+void errLogExit(char* fmt, ...);
 void fwarning(char* fmt, ...);
+void fmessage(char* fmt, ...);
 void drop_privs(int nogroups);
 int mkpath_as_root(const char* path);
 void extract_command_name(int index, char **argv);
@@ -494,9 +516,10 @@ void logerr(const char *msg);
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
 void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
 void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
-void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode);
+void touch_file_as_user(const char *fname, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);
+void trim_trailing_slash_or_dot(char *path);
 char *line_remove_spaces(const char *buf);
 char *split_comma(char *str);
 void check_unsigned(const char *str, const char *msg);
@@ -505,18 +528,31 @@ void check_private_dir(void);
 void update_map(char *mapping, char *map_file);
 void wait_for_other(int fd);
 void notify_other(int fd);
-char *expand_home(const char *path, const char* homedir);
 const char *gnu_basename(const char *path);
 uid_t pid_get_uid(pid_t pid);
-void invalid_filename(const char *fname, int globbing);
 uid_t get_group_id(const char *group);
-int remove_directory(const char *path);
+int remove_overlay_directory(void);
 void flush_stdin(void);
 void create_empty_dir_as_root(const char *dir, mode_t mode);
 void create_empty_file_as_root(const char *dir, mode_t mode);
 int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);
 void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 unsigned extract_timeout(const char *str);
+void disable_file_or_dir(const char *fname);
+void disable_file_path(const char *path, const char *file);
+int safe_fd(const char *path, int flags);
+int invalid_sandbox(const pid_t pid);
+
+// Get info regarding the last kernel mount operation from /proc/self/mountinfo
+// The return value points to a static area, and will be overwritten by subsequent calls.
+// The function does an exit(1) if anything goes wrong.
+typedef struct {
+	char *fsname; // the pathname of the directory in the filesystem which forms the root of this mount
+	char *dir;	// mount destination
+	char *fstype; // filesystem type
+} MountData;
+MountData *get_last_mount(void);
+
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log
@@ -536,18 +572,15 @@ void fs_dev_disable_3d(void);
 void fs_dev_disable_video(void);
 void fs_dev_disable_tv(void);
 void fs_dev_disable_dvd(void);
+void fs_dev_disable_u2f(void);
 
 // fs_home.c
 // private mode (--private)
 void fs_private(void);
 // private mode (--private=homedir)
 void fs_private_homedir(void);
-// private template (--private-template=templatedir)
-void fs_private_template(void);
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void);
-// check new private template home directory (--private-template= option) exit if it fails
-void fs_check_private_template(void);
 void fs_private_home_list(void);
 
 
@@ -569,9 +602,6 @@ void caps_drop_list(const char *clist);
 void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);
 void caps_drop_dac_override(void);
-
-// syscall.c
-const char *syscall_find_nr(int nr);
 
 // fs_trace.c
 void fs_trace_preload(void);
@@ -614,9 +644,7 @@ void netns(const char *nsname);
 void netns_mounts(const char *nsname);
 
 // bandwidth.c
-void bandwidth_del_run_file(pid_t pid);
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up);
-void network_del_run_file(pid_t pid);
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
@@ -641,12 +669,6 @@ void env_ibus_load(void);
 
 // fs_whitelist.c
 void fs_whitelist(void);
-
-// errno.c
-int errno_highest_nr(void);
-int errno_find_name(const char *name);
-char *errno_find_nr(int nr);
-void errno_print(void);
 
 // pulseaudio.c
 void pulseaudio_init(void);
@@ -676,7 +698,7 @@ void fs_logger_change_owner(void);
 void fs_logger_print_log(pid_t pid);
 
 // run_symlink.c
-void run_symlink(int argc, char **argv);
+void run_symlink(int argc, char **argv, int run_as_is);
 
 // paths.c
 char **build_paths(void);
@@ -704,6 +726,7 @@ void x11_start_xpra(int argc, char **argv);
 void x11_start_xephyr(int argc, char **argv);
 void x11_block(void);
 void x11_start_xvfb(int argc, char **argv);
+void x11_xorg(void);
 
 // ls.c
 enum {
@@ -729,7 +752,6 @@ enum {
 	CFG_WHITELIST,
 	CFG_XEPHYR_WINDOW_TITLE,
 	CFG_OVERLAYFS,
-	CFG_CHROOT_DESKTOP,
 	CFG_PRIVATE_HOME,
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_FIREJAIL_PROMPT,
@@ -739,6 +761,9 @@ enum {
 	CFG_ARP_PROBES,
 	CFG_XPRA_ATTACH,
 	CFG_PRIVATE_LIB,
+	CFG_APPARMOR,
+	CFG_DBUS,
+	CFG_PRIVATE_CACHE,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;
@@ -749,7 +774,6 @@ extern char *xvfb_extra_params;
 extern char *netfilter_default;
 int checkcfg(int val);
 void print_compiletime_support(void);
-void x11_xorg(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);
@@ -770,6 +794,8 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FIREJAIL (PREFIX "/bin/firejail")
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
+#define PATH_FSEC_PRINT (LIBDIR "/firejail/fsec-print")
+#define PATH_FSEC_OPTIMIZE (LIBDIR "/firejail/fsec-optimize")
 #define PATH_FCOPY (LIBDIR "/firejail/fcopy")
 #define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"
 #define PATH_FLDD (LIBDIR "/firejail/fldd")
@@ -782,13 +808,19 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define SBOX_CAPS_NETWORK (1 << 4)	// caps filter for programs running network programs
 #define SBOX_ALLOW_STDIN (1 << 5)		// don't close stdin
 #define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
+#define SBOX_CAPS_HIDEPID (1 << 7)	// hidepid caps filter for running firemon
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 
+// run_files.c
+void delete_run_files(pid_t pid);
+void delete_bandwidth_run_file(pid_t pid);
+void set_name_run_file(pid_t pid);
+void set_x11_run_file(pid_t pid, int display);
+void set_profile_run_file(pid_t pid, const char *fname);
 
-// git.c
-void git_install();
-void git_uninstall();
+// dbus.c
+void dbus_session_disable(void);
 
 #endif

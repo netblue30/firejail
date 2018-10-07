@@ -1,4 +1,5 @@
 # Firejail profile for dragon
+# Description: A multimedia player where the focus is on simplicity, instead of features
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/dragon.local
@@ -6,17 +7,20 @@ include /etc/firejail/dragon.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/dragonplayerrc
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter
-nodvd
 nogroups
 nonewprivs
 noroot
@@ -28,7 +32,6 @@ shell none
 
 private-bin dragon
 private-dev
-# private-etc
 private-tmp
 
 noexec ${HOME}

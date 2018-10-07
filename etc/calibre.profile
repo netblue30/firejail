@@ -1,4 +1,5 @@
 # Firejail profile for calibre
+# Description: Powerful and easy to use e-book manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/calibre.local
@@ -7,11 +8,13 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.cache/calibre
 noblacklist ${HOME}/.config/calibre
+noblacklist ${DOCUMENTS}
 
 include /etc/firejail/disable-common.inc
-# include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
@@ -30,7 +33,6 @@ seccomp
 shell none
 tracelog
 
-# private-bin
 private-dev
 private-tmp
 

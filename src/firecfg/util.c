@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -58,9 +58,15 @@ int which(const char *program) {
 		// use path2 to count the entries
 		char *ptr = strtok(path2, ":");
 		while (ptr) {
-			if (find(program, ptr)) {
-				free(path2);
-				return 1;
+			// Ubuntu 18.04 is adding  /snap/bin to PATH;
+			// they populate /snap/bin with simbolic links to /usr/bin/ programs;
+			// most simlinked programs are not installed by default.
+			// Removing /snap/bin from our search
+			if (strcmp(ptr, "/snap/bin") != 0) {
+				if (find(program, ptr)) {
+					free(path2);
+					return 1;
+				}
 			}
 			ptr = strtok(NULL, ":");
 		}

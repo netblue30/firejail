@@ -2,6 +2,7 @@
 *.so
 *~
 *.swp
+*.deb
 *.rpm
 *.gcda
 *.gcno
@@ -9,9 +10,11 @@ Makefile
 autom4te.cache/
 config.log
 config.status
+firejail-*.tar.xz
 firejail-login.5
 firejail-profile.5
 firejail-config.5
+firejail-users.5
 firejail.1
 firemon.1
 firecfg.1
@@ -23,7 +26,9 @@ src/tags
 src/faudit/faudit
 src/fnet/fnet
 src/fnetfilter/fnetfilter
+src/fsec-print/fsec-print
 src/fseccomp/fseccomp
+src/fsec-optimize/fsec-optimize
 src/fcopy/fcopy
 src/fldd/fldd
 src/fbuilder/fbuilder
@@ -34,3 +39,5 @@ seccomp.32
 seccomp.64
 seccomp.block_secondary
 seccomp.mdwx
+src/common.mk
+

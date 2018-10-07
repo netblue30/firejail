@@ -1,4 +1,5 @@
 # Firejail profile for w3m
+# Description: WWW browsable pager with excellent tables/frames support
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/w3m.local
@@ -11,8 +12,10 @@ noblacklist ${HOME}/.w3m
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 netfilter
@@ -30,6 +33,7 @@ shell none
 tracelog
 
 # private-bin w3m
+private-cache
 private-dev
-private-etc resolv.conf,ssl
+private-etc resolv.conf,ssl,pki,ca-certificates,crypto-policies
 private-tmp

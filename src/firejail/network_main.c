@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -28,11 +28,9 @@
 
 // configure bridge structure
 // - extract ip address and mask from the bridge interface
-void net_configure_bridge(Bridge *br, char *dev_name) {
+static void net_configure_bridge(Bridge *br) {
 	assert(br);
-	assert(dev_name);
-
-	br->dev = dev_name;
+	assert(br->dev);
 
 	// check the bridge device exists
 	char sysbridge[30 + strlen(br->dev)];
@@ -58,13 +56,13 @@ void net_configure_bridge(Bridge *br, char *dev_name) {
 		}
 	}
 
-	// allow unconfigured interfaces
-	if (net_get_if_addr(br->dev, &br->ip, &br->mask, br->mac, &br->mtu)) {
+	int mtu = br->mtu;	// preserve mtu value in case the user changed it with --mtu
+	if (net_get_if_addr(br->dev, &br->ip, &br->mask, br->mac, &br->mtu))
+		// allow unconfigured interfaces
 		fwarning("the network interface %s is not configured\n", br->dev);
-		br->configured = 1;
-		br->arg_ip_none = 1;
-		return;
-	}
+	if (mtu)
+		br->mtu = mtu;
+
 	if (arg_debug) {
 		if (br->macvlan == 0)
 			printf("Bridge device %s at %d.%d.%d.%d/%d\n",
@@ -74,13 +72,40 @@ void net_configure_bridge(Bridge *br, char *dev_name) {
 				br->dev, PRINT_IP(br->ip), mask2bits(br->mask));
 	}
 
-	uint32_t range = ~br->mask + 1;		  // the number of potential addresses
-	// this software is not supported for /31 networks
-	if (range < 4) {
-		fprintf(stderr, "Error: the software is not supported for /31 networks\n");
+	if (br->mask) {
+		uint32_t range = ~br->mask + 1;		  // the number of potential addresses
+		// this software is not supported for /31 networks
+		if (range < 4) {
+			fprintf(stderr, "Error: the software is not supported for /31 networks\n");
+			exit(1);
+		}
+	}
+
+
+	// no interface network mask - no ip address will be configured
+	if (br->mask == 0)
+		goto err_no_ip;
+	// no interface ip - extract the network address from the address configured by the user
+	else if (br->ip == 0 && br->ipsandbox)
+		br->ip = br->ipsandbox & br->mask;
+	// no interface ip - extract the network address from the default gateway configured by the user
+	else if (br->ip == 0 && cfg.defaultgw)
+		br->ip = cfg.defaultgw & br->mask;
+	// no ip address will be configured
+	else if (br->ip == 0)
+		goto err_no_ip;
+
+	if ((br->iprange_start && in_netrange(br->iprange_start, br->ip, br->mask)) ||
+	    (br->iprange_end && in_netrange(br->iprange_end, br->ip, br->mask))) {
+		fprintf(stderr, "Error: IP range addresses not in network range\n");
 		exit(1);
 	}
-	br->configured = 1;
+
+	return;
+
+err_no_ip:
+	br->arg_ip_none = 1;
+	fwarning("Not enough information to configure an IP address for\n   interface --net=%s\n", br->dev);
 }
 
 
@@ -146,7 +171,6 @@ void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child) {
 // the default address should be in the range of at least on of the bridge devices
 void check_default_gw(uint32_t defaultgw) {
 	assert(defaultgw);
-
 	if (cfg.bridge0.configured) {
 		char *rv = in_netrange(defaultgw, cfg.bridge0.ip, cfg.bridge0.mask);
 		if (rv == 0)
@@ -175,14 +199,22 @@ void check_default_gw(uint32_t defaultgw) {
 void net_check_cfg(void) {
 	EUID_ASSERT();
 	int net_configured = 0;
-	if (cfg.bridge0.configured)
+	if (cfg.bridge0.configured) {
+		net_configure_bridge(&cfg.bridge0);
 		net_configured++;
-	if (cfg.bridge1.configured)
+	}
+	if (cfg.bridge1.configured) {
+		net_configure_bridge(&cfg.bridge1);
 		net_configured++;
-	if (cfg.bridge2.configured)
+	}
+	if (cfg.bridge2.configured) {
+		net_configure_bridge(&cfg.bridge2);
 		net_configured++;
-	if (cfg.bridge3.configured)
+	}
+	if (cfg.bridge3.configured) {
+		net_configure_bridge(&cfg.bridge3);
 		net_configured++;
+	}
 
 	int if_configured = 0;
 	if (cfg.interface0.configured)
@@ -237,18 +269,23 @@ void net_dns_print(pid_t pid) {
 	EUID_ASSERT();
 	// drop privileges - will not be able to read /etc/resolv.conf for --noroot option
 
-	// if the pid is that of a firejail  process, use the pid of the first child process
-	EUID_ROOT();
-	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (comm) {
-		if (strcmp(comm, "firejail") == 0) {
-			pid_t child;
-			if (find_child(pid, &child) == 0) {
-				pid = child;
-			}
+	// in case the pid is that of a firejail process, use the pid of the first child process
+	pid = switch_to_child(pid);
+
+	// now check if the pid belongs to a firejail sandbox
+	if (invalid_sandbox(pid)) {
+		fprintf(stderr, "Error: no valid sandbox\n");
+		exit(1);
+	}
+
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission denied.\n");
+			exit(1);
 		}
-		free(comm);
 	}
 
 	EUID_ROOT();

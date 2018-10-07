@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -85,6 +85,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// dbus
+			else if (strncmp(ptr, "dbus ", 5) == 0) {
+				if (strcmp(ptr + 5, "yes") == 0)
+					cfg_val[CFG_DBUS] = 1;
+				else if (strcmp(ptr + 5, "no") == 0)
+					cfg_val[CFG_DBUS] = 0;
+				else
+					goto errout;
+			}
 			// join
 			else if (strncmp(ptr, "join ", 5) == 0) {
 				if (strcmp(ptr + 5, "yes") == 0)
@@ -100,6 +109,15 @@ int checkcfg(int val) {
 					cfg_val[CFG_X11] = 1;
 				else if (strcmp(ptr + 4, "no") == 0)
 					cfg_val[CFG_X11] = 0;
+				else
+					goto errout;
+			}
+			// apparmor
+			else if (strncmp(ptr, "apparmor ", 9) == 0) {
+				if (strcmp(ptr + 9, "yes") == 0)
+					cfg_val[CFG_APPARMOR] = 1;
+				else if (strcmp(ptr + 9, "no") == 0)
+					cfg_val[CFG_APPARMOR] = 0;
 				else
 					goto errout;
 			}
@@ -147,11 +165,6 @@ int checkcfg(int val) {
 					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 0;
 				else
 					goto errout;
-			}
-			// follow symlink in private-bin command
-			else if (strncmp(ptr, "follow-symlink-private-bin ", 27) == 0) {
-				if (!arg_quiet)
-					fprintf(stderr, "Warning:follow-symlink-private-bin from firejail.config was deprecated\n");
 			}
 			// nonewprivs
 			else if (strncmp(ptr, "force-nonewprivs ", 17) == 0) {
@@ -294,10 +307,6 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			else if (strncmp(ptr, "remount-proc-sys ", 17) == 0) {
-				if (!arg_quiet)
-					fprintf(stderr, "Warning: remount-proc-sys from firejail.config was deprecated\n");
-			}
 			else if (strncmp(ptr, "overlayfs ", 10) == 0) {
 				if (strcmp(ptr + 10, "yes") == 0)
 					cfg_val[CFG_OVERLAYFS] = 1;
@@ -314,19 +323,19 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			else if (strncmp(ptr, "private-cache ", 14) == 0) {
+				if (strcmp(ptr + 14, "yes") == 0)
+					cfg_val[CFG_PRIVATE_CACHE] = 1;
+				else if (strcmp(ptr + 14, "no") == 0)
+					cfg_val[CFG_PRIVATE_CACHE] = 0;
+				else
+					goto errout;
+			}
 			else if (strncmp(ptr, "private-lib ", 12) == 0) {
 				if (strcmp(ptr + 12, "yes") == 0)
 					cfg_val[CFG_PRIVATE_LIB] = 1;
 				else if (strcmp(ptr + 12, "no") == 0)
 					cfg_val[CFG_PRIVATE_LIB] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "chroot-desktop ", 15) == 0) {
-				if (strcmp(ptr + 15, "yes") == 0)
-					cfg_val[CFG_CHROOT_DESKTOP] = 1;
-				else if (strcmp(ptr + 15, "no") == 0)
-					cfg_val[CFG_CHROOT_DESKTOP] = 0;
 				else
 					goto errout;
 			}
@@ -372,6 +381,13 @@ int checkcfg(int val) {
 		initialized = 1;
 	}
 
+
+	// merge CFG_RESTRICTED_NETWORK into CFG_NETWORK
+	if (val == CFG_NETWORK) {
+		if (cfg_val[CFG_RESTRICTED_NETWORK] && getuid() != 0)
+			return 0;
+	}
+
 	return cfg_val[val];
 
 errout:
@@ -402,14 +418,6 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- bind support is %s\n",
-#ifdef HAVE_BIND
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- chroot support is %s\n",
 #ifdef HAVE_CHROOT
 		"enabled"
@@ -434,14 +442,6 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- git install support is %s\n",
-#ifdef HAVE_GIT_INSTALL
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- networking support is %s\n",
 #ifdef HAVE_NETWORK
 		"enabled"
@@ -449,10 +449,6 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-
-#ifdef HAVE_NETWORK_RESTRICTED
-	printf("\t- networking features are available only to root user\n");
-#endif
 
 	printf("\t- overlayfs support is %s\n",
 #ifdef HAVE_OVERLAYFS
@@ -493,5 +489,4 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-
 }

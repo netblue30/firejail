@@ -1,4 +1,5 @@
 # Firejail profile for gpg-agent
+# Description: GNU privacy guard - cryptographic agent
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gpg-agent.local
@@ -11,6 +12,7 @@ noblacklist ${HOME}/.gnupg
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -30,4 +32,5 @@ shell none
 tracelog
 
 # private-bin gpg-agent,gpg
+private-cache
 private-dev

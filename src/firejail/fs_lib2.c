@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -118,8 +118,7 @@ void fslib_install_stdc(void) {
 	if (stat("/usr/lib/locale", &s) == 0)
 		fslib_copy_dir("/usr/lib/locale");
 
-	if (!arg_quiet)
-		fprintf(stderr, "Standard C library installed in %0.2f ms\n", timetrace_end());
+	fmessage("Standard C library installed in %0.2f ms\n", timetrace_end());
 }
 
 
@@ -303,8 +302,7 @@ void fslib_install_system(void) {
 				free(name);
 			}
 
-			if (!arg_quiet)
-				fprintf(stderr, "%s installed in %0.2f ms\n", ptr->message, timetrace_end());
+			fmessage("%s installed in %0.2f ms\n", ptr->message, timetrace_end());
 		}
 		ptr++;
 	}

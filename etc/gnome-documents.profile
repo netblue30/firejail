@@ -1,4 +1,5 @@
 # Firejail profile for gnome-documents
+# Description: Document manager for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gnome-documents.local
@@ -8,11 +9,14 @@ include /etc/firejail/globals.local
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
 noblacklist ${HOME}/.config/libreoffice
+noblacklist ${DOCUMENTS}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 netfilter
@@ -29,6 +33,7 @@ seccomp
 shell none
 tracelog
 
+private-cache
 private-dev
 private-tmp
 

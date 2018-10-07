@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -10,7 +10,11 @@ match_max 100000
 send --  "firejail --debug --seccomp=chmod,fchmod,fchmodat --private\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"VALIDATE_ARCHITECTURE"
+	"seccomp entries in /run/firejail/mnt/seccomp"
+}
+expect {
+	timeout {puts "TESTING ERROR 0.0\n";exit}
+	"ld  data.architecture"
 }
 expect {
 	timeout {puts "TESTING ERROR 0.1\n";exit}
@@ -34,7 +38,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 0.6\n";exit}
-	"RETURN_ALLOW"
+	"ret ALLOW"
 }
 expect {
 	timeout {puts "TESTING ERROR 0.7\n";exit}
@@ -48,7 +52,11 @@ puts "\n"
 send --  "firejail --debug --seccomp.drop=chmod,fchmod,fchmodat --private\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"VALIDATE_ARCHITECTURE"
+	"seccomp entries in /run/firejail/mnt/seccomp"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.0\n";exit}
+	"ld  data.architecture"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
@@ -66,7 +74,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.6\n";exit}
-	"RETURN_ALLOW"
+	"ret ALLOW"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.7\n";exit}
@@ -80,7 +88,11 @@ sleep 2
 send --  "firejail --debug --profile=seccomp.profile --private\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"VALIDATE_ARCHITECTURE"
+	"seccomp entries in /run/firejail/mnt/seccomp"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.0\n";exit}
+	"ld  data.architecture"
 }
 expect {
 	timeout {puts "TESTING ERROR 2.1\n";exit}
@@ -104,7 +116,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2.6\n";exit}
-	"RETURN_ALLOW"
+	"ret ALLOW"
 }
 expect {
 	timeout {puts "TESTING ERROR 2.7\n";exit}
@@ -118,7 +130,11 @@ puts "\n"
 send --  "firejail --debug --profile=seccomp-empty.profile --private\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"VALIDATE_ARCHITECTURE"
+	"seccomp entries in /run/firejail/mnt/seccomp"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.0\n";exit}
+	"ld  data.architecture"
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
@@ -136,7 +152,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.6\n";exit}
-	"RETURN_ALLOW"
+	"ret ALLOW"
 }
 expect {
 	timeout {puts "TESTING ERROR 3.7\n";exit}
@@ -145,4 +161,4 @@ expect {
 sleep 2
 send -- "exit\r"
 after 100
-puts "\n"
+puts "all done\n"

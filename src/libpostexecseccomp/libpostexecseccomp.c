@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -31,7 +31,11 @@ static void load_seccomp(void) {
 	if (fd == -1)
 		return;
 
-	int size = lseek(fd, 0, SEEK_END);
+	off_t size = lseek(fd, 0, SEEK_END);
+	if (size <= 0) {
+		close(fd);
+		return;
+	}
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	struct sock_filter *filter = MAP_FAILED;
 	if (size != 0)
@@ -39,7 +43,7 @@ static void load_seccomp(void) {
 
 	close(fd);
 
-	if (size == 0 || filter == MAP_FAILED)
+	if (filter == MAP_FAILED)
 		return;
 
 	// install filter

@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -54,6 +54,21 @@ expect {
 after 100
 send -- "exit\r"
 sleep 1
+send -- "firejail --whitelist=/opt/firejail-test-file --whitelist=/opt/firejail-test-dir --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "find /opt | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"4"
+}
+after 100
+send -- "exit\r"
+sleep 1
 
 
 send -- "touch /srv/firejail-test-file\r"
@@ -77,14 +92,20 @@ expect {
 after 100
 send -- "exit\r"
 sleep 1
+send -- "firejail --whitelist=/srv/firejail-test-file --whitelist=/srv/firejail-test-dir --debug\r"
+expect {
+	timeout {puts "TESTING ERROR 5.1\n";exit}
+	"Child process initialized"
+}
+sleep 1
 
-
-
-
-
-
-
-
-
+send -- "find /srv | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 6.1\n";exit}
+	"4"
+}
+after 100
+send -- "exit\r"
+sleep 1
 
 puts "\nall done\n"

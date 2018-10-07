@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -126,9 +126,9 @@ int seccomp_load(const char *fname) {
 		errExit("strdup");
 	filter_list_head = fl;
 
-	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
-		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-			PATH_FSECCOMP, "print", fname);
+	if (arg_debug && access(PATH_FSEC_PRINT, X_OK) == 0) {
+		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
+			PATH_FSEC_PRINT, fname);
 	}
 
 	return 0;
@@ -138,6 +138,7 @@ errexit:
 }
 
 // 32 bit arch filter installed on 64 bit architectures
+#if defined(__x86_64__)
 #if defined(__LP64__)
 static void seccomp_filter_32(void) {
 	if (seccomp_load(RUN_SECCOMP_32) == 0) {
@@ -146,15 +147,6 @@ static void seccomp_filter_32(void) {
 	}
 }
 #endif
-
-// 64 bit arch filter installed on 32 bit architectures
-#if defined(__ILP32__)
-static void seccomp_filter_64(void) {
-	if (seccomp_load(RUN_SECCOMP_64) == 0) {
-		if (arg_debug)
-			printf("Dual 32/64 bit seccomp filter configured\n");
-	}
-}
 #endif
 
 static void seccomp_filter_block_secondary(void) {
@@ -177,11 +169,10 @@ int seccomp_filter_drop(void) {
 			if (arg_seccomp_block_secondary)
 				seccomp_filter_block_secondary();
 			else {
+#if defined(__x86_64__)
 #if defined(__LP64__)
 				seccomp_filter_32();
 #endif
-#if defined(__ILP32__)
-				seccomp_filter_64();
 #endif
 			}
 		}
@@ -190,11 +181,10 @@ int seccomp_filter_drop(void) {
 			if (arg_seccomp_block_secondary)
 				seccomp_filter_block_secondary();
 			else {
+#if defined(__x86_64__)
 #if defined(__LP64__)
 				seccomp_filter_32();
 #endif
-#if defined(__ILP32__)
-				seccomp_filter_64();
 #endif
 			}
 			if (arg_debug)
@@ -208,6 +198,11 @@ int seccomp_filter_drop(void) {
 			else
 				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
 					      PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list);
+			if (rv)
+				exit(rv);
+
+			// optimize the new filter
+			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSEC_OPTIMIZE, RUN_SECCOMP_CFG);
 			if (rv)
 				exit(rv);
 		}
@@ -232,6 +227,11 @@ int seccomp_filter_drop(void) {
 
 		if (rv)
 			exit(rv);
+
+		// optimize the drop filter
+		rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSEC_OPTIMIZE, RUN_SECCOMP_CFG);
+		if (rv)
+			exit(rv);
 	}
 
 	// load the filter
@@ -240,12 +240,12 @@ int seccomp_filter_drop(void) {
 			printf("seccomp filter configured\n");
 	}
 
-	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
+	if (arg_debug && access(PATH_FSEC_PRINT, X_OK) == 0) {
 		struct stat st;
 		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0) {
 			printf("configuring postexec seccomp filter in %s\n", RUN_SECCOMP_POSTEXEC);
-			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-				  PATH_FSECCOMP, "print", RUN_SECCOMP_POSTEXEC);
+			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
+				  PATH_FSEC_PRINT, RUN_SECCOMP_POSTEXEC);
 		}
 	}
 
@@ -280,12 +280,12 @@ int seccomp_filter_keep(void) {
 			printf("seccomp filter configured\n");
 	}
 
-	if (arg_debug && access(PATH_FSECCOMP, X_OK) == 0) {
+	if (arg_debug && access(PATH_FSEC_PRINT, X_OK) == 0) {
 		struct stat st;
 		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0) {
 			printf("configuring postexec seccomp filter in %s\n", RUN_SECCOMP_POSTEXEC);
-			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-				  PATH_FSECCOMP, "print", RUN_SECCOMP_POSTEXEC);
+			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
+				  PATH_FSEC_PRINT, RUN_SECCOMP_POSTEXEC);
 		}
 	}
 
@@ -295,18 +295,13 @@ int seccomp_filter_keep(void) {
 void seccomp_print_filter(pid_t pid) {
 	EUID_ASSERT();
 
-	// if the pid is that of a firejail  process, use the pid of the first child process
-	EUID_ROOT();
-	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (comm) {
-		if (strcmp(comm, "firejail") == 0) {
-			pid_t child;
-			if (find_child(pid, &child) == 0) {
-				pid = child;
-			}
-		}
-		free(comm);
+	// in case the pid is that of a firejail process, use the pid of the first child process
+	pid = switch_to_child(pid);
+
+	// now check if the pid belongs to a firejail sandbox
+	if (invalid_sandbox(pid)) {
+		fprintf(stderr, "Error: no valid sandbox\n");
+		exit(1);
 	}
 
 	// check privileges for non-root users
@@ -332,7 +327,7 @@ void seccomp_print_filter(pid_t pid) {
 	}
 
 	// read and print the filter - run this as root, the user doesn't have access
-	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FSECCOMP, "print", fname);
+	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 2, PATH_FSEC_PRINT, fname);
 	free(fname);
 
 	exit(0);

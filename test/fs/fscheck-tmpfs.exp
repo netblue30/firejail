@@ -11,3 +11,5 @@ expect {
 	"Error"
 }
 after 100
+
+puts "\nall done\n"

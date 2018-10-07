@@ -30,8 +30,30 @@ installing new programs. If the program is supported by Firejail, the symbolic l
 will be created. For a full list of programs supported by default run "cat /usr/lib/firejail/firecfg.config".
 
 For user-driven manual integration, see \fBDESKTOP INTEGRATION\fR section in \fBman 1 firejail\fR.
+.SH DEFAULT ACTIONS
+The following actions are implemented by default by running sudo firecfg:
+
+.RS
+- set or update the symbolic links for desktop integration;
+.br
+
+.br
+- add the current user to Firejail user access database (firecfg --add-users);
+.br
+
+.br
+-fix desktop files in $HOME/.local/share/applications/ (firecfg --fix).
+.RE
 
 .SH OPTIONS
+.TP
+\fB\-\-add-users user [user]
+Add the list of users to Firejail user access database.
+
+Example:
+.br
+$ sudo firecfg --add-users dustin lucas mike eleven
+
 .TP
 \fB\-\-clean
 Remove all firejail symbolic links.
@@ -102,3 +124,4 @@ Homepage: https://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5)
+\&\flfirejail-users\fR\|(5)

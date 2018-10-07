@@ -1,11 +1,10 @@
 # Firejail profile for meld
+# Description: Graphical tool to diff and merge files
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/meld.local
 # Persistent global definitions
 include /etc/firejail/globals.local
-
-blacklist /run/user/*/bus
 
 noblacklist ${HOME}/.local/share/meld
 
@@ -14,9 +13,12 @@ include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+include /etc/firejail/whitelist-var-common.inc
+
 caps.drop all
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -29,6 +31,7 @@ seccomp
 shell none
 
 private-bin meld,python*
+private-cache
 private-dev
 private-tmp
 

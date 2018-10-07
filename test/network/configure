@@ -10,6 +10,8 @@ iptables -t nat -A POSTROUTING -o eth0 -s 10.10.20.0/29 -j MASQUERADE
 # port forwarding
 # iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to 10.10.20.2:80
 
+brctl addbr br-unconfigured
+ifconfig br-unconfigured up
 brctl addbr br1
 ifconfig br1 10.10.30.1/24 up
 brctl addbr br2

@@ -9,6 +9,7 @@ noblacklist ${HOME}/.Skype
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-programs.inc
 
@@ -25,6 +26,7 @@ shell none
 
 disable-mnt
 #private-bin skype,bash
+private-cache
 private-dev
 private-tmp
 

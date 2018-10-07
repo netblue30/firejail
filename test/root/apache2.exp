@@ -16,18 +16,18 @@ spawn $env(SHELL)
 send -- "firejail --tree\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"root:/usr/sbin/apache2"
+	"root:apache:firejail --name=apache /etc/init.d/apache2"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"www-data:/usr/sbin/apache2"
+	"www-data::/usr/sbin/apache2"
 }
 sleep 2
 
 
 send -- "rm index.html\r"
 sleep 1
-send -- "wget 0\r"
+send -- "wget 127.0.0.1\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"saved"

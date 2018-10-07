@@ -1,4 +1,5 @@
 # Firejail profile for mumble
+# Description: Low latency encrypted VoIP client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mumble.local
@@ -10,6 +11,7 @@ noblacklist ${HOME}/.local/share/data/Mumble
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -18,6 +20,7 @@ mkdir ${HOME}/.local/share/data/Mumble
 whitelist ${HOME}/.config/Mumble
 whitelist ${HOME}/.local/share/data/Mumble
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter

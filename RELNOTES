@@ -1,5 +1,81 @@
-firejail (0.9.51) baseline; urgency=low
-  * work in progress!
+firejail (0.9.56) baseline; urgency=low
+  * modif: removed CFG_CHROOT_DESKTOP configuration option
+  * modif: removed compile time --enable-network=restricted
+  * modif: removed compile time --disable-bind
+  * modif: --net=none allowed even if networking was disabled at compile
+     time or at run time
+  * modif: allow system users to run the sandbox
+  * support wireless devices in --net option
+  * support tap devices in --net option (tunneling support)
+  * allow IP address configuration if the parent interface specified
+     by --net is not configured (--netmask)
+  * support for firetunnel utility
+  * disable U2F devices (--nou2f)
+  * add --private-cache to support private ~/.cache
+  * support full paths in private-lib
+  * globbing support in private-lib
+  * support for local user directories in firecfg (--bindir)
+  * new profiles: ms-excel, ms-office, ms-onenote, ms-outlook, ms-powerpoint,
+  * new profiles: ms-skype, ms-word, riot-desktop, gnome-mpv, snox, gradio,
+  * new profiles: standardnotes-desktop, shellcheck, patch, flameshot,
+  * new profiles: rview, rvim, vimcat, vimdiff, vimpager, vimtutor, xxd,
+  * new profiles: Beaker, electrum, clamtk, pybitmessage, dig, whois,
+  * new profiles: jdownloader, Fluxbox, Blackbox, Awesome, i3
+  * new profiles: start-tor-browser.desktop
+ -- netblue30 <netblue30@yahoo.com>  Tue, 18 Sep 2018 08:00:00 -0500
+
+firejail (0.9.54) baseline; urgency=low
+  * modif: --force removed
+  * modif: --csh, --zsh removed
+  * modif: --debug-check-filename removed
+  * modif: --git-install and --git-uninstall removed
+  * modif: support for private-bin, private-lib and shell none has been
+     disabled while running AppImage archives in order to be able to use
+     our regular profile files with AppImages.
+  * modif: restrictions for /proc, /sys and /run/user directories
+     are moved from AppArmor profile into firejail executable
+  * modif: unifying Chromium and Firefox browsers profiles.
+     All users of Firefox-based browsers who use addons and plugins
+     that read/write from ${HOME} will need to uncomment the includes for
+     firefox-common-addons.inc in firefox-common.profile.
+  * modif: split disable-devel.inc into disable-devel and
+     disable-interpreters.inc
+  * Firejail user access database (/etc/firejail/firejail.users,
+     man firejail-users)
+  * add --noautopulse to disable automatic ~/.config/pulse (for complex setups)
+  * Spectre mitigation patch for gcc and clang compiler
+  * D-Bus handling (--nodbus)
+  * AppArmor support for overlayfs and chroot sandboxes
+  * AppArmor support for AppImages
+  * Enable AppArmor by default for a large number of programs
+  * firejail --apparmor.print option
+  * firemon --apparmor option
+  * apparmor yes/no flag in /etc/firejail/firejail.config
+  * seccomp syscall list update for glibc 2.26-10
+  * seccomp disassembler for --seccomp.print option
+  * seccomp machine code optimizer for default seccomp filters
+  * IPv6 DNS support
+  * whitelist support for overlay and chroot sandboxes
+  * private-dev support for overlay and chroot sandboxes
+  * private-tmp support for overlay and chroot sandboxes
+  * added sandbox name support in firemon
+  * firemon/prctl enhancements
+  * noblacklist support for /sys/module directory
+  * whitelist support for /sys/module directory
+  * new profiles: basilisk, Tor Browser language packs, PlayOnLinux, sylpheed,
+  * new profiles: discord-canary, pycharm-community, pycharm-professional,
+  * new profiles: pdfchain, tilp, vivaldi-snapshot, bitcoin-qt, kaffeine,
+  * new profiles: falkon, gnome-builder, asunder, VS Code, gnome-recipes,
+  * new profiles: akonadi_controle, evince-previewer, evince-thumbnailer,
+  * new profiles: blender-2.8, thunderbird-beta, ncdu, gnome-logs, gcloud,
+  * new profiles: musixmatch, gunzip, bunzip2, enchant-lsmod, enchant-lsmod-2,
+  * new profiles: enchant, enchant-2, Discord, acat, adiff, als, apack,
+  * new profiles: arepack, aunpack profiles, ppsspp, scallion, clion,
+  * new profiles: baloo_filemetadata_temp_extractor, AnyDesk, webstorm, xmind,
+  * new profiles: qmmp, sayonara
+ -- netblue30 <netblue30@yahoo.com>  Wed, 16 May 2018 08:00:00 -0500
+
+firejail (0.9.52) baseline; urgency=low
   * modif: --allow-private-blacklists was deprecated; blacklisting,
     read-only, read-write, tmpfs and noexec are allowed in
     private home directories
@@ -44,8 +120,40 @@ firejail (0.9.51) baseline; urgency=low
       xcalc, zaproxy, kopete, cliqz, signal-desktop, kget, nheko, Enpass,
       kwin_x11, krunner, ping, bsdtar, makepkg (Arch), archaudit-report
       cower (Arch), kdeinit4
+ -- netblue30 <netblue30@yahoo.com>  Thu, 7 Dec 2017 08:00:00 -0500
 
- -- netblue30 <netblue30@yahoo.com>  Thu, 9 Nov 2017 08:00:00 -0500
+firejail (0.9.50) baseline; urgency=low
+  * modif: --output split in two commands, --output and --output-stderr
+  * feature: per-profile disable-mnt (--disable-mnt)
+  * feature: per-profile support to set X11 Xephyr screen size (--xephyr-screen)
+  * feature: private /lib directory (--private-lib)
+  * feature: disable CDROM/DVD drive (--nodvd)
+  * feature: disable DVB devices (--notv)
+  * feature: --profile.print
+  * enhancement: print all seccomp filters under --debug
+  * enhancement: /proc/sys mounting
+  * enhancement: rework IP address assingment for --net options
+  * enhancement: support for newer Xpra versions (2.1+) -
+     set xpra-attach yes in /etc/firejail/firejail.config
+  * enhancement: all profiles use a standard layout style
+  * enhancement: create /usr/local for firecfg if the directory doesn't exist
+  * enhancement: allow full paths in --private-bin
+  * seccomp feature: --memory-deny-write-execute
+  * seccomp feature: seccomp post-exec
+  * seccomp feature: block secondary architecture (--seccomp.block_secondary)
+  * seccomp feature: seccomp syscall groups
+  * seccomp enhancement: print all seccomp filters under --debug
+  * seccomp enhancement: default seccomp list update
+  * new profiles: curl, mplayer2, SMPlayer, Calibre, ebook-viewer, KWrite,
+  * new profiles: Geary, Liferea, peek, silentarmy, IntelliJ IDEA,
+  * new profiles: Android Studio, electron, riot-web, Extreme Tux Racer,
+  * new profiles: Frozen Bubble, Open Invaders, Pingus, Simutrans, SuperTux
+  * new profiles: telegram-desktop, arm, rambox, apktool, baobab, dex2jar, gitg,
+  * new profiles: hashcat, obs, picard, remmina, sdat2img, soundconverter
+  * new profiles: truecraft, gnome-twitch, tuxguitar, musescore, neverball
+  * new profiles: sqlitebrowse, Yandex Browser, minetest
+  * bugfixes
+ -- netblue30 <netblue30@yahoo.com>  Sat, 30 Sep 2017 08:00:00 -0500
 
 firejail (0.9.50~rc1) baseline; urgency=low
   * release pending!

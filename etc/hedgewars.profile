@@ -1,4 +1,5 @@
 # Firejail profile for hedgewars
+# Description: Funny turn-based artillery game, featuring fighting hedgehogs
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/hedgewars.local
@@ -9,6 +10,7 @@ noblacklist ${HOME}/.hedgewars
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

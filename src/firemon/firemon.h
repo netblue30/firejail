@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -36,6 +36,7 @@ static inline void firemon_clrscr(void) {
 }
 
 // firemon.c
+extern pid_t skip_process;
 extern int arg_nowrap;
 int find_child(int id);
 void firemon_sleep(int st);
@@ -82,5 +83,8 @@ void netstats(void);
 
 // x11.c
 void x11(pid_t pid, int print_procs);
+
+//apparmor.c
+void apparmor(pid_t pid, int print_procs);
 
 #endif

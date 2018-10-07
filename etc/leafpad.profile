@@ -1,4 +1,5 @@
 # Firejail profile for leafpad
+# Description: GTK+ based simple text editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/leafpad.local
@@ -9,6 +10,7 @@ noblacklist ${HOME}/.config/leafpad
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

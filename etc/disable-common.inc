@@ -7,31 +7,40 @@ blacklist-nolog ${HOME}/.*_history
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.cache/greenclip*
 blacklist-nolog ${HOME}/.history
+blacklist-nolog ${HOME}/.kde/share/apps/klipper
+blacklist-nolog ${HOME}/.kde4/share/apps/klipper
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
+blacklist-nolog ${HOME}/.local/share/klipper
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog /tmp/clipmenu*
 
 # X11 session autostart
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
 blacklist ${HOME}/.Xsession
+blacklist ${HOME}/.blackbox
 blacklist ${HOME}/.config/autostart
 blacklist ${HOME}/.config/autostart-scripts
+blacklist ${HOME}/.config/awesome
+blacklist ${HOME}/.config/i3
 blacklist ${HOME}/.config/lxsession/LXDE/autostart
 blacklist ${HOME}/.config/openbox
 blacklist ${HOME}/.config/plasma-workspace
 blacklist ${HOME}/.config/startupconfig
-blacklist ${HOME}/.fluxbox/startup
+blacklist ${HOME}/.config/startupconfigkeys
+blacklist ${HOME}/.fluxbox
 blacklist ${HOME}/.gnomerc
 blacklist ${HOME}/.kde/Autostart
 blacklist ${HOME}/.kde/env
 blacklist ${HOME}/.kde/share/autostart
 blacklist ${HOME}/.kde/share/config/startupconfig
+blacklist ${HOME}/.kde/share/config/startupconfigkeys
 blacklist ${HOME}/.kde/shutdown
 blacklist ${HOME}/.kde4/env
 blacklist ${HOME}/.kde4/Autostart
 blacklist ${HOME}/.kde4/share/autostart
 blacklist ${HOME}/.kde4/shutdown
 blacklist ${HOME}/.kde4/share/config/startupconfig
+blacklist ${HOME}/.kde4/share/config/startupconfigkeys
 blacklist ${HOME}/.local/share/autostart
 blacklist ${HOME}/.xinitrc
 blacklist ${HOME}/.xprofile
@@ -40,55 +49,79 @@ blacklist ${HOME}/.xsession
 blacklist ${HOME}/.xsessionrc
 blacklist /etc/X11/Xsession.d
 blacklist /etc/xdg/autostart
+read-only ${HOME}/.Xauthority
 
 # KDE config
-blacklist ${HOME}/.config/*.notifyrc
 blacklist ${HOME}/.config/khotkeysrc
 blacklist ${HOME}/.config/krunnerrc
+blacklist ${HOME}/.config/kscreenlockerrc
+blacklist ${HOME}/.config/ksslcertificatemanager
 blacklist ${HOME}/.config/kwinrc
 blacklist ${HOME}/.config/kwinrulesrc
 blacklist ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
+blacklist ${HOME}/.config/plasmashellrc
 blacklist ${HOME}/.config/plasmavaultrc
-blacklist ${HOME}/.kde/share/apps/konsole
 blacklist ${HOME}/.kde/share/apps/kwin
 blacklist ${HOME}/.kde/share/apps/plasma
 blacklist ${HOME}/.kde/share/apps/solid
-blacklist ${HOME}/.kde/share/config/*.notifyrc
 blacklist ${HOME}/.kde/share/config/khotkeysrc
 blacklist ${HOME}/.kde/share/config/krunnerrc
+blacklist ${HOME}/.kde/share/config/kscreensaverrc
+blacklist ${HOME}/.kde/share/config/ksslcertificatemanager
 blacklist ${HOME}/.kde/share/config/kwinrc
 blacklist ${HOME}/.kde/share/config/kwinrulesrc
 blacklist ${HOME}/.kde/share/config/plasma-desktop-appletsrc
-blacklist ${HOME}/.kde4/share/apps/konsole
 blacklist ${HOME}/.kde4/share/apps/kwin
 blacklist ${HOME}/.kde4/share/apps/plasma
 blacklist ${HOME}/.kde4/share/apps/solid
-blacklist ${HOME}/.kde4/share/config/*.notifyrc
 blacklist ${HOME}/.kde4/share/config/khotkeysrc
 blacklist ${HOME}/.kde4/share/config/krunnerrc
+blacklist ${HOME}/.kde4/share/config/kscreensaverrc
+blacklist ${HOME}/.kde4/share/config/ksslcertificatemanager
 blacklist ${HOME}/.kde4/share/config/kwinrc
 blacklist ${HOME}/.kde4/share/config/kwinrulesrc
 blacklist ${HOME}/.kde4/share/config/plasma-desktop-appletsrc
 blacklist ${HOME}/.local/share/kglobalaccel
-blacklist ${HOME}/.local/share/konsole
 blacklist ${HOME}/.local/share/kwin
 blacklist ${HOME}/.local/share/plasma
+blacklist ${HOME}/.local/share/plasmashell
 blacklist ${HOME}/.local/share/solid
+read-only ${HOME}/.cache/ksycoca5_*
+read-only ${HOME}/.config/*notifyrc
 read-only ${HOME}/.config/kdeglobals
+read-only ${HOME}/.config/kio_httprc
+read-only ${HOME}/.config/kiorc
 read-only ${HOME}/.config/kioslaverc
+read-only ${HOME}/.config/ksslcablacklist
+read-only ${HOME}/.kde/share/apps/konsole
+read-only ${HOME}/.kde/share/apps/kssl
+read-only ${HOME}/.kde/share/config/*notifyrc
 read-only ${HOME}/.kde/share/config/kdeglobals
+read-only ${HOME}/.kde/share/config/kio_httprc
 read-only ${HOME}/.kde/share/config/kioslaverc
+read-only ${HOME}/.kde/share/config/ksslcablacklist
 read-only ${HOME}/.kde/share/kde4/services
+read-only ${HOME}/.kde4/share/apps/konsole
+read-only ${HOME}/.kde4/share/apps/kssl
+read-only ${HOME}/.kde4/share/config/*notifyrc
 read-only ${HOME}/.kde4/share/config/kdeglobals
+read-only ${HOME}/.kde4/share/config/kio_httprc
 read-only ${HOME}/.kde4/share/config/kioslaverc
+read-only ${HOME}/.kde4/share/config/ksslcablacklist
 read-only ${HOME}/.kde4/share/kde4/services
+read-only ${HOME}/.local/share/konsole
 read-only ${HOME}/.local/share/kservices5
+read-only ${HOME}/.local/share/kssl
 
 # kdeinit socket
 blacklist /run/user/*/kdeinit5__*
 # blacklist /run/user/*/ksocket-*/kdeinit4__*
 # blacklist /tmp/ksocket-*/kdeinit4__*
 #  - causes issues when kdeinit4 gets killed; enable on KDE Plasma 4
+
+# gnome
+# contains extensions, last used times of applications, and notifications
+blacklist ${HOME}/.local/share/gnome-shell
 
 # systemd
 blacklist ${HOME}/.config/systemd
@@ -134,7 +167,7 @@ blacklist /var/lib/mysql/mysql.sock
 blacklist /var/lib/mysqld/mysql.sock
 blacklist /var/lib/pacman
 blacklist /var/lib/upower
-# blacklist /var/log - a virtual /var/log directory (mostly empty) is buid up by default for
+# blacklist /var/log - a virtual /var/log directory (mostly empty) is build up by default for
 #          every sandbox, unless --writeble-var-log switch is activated
 blacklist /var/mail
 blacklist /var/opt
@@ -179,6 +212,7 @@ read-only ${HOME}/.forward
 read-only ${HOME}/.local/share/fish
 read-only ${HOME}/.login
 read-only ${HOME}/.logout
+read-only ${HOME}/.oh-my-zsh
 read-only ${HOME}/.pam_environment
 read-only ${HOME}/.pgpkey
 read-only ${HOME}/.plan
@@ -193,6 +227,9 @@ read-only ${HOME}/.zsh_files
 read-only ${HOME}/.zshenv
 read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
+
+# Remote access
+read-only ${HOME}/.ssh/authorized_keys
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
@@ -218,6 +255,7 @@ read-only ${HOME}/_exrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
+read-only ${HOME}/.homesick
 
 # Make directories commonly found in $PATH read-only
 read-only ${HOME}/.gem
@@ -232,6 +270,7 @@ read-only ${HOME}/bin
 blacklist   ${HOME}/.local/share/Trash
 
 # Write-protection for desktop entries
+read-only ${HOME}/.config/menus
 read-only ${HOME}/.local/share/applications
 
 # top secret
@@ -243,6 +282,7 @@ blacklist ${HOME}/.caff
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/keybase
 blacklist ${HOME}/.ecryptfs
+blacklist ${HOME}/.fetchmailrc
 blacklist ${HOME}/.gnome2/keyrings
 blacklist ${HOME}/.gnupg
 blacklist ${HOME}/.kde/share/apps/kwallet
@@ -250,7 +290,7 @@ blacklist ${HOME}/.kde4/share/apps/kwallet
 blacklist ${HOME}/.local/share/keyrings
 blacklist ${HOME}/.local/share/kwalletd
 blacklist ${HOME}/.msmtprc
-blacklist ${HOME}/.mutt/muttrc
+blacklist ${HOME}/.mutt
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.netrc
 blacklist ${HOME}/.pki
@@ -270,6 +310,13 @@ blacklist /etc/shadow-
 blacklist /etc/ssh
 blacklist /home/.ecryptfs
 blacklist /var/backup
+
+# cloud provider configuration
+blacklist ${HOME}/.aws
+blacklist ${HOME}/.boto
+blacklist /etc/boto.cfg
+blacklist ${HOME}/.config/gcloud
+blacklist ${HOME}/.kube
 
 # system directories
 blacklist /sbin
@@ -338,5 +385,17 @@ blacklist ${PATH}/xfce4-terminal.wrapper
 blacklist /initrd*
 blacklist /vmlinuz*
 
+# snapshot files
+blacklist /.snapshots
+
 # complement noexec ${HOME} and noexec /tmp
 noexec /tmp/.X11-unix
+
+# flatpak
+blacklist ${HOME}/*.config/flatpak
+blacklist ${HOME}/*.var
+blacklist ${HOME}/*.local/share/flatpak
+blacklist /var/lib/flatpak
+blacklist /usr/share/flatpak
+# most of the time bwrap is SUID binary
+blacklist ${PATH}/bwrap

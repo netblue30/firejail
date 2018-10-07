@@ -1,4 +1,5 @@
 # Firejail profile for electron
+# Description: Build cross platform desktop apps with web technologies
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/electron.local
@@ -11,8 +12,10 @@ include /etc/firejail/disable-programs.inc
 
 whitelist ${DOWNLOADS}
 
+apparmor
 caps.drop all
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -52,6 +52,8 @@ static void env_add(Env *env) {
 
 // load IBUS env variables
 void env_ibus_load(void) {
+	EUID_ASSERT();
+
 	// check ~/.config/ibus/bus directory
 	char *dirname;
 	if (asprintf(&dirname, "%s/.config/ibus/bus", cfg.homedir) == -1)
@@ -101,9 +103,7 @@ void env_ibus_load(void) {
 				*ptr = '\0';
 			if (arg_debug)
 				printf("%s\n", buf);
-			EUID_USER();
 			env_store(buf, SETENV);
-			EUID_ROOT();
 		}
 
 		fclose(fp);
@@ -116,9 +116,13 @@ void env_ibus_load(void) {
 
 // default sandbox env variables
 void env_defaults(void) {
-	// fix qt 4.8
+	// Qt fixes
 	if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
 		errExit("setenv");
+	if (setenv("QML_DISABLE_DISK_CACHE", "1", 1) < 0)
+		errExit("setenv");
+//	if (setenv("QTWEBENGINE_DISABLE_SANDBOX", "1", 1) < 0)
+//		errExit("setenv");
 //	if (setenv("MOZ_NO_REMOTE, "1", 1) < 0)
 //		errExit("setenv");
 	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
@@ -141,6 +145,11 @@ void env_defaults(void) {
 	if (set_prompt) {
 		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
 		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
+			errExit("setenv");
+	}
+	else {
+		// remove PROMPT_COMMAND
+		if (setenv("PROMPT_COMMAND", ":", 1) < 0) // unsetenv() will not work here, bash still picks it up from somewhere
 			errExit("setenv");
 	}
 

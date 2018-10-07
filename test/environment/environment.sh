@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
@@ -38,7 +38,7 @@ echo "TESTING: environment variables (test/environment/env.exp)"
 echo "TESTING: shell none(test/environment/shell-none.exp)"
 ./shell-none.exp
 
-which dash
+which dash 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: dash (test/environment/dash.exp)"
@@ -47,7 +47,7 @@ else
         echo "TESTING SKIP: dash not found"
 fi
 
-which csh
+which csh 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: csh (test/environment/csh.exp)"
@@ -56,7 +56,7 @@ else
         echo "TESTING SKIP: csh not found"
 fi
 
-which zsh
+which zsh 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: zsh (test/environment/zsh.exp)"
@@ -68,10 +68,7 @@ fi
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
 
-echo "TESTING: firejail in firejail - force new sandbox (test/environment/firejail-in-firejail2.exp)"
-./firejail-in-firejail2.exp
-
-which aplay
+which aplay 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: sound (test/environment/sound.exp)"
@@ -86,7 +83,7 @@ echo "TESTING: nice (test/environment/nice.exp)"
 echo "TESTING: quiet (test/environment/quiet.exp)"
 ./quiet.exp
 
-which strace
+which strace 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: --allow-debuggers (test/environment/allow-debuggers.exp)"

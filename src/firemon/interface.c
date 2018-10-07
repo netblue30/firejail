@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -62,7 +62,7 @@ static void net_ifprint(void) {
 					// extract mac address
 					struct ifreq ifr;
 					memset(&ifr, 0, sizeof(ifr));
-					strncpy(ifr.ifr_name,  ifa->ifa_name, IFNAMSIZ);
+					strncpy(ifr.ifr_name,  ifa->ifa_name, IFNAMSIZ - 1);
 					int rv = ioctl (fd, SIOCGIFHWADDR, &ifr);
 
 					if (rv == 0)

@@ -1,4 +1,5 @@
 # Firejail profile for psi-plus
+# Description: Qt-based XMPP/Jabber client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/psi-plus.local
@@ -10,6 +11,7 @@ noblacklist ${HOME}/.local/share/psi+
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

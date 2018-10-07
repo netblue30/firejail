@@ -1,4 +1,5 @@
 # Firejail profile for kino
+# Description: Non-linear editor for Digital Video data
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kino.local
@@ -10,6 +11,7 @@ noblacklist ${HOME}/.kinorc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -24,6 +26,7 @@ protocol unix
 seccomp
 shell none
 
+private-cache
 private-dev
 private-tmp
 

@@ -1,4 +1,5 @@
 # Firejail profile for arch-audit
+# Description: A utility like pkg-audit based on Arch CVE Monitoring Team data
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
@@ -11,8 +12,10 @@ noblacklist /var/lib/pacman
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 ipc-namespace
@@ -31,6 +34,7 @@ shell none
 
 disable-mnt
 private
+private-cache
 private-bin arch-audit
 private-dev
 private-tmp

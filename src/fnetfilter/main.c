@@ -1,5 +1,5 @@
  /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -50,19 +50,20 @@ static void usage(void) {
 	printf("\tfnetfilter netfilter-command destination-file\n");
 }
 
+static void err_exit_cannot_open_file(const char *fname) {
+	fprintf(stderr, "Error fnetfilter: cannot open %s\n", fname);
+	exit(1);
+}
+
 
 static void copy(const char *src, const char *dest) {
 	FILE *fp1 = fopen(src, "r");
-	if (!fp1) {
-		fprintf(stderr, "Error fnetfilter: cannot open %s\n", src);
-		exit(1);
-	}
+	if (!fp1)
+		err_exit_cannot_open_file(src);
 
 	FILE *fp2 = fopen(dest, "w");
-	if (!fp2) {
-		fprintf(stderr, "Error fnetfilter: cannot open %s\n", dest);
-		exit(1);
-	}
+	if (!fp2)
+		err_exit_cannot_open_file(dest);
 
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp1))
@@ -78,13 +79,17 @@ static void process_template(char *src, const char *dest) {
 	*arg_start = '\0';
 	arg_start++;
 	if (*arg_start == '\0') {
-		fprintf(stderr, "Error fnetfilter: you need to provide at least on argument\n");
+		fprintf(stderr, "Error fnetfilter: you need to provide at least one argument\n");
 		exit(1);
 	}
 
 	// extract the arguments from command line
 	char *token = strtok(arg_start, ",");
 	while (token) {
+		if (argcnt == MAXARGS) {
+			fprintf(stderr, "Error fnetfilter: only up to %u arguments are supported\n", (unsigned) MAXARGS);
+			exit(1);
+		}
 		// look for abnormal things
 		int len = strlen(token);
 		if (strcspn(token, "\\&!?\"'<>%^(){};,*[]") != (size_t)len) {
@@ -106,16 +111,12 @@ for (i = 0; i < argcnt; i++)
 
 	// open the files
 	FILE *fp1 = fopen(src, "r");
-	if (!fp1) {
-		fprintf(stderr, "Error fnetfilter: cannot open %s\n", src);
-		exit(1);
-	}
+	if (!fp1)
+		err_exit_cannot_open_file(src);
 
 	FILE *fp2 = fopen(dest, "w");
-	if (!fp2) {
-		fprintf(stderr, "Error fnetfilter: cannot open %s\n", dest);
-		exit(1);
-	}
+	if (!fp2)
+		err_exit_cannot_open_file(dest);
 
 	int line = 0;
 	char buf[MAXBUF];
@@ -128,7 +129,7 @@ for (i = 0; i < argcnt; i++)
 			else {
 				// parsing
 				int index = 0;
-				int rv = sscanf(ptr, "$ARG%u", &index) ;
+				int rv = sscanf(ptr, "$ARG%d", &index) ;
 				if (rv != 1) {
 					fprintf(stderr, "Error fnetfilter: invalid template argument on line %d\n", line);
 					exit(1);
@@ -186,19 +187,15 @@ printf("\n");
 //printf("destfile %s\n", destfile);
 	// destfile is a real filename
 	int len = strlen(destfile);
-	if (strcspn(destfile, "\\&!?\"'<>%^(){};,*[]") != (size_t)len) {
-		fprintf(stderr, "Error fnetfilter: invalid destination file in netfilter command\n");
-		exit(1);
-	}
+	if (strcspn(destfile, "\\&!?\"'<>%^(){};,*[]") != (size_t)len)
+		err_exit_cannot_open_file(destfile);
 
 	// handle default config (command = NULL, destfile)
 	if (command == NULL) {
 		// create a default filter file
 		FILE *fp = fopen(destfile, "w");
-		if (!fp) {
-			fprintf(stderr, "Error fnetfilter: cannot open %s\n", destfile);
-			exit(1);
-		}
+		if (!fp)
+			err_exit_cannot_open_file(destfile);
 		fprintf(fp, "%s\n", default_filter);
 		fclose(fp);
 	}

@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -68,19 +68,19 @@ send -- "exit\r"
 after 100
 
 
-send -- "firejail --debug --private-bin=/etc/shadow \r"
+send -- "firejail --private-bin=/etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"Warning: file /etc/shadow not found"
+	"Warning: invalid private-bin path /etc/shadow"
 }
-after 100
+after 300
 
 send -- "firejail --private-bin=\"bla;bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
 	"is an invalid filename"
 }
-after 100
+after 300
 
 send -- "firejail --private-etc=../bin/ls\r"
 expect {
@@ -88,5 +88,5 @@ expect {
 	"is an invalid filename"
 }
 
-after 100
+after 300
 puts "\nall done\n"

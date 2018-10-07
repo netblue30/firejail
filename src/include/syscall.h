@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -69,6 +69,11 @@
 #ifdef SYS_alarm
 #ifdef __NR_alarm
 	{"alarm", __NR_alarm},
+#endif
+#endif
+#ifdef SYS_arch_prctl
+#ifdef __NR_arch_prctl
+	{"arch_prctl", __NR_arch_prctl},
 #endif
 #endif
 #ifdef SYS_bdflush
@@ -1051,6 +1056,21 @@
 	{"pivot_root", __NR_pivot_root},
 #endif
 #endif
+#ifdef SYS_pkey_alloc
+#ifdef __NR_pkey_alloc
+	{"pkey_alloc", __NR_pkey_alloc},
+#endif
+#endif
+#ifdef SYS_pkey_free
+#ifdef __NR_pkey_free
+	{"pkey_free", __NR_pkey_free},
+#endif
+#endif
+#ifdef SYS_pkey_mprotect
+#ifdef __NR_pkey_mprotect
+	{"pkey_mprotect", __NR_pkey_mprotect},
+#endif
+#endif
 #ifdef SYS_poll
 #ifdef __NR_poll
 	{"poll", __NR_poll},
@@ -1634,6 +1654,11 @@
 #ifdef SYS_statfs64
 #ifdef __NR_statfs64
 	{"statfs64", __NR_statfs64},
+#endif
+#endif
+#ifdef SYS_statx
+#ifdef __NR_statx
+	{"statx", __NR_statx},
 #endif
 #endif
 #ifdef SYS_stime
@@ -2814,6 +2839,21 @@
 	{"pivot_root", __NR_pivot_root},
 #endif
 #endif
+#ifdef SYS_pkey_alloc
+#ifdef __NR_pkey_alloc
+	{"pkey_alloc", __NR_pkey_alloc},
+#endif
+#endif
+#ifdef SYS_pkey_free
+#ifdef __NR_pkey_free
+	{"pkey_free", __NR_pkey_free},
+#endif
+#endif
+#ifdef SYS_pkey_mprotect
+#ifdef __NR_pkey_mprotect
+	{"pkey_mprotect", __NR_pkey_mprotect},
+#endif
+#endif
 #ifdef SYS_poll
 #ifdef __NR_poll
 	{"poll", __NR_poll},
@@ -3322,6 +3362,11 @@
 #ifdef SYS_statfs
 #ifdef __NR_statfs
 	{"statfs", __NR_statfs},
+#endif
+#endif
+#ifdef SYS_statx
+#ifdef __NR_statx
+	{"statx", __NR_statx},
 #endif
 #endif
 #ifdef SYS_swapoff
@@ -4427,6 +4472,21 @@
 	{"pivot_root", __NR_pivot_root},
 #endif
 #endif
+#ifdef SYS_pkey_alloc
+#ifdef __NR_pkey_alloc
+	{"pkey_alloc", __NR_pkey_alloc},
+#endif
+#endif
+#ifdef SYS_pkey_free
+#ifdef __NR_pkey_free
+	{"pkey_free", __NR_pkey_free},
+#endif
+#endif
+#ifdef SYS_pkey_mprotect
+#ifdef __NR_pkey_mprotect
+	{"pkey_mprotect", __NR_pkey_mprotect},
+#endif
+#endif
 #ifdef SYS_poll
 #ifdef __NR_poll
 	{"poll", __NR_poll},
@@ -4925,6 +4985,11 @@
 #ifdef SYS_statfs
 #ifdef __NR_statfs
 	{"statfs", __NR_statfs},
+#endif
+#endif
+#ifdef SYS_statx
+#ifdef __NR_statx
+	{"statx", __NR_statx},
 #endif
 #endif
 #ifdef SYS_swapoff

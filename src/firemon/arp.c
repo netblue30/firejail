@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -51,7 +51,7 @@ static void print_arp(const char *fname) {
 		char mac[64];
 		char mask[64];
 		char device[64];
-		int rv = sscanf(start, "%s %s %s %s %s %s\n", ip, type, flags, mac, mask, device);
+		int rv = sscanf(start, "%63s %63s %63s %63s %63s %63s\n", ip, type, flags, mac, mask, device);
 		if (rv != 6)
 			continue;
 

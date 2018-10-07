@@ -1,5 +1,5 @@
  /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -20,18 +20,21 @@
 #ifndef FNET_H
 #define FNET_H
 
+#include "../include/common.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "../include/common.h"
+#include <stdarg.h>
 
 // main.c
 extern int arg_quiet;
+extern void fmessage(char* fmt, ...); // TODO: this function is duplicated in src/firejail/util.c
 
 // veth.c
 int net_create_veth(const char *dev, const char *nsdev, unsigned pid);
 int net_create_macvlan(const char *dev, const char *parent, unsigned pid);
+int net_create_ipvlan(const char *dev, const char *parent, unsigned pid);
 int net_move_interface(const char *dev, unsigned pid);
 
 // interface.c

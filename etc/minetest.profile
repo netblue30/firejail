@@ -1,4 +1,5 @@
 # Firejail profile for minetest
+# Description: Multiplayer infinite-world block sandbox
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/minetest.local
@@ -9,16 +10,19 @@ noblacklist ${HOME}/.minetest
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.minetest
 whitelist ${HOME}/.minetest
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -32,7 +36,8 @@ shell none
 disable-mnt
 private-bin minetest
 private-dev
-private-etc asound.conf,ca-certificates,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pulse,resolv.conf,ssl
+# private-etc needs to be updated, see #1702
+#private-etc asound.conf,ca-certificates,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pulse,resolv.conf,ssl,pki,crypto-policies,machine-id
 private-tmp
 
 noexec ${HOME}

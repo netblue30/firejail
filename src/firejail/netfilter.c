@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -170,7 +170,12 @@ void netfilter_print(pid_t pid, int ipv6) {
 
 	// join the network namespace
 	pid_t child;
-	if (find_child(pid, &child) == -1) {
+	if (find_child(pid, &child) == 1) {
+		fprintf(stderr, "Error: cannot join the network namespace\n");
+		exit(1);
+	}
+
+	if (invalid_sandbox(child)) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");
 		exit(1);
 	}
@@ -183,7 +188,7 @@ void netfilter_print(pid_t pid, int ipv6) {
 
 	// find iptables executable
 	char *iptables = NULL;
-	char *iptables_restore = NULL;
+//	char *iptables_restore = NULL;
 	if (ipv6) {
 		if (stat("/sbin/ip6tables", &s) == 0)
 			iptables = "/sbin/ip6tables";

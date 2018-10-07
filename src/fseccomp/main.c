@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -37,7 +37,6 @@ static void usage(void) {
 	printf("\tfseccomp default drop file1 file2 list allow-debuggers\n");
 	printf("\tfseccomp keep file1 file2 list\n");
 	printf("\tfseccomp memory-deny-write-execute file\n");
-	printf("\tfseccomp print file\n");
 }
 
 int main(int argc, char **argv) {
@@ -71,8 +70,6 @@ printf("\n");
 		protocol_print();
 	else if (argc == 5 && strcmp(argv[1], "protocol") == 0 && strcmp(argv[2], "build") == 0)
 		protocol_build_filter(argv[3], argv[4]);
-	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "64") == 0)
-		seccomp_secondary_64(argv[3]);
 	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "32") == 0)
 		seccomp_secondary_32(argv[3]);
 	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "block") == 0)
@@ -93,8 +90,6 @@ printf("\n");
 		seccomp_keep(argv[2], argv[3], argv[4]);
 	else if (argc == 3 && strcmp(argv[1], "memory-deny-write-execute") == 0)
 		memory_deny_write_execute(argv[2]);
-	else if (argc == 3 && strcmp(argv[1], "print") == 0)
-		filter_print(argv[2]);
 	else {
 		fprintf(stderr, "Error fseccomp: invalid arguments\n");
 		return 1;

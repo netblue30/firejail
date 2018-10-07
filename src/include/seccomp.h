@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -67,6 +67,30 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+// From /usr/include/linux/filter.h
+//struct sock_filter {	/* Filter block */
+//	__u16	code;   /* Actual filter code */
+//	__u8	jt;	/* Jump true */
+//	__u8	jf;	/* Jump false */
+//	__u32	k;      /* Generic multiuse field */
+//};
+
+// for old platforms (Debian "wheezy", etc.)
+#ifndef BPF_MOD
+#define BPF_MOD 0x90
+#endif
+#ifndef BPF_XOR
+#define BPF_XOR 0xa0
+#endif
+#ifndef SECCOMP_RET_ACTION
+#define SECCOMP_RET_ACTION 0x7fff0000U
+#endif
+#ifndef SECCOMP_RET_TRACE
+#define SECCOMP_RET_TRACE 0x7ff00000U
+#endif
+
+
+
 #include <sys/prctl.h>
 #ifndef PR_SET_NO_NEW_PRIVS
 # define PR_SET_NO_NEW_PRIVS 38
@@ -81,6 +105,7 @@
 #define SECCOMP_RET_ALLOW	0x7fff0000U
 #define SECCOMP_RET_ERRNO	0x00050000U
 #define SECCOMP_RET_DATA        0x0000ffffU
+
 struct seccomp_data {
     int nr;
     __u32 arch;
@@ -88,6 +113,11 @@ struct seccomp_data {
     __u64 args[6];
 };
 #endif
+
+#ifndef SECCOMP_RET_LOG
+#define SECCOMP_RET_LOG		0x7ffc0000U
+#endif
+
 
 #if defined(__i386__)
 # define ARCH_NR	AUDIT_ARCH_I386
@@ -200,9 +230,12 @@ struct seccomp_data {
      BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_32, 1, 0), \
      BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
+#ifndef X32_SYSCALL_BIT
+#define X32_SYSCALL_BIT 0x40000000
+#endif
+
 #if defined(__x86_64__)
 // handle X32 ABI
-#define X32_SYSCALL_BIT 0x40000000
 #define HANDLE_X32 \
 		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, X32_SYSCALL_BIT, 1, 0), \
 		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, 0, 1, 0), \

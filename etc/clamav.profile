@@ -1,4 +1,5 @@
 # Firejail profile for clamav
+# Description: Anti-virus utility for Unix
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
@@ -6,12 +7,11 @@ include /etc/firejail/clamav.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 caps.drop all
 ipc-namespace
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

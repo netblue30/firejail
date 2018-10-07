@@ -1,4 +1,5 @@
 # Firejail profile for bitlbee
+# Description: IRC to other chat networks gateway
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/bitlbee.local
@@ -11,8 +12,10 @@ noblacklist /usr/sbin
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 netfilter
 no3d
@@ -26,7 +29,7 @@ seccomp
 
 disable-mnt
 private
-private-dev
+private-cache
 private-dev
 private-tmp
 read-write /var/lib/bitlbee

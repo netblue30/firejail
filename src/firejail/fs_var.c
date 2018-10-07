@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -255,23 +255,8 @@ void fs_var_lock(void) {
 		fs_logger("tmpfs /var/lock");
 	}
 	else {
-		char *lnk = realpath("/var/lock", NULL);
-		if (lnk) {
-			if (!is_dir(lnk)) {
-				// create directory
-				mkdir_attr(lnk, S_IRWXU|S_IRWXG|S_IRWXO, 0, 0);
-			}
-			if (arg_debug)
-				printf("Mounting tmpfs on %s on behalf of /var/lock\n", lnk);
-			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-				errExit("mounting /var/lock");
-			free(lnk);
-			fs_logger("tmpfs /var/lock");
-		}
-		else {
-			fwarning("/var/lock not mounted\n");
-			dbg_test_dir("/var/lock");
-		}
+		fwarning("/var/lock not mounted\n");
+		dbg_test_dir("/var/lock");
 	}
 }
 

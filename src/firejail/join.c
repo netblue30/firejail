@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -49,7 +49,7 @@ static void extract_x11_display(pid_t pid) {
 	if (!fp)
 		return;
 
-	if (1 != fscanf(fp, "%d", &display)) {
+	if (1 != fscanf(fp, "%u", &display)) {
 		fprintf(stderr, "Error: cannot read X11 display file\n");
 		fclose(fp);
 		return;
@@ -64,7 +64,7 @@ static void extract_x11_display(pid_t pid) {
 
 	// store the display number for join process in /run/firejail/x11
 	EUID_ROOT();
-	set_x11_file(getpid(), display);
+	set_x11_run_file(getpid(), display);
 	EUID_USER();
 }
 
@@ -205,6 +205,54 @@ static void extract_user_namespace(pid_t pid) {
 	free(uidmap);
 }
 
+static void extract_umask(pid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_UMASK_FILE) == -1)
+		errExit("asprintf");
+
+	FILE *fp = fopen(fname, "re");
+	free(fname);
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open umask file\n");
+		exit(1);
+	}
+	if (fscanf(fp, "%3o", &orig_umask) < 1) {
+		fprintf(stderr, "Error: cannot read umask\n");
+		exit(1);
+	}
+	fclose(fp);
+}
+
+pid_t switch_to_child(pid_t pid) {
+	EUID_ROOT();
+	errno = 0;
+	char *comm = pid_proc_comm(pid);
+	if (!comm) {
+		if (errno == ENOENT) {
+			fprintf(stderr, "Error: cannot find process with id %d\n", pid);
+			exit(1);
+		}
+		else {
+			fprintf(stderr, "Error: cannot read /proc file\n");
+			exit(1);
+		}
+	}
+	EUID_USER();
+	if (strcmp(comm, "firejail") == 0) {
+		pid_t child;
+		if (find_child(pid, &child) == 1) {
+			fprintf(stderr, "Error: no valid sandbox\n");
+			exit(1);
+		}
+		fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) child);
+		pid = child;
+	}
+	free(comm);
+	return pid;
+}
+
+
+
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
 	char *homedir = cfg.homedir;
@@ -213,20 +261,13 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	extract_command(argc, argv, index);
 	signal (SIGTERM, signal_handler);
 
-	// if the pid is that of a firejail  process, use the pid of the first child process
-	EUID_ROOT();
-	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (comm) {
-		if (strcmp(comm, "firejail") == 0) {
-			pid_t child;
-			if (find_child(pid, &child) == 0) {
-				pid = child;
-				if (!arg_quiet)
-					printf("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
-			}
-		}
-		free(comm);
+	// in case the pid is that of a firejail process, use the pid of the first child process
+	pid = switch_to_child(pid);
+
+	// now check if the pid belongs to a firejail sandbox
+	if (invalid_sandbox(pid)) {
+		fprintf(stderr, "Error: no valid sandbox\n");
+		exit(1);
 	}
 
 	// check privileges for non-root users
@@ -254,6 +295,9 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	// set cgroup
 	if (cfg.cgroup)	// not available for uid 0
 		set_cgroup(cfg.cgroup);
+
+	// get umask, it will be set by start_application()
+	extract_umask(pid);
 
 	// join namespaces
 	if (arg_join_network) {
@@ -293,6 +337,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
+
+		EUID_USER();
 		if (chdir("/") < 0)
 			errExit("chdir");
 		if (homedir) {
@@ -309,18 +355,18 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			set_cpu_affinity();
 
 		// set caps filter
+		EUID_ROOT();
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
 #ifdef HAVE_SECCOMP
 		// read cfg.protocol from file
 		if (getuid() != 0)
 			protocol_filter_load(RUN_PROTOCOL_CFG);
-		if (cfg.protocol) {	// not available for uid 0
+		if (cfg.protocol) 	// not available for uid 0
 			seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
-		}
 
 		// set seccomp filter
-		if (apply_seccomp == 1)	// not available for uid 0
+		if (apply_seccomp == 1)	 // not available for uid 0
 			seccomp_load(RUN_SECCOMP_CFG);
 #endif
 
@@ -336,10 +382,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			if (apply_caps == 1)	// not available for uid 0
 				caps_set(caps);
 		}
-		else
-			drop_privs(arg_nogroups);	// nogroups not available for uid 0
 
-
+		EUID_USER();
 		// set nice
 		if (arg_nice) {
 			errno = 0;
@@ -386,7 +430,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			}
 		}
 
-		start_application(0);
+		drop_privs(arg_nogroups);
+		start_application(0, NULL);
 
 		// it will never get here!!!
 	}

@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -18,19 +18,19 @@ spawn $env(SHELL)
 send -- "firejail --seccomp.print=test\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"EXAMINE_SYSCAL"
+	"ld  data.syscall-number"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"delete_module"
+	"jeq delete_module"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"init_module"
+	"jeq init_module"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"RETURN_ALLOW"
+	"ret ALLOW"
 }
 after 100
 puts "\nall done\n"

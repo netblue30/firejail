@@ -6,12 +6,12 @@ Summary: Linux namepaces sandbox program
 License: GPLv2+
 Group: Development/Tools
 Source0: https://github.com/netblue30/firejail/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-URL: http://github.com/netblue30/firejail
+URL: https://github.com/netblue30/firejail
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
-Firejail  is  a  SUID sandbox program that reduces the risk of security
+Firejail is a SUID sandbox program that reduces the risk of security
 breaches by restricting the running environment of untrusted applications
 using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 
@@ -19,7 +19,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %setup -q
 
 %build
-%configure --disable-userns
+%configure --disable-userns --disable-contrib-install
 make %{?_smp_mflags}
 
 %install
@@ -35,12 +35,7 @@ rm -rf %{buildroot}
 %attr(4755, -, -) %{_bindir}/__NAME__
 %{_bindir}/firecfg
 %{_bindir}/firemon
-%{_libdir}/__NAME__/firecfg.config
-%{_libdir}/__NAME__/ftee
-%{_libdir}/__NAME__/faudit
-%{_libdir}/__NAME__/fshaper.sh
-%{_libdir}/__NAME__/libtrace.so
-%{_libdir}/__NAME__/libtracelog.so
+%{_libdir}/__NAME__
 %{_datarootdir}/bash-completion/completions/__NAME__
 %{_datarootdir}/bash-completion/completions/firecfg
 %{_datarootdir}/bash-completion/completions/firemon
@@ -50,4 +45,5 @@ rm -rf %{buildroot}
 %{_mandir}/man1/firemon.1.gz
 %{_mandir}/man5/__NAME__-login.5.gz
 %{_mandir}/man5/__NAME__-profile.5.gz
-%config %{_sysconfdir}/__NAME__
+%{_mandir}/man5/__NAME__-users.5.gz
+%config(noreplace) %{_sysconfdir}/__NAME__

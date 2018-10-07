@@ -1,4 +1,5 @@
 # Firejail profile for aweather
+# Description: Advanced Weather Monitoring Program
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/aweather.local
@@ -9,6 +10,7 @@ noblacklist ${HOME}/.config/aweather
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

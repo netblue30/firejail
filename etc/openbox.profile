@@ -1,4 +1,5 @@
 # Firejail profile for openbox
+# Description: Standards-compliant, fast, light-weight and extensible window manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/openbox.local
@@ -14,3 +15,6 @@ netfilter
 noroot
 protocol unix,inet,inet6
 seccomp
+
+read-only ${HOME}/.config/openbox/autostart
+read-only ${HOME}/.config/openbox/environment

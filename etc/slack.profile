@@ -5,13 +5,12 @@ include /etc/firejail/slack.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /var
-
 noblacklist ${HOME}/.config/Slack
 noblacklist ${HOME}/Downloads
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -20,6 +19,7 @@ mkdir ${HOME}/.config/Slack
 whitelist ${HOME}/.config/Slack
 whitelist ${HOME}/Downloads
 include /etc/firejail/whitelist-common.inc
+include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 name slack
@@ -34,7 +34,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin slack
+private-bin slack,locale
 private-dev
-private-etc asound.conf,ca-certificates,fonts,group,passwd,pulse,resolv.conf,ssl,ld.so.conf,ld.so.cache,localtime
+private-etc asound.conf,ca-certificates,fonts,group,passwd,pulse,resolv.conf,ssl,ld.so.conf,ld.so.cache,localtime,pki,crypto-policies,machine-id
 private-tmp

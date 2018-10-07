@@ -1,11 +1,11 @@
 # Firejail profile for xiphos
+# Description: Environment for Bible reading, study, and research
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xiphos.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist ${HOME}/.Xauthority
 blacklist ${HOME}/.bashrc
 
 noblacklist ${HOME}/.sword
@@ -13,6 +13,7 @@ noblacklist ${HOME}/.xiphos
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -36,5 +37,5 @@ tracelog
 
 private-bin xiphos
 private-dev
-private-etc fonts,resolv.conf,sword
+private-etc fonts,resolv.conf,sword,ca-certificates,ssl,pki,crypto-policies
 private-tmp

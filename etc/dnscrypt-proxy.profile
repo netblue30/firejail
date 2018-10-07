@@ -1,4 +1,5 @@
 # Firejail profile for dnscrypt-proxy
+# Description: Tool for securing communications between a client and a DNS resolver
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/dnscrypt-proxy.local
@@ -12,8 +13,10 @@ noblacklist /usr/sbin
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
 no3d
@@ -26,6 +29,7 @@ seccomp.drop mount,umount2,ptrace,kexec_load,kexec_file_load,open_by_handle_at,i
 
 disable-mnt
 private
+private-cache
 private-dev
 
 # mdwe can break modules/plugins

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -25,6 +25,8 @@
 #include <unistd.h>
 #include <glob.h>
 
+static int prog_cnt = 0;
+
 static char *paths[] = {
 	"/usr/local/bin",
 	"/usr/bin",
@@ -40,7 +42,6 @@ static char *paths[] = {
 // return 1 if found, 0 if not found
 static char *check_dir_or_file(const char *name) {
 	assert(name);
-
 	struct stat s;
 	char *fname = NULL;
 
@@ -147,7 +148,7 @@ static void report_duplication(const char *fname) {
 	}
 }
 
-static void duplicate(char *fname, FILE *fplist) {
+static void duplicate(char *fname) {
 	assert(fname);
 
 	if (*fname == '~' || strstr(fname, "..")) {
@@ -162,8 +163,10 @@ static void duplicate(char *fname, FILE *fplist) {
 		// is required for the following cases:
 		//  - if user's $PATH order is not the same as the above
 		//    paths[] variable order
-		if (!valid_full_path_file(fname))
+		if (!valid_full_path_file(fname)) {
+			fwarning("invalid private-bin path %s\n", fname);
 			return;
+		}
 
 		full_path = strdup(fname);
 		if (!full_path)
@@ -179,8 +182,18 @@ static void duplicate(char *fname, FILE *fplist) {
 			errExit("asprintf");
 	}
 
-	if (fplist)
-		fprintf(fplist, "%s\n", full_path);
+	// add to private-lib list
+	if (cfg.bin_private_lib == NULL) {
+		if (asprintf(&cfg.bin_private_lib, "%s,%s",fname, full_path) == -1)
+			errExit("asprinf");
+	}
+	else {
+		char *tmp;
+		if (asprintf(&tmp, "%s,%s,%s", cfg.bin_private_lib, fname, full_path) == -1)
+			errExit("asprinf");
+		free(cfg.bin_private_lib);
+		cfg.bin_private_lib = tmp;
+	}
 
 	// if full_path is symlink, and the link is in our path, copy both the file and the symlink
 	if (is_link(full_path)) {
@@ -190,6 +203,7 @@ static void duplicate(char *fname, FILE *fplist) {
 				// solving problems such as /bin/sh -> /bin/dash
 				// copy the real file pointed by symlink
 				sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, actual_path, RUN_BIN_DIR);
+				prog_cnt++;
 				char *f = strrchr(actual_path, '/');
 				if (f && *(++f) !='\0')
 					report_duplication(f);
@@ -200,18 +214,19 @@ static void duplicate(char *fname, FILE *fplist) {
 
 	// copy a file or a symlink
 	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
+	prog_cnt++;
 	free(full_path);
 	report_duplication(fname);
 }
 
-static void globbing(char *fname, FILE *fplist) {
+static void globbing(char *fname) {
 	assert(fname);
 
 	// go directly to duplicate() if no globbing char is present - see man 7 glob
 	if (strrchr(fname, '*') == NULL &&
 	    strrchr(fname, '[') == NULL &&
 	    strrchr(fname, '?') == NULL)
-		return duplicate(fname, fplist);
+		return duplicate(fname);
 
 	// loop through paths[]
 	int i = 0;
@@ -242,7 +257,7 @@ static void globbing(char *fname, FILE *fplist) {
 			if (strcmp(globbuf.gl_pathv[j], pattern) == 0)
 				continue;
 
-			duplicate(globbuf.gl_pathv[j], fplist);
+			duplicate(globbuf.gl_pathv[j]);
 		}
 
 		globfree(&globbuf);
@@ -255,6 +270,9 @@ void fs_private_bin_list(void) {
 	char *private_list = cfg.bin_private_keep;
 	assert(private_list);
 
+	// start timetrace
+	timetrace_start();
+
 	// create /run/firejail/mnt/bin directory
 	mkdir_attr(RUN_BIN_DIR, 0755, 0, 0);
 
@@ -266,22 +284,16 @@ void fs_private_bin_list(void) {
 	if (!dlist)
 		errExit("strdup");
 
-	// save a list of private-bin files in order to bring in private-libs later
-	FILE *fplist = NULL;
-	if (arg_private_lib) {
-		fplist = fopen(RUN_LIB_BIN, "w");
-		if (!fplist)
-			errExit("fopen");
-	}
-
 	char *ptr = strtok(dlist, ",");
-	globbing(ptr, fplist);
+	if (!ptr) {
+		fprintf(stderr, "Error: invalid private-bin argument\n");
+		exit(1);
+	}
+	globbing(ptr);
 	while ((ptr = strtok(NULL, ",")) != NULL)
-		globbing(ptr, fplist);
+		globbing(ptr);
 	free(dlist);
 	fs_logger_print();
-	if (fplist)
-		fclose(fplist);
 
 	// mount-bind
 	int i = 0;
@@ -297,4 +309,5 @@ void fs_private_bin_list(void) {
 		}
 		i++;
 	}
+	fmessage("%d %s installed in %0.2f ms\n", prog_cnt, (prog_cnt == 1)? "program": "programs", timetrace_end());
 }

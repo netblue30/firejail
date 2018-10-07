@@ -1,4 +1,5 @@
 # Firejail profile for gpredict
+# Description: Satellite tracking program
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/gpredict.local
@@ -9,6 +10,7 @@ noblacklist ${HOME}/.config/Gpredict
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -30,7 +32,7 @@ tracelog
 
 private-bin gpredict
 private-dev
-private-etc fonts,resolv.conf
+private-etc fonts,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

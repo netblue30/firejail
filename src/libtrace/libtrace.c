@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -23,13 +23,16 @@
 #include <string.h>
 #include <dlfcn.h>
 #include <sys/types.h>
+#include <limits.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/un.h>
 #include <sys/stat.h>
+#include <syslog.h>
 #include <dirent.h>
+#include <limits.h>
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);

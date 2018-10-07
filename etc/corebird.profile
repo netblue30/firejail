@@ -1,4 +1,5 @@
 # Firejail profile for corebird
+# Description: Native Gtk+ Twitter client for the Linux desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/corebird.local
@@ -9,8 +10,10 @@ noblacklist ${HOME}/.config/corebird
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 

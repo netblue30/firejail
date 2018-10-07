@@ -1,4 +1,5 @@
 # Firejail profile for enchant
+# Description: Wrapper for various spell checker engines
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/enchant.local
@@ -9,11 +10,15 @@ noblacklist ${HOME}/.config/enchant
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 netfilter
+no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -26,7 +31,12 @@ seccomp
 shell none
 tracelog
 
-# private-bin enchant
-# private-dev
-# private-etc fonts
-# private-tmp
+# private-bin enchant, enchant-*
+private-cache
+private-dev
+private-etc none
+private-tmp
+
+# memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

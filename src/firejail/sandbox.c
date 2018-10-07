@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -53,10 +53,7 @@ int enforce_seccomp = 0;
 
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
-	if (!arg_quiet) {
-		printf("\nChild received signal %d, shutting down the sandbox...\n", sig);
-		fflush(0);
-	}
+	fmessage("\nChild received signal %d, shutting down the sandbox...\n", sig);
 
 	// broadcast sigterm to all processes in the group
 	kill(-1, SIGTERM);
@@ -127,6 +124,31 @@ void save_nogroups(void) {
 		exit(1);
 	}
 
+}
+
+void save_umask(void) {
+	FILE *fp = fopen(RUN_UMASK_FILE, "wxe");
+	if (fp) {
+		fprintf(fp, "%o\n", orig_umask);
+		SET_PERMS_STREAM(fp, 0, 0, 0644); // assume mode 0644
+		fclose(fp);
+	}
+	else {
+		fprintf(stderr, "Error: cannot save umask\n");
+		exit(1);
+	}
+}
+
+static FILE *create_ready_for_join_file(void) {
+	FILE *fp = fopen(RUN_READY_FOR_JOIN, "wxe");
+	if (fp) {
+		ASSERT_PERMS_STREAM(fp, 0, 0, 0644);
+		return fp;
+	}
+	else {
+		fprintf(stderr, "Error: cannot create %s\n", RUN_READY_FOR_JOIN);
+		exit(1);
+	}
 }
 
 static void sandbox_if_up(Bridge *br) {
@@ -240,7 +262,7 @@ static int monitor_application(pid_t app_pid) {
 		}
 		while(rv != monitored_pid);
 		if (arg_debug)
-			printf("Sandbox monitor: waitpid %u retval %d status %d\n", monitored_pid, rv, status);
+			printf("Sandbox monitor: waitpid %d retval %d status %d\n", monitored_pid, rv, status);
 		if (rv == -1) { // we can get here if we have processes joining the sandbox (ECHILD)
 			if (arg_debug)
 				perror("waitpid");
@@ -284,7 +306,7 @@ static int monitor_application(pid_t app_pid) {
 		closedir(dir);
 
 		if (monitored_pid != 0 && arg_debug)
-			printf("Sandbox monitor: monitoring %u\n", monitored_pid);
+			printf("Sandbox monitor: monitoring %d\n", monitored_pid);
 	}
 
 	// return the latest exit status.
@@ -298,13 +320,13 @@ static void print_time(void) {
 		usleep(1000);
 		unsigned long long onems = getticks() - end_timestamp;
 		if (onems) {
-			printf("Child process initialized in %.02f ms\n",
+			fmessage("Child process initialized in %.02f ms\n",
 				(float) (end_timestamp - start_timestamp) / (float) onems);
 			return;
 		}
 	}
 
-	printf("Child process initialized\n");
+	fmessage("Child process initialized\n");
 }
 
 
@@ -364,12 +386,15 @@ static int ok_to_run(const char *program) {
 	return 0;
 }
 
-void start_application(int no_sandbox) {
+void start_application(int no_sandbox, FILE *fp) {
 	// set environment
 	if (no_sandbox == 0) {
 		env_defaults();
 		env_apply();
 	}
+	// restore original umask
+	umask(orig_umask);
+
 	if (arg_debug) {
 		printf("starting application\n");
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
@@ -380,6 +405,11 @@ void start_application(int no_sandbox) {
 	//****************************************
 	if (arg_audit) {
 		assert(arg_audit_prog);
+
+		if (fp) {
+			fprintf(fp, "ready\n");
+			fclose(fp);
+		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
@@ -387,6 +417,9 @@ void start_application(int no_sandbox) {
 		seccomp_install_filters();
 #endif
 		execl(arg_audit_prog, arg_audit_prog, NULL);
+
+		perror("execl");
+		exit(1);
 	}
 	//****************************************
 	// start the program without using a shell
@@ -410,6 +443,11 @@ void start_application(int no_sandbox) {
 			print_time();
 
 		int rv = ok_to_run(cfg.original_argv[cfg.original_program_index]);
+
+		if (fp) {
+			fprintf(fp, "ready\n");
+			fclose(fp);
+		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
@@ -466,6 +504,11 @@ void start_application(int no_sandbox) {
 
 		if (!arg_command && !arg_quiet)
 			print_time();
+
+		if (fp) {
+			fprintf(fp, "ready\n");
+			fclose(fp);
+		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
@@ -482,6 +525,7 @@ void start_application(int no_sandbox) {
 static void enforce_filters(void) {
 	// force default seccomp inside the chroot, no keep or drop list
 	// the list build on top of the default drop list is kept intact
+	arg_nonewprivs = 1;
 	arg_seccomp = 1;
 #ifdef HAVE_SECCOMP
 	enforce_seccomp = 1;
@@ -503,8 +547,8 @@ static void enforce_filters(void) {
 	// drop all supplementary groups; /etc/group file inside chroot
 	// is controlled by a regular usr
 	arg_nogroups = 1;
-	if (!arg_quiet)
-		printf("Dropping all Linux capabilities and enforcing default seccomp filter\n");
+	fmessage("\n** Warning: dropping all Linux capabilities and enforcing  **\n");
+	fmessage("**                  default seccomp filter                 **\n\n");
 }
 
 int sandbox(void* sandbox_arg) {
@@ -557,6 +601,11 @@ int sandbox(void* sandbox_arg) {
 	else
 		fs_logger("sandbox filesystem: local");
 	fs_logger("install mount namespace");
+
+	//****************************
+	// save the umask
+	//****************************
+	save_umask();
 
 	//****************************
 	// netfilter
@@ -642,28 +691,29 @@ int sandbox(void* sandbox_arg) {
 	// print network configuration
 	if (!arg_quiet) {
 		if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
-			printf("\n");
+			fmessage("\n");
 			if (any_bridge_configured() || any_interface_configured()) {
-//				net_ifprint();
 				if (arg_scan)
 					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, PATH_FNET, "printif", "scan");
 				else
-					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif", "scan");
+					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif");
 
 			}
 			if (cfg.defaultgw != 0) {
 				if (gw_cfg_failed)
-					printf("Default gateway configuration failed\n");
+					fmessage("Default gateway configuration failed\n");
 				else
-					printf("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+					fmessage("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
 			}
-			if (cfg.dns1 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns1));
-			if (cfg.dns2 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns2));
-			if (cfg.dns3 != 0)
-				printf("DNS server %d.%d.%d.%d\n", PRINT_IP(cfg.dns3));
-			printf("\n");
+			if (cfg.dns1 != NULL)
+				fmessage("DNS server %s\n", cfg.dns1);
+			if (cfg.dns2 != NULL)
+				fmessage("DNS server %s\n", cfg.dns2);
+			if (cfg.dns3 != NULL)
+				fmessage("DNS server %s\n", cfg.dns3);
+			if (cfg.dns4 != NULL)
+				fmessage("DNS server %s\n", cfg.dns4);
+			fmessage("\n");
 		}
 	}
 
@@ -671,8 +721,11 @@ int sandbox(void* sandbox_arg) {
 	if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {
 		// do nothing - there are problems with ibus version 1.5.11
 	}
-	else
+	else {
+		EUID_USER();
 		env_ibus_load();
+		EUID_ROOT();
+	}
 
 	//****************************
 	// fs pre-processing:
@@ -696,7 +749,13 @@ int sandbox(void* sandbox_arg) {
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
-
+	// for --appimage, --chroot and --overlay* we replace the seccomp filter with the default one
+	// we also drop all capabilities
+	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay)) {
+		enforce_filters();
+		need_preload = arg_trace || arg_tracelog;
+		arg_seccomp = 1;
+	}
 	// trace pre-install
 	if (need_preload)
 		fs_trace_preload();
@@ -708,18 +767,9 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// configure filesystem
 	//****************************
-	if (arg_appimage)
-		enforce_filters();
-
 #ifdef HAVE_CHROOT
 	if (cfg.chrootdir) {
 		fs_chroot(cfg.chrootdir);
-
-		// force caps and seccomp if not started as root
-		if (getuid() != 0)
-			enforce_filters();
-		else
-			arg_seccomp = 1;
 
 		//****************************
 		// trace pre-install, this time inside chroot
@@ -730,14 +780,8 @@ int sandbox(void* sandbox_arg) {
 	else
 #endif
 #ifdef HAVE_OVERLAYFS
-	if (arg_overlay)	{
+	if (arg_overlay)
 		fs_overlayfs();
-		// force caps and seccomp if not started as root
-		if (getuid() != 0)
-			enforce_filters();
-		else
-			arg_seccomp = 1;
-	}
 	else
 #endif
 		fs_basic_fs();
@@ -766,14 +810,8 @@ int sandbox(void* sandbox_arg) {
 			fs_private();
 	}
 
-	if (arg_private_dev) {
-		if (cfg.chrootdir)
-			fwarning("private-dev feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-dev feature is disabled in overlay\n");
-		else
-			fs_private_dev();
-	}
+	if (arg_private_dev)
+		fs_private_dev();
 
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
@@ -808,7 +846,8 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	if (arg_private_bin) {
+	// private-bin is disabled for appimages
+	if (arg_private_bin && !arg_appimage) {
 		if (cfg.chrootdir)
 			fwarning("private-bin feature is disabled in chroot\n");
 		else if (arg_overlay)
@@ -827,7 +866,8 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	if (arg_private_lib) {
+	// private-lib is disabled for appimages
+	if (arg_private_lib && !arg_appimage) {
 		if (cfg.chrootdir)
 			fwarning("private-lib feature is disabled in chroot\n");
 		else if (arg_overlay)
@@ -837,18 +877,28 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	if (arg_private_tmp) {
+	if (arg_private_cache) {
 		if (cfg.chrootdir)
-			fwarning("private-tmp feature is disabled in chroot\n");
+			fwarning("private-cache feature is disabled in chroot\n");
 		else if (arg_overlay)
-			fwarning("private-tmp feature is disabled in overlay\n");
-		else {
-			// private-tmp is implemented as a whitelist
-			EUID_USER();
-			fs_private_tmp();
-			EUID_ROOT();
-		}
+			fwarning("private-cache feature is disabled in overlay\n");
+		else
+			fs_private_cache();
 	}
+
+	if (arg_private_tmp) {
+		// private-tmp is implemented as a whitelist
+		EUID_USER();
+		fs_private_tmp();
+		EUID_ROOT();
+	}
+
+	//****************************
+	// Session D-BUS
+	//****************************
+	if (arg_nodbus)
+		dbus_session_disable();
+
 
 	//****************************
 	// hosts and hostname
@@ -880,12 +930,7 @@ int sandbox(void* sandbox_arg) {
 	// apply the profile file
 	//****************************
 	// apply all whitelist commands ...
-	if (cfg.chrootdir)
-		fwarning("whitelist feature is disabled in chroot\n");
-	else if (arg_overlay)
-		fwarning("whitelist feature is disabled in overlay\n");
-	else
-		fs_whitelist();
+	fs_whitelist();
 
 	// ... followed by blacklist commands
 	fs_blacklist(); // mkdir and mkfile are processed all over again
@@ -900,7 +945,7 @@ int sandbox(void* sandbox_arg) {
 		// disable /dev/snd
 		fs_dev_disable_sound();
 	}
-	else
+	else if (!arg_noautopulse)
 		pulseaudio_init();
 
 	if (arg_no3d)
@@ -911,6 +956,9 @@ int sandbox(void* sandbox_arg) {
 
 	if (arg_nodvd)
 		fs_dev_disable_dvd();
+
+	if (arg_nou2f)
+	        fs_dev_disable_u2f();
 
 	if (arg_novideo)
 		fs_dev_disable_video();
@@ -936,6 +984,8 @@ int sandbox(void* sandbox_arg) {
 	// set application environment
 	//****************************
 	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
+
+	EUID_USER();
 	int cwd = 0;
 	if (cfg.cwd) {
 		if (chdir(cfg.cwd) == 0)
@@ -962,7 +1012,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-
 	// set nice
 	if (arg_nice) {
 		errno = 0;
@@ -974,6 +1023,7 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
+	EUID_ROOT();
 	// clean /tmp/.X11-unix sockets
 	fs_x11();
 	if (arg_x11_xorg)
@@ -985,13 +1035,12 @@ int sandbox(void* sandbox_arg) {
 	// set capabilities
 	set_caps();
 
-	// set rlimits
-	set_rlimits();
-
 	// set cpu affinity
 	if (cfg.cpus) {
 		save_cpu(); // save cpu affinity mask to CPU_CFG file
+		EUID_USER();
 		set_cpu_affinity();
+		EUID_ROOT();
 	}
 
 	// save cgroup in CGROUP_CFG file
@@ -1008,6 +1057,10 @@ int sandbox(void* sandbox_arg) {
 		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
 		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
 	}
+	else {
+		int rv = unlink(RUN_SECCOMP_PROTOCOL);
+		(void) rv;
+	}
 #endif
 
 	// if a keep list is available, disregard the drop list
@@ -1016,13 +1069,12 @@ int sandbox(void* sandbox_arg) {
 			seccomp_filter_keep();
 		else
 			seccomp_filter_drop();
-	}
 
-	if (arg_debug) {
-		printf("\nSeccomp files:\n");
-		int rv = system("ls -l /run/firejail/mnt/seccomp*\n");
+	}
+	else { // clean seccomp files under /run/firejail/mnt
+		int rv = unlink(RUN_SECCOMP_CFG);
+		rv |= unlink(RUN_SECCOMP_32);
 		(void) rv;
-		printf("\n");
 	}
 
 	if (arg_memory_deny_write_execute) {
@@ -1030,22 +1082,31 @@ int sandbox(void* sandbox_arg) {
 			printf("Install memory write&execute filter\n");
 		seccomp_load(RUN_SECCOMP_MDWX);	// install filter
 	}
+	else {
+		int rv = unlink(RUN_SECCOMP_MDWX);
+		(void) rv;
+	}
 #endif
 
 	//****************************************
-	// drop privileges or create a new user namespace
+	// communicate progress of sandbox set up
+	// to --join
+	//****************************************
+
+	FILE *fp = create_ready_for_join_file();
+
+	//****************************************
+	// create a new user namespace
+	//     - too early to drop privileges
 	//****************************************
 	save_nogroups();
 	if (arg_noroot) {
 		int rv = unshare(CLONE_NEWUSER);
 		if (rv == -1) {
 			fwarning("cannot create a new user namespace, going forward without it...\n");
-			drop_privs(arg_nogroups);
 			arg_noroot = 0;
 		}
 	}
-	else
-		drop_privs(arg_nogroups);
 
 	// notify parent that new user namespace has been created so a proper
  	// UID/GID map can be setup
@@ -1068,24 +1129,25 @@ int sandbox(void* sandbox_arg) {
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
 	if (arg_nonewprivs) {
-		int no_new_privs = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+		prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
 
-		if(no_new_privs != 0 && !arg_quiet)
+		if (prctl(PR_GET_NO_NEW_PRIVS, 0, 0, 0, 0) != 1)
 			fwarning("NO_NEW_PRIVS disabled, it requires a Linux kernel version 3.5 or newer.\n");
 		else if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");
 	}
 
 	//****************************************
-	// fork the application and monitor it
+	// drop privileges, fork the application and monitor it
 	//****************************************
+	drop_privs(arg_nogroups);
 	pid_t app_pid = fork();
 	if (app_pid == -1)
 		errExit("fork");
 
 	if (app_pid == 0) {
 #ifdef HAVE_APPARMOR
-		if (arg_apparmor) {
+		if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
 			errno = 0;
 			if (aa_change_onexec("firejail-default")) {
 				fwarning("Cannot confine the application using AppArmor.\n"
@@ -1096,9 +1158,14 @@ int sandbox(void* sandbox_arg) {
 				printf("AppArmor enabled\n");
 		}
 #endif
+		// set rlimits
+		set_rlimits();
+
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
-		start_application(0);	// start app
+		start_application(0, fp);	// start app
 	}
+
+	fclose(fp);
 
 	int status = monitor_application(app_pid);	// monitor application
 	flush_stdin();

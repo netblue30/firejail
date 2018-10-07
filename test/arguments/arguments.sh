@@ -3,10 +3,8 @@
 if [ -f /etc/debian_version ]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep faudit)")
 	export PATH="$PATH:$libdir"
-else
-	export PATH="$PATH:/usr/lib/firejail"
 fi
-export PATH="$PATH:/usr/lib/firejail"
+export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
 echo "TESTING: 1. regular bash session"
 ./bashrun.exp

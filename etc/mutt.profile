@@ -1,4 +1,5 @@
 # Firejail profile for mutt
+# Description: Text-based mailreader supporting MIME, GPG, PGP and threading
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mutt.local
@@ -20,7 +21,6 @@ noblacklist ${HOME}/.mail
 noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.msmtprc
 noblacklist ${HOME}/.mutt
-noblacklist ${HOME}/.mutt/muttrc
 noblacklist ${HOME}/.muttrc
 noblacklist ${HOME}/.signature
 noblacklist ${HOME}/.vim
@@ -34,6 +34,7 @@ noblacklist ${HOME}/sent
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

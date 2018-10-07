@@ -100,7 +100,8 @@ $ firejail --allusers
 Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
 .TP
 \fB\-\-appimage
-Sandbox an AppImage (https://appimage.org/) application.
+Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started as a
+regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -111,6 +112,21 @@ $ firejail --appimage krita-3.0-x86_64.appimage
 $ firejail --appimage --private krita-3.0-x86_64.appimage
 .br
 $ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
+
+.TP
+\fB\-\-apparmor.print=name|pid
+Print the AppArmor confinement status for the sandbox identified by name or by PID.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-apparmor.print=browser
+.br
+5074:netblue:/usr/bin/firejail /usr/bin/firefox-esr
+.br
+  AppArmor: firejail-default enforce
+
 .TP
 \fB\-\-audit
 Audit the sandbox, see \fBAUDIT\fR section for more details.
@@ -155,7 +171,7 @@ in order to allow strace to run. Chromium and Chromium-based browsers will not w
 .br
 Example:
 .br
-$ firejail --build=profile-file vlc ~/Videos/test.mp4
+$ firejail --build vlc ~/Videos/test.mp4
 .TP
 \fB\-\-build=profile-file
 The command builds a whitelisted profile, and saves it in profile-file. If /usr/bin/strace is installed on the system, it also
@@ -239,7 +255,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-caps.print=3272
 
@@ -257,8 +273,7 @@ Example:
 \fB\-\-chroot=dirname
 Chroot the sandbox into a root filesystem. Unlike the regular filesystem container,
 the system directories are mounted read-write. If the sandbox is started as a
-regular user, default seccomp and capabilities filters are enabled. This
-option is not available on Grsecurity systems.
+regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -294,19 +309,10 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-cpu.print=3272
 
-.TP
-\fB\-\-csh
-Use /bin/csh as default user shell.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-csh
 .TP
 \fB\-\-debug\fR
 Print debug messages.
@@ -336,15 +342,6 @@ Print all recognized capabilities in the current Firejail software build and exi
 Example:
 .br
 $ firejail \-\-debug-caps
-.TP
-\fB\-\-debug-check-filename\fR
-Debug filename checking.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-debug-check-filename firefox
 
 .TP
 \fB\-\-debug-errnos
@@ -416,7 +413,10 @@ Use this option if you don't trust the DNS setup on your network.
 Example:
 .br
 $ firejail \-\-dns=8.8.8.8 \-\-dns=8.8.4.4 firefox
+.br
 
+.br
+Note: this feature is not supported on systemd-resolved setups.
 .TP
 \fB\-\-dns.print=name|pid
 Print DNS configuration for a sandbox identified by name or by PID.
@@ -435,7 +435,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-dns.print=3272
 
@@ -450,14 +450,7 @@ Example:
 $ firejail \-\-env=LD_LIBRARY_PATH=/opt/test/lib
 
 .TP
-\fB\-\-force
-By default, if Firejail is started in an existing sandbox, it will run the program in a bash shell.
-This option disables this behavior, and attempts to start Firejail in the existing sandbox.
-There could be lots of reasons for it to fail, for example if the existing sandbox disables
-admin capabilities, SUID binaries, or if it runs seccomp.
-
-.TP
-\fB\-\-fs.print=name|print
+\fB\-\-fs.print=name|pid
 Print the filesystem log for the sandbox identified by name or by PID.
 .br
 
@@ -474,46 +467,13 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-fs.print=3272
 
 .TP
 \fB\-\-get=name|pid filename
 Get a file from sandbox container, see \fBFILE TRANSFER\fR section for more details.
-
-
-.TP
-\fB\-\-git-install
-Download, compile and install mainline git version of Firejail from the official repository on GitHub.
-The software is installed in /usr/local/bin, and takes precedence over the (old) version
-installed in /usr/bin. If for any reason the new version doesn't work, the user can uninstall it
-using \-\-git-uninstall command and revert to the old version.
-.br
-
-.br
-Prerequisites: git and compile support are required for this command to work. On Debian/Ubuntu
-systems this support is installed using "sudo apt-get install build-essential git".
-.br
-
-.br
-Example:
-.br
-
-.br
-$ firejail \-\-git-install
-
-.TP
-\fB\-\-git-uninstall
-Remove the Firejail version previously installed in /usr/local/bin using \-\-git-install command.
-.br
-
-.br
-Example:
-.br
-
-.br
-$ firejail \-\-git-uninstall
 
 .TP
 \fB\-?\fR, \fB\-\-help\fR
@@ -549,7 +509,8 @@ Ignore command in profile file.
 Example:
 .br
 $ firejail \-\-ignore=shell --ignore=seccomp firefox
-
+.br
+$ firejail \-\-ignore="net eth0" firefox
 .TP
 \fB\-\-interface=interface
 Move interface in a new network namespace. Up to four --interface options can be specified.
@@ -644,7 +605,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-join=3272
 
@@ -655,7 +616,7 @@ If a program is specified, the program is run in the sandbox. This command is av
 Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox.
 
 .TP
-\fB\-\-join-network=name|PID
+\fB\-\-join-network=name|pid
 Join the network namespace of the sandbox identified by name. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. This command is available only to root user.
 Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox. Example:
@@ -718,6 +679,26 @@ Same as "firejail --join=name" if sandbox with specified name exists, otherwise 
 Note that in contrary to other join options there is respective profile option.
 
 .TP
+\fB\-\-keep-dev-shm
+/dev/shm directory is untouched (even with --private-dev)
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-dev-shm --private-dev
+
+.TP
+\fB\-\-keep-var-tmp
+/var/tmp directory is untouched.
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-var-tmp
+
+.TP
 \fB\-\-ls=name|pid dir_or_filename
 List files in sandbox container, see \fBFILE TRANSFER\fR section for more details.
 
@@ -731,16 +712,17 @@ Example:
 .br
 $ firejail \-\-list
 .br
-7015:netblue:firejail firefox
+7015:netblue:browser:firejail firefox
 .br
-7056:netblue:firejail \-\-net=eth0 transmission-gtk
+7056:netblue:torrent:firejail \-\-net=eth0 transmission-gtk
 .br
-7064:netblue:firejail \-\-noroot xterm
+7064:netblue::firejail \-\-noroot xterm
 .br
 $
 .TP
 \fB\-\-mac=address
-Assign MAC addresses to the last network interface defined by a \-\-net option.
+Assign MAC addresses to the last network interface defined by a \-\-net option. This option
+is not supported for wireless interfaces.
 .br
 
 .br
@@ -799,7 +781,7 @@ Enable a new network namespace and connect it to this bridge interface.
 Unless specified with option \-\-ip and \-\-defaultgw, an IP address and a default gateway will be assigned
 automatically to the sandbox. The IP address is verified using ARP before assignment. The address
 configured as default gateway is the bridge device IP address. Up to four \-\-net
-bridge devices can be defined. Mixing bridge and macvlan devices is allowed.
+options can be specified.
 .br
 
 .br
@@ -816,22 +798,37 @@ $ sudo ifconfig br1 10.10.30.1/24
 $ firejail \-\-net=br0 \-\-net=br1
 
 .TP
-\fB\-\-net=ethernet_interface
+\fB\-\-net=ethernet_interface|wireless_interface
 Enable a new network namespace and connect it
-to this ethernet interface using the standard Linux macvlan
+to this ethernet interface using the standard Linux macvlan|ipvaln
 driver. Unless specified with option \-\-ip and \-\-defaultgw, an
 IP address and a default gateway will be assigned automatically
 to the sandbox. The IP address is verified using ARP before
 assignment. The address configured as default gateway is the
-default gateway of the host. Up to four \-\-net devices can
-be defined. Mixing bridge and macvlan devices is allowed.
-Note: wlan devices are not supported for this option.
+default gateway of the host. Up to four \-\-net options can be specified.
+Support for ipvlan driver was introduced in Linux kernel 3.19.
 .br
 
 .br
 Example:
 .br
 $ firejail \-\-net=eth0 \-\-ip=192.168.1.80 \-\-dns=8.8.8.8 firefox
+.br
+$ firejail \-\-net=wlan0 firefox
+
+.TP
+\fB\-\-net=tap_interface
+Enable a new network namespace and connect it
+to this ethernet tap interface using the standard Linux macvlan
+driver. If the tap interface is not configured, the sandbox
+will not try to configure the interface inside the sandbox.
+Please use \-\-ip, \-\-netmask and \-\-defaultgw to specify the configuration.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=tap0 \-\-ip=10.10.20.80 \-\-netmask=255.255.255.0 \-\-defaultgw=10.10.20.1 firefox
 
 .TP
 \fB\-\-net=none
@@ -850,11 +847,6 @@ $ firejail \-\-net=none vlc
 .br
 Note: \-\-net=none can crash the application on some platforms.
 In these cases, it can be replaced with \-\-protocol=unix.
-
-.TP
-\fB\-\-netns=name
-Run the program in a named, persistent network namespace.  These can
-be created and configured using "ip netns".
 
 .TP
 \fB\-\-netfilter
@@ -983,6 +975,26 @@ $ firejail --name=browser --net=eth0 --netfilter firefox &
 $ firejail --netfilter6.print=browser
 
 .TP
+\fB\-\-netmask=address
+Use this option when you want to assign an IP address in a new namespace and
+the parent interface specified by --net is not configured. An IP address and
+a default gateway address also have to be added. By default the new namespace
+interface comes without IP address and default gateway configured. Example:
+.br
+
+.br
+$ sudo /sbin/brctl addbr br0
+.br
+$ sudo /sbin/ifconfig br0 up
+.br
+$ firejail --ip=10.10.20.67 --netmask=255.255.255.0 --defaultgw=10.10.20.1
+
+.TP
+\fB\-\-netns=name
+Run the program in a named, persistent network namespace.  These can
+be created and configured using "ip netns".
+
+.TP
 \fB\-\-netstats
 Monitor network namespace statistics, see \fBMONITORING\fR section for more details.
 .br
@@ -1045,6 +1057,17 @@ $ nc dict.org 2628
 .br
 220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
 .br
+.TP
+\fB\-\-nodbus
+Disable D-Bus access. Only the regular UNIX socket is handled by this command. To
+disable the abstract socket you would need to request a new network namespace using
+\-\-net command. Another option is to remove unix from \-\-protocol set.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-nodbus \-\-net=none
 .TP
 \fB\-\-nodvd
 Disable DVD and audio CD devices.
@@ -1170,6 +1193,17 @@ Example:
 $ firejail \-\-nosound firefox
 
 .TP
+\fB\-\-noautopulse
+Disable automatic ~/.config/pulse init, for complex setups such as remote
+pulse servers or non-standard socket paths.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noautopulse firefox
+
+.TP
 \fB\-\-notv
 Disable DVB (Digital Video Broadcasting) TV devices.
 .br
@@ -1178,6 +1212,16 @@ Disable DVB (Digital Video Broadcasting) TV devices.
 Example:
 .br
 $ firejail \-\-notv vlc
+
+.TP
+\fB\-\-nou2f
+Disable U2F devices.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-nou2f
 
 .TP
 \fB\-\-novideo
@@ -1223,7 +1267,8 @@ Similar to \-\-output, but stderr is also stored.
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail/<PID> directory.
+Directories /run, /tmp and /dev are not covered by the overlay. The overlay is stored in $HOME/.firejail/<PID> directory.
+If the sandbox is started as a regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -1241,8 +1286,9 @@ $ firejail \-\-overlay firefox
 \fB\-\-overlay-named=name
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
 the system directories are mounted read-write. All filesystem modifications go into the overlay.
-The overlay is stored in $HOME/.firejail/<NAME> directory. The created overlay can be reused between multiple
-sessions.
+Directories /run, /tmp and /dev are not covered by the overlay. The overlay is stored in $HOME/.firejail/<NAME> directory.
+The created overlay can be reused between multiple sessions.
+If the sandbox is started as a regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -1259,7 +1305,8 @@ $ firejail \-\-overlay-named=jail1 firefox
 .TP
 \fB\-\-overlay-tmpfs
 Mount a filesystem overlay on top of the current filesystem. All filesystem modifications
-are discarded when the sandbox is closed.
+are discarded when the sandbox is closed. Directories /run, /tmp and /dev are not covered by the overlay.
+If the sandbox is started as a regular user, default seccomp and capabilities filters are enabled.
 .br
 
 .br
@@ -1316,6 +1363,17 @@ closed.
 Example:
 .br
 $ firejail \-\-private-home=.mozilla firefox
+
+.TP
+\fB\-\-private-cache
+Mount an empty temporary filesystem on top of the .cache directory in user home. All
+modifications are discarded when the sandbox is closed.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-private-cache openbox
 
 .TP
 \fB\-\-private-bin=file,file
@@ -1525,7 +1583,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-protocol.print=3272
 .br
@@ -1620,20 +1678,16 @@ $ firejail \-\-net=eth0 \-\-scan
 .TP
 \fB\-\-seccomp
 Enable seccomp filter and blacklist the syscalls in the default list (@default). The default list is as follows:
-mount, umount2, ptrace, kexec_load, kexec_file_load, name_to_handle_at, open_by_handle_at, create_module, init_module, finit_module, delete_module,
-iopl, ioperm, ioprio_set, swapon, swapoff, syslog, process_vm_readv, process_vm_writev,
-sysfs,_sysctl, adjtimex, clock_adjtime, lookup_dcookie, perf_event_open, fanotify_init, kcmp,
-add_key, request_key, keyctl, uselib, acct, modify_ldt, pivot_root, io_setup,
-io_destroy, io_getevents, io_submit, io_cancel,
-remap_file_pages, mbind, set_mempolicy,
-migrate_pages, move_pages, vmsplice, chroot,
-tuxcall, reboot, mfsservctl, get_kernel_syms,
-bpf, clock_settime, personality, process_vm_writev, query_module,
-settimeofday, stime, umount, userfaultfd, ustat, vm86, vm86old,
-afs_syscall, bdflush, break, ftime, getpmsg, gtty, lock, mpx, pciconfig_iobase, pciconfig_read,
-pciconfig_write, prof, profil, putpmsg, rtas, s390_runtime_instr, s390_mmio_read, s390_mmio_write,
-security, setdomainname,  sethostname, sgetmask, ssetmask, stty, subpage_prot, switch_endian,
-ulimit, vhangup and vserver.
+_sysctl, acct, add_key, adjtimex, afs_syscall, bdflush, bpf, break, chroot, clock_adjtime, clock_settime,
+create_module, delete_module, fanotify_init, finit_module, ftime, get_kernel_syms, getpmsg, gtty, init_module,
+io_cancel, io_destroy, io_getevents, io_setup, io_submit, ioperm, iopl, ioprio_set, kcmp, kexec_file_load,
+kexec_load, keyctl, lock, lookup_dcookie, mbind, mfsservctl, migrate_pages, modify_ldt, mount, move_pages, mpx,
+name_to_handle_at, open_by_handle_at, pciconfig_iobase, pciconfig_read, pciconfig_write, perf_event_open,
+personality, pivot_root, process_vm_readv, process_vm_writev, process_vm_writev, prof, profil, ptrace, putpmsg,
+query_module, reboot, remap_file_pages, request_key, rtas, s390_mmio_read, s390_mmio_write, s390_runtime_instr,
+security, set_mempolicy, setdomainname, sethostname, settimeofday, sgetmask, ssetmask, stime, stty, subpage_prot,
+swapoff, swapon, switch_endian, sysfs, syslog, tuxcall, ulimit, umount, umount2, uselib, userfaultfd, ustat, vhangup,
+vm86, vm86old, vmsplice and vserver.
 
 .br
 To help creating useful seccomp filters more easily, the following
@@ -1716,7 +1770,7 @@ Bad system call
 .br
 
 .TP
-\fB\-\-seccomp.block_secondary
+\fB\-\-seccomp.block-secondary
 Enable seccomp filter and filter system call architectures so that
 only the native architecture is allowed. For example, on amd64, i386
 and x32 system calls are blocked as well as changing the execution
@@ -1772,7 +1826,7 @@ Example:
 $ firejail \-\-shell=none \-\-seccomp.keep=poll,select,[...] transmission-gtk
 
 .TP
-\fB\-\-seccomp.print=name|PID
+\fB\-\-seccomp.print=name|pid
 Print the seccomp filter for the sandbox identified by name or PID.
 .br
 
@@ -1781,59 +1835,159 @@ Example:
 .br
 $ firejail \-\-name=browser firefox &
 .br
-$ firejail \-\-seccomp.print=browser
+$ firejail --seccomp.print=browser
 .br
-SECCOMP Filter:
+ line  OP JT JF    K
 .br
-  VALIDATE_ARCHITECTURE
+=================================
 .br
-  EXAMINE_SYSCALL
+ 0000: 20 00 00 00000004   ld  data.architecture
 .br
-  BLACKLIST 165 mount
+ 0001: 15 01 00 c000003e   jeq ARCH_64 0003 (false 0002)
 .br
-  BLACKLIST 166 umount2
+ 0002: 06 00 00 7fff0000   ret ALLOW
 .br
-  BLACKLIST 101 ptrace
+ 0003: 20 00 00 00000000   ld  data.syscall-number
 .br
-  BLACKLIST 246 kexec_load
+ 0004: 35 01 00 40000000   jge X32_ABI true:0006 (false 0005)
 .br
-  BLACKLIST 304 open_by_handle_at
+ 0005: 35 01 00 00000000   jge read 0007 (false 0006)
 .br
-  BLACKLIST 175 init_module
+ 0006: 06 00 00 00050001   ret ERRNO(1)
 .br
-  BLACKLIST 176 delete_module
+ 0007: 15 41 00 0000009a   jeq modify_ldt 0049 (false 0008)
 .br
-  BLACKLIST 172 iopl
+ 0008: 15 40 00 000000d4   jeq lookup_dcookie 0049 (false 0009)
 .br
-  BLACKLIST 173 ioperm
+ 0009: 15 3f 00 0000012a   jeq perf_event_open 0049 (false 000a)
 .br
-  BLACKLIST 167 swapon
+ 000a: 15 3e 00 00000137   jeq process_vm_writev 0049 (false 000b)
 .br
-  BLACKLIST 168 swapoff
+ 000b: 15 3d 00 0000009c   jeq _sysctl 0049 (false 000c)
 .br
-  BLACKLIST 103 syslog
+ 000c: 15 3c 00 000000b7   jeq afs_syscall 0049 (false 000d)
 .br
-  BLACKLIST 310 process_vm_readv
+ 000d: 15 3b 00 000000ae   jeq create_module 0049 (false 000e)
 .br
-  BLACKLIST 311 process_vm_writev
+ 000e: 15 3a 00 000000b1   jeq get_kernel_syms 0049 (false 000f)
 .br
-  BLACKLIST 133 mknod
+ 000f: 15 39 00 000000b5   jeq getpmsg 0049 (false 0010)
 .br
-  BLACKLIST 139 sysfs
+ 0010: 15 38 00 000000b6   jeq putpmsg 0049 (false 0011)
 .br
-  BLACKLIST 156 _sysctl
+ 0011: 15 37 00 000000b2   jeq query_module 0049 (false 0012)
 .br
-  BLACKLIST 159 adjtimex
+ 0012: 15 36 00 000000b9   jeq security 0049 (false 0013)
 .br
-  BLACKLIST 305 clock_adjtime
+ 0013: 15 35 00 0000008b   jeq sysfs 0049 (false 0014)
 .br
-  BLACKLIST 212 lookup_dcookie
+ 0014: 15 34 00 000000b8   jeq tuxcall 0049 (false 0015)
 .br
-  BLACKLIST 298 perf_event_open
+ 0015: 15 33 00 00000086   jeq uselib 0049 (false 0016)
 .br
-  BLACKLIST 300 fanotify_init
+ 0016: 15 32 00 00000088   jeq ustat 0049 (false 0017)
 .br
-  RETURN_ALLOW
+ 0017: 15 31 00 000000ec   jeq vserver 0049 (false 0018)
+.br
+ 0018: 15 30 00 0000009f   jeq adjtimex 0049 (false 0019)
+.br
+ 0019: 15 2f 00 00000131   jeq clock_adjtime 0049 (false 001a)
+.br
+ 001a: 15 2e 00 000000e3   jeq clock_settime 0049 (false 001b)
+.br
+ 001b: 15 2d 00 000000a4   jeq settimeofday 0049 (false 001c)
+.br
+ 001c: 15 2c 00 000000b0   jeq delete_module 0049 (false 001d)
+.br
+ 001d: 15 2b 00 00000139   jeq finit_module 0049 (false 001e)
+.br
+ 001e: 15 2a 00 000000af   jeq init_module 0049 (false 001f)
+.br
+ 001f: 15 29 00 000000ad   jeq ioperm 0049 (false 0020)
+.br
+ 0020: 15 28 00 000000ac   jeq iopl 0049 (false 0021)
+.br
+ 0021: 15 27 00 000000f6   jeq kexec_load 0049 (false 0022)
+.br
+ 0022: 15 26 00 00000140   jeq kexec_file_load 0049 (false 0023)
+.br
+ 0023: 15 25 00 000000a9   jeq reboot 0049 (false 0024)
+.br
+ 0024: 15 24 00 000000a7   jeq swapon 0049 (false 0025)
+.br
+ 0025: 15 23 00 000000a8   jeq swapoff 0049 (false 0026)
+.br
+ 0026: 15 22 00 000000a3   jeq acct 0049 (false 0027)
+.br
+ 0027: 15 21 00 00000141   jeq bpf 0049 (false 0028)
+.br
+ 0028: 15 20 00 000000a1   jeq chroot 0049 (false 0029)
+.br
+ 0029: 15 1f 00 000000a5   jeq mount 0049 (false 002a)
+.br
+ 002a: 15 1e 00 000000b4   jeq nfsservctl 0049 (false 002b)
+.br
+ 002b: 15 1d 00 0000009b   jeq pivot_root 0049 (false 002c)
+.br
+ 002c: 15 1c 00 000000ab   jeq setdomainname 0049 (false 002d)
+.br
+ 002d: 15 1b 00 000000aa   jeq sethostname 0049 (false 002e)
+.br
+ 002e: 15 1a 00 000000a6   jeq umount2 0049 (false 002f)
+.br
+ 002f: 15 19 00 00000099   jeq vhangup 0049 (false 0030)
+.br
+ 0030: 15 18 00 000000ee   jeq set_mempolicy 0049 (false 0031)
+.br
+ 0031: 15 17 00 00000100   jeq migrate_pages 0049 (false 0032)
+.br
+ 0032: 15 16 00 00000117   jeq move_pages 0049 (false 0033)
+.br
+ 0033: 15 15 00 000000ed   jeq mbind 0049 (false 0034)
+.br
+ 0034: 15 14 00 00000130   jeq open_by_handle_at 0049 (false 0035)
+.br
+ 0035: 15 13 00 0000012f   jeq name_to_handle_at 0049 (false 0036)
+.br
+ 0036: 15 12 00 000000fb   jeq ioprio_set 0049 (false 0037)
+.br
+ 0037: 15 11 00 00000067   jeq syslog 0049 (false 0038)
+.br
+ 0038: 15 10 00 0000012c   jeq fanotify_init 0049 (false 0039)
+.br
+ 0039: 15 0f 00 00000138   jeq kcmp 0049 (false 003a)
+.br
+ 003a: 15 0e 00 000000f8   jeq add_key 0049 (false 003b)
+.br
+ 003b: 15 0d 00 000000f9   jeq request_key 0049 (false 003c)
+.br
+ 003c: 15 0c 00 000000fa   jeq keyctl 0049 (false 003d)
+.br
+ 003d: 15 0b 00 000000ce   jeq io_setup 0049 (false 003e)
+.br
+ 003e: 15 0a 00 000000cf   jeq io_destroy 0049 (false 003f)
+.br
+ 003f: 15 09 00 000000d0   jeq io_getevents 0049 (false 0040)
+.br
+ 0040: 15 08 00 000000d1   jeq io_submit 0049 (false 0041)
+.br
+ 0041: 15 07 00 000000d2   jeq io_cancel 0049 (false 0042)
+.br
+ 0042: 15 06 00 000000d8   jeq remap_file_pages 0049 (false 0043)
+.br
+ 0043: 15 05 00 00000116   jeq vmsplice 0049 (false 0044)
+.br
+ 0044: 15 04 00 00000087   jeq personality 0049 (false 0045)
+.br
+ 0045: 15 03 00 00000143   jeq userfaultfd 0049 (false 0046)
+.br
+ 0046: 15 02 00 00000065   jeq ptrace 0049 (false 0047)
+.br
+ 0047: 15 01 00 00000136   jeq process_vm_readv 0049 (false 0048)
+.br
+ 0048: 06 00 00 7fff0000   ret ALLOW
+.br
+ 0049: 06 00 01 00000000   ret KILL
 .br
 $
 .TP
@@ -1849,15 +2003,14 @@ $ firejail \-\-shell=none script.sh
 \fB\-\-shell=program
 Set default user shell. Use this shell to run the application using \-c shell option.
 For example "firejail \-\-shell=/bin/dash firefox" will start Mozilla Firefox as "/bin/dash \-c firefox".
-By default Bash shell (/bin/bash) is used. Options such as \-\-zsh and \-\-csh can also set the default
-shell.
+By default Bash shell (/bin/bash) is used.
 .br
 
 .br
 Example:
 $firejail \-\-shell=/bin/dash script.sh
 .TP
-\fB\-\-shutdown=name|PID
+\fB\-\-shutdown=name|pid
 Shutdown the sandbox identified by name or PID.
 .br
 
@@ -1874,7 +2027,7 @@ Example:
 .br
 $ firejail \-\-list
 .br
-3272:netblue:firejail \-\-private firefox
+3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-shutdown=3272
 .TP
@@ -1977,6 +2130,26 @@ $ firejail \-\-tree
   11970:netblue:transmission-gtk
 
 .TP
+\fB\-\-tunnel[=devname]
+Connect the sandbox to a network overlay/VPN tunnel created by firetunnel utility. This options
+tries first the client side of the tunnel. If this fails, it tries the server side. If multiple tunnels are active,
+please specify the tunnel device using \-\-tunnel=devname.
+.br
+
+.br
+The available tunnel devices are listed in /etc/firetunnel directory, one file for each device.
+The files are regular firejail profile files containing the network configuration,
+and are created and managed by firetunnel utility.
+By default ftc is the client-side device and fts is the server-side device. For more information
+please see man 1 firetunnel.
+.br
+
+.br
+Example:
+.br
+$ firejail --tunnel firefox
+.br
+.TP
 \fB\-\-version
 Print program version and exit.
 .br
@@ -2004,7 +2177,7 @@ $ firejail \-\-net=br0 --veth-name=if0
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
 whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
 everything else is discarded when the sandbox is closed. The top directory could be
-user home, /dev, /media, /mnt, /opt, /srv, /var, and /tmp.
+user home, /dev, /etc, /media, /mnt, /opt, /srv, /sys/module, /usr/share, /var, and /tmp.
 .br
 
 .br
@@ -2224,16 +2397,6 @@ Example:
 $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
 .br
 
-.TP
-\fB\-\-zsh
-Use /usr/bin/zsh as default user shell.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-zsh
-
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.
 The symbolic link should be placed in the first $PATH position. On most systems, a good place
@@ -2331,33 +2494,33 @@ AppArmor support is disabled by default at compile time. Use --enable-apparmor c
 .br
 $ ./configure --prefix=/usr --enable-apparmor
 .TP
-During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The profile needs to be loaded into the kernel by running the following command as root:
+During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The local customizations can be placed in /etc/apparmor.d/local/firejail-local. The profile needs to be loaded into the kernel by reloading apparmor.service, rebooting the system or running the following command as root:
 .br
 
 .br
-# aa-enforce firejail-default
+# apparmor_parser -r /etc/apparmor.d/firejail-default
 .TP
-The installed profile tries to replicate some advanced security features inspired by kernel-based Grsecurity:
+The installed profile is supplemental for main firejail functions and among other things does the following:
 .br
 
 .br
-- Prevent information leakage in /proc and /sys directories. The resulting filesystem is barely enough for running
-commands such as "top" and "ps aux".
+- Disable ptrace. With ptrace it is possible to inspect and hijack running programs. Usually this is needed only for debugging. You should have no problems running Chromium or Firefox. This feature is available only on Ubuntu kernels.
 .br
 
 .br
-- Allow running programs only from well-known system paths, such as /bin, /sbin, /usr/bin etc. Running
-programs and scripts from user home or other directories writable by the user is not allowed.
+- Whitelist write access to several files under /run, /proc and /sys.
 .br
 
 .br
-- Allow access to files only in the following standard directories: /bin, /dev, /etc, /home, /lib*, /media, /mnt, /opt,
-/proc, /root, /run, /sbin, /srv, /sys, /tmp, /usr, and /var
+- Allow running programs only from well-known system paths, such as /bin, /sbin, /usr/bin etc. Those paths are available as read-only. Running programs and scripts from user home or other directories writable by the user is not allowed.
 .br
 
 .br
-- Disable D-Bus. D-Bus has long been a huge security hole, and most programs don't use it anyway.
-You should have no problems running Chromium or Firefox. This feature is available only on Ubuntu kernels.
+- Prevent using non-standard network sockets. Only unix, inet, inet6, netlink, raw and packet are allowed.
+.br
+
+.br
+- Deny access to known sensitive paths like .snapshots.
 
 .TP
 To enable AppArmor confinement on top of your current Firejail security features, pass \fB\-\-apparmor\fR flag to Firejail command line. You can also include \fBapparmor\fR command in a Firejail profile file. Example:
@@ -2480,12 +2643,12 @@ Limitations: audit feature is not implemented for --x11 commands.
 Option \-\-list prints a list of all sandboxes. The format
 for each process entry is as follows:
 
-	PID:USER:Command
+	PID:USER:Sandbox Name:Command
 
 Option \-\-tree prints the tree of processes running in the sandbox. The format
 for each process entry is as follows:
 
-	PID:USER:Command
+	PID:USER:Sandbox Name:Command
 
 Option \-\-top is similar to the UNIX top command, however it applies only to
 sandboxes.
@@ -2517,6 +2680,9 @@ It is a sum of the RES values for all processes running in the sandbox.
 RX(KB/s)
 Network receive speed.
 .TP
+Sandbox Name
+The name of the sandbox, if any.
+.TP
 SHR
 Shared Memory Size (KiB), it reflects memory shared with other
 processes. It is a sum of the SHR values for all processes running
@@ -2528,7 +2694,7 @@ Network transmit speed.
 Uptime
 Sandbox running time in hours:minutes:seconds format.
 .TP
-User
+USER
 The owner of the sandbox.
 
 .SH SECURITY PROFILES
@@ -2588,7 +2754,7 @@ Child process initialized
 [...]
 .RE
 
-See man 5 firejail-profile for profile file syntax information.
+See \fBman 5 firejail-profile\fR for profile file syntax information.
 
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
@@ -2636,3 +2802,4 @@ Homepage: https://firejail.wordpress.com
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5)
+\&\flfirejail-users\fR\|(5)

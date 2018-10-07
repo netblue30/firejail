@@ -1,4 +1,5 @@
 # Firejail profile for xfburn
+# Description: CD-burner application for Xfce Desktop Environment
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xfburn.local
@@ -9,6 +10,7 @@ noblacklist ${HOME}/.config/xfburn
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

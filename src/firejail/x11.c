@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -22,7 +22,6 @@
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -31,6 +30,8 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <limits.h>
+#include <fcntl.h>
+
 
 // Parse the DISPLAY environment variable and return a display number.
 // Returns -1 if DISPLAY is not set, or is set to anything other than :ddd.
@@ -347,12 +348,6 @@ void x11_start_xvfb(int argc, char **argv) {
 	}
 	free(fname);
 
-	if (arg_debug) {
-		printf("X11 sockets: "); fflush(0);
-		int rv = system("ls /tmp/.X11-unix");
-		(void) rv;
-	}
-
 	assert(display_str);
 	setenv("DISPLAY", display_str, 1);
 	// run attach command
@@ -360,8 +355,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	if (jail < 0)
 		errExit("fork");
 	if (jail == 0) {
-		if (!arg_quiet)
-			printf("\n*** Attaching to Xvfb display %d ***\n\n", display);
+		fmessage("\n*** Attaching to Xvfb display %d ***\n\n", display);
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
@@ -515,7 +509,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	assert(pos < (sizeof(server_argv)/sizeof(*server_argv)));
 	assert(server_argv[pos-1] == NULL);	  // last element is null
 
-	if (arg_debug) {
+	{
 		size_t i = 0;
 		printf("\n*** Starting xephyr server:");
 		while (server_argv[i]!=NULL) {
@@ -582,12 +576,6 @@ void x11_start_xephyr(int argc, char **argv) {
 		exit(1);
 	}
 	free(fname);
-
-	if (arg_debug) {
-		printf("X11 sockets: "); fflush(0);
-		int rv = system("ls /tmp/.X11-unix");
-		(void) rv;
-	}
 
 	assert(display_str);
 	setenv("DISPLAY", display_str, 1);
@@ -756,12 +744,6 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	}
 	free(fname);
 
-	if (arg_debug) {
-		printf("X11 sockets: "); fflush(0);
-		int rv = system("ls /tmp/.X11-unix");
-		(void) rv;
-	}
-
 	// build attach command
 	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str, NULL };
 
@@ -776,8 +758,7 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 			dup2(fd_null,2);
 		}
 
-		if (!arg_quiet)
-			printf("\n*** Attaching to xpra display %d ***\n\n", display);
+		fmessage("\n*** Attaching to xpra display %d ***\n\n", display);
 
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
@@ -816,8 +797,7 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 		exit(1);
 	}
 
-	if (!arg_quiet)
-		printf("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
+	fmessage("Xpra server pid %d, xpra client pid %d, jail %d\n", server, client, jail);
 
 	sleep(1);				  // adding a delay in order to let the server start
 
@@ -965,6 +945,8 @@ void x11_start_xpra_new(int argc, char **argv, char *display_str) {
 		}
 	}
 
+	server_argv[spos++] = NULL;
+
 	assert((int) fpos < (argc+2));
 	assert(!firejail_argv[fpos]);
 						  // no overrun
@@ -1099,7 +1081,7 @@ void x11_xorg(void) {
 	// check xauth utility is present in the system
 	struct stat s;
 	if (stat("/usr/bin/xauth", &s) == -1) {
-		fprintf(stderr, "Error: xauth utility not found in PATH.  Please install it:\n"
+		fprintf(stderr, "Error: xauth utility not found in /usr/bin. Please install it:\n"
 			"   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
 		exit(1);
 	}
@@ -1116,7 +1098,7 @@ void x11_xorg(void) {
 	}
 
 	// temporarily mount a tempfs on top of /tmp directory
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=777,gid=0") < 0)
+	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 		errExit("mounting /tmp");
 
 	// create the temporary .Xauthority file
@@ -1170,15 +1152,6 @@ void x11_xorg(void) {
 		exit(1);
 	}
 
-	// ensure the file has the correct permissions and move it
-	// into the correct location.
-	if (stat(tmpfname, &s) == -1) {
-		fprintf(stderr, "Error: .Xauthority file was not created\n");
-		exit(1);
-	}
-	if (set_perms(tmpfname, getuid(), getgid(), 0600))
-		errExit("set_perms");
-
 	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
 	// automatically when the sandbox is closed (rename doesn't work)
 						  // root needed
@@ -1186,34 +1159,48 @@ void x11_xorg(void) {
 		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
 		exit(1);
 	}
-	if (set_perms(RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600))
-		errExit("set_perms");
 	/* coverity[toctou] */
 	unlink(tmpfname);
 	umount("/tmp");
 
 	// Ensure there is already a file in the usual location, so that bind-mount below will work.
-	// todo: fix TOCTOU races, currently managed by imposing /usr/bin/xauth as executable
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (stat(dest, &s) == -1) {
-		// create an .Xauthority file
-		touch_file_as_user(dest, getuid(), getgid(), 0600);
-	}
-	if (is_link(dest)) {
-		fprintf(stderr, "Error: .Xauthority is a symbolic link\n");
+	if (lstat(dest, &s) == -1)
+		touch_file_as_user(dest, 0600);
+
+	// get a file descriptor for .Xauthority
+	fd = safe_fd(dest, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1)
+		errExit("safe_fd");
+	// check if the actual mount destination is a user owned regular file
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode) || s.st_uid != getuid()) {
+		if (S_ISLNK(s.st_mode))
+			fprintf(stderr, "Error: .Xauthority is a symbolic link\n");
+		else
+			fprintf(stderr, "Error: .Xauthority is not a user owned regular file\n");
 		exit(1);
 	}
 
-	// mount
-	if (mount(RUN_XAUTHORITY_SEC_FILE, dest, "none", MS_BIND, "mode=0600") == -1) {
+	// mount via the link in /proc/self/fd
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(RUN_XAUTHORITY_SEC_FILE, proc, "none", MS_BIND, "mode=0600") == -1) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
-	// just  in case...
-	if (set_perms(dest, getuid(), getgid(), 0600))
-		errExit("set_perms");
+	free(proc);
+	close(fd);
+	// check /proc/self/mountinfo to confirm the mount is ok
+	MountData *mptr = get_last_mount();
+	if (strcmp(mptr->dir, dest) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
+		errLogExit("invalid .Xauthority mount");
+
+	ASSERT_PERMS(dest, getuid(), getgid(), 0600);
 	free(dest);
 #endif
 }

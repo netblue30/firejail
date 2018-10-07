@@ -1,12 +1,12 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
-which firefox
+which firefox 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: firefox x11 xorg"
@@ -15,7 +15,7 @@ else
 	echo "TESTING SKIP: firefox not found"
 fi
 
-which transmission-gtk
+which transmission-gtk 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: transmission-gtk x11 xorg"
@@ -24,7 +24,7 @@ else
 	echo "TESTING SKIP: transmission-gtk not found"
 fi
 
-which thunderbird
+which thunderbird 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: thunderbird x11 xorg"

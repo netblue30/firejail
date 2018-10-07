@@ -1,12 +1,15 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
 sudo ./configure
+
+echo "TESTING: unconfigured network (net_unconfigured.exp)"
+./net_unconfigured.exp
 
 echo "TESTING: netfilter template (netfilter-template.exp)"
 rm -f ./tcpserver

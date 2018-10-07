@@ -10,6 +10,7 @@ noblacklist ${HOME}/.ViberPC
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -31,8 +32,10 @@ shell none
 
 disable-mnt
 private-bin sh,bash,dig,awk,Viber
-private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf
+private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf,pki,ca-certificates,crypto-policies,machine-id,asound.conf
 private-tmp
 
 noexec ${HOME}
 noexec /tmp
+
+env QTWEBENGINE_DISABLE_SANDBOX=1

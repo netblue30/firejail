@@ -1,4 +1,5 @@
 # Firejail profile for catfish
+# Description: File searching tool
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/catfish.local
@@ -8,12 +9,17 @@ include /etc/firejail/globals.local
 # We can't blacklist much since catfish
 # is for finding files/content
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.config/catfish
+
+# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -23,6 +29,7 @@ include /etc/firejail/whitelist-var-common.inc
 caps.drop all
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

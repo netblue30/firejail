@@ -5,28 +5,31 @@ include /etc/firejail/cin.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 noblacklist ${HOME}/.bcast5
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
 ipc-namespace
 net none
+nodbus
 nodvd
-nogroups
+#nogroups
 nonewprivs
 notv
 noroot
 protocol unix
+
+# if an 1-1.2% gap per thread hurts you, comment seccomp
 seccomp
 shell none
 
-private-bin cin,ffmpeg
+#private-bin cin,ffmpeg
+private-cache
 private-dev
 
 noexec ${HOME}

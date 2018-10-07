@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -19,8 +19,8 @@
 */
 
 #include "../include/common.h"
+#include "../include/ldd_utils.h"
 
-#include <elf.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/mount.h>
@@ -29,35 +29,9 @@
 #include <unistd.h>
 #include <dirent.h>
 
-#ifdef __LP64__
-#define Elf_Ehdr Elf64_Ehdr
-#define Elf_Phdr Elf64_Phdr
-#define Elf_Shdr Elf64_Shdr
-#define Elf_Dyn Elf64_Dyn
-#else
-#define Elf_Ehdr Elf32_Ehdr
-#define Elf_Phdr Elf32_Phdr
-#define Elf_Shdr Elf32_Shdr
-#define Elf_Dyn Elf32_Dyn
-#endif
 
 static int arg_quiet = 0;
 static void copy_libs_for_lib(const char *lib);
-
-static const char * const default_lib_paths[] = {
-	"/lib",
-	"/lib/x86_64-linux-gnu",
-	"/lib64",
-	"/usr/lib",
-	"/usr/lib/x86_64-linux-gnu",
-	LIBDIR,
-	"/usr/local/lib",
-	"/usr/lib/x86_64-linux-gnu/mesa", // libGL.so is sometimes a symlink into this directory
-	"/usr/lib/x86_64-linux-gnu/mesa-egl", // libGL.so is sometimes a symlink into this directory
-//    "/usr/lib/x86_64-linux-gnu/plasma-discover",
-	NULL
-};
-
 
 typedef struct storage_t {
 	struct storage_t *next;
@@ -107,7 +81,8 @@ static bool ptr_ok(const void *ptr, const void *base, const void *end, const cha
 	return r;
 }
 
-static void copy_libs_for_exe(const char *exe) {
+
+static void parse_elf(const char *exe) {
 	int f;
 	f = open(exe, O_RDONLY);
 	if (f < 0) {
@@ -132,6 +107,12 @@ static void copy_libs_for_exe(const char *exe) {
 			fprintf(stderr, "Warning fldd: %s is not an ELF executable or library\n", exe);
 		goto close;
 	}
+//unsigned char elfclass = ebuf->e_ident[EI_CLASS];
+//if (elfclass == ELFCLASS32)
+//printf("%s 32bit\n", exe);
+//else if (elfclass == ELFCLASS64)
+//printf("%s 64bit\n", exe);
+
 
 	Elf_Phdr *pbuf = (Elf_Phdr *)(base + sizeof(*ebuf));
 	while (ebuf->e_phnum-- > 0 && ptr_ok(pbuf, base, end, "pbuf")) {
@@ -227,11 +208,11 @@ static void copy_libs_for_lib(const char *lib) {
 		char *fname;
 		if (asprintf(&fname, "%s/%s", lib_path->name, lib) == -1)
 			errExit("asprintf");
-		if (access(fname, R_OK) == 0) {
+		if (access(fname, R_OK) == 0 && is_lib_64(fname)) {
 			if (!storage_find(libs, fname)) {
 				storage_add(&libs, fname);
 				// libs may need other libs
-				copy_libs_for_exe(fname);
+				parse_elf(fname);
 			}
 			free(fname);
 			return;
@@ -270,9 +251,9 @@ static void walk_directory(const char *dirname) {
 
 			// check regular so library
 			char *ptr = strstr(entry->d_name, ".so");
-			if (ptr) {
+			if (ptr && is_lib_64(path)) {
 				if (*(ptr + 3) == '\0' || *(ptr + 3) == '.') {
-					copy_libs_for_exe(path);
+					parse_elf(path);
 					free(path);
 					continue;
 				}
@@ -340,7 +321,7 @@ printf("\n");
 	// attempt to open the file
 	if (argc == 3) {
 		fd = open(argv[2], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		if (!fd) {
+		if (fd == -1) {
 			fprintf(stderr, "Error fldd: invalid arguments\n");
 			usage();
 			exit(1);
@@ -356,8 +337,12 @@ printf("\n");
 		errExit("stat");
 	if (S_ISDIR(s.st_mode))
 		walk_directory(argv[1]);
-	else
-		copy_libs_for_exe(argv[1]);
+	else {
+		if (is_lib_64(argv[1]))
+			parse_elf(argv[1]);
+		else
+			fprintf(stderr, "Warning fldd: %s is not a 64bit program/library\n", argv[1]);
+	}
 
 
 	// print libraries and exit

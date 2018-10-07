@@ -1,4 +1,5 @@
 # Firejail profile for epiphany
+# Description: Clone of Boulder Dash game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/epiphany.local
@@ -11,6 +12,7 @@ noblacklist ${HOME}/.local/share/epiphany
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.cache/epiphany

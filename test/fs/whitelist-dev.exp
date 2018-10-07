@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -56,6 +56,9 @@ expect {
 	"16" {puts "OK\n"}
 	"17" {puts "OK\n"}
 	"18" {puts "OK\n"}
+	"19" {puts "OK\n"}
+	"20" {puts "OK\n"}
+	"21" {puts "OK\n"}
 }
 after 100
 

@@ -1,13 +1,13 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --dns=1.2.3.4\r"
+send -- "firejail --name=test --dns=1.2.3.4 --dns=::2\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -19,6 +19,10 @@ send -- "firejail --dns.print=test\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"nameserver 1.2.3.4"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"nameserver ::2"
 }
 after 100
 puts "\nall done\n"

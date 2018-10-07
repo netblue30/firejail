@@ -1,17 +1,13 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --debug-check-filename --noprofile --blacklist=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --noprofile --blacklist=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 1.2\n";exit}
 	"Error:"
@@ -22,11 +18,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --cgroup=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 2.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --noprofile --cgroup=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 2.2\n";exit}
 	"Error:"
@@ -37,12 +29,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --chroot=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"Checking filename bla&&bla" {puts "normal system\n"}
-	"Error: --chroot option is not available on Grsecurity systems" { puts "\nall done\n"; exit}
-}
+send -- "firejail --noprofile --chroot=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 3.2\n";exit}
 	"Error:"
@@ -53,11 +40,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --netfilter=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 4.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --noprofile --netfilter=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 4.2\n";exit}
 	"Error:"
@@ -68,22 +51,14 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --output=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 5.2\n";exit}
-	"Error:"
-}
+send -- "firejail --noprofile --output=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 5.3\n";exit}
 	"is an invalid filename"
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --private=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 6.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --noprofile --private=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 6.2\n";exit}
 	"Error:"
@@ -94,11 +69,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --private-bin=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 7.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --noprofile --private-bin=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 7.2\n";exit}
 	"Error:"
@@ -109,11 +80,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --private-home=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 8.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --noprofile --private-home=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 8.2\n";exit}
 	"Error:"
@@ -124,11 +91,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --private-etc=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 9.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --noprofile --private-etc=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 9.2\n";exit}
 	"Error:"
@@ -139,11 +102,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --profile=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 10.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --profile=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 10.2\n";exit}
 	"Error:"
@@ -154,11 +113,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --read-only=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 11.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --read-only=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 11.2\n";exit}
 	"Error:"
@@ -169,11 +124,7 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --shell=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 12.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --shell=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 12.2\n";exit}
 	"Error:"
@@ -185,11 +136,7 @@ expect {
 after 100
 
 
-send -- "firejail --debug-check-filename --whitelist=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 14.1\n";exit}
-	"Checking filename bla&&bla"
-}
+send -- "firejail --whitelist=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 14.2\n";exit}
 	"Error:"

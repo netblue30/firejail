@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -20,19 +20,23 @@ sleep 1
 send --  "firejail --seccomp=unlinkat:ENOENT --debug rm seccomp-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"unlinkat 2 ENOENT"
+	"seccomp entries in /run/firejail/mnt/seccomp"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"ret ERRNO(2)"
 }
 sleep 1
 
 send --  "firejail --seccomp=unlinkat:ENOENT,mkdir:ENOENT\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
 }
 sleep 1
 send -- "rm seccomp-test-file\r"
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"No such file or directory"
 }
 after 100
@@ -40,7 +44,7 @@ puts "\n"
 
 send -- "mkdir seccomp-test-dir\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"No such file or directory"
 }
 after 100

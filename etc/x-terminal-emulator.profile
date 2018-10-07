@@ -5,12 +5,11 @@ include /etc/firejail/x-terminal-emulator.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
-
 caps.drop all
 ipc-namespace
 net none
 netfilter
+nodbus
 nogroups
 noroot
 protocol unix

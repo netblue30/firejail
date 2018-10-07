@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -64,15 +64,16 @@ static inline uint32_t hash(const char *str) {
 }
 
 static void storage_add(const char *str) {
-#ifdef DEBUG
-	printf("add %s\n", str);
-#endif
 	if (!str) {
 #ifdef DEBUG
 		printf("null pointer passed to storage_add\n");
 #endif
 		return;
 	}
+
+#ifdef DEBUG
+	printf("add %s\n", str);
+#endif
 
 	ListElem *ptr = malloc(sizeof(ListElem));
 	if (!ptr) {
@@ -96,15 +97,17 @@ static void storage_add(const char *str) {
 static char* cwd = NULL;
 
 static char *storage_find(const char *str) {
-#ifdef DEBUG
-	printf("storage find %s\n", str);
-#endif
 	if (!str) {
 #ifdef DEBUG
 		printf("null pointer passed to storage_find\n");
 #endif
 		return NULL;
 	}
+
+#ifdef DEBUG
+	printf("storage find %s\n", str);
+#endif
+
 	const char *tofind = str;
 	int allocated = 0;
 

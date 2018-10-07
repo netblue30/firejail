@@ -10,6 +10,7 @@ noblacklist ${HOME}/.local/share/Ricochet
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -34,7 +35,7 @@ shell none
 disable-mnt
 private-bin ricochet,tor
 private-dev
-#private-etc fonts,tor,X11,alternatives
+#private-etc fonts,tor,X11,alternatives,ca-certificates,ssl,pki,crypto-policies
 
 noexec ${HOME}
 noexec /tmp

@@ -1,8 +1,8 @@
 all: apps man filters
 MYLIBS = src/lib
-APPS = src/firejail src/firemon src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fbuilder src/fcopy src/fldd src/libpostexecseccomp
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5
-SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.64 seccomp.block_secondary seccomp.mdwx
+APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee src/faudit src/fnet src/fseccomp src/fbuilder src/fcopy src/fldd src/libpostexecseccomp
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
+SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -19,19 +19,17 @@ DOCDIR=@docdir@
 HAVE_SECCOMP=@HAVE_SECCOMP@
 HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
-HAVE_GIT_INSTALL=@HAVE_GIT_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
-
-uids.h:; ./mkuid.sh
+HAVE_SUID=@HAVE_SUID@
 
 .PHONY: mylibs $(MYLIBS)
-mylibs: $(MYLIBS) uids.h
+mylibs: $(MYLIBS)
 $(MYLIBS):
 	$(MAKE) -C $@
 
 .PHONY: apps $(APPS)
 apps: $(APPS)
-$(APPS): $(MYLIBS) uids.h
+$(APPS): $(MYLIBS)
 	$(MAKE) -C $@
 
 $(MANPAGES): $(wildcard src/man/*.txt)
@@ -42,9 +40,11 @@ man: $(MANPAGES)
 filters: src/fseccomp
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	src/fseccomp/fseccomp default seccomp
+	src/fsec-optimize/fsec-optimize seccomp
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
+	src/fsec-optimize/fsec-optimize seccomp.debug
 	src/fseccomp/fseccomp secondary 32 seccomp.32
-	src/fseccomp/fseccomp secondary 64 seccomp.64
+	src/fsec-optimize/fsec-optimize seccomp.32
 	src/fseccomp/fseccomp secondary block seccomp.block_secondary
 	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
 endif
@@ -71,13 +71,15 @@ distclean: clean
 	for dir in $(APPS) $(MYLIBS); do \
 		$(MAKE) -C $$dir distclean; \
 	done
-	rm -fr Makefile autom4te.cache config.log config.status config.h uids.h
+	rm -fr Makefile autom4te.cache config.log config.status config.h dummy.o src/common.mk
 
 realinstall:
 	# firejail executable
 	install -m 0755 -d $(DESTDIR)/$(bindir)
 	install -c -m 0755 src/firejail/firejail $(DESTDIR)/$(bindir)/.
+ifeq ($(HAVE_SUID),yes)
 	chmod u+s $(DESTDIR)/$(bindir)/firejail
+endif
 	# firemon executable
 	install -c -m 0755 src/firemon/firemon $(DESTDIR)/$(bindir)/.
 	# firecfg executable
@@ -89,10 +91,6 @@ realinstall:
 	install -c -m 0644 src/libpostexecseccomp/libpostexecseccomp.so $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
-ifeq ($(HAVE_GIT_INSTALL),-DHAVE_GIT_INSTALL)
-	install -c -m 0755 src/fgit/fgit-install.sh $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fgit/fgit-uninstall.sh $(DESTDIR)/$(libdir)/firejail/.
-endif
 
 	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
@@ -102,11 +100,12 @@ endif
 	install -c -m 0755 src/fldd/fldd $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fbuilder/fbuilder $(DESTDIR)/$(libdir)/firejail/.
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
+	install -c -m 0755 src/fsec-print/fsec-print $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 src/fsec-optimize/fsec-optimize $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.32 $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp.64 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.block_secondary $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.mdwx $(DESTDIR)/$(libdir)/firejail/.
 endif
@@ -170,6 +169,8 @@ install-strip: all
 	strip src/fnet/fnet
 	strip src/fnetfilter/fnetfilter
 	strip src/fseccomp/fseccomp
+	strip src/fsec-print/fsec-print
+	strip src/fsec-optimize/fsec-optimize
 	strip src/fcopy/fcopy
 	strip src/fldd/fldd
 	strip src/fbuilder/fbuilder
@@ -189,7 +190,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 
-DISTFILES = "src etc platform contrib configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
+DISTFILES = "src etc platform contrib configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh COPYING README RELNOTES"
 DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
 
 dist:
@@ -290,6 +291,10 @@ test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sy
 # The tests are very intrussive, by the time you are done
 # with them you will need to restart your computer.
 ##########################################
+
+# a firejail-test account is required, public/private key setup
+test-ssh:
+	cd test/ssh; ./ssh.sh | grep TESTING
 
 # requires root access
 test-chroot:

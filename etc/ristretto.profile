@@ -1,4 +1,5 @@
 # Firejail profile for ristretto
+# Description: Lightweight picture-viewer for the Xfce desktop environment
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/ristretto.local
@@ -11,6 +12,7 @@ noblacklist ${HOME}/.steam
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -28,6 +30,7 @@ protocol unix
 seccomp
 shell none
 
+private-cache
 private-dev
 private-tmp
 

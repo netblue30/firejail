@@ -1,4 +1,5 @@
 # Firejail profile for quiterss
+# Description: RSS/Atom news feeds reader
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/quiterss.local
@@ -12,6 +13,7 @@ noblacklist ${HOME}/.local/share/QuiteRss
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -44,7 +46,7 @@ tracelog
 disable-mnt
 private-bin quiterss
 private-dev
-# private-etc X11,ssl
+# private-etc X11,ssl,pki,ca-certificates,crypto-policies
 
 noexec ${HOME}
 noexec /tmp

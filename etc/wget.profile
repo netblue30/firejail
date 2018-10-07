@@ -1,4 +1,5 @@
 # Firejail profile for wget
+# Description: Retrieves files from the web
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
@@ -32,7 +33,7 @@ shell none
 
 # private-bin wget
 private-dev
-# private-etc resolv.conf
+# private-etc resolv.conf,ca-certificates,ssl,pki,crypto-policies
 # private-tmp
 
 noexec ${HOME}

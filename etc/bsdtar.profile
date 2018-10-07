@@ -8,6 +8,7 @@ include /etc/firejail/globals.local
 
 include /etc/firejail/disable-common.inc
 # include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -33,9 +34,6 @@ shell none
 tracelog
 
 # support compressed archives
-private-bin sh,bash,dash,bsdtar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop,lz4,libarchive
+private-bin sh,bash,bsdtar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop,lz4,libarchive
 private-dev
 private-etc passwd,group,localtime
-
-
-

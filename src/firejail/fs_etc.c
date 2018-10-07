@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -99,7 +99,9 @@ errexit:
 }
 
 static void duplicate(const char *fname, const char *private_dir, const char *private_run_dir) {
-	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
+	assert(fname);
+
+	if (*fname == '~' || strchr(fname, '/') || strcmp(fname, "..") == 0) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
@@ -162,6 +164,10 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 
 
 		char *ptr = strtok(dlist, ",");
+		if (!ptr) {
+			fprintf(stderr, "Error: invalid private %s argument\n", private_dir);
+			exit(1);
+		}
 		duplicate(ptr, private_dir, private_run_dir);
 
 		while ((ptr = strtok(NULL, ",")) != NULL)
@@ -176,6 +182,5 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);
 
-	if (!arg_quiet)
-		fprintf(stderr, "Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
+	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }

@@ -18,7 +18,7 @@ echo "*****************************************"
 tar -xJvf $CODE_ARCHIVE
 #mkdir -p $INSTALL_DIR
 cd $CODE_DIR
-./configure --prefix=/usr --enable-git-install
+./configure --prefix=/usr
 make -j2
 mkdir debian
 DESTDIR=debian make install-strip
@@ -32,18 +32,19 @@ echo "*****************************************"
 mv $INSTALL_DIR/usr/share/doc/firejail/RELNOTES $INSTALL_DIR/usr/share/doc/firejail/changelog.Debian
 gzip -9 -n $INSTALL_DIR/usr/share/doc/firejail/changelog.Debian
 rm $INSTALL_DIR/usr/share/doc/firejail/COPYING
-cp platform/debian/copyright $INSTALL_DIR/usr/share/doc/firejail/.
+install -m644 platform/debian/copyright $INSTALL_DIR/usr/share/doc/firejail/.
 mkdir -p $DEBIAN_CTRL_DIR
-sed "s/FIREJAILVER/$2/g"  platform/debian/control > $DEBIAN_CTRL_DIR/control
+sed "s/FIREJAILVER/$2/g"  platform/debian/control.$(dpkg-architecture -qDEB_HOST_ARCH) > $DEBIAN_CTRL_DIR/control
 
 mkdir -p $INSTALL_DIR/usr/share/lintian/overrides/
-cp platform/debian/firejail.lintian-overrides $INSTALL_DIR/usr/share/lintian/overrides/firejail
+install -m644 platform/debian/firejail.lintian-overrides $INSTALL_DIR/usr/share/lintian/overrides/firejail
 
 find $INSTALL_DIR/etc -type f | sed "s,^$INSTALL_DIR,," | LC_ALL=C sort > $DEBIAN_CTRL_DIR/conffiles
+chmod 644 $DEBIAN_CTRL_DIR/conffiles
 find $INSTALL_DIR  -type d | xargs chmod 755
 cd $CODE_DIR
 fakeroot dpkg-deb --build debian
-lintian --no-tag-display-limit debian.deb
+lintian debian.deb
 mv debian.deb ../firejail_$2_1_$(dpkg-architecture -qDEB_HOST_ARCH).deb
 cd ..
 rm -fr $CODE_DIR

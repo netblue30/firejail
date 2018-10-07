@@ -1,19 +1,19 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firecfg\r"
+send -- "firecfg --debug\r"
 sleep 1
 
-send --  "firecfg --clean\r"
+send --  "firecfg --debug --clean\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"/usr/local/bin/firefox removed"
+	"less removed"
 }
 sleep 1
 
@@ -27,14 +27,14 @@ expect {
 }
 sleep 1
 
-send --  "firecfg\r"
+send --  "firecfg --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"firefox created"
+	"less created"
 }
 sleep 1
 
-send -- "file /usr/local/bin/firefox\r"
+send -- "file /usr/local/bin/less\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"symbolic link to /usr/bin/firejail"
@@ -44,7 +44,7 @@ sleep 1
 send -- "firecfg --list\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"/usr/local/bin/firefox"
+	"/usr/local/bin/less"
 }
 sleep 1
 

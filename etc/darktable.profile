@@ -1,4 +1,5 @@
 # Firejail profile for darktable
+# Description: Virtual lighttable and darkroom for photographers
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/darktable.local
@@ -7,11 +8,14 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.cache/darktable
 noblacklist ${HOME}/.config/darktable
+noblacklist ${PICTURES}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
 netfilter

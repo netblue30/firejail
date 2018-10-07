@@ -1,4 +1,5 @@
 # Firejail profile for pidgin
+# Description: Graphical multi-protocol instant messaging client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/pidgin.local
@@ -9,6 +10,7 @@ noblacklist ${HOME}/.purple
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -25,6 +27,7 @@ shell none
 tracelog
 
 private-bin pidgin
+private-cache
 private-dev
 private-tmp
 

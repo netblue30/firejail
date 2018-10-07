@@ -1,4 +1,5 @@
 # Firejail profile for xpra
+# Description: Tool to detach/reattach running X programs
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xpra.local
@@ -15,8 +16,15 @@ include /etc/firejail/globals.local
 
 blacklist /media
 
+# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

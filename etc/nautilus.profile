@@ -1,4 +1,5 @@
 # Firejail profile for nautilus
+# Description: File manager and graphical shell for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/nautilus.local
@@ -13,8 +14,15 @@ noblacklist ${HOME}/.local/share/Trash
 noblacklist ${HOME}/.local/share/nautilus
 noblacklist ${HOME}/.local/share/nautilus-python
 
+# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 # include /etc/firejail/disable-programs.inc
 

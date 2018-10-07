@@ -1,5 +1,5 @@
  /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -18,7 +18,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnet.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/utsname.h>
+
 int arg_quiet = 0;
+
+void fmessage(char* fmt, ...) { // TODO: this function is duplicated in src/firejail/util.c
+	if (arg_quiet)
+		return;
+
+	va_list args;
+	va_start(args,fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+	fflush(0);
+}
+
 
 static void usage(void) {
 	printf("Usage:\n");
@@ -29,8 +45,8 @@ static void usage(void) {
 	printf("\tfnet printif scan\n");
 	printf("\tfnet config interface dev ip mask mtu\n");
 	printf("\tfnet config mac addr\n");
-	printf("\tfnet config ipv6 dev ipn");
-	printf("\tfmet ifup dev\n");
+	printf("\tfnet config ipv6 dev ip\n");
+	printf("\tfnet ifup dev\n");
 }
 
 int main(int argc, char **argv) {
@@ -74,7 +90,33 @@ printf("\n");
 		net_if_up(argv[3]);
 	}
 	else if (argc == 6 && strcmp(argv[1], "create") == 0 && strcmp(argv[2], "macvlan") == 0) {
-		net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
+		// use ipvlan for wireless devices
+		// ipvlan driver was introduced in Linux kernel 3.19
+
+		// check kernel version
+		struct utsname u;
+		int rv = uname(&u);
+		if (rv != 0)
+			errExit("uname");
+		int major;
+		int minor;
+		if (2 != sscanf(u.release, "%d.%d", &major, &minor)) {
+			fprintf(stderr, "Error fnet: cannot extract Linux kernel version: %s\n", u.version);
+			exit(1);
+		}
+
+		if (major <= 3 && minor < 18)
+			net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
+		else {
+			struct stat s;
+			char *fname;
+			if (asprintf(&fname, "/sys/class/net/%s/wireless", argv[4]) == -1)
+				errExit("asprintf");
+			if (stat(fname, &s) == 0) // wireless
+				net_create_ipvlan(argv[3], argv[4], atoi(argv[5]));
+			else // regular ethernet
+				net_create_macvlan(argv[3], argv[4], atoi(argv[5]));
+		}
 	}
 	else if (argc == 7 && strcmp(argv[1], "config") == 0 && strcmp(argv[2], "interface") == 0) {
 		char *dev = argv[3];

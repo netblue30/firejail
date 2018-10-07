@@ -1,13 +1,41 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
-echo "TESTING: audit (test/utils/audit.exp)"
-./audit.exp
+if [ -f /etc/debian_version ]; then
+	libdir=$(dirname "$(dpkg -L firejail | grep faudit)")
+	export PATH="$PATH:$libdir"
+fi
+export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
+
+echo "testing" > ~/firejail-test-file-7699
+echo "testing" > /tmp/firejail-test-file-7699
+echo "testing" > /var/tmp/firejail-test-file-7699
+echo "TESTING: build (test/utils/build.exp)"
+./build.exp
+rm -f ~/firejail-test-file-7699
+rm -f /tmp/firejail-test-file-7699
+rm -f /var/tmp/firejail-test-file-7699
+
+if [ $(readlink /proc/self) -lt 100 ]; then
+	echo "TESTING SKIP: already running in pid namespace (test/utils/audit.exp)"
+else
+	echo "TESTING: audit (test/utils/audit.exp)"
+	./audit.exp
+fi
+
+echo "TESTING: name (test/utils/name.exp)"
+./name.exp
+
+echo "TESTING: command (test/utils/command.exp)"
+./command.exp
+
+echo "TESTING: profile.print (test/utils/profile_print.exp)"
+./profile_print.exp
 
 echo "TESTING: version (test/utils/version.exp)"
 ./version.exp
@@ -15,7 +43,7 @@ echo "TESTING: version (test/utils/version.exp)"
 echo "TESTING: help (test/utils/help.exp)"
 ./help.exp
 
-which man
+which man 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: man (test/utils/man.exp)"
@@ -91,11 +119,19 @@ echo "TESTING: top (test/utils/top.exp)"
 echo "TESTING: file transfer (test/utils/ls.exp)"
 ./ls.exp
 
-echo "TESTING: firemon seccomp (test/utils/firemon-seccomp.exp)"
-./firemon-seccomp.exp
+if grep -q "^Seccomp.*0" /proc/self/status; then
+	echo "TESTING: firemon seccomp (test/utils/firemon-seccomp.exp)"
+	./firemon-seccomp.exp
+else
+	echo "TESTING SKIP: seccomp already active (test/utils/firemon-seccomp.exp)"
+fi
 
-echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
-./firemon-caps.exp
+if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
+	echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
+	./firemon-caps.exp
+else
+	echo "TESTING SKIP: other capabilities than expected (test/utils/firemon-caps.exp)"
+fi
 
 echo "TESTING: firemon cpu (test/utils/firemon-cpu.exp)"
 ./firemon-cpu.exp

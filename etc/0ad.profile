@@ -1,4 +1,5 @@
 # Firejail profile for 0ad
+# Description: Real-time strategy game of ancient warfare
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/0ad.local
@@ -11,6 +12,7 @@ noblacklist ${HOME}/.local/share/0ad
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -24,6 +26,7 @@ include /etc/firejail/whitelist-common.inc
 
 caps.drop all
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -36,6 +39,7 @@ shell none
 tracelog
 
 disable-mnt
+private-bin 0ad,pyrogenesis,sh,which
 private-dev
 private-tmp
 

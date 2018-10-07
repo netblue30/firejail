@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -25,6 +25,7 @@
 #include <grp.h>
 #include <sys/stat.h>
 
+pid_t skip_process = 0;
 static int arg_route = 0;
 static int arg_arp = 0;
 static int arg_tree = 0;
@@ -37,6 +38,7 @@ static int arg_x11 = 0;
 static int arg_top = 0;
 static int arg_list = 0;
 static int arg_netstats = 0;
+static int arg_apparmor = 0;
 int arg_nowrap = 0;
 
 static struct termios tlocal;	// startup terminal setting
@@ -178,6 +180,8 @@ int main(int argc, char **argv) {
 			arg_route = 1;
 		else if (strcmp(argv[i], "--arp") == 0)
 			arg_arp = 1;
+		else if (strcmp(argv[i], "--apparmor") == 0)
+			arg_apparmor = 1;
 
 		else if (strncmp(argv[i], "--name=", 7) == 0) {
 			char *name = argv[i] + 7;
@@ -214,6 +218,13 @@ int main(int argc, char **argv) {
 		}
 	}
 
+
+	// if the parent is firejail, skip the process
+	pid_t ppid = getppid();
+	char *pcomm = pid_proc_comm(ppid);
+	if (pcomm && strcmp(pcomm, "firejail") == 0)
+		skip_process = ppid;
+
 	// allow only root user if /proc is mounted hidepid
 	if (pid_hidepid() && getuid() != 0) {
 		fprintf(stderr, "Error: /proc is mounted hidepid, you would need to be root to run this command\n");
@@ -232,9 +243,13 @@ int main(int argc, char **argv) {
 		netstats();	// print all sandboxes, --name disregarded
 		return 0;
 	}
+	if (arg_tree) {
+		tree(pid);
+		return 0;
+	}
 
 	// if --name requested without other options, print all data
-	if (pid && !arg_tree &&  !arg_cpu && !arg_seccomp && !arg_caps &&
+	if (pid && !arg_cpu && !arg_seccomp && !arg_caps && !arg_apparmor &&
 	    !arg_cgroup && !arg_x11 && !arg_interface && !arg_route && !arg_arp) {
 		arg_tree = 1;
 		arg_cpu = 1;
@@ -245,14 +260,11 @@ int main(int argc, char **argv) {
 		arg_interface = 1;
 		arg_route = 1;
 		arg_arp = 1;
+		arg_apparmor = 1;
 	}
 
 	// cumulative options
 	int print_procs = 1;
-	if (arg_tree) {
-		tree((pid_t) pid);
-		print_procs = 0;
-	}
 	if (arg_cpu) {
 		cpu((pid_t) pid, print_procs);
 		print_procs = 0;
@@ -263,6 +275,10 @@ int main(int argc, char **argv) {
 	}
 	if (arg_caps) {
 		caps((pid_t) pid, print_procs);
+		print_procs = 0;
+	}
+	if (arg_apparmor) {
+		apparmor((pid_t) pid, print_procs);
 		print_procs = 0;
 	}
 	if (arg_cgroup) {
@@ -285,10 +301,10 @@ int main(int argc, char **argv) {
 		arp((pid_t) pid, print_procs);
 		print_procs = 0;
 	}
+	(void) print_procs;
 
 	if (getuid() == 0) {
-		if (!arg_tree)
-			tree((pid_t) pid);
+		tree((pid_t) pid);	// pid initialized as zero, will print the tree for all processes if a specific pid was not requested
 		procevent((pid_t) pid);
 	}
 

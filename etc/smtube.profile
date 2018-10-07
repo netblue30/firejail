@@ -1,4 +1,5 @@
 # Firejail profile for smtube
+# Description: YouTube videos browser
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/smtube.local
@@ -11,11 +12,15 @@ noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.mplayer
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.local/share/vlc
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 

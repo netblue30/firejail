@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -31,7 +31,7 @@ after 100
 send -- "fnetfilter test1.net,33\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"invalid destination file in netfilter command"
+	"cannot open test1.net,33"
 }
 after 100
 send -- "rm outfile\r"

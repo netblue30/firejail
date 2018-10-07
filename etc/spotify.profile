@@ -9,7 +9,6 @@ blacklist ${HOME}/.bashrc
 blacklist /lost+found
 blacklist /sbin
 blacklist /srv
-blacklist /sys
 
 noblacklist ${HOME}/.cache/spotify
 noblacklist ${HOME}/.config/spotify
@@ -17,6 +16,7 @@ noblacklist ${HOME}/.local/share/spotify
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -31,6 +31,7 @@ include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
 netfilter
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -42,9 +43,9 @@ shell none
 tracelog
 
 disable-mnt
-private-bin spotify,bash,sh
+private-bin spotify,bash,sh,zenity
 private-dev
-private-etc fonts,machine-id,pulse,resolv.conf
+private-etc fonts,group,ld.so.cache,machine-id,pulse,resolv.conf,hosts,nsswitch.conf,host.conf,ca-certificates,ssl,pki,crypto-policies
 private-opt spotify
 private-tmp
 

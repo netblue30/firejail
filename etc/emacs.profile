@@ -1,4 +1,5 @@
 # Firejail profile for emacs
+# Description: GNU Emacs editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/emacs.local

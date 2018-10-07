@@ -1,4 +1,5 @@
 # Firejail profile for amule
+# Description: Client for the eD2k and Kad networks, like eMule
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/amule.local
@@ -10,6 +11,7 @@ noblacklist ${HOME}/.aMule
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

@@ -1,31 +1,17 @@
 # Firejail profile for knotes
+# Description: Sticky notes application
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/knotes.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# knotes has problems launching akonadi in debian and ubuntu.
+# one solution is to have akonadi already running when knotes is started
+
 noblacklist ${HOME}/.config/knotesrc
+noblacklist ${HOME}/.local/share/knotes
 
-include /etc/firejail/disable-common.inc
-# include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
 
-include /etc/firejail/whitelist-var-common.inc
-
-caps.drop all
-netfilter
-nodvd
-nogroups
-nonewprivs
-noroot
-nosound
-notv
-protocol unix
-seccomp
-shell none
-tracelog
-
-private-dev
-#private-tmp - problems on kubuntu 17.04
+# Redirect
+include /etc/firejail/kmail.profile

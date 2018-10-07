@@ -5,19 +5,24 @@ include /etc/firejail/pdftotext.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
+noblacklist ${DOCUMENTS}
+
 blacklist /tmp/.X11-unix
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+machine-id
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

@@ -3,18 +3,18 @@
 arr[1]="TEST 1: standard compilation"
 arr[2]="TEST 2: compile seccomp disabled"
 arr[3]="TEST 3: compile chroot disabled"
-arr[4]="TEST 4: compile bind disabled"
+arr[4]="deprecated: TEST 4: compile bind disabled"
 arr[5]="TEST 5: compile user namespace disabled"
 arr[6]="TEST 6: compile network disabled"
 arr[7]="TEST 7: compile X11 disabled"
-arr[8]="TEST 8: compile network restricted"
+arr[8]="deprecated: TEST 8: compile network restricted"
 arr[9]="TEST 9: compile file transfer disabled"
 arr[10]="TEST 10: compile disable whitelist"
 arr[11]="TEST 11: compile disable global config"
 arr[12]="TEST 12: compile apparmor"
 arr[13]="TEST 13: compile busybox"
 arr[14]="TEST 14: compile overlayfs disabled"
-arr[15]="TEST 15: compile apparmor enabled"
+arr[14]="TEST 15: compile private-home disabled"
 
 # remove previous reports and output file
 cleanup() {
@@ -108,24 +108,6 @@ cp output-make om3
 rm output-configure output-make
 
 #*****************************************************************
-# TEST 4
-#*****************************************************************
-# - disable bind configuration
-#*****************************************************************
-print_title "${arr[4]}"
-# seccomp
-cd firejail
-make distclean
-./configure --prefix=/usr --disable-bind  --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
-cd ..
-grep Warning output-configure output-make > ./report-test4
-grep Error output-configure output-make >> ./report-test4
-cp output-configure oc4
-cp output-make om4
-rm output-configure output-make
-
-#*****************************************************************
 # TEST 5
 #*****************************************************************
 # - disable user namespace configuration
@@ -178,25 +160,6 @@ grep Warning output-configure output-make > ./report-test7
 grep Error output-configure output-make >> ./report-test7
 cp output-configure oc7
 cp output-make om7
-rm output-configure output-make
-
-
-#*****************************************************************
-# TEST 8
-#*****************************************************************
-# - enable network restricted
-#*****************************************************************
-print_title "${arr[8]}"
-# seccomp
-cd firejail
-make distclean
-./configure --prefix=/usr --enable-network=restricted  --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
-cd ..
-grep Warning output-configure output-make > ./report-test8
-grep Error output-configure output-make >> ./report-test8
-cp output-configure oc8
-cp output-make om8
 rm output-configure output-make
 
 
@@ -311,13 +274,13 @@ rm output-configure output-make
 #*****************************************************************
 # TEST 15
 #*****************************************************************
-# - enable apparmor
+# - disable private home
 #*****************************************************************
 print_title "${arr[15]}"
 # seccomp
 cd firejail
 make distclean
-./configure --prefix=/usr --enable-apparmor --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-private-home --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test15
@@ -325,7 +288,6 @@ grep Error output-configure output-make >> ./report-test15
 cp output-configure oc15
 cp output-make om15
 rm output-configure output-make
-
 
 #*****************************************************************
 # PRINT REPORTS

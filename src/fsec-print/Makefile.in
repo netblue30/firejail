@@ -1,0 +1,14 @@
+all: fsec-print
+
+include ../common.mk
+
+%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/seccomp.h ../include/syscall.h
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+
+fsec-print: $(OBJS) ../lib/libnetlink.o
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
+
+clean:; rm -f *.o fsec-print *.gcov *.gcda *.gcno
+
+distclean: clean
+	rm -fr Makefile

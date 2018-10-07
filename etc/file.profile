@@ -1,4 +1,5 @@
 # Firejail profile for file
+# Description: Recognize the type of data in a file using "magic" numbers
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
@@ -6,7 +7,6 @@ include /etc/firejail/file.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-blacklist /run/user/*/bus
 blacklist /tmp/.X11-unix
 
 include /etc/firejail/disable-common.inc
@@ -17,6 +17,7 @@ caps.drop all
 hostname file
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs

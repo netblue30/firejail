@@ -1,4 +1,5 @@
 # Firejail profile for polari
+# Description: Internet Relay Chat (IRC) client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/polari.local
@@ -8,6 +9,7 @@ include /etc/firejail/globals.local
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.cache/telepathy

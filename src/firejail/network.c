@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -28,6 +28,40 @@
 #include <net/route.h>
 #include <linux/if_bridge.h>
 
+// return 1 if addr is a IPv4 or IPv6 address
+int check_ip46_address(const char *addr) {
+	// check ipv4 address
+	uint32_t tmp;
+	if (atoip(addr, &tmp) == 0)
+		return 1;
+
+	// check ipv6 address
+	struct in6_addr result;
+
+	char *tmpstr = strdup(addr);
+	if (!tmpstr)
+		errExit("strdup");
+	char *ptr = strchr(tmpstr, '/');
+	if (ptr) {
+		*ptr = '\0';
+		ptr++;
+		int mask = atoi(ptr);
+		// check the network mask
+		if (mask < 0 || mask > 128) {
+			free(tmpstr);
+			return 0;
+		}
+	}
+	if (inet_pton(AF_INET6, tmpstr, &result) == 1) {
+		free(tmpstr);
+		return 1;
+	}
+
+	free(tmpstr);
+
+	// failed
+	return 0;
+}
 
 int net_get_mtu(const char *ifname) {
 	int mtu = 0;
@@ -44,7 +78,7 @@ int net_get_mtu(const char *ifname) {
 
 	memset(&ifr, 0, sizeof(ifr));
 	ifr.ifr_addr.sa_family = AF_INET;
-	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
 	if (ioctl(s, SIOCGIFMTU, (caddr_t)&ifr) == 0)
 		mtu = ifr.ifr_mtu;
 	if (arg_debug)
@@ -72,7 +106,7 @@ void net_set_mtu(const char *ifname, int mtu) {
 
 	memset(&ifr, 0, sizeof(ifr));
 	ifr.ifr_addr.sa_family = AF_INET;
-	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
 	ifr.ifr_mtu = mtu;
 	if (ioctl(s, SIOCSIFMTU, (caddr_t)&ifr) != 0)
 		fwarning("cannot set mtu for interface %s\n", ifname);
@@ -235,7 +269,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
               	errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
 	ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
 
 	if (ioctl(sock, SIOCGIFHWADDR, &ifr) == -1)

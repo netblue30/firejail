@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -164,9 +164,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_vmsplice
 	  "vmsplice,"
 #endif
-#ifdef SYS_personality
-	  "personality,"
-#endif
 #ifdef SYS_umount
 	  "umount,"
 #endif
@@ -178,6 +175,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "@default,"
 #ifdef SYS_ptrace
 	  "ptrace,"
+#endif
+#ifdef SYS_personality
+	  "personality,"
 #endif
 #ifdef SYS_process_vm_readv
 	  "process_vm_readv"
@@ -495,10 +495,7 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 		}
 		else {
 			syscall_process_name(ptr, &syscall_nr, &error_nr);
-			if (syscall_nr == -1) {
-				if (!arg_quiet)
-					fprintf(stderr, "Warning fseccomp: syscall \"%s\" not available on this platform\n", ptr);
-			}
+			if (syscall_nr == -1) {;}
 			else if (callback != NULL) {
 				if (error_nr != -1 && fd != 0) {
 					filter_add_errno(fd, syscall_nr, error_nr, ptrarg);

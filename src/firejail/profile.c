@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -87,6 +87,31 @@ static int is_in_ignore_list(char *ptr) {
 	return 0;
 }
 
+void profile_add_ignore(const char *str) {
+	assert(str);
+	if (*str == '\0') {
+		fprintf(stderr, "Error: invalid ignore option\n");
+		exit(1);
+	}
+
+	// find an empty entry in profile_ignore array
+	int i;
+	for (i = 0; i < MAX_PROFILE_IGNORE; i++) {
+		if (cfg.profile_ignore[i] == NULL)
+			break;
+	}
+	if (i >= MAX_PROFILE_IGNORE) {
+		fprintf(stderr, "Error: maximum %d --ignore options are permitted\n", MAX_PROFILE_IGNORE);
+		exit(1);
+	}
+	// ... and configure it
+	else {
+		cfg.profile_ignore[i] = strdup(str);
+		if (!cfg.profile_ignore[i])
+			errExit("strdup");
+	}
+}
+
 
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
@@ -99,25 +124,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 
 	if (strncmp(ptr, "ignore ", 7) == 0) {
-		char *str = strdup(ptr + 7);
-		if (*str == '\0') {
-			fprintf(stderr, "Error: invalid ignore option\n");
-			exit(1);
-		}
-		// find an empty entry in profile_ignore array
-		int j;
-		for (j = 0; j < MAX_PROFILE_IGNORE; j++) {
-			if (cfg.profile_ignore[j] == NULL)
-				break;
-		}
-		if (j >= MAX_PROFILE_IGNORE) {
-			fprintf(stderr, "Error: maximum %d --ignore options are permitted\n", MAX_PROFILE_IGNORE);
-			exit(1);
-		}
-		// ... and configure it
-		else
-			cfg.profile_ignore[j] = str;
-
+		profile_add_ignore(ptr + 7);
 		return 0;
 	}
 
@@ -217,8 +224,19 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_allusers = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "private-cache") == 0) {
+		if (checkcfg(CFG_PRIVATE_CACHE))
+			arg_private_cache = 1;
+		else
+			warning_feature_disabled("private-cache");
+		return 0;
+	}
 	else if (strcmp(ptr, "private-dev") == 0) {
 		arg_private_dev = 1;
+		return 0;
+	}
+	else if (strcmp(ptr, "keep-dev-shm") == 0) {
+		arg_keep_dev_shm = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "private-tmp") == 0) {
@@ -231,6 +249,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	else if (strcmp(ptr, "nosound") == 0) {
 		arg_nosound = 1;
+		return 0;
+	}
+	else if (strcmp(ptr, "noautopulse") == 0) {
+		arg_noautopulse = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "notv") == 0) {
@@ -249,9 +271,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_no3d = 1;
 		return 0;
 	}
-	else if (strcmp(ptr, "allow-private-blacklist") == 0) {
-		if (!arg_quiet)
-			fprintf(stderr, "Warning: --allow-private-blacklist was deprecated\n");
+	else if (strcmp(ptr, "nodbus") == 0) {
+		arg_nodbus = 1;
+		return 0;
+	}
+	else if (strcmp(ptr, "nou2f") == 0) {
+	        arg_nou2f = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "netfilter") == 0) {
@@ -292,39 +317,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "net none") == 0) {
-#ifdef HAVE_NETWORK
-		if (checkcfg(CFG_NETWORK)) {
-			arg_nonetwork  = 1;
-			cfg.bridge0.configured = 0;
-			cfg.bridge1.configured = 0;
-			cfg.bridge2.configured = 0;
-			cfg.bridge3.configured = 0;
-			cfg.interface0.configured = 0;
-			cfg.interface1.configured = 0;
-			cfg.interface2.configured = 0;
-			cfg.interface3.configured = 0;
-		}
-		else
-			warning_feature_disabled("networking");
-#endif
+		arg_nonetwork  = 1;
+		cfg.bridge0.configured = 0;
+		cfg.bridge1.configured = 0;
+		cfg.bridge2.configured = 0;
+		cfg.bridge3.configured = 0;
+		cfg.interface0.configured = 0;
+		cfg.interface1.configured = 0;
+		cfg.interface2.configured = 0;
+		cfg.interface3.configured = 0;
 		return 0;
 	}
 	else if (strncmp(ptr, "net ", 4) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
-#ifdef HAVE_NETWORK_RESTRICTED
-			// compile time restricted networking
-			if (getuid() != 0) {
-				fprintf(stderr, "Error: only \"net none\" is allowed to non-root users\n");
-				exit(1);
-			}
-#endif
-			// run time restricted networking
-			if (checkcfg(CFG_RESTRICTED_NETWORK) && getuid() != 0) {
-				fprintf(stderr, "Error: only \"net none\" is allowed to non-root users\n");
-				exit(1);
-			}
-
 			if (strcmp(ptr + 4, "lo") == 0) {
 				fprintf(stderr, "Error: cannot attach to lo device\n");
 				exit(1);
@@ -343,7 +349,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
 				exit(1);
 			}
-			net_configure_bridge(br, ptr + 4);
+			br->dev = ptr + 4;
+			br->configured = 1;
 		}
 		else
 			warning_feature_disabled("networking");
@@ -408,10 +415,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: invalid IP range\n");
 				exit(1);
 			}
-			if (in_netrange(br->iprange_start, br->ip, br->mask) || in_netrange(br->iprange_end, br->ip, br->mask)) {
-				fprintf(stderr, "Error: IP range addresses not in network range\n");
-				exit(1);
-			}
 		}
 		else
 			warning_feature_disabled("networking");
@@ -466,6 +469,40 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	else if (strncmp(ptr, "netmask ", 8) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			Bridge *br = last_bridge_configured();
+			if (br == NULL) {
+				fprintf(stderr, "Error: no network device configured\n");
+				exit(1);
+			}
+			if (br->arg_ip_none || br->masksandbox) {
+				fprintf(stderr, "Error: cannot configure the network mask twice for the same interface\n");
+				exit(1);
+			}
+
+			// configure this network mask for the last bridge defined
+			if (atoip(ptr + 8, &br->masksandbox)) {
+				fprintf(stderr, "Error: invalid  network mask\n");
+				exit(1);
+			}
+
+			// if the bridge is not configured, use this mask as the bridge mask
+			if (br->mask == 0)
+				br->mask = br->masksandbox;
+			else {
+				fprintf(stderr, "Error: interface %s already has a network mask defined; "
+					"please remove --netmask\n",
+					br->dev);
+				exit(1);
+			}
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
 	else if (strncmp(ptr, "ip ", 3) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
@@ -503,18 +540,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: no network device configured\n");
 				exit(1);
 			}
-			if (br->arg_ip_none || br->ip6sandbox) {
+			if (br->ip6sandbox) {
 				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
 				exit(1);
 			}
 
 			// configure this IP address for the last bridge defined
-			// todo: verify ipv6 syntax
-			br->ip6sandbox = ptr + 4;
-//			if (atoip(argv[i] + 5, &br->ipsandbox)) {
-//				fprintf(stderr, "Error: invalid IP address\n");
-//				exit(1);
-//			}
+			if (check_ip46_address(ptr + 4) == 0) {
+				fprintf(stderr, "Error: invalid IPv6 address\n");
+				exit(1);
+			}
+
+			br->ip6sandbox = strdup(ptr + 4);
+			if (br->ip6sandbox == NULL)
+				errExit("strdup");
 
 		}
 		else
@@ -548,7 +587,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			if (cfg.protocol) {
-				fwarning("a protocol list is present, the new list \"%s\" will not be installed\n", ptr + 9);
+				fwarning("two protocol lists are present, \"%s\" will be installed\n", cfg.protocol);
 				return 0;
 			}
 
@@ -669,20 +708,26 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// dns
 	if (strncmp(ptr, "dns ", 4) == 0) {
-		uint32_t dns;
-		if (atoip(ptr + 4, &dns)) {
-			fprintf(stderr, "Error: invalid DNS server IP address\n");
-			return 1;
-		}
 
-		if (cfg.dns1 == 0)
+		if (check_ip46_address(ptr + 4) == 0) {
+			fprintf(stderr, "Error: invalid DNS server IPv4 or IPv6 address\n");
+			exit(1);
+		}
+		char *dns = strdup(ptr + 4);
+		if (!dns)
+			errExit("strdup");
+
+		if (cfg.dns1 == NULL)
 			cfg.dns1 = dns;
-		else if (cfg.dns2 == 0)
+		else if (cfg.dns2 == NULL)
 			cfg.dns2 = dns;
-		else if (cfg.dns3 == 0)
+		else if (cfg.dns3 == NULL)
 			cfg.dns3 = dns;
+		else if (cfg.dns4 == NULL)
+			cfg.dns4 = dns;
 		else {
-			fprintf(stderr, "Error: up to 3 DNS servers can be specified\n");
+			fprintf(stderr, "Error: up to 4 DNS servers can be specified\n");
+			free(dns);
 			return 1;
 		}
 		return 0;
@@ -726,6 +771,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// writable-var
 	if (strcmp(ptr, "writable-var") == 0) {
 		arg_writable_var = 1;
+		return 0;
+	}
+	// don't overwrite /var/tmp
+	if (strcmp(ptr, "keep-var-tmp") == 0) {
+		arg_keep_var_tmp = 1;
 		return 0;
 	}
 	// writable-run-user
@@ -914,6 +964,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_OVERLAYFS
 	if (strncmp(ptr, "overlay-named ", 14) == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
+			if (arg_overlay) {
+				fprintf(stderr, "Error: only one overlay command is allowed\n");
+				exit(1);
+			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
@@ -945,6 +999,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	} else if (strcmp(ptr, "overlay-tmpfs") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
+			if (arg_overlay) {
+				fprintf(stderr, "Error: only one overlay command is allowed\n");
+				exit(1);
+			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
@@ -960,6 +1018,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 	} else if (strcmp(ptr, "overlay") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
+			if (arg_overlay) {
+				fprintf(stderr, "Error: only one overlay command is allowed\n");
+				exit(1);
+			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
@@ -986,7 +1048,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// filesystem bind
 	if (strncmp(ptr, "bind ", 5) == 0) {
-#ifdef HAVE_BIND
 		if (checkcfg(CFG_BIND)) {
 			if (getuid() != 0) {
 				fprintf(stderr, "Error: --bind option is available only if running as root\n");
@@ -1019,7 +1080,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else
 			warning_feature_disabled("bind");
-#endif
 		return 0;
 	}
 
@@ -1223,27 +1283,8 @@ void profile_read(const char *fname) {
 	}
 
 	// save the name of the file for --profile.print option
-	if (include_level == 0) {
-		char *runfile;
-		if (asprintf(&runfile, "%s/%d", RUN_FIREJAIL_PROFILE_DIR, getpid()) == -1)
-			errExit("asprintf");
-
-		EUID_ROOT();
-		// the file is deleted first
-		FILE *fp = fopen(runfile, "w");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot create %s\n", runfile);
-			exit(1);
-		}
-		fprintf(fp, "%s\n", fname);
-
-		// mode and ownership
-		SET_PERMS_STREAM(fp, 0, 0, 0644);
-		fclose(fp);
-		EUID_USER();
-		free(runfile);
-	}
-
+	if (include_level == 0)
+		set_profile_run_file(getpid(), fname);
 
 	int msg_printed = 0;
 
@@ -1274,8 +1315,7 @@ void profile_read(const char *fname) {
 			continue;
 		}
 		if (!msg_printed) {
-			if (!arg_quiet)
-				fprintf(stderr, "Reading profile %s\n", fname);
+			fmessage("Reading profile %s\n", fname);
 			msg_printed = 1;
 		}
 

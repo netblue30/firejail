@@ -1,4 +1,5 @@
 # Firejail profile for kopete
+# Description: Instant messaging and chat application
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/kopete.local
@@ -12,6 +13,7 @@ noblacklist ${HOME}/.kde4/share/config/kopeterc
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

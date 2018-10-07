@@ -9,6 +9,7 @@ noblacklist ${HOME}/.config/mate/mate-dictionary
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -34,7 +35,7 @@ shell none
 
 disable-mnt
 private-bin mate-dictionary
-private-etc fonts,resolv.conf
+private-etc fonts,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-opt mate-dictionary
 private-dev
 private-tmp

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -21,7 +21,7 @@
 #include "firejail.h"
 #include <ftw.h>
 #include <sys/stat.h>
-#include <fcntl.h>
+#include <sys/mount.h>
 #include <syslog.h>
 #include <errno.h>
 #include <dirent.h>
@@ -29,49 +29,110 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 
 #define MAX_GROUPS 1024
+#define MAXBUF 4098
+#define EMPTY_STRING ("")
+
+
+// send the error to /var/log/auth.log and exit after a small delay
+void errLogExit(char* fmt, ...) {
+	va_list args;
+	va_start(args,fmt);
+	openlog("firejail", LOG_NDELAY | LOG_PID, LOG_AUTH);
+	MountData *m = get_last_mount();
+
+	char *msg1;
+	char *msg2  = "Access error";
+	if (vasprintf(&msg1, fmt, args) != -1 &&
+	    asprintf(&msg2, "Access error: pid %d, last mount name:%s dir:%s type:%s - %s", getuid(), m->fsname, m->dir, m->fstype, msg1) != -1)
+		syslog(LOG_CRIT, "%s", msg2);
+	va_end(args);
+	closelog();
+
+	sleep(2);
+	fprintf(stderr, "%s\n", msg2);
+	exit(1);
+}
+
+static void clean_supplementary_groups(gid_t gid) {
+	assert(cfg.username);
+	gid_t groups[MAX_GROUPS];
+	int ngroups = MAX_GROUPS;
+	int rv = getgrouplist(cfg.username, gid, groups, &ngroups);
+	if (rv == -1)
+		goto clean_all;
+
+	// clean supplementary group list
+	// allow only tty, audio, video, games
+	gid_t new_groups[MAX_GROUPS];
+	int new_ngroups = 0;
+	char *allowed[] = {
+		"tty",
+		"audio",
+		"video",
+		"games",
+		NULL
+	};
+
+	int i = 0;
+	while (allowed[i]) {
+		gid_t g = get_group_id(allowed[i]);
+	 	if (g) {
+			int j;
+			for (j = 0; j < ngroups; j++) {
+				if (g == groups[j]) {
+					new_groups[new_ngroups] = g;
+					new_ngroups++;
+					break;
+				}
+			}
+		}
+		i++;
+	}
+
+	if (new_ngroups) {
+		rv = setgroups(new_ngroups, new_groups);
+		if (rv)
+			goto clean_all;
+
+		if (arg_debug) {
+			printf("Supplementary groups: ");
+			for (i = 0; i < new_ngroups; i++)
+				printf("%d ", new_groups[i]);
+			printf("\n");
+		}
+	}
+	else
+		goto clean_all;
+
+	return;
+
+clean_all:
+	fwarning("cleaning all supplementary groups\n");
+	if (setgroups(0, NULL) < 0)
+		errExit("setgroups");
+}
+
+
 // drop privileges
 // - for root group or if nogroups is set, supplementary groups are not configured
 void drop_privs(int nogroups) {
 	EUID_ROOT();
 	gid_t gid = getgid();
+	if (arg_debug)
+		printf("Drop privileges: pid %d, uid %d, gid %d, nogroups %d\n",  getpid(), getuid(), gid, nogroups);
 
 	// configure supplementary groups
 	if (gid == 0 || nogroups) {
 		if (setgroups(0, NULL) < 0)
 			errExit("setgroups");
 		if (arg_debug)
-			printf("Username %s, no supplementary groups\n", cfg.username);
+			printf("No supplementary groups\n");
 	}
-	else {
-		assert(cfg.username);
-		gid_t groups[MAX_GROUPS];
-		int ngroups = MAX_GROUPS;
-		int rv = getgrouplist(cfg.username, gid, groups, &ngroups);
-
-		if (arg_debug && rv) {
-			printf("Username %s, groups ", cfg.username);
-			int i;
-			for (i = 0; i < ngroups; i++)
-				printf("%u, ", groups[i]);
-			printf("\n");
-		}
-
-		if (rv == -1) {
-			fwarning("cannot extract supplementary group list, dropping them\n");
-			if (setgroups(0, NULL) < 0)
-				errExit("setgroups");
-		}
-		else {
-			rv = setgroups(ngroups, groups);
-			if (rv) {
-				fwarning("cannot set supplementary group list, dropping them\n");
-				if (setgroups(0, NULL) < 0)
-					errExit("setgroups");
-			}
-		}
-	}
+	else if (arg_noroot)
+		clean_supplementary_groups(gid);
 
 	// set uid/gid
 	if (setgid(getgid()) < 0)
@@ -95,7 +156,6 @@ int mkpath_as_root(const char* path) {
 		*p='\0';
 		if (mkdir(file_path, 0755)==-1) {
 			if (errno != EEXIST) {
-				*p='/';
 				free(file_path);
 				return -1;
 			}
@@ -126,6 +186,16 @@ void fwarning(char* fmt, ...) {
 	va_end(args);
 }
 
+void fmessage(char* fmt, ...) { // TODO: this function is duplicated in src/fnet/interface.c
+	if (arg_quiet)
+		return;
+
+	va_list args;
+	va_start(args,fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
+	fflush(0);
+}
 
 void logsignal(int s) {
 	if (!arg_debug)
@@ -294,7 +364,7 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 }
 
 // return -1 if error, 0 if no error
-void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
+void touch_file_as_user(const char *fname, mode_t mode) {
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -302,10 +372,10 @@ void touch_file_as_user(const char *fname, uid_t uid, gid_t gid, mode_t mode) {
 		// drop privileges
 		drop_privs(0);
 
-		FILE *fp = fopen(fname, "w");
+		FILE *fp = fopen(fname, "wx");
 		if (fp) {
 			fprintf(fp, "\n");
-			SET_PERMS_STREAM(fp, uid, gid, mode);
+			SET_PERMS_STREAM(fp, -1, -1, mode);
 			fclose(fp);
 		}
 #ifdef HAVE_GCOV
@@ -354,15 +424,48 @@ int is_link(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
+	char *dup = NULL;
 	struct stat s;
 	if (lstat(fname, &s) == 0) {
 		if (S_ISLNK(s.st_mode))
 			return 1;
+		if (S_ISDIR(s.st_mode)) {
+			// remove trailing slashes and single dots and try again
+			dup = strdup(fname);
+			if (!dup)
+				errExit("strdup");
+			trim_trailing_slash_or_dot(dup);
+			if (lstat(dup, &s) == 0) {
+				if (S_ISLNK(s.st_mode)) {
+					free(dup);
+					return 1;
+				}
+			}
+		}
 	}
 
+	free(dup);
 	return 0;
 }
 
+// remove all slashes and single dots from the end of a path
+// for example /foo/bar///././. -> /foo/bar
+void trim_trailing_slash_or_dot(char *path) {
+	assert(path);
+
+	char *end = strchr(path, '\0');
+	assert(end);
+	if ((end - path) > 1) {
+		end--;
+		while (*end == '/' ||
+		      (*end == '.' && *(end - 1) == '/')) {
+			*end = '\0';
+			end--;
+			if (end == path)
+				break;
+		}
+	}
+}
 
 // remove multiple spaces and return allocated memory
 char *line_remove_spaces(const char *buf) {
@@ -533,33 +636,33 @@ void extract_command_name(int index, char **argv) {
 	if (!cfg.command_name)
 		errExit("strdup");
 
-	// restrict the command name to the first word
-	char *ptr = cfg.command_name;
-	while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
-		ptr++;
-	*ptr = '\0';
-
 	// remove the path: /usr/bin/firefox becomes firefox
-	ptr = strrchr(cfg.command_name, '/');
+	char *basename = cfg.command_name;
+	char *ptr = strrchr(cfg.command_name, '/');
 	if (ptr) {
-		ptr++;
+		basename = ++ptr;
 		if (*ptr == '\0') {
 			fprintf(stderr, "Error: invalid command name\n");
 			exit(1);
 		}
+	}
+	else
+		ptr = basename;
 
-		char *tmp = strdup(ptr);
-		if (!tmp)
+	// restrict the command name to the first word
+	while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
+		ptr++;
+
+	// command name is a substring of cfg.command_name
+	if (basename != cfg.command_name || *ptr != '\0') {
+		*ptr = '\0';
+		
+		basename = strdup(basename);
+		if (!basename)
 			errExit("strdup");
 
-		// limit the command to the first ' '
-		char *ptr2 = tmp;
-		while (*ptr2 != ' ' && *ptr2 != '\0')
-			ptr2++;
-		*ptr2 = '\0';
-
 		free(cfg.command_name);
-		cfg.command_name = tmp;
+		cfg.command_name = basename;
 	}
 }
 
@@ -655,38 +758,6 @@ void notify_other(int fd) {
 }
 
 
-// This function takes a pathname supplied by the user and expands '~' and
-// '${HOME}' at the start, to refer to a path relative to the user's home
-// directory (supplied).
-// The return value is allocated using malloc and must be freed by the caller.
-// The function returns NULL if there are any errors.
-char *expand_home(const char *path, const char* homedir) {
-	assert(path);
-	assert(homedir);
-
-	// Replace home macro
-	char *new_name = NULL;
-	if (strncmp(path, "${HOME}", 7) == 0) {
-		if (asprintf(&new_name, "%s%s", homedir, path + 7) == -1)
-			errExit("asprintf");
-		return new_name;
-	}
-	else if (*path == '~') {
-		if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
-			errExit("asprintf");
-		return new_name;
-	}
-	else if (strncmp(path, "${CFG}", 6) == 0) {
-		if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
-			errExit("asprintf");
-		return new_name;
-	}
-
-	char *rv = strdup(path);
-	if (!rv)
-		errExit("strdup");
-	return rv;
-}
 
 
 // Equivalent to the GNU version of basename, which is incompatible with
@@ -723,12 +794,14 @@ uid_t pid_get_uid(pid_t pid) {
 	char buf[PIDS_BUFLEN];
 	while (fgets(buf, PIDS_BUFLEN - 1, fp)) {
 		if (strncmp(buf, "Uid:", 4) == 0) {
-			char *ptr = buf + 5;
+			char *ptr = buf + 4;
 			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
 				ptr++;
 			}
-			if (*ptr == '\0')
-				break;
+			if (*ptr == '\0') {
+				fprintf(stderr, "Error: cannot read /proc file\n");
+				exit(1);
+			}
 
 			rv = atoi(ptr);
 			break;			  // break regardless!
@@ -739,45 +812,10 @@ uid_t pid_get_uid(pid_t pid) {
 	free(file);
 	EUID_USER();				  // grsecurity fix
 
-	if (rv == 0) {
-		fprintf(stderr, "Error: cannot read /proc file\n");
-		exit(1);
-	}
 	return rv;
 }
 
 
-void invalid_filename(const char *fname, int globbing) {
-//	EUID_ASSERT();
-	assert(fname);
-	const char *ptr = fname;
-
-	if (arg_debug_check_filename)
-		printf("Checking filename %s\n", fname);
-
-	if (strncmp(ptr, "${HOME}", 7) == 0)
-		ptr = fname + 7;
-	else if (strncmp(ptr, "${PATH}", 7) == 0)
-		ptr = fname + 7;
-	else if (strcmp(fname, "${DOWNLOADS}") == 0)
-		return;
-
-	int len = strlen(ptr);
-
-	if (globbing) {
-		// file globbing ('*?[]') is allowed
-		if (strcspn(ptr, "\\&!\"'<>%^(){};,") != (size_t)len) {
-			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
-			exit(1);
-		}
-	}
-	else {
-		if (strcspn(ptr, "\\&!?\"'<>%^(){};,*[]") != (size_t)len) {
-			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
-			exit(1);
-		}
-	}
-}
 
 
 uid_t get_group_id(const char *group) {
@@ -795,18 +833,80 @@ static int remove_callback(const char *fpath, const struct stat *sb, int typefla
 	(void) sb;
 	(void) typeflag;
 	(void) ftwbuf;
+	assert(fpath);
 
-	int rv = remove(fpath);
-	if (rv)
-		perror(fpath);
+	if (strcmp(fpath, ".") == 0)
+		return 0;
 
-	return rv;
+	if (remove(fpath)) {	// removes the link not the actual file
+		perror("remove");
+		fprintf(stderr, "Error: cannot remove file from user .firejail directory: %s\n", fpath);
+		exit(1);
+	}
+
+	return 0;
 }
 
 
-int remove_directory(const char *path) {
-	// FTW_PHYS - do not follow symbolic links
-	return nftw(path, remove_callback, 64, FTW_DEPTH | FTW_PHYS);
+int remove_overlay_directory(void) {
+	EUID_ASSERT();
+	struct stat s;
+	sleep(1);
+
+	char *path;
+	if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+
+	if (lstat(path, &s) == 0) {
+		// deal with obvious problems such as symlinks and root ownership
+		if (!S_ISDIR(s.st_mode)) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: %s is a symbolic link\n", path);
+			else
+				fprintf(stderr, "Error: %s is not a directory\n", path);
+			exit(1);
+		}
+		if (s.st_uid != getuid()) {
+			fprintf(stderr, "Error: %s is not owned by the current user\n", path);
+			exit(1);
+		}
+
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// open ~/.firejail, fails if there is any symlink
+			int fd = safe_fd(path, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+			if (fd == -1)
+				errExit("safe_fd");
+			// chdir to ~/.firejail
+			if (fchdir(fd) == -1)
+				errExit("fchdir");
+			close(fd);
+
+			EUID_ROOT();
+			// FTW_PHYS - do not follow symbolic links
+			if (nftw(".", remove_callback, 64, FTW_DEPTH | FTW_PHYS) == -1)
+				errExit("nftw");
+
+			EUID_USER();
+			// remove ~/.firejail
+			if (rmdir(path) == -1)
+				errExit("rmdir");
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+		// check if ~/.firejail was deleted
+		if (stat(path, &s) == -1)
+			return 0;
+		else
+			return 1;
+	}
+	return 0;
 }
 
 void flush_stdin(void) {
@@ -853,10 +953,8 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 		FILE *fp = fopen(fname, "w");
 		if (!fp)
 			errExit("fopen");
-		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR);
+		SET_PERMS_STREAM(fp, 0, 0, mode);
 		fclose(fp);
-		if (chmod(fname, mode) == -1)
-			errExit("chmod");
 	}
 }
 
@@ -919,4 +1017,171 @@ unsigned extract_timeout(const char *str) {
 	}
 
 	return h * 3600 + m * 60 + s;
+}
+
+void disable_file_or_dir(const char *fname) {
+	if (arg_debug)
+		printf("blacklist %s\n", fname);
+	struct stat s;
+	if (stat(fname, &s) != -1) {
+		if (is_dir(fname)) {
+			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				errExit("disable directory");
+		}
+		else {
+			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
+				errExit("disable file");
+		}
+	}
+	fs_logger2("blacklist", fname);
+}
+
+void disable_file_path(const char *path, const char *file) {
+	assert(file);
+	assert(path);
+
+	char *fname;
+	if (asprintf(&fname, "%s/%s", path, file) == -1)
+		errExit("asprintf");
+
+	disable_file_or_dir(fname);
+	free(fname);
+}
+
+// The returned file descriptor should be suitable for privileged operations on
+// user controlled paths
+int safe_fd(const char *path, int flags) {
+	assert(path);
+
+	// reject empty string, relative path
+	if (*path != '/')
+		goto errexit;
+	// reject ".."
+	if (strstr(path, ".."))
+		goto errexit;
+	char *p = strrchr(path, '/');
+	assert(p);
+	// reject trailing slash, root directory
+	if (*(p + 1) == '\0')
+		goto errexit;
+	// reject trailing dot
+	if (*(p + 1) == '.' && *(p + 2) == '\0')
+		goto errexit;
+
+	// work with a copy of path
+	char *dup = strdup(path);
+	if (!dup)
+		errExit("strdup");
+
+	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (parentfd == -1)
+		errExit("open");
+
+	// traverse the path and return -1 if a symlink is encountered
+	int fd = -1;
+	char *current_tok = EMPTY_STRING;
+	char *tok = strtok(dup, "/");
+	assert(tok);
+	while (tok) {
+		// skip all "/./"
+		if (strcmp(tok, ".") == 0) {
+			tok = strtok(NULL, "/");
+			continue;
+		}
+		// open the element, assuming it is a directory; this fails with ENOTDIR if it is a symbolic link
+		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (fd == -1) {
+			// if the following token is NULL, the current token is the final path element
+			// try again to open it, this time using the passed flags, and return -1 or the descriptor
+			current_tok = tok;
+			tok = strtok(NULL, "/");
+			if (!tok)
+				fd = openat(parentfd, current_tok, flags|O_NOFOLLOW);
+			close(parentfd);
+			free(dup);
+			return fd; // -1 if open failed
+		}
+		// move on to next path segment
+		current_tok = tok;
+		tok = strtok(NULL, "/");
+		if (tok) {
+			close(parentfd);
+			parentfd = fd;
+		}
+	}
+
+	// we are here because the last path element exists and is of file type directory
+	// reopen it using the passed flags
+	close(fd);
+	fd = openat(parentfd, current_tok, flags|O_NOFOLLOW);
+	close(parentfd);
+	free(dup);
+	return fd; // -1 if open failed
+
+errexit:
+	fprintf(stderr, "Error: cannot open \"%s\", invalid filename\n", path);
+	exit(1);
+}
+
+
+// return 1 if the sandbox identified by pid is not fully set up yet or if
+// it is no firejail sandbox at all, return 0 if the sandbox is complete
+int invalid_sandbox(const pid_t pid) {
+	// check if a file "ready-for-join" exists
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_READY_FOR_JOIN) == -1)
+		errExit("asprintf");
+	EUID_ROOT();
+	FILE *fp = fopen(fname, "re");
+	EUID_USER();
+	free(fname);
+	if (!fp)
+		return 1;
+	// regular file owned by root
+	int fd = fileno(fp);
+	if (fd == -1)
+		errExit("fileno");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode) || s.st_uid != 0) {
+		fclose(fp);
+		return 1;
+	}
+	// check if it is non-empty
+	char buf[BUFLEN];
+	if (fgets(buf, BUFLEN, fp) == NULL) {
+		fclose(fp);
+		return 1;
+	}
+	fclose(fp);
+	// confirm "ready" string was written
+	if (strncmp(buf, "ready\n", 6) != 0)
+		return 1;
+
+	// walk down the process tree a few nodes, there should be no firejail leaf
+#define MAXNODES 5
+	pid_t current = pid, next;
+	int i;
+	for (i = 0; i < MAXNODES; i++) {
+		if (find_child(current, &next) == 1) {
+			// found a leaf
+			EUID_ROOT();
+			char *comm = pid_proc_comm(current);
+			EUID_USER();
+			if (!comm) {
+				fprintf(stderr, "Error: cannot read /proc file\n");
+				exit(1);
+			}
+			if (strcmp(comm, "firejail") == 0) {
+				free(comm);
+				return 1;
+			}
+			free(comm);
+			break;
+		}
+		current = next;
+	}
+
+	return 0;
 }

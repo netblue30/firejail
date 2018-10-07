@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -87,7 +87,6 @@ void preproc_mount_mnt_dir(void) {
 		else {
 			//copy default seccomp files
 			copy_file(PATH_SECCOMP_32, RUN_SECCOMP_32, getuid(), getgid(), 0644); // root needed
-			copy_file(PATH_SECCOMP_64, RUN_SECCOMP_64, getuid(), getgid(), 0644); // root needed
 		}
 		if (arg_allow_debuggers)
 			copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
@@ -107,6 +106,31 @@ void preproc_mount_mnt_dir(void) {
 	}
 }
 
+static void clean_dir(const char *name, int *pidarr, int start_pid, int max_pids) {
+	DIR *dir;
+	if (!(dir = opendir(name))) {
+		fwarning("cannot clean %s directory\n", name);
+		return; // we live to fight another day!
+	}
+
+	// clean leftover files
+	struct dirent *entry;
+	char *end;
+	while ((entry = readdir(dir)) != NULL) {
+		pid_t pid = strtol(entry->d_name, &end, 10);
+		pid %= max_pids;
+		if (end == entry->d_name || *end)
+			continue;
+
+		if (pid < start_pid)
+			continue;
+		if (pidarr[pid] == 0)
+			delete_run_files(pid);
+	}
+	closedir(dir);
+}
+
+
 // clean run directory
 void preproc_clean_run(void) {
 	int max_pids=32769;
@@ -116,6 +140,8 @@ void preproc_clean_run(void) {
 	if (fp) {
 		int val;
 		if (fscanf(fp, "%d", &val) == 1) {
+			if (val > 4194304)	// this is the max value supported on 64 bit Linux kernels
+				val = 4194304;
 			if (val >= max_pids)
 				max_pids = val + 1;
 		}
@@ -153,29 +179,9 @@ void preproc_clean_run(void) {
 	}
 	closedir(dir);
 
-	// open /run/firejail/profile directory
-	if (!(dir = opendir(RUN_FIREJAIL_PROFILE_DIR))) {
-		// sleep 2 seconds and try again
-		sleep(2);
-		if (!(dir = opendir(RUN_FIREJAIL_PROFILE_DIR))) {
-			fprintf(stderr, "Error: cannot open %s directory\n", RUN_FIREJAIL_PROFILE_DIR);
-			exit(1);
-		}
-	}
-
-	// read /run/firejail/profile directory and clean leftover files
-	while ((entry = readdir(dir)) != NULL) {
-		pid_t pid = strtol(entry->d_name, &end, 10);
-		pid %= max_pids;
-		if (end == entry->d_name || *end)
-			continue;
-
-		if (pid < start_pid)
-			continue;
-		if (pidarr[pid] == 0)
-			clear_run_files(pid);
-	}
-	closedir(dir);
+	// clean profile and name directories
+	clean_dir(RUN_FIREJAIL_PROFILE_DIR, pidarr, start_pid, max_pids);
+	clean_dir(RUN_FIREJAIL_NAME_DIR, pidarr, start_pid, max_pids);
 
 	free(pidarr);
 }

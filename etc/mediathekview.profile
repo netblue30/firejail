@@ -1,4 +1,5 @@
 # Firejail profile for mediathekview
+# Description: View streams from German public television stations
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/mediathekview.local
@@ -16,8 +17,15 @@ noblacklist ${HOME}/.local/share/xplayer
 noblacklist ${HOME}/.mediathek3
 noblacklist ${HOME}/.mplayer
 
+# Allow access to java
+noblacklist ${PATH}/java
+noblacklist /usr/lib/java
+noblacklist /etc/java
+noblacklist /usr/share/java
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

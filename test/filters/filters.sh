@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
@@ -9,11 +9,9 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 if [ -f /etc/debian_version ]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep fseccomp)")
 	export PATH="$PATH:$libdir"
-else
-	export PATH="$PATH:/usr/lib/firejail"
 fi
+export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
-export PATH="$PATH:/usr/lib/firejail"
 
 if [ "$(uname -m)" = "x86_64" ]; then
     echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"
@@ -28,11 +26,22 @@ fi
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp
 
+echo "TESTING: seccomp run files (test/filters/seccomp-run-files.exp)"
+./seccomp-run-files.exp
+
+echo "TESTING: seccomp postexec (test/filters/seccomp-postexec.exp)"
+./seccomp-postexec.exp
+
 echo "TESTING: noroot (test/filters/noroot.exp)"
 ./noroot.exp
 
-echo "TESTING: capabilities (test/filters/caps.exp)"
-./caps.exp
+
+if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
+	echo "TESTING: capabilities (test/filters/caps.exp)"
+	./caps.exp
+else
+	echo "TESTING SKIP: other capabilities than expected (test/filters/caps.exp)"
+fi
 
 echo "TESTING: capabilities print (test/filters/caps-print.exp)"
 ./caps-print.exp
@@ -73,7 +82,7 @@ echo "TESTING: seccomp errno (test/filters/seccomp-errno.exp)"
 echo "TESTING: seccomp su (test/filters/seccomp-su.exp)"
 ./seccomp-su.exp
 
-which strace
+which strace 2>/dev/null
 if [ $? -eq 0 ]; then
         echo "TESTING: seccomp ptrace (test/filters/seccomp-ptrace.exp)"
         ./seccomp-ptrace.exp

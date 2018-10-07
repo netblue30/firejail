@@ -1,12 +1,12 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
-which cpio
+which cpio 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: cpio"
@@ -24,7 +24,7 @@ fi
 #	echo "TESTING SKIP: strings not found"
 #fi
 
-which gzip
+which gzip 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: gzip"
@@ -33,7 +33,7 @@ else
 	echo "TESTING SKIP: gzip not found"
 fi
 
-which xzdec
+which xzdec 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: xzdec"
@@ -42,7 +42,7 @@ else
 	echo "TESTING SKIP: xzdec not found"
 fi
 
-which xz
+which xz 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: xz"
@@ -51,7 +51,7 @@ else
 	echo "TESTING SKIP: xz not found"
 fi
 
-which less
+which less 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: less"
@@ -60,7 +60,7 @@ else
 	echo "TESTING SKIP: less not found"
 fi
 
-which file
+which file 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: file"
@@ -69,7 +69,7 @@ else
 	echo "TESTING SKIP: file not found"
 fi
 
-which tar
+which tar 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: tar"
@@ -78,7 +78,7 @@ else
 	echo "TESTING SKIP: tar not found"
 fi
 
-which ping
+which ping 2>/dev/null
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: ping"

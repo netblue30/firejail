@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -141,22 +141,6 @@ static void bandwidth_create_run_file(pid_t pid) {
 	free(fname);
 }
 
-// delete bandwidth file
-void bandwidth_del_run_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
-		errExit("asprintf");
-	unlink(fname);
-	free(fname);
-}
-
-void network_del_run_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d-netmap", RUN_FIREJAIL_NETWORK_DIR, (int) pid) == -1)
-		errExit("asprintf");
-	unlink(fname);
-	free(fname);
-}
 
 void network_set_run_file(pid_t pid) {
 	char *fname;
@@ -268,9 +252,8 @@ void bandwidth_remove(pid_t pid, const char *dev) {
 	}
 
 	// remove the file if there are no entries in the list
-	if (ifbw == NULL) {
-		 bandwidth_del_run_file(pid);
-	}
+	if (ifbw == NULL)
+		 delete_bandwidth_run_file(pid);
 }
 
 // add interface to run file
@@ -345,9 +328,24 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	// join the network namespace
 	//************************
 	pid_t child;
-	if (find_child(pid, &child) == -1) {
+	if (find_child(pid, &child) == 1) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");
 		exit(1);
+	}
+
+	if (invalid_sandbox(child)) {
+		fprintf(stderr, "Error: cannot join the network namespace\n");
+		exit(1);
+	}
+
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
+			exit(1);
+		}
 	}
 
 	EUID_ROOT();

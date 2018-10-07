@@ -1,4 +1,5 @@
 # Firejail profile for midori
+# Description: Lightweight web browser
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/midori.local
@@ -13,6 +14,7 @@ noblacklist ${HOME}/.pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.cache/midori

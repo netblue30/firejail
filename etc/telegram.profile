@@ -6,9 +6,11 @@ include /etc/firejail/telegram.local
 include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.TelegramDesktop
+noblacklist ${HOME}/.local/share/TelegramDesktop
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
@@ -21,6 +23,7 @@ protocol unix,inet,inet6
 seccomp
 
 disable-mnt
+private-cache
 private-tmp
 
 noexec ${HOME}

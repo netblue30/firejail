@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -94,10 +94,21 @@ static int pid_is_firejail(pid_t pid) {
 		// list of firejail arguments that don't trigger sandbox creation
 		// the initial -- is not included
 		char *exclude_args[] = {
-			"ls", "list", "tree", "x11", "help", "version", "top", "netstats", "debug-syscalls",
-			"debug-errnos", "debug-protocols", "protocol.print",  "debug.caps",
-			"shutdown", "bandwidth", "caps.print", "cpu.print", "debug-caps",
-			"fs.print", "get", "overlay-clean", NULL
+			// all print options
+			"apparmor.print", "caps.print", "cpu.print", "dns.print", "fs.print", "netfilter.print",
+			"netfilter6.print", "profile.print", "protocol.print", "seccomp.print",
+			// debug
+			"debug-caps", "debug-errnos", "debug-protocols", "debug-syscalls",
+			// file transfer
+			"ls", "get", "put",
+			// stats
+			"tree", "list", "top",
+			// network
+			"netstats", "bandwidth",
+			// etc
+			"help", "version", "overlay-clean",
+
+			NULL // end of list marker
 		};
 
 		int i;
@@ -291,6 +302,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 						child %= max_pids;
 						pids[child].level = pids[pid].level + 1;
 						pids[child].uid = pid_get_uid(child);
+						pids[child].parent = pid;
 					}
 					sprintf(lineptr, " fork");
 					break;
@@ -318,12 +330,22 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 					sprintf(lineptr, " exit");
 					break;
 
+
+
 				case PROC_EVENT_UID:
 					pid = proc_ev->event_data.id.process_tgid;
 #ifdef DEBUG_PRCTL
 	printf("%s: %d, event uid, pid %d\n", __FUNCTION__, __LINE__, pid);
 #endif
-					sprintf(lineptr, " uid ");
+					if (pids[pid].level == 1 ||
+					    pids[pids[pid].parent].level == 1) {
+						sprintf(lineptr, "\n");
+						continue;
+					}
+					else
+						sprintf(lineptr, " uid (%d:%d)",
+							proc_ev->event_data.id.r.ruid,
+							proc_ev->event_data.id.e.euid);
 					break;
 
 				case PROC_EVENT_GID:
@@ -331,8 +353,18 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 #ifdef DEBUG_PRCTL
 	printf("%s: %d, event gid, pid %d\n", __FUNCTION__, __LINE__, pid);
 #endif
-					sprintf(lineptr, " gid ");
+					if (pids[pid].level == 1 ||
+					    pids[pids[pid].parent].level == 1) {
+						sprintf(lineptr, "\n");
+						continue;
+					}
+					else
+						sprintf(lineptr, " gid (%d:%d)",
+							proc_ev->event_data.id.r.rgid,
+							proc_ev->event_data.id.e.egid);
 					break;
+
+
 
 				case PROC_EVENT_SID:
 					pid = proc_ev->event_data.sid.process_tgid;

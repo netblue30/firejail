@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -25,6 +25,8 @@ void tree(pid_t pid) {
 	// print processes
 	int i;
 	for (i = 0; i < max_pids; i++) {
+		if (i == skip_process)
+			continue;
 		if (pids[i].level == 1)
 			pid_print_tree(i, 0, arg_nowrap);
 	}

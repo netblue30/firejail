@@ -1,4 +1,5 @@
 # Firejail profile for audacious
+# Description: Small and fast audio player which supports lots of formats
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/audacious.local
@@ -7,16 +8,21 @@ include /etc/firejail/globals.local
 
 noblacklist ${HOME}/.config/Audaciousrc
 noblacklist ${HOME}/.config/audacious
+noblacklist ${MUSIC}
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
+nodbus
 nogroups
 nonewprivs
 noroot

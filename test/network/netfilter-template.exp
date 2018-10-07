@@ -1,11 +1,19 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
+
+
+send -- "firejail --net=br1 --ip=10.10.30.10 --name=test1 --netfilter=/etc/firejail/blablabla\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"invalid network filter file"
+}
+sleep 1
 
 send -- "firejail --net=br1 --ip=10.10.30.10 --name=test1 --netfilter=/etc/firejail/tcpserver.net,5555 ./tcpserver 5555\r"
 expect {
@@ -15,6 +23,21 @@ expect {
 sleep 1
 
 spawn $env(SHELL)
+send -- "firejail --netfilter.print=test1\r"
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"Chain INPUT"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"Chain FORWARD"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.3\n";exit}
+	"Chain OUTPUT"
+}
+sleep 1
+
 send -- "telnet 10.10.30.10 5555\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}

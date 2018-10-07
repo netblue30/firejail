@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -20,41 +20,24 @@
 
 #include "fbuilder.h"
 #include <sys/wait.h>
-#include <fcntl.h>
 
-#define TRACE_OUTPUT "/tmp/firejail-trace"
-#define STRACE_OUTPUT "/tmp/firejail-strace"
+#define TRACE_OUTPUT "/tmp/firejail-trace.XXXXXX"
+#define STRACE_OUTPUT "/tmp/firejail-strace.XXXXXX"
 
-static char *cmdlist[] = {
-	"/usr/bin/firejail",
-	"--quiet",
-	"--output=" TRACE_OUTPUT,
-	"--noprofile",
-	"--caps.drop=all",
-	"--nonewprivs",
-	"--trace",
-	"--shell=none",
-	"/usr/bin/strace", // also used as a marker in build_profile()
-	"-c",
-	"-f",
-	"-o" STRACE_OUTPUT,
-};
-
-static void clear_tmp_files(void) {
-	unlink(STRACE_OUTPUT);
-	unlink(TRACE_OUTPUT);
-
-	// run all the rest
-	int i;
-	for (i = 1; i <= 5; i++) {
-		char *newname;
-		if (asprintf(&newname, "%s.%d", TRACE_OUTPUT, i) == -1)
-			errExit("asprintf");
-		unlink(newname);
-		free(newname);
-	}
-
-}
+/* static char *cmdlist[] = { */
+/* 	"/usr/bin/firejail", */
+/* 	"--quiet", */
+/* 	"--output=" TRACE_OUTPUT, */
+/* 	"--noprofile", */
+/* 	"--caps.drop=all", */
+/* 	"--nonewprivs", */
+/* 	"--trace", */
+/* 	"--shell=none", */
+/* 	"/usr/bin/strace", // also used as a marker in build_profile() */
+/* 	"-c", */
+/* 	"-f", */
+/* 	"-o" STRACE_OUTPUT, */
+/* }; */
 
 void build_profile(int argc, char **argv, int index, FILE *fp) {
 	// next index is the application name
@@ -63,8 +46,40 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		exit(1);
 	}
 
-	// clean /tmp files
-	clear_tmp_files();
+	char trace_output[] = "/tmp/firejail-trace.XXXXXX";
+	char strace_output[] = "/tmp/firejail-strace.XXXXXX";
+
+	int tfile = mkstemp(trace_output);
+	int stfile = mkstemp(strace_output);
+	if(tfile == -1 || stfile == -1)
+		errExit("mkstemp");
+
+	// close the files, firejail/strace will overwrite them!
+	close(tfile);
+	close(stfile);
+
+
+	char *output;
+	char *stroutput;
+	if(asprintf(&output,"--output=%s",trace_output) == -1)
+		errExit("asprintf");
+	if(asprintf(&stroutput,"-o %s",strace_output) == -1)
+		errExit("asprintf");
+
+	char *cmdlist[] = {
+	  "/usr/bin/firejail",
+	  "--quiet",
+	  output,
+	  "--noprofile",
+	  "--caps.drop=all",
+	  "--nonewprivs",
+	  "--trace",
+	  "--shell=none",
+	  "/usr/bin/strace", // also used as a marker in build_profile()
+	  "-c",
+	  "-f",
+	  stroutput,
+	};
 
 	// detect strace
 	int have_strace = 0;
@@ -131,16 +146,16 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### home directory whitelisting\n");
-		build_home(TRACE_OUTPUT, fp);
+		build_home(trace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### filesystem\n");
-		build_tmp(TRACE_OUTPUT, fp);
-		build_dev(TRACE_OUTPUT, fp);
-		build_etc(TRACE_OUTPUT, fp);
-		build_var(TRACE_OUTPUT, fp);
-		build_bin(TRACE_OUTPUT, fp);
-		build_share(TRACE_OUTPUT, fp);
+		build_tmp(trace_output, fp);
+		build_dev(trace_output, fp);
+		build_etc(trace_output, fp);
+		build_var(trace_output, fp);
+		build_bin(trace_output, fp);
+		build_share(trace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### security filters\n");
@@ -148,7 +163,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "nonewprivs\n");
 		fprintf(fp, "seccomp\n");
 		if (have_strace)
-			build_seccomp(STRACE_OUTPUT, fp);
+			build_seccomp(strace_output, fp);
 		else {
 			fprintf(fp, "# If you install strace on your system, Firejail will also create a\n");
 			fprintf(fp, "# whitelisted seccomp filter.\n");
@@ -156,11 +171,14 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### network\n");
-		build_protocol(TRACE_OUTPUT, fp);
+		build_protocol(trace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### environment\n");
 		fprintf(fp, "shell none\n");
+
+		unlink(trace_output);
+		unlink(strace_output);
 
 	}
 	else {

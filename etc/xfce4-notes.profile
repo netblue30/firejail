@@ -1,4 +1,5 @@
 # Firejail profile for xfce4-notes
+# Description: Notes application for the Xfce4 desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xfce4-notes.local
@@ -11,6 +12,7 @@ noblacklist ${HOME}/.local/share/notes
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -29,6 +31,7 @@ seccomp
 shell none
 
 disable-mnt
+private-cache
 private-dev
 private-tmp
 

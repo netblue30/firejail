@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -39,6 +39,7 @@ typedef enum {
 	DEV_VIDEO,
 	DEV_TV,
 	DEV_DVD,
+	DEV_U2F,
 } DEV_TYPE;
 
 
@@ -76,6 +77,17 @@ static DevEntry dev[] = {
 	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
 	{"/dev/sr0", RUN_DEV_DIR "/sr0", DEV_DVD}, // for DVD and audio CD players
+	{"/dev/hidraw0", RUN_DEV_DIR "/hidraw0", DEV_U2F},
+	{"/dev/hidraw1", RUN_DEV_DIR "/hidraw1", DEV_U2F},
+	{"/dev/hidraw2", RUN_DEV_DIR "/hidraw2", DEV_U2F},
+	{"/dev/hidraw3", RUN_DEV_DIR "/hidraw3", DEV_U2F},
+	{"/dev/hidraw4", RUN_DEV_DIR "/hidraw4", DEV_U2F},
+	{"/dev/hidraw5", RUN_DEV_DIR "/hidraw5", DEV_U2F},
+	{"/dev/hidraw6", RUN_DEV_DIR "/hidraw6", DEV_U2F},
+	{"/dev/hidraw7", RUN_DEV_DIR "/hidraw7", DEV_U2F},
+	{"/dev/hidraw8", RUN_DEV_DIR "/hidraw8", DEV_U2F},
+	{"/dev/hidraw9", RUN_DEV_DIR "/hidraw9", DEV_U2F},
+	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F},	// USB devices such as Yubikey, U2F
 	{NULL, NULL, DEV_NONE}
 };
 
@@ -84,13 +96,13 @@ static void deventry_mount(void) {
 	while (dev[i].dev_fname != NULL) {
 		struct stat s;
 		if (stat(dev[i].run_fname, &s) == 0) {
-
 			// check device type and subsystem configuration
 			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
 			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
 			    (dev[i].type == DEV_TV && arg_notv == 0) ||
-			    (dev[i].type == DEV_DVD && arg_nodvd == 0)) {
+			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
+			    (dev[i].type == DEV_U2F && arg_nou2f == 0)) {
 
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)
@@ -141,17 +153,52 @@ errexit:
 }
 
 static void create_link(const char *oldpath, const char *newpath) {
-	if (symlink(oldpath, newpath) == -1)
-		goto errexit;
-	if (chown(newpath, 0, 0) < 0)
-		goto errexit;
+	if (symlink(oldpath, newpath) == -1) {
+		fprintf(stderr, "Error: cannot create %s device\n", newpath);
+		exit(1);
+	}
+
+	if (chown(newpath, 0, 0) < 0) {;}
+
 	fs_logger2("create", newpath);
 	return;
-
-errexit:
-	fprintf(stderr, "Error: cannot create %s device\n", newpath);
-	exit(1);
 }
+
+static void empty_dev_shm(void) {
+	// create an empty /dev/shm directory
+	mkdir_attr("/dev/shm", 01777, 0, 0);
+	fs_logger("mkdir /dev/shm");
+	fs_logger("create /dev/shm");
+}
+
+static void mount_dev_shm(void) {
+	mkdir_attr("/dev/shm", 01777, 0, 0);
+	int rv = mount(RUN_DEV_DIR "/shm", "/dev/shm", "none", MS_BIND, "mode=01777,gid=0");
+	if (rv == -1) {
+		fwarning("cannot mount the old /dev/shm in private-dev\n");
+		dbg_test_dir(RUN_DEV_DIR "/shm");
+		empty_dev_shm();
+		return;
+	}
+}
+
+static void process_dev_shm(void) {
+	// Jack audio keeps an Unix socket under (/dev/shm/jack_default_1000_0 or /dev/shm/jack/...)
+	// looking for jack socket
+	glob_t globbuf;
+	int globerr = glob(RUN_DEV_DIR "/shm/jack*", GLOB_NOSORT, NULL, &globbuf);
+	if (globerr && !arg_keep_dev_shm) {
+		empty_dev_shm();
+		return;
+	}
+	globfree(&globbuf);
+
+	// if we got here, it means we have a jack server installed
+	// mount-bind the old /dev/shm
+	mount_dev_shm();
+
+}
+
 
 void fs_private_dev(void){
 	// install a new /dev directory
@@ -199,15 +246,14 @@ void fs_private_dev(void){
 			fs_logger("clone /dev/log");
 		}
 	}
+
+	// bring forward the current /dev/shm directory if necessary
+	if (arg_debug)
+		printf("Process /dev/shm directory\n");
+	process_dev_shm();
+
 	if (mount(RUN_RO_DIR, RUN_DEV_DIR, "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("disable run dev directory");
-
-	// create /dev/shm
-	if (arg_debug)
-		printf("Create /dev/shm directory\n");
-	mkdir_attr("/dev/shm", 01777, 0, 0);
-	fs_logger("mkdir /dev/shm");
-	fs_logger("create /dev/shm");
 
 	// create default devices
 	create_char_dev("/dev/zero", 0666, 1, 5); // mknod -m 666 /dev/zero c 1 5
@@ -251,8 +297,8 @@ void fs_private_dev(void){
 	free(data);
 	fs_logger("clone /dev/pts");
 
-#if 0
 	// stdin, stdout, stderr
+#if 0
 	create_link("/proc/self/fd", "/dev/fd");
 	create_link("/proc/self/fd/0", "/dev/stdin");
 	create_link("/proc/self/fd/1", "/dev/stdout");
@@ -268,68 +314,30 @@ void fs_private_dev(void){
 	}
 }
 
-
-#if 0
-void fs_dev_shm(void) {
-	uid_t uid = getuid(); // set a new shm only if we started as root
-	if (uid)
-		return;
-
-	if (is_dir("/dev/shm")) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /dev/shm\n");
-		if (mount("tmpfs", "/dev/shm", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-			errExit("mounting /dev/shm");
-		fs_logger("tmpfs /dev/shm");
-	}
-	else {
-		char *lnk = realpath("/dev/shm", NULL);
-		if (lnk) {
-			if (!is_dir(lnk)) {
-				// create directory
-				mkdir_attr(lnk, 01777, 0, 0);
-			}
-			if (arg_debug)
-				printf("Mounting tmpfs on %s on behalf of /dev/shm\n", lnk);
-			if (mount("tmpfs", lnk, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
-				errExit("mounting /var/tmp");
-			fs_logger2("tmpfs", lnk);
-			free(lnk);
-		}
-		else {
-			fwarning("/dev/shm not mounted\n");
-			dbg_test_dir("/dev/shm");
-		}
-
-	}
-}
-#endif
-
-static void disable_file_or_dir(const char *fname) {
-	if (arg_debug)
-		printf("disable %s\n", fname);
-	struct stat s;
-	if (stat(fname, &s) != -1) {
-		if (is_dir(fname)) {
-			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable directory");
-		}
-		else {
-			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable file");
-		}
-	}
-	fs_logger2("blacklist", fname);
-
-}
-
 void fs_dev_disable_sound(void) {
-	int i = 0;
+	unsigned i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_SOUND)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}
+
+	// disable all jack sockets in /dev/shm
+	glob_t globbuf;
+	int globerr = glob("/dev/shm/jack*", GLOB_NOSORT, NULL, &globbuf);
+	if (globerr)
+		return;
+
+	for (i = 0; i < globbuf.gl_pathc; i++) {
+		char *path = globbuf.gl_pathv[i];
+		assert(path);
+		if (is_link(path)) {
+			fwarning("skipping nosound for %s because it is a symbolic link\n", path);
+			continue;
+		}
+		disable_file_or_dir(path);
+	}
+	globfree(&globbuf);
 }
 
 void fs_dev_disable_video(void) {
@@ -363,6 +371,15 @@ void fs_dev_disable_dvd(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_DVD)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_u2f(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_U2F)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}

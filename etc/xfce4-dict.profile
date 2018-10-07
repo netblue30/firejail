@@ -1,4 +1,5 @@
 # Firejail profile for xfce4-dict
+# Description: Dictionary plugin for Xfce4 panel
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/xfce4-dict.local
@@ -9,6 +10,7 @@ noblacklist ${HOME}/.config/xfce4-dict
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -27,6 +29,7 @@ seccomp
 shell none
 
 disable-mnt
+private-cache
 private-dev
 private-tmp
 

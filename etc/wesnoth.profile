@@ -1,4 +1,5 @@
 # Firejail profile for wesnoth
+# Description: Fantasy turn-based strategy game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/wesnoth.local
@@ -11,6 +12,7 @@ noblacklist ${HOME}/.local/share/wesnoth
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 

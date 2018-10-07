@@ -3,6 +3,21 @@
 # set a new firejail config file
 #cp firejail.config /etc/firejail/firejail.config
 
+
+#********************************
+# firecfg
+#********************************
+which less 2>/dev/null
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: firecfg (test/root/firecfg.exp)"
+	mv /home/netblue/.local/share/applications /home/netblue/.local/share/applications-store
+	./firecfg.exp
+	mv /home/netblue/.local/share/applications-store /home/netblue/.local/share/applications
+else
+	echo "TESTING SKIP: firecfg, less not found"
+fi
+
 #********************************
 # servers
 #********************************
@@ -62,8 +77,8 @@ echo "TESTING: fs whitelist mnt, opt, media (test/root/whitelist-mnt.exp)"
 echo "TESTING: join (test/root/join.exp)"
 ./join.exp
 
-echo "TESTING: git-install (test/root/git.exp)"
-./git.exp
+echo "TESTING: login-nobody (test/root/login_nobody.exp)"
+./login_nobody.exp
 
 #********************************
 # seccomp
@@ -107,17 +122,6 @@ rm -f tmpfile
 echo "TESTING: firemon events (test/root/firemon-events.exp)"
 ./firemon-events.exp
 
-#********************************
-# firecfg
-#********************************
-which firefox
-if [ "$?" -eq 0 ];
-then
-	echo "TESTING: firecfg (test/root/firecfg.exp)"
-	./firecfg.exp
-else
-	echo "TESTING SKIP: firecfg, firefox not found"
-fi
 
 # restore the default config file
 #cp ../../etc/firejail.config /etc/firejail/firejail.config

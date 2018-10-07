@@ -8,31 +8,13 @@ include /etc/firejail/globals.local
 noblacklist ${HOME}/.config/brave
 # brave uses gpg for built-in password manager
 noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.pki
-
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-programs.inc
 
 mkdir ${HOME}/.config/brave
-mkdir ${HOME}/.pki
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/KeePass
 whitelist ${HOME}/.config/brave
-whitelist ${HOME}/.config/keepass
-whitelist ${HOME}/.config/lastpass
-whitelist ${HOME}/.keepass
-whitelist ${HOME}/.lastpass
-whitelist ${HOME}/.pki
-include /etc/firejail/whitelist-common.inc
+whitelist ${HOME}/.gnupg
 
-# caps.drop all
-netfilter
-# nonewprivs
-# noroot
-nodvd
-notv
-# protocol unix,inet,inet6,netlink
-# seccomp
+# noexec /tmp is included in chromium-common.profile and breaks Brave
+ignore noexec /tmp
 
-disable-mnt
+# Redirect
+include /etc/firejail/chromium-common.profile

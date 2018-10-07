@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Firejail Authors
+ * Copyright (C) 2014-2018 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -53,7 +53,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			fs_logger2("clone", fname);
 		}
 		else {
-			touch_file_as_user(fname, u, g, 0644);
+			touch_file_as_user(fname, 0644);
 			fs_logger2("touch", fname);
 		}
 		free(fname);
@@ -78,7 +78,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			fs_logger2("clone", fname);
 		}
 		else {
-			touch_file_as_user(fname, u, g, 0644);
+			touch_file_as_user(fname, 0644);
 			fs_logger2("touch", fname);
 		}
 		free(fname);
@@ -235,8 +235,29 @@ void fs_private_homedir(void) {
 	// mount bind private_homedir on top of homedir
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_homedir, homedir);
-	if (mount(private_homedir, homedir, NULL, MS_NOSUID | MS_NODEV | MS_BIND | MS_REC, NULL) < 0)
+	// get a file descriptor for private_homedir, fails if there is any symlink
+	int fd = safe_fd(private_homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1)
+		errExit("safe_fd");
+	// check if new home directory is owned by the user
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != getuid()) {
+		fprintf(stderr, "Error: private directory is not owned by the current user\n");
+		exit(1);
+	}
+	if ((S_IRWXU & s.st_mode) != S_IRWXU)
+		fwarning("no full permissions on private directory\n");
+	// mount via the link in /proc/self/fd
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(proc, homedir, NULL, MS_NOSUID | MS_NODEV | MS_BIND | MS_REC, NULL) < 0)
 		errExit("mount bind");
+	free(proc);
+	close(fd);
+
 	fs_logger3("mount-bind", private_homedir, cfg.homedir);
 	fs_logger2("whitelist", cfg.homedir);
 // preserve mode and ownership
@@ -290,6 +311,8 @@ void fs_private(void) {
 	if (u == 0 && arg_allusers) // allow --allusers when starting the sandbox as root
 		;
 	else {
+		if (arg_allusers)
+			fwarning("--allusers disabled by --private or --whitelist\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
 		fs_logger("tmpfs /home");
@@ -337,29 +360,8 @@ void fs_check_private_dir(void) {
 	free(tmp);
 
 	if (!cfg.home_private
-	 || !is_dir(cfg.home_private)
-	 || is_link(cfg.home_private)
-	 || strstr(cfg.home_private, "..")) {
+	 || !is_dir(cfg.home_private)) {
 		fprintf(stderr, "Error: invalid private directory\n");
-		exit(1);
-	}
-
-	// check home directory and chroot home directory have the same owner
-	struct stat s2;
-	int rv = stat(cfg.home_private, &s2);
-	if (rv < 0) {
-		fprintf(stderr, "Error: cannot find %s directory\n", cfg.home_private);
-		exit(1);
-	}
-
-	struct stat s1;
-	rv = stat(cfg.homedir, &s1);
-	if (rv < 0) {
-		fprintf(stderr, "Error: cannot find %s directory, full path name required\n", cfg.homedir);
-		exit(1);
-	}
-	if (s1.st_uid != s2.st_uid) {
-		printf("Error: --private directory should be owned by the current user\n");
 		exit(1);
 	}
 }
@@ -398,34 +400,33 @@ static char *check_dir_or_file(const char *name) {
 			}
 			return fname;
 		}
-		else {
-			fprintf(stderr, "Error: invalid file %s\n", name);
-			exit(1);
-		}
+		else // dangling link
+			goto errexit;
 	}
 	else {
 		// check the file is in user home directory, a full home directory is not allowed
 		char *rname = realpath(fname, NULL);
 		if (!rname ||
 		    strncmp(rname, cfg.homedir, strlen(cfg.homedir)) != 0 ||
-		    strcmp(rname, cfg.homedir) == 0) {
-			fprintf(stderr, "Error: invalid file %s\n", name);
-			exit(1);
-		}
+		    strcmp(rname, cfg.homedir) == 0)
+			goto errexit;
 
 		// only top files and directories in user home are allowed
 		char *ptr = rname + strlen(cfg.homedir);
-		assert(*ptr != '\0');
+		if (*ptr != '/')
+			goto errexit;
 		ptr = strchr(++ptr, '/');
 		if (ptr) {
-			if (*ptr != '\0') {
-				fprintf(stderr, "Error: only top files and directories in user home are allowed\n");
-				exit(1);
-			}
+			fprintf(stderr, "Error: only top files and directories in user home are allowed\n");
+			exit(1);
 		}
 		free(fname);
 		return rname;
 	}
+
+errexit:
+	fprintf(stderr, "Error: invalid file %s\n", name);
+	exit(1);
 }
 
 static void duplicate(char *name) {
@@ -492,6 +493,10 @@ void fs_private_home_list(void) {
 		errExit("strdup");
 
 	char *ptr = strtok(dlist, ",");
+	if (!ptr) {
+		fprintf(stderr, "Error: invalid private-home argument\n");
+		exit(1);
+	}
 	duplicate(ptr);
 	while ((ptr = strtok(NULL, ",")) != NULL)
 		duplicate(ptr);

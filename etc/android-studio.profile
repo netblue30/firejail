@@ -20,6 +20,8 @@ include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+include /etc/firejail/whitelist-var-common.inc
+
 caps.drop all
 netfilter
 nodvd
@@ -32,7 +34,8 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-dev
+private-cache
 # private-tmp
 
-noexec /tmp
+# noexec /tmp breaks 'Android Profiler'
+#noexec /tmp

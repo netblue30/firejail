@@ -1,35 +1,31 @@
 #!/usr/bin/expect -f
-# This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
-# License GPL v2
 
 set timeout 10
+cd /home
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --private --tracelog --csh\r"
+send -- "firejail --private --shell=/bin/csh\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "find ~\r"
+send -- "env | grep SHELL;pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	".cshrc"
-}
-
-send -- "env | grep SHELL\r"
-expect {
-        timeout {puts "TESTING ERROR 2\n";exit}
-        "SHELL"
+	"SHELL"
 }
 expect {
-	timeout {puts "TESTING ERROR 2.1\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"/bin/csh"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"home"
 }
 send -- "exit\r"
 after 100
 
-puts "\n"
+puts "\nall done\n"

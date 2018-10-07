@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -22,11 +22,12 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"blacklist /dev/kmsg"
+	"blacklist /proc/kmsg"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"blacklist /proc/kmsg"
+	"blacklist /usr/bin/su" {puts "Arch Linux";}
+	"blacklist /bin/su" {puts "Debian"}
 }
 after 100
 puts "\nall done\n"

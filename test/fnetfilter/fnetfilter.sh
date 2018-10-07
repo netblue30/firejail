@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2017 Firejail Authors
+# Copyright (C) 2014-2018 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
@@ -11,7 +11,7 @@ if [ -f /etc/debian_version ]; then
 	export PATH="$PATH:$libdir"
 fi
 
-export PATH="$PATH:/usr/lib/firejail"
+export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
 chmod 400 outlocked
 

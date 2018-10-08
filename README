@@ -149,6 +149,8 @@ Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
 crass (https://github.com/crass)
 	- extract_command_name fixes
+	- update appimage size calculation to newest code from libappimage
+	- firejail should look for processes with names exactly named
 curiosity-seeker (https://github.com/curiosity-seeker)
 	- tightening unbound and dnscrypt-proxy profiles
 	- correct and tighten QuiteRss profile
@@ -160,6 +162,7 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- added VirtualBox.profile
 	- various other profile fixes
 	- added digiKam profile
+	- write-protection for thumbnailer dir
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)

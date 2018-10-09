@@ -3,10 +3,9 @@ done: regression: fix whitelisting of symlinks to other home dirs, small improve
 done: tiny memleaks
 done: incomplete fix: whitelisting of symlinks to other home dirs
 done: mount empty home if macro can't be whitelisted
+done: AppArmor: Allow writing to removable media
+done: tests: skip audit.exp if tests are already running in a pid namespace
 
-todo: tests: skip audit.exp if tests are already running in a pid namespace (renerh)
-
-todo: AppArmor: Allow writing to removable media
 
 todo: configure.ac: set sysconfdir only if none was specified manually
 

@@ -20,7 +20,7 @@ send -- "stty -echo\r"
 after 100
 send --  "firejail --shutdown=shutdowntesting; echo done\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
+	timeout {puts "TESTING ERROR 1\n";exit}
 	"done"
 }
 sleep 5
@@ -28,15 +28,15 @@ sleep 5
 spawn $env(SHELL)
 send --  "firejail --list;echo done\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"shutdowntesting" {puts "TESTING ERROR 6\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"shutdowntesting" {puts "TESTING ERROR 3\n";exit}
 	"done"
 }
 sleep 1
 
 send --  "firejail --shutdown=sutdowntesting\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"cannot find sandbox sutdowntesting"
 }
 after 100

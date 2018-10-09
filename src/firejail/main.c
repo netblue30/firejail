@@ -868,6 +868,7 @@ int main(int argc, char **argv) {
 
 	// check if the user is allowed to use firejail
 	init_cfg(argc, argv);
+	assert(cfg.homedir);
 
 	// get starting timestamp, process --quiet
 	start_timestamp = getticks();
@@ -1480,7 +1481,7 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 
-			char *ppath = expand_home(argv[i] + 10, cfg.homedir);
+			char *ppath = expand_macros(argv[i] + 10);
 			if (!ppath)
 				errExit("strdup");
 

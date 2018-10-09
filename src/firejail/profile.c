@@ -1327,7 +1327,7 @@ void profile_read(const char *fname) {
 			char *newprofile = ptr + 8; // profile name
 
 			// expand ${HOME}/ in front of the new profile file
-			char *newprofile2 = expand_home(newprofile, cfg.homedir);
+			char *newprofile2 = expand_macros(newprofile);
 
 			// recursivity
 			profile_read((newprofile2)? newprofile2:newprofile);

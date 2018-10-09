@@ -257,8 +257,6 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 
 // blacklist files or directories by mounting empty files on top of them
 void fs_blacklist(void) {
-	char *homedir = cfg.homedir;
-	assert(homedir);
 	ProfileEntry *entry = cfg.profile;
 	if (!entry)
 		return;
@@ -335,7 +333,7 @@ void fs_blacklist(void) {
 				enames = calloc(2, sizeof(char *));
 				if (!enames)
 					errExit("calloc");
-				enames[0] = expand_home(entry->data + 12, homedir);
+				enames[0] = expand_macros(entry->data + 12);
 				assert(enames[1] == 0);
 			}
 
@@ -401,7 +399,7 @@ void fs_blacklist(void) {
 		}
 
 		// replace home macro in blacklist array
-		char *new_name = expand_home(ptr, homedir);
+		char *new_name = expand_macros(ptr);
 		ptr = new_name;
 
 		// expand path macro - look for the file in /usr/local/bin,  /usr/local/sbin, /bin, /usr/bin, /sbin and  /usr/sbin directories

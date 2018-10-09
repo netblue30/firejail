@@ -494,7 +494,7 @@ int arp_check(const char *dev, uint32_t destaddr);
 uint32_t arp_assign(const char *dev, Bridge *br);
 
 // macros.c
-char *expand_home(const char *path, const char *homedir);
+char *expand_macros(const char *path);
 char *resolve_macro(const char *name);
 void invalid_filename(const char *fname, int globbing);
 int is_macro(const char *name);

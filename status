@@ -1,3 +1,26 @@
+done: cleanup
+done: regression: fix whitelisting of symlinks to other home dirs, small improvements
+done: tiny memleaks
+done: incomplete fix: whitelisting of symlinks to other home dirs
+done: mount empty home if macro can't be whitelisted
+
+todo: tests: skip audit.exp if tests are already running in a pid namespace (renerh)
+
+todo: AppArmor: Allow writing to removable media
+
+todo: configure.ac: set sysconfdir only if none was specified manually
+
+todo: Firejail should look for processes with names exactly named "firejail
+
+todo: Update appimage size calculation to newest code from libappimage.
+
+todo: clean /run/user directory (smitsohu)
+	- firejail.h
+	-restrict_users.c
+
+
+
+
 Oct 9, 0.9.56.1, mainline merge
 
 Sep 26 mainline merge

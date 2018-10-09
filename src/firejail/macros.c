@@ -69,7 +69,7 @@ Macro macro[] = {
 };
 
 // return -1 if not found
-static int macro_id(const char *name) {
+int macro_id(const char *name) {
 	int i = 0;
 	while (macro[i].name != NULL) {
 		if (strcmp(name, macro[i].name) == 0)

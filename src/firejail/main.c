@@ -1486,8 +1486,33 @@ int main(int argc, char **argv) {
 			if (!ppath)
 				errExit("strdup");
 
-			profile_read(ppath);
-			custom_profile = 1;
+			if (access(ppath, R_OK)) {
+				char *ptr = ppath;
+				while (*ptr != '/' && *ptr != '.' && *ptr != '\0')
+					ptr++;
+				// profile path contains no / or . chars,
+				// assume its a profile name
+				if (*ptr != '\0') {
+					fprintf(stderr, "Error: inaccessible profile file: %s\n", ppath);
+					exit(1);
+				}
+				
+				// profile was not read in previously, try to see if
+				// we were given a profile name.
+				if (!profile_find_firejail(ppath, 1)) {
+					// do not fall through to default profile,
+					// because the user should be notified that
+					// given profile arg could not be used.
+					fprintf(stderr, "Error: no profile with name \"%s\" found.\n", ppath);
+					exit(1);
+				}
+				else
+					custom_profile = 1;
+			}
+			else {
+				profile_read(ppath);
+				custom_profile = 1;
+			}
 			free(ppath);
 		}
 		else if (strcmp(argv[i], "--noprofile") == 0) {
@@ -2328,21 +2353,8 @@ int main(int argc, char **argv) {
 
 
 	// load the profile
-	if (!arg_noprofile) {
-		if (!custom_profile) {
-			// look for a profile in ~/.config/firejail directory
-			char *usercfgdir;
-			if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
-				errExit("asprintf");
-			int rv = profile_find(cfg.command_name, usercfgdir);
-			free(usercfgdir);
-			custom_profile = rv;
-		}
-		if (!custom_profile) {
-			// look for a user profile in /etc/firejail directory
-			int rv = profile_find(cfg.command_name, SYSCONFDIR);
-			custom_profile = rv;
-		}
+	if (!arg_noprofile && !custom_profile) {
+		custom_profile = profile_find_firejail(cfg.command_name, 1);
 	}
 
 	// use default.profile as the default
@@ -2353,16 +2365,7 @@ int main(int argc, char **argv) {
 		if (arg_debug)
 			printf("Attempting to find %s.profile...\n", profile_name);
 
-		// look for the profile in ~/.config/firejail directory
-		char *usercfgdir;
-		if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
-			errExit("asprintf");
-		custom_profile = profile_find(profile_name, usercfgdir);
-		free(usercfgdir);
-
-		if (!custom_profile)
-			// look for the profile in /etc/firejail directory
-			custom_profile = profile_find(profile_name, SYSCONFDIR);
+		custom_profile = profile_find_firejail(profile_name, 1);
 
 		if (!custom_profile) {
 			fprintf(stderr, "Error: no default.profile installed\n");

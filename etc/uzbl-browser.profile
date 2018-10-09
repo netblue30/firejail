@@ -1,9 +1,9 @@
 # Firejail profile for uzbl-browser
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/uzbl-browser.local
+include uzbl-browser.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/uzbl
 noblacklist ${HOME}/.gnupg
@@ -15,10 +15,10 @@ noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.config/uzbl
 mkdir ${HOME}/.gnupg
@@ -29,7 +29,7 @@ whitelist ${HOME}/.config/uzbl
 whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.local/share/uzbl
 whitelist ${HOME}/.password-store
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

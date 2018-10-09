@@ -2,15 +2,15 @@
 # Description: IRC client for X similar to AmIRC
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/xchat.local
+include xchat.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/xchat
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-programs.inc
 
 caps.drop all
 nodvd

@@ -2,17 +2,17 @@
 # Description: Vi IMproved - enhanced vi editor
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/vim.local
+include vim.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo
 noblacklist ${HOME}/.vimrc
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 netfilter

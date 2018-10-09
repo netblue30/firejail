@@ -1,23 +1,23 @@
 # Firejail profile for signal-desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/signal-desktop.local
+include signal-desktop.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/Signal
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-passwdmgr.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
+include disable-passwdmgr.inc
 
 mkdir ${HOME}/.config/Signal
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/Signal
-include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

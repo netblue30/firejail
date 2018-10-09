@@ -2,15 +2,15 @@
 # Description: Internet Relay Chat (IRC) client
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/polari.local
+include polari.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/telepathy
 mkdir ${HOME}/.config/telepathy-account-widgets
@@ -24,7 +24,7 @@ whitelist ${HOME}/.local/share/Empathy
 whitelist ${HOME}/.local/share/TpLogger
 whitelist ${HOME}/.local/share/telepathy
 whitelist ${HOME}/.purple
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

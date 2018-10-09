@@ -2,19 +2,19 @@
 # Description: Notes application for the Xfce4 desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/xfce4-notes.local
+include xfce4-notes.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/xfce4/xfce4-notes.gtkrc
 noblacklist ${HOME}/.config/xfce4/xfce4-notes.rc
 noblacklist ${HOME}/.local/share/notes
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 netfilter

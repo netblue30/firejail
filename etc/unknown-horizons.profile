@@ -2,19 +2,19 @@
 # Description: 2D realtime strategy simulation
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/unknown-horizons.local
+include unknown-horizons.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.unknown-horizons
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.unknown-horizons
 whitelist ${HOME}/.unknown-horizons
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 nodvd

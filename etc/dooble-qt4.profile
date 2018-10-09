@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/dooble.profile
+include dooble.profile

@@ -4,4 +4,4 @@
 
 
 # Redirect
-include /etc/firejail/gzip.profile
+include gzip.profile

@@ -2,16 +2,16 @@
 # Description: Simple and scientific calculator
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/kcalc.local
+include kcalc.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkfile ${HOME}/.config/kcalcrc
 mkfile ${HOME}/.kde/share/config/kcalcrc
@@ -19,8 +19,8 @@ mkfile ${HOME}/.kde4/share/config/kcalcrc
 whitelist ${HOME}/.config/kcalcrc
 whitelist ${HOME}/.kde/share/config/kcalcrc
 whitelist ${HOME}/.kde4/share/config/kcalcrc
-include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

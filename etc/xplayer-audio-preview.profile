@@ -1,10 +1,10 @@
 # Firejail profile for xplayer-audio-preview
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/xplayer-audio-preview.local
+include xplayer-audio-preview.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 
 # Redirect
-include /etc/firejail/xplayer.profile
+include xplayer.profile

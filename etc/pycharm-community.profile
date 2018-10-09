@@ -1,9 +1,9 @@
 # Firejail profile for pycharm-community
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/pycharm-community.local
+include pycharm-community.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/snap
 noblacklist ${HOME}/.PyCharmCE*
@@ -15,10 +15,10 @@ noblacklist /usr/lib/java
 noblacklist /etc/java
 noblacklist /usr/share/java
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 machine-id

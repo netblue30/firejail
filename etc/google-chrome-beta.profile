@@ -1,9 +1,9 @@
 # Firejail profile for google-chrome-beta
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/google-chrome-beta.local
+include google-chrome-beta.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/google-chrome-beta
 noblacklist ${HOME}/.config/google-chrome-beta
@@ -14,4 +14,4 @@ whitelist ${HOME}/.cache/google-chrome-beta
 whitelist ${HOME}/.config/google-chrome-beta
 
 # Redirect
-include /etc/firejail/chromium-common.profile
+include chromium-common.profile

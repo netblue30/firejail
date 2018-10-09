@@ -1,9 +1,9 @@
 # Firejail profile for waterfox
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/waterfox.local
+include waterfox.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.cache/waterfox
@@ -25,4 +25,4 @@ whitelist ${HOME}/.waterfox
 #private-etc waterfox
 
 # Redirect
-include /etc/firejail/firefox-common.profile
+include firefox-common.profile

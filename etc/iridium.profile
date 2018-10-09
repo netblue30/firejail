@@ -1,9 +1,9 @@
 # Firejail profile for iridium
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/iridium.local
+include iridium.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/iridium
 noblacklist ${HOME}/.config/iridium
@@ -14,4 +14,4 @@ whitelist ${HOME}/.cache/iridium
 whitelist ${HOME}/.config/iridium
 
 # Redirect
-include /etc/firejail/chromium-common.profile
+include chromium-common.profile

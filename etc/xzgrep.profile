@@ -4,4 +4,4 @@
 
 
 # Redirect
-include /etc/firejail/cpio.profile
+include cpio.profile

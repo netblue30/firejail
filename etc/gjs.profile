@@ -2,9 +2,9 @@
 # Description: Mozilla-based javascript bindings for the GNOME platform
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/gjs.local
+include gjs.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
@@ -13,11 +13,11 @@ noblacklist ${HOME}/.cache/org.gnome.Books
 noblacklist ${HOME}/.config/libreoffice
 noblacklist ${HOME}/.local/share/gnome-photos
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 netfilter

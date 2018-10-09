@@ -2,9 +2,9 @@
 # Description: Universal document viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/okular.local
+include okular.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/okular
 noblacklist ${HOME}/.config/okularpartrc
@@ -18,14 +18,14 @@ noblacklist ${HOME}/.kde4/share/config/okularrc
 noblacklist ${HOME}/.local/share/okular
 noblacklist ${DOCUMENTS}
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-xdg.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-xdg.inc
 
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

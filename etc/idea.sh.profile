@@ -1,9 +1,9 @@
 # Firejail profile for idea.sh
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/idea.sh.local
+include idea.sh.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.IdeaIC*
 noblacklist ${HOME}/.android
@@ -16,9 +16,9 @@ noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 netfilter

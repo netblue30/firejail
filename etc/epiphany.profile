@@ -2,18 +2,18 @@
 # Description: Clone of Boulder Dash game
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/epiphany.local
+include epiphany.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/epiphany
 noblacklist ${HOME}/.config/epiphany
 noblacklist ${HOME}/.local/share/epiphany
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/epiphany
 mkdir ${HOME}/.config/epiphany
@@ -22,7 +22,7 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/epiphany
 whitelist ${HOME}/.config/epiphany
 whitelist ${HOME}/.local/share/epiphany
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

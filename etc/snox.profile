@@ -1,9 +1,9 @@
 # Firejail profile for snox
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/snox.local
+include snox.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/snox
 noblacklist ${HOME}/.config/snox
@@ -16,4 +16,4 @@ whitelist ${HOME}/.cache/snox
 whitelist ${HOME}/.config/snox
 
 # Redirect
-include /etc/firejail/chromium-common.profile
+include chromium-common.profile

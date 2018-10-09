@@ -5,4 +5,4 @@
 whitelist /opt/thunderbird-beta
 
 # Redirect
-include /etc/firejail/thunderbird.profile
+include thunderbird.profile

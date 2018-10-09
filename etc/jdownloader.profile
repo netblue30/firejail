@@ -1,10 +1,10 @@
 # Firejail profile for jdownloader
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/jdownloader.local
+include jdownloader.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 
 # Redirect
-include /etc/firejail/JDownloader.profile
+include JDownloader.profile

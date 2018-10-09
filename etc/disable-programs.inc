@@ -1,6 +1,6 @@
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/disable-programs.local
+include disable-programs.local
 
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Standard Notes Backups

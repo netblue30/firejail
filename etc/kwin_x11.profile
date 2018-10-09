@@ -1,22 +1,22 @@
 # Firejail profile for kwin_x11
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/kwin_x11.local
+include kwin_x11.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/kwin
 noblacklist ${HOME}/.config/kwinrc
 noblacklist ${HOME}/.config/kwinrulesrc
 noblacklist ${HOME}/.local/share/kwin
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

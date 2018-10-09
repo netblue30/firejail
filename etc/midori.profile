@@ -2,9 +2,9 @@
 # Description: Lightweight web browser
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/midori.local
+include midori.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/midori
 noblacklist ${HOME}/.local/share/midori
@@ -12,10 +12,10 @@ noblacklist ${HOME}/.local/share/midori
 # noblacklist ${HOME}/.local/share/webkitgtk
 noblacklist ${HOME}/.pki
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/midori
 mkdir ${HOME}/.config/midori
@@ -33,7 +33,7 @@ whitelist ${HOME}/.local/share/midori
 whitelist ${HOME}/.local/share/webkit
 whitelist ${HOME}/.local/share/webkitgtk
 whitelist ${HOME}/.pki
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

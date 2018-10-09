@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/openshot.profile
+include openshot.profile

@@ -4,4 +4,4 @@ quiet
 
 
 # Redirect
-include /etc/firejail/clamav.profile
+include clamav.profile

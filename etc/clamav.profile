@@ -3,9 +3,9 @@
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include /etc/firejail/clamav.local
+include clamav.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 caps.drop all
 ipc-namespace

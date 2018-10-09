@@ -2,13 +2,13 @@
 # Description: Standards-compliant, fast, light-weight and extensible window manager
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/openbox.local
+include openbox.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # all applications started in OpenBox will run in this profile
 noblacklist ${HOME}/.config/openbox
-include /etc/firejail/disable-common.inc
+include disable-common.inc
 
 caps.drop all
 netfilter

@@ -1,9 +1,9 @@
 # Firejail profile for cliqz
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/cliqz.local
+include cliqz.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/cliqz
 noblacklist ${HOME}/.config/cliqz
@@ -17,4 +17,4 @@ whitelist ${HOME}/.config/cliqz
 #private-etc cliqz
 
 # Redirect
-include /etc/firejail/firefox-common.profile
+include firefox-common.profile

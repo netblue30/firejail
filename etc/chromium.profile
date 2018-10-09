@@ -2,9 +2,9 @@
 # Description: A web browser built for speed, simplicity, and security
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/chromium.local
+include chromium.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/chromium
 noblacklist ${HOME}/.config/chromium
@@ -19,4 +19,4 @@ whitelist ${HOME}/.config/chromium-flags.conf
 # private-bin chromium,chromium-browser,chromedriver
 
 # Redirect
-include /etc/firejail/chromium-common.profile
+include chromium-common.profile

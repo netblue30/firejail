@@ -2,21 +2,21 @@
 # Description: 3D floor-tilting game
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/neverball.local
+include neverball.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.neverball
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.neverball
 whitelist ${HOME}/.neverball
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

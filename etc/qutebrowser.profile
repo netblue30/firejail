@@ -2,9 +2,9 @@
 # Description: Keyboard-driven, vim-like browser based on PyQt5
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/qutebrowser.local
+include qutebrowser.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/qutebrowser
 noblacklist ${HOME}/.config/qutebrowser
@@ -19,10 +19,10 @@ noblacklist /usr/lib/python3*
 # with >=llvm-4 mesa drivers need llvm stuff
 noblacklist /usr/lib/llvm*
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/qutebrowser
 mkdir ${HOME}/.config/qutebrowser
@@ -31,7 +31,7 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/qutebrowser
 whitelist ${HOME}/.config/qutebrowser
 whitelist ${HOME}/.local/share/qutebrowser
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

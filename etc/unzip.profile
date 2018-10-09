@@ -3,10 +3,10 @@
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include /etc/firejail/unzip.local
+include unzip.local
 # Persistent global definitions
 # added by included default.profile
-#include /etc/firejail/globals.local
+#include globals.local
 
 blacklist /tmp/.X11-unix
 
@@ -29,4 +29,4 @@ private-etc passwd,group,localtime
 # GNOME Shell integration (chrome-gnome-shell)
 noblacklist ${HOME}/.local/share/gnome-shell
 
-include /etc/firejail/default.profile
+include default.profile

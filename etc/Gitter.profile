@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/gitter.profile
+include gitter.profile

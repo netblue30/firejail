@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/fossamail.profile
+include fossamail.profile

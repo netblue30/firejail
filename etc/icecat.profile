@@ -1,9 +1,9 @@
 # Firejail profile for icecat
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/icecat.local
+include icecat.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
@@ -17,4 +17,4 @@ whitelist ${HOME}/.mozilla
 #private-etc icecat
 
 # Redirect
-include /etc/firejail/firefox-common.profile
+include firefox-common.profile

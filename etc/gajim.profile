@@ -2,9 +2,9 @@
 # Description: GTK+-based Jabber client
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/gajim.local
+include gajim.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/gajim
 noblacklist ${HOME}/.config/gajim
@@ -15,11 +15,11 @@ noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python3*
 noblacklist /usr/lib64/python3*
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.config/gajim
@@ -29,7 +29,7 @@ whitelist ${HOME}/.cache/gajim
 whitelist ${HOME}/.config/gajim
 whitelist ${HOME}/.local/share/gajim
 whitelist ${HOME}/Downloads
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

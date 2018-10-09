@@ -4,4 +4,4 @@
 
 
 # Redirect
-include /etc/firejail/Thunar.profile
+include Thunar.profile

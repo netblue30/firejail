@@ -2,21 +2,21 @@
 # Description: Powerful and easy to use e-book manager
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/calibre.local
+include calibre.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/calibre
 noblacklist ${HOME}/.config/calibre
 noblacklist ${DOCUMENTS}
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-xdg.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-xdg.inc
 
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

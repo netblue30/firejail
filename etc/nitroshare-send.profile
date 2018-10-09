@@ -4,4 +4,4 @@
 
 
 # Redirect
-include /etc/firejail/nitroshare.profile
+include nitroshare.profile

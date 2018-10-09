@@ -2,24 +2,24 @@
 # Description: Lightweight and fast web browser
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/netsurf.local
+include netsurf.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/netsurf
 noblacklist ${HOME}/.config/netsurf
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/netsurf
 mkdir ${HOME}/.config/netsurf
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/netsurf
 whitelist ${HOME}/.config/netsurf
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

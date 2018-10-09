@@ -4,4 +4,4 @@
 
 
 # Redirect
-include /etc/firejail/wireshark.profile
+include wireshark.profile

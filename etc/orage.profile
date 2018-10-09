@@ -2,19 +2,19 @@
 # Description: Calendar for Xfce Desktop Environment
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/orage.local
+include orage.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/orage
 noblacklist ${HOME}/.local/share/orage
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-xdg.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-xdg.inc
 
 caps.drop all
 netfilter

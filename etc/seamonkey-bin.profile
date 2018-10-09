@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/seamonkey.profile
+include seamonkey.profile

@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/gimp.profile
+include gimp.profile

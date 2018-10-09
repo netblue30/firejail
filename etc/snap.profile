@@ -2,16 +2,16 @@
 # Description: Location of genes from DNA sequence with hidden markov model
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/snap.local
+include snap.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # Generic Ubuntu snap application profile
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/snap
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc

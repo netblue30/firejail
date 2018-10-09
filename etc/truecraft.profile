@@ -1,24 +1,24 @@
 # Firejail profile for truecraft
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/truecraft.local
+include truecraft.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/mono
 noblacklist ${HOME}/.config/truecraft
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.config/mono
 mkdir ${HOME}/.config/truecraft
 whitelist ${HOME}/.config/mono
 whitelist ${HOME}/.config/truecraft
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 nodvd

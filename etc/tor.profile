@@ -2,9 +2,9 @@
 # Description: Anonymizing overlay network for TCP
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/tor.local
+include tor.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # How to use:
 # Create a script called anything (e.g. mytor)
@@ -17,12 +17,12 @@ include /etc/firejail/globals.local
 # You'll also likely want to disable the system service (if it exists)
 # Run mytor (or whatever you called the script above) whenever you want to start tor
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-xdg.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-xdg.inc
 
 caps.keep setuid,setgid,net_bind_service,dac_read_search
 ipc-namespace

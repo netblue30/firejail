@@ -2,9 +2,9 @@
 # Description: Feed/news/podcast client with plugin support
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/liferea.local
+include liferea.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/liferea
 noblacklist ${HOME}/.config/liferea
@@ -16,11 +16,11 @@ noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/liferea
 mkdir ${HOME}/.config/liferea
@@ -28,8 +28,8 @@ mkdir ${HOME}/.local/share/liferea
 whitelist ${HOME}/.cache/liferea
 whitelist ${HOME}/.config/liferea
 whitelist ${HOME}/.local/share/liferea
-include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

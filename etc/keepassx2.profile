@@ -3,4 +3,4 @@
 # This file is overwritten after every install/update
 
 # Redirects
-include /etc/firejail/keepassx.profile
+include keepassx.profile

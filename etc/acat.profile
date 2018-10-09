@@ -1,9 +1,9 @@
 # Firejail profile for acat
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/acat.local
+include acat.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # Redirect
-include /etc/firejail/atool.profile
+include atool.profile

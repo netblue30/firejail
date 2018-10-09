@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/cin.profile
+include cin.profile

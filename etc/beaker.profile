@@ -1,19 +1,19 @@
 # Firejail profile for beaker
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/beaker.local
+include beaker.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/Beaker Browser
 
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
+include disable-devel.inc
+include disable-interpreters.inc
 
 mkdir ${HOME}/.config/Beaker Browser
 whitelist ${HOME}/.config/Beaker Browser
 whitelist ${DOWNLOADS}
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 # Redirect
-include /etc/firejail/electron.profile
+include electron.profile

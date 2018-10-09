@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/bsdtar.profile
+include bsdtar.profile

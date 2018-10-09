@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/libreoffice.profile
+include libreoffice.profile

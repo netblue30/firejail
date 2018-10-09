@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/cyberfox.profile
+include cyberfox.profile

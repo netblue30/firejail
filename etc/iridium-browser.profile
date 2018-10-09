@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/iridium.profile
+include iridium.profile

@@ -1,9 +1,9 @@
 # Firejail profile for spotify
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/spotify.local
+include spotify.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 blacklist ${HOME}/.bashrc
 blacklist /lost+found
@@ -14,11 +14,11 @@ noblacklist ${HOME}/.cache/spotify
 noblacklist ${HOME}/.config/spotify
 noblacklist ${HOME}/.local/share/spotify
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/spotify
 mkdir ${HOME}/.config/spotify
@@ -26,8 +26,8 @@ mkdir ${HOME}/.local/share/spotify
 whitelist ${HOME}/.cache/spotify
 whitelist ${HOME}/.config/spotify
 whitelist ${HOME}/.local/share/spotify
-include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

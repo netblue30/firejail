@@ -1,16 +1,16 @@
 # Firejail profile for Visual Studio Code
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/code.local
+include code.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.vscode
 noblacklist ${HOME}/.config/Code
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 net none

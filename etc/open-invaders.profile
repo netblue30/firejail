@@ -2,21 +2,21 @@
 # Description: Space Invaders clone
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/open-invaders.local
+include open-invaders.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.openinvaders
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.openinvaders
 whitelist ${HOME}/.openinvaders
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 net none

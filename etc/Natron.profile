@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/natron.profile
+include natron.profile

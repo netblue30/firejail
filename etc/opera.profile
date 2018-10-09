@@ -2,9 +2,9 @@
 # Description: A fast and secure web browser
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/opera.local
+include opera.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/opera
 noblacklist ${HOME}/.config/opera
@@ -18,4 +18,4 @@ whitelist ${HOME}/.config/opera
 whitelist ${HOME}/.opera
 
 # Redirect
-include /etc/firejail/chromium-common.profile
+include chromium-common.profile

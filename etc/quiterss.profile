@@ -2,20 +2,20 @@
 # Description: RSS/Atom news feeds reader
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/quiterss.local
+include quiterss.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/QuiteRss
 noblacklist ${HOME}/.config/QuiteRss
 noblacklist ${HOME}/.config/QuiteRssrc
 noblacklist ${HOME}/.local/share/QuiteRss
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/QuiteRss
 mkdir ${HOME}/.config/QuiteRss
@@ -27,7 +27,7 @@ whitelist ${HOME}/.config/QuiteRssrc
 whitelist ${HOME}/.local/share/data/QuiteRss
 whitelist ${HOME}/.local/share/QuiteRss
 whitelist ${HOME}/quiterssfeeds.opml
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

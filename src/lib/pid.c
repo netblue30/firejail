@@ -359,7 +359,10 @@ void pid_read(pid_t mon_pid) {
 		char buf[PIDS_BUFLEN];
 		while (fgets(buf, PIDS_BUFLEN - 1, fp)) {
 			if (strncmp(buf, "Name:", 5) == 0) {
-				char *ptr = buf + 5;
+				char *ptr = strchr(buf, '\n');
+				if (ptr)
+					*ptr = '\0';
+				ptr = buf + 5;
 				while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
 					ptr++;
 				}
@@ -368,7 +371,7 @@ void pid_read(pid_t mon_pid) {
 					exit(1);
 				}
 
-				if ((strncmp(ptr, "firejail", 8) == 0) && (mon_pid == 0 || mon_pid == pid)) {
+				if ((strcmp(ptr, "firejail") == 0) && (mon_pid == 0 || mon_pid == pid)) {
 					if (pid_proc_cmdline_x11_xpra_xephyr(pid))
 						pids[pid].level = -1;
 					else

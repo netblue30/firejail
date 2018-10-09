@@ -1367,7 +1367,7 @@ void profile_read(const char *fname) {
 		if (ptr && strlen(ptr) == 6)
 			return;
 
-		fprintf(stderr, "Error: cannot access profile file\n");
+		fprintf(stderr, "Error: cannot access profile file: %s\n", fname);
 		exit(1);
 	}
 
@@ -1429,17 +1429,22 @@ void profile_read(const char *fname) {
 		if (strncmp(ptr, "include ", 8) == 0) {
 			include_level++;
 
-			// extract profile filename and new skip params
-			char *newprofile = ptr + 8; // profile name
+			// expand macros in front of the include profile file
+			char *newprofile = expand_macros(ptr + 8);
 
-			// expand ${HOME}/ in front of the new profile file
-			char *newprofile2 = expand_macros(newprofile);
+			char *ptr2 = newprofile;
+			while (*ptr2 != '/' && *ptr2 != '\0')
+				ptr2++;
+			// profile path contains no / chars, do a search
+			if (*ptr2 == '\0') {
+				profile_find_firejail(newprofile, 0);
+			}
+			else {
+				profile_read(newprofile);
+			}
 
-			// recursivity
-			profile_read((newprofile2)? newprofile2:newprofile);
 			include_level--;
-			if (newprofile2)
-				free(newprofile2);
+			free(newprofile);
 			free(ptr);
 			continue;
 		}

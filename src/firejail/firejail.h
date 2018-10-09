@@ -74,6 +74,7 @@
 
 #define RUN_WHITELIST_X11_DIR	"/run/firejail/mnt/orig-x11"
 #define RUN_WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"	// default home directory masking
+#define RUN_WHITELIST_RUN_DIR	"/run/firejail/mnt/orig-run"	// default run directory masking
 #define RUN_WHITELIST_HOME_USER_DIR	"/run/firejail/mnt/orig-home-user"	// home directory whitelisting
 #define RUN_WHITELIST_TMP_DIR	"/run/firejail/mnt/orig-tmp"
 #define RUN_WHITELIST_MEDIA_DIR	"/run/firejail/mnt/orig-media"

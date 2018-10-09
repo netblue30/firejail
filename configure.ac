@@ -136,7 +136,7 @@ AC_SUBST(HAVE_SECCOMP_H)
 
 # set sysconfdir
 if test "$prefix" = /usr; then
-	sysconfdir="/etc"
+	test "$sysconfdir" = '${prefix}/etc' && sysconfdir="/etc"
 fi
 
 AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \

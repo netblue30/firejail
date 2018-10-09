@@ -47,6 +47,9 @@ owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/orcexec.* w,
 
 owner /{,run/firejail/mnt/oroot/}{run,dev}/shm/** w,
 
+# Allow writing to removable media
+owner /{,var/}run/media/** w,
+
 # Allow logging Firejail blacklist violations to journal
 /{,var/}run/systemd/journal/socket w,
 /{,var/}run/systemd/journal/dev-log w,

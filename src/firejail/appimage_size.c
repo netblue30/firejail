@@ -18,6 +18,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 /*
+    This code borrows heavily from src/libappimage_shared/elf.c in libappimage
+ */
+/*
 Compile with:
 gcc elfsize.c -o elfsize
 Example:
@@ -74,7 +77,10 @@ static uint64_t file64_to_cpu(uint64_t val) {
 // return 0 if error
 static long unsigned int read_elf32(int fd) {
 	Elf32_Ehdr ehdr32;
+	Elf32_Shdr shdr32;
+	off_t last_shdr_offset;
 	ssize_t ret;
+	unsigned long sht_end, last_section_end;
 
 	ret = pread(fd, &ehdr32, sizeof(ehdr32), 0);
 	if (ret < 0 || (size_t)ret != sizeof(ehdr))
@@ -84,14 +90,25 @@ static long unsigned int read_elf32(int fd) {
 	ehdr.e_shentsize        = file16_to_cpu(ehdr32.e_shentsize);
 	ehdr.e_shnum            = file16_to_cpu(ehdr32.e_shnum);
 
-	return(ehdr.e_shoff + (ehdr.e_shentsize * ehdr.e_shnum));
+	last_shdr_offset = ehdr.e_shoff + (ehdr.e_shentsize * (ehdr.e_shnum - 1));
+	ret = pread(fd, &shdr32, sizeof(shdr32), last_shdr_offset);
+	if (ret < 0 || (size_t)ret != sizeof(shdr32))
+		return 0;
+
+	/* ELF ends either with the table of section headers (SHT) or with a section. */
+	sht_end = ehdr.e_shoff + (ehdr.e_shentsize * ehdr.e_shnum);
+	last_section_end = file64_to_cpu(shdr32.sh_offset) + file64_to_cpu(shdr32.sh_size);
+	return sht_end > last_section_end ? sht_end : last_section_end;
 }
 
 
 // return 0 if error
 static long unsigned int read_elf64(int fd) {
 	Elf64_Ehdr ehdr64;
+	Elf64_Shdr shdr64;
+	off_t last_shdr_offset;
 	ssize_t ret;
+	unsigned long sht_end, last_section_end;
 
 	ret = pread(fd, &ehdr64, sizeof(ehdr64), 0);
 	if (ret < 0 || (size_t)ret != sizeof(ehdr))
@@ -101,18 +118,21 @@ static long unsigned int read_elf64(int fd) {
 	ehdr.e_shentsize        = file16_to_cpu(ehdr64.e_shentsize);
 	ehdr.e_shnum            = file16_to_cpu(ehdr64.e_shnum);
 
-	return(ehdr.e_shoff + (ehdr.e_shentsize * ehdr.e_shnum));
+	last_shdr_offset = ehdr.e_shoff + (ehdr.e_shentsize * (ehdr.e_shnum - 1));
+	ret = pread(fd, &shdr64, sizeof(shdr64), last_shdr_offset);
+	if (ret < 0 || (size_t)ret != sizeof(shdr64))
+		return 0;
+
+	/* ELF ends either with the table of section headers (SHT) or with a section. */
+	sht_end = ehdr.e_shoff + (ehdr.e_shentsize * ehdr.e_shnum);
+	last_section_end = file64_to_cpu(shdr64.sh_offset) + file64_to_cpu(shdr64.sh_size);
+	return sht_end > last_section_end ? sht_end : last_section_end;
 }
 
 
 // return 0 if error
 // return 0 if this is not an appimgage2 file
 long unsigned int appimage2_size(const char *fname) {
-/* TODO, FIXME: This assumes that the section header table (SHT) is
-the last part of the ELF. This is usually the case but
-it could also be that the last section is the last part
-of the ELF. This should be checked for.
-*/
 	ssize_t ret;
 	int fd;
 	long unsigned int size = 0;

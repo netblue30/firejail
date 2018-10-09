@@ -6,10 +6,8 @@ done: mount empty home if macro can't be whitelisted
 done: AppArmor: Allow writing to removable media
 done: tests: skip audit.exp if tests are already running in a pid namespace
 done: configure.ac: set sysconfdir only if none was specified manually
-
-todo: Firejail should look for processes with names exactly named "firejail
-
-todo: Update appimage size calculation to newest code from libappimage.
+done: Firejail should look for processes with names exactly named "firejail
+done: Update appimage size calculation to newest code from libappimage.
 
 todo: clean /run/user directory (smitsohu)
 	- firejail.h

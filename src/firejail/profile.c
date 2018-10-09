@@ -65,12 +65,15 @@ int profile_find(const char *name, const char *dir, int add_ext) {
 
 // search and read the profile specified by name from firejail directories
 int profile_find_firejail(const char *name, int add_ext) {
+	int rv = 0;
 	// look for a profile in ~/.config/firejail directory
-	char *usercfgdir;
-	if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
-		errExit("asprintf");
-	int rv = profile_find(name, usercfgdir, add_ext);
-	free(usercfgdir);
+	if (checkcfg(CFG_USER_PROFILES)) {
+		char *usercfgdir;
+		if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		rv = profile_find(name, usercfgdir, add_ext);
+		free(usercfgdir);
+	}
 
 	if (!rv)
 		// look for a user profile in /etc/firejail directory

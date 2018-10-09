@@ -371,6 +371,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// user-profiles
+			else if (strncmp(ptr, "user-profiles ", 14) == 0) {
+				if (strcmp(ptr + 14, "yes") == 0)
+					cfg_val[CFG_USER_PROFILES] = 1;
+				else if (strcmp(ptr + 14, "no") == 0)
+					cfg_val[CFG_USER_PROFILES] = 0;
+				else
+					goto errout;
+			}
 			else
 				goto errout;
 

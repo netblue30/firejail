@@ -13,6 +13,7 @@ whitelist ${HOME}/.config/user-dirs.dirs
 read-only ${HOME}/.config/user-dirs.dirs
 whitelist ${HOME}/.drirc
 whitelist ${HOME}/.icons
+?HAS_APPIMAGE: whitelist ${HOME}/.local/share/appimagekit
 whitelist ${HOME}/.local/share/applications
 read-only ${HOME}/.local/share/applications
 whitelist ${HOME}/.local/share/icons

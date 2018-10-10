@@ -164,7 +164,7 @@ static char *usage_str =
 	"    --private-tmp - mount a tmpfs on top of /tmp directory.\n"
 	"    --private-opt=file,directory - build a new /opt in a temporary filesystem.\n"
 	"    --private-srv=file,directory - build a new /srv in a temporary filesystem.\n"
-	"    --profile=filename - use a custom profile.\n"
+	"    --profile=filename|profile_name - use a custom profile.\n"
 	"    --profile.print=name|pid - print the name of profile file.\n"
 	"    --profile-path=directory - use this directory to look for profile files.\n"
 	"    --protocol=protocol,protocol,protocol - enable protocol filter.\n"

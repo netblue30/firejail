@@ -55,6 +55,7 @@ blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
 blacklist ${HOME}/.config/Fritzing
 blacklist ${HOME}/.config/GIMP
+blacklist ${HOME}/.config/GitHub Desktop
 blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Google
 blacklist ${HOME}/.config/Google Play Music Desktop Player

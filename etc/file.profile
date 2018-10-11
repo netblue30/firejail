@@ -30,7 +30,7 @@ shell none
 tracelog
 x11 none
 
-private-bin file
+#private-bin file
 private-dev
 private-etc magic.mgc,magic,localtime
 private-lib

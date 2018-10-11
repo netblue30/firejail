@@ -252,6 +252,7 @@ blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dashcore
+blacklist ${HOME}/.devilspie
 blacklist ${HOME}/.dia
 blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dooble

@@ -114,6 +114,7 @@ blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge
+blacklist ${HOME}/.config/devilspie2
 blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/digikamrc
 blacklist ${HOME}/.config/discord

@@ -34,6 +34,6 @@ shell none
 tracelog
 
 # support compressed archives
-private-bin sh,bash,bsdtar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop,lz4,libarchive
+private-bin sh,bash,bsdcat,bsdcpio,bsdtar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop,lz4,libarchive
 private-dev
 private-etc passwd,group,localtime

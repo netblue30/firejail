@@ -66,6 +66,7 @@ blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/InSilmaril
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/Meltytech
+blacklist ${HOME}/.config/Min
 blacklist ${HOME}/.config/Mousepad
 blacklist ${HOME}/.config/Mumble
 blacklist ${HOME}/.config/MusE

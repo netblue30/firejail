@@ -131,3 +131,8 @@ firejail (0.9.56-LTS~rc1) baseline; urgency=low
 
 The new LTS branch is here: https://github.com/netblue30/firejail/tree/LTSbase
 
+# New profiles:
+
+QMediathekView, aria2c, Authenticator, checkbashisms, devilspie, devilspie2, easystroke, github-desktop, min,
+bsdcat, bsdcpio, bsdtar, lzmadec
+

@@ -32,6 +32,7 @@ blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
 blacklist ${HOME}/.anydesk
 blacklist ${HOME}/.arduino15
+blacklist ${HOME}/.aria2
 blacklist ${HOME}/.arm
 blacklist ${HOME}/.asunder_album_genre
 blacklist ${HOME}/.asunder_album_title

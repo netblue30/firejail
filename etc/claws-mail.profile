@@ -16,19 +16,24 @@ include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
+include /etc/firejail/whitelist-common.inc
+
 caps.drop all
 netfilter
+no3d
 nodvd
 nogroups
 nonewprivs
 noroot
 nosound
 notv
+nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
 shell none
 
+private-cache
 private-dev
 private-tmp
 

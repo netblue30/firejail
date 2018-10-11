@@ -1,3 +1,8 @@
+firejail (0.9.56.1) baseline; urgency=low
+  * work in progress
+  * --disable-mnt rework
+ -- netblue30 <netblue30@yahoo.com>  Thu, 11 Oct 2018 08:00:00 -0500
+
 firejail (0.9.56) baseline; urgency=low
   * modif: removed CFG_CHROOT_DESKTOP configuration option
   * modif: removed compile time --enable-network=restricted

@@ -98,4 +98,36 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 
 `````
-# Current development version: 0.9.57
+# Current development version: 0.9.56.1
+
+This is probably a bugfix release: fixes, small features, new profiles. If we end up implementing something major
+we'll switch to a regular 0.9.57 release.
+
+# New Long Term Support (LTS) version
+
+We are rebasing our Long Term Support branch of Firejail. The current LTS version (0.9.38.x) is more than two years old.
+The new version updates the code base to 0.9.56. We target a reduction of approx. 40% of the code by removing rarely
+used features (chroot, overlay, rlimits, cgroups), incomplete features (private-bin, private-lib),
+and a lot of instrumentation (build profile feature, tracing, auditing, etc). Sandbox-specific security features such as
+seccomp, capabilities, filesystem whitelist/blacklist and networking are updated and hardened.
+
+We have an rc1 release out, the final version will follow in the next few weeks:
+`````
+firejail (0.9.56-LTS~rc1) baseline; urgency=low
+  * code based on Firejail version 0.9.56
+  * much smaller code base for SUID executable
+  * command line options removed:
+     --audit, --build, --cgroup, --chroot, --get, --ls, --output,
+     --output-stderr, --overlay, --overlay-named, --overlay-tmpfs,
+     --overlay-clean, --private-home, --private-bin, --private-etc,
+     --private-opt, --private-srv, --put, --rlimit*, --trace, --tracelog,
+     --x11*, --xephyr*
+  * compile-time options: --enable-apparmor, --disable-seccomp,
+     --disable-globalcfg, --disable-network, --disable-userns,
+     --disable-whitelist, --disable-suid, --enable-fatal-warnings,
+     --enable-busybox-workaround
+ -- netblue30 <netblue30@yahoo.com>  Wed, 3 Oct 2018 08:00:00 -0500
+`````
+
+The new LTS branch is here: https://github.com/netblue30/firejail/tree/LTSbase
+

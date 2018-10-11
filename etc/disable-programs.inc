@@ -70,6 +70,7 @@ blacklist ${HOME}/.config/MuseScore
 blacklist ${HOME}/.config/MusicBrainz
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/Qlipper
+blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Rambox
@@ -360,6 +361,7 @@ blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Mumble
+blacklist ${HOME}/.local/share/QMediathekView
 blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet
 blacklist ${HOME}/.local/share/Steam

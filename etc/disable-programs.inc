@@ -47,6 +47,7 @@ blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/2048-qt
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
+blacklist ${HOME}/.config/Authenticator
 blacklist ${HOME}/.config/Beaker Browser
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/Clementine

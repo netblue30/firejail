@@ -35,7 +35,6 @@ private-cache
 private-dev
 private-etc magic.mgc,magic,localtime
 private-lib
-private-tmp
 
 memory-deny-write-execute
 noexec ${HOME}

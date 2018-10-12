@@ -11,7 +11,7 @@ include /etc/firejail/globals.local
 #   with its own profile, if it is sandboxed automatically.
 
 # noblacklist ${HOME}/.cache/krunner
-# noblacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite
+# noblacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite*
 # noblacklist ${HOME}/.config/chromium
 noblacklist ${HOME}/.config/krunnerrc
 noblacklist ${HOME}/.kde/share/config/krunnerrc
@@ -34,3 +34,5 @@ nonewprivs
 noroot
 protocol unix,inet,inet6
 seccomp
+
+# private-cache

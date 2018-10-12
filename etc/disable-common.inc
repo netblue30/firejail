@@ -317,9 +317,11 @@ blacklist /var/backup
 # cloud provider configuration
 blacklist ${HOME}/.aws
 blacklist ${HOME}/.boto
-blacklist /etc/boto.cfg
 blacklist ${HOME}/.config/gcloud
 blacklist ${HOME}/.kube
+blacklist ${HOME}/.passwd-s3fs
+blacklist ${HOME}/.s3cmd
+blacklist /etc/boto.cfg
 
 # system directories
 blacklist /sbin
@@ -391,14 +393,14 @@ blacklist /vmlinuz*
 # snapshot files
 blacklist /.snapshots
 
-# complement noexec ${HOME} and noexec /tmp
-noexec /tmp/.X11-unix
-
 # flatpak
-blacklist ${HOME}/*.config/flatpak
-blacklist ${HOME}/*.var
-blacklist ${HOME}/*.local/share/flatpak
-blacklist /var/lib/flatpak
+blacklist ${HOME}/.config/flatpak
+blacklist ${HOME}/.local/share/flatpak
+blacklist ${HOME}/.var
 blacklist /usr/share/flatpak
+blacklist /var/lib/flatpak
 # most of the time bwrap is SUID binary
 blacklist ${PATH}/bwrap
+
+# complement noexec ${HOME} and noexec /tmp
+noexec /tmp/.X11-unix

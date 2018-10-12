@@ -371,10 +371,10 @@ void fs_whitelist(void) {
 		new_name = expand_home(dataptr, cfg.homedir);
 		assert(new_name);
 
-		// skip command if resolving the macro was not successful
+		// mount empty home directory if resolving the macro was not successful
 		if (is_macro(new_name) && macro_id(new_name) > -1) {
-			// mount empty home directory and print a warning
-			if (!nowhitelist_flag && !arg_private) {
+			// no warning if home does not exist (e.g. in a chroot)
+			if (stat(cfg.homedir, &s) == 0 && !nowhitelist_flag && !arg_private) {
 				home_dir = 1;
 				if (!arg_quiet) {
 					fprintf(stderr, "***\n");

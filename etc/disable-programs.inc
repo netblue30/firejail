@@ -52,6 +52,7 @@ blacklist ${HOME}/.config/Beaker Browser
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/Clementine
 blacklist ${HOME}/.config/Code
+blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
@@ -458,6 +459,7 @@ blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.lv2
+blacklist ${HOME}/.masterpdfeditor
 blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3

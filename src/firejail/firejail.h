@@ -32,6 +32,7 @@
 #define RUN_FIREJAIL_DIR	"/run/firejail"
 #define RUN_FIREJAIL_APPIMAGE_DIR	"/run/firejail/appimage"
 #define RUN_FIREJAIL_NAME_DIR	"/run/firejail/name" // also used in src/lib/pid.c - todo: move it in a common place
+#define RUN_FIREJAIL_LIB_DIR		"/run/firejail/lib"
 #define RUN_FIREJAIL_X11_DIR	"/run/firejail/x11"
 #define RUN_FIREJAIL_NETWORK_DIR	"/run/firejail/network"
 #define RUN_FIREJAIL_BANDWIDTH_DIR	"/run/firejail/bandwidth"
@@ -790,16 +791,32 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 
 // sbox.c
 // programs
-#define PATH_FNET (LIBDIR "/firejail/fnet")
-#define PATH_FNETFILTER (LIBDIR "/firejail/fnetfilter")
+#define PATH_FNET_MAIN (LIBDIR "/firejail/fnet")		// when called from main thread
+#define PATH_FNET (RUN_FIREJAIL_LIB_DIR "/fnet")	// when called from sandbox thread
+
+//#define PATH_FNETFILTER (LIBDIR "/firejail/fnetfilter")
+#define PATH_FNETFILTER (RUN_FIREJAIL_LIB_DIR "/fnetfilter")
+
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FIREJAIL (PREFIX "/bin/firejail")
-#define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
+
+//#define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
+#define PATH_FSECCOMP ( RUN_FIREJAIL_LIB_DIR "/fseccomp")
+
+// FSEC_PRINT is run outside of sandbox by --seccomp.print
+// it is also run from inside the sandbox by --debug; in this case we do an access(filename, X_OK) test first
 #define PATH_FSEC_PRINT (LIBDIR "/firejail/fsec-print")
-#define PATH_FSEC_OPTIMIZE (LIBDIR "/firejail/fsec-optimize")
-#define PATH_FCOPY (LIBDIR "/firejail/fcopy")
+
+//#define PATH_FSEC_OPTIMIZE (LIBDIR "/firejail/fsec-optimize")
+#define PATH_FSEC_OPTIMIZE (RUN_FIREJAIL_LIB_DIR "/fsec-optimize")
+
+//#define PATH_FCOPY (LIBDIR "/firejail/fcopy")
+#define PATH_FCOPY (RUN_FIREJAIL_LIB_DIR "/fcopy")
+
 #define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"
-#define PATH_FLDD (LIBDIR "/firejail/fldd")
+
+//#define PATH_FLDD (LIBDIR "/firejail/fldd")
+#define PATH_FLDD (RUN_FIREJAIL_LIB_DIR "/fldd")
 
 // bitmapped filters for sbox_run
 #define SBOX_ROOT (1 << 0)			// run the sandbox as root

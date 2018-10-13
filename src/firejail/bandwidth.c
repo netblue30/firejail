@@ -406,17 +406,17 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	if (devname) {
 		if (strcmp(command, "set") == 0) {
 			if (asprintf(&cmd, "%s/firejail/fshaper.sh --%s %s %d %d",
-				LIBDIR, command, devname, down, up) == -1)
+				RUN_FIREJAIL_LIB_DIR, command, devname, down, up) == -1)
 				errExit("asprintf");
 		}
 		else {
 			if (asprintf(&cmd, "%s/firejail/fshaper.sh --%s %s",
-				LIBDIR, command, devname) == -1)
+				RUN_FIREJAIL_LIB_DIR, command, devname) == -1)
 				errExit("asprintf");
 		}
 	}
 	else {
-		if (asprintf(&cmd, "%s/firejail/fshaper.sh --%s", LIBDIR, command) == -1)
+		if (asprintf(&cmd, "%s/firejail/fshaper.sh --%s", RUN_FIREJAIL_LIB_DIR, command) == -1)
 			errExit("asprintf");
 	}
 	assert(cmd);

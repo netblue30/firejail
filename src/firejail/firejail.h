@@ -32,6 +32,7 @@
 #define RUN_FIREJAIL_DIR	"/run/firejail"
 #define RUN_FIREJAIL_APPIMAGE_DIR	"/run/firejail/appimage"
 #define RUN_FIREJAIL_NAME_DIR	"/run/firejail/name" // also used in src/lib/pid.c - todo: move it in a common place
+#define RUN_FIREJAIL_LIB_DIR		"/run/firejail/lib"
 #define RUN_FIREJAIL_X11_DIR	"/run/firejail/x11"
 #define RUN_FIREJAIL_NETWORK_DIR	"/run/firejail/network"
 #define RUN_FIREJAIL_BANDWIDTH_DIR	"/run/firejail/bandwidth"
@@ -62,11 +63,11 @@
 #define RUN_SECCOMP_MDWX	"/run/firejail/mnt/seccomp.mdwx"		// filter for memory-deny-write-execute
 #define RUN_SECCOMP_BLOCK_SECONDARY	"/run/firejail/mnt/seccomp.block_secondary"	// secondary arch blocking filter
 #define RUN_SECCOMP_POSTEXEC	"/run/firejail/mnt/seccomp.postexec"		// filter for post-exec library
-#define PATH_SECCOMP_DEFAULT (LIBDIR "/firejail/seccomp")			// default filter built during make
-#define PATH_SECCOMP_DEFAULT_DEBUG (LIBDIR "/firejail/seccomp.debug")	// default filter built during make
-#define PATH_SECCOMP_32 (LIBDIR "/firejail/seccomp.32")			// 32bit arch filter built during make
-#define PATH_SECCOMP_MDWX (LIBDIR "/firejail/seccomp.mdwx")		// filter for memory-deny-write-execute built during make
-#define PATH_SECCOMP_BLOCK_SECONDARY (LIBDIR "/firejail/seccomp.block_secondary")	// secondary arch blocking filter built during make
+#define PATH_SECCOMP_DEFAULT (RUN_FIREJAIL_LIB_DIR "/firejail/seccomp")			// default filter built during make
+#define PATH_SECCOMP_DEFAULT_DEBUG (RUN_FIREJAIL_LIB_DIR "/firejail/seccomp.debug")	// default filter built during make
+#define PATH_SECCOMP_32 (RUN_FIREJAIL_LIB_DIR "/firejail/seccomp.32")			// 32bit arch filter built during make
+#define PATH_SECCOMP_MDWX (RUN_FIREJAIL_LIB_DIR "/firejail/seccomp.mdwx")		// filter for memory-deny-write-execute built during make
+#define PATH_SECCOMP_BLOCK_SECONDARY (RUN_FIREJAIL_LIB_DIR "/firejail/seccomp.block_secondary")	// secondary arch blocking filter built during make
 
 
 #define RUN_DEV_DIR		"/run/firejail/mnt/dev"
@@ -790,16 +791,16 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 
 // sbox.c
 // programs
-#define PATH_FNET (LIBDIR "/firejail/fnet")
-#define PATH_FNETFILTER (LIBDIR "/firejail/fnetfilter")
+#define PATH_FNET (RUN_FIREJAIL_LIB_DIR "/firejail/fnet")
+#define PATH_FNETFILTER (RUN_FIREJAIL_LIB_DIR "/firejail/fnetfilter")
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FIREJAIL (PREFIX "/bin/firejail")
-#define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
-#define PATH_FSEC_PRINT (LIBDIR "/firejail/fsec-print")
-#define PATH_FSEC_OPTIMIZE (LIBDIR "/firejail/fsec-optimize")
-#define PATH_FCOPY (LIBDIR "/firejail/fcopy")
-#define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"
-#define PATH_FLDD (LIBDIR "/firejail/fldd")
+#define PATH_FSECCOMP (RUN_FIREJAIL_LIB_DIR "/firejail/fseccomp")
+#define PATH_FSEC_PRINT (RUN_FIREJAIL_LIB_DIR "/firejail/fsec-print")
+#define PATH_FSEC_OPTIMIZE (RUN_FIREJAIL_LIB_DIR "/firejail/fsec-optimize")
+#define PATH_FCOPY (RUN_FIREJAIL_LIB_DIR "/firejail/fcopy")
+#define SBOX_STDIN_FILE (RUN_MNT_DIR "/sbox_stdin")
+#define PATH_FLDD (RUN_FIREJAIL_LIB_DIR "/firejail/fldd")
 
 // bitmapped filters for sbox_run
 #define SBOX_ROOT (1 << 0)			// run the sandbox as root

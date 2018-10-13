@@ -560,13 +560,6 @@ char *clean_pathname(const char *path) {
 		// remove a trailing slash
 		if (j > 1 && rv[j - 1] == '/')
 			rv[j - 1] = '\0';
-
-		size_t new_len = strlen(rv);
-		if (new_len < len) {
-			rv = realloc(rv, new_len + 1);
-			if (!rv)
-				errExit("realloc");
-		}
 	}
 
 	return rv;

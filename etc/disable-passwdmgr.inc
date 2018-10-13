@@ -2,6 +2,7 @@
 # Persistent customizations should go in a .local file.
 include /etc/firejail/disable-passwdmgr.local
 
+blacklist ${HOME}/.config/Bitwarden
 blacklist ${HOME}/.config/KeePass
 blacklist ${HOME}/.config/keepass
 blacklist ${HOME}/.config/keepassx

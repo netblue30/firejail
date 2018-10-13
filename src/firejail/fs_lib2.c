@@ -38,6 +38,7 @@ typedef struct liblist_t {
 
 static LibList libc_list[] = {
 	{ "libselinux.so.", 0 },
+	{ "libapparmor.so.", 0},
 	{ "ld-linux-x86-64.so.", 0 },
 	{ "libanl.so.", 0 },
 	{ "libc.so.", 0 },

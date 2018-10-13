@@ -123,6 +123,8 @@ bn0785ac (https://github.com/bn0785ac)
 	- fix inox, add snox profile
 BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
+Brad Ackerman
+	- blacklist Bitwarden config in disable-passwdmgr.inc
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix
@@ -277,7 +279,13 @@ glitsj16 (https://github.com/glitsj16)
 	- profile fixes: file, strings, claws-mail,
 	- new profiles: QMediathekView, aria2c, Authenticator, checkbashisms
 	- new profiles: devilspie, devilspie2, easystroke, github-desktop, min
-	- new profiles: bsdcat, bsdcpio, bsdtar, lzmadec
+	- new profiles: bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat
+	- new profiles: lbzip2, lzcat, lzcmp, lzdiff, lzegrep, lzfgrep, lzgrep
+	- new profiles: lzless, lzma, lzmainfo, lzmore, unlzma, unxz, xzcat
+	- new profiles: xzcmp, xzdiff, xzegrep, xzfgrep, xzgrep, xzless, xzmore
+	- new profiles: lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh
+	- new profiles: nirtoshare-send, nitroshare-ui, mencoder, gnome-pie
+	- new profiles: masterpdfeditor
 graywolf (https://github.com/graywolf)
 	- spelling fix
 greigdp (https://github.com/greigdp)

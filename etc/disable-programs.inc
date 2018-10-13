@@ -52,6 +52,7 @@ blacklist ${HOME}/.config/Beaker Browser
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/Clementine
 blacklist ${HOME}/.config/Code
+blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
@@ -72,6 +73,7 @@ blacklist ${HOME}/.config/Mumble
 blacklist ${HOME}/.config/MusE
 blacklist ${HOME}/.config/MuseScore
 blacklist ${HOME}/.config/MusicBrainz
+blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QMediathekView
@@ -91,6 +93,7 @@ blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/arkrc
+blacklist ${HOME}/.config/artha.conf
 blacklist ${HOME}/.config/asunder
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
@@ -142,6 +145,7 @@ blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv
+blacklist ${HOME}/.config/gnome-pie
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
@@ -191,6 +195,7 @@ blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/nheko
+blacklist ${HOME}/.config/NitroShare
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/onionshare
@@ -458,6 +463,7 @@ blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.lv2
+blacklist ${HOME}/.masterpdfeditor
 blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3

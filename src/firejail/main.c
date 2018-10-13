@@ -838,7 +838,7 @@ static void run_builder(int argc, char **argv) {
 	assert(getenv("LD_PRELOAD") == NULL);
 	umask(orig_umask);
 
-	argv[0] = RUN_FIREJAIL_LIB_DIR "/firejail/fbuilder";
+	argv[0] = LIBDIR "/firejail/fbuilder";
 	execvp(argv[0], argv);
 
 	perror("execvp");
@@ -877,13 +877,6 @@ int main(int argc, char **argv) {
 	// cleanup at exit
 	EUID_ROOT();
 	atexit(clear_atexit);
-
-	// make private copy of mount namespace so that mounts in firejail do not
-	// propagate up to host
-	if (unshare(CLONE_NEWNS) != 0)
-		errExit("unshare");
-	if (mount(NULL, "/", NULL, MS_PRIVATE | MS_REC, NULL) != 0)
-		errExit("mount: make all mounts private");
 
 	// build /run/firejail directory structure
 	preproc_build_firejail_dir();
@@ -2123,7 +2116,7 @@ int main(int argc, char **argv) {
 		else if (strncmp(argv[i], "--timeout=", 10) == 0)
 			cfg.timeout = extract_timeout(argv[i] + 10);
 		else if (strcmp(argv[i], "--audit") == 0) {
-			arg_audit_prog = RUN_FIREJAIL_LIB_DIR "/firejail/faudit";
+			arg_audit_prog = LIBDIR "/firejail/faudit";
 			arg_audit = 1;
 		}
 		else if (strncmp(argv[i], "--audit=", 8) == 0) {

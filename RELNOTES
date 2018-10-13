@@ -3,7 +3,12 @@ firejail (0.9.56.1) baseline; urgency=low
   * --disable-mnt rework
   * new profiles: QMediathekView, aria2c, Authenticator, checkbashisms
   * new profiles: devilspie, devilspie2, easystroke, github-desktop, min
-  * new profiles: bsdcat, bsdcpio, bsdtar, lzmadec
+  * new profiles: bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat
+  * new profiles: lbzip2, lzcat, lzcmp, lzdiff, lzegrep, lzfgrep, lzgrep
+  * new profiles: lzless, lzma, lzmainfo, lzmore, unlzma, unxz, xzcat
+  * new profiles: xzcmp, xzdiff, xzegrep, xzfgrep, xzgrep, xzless, xzmore
+  * new profiles: lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh
+  * new profiles: nirtoshare-send, nitroshare-ui
  -- netblue30 <netblue30@yahoo.com>  Thu, 11 Oct 2018 08:00:00 -0500
 
 firejail (0.9.56) baseline; urgency=low

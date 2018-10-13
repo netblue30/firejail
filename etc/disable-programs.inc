@@ -73,6 +73,7 @@ blacklist ${HOME}/.config/Mumble
 blacklist ${HOME}/.config/MusE
 blacklist ${HOME}/.config/MuseScore
 blacklist ${HOME}/.config/MusicBrainz
+blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QMediathekView
@@ -92,6 +93,7 @@ blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/arkrc
+blacklist ${HOME}/.config/artha.conf
 blacklist ${HOME}/.config/asunder
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
@@ -192,6 +194,7 @@ blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/nheko
+blacklist ${HOME}/.config/NitroShare
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/onionshare

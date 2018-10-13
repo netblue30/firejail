@@ -6,6 +6,8 @@ include /etc/firejail/gnome-pie.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.config/gnome-pie
+
 #include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 #include /etc/firejail/disable-interpreters.inc

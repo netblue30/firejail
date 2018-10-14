@@ -2716,7 +2716,7 @@ Reading profile /home/netblue/icecat.profile
 .RS
 $ firejail --profile=icecat icecat-wrapper.sh
 .br
-Reading profile /home/netblue/icecat.profile
+Reading profile /home/netblue/.config/firejail/icecat.profile
 .br
 [...]
 .RE

@@ -444,6 +444,8 @@ Paul Moore <pmoore@redhat.com>
 	-src/fsec-print/print.c extracted from libseccomp software package
 Paupiah Yash (https://github.com/CaffeinatedStud)
 	- gzip  profile
+Pawel (https://github.com/grimskies)
+	- make --join return exit code of the invoked program
 Peter Millerchip (https://github.com/pmillerchip)
 	- memory allocation fix
 	- --private.keep to --private-home transition

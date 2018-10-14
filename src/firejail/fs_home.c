@@ -355,7 +355,7 @@ void fs_check_private_dir(void) {
 	invalid_filename(cfg.home_private, 0); // no globbing
 
 	// Expand the home directory
-	char *tmp = expand_home(cfg.home_private, cfg.homedir);
+	char *tmp = expand_macros(cfg.home_private);
 	cfg.home_private = realpath(tmp, NULL);
 	free(tmp);
 
@@ -378,7 +378,7 @@ static char *check_dir_or_file(const char *name) {
 		printf("Private home: checking %s\n", name);
 
 	// expand home directory
-	char *fname = expand_home(name, cfg.homedir);
+	char *fname = expand_macros(name);
 	assert(fname);
 
 	// If it doesn't start with '/', it must be relative to homedir

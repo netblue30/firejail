@@ -458,7 +458,8 @@ void fs_mnt(const int enforce);
 
 // profile.c
 // find and read the profile specified by name from dir directory
-int profile_find(const char *name, const char *dir);
+int profile_find(const char *name, const char *dir, int add_ext);
+int profile_find_firejail(const char *name, int add_ext);
 // read a profile file
 void profile_read(const char *fname);
 // check profile line; if line == 0, this was generated from a command line option
@@ -496,7 +497,7 @@ int arp_check(const char *dev, uint32_t destaddr);
 uint32_t arp_assign(const char *dev, Bridge *br);
 
 // macros.c
-char *expand_home(const char *path, const char *homedir);
+char *expand_macros(const char *path);
 char *resolve_macro(const char *name);
 void invalid_filename(const char *fname, int globbing);
 int is_macro(const char *name);

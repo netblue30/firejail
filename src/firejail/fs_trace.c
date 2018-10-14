@@ -51,7 +51,7 @@ void fs_trace(void) {
 	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "w");
 	if (!fp)
 		errExit("fopen");
-	const char *prefix = LIBDIR "/firejail";
+	const char *prefix = RUN_FIREJAIL_LIB_DIR;
 
 	if (arg_trace) {
 		fprintf(fp, "%s/libtrace.so\n", prefix);

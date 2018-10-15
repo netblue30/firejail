@@ -1379,6 +1379,16 @@ void fs_chroot(const char *rootdir) {
 	ASSERT_PERMS(rundir, 0, 0, 0755);
 	free(rundir);
 
+	// create /run/firejail/lib directory in chroot and mount it
+	if (asprintf(&rundir, "%s%s", rootdir, RUN_FIREJAIL_LIB_DIR) == -1)
+		errExit("asprintf");
+	if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+		errExit("mkdir");
+	ASSERT_PERMS(rundir, 0, 0, 0755);
+	if (mount(RUN_FIREJAIL_LIB_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind");
+	free(rundir);
+
 	// create /run/firejail/mnt directory in chroot and mount the current one
 	if (asprintf(&rundir, "%s%s", rootdir, RUN_MNT_DIR) == -1)
 		errExit("asprintf");

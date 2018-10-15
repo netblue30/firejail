@@ -192,9 +192,8 @@ char *resolve_macro(const char *name) {
 // directory (supplied).
 // The return value is allocated using malloc and must be freed by the caller.
 // The function returns NULL if there are any errors.
-char *expand_home(const char *path, const char *homedir) {
+char *expand_macros(const char *path) {
 	assert(path);
-	assert(homedir);
 
 	int called_as_root = 0;
 
@@ -210,14 +209,14 @@ char *expand_home(const char *path, const char *homedir) {
 	// Replace home macro
 	char *new_name = NULL;
 	if (strncmp(path, "${HOME}", 7) == 0) {
-		if (asprintf(&new_name, "%s%s", homedir, path + 7) == -1)
+		if (asprintf(&new_name, "%s%s", cfg.homedir, path + 7) == -1)
 			errExit("asprintf");
 		if(called_as_root)
 			EUID_ROOT();
 		return new_name;
 	}
 	else if (*path == '~') {
-		if (asprintf(&new_name, "%s%s", homedir, path + 1) == -1)
+		if (asprintf(&new_name, "%s%s", cfg.homedir, path + 1) == -1)
 			errExit("asprintf");
 		if(called_as_root)
 			EUID_ROOT();

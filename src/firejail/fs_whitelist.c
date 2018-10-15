@@ -368,7 +368,7 @@ void fs_whitelist(void) {
 		char *dataptr = (nowhitelist_flag)? entry->data + 12: entry->data + 10;
 
 		// replace ~/ or ${HOME} into /home/username or resolve macro
-		new_name = expand_home(dataptr, cfg.homedir);
+		new_name = expand_macros(dataptr);
 		assert(new_name);
 
 		// mount empty home directory if resolving the macro was not successful

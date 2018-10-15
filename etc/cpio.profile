@@ -24,6 +24,7 @@ nodvd
 nonewprivs
 nosound
 notv
+nou2f
 novideo
 seccomp
 shell none

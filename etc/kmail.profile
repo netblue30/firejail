@@ -46,6 +46,7 @@ nonewprivs
 noroot
 nosound
 notv
+nou2f
 novideo
 protocol unix,inet,inet6,netlink
 # we need to allow chroot, io_getevents, ioprio_set, io_setup, io_submit system calls

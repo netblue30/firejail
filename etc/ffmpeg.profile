@@ -22,6 +22,7 @@ nodbus
 nodvd
 nosound
 notv
+nou2f
 novideo
 nonewprivs
 noroot

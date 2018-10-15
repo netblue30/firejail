@@ -22,6 +22,7 @@ nogroups
 nonewprivs
 # nosound - disabled for knotify
 noroot
+nou2f
 novideo
 notv
 protocol unix,inet,inet6,netlink

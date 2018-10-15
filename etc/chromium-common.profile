@@ -27,6 +27,7 @@ nodbus
 nodvd
 nogroups
 notv
+nou2f
 shell none
 
 disable-mnt

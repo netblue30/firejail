@@ -27,6 +27,7 @@ nogroups
 #noroot
 nosound
 notv
+nou2f
 novideo
 
 # protocol command is built using seccomp; nonewprivs will kill it
@@ -47,5 +48,3 @@ private-tmp
 #memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
-
-

@@ -28,6 +28,7 @@ caps.drop all
 netfilter
 nodvd
 notv
+nou2f
 novideo
 nogroups
 nonewprivs

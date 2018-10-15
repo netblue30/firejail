@@ -25,6 +25,7 @@ nogroups
 nonewprivs
 noroot
 notv
+nou2f
 protocol unix
 seccomp
 shell none

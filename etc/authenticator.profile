@@ -30,8 +30,8 @@ nonewprivs
 noroot
 nosound
 notv
-# novideo
 nou2f
+# novideo
 protocol unix
 seccomp
 shell none

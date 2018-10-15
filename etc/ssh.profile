@@ -25,6 +25,7 @@ nonewprivs
 # noroot - see issue #1543
 nosound
 notv
+nou2f
 protocol unix,inet,inet6
 seccomp
 shell none

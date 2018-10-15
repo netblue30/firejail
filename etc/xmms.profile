@@ -21,6 +21,7 @@ no3d
 nonewprivs
 noroot
 notv
+nou2f
 novideo
 protocol unix,inet,inet6
 seccomp

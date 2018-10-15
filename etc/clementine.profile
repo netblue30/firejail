@@ -23,6 +23,7 @@ caps.drop all
 nonewprivs
 noroot
 notv
+nou2f
 novideo
 protocol unix,inet,inet6
 # blacklisting of ioprio_set system calls breaks clementine

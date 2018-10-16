@@ -25,26 +25,29 @@ extern char *xephyr_screen;
 #define MAX_READ 8192				  // line buffer for profile files
 
 // find and read the profile specified by name from dir directory
-int profile_find(const char *name, const char *dir) {
+int profile_find(const char *name, const char *dir, int add_ext) {
 	EUID_ASSERT();
 	assert(name);
 	assert(dir);
 
 	int rv = 0;
 	DIR *dp;
-	char *pname;
-	if (asprintf(&pname, "%s.profile", name) == -1)
-		errExit("asprintf");
+	char *pname = NULL;
+	if (add_ext)
+		if (asprintf(&pname, "%s.profile", name) == -1)
+			errExit("asprintf");
+		else
+			name = pname;
 
 	dp = opendir (dir);
 	if (dp != NULL) {
 		struct dirent *ep;
 		while ((ep = readdir(dp)) != NULL) {
-			if (strcmp(ep->d_name, pname) == 0) {
+			if (strcmp(ep->d_name, name) == 0) {
 				if (arg_debug)
 					printf("Found %s profile in %s directory\n", name, dir);
 				char *etcpname;
-				if (asprintf(&etcpname, "%s/%s", dir, pname) == -1)
+				if (asprintf(&etcpname, "%s/%s", dir, name) == -1)
 					errExit("asprintf");
 				profile_read(etcpname);
 				free(etcpname);
@@ -55,10 +58,26 @@ int profile_find(const char *name, const char *dir) {
 		(void) closedir (dp);
 	}
 
-	free(pname);
+	if (pname)
+		free(pname);
 	return rv;
 }
 
+// search and read the profile specified by name from firejail directories
+int profile_find_firejail(const char *name, int add_ext) {
+	// look for a profile in ~/.config/firejail directory
+	char *usercfgdir;
+	if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
+		errExit("asprintf");
+	int rv = profile_find(name, usercfgdir, add_ext);
+	free(usercfgdir);
+
+	if (!rv)
+		// look for a user profile in /etc/firejail directory
+		rv = profile_find(name, SYSCONFDIR, add_ext);
+
+	return rv;
+}
 
 //***************************************************
 // run-time profiles
@@ -1327,7 +1346,7 @@ void profile_read(const char *fname) {
 			char *newprofile = ptr + 8; // profile name
 
 			// expand ${HOME}/ in front of the new profile file
-			char *newprofile2 = expand_home(newprofile, cfg.homedir);
+			char *newprofile2 = expand_macros(newprofile);
 
 			// recursivity
 			profile_read((newprofile2)? newprofile2:newprofile);

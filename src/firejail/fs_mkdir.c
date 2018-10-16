@@ -60,7 +60,7 @@ void fs_mkdir(const char *name) {
 
 	// check directory name
 	invalid_filename(name, 0); // no globbing
-	char *expanded = expand_home(name, cfg.homedir);
+	char *expanded = expand_macros(name);
 	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0 &&
 	    strncmp(expanded, "/tmp", 4) != 0) {
 		fprintf(stderr, "Error: only directories in user home or /tmp are supported by mkdir\n");
@@ -100,7 +100,7 @@ void fs_mkfile(const char *name) {
 
 	// check file name
 	invalid_filename(name, 0); // no globbing
-	char *expanded = expand_home(name, cfg.homedir);
+	char *expanded = expand_macros(name);
 	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0 &&
 	    strncmp(expanded, "/tmp", 4) != 0) {
 		fprintf(stderr, "Error: only files in user home or /tmp are supported by mkfile\n");

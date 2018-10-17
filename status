@@ -1,5 +1,6 @@
-Oct 17, partial mainline merge
 
+Oct 12: full merge
+done: fs_whitelist: no warning if macro resolution fails because of missing…
 done: clean homedir pathname
 done: allow overriding of disable-mnt with noblacklist
 

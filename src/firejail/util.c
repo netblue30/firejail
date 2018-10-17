@@ -538,31 +538,34 @@ char *split_comma(char *str) {
 char *clean_pathname(const char *path) {
 	assert(path);
 	size_t len = strlen(path);
-	char *rv = calloc(len + 1, 1);
+	assert(len + 1 != 0 && path[len] == '\0');
+
+	char *rv = malloc(len + 1);
 	if (!rv)
-		errExit("calloc");
+		errExit("malloc");
+
 	if (len > 0) {
-		int i, j, cnt;
+		size_t i, j, cnt;
 		for (i = 0, j = 0, cnt = 0; i < len; i++) {
 			if (path[i] == '/')
 				cnt++;
 			else
 				cnt = 0;
+
 			if (cnt < 2) {
 				rv[j] = path[i];
 				j++;
 			}
 		}
+		rv[j] = '\0';
+
 		// remove a trailing slash
 		if (j > 1 && rv[j - 1] == '/')
 			rv[j - 1] = '\0';
-		size_t new_len = strlen(rv);
-		if (new_len < len) {
-			rv = realloc(rv, new_len + 1);
-			if (!rv)
-				errExit("realloc");
-		}
 	}
+	else
+		*rv = '\0';
+
 	return rv;
 }
 

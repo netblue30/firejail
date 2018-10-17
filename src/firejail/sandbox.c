@@ -530,14 +530,6 @@ static void enforce_filters(void) {
 #ifdef HAVE_SECCOMP
 	enforce_seccomp = 1;
 #endif
-	if (cfg.seccomp_list_drop) {
-		free(cfg.seccomp_list_drop);
-		cfg.seccomp_list_drop = NULL;
-	}
-	if (cfg.seccomp_list_keep) {
-		free(cfg.seccomp_list_keep);
-		cfg.seccomp_list_keep = NULL;
-	}
 
 	// disable all capabilities
 	if (arg_caps_default_filter || arg_caps_list)
@@ -547,8 +539,7 @@ static void enforce_filters(void) {
 	// drop all supplementary groups; /etc/group file inside chroot
 	// is controlled by a regular usr
 	arg_nogroups = 1;
-	fmessage("\n** Warning: dropping all Linux capabilities and enforcing  **\n");
-	fmessage("**                  default seccomp filter                 **\n\n");
+	fmessage("\n**     Warning: dropping all Linux capabilities     **\n");
 }
 
 int sandbox(void* sandbox_arg) {

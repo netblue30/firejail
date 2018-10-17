@@ -35,6 +35,7 @@ nonewprivs
 noroot
 # nosound - KWrite is using ALSA!
 notv
+nou2f
 novideo
 protocol unix
 seccomp

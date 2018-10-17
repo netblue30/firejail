@@ -28,6 +28,7 @@ nonewprivs
 noroot
 nosound
 notv
+nou2f
 novideo
 protocol unix
 # blacklisting of ioprio_set system calls breaks baloo_file

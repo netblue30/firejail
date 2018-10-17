@@ -55,6 +55,7 @@ nogroups
 nonewprivs
 noroot
 notv
+nou2f
 # novideo should be commented for VR
 novideo
 protocol unix,inet,inet6,netlink

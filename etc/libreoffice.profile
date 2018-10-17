@@ -36,6 +36,7 @@ nogroups
 #nonewprivs - fix for Ubuntu 18.04/Debian 10
 noroot
 notv
+nou2f
 #protocol unix,inet,inet6  - fix for Ubuntu 18.04/Debian 10
 #seccomp  - fix for Ubuntu 18.04/Debian 10
 shell none

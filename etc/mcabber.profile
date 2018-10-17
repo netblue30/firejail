@@ -22,6 +22,7 @@ nonewprivs
 noroot
 nosound
 notv
+nou2f
 novideo
 protocol inet,inet6
 seccomp

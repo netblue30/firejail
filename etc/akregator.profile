@@ -31,6 +31,7 @@ nogroups
 nonewprivs
 noroot
 notv
+nou2f
 novideo
 protocol unix,inet,inet6,netlink
 # chroot syscalls are needed for setting up the built-in sandbox

@@ -25,6 +25,7 @@ nonewprivs
 # noroot
 nosound
 notv
+nou2f
 novideo
 nonewprivs
 protocol unix

@@ -32,6 +32,7 @@ netfilter
 nogroups
 nonewprivs
 noroot
+nou2f
 protocol unix,inet,inet6,netlink
 seccomp
 shell none

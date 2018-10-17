@@ -18,6 +18,7 @@ nodbus
 nodvd
 nosound
 notv
+nou2f
 novideo
 shell none
 tracelog

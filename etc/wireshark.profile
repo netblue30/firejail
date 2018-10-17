@@ -36,6 +36,7 @@ no3d
 nodvd
 nosound
 notv
+nou2f
 novideo
 # protocol unix,inet,inet6,netlink
 # seccomp - breaks network traffic capture for unprivileged users

@@ -26,6 +26,7 @@ nodvd
 nogroups
 nosound
 notv
+nou2f
 novideo
 shell none
 tracelog

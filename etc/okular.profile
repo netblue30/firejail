@@ -39,6 +39,7 @@ nonewprivs
 noroot
 nosound
 notv
+nou2f
 novideo
 protocol unix
 seccomp

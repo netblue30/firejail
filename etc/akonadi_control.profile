@@ -42,6 +42,7 @@ nogroups
 noroot
 nosound
 notv
+nou2f
 novideo
 # protocol unix,inet,inet6
 # seccomp.drop @cpu-emulation,@debug,@obsolete,@privileged,@resources,add_key,fanotify_init,io_cancel,io_destroy,kcmp,keyctl,name_to_handle_at,ni_syscall,open_by_handle_at,personality,process_vm_readv,ptrace,remap_file_pages,request_key,syslog,umount,userfaultfd,vmsplice

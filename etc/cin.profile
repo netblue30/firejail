@@ -21,6 +21,7 @@ nodvd
 #nogroups
 nonewprivs
 notv
+nou2f
 noroot
 protocol unix
 

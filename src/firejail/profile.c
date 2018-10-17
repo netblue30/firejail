@@ -132,11 +132,98 @@ void profile_add_ignore(const char *str) {
 }
 
 
+int profile_check_conditional(char *ptr, int lineno, const char *fname) {
+	struct cond_t {
+		char *name;	// conditional name
+		size_t len;	// length of name
+		bool value;	// true if set
+	} conditionals[] = {
+		{"HAS_APPIMAGE", strlen("HAS_APPIMAGE"), arg_appimage!=0},
+		NULL
+	}, *cond = conditionals;
+	char *tmp = ptr, *msg = NULL;
+
+	if (*ptr++ != '?')
+		return 1;
+
+	while (cond->name) {
+		// continue if not this conditional
+		if (strncmp(ptr, cond->name, cond->len) != 0) {
+			cond++;
+			continue;
+		}
+		ptr += cond->len;
+
+		if (*ptr == ' ')
+			ptr++;
+		if (*ptr++ != ':') {
+			msg = "invalid syntax: colon must come after conditional";
+			ptr = tmp;
+			goto error;
+		}
+		if (*ptr == '\0') {
+			msg = "invalid conditional line: no profile line after conditional";
+			ptr = tmp;
+			goto error;
+		}
+		if (*ptr == ' ')
+			ptr++;
+
+		// if set, continue processing statement in caller
+		if (cond->value) {
+			// move ptr to start of profile line
+			ptr = strdup(ptr);
+			if (!ptr)
+				errExit("strdup");
+
+			// check that the profile line does not contain either
+			// quiet or include directives
+			if ((strncmp(ptr, "quiet", 5) == 0) ||
+			    (strncmp(ptr, "include", 7) == 0)) {
+				msg = "invalid profile line: quiet and include not allowed in conditionals";
+				ptr = tmp;
+				goto error;
+			}
+			free(tmp);
+
+			// verify syntax, exit in case of error
+			if (profile_check_line(ptr, lineno, fname))
+				profile_add(ptr);
+		}
+		// tell caller to ignore
+		return 0;
+	}
+
+	tmp = ptr;
+	// get the conditional used
+	while (*tmp != ':' && *tmp != '\0')
+		tmp++;
+	*tmp = '\0';
+
+	// this was a '?' prefix, but didn't match any of the conditionals
+	msg = "invalid/unsupported conditional";
+
+error:
+	fprintf(stderr, "Error: %s (\"%s\"", msg, ptr);
+	if (lineno == 0) ;
+	else if (fname != NULL)
+		fprintf(stderr, " on line %d in %s", lineno, fname);
+	else
+		fprintf(stderr, " on line %d in the custom profile", lineno);
+	fprintf(stderr, ")\n");
+	exit(1);
+}
+
+
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
 int profile_check_line(char *ptr, int lineno, const char *fname) {
 	EUID_ASSERT();
+
+	// check and process conditional profile lines
+	if (profile_check_conditional(ptr, lineno, fname) == 0)
+		return 0;
 
 	// check ignore list
 	if (is_in_ignore_list(ptr))

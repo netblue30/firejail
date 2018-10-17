@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/krita.profile
+include krita.profile

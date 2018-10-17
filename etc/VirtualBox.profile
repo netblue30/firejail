@@ -4,4 +4,4 @@
 
 
 # Redirect
-include /etc/firejail/virtualbox.profile
+include virtualbox.profile

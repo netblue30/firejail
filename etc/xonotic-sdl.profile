@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/xonotic.profile
+include xonotic.profile

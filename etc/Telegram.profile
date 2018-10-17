@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/telegram.profile
+include telegram.profile

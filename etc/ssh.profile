@@ -3,17 +3,17 @@
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include /etc/firejail/ssh.local
+include ssh.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist /etc/ssh
 noblacklist /tmp/ssh-*
 noblacklist ${HOME}/.ssh
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 ipc-namespace

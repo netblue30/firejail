@@ -2,9 +2,9 @@
 # Description: Full featured graphical email client
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/kmail.local
+include kmail.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # kmail has problems launching akonadi in debian and ubuntu.
 # one solution is to have akonadi already running when kmail is started
@@ -29,13 +29,13 @@ noblacklist ${HOME}/.local/share/local-mail
 noblacklist ${HOME}/.local/share/notes
 noblacklist /tmp/akonadi-*
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-var-common.inc
 
 # apparmor
 caps.drop all

@@ -2,14 +2,14 @@
 # Description: Fast, light and extensible chat client
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/weechat.local
+include weechat.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.weechat
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-programs.inc
 
 caps.drop all
 netfilter

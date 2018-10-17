@@ -2,16 +2,16 @@
 # Description: Free command line video decoding, encoding and filtering tool
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/mencoder.local
+include mencoder.local
 # Persistent global definitions
 # added by included profile
-#include /etc/firejail/globals.local
+#include globals.local
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 net none
 no3d
@@ -25,4 +25,4 @@ shell none
 
 private-bin mencoder
 
-include /etc/firejail/mplayer.profile
+include mplayer.profile

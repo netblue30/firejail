@@ -4,4 +4,4 @@
 
 
 # Redirect
-include /etc/firejail/xzdec.profile
+include xzdec.profile

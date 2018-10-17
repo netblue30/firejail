@@ -2,9 +2,9 @@
 # Description: File manager with an ncurses frontend written in Python
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/ranger.local
+include ranger.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/ranger
 
@@ -20,11 +20,11 @@ noblacklist ${PATH}/perl
 noblacklist /usr/lib/perl*
 noblacklist /usr/share/perl*
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 net none

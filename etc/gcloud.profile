@@ -1,17 +1,17 @@
 # Firejail profile for gcloud
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/gcloud.local
+include gcloud.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.boto
 noblacklist ${HOME}/.config/gcloud
 noblacklist /var/run/docker.sock
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-programs.inc
 
 apparmor
 caps.drop all

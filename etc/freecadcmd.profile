@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/freecad.profile
+include freecad.profile

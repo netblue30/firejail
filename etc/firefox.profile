@@ -2,9 +2,9 @@
 # Description: Safe and easy web browser from Mozilla
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/firefox.local
+include firefox.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
@@ -20,4 +20,4 @@ whitelist ${HOME}/.mozilla
 #private-etc firefox
 
 # Redirect
-include /etc/firejail/firefox-common.profile
+include firefox-common.profile

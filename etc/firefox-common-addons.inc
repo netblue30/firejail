@@ -1,6 +1,6 @@
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/firefox-common-addons.local
+include firefox-common-addons.local
 
 noblacklist ${HOME}/.config/kgetrc
 noblacklist ${HOME}/.config/okularpartrc

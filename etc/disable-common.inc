@@ -1,6 +1,6 @@
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include /etc/firejail/disable-common.local
+include disable-common.local
 
 # History files in $HOME and clipboard managers
 blacklist-nolog ${HOME}/.*_history

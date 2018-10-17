@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/mate-calc.profile
+include mate-calc.profile

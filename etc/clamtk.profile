@@ -1,9 +1,9 @@
 # Firejail profile for clamtk
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/clamtk.local
+include clamtk.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 caps.drop all
 ipc-namespace

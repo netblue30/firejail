@@ -1,9 +1,9 @@
 # Firejail profile for brave
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/brave.local
+include brave.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/brave
 # brave uses gpg for built-in password manager
@@ -17,4 +17,4 @@ whitelist ${HOME}/.gnupg
 ignore noexec /tmp
 
 # Redirect
-include /etc/firejail/chromium-common.profile
+include chromium-common.profile

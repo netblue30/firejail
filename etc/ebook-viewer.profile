@@ -5,4 +5,4 @@ net none
 nodbus
 
 # Redirect
-include /etc/firejail/calibre.profile
+include calibre.profile

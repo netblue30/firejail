@@ -1,26 +1,26 @@
 # Firejail profile for firefox-common
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/firefox-common.local
+include firefox-common.local
 # Persistent global definitions
 # already included by caller profile
-#include /etc/firejail/globals.local
+#include globals.local
 
 # uncomment the following line to allow access to common programs/addons/plugins
-#include /etc/firejail/firefox-common-addons.inc
+#include firefox-common-addons.inc
 
 noblacklist ${HOME}/.pki
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.pki
-include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

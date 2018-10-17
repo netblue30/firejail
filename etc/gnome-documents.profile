@@ -2,21 +2,21 @@
 # Description: Document manager for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/gnome-documents.local
+include gnome-documents.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
 noblacklist ${HOME}/.config/libreoffice
 noblacklist ${DOCUMENTS}
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-xdg.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-xdg.inc
 
 caps.drop all
 netfilter

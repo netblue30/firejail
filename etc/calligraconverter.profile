@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/calligra.profile
+include calligra.profile

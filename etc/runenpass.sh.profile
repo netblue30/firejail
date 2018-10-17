@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/enpass.profile
+include enpass.profile

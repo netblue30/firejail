@@ -3,19 +3,19 @@
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include /etc/firejail/wget.local
+include wget.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 blacklist /tmp/.X11-unix
 
 noblacklist ${HOME}/.wgetrc
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

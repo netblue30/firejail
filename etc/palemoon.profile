@@ -1,9 +1,9 @@
 # Firejail profile for palemoon
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/palemoon.local
+include palemoon.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/moonchild productions/pale moon
 noblacklist ${HOME}/.moonchild productions/pale moon
@@ -23,4 +23,4 @@ seccomp
 #private-opt palemoon
 
 # Redirect
-include /etc/firejail/firefox-common.profile
+include firefox-common.profile

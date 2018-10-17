@@ -2,25 +2,25 @@
 # Description: Nintendo64 Emulator
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/mupen64plus.local
+include mupen64plus.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/mupen64plus
 noblacklist ${HOME}/.local/share/mupen64plus
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-passwdmgr.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 # you'll need to manually whitelist ROM files
 mkdir ${HOME}/.config/mupen64plus
 mkdir ${HOME}/.local/share/mupen64plus
 whitelist ${HOME}/.config/mupen64plus/
 whitelist ${HOME}/.local/share/mupen64plus/
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 net none

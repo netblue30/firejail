@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/ardour5.profile
+include ardour5.profile

@@ -7,4 +7,4 @@ mkdir ${HOME}/.tor-browser-ko
 whitelist ${HOME}/.tor-browser-ko
 
 # Redirect
-include /etc/firejail/torbrowser-launcher.profile
+include torbrowser-launcher.profile

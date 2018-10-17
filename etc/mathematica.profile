@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/Mathematica.profile
+include Mathematica.profile

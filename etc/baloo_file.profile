@@ -1,9 +1,9 @@
 # Firejail profile for baloo_file
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/baloo_file.local
+include baloo_file.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/baloofilerc
 noblacklist ${HOME}/.kde/share/config/baloofilerc
@@ -12,13 +12,13 @@ noblacklist ${HOME}/.kde4/share/config/baloofilerc
 noblacklist ${HOME}/.kde4/share/config/baloorc
 noblacklist ${HOME}/.local/share/baloo
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 no3d

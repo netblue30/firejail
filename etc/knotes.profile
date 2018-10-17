@@ -2,9 +2,9 @@
 # Description: Sticky notes application
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/knotes.local
+include knotes.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # knotes has problems launching akonadi in debian and ubuntu.
 # one solution is to have akonadi already running when knotes is started
@@ -14,4 +14,4 @@ noblacklist ${HOME}/.local/share/knotes
 
 
 # Redirect
-include /etc/firejail/kmail.profile
+include kmail.profile

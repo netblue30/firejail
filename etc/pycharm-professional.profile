@@ -4,4 +4,4 @@
 noblacklist ${HOME}/.PyCharm*
 
 # Redirect
-include /etc/firejail/pycharm-community.profile
+include pycharm-community.profile

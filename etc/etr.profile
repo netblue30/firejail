@@ -1,20 +1,20 @@
 # Firejail profile for etr
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/etr.local
+include etr.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.etr
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.etr
 whitelist ${HOME}/.etr
-include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 net none

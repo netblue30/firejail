@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/google-chrome.profile
+include google-chrome.profile

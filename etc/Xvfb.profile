@@ -2,9 +2,9 @@
 # Description: Virtual Framebuffer 'fake' X server
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/Xvfb.local
+include Xvfb.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 #
 # This profile will sandbox Xvfb server itself when used with firejail --x11=xvfb.
@@ -20,7 +20,7 @@ include /etc/firejail/globals.local
 blacklist /media
 
 whitelist /var/lib/xkb
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 # Xvfb needs to be allowed access to the abstract Unix socket namespace.

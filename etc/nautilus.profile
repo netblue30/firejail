@@ -2,9 +2,9 @@
 # Description: File manager and graphical shell for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/nautilus.local
+include nautilus.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # Nautilus is started by systemd on most systems. Therefore it is not firejailed by default. Since there
 # is already a nautilus process running on gnome desktops firejail will have no effect.
@@ -20,11 +20,11 @@ noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-# include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+# include disable-programs.inc
 
 caps.drop all
 netfilter

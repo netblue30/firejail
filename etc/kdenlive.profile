@@ -2,19 +2,19 @@
 # Description: Non-linear video editor
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/kdenlive.local
+include kdenlive.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/kdenlive
 noblacklist ${HOME}/.config/kdenliverc
 noblacklist ${HOME}/.local/share/kdenlive
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 apparmor
 caps.drop all

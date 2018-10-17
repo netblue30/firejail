@@ -2,9 +2,9 @@
 # Description: Email, RSS and newsgroup client with integrated spam filter
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/thunderbird.local
+include thunderbird.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 # Users have thunderbird set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories
@@ -38,4 +38,4 @@ writable-run-user
 
 # allow browsers
 # Redirect
-include /etc/firejail/firefox.profile
+include firefox.profile

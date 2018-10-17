@@ -1,10 +1,10 @@
 # Firejail profile for vimtutor
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/vimtutor.local
+include vimtutor.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 
 # Redirect
-include /etc/firejail/vim.profile
+include vim.profile

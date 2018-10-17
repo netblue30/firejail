@@ -1,9 +1,9 @@
 # Firejail profile for discord-canary
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/discord-canary.local
+include discord-canary.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 
 noblacklist ${HOME}/.config/discordcanary
@@ -15,4 +15,4 @@ private-bin discord-canary
 private-opt discord-canary
 
 #Redirect
-include /etc/firejail/discord-common.profile
+include discord-common.profile

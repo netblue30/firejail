@@ -2,23 +2,23 @@
 # Description: Document viewer for files like PDF and Postscript. X-Apps Project.
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/xreader.local
+include xreader.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/xreader
 noblacklist ${HOME}/.config/xreader
 noblacklist ${DOCUMENTS}
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-xdg.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-xdg.inc
 
 # Breaks xreader on Mint 18.3
-# include /etc/firejail/whitelist-var-common.inc
+# include whitelist-var-common.inc
 
 # apparmor
 caps.drop all

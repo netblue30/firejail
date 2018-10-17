@@ -2,24 +2,24 @@
 # Description: GNOME Twitch app for watching Twitch.tv streams without a browser or flash
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/gnome-twitch.local
+include gnome-twitch.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/gnome-twitch
 noblacklist ${HOME}/.local/share/gnome-twitch
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/gnome-twitch
 mkdir ${HOME}/.local/share/gnome-twitch
 whitelist ${HOME}/.cache/gnome-twitch
 whitelist ${HOME}/.local/share/gnome-twitch
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 nodvd

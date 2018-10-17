@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/tar.profile
+include tar.profile

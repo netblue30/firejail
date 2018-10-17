@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/handbrake.profile
+include handbrake.profile

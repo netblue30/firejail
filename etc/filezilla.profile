@@ -2,9 +2,9 @@
 # Description: Full-featured graphical FTP/FTPS/SFTP client
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/filezilla.local
+include filezilla.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/filezilla
 noblacklist ${HOME}/.filezilla
@@ -15,11 +15,11 @@ noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/whitelist-var-common.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-programs.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/vivaldi.profile
+include vivaldi.profile

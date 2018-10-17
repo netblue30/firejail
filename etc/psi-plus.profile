@@ -2,18 +2,18 @@
 # Description: Qt-based XMPP/Jabber client
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/psi-plus.local
+include psi-plus.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/psi+
 noblacklist ${HOME}/.local/share/psi+
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkdir ${HOME}/.cache/psi+
 mkdir ${HOME}/.config/psi+
@@ -22,7 +22,7 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/psi+
 whitelist ${HOME}/.config/psi+
 whitelist ${HOME}/.local/share/psi+
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

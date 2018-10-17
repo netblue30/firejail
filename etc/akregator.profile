@@ -2,26 +2,26 @@
 # Description: RSS/Atom feed aggregator
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/akregator.local
+include akregator.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/akregatorrc
 noblacklist ${HOME}/.local/share/akregator
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 mkfile ${HOME}/.config/akregatorrc
 mkdir ${HOME}/.local/share/akregator
 whitelist ${HOME}/.config/akregatorrc
 whitelist ${HOME}/.local/share/akregator
 whitelist ${HOME}/.local/share/kssl
-include /etc/firejail/whitelist-common.inc
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

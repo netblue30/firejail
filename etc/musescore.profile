@@ -2,9 +2,9 @@
 # Description: Free music composition and notation software
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/musescore.local
+include musescore.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/MusE
 noblacklist ${HOME}/.config/MuseScore
@@ -13,14 +13,14 @@ noblacklist ${HOME}/.local/share/data/MuseScore
 noblacklist ${DOCUMENTS}
 noblacklist ${MUSIC}
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-xdg.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-xdg.inc
 
-include /etc/firejail/whitelist-var-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

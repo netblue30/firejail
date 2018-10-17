@@ -2,24 +2,24 @@
 # Description: Environment for Bible reading, study, and research
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/xiphos.local
+include xiphos.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 blacklist ${HOME}/.bashrc
 
 noblacklist ${HOME}/.sword
 noblacklist ${HOME}/.xiphos
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 whitelist ${HOME}/.sword
 whitelist ${HOME}/.xiphos
-include /etc/firejail/whitelist-common.inc
+include whitelist-common.inc
 
 caps.drop all
 netfilter

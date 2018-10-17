@@ -1,10 +1,10 @@
 # Firejail profile for firefox-esr
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/firefox-esr.local
+include firefox-esr.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 
 # Redirect
-include /etc/firejail/firefox.profile
+include firefox.profile

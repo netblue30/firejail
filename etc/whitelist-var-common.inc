@@ -1,5 +1,5 @@
 # Local customizations come here
-include /etc/firejail/whitelist-var-common.local
+include whitelist-var-common.local
 
 # common /var whitelist for all profiles
 

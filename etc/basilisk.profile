@@ -1,9 +1,9 @@
 # Firejail profile for basilisk
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/basilisk.local
+include basilisk.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.cache/moonchild productions/basilisk
 noblacklist ${HOME}/.moonchild productions/basilisk
@@ -24,4 +24,4 @@ seccomp
 #private-opt basilisk
 
 # Redirect
-include /etc/firejail/firefox-common.profile
+include firefox-common.profile

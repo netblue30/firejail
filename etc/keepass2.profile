@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/keepass.profile
+include keepass.profile

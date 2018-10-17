@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/weechat.profile
+include weechat.profile

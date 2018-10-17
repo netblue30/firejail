@@ -3,4 +3,4 @@
 
 
 # Redirect
-include /etc/firejail/blender.profile
+include blender.profile

@@ -2,16 +2,16 @@
 # Description: A hackable text editor for the 21st Century
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/atom.local
+include atom.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 # net none

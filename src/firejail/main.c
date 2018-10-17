@@ -212,9 +212,8 @@ static void init_cfg(int argc, char **argv) {
 	// build home directory name
 	cfg.homedir = NULL;
 	if (pw->pw_dir != NULL) {
-		cfg.homedir = strdup(pw->pw_dir);
-		if (!cfg.homedir)
-			errExit("strdup");
+		cfg.homedir = clean_pathname(pw->pw_dir);
+		assert(cfg.homedir);
 	}
 	else {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);

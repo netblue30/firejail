@@ -1,4 +1,12 @@
-Oct 9, 0.9.56.1, mainline merge
+Oct 17, partial mainline merge
+
+done: clean homedir pathname
+done: allow overriding of disable-mnt with noblacklist
+
+
+
+
+Oct 9, 0.9.56.1, full mainline merge
 done: cleanup
 done: regression: fix whitelisting of symlinks to other home dirs, small improvements
 done: tiny memleaks

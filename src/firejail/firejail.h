@@ -479,6 +479,7 @@ int is_link(const char *fname);
 void trim_trailing_slash_or_dot(char *path);
 char *line_remove_spaces(const char *buf);
 char *split_comma(char *str);
+char *clean_pathname(const char *path);
 void check_unsigned(const char *str, const char *msg);
 int find_child(pid_t parent, pid_t *child);
 void check_private_dir(void);

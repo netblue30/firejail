@@ -1,11 +1,10 @@
 
+Oct 17: improve clean_pathname function
+
 Oct 12: full merge
 done: fs_whitelist: no warning if macro resolution fails because of missing…
 done: clean homedir pathname
 done: allow overriding of disable-mnt with noblacklist
-
-
-
 
 Oct 9, 0.9.56.1, full mainline merge
 done: cleanup

@@ -471,11 +471,13 @@ void trim_trailing_slash_or_dot(char *path) {
 char *line_remove_spaces(const char *buf) {
 	EUID_ASSERT();
 	assert(buf);
-	if (strlen(buf) == 0)
+	size_t len = strlen(buf);
+	if (len == 0)
 		return NULL;
+	assert(len + 1 != 0 && buf[len] == '\0');
 
 	// allocate memory for the new string
-	char *rv = malloc(strlen(buf) + 1);
+	char *rv = malloc(len + 1);
 	if (rv == NULL)
 		errExit("malloc");
 
@@ -539,12 +541,14 @@ char *split_comma(char *str) {
 char *clean_pathname(const char *path) {
 	assert(path);
 	size_t len = strlen(path);
-	char *rv = calloc(len + 1, 1);
+	assert(len + 1 != 0 && path[len] == '\0');
+
+	char *rv = malloc(len + 1);
 	if (!rv)
-		errExit("calloc");
+		errExit("malloc");
 
 	if (len > 0) {
-		int i, j, cnt;
+		size_t i, j, cnt;
 		for (i = 0, j = 0, cnt = 0; i < len; i++) {
 			if (path[i] == '/')
 				cnt++;
@@ -556,11 +560,14 @@ char *clean_pathname(const char *path) {
 				j++;
 			}
 		}
+		rv[j] = '\0';
 
 		// remove a trailing slash
 		if (j > 1 && rv[j - 1] == '/')
 			rv[j - 1] = '\0';
 	}
+	else
+		*rv = '\0';
 
 	return rv;
 }

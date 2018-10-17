@@ -794,8 +794,10 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// handle /mnt and /media
 	//****************************
-	if (arg_disable_mnt || checkcfg(CFG_DISABLE_MNT))
-		fs_mnt();
+	if (checkcfg(CFG_DISABLE_MNT))
+		fs_mnt(1);
+	else if (arg_disable_mnt)
+		fs_mnt(0);
 
 	//****************************
 	// apply the profile file

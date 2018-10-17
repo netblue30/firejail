@@ -545,11 +545,23 @@ void fs_noexec(const char *dir) {
 }
 
 // Disable /mnt, /media, /run/mount and /run/media access
-void fs_mnt(void) {
-	disable_file(BLACKLIST_FILE, "/mnt");
-	disable_file(BLACKLIST_FILE, "/media");
-	disable_file(BLACKLIST_FILE, "/run/mount");
-	disable_file(BLACKLIST_FILE, "//run/media");
+void fs_mnt(const int enforce) {
+	if (enforce) {
+		// disable-mnt set in firejail.config
+		// overriding with noblacklist is not possible in this case
+		disable_file(BLACKLIST_FILE, "/mnt");
+		disable_file(BLACKLIST_FILE, "/media");
+		disable_file(BLACKLIST_FILE, "/run/mount");
+		disable_file(BLACKLIST_FILE, "/run/media");
+	}
+	else {
+		EUID_USER();
+		profile_add("blacklist /mnt");
+		profile_add("blacklist /media");
+		profile_add("blacklist /run/mount");
+		profile_add("blacklist /run/media");
+		EUID_ROOT();
+	}
 }
 
 

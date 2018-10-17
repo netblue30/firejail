@@ -414,7 +414,7 @@ void fs_chroot(const char *rootdir);
 void fs_check_chroot_dir(const char *rootdir);
 void fs_private_tmp(void);
 void fs_private_cache(void);
-void fs_mnt(void);
+void fs_mnt(const int enforce);
 
 // profile.c
 // find and read the profile specified by name from dir directory

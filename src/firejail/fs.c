@@ -1195,73 +1195,78 @@ void fs_check_chroot_dir(const char *rootdir) {
 	}
 
 	// check /dev
-	fd = openat(parentfd, "dev", O_PATH|O_CLOEXEC);
+	char *dir = "dev";
+	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot open /dev in chroot directory\n");
-		exit(1);
+		if (errno == ENOENT)
+			goto error1;
+		else
+			goto error2;
 	}
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /dev should be a directory owned by root\n");
-		exit(1);
-	}
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
+		goto error3;
 	close(fd);
 
 	// check /var/tmp
-	fd = openat(parentfd, "var/tmp", O_PATH|O_CLOEXEC);
+	dir = "var/tmp";
+	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot open /var/tmp in chroot directory\n");
-		exit(1);
+		if (errno == ENOENT)
+			goto error1;
+		else
+			goto error2;
 	}
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /var/tmp should be a directory owned by root\n");
-		exit(1);
-	}
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
+		goto error3;
 	close(fd);
 
 	// check /proc
-	fd = openat(parentfd, "proc", O_PATH|O_CLOEXEC);
+	dir = "proc";
+	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot open /proc in chroot directory\n");
-		exit(1);
+		if (errno == ENOENT)
+			goto error1;
+		else
+			goto error2;
 	}
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /proc should be a directory owned by root\n");
-		exit(1);
-	}
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
+		goto error3;
 	close(fd);
 
 	// check /tmp
-	fd = openat(parentfd, "tmp", O_PATH|O_CLOEXEC);
+	dir = "tmp";
+	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot open /tmp in chroot directory\n");
-		exit(1);
+		if (errno == ENOENT)
+			goto error1;
+		else
+			goto error2;
 	}
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /tmp should be a directory owned by root\n");
-		exit(1);
-	}
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
+		goto error3;
 	close(fd);
 
 	// check /etc
-	fd = openat(parentfd, "etc", O_PATH|O_CLOEXEC);
+	dir = "etc";
+	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot open /etc in chroot directory\n");
-		exit(1);
+		if (errno == ENOENT)
+			goto error1;
+		else
+			goto error2;
 	}
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /etc should be a directory owned by root\n");
-		exit(1);
-	}
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
+		goto error3;
 	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
 		fprintf(stderr, "Error: only root user should be given write permission on chroot /etc\n");
 		exit(1);
@@ -1298,21 +1303,34 @@ void fs_check_chroot_dir(const char *rootdir) {
 
 	// check x11 socket directory
 	if (getenv("FIREJAIL_X11")) {
-		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_CLOEXEC);
+		dir = "tmp/.X11-unix";
+		fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
 		if (fd == -1) {
-			fprintf(stderr, "Error: cannot open /tmp/.X11-unix in chroot directory\n");
-			exit(1);
+			if (errno == ENOENT)
+				goto error1;
+			else
+				goto error2;
 		}
 		if (fstat(fd, &s) == -1)
 			errExit("fstat");
-		if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
-			fprintf(stderr, "Error: chroot /tmp/.X11-unix should be a directory owned by root\n");
-			exit(1);
-		}
+		if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
+			goto error3;
 		close(fd);
 	}
 
 	close(parentfd);
+	return;
+
+error1:
+	fprintf(stderr, "Error: cannot find /%s in chroot directory\n", dir);
+	exit(1);
+error2:
+	perror("open");
+	fprintf(stderr, "Error: cannot open /%s in chroot directory\n", dir);
+	exit(1);
+error3:
+	fprintf(stderr, "Error: chroot /%s should be a directory owned by root\n", dir);
+	exit(1);
 }
 
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf

@@ -393,6 +393,8 @@ static char *check_dir_or_file(const char *name) {
 	// we allow only files in user home directory or symbolic links to files or directories owned by the user
 	struct stat s;
 	if (lstat(fname, &s) == 0 && S_ISLNK(s.st_mode)) {
+		if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0 || fname[strlen(cfg.homedir)] != '/')
+			goto errexit;
 		if (stat(fname, &s) == 0) {
 			if (s.st_uid != getuid()) {
 				fprintf(stderr, "Error: symbolic link %s to file or directory not owned by the user\n", fname);

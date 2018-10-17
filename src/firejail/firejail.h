@@ -801,8 +801,8 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define PATH_FIREMON (PREFIX "/bin/firemon")
 #define PATH_FIREJAIL (PREFIX "/bin/firejail")
 
-//#define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
-#define PATH_FSECCOMP ( RUN_FIREJAIL_LIB_DIR "/fseccomp")
+#define PATH_FSECCOMP_MAIN (LIBDIR "/firejail/fseccomp")		// when called from main thread
+#define PATH_FSECCOMP ( RUN_FIREJAIL_LIB_DIR "/fseccomp")	// when called from sandbox thread
 
 // FSEC_PRINT is run outside of sandbox by --seccomp.print
 // it is also run from inside the sandbox by --debug; in this case we do an access(filename, X_OK) test first

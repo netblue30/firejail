@@ -456,7 +456,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifdef HAVE_SECCOMP
 	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-syscalls");
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls");
 			exit(rv);
 		}
 		else
@@ -464,7 +464,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-errnos");
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-errnos");
 			exit(rv);
 		}
 		else
@@ -482,7 +482,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--debug-protocols") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP, "debug-protocols");
+		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-protocols");
 		exit(rv);
 	}
 	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {

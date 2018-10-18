@@ -1,8 +1,7 @@
-todo - Oct 13: update profiles, README
-
 Oct 17: Fix docs on default seccomp list: change mfsservctl -> nfsservctl and…
 Oct 17: improve clean_pathname function
 Oct 14: Make --join return exit code of the invoked program
+Oct 13: update profiles, README
 
 Oct 12: full merge
 done: fs_whitelist: no warning if macro resolution fails because of missing…

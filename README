@@ -33,14 +33,15 @@ Maintainer:
 - netblue30 (netblue30@yahoo.com)
 
 Committers
+- chiraag-nataraj (https://github.com/chiraag-nataraj)
+- crass (https://github.com/crass)
 - Fred-Barclay (https://github.com/Fred-Barclay)
 - Reiner Herrmann (https://github.com/reinerh - Debian/Ubuntu maintainer)
 - smithsohu (https://github.com/smitsohu)
 - SkewedZeppelin (https://github.com/SkewedZeppelin)
-- startx2017 (https://github.com/startx2017) - 0.9.38-LTS and *bugfixes branches maintainer)
+- startx2017 (https://github.com/startx2017) - LTS and *bugfixes branches maintainer)
 - Topi Miettinen (https://github.com/topimiettinen)
 - Vincent43 (https://github.com/Vincent43)
-- chiraag-nataraj (https://github.com/chiraag-nataraj)
 - netblue30 (netblue30@yahoo.com)
 
 
@@ -122,6 +123,8 @@ bn0785ac (https://github.com/bn0785ac)
 	- fix inox, add snox profile
 BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
+Brad Ackerman
+	- blacklist Bitwarden config in disable-passwdmgr.inc
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix
@@ -147,6 +150,10 @@ Christian Stadelmann (https://github.com/genodeftest)
 	- evolution profile fix
 Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
+crass (https://github.com/crass)
+	- extract_command_name fixes
+	- update appimage size calculation to newest code from libappimage
+	- firejail should look for processes with names exactly named
 curiosity-seeker (https://github.com/curiosity-seeker)
 	- tightening unbound and dnscrypt-proxy profiles
 	- correct and tighten QuiteRss profile
@@ -158,6 +165,7 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- added VirtualBox.profile
 	- various other profile fixes
 	- added digiKam profile
+	- write-protection for thumbnailer dir
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
@@ -268,6 +276,16 @@ glitsj16 (https://github.com/glitsj16)
 	- spelling fixes
 	- bitblbee profile fixes
 	- fix firefox common addons
+	- profile fixes: file, strings, claws-mail,
+	- new profiles: QMediathekView, aria2c, Authenticator, checkbashisms
+	- new profiles: devilspie, devilspie2, easystroke, github-desktop, min
+	- new profiles: bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat
+	- new profiles: lbzip2, lzcat, lzcmp, lzdiff, lzegrep, lzfgrep, lzgrep
+	- new profiles: lzless, lzma, lzmainfo, lzmore, unlzma, unxz, xzcat
+	- new profiles: xzcmp, xzdiff, xzegrep, xzfgrep, xzgrep, xzless, xzmore
+	- new profiles: lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh
+	- new profiles: nirtoshare-send, nitroshare-ui, mencoder, gnome-pie
+	- new profiles: masterpdfeditor
 graywolf (https://github.com/graywolf)
 	- spelling fix
 greigdp (https://github.com/greigdp)
@@ -660,6 +678,7 @@ veloute (https://github.com/veloute)
 	- added standardnotes profile
 	- added flameshot profile
 	- added jdownloader profile
+	- fixed discord profile
 Vincent43 (https://github.com/Vincent43)
 	- apparmor enhancements
 vismir2 (https://github.com/vismir2)

@@ -1,39 +1,49 @@
-# Firejail profile for bsdtar
+# Firejail profile for devilspie2
+# Description: Window matching daemon (Lua)
 # This file is overwritten after every install/update
-quiet
 # Persistent local customizations
-include /etc/firejail/bsdtar.local
+include /etc/firejail/devilspie2.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.config/devilspie2
+
 include /etc/firejail/disable-common.inc
-# include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
-blacklist /tmp/.X11-unix
-
-hostname bsdtar
 caps.drop all
 ipc-namespace
-netfilter
+machine-id
+net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
-# noroot
+noroot
 nosound
 notv
+nou2f
 novideo
-nonewprivs
 protocol unix
 seccomp
 shell none
-
 tracelog
 
-# support compressed archives
-private-bin sh,bash,bsdcat,bsdcpio,bsdtar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop,lz4,libarchive
+disable-mnt
+private-bin devilspie2
+private-cache
 private-dev
-private-etc passwd,group,localtime
+private-etc none
+private-lib gconv
+private-tmp
+
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp
+
+# devilspie2 will never write anything
+read-only ${HOME}

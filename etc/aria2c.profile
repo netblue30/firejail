@@ -1,41 +1,45 @@
-# Firejail profile for claws-mail
-# Description: Fast, lightweight and user-friendly GTK+2 based email client
+# Firejail profile for aria2c
+# Description: Download utility that supports HTTP(S), FTP, BitTorrent and Metalink
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/claws-mail.local
+include /etc/firejail/aria2c.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.claws-mail
-noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.signature
+noblacklist ${HOME}/.aria2
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-xdg.inc
 
 caps.drop all
+ipc-namespace
 netfilter
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
 noroot
 nosound
 notv
-nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
 shell none
 
+disable-mnt
+# private
+private-bin aria2c,gzip
 private-cache
 private-dev
+private-etc ca-certificates,ssl
+private-lib libreadline.so.*
 private-tmp
 
-# If you want to read local mail stored in /var/mail, add the following to claws-mail.local:
-# noblacklist /var/mail
-# noblacklist /var/spool/mail
-# writable-var
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

@@ -21,9 +21,13 @@ shell none
 tracelog
 
 private-bin strings
+private-cache
 private-dev
+private-etc none
 private-lib
 
 memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp
 
 include /etc/firejail/default.profile

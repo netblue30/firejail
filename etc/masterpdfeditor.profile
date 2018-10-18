@@ -1,27 +1,26 @@
-# Firejail profile for evince
-# Description: Document (PostScript, PDF) viewer
+# Firejail profile for masterpdfeditor
+# Description: A complete solution for creating and editing PDF files
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/evince.local
+include /etc/firejail/masterpdfeditor.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/evince
-noblacklist ${DOCUMENTS}
+noblacklist ${HOME}/.config/Code Industry
+noblacklist ${HOME}/.masterpdfeditor
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
 include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-xdg.inc
 
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
+ipc-namespace
 machine-id
-# net none breaks AppArmor on Ubuntu systems
-netfilter
+net none
 no3d
 nodbus
 nodvd
@@ -30,20 +29,22 @@ nonewprivs
 noroot
 nosound
 notv
+nou2f
 novideo
 protocol unix
 seccomp
 shell none
 tracelog
 
-private-bin evince,evince-previewer,evince-thumbnailer
+# disable-mnt
+# private
+private-bin masterpdfeditor*
+private-cache
 private-dev
 private-etc fonts
-
-private-lib evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*,gconv
-
+# private-lib
 private-tmp
 
-#memory-deny-write-execute - breaks application on Archlinux, issue 1803
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

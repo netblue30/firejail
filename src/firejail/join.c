@@ -386,8 +386,18 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		// it will never get here!!!
 	}
 
+	int status = 0;
 	// wait for the child to finish
-	waitpid(child, NULL, 0);
+	waitpid(child, &status, 0);
 	flush_stdin();
-	exit(0);
+
+	if (WIFEXITED(status)) {
+		status = WEXITSTATUS(status);
+	} else if (WIFSIGNALED(status)) {
+		status = WTERMSIG(status);
+	} else {
+		status = 0;
+	}
+
+	exit(status);
 }

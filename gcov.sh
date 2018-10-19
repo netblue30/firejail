@@ -6,22 +6,17 @@ gcov_init() {
 	firemon --help > /dev/null
 	/usr/lib/firejail/fnet --help > /dev/null
 	/usr/lib/firejail/fseccomp --help > /dev/null
-	/usr/lib/firejail/ftee --help > /dev/null
-	/usr/lib/firejail/fcopy --help > /dev/null
-	/usr/lib/firejail/fldd --help > /dev/null
 	firecfg --help > /dev/null
 
 	/usr/lib/firejail/fnetfilter --help > /dev/null
 	/usr/lib/firejail/fsec-print --help > /dev/null
 	/usr/lib/firejail/fsec-optimize --help > /dev/null
-	/usr/lib/firejail/faudit --help > /dev/null
-	/usr/lib/firejail/fbuilder --help > /dev/null
 
 	sudo chown $USER:$USER `find .`
 }
 
 generate() {
-	lcov -q --capture -d src/firejail -d src/firemon -d src/faudit -d src/fbuilder -d  src/fcopy -d  src/fnetfilter -d src/fsec-print -d src/fsec-optimize -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg -d src/fldd --output-file gcov-file-new
+	lcov -q --capture -d src/firejail -d src/firemon -d src/fnetfilter -d src/fsec-print -d src/fsec-optimize -d src/fseccomp -d src/fnet -d src/lib -d src/firecfg --output-file gcov-file-new
 	lcov --add-tracefile gcov-file-old --add-tracefile gcov-file-new  --output-file gcov-file
 	rm -fr gcov-dir
 	genhtml -q gcov-file --output-directory gcov-dir
@@ -32,7 +27,9 @@ generate() {
 
 
 gcov_init
-lcov -q --capture -d src/firejail -d src/firemon -d src/faudit -d src/fbuilder -d  src/fcopy -d  src/fnetfilter -d src/fsec-print -d src/fsec-optimize -d src/fseccomp -d src/fnet -d src/ftee -d src/lib -d src/firecfg -d src/fldd  --output-file gcov-file-old
+lcov -q --capture -d src/firejail -d src/firemon \
+	-d  src/fnetfilter -d src/fsec-print -d src/fsec-optimize -d src/fseccomp \
+	-d src/fnet -d src/lib -d src/firecfg --output-file gcov-file-old
 
 #make test-utils
 #generate
@@ -44,10 +41,8 @@ lcov -q --capture -d src/firejail -d src/firemon -d src/faudit -d src/fbuilder -
 make test-root
 generate
 sleep 2
+exit
 
-make test-chroot
-generate
-sleep 2
 
 make test-network
 generate
@@ -57,19 +52,7 @@ make test-stress
 generate
 sleep 2
 
-make test-ssh
-generate
-sleep 2
-
 make test-appimage
-generate
-sleep 2
-
-make test-overlay
-generate
-sleep 2
-
-make test-fcopy
 generate
 sleep 2
 
@@ -90,14 +73,6 @@ generate
 sleep 2
 
 make test-apps
-generate
-sleep 2
-
-make test-apps-x11
-generate
-sleep 2
-
-make test-apps-x11-xorg
 generate
 sleep 2
 

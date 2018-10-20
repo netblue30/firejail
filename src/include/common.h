@@ -124,8 +124,6 @@ static inline unsigned long long getticks(void) {
 #endif
 }
 
-void timetrace_start(void);
-float timetrace_end(void);
 int join_namespace(pid_t pid, char *type);
 int name2pid(const char *name, pid_t *pid);
 char *pid_proc_comm(const pid_t pid);

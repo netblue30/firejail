@@ -22,7 +22,6 @@ rm -fr ~/_firejail_test_*
 echo "TESTING: /sys/fs access (test/fs/sys_fs.exp)"
 ./sys_fs.exp
 
-echo "TESTING: kmsg access (test/fs/kmsg.exp)"
 if [ -c /dev/kmsg ]; then
 	echo "TESTING: kmsg access (test/fs/kmsg.exp)"
 	./kmsg.exp

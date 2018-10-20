@@ -41,8 +41,6 @@ lcov -q --capture -d src/firejail -d src/firemon \
 make test-root
 generate
 sleep 2
-exit
-
 
 make test-network
 generate

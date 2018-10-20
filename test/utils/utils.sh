@@ -95,7 +95,6 @@ echo "TESTING: join profile (test/utils/join-profile.exp)"
 echo "TESTING: top (test/utils/top.exp)"
 ./top.exp
 
-echo "TESTING: firemon seccomp (test/utils/firemon-seccomp.exp)"
 if grep -q "^Seccomp.*0" /proc/self/status; then
 	echo "TESTING: firemon seccomp (test/utils/firemon-seccomp.exp)"
 	./firemon-seccomp.exp
@@ -103,7 +102,6 @@ else
 	echo "TESTING SKIP: seccomp already active (test/utils/firemon-seccomp.exp)"
 fi
 
-echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
 if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
 	echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
 	./firemon-caps.exp

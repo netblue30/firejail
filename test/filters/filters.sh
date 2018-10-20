@@ -13,6 +13,13 @@ fi
 export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
 
+if [ -f /sys/kernel/security/apparmor/profiles ]; then
+	echo "TESTING: apparmor (test/filters/apparmor.exp)"
+	./apparmor.exp
+else
+	echo "TESTING SKIP: no apparmor support in Linux kernel (test/filters/apparmor.exp)"
+fi
+
 if [ "$(uname -m)" = "x86_64" ]; then
     echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"
     ./memwrexe.exp

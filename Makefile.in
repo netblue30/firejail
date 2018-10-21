@@ -169,7 +169,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 
-DISTFILES = "src etc platform configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh COPYING README RELNOTES"
+DISTFILES = "src etc platform configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkdeb-apparmor.sh COPYING README RELNOTES"
 DISTFILES_TEST = "test/apps test/root test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils"
 
 dist:

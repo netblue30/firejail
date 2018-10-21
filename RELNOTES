@@ -11,5 +11,5 @@ firejail (0.9.56-LTS~rc1) baseline; urgency=low
      --disable-globalcfg, --disable-network, --disable-userns,
      --disable-whitelist, --disable-suid, --enable-fatal-warnings,
      --enable-busybox-workaround
- -- netblue30 <netblue30@yahoo.com>  Wed, 3 Oct 2018 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 21 Oct 2018 08:00:00 -0500
 

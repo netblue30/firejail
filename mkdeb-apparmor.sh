@@ -45,6 +45,6 @@ find $INSTALL_DIR  -type d | xargs chmod 755
 cd $CODE_DIR
 fakeroot dpkg-deb --build debian
 lintian debian.deb
-mv debian.deb ../firejail_$2_1_$(dpkg-architecture -qDEB_HOST_ARCH)-apparmor.deb
+mv debian.deb ../firejail-apparmor_$2_1_$(dpkg-architecture -qDEB_HOST_ARCH).deb
 cd ..
 rm -fr $CODE_DIR

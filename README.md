@@ -98,10 +98,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 
 `````
-# Current development version: 0.9.56.1
-
-This is probably a bugfix release: fixes, small features, new profiles. If we end up implementing something major
-we'll switch to a regular 0.9.57 release.
+# Current development version: 0.9.57
 
 # New Long Term Support (LTS) version
 

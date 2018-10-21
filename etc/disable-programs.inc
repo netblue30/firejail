@@ -3,6 +3,7 @@
 include disable-programs.local
 
 blacklist ${HOME}/Monero/wallets
+blacklist ${HOME}/Nextcloud/Notes
 blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/snap
 blacklist ${HOME}/.*coin
@@ -75,6 +76,7 @@ blacklist ${HOME}/.config/MuseScore
 blacklist ${HOME}/.config/MusicBrainz
 blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nylas Mail
+blacklist ${HOME}/.config/PBE
 blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/QuiteRss
@@ -373,6 +375,7 @@ blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Mumble
+blacklist ${HOME}/.local/share/PBE
 blacklist ${HOME}/.local/share/QMediathekView
 blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet

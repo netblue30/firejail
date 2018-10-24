@@ -87,6 +87,7 @@ andrew160 (https://github.com/andrew160)
 	- profile and man pages fixes
 announ (https://github.com/announ)
 	- mpv and youtube-dl profile fixes
+	- git profile fix
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start

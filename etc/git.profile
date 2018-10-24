@@ -13,6 +13,7 @@ noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.oh-my-zsh
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo

@@ -29,12 +29,14 @@
 #include <errno.h>
 #include <fcntl.h>
 
+#define MAX_BUF 4096
 // check noblacklist statements not matched by a proper blacklist in disable-*.inc files
 //#define TEST_NO_BLACKLIST_MATCHING
 
 
 
 static void fs_rdwr(const char *dir);
+static void fs_rdwr_rec(const char *dir);
 
 
 
@@ -147,21 +149,15 @@ static void disable_file(OPERATION op, const char *filename) {
 		}
 	}
 	else if (op == MOUNT_READONLY) {
-		if (arg_debug)
-			printf("Mounting read-only %s\n", fname);
-		fs_rdonly(fname);
+		fs_rdonly_rec(fname);
 // todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_RDWR) {
-		if (arg_debug)
-			printf("Mounting read-only %s\n", fname);
-		fs_rdwr(fname);
+		fs_rdwr_rec(fname);
 // todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_NOEXEC) {
-		if (arg_debug)
-			printf("Mounting noexec %s\n", fname);
-		fs_noexec(fname);
+		fs_noexec_rec(fname);
 // todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_TMPFS) {
@@ -457,9 +453,10 @@ static int get_mount_flags(const char *path, unsigned long *flags) {
 
 //***********************************************
 // mount namespace
+//		- functions need fully resolved paths
 //***********************************************
 
-// remount a directory read-only
+// remount directory read-only
 void fs_rdonly(const char *dir) {
 	assert(dir);
 	// check directory exists
@@ -471,75 +468,136 @@ void fs_rdonly(const char *dir) {
 		if ((flags & MS_RDONLY) == MS_RDONLY)
 			return;
 		flags |= MS_RDONLY;
+		if (arg_debug)
+			printf("Mounting read-only %s\n", dir);
 		// mount --bind /bin /bin
 		// mount --bind -o remount,ro /bin
 		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
+		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT, NULL) < 0)
 			errExit("mount read-only");
 		fs_logger2("read-only", dir);
 	}
 }
 
-static void fs_rdwr(const char *dir) {
+// remount directory read-only recursively
+void fs_rdonly_rec(const char *dir) {
 	assert(dir);
-	// check directory exists and ensure we have a resolved path
-	// the resolved path allows to run a sanity check after the mount
-	char *path = realpath(dir, NULL);
-	if (path == NULL)
+	EUID_USER();
+	// get mount point of the directory
+	int mountid = get_mount_id(dir);
+	if (mountid == 0)
 		return;
-	// allow only user owned directories, except the user is root
-	uid_t u = getuid();
-	struct stat s;
-	int rv = stat(path, &s);
-	if (rv) {
-		free(path);
-		return;
+	// build array with all mount points that need to get remounted
+	char **arr = get_all_mounts(mountid, dir);
+	assert(arr);
+	// remount
+	EUID_ROOT();
+	char **tmp = arr;
+	while (*tmp) {
+		fs_rdonly(*tmp);
+		free(*tmp++);
 	}
-	if (u != 0 && s.st_uid != u) {
-		fwarning("you are not allowed to change %s to read-write\n", path);
-		free(path);
-		return;
-	}
-	// mount --bind /bin /bin
-	// mount --bind -o remount,rw /bin
-	unsigned long flags = 0;
-	get_mount_flags(path, &flags);
-	if ((flags & MS_RDONLY) == 0) {
-		free(path);
-		return;
-	}
-	flags &= ~MS_RDONLY;
-	if (mount(path, path, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-	    mount(NULL, path, NULL, flags|MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
-		errExit("mount read-write");
-	fs_logger2("read-write", path);
-
-	// run a check on /proc/self/mountinfo to validate the mount
-	MountData *mptr = get_last_mount();
-	if (strncmp(mptr->dir, path, strlen(path)) != 0)
-		errLogExit("invalid read-write mount");
-
-	free(path);
+	free(arr);
 }
 
+// remount directory read-write
+static void fs_rdwr(const char *dir) {
+	assert(dir);
+	// check directory exists
+	struct stat s;
+	int rv = stat(dir, &s);
+	if (rv == 0) {
+		// allow only user owned directories, except the user is root
+		uid_t u = getuid();
+		if (u != 0 && s.st_uid != u) {
+			fwarning("you are not allowed to change %s to read-write\n", dir);
+			return;
+		}
+		unsigned long flags = 0;
+		get_mount_flags(dir, &flags);
+		if ((flags & MS_RDONLY) == 0)
+			return;
+		flags &= ~MS_RDONLY;
+		if (arg_debug)
+			printf("Mounting read-write %s\n", dir);
+		// mount --bind /bin /bin
+		// mount --bind -o remount,rw /bin
+		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
+		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT, NULL) < 0)
+			errExit("mount read-write");
+		fs_logger2("read-write", dir);
+		// run a sanity check on /proc/self/mountinfo
+		MountData *mptr = get_last_mount();
+		size_t len = strlen(dir);
+		if (strncmp(mptr->dir, dir, len) != 0 ||
+		   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
+			errLogExit("invalid read-write mount");
+	}
+}
+
+// remount directory read-write recursively
+static void fs_rdwr_rec(const char *dir) {
+	assert(dir);
+	EUID_USER();
+	// get mount point of the directory
+	int mountid = get_mount_id(dir);
+	if (mountid == 0)
+		return;
+	// build array with all mount points that need to get remounted
+	char **arr = get_all_mounts(mountid, dir);
+	assert(arr);
+	// remount
+	EUID_ROOT();
+	char **tmp = arr;
+	while (*tmp) {
+		fs_rdwr(*tmp);
+		free(*tmp++);
+	}
+	free(arr);
+}
+
+// remount directory noexec, nodev, nosuid
 void fs_noexec(const char *dir) {
 	assert(dir);
 	// check directory exists
 	struct stat s;
 	int rv = stat(dir, &s);
 	if (rv == 0) {
-		// mount --bind /bin /bin
-		// mount --bind -o remount,ro /bin
 		unsigned long flags = 0;
 		get_mount_flags(dir, &flags);
 		if ((flags & (MS_NOEXEC|MS_NODEV|MS_NOSUID)) == (MS_NOEXEC|MS_NODEV|MS_NOSUID))
 			return;
 		flags |= MS_NOEXEC|MS_NODEV|MS_NOSUID;
+		if (arg_debug)
+			printf("Mounting noexec %s\n", dir);
+		// mount --bind /bin /bin
+		// mount --bind -o remount,noexec /bin
 		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
+		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT, NULL) < 0)
 			errExit("mount noexec");
 		fs_logger2("noexec", dir);
 	}
+}
+
+// remount directory noexec, nodev, nosuid recursively
+void fs_noexec_rec(const char *dir) {
+	assert(dir);
+	EUID_USER();
+	// get mount point of the directory
+	int mountid = get_mount_id(dir);
+	if (mountid == 0)
+		return;
+	// build array with all mount points that need to get remounted
+	char **arr = get_all_mounts(mountid, dir);
+	assert(arr);
+	// remount
+	EUID_ROOT();
+	char **tmp = arr;
+	while (*tmp) {
+		fs_noexec(*tmp);
+		free(*tmp++);
+	}
+	free(arr);
 }
 
 // Disable /mnt, /media, /run/mount and /run/media access

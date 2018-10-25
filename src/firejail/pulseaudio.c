@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/statvfs.h>
 #include <sys/mount.h>
 #include <dirent.h>
 #include <sys/wait.h>
@@ -82,10 +83,8 @@ void pulseaudio_init(void) {
 	// create the new user pulseaudio directory
 	if (mkdir(RUN_PULSE_DIR, 0700) == -1)
 		errExit("mkdir");
-	// make it a mount point and add mount flags
-	if (mount(RUN_PULSE_DIR, RUN_PULSE_DIR, NULL, MS_BIND, NULL) < 0 ||
-	    mount(NULL, RUN_PULSE_DIR, NULL, MS_NOEXEC|MS_NODEV|MS_NOSUID|MS_BIND|MS_REMOUNT, NULL) < 0)
-		errExit("mount RUN_PULSE_DIR");
+	// mount it nosuid, noexec, nodev
+	fs_noexec(RUN_PULSE_DIR);
 
 	// create the new client.conf file
 	char *pulsecfg = NULL;
@@ -189,7 +188,12 @@ void pulseaudio_init(void) {
 		// confirm the actual mount destination is owned by the user
 		if (fstat(fd, &s) == -1 || s.st_uid != getuid())
 			errExit("fstat");
-
+		// preserve a read-only mount
+		struct statvfs vfs;
+		if (fstatvfs(fd, &vfs) == -1)
+			errExit("fstatvfs");
+		if ((vfs.f_flag & MS_RDONLY) == MS_RDONLY)
+			fs_rdonly(RUN_PULSE_DIR);
 		// mount via the link in /proc/self/fd
 		char *proc;
 		if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)

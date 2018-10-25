@@ -440,8 +440,10 @@ void preproc_clean_run(void);
 void fs_blacklist(void);
 // remount a directory read-only
 void fs_rdonly(const char *dir);
+void fs_rdonly_rec(const char *dir);
 // remount a directory noexec, nodev and nosuid
 void fs_noexec(const char *dir);
+void fs_noexec_rec(const char *dir);
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void);
 // build a basic read-only filesystem
@@ -550,12 +552,16 @@ int invalid_sandbox(const pid_t pid);
 // The return value points to a static area, and will be overwritten by subsequent calls.
 // The function does an exit(1) if anything goes wrong.
 typedef struct {
+	int mountid; // id of the mount
 	char *fsname; // the pathname of the directory in the filesystem which forms the root of this mount
 	char *dir;	// mount destination
 	char *fstype; // filesystem type
 } MountData;
-MountData *get_last_mount(void);
 
+// mountinfo.c
+MountData *get_last_mount(void);
+int get_mount_id(const char *path);
+char **get_all_mounts(const int mountid, const char *path);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

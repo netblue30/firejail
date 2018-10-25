@@ -485,8 +485,10 @@ void fs_rdonly_rec(const char *dir) {
 	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == 0)
+	if (mountid == 0) {
+		EUID_ROOT();
 		return;
+	}
 	// build array with all mount points that need to get remounted
 	char **arr = get_all_mounts(mountid, dir);
 	assert(arr);
@@ -541,8 +543,10 @@ static void fs_rdwr_rec(const char *dir) {
 	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == 0)
+	if (mountid == 0) {
+		EUID_ROOT();
 		return;
+	}
 	// build array with all mount points that need to get remounted
 	char **arr = get_all_mounts(mountid, dir);
 	assert(arr);
@@ -585,8 +589,10 @@ void fs_noexec_rec(const char *dir) {
 	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == 0)
+	if (mountid == 0) {
+		EUID_ROOT();
 		return;
+	}
 	// build array with all mount points that need to get remounted
 	char **arr = get_all_mounts(mountid, dir);
 	assert(arr);

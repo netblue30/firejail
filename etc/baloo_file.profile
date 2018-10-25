@@ -47,4 +47,3 @@ noexec /tmp
 # Note: Baloo will not be able to update the "first run" key in its configuration files.
 # read-only  ${HOME}
 # read-write ${HOME}/.local/share
-# noexec     ${HOME}/.local/share

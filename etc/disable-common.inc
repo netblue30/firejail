@@ -266,7 +266,6 @@ read-only ${HOME}/bin
 # The following block breaks trash functionality in file managers
 #read-only  ${HOME}/.local
 #read-write ${HOME}/.local/share
-#noexec     ${HOME}/.local/share
 blacklist   ${HOME}/.local/share/Trash
 
 # Write-protection for desktop entries
@@ -401,6 +400,3 @@ blacklist /usr/share/flatpak
 blacklist /var/lib/flatpak
 # most of the time bwrap is SUID binary
 blacklist ${PATH}/bwrap
-
-# complement noexec ${HOME} and noexec /tmp
-noexec /tmp/.X11-unix

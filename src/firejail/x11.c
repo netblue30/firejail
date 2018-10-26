@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/statvfs.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
@@ -1163,6 +1164,9 @@ void x11_xorg(void) {
 	unlink(tmpfname);
 	umount("/tmp");
 
+	// remount RUN_XAUTHORITY_SEC_FILE noexec, nodev, nosuid
+	fs_noexec(RUN_XAUTHORITY_SEC_FILE);
+
 	// Ensure there is already a file in the usual location, so that bind-mount below will work.
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
@@ -1184,6 +1188,12 @@ void x11_xorg(void) {
 			fprintf(stderr, "Error: .Xauthority is not a user owned regular file\n");
 		exit(1);
 	}
+	// preserve a read-only mount
+	struct statvfs vfs;
+	if (fstatvfs(fd, &vfs) == -1)
+		errExit("fstatvfs");
+	if ((vfs.f_flag & MS_RDONLY) == MS_RDONLY)
+		fs_rdonly(RUN_XAUTHORITY_SEC_FILE);
 
 	// mount via the link in /proc/self/fd
 	char *proc;

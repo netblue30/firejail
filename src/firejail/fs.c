@@ -485,12 +485,12 @@ void fs_rdonly_rec(const char *dir) {
 	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == 0) {
+	if (mountid == -1) {
 		EUID_ROOT();
 		return;
 	}
 	// build array with all mount points that need to get remounted
-	char **arr = get_all_mounts(mountid, dir);
+	char **arr = build_mount_array(mountid, dir);
 	assert(arr);
 	// remount
 	EUID_ROOT();
@@ -543,12 +543,12 @@ static void fs_rdwr_rec(const char *dir) {
 	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == 0) {
+	if (mountid == -1) {
 		EUID_ROOT();
 		return;
 	}
 	// build array with all mount points that need to get remounted
-	char **arr = get_all_mounts(mountid, dir);
+	char **arr = build_mount_array(mountid, dir);
 	assert(arr);
 	// remount
 	EUID_ROOT();
@@ -589,12 +589,12 @@ void fs_noexec_rec(const char *dir) {
 	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == 0) {
+	if (mountid == -1) {
 		EUID_ROOT();
 		return;
 	}
 	// build array with all mount points that need to get remounted
-	char **arr = get_all_mounts(mountid, dir);
+	char **arr = build_mount_array(mountid, dir);
 	assert(arr);
 	// remount
 	EUID_ROOT();
@@ -809,20 +809,17 @@ void fs_basic_fs(void) {
 	uid_t uid = getuid();
 
 	if (arg_debug)
-		printf("Mounting read-only /bin, /sbin, /lib, /lib32, /lib64, /usr");
+		printf("Basic read-only filesystem:\n");
 	if (!arg_writable_etc) {
 		fs_rdonly("/etc");
 		if (uid)
 			fs_noexec("/etc");
-		if (arg_debug) printf(", /etc");
 	}
 	if (!arg_writable_var) {
 		fs_rdonly("/var");
 		if (uid)
 			fs_noexec("/var");
-		if (arg_debug) printf(", /var");
 	}
-	if (arg_debug) printf("\n");
 	fs_rdonly("/bin");
 	fs_rdonly("/sbin");
 	fs_rdonly("/lib");

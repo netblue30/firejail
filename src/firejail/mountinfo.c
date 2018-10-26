@@ -67,7 +67,7 @@ static void unmangle_path(char *path) {
 // Parse a line from /proc/self/mountinfo,
 // the function does an exit(1) if anything goes wrong.
 static void parse_line(char *line, MountData *output) {
-	assert(line && *line);
+	assert(line && output);
 	memset(output, 0, sizeof(*output));
 	// extract filesystem name, directory and filesystem types
 	// examples:
@@ -156,7 +156,7 @@ int get_mount_id(const char *path) {
 	EUID_ASSERT();
 	int fd = open(path, O_PATH|O_CLOEXEC);
 	if (fd == -1)
-		return 0;
+		return -1;
 
 	char *fdinfo;
 	if (asprintf(&fdinfo, "/proc/self/fdinfo/%d", fd) == -1)
@@ -166,31 +166,31 @@ int get_mount_id(const char *path) {
 	EUID_USER();
 	if (!fp)
 		goto errexit;
-	// go to the last line
-	char buf[MAX_BUF];
-	while (fgets(buf, MAX_BUF, fp));
-	fclose(fp);
-	close(fd);
-	// go to the mount id
-	if (strncmp(buf, "mnt_id:", 7) != 0)
-		goto errexit;
-	char *ptr = buf + 7;
-	while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
-		ptr++;
-	}
-	if (*ptr == '\0')
-		goto errexit;
-	free(fdinfo);
 
-	return atoi(ptr);
+	// read the file
+	char buf[MAX_BUF];
+	while (fgets(buf, MAX_BUF, fp)) {
+		if (strncmp(buf, "mnt_id:", 7) == 0) {
+			char *ptr = buf + 7;
+			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
+				ptr++;
+			}
+			if (*ptr == '\0')
+				goto errexit;
+			fclose(fp);
+			close(fd);
+			free(fdinfo);
+			return atoi(ptr);
+		}
+	}
 
 errexit:
-	fprintf(stderr, "Error: cannot read file in /proc/self/fdinfo\n");
+	fprintf(stderr, "Error: cannot read %s\n", fdinfo);
 	exit(1);
 }
 
 // Return array with all paths that might need a remount.
-char **get_all_mounts(const int mountid, const char *path) {
+char **build_mount_array(const int mountid, const char *path) {
 	// open /proc/self/mountinfo
 	FILE *fp = fopen("/proc/self/mountinfo", "re");
 	if (!fp) {
@@ -244,7 +244,7 @@ char **get_all_mounts(const int mountid, const char *path) {
 					errExit("realloc");
 			}
 			rv[cnt] = strdup(mdata.dir);
-			if (!rv[cnt])
+			if (rv[cnt] == NULL)
 				errExit("strdup");
 			cnt++;
 		}

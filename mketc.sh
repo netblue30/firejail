@@ -18,5 +18,6 @@ noblacklist \${PATH}/umount\
 noblacklist \${PATH}/su\
 noblacklist \${PATH}/sudo\
 noblacklist \${PATH}/nc\
+noblacklist \${PATH}/crontab\
 ' .etc/disable-common.inc
 fi

@@ -372,3 +372,10 @@ void network_main(pid_t child) {
 
 	free(cstr);
 }
+
+void net_print(pid_t pid) {
+	EUID_ASSERT();
+
+	enter_network_namespace(pid);
+	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET_MAIN, "printif");
+}

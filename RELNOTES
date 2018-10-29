@@ -1,6 +1,7 @@
 firejail (0.9.56.1) baseline; urgency=low
   * work in progress
   * --disable-mnt rework
+  * --net.print command
   * new profiles: QMediathekView, aria2c, Authenticator, checkbashisms
   * new profiles: devilspie, devilspie2, easystroke, github-desktop, min
   * new profiles: bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat

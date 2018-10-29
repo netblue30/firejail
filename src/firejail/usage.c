@@ -115,6 +115,7 @@ static char *usage_str =
 	"    --net=ethernet_interface - enable network namespaces and connect to this\n"
 	"\tEthernet interface.\n"
 	"    --net=none - enable a new, unconnected network namespace.\n"
+	"    --net.print=name|pid - print network interface configuration.\n"
 	"    --netfilter[=filename,arg1,arg2,arg3 ...] - enable firewall.\n"
 	"    --netfilter.print=name|pid - print the firewall.\n"
 	"    --netfilter6=filename - enable IPv6 firewall.\n"

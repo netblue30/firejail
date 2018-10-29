@@ -98,9 +98,9 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 
 `````
-# Current development version: 0.9.57
+## Current development version: 0.9.57
 
-# New Long Term Support (LTS) version
+## New Long Term Support (LTS) version
 
 We are rebasing our Long Term Support branch of Firejail. The current LTS version (0.9.38.x) is more than two years old.
 The new version updates the code base to 0.9.56. We target a reduction of approx. 40% of the code by removing rarely
@@ -128,7 +128,22 @@ firejail (0.9.56-LTS~rc1) baseline; urgency=low
 
 The new LTS branch is here: https://github.com/netblue30/firejail/tree/LTSbase
 
-# New profiles:
+## New commands:
+`````
+      --net.print=name|pid
+              If a new network namespace is enabled, print network interface
+              configuration  for the sandbox specified by name or PID. Exam‐
+              ple:
+
+              $ firejail --net.print=browser
+              Switching to pid 1853, the  first  child  process  inside  the
+              sandbox
+              Interface  MAC               IP            Mask        Status
+              lo                           127.0.0.1     255.0.0.0     UP
+              eth0-1852  5e:fb:8e:27:29:26 192.168.1.186 255.255.255.0 UP
+`````
+
+## New profiles:
 
 QMediathekView, aria2c, Authenticator, checkbashisms, devilspie, devilspie2, easystroke, github-desktop, min,
 bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat, lbzip2, lzcat, lzcmp, lzdiff, lzegrep, lzfgrep, lzgrep,

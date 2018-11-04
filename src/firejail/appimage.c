@@ -106,16 +106,19 @@ void appimage_set(const char *appimage) {
 	char *mode;
 	if (asprintf(&mode, "mode=700,uid=%d,gid=%d", getuid(), getgid()) == -1)
 		errExit("asprintf");
-	EUID_ROOT();
+	unsigned long flags = MS_MGC_VAL|MS_RDONLY;
+	if (getuid())
+		flags |= MS_NODEV|MS_NOSUID;
 
+	EUID_ROOT();
 	if (size == 0) {
 		fmessage("Mounting appimage type 1\n");
-		if (mount(devloop, mntdir, "iso9660",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
+		if (mount(devloop, mntdir, "iso9660", flags,  mode) < 0)
 			errExit("mounting appimage");
 	}
 	else {
 		fmessage("Mounting appimage type 2\n");
-		if (mount(devloop, mntdir, "squashfs",MS_MGC_VAL|MS_RDONLY,  mode) < 0)
+		if (mount(devloop, mntdir, "squashfs", flags,  mode) < 0)
 			errExit("mounting appimage");
 	}
 

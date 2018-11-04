@@ -34,7 +34,7 @@
 //#define TEST_NO_BLACKLIST_MATCHING
 
 
-
+static int mount_warning = 0; // remember if warning was printed already
 static void fs_rdwr(const char *dir);
 static void fs_rdwr_rec(const char *dir);
 
@@ -482,18 +482,23 @@ void fs_rdonly(const char *dir) {
 // remount directory read-only recursively
 void fs_rdonly_rec(const char *dir) {
 	assert(dir);
-	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == -1) {
-		EUID_ROOT();
+	if (mountid == -1)
+		return;
+	if (mountid == -2) {
+		// falling back to a simple remount on old kernels
+		if (!mount_warning) {
+			fwarning("read-only, read-write and noexec options are not applied recursively\n");
+			mount_warning = 1;
+		}
+		fs_rdonly(dir);
 		return;
 	}
 	// build array with all mount points that need to get remounted
 	char **arr = build_mount_array(mountid, dir);
 	assert(arr);
 	// remount
-	EUID_ROOT();
 	char **tmp = arr;
 	while (*tmp) {
 		fs_rdonly(*tmp);
@@ -540,18 +545,23 @@ static void fs_rdwr(const char *dir) {
 // remount directory read-write recursively
 static void fs_rdwr_rec(const char *dir) {
 	assert(dir);
-	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == -1) {
-		EUID_ROOT();
+	if (mountid == -1)
+		return;
+	if (mountid == -2) {
+		// falling back to a simple remount on old kernels
+		if (!mount_warning) {
+			fwarning("read-only, read-write and noexec options are not applied recursively\n");
+			mount_warning = 1;
+		}
+		fs_rdwr(dir);
 		return;
 	}
 	// build array with all mount points that need to get remounted
 	char **arr = build_mount_array(mountid, dir);
 	assert(arr);
 	// remount
-	EUID_ROOT();
 	char **tmp = arr;
 	while (*tmp) {
 		fs_rdwr(*tmp);
@@ -586,18 +596,23 @@ void fs_noexec(const char *dir) {
 // remount directory noexec, nodev, nosuid recursively
 void fs_noexec_rec(const char *dir) {
 	assert(dir);
-	EUID_USER();
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
-	if (mountid == -1) {
-		EUID_ROOT();
+	if (mountid == -1)
+		return;
+	if (mountid == -2) {
+		// falling back to a simple remount on old kernels
+		if (!mount_warning) {
+			fwarning("read-only, read-write and noexec options are not applied recursively\n");
+			mount_warning = 1;
+		}
+		fs_noexec(dir);
 		return;
 	}
 	// build array with all mount points that need to get remounted
 	char **arr = build_mount_array(mountid, dir);
 	assert(arr);
 	// remount
-	EUID_ROOT();
 	char **tmp = arr;
 	while (*tmp) {
 		fs_noexec(*tmp);

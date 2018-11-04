@@ -153,7 +153,6 @@ MountData *get_last_mount(void) {
 
 // Extract the mount id from /proc/self/fdinfo and return it.
 int get_mount_id(const char *path) {
-	EUID_ASSERT();
 	int fd = open(path, O_PATH|O_CLOEXEC);
 	if (fd == -1)
 		return -1;
@@ -161,32 +160,41 @@ int get_mount_id(const char *path) {
 	char *fdinfo;
 	if (asprintf(&fdinfo, "/proc/self/fdinfo/%d", fd) == -1)
 		errExit("asprintf");
-	EUID_ROOT();
 	FILE *fp = fopen(fdinfo, "re");
-	EUID_USER();
-	if (!fp)
-		goto errexit;
+	if (!fp) {
+		perror("fopen");
+		fprintf(stderr, "Error: cannot open %s\n", fdinfo);
+		exit(1);
+	}
 
 	// read the file
 	char buf[MAX_BUF];
-	while (fgets(buf, MAX_BUF, fp)) {
+	if (fgets(buf, MAX_BUF, fp) == NULL) {
+		fprintf(stderr, "Error: cannot read %s\n", fdinfo);
+		exit(1);
+	}
+	do {
 		if (strncmp(buf, "mnt_id:", 7) == 0) {
 			char *ptr = buf + 7;
 			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
 				ptr++;
 			}
-			if (*ptr == '\0')
-				goto errexit;
+			if (*ptr == '\0') {
+				fprintf(stderr, "Error: cannot read %s\n", fdinfo);
+				exit(1);
+			}
 			fclose(fp);
 			close(fd);
 			free(fdinfo);
 			return atoi(ptr);
 		}
-	}
+	} while (fgets(buf, MAX_BUF, fp));
 
-errexit:
-	fprintf(stderr, "Error: cannot read %s\n", fdinfo);
-	exit(1);
+	// fallback, kernels older than 3.15 don't expose the mount id in this place
+	fclose(fp);
+	close(fd);
+	free(fdinfo);
+	return -2;
 }
 
 // Return array with all paths that might need a remount.
@@ -208,7 +216,11 @@ char **build_mount_array(const int mountid, const char *path) {
 	// read /proc/self/mountinfo
 	size_t pathlen = strlen(path);
 	int found = 0;
-	while (fgets(mbuf, MAX_BUF, fp)) {
+	if (fgets(mbuf, MAX_BUF, fp) == NULL) {
+		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
+		exit(1);
+	}
+	do {
 		// find mount point with mount id
 		if (!found) {
 			parse_line(mbuf, &mdata);
@@ -230,7 +242,8 @@ char **build_mount_array(const int mountid, const char *path) {
 			else
 				continue;
 		}
-		// from here on add all mount points below path
+		// from here on add all mount points below path,
+		// don't remount blacklisted paths
 		parse_line(mbuf, &mdata);
 		if (strncmp(mdata.dir, path, pathlen) == 0 &&
 		    mdata.dir[pathlen] == '/' &&
@@ -248,7 +261,8 @@ char **build_mount_array(const int mountid, const char *path) {
 				errExit("strdup");
 			cnt++;
 		}
-	}
+	} while (fgets(mbuf, MAX_BUF, fp));
+
 	if (cnt == size) {
 		size++;
 		rv = realloc(rv, size * sizeof(*rv));

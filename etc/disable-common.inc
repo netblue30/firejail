@@ -2,6 +2,11 @@
 # Persistent customizations should go in a .local file.
 include disable-common.local
 
+# The following block breaks trash functionality in file managers
+#read-only  ${HOME}/.local
+#read-write ${HOME}/.local/share
+blacklist   ${HOME}/.local/share/Trash
+
 # History files in $HOME and clipboard managers
 blacklist-nolog ${HOME}/.*_history
 blacklist-nolog ${HOME}/.adobe
@@ -262,11 +267,6 @@ read-only ${HOME}/.gem
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
 read-only ${HOME}/bin
-
-# The following block breaks trash functionality in file managers
-#read-only  ${HOME}/.local
-#read-write ${HOME}/.local/share
-blacklist   ${HOME}/.local/share/Trash
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus

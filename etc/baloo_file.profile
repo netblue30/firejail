@@ -5,6 +5,11 @@ include baloo_file.local
 # Persistent global definitions
 include globals.local
 
+# Make home directory read-only and allow writing only to ${HOME}/.local/share
+# Note: Baloo will not be able to update the "first run" key in its configuration files.
+# read-only  ${HOME}
+# read-write ${HOME}/.local/share
+
 noblacklist ${HOME}/.config/baloofilerc
 noblacklist ${HOME}/.kde/share/config/baloofilerc
 noblacklist ${HOME}/.kde/share/config/baloorc
@@ -42,8 +47,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# Make home directory read-only and allow writing only to ${HOME}/.local/share
-# Note: Baloo will not be able to update the "first run" key in its configuration files.
-# read-only  ${HOME}
-# read-write ${HOME}/.local/share

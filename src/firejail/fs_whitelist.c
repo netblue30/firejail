@@ -303,7 +303,9 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	// confirm the file was mounted on the right target
 	// strcmp does not work here, because mptr->dir can be a child mount
-	if (strncmp(mptr->dir, path, strlen(path)) != 0)
+	size_t path_len = strlen(path);
+	if (strncmp(mptr->dir, path, path_len) != 0 ||
+	   (*(mptr->dir + path_len) != '\0' && *(mptr->dir + path_len) != '/'))
 		errLogExit("invalid whitelist mount");
 	// No mounts are allowed on top level directories. A destination such as "/etc" is very bad!
 	//  - there should be more than one '/' char in dest string
@@ -326,8 +328,6 @@ static void whitelist_path(ProfileEntry *entry) {
 
 
 void fs_whitelist(void) {
-	char *homedir = cfg.homedir;
-	assert(homedir);
 	ProfileEntry *entry = cfg.profile;
 	if (!entry)
 		return;

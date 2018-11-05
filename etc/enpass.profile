@@ -1,3 +1,5 @@
+# Firejail profile for enpass
+# Description: A multiplatform password manager
 # This file is overwritten after every install/update.
 # Persistent local customisations
 include enpass.local

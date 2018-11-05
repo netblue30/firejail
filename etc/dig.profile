@@ -1,5 +1,6 @@
-quiet
 # Firejail profile for dig
+# Description: DNS lookup utility
+quiet
 # This file is overwritten after every install/update
 # Persistent local customizations
 include dig.local

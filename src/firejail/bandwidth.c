@@ -296,69 +296,7 @@ void bandwidth_set(pid_t pid, const char *dev, int down, int up) {
 //***********************************
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) {
 	EUID_ASSERT();
-	//************************
-	// verify sandbox
-	//************************
-	EUID_ROOT();
-	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (!comm) {
-		fprintf(stderr, "Error: cannot find sandbox\n");
-		exit(1);
-	}
-
-	// check for firejail sandbox
-	if (strcmp(comm, "firejail") != 0) {
-		fprintf(stderr, "Error: cannot find sandbox\n");
-		exit(1);
-	}
-	free(comm);
-
-	// check network namespace
-	char *name;
-	if (asprintf(&name, "/run/firejail/network/%d-netmap", pid) == -1)
-		errExit("asprintf");
-	struct stat s;
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace\n");
-		exit(1);
-	}
-
-	//************************
-	// join the network namespace
-	//************************
-	pid_t child;
-	if (find_child(pid, &child) == 1) {
-		fprintf(stderr, "Error: cannot join the network namespace\n");
-		exit(1);
-	}
-
-	if (invalid_sandbox(child)) {
-		fprintf(stderr, "Error: cannot join the network namespace\n");
-		exit(1);
-	}
-
-	// check privileges for non-root users
-	uid_t uid = getuid();
-	if (uid != 0) {
-		uid_t sandbox_uid = pid_get_uid(pid);
-		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
-			exit(1);
-		}
-	}
-
-	EUID_ROOT();
-	if (join_namespace(child, "net")) {
-		fprintf(stderr, "Error: cannot join the network namespace\n");
-		exit(1);
-	}
-
-	// set run file
-	if (strcmp(command, "set") == 0)
-		bandwidth_set(pid, dev, down, up);
-	else if (strcmp(command, "clear") == 0)
-		bandwidth_remove(pid, dev);
+	enter_network_namespace(pid);
 
 	//************************
 	// build command
@@ -399,6 +337,22 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		}
 		free(fname);
 		fclose(fp);
+	}
+
+	// set run file
+	if (strcmp(command, "set") == 0) {
+		if (devname == NULL) {
+			fprintf(stderr, "Error: cannot find a %s interface inside the sandbox\n", dev);
+			exit(1);
+		}
+		bandwidth_set(pid, devname, down, up);
+	}
+	else if (strcmp(command, "clear") == 0) {
+		if (devname == NULL) {
+			fprintf(stderr, "Error: cannot find a %s interface inside the sandbox\n", dev);
+			exit(1);
+		}
+		bandwidth_remove(pid, devname);
 	}
 
 	// build fshaper.sh command

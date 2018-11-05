@@ -27,7 +27,7 @@ nodbus
 nodvd
 nogroups
 notv
-nou2f
+?BROWSER_DISABLE_U2F: nou2f
 shell none
 
 disable-mnt

@@ -14,7 +14,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 #include disable-xdg.inc
 
-whitelist ~/.digrc
+whitelist ${HOME}/.digrc
 include whitelist-common.inc
 include whitelist-var-common.inc
 

@@ -35,7 +35,7 @@ x11 none
 private-cache
 private-dev
 private-etc magic.mgc,magic,localtime
-private-lib libmagic.so.*
+private-lib libarchive.so.*,libfakeroot,libmagic.so.*
 
 memory-deny-write-execute
 noexec ${HOME}

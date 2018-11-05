@@ -29,4 +29,7 @@ private-dev
 private-etc passwd,group,localtime
 private-lib
 
+# Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
+writable-var
+
 include default.profile

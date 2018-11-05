@@ -1,5 +1,6 @@
-quiet
 # Firejail profile for whois
+# Description: Intelligent WHOIS client
+quiet
 # This file is overwritten after every install/update
 # Persistent local customizations
 include whois.local

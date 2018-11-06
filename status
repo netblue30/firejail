@@ -1,3 +1,14 @@
+Nov 6: mainline merge
+done: removed transfer.sh support from travis build
+done: fix --bandwidth command
+done: fs_whitelist: minor mountinfo check improvement, cleanup
+done: mount appimages nodev,nosuid
+done: adding --net.print command
+done: fix busybox workaround
+
+Nov 6: 0.9.56.1 open for development
+Oct 21: release 0.9.56-LTS
+
 Oct 17: Fix docs on default seccomp list: change mfsservctl -> nfsservctl and…
 Oct 17: improve clean_pathname function
 Oct 14: Make --join return exit code of the invoked program

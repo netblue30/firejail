@@ -524,6 +524,16 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature("networking");
 	}
+	else if (strncmp(argv[i], "--net.print=", 12) == 0) {
+		if (checkcfg(CFG_NETWORK)) {
+			// extract pid or sandbox name
+			pid_t pid = require_pid(argv[i] + 12);
+			net_print(pid);
+			exit(0);
+		}
+		else
+			exit_err_feature("networking");
+	}
 #endif
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
 		if (checkcfg(CFG_JOIN) || getuid() == 0) {

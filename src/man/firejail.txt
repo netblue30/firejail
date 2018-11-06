@@ -781,6 +781,23 @@ Note: \-\-net=none can crash the application on some platforms.
 In these cases, it can be replaced with \-\-protocol=unix.
 
 .TP
+\fB\-\-net.print=name|pid
+If a new network namespace is enabled, print network interface configuration for the sandbox specified by name or PID. Example:
+.br
+
+.br
+$ firejail --net.print=browser
+.br
+Switching to pid 1853, the first child process inside the sandbox
+.br
+Interface  MAC               IP            Mask        Status
+.br
+lo                           127.0.0.1     255.0.0.0     UP
+.br
+eth0-1852  5e:fb:8e:27:29:26 192.168.1.186 255.255.255.0 UP
+.br
+
+.TP
 \fB\-\-netfilter
 Enable a default firewall if a new network namespace is created inside the sandbox.
 This option has no effect for sandboxes using the system network namespace.

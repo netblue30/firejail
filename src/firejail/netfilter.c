@@ -132,63 +132,12 @@ void netfilter6(const char *fname) {
 void netfilter_print(pid_t pid, int ipv6) {
 	EUID_ASSERT();
 
-	// verify sandbox
-	EUID_ROOT();
-	char *comm = pid_proc_comm(pid);
-	EUID_USER();
-	if (!comm) {
-		fprintf(stderr, "Error: cannot find sandbox\n");
-		exit(1);
-	}
-
-	// check for firejail sandbox
-	if (strcmp(comm, "firejail") != 0) {
-		fprintf(stderr, "Error: cannot find sandbox\n");
-		exit(1);
-	}
-	free(comm);
-
-	// check privileges for non-root users
-	uid_t uid = getuid();
-	if (uid != 0) {
-		uid_t sandbox_uid = pid_get_uid(pid);
-		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
-			exit(1);
-		}
-	}
-
-	// check network namespace
-	char *name;
-	if (asprintf(&name, "/run/firejail/network/%d-netmap", pid) == -1)
-		errExit("asprintf");
-	struct stat s;
-	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace\n");
-		exit(1);
-	}
-
-	// join the network namespace
-	pid_t child;
-	if (find_child(pid, &child) == 1) {
-		fprintf(stderr, "Error: cannot join the network namespace\n");
-		exit(1);
-	}
-
-	if (invalid_sandbox(child)) {
-		fprintf(stderr, "Error: cannot join the network namespace\n");
-		exit(1);
-	}
-
-	EUID_ROOT();
-	if (join_namespace(child, "net")) {
-		fprintf(stderr, "Error: cannot join the network namespace\n");
-		exit(1);
-	}
+	enter_network_namespace(pid);
 
 	// find iptables executable
 	char *iptables = NULL;
 //	char *iptables_restore = NULL;
+	struct stat s;
 	if (ipv6) {
 		if (stat("/sbin/ip6tables", &s) == 0)
 			iptables = "/sbin/ip6tables";

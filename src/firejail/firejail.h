@@ -376,6 +376,7 @@ void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
 void net_check_cfg(void);
 void net_dns_print(pid_t pid);
 void network_main(pid_t child);
+void net_print(pid_t pid);
 
 // network.c
 int check_ip46_address(const char *addr);
@@ -500,6 +501,7 @@ void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 int safe_fd(const char *path, int flags);
 int invalid_sandbox(const pid_t pid);
+void enter_network_namespace(pid_t pid);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.

@@ -1128,3 +1128,41 @@ int invalid_sandbox(const pid_t pid) {
 
 	return 0;
 }
+
+void enter_network_namespace(pid_t pid) {
+	// in case the pid is that of a firejail process, use the pid of the first child process
+	pid_t child = switch_to_child(pid);
+
+	// now check if the pid belongs to a firejail sandbox
+	if (invalid_sandbox(child)) {
+		fprintf(stderr, "Error: no valid sandbox\n");
+		exit(1);
+	}
+
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
+			exit(1);
+		}
+	}
+
+	// check network namespace
+	char *name;
+	if (asprintf(&name, "/run/firejail/network/%d-netmap", pid) == -1)
+		errExit("asprintf");
+	struct stat s;
+	if (stat(name, &s) == -1) {
+		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace\n");
+		exit(1);
+	}
+
+	// join the namespace
+	EUID_ROOT();
+	if (join_namespace(child, "net")) {
+		fprintf(stderr, "Error: cannot join the network namespace\n");
+		exit(1);
+	}
+}

@@ -34,6 +34,7 @@
 
 #define EMPTY_STRING ("")
 #define MAXBUF 4098
+static size_t homedir_len; // cache length of homedir string
 
 
 static int mkpath(const char* path, mode_t mode) {
@@ -42,7 +43,7 @@ static int mkpath(const char* path, mode_t mode) {
 
 	// create directories with uid/gid as root or as current user if inside home directory
 	int userhome = 0;
-	if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {
+	if (strncmp(path, cfg.homedir, homedir_len) == 0) {
 		EUID_USER();
 		userhome = 1;
 	}
@@ -123,12 +124,12 @@ static void whitelist_path(ProfileEntry *entry) {
 	char *wfile = NULL;
 
 	if (entry->home_dir) {
-		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) != 0 || path[strlen(cfg.homedir)] != '/')
+		if (strncmp(path, cfg.homedir, homedir_len) != 0 || path[homedir_len] != '/')
 			// either symlink pointing outside home directory
 			// or entire home directory, skip the mount
 			return;
 
-		fname = path + strlen(cfg.homedir) + 1; // strlen("/home/user/")
+		fname = path + homedir_len + 1; // strlen("/home/user/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
@@ -302,7 +303,9 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	// confirm the file was mounted on the right target
 	// strcmp does not work here, because mptr->dir can be a child mount
-	if (strncmp(mptr->dir, path, strlen(path)) != 0)
+	size_t path_len = strlen(path);
+	if (strncmp(mptr->dir, path, path_len) != 0 ||
+	   (*(mptr->dir + path_len) != '\0' && *(mptr->dir + path_len) != '/'))
 		errLogExit("invalid whitelist mount");
 	// No mounts are allowed on top level directories. A destination such as "/etc" is very bad!
 	//  - there should be more than one '/' char in dest string
@@ -325,12 +328,11 @@ static void whitelist_path(ProfileEntry *entry) {
 
 
 void fs_whitelist(void) {
-	char *homedir = cfg.homedir;
-	assert(homedir);
 	ProfileEntry *entry = cfg.profile;
 	if (!entry)
 		return;
 
+	homedir_len = strlen(cfg.homedir);
 	char *new_name = NULL;
 	int home_dir = 0;	// /home/user directory flag
 	int tmp_dir = 0;	// /tmp directory flag
@@ -430,7 +432,7 @@ void fs_whitelist(void) {
 
 			// if 1 the file was not found; mount an empty directory
 			if (!nowhitelist_flag) {
-				if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0 && new_name[strlen(cfg.homedir)] == '/') {
+				if (strncmp(new_name, cfg.homedir, homedir_len) == 0 && new_name[homedir_len] == '/') {
 					if(!arg_private)
 						home_dir = 1;
 				}
@@ -483,7 +485,7 @@ void fs_whitelist(void) {
 		}
 
 		// check for supported directories
-		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0 && new_name[strlen(cfg.homedir)] == '/') {
+		if (strncmp(new_name, cfg.homedir, homedir_len) == 0 && new_name[homedir_len] == '/') {
 			// whitelisting home directory is disabled if --private option is present
 			if (arg_private) {
 				if (arg_debug || arg_debug_whitelists)
@@ -504,7 +506,7 @@ void fs_whitelist(void) {
 
 			// both path and absolute path are in user home,
 			// if not check if the symlink destination is owned by the user
-			if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0 || fname[strlen(cfg.homedir)] != '/') {
+			if (strncmp(fname, cfg.homedir, homedir_len) != 0 || fname[homedir_len] != '/') {
 				if (checkcfg(CFG_FOLLOW_SYMLINK_AS_USER)) {
 					if (stat(fname, &s) == 0 && s.st_uid != getuid()) {
 						free(fname);

@@ -1,4 +1,4 @@
-firejail (0.9.56-LTS~rc1) baseline; urgency=low
+firejail (0.9.56-LTS) baseline; urgency=low
   * code based on Firejail version 0.9.56
   * much smaller code base for SUID executable
   * command line options removed:

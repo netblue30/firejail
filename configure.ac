@@ -1,5 +1,5 @@
 AC_PREREQ([2.68])
-AC_INIT(firejail, 0.9.56-LTS, netblue30@yahoo.com, , http://firejail.wordpress.com)
+AC_INIT(firejail, 0.9.56.1-LTS, netblue30@yahoo.com, , http://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 #AC_CONFIG_HEADERS([config.h])
 

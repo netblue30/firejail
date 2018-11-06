@@ -51,6 +51,7 @@ blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Authenticator
 blacklist ${HOME}/.config/Beaker Browser
 blacklist ${HOME}/.config/Brackets
+blacklist ${HOME}/.config/BraveSoftware
 blacklist ${HOME}/.config/Clementine
 blacklist ${HOME}/.config/Code
 blacklist ${HOME}/.config/Code Industry

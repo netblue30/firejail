@@ -371,6 +371,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// browser-disable-u2f
+			else if (strncmp(ptr, "browser-disable-u2f ", 20) == 0) {
+				if (strcmp(ptr + 20, "yes") == 0)
+					cfg_val[CFG_BROWSER_DISABLE_U2F] = 1;
+				else if (strcmp(ptr + 20, "no") == 0)
+					cfg_val[CFG_BROWSER_DISABLE_U2F] = 0;
+				else
+					goto errout;
+			}
 			else
 				goto errout;
 

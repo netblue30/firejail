@@ -3,9 +3,9 @@
 include disable-common.local
 
 # The following block breaks trash functionality in file managers
-#read-only  ${HOME}/.local
+#read-only ${HOME}/.local
 #read-write ${HOME}/.local/share
-blacklist   ${HOME}/.local/share/Trash
+blacklist ${HOME}/.local/share/Trash
 
 # History files in $HOME and clipboard managers
 blacklist-nolog ${HOME}/.*_history
@@ -122,7 +122,7 @@ read-only ${HOME}/.local/share/kssl
 blacklist /run/user/*/kdeinit5__*
 # blacklist /run/user/*/ksocket-*/kdeinit4__*
 # blacklist /tmp/ksocket-*/kdeinit4__*
-#  - causes issues when kdeinit4 gets killed; enable on KDE Plasma 4
+# causes issues when kdeinit4 gets killed; enable on KDE Plasma 4
 
 # gnome
 # contains extensions, last used times of applications, and notifications
@@ -133,7 +133,7 @@ blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
 blacklist /var/lib/systemd
 # blacklist /var/run/systemd
-#  - creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
+# creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 
 # VirtualBox
 blacklist ${HOME}/.VirtualBox
@@ -173,7 +173,7 @@ blacklist /var/lib/mysqld/mysql.sock
 blacklist /var/lib/pacman
 blacklist /var/lib/upower
 # blacklist /var/log - a virtual /var/log directory (mostly empty) is build up by default for
-#          every sandbox, unless --writeble-var-log switch is activated
+# every sandbox, unless --writeble-var-log switch is activated
 blacklist /var/mail
 blacklist /var/opt
 blacklist /var/run/acpid.socket

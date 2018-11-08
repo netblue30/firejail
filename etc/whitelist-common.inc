@@ -20,6 +20,10 @@ whitelist ${HOME}/.local/share/icons
 whitelist ${HOME}/.local/share/mime
 whitelist ${HOME}/.mime.types
 
+# dconf
+mkdir ${HOME}/.config/dconf
+whitelist ${HOME}/.config/dconf
+
 # fonts
 whitelist ${HOME}/.cache/fontconfig
 whitelist ${HOME}/.config/fontconfig
@@ -48,11 +52,8 @@ whitelist ${HOME}/.kde4/share/config/gtkrc-2.0
 whitelist ${HOME}/.local/share/themes
 whitelist ${HOME}/.themes
 
-# dconf
-mkdir ${HOME}/.config/dconf
-whitelist ${HOME}/.config/dconf
-
 # qt/kde
+whitelist ${HOME}/.cache/kioexec/krun
 whitelist ${HOME}/.config/Kvantum
 whitelist ${HOME}/.config/Trolltech.conf
 whitelist ${HOME}/.config/kdeglobals
@@ -73,4 +74,3 @@ whitelist ${HOME}/.kde4/share/config/ksslcablacklist
 whitelist ${HOME}/.kde4/share/config/oxygenrc
 whitelist ${HOME}/.kde4/share/icons
 whitelist ${HOME}/.local/share/qt5ct
-whitelist ${HOME}/.cache/kioexec/krun

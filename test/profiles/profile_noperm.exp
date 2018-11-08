@@ -7,7 +7,7 @@ match_max 100000
 send -- "firejail --profile=/etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"cannot access profile"
+	"inaccessible profile file"
 }
 after 100
 puts "\nall done\n"

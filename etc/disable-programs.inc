@@ -2,10 +2,12 @@
 # Persistent customizations should go in a .local file.
 include disable-programs.local
 
+blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud/Notes
 blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/snap
+blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*
@@ -35,9 +37,9 @@ blacklist ${HOME}/.anydesk
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.aria2
 blacklist ${HOME}/.arm
+blacklist ${HOME}/.asunder_album_artist
 blacklist ${HOME}/.asunder_album_genre
 blacklist ${HOME}/.asunder_album_title
-blacklist ${HOME}/.asunder_album_artist
 blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
@@ -315,9 +317,9 @@ blacklist ${HOME}/.kde/share/apps/khtml
 blacklist ${HOME}/.kde/share/apps/konqsidebartng
 blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/kopete
-blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/apps/khtml
 blacklist ${HOME}/.kde/share/apps/ktorrent
+blacklist ${HOME}/.kde/share/apps/okular
 blacklist ${HOME}/.kde/share/config/baloofilerc
 blacklist ${HOME}/.kde/share/config/baloorc
 blacklist ${HOME}/.kde/share/config/digikam
@@ -540,8 +542,6 @@ blacklist ${HOME}/.xmr-stak
 blacklist ${HOME}/.xonotic
 blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom
-blacklist ${HOME}/Arduino
-blacklist ${HOME}/wallet.dat
 blacklist /tmp/akonadi-*
 blacklist /tmp/ssh-*
 

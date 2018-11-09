@@ -1495,7 +1495,8 @@ int main(int argc, char **argv) {
 			if (!ppath)
 				errExit("strdup");
 
-			if (access(ppath, R_OK)) {
+			if (*ppath == ':' || access(ppath, R_OK) || is_dir(ppath)) {
+				int has_colon = (*ppath == ':');
 				char *ptr = ppath;
 				while (*ptr != '/' && *ptr != '.' && *ptr != '\0')
 					ptr++;
@@ -1508,7 +1509,7 @@ int main(int argc, char **argv) {
 
 				// profile was not read in previously, try to see if
 				// we were given a profile name.
-				if (!profile_find_firejail(ppath, 1)) {
+				if (!profile_find_firejail(ppath + has_colon, 1)) {
 					// do not fall through to default profile,
 					// because the user should be notified that
 					// given profile arg could not be used.

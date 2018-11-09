@@ -186,7 +186,9 @@ Example:
 $ firejail --build=vlc.profile vlc ~/Videos/test.mp4
 .TP
 \fB\-c
-Execute command and exit.
+Login shell compatibility option. This option is use by some login programs when executing
+the login shell, such as when firejail is used as a restricted login shell. It currently does
+not change the execution of firejail.
 .TP
 \fB\-\-caps
 Linux capabilities is a kernel feature designed to split up the root privilege into a set of distinct privileges.

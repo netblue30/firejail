@@ -101,17 +101,15 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 ## Current development version: 0.9.57
 
-## New Long Term Support (LTS) version
+## New Long Term Support (0.9.56-LTS) version released
 
-We are rebasing our Long Term Support branch of Firejail. The current LTS version (0.9.38.x) is more than two years old.
 The new version updates the code base to 0.9.56. We target a reduction of approx. 40% of the code by removing rarely
 used features (chroot, overlay, rlimits, cgroups), incomplete features (private-bin, private-lib),
 and a lot of instrumentation (build profile feature, tracing, auditing, etc). Sandbox-specific security features such as
 seccomp, capabilities, filesystem whitelist/blacklist and networking are updated and hardened.
 
-We have an rc1 release out, the final version will follow in the next few weeks:
 `````
-firejail (0.9.56-LTS~rc1) baseline; urgency=low
+firejail (0.9.56-LTS) baseline; urgency=low
   * code based on Firejail version 0.9.56
   * much smaller code base for SUID executable
   * command line options removed:
@@ -124,7 +122,7 @@ firejail (0.9.56-LTS~rc1) baseline; urgency=low
      --disable-globalcfg, --disable-network, --disable-userns,
      --disable-whitelist, --disable-suid, --enable-fatal-warnings,
      --enable-busybox-workaround
- -- netblue30 <netblue30@yahoo.com>  Wed, 3 Oct 2018 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 21 Oct 2018 08:00:00 -0500
 `````
 
 The new LTS branch is here: https://github.com/netblue30/firejail/tree/LTSbase

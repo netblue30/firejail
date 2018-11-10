@@ -25,7 +25,8 @@ extern char *xephyr_screen;
 #define MAX_READ 8192				  // line buffer for profile files
 
 // find and read the profile specified by name from dir directory
-int profile_find(const char *name, const char *dir, int add_ext) {
+// return  1 if a profile was found
+static int profile_find(const char *name, const char *dir, int add_ext) {
 	EUID_ASSERT();
 	assert(name);
 	assert(dir);
@@ -64,6 +65,7 @@ int profile_find(const char *name, const char *dir, int add_ext) {
 }
 
 // search and read the profile specified by name from firejail directories
+// return  1 if a profile was found
 int profile_find_firejail(const char *name, int add_ext) {
 	// look for a profile in ~/.config/firejail directory
 	char *usercfgdir;
@@ -139,6 +141,7 @@ int profile_check_conditional(char *ptr, int lineno, const char *fname) {
 		bool value;	// true if set
 	} conditionals[] = {
 		{"HAS_APPIMAGE", strlen("HAS_APPIMAGE"), arg_appimage!=0},
+		{"BROWSER_DISABLE_U2F", strlen("BROWSER_DISABLE_U2F"), checkcfg(CFG_BROWSER_DISABLE_U2F)!=0},
 		NULL
 	}, *cond = conditionals;
 	char *tmp = ptr, *msg = NULL;
@@ -1437,7 +1440,13 @@ void profile_read(const char *fname) {
 				ptr2++;
 			// profile path contains no / chars, do a search
 			if (*ptr2 == '\0') {
-				profile_find_firejail(newprofile, 0);
+				int rv = profile_find_firejail(newprofile, 0); // returns 1 if a profile was found in sysconfig directory
+				if (!rv) {
+					// maybe this is a file in the local working directory?
+					// it will stop the sandbox if not!
+					// Note: if the file ends in .local it will not stop the program
+					profile_read(newprofile);
+				}
 			}
 			else {
 				profile_read(newprofile);

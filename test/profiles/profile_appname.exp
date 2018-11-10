@@ -7,18 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --profile=test2.profile\r"
+send -- "firejail --profile=firefox\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile test2.profile"
+	"Reading profile /etc/firejail/firefox.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Reading profile test.profile"
+	"Reading profile /etc/firejail/firefox-common.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"cannot access profile file"
+	"shell=none configured, but no program specified"
 }
 
 after 100

@@ -2244,21 +2244,18 @@ int main(int argc, char **argv) {
 				return 1;
 			}
 		}
-		else if (strcmp(argv[i], "--") == 0) {
-			// double dash - positional params to follow
-			arg_doubledash = 1;
-			i++;
-			if (i  >= argc) {
-				fprintf(stderr, "Error: program name not found\n");
-				exit(1);
-			}
-			extract_command_name(i, argv);
-			prog_index = i;
-			break;
-		}
 		else {
+			// double dash - positional params to follow
+			if (strcmp(argv[i], "--") == 0) {
+				arg_doubledash = 1;
+				i++;
+				if (i  >= argc) {
+					fprintf(stderr, "Error: program name not found\n");
+					exit(1);
+				}
+			}
 			// is this an invalid option?
-			if (*argv[i] == '-') {
+			else if (*argv[i] == '-') {
 				fprintf(stderr, "Error: invalid %s command line option\n", argv[i]);
 				return 1;
 			}

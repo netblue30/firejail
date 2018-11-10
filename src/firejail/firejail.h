@@ -461,7 +461,6 @@ void fs_mnt(const int enforce);
 
 // profile.c
 // find and read the profile specified by name from dir directory
-int profile_find(const char *name, const char *dir, int add_ext);
 int profile_find_firejail(const char *name, int add_ext);
 // read a profile file
 void profile_read(const char *fname);
@@ -771,6 +770,7 @@ enum {
 	CFG_JOIN,
 	CFG_ARP_PROBES,
 	CFG_XPRA_ATTACH,
+	CFG_BROWSER_DISABLE_U2F,
 	CFG_PRIVATE_LIB,
 	CFG_APPARMOR,
 	CFG_DBUS,

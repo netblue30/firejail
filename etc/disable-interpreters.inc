@@ -4,8 +4,8 @@ include disable-interpreters.local
 
 # Lua
 blacklist ${PATH}/lua*
-blacklist /usr/lib/lua
 blacklist /usr/include/lua*
+blacklist /usr/lib/lua
 blacklist /usr/share/lua
 
 # Node.js

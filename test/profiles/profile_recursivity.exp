@@ -7,18 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --profile=test2.profile\r"
+send -- "firejail --profile=test3.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile test2.profile"
+	"Reading profile test3.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Reading profile test.profile"
+	"Reading profile test3.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"cannot access profile file"
+	"maximum profile include level was reached"
 }
 
 after 100

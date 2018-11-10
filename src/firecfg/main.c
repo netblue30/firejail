@@ -316,6 +316,9 @@ int main(int argc, char **argv) {
 	int i;
 	int bindir_set = 0;
 
+	// set umask
+	umask(022);
+
 	// user setup
 	char *user = get_user();
 	assert(user);

@@ -119,9 +119,13 @@ int firejail_user_check(const char *name) {
 	}
 
 	FILE *fp = fopen(fname, "r");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open %s for reading. "
+			"See \"man firejail-users\" for more information about this file.\n", fname);
+		perror("fopen");
+		exit(1);
+	}
 	free(fname);
-	if (!fp)
-		return 0;
 
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
@@ -165,8 +169,9 @@ void firejail_user_add(const char *name) {
 			return;
 		}
 	}
+	else
+		printf("Creating %s\n", fname);
 
-	printf("%s created\n", fname);
 	FILE *fp = fopen(fname, "a+");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open %s\n", fname);

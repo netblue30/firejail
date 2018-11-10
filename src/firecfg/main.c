@@ -316,9 +316,6 @@ int main(int argc, char **argv) {
 	int i;
 	int bindir_set = 0;
 
-	// set umask
-	umask(022);
-
 	// user setup
 	char *user = get_user();
 	assert(user);
@@ -382,6 +379,8 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 
+			// set umask, access database must be world-readable
+			umask(022);
 			for (j = i + 1; j < argc; j++) {
 				printf("Adding user %s to Firejail access database in %s/firejail.users\n", argv[j], SYSCONFDIR);
 				firejail_user_add(argv[j]);
@@ -436,7 +435,10 @@ int main(int argc, char **argv) {
 	// add user to firejail access database - only for root
 	if (getuid() == 0) {
 		printf("\nAdding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
+		// temporarily set the umask, access database must be world-readable
+		mode_t orig_umask = umask(022);
 		firejail_user_add(user);
+		umask(orig_umask);
 	}
 
 	// set new symlinks based on ~/.config/firejail directory

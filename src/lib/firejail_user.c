@@ -29,6 +29,7 @@
 #include "../include/firejail_user.h"
 #include <sys/types.h>
 #include <pwd.h>
+#include <errno.h>
 
 #define MAXBUF 4098
 
@@ -113,15 +114,22 @@ int firejail_user_check(const char *name) {
 
 	// check file existence
 	char *fname = get_fname();
+	assert(fname);
 	if (access(fname, F_OK)) {
-		free(fname);
-		return 1;	// assume the user doesn't care about access checking
+		if (errno == ENOENT) { // assume the user doesn't care about access checking
+			free(fname);
+			return 1;
+		}
+		else { // for example no search permission on SYSCONFDIR
+			fprintf(stderr, "Error: cannot access %s\n", fname);
+			perror("access");
+			exit(1);
+		}
 	}
 
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s for reading. "
-			"See \"man firejail-users\" for more information about this file.\n", fname);
+		fprintf(stderr, "Error: cannot read %s\n", fname);
 		perror("fopen");
 		exit(1);
 	}
@@ -166,6 +174,7 @@ void firejail_user_add(const char *name) {
 	if (access(fname, F_OK) == 0) {
 		if (firejail_user_check(name)) {
 			printf("User %s already in the database\n", name);
+			free(fname);
 			return;
 		}
 	}

@@ -238,9 +238,9 @@ char **build_mount_array(const int mount_id, const char *path) {
 				// give up if mount id has been reassigned,
 				// don't remount blacklisted path
 				if (strncmp(mntp.dir, path, strlen(mntp.dir)) ||
-			            strstr(mntp.fsname, "firejail.ro.dir") ||
-			            strstr(mntp.fsname, "firejail.ro.file"))
-			            	break;
+				    strstr(mntp.fsname, "firejail.ro.dir") ||
+				    strstr(mntp.fsname, "firejail.ro.file"))
+					    break;
 
 				*rv = strdup(path);
 				if (*rv == NULL)

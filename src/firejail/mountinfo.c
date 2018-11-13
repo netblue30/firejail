@@ -69,7 +69,7 @@ static void unmangle_path(char *path) {
 static void parse_line(char *line, MountData *output) {
 	assert(line && output);
 	memset(output, 0, sizeof(*output));
-	// extract filesystem name, directory and filesystem types
+	// extract mount id, filesystem name, directory and filesystem types
 	// examples:
 	//	587 543 8:1 /tmp /etc rw,relatime master:1 - ext4 /dev/sda1 rw,errors=remount-ro,data=ordered
 	//		output.mountid: 587
@@ -153,6 +153,8 @@ MountData *get_last_mount(void) {
 
 // Extract the mount id from /proc/self/fdinfo and return it.
 int get_mount_id(const char *path) {
+	assert(path);
+
 	int fd = open(path, O_PATH|O_CLOEXEC);
 	if (fd == -1)
 		return -1;
@@ -197,8 +199,12 @@ int get_mount_id(const char *path) {
 	return -2;
 }
 
-// Return array with all paths that might need a remount.
-char **build_mount_array(const int mountid, const char *path) {
+// Check /proc/self/mountinfo if path has any submounts (or if path would have submounts
+// if it was made a mount point).
+// Returns an array that can be iterated over for recursive remounting.
+char **build_mount_array(const int mount_id, const char *path) {
+	assert(path);
+
 	// open /proc/self/mountinfo
 	FILE *fp = fopen("/proc/self/mountinfo", "re");
 	if (!fp) {
@@ -207,29 +213,33 @@ char **build_mount_array(const int mountid, const char *path) {
 		exit(1);
 	}
 
-	size_t size = 32;
+	// array to be returned
 	size_t cnt = 0;
+	size_t size = 32;
 	char **rv = malloc(size * sizeof(*rv));
 	if (!rv)
 		errExit("malloc");
 
 	// read /proc/self/mountinfo
 	size_t pathlen = strlen(path);
+	char buf[MAX_BUF];
+	MountData mntp;
 	int found = 0;
-	if (fgets(mbuf, MAX_BUF, fp) == NULL) {
+
+	if (fgets(buf, MAX_BUF, fp) == NULL) {
 		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
 		exit(1);
 	}
 	do {
 		// find mount point with mount id
 		if (!found) {
-			parse_line(mbuf, &mdata);
-			if (mdata.mountid == mountid) {
-			    // don't remount blacklisted paths,
-			    // give up if mount id has been reassigned
-			    if (strstr(mdata.fsname, "firejail.ro.dir") ||
-			        strstr(mdata.fsname, "firejail.ro.file") ||
-			        strncmp(mdata.dir, path, strlen(mdata.dir)))
+			parse_line(buf, &mntp);
+			if (mntp.mountid == mount_id) {
+				// give up if mount id has been reassigned,
+				// don't remount blacklisted path
+				if (strncmp(mntp.dir, path, strlen(mntp.dir)) ||
+			        strstr(mntp.fsname, "firejail.ro.dir") ||
+			        strstr(mntp.fsname, "firejail.ro.file"))
 			        break;
 
 				*rv = strdup(path);
@@ -244,24 +254,24 @@ char **build_mount_array(const int mountid, const char *path) {
 		}
 		// from here on add all mount points below path,
 		// don't remount blacklisted paths
-		parse_line(mbuf, &mdata);
-		if (strncmp(mdata.dir, path, pathlen) == 0 &&
-		    mdata.dir[pathlen] == '/' &&
-		    strstr(mdata.fsname, "firejail.ro.dir") == NULL &&
-		    strstr(mdata.fsname, "firejail.ro.file") == NULL) {
+		parse_line(buf, &mntp);
+		if (strncmp(mntp.dir, path, pathlen) == 0 &&
+		    mntp.dir[pathlen] == '/' &&
+		    strstr(mntp.fsname, "firejail.ro.dir") == NULL &&
+		    strstr(mntp.fsname, "firejail.ro.file") == NULL) {
 
-			if (cnt >= size) {
+			if (cnt == size) {
 				size *= 2;
 				rv = realloc(rv, size * sizeof(*rv));
 				if (!rv)
 					errExit("realloc");
 			}
-			rv[cnt] = strdup(mdata.dir);
+			rv[cnt] = strdup(mntp.dir);
 			if (rv[cnt] == NULL)
 				errExit("strdup");
 			cnt++;
 		}
-	} while (fgets(mbuf, MAX_BUF, fp));
+	} while (fgets(buf, MAX_BUF, fp));
 
 	if (cnt == size) {
 		size++;

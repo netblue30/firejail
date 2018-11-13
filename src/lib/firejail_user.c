@@ -115,16 +115,10 @@ int firejail_user_check(const char *name) {
 	// check file existence
 	char *fname = get_fname();
 	assert(fname);
-	if (access(fname, F_OK)) {
-		if (errno == ENOENT) { // assume the user doesn't care about access checking
-			free(fname);
-			return 1;
-		}
-		else { // for example no search permission on SYSCONFDIR
-			fprintf(stderr, "Error: cannot access %s\n", fname);
-			perror("access");
-			exit(1);
-		}
+	if (access(fname, F_OK) == -1 && errno == ENOENT) {
+		// assume the user doesn't care about access checking
+		free(fname);
+		return 1;
 	}
 
 	FILE *fp = fopen(fname, "r");

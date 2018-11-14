@@ -2718,7 +2718,7 @@ The owner of the sandbox.
 Several command line options can be passed to the program using
 profile files. Firejail chooses the profile file as follows:
 
-1. If a profile file is provided by the user with --profile option, the profile file is loaded. If a profile name is given, it is searched for first in the ~/.config/firejail directory and if not found then in  /etc/firejail directory. Profile names do not include the .profile suffix.
+1. If a profile file is provided by the user with --profile=FILE option, the profile FILE is loaded. If a profile name is given, it is searched for first in the ~/.config/firejail directory and if not found then in  /etc/firejail directory. Profile names do not include the .profile suffix. If there is a file with the same name as the given profile name, it will be used instead of doing the profile search. To force a profile search, prefix the profile name with a colon (:), eg. --profile=:PROFILE_NAME.
 Example:
 .PP
 .RS

@@ -42,7 +42,6 @@ static char *usage_str =
 	"    --blacklist=filename - blacklist directory or file.\n"
 	"    --build - build a whitelisted profile for the application.\n"
 	"    --build=filename - build a whitelisted profile for the application.\n"
-	"    -c - login shell compatibility option (has no effect).\n"
 	"    --caps - enable default Linux capabilities filter.\n"
 	"    --caps.drop=all - drop all capabilities.\n"
 	"    --caps.drop=capability,capability - blacklist capabilities filter.\n"

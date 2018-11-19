@@ -8,23 +8,25 @@ usage = """fjdisplay.py name-of-firejail
 returns the display in the form of ':NNN'
 """
 
+
 def getfirejails():
-    output = subprocess.check_output(['firemon','--x11'])
+    output = subprocess.check_output(['firemon', '--x11'])
     firejails = {}
     name = ''
     for line in output.split('\n'):
-        namematch = re.search('--name=(\w+\S*)',line)
+        namematch = re.search('--name=(\w+\S*)', line)
         if namematch:
-          name = namematch.group(1)
-        displaymatch = re.search('DISPLAY (:\d+)',line)
+            name = namematch.group(1)
+        displaymatch = re.search('DISPLAY (:\d+)', line)
         if displaymatch:
-          firejails[name] = displaymatch.group(1)
+            firejails[name] = displaymatch.group(1)
     return firejails
+
 
 def getdisplay(name):
     firejails = getfirejails()
     fjlist = '\n'.join(firejails.keys())
-    namere = re.compile('^'+name+'.*', re.MULTILINE)
+    namere = re.compile('^' + name + '.*', re.MULTILINE)
     matchingjails = namere.findall(fjlist)
     if len(matchingjails) == 1:
         return firejails[matchingjails[0]]
@@ -33,6 +35,7 @@ def getdisplay(name):
     else:
         raise NameError("ambiguous firejail name")
 
+
 if __name__ == '__main__':
     if '-h' in sys.argv or '--help' in sys.argv or len(sys.argv) > 2:
         print(usage)
@@ -40,4 +43,4 @@ if __name__ == '__main__':
     if len(sys.argv) == 1:
         print(getfirejails())
     if len(sys.argv) == 2:
-        print (getdisplay(sys.argv[1]))
+        print(getdisplay(sys.argv[1]))

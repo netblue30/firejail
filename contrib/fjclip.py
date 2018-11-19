@@ -23,7 +23,7 @@ if sys.argv[1] == '-':
     clipin_raw = sys.stdin.read()
 else:
     display = fjdisplay.getdisplay(sys.argv[1])
-    clipin_raw = subprocess.check_output(['xsel','-b','--display',display])
+    clipin_raw = subprocess.check_output(['xsel', '-b', '--display', display])
 
 clipin = clipin_raw.strip()
 
@@ -31,5 +31,6 @@ if sys.argv[2] == '-':
     print(clipin)
 else:
     display = fjdisplay.getdisplay(sys.argv[2])
-    clipout = subprocess.Popen(['xsel','-b','-i','--display',display],stdin=subprocess.PIPE)
+    clipout = subprocess.Popen(['xsel', '-b', '-i', '--display', display],
+                               stdin=subprocess.PIPE)
     clipout.communicate(clipin)

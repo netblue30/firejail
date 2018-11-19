@@ -64,7 +64,7 @@ Aleksey Manevich (https://github.com/manevich)
 	- fix double quotes/single quotes problem
 	- big rework of argument processing subsystem
 	- --join fixes
-	- spliting up cmdline.c
+	- splitting up cmdline.c
 	- Busybox support
 	- X11 support rewrite
 	- gether shell selection code in one place
@@ -330,7 +330,7 @@ Jaykishan Mutkawoa (https://github.com/jmutkawoa)
 	- cpio profile
 James Elford (https://github.com/jelford)
 	- pass password manager support
-	- removed shell none from ssh-agent configuration, fixing the infinit loop
+	- removed shell none from ssh-agent configuration, fixing the infinite loop
 	- added gcloud profile
 	- blacklist sensitive cloud provider files in disable-common
 Jean Lucas (https://github.com/flacks)

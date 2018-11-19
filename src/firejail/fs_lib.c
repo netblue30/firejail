@@ -114,7 +114,7 @@ void fslib_copy_libs(const char *full_path) {
 	if (chown(RUN_LIB_FILE, getuid(), getgid()))
 		errExit("chown");
 
-	// run fldd to extact the list of files
+	// run fldd to extract the list of files
 	if (arg_debug || arg_debug_private_lib)
 		printf("    running fldd %s\n", full_path);
 	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);

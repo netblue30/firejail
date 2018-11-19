@@ -275,7 +275,7 @@ Build a new /lib directory and bring in the libraries required by the applicatio
 This feature is still under development, see \fBman 1 firejail\fR for some examples.
 .TP
 \fBprivate-opt file,directory
-Build a new /optin a temporary
+Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
 All modifications are discarded when the sandbox is closed.
 .TP

@@ -77,7 +77,7 @@ static void quote_cmdline(char *command_line, char *window_title, int len, int a
 
 		// enclose args by single quotes,
 		// and since single quote can't be represented in single quoted text
-		// each occurence of it should be enclosed by double quotes
+		// each occurrence of it should be enclosed by double quotes
 		in_quotes = false;
 		for (j = 0; j < strlen(argv[i + index]); j++) {
 			// single quote

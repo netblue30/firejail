@@ -385,7 +385,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 			int add_new = 0;
 			if (pids[pid].level < 0)	// not a firejail process
 				continue;
-			else if (pids[pid].level == 0) { // new porcess, do we track it?
+			else if (pids[pid].level == 0) { // new process, do we track it?
 				if (pid_is_firejail(pid) && mypid == 0) {
 					pids[pid].level = 1;
 					add_new = 1;

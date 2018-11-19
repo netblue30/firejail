@@ -147,7 +147,7 @@ firejail (0.9.50) baseline; urgency=low
   * feature: --profile.print
   * enhancement: print all seccomp filters under --debug
   * enhancement: /proc/sys mounting
-  * enhancement: rework IP address assingment for --net options
+  * enhancement: rework IP address assignment for --net options
   * enhancement: support for newer Xpra versions (2.1+) -
      set xpra-attach yes in /etc/firejail/firejail.config
   * enhancement: all profiles use a standard layout style
@@ -181,7 +181,7 @@ firejail (0.9.50~rc1) baseline; urgency=low
   * feature: --profile.print
   * enhancement: print all seccomp filters under --debug
   * enhancement: /proc/sys mounting
-  * enhancement: rework IP address assingment for --net options
+  * enhancement: rework IP address assignment for --net options
   * enhancement: support for newer Xpra versions (2.1+) -
      set xpra-attach yes in /etc/firejail/firejail.config
   * enhancement: all profiles use a standard layout style

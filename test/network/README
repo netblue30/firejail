@@ -1,7 +1,7 @@
 Warning: this test requires root access to configure a number of bridge, mac
 and vlan devices. Please take a look at configure file. By the time you are
 finished testing, you'll probably have to reboot the computer to get your
-networking subsytem back to normal.
+networking subsystem back to normal.
 
 Limitations - to be investigated and fixed:
 	- the test is assuming an eth0 wired interface to be present

@@ -8,7 +8,7 @@ usage = """usage: fjresize.py firejail-name displaysize
 resize firejail xephyr windows.
 fjdisplay.py with no other arguments will list running named firejails with displays.
 fjresize.py with only a firejail name will list valid resolutions.
-names can be shortend as long its unambiguous.
+names can be shortened as long its unambiguous.
 note: you may need to move the xephyr window for the resize to take effect
 example:
     fjresize.py browser 1280x800

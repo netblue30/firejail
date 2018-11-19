@@ -353,7 +353,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			exit(1);
 		}
 
-		// copy the temporary file into the destionation file
+		// copy the temporary file into the destination file
 		child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -428,7 +428,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			exit(1);
 		}
 
-		// copy the temporary file into the destionation file
+		// copy the temporary file into the destination file
 		child = fork();
 		if (child < 0)
 			errExit("fork");

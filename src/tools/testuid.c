@@ -30,7 +30,7 @@
 static void print_status(void) {
 	FILE *fp = fopen("/proc/self/status", "r");
 	if (!fp) {
-		fprintf(stderr, "Error, cannot open staus file\n");
+		fprintf(stderr, "Error, cannot open status file\n");
 		exit(1);
 	}
 

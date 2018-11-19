@@ -21,7 +21,7 @@ if [ "$1" = "--clear" ]; then
 	fi
 
 	DEV=$2
-	echo "Removing bandwith limits"
+	echo "Removing bandwidth limits"
 	/sbin/tc qdisc del dev $DEV root  2> /dev/null > /dev/null
 	/sbin/tc qdisc del dev $DEV ingress 2> /dev/null > /dev/null
 	exit
@@ -30,7 +30,7 @@ fi
 
 if [ "$1" = "--set" ]; then
 	DEV=$2
-	echo "Removing bandwith limit"
+	echo "Removing bandwidth limit"
 	/sbin/tc qdisc del dev $DEV ingress #2> /dev/null > /dev/null
 
 	if [ $# -ne 4 ]; then

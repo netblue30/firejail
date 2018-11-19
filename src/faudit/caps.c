@@ -43,7 +43,7 @@ static int extract_caps(uint64_t *val) {
 	return 1;
 }
 
-// return 1 if the capability is in tbe map
+// return 1 if the capability is in the map
 static int check_capability(uint64_t map, int cap) {
 	int i;
 	uint64_t mask = 1ULL;

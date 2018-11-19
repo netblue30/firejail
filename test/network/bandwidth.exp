@@ -50,7 +50,7 @@ sleep 1
 send -- "firejail --bandwidth=test clear br0\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"Removing bandwith limits"
+	"Removing bandwidth limits"
 }
 sleep 1
 

@@ -190,7 +190,7 @@ void run_no_sandbox(int argc, char **argv) {
 
 	int prog_index = 0;
 	// find first non option arg:
-	//	- first argument not starting wiht --,
+	//	- first argument not starting with --,
 	//	- whatever follows after -c (example: firejail -c ls)
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-c") == 0) {

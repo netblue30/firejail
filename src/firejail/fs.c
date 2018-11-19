@@ -72,7 +72,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	if (fname == NULL && errno == EACCES) {
 		if (arg_debug)
 			printf("Debug: no access to file %s, forcing mount\n", filename);
-		// realpath and stat funtions will fail on FUSE filesystems
+		// realpath and stat functions will fail on FUSE filesystems
 		// they don't seem to like a uid of 0
 		// force mounting
 		int rv = mount(RUN_RO_DIR, filename, "none", MS_BIND, "mode=400,gid=0");

@@ -91,7 +91,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	if (arg_debug)
 		printf("command len %d + %d + 1\n", (int) (sizeof(cmdlist) / sizeof(char*)), argc - index);
 	char *cmd[len];
-	cmd[0] = cmdlist[0];	// explicit assignemnt to clean scan-build error
+	cmd[0] = cmdlist[0];	// explicit assignment to clean scan-build error
 
 	// build command
 	unsigned i = 0;

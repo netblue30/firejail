@@ -359,7 +359,7 @@ extern int arg_private_bin;	// private bin directory
 extern int arg_private_tmp;	// private tmp directory
 extern int arg_private_lib;	// private lib directory
 extern int arg_scan;		// arp-scan all interfaces
-extern int arg_whitelist;	// whitelist commad
+extern int arg_whitelist;	// whitelist command
 extern int arg_nosound;	// disable sound
 extern int arg_noautopulse; // disable automatic ~/.config/pulse init
 extern int arg_novideo; //disable video devices in /dev
@@ -380,7 +380,7 @@ extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
 extern int arg_allow_debuggers;	// allow debuggers
 extern int arg_x11_block;	// block X11
-extern int arg_x11_xorg;	// use X11 security extention
+extern int arg_x11_xorg;	// use X11 security extension
 extern int arg_allusers;	// all user home directories visible
 extern int arg_machineid;	// preserve /etc/machine-id
 extern int arg_disable_mnt;	// disable /mnt and /media
@@ -437,7 +437,7 @@ void preproc_mount_mnt_dir(void);
 void preproc_clean_run(void);
 
 // fs.c
-// blacklist files or directoies by mounting empty files on top of them
+// blacklist files or directories by mounting empty files on top of them
 void fs_blacklist(void);
 // remount a directory read-only
 void fs_rdonly(const char *dir);

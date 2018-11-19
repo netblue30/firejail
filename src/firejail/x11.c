@@ -228,7 +228,7 @@ void x11_start_xvfb(int argc, char **argv) {
 
 	assert(xvfb_screen);
 
-	char *server_argv[256] = {		  // rest initialyzed to NULL
+	char *server_argv[256] = {		  // rest initialized to NULL
 		"Xvfb", display_str, "-screen", "0", xvfb_screen
 	};
 	unsigned pos = 0;
@@ -418,7 +418,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	pid_t jail = 0;
 	pid_t server = 0;
 
-	// default xephyr screen can be overwriten by a --xephyr-screen= command line option
+	// default xephyr screen can be overwritten by a --xephyr-screen= command line option
 	char *newscreen = extract_setting(argc, argv, "--xephyr-screen=");
 	if (newscreen)
 		xephyr_screen = newscreen;
@@ -446,7 +446,7 @@ void x11_start_xephyr(int argc, char **argv) {
 		errExit("asprintf");
 
 	assert(xephyr_screen);
-	char *server_argv[256] = {		  // rest initialyzed to NULL
+	char *server_argv[256] = {		  // rest initialized to NULL
 		"Xephyr", "-ac", "-br", "-noreset", "-screen", xephyr_screen
 	};
 	unsigned pos = 0;
@@ -627,7 +627,7 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	pid_t server = 0;
 
 	// build the start command
-	char *server_argv[256] = {		  // rest initialyzed to NULL
+	char *server_argv[256] = {		  // rest initialized to NULL
 		"xpra", "start", display_str, "--no-daemon",
 	};
 	unsigned pos = 0;
@@ -861,7 +861,7 @@ void x11_start_xpra_new(int argc, char **argv, char *display_str) {
 	pid_t server = 0;
 
 	// build the start command
-	char *server_argv[256] = {		  // rest initialyzed to NULL
+	char *server_argv[256] = {		  // rest initialized to NULL
 		"xpra", "start", display_str, "--daemon=no", "--attach=yes", "--exit-with-children=yes"
 	};
 	unsigned spos = 0;

@@ -33,7 +33,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin easystroke
+private-bin easystroke,bash,sh
 private-cache
 private-dev
 private-etc fonts

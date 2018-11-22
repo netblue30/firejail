@@ -148,4 +148,4 @@ QMediathekView, aria2c, Authenticator, checkbashisms, devilspie, devilspie2, eas
 bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat, lbzip2, lzcat, lzcmp, lzdiff, lzegrep, lzfgrep, lzgrep,
 lzless, lzma, lzmainfo, lzmore, unlzma, unxz, xzcat, xzcmp, xzdiff, xzegrep, xzfgrep, xzgrep, xzless, xzmore,
 lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh, nirtoshare-send, nitroshare-ui, mencoder, gnome-pie,
-masterpdfeditor, QOwnNotes, aisleriot, Mendeley
+masterpdfeditor, QOwnNotes, aisleriot, Mendeley, feedreader

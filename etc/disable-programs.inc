@@ -408,6 +408,7 @@ blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/emailidentities
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
+blacklist ${HOME}/.local/share/feedreader
 blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.local/share/geary
@@ -568,6 +569,7 @@ blacklist ${HOME}/.cache/dolphin
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon
+blacklist ${HOME}/.cache/feedreader
 blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/geeqie

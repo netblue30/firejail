@@ -1,26 +1,30 @@
-# Firejail profile for default
+# Firejail profile for feedreader
+# Description: RSS client
 # This file is overwritten after every install/update
 # Persistent local customizations
-include sol.local
+include feedreader.local
 # Persistent global definitions
 include globals.local
+
+noblacklist ${HOME}/.cache/feedreader
+noblacklist ${HOME}/.local/share/feedreader
 
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
 
-# all necessary files in $HOME are in whitelist-common.inc
+mkdir ${HOME}/.cache/feedreader
+mkdir ${HOME}/.local/share/feedreader
+whitelist ${HOME}/.cache/feedreader
+whitelist ${HOME}/.local/share/feedreader
 include whitelist-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-ipc-namespace
-net none
+netfilter
 # no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -29,16 +33,13 @@ noroot
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
 
 disable-mnt
-private-bin sol
-private-cache
 private-dev
 private-tmp
 
-memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

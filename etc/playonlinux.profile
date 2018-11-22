@@ -15,7 +15,13 @@ noblacklist ${HOME}/.PlayOnLinux
 # nc is needed to run playonlinux
 noblacklist ${PATH}/nc
 
-# Allow access to perl
+# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
+
+# Allow perl (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/cpan*
 noblacklist ${PATH}/core_perl
 noblacklist ${PATH}/perl
@@ -23,7 +29,6 @@ noblacklist /usr/lib/perl*
 noblacklist /usr/share/perl*
 
 include disable-common.inc
-# playonlinux uses perl
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-programs.inc

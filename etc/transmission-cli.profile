@@ -1,6 +1,7 @@
 # Firejail profile for transmission-cli
 # Description: Lightweight BitTorrent client
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include transmission-cli.local
 # Persistent global definitions

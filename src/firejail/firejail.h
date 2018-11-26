@@ -439,6 +439,8 @@ void preproc_clean_run(void);
 // fs.c
 // blacklist files or directories by mounting empty files on top of them
 void fs_blacklist(void);
+// mount a writable tmpfs
+void fs_tmpfs(const char *dir, unsigned check_owner);
 // remount a directory read-only
 void fs_rdonly(const char *dir);
 void fs_rdonly_rec(const char *dir);

@@ -447,6 +447,7 @@ blacklist ${HOME}/.local/share/nautilus-python
 blacklist ${HOME}/.local/share/nemo
 blacklist ${HOME}/.local/share/nemo-python
 blacklist ${HOME}/.local/share/notes
+blacklist ${HOME}/.local/share/ocenaudio
 blacklist ${HOME}/.local/share/okular
 blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview

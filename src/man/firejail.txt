@@ -2484,7 +2484,7 @@ Globbing is the operation that expands a wildcard pattern into the list of pathn
 - '[' denotes a range of characters
 .br
 .TP
-The gobing feature is implemented using glibc glob command. For more information on the wildcard syntax see man 7 glob.
+The globbing feature is implemented using glibc glob command. For more information on the wildcard syntax see man 7 glob.
 .br
 
 .br

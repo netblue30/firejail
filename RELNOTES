@@ -11,7 +11,7 @@ firejail (0.9.56.1) baseline; urgency=low
   * new profiles: lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh
   * new profiles: nirtoshare-send, nitroshare-ui, mencoder, gnome-pie
   * new profiles: masterpdfeditor, QOwnNotes, aisleriot, Mendeley
-  * new profiles: feedreader, ocenaudio
+  * new profiles: feedreader, ocenaudio, mpsyt
  -- netblue30 <netblue30@yahoo.com>  Thu, 11 Oct 2018 08:00:00 -0500
 
 firejail (0.9.56) baseline; urgency=low

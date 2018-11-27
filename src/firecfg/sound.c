@@ -41,10 +41,13 @@ void sound(void) {
 	char *fname;
 	if (asprintf(&fname, "%s/.config/pulse/client.conf", home) == -1)
 		errExit("asprintf");
+	printf("Writing file %s\n", fname);
 	FILE *fpout = fopen(fname, "w");
-	free(fname);
-	if (!fpout)
+	if (!fpout) {
+		perror("fopen");
 		goto errexit;
+	}
+	free(fname);
 
 	// copy default config
 	char buf[MAX_BUF];

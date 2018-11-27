@@ -55,6 +55,11 @@ Example:
 $ sudo firecfg --add-users dustin lucas mike eleven
 
 .TP
+\fB\-\-bindir=directory
+Create and search symbolic links in directory instead of the default location /user/local/bin.
+Directory should precede /usr/bin and /bin in the PATH environment variable.
+
+.TP
 \fB\-\-clean
 Remove all firejail symbolic links.
 

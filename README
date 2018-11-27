@@ -518,6 +518,8 @@ rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
+rusty-snake (https://github.com/rusty-snake)
+	- fixed kdenlive profile
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
@@ -684,6 +686,7 @@ veloute (https://github.com/veloute)
 	- added flameshot profile
 	- added jdownloader profile
 	- fixed discord profile
+	- fixes for various profiles
 Vincent43 (https://github.com/Vincent43)
 	- apparmor enhancements
 vismir2 (https://github.com/vismir2)

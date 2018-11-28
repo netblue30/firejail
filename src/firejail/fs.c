@@ -162,18 +162,8 @@ static void disable_file(OPERATION op, const char *filename) {
 	}
 	else if (op == MOUNT_TMPFS) {
 		if (S_ISDIR(s.st_mode)) {
-			if (arg_debug)
-				printf("Mounting tmpfs on %s\n", fname);
-			// preserve owner and mode for the directory
-			if (mount("tmpfs", fname, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  0) < 0)
-				errExit("mounting tmpfs");
-			/* coverity[toctou] */
-			if (chown(fname, s.st_uid, s.st_gid) == -1)
-				errExit("mounting tmpfs chown");
-			if (chmod(fname, s.st_mode) == -1)
-				errExit("mounting tmpfs chmod");
+			fs_tmpfs(fname, 0);
 			last_disable = SUCCESSFUL;
-			fs_logger2("tmpfs", fname);
 		}
 		else
 			fwarning("%s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
@@ -455,6 +445,49 @@ static int get_mount_flags(const char *path, unsigned long *flags) {
 // mount namespace
 //		- functions need fully resolved paths
 //***********************************************
+
+// mount a writable tmpfs on directory
+void fs_tmpfs(const char *dir, unsigned check_owner) {
+	assert(dir);
+	// get a file descriptor for dir, fails if there is any symlink
+	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1)
+		errExit("safe_fd");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (check_owner && s.st_uid != getuid()) {
+		fwarning("no tmpfs mounted on %s: not owned by the current user\n", dir);
+		close(fd);
+		return;
+	}
+	if (arg_debug)
+		printf("Mounting tmpfs on %s\n", dir);
+	// preserve ownership, mode
+	char *options;
+	if (asprintf(&options, "mode=%o,uid=%u,gid=%u", s.st_mode & 07777, s.st_uid, s.st_gid) == -1)
+		errExit("asprintf");
+	// preserve some mount flags
+	struct statvfs buf;
+	if (fstatvfs(fd, &buf) == -1)
+		errExit("fstatvfs");
+	unsigned long flags = buf.f_flag &  // remove read-only flag
+		(MS_NOSUID|MS_NODEV|MS_NOEXEC|MS_MANDLOCK|MS_STRICTATIME|MS_NODIRATIME|MS_RELATIME|MS_NOATIME);
+	// mount via the symbolic link in /proc/self/fd
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount("tmpfs", proc, "tmpfs", flags|MS_NOSUID|MS_NODEV, options) < 0)
+		errExit("mounting tmpfs");
+	// check the last mount operation
+	MountData *mdata = get_last_mount();
+	if (strcmp(mdata->fstype, "tmpfs") != 0 || strcmp(mdata->dir, dir) != 0)
+		errLogExit("invalid tmpfs mount");
+	fs_logger2("tmpfs", dir);
+	free(options);
+	free(proc);
+	close(fd);
+}
 
 // remount directory read-only
 void fs_rdonly(const char *dir) {
@@ -1584,8 +1617,6 @@ void fs_private_tmp(void) {
 		}
 	}
 	closedir(dir);
-
-
 }
 
 // this function is called from sandbox.c before blacklist/whitelist functions
@@ -1595,53 +1626,20 @@ void fs_private_cache(void) {
 		errExit("asprintf");
 	// check if ~/.cache is a valid destination
 	struct stat s;
-	if (is_link(cache)) {
-		fwarning("user .cache is a symbolic link, tmpfs not mounted\n");
+	if (lstat(cache, &s) == -1) {
+		fwarning("cannot find %s, tmpfs not mounted\n", cache);
 		free(cache);
 		return;
 	}
-	if (stat(cache, &s) == -1 || !S_ISDIR(s.st_mode)) {
-		fwarning("no user .cache directory found, tmpfs not mounted\n");
+	if (!S_ISDIR(s.st_mode)) {
+		if (S_ISLNK(s.st_mode))
+			fwarning("%s is a symbolic link, tmpfs not mounted\n", cache);
+		else
+			fwarning("%s is not a directory; cannot mount a tmpfs on top of it\n", cache);
 		free(cache);
 		return;
 	}
-	if (s.st_uid != getuid()) {
-		fwarning("user .cache is not owned by current user, tmpfs not mounted\n");
-		free(cache);
-		return;
-	}
-
-	if (arg_debug)
-		printf("Mounting tmpfs on %s\n", cache);
-	// get a file descriptor for ~/.cache, fails if there is any symlink
-	int fd = safe_fd(cache, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
-		errExit("safe_fd");
-	// confirm that actual mount destination is owned by the user
-	if (fstat(fd, &s) == -1 || s.st_uid != getuid())
-		errExit("fstat");
-
-	// mount a tmpfs on ~/.cache via the symbolic link in /proc/self/fd
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount("tmpfs", proc, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC, 0) < 0)
-		errExit("mounting tmpfs");
-	fs_logger2("tmpfs", cache);
-	free(proc);
-	close(fd);
-	// check the last mount operation
-	MountData *mdata = get_last_mount();
-	assert(mdata);
-	if (strcmp(mdata->fstype, "tmpfs") != 0 || strcmp(mdata->dir, cache) != 0)
-		errLogExit("invalid .cache mount");
-
-	// get a new file descriptor for ~/.cache, the old directory is masked by the tmpfs
-	fd = safe_fd(cache, O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
-		errExit("safe_fd");
+	// do the mount
+	fs_tmpfs(cache, getuid()); // check ownership of ~/.cache
 	free(cache);
-	// restore permissions
-	SET_PERMS_FD(fd, s.st_uid, s.st_gid, s.st_mode);
-	close(fd);
 }

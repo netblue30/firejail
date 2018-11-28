@@ -2058,7 +2058,7 @@ Kill the sandbox automatically after the time has elapsed. The time is specified
 $ firejail \-\-timeout=01:30:00 firefox
 .TP
 \fB\-\-tmpfs=dirname
-Mount a tmpfs filesystem on directory dirname. This option is available only when running the sandbox as root.
+Mount a writable tmpfs filesystem on directory dirname. This option is available only when running the sandbox as root.
 File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 

@@ -13,6 +13,18 @@ noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/mps
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
+noblacklist ${DOWNLOADS}
+
+mkdir ${HOME}/.config/mps-youtube
+
+whitelist ${HOME}/.config/mpv
+whitelist ${HOME}/.mplayer
+whitelist ${HOME}/.config/mps-youtube
+whitelist ${HOME}/.netrc
+whitelist ${HOME}/mps
+whitelist ${MUSIC}
+whitelist ${VIDEOS}
+whitelist ${DOWNLOADS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*
@@ -45,3 +57,7 @@ tracelog
 
 private-bin mpsyt,mplayer,mpv,youtube-dl,python*,env
 private-dev
+private-tmp
+
+noexec ${HOME}
+noexec /tmp

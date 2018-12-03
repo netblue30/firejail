@@ -229,6 +229,13 @@ char *expand_macros(const char *path) {
 			EUID_ROOT();
 		return new_name;
 	}
+	else if (strncmp(path, "${RUNUSER}", 10) == 0) {
+		if (asprintf(&new_name, "/run/user/%u%s", getuid(), path + 10) == -1)
+			errExit("asprintf");
+		if(called_as_root)
+			EUID_ROOT();
+		return new_name;
+	}
 	else {
 		char *directory = resolve_macro(path);
 		if (directory) {
@@ -260,6 +267,8 @@ void invalid_filename(const char *fname, int globbing) {
 		ptr = fname + 7;
 	else if (strncmp(ptr, "${PATH}", 7) == 0)
 		ptr = fname + 7;
+	else if (strncmp(ptr, "${RUNUSER}", 10) == 0)
+		ptr = fname + 10;
 	else {
 		int id = macro_id(fname);
 		if (id != -1)

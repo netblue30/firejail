@@ -94,7 +94,7 @@ Example: "?HAS_APPIMAGE: whitelist ${HOME}/special/appimage/dir"
 
 This example will load the whitelist profile line only if the \-\-appimage option has been specified on the command line.
 
-Currently the only conditionals supported are HAS_APPIMAGE and BROWSER_DISABLE_U2F.
+Currently the only conditionals supported are HAS_APPIMAGE, HAS_NODBUS and BROWSER_DISABLE_U2F.
 
 The profile line may be any profile line that you would normally use in a profile \fBexcept\fR for "quiet" and "include" lines.
 

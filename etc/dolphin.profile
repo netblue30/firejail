@@ -6,8 +6,6 @@ include dolphin.local
 # Persistent global definitions
 include globals.local
 
-# warning: firejail is currently not effectively constraining dolphin since used services are started by kdeinit5
-
 noblacklist ${HOME}/.local/share/Trash
 # noblacklist ${HOME}/.cache/dolphin - disable-programs.inc is disabled, see below
 # noblacklist ${HOME}/.config/dolphinrc
@@ -32,7 +30,7 @@ protocol unix
 seccomp
 shell none
 
-# private-dev
+private-dev
 # private-tmp
 
 join-or-start dolphin

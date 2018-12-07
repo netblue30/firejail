@@ -132,6 +132,10 @@ void env_defaults(void) {
 	if (cfg.shell && setenv("SHELL", cfg.shell, 1) < 0)
 		errExit("setenv");
 
+	// spawn KIO slaves inside the sandbox
+	if (setenv("KDE_FORK_SLAVES", "1", 1) < 0)
+		errExit("setenv");
+
 	// set prompt color to green
 	int set_prompt = 0;
 	if (checkcfg(CFG_FIREJAIL_PROMPT))

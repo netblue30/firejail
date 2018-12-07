@@ -141,6 +141,7 @@ int profile_check_conditional(char *ptr, int lineno, const char *fname) {
 		bool value;	// true if set
 	} conditionals[] = {
 		{"HAS_APPIMAGE", strlen("HAS_APPIMAGE"), arg_appimage!=0},
+		{"HAS_NODBUS", strlen("HAS_NODBUS"), arg_nodbus!=0},
 		{"BROWSER_DISABLE_U2F", strlen("BROWSER_DISABLE_U2F"), checkcfg(CFG_BROWSER_DISABLE_U2F)!=0},
 		NULL
 	}, *cond = conditionals;

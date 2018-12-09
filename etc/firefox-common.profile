@@ -29,6 +29,7 @@ caps.drop all
 netfilter
 # Breaks Gnome connector and KDE Connect
 # Also seems to break Ubuntu titlebar menu
+# Also breaks enigmail apparently?
 # During a stream on Plasma it prevents the mechanism to temporarily bypass the power management, i.e. to keep the screen on
 # Therefore disable if you use that
 nodbus

@@ -38,4 +38,6 @@ writable-run-user
 
 # allow browsers
 # Redirect
+# Uncomment if you use enigmail
+# ignore nodbus
 include firefox.profile

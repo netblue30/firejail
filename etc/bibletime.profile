@@ -34,9 +34,11 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6,netlink
-seccomp
+# Breaks bibletime on Fedora and Arch
+#seccomp
 shell none
-tracelog
+# Breaks bibletime on Fedora and Arch
+#tracelog
 
 # private-bin bibletime,qt5ct
 private-dev

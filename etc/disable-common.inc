@@ -119,13 +119,11 @@ read-only ${HOME}/.local/share/kservices5
 read-only ${HOME}/.local/share/kssl
 
 # KDE sockets
-blacklist ${RUNUSER}/kdeinit5__*
 blacklist ${RUNUSER}/*.slave-socket
-# decide heuristically if the kdeinit4 socket can be blacklisted
-?HAS_NODBUS: blacklist ${RUNUSER}/ksocket-*/kdeinit4__*
-blacklist ${RUNUSER}/ksocket-*/*.slave-socket
-?HAS_NODBUS: blacklist /tmp/ksocket-*/kdeinit4__*
-blacklist /tmp/ksocket-*/*.slave-socket
+blacklist ${RUNUSER}/kdeinit5__*
+blacklist ${RUNUSER}/kdesud_*
+?HAS_NODBUS: blacklist ${RUNUSER}/ksocket-*
+?HAS_NODBUS: blacklist /tmp/ksocket-*
 
 # gnome
 # contains extensions, last used times of applications, and notifications

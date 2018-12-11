@@ -767,26 +767,7 @@ void fs_proc_sys_dev_boot(void) {
 			char *fnamegpg;
 			if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
 				errExit("asprintf");
-			if (stat(fnamegpg, &s) == -1) {
-				pid_t child = fork();
-				if (child < 0)
-					errExit("fork");
-				if (child == 0) {
-					// drop privileges
-					drop_privs(0);
-					if (mkdir(fnamegpg, 0700) == 0) {
-						if (chmod(fnamegpg, 0700) == -1)
-							{;} // do nothing
-					}
-#ifdef HAVE_GCOV
-					__gcov_flush();
-#endif
-					_exit(0);
-				}
-				// wait for the child to finish
-				waitpid(child, NULL, 0);
-				fs_logger2("create", fnamegpg);
-			}
+			create_empty_dir_as_user(fnamegpg, 0700);
 			if (stat(fnamegpg, &s) == 0)
 				disable_file(BLACKLIST_FILE, fnamegpg);
 			free(fnamegpg);
@@ -795,26 +776,7 @@ void fs_proc_sys_dev_boot(void) {
 			char *fnamesysd;
 			if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
 				errExit("asprintf");
-			if (stat(fnamesysd, &s) == -1) {
-				pid_t child = fork();
-				if (child < 0)
-					errExit("fork");
-				if (child == 0) {
-					// drop privileges
-					drop_privs(0);
-					if (mkdir(fnamesysd, 0755) == 0) {
-						if (chmod(fnamesysd, 0755) == -1)
-							{;} // do nothing
-					}
-#ifdef HAVE_GCOV
-					__gcov_flush();
-#endif
-					_exit(0);
-				}
-				// wait for the child to finish
-				waitpid(child, NULL, 0);
-				fs_logger2("create", fnamesysd);
-			}
+			create_empty_dir_as_user(fnamesysd, 0755);
 			if (stat(fnamesysd, &s) == 0)
 				disable_file(BLACKLIST_FILE, fnamesysd);
 			free(fnamesysd);
@@ -924,31 +886,11 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 	}
 	else {
 		// create ~/.firejail directory
-		pid_t child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			// drop privileges
-			drop_privs(0);
-
-			// create directory
-			if (mkdir(dirname, 0700))
-				errExit("mkdir");
-			if (chmod(dirname, 0700) == -1)
-				errExit("chmod");
-			ASSERT_PERMS(dirname, getuid(), getgid(), 0700);
-#ifdef HAVE_GCOV
-			__gcov_flush();
-#endif
-			_exit(0);
-		}
-		// wait for the child to finish
-		waitpid(child, NULL, 0);
+		create_empty_dir_as_user(dirname, 0700);
 		if (stat(dirname, &s) == -1) {
-			fprintf(stderr, "Error: cannot create ~/.firejail directory\n");
+			fprintf(stderr, "Error: cannot create directory %s\n", dirname);
 			exit(1);
 		}
-		fs_logger2("create", dirname);
 	}
 	free(dirname);
 

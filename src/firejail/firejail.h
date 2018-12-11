@@ -540,6 +540,7 @@ uid_t pid_get_uid(pid_t pid);
 uid_t get_group_id(const char *group);
 int remove_overlay_directory(void);
 void flush_stdin(void);
+void create_empty_dir_as_user(const char *dir, mode_t mode);
 void create_empty_dir_as_root(const char *dir, mode_t mode);
 void create_empty_file_as_root(const char *dir, mode_t mode);
 int set_perms(const char *fname, uid_t uid, gid_t gid, mode_t mode);

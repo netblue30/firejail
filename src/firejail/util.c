@@ -961,6 +961,42 @@ void flush_stdin(void) {
 	}
 }
 
+void create_empty_dir_as_user(const char *dir, mode_t mode) {
+	assert(dir);
+	mode &= 07777;
+	struct stat s;
+
+	if (stat(dir, &s)) {
+		if (arg_debug)
+			printf("Creating empty %s directory\n", dir);
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+
+			if (mkdir(dir, mode) == 0) {
+				if (chmod(dir, mode) == -1)
+					{;} // do nothing
+			}
+			else if (errno != EEXIST && arg_debug) {
+				char *str;
+				if (asprintf(&str, "Directory %s not created", dir) == -1)
+					errExit("asprintf");
+				perror(str);
+			}
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
+		}
+		waitpid(child, NULL, 0);
+		if (stat(dir, &s) == 0)
+			fs_logger2("create", dir);
+	}
+}
+
 void create_empty_dir_as_root(const char *dir, mode_t mode) {
 	assert(dir);
 	mode &= 07777;

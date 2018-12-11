@@ -1171,8 +1171,13 @@ void x11_xorg(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (lstat(dest, &s) == -1)
+	if (lstat(dest, &s) == -1) {
 		touch_file_as_user(dest, 0600);
+		if (stat(dest, &s) == -1) {
+			fprintf(stderr, "Error: cannot create %s\n", dest);
+			exit(1);
+		}
+	}
 
 	// get a file descriptor for .Xauthority
 	fd = safe_fd(dest, O_PATH|O_NOFOLLOW|O_CLOEXEC);

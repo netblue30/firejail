@@ -767,7 +767,8 @@ void fs_proc_sys_dev_boot(void) {
 			char *fnamegpg;
 			if (asprintf(&fnamegpg, "/run/user/%d/gnupg", getuid()) == -1)
 				errExit("asprintf");
-			create_empty_dir_as_user(fnamegpg, 0700);
+			if (create_empty_dir_as_user(fnamegpg, 0700))
+				fs_logger2("create", fnamegpg);
 			if (stat(fnamegpg, &s) == 0)
 				disable_file(BLACKLIST_FILE, fnamegpg);
 			free(fnamegpg);
@@ -776,7 +777,8 @@ void fs_proc_sys_dev_boot(void) {
 			char *fnamesysd;
 			if (asprintf(&fnamesysd, "/run/user/%d/systemd", getuid()) == -1)
 				errExit("asprintf");
-			create_empty_dir_as_user(fnamesysd, 0755);
+			if (create_empty_dir_as_user(fnamesysd, 0755))
+				fs_logger2("create", fnamesysd);
 			if (stat(fnamesysd, &s) == 0)
 				disable_file(BLACKLIST_FILE, fnamesysd);
 			free(fnamesysd);

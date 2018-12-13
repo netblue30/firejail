@@ -961,7 +961,8 @@ void flush_stdin(void) {
 	}
 }
 
-void create_empty_dir_as_user(const char *dir, mode_t mode) {
+// return 1 if new directory was created, else return 0
+int create_empty_dir_as_user(const char *dir, mode_t mode) {
 	assert(dir);
 	mode &= 07777;
 	struct stat s;
@@ -980,7 +981,7 @@ void create_empty_dir_as_user(const char *dir, mode_t mode) {
 				if (chmod(dir, mode) == -1)
 					{;} // do nothing
 			}
-			else if (errno != EEXIST && arg_debug) {
+			else if (arg_debug) {
 				char *str;
 				if (asprintf(&str, "Directory %s not created", dir) == -1)
 					errExit("asprintf");
@@ -993,8 +994,9 @@ void create_empty_dir_as_user(const char *dir, mode_t mode) {
 		}
 		waitpid(child, NULL, 0);
 		if (stat(dir, &s) == 0)
-			fs_logger2("create", dir);
+			return 1;
 	}
+	return 0;
 }
 
 void create_empty_dir_as_root(const char *dir, mode_t mode) {

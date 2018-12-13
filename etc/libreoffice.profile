@@ -24,23 +24,27 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
-# Ubuntu 18.04 uses its own apparmor profile
-# uncomment the next line if you are not on Ubuntu
-#apparmor
+# ubuntu 18.04 comes with its own apparmor profile, but it is not in enforce mode.
+# comment the next line to use the ubuntu profile instead of firejail's apparmor profile
+apparmor
 caps.drop all
 machine-id
 netfilter
 #nodbus
 nodvd
 nogroups
-#nonewprivs - fix for Ubuntu 18.04/Debian 10
+# comment nonewprivs when using the ubuntu 18.04/debian 10 apparmor profile
+nonewprivs
 noroot
 notv
 nou2f
-#protocol unix,inet,inet6  - fix for Ubuntu 18.04/Debian 10
-#seccomp  - fix for Ubuntu 18.04/Debian 10
+# comment the protocol line when using the ubuntu 18.04/debian 10 apparmor profile
+protocol unix,inet,inet6
+# comment seccomp when using the ubuntu 18.04/debian 10 apparmor profile
+seccomp
 shell none
-#tracelog - problems reported by Ubuntu 18.04 apparmor profile in /var/log/syslog
+# comment tracelog when using the ubuntu 18.04/debian 10 apparmor profile
+tracelog
 
 private-dev
 private-tmp

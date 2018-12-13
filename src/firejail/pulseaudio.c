@@ -102,74 +102,124 @@ void pulseaudio_init(void) {
 	if (set_perms(RUN_PULSE_DIR, getuid(), getgid(), 0700))
 		errExit("set_perms");
 
-	// create ~/.config directory if necessary
-	char *homeusercfg;
-	if (asprintf(&homeusercfg, "%s/.config", cfg.homedir) == -1)
+	// create ~/.config/pulse directory if not present
+	char *dir1;
+	if (asprintf(&dir1, "%s/.config", cfg.homedir) == -1)
 		errExit("asprintf");
-	create_empty_dir_as_user(homeusercfg, 0700);
-	// set environment variable if creating ~/.config wasn't successful or if it is not a directory owned by the user
-	if (lstat(homeusercfg, &s) != 0 || !S_ISDIR(s.st_mode) || s.st_uid != getuid()) {
-		if (arg_debug)
-			printf("Setting PULSE_CLIENTCONFIG environment variable\n");
-		if (setenv("PULSE_CLIENTCONFIG", pulsecfg, 1) < 0)
-			errExit("setenv");
-		free(homeusercfg);
-		free(pulsecfg);
-		return;
-	}
-	free(homeusercfg);
+	if (lstat(dir1, &s) == -1) {
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
 
-	// create ~/.config/pulse directory if necessary
+			int rv = mkdir(dir1, 0755);
+			if (rv == 0) {
+				if (chmod(dir1, 0755))
+					{;} // do nothing
+			}
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+		fs_logger2("create", dir1);
+	}
+	else {
+		// we expect a user owned directory
+		if (!S_ISDIR(s.st_mode) || s.st_uid != getuid()) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: user .config is a symbolic link\n");
+			else
+				fprintf(stderr, "Error: user .config is not a directory owned by the current user\n");
+			exit(1);
+		}
+	}
+	free(dir1);
+
+	if (asprintf(&dir1, "%s/.config/pulse", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (lstat(dir1, &s) == -1) {
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			// drop privileges
+			drop_privs(0);
+
+			int rv = mkdir(dir1, 0700);
+			if (rv == 0) {
+				if (chmod(dir1, 0700))
+					{;} // do nothing
+			}
+#ifdef HAVE_GCOV
+			__gcov_flush();
+#endif
+			_exit(0);
+		}
+		// wait for the child to finish
+		waitpid(child, NULL, 0);
+		fs_logger2("create", dir1);
+	}
+	else {
+		// we expect a user owned directory
+		if (!S_ISDIR(s.st_mode) || s.st_uid != getuid()) {
+			if (S_ISLNK(s.st_mode))
+				fprintf(stderr, "Error: user .config/pulse is a symbolic link\n");
+			else
+				fprintf(stderr, "Error: user .config/pulse is not a directory owned by the current user\n");
+			exit(1);
+		}
+	}
+	free(dir1);
+
+	// if we have ~/.config/pulse mount the new directory, else set environment variable.
+	char *homeusercfg;
 	if (asprintf(&homeusercfg, "%s/.config/pulse", cfg.homedir) == -1)
 		errExit("asprintf");
-	create_empty_dir_as_user(homeusercfg, 0700);
-	// set environment variable if creating ~/.config/pulse wasn't successful or if it is not a directory owned by the user
-	if (lstat(homeusercfg, &s) != 0 || !S_ISDIR(s.st_mode) || s.st_uid != getuid()) {
-		if (arg_debug)
-			printf("Setting PULSE_CLIENTCONFIG environment variable\n");
+	if (stat(homeusercfg, &s) == 0) {
+		// get a file descriptor for ~/.config/pulse, fails if there is any symlink
+		int fd = safe_fd(homeusercfg, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (fd == -1)
+			errExit("safe_fd");
+		// confirm the actual mount destination is owned by the user
+		if (fstat(fd, &s) == -1 || s.st_uid != getuid())
+			errExit("fstat");
+		// preserve a read-only mount
+		struct statvfs vfs;
+		if (fstatvfs(fd, &vfs) == -1)
+			errExit("fstatvfs");
+		if ((vfs.f_flag & MS_RDONLY) == MS_RDONLY)
+			fs_rdonly(RUN_PULSE_DIR);
+		// mount via the link in /proc/self/fd
+		char *proc;
+		if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+			errExit("asprintf");
+		if (mount(RUN_PULSE_DIR, proc, "none", MS_BIND, NULL) < 0)
+			errExit("mount pulseaudio");
+		fs_logger2("tmpfs", homeusercfg);
+		free(proc);
+		close(fd);
+		// check /proc/self/mountinfo to confirm the mount is ok
+		MountData *mptr = get_last_mount();
+		if (strcmp(mptr->dir, homeusercfg) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
+			errLogExit("invalid pulseaudio mount");
+
+		char *p;
+		if (asprintf(&p, "%s/client.conf", homeusercfg) == -1)
+			errExit("asprintf");
+		fs_logger2("create", p);
+		free(p);
+	}
+
+	else {
+		// set environment
 		if (setenv("PULSE_CLIENTCONFIG", pulsecfg, 1) < 0)
 			errExit("setenv");
-		free(homeusercfg);
-		free(pulsecfg);
-		return;
 	}
-
-	// get a file descriptor for ~/.config/pulse, fails if there is any symlink
-	int fd = safe_fd(homeusercfg, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
-		errExit("safe_fd");
-	// confirm again the actual mount destination is owned by the user
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (s.st_uid != getuid()) {
-		fprintf(stderr, "Error: %s is not owned by the current user\n", homeusercfg);
-		exit(1);
-	}
-	// preserve a read-only mount
-	struct statvfs vfs;
-	if (fstatvfs(fd, &vfs) == -1)
-		errExit("fstatvfs");
-	if ((vfs.f_flag & MS_RDONLY) == MS_RDONLY)
-		fs_rdonly(RUN_PULSE_DIR);
-	// mount via the link in /proc/self/fd
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(RUN_PULSE_DIR, proc, "none", MS_BIND, NULL) < 0)
-		errExit("mount pulseaudio");
-	free(proc);
-	close(fd);
-	// check /proc/self/mountinfo to confirm the mount is ok
-	MountData *mptr = get_last_mount();
-	if (strcmp(mptr->dir, homeusercfg) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
-		errLogExit("invalid pulseaudio mount");
-	fs_logger2("tmpfs", homeusercfg);
-
-	char *p;
-	if (asprintf(&p, "%s/client.conf", homeusercfg) == -1)
-		errExit("asprintf");
-	fs_logger2("create", p);
-	free(p);
 
 	free(pulsecfg);
 	free(homeusercfg);

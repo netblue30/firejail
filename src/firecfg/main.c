@@ -342,7 +342,7 @@ int main(int argc, char **argv) {
 			// exit if the directory does not exist, or if we don't have access to it
 			if (access(arg_bindir, R_OK | W_OK | X_OK)) {
 				if (errno == EACCES)
-					fprintf(stderr, "Error: cannot access directory %s: full permissions required\n", arg_bindir);
+					fprintf(stderr, "Error: firecfg needs full permissions on directory %s\n", arg_bindir);
 				else {
 					perror("access");
 					fprintf(stderr, "Error: cannot access directory %s\n", arg_bindir);

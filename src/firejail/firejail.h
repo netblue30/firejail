@@ -46,6 +46,7 @@
 #define RUN_CPU_CFG	"/run/firejail/mnt/cpu"
 #define RUN_GROUPS_CFG	"/run/firejail/mnt/groups"
 #define RUN_PROTOCOL_CFG	"/run/firejail/mnt/protocol"
+#define RUN_NONEWPRIVS_CFG	"/run/firejail/mnt/nonewprivs"
 #define RUN_HOME_DIR	"/run/firejail/mnt/home"
 #define RUN_ETC_DIR	"/run/firejail/mnt/etc"
 #define RUN_OPT_DIR	"/run/firejail/mnt/opt"

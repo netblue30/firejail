@@ -109,7 +109,7 @@ static void set_caps(void) {
 		caps_drop_dac_override();
 }
 
-void save_nogroups(void) {
+static void save_nogroups(void) {
 	if (arg_nogroups == 0)
 		return;
 
@@ -126,7 +126,23 @@ void save_nogroups(void) {
 
 }
 
-void save_umask(void) {
+static void save_nonewprivs(void) {
+	if (arg_nonewprivs == 0)
+		return;
+
+	FILE *fp = fopen(RUN_NONEWPRIVS_CFG, "wxe");
+	if (fp) {
+		fprintf(fp, "\n");
+		SET_PERMS_STREAM(fp, 0, 0, 0644); // assume mode 0644
+		fclose(fp);
+	}
+	else {
+		fprintf(stderr, "Error: cannot save nonewprivs state\n");
+		exit(1);
+	}
+}
+
+static void save_umask(void) {
 	FILE *fp = fopen(RUN_UMASK_FILE, "wxe");
 	if (fp) {
 		fprintf(fp, "%o\n", orig_umask);
@@ -597,11 +613,6 @@ int sandbox(void* sandbox_arg) {
 	fs_logger("install mount namespace");
 
 	//****************************
-	// save the umask
-	//****************************
-	save_umask();
-
-	//****************************
 	// netfilter
 	//****************************
 	if (arg_netfilter && any_bridge_configured()) { // assuming by default the client filter
@@ -750,9 +761,16 @@ int sandbox(void* sandbox_arg) {
 		need_preload = arg_trace || arg_tracelog;
 		arg_seccomp = 1;
 	}
+
 	// trace pre-install
 	if (need_preload)
 		fs_trace_preload();
+
+	// state of nonewprivs
+	save_nonewprivs();
+
+	// save original umask
+	save_umask();
 
 	// store hosts file
 	if (cfg.hosts_file)

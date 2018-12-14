@@ -100,10 +100,27 @@ static void extract_nogroups(pid_t pid) {
 		errExit("asprintf");
 
 	struct stat s;
-	if (stat(fname, &s) == -1)
+	if (stat(fname, &s) == -1) {
+		free(fname);
 		return;
+	}
 
 	arg_nogroups = 1;
+	free(fname);
+}
+
+static void extract_nonewprivs(pid_t pid) {
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_NONEWPRIVS_CFG) == -1)
+		errExit("asprintf");
+
+	struct stat s;
+	if (stat(fname, &s) == -1) {
+		free(fname);
+		return;
+	}
+
+	arg_nonewprivs = 1;
 	free(fname);
 }
 
@@ -113,8 +130,10 @@ static void extract_cpu(pid_t pid) {
 		errExit("asprintf");
 
 	struct stat s;
-	if (stat(fname, &s) == -1)
+	if (stat(fname, &s) == -1) {
+		free(fname);
 		return;
+	}
 
 	// there is a CPU_CFG file, load it!
 	load_cpu(fname);
@@ -127,8 +146,10 @@ static void extract_cgroup(pid_t pid) {
 		errExit("asprintf");
 
 	struct stat s;
-	if (stat(fname, &s) == -1)
+	if (stat(fname, &s) == -1) {
+		free(fname);
 		return;
+	}
 
 	// there is a cgroup file CGROUP_CFG, load it!
 	load_cgroup(fname);
@@ -154,7 +175,10 @@ static void extract_caps_seccomp(pid_t pid) {
 		if (strncmp(buf, "Seccomp:", 8) == 0) {
 			char *ptr = buf + 8;
 			int val;
-			sscanf(ptr, "%d", &val);
+			if (sscanf(ptr, "%d", &val) != 1) {
+				fprintf(stderr, "Error: cannot read stat file for process %u\n", pid);
+				exit(1);
+			}
 			if (val == 2)
 				apply_seccomp = 1;
 			break;
@@ -162,7 +186,10 @@ static void extract_caps_seccomp(pid_t pid) {
 		else if (strncmp(buf, "CapBnd:", 7) == 0) {
 			char *ptr = buf + 7;
 			unsigned long long val;
-			sscanf(ptr, "%llx", &val);
+			if (sscanf(ptr, "%llx", &val) != 1) {
+				fprintf(stderr, "Error: cannot read stat file for process %u\n", pid);
+				exit(1);
+			}
 			apply_caps = 1;
 			caps = val;
 		}
@@ -229,7 +256,7 @@ pid_t switch_to_child(pid_t pid) {
 	char *comm = pid_proc_comm(pid);
 	if (!comm) {
 		if (errno == ENOENT) {
-			fprintf(stderr, "Error: cannot find process with id %d\n", pid);
+			fprintf(stderr, "Error: cannot find process with pid %d\n", pid);
 			exit(1);
 		}
 		else {
@@ -285,6 +312,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
 	if (getuid() != 0) {
+		extract_nonewprivs(pid);
 		extract_caps_seccomp(pid);
 		extract_cpu(pid);
 		extract_cgroup(pid);
@@ -296,7 +324,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	if (cfg.cgroup)	// not available for uid 0
 		set_cgroup(cfg.cgroup);
 
-	// get umask, it will be set by start_application()
+	// set umask, also uid 0
 	extract_umask(pid);
 
 	// join namespaces
@@ -381,6 +409,13 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			// set caps filter
 			if (apply_caps == 1)	// not available for uid 0
 				caps_set(caps);
+		}
+
+		// set nonewprivs
+		if (arg_nonewprivs == 1) {	// not available for uid 0
+			prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+			if (arg_debug)
+				printf("NO_NEW_PRIVS set\n");
 		}
 
 		EUID_USER();

@@ -413,8 +413,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		// set nonewprivs
 		if (arg_nonewprivs == 1) {	// not available for uid 0
-			prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
-			if (arg_debug)
+			int rv = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+			if (arg_debug && rv == 0)
 				printf("NO_NEW_PRIVS set\n");
 		}
 

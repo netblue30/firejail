@@ -2676,7 +2676,7 @@ Option \-\-netstats prints network statistics for active sandboxes installing ne
 
 
 Listed below are the available fields (columns) in alphabetical
-order for \-\-top and \-\-netstat options:
+order for \-\-top and \-\-netstats options:
 
 .TP
 Command

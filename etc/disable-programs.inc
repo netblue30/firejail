@@ -233,6 +233,7 @@ blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/smtube
 blacklist ${HOME}/.config/specialmailcollectionsrc
 blacklist ${HOME}/.config/spotify
+blacklist ${HOME}/.config/supertuxkart
 blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/synfig
@@ -461,6 +462,7 @@ blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/supertux2
+blacklist ${HOME}/.local/share/supertuxkart
 blacklist ${HOME}/.local/share/telepathy
 blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser
@@ -617,6 +619,7 @@ blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
 blacklist ${HOME}/.cache/spotify
+blacklist ${HOME}/.cache/supertuxkart
 blacklist ${HOME}/.cache/systemsettings
 blacklist ${HOME}/.cache/telepathy
 blacklist ${HOME}/.cache/thunderbird

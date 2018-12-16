@@ -28,7 +28,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
 netfilter
 nodbus
 nodvd

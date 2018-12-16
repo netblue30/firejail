@@ -20,17 +20,17 @@ include disable-interpreters.inc
 mkdir ${HOME}/.config/supertuxkart
 mkdir ${HOME}/.cache/supertuxkart
 mkdir ${HOME}/.local/share/supertuxkart
-
 whitelist ${HOME}/.config/supertuxkart
 whitelist ${HOME}/.cache/supertuxkart
 whitelist ${HOME}/.local/share/supertuxkart
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
 ipc-namespace
 netfilter
 nodbus
-noautopulse
 nodvd
 nogroups
 nonewprivs
@@ -45,10 +45,10 @@ tracelog
 
 disable-mnt
 private-bin supertuxkart
-private-dev
-private-etc resolv.conf,ca-certificates,ssl,hosts,machine-id,xdg,openal,crypto-policies,pki,drirc,system-fips,selinux,
-private-tmp
 private-cache
+private-dev
+private-etc resolv.conf,ca-certificates,ssl,hosts,machine-id,xdg,openal,crypto-policies,pki,drirc,system-fips,selinux
+private-tmp
 private-opt none
 private-srv none
 

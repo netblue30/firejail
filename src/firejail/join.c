@@ -22,8 +22,12 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/prctl.h>
 #include <errno.h>
+
+#include <sys/prctl.h>
+#ifndef PR_SET_NO_NEW_PRIVS
+# define PR_SET_NO_NEW_PRIVS 38
+#endif
 
 static int apply_caps = 0;
 static uint64_t caps = 0;
@@ -164,21 +168,16 @@ static void extract_caps_seccomp(pid_t pid) {
 		exit(1);
 	}
 	FILE *fp = fopen(file, "r");
-	if (!fp) {
-		free(file);
-		fprintf(stderr, "Error: cannot open stat file for process %u\n", pid);
-		exit(1);
-	}
+	if (!fp)
+		goto errexit;
 
 	char buf[BUFLEN];
 	while (fgets(buf, BUFLEN - 1, fp)) {
 		if (strncmp(buf, "Seccomp:", 8) == 0) {
 			char *ptr = buf + 8;
 			int val;
-			if (sscanf(ptr, "%d", &val) != 1) {
-				fprintf(stderr, "Error: cannot read stat file for process %u\n", pid);
-				exit(1);
-			}
+			if (sscanf(ptr, "%d", &val) != 1)
+				goto errexit;
 			if (val == 2)
 				apply_seccomp = 1;
 			break;
@@ -186,16 +185,27 @@ static void extract_caps_seccomp(pid_t pid) {
 		else if (strncmp(buf, "CapBnd:", 7) == 0) {
 			char *ptr = buf + 7;
 			unsigned long long val;
-			if (sscanf(ptr, "%llx", &val) != 1) {
-				fprintf(stderr, "Error: cannot read stat file for process %u\n", pid);
-				exit(1);
-			}
+			if (sscanf(ptr, "%llx", &val) != 1)
+				goto errexit;
 			apply_caps = 1;
 			caps = val;
+		}
+		else if (strncmp(buf, "NoNewPrivs:", 11) == 0) {
+			char *ptr = buf + 11;
+			int val;
+			if (sscanf(ptr, "%d", &val) != 1)
+				goto errexit;
+			if (val)
+				arg_nonewprivs = 1;
 		}
 	}
 	fclose(fp);
 	free(file);
+	return;
+
+errexit:
+	fprintf(stderr, "Error: cannot read stat file for process %u\n", pid);
+	exit(1);
 }
 
 static void extract_user_namespace(pid_t pid) {
@@ -312,7 +322,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
 	if (getuid() != 0) {
-		extract_nonewprivs(pid);
+		extract_nonewprivs(pid);  // redundant on Linux >= 4.10; duplicated in function extract_caps_seccomp
 		extract_caps_seccomp(pid);
 		extract_cpu(pid);
 		extract_cgroup(pid);

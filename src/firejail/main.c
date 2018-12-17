@@ -866,7 +866,6 @@ int main(int argc, char **argv) {
 	int lockfd_directory = -1;
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
-	int arg_seccomp_cmdline = 0; 	// seccomp requested on command line (used to break out of --chroot)
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 
 	// drop permissions by default and rise them when required
@@ -1153,7 +1152,6 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
-				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1166,7 +1164,6 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
-				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1179,7 +1176,6 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
-				arg_seccomp_cmdline = 1;
 			}
 			else
 				exit_err_feature("seccomp");
@@ -2278,12 +2274,21 @@ int main(int argc, char **argv) {
 	}
 	EUID_ASSERT();
 
-	// exit for --chroot sandboxes when secomp or caps are explicitly specified on command line
-	if (getuid() != 0 && cfg.chrootdir && (arg_seccomp_cmdline || arg_caps_cmdline)) {
-		fprintf(stderr, "Error: for chroot sandboxes, default seccomp and capabilities filters are\n"
-			"enabled by default. Please remove all --seccomp and --caps options from the\n"
-			"command line.\n");
-		exit(1);
+	// exit chroot, overlay and appimage sandboxes when caps are explicitly specified on command line
+	if (getuid() != 0 && arg_caps_cmdline) {
+		char *opt = NULL;
+		if (cfg.chrootdir)
+			opt = "chroot";
+		else if (arg_overlay)
+			opt = "overlay";
+		else if (arg_appimage)
+			opt = "appimage";
+
+		if (opt) {
+			fprintf(stderr, "Error: all capabilities are dropped for %s by default.\n"
+				"Please remove --caps options from the command line.\n", opt);
+			exit(1);
+		}
 	}
 
 	// prog_index could still be -1 if no program was specified

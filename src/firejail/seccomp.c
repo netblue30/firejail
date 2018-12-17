@@ -31,7 +31,6 @@ typedef struct filter_list {
 
 static FilterList *filter_list_head = NULL;
 static int err_printed = 0;
-extern int enforce_seccomp;
 
 char *seccomp_check_list(const char *str) {
 	assert(str);
@@ -73,11 +72,6 @@ int seccomp_install_filters(void) {
 				printf("Installing %s seccomp filter\n", fl->fname);
 
 			if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &fl->prog)) {
-
-				if (enforce_seccomp) {
-					fprintf(stderr, "Error: a seccomp-enabled Linux kernel is required, exiting...\n");
-					exit(1);
-				}
 
 				if (!err_printed)
 					fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");

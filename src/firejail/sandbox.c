@@ -39,6 +39,9 @@
 #ifndef PR_SET_NO_NEW_PRIVS
 # define PR_SET_NO_NEW_PRIVS 38
 #endif
+#ifndef PR_GET_NO_NEW_PRIVS
+# define PR_GET_NO_NEW_PRIVS 39
+#endif
 
 #ifdef HAVE_APPARMOR
 #include <sys/apparmor.h>
@@ -46,10 +49,7 @@
 #include <syscall.h>
 
 
-#ifdef HAVE_SECCOMP
-int enforce_seccomp = 0;
-#endif
-
+static int force_nonewprivs = 0;
 
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
@@ -539,23 +539,17 @@ void start_application(int no_sandbox, FILE *fp) {
 }
 
 static void enforce_filters(void) {
-	// force default seccomp inside the chroot, no keep or drop list
-	// the list build on top of the default drop list is kept intact
+	// enforce NO_NEW_PRIVS
 	arg_nonewprivs = 1;
-	arg_seccomp = 1;
-#ifdef HAVE_SECCOMP
-	enforce_seccomp = 1;
-#endif
+	force_nonewprivs = 1;
 
 	// disable all capabilities
-	if (arg_caps_default_filter || arg_caps_list)
-		fwarning("all capabilities disabled for a regular user in chroot\n");
+	fmessage("\n**     Warning: dropping all Linux capabilities     **\n");
 	arg_caps_drop_all = 1;
 
 	// drop all supplementary groups; /etc/group file inside chroot
 	// is controlled by a regular usr
 	arg_nogroups = 1;
-	fmessage("\n**     Warning: dropping all Linux capabilities     **\n");
 }
 
 int sandbox(void* sandbox_arg) {
@@ -754,23 +748,16 @@ int sandbox(void* sandbox_arg) {
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
-	// for --appimage, --chroot and --overlay* we replace the seccomp filter with the default one
-	// we also drop all capabilities
+	// for --appimage, --chroot and --overlay* we force NO_NEW_PRIVS
+	// and drop all capabilities
 	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay)) {
 		enforce_filters();
 		need_preload = arg_trace || arg_tracelog;
-		arg_seccomp = 1;
 	}
 
 	// trace pre-install
 	if (need_preload)
 		fs_trace_preload();
-
-	// state of nonewprivs
-	save_nonewprivs();
-
-	// save original umask
-	save_umask();
 
 	// store hosts file
 	if (cfg.hosts_file)
@@ -1043,9 +1030,15 @@ int sandbox(void* sandbox_arg) {
 	if (arg_x11_xorg)
 		x11_xorg();
 
+	// save original umask
+	save_umask();
+
 	//****************************
 	// set security filters
 	//****************************
+	// save state of nonewprivs
+	save_nonewprivs();
+
 	// set capabilities
 	set_caps();
 
@@ -1145,8 +1138,13 @@ int sandbox(void* sandbox_arg) {
 	if (arg_nonewprivs) {
 		prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
 
-		if (prctl(PR_GET_NO_NEW_PRIVS, 0, 0, 0, 0) != 1)
-			fwarning("NO_NEW_PRIVS disabled, it requires a Linux kernel version 3.5 or newer.\n");
+		if (prctl(PR_GET_NO_NEW_PRIVS, 0, 0, 0, 0) != 1) {
+			fwarning("cannot set NO_NEW_PRIVS, it requires a Linux kernel version 3.5 or newer.\n");
+			if (force_nonewprivs) {
+				fprintf(stderr, "Error: NO_NEW_PRIVS required for this sandbox, exiting ...\n");
+				exit(1);
+			}
+		}
 		else if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");
 	}

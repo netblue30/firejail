@@ -88,6 +88,7 @@ andrew160 (https://github.com/andrew160)
 announ (https://github.com/announ)
 	- mpv and youtube-dl profile fixes
 	- git profile fix
+	- evince profile fix
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start
@@ -396,6 +397,8 @@ LaurentGH (https://github.com/LaurentGH)
 	- allow private-bin parameters to be absolute paths
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
+luzpaz (https://github.com/luzpaz)
+	- code spelling fixes
 maces (https://github.com/maces)
 	- Franz messenger profile
 Madura A (https://github.com/manushanga)
@@ -471,6 +474,7 @@ pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile
 	- mpsyt profile
 	- fix youtube-dl and mpv
+	- fix gnome-mpv profile
 Pixel Fairy (https://github.com/xahare)
 	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
 PizzaDude (https://github.com/pizzadude)
@@ -522,6 +526,8 @@ Ruan (https://github.com/ruany)
 	- fixed hexchat profile
 rusty-snake (https://github.com/rusty-snake)
 	- fixed kdenlive profile
+	- added thunderbird-wayland and supertuxcart profiles
+	- fix bible-time profile
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
@@ -689,6 +695,7 @@ veloute (https://github.com/veloute)
 	- added jdownloader profile
 	- fixed discord profile
 	- fixes for various profiles
+	- removed vim and ranger from firecfg
 Vincent43 (https://github.com/Vincent43)
 	- apparmor enhancements
 vismir2 (https://github.com/vismir2)

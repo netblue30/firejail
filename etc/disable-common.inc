@@ -268,6 +268,9 @@ read-only ${HOME}/.gem
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
 read-only ${HOME}/bin
+read-only ${HOME}/.bin
+read-only ${HOME}/.local/bin
+read-only ${HOME}/.cargo/bin
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus

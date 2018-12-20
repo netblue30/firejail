@@ -10,6 +10,7 @@ blacklist ${HOME}/.bashrc
 
 noblacklist ${HOME}/.bibletime
 noblacklist ${HOME}/.sword
+noblacklist ${HOME}/.local/share/bibletime
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,6 +20,7 @@ include disable-programs.inc
 
 whitelist ${HOME}/.bibletime
 whitelist ${HOME}/.sword
+whitelist ${HOME}/.local/share/bibletime
 include whitelist-common.inc
 
 caps.drop all

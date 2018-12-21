@@ -272,6 +272,11 @@ read-only ${HOME}/.bin
 read-only ${HOME}/.local/bin
 read-only ${HOME}/.cargo/bin
 
+# cargo
+read-only ${HOME}/.cargo/env
+blacklist ${HOME}/.cargo/registry
+blacklist ${HOME}/.cargo/config
+
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus
 read-only ${HOME}/.local/share/applications

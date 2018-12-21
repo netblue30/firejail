@@ -6,6 +6,8 @@ include gnome-builder.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cargo/config
+noblacklist ${HOME}/.cargo/registry
 
 include disable-common.inc
 include disable-passwdmgr.inc

@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
+noblacklist ${HOME}/.cargo/config
+noblacklist ${HOME}/.cargo/registry
 
 include disable-common.inc
 include disable-passwdmgr.inc

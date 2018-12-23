@@ -8,6 +8,10 @@ include globals.local
 noblacklist ${HOME}/.config/Brackets
 #noblacklist /opt/brackets/
 #noblacklist /opt/google/
+# Uncomment the the next two lines if you are developing rust.
+#noblacklist ${HOME}/.cargo/config
+#noblacklist ${HOME}/.cargo/registry
+
 
 include disable-common.inc
 include disable-passwdmgr.inc

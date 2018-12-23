@@ -7,6 +7,7 @@ include rhythmbox.local
 include globals.local
 
 noblacklist ${MUSIC}
+noblacklist ${HOME}/.local/share/rhythmbox
 
 include disable-common.inc
 include disable-devel.inc

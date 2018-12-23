@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
+# uncomment the following line if you need gpg
+#noblacklist ${HOME}/.gnupg
 
 include disable-common.inc
 include disable-passwdmgr.inc

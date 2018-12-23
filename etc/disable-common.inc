@@ -271,8 +271,6 @@ read-only ${HOME}/bin
 read-only ${HOME}/.bin
 read-only ${HOME}/.local/bin
 read-only ${HOME}/.cargo/bin
-
-# cargo
 read-only ${HOME}/.cargo/env
 blacklist ${HOME}/.cargo/registry
 blacklist ${HOME}/.cargo/config

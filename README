@@ -528,6 +528,8 @@ rusty-snake (https://github.com/rusty-snake)
 	- fixed kdenlive profile
 	- added thunderbird-wayland and supertuxcart profiles
 	- fix bible-time profile
+	- more blacklists in disable-common.inc
+	- fixed some missing paths in disable-programs.inc
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)

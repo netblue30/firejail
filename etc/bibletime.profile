@@ -18,6 +18,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.bibletime
+mkdir ${HOME}/.sword
+mkdir ${HOME}/.local/share/bibletime
 whitelist ${HOME}/.bibletime
 whitelist ${HOME}/.sword
 whitelist ${HOME}/.local/share/bibletime

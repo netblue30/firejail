@@ -23,7 +23,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 caps.drop all
-netfilter
+net none
 no3d
 nodvd
 nogroups
@@ -33,7 +33,7 @@ nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6,netlink
+protocol unix
 seccomp
 shell none
 tracelog

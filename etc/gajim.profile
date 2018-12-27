@@ -41,9 +41,15 @@ notv
 nou2f
 protocol unix,inet,inet6
 seccomp
+shell none
+tracelog
 
 disable-mnt
-private-bin python,python3,sh,gpg,gpg2,gajim
+private-bin python,python3,sh,gpg,gpg2,gajim,bash,zsh,paplay,gajim-history-manager
+private-cache
 private-dev
 private-etc alsa,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
 private-tmp
+
+noexec ${HOME}
+noexec /tmp

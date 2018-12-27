@@ -21,8 +21,8 @@ include whitelist-common.inc
 apparmor
 caps.drop all
 netfilter
-no3d
-nodbus
+#no3d
+#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -31,17 +31,19 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,netlink
 seccomp
 shell none
 tracelog
 machine-id
 
-private-bin ghostwriter
+# Breaks Translation
+#private-bin ghostwriter,pandoc
 private-cache
 private-dev
 private-etc cups,crypto-policies,localtime,drirc,fonts,xdg,gtk-3.0,dconf,machine-id
-private-lib
+# Breaks Translation
+#private-lib
 private-tmp
 
 noexec ${HOME}

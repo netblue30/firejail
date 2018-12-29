@@ -64,6 +64,7 @@ clean:
 	rm -f test/environment/logfile*
 	rm -f test/environment/index.html
 	rm -f test/environment/wget-log
+	rm -rf test/fcopy/dest
 	rm -f test/sysutils/firejail_t*
 	cd test/compile; ./compile.sh --clean; cd ../..
 
@@ -288,7 +289,7 @@ test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sy
 
 ##########################################
 # Individual tests, some of them require root access
-# The tests are very intrussive, by the time you are done
+# The tests are very intrusive, by the time you are done
 # with them you will need to restart your computer.
 ##########################################
 

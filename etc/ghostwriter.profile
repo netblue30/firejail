@@ -7,19 +7,31 @@ include ghostwriter.local
 include globals.local
 
 noblacklist ${HOME}/.config/ghostwriter
+noblacklist ${DOCUMENTS}
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
-mkdir ${HOME}/.config/ghostwriter
-whitelist ${HOME}/.config/ghostwriter
-include whitelist-common.inc
+#mkdir ${HOME}/.config/ghostwriter
+#mkdir ${DESKTOP}
+#mkdir ${DOCUMENTS}
+#mkdir ${DOWNLOADS}
+#mkdir ${PICTURES}
+#whitelist ${HOME}/.config/ghostwriter
+#whitelist ${DESKTOP}
+#whitelist ${DOCUMENTS}
+#whitelist ${DOWNLOADS}
+#whitelist ${PICTURES}
+#include whitelist-common.inc
 
 apparmor
 caps.drop all
+machine-id
 netfilter
 #no3d
 #nodbus
@@ -35,13 +47,12 @@ protocol unix,inet,netlink
 seccomp
 shell none
 tracelog
-machine-id
 
 # Breaks Translation
 #private-bin ghostwriter,pandoc
 private-cache
 private-dev
-private-etc cups,crypto-policies,localtime,drirc,fonts,xdg,gtk-3.0,dconf,machine-id
+private-etc cups,crypto-policies,localtime,drirc,fonts,gtk-3.0,dconf,machine-id
 # Breaks Translation
 #private-lib
 private-tmp

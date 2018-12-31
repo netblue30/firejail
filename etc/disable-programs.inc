@@ -148,6 +148,7 @@ blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/gedit
 blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/ghb
+blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv

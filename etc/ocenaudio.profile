@@ -20,7 +20,9 @@ include disable-xdg.inc
 apparmor
 caps.drop all
 ipc-namespace
-net none
+machine-id
+# net none breaks AppArmor on Ubuntu systems
+netfilter
 no3d
 # nodbus - breaks preferences, comment when needed
 nodbus
@@ -41,7 +43,7 @@ tracelog
 private-bin ocenaudio
 private-cache
 private-dev
-private-etc asound.conf,fonts,pulse
+private-etc asound.conf,fonts,ld.so.cache,pulse
 # private-lib
 private-tmp
 

@@ -1,3 +1,6 @@
+2019: Jan 2
+done: Correctly set address length in arp frames
+
 Nov 6: mainline merge
 done: removed transfer.sh support from travis build
 done: fix --bandwidth command

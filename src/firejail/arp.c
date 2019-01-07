@@ -78,7 +78,7 @@ void arp_announce(const char *dev, Bridge *br) {
 		errExit("if_nametoindex");
 	addr.sll_family = AF_PACKET;
 	memcpy (addr.sll_addr, ifr.ifr_hwaddr.sa_data, 6);
-	addr.sll_halen = htons(6);
+	addr.sll_halen = ETH_ALEN;
 
 	// build the arp packet header
 	ArpHdr hdr;
@@ -150,7 +150,7 @@ int arp_check(const char *dev, uint32_t destaddr) {
 		errExit("if_nametoindex");
 	addr.sll_family = AF_PACKET;
 	memcpy (addr.sll_addr, ifr.ifr_hwaddr.sa_data, 6);
-	addr.sll_halen = htons(6);
+	addr.sll_halen = ETH_ALEN;
 
 	// build the arp packet header
 	ArpHdr hdr;

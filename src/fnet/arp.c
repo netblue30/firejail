@@ -124,7 +124,7 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 				errExit("if_nametoindex");
 			addr.sll_family = AF_PACKET;
 			memcpy (addr.sll_addr, mac, 6);
-			addr.sll_halen = htons(6);
+			addr.sll_halen = ETH_ALEN;
 
 			// build the arp packet header
 			ArpHdr hdr;

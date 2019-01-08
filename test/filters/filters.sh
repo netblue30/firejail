@@ -113,3 +113,10 @@ if [ "$(uname -m)" = "x86_64" ]; then
 else
         echo "TESTING SKIP: seccomp dual, not running on x86_64"
 fi
+
+if [ "$(uname -m)" = "x86_64" ]; then
+       echo "TESTING: seccomp join (test/filters/seccomp-join.exp)"
+        ./seccomp-join.exp
+else
+        echo "TESTING SKIP: seccomp join test implemented only for x86_64"
+fi

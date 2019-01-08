@@ -17,6 +17,8 @@ noblacklist /usr/local/lib/python3*
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.mplayer
 noblacklist ${HOME}/.config/mps-youtube
+noblacklist ${HOME}/.cache/mps-youtube
+noblacklist ${HOME}/.local/share/mps-youtube
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/mps
 noblacklist ${MUSIC}
@@ -31,9 +33,13 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/mps-youtube
+mkdir ${HOME}/.cache/mps-youtube
+mkdir ${HOME}/.local/share/mps-youtube
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.mplayer
 whitelist ${HOME}/.config/mps-youtube
+whitelist ${HOME}/.cache/mps-youtube
+whitelist ${HOME}/.local/share/mps-youtube
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/mps
 whitelist ${MUSIC}

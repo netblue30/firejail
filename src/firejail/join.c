@@ -160,7 +160,7 @@ static void extract_cgroup(pid_t pid) {
 	free(fname);
 }
 
-static void extract_caps_seccomp(pid_t pid) {
+static void extract_caps(pid_t pid) {
 	// open stat file
 	char *file;
 	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
@@ -173,16 +173,7 @@ static void extract_caps_seccomp(pid_t pid) {
 
 	char buf[BUFLEN];
 	while (fgets(buf, BUFLEN - 1, fp)) {
-		if (strncmp(buf, "Seccomp:", 8) == 0) {
-			char *ptr = buf + 8;
-			int val;
-			if (sscanf(ptr, "%d", &val) != 1)
-				goto errexit;
-			if (val == 2)
-				apply_seccomp = 1;
-			break;
-		}
-		else if (strncmp(buf, "CapBnd:", 7) == 0) {
+		if (strncmp(buf, "CapBnd:", 7) == 0) {
 			char *ptr = buf + 7;
 			unsigned long long val;
 			if (sscanf(ptr, "%llx", &val) != 1)
@@ -323,7 +314,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	// in user mode set caps seccomp, cpu, cgroup, etc
 	if (getuid() != 0) {
 		extract_nonewprivs(pid);  // redundant on Linux >= 4.10; duplicated in function extract_caps_seccomp
-		extract_caps_seccomp(pid);
+		extract_caps(pid);
 		extract_cpu(pid);
 		extract_cgroup(pid);
 		extract_nogroups(pid);
@@ -397,15 +388,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
 #ifdef HAVE_SECCOMP
-		// read cfg.protocol from file
 		if (getuid() != 0)
-			protocol_filter_load(RUN_PROTOCOL_CFG);
-		if (cfg.protocol) 	// not available for uid 0
-			seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
-
-		// set seccomp filter
-		if (apply_seccomp == 1)	 // not available for uid 0
-			seccomp_load(RUN_SECCOMP_CFG);
+			seccomp_load_file_list();
 #endif
 
 		// mount user namespace or drop privileges

@@ -83,6 +83,41 @@ int seccomp_install_filters(void) {
 	return r;
 }
 
+static void seccomp_save_file_list(const char *fname) {
+	assert(fname);
+
+	FILE *fp = fopen(RUN_SECCOMP_LIST, "a+");
+	if (!fp)
+		errExit("fopen");
+
+	fprintf(fp, "%s\n", fname);
+	fclose(fp);
+	int rv = chown(RUN_SECCOMP_LIST, getuid(), getgid());
+	(void) rv;
+}
+
+#define MAXBUF 4096
+static int load_file_list_flag = 0;
+void seccomp_load_file_list(void) {
+	FILE *fp = fopen(RUN_SECCOMP_LIST, "r");
+	if (!fp)
+		return; // no seccomp configuration whatsoever
+
+	load_file_list_flag = 1;
+	char buf[MAXBUF];
+	while (fgets(buf, MAXBUF, fp)) {
+		// clean '\n'
+		char *ptr = strchr(buf, '\n');
+		if (ptr)
+			*ptr = '\0';
+		seccomp_load(buf);
+	}
+
+	fclose(fp);
+	load_file_list_flag = 0;
+}
+
+
 int seccomp_load(const char *fname) {
 	assert(fname);
 
@@ -124,6 +159,10 @@ int seccomp_load(const char *fname) {
 		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
 			PATH_FSEC_PRINT, fname);
 	}
+
+	// save the file name in seccomp list
+	if (!load_file_list_flag)
+		seccomp_save_file_list(fname);
 
 	return 0;
 errexit:
@@ -308,23 +347,45 @@ void seccomp_print_filter(pid_t pid) {
 		}
 	}
 
-	// find the seccomp filter
+	// find the seccomp list file
 	EUID_ROOT();
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_SECCOMP_CFG) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_SECCOMP_LIST) == -1)
 		errExit("asprintf");
 
 	struct stat s;
-	if (stat(fname, &s) == -1) {
-		printf("Cannot access seccomp filter.\n");
-		exit(1);
-	}
+	if (stat(fname, &s) == -1)
+		goto errexit;
 
-	// read and print the filter - run this as root, the user doesn't have access
-	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 2, PATH_FSEC_PRINT, fname);
+	FILE *fp = fopen(fname, "r");
+	if (!fp)
+		goto errexit;
 	free(fname);
 
+	char buf[MAXBUF];
+	while (fgets(buf, MAXBUF, fp)) {
+		// clean '\n'
+		char *ptr = strchr(buf, '\n');
+		if (ptr)
+			*ptr = '\0';
+
+		if (asprintf(&fname, "/proc/%d/root%s", pid, buf) == -1)
+			errExit("asprintf");
+		printf("FILE: %s\n", fname); fflush(0);
+
+		// read and print the filter - run this as root, the user doesn't have access
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 2, PATH_FSEC_PRINT, fname);
+		fflush(0);
+
+		printf("\n"); fflush(0);
+		free(fname);
+	}
+	fclose(fp);
 	exit(0);
+
+errexit:
+	printf("Cannot access seccomp filter.\n");
+	exit(1);
 }
 
 #endif // HAVE_SECCOMP

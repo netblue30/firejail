@@ -57,7 +57,7 @@
 #define RUN_LIB_FILE	"/run/firejail/mnt/libfiles"
 #define RUN_DNS_ETC	"/run/firejail/mnt/dns-etc"
 
-
+#define RUN_SECCOMP_LIST	"/run/firejail/mnt/seccomp.list"	// list of seccomp files installed
 #define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
 #define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
 #define RUN_SECCOMP_32	"/run/firejail/mnt/seccomp.32"		// 32bit arch filter installed on 64bit architectures
@@ -607,6 +607,7 @@ int seccomp_filter_keep(void);
 void seccomp_print_filter(pid_t pid);
 
 // caps.c
+void seccomp_load_file_list(void);
 int caps_default_filter(void);
 void caps_print(void);
 void caps_drop_all(void);

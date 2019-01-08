@@ -52,6 +52,9 @@ fi
 echo "TESTING: capabilities print (test/filters/caps-print.exp)"
 ./caps-print.exp
 
+echo "TESTING: capabilities join (test/filters/caps-join.exp)"
+./caps-join.exp
+
 rm -f seccomp-test-file
 if [ "$(uname -m)" = "x86_64" ]; then
        echo "TESTING: fseccomp (test/filters/fseccomp.exp)"

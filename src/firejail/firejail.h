@@ -55,7 +55,7 @@
 #define RUN_LIB_FILE	"/run/firejail/mnt/libfiles"
 #define RUN_DNS_ETC	"/run/firejail/mnt/dns-etc"
 
-
+#define RUN_SECCOMP_LIST	"/run/firejail/mnt/seccomp.list"	// list of seccomp files installed
 #define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
 #define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
 #define RUN_SECCOMP_32	"/run/firejail/mnt/seccomp.32"		// 32bit arch filter installed on 64bit architectures
@@ -545,6 +545,7 @@ void fs_private_home_list(void);
 
 
 // seccomp.c
+void seccomp_load_file_list(void);
 char *seccomp_check_list(const char *str);
 int seccomp_install_filters(void);
 int seccomp_load(const char *fname);

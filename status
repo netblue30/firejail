@@ -1,5 +1,9 @@
-2019: Jan 2
-done: Correctly set address length in arp frames
+
+Jan 9: fix netfilter-default functionality in /etc/firejail/firejail.config
+Jan 8: test caps join
+Jan 8: testing seccomp/join
+Jan 8:  fix join/seccomp #2296
+Jan 2: Correctly set address length in arp frames
 
 Nov 6: mainline merge
 done: removed transfer.sh support from travis build

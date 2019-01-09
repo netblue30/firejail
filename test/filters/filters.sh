@@ -12,7 +12,6 @@ if [ -f /etc/debian_version ]; then
 fi
 export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
-
 if [ -f /sys/kernel/security/apparmor/profiles ]; then
 	echo "TESTING: apparmor (test/filters/apparmor.exp)"
 	./apparmor.exp
@@ -42,7 +41,7 @@ echo "TESTING: seccomp postexec (test/filters/seccomp-postexec.exp)"
 echo "TESTING: noroot (test/filters/noroot.exp)"
 ./noroot.exp
 
-echo "TESTING: capabilities (test/filters/caps.exp)"
+
 if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
 	echo "TESTING: capabilities (test/filters/caps.exp)"
 	./caps.exp
@@ -52,6 +51,9 @@ fi
 
 echo "TESTING: capabilities print (test/filters/caps-print.exp)"
 ./caps-print.exp
+
+echo "TESTING: capabilities join (test/filters/caps-join.exp)"
+./caps-join.exp
 
 rm -f seccomp-test-file
 if [ "$(uname -m)" = "x86_64" ]; then
@@ -113,4 +115,11 @@ if [ "$(uname -m)" = "x86_64" ]; then
         ./seccomp-dualfilter.exp
 else
         echo "TESTING SKIP: seccomp dual, not running on x86_64"
+fi
+
+if [ "$(uname -m)" = "x86_64" ]; then
+       echo "TESTING: seccomp join (test/filters/seccomp-join.exp)"
+        ./seccomp-join.exp
+else
+        echo "TESTING SKIP: seccomp join test implemented only for x86_64"
 fi

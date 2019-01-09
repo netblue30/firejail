@@ -69,8 +69,12 @@ void netfilter(const char *fname) {
 	if (set_perms(SBOX_STDIN_FILE, getuid(), getgid(), 0644))
 		errExit("set_perms");
 
-	if (fname == NULL)
-		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FNETFILTER, SBOX_STDIN_FILE);
+	if (fname == NULL) {
+		if (netfilter_default)
+			sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FNETFILTER, netfilter_default, SBOX_STDIN_FILE);
+		else
+			sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FNETFILTER, SBOX_STDIN_FILE);
+	}
 	else
 		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FNETFILTER, fname, SBOX_STDIN_FILE);
 

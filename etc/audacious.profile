@@ -17,6 +17,10 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/audacious
+whitelist ${HOME}/.config/Audaciousrc
+whitelist ${HOME}/.config/audacious
+whitelist ${MUSIC}
 include whitelist-var-common.inc
 
 apparmor

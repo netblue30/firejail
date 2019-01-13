@@ -2277,12 +2277,12 @@ int main(int argc, char **argv) {
 	// exit chroot, overlay and appimage sandboxes when caps are explicitly specified on command line
 	if (getuid() != 0 && arg_caps_cmdline) {
 		char *opt = NULL;
-		if (cfg.chrootdir)
-			opt = "chroot";
+		if (arg_appimage)
+			opt = "appimage";
 		else if (arg_overlay)
 			opt = "overlay";
-		else if (arg_appimage)
-			opt = "appimage";
+		else if (cfg.chrootdir)
+			opt = "chroot";
 
 		if (opt) {
 			fprintf(stderr, "Error: all capabilities are dropped for %s by default.\n"

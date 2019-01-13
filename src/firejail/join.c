@@ -365,8 +365,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				printf("changing root to %s\n", rootdir);
 		}
 
-		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
-
 		EUID_USER();
 		if (chdir("/") < 0)
 			errExit("chdir");
@@ -460,6 +458,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		drop_privs(arg_nogroups);
+		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 		start_application(0, NULL);
 
 		// it will never get here!!!

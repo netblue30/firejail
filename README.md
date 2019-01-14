@@ -144,6 +144,13 @@ The new LTS branch is here: https://github.com/netblue30/firejail/tree/LTSbase
 
 ## New profiles:
 
+`````
+$ ls etc/*.profile | wc -l
+608
+`````
+We have more than 600 application profiles on mainline!
+
+
 QMediathekView, aria2c, Authenticator, checkbashisms, devilspie, devilspie2, easystroke, github-desktop, min,
 bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat, lbzip2, lzcat, lzcmp, lzdiff, lzegrep, lzfgrep, lzgrep,
 lzless, lzma, lzmainfo, lzmore, unlzma, unxz, xzcat, xzcmp, xzdiff, xzegrep, xzfgrep, xzgrep, xzless, xzmore,

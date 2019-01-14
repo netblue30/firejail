@@ -2,6 +2,12 @@ firejail (0.9.56.1) baseline; urgency=low
   * work in progress
   * --disable-mnt rework
   * --net.print command
+  * GitLab CI/CD integration: disto specific builds
+  * profile parser enhancements and conditional handling support
+     for HAS_APPIMAGE, HAS_NODBUS, BROWSER_DISABLE_U2F
+  * profile name support
+  * added explicit nonewprivs support to join option
+  * add mincore syscall to default seccomp list
   * new profiles: QMediathekView, aria2c, Authenticator, checkbashisms
   * new profiles: devilspie, devilspie2, easystroke, github-desktop, min
   * new profiles: bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat

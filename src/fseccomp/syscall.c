@@ -168,7 +168,10 @@ static const SyscallGroupList sysgroups[] = {
 	  "umount,"
 #endif
 #ifdef SYS_userfaultfd
-	  "userfaultfd"
+	  "userfaultfd,"
+#endif
+#ifdef SYS_mincore	// 0.9.57
+	  "mincore"
 #endif
 	},
 	{ .name = "@default-nodebuggers", .list =

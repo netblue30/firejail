@@ -39,6 +39,5 @@ private-etc fonts,ld.so.conf,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-dev
 private-tmp
 
-memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

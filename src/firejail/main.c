@@ -157,12 +157,35 @@ static void myexit(int rv) {
 	exit(rv);
 }
 
-static void my_handler(int s){
-	EUID_ROOT();
+static void my_handler(int s) {
 	fmessage("\nParent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
-	kill(child, SIGTERM);
-	myexit(1);
+	if (waitpid(child, NULL, WNOHANG) == 0) {
+		if (has_handler(child, s)) // signals are not delivered if there is no handler yet
+			kill(child, s);
+		else
+			kill(child, SIGKILL);
+		waitpid(child, NULL, 0);
+	}
+	myexit(s);
+}
+
+static void install_handler(void) {
+	struct sigaction sga;
+
+	// block SIGTERM while handling SIGINT
+	sigemptyset(&sga.sa_mask);
+	sigaddset(&sga.sa_mask, SIGTERM);
+	sga.sa_handler = my_handler;
+	sga.sa_flags = 0;
+	sigaction(SIGINT, &sga, NULL);
+
+	// block SIGINT while handling SIGTERM
+	sigemptyset(&sga.sa_mask);
+	sigaddset(&sga.sa_mask, SIGINT);
+	sga.sa_handler = my_handler;
+	sga.sa_flags = 0;
+	sigaction(SIGTERM, &sga, NULL);
 }
 
 // return 1 if error, 0 if a valid pid was found
@@ -2601,15 +2624,24 @@ int main(int argc, char **argv) {
 		flock(lockfd_network, LOCK_UN);
 		close(lockfd_network);
 	}
+	EUID_USER();
+
+	int status = 0;
+	//*****************************
+	// following code is signal-safe
 
 	// handle CTRL-C in parent
-	signal (SIGINT, my_handler);
-	signal (SIGTERM, my_handler);
+	install_handler();
 
 	// wait for the child to finish
-	EUID_USER();
-	int status = 0;
 	waitpid(child, &status, 0);
+
+	// restore default signal actions
+	signal(SIGTERM, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+
+	// end of signal-safe code
+	//*****************************
 
 	// free globals
 	if (cfg.profile) {

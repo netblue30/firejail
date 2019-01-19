@@ -53,6 +53,7 @@ static int force_nonewprivs = 0;
 
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
+	usleep(10000); // don't race to print a message
 	fmessage("\nChild received signal %d, shutting down the sandbox...\n", sig);
 
 	// broadcast sigterm to all processes in the group
@@ -81,9 +82,7 @@ static void sandbox_handler(int sig){
 			monsec--;
 		}
 		free(monfile);
-
 	}
-
 
 	// broadcast a SIGKILL
 	kill(-1, SIGKILL);
@@ -92,6 +91,23 @@ static void sandbox_handler(int sig){
 	exit(sig);
 }
 
+static void install_handler(void) {
+	struct sigaction sga;
+
+	// block SIGTERM while handling SIGINT
+	sigemptyset(&sga.sa_mask);
+	sigaddset(&sga.sa_mask, SIGTERM);
+	sga.sa_handler = sandbox_handler;
+	sga.sa_flags = 0;
+	sigaction(SIGINT, &sga, NULL);
+
+	// block SIGINT while handling SIGTERM
+	sigemptyset(&sga.sa_mask);
+	sigaddset(&sga.sa_mask, SIGINT);
+	sga.sa_handler = sandbox_handler;
+	sga.sa_flags = 0;
+	sigaction(SIGTERM, &sga, NULL);
+}
 
 static void set_caps(void) {
 	if (arg_caps_drop_all)
@@ -123,7 +139,6 @@ static void save_nogroups(void) {
 		fprintf(stderr, "Error: cannot save nogroups state\n");
 		exit(1);
 	}
-
 }
 
 static void save_nonewprivs(void) {
@@ -235,9 +250,17 @@ static void chk_chroot(void) {
 }
 
 static int monitor_application(pid_t app_pid) {
+	EUID_ASSERT();
 	monitored_pid = app_pid;
-	signal (SIGTERM, sandbox_handler);
-	EUID_USER();
+
+	// block signals and install handler
+	sigset_t oldmask, newmask;
+	sigemptyset(&oldmask);
+	sigemptyset(&newmask);
+	sigaddset(&newmask, SIGTERM);
+	sigaddset(&newmask, SIGINT);
+	sigprocmask(SIG_BLOCK, &newmask, &oldmask);
+	install_handler();
 
 	// handle --timeout
 	int options = 0;;
@@ -260,16 +283,25 @@ static int monitor_application(pid_t app_pid) {
 
 		pid_t rv;
 		do {
+			// handle signals asynchronously
+			sigprocmask(SIG_SETMASK, &oldmask, NULL);
+
 			rv = waitpid(-1, &status, options);
-			if (rv == -1)
+
+			// block signals again
+			sigprocmask(SIG_BLOCK, &newmask, NULL);
+
+			if (rv == -1) { // we can get here if we have processes joining the sandbox (ECHILD)
+				sleep(1);
 				break;
+			}
 
 			// handle --timeout
 			if (options) {
 				if (--timeout == 0)  {
 					kill(-1, SIGTERM);
-					flush_stdin();
 					sleep(1);
+					flush_stdin();
 					_exit(1);
 				}
 				else
@@ -279,11 +311,6 @@ static int monitor_application(pid_t app_pid) {
 		while(rv != monitored_pid);
 		if (arg_debug)
 			printf("Sandbox monitor: waitpid %d retval %d status %d\n", monitored_pid, rv, status);
-		if (rv == -1) { // we can get here if we have processes joining the sandbox (ECHILD)
-			if (arg_debug)
-				perror("waitpid");
-			sleep(1);
-		}
 
 		DIR *dir;
 		if (!(dir = opendir("/proc"))) {

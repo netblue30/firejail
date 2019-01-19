@@ -551,6 +551,7 @@ void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 int safe_fd(const char *path, int flags);
 int invalid_sandbox(const pid_t pid);
+int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo

@@ -41,7 +41,15 @@ static void signal_handler(int sig){
 	exit(sig);
 }
 
+static void install_handler(void) {
+	struct sigaction sga;
 
+	// handle SIGTERM
+	sigemptyset(&sga.sa_mask);
+	sga.sa_handler = signal_handler;
+	sga.sa_flags = 0;
+	sigaction(SIGTERM, &sga, NULL);
+}
 
 static void extract_x11_display(pid_t pid) {
 	char *fname;
@@ -465,8 +473,19 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	}
 
 	int status = 0;
+	//*****************************
+	// following code is signal-safe
+
+	install_handler();
+
 	// wait for the child to finish
 	waitpid(child, &status, 0);
+
+	// restore default signal action
+	signal(SIGTERM, SIG_DFL);
+
+	// end of signal-safe code
+	//*****************************
 	flush_stdin();
 
 	if (WIFEXITED(status)) {

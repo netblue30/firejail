@@ -30,6 +30,7 @@
 #include <fcntl.h>
 
 #define MAX_BUF 4096
+#define EMPTY_STRING ("")
 // check noblacklist statements not matched by a proper blacklist in disable-*.inc files
 //#define TEST_NO_BLACKLIST_MATCHING
 
@@ -1215,9 +1216,8 @@ void fs_overlayfs(void) {
 void fs_check_chroot_dir(const char *rootdir) {
 	EUID_ASSERT();
 	assert(rootdir);
+	char *dir = EMPTY_STRING;
 	struct stat s;
-	int fd = -1;
-	int parentfd = -1;
 
 	char *overlay;
 	if (asprintf(&overlay, "%s/.firejail", cfg.homedir) == -1)
@@ -1229,7 +1229,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	free(overlay);
 
 	// fails if there is any symlink or if rootdir is not a directory
-	parentfd = safe_fd(rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	int parentfd = safe_fd(rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (parentfd == -1) {
 		fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
 		exit(1);
@@ -1248,78 +1248,58 @@ void fs_check_chroot_dir(const char *rootdir) {
 	}
 
 	// check /dev
-	char *dir = "dev";
-	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOENT)
-			goto error1;
-		else
-			goto error2;
-	}
+	dir = "dev";
+	int fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
+	if (fd == -1)
+		goto error1;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error3;
+		goto error2;
 	close(fd);
 
 	// check /var/tmp
 	dir = "var/tmp";
 	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOENT)
-			goto error1;
-		else
-			goto error2;
-	}
+	if (fd == -1)
+		goto error1;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error3;
+		goto error2;
 	close(fd);
 
 	// check /proc
 	dir = "proc";
 	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOENT)
-			goto error1;
-		else
-			goto error2;
-	}
+	if (fd == -1)
+		goto error1;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error3;
+		goto error2;
 	close(fd);
 
 	// check /tmp
 	dir = "tmp";
 	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOENT)
-			goto error1;
-		else
-			goto error2;
-	}
+	if (fd == -1)
+		goto error1;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error3;
+		goto error2;
 	close(fd);
 
 	// check /etc
 	dir = "etc";
 	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOENT)
-			goto error1;
-		else
-			goto error2;
-	}
+	if (fd == -1)
+		goto error1;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
 	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error3;
+		goto error2;
 	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
 		fprintf(stderr, "Error: only root user should be given write permission on chroot /etc\n");
 		exit(1);
@@ -1358,16 +1338,12 @@ void fs_check_chroot_dir(const char *rootdir) {
 	if (getenv("FIREJAIL_X11")) {
 		dir = "tmp/.X11-unix";
 		fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-		if (fd == -1) {
-			if (errno == ENOENT)
-				goto error1;
-			else
-				goto error2;
-		}
+		if (fd == -1)
+			goto error1;
 		if (fstat(fd, &s) == -1)
 			errExit("fstat");
 		if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-			goto error3;
+			goto error2;
 		close(fd);
 	}
 
@@ -1375,13 +1351,14 @@ void fs_check_chroot_dir(const char *rootdir) {
 	return;
 
 error1:
-	fprintf(stderr, "Error: cannot find /%s in chroot directory\n", dir);
+	if (errno == ENOENT)
+		fprintf(stderr, "Error: cannot find /%s in chroot directory\n", dir);
+	else {
+		perror("open");
+		fprintf(stderr, "Error: cannot open /%s in chroot directory\n", dir);
+	}
 	exit(1);
 error2:
-	perror("open");
-	fprintf(stderr, "Error: cannot open /%s in chroot directory\n", dir);
-	exit(1);
-error3:
 	fprintf(stderr, "Error: chroot /%s should be a directory owned by root\n", dir);
 	exit(1);
 }

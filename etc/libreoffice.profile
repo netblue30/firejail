@@ -28,7 +28,7 @@ include whitelist-var-common.inc
 # comment the next line to use the ubuntu profile instead of firejail's apparmor profile
 apparmor
 caps.drop all
-machine-id
+#machine-id
 netfilter
 #nodbus
 nodvd

@@ -119,7 +119,6 @@ static int mkpath(const char* path, mode_t mode) {
 static void whitelist_path(ProfileEntry *entry) {
 	assert(entry);
 	const char *path = entry->data + 10;
-	assert(path);
 	const char *fname;
 	char *wfile = NULL;
 

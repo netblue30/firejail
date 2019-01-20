@@ -199,8 +199,7 @@ int get_mount_id(const char *path) {
 	return -2;
 }
 
-// Check /proc/self/mountinfo if path has any submounts (or if path would have submounts
-// if it was made a mount point).
+// Check /proc/self/mountinfo if path contains any mounts points.
 // Returns an array that can be iterated over for recursive remounting.
 char **build_mount_array(const int mount_id, const char *path) {
 	assert(path);

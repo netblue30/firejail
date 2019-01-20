@@ -31,7 +31,6 @@
 
 static int apply_caps = 0;
 static uint64_t caps = 0;
-static int apply_seccomp = 0;
 static unsigned display = 0;
 #define BUFLEN 4096
 
@@ -321,7 +320,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
 	if (getuid() != 0) {
-		extract_nonewprivs(pid);  // redundant on Linux >= 4.10; duplicated in function extract_caps_seccomp
+		extract_nonewprivs(pid);  // redundant on Linux >= 4.10; duplicated in function extract_caps
 		extract_caps(pid);
 		extract_cpu(pid);
 		extract_cgroup(pid);

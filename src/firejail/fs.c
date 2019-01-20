@@ -35,7 +35,7 @@
 //#define TEST_NO_BLACKLIST_MATCHING
 
 
-static int mount_warning = 0; // remember if warning was printed already
+static int mount_warning = 0;
 static void fs_rdwr(const char *dir);
 static void fs_rdwr_rec(const char *dir);
 
@@ -468,12 +468,11 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 	char *options;
 	if (asprintf(&options, "mode=%o,uid=%u,gid=%u", s.st_mode & 07777, s.st_uid, s.st_gid) == -1)
 		errExit("asprintf");
-	// preserve some mount flags
+	// preserve mount flags, but remove read-only flag
 	struct statvfs buf;
 	if (fstatvfs(fd, &buf) == -1)
 		errExit("fstatvfs");
-	unsigned long flags = buf.f_flag &  // remove read-only flag
-		(MS_NOSUID|MS_NODEV|MS_NOEXEC|MS_MANDLOCK|MS_STRICTATIME|MS_NODIRATIME|MS_RELATIME|MS_NOATIME);
+	unsigned long flags = buf.f_flag & ~(MS_RDONLY|MS_BIND);
 	// mount via the symbolic link in /proc/self/fd
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)

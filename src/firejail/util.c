@@ -454,7 +454,6 @@ void trim_trailing_slash_or_dot(char *path) {
 	assert(path);
 
 	char *end = strchr(path, '\0');
-	assert(end);
 	if ((end - path) > 1) {
 		end--;
 		while (*end == '/' ||
@@ -941,9 +940,7 @@ int remove_overlay_directory(void) {
 		// wait for the child to finish
 		waitpid(child, NULL, 0);
 		// check if ~/.firejail was deleted
-		if (stat(path, &s) == -1)
-			return 0;
-		else
+		if (stat(path, &s) == 0)
 			return 1;
 	}
 	return 0;

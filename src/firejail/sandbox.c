@@ -1178,7 +1178,7 @@ int sandbox(void* sandbox_arg) {
 	// drop privileges, fork the application and monitor it
 	//****************************************
 	drop_privs(arg_nogroups);
-	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the sandbox in case the parent died
 	pid_t app_pid = fork();
 	if (app_pid == -1)
 		errExit("fork");

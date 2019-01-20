@@ -1093,8 +1093,13 @@ unsigned extract_timeout(const char *str) {
 		fprintf(stderr, "Error: invalid timeout, please use a hh:mm:ss format\n");
 		exit(1);
 	}
+	unsigned timeout = h * 3600 + m * 60 + s;
+	if (timeout == 0) {
+		fprintf(stderr, "Error: invalid timeout\n");
+		exit(1);
+	}
 
-	return h * 3600 + m * 60 + s;
+	return timeout;
 }
 
 void disable_file_or_dir(const char *fname) {

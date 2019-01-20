@@ -43,8 +43,10 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
+disable-mnt
 private-bin google-earth,sh,bash,grep,sed,ls,dirname
 private-dev
+private-opt google
 
 noexec ${HOME}
 noexec /tmp

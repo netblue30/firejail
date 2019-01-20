@@ -26,20 +26,11 @@
 void shut(pid_t pid) {
 	EUID_ASSERT();
 
-	pid_t parent = pid;
-	// if the pid is that of a firejail  process, use the pid of a child process inside the sandbox
 	EUID_ROOT();
 	char *comm = pid_proc_comm(pid);
 	EUID_USER();
 	if (comm) {
-		if (strcmp(comm, "firejail") == 0) {
-			pid_t child;
-			if (find_child(pid, &child) == 0) {
-				pid = child;
-				printf("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) pid);
-			}
-		}
-		else {
+		if (strcmp(comm, "firejail") != 0) {
 			fprintf(stderr, "Error: this is not a firejail sandbox\n");
 			exit(1);
 		}
@@ -58,7 +49,6 @@ void shut(pid_t pid) {
 		}
 	}
 
-	EUID_ROOT();
 	printf("Sending SIGTERM to %u\n", pid);
 	kill(pid, SIGTERM);
 
@@ -94,14 +84,16 @@ void shut(pid_t pid) {
 
 	// force SIGKILL
 	if (!killdone) {
-		// kill the process and also the parent
+		// kill the process and its child
+		pid_t child;
+		if (find_child(pid, &child) == 0) {
+			printf("Sending SIGKILL to %u\n", child);
+			kill(child, SIGKILL);
+		}
 		printf("Sending SIGKILL to %u\n", pid);
 		kill(pid, SIGKILL);
-		if (parent != pid) {
-			printf("Sending SIGKILL to %u\n", parent);
-			kill(parent, SIGKILL);
-		}
 	}
 
-	delete_run_files(parent);
+	EUID_ROOT();
+	delete_run_files(pid);
 }

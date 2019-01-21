@@ -34,11 +34,12 @@ static int profile_find(const char *name, const char *dir, int add_ext) {
 	int rv = 0;
 	DIR *dp;
 	char *pname = NULL;
-	if (add_ext)
+	if (add_ext) {
 		if (asprintf(&pname, "%s.profile", name) == -1)
 			errExit("asprintf");
 		else
 			name = pname;
+	}
 
 	dp = opendir (dir);
 	if (dp != NULL) {
@@ -133,40 +134,54 @@ void profile_add_ignore(const char *str) {
 	}
 }
 
+typedef struct cond_t {
+	const char *name;	// conditional name
+	int (*check)(void);	// true if set
+} Cond;
+
+static int check_appimage(void) {
+	return arg_appimage != 0;
+}
+
+static int check_nodbus(void) {
+	return arg_nodbus != 0;
+}
+
+static int check_disable_u2f(void) {
+	return checkcfg(CFG_BROWSER_DISABLE_U2F) != 0;
+}
+
+Cond conditionals[] = {
+	{"HAS_APPIMAGE", check_appimage},
+	{"HAS_NODBUS", check_nodbus},
+	{"BROWSER_DISABLE_U2F", check_disable_u2f},
+	{ NULL, NULL }
+};
 
 int profile_check_conditional(char *ptr, int lineno, const char *fname) {
-	struct cond_t {
-		char *name;	// conditional name
-		size_t len;	// length of name
-		bool value;	// true if set
-	} conditionals[] = {
-		{"HAS_APPIMAGE", strlen("HAS_APPIMAGE"), arg_appimage!=0},
-		{"HAS_NODBUS", strlen("HAS_NODBUS"), arg_nodbus!=0},
-		{"BROWSER_DISABLE_U2F", strlen("BROWSER_DISABLE_U2F"), checkcfg(CFG_BROWSER_DISABLE_U2F)!=0},
-		NULL
-	}, *cond = conditionals;
 	char *tmp = ptr, *msg = NULL;
 
 	if (*ptr++ != '?')
 		return 1;
 
+	Cond *cond = conditionals;
 	while (cond->name) {
 		// continue if not this conditional
-		if (strncmp(ptr, cond->name, cond->len) != 0) {
+		if (strncmp(ptr, cond->name, strlen(cond->name)) != 0) {
 			cond++;
 			continue;
 		}
-		ptr += cond->len;
+		ptr += strlen(cond->name);
 
 		if (*ptr == ' ')
 			ptr++;
 		if (*ptr++ != ':') {
-			msg = "invalid syntax: colon must come after conditional";
+			msg = "invalid conditional syntax: colon must come after conditional";
 			ptr = tmp;
 			goto error;
 		}
 		if (*ptr == '\0') {
-			msg = "invalid conditional line: no profile line after conditional";
+			msg = "invalid conditional syntax: no profile line after conditional";
 			ptr = tmp;
 			goto error;
 		}
@@ -174,7 +189,8 @@ int profile_check_conditional(char *ptr, int lineno, const char *fname) {
 			ptr++;
 
 		// if set, continue processing statement in caller
-		if (cond->value) {
+		int value = cond->check();
+		if (value) {
 			// move ptr to start of profile line
 			ptr = strdup(ptr);
 			if (!ptr)
@@ -184,13 +200,15 @@ int profile_check_conditional(char *ptr, int lineno, const char *fname) {
 			// quiet or include directives
 			if ((strncmp(ptr, "quiet", 5) == 0) ||
 			    (strncmp(ptr, "include", 7) == 0)) {
-				msg = "invalid profile line: quiet and include not allowed in conditionals";
+				msg = "invalid conditional syntax: quiet and include not allowed in conditionals";
 				ptr = tmp;
 				goto error;
 			}
 			free(tmp);
 
 			// verify syntax, exit in case of error
+			if (arg_debug)
+				printf("conditional %s, %s\n", cond->name, ptr);
 			if (profile_check_line(ptr, lineno, fname))
 				profile_add(ptr);
 		}

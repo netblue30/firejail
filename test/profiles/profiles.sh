@@ -6,6 +6,9 @@
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 
+echo "TESTING: profile conditional (test/profiles/conditional.exp)"
+./conditional.exp
+
 echo "TESTING: profile recursivity (test/profiles/profile_recursivity.exp)"
 ./profile_recursivity.exp
 

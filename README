@@ -528,9 +528,12 @@ Ruan (https://github.com/ruany)
 rusty-snake (https://github.com/rusty-snake)
 	- fixed kdenlive profile
 	- added thunderbird-wayland and supertuxcart profiles
-	- fix bible-time profile
+	- fix bible-time, rhythmbox profiles
 	- more blacklists in disable-common.inc
 	- fixed some missing paths in disable-programs.inc
+	- added ghostwriter profle
+	- fix gajim profile, added gajim-history-manager profile
+	- updates for ~/.cargo
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
@@ -647,6 +650,8 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- added lstat() / lstat64() support to libtrace
 	- include mkuid.sh in make dist
 	- cppcheck bugfixes
+tinmanx (https://github.com/tinmanx)
+	- remove network access from cherrytree.profile
 Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Tomasz Jan Góralczyk (https://github.com/tjg)

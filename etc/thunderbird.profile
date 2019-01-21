@@ -14,6 +14,10 @@ noblacklist ${HOME}/.gnupg
 # noblacklist ${HOME}/.icedove
 noblacklist ${HOME}/.thunderbird
 
+# If you have setup Thunderbird to archive emails to a local folder,
+# make sure you add the path to that folder to the mkdir and whitelist
+# rules below. Otherwise they will be deleted when you close Thunderbird.
+# See https://github.com/netblue30/firejail/issues/2357
 mkdir ${HOME}/.cache/thunderbird
 mkdir ${HOME}/.gnupg
 # mkdir ${HOME}/.icedove

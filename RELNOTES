@@ -18,7 +18,7 @@ firejail (0.9.58~rc1) baseline; urgency=low
   * new profiles: nirtoshare-send, nitroshare-ui, mencoder, gnome-pie
   * new profiles: masterpdfeditor, QOwnNotes, aisleriot, Mendeley
   * new profiles: feedreader, ocenaudio, mpsyt, thunderbird-wayland
-  * new profiles: supertuxcart, ghostwriter, gajim-history-manager
+  * new profiles: supertuxkart, ghostwriter, gajim-history-manager
  -- netblue30 <netblue30@yahoo.com>  Mon, 21 Jan 2019 08:00:00 -0500
 
 firejail (0.9.56) baseline; urgency=low

@@ -527,7 +527,7 @@ Ruan (https://github.com/ruany)
 	- fixed hexchat profile
 rusty-snake (https://github.com/rusty-snake)
 	- fixed kdenlive profile
-	- added thunderbird-wayland and supertuxcart profiles
+	- added thunderbird-wayland and supertuxkart profiles
 	- fix bible-time, rhythmbox profiles
 	- more blacklists in disable-common.inc
 	- fixed some missing paths in disable-programs.inc

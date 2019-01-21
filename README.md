@@ -156,4 +156,4 @@ bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat, lbzip2, lzcat, lzcmp, lzdiff
 lzless, lzma, lzmainfo, lzmore, unlzma, unxz, xzcat, xzcmp, xzdiff, xzegrep, xzfgrep, xzgrep, xzless, xzmore,
 lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh, nirtoshare-send, nitroshare-ui, mencoder, gnome-pie,
 masterpdfeditor, QOwnNotes, aisleriot, Mendeley, feedreader, ocenaudio, mpsyt,
-thunderbird-wayland, supertuxcart, ghostwriter, gajim-history-manager
+thunderbird-wayland, supertuxkart, ghostwriter, gajim-history-manager

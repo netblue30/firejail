@@ -9,6 +9,12 @@ noblacklist ${HOME}/.cache/peek
 noblacklist ${PICTURES}
 noblacklist ${VIDEOS}
 
+mkdir ${HOME}/.cache/peek
+
+whitelist ${HOME}/.cache/peek
+whitelist ${PICTURES}
+whitelist ${VIDEOS}
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
@@ -16,10 +22,12 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-common.inc
+
 caps.drop all
 net none
 no3d
-nodbus
+#nodbus breaks format picker on arch
 nodvd
 nogroups
 nonewprivs
@@ -33,7 +41,7 @@ seccomp
 shell none
 
 # private-bin breaks gif mode, mp4 and webm mode work fine however
-# private-bin peek,convert,ffmpeg
+# private-bin peek,convert,ffmpeg,gifski
 private-dev
 private-tmp
 

@@ -39,7 +39,7 @@ novideo
 protocol unix
 seccomp
 shell none
-tracelog
+# tracelog
 
 private-bin gwenview,gimp*,kbuildsycoca4,kdeinit4
 private-dev

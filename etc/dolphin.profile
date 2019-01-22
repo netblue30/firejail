@@ -27,7 +27,7 @@ nonewprivs
 noroot
 notv
 novideo
-protocol unix
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 

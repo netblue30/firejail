@@ -6,21 +6,14 @@ include github-desktop.local
 # Persistent global definitions
 include globals.local
 
-# Note: add noblacklist/whitelist entrees below for any
-# location where you keep local repository clones.
-
 noblacklist ${HOME}/.gitconfig
-whitelist ${HOME}/.gitconfig
 noblacklist ${HOME}/.config/GitHub Desktop
-whitelist ${HOME}/.config/GitHub Desktop
 
 include disable-common.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-devel.inc
 include disable-interpreters.inc
-
-include whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -45,6 +38,7 @@ disable-mnt
 # private-bin github-desktop
 private-cache
 private-dev
+?HAS_APPIMAGE: ignore private-dev
 # private-etc none
 # private-lib
 private-tmp

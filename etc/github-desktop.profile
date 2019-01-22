@@ -1,4 +1,4 @@
-# Firejail profile for desktop
+# Firejail profile for github-desktop
 # Description: Extend your GitHub workflow beyond your browser with GitHub Desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
@@ -6,7 +6,12 @@ include github-desktop.local
 # Persistent global definitions
 include globals.local
 
+# Note: add noblacklist/whitelist entrees below for any
+# location where you keep local repository clones.
+
+noblacklist ${HOME}/.gitconfig
 whitelist ${HOME}/.gitconfig
+noblacklist ${HOME}/.config/GitHub Desktop
 whitelist ${HOME}/.config/GitHub Desktop
 
 include disable-common.inc
@@ -31,14 +36,19 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 
+# Note: On debian-based distributions the binary might be located in
+# /opt/GitHub Desktop/github-desktop, and therefore not be in PATH.
+# If that's the case you can start GitHub Desktop with firejail via
+# `firejail "/opt/GitHub Desktop/github-desktop"`.
+
 disable-mnt
-# private-bin Atom,desktop
-# private-cache
-# private-dev
+# private-bin github-desktop
+private-cache
+private-dev
 # private-etc none
 # private-lib
-# private-tmp
+private-tmp
 
 # memory-deny-write-execute
-# noexec ${HOME}
-# noexec /tmp
+noexec ${HOME}
+noexec /tmp

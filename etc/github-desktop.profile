@@ -37,8 +37,8 @@ seccomp
 disable-mnt
 # private-bin github-desktop
 private-cache
-private-dev
 ?HAS_APPIMAGE: ignore private-dev
+private-dev
 # private-etc none
 # private-lib
 private-tmp

@@ -170,9 +170,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_userfaultfd
 	  "userfaultfd,"
 #endif
-#ifdef SYS_mincore	// 0.9.57
-	  "mincore"
-#endif
+//#ifdef SYS_mincore	// 0.9.57 - problem fixed in Linux kernel 5.0; on 4.x it will break kodi, mpv, totem
+//	  "mincore"
+//#endif
 	},
 	{ .name = "@default-nodebuggers", .list =
 	  "@default,"

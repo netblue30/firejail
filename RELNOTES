@@ -7,7 +7,6 @@ firejail (0.9.58~rc1) baseline; urgency=low
      for HAS_APPIMAGE, HAS_NODBUS, BROWSER_DISABLE_U2F
   * profile name support
   * added explicit nonewprivs support to join option
-  * add mincore syscall to default seccomp list
   * new profiles: QMediathekView, aria2c, Authenticator, checkbashisms
   * new profiles: devilspie, devilspie2, easystroke, github-desktop, min
   * new profiles: bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat

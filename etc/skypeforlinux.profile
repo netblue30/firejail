@@ -30,4 +30,4 @@ private-cache
 private-tmp
 
 noexec ${HOME}
-noexec /tmp
+# noexec /tmp  - breaks Skype

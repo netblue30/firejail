@@ -302,6 +302,7 @@ blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.mutt
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.netrc
+blacklist ${HOME}/.nyx
 blacklist ${HOME}/.pki
 blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/.ssh

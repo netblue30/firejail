@@ -35,13 +35,13 @@ expect {
 	"/run/firejail/mnt/seccomp seccomp filter" {puts "TESTING ERROR 5\n";exit}
 	"/run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 6\n";exit}
 	"/run/firejail/mnt/seccomp.64 seccomp filter" {puts "TESTING ERROR 7\n";exit}
-	"/run/firejail/mnt/seccomp.protocol seccomp filter"
+	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
 }
 after 100
 send -- "ls -l /run/firejail/mnt | grep -c seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
-	"2"
+	"3"
 }
 send -- "exit\r"
 sleep 1
@@ -64,7 +64,7 @@ after 100
 send -- "ls -l /run/firejail/mnt | grep -c seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"3"
+	"4"
 }
 send -- "exit\r"
 sleep 1

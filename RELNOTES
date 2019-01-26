@@ -1,5 +1,4 @@
-firejail (0.9.58~rc1) baseline; urgency=low
-  * work in progress
+firejail (0.9.58) baseline; urgency=low
   * --disable-mnt rework
   * --net.print command
   * GitLab CI/CD integration: disto specific builds
@@ -18,7 +17,8 @@ firejail (0.9.58~rc1) baseline; urgency=low
   * new profiles: masterpdfeditor, QOwnNotes, aisleriot, Mendeley
   * new profiles: feedreader, ocenaudio, mpsyt, thunderbird-wayland
   * new profiles: supertuxkart, ghostwriter, gajim-history-manager
- -- netblue30 <netblue30@yahoo.com>  Mon, 21 Jan 2019 08:00:00 -0500
+  * bugfixes
+ -- netblue30 <netblue30@yahoo.com>  Sat, 26 Jan 2019 08:00:00 -0500
 
 firejail (0.9.56) baseline; urgency=low
   * modif: removed CFG_CHROOT_DESKTOP configuration option

@@ -190,7 +190,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 
-DISTFILES = "src etc platform contrib configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh COPYING README RELNOTES"
+DISTFILES = "src etc platform contrib configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkdeb-apparmor.sh COPYING README RELNOTES"
 DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
 
 dist:
@@ -210,6 +210,9 @@ asc:; ./mkasc.sh $(VERSION)
 
 deb: dist
 	./mkdeb.sh $(NAME) $(VERSION)
+
+deb-apparmor: dist
+	./mkdeb-apparmor.sh $(NAME) $(VERSION)
 
 snap: all
 	cd platform/snap; ./snap.sh

@@ -4,6 +4,7 @@
 # 2. Redhat-based systems. Use centos:latest for reasonable backwards compat
 # and fedora:latest for new setups
 # 3. Alpine for installing directly from source
+# Also builds apparmor package for Ubuntu LTS
 build_ubuntu_package:
     image: ubuntu:rolling
     script:
@@ -39,3 +40,10 @@ build_src_package:
         - apk upgrade
         - apk add build-base linux-headers
         - ./configure --prefix=/usr && make && make install-strip
+
+build_apparmor:
+  image: ubuntu:latest
+  script:
+    - apt-get update -qq
+    - apt-get install -y -qq build-essential lintian libapparmor-dev
+    - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail-apparmor*.deb

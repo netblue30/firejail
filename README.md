@@ -99,61 +99,6 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 
 `````
-## Current development version: 0.9.57
-
-## New Long Term Support (0.9.56-LTS) version released
-
-The new version updates the code base to 0.9.56. We target a reduction of approx. 40% of the code by removing rarely
-used features (chroot, overlay, rlimits, cgroups), incomplete features (private-bin, private-lib),
-and a lot of instrumentation (build profile feature, tracing, auditing, etc). Sandbox-specific security features such as
-seccomp, capabilities, filesystem whitelist/blacklist and networking are updated and hardened.
-
-`````
-firejail (0.9.56-LTS) baseline; urgency=low
-  * code based on Firejail version 0.9.56
-  * much smaller code base for SUID executable
-  * command line options removed:
-     --audit, --build, --cgroup, --chroot, --get, --ls, --output,
-     --output-stderr, --overlay, --overlay-named, --overlay-tmpfs,
-     --overlay-clean, --private-home, --private-bin, --private-etc,
-     --private-opt, --private-srv, --put, --rlimit*, --trace, --tracelog,
-     --x11*, --xephyr*
-  * compile-time options: --enable-apparmor, --disable-seccomp,
-     --disable-globalcfg, --disable-network, --disable-userns,
-     --disable-whitelist, --disable-suid, --enable-fatal-warnings,
-     --enable-busybox-workaround
- -- netblue30 <netblue30@yahoo.com>  Sun, 21 Oct 2018 08:00:00 -0500
-`````
-
-The new LTS branch is here: https://github.com/netblue30/firejail/tree/LTSbase
-
-## New commands:
-`````
-      --net.print=name|pid
-              If a new network namespace is enabled, print network interface
-              configuration  for the sandbox specified by name or PID. Exam‐
-              ple:
-
-              $ firejail --net.print=browser
-              Switching to pid 1853, the  first  child  process  inside  the
-              sandbox
-              Interface  MAC               IP            Mask        Status
-              lo                           127.0.0.1     255.0.0.0     UP
-              eth0-1852  5e:fb:8e:27:29:26 192.168.1.186 255.255.255.0 UP
-`````
+## Current development version: 0.9.59
 
 ## New profiles:
-
-`````
-$ ls etc/*.profile | wc -l
-608
-`````
-We have more than 600 application profiles on mainline!
-
-
-QMediathekView, aria2c, Authenticator, checkbashisms, devilspie, devilspie2, easystroke, github-desktop, min,
-bsdcat, bsdcpio, bsdtar, lzmadec, lbunzip2, lbzcat, lbzip2, lzcat, lzcmp, lzdiff, lzegrep, lzfgrep, lzgrep,
-lzless, lzma, lzmainfo, lzmore, unlzma, unxz, xzcat, xzcmp, xzdiff, xzegrep, xzfgrep, xzgrep, xzless, xzmore,
-lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh, nirtoshare-send, nitroshare-ui, mencoder, gnome-pie,
-masterpdfeditor, QOwnNotes, aisleriot, Mendeley, feedreader, ocenaudio, mpsyt,
-thunderbird-wayland, supertuxkart, ghostwriter, gajim-history-manager

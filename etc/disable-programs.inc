@@ -538,6 +538,7 @@ blacklist ${HOME}/.w3m
 blacklist ${HOME}/.warzone2100-3.*
 blacklist ${HOME}/.waterfox
 blacklist ${HOME}/.weechat
+blacklist ${HOME}/.wget-hsts
 blacklist ${HOME}/.wgetrc
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wireshark

@@ -11,12 +11,15 @@ blacklist ${HOME}/.local/share/Trash
 blacklist-nolog ${HOME}/.*_history
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.cache/greenclip*
+blacklist-nolog ${HOME}/.histfile
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.kde/share/apps/klipper
 blacklist-nolog ${HOME}/.kde4/share/apps/klipper
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/klipper
 blacklist-nolog ${HOME}/.macromedia
+blacklist-nolog ${HOME}/.python-history
+blacklist-nolog ${HOME}/.pythonhist
 blacklist-nolog /tmp/clipmenu*
 
 # X11 session autostart

@@ -272,7 +272,6 @@ typedef struct config_t {
 	int nice;
 	char *cgroup;
 
-
 	// command line
 	char *command_line;
 	char *window_title;
@@ -781,6 +780,7 @@ enum {
 	CFG_APPARMOR,
 	CFG_DBUS,
 	CFG_PRIVATE_CACHE,
+	CFG_CGROUP,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

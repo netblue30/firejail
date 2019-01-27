@@ -1,5 +1,6 @@
 firejail (0.9.59) baseline; urgency=low
   * work in progress
+  * enable/disable cgroup in firejail.config
  -- netblue30 <netblue30@yahoo.com>  Sun, 27 Jan 2019 08:00:00 -0500
 
 firejail (0.9.58) baseline; urgency=low

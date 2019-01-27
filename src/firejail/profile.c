@@ -878,7 +878,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// cgroup
 	if (strncmp(ptr, "cgroup ", 7) == 0) {
-		set_cgroup(ptr + 7);
+		if (checkcfg(CFG_CGROUP))
+			set_cgroup(ptr + 7);
+		else
+			warning_feature_disabled("cgroup");
 		return 0;
 	}
 

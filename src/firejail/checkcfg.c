@@ -130,6 +130,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// cgroup
+			else if (strncmp(ptr, "cgroup ", 5) == 0) {
+				if (strcmp(ptr + 5, "yes") == 0)
+					cfg_val[CFG_CGROUP] = 1;
+				else if (strcmp(ptr + 5, "no") == 0)
+					cfg_val[CFG_CGROUP] = 0;
+				else
+					goto errout;
+			}
 			// user namespace
 			else if (strncmp(ptr, "userns ", 7) == 0) {
 				if (strcmp(ptr + 7, "yes") == 0)

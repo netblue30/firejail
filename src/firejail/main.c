@@ -1286,16 +1286,20 @@ int main(int argc, char **argv) {
 			arg_nice = 1;
 		}
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
-			if (option_cgroup) {
-				fprintf(stderr, "Error: only a cgroup can be defined\n");
-				exit(1);
-			}
+			if (checkcfg(CFG_CGROUP)) {
+				if (option_cgroup) {
+					fprintf(stderr, "Error: only a cgroup can be defined\n");
+					exit(1);
+				}
 
-			option_cgroup = 1;
-			cfg.cgroup = strdup(argv[i] + 9);
-			if (!cfg.cgroup)
-				errExit("strdup");
-			set_cgroup(cfg.cgroup);
+				option_cgroup = 1;
+				cfg.cgroup = strdup(argv[i] + 9);
+				if (!cfg.cgroup)
+					errExit("strdup");
+				set_cgroup(cfg.cgroup);
+			}
+			else
+				exit_err_feature("cgroup");
 		}
 
 		//*************************************

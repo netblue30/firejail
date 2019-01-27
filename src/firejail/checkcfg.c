@@ -131,10 +131,10 @@ int checkcfg(int val) {
 					goto errout;
 			}
 			// cgroup
-			else if (strncmp(ptr, "cgroup ", 5) == 0) {
-				if (strcmp(ptr + 5, "yes") == 0)
+			else if (strncmp(ptr, "cgroup ", 7) == 0) {
+				if (strcmp(ptr + 7, "yes") == 0)
 					cfg_val[CFG_CGROUP] = 1;
-				else if (strcmp(ptr + 5, "no") == 0)
+				else if (strcmp(ptr + 7, "no") == 0)
 					cfg_val[CFG_CGROUP] = 0;
 				else
 					goto errout;

@@ -21,10 +21,13 @@ profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 dbus,
 
 ##########
-# With ptrace it is possible to inspect and hijack running programs. Usually this
-# is needed only for debugging. To allow ptrace, uncomment the following line.
+# With ptrace it is possible to inspect and hijack running programs.
+# Some browsers are also using ptrace for their sandboxing.
 ##########
+# Uncomment this line to allow all ptrace access
 #ptrace,
+# Allow obtaining some process information, but not ptrace(2)
+ptrace (read,readby) peer=firejail-default,
 
 ##########
 # Allow read access to whole filesystem and control it from firejail.

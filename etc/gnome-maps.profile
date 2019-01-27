@@ -9,6 +9,7 @@ include globals.local
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
 noblacklist ${HOME}/.cache/champlain
+noblacklist ${HOME}/.local/share/flatpak
 
 include disable-common.inc
 include disable-devel.inc

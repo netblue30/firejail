@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.config/enchant
 noblacklist ${HOME}/.config/gedit
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.python-history
 
 include disable-common.inc
 # include disable-devel.inc

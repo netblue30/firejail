@@ -7,6 +7,7 @@ include geany.local
 include globals.local
 
 noblacklist ${HOME}/.config/geany
+noblacklist ${HOME}/.python-history
 
 include disable-common.inc
 include disable-passwdmgr.inc

@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.cargo/config
 noblacklist ${HOME}/.cargo/registry
+noblacklist ${HOME}/.python-history
 
 include disable-common.inc
 include disable-passwdmgr.inc

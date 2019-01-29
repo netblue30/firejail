@@ -6,11 +6,14 @@ include cliqz.local
 include globals.local
 
 noblacklist ${HOME}/.cache/cliqz
+noblacklist ${HOME}/.cliqz
 noblacklist ${HOME}/.config/cliqz
 
 mkdir ${HOME}/.cache/cliqz
+mkdir ${HOME}/.cliqz
 mkdir ${HOME}/.config/cliqz
 whitelist ${HOME}/.cache/cliqz
+whitelist ${HOME}/.cliqz
 whitelist ${HOME}/.config/cliqz
 
 # private-etc must first be enabled in firefox-common.profile

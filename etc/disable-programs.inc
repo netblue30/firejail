@@ -46,6 +46,7 @@ blacklist ${HOME}/.audacity-data
 blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.claws-mail
+blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/2048-qt
 blacklist ${HOME}/.config/Atom

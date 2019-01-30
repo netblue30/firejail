@@ -6,6 +6,7 @@ include vim.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo
 noblacklist ${HOME}/.vimrc

@@ -9,6 +9,7 @@ include globals.local
 
 blacklist /tmp/.X11-unix
 
+noblacklist ${HOME}/.wget-hsts
 noblacklist ${HOME}/.wgetrc
 
 include disable-common.inc

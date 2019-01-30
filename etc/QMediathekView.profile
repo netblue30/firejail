@@ -17,12 +17,14 @@ noblacklist ${HOME}/.config/xplayer
 noblacklist ${HOME}/.local/share/totem
 noblacklist ${HOME}/.local/share/xplayer
 noblacklist ${HOME}/.mplayer
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 include whitelist-var-common.inc
 

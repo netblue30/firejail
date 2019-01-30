@@ -16,6 +16,7 @@ noblacklist ${HOME}/.local/share/totem
 noblacklist ${HOME}/.local/share/xplayer
 noblacklist ${HOME}/.mediathek3
 noblacklist ${HOME}/.mplayer
+noblacklist ${VIDEOS}
 
 # Allow access to java
 noblacklist ${PATH}/java
@@ -28,6 +29,7 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 include whitelist-var-common.inc
 
@@ -44,6 +46,7 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
+private-cache
 private-dev
 private-tmp
 

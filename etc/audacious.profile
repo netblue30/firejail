@@ -34,6 +34,7 @@ seccomp
 shell none
 tracelog
 
+private-cache
 # private-bin audacious
 private-dev
 private-tmp

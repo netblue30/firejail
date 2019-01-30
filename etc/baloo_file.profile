@@ -26,6 +26,7 @@ include disable-programs.inc
 include whitelist-var-common.inc
 
 caps.drop all
+netfilter
 no3d
 nodvd
 nogroups
@@ -41,6 +42,7 @@ seccomp.drop @cpu-emulation,@debug,@obsolete,@privileged,@resources,add_key,fano
 shell none
 # x11 xorg
 
+private-cache
 private-bin baloo_file,baloo_file_extractor,baloo_filemetadata_temp_extractor,kbuildsycoca4
 private-dev
 private-tmp

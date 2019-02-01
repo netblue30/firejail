@@ -31,7 +31,7 @@ include whitelist-var-common.inc
 
 caps.drop all
 netfilter
-nodbus
+#nodbus - dbus needed for MPRIS
 nodvd
 nogroups
 nonewprivs

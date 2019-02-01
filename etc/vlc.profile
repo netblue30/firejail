@@ -24,7 +24,7 @@ include whitelist-var-common.inc
 #apparmor - on Ubuntu 18.04 it refuses to start without dbus access
 caps.drop all
 netfilter
-#nodbus
+#nodbus - dbus needed for MPRIS
 nogroups
 nonewprivs
 noroot

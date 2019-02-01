@@ -51,5 +51,6 @@ private-dev
 #private-etc ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,mime.types,mailcap,asound.conf,pulse,pki,crypto-policies,ld.so.cache
 private-tmp
 
-noexec ${HOME}
+# breaks DRM binaries
+#noexec ${HOME}
 noexec /tmp

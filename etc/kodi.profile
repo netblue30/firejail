@@ -41,5 +41,6 @@ tracelog
 private-dev
 private-tmp
 
-noexec ${HOME}
+# breaks plugins
+#noexec ${HOME}
 noexec /tmp

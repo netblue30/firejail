@@ -139,6 +139,15 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+			// name change
+			else if (strncmp(ptr, "name-change ", 12) == 0) {
+				if (strcmp(ptr + 12, "yes") == 0)
+					cfg_val[CFG_NAME_CHANGE] = 1;
+				else if (strcmp(ptr + 12, "no") == 0)
+					cfg_val[CFG_NAME_CHANGE] = 0;
+				else
+					goto errout;
+			}
 			// user namespace
 			else if (strncmp(ptr, "userns ", 7) == 0) {
 				if (strcmp(ptr + 7, "yes") == 0)

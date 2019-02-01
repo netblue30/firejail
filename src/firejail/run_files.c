@@ -76,28 +76,19 @@ void delete_run_files(pid_t pid) {
 }
 
 static char *newname(char *name) {
-	char *rv;
+	char *rv = name;
 	pid_t pid;
 
-	// try the name
-	if (name2pid(name, &pid))
-		return name;
+	if (checkcfg(CFG_NAME_CHANGE)) {
+		// try the name
+		if (name2pid(name, &pid))
+			return name;
 
-	// try name-1 to 9
-	int i;
-	for (i = 1; i < 10; i++) {
-		if (asprintf(&rv, "%s-%d", name, i) == -1)
+		// return name-pid
+		if (asprintf(&rv, "%s-%d", name, getpid()) == -1)
 			errExit("asprintf");
-		if (name2pid(rv, &pid)) {
-			fwarning("Sandbox name changed to %s\n", rv);
-			return rv;
-		}
-		free(rv);
 	}
 
-	// return name-pid
-	if (asprintf(&rv, "%s-%d", name, getpid()) == -1)
-		errExit("asprintf");
 	return rv;
 }
 

@@ -111,39 +111,39 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	":ftest-1:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
-	":ftest-2:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
-	":ftest-3:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 16\n";exit}
-	":ftest-4:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
-	":ftest-5:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 18\n";exit}
-	":ftest-6:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 19\n";exit}
-	":ftest-7:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 20\n";exit}
-	":ftest-8:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 21\n";exit}
-	":ftest-9:"
+	":ftest-"
 }
 expect {
 	timeout {puts "TESTING ERROR 22\n";exit}
@@ -153,22 +153,5 @@ expect {
 	timeout {puts "TESTING ERROR 23\n";exit}
 	":ftest-"
 }
-after 100
-
-send -- "firejail --shutdown=ftest-5\r"
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	"Sending SIGTERM"
-}
 sleep 1
-
-spawn $env(SHELL)
-send -- "firejail --list\r"
-expect {
-	timeout {puts "TESTING ERROR 12\n";exit}
-	":ftest-5:"  {puts "TESTING ERROR 15\n";exit}
-	":ftest-9:"
-}
-
-after 100
 puts "all done\n"

@@ -47,5 +47,6 @@ tracelog
 
 private-dev
 
-noexec ${HOME}
+# breaks when installed via pip
+#noexec ${HOME}
 noexec /tmp

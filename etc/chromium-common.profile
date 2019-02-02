@@ -34,7 +34,8 @@ disable-mnt
 private-dev
 # private-tmp - problems with multiple browser sessions
 
-noexec ${HOME}
+# breaks DRM binaries
+#noexec ${HOME}
 noexec /tmp
 
 # the file dialog needs to work without d-bus

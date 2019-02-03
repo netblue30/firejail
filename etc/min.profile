@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.config/Min
 
 noblacklist ${HOME}/.pki
+noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,8 +17,10 @@ include disable-interpreters.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.pki
+mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.pki
+whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
 include whitelist-var-common.inc
 

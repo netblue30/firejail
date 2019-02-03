@@ -12,7 +12,8 @@ noblacklist ${HOME}/.cache/Mendeley Ltd.
 noblacklist ${HOME}/.config/Mendeley Ltd.
 noblacklist ${HOME}/.local/share/Mendeley Ltd.
 noblacklist ${HOME}/.local/share/data/Mendeley Ltd.
-noblacklist ${HOME}/.pki/nssdb
+noblacklist ${HOME}/.pki
+noblacklist ${HOME}/.local/share/pki
 
 # Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*

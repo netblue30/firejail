@@ -306,6 +306,7 @@ blacklist ${HOME}/.mutt
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.netrc
 blacklist ${HOME}/.pki
+blacklist ${HOME}/.local/share/pki
 blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/.ssh
 blacklist ${HOME}/.vaults

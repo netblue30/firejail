@@ -11,6 +11,7 @@ noblacklist ${HOME}/.local/share/midori
 # noblacklist ${HOME}/.local/share/webkit
 # noblacklist ${HOME}/.local/share/webkitgtk
 noblacklist ${HOME}/.pki
+noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,6 +24,7 @@ mkdir ${HOME}/.local/share/midori
 mkdir ${HOME}/.local/share/webkit
 mkdir ${HOME}/.local/share/webkitgtk
 mkdir ${HOME}/.pki
+mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/midori
@@ -33,6 +35,7 @@ whitelist ${HOME}/.local/share/midori
 whitelist ${HOME}/.local/share/webkit
 whitelist ${HOME}/.local/share/webkitgtk
 whitelist ${HOME}/.pki
+whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
 
 caps.drop all

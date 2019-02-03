@@ -24,6 +24,7 @@ noblacklist ${HOME}/.local/share/okular
 noblacklist ${HOME}/.local/share/qpdfview
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.pki
+noblacklist ${HOME}/.local/share/pki
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -32,6 +33,7 @@ include /etc/firejail/disable-programs.inc
 mkdir ${HOME}/.cache/mozilla/firefox
 mkdir ${HOME}/.mozilla
 mkdir ${HOME}/.pki
+mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/mozilla/firefox
@@ -60,6 +62,7 @@ whitelist ${HOME}/.mozilla
 whitelist ${HOME}/.pentadactyl
 whitelist ${HOME}/.pentadactylrc
 whitelist ${HOME}/.pki
+whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/.vimperator
 whitelist ${HOME}/.vimperatorrc
 whitelist ${HOME}/.wine-pipelight

@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.pki
+noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -29,6 +30,7 @@ whitelist ${HOME}/.mozilla
 whitelist ${HOME}/.pentadactyl
 whitelist ${HOME}/.pentadactylrc
 whitelist ${HOME}/.pki
+whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/.vimperator
 whitelist ${HOME}/.vimperatorrc
 whitelist ${HOME}/.wine-pipelight

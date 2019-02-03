@@ -14,6 +14,7 @@ noblacklist ${HOME}/.config/evolution
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.local/share/evolution
 noblacklist ${HOME}/.pki
+noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc

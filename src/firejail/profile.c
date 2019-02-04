@@ -241,6 +241,7 @@ error:
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
 int profile_check_line(char *ptr, int lineno, const char *fname) {
+	static int whitelist_warning_printed = 0;
 	EUID_ASSERT();
 
 	// check and process conditional profile lines
@@ -1126,8 +1127,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
 		}
-
+		else
+			warning_feature_disabled("overlayfs");
 		return 0;
+
 	} else if (strcmp(ptr, "overlay-tmpfs") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
 			if (arg_overlay) {
@@ -1144,9 +1147,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 			arg_overlay = 1;
-
-			return 0;
 		}
+		else
+			warning_feature_disabled("overlayfs");
+		return 0;
+
 	} else if (strcmp(ptr, "overlay") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
 			if (arg_overlay) {
@@ -1171,9 +1176,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
 
 			free(subdirname);
-
-			return 0;
 		}
+		else
+			warning_feature_disabled("overlayfs");
+		return 0;
 	}
 #endif
 
@@ -1260,26 +1266,30 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	if (strncmp(ptr, "join-or-start ", 14) == 0) {
-		// try to join by name only
-		pid_t pid;
-		if (!name2pid(ptr + 14, &pid)) {
-			if (!cfg.shell && !arg_shell_none)
-				cfg.shell = guess_shell();
+		if (checkcfg(CFG_JOIN) || getuid() == 0) {
+			// try to join by name only
+			pid_t pid;
+			if (!name2pid(ptr + 14, &pid)) {
+				if (!cfg.shell && !arg_shell_none)
+					cfg.shell = guess_shell();
 
-			// find first non-option arg
-			int i;
-			for (i = 1; i < cfg.original_argc && strncmp(cfg.original_argv[i], "--", 2) != 0; i++);
+				// find first non-option arg
+				int i;
+				for (i = 1; i < cfg.original_argc && strncmp(cfg.original_argv[i], "--", 2) != 0; i++);
 
-			join(pid, cfg.original_argc,cfg.original_argv, i + 1);
-			exit(0);
+				join(pid, cfg.original_argc,cfg.original_argv, i + 1);
+				exit(0);
+			}
+
+			// set sandbox name and start normally
+			cfg.name = ptr + 14;
+			if (strlen(cfg.name) == 0) {
+				fprintf(stderr, "Error: invalid sandbox name\n");
+				exit(1);
+			}
 		}
-
-		// set sandbox name and start normally
-		cfg.name = ptr + 14;
-		if (strlen(cfg.name) == 0) {
-			fprintf(stderr, "Error: invalid sandbox name\n");
-			exit(1);
-		}
+		else
+			warning_feature_disabled("join");
 		return 0;
 	}
 
@@ -1301,8 +1311,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_whitelist = 1;
 			ptr += 10;
 		}
-		else
+		else {
+			if (!whitelist_warning_printed) {
+				warning_feature_disabled("whitelist");
+				whitelist_warning_printed = 1;
+			}
 			return 0;
+		}
 #else
 		return 0;
 #endif

@@ -181,7 +181,9 @@ static void load_blacklist(void) {
 
 	// extract blacklists
 	char buf[MAXBUF];
+#ifdef DEBUG
 	int cnt = 0;
+#endif
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "sandbox pid: ", 13) == 0) {
 			char *ptr = strchr(buf, '\n');
@@ -202,7 +204,9 @@ static void load_blacklist(void) {
 			if (ptr)
 				*ptr = '\0';
 			storage_add(buf + 10);
+#ifdef DEBUG
 			cnt++;
+#endif
 		}
 	}
 	fclose(fp);

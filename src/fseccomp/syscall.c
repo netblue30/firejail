@@ -546,7 +546,7 @@ static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg) {
 	}
 	else { // no problem, add to pre-exec list
 		// build syscall:error_no
-		char *newcall;
+		char *newcall = NULL;
 		if (arg != 0) {
 			if (asprintf(&newcall, "%s:%s", syscall_find_nr(syscall), errno_find_nr(arg)) == -1)
 				errExit("asprintf");
@@ -560,6 +560,7 @@ static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg) {
 		if (ptr->prelist) {
 			if (asprintf(&ptr->prelist, "%s,%s", ptr->prelist, newcall) == -1)
 				errExit("asprintf");
+			free(newcall);
 		}
 		else
 			ptr->prelist = newcall;

@@ -241,7 +241,9 @@ error:
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
 int profile_check_line(char *ptr, int lineno, const char *fname) {
+#ifdef HAVE_WHITELIST
 	static int whitelist_warning_printed = 0;
+#endif
 	EUID_ASSERT();
 
 	// check and process conditional profile lines

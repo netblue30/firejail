@@ -71,164 +71,48 @@ int checkcfg(int val) {
 			if (*buf == '#' || *buf == '\n')
 				continue;
 
+#define PARSE_YESNO(key, string) \
+			else if (strncmp(ptr, string " ", strlen(string)+1) == 0) { \
+				if (strcmp(ptr + strlen(string) + 1, "yes") == 0) \
+					cfg_val[key] = 1; \
+				else if (strcmp(ptr + strlen(string) + 1, "no") == 0) \
+					cfg_val[key] = 0; \
+				else \
+					goto errout; \
+			}
+
 			// parse line
 			ptr = line_remove_spaces(buf);
 			if (!ptr)
 				continue;
+			PARSE_YESNO(CFG_FILE_TRANSFER, "file-transfer")
+			PARSE_YESNO(CFG_DBUS, "dbus")
+			PARSE_YESNO(CFG_JOIN, "join")
+			PARSE_YESNO(CFG_X11, "x11")
+			PARSE_YESNO(CFG_APPARMOR, "apparmor")
+			PARSE_YESNO(CFG_BIND, "bind")
+			PARSE_YESNO(CFG_CGROUP, "cgroup")
+			PARSE_YESNO(CFG_NAME_CHANGE, "name-change")
+			PARSE_YESNO(CFG_USERNS, "userns")
+			PARSE_YESNO(CFG_CHROOT, "chroot")
+			PARSE_YESNO(CFG_FIREJAIL_PROMPT, "firejail-prompt")
+			PARSE_YESNO(CFG_FOLLOW_SYMLINK_AS_USER, "follow-symlink-as-user")
+			PARSE_YESNO(CFG_FORCE_NONEWPRIVS, "force-nonewprivs")
+			PARSE_YESNO(CFG_SECCOMP, "seccomp")
+			PARSE_YESNO(CFG_WHITELIST, "whitelist")
+			PARSE_YESNO(CFG_NETWORK, "network")
+			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
+			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
+			PARSE_YESNO(CFG_OVERLAYFS, "overlayfs")
+			PARSE_YESNO(CFG_PRIVATE_HOME, "private-home")
+			PARSE_YESNO(CFG_PRIVATE_CACHE, "private-cache")
+			PARSE_YESNO(CFG_PRIVATE_LIB, "private-lib")
+			PARSE_YESNO(CFG_PRIVATE_BIN_NO_LOCAL, "private-bin-no-local")
+			PARSE_YESNO(CFG_DISABLE_MNT, "disable-mnt")
+			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
+			PARSE_YESNO(CFG_BROWSER_DISABLE_U2F, "browser-disable-u2f")
+#undef PARSE_YESNO
 
-			// file transfer
-			else if (strncmp(ptr, "file-transfer ", 14) == 0) {
-				if (strcmp(ptr + 14, "yes") == 0)
-					cfg_val[CFG_FILE_TRANSFER] = 1;
-				else if (strcmp(ptr + 14, "no") == 0)
-					cfg_val[CFG_FILE_TRANSFER] = 0;
-				else
-					goto errout;
-			}
-			// dbus
-			else if (strncmp(ptr, "dbus ", 5) == 0) {
-				if (strcmp(ptr + 5, "yes") == 0)
-					cfg_val[CFG_DBUS] = 1;
-				else if (strcmp(ptr + 5, "no") == 0)
-					cfg_val[CFG_DBUS] = 0;
-				else
-					goto errout;
-			}
-			// join
-			else if (strncmp(ptr, "join ", 5) == 0) {
-				if (strcmp(ptr + 5, "yes") == 0)
-					cfg_val[CFG_JOIN] = 1;
-				else if (strcmp(ptr + 5, "no") == 0)
-					cfg_val[CFG_JOIN] = 0;
-				else
-					goto errout;
-			}
-			// x11
-			else if (strncmp(ptr, "x11 ", 4) == 0) {
-				if (strcmp(ptr + 4, "yes") == 0)
-					cfg_val[CFG_X11] = 1;
-				else if (strcmp(ptr + 4, "no") == 0)
-					cfg_val[CFG_X11] = 0;
-				else
-					goto errout;
-			}
-			// apparmor
-			else if (strncmp(ptr, "apparmor ", 9) == 0) {
-				if (strcmp(ptr + 9, "yes") == 0)
-					cfg_val[CFG_APPARMOR] = 1;
-				else if (strcmp(ptr + 9, "no") == 0)
-					cfg_val[CFG_APPARMOR] = 0;
-				else
-					goto errout;
-			}
-			// bind
-			else if (strncmp(ptr, "bind ", 5) == 0) {
-				if (strcmp(ptr + 5, "yes") == 0)
-					cfg_val[CFG_BIND] = 1;
-				else if (strcmp(ptr + 5, "no") == 0)
-					cfg_val[CFG_BIND] = 0;
-				else
-					goto errout;
-			}
-			// cgroup
-			else if (strncmp(ptr, "cgroup ", 7) == 0) {
-				if (strcmp(ptr + 7, "yes") == 0)
-					cfg_val[CFG_CGROUP] = 1;
-				else if (strcmp(ptr + 7, "no") == 0)
-					cfg_val[CFG_CGROUP] = 0;
-				else
-					goto errout;
-			}
-			// name change
-			else if (strncmp(ptr, "name-change ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_NAME_CHANGE] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_NAME_CHANGE] = 0;
-				else
-					goto errout;
-			}
-			// user namespace
-			else if (strncmp(ptr, "userns ", 7) == 0) {
-				if (strcmp(ptr + 7, "yes") == 0)
-					cfg_val[CFG_USERNS] = 1;
-				else if (strcmp(ptr + 7, "no") == 0)
-					cfg_val[CFG_USERNS] = 0;
-				else
-					goto errout;
-			}
-			// chroot
-			else if (strncmp(ptr, "chroot ", 7) == 0) {
-				if (strcmp(ptr + 7, "yes") == 0)
-					cfg_val[CFG_CHROOT] = 1;
-				else if (strcmp(ptr + 7, "no") == 0)
-					cfg_val[CFG_CHROOT] = 0;
-				else
-					goto errout;
-			}
-			// prompt
-			else if (strncmp(ptr, "firejail-prompt ", 16) == 0) {
-				if (strcmp(ptr + 16, "yes") == 0)
-					cfg_val[CFG_FIREJAIL_PROMPT] = 1;
-				else if (strcmp(ptr + 16, "no") == 0)
-					cfg_val[CFG_FIREJAIL_PROMPT] = 0;
-				else
-					goto errout;
-			}
-			// follow symlink as user
-			else if (strncmp(ptr, "follow-symlink-as-user ", 23) == 0) {
-				if (strcmp(ptr + 23, "yes") == 0)
-					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 1;
-				else if (strcmp(ptr + 23, "no") == 0)
-					cfg_val[CFG_FOLLOW_SYMLINK_AS_USER] = 0;
-				else
-					goto errout;
-			}
-			// nonewprivs
-			else if (strncmp(ptr, "force-nonewprivs ", 17) == 0) {
-				if (strcmp(ptr + 17, "yes") == 0)
-					cfg_val[CFG_FORCE_NONEWPRIVS] = 1;
-				else if (strcmp(ptr + 17, "no") == 0)
-					cfg_val[CFG_FORCE_NONEWPRIVS] = 0;
-				else
-					goto errout;
-			}
-			// seccomp
-			else if (strncmp(ptr, "seccomp ", 8) == 0) {
-				if (strcmp(ptr + 8, "yes") == 0)
-					cfg_val[CFG_SECCOMP] = 1;
-				else if (strcmp(ptr + 8, "no") == 0)
-					cfg_val[CFG_SECCOMP] = 0;
-				else
-					goto errout;
-			}
-			// whitelist
-			else if (strncmp(ptr, "whitelist ", 10) == 0) {
-				if (strcmp(ptr + 10, "yes") == 0)
-					cfg_val[CFG_WHITELIST] = 1;
-				else if (strcmp(ptr + 10, "no") == 0)
-					cfg_val[CFG_WHITELIST] = 0;
-				else
-					goto errout;
-			}
-			// network
-			else if (strncmp(ptr, "network ", 8) == 0) {
-				if (strcmp(ptr + 8, "yes") == 0)
-					cfg_val[CFG_NETWORK] = 1;
-				else if (strcmp(ptr + 8, "no") == 0)
-					cfg_val[CFG_NETWORK] = 0;
-				else
-					goto errout;
-			}
-			// network
-			else if (strncmp(ptr, "restricted-network ", 19) == 0) {
-				if (strcmp(ptr + 19, "yes") == 0)
-					cfg_val[CFG_RESTRICTED_NETWORK] = 1;
-				else if (strcmp(ptr + 19, "no") == 0)
-					cfg_val[CFG_RESTRICTED_NETWORK] = 0;
-				else
-					goto errout;
-			}
 			// netfilter
 			else if (strncmp(ptr, "netfilter-default ", 18) == 0) {
 				char *fname = ptr + 18;
@@ -266,16 +150,6 @@ int checkcfg(int val) {
 					errExit("asprintf");
 			}
 
-			// xephyr window title
-			else if (strncmp(ptr, "xephyr-window-title ", 20) == 0) {
-				if (strcmp(ptr + 20, "yes") == 0)
-					cfg_val[CFG_XEPHYR_WINDOW_TITLE] = 1;
-				else if (strcmp(ptr + 20, "no") == 0)
-					cfg_val[CFG_XEPHYR_WINDOW_TITLE] = 0;
-				else
-					goto errout;
-			}
-
 			// Xephyr command extra parameters
 			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
 				if (*xephyr_extra_params != '\0')
@@ -295,7 +169,7 @@ int checkcfg(int val) {
 			}
 
 			// Xvfb screen size
-	            		else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
+			else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
 				// expecting three numbers separated by x's
 				unsigned int n1;
 				unsigned int n2;
@@ -325,78 +199,12 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			else if (strncmp(ptr, "overlayfs ", 10) == 0) {
-				if (strcmp(ptr + 10, "yes") == 0)
-					cfg_val[CFG_OVERLAYFS] = 1;
-				else if (strcmp(ptr + 10, "no") == 0)
-					cfg_val[CFG_OVERLAYFS] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "private-home ", 13) == 0) {
-				if (strcmp(ptr + 13, "yes") == 0)
-					cfg_val[CFG_PRIVATE_HOME] = 1;
-				else if (strcmp(ptr + 13, "no") == 0)
-					cfg_val[CFG_PRIVATE_HOME] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "private-cache ", 14) == 0) {
-				if (strcmp(ptr + 14, "yes") == 0)
-					cfg_val[CFG_PRIVATE_CACHE] = 1;
-				else if (strcmp(ptr + 14, "no") == 0)
-					cfg_val[CFG_PRIVATE_CACHE] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "private-lib ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_PRIVATE_LIB] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_PRIVATE_LIB] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "private-bin-no-local ", 21) == 0) {
-				if (strcmp(ptr + 21, "yes") == 0)
-					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 1;
-				else if (strcmp(ptr + 21, "no") == 0)
-					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "disable-mnt ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_DISABLE_MNT] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_DISABLE_MNT] = 0;
-				else
-					goto errout;
-			}
 			// arp probes
 			else if (strncmp(ptr, "arp-probes ", 11) == 0) {
 				int arp_probes = atoi(ptr + 11);
 				if (arp_probes <= 1 || arp_probes > 30)
 					goto errout;
 				cfg_val[CFG_ARP_PROBES] = arp_probes;
-			}
-			// xpra-attach
-			else if (strncmp(ptr, "xpra-attach ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_XPRA_ATTACH] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_XPRA_ATTACH] = 0;
-				else
-					goto errout;
-			}
-			// browser-disable-u2f
-			else if (strncmp(ptr, "browser-disable-u2f ", 20) == 0) {
-				if (strcmp(ptr + 20, "yes") == 0)
-					cfg_val[CFG_BROWSER_DISABLE_U2F] = 1;
-				else if (strcmp(ptr + 20, "no") == 0)
-					cfg_val[CFG_BROWSER_DISABLE_U2F] = 0;
-				else
-					goto errout;
 			}
 			else
 				goto errout;

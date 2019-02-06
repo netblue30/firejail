@@ -297,7 +297,7 @@ printf("\n");
 	}
 
 
-	if (strcmp(argv[1], "--help") == 0) {
+	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") == 0) {
 		usage();
 		return 0;
 	}
@@ -311,11 +311,6 @@ printf("\n");
 	char *quiet = getenv("FIREJAIL_QUIET");
 	if (quiet && strcmp(quiet, "yes") == 0)
 		arg_quiet = 1;
-
-	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
-		usage();
-		return 0;
-	}
 
 	int fd = STDOUT_FILENO;
 	// attempt to open the file

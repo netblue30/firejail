@@ -2527,7 +2527,7 @@ AppArmor support is disabled by default at compile time. Use --enable-apparmor c
 .br
 $ ./configure --prefix=/usr --enable-apparmor
 .TP
-During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The local customizations can be placed in /etc/apparmor.d/local/firejail-local. The profile needs to be loaded into the kernel by reloading apparmor.service, rebooting the system or running the following command as root:
+During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The local customizations must be placed in /etc/apparmor.d/local/firejail-local. The profile needs to be loaded into the kernel by reloading apparmor.service, rebooting the system or running the following command as root:
 .br
 
 .br

@@ -1,1 +1,2 @@
-# Site-specific additions and overrides for 'firejail-default'
+# Site-specific additions and overrides for 'firejail-default'.
+# For more details, please see /etc/apparmor.d/local/README.

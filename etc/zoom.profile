@@ -6,6 +6,7 @@ include zoom.local
 include globals.local
 
 noblacklist ${HOME}/.config/zoomus.conf
+noblacklist ${HOME}/.zoom
 
 include disable-common.inc
 include disable-devel.inc
@@ -14,6 +15,7 @@ include disable-programs.inc
 
 mkdir ${HOME}/.zoom
 whitelist ${HOME}/.cache/zoom
+whitelist ${HOME}/.config/zoomus.conf
 whitelist ${HOME}/.zoom
 include whitelist-common.inc
 

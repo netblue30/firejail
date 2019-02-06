@@ -176,6 +176,7 @@ blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdenliverc
 blacklist ${HOME}/.config/kgetrc
+blacklist ${HOME}/.config/klavaro
 blacklist ${HOME}/.config/klipperrc
 blacklist ${HOME}/.config/kmail2rc
 blacklist ${HOME}/.config/kmailsearchindexingrc
@@ -432,6 +433,7 @@ blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kdenlive
 blacklist ${HOME}/.local/share/kget
+blacklist ${HOME}/.local/share/klavaro
 blacklist ${HOME}/.local/share/kmail2
 blacklist ${HOME}/.local/share/knotes
 blacklist ${HOME}/.local/share/krita

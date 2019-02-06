@@ -21,11 +21,12 @@ mkdir ${HOME}/.config/klavaro
 whitelist ${HOME}/.local/share/klavaro
 whitelist ${HOME}/.config/klavaro
 include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
 machine-id
-netfilter
+net none
 no3d
 nodbus
 nodvd
@@ -41,11 +42,10 @@ shell none
 tracelog
 
 disable-mnt
-private-bin klavaro
+private-bin klavaro,tclsh,tclsh*
 private-cache
 private-dev
 private-etc fonts
-private-lib
 private-tmp
 private-opt none
 private-srv none

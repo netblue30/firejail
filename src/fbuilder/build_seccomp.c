@@ -131,9 +131,9 @@ static void process_protocol(const char *fname) {
 			inet = 1;
 		else if (strncmp(ptr, "AF_INET6 ", 9) == 0)
 			inet6 = 1;
-		else if (strncmp(ptr, "AF_NETLINK ", 9) == 0)
+		else if (strncmp(ptr, "AF_NETLINK ", 11) == 0)
 			netlink = 1;
-		else if (strncmp(ptr, "AF_PACKET ", 9) == 0)
+		else if (strncmp(ptr, "AF_PACKET ", 10) == 0)
 			packet = 1;
 	}
 

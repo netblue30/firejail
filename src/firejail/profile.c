@@ -869,7 +869,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	// nice value
-	if (strncmp(ptr, "nice ", 4) == 0) {
+	if (strncmp(ptr, "nice ", 5) == 0) {
 		cfg.nice = atoi(ptr + 5);
 		if (getuid() != 0 &&cfg.nice < 0)
 			cfg.nice = 0;

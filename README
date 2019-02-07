@@ -743,4 +743,4 @@ Zack Weinberg (https://github.com/zackw)
 	  with firejail --x11
 	- support for xpra-extra-params in firejail.config
 
-Copyright (C) 2014-2017 Firejail Authors
+Copyright (C) 2014-2019 Firejail Authors

@@ -6,6 +6,7 @@ include code.local
 include globals.local
 
 noblacklist ${HOME}/.vscode
+noblacklist ${HOME}/.vscode-oss
 noblacklist ${HOME}/.config/Code
 
 include disable-common.inc

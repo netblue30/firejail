@@ -42,7 +42,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin klavaro,tclsh,tclsh*
+private-bin klavaro,tclsh,tclsh*,bash
 private-cache
 private-dev
 private-etc fonts

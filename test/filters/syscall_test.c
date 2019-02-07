@@ -1,5 +1,5 @@
 // This file is part of Firejail project
-// Copyright (C) 2014-2018 Firejail Authors
+// Copyright (C) 2014-2019 Firejail Authors
 // License GPL v2
 
 #include <stdlib.h>

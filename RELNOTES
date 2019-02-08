@@ -1,10 +1,11 @@
-firejail (0.9.59) baseline; urgency=low
-  * work in progress
+firejail (0.9.58,2) baseline; urgency=low
   * cgroup flag in /etc/firejail/firejail.config file
   * name-change flag in /etc/firejail.config file
   * --name rework
   * new profiles: klavaro
- -- netblue30 <netblue30@yahoo.com>  Sun, 27 Jan 2019 08:00:00 -0500
+  * browser profiles fixes
+  * various other bugfixes
+ -- netblue30 <netblue30@yahoo.com>  Fri, 8 Feb 2019 08:00:00 -0500
 
 firejail (0.9.58) baseline; urgency=low
   * --disable-mnt rework

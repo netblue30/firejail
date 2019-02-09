@@ -36,7 +36,7 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol netlink,unix
 seccomp
 shell none
 
@@ -46,9 +46,9 @@ private-etc fonts,ld.so.cache,machine-id
 private-tmp
 
 # 2.2.4 crashes on database open
-#memory-deny-write-execute
+# memory-deny-write-execute
 noexec ${HOME}
-noexec /tmp
+# noexec /tmp
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp
 join-or-start keepassxc

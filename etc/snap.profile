@@ -1,5 +1,5 @@
 # Firejail profile for snap
-# Description: Location of genes from DNA sequence with hidden markov model
+# Description: generic Ubuntu snap application profile
 # This file is overwritten after every install/update
 # Persistent local customizations
 include snap.local

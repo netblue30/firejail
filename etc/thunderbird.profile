@@ -44,4 +44,4 @@ writable-run-user
 # Redirect
 # Uncomment if you use enigmail
 # ignore nodbus
-include firefox.profile
+include firefox-common.profile

@@ -411,10 +411,3 @@ blacklist /usr/share/flatpak
 blacklist /var/lib/flatpak
 # most of the time bwrap is SUID binary
 blacklist ${PATH}/bwrap
-
-# snap
-blacklist ${HOME}/.snap
-blacklist ${HOME}/snap
-blacklist /var/cache/snapd
-blacklist /var/lib/snapd
-blacklist /var/snap

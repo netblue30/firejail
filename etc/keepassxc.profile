@@ -42,7 +42,7 @@ shell none
 
 private-bin keepassxc
 private-dev
-private-etc fonts,ld.so.cache,machine-id
+private-etc fonts,ld.so.cache,machine-id,alternatives
 private-tmp
 
 # 2.2.4 crashes on database open

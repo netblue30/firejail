@@ -21,7 +21,6 @@ include disable-xdg.inc
 include whitelist-common.inc
 
 caps.drop all
-ipc-namespace
 netfilter
 no3d
 nodvd

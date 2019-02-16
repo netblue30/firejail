@@ -23,7 +23,6 @@ include disable-programs.inc
 include disable-xdg.inc
 
 caps.drop all
-ipc-namespace
 netfilter
 no3d
 nodbus

@@ -1,0 +1,31 @@
+# Firejail profile for webui-aria2
+# This file is overwritten after every install/update
+# Persistent local customizations
+include webui-aria2.local
+# Persistent global definitions
+include globals.local
+
+noblacklist ${PATH}/node
+
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-devel.inc
+include disable-interpreters.inc
+
+caps.drop all
+netfilter
+nodvd
+nogroups
+nonewprivs
+noroot
+notv
+nou2f
+novideo
+protocol unix,inet,inet6
+seccomp
+shell none
+
+private-cache
+private-dev
+private-tmp

@@ -1,3 +1,6 @@
+firejail (0.9.58) baseline; urgency=low
+  * new profiles: crow, nyx
+
 firejail (0.9.58,2) baseline; urgency=low
   * cgroup flag in /etc/firejail/firejail.config file
   * name-change flag in /etc/firejail.config file

@@ -42,7 +42,6 @@ shell none
 
 private-bin keepassxc
 private-dev
-
 private-etc alternatives,fonts,ld.so.cache,machine-id
 private-tmp
 

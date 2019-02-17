@@ -445,6 +445,9 @@ nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
 Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
+Lorenzo "Palinuro" Faletra (https://github.com/PalinuroSec)
+	- prevent thunderbird conflicts when firefox is running
+	- add join-or-start to pluma to open multiple files in tabs
 Panzerfather (https://github.com/Panzerfather)
 	- allow eog to access user's trash
 Patrick Toomey (https://sourceforge.net/u/ptoomey/profile/)

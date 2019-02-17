@@ -1,4 +1,5 @@
 # Firejail profile for webui-aria2
+# Run this with firejail --profile=webui-aria2 node node-server.js
 # This file is overwritten after every install/update
 # Persistent local customizations
 include webui-aria2.local

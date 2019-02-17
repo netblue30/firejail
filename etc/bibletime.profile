@@ -44,5 +44,5 @@ shell none
 
 # private-bin bibletime,qt5ct
 private-dev
-private-etc fonts,resolv.conf,sword,sword.conf,passwd,machine-id,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,fonts,resolv.conf,sword,sword.conf,passwd,machine-id,ca-certificates,ssl,pki,crypto-policies
 private-tmp

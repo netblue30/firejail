@@ -38,5 +38,5 @@ tracelog
 
 private-bin pdftotext
 private-dev
-private-etc none
+private-etc alternatives
 private-tmp

@@ -35,7 +35,7 @@ tracelog
 # private-bin enchant, enchant-*
 private-cache
 private-dev
-private-etc none
+private-etc alternatives
 private-tmp
 
 # memory-deny-write-execute

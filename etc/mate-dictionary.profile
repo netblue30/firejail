@@ -36,7 +36,7 @@ shell none
 
 disable-mnt
 private-bin mate-dictionary
-private-etc fonts,resolv.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,fonts,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-opt mate-dictionary
 private-dev
 private-tmp

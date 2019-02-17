@@ -37,7 +37,7 @@ tracelog
 
 # private-bin gjs gnome-books
 private-dev
-# private-etc fonts
+# private-etc alternatives,fonts
 private-tmp
 
 noexec ${HOME}

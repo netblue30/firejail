@@ -37,7 +37,7 @@ tracelog
 
 private-bin pluma
 private-dev
-# private-etc fonts
+# private-etc alternatives,fonts
 private-lib pluma
 private-tmp
 

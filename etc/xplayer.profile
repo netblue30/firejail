@@ -40,7 +40,7 @@ tracelog
 
 private-bin xplayer,xplayer-audio-preview,xplayer-video-thumbnailer
 private-dev
-# private-etc fonts,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,fonts,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

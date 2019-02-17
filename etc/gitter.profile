@@ -35,7 +35,7 @@ shell none
 
 disable-mnt
 private-bin bash,env,gitter
-private-etc fonts,pulse,resolv.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,fonts,pulse,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-opt Gitter
 private-dev
 private-tmp

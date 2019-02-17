@@ -49,7 +49,7 @@ tracelog
 disable-mnt
 private-bin QOwnNotes,gio
 private-dev
-private-etc fonts,ld.so.cache,pulse,resolv.conf,hosts,nsswitch.conf,host.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,fonts,ld.so.cache,pulse,resolv.conf,hosts,nsswitch.conf,host.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

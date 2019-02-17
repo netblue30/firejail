@@ -46,7 +46,7 @@ disable-mnt
 private-bin supertuxkart
 private-cache
 private-dev
-private-etc resolv.conf,ca-certificates,ssl,hosts,machine-id,xdg,openal,crypto-policies,pki,drirc,system-fips,selinux
+private-etc alternatives,resolv.conf,ca-certificates,ssl,hosts,machine-id,xdg,openal,crypto-policies,pki,drirc,system-fips,selinux
 private-tmp
 private-opt none
 private-srv none

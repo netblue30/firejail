@@ -305,6 +305,7 @@ blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.mutt
 blacklist ${HOME}/.muttrc
 blacklist ${HOME}/.netrc
+blacklist ${HOME}/.nyx
 blacklist ${HOME}/.pki
 blacklist ${HOME}/.local/share/pki
 blacklist ${HOME}/.smbcredentials

@@ -31,5 +31,5 @@ shell none
 tracelog
 
 private-dev
-private-etc none
+private-etc alternatives
 private-tmp

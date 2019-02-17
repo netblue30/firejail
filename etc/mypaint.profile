@@ -1,19 +1,17 @@
-# Firejail profile for lollypop
-# Description: Music player for GNOME
+# Firejail profile for mypaint
+# Description: A fast and easy graphics application for digital painters
 # This file is overwritten after every install/update
 # Persistent local customizations
-include lollypop.local
+include mypaint.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/lollypop
-noblacklist ${MUSIC}
-
-# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${HOME}/.cache/mypaint
+noblacklist ${HOME}/.config/mypaint
+noblacklist ${HOME}/.local/share/mypaint
 noblacklist ${PATH}/python2*
-noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
-noblacklist /usr/lib/python3*
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,23 +20,28 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-include whitelist-var-common.inc
-
+apparmor
 caps.drop all
-netfilter
+machine-id
+net none
 no3d
+nodbus
+nodvd
 nogroups
 nonewprivs
 noroot
+nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix
 seccomp
 shell none
+tracelog
 
+private-cache
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,fonts,host.conf,hostname,hosts,pulse,resolv.conf,ssl,pki,crypto-policies,gtk-3.0,xdg,machine-id
+private-etc alternatives,fonts,gtk-3.0,dconf
 private-tmp
 
 noexec ${HOME}

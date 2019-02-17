@@ -40,7 +40,7 @@ tracelog
 
 # private-bin gedit
 private-dev
-# private-etc fonts
+# private-etc alternatives,fonts
 private-lib /usr/bin/gedit,libtinfo.so.*,libreadline.so.*,gedit,libgspell-1.so.*,gconv,aspell
 private-tmp
 

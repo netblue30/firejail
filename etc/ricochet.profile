@@ -36,7 +36,7 @@ shell none
 disable-mnt
 private-bin ricochet,tor
 private-dev
-#private-etc fonts,tor,X11,alternatives,ca-certificates,ssl,pki,crypto-policies
+#private-etc alternatives,fonts,tor,X11,alternatives,ca-certificates,ssl,pki,crypto-policies
 
 noexec ${HOME}
 noexec /tmp

@@ -46,7 +46,7 @@ tracelog
 disable-mnt
 private-bin spotify,bash,sh,zenity
 private-dev
-private-etc fonts,group,ld.so.cache,machine-id,pulse,resolv.conf,hosts,nsswitch.conf,host.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,fonts,group,ld.so.cache,machine-id,pulse,resolv.conf,hosts,nsswitch.conf,host.conf,ca-certificates,ssl,pki,crypto-policies
 private-opt spotify
 private-tmp
 

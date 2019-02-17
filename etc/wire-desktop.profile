@@ -37,5 +37,5 @@ shell none
 disable-mnt
 private-bin wire-desktop
 private-dev
-private-etc fonts,machine-id,resolv.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,fonts,machine-id,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp

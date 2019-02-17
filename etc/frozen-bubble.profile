@@ -35,5 +35,5 @@ shell none
 disable-mnt
 # private-bin frozen-bubble
 private-dev
-# private-etc none
+# private-etc alternatives
 private-tmp

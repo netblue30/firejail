@@ -35,7 +35,7 @@ tracelog
 disable-mnt
 private-bin fairymax,gnome-chess,hoichess
 private-dev
-private-etc fonts,gnome-chess
+private-etc alternatives,fonts,gnome-chess
 private-tmp
 
 noexec ${HOME}

@@ -35,7 +35,7 @@ shell none
 # private-bin bless,sh,bash,mono
 private-cache
 private-dev
-private-etc fonts,mono
+private-etc alternatives,fonts,mono
 private-tmp
 
 noexec ${HOME}

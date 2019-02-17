@@ -41,7 +41,7 @@ disable-mnt
 private-bin awk,grep,nitroshare,nitroshare-cli,nitroshare-nmh,nitroshare-send,nitroshare-ui
 private-cache
 private-dev
-private-etc ca-certificates,dconf,fonts,hostname,hosts,ld.so.cache,machine-id,nsswitch.conf,ssl
+private-etc alternatives,ca-certificates,dconf,fonts,hostname,hosts,ld.so.cache,machine-id,nsswitch.conf,ssl
 # private-lib libnitroshare.so.*,libqhttpengine.so.*,libqmdnsengine.so.*,nitroshare
 private-tmp
 

@@ -29,7 +29,7 @@ tracelog
 disable-mnt
 private-bin tilp
 private-cache
-private-etc fonts
+private-etc alternatives,fonts
 private-tmp
 
 noexec ${HOME}

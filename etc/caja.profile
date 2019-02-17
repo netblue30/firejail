@@ -41,5 +41,5 @@ tracelog
 # caja needs to be able to start arbitrary applications so we cannot blacklist their files
 # private-bin caja
 # private-dev
-# private-etc fonts
+# private-etc alternatives,fonts
 # private-tmp

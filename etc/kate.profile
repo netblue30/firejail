@@ -42,7 +42,7 @@ tracelog
 
 # private-bin kate,kbuildsycoca4,kdeinit4
 private-dev
-# private-etc fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
+# private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
 private-tmp
 
 # noexec ${HOME}

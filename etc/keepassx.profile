@@ -41,7 +41,7 @@ tracelog
 
 private-bin keepassx,keepassx2
 private-dev
-private-etc fonts,machine-id
+private-etc alternatives,fonts,machine-id
 private-tmp
 
 memory-deny-write-execute

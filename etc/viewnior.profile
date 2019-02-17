@@ -38,7 +38,7 @@ tracelog
 private-bin viewnior
 private-cache
 private-dev
-private-etc fonts
+private-etc alternatives,fonts
 private-tmp
 
 # memory-deny-write-executes breaks on Arch - see issue #1808

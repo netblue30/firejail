@@ -39,5 +39,5 @@ tracelog
 # private-bin exiftool,perl
 private-cache
 private-dev
-private-etc none
+private-etc alternatives
 private-tmp

@@ -32,7 +32,7 @@ novideo
 shell none
 tracelog
 
-# private-etc fonts,passwd - minimal required to run but will probably break
+# private-etc alternatives,fonts,passwd - minimal required to run but will probably break
 # program!
 private-cache
 private-dev

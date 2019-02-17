@@ -31,5 +31,5 @@ shell none
 
 # private-bin etr
 private-dev
-# private-etc none
+# private-etc alternatives
 private-tmp

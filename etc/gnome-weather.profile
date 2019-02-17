@@ -38,7 +38,7 @@ tracelog
 disable-mnt
 # private-bin gjs gnome-weather
 private-dev
-# private-etc fonts,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,fonts,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

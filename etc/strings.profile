@@ -24,7 +24,7 @@ tracelog
 private-bin strings
 private-cache
 private-dev
-private-etc none
+private-etc alternatives
 private-lib
 
 memory-deny-write-execute

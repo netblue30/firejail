@@ -34,5 +34,5 @@ shell none
 disable-mnt
 # private-bin supertux2
 private-dev
-# private-etc none
+# private-etc alternatives
 private-tmp

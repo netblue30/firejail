@@ -34,5 +34,5 @@ tracelog
 
 # private-bin gjs,gnome-books,gnome-documents,gnome-photos,gnome-maps,gnome-weather
 private-dev
-# private-etc fonts,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,fonts,ca-certificates,ssl,pki,crypto-policies
 private-tmp

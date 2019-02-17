@@ -43,7 +43,7 @@ private
 # private-bin program
 # private-cache
 private-dev
-# private-etc none
+# private-etc alternatives
 # private-lib
 private-tmp
 

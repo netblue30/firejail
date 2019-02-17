@@ -33,5 +33,5 @@ tracelog
 
 # private-bin tracker
 # private-dev
-# private-etc fonts
+# private-etc alternatives,fonts
 # private-tmp

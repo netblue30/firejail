@@ -26,7 +26,7 @@ tracelog
 # support compressed archives
 private-bin sh,bash,tar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop
 private-dev
-private-etc passwd,group,localtime
+private-etc alternatives,passwd,group,localtime
 private-lib
 
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)

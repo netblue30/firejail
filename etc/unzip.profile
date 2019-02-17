@@ -25,7 +25,7 @@ tracelog
 
 private-bin unzip
 private-dev
-private-etc passwd,group,localtime
+private-etc alternatives,passwd,group,localtime
 
 # GNOME Shell integration (chrome-gnome-shell)
 noblacklist ${HOME}/.local/share/gnome-shell

@@ -45,7 +45,7 @@ tracelog
 
 # private-bin wireshark
 private-dev
-# private-etc fonts,group,hosts,machine-id,passwd,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,fonts,group,hosts,machine-id,passwd,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

@@ -31,5 +31,5 @@ shell none
 
 # private-bin amarok
 private-dev
-# private-etc machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp

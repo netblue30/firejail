@@ -39,5 +39,6 @@ shell none
 
 private-bin display,python*
 private-dev
-# private-etc none - on Debian-based systems display is a symlink in /etc/alternatives
+# On Debian-based systems, display is a symlink in /etc/alternatives
+private-etc alternatives
 private-tmp

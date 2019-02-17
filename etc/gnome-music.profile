@@ -40,7 +40,7 @@ tracelog
 
 private-bin gnome-music,python*,env,gio-launch-desktop,yelp
 private-dev
-private-etc fonts,machine-id,pulse,asound.conf
+private-etc alternatives,fonts,machine-id,pulse,asound.conf
 private-tmp
 
 noexec ${HOME}

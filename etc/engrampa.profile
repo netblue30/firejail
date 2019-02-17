@@ -34,7 +34,7 @@ tracelog
 
 # private-bin engrampa
 private-dev
-# private-etc fonts
+# private-etc alternatives,fonts
 # private-tmp
 
 memory-deny-write-execute

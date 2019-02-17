@@ -47,7 +47,7 @@ disable-mnt
 private-bin QMediathekView,mplayer,mpv,smplayer,totem,vlc,xplayer
 private-cache
 private-dev
-# private-etc none
+# private-etc alternatives
 # private-lib
 private-tmp
 

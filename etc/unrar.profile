@@ -25,7 +25,7 @@ tracelog
 
 private-bin unrar
 private-dev
-private-etc passwd,group,localtime
+private-etc alternatives,passwd,group,localtime
 private-tmp
 
 include default.profile

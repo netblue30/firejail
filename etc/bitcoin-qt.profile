@@ -42,7 +42,7 @@ tracelog
 private-bin bitcoin-qt
 private-dev
 # Causes problem with loading of libGL.so
-#private-etc fonts,ca-certificates,ssl,pki,crypto-policies
+#private-etc alternatives,fonts,ca-certificates,ssl,pki,crypto-policies
 # Works, but QT complains about OpenSSL a bit.
 #private-lib
 private-tmp

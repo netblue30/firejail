@@ -37,7 +37,7 @@ shell none
 disable-mnt
 private-bin crow
 private-dev
-private-etc ca-certificates,ssl,machine-id,dconf,nsswitch.conf,resolv.conf,fonts,asound.conf,pulse,pki,crypto-policies
+private-etc alternatives,ca-certificates,ssl,machine-id,dconf,nsswitch.conf,resolv.conf,fonts,asound.conf,pulse,pki,crypto-policies
 private-opt none
 private-tmp
 private-srv none

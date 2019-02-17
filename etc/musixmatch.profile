@@ -21,7 +21,7 @@ nodvd
 nogroups
 nonewprivs
 noroot
-nogroups 
+nogroups
 nosound
 notv
 nou2f
@@ -31,7 +31,7 @@ seccomp
 
 disable-mnt
 private-dev
-private-etc machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
 
 noexec ${HOME}
 noexec /tmp

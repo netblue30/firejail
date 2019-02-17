@@ -32,7 +32,7 @@ tracelog
 disable-mnt
 private-bin ls,surf,sh,bash,curl,dmenu,printf,sed,sleep,st,stterm,xargs,xprop
 private-dev
-private-etc passwd,group,hosts,resolv.conf,fonts,ssl,pki,ca-certificates,crypto-policies
+private-etc alternatives,passwd,group,hosts,resolv.conf,fonts,ssl,pki,ca-certificates,crypto-policies
 private-tmp
 
 noexec ${HOME}

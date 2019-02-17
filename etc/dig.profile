@@ -40,7 +40,7 @@ private
 private-bin sh,bash,dig
 private-cache
 private-dev
-# private-etc resolv.conf
+# private-etc alternatives,resolv.conf
 private-lib
 private-tmp
 

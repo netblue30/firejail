@@ -44,7 +44,7 @@ shell none
 private-bin clawsker,perl
 private-cache
 private-dev
-private-etc fonts
+private-etc alternatives,fonts
 private-lib girepository-1.*,libgirepository-1.*,perl*
 private-tmp
 

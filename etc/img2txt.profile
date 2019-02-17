@@ -34,5 +34,5 @@ tracelog
 # private-bin img2txt
 private-cache
 private-dev
-# private-etc none
+# private-etc alternatives
 private-tmp

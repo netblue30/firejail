@@ -36,5 +36,5 @@ tracelog
 # private-bin elinks
 private-cache
 private-dev
-# private-etc ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,ca-certificates,ssl,pki,crypto-policies
 private-tmp

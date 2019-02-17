@@ -37,6 +37,6 @@ tracelog
 private-bin odt2txt
 private-cache
 private-dev
-private-etc none
+private-etc alternatives
 private-tmp
 read-only ${HOME}

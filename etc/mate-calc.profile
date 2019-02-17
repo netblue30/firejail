@@ -39,7 +39,7 @@ shell none
 
 disable-mnt
 private-bin mate-calc,mate-calculator
-private-etc fonts
+private-etc alternatives,fonts
 private-dev
 private-opt none
 private-tmp

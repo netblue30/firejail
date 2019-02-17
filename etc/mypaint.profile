@@ -41,7 +41,7 @@ tracelog
 
 private-cache
 private-dev
-private-etc fonts,gtk-3.0,dconf
+private-etc alternatives,fonts,gtk-3.0,dconf
 private-tmp
 
 noexec ${HOME}

@@ -39,7 +39,7 @@ tracelog
 
 private-bin eom
 private-dev
-private-etc fonts
+private-etc alternatives,fonts
 private-lib
 private-tmp
 

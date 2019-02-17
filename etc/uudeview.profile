@@ -23,6 +23,6 @@ tracelog
 private-bin uudeview
 private-cache
 private-dev
-private-etc ld.so.preload
+private-etc alternatives,ld.so.preload
 
 include default.profile

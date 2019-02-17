@@ -38,7 +38,7 @@ private
 private-bin sh,bash,whois
 private-cache
 private-dev
-# private-etc hosts,services,whois.conf
+# private-etc alternatives,hosts,services,whois.conf
 private-lib
 private-tmp
 

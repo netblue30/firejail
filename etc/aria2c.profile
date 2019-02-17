@@ -37,7 +37,7 @@ disable-mnt
 private-bin aria2c,gzip
 private-cache
 private-dev
-private-etc ca-certificates,ssl
+private-etc alternatives,ca-certificates,ssl
 private-lib libreadline.so.*
 private-tmp
 

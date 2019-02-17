@@ -44,7 +44,7 @@ tracelog
 disable-mnt
 private-bin arm,tor,sh,bash,python*,ps,lsof,ldconfig
 private-dev
-private-etc tor,passwd,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,tor,passwd,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

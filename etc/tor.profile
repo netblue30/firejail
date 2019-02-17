@@ -46,7 +46,7 @@ private
 private-bin tor,bash
 private-cache
 private-dev
-private-etc tor,passwd,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,tor,passwd,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

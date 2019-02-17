@@ -41,5 +41,5 @@ private
 # private-bin Xvfb,sh,xkbcomp
 # private-bin Xvfb,sh,xkbcomp,strace,bash,cat,ls
 private-dev
-private-etc ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname
+private-etc alternatives,ld.so.conf,ld.so.cache,resolv.conf,host.conf,nsswitch.conf,gai.conf,hosts,hostname
 private-tmp

@@ -37,7 +37,7 @@ tracelog
 
 # private-bin mupdf,sh,tempfile,rm
 private-dev
-private-etc fonts
+private-etc alternatives,fonts
 private-tmp
 
 # mupdf will never write anything

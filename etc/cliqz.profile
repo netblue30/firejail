@@ -17,7 +17,7 @@ whitelist ${HOME}/.cliqz
 whitelist ${HOME}/.config/cliqz
 
 # private-etc must first be enabled in firefox-common.profile
-#private-etc cliqz
+#private-etc alternatives,cliqz
 
 # Redirect
 include firefox-common.profile

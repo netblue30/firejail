@@ -35,7 +35,7 @@ shell none
 disable-mnt
 private-bin flameshot
 private-cache
-private-etc fonts,ld.so.conf,resolv.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,fonts,ld.so.conf,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-dev
 private-tmp
 

@@ -42,7 +42,7 @@ tracelog
 
 private-bin xed
 private-dev
-# private-etc fonts
+# private-etc alternatives,fonts
 private-tmp
 
 # xed uses python plugins, memory-deny-write-execute breaks python

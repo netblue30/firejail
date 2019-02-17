@@ -38,7 +38,7 @@ shell none
 disable-mnt
 private-bin gnome-recipes,tar
 private-dev
-private-etc ca-certificates,fonts,ssl,crypto-policies,pki
+private-etc alternatives,ca-certificates,fonts,ssl,crypto-policies,pki
 # private-lib works for me with Gnome Shell 3.26.2, Mutter WM (Arch Linux)
 # not widely tested though, leaving it to devs discretion to enable it later
 #private-lib gdk-pixbuf-2.0,gio,gvfs/libgvfscommon.so,libgconf-2.so.4,libgnutls.so.30,libjpeg.so.8,libp11-kit.so.0,libproxy.so.1,librsvg-2.so.2

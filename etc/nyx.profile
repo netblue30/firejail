@@ -42,7 +42,7 @@ disable-mnt
 private-bin nyx,python*
 private-cache
 private-dev
-private-etc passwd,tor,fonts
+private-etc alternatives,passwd,tor,fonts
 private-opt none
 private-srv none
 private-tmp

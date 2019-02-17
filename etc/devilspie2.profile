@@ -37,7 +37,7 @@ disable-mnt
 private-bin devilspie2
 private-cache
 private-dev
-private-etc none
+private-etc alternatives
 private-lib gconv
 private-tmp
 

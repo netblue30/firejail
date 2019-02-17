@@ -34,7 +34,7 @@ tracelog
 disable-mnt
 # private-bin gnome-clocks
 private-dev
-# private-etc fonts,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,fonts,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
 noexec ${HOME}

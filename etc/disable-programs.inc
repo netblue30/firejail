@@ -201,6 +201,7 @@ blacklist ${HOME}/.config/mono
 blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
+blacklist ${HOME}/.config/mypaint
 blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
@@ -450,6 +451,7 @@ blacklist ${HOME}/.local/share/midori
 blacklist ${HOME}/.local/share/multimc
 blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
+blacklist ${HOME}/.local/share/mypaint
 blacklist ${HOME}/.local/share/nautilus
 blacklist ${HOME}/.local/share/nautilus-python
 blacklist ${HOME}/.local/share/nemo
@@ -612,6 +614,7 @@ blacklist ${HOME}/.cache/moonchild productions/basilisk
 blacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla
 blacklist ${HOME}/.cache/mutt
+blacklist ${HOME}/.cache/mypaint
 blacklist ${HOME}/.cache/nheko/nheko
 blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/okular

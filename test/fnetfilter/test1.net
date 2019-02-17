@@ -16,4 +16,3 @@
 -A OUTPUT -p tcp --dport 3478 -j DROP
 -A OUTPUT -p tcp --dport 3479 -j DROP
 COMMIT
-

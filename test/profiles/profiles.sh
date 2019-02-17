@@ -43,4 +43,3 @@ do
 	echo "TESTING: $PROFILE"
 	./test-profile.exp $PROFILE
 done
-

@@ -189,4 +189,3 @@ void build_protocol(const char *fname, FILE *fp) {
 		fprintf(fp, "netfilter\n");
 	}
 }
-

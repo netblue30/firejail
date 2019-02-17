@@ -19,4 +19,3 @@ for app in $LIST; do
 		echo "TESTING SKIP: $app not found"
 	fi
 done
-

@@ -63,7 +63,7 @@ void shut(pid_t pid) {
 	while (monsec) {
 		sleep(1);
 		monsec--;
-		
+
 		FILE *fp = fopen(monfile, "r");
 		if (!fp) {
 			killdone = 1;

@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	int portno = atoi(argv[1]);
-	
+
 	// init socket
 	fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (fd < 0) {
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 		if (pid == 0) {
 			// child
 			close(fd);
-#define MAXBUF 4096			
+#define MAXBUF 4096
 			char buf[MAXBUF];
 			memset(buf, 0, MAXBUF);
 
@@ -103,6 +103,6 @@ int main(int argc, char **argv) {
 		else
 			close(newfd);
 	}
-	
+
 	return 0;
 }

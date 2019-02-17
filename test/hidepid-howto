@@ -23,5 +23,3 @@ $ cat /proc/mounts | grep proc
 proc /proc proc rw,nosuid,nodev,noexec,relatime,gid=618,hidepid=2 0 0
 
 3. Test "firejail --list", "firejail --top", "firejail --tree", "firejail --netstats"
-
-

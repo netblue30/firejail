@@ -48,4 +48,3 @@ void sound(void);
 
 // desktop_files.c
 void fix_desktop_files(char *homedir);
-

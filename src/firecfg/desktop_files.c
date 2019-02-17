@@ -322,5 +322,3 @@ void fix_desktop_files(char *homedir) {
 	closedir(dir);
 	free(user_apps_dir);
 }
-
-

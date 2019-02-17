@@ -189,4 +189,3 @@ void preproc_clean_run(void) {
 
 	free(pidarr);
 }
-

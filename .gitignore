@@ -40,4 +40,3 @@ seccomp.64
 seccomp.block_secondary
 seccomp.mdwx
 src/common.mk
-

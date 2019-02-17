@@ -133,4 +133,3 @@ struct sock_filter *duplicate(struct sock_filter *filter, int entries) {
 	memcpy(rv, filter, len);
 	return rv;
 }
-

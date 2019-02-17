@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 		usage();
 		return 1;
 	}
-	
+
 	if (strcmp(argv[1], "mmap") == 0) {
 		// open some file
 		int fd = open("memwrexe.c", O_RDONLY);
@@ -28,13 +28,13 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "TESTING ERROR: file not found, cannot run mmap test\n");
 			return 1;
 		}
-	
+
 		int size = lseek(fd, 0, SEEK_END);
 		if (size == -1) {
 			fprintf(stderr, "TESTING ERROR: file not found, cannot run mmap test\n");
 			return 1;
 		}
-		
+
 		void *p = mmap (0, size, PROT_WRITE|PROT_READ|PROT_EXEC, MAP_SHARED, fd, 0);
 		printf("mmap successful\n");
 
@@ -51,19 +51,19 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "TESTING ERROR: file not found, cannot run mmap test\n");
 			return 1;
 		}
-	
+
 		int size = lseek(fd, 0, SEEK_END);
 		if (size == -1) {
 			fprintf(stderr, "TESTING ERROR: file not found, cannot run mmap test\n");
 			return 1;
 		}
-		
+
 		void *p = mmap (0, size, PROT_READ, MAP_SHARED, fd, 0);
 		if (!p) {
 			fprintf(stderr, "TESTING ERROR: cannot map file for mprotect test\n");
 			return 1;
 		}
-		
+
 		mprotect(p, size, PROT_READ|PROT_WRITE|PROT_EXEC);
 		printf("mprotect successful\n");
 
@@ -73,4 +73,3 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 }
-	

@@ -330,4 +330,3 @@ void print(struct sock_filter *filter, int entries) {
 		printf("\n");
 	}
 }
-

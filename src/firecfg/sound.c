@@ -65,4 +65,3 @@ errexit:
 	fprintf(stderr, "Error: cannot configure sound file\n");
 	exit(1);
 }
-

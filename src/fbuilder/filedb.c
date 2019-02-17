@@ -76,4 +76,3 @@ void filedb_print(FileDB *head, const char *prefix, FILE *fp) {
 		ptr = ptr->next;
 	}
 }
-

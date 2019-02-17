@@ -59,7 +59,7 @@ void shut(pid_t pid) {
 		errExit("asprintf");
 	int killdone = 0;
 
-	usleep(200000)  // give sandbox a little head start
+	usleep(200000);  // give sandbox a little head start
 	while (monsec) {
 		sleep(1);
 		monsec--;

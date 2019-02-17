@@ -39,7 +39,6 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
 private-cache
 private-dev
 private-etc fonts,gtk-3.0,dconf
@@ -47,5 +46,3 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# vim:set syntax=sh:

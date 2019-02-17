@@ -6,7 +6,7 @@ include iceweasel.local
 include globals.local
 
 # private-etc must first be enabled in firefox-common.profile
-#private-etc alternatives,iceweasel
+#private-etc iceweasel
 
 # Redirect
 include firefox.profile

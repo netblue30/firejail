@@ -14,7 +14,7 @@ whitelist ${HOME}/.cache/mozilla/abrowser
 whitelist ${HOME}/.mozilla
 
 # private-etc must first be enabled in firefox-common.profile
-#private-etc abrowser, alternatives
+#private-etc abrowser
 
 
 # Redirect

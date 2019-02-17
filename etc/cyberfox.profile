@@ -15,7 +15,7 @@ whitelist ${HOME}/.cache/8pecxstudios
 
 # private-bin cyberfox,which,sh,dbus-launch,dbus-send,env
 # private-etc must first be enabled in firefox-common.profile
-#private-etc alternatives,cyberfox
+#private-etc cyberfox
 
 # Redirect
 include firefox-common.profile

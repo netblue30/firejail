@@ -19,7 +19,7 @@ seccomp
 
 #private-bin palemoon
 # private-etc must first be enabled in firefox-common.profile
-#private-etc alternatives,palemoon
+#private-etc palemoon
 #private-opt palemoon
 
 # Redirect

@@ -20,7 +20,7 @@ seccomp
 
 #private-bin basilisk
 # private-etc must first be enabled in firefox-common.profile
-#private-etc alternatives,basilisk
+#private-etc basilisk
 #private-opt basilisk
 
 # Redirect

@@ -36,7 +36,7 @@ tracelog
 
 # private-bin gedit
 private-dev
-# private-etc fonts
+# private-etc alternatives,fonts
 #private-lib gedit - disabled; problems when running "firejail gedit"; "firejail /usr/bin/gedit" works fine
 private-tmp
 

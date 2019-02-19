@@ -199,6 +199,7 @@ blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mono
 blacklist ${HOME}/.config/mpd
+blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/mypaint

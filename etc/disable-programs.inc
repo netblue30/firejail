@@ -93,6 +93,7 @@ blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/Signal
 blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Standard Notes
+blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire

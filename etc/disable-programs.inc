@@ -146,6 +146,7 @@ blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/galculator
+blacklist ${HOME}/.config/gconf
 blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/gedit
 blacklist ${HOME}/.config/geeqie

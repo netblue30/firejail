@@ -510,6 +510,9 @@ Disable U2F devices.
 \fBnovideo
 Disable video devices.
 .TP
+\fBvideo
+Enable video devices.
+.TP
 \fBno3d
 Disable 3D hardware acceleration.
 

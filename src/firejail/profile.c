@@ -398,6 +398,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_novideo = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "video") == 0) {
+		arg_novideo = 0;
+		return 0;
+	}
 	else if (strcmp(ptr, "no3d") == 0) {
 		arg_no3d = 1;
 		return 0;

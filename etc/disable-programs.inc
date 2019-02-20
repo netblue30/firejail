@@ -512,6 +512,7 @@ blacklist ${HOME}/.pingus
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.qmmp
+blacklist ${HOME}/.quodlibet
 blacklist ${HOME}/.redeclipse
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json

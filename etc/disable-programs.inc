@@ -144,6 +144,7 @@ blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/falkon
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flowblade
+blacklist ${HOME}/.config/font-manager
 blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/gconf

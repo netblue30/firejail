@@ -14,10 +14,10 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
 
 apparmor
 caps.drop all
+ipc-namespace
 machine-id
 net none
 no3d
@@ -35,12 +35,11 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
-private-bin nano
+# disable-mnt
+private-bin nano,rnano
 private-cache
 private-dev
-private-etc nanorc
-private-tmp
+private-etc alternatives,nanorc
 
 memory-deny-write-execute
 noexec ${HOME}

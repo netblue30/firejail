@@ -539,6 +539,7 @@ blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling
 blacklist ${HOME}/.tor-browser-*
+blacklist ${HOME}/.tor-browser_*
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.tuxguitar*
 blacklist ${HOME}/.unknown-horizons

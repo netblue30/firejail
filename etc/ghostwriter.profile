@@ -31,7 +31,6 @@ include disable-xdg.inc
 
 apparmor
 caps.drop all
-# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 netfilter
 #no3d

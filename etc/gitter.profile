@@ -20,6 +20,7 @@ whitelist ${HOME}/.config/Gitter
 include whitelist-var-common.inc
 
 caps.drop all
+# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 netfilter
 nodvd

@@ -20,6 +20,7 @@ include disable-xdg.inc
 apparmor
 caps.drop all
 ipc-namespace
+# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 # net none breaks AppArmor on Ubuntu systems
 netfilter

@@ -16,6 +16,7 @@ include disable-programs.inc
 
 caps.drop all
 ipc-namespace
+# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 net none
 no3d

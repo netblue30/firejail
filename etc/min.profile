@@ -25,11 +25,7 @@ include whitelist-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-# ipc-namespace
-# machine-id breaks pulse audio; it should work fine in setups where sound is not required
-#machine-id
 netfilter
-# no3d
 nodbus
 nodvd
 nogroups

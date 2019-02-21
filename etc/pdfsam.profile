@@ -23,7 +23,6 @@ include disable-programs.inc
 include disable-xdg.inc
 
 caps.drop all
-# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 net none
 no3d

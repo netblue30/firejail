@@ -19,7 +19,6 @@ include whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace
-# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 net none
 no3d
@@ -37,15 +36,11 @@ seccomp
 shell none
 tracelog
 
-# disable-mnt
-# private
 private-bin masterpdfeditor*
 private-cache
 private-dev
 private-etc alternatives,fonts
-# private-lib
 private-tmp
 
-# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

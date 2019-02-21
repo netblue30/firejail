@@ -19,7 +19,6 @@ include disable-xdg.inc
 include whitelist-var-common.inc
 
 caps.drop all
-# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 # net none breaks AppArmor on Ubuntu systems
 netfilter

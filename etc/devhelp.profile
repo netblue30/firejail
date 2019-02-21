@@ -20,7 +20,6 @@ include whitelist-common.inc
 
 apparmor
 caps.drop all
-# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 net none
 # nodbus - makes settings immutable

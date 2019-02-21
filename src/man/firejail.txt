@@ -736,6 +736,8 @@ $ firejail \-\-net=eth0 \-\-mac=00:11:22:33:44:55 firefox
 \fB\-\-machine-id
 Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
 .br
+Note that this breaks audio support. Enable it when sound is not required.
+.br
 
 .br
 Example:

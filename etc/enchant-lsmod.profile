@@ -3,7 +3,8 @@
 # Persistent local customizations
 include enchant-lsmod.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 # Redirect
 include enchant.profile

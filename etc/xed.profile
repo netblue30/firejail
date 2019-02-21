@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 
 # apparmor - makes settings immutable
 caps.drop all
-# machine-id breaks audio; it should work fine in setups where sound is not required
 machine-id
 # net none - makes settings immutable
 no3d

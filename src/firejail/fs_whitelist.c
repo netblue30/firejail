@@ -33,7 +33,6 @@
 //#define TEST_MOUNTINFO
 
 #define EMPTY_STRING ("")
-#define MAXBUF 4098
 static size_t homedir_len; // cache length of homedir string
 
 
@@ -68,11 +67,6 @@ static int mkpath(const char* path, mode_t mode) {
 	char *tok = strtok(dup, "/");
 	assert(tok); // path is no top level directory
 	while (tok) {
-		// skip all instances of "/./"
-		if (strcmp(tok, ".") == 0) {
-			tok = strtok(NULL, "/");
-			continue;
-		}
 		// create the directory if necessary
 		if (mkdirat(parentfd, tok, mode) == -1) {
 			if (errno != EEXIST) {

@@ -1163,11 +1163,6 @@ int safe_fd(const char *path, int flags) {
 	char *tok = strtok(dup, "/");
 	assert(tok);
 	while (tok) {
-		// skip all "/./"
-		if (strcmp(tok, ".") == 0) {
-			tok = strtok(NULL, "/");
-			continue;
-		}
 		// open the element, assuming it is a directory; this fails with ENOTDIR if it is a symbolic link
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1) {
@@ -1267,7 +1262,7 @@ int invalid_sandbox(const pid_t pid) {
 }
 
 int has_handler(pid_t pid, int signal) {
-	if (signal > 0) {
+	if (signal > 0 && signal <= SIGRTMAX) {
 		char *fname;
 		if (asprintf(&fname, "/proc/%d/status", pid) == -1)
 			errExit("asprintf");

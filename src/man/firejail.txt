@@ -1639,16 +1639,6 @@ Example:
 .br
 $ firejail \-\-read-only=~/.mozilla firefox
 .br
-
-.br
-A short note about mixing \-\-whitelist and \-\-read-only options. Whitelisted directories
-should be made read-only independently. Making a parent directory read-only, will not
-make the whitelist read-only. Example:
-.br
-
-.br
-$ firejail --whitelist=~/work --read-only=~ --read-only=~/work
-
 .TP
 \fB\-\-read-write=dirname_or_filename
 Set directory or file read-write. Only files or directories belonging to the current user are allowed for
@@ -2212,7 +2202,7 @@ $ firejail \-\-net=br0 --veth-name=if0
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
 whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
 everything else is discarded when the sandbox is closed. The top directory could be
-user home, /dev, /etc, /media, /mnt, /opt, /srv, /sys/module, /usr/share, /var, and /tmp.
+user home, /dev, /etc, /media, /mnt, /opt, /run/user/$UID, /srv, /sys/module, /tmp, /usr/share and /var.
 .br
 
 .br

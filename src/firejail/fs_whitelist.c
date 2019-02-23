@@ -34,17 +34,19 @@
 
 #define EMPTY_STRING ("")
 static size_t homedir_len; // cache length of homedir string
+static size_t runuser_len; // cache length of runuser string
+static char *runuser;
 
 
 static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
 	mode |= 0111;
 
-	// create directories with uid/gid as root or as current user if inside home directory
-	int userhome = 0;
-	if (strncmp(path, cfg.homedir, homedir_len) == 0) {
+	// create directories with uid/gid as root or as current user if inside home or run directory
+	int userprivs = 0;
+	if (strncmp(path, cfg.homedir, homedir_len) == 0 || strncmp(path, runuser, runuser_len) == 0) {
 		EUID_USER();
-		userhome = 1;
+		userprivs = 1;
 	}
 
 	// work on a copy of the path
@@ -74,7 +76,7 @@ static int mkpath(const char* path, mode_t mode) {
 					perror("mkdir");
 				close(parentfd);
 				free(dup);
-				if (userhome) {
+				if (userprivs) {
 					EUID_ROOT();
 				}
 				return -1;
@@ -89,7 +91,7 @@ static int mkpath(const char* path, mode_t mode) {
 				perror("open");
 			close(parentfd);
 			free(dup);
-			if (userhome) {
+			if (userprivs) {
 				EUID_ROOT();
 			}
 			return -1;
@@ -104,7 +106,7 @@ static int mkpath(const char* path, mode_t mode) {
 		fs_logger2("mkpath", path);
 
 	free(dup);
-	if (userhome) {
+	if (userprivs) {
 		EUID_ROOT();
 	}
 	return fd;
@@ -197,6 +199,12 @@ static void whitelist_path(ProfileEntry *entry) {
 		fname = path + 12; // strlen("/sys/module/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MODULE_DIR, fname) == -1)
+			errExit("asprintf");
+	}
+	else if (entry->run_dir) {
+		fname = path + runuser_len + 1; // strlen("/run/user/$uid/")
+
+		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_RUN_USER_DIR, fname) == -1)
 			errExit("asprintf");
 	}
 	assert(wfile);
@@ -325,7 +333,11 @@ void fs_whitelist(void) {
 	if (!entry)
 		return;
 
+	if (asprintf(&runuser, "/run/user/%u", getuid()) == -1)
+		errExit("asprintf");
+	runuser_len = strlen(runuser);
 	homedir_len = strlen(cfg.homedir);
+
 	char *new_name = NULL;
 	int home_dir = 0;	// /home/user directory flag
 	int tmp_dir = 0;	// /tmp directory flag
@@ -338,6 +350,7 @@ void fs_whitelist(void) {
 	int etc_dir = 0;                // /etc directory flag
 	int share_dir = 0;                // /usr/share directory flag
 	int module_dir = 0;                // /sys/module directory flag
+	int run_dir = 0;                // /run/user/$uid directory flag
 
 	size_t nowhitelist_c = 0;
 	size_t nowhitelist_m = 32;
@@ -449,6 +462,8 @@ void fs_whitelist(void) {
 					share_dir = 1;
 				else if (strncmp(new_name, "/sys/module/", 12) == 0)
 					module_dir = 1;
+				else if (strncmp(new_name, runuser, runuser_len) == 0 && new_name[runuser_len] == '/')
+					run_dir = 1;
 			}
 
 			entry->data = EMPTY_STRING;
@@ -624,6 +639,15 @@ void fs_whitelist(void) {
 				goto errexit;
 			}
 		}
+		else if (strncmp(new_name, runuser, runuser_len) == 0 && new_name[runuser_len] == '/') {
+			entry->run_dir = 1;
+			run_dir = 1;
+			// both path and absolute path are under /run/user/$uid
+			if (strncmp(fname, runuser, runuser_len) != 0 || fname[runuser_len] != '/') {
+				free(fname);
+				goto errexit;
+			}
+		}
 		else {
 			free(fname);
 			goto errexit;
@@ -704,7 +728,7 @@ void fs_whitelist(void) {
 		// mount tmpfs on /tmp
 		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /tmp directory\n");
-		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
+		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
 			errExit("mounting tmpfs on /tmp");
 		fs_logger("tmpfs /tmp");
 	}
@@ -721,7 +745,7 @@ void fs_whitelist(void) {
 			// mount tmpfs on /media
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /media directory\n");
-			if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /media");
 			fs_logger("tmpfs /media");
 		}
@@ -741,7 +765,7 @@ void fs_whitelist(void) {
 			// mount tmpfs on /mnt
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /mnt directory\n");
-			if (mount("tmpfs", "/mnt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			if (mount("tmpfs", "/mnt", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /mnt");
 			fs_logger("tmpfs /mnt");
 		}
@@ -760,7 +784,7 @@ void fs_whitelist(void) {
 		// mount tmpfs on /var
 		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /var directory\n");
-		if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /var");
 		fs_logger("tmpfs /var");
 	}
@@ -775,7 +799,7 @@ void fs_whitelist(void) {
 		// mount tmpfs on /dev
 		if (arg_debug || arg_debug_whitelists)
 			printf("Mounting tmpfs on /dev directory\n");
-		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /dev");
 		fs_logger("tmpfs /dev");
 	}
@@ -792,7 +816,7 @@ void fs_whitelist(void) {
 			// mount tmpfs on /opt
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /opt directory\n");
-			if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /opt");
 			fs_logger("tmpfs /opt");
 		}
@@ -812,7 +836,7 @@ void fs_whitelist(void) {
 			// mount tmpfs on /srv
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /srv directory\n");
-			if (mount("tmpfs", "/srv", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			if (mount("tmpfs", "/srv", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /srv");
 			fs_logger("tmpfs /srv");
 		}
@@ -832,7 +856,7 @@ void fs_whitelist(void) {
 			// mount tmpfs on /srv
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /etc directory\n");
-			if (mount("tmpfs", "/etc", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			if (mount("tmpfs", "/etc", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /etc");
 			fs_logger("tmpfs /etc");
 		}
@@ -852,7 +876,7 @@ void fs_whitelist(void) {
 			// mount tmpfs on /srv
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /usr/share directory\n");
-			if (mount("tmpfs", "/usr/share", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			if (mount("tmpfs", "/usr/share", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /usr/share");
 			fs_logger("tmpfs /usr/share");
 		}
@@ -872,12 +896,36 @@ void fs_whitelist(void) {
 			// mount tmpfs on /sys/module
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /sys/module directory\n");
-			if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /sys/module");
 			fs_logger("tmpfs /sys/module");
 		}
 		else
 			module_dir = 0;
+	}
+
+	// /run/user mountpoint
+	if (run_dir) {
+		// check if /run/user/$uid directory exists
+		if (stat(runuser, &s) == 0) {
+			// keep a copy of real /run/user/$uid directory in RUN_WHITELIST_RUN_USER_DIR
+			mkdir_attr(RUN_WHITELIST_RUN_USER_DIR, 0700, getuid(), getgid());
+			if (mount(runuser, RUN_WHITELIST_RUN_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+
+			// mount tmpfs on /run/user/$uid
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on %s directory\n", runuser);
+			char *options;
+			if (asprintf(&options, "mode=700,uid=%u,gid=%u", getuid(), getgid()) == -1)
+				errExit("asprintf");
+			if (mount("tmpfs", runuser, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME, options) < 0)
+				errExit("mounting tmpfs on /run/user/<uid>");
+			free(options);
+			fs_logger2("tmpfs", runuser);
+		}
+		else
+			run_dir = 0;
 	}
 
 
@@ -931,81 +979,89 @@ void fs_whitelist(void) {
 
 	// mask the real home directory, currently mounted on RUN_WHITELIST_HOME_DIR
 	if (home_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_HOME_USER_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_HOME_USER_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_HOME_USER_DIR);
 	}
 
 	// mask the real /tmp directory, currently mounted on RUN_WHITELIST_TMP_DIR
 	if (tmp_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_TMP_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_TMP_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_TMP_DIR);
 	}
 
 	// mask the real /var directory, currently mounted on RUN_WHITELIST_VAR_DIR
 	if (var_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_VAR_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_VAR_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_VAR_DIR);
 	}
 
 	// mask the real /opt directory, currently mounted on RUN_WHITELIST_OPT_DIR
 	if (opt_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_OPT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_OPT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_OPT_DIR);
 	}
 
 	// mask the real /dev directory, currently mounted on RUN_WHITELIST_DEV_DIR
 	if (dev_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_DEV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_DEV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_DEV_DIR);
 	}
 
 	// mask the real /media directory, currently mounted on RUN_WHITELIST_MEDIA_DIR
 	if (media_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_MEDIA_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_MEDIA_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_MEDIA_DIR);
 	}
 
 	// mask the real /mnt directory, currently mounted on RUN_WHITELIST_MNT_DIR
 	if (mnt_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_MNT_DIR);
 	}
 
 	// mask the real /srv directory, currently mounted on RUN_WHITELIST_SRV_DIR
 	if (srv_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_SRV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_SRV_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_SRV_DIR);
 	}
 
 	// mask the real /etc directory, currently mounted on RUN_WHITELIST_ETC_DIR
 	if (etc_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_ETC_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_ETC_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_ETC_DIR);
 	}
 
 	// mask the real /usr/share directory, currently mounted on RUN_WHITELIST_SHARE_DIR
 	if (share_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_SHARE_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_SHARE_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_SHARE_DIR);
 	}
 
 	// mask the real /sys/module directory, currently mounted on RUN_WHITELIST_MODULE_DIR
 	if (module_dir) {
-		if (mount("tmpfs", RUN_WHITELIST_MODULE_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", RUN_WHITELIST_MODULE_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");
 		fs_logger2("tmpfs", RUN_WHITELIST_MODULE_DIR);
 	}
 
+	// mask the real /run/user/$uid directory, currently mounted on RUN_WHITELIST_MODULE_DIR
+	if (run_dir) {
+		if (mount("tmpfs", RUN_WHITELIST_RUN_USER_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+			errExit("mount tmpfs");
+		fs_logger2("tmpfs", RUN_WHITELIST_RUN_USER_DIR);
+	}
+
+	free(runuser);
 	return;
 
 errexit:

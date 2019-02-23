@@ -78,6 +78,7 @@
 #define RUN_WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"	// default home directory masking
 #define RUN_WHITELIST_RUN_DIR	"/run/firejail/mnt/orig-run"	// default run directory masking
 #define RUN_WHITELIST_HOME_USER_DIR	"/run/firejail/mnt/orig-home-user"	// home directory whitelisting
+#define RUN_WHITELIST_RUN_USER_DIR	"/run/firejail/mnt/orig-run-user"	// run directory whitelisting
 #define RUN_WHITELIST_TMP_DIR	"/run/firejail/mnt/orig-tmp"
 #define RUN_WHITELIST_MEDIA_DIR	"/run/firejail/mnt/orig-media"
 #define RUN_WHITELIST_MNT_DIR	"/run/firejail/mnt/orig-mnt"
@@ -211,6 +212,7 @@ typedef struct profile_entry_t {
 	unsigned etc_dir:1;	// whitelist in /etc directory
 	unsigned share_dir:1;	// whitelist in /usr/share directory
 	unsigned module_dir:1;	// whitelist in /sys/module directory
+	unsigned run_dir:1;	// whitelist in /run/user/$uid directory
 }ProfileEntry;
 
 typedef struct config_t {

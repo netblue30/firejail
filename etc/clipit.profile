@@ -16,8 +16,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+apparmor
 caps.drop all
-netfilter
+ipc-namespace
+machine-id
+net none
 no3d
 nodvd
 nogroups

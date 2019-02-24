@@ -11,6 +11,9 @@ include less.local
 blacklist /tmp/.X11-unix
 
 ignore noroot
+apparmor
+ipc-namespace
+machine-id
 net none
 no3d
 nodbus

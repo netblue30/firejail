@@ -15,7 +15,9 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
+machine-id
 net none
 no3d
 nodbus
@@ -33,7 +35,10 @@ shell none
 tracelog
 
 private-bin ffmpeg
+private-cache
 private-dev
 private-tmp
 
 # memory-deny-write-execute - it breaks old versions of ffmpeg
+noexec ${HOME}
+noexec /tmp

@@ -22,7 +22,10 @@ include disable-common.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
+ipc-namespace
+machine-id
 netfilter
 no3d
 nodvd
@@ -39,3 +42,7 @@ shell none
 
 private-cache
 private-dev
+
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

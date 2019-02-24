@@ -20,6 +20,7 @@ include whitelist-var-common.inc
 
 caps.drop all
 # ipc-namespace
+machine-id
 netfilter
 no3d
 nodbus
@@ -45,5 +46,5 @@ private-lib
 private-tmp
 
 memory-deny-write-execute
-# noexec ${HOME}
-# noexec /tmp
+noexec ${HOME}
+noexec /tmp

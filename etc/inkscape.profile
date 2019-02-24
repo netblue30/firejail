@@ -23,6 +23,8 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+ipc-namespace
+machine-id
 net none
 nodbus
 nodvd
@@ -41,5 +43,6 @@ shell none
 private-dev
 private-tmp
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

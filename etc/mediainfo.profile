@@ -14,7 +14,10 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
+ipc-namespace
+machine-id
 net none
 no3d
 nodbus
@@ -36,3 +39,7 @@ private-cache
 private-dev
 private-etc alternatives
 private-tmp
+
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

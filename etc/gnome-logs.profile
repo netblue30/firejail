@@ -16,7 +16,9 @@ include disable-xdg.inc
 whitelist /var/log/journal
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
+ipc-namespace
 net none
 no3d
 nodbus
@@ -36,11 +38,16 @@ shell none
 
 disable-mnt
 private-bin gnome-logs
+private-cache
 private-dev
 private-etc alternatives,fonts,localtime,machine-id
 private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 writable-var-log
 
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
+
+# comment this if you export logs to a file in your ${HOME}
+read-only ${HOME}

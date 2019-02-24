@@ -25,8 +25,10 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
+machine-id
 net none
 no3d
 nodbus
@@ -42,7 +44,9 @@ protocol unix
 seccomp
 shell none
 
+private-cache
 private-dev
+private-lib perl*
 private-tmp
 
 memory-deny-write-execute

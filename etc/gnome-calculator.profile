@@ -17,8 +17,10 @@ include disable-xdg.inc
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+apparmor
 caps.drop all
+ipc-namespace
+machine-id
 # net none
 netfilter
 no3d
@@ -42,6 +44,6 @@ private-dev
 private-lib gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*,libgnutls.so.*,libproxy.so.*,librsvg-2.so.*,libxml2.so.*
 private-tmp
 
-#memory-deny-write-execute  - breaks on Arch
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

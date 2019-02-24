@@ -16,8 +16,11 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+ipc-namespace
+machine-id
 net none
 no3d
+# nodbus makes settings immutable - comment if you need settings support
 nodbus
 nodvd
 nogroups
@@ -37,6 +40,6 @@ private-dev
 # private-etc alternatives,fonts
 # private-tmp
 
-#memory-deny-write-execute  - breaks on Arch
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

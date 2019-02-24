@@ -15,8 +15,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+apparmor
 caps.drop all
-netfilter
+ipc-namespace
+machine-id
+net none
 no3d
 nodbus
 nodvd
@@ -32,12 +35,13 @@ seccomp
 shell none
 tracelog
 
-# private-bin enchant, enchant-*
+private-bin enchant, enchant-*
 private-cache
 private-dev
 private-etc alternatives
+private-lib
 private-tmp
 
-# memory-deny-write-execute
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

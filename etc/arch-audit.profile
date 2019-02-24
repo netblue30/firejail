@@ -17,10 +17,13 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+apparmor
 caps.drop all
 ipc-namespace
+machine-id
 netfilter
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -29,14 +32,14 @@ nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol inet,inet6
 seccomp
 shell none
 
 disable-mnt
 private
-private-cache
 private-bin arch-audit
+private-cache
 private-dev
 private-tmp
 

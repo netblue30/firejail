@@ -2,7 +2,7 @@
 # Description: A restricted nano
 # This file is overwritten after every install/update
 # Persistent local customizations
-include rnano.local
+#include rnano.local
 # Persistent global definitions
 include globals.local
 

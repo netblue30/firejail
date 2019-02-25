@@ -22,10 +22,13 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
-netfilter
+ipc-namespace
+machine-id
 net none
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -45,3 +48,7 @@ private-dev
 # without login.defs atool complains and uses UID/GID 1000 by default
 private-etc alternatives,passwd,group,login.defs
 private-tmp
+
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

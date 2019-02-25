@@ -17,11 +17,11 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-include whitelist-var-common.inc
-
-# apparmor - makes settings immutable
+apparmor
 caps.drop all
-# net none - makes settings immutable
+ipc-namespace
+machine-id
+net none
 no3d
 # nodbus - makes settings immutable
 nodvd
@@ -40,9 +40,9 @@ private-bin eog
 private-cache
 private-dev
 private-etc alternatives,fonts
-private-lib gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*
+private-lib eog,gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*
 private-tmp
 
-#memory-deny-write-execute  - breaks on Arch
+memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

@@ -25,6 +25,7 @@ protocol unix
 shell none
 tracelog
 
+private-cache
 private-dev
 
 memory-deny-write-execute

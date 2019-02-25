@@ -12,6 +12,12 @@ noblacklist ${HOME}/.inkscape
 noblacklist ${DOCUMENTS}
 noblacklist ${PICTURES}
 
+# Allow python (blacklisted by disable-interpreters.inc)
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
@@ -39,10 +45,10 @@ protocol unix
 seccomp
 shell none
 
-# private-bin inkscape,potrace - problems on Debian stretch
+# private-bin inkscape,potrace,python* - problems on Debian stretch
 private-dev
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

@@ -10,18 +10,27 @@ include gzip.local
 
 blacklist /tmp/.X11-unix
 
-ignore noroot
+apparmor
+ipc-namespace
+machine-id
 net none
 no3d
 nodbus
 nodvd
+nogroups
 nosound
 notv
 nou2f
 novideo
+protocol unix
 shell none
 tracelog
 
+private-cache
 private-dev
+
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp
 
 include default.profile

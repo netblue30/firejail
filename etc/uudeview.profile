@@ -5,7 +5,7 @@ quiet
 # Persistent local customizations
 include uudeview.local
 # Persistent global definitions
-# added by included default.profile
+# added by included profile
 #include globals.local
 
 hostname uudeview

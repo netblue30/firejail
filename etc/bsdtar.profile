@@ -14,15 +14,17 @@ include disable-programs.inc
 
 blacklist /tmp/.X11-unix
 
-hostname bsdtar
+apparmor
 caps.drop all
+hostname bsdtar
 ipc-namespace
-netfilter
+machine-id
+net none
 no3d
 nodvd
 nogroups
 nonewprivs
-# noroot
+noroot
 nosound
 notv
 nou2f
@@ -31,10 +33,14 @@ nonewprivs
 protocol unix
 seccomp
 shell none
-
 tracelog
 
 # support compressed archives
 private-bin sh,bash,bsdcat,bsdcpio,bsdtar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop,lz4,libarchive
+private-cache
 private-dev
 private-etc alternatives,passwd,group,localtime
+
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

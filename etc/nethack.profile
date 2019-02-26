@@ -1,13 +1,13 @@
-# Firejail profile for nano
-# Description: nano is an easy text editor for the terminal
+# Firejail profile for nethack
+# Description: A rogue-like single player dungeon exploration game
 # This file is overwritten after every install/update
 # Persistent local customizations
-include nano.local
+include nethack.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/nano
-noblacklist ${HOME}/.nanorc
+
+noblacklist /var/games/nethack
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,33 +15,33 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-apparmor
+whitelist /var/games/nethack
+include whitelist-common.inc
+include whitelist-var-common.inc
+
 caps.drop all
 ipc-namespace
-machine-id
 net none
 no3d
 nodbus
 nodvd
 nogroups
-nonewprivs
-noroot
+#nonewprivs
+#noroot
 nosound
 notv
-nou2f
 novideo
-protocol unix
-seccomp
+#protocol unix,netlink
+#seccomp
 shell none
-tracelog
 
-# disable-mnt
-private-bin nano,rnano
+disable-mnt
+#private
 private-cache
 private-dev
-# Comment the next line if you want to edit files in /etc directly
-private-etc alternatives,nanorc
+private-tmp
+writable-var
 
-memory-deny-write-execute
+#memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

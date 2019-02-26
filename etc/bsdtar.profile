@@ -14,8 +14,8 @@ include disable-programs.inc
 
 blacklist /tmp/.X11-unix
 
-hostname bsdtar
 caps.drop all
+hostname bsdtar
 ipc-namespace
 netfilter
 no3d
@@ -27,11 +27,9 @@ nosound
 notv
 nou2f
 novideo
-nonewprivs
 protocol unix
 seccomp
 shell none
-
 tracelog
 
 # support compressed archives

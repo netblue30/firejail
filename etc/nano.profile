@@ -39,6 +39,7 @@ tracelog
 private-bin nano,rnano
 private-cache
 private-dev
+# Comment the next line if you want to edit files in /etc directly
 private-etc alternatives,nanorc
 
 memory-deny-write-execute

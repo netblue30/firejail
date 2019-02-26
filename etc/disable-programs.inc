@@ -206,6 +206,7 @@ blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/mypaint
+blacklist ${HOME}/.config/nano
 blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
@@ -503,6 +504,7 @@ blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.mplayer
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.multimc5
+blacklist ${HOME}/.nanorc
 blacklist ${HOME}/.neverball
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail

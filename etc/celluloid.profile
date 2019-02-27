@@ -43,7 +43,7 @@ tracelog
 
 private-bin celluloid,gnome-mpv,youtube-dl,python*,env
 private-cache
-private-etc alternatives
+private-etc alternatives,ca-certificates,ssl,pki,pkcs11,hosts,machine-id,localtime,libva.conf,drirc,fonts,gtk-3.0,dconf,crypto-policies,xdg,selinux,resolv.conf
 private-dev
 private-tmp
 

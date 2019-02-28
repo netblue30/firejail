@@ -505,6 +505,7 @@ blacklist ${HOME}/.mplayer
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.nanorc
+blacklist ${HOME}/.netactview
 blacklist ${HOME}/.neverball
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail

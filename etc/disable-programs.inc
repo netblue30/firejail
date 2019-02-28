@@ -234,6 +234,7 @@ blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.config/ranger
+blacklist ${HOME}/.config/redshift
 blacklist ${HOME}/.config/redshift.conf
 blacklist ${HOME}/.config/remmina
 blacklist ${HOME}/.config/ristretto

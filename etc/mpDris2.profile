@@ -41,7 +41,7 @@ private-bin mpDris2,notify-send,python*
 private-cache
 private-dev
 private-etc alternatives,hosts,nsswitch.conf
-private-lib libgirepository-1.0.so.*,libnotify.so.*,libpython*,python2*,python3*
+private-lib libdbus-1.so.*,libdbus-glib-1.so.*,libgirepository-1.0.so.*,libnotify.so.*,libpython*,python2*,python3*
 private-tmp
 
 # memory-deny-write-execute - Breaks on Arch

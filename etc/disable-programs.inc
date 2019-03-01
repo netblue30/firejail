@@ -136,6 +136,7 @@ blacklist ${HOME}/.config/discord
 blacklist ${HOME}/.config/discordcanary
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
+blacklist ${HOME}/.config/d-feet
 blacklist ${HOME}/.config/emaildefaults
 blacklist ${HOME}/.config/emailidentities
 blacklist ${HOME}/.config/enchant

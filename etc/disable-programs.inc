@@ -269,6 +269,7 @@ blacklist ${HOME}/.config/xfburn
 blacklist ${HOME}/.config/xfce4/xfce4-notes.gtkrc
 blacklist ${HOME}/.config/xfce4/xfce4-notes.rc
 blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
+blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
 blacklist ${HOME}/.config/xfce4-dict
 blacklist ${HOME}/.config/xiaoyong
 blacklist ${HOME}/.config/xmms2

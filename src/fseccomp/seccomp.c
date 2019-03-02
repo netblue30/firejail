@@ -258,6 +258,14 @@ void memory_deny_write_execute(const char *fname) {
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, SHM_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SHM_EXEC, 0, 1),
 		KILL_PROCESS,
+		RETURN_ALLOW,
+#endif
+#ifdef SYS_memfd_create
+		// block memfd_create as it can be used to create
+		// arbitrary memory contents which can be later mapped
+		// as executable
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_memfd_create, 0, 1),
+		KILL_PROCESS,
 		RETURN_ALLOW
 #endif
 	};

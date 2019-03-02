@@ -6,12 +6,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include <sys/syscall.h>
 
 static void usage(void) {
 	printf("memwrexe options\n");
 	printf("where options is:\n");
 	printf("\tmmap - mmap test\n");
 	printf("\tmprotect - mprotect test\n");
+	printf("\tmemfd_create - memfd_create test\n");
 }
 
 int main(int argc, char **argv) {
@@ -66,6 +68,20 @@ int main(int argc, char **argv) {
 
 		mprotect(p, size, PROT_READ|PROT_WRITE|PROT_EXEC);
 		printf("mprotect successful\n");
+
+		// wait for expect to timeout
+		sleep(100);
+
+		return 0;
+	}
+
+	else if (strcmp(argv[1], "memfd_create") == 0) {
+		int fd = syscall(SYS_memfd_create, "memfd_create", 0);
+		if (fd == -1) {
+			fprintf(stderr, "TESTING ERROR: cannot run memfd_create test\n");
+			return 1;
+		}
+		printf("memfd_create successful\n");
 
 		// wait for expect to timeout
 		sleep(100);

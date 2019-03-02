@@ -12,7 +12,6 @@ noblacklist ${HOME}/.config/Brackets
 #noblacklist ${HOME}/.cargo/config
 #noblacklist ${HOME}/.cargo/registry
 
-
 include disable-common.inc
 include disable-passwdmgr.inc
 include disable-programs.inc

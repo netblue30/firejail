@@ -14,6 +14,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-common.inc
+include whitelist-var-common.inc
+
 apparmor
 caps.drop all
 machine-id
@@ -32,8 +35,6 @@ seccomp
 shell none
 
 disable-mnt
-# for GTK theme support comment 'private'
-private
 private-cache
 private-dev
 private-tmp
@@ -42,5 +43,4 @@ memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
 
-# gucharmap will never write anything
 read-only ${HOME}

@@ -21,6 +21,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.claws-mail
 whitelist ${HOME}/.claws-mail
 include whitelist-common.inc
 
@@ -40,8 +41,7 @@ protocol unix
 seccomp
 shell none
 
-# disable-mnt
-# private
+disable-mnt
 private-bin clawsker,perl
 private-cache
 private-dev

@@ -14,7 +14,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-mkdir     ${HOME}/.hedgewars
+mkdir ${HOME}/.hedgewars
 whitelist ${HOME}/.hedgewars
 include whitelist-common.inc
 

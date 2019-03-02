@@ -40,5 +40,4 @@ private-dev
 private-etc alternatives,fonts
 private-tmp
 
-# mupdf will never write anything
 read-only ${HOME}

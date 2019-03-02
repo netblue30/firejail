@@ -7,7 +7,6 @@ include mendeleydesktop.local
 include globals.local
 
 noblacklist ${DOCUMENTS}
-noblacklist ${DOWNLOADS}
 noblacklist ${HOME}/.cache/Mendeley Ltd.
 noblacklist ${HOME}/.config/Mendeley Ltd.
 noblacklist ${HOME}/.local/share/Mendeley Ltd.

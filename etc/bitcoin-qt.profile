@@ -7,6 +7,7 @@ include bitcoin-qt.local
 include globals.local
 
 noblacklist ${HOME}/.bitcoin
+noblacklist ${HOME}/.config/Bitcoin
 
 include disable-common.inc
 include disable-devel.inc

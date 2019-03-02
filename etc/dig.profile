@@ -7,13 +7,16 @@ include dig.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.digrc
+
 include disable-common.inc
 # include disable-devel.inc
 # include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-#include disable-xdg.inc
+include disable-xdg.inc
 
+mkfile ${HOME}/.digrc
 whitelist ${HOME}/.digrc
 include whitelist-common.inc
 include whitelist-var-common.inc

@@ -13,8 +13,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.config/dconf
-whitelist ${HOME}/.config/dconf
+# dconf paths are whitelisted by the following
 include whitelist-common.inc
 
 apparmor

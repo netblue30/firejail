@@ -288,6 +288,7 @@ blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dashcore
 blacklist ${HOME}/.devilspie
 blacklist ${HOME}/.dia
+blacklist ${HOME}/.digrc
 blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dooble
 blacklist ${HOME}/.dosbox

@@ -1099,7 +1099,7 @@ void x11_xorg(void) {
 	}
 
 	// temporarily mount a tempfs on top of /tmp directory
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
+	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
 		errExit("mounting /tmp");
 
 	// create the temporary .Xauthority file
@@ -1253,7 +1253,7 @@ void fs_x11(void) {
 
 	// This directory must be mode 1777, or Xlib will barf.
 	if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs",
-		MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,
+		MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,
 		"mode=1777,uid=0,gid=0") < 0)
 		errExit("mounting tmpfs on /tmp/.X11-unix");
 	fs_logger("tmpfs /tmp/.X11-unix");

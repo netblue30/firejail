@@ -83,7 +83,7 @@ static void sanitize_home(void) {
 		errExit("mount bind");
 
 	// mount tmpfs in the new home
-	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
 	fs_logger("tmpfs /home");
 
@@ -105,7 +105,7 @@ static void sanitize_home(void) {
 		errExit("mount bind");
 
 	// mask home dir under /run
-	if (mount("tmpfs", RUN_WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", RUN_WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
 	fs_logger2("tmpfs", RUN_WHITELIST_HOME_DIR);
 	if (!arg_private)
@@ -138,7 +138,7 @@ static void sanitize_run(void) {
 		errExit("mount bind");
 
 	// mount tmpfs on /run/user
-	if (mount("tmpfs", "/run/user", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", "/run/user", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
 	fs_logger("tmpfs /run/user");
 
@@ -156,7 +156,7 @@ static void sanitize_run(void) {
 		errExit("mount bind");
 
 	// mask mirrored /run/user/$UID directory
-	if (mount("tmpfs", RUN_WHITELIST_RUN_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", RUN_WHITELIST_RUN_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
 	fs_logger2("tmpfs", RUN_WHITELIST_RUN_DIR);
 
@@ -398,7 +398,7 @@ void restrict_users(void) {
 		else {
 			// user has the home directory outside /home
 			// mount tmpfs on top of /home in order to hide it
-			if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+			if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mount tmpfs");
 			fs_logger("tmpfs /home");
 		}

@@ -228,7 +228,7 @@ void fs_private_dev(void){
 	}
 
 	// mount tmpfs on top of /dev
-	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
 	fs_logger("tmpfs /dev");
 

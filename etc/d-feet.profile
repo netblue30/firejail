@@ -21,6 +21,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/d-feet
 whitelist ${HOME}/.config/d-feet
 include whitelist-common.inc
 include whitelist-var-common.inc

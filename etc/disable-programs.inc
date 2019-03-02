@@ -308,6 +308,7 @@ blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.git-credential-cache
 blacklist ${HOME}/.gitconfig
+blacklist ${HOME}/.gnome/gnome-schedule
 blacklist ${HOME}/.googleearth/Cache/
 blacklist ${HOME}/.googleearth/Temp/
 blacklist ${HOME}/.googleearth/myplaces.backup.kml

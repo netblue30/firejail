@@ -255,6 +255,7 @@ blacklist ${HOME}/.config/telepathy-account-widgets
 blacklist ${HOME}/.config/torbrowser
 blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/tox
+blacklist ${HOME}/.config/transgui
 blacklist ${HOME}/.config/truecraft
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/uGet

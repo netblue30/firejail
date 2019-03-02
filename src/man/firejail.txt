@@ -747,8 +747,8 @@ $ firejail \-\-machine-id
 Install a seccomp filter to block attempts to create memory mappings
 that are both writable and executable, to change mappings to be
 executable, or to create executable shared memory. The filter examines
-the arguments of mmap, mmap2, mprotect, pkey_mprotect and shmat system
-calls and kills the process if necessary.
+the arguments of mmap, mmap2, mprotect, pkey_mprotect, memfd_create and
+shmat system calls and kills the process if necessary.
 .br
 
 .br

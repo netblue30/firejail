@@ -29,6 +29,18 @@ expect {
 	"mprotect successful" {puts "TESTING ERROR 12\n";exit}
 	"Parent is shutting down"
 }
+after 100
+
+send --  "firejail --memory-deny-write-execute ./memwrexe-32 memfd_create\r"
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 21\n";exit}
+	"memfd_create successful" {puts "TESTING ERROR 22\n";exit}
+	"Parent is shutting down"
+}
 
 after 100
 puts "\nall done\n"

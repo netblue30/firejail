@@ -6,7 +6,9 @@ include ranger.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.config/ranger
+noblacklist ${HOME}/.nanorc
 
 # Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*

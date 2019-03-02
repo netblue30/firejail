@@ -13,6 +13,7 @@ noblacklist /var/spool/mail
 noblacklist ${HOME}/.Mail
 noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.cache/mutt
+noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.elinks
 noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
@@ -22,6 +23,7 @@ noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.msmtprc
 noblacklist ${HOME}/.mutt
 noblacklist ${HOME}/.muttrc
+noblacklist ${HOME}/.nanorc
 noblacklist ${HOME}/.signature
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo

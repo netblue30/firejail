@@ -18,10 +18,6 @@ include disable-programs.inc
 include disable-xdg.inc
 
 #mkdir ${HOME}/.config/ghostwriter
-#mkdir ${DESKTOP}
-#mkdir ${DOCUMENTS}
-#mkdir ${DOWNLOADS}
-#mkdir ${PICTURES}
 #whitelist ${HOME}/.config/ghostwriter
 #whitelist ${DESKTOP}
 #whitelist ${DOCUMENTS}

@@ -30,7 +30,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs

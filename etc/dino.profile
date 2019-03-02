@@ -15,7 +15,7 @@ include disable-programs.inc
 
 mkdir ${HOME}/.local/share/dino
 whitelist ${HOME}/.local/share/dino
-whitelist ${HOME}/Downloads
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 
 caps.drop all

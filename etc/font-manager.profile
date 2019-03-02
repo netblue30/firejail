@@ -6,8 +6,8 @@ include font-manager.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/font-manager
 noblacklist ${HOME}/.config/font-manager
-whitelist ${HOME}/.config/font-manager
 
 # Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*
@@ -23,7 +23,9 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/font-manager
+mkdir ${HOME}/.config/font-manager
 whitelist ${HOME}/.cache/font-manager
+whitelist ${HOME}/.config/font-manager
 include whitelist-common.inc
 
 apparmor

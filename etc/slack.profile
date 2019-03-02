@@ -6,7 +6,6 @@ include slack.local
 include globals.local
 
 noblacklist ${HOME}/.config/Slack
-noblacklist ${HOME}/Downloads
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +16,7 @@ include disable-programs.inc
 mkdir ${HOME}/.config
 mkdir ${HOME}/.config/Slack
 whitelist ${HOME}/.config/Slack
-whitelist ${HOME}/Downloads
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 

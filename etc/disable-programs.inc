@@ -604,6 +604,7 @@ blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
+blacklist ${HOME}/.cache/gnome-recipes
 blacklist ${HOME}/.cache/gnome-twitch
 blacklist ${HOME}/.cache/gradio
 blacklist ${HOME}/.cache/icedove

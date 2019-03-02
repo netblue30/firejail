@@ -7,8 +7,6 @@ include /etc/firejail/transgui.local
 include globals.local
 
 noblacklist ${HOME}/.config/transgui
-whitelist ${HOME}/.config/transgui
-
 noblacklist ${DOWNLOADS}
 
 include disable-common.inc
@@ -18,7 +16,10 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/transgui
+whitelist ${HOME}/.config/transgui
 include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

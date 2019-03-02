@@ -25,7 +25,7 @@ mkdir ${HOME}/.local/share/ktorrent
 mkfile ${HOME}/.config/ktorrentrc
 mkfile ${HOME}/.kde/share/config/ktorrentrc
 mkfile ${HOME}/.kde4/share/config/ktorrentrc
-whitelist  ${DOWNLOADS}
+whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/ktorrentrc
 whitelist ${HOME}/.kde/share/apps/ktorrent
 whitelist ${HOME}/.kde/share/config/ktorrentrc

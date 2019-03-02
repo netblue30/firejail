@@ -540,6 +540,7 @@ rusty-snake (https://github.com/rusty-snake)
 	- fix gajim profile, added gajim-history-manager profile
 	- updates for ~/.cargo
 	- added klavaro profile
+	- added mypaint, nano, celluoid profiles
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)

@@ -47,5 +47,4 @@ memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
 
-# devilspie2 will never write anything
 read-only ${HOME}

@@ -13,6 +13,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+inclue whitelist-var-common.inc
+
 apparmor
 caps.drop all
 hostname geekbench
@@ -40,6 +42,7 @@ private-cache
 private-dev
 private-etc alternatives,groups,passwd,lsb-release
 private-lib libstdc++.so.*
+private-opt none
 private-tmp
 
 # memory-deny-write-execute - Breaks on Arch

@@ -7,7 +7,6 @@ include clawsker.local
 include globals.local
 
 noblacklist ${HOME}/.claws-mail
-whitelist ${HOME}/.claws-mail
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/cpan*
@@ -21,6 +20,8 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+
+whitelist ${HOME}/.claws-mail
 include whitelist-common.inc
 
 caps.drop all

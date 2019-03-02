@@ -33,7 +33,6 @@ seccomp
 shell none
 
 disable-mnt
-# private
 private-bin aria2c,gzip
 private-cache
 private-dev

@@ -301,6 +301,7 @@ blacklist ${HOME}/.kde/share/apps/kwallet
 blacklist ${HOME}/.kde4/share/apps/kwallet
 blacklist ${HOME}/.local/share/keyrings
 blacklist ${HOME}/.local/share/kwalletd
+blacklist ${HOME}/.local/share/plasma-vault
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.mutt
 blacklist ${HOME}/.muttrc

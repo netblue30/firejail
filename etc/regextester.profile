@@ -21,7 +21,7 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
+# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -46,3 +46,6 @@ private-tmp
 memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp
+
+# never write anything
+read-only ${HOME}

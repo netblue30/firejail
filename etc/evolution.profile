@@ -8,7 +8,7 @@ include globals.local
 
 noblacklist /var/mail
 noblacklist /var/spool/mail
-# noblacklist ${HOME}/.bogofilter
+noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.cache/evolution
 noblacklist ${HOME}/.config/evolution
 noblacklist ${HOME}/.gnupg

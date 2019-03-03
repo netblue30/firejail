@@ -19,6 +19,7 @@ blacklist ${HOME}/.IdeaIC*
 blacklist ${HOME}/.LuminanceHDR
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Natron
+blacklist ${HOME}/.PlayOnLinux
 blacklist ${HOME}/.PyCharm*
 blacklist ${HOME}/.Sayonara
 blacklist ${HOME}/.Skype
@@ -46,6 +47,8 @@ blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
 blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
+blacklist ${HOME}/.bitcoin
+blacklist ${HOME}/.bogofilter
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.config/0ad
@@ -54,12 +57,14 @@ blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Authenticator
 blacklist ${HOME}/.config/Beaker Browser
+blacklist ${HOME}/.config/Bitcoin
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/BraveSoftware
 blacklist ${HOME}/.config/Clementine
 blacklist ${HOME}/.config/Code
 blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
+blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
 blacklist ${HOME}/.config/Fritzing
@@ -111,6 +116,7 @@ blacklist ${HOME}/.config/baloofilerc
 blacklist ${HOME}/.config/baloorc
 blacklist ${HOME}/.config/blender
 blacklist ${HOME}/.config/bless
+blacklist ${HOME}/.config/bnox
 blacklist ${HOME}/.config/borg
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
@@ -134,6 +140,7 @@ blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/digikamrc
 blacklist ${HOME}/.config/discord
 blacklist ${HOME}/.config/discordcanary
+blacklist ${HOME}/.config/dnox
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/d-feet
@@ -205,6 +212,7 @@ blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mono
 blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mpDris2
+blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/mypaint
@@ -214,6 +222,7 @@ blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/NitroShare
+blacklist ${HOME}/.config/obs-studio
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/onionshare
@@ -245,6 +254,7 @@ blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/smtube
+blacklist ${HOME}/.config/snox
 blacklist ${HOME}/.config/specialmailcollectionsrc
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/supertuxkart
@@ -316,6 +326,7 @@ blacklist ${HOME}/.googleearth/myplaces.backup.kml
 blacklist ${HOME}/.googleearth/myplaces.kml
 blacklist ${HOME}/.gradle
 blacklist ${HOME}/.guayadeque
+blacklist ${HOME}/.hashcat
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.hugin
 blacklist ${HOME}/.icedove
@@ -323,6 +334,7 @@ blacklist ${HOME}/.imagej
 blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.jack-server
 blacklist ${HOME}/.jack-settings
+blacklist ${HOME}/.jak
 blacklist ${HOME}/.java
 blacklist ${HOME}/.jd
 blacklist ${HOME}/.jitsi
@@ -555,6 +567,7 @@ blacklist ${HOME}/.unknown-horizons
 blacklist ${HOME}/.viking
 blacklist ${HOME}/.viking-maps
 blacklist ${HOME}/.vscode
+blacklist ${HOME}/.vscode-oss
 blacklist ${HOME}/.vst
 blacklist ${HOME}/.w3m
 blacklist ${HOME}/.warzone2100-3.*
@@ -579,6 +592,7 @@ blacklist /tmp/ssh-*
 blacklist ${HOME}/.cache/0ad
 blacklist ${HOME}/.cache/8pecxstudios
 blacklist ${HOME}/.cache/Clementine
+blacklist ${HOME}/.cache/Enox
 blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
@@ -586,6 +600,7 @@ blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic
+blacklist ${HOME}/.cache/bnox
 blacklist ${HOME}/.cache/borg
 blacklist ${HOME}/.cache/calibre
 blacklist ${HOME}/.cache/champlain
@@ -594,11 +609,13 @@ blacklist ${HOME}/.cache/chromium-dev
 blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/darktable
 blacklist ${HOME}/.cache/discover
+blacklist ${HOME}/.cache/dnox
 blacklist ${HOME}/.cache/dolphin
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
+blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/geeqie
@@ -629,6 +646,13 @@ blacklist ${HOME}/.cache/midori
 blacklist ${HOME}/.cache/moonchild productions/basilisk
 blacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla
+blacklist ${HOME}/.cache/ms-excel-online
+blacklist ${HOME}/.cache/ms-office-online
+blacklist ${HOME}/.cache/ms-onenote-online
+blacklist ${HOME}/.cache/ms-outlook-online
+blacklist ${HOME}/.cache/ms-powerpoint-online
+blacklist ${HOME}/.cache/ms-skype-online
+blacklist ${HOME}/.cache/ms-word-online
 blacklist ${HOME}/.cache/mutt
 blacklist ${HOME}/.cache/mypaint
 blacklist ${HOME}/.cache/nheko/nheko
@@ -646,6 +670,7 @@ blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
+blacklist ${HOME}/.cache/snox
 blacklist ${HOME}/.cache/spotify
 blacklist ${HOME}/.cache/supertuxkart
 blacklist ${HOME}/.cache/systemsettings

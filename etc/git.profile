@@ -9,10 +9,12 @@ include globals.local
 
 blacklist /tmp/.X11-unix
 
+noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.nanorc
 noblacklist ${HOME}/.oh-my-zsh
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.vim

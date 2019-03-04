@@ -19,8 +19,8 @@ whitelist ${HOME}/.pentadactylrc
 whitelist ${HOME}/.vimperator
 whitelist ${HOME}/.vimperatorrc
 whitelist ${HOME}/.zotero
-whitelist ${HOME}/Downloads
 whitelist ${HOME}/dwhelper
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 
 caps.drop all

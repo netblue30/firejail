@@ -15,6 +15,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist ${HOME}/.config/gconf
 include whitelist-common.inc
 
 apparmor
@@ -22,7 +23,6 @@ caps.drop all
 machine-id
 net none
 no3d
-# nodbus - DBUS is needed to commit changes to gconf
 nodvd
 nogroups
 nonewprivs

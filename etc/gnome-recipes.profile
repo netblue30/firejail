@@ -7,6 +7,7 @@ include gnome-recipes.local
 include globals.local
 
 
+noblacklist ${HOME}/.cache/gnome-recipes
 noblacklist ${HOME}/.local/share/gnome-recipes
 
 include disable-common.inc
@@ -16,7 +17,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.cache/gnome-recipes
+mkdir ${HOME}/.local/share/gnome-recipes
 whitelist ${HOME}/.cache/gnome-recipes
+whitelist ${HOME}/.local/share/gnome-recipes
 include whitelist-common.inc
 include whitelist-var-common.inc
 

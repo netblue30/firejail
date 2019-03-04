@@ -6,7 +6,6 @@ include authenticator.local
 # Persistent global definitions
 include globals.local
 
-# blacklisted in 'disable-programs.local'
 noblacklist ${HOME}/.config/Authenticator
 
 # Allow python 3.x (blacklisted by disable-interpreters.inc)
@@ -41,7 +40,6 @@ disable-mnt
 private-cache
 private-dev
 private-etc alternatives,fonts,ld.so.cache
-# private-lib
 private-tmp
 
 # memory-deny-write-execute - breaks on Arch

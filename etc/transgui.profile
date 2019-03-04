@@ -1,5 +1,5 @@
 # Firejail profile for transgui
-# Description:  Cross-platform Transmission BitTorrent client
+# Description: Cross-platform Transmission BitTorrent client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include /etc/firejail/transgui.local
@@ -7,9 +7,6 @@ include /etc/firejail/transgui.local
 include globals.local
 
 noblacklist ${HOME}/.config/transgui
-whitelist ${HOME}/.config/transgui
-
-noblacklist ${DOWNLOADS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +15,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/transgui
+whitelist ${HOME}/.config/transgui
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

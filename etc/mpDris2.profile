@@ -48,5 +48,4 @@ private-tmp
 noexec ${HOME}
 noexec /tmp
 
-# mpDris2 will never write anything
 read-only ${HOME}

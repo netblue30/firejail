@@ -6,7 +6,7 @@ include simplescreenrecorder.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${DOWNLOADS}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -29,7 +29,6 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
 private-cache
 private-dev
 # private-etc alternatives

@@ -270,7 +270,7 @@ void fs_private_homedir(void) {
 		// mask /root
 		if (arg_debug)
 			printf("Mounting a new /root directory\n");
-		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
+		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 			errExit("mounting home directory");
 		fs_logger("tmpfs /root");
 	}
@@ -278,7 +278,7 @@ void fs_private_homedir(void) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
-		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
 		fs_logger("tmpfs /home");
 	}
@@ -313,7 +313,7 @@ void fs_private(void) {
 	else {
 		if (arg_allusers)
 			fwarning("--allusers disabled by --private or --whitelist\n");
-		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
 		fs_logger("tmpfs /home");
 	}
@@ -321,7 +321,7 @@ void fs_private(void) {
 	// mask /root
 	if (arg_debug)
 		printf("Mounting a new /root directory\n");
-	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
+	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 		errExit("mounting root directory");
 	fs_logger("tmpfs /root");
 
@@ -517,14 +517,14 @@ void fs_private_home_list(void) {
 		// mask /root
 		if (arg_debug)
 			printf("Mounting a new /root directory\n");
-		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=700,gid=0") < 0)
+		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 			errExit("mounting home directory");
 	}
 	else {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
-		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
 	}
 

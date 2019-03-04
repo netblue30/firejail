@@ -17,9 +17,11 @@ include disable-interpreters.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.pki
+mkdir ${HOME}/.config/Min
 mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.pki
+whitelist ${HOME}/.config/Min
 whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
 include whitelist-var-common.inc

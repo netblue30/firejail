@@ -11,7 +11,13 @@ noblacklist ${HOME}/Nextcloud/Notes
 noblacklist ${HOME}/.config/PBE
 noblacklist ${HOME}/.local/share/PBE
 
-mkdir ${DOCUMENTS}
+include disable-common.inc
+include disable-devel.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-xdg.inc
+
 mkdir ${HOME}/Nextcloud/Notes
 mkdir ${HOME}.config/PBE
 mkdir ${HOME}/.local/share/PBE
@@ -21,13 +27,6 @@ whitelist ${HOME}/.config/PBE
 whitelist ${HOME}/.local/share/PBE
 include whitelist-common.inc
 include whitelist-var-common.inc
-
-include disable-common.inc
-include disable-devel.inc
-include disable-interpreters.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
-include disable-xdg.inc
 
 caps.drop all
 machine-id

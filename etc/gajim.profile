@@ -24,11 +24,10 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.config/gajim
 mkdir ${HOME}/.local/share/gajim
-mkdir ${HOME}/Downloads
 whitelist ${HOME}/.cache/gajim
 whitelist ${HOME}/.config/gajim
 whitelist ${HOME}/.local/share/gajim
-whitelist ${HOME}/Downloads
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 
 caps.drop all
@@ -52,3 +51,5 @@ private-tmp
 
 noexec ${HOME}
 noexec /tmp
+
+join-or-start gajim

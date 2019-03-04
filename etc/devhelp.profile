@@ -6,8 +6,6 @@ include devhelp.local
 # Persistent global definitions
 include globals.local
 
-mkdir ${HOME}/.cache/mesa_shader_cache
-whitelist ${HOME}/.cache/mesa_shader_cache
 
 include disable-common.inc
 include disable-devel.inc
@@ -47,5 +45,4 @@ private-tmp
 noexec ${HOME}
 noexec /tmp
 
-# devhelp will never write anything
 read-only ${HOME}

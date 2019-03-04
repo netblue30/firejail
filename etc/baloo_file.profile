@@ -7,7 +7,7 @@ include globals.local
 
 # Make home directory read-only and allow writing only to ${HOME}/.local/share
 # Note: Baloo will not be able to update the "first run" key in its configuration files.
-# read-only  ${HOME}
+# read-only ${HOME}
 # read-write ${HOME}/.local/share
 
 noblacklist ${HOME}/.config/baloofilerc

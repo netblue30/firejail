@@ -14,6 +14,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.config/Gitter
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/autostart
 whitelist ${HOME}/.config/Gitter

@@ -20,7 +20,6 @@ caps.drop all
 machine-id
 net none
 no3d
-# nodbus - DBUS is needed to commit changes to dconf
 nodvd
 nogroups
 nonewprivs

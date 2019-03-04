@@ -1,5 +1,11 @@
-firejail (0.9.58) baseline; urgency=low
-  * new profiles: crow, nyx
+firejail (0.9.59) baseline; urgency=low
+  * new profiles: crow, nyx, mypaint, celluoid, nano, transgui, mpdris2
+  * new profiles: sysprof, simplescreenrecorder, geekbench, xfce4-mixer
+  * new profiles: pavucontrol, d-feet, seahorse, secret-tool, gnome-keyring
+  * new profiles: regextester, hardinfo, gnome-system-log, gnome-nettool
+  * new profiles: netactview, redshift, devhelp, assogiate, subdownloader
+  * new profiles: font-manager, exfalso, gconf-editor, dconf-editor
+  * new profiles: sysprof-cli, seahorse-tool, secret-tool, dconf, gsettings
 
 firejail (0.9.58,2) baseline; urgency=low
   * cgroup flag in /etc/firejail/firejail.config file

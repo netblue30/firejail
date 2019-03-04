@@ -855,8 +855,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.dns4 = dns;
 		else {
 			fprintf(stderr, "Error: up to 4 DNS servers can be specified\n");
-			free(dns);
-			return 1;
+			exit(1);
 		}
 		return 0;
 	}

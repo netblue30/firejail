@@ -13,7 +13,7 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
+# include disable-xdg.inc
 
 caps.drop all
 ipc-namespace
@@ -32,8 +32,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-disable-mnt
-# private
+# disable-mnt
 private-bin aria2c,gzip
 private-cache
 private-dev

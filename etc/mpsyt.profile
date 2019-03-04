@@ -21,7 +21,6 @@ noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/mps
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
-noblacklist ${DOWNLOADS}
 
 include disable-common.inc
 include disable-devel.inc

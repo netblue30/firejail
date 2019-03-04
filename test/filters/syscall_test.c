@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
 	}
 	else if (strcmp(argv[1], "mount") == 0) {
 		printf("before mount\n");
-		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0) {
+		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0) {
 			perror("mount");
 		}
 		printf("after mount\n");

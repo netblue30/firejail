@@ -118,7 +118,7 @@ void fs_var_log(void) {
 		// mount a tmpfs on top of /var/log
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/log\n");
-		if (mount("tmpfs", "/var/log", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/log", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/log");
 		fs_logger("tmpfs /var/log");
 
@@ -153,7 +153,7 @@ void fs_var_lib(void) {
 	if (stat("/var/lib/dhcp", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lib/dhcp\n");
-		if (mount("tmpfs", "/var/lib/dhcp", "tmpfs", MS_NOSUID |  MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/lib/dhcp", "tmpfs", MS_NOSUID |  MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/dhcp");
 		fs_logger("tmpfs /var/lib/dhcp");
 
@@ -172,7 +172,7 @@ void fs_var_lib(void) {
 	if (stat("/var/lib/nginx", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lib/nginx\n");
-		if (mount("tmpfs", "/var/lib/nginx", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/lib/nginx", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/nginx");
 		fs_logger("tmpfs /var/lib/nginx");
 	}
@@ -181,7 +181,7 @@ void fs_var_lib(void) {
 	if (stat("/var/lib/snmp", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lib/snmp\n");
-		if (mount("tmpfs", "/var/lib/snmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/lib/snmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/snmp");
 		fs_logger("tmpfs /var/lib/snmp");
 	}
@@ -190,7 +190,7 @@ void fs_var_lib(void) {
 	if (stat("/var/lib/sudo", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lib/sudo\n");
-		if (mount("tmpfs", "/var/lib/sudo", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/lib/sudo", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/sudo");
 		fs_logger("tmpfs /var/lib/sudo");
 	}
@@ -202,7 +202,7 @@ void fs_var_cache(void) {
 	if (stat("/var/cache/apache2", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/cache/apache2\n");
-		if (mount("tmpfs", "/var/cache/apache2", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/cache/apache2", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/apache2");
 		fs_logger("tmpfs /var/cache/apache2");
 	}
@@ -210,7 +210,7 @@ void fs_var_cache(void) {
 	if (stat("/var/cache/lighttpd", &s) == 0) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/cache/lighttpd\n");
-		if (mount("tmpfs", "/var/cache/lighttpd", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/var/cache/lighttpd", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/lighttpd");
 		fs_logger("tmpfs /var/cache/lighttpd");
 
@@ -250,7 +250,7 @@ void fs_var_lock(void) {
 	if (is_dir("/var/lock")) {
 		if (arg_debug)
 			printf("Mounting tmpfs on /var/lock\n");
-		if (mount("tmpfs", "/var/lock", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
+		if (mount("tmpfs", "/var/lock", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
 			errExit("mounting /lock");
 		fs_logger("tmpfs /var/lock");
 	}
@@ -266,7 +266,7 @@ void fs_var_tmp(void) {
 		if (!is_link("/var/tmp")) {
 			if (arg_debug)
 				printf("Mounting tmpfs on /var/tmp\n");
-			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
+			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/tmp");
 			fs_logger("tmpfs /var/tmp");
 		}

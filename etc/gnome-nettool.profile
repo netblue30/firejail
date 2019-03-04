@@ -35,15 +35,11 @@ novideo
 #shell none
 
 disable-mnt
-#private-bin gnome-nettool
+private
 private-cache
 private-dev
-#private-etc alternatives
 private-lib libbind9.so.*,libcrypto.so.*,libdns.so.*,libirs.so.*,liblua.so.*,libssh2.so.*,libssl.so.*
 private-tmp
 
 noexec ${HOME}
 noexec /tmp
-
-# never write anything
-read-only ${HOME}

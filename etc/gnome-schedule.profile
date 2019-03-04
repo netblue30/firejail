@@ -7,7 +7,6 @@ include gnome-schedule.local
 include globals.local
 
 noblacklist ${HOME}/.gnome/gnome-schedule
-whitelist ${HOME}/.gnome/gnome-schedule
 
 # Needs at and crontab to read/write user cron
 noblacklist ${PATH}/at
@@ -49,6 +48,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkfile ${HOME}/.gnome/gnome-schedule
+whitelist ${HOME}/.gnome/gnome-schedule
 include whitelist-common.inc
 
 apparmor

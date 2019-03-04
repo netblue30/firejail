@@ -41,7 +41,7 @@ private-bin regextester
 private-cache
 private-dev
 private-etc alternatives,fonts
-private-lib /usr/lib/libgranite.so.*
+private-lib libgranite.so.*
 private-tmp
 
 memory-deny-write-execute

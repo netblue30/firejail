@@ -21,6 +21,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 ipc-namespace
+machine-id
 net none
 no3d
 nodbus
@@ -40,7 +41,7 @@ disable-mnt
 private-bin pavucontrol
 private-cache
 private-dev
-private-etc alternatives,asound.conf,fonts,machine-id,pulse
+private-etc alternatives,asound.conf,fonts,pulse
 private-lib
 private-tmp
 

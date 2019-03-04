@@ -6,8 +6,7 @@ include netactview.local
 # Persistent global definitions
 include globals.local
 
-mkfile ${HOME}/.netactview
-whitelist ${HOME}/.netactview
+noblacklist ${HOME}/.netactview
 
 include disable-common.inc
 include disable-devel.inc

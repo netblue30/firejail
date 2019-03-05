@@ -1,5 +1,5 @@
 # Firejail profile for transmission-gtk
-# Description: Lightweight BitTorrent client
+# Description: Fast, easy and free BitTorrent client (GTK GUI)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include transmission-gtk.local
@@ -47,3 +47,5 @@ private-tmp
 
 # Causes freeze during opening file dialog in Archlinux, see issue #1855
 # memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

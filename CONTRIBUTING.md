@@ -5,7 +5,7 @@ We welcome issues, whether to ask a question, provide information, request a new
 feature, or to report a suspected bug or problem.
 
 If you want to request a program profile that we don't already have, please add a comment in
-our dedicated issue, #1139.
+our [dedicated issue](https://github.com/netblue30/firejail/issues/1139).
 
 When submitting a bug report, please provide the following information so that
 we can handle the report more easily:

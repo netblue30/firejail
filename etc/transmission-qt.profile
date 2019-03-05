@@ -1,5 +1,5 @@
 # Firejail profile for transmission-qt
-# Description: Lightweight BitTorrent client
+# Description: Fast, easy and free BitTorrent client (Qt GUI)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include transmission-qt.local
@@ -46,3 +46,5 @@ private-dev
 private-tmp
 
 # memory-deny-write-execute - problems on Qt 5.10.0, KDE Frameworks 5.41.0
+noexec ${HOME}
+noexec /tmp

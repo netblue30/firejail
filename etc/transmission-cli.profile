@@ -1,5 +1,5 @@
 # Firejail profile for transmission-cli
-# Description: Lightweight BitTorrent client
+# Description: Fast, easy and free BitTorrent client (CLI tools and web client)
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
@@ -16,9 +16,11 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
 machine-id
 netfilter
+nodbus
 nodvd
 nonewprivs
 noroot
@@ -26,14 +28,17 @@ nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol inet,inet6
 seccomp
 shell none
 tracelog
 
 # private-bin transmission-cli
 private-dev
-private-etc alternatives,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
+private-lib
 private-tmp
 
 memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

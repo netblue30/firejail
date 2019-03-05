@@ -1,9 +1,9 @@
-# Firejail profile for transmission-cli
-# Description: Fast, easy and free BitTorrent client (CLI tools and web client)
+# Firejail profile for transmission-remote
+# Description: A remote control utility for transmission-daemon (CLI)
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include transmission-cli.local
+include transmission-remote.local
 # Persistent global definitions
 include globals.local
 
@@ -19,7 +19,7 @@ include disable-programs.inc
 apparmor
 caps.drop all
 machine-id
-netfilter
+net none
 nodbus
 nodvd
 nonewprivs
@@ -28,14 +28,14 @@ nosound
 notv
 nou2f
 novideo
-protocol inet,inet6
+protocol unix
 seccomp
 shell none
 tracelog
 
-# private-bin transmission-cli
+# private-bin transmission-remote
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives
 private-lib
 private-tmp
 

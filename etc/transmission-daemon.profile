@@ -1,9 +1,9 @@
-# Firejail profile for transmission-cli
-# Description: Fast, easy and free BitTorrent client (CLI tools and web client)
+# Firejail profile for transmission-daemon
+# Description:  Fast, easy and free BitTorrent client (daemon)
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include transmission-cli.local
+include transmission-daemon.local
 # Persistent global definitions
 include globals.local
 
@@ -22,6 +22,7 @@ machine-id
 netfilter
 nodbus
 nodvd
+nogroups
 nonewprivs
 noroot
 nosound
@@ -33,7 +34,7 @@ seccomp
 shell none
 tracelog
 
-# private-bin transmission-cli
+# private-bin transmission-daemon
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
 private-lib

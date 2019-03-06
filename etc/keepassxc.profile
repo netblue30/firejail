@@ -48,7 +48,7 @@ private-tmp
 # 2.2.4 crashes on database open
 # memory-deny-write-execute
 noexec ${HOME}
-# noexec /tmp
+noexec /tmp
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp
 join-or-start keepassxc

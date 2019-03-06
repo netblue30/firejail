@@ -13,7 +13,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-inclue whitelist-var-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
@@ -40,7 +40,7 @@ disable-mnt
 private-bin bash,geekbenc*,sh
 private-cache
 private-dev
-private-etc alternatives,groups,passwd,lsb-release
+private-etc alternatives,group,passwd,lsb-release
 private-lib libstdc++.so.*
 private-opt none
 private-tmp
@@ -49,5 +49,4 @@ private-tmp
 noexec ${HOME}
 noexec /tmp
 
-# never write anything
 read-only ${HOME}

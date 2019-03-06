@@ -42,6 +42,6 @@ private-etc alternatives,fonts,ld.so.cache,machine-id,ssl
 #private-lib gdk-pixbuf-2.*,gio,gtk3,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*,libsysprof-2.so,libsysprof-ui-2.so
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute - Breaks GUI on Arch
 noexec ${HOME}
 noexec /tmp

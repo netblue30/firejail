@@ -3,7 +3,8 @@
 # Persistent local customizations
 include evince-thumbnailer.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 
 # Redirect

@@ -38,7 +38,7 @@ tracelog
 private-bin gpicview
 private-cache
 private-dev
-private-etc alternatives,fonts,groups,passwd
+private-etc alternatives,fonts,group,passwd
 private-lib
 private-tmp
 

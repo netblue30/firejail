@@ -32,5 +32,4 @@ private-dev
 private-etc alternatives,fonts,machine-id,localtime,ld.so.cache,ca-certificates,ssl,pki,crypto-policies,resolv.conf
 private-tmp
 
-noexec ${HOME}
 noexec /tmp

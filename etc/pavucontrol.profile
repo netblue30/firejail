@@ -15,9 +15,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkfile ${HOME}/.config/pavucontrol.ini
-whitelist ${HOME}/.config/pavucontrol.ini
-include whitelist-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -13,6 +13,8 @@ nodbus
 private-bin sysprof-cli
 private-lib
 
+memory-deny-write-execute
+
 
 # Redirect
 include sysprof.profile

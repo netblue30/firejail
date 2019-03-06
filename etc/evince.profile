@@ -20,7 +20,7 @@ include whitelist-var-common.inc
 
 caps.drop all
 machine-id
-# net none breaks AppArmor on Ubuntu systems
+# net none - breaks AppArmor on Ubuntu systems
 netfilter
 no3d
 nodbus
@@ -39,12 +39,10 @@ tracelog
 
 private-bin evince,evince-previewer,evince-thumbnailer
 private-dev
-private-etc alternatives,fonts,machine-id
-
+private-etc alternatives,fonts,group,machine-id,passwd
 private-lib evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*,gconv
-
 private-tmp
 
-#memory-deny-write-execute - breaks application on Archlinux, issue 1803
+# memory-deny-write-execute - might break application (https://github.com/netblue30/firejail/issues/1803)
 noexec ${HOME}
 noexec /tmp

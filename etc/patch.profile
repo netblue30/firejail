@@ -36,7 +36,7 @@ shell none
 
 private-bin patch,red
 private-dev
-private-lib
+private-lib libfakeroot
 
 memory-deny-write-execute
 noexec ${HOME}

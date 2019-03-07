@@ -8,6 +8,7 @@ include globals.local
 noblacklist ${HOME}/.vscode
 noblacklist ${HOME}/.vscode-oss
 noblacklist ${HOME}/.config/Code
+noblacklist ${HOME}/.config/Code - OSS
 
 include disable-common.inc
 include disable-passwdmgr.inc

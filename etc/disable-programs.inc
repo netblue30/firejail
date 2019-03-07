@@ -62,6 +62,7 @@ blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/BraveSoftware
 blacklist ${HOME}/.config/Clementine
 blacklist ${HOME}/.config/Code
+blacklist ${HOME}/.config/Code - OSS
 blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Enox

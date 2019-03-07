@@ -435,6 +435,7 @@ blacklist ${HOME}/.local/share/data/Mendeley Ltd.
 blacklist ${HOME}/.local/share/data/Mumble
 blacklist ${HOME}/.local/share/data/MusE
 blacklist ${HOME}/.local/share/data/MuseScore
+blacklist ${HOME}/.local/share/data/nomacs
 blacklist ${HOME}/.local/share/data/qBittorrent
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
@@ -481,6 +482,7 @@ blacklist ${HOME}/.local/share/nautilus
 blacklist ${HOME}/.local/share/nautilus-python
 blacklist ${HOME}/.local/share/nemo
 blacklist ${HOME}/.local/share/nemo-python
+blacklist ${HOME}/.local/share/nomacs
 blacklist ${HOME}/.local/share/notes
 blacklist ${HOME}/.local/share/ocenaudio
 blacklist ${HOME}/.local/share/okular

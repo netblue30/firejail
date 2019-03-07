@@ -33,12 +33,11 @@ shell none
 tracelog
 
 disable-mnt
-private-bin gnome-clocks
+private-bin gnome-clocks,gsound-play
 private-cache
 private-dev
 private-etc alternatives,fonts,ca-certificates,ssl,pki,crypto-policies,machine-id,hosts,pkcs11,localtime,gtk-3.0,dconf
 private-tmp
 
-memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

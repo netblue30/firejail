@@ -102,4 +102,4 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 ## Current development version: 0.9.59
 
 ## New profiles:
-crow, nyx, klavaro, mypaint, celluoid, nano, transgui, sysprof, simplescreenrecorder, geekbench, xfce4-mixer, pavucontrol, d-feet, seahorse, secret-tool, gnome-keyring, regextester, hardinfo, gnome-system-log, gnome-nettool, netactview, redshift, devhelp, assogiate, subdownloader, font-manager, exfalso, gconf-editor, dconf-editor, mpdris2, sysprof-cli, seahorse-tool, secret-tool, dconf, gsettings, code-oss
+crow, nyx, klavaro, mypaint, celluoid, nano, transgui, sysprof, simplescreenrecorder, geekbench, xfce4-mixer, pavucontrol, d-feet, seahorse, secret-tool, gnome-keyring, regextester, hardinfo, gnome-system-log, gnome-nettool, netactview, redshift, devhelp, assogiate, subdownloader, font-manager, exfalso, gconf-editor, dconf-editor, mpdris2, sysprof-cli, seahorse-tool, secret-tool, dconf, gsettings, code-oss, pragha

@@ -35,7 +35,7 @@ shell none
 # it is not in PATH. To use Wire with firejail, run "firejail /opt/wire-desktop/wire-desktop"
 
 disable-mnt
-private-bin wire-desktop
+private-bin wire-desktop,bash,sh,env,electron
 private-dev
 private-etc alternatives,fonts,machine-id,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp

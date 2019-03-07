@@ -25,7 +25,7 @@ private-bin strings
 private-cache
 private-dev
 private-etc alternatives
-private-lib
+private-lib libfakeroot
 
 memory-deny-write-execute
 noexec ${HOME}

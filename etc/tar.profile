@@ -27,7 +27,7 @@ tracelog
 private-bin sh,bash,tar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop
 private-dev
 private-etc alternatives,passwd,group,localtime
-private-lib
+private-lib libfakeroot
 
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var

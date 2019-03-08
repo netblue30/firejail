@@ -41,6 +41,6 @@ private-etc alternatives,fonts
 private-lib
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

@@ -45,6 +45,6 @@ private-etc alternatives,fonts
 private-lib eog,gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute
 noexec ${HOME}
 noexec /tmp

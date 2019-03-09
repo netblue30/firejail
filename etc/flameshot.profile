@@ -1,6 +1,7 @@
 # Firejail profile for flameshot
 # Description: Powerful yet simple-to-use screenshot software
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include flameshot.local
 # Persistent global definitions

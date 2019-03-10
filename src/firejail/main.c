@@ -1522,6 +1522,9 @@ int main(int argc, char **argv) {
 			if (!ppath)
 				errExit("strdup");
 
+			// checking for strange chars in the file name, no globbing
+			invalid_filename(ppath, 0);
+
 			if (*ppath == ':' || access(ppath, R_OK) || is_dir(ppath)) {
 				int has_colon = (*ppath == ':');
 				char *ptr = ppath;

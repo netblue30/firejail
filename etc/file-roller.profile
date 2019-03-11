@@ -16,7 +16,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
+#ipc-namespace - causing issues launching on archlinux
 machine-id
 net none
 no3d

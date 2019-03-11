@@ -6,6 +6,7 @@ include nomacs.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/nomacs
 noblacklist ${HOME}/.local/share/nomacs
 noblacklist ${HOME}/.local/share/data/nomacs
 noblacklist ${PICTURES}
@@ -23,7 +24,6 @@ apparmor
 caps.drop all
 machine-id
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -37,10 +37,10 @@ seccomp
 shell none
 tracelog
 
-private-bin nomacs
+#private-bin nomacs
 private-cache
 private-dev
-private-etc alternatives,hosts,ca-certificates,ssl,pki,crypto-policies,resolv.conf,drirc,fonts,gtk-3.0,dconf,machine-id
+private-etc alternatives,hosts,ca-certificates,ssl,pki,crypto-policies,resolv.conf,drirc,fonts,gtk-3.0,dconf,machine-id,login.defs
 private-tmp
 
 memory-deny-write-execute

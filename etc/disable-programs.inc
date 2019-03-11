@@ -222,6 +222,7 @@ blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/NitroShare
+blacklist ${HOME}/.config/nomacs
 blacklist ${HOME}/.config/obs-studio
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc

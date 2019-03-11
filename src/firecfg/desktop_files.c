@@ -227,7 +227,7 @@ void fix_desktop_files(char *homedir) {
 			continue;
 		}
 
-		// try to decide if we need to covert this file
+		// try to decide if we need to convert this file
 		char *change_exec = NULL;
 		int change_dbus = 0;
 

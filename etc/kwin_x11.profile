@@ -12,6 +12,7 @@ noblacklist ${HOME}/.local/share/kwin
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -39,6 +40,3 @@ private-bin kwin_x11
 private-dev
 private-etc alternatives,drirc,fonts,kde5rc,ld.so.cache,machine-id,xdg
 private-tmp
-
-noexec ${HOME}
-noexec /tmp

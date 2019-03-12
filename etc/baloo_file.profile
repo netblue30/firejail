@@ -19,6 +19,7 @@ noblacklist ${HOME}/.local/share/baloo
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -46,6 +47,3 @@ private-bin baloo_file,baloo_file_extractor,baloo_filemetadata_temp_extractor,kb
 private-cache
 private-dev
 private-tmp
-
-noexec ${HOME}
-noexec /tmp

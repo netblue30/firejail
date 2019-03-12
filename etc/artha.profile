@@ -15,10 +15,10 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
 ipc-namespace
-machine-id
-net none
+# net none - breaks on Ubuntu
 no3d
 # nodbus
 nodvd
@@ -37,7 +37,7 @@ disable-mnt
 private-bin artha,enchant,notify-send
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,machine-id,fonts
 private-lib libnotify.so.*
 private-tmp
 

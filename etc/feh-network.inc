@@ -1,2 +1,4 @@
 ignore net none
-private-etc resolv.conf,ca-certificates,ssl
+netfilter
+protocol unix,inet,inet6
+private-etc resolv.conf,ca-certificates,ssl,pki,hosts,crypto-policies

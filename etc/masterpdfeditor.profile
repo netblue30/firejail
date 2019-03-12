@@ -17,12 +17,11 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
 machine-id
-net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -36,7 +35,7 @@ seccomp
 shell none
 tracelog
 
-private-bin masterpdfeditor*
+private-bin masterpdfedito*
 private-cache
 private-dev
 private-etc alternatives,fonts

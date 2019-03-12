@@ -17,8 +17,7 @@ include whitelist-common.inc
 
 apparmor
 caps.drop all
-machine-id
-net none
+# net none - breaks application on older versions
 no3d
 nodvd
 nogroups
@@ -37,7 +36,7 @@ disable-mnt
 private-bin dconf-editor
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,machine-id
 private-lib
 private-tmp
 

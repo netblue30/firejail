@@ -9,9 +9,9 @@ include globals.local
 noblacklist ${HOME}/.config/d-feet
 
 # Allow python (disabled by disable-interpreters.inc)
-#noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
-#noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
 
 include disable-common.inc
@@ -29,8 +29,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 ipc-namespace
-machine-id
-net none
+# net none - breaks on Ubuntu
 no3d
 nodvd
 nogroups
@@ -48,7 +47,7 @@ disable-mnt
 private-bin d-feet,python*
 private-cache
 private-dev
-private-etc alternatives,dbus-1,fonts
+private-etc alternatives,dbus-1,fonts,machine-id
 private-tmp
 
 # memory-deny-write-execute - Breaks on Arch

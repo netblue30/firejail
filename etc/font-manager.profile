@@ -31,7 +31,7 @@ include whitelist-common.inc
 apparmor
 caps.drop all
 machine-id
-net none
+# net none - issues on older versions
 no3d
 nodvd
 nogroups

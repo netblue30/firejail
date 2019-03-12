@@ -20,7 +20,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-net none
+#net none - breaks dbus
 no3d
 nodvd
 nogroups
@@ -35,8 +35,12 @@ seccomp
 shell none
 
 disable-mnt
+private-bin gucharmap
 private-cache
 private-dev
+private-etc alternatives,fonts
+private-home .config,.icons,.themes
+private-lib
 private-tmp
 
 memory-deny-write-execute

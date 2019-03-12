@@ -16,6 +16,7 @@ noblacklist /etc/ssh
 noblacklist /tmp/ssh-*
 noblacklist ${HOME}/.ssh
 
+include disable-exec.inc
 include whitelist-var-common.inc
 
 apparmor

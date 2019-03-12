@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/Standard Notes
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -40,5 +41,3 @@ private-dev
 private-tmp
 private-etc alternatives,ca-certificates,fonts,host.conf,hostname,hosts,resolv.conf,ssl,pki,crypto-policies,xdg
 
-noexec ${HOME}
-noexec /tmp

@@ -19,6 +19,7 @@ noblacklist /usr/lib/python3*
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -59,5 +60,3 @@ private-dev
 private-tmp
 
 # memory-deny-write-execute - problems on  Arch, see #1690 on GitHub repo
-noexec ${HOME}
-noexec /tmp

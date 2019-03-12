@@ -10,6 +10,7 @@ include globals.local
 blacklist /tmp/.X11-unix
 
 include disable-common.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
@@ -41,5 +42,3 @@ private-etc alternatives,magic.mgc,magic,localtime
 private-lib libarchive.so.*,libfakeroot,libmagic.so.*
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

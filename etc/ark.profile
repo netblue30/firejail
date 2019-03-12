@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/arkrc
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -39,5 +40,3 @@ private-bin ark,unrar,rar,unzip,zip,zipinfo,7z,p7zip,unar,lsar,lrzip,lzop,lz4,ba
 private-dev
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

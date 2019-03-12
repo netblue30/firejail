@@ -22,6 +22,7 @@ noblacklist /usr/sbin
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -51,5 +52,3 @@ tracelog
 private-dev
 # private-tmp - breaks programs that depend on akonadi
 
-noexec ${HOME}
-noexec /tmp

@@ -6,6 +6,9 @@ include firefox-common.local
 # already included by caller profile
 #include globals.local
 
+# noexec ${HOME} breaks DRM binaries.
+ignore noexec ${HOME}
+
 # Uncomment the following line to allow access to common programs/addons/plugins.
 #include firefox-common-addons.inc
 
@@ -14,6 +17,7 @@ noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
@@ -55,7 +59,3 @@ private-dev
 # private-etc below works fine on most distributions. There are some problems on CentOS.
 #private-etc alternatives,ca-certificates,ssl,machine-id,dconf,selinux,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,xdg,gtk-2.0,gtk-3.0,X11,pango,fonts,mime.types,mailcap,asound.conf,pulse,pki,crypto-policies,ld.so.cache
 private-tmp
-
-# Breaks DRM binaries.
-#noexec ${HOME}
-noexec /tmp

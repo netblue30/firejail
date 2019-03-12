@@ -11,6 +11,7 @@ include seahorse-tool.local
 mkdir ${HOME}/.config/dconf
 whitelist ${HOME}/.config/dconf
 
+include disable-exec.inc
 include disable-xdg.inc
 include whitelist-var-common.inc
 
@@ -21,8 +22,6 @@ disable-mnt
 private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp
 
 # Redirect
 include gpg.profile

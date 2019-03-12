@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/galculator
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -47,5 +48,3 @@ private-lib
 private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

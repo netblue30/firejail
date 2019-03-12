@@ -31,6 +31,7 @@ noblacklist /tmp/akonadi-*
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -58,5 +59,3 @@ writable-run-user
 private-dev
 # private-tmp - interrupts connection to akonadi, breaks opening of email attachments
 
-noexec ${HOME}
-noexec /tmp

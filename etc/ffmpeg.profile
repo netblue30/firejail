@@ -12,6 +12,7 @@ noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -48,5 +49,3 @@ private-etc alternatives,pki,pkcs11,hosts,ssl,ca-certificates,resolv.conf
 private-tmp
 
 # memory-deny-write-execute - it breaks old versions of ffmpeg
-noexec ${HOME}
-noexec /tmp

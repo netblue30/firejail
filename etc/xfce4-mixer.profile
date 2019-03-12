@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -45,5 +46,3 @@ private-etc alternatives,asound.conf,fonts,pulse,machine-id
 private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

@@ -15,6 +15,7 @@ noblacklist /usr/lib/python3*
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -47,5 +48,3 @@ private-tmp
 
 # xed uses python plugins, memory-deny-write-execute breaks python
 # memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

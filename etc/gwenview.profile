@@ -19,6 +19,7 @@ noblacklist ${HOME}/.local/share/org.kde.gwenview
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -47,5 +48,3 @@ private-dev
 private-etc alternatives,fonts,gimp,gtk-2.0,kde4rc,kde5rc,ld.so.cache,machine-id,pulse,xdg
 
 # memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

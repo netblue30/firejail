@@ -17,7 +17,6 @@ include disable-xdg.inc
 
 apparmor
 caps.drop all
-net none
 nodvd
 nogroups
 nonewprivs

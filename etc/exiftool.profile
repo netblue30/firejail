@@ -40,7 +40,7 @@ seccomp
 shell none
 tracelog
 
-private-bin exiftool,perl
+#private-bin exiftool,perl
 private-cache
 private-dev
 private-etc alternatives

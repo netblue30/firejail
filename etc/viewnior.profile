@@ -20,7 +20,6 @@ include disable-programs.inc
 
 apparmor
 caps.drop all
-hostname viewnior
 ipc-namespace
 net none
 no3d

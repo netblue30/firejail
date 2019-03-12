@@ -42,6 +42,7 @@ tracelog
 private-bin meld,python*
 private-cache
 private-dev
+# Uncomment the next line if you don't need to compare in /etc.
 # private-etc fonts,alternatives
 private-tmp
 

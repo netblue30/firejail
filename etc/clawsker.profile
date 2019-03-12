@@ -25,6 +25,7 @@ mkdir ${HOME}/.claws-mail
 whitelist ${HOME}/.claws-mail
 include whitelist-common.inc
 
+apparmor
 caps.drop all
 net none
 no3d
@@ -42,11 +43,11 @@ seccomp
 shell none
 
 disable-mnt
-private-bin clawsker,perl
+private-bin bash,clawsker,perl,sh,which
 private-cache
 private-dev
 private-etc alternatives,fonts
-private-lib girepository-1.*,libgirepository-1.*,perl*
+private-lib girepository-1.*,libdbus-glib-1.so.*,libetpan.so.*,libgirepository-1.*,libgtk-x11-2.0.so.*,libstartup-notification-1.so.*,perl*
 private-tmp
 
 # memory-deny-write-execute - breaks on Arch

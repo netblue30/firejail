@@ -18,9 +18,9 @@ apparmor
 caps.drop all
 #ipc-namespace - causing issues launching on archlinux
 machine-id
-net none
+# net none - breaks on older Ubuntu versions
 no3d
-# nodbus makes settings immutable - comment if you need settings support
+# nodbus - makes settings immutable - comment if you need settings support
 nodbus
 nodvd
 nogroups

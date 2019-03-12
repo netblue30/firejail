@@ -18,7 +18,10 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
+hostname viewnior
+ipc-namespace
 net none
 no3d
 nodbus
@@ -38,7 +41,7 @@ tracelog
 private-bin viewnior
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,machine-id
 private-tmp
 
 # memory-deny-write-executes breaks on Arch - see issue #1808

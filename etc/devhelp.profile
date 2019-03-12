@@ -18,8 +18,7 @@ include whitelist-common.inc
 
 apparmor
 caps.drop all
-machine-id
-net none
+# net none - makes settings immutable
 # nodbus - makes settings immutable
 nodvd
 nogroups
@@ -38,7 +37,7 @@ disable-mnt
 private-bin devhelp
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,dconf,fonts,ld.so.cache,machine-id,ssl
 private-tmp
 
 # memory-deny-write-execute - Breaks on Arch

@@ -16,8 +16,7 @@ include disable-passwdmgr.inc
 
 caps.drop all
 ipc-namespace
-machine-id
-net none
+# net none - breaks dbus
 no3d
 nodvd
 nogroups
@@ -34,7 +33,7 @@ shell none
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,machine-id
 private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 

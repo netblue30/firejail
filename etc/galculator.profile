@@ -13,6 +13,7 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.config/galculator
 whitelist ${HOME}/.config/galculator
@@ -21,6 +22,8 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+hostname galculator
+ipc-namespace
 net none
 nodbus
 nodvd
@@ -37,7 +40,12 @@ shell none
 tracelog
 
 private-bin galculator
+private-cache
 private-dev
 private-etc alternatives,fonts
 private-lib
 private-tmp
+
+memory-deny-write-execute
+noexec ${HOME}
+noexec /tmp

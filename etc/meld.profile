@@ -15,10 +15,11 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
-net none
+ipc-namespace
+machine-id
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs

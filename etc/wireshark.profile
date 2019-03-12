@@ -18,6 +18,7 @@ noblacklist /usr/share/lua
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -48,5 +49,3 @@ private-dev
 # private-etc alternatives,fonts,group,hosts,machine-id,passwd,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

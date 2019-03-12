@@ -19,6 +19,7 @@ noblacklist /usr/share/java
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
@@ -49,7 +50,5 @@ tracelog
 private-dev
 private-tmp
 
-noexec ${HOME}
-noexec /tmp
 
 join-or-start libreoffice

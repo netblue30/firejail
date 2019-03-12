@@ -6,11 +6,15 @@ include chromium-common.local
 # already included by caller profile
 #include globals.local
 
+# noexec ${HOME} breaks DRM binaries.
+ignore noexec ${HOME}
+
 noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
@@ -36,10 +40,6 @@ shell none
 disable-mnt
 private-dev
 # private-tmp - problems with multiple browser sessions
-
-# breaks DRM binaries
-#noexec ${HOME}
-noexec /tmp
 
 # the file dialog needs to work without d-bus
 env NO_CHROME_KDE_FILE_DIALOG=1

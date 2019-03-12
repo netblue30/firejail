@@ -12,6 +12,7 @@ noblacklist ${HOME}/.local/share/supertuxkart
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
@@ -51,5 +52,3 @@ private-tmp
 private-opt none
 private-srv none
 
-noexec ${HOME}
-noexec /tmp

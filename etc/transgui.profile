@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/transgui
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -48,5 +49,3 @@ private-lib libgdk_pixbuf-2.0.so.*,libGeoIP.so*,libgthread-2.0.so.*,libgtk-x11-2
 private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

@@ -12,6 +12,7 @@ noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -47,5 +48,3 @@ private-etc alternatives,asound.conf,fonts,ld.so.cache,pulse
 private-tmp
 
 # memory-deny-write-execute - breaks on Arch
-noexec ${HOME}
-noexec /tmp

@@ -6,6 +6,9 @@ include kodi.local
 # Persistent global definitions
 include globals.local
 
+# noexec ${HOME} breaks plugins
+ignore noexec ${HOME}
+
 noblacklist ${HOME}/.kodi
 noblacklist ${MUSIC}
 noblacklist ${PICTURES}
@@ -19,6 +22,7 @@ noblacklist /usr/lib/python3*
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -40,7 +44,3 @@ tracelog
 
 private-dev
 private-tmp
-
-# breaks plugins
-#noexec ${HOME}
-noexec /tmp

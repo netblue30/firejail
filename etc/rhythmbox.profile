@@ -12,6 +12,7 @@ noblacklist ${HOME}/.local/share/rhythmbox
 include disable-common.inc
 include disable-devel.inc
 # rhythmbox is using Python
+include disable-exec.inc
 #include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -39,5 +40,3 @@ private-bin rhythmbox
 private-dev
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

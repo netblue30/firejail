@@ -11,6 +11,7 @@ noblacklist ${HOME}/.config/transmission
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -46,5 +47,3 @@ private-dev
 private-tmp
 
 # memory-deny-write-execute - problems on Qt 5.10.0, KDE Frameworks 5.41.0
-noexec ${HOME}
-noexec /tmp

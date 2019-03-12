@@ -39,7 +39,6 @@ private-bin gucharmap
 private-cache
 private-dev
 private-etc alternatives,fonts
-private-home .config,.icons,.themes
 private-lib
 private-tmp
 

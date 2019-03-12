@@ -7,11 +7,17 @@ include meld.local
 include globals.local
 
 noblacklist ${HOME}/.local/share/meld
+noblacklist ${PATH}/python*
+noblacklist /usr/include/python*
+noblacklist /usr/lib/python*
+noblacklist /usr/local/lib/python*
+noblacklist /usr/share/python*
 
 include disable-common.inc
 include disable-devel.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 include whitelist-var-common.inc
 
@@ -31,10 +37,12 @@ novideo
 protocol unix
 seccomp
 shell none
+tracelog
 
 private-bin meld,python*
 private-cache
 private-dev
+# private-etc fonts,alternatives
 private-tmp
 
 noexec ${HOME}

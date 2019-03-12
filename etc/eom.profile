@@ -19,11 +19,8 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
 caps.drop all
-# net none - makes settings immutable
 no3d
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -37,6 +34,8 @@ seccomp
 shell none
 tracelog
 
+# private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'
+# comment those if you need that functionality
 private-bin eom
 private-dev
 private-etc alternatives,fonts

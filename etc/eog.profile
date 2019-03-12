@@ -23,9 +23,7 @@ apparmor
 caps.drop all
 ipc-namespace
 machine-id
-net none
 no3d
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -37,7 +35,10 @@ novideo
 protocol unix
 seccomp
 shell none
+tracelog
 
+# private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'
+# comment those if you need that functionality
 private-bin eog
 private-cache
 private-dev

@@ -5,8 +5,7 @@ quiet
 # Persistent local customizations
 include gzip.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 blacklist /tmp/.X11-unix
 

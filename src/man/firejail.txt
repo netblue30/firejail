@@ -2603,7 +2603,7 @@ $ firejail --read-only=~/dir[1-4]
 
 .SH FILE TRANSFER
 These features allow the user to inspect the filesystem container of an existing sandbox
-and transfer files from the container to the host filesystem.
+and transfer files between the container and the host filesystem.
 
 .TP
 \fB\-\-get=name|pid filename

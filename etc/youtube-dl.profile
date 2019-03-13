@@ -19,8 +19,12 @@ noblacklist /usr/lib/python3*
 noblacklist /usr/local/lib/python2*
 noblacklist /usr/local/lib/python3*
 
+# breaks when installed via pip
+ignore noexec ${HOME}
+
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -28,10 +32,13 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
+machine-id
 netfilter
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -45,8 +52,11 @@ seccomp
 shell none
 tracelog
 
+disable-mnt
+private-bin youtube-dl,python*,ffmpeg
+private-cache
 private-dev
+private-etc alternatives,ssl,pki,ca-certificates,hostname,hosts,resolv.conf,youtube-dl.conf,crypto-policies,mime.types
+private-tmp
 
-# breaks when installed via pip
-#noexec ${HOME}
-noexec /tmp
+# memory-deny-write-execute - breaks on Arch

@@ -7,11 +7,13 @@ include transmission-remote-cli.local
 # added by included profile
 #include globals.local
 
-# Allow python (disabled by disable-interpreters.inc)
+# Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
+noblacklist /usr/local/lib/python2*
+noblacklist /usr/local/lib/python3*
 
 mkdir ${HOME}/.cache/transmission
 mkdir ${HOME}/.config/transmission

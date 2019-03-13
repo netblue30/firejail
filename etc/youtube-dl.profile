@@ -59,4 +59,4 @@ private-dev
 private-etc alternatives,ssl,pki,ca-certificates,hostname,hosts,resolv.conf,youtube-dl.conf,crypto-policies,mime.types
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute - breaks on Arch

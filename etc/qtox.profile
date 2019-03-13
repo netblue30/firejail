@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/tox
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -45,5 +46,3 @@ private-etc alternatives,fonts,resolv.conf,ld.so.cache,localtime,ca-certificates
 private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

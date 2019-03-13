@@ -10,9 +10,11 @@ noblacklist ${HOME}/.minetest
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.minetest
 whitelist ${HOME}/.minetest
@@ -33,13 +35,12 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 disable-mnt
 private-bin minetest
+private-cache
 private-dev
 # private-etc needs to be updated, see #1702
 #private-etc alternatives,asound.conf,ca-certificates,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pulse,resolv.conf,ssl,pki,crypto-policies,machine-id
 private-tmp
-
-noexec ${HOME}
-noexec /tmp

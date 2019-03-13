@@ -3,7 +3,8 @@
 # Persistent local customizations
 include bunzip2.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 # Redirect
 include gzip.profile

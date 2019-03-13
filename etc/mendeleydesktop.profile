@@ -19,6 +19,8 @@ noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
+noblacklist /usr/local/lib/python2*
+noblacklist /usr/local/lib/python3*
 
 include disable-common.inc
 include disable-devel.inc

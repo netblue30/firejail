@@ -35,11 +35,13 @@ noblacklist ${PATH}/urxvtcd
 noblacklist ${PATH}/xfce4-terminal
 noblacklist ${PATH}/xfce4-terminal.wrapper
 
-# Allow python (disabled by disable-interpreters.inc)
+# Allow python (blacklisted by disable-interpreters.inc)
 noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
 noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
+noblacklist /usr/local/lib/python2*
+noblacklist /usr/local/lib/python3*
 
 include disable-common.inc
 include disable-devel.inc

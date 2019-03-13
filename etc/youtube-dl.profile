@@ -19,8 +19,12 @@ noblacklist /usr/lib/python3*
 noblacklist /usr/local/lib/python2*
 noblacklist /usr/local/lib/python3*
 
+# breaks when installed via pip
+ignore noexec ${HOME}
+
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -56,6 +60,3 @@ private-etc alternatives,ssl,pki,ca-certificates,hostname,hosts,resolv.conf,yout
 private-tmp
 
 memory-deny-write-execute
-# breaks when installed via pip
-#noexec ${HOME}
-noexec /tmp

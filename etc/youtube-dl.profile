@@ -28,10 +28,13 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
+machine-id
 netfilter
 no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -45,8 +48,14 @@ seccomp
 shell none
 tracelog
 
+disable-mnt
+private-bin youtube-dl,python*,ffmpeg
+private-cache
 private-dev
+private-etc alternatives,ssl,pki,ca-certificates,hostname,hosts,resolv.conf,youtube-dl.conf,crypto-policies,mime.types
+private-tmp
 
+memory-deny-write-execute
 # breaks when installed via pip
 #noexec ${HOME}
 noexec /tmp

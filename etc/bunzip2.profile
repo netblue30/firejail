@@ -1,4 +1,5 @@
 # Firejail profile for bunzip2
+# Description: A high-quality data compression program
 # This file is overwritten after every install/update
 # Persistent local customizations
 include bunzip2.local

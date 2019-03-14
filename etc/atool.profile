@@ -18,15 +18,21 @@ noblacklist /usr/share/perl*
 
 include disable-common.inc
 # include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
-netfilter
+hostname atool
+ipc-namespace
+machine-id
 net none
+netfilter
 no3d
 nodvd
+nodbus
 nogroups
 nonewprivs
 noroot
@@ -40,8 +46,10 @@ shell none
 tracelog
 
 private-cache
-# private-bin atool
+# private-bin atool,perl
 private-dev
 # without login.defs atool complains and uses UID/GID 1000 by default
 private-etc alternatives,passwd,group,login.defs
 private-tmp
+
+memory-deny-write-execute

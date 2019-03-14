@@ -27,6 +27,7 @@ net none
 no3d
 nodbus
 nodvd
+nogroups
 nonewprivs
 nosound
 notv

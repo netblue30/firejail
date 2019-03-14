@@ -13,14 +13,21 @@ noblacklist /sbin
 noblacklist /usr/sbin
 
 include disable-common.inc
+# include disable-devel.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
+hostname cpio
+ipc-namespace
+machine-id
 net none
 no3d
 nodbus
 nodvd
+nogroups
 nonewprivs
 nosound
 notv
@@ -30,4 +37,7 @@ seccomp
 shell none
 tracelog
 
+private-cache
 private-dev
+
+memory-deny-write-execute

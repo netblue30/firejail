@@ -10,12 +10,20 @@ include tar.local
 
 blacklist /tmp/.X11-unix
 
-hostname tar
+include disable-exec.inc
+include disable-interpreters.inc
+
 ignore noroot
+
+apparmor
+hostname tar
+ipc-namespace
+machine-id
 net none
 no3d
 nodbus
 nodvd
+nogroups
 nosound
 notv
 nou2f
@@ -25,9 +33,12 @@ tracelog
 
 # support compressed archives
 private-bin sh,bash,tar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop
+private-cache
 private-dev
 private-etc alternatives,passwd,group,localtime
 private-lib libfakeroot
+
+memory-deny-write-execute
 
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var

@@ -9,11 +9,20 @@ include globals.local
 
 blacklist /tmp/.X11-unix
 
+include disable-exec.inc
+include disable-interpreters.inc
+
 ignore noroot
+
+apparmor
+hostname gzip
+ipc-namespace
+machine-id
 net none
 no3d
 nodbus
 nodvd
+nogroups
 nosound
 notv
 nou2f
@@ -21,6 +30,9 @@ novideo
 shell none
 tracelog
 
+private-cache
 private-dev
+
+memory-deny-write-execute
 
 include default.profile

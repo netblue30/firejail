@@ -28,7 +28,7 @@ nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
@@ -36,7 +36,7 @@ shell none
 private-bin aria2c,gzip
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,ssl
+private-etc alternatives,ca-certificates,ssl,resolv.conf
 private-lib libreadline.so.*
 private-tmp
 

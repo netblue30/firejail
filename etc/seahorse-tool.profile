@@ -9,7 +9,7 @@ include seahorse-tool.local
 
 # dconf
 mkdir ${HOME}/.config/dconf
-whitelist ${HOME}/.config/dconf
+noblacklist ${HOME}/.config/dconf
 
 include disable-exec.inc
 include disable-xdg.inc

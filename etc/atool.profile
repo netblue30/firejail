@@ -45,8 +45,8 @@ seccomp
 shell none
 tracelog
 
-private-cache
 # private-bin atool,perl
+private-cache
 private-dev
 # without login.defs atool complains and uses UID/GID 1000 by default
 private-etc alternatives,passwd,group,login.defs

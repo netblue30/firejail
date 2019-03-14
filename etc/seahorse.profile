@@ -9,7 +9,7 @@ include seahorse.local
 
 # dconf
 mkdir ${HOME}/.config/dconf
-whitelist ${HOME}/.config/dconf
+noblacklist ${HOME}/.config/dconf
 
 # ssh
 noblacklist /etc/ssh

@@ -7,6 +7,8 @@ include seahorse-daemon.local
 # added by included profile
 #include globals.local
 
+blacklist /tmp/.X11-unix
+
 memory-deny-write-execute
 
 # Redirect

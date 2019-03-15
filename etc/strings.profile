@@ -8,6 +8,7 @@ include strings.local
 #include globals.local
 
 blacklist /tmp/.X11-unix
+include disable-exec.inc
 
 ignore noroot
 net none

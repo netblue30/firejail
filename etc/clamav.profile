@@ -7,6 +7,8 @@ include clamav.local
 # Persistent global definitions
 include globals.local
 
+include disable-exec.inc
+
 caps.drop all
 ipc-namespace
 net none
@@ -30,5 +32,3 @@ private-dev
 read-only ${HOME}
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

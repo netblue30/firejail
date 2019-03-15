@@ -12,6 +12,7 @@ noblacklist /tmp/ssh-*
 noblacklist ${HOME}/.ssh
 
 include disable-common.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
@@ -36,6 +37,4 @@ private-dev
 # private-tmp # Breaks when exiting
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp
 writable-run-user

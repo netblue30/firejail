@@ -5,9 +5,11 @@ include start-tor-browser.local
 # Persistent global definitions
 include globals.local
 
+ignore noexec ${HOME}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -36,5 +38,3 @@ private-bin bash,sh,grep,tail,env,gpg,id,readlink,dirname,test,mkdir,ln,sed,cp,r
 private-dev
 private-etc alternatives,fonts,hostname,hosts,resolv.conf,pki,ssl,ca-certificates,crypto-policies,alsa,asound.conf,pulse,machine-id,ld.so.cache
 private-tmp
-
-noexec /tmp

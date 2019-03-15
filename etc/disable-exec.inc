@@ -6,6 +6,6 @@ noexec ${HOME}
 noexec ${RUNUSER}
 noexec /dev/shm
 noexec /tmp
-# /var/tmp is noexec by default
-# just in case there is a keep-var-tmp option:
-noexec /var/tmp
+# /var is noexec by default for unprivileged users
+# except there is a writable-var option, so just in case:
+noexec /var

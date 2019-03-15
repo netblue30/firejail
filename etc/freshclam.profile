@@ -6,6 +6,7 @@ include clamav.local
 # Persistent global definitions
 include globals.local
 
+include disable-exec.inc
 
 caps.keep setgid,setuid
 ipc-namespace
@@ -32,5 +33,3 @@ writable-var
 writable-var-log
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

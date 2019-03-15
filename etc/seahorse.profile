@@ -6,8 +6,6 @@ include seahorse.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-
 # dconf
 mkdir ${HOME}/.config/dconf
 noblacklist ${HOME}/.config/dconf

@@ -16,7 +16,6 @@ include disable-common.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-shell none
 caps.drop all
 netfilter
 no3d
@@ -26,4 +25,6 @@ noroot
 notv
 protocol unix,inet,inet6
 seccomp
+shell none
+
 writable-run-user

@@ -8,7 +8,6 @@ include seahorse-tool.local
 #include globals.local
 
 # dconf
-mkdir ${HOME}/.config/dconf
 noblacklist ${HOME}/.config/dconf
 
 include disable-exec.inc

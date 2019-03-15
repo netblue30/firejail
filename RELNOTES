@@ -8,6 +8,7 @@ firejail (0.9.59) baseline; urgency=low
   * new profiles: sysprof-cli, seahorse-tool, secret-tool, dconf, gsettings
   * new profiles: code-oss, pragha
   * memory-deny-write-execute now also blocks memfd_create
+  * drop support for flatpak/snap packages
 
 firejail (0.9.58,2) baseline; urgency=low
   * cgroup flag in /etc/firejail/firejail.config file

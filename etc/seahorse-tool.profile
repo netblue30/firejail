@@ -7,21 +7,11 @@ include seahorse-tool.local
 # added by included profile
 #include globals.local
 
-# dconf
-mkdir ${HOME}/.config/dconf
-noblacklist ${HOME}/.config/dconf
+noblacklist ${DOWNLOADS}
 
-include disable-exec.inc
-include disable-xdg.inc
-include whitelist-var-common.inc
-
-apparmor
-ipc-namespace
-
-disable-mnt
 private-tmp
 
 memory-deny-write-execute
 
 # Redirect
-include gpg.profile
+include seahorse.profile

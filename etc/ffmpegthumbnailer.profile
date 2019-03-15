@@ -10,6 +10,8 @@ include ffmpegthumbnailer.local
 private-bin ffmpegthumbnailer
 private-lib libffmpegthumbnailer.so.*
 
+# fix for ranger video thumbnails
+ignore private-cache
 
 # Redirect
 include ffmpeg.profile

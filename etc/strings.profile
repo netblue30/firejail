@@ -29,7 +29,5 @@ private-etc alternatives
 private-lib libfakeroot
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp
 
 include default.profile

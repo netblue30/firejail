@@ -5,6 +5,8 @@ include clamtk.local
 # Persistent global definitions
 include globals.local
 
+include disable-exec.inc
+
 caps.drop all
 ipc-namespace
 net none
@@ -23,6 +25,3 @@ seccomp
 shell none
 
 private-dev
-
-noexec ${HOME}
-noexec /tmp

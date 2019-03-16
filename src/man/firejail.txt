@@ -48,6 +48,10 @@ Firejail allows the user to manage application security using security profiles.
 Each profile defines a set of permissions for a specific application or group
 of applications. The software includes security profiles for a number of more common
 Linux programs, such as Mozilla Firefox, Chromium, VLC, Transmission etc.
+.PP
+Alternative sandbox technologies like snap (https://snapcraft.io/) and flatpak (https://flatpak.org/)
+are not supported. Snap and flatpak packages have their own native management tools and will
+not work when sandboxed with Firejail.
 
 .SH USAGE
 Without any options, the sandbox consists of a filesystem build in a new mount namespace,

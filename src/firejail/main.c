@@ -866,11 +866,9 @@ static void run_builder(int argc, char **argv) {
 	(void) argc;
 
 	// drop privileges
-	gid_t gid = getgid();
-	uid_t uid = getuid();
-	if (setresgid(gid, gid, gid) != 0)
+	if (setresgid(-1, getgid(), getgid()) != 0)
 		errExit("setresgid");
-	if (setresuid(uid, uid, uid) != 0)
+	if (setresuid(-1, getuid(), getuid()) != 0)
 		errExit("setresuid");
 
 	assert(getenv("LD_PRELOAD") == NULL);

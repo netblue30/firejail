@@ -6,7 +6,6 @@ blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud/Notes
 blacklist ${HOME}/Standard Notes Backups
-blacklist ${HOME}/snap
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios

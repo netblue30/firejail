@@ -1,15 +1,13 @@
-# Firejail profile for seahorse-tool
+# Firejail profile for seahorse-daemon
 # Description: PGP encryption and signing
 # This file is overwritten after every install/update
 # Persistent local customizations
-include seahorse-tool.local
+include seahorse-daemon.local
 # Persistent global definitions
 # added by included profile
 #include globals.local
 
-noblacklist ${DOWNLOADS}
-
-private-tmp
+blacklist /tmp/.X11-unix
 
 memory-deny-write-execute
 

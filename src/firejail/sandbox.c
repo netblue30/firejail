@@ -1064,9 +1064,6 @@ int sandbox(void* sandbox_arg) {
 	// save state of nonewprivs
 	save_nonewprivs();
 
-	// set capabilities
-	set_caps();
-
 	// set cpu affinity
 	if (cfg.cpus) {
 		save_cpu(); // save cpu affinity mask to CPU_CFG file
@@ -1118,7 +1115,12 @@ int sandbox(void* sandbox_arg) {
 		int rv = unlink(RUN_SECCOMP_MDWX);
 		(void) rv;
 	}
+	// make seccomp filters read-only
+	fs_rdonly(RUN_SECCOMP_DIR);
 #endif
+
+	// set capabilities
+	set_caps();
 
 	//****************************************
 	// communicate progress of sandbox set up

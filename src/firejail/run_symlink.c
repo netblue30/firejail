@@ -34,11 +34,12 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 		return;
 
 	// drop privileges
-	EUID_ROOT();
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
+	gid_t gid = getgid();
+	uid_t uid = getuid();
+	if (setresgid(gid, gid, gid) != 0)
+		errExit("setresgid");
+	if (setresuid(uid, uid, uid) != 0)
+		errExit("setresuid");
 
 	// find the real program by looking in PATH
 	char *p = getenv("PATH");
@@ -94,7 +95,7 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 	umask(orig_umask);
 
 	// desktop integration is not supported for root user; instead, the original program is started
-	if (getuid() == 0 || run_as_is) {
+	if (uid == 0 || run_as_is) {
 		argv[0] = program;
 		execv(program, argv);
 		exit(1);

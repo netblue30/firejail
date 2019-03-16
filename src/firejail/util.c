@@ -119,12 +119,13 @@ clean_all:
 // drop privileges
 // - for root group or if nogroups is set, supplementary groups are not configured
 void drop_privs(int nogroups) {
-	EUID_ROOT();
 	gid_t gid = getgid();
+	uid_t uid = getuid();
 	if (arg_debug)
-		printf("Drop privileges: pid %d, uid %d, gid %d, nogroups %d\n",  getpid(), getuid(), gid, nogroups);
+		printf("Drop privileges: pid %d, uid %d, gid %d, nogroups %d\n",  getpid(), uid, gid, nogroups);
 
 	// configure supplementary groups
+	EUID_ROOT();
 	if (gid == 0 || nogroups) {
 		if (setgroups(0, NULL) < 0)
 			errExit("setgroups");
@@ -135,10 +136,10 @@ void drop_privs(int nogroups) {
 		clean_supplementary_groups(gid);
 
 	// set uid/gid
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
+	if (setresgid(gid, gid, gid) != 0)
+		errExit("setresgid");
+	if (setresuid(uid, uid, uid) != 0)
+		errExit("setresuid");
 }
 
 

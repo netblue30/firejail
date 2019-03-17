@@ -20,7 +20,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
+#ipc-namespace
 net none
 no3d
 nodbus

@@ -10,12 +10,14 @@ noblacklist ${HOME}/.easystroke
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
+apparmor
 caps.drop all
-ipc-namespace
 machine-id
 net none
 no3d
@@ -33,13 +35,13 @@ seccomp
 shell none
 
 disable-mnt
-private-bin easystroke,bash,sh
+# breaks custom shell command functionality
+#private-bin bash,easystroke,sh
 private-cache
 private-dev
-private-etc alternatives,fonts
-private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
+private-etc alternatives,fonts,group,passwd
+# breaks custom shell command functionality
+#private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

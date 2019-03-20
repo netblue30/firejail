@@ -100,9 +100,6 @@ static void extract_command(int argc, char **argv, int index) {
 
 	// build command
 	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index);
-
-	if (arg_debug)
-		printf("Extracted command #%s#\n", cfg.command_line);
 }
 
 static void extract_nogroups(pid_t pid) {
@@ -290,11 +287,8 @@ pid_t switch_to_child(pid_t pid) {
 
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
-	char *homedir = cfg.homedir;
+
 	pid_t parent = pid;
-
-	extract_command(argc, argv, index);
-
 	// in case the pid is that of a firejail process, use the pid of the first child process
 	pid = switch_to_child(pid);
 
@@ -374,18 +368,14 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		EUID_USER();
 		if (chdir("/") < 0)
 			errExit("chdir");
-		if (homedir) {
+		if (cfg.homedir) {
 			struct stat s;
-			if (stat(homedir, &s) == 0) {
+			if (stat(cfg.homedir, &s) == 0) {
 				/* coverity[toctou] */
-				if (chdir(homedir) < 0)
+				if (chdir(cfg.homedir) < 0)
 					errExit("chdir");
 			}
 		}
-
-		// set cpu affinity
-		if (cfg.cpus)	// not available for uid 0
-			set_cpu_affinity();
 
 		// set caps filter
 		EUID_ROOT();
@@ -417,33 +407,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		EUID_USER();
-		// set nice
-		if (arg_nice) {
-			errno = 0;
-			int rv = nice(cfg.nice);
-			(void) rv;
-			if (errno) {
-				fwarning("cannot set nice value\n");
-				errno = 0;
-			}
-		}
-
-		// set environment, add x11 display
-		env_defaults();
-		if (display) {
-			char *display_str;
-			if (asprintf(&display_str, ":%d", display) == -1)
-				errExit("asprintf");
-			setenv("DISPLAY", display_str, 1);
-			free(display_str);
-		}
-
-		if (cfg.command_line == NULL) {
-			assert(cfg.shell);
-			cfg.command_line = cfg.shell;
-			cfg.window_title = cfg.shell;
-		}
-
 		int cwd = 0;
 		if (cfg.cwd) {
 			if (chdir(cfg.cwd) == 0)
@@ -463,8 +426,38 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			}
 		}
 
+		// drop privileges
 		drop_privs(arg_nogroups);
-		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
+
+		// kill the child in case the parent died
+		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+
+		extract_command(argc, argv, index);
+		if (cfg.command_line == NULL) {
+			assert(cfg.shell);
+			cfg.command_line = cfg.shell;
+			cfg.window_title = cfg.shell;
+		}
+		if (arg_debug)
+			printf("Extracted command #%s#\n", cfg.command_line);
+
+		// set cpu affinity
+		if (cfg.cpus)	// not available for uid 0
+			set_cpu_affinity();
+
+		// set nice value
+		if (arg_nice)
+			set_nice(cfg.nice);
+
+		// add x11 display
+		if (display) {
+			char *display_str;
+			if (asprintf(&display_str, ":%d", display) == -1)
+				errExit("asprintf");
+			setenv("DISPLAY", display_str, 1);
+			free(display_str);
+		}
+
 		start_application(0, NULL);
 
 		// it will never get here!!!

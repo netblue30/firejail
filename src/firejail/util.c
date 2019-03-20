@@ -250,6 +250,16 @@ void logerr(const char *msg) {
 	closelog();
 }
 
+
+void set_nice(int inc) {
+	errno = 0;
+	int rv = nice(inc);
+	(void) rv;
+	if (errno)
+		fwarning("cannot set nice value\n");
+}
+
+
 static int copy_file_by_fd(int src, int dst) {
 	assert(src >= 0);
 	assert(dst >= 0);

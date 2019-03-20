@@ -538,6 +538,7 @@ blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
+blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
@@ -695,3 +696,4 @@ blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
 
 blacklist /var/games/nethack
+blacklist /var/lib/games/Maelstrom-Scores

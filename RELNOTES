@@ -7,7 +7,7 @@ firejail (0.9.59) baseline; urgency=low
   * new profiles: font-manager, exfalso, gconf-editor, dconf-editor
   * new profiles: sysprof-cli, seahorse-tool, secret-tool, dconf, gsettings
   * new profiles: code-oss, pragha, Maelstrom, ostrichriders, bzflag
-  * new profiles: freeciv, lincity-ng, megaglest, openttd
+  * new profiles: freeciv, lincity-ng, megaglest, openttd, crawl, crawl-tiles
   * memory-deny-write-execute now also blocks memfd_create
   * drop support for flatpak/snap packages
 

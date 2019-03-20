@@ -48,6 +48,7 @@ blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.bogofilter
+blacklist ${HOME}/.bzf
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.config/0ad
@@ -296,6 +297,7 @@ blacklist ${HOME}/.config/yandex-browser-beta
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
+blacklist ${HOME}/.crawl
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dashcore
 blacklist ${HOME}/.devilspie
@@ -318,6 +320,7 @@ blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
+blacklist ${HOME}/.freeciv
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.git-credential-cache
@@ -404,6 +407,7 @@ blacklist ${HOME}/.killingfloor
 blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc
 blacklist ${HOME}/.kodi
+blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
@@ -519,6 +523,7 @@ blacklist ${HOME}/.masterpdfeditor
 blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
+blacklist ${HOME}/.megaglest
 blacklist ${HOME}/.minetest
 blacklist ${HOME}/.moonchild productions/basilisk
 blacklist ${HOME}/.moonchild productions/pale moon
@@ -536,6 +541,7 @@ blacklist ${HOME}/.nylas-mail
 blacklist ${HOME}/.openinvaders
 blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
+blacklist ${HOME}/.openttd
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
 blacklist ${HOME}/.ostrichriders

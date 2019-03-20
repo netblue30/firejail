@@ -294,7 +294,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	pid_t parent = pid;
 
 	extract_command(argc, argv, index);
-	signal (SIGTERM, signal_handler);
 
 	// in case the pid is that of a firejail process, use the pid of the first child process
 	pid = switch_to_child(pid);

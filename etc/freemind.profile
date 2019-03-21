@@ -50,6 +50,3 @@ private-dev
 private-tmp
 private-opt none
 private-srv none
-
-noexec ${HOME}
-noexec /tmp

@@ -203,8 +203,10 @@ blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
+blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mailtransports
+blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
@@ -477,6 +479,8 @@ blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
+blacklist ${HOME}/.local/share/lugaru
+blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
@@ -547,6 +551,7 @@ blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
 blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.pingus
+blacklist ${HOME}/.pioneer
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.qmmp
@@ -556,6 +561,7 @@ blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig
 blacklist ${HOME}/.retroshare
+blacklist ${HOME}/.scorched3d
 blacklist ${HOME}/.scribus
 blacklist ${HOME}/.scribusrc
 blacklist ${HOME}/.simutrans
@@ -592,6 +598,7 @@ blacklist ${HOME}/.waterfox
 blacklist ${HOME}/.weechat
 blacklist ${HOME}/.wget-hsts
 blacklist ${HOME}/.wgetrc
+blacklist ${HOME}/.widelands
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wireshark
 blacklist ${HOME}/.wine64

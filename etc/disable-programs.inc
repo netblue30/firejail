@@ -323,6 +323,7 @@ blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
 blacklist ${HOME}/.freeciv
+blacklist ${HOME}/.freemind
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.git-credential-cache

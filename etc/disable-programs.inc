@@ -514,6 +514,7 @@ blacklist ${HOME}/.local/share/uzbl
 blacklist ${HOME}/.local/share/vlc
 blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan
+blacklist ${HOME}/.local/share/warsow-2.1
 blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
@@ -569,11 +570,14 @@ blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
 blacklist ${HOME}/.tconn
+blacklist ${HOME}/.teeworlds
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling
 blacklist ${HOME}/.tor-browser-*
 blacklist ${HOME}/.tor-browser_*
+blacklist ${HOME}/.torcs
+blacklist ${HOME}/.tremulous
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.tuxguitar*
 blacklist ${HOME}/.unknown-horizons
@@ -694,6 +698,7 @@ blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc
+blacklist ${HOME}/.cache/warsow-2.1
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/xmms2

@@ -77,6 +77,7 @@ blacklist ${HOME}/.config/Google Play Music Desktop Player
 blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/InSilmaril
+blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mendeley Ltd.
@@ -190,6 +191,7 @@ blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdenliverc
 blacklist ${HOME}/.config/kgetrc
+blacklist ${HOME}/.config/kid3rc
 blacklist ${HOME}/.config/klavaro
 blacklist ${HOME}/.config/klipperrc
 blacklist ${HOME}/.config/kmail2rc

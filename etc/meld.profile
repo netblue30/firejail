@@ -10,7 +10,7 @@ noblacklist ${HOME}/.local/share/meld
 noblacklist ${PATH}/python*
 noblacklist /usr/include/python*
 noblacklist /usr/lib/python*
-noblacklist /usr/local/lib/python*
+noblacklist /usr/local/lib/python*,git,svn,hg,bzr,cvs
 noblacklist /usr/share/python*
 
 include disable-common.inc
@@ -40,7 +40,7 @@ seccomp
 shell none
 tracelog
 
-private-bin meld,python*
+private-bin meld,python*,git,svn,hg,bzr,cvs
 private-cache
 private-dev
 # Uncomment the next line if you don't need to compare in /etc.

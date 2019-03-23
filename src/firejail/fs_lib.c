@@ -133,6 +133,7 @@ void fslib_copy_libs(const char *full_path) {
 		fslib_duplicate(buf);
 	}
 	fclose(fp);
+	unlink(RUN_LIB_FILE);
 }
 
 

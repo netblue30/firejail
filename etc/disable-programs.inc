@@ -6,7 +6,6 @@ blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud/Notes
 blacklist ${HOME}/Standard Notes Backups
-blacklist ${HOME}/snap
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
@@ -49,6 +48,7 @@ blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.bogofilter
+blacklist ${HOME}/.bzf
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.config/0ad
@@ -77,6 +77,7 @@ blacklist ${HOME}/.config/Google Play Music Desktop Player
 blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/InSilmaril
+blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mendeley Ltd.
@@ -190,6 +191,7 @@ blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdenliverc
 blacklist ${HOME}/.config/kgetrc
+blacklist ${HOME}/.config/kid3rc
 blacklist ${HOME}/.config/klavaro
 blacklist ${HOME}/.config/klipperrc
 blacklist ${HOME}/.config/kmail2rc
@@ -203,8 +205,10 @@ blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
+blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mailtransports
+blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
@@ -297,6 +301,7 @@ blacklist ${HOME}/.config/yandex-browser-beta
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
+blacklist ${HOME}/.crawl
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dashcore
 blacklist ${HOME}/.devilspie
@@ -319,6 +324,8 @@ blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
+blacklist ${HOME}/.freeciv
+blacklist ${HOME}/.freemind
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.git-credential-cache
@@ -405,6 +412,7 @@ blacklist ${HOME}/.killingfloor
 blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc
 blacklist ${HOME}/.kodi
+blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
@@ -474,6 +482,8 @@ blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
+blacklist ${HOME}/.local/share/lugaru
+blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
@@ -511,6 +521,7 @@ blacklist ${HOME}/.local/share/uzbl
 blacklist ${HOME}/.local/share/vlc
 blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan
+blacklist ${HOME}/.local/share/warsow-2.1
 blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
@@ -520,6 +531,7 @@ blacklist ${HOME}/.masterpdfeditor
 blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
+blacklist ${HOME}/.megaglest
 blacklist ${HOME}/.minetest
 blacklist ${HOME}/.moonchild productions/basilisk
 blacklist ${HOME}/.moonchild productions/pale moon
@@ -537,9 +549,12 @@ blacklist ${HOME}/.nylas-mail
 blacklist ${HOME}/.openinvaders
 blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
+blacklist ${HOME}/.openttd
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
+blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.pingus
+blacklist ${HOME}/.pioneer
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.qmmp
@@ -549,6 +564,7 @@ blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig
 blacklist ${HOME}/.retroshare
+blacklist ${HOME}/.scorched3d
 blacklist ${HOME}/.scribus
 blacklist ${HOME}/.scribusrc
 blacklist ${HOME}/.simutrans
@@ -563,11 +579,14 @@ blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
 blacklist ${HOME}/.tconn
+blacklist ${HOME}/.teeworlds
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling
 blacklist ${HOME}/.tor-browser-*
 blacklist ${HOME}/.tor-browser_*
+blacklist ${HOME}/.torcs
+blacklist ${HOME}/.tremulous
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.tuxguitar*
 blacklist ${HOME}/.unknown-horizons
@@ -582,6 +601,7 @@ blacklist ${HOME}/.waterfox
 blacklist ${HOME}/.weechat
 blacklist ${HOME}/.wget-hsts
 blacklist ${HOME}/.wgetrc
+blacklist ${HOME}/.widelands
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wireshark
 blacklist ${HOME}/.wine64
@@ -688,6 +708,7 @@ blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc
+blacklist ${HOME}/.cache/warsow-2.1
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/xmms2
@@ -696,3 +717,4 @@ blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
 
 blacklist /var/games/nethack
+blacklist /var/lib/games/Maelstrom-Scores

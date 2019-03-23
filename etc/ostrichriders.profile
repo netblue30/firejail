@@ -1,12 +1,12 @@
-# Firejail profile for pavucontrol
-# Description: PulseAudio Volume Control
+# Firejail profile for ostrichriders
+# Description: Knights flying on ostriches compete against other riders
 # This file is overwritten after every install/update
 # Persistent local customizations
-include pavucontrol.local
+include ostrichriders.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/pavucontrol.ini
+noblacklist ${HOME}/.ostrichriders
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,13 +16,14 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.ostrichriders
+whitelist ${HOME}/.ostrichriders
+include whitelist-common.inc
 include whitelist-var-common.inc
 
-apparmor
 caps.drop all
-#ipc-namespace
+ipc-namespace
 net none
-no3d
 nodbus
 nodvd
 nogroups
@@ -31,16 +32,14 @@ noroot
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,netlink
 seccomp
 shell none
+tracelog
 
 disable-mnt
-private-bin pavucontrol
+private-bin ostrichriders
 private-cache
+# private-dev should be commented for controllers
 private-dev
-private-etc alternatives,asound.conf,fonts,machine-id,pulse
-private-lib
 private-tmp
-
-memory-deny-write-execute

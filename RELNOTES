@@ -6,8 +6,13 @@ firejail (0.9.59) baseline; urgency=low
   * new profiles: netactview, redshift, devhelp, assogiate, subdownloader
   * new profiles: font-manager, exfalso, gconf-editor, dconf-editor
   * new profiles: sysprof-cli, seahorse-tool, secret-tool, dconf, gsettings
-  * new profiles: code-oss, pragha
+  * new profiles: code-oss, pragha, Maelstrom, ostrichriders, bzflag
+  * new profiles: freeciv, lincity-ng, megaglest, openttd, crawl, crawl-tiles
+  * new profiles: teeworlds, torcs, tremulous, warsow, lugaru, manaplus
+  * new profiles: pioneer, scorched3d, widelands, freemind, kid3, kid3-qt
+  * new profiles: kid3-cli
   * memory-deny-write-execute now also blocks memfd_create
+  * drop support for flatpak/snap packages
 
 firejail (0.9.58,2) baseline; urgency=low
   * cgroup flag in /etc/firejail/firejail.config file

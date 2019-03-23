@@ -866,11 +866,10 @@ static void run_builder(int argc, char **argv) {
 	(void) argc;
 
 	// drop privileges
-	EUID_ROOT();
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
+	if (setresgid(-1, getgid(), getgid()) != 0)
+		errExit("setresgid");
+	if (setresuid(-1, getuid(), getuid()) != 0)
+		errExit("setresuid");
 
 	assert(getenv("LD_PRELOAD") == NULL);
 	umask(orig_umask);

@@ -119,12 +119,12 @@ clean_all:
 // drop privileges
 // - for root group or if nogroups is set, supplementary groups are not configured
 void drop_privs(int nogroups) {
-	EUID_ROOT();
 	gid_t gid = getgid();
 	if (arg_debug)
 		printf("Drop privileges: pid %d, uid %d, gid %d, nogroups %d\n",  getpid(), getuid(), gid, nogroups);
 
 	// configure supplementary groups
+	EUID_ROOT();
 	if (gid == 0 || nogroups) {
 		if (setgroups(0, NULL) < 0)
 			errExit("setgroups");
@@ -135,10 +135,10 @@ void drop_privs(int nogroups) {
 		clean_supplementary_groups(gid);
 
 	// set uid/gid
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
+	if (setresgid(-1, getgid(), getgid()) != 0)
+		errExit("setresgid");
+	if (setresuid(-1, getuid(), getuid()) != 0)
+		errExit("setresuid");
 }
 
 
@@ -249,6 +249,16 @@ void logerr(const char *msg) {
 	syslog(LOG_ERR, "%s\n", msg);
 	closelog();
 }
+
+
+void set_nice(int inc) {
+	errno = 0;
+	int rv = nice(inc);
+	(void) rv;
+	if (errno)
+		fwarning("cannot set nice value\n");
+}
+
 
 static int copy_file_by_fd(int src, int dst) {
 	assert(src >= 0);

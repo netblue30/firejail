@@ -5,7 +5,6 @@ include pycharm-community.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/snap
 noblacklist ${HOME}/.PyCharmCE*
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.java

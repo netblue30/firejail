@@ -1,12 +1,17 @@
-# Firejail profile for pavucontrol
-# Description: PulseAudio Volume Control
+# Firejail profile for freemind
+# Description: Free mind mapping software
 # This file is overwritten after every install/update
 # Persistent local customizations
-include pavucontrol.local
+include freemind.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/pavucontrol.ini
+noblacklist ${DOCUMENTS}
+noblacklist ${PATH}/java
+noblacklist /etc/java
+noblacklist /usr/lib/java
+noblacklist /usr/share/java
+noblacklist ${HOME}/.freemind
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,27 +25,28 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-#ipc-namespace
-net none
+machine-id
+netfilter
 no3d
 nodbus
 nodvd
 nogroups
 nonewprivs
 noroot
+nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 disable-mnt
-private-bin pavucontrol
+private-bin freemind,java,bash,sed,sh,grep,mkdir,echo,cp,uname,which,lsb_release,rpm,dpkg,dirname,readlink
 private-cache
 private-dev
-private-etc alternatives,asound.conf,fonts,machine-id,pulse
-private-lib
+#private-etc alternatives,fonts,java
 private-tmp
-
-memory-deny-write-execute
+private-opt none
+private-srv none

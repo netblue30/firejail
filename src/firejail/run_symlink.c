@@ -34,11 +34,10 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 		return;
 
 	// drop privileges
-	EUID_ROOT();
-	if (setgid(getgid()) < 0)
-		errExit("setgid/getgid");
-	if (setuid(getuid()) < 0)
-		errExit("setuid/getuid");
+	if (setresgid(-1, getgid(), getgid()) != 0)
+		errExit("setresgid");
+	if (setresuid(-1, getuid(), getuid()) != 0)
+		errExit("setresuid");
 
 	// find the real program by looking in PATH
 	char *p = getenv("PATH");

@@ -161,32 +161,29 @@ int check_kernel_procs(void) {
 
 void run_no_sandbox(int argc, char **argv) {
 	EUID_ASSERT();
+	// drop privileges
+	if (setresgid(-1, getgid(), getgid()) != 0)
+		errExit("setresgid");
+	if (setresuid(-1, getuid(), getuid()) != 0)
+		errExit("setresuid");
 
 	// process limited subset of options
 	int i;
 	for (i = 0; i < argc; i++) {
 		if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
- 		else if (strcmp(argv[i], "--shell=none") == 0 ||
-		    strncmp(argv[i], "--shell=", 8) == 0)
+		else if (strncmp(argv[i], "--shell=", 8) == 0)
 			fwarning("shell-related command line options are disregarded - using SHELL environment variable\n");
 	}
 
-	// use $SHELL to get shell used in sandbox
-	char *shell =  getenv("SHELL");
-	if (shell && access(shell, R_OK) == 0)
-		cfg.shell = shell;
-
-	// guess shell otherwise
-	if (!cfg.shell) {
-		cfg.shell = guess_shell();
-		if (arg_debug)
-			printf("Autoselecting %s as shell\n", cfg.shell);
-	}
+	// use $SHELL to get shell used in sandbox, guess shell otherwise
+	cfg.shell = guess_shell();
 	if (!cfg.shell) {
 		fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
 		exit(1);
 	}
+	else if (arg_debug)
+		printf("Selecting %s as shell\n", cfg.shell);
 
 	int prog_index = 0;
 	// find first non option arg:

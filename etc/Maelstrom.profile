@@ -1,12 +1,12 @@
-# Firejail profile for pavucontrol
-# Description: PulseAudio Volume Control
+# Firejail profile for Maelstrom
+# Description: A space combat game
 # This file is overwritten after every install/update
 # Persistent local customizations
-include pavucontrol.local
+include Maelstrom.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/pavucontrol.ini
+noblacklist /var/lib/games/Maelstrom-Scores
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,31 +16,28 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /var/lib/games
+include whitelist-common.inc
 include whitelist-var-common.inc
 
-apparmor
 caps.drop all
-#ipc-namespace
+ipc-namespace
 net none
-no3d
 nodbus
 nodvd
 nogroups
-nonewprivs
-noroot
+#nonewprivs
+#noroot
 notv
 nou2f
 novideo
-protocol unix
-seccomp
+#protocol unix
+#seccomp
 shell none
+tracelog
 
 disable-mnt
-private-bin pavucontrol
+private-bin Maelstrom
 private-cache
 private-dev
-private-etc alternatives,asound.conf,fonts,machine-id,pulse
-private-lib
 private-tmp
-
-memory-deny-write-execute

@@ -1038,17 +1038,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	// set nice
-	if (arg_nice) {
-		errno = 0;
-		int rv = nice(cfg.nice);
-		(void) rv;
-		if (errno) {
-			fwarning("cannot set nice value\n");
-			errno = 0;
-		}
-	}
-
 	EUID_ROOT();
 	// clean /tmp/.X11-unix sockets
 	fs_x11();
@@ -1064,17 +1053,11 @@ int sandbox(void* sandbox_arg) {
 	// save state of nonewprivs
 	save_nonewprivs();
 
-	// set cpu affinity
-	if (cfg.cpus) {
-		save_cpu(); // save cpu affinity mask to CPU_CFG file
-		EUID_USER();
-		set_cpu_affinity();
-		EUID_ROOT();
-	}
+	// save cpu affinity mask to CPU_CFG file
+	save_cpu();
 
 	// save cgroup in CGROUP_CFG file
-	if (cfg.cgroup)
-		save_cgroup();
+	save_cgroup();
 
 	// set seccomp
 #ifdef HAVE_SECCOMP
@@ -1127,7 +1110,7 @@ int sandbox(void* sandbox_arg) {
 	// to --join
 	//****************************************
 
-	FILE *fp = create_ready_for_join_file();
+	FILE *rj = create_ready_for_join_file();
 
 	//****************************************
 	// create a new user namespace
@@ -1177,10 +1160,23 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	//****************************************
-	// drop privileges, fork the application and monitor it
+	// drop privileges
 	//****************************************
 	drop_privs(arg_nogroups);
-	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the sandbox in case the parent died
+
+	// kill the sandbox in case the parent died
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+
+	//****************************************
+	// set cpu affinity
+	//****************************************
+
+	if (cfg.cpus)
+		set_cpu_affinity();
+
+	//****************************************
+	// fork the application and monitor it
+	//****************************************
 	pid_t app_pid = fork();
 	if (app_pid == -1)
 		errExit("fork");
@@ -1198,13 +1194,15 @@ int sandbox(void* sandbox_arg) {
 				printf("AppArmor enabled\n");
 		}
 #endif
-		// set rlimits
+		// set nice and rlimits
+		if (arg_nice)
+			set_nice(cfg.nice);
 		set_rlimits();
-		// start app
-		start_application(0, fp);
+
+		start_application(0, rj);
 	}
 
-	fclose(fp);
+	fclose(rj);
 
 	int status = monitor_application(app_pid);	// monitor application
 	flush_stdin();

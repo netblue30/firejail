@@ -1,12 +1,13 @@
-# Firejail profile for pavucontrol
-# Description: PulseAudio Volume Control
+# Firejail profile for kid3
+# Description: Audio Tag Editor
 # This file is overwritten after every install/update
 # Persistent local customizations
-include pavucontrol.local
+include kid3.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/pavucontrol.ini
+noblacklist ${MUSIC}
+noblacklist ${HOME}/.config/kid3rc
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,9 +21,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-#ipc-namespace
-net none
-no3d
+netfilter
 nodbus
 nodvd
 nogroups
@@ -31,16 +30,16 @@ noroot
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
+tracelog
 
-disable-mnt
-private-bin pavucontrol
 private-cache
 private-dev
-private-etc alternatives,asound.conf,fonts,machine-id,pulse
-private-lib
+private-etc alternatives,drirc,fonts,kde5rc,gtk-3.0,dconf,machine-id,ca-certificates,ssl,pki,hostname,hosts,resolv.conf,pulse,,crypto-policies
 private-tmp
+private-opt none
+private-srv none
 
 memory-deny-write-execute

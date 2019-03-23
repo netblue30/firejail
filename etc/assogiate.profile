@@ -39,7 +39,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin assogiate
+private-bin assogiate,gtk-update-icon-cache
 private-cache
 private-dev
 private-lib gnome-vfs-2.0,libattr.so.*,libacl.so.*,libfam.so.*

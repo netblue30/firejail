@@ -51,6 +51,7 @@ blacklist ${HOME}/.bogofilter
 blacklist ${HOME}/.bzf
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
+blacklist ${HOME}/.clonk
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/2048-qt
 blacklist ${HOME}/.config/Atom
@@ -157,6 +158,7 @@ blacklist ${HOME}/.config/falkon
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/font-manager
+blacklist ${HOME}/.config/freecol
 blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/gconf
@@ -325,6 +327,7 @@ blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
 blacklist ${HOME}/.freeciv
+blacklist ${HOME}/.freecol
 blacklist ${HOME}/.freemind
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
@@ -455,6 +458,7 @@ blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
 blacklist ${HOME}/.local/share/feedreader
 blacklist ${HOME}/.local/share/feral-interactive
+blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.local/share/geary
 blacklist ${HOME}/.local/share/geeqie
@@ -546,6 +550,7 @@ blacklist ${HOME}/.netactview
 blacklist ${HOME}/.neverball
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail
+blacklist ${HOME}/.opencity
 blacklist ${HOME}/.openinvaders
 blacklist ${HOME}/.openshot
 blacklist ${HOME}/.openshot_qt
@@ -595,6 +600,7 @@ blacklist ${HOME}/.viking-maps
 blacklist ${HOME}/.vscode
 blacklist ${HOME}/.vscode-oss
 blacklist ${HOME}/.vst
+blacklist ${HOME}/.vultures
 blacklist ${HOME}/.w3m
 blacklist ${HOME}/.warzone2100-3.*
 blacklist ${HOME}/.waterfox
@@ -644,6 +650,7 @@ blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
 blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
+blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/google-chrome
@@ -717,4 +724,7 @@ blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
 
 blacklist /var/games/nethack
+blacklist /var/games/slashem
+blacklist /var/games/vulturesclaw
+blacklist /var/games/vultureseye
 blacklist /var/lib/games/Maelstrom-Scores

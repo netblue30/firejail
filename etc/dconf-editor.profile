@@ -6,6 +6,8 @@ include dconf-editor.local
 # Persistent global definitions
 include globals.local
 
+whitelist ${HOME}/.local/share/glib-2.0
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

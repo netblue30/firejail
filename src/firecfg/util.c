@@ -59,8 +59,8 @@ int which(const char *program) {
 		char *ptr = strtok(path2, ":");
 		while (ptr) {
 			// Ubuntu 18.04 is adding  /snap/bin to PATH;
-			// they populate /snap/bin with simbolic links to /usr/bin/ programs;
-			// most simlinked programs are not installed by default.
+			// they populate /snap/bin with symbolic links to /usr/bin/ programs;
+			// most symlinked programs are not installed by default.
 			// Removing /snap/bin from our search
 			if (strcmp(ptr, "/snap/bin") != 0) {
 				if (find(program, ptr)) {

@@ -536,7 +536,7 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: thunderbird-wayland, supertuxkart, ghostwriter
 	- added profiles: klavaro, mypaint, mypaint-ora-thumbnailer, nano
 	- added profiles: gajim-history-manager, freemind, nomacs, kid3
-	- added profiles: kid3-qt, kid3-cli
+	- added profiles: kid3-qt, kid3-cli, anki, anki
 	- fixed profiles: kdenlive, bibletime, rhythmbox, gajim, seahorse
 	- fixed profiles: libreoffice, gnome-maps, wget, seahorse-tool
 	- hardened profiles: disable-common.inc, disable-programs.inc

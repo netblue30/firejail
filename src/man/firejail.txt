@@ -2500,7 +2500,7 @@ Make a firefox symlink to /usr/bin/firejail:
 .br
 
 .br
-$ ln -s /usr/bin/firejail /usr/local/bin/firefox
+$ sudo ln -s /usr/bin/firejail /usr/local/bin/firefox
 .br
 
 .br
@@ -2540,7 +2540,7 @@ $ firejail --tree
       1221:netblue:/usr/lib/firefox/firefox
 .RE
 
-We provide a tool that automates all this integration, please see \fBman 1 firecfg\fR for more details.
+We provide a tool that automates all this integration, please see \&\flfirecfg\fR\|(1) for more details.
 
 .SH EXAMPLES
 .TP

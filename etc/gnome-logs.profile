@@ -46,7 +46,5 @@ private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.s
 private-tmp
 writable-var-log
 
-memory-deny-write-execute
-
 # comment this if you export logs to a file in your ${HOME}
 read-only ${HOME}

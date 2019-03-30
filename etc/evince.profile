@@ -23,7 +23,7 @@ machine-id
 # net none - breaks AppArmor on Ubuntu systems
 netfilter
 no3d
-nodbus
+nodbus # might break two-page-view on some systems
 nodvd
 nogroups
 nonewprivs

@@ -26,6 +26,7 @@ nodbus
 nodvd
 # When using 'volatile' storage (https://www.freedesktop.org/software/systemd/man/journald.conf.html),
 # comment both 'nogroups' and 'noroot'
+# or put 'ignore nogroups' and 'ignore noroot' to your gnome-logs.local.
 nogroups
 nonewprivs
 noroot

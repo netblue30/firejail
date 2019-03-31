@@ -26,6 +26,7 @@ nodbus
 nodvd
 # When using 'volatile' storage (https://www.freedesktop.org/software/systemd/man/journald.conf.html),
 # comment both 'nogroups' and 'noroot'
+# or put 'ignore nogroups' and 'ignore noroot' to your gnome-logs.local.
 nogroups
 nonewprivs
 noroot
@@ -45,8 +46,6 @@ private-etc alternatives,fonts,localtime,machine-id
 private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 writable-var-log
-
-memory-deny-write-execute
 
 # comment this if you export logs to a file in your ${HOME}
 read-only ${HOME}

@@ -7,6 +7,7 @@ include assogiate.local
 include globals.local
 
 noblacklist ${PICTURES}
+whitelist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,9 +16,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
-
-whitelist ${PICTURES}
 include whitelist-common.inc
+include white-var-common.inc
 
 apparmor
 caps.drop all
@@ -39,7 +39,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin assogiate,gtk-update-icon-cache
+private-bin assogiate,gtk-update-icon-cache,update-mime-database
 private-cache
 private-dev
 private-lib gnome-vfs-2.0,libattr.so.*,libacl.so.*,libfam.so.*

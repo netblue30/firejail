@@ -56,8 +56,10 @@ static int have_profile(const char *filename, const char *homedir) {
 	if (arg_debug)
 		printf("checking profile for %s\n", filename);
 
-	// we get strange names here, such as .org.gnom.gedit.desktop, com.uploadedlobster.peek.desktop,
+	// we get strange names here, such as .org.gnome.gedit.desktop, com.uploadedlobster.peek.desktop,
 	// or io.github.Pithos.desktop; extract the word before .desktop
+	// TODO: implement proper fix for #2624 (names like org.gnome.Logs.desktop fall thru
+	// the 'last word' logic and don't get installed to ~/.local/share/applications
 
 	char *tmpfname = strdup(filename);
 	if (!tmpfname)

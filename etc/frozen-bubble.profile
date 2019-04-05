@@ -10,7 +10,8 @@ noblacklist ${HOME}/.frozen-bubble
 
 include disable-common.inc
 include disable-devel.inc
-include disable-interpreters.inc
+# requires /usr/bin/perl
+#include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 

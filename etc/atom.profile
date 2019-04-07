@@ -10,6 +10,7 @@ noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
 noblacklist ${HOME}/.cargo/config
 noblacklist ${HOME}/.cargo/registry
+noblacklist ${HOME}/.gitconfig
 
 include disable-common.inc
 include disable-passwdmgr.inc

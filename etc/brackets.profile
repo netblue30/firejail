@@ -9,8 +9,10 @@ noblacklist ${HOME}/.config/Brackets
 #noblacklist /opt/brackets/
 #noblacklist /opt/google/
 # Uncomment the the next two lines if you are developing rust.
+# or put it in your brackets.local
 #noblacklist ${HOME}/.cargo/config
 #noblacklist ${HOME}/.cargo/registry
+noblacklist ${HOME}/.gitconfig
 
 include disable-common.inc
 include disable-passwdmgr.inc

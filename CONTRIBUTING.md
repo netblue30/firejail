@@ -18,5 +18,11 @@ we can handle the report more easily:
  let us know if it runs correctly or not.
  - You may also try disabling various options provided in `/etc/firejail/<ProgramName.profile>` until you find out which one causes problems. It will significantly help to find solution for your issue.
 
+Please note: if you are running Debian, Ubuntu, Linux Mint, or another related
+distribution and you installed firejail from your distro's repositories, please
+ensure that **both** of the following were installed:
+`firejail` and `firejail-profiles`. A common source of issues is that
+firejail-profiles was not installed when installing firejail.
+
 We take security bugs very seriously. If you believe you have found one, please report it by
 emailing us at netblue30@yahoo.com

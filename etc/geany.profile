@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/geany
 noblacklist ${HOME}/.python-history
+noblacklist ${HOME}/.gitconfig
 
 include disable-common.inc
 include disable-passwdmgr.inc

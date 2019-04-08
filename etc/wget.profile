@@ -13,6 +13,7 @@ noblacklist ${HOME}/.wget-hsts
 noblacklist ${HOME}/.wgetrc
 
 include disable-common.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
@@ -38,5 +39,3 @@ private-dev
 # private-etc alternatives,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 # private-tmp
 
-noexec ${HOME}
-noexec /tmp

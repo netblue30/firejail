@@ -10,6 +10,7 @@ noblacklist ${HOME}/.local/share/gnome-chess
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.iinc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -37,6 +38,3 @@ private-bin fairymax,gnome-chess,hoichess,gnuchess
 private-dev
 private-etc alternatives,fonts,gnome-chess
 private-tmp
-
-noexec ${HOME}
-noexec /tmp

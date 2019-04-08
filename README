@@ -49,6 +49,8 @@ Committers
 
 Firejail Authors (alphabetical order)
 
+7twin (https://github.com/7twin_
+	- fix typos
 1dnrr (https://github.com/1dnrr)
 	- add pybitmessage profile
 Aidan Gauland (https://github.com/aidalgol)
@@ -439,6 +441,7 @@ n1trux (https://github.com/n1trux)
 	- fix flashpeak-slimjet profile typos
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
+	- add code-oss config directory
 NickMolloy (https://github.com/NickMolloy)
 	- ARP address length fix
 Niklas Haas (https://github.com/haasn)
@@ -450,6 +453,7 @@ Ondra Nekola (https://github.com/satai)
 Lorenzo "Palinuro" Faletra (https://github.com/PalinuroSec)
 	- prevent thunderbird conflicts when firefox is running
 	- add join-or-start to pluma to open multiple files in tabs
+	- fixes to keepassxc, thunderbird and pluma
 Panzerfather (https://github.com/Panzerfather)
 	- allow eog to access user's trash
 Patrick Toomey (https://sourceforge.net/u/ptoomey/profile/)
@@ -478,6 +482,8 @@ Petter Reinholdtsen (pere@hungry.com)
 PharmaceuticalCobweb (https://github.com/PharmaceuticalCobweb)
 	- fix quiterss profile
 	- added profile for gnome-ring
+pianoslum (https://github.com/pianoslum)
+	- nodbus breaking evince two-page-view warning
 pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile
 	- mpsyt profile
@@ -553,6 +559,8 @@ sarneaud (https://github.com/sarneaud)
 	- various enhancements and bug fixes
 Sergey Alirzaev (https://github.com/l29ah)
 	- firejail.h enum fix
+Tobias Schmidl (https://github.com/schtobia)
+	- added profile for webui-aria2
 Simon Peter (https://github.com/probonopd)
 	- set $APPIMAGE and $APPDIR environment variables
 	- AppImage version detection
@@ -715,6 +723,12 @@ veloute (https://github.com/veloute)
 	- fixed discord profile
 	- fixes for various profiles
 	- removed vim and ranger from firecfg
+	- fixing keepassxc auto-type, noexec /tmp
+	- fix ipc-namespace prblem in file-roller
+	- fix exiftool, viewnior, aria2c, ffmpegthumbnailer
+	- fix pavucontrol (ipcnamespace)
+	- fix gnuchess
+	- add anki profile
 Vincent43 (https://github.com/Vincent43)
 	- apparmor enhancements
 vismir2 (https://github.com/vismir2)

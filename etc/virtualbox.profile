@@ -14,6 +14,7 @@ noblacklist /usr/lib/virtualbox
 noblacklist /usr/lib64/virtualbox
 
 include disable-common.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 

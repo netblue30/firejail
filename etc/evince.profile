@@ -11,6 +11,7 @@ noblacklist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -46,5 +47,3 @@ private-lib evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,li
 private-tmp
 
 # memory-deny-write-execute - might break application (https://github.com/netblue30/firejail/issues/1803)
-noexec ${HOME}
-noexec /tmp

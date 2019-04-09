@@ -17,19 +17,22 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "libpostexecseccomp.h"
 #include "../include/seccomp.h"
+#include "../include/rundefs.h"
 #include <fcntl.h>
 #include <linux/filter.h>
 #include <sys/mman.h>
 #include <sys/prctl.h>
 #include <unistd.h>
+#include <stdio.h>
 
 __attribute__((constructor))
 static void load_seccomp(void) {
 	int fd = open(RUN_SECCOMP_POSTEXEC, O_RDONLY);
-	if (fd == -1)
+	if (fd == -1) {
+		fprintf(stderr, "Error: cannot open seccomp postexec filter file %s\n", RUN_SECCOMP_POSTEXEC);
 		return;
+	}
 
 	off_t size = lseek(fd, 0, SEEK_END);
 	if (size <= 0) {
@@ -40,11 +43,12 @@ static void load_seccomp(void) {
 	struct sock_filter *filter = MAP_FAILED;
 	if (size != 0)
 		filter = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-
 	close(fd);
 
-	if (filter == MAP_FAILED)
+	if (filter == MAP_FAILED) {
+		fprintf(stderr, "Error: cannot map seccomp postexec filter data\n");
 		return;
+	}
 
 	// install filter
 	struct sock_fprog prog = {

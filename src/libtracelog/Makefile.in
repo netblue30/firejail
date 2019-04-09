@@ -13,7 +13,7 @@ LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now
 
 all: libtracelog.so
 
-%.o : %.c $(H_FILE_LIST)
+%.o : %.c $(H_FILE_LIST) ../include/rundefs.h
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 libtracelog.so: $(OBJS)

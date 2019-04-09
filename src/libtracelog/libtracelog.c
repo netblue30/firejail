@@ -32,6 +32,7 @@
 #include <syslog.h>
 #include <dirent.h>
 #include <limits.h>
+#include "../include/rundefs.h"
 
 //#define DEBUG
 
@@ -163,7 +164,6 @@ static char *storage_find(const char *str) {
 //
 // load blacklist form /run/firejail/mnt/fslogger
 //
-#define RUN_FSLOGGER_FILE		"/run/firejail/mnt/fslogger"
 #define MAXBUF 4096
 static int blacklist_loaded = 0;
 static char *sandbox_pid_str = NULL;

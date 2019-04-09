@@ -10,18 +10,18 @@ match_max 100000
 send --  "firejail --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"/run/firejail/mnt/seccomp seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"/run/firejail/mnt/seccomp.32 seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp.32 seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"/run/firejail/mnt/seccomp.protocol seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 after 100
-send -- "ls -l /run/firejail/mnt | grep -c seccomp\r"
+send -- "ls -l /run/firejail/mnt/seccomp | grep -c seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"5"
@@ -32,13 +32,13 @@ sleep 1
 send --  "firejail --ignore=seccomp --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"/run/firejail/mnt/seccomp seccomp filter" {puts "TESTING ERROR 5\n";exit}
-	"/run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 6\n";exit}
-	"/run/firejail/mnt/seccomp.64 seccomp filter" {puts "TESTING ERROR 7\n";exit}
-	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp seccomp filter" {puts "TESTING ERROR 5\n";exit}
+	"/run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 6\n";exit}
+	"/run/firejail/mnt/seccomp/seccomp.64 seccomp filter" {puts "TESTING ERROR 7\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 after 100
-send -- "ls -l /run/firejail/mnt | grep -c seccomp\r"
+send -- "ls -l /run/firejail/mnt/seccomp | grep -c seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"3"
@@ -49,15 +49,15 @@ sleep 1
 send --  "firejail --ignore=protocol --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
-	"/run/firejail/mnt/seccomp seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"/run/firejail/mnt/seccomp.32 seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp.32 seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"/run/firejail/mnt/seccomp.protocol seccomp filter" {puts "TESTING ERROR 12\n";exit}
+	"/run/firejail/mnt/seccomp/seccomp.protocol seccomp filter" {puts "TESTING ERROR 12\n";exit}
 	"monitoring"
 }
 after 100
@@ -72,22 +72,22 @@ sleep 1
 send --  "firejail --memory-deny-write-execute --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
-	"/run/firejail/mnt/seccomp.mdwx seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp.mdwx seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
-	"/run/firejail/mnt/seccomp seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 16\n";exit}
-	"/run/firejail/mnt/seccomp.32 seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp.32 seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
-	"/run/firejail/mnt/seccomp.protocol seccomp filter"
+	"/run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 after 100
-send -- "ls -l /run/firejail/mnt | grep -c seccomp\r"
+send -- "ls -l /run/firejail/mnt/seccomp | grep -c seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 18\n";exit}
 	"6"

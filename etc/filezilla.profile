@@ -36,7 +36,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-# private-bin breaks --join
-# private-bin filezilla,uname,sh,bash,python*,lsb_release,fzputtygen,fzsftp
+# private-bin breaks --join if the user has zsh set as $SHELL - adding zsh on private-bin
+private-bin filezilla,uname,sh,bash,zsh,python*,lsb_release,fzputtygen,fzsftp
 private-dev
 private-tmp

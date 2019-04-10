@@ -36,6 +36,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin filezilla,uname,sh,bash,python*,lsb_release,fzputtygen,fzsftp
+# private-bin breaks --join
+# private-bin filezilla,uname,sh,bash,python*,lsb_release,fzputtygen,fzsftp
 private-dev
 private-tmp

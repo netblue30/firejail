@@ -10,6 +10,7 @@ noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -31,5 +32,3 @@ private-bin guayadeque
 private-dev
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

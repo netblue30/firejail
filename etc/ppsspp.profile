@@ -13,6 +13,7 @@ noblacklist /usr/lib/llvm*
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -41,5 +42,3 @@ private-etc alternatives,asound.conf,ca-certificates,drirc,fonts,group,host.conf
 private-opt ppsspp
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

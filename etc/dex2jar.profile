@@ -14,6 +14,7 @@ noblacklist /usr/share/java
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -41,5 +42,3 @@ private-bin dex2jar,java,sh,bash,expr,dirname,ls,uname,grep
 private-cache
 private-dev
 
-noexec ${HOME}
-noexec /tmp

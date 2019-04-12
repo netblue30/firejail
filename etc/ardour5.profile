@@ -14,6 +14,7 @@ noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -39,5 +40,3 @@ private-dev
 #private-etc alternatives,pulse,X11,alternatives,ardour4,ardour5,fonts,machine-id,asound.conf
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

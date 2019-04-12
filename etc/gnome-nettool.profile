@@ -8,6 +8,7 @@ include globals.local
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -41,5 +42,3 @@ private-dev
 private-lib libbind9.so.*,libcrypto.so.*,libdns.so.*,libirs.so.*,liblua.so.*,libssh2.so.*,libssl.so.*
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

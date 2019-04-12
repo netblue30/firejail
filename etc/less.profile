@@ -9,6 +9,7 @@ include less.local
 #include globals.local
 
 blacklist /tmp/.X11-unix
+include disable-exec.inc
 
 ignore noroot
 apparmor
@@ -34,7 +35,5 @@ private-cache
 private-dev
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp
 
 include default.profile

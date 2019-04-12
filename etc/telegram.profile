@@ -10,6 +10,7 @@ noblacklist ${HOME}/.local/share/TelegramDesktop
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
@@ -26,5 +27,3 @@ disable-mnt
 private-cache
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

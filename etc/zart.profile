@@ -11,6 +11,7 @@ noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -33,5 +34,3 @@ shell none
 private-bin zart,ffmpeg,melt,ffprobe,ffplay
 private-dev
 
-noexec ${HOME}
-noexec /tmp

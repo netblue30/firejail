@@ -18,6 +18,7 @@ noblacklist /usr/local/lib/python3*
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -47,7 +48,5 @@ private-lib libdbus-1.so.*,libdbus-glib-1.so.*,libgirepository-1.0.so.*,libnotif
 private-tmp
 
 # memory-deny-write-execute - Breaks on Arch
-noexec ${HOME}
-noexec /tmp
 
 read-only ${HOME}

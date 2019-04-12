@@ -31,6 +31,7 @@ blacklist ${HOME}/.gnupg/openpgp-revocs.d
 noblacklist /var/lib/pacman
 
 include disable-common.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
@@ -54,5 +55,3 @@ disable-mnt
 private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

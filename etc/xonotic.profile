@@ -10,6 +10,7 @@ noblacklist ${HOME}/.xonotic
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -39,5 +40,3 @@ private-dev
 private-etc alternatives,asound.conf,ca-certificates,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pulse,resolv.conf,ssl,pki,crypto-policies,machine-id
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

@@ -10,6 +10,7 @@ noblacklist ${HOME}/.ViberPC
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -35,7 +36,5 @@ private-bin sh,bash,dig,awk,Viber
 private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf,pki,ca-certificates,crypto-policies,machine-id,asound.conf
 private-tmp
 
-noexec ${HOME}
-noexec /tmp
 
 env QTWEBENGINE_DISABLE_SANDBOX=1

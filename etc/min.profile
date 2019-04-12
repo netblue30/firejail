@@ -13,6 +13,7 @@ noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
@@ -48,5 +49,3 @@ private-etc alternatives,ca-certificates,ssl,machine-id,dconf,selinux,passwd,gro
 private-tmp
 
 # memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

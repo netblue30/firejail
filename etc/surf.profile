@@ -10,6 +10,7 @@ noblacklist ${HOME}/.surf
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
@@ -35,5 +36,3 @@ private-dev
 private-etc alternatives,passwd,group,hosts,resolv.conf,fonts,ssl,pki,ca-certificates,crypto-policies
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

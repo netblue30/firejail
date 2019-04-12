@@ -6,6 +6,8 @@ include ncdu.local
 # Persistent global definitions
 include globals.local
 
+include disable-exec.inc
+
 caps.drop all
 ipc-namespace
 nodbus
@@ -27,5 +29,3 @@ private-dev
 # private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp

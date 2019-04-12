@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/Gpredict
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -36,5 +37,3 @@ private-dev
 private-etc alternatives,fonts,resolv.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

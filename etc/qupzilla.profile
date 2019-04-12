@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/qupzilla
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -37,5 +38,3 @@ private-dev
 # private-etc alternatives,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,adobe,mime.types,mailcap,asound.conf,pulse,machine-id,ca-certificates,ssl,pki,crypto-policies
 # private-tmp - interferes with the opening of downloaded files
 
-noexec ${HOME}
-noexec /tmp

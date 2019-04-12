@@ -9,6 +9,7 @@ noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
@@ -33,5 +34,3 @@ disable-mnt
 private-dev
 private-etc alternatives,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
 
-noexec ${HOME}
-noexec /tmp

@@ -11,6 +11,7 @@ noblacklist ${HOME}/.config/falkon
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -37,5 +38,3 @@ seccomp.drop @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@res
 private-dev
 # private-tmp - interferes with the opening of downloaded files
 
-noexec ${HOME}
-noexec /tmp

@@ -551,7 +551,7 @@ rusty-snake (https://github.com/rusty-snake)
 	- hardened profiles: disable-common.inc, disable-programs.inc
 	- hardened profiles: gajim, evince, ffmpeg, feh-network.inc, qtox
 	- hardened profiles: gnome-clocks, meld, minetest, youtube-dl
-	- hardened profiles: bibletime
+	- hardened profiles: bibletime, whois
 	- gnome-mpv was renamed to celluloid
 	- updates for ~/.cargo and ~/.python-history
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)

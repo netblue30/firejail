@@ -549,7 +549,7 @@ rusty-snake (https://github.com/rusty-snake)
 	- fixed profiles: libreoffice, gnome-maps, wget, seahorse-tool
 	- fixed profiles: gnome-logs, atom, brackets, gnome-builder, geany
 	- fixed profiles: vim, emacs, pycharm-community, gedit, klavaro
-  - fixed profiles: default
+	- fixed profiles: default
 	- hardened profiles: disable-common.inc, disable-programs.inc
 	- hardened profiles: gajim, evince, ffmpeg, feh-network.inc, qtox
 	- hardened profiles: gnome-clocks, meld, minetest, youtube-dl

@@ -43,12 +43,10 @@ shell none
 tracelog
 
 disable-mnt
-private-bin klavaro,tclsh,tclsh*,bash
+private-bin bash,klavaro,sh,tclsh,tclsh*
 private-cache
 private-dev
 private-etc alternatives,fonts
 private-tmp
 private-opt none
 private-srv none
-
-memory-deny-write-execute

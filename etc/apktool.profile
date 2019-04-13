@@ -8,6 +8,7 @@ include apktool.local
 include globals.local
 
 include disable-common.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
@@ -33,6 +34,3 @@ shell none
 private-bin apktool,bash,java,dirname,basename,expr,sh
 private-cache
 private-dev
-
-noexec ${HOME}
-noexec /tmp

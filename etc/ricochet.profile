@@ -10,6 +10,7 @@ noblacklist ${HOME}/.local/share/Ricochet
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -38,5 +39,3 @@ private-bin ricochet,tor
 private-dev
 #private-etc alternatives,fonts,tor,X11,alternatives,ca-certificates,ssl,pki,crypto-policies
 
-noexec ${HOME}
-noexec /tmp

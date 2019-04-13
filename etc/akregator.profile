@@ -11,6 +11,7 @@ noblacklist ${HOME}/.local/share/akregator
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -43,5 +44,3 @@ private-bin akregator,akregatorstorageexporter,dbus-launch,kdeinit5,kshell5,kdei
 private-dev
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

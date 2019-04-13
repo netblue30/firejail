@@ -11,6 +11,7 @@ noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -40,5 +41,3 @@ private-etc alternatives,fonts,ld.so.conf,resolv.conf,ca-certificates,ssl,pki,cr
 private-dev
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

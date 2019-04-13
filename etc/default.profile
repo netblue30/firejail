@@ -19,6 +19,8 @@ include disable-programs.inc
 # apparmor
 caps.drop all
 # ipc-namespace
+# machine-id
+# net none
 netfilter
 # no3d
 # nodbus
@@ -33,6 +35,7 @@ noroot
 protocol unix,inet,inet6
 seccomp
 # shell none
+# tracelog
 
 # disable-mnt
 # private

@@ -2,7 +2,7 @@ all: firejail
 
 include ../common.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/ldd_utils.h ../include/euid_common.h ../include/pid.h ../include/seccomp.h ../include/syscall.h ../include/firejail_user.h
+%.o : %.c $(H_FILE_LIST) ../include/rundefs.h ../include/common.h ../include/ldd_utils.h ../include/euid_common.h ../include/pid.h ../include/seccomp.h ../include/syscall.h ../include/firejail_user.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 firejail: $(OBJS) ../lib/libnetlink.o ../lib/common.o ../lib/ldd_utils.o ../lib/firejail_user.o

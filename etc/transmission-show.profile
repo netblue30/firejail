@@ -19,7 +19,7 @@ include disable-programs.inc
 apparmor
 caps.drop all
 machine-id
-net none
+netfilter
 nodbus
 nodvd
 nonewprivs
@@ -28,13 +28,13 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol inet,inet6
 seccomp
 shell none
 tracelog
 
 private-dev
-private-etc alternatives
+private-etc alternatives,hosts,nsswitch.conf
 private-lib
 private-tmp
 

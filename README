@@ -38,10 +38,12 @@ Committers
 - glitsj16 (https://github.com/glitsj16)
 - Fred-Barclay (https://github.com/Fred-Barclay)
 - Reiner Herrmann (https://github.com/reinerh - Debian/Ubuntu maintainer)
+- rusty-snake (https://github.com/rusty-snake)
 - smithsohu (https://github.com/smitsohu)
 - SkewedZeppelin (https://github.com/SkewedZeppelin)
 - startx2017 (https://github.com/startx2017) - LTS and *bugfixes branches maintainer)
 - Topi Miettinen (https://github.com/topimiettinen)
+- veloute (https://github.com/veloute)
 - Vincent43 (https://github.com/Vincent43)
 - netblue30 (netblue30@yahoo.com)
 
@@ -542,14 +544,16 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: thunderbird-wayland, supertuxkart, ghostwriter
 	- added profiles: klavaro, mypaint, mypaint-ora-thumbnailer, nano
 	- added profiles: gajim-history-manager, freemind, nomacs, kid3
-	- added profiles: kid3-qt, kid3-cli, anki
+	- added profiles: kid3-qt, kid3-cli, anki, utox
 	- fixed profiles: kdenlive, bibletime, rhythmbox, gajim, seahorse
 	- fixed profiles: libreoffice, gnome-maps, wget, seahorse-tool
 	- fixed profiles: gnome-logs, atom, brackets, gnome-builder, geany
-	- fixed profiles: vim, emacs, pycharm-community, gedit
+	- fixed profiles: vim, emacs, pycharm-community, gedit, klavaro
+  - fixed profiles: default
 	- hardened profiles: disable-common.inc, disable-programs.inc
 	- hardened profiles: gajim, evince, ffmpeg, feh-network.inc, qtox
 	- hardened profiles: gnome-clocks, meld, minetest, youtube-dl
+	- hardened profiles: bibletime, whois, etr, display, feh
 	- gnome-mpv was renamed to celluloid
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile

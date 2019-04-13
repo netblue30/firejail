@@ -13,6 +13,7 @@ noblacklist ${HOME}/.cargo/registry
 noblacklist ${HOME}/.gitconfig
 
 include disable-common.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
@@ -35,6 +36,3 @@ shell none
 private-cache
 private-dev
 private-tmp
-
-noexec ${HOME}
-noexec /tmp

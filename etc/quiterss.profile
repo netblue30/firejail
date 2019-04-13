@@ -13,6 +13,7 @@ noblacklist ${HOME}/.local/share/QuiteRss
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -49,5 +50,3 @@ private-bin quiterss
 private-dev
 # private-etc alternatives,X11,ssl,pki,ca-certificates,crypto-policies
 
-noexec ${HOME}
-noexec /tmp

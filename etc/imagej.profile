@@ -16,6 +16,7 @@ noblacklist /usr/share/java
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -40,5 +41,3 @@ private-bin imagej,bash,grep,sort,tail,tr,cut,whoami,hostname,uname,mkdir,ls,tou
 private-dev
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

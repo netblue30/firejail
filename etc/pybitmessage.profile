@@ -19,6 +19,7 @@ noblacklist /usr/local/lib/python3*
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-interpreters.inc
@@ -47,5 +48,3 @@ private-dev
 private-etc alternatives,PyBitmessage,PyBitmessage.conf,Trolltech.conf,fonts,gtk-2.0,hosts,ld.so.cache,ld.so.preload,localtime,pki,resolv.conf,selinux,sni-qt.conf,system-fips,xdg,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

@@ -24,6 +24,7 @@ noblacklist /usr/local/lib/python3*
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -50,5 +51,3 @@ private-bin mendeleydesktop,python*,env,gconftool-2,which,sh,ln,cat,update-deskt
 private-dev
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

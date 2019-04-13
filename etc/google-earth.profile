@@ -13,6 +13,7 @@ noblacklist ${HOME}/.googleearth/myplaces.kml
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -48,5 +49,3 @@ private-bin google-earth,sh,bash,grep,sed,ls,dirname
 private-dev
 private-opt google
 
-noexec ${HOME}
-noexec /tmp

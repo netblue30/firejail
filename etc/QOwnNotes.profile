@@ -13,6 +13,7 @@ noblacklist ${HOME}/.local/share/PBE
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -51,5 +52,3 @@ private-dev
 private-etc alternatives,fonts,ld.so.cache,pulse,resolv.conf,hosts,nsswitch.conf,host.conf,ca-certificates,ssl,pki,crypto-policies
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

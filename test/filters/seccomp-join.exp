@@ -20,15 +20,15 @@ set spawn_id $id1
 send --  "firejail --name=jointesting --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Installing /run/firejail/mnt/seccomp seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Installing /run/firejail/mnt/seccomp.32 seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 sleep 1
 
@@ -37,15 +37,15 @@ set spawn_id $id2
 send --  "firejail --debug --join=jointesting\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Installing /run/firejail/mnt/seccomp seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Installing /run/firejail/mnt/seccomp.32 seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 sleep 1
 
@@ -64,16 +64,16 @@ set spawn_id $id1
 send --  "firejail --name=jointesting --seccomp.block-secondary --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"Installing /run/firejail/mnt/seccomp seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 12\n";exit}
-	"Installing /run/firejail/mnt/seccomp.block_secondary seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 12\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.block_secondary seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 sleep 1
 
@@ -81,15 +81,15 @@ set spawn_id $id2
 send --  "firejail --debug --join=jointesting\r"
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
-	"Installing /run/firejail/mnt/seccomp seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
-	"Installing /run/firejail/mnt/seccomp.block_secondary seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.block_secondary seccomp filter"
 }
 expect {
 	timeout {puts "TESTING ERROR 16\n";exit}
-	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 sleep 1
 
@@ -106,7 +106,7 @@ set spawn_id $id1
 send --  "firejail --name=jointesting --noprofile --protocol=inet --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 22\n";exit}
-	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 sleep 1
 
@@ -115,9 +115,9 @@ set spawn_id $id2
 send --  "firejail --debug --join=jointesting\r"
 expect {
 	timeout {puts "TESTING ERROR 23\n";exit}
-	"Installing /run/firejail/mnt/seccomp seccomp filter" {puts "TESTING ERROR 24\n";exit}
-	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 25\n";exit}
-	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter" {puts "TESTING ERROR 24\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 25\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 sleep 1
 
@@ -134,7 +134,7 @@ set spawn_id $id1
 send --  "firejail --name=jointesting --noprofile --memory-deny-write-execute --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 32\n";exit}
-	"Installing /run/firejail/mnt/seccomp.mdwx seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp.mdwx seccomp filter"
 }
 sleep 1
 
@@ -143,10 +143,10 @@ set spawn_id $id2
 send --  "firejail --debug --join=jointesting\r"
 expect {
 	timeout {puts "TESTING ERROR 33\n";exit}
-	"Installing /run/firejail/mnt/seccomp seccomp filter" {puts "TESTING ERROR 34\n";exit}
-	"Installing /run/firejail/mnt/seccomp.32 seccomp filter" {puts "TESTING ERROR 35\n";exit}
-	"Installing /run/firejail/mnt/seccomp.protocol seccomp filter" {puts "TESTING ERROR 36\n";exit}
-	"Installing /run/firejail/mnt/seccomp.mdwx seccomp filter"
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter" {puts "TESTING ERROR 34\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 35\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter" {puts "TESTING ERROR 36\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.mdwx seccomp filter"
 }
 sleep 1
 

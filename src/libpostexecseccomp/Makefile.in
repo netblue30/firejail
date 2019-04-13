@@ -13,12 +13,11 @@ LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now
 
 all: libpostexecseccomp.so
 
-%.o : %.c $(H_FILE_LIST)
+%.o : %.c $(H_FILE_LIST) ../include/seccomp.h ../include/rundefs.h
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 libpostexecseccomp.so: $(OBJS)
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
-
 
 clean:; rm -f $(OBJS) libpostexecseccomp.so
 

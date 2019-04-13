@@ -16,6 +16,7 @@ noblacklist ${HOME}/.local/share/spotify
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -50,5 +51,3 @@ private-etc alternatives,fonts,group,ld.so.cache,machine-id,pulse,resolv.conf,ho
 private-opt spotify
 private-tmp
 
-noexec ${HOME}
-noexec /tmp

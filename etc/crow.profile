@@ -13,6 +13,7 @@ whitelist ${HOME}/.cache/gstreamer-1.0
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -42,5 +43,3 @@ private-opt none
 private-tmp
 private-srv none
 
-noexec ${HOME}
-noexec /tmp

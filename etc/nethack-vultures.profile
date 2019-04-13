@@ -12,6 +12,7 @@ noblacklist /var/log
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -43,5 +44,3 @@ private-dev
 private-tmp
 writable-var
 
-noexec ${HOME}
-noexec /tmp

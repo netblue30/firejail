@@ -29,7 +29,7 @@ seccomp
 
 private-bin sh,xdg-mime,tr,sed,echo,head,cut,xdg-open,grep,egrep,bash,zsh
 private-dev
-private-etc alternatives,fonts,machine-id,localtime,ld.so.cache,ca-certificates,ssl,pki,crypto-policies,resolv.conf
+private-etc alternatives,ca-certificates,crypto-policies,fonts,group,machine-id,ld.so.cache,localtime,login.defs,password,pki,resolv.conf,ssl
 private-tmp
 
 noexec /tmp

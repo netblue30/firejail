@@ -14,7 +14,7 @@ noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
 
 # noexec ${HOME} breaks DRM binaries.
-ignore noexec ${HOME}
+?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
 include disable-common.inc
 include disable-devel.inc

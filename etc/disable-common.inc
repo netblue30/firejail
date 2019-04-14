@@ -227,7 +227,6 @@ read-only ${HOME}/.pgpkey
 read-only ${HOME}/.plan
 read-only ${HOME}/.profile
 read-only ${HOME}/.project
-read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.tcshrc
 read-only ${HOME}/.zlogin
 read-only ${HOME}/.zlogout
@@ -248,12 +247,14 @@ read-only ${HOME}/.emacs
 read-only ${HOME}/.emacs.d
 read-only ${HOME}/.exrc
 read-only ${HOME}/.gvimrc
+read-only ${HOME}/.homesick
 read-only ${HOME}/.iscreenrc
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc
 read-only ${HOME}/.muttrc
 read-only ${HOME}/.nano
+read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.reportbugrc
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.vim
@@ -265,7 +266,6 @@ read-only ${HOME}/_exrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
-read-only ${HOME}/.homesick
 
 # Make directories commonly found in $PATH read-only
 read-only ${HOME}/.gem

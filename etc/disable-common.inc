@@ -227,6 +227,7 @@ read-only ${HOME}/.pgpkey
 read-only ${HOME}/.plan
 read-only ${HOME}/.profile
 read-only ${HOME}/.project
+read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.tcshrc
 read-only ${HOME}/.zlogin
 read-only ${HOME}/.zlogout

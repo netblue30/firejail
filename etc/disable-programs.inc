@@ -5,6 +5,7 @@ include disable-programs.local
 blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud/Notes
+blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/.*coin

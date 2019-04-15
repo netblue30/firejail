@@ -550,6 +550,7 @@ blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.nanorc
 blacklist ${HOME}/.netactview
 blacklist ${HOME}/.neverball
+blacklist ${HOME}/.newsboat
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail
 blacklist ${HOME}/.opencity

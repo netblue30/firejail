@@ -6,8 +6,13 @@ include gramps.local
 # Persistent global definitions
 include globals.local
 
+# Allow python (blacklisted by disable-interpreters.inc)
+#noblacklist ${PATH}/python2*
 noblacklist ${PATH}/python3*
+#noblacklist /usr/lib/python2*
 noblacklist /usr/lib/python3*
+#noblacklist /usr/local/lib/python2*
+noblacklist /usr/local/lib/python3*
 
 noblacklist ${HOME}/.gramps
 whitelist ${HOME}/.gramps
@@ -39,12 +44,11 @@ seccomp
 shell none
 
 disable-mnt
-# private
-# private-bin program
+# private-bin gramps
 private-cache
 private-dev
 # private-etc alternatives
-#private-lib
+# private-lib
 private-tmp
 
 #memory-deny-write-execute

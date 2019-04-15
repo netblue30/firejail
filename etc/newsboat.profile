@@ -36,7 +36,7 @@ shell none
 
 disable-mnt
 # private
-# private-bin newsboat bash
+private-bin newsboat,bash
 private-cache
 private-dev
 # private-etc none
@@ -44,5 +44,4 @@ private-dev
 private-tmp
 
 memory-deny-write-execute
-#noexec ${HOME}
-#noexec /tmp
+

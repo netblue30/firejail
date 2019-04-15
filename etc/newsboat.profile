@@ -35,7 +35,6 @@ seccomp
 shell none
 
 disable-mnt
-# private
 private-bin newsboat,bash
 private-cache
 private-dev

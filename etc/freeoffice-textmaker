@@ -20,7 +20,6 @@ caps.drop all
 ipc-namespace
 machine-id
 net none
-netfilter
 no3d
 nodbus
 nodvd
@@ -38,7 +37,6 @@ tracelog
 
 # disable-mnt
 # private
-# private-bin program
 private-cache
 private-dev
 # private-etc alternatives

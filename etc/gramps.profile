@@ -14,9 +14,6 @@ noblacklist /usr/lib/python3*
 #noblacklist /usr/local/lib/python2*
 noblacklist /usr/local/lib/python3*
 
-noblacklist ${HOME}/.gramps
-whitelist ${HOME}/.gramps
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -24,6 +21,11 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+
+mkdir ${HOME}/.gramps
+whitelist ${HOME}/.gramps
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

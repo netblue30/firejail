@@ -18,7 +18,6 @@ include disable-programs.inc
 # apparmor
 caps.drop all
 ipc-namespace
-machine-id
 net none
 no3d
 nodbus

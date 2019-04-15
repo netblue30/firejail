@@ -15,7 +15,7 @@ include disable-programs.inc
 
 noblacklist ${HOME}/SoftMaker
 
-# apparmor
+apparmor
 caps.drop all
 ipc-namespace
 net none

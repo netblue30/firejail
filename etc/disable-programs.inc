@@ -339,6 +339,7 @@ blacklist ${HOME}/.googleearth/Temp/
 blacklist ${HOME}/.googleearth/myplaces.backup.kml
 blacklist ${HOME}/.googleearth/myplaces.kml
 blacklist ${HOME}/.gradle
+blacklist ${HOME}/.gramps
 blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hashcat
 blacklist ${HOME}/.hedgewars

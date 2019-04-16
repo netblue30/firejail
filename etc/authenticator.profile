@@ -6,6 +6,7 @@ include authenticator.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/Authenticator
 noblacklist ${HOME}/.config/Authenticator
 
 # Allow python (blacklisted by disable-interpreters.inc)
@@ -25,7 +26,7 @@ include disable-programs.inc
 
 # apparmor
 caps.drop all
-net none
+netfilter
 no3d
 # nodbus - makes settings immutable
 nodvd
@@ -36,15 +37,14 @@ nosound
 notv
 nou2f
 # novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 shell none
 
 disable-mnt
-# private-bin authenticator
-private-cache
+# private-bin authenticator,python*
 private-dev
-private-etc alternatives,fonts,ld.so.cache
+private-etc alternatives,ca-certificates,fonts,ld.so.cache,ssl
 private-tmp
 
 # memory-deny-write-execute - breaks on Arch

@@ -7,7 +7,6 @@ include newsboat.local
 include globals.local
 
 noblacklist ${HOME}/.newsboat
-whitelist ${HOME}/.newsboat
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,6 +15,11 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+
+mkdir ${HOME}/.newsboat
+whitelist ${HOME}/.newsboat
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace
@@ -26,7 +30,6 @@ nodvd
 nogroups
 nonewprivs
 noroot
-# nosound
 notv
 nou2f
 novideo
@@ -35,11 +38,10 @@ seccomp
 shell none
 
 disable-mnt
-private-bin newsboat,bash
+private-bin newsboat
 private-cache
 private-dev
-# private-etc none
-#private-lib
+private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl,terminfo
 private-tmp
 
 memory-deny-write-execute

@@ -625,6 +625,7 @@ blacklist /tmp/ssh-*
 # ${HOME}/.cache directory
 blacklist ${HOME}/.cache/0ad
 blacklist ${HOME}/.cache/8pecxstudios
+blacklist ${HOME}/.cache/Authenticator
 blacklist ${HOME}/.cache/Clementine
 blacklist ${HOME}/.cache/Enox
 blacklist ${HOME}/.cache/Franz

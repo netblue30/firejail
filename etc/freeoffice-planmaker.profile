@@ -5,6 +5,8 @@ include freeoffice-planmaker.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/SoftMaker
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -12,8 +14,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 # include disable-xdg.inc
-
-noblacklist ${HOME}/SoftMaker
 
 apparmor
 caps.drop all
@@ -25,7 +25,6 @@ nodvd
 nogroups
 nonewprivs
 noroot
-# nosound
 notv
 nou2f
 novideo
@@ -34,12 +33,8 @@ seccomp
 shell none
 tracelog
 
-# disable-mnt
-# private
 private-cache
 private-dev
-# private-etc alternatives
-# private-lib
 private-tmp
 
-#memory-deny-write-execute
+

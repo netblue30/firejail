@@ -45,4 +45,3 @@ private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl,ter
 private-tmp
 
 memory-deny-write-execute
-

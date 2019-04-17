@@ -18,7 +18,7 @@ include disable-programs.inc
 apparmor
 caps.drop all
 ipc-namespace
-net none
+netfilter
 no3d
 nodbus
 nodvd

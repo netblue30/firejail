@@ -5,6 +5,7 @@ include disable-programs.local
 blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud/Notes
+blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/.*coin
@@ -339,6 +340,7 @@ blacklist ${HOME}/.googleearth/Temp/
 blacklist ${HOME}/.googleearth/myplaces.backup.kml
 blacklist ${HOME}/.googleearth/myplaces.kml
 blacklist ${HOME}/.gradle
+blacklist ${HOME}/.gramps
 blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hashcat
 blacklist ${HOME}/.hedgewars
@@ -549,6 +551,7 @@ blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.nanorc
 blacklist ${HOME}/.netactview
 blacklist ${HOME}/.neverball
+blacklist ${HOME}/.newsboat
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail
 blacklist ${HOME}/.opencity

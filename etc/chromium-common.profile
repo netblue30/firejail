@@ -7,7 +7,7 @@ include chromium-common.local
 #include globals.local
 
 # noexec ${HOME} breaks DRM binaries.
-ignore noexec ${HOME}
+?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
 noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki

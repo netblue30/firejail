@@ -151,10 +151,15 @@ static int check_disable_u2f(void) {
 	return checkcfg(CFG_BROWSER_DISABLE_U2F) != 0;
 }
 
+static int check_allow_drm(void) {
+	return checkcfg(CFG_BROWSER_ALLOW_DRM) != 0;
+}
+
 Cond conditionals[] = {
 	{"HAS_APPIMAGE", check_appimage},
 	{"HAS_NODBUS", check_nodbus},
 	{"BROWSER_DISABLE_U2F", check_disable_u2f},
+	{"BROWSER_ALLOW_DRM", check_allow_drm},
 	{ NULL, NULL }
 };
 

@@ -111,6 +111,7 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_DISABLE_MNT, "disable-mnt")
 			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
 			PARSE_YESNO(CFG_BROWSER_DISABLE_U2F, "browser-disable-u2f")
+			PARSE_YESNO(CFG_BROWSER_ALLOW_DRM, "browser-allow-drm")
 #undef PARSE_YESNO
 
 			// netfilter

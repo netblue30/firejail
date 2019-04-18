@@ -44,7 +44,7 @@ shell none
 disable-mnt
 # private-bin authenticator,python*
 private-dev
-private-etc alternatives,ca-certificates,fonts,ld.so.cache,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,pki,resolv.conf,ssl
 private-tmp
 
 # memory-deny-write-execute - breaks on Arch

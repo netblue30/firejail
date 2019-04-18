@@ -7,6 +7,7 @@ include pluma.local
 include globals.local
 
 noblacklist ${HOME}/.config/pluma
+noblacklist ${HOME}/.pythonrc.py
 
 include disable-common.inc
 include disable-devel.inc

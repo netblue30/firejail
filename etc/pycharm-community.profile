@@ -7,6 +7,7 @@ include globals.local
 
 noblacklist ${HOME}/.PyCharmCE*
 noblacklist ${HOME}/.python-history
+noblacklist ${HOME}/.pythonrc.py
 noblacklist ${HOME}/.java
 
 # Allow access to java

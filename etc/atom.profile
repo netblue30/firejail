@@ -11,6 +11,7 @@ noblacklist ${HOME}/.config/Atom
 noblacklist ${HOME}/.cargo/config
 noblacklist ${HOME}/.cargo/registry
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.pythonrc.py
 
 include disable-common.inc
 include disable-exec.inc

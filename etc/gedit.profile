@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/enchant
 noblacklist ${HOME}/.config/gedit
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.python-history
+noblacklist ${HOME}/.pythonrc.py
 
 include disable-common.inc
 # include disable-devel.inc

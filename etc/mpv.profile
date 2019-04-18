@@ -1,6 +1,7 @@
 # Firejail profile for mpv
 # Description: Video player based on MPlayer/mplayer2
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include mpv.local
 # Persistent global definitions
@@ -44,4 +45,5 @@ shell none
 tracelog
 
 private-bin mpv,youtube-dl,python*,env
+private-cache
 private-dev

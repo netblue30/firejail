@@ -11,7 +11,7 @@ firejail (0.9.59) baseline; urgency=low
   * new profiles: teeworlds, torcs, tremulous, warsow, lugaru, manaplus
   * new profiles: pioneer, scorched3d, widelands, freemind, kid3, kid3-qt
   * new profiles: kid3-cli, nomacs, freecol, opencity, openclonk, slashem
-  * new profiles: vultureseye, vulturesclaw, anki, utox
+  * new profiles: vultureseye, vulturesclaw, anki, cheese, utox
   * new profiles: autokey-gtk, autokey-qt, autokey-run, autokey-shell
   * memory-deny-write-execute now also blocks memfd_create
   * drop support for flatpak/snap packages

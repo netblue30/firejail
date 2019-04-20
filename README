@@ -53,6 +53,7 @@ Firejail Authors (alphabetical order)
 
 7twin (https://github.com/7twin_
 	- fix typos
+	- fix flameshot raw screenshots
 1dnrr (https://github.com/1dnrr)
 	- add pybitmessage profile
 Aidan Gauland (https://github.com/aidalgol)
@@ -173,6 +174,8 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- various other profile fixes
 	- added digiKam profile
 	- write-protection for thumbnailer dir
+	- added gramps, newsboat, freeoffice-planmaker profiles
+	- added freeoffice-textmaker, freeoffice-presentations profiles
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
@@ -403,6 +406,8 @@ Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 Lockdis (https://github.com/Lockdis)
 	- Added crow, nyx, and google-earth-pro profiles
+Lukáš Krejčí (https://github.com/lskrejci)
+        - fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
 	- code spelling fixes
 maces (https://github.com/maces)
@@ -544,23 +549,30 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: thunderbird-wayland, supertuxkart, ghostwriter
 	- added profiles: klavaro, mypaint, mypaint-ora-thumbnailer, nano
 	- added profiles: gajim-history-manager, freemind, nomacs, kid3
-	- added profiles: kid3-qt, kid3-cli, anki, utox
+	- added profiles: kid3-qt, kid3-cli, anki, utox, mp3splt, mp3wrap
+	- added profiles: oggsplt, flacsplt, cheese
 	- fixed profiles: kdenlive, bibletime, rhythmbox, gajim, seahorse
 	- fixed profiles: libreoffice, gnome-maps, wget, seahorse-tool
 	- fixed profiles: gnome-logs, atom, brackets, gnome-builder, geany
 	- fixed profiles: vim, emacs, pycharm-community, gedit, klavaro
-	- fixed profiles: default
+	- fixed profiles: default, mpv, authenticator, gramps
+	- fixed profiles: freeoffice-planmaker, freeoffice-presentations
+	- fixed profiles: freeoffice-textmaker, code, newsboat
 	- hardened profiles: disable-common.inc, disable-programs.inc
 	- hardened profiles: gajim, evince, ffmpeg, feh-network.inc, qtox
 	- hardened profiles: gnome-clocks, meld, minetest, youtube-dl
-	- hardened profiles: bibletime, whois, etr, display, feh
+	- hardened profiles: bibletime, whois, etr, display, feh, mpv
 	- gnome-mpv was renamed to celluloid
+	- some typo fixes
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
 	- rewrite globbing code to fix various minor issues
 	- added noblacklist command for profile files
 	- various enhancements and bug fixes
+Senemu (https://github.com/Senemu)
+	- protection for .pythonrc.py
+	- fixed evince
 Sergey Alirzaev (https://github.com/l29ah)
 	- firejail.h enum fix
 Tobias Schmidl (https://github.com/schtobia)

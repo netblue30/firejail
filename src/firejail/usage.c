@@ -103,7 +103,7 @@ static char *usage_str =
 	"    --machine-id - preserve /etc/machine-id\n"
 #ifdef HAVE_SECCOMP
 	"    --memory-deny-write-execute - seccomp filter to block attempts to create\n"
-	"\tmemory mappings  that are both writable and executable.\n"
+	"\tmemory mappings that are both writable and executable.\n"
 #endif
 #ifdef HAVE_NETWORK
 	"    --mtu=number - set interface MTU.\n"
@@ -140,7 +140,7 @@ static char *usage_str =
 	"    --noautopulse - disable automatic ~/.config/pulse init.\n"
 	"    --novideo - disable video devices.\n"
 	"    --nou2f - disable U2F devices.\n"
-	"    --nowhitelist=filename - disable whitelist for file or directory .\n"
+	"    --nowhitelist=filename - disable whitelist for file or directory.\n"
 	"    --output=logfile - stdout logging and log rotation.\n"
 	"    --output-stderr=logfile - stdout and stderr logging and log rotation.\n"
 	"    --overlay - mount a filesystem overlay on top of the current filesystem.\n"

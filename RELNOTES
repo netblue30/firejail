@@ -1,4 +1,4 @@
-firejail (0.9.60~rc1) baseline; urgency=low
+firejail (0.9.60~rc2) baseline; urgency=low
   * new profiles: crow, nyx, mypaint, celluoid, nano, transgui, mpdris2
   * new profiles: sysprof, simplescreenrecorder, geekbench, xfce4-mixer
   * new profiles: pavucontrol, d-feet, seahorse, secret-tool, gnome-keyring

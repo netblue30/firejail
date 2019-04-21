@@ -1,4 +1,4 @@
-firejail (0.9.59) baseline; urgency=low
+firejail (0.9.60~rc1) baseline; urgency=low
   * new profiles: crow, nyx, mypaint, celluoid, nano, transgui, mpdris2
   * new profiles: sysprof, simplescreenrecorder, geekbench, xfce4-mixer
   * new profiles: pavucontrol, d-feet, seahorse, secret-tool, gnome-keyring
@@ -11,12 +11,13 @@ firejail (0.9.59) baseline; urgency=low
   * new profiles: teeworlds, torcs, tremulous, warsow, lugaru, manaplus
   * new profiles: pioneer, scorched3d, widelands, freemind, kid3, kid3-qt
   * new profiles: kid3-cli, nomacs, freecol, opencity, openclonk, slashem
-  * new profiles: vultureseye, vulturesclaw, anki, cheese, utox, mp3splt, mp3wrap
+  * new profiles: vultureseye, vulturesclaw, anki, cheese, utox, mp3splt
   * new profiles: oggsplt, flacsplt, gramps, newsboat, freeoffice-planmaker
   * new profiles: autokey-gtk, autokey-qt, autokey-run, autokey-shell
-  * new profiles: freeoffice-presentations, freeoffice-textmaker
+  * new profiles: freeoffice-presentations, freeoffice-textmaker, mp3wrap
   * memory-deny-write-execute now also blocks memfd_create
   * drop support for flatpak/snap packages
+ -- netblue30 <netblue30@yahoo.com>  Sun, 21 Apr 2019 08:00:00 -0500
 
 firejail (0.9.58,2) baseline; urgency=low
   * cgroup flag in /etc/firejail/firejail.config file

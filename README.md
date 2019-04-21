@@ -99,7 +99,9 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 
 `````
-## Current development version: 0.9.59
+## Current development version: 0.9.60-rc2
+
+## 0.9.60-rc1 is out!
 
 ## New profiles:
 anki, assogiate, autokey-gtk, autokey-qt, autokey-run, autokey-shell, bzflag, celluoid, cheese, code-oss, crawl, crawl-tiles, crow, d-feet, dconf,

@@ -174,9 +174,9 @@ static char *usage_str =
 	"\tcontainer.\n"
 #endif
 	"    --quiet - turn off Firejail's output.\n"
-	"    --read-only=filename - set directory or file read-only..\n"
+	"    --read-only=filename - set directory or file read-only.\n"
 	"    --read-write=filename - set directory or file read-write.\n"
-	"    --rlimit-as=number - set the maximum size of the process's virtual memory\n"
+	"    --rlimit-as=number - set the maximum size of the process's virtual memory.\n"
 	"\t(address space) in bytes.\n"
 	"    --rlimit-cpu=number - set the maximum CPU time in seconds.\n"
 	"    --rlimit-fsize=number - set the maximum file size that can be created\n"

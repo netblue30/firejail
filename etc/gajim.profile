@@ -32,6 +32,7 @@ whitelist ${HOME}/.cache/gajim
 whitelist ${HOME}/.config/gajim
 whitelist ${HOME}/.local/share/gajim
 whitelist ${DOWNLOADS}
+whitelist /var/lib/flatpak/exports/share/locale
 include whitelist-common.inc
 
 caps.drop all

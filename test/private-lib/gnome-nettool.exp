@@ -1,0 +1,84 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2019 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail gnome-nettool\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Reading profile /etc/firejail/gnome-nettool.profile"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 3
+
+spawn $env(SHELL)
+send -- "firejail --list\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	":firejail"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"gnome-nettool"
+}
+after 100
+
+# grsecurity exit
+send -- "file /proc/sys/kernel/grsecurity\r"
+expect {
+	timeout {puts "TESTING ERROR - grsecurity detection\n";exit}
+	"grsecurity: directory" {puts "grsecurity present, exiting...\n";exit}
+	"cannot open" {puts "grsecurity not present\n"}
+}
+
+send -- "firejail --name=blablabla\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+sleep 2
+
+spawn $env(SHELL)
+#seccomp is not configured
+#send -- "firemon --seccomp\r"
+#expect {
+#	timeout {puts "TESTING ERROR 5\n";exit}
+#	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
+#	":firejail gnome-nettool"
+#}
+#expect {
+#	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
+#	"Seccomp:	2"
+#}
+#expect {
+#	timeout {puts "TESTING ERROR 5.1\n";exit}
+#	"name=blablabla"
+#}
+#after 100
+send -- "firemon --caps\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	":firejail gnome-nettool"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.1\n";exit}
+	"CapBnd:"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.2\n";exit}
+	"0000000000002000"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.3\n";exit}
+	"name=blablabla"
+}
+after 100
+
+puts "\nall done\n"

@@ -16,7 +16,9 @@ noblacklist /usr/lib/python3*
 noblacklist /usr/local/lib/python2*
 noblacklist /usr/local/lib/python3*
 
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.subversion
 

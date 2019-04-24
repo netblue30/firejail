@@ -12,7 +12,9 @@ noblacklist ${HOME}/.config/Brackets
 # or put it in your brackets.local
 #noblacklist ${HOME}/.cargo/config
 #noblacklist ${HOME}/.cargo/registry
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 
 include disable-common.inc
 include disable-passwdmgr.inc

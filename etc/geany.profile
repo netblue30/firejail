@@ -7,7 +7,9 @@ include geany.local
 include globals.local
 
 noblacklist ${HOME}/.config/geany
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.pythonrc.py
 

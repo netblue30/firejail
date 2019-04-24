@@ -9,10 +9,12 @@ include globals.local
 
 blacklist /tmp/.X11-unix
 
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.nanorc
 noblacklist ${HOME}/.oh-my-zsh

@@ -6,7 +6,9 @@ include clion.local
 include globals.local
 
 noblacklist ${HOME}/.CLion*
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh

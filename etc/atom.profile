@@ -8,9 +8,11 @@ include globals.local
 
 noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.cargo/config
 noblacklist ${HOME}/.cargo/registry
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 noblacklist ${HOME}/.pythonrc.py
 
 include disable-common.inc

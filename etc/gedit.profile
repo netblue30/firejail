@@ -8,7 +8,9 @@ include globals.local
 
 noblacklist ${HOME}/.config/enchant
 noblacklist ${HOME}/.config/gedit
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.pythonrc.py
 

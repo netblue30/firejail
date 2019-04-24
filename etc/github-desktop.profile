@@ -6,8 +6,10 @@ include github-desktop.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.config/GitHub Desktop
+noblacklist ${HOME}/.config/git
+noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 
 include disable-common.inc
 include disable-passwdmgr.inc

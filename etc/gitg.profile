@@ -6,7 +6,9 @@ include gitg.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 noblacklist ${HOME}/.local/share/gitg
 noblacklist ${HOME}/.ssh
 

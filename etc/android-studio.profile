@@ -7,7 +7,9 @@ include globals.local
 
 noblacklist ${HOME}/.AndroidStudio*
 noblacklist ${HOME}/.android
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential
 noblacklist ${HOME}/.gradle
 noblacklist ${HOME}/.jack-server
 noblacklist ${HOME}/.jack-settings

@@ -9,7 +9,9 @@ noblacklist ${HOME}/.cargo/config
 noblacklist ${HOME}/.cargo/registry
 noblacklist ${HOME}/.config/Code
 noblacklist ${HOME}/.config/Code - OSS
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.pythonrc.py
 noblacklist ${HOME}/.vscode
 noblacklist ${HOME}/.vscode-oss

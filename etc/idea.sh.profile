@@ -7,7 +7,9 @@ include globals.local
 
 noblacklist ${HOME}/.IdeaIC*
 noblacklist ${HOME}/.android
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.gradle
 noblacklist ${HOME}/.jack-server
 noblacklist ${HOME}/.jack-settings

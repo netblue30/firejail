@@ -7,7 +7,9 @@ include globals.local
 
 noblacklist ${HOME}/.WebStorm*
 noblacklist ${HOME}/.android
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.gradle
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains

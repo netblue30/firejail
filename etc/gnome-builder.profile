@@ -8,7 +8,9 @@ include globals.local
 
 noblacklist ${HOME}/.cargo/config
 noblacklist ${HOME}/.cargo/registry
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.pythonrc.py
 

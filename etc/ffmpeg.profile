@@ -25,8 +25,6 @@ caps.drop all
 ipc-namespace
 machine-id
 netfilter
-# no3d might break HW accelerated de/encoding - comment when appropriate
-no3d
 nodbus
 nodvd
 nogroups

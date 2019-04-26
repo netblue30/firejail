@@ -22,6 +22,7 @@ machine-id
 # net none - breaks on older Ubuntu versions
 no3d
 # nodbus - makes settings immutable - comment if you need settings support
+# or put 'ignore nodbus' in your file-roller.local
 nodbus
 nodvd
 nogroups

@@ -8,7 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
-# uncomment the following line if you need gpg
+# if you need gpg uncomment the following line
+# or put it into your emacs.local
 #noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.python-history
 

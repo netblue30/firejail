@@ -40,8 +40,9 @@ writable-run-user
 # noblacklist /var/spool/mail
 # writable-var
 
+# Uncomment (or put in meld.local) if you use enigmail
+#ignore nodbus
+
 # allow browsers
 # Redirect
-# Uncomment if you use enigmail
-# ignore nodbus
 include firefox-common.profile

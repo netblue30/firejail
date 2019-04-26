@@ -37,6 +37,7 @@ tracelog
 
 # private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'
 # comment those if you need that functionality
+# or put 'ignore private-bin' and 'ignore private-etc' in your eog.local
 private-bin eom
 private-dev
 private-etc alternatives,fonts

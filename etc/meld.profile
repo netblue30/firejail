@@ -22,13 +22,13 @@ noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.subversion
 
-# Uncomment the next line if you don't need to compare files in disable-common.inc.
+# Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-common.inc.
 #include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-# Uncomment the next line if you don't need to compare files in disable-programs.inc.
+# Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-programs.inc.
 #include disable-programs.inc
 
 include whitelist-var-common.inc
@@ -55,7 +55,7 @@ tracelog
 private-bin bzr,cvs,git,hg,meld,python*,svn
 private-cache
 private-dev
-# Uncomment the next line if you don't need to compare in /etc.
+# Uncomment the next line (or put it into your meld.local) if you don't need to compare in /etc.
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,pki,resolv.conf,ssl,subversion
 private-tmp
 

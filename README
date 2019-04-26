@@ -555,9 +555,12 @@ rusty-snake (https://github.com/rusty-snake)
 	- fixed profiles: libreoffice, gnome-maps, wget, seahorse-tool
 	- fixed profiles: gnome-logs, atom, brackets, gnome-builder, geany
 	- fixed profiles: vim, emacs, pycharm-community, gedit, klavaro
-	- fixed profiles: default, mpv, authenticator, gramps
+	- fixed profiles: default, mpv, authenticator, gramps, webstorm
 	- fixed profiles: freeoffice-planmaker, freeoffice-presentations
-	- fixed profiles: freeoffice-textmaker, code, newsboat
+	- fixed profiles: freeoffice-textmaker, code, newsboat, aosp, clion
+	- fixed profiles: android-studio, git, gitg, github-desktop, idea.sh
+	- fixed profiles: ffmpeg, thunderbird, gnome-system-log, file-roller
+	- fixed profiles: eog, eom
 	- hardened profiles: disable-common.inc, disable-programs.inc
 	- hardened profiles: gajim, evince, ffmpeg, feh-network.inc, qtox
 	- hardened profiles: gnome-clocks, meld, minetest, youtube-dl

@@ -12,12 +12,6 @@ noblacklist ${HOME}/.config/Sinew Software Systems
 noblacklist ${HOME}/.local/share/Enpass
 noblacklist ${DOCUMENTS}
 
-whitelist ${HOME}/.cache/Enpass
-whitelist ${HOME}/.config/sinew.in
-whitelist ${HOME}/.config/Sinew Software Systems
-whitelist ${HOME}/.local/share/Enpass
-whitelist ${DOCUMENTS}
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -25,6 +19,12 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+
+whitelist ${HOME}/.cache/Enpass
+whitelist ${HOME}/.config/sinew.in
+whitelist ${HOME}/.config/Sinew Software Systems
+whitelist ${HOME}/.local/share/Enpass
+whitelist ${DOCUMENTS}
 
 include whitelist-var-common.inc
 
@@ -35,6 +35,7 @@ include whitelist-var-common.inc
 caps.drop all
 machine-id
 netfilter
+no3d
 nodvd
 nogroups
 nonewprivs

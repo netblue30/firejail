@@ -100,6 +100,7 @@ blacklist ${HOME}/.config/Rambox
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/Signal
+blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Standard Notes
 blacklist ${HOME}/.config/SubDownloader
@@ -261,6 +262,7 @@ blacklist ${HOME}/.config/redshift.conf
 blacklist ${HOME}/.config/remmina
 blacklist ${HOME}/.config/ristretto
 blacklist ${HOME}/.config/scribus
+blacklist ${HOME}/.config/sinew.in
 blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/smplayer
@@ -428,6 +430,7 @@ blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Anki2
 blacklist ${HOME}/.local/share/Empathy
+blacklist ${HOME}/.local/share/Enpass
 blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble
@@ -633,6 +636,7 @@ blacklist ${HOME}/.cache/8pecxstudios
 blacklist ${HOME}/.cache/Authenticator
 blacklist ${HOME}/.cache/Clementine
 blacklist ${HOME}/.cache/Enox
+blacklist ${HOME}/.cache/Enpass
 blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz

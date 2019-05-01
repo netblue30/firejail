@@ -6,8 +6,17 @@ include enpass.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/Enpass
+noblacklist ${HOME}/.config/sinew.in
 noblacklist ${HOME}/.config/Sinew Software Systems
+noblacklist ${HOME}/.local/share/Enpass
 noblacklist ${DOCUMENTS}
+
+whitelist ${HOME}/.cache/Enpass
+whitelist ${HOME}/.config/sinew.in
+whitelist ${HOME}/.config/Sinew Software Systems
+whitelist ${HOME}/.local/share/Enpass
+whitelist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,10 +28,13 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+# machine-id and nosound break audio notification functionality
+# comment both if you need that functionality or put 'ignore machine-id'
+# and 'ignore nosound' in your enpass.local
+
 caps.drop all
 machine-id
-net none
-no3d
+netfilter
 nodvd
 nogroups
 nonewprivs
@@ -31,14 +43,15 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
 
-private-bin sh,readlink,dirname
+private-bin dirname,Enpass,importer_enpass,sh,readlink
+?HAS_APPIMAGE: ignore private-dev
 private-dev
 private-opt Enpass
 private-tmp
 
-memory-deny-write-execute
+#memory-deny-write-execute - breaks on Arch

@@ -60,6 +60,7 @@ blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Authenticator
 blacklist ${HOME}/.config/Beaker Browser
 blacklist ${HOME}/.config/Bitcoin
+blacklist ${HOME}/.config/Bitwarden
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/BraveSoftware
 blacklist ${HOME}/.config/Clementine

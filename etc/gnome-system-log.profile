@@ -29,7 +29,7 @@ no3d
 nodvd
 # When using 'volatile' storage (https://www.freedesktop.org/software/systemd/man/journald.conf.html),
 # comment both 'nogroups' and 'noroot'
-# or put 'ignore nogroups' and 'ignore noroot' to your gnome-logs.local.
+# or put 'ignore nogroups' and 'ignore noroot' in your gnome-system-log.local.
 nogroups
 nonewprivs
 noroot
@@ -52,5 +52,6 @@ writable-var-log
 
 memory-deny-write-execute
 
-# uncomment this if you never export logs to a file in your ${HOME}
-#read-only ${HOME}
+# comment this if you export logs to a file in your ${HOME}
+# or put 'ignore read-only ${HOME}' in your gnome-system-log.local
+read-only ${HOME}

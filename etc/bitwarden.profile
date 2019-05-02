@@ -10,13 +10,6 @@ noblacklist ${HOME}/.config/Bitwarden
 ignore noexec /tmp
 noblacklist ${DOWNLOADS}
 
-whitelist ${HOME}/.config/Bitwarden
-whitelist ${HOME}/.config/gtk-3.0
-whitelist ${HOME}/.fonts
-whitelist ${HOME}/.icons
-whitelist ${HOME}/.themes
-whitelist ${DOWNLOADS}
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -25,12 +18,17 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-common.inc
 include whitelist-var-common.inc
+
+whitelist ${HOME}/.config/Bitwarden
+whitelist ${DOWNLOADS}
 
 apparmor
 caps.drop all
 machine-id
 netfilter
+no3d
 #nodbus - breaks appindicator (tray) functionality
 nodvd
 nogroups

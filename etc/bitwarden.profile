@@ -8,7 +8,6 @@ include globals.local
 
 noblacklist ${HOME}/.config/Bitwarden
 ignore noexec /tmp
-noblacklist ${DOWNLOADS}
 
 include disable-common.inc
 include disable-devel.inc

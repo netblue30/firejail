@@ -24,6 +24,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.config/gajim
@@ -53,6 +54,5 @@ private-bin python,python3,sh,gpg,gpg2,gajim,bash,zsh,paplay,gajim-history-manag
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
 private-tmp
-
 
 join-or-start gajim

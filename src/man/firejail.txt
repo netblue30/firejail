@@ -1137,8 +1137,7 @@ $ firejail \-\-noexec=/tmp
 .br
 
 .br
-/etc and /var are noexec by default if the sandbox was started as a regular user. If there are more than one mount operation
-on the path of the file or directory, noexec should be applied to the last one. Always check if the change took effect inside the sandbox.
+/etc and /var are noexec by default if the sandbox was started as a regular user.
 
 .TP
 \fB\-\-nogroups
@@ -1424,7 +1423,8 @@ $ firejail \-\-private-cache openbox
 
 .TP
 \fB\-\-private-dev
-Create a new /dev directory. Only disc, dri, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log and shm devices are available.
+Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log, shm and usb devices are available.
+Use the options --no3d, --nodvd, --nosound, --notv, --nou2f and --novideo for additional restrictions.
 .br
 
 .br

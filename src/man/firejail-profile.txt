@@ -259,8 +259,9 @@ Build a new /bin in a temporary filesystem, and copy the programs in the list.
 The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
 .TP
 \fBprivate-dev
-Create a new /dev directory. Only disc, dri, null, full, zero, tty, pts, ptmx,
-random, snd, urandom, video, log and shm devices are available.
+Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx,
+random, snd, urandom, video, log, shm and usb devices are available.
+Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional restrictions.
 .TP
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).

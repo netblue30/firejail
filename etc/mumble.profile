@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/Mumble
 noblacklist ${HOME}/.local/share/data/Mumble
+noblacklist ${HOME}/.local/share/Mumble
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +19,10 @@ include disable-programs.inc
 
 mkdir ${HOME}/.config/Mumble
 mkdir ${HOME}/.local/share/data/Mumble
+mkdir ${HOME}/.local/share/Mumble
 whitelist ${HOME}/.config/Mumble
 whitelist ${HOME}/.local/share/data/Mumble
+whitelist ${HOME}/.local/share/Mumble
 include whitelist-common.inc
 include whitelist-var-common.inc
 

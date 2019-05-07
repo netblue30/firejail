@@ -35,7 +35,7 @@ nosound
 notv
 nou2f
 protocol unix
-seccomp
+#seccomp
 shell none
 
 private-dev

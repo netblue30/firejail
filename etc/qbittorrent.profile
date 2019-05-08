@@ -61,4 +61,4 @@ private-dev
 # private-lib - problems on Arch
 private-tmp
 
-# memory-deny-write-execute - problems on  Arch, see #1690 on GitHub repo
+# memory-deny-write-execute - problems on Arch, see #1690 on GitHub repo

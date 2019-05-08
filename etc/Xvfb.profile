@@ -9,7 +9,7 @@ include globals.local
 #
 # This profile will sandbox Xvfb server itself when used with firejail --x11=xvfb.
 # The target program is sandboxed with its own profile. By default the this functionality
-# is disabled. To enable it, create a firejail-Xvfb  symlink in /usr/local/bin:
+# is disabled. To enable it, create a firejail-Xvfb symlink in /usr/local/bin:
 #
 #    $ sudo ln -s /usr/bin/firejail /usr/local/bin/Xvfb
 #

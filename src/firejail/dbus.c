@@ -29,7 +29,7 @@ void dbus_session_disable(void) {
 	if (asprintf(&path, "/run/user/%d/bus", getuid()) == -1)
 		errExit("asprintf");
 	char *env_var;
-	if (asprintf(&env_var, "DBUS_SESSION_BUS_ADDRESS=unix:path=%s", path) == -1)
+	if (asprintf(&env_var, "unix:path=%s", path) == -1)
 		errExit("asprintf");
 
 	// set a new environment variable: DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/<UID>/bus

@@ -43,6 +43,12 @@ void dbus_session_disable(void) {
 	free(path);
 	free(env_var);
 
+	// blacklist the dbus-launch user directory
+	if (asprintf(&path, "%s/.dbus", cfg.homedir) == -1)
+		errExit("asprintf");
+	disable_file_or_dir(path);
+	free(path);
+
 	// look for a possible abstract unix socket
 
 	// --net=none

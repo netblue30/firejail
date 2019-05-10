@@ -41,7 +41,7 @@ protocol netlink,unix
 seccomp
 shell none
 
-private-bin keepassxc
+private-bin keepassxc,keepassxc-proxy
 private-dev
 private-etc alternatives,fonts,ld.so.cache,machine-id
 private-tmp

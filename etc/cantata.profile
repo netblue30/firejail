@@ -11,6 +11,10 @@ noblacklist ${HOME}/.config/cantata
 noblacklist ${HOME}/.local/share/cantata
 noblacklist ${MUSIC}
 
+noblacklist ${PATH}/perl
+noblacklist /usr/lib/perl*
+noblacklist /usr/share/perl*
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -19,7 +23,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-apparmor
+# apparmor
 caps.drop all
 ipc-namespace
 netfilter
@@ -32,5 +36,5 @@ seccomp
 shell none
 
 # private-etc samba,gcrypt,drirc,fonts,mpd.conf,kde5rc,passwd,xdg,hosts,ssl,
-private-bin cantata,mpd
+private-bin cantata,mpd,perl
 private-dev

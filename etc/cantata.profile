@@ -31,10 +31,10 @@ nonewprivs
 noroot
 nou2f
 novideo
-protocol unix,inet,inet6,netlink,
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-# private-etc samba,gcrypt,drirc,fonts,mpd.conf,kde5rc,passwd,xdg,hosts,ssl,
+# private-etc samba,gcrypt,drirc,fonts,mpd.conf,kde5rc,passwd,xdg,hosts,ssl
 private-bin cantata,mpd,perl
 private-dev

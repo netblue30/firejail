@@ -1107,9 +1107,11 @@ $ nc dict.org 2628
 .br
 .TP
 \fB\-\-nodbus
-Disable D-Bus access. Only the regular UNIX socket is handled by this command. To
-disable the abstract socket you would need to request a new network namespace using
-\-\-net command. Another option is to remove unix from \-\-protocol set.
+Disable D-Bus access (both system and session buses). Only the regular
+UNIX sockets are handled by this command. To disable the abstract
+sockets you would need to request a new network namespace using
+\-\-net command. Another option is to remove unix from \-\-protocol
+set.
 .br
 
 .br

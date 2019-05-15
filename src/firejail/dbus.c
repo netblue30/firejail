@@ -19,7 +19,7 @@
 */
 #include "firejail.h"
 
-void dbus_session_disable(void) {
+void dbus_disable(void) {
 	if (!checkcfg(CFG_DBUS)) {
 		fwarning("D-Bus handling is disabled in Firejail configuration file\n");
 		return;
@@ -42,6 +42,9 @@ void dbus_session_disable(void) {
 	disable_file_or_dir(path);
 	free(path);
 	free(env_var);
+
+	// blacklist also system D-Bus socket
+	disable_file_or_dir("/run/dbus/system_bus_socket");
 
 	// look for a possible abstract unix socket
 

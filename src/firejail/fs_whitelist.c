@@ -24,8 +24,12 @@
 #include <fnmatch.h>
 #include <glob.h>
 #include <dirent.h>
-#include <fcntl.h>
 #include <errno.h>
+
+#include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 // mountinfo functionality test;
 // 1. enable TEST_MOUNTINFO definition

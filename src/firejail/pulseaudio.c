@@ -24,7 +24,11 @@
 #include <sys/mount.h>
 #include <dirent.h>
 #include <sys/wait.h>
+
 #include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 // disable pulseaudio socket
 void pulseaudio_disable(void) {

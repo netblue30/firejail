@@ -128,6 +128,7 @@ blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/caja
 blacklist ${HOME}/.config/calibre
+blacklist ${HOME}/.config/cantata
 blacklist ${HOME}/.config/catfish
 blacklist ${HOME}/.config/celluloid
 blacklist ${HOME}/.config/cherrytree
@@ -451,6 +452,7 @@ blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/bibletime
 blacklist ${HOME}/.local/share/caja-python
+blacklist ${HOME}/.local/share/cantata
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/contacts
@@ -648,6 +650,7 @@ blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/bnox
 blacklist ${HOME}/.cache/borg
 blacklist ${HOME}/.cache/calibre
+blacklist ${HOME}/.cache/cantata
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/chromium-dev

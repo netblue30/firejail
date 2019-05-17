@@ -782,6 +782,6 @@ void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
 
 // dbus.c
-void dbus_session_disable(void);
+void dbus_disable(void);
 
 #endif

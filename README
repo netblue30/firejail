@@ -560,11 +560,11 @@ rusty-snake (https://github.com/rusty-snake)
 	- fixed profiles: freeoffice-textmaker, code, newsboat, aosp, clion
 	- fixed profiles: android-studio, git, gitg, github-desktop, idea.sh
 	- fixed profiles: ffmpeg, thunderbird, gnome-system-log, file-roller
-	- fixed profiles: eog, eom
+	- fixed profiles: eog, eom, xiphos
 	- hardened profiles: disable-common.inc, disable-programs.inc
 	- hardened profiles: gajim, evince, ffmpeg, feh-network.inc, qtox
 	- hardened profiles: gnome-clocks, meld, minetest, youtube-dl
-	- hardened profiles: bibletime, whois, etr, display, feh, mpv
+	- hardened profiles: bibletime, whois, etr, display, feh, mpv, xiphos
 	- gnome-mpv was renamed to celluloid
 	- some typo fixes
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)

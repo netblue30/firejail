@@ -6,9 +6,7 @@ include pidgin.local
 # Persistent global definitions
 include globals.local
 
-mkdir ${HOME}/.purple
 noblacklist ${HOME}/.purple
-whitelist ${HOME}/.purple
 
 ignore noexec ${RUNUSER}
 ignore noexec /dev/shm
@@ -20,6 +18,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+
+mkdir ${HOME}/.purple
+whitelist ${HOME}/.purple
 include whitelist-common.inc
 include whitelist-var-common.inc
 

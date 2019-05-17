@@ -29,7 +29,7 @@ void dbus_disable(void) {
 	if (asprintf(&path, "/run/user/%d/bus", getuid()) == -1)
 		errExit("asprintf");
 	char *env_var;
-	if (asprintf(&env_var, "DBUS_SESSION_BUS_ADDRESS=unix:path=%s", path) == -1)
+	if (asprintf(&env_var, "unix:path=%s", path) == -1)
 		errExit("asprintf");
 
 	// set a new environment variable: DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/<UID>/bus
@@ -43,8 +43,16 @@ void dbus_disable(void) {
 	free(path);
 	free(env_var);
 
+
+	// blacklist the dbus-launch user directory
+	if (asprintf(&path, "%s/.dbus", cfg.homedir) == -1)
+		errExit("asprintf");
+	disable_file_or_dir(path);
+	free(path);
+
 	// blacklist also system D-Bus socket
 	disable_file_or_dir("/run/dbus/system_bus_socket");
+
 
 	// look for a possible abstract unix socket
 

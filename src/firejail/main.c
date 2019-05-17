@@ -2423,10 +2423,6 @@ int main(int argc, char **argv) {
 	}
 	EUID_ASSERT();
 
-	// pass --quiet as an environment variable, in case the command calls further firejailed commands
-	if (arg_quiet)
-		setenv("FIREJAIL_QUIET", "yes", 1);
-
 	// block X11 sockets
 	if (arg_x11_block)
 		x11_block();

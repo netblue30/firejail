@@ -27,7 +27,11 @@
 #include <glob.h>
 #include <dirent.h>
 #include <errno.h>
+
 #include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 #define MAX_BUF 4096
 #define EMPTY_STRING ("")

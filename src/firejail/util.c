@@ -29,7 +29,11 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <sys/wait.h>
+
 #include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 #define MAX_GROUPS 1024
 #define MAXBUF 4098

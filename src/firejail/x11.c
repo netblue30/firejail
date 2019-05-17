@@ -31,7 +31,11 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <limits.h>
+
 #include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 
 // Parse the DISPLAY environment variable and return a display number.

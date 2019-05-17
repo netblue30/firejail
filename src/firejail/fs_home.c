@@ -22,7 +22,6 @@
 #include <linux/limits.h>
 #include <glob.h>
 #include <dirent.h>
-#include <fcntl.h>
 #include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -30,6 +29,11 @@
 #include <unistd.h>
 #include <grp.h>
 //#include <ftw.h>
+
+#include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 static void skel(const char *homedir, uid_t u, gid_t g) {
 	char *fname;

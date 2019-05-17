@@ -907,7 +907,8 @@ int main(int argc, char **argv) {
 
 	// get starting timestamp, process --quiet
 	start_timestamp = getticks();
-	if (check_arg(argc, argv, "--quiet", 1))
+	char *env_quiet = getenv("FIREJAIL_QUIET");
+	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
 		arg_quiet = 1;
 
 	// cleanup at exit

@@ -219,6 +219,7 @@ blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
+blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mono

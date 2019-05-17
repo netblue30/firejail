@@ -513,6 +513,9 @@ pszxzsd (https://github.com/pszxzsd)
 	-uGet profile
 pwnage-pineapple (https://github.com/pwnage-pineapple)
 	- update Okular profile
+Quentin Minster (https://github.com/laomaiweng)
+	- propagate --quiet to children Firejail'ed processes
+	- nodbus enhancements/bugfixes
 Rafael Cavalcanti (https://github.com/rccavalcanti)
 	- chromium profile fixes for Arch Linux
 Rahiel Kasim (https://github.com/rahiel)

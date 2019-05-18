@@ -30,7 +30,7 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,netlink
 seccomp
 shell none
 tracelog
@@ -40,7 +40,7 @@ tracelog
 # or put 'ignore private-bin', 'ignore private-etc' and 'ignore private-lib' in your eom.local
 private-bin eom
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,gtk-3.0,dconf
 private-lib
 private-tmp
 

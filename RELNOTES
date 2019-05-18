@@ -15,6 +15,7 @@ firejail (0.9.60~rc2) baseline; urgency=low
   * new profiles: oggsplt, flacsplt, gramps, newsboat, freeoffice-planmaker
   * new profiles: autokey-gtk, autokey-qt, autokey-run, autokey-shell
   * new profiles: freeoffice-presentations, freeoffice-textmaker, mp3wrap
+  * new profiles: inkview
   * memory-deny-write-execute now also blocks memfd_create
   * drop support for flatpak/snap packages
  -- netblue30 <netblue30@yahoo.com>  Sun, 21 Apr 2019 08:00:00 -0500

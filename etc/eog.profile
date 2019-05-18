@@ -33,7 +33,7 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,netlink
 seccomp
 shell none
 tracelog
@@ -44,7 +44,7 @@ tracelog
 private-bin eog
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,gtk-3.0,dconf
 private-lib eog,gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*
 private-tmp
 

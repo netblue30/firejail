@@ -38,10 +38,6 @@ seccomp
 shell none
 tracelog
 
-# private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'
-# comment those if you need that functionality
-# or put 'ignore private-bin', 'ignore private-etc' and 'ignore private-lib' in your eo-common.local
-private-bin eog,eom
 private-cache
 private-dev
 private-etc alternatives,dconf,fonts,gtk-3.0

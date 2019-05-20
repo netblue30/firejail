@@ -338,7 +338,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_private = 1;
 		return 0;
 	}
-	if (strncmp(ptr, "private-home ", 13) == 0) {
+	else if (strncmp(ptr, "private-home ", 13) == 0) {
 #ifdef HAVE_PRIVATE_HOME
 		if (checkcfg(CFG_PRIVATE_HOME)) {
 			if (cfg.home_private_keep) {
@@ -351,6 +351,18 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		else
 			warning_feature_disabled("private-home");
 #endif
+		return 0;
+	}
+	else if (strcmp(ptr, "private-cwd") == 0) {
+		cfg.cwd = NULL;
+		arg_private_cwd = 1;
+		return 0;
+	}
+	else if (strncmp(ptr, "private-cwd ", 12) == 0) {
+		cfg.cwd = strdup(ptr + 12);
+
+		fs_check_private_cwd();
+		arg_private_cwd = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "allusers") == 0) {

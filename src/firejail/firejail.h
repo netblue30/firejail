@@ -283,6 +283,7 @@ extern int arg_private_srv;	// private srv directory
 extern int arg_private_bin;	// private bin directory
 extern int arg_private_tmp;	// private tmp directory
 extern int arg_private_lib;	// private lib directory
+extern int arg_private_cwd;	// private working directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist command
 extern int arg_nosound;	// disable sound
@@ -521,6 +522,8 @@ void fs_private(void);
 void fs_private_homedir(void);
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void);
+// check new private working directory (--private-cwd= option) - exit if it fails
+void fs_check_private_cwd(void);
 void fs_private_home_list(void);
 
 

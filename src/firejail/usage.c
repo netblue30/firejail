@@ -162,6 +162,8 @@ static char *usage_str =
 	"    --private-etc=file,directory - build a new /etc in a temporary\n"
 	"\tfilesystem, and copy the files and directories in the list.\n"
 	"    --private-tmp - mount a tmpfs on top of /tmp directory.\n"
+	"    --private-cwd - do not inherit working directory inside jail.\n"
+	"    --private-cwd=directory - set working directory inside jail.\n"
 	"    --private-opt=file,directory - build a new /opt in a temporary filesystem.\n"
 	"    --private-srv=file,directory - build a new /srv in a temporary filesystem.\n"
 	"    --profile=filename|profile_name - use a custom profile.\n"

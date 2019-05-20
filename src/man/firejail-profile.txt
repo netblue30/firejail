@@ -288,6 +288,12 @@ All modifications are discarded when the sandbox is closed.
 \fBprivate-tmp
 Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
 .TP
+\fBprivate-cwd
+Set working directory inside jail to the home directory, and failing that, the root directory.
+.TP
+\fBprivate-cwd directory
+Set working directory inside the jail.
+.TP
 \fBread-only file_or_directory
 Make directory or file read-only.
 .TP

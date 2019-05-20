@@ -552,6 +552,7 @@ blacklist ${HOME}/.minetest
 blacklist ${HOME}/.moonchild productions/basilisk
 blacklist ${HOME}/.moonchild productions/pale moon
 blacklist ${HOME}/.mozilla
+blacklist ${HOME}/.mp3splt-gtk
 blacklist ${HOME}/.mpd
 blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.mplayer

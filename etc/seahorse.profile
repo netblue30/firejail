@@ -50,7 +50,7 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-# shell none - causes gpg to hang
+shell none
 tracelog
 
 disable-mnt

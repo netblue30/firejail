@@ -29,8 +29,7 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-# Causes gpg to hang
-#shell none
+shell none
 tracelog
 
 # private-bin gpg,gpg-agent

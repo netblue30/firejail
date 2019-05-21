@@ -271,6 +271,7 @@ static int monitor_application(pid_t app_pid) {
 	}
 
 	int status = 0;
+	int app_status = 0;
 	while (monitored_pid) {
 		usleep(20000);
 		char *msg;
@@ -295,6 +296,8 @@ static int monitor_application(pid_t app_pid) {
 				sleep(1);
 				break;
 			}
+			else if (rv == app_pid)
+				app_status = status;
 
 			// handle --timeout
 			if (options) {
@@ -352,8 +355,8 @@ static int monitor_application(pid_t app_pid) {
 			printf("Sandbox monitor: monitoring %d\n", monitored_pid);
 	}
 
-	// return the latest exit status.
-	return status;
+	// return the appropriate exit status.
+	return arg_deterministic_exit_code ? app_status : status;
 }
 
 static void print_time(void) {

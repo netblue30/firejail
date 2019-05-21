@@ -16,9 +16,18 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/gnome-chess_saved_games
+whitelist ${HOME}/gnome-chess_saved_games
+
+mkdir ${HOME}/.local/share/gnome-chess
+whitelist ${HOME}/.local/share/gnome-chess
+include whitelist-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
+machine-id
+net none
 no3d
 nodvd
 nogroups
@@ -35,6 +44,7 @@ tracelog
 
 disable-mnt
 private-bin fairymax,gnome-chess,hoichess,gnuchess
+private-cache
 private-dev
-private-etc alternatives,fonts,gnome-chess
+private-etc alternatives,dconf,fonts,gnome-chess,gtk-3.0
 private-tmp

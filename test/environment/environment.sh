@@ -116,3 +116,6 @@ echo "TESTING: rlimit errors (test/environment/rlimit-bad.exp)"
 
 echo "TESTING: rlimit errors profile (test/environment/rlimit-bad-profile.exp)"
 ./rlimit-bad-profile.exp
+
+echo "TESTING: deterministic exit code (test/environment/deterministic-exit-code.exp"
+./deterministic-exit-code.exp

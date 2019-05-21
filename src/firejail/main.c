@@ -125,6 +125,7 @@ int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
 int arg_nodbus = 0; // -nodbus
 int arg_nou2f = 0; // --nou2f
+int arg_deterministic_exit_code = 0;	// always exit with first childs exit status
 int login_shell = 0;
 
 
@@ -2274,6 +2275,9 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: please provide a name for sandbox\n");
 				return 1;
 			}
+		}
+		else if (strcmp(argv[i], "--deterministic-exit-code") == 0) {
+			arg_deterministic_exit_code = 1;
 		}
 		else {
 			// double dash - positional params to follow

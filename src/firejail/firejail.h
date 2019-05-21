@@ -315,6 +315,7 @@ extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
 extern int arg_nou2f;   // --nou2f
 extern int arg_nodbus; // -nodbus
+extern int arg_deterministic_exit_code;	// always exit with first childs exit status
 
 extern int login_shell;
 extern int parent_to_child_fds[2];

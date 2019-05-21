@@ -661,6 +661,10 @@ instead of the default one.
 Join the sandbox identified by name or start a new one.
 Same as "firejail --join=sandboxname" command if sandbox with specified name exists, otherwise same as "name sandboxname".
 
+.TP
+\fBdeterministic-exit-code
+Always exit firejail with the first childs exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
+
 .SH FILES
 /etc/firejail/filename.profile, $HOME/.config/firejail/filename.profile
 

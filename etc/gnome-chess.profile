@@ -16,12 +16,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/gnome-chess_saved_games
-whitelist ${HOME}/gnome-chess_saved_games
-
-mkdir ${HOME}/.local/share/gnome-chess
-whitelist ${HOME}/.local/share/gnome-chess
-include whitelist-common.inc
 include whitelist-var-common.inc
 
 apparmor

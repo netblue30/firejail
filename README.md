@@ -99,7 +99,9 @@ If you keep additional Firejail security profiles in a public repository, please
 
 Use this issue to request new profiles: [#1139](https://github.com/netblue30/firejail/issues/1139)
 
-We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory .
+You can also use this tool to get a list of syscalls needed by a program: [https://github.com/avilum/syscalls](https://github.com/avilum/syscalls).
+
+We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory.
 `````
 
 `````

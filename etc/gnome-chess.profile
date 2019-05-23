@@ -18,7 +18,10 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
+machine-id
+net none
 no3d
 nodvd
 nogroups
@@ -35,6 +38,7 @@ tracelog
 
 disable-mnt
 private-bin fairymax,gnome-chess,hoichess,gnuchess
+private-cache
 private-dev
-private-etc alternatives,fonts,gnome-chess
+private-etc alternatives,dconf,fonts,gnome-chess,gtk-3.0
 private-tmp

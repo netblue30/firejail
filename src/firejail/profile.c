@@ -359,9 +359,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strncmp(ptr, "private-cwd ", 12) == 0) {
-		cfg.cwd = strdup(ptr + 12);
-
-		fs_check_private_cwd();
+		fs_check_private_cwd(ptr + 12);
 		arg_private_cwd = 1;
 		return 0;
 	}

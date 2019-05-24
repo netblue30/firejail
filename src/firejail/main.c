@@ -632,6 +632,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--get=", 6) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
 			logargs(argc, argv);
+			if (arg_private_cwd) {
+				fprintf(stderr, "Error: --get and --private-cwd options are mutually exclusive\n");
+				exit(1);
+			}
 
 			// verify path
 			if ((i + 2) != argc) {
@@ -656,6 +660,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--put=", 6) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
 			logargs(argc, argv);
+			if (arg_private_cwd) {
+				fprintf(stderr, "Error: --put and --private-cwd options are mutually exclusive\n");
+				exit(1);
+			}
 
 			// verify path
 			if ((i + 3) != argc) {
@@ -686,6 +694,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--ls=", 5) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
 			logargs(argc, argv);
+			if (arg_private_cwd) {
+				fprintf(stderr, "Error: --ls and --private-cwd options are mutually exclusive\n");
+				exit(1);
+			}
 
 			// verify path
 			if ((i + 2) != argc) {
@@ -1780,13 +1792,12 @@ int main(int argc, char **argv) {
 			arg_private_cwd = 1;
 		}
 		else if (strncmp(argv[i], "--private-cwd=", 14) == 0) {
-			cfg.cwd = argv[i] + 14;
-			if (*cfg.cwd == '\0') {
+			if (*(argv[i] + 14) == '\0') {
 				fprintf(stderr, "Error: invalid private-cwd option\n");
 				exit(1);
 			}
 
-			fs_check_private_cwd();
+			fs_check_private_cwd(argv[i] + 14);
 			arg_private_cwd = 1;
 		}
 

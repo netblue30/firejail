@@ -524,7 +524,7 @@ void fs_private_homedir(void);
 // check new private home directory (--private= option) - exit if it fails
 void fs_check_private_dir(void);
 // check new private working directory (--private-cwd= option) - exit if it fails
-void fs_check_private_cwd(void);
+void fs_check_private_cwd(const char *dir);
 void fs_private_home_list(void);
 
 

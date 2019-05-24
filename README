@@ -97,6 +97,9 @@ announ (https://github.com/announ)
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start
+Austin Morton
+	- deterministic-exit-code option
+	- private-cwd options
 Austin S. Hemmelgarn (https://github.com/Ferroin)
 	- unbound profile update
 avoidr (https://github.com/avoidr)

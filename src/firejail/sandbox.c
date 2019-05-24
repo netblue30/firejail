@@ -1019,6 +1019,10 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.cwd) {
 		if (chdir(cfg.cwd) == 0)
 			cwd = 1;
+		else if (arg_private_cwd) {
+			fprintf(stderr, "Error: unabled to enter private working directory: %s: %s\n", cfg.cwd, strerror(errno));
+			exit(1);
+		}
 	}
 
 	if (!cwd) {

@@ -1,0 +1,52 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2019 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "cd /tmp\r"
+after 100
+
+# testing profile and private
+send -- "firejail --private-cwd\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"$env(HOME)"
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+send -- "cd /\r"
+after 100
+
+# testing profile and private
+send -- "firejail --private-cwd=/tmp\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"/tmp"
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+puts "all done\n"

@@ -1572,6 +1572,48 @@ drwx------  2 nobody nogroup 4096 Apr 30 10:52 pulse-PKdhtXMmr18n
 drwxrwxrwt  2 nobody nogroup 4096 Apr 30 10:52 .X11-unix
 .br
 
+.TP
+\fB\-\-private-cwd
+Set working directory inside jail to the home directory, and failing that, the root directory.
+.br
+Does not impact working directory of profile include paths.
+.br
+
+.br
+Example:
+.br
+$ pwd
+.br
+/tmp
+.br
+$ firejail \-\-private-cwd
+.br
+$ pwd
+.br
+/home/user
+.br
+
+.TP
+\fB\-\-private-cwd=directory
+Set working directory inside the jail.
+.br
+Does not impact working directory of profile include paths.
+.br
+
+.br
+Example:
+.br
+$ pwd
+.br
+/tmp
+.br
+$ firejail \-\-private-cwd=/opt
+.br
+$ pwd
+.br
+/opt
+.br
+
 
 .TP
 \fB\-\-profile=filename_or_profilename

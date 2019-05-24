@@ -69,6 +69,9 @@ echo "TESTING: empty private-etc (test/fs/private-etc-empty.exp)"
 echo "TESTING: private-bin (test/fs/private-bin.exp)"
 ./private-bin.exp
 
+echo "TESTING: private-cwd (test/fs/private-cwd.exp)"
+./private-cwd.exp
+
 echo "TESTING: macros (test/fs/macro.exp)"
 ./macro.exp
 

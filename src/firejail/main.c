@@ -92,6 +92,7 @@ int arg_private_srv = 0;			// private srv directory
 int arg_private_bin = 0;			// private bin directory
 int arg_private_tmp = 0;			// private tmp directory
 int arg_private_lib = 0;			// private lib directory
+int arg_private_cwd = 0;			// private working directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist command
 int arg_nosound = 0;				// disable sound
@@ -1773,6 +1774,20 @@ int main(int argc, char **argv) {
 				arg_private_cache = 1;
 			else
 				exit_err_feature("private-cache");
+		}
+		else if (strcmp(argv[i], "--private-cwd") == 0) {
+			cfg.cwd = NULL;
+			arg_private_cwd = 1;
+		}
+		else if (strncmp(argv[i], "--private-cwd=", 14) == 0) {
+			cfg.cwd = argv[i] + 14;
+			if (*cfg.cwd == '\0') {
+				fprintf(stderr, "Error: invalid private-cwd option\n");
+				exit(1);
+			}
+
+			fs_check_private_cwd();
+			arg_private_cwd = 1;
 		}
 
 		//*************************************

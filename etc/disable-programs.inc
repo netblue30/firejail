@@ -209,6 +209,7 @@ blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/knotesrc
 blacklist ${HOME}/.config/konversationrc
 blacklist ${HOME}/.config/ktorrentrc
+blacklist ${HOME}/.config/ktouch2rc
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
@@ -494,6 +495,7 @@ blacklist ${HOME}/.local/share/knotes
 blacklist ${HOME}/.local/share/krita
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/ktorrent
+blacklist ${HOME}/.local/share/ktouch
 blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/local-mail

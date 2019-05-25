@@ -112,7 +112,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 ## New profiles:
 anki, assogiate, autokey-gtk, autokey-qt, autokey-run, autokey-shell, bzflag, celluoid, cheese, code-oss, crawl, crawl-tiles, crow, d-feet, dconf,
 dconf-editor, devhelp, exfalso, font-manager, freeciv, freecol, freeoffice-planmaker, freeoffice-presentations, freeoffice-textmaker, freemind,
-gconf-editor, geekbench, gnome-keyring, gnome-nettool, gnome-system-log, gramps, gsettings, inkview kid3, kid3-cli, kid3-qt, lincity-ng, lugaru,
+gconf-editor, geekbench, gnome-keyring, gnome-nettool, gnome-system-log, gramps, gsettings, inkview, kid3, kid3-cli, kid3-qt, ktouch, lincity-ng, lugaru,
 Maelstrom, manaplus, megaglest, meteo-qt, mp3splt-gtk, mpdris2, mypaint, nano, netactview, newsboat, nomacs, nyx, opencity, openclonk, openttd, ostrichriders, pavucontrol,
 pioneer, pragha, redshift, regextester, seahorse, seahorse-tool, scorched3d, secret-tool, simplescreenrecorder, slashem, subdownloader, sysprof,
 sysprof-cli, teeworlds, torcs, tremulous, transgui, utox, vulturesclaw, vultureseye, warsow, widelands, xfce4-mixer

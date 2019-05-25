@@ -24,7 +24,7 @@ no3d
 nodvd
 nogroups
 nonewprivs
-# Ubuntu 16.04 version needs root privileges - uncomment if you don't use that
+# Ubuntu 16.04 version needs root privileges - uncomment or put in sysprof.local if you don't use that
 #noroot
 nosound
 notv

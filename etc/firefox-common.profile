@@ -9,7 +9,7 @@ include firefox-common.local
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
-# Uncomment the following line to allow access to common programs/addons/plugins.
+# Uncomment the following line (or put it in your firefox-common.local) to allow access to common programs/addons/plugins.
 #include firefox-common-addons.inc
 
 noblacklist ${HOME}/.pki

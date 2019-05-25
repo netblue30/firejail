@@ -41,7 +41,7 @@ shell none
 tracelog
 
 # To support exiftool in private-bin on Arch Linux (and derivatives), symlink /usr/bin/vendor_perl/exiftool to /usr/bin/exiftool and uncomment the below.
-# Users on non-Arch Linux distributions can safely uncomment the below to enable extra hardening.
+# Users on non-Arch Linux distributions can safely uncomment (or put in exiftool.local) the line below to enable extra hardening.
 #private-bin exiftool,perl
 private-cache
 private-dev

@@ -569,7 +569,8 @@ rusty-snake (https://github.com/rusty-snake)
 	- fixed profiles: freeoffice-textmaker, code, newsboat, aosp, clion
 	- fixed profiles: android-studio, git, gitg, github-desktop, idea.sh
 	- fixed profiles: ffmpeg, thunderbird, gnome-system-log, file-roller
-	- fixed profiles: eog, eom, xiphos
+	- fixed profiles: eog, eom, xiphos, firefox-common, libreoffice
+	- fixed profiles: ocenaudio, sysprof, exiftool
 	- hardened profiles: disable-common.inc, disable-programs.inc
 	- hardened profiles: gajim, evince, ffmpeg, feh-network.inc, qtox
 	- hardened profiles: gnome-clocks, meld, minetest, youtube-dl

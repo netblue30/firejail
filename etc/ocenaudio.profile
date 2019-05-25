@@ -24,7 +24,7 @@ ipc-namespace
 # net none breaks AppArmor on Ubuntu systems
 netfilter
 no3d
-# nodbus - breaks preferences, comment when needed
+# nodbus - breaks preferences, comment (or put 'ignore nodbus' in your oceanaudio.local) when needed
 nodbus
 nodvd
 nogroups
@@ -39,12 +39,10 @@ shell none
 tracelog
 
 # disable-mnt
-# private
 private-bin ocenaudio
 private-cache
 private-dev
 private-etc alternatives,asound.conf,fonts,ld.so.cache,pulse
-# private-lib
 private-tmp
 
 # memory-deny-write-execute - breaks on Arch

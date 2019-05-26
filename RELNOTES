@@ -25,7 +25,7 @@ firejail (0.9.60) baseline; urgency=low
   * new profiles: oggsplt, flacsplt, gramps, newsboat, freeoffice-planmaker
   * new profiles: autokey-gtk, autokey-qt, autokey-run, autokey-shell
   * new profiles: freeoffice-presentations, freeoffice-textmaker, mp3wrap
-  * new profiles: inkview, meteo-qt, mp3splt-gtk, ktouch, yelp
+  * new profiles: inkview, meteo-qt, mp3splt-gtk, ktouch, yelp, cantata
  -- netblue30 <netblue30@yahoo.com>  Sun, 26 May 2019 08:00:00 -0500
 
 firejail (0.9.58,2) baseline; urgency=low

@@ -179,6 +179,8 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- write-protection for thumbnailer dir
 	- added gramps, newsboat, freeoffice-planmaker profiles
 	- added freeoffice-textmaker, freeoffice-presentations profiles
+	- added cantata profile
+	- updated keypassxc profile
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
@@ -307,6 +309,8 @@ greigdp (https://github.com/greigdp)
 	- fixed spotify profile
 	- added Slack profile
 	- add Spotify profile
+grizzlyuser (https://github.com/grizzlyuser)
+	- added support for youtube-dl in smplayer profile
 GSI (https://github.com/GSI)
 	- added Uzbl browser profile
 hamzadis (https://github.com/hamzadis)
@@ -356,6 +360,7 @@ Jean Lucas (https://github.com/flacks)
 	- fix wire profile
 	- add Beaker profile
 	- fixes for gnome-music
+	- allow reading of system-wide Flatpak locale in gajim profile
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)
@@ -372,7 +377,7 @@ Jonas Heinrich (https://github.com/onny)
 	- added signal-desktop profile
 	- fixed franz profile
 Jose Riha (https://github.com/jose1711)
-        - added meteo-qt profile
+	- added meteo-qt profile
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -521,6 +526,7 @@ pwnage-pineapple (https://github.com/pwnage-pineapple)
 Quentin Minster (https://github.com/laomaiweng)
 	- propagate --quiet to children Firejail'ed processes
 	- nodbus enhancements/bugfixes
+	- added vim syntax and ftdetect files
 Rafael Cavalcanti (https://github.com/rccavalcanti)
 	- chromium profile fixes for Arch Linux
 Rahiel Kasim (https://github.com/rahiel)
@@ -761,6 +767,8 @@ veloute (https://github.com/veloute)
 	- add anki profile
 Vincent43 (https://github.com/Vincent43)
 	- apparmor enhancements
+Vincent Blillault (https://github.com/Feandil)
+	- fix mumble profile
 vismir2 (https://github.com/vismir2)
 	- feh, ranger, 7z, keepass, keepassx and zathura profiles
 	- claws-mail, mutt, git, emacs, vim profiles

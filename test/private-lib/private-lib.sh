@@ -5,7 +5,7 @@
 
 export MALLOC_CHECK_=3g
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
-LIST="gnome-logs gnome-system-log gnome-nettool pavucontrol dig whois evince galculator gnome-calculator gedit leafpad mousepad pluma transmission-gtk xcalc atril gpicview eom eog"
+LIST="gnome-logs gnome-system-log gnome-nettool pavucontrol dig evince whois galculator gnome-calculator gedit leafpad mousepad pluma transmission-gtk xcalc atril gpicview eom eog"
 
 
 for app in $LIST; do

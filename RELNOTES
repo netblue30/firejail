@@ -1,4 +1,14 @@
-firejail (0.9.60~rc2) baseline; urgency=low
+firejail (0.9.60) baseline; urgency=low
+  * security bug reported by Austin Morton:
+    Seccomp filters are copied into /run/firejail/mnt, and are writable
+    within the jail. A malicious process can modify files from inside the
+    jail. Processes that are later joined to the jail will not have seccomp
+    filters applied.
+  * memory-deny-write-execute now also blocks memfd_create
+  * add private-cwd option to control working directory within jail
+  * blocking system D-Bus socket with --nodbus
+  * bringing back Centos 6 support
+  * drop support for flatpak/snap packages
   * new profiles: crow, nyx, mypaint, celluoid, nano, transgui, mpdris2
   * new profiles: sysprof, simplescreenrecorder, geekbench, xfce4-mixer
   * new profiles: pavucontrol, d-feet, seahorse, secret-tool, gnome-keyring
@@ -16,9 +26,7 @@ firejail (0.9.60~rc2) baseline; urgency=low
   * new profiles: autokey-gtk, autokey-qt, autokey-run, autokey-shell
   * new profiles: freeoffice-presentations, freeoffice-textmaker, mp3wrap
   * new profiles: inkview, meteo-qt, mp3splt-gtk, ktouch, yelp
-  * memory-deny-write-execute now also blocks memfd_create
-  * drop support for flatpak/snap packages
- -- netblue30 <netblue30@yahoo.com>  Sun, 21 Apr 2019 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 26 May 2019 08:00:00 -0500
 
 firejail (0.9.58,2) baseline; urgency=low
   * cgroup flag in /etc/firejail/firejail.config file

@@ -1,4 +1,8 @@
-firejail (0.9.60) baseline; urgency=low
+ffirejail (0.9.60) baseline; urgency=low
+  * work in progress
+ -- netblue30 <netblue30@yahoo.com>  Sun, 26 May 2019 08:00:00 -0500
+
+irejail (0.9.60) baseline; urgency=low
   * security bug reported by Austin Morton:
     Seccomp filters are copied into /run/firejail/mnt, and are writable
     within the jail. A malicious process can modify files from inside the

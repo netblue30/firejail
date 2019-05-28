@@ -94,6 +94,7 @@ blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/PBE
 blacklist ${HOME}/.config/Qlipper
+blacklist ${HOME}/.config/QGIS
 blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
@@ -440,6 +441,7 @@ blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/PBE
+blacklist ${HOME}/.local/share/QGIS
 blacklist ${HOME}/.local/share/QMediathekView
 blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet
@@ -579,6 +581,7 @@ blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
+blacklist ${HOME}/.qgis2
 blacklist ${HOME}/.qmmp
 blacklist ${HOME}/.quodlibet
 blacklist ${HOME}/.redeclipse

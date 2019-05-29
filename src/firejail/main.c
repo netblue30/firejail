@@ -1059,6 +1059,9 @@ int main(int argc, char **argv) {
 			if (!ppath)
 				errExit("strdup");
 
+			// checking for strange chars in the file name, no globbing
+			invalid_filename(ppath, 0);
+
 			profile_read(ppath);
 			custom_profile = 1;
 			free(ppath);

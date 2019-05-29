@@ -1085,7 +1085,7 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
 		}
-		else if (strcmp(argv[1], "--keep-var-tmp") == 0) {
+		else if (strcmp(argv[i], "--keep-var-tmp") == 0) {
 		        arg_keep_var_tmp = 1;
 		}
 		else if (strcmp(argv[i], "--writable-run-user") == 0) {

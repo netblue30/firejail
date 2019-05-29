@@ -3,7 +3,8 @@
 # Persistent local customizations
 include /etc/firejail/bunzip2.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+# added by included profile
+#include /etc/firejail/globals.local
 
 # Redirect
 include /etc/firejail/gzip.profile

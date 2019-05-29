@@ -1,3 +1,14 @@
+todo: Jan 13: ffix parent death signal
+todo: Dec 17: join: also check proc file to detect nonewprivs bit
+todo: Sort items alphabetically in man firejail #2479, Feb 26
+todo: Alphabetical ordering of firecfg.config #2544, Mar 8
+todo: Fix incorrect parsing of --keep-var-tmp command #2587
+todo: Avoid including globals.local twice, #2586
+todo: Fix typo's in firecfg util.c #2627
+Mar 10: fix --list reporting for sandboxes using --x11=none; to be ported Mar 10
+Mar 10: checking for invalid chars in profile filename before any other proce…
+todo: documentation update - Feb 23
+Feb 6: strncmp byte count fixes
 Jan 19: disallow zero seconds timeout
 
 Jan 9: fix netfilter-default functionality in /etc/firejail/firejail.config

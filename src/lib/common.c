@@ -254,7 +254,7 @@ int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid) {
 		if (strncmp(arg, "--", 2) != 0)
 			break;
 
-		if (strcmp(arg, "--x11=xorg") == 0)
+		if (strcmp(arg, "--x11=xorg") == 0 || strcmp(arg, "--x11=none") == 0)
 			return 0;
 
 		// check x11 xpra or xephyr

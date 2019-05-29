@@ -856,8 +856,6 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// set application environment
 	//****************************
-	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
-
 	EUID_USER();
 	int cwd = 0;
 	if (cfg.cwd) {
@@ -1004,6 +1002,7 @@ int sandbox(void* sandbox_arg) {
 	// drop privileges, fork the application and monitor it
 	//****************************************
 	drop_privs(arg_nogroups);
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
 	pid_t app_pid = fork();
 	if (app_pid == -1)
 		errExit("fork");
@@ -1021,9 +1020,8 @@ int sandbox(void* sandbox_arg) {
 				printf("AppArmor enabled\n");
 		}
 #endif
-
-		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
-		start_application(0, fp);	// start app
+		// start app
+		start_application(0, fp);
 	}
 
 	fclose(fp);

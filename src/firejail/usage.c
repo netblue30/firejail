@@ -66,7 +66,7 @@ static char *usage_str =
 #ifdef HAVE_NETWORK
 	"    --defaultgw=address - configure default gateway.\n"
 #endif
-	"    --deterministic-exit-code - always exit with first childs status code.\n"
+	"    --deterministic-exit-code - always exit with first child's status code.\n"
 	"    --dns=address - set DNS server.\n"
 	"    --dns.print=name|pid - print DNS configuration.\n"
 	"    --env=name=value - set environment variable.\n"

@@ -126,7 +126,7 @@ int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
 int arg_nodbus = 0; // -nodbus
 int arg_nou2f = 0; // --nou2f
-int arg_deterministic_exit_code = 0;	// always exit with first childs exit status
+int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
 int login_shell = 0;
 
 

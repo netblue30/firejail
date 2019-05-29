@@ -411,7 +411,7 @@ $ firejail \-\-disable-mnt firefox
 
 .TP
 \fB\-\-deterministic-exit-code
-Always exit firejail with the first childs exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
+Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
 
 .TP
 \fB\-\-dns=address

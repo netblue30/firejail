@@ -1,5 +1,4 @@
 Jan 13: fix parent death signal
-todo: Dec 17: join: also check proc file to detect nonewprivs bit
 todo: Sort items alphabetically in man firejail #2479, Feb 26
 todo: Alphabetical ordering of firecfg.config #2544, Mar 8
 Mar 13: Fix incorrect parsing of --keep-var-tmp command #2587

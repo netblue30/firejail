@@ -959,6 +959,12 @@ unsigned extract_timeout(const char *str) {
 		exit(1);
 	}
 
+	unsigned timeout = h * 3600 + m * 60 + s;
+	if (timeout == 0) {
+		fprintf(stderr, "Error: invalid timeout\n");
+		exit(1);
+	}
+
 	return h * 3600 + m * 60 + s;
 }
 

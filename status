@@ -1,3 +1,4 @@
+Jan 19: disallow zero seconds timeout
 
 Jan 9: fix netfilter-default functionality in /etc/firejail/firejail.config
 Jan 8: test caps join

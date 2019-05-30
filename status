@@ -1,3 +1,19 @@
+un 29 test:
+TESTING: tar
+TESTING ERROR 4.2
+TESTING: DNS (test/environment/dns.exp)
+netblue@debian:~/work/github/LTSbase/test/environment$ TESTING ERROR 1.2
+
+
+todo May 23: add header guard to firecfg.h
+todo May 18: man pages: add FIREJAIL_QUIET
+todo May 17: Merge pull request #2688 from laomaiweng/nodbus-enhancements
+todo May 17: Merge pull request #2701 from smitsohu/opath - bring back support for Centos6
+todo May 4: update man pages (private-dev, noexec)
+todo April 21: typo
+todo April 20: typo and merges
+todo Mar 23: mount runtime seccomp files read-only
+
 Jan 13: fix parent death signal
 todo: Sort items alphabetically in man firejail #2479, Feb 26
 todo: Alphabetical ordering of firecfg.config #2544, Mar 8

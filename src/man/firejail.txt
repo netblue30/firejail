@@ -1316,6 +1316,10 @@ unix,inet,inet6,netlink
 .TP
 \fB\-\-quiet
 Turn off Firejail's output.
+.br
+
+.br
+The same effect can be obtained by setting an environment variable FIREJAIL_QUIET to yes.
 .TP
 \fB\-\-read-only=dirname_or_filename
 Set directory or file read-only. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.

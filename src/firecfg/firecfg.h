@@ -17,6 +17,8 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#ifndef FIRECFG_H
+#define FIRECFG_H
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <sys/types.h>
@@ -48,4 +50,4 @@ void sound(void);
 
 // desktop_files.c
 void fix_desktop_files(char *homedir);
-
+#endif

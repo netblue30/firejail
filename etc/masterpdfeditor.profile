@@ -20,9 +20,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
 machine-id
-no3d
 nodvd
 nogroups
 nonewprivs
@@ -36,7 +34,6 @@ seccomp
 shell none
 tracelog
 
-private-bin masterpdfedito*
 private-cache
 private-dev
 private-etc alternatives,fonts

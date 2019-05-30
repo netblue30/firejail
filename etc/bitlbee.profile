@@ -33,6 +33,6 @@ private
 private-cache
 private-dev
 private-tmp
-read-write /var/lib/bitlbee
 
 noexec /tmp
+read-write /var/lib/bitlbee

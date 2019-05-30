@@ -6,9 +6,6 @@ include spotify.local
 include globals.local
 
 blacklist ${HOME}/.bashrc
-blacklist /lost+found
-blacklist /sbin
-blacklist /srv
 
 noblacklist ${HOME}/.cache/spotify
 noblacklist ${HOME}/.config/spotify
@@ -49,5 +46,6 @@ private-bin spotify,bash,sh,zenity
 private-dev
 private-etc alternatives,fonts,group,ld.so.cache,machine-id,pulse,resolv.conf,hosts,nsswitch.conf,host.conf,ca-certificates,ssl,pki,crypto-policies
 private-opt spotify
+private-srv none
 private-tmp
 

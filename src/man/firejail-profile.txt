@@ -210,8 +210,9 @@ Mount an empty temporary filesystem on top of the .cache directory in user home.
 modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-dev
-Create a new /dev directory. Only disc, dri, null, full, zero, tty, pts, ptmx,
-random, snd, urandom, video, log and shm devices are available.
+Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx,
+random, snd, urandom, video, log, shm and usb devices are available.
+Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional restrictions.
 .TP
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).

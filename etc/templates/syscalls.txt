@@ -1,0 +1,43 @@
+Hints for writing seccomp.drop lines
+====================================
+
+@clock=adjtimex,clock_adjtime,clock_settime,settimeofday,stime
+@module=delete_module,finit_module,init_module
+@raw-io=ioperm,iopl,pciconfig_iobase,pciconfig_read,pciconfig_write,s390_mmio_read,s390_mmio_write
+@reboot=kexec_load,kexec_file_load,reboot,
+@swap=swapon,swapoff
+
+@privileged=@clock,@module,@raw-io,@reboot,@swap,acct,bpf,chroot,mount,nfsservctl,pivot_root,setdomainname,sethostname,umount2,vhangup
+
+@cpu-emulation=modify_ldt,subpage_prot,switch_endian,vm86,vm86old
+@debug=lookup_dcookie,perf_event_open,process_vm_writev,rtas,s390_runtime_instr,sys_debug_setcontext
+@obsolete=_sysctl,afs_syscall,bdflush,break,create_module,ftime,get_kernel_syms,getpmsg,gtty,lock,mpx,prof,profil,putpmsg,query_module,security,sgetmask,ssetmask,stty,sysfs,tuxcall,ulimit,uselib,ustat,vserver
+@resources=set_mempolicy,migrate_pages,move_pages,mbind
+
+@default=@cpu-emulation,@debug,@obsolete,@privileged,@resources,open_by_handle_at,name_to_handle_at,ioprio_set,ni_syscall,syslog,fanotify_init,kcmp,add_key,request_key,keyctl,io_setup,io_destroy,io_getevents,io_submit,io_cancel,remap_file_pages,vmsplice,umount,userfaultfd,mincore
+
+@default-nodebuggers=@default,ptrace,personality,process_vm_readv
+
+@default-keep=execve,prctl
+
+
++---------+----------------+---------------+
+| @clock  | @cpu-emulation | @default-keep |
+| @module | @debug         |               |
+| @raw-io | @obsolete      |               |
+| @reboot | @resources     |               |
+| @swap   |                |               |
++---------+----------------+---------------+
+     :              :
++-------------+     :
+| @privileged |     :
++-------------+     :
+     :              :
++----------+        :
+| @default |........:
++----------+
+    :
++----------------------+
+| @default-nodebuggers |
++----------------------+
+

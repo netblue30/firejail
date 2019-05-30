@@ -566,24 +566,9 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: kid3-qt, kid3-cli, anki, utox, mp3splt, mp3wrap
 	- added profiles: oggsplt, flacsplt, cheese, inkview, mp3splt-gtk
 	- added profiles: ktouch, yelp
-	- fixed profiles: kdenlive, bibletime, rhythmbox, gajim, seahorse
-	- fixed profiles: libreoffice, gnome-maps, wget, seahorse-tool
-	- fixed profiles: gnome-logs, atom, brackets, gnome-builder, geany
-	- fixed profiles: vim, emacs, pycharm-community, gedit, klavaro
-	- fixed profiles: default, mpv, authenticator, gramps, webstorm
-	- fixed profiles: freeoffice-planmaker, freeoffice-presentations
-	- fixed profiles: freeoffice-textmaker, code, newsboat, aosp, clion
-	- fixed profiles: android-studio, git, gitg, github-desktop, idea.sh
-	- fixed profiles: ffmpeg, thunderbird, gnome-system-log, file-roller
-	- fixed profiles: eog, eom, xiphos, firefox-common, libreoffice
-	- fixed profiles: ocenaudio, sysprof, exiftool
-	- hardened profiles: disable-common.inc, disable-programs.inc
-	- hardened profiles: gajim, evince, ffmpeg, feh-network.inc, qtox
-	- hardened profiles: gnome-clocks, meld, minetest, youtube-dl
-	- hardened profiles: bibletime, whois, etr, display, feh, mpv, xiphos
-	- hardened profiles: gnome-chess
-	- gnome-mpv was renamed to celluloid
+	- many profile fixing and hardening
 	- some typo fixes
+	- added profile templates
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)

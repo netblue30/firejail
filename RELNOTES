@@ -1,5 +1,6 @@
-ffirejail (0.9.60) baseline; urgency=low
+firejail (0.9.60) baseline; urgency=low
   * work in progress
+  * profile templates
  -- netblue30 <netblue30@yahoo.com>  Sun, 26 May 2019 08:00:00 -0500
 
 firejail (0.9.60) baseline; urgency=low

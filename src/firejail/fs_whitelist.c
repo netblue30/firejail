@@ -712,8 +712,16 @@ void fs_whitelist(void) {
 		if (stat(cfg.homedir, &s) == 0) {
 			// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
 			mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
-			if (mount(cfg.homedir, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+			int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+			if (fd == -1)
+				errExit("safe_fd");
+			char *proc;
+			if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+				errExit("asprintf");
+			if (mount(proc, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
+			free(proc);
+			close(fd);
 
 			// mount a tmpfs and initialize /home/user, overrides --allusers
 			fs_private();

@@ -26,7 +26,6 @@
 #include <sys/mount.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <dirent.h>
 #include <pwd.h>
 #include <errno.h>
@@ -37,6 +36,11 @@
 #include <time.h>
 #include <net/if.h>
 #include <sys/utsname.h>
+
+#include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 uid_t firejail_uid = 0;
 gid_t firejail_gid = 0;
@@ -256,13 +260,36 @@ static void init_cfg(int argc, char **argv) {
 		errExit("strdup");
 
 	// build home directory name
-	cfg.homedir = NULL;
-	if (pw->pw_dir != NULL) {
-		cfg.homedir = clean_pathname(pw->pw_dir);
-		assert(cfg.homedir);
-	}
-	else {
+	if (pw->pw_dir == NULL) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
+		exit(1);
+	}
+	// resolve symbolic links
+	cfg.homedir = realpath(pw->pw_dir, NULL);
+	if (!cfg.homedir) {
+		perror("realpath");
+		fprintf(stderr, "Error: cannot find user directory %s\n", pw->pw_dir);
+		exit(1);
+	}
+	// enforce a user owned home directory
+	int fd = safe_fd(cfg.homedir, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1)
+		errExit("safe_fd");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISDIR(s.st_mode)) {
+		fprintf(stderr, "Error: invalid user directory %s\n", cfg.homedir);
+		exit(1);
+	}
+	if (s.st_uid != getuid()) {
+		fprintf(stderr, "Error: user directory %s is not owned by user %s\n", cfg.homedir, cfg.username);
+		exit(1);
+	}
+	close(fd);
+	// no home directory allowed in /proc or /sys
+	if (strncmp(cfg.homedir, "/proc/", 6) == 0 || strncmp(cfg.homedir, "/sys/", 5) == 0) {
+		fprintf(stderr, "Error: invalid user directory %s\n", cfg.homedir);
 		exit(1);
 	}
 

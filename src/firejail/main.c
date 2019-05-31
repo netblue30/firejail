@@ -264,32 +264,19 @@ static void init_cfg(int argc, char **argv) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
-	// resolve symbolic links
-	cfg.homedir = realpath(pw->pw_dir, NULL);
-	if (!cfg.homedir) {
-		perror("realpath");
-		fprintf(stderr, "Error: cannot find user directory %s\n", pw->pw_dir);
-		exit(1);
-	}
-	// enforce a user owned home directory
-	int fd = safe_fd(cfg.homedir, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
-		errExit("safe_fd");
-	struct stat s;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (!S_ISDIR(s.st_mode)) {
-		fprintf(stderr, "Error: invalid user directory %s\n", cfg.homedir);
-		exit(1);
-	}
-	if (s.st_uid != getuid()) {
-		fprintf(stderr, "Error: user directory %s is not owned by user %s\n", cfg.homedir, cfg.username);
-		exit(1);
-	}
-	close(fd);
-	// no home directory allowed in /proc or /sys
-	if (strncmp(cfg.homedir, "/proc/", 6) == 0 || strncmp(cfg.homedir, "/sys/", 5) == 0) {
-		fprintf(stderr, "Error: invalid user directory %s\n", cfg.homedir);
+	cfg.homedir = clean_pathname(pw->pw_dir);
+	assert(cfg.homedir);
+	// detect problems with user home directory
+	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1) {
+		if (errno == ENOENT)
+			fprintf(stderr, "Error: cannot find user directory %s\n", cfg.homedir);
+		else if (errno == ENOTDIR)
+			fprintf(stderr, "Error: user directory %s is invalid (symbolic links are not allowed)\n", cfg.homedir);
+		else {
+			perror("open");
+			fprintf(stderr, "Error: cannot open user directory %s\n", cfg.homedir);
+		}
 		exit(1);
 	}
 
@@ -944,7 +931,6 @@ int main(int argc, char **argv) {
 
 	// check if the user is allowed to use firejail
 	init_cfg(argc, argv);
-	assert(cfg.homedir);
 
 	// get starting timestamp, process --quiet
 	start_timestamp = getticks();

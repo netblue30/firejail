@@ -247,7 +247,6 @@ void fs_private_homedir(void) {
 	if (fd2 == -1)
 		errExit("safe_fd");
 	// check if private_homedir is owned by the user
-	// this was checked already for homedir
 	struct stat s;
 	if (fstat(fd1, &s) == -1)
 		errExit("fstat");

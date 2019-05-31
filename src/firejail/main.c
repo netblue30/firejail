@@ -279,6 +279,7 @@ static void init_cfg(int argc, char **argv) {
 		}
 		exit(1);
 	}
+	close(fd);
 
 	cfg.cwd = getcwd(NULL, 0);
 	if (!cfg.cwd && errno != ENOENT)

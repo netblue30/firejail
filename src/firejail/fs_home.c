@@ -269,6 +269,12 @@ void fs_private_homedir(void) {
 	free(proc2);
 	close(fd1);
 	close(fd2);
+	// check /proc/self/mountinfo to confirm the mount is ok
+	size_t len = strlen(homedir);
+	MountData *mptr = get_last_mount();
+	if (strncmp(mptr->dir, homedir, len) != 0 ||
+	   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
+		errLogExit("invalid private mount");
 
 	fs_logger3("mount-bind", private_homedir, homedir);
 	fs_logger2("whitelist", homedir);
@@ -550,6 +556,10 @@ void fs_private_home_list(void) {
 		errExit("mount bind");
 	free(proc);
 	close(fd);
+	// check /proc/self/mountinfo to confirm the mount is ok
+	MountData *mptr = get_last_mount();
+	if (strcmp(mptr->dir, homedir) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
+		errLogExit("invalid private-home mount");
 	fs_logger2("tmpfs", homedir);
 
 	if (uid != 0) {

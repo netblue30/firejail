@@ -11,7 +11,7 @@ noblacklist ${HOME}/.java
 noblacklist ${HOME}/Arduino
 noblacklist ${DOCUMENTS}
 
-# Allow access to java
+# Allow java (blacklisted by disable-interpreters.inc)
 include allow-java.inc
 
 include disable-common.inc

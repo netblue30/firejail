@@ -9,9 +9,11 @@ include globals.local
 noblacklist ${HOME}/.cache/mypaint
 noblacklist ${HOME}/.config/mypaint
 noblacklist ${HOME}/.local/share/mypaint
-noblacklist ${PATH}/python2*
-noblacklist /usr/lib/python2*
 noblacklist ${PICTURES}
+
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc

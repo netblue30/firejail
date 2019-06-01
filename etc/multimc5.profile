@@ -10,7 +10,7 @@ noblacklist ${HOME}/.local/share/multimc
 noblacklist ${HOME}/.local/share/multimc5
 noblacklist ${HOME}/.multimc5
 
-# Allow access to java
+# Allow java (blacklisted by disable-interpreters.inc)
 include allow-java.inc
 
 include disable-common.inc

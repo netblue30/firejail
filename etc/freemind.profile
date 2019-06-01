@@ -9,7 +9,7 @@ include globals.local
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.freemind
 
-# Allow access to java
+# Allow java (blacklisted by disable-interpreters.inc)
 include allow-java.inc
 
 include disable-common.inc

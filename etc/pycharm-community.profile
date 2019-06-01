@@ -10,7 +10,7 @@ noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.pythonrc.py
 noblacklist ${HOME}/.java
 
-# Allow access to java
+# Allow java (blacklisted by disable-interpreters.inc)
 include allow-java.inc
 
 include disable-common.inc

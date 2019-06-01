@@ -11,9 +11,8 @@ noblacklist ${HOME}/.config/cantata
 noblacklist ${HOME}/.local/share/cantata
 noblacklist ${MUSIC}
 
-noblacklist ${PATH}/perl
-noblacklist /usr/lib/perl*
-noblacklist /usr/share/perl*
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
 
 include disable-common.inc
 include disable-devel.inc

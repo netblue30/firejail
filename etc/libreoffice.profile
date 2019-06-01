@@ -10,8 +10,9 @@ noblacklist ${HOME}/.java
 noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
 
-# libreoffice uses java; if you don't care about java functionality,
-# comment the next four lines
+# libreoffice uses java for some certain operations
+# comment if you don't care about java functionality
+# Allow java (blacklisted by disable-interpreters.inc)
 include allow-java.inc
 
 include disable-common.inc

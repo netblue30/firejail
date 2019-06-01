@@ -8,7 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.imagej
 
-# Allow access to java
+# Allow java (blacklisted by disable-interpreters.inc)
 include allow-java.inc
 
 include disable-common.inc

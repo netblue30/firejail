@@ -8,7 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/devilspie2
 
-# Allow access to lua
+# Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
 include disable-common.inc

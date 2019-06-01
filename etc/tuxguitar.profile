@@ -11,7 +11,7 @@ noblacklist ${HOME}/.tuxguitar*
 noblacklist ${DOCUMENTS}
 noblacklist ${MUSIC}
 
-# Allow access to java
+# Allow java (blacklisted by disable-interpreters.inc)
 include allow-java.inc
 
 include disable-common.inc

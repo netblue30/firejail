@@ -11,12 +11,8 @@ include globals.local
 noblacklist ${PATH}/mount
 noblacklist ${PATH}/umount
 
-# Allow access to perl
-noblacklist ${PATH}/cpan*
-noblacklist ${PATH}/core_perl
-noblacklist ${PATH}/perl
-noblacklist /usr/lib/perl*
-noblacklist /usr/share/perl*
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
 
 include disable-common.inc
 include disable-devel.inc

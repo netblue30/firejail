@@ -8,10 +8,8 @@ include globals.local
 
 blacklist /tmp/.X11-unix
 
-# Allow access to perl
-noblacklist ${PATH}/perl
-noblacklist /usr/lib/perl*
-noblacklist /usr/share/perl*
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
 
 include disable-common.inc
 include disable-devel.inc

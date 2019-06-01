@@ -10,7 +10,7 @@ noblacklist ${HOME}/.config/wireshark
 noblacklist ${HOME}/.wireshark
 noblacklist ${DOCUMENTS}
 
-# Wireshark can use Lua for scripting
+# Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
 include disable-common.inc

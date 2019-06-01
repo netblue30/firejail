@@ -15,10 +15,7 @@ include allow-python2.inc
 include allow-python3.inc
 
 # Allow perl
-# noblacklist ${PATH}/cpan*
-noblacklist ${PATH}/perl
-noblacklist /usr/lib/perl*
-noblacklist /usr/share/perl*
+include allow-perl.inc
 
 include disable-common.inc
 include disable-devel.inc

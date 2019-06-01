@@ -12,7 +12,7 @@ noblacklist ${HOME}/.cache/freecol
 noblacklist ${HOME}/.config/freecol
 noblacklist ${HOME}/.local/share/freecol
 
-# Allow java (blacklisted by disable-interpreters.inc)
+# Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
 include disable-common.inc

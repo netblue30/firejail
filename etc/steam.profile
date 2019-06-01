@@ -25,7 +25,7 @@ noblacklist /usr/lib/llvm*
 # needed for STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 to work
 noblacklist /sbin
 
-# Allow java (blacklisted by disable-interpreters.inc)
+# Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)

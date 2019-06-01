@@ -18,7 +18,7 @@ noblacklist ${HOME}/.mediathek3
 noblacklist ${HOME}/.mplayer
 noblacklist ${VIDEOS}
 
-# Allow java (blacklisted by disable-interpreters.inc)
+# Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
 include disable-common.inc

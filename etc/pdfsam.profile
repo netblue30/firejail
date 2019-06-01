@@ -9,7 +9,7 @@ include globals.local
 noblacklist ${HOME}/.java
 noblacklist ${DOCUMENTS}
 
-# Allow java (blacklisted by disable-interpreters.inc)
+# Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
 include disable-common.inc

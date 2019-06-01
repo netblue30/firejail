@@ -12,7 +12,7 @@ noblacklist ${HOME}/.config/libreoffice
 
 # libreoffice uses java for some certain operations
 # comment if you don't care about java functionality
-# Allow java (blacklisted by disable-interpreters.inc)
+# Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
 include disable-common.inc

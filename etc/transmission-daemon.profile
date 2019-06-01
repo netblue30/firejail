@@ -1,5 +1,5 @@
 # Firejail profile for transmission-daemon
-# Description:  Fast, easy and free BitTorrent client (daemon)
+# Description: Fast, easy and free BitTorrent client (daemon)
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

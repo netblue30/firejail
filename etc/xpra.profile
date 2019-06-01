@@ -8,7 +8,7 @@ include globals.local
 
 #
 # This profile will sandbox Xpra server itself when used with firejail --x11=xpra.
-# To enable it, create a firejail-xpra  symlink in /usr/local/bin:
+# To enable it, create a firejail-xpra symlink in /usr/local/bin:
 #
 #    $ sudo ln -s /usr/bin/firejail /usr/local/bin/xpra
 #

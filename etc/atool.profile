@@ -10,11 +10,7 @@ include globals.local
 blacklist /tmp/.X11-unix
 
 # Allow perl (blacklisted by disable-interpreters.inc)
-noblacklist ${PATH}/cpan*
-noblacklist ${PATH}/core_perl
-noblacklist ${PATH}/perl
-noblacklist /usr/lib/perl*
-noblacklist /usr/share/perl*
+include allow-perl.inc
 
 include disable-common.inc
 # include disable-devel.inc

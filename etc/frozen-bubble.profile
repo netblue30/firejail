@@ -9,11 +9,7 @@ include globals.local
 noblacklist ${HOME}/.frozen-bubble
 
 # Allow perl (blacklisted by disable-interpreters.inc)
-noblacklist ${PATH}/cpan*
-noblacklist ${PATH}/core_perl
-noblacklist ${PATH}/perl
-noblacklist /usr/lib/perl*
-noblacklist /usr/share/perl*
+include allow-perl.inc
 
 include disable-common.inc
 include disable-devel.inc

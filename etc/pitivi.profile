@@ -10,12 +10,8 @@ include globals.local
 noblacklist ${HOME}/.config/pitivi
 
 # Allow python (blacklisted by disable-interpreters.inc)
-noblacklist ${PATH}/python2*
-noblacklist ${PATH}/python3*
-noblacklist /usr/lib/python2*
-noblacklist /usr/lib/python3*
-noblacklist /usr/local/lib/python2*
-noblacklist /usr/local/lib/python3*
+include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc

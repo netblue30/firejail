@@ -10,9 +10,7 @@ noblacklist ${HOME}/.config/autostart
 noblacklist ${HOME}/.config/meteo-qt
 
 # Allow python (blacklisted by disable-interpreters.inc)
-noblacklist ${PATH}/python3*
-noblacklist /usr/lib/python3*
-noblacklist /usr/local/lib/python3*
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc

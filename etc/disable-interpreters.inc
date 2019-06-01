@@ -19,6 +19,8 @@ blacklist ${HOME}/.nvm
 blacklist ${PATH}/cpan*
 blacklist ${PATH}/core_perl
 blacklist ${PATH}/perl
+blacklist ${PATH}/site_perl
+blacklist ${PATH}/vendor_perl
 blacklist /usr/lib/perl*
 blacklist /usr/share/perl*
 

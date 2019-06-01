@@ -43,8 +43,6 @@ noroot
 nosound
 notv
 nou2f
-# uncomment novideo if you want to allow access only to user-configured
-# associated video player
 novideo
 protocol unix,inet,inet6
 seccomp
@@ -57,6 +55,10 @@ disable-mnt
 private-bin links,sh
 private-cache
 private-dev
+private-etc ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
+# Uncomment the following line (or put it in your links.local) allow external
+# media players
+# private-etc alsa,asound.conf,alternatives,machine-id,openal,pulse
 private-tmp
 
 memory-deny-write-execute

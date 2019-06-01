@@ -11,10 +11,7 @@ noblacklist ${HOME}/.pythonrc.py
 noblacklist ${HOME}/.java
 
 # Allow access to java
-noblacklist ${PATH}/java
-noblacklist /usr/lib/java
-noblacklist /etc/java
-noblacklist /usr/share/java
+include allow-java.inc
 
 include disable-common.inc
 include disable-devel.inc

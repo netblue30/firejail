@@ -9,10 +9,6 @@ include globals.local
 noblacklist ${HOME}/.jd
 
 # Allow access to java
-noblacklist ${PATH}/java
-noblacklist /usr/lib/java
-noblacklist /etc/java
-noblacklist /usr/share/java
 
 include disable-common.inc
 include disable-devel.inc

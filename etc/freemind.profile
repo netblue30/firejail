@@ -7,11 +7,10 @@ include freemind.local
 include globals.local
 
 noblacklist ${DOCUMENTS}
-noblacklist ${PATH}/java
-noblacklist /etc/java
-noblacklist /usr/lib/java
-noblacklist /usr/share/java
 noblacklist ${HOME}/.freemind
+
+# Allow access to java
+include allow-java.inc
 
 include disable-common.inc
 include disable-devel.inc

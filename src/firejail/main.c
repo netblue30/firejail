@@ -269,17 +269,13 @@ static void init_cfg(int argc, char **argv) {
 	// detect problems with user home directory
 	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1) {
-		if (errno == ENOENT)
-			fprintf(stderr, "Error: cannot find user directory %s\n", cfg.homedir);
-		else if (errno == ENOTDIR)
+		if (errno == ENOTDIR) {
 			fprintf(stderr, "Error: user directory %s is invalid (symbolic links are not allowed)\n", cfg.homedir);
-		else {
-			perror("open");
-			fprintf(stderr, "Error: cannot open user directory %s\n", cfg.homedir);
+			exit(1);
 		}
-		exit(1);
 	}
-	close(fd);
+	else
+		close(fd);
 
 	cfg.cwd = getcwd(NULL, 0);
 	if (!cfg.cwd && errno != ENOENT)

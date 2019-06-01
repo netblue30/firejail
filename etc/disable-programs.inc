@@ -745,3 +745,6 @@ blacklist /var/games/slashem
 blacklist /var/games/vulturesclaw
 blacklist /var/games/vultureseye
 blacklist /var/lib/games/Maelstrom-Scores
+
+# ${HOME}/.config directory
+blacklist ${HOME}/.config/teams-for-linux

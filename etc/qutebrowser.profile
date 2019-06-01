@@ -9,13 +9,12 @@ include globals.local
 noblacklist ${HOME}/.cache/qutebrowser
 noblacklist ${HOME}/.config/qutebrowser
 noblacklist ${HOME}/.local/share/qutebrowser
+# with >=llvm-4 mesa drivers need llvm stuff
+noblacklist /usr/lib/llvm*
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
-
-# with >=llvm-4 mesa drivers need llvm stuff
-noblacklist /usr/lib/llvm*
 
 include disable-common.inc
 include disable-devel.inc

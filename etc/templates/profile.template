@@ -1,6 +1,39 @@
 # Firejail profile for PROGRAM_NAME
 # Description: DESCRIPTION
 # This file is overwritten after every install/update
+# --- CUT HERE ---
+# This is a generic template to help you with creation of profiles
+# for new programs. PRs welcome at https://github.com/netblue30/firejail/
+#
+# Rules to follow:
+#  - lines with one # are often used in profiles
+#  - lines with two ## are only needed in special situations
+#  - make the profile as restrictive as possible while still keeping the program useful
+#    (e. g. a program that is unable to save user's work is considered a bad practice)
+#  - dedicate some time (based on how complex the application is) to profile testing before raising
+#    a pull request
+#  - keep the sections structure, use a single empty line as a separator
+#  - entries within sections are alphabetically sorted
+#  - consider putting binary into src/firecfg/firecfg.config (keep list sorted) but beware
+#    to not do this for essential utilities as this may *break* your OS! (related discussion:
+#    https://github.com/netblue30/firejail/issues/2507)
+#  - remove this comment section and any generic comment past 'Persistent global definitions'
+#
+# Sections structure
+#   HEADER
+#   COMMENTS
+#   BLACKLISTS
+#   NOBLACKLISTS
+#   DISABLE INCLUDES
+#   MKDIRS
+#   WHITELISTS
+#   WHITELIST INCLUDES
+#   OPTIONS (no*)
+#   PRIVATE OPTIONS (disable-mnt, private-*)
+#   SPECIAL OPTIONS (mdwx, noexec, read-only, join-or-start)
+#   REDIRECT INCLUDES
+#
+# --- CUT HERE ---
 ##quiet
 # Persistent local customizations
 #include PROFILE.local
@@ -11,6 +44,18 @@
 
 ##blacklist PATH
 
+# It is common practice to add files/dirs containing program-specific configuration
+# (often ${HOME}/PROGRAMNAME or ${HOME}/.config/PROGRAMNAME) into disable-programs.inc
+# (keep list sorted) and then disable blacklisting below.
+# One way to retrieve the files a program uses is:
+#  - launch binary with --private naming a sandbox
+#      `firejail --name=test --ignore=private-bin [--profile=PROFILE] --private BINARY`
+#  - work with the program, do some configuration changes and save them, open new documents,
+#    install plugins if they exists, etc
+#  - join the sandbox with bash:
+#      `firejail --join=test bash`
+#  - look what has changed and use that information to populate blacklist and whitelist sections
+#      `ls -aR`
 #noblacklist PATH
 
 # Allow python (blacklisted by disable-interpreters.inc)
@@ -21,6 +66,13 @@
 #noblacklist /usr/local/lib/python2*
 #noblacklist /usr/local/lib/python3*
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+#noblacklist ${PATH}/cpan*
+#noblacklist ${PATH}/core_perl
+#noblacklist ${PATH}/perl
+#noblacklist /usr/lib/perl*
+#noblacklist /usr/share/perl*
+
 #include disable-common.inc
 #include disable-devel.inc
 #include disable-exec.inc
@@ -29,6 +81,11 @@
 #include disable-programs.inc
 #include disable-xdg.inc
 
+# This section often mirrors noblacklist section above. The idea is
+# that if a user feels too restricted (he's unable to save files into
+# home directory for instance) he/she may disable whitelist (nowhitelist)
+# in PROFILE.local but still be protected by BLACKLISTS section
+# (further explanation at https://github.com/netblue30/firejail/issues/1569)
 #mkdir PATH
 #mkfile PATH
 #whitelist PATH

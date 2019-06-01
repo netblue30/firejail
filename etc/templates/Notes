@@ -1,7 +1,0 @@
-Notes
-=====
-
- * Lines with one # are often used
- * Lines with two ## are only in special situation needed
- * Add programs specific paths like .config/program to disable-programs.inc
- * Add the name of the profile/program to src/firecfg/firecfg.config

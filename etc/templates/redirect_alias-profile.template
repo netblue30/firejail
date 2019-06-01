@@ -8,29 +8,38 @@ include PROFILE.local
 #include globals.local
 #NOTE: let include globals.local commented
 
-# Additional blacklisting (if needed)
-#blacklist PATH
-
-# Additional noblacklisting (if needed)
-#noblacklist PATH
-
-# Additional whitelisting (if needed)
-#mkdir PATH
-#mkfile PATH
-#whitelist PATH
-
-# Additional options if needed (see firejail-profile.example)
-
-# Add programs to private-bin (if needed)
-#private-bin PROGRAMS
-# Add files to private-etc (if needed)
-#private-etc FILES
+# For more informations see profile.template
 
 # Ignore something that is in the included profile
 #ignore net none
 #ignore private-bin
 #ignore seccomp
 #...
+
+# Additional noblacklisting (if needed)
+#noblacklist PATH
+
+# Additional allow includes (if needed)
+
+# Additional blacklisting (if needed)
+#blacklist PATH
+
+# Additional whitelisting (if needed)
+#mkdir PATH
+##mkfile PATH
+#whitelist PATH
+
+# Additional options (if needed)
+
+
+
+# Additional private-options (if needed)
+# Add programs to private-bin (if needed)
+#private-bin PROGRAMS
+# Add files to private-etc (if needed)
+#private-etc FILES
+
+# Additional special options (if needed)
 
 # Redirect
 include PROFILE.profile

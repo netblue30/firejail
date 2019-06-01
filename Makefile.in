@@ -121,6 +121,7 @@ endif
 	install -c -m 0644 COPYING $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 README $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 RELNOTES $(DESTDIR)/$(DOCDIR)/.
+	install -c -m 0644 etc/templates/* $(DESTDIR)/$(DOCDIR)/.
 	# etc files
 	./mketc.sh $(sysconfdir) $(BUSYBOX_WORKAROUND)
 	install -m 0755 -d $(DESTDIR)/$(sysconfdir)/firejail

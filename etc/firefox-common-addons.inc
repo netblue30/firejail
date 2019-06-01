@@ -56,8 +56,7 @@ whitelist ${HOME}/dwhelper
 noblacklist ${HOME}/.local/share/gnome-shell
 whitelist ${HOME}/.local/share/gnome-shell
 ignore nodbus
-noblacklist ${PATH}/python3*
-noblacklist /usr/lib/python3*
+include allow-python3.inc
 
 # Flash plugin
 # private-etc must first be enabled in firefox-common.profile and in profiles including it.

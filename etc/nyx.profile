@@ -6,10 +6,9 @@ include nyx.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${PATH}/python2*
-noblacklist ${PATH}/python3*
-noblacklist /usr/lib/python2*
-noblacklist /usr/lib/python3*
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc
 
 noblacklist ${HOME}/.nyx
 mkdir ${HOME}/.nyx

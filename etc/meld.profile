@@ -6,21 +6,16 @@ include meld.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/meld
-
-# Allow python (blacklisted by disable-interpreters.inc)
-noblacklist ${PATH}/python2*
-noblacklist ${PATH}/python3*
-noblacklist /usr/lib/python2*
-noblacklist /usr/lib/python3*
-noblacklist /usr/local/lib/python2*
-noblacklist /usr/local/lib/python3*
-
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
+noblacklist ${HOME}/.local/share/meld
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.subversion
+
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc
 
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-common.inc.
 #include disable-common.inc

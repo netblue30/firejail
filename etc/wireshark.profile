@@ -10,11 +10,8 @@ noblacklist ${HOME}/.config/wireshark
 noblacklist ${HOME}/.wireshark
 noblacklist ${DOCUMENTS}
 
-# Wireshark can use Lua for scripting
-noblacklist ${PATH}/lua*
-noblacklist /usr/lib/lua
-noblacklist /usr/include/lua*
-noblacklist /usr/share/lua
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
 
 include disable-common.inc
 include disable-devel.inc

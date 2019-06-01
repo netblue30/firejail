@@ -5,14 +5,14 @@ include natron.local
 # Persistent global definitions
 include globals.local
 
-# Allow python (blacklisted by disable-interpreters.inc)
-include allow-python2.inc
-include allow-python3.inc
-
 noblacklist ${HOME}/.Natron
 noblacklist ${HOME}/.cache/INRIA/Natron
 noblacklist ${HOME}/.config/INRIA
 noblacklist /opt/natron
+
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc

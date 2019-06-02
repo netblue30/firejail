@@ -9,11 +9,11 @@ include globals.local
 # it allows /sbin and /usr/sbin directories - this is where servers are installed
 # depending on your usage, you can enable some of the commands below:
 
-blacklist /tmp/.X11-unix
-
 noblacklist /sbin
 noblacklist /usr/sbin
 # noblacklist /var/opt
+
+blacklist /tmp/.X11-unix
 
 include disable-common.inc
 # include disable-devel.inc

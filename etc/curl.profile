@@ -7,9 +7,9 @@ include curl.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-
 noblacklist ${HOME}/.curlrc
+
+blacklist /tmp/.X11-unix
 
 include disable-common.inc
 include disable-exec.inc

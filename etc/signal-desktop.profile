@@ -5,10 +5,13 @@ include signal-desktop.local
 # Persistent global definitions
 include globals.local
 
+ignore noexec /tmp
+
 noblacklist ${HOME}/.config/Signal
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-passwdmgr.inc
@@ -34,5 +37,3 @@ shell none
 disable-mnt
 private-dev
 private-tmp
-
-noexec ${HOME}

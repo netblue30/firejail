@@ -5,10 +5,14 @@ include skypeforlinux.local
 # Persistent global definitions
 include globals.local
 
+# breaks Skype
+ignore noexec /tmp
+
 noblacklist ${HOME}/.config/skypeforlinux
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -28,6 +32,3 @@ disable-mnt
 private-cache
 # private-dev - needs /dev/disk
 private-tmp
-
-noexec ${HOME}
-# noexec /tmp - breaks Skype

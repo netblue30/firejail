@@ -6,8 +6,6 @@ include mutt.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-
 noblacklist /var/mail
 noblacklist /var/spool/mail
 noblacklist ${HOME}/.Mail
@@ -33,6 +31,8 @@ noblacklist ${HOME}/Mail
 noblacklist ${HOME}/mail
 noblacklist ${HOME}/postponed
 noblacklist ${HOME}/sent
+
+blacklist /tmp/.X11-unix
 
 include disable-common.inc
 include disable-devel.inc

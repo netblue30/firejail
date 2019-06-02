@@ -6,11 +6,11 @@ include bibletime.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${HOME}/.bashrc
-
 noblacklist ${HOME}/.bibletime
 noblacklist ${HOME}/.sword
 noblacklist ${HOME}/.local/share/bibletime
+
+blacklist ${HOME}/.bashrc
 
 include disable-common.inc
 include disable-devel.inc

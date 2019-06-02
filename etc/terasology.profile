@@ -5,6 +5,8 @@ include terasology.local
 # Persistent global definitions
 include globals.local
 
+ignore noexec /tmp
+
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/terasology
 
@@ -13,6 +15,7 @@ include allow-java.inc
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -43,5 +46,3 @@ disable-mnt
 private-dev
 private-etc alternatives,asound.conf,ca-certificates,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,lsb-release,machine-id,mime.types,passwd,pulse,resolv.conf,ssl,java-8-openjdk,java-7-openjdk,pki,crypto-policies
 private-tmp
-
-noexec ${HOME}

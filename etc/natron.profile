@@ -8,7 +8,6 @@ include globals.local
 noblacklist ${HOME}/.Natron
 noblacklist ${HOME}/.cache/INRIA/Natron
 noblacklist ${HOME}/.config/INRIA
-noblacklist /opt/natron
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -29,9 +28,9 @@ nogroups
 nonewprivs
 noroot
 notv
-protocol unix,inet,inet6
+nou2f
+protocol unix
 seccomp
 shell none
 
 private-bin natron,Natron,NatronRenderer
-

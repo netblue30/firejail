@@ -5,29 +5,41 @@ quiet
 # Persistent local customizations
 include unzip.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
-
-blacklist /tmp/.X11-unix
-
-hostname unzip
-ignore noroot
-net none
-no3d
-nodbus
-nodvd
-nosound
-notv
-nou2f
-novideo
-shell none
-tracelog
-
-private-bin unzip
-private-dev
-private-etc alternatives,passwd,group,localtime
+include globals.local
 
 # GNOME Shell integration (chrome-gnome-shell)
 noblacklist ${HOME}/.local/share/gnome-shell
 
-include default.profile
+blacklist /tmp/.X11-unix
+
+include disable-common.inc
+include disable-devel.inc
+include disable-exec.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+
+caps.drop all
+ipc-namespace
+machine-id
+hostname unzip
+net none
+no3d
+nodbus
+nodvd
+#nogroups
+nonewprivs
+noroot
+nosound
+notv
+nou2f
+novideo
+protocol unix
+seccomp
+shell none
+tracelog
+
+private-bin unzip
+private-cache
+private-dev
+private-etc alternatives,passwd,group,localtime

@@ -5,6 +5,8 @@ include franz.local
 # Persistent global definitions
 include globals.local
 
+ignore noexec /tmp
+
 noblacklist ${HOME}/.cache/Franz
 noblacklist ${HOME}/.config/Franz
 noblacklist ${HOME}/.pki
@@ -12,6 +14,7 @@ noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
@@ -41,5 +44,3 @@ shell none
 disable-mnt
 private-dev
 private-tmp
-
-noexec ${HOME}

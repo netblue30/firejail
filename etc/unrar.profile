@@ -5,21 +5,34 @@ quiet
 # Persistent local customizations
 include unrar.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 blacklist /tmp/.X11-unix
 
+include disable-common.inc
+include disable-devel.inc
+include disable-exec.inc
+include disable-interpreters.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+
+caps.drop all
 hostname unrar
-ignore noroot
+ipc-namespace
+machine-id
 net none
 no3d
 nodbus
 nodvd
+#nogroups
+nonewprivs
+#noroot
 nosound
 notv
 nou2f
 novideo
+protocol unix
+seccomp
 shell none
 tracelog
 
@@ -27,5 +40,3 @@ private-bin unrar
 private-dev
 private-etc alternatives,passwd,group,localtime
 private-tmp
-
-include default.profile

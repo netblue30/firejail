@@ -7,8 +7,6 @@ include git.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.emacs
@@ -21,6 +19,8 @@ noblacklist ${HOME}/.oh-my-zsh
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo
+
+blacklist /tmp/.X11-unix
 
 include disable-common.inc
 include disable-exec.inc

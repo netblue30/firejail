@@ -5,11 +5,11 @@ include spotify.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${HOME}/.bashrc
-
 noblacklist ${HOME}/.cache/spotify
 noblacklist ${HOME}/.config/spotify
 noblacklist ${HOME}/.local/share/spotify
+
+blacklist ${HOME}/.bashrc
 
 include disable-common.inc
 include disable-devel.inc

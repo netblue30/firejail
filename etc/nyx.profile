@@ -11,8 +11,6 @@ include allow-python2.inc
 include allow-python3.inc
 
 noblacklist ${HOME}/.nyx
-mkdir ${HOME}/.nyx
-whitelist ${HOME}/.nyx
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,6 +19,11 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+
+mkdir ${HOME}/.nyx
+whitelist ${HOME}/.nyx
+include whitelist-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

@@ -92,20 +92,6 @@ $ firejail --allusers
 .TP
 \fB\-\-apparmor
 Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
-.TP
-\fB\-\-appimage
-Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started as a
-regular user, default seccomp and capabilities filters are enabled.
-.br
-
-.br
-Example:
-.br
-$ firejail --appimage krita-3.0-x86_64.appimage
-.br
-$ firejail --appimage --private krita-3.0-x86_64.appimage
-.br
-$ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
 
 .TP
 \fB\-\-apparmor.print=name|pid
@@ -120,6 +106,21 @@ $ firejail \-\-apparmor.print=browser
 5074:netblue:/usr/bin/firejail /usr/bin/firefox-esr
 .br
   AppArmor: firejail-default enforce
+
+.TP
+\fB\-\-appimage
+Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started as a
+regular user, default seccomp and capabilities filters are enabled.
+.br
+
+.br
+Example:
+.br
+$ firejail --appimage krita-3.0-x86_64.appimage
+.br
+$ firejail --appimage --private krita-3.0-x86_64.appimage
+.br
+$ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
 
 .TP
 \fB\-\-bandwidth=name|pid

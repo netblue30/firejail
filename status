@@ -16,12 +16,10 @@ todo Mar 23: mount runtime seccomp files read-only
 
 Jan 13: fix parent death signal
 todo: Sort items alphabetically in man firejail #2479, Feb 26
-todo: Alphabetical ordering of firecfg.config #2544, Mar 8
 Mar 13: Fix incorrect parsing of --keep-var-tmp command #2587
 Mar 13: Avoid including globals.local twice, #2586
 Mar 10: fix --list reporting for sandboxes using --x11=none; to be ported Mar 10
 Mar 10: checking for invalid chars in profile filename before any other proce…
-todo: documentation update - Feb 23
 Feb 6: strncmp byte count fixes
 Jan 19: disallow zero seconds timeout
 

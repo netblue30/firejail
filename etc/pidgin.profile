@@ -6,10 +6,10 @@ include pidgin.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.purple
-
 ignore noexec ${RUNUSER}
 ignore noexec /dev/shm
+
+noblacklist ${HOME}/.purple
 
 include disable-common.inc
 include disable-devel.inc

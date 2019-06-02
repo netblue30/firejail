@@ -7,6 +7,9 @@ include youtube-dl.local
 # Persistent global definitions
 include globals.local
 
+# breaks when installed via pip
+ignore noexec ${HOME}
+
 noblacklist ${HOME}/.netrc
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
@@ -14,9 +17,6 @@ noblacklist ${VIDEOS}
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
-
-# breaks when installed via pip
-ignore noexec ${HOME}
 
 include disable-common.inc
 include disable-devel.inc

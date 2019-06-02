@@ -14,8 +14,6 @@ include globals.local
 #
 # or run "sudo firecfg"
 
-blacklist /media
-
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
@@ -45,6 +43,7 @@ protocol unix
 seccomp
 shell none
 
+disable-mnt
 # private home directory doesn't work on some distros, so we go for a regular home
 # private
 # older Xpra versions also use Xvfb

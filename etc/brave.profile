@@ -6,6 +6,9 @@ include brave.local
 # Persistent global definitions
 include globals.local
 
+# noexec /tmp is included in chromium-common.profile and breaks Brave
+ignore noexec /tmp
+
 noblacklist ${HOME}/.config/brave
 noblacklist ${HOME}/.config/BraveSoftware
 # brave uses gpg for built-in password manager
@@ -16,9 +19,6 @@ mkdir ${HOME}/.config/BraveSoftware
 whitelist ${HOME}/.config/brave
 whitelist ${HOME}/.config/BraveSoftware
 whitelist ${HOME}/.gnupg
-
-# noexec /tmp is included in chromium-common.profile and breaks Brave
-ignore noexec /tmp
 
 # Redirect
 include chromium-common.profile

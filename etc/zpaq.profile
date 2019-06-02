@@ -10,6 +10,5 @@ include zpaq.local
 # mdwx breaks 'list' functionality
 ignore memory-deny-write-execute
 
-
 # Redirect
 include cpio.profile

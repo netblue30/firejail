@@ -3,10 +3,13 @@
 # Persistent local customizations
 include ms-skype.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
+
+ignore novideo
 
 noblacklist ${HOME}/.cache/ms-skype-online
-ignore novideo
+
 private-bin ms-skype
 
 # Redirect

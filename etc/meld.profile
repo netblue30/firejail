@@ -54,3 +54,4 @@ private-dev
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,pki,resolv.conf,ssl,subversion
 private-tmp
 
+read-only ${HOME}/.ssh

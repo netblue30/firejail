@@ -17,8 +17,6 @@ include globals.local
 # some Linux distributions. Also, older versions of Xpra use Xvfb.
 #
 
-blacklist /media
-
 whitelist /var/lib/xkb
 include whitelist-common.inc
 
@@ -36,6 +34,7 @@ protocol unix
 seccomp
 shell none
 
+disable-mnt
 # using a private home directory
 private
 # private-bin Xvfb,sh,xkbcomp

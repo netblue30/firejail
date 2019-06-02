@@ -14,9 +14,6 @@ include globals.local
 # or run "sudo firecfg"
 #
 
-
-blacklist /media
-
 whitelist /var/lib/xkb
 include whitelist-common.inc
 
@@ -34,6 +31,7 @@ protocol unix
 seccomp
 shell none
 
+disable-mnt
 # using a private home directory
 private
 # private-bin Xephyr,sh,xkbcomp

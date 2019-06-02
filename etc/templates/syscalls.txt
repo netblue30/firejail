@@ -4,19 +4,19 @@ Hints for writing seccomp.drop lines
 @clock=adjtimex,clock_adjtime,clock_settime,settimeofday,stime
 @module=delete_module,finit_module,init_module
 @raw-io=ioperm,iopl,pciconfig_iobase,pciconfig_read,pciconfig_write,s390_mmio_read,s390_mmio_write
-@reboot=kexec_load,kexec_file_load,reboot,
-@swap=swapon,swapoff
+@reboot=kexec_file_load,kexec_load,reboot
+@swap=swapoff,swapon
 
 @privileged=@clock,@module,@raw-io,@reboot,@swap,acct,bpf,chroot,mount,nfsservctl,pivot_root,setdomainname,sethostname,umount2,vhangup
 
 @cpu-emulation=modify_ldt,subpage_prot,switch_endian,vm86,vm86old
 @debug=lookup_dcookie,perf_event_open,process_vm_writev,rtas,s390_runtime_instr,sys_debug_setcontext
 @obsolete=_sysctl,afs_syscall,bdflush,break,create_module,ftime,get_kernel_syms,getpmsg,gtty,lock,mpx,prof,profil,putpmsg,query_module,security,sgetmask,ssetmask,stty,sysfs,tuxcall,ulimit,uselib,ustat,vserver
-@resources=set_mempolicy,migrate_pages,move_pages,mbind
+@resources=mbind,migrate_pages,move_pages,set_mempolicy
 
-@default=@cpu-emulation,@debug,@obsolete,@privileged,@resources,open_by_handle_at,name_to_handle_at,ioprio_set,ni_syscall,syslog,fanotify_init,kcmp,add_key,request_key,keyctl,io_setup,io_destroy,io_getevents,io_submit,io_cancel,remap_file_pages,vmsplice,umount,userfaultfd,mincore
+@default=@cpu-emulation,@debug,@obsolete,@privileged,@resources,add_key,fanotify_init,io_cancel,io_destroy,io_getevents,ioprio_set,io_setup,io_submit,kcmp,keyctl,mincore,name_to_handle_at,ni_syscall,open_by_handle_at,remap_file_pages,request_key,syslog,umount,userfaultfd,vmsplice
 
-@default-nodebuggers=@default,ptrace,personality,process_vm_readv
+@default-nodebuggers=@default,personality,process_vm_readv,ptrace
 
 @default-keep=execve,prctl
 

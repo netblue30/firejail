@@ -31,8 +31,6 @@ include PROFILE.local
 
 # Additional options (if needed)
 
-
-
 # Additional private-options (if needed)
 # Add programs to private-bin (if needed)
 #private-bin PROGRAMS

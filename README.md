@@ -111,4 +111,4 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ## New profiles:
 
-klatexformula, klatexformula_cmdl, links, qgis, xlinks
+klatexformula, klatexformula_cmdl, links, pandoc, qgis, xlinks

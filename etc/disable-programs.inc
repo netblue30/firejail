@@ -432,6 +432,7 @@ blacklist ${HOME}/.kodi
 blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
+blacklist ${HOME}/.links
 blacklist ${HOME}/.lmmsrc.xml
 blacklist ${HOME}/.local/lib/vivaldi
 blacklist ${HOME}/.local/share/0ad

@@ -370,6 +370,7 @@ blacklist ${HOME}/.kde/share/apps/kaffeine
 blacklist ${HOME}/.kde/share/apps/kcookiejar
 blacklist ${HOME}/.kde/share/apps/kget
 blacklist ${HOME}/.kde/share/apps/khtml
+blacklist ${HOME}/.kde/share/apps/klatexformula
 blacklist ${HOME}/.kde/share/apps/konqsidebartng
 blacklist ${HOME}/.kde/share/apps/konqueror
 blacklist ${HOME}/.kde/share/apps/kopete
@@ -426,6 +427,7 @@ blacklist ${HOME}/.kde4/share/config/okularrc
 blacklist ${HOME}/.killingfloor
 blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc
+blacklist ${HOME}/.klatexformula
 blacklist ${HOME}/.kodi
 blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.linphone-history.db

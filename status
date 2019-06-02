@@ -7,7 +7,7 @@ netblue@debian:~/work/github/LTSbase/test/environment$ TESTING ERROR 1.2
 
 May 23: add header guard to firecfg.h
 May 18: man pages: add FIREJAIL_QUIET
-todo May 17: Merge pull request #2688 from laomaiweng/nodbus-enhancements
+May 17: Merge pull request #2688 from laomaiweng/nodbus-enhancements
 May 17: Merge pull request #2701 from smitsohu/opath - bring back support for Centos6
 May 4: update man pages (private-dev, noexec)
 April 21: typo

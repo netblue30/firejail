@@ -10,8 +10,7 @@ May 18: man pages: add FIREJAIL_QUIET
 todo May 17: Merge pull request #2688 from laomaiweng/nodbus-enhancements
 May 17: Merge pull request #2701 from smitsohu/opath - bring back support for Centos6
 May 4: update man pages (private-dev, noexec)
-todo April 21: typo
-todo April 20: typo and merges
+April 21: typo
 todo Mar 23: mount runtime seccomp files read-only
 
 Jan 13: fix parent death signal

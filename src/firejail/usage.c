@@ -141,7 +141,7 @@ static char *usage_str =
 	"    --protocol=protocol,protocol,protocol - enable protocol filter.\n"
 	"    --protocol.print=name|pid - print the protocol filter.\n"
 	"    --quiet - turn off Firejail's output.\n"
-	"    --read-only=filename - set directory or file read-only..\n"
+	"    --read-only=filename - set directory or file read-only.\n"
 	"    --read-write=filename - set directory or file read-write.\n"
 	"    --rlimit-as=number - set the maximum size of the process's virtual memory\n"
 	"\t(address space) in bytes.\n"

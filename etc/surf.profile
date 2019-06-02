@@ -15,6 +15,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.surf
+whitelist ${HOME}/.surf
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
 

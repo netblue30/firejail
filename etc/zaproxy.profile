@@ -19,6 +19,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.java
 mkdir ${HOME}/.ZAP
 whitelist ${HOME}/.java
 whitelist ${HOME}/.ZAP

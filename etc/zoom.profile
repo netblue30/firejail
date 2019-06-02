@@ -13,6 +13,8 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.cache/zoom
+mkfile ${HOME}/.config/zoomus.conf
 mkdir ${HOME}/.zoom
 whitelist ${HOME}/.cache/zoom
 whitelist ${HOME}/.config/zoomus.conf

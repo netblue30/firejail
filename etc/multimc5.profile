@@ -21,6 +21,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.local/share/multimc
+mkdir ${HOME}/.local/share/multimc5
+mkdir ${HOME}/.multimc5
 whitelist ${HOME}/.local/share/multimc
 whitelist ${HOME}/.local/share/multimc5
 whitelist ${HOME}/.multimc5

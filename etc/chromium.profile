@@ -12,6 +12,7 @@ noblacklist ${HOME}/.config/chromium-flags.conf
 
 mkdir ${HOME}/.cache/chromium
 mkdir ${HOME}/.config/chromium
+mkfile ${HOME}/.config/chromium-flags.conf
 whitelist ${HOME}/.cache/chromium
 whitelist ${HOME}/.config/chromium
 whitelist ${HOME}/.config/chromium-flags.conf

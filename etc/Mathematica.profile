@@ -16,6 +16,7 @@ include disable-programs.inc
 
 mkdir ${HOME}/.Mathematica
 mkdir ${HOME}/.Wolfram Research
+mkdir ${HOME}/Documents/Wolfram Mathematica
 whitelist ${HOME}/.Mathematica
 whitelist ${HOME}/.Wolfram Research
 whitelist ${HOME}/Documents/Wolfram Mathematica

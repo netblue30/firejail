@@ -5,7 +5,6 @@ include JDownloader.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist ${HOME}/.jd
 
 # Allow java (blacklisted by disable-devel.inc)

@@ -6,7 +6,6 @@ include nethack.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist /var/games/nethack
 
 include disable-common.inc

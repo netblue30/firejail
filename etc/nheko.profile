@@ -18,11 +18,9 @@ include disable-programs.inc
 
 mkdir ${HOME}/.config/nheko
 mkdir ${HOME}/.cache/nheko/nheko
-
 whitelist ${HOME}/.config/nheko
 whitelist ${HOME}/.cache/nheko/nheko
 whitelist ${DOWNLOADS}
-
 include whitelist-common.inc
 
 caps.drop all

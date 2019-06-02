@@ -7,6 +7,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/Rocket.Chat
 
+mkdir ${HOME}/.config/Rocket.Chat
 whitelist ${HOME}/.config/Rocket.Chat
 include whitelist-common.inc
 

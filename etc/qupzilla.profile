@@ -15,6 +15,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.cache/qupzilla
+mkdir ${HOME}/.config/qupzilla
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/qupzilla
 whitelist ${HOME}/.config/qupzilla

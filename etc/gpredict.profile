@@ -15,6 +15,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.config/Gpredict
 whitelist ${HOME}/.config/Gpredict
 include whitelist-common.inc
 

@@ -14,11 +14,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.config/mate/mate-dictionary
 whitelist ${HOME}/.config/mate/mate-dictionary
-whitelist ${HOME}/.config/gtk-3.0
-whitelist ${HOME}/.fonts
-whitelist ${HOME}/.icons
-whitelist ${HOME}/.themes
+include whitelist-common.inc
 
 caps.drop all
 netfilter

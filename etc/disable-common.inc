@@ -242,6 +242,7 @@ read-only ${HOME}/.ssh/authorized_keys
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
+read-only ${HOME}/.cargo/env
 read-only ${HOME}/.dotfiles
 read-only ${HOME}/.emacs
 read-only ${HOME}/.emacs.d
@@ -275,7 +276,6 @@ read-only ${HOME}/bin
 read-only ${HOME}/.bin
 read-only ${HOME}/.local/bin
 read-only ${HOME}/.cargo/bin
-read-only ${HOME}/.cargo/env
 blacklist ${HOME}/.cargo/registry
 blacklist ${HOME}/.cargo/config
 
@@ -414,3 +414,12 @@ blacklist /usr/share/flatpak
 blacklist /var/lib/flatpak
 # most of the time bwrap is SUID binary
 blacklist ${PATH}/bwrap
+
+# mail directories used by mutt
+blacklist ${HOME}/.Mail
+blacklist ${HOME}/.mail
+blacklist ${HOME}/.signature
+blacklist ${HOME}/Mail
+blacklist ${HOME}/mail
+blacklist ${HOME}/postponed
+blacklist ${HOME}/sent

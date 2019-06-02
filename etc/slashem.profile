@@ -6,7 +6,6 @@ include slashem.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist /var/games/slashem
 
 include disable-common.inc

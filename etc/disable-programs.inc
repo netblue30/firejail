@@ -7,6 +7,7 @@ blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud/Notes
 blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
+blacklist ${HOME}/mps
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
@@ -118,6 +119,7 @@ blacklist ${HOME}/.config/artha.conf
 blacklist ${HOME}/.config/asunder
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
+blacklist ${HOME}/.config/autokey
 blacklist ${HOME}/.config/aweather
 blacklist ${HOME}/.config/baloofilerc
 blacklist ${HOME}/.config/baloorc
@@ -140,6 +142,7 @@ blacklist ${HOME}/.config/clipit
 blacklist ${HOME}/.config/cliqz
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/corebird
+blacklist ${HOME}/.config/cower
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge
@@ -267,6 +270,7 @@ blacklist ${HOME}/.config/redshift.conf
 blacklist ${HOME}/.config/remmina
 blacklist ${HOME}/.config/ristretto
 blacklist ${HOME}/.config/scribus
+blacklist ${HOME}/.config/scribusrc
 blacklist ${HOME}/.config/sinew.in
 blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
@@ -455,6 +459,7 @@ blacklist ${HOME}/.local/share/akonadi*
 blacklist ${HOME}/.local/share/akregator
 blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
+blacklist ${HOME}/.local/share/autokey
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/bibletime
 blacklist ${HOME}/.local/share/caja-python

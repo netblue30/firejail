@@ -3,7 +3,6 @@
 # Persistent local customizations
 include start-tor-browser.desktop.local
 
-
 noblacklist ${HOME}/.tor-browser-*
 noblacklist ${HOME}/.tor-browser_*
 

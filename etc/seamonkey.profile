@@ -18,6 +18,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.cache/mozilla
 mkdir ${HOME}/.mozilla
+mkdir ${HOME}/.pki
+mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/mozilla

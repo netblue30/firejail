@@ -21,6 +21,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.local/share/Anki2
 whitelist ${DOCUMENTS}
 whitelist ${HOME}/.local/share/Anki2
 include whitelist-common.inc

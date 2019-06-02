@@ -6,7 +6,6 @@ include nethack.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist ${HOME}/.vultures
 noblacklist /var/log
 
@@ -43,4 +42,3 @@ private-cache
 private-dev
 private-tmp
 writable-var
-

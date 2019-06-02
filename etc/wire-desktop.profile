@@ -16,7 +16,6 @@ include disable-programs.inc
 mkdir ${HOME}/.config/Wire
 whitelist ${HOME}/.config/Wire
 whitelist ${DOWNLOADS}
-
 include whitelist-common.inc
 
 caps.drop all

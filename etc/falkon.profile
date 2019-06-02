@@ -16,6 +16,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.cache/falkon
+mkdir ${HOME}/.config/falkon
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/falkon
 whitelist ${HOME}/.config/falkon

@@ -1,10 +1,11 @@
 # Firejail profile for dooble
 # This file is overwritten after every install/update
 # Persistent local customizations
+include dooble.local
+# Backward compatibility
 include dooble-qt4.local
 # Persistent global definitions
 include globals.local
-
 
 noblacklist ${HOME}/.dooble
 

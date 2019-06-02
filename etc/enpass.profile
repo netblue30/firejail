@@ -20,12 +20,16 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/Enpass
+mkfile ${HOME}/.config/sinew.in
+mkdir ${HOME}/.config/Sinew Software Systems
+mkdir ${HOME}/.local/share/Enpass
 whitelist ${HOME}/.cache/Enpass
 whitelist ${HOME}/.config/sinew.in
 whitelist ${HOME}/.config/Sinew Software Systems
 whitelist ${HOME}/.local/share/Enpass
 whitelist ${DOCUMENTS}
-
+include whitelist-common.inc
 include whitelist-var-common.inc
 
 # machine-id and nosound break audio notification functionality

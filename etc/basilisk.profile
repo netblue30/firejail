@@ -10,7 +10,6 @@ noblacklist ${HOME}/.moonchild productions/basilisk
 
 mkdir ${HOME}/.cache/moonchild productions/basilisk
 mkdir ${HOME}/.moonchild productions
-whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/moonchild productions/basilisk
 whitelist ${HOME}/.moonchild productions
 

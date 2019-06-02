@@ -14,6 +14,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.config/Nylas Mail
+mkdir ${HOME}/.nylas-mail
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/Nylas Mail
 whitelist ${HOME}/.nylas-mail

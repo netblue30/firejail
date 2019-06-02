@@ -20,8 +20,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist ${HOME}/.config/autostart
 mkdir ${HOME}/.config/meteo-qt
+whitelist ${HOME}/.config/autostart
 whitelist ${HOME}/.config/meteo-qt
 include whitelist-common.inc
 include whitelist-var-common.inc

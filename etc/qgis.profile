@@ -6,7 +6,6 @@ include qgis.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/QtProject.conf
 noblacklist ${HOME}/.config/QGIS
 noblacklist ${HOME}/.local/share/QGIS
 noblacklist ${HOME}/.qgis2

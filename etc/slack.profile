@@ -13,7 +13,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-mkdir ${HOME}/.config
 mkdir ${HOME}/.config/Slack
 whitelist ${HOME}/.config/Slack
 whitelist ${DOWNLOADS}

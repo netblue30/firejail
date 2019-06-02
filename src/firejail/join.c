@@ -29,7 +29,6 @@
 
 static int apply_caps = 0;
 static uint64_t caps = 0;
-static int apply_seccomp = 0;
 static unsigned display = 0;
 #define BUFLEN 4096
 

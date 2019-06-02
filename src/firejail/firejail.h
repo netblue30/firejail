@@ -23,6 +23,10 @@
 #include "../include/euid_common.h"
 #include <stdarg.h>
 #include <sys/stat.h>
+#include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL

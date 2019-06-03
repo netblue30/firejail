@@ -81,7 +81,9 @@ int find_child(int id) {
 			return i;
 	}
 
-	return -1;
+	// if a second child is not found, return the first child pid
+	// this happens for processes sandboxed with --join
+	return first_child;
 }
 
 // sleep and wait for a key to be pressed

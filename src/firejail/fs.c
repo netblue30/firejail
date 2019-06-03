@@ -681,13 +681,9 @@ void fs_mnt(const int enforce) {
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {
 
-	if (arg_debug)
-		printf("Remounting /proc and /proc/sys filesystems\n");
-	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
-		errExit("mounting /proc");
-	fs_logger("remount /proc");
-
 	// remount /proc/sys readonly
+	if (arg_debug)
+		printf("Mounting read-only /proc/sys\n");
 	if (mount("/proc/sys", "/proc/sys", NULL, MS_BIND | MS_REC, NULL) < 0 ||
 	    mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mounting /proc/sys");
@@ -697,7 +693,8 @@ void fs_proc_sys_dev_boot(void) {
 	/* Mount a version of /sys that describes the network namespace */
 	if (arg_debug)
 		printf("Remounting /sys directory\n");
-	// if this is an overlay, don't try to unmount, just mount a new sysfs
+	// sysfs not yet mounted in overlays, so don't try to unmount it
+	// expect that unmounting /sys fails in a chroot, no need to print a warning in that case
 	if (!arg_overlay) {
 		if (umount2("/sys", MNT_DETACH) < 0 && !cfg.chrootdir)
 			fwarning("failed to unmount /sys\n");
@@ -952,7 +949,7 @@ char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 // # umount /root/overlay/root
 
 
-// to do: fix the code below; also, it might work without /dev, but consider keeping /dev/shm; add locking mechanism for overlay-clean
+// TODO: fix the code below
 #include <sys/utsname.h>
 void fs_overlayfs(void) {
 	struct stat s;
@@ -1175,6 +1172,15 @@ void fs_overlayfs(void) {
 		errExit("mounting /tmp");
 	fs_logger("whitelist /tmp");
 
+	// mount a new proc filesystem
+	if (arg_debug)
+		printf("Mounting /proc\n");
+	char *proc;
+	if (asprintf(&proc, "%s/proc", oroot) == -1)
+		errExit("asprintf");
+	if (mount("proc", proc, "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
+		errExit("mounting /proc");
+
 	// chroot in the new filesystem
 #ifdef HAVE_GCOV
 	__gcov_flush();
@@ -1209,6 +1215,7 @@ void fs_overlayfs(void) {
 	free(dev);
 	free(run);
 	free(tmp);
+	free(proc);
 }
 #endif
 
@@ -1378,6 +1385,16 @@ void fs_chroot(const char *rootdir) {
 	if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting /dev");
 	free(newdev);
+
+	// mount a new proc filesystem
+	char *newproc;
+	if (asprintf(&newproc, "%s/proc", rootdir) == -1)
+		errExit("asprintf");
+	if (arg_debug)
+		printf("Mounting /proc filesystem on %s\n", newproc);
+	if (mount("proc", newproc, "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
+		errExit("mounting /proc");
+	free(newproc);
 
 	// x11
 	if (getenv("FIREJAIL_X11")) {

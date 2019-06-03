@@ -11,7 +11,7 @@ May 17: Merge pull request #2688 from laomaiweng/nodbus-enhancements
 May 17: Merge pull request #2701 from smitsohu/opath - bring back support for Centos6
 May 4: update man pages (private-dev, noexec)
 April 21: typo
-todo Mar 23: mount runtime seccomp files read-only
+Mar 23: mount runtime seccomp files read-only
 
 Jan 13: fix parent death signal
 Feb 26: Sort items alphabetically in man firejail #2479

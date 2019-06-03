@@ -59,13 +59,14 @@
 #define RUN_LIB_FILE	"/run/firejail/mnt/libfiles"
 #define RUN_DNS_ETC	"/run/firejail/mnt/dns-etc"
 
-#define RUN_SECCOMP_LIST	"/run/firejail/mnt/seccomp.list"	// list of seccomp files installed
-#define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp.protocol"	// protocol filter
-#define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp"			// configured filter
-#define RUN_SECCOMP_32	"/run/firejail/mnt/seccomp.32"		// 32bit arch filter installed on 64bit architectures
-#define RUN_SECCOMP_MDWX	"/run/firejail/mnt/seccomp.mdwx"		// filter for memory-deny-write-execute
-#define RUN_SECCOMP_BLOCK_SECONDARY	"/run/firejail/mnt/seccomp.block_secondary"	// secondary arch blocking filter
-#define RUN_SECCOMP_POSTEXEC	"/run/firejail/mnt/seccomp.postexec"		// filter for post-exec library
+#define RUN_SECCOMP_DIR	"/run/firejail/mnt/seccomp"
+#define RUN_SECCOMP_LIST	"/run/firejail/mnt/seccomp/seccomp.list"	// list of seccomp files installed
+#define RUN_SECCOMP_PROTOCOL	"/run/firejail/mnt/seccomp/seccomp.protocol"	// protocol filter
+#define RUN_SECCOMP_CFG	"/run/firejail/mnt/seccomp/seccomp"			// configured filter
+#define RUN_SECCOMP_32	"/run/firejail/mnt/seccomp/seccomp.32"		// 32bit arch filter installed on 64bit architectures
+#define RUN_SECCOMP_MDWX	"/run/firejail/mnt/seccomp/seccomp.mdwx"		// filter for memory-deny-write-execute
+#define RUN_SECCOMP_BLOCK_SECONDARY	"/run/firejail/mnt/seccomp/seccomp.block_secondary"	// secondary arch blocking filter
+#define RUN_SECCOMP_POSTEXEC	"/run/firejail/mnt/seccomp/seccomp.postexec"		// filter for post-exec library
 #define PATH_SECCOMP_DEFAULT (LIBDIR "/firejail/seccomp")			// default filter built during make
 #define PATH_SECCOMP_DEFAULT_DEBUG (LIBDIR "/firejail/seccomp.debug")	// default filter built during make
 #define PATH_SECCOMP_32 (LIBDIR "/firejail/seccomp.32")			// 32bit arch filter built during make
@@ -96,7 +97,6 @@
 #define RUN_ASOUNDRC_FILE	"/run/firejail/mnt/.asoundrc"
 #define RUN_HOSTNAME_FILE	"/run/firejail/mnt/hostname"
 #define RUN_HOSTS_FILE	"/run/firejail/mnt/hosts"
-#define RUN_RESOLVCONF_FILE	"/run/firejail/mnt/resolv.conf"
 #define RUN_MACHINEID	"/run/firejail/mnt/machine-id"
 #define RUN_LDPRELOAD_FILE	"/run/firejail/mnt/ld.so.preload"
 #define RUN_UTMP_FILE		"/run/firejail/mnt/utmp"

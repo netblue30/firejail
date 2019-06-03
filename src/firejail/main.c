@@ -1721,6 +1721,10 @@ int main(int argc, char **argv) {
 				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
 				exit(1);
 			}
+			if (strncmp(cfg.homedir, "/etc/", 5) == 0) {
+				fprintf(stderr, "Error: user directory in /etc, private-etc is disabled\n");
+				exit(1);
+			}
 
 			// extract private etc list
 			if (*(argv[i] + 14) == '\0') {
@@ -1735,6 +1739,10 @@ int main(int argc, char **argv) {
 			arg_private_etc = 1;
 		}
 		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
+			if (strncmp(cfg.homedir, "/opt/", 5) == 0) {
+				fprintf(stderr, "Error: user directory in /opt, private-opt is disabled\n");
+				exit(1);
+			}
 			// extract private opt list
 			if (*(argv[i] + 14) == '\0') {
 				fprintf(stderr, "Error: invalid private-opt option\n");
@@ -1748,6 +1756,10 @@ int main(int argc, char **argv) {
 			arg_private_opt = 1;
 		}
 		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
+			if (strncmp(cfg.homedir, "/srv/", 5) == 0) {
+				fprintf(stderr, "Error: user directory in /srv, private-srv is disabled\n");
+				exit(1);
+			}
 			// extract private srv list
 			if (*(argv[i] + 14) == '\0') {
 				fprintf(stderr, "Error: invalid private-srv option\n");

@@ -26,8 +26,7 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-# shell none
-# tracelog
+shell none
 
 private-bin sh,xdg-mime,tr,sed,echo,head,cut,xdg-open,grep,egrep,bash,zsh,teams-for-linux
 private-dev

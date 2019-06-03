@@ -15,9 +15,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 caps.drop all
+hostname uudeview
 ipc-namespace
 machine-id
-hostname uudeview
 net none
 nodbus
 nodvd

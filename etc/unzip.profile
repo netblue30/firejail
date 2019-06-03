@@ -20,9 +20,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 caps.drop all
+hostname unzip
 ipc-namespace
 machine-id
-hostname unzip
 net none
 no3d
 nodbus

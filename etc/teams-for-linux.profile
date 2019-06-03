@@ -7,8 +7,13 @@ include teams-for-linux.local
 include globals.local
 
 caps.drop all
+
+mkdir ${HOME}/.config/teams-for-linux
 whitelist ${HOME}/.config/teams-for-linux
 noblacklist ${HOME}/.config/teams-for-linux
+
+include whitelist-common.inc
+include whitelist-var-common.inc
 include disable-common.inc
 include disable-devel.inc
 include disable-passwdmgr.inc

@@ -8,13 +8,13 @@ include globals.local
 
 caps.drop all
 whitelist ${HOME}/.config/teams-for-linux
+noblacklist ${HOME}/.config/teams-for-linux
 include disable-common.inc
 include disable-devel.inc
 include disable-passwdmgr.inc
 include disable-interpreters.inc
-# include disable-programs.inc
-
-
+include disable-exec.inc
+include disable-programs.inc
 
 netfilter
 nodvd
@@ -35,6 +35,4 @@ private-tmp
 private-cache
 disable-mnt
 
-noblacklist ${HOME}/.config/teams-for-linux
 
-noexec /tmp

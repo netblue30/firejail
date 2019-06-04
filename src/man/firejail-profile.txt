@@ -74,6 +74,9 @@ Child process initialized
 [...]
 .RE
 
+.SH Templates
+Templates for writing own profiles can be found in /usr/share/doc/firejail.
+
 .SH Scripting
 Scripting commands:
 

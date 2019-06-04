@@ -270,21 +270,23 @@ static void init_cfg(int argc, char **argv) {
 			cfg.homedir = clean_pathname(pw->pw_dir);
 		assert(cfg.homedir);
 
-		// enforce a user owned directory outside /proc and /sys
-		int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-		if (fd > -1) {
+		if (getuid() != 0) {
+			// enforce a user owned directory outside /proc and /sys
 			if (strncmp(cfg.homedir, "/proc/", 6) == 0 || strncmp(cfg.homedir, "/sys/", 5) == 0) {
 				fprintf(stderr, "Error: invalid user directory\n");
 				exit(1);
 			}
-			struct stat s;
-			if (fstat(fd, &s) == -1)
-				errExit("fstat");
-			if (s.st_uid != getuid()) {
-				fprintf(stderr, "Error: user directory %s is not owned by user %s\n", cfg.homedir, cfg.username);
-				exit(1);
+			int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+			if (fd > -1) {
+				struct stat s;
+				if (fstat(fd, &s) == -1)
+					errExit("fstat");
+				if (s.st_uid != getuid()) {
+					fprintf(stderr, "Error: user directory %s is not owned by user %s\n", cfg.homedir, cfg.username);
+					exit(1);
+				}
+				close(fd);
 			}
-			close(fd);
 		}
 	}
 	else {  // reject symbolic links

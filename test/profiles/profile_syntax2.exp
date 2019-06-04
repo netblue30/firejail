@@ -30,16 +30,12 @@ expect {
 	"Drop CAP_SYS_MODULE"
 }
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"seccomp entries in /run/firejail/mnt/seccomp"
-}
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"jeq mount"
-}
-expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter"
 }
 send -- "exit\r"
 after 100

@@ -1,3 +1,9 @@
+firejail (0.9.56.2-LTS) baseline; urgency=low
+  * fix CVE-2019-12589
+  * fix CVE-2019-12499
+  * other bugfixes
+ -- netblue30 <netblue30@yahoo.com>  Tue, 4 Jun 2018 08:00:00 -0500
+
 firejail (0.9.56-LTS) baseline; urgency=low
   * code based on Firejail version 0.9.56
   * much smaller code base for SUID executable

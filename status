@@ -1,4 +1,8 @@
-Jun 29 test:
+Jun 4 test:
+TESTING: DNS (test/environment/dns.exp)
+netblue@debian:~/work/github/LTSbase/test/environment$ TESTING ERROR 1.2
+
+May 29 test:
 TESTING: tar
 TESTING ERROR 4.2
 TESTING: DNS (test/environment/dns.exp)

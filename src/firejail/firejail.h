@@ -713,6 +713,7 @@ enum {
 	CFG_PRIVATE_CACHE,
 	CFG_CGROUP,
 	CFG_NAME_CHANGE,
+	CFG_HOMEDIR_SYMLINK,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

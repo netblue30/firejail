@@ -50,6 +50,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
 		cfg_val[CFG_XPRA_ATTACH] = 0;
+		cfg_val[CFG_HOMEDIR_SYMLINK] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -112,6 +113,7 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
 			PARSE_YESNO(CFG_BROWSER_DISABLE_U2F, "browser-disable-u2f")
 			PARSE_YESNO(CFG_BROWSER_ALLOW_DRM, "browser-allow-drm")
+			PARSE_YESNO(CFG_HOMEDIR_SYMLINK, "homedir-symlink")
 #undef PARSE_YESNO
 
 			// netfilter

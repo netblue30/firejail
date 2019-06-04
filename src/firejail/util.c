@@ -487,7 +487,7 @@ char *line_remove_spaces(const char *buf) {
 	size_t len = strlen(buf);
 	if (len == 0)
 		return NULL;
-	assert(len + 1 != 0 && buf[len] == '\0');
+	assert(len + 1 != 0);
 
 	// allocate memory for the new string
 	char *rv = malloc(len + 1);
@@ -554,7 +554,7 @@ char *split_comma(char *str) {
 char *clean_pathname(const char *path) {
 	assert(path);
 	size_t len = strlen(path);
-	assert(len + 1 != 0 && path[len] == '\0');
+	assert(len + 1 != 0);
 
 	char *rv = malloc(len + 1);
 	if (!rv)

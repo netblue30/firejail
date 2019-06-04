@@ -609,6 +609,7 @@ blacklist ${HOME}/.surf
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
+blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.teeworlds
 blacklist ${HOME}/.thunderbird
@@ -757,3 +758,4 @@ blacklist /var/games/slashem
 blacklist /var/games/vulturesclaw
 blacklist /var/games/vultureseye
 blacklist /var/lib/games/Maelstrom-Scores
+

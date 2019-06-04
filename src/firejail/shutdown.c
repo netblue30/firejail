@@ -62,15 +62,16 @@ void shut(pid_t pid) {
 	printf("Sending SIGTERM to %u\n", pid);
 	kill(pid, SIGTERM);
 
-	// wait for not more than 10 seconds
-	sleep(2);
-	int monsec = 8;
+	// wait for not more than 11 seconds
+	int monsec = 11;
 	char *monfile;
 	if (asprintf(&monfile, "/proc/%d/cmdline", pid) == -1)
 		errExit("asprintf");
 	int killdone = 0;
 
 	while (monsec) {
+		sleep(1);
+		monsec--;
 		FILE *fp = fopen(monfile, "r");
 		if (!fp) {
 			killdone = 1;
@@ -85,9 +86,6 @@ void shut(pid_t pid) {
 			killdone = 1;
 			break;
 		}
-
-		sleep(1);
-		monsec--;
 	}
 	free(monfile);
 

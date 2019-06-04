@@ -20,6 +20,6 @@
 #ifndef LIBPOSTEXECSECCOMP_H
 #define LIBPOSTEXECSECCOMP_H
 
-#define RUN_SECCOMP_POSTEXEC	"/run/firejail/mnt/seccomp.postexec"
+#define RUN_SECCOMP_POSTEXEC	"/run/firejail/mnt/seccomp/seccomp.postexec"
 
 #endif

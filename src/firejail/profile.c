@@ -1039,8 +1039,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			exit(1);
 		}
 		if (strncmp(cfg.homedir, "/etc/", 5) == 0) {
-			fprintf(stderr, "Error: user directory in /etc, private-etc is disabled\n");
-			exit(1);
+			fwarning("user home directory in /etc, private-etc is disabled\n");
+			return 0;
 		}
 		if (cfg.etc_private_keep) {
 			if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, ptr + 12) < 0 )
@@ -1056,8 +1056,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// private /opt list of files and directories
 	if (strncmp(ptr, "private-opt ", 12) == 0) {
 		if (strncmp(cfg.homedir, "/opt/", 5) == 0) {
-			fprintf(stderr, "Error: user directory in /opt, private-opt is disabled\n");
-			exit(1);
+			fwarning("user home directory in /opt, private-opt is disabled\n");
+			return 0;
 		}
 		if (cfg.opt_private_keep) {
 			if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, ptr + 12) < 0 )
@@ -1073,8 +1073,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// private /srv list of files and directories
 	if (strncmp(ptr, "private-srv ", 12) == 0) {
 		if (strncmp(cfg.homedir, "/srv/", 5) == 0) {
-			fprintf(stderr, "Error: user directory in /srv, private-srv is disabled\n");
-			exit(1);
+			fwarning("user home directory in /srv, private-srv is disabled\n");
+			return 0;
 		}
 		if (cfg.srv_private_keep) {
 			if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, ptr + 12) < 0 )

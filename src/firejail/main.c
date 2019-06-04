@@ -1722,7 +1722,7 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 			if (strncmp(cfg.homedir, "/etc/", 5) == 0) {
-				fprintf(stderr, "Error: user directory in /etc, private-etc is disabled\n");
+				fprintf(stderr, "Error: user home directory in /etc, private-etc is disabled\n");
 				exit(1);
 			}
 
@@ -1740,7 +1740,7 @@ int main(int argc, char **argv) {
 		}
 		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
 			if (strncmp(cfg.homedir, "/opt/", 5) == 0) {
-				fprintf(stderr, "Error: user directory in /opt, private-opt is disabled\n");
+				fprintf(stderr, "Error: user home directory in /opt, private-opt is disabled\n");
 				exit(1);
 			}
 			// extract private opt list
@@ -1757,7 +1757,7 @@ int main(int argc, char **argv) {
 		}
 		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
 			if (strncmp(cfg.homedir, "/srv/", 5) == 0) {
-				fprintf(stderr, "Error: user directory in /srv, private-srv is disabled\n");
+				fprintf(stderr, "Error: user home directory in /srv, private-srv is disabled\n");
 				exit(1);
 			}
 			// extract private srv list

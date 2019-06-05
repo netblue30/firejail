@@ -266,18 +266,17 @@ static void init_cfg(int argc, char **argv) {
 	}
 	if (checkcfg(CFG_HOMEDIR_SYMLINK)) {  // resolve symbolic links
 		cfg.homedir = realpath(pw->pw_dir, NULL);
-		if (!cfg.homedir)
-			cfg.homedir = clean_pathname(pw->pw_dir);
-		assert(cfg.homedir);
-
-		if (getuid() != 0) {
-			// enforce a user owned directory outside /proc and /sys
-			if (strncmp(cfg.homedir, "/proc/", 6) == 0 || strncmp(cfg.homedir, "/sys/", 5) == 0) {
-				fprintf(stderr, "Error: invalid user directory\n");
-				exit(1);
-			}
-			int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-			if (fd > -1) {
+		if (cfg.homedir) {
+			if (getuid() != 0) {
+				// realpath return value might be under control of the user
+				// enforce a user owned directory outside /proc and /sys
+				if (strncmp(cfg.homedir, "/proc/", 6) == 0 || strncmp(cfg.homedir, "/sys/", 5) == 0) {
+					fprintf(stderr, "Error: invalid user directory\n");
+					exit(1);
+				}
+				int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+				if (fd == -1)
+					errExit("safe_fd");
 				struct stat s;
 				if (fstat(fd, &s) == -1)
 					errExit("fstat");
@@ -288,6 +287,10 @@ static void init_cfg(int argc, char **argv) {
 				close(fd);
 			}
 		}
+		else {
+			cfg.homedir = clean_pathname(pw->pw_dir);
+			assert(cfg.homedir);
+		}
 	}
 	else {  // reject symbolic links
 		cfg.homedir = clean_pathname(pw->pw_dir);
@@ -296,8 +299,8 @@ static void init_cfg(int argc, char **argv) {
 		int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1) {
 			if (errno == ENOTDIR) {
-				fprintf(stderr, "Error: invalid user directory %s: path element is not a directory\n"
-						"Hint: following symbolic links is disabled in Firejail configuration file\n", cfg.homedir);
+				fprintf(stderr, "Error: invalid user directory %s: path element is not a directory.\n"
+						"Following symbolic links is disabled in Firejail configuration file\n", cfg.homedir);
 				exit(1);
 			}
 		}

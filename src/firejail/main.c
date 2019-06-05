@@ -247,8 +247,9 @@ static void build_cfg_homedir(const char *dir) {
 		if (cfg.homedir) {
 			if (getuid() != 0) {
 				// realpath return value might be under control of the user
-				// enforce a user owned directory outside /proc and /sys
-				if (strncmp(cfg.homedir, "/proc/", 6) == 0 || strncmp(cfg.homedir, "/sys/", 5) == 0) {
+				// enforce a user owned directory outside /proc, /sys, /run/firejail
+				if (strncmp(cfg.homedir, "/proc/", 6) == 0 || strncmp(cfg.homedir, "/sys/", 5) == 0 ||
+				    strncmp(cfg.homedir, RUN_FIREJAIL_DIR, strlen(RUN_FIREJAIL_DIR)) == 0) {
 					fprintf(stderr, "Error: invalid user directory\n");
 					exit(1);
 				}

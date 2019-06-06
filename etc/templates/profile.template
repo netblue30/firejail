@@ -112,7 +112,7 @@
 #novideo
 #protocol unix,inet,inet6,netlink
 #seccomp
-##seccomp.drop SYSCALLS
+##seccomp.drop SYSCALLS (see also syscalls.txt)
 #shell none
 #tracelog
 
@@ -135,5 +135,6 @@
 
 ##env VAR=VALUE
 #memory-deny-write-execute
+##noexec PATH
 ##read-only ${HOME}
 ##join-or-start NAME

@@ -9,11 +9,14 @@ include globals.local
 noblacklist ${MUSIC}
 noblacklist ${HOME}/.local/share/rhythmbox
 
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc
+
 include disable-common.inc
 include disable-devel.inc
-# rhythmbox is using Python
 include disable-exec.inc
-#include disable-interpreters.inc
+include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc

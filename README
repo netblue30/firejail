@@ -97,7 +97,7 @@ announ (https://github.com/announ)
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start
-Austin Morton
+Austin Morton (https://github.com/apmorton)
 	- deterministic-exit-code option
 	- private-cwd options
 Austin S. Hemmelgarn (https://github.com/Ferroin)
@@ -193,6 +193,8 @@ Danil Semelenov (https://github.com/sgtpep)
 Dara Adib (https://github.com/daradib)
 	- ssh profile fix
 	- evince profile fix
+David Thole (https://github.com/TheDarkTrumpet)
+	- added profile for teams-for-linux
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
 dewbasaur (https://github.com/dewbasaur)
@@ -378,6 +380,9 @@ Jonas Heinrich (https://github.com/onny)
 	- fixed franz profile
 Jose Riha (https://github.com/jose1711)
 	- added meteo-qt profile
+	- created qgis, links, xlinks profiles
+	- extended profile.template with comments
+	- some typo and comment fixes in profile.template
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -565,7 +570,8 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: gajim-history-manager, freemind, nomacs, kid3
 	- added profiles: kid3-qt, kid3-cli, anki, utox, mp3splt, mp3wrap
 	- added profiles: oggsplt, flacsplt, cheese, inkview, mp3splt-gtk
-	- added profiles: ktouch, yelp
+	- added profiles: ktouch, yelp, klatexformula, klatexformula_cmdl
+	- added profiles: pandoc
 	- many profile fixing and hardening
 	- some typo fixes
 	- added profile templates
@@ -703,6 +709,7 @@ Topi Miettinen (https://github.com/topimiettinen)
 	- seccomp default list update
 	- improve loading of seccomp filter and memory-deny-write-execute feature
 	- private-lib feature
+	- make --nodbus block also system D-Bus socket
 user1024 (user1024@tut.by)
 	- electron profile whitelisting
 	- fixed Rocket.Chat profile

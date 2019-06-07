@@ -294,6 +294,7 @@ blacklist ${HOME}/.Private
 blacklist ${HOME}/.caff
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/keybase
+blacklist ${HOME}/.davfs2/secrets
 blacklist ${HOME}/.ecryptfs
 blacklist ${HOME}/.fetchmailrc
 blacklist ${HOME}/.gnome2/keyrings
@@ -313,6 +314,7 @@ blacklist ${HOME}/.local/share/pki
 blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/.ssh
 blacklist ${HOME}/.vaults
+blacklist /etc/davfs2/secrets
 blacklist /etc/group+
 blacklist /etc/group-
 blacklist /etc/gshadow

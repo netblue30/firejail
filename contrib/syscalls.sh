@@ -8,10 +8,10 @@ then
 echo
 echo "   *** No program specified!!! ***"
 echo    
-echo -e "Execute this as:\\n"
-echo -e "\\e[96m   syscalls /full/path/to/program\\n"
+echo -e "Make this file executable and execute it as:\\n"
+echo -e "\\e[96m   syscalls.sh /full/path/to/program\\n"
 echo -e "\\e[39mif you saved this script in a directory in your PATH (e.g., in ${HOME}/bin), otherwise as:\\n"
-echo -e "\\e[96m   ./syscalls /full/path/to/program\\n"
+echo -e "\\e[96m   ./syscalls.sh /full/path/to/program\\n"
 echo -e "\\e[39mUse the full path to the respective program to avoid executing it sandboxed with Firejail\\n(if a Firejail profile for it already exits and 'sudo firecfg' was executed earlier)\\nin order to determine the necessary system calls."
 echo
 exit 0

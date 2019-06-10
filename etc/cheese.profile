@@ -7,6 +7,7 @@ include cheese.local
 include globals.local
 
 noblacklist ${VIDEOS}
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,6 +18,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 whitelist ${VIDEOS}
+whitelist ${PICTURES}
 include whitelist-common.inc
 include whitelist-var-common.inc
 

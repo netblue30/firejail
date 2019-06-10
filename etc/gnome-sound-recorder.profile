@@ -1,17 +1,14 @@
-# Firejail profile for rhythmbox
-# Description: Music player and organizer for GNOME
+# Firejail profile for gnome-sound-recorder
+# Description: simple sound recordings for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
-include rhythmbox.local
+include gnome-sound-recorder.local
 # Persistent global definitions
 include globals.local
 
 noblacklist ${MUSIC}
-noblacklist ${HOME}/.local/share/rhythmbox
-
-# Allow python (blacklisted by disable-interpreters.inc)
-include allow-python2.inc
-include allow-python3.inc
+noblacklist ${HOME}/.local/share/flatpak
+noblacklist ${HOME}/.local/share/Trash
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,23 +20,22 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
 caps.drop all
-netfilter
-# no3d
-# nodbus - makes settings immutable
+net none
+nodvd
 nogroups
 nonewprivs
 noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix
 seccomp
 shell none
 tracelog
 
-private-bin rhythmbox
+disable-mnt
+private-cache
 private-dev
+private-etc alsa,asound.conf,dconf,fonts,gtk-2.0,gtk-3.0,machine-id,openal,pango,pulse,xdg
 private-tmp
-

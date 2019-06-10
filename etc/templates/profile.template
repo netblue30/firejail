@@ -71,7 +71,7 @@
 #include allow-java.inc
 
 # Allow lua (blacklisted by disable-interpreters.inc)
-include allow-lua.inc
+#include allow-lua.inc
 
 #include disable-common.inc
 #include disable-devel.inc
@@ -112,7 +112,7 @@ include allow-lua.inc
 #novideo
 #protocol unix,inet,inet6,netlink
 #seccomp
-##seccomp.drop SYSCALLS
+##seccomp.drop SYSCALLS (see also syscalls.txt)
 #shell none
 #tracelog
 
@@ -135,5 +135,6 @@ include allow-lua.inc
 
 ##env VAR=VALUE
 #memory-deny-write-execute
+##noexec PATH
 ##read-only ${HOME}
 ##join-or-start NAME

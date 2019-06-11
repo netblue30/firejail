@@ -133,13 +133,18 @@
 #private-cache
 #private-dev
 #private-etc FILES
-# private-etc templates (see also #1734)
-#  Internet: ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
-#  Sound: alsa,asound.conf,machine-id,openal,pulse
-#  GTK: dconf,fonts,gtk-2.0,gtk-3.0,pango,xdg
-#  KDE/QT: fonts,kde4rc,kde5rc,ld.so.cache,machine-id,Trolltech.conf,xdg
-#  GUIs: fonts
-#  Alternatives: alternatives
+# private-etc templates (see also #1734, #2093)
+#  Common: ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,alternatives,mime.types,xdg
+#    Extra: magic,magic.mgc,passwd,group
+#  Networking: ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv,conf,hosts,host.conf,hostname,protocols,services,rpc
+#    Extra: proxychains.conf,gai.conf
+#  Sound: alsa,asound.conf,pulse,machine-id
+#  GUI: fonts,pango,X11
+#  GTK: dconf,gconf,gtk-2.0,gtk-3.0
+#  Qt: Trolltech.conf
+#  KDE: kde4rc,kde5rc
+#  3D: drirc,glvnd,bumblebee,nvidia
+#  D-Bus: dbus-1,machine-id
 ##private-lib LIBS
 ##private-opt NAME
 #private-tmp

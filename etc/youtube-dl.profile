@@ -49,7 +49,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin youtube-dl,python*,ffmpeg
+private-bin youtube-dl,python*,ffmpeg,env
 private-cache
 private-dev
 private-etc alternatives,ssl,pki,ca-certificates,hostname,hosts,resolv.conf,youtube-dl.conf,crypto-policies,mime.types

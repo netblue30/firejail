@@ -35,6 +35,17 @@
 #   SPECIAL OPTIONS (mdwx, noexec, read-only, join-or-start)
 #   REDIRECT INCLUDES
 #
+# The following macros may be used in path names to substitute common locations:
+#  ${DESKTOP}
+#  ${DOCUMENTS}
+#  ${DOWNLOADS}
+#  ${HOME} (user's home)
+#  ${PATH} (contents of PATH envvar)
+#  ${MUSIC}
+#  ${VIDEOS}
+#
+# Check contents of ~/.config/user-dirs.dirs to see how they translate to actual paths.
+#
 # --- CUT HERE ---
 ##quiet
 # Persistent local customizations

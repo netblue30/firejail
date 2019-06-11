@@ -18,10 +18,10 @@ exit 0
 
 else
 
-strace -cfo $STRACE_OUTPUT_FILE "$@" && awk '{print $NF}' $STRACE_OUTPUT_FILE | sed '/syscall\|-\|total/d' | sort -u | awk -vORS=, '{ print $1 }' | sed 's/,$/\n/' > $SYSCALLS_OUTPUT_FILE
+strace -cfo "$STRACE_OUTPUT_FILE" "$@" && awk '{print $NF}' "$STRACE_OUTPUT_FILE" | sed '/syscall\|-\|total/d' | sort -u | awk -vORS=, '{ print $1 }' | sed 's/,$/\n/' > "$SYSCALLS_OUTPUT_FILE"
 echo
 echo -e "\e[39mThese are the sorted syscalls:\n\e[93m"
-cat $SYSCALLS_OUTPUT_FILE
+cat "$SYSCALLS_OUTPUT_FILE"
 echo
 echo -e "\e[39mThe sorted syscalls were saved to:\n\n\e[96m$SYSCALLS_OUTPUT_FILE"
 echo

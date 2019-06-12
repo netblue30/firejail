@@ -6,15 +6,13 @@ include totem.local
 # Persistent global definitions
 include globals.local
 
+# Allow lua (required for youtube video)
+include allow-lua.inc
+
 noblacklist ${HOME}/.config/totem
 noblacklist ${HOME}/.local/share/totem
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
-# lua is required for youtube (online?) videos
-noblacklist ${PATH}/lua* 
-noblacklist /usr/lib/lua
-noblacklist /usr/include/lua*
-noblacklist /usr/share/lua
 
 include disable-common.inc
 include disable-devel.inc

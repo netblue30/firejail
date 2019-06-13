@@ -179,6 +179,7 @@ blacklist ${HOME}/.config/git
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv
+blacklist ${HOME}/.config/godot
 blacklist ${HOME}/.config/gnome-pie
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
@@ -492,6 +493,7 @@ blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/gnome-recipes
 blacklist ${HOME}/.local/share/gnome-ring
 blacklist ${HOME}/.local/share/gnome-twitch
+blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/kaffeine
@@ -684,6 +686,7 @@ blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/geeqie
+blacklist ${HOME}/.cache/godot
 blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable

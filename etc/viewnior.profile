@@ -43,5 +43,4 @@ private-dev
 private-etc alternatives,fonts,machine-id
 private-tmp
 
-# memory-deny-write-executes breaks on Arch - see issue #1808
-#memory-deny-write-execute
+#memory-deny-write-execute - breaks on Arch (see issues #1803 and #1808)

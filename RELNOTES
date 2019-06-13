@@ -2,7 +2,7 @@ firejail (0.9.61) baseline; urgency=low
   * work in progress
   * profile templates
   * new profiles: qgis, klatexformula, klatexformula_cmdl, links, xlinks
-  * new profiles: pandoc, teams-for-linux
+  * new profiles: pandoc, teams-for-linux, OpenArena
  -- netblue30 <netblue30@yahoo.com>  Sat, 1 Jun 2019 08:00:00 -0500
 
 firejail (0.9.60) baseline; urgency=low

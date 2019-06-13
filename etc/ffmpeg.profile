@@ -43,7 +43,7 @@ tracelog
 private-bin ffmpeg
 private-cache
 private-dev
-private-etc alternatives,pki,pkcs11,hosts,ssl,ca-certificates,resolv.conf
+private-etc alternatives,ca-certificates,hosts,pkcs11,pki,resolv.conf,ssl
 private-tmp
 
 # memory-deny-write-execute - it breaks old versions of ffmpeg

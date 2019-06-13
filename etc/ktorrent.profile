@@ -52,7 +52,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin ktorrent,kbuildsycoca4,kdeinit4
+private-bin kbuildsycoca4,kdeinit4,ktorrent
 private-dev
 # private-lib - problems on Arch
 private-tmp

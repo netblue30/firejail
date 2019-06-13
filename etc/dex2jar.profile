@@ -35,7 +35,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin dex2jar,java,sh,bash,expr,dirname,ls,uname,grep
+private-bin bash,dex2jar,dirname,expr,grep,java,ls,sh,uname
 private-cache
 private-dev
 

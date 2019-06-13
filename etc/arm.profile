@@ -41,8 +41,8 @@ shell none
 tracelog
 
 disable-mnt
-private-bin arm,tor,sh,bash,python*,ps,lsof,ldconfig
+private-bin arm,bash,ldconfig,lsof,ps,python*,sh,tor
 private-dev
-private-etc alternatives,tor,passwd,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,passwd,pki,ssl,tor
 private-tmp
 

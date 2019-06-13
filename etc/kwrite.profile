@@ -43,7 +43,7 @@ seccomp
 shell none
 tracelog
 
-private-bin kwrite,kbuildsycoca4,kdeinit4
+private-bin kbuildsycoca4,kdeinit4,kwrite
 private-dev
 private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,pulse,xdg
 private-tmp

@@ -38,5 +38,5 @@ tracelog
 
 private-bin unrar
 private-dev
-private-etc alternatives,passwd,group,localtime
+private-etc alternatives,group,localtime,passwd
 private-tmp

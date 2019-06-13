@@ -38,7 +38,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin tremulous,tremulous-wrapper,tremded
+private-bin tremded,tremulous,tremulous-wrapper
 private-cache
 private-dev
 private-tmp

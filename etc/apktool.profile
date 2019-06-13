@@ -31,6 +31,6 @@ protocol unix
 seccomp
 shell none
 
-private-bin apktool,bash,java,dirname,basename,expr,sh
+private-bin apktool,basename,bash,dirname,expr,java,sh
 private-cache
 private-dev

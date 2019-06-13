@@ -44,5 +44,5 @@ shell none
 
 disable-mnt
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,lsb-release,machine-id,mime.types,passwd,pulse,resolv.conf,ssl,java-8-openjdk,java-7-openjdk,pki,crypto-policies
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,java-7-openjdk,java-8-openjdk,ld.so.cache,ld.so.preload,localtime,lsb-release,machine-id,mime.types,passwd,pki,pulse,resolv.conf,ssl
 private-tmp

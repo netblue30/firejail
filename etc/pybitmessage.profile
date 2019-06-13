@@ -39,8 +39,8 @@ seccomp
 shell none
 
 disable-mnt
-private-bin pybitmessage,python*,sh,ldconfig,env,bash,stat
+private-bin bash,env,ldconfig,pybitmessage,python*,sh,stat
 private-dev
-private-etc alternatives,PyBitmessage,PyBitmessage.conf,Trolltech.conf,fonts,gtk-2.0,hosts,ld.so.cache,ld.so.preload,localtime,pki,resolv.conf,selinux,sni-qt.conf,system-fips,xdg,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,fonts,gtk-2.0,hosts,ld.so.cache,ld.so.preload,localtime,pki,pki,PyBitmessage,PyBitmessage.conf,resolv.conf,selinux,sni-qt.conf,ssl,system-fips,Trolltech.conf,xdg
 private-tmp
 

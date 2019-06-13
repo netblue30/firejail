@@ -38,7 +38,7 @@ x11 none
 #private-bin file
 private-cache
 private-dev
-private-etc alternatives,magic.mgc,magic,localtime
+private-etc alternatives,localtime,magic,magic.mgc
 private-lib libarchive.so.*,libfakeroot,libmagic.so.*
 
 memory-deny-write-execute

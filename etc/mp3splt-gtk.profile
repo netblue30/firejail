@@ -37,5 +37,5 @@ tracelog
 private-bin mp3splt-gtk
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,fonts,gtk-3.0,dconf,machine-id,openal,pulse
+private-etc alsa,alternatives,asound.conf,dconf,fonts,gtk-3.0,machine-id,openal,pulse
 private-tmp

@@ -37,7 +37,7 @@ shell none
 private-bin aria2c,gzip
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,ssl,resolv.conf
+private-etc alternatives,ca-certificates,resolv.conf,ssl
 private-lib libreadline.so.*
 private-tmp
 

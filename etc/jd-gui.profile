@@ -37,7 +37,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin jd-gui,sh,bash
+private-bin bash,jd-gui,sh
 private-cache
 private-dev
 private-tmp

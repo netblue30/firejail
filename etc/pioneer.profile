@@ -38,7 +38,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin pioneer,modelcompiler,savegamedump
+private-bin modelcompiler,pioneer,savegamedump
 private-cache
 private-dev
 private-tmp

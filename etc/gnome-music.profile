@@ -37,8 +37,8 @@ seccomp
 shell none
 tracelog
 
-private-bin gnome-music,python*,env,gio-launch-desktop,yelp
+private-bin env,gio-launch-desktop,gnome-music,python*,yelp
 private-dev
-private-etc alternatives,fonts,machine-id,pulse,asound.conf
+private-etc alternatives,asound.conf,fonts,machine-id,pulse
 private-tmp
 

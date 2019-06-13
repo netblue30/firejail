@@ -32,7 +32,7 @@ shell none
 
 disable-mnt
 private
-private-bin silentarmy,sa-solver,python*
+private-bin python*,sa-solver,silentarmy
 private-dev
 private-opt none
 private-tmp

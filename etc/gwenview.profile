@@ -43,7 +43,7 @@ seccomp
 shell none
 # tracelog
 
-private-bin gwenview,gimp*,kbuildsycoca4,kdeinit4
+private-bin gimp*,gwenview,kbuildsycoca4,kdeinit4
 private-dev
 private-etc alternatives,fonts,gimp,gtk-2.0,kde4rc,kde5rc,ld.so.cache,machine-id,pulse,xdg
 

@@ -36,7 +36,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin sdat2img,env,python*
+private-bin env,python*,sdat2img
 private-cache
 private-dev
 

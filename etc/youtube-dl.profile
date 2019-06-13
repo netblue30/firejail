@@ -49,10 +49,10 @@ shell none
 tracelog
 
 disable-mnt
-private-bin youtube-dl,python*,ffmpeg,env
+private-bin env,ffmpeg,python*,youtube-dl
 private-cache
 private-dev
-private-etc alternatives,ssl,pki,ca-certificates,hostname,hosts,resolv.conf,youtube-dl.conf,crypto-policies,mime.types
+private-etc alternatives,ca-certificates,crypto-policies,hostname,hosts,mime.types,pki,resolv.conf,ssl,youtube-dl.conf
 private-tmp
 
 # memory-deny-write-execute - breaks on Arch

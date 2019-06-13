@@ -37,7 +37,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin pdfsam,sh,bash,java,archlinux-java,grep,awk,dirname,uname,which,sort,find,readlink,expr,ls,java-config
+private-bin archlinux-java,awk,bash,dirname,expr,find,grep,java,java-config,ls,pdfsam,readlink,sh,sort,uname,which
 private-cache
 private-dev
 private-tmp

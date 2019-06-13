@@ -42,4 +42,4 @@ tracelog
 private-bin unzip
 private-cache
 private-dev
-private-etc alternatives,passwd,group,localtime
+private-etc alternatives,group,localtime,passwd

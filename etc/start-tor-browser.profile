@@ -34,7 +34,7 @@ shell none
 #tracelog
 
 disable-mnt
-private-bin bash,sh,grep,tail,env,gpg,id,readlink,dirname,test,mkdir,ln,sed,cp,rm,getconf
+private-bin bash,cp,dirname,env,getconf,gpg,grep,id,ln,mkdir,readlink,rm,sed,sh,tail,test
 private-dev
-private-etc alternatives,fonts,hostname,hosts,resolv.conf,pki,ssl,ca-certificates,crypto-policies,alsa,asound.conf,pulse,machine-id,ld.so.cache
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,hostname,hosts,ld.so.cache,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp

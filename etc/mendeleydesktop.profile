@@ -43,7 +43,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin mendeleydesktop,python*,env,gconftool-2,which,sh,ln,cat,update-desktop-database
+private-bin cat,env,gconftool-2,ln,mendeleydesktop,python*,sh,update-desktop-database,which
 private-dev
 private-tmp
 

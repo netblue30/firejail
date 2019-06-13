@@ -31,6 +31,6 @@ protocol unix
 seccomp
 shell none
 
-private-bin zart,ffmpeg,melt,ffprobe,ffplay
+private-bin ffmpeg,ffplay,ffprobe,melt,zart
 private-dev
 

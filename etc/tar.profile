@@ -38,10 +38,10 @@ shell none
 tracelog
 
 # support compressed archives
-private-bin sh,bash,tar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop
+private-bin bash,bzip2,compress,gtar,gzip,lbzip2,lzip,lzma,lzop,sh,tar,xz
 private-cache
 private-dev
-private-etc alternatives,passwd,group,localtime
+private-etc alternatives,group,localtime,passwd
 private-lib libfakeroot
 
 memory-deny-write-execute

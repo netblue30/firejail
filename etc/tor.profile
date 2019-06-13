@@ -44,9 +44,9 @@ writable-var
 
 disable-mnt
 private
-private-bin tor,bash
+private-bin bash,tor
 private-cache
 private-dev
-private-etc alternatives,tor,passwd,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,passwd,pki,ssl,tor
 private-tmp
 

@@ -46,7 +46,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin python,python3,sh,gpg,gpg2,gajim,bash,zsh,paplay,gajim-history-manager
+private-bin bash,gajim,gajim-history-manager,gpg,gpg2,paplay,python,python3,sh,zsh
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
 private-tmp

@@ -40,6 +40,6 @@ seccomp
 shell none
 tracelog
 
-private-bin mpv,youtube-dl,python*,env
+private-bin env,mpv,python*,youtube-dl
 private-cache
 private-dev

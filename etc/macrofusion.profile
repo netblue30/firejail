@@ -36,7 +36,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin python*,macrofusion,env,enfuse,exiftool,align_image_stack
+private-bin align_image_stack,enfuse,env,exiftool,macrofusion,python*
 private-cache
 private-dev
 private-tmp

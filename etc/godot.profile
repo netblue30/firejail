@@ -35,8 +35,8 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
-private-bin godot
+
+# private-bin godot
 private-cache
 private-dev
 private-etc ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl,fonts,alsa,asound.conf,machine-id,openal,pulse,alternatives,drirc

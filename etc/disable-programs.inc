@@ -575,6 +575,7 @@ blacklist ${HOME}/.neverball
 blacklist ${HOME}/.newsboat
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail
+blacklist ${HOME}/.openarena
 blacklist ${HOME}/.opencity
 blacklist ${HOME}/.openinvaders
 blacklist ${HOME}/.openshot

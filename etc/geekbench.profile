@@ -46,6 +46,6 @@ private-lib libstdc++.so.*
 private-opt none
 private-tmp
 
-# memory-deny-write-execute - Breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)
 
 read-only ${HOME}

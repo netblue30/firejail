@@ -44,4 +44,4 @@ private-etc alternatives,dconf,fonts,gtk-3.0
 private-lib eog,eom,gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*
 private-tmp
 
-#memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

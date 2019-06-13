@@ -49,4 +49,4 @@ private-dev
 private-etc alternatives,dbus-1,fonts,machine-id
 private-tmp
 
-# memory-deny-write-execute - Breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

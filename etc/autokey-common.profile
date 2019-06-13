@@ -38,4 +38,4 @@ private-cache
 private-dev
 private-tmp
 
-# memory-deny-write-execute - Breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

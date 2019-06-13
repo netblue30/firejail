@@ -47,4 +47,4 @@ private-etc alternatives,fonts
 private-lib girepository-1.*,libdbus-glib-1.so.*,libetpan.so.*,libgirepository-1.*,libgtk-x11-2.0.so.*,libstartup-notification-1.so.*,perl*
 private-tmp
 
-# memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

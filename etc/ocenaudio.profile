@@ -45,4 +45,4 @@ private-dev
 private-etc alternatives,asound.conf,fonts,ld.so.cache,pulse
 private-tmp
 
-# memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

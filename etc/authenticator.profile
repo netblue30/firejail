@@ -43,4 +43,4 @@ private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,pki,resolv.conf,ssl
 private-tmp
 
-# memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

@@ -51,4 +51,4 @@ private-etc alternatives,ca-certificates,crypto-policies,hosts,nsswitch.conf,fon
 private-opt Bitwarden
 private-tmp
 
-#memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

@@ -45,4 +45,4 @@ private-dev
 private-etc alternatives,fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,crypto-policies,machine-id,pulse
 private-tmp
 
-memory-deny-write-execute
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

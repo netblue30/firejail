@@ -299,6 +299,7 @@ blacklist ${HOME}/.ecryptfs
 blacklist ${HOME}/.fetchmailrc
 blacklist ${HOME}/.gnome2/keyrings
 blacklist ${HOME}/.gnupg
+blacklist ${HOME}/.config/hub
 blacklist ${HOME}/.kde/share/apps/kwallet
 blacklist ${HOME}/.kde4/share/apps/kwallet
 blacklist ${HOME}/.local/share/keyrings

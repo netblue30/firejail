@@ -6,6 +6,13 @@ include meld.local
 # Persistent global definitions
 include globals.local
 
+# If you want to use meld as git-mergetool (and may some other VCS integrations) you need
+# to bypass firejail, you can do this by removing the symlink or call it by its absolut path
+# Removing the symlink:
+#  sudo rm /usr/local/bin/meld
+# Calling by its absolut path (example for git-mergetoll):
+#  git config --global mergetool.meld.cmd /usr/bin/meld
+
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
@@ -26,7 +33,8 @@ include disable-passwdmgr.inc
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-programs.inc.
 #include disable-programs.inc
 
-include whitelist-var-common.inc
+# Uncomment the next line (or put it into your meld.local) if you don't need to compare files in /var.
+#include whitelist-var-common.inc
 
 apparmor
 caps.drop all

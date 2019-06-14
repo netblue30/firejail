@@ -17,6 +17,13 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/clipit
+mkdir ${HOME}/.local/share/clipit
+whitelist ${HOME}/.config/clipit
+whitelist ${HOME}/.local/share/clipit
+include whitelist-common.inc
+include whitelist-var-common.inc
+
 apparmor
 caps.drop all
 ipc-namespace

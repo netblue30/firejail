@@ -571,7 +571,8 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: kid3-qt, kid3-cli, anki, utox, mp3splt, mp3wrap
 	- added profiles: oggsplt, flacsplt, cheese, inkview, mp3splt-gtk
 	- added profiles: ktouch, yelp, klatexformula, klatexformula_cmdl
-	- added profiles: pandoc, gnome-sound-recorder, godot
+	- added profiles: pandoc, gnome-sound-recorder, godot, newsbeuter
+	- added profiles: keepassxc-cli, keepassxc-proxy
 	- many profile fixing and hardening
 	- some typo fixes
 	- added profile templates

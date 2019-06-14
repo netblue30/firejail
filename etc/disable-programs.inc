@@ -239,6 +239,7 @@ blacklist ${HOME}/.config/nano
 blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
+blacklist ${HOME}/.config/newsbeuter
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/NitroShare
 blacklist ${HOME}/.config/nomacs
@@ -574,6 +575,7 @@ blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.nanorc
 blacklist ${HOME}/.netactview
 blacklist ${HOME}/.neverball
+blacklist ${HOME}/.newsbeuter
 blacklist ${HOME}/.newsboat
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail

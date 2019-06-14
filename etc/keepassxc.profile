@@ -37,11 +37,11 @@ nosound
 notv
 nou2f
 novideo
-protocol netlink,unix
+protocol unix,netlink
 seccomp
 shell none
 
-private-bin keepassxc,keepassxc-proxy
+private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 private-dev
 private-etc alternatives,fonts,ld.so.cache,machine-id
 private-tmp

@@ -8,12 +8,13 @@ include globals.local
 
 noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.mplayer
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
+
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc

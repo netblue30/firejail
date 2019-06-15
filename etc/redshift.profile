@@ -18,6 +18,9 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/redshift
+whitelist ${HOME}/.config/redshift
+whitelist ${HOME}/.config/redshift.conf
 include whitelist-var-common.inc
 
 apparmor

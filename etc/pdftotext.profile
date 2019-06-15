@@ -16,6 +16,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
 include whitelist-var-common.inc
 
 caps.drop all

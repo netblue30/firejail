@@ -6,17 +6,18 @@ include mpsyt.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/mps-youtube
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.mplayer
-noblacklist ${HOME}/.config/mps-youtube
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/mps
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
+
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -27,14 +28,17 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/mps-youtube
+mkdir ${HOME}/.config/mpv
+mkdir ${HOME}/.mplayer
+mkdir ${HOME}/mps
+whitelist ${HOME}/.config/mps-youtube
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.mplayer
-whitelist ${HOME}/.config/mps-youtube
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/mps
+whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${VIDEOS}
-whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 

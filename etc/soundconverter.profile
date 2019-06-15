@@ -6,11 +6,11 @@ include soundconverter.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${MUSIC}
-
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
+
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,6 +20,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist ${DOWNLOADS}
+whitelist ${MUSIC}
+include whitelist-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -9,7 +9,6 @@ include globals.local
 noblacklist ${HOME}/.config/dconf
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.ssh
-noblacklist /etc/ssh
 noblacklist /tmp/ssh-*
 
 include disable-common.inc
@@ -26,8 +25,6 @@ mkdir ${HOME}/.ssh
 whitelist ${HOME}/.config/dconf
 whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.ssh
-whitelist /etc/ld.so.preload
-whitelist /etc/ssh
 whitelist /tmp/ssh-*
 include whitelist-common.inc
 include whitelist-var-common.inc
@@ -53,5 +50,6 @@ tracelog
 disable-mnt
 private-cache
 private-dev
+private-etc ca-certificates,crypto-policies,dconf,fonts,gconf,gtk-2.0,gtk-3.0,hostname,host.conf,hosts,ld.so.preload,nsswitch.conf,pango,pki,protocols,resolv.conf,rpc,services,ssh,ssl,X11
 
 writable-run-user

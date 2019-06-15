@@ -43,7 +43,7 @@ disable-mnt
 private-bin assogiate,gtk-update-icon-cache,update-mime-database
 private-cache
 private-dev
-private-lib gnome-vfs-2.0,libattr.so.*,libacl.so.*,libfam.so.*
+private-lib gnome-vfs-2.0,libacl.so.*,libattr.so.*,libfam.so.*
 private-tmp
 
 memory-deny-write-execute

@@ -32,8 +32,8 @@ seccomp
 shell none
 
 disable-mnt
-private-bin sh,bash,dig,awk,Viber
-private-etc hosts,fonts,mailcap,resolv.conf,X11,pulse,alternatives,localtime,nsswitch.conf,ssl,proxychains.conf,pki,ca-certificates,crypto-policies,machine-id,asound.conf
+private-bin awk,bash,dig,sh,Viber
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,hosts,localtime,machine-id,mailcap,nsswitch.conf,pki,proxychains.conf,pulse,resolv.conf,ssl,X11
 private-tmp
 
 env QTWEBENGINE_DISABLE_SANDBOX=1

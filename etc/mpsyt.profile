@@ -54,7 +54,7 @@ seccomp
 shell none
 tracelog
 
-private-bin mpsyt,mplayer,mpv,youtube-dl,python*,env,ffmpeg
+private-bin env,ffmpeg,mplayer,mpsyt,mpv,python*,youtube-dl
 private-dev
 private-tmp
 

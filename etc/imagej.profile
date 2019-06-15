@@ -34,7 +34,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin imagej,bash,grep,sort,tail,tr,cut,whoami,hostname,uname,mkdir,ls,touch,free,awk,update-java-alternatives,basename,xprop,rm,ln
+private-bin awk,basename,bash,cut,free,grep,hostname,imagej,ln,ls,mkdir,rm,sort,tail,touch,tr,uname,update-java-alternatives,whoami,xprop
 private-dev
 private-tmp
 

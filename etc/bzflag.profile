@@ -38,7 +38,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin bzflag,bzflag-wrapper,bzfs,bzadmin
+private-bin bzadmin,bzflag,bzflag-wrapper,bzfs
 private-cache
 private-dev
 private-tmp

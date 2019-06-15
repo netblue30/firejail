@@ -41,7 +41,7 @@ disable-mnt
 private-bin utox
 private-cache
 private-dev
-private-etc alternatives,fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,crypto-policies,machine-id,pulse,openal
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,localtime,machine-id,openal,pki,pulse,resolv.conf,ssl
 private-tmp
 
 memory-deny-write-execute

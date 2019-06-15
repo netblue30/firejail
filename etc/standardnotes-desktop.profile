@@ -39,5 +39,5 @@ seccomp
 disable-mnt
 private-dev
 private-tmp
-private-etc alternatives,ca-certificates,fonts,host.conf,hostname,hosts,resolv.conf,ssl,pki,crypto-policies,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,pki,resolv.conf,ssl,xdg
 

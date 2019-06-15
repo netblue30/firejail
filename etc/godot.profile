@@ -39,5 +39,5 @@ tracelog
 # private-bin godot
 private-cache
 private-dev
-private-etc ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl,fonts,alsa,asound.conf,machine-id,openal,pulse,alternatives,drirc
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,machine-id,nsswitch.conf,openal,pki,pulse,resolv.conf,ssl
 private-tmp

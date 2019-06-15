@@ -32,8 +32,8 @@ shell none
 tracelog
 
 disable-mnt
-private-bin ls,surf,sh,bash,curl,dmenu,printf,sed,sleep,st,stterm,xargs,xprop
+private-bin bash,curl,dmenu,ls,printf,sed,sh,sleep,st,stterm,surf,xargs,xprop
 private-dev
-private-etc alternatives,passwd,group,hosts,resolv.conf,fonts,ssl,pki,ca-certificates,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,passwd,pki,resolv.conf,ssl
 private-tmp
 

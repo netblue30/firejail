@@ -33,7 +33,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin slack,locale
+private-bin locale,slack
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,fonts,group,passwd,pulse,resolv.conf,ssl,ld.so.conf,ld.so.cache,localtime,pki,crypto-policies,machine-id
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
 private-tmp

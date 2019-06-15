@@ -42,7 +42,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin freemind,java,bash,sed,sh,grep,mkdir,echo,cp,uname,which,lsb_release,rpm,dpkg,dirname,readlink
+private-bin bash,cp,dirname,dpkg,echo,freemind,grep,java,lsb_release,mkdir,readlink,rpm,sed,sh,uname,which
 private-cache
 private-dev
 #private-etc alternatives,fonts,java

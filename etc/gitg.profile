@@ -35,7 +35,7 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin gitg,git,ssh
+private-bin git,gitg,ssh
 private-cache
 private-dev
 private-tmp

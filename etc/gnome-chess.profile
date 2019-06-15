@@ -37,7 +37,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin fairymax,gnome-chess,hoichess,gnuchess
+private-bin fairymax,gnome-chess,gnuchess,hoichess
 private-cache
 private-dev
 private-etc alternatives,dconf,fonts,gnome-chess,gtk-3.0

@@ -34,7 +34,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin vlc,cvlc,nvlc,rvlc,qvlc,svlc
+private-bin cvlc,nvlc,qvlc,rvlc,svlc,vlc
 private-dev
 private-tmp
 

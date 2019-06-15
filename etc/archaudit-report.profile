@@ -36,7 +36,7 @@ shell none
 
 disable-mnt
 private
-private-bin archaudit-report,arch-audit,bash,cat,comm,cut,date,fold,grep,pacman,pactree,rm,sed,sort,whoneeds
+private-bin arch-audit,archaudit-report,bash,cat,comm,cut,date,fold,grep,pacman,pactree,rm,sed,sort,whoneeds
 #private-dev
 private-tmp
 

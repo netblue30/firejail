@@ -36,5 +36,5 @@ tracelog
 # private-bin w3m
 private-cache
 private-dev
-private-etc alternatives,resolv.conf,ssl,pki,ca-certificates,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
 private-tmp

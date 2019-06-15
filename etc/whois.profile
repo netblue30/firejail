@@ -36,7 +36,7 @@ shell none
 
 disable-mnt
 private
-private-bin sh,bash,whois
+private-bin bash,sh,whois
 private-cache
 private-dev
 # private-etc alternatives,hosts,services,whois.conf

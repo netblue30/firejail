@@ -44,6 +44,6 @@ tracelog
 
 private-cache
 private-dev
-private-etc alternatives,fonts,gtk-3.0,dconf
+private-etc alternatives,dconf,fonts,gtk-3.0
 private-tmp
 

@@ -45,7 +45,7 @@ tracelog
 private-cache
 private-dev
 # without login.defs atool complains and uses UID/GID 1000 by default
-private-etc alternatives,passwd,group,login.defs
+private-etc alternatives,group,login.defs,passwd
 private-tmp
 
 memory-deny-write-execute

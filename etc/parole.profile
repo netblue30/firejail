@@ -25,6 +25,6 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-bin parole,dbus-launch
+private-bin dbus-launch,parole
 private-cache
-private-etc alternatives,passwd,group,fonts,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,machine-id,passwd,pki,pulse,ssl

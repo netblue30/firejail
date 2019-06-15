@@ -38,7 +38,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin smplayer,smtube,mplayer,mpv,youtube-dl,python*,env
+private-bin env,mplayer,mpv,python*,smplayer,smtube,youtube-dl
 private-dev
 private-tmp
 

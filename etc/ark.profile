@@ -34,7 +34,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin ark,unrar,rar,unzip,zip,zipinfo,7z,p7zip,unar,lsar,lrzip,lzop,lz4,bash,sh,tclsh
+private-bin 7z,ark,bash,lrzip,lsar,lz4,lzop,p7zip,rar,sh,tclsh,unar,unrar,unzip,zip,zipinfo
 #private-etc alternatives,smb.conf,samba,mtab,fonts,drirc,kde5rc,passwd,group,xdg
 
 private-dev

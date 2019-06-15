@@ -38,9 +38,9 @@ seccomp
 shell none
 tracelog
 
-private-bin celluloid,gnome-mpv,youtube-dl,python*,env
+private-bin celluloid,env,gnome-mpv,python*,youtube-dl
 private-cache
-private-etc alternatives,ca-certificates,ssl,pki,pkcs11,hosts,machine-id,localtime,libva.conf,drirc,fonts,gtk-3.0,dconf,crypto-policies,xdg,selinux,resolv.conf
+private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gtk-3.0,hosts,libva.conf,localtime,machine-id,pkcs11,pki,resolv.conf,selinux,ssl,xdg
 private-dev
 private-tmp
 

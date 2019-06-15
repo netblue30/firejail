@@ -30,7 +30,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin kdeinit4,kbuildsycoca4,kded4,knotify4
+private-bin kbuildsycoca4,kded4,kdeinit4,knotify4
 private-dev
 private-tmp
 

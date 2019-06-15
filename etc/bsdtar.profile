@@ -37,9 +37,9 @@ shell none
 tracelog
 
 # support compressed archives
-private-bin sh,bash,bsdcat,bsdcpio,bsdtar,gtar,compress,gzip,lzma,xz,bzip2,lbzip2,lzip,lzop,lz4,libarchive
+private-bin bash,bsdcat,bsdcpio,bsdtar,bzip2,compress,gtar,gzip,lbzip2,libarchive,lz4,lzip,lzma,lzop,sh,xz
 private-cache
 private-dev
-private-etc alternatives,passwd,group,localtime
+private-etc alternatives,group,localtime,passwd
 
 memory-deny-write-execute

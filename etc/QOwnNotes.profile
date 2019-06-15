@@ -47,8 +47,8 @@ shell none
 tracelog
 
 disable-mnt
-private-bin QOwnNotes,gio
+private-bin gio,QOwnNotes
 private-dev
-private-etc alternatives,fonts,ld.so.cache,pulse,resolv.conf,hosts,nsswitch.conf,host.conf,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hosts,ld.so.cache,nsswitch.conf,pki,pulse,resolv.conf,ssl
 private-tmp
 

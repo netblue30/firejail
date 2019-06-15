@@ -38,7 +38,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin freeciv-gtk3,freeciv-mp-gtk3,freeciv-server,freeciv-manual
+private-bin freeciv-gtk3,freeciv-manual,freeciv-mp-gtk3,freeciv-server
 private-cache
 private-dev
 private-tmp

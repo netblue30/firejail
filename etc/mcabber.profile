@@ -30,4 +30,4 @@ shell none
 
 private-bin mcabber
 private-dev
-private-etc alternatives,ca-certificates,ssl,pki,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,pki,ssl

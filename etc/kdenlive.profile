@@ -33,6 +33,6 @@ protocol unix,netlink
 seccomp
 shell none
 
-private-bin kdenlive,kdenlive_render,dbus-launch,melt,ffmpeg,ffplay,ffprobe,dvdauthor,genisoimage,vlc,xine,kdeinit5,kshell5,kdeinit5_shutdown,kdeinit5_wrapper,kdeinit4,kshell4,kdeinit4_shutdown,kdeinit4_wrapper,mlt-melt
+private-bin dbus-launch,dvdauthor,ffmpeg,ffplay,ffprobe,genisoimage,kdeinit4,kdeinit4_shutdown,kdeinit4_wrapper,kdeinit5,kdeinit5_shutdown,kdeinit5_wrapper,kdenlive,kdenlive_render,kshell4,kshell5,melt,mlt-melt,vlc,xine
 private-dev
 # private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,passwd,pulse,xdg,X11

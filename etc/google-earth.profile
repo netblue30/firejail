@@ -45,7 +45,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin google-earth,sh,bash,grep,sed,ls,dirname
+private-bin bash,dirname,google-earth,grep,ls,sed,sh
 private-dev
 private-opt google
 

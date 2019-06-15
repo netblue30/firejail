@@ -35,6 +35,6 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-private-etc alternatives,asound.conf,ca-certificates,fonts,host.conf,hostname,hosts,pulse,resolv.conf,ssl,pki,crypto-policies,gtk-3.0,xdg,machine-id
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-3.0,host.conf,hostname,hosts,machine-id,pki,pulse,resolv.conf,ssl,xdg
 private-tmp
 

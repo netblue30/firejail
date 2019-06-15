@@ -49,7 +49,7 @@ tracelog
 #private-bin ghostwriter,pandoc
 private-cache
 private-dev
-private-etc alternatives,cups,crypto-policies,localtime,drirc,fonts,gtk-3.0,dconf,machine-id
+private-etc alternatives,crypto-policies,cups,dconf,drirc,fonts,gtk-3.0,localtime,machine-id
 # Breaks Translation
 #private-lib
 private-tmp

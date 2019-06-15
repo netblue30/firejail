@@ -42,7 +42,7 @@ shell none
 
 disable-mnt
 private
-private-bin sh,bash,dig
+private-bin bash,dig,sh
 private-cache
 private-dev
 # private-etc alternatives,resolv.conf

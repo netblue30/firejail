@@ -34,7 +34,7 @@ seccomp
 shell none
 tracelog
 
-private-bin konversation,kbuildsycoca4
+private-bin kbuildsycoca4,konversation
 private-cache
 private-dev
 private-tmp

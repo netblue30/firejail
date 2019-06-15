@@ -46,6 +46,6 @@ disable-mnt
 private-bin electrum,python*
 private-cache
 private-dev
-private-etc alternatives,fonts,dconf,ca-certificates,ssl,pki,crypto-policies,machine-id,resolv.conf
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,machine-id,pki,resolv.conf,ssl
 private-tmp
 

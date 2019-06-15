@@ -33,6 +33,6 @@ seccomp
 shell none
 
 # private-bin breaks --join if the user has zsh set as $SHELL - adding zsh on private-bin
-private-bin filezilla,uname,sh,bash,zsh,python*,lsb_release,fzputtygen,fzsftp
+private-bin bash,filezilla,fzputtygen,fzsftp,lsb_release,python*,sh,uname,zsh
 private-dev
 private-tmp

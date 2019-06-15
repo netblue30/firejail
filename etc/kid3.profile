@@ -37,7 +37,7 @@ tracelog
 
 private-cache
 private-dev
-private-etc alternatives,drirc,fonts,kde5rc,gtk-3.0,dconf,machine-id,ca-certificates,ssl,pki,hostname,hosts,resolv.conf,pulse,,crypto-policies
+private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gtk-3.0,hostname,hosts,kde5rc,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp
 private-opt none
 private-srv none

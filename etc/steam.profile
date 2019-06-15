@@ -69,5 +69,5 @@ shell none
 # private-dev should be commented for controllers
 private-dev
 # private-etc breaks a small selection of games on some systems, comment to support those
-private-etc alternatives,asound.conf,ca-certificates,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,localtime,lsb-release,machine-id,mime.types,passwd,pulse,resolv.conf,ssl,pki,services,crypto-policies,alternatives,bumblebee,nvidia,os-release
+private-etc alternatives,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,lsb-release,machine-id,mime.types,nvidia,os-release,passwd,pki,pulse,resolv.conf,services,ssl
 private-tmp

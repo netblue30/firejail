@@ -41,5 +41,5 @@ tracelog
 disable-mnt
 private-bin cheese
 private-cache
-private-etc alternatives,fonts,drirc,clutter-1.0,gtk-3.0,dconf
+private-etc alternatives,clutter-1.0,dconf,drirc,fonts,gtk-3.0
 private-tmp

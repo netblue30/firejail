@@ -32,7 +32,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin XMind,sh,cp
+private-bin cp,sh,XMind
 private-tmp
 private-dev
 

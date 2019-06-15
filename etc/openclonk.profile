@@ -38,7 +38,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin openclonk,c4group
+private-bin c4group,openclonk
 private-cache
 private-dev
 private-tmp

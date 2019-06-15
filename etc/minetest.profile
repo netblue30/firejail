@@ -6,6 +6,7 @@ include minetest.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/minetest
 noblacklist ${HOME}/.minetest
 
 include disable-common.inc
@@ -16,7 +17,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/minetest
 mkdir ${HOME}/.minetest
+whitelist ${HOME}/.cache/minetest
 whitelist ${HOME}/.minetest
 include whitelist-common.inc
 include whitelist-var-common.inc

@@ -19,7 +19,6 @@ noblacklist ${HOME}/.kde4/share/config/okularrc
 noblacklist ${HOME}/.local/share/kget
 noblacklist ${HOME}/.local/share/okular
 noblacklist ${HOME}/.local/share/qpdfview
-noblacklist ${HOME}/.local/share/tridactyl
 
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.config/gnome-mplayer

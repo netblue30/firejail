@@ -12,6 +12,8 @@ noblacklist ${HOME}/.config/mpDris2
 include allow-python2.inc
 include allow-python3.inc
 
+noblacklist ${MUSIC}
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -19,6 +21,12 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+
+whitelist ${MUSIC}
+
+mkdir ${HOME}/.config/mpDris2
+whitelist ${HOME}/.config/mpDris2
+include whitelist-var-common.inc
 
 caps.drop all
 machine-id

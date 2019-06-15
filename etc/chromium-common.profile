@@ -29,8 +29,7 @@ include whitelist-var-common.inc
 apparmor
 caps.keep sys_chroot,sys_admin
 netfilter
-# Breaks Gnome connector - disable if you use that
-nodbus
+# nodbus - prevents access to passwords saved in GNOME Keyring, also breaks Gnome connector
 nodvd
 nogroups
 notv

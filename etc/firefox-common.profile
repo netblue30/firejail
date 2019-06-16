@@ -34,11 +34,8 @@ caps.drop all
 # machine-id breaks pulse audio; it should work fine in setups where sound is not required.
 #machine-id
 netfilter
-# Breaks Gnome connector and KDE Connect.
-# Also seems to break Ubuntu titlebar menu.
-# Also breaks enigmail apparently?
-# During a stream on Plasma it prevents the mechanism to temporarily bypass the power management, i.e. to keep the screen on.
-# Therefore disable if you use that.
+# nodbus breaks various desktop integration features
+# among other things global menus, Gnome connector, KDE connect and power management on KDE Plasma
 nodbus
 nodvd
 nogroups

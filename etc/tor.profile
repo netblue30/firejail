@@ -25,7 +25,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-caps.keep setuid,setgid,net_bind_service,dac_read_search
+caps.keep dac_read_search,net_bind_service,setgid,setuid
 ipc-namespace
 machine-id
 netfilter

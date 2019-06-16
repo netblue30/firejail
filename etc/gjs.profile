@@ -32,7 +32,7 @@ seccomp
 shell none
 tracelog
 
-# private-bin gjs,gnome-books,gnome-documents,gnome-photos,gnome-maps,gnome-weather
+# private-bin gjs,gnome-books,gnome-documents,gnome-maps,gnome-photos,gnome-weather
 private-dev
-# private-etc alternatives,fonts,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
 private-tmp

@@ -33,5 +33,5 @@ tracelog
 
 # private-bin simple-scan
 # private-dev
-# private-etc alternatives,fonts,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
 # private-tmp

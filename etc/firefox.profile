@@ -15,7 +15,7 @@ whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
 
 # firefox requires a shell to launch on Arch.
-#private-bin firefox,which,sh,dbus-launch,dbus-send,env,bash
+#private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which
 # private-etc must first be enabled in firefox-common.profile
 #private-etc firefox
 

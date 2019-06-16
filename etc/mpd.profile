@@ -34,7 +34,7 @@ protocol unix,inet,inet6
 seccomp.drop @cpu-emulation,@debug,@obsolete,@privileged,@resources,add_key,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,kcmp,keyctl,name_to_handle_at,ni_syscall,open_by_handle_at,personality,process_vm_readv,ptrace,remap_file_pages,request_key,syslog,umount,userfaultfd,vmsplice
 shell none
 
-#private-bin mpd,bash
+#private-bin bash,mpd
 private-cache
 private-dev
 private-tmp

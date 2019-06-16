@@ -35,7 +35,7 @@ seccomp
 shell none
 
 private-bin 7z,ark,bash,lrzip,lsar,lz4,lzop,p7zip,rar,sh,tclsh,unar,unrar,unzip,zip,zipinfo
-#private-etc alternatives,smb.conf,samba,mtab,fonts,drirc,kde5rc,passwd,group,xdg
+#private-etc alternatives,drirc,fonts,group,kde5rc,mtab,passwd,samba,smb.conf,xdg
 
 private-dev
 private-tmp

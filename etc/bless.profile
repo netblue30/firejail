@@ -33,7 +33,7 @@ protocol unix
 seccomp
 shell none
 
-# private-bin bless,sh,bash,mono
+# private-bin bash,bless,mono,sh
 private-cache
 private-dev
 private-etc alternatives,fonts,mono

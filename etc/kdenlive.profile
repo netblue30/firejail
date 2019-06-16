@@ -35,4 +35,4 @@ shell none
 
 private-bin dbus-launch,dvdauthor,ffmpeg,ffplay,ffprobe,genisoimage,kdeinit4,kdeinit4_shutdown,kdeinit4_wrapper,kdeinit5,kdeinit5_shutdown,kdeinit5_wrapper,kdenlive,kdenlive_render,kshell4,kshell5,melt,mlt-melt,vlc,xine
 private-dev
-# private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,passwd,pulse,xdg,X11
+# private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,passwd,pulse,X11,xdg

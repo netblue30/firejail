@@ -31,7 +31,7 @@ protocol unix
 seccomp
 shell none
 
-#private-bin synfigstudio,synfig,ffmpeg
+#private-bin ffmpeg,synfig,synfigstudio
 private-cache
 private-dev
 private-tmp

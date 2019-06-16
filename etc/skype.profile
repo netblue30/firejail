@@ -28,7 +28,7 @@ seccomp
 shell none
 
 disable-mnt
-#private-bin skype,bash
+#private-bin bash,skype
 private-cache
 private-dev
 private-tmp

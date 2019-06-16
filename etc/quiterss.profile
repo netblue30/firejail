@@ -50,5 +50,5 @@ tracelog
 disable-mnt
 private-bin quiterss
 private-dev
-# private-etc alternatives,X11,ssl,pki,ca-certificates,crypto-policies
+# private-etc alternatives,ca-certificates,crypto-policies,pki,ssl,X11
 

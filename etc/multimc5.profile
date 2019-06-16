@@ -43,7 +43,7 @@ shell none
 
 disable-mnt
 # private-bin works, but causes weirdness
-# private-bin multimc5,bash,mkdir,which,zenity,kdialog,ldd,chmod,valgrind,apt-file,pkgfile,dnf,yum,zypper,pfl,java,grep,sort,awk,readlink,dirname
+# private-bin apt-file,awk,bash,chmod,dirname,dnf,grep,java,kdialog,ldd,mkdir,multimc5,pfl,pkgfile,readlink,sort,valgrind,which,yum,zenity,zypper
 private-dev
 private-tmp
 

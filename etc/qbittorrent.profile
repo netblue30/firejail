@@ -53,8 +53,7 @@ shell none
 
 private-bin python*,qbittorrent
 private-dev
-# private-etc alternatives,X11,fonts,xdg,resolv.conf,ca-certificates,ssl,pki,crypto-policies
-# private-lib - problems on Arch
+# private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,resolv.conf,ssl,X11,xdg
 private-tmp
 
 # memory-deny-write-execute - problems on Arch, see #1690 on GitHub repo

@@ -43,6 +43,6 @@ tracelog
 
 # private-bin wireshark
 private-dev
-# private-etc alternatives,fonts,group,hosts,machine-id,passwd,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,machine-id,passwd,pki,ssl
 private-tmp
 

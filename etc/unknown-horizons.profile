@@ -29,5 +29,5 @@ shell none
 
 # private-bin unknown-horizons
 private-dev
-# private-etc alternatives,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
 private-tmp

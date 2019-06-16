@@ -36,7 +36,7 @@ seccomp
 shell none
 tracelog
 
-# private-bin mupdf,sh,tempfile,rm
+# private-bin mupdf,rm,sh,tempfile
 private-dev
 private-etc alternatives,fonts
 private-tmp

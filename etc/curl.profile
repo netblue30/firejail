@@ -34,5 +34,5 @@ shell none
 # private-bin curl
 private-cache
 private-dev
-# private-etc alternatives,resolv.conf,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
 private-tmp

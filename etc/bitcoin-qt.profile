@@ -43,7 +43,7 @@ tracelog
 private-bin bitcoin-qt
 private-dev
 # Causes problem with loading of libGL.so
-#private-etc alternatives,fonts,ca-certificates,ssl,pki,crypto-policies
+#private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
 private-tmp
 
 memory-deny-write-execute

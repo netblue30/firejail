@@ -34,7 +34,7 @@ seccomp
 shell none
 
 # private-bin breaks gif mode, mp4 and webm mode work fine however
-# private-bin peek,convert,ffmpeg
+# private-bin convert,ffmpeg,peek
 private-dev
 private-tmp
 

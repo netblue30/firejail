@@ -37,8 +37,8 @@ shell none
 disable-mnt
 # using a private home directory
 private
-# private-bin Xvfb,sh,xkbcomp
-# private-bin Xvfb,sh,xkbcomp,strace,bash,cat,ls
+# private-bin sh,xkbcomp,Xvfb
+# private-bin bash,cat,ls,sh,strace,xkbcomp,Xvfb
 private-dev
 private-etc alternatives,gai.conf,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,nsswitch.conf,resolv.conf
 private-tmp

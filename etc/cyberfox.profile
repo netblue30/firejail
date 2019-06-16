@@ -13,7 +13,7 @@ mkdir ${HOME}/.cache/8pecxstudios
 whitelist ${HOME}/.8pecxstudios
 whitelist ${HOME}/.cache/8pecxstudios
 
-# private-bin cyberfox,which,sh,dbus-launch,dbus-send,env
+# private-bin cyberfox,dbus-launch,dbus-send,env,sh,which
 # private-etc must first be enabled in firefox-common.profile
 #private-etc cyberfox
 

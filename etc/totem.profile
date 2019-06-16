@@ -40,6 +40,6 @@ private-bin totem
 # totem needs access to ~/.cache/tracker or it exits
 #private-cache
 private-dev
-# private-etc alternatives,fonts,machine-id,pulse,asound.conf,ca-certificates,ssl,pki,crypto-policies
+# private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,machine-id,pki,pulse,ssl
 private-tmp
 

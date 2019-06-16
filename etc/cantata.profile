@@ -34,6 +34,6 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-# private-etc samba,gcrypt,drirc,fonts,mpd.conf,kde5rc,passwd,xdg,hosts,ssl
+# private-etc drirc,fonts,gcrypt,hosts,kde5rc,mpd.conf,passwd,samba,ssl,xdg
 private-bin cantata,mpd,perl
 private-dev

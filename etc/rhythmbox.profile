@@ -26,7 +26,6 @@ include whitelist-var-common.inc
 # apparmor - makes settings immutable
 caps.drop all
 netfilter
-# no3d
 # nodbus - makes settings immutable
 nogroups
 nonewprivs
@@ -39,7 +38,6 @@ seccomp
 shell none
 tracelog
 
-private-bin rhythmbox
+private-bin rhythmbox,rhythmbox-client
 private-dev
 private-tmp
-

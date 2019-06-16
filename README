@@ -572,7 +572,7 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: oggsplt, flacsplt, cheese, inkview, mp3splt-gtk
 	- added profiles: ktouch, yelp, klatexformula, klatexformula_cmdl
 	- added profiles: pandoc, gnome-sound-recorder, godot, newsbeuter
-	- added profiles: keepassxc-cli, keepassxc-proxy
+	- added profiles: keepassxc-cli, keepassxc-proxy, rhythmbox-client
 	- many profile fixing and hardening
 	- some typo fixes
 	- added profile templates

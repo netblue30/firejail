@@ -34,7 +34,6 @@ protocol unix
 seccomp
 shell none
 tracelog
-writable-var-log
 
 # The user can have a custom coloring script configured in ${HOME}/.lessfilter.
 # Enable private-bin and private-lib if you are not using any filter.
@@ -42,5 +41,6 @@ writable-var-log
 # private-lib
 private-cache
 private-dev
+writable-var-log
 
 memory-deny-write-execute

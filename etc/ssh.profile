@@ -37,6 +37,6 @@ tracelog
 private-cache
 private-dev
 # private-tmp # Breaks when exiting
+writable-run-user
 
 memory-deny-write-execute
-writable-run-user

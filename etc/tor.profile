@@ -40,7 +40,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
-writable-var
 
 disable-mnt
 private
@@ -49,3 +48,4 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,passwd,pki,ssl,tor
 private-tmp
+writable-var

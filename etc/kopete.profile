@@ -31,8 +31,8 @@ notv
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-writable-var
 
 private-dev
 private-tmp
+writable-var
 

@@ -43,7 +43,7 @@ private-cache
 private-dev
 private-etc alternatives,group,localtime,passwd
 private-lib libfakeroot
-
-memory-deny-write-execute
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var
+
+memory-deny-write-execute

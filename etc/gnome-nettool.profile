@@ -14,7 +14,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-include whitelist-common.inc
+#include whitelist-common.inc -- see #903
 include whitelist-var-common.inc
 
 caps.keep net_raw

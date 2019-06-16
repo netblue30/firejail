@@ -33,8 +33,7 @@ seccomp
 shell none
 tracelog
 
-# private-bin gjs gnome-photos
+# private-bin gjs,gnome-photos
 private-dev
-# private-etc alternatives,fonts
 private-tmp
 

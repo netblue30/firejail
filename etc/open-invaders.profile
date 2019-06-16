@@ -33,5 +33,4 @@ shell none
 
 # private-bin open-invaders
 private-dev
-# private-etc alternatives
 private-tmp

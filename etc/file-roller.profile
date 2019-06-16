@@ -39,7 +39,6 @@ tracelog
 
 # private-bin file-roller
 private-dev
-# private-etc alternatives,fonts
 # private-tmp
 
 # memory-deny-write-execute

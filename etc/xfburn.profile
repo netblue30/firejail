@@ -29,5 +29,4 @@ tracelog
 
 # private-bin xfburn
 # private-dev
-# private-etc alternatives,fonts
 # private-tmp

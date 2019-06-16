@@ -36,8 +36,7 @@ seccomp
 shell none
 tracelog
 
-# private-bin gjs gnome-books
+# private-bin gjs,gnome-books
 private-dev
-# private-etc alternatives,fonts
 private-tmp
 

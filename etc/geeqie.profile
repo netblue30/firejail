@@ -31,4 +31,3 @@ shell none
 
 # private-bin geeqie
 private-dev
-# private-etc alternatives,X11

@@ -48,8 +48,6 @@ disable-mnt
 private-bin mplayer,mpv,QMediathekView,smplayer,totem,vlc,xplayer
 private-cache
 private-dev
-# private-etc alternatives
-# private-lib
 private-tmp
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

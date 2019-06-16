@@ -21,16 +21,12 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 # ipc-namespace
-# machine-id
-# net none
 # netfilter
-# no3d
 # nodbus
 # nodvd
 # nogroups
 nonewprivs
 noroot
-# nosound
 notv
 # nou2f
 novideo
@@ -40,12 +36,8 @@ shell none
 # tracelog
 
 # disable-mnt
-# private
 # private-bin openarena
 private-cache
 private-dev
-# private-etc machine-id,xdg,openal,udev,drirc,passwd,selinux
-# private-lib
+# private-etc drirc,machine-id,openal,passwd,selinux,udev,xdg
 private-tmp
-
-# memory-deny-write-execute

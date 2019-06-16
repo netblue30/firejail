@@ -38,7 +38,6 @@ tracelog
 # private-bin img2txt
 private-cache
 private-dev
-# private-etc alternatives
 private-tmp
 
 memory-deny-write-execute

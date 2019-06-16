@@ -15,11 +15,11 @@ noblacklist ${HOME}/.config/catfish
 include allow-python2.inc
 include allow-python3.inc
 
-include disable-common.inc
+# include disable-common.inc
 # include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-include disable-programs.inc
+# include disable-programs.inc
 
 whitelist /var/lib/mlocate
 include whitelist-var-common.inc

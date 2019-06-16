@@ -6,12 +6,15 @@ include bitlbee.local
 # Persistent global definitions
 include globals.local
 
+ignore noexec ${HOME}
+
 noblacklist /sbin
 noblacklist /usr/sbin
 # noblacklist /var/log
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -34,5 +37,4 @@ private-cache
 private-dev
 private-tmp
 
-noexec /tmp
 read-write /var/lib/bitlbee

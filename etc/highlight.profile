@@ -34,5 +34,4 @@ tracelog
 private-bin highlight
 private-cache
 private-dev
-# private-etc alternatives
 private-tmp

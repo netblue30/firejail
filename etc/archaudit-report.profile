@@ -6,7 +6,6 @@ include archaudit-report.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist /var/lib/pacman
 
 include disable-common.inc
@@ -16,8 +15,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
-
-include whitelist-common.inc
 
 caps.drop all
 ipc-namespace

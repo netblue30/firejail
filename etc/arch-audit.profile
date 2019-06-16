@@ -7,7 +7,6 @@ include arch-audit.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist /var/lib/pacman
 
 include disable-common.inc

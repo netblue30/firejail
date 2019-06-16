@@ -49,4 +49,3 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,passwd,pki,ssl,tor
 private-tmp
-

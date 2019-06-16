@@ -17,7 +17,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkfile ${HOME}/.digrc
+#mkfile ${HOME}/.digrc -- see #903
 whitelist ${HOME}/.digrc
 include whitelist-common.inc
 include whitelist-var-common.inc
@@ -45,7 +45,6 @@ private
 private-bin bash,dig,sh
 private-cache
 private-dev
-# private-etc alternatives,resolv.conf
 private-lib
 private-tmp
 

@@ -33,5 +33,4 @@ shell none
 
 # private-bin simutrans
 private-dev
-# private-etc alternatives
 private-tmp

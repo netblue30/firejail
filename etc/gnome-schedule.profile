@@ -69,6 +69,5 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-# private-etc alternatives
 writable-var
 

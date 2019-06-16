@@ -5,10 +5,13 @@ include shotcut.local
 # Persistent global definitions
 include globals.local
 
+ignore noexec ${HOME}
+
 noblacklist ${HOME}/.config/Meltytech
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -26,9 +29,6 @@ protocol unix
 seccomp
 shell none
 
-#private-bin shotcut,melt,qmelt,nice
+#private-bin melt,nice,qmelt,shotcut
 private-cache
 private-dev
-
-#noexec ${HOME}
-noexec /tmp

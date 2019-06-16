@@ -44,7 +44,6 @@ tracelog
 
 # private-bin gedit
 private-dev
-# private-etc alternatives,fonts
 private-lib aspell,gconv,gedit,libgspell-1.so.*,libreadline.so.*,libtinfo.so.*
 private-tmp
 

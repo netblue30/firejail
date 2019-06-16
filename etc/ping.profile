@@ -30,10 +30,8 @@ nosound
 notv
 nou2f
 novideo
-
 # protocol command is built using seccomp; nonewprivs will kill it
 #protocol unix,inet,inet6,netlink,packet
-
 # killed by no-new-privs
 #seccomp
 
@@ -42,7 +40,7 @@ private
 #private-bin has mammoth problems with execvp: "No such file or directory"
 private-dev
 # /etc/hosts is required in private-etc; however, just adding it to the list doesn't solve the problem!
-#private-etc resolv.conf,hosts,ca-certificates,ssl,pki,crypto-policies
+#private-etc ca-certificates,crypto-policies,hosts,pki,resolv.conf,ssl
 private-tmp
 
 # memory-deny-write-execute is built using seccomp; nonewprivs will kill it

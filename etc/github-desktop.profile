@@ -42,7 +42,6 @@ disable-mnt
 private-cache
 ?HAS_APPIMAGE: ignore private-dev
 private-dev
-# private-etc alternatives
 # private-lib
 private-tmp
 

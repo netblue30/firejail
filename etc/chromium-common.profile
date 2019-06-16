@@ -29,7 +29,7 @@ include whitelist-var-common.inc
 apparmor
 caps.keep sys_admin,sys_chroot
 netfilter
-# nodbus - prevents access to passwords saved in GNOME Keyring, also breaks Gnome connector
+# nodbus - prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector
 nodvd
 nogroups
 notv
@@ -41,4 +41,4 @@ private-dev
 # private-tmp - problems with multiple browser sessions
 
 # the file dialog needs to work without d-bus
-env NO_CHROME_KDE_FILE_DIALOG=1
+?HAS_NODBUS: env NO_CHROME_KDE_FILE_DIALOG=1

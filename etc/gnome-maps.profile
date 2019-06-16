@@ -10,6 +10,7 @@ include globals.local
 
 noblacklist ${HOME}/.cache/champlain
 noblacklist ${HOME}/.local/share/flatpak
+noblacklist ${HOME}/.local/share/maps-places.json
 
 include disable-common.inc
 include disable-devel.inc

@@ -45,7 +45,7 @@ notv
 nou2f
 novideo
 # blacklisting of mbind system calls breaks old version
-seccomp.drop @cpu-emulation,@debug,@obsolete,@privileged,set_mempolicy,migrate_pages,move_pages,open_by_handle_at,name_to_handle_at,ioprio_set,ni_syscall,syslog,fanotify_init,kcmp,add_key,request_key,keyctl,io_setup,io_destroy,io_getevents,io_submit,io_cancel,remap_file_pages,vmsplice,umount,userfaultfd,mincore
+seccomp.drop @cpu-emulation,@debug,@obsolete,@privileged,add_key,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,kcmp,keyctl,migrate_pages,mincore,move_pages,name_to_handle_at,ni_syscall,open_by_handle_at,remap_file_pages,request_key,set_mempolicy,syslog,umount,userfaultfd,vmsplice
 protocol unix,inet,inet6,netlink
 shell none
 tracelog

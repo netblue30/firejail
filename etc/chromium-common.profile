@@ -27,7 +27,7 @@ include whitelist-common.inc
 include whitelist-var-common.inc
 
 apparmor
-caps.keep sys_chroot,sys_admin
+caps.keep sys_admin,sys_chroot
 netfilter
 # nodbus - prevents access to passwords saved in GNOME Keyring, also breaks Gnome connector
 nodvd

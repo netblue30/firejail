@@ -6,7 +6,6 @@ include tuxguitar.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/.tuxguitar*
 noblacklist ${DOCUMENTS}
 noblacklist ${MUSIC}

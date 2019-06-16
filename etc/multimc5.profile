@@ -5,7 +5,6 @@ include multimc5.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/multimc
 noblacklist ${HOME}/.local/share/multimc5
 noblacklist ${HOME}/.multimc5

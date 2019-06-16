@@ -6,7 +6,6 @@ include libreoffice.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.java
 noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
 

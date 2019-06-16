@@ -7,7 +7,6 @@ include globals.local
 
 ignore noexec /tmp
 
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/terasology
 
 # Allow java (blacklisted by disable-devel.inc)

@@ -6,7 +6,6 @@ include zaproxy.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/.ZAP
 
 # Allow java (blacklisted by disable-devel.inc)

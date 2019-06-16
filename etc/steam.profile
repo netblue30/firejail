@@ -6,7 +6,6 @@ include steam.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/.killingfloor
 noblacklist ${HOME}/.local/share/3909/PapersPlease
 noblacklist ${HOME}/.local/share/aspyr-media

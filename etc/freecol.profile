@@ -7,7 +7,6 @@ include freecol.local
 include globals.local
 
 noblacklist ${HOME}/.freecol
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/.cache/freecol
 noblacklist ${HOME}/.config/freecol
 noblacklist ${HOME}/.local/share/freecol

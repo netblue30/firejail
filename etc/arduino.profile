@@ -7,7 +7,6 @@ include arduino.local
 include globals.local
 
 noblacklist ${HOME}/.arduino15
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/Arduino
 noblacklist ${DOCUMENTS}
 

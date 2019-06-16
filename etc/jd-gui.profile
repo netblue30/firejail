@@ -6,7 +6,6 @@ include jd-gui.local
 include globals.local
 
 noblacklist ${HOME}/.config/jd-gui.cfg
-noblacklist ${HOME}/.java
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

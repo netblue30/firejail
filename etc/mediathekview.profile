@@ -11,7 +11,6 @@ noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.config/totem
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.config/xplayer
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/totem
 noblacklist ${HOME}/.local/share/xplayer
 noblacklist ${HOME}/.mediathek3

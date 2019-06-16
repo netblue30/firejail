@@ -20,6 +20,13 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/champlain
+mkfile ${HOME}/.local/share/maps-places.json
+whitelist ${HOME}/.cache/champlain
+whitelist ${HOME}/.local/share/maps-places.json
+whitelist ${DOWNLOADS}
+whitelist ${PICTURES}
+include whitelist-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -40,8 +47,9 @@ shell none
 tracelog
 
 disable-mnt
-# private-bin gjs,gnome-maps
+private-bin gjs,gnome-maps
+# private-cache -- gnome-maps cache all maps/satelite-images
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
+private-etc alternatives,ca-certificates,clutter-1.0,crypto-policies,dconf,drirc,fonts,gconf,gcrypt,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pango,pkcs11,pki,protocols,resolv.conf,rpc,services,ssl,X11,xdg
 private-tmp
 

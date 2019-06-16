@@ -30,8 +30,8 @@
 #   MKDIRS
 #   WHITELISTS
 #   WHITELIST INCLUDES
-#   OPTIONS (no*)
-#   PRIVATE OPTIONS (disable-mnt, private-*)
+#   OPTIONS (caps*, net*, no*, protocol, seccomp, shell none, tracelog)
+#   PRIVATE OPTIONS (disable-mnt, private-*, writable-*)
 #   SPECIAL OPTIONS (mdwx, noexec, read-only, join-or-start)
 #   REDIRECT INCLUDES
 #
@@ -98,7 +98,7 @@
 # in PROFILE.local but still be protected by BLACKLISTS section
 # (further explanation at https://github.com/netblue30/firejail/issues/1569)
 #mkdir PATH
-#mkfile PATH
+##mkfile PATH
 #whitelist PATH
 #include whitelist-common.inc
 #include whitelist-var-common.inc
@@ -136,7 +136,7 @@
 # private-etc templates (see also #1734, #2093)
 #  Common: ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,alternatives,mime.types,xdg
 #    Extra: magic,magic.mgc,passwd,group
-#  Networking: ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv,conf,hosts,host.conf,hostname,protocols,services,rpc
+#  Networking: ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,protocols,services,rpc
 #    Extra: proxychains.conf,gai.conf
 #  Sound: alsa,asound.conf,pulse,machine-id
 #  GUI: fonts,pango,X11

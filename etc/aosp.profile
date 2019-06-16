@@ -5,7 +5,6 @@ include aosp.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.bash_history
 noblacklist ${HOME}/.config/git

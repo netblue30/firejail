@@ -1106,7 +1106,7 @@ int sandbox(void* sandbox_arg) {
 		(void) rv;
 	}
 	// make seccomp filters read-only
-	fs_rdonly(RUN_SECCOMP_DIR);
+	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY);
 #endif
 
 	// set capabilities

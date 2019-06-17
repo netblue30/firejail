@@ -88,7 +88,7 @@ void pulseaudio_init(void) {
 	if (mkdir(RUN_PULSE_DIR, 0700) == -1)
 		errExit("mkdir");
 	// mount it nosuid, noexec, nodev
-	fs_noexec(RUN_PULSE_DIR);
+	fs_remount(RUN_PULSE_DIR, MOUNT_NOEXEC);
 
 	// create the new client.conf file
 	char *pulsecfg = NULL;
@@ -155,7 +155,7 @@ void pulseaudio_init(void) {
 		if (fstatvfs(fd, &vfs) == -1)
 			errExit("fstatvfs");
 		if ((vfs.f_flag & MS_RDONLY) == MS_RDONLY)
-			fs_rdonly(RUN_PULSE_DIR);
+			fs_remount(RUN_PULSE_DIR, MOUNT_READONLY);
 		// mount via the link in /proc/self/fd
 		char *proc;
 		if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)

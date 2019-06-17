@@ -1169,7 +1169,7 @@ void x11_xorg(void) {
 	umount("/tmp");
 
 	// remount RUN_XAUTHORITY_SEC_FILE noexec, nodev, nosuid
-	fs_remount(RUN_XAUTHORITY_SEC_FILE, MOUNT_NOEXEC);
+	fs_remount(RUN_XAUTHORITY_SEC_FILE, MOUNT_NOEXEC, 0);
 
 	// Ensure there is already a file in the usual location, so that bind-mount below will work.
 	char *dest;
@@ -1202,9 +1202,11 @@ void x11_xorg(void) {
 	if (fstatvfs(fd, &vfs) == -1)
 		errExit("fstatvfs");
 	if ((vfs.f_flag & MS_RDONLY) == MS_RDONLY)
-		fs_remount(RUN_XAUTHORITY_SEC_FILE, MOUNT_READONLY);
+		fs_remount(RUN_XAUTHORITY_SEC_FILE, MOUNT_READONLY, 0);
 
 	// mount via the link in /proc/self/fd
+	if (arg_debug)
+		printf("Mounting %s on %s\n", RUN_XAUTHORITY_SEC_FILE, dest);
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 		errExit("asprintf");

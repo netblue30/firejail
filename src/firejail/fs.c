@@ -147,7 +147,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		}
 	}
 	else if (op == MOUNT_READONLY | op == MOUNT_RDWR | op == MOUNT_NOEXEC) {
-		fs_remount_rec(fname, op);
+		fs_remount_rec(fname, op, 1);
 		// todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_TMPFS) {
@@ -478,7 +478,7 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 	close(fd);
 }
 
-void fs_remount(const char *dir, OPERATION op) {
+void fs_remount(const char *dir, OPERATION op, unsigned check_mnt) {
 	assert(dir);
 	// check directory exists
 	struct stat s;
@@ -519,17 +519,19 @@ void fs_remount(const char *dir, OPERATION op) {
 		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
 		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT, NULL) < 0)
 			errExit("remounting");
-		// run a sanity check on /proc/self/mountinfo
-		MountData *mptr = get_last_mount();
-		size_t len = strlen(dir);
-		if (strncmp(mptr->dir, dir, len) != 0 ||
-		   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
-			errLogExit("invalid %s mount", opstr[op]);
+		if (check_mnt) {
+			// run a sanity check on /proc/self/mountinfo
+			MountData *mptr = get_last_mount();
+			size_t len = strlen(dir);
+			if (strncmp(mptr->dir, dir, len) != 0 ||
+			   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
+				errLogExit("invalid %s mount", opstr[op]);
+		}
 		fs_logger2(opstr[op], dir);
 	}
 }
 
-void fs_remount_rec(const char *dir, OPERATION op) {
+void fs_remount_rec(const char *dir, OPERATION op, unsigned check_mnt) {
 	assert(dir);
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
@@ -542,7 +544,7 @@ void fs_remount_rec(const char *dir, OPERATION op) {
 			fwarning("read-only, read-write and noexec options are not applied recursively\n");
 			mount_warning = 1;
 		}
-		fs_remount(dir, op);
+		fs_remount(dir, op, check_mnt);
 		return;
 	}
 	// build array with all mount points that need to get remounted
@@ -551,7 +553,7 @@ void fs_remount_rec(const char *dir, OPERATION op) {
 	// remount
 	char **tmp = arr;
 	while (*tmp) {
-		fs_remount(*tmp, op);
+		fs_remount(*tmp, op, check_mnt);
 		free(*tmp++);
 	}
 	free(arr);
@@ -720,28 +722,29 @@ static void disable_config(void) {
 
 
 // build a basic read-only filesystem
+// top level directories could be links, run no after-mount checks
 void fs_basic_fs(void) {
 	uid_t uid = getuid();
 
 	if (arg_debug)
 		printf("Basic read-only filesystem:\n");
 	if (!arg_writable_etc) {
-		fs_remount("/etc", MOUNT_READONLY);
+		fs_remount("/etc", MOUNT_READONLY, 0);
 		if (uid)
-			fs_remount("/etc", MOUNT_NOEXEC);
+			fs_remount("/etc", MOUNT_NOEXEC, 0);
 	}
 	if (!arg_writable_var) {
-		fs_remount("/var", MOUNT_READONLY);
+		fs_remount("/var", MOUNT_READONLY, 0);
 		if (uid)
-			fs_remount("/var", MOUNT_NOEXEC);
+			fs_remount("/var", MOUNT_NOEXEC, 0);
 	}
-	fs_remount("/bin", MOUNT_READONLY);
-	fs_remount("/sbin", MOUNT_READONLY);
-	fs_remount("/lib", MOUNT_READONLY);
-	fs_remount("/lib64", MOUNT_READONLY);
-	fs_remount("/lib32", MOUNT_READONLY);
-	fs_remount("/libx32", MOUNT_READONLY);
-	fs_remount("/usr", MOUNT_READONLY);
+	fs_remount("/bin", MOUNT_READONLY, 0);
+	fs_remount("/sbin", MOUNT_READONLY, 0);
+	fs_remount("/lib", MOUNT_READONLY, 0);
+	fs_remount("/lib64", MOUNT_READONLY, 0);
+	fs_remount("/lib32", MOUNT_READONLY, 0);
+	fs_remount("/libx32", MOUNT_READONLY, 0);
+	fs_remount("/usr", MOUNT_READONLY, 0);
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	fs_var_lock();
@@ -750,7 +753,7 @@ void fs_basic_fs(void) {
 	if (!arg_writable_var_log)
 		fs_var_log();
 	else
-		fs_remount("/var/log", MOUNT_RDWR);
+		fs_remount("/var/log", MOUNT_RDWR, 0);
 
 	fs_var_lib();
 	fs_var_cache();

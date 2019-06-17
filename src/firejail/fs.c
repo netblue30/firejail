@@ -484,19 +484,17 @@ void fs_remount(const char *dir, OPERATION op) {
 	struct stat s;
 	int rv = stat(dir, &s);
 	if (rv == 0) {
+		unsigned long flags = 0;
+		if (get_mount_flags(dir, &flags) != 0) {
+			fwarning("cannot remount %s\n", dir);
+			return;
+		}
 		if (op == MOUNT_RDWR) {
 			// allow only user owned directories, except the user is root
 			if (getuid() != 0 && s.st_uid != getuid()) {
 				fwarning("you are not allowed to change %s to read-write\n", dir);
 				return;
 			}
-		}
-		unsigned long flags = 0;
-		if (get_mount_flags(dir, &flags) != 0) {
-			fwarning("not remounting %s\n", dir);
-			return;
-		}
-		if (op == MOUNT_RDWR) {
 			if ((flags & MS_RDONLY) == 0)
 				return;
 			flags &= ~MS_RDONLY;

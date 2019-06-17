@@ -35,11 +35,11 @@ seccomp
 shell none
 tracelog
 
-private-bin awk,cut,dbus-send,egrep,file,grep,head,python,python3,readlink,sed,sh,udiskie,uname,which,xdg-mime,xdg-open,xprop
+private-bin awk,cut,dbus-send,egrep,file,grep,head,python*,readlink,sed,sh,udiskie,uname,which,xdg-mime,xdg-open,xprop
 # add your configured file browser in udiskie.local, e. g.
 # private-bin nautilus
 # private-bin thunar
 private-cache
 private-dev
-private-etc ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,alternatives,mime.types,xdg
+private-etc alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
 private-tmp

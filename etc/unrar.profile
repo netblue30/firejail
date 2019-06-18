@@ -7,8 +7,6 @@ include unrar.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -35,6 +33,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 private-bin unrar
 private-dev

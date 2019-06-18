@@ -9,8 +9,6 @@ include globals.local
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
 
-blacklist /tmp/.X11-unix
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -37,6 +35,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 # To support exiftool in private-bin on Arch Linux (and derivatives), symlink /usr/bin/vendor_perl/exiftool to /usr/bin/exiftool and uncomment the below.
 # Users on non-Arch Linux distributions can safely uncomment (or put in exiftool.local) the line below to enable extra hardening.

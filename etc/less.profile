@@ -9,8 +9,6 @@ include globals.local
 
 noblacklist ${HOME}/.lesshst
 
-blacklist /tmp/.X11-unix
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -36,6 +34,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 # The user can have a custom coloring script configured in ${HOME}/.lessfilter.
 # Enable private-bin and private-lib if you are not using any filter.

@@ -10,8 +10,6 @@ include globals.local
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
 
-blacklist /tmp/.X11-unix
-
 include disable-common.inc
 # include disable-devel.inc
 include disable-exec.inc
@@ -40,6 +38,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 # private-bin atool,perl
 private-cache

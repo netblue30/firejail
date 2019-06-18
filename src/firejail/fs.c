@@ -146,7 +146,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				fs_logger2("blacklist-nolog", fname);
 		}
 	}
-	else if (op == MOUNT_READONLY | op == MOUNT_RDWR | op == MOUNT_NOEXEC) {
+	else if (op == MOUNT_READONLY || op == MOUNT_RDWR || op == MOUNT_NOEXEC) {
 		fs_remount_rec(fname, op, 1);
 		// todo: last_disable = SUCCESSFUL;
 	}

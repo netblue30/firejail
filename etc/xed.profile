@@ -6,6 +6,9 @@ include xed.local
 include globals.local
 
 noblacklist ${HOME}/.config/xed
+noblacklist ${HOME}/.python-history
+noblacklist ${HOME}/.python_history
+noblacklist ${HOME}/.pythonhist
 noblacklist ${HOME}/.pythonrc.py
 
 # Allow python (blacklisted by disable-interpreters.inc)

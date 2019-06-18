@@ -19,7 +19,10 @@ blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/klipper
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.python-history
+blacklist-nolog ${HOME}/.python_history
 blacklist-nolog ${HOME}/.pythonhist
+blacklist-nolog ${HOME}/.lesshst
+blacklist-nolog ${HOME}/.viminfo
 blacklist-nolog /tmp/clipmenu*
 
 # X11 session autostart

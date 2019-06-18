@@ -7,6 +7,8 @@ include less.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.lesshst
+
 blacklist /tmp/.X11-unix
 
 include disable-common.inc

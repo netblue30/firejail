@@ -8,11 +8,17 @@ include globals.local
 
 noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
-noblacklist ${HOME}/.config/git
+# allow rust
 noblacklist ${HOME}/.cargo/config
 noblacklist ${HOME}/.cargo/registry
+# allow git config files
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
+# allow python dev files
+noblacklist ${HOME}/.python-history
+noblacklist ${HOME}/.python_history
+noblacklist ${HOME}/.pythonhist
 noblacklist ${HOME}/.pythonrc.py
 
 include disable-common.inc

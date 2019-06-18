@@ -12,6 +12,9 @@ noblacklist ${HOME}/.emacs.d
 # or put it into your emacs.local
 #noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.python-history
+noblacklist ${HOME}/.python_history
+noblacklist ${HOME}/.pythonhist
+noblacklist ${HOME}/.pythonrc.py
 
 include disable-common.inc
 include disable-passwdmgr.inc

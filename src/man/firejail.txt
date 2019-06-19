@@ -2318,9 +2318,9 @@ $ sudo firejail --writable-var-log
 .TP
 \fB\-\-x11
 Sandbox the application using Xpra, Xephyr, Xvfb or Xorg security extension.
-The sandbox will prevents screenshot and keylogger applications started inside the sandbox from accessing
+The sandbox will prevent screenshot and keylogger applications started inside the sandbox from accessing
 clients running outside the sandbox.
-Firejail will try first Xpra, and if Xpra is not installed on the system, it will try to find Xephyr.
+Firejail will try Xpra first, and if Xpra is not installed on the system, it will try to find Xephyr.
 If all fails, Firejail will not attempt to use Xvfb or X11 security extension.
 .br
 

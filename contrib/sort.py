@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+"""
+Sort the items of multi-item options in profiles, the following options are supported:
+ private-bin, private-etc, private-lib, caps.drop, caps.keep, seccomp.drop, seccomp.drop, protocol
+
+Usage:
+ python3 /lib64/firejail/sort.py /path/to/profile [ /path/to/profile2 /path/to/profile3 ... ]
+
+Exit-Codes:
+ 0: No Error; No Profile Fixed.
+ 1: Error, one or more profiles were not processed correctly.
+ 101: No Error; One or more profile were fixed.
+"""
 
 # Requirements:
 #  * python >= 3.6

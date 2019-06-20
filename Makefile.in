@@ -115,6 +115,7 @@ ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -c -m 0755 contrib/fjdisplay.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjresize.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fj-mkdeb.py $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0755 contrib/sort.py $(DESTDIR)/$(libdir)/firejail/.
 endif
 	# documents
 	install -m 0755 -d $(DESTDIR)/$(DOCDIR)

@@ -1,5 +1,10 @@
 # Firejail profile for makepkg
 # This file is overwritten after every install/update
+quiet
+# Persistent local customizations
+include makepkg.local
+# Persistent global definitions
+include globals.local
 
 # Note: see this Arch forum discussion https://bbs.archlinux.org/viewtopic.php?pid=1743138
 # for potential issues and their solutions when Firejailing makepkg
@@ -7,13 +12,6 @@
 # This profile could be significantly strengthened by adding the following to makepkg.local
 # whitelist ${HOME}/<Your Build Folder>
 # whitelist ${HOME}/.gnupg
-
-quiet
-# Persistent local customizations
-include makepkg.local
-# Persistent global definitions
-include globals.local
-
 
 # Enable severely restricted access to ${HOME}/.gnupg
 noblacklist ${HOME}/.gnupg
@@ -26,8 +24,7 @@ blacklist ${HOME}/.gnupg/private-keys-v1.d
 blacklist ${HOME}/.gnupg/crls.d
 blacklist ${HOME}/.gnupg/openpgp-revocs.d
 
-
-# Need to be able to read /var/lib/pacman, {Note no capabilities so automatically read-only}
+# Arch Linux (based distributions) need access to /var/lib/pacman. As we drop all capabilities this is automatically read-only.
 noblacklist /var/lib/pacman
 
 include disable-common.inc

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Sort the items of multi-item options in profiles, the following options are supported:
- private-bin, private-etc, private-lib, caps.drop, caps.keep, seccomp.drop, seccomp.drop, protocol
+  private-bin, private-etc, private-lib, caps.drop, caps.keep, seccomp.drop, seccomp.drop, protocol
 
 Usage:
     $ /lib64/firejail/sort.py /path/to/profile [ /path/to/profile2 /path/to/profile3 ... ]
@@ -14,7 +14,7 @@ Exit-Codes:
 """
 
 # Requirements:
-#  * python >= 3.6
+#  python >= 3.6
 from sys import argv
 
 def sort_alphabetical(raw_items):

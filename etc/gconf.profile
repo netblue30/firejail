@@ -42,6 +42,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 disable-mnt
 private-bin gconf-editor,gconf-merge-*,gconfpkg,gconftool-2,gsettings-*-convert,python2*

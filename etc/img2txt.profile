@@ -34,6 +34,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 # private-bin img2txt
 private-cache

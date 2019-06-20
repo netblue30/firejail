@@ -24,6 +24,7 @@ novideo
 protocol unix
 seccomp
 shell none
+x11 none
 
 private-dev
 # private-tmp

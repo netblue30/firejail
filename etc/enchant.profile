@@ -35,6 +35,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 private-bin enchant,enchant-*
 private-cache

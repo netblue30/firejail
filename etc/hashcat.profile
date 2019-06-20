@@ -33,6 +33,7 @@ novideo
 protocol unix
 seccomp
 shell none
+x11 none
 
 disable-mnt
 private-bin hashcat

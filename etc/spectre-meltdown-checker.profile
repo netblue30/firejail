@@ -38,6 +38,7 @@ novideo
 protocol unix
 seccomp.drop @clock,@cpu-emulation,@module,@obsolete,@reboot,@resources,@swap
 shell none
+x11 none
 
 disable-mnt
 private

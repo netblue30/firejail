@@ -36,5 +36,6 @@ nou2f
 novideo
 protocol unix
 seccomp
+#x11 none
 
 private-dev

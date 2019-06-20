@@ -7,6 +7,10 @@ include gzip.local
 # Persistent global definitions
 include globals.local
 
+# Applications specific to Arch Linux (and derivatives) need read-access to /var/lib/pacman.
+# Since we drop all capabilities this directory is automatically read-only.
+noblacklist /var/lib/pacman
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

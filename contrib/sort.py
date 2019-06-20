@@ -4,8 +4,14 @@ Sort the items of multi-item options in profiles, the following options are supp
   private-bin, private-etc, private-lib, caps.drop, caps.keep, seccomp.drop, seccomp.drop, protocol
 
 Usage:
-    $ /lib64/firejail/sort.py /path/to/profile [ /path/to/profile2 /path/to/profile3 ... ]
+    $ ./sort.py /path/to/profile [ /path/to/profile2 /path/to/profile3 ... ]
 Keep in mind that this will overwrite your profile(s).
+
+Examples:
+    $ ./sort.py MyAwesomeProfile.profile
+    $ ./sort.py new_profile.profile second_new_profile.profile
+    $ ./sort.py ~/.config/firejail/*.{profile,inc,local}
+    $ sudo ./sort.py /etc/firejail/*.{profile,inc,local}
 
 Exit-Codes:
   0: No Error; No Profile Fixed.

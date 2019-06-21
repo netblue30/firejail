@@ -9,14 +9,14 @@ build_ubuntu_package:
     image: ubuntu:rolling
     script:
     - apt-get update -qq
-    - apt-get install -y -qq build-essential lintian
+    - apt-get install -y -qq build-essential lintian pkg-config
     - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
 
 build_debian_package:
   image: debian:jessie
   script:
     - apt-get update -qq
-    - apt-get install -y -qq build-essential lintian
+    - apt-get install -y -qq build-essential lintian pkg-config
     - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
 
 build_redhat_package:
@@ -45,5 +45,5 @@ build_apparmor:
   image: ubuntu:latest
   script:
     - apt-get update -qq
-    - apt-get install -y -qq build-essential lintian libapparmor-dev
+    - apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
     - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail-apparmor*.deb

@@ -45,7 +45,7 @@ typedef struct arp_hdr_t {
 void arp_announce(const char *dev, Bridge *br) {
 	// RFC 5227 - using a source and destination IP address of the interface
 	uint32_t srcaddr = br->ipsandbox;
-	uint32_t destaddr = br->ipsandbox;
+	uint32_t destaddr = srcaddr;
 
 	if (strlen(dev) > IFNAMSIZ) {
 		fprintf(stderr, "Error: invalid network device name %s\n", dev);

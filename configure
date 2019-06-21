@@ -625,6 +625,9 @@ ac_includes_default="\
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 HAVE_SECCOMP_H
+EGREP
+GREP
+CPP
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
@@ -641,11 +644,13 @@ HAVE_SECCOMP
 HAVE_PRIVATE_HOME
 HAVE_OVERLAYFS
 EXTRA_LDFLAGS
-EGREP
-GREP
-CPP
-HAVE_APPARMOR
 EXTRA_CFLAGS
+HAVE_APPARMOR
+AA_LIBS
+AA_CFLAGS
+PKG_CONFIG_LIBDIR
+PKG_CONFIG_PATH
+PKG_CONFIG
 RANLIB
 INSTALL_DATA
 INSTALL_SCRIPT
@@ -724,6 +729,11 @@ CFLAGS
 LDFLAGS
 LIBS
 CPPFLAGS
+PKG_CONFIG
+PKG_CONFIG_PATH
+PKG_CONFIG_LIBDIR
+AA_CFLAGS
+AA_LIBS
 CPP'
 
 
@@ -1373,6 +1383,13 @@ Some influential environment variables:
   LIBS        libraries to pass to the linker, e.g. -l<library>
   CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
               you have headers in a nonstandard directory <include dir>
+  PKG_CONFIG  path to pkg-config utility
+  PKG_CONFIG_PATH
+              directories to add to pkg-config's search path
+  PKG_CONFIG_LIBDIR
+              path overriding pkg-config's built-in search path
+  AA_CFLAGS   C compiler flags for AA, overriding pkg-config
+  AA_LIBS     linker flags for AA, overriding pkg-config
   CPP         C preprocessor
 
 Use these variables to override the choices made by `configure' or to help
@@ -1493,6 +1510,52 @@ fi
   as_fn_set_status $ac_retval
 
 } # ac_fn_c_try_compile
+
+# ac_fn_c_try_link LINENO
+# -----------------------
+# Try to link conftest.$ac_ext, and return whether this succeeded.
+ac_fn_c_try_link ()
+{
+  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
+  rm -f conftest.$ac_objext conftest$ac_exeext
+  if { { ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
+$as_echo "$ac_try_echo"; } >&5
+  (eval "$ac_link") 2>conftest.err
+  ac_status=$?
+  if test -s conftest.err; then
+    grep -v '^ *+' conftest.err >conftest.er1
+    cat conftest.er1 >&5
+    mv -f conftest.er1 conftest.err
+  fi
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext && {
+	 test "$cross_compiling" = yes ||
+	 test -x conftest$ac_exeext
+       }; then :
+  ac_retval=0
+else
+  $as_echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_retval=1
+fi
+  # Delete the IPA/IPO (Inter Procedural Analysis/Optimization) information
+  # created by the PGI compiler (conftest_ipa8_conftest.oo), as it would
+  # interfere with the next link command; also delete a directory that is
+  # left behind by Apple's compiler.  We do this before executing the actions.
+  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
+  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
+  as_fn_set_status $ac_retval
+
+} # ac_fn_c_try_link
 
 # ac_fn_c_try_cpp LINENO
 # ----------------------
@@ -1694,52 +1757,6 @@ $as_echo "$ac_res" >&6; }
   eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
 
 } # ac_fn_c_check_header_compile
-
-# ac_fn_c_try_link LINENO
-# -----------------------
-# Try to link conftest.$ac_ext, and return whether this succeeded.
-ac_fn_c_try_link ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  rm -f conftest.$ac_objext conftest$ac_exeext
-  if { { ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
-$as_echo "$ac_try_echo"; } >&5
-  (eval "$ac_link") 2>conftest.err
-  ac_status=$?
-  if test -s conftest.err; then
-    grep -v '^ *+' conftest.err >conftest.er1
-    cat conftest.er1 >&5
-    mv -f conftest.er1 conftest.err
-  fi
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext && {
-	 test "$cross_compiling" = yes ||
-	 test -x conftest$ac_exeext
-       }; then :
-  ac_retval=0
-else
-  $as_echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_retval=1
-fi
-  # Delete the IPA/IPO (Inter Procedural Analysis/Optimization) information
-  # created by the PGI compiler (conftest_ipa8_conftest.oo), as it would
-  # interfere with the next link command; also delete a directory that is
-  # left behind by Apple's compiler.  We do this before executing the actions.
-  rm -rf conftest.dSYM conftest_ipa8_conftest.oo
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-  as_fn_set_status $ac_retval
-
-} # ac_fn_c_try_link
 cat >config.log <<_ACEOF
 This file contains any messages produced by compilers while
 running configure, to aid debugging if configure makes a mistake.
@@ -2093,7 +2110,6 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-#AC_CONFIG_HEADERS([config.h])
 
 
 
@@ -2886,7 +2902,6 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
-#AC_PROG_CXX
 ac_aux_dir=
 for ac_dir in "$srcdir" "$srcdir/.." "$srcdir/../.."; do
   if test -f "$ac_dir/install-sh"; then
@@ -3177,18 +3192,473 @@ else
 fi
 
 
-
 HAVE_APPARMOR=""
 # Check whether --enable-apparmor was given.
 if test "${enable_apparmor+set}" = set; then :
   enableval=$enable_apparmor;
 fi
 
+
+
+
+
+
+
+
+if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
+	if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
+set dummy ${ac_tool_prefix}pkg-config; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_PKG_CONFIG+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+PKG_CONFIG=$ac_cv_path_PKG_CONFIG
+if test -n "$PKG_CONFIG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PKG_CONFIG" >&5
+$as_echo "$PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+fi
+if test -z "$ac_cv_path_PKG_CONFIG"; then
+  ac_pt_PKG_CONFIG=$PKG_CONFIG
+  # Extract the first word of "pkg-config", so it can be a program name with args.
+set dummy pkg-config; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_ac_pt_PKG_CONFIG+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $ac_pt_PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_ac_pt_PKG_CONFIG="$ac_pt_PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_ac_pt_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+ac_pt_PKG_CONFIG=$ac_cv_path_ac_pt_PKG_CONFIG
+if test -n "$ac_pt_PKG_CONFIG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_pt_PKG_CONFIG" >&5
+$as_echo "$ac_pt_PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+  if test "x$ac_pt_PKG_CONFIG" = x; then
+    PKG_CONFIG=""
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    PKG_CONFIG=$ac_pt_PKG_CONFIG
+  fi
+else
+  PKG_CONFIG="$ac_cv_path_PKG_CONFIG"
+fi
+
+fi
+if test -n "$PKG_CONFIG"; then
+	_pkg_min_version=0.9.0
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking pkg-config is at least version $_pkg_min_version" >&5
+$as_echo_n "checking pkg-config is at least version $_pkg_min_version... " >&6; }
+	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+		PKG_CONFIG=""
+	fi
+fi
 if test "x$enable_apparmor" = "xyes"; then :
 
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
 
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for AA" >&5
+$as_echo_n "checking for AA... " >&6; }
 
+if test -n "$AA_CFLAGS"; then
+    pkg_cv_AA_CFLAGS="$AA_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libapparmor\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libapparmor") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_AA_CFLAGS=`$PKG_CONFIG --cflags "libapparmor" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$AA_LIBS"; then
+    pkg_cv_AA_LIBS="$AA_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libapparmor\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libapparmor") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_AA_LIBS=`$PKG_CONFIG --libs "libapparmor" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        AA_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libapparmor" 2>&1`
+        else
+	        AA_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libapparmor" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$AA_PKG_ERRORS" >&5
+
+	as_fn_error $? "Package requirements (libapparmor) were not met:
+
+$AA_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables AA_CFLAGS
+and AA_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details." "$LINENO" 5
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables AA_CFLAGS
+and AA_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details" "$LINENO" 5; }
+else
+	AA_CFLAGS=$pkg_cv_AA_CFLAGS
+	AA_LIBS=$pkg_cv_AA_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	EXTRA_CFLAGS+=" $AA_CFLAGS" && EXTRA_LDFLAGS+=" $AA_LIBS"
+fi
+
+
+fi
+
+
+
+
+
+HAVE_OVERLAYFS=""
+# Check whether --enable-overlayfs was given.
+if test "${enable_overlayfs+set}" = set; then :
+  enableval=$enable_overlayfs;
+fi
+
+if test "x$enable_overlayfs" != "xno"; then :
+
+	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+
+
+fi
+
+HAVE_PRIVATEHOME=""
+# Check whether --enable-private-home was given.
+if test "${enable_private_home+set}" = set; then :
+  enableval=$enable_private_home;
+fi
+
+if test "x$enable_private_home" != "xno"; then :
+
+	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
+
+
+fi
+
+HAVE_SECCOMP=""
+# Check whether --enable-seccomp was given.
+if test "${enable_seccomp+set}" = set; then :
+  enableval=$enable_seccomp;
+fi
+
+if test "x$enable_seccomp" != "xno"; then :
+
+	HAVE_SECCOMP="-DHAVE_SECCOMP"
+
+
+fi
+
+HAVE_CHROOT=""
+# Check whether --enable-chroot was given.
+if test "${enable_chroot+set}" = set; then :
+  enableval=$enable_chroot;
+fi
+
+if test "x$enable_chroot" != "xno"; then :
+
+	HAVE_CHROOT="-DHAVE_CHROOT"
+
+
+fi
+
+HAVE_GLOBALCFG=""
+# Check whether --enable-globalcfg was given.
+if test "${enable_globalcfg+set}" = set; then :
+  enableval=$enable_globalcfg;
+fi
+
+if test "x$enable_globalcfg" != "xno"; then :
+
+	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
+
+
+fi
+
+HAVE_NETWORK=""
+# Check whether --enable-network was given.
+if test "${enable_network+set}" = set; then :
+  enableval=$enable_network;
+fi
+
+if test "x$enable_network" != "xno"; then :
+
+	HAVE_NETWORK="-DHAVE_NETWORK"
+
+
+fi
+
+HAVE_USERNS=""
+# Check whether --enable-userns was given.
+if test "${enable_userns+set}" = set; then :
+  enableval=$enable_userns;
+fi
+
+if test "x$enable_userns" != "xno"; then :
+
+	HAVE_USERNS="-DHAVE_USERNS"
+
+
+fi
+
+HAVE_X11=""
+# Check whether --enable-x11 was given.
+if test "${enable_x11+set}" = set; then :
+  enableval=$enable_x11;
+fi
+
+if test "x$enable_x11" != "xno"; then :
+
+	HAVE_X11="-DHAVE_X11"
+
+
+fi
+
+HAVE_FILE_TRANSFER=""
+# Check whether --enable-file-transfer was given.
+if test "${enable_file_transfer+set}" = set; then :
+  enableval=$enable_file_transfer;
+fi
+
+if test "x$enable_file_transfer" != "xno"; then :
+
+	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
+
+
+fi
+
+HAVE_WHITELIST=""
+# Check whether --enable-whitelist was given.
+if test "${enable_whitelist+set}" = set; then :
+  enableval=$enable_whitelist;
+fi
+
+if test "x$enable_whitelist" != "xno"; then :
+
+	HAVE_WHITELIST="-DHAVE_WHITELIST"
+
+
+fi
+
+HAVE_SUID=""
+# Check whether --enable-suid was given.
+if test "${enable_suid+set}" = set; then :
+  enableval=$enable_suid;
+fi
+
+if test "x$enable_suid" = "xno"; then :
+  HAVE_SUID="no"
+else
+  HAVE_SUID="yes"
+
+fi
+
+
+HAVE_FATAL_WARNINGS=""
+# Check whether --enable-fatal_warnings was given.
+if test "${enable_fatal_warnings+set}" = set; then :
+  enableval=$enable_fatal_warnings;
+fi
+
+if test "x$enable_fatal_warnings" = "xyes"; then :
+
+	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
+
+
+fi
+
+BUSYBOX_WORKAROUND="no"
+# Check whether --enable-busybox-workaround was given.
+if test "${enable_busybox_workaround+set}" = set; then :
+  enableval=$enable_busybox_workaround;
+fi
+
+if test "x$enable_busybox_workaround" = "xyes"; then :
+
+	BUSYBOX_WORKAROUND="yes"
+
+
+fi
+
+
+HAVE_GCOV=""
+# Check whether --enable-gcov was given.
+if test "${enable_gcov+set}" = set; then :
+  enableval=$enable_gcov;
+fi
+
+if test "x$enable_gcov" = "xyes"; then :
+
+	HAVE_GCOV="--coverage -DHAVE_GCOV "
+	EXTRA_LDFLAGS+=" -lgcov --coverage "
+
+
+fi
+
+HAVE_CONTRIB_INSTALL="yes"
+# Check whether --enable-contrib-install was given.
+if test "${enable_contrib_install+set}" = set; then :
+  enableval=$enable_contrib_install;
+fi
+
+if test "x$enable_contrib_install" = "xno"; then :
+  HAVE_CONTRIB_INSTALL="no"
+else
+  HAVE_CONTRIB_INSTALL="yes"
+
+fi
+
+
+# checking pthread library
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
+$as_echo_n "checking for main in -lpthread... " >&6; }
+if ${ac_cv_lib_pthread_main+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpthread  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+
+int
+main ()
+{
+return main ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_pthread_main=yes
+else
+  ac_cv_lib_pthread_main=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_main" >&5
+$as_echo "$ac_cv_lib_pthread_main" >&6; }
+if test "x$ac_cv_lib_pthread_main" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBPTHREAD 1
+_ACEOF
+
+  LIBS="-lpthread $LIBS"
+
+else
+  as_fn_error $? "*** POSIX thread support not installed ***" "$LINENO" 5
 fi
 
 ac_ext=c
@@ -3587,266 +4057,6 @@ fi
 
 done
 
-
-if test "x$enable_apparmor" = "xyes"; then :
-
-	ac_fn_c_check_header_mongrel "$LINENO" "sys/apparmor.h" "ac_cv_header_sys_apparmor_h" "$ac_includes_default"
-if test "x$ac_cv_header_sys_apparmor_h" = xyes; then :
-
-else
-  as_fn_error $? "Couldn't find sys/apparmor.h... please install apparmor user space library and development files " "$LINENO" 5
-fi
-
-
-
-fi
-if test "x$enable_apparmor" = "xyes"; then :
-
-	EXTRA_LDFLAGS+=" -lapparmor "
-
-fi
-
-
-HAVE_OVERLAYFS=""
-# Check whether --enable-overlayfs was given.
-if test "${enable_overlayfs+set}" = set; then :
-  enableval=$enable_overlayfs;
-fi
-
-if test "x$enable_overlayfs" != "xno"; then :
-
-	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-
-
-fi
-
-HAVE_PRIVATEHOME=""
-# Check whether --enable-private-home was given.
-if test "${enable_private_home+set}" = set; then :
-  enableval=$enable_private_home;
-fi
-
-if test "x$enable_private_home" != "xno"; then :
-
-	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
-
-
-fi
-
-HAVE_SECCOMP=""
-# Check whether --enable-seccomp was given.
-if test "${enable_seccomp+set}" = set; then :
-  enableval=$enable_seccomp;
-fi
-
-if test "x$enable_seccomp" != "xno"; then :
-
-	HAVE_SECCOMP="-DHAVE_SECCOMP"
-
-
-fi
-
-HAVE_CHROOT=""
-# Check whether --enable-chroot was given.
-if test "${enable_chroot+set}" = set; then :
-  enableval=$enable_chroot;
-fi
-
-if test "x$enable_chroot" != "xno"; then :
-
-	HAVE_CHROOT="-DHAVE_CHROOT"
-
-
-fi
-
-HAVE_GLOBALCFG=""
-# Check whether --enable-globalcfg was given.
-if test "${enable_globalcfg+set}" = set; then :
-  enableval=$enable_globalcfg;
-fi
-
-if test "x$enable_globalcfg" != "xno"; then :
-
-	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
-
-
-fi
-
-HAVE_NETWORK=""
-# Check whether --enable-network was given.
-if test "${enable_network+set}" = set; then :
-  enableval=$enable_network;
-fi
-
-if test "x$enable_network" != "xno"; then :
-
-	HAVE_NETWORK="-DHAVE_NETWORK"
-
-
-fi
-
-HAVE_USERNS=""
-# Check whether --enable-userns was given.
-if test "${enable_userns+set}" = set; then :
-  enableval=$enable_userns;
-fi
-
-if test "x$enable_userns" != "xno"; then :
-
-	HAVE_USERNS="-DHAVE_USERNS"
-
-
-fi
-
-HAVE_X11=""
-# Check whether --enable-x11 was given.
-if test "${enable_x11+set}" = set; then :
-  enableval=$enable_x11;
-fi
-
-if test "x$enable_x11" != "xno"; then :
-
-	HAVE_X11="-DHAVE_X11"
-
-
-fi
-
-HAVE_FILE_TRANSFER=""
-# Check whether --enable-file-transfer was given.
-if test "${enable_file_transfer+set}" = set; then :
-  enableval=$enable_file_transfer;
-fi
-
-if test "x$enable_file_transfer" != "xno"; then :
-
-	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
-
-
-fi
-
-HAVE_WHITELIST=""
-# Check whether --enable-whitelist was given.
-if test "${enable_whitelist+set}" = set; then :
-  enableval=$enable_whitelist;
-fi
-
-if test "x$enable_whitelist" != "xno"; then :
-
-	HAVE_WHITELIST="-DHAVE_WHITELIST"
-
-
-fi
-
-HAVE_SUID=""
-# Check whether --enable-suid was given.
-if test "${enable_suid+set}" = set; then :
-  enableval=$enable_suid;
-fi
-
-if test "x$enable_suid" = "xno"; then :
-  HAVE_SUID="no"
-else
-  HAVE_SUID="yes"
-
-fi
-
-
-HAVE_FATAL_WARNINGS=""
-# Check whether --enable-fatal_warnings was given.
-if test "${enable_fatal_warnings+set}" = set; then :
-  enableval=$enable_fatal_warnings;
-fi
-
-if test "x$enable_fatal_warnings" = "xyes"; then :
-
-	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
-
-
-fi
-
-BUSYBOX_WORKAROUND="no"
-# Check whether --enable-busybox-workaround was given.
-if test "${enable_busybox_workaround+set}" = set; then :
-  enableval=$enable_busybox_workaround;
-fi
-
-if test "x$enable_busybox_workaround" = "xyes"; then :
-
-	BUSYBOX_WORKAROUND="yes"
-
-
-fi
-
-
-HAVE_GCOV=""
-# Check whether --enable-gcov was given.
-if test "${enable_gcov+set}" = set; then :
-  enableval=$enable_gcov;
-fi
-
-if test "x$enable_gcov" = "xyes"; then :
-
-	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS+=" -lgcov --coverage "
-
-
-fi
-
-HAVE_CONTRIB_INSTALL="yes"
-# Check whether --enable-contrib-install was given.
-if test "${enable_contrib_install+set}" = set; then :
-  enableval=$enable_contrib_install;
-fi
-
-if test "x$enable_contrib_install" = "xno"; then :
-  HAVE_CONTRIB_INSTALL="no"
-else
-  HAVE_CONTRIB_INSTALL="yes"
-
-fi
-
-
-# checking pthread library
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
-$as_echo_n "checking for main in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_main+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-
-int
-main ()
-{
-return main ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_main=yes
-else
-  ac_cv_lib_pthread_main=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_main" >&5
-$as_echo "$ac_cv_lib_pthread_main" >&6; }
-if test "x$ac_cv_lib_pthread_main" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
-
-  LIBS="-lpthread $LIBS"
-
-else
-  as_fn_error $? "*** POSIX thread support not installed ***" "$LINENO" 5
-fi
 
 ac_fn_c_check_header_mongrel "$LINENO" "pthread.h" "ac_cv_header_pthread_h" "$ac_includes_default"
 if test "x$ac_cv_header_pthread_h" = xyes; then :

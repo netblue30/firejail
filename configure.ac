@@ -1,12 +1,10 @@
 AC_PREREQ([2.68])
 AC_INIT(firejail, 0.9.61, netblue30@yahoo.com, , https://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
-#AC_CONFIG_HEADERS([config.h])
 
 AC_CONFIG_MACRO_DIR([m4])
 
 AC_PROG_CC
-#AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_RANLIB
 
@@ -19,24 +17,19 @@ AX_CHECK_COMPILE_FLAG(
     [-mretpoline],
     [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mretpoline"]
 )
-AC_SUBST([EXTRA_CFLAGS])
 
 HAVE_APPARMOR=""
 AC_ARG_ENABLE([apparmor],
     AS_HELP_STRING([--enable-apparmor], [enable apparmor]))
 AS_IF([test "x$enable_apparmor" = "xyes"], [
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
+	PKG_CHECK_MODULES([AA], libapparmor, [EXTRA_CFLAGS+=" $AA_CFLAGS" && EXTRA_LDFLAGS+=" $AA_LIBS"])
 	AC_SUBST(HAVE_APPARMOR)
 ])
 
-AS_IF([test "x$enable_apparmor" = "xyes"], [
-	AC_CHECK_HEADER(sys/apparmor.h, , [AC_MSG_ERROR(
-	[Couldn't find sys/apparmor.h... please install apparmor user space library and development files] )])
-])
-AS_IF([test "x$enable_apparmor" = "xyes"], [
-	EXTRA_LDFLAGS+=" -lapparmor "
-])
+AC_SUBST([EXTRA_CFLAGS])
 AC_SUBST([EXTRA_LDFLAGS])
+
 
 HAVE_OVERLAYFS=""
 AC_ARG_ENABLE([overlayfs],

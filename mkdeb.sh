@@ -2,6 +2,8 @@
 # based on http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
 # a code archive should already be available
 
+set -e
+
 TOP=`pwd`
 CODE_ARCHIVE="$1-$2.tar.xz"
 CODE_DIR="$1-$2"

@@ -8,16 +8,16 @@
 build_ubuntu_package:
     image: ubuntu:rolling
     script:
-    - apt-get update -qq
-    - apt-get install -y -qq build-essential lintian pkg-config
-    - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
+        - apt-get update -qq
+        - apt-get install -y -qq build-essential lintian pkg-config
+        - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
 
 build_debian_package:
-  image: debian:jessie
-  script:
-    - apt-get update -qq
-    - apt-get install -y -qq build-essential lintian pkg-config
-    - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
+    image: debian:jessie
+    script:
+        - apt-get update -qq
+        - apt-get install -y -qq build-essential lintian pkg-config
+        - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
 
 build_redhat_package:
     image: centos:latest
@@ -42,11 +42,11 @@ build_src_package:
         - ./configure --prefix=/usr && make && make install-strip
 
 build_apparmor:
-  image: ubuntu:latest
-  script:
-    - apt-get update -qq
-    - apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
-    - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail-apparmor*.deb
+    image: ubuntu:latest
+    script:
+        - apt-get update -qq
+        - apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
+        - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail-apparmor*.deb
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

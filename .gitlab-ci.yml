@@ -48,6 +48,14 @@ build_apparmor:
         - apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
         - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail-apparmor*.deb
 
+cppcheck:
+    image: debian:latest
+    before_script:
+        - apt-get -qq update
+        - apt-get -qq --no-install-recommends install cppcheck
+    script:
+        - cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest
     variables:

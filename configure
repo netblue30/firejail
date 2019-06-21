@@ -2095,6 +2095,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 #AC_CONFIG_HEADERS([config.h])
 
+
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -3101,44 +3103,79 @@ fi
 
 
 HAVE_SPECTRE="no"
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Spectre mitigation support in gcc or clang compiler" >&5
-$as_echo_n "checking for Spectre mitigation support in gcc or clang compiler... " >&6; }
-if test "$CC" = "gcc"; then :
 
-	HAVE_SPECTRE="yes"
-	$CC -mindirect-branch=thunk -c dummy.c || HAVE_SPECTRE="no"
-	rm -f dummy.o
-	if test "$HAVE_SPECTRE" = "yes"; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -mindirect-branch=thunk" >&5
+$as_echo_n "checking whether C compiler accepts -mindirect-branch=thunk... " >&6; }
+if ${ax_cv_check_cflags___mindirect_branch_thunk+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
 
-		EXTRA_CFLAGS+=" -mindirect-branch=thunk "
+  ax_check_save_flags=$CFLAGS
+  CFLAGS="$CFLAGS  -mindirect-branch=thunk"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
 
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ax_cv_check_cflags___mindirect_branch_thunk=yes
+else
+  ax_cv_check_cflags___mindirect_branch_thunk=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+  CFLAGS=$ax_check_save_flags
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___mindirect_branch_thunk" >&5
+$as_echo "$ax_cv_check_cflags___mindirect_branch_thunk" >&6; }
+if test "x$ax_cv_check_cflags___mindirect_branch_thunk" = xyes; then :
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mindirect-branch=thunk"
+
+else
+  :
 fi
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -mretpoline" >&5
+$as_echo_n "checking whether C compiler accepts -mretpoline... " >&6; }
+if ${ax_cv_check_cflags___mretpoline+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+  ax_check_save_flags=$CFLAGS
+  CFLAGS="$CFLAGS  -mretpoline"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ax_cv_check_cflags___mretpoline=yes
+else
+  ax_cv_check_cflags___mretpoline=no
 fi
-if test "$CC" = "clang"; then :
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+  CFLAGS=$ax_check_save_flags
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___mretpoline" >&5
+$as_echo "$ax_cv_check_cflags___mretpoline" >&6; }
+if test "x$ax_cv_check_cflags___mretpoline" = xyes; then :
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mretpoline"
 
-	HAVE_SPECTRE="yes"
-	$CC -mretpoline -c dummy.c || HAVE_SPECTRE="no"
-	rm -f dummy.o
-	if test "$HAVE_SPECTRE" = "yes"; then :
-
-		EXTRA_CFLAGS+=" -mretpoline "
-
+else
+  :
 fi
 
-fi
-if test "$HAVE_SPECTRE" = "yes"; then :
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-fi
-if test "$HAVE_SPECTRE" = "no"; then :
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ... not available" >&5
-$as_echo "... not available" >&6; }
-
-fi
 
 
 HAVE_APPARMOR=""
@@ -3153,7 +3190,6 @@ if test "x$enable_apparmor" = "xyes"; then :
 
 
 fi
-
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'

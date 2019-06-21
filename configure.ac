@@ -3,35 +3,22 @@ AC_INIT(firejail, 0.9.61, netblue30@yahoo.com, , https://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 #AC_CONFIG_HEADERS([config.h])
 
+AC_CONFIG_MACRO_DIR([m4])
+
 AC_PROG_CC
 #AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_RANLIB
 
 HAVE_SPECTRE="no"
-AC_MSG_CHECKING(for Spectre mitigation support in gcc or clang compiler)
-AS_IF([test "$CC" = "gcc"], [
-	HAVE_SPECTRE="yes"
-	$CC -mindirect-branch=thunk -c dummy.c || HAVE_SPECTRE="no"
-	rm -f dummy.o
-	AS_IF([test "$HAVE_SPECTRE" = "yes"], [
-		EXTRA_CFLAGS+=" -mindirect-branch=thunk "
-	])
-])
-AS_IF([test "$CC" = "clang"], [
-	HAVE_SPECTRE="yes"
-	$CC -mretpoline -c dummy.c || HAVE_SPECTRE="no"
-	rm -f dummy.o
-	AS_IF([test "$HAVE_SPECTRE" = "yes"], [
-		EXTRA_CFLAGS+=" -mretpoline "
-	])
-])
-AS_IF([test "$HAVE_SPECTRE" = "yes"], [
-	AC_MSG_RESULT(yes)
-])
-AS_IF([test "$HAVE_SPECTRE" = "no"], [
-	AC_MSG_RESULT(... not available)
-])
+AX_CHECK_COMPILE_FLAG(
+    [-mindirect-branch=thunk],
+    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mindirect-branch=thunk"]
+)
+AX_CHECK_COMPILE_FLAG(
+    [-mretpoline],
+    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mretpoline"]
+)
 AC_SUBST([EXTRA_CFLAGS])
 
 HAVE_APPARMOR=""

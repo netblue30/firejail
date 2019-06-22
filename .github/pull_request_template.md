@@ -12,3 +12,5 @@ If you make a PR for new profiles or changeing profiles please do the following:
    Note also that the sort.py script exists only since firejail `0.9.61`.
 
 If you have no idea how to do one of these, you can open the PR anyway.
+
+See also [CONTRIBUTING.md](/CONTRIBUTING.md).

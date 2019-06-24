@@ -19,6 +19,7 @@ include disable-programs.inc
 caps.drop all
 netfilter
 no3d
+nodbus
 nodvd
 nonewprivs
 noroot

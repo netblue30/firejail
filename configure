@@ -642,6 +642,7 @@ HAVE_GLOBALCFG
 HAVE_CHROOT
 HAVE_SECCOMP
 HAVE_PRIVATE_HOME
+HAVE_FIRETUNNEL
 HAVE_OVERLAYFS
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
@@ -706,6 +707,7 @@ ac_user_opts='
 enable_option_checking
 enable_apparmor
 enable_overlayfs
+enable_firetunnel
 enable_private_home
 enable_seccomp
 enable_chroot
@@ -1357,6 +1359,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-apparmor       enable apparmor
   --disable-overlayfs     disable overlayfs
+  --disable-firetunnel    disable firetunnel
   --disable-private-home  disable private home feature
   --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
@@ -3433,6 +3436,19 @@ if test "x$enable_overlayfs" != "xno"; then :
 
 fi
 
+HAVE_FIRETUNNEL=""
+# Check whether --enable-firetunnel was given.
+if test "${enable_firetunnel+set}" = set; then :
+  enableval=$enable_firetunnel;
+fi
+
+if test "x$enable_firetunnel" != "xno"; then :
+
+	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
+
+
+fi
+
 HAVE_PRIVATEHOME=""
 # Check whether --enable-private-home was given.
 if test "${enable_private_home+set}" = set; then :
@@ -5280,6 +5296,7 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

@@ -1498,6 +1498,7 @@ int main(int argc, char **argv) {
 				exit_err_feature("overlayfs");
 		}
 #endif
+#ifdef HAVE_FIRETUNNEL
 		else if (strcmp(argv[i], "--tunnel") == 0) {
 			// try to connect to the default client side of the tunnel
 			// if this fails, try the default server side of the tunnel
@@ -1523,7 +1524,7 @@ int main(int argc, char **argv) {
 				exit(1);
 			}
 		}
-
+#endif
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
 			// multiple profile files are allowed!
 

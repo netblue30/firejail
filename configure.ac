@@ -1,3 +1,12 @@
+#
+# Note:
+#
+# If for any reason autoconf fails, run "autoreconf -i --install " and try again.
+# We rely soley on autoconf, without automake. Apparently, in this case
+# the macros from m4 directory are not picked up by default by automake.
+# "autoreconf -i --install" seems to fix the problem.
+#
+
 AC_PREREQ([2.68])
 AC_INIT(firejail, 0.9.61, netblue30@yahoo.com, , https://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
@@ -37,6 +46,14 @@ AC_ARG_ENABLE([overlayfs],
 AS_IF([test "x$enable_overlayfs" != "xno"], [
 	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
 	AC_SUBST(HAVE_OVERLAYFS)
+])
+
+HAVE_FIRETUNNEL=""
+AC_ARG_ENABLE([firetunnel],
+    AS_HELP_STRING([--disable-firetunnel], [disable firetunnel]))
+AS_IF([test "x$enable_firetunnel" != "xno"], [
+	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
+	AC_SUBST(HAVE_FIRETUNNEL)
 ])
 
 HAVE_PRIVATEHOME=""
@@ -186,6 +203,7 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

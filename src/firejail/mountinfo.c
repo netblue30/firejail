@@ -33,7 +33,7 @@ static MountData mdata;
 
 // Convert octal escape sequence to decimal value
 static int read_oct(const char *path) {
-	int decimal = 0;
+	int dec = 0;
 	int digit, i;
 	// there are always exactly three octal digits
 	for (i = 1; i < 4; i++) {
@@ -42,29 +42,26 @@ static int read_oct(const char *path) {
 			fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
 			exit(1);
 		}
-		decimal = (decimal + digit - '0') * 8;
+		dec = (dec << 3) + (digit - '0');
 	}
-	decimal /= 8;
-	return decimal;
+	return dec;
 }
 
 // Restore empty spaces in pathnames extracted from /proc/self/mountinfo
 static void unmangle_path(char *path) {
 	char *p = strchr(path, '\\');
-	if (p) {
-		if (read_oct(p) == ' ') {
-			*p = ' ';
-			int i = 3;
-			do {
-				p++;
-				if (*(p + i) == '\\' && read_oct(p + i) == ' ') {
-					*p = ' ';
-					i += 3;
-				}
-				else
-					*p = *(p + i);
-			} while (*p);
-		}
+	if (p && read_oct(p) == ' ') {
+		*p = ' ';
+		int i = 3;
+		do {
+			p++;
+			if (*(p + i) == '\\' && read_oct(p + i) == ' ') {
+				*p = ' ';
+				i += 3;
+			}
+			else
+				*p = *(p + i);
+		} while (*p);
 	}
 }
 
@@ -136,7 +133,6 @@ MountData *get_last_mount(void) {
 	// open /proc/self/mountinfo
 	FILE *fp = fopen("/proc/self/mountinfo", "re");
 	if (!fp) {
-		perror("fopen");
 		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
 		exit(1);
 	}
@@ -167,31 +163,24 @@ int get_mount_id(const char *path) {
 	if (asprintf(&fdinfo, "/proc/self/fdinfo/%d", fd) == -1)
 		errExit("asprintf");
 	FILE *fp = fopen(fdinfo, "re");
-	if (!fp) {
-		perror("fopen");
-		fprintf(stderr, "Error: cannot open %s\n", fdinfo);
-		exit(1);
-	}
+	free(fdinfo);
+	if (!fp)
+		goto errexit;
 
 	// read the file
 	char buf[MAX_BUF];
-	if (fgets(buf, MAX_BUF, fp) == NULL) {
-		fprintf(stderr, "Error: cannot read %s\n", fdinfo);
-		exit(1);
-	}
+	if (fgets(buf, MAX_BUF, fp) == NULL)
+		goto errexit;
 	do {
 		if (strncmp(buf, "mnt_id:", 7) == 0) {
 			char *ptr = buf + 7;
 			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
 				ptr++;
 			}
-			if (*ptr == '\0') {
-				fprintf(stderr, "Error: cannot read %s\n", fdinfo);
-				exit(1);
-			}
+			if (*ptr == '\0')
+				goto errexit;
 			fclose(fp);
 			close(fd);
-			free(fdinfo);
 			return atoi(ptr);
 		}
 	} while (fgets(buf, MAX_BUF, fp));
@@ -199,8 +188,11 @@ int get_mount_id(const char *path) {
 	// fallback, kernels older than 3.15 don't expose the mount id in this place
 	fclose(fp);
 	close(fd);
-	free(fdinfo);
 	return -2;
+
+errexit:
+	fprintf(stderr, "Error: cannot read proc file\n");
+	exit(1);
 }
 
 // Check /proc/self/mountinfo if path contains any mounts points.
@@ -211,7 +203,6 @@ char **build_mount_array(const int mount_id, const char *path) {
 	// open /proc/self/mountinfo
 	FILE *fp = fopen("/proc/self/mountinfo", "re");
 	if (!fp) {
-		perror("fopen");
 		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
 		exit(1);
 	}
@@ -245,8 +236,8 @@ char **build_mount_array(const int mount_id, const char *path) {
 				    strstr(mntp.fsname, "firejail.ro.file"))
 					    break;
 
-				*rv = strdup(path);
-				if (*rv == NULL)
+				rv[0] = strdup(path);
+				if (rv[0] == NULL)
 					errExit("strdup");
 				cnt++;
 				found = 1;

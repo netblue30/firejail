@@ -1132,7 +1132,7 @@ void x11_xorg(void) {
 #ifdef HAVE_GCOV
 		__gcov_flush();
 #endif
-		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-v", "-f", tmpfname,
+		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);
 
 		_exit(127);

@@ -1138,7 +1138,7 @@ void x11_xorg(void) {
 		}
 		else {
                         execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
-                        "generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);		
+                        "generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);
 		}
 
 		_exit(127);

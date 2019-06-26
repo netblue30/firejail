@@ -2,7 +2,11 @@
 # Note:
 #
 # If for any reason autoconf fails, run "autoreconf -i --install " and try again.
-# We rely soley on autoconf, without automake. Apparently, in this case
+# This is how the error looks like on Arch Linux:
+#        ./configure: line 3064: syntax error near unexpected token `newline'
+#        ./configure: line 3064: `AX_CHECK_COMPILE_FLAG('
+#
+# We rely solely on autoconf, without automake. Apparently, in this case
 # the macros from m4 directory are not picked up by default by automake.
 # "autoreconf -i --install" seems to fix the problem.
 #
@@ -25,6 +29,14 @@ AX_CHECK_COMPILE_FLAG(
 AX_CHECK_COMPILE_FLAG(
     [-mretpoline],
     [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mretpoline"]
+)
+AX_CHECK_COMPILE_FLAG(
+    [-fstack-clash-protection],
+    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-clash-protection"]
+)
+AX_CHECK_COMPILE_FLAG(
+    [-fstack-protector-strong],
+    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-protector-strong"]
 )
 
 HAVE_APPARMOR=""

@@ -4,8 +4,8 @@
 # Persistent local customizations
 include xxd.local
 # Persistent global definitions
-include globals.local
-
+# added by included profile
+#include globals.local
 
 # Redirect
 include vim.profile

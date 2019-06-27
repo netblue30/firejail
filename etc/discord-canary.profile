@@ -5,7 +5,6 @@ include discord-canary.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist ${HOME}/.config/discordcanary
 
 mkdir ${HOME}/.config/discordcanary

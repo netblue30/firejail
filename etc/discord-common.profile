@@ -3,7 +3,7 @@
 # Persistent local customizations
 include discord-common.local
 # Persistent global definitions
-# already included by caller profile
+# added by caller profile
 #include globals.local
 
 include disable-common.inc

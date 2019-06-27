@@ -7,6 +7,5 @@ include keepassxc-cli.local
 # added by included profile
 #include globals.local
 
-
 # Redirect
 include keepassxc.profile

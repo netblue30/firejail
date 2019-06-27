@@ -13,5 +13,5 @@ whitelist ${HOME}/.config/discord
 private-bin discord
 private-opt discord
 
-#Redirect
+# Redirect
 include discord-common.profile

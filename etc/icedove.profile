@@ -3,7 +3,8 @@
 # Persistent local customizations
 include icedove.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 # Users have icedove set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories

@@ -7,6 +7,5 @@ include gconf-merge-schema.local
 # added by included profile
 #include globals.local
 
-
 # Redirect
 include gconf.profile

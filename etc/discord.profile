@@ -5,7 +5,6 @@ include discord.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist ${HOME}/.config/discord
 
 mkdir ${HOME}/.config/discord

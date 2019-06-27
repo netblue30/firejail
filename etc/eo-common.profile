@@ -4,7 +4,7 @@
 # Persistent local customizations
 include eo-common.local
 # Persistent global definitions
-# already included by caller profile
+# added by caller profile
 #include globals.local
 
 noblacklist ${HOME}/.local/share/Trash

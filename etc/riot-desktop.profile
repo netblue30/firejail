@@ -4,7 +4,8 @@
 # Persistent local customizations
 include riot-desktop.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 # Redirect
 include riot-web.profile

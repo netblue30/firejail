@@ -15,6 +15,5 @@ private-lib
 
 memory-deny-write-execute
 
-
 # Redirect
 include sysprof.profile

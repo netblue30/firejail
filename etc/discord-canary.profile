@@ -5,7 +5,6 @@ include discord-canary.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist ${HOME}/.config/discordcanary
 
 mkdir ${HOME}/.config/discordcanary
@@ -14,5 +13,5 @@ whitelist ${HOME}/.config/discordcanary
 private-bin discord-canary
 private-opt discord-canary
 
-#Redirect
+# Redirect
 include discord-common.profile

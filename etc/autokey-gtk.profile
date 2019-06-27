@@ -7,5 +7,5 @@ include autokey-gtk.local
 # added by included profile
 #include globals.local
 
-#Redirect
+# Redirect
 include autokey-common.profile

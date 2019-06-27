@@ -3,6 +3,9 @@
 # This file is overwritten after every install/update
 # Persistent local customizations
 include xlinks.local
+# Persistent global definitions
+# added by included profile
+#include globals.local
 
 noblacklist /tmp/.X11-unix
 noblacklist ${HOME}/.links

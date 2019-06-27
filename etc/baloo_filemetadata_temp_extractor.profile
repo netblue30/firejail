@@ -4,7 +4,8 @@ quiet
 # Persistent local customizations
 include baloo_filemetadata_temp_extractor.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 ignore read-write
 read-only ${HOME}

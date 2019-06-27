@@ -33,7 +33,7 @@ seccomp
 shell none
 tracelog
 
-private-bin jerry,stockfish,sh,bash
+private-bin bash,jerry,sh,stockfish
 private-dev
 private-etc fonts,gtk-2.0,gtk-3.0
 private-tmp

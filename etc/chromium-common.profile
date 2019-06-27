@@ -3,7 +3,7 @@
 # Persistent local customizations
 include chromium-common.local
 # Persistent global definitions
-# already included by caller profile
+# added by caller profile
 #include globals.local
 
 # noexec ${HOME} breaks DRM binaries.

@@ -4,8 +4,8 @@
 # Persistent local customizations
 include firefox-developer-edition.local
 # Persistent global definitions
-include globals.local
-
+# added by included profile
+#include globals.local
 
 # Redirect
 include firefox.profile

@@ -7,6 +7,5 @@ include gconf-editor.local
 # added by included profile
 #include globals.local
 
-
 # Redirect
 include gconf.profile

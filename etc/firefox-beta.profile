@@ -3,8 +3,8 @@
 # Persistent local customizations
 include firefox-beta.local
 # Persistent global definitions
-include globals.local
-
+# added by included profile
+#include globals.local
 
 # Redirect
 include firefox.profile

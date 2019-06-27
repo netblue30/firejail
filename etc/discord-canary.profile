@@ -13,5 +13,5 @@ whitelist ${HOME}/.config/discordcanary
 private-bin discord-canary
 private-opt discord-canary
 
-#Redirect
+# Redirect
 include discord-common.profile

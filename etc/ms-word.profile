@@ -3,7 +3,8 @@
 # Persistent local customizations
 include ms-word.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 noblacklist ${HOME}/.cache/ms-word-online
 private-bin ms-word

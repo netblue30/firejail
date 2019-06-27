@@ -3,8 +3,8 @@
 # Persistent local customizations
 include ideaIC.local
 # Persistent global definitions
-include globals.local
-
+# added by included profile
+#include globals.local
 
 # Redirect
 include idea.sh.profile

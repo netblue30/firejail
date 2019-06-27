@@ -7,6 +7,5 @@ include masterpdfeditor5.local
 # added by included profile
 #include globals.local
 
-
 # Redirect
 include masterpdfeditor.profile

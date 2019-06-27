@@ -9,6 +9,5 @@ include ffplay.local
 
 private-bin ffplay
 
-
 # Redirect
 include ffmpeg.profile

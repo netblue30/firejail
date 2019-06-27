@@ -3,7 +3,8 @@
 # Persistent local customizations
 include cvlc.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 # cvlc doesn't like private-bin
 ignore private-bin

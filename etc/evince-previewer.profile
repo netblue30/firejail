@@ -6,6 +6,5 @@ include evince-previewer.local
 # added by included profile
 #include globals.local
 
-
 # Redirect
 include evince.profile

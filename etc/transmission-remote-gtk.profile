@@ -16,6 +16,5 @@ include whitelist-var-common.inc
 
 private-etc fonts
 
-
 # Redirect
 include transmission-remote.profile

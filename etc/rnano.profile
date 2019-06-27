@@ -4,8 +4,8 @@
 # Persistent local customizations
 include rnano.local
 # Persistent global definitions
+# added by included profile
 #include globals.local
-
 
 # Redirect
 include nano.profile

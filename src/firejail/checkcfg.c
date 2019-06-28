@@ -278,6 +278,14 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- firetunnel support is %s\n",
+#ifdef HAVE_FIRETUNNEL
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- networking support is %s\n",
 #ifdef HAVE_NETWORK
 		"enabled"

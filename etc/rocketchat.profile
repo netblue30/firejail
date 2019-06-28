@@ -3,7 +3,8 @@
 # Persistent local customizations
 include rocketchat.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 noblacklist ${HOME}/.config/Rocket.Chat
 

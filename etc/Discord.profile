@@ -5,7 +5,6 @@ include Discord.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist ${HOME}/.config/discord
 
 mkdir ${HOME}/.config/discord
@@ -14,5 +13,5 @@ whitelist ${HOME}/.config/discord
 private-bin Discord
 private-opt Discord
 
-#Redirect
+# Redirect
 include discord-common.profile

@@ -3,7 +3,7 @@
 arr[1]="TEST 1: standard compilation"
 arr[2]="TEST 2: compile seccomp disabled"
 arr[3]="TEST 3: compile chroot disabled"
-arr[4]="deprecated: TEST 4: compile bind disabled"
+arr[4]="TEST 4: compile firetunnel disabled"
 arr[5]="TEST 5: compile user namespace disabled"
 arr[6]="TEST 6: compile network disabled"
 arr[7]="TEST 7: compile X11 disabled"
@@ -105,6 +105,24 @@ grep Warning output-configure output-make > ./report-test3
 grep Error output-configure output-make >> ./report-test3
 cp output-configure oc3
 cp output-make om3
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 4
+#*****************************************************************
+# - disable firetunnel configuration
+#*****************************************************************
+print_title "${arr[4]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-firetunnel  --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test4
+grep Error output-configure output-make >> ./report-test4
+cp output-configure oc4
+cp output-make om4
 rm output-configure output-make
 
 #*****************************************************************

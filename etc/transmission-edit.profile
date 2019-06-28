@@ -7,6 +7,5 @@ include transmission-edit.local
 # added by included profile
 #include globals.local
 
-
 # Redirect
 include transmission-cli.profile

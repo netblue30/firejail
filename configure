@@ -642,6 +642,7 @@ HAVE_GLOBALCFG
 HAVE_CHROOT
 HAVE_SECCOMP
 HAVE_PRIVATE_HOME
+HAVE_FIRETUNNEL
 HAVE_OVERLAYFS
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
@@ -681,7 +682,6 @@ infodir
 docdir
 oldincludedir
 includedir
-runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -706,6 +706,7 @@ ac_user_opts='
 enable_option_checking
 enable_apparmor
 enable_overlayfs
+enable_firetunnel
 enable_private_home
 enable_seccomp
 enable_chroot
@@ -773,7 +774,6 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
-runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -1026,15 +1026,6 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
-  -runstatedir | --runstatedir | --runstatedi | --runstated \
-  | --runstate | --runstat | --runsta | --runst | --runs \
-  | --run | --ru | --r)
-    ac_prev=runstatedir ;;
-  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
-  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
-  | --run=* | --ru=* | --r=*)
-    runstatedir=$ac_optarg ;;
-
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1172,7 +1163,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir runstatedir
+		libdir localedir mandir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1325,7 +1316,6 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
-  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -1357,6 +1347,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-apparmor       enable apparmor
   --disable-overlayfs     disable overlayfs
+  --disable-firetunnel    disable firetunnel
   --disable-private-home  disable private home feature
   --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
@@ -3191,6 +3182,78 @@ else
   :
 fi
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -fstack-clash-protection" >&5
+$as_echo_n "checking whether C compiler accepts -fstack-clash-protection... " >&6; }
+if ${ax_cv_check_cflags___fstack_clash_protection+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+  ax_check_save_flags=$CFLAGS
+  CFLAGS="$CFLAGS  -fstack-clash-protection"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ax_cv_check_cflags___fstack_clash_protection=yes
+else
+  ax_cv_check_cflags___fstack_clash_protection=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+  CFLAGS=$ax_check_save_flags
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___fstack_clash_protection" >&5
+$as_echo "$ax_cv_check_cflags___fstack_clash_protection" >&6; }
+if test "x$ax_cv_check_cflags___fstack_clash_protection" = xyes; then :
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-clash-protection"
+
+else
+  :
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -fstack-protector-strong" >&5
+$as_echo_n "checking whether C compiler accepts -fstack-protector-strong... " >&6; }
+if ${ax_cv_check_cflags___fstack_protector_strong+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+  ax_check_save_flags=$CFLAGS
+  CFLAGS="$CFLAGS  -fstack-protector-strong"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ax_cv_check_cflags___fstack_protector_strong=yes
+else
+  ax_cv_check_cflags___fstack_protector_strong=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+  CFLAGS=$ax_check_save_flags
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___fstack_protector_strong" >&5
+$as_echo "$ax_cv_check_cflags___fstack_protector_strong" >&6; }
+if test "x$ax_cv_check_cflags___fstack_protector_strong" = xyes; then :
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-protector-strong"
+
+else
+  :
+fi
+
 
 HAVE_APPARMOR=""
 # Check whether --enable-apparmor was given.
@@ -3323,8 +3386,8 @@ if test "x$enable_apparmor" = "xyes"; then :
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for AA" >&5
-$as_echo_n "checking for AA... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libapparmor" >&5
+$as_echo_n "checking for libapparmor... " >&6; }
 
 if test -n "$AA_CFLAGS"; then
     pkg_cv_AA_CFLAGS="$AA_CFLAGS"
@@ -3364,7 +3427,7 @@ fi
 
 
 if test $pkg_failed = yes; then
-   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 
 if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
@@ -3391,7 +3454,7 @@ Alternatively, you may set the environment variables AA_CFLAGS
 and AA_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
 elif test $pkg_failed = untried; then
-     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
@@ -3429,6 +3492,19 @@ fi
 if test "x$enable_overlayfs" != "xno"; then :
 
 	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+
+
+fi
+
+HAVE_FIRETUNNEL=""
+# Check whether --enable-firetunnel was given.
+if test "${enable_firetunnel+set}" = set; then :
+  enableval=$enable_firetunnel;
+fi
+
+if test "x$enable_firetunnel" != "xno"; then :
+
+	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
 
 
 fi
@@ -5280,6 +5356,7 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

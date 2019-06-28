@@ -310,7 +310,7 @@ void x11_start_xvfb(int argc, char **argv) {
 
 	if (arg_debug) {
 		size_t i = 0;
-		printf("\n*** Stating xvfb client:");
+		printf("\n*** Starting xvfb client:");
 		while (jail_argv[i]!=NULL) {
 			printf(" \"%s\"", jail_argv[i]);
 			i++;
@@ -838,7 +838,7 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 
 			if (arg_debug) {
 				if (n == 10)
-					printf("failed to stop xpra server gratefully\n");
+					printf("failed to stop xpra server gracefully\n");
 				else
 					printf("xpra server successfully stopped in %d secs\n", n);
 			}
@@ -1023,6 +1023,7 @@ void x11_start_xpra(int argc, char **argv) {
 	if (!program_in_path("xpra")) {
 		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
+                fprintf(stderr, "   Arch: sudo pacman -S xpra\n");
 		exit(0);
 	}
 
@@ -1056,6 +1057,8 @@ void x11_start(int argc, char **argv) {
 		fprintf(stderr, "\nError: Xpra or Xephyr not found in /usr/bin directory, please install one of them:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n");
+                fprintf(stderr, "   Arch: sudo pacman -S xpra\n");
+                fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xephyr\n");
 		exit(0);
 	}
 }
@@ -1087,7 +1090,8 @@ void x11_xorg(void) {
 	struct stat s;
 	if (stat("/usr/bin/xauth", &s) == -1) {
 		fprintf(stderr, "Error: xauth utility not found in /usr/bin. Please install it:\n"
-			"   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
+                        "   Debian/Ubuntu/Mint: sudo apt-get install xauth\n"
+			"   Arch: sudo pacman -S xorg-xauth\n");
 		exit(1);
 	}
 	if (s.st_uid != 0 && s.st_gid != 0) {
@@ -1128,8 +1132,14 @@ void x11_xorg(void) {
 #ifdef HAVE_GCOV
 		__gcov_flush();
 #endif
-		execlp("/usr/bin/xauth", "/usr/bin/xauth", "-v", "-f", tmpfname,
+		if (arg_debug) {
+			execlp("/usr/bin/xauth", "/usr/bin/xauth", "-v", "-f", tmpfname,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);
+		}
+		else {
+                        execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
+                        "generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);
+		}
 
 		_exit(127);
 	}

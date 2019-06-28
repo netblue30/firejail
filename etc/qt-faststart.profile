@@ -9,6 +9,5 @@ include qt-faststart.local
 
 private-bin qt-faststart
 
-
 # Redirect
 include ffmpeg.profile

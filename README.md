@@ -45,9 +45,11 @@ $ git clone https://github.com/netblue30/firejail.git
 $ cd firejail
 $ ./configure && make && sudo make install-strip
 `````
-On Debian/Ubuntu you will need to install git and a compiler:
+On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
+development libraries and pkg-config are required when using --apparmor
+./configure option:
 `````
-$ sudo apt-get install git build-essential
+$ sudo apt-get install git build-essential libapparmor-dev pkg-config
 `````
 
 
@@ -113,4 +115,5 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ## New profiles:
 
-klatexformula, klatexformula_cmdl, links, pandoc, qgis, teams-for-linux, xlinks, OpenArena, gnome-sound-recorder, godot, tcpdump, tshark, keepassxc-cli, keepassxc-proxy, newsbeuter, rhythmbox-client
+klatexformula, klatexformula_cmdl, links, pandoc, qgis, teams-for-linux, xlinks, OpenArena, gnome-sound-recorder, godot, tcpdump, tshark, keepassxc-cli, keepassxc-proxy, newsbeuter, rhythmbox-client,
+jerry

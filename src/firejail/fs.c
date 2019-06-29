@@ -204,21 +204,23 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 			continue;
 		// noblacklist is expected to be short in normal cases, so stupid and correct brute force is okay
 		bool okay_to_blacklist = true;
-		for (j = 0; j < noblacklist_len; j++) {
-			int result = fnmatch(noblacklist[j], path, FNM_PATHNAME);
-			if (result == FNM_NOMATCH)
-				continue;
-			else if (result == 0) {
-				okay_to_blacklist = false;
+		if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
+			for (j = 0; j < noblacklist_len; j++) {
+				int result = fnmatch(noblacklist[j], path, FNM_PATHNAME);
+				if (result == FNM_NOMATCH)
+					continue;
+				else if (result == 0) {
+					okay_to_blacklist = false;
 #ifdef TEST_NO_BLACKLIST_MATCHING
-				if (j < nbcheck_size)	// noblacklist checking
-					nbcheck[j] = 1;
+					if (j < nbcheck_size)	// noblacklist checking
+						nbcheck[j] = 1;
 #endif
-				break;
-			}
-			else {
-				fprintf(stderr, "Error: failed to compare path %s with pattern %s\n", path, noblacklist[j]);
-				exit(1);
+					break;
+				}
+				else {
+					fprintf(stderr, "Error: failed to compare path %s with pattern %s\n", path, noblacklist[j]);
+					exit(1);
+				}
 			}
 		}
 

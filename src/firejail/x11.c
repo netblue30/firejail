@@ -210,7 +210,7 @@ void x11_start_xvfb(int argc, char **argv) {
 
 	setenv("FIREJAIL_X11", "yes", 1);
 
-	// mever try to run X servers as root!!!
+	// never try to run X servers as root!!!
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
 		exit(1);

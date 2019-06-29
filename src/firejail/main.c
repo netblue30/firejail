@@ -2160,6 +2160,7 @@ int main(int argc, char **argv) {
 				cfg.dns4 = dns;
 			else {
 				fprintf(stderr, "Error: up to 4 DNS servers can be specified\n");
+				free(dns);
 				return 1;
 			}
 		}

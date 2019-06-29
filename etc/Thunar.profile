@@ -16,6 +16,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 # include disable-programs.inc
 
+allusers
 caps.drop all
 netfilter
 no3d

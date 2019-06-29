@@ -18,6 +18,7 @@ include disable-passwdmgr.inc
 # dolphin needs to be able to start arbitrary applications so we cannot blacklist their files
 # include disable-programs.inc
 
+allusers
 caps.drop all
 # net none
 netfilter

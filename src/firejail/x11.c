@@ -893,9 +893,9 @@ void x11_start_xpra_new(int argc, char **argv, char *display_str) {
 
 	strcpy(start_child,start_child_prefix);
 	for(i = 0; (unsigned) i < fpos; i++) {
-		strncat(start_child,firejail_argv[i],strlen(firejail_argv[i]));
+		strcat(start_child,firejail_argv[i]);
 		if((unsigned) i != fpos - 1)
-			strncat(start_child," ",strlen(" "));
+			strcat(start_child," ");
 	}
 
 	server_argv[spos++] = start_child;

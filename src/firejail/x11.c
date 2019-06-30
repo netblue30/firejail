@@ -222,7 +222,7 @@ void x11_start_xvfb(int argc, char **argv) {
 		fprintf(stderr, "\nError: Xvfb program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xvfb\n");
 		fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xvfb\n");
-		fprintf(stderr, "	Fedora: sudo dnf install xorg-x11-server-Xvfb\n");
+		fprintf(stderr, "   Fedora: sudo dnf install xorg-x11-server-Xvfb\n");
 		exit(0);
 	}
 
@@ -442,7 +442,7 @@ void x11_start_xephyr(int argc, char **argv) {
 		fprintf(stderr, "\nError: Xephyr program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n");
 		fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xephyr\n");
-		fprintf(stderr, "	Fedora: sudo dnf install xorg-x11-server-Xephyr\n");
+		fprintf(stderr, "   Fedora: sudo dnf install xorg-x11-server-Xephyr\n");
 		exit(0);
 	}
 
@@ -1025,8 +1025,8 @@ void x11_start_xpra(int argc, char **argv) {
 	if (!program_in_path("xpra")) {
 		fprintf(stderr, "\nError: Xpra program was not found in /usr/bin directory, please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");
-        fprintf(stderr, "   Arch: sudo pacman -S xpra\n");
-		fprintf(stderr, "	Fedora: sudo dnf install xpra\n");
+		fprintf(stderr, "   Arch: sudo pacman -S xpra\n");
+		fprintf(stderr, "   Fedora: sudo dnf install xpra\n");
 		exit(0);
 	}
 
@@ -1062,8 +1062,8 @@ void x11_start(int argc, char **argv) {
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xserver-xephyr\n");
 		fprintf(stderr, "   Arch: sudo pacman -S xpra\n");
 		fprintf(stderr, "   Arch: sudo pacman -S xorg-server-xephyr\n");
-		fprintf(stderr, "	Fedora: sudo dnf install xpra\n");
-		fprintf(stderr, "	Fedora: sudo dnf install xorg-x11-server-Xephyr\n");
+		fprintf(stderr, "   Fedora: sudo dnf install xpra\n");
+		fprintf(stderr, "   Fedora: sudo dnf install xorg-x11-server-Xephyr\n");
 		exit(0);
 	}
 }
@@ -1095,9 +1095,9 @@ void x11_xorg(void) {
 	struct stat s;
 	if (stat("/usr/bin/xauth", &s) == -1) {
 		fprintf(stderr, "Error: xauth utility not found in /usr/bin. Please install it:\n");
-        fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
+		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
 		fprintf(stderr, "   Arch: sudo pacman -S xorg-xauth\n");
-		fprintf(stderr, "	Fedora: sudo dnf install xorg-x11-xauth\n");
+		fprintf(stderr, "   Fedora: sudo dnf install xorg-x11-xauth\n");
 		exit(1);
 	}
 	if (s.st_uid != 0 && s.st_gid != 0) {

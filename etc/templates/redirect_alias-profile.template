@@ -6,38 +6,39 @@ include PROFILE.local
 # Persistent global definitions
 # added by included profile
 #include globals.local
-#NOTE: let include globals.local commented, except redirecting to a -common.profile
+#NOTE: keep include globals.local commented, except when redirecting to a *-common.profile
 
-# For more informations see profile.template
+# For more information, see profile.template
 
-# Ignore something that is in the included profile
+# Ignoring option(s) from the included profile
 #ignore net none
 #ignore private-bin
 #ignore seccomp
 #...
 
-# Additional noblacklisting (if needed)
+# Additional noblacklisting (when needed)
 #noblacklist PATH
 
-# Additional allow includes (if needed)
+# Additional allow includes (when needed)
 
-# Additional blacklisting (if needed)
+# Additional blacklisting (when needed)
 #blacklist PATH
 
-# Additional whitelisting (if needed)
+# Additional whitelisting (when needed)
+#NOTE: never use mkdir/mkfile together with 'private' (see #903)
 #mkdir PATH
 ##mkfile PATH
 #whitelist PATH
 
-# Additional options (if needed)
+# Additional options (when needed)
 
-# Additional private-options (if needed)
-# Add programs to private-bin (if needed)
+# Additional private-options (when needed)
+# Add programs to private-bin (when needed)
 #private-bin PROGRAMS
-# Add files to private-etc (if needed)
+# Add files to private-etc (when needed)
 #private-etc FILES
 
-# Additional special options (if needed)
+# Additional special options (when needed)
 
 # Redirect
 include PROFILE.profile

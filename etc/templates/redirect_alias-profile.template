@@ -25,7 +25,7 @@ include PROFILE.local
 #blacklist PATH
 
 # Additional whitelisting (when needed)
-#NOTE: never use mkdir/mkfile together with 'private' (see #903)
+#NOTE: never use mkdir/mkfile when 'private' is set (see https://github.com/netblue30/firejail/issues/903)
 #mkdir PATH
 ##mkfile PATH
 #whitelist PATH

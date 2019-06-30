@@ -4,7 +4,8 @@
 # Persistent local customizations
 include autokey-common.local
 # Persistent global definitions
-include globals.local
+# added by caller profile
+#include globals.local
 
 noblacklist ${HOME}/.config/autokey
 noblacklist ${HOME}/.local/share/autokey

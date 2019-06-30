@@ -3,16 +3,16 @@
 # This file is overwritten after every install/update
 # --- CUT HERE ---
 # This is a generic template to help you with creation of profiles
-# for new programs. PRs welcome at https://github.com/netblue30/firejail/
+# for new programs. PRs welcome at https://github.com/netblue30/firejail/.
 #
 # Rules to follow:
 #  - lines with one # are often used in profiles
 #  - lines with two ## are only needed in special situations
 #  - make the profile as restrictive as possible while still keeping the program useful
-#    (e. g. a program that is unable to save user's work is considered a bad practice)
-#  - dedicate some time (based on how complex the application is) to profile testing before raising
+#    (e. g. a program that is unable to save user's work is considered bad practice)
+#  - dedicate some time (based on the complexity of the application) to profile testing before raising
 #    a pull request
-#  - keep the sections structure, use a single empty line as a separator
+#  - keep the sections structure, use a single empty line as separator
 #  - entries within sections are alphabetically sorted
 #  - consider putting binary into src/firecfg/firecfg.config (keep list sorted) but beware
 #    to not do this for essential utilities as this may *break* your OS! (related discussion:
@@ -66,8 +66,8 @@ include globals.local
 # One way to retrieve the files a program uses is:
 #  - launch binary with --private naming a sandbox
 #      `firejail --name=test --ignore=private-bin [--profile=PROFILE] --private BINARY`
-#  - work with the program, do some configuration changes and save them, open new documents,
-#    install plugins if they exists, etc
+#  - work with the program, make some configuration changes and save them, open new documents,
+#    install plugins if they exists, etc.
 #  - join the sandbox with bash:
 #      `firejail --join=test bash`
 #  - look what has changed and use that information to populate blacklist and whitelist sections
@@ -128,14 +128,14 @@ include globals.local
 #notv
 #nou2f
 #novideo
-# Remove every not needed protocol
+# Remove each unneeded protocol:
 #  - unix is usually needed
-#  - inet,inet6 only if internet access is requiered (see 'net none'/'netfilter' above)
+#  - inet,inet6 only if internet access is required (see 'net none'/'netfilter' above)
 #  - netlink is rarely needed
 #  - packet almost never
 #protocol unix,inet,inet6,netlink,packet
 #seccomp
-##seccomp.drop SYSCALLS (see also syscalls.txt)
+##seccomp.drop SYSCALLS (see syscalls.txt)
 #shell none
 #tracelog
 # Prefer 'x11 none' instead of 'blacklist /tmp/.X11-unix' if 'net none' is set

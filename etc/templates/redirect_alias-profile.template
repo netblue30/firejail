@@ -6,7 +6,7 @@ include PROFILE.local
 # Persistent global definitions
 # added by included profile
 #include globals.local
-#NOTE: let include globals.local commented
+#NOTE: let include globals.local commented, except redirecting to a -common.profile
 
 # For more informations see profile.template
 

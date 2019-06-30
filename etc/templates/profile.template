@@ -106,6 +106,7 @@ include globals.local
 #include whitelist-common.inc
 #include whitelist-var-common.inc
 
+##allusers
 #apparmor
 #caps.drop all
 ##caps.keep CAPS

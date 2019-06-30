@@ -23,6 +23,7 @@ noblacklist ${HOME}/.steampid
 noblacklist /usr/lib/llvm*
 # needed for STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 to work
 noblacklist /sbin
+noblacklist /usr/sbin
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

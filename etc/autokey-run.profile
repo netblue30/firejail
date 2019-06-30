@@ -4,8 +4,7 @@
 # Persistent local customizations
 include autokey-run.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 # Redirect
 include autokey-common.profile

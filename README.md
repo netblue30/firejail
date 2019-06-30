@@ -115,5 +115,4 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ## New profiles:
 
-klatexformula, klatexformula_cmdl, links, pandoc, qgis, teams-for-linux, xlinks, OpenArena, gnome-sound-recorder, godot, tcpdump, tshark, keepassxc-cli, keepassxc-proxy, newsbeuter, rhythmbox-client,
-jerry
+gnome-sound-recorder, godot, jerry, keepassxc-cli, keepassxc-proxy, klatexformula, klatexformula_cmdl, links, newsbeuter, OpenArena, pandoc, qgis, rhythmbox-client, tcpdump, teams-for-linux, tshark, xlinks, zeal

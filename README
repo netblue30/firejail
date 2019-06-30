@@ -575,6 +575,7 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: ktouch, yelp, klatexformula, klatexformula_cmdl
 	- added profiles: pandoc, gnome-sound-recorder, godot, newsbeuter
 	- added profiles: keepassxc-cli, keepassxc-proxy, rhythmbox-client
+	- added profiles: zeal
 	- many profile fixing and hardening
 	- some typo fixes
 	- added profile templates

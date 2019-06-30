@@ -110,6 +110,7 @@ blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
+blacklist ${HOME}/.config/Zeal
 blacklist ${HOME}/.config/akonadi*
 blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/ardour4
@@ -458,6 +459,7 @@ blacklist ${HOME}/.local/share/SuperHexagon
 blacklist ${HOME}/.local/share/TelegramDesktop
 blacklist ${HOME}/.local/share/Terraria
 blacklist ${HOME}/.local/share/TpLogger
+blacklist ${HOME}/.local/share/Zeal
 blacklist ${HOME}/.local/share/akonadi*
 blacklist ${HOME}/.local/share/akregator
 blacklist ${HOME}/.local/share/apps/korganizer
@@ -665,6 +667,7 @@ blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic

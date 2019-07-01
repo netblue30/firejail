@@ -14,7 +14,6 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-# include disable-xdg.inc
 
 caps.drop all
 ipc-namespace
@@ -32,6 +31,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
+x11 none
 
 # disable-mnt
 private-bin aria2c,gzip

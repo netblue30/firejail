@@ -30,6 +30,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+x11 none
 
 disable-mnt
 private

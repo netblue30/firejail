@@ -21,7 +21,9 @@ include disable-xdg.inc
 apparmor
 caps.drop all
 ipc-namespace
-# net none breaks AppArmor on Ubuntu systems
+# net none - breaks update functionality and AppArmor on Ubuntu systems
+# uncomment (or put 'net none' in your ocenaudio.local) when needed
+#net none
 netfilter
 no3d
 # nodbus - breaks preferences, comment (or put 'ignore nodbus' in your oceanaudio.local) when needed
@@ -38,7 +40,6 @@ seccomp
 shell none
 tracelog
 
-# disable-mnt
 private-bin ocenaudio
 private-cache
 private-dev

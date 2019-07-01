@@ -31,7 +31,6 @@ novideo
 protocol inet,inet6
 seccomp
 shell none
-x11 none
 
 # private-bin curl
 private-cache

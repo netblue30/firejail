@@ -31,7 +31,6 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
-x11 none
 
 # disable-mnt
 private-bin aria2c,gzip

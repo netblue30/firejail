@@ -10,8 +10,6 @@ include globals.local
 noblacklist ${HOME}/.wget-hsts
 noblacklist ${HOME}/.wgetrc
 
-blacklist /tmp/.X11-unix
-
 include disable-common.inc
 include disable-exec.inc
 include disable-passwdmgr.inc
@@ -33,6 +31,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+x11 none
 
 # private-bin wget
 private-dev

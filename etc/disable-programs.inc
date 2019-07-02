@@ -254,6 +254,7 @@ blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/pavucontrol.ini
+blacklist ${HOME}/.config/pavucontrol-qt
 blacklist ${HOME}/.config/pcmanfm
 blacklist ${HOME}/.config/pdfmod
 blacklist ${HOME}/.config/Pinta
@@ -655,6 +656,11 @@ blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom
 blacklist /tmp/akonadi-*
 blacklist /tmp/ssh-*
+blacklist /var/games/nethack
+blacklist /var/games/slashem
+blacklist /var/games/vulturesclaw
+blacklist /var/games/vultureseye
+blacklist /var/lib/games/Maelstrom-Scores
 
 # ${HOME}/.cache directory
 blacklist ${HOME}/.cache/0ad
@@ -704,6 +710,7 @@ blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/inkscape
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
+blacklist ${HOME}/.cache/kcmshell5
 blacklist ${HOME}/.cache/kdenlive
 blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/kmail2
@@ -762,9 +769,3 @@ blacklist ${HOME}/.cache/xmms2
 blacklist ${HOME}/.cache/xreader
 blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
-
-blacklist /var/games/nethack
-blacklist /var/games/slashem
-blacklist /var/games/vulturesclaw
-blacklist /var/games/vultureseye
-blacklist /var/lib/games/Maelstrom-Scores

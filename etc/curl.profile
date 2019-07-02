@@ -9,8 +9,6 @@ include globals.local
 
 noblacklist ${HOME}/.curlrc
 
-blacklist /tmp/.X11-unix
-
 include disable-common.inc
 include disable-exec.inc
 include disable-passwdmgr.inc

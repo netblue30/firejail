@@ -9,6 +9,7 @@ include gconf-editor.local
 
 blacklist /tmp/.X11-unix
 
+ignore net none
 ignore x11 none
 
 # Redirect

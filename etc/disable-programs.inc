@@ -254,6 +254,7 @@ blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/pavucontrol.ini
+blacklist ${HOME}/.config/pavucontrol-qt
 blacklist ${HOME}/.config/pcmanfm
 blacklist ${HOME}/.config/pdfmod
 blacklist ${HOME}/.config/Pinta

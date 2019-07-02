@@ -28,7 +28,7 @@ Features: https://firejail.wordpress.com/features-3/
 
 Documentation: https://firejail.wordpress.com/documentation-2/
 
-FAQ: https://firejail.wordpress.com/support/
+FAQ: https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions
 
 Wiki: https://github.com/netblue30/firejail/wiki
 

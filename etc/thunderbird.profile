@@ -14,7 +14,8 @@ noblacklist ${HOME}/.gnupg
 # noblacklist ${HOME}/.icedove
 noblacklist ${HOME}/.thunderbird
 
-# Allow Firefox to load your profile when clicking a link in an email
+# Uncomment the next 4 lines or put they in your thunderbird.local to
+# allow Firefox to load your profile when clicking a link in an email
 #noblacklist ${HOME}/.cache/mozilla
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.cache/mozilla/firefox

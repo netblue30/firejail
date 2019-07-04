@@ -8,6 +8,12 @@ Start a sandbox:
 firejail [OPTIONS] [program and arguments]
 .RE
 .PP
+Start an AppImage program:
+.PP
+.RS
+firejail [OPTIONS] --appimage [appimage-file and arguments]
+.RE
+.PP
 File transfer from an existing sandbox
 .PP
 .RS

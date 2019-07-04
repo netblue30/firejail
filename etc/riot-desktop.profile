@@ -7,5 +7,8 @@ include riot-desktop.local
 # added by included profile
 #include globals.local
 
+# Seccomp prevents riot from launching
+ignore seccomp
+
 # Redirect
 include riot-web.profile

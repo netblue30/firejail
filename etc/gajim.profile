@@ -20,6 +20,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+# Comment the following line if you need to whitelist other folders than ~/Downloads
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/gajim

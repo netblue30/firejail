@@ -268,6 +268,7 @@ static int monitor_application(pid_t app_pid) {
 	if (cfg.timeout) {
 		options = WNOHANG;
 		timeout = cfg.timeout;
+		sleep(1);
 	}
 
 	int status = 0;
@@ -302,8 +303,11 @@ static int monitor_application(pid_t app_pid) {
 			// handle --timeout
 			if (options) {
 				if (--timeout == 0)  {
+					// SIGTERM might fail if the process ignores it (SIG_IGN)
+					// we give it 100ms to close properly and after that we SIGKILL it
 					kill(-1, SIGTERM);
-					sleep(1);
+					usleep(100000);
+					kill(-1, SIGKILL);
 					flush_stdin();
 					_exit(1);
 				}

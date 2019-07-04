@@ -1,5 +1,6 @@
 firejail (0.9.61) baseline; urgency=low
   * work in progress
+  * added file-copy-limit in /etc/firejail/firejail.config
   * profile templates
   * new profiles: qgis, klatexformula, klatexformula_cmdl, links, xlinks
   * new profiles: pandoc, teams-for-linux, OpenArena, gnome-sound-recorder

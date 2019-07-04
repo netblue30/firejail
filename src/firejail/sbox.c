@@ -129,8 +129,24 @@ int sbox_run(unsigned filter, int num, ...) {
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
-		// clean the new process
+		// preserve firejail-specific env vars
+		char *cl = getenv("FIREJAIL_FILE_COPY_LIMIT");
+		if (cl) {
+			// duplicate the value, who knows what's going to happen with it in clearenv!
+			cl = strdup(cl);
+			if (!cl)
+				errExit("strdup");
+		}
 		clearenv();
+		if (cl) {
+			if (setenv("FIREJAIL_FILE_COPY_LIMIT", cl, 1) == -1)
+				errExit("setenv");
+			free(cl);
+		}
+		if (arg_quiet) // --quiet is passed as an environment variable
+			setenv("FIREJAIL_QUIET", "yes", 1);
+		if (arg_debug) // --debug is passed as an environment variable
+			setenv("FIREJAIL_DEBUG", "yes", 1);
 
 		if (filter & SBOX_STDIN_FROM_FILE) {
 			int fd;
@@ -195,12 +211,6 @@ int sbox_run(unsigned filter, int num, ...) {
 		}
 		else if (filter & SBOX_USER)
 			drop_privs(1);
-
-		clearenv();
-
-		// --quiet is passed as an environment variable
-		if (arg_quiet)
-			setenv("FIREJAIL_QUIET", "yes", 1);
 
 		if (arg[0])	// get rid of scan-build warning
 			execvp(arg[0], arg);

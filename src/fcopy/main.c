@@ -25,9 +25,11 @@
 #include <pwd.h>
 
 int arg_quiet = 0;
+int arg_debug = 0;
 static int arg_follow_link = 0;
 
-#define COPY_LIMIT (500 * 1024 *1024)
+static int copy_limit = 500 * 1024 *1024; // 500 MB
+#define COPY_LIMIT (
 static int size_limit_reached = 0;
 static unsigned file_cnt = 0;
 static unsigned size_cnt = 0;
@@ -184,8 +186,8 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	mode_t mode = s.st_mode;
 
 	// recalculate size
-	if ((s.st_size + size_cnt) > COPY_LIMIT) {
-		fprintf(stderr, "Error fcopy: size limit of %dMB reached\n", (COPY_LIMIT / 1024) / 1024);
+	if ((s.st_size + size_cnt) > copy_limit) {
+		fprintf(stderr, "Error fcopy: size limit of %dMB reached\n", (copy_limit / 1024) / 1024);
 		size_limit_reached = 1;
 		free(outfname);
 		return 0;
@@ -330,6 +332,9 @@ int main(int argc, char **argv) {
 	char *quiet = getenv("FIREJAIL_QUIET");
 	if (quiet && strcmp(quiet, "yes") == 0)
 		arg_quiet = 1;
+	char *debug = getenv("FIREJAIL_DEBUG");
+	if (debug && strcmp(debug, "yes") == 0)
+		arg_debug = 1;
 
 	char *src;
 	char *dest;
@@ -382,6 +387,14 @@ int main(int argc, char **argv) {
 	if (!S_ISDIR(s.st_mode)) {
 		fprintf(stderr, "Error fcopy: dest %s is not a directory\n", dest);
 		exit(1);
+	}
+
+	// extract copy limit size from env variable, if any
+	char *cl = getenv("FIREJAIL_FILE_COPY_LIMIT");
+	if (cl) {
+		copy_limit = atoi(cl) * 1024 * 1024;
+		if (arg_debug)
+			printf("file copy limit %d bytes\n", copy_limit);
 	}
 
 	// copy files

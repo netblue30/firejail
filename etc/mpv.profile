@@ -8,6 +8,7 @@ include mpv.local
 include globals.local
 
 noblacklist ${HOME}/.config/mpv
+noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.netrc
 
 # Allow python (blacklisted by disable-interpreters.inc)

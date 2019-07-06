@@ -38,5 +38,3 @@ tracelog
 private-bin qpdfview
 private-dev
 private-tmp
-
-memory-deny-write-execute

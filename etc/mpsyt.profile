@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/mps-youtube
 noblacklist ${HOME}/.config/mpv
+noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.mplayer
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/mps
@@ -29,10 +30,12 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/mps-youtube
 mkdir ${HOME}/.config/mpv
+mkdir ${HOME}/.config/youtube-dl
 mkdir ${HOME}/.mplayer
 mkdir ${HOME}/mps
 whitelist ${HOME}/.config/mps-youtube
 whitelist ${HOME}/.config/mpv
+whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.mplayer
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/mps

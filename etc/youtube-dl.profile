@@ -10,6 +10,7 @@ include globals.local
 # breaks when installed via pip
 ignore noexec ${HOME}
 
+noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.netrc
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}

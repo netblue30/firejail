@@ -7,6 +7,7 @@ include smplayer.local
 include globals.local
 
 noblacklist ${HOME}/.config/smplayer
+noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.mplayer
 
 # Allow python (blacklisted by disable-interpreters.inc)

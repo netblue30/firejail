@@ -6,8 +6,9 @@ include celluloid.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/gnome-mpv
 noblacklist ${HOME}/.config/celluloid
+noblacklist ${HOME}/.config/gnome-mpv
+noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
 

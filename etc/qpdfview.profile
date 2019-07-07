@@ -22,6 +22,7 @@ include whitelist-var-common.inc
 
 caps.drop all
 machine-id
+nodbus
 nodvd
 nogroups
 nonewprivs

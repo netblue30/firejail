@@ -50,7 +50,7 @@ void errLogExit(char* fmt, ...) {
 	char *msg1;
 	char *msg2  = "Access error";
 	if (vasprintf(&msg1, fmt, args) != -1 &&
-	    asprintf(&msg2, "Access error: pid %d, last mount name:%s dir:%s type:%s - %s", getuid(), m->fsname, m->dir, m->fstype, msg1) != -1)
+	    asprintf(&msg2, "Access error: uid %d, last mount name:%s dir:%s type:%s - %s", getuid(), m->fsname, m->dir, m->fstype, msg1) != -1)
 		syslog(LOG_CRIT, "%s", msg2);
 	va_end(args);
 	closelog();
@@ -487,7 +487,6 @@ char *line_remove_spaces(const char *buf) {
 	size_t len = strlen(buf);
 	if (len == 0)
 		return NULL;
-	assert(len + 1 != 0 && buf[len] == '\0');
 
 	// allocate memory for the new string
 	char *rv = malloc(len + 1);
@@ -554,15 +553,13 @@ char *split_comma(char *str) {
 char *clean_pathname(const char *path) {
 	assert(path);
 	size_t len = strlen(path);
-	assert(len + 1 != 0 && path[len] == '\0');
-
 	char *rv = malloc(len + 1);
 	if (!rv)
 		errExit("malloc");
 
 	if (len > 0) {
-		size_t i, j, cnt;
-		for (i = 0, j = 0, cnt = 0; i < len; i++) {
+		size_t i = 0, j = 0, cnt = 0;
+		for (; i < len; i++) {
 			if (path[i] == '/')
 				cnt++;
 			else
@@ -1142,56 +1139,47 @@ void disable_file_path(const char *path, const char *file) {
 	free(fname);
 }
 
-// The returned file descriptor should be suitable for privileged operations on
-// user controlled paths
+// open file without following any symbolic link
+// returns a file descriptor on success, or -1 if a symlink is found
 int safe_fd(const char *path, int flags) {
 	assert(path);
-
-	// reject empty string, relative path
 	if (*path != '/')
 		goto errexit;
-	// reject ".."
 	if (strstr(path, ".."))
 		goto errexit;
-	char *p = strrchr(path, '/');
-	assert(p);
-	// reject trailing slash, root directory
-	if (*(p + 1) == '\0')
-		goto errexit;
-	// reject trailing dot
-	if (*(p + 1) == '.' && *(p + 2) == '\0')
-		goto errexit;
-
-	// work with a copy of path
-	char *dup = strdup(path);
-	if (!dup)
-		errExit("strdup");
 
 	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (parentfd == -1)
 		errExit("open");
-
-	// traverse the path and return -1 if a symlink is encountered
 	int fd = -1;
-	char *current_tok = EMPTY_STRING;
+
+	char *last_tok = EMPTY_STRING;
+	char *dup = strdup(path);
+	if (!dup)
+		errExit("strdup");
 	char *tok = strtok(dup, "/");
-	assert(tok);
+	if (!tok) { // root directory
+		free(dup);
+		return parentfd;
+	}
+
 	while (tok) {
 		// open the element, assuming it is a directory; this fails with ENOTDIR if it is a symbolic link
+		// if token is a single dot, the previous directory is reopened
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1) {
 			// if the following token is NULL, the current token is the final path element
 			// try again to open it, this time using the passed flags, and return -1 or the descriptor
-			current_tok = tok;
+			last_tok = tok;
 			tok = strtok(NULL, "/");
 			if (!tok)
-				fd = openat(parentfd, current_tok, flags|O_NOFOLLOW);
+				fd = openat(parentfd, last_tok, flags|O_NOFOLLOW);
 			close(parentfd);
 			free(dup);
 			return fd; // -1 if open failed
 		}
 		// move on to next path segment
-		current_tok = tok;
+		last_tok = tok;
 		tok = strtok(NULL, "/");
 		if (tok) {
 			close(parentfd);
@@ -1202,13 +1190,13 @@ int safe_fd(const char *path, int flags) {
 	// we are here because the last path element exists and is of file type directory
 	// reopen it using the passed flags
 	close(fd);
-	fd = openat(parentfd, current_tok, flags|O_NOFOLLOW);
+	fd = openat(parentfd, last_tok, flags|O_NOFOLLOW);
 	close(parentfd);
 	free(dup);
 	return fd; // -1 if open failed
 
 errexit:
-	fprintf(stderr, "Error: cannot open \"%s\", invalid filename\n", path);
+	fprintf(stderr, "Error: cannot open \"%s\": invalid path\n", path);
 	exit(1);
 }
 

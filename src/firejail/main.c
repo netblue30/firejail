@@ -38,6 +38,15 @@
 #include <net/if.h>
 #include <sys/utsname.h>
 
+#ifdef __ia64__
+/* clone(2) has a different interface on ia64, as it needs to know
+   the size of the stack */
+int __clone2(int (*fn)(void *),
+             void *child_stack_base, size_t stack_size,
+             int flags, void *arg, ...
+              /* pid_t *ptid, struct user_desc *tls, pid_t *ctid */ );
+#endif
+
 uid_t firejail_uid = 0;
 gid_t firejail_gid = 0;
 
@@ -2541,10 +2550,18 @@ int main(int argc, char **argv) {
 
 	EUID_ASSERT();
 	EUID_ROOT();
+#ifdef __ia64__
+	child = __clone2(sandbox,
+		child_stack,
+		STACK_SIZE,
+		flags,
+		NULL);
+#else
 	child = clone(sandbox,
 		child_stack + STACK_SIZE,
 		flags,
 		NULL);
+#endif
 	if (child == -1)
 		errExit("clone");
 	EUID_USER();

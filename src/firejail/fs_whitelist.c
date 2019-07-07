@@ -237,11 +237,6 @@ static void whitelist_path(ProfileEntry *entry) {
 		return;
 	}
 
-#ifdef TEST_MOUNTINFO
-	printf("TEST_MOUNTINFO\n");
-	path = "/etc/.";
-#endif
-
 	// create path of the mount target if necessary
 	int fd2 = mkpath(path, 0755);
 	if (fd2 == -1) {
@@ -305,7 +300,10 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	// check the last mount operation
 	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
-
+#ifdef TEST_MOUNTINFO
+	printf("TEST_MOUNTINFO\n");
+	mptr->dir = "foo";
+#endif
 	// confirm the file was mounted on the right target
 	// strcmp does not work here, because mptr->dir can be a child mount
 	size_t path_len = strlen(path);

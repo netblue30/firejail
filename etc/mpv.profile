@@ -43,5 +43,6 @@ shell none
 tracelog
 
 private-bin env,mpv,python*,youtube-dl
-private-cache
+# Causes slow OSD, see #2838
+#private-cache
 private-dev

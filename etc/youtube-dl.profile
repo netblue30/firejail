@@ -7,7 +7,7 @@ include youtube-dl.local
 # Persistent global definitions
 include globals.local
 
-# breaks when installed via pip
+# breaks when installed under ${HOME} via `pip install --user` (see #2833)
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.config/youtube-dl

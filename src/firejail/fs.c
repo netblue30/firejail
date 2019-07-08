@@ -1127,11 +1127,36 @@ void fs_overlayfs(void) {
 
 #ifdef HAVE_CHROOT
 // exit if error
+static void fs_check_chroot_subdir(const char *subdir, int parentfd, int check_writable) {
+	assert(subdir);
+	int fd = openat(parentfd, subdir, O_PATH|O_CLOEXEC);
+	if (fd == -1) {
+		if (errno == ENOENT)
+			fprintf(stderr, "Error: cannot find /%s in chroot directory\n", subdir);
+		else {
+			perror("open");
+			fprintf(stderr, "Error: cannot open /%s in chroot directory\n", subdir);
+		}
+		exit(1);
+	}
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	close(fd);
+	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /%s should be a directory owned by root\n", subdir);
+		exit(1);
+	}
+	if (check_writable && ((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+		fprintf(stderr, "Error: only root user should be given write permission on chroot /%s\n", subdir);
+		exit(1);
+	}
+}
+
+// exit if error
 void fs_check_chroot_dir(const char *rootdir) {
 	EUID_ASSERT();
 	assert(rootdir);
-	char *dir = EMPTY_STRING;
-	struct stat s;
 
 	char *overlay;
 	if (asprintf(&overlay, "%s/.firejail", cfg.homedir) == -1)
@@ -1150,6 +1175,7 @@ void fs_check_chroot_dir(const char *rootdir) {
 	}
 	// rootdir has to be owned by root and is not allowed to be generally writable,
 	// this also excludes /tmp, /var/tmp and such
+	struct stat s;
 	if (fstat(parentfd, &s) == -1)
 		errExit("fstat");
 	if (s.st_uid != 0) {
@@ -1161,64 +1187,24 @@ void fs_check_chroot_dir(const char *rootdir) {
 		exit(1);
 	}
 
-	// check /dev
-	dir = "dev";
-	int fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1)
-		goto error1;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error2;
-	close(fd);
-
-	// check /var/tmp
-	dir = "var/tmp";
-	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1)
-		goto error1;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error2;
-	close(fd);
-
-	// check /proc
-	dir = "proc";
-	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1)
-		goto error1;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error2;
-	close(fd);
-
-	// check /tmp
-	dir = "tmp";
-	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1)
-		goto error1;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error2;
-	close(fd);
-
-	// check /etc
-	dir = "etc";
-	fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-	if (fd == -1)
-		goto error1;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-		goto error2;
-	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
-		fprintf(stderr, "Error: only root user should be given write permission on chroot /etc\n");
-		exit(1);
+	// check subdirectories in rootdir
+	typedef struct {
+		char *dname;
+		int check_writable;
+	} chrootsubdir;
+	chrootsubdir dirs[] = {
+		{"dev", 0},
+		{"etc", 1},
+		{"proc", 0},
+		{"tmp", 0},
+		{"var/tmp", 0},
+		{NULL, 0}
+	};
+	chrootsubdir *tmp = dirs;
+	while (tmp->dname) {
+		fs_check_chroot_subdir(tmp->dname, parentfd, tmp->check_writable);
+		tmp++;
 	}
-	close(fd);
 
 	// there should be no checking on <chrootdir>/etc/resolv.conf
 	// the file is replaced with the real /etc/resolv.conf anyway
@@ -1249,32 +1235,10 @@ void fs_check_chroot_dir(const char *rootdir) {
 #endif
 
 	// check x11 socket directory
-	if (getenv("FIREJAIL_X11")) {
-		dir = "tmp/.X11-unix";
-		fd = openat(parentfd, dir, O_PATH|O_CLOEXEC);
-		if (fd == -1)
-			goto error1;
-		if (fstat(fd, &s) == -1)
-			errExit("fstat");
-		if (!S_ISDIR(s.st_mode) || s.st_uid != 0)
-			goto error2;
-		close(fd);
-	}
+	if (getenv("FIREJAIL_X11"))
+		fs_check_chroot_subdir("tmp/.X11-unix", parentfd, 0);
 
 	close(parentfd);
-	return;
-
-error1:
-	if (errno == ENOENT)
-		fprintf(stderr, "Error: cannot find /%s in chroot directory\n", dir);
-	else {
-		perror("open");
-		fprintf(stderr, "Error: cannot open /%s in chroot directory\n", dir);
-	}
-	exit(1);
-error2:
-	fprintf(stderr, "Error: chroot /%s should be a directory owned by root\n", dir);
-	exit(1);
 }
 
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf

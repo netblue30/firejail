@@ -1188,23 +1188,11 @@ void fs_check_chroot_dir(const char *rootdir) {
 	}
 
 	// check subdirectories in rootdir
-	typedef struct {
-		char *dname;
-		int check_writable;
-	} chrootsubdir;
-	chrootsubdir dirs[] = {
-		{"dev", 0},
-		{"etc", 1},
-		{"proc", 0},
-		{"tmp", 0},
-		{"var/tmp", 0},
-		{NULL, 0}
-	};
-	chrootsubdir *tmp = dirs;
-	while (tmp->dname) {
-		fs_check_chroot_subdir(tmp->dname, parentfd, tmp->check_writable);
-		tmp++;
-	}
+	fs_check_chroot_subdir("dev", parentfd, 0);
+	fs_check_chroot_subdir("etc", parentfd, 1);
+	fs_check_chroot_subdir("proc", parentfd, 0);
+	fs_check_chroot_subdir("tmp", parentfd, 0);
+	fs_check_chroot_subdir("var/tmp", parentfd, 0);
 
 	// there should be no checking on <chrootdir>/etc/resolv.conf
 	// the file is replaced with the real /etc/resolv.conf anyway

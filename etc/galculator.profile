@@ -47,4 +47,4 @@ private-etc alternatives,fonts
 private-lib
 private-tmp
 
-memory-deny-write-execute
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

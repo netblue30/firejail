@@ -45,4 +45,4 @@ private-etc alternatives,asound.conf,avahi,fonts,machine-id,pulse
 private-lib
 private-tmp
 
-memory-deny-write-execute
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

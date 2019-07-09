@@ -41,54 +41,50 @@ typedef FILE *(*orig_fopen64_t)(const char *pathname, const char *mode);
 static orig_fopen64_t orig_fopen64 = NULL;
 
 //
-// pid
+// library constructor/destructor
 //
+static FILE *ftty = NULL;
 static pid_t mypid = 0;
-static inline pid_t pid(void) {
-	if (!mypid)
-		mypid = getpid();
-	return mypid;
-}
-
-//
-// process name
-//
 #define MAXNAME 16
-static char myname[MAXNAME];
-static int nameinit = 0;
-static char *name(void) {
-	if (!nameinit) {
-		// initialize the name of the process based on /proc/PID/comm
-		memset(myname, 0, MAXNAME);
+static char myname[MAXNAME] = {'\0', };
 
-		pid_t p = pid();
-		char *fname;
-		if (asprintf(&fname, "/proc/%u/comm", p) == -1)
-			return "unknown";
+static void init(void) __attribute__((constructor));
+void init(void) {
+	orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
 
-		// read file
-		if (!orig_fopen)
-			orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
-		FILE *fp  = orig_fopen(fname, "r");
-		if (!fp)
-			return "unknown";
-		if (fgets(myname, MAXNAME, fp) == NULL) {
-			fclose(fp);
-			free(fname);
-			return "unknown";
-		}
+	// tty
+	ftty = orig_fopen("/dev/tty", "w");
 
-		// clean '\n'
-		char *ptr = strchr(myname, '\n');
-		if (ptr)
-			*ptr = '\0';
+	// pid
+	mypid = getpid();
 
+	// process name
+	char *fname;
+	if (asprintf(&fname, "/proc/%u/comm", mypid) == -1)
+		strncpy(myname, "unknown", MAXNAME-1);
+
+	// read file
+	FILE *fp  = orig_fopen(fname, "r");
+	if (!fp)
+		strncpy(myname, "unknown", MAXNAME-1);
+	if (fgets(myname, MAXNAME, fp) == NULL) {
 		fclose(fp);
 		free(fname);
-		nameinit = 1;
+		strncpy(myname, "unknown", MAXNAME-1);
 	}
 
-	return myname;
+	// clean '\n'
+	char *ptr = strchr(myname, '\n');
+	if (ptr)
+		*ptr = '\0';
+
+	fclose(fp);
+	free(fname);
+}
+
+static void fini(void) __attribute__((destructor));
+void fini(void) {
+	fclose(ftty);
 }
 
 //
@@ -235,23 +231,23 @@ static char *translate(XTable *table, int val) {
 static void print_sockaddr(int sockfd, const char *call, const struct sockaddr *addr, int rv) {
 	if (addr->sa_family == AF_INET) {
 		struct sockaddr_in *a = (struct sockaddr_in *) addr;
-		printf("%u:%s:%s %d %s port %u:%d\n", pid(), name(), call, sockfd, inet_ntoa(a->sin_addr), ntohs(a->sin_port), rv);
+		fprintf(ftty, "%u:%s:%s %d %s port %u:%d\n", mypid, myname, call, sockfd, inet_ntoa(a->sin_addr), ntohs(a->sin_port), rv);
 	}
 	else if (addr->sa_family == AF_INET6) {
 		struct sockaddr_in6 *a = (struct sockaddr_in6 *) addr;
 		char str[INET6_ADDRSTRLEN];
 		inet_ntop(AF_INET6, &(a->sin6_addr), str, INET6_ADDRSTRLEN);
-		printf("%u:%s:%s %d %s:%d\n", pid(), name(), call, sockfd, str, rv);
+		fprintf(ftty, "%u:%s:%s %d %s:%d\n", mypid, myname, call, sockfd, str, rv);
 	}
 	else if (addr->sa_family == AF_UNIX) {
 		struct sockaddr_un *a = (struct sockaddr_un *) addr;
 		if (a->sun_path[0])
-			printf("%u:%s:%s %d %s:%d\n", pid(), name(), call, sockfd, a->sun_path, rv);
+			fprintf(ftty, "%u:%s:%s %d %s:%d\n", mypid, myname, call, sockfd, a->sun_path, rv);
 		else
-			printf("%u:%s:%s %d @%s:%d\n", pid(), name(), call, sockfd, a->sun_path + 1, rv);
+			fprintf(ftty, "%u:%s:%s %d @%s:%d\n", mypid, myname, call, sockfd, a->sun_path + 1, rv);
 	}
 	else {
-		printf("%u:%s:%s %d family %d:%d\n", pid(), name(), call, sockfd, addr->sa_family, rv);
+		fprintf(ftty, "%u:%s:%s %d family %d:%d\n", mypid, myname, call, sockfd, addr->sa_family, rv);
 	}
 }
 
@@ -267,7 +263,7 @@ int open(const char *pathname, int flags, mode_t mode) {
 		orig_open = (orig_open_t)dlsym(RTLD_NEXT, "open");
 
 	int rv = orig_open(pathname, flags, mode);
-	printf("%u:%s:open %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:open %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -278,7 +274,7 @@ int open64(const char *pathname, int flags, mode_t mode) {
 		orig_open64 = (orig_open64_t)dlsym(RTLD_NEXT, "open64");
 
 	int rv = orig_open64(pathname, flags, mode);
-	printf("%u:%s:open64 %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:open64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -290,7 +286,7 @@ int openat(int dirfd, const char *pathname, int flags, mode_t mode) {
 		orig_openat = (orig_openat_t)dlsym(RTLD_NEXT, "openat");
 
 	int rv = orig_openat(dirfd, pathname, flags, mode);
-	printf("%u:%s:openat %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:openat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -301,7 +297,7 @@ int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 		orig_openat64 = (orig_openat64_t)dlsym(RTLD_NEXT, "openat64");
 
 	int rv = orig_openat64(dirfd, pathname, flags, mode);
-	printf("%u:%s:openat64 %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:openat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -312,7 +308,7 @@ FILE *fopen(const char *pathname, const char *mode) {
 		orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
 
 	FILE *rv = orig_fopen(pathname, mode);
-	printf("%u:%s:fopen %s:%p\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:fopen %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -322,7 +318,7 @@ FILE *fopen64(const char *pathname, const char *mode) {
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
 
 	FILE *rv = orig_fopen64(pathname, mode);
-	printf("%u:%s:fopen64 %s:%p\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:fopen64 %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -336,7 +332,7 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 		orig_freopen = (orig_freopen_t)dlsym(RTLD_NEXT, "freopen");
 
 	FILE *rv = orig_freopen(pathname, mode, stream);
-	printf("%u:%s:freopen %s:%p\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:freopen %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -348,7 +344,7 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 		orig_freopen64 = (orig_freopen64_t)dlsym(RTLD_NEXT, "freopen64");
 
 	FILE *rv = orig_freopen64(pathname, mode, stream);
-	printf("%u:%s:freopen64 %s:%p\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:freopen64 %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -361,7 +357,7 @@ int unlink(const char *pathname) {
 		orig_unlink = (orig_unlink_t)dlsym(RTLD_NEXT, "unlink");
 
 	int rv = orig_unlink(pathname);
-	printf("%u:%s:unlink %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:unlink %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -372,7 +368,7 @@ int unlinkat(int dirfd, const char *pathname, int flags) {
 		orig_unlinkat = (orig_unlinkat_t)dlsym(RTLD_NEXT, "unlinkat");
 
 	int rv = orig_unlinkat(dirfd, pathname, flags);
-	printf("%u:%s:unlinkat %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:unlinkat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -384,7 +380,7 @@ int mkdir(const char *pathname, mode_t mode) {
 		orig_mkdir = (orig_mkdir_t)dlsym(RTLD_NEXT, "mkdir");
 
 	int rv = orig_mkdir(pathname, mode);
-	printf("%u:%s:mkdir %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:mkdir %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -395,7 +391,7 @@ int mkdirat(int dirfd, const char *pathname, mode_t mode) {
 		orig_mkdirat = (orig_mkdirat_t)dlsym(RTLD_NEXT, "mkdirat");
 
 	int rv = orig_mkdirat(dirfd, pathname, mode);
-	printf("%u:%s:mkdirat %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:mkdirat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -406,7 +402,7 @@ int rmdir(const char *pathname) {
 		orig_rmdir = (orig_rmdir_t)dlsym(RTLD_NEXT, "rmdir");
 
 	int rv = orig_rmdir(pathname);
-	printf("%u:%s:rmdir %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:rmdir %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -418,7 +414,7 @@ int stat(const char *pathname, struct stat *buf) {
 		orig_stat = (orig_stat_t)dlsym(RTLD_NEXT, "stat");
 
 	int rv = orig_stat(pathname, buf);
-	printf("%u:%s:stat %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:stat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -430,7 +426,7 @@ int stat64(const char *pathname, struct stat64 *buf) {
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
 
 	int rv = orig_stat64(pathname, buf);
-	printf("%u:%s:stat64 %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:stat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -443,7 +439,7 @@ int lstat(const char *pathname, struct stat *buf) {
 		orig_lstat = (orig_lstat_t)dlsym(RTLD_NEXT, "lstat");
 
 	int rv = orig_lstat(pathname, buf);
-	printf("%u:%s:lstat %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:lstat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -455,7 +451,7 @@ int lstat64(const char *pathname, struct stat64 *buf) {
 		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
 
 	int rv = orig_lstat64(pathname, buf);
-	printf("%u:%s:lstat64 %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:lstat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -468,7 +464,7 @@ DIR *opendir(const char *pathname) {
 		orig_opendir = (orig_opendir_t)dlsym(RTLD_NEXT, "opendir");
 
 	DIR *rv = orig_opendir(pathname);
-	printf("%u:%s:opendir %s:%p\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:opendir %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -480,7 +476,7 @@ int access(const char *pathname, int mode) {
 		orig_access = (orig_access_t)dlsym(RTLD_NEXT, "access");
 
 	int rv = orig_access(pathname, mode);
-	printf("%u:%s:access %s:%d\n", pid(), name(), pathname, rv);
+	fprintf(ftty, "%u:%s:access %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -508,7 +504,7 @@ int socket(int domain, int type, int protocol) {
 
 	int rv = orig_socket(domain, type, protocol);
 	char *ptr = buf;
-	ptr += sprintf(ptr, "%u:%s:socket ", pid(), name());
+	ptr += sprintf(ptr, "%u:%s:socket ", mypid, myname);
 	char *str = translate(socket_domain, domain);
 	if (str == NULL)
 		ptr += sprintf(ptr, "%d ", domain);
@@ -538,7 +534,7 @@ int socket(int domain, int type, int protocol) {
 			sprintf(ptr, "%s", str);
 	}
 
-	printf("%s:%d\n", buf, rv);
+	fprintf(ftty, "%s:%d\n", buf, rv);
 	return rv;
 }
 
@@ -576,7 +572,7 @@ int system(const char *command) {
 		orig_system = (orig_system_t)dlsym(RTLD_NEXT, "system");
 
 	int rv = orig_system(command);
-	printf("%u:%s:system %s:%d\n", pid(), name(), command, rv);
+	fprintf(ftty, "%u:%s:system %s:%d\n", mypid, myname, command, rv);
 
 	return rv;
 }
@@ -588,7 +584,7 @@ int setuid(uid_t uid) {
 		orig_setuid = (orig_setuid_t)dlsym(RTLD_NEXT, "setuid");
 
 	int rv = orig_setuid(uid);
-	printf("%u:%s:setuid %d:%d\n", pid(), name(), uid, rv);
+	fprintf(ftty, "%u:%s:setuid %d:%d\n", mypid, myname, uid, rv);
 
 	return rv;
 }
@@ -600,7 +596,7 @@ int setgid(gid_t gid) {
 		orig_setgid = (orig_setgid_t)dlsym(RTLD_NEXT, "setgid");
 
 	int rv = orig_setgid(gid);
-	printf("%u:%s:setgid %d:%d\n", pid(), name(), gid, rv);
+	fprintf(ftty, "%u:%s:setgid %d:%d\n", mypid, myname, gid, rv);
 
 	return rv;
 }
@@ -612,7 +608,7 @@ int setfsuid(uid_t uid) {
 		orig_setfsuid = (orig_setfsuid_t)dlsym(RTLD_NEXT, "setfsuid");
 
 	int rv = orig_setfsuid(uid);
-	printf("%u:%s:setfsuid %d:%d\n", pid(), name(), uid, rv);
+	fprintf(ftty, "%u:%s:setfsuid %d:%d\n", mypid, myname, uid, rv);
 
 	return rv;
 }
@@ -624,7 +620,7 @@ int setfsgid(gid_t gid) {
 		orig_setfsgid = (orig_setfsgid_t)dlsym(RTLD_NEXT, "setfsgid");
 
 	int rv = orig_setfsgid(gid);
-	printf("%u:%s:setfsgid %d:%d\n", pid(), name(), gid, rv);
+	fprintf(ftty, "%u:%s:setfsgid %d:%d\n", mypid, myname, gid, rv);
 
 	return rv;
 }
@@ -636,7 +632,7 @@ int setreuid(uid_t ruid, uid_t euid) {
 		orig_setreuid = (orig_setreuid_t)dlsym(RTLD_NEXT, "setreuid");
 
 	int rv = orig_setreuid(ruid, euid);
-	printf("%u:%s:setreuid %d %d:%d\n", pid(), name(), ruid, euid, rv);
+	fprintf(ftty, "%u:%s:setreuid %d %d:%d\n", mypid, myname, ruid, euid, rv);
 
 	return rv;
 }
@@ -648,7 +644,7 @@ int setregid(gid_t rgid, gid_t egid) {
 		orig_setregid = (orig_setregid_t)dlsym(RTLD_NEXT, "setregid");
 
 	int rv = orig_setregid(rgid, egid);
-	printf("%u:%s:setregid %d %d:%d\n", pid(), name(), rgid, egid, rv);
+	fprintf(ftty, "%u:%s:setregid %d %d:%d\n", mypid, myname, rgid, egid, rv);
 
 	return rv;
 }
@@ -660,7 +656,7 @@ int setresuid(uid_t ruid, uid_t euid, uid_t suid) {
 		orig_setresuid = (orig_setresuid_t)dlsym(RTLD_NEXT, "setresuid");
 
 	int rv = orig_setresuid(ruid, euid, suid);
-	printf("%u:%s:setresuid %d %d %d:%d\n", pid(), name(), ruid, euid, suid, rv);
+	fprintf(ftty, "%u:%s:setresuid %d %d %d:%d\n", mypid, myname, ruid, euid, suid, rv);
 
 	return rv;
 }
@@ -672,7 +668,7 @@ int setresgid(gid_t rgid, gid_t egid, gid_t sgid) {
 		orig_setresgid = (orig_setresgid_t)dlsym(RTLD_NEXT, "setresgid");
 
 	int rv = orig_setresgid(rgid, egid, sgid);
-	printf("%u:%s:setresgid %d %d %d:%d\n", pid(), name(), rgid, egid, sgid, rv);
+	fprintf(ftty, "%u:%s:setresgid %d %d %d:%d\n", mypid, myname, rgid, egid, sgid, rv);
 
 	return rv;
 }
@@ -687,6 +683,6 @@ static void log_exec(int argc, char** argv) {
 	int rv = readlink("/proc/self/exe", buf, PATH_MAX);
 	if (rv != -1) {
 		buf[rv] = '\0';	// readlink does not add a '\0' at the end
-		printf("%u:%s:exec %s:0\n", pid(), name(), buf);
+		fprintf(ftty, "%u:%s:exec %s:0\n", mypid, myname, buf);
 	}
 }

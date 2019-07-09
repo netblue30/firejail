@@ -41,8 +41,8 @@ static void load_seccomp(void) {
 	}
 	unsigned short entries = (unsigned short) size / (unsigned short) sizeof(struct sock_filter);
 	struct sock_filter *filter = MAP_FAILED;
-	if (size != 0)
-		filter = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+	
+	filter = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
 	close(fd);
 
 	if (filter == MAP_FAILED) {

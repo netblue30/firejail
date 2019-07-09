@@ -441,6 +441,8 @@ static int get_mount_flags(const char *path, unsigned long *flags) {
 // mount a writable tmpfs on directory
 void fs_tmpfs(const char *dir, unsigned check_owner) {
 	assert(dir);
+	if (arg_debug)
+		printf("Mounting tmpfs on %s\n", dir);
 	// get a file descriptor for dir, fails if there is any symlink
 	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
@@ -449,12 +451,9 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
 	if (check_owner && s.st_uid != getuid()) {
-		fwarning("no tmpfs mounted on %s: not owned by the current user\n", dir);
-		close(fd);
-		return;
+		fprintf(stderr, "Error: cannot mount tmpfs on %s: not owned by the current user\n", dir);
+		exit(1);
 	}
-	if (arg_debug)
-		printf("Mounting tmpfs on %s\n", dir);
 	// preserve ownership, mode
 	char *options;
 	if (asprintf(&options, "mode=%o,uid=%u,gid=%u", s.st_mode & 07777, s.st_uid, s.st_gid) == -1)

@@ -25,8 +25,12 @@
 #include <fnmatch.h>
 #include <glob.h>
 #include <dirent.h>
-#include <fcntl.h>
 #include <errno.h>
+
+#include <fcntl.h>
+#ifndef O_PATH
+# define O_PATH 010000000
+#endif
 
 #define MAXBUF 1024
 
@@ -79,8 +83,16 @@ static void sanitize_home(void) {
 		errExit("mkdir");
 
 	// keep a copy of the user home directory
-	if (mount(cfg.homedir, RUN_WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1)
+		errExit("safe_fd");
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(proc, RUN_WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	free(proc);
+	close(fd);
 
 	// mount tmpfs in the new home
 	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)

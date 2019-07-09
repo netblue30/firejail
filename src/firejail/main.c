@@ -26,7 +26,6 @@
 #include <sys/mount.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <dirent.h>
 #include <pwd.h>
 #include <errno.h>
@@ -37,6 +36,11 @@
 #include <time.h>
 #include <net/if.h>
 #include <sys/utsname.h>
+
+#include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH 010000000
+#endif
 
 #ifdef __ia64__
 /* clone(2) has a different interface on ia64, as it needs to know
@@ -242,6 +246,41 @@ static pid_t require_pid(const char *name) {
 	return pid;
 }
 
+// return 1 if there is a link somewhere in path of directory
+static int has_link(const char *dir) {
+	assert(dir);
+	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1) {
+		if (errno == ENOTDIR && is_dir(dir))
+			return 1;
+	}
+	else
+		close(fd);
+	return 0;
+}
+
+static void build_cfg_homedir(const char *dir) {
+	EUID_ASSERT();
+	assert(dir);
+	if (dir[0] != '/') {
+		fprintf(stderr, "Error: invalid user directory \"%s\"\n", dir);
+		exit(1);
+	}
+	// symlinks are rejected in many places, provide a solution for home directories
+	if (checkcfg(CFG_HOMEDIR_SYMLINK)) {
+		cfg.homedir = realpath(dir, NULL);
+		if (cfg.homedir)
+			return;
+	}
+	else if (has_link(dir)) {
+		fprintf(stderr, "Error: path of user directory contains a symbolic link. "
+			"Please provide resolved path in password database (/etc/passwd) "
+			"or enable symbolic link resolution in Firejail configuration file.\n");
+		exit(1);
+	}
+	cfg.homedir = clean_pathname(dir);
+}
+
 // init configuration
 static void init_cfg(int argc, char **argv) {
 	EUID_ASSERT();
@@ -265,15 +304,12 @@ static void init_cfg(int argc, char **argv) {
 		errExit("strdup");
 
 	// build home directory name
-	cfg.homedir = NULL;
-	if (pw->pw_dir != NULL) {
-		cfg.homedir = clean_pathname(pw->pw_dir);
-		assert(cfg.homedir);
-	}
-	else {
+	if (pw->pw_dir == NULL) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
+	build_cfg_homedir(pw->pw_dir);
+	assert(cfg.homedir);
 
 	cfg.cwd = getcwd(NULL, 0);
 	if (!cfg.cwd && errno != ENOENT)
@@ -926,7 +962,6 @@ int main(int argc, char **argv) {
 
 	// check if the user is allowed to use firejail
 	init_cfg(argc, argv);
-	assert(cfg.homedir);
 
 	// get starting timestamp, process --quiet
 	start_timestamp = getticks();

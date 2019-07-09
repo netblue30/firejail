@@ -239,13 +239,16 @@ void fs_private_homedir(void) {
 	// mount bind private_homedir on top of homedir
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_homedir, homedir);
-	// get a file descriptor for private_homedir, fails if there is any symlink
-	int fd = safe_fd(private_homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
+	// get file descriptors for homedir and private_homedir, fails if there is any symlink
+	int src = safe_fd(private_homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (src == -1)
+		errExit("safe_fd");
+	int dst = safe_fd(homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (dst == -1)
 		errExit("safe_fd");
 	// check if new home directory is owned by the user
 	struct stat s;
-	if (fstat(fd, &s) == -1)
+	if (fstat(src, &s) == -1)
 		errExit("fstat");
 	if (s.st_uid != getuid()) {
 		fprintf(stderr, "Error: private directory is not owned by the current user\n");
@@ -253,17 +256,27 @@ void fs_private_homedir(void) {
 	}
 	if ((S_IRWXU & s.st_mode) != S_IRWXU)
 		fwarning("no full permissions on private directory\n");
-	// mount via the link in /proc/self/fd
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+	// mount via the links in /proc/self/fd
+	char *proc_src, *proc_dst;
+	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1)
 		errExit("asprintf");
-	if (mount(proc, homedir, NULL, MS_NOSUID | MS_NODEV | MS_BIND | MS_REC, NULL) < 0)
+	if (asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
+		errExit("asprintf");
+	if (mount(proc_src, proc_dst, NULL, MS_NOSUID | MS_NODEV | MS_BIND | MS_REC, NULL) < 0)
 		errExit("mount bind");
-	free(proc);
-	close(fd);
+	free(proc_src);
+	free(proc_dst);
+	close(src);
+	close(dst);
+	// check /proc/self/mountinfo to confirm the mount is ok
+	MountData *mptr = get_last_mount();
+	size_t len = strlen(homedir);
+	if (strncmp(mptr->dir, homedir, len) != 0 ||
+		(*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
+		errLogExit("invalid private mount");
 
-	fs_logger3("mount-bind", private_homedir, cfg.homedir);
-	fs_logger2("whitelist", cfg.homedir);
+	fs_logger3("mount-bind", private_homedir, homedir);
+	fs_logger2("whitelist", homedir);
 // preserve mode and ownership
 //	if (chown(homedir, s.st_uid, s.st_gid) == -1)
 //		errExit("mount-bind chown");
@@ -310,13 +323,13 @@ void fs_private(void) {
 	int aflag = store_asoundrc();
 
 	// mask /home
-	if (arg_debug)
-		printf("Mounting a new /home directory\n");
 	if (u == 0 && arg_allusers) // allow --allusers when starting the sandbox as root
 		;
 	else {
+		if (arg_debug)
+			printf("Mounting a new /home directory\n");
 		if (arg_allusers)
-			fwarning("--allusers disabled by --private or --whitelist\n");
+			fwarning("allusers option disabled by private or whitelist option\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting home directory");
 		fs_logger("tmpfs /home");
@@ -330,19 +343,24 @@ void fs_private(void) {
 	fs_logger("tmpfs /root");
 
 	if (u != 0) {
-		// create /home/user
-		if (arg_debug)
-			printf("Create a new user directory\n");
-		if (mkdir(homedir, S_IRWXU) == -1) {
-			if (mkpath_as_root(homedir) == -1)
-				errExit("mkpath");
-			if (mkdir(homedir, S_IRWXU) == -1 && errno != EEXIST)
-				errExit("mkdir");
+		if (strncmp(homedir, "/home/", 6) == 0) {
+			// create /home/user
+			if (arg_debug)
+				printf("Create a new user directory\n");
+			if (mkdir(homedir, S_IRWXU) == -1) {
+				if (mkpath_as_root(homedir) == -1)
+					errExit("mkpath");
+				if (mkdir(homedir, S_IRWXU) == -1 && errno != EEXIST)
+					errExit("mkdir");
+			}
+			if (chown(homedir, u, g) < 0)
+				errExit("chown");
+			fs_logger2("mkdir", homedir);
+			fs_logger2("tmpfs", homedir);
 		}
-		if (chown(homedir, u, g) < 0)
-			errExit("chown");
-		fs_logger2("mkdir", homedir);
-		fs_logger2("tmpfs", homedir);
+		else
+			// user directory is outside /home, mask it as well
+			fs_tmpfs(homedir, 1);
 	}
 
 	skel(homedir, u, g);
@@ -528,8 +546,20 @@ void fs_private_home_list(void) {
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", RUN_HOME_DIR, homedir);
 
-	if (mount(RUN_HOME_DIR, homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
+	int fd = safe_fd(homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1)
+		errExit("safe_fd");
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(RUN_HOME_DIR, proc, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	free(proc);
+	close(fd);
+	// check /proc/self/mountinfo to confirm the mount is ok
+	MountData *mptr = get_last_mount();
+	if (strcmp(mptr->dir, homedir) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
+		errLogExit("invalid private-home mount");
 	fs_logger2("tmpfs", homedir);
 
 	if (uid != 0) {

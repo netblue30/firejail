@@ -126,16 +126,25 @@ void appimage_set(const char *appimage) {
 		printf("appimage mounted on %s\n", mntdir);
 	EUID_USER();
 
+	char* abspath = realpath(appimage, NULL);
+	if (abspath == NULL)
+		errExit("Failed to obtain absolute path");
+
 	// set environment
-	if (setenv("APPIMAGE", appimage, 1) < 0)
+	if (setenv("APPIMAGE", abspath, 1) < 0)
 		errExit("setenv");
 	if (mntdir && setenv("APPDIR", mntdir, 1) < 0)
+		errExit("setenv");
+	if (size != 0 && setenv("ARGV0", appimage, 1) < 0)
+		errExit("setenv");
+	if (setenv("OWD", cfg.cwd, 1) < 0)
 		errExit("setenv");
 
 	// build new command line
 	if (asprintf(&cfg.command_line, "%s/AppRun", mntdir) == -1)
 		errExit("asprintf");
 
+	free(abspath);
 	free(mode);
 #ifdef HAVE_GCOV
 	__gcov_flush();

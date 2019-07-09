@@ -36,7 +36,7 @@ seccomp
 shell none
 tracelog
 
-private-bin obs,python*
+private-bin obs,python*,obs-ffmpeg-mux,sh,bash
 private-cache
 private-dev
 private-tmp

@@ -26,7 +26,6 @@
 #include <sys/mount.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <dirent.h>
 #include <pwd.h>
 #include <errno.h>
@@ -37,6 +36,11 @@
 #include <time.h>
 #include <net/if.h>
 #include <sys/utsname.h>
+
+#include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH 010000000
+#endif
 
 #ifdef __ia64__
 /* clone(2) has a different interface on ia64, as it needs to know

@@ -8,13 +8,13 @@ include less.local
 include globals.local
 
 noblacklist ${HOME}/.lesshst
+read-only ${HOME}
+read-write ${HOME}/.lesshst
 
-include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-include disable-programs.inc
 
 apparmor
 caps.drop all

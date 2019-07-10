@@ -64,14 +64,9 @@ void init(void) {
 		strncpy(myname, "unknown", MAXNAME-1);
 
 	// read file
-	FILE *fp  = orig_fopen(fname, "r");
-	if (!fp)
+	FILE *fp = orig_fopen(fname, "r");
+	if (!fp || fgets(myname, MAXNAME, fp) == NULL)
 		strncpy(myname, "unknown", MAXNAME-1);
-	if (fgets(myname, MAXNAME, fp) == NULL) {
-		fclose(fp);
-		free(fname);
-		strncpy(myname, "unknown", MAXNAME-1);
-	}
 
 	// clean '\n'
 	char *ptr = strchr(myname, '\n');

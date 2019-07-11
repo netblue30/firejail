@@ -329,10 +329,9 @@ void pid_read(pid_t mon_pid) {
 		}
 	}
 
-	pid_t child = -1;
 	struct dirent *entry;
 	char *end;
-	while (child < 0 && (entry = readdir(dir))) {
+	while ((entry = readdir(dir))) {
 		pid_t pid = strtol(entry->d_name, &end, 10);
 		pid %= max_pids;
 		if (end == entry->d_name || *end)

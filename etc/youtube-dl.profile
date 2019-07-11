@@ -49,7 +49,6 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
 private-bin env,ffmpeg,python*,youtube-dl
 private-cache
 private-dev

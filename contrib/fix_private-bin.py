@@ -61,7 +61,6 @@ def fixSymlinkedBins(files, replMap):
         if shouldUpdate:
             with open(filename, "w") as file:
                 file.writelines(lines)
-            pass
 
 
 def createSetOfBinaries(files):
@@ -70,7 +69,6 @@ def createSetOfBinaries(files):
 	"""
     s = set()
     for filename in files:
-        lines = None
         with open(filename, "r") as file:
             for line in file:
                 if privRx.search(line):

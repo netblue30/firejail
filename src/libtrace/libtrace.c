@@ -402,50 +402,50 @@ int rmdir(const char *pathname) {
 }
 
 // stat
-typedef int (*orig_stat_t)(const char *pathname, struct stat *buf);
+typedef int (*orig_stat_t)(const char *pathname, struct stat *statbuf);
 static orig_stat_t orig_stat = NULL;
-int stat(const char *pathname, struct stat *buf) {
+int stat(const char *pathname, struct stat *statbuf) {
 	if (!orig_stat)
 		orig_stat = (orig_stat_t)dlsym(RTLD_NEXT, "stat");
 
-	int rv = orig_stat(pathname, buf);
+	int rv = orig_stat(pathname, statbuf);
 	fprintf(ftty, "%u:%s:stat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
 #ifdef __GLIBC__
-typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
+typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *statbuf);
 static orig_stat64_t orig_stat64 = NULL;
-int stat64(const char *pathname, struct stat64 *buf) {
+int stat64(const char *pathname, struct stat64 *statbuf) {
 	if (!orig_stat64)
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
 
-	int rv = orig_stat64(pathname, buf);
+	int rv = orig_stat64(pathname, statbuf);
 	fprintf(ftty, "%u:%s:stat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
 
 // lstat
-typedef int (*orig_lstat_t)(const char *pathname, struct stat *buf);
+typedef int (*orig_lstat_t)(const char *pathname, struct stat *statbuf);
 static orig_lstat_t orig_lstat = NULL;
-int lstat(const char *pathname, struct stat *buf) {
+int lstat(const char *pathname, struct stat *statbuf) {
 	if (!orig_lstat)
 		orig_lstat = (orig_lstat_t)dlsym(RTLD_NEXT, "lstat");
 
-	int rv = orig_lstat(pathname, buf);
+	int rv = orig_lstat(pathname, statbuf);
 	fprintf(ftty, "%u:%s:lstat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
 #ifdef __GLIBC__
-typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *buf);
+typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *statbuf);
 static orig_lstat64_t orig_lstat64 = NULL;
-int lstat64(const char *pathname, struct stat64 *buf) {
+int lstat64(const char *pathname, struct stat64 *statbuf) {
 	if (!orig_lstat64)
 		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
 
-	int rv = orig_lstat64(pathname, buf);
+	int rv = orig_lstat64(pathname, statbuf);
 	fprintf(ftty, "%u:%s:lstat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
@@ -492,13 +492,13 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 // socket
 typedef int (*orig_socket_t)(int domain, int type, int protocol);
 static orig_socket_t orig_socket = NULL;
-static char buf[1024];
+static char socketbuf[1024];
 int socket(int domain, int type, int protocol) {
 	if (!orig_socket)
 		orig_socket = (orig_socket_t)dlsym(RTLD_NEXT, "socket");
 
 	int rv = orig_socket(domain, type, protocol);
-	char *ptr = buf;
+	char *ptr = socketbuf;
 	ptr += sprintf(ptr, "%u:%s:socket ", mypid, myname);
 	char *str = translate(socket_domain, domain);
 	if (str == NULL)
@@ -529,7 +529,7 @@ int socket(int domain, int type, int protocol) {
 			sprintf(ptr, "%s", str);
 	}
 
-	fprintf(ftty, "%s:%d\n", buf, rv);
+	fprintf(ftty, "%s:%d\n", socketbuf, rv);
 	return rv;
 }
 

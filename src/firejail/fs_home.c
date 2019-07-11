@@ -482,14 +482,14 @@ static void duplicate(char *name) {
 	}
 	else if (S_ISDIR(s.st_mode)) {
 		// create the directory in RUN_HOME_DIR
-		char *name;
+		char *path;
 		char *ptr = strrchr(fname, '/');
 		ptr++;
-		if (asprintf(&name, "%s/%s", RUN_HOME_DIR, ptr) == -1)
+		if (asprintf(&path, "%s/%s", RUN_HOME_DIR, ptr) == -1)
 			errExit("asprintf");
-		mkdir_attr(name, 0755, getuid(), getgid());
-		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FCOPY, fname, name);
-		free(name);
+		mkdir_attr(path, 0755, getuid(), getgid());
+		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FCOPY, fname, path);
+		free(path);
 	}
 	else
 		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FCOPY, fname, RUN_HOME_DIR);

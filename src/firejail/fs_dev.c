@@ -137,8 +137,8 @@ static void deventry_mount(void) {
 }
 
 static void create_char_dev(const char *path, mode_t mode, int major, int minor) {
-	dev_t dev = makedev(major, minor);
-	if (mknod(path, S_IFCHR | mode, dev) == -1)
+	dev_t device = makedev(major, minor);
+	if (mknod(path, S_IFCHR | mode, device) == -1)
 		goto errexit;
 	if (chmod(path, mode) < 0)
 		goto errexit;

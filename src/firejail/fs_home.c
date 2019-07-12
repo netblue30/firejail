@@ -272,7 +272,7 @@ void fs_private_homedir(void) {
 	MountData *mptr = get_last_mount();
 	size_t len = strlen(homedir);
 	if (strncmp(mptr->dir, homedir, len) != 0 ||
-		(*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
+	   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
 		errLogExit("invalid private mount");
 
 	fs_logger3("mount-bind", private_homedir, homedir);
@@ -443,17 +443,15 @@ static char *check_dir_or_file(const char *name) {
 			goto errexit;
 	}
 	else {
-		// check the file is in user home directory, a full home directory is not allowed
+		// check the file is in user home directory
 		char *rname = realpath(fname, NULL);
-		if (!rname ||
-		    strncmp(rname, cfg.homedir, strlen(cfg.homedir)) != 0 ||
-		    strcmp(rname, cfg.homedir) == 0)
+		if (!rname || strncmp(rname, cfg.homedir, strlen(cfg.homedir)) != 0)
 			goto errexit;
-
-		// only top files and directories in user home are allowed
+		// a full home directory is not allowed
 		char *ptr = rname + strlen(cfg.homedir);
 		if (*ptr != '/')
 			goto errexit;
+		// only top files and directories in user home are allowed
 		ptr = strchr(++ptr, '/');
 		if (ptr) {
 			fprintf(stderr, "Error: only top files and directories in user home are allowed\n");

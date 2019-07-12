@@ -291,7 +291,7 @@ void fs_private_homedir(void) {
 			errExit("mounting home directory");
 		fs_logger("tmpfs /root");
 	}
-	else {
+	if (u == 0 || strncmp(homedir, "/home/", 6) != 0) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
@@ -567,7 +567,7 @@ void fs_private_home_list(void) {
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 			errExit("mounting home directory");
 	}
-	else {
+	if (uid == 0 || strncmp(homedir, "/home/", 6) != 0) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");

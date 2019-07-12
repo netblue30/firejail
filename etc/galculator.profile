@@ -24,7 +24,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 #hostname galculator - breaks Arch Linux
-ipc-namespace
+#ipc-namespace
 net none
 nodbus
 nodvd

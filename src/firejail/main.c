@@ -266,17 +266,16 @@ static void build_cfg_homedir(const char *dir) {
 		fprintf(stderr, "Error: invalid user directory \"%s\"\n", dir);
 		exit(1);
 	}
-	// symlinks are rejected in many places, provide a solution for home directories
+	// symlinks are rejected in many places, offer a solution for home directories
 	if (checkcfg(CFG_HOMEDIR_SYMLINK)) {
 		cfg.homedir = realpath(dir, NULL);
 		if (cfg.homedir)
 			return;
 	}
 	else if (has_link(dir)) {
-		fprintf(stderr, "Error: path of user directory contains a symbolic link. "
-			"Please provide resolved path in password database (/etc/passwd) "
-			"or enable symbolic link resolution in Firejail configuration file.\n");
-		exit(1);
+		fwarning("no full support for symbolic links in path of user directory.\n"
+			"Please provide resolved path in password database (/etc/passwd)\n"
+			"or enable symbolic link resolution in Firejail configuration file.\n\n");
 	}
 	cfg.homedir = clean_pathname(dir);
 }

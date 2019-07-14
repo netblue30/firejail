@@ -66,6 +66,9 @@ owner /{,var/}run/media/** w,
 # Needed for firefox sandbox
 /proc/[0-9]*/{uid_map,gid_map,setgroups} w,
 
+# Needed for electron apps
+/proc/@{PID}/comm w,
+
 # Silence noise
 deny /proc/@{PID}/oom_adj w,
 deny /proc/@{PID}/oom_score_adj w,

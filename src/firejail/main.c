@@ -262,7 +262,7 @@ static int has_link(const char *dir) {
 static void build_cfg_homedir(const char *dir) {
 	EUID_ASSERT();
 	assert(dir);
-	if (dir[0] != '/') {
+	if (dir[0] != '/' || dir[1] == '\0') { // system users sometimes have root directory as home
 		fprintf(stderr, "Error: invalid user directory \"%s\"\n", dir);
 		exit(1);
 	}

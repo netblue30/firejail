@@ -941,6 +941,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "allow-debuggers") == 0) {
+		arg_allow_debuggers = 1;
+		return 0;
+	}
+
 	if (strcmp(ptr, "x11 none") == 0) {
 		arg_x11_block = 1;
 		return 0;

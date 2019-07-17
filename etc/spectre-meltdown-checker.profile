@@ -6,8 +6,6 @@ include spectre-meltdown-checker.local
 # Persistent global definitions
 include globals.local
 
-# sudo firejail --allow-debuggers spectre-meltdown-checker
-
 noblacklist ${PATH}/mount
 noblacklist ${PATH}/umount
 
@@ -24,6 +22,7 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+allow-debuggers
 caps.keep sys_rawio
 ipc-namespace
 net none

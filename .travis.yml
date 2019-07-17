@@ -4,7 +4,7 @@ sudo: true
 
 script:
   - sudo apt-get -y install expect csh xzdec lintian fakeroot
-  - ( ./configure --prefix=/usr && make && sudo make install && make test-travis )
+  - ( ./configure --enable-fatal-warnings --prefix=/usr && make && sudo make install && make test-travis )
   - ( sudo make install-strip DESTDIR=$(readlink -f appdir) )
 #  # If successful, build release tarball
 #  - ( cd appdir/ ; tar cfvj ../firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2 . )

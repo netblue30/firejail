@@ -13,27 +13,19 @@ noblacklist ${PATH}/at
 noblacklist ${PATH}/crontab
 
 # Needs access to these files/dirs
+noblacklist /etc/at.allow
+noblacklist /etc/at.deny
 noblacklist /etc/cron.allow
 noblacklist /etc/cron.deny
+noblacklist /etc/fonts
+noblacklist /etc/ld.so.preload
+noblacklist /etc/pam.d
 noblacklist /etc/shadow
+noblacklist /var/spool/at
 noblacklist /var/spool/cron
 
-# Needs a terminal for cron job test execution
-noblacklist ${PATH}/lxterminal
-noblacklist ${PATH}/gnome-terminal
-noblacklist ${PATH}/gnome-terminal.wrapper
-noblacklist ${PATH}/lilyterm
-noblacklist ${PATH}/mate-terminal
-noblacklist ${PATH}/mate-terminal.wrapper
-noblacklist ${PATH}/pantheon-terminal
-noblacklist ${PATH}/roxterm
-noblacklist ${PATH}/roxterm-config
-noblacklist ${PATH}/terminix
-noblacklist ${PATH}/tilix
-noblacklist ${PATH}/urxvtc
-noblacklist ${PATH}/urxvtcd
-noblacklist ${PATH}/xfce4-terminal
-noblacklist ${PATH}/xfce4-terminal.wrapper
+# cron job testing needs a terminal, resulting in sandbox escape (see disable-common.inc)
+# add 'noblacklist ${PATH}/your-terminal' to gnome-schedule.local if you need that functionality
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -49,7 +41,18 @@ include disable-xdg.inc
 
 mkfile ${HOME}/.gnome/gnome-schedule
 whitelist ${HOME}/.gnome/gnome-schedule
+whitelist /etc/at.allow
+whitelist /etc/at.deny
+whitelist /etc/cron.allow
+whitelist /etc/cron.deny
+whitelist /etc/fonts
+whitelist /etc/pam.d
+whitelist /etc/ld.so.preload
+whitelist /etc/shadow
+whitelist /var/spool/atd
+whitelist /var/spool/cron
 include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.keep chown,dac_override,setgid,setuid

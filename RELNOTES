@@ -2,10 +2,16 @@ firejail (0.9.61) baseline; urgency=low
   * work in progress
   * added file-copy-limit in /etc/firejail/firejail.config
   * profile templates
+  * allow-debuggers support in profiles
+  * new scripts in conrib: gdb-firejail.sh and sort.py
   * new profiles: qgis, klatexformula, klatexformula_cmdl, links, xlinks
   * new profiles: pandoc, teams-for-linux, OpenArena, gnome-sound-recorder
   * new profiles: godot, tcpdump, tshark, newsbeuter, keepassxc-cli
   * new profiles: keepassxc-proxy, rhythmbox-client, jerry, zeal, mpg123
+  * new profiles: conplay, mpg123.bin, mpg123-alsa, mpg123-id3dump, out123
+  * new profiles: mpg123-jack, mpg123-nas, mpg123-openal, mpg123-oss
+  * new profiles: mpg123-portaudio, mpg123-pulse, mpg123-strip, pavucontrol-qt
+  * new profiles: gnome-characters, gnome-character-map
  -- netblue30 <netblue30@yahoo.com>  Sat, 1 Jun 2019 08:00:00 -0500
 
 firejail (0.9.60) baseline; urgency=low

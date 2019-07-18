@@ -3,7 +3,7 @@ If you make a PR for new profiles or changeing profiles please do the following:
    Hint: The profile-template is very new, if you install firejail with your package-manager, it maybe missing, therefore, and to follow the latest rules, it is recommended to use the template from the repository.
  - Order the arguments of options alphabetical, you can easy do this with the [sort.py](https://github.com/netblue30/firejail/tree/master/contrib/sort.py).  
  The path to it depends on your distro:
- 
+
    | Distro | Path |
    | ------ | ---- |
    | Arch/Fedora | `/lib64/firejail/sort.py` |

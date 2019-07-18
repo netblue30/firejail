@@ -121,6 +121,8 @@ avoidr (https://github.com/avoidr)
 	- various other fixes
 Bader Zaidan (https://github.com/BaderSZ)
 	- Telegram profile
+Bandie (https://github.com/Bandie)
+	- fixed riot-desktop
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
 bitfreak25 (https://github.com/bitfreak25)
@@ -183,6 +185,7 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- added freeoffice-textmaker, freeoffice-presentations profiles
 	- added cantata profile
 	- updated keypassxc profile
+	- added syscalls.sh, which determine the necessary syscalls for a program
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
@@ -205,12 +208,17 @@ dewbasaur (https://github.com/dewbasaur)
 	- Steam profile
 DiGitHubCap (https://github.com/DiGitHubCap)
 	- deluge profile fix
+Disconnect3d (https://github.com/disconnect3d)
+	- code cleanup
 dshmgh (https://github.com/dshmgh)
 	- overlayfs fix for systems with /home mounted on a separate partition
 Duncan Overbruck (https://github.com/Duncaen)
 	- musl libc fix
 	- utmp fix
 	- fix install for --disable-seccomp software configurations
+Eduard Tolosa (https://github.com/Edu4rdSHL)
+	- fixed and hardened qpdfview.profile
+	- fixed gajim.profile
 emacsomancer (https://github.com/emacsomancer)
 	- added profile for Conkeror browser
 eventyrer (https://github.com/eventyrer)
@@ -365,6 +373,8 @@ Jean Lucas (https://github.com/flacks)
 	- add Beaker profile
 	- fixes for gnome-music
 	- allow reading of system-wide Flatpak locale in gajim profile
+Jean-Philippe Eisenbarth (https://github.com/jpeisenbarth)
+	- fixed spotify.profile
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)
@@ -385,6 +395,10 @@ Jose Riha (https://github.com/jose1711)
 	- created qgis, links, xlinks profiles
 	- extended profile.template with comments
 	- some typo and comment fixes in profile.template
+	- Make it possible for cheese app to save pictures too
+	- Add davfs2 secrets file to blacklist
+	- Add profile for udiskie
+	- fix udiskie.profile
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -457,6 +471,8 @@ Michael Haas (https://github.com/mhaas)
 	- bugfixes
 Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
+mirabellette (https://github.com/mirabellette)
+	- add comment to thunderbird.profile to allow Firefox to load profiles
 mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
 mustaqimM (https://github.com/mustaqimM)
@@ -466,6 +482,7 @@ n1trux (https://github.com/n1trux)
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
+	- fix wire-desktop.profile on arch
 NickMolloy (https://github.com/NickMolloy)
 	- ARP address length fix
 Niklas Haas (https://github.com/haasn)
@@ -575,21 +592,25 @@ rusty-snake (https://github.com/rusty-snake)
 	- added profiles: ktouch, yelp, klatexformula, klatexformula_cmdl
 	- added profiles: pandoc, gnome-sound-recorder, godot, newsbeuter
 	- added profiles: keepassxc-cli, keepassxc-proxy, rhythmbox-client
-	- added profiles: zeal
+	- added profiles: zeal, gnome-characters, gnome-character-map
 	- many profile fixing and hardening
 	- some typo fixes
 	- added profile templates
+	- added sort.py to contrib
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
 	- rewrite globbing code to fix various minor issues
 	- added noblacklist command for profile files
 	- various enhancements and bug fixes
+Sebastian Hafner (https://github.com/DropNib)
+	- profile support for allow-debuggers
 Senemu (https://github.com/Senemu)
 	- protection for .pythonrc.py
 	- fixed evince
 Sergey Alirzaev (https://github.com/l29ah)
 	- firejail.h enum fix
+	- firefox-common-addons.inc: + tridactyl
 Tobias Schmidl (https://github.com/schtobia)
 	- added profile for webui-aria2
 Simon Peter (https://github.com/probonopd)
@@ -686,6 +707,8 @@ startx2017 (https://github.com/startx2017)
 	- handbrake profile
 	- mplayer and smplayer profiles
 	- kwrite and geary profiles
+StelFux (https://github.com/StelFux)
+	- Fix youtube video in totem
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

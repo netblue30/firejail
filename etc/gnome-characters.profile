@@ -1,8 +1,8 @@
-# Firejail profile for gucharmap
-# Description: Unicode character picker and font browser
+# Firejail profile for gnome-characters
+# Description: Character map application for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
-include gucharmap.local
+include gnome-characters.local
 # Persistent global definitions
 include globals.local
 
@@ -17,12 +17,13 @@ include disable-xdg.inc
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-apparmor
 caps.drop all
 machine-id
-#net none - breaks dbus
+net none
 no3d
-#nodbus - breaks state saveing
+# Uncomment the next line (or add it to your gnome-characters.local)
+# if you don't need recently used chars
+#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -37,11 +38,13 @@ shell none
 tracelog
 
 disable-mnt
-private-bin gnome-character-map,gucharmap
+# Uncomment the next line (or add it to your gnome-characters.local)
+# if you don't need recently used chars
+#private
+private-bin gjs,gnome-characters
 private-cache
 private-dev
-private-etc alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,X11,xdg
-private-lib
+private-etc alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,pango,X11,xdg
 private-tmp
 
 read-only ${HOME}

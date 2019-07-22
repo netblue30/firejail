@@ -302,6 +302,22 @@ static void init_cfg(int argc, char **argv) {
 	if (!cfg.username)
 		errExit("strdup");
 
+	// check user database
+	if (!firejail_user_check(cfg.username)) {
+		fprintf(stderr, "Error: the user is not allowed to use Firejail.\n"
+			"Please add the user in %s/firejail.users file,\n"
+			"either by running \"sudo firecfg\", or by editing the file directly.\n"
+			"See \"man firejail-users\" for more details.\n\n", SYSCONFDIR);
+
+		// attempt to run the program as is
+		run_symlink(argc, argv, 1);
+		exit(1);
+	}
+
+	cfg.cwd = getcwd(NULL, 0);
+	if (!cfg.cwd && errno != ENOENT)
+		errExit("getcwd");
+
 	// build home directory name
 	if (pw->pw_dir == NULL) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
@@ -309,22 +325,6 @@ static void init_cfg(int argc, char **argv) {
 	}
 	build_cfg_homedir(pw->pw_dir);
 	assert(cfg.homedir);
-
-	cfg.cwd = getcwd(NULL, 0);
-	if (!cfg.cwd && errno != ENOENT)
-		errExit("getcwd");
-
-	// check user database
-	if (!firejail_user_check(cfg.username)) {
-		fprintf(stderr, "Error: the user is not allowed to use Firejail. "
-			"Please add the user in %s/firejail.users file, "
-			"either by running \"sudo firecfg\", or by editing the file directly.\n"
-			"See \"man firejail-users\" for more details.\n", SYSCONFDIR);
-
-		// attempt to run the program as is
-		run_symlink(argc, argv, 1);
-		exit(1);
-	}
 
 	// initialize random number generator
 	sandbox_pid = getpid();

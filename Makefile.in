@@ -217,12 +217,6 @@ deb: dist
 deb-apparmor: dist
 	./mkdeb-apparmor.sh $(NAME) $(VERSION)
 
-snap: all
-	cd platform/snap; ./snap.sh
-
-install-snap: snap
-	sudo snap remove faudit; sudo snap install faudit*.snap
-
 test-compile: dist
 	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
 

@@ -228,7 +228,7 @@ extras: all
 	$(MAKE) -C extras/firetools
 
 cppcheck: clean
-	cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+	cppcheck --force --error-exitcode=1 --enable=warning,performance .
 
 scan-build: clean
 	scan-build make

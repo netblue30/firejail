@@ -231,7 +231,7 @@ cppcheck: clean
 	cppcheck --force --error-exitcode=1 --enable=warning,performance .
 
 scan-build: clean
-	scan-build make
+	NO_EXTRA_CFLAGS="yes" scan-build make
 
 
 #

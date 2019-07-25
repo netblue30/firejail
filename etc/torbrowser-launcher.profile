@@ -48,7 +48,7 @@ shell none
 #tracelog
 
 disable-mnt
-private-bin bash,cp,dirname,env,expr,file,getconf,gpg,grep,id,ln,mkdir,python*,readlink,rm,sed,sh,tail,tar,tclsh,test,tor-browser-en,torbrowser-launcher,xz
+private-bin bash,cat,cp,cut,dirname,env,expr,file,getconf,gpg,grep,gxmessage,id,kdialog,ln,mkdir,pwd,python*,readlink,realpath,rm,sed,sh,tail,tar,tclsh,test,tor-browser-en,torbrowser-launcher,update-desktop-database,xmessage,xz,zenity
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,hostname,hosts,ld.so.cache,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp

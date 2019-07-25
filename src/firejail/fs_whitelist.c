@@ -46,9 +46,10 @@ static int mkpath(const char* path, mode_t mode) {
 	assert(path && *path);
 	mode |= 0111;
 
-	// create directories with uid/gid as root or as current user if inside home or run directory
+	// create directories with uid/gid as root, or as current user if inside home or run/user/$uid directory
 	int userprivs = 0;
-	if (strncmp(path, cfg.homedir, homedir_len) == 0 || strncmp(path, runuser, runuser_len) == 0) {
+	if ((strncmp(path, cfg.homedir, homedir_len) == 0 && path[homedir_len] == '/') ||
+	    (strncmp(path, runuser, runuser_len) == 0 && path[runuser_len] == '/')) {
 		EUID_USER();
 		userprivs = 1;
 	}
@@ -122,7 +123,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	const char *fname;
 	char *wfile = NULL;
 
-	if (entry->home_dir) {
+	if (entry->wldir == WLDIR_HOME) {
 		if (strncmp(path, cfg.homedir, homedir_len) != 0 || path[homedir_len] != '/')
 			// either symlink pointing outside home directory
 			// or entire home directory, skip the mount
@@ -133,25 +134,25 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_HOME_USER_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->tmp_dir) {
+	else if (entry->wldir == WLDIR_TMP) {
 		fname = path + 5; // strlen("/tmp/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->media_dir) {
+	else if (entry->wldir == WLDIR_MEDIA) {
 		fname = path + 7; // strlen("/media/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MEDIA_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->mnt_dir) {
+	else if (entry->wldir == WLDIR_MNT) {
 		fname = path + 5; // strlen("/mnt/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MNT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->var_dir) {
+	else if (entry->wldir == WLDIR_VAR) {
 		if (strncmp(path, "/var/", 5) != 0)
 			// symlink pointing outside /var, skip the mount
 			return;
@@ -161,7 +162,7 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_VAR_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->dev_dir) {
+	else if (entry->wldir == WLDIR_DEV) {
 		if (strncmp(path, "/dev/", 5) != 0)
 			// symlink pointing outside /dev, skip the mount
 			return;
@@ -171,19 +172,19 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_DEV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->opt_dir) {
+	else if (entry->wldir == WLDIR_OPT) {
 		fname = path + 5; // strlen("/opt/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_OPT_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->srv_dir) {
+	else if (entry->wldir == WLDIR_SRV) {
 		fname = path + 5; // strlen("/srv/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SRV_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->etc_dir) {
+	else if (entry->wldir == WLDIR_ETC) {
 		if (strncmp(path, "/etc/", 5) != 0)
 			// symlink pointing outside /etc, skip the mount
 			return;
@@ -193,19 +194,19 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_ETC_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->share_dir) {
+	else if (entry->wldir == WLDIR_SHARE) {
 		fname = path + 11; // strlen("/usr/share/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_SHARE_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->module_dir) {
+	else if (entry->wldir == WLDIR_MODULE) {
 		fname = path + 12; // strlen("/sys/module/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_MODULE_DIR, fname) == -1)
 			errExit("asprintf");
 	}
-	else if (entry->run_dir) {
+	else if (entry->wldir == WLDIR_RUN) {
 		fname = path + runuser_len + 1; // strlen("/run/user/$uid/")
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_RUN_USER_DIR, fname) == -1)
@@ -327,6 +328,20 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	free(wfile);
 	return;
+}
+
+static void whitelist_home(int topdir) {
+	ProfileEntry entry;
+	memset(&entry, 0, sizeof(entry));
+	char *cmd;
+	if (asprintf(&cmd, "whitelist %s", cfg.homedir) == -1)
+		errExit("asprintf");
+	entry.data = cmd;
+	entry.wldir = topdir;
+	// creates path owned by root, except homedir is inside /run/user/$uid
+	// does nothing if homedir does not exist
+	whitelist_path(&entry);
+	free(cmd);
 }
 
 
@@ -508,7 +523,7 @@ void fs_whitelist(void) {
 				continue;
 			}
 
-			entry->home_dir = 1;
+			entry->wldir = WLDIR_HOME;
 			home_dir = 1;
 			if (arg_debug || arg_debug_whitelists)
 				fprintf(stderr, "Debug %d: fname #%s#, cfg.homedir #%s#\n",
@@ -526,7 +541,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {
-			entry->tmp_dir = 1;
+			entry->wldir = WLDIR_TMP;
 			tmp_dir = 1;
 
 			// both path and absolute path are under /tmp
@@ -536,7 +551,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/media/", 7) == 0) {
-			entry->media_dir = 1;
+			entry->wldir = WLDIR_MEDIA;
 			media_dir = 1;
 			// both path and absolute path are under /media
 			if (strncmp(fname, "/media/", 7) != 0) {
@@ -545,7 +560,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/mnt/", 5) == 0) {
-			entry->mnt_dir = 1;
+			entry->wldir = WLDIR_MNT;
 			mnt_dir = 1;
 			// both path and absolute path are under /mnt
 			if (strncmp(fname, "/mnt/", 5) != 0) {
@@ -554,7 +569,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/var/", 5) == 0) {
-			entry->var_dir = 1;
+			entry->wldir = WLDIR_VAR;
 			var_dir = 1;
 			// both path and absolute path are under /var
 			// exceptions: /var/tmp, /var/run and /var/lock
@@ -570,7 +585,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/dev/", 5) == 0) {
-			entry->dev_dir = 1;
+			entry->wldir = WLDIR_DEV;
 			dev_dir = 1;
 			// special handling for /dev/shm
 			// on some platforms (Debian wheezy, Ubuntu 14.04), it is a symlink to /run/shm
@@ -591,7 +606,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/opt/", 5) == 0) {
-			entry->opt_dir = 1;
+			entry->wldir = WLDIR_OPT;
 			opt_dir = 1;
 			// both path and absolute path are under /dev
 			if (strncmp(fname, "/opt/", 5) != 0) {
@@ -600,7 +615,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/srv/", 5) == 0) {
-			entry->srv_dir = 1;
+			entry->wldir = WLDIR_SRV;
 			srv_dir = 1;
 			// both path and absolute path are under /srv
 			if (strncmp(fname, "/srv/", 5) != 0) {
@@ -609,7 +624,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/etc/", 5) == 0) {
-			entry->etc_dir = 1;
+			entry->wldir = WLDIR_ETC;
 			etc_dir = 1;
 			// special handling for some of the symlinks
 			if (strcmp(new_name, "/etc/localtime") == 0);
@@ -624,7 +639,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/usr/share/", 11) == 0) {
-			entry->share_dir = 1;
+			entry->wldir = WLDIR_SHARE;
 			share_dir = 1;
 			// both path and absolute path are under /etc
 			if (strncmp(fname, "/usr/share/", 11) != 0) {
@@ -633,7 +648,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, "/sys/module/", 12) == 0) {
-			entry->module_dir = 1;
+			entry->wldir = WLDIR_MODULE;
 			module_dir = 1;
 			// both path and absolute path are under /sys/module
 			if (strncmp(fname, "/sys/module/", 12) != 0) {
@@ -642,7 +657,7 @@ void fs_whitelist(void) {
 			}
 		}
 		else if (strncmp(new_name, runuser, runuser_len) == 0 && new_name[runuser_len] == '/') {
-			entry->run_dir = 1;
+			entry->wldir = WLDIR_RUN;
 			run_dir = 1;
 			// both path and absolute path are under /run/user/$uid
 			if (strncmp(fname, runuser, runuser_len) != 0 || fname[runuser_len] != '/') {
@@ -704,43 +719,28 @@ void fs_whitelist(void) {
 	free(nowhitelist);
 
 	EUID_ROOT();
-	// /home/user mountpoint
-	if (home_dir) {
-		// check if /home/user directory exists
-		if (stat(cfg.homedir, &s) == 0) {
-			// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
-			mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
-			int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-			if (fd == -1)
-				errExit("safe_fd");
-			char *proc;
-			if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-				errExit("asprintf");
-			if (mount(proc, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-				errExit("mount bind");
-			free(proc);
-			close(fd);
-
-			// mount a tmpfs and initialize /home/user, overrides --allusers
-			fs_private();
-		}
-		else
-			home_dir = 0;
-	}
-
 	// /tmp mountpoint
 	if (tmp_dir) {
-		// keep a copy of real /tmp directory in RUN_WHITELIST_TMP_DIR
-		mkdir_attr(RUN_WHITELIST_TMP_DIR, 1777, 0, 0);
-		if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind");
+		// check if /tmp directory exists
+		if (stat("/tmp", &s) == 0) {
+			// keep a copy of real /tmp directory in RUN_WHITELIST_TMP_DIR
+			mkdir_attr(RUN_WHITELIST_TMP_DIR, 1777, 0, 0);
+			if (mount("/tmp", RUN_WHITELIST_TMP_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
 
-		// mount tmpfs on /tmp
-		if (arg_debug || arg_debug_whitelists)
-			printf("Mounting tmpfs on /tmp directory\n");
-		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
-			errExit("mounting tmpfs on /tmp");
-		fs_logger("tmpfs /tmp");
+			// mount tmpfs on /tmp
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /tmp directory\n");
+			if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
+				errExit("mounting tmpfs on /tmp");
+			fs_logger("tmpfs /tmp");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/tmp/", 5) == 0)
+				whitelist_home(WLDIR_TMP);
+		}
+		else
+			tmp_dir = 0;
 	}
 
 	// /media mountpoint
@@ -758,6 +758,10 @@ void fs_whitelist(void) {
 			if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /media");
 			fs_logger("tmpfs /media");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/media/", 7) == 0)
+				whitelist_home(WLDIR_MEDIA);
 		}
 		else
 			media_dir = 0;
@@ -778,40 +782,61 @@ void fs_whitelist(void) {
 			if (mount("tmpfs", "/mnt", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /mnt");
 			fs_logger("tmpfs /mnt");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/mnt/", 5) == 0)
+				whitelist_home(WLDIR_MNT);
 		}
 		else
 			mnt_dir = 0;
 	}
 
-
 	// /var mountpoint
 	if (var_dir) {
-		// keep a copy of real /var directory in RUN_WHITELIST_VAR_DIR
-		mkdir_attr(RUN_WHITELIST_VAR_DIR, 0755, 0, 0);
-		if (mount("/var", RUN_WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind");
+		// check if /var directory exists
+		if (stat("/var", &s) == 0) {
+			// keep a copy of real /var directory in RUN_WHITELIST_VAR_DIR
+			mkdir_attr(RUN_WHITELIST_VAR_DIR, 0755, 0, 0);
+			if (mount("/var", RUN_WHITELIST_VAR_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
 
-		// mount tmpfs on /var
-		if (arg_debug || arg_debug_whitelists)
-			printf("Mounting tmpfs on /var directory\n");
-		if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
-			errExit("mounting tmpfs on /var");
-		fs_logger("tmpfs /var");
+			// mount tmpfs on /var
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /var directory\n");
+			if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /var");
+			fs_logger("tmpfs /var");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/var/", 5) == 0)
+				whitelist_home(WLDIR_VAR);
+		}
+		else
+			var_dir = 0;
 	}
 
 	// /dev mountpoint
 	if (dev_dir) {
-		// keep a copy of real /dev directory in RUN_WHITELIST_DEV_DIR
-		mkdir_attr(RUN_WHITELIST_DEV_DIR, 0755, 0, 0);
-		if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mount bind");
+		// check if /dev directory exists
+		if (stat("/dev", &s) == 0) {
+			// keep a copy of real /dev directory in RUN_WHITELIST_DEV_DIR
+			mkdir_attr(RUN_WHITELIST_DEV_DIR, 0755, 0, 0);
+			if (mount("/dev", RUN_WHITELIST_DEV_DIR, NULL, MS_BIND|MS_REC,  "mode=755,gid=0") < 0)
+				errExit("mount bind");
 
-		// mount tmpfs on /dev
-		if (arg_debug || arg_debug_whitelists)
-			printf("Mounting tmpfs on /dev directory\n");
-		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
-			errExit("mounting tmpfs on /dev");
-		fs_logger("tmpfs /dev");
+			// mount tmpfs on /dev
+			if (arg_debug || arg_debug_whitelists)
+				printf("Mounting tmpfs on /dev directory\n");
+			if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+				errExit("mounting tmpfs on /dev");
+			fs_logger("tmpfs /dev");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/dev/", 5) == 0)
+				whitelist_home(WLDIR_DEV);
+		}
+		else
+			dev_dir = 0;
 	}
 
 	// /opt mountpoint
@@ -829,6 +854,10 @@ void fs_whitelist(void) {
 			if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /opt");
 			fs_logger("tmpfs /opt");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/opt/", 5) == 0)
+				whitelist_home(WLDIR_OPT);
 		}
 		else
 			opt_dir = 0;
@@ -849,6 +878,10 @@ void fs_whitelist(void) {
 			if (mount("tmpfs", "/srv", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /srv");
 			fs_logger("tmpfs /srv");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/srv/", 5) == 0)
+				whitelist_home(WLDIR_SRV);
 		}
 		else
 			srv_dir = 0;
@@ -863,12 +896,16 @@ void fs_whitelist(void) {
 			if (mount("/etc", RUN_WHITELIST_ETC_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 
-			// mount tmpfs on /srv
+			// mount tmpfs on /etc
 			if (arg_debug || arg_debug_whitelists)
 				printf("Mounting tmpfs on /etc directory\n");
 			if (mount("tmpfs", "/etc", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /etc");
 			fs_logger("tmpfs /etc");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/etc/", 5) == 0)
+				whitelist_home(WLDIR_ETC);
 		}
 		else
 			etc_dir = 0;
@@ -889,6 +926,10 @@ void fs_whitelist(void) {
 			if (mount("tmpfs", "/usr/share", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /usr/share");
 			fs_logger("tmpfs /usr/share");
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, "/usr/share/", 11) == 0)
+				whitelist_home(WLDIR_SHARE);
 		}
 		else
 			share_dir = 0;
@@ -914,7 +955,7 @@ void fs_whitelist(void) {
 			module_dir = 0;
 	}
 
-	// /run/user mountpoint
+	// /run/user/$uid mountpoint
 	if (run_dir) {
 		// check if /run/user/$uid directory exists
 		if (stat(runuser, &s) == 0) {
@@ -933,11 +974,38 @@ void fs_whitelist(void) {
 				errExit("mounting tmpfs on /run/user/<uid>");
 			free(options);
 			fs_logger2("tmpfs", runuser);
+
+			// autowhitelist home directory if it is masked by the tmpfs
+			if (strncmp(cfg.homedir, runuser, runuser_len) == 0 && cfg.homedir[runuser_len] == '/')
+				whitelist_home(WLDIR_RUN);
 		}
 		else
 			run_dir = 0;
 	}
 
+	// home mountpoint
+	if (home_dir) {
+		// check if home directory exists
+		if (stat(cfg.homedir, &s) == 0) {
+			// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
+			mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
+			int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+			if (fd == -1)
+				errExit("safe_fd");
+			char *proc;
+			if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+				errExit("asprintf");
+			if (mount(proc, RUN_WHITELIST_HOME_USER_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+			free(proc);
+			close(fd);
+
+			// mount a tmpfs and initialize home directory, overrides --allusers
+			fs_private();
+		}
+		else
+			home_dir = 0;
+	}
 
 	// go through profile rules again, and interpret whitelist commands
 	entry = cfg.profile;
@@ -957,6 +1025,7 @@ void fs_whitelist(void) {
 			// if the link is already there, do not bother
 			if (lstat(entry->link, &s) != 0) {
 				// create the path if necessary
+				// entry->link has no trailing slashes or single dots
 				int fd = mkpath(entry->link, 0755);
 				if (fd == -1) {
 					if (arg_debug || arg_debug_whitelists)
@@ -1064,7 +1133,7 @@ void fs_whitelist(void) {
 		fs_logger2("tmpfs", RUN_WHITELIST_MODULE_DIR);
 	}
 
-	// mask the real /run/user/$uid directory, currently mounted on RUN_WHITELIST_MODULE_DIR
+	// mask the real /run/user/$uid directory, currently mounted on RUN_WHITELIST_RUN_USER_DIR
 	if (run_dir) {
 		if (mount("tmpfs", RUN_WHITELIST_RUN_USER_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mount tmpfs");

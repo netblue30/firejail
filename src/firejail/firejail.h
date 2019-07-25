@@ -124,19 +124,21 @@ typedef struct profile_entry_t {
 
 	// whitelist command parameters
 	char *link;	// link name - set if the file is a link
-	unsigned home_dir:1;	// whitelist in /home/user directory
-	unsigned tmp_dir:1;	// whitelist in /tmp directory
-	unsigned media_dir:1;	// whitelist in /media directory
-	unsigned mnt_dir:1;	// whitelist in /mnt directory
-	unsigned var_dir:1;	// whitelist in /var directory
-	unsigned dev_dir:1;	// whitelist in /dev directory
-	unsigned opt_dir:1;	// whitelist in /opt directory
-	unsigned srv_dir:1;	// whitelist in /srv directory
-	unsigned etc_dir:1;	// whitelist in /etc directory
-	unsigned share_dir:1;	// whitelist in /usr/share directory
-	unsigned module_dir:1;	// whitelist in /sys/module directory
-	unsigned run_dir:1;	// whitelist in /run/user/$uid directory
-}ProfileEntry;
+	enum {
+		WLDIR_HOME = 1,	// whitelist in home directory
+		WLDIR_TMP,	// whitelist in /tmp directory
+		WLDIR_MEDIA,	// whitelist in /media directory
+		WLDIR_MNT,	// whitelist in /mnt directory
+		WLDIR_VAR,	// whitelist in /var directory
+		WLDIR_DEV,	// whitelist in /dev directory
+		WLDIR_OPT,	// whitelist in /opt directory
+		WLDIR_SRV,	// whitelist in /srv directory
+		WLDIR_ETC,	// whitelist in /etc directory
+		WLDIR_SHARE,	// whitelist in /usr/share directory
+		WLDIR_MODULE,	// whitelist in /sys/module directory
+		WLDIR_RUN	// whitelist in /run/user/$uid directory
+	} wldir;
+} ProfileEntry;
 
 typedef struct config_t {
 	// user data

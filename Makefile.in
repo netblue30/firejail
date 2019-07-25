@@ -217,12 +217,6 @@ deb: dist
 deb-apparmor: dist
 	./mkdeb-apparmor.sh $(NAME) $(VERSION)
 
-snap: all
-	cd platform/snap; ./snap.sh
-
-install-snap: snap
-	sudo snap remove faudit; sudo snap install faudit*.snap
-
 test-compile: dist
 	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
 
@@ -234,10 +228,10 @@ extras: all
 	$(MAKE) -C extras/firetools
 
 cppcheck: clean
-	cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+	cppcheck --force --error-exitcode=1 --enable=warning,performance .
 
 scan-build: clean
-	scan-build make
+	NO_EXTRA_CFLAGS="yes" scan-build make
 
 
 #

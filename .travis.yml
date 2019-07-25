@@ -10,3 +10,4 @@ script:
 #  - ( cd appdir/ ; tar cfvj ../firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2 . )
 #  - curl --upload-file ./firejail-*.tar.bz2 https://transfer.sh/firejail-build$TRAVIS_BUILD_NUMBER.tar.bz2
 #  - # Could use https://github.com/probonopd/uploadtool to upload to GitHub Releases instead
+  - contrib/sort.py etc/*.{profile,inc}

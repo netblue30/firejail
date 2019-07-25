@@ -101,13 +101,13 @@ def main(args):
             else:
                 fix_profile(filename)
         except FileNotFoundError:
-            print(f"[ Error ] Can't find {filename}")
+            print(f"[ Error ] Can't find `{filename}'")
             exit_code = 1
         except PermissionError:
-            print(f"[ Error ] Can't read/write {filename}")
+            print(f"[ Error ] Can't read/write `{filename}'")
             exit_code = 1
         except:
-            print(f"[ Error ] An error occurred while processing {filename}")
+            print(f"[ Error ] An error occurred while processing `{filename}'")
             exit_code = 1
     return exit_code
 

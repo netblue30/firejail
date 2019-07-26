@@ -39,6 +39,5 @@ tracelog
 x11 none
 
 private-bin unzip
-private-cache
 private-dev
 private-etc alternatives,group,localtime,passwd

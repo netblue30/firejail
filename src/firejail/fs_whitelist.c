@@ -735,6 +735,22 @@ void fs_whitelist(void) {
 				errExit("mounting tmpfs on /tmp");
 			fs_logger("tmpfs /tmp");
 
+			// pam-tmpdir - issue #2685
+			char *env = getenv("TMP");
+			if (env) {
+				char *pamtmpdir;
+				if (asprintf(&pamtmpdir, "/tmp/user/%u", getuid()) == -1)
+					errExit("asprintf");
+				if (strcmp(env, pamtmpdir) == 0) {
+					// create empty user-owned /tmp/user/$uid directory
+					mkdir_attr("/tmp/user", 0755, 0, 0);
+					fs_logger("mkdir /tmp/user");
+					mkdir_attr(pamtmpdir, 0700, getuid(), getgid());
+					fs_logger2("mkdir", pamtmpdir);
+				}
+				free(pamtmpdir);
+			}
+
 			// autowhitelist home directory if it is masked by the tmpfs
 			if (strncmp(cfg.homedir, "/tmp/", 5) == 0)
 				whitelist_home(WLDIR_TMP);

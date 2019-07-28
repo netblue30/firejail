@@ -11,6 +11,7 @@ build_ubuntu_package:
         - apt-get update -qq
         - apt-get install -y -qq build-essential lintian pkg-config
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
+        - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_debian_package:
     image: debian:jessie
@@ -25,6 +26,7 @@ build_redhat_package:
         - yum update -y
         - yum install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && yum install -y firejail*.rpm
+        - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_fedora_package:
     image: fedora:latest
@@ -32,14 +34,16 @@ build_fedora_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
+        - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_src_package:
     image: alpine:latest
     script:
         - apk update
         - apk upgrade
-        - apk add build-base linux-headers
+        - apk add build-base linux-headers python3
         - ./configure --prefix=/usr && make && make install-strip
+        - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_apparmor:
     image: ubuntu:latest

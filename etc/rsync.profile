@@ -7,9 +7,8 @@ include rsync.local
 # Persistent global definitions
 include globals.local
 
-# This profile is focused on using rsync as an client for downlaoding, it is not writen for using rsync
-#  - as an daemon (rsync --daemon)
-#  - creating backup of $HOME or a full system
+# Warning: This profile is writte to use rsync as an client for downloading,
+# it is not writen to use rsync as an daemon (rsync --daemon) or to create backups.
 
 blacklist /tmp/.X11-unix
 

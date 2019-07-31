@@ -322,6 +322,7 @@ blacklist ${HOME}/.config/yelp
 blacklist ${HOME}/.config/youtube-dl
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
+blacklist ${HOME}/.config/Zulip
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.crawl
 blacklist ${HOME}/.curlrc

@@ -5,6 +5,9 @@ include kwin_x11.local
 # Persistent global definitions
 include globals.local
 
+# fix automatical kwin_x11 sandboxing:
+# echo KDEWM=kwin_x11 >> ~/.pam_environment
+
 noblacklist ${HOME}/.cache/kwin
 noblacklist ${HOME}/.config/kwinrc
 noblacklist ${HOME}/.config/kwinrulesrc

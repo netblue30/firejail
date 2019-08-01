@@ -8,6 +8,7 @@ include globals.local
 # itch.io has native firejail/sandboxing support bundled in
 # See https://itch.io/docs/itch/using/sandbox/linux.html
 
+noblacklist ${HOME}/.itch
 noblacklist ${HOME}/.config/itch
 
 include disable-common.inc
@@ -16,7 +17,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.itch
 mkdir ${HOME}/.config/itch
+whitelist ${HOME}/.itch
 whitelist ${HOME}/.config/itch
 include whitelist-common.inc
 

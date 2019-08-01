@@ -628,6 +628,7 @@ blacklist ${HOME}/.teeworlds
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling
+blacklist ${HOME}/.tor-browser
 blacklist ${HOME}/.tor-browser-*
 blacklist ${HOME}/.tor-browser_*
 blacklist ${HOME}/.torcs

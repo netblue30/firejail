@@ -7,8 +7,6 @@ include seahorse-tool.local
 # added by included profile
 #include globals.local
 
-noblacklist ${DOWNLOADS}
-
 private-tmp
 
 memory-deny-write-execute

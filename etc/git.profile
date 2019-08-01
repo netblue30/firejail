@@ -15,7 +15,6 @@ noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.nanorc
-noblacklist ${HOME}/.oh-my-zsh
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo

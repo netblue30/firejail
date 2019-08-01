@@ -743,9 +743,9 @@ void fs_whitelist(void) {
 					errExit("asprintf");
 				if (strcmp(env, pamtmpdir) == 0) {
 					// create empty user-owned /tmp/user/$uid directory
-					mkdir_attr("/tmp/user", 0755, 0, 0);
+					mkdir_attr("/tmp/user", 0711, 0, 0);
 					fs_logger("mkdir /tmp/user");
-					mkdir_attr(pamtmpdir, 0700, getuid(), getgid());
+					mkdir_attr(pamtmpdir, 0700, getuid(), 0);
 					fs_logger2("mkdir", pamtmpdir);
 				}
 				free(pamtmpdir);

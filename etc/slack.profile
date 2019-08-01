@@ -20,7 +20,6 @@ include whitelist-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-name slack
 netfilter
 nodvd
 nogroups

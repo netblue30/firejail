@@ -6,6 +6,7 @@ include pluma.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/enchant
 noblacklist ${HOME}/.config/pluma
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.python_history
@@ -42,7 +43,7 @@ tracelog
 
 private-bin pluma
 private-dev
-private-lib pluma
+private-lib aspell,gconv,libgspell-1.so.*,libreadline.so.*,libtinfo.so.*,pluma
 private-tmp
 
 memory-deny-write-execute

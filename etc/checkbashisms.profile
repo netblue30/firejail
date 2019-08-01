@@ -44,7 +44,7 @@ x11 none
 
 private-cache
 private-dev
-private-lib perl*
+private-lib libfreebl3.so,perl*
 private-tmp
 
 memory-deny-write-execute

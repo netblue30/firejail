@@ -9,7 +9,6 @@ noblacklist ${HOME}/.PyCharmCE*
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.python_history
 noblacklist ${HOME}/.pythonhist
-noblacklist ${HOME}/.pythonrc.py
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

@@ -9,7 +9,6 @@ include globals.local
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.python_history
 noblacklist ${HOME}/.pythonhist
-noblacklist ${HOME}/.pythonrc.py
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo
 noblacklist ${HOME}/.vimrc

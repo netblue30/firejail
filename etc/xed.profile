@@ -9,7 +9,6 @@ noblacklist ${HOME}/.config/xed
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.python_history
 noblacklist ${HOME}/.pythonhist
-noblacklist ${HOME}/.pythonrc.py
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include	allow-python2.inc

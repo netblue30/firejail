@@ -13,15 +13,9 @@ noblacklist ${PATH}/at
 noblacklist ${PATH}/crontab
 
 # Needs access to these files/dirs
-noblacklist /etc/at.allow
-noblacklist /etc/at.deny
 noblacklist /etc/cron.allow
 noblacklist /etc/cron.deny
-noblacklist /etc/fonts
-noblacklist /etc/ld.so.preload
-noblacklist /etc/pam.d
 noblacklist /etc/shadow
-noblacklist /var/spool/at
 noblacklist /var/spool/cron
 
 # cron job testing needs a terminal, resulting in sandbox escape (see disable-common.inc)

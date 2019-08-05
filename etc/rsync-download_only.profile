@@ -10,6 +10,8 @@ include globals.local
 # Warning: This profile is writte to use rsync as an client for downloading,
 # it is not writen to use rsync as an daemon (rsync --daemon) or to create backups.
 
+# Usage: firejail --profile=rsync-download_only rsync
+
 blacklist /tmp/.X11-unix
 
 include disable-common.inc

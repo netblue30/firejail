@@ -34,5 +34,5 @@ shell none
 disable-mnt
 private-bin locale,slack
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,debian_version,fonts,group,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,debian_version,fedora-release,fonts,group,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
 private-tmp

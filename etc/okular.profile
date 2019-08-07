@@ -49,7 +49,7 @@ tracelog
 
 private-bin kbuildsycoca4,kdeinit4,lpr,okular
 private-dev
-private-etc alternatives,cups,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
+private-etc alternatives,cups,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,passwd,xdg
 # private-tmp - on KDE we need access to the real /tmp for data exchange with email clients
 
 # memory-deny-write-execute

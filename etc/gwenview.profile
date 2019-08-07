@@ -45,6 +45,6 @@ shell none
 
 private-bin gimp*,gwenview,kbuildsycoca4,kdeinit4
 private-dev
-private-etc alternatives,fonts,gimp,gtk-2.0,kde4rc,kde5rc,ld.so.cache,machine-id,pulse,xdg
+private-etc alternatives,fonts,gimp,gtk-2.0,kde4rc,kde5rc,ld.so.cache,machine-id,passwd,pulse,xdg
 
 # memory-deny-write-execute

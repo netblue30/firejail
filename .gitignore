@@ -6,6 +6,7 @@
 *.rpm
 *.gcda
 *.gcno
+.directory
 Makefile
 autom4te.cache/
 config.log

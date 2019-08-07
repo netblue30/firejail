@@ -111,16 +111,8 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 
 static int store_xauthority(void) {
 	// put a copy of .Xauthority in XAUTHORITY_FILE
-	char *src;
 	char *dest = RUN_XAUTHORITY_FILE;
-	// create an empty file as root, and change ownership to user
-	FILE *fp = fopen(dest, "w");
-	if (fp) {
-		fprintf(fp, "\n");
-		SET_PERMS_STREAM(fp, getuid(), getgid(), 0600);
-		fclose(fp);
-	}
-
+	char *src;
 	if (asprintf(&src, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
 
@@ -128,29 +120,34 @@ static int store_xauthority(void) {
 	if (stat(src, &s) == 0) {
 		if (is_link(src)) {
 			fwarning("invalid .Xauthority file\n");
+			free(src);
 			return 0;
 		}
 
+		// create an empty file as root, and change ownership to user
+		FILE *fp = fopen(dest, "w");
+		if (fp) {
+			fprintf(fp, "\n");
+			SET_PERMS_STREAM(fp, getuid(), getgid(), 0600);
+			fclose(fp);
+		}
+		else
+			errExit("fopen");
+
 		copy_file_as_user(src, dest, getuid(), getgid(), 0600); // regular user
 		fs_logger2("clone", dest);
+		free(src);
 		return 1; // file copied
 	}
 
+	free(src);
 	return 0;
 }
 
 static int store_asoundrc(void) {
-	// put a copy of .Xauthority in XAUTHORITY_FILE
-	char *src;
+	// put a copy of .asoundrc in ASOUNDRC_FILE
 	char *dest = RUN_ASOUNDRC_FILE;
-	// create an empty file as root, and change ownership to user
-	FILE *fp = fopen(dest, "w");
-	if (fp) {
-		fprintf(fp, "\n");
-		SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);
-		fclose(fp);
-	}
-
+	char *src;
 	if (asprintf(&src, "%s/.asoundrc", cfg.homedir) == -1)
 		errExit("asprintf");
 
@@ -164,18 +161,30 @@ static int store_asoundrc(void) {
 				fprintf(stderr, "Error: Cannot access %s\n", src);
 				exit(1);
 			}
-			if (strncmp(rp, cfg.homedir, strlen(cfg.homedir)) != 0) {
+			if (strncmp(rp, cfg.homedir, strlen(cfg.homedir)) != 0 || rp[strlen(cfg.homedir)] != '/') {
 				fprintf(stderr, "Error: .asoundrc is a symbolic link pointing to a file outside home directory\n");
 				exit(1);
 			}
 			free(rp);
 		}
 
+		// create an empty file as root, and change ownership to user
+		FILE *fp = fopen(dest, "w");
+		if (fp) {
+			fprintf(fp, "\n");
+			SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);
+			fclose(fp);
+		}
+		else
+			errExit("fopen");
+
 		copy_file_as_user(src, dest, getuid(), getgid(), 0644); // regular user
 		fs_logger2("clone", dest);
+		free(src);
 		return 1; // file copied
 	}
 
+	free(src);
 	return 0;
 }
 
@@ -194,13 +203,14 @@ static void copy_xauthority(void) {
 
 	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
 	fs_logger2("clone", dest);
+	free(dest);
 
 	// delete the temporary file
 	unlink(src);
 }
 
 static void copy_asoundrc(void) {
-	// copy XAUTHORITY_FILE in the new home directory
+	// copy ASOUNDRC_FILE in the new home directory
 	char *src = RUN_ASOUNDRC_FILE ;
 	char *dest;
 	if (asprintf(&dest, "%s/.asoundrc", cfg.homedir) == -1)
@@ -214,6 +224,7 @@ static void copy_asoundrc(void) {
 
 	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
 	fs_logger2("clone", dest);
+	free(dest);
 
 	// delete the temporary file
 	unlink(src);

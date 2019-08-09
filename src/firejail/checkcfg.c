@@ -50,7 +50,6 @@ int checkcfg(int val) {
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
 		cfg_val[CFG_XPRA_ATTACH] = 0;
-		cfg_val[CFG_HOMEDIR_SYMLINK] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -86,7 +85,6 @@ int checkcfg(int val) {
 			ptr = line_remove_spaces(buf);
 			if (!ptr)
 				continue;
-			PARSE_YESNO(CFG_HOMEDIR_SYMLINK, "homedir-symlink")
 			PARSE_YESNO(CFG_FILE_TRANSFER, "file-transfer")
 			PARSE_YESNO(CFG_DBUS, "dbus")
 			PARSE_YESNO(CFG_JOIN, "join")

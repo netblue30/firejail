@@ -259,25 +259,17 @@ static int has_link(const char *dir) {
 	return 0;
 }
 
-static void build_cfg_homedir(const char *dir) {
-	EUID_ASSERT();
-	assert(dir);
-	if (dir[0] != '/' || dir[1] == '\0') { // system users sometimes have root directory as home
-		fprintf(stderr, "Error: invalid user directory \"%s\"\n", dir);
+static void check_homedir(void) {
+	assert(cfg.homedir);
+	if (cfg.homedir[0] != '/' || cfg.homedir[1] == '\0') { // system users sometimes have root directory as home
+		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
 		exit(1);
 	}
-	// symlinks are rejected in many places, offer a solution for home directories
-	if (checkcfg(CFG_HOMEDIR_SYMLINK)) {
-		cfg.homedir = realpath(dir, NULL);
-		if (cfg.homedir)
-			return;
+	// symlinks are rejected in many places
+	if (has_link(cfg.homedir)) {
+		fprintf(stderr, "No full support for symbolic links in path of user directory.\n"
+			"Please provide resolved path in password database (/etc/passwd).\n\n");
 	}
-	else if (has_link(dir)) {
-		fwarning("no full support for symbolic links in path of user directory.\n"
-			"Please provide resolved path in password database (/etc/passwd)\n"
-			"or enable symbolic link resolution in Firejail configuration file.\n\n");
-	}
-	cfg.homedir = clean_pathname(dir);
 }
 
 // init configuration
@@ -323,8 +315,8 @@ static void init_cfg(int argc, char **argv) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
-	build_cfg_homedir(pw->pw_dir);
-	assert(cfg.homedir);
+	cfg.homedir = clean_pathname(pw->pw_dir);
+	check_homedir();
 
 	// initialize random number generator
 	sandbox_pid = getpid();

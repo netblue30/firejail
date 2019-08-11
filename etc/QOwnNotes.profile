@@ -20,7 +20,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/Nextcloud/Notes
-mkdir ${HOME}.config/PBE
+mkdir ${HOME}/.config/PBE
 mkdir ${HOME}/.local/share/PBE
 whitelist ${DOCUMENTS}
 whitelist ${HOME}/Nextcloud/Notes

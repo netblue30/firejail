@@ -16,7 +16,7 @@ include allow-python2.inc
 include allow-python3.inc
 
 noblacklist ${MUSIC}
-moblacklist ${PICTURES}
+noblacklist ${PICTURES}
 noblacklist ${VIDEOS}
 
 include disable-common.inc

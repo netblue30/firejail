@@ -1,7 +1,7 @@
 # Firejail profile for atool
 # Description: Tool for managing file archives of various types
-quiet
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include atool.local
 # Persistent global definitions

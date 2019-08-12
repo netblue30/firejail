@@ -1,12 +1,15 @@
-# Firejail profile for bzip2
+# Firejail profile for bzcat
 # Description: A high-quality data compression program
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include bzip2.local
+include bzcat.local
 # Persistent global definitions
 # added by included profile
 #include globals.local
+
+ignore read-write
+read-only ${HOME}
 
 # Redirect
 include gzip.profile

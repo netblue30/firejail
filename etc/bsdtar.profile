@@ -20,8 +20,8 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodvd
 nodbus
+nodvd
 nogroups
 nonewprivs
 # noroot

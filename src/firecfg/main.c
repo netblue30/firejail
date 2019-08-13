@@ -284,9 +284,9 @@ static void set_links_homedir(const char *homedir) {
 }
 
 static char *get_user(void) {
-	char *user = getlogin();
+	char *user = getenv("SUDO_USER");
 	if (!user) {
-		user = getenv("SUDO_USER");
+		user = getpwuid(getuid())->pw_name;
 		if (!user) {
 			fprintf(stderr, "Error: cannot detect login user\n");
 			exit(1);

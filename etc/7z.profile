@@ -13,7 +13,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+apparmor
 caps.drop all
+hostname 7z
 ipc-namespace
 machine-id
 net none
@@ -33,4 +35,8 @@ shell none
 tracelog
 x11 none
 
+#private-bin 7z,7z*,p7zip
+private-cache
 private-dev
+
+memory-deny-write-execute

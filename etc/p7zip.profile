@@ -1,6 +1,7 @@
 # Firejail profile for p7zip
 # Description: 7zr file archiver with high compression ratio
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include p7zip.local
 # Persistent global definitions

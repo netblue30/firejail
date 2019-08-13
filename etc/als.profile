@@ -1,5 +1,6 @@
 # Firejail profile for als
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include als.local
 # Persistent global definitions

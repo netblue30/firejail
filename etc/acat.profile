@@ -1,5 +1,6 @@
 # Firejail profile for acat
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include acat.local
 # Persistent global definitions

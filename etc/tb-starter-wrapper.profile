@@ -13,7 +13,5 @@ noblacklist ${HOME}/.tb
 mkdir ${HOME}/.tb
 whitelist ${HOME}/.tb
 
-x11 xorg
-
 # Redirect
 include torbrowser-launcher.profile

@@ -1,6 +1,7 @@
 # Firejail profile for dnscrypt-proxy
 # Description: Tool for securing communications between a client and a DNS resolver
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include dnscrypt-proxy.local
 # Persistent global definitions

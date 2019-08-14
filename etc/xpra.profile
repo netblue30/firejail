@@ -1,6 +1,7 @@
 # Firejail profile for xpra
 # Description: Tool to detach/reattach running X programs
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include xpra.local
 # Persistent global definitions

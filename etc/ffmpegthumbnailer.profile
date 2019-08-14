@@ -1,6 +1,7 @@
 # Firejail profile for ffmpegthumbnailer
 # Description: FFmpeg-based video thumbnailer
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include ffmpegthumbnailer.local
 # Persistent global definitions

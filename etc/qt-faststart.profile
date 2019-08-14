@@ -1,6 +1,7 @@
 # Firejail profile for qt-faststart
 # Description: FFmpeg-based media utility
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include qt-faststart.local
 # Persistent global definitions

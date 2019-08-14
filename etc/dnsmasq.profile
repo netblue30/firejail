@@ -1,6 +1,7 @@
 # Firejail profile for dnsmasq
 # Description: Small caching DNS proxy and DHCP/TFTP server
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include dnsmasq.local
 # Persistent global definitions

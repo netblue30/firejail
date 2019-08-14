@@ -1,6 +1,7 @@
 # Firejail profile for Xephyr
 # This file is overwritten after every install/update
 # Persistent local customizations
+quiet
 include Xephyr.local
 # Persistent global definitions
 include globals.local

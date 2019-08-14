@@ -1,4 +1,6 @@
 # Firejail profile for conplay
+# Description: MPEG audio player/decoder
+# This file is overwritten after every install/update
 # Persistent local customizations
 include conplay.local
 # Persistent global definitions

@@ -14,10 +14,10 @@ expect {
 }
 sleep 1
 
-send -- "find /dev | wc -l\r"
+send -- "ls /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"2"
+	"1"
 }
 after 100
 send -- "exit\r"
@@ -33,7 +33,7 @@ sleep 1
 send -- "find /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"4"
+	"1"
 }
 after 100
 send -- "exit\r"
@@ -46,7 +46,7 @@ expect {
 }
 sleep 1
 
-send -- "ls -l /dev | wc -l\r"
+send -- "ls /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"12" {puts "OK\n"}

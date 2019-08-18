@@ -165,6 +165,8 @@ Christian Stadelmann (https://github.com/genodeftest)
 	- evolution profile fix
 Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
+corecontingency (https://https://github.com/corecontingency)
+	- tighten private-bin and etc for torbrowser-launcher.profile
 crass (https://github.com/crass)
 	- extract_command_name fixes
 	- update appimage size calculation to newest code from libappimage
@@ -314,6 +316,8 @@ glitsj16 (https://github.com/glitsj16)
 	- new profiles: lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh
 	- new profiles: nirtoshare-send, nitroshare-ui, mencoder, gnome-pie
 	- new profiles: masterpdfeditor
+gm10 (https://github.com/gm10)
+	- get_user() do not use the unreliable getlogin()
 graywolf (https://github.com/graywolf)
 	- spelling fix
 greigdp (https://github.com/greigdp)

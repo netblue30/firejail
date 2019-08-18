@@ -6,7 +6,6 @@ include xmr-stak.local
 include globals.local
 
 noblacklist ${HOME}/.xmr-stak
-noblacklist /usr/lib/llvm*
 
 include disable-common.inc
 include disable-devel.inc

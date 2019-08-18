@@ -7,7 +7,6 @@ include scallion.local
 include globals.local
 
 noblacklist ${PATH}/llvm*
-noblacklist /usr/lib/llvm*
 noblacklist ${PATH}/openssl
 noblacklist ${PATH}/openssl-1.0
 noblacklist ${DOCUMENTS}

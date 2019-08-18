@@ -509,6 +509,8 @@ blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kdenlive
 blacklist ${HOME}/.local/share/kget
+blacklist ${HOME}/.local/share/kiwix
+blacklist ${HOME}/.local/share/kiwix-desktop
 blacklist ${HOME}/.local/share/klavaro
 blacklist ${HOME}/.local/share/kmail2
 blacklist ${HOME}/.local/share/knotes

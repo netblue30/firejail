@@ -13,5 +13,7 @@ noblacklist ${HOME}/.tb
 mkdir ${HOME}/.tb
 whitelist ${HOME}/.tb
 
+private-bin tb-starter-wrapper
+
 # Redirect
 include torbrowser-launcher.profile

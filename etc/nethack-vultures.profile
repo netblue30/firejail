@@ -7,7 +7,6 @@ include nethack.local
 include globals.local
 
 noblacklist ${HOME}/.vultures
-noblacklist /var/log
 
 include disable-common.inc
 include disable-devel.inc

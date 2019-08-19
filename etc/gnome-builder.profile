@@ -14,7 +14,6 @@ noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.python_history
 noblacklist ${HOME}/.pythonhist
-noblacklist ${HOME}/.pythonrc.py
 
 include disable-common.inc
 include disable-passwdmgr.inc

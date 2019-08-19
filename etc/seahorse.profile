@@ -8,7 +8,6 @@ include globals.local
 
 blacklist /tmp/.X11-unix
 
-noblacklist ${HOME}/.config/dconf
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.ssh
 noblacklist /tmp/ssh-*

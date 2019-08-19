@@ -8,8 +8,6 @@ include globals.local
 
 noblacklist ${HOME}/.config/ppsspp
 noblacklist ${DOCUMENTS}
-# with >=llvm-4 mesa drivers need llvm stuff
-noblacklist /usr/lib/llvm*
 
 include disable-common.inc
 include disable-devel.inc

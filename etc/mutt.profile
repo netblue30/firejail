@@ -17,7 +17,6 @@ noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.mail
-noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.msmtprc
 noblacklist ${HOME}/.mutt
 noblacklist ${HOME}/.muttrc

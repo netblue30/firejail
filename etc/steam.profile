@@ -19,8 +19,6 @@ noblacklist ${HOME}/.local/share/vulkan
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.steampath
 noblacklist ${HOME}/.steampid
-# with >=llvm-4 mesa drivers need llvm stuff
-noblacklist /usr/lib/llvm*
 # needed for STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 to work
 noblacklist /sbin
 noblacklist /usr/sbin

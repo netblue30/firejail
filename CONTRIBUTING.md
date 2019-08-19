@@ -33,3 +33,7 @@ Pull requests with enhancements, bugfixes or new profiles are very welcome.
 If you want to write a new profile, the easiest way to do this is to use the
 [profile template](https://github.com/netblue30/firejail/blob/master/etc/templates/profile.template).
 If you have already written a profile, please make sure it follows the rules described in the template.
+
+# Editing the wiki
+
+You are highly encouraged to add your own tips and tricks to the [wiki](https://github.com/netblue30/firejail/wiki).

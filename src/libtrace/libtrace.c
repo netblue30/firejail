@@ -34,6 +34,13 @@
 #include <dirent.h>
 #include <limits.h>
 
+#define tprintf(fp, args...) \
+    do { \
+        if (!fp)\
+            init(); \
+        fprintf(fp, args); \
+    } while(0)
+
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
 static orig_fopen_t orig_fopen = NULL;
@@ -43,29 +50,29 @@ static orig_fopen64_t orig_fopen64 = NULL;
 //
 // library constructor/destructor
 //
-//#define PRINTF_DEVTTY
-#ifdef PRINTF_DEVTTY
 // Replacing printf with fprintf to /dev/tty in order to fix #561
-// In some cases this crashes the program running in the sandbox.
-// Example:
-//                  $ firejail --trace mkdir ttt
-// logs the following error in syslog:
-//                  debian kernel: [18521.399073] mkdir[12206]: segfault at 0 ip 00007f77ebf41f6b sp 00007ffe1a0161e0 error 4 in libc-2.24.so[7f77ebe4b000+195000]
+// If you really want to turn it off, comment the following line, but its a
+// really bad idea.
+#define PRINTF_DEVTTY
 static FILE *ftty = NULL;
-#endif
 static pid_t mypid = 0;
 #define MAXNAME 16
 static char myname[MAXNAME] = {'\0', };
 
 static void init(void) __attribute__((constructor));
 void init(void) {
+	if (ftty)
+		return;
+
 	orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
 
 	// tty
 #ifdef PRINTF_DEVTTY
 	ftty = orig_fopen("/dev/tty", "w");
-printf("*** ftty %p ***\n", ftty);
+#else
+	ftty = stderr;
 #endif
+	tprintf(ftty, "=== tracelib init() === \n");
 
 	// pid
 	mypid = getpid();
@@ -91,9 +98,7 @@ printf("*** ftty %p ***\n", ftty);
 
 static void fini(void) __attribute__((destructor));
 void fini(void) {
-#ifdef PRINTF_DEVTTY
 	fclose(ftty);
-#endif
 }
 
 //
@@ -240,43 +245,23 @@ static char *translate(XTable *table, int val) {
 static void print_sockaddr(int sockfd, const char *call, const struct sockaddr *addr, int rv) {
 	if (addr->sa_family == AF_INET) {
 		struct sockaddr_in *a = (struct sockaddr_in *) addr;
-#ifdef PRINTF_DEVTTY
-		fprintf(ftty, "%u:%s:%s %d %s port %u:%d\n", mypid, myname, call, sockfd, inet_ntoa(a->sin_addr), ntohs(a->sin_port), rv);
-#else
-		printf("%u:%s:%s %d %s port %u:%d\n", mypid, myname, call, sockfd, inet_ntoa(a->sin_addr), ntohs(a->sin_port), rv);
-#endif
+		tprintf(ftty, "%u:%s:%s %d %s port %u:%d\n", mypid, myname, call, sockfd, inet_ntoa(a->sin_addr), ntohs(a->sin_port), rv);
 	}
 	else if (addr->sa_family == AF_INET6) {
 		struct sockaddr_in6 *a = (struct sockaddr_in6 *) addr;
 		char str[INET6_ADDRSTRLEN];
 		inet_ntop(AF_INET6, &(a->sin6_addr), str, INET6_ADDRSTRLEN);
-#ifdef PRINTF_DEVTTY
-		fprintf(ftty, "%u:%s:%s %d %s:%d\n", mypid, myname, call, sockfd, str, rv);
-#else
-		printf("%u:%s:%s %d %s:%d\n", mypid, myname, call, sockfd, str, rv);
-#endif
+		tprintf(ftty, "%u:%s:%s %d %s:%d\n", mypid, myname, call, sockfd, str, rv);
 	}
 	else if (addr->sa_family == AF_UNIX) {
 		struct sockaddr_un *a = (struct sockaddr_un *) addr;
 		if (a->sun_path[0])
-#ifdef PRINTF_DEVTTY
-			fprintf(ftty, "%u:%s:%s %d %s:%d\n", mypid, myname, call, sockfd, a->sun_path, rv);
-#else
-			printf("%u:%s:%s %d %s:%d\n", mypid, myname, call, sockfd, a->sun_path, rv);
-#endif
+			tprintf(ftty, "%u:%s:%s %d %s:%d\n", mypid, myname, call, sockfd, a->sun_path, rv);
 		else
-#ifdef PRINTF_DEVTTY
-			fprintf(ftty, "%u:%s:%s %d @%s:%d\n", mypid, myname, call, sockfd, a->sun_path + 1, rv);
-#else
-			printf("%u:%s:%s %d @%s:%d\n", mypid, myname, call, sockfd, a->sun_path + 1, rv);
-#endif
+			tprintf(ftty, "%u:%s:%s %d @%s:%d\n", mypid, myname, call, sockfd, a->sun_path + 1, rv);
 	}
 	else {
-#ifdef PRINTF_DEVTTY
-		fprintf(ftty, "%u:%s:%s %d family %d:%d\n", mypid, myname, call, sockfd, addr->sa_family, rv);
-#else
-		printf("%u:%s:%s %d family %d:%d\n", mypid, myname, call, sockfd, addr->sa_family, rv);
-#endif
+		tprintf(ftty, "%u:%s:%s %d family %d:%d\n", mypid, myname, call, sockfd, addr->sa_family, rv);
 	}
 }
 
@@ -292,11 +277,7 @@ int open(const char *pathname, int flags, mode_t mode) {
 		orig_open = (orig_open_t)dlsym(RTLD_NEXT, "open");
 
 	int rv = orig_open(pathname, flags, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:open %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:open %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:open %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -307,11 +288,7 @@ int open64(const char *pathname, int flags, mode_t mode) {
 		orig_open64 = (orig_open64_t)dlsym(RTLD_NEXT, "open64");
 
 	int rv = orig_open64(pathname, flags, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:open64 %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:open64 %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:open64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -323,11 +300,7 @@ int openat(int dirfd, const char *pathname, int flags, mode_t mode) {
 		orig_openat = (orig_openat_t)dlsym(RTLD_NEXT, "openat");
 
 	int rv = orig_openat(dirfd, pathname, flags, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:openat %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:openat %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:openat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -338,11 +311,7 @@ int openat64(int dirfd, const char *pathname, int flags, mode_t mode) {
 		orig_openat64 = (orig_openat64_t)dlsym(RTLD_NEXT, "openat64");
 
 	int rv = orig_openat64(dirfd, pathname, flags, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:openat64 %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:openat64 %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:openat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -353,11 +322,7 @@ FILE *fopen(const char *pathname, const char *mode) {
 		orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
 
 	FILE *rv = orig_fopen(pathname, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:fopen %s:%p\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:fopen %s:%p\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:fopen %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -367,11 +332,7 @@ FILE *fopen64(const char *pathname, const char *mode) {
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
 
 	FILE *rv = orig_fopen64(pathname, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:fopen64 %s:%p\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:fopen64 %s:%p\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:fopen64 %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -385,11 +346,7 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 		orig_freopen = (orig_freopen_t)dlsym(RTLD_NEXT, "freopen");
 
 	FILE *rv = orig_freopen(pathname, mode, stream);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:freopen %s:%p\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:freopen %s:%p\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:freopen %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -401,11 +358,7 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 		orig_freopen64 = (orig_freopen64_t)dlsym(RTLD_NEXT, "freopen64");
 
 	FILE *rv = orig_freopen64(pathname, mode, stream);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:freopen64 %s:%p\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:freopen64 %s:%p\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:freopen64 %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -418,11 +371,7 @@ int unlink(const char *pathname) {
 		orig_unlink = (orig_unlink_t)dlsym(RTLD_NEXT, "unlink");
 
 	int rv = orig_unlink(pathname);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:unlink %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:unlink %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:unlink %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -433,11 +382,7 @@ int unlinkat(int dirfd, const char *pathname, int flags) {
 		orig_unlinkat = (orig_unlinkat_t)dlsym(RTLD_NEXT, "unlinkat");
 
 	int rv = orig_unlinkat(dirfd, pathname, flags);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:unlinkat %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:unlinkat %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:unlinkat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -449,11 +394,7 @@ int mkdir(const char *pathname, mode_t mode) {
 		orig_mkdir = (orig_mkdir_t)dlsym(RTLD_NEXT, "mkdir");
 
 	int rv = orig_mkdir(pathname, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:mkdir %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:mkdir %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:mkdir %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -464,11 +405,7 @@ int mkdirat(int dirfd, const char *pathname, mode_t mode) {
 		orig_mkdirat = (orig_mkdirat_t)dlsym(RTLD_NEXT, "mkdirat");
 
 	int rv = orig_mkdirat(dirfd, pathname, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:mkdirat %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:mkdirat %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:mkdirat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -479,11 +416,7 @@ int rmdir(const char *pathname) {
 		orig_rmdir = (orig_rmdir_t)dlsym(RTLD_NEXT, "rmdir");
 
 	int rv = orig_rmdir(pathname);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:rmdir %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:rmdir %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:rmdir %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -495,11 +428,7 @@ int stat(const char *pathname, struct stat *statbuf) {
 		orig_stat = (orig_stat_t)dlsym(RTLD_NEXT, "stat");
 
 	int rv = orig_stat(pathname, statbuf);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:stat %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:stat %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:stat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -511,11 +440,7 @@ int stat64(const char *pathname, struct stat64 *statbuf) {
 		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
 
 	int rv = orig_stat64(pathname, statbuf);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:stat64 %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:stat64 %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:stat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -528,11 +453,7 @@ int lstat(const char *pathname, struct stat *statbuf) {
 		orig_lstat = (orig_lstat_t)dlsym(RTLD_NEXT, "lstat");
 
 	int rv = orig_lstat(pathname, statbuf);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:lstat %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:lstat %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:lstat %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -544,11 +465,7 @@ int lstat64(const char *pathname, struct stat64 *statbuf) {
 		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
 
 	int rv = orig_lstat64(pathname, statbuf);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:lstat64 %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:lstat64 %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:lstat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 #endif /* __GLIBC__ */
@@ -561,11 +478,7 @@ DIR *opendir(const char *pathname) {
 		orig_opendir = (orig_opendir_t)dlsym(RTLD_NEXT, "opendir");
 
 	DIR *rv = orig_opendir(pathname);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:opendir %s:%p\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:opendir %s:%p\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:opendir %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -577,11 +490,7 @@ int access(const char *pathname, int mode) {
 		orig_access = (orig_access_t)dlsym(RTLD_NEXT, "access");
 
 	int rv = orig_access(pathname, mode);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:access %s:%d\n", mypid, myname, pathname, rv);
-#else
-	printf("%u:%s:access %s:%d\n", mypid, myname, pathname, rv);
-#endif
+	tprintf(ftty, "%u:%s:access %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
 
@@ -639,11 +548,7 @@ int socket(int domain, int type, int protocol) {
 			sprintf(ptr, "%s", str);
 	}
 
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%s:%d\n", socketbuf, rv);
-#else
-	printf("%s:%d\n", socketbuf, rv);
-#endif
+	tprintf(ftty, "%s:%d\n", socketbuf, rv);
 	return rv;
 }
 
@@ -681,11 +586,7 @@ int system(const char *command) {
 		orig_system = (orig_system_t)dlsym(RTLD_NEXT, "system");
 
 	int rv = orig_system(command);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:system %s:%d\n", mypid, myname, command, rv);
-#else
-	printf("%u:%s:system %s:%d\n", mypid, myname, command, rv);
-#endif
+	tprintf(ftty, "%u:%s:system %s:%d\n", mypid, myname, command, rv);
 
 	return rv;
 }
@@ -697,11 +598,7 @@ int setuid(uid_t uid) {
 		orig_setuid = (orig_setuid_t)dlsym(RTLD_NEXT, "setuid");
 
 	int rv = orig_setuid(uid);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:setuid %d:%d\n", mypid, myname, uid, rv);
-#else
-	printf("%u:%s:setuid %d:%d\n", mypid, myname, uid, rv);
-#endif
+	tprintf(ftty, "%u:%s:setuid %d:%d\n", mypid, myname, uid, rv);
 
 	return rv;
 }
@@ -713,11 +610,7 @@ int setgid(gid_t gid) {
 		orig_setgid = (orig_setgid_t)dlsym(RTLD_NEXT, "setgid");
 
 	int rv = orig_setgid(gid);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:setgid %d:%d\n", mypid, myname, gid, rv);
-#else
-	printf("%u:%s:setgid %d:%d\n", mypid, myname, gid, rv);
-#endif
+	tprintf(ftty, "%u:%s:setgid %d:%d\n", mypid, myname, gid, rv);
 
 	return rv;
 }
@@ -729,11 +622,7 @@ int setfsuid(uid_t uid) {
 		orig_setfsuid = (orig_setfsuid_t)dlsym(RTLD_NEXT, "setfsuid");
 
 	int rv = orig_setfsuid(uid);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:setfsuid %d:%d\n", mypid, myname, uid, rv);
-#else
-	printf("%u:%s:setfsuid %d:%d\n", mypid, myname, uid, rv);
-#endif
+	tprintf(ftty, "%u:%s:setfsuid %d:%d\n", mypid, myname, uid, rv);
 
 	return rv;
 }
@@ -745,11 +634,7 @@ int setfsgid(gid_t gid) {
 		orig_setfsgid = (orig_setfsgid_t)dlsym(RTLD_NEXT, "setfsgid");
 
 	int rv = orig_setfsgid(gid);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:setfsgid %d:%d\n", mypid, myname, gid, rv);
-#else
-	printf("%u:%s:setfsgid %d:%d\n", mypid, myname, gid, rv);
-#endif
+	tprintf(ftty, "%u:%s:setfsgid %d:%d\n", mypid, myname, gid, rv);
 
 	return rv;
 }
@@ -761,11 +646,7 @@ int setreuid(uid_t ruid, uid_t euid) {
 		orig_setreuid = (orig_setreuid_t)dlsym(RTLD_NEXT, "setreuid");
 
 	int rv = orig_setreuid(ruid, euid);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:setreuid %d %d:%d\n", mypid, myname, ruid, euid, rv);
-#else
-	printf("%u:%s:setreuid %d %d:%d\n", mypid, myname, ruid, euid, rv);
-#endif
+	tprintf(ftty, "%u:%s:setreuid %d %d:%d\n", mypid, myname, ruid, euid, rv);
 
 	return rv;
 }
@@ -777,11 +658,7 @@ int setregid(gid_t rgid, gid_t egid) {
 		orig_setregid = (orig_setregid_t)dlsym(RTLD_NEXT, "setregid");
 
 	int rv = orig_setregid(rgid, egid);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:setregid %d %d:%d\n", mypid, myname, rgid, egid, rv);
-#else
-	printf("%u:%s:setregid %d %d:%d\n", mypid, myname, rgid, egid, rv);
-#endif
+	tprintf(ftty, "%u:%s:setregid %d %d:%d\n", mypid, myname, rgid, egid, rv);
 
 	return rv;
 }
@@ -793,11 +670,7 @@ int setresuid(uid_t ruid, uid_t euid, uid_t suid) {
 		orig_setresuid = (orig_setresuid_t)dlsym(RTLD_NEXT, "setresuid");
 
 	int rv = orig_setresuid(ruid, euid, suid);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:setresuid %d %d %d:%d\n", mypid, myname, ruid, euid, suid, rv);
-#else
-	printf("%u:%s:setresuid %d %d %d:%d\n", mypid, myname, ruid, euid, suid, rv);
-#endif
+	tprintf(ftty, "%u:%s:setresuid %d %d %d:%d\n", mypid, myname, ruid, euid, suid, rv);
 
 	return rv;
 }
@@ -809,11 +682,7 @@ int setresgid(gid_t rgid, gid_t egid, gid_t sgid) {
 		orig_setresgid = (orig_setresgid_t)dlsym(RTLD_NEXT, "setresgid");
 
 	int rv = orig_setresgid(rgid, egid, sgid);
-#ifdef PRINTF_DEVTTY
-	fprintf(ftty, "%u:%s:setresgid %d %d %d:%d\n", mypid, myname, rgid, egid, sgid, rv);
-#else
-	printf("%u:%s:setresgid %d %d %d:%d\n", mypid, myname, rgid, egid, sgid, rv);
-#endif
+	tprintf(ftty, "%u:%s:setresgid %d %d %d:%d\n", mypid, myname, rgid, egid, sgid, rv);
 
 	return rv;
 }
@@ -828,10 +697,6 @@ static void log_exec(int argc, char** argv) {
 	int rv = readlink("/proc/self/exe", buf, PATH_MAX);
 	if (rv != -1) {
 		buf[rv] = '\0';	// readlink does not add a '\0' at the end
-#ifdef PRINTF_DEVTTY
-		fprintf(ftty, "%u:%s:exec %s:0\n", mypid, myname, buf);
-#else
-		printf("%u:%s:exec %s:0\n", mypid, myname, buf);
-#endif
+		tprintf(ftty, "%u:%s:exec %s:0\n", mypid, myname, buf);
 	}
 }

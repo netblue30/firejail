@@ -8,7 +8,7 @@ include transmission-cli.local
 # added by included profile
 #include globals.local
 
-#private-bin transmission-cli
+private-bin transmission-cli
 private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
 
 # Redirect

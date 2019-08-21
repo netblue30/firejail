@@ -67,5 +67,5 @@ shell none
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,pki,ssl,java-8-openjdk,i2p
+private-etc alternatives,ca-certificates,crypto-policies,i2p,java-8-openjdk,pki,ssl
 private-tmp

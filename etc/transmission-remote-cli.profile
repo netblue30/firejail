@@ -12,15 +12,8 @@ include transmission-remote-cli.local
 include	allow-python2.inc
 include	allow-python3.inc
 
-mkdir ${HOME}/.cache/transmission
-mkdir ${HOME}/.config/transmission
-whitelist ${HOME}/.cache/transmission
-whitelist ${HOME}/.config/transmission
-include whitelist-common.inc
-include whitelist-var-common.inc
-
-# private-bin python*
+private-bin python*,transmission-remote-cli
 private-etc fonts
 
 # Redirect
-include transmission-remote.profile
+include transmission-common.profile

@@ -3,6 +3,7 @@
 include disable-programs.local
 
 blacklist ${HOME}/Arduino
+blacklist ${HOME}/i2p
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud/Notes
 blacklist ${HOME}/SoftMaker
@@ -190,6 +191,7 @@ blacklist ${HOME}/.config/gpicview
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/hexchat
+blacklist ${HOME}/.config/i2p
 blacklist ${HOME}/.config/inkscape
 blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.config/iridium
@@ -366,6 +368,7 @@ blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hashcat
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.hugin
+blacklist ${HOME}/.i2p
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.imagej
 blacklist ${HOME}/.inkscape
@@ -505,6 +508,7 @@ blacklist ${HOME}/.local/share/gnome-twitch
 blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
+blacklist ${HOME}/.local/share/i2p
 blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kdenlive

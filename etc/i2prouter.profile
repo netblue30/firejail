@@ -11,7 +11,7 @@ include globals.local
 # This profile will not currently work with any Arch User Repository i2p packages,
 # use the distro-independent official java installer instead
 
-# Only needed if i2prouter binary is not in home directory, ubuntu official ppa package does this
+# Only needed if i2prouter binary is in home directory, java installer does this
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.config/i2p
@@ -23,6 +23,7 @@ noblacklist /usr/sbin
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -31,12 +32,18 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist ${HOME}/.config/I2P
+mkdir ${HOME}/.config/i2p
+mkdir ${HOME}/.i2p
+mkdir ${HOME}/.local/share/i2p
+mkdir ${HOME}/i2p
+whitelist ${HOME}/.config/i2p
 whitelist ${HOME}/.i2p
-whitelist ${HOME}/.local/share/I2P
+whitelist ${HOME}/.local/share/i2p
 whitelist ${HOME}/i2p
 # Only needed if wrapper is placed in /usr/sbin/, ubuntu official ppa package does this
 whitelist /usr/sbin/wrapper*
+
+include whitelist-common.inc
 
 # May break I2P if wrapper is placed in the home directory
 # If using ubuntu official ppa, this should be fine to uncomment, as it puts wrapper in /usr/sbin/

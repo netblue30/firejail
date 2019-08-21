@@ -8,5 +8,7 @@ include transmission-edit.local
 # added by included profile
 #include globals.local
 
+private-bin transmission-edit
+
 # Redirect
-include transmission-cli.profile
+include transmission-common.profile

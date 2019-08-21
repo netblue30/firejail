@@ -13,7 +13,7 @@ include	allow-python2.inc
 include	allow-python3.inc
 
 private-bin python*,transmission-remote-cli
-private-etc fonts
+private-etc
 
 # Redirect
 include transmission-common.profile

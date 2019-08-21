@@ -12,7 +12,7 @@ whitelist /var/lib/transmission
 
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
 
-#private-bin transmission-daemon
+private-bin transmission-daemon
 private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
 
 read-write /var/lib/transmission

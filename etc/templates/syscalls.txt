@@ -1,6 +1,9 @@
 Hints for writing seccomp.drop lines
 ====================================
 
+Definition of groups
+--------------------
+
 @clock=adjtimex,clock_adjtime,clock_settime,settimeofday,stime
 @module=delete_module,finit_module,init_module
 @raw-io=ioperm,iopl,pciconfig_iobase,pciconfig_read,pciconfig_write,s390_mmio_read,s390_mmio_write
@@ -20,6 +23,8 @@ Hints for writing seccomp.drop lines
 
 @default-keep=execve,prctl
 
+Inheritance of groups
+---------------------
 
 +---------+----------------+---------------+
 | @clock  | @cpu-emulation | @default-keep |
@@ -41,7 +46,28 @@ Hints for writing seccomp.drop lines
 | @default-nodebuggers |
 +----------------------+
 
+common used seccomp.drop lines
+------------------------------
 
 @default without chroot: @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@resources,@swap,acct,add_key,bpf,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,kcmp,keyctl,mount,name_to_handle_at,nfsservctl,ni_syscall,open_by_handle_at,pivot_root,remap_file_pages,request_key,setdomainname,sethostname,syslog,umount,umount2,userfaultfd,vhangup,vmsplice
 
 @default-nodebuggers without chroot: @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@resources,@swap,acct,add_key,bpf,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,kcmp,keyctl,mount,name_to_handle_at,nfsservctl,ni_syscall,open_by_handle_at,personality,pivot_root,process_vm_readv,ptrace,remap_file_pages,request_key,setdomainname,sethostname,syslog,umount,umount2,userfaultfd,vhangup,vmsplice
+
+Building a seccomp.drop line if seccomp breaks a programm
+---------------------------------------------------------
+
+```
+$ journalctl --grep=syscall --follow
+<...> audit[…]: SECCOMP <...> syscall=161 <...>
+$ firejail --debug-syscalls | grep 161
+161	- chroot
+```
+
+TODO: write a short explanation
+TODO: suggest to use `allow-debuggers` instead of `seccomp.drop` if possible
+
+see also
+--------
+
+ - contrib/syscalls.sh
+ - https://firejail.wordpress.com/documentation-2/seccomp-guide/

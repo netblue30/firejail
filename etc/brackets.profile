@@ -8,13 +8,9 @@ include globals.local
 noblacklist ${HOME}/.config/Brackets
 #noblacklist /opt/brackets/
 #noblacklist /opt/google/
-# Uncomment the next two lines if you are developing rust.
-# or put it in your brackets.local
-#noblacklist ${HOME}/.cargo/config
-#noblacklist ${HOME}/.cargo/registry
-noblacklist ${HOME}/.config/git
-noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.git-credentials
+
+# Allows files commonly used by IDEs
+include allow-common-devel.inc
 
 include disable-common.inc
 include disable-passwdmgr.inc

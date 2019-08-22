@@ -8,17 +8,9 @@ include globals.local
 
 noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
-# allow rust
-noblacklist ${HOME}/.cargo/config
-noblacklist ${HOME}/.cargo/registry
-# allow git config files
-noblacklist ${HOME}/.config/git
-noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.git-credentials
-# allow python dev files
-noblacklist ${HOME}/.python-history
-noblacklist ${HOME}/.python_history
-noblacklist ${HOME}/.pythonhist
+
+# Allows files commonly used by IDEs
+include allow-common-devel.inc
 
 include disable-common.inc
 include disable-exec.inc

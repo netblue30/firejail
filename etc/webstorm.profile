@@ -7,13 +7,12 @@ include globals.local
 
 noblacklist ${HOME}/.WebStorm*
 noblacklist ${HOME}/.android
-noblacklist ${HOME}/.config/git
-noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.git-credentials
-noblacklist ${HOME}/.gradle
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
+
+# Allows files commonly used by IDEs
+include allow-common-devel.inc
 
 noblacklist ${PATH}/node
 noblacklist ${HOME}/.nvm

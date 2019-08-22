@@ -11,9 +11,9 @@ noblacklist ${HOME}/.emacs.d
 # if you need gpg uncomment the following line
 # or put it into your emacs.local
 #noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.python-history
-noblacklist ${HOME}/.python_history
-noblacklist ${HOME}/.pythonhist
+
+# Allows files commonly used by IDEs
+include allow-common-devel.inc
 
 include disable-common.inc
 include disable-passwdmgr.inc

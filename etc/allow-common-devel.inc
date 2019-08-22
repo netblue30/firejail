@@ -11,3 +11,7 @@ noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.python_history
 noblacklist ${HOME}/.pythonhist
+
+# Java
+noblacklist ${HOME}/.gradle
+noblacklist ${HOME}/.java

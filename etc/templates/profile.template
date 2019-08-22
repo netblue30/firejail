@@ -87,6 +87,9 @@ include globals.local
 # Allow lua (blacklisted by disable-interpreters.inc)
 #include allow-lua.inc
 
+# Allows files commonly used by IDEs
+#include allow-common-devel.inc
+
 #include disable-common.inc
 #include disable-devel.inc
 #include disable-exec.inc

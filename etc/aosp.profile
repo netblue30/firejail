@@ -7,17 +7,15 @@ include globals.local
 
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.bash_history
-noblacklist ${HOME}/.config/git
-noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.git-credentials
-noblacklist ${HOME}/.gradle
 noblacklist ${HOME}/.jack-server
 noblacklist ${HOME}/.jack-settings
-noblacklist ${HOME}/.java
 noblacklist ${HOME}/.repo_.gitconfig.json
 noblacklist ${HOME}/.repoconfig
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
+
+# Allows files commonly used by IDEs
+include allow-common-devel.inc
 
 include disable-common.inc
 include disable-passwdmgr.inc

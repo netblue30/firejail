@@ -6,12 +6,12 @@ include pycharm-community.local
 include globals.local
 
 noblacklist ${HOME}/.PyCharmCE*
-noblacklist ${HOME}/.python-history
-noblacklist ${HOME}/.python_history
-noblacklist ${HOME}/.pythonhist
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
+
+# Allows files commonly used by IDEs
+include allow-common-devel.inc
 
 include disable-common.inc
 include disable-devel.inc

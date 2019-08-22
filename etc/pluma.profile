@@ -8,9 +8,9 @@ include globals.local
 
 noblacklist ${HOME}/.config/enchant
 noblacklist ${HOME}/.config/pluma
-noblacklist ${HOME}/.python-history
-noblacklist ${HOME}/.python_history
-noblacklist ${HOME}/.pythonhist
+
+# Allows files commonly used by IDEs
+include allow-common-devel.inc
 
 include disable-common.inc
 include disable-devel.inc

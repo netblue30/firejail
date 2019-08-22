@@ -42,7 +42,7 @@ The following actions are implemented by default by running sudo firecfg:
 .br
 
 .br
--fix desktop files in $HOME/.local/share/applications/ (firecfg --fix).
+- fix desktop files in $HOME/.local/share/applications/ (firecfg --fix).
 .RE
 
 .SH OPTIONS

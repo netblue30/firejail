@@ -52,6 +52,8 @@ blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.bogofilter
 blacklist ${HOME}/.bzf
+blacklist ${HOME}/.cargo/registry
+blacklist ${HOME}/.cargo/config
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.clonk

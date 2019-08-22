@@ -71,10 +71,10 @@ If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option
 to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.
 .PP
-If a program argument is not specified, Firejail starts /bin/bash shell.
+If a program argument is not specified, Firejail starts the default shell from the current user.
 Examples:
 .PP
-$ firejail [OPTIONS]                # starting a /bin/bash shell
+$ firejail [OPTIONS]                # starting the user default shell (normally /bin/bash)
 .PP
 $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 .PP

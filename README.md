@@ -35,6 +35,8 @@ Wiki: https://github.com/netblue30/firejail/wiki
 
 Travis-CI status: https://travis-ci.org/netblue30/firejail
 
+GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
+
 
 ## Security vulnerabilities
 

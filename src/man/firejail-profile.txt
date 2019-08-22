@@ -75,7 +75,13 @@ Child process initialized
 .RE
 
 .SH Templates
-Templates for writing own profiles can be found in /usr/share/doc/firejail.
+In /usr/share/doc/firejail there are two templates to write new profiles.
+.RS
+profile.template - for regular profiles
+.br
+redirect_alias-profile.template - for aliasing/redirecting profiles
+.RE
+
 
 .SH Scripting
 Scripting commands:
@@ -144,7 +150,7 @@ Ignore command.
 
 Example: "ignore seccomp"
 .br
-Example: "ignore net ehh0"
+Example: "ignore net eth0"
 
 .TP
 \fBquiet
@@ -154,10 +160,10 @@ Example: "quiet"
 
 .SH Filesystem
 These profile entries define a chroot filesystem built on top of the existing
-host filesystem. Each line describes a file element that is removed from
-the filesystem (\fBblacklist\fR), a read-only file or directory (\fBread-only\fR),
+host filesystem. Each line describes a file/directory that is inaccessible
+(\fBblacklist\fR), a read-only file or directory (\fBread-only\fR),
 a tmpfs mounted on top of an existing directory (\fBtmpfs\fR),
-or mount-bind a directory  or file on top of another directory or file (\fBbind\fR).
+or mount-bind a directory or file on top of another directory or file (\fBbind\fR).
 Use \fBprivate\fR to set private mode.
 File globbing is supported, and PATH and HOME directories are searched.
 Examples:

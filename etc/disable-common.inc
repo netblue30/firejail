@@ -284,8 +284,7 @@ read-only ${HOME}/bin
 read-only ${HOME}/.bin
 read-only ${HOME}/.local/bin
 read-only ${HOME}/.cargo/bin
-blacklist ${HOME}/.cargo/registry
-blacklist ${HOME}/.cargo/config
+read-only ${HOME}/.cargo/env
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus

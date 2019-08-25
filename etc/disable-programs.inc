@@ -29,9 +29,9 @@ blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
 blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
+blacklist ${HOME}/.VSCodium
 blacklist ${HOME}/.ViberPC
 blacklist ${HOME}/.VirtualBox
-blacklist ${HOME}/.VSCodium
 blacklist ${HOME}/.WebStorm*
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
@@ -97,9 +97,9 @@ blacklist ${HOME}/.config/MusicBrainz
 blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/PBE
-blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QGIS
 blacklist ${HOME}/.config/QMediathekView
+blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Rambox
@@ -182,10 +182,11 @@ blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/git
 blacklist ${HOME}/.config/globaltime
+blacklist ${HOME}/.config/gnome-builder
 blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv
-blacklist ${HOME}/.config/godot
 blacklist ${HOME}/.config/gnome-pie
+blacklist ${HOME}/.config/godot
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
@@ -235,8 +236,8 @@ blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mono
-blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mpDris2
+blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
@@ -257,8 +258,8 @@ blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.kde.gwenviewrc
-blacklist ${HOME}/.config/pavucontrol.ini
 blacklist ${HOME}/.config/pavucontrol-qt
+blacklist ${HOME}/.config/pavucontrol.ini
 blacklist ${HOME}/.config/pcmanfm
 blacklist ${HOME}/.config/pdfmod
 blacklist ${HOME}/.config/Pinta
@@ -356,8 +357,6 @@ blacklist ${HOME}/.freecol
 blacklist ${HOME}/.freemind
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
-blacklist ${HOME}/.git-credentials
-blacklist ${HOME}/.git-credential-cache
 blacklist ${HOME}/.gitconfig
 blacklist ${HOME}/.gnome/gnome-schedule
 blacklist ${HOME}/.googleearth/Cache/
@@ -417,13 +416,13 @@ blacklist ${HOME}/.kde4/share/apps/kaffeine
 blacklist ${HOME}/.kde4/share/apps/kcookiejar
 blacklist ${HOME}/.kde4/share/apps/kget
 blacklist ${HOME}/.kde4/share/apps/khtml
-blacklist ${HOME}/.kde4/share/apps/konqueror
 blacklist ${HOME}/.kde4/share/apps/konqsidebartng
+blacklist ${HOME}/.kde4/share/apps/konqueror
 blacklist ${HOME}/.kde4/share/apps/kopete
 blacklist ${HOME}/.kde4/share/apps/ktorrent
 blacklist ${HOME}/.kde4/share/apps/okular
-blacklist ${HOME}/.kde4/share/config/baloorc
 blacklist ${HOME}/.kde4/share/config/baloofilerc
+blacklist ${HOME}/.kde4/share/config/baloorc
 blacklist ${HOME}/.kde4/share/config/digikam
 blacklist ${HOME}/.kde4/share/config/gwenviewrc
 blacklist ${HOME}/.kde4/share/config/k3brc
@@ -446,9 +445,9 @@ blacklist ${HOME}/.kinorc
 blacklist ${HOME}/.klatexformula
 blacklist ${HOME}/.kodi
 blacklist ${HOME}/.lincity-ng
+blacklist ${HOME}/.links
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
-blacklist ${HOME}/.links
 blacklist ${HOME}/.lmmsrc.xml
 blacklist ${HOME}/.local/lib/vivaldi
 blacklist ${HOME}/.local/share/0ad
@@ -502,6 +501,7 @@ blacklist ${HOME}/.local/share/geeqie
 blacklist ${HOME}/.local/share/gitg
 blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
+blacklist ${HOME}/.local/share/gnome-builder
 blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/gnome-recipes
@@ -637,9 +637,7 @@ blacklist ${HOME}/.teeworlds
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling
-blacklist ${HOME}/.tor-browser
-blacklist ${HOME}/.tor-browser-*
-blacklist ${HOME}/.tor-browser_*
+blacklist ${HOME}/.tor-browser*
 blacklist ${HOME}/.torcs
 blacklist ${HOME}/.tremulous
 blacklist ${HOME}/.ts3client
@@ -718,6 +716,7 @@ blacklist ${HOME}/.cache/godot
 blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
+blacklist ${HOME}/.cache/gnome-builder
 blacklist ${HOME}/.cache/gnome-recipes
 blacklist ${HOME}/.cache/gnome-twitch
 blacklist ${HOME}/.cache/gradio

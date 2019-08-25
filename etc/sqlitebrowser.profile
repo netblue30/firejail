@@ -42,4 +42,4 @@ private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,group,machine-id,passwd,pki,ssl
 private-tmp
 
-#memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute - breaks on Arch (see issue #1803)

@@ -1,11 +1,8 @@
 # Firejail profile for transmission-common
 # Description: Fast, easy and free BitTorrent client
 # This file is overwritten after every install/update
-quiet
 # Persistent local customizations
-include transmission-gtk.local
-# Persistent global definitions
-include globals.local
+include transmission-common.local
 
 noblacklist ${HOME}/.cache/transmission
 noblacklist ${HOME}/.config/transmission

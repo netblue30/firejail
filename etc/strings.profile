@@ -1,4 +1,5 @@
 # Firejail profile for strings
+# Description: print the strings of printable characters in files
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

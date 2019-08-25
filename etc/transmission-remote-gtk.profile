@@ -5,8 +5,7 @@ quiet
 # Persistent local customizations
 include transmission-remote-gtk.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/transmission-remote-gtk
 

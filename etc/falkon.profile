@@ -38,5 +38,6 @@ seccomp.drop @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@res
 # tracelog
 
 private-dev
+# private-etc alternatives,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,adobe,mime.types,mailcap,asound.conf,pulse,machine-id,ca-certificates,ssl,pki,crypto-policies
 # private-tmp - interferes with the opening of downloaded files
 

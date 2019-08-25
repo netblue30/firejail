@@ -6,4 +6,5 @@ include gnome-character-map.local
 # added by included profile
 #include globals.local
 
+# Redirect
 include gucharmap.profile

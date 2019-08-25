@@ -1,4 +1,5 @@
 # Firejail profile for pdftotext
+# Description: Portable Document Format (PDF) to text converter
 # This file is overwritten after every install/update
 # Persistent local customizations
 include pdftotext.local

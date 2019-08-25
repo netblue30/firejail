@@ -5,8 +5,7 @@ quiet
 # Persistent local customizations
 include transmission-gtk.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 private-bin transmission-gtk
 

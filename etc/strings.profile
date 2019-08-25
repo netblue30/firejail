@@ -43,3 +43,4 @@ private-lib libfakeroot
 private-tmp
 
 memory-deny-write-execute
+read-only ${HOME}

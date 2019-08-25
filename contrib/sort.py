@@ -78,6 +78,8 @@ def fix_profile(filename):
                 fixed_line = f"{line[:10]}{sort_alphabetical(line[10:])}"
             elif line[:8] == "protocol":
                 fixed_line = f"protocol {sort_protocol(line[9:])}"
+            elif line[:8] == "seccomp ":
+                fixed_line = f"{line[:8]}{sort_alphabetical(line[8:])}"
             else:
                 fixed_line = line
             if fixed_line != line:

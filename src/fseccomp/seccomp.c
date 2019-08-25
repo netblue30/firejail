@@ -80,6 +80,10 @@ void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_
 
 	// build pre-exec filter: don't blacklist any syscalls in @default-keep
 	filter_init(fd);
+
+	// allow exceptions in form of !syscall
+	syscall_check_list(list, filter_add_whitelist_for_excluded, fd, 0, NULL);
+
 	char *prelist, *postlist;
 	syscalls_in_list(list, "@default-keep", fd, &prelist, &postlist);
 	if (prelist)
@@ -128,6 +132,10 @@ void seccomp_default_drop(const char *fname1, const char *fname2, char *list, in
 	// build pre-exec filter: blacklist @default, don't blacklist
 	// any listed syscalls in @default-keep
 	filter_init(fd);
+
+	// allow exceptions in form of !syscall
+	syscall_check_list(list, filter_add_whitelist_for_excluded, fd, 0, NULL);
+
 	add_default_list(fd, allow_debuggers);
 	char *prelist, *postlist;
 	syscalls_in_list(list, "@default-keep", fd, &prelist, &postlist);
@@ -175,6 +183,10 @@ void seccomp_keep(const char *fname1, const char *fname2, char *list) {
 
 	// build pre-exec filter: whitelist also @default-keep
 	filter_init(fd);
+
+	// allow exceptions in form of !syscall
+	syscall_check_list(list, filter_add_blacklist_for_excluded, fd, 0, NULL);
+
 	// these syscalls are used by firejail after the seccomp filter is initialized
 	int r;
 	r = syscall_check_list("@default-keep", filter_add_whitelist, fd, 0, NULL);

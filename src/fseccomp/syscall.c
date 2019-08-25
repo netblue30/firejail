@@ -497,9 +497,17 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 			syscall_check_list(new_list, callback, fd, arg, ptrarg);
 		}
 		else {
+			bool negate = false;
+			if (*ptr == '!') {
+				negate = true;
+				ptr++;
+			}
 			syscall_process_name(ptr, &syscall_nr, &error_nr);
 			if (syscall_nr == -1) {;}
 			else if (callback != NULL) {
+				if (negate) {
+					syscall_nr = -syscall_nr;
+				}
 				if (error_nr != -1 && fd != 0) {
 					filter_add_errno(fd, syscall_nr, error_nr, ptrarg);
 				}
@@ -522,7 +530,7 @@ static void find_syscall(int fd, int syscall, int arg, void *ptrarg) {
 	(void)fd;
 	(void) arg;
 	SyscallCheckList *ptr = ptrarg;
-	if (syscall == ptr->syscall)
+	if (abs(syscall) == ptr->syscall)
 		ptr->found = true;
 }
 

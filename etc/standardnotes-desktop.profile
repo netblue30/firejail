@@ -34,7 +34,7 @@ nosound
 notv
 nou2f
 protocol unix,inet,inet6,netlink
-seccomp.drop @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@resources,@swap,acct,add_key,bpf,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,kcmp,keyctl,mincore,mount,name_to_handle_at,nfsservctl,ni_syscall,open_by_handle_at,pivot_root,remap_file_pages,request_key,setdomainname,sethostname,syslog,umount,umount2,userfaultfd,vhangup,vmsplice
+seccomp !chroot
 
 disable-mnt
 private-dev

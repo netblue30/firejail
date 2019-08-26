@@ -35,7 +35,7 @@ protocol unix,inet,inet6,netlink
 shell none
 #tracelog -- breaks
 
-private-bin ghostwriter,pandoc,gettext
+private-bin gettext,ghostwriter,pandoc
 private-cache
 private-dev
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed

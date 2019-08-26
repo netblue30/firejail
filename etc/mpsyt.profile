@@ -62,8 +62,8 @@ seccomp
 shell none
 tracelog
 
-#private-cache
 private-bin env,ffmpeg,mplayer,mpsyt,mpv,python*,youtube-dl
+#private-cache
 private-dev
 private-tmp
 

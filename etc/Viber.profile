@@ -28,12 +28,10 @@ nonewprivs
 noroot
 notv
 protocol unix,inet,inet6
-seccomp
+seccomp !chroot
 shell none
 
 disable-mnt
 private-bin awk,bash,dig,sh,Viber
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,hosts,localtime,machine-id,mailcap,nsswitch.conf,pki,proxychains.conf,pulse,resolv.conf,ssl,X11
 private-tmp
-
-env QTWEBENGINE_DISABLE_SANDBOX=1

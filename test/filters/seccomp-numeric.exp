@@ -1,0 +1,44 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2019 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "touch seccomp-test-file\r"
+after 100
+
+send --  "firejail --seccomp=unlinkat:ENOENT,mkdir:ENOENT rm seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"No such file or directory"
+}
+after 100
+
+send --  "firejail --seccomp=\\\$263:ENOENT,mkdir:ENOENT rm seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"No such file or directory"
+}
+after 100
+
+send --  "firejail --seccomp=unlinkat:ENOENT,mkdir:ENOENT mkdir seccomp-test-dir\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"No such file or directory"
+}
+after 100
+
+send --  "firejail --seccomp=unlinkat:ENOENT,\\\$83:ENOENT mkdir seccomp-test-dir\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"No such file or directory"
+}
+after 100
+
+send -- "rm seccomp-test-file\r"
+#send -- "rm -fr seccomp-test-dir\r"
+after 100
+puts "all done\n"

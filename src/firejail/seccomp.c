@@ -48,11 +48,11 @@ char *seccomp_check_list(const char *str) {
 	const char *ptr1 = str;
 	char *ptr2 = rv;
 	while (*ptr1 != '\0') {
-		if (isalnum(*ptr1) || *ptr1 == '_' || *ptr1 == ',' || *ptr1 == ':'
-				   || *ptr1 == '@' || *ptr1 == '-' || *ptr1 == '$')
+	if (isalnum(*ptr1) || *ptr1 == '_' || *ptr1 == ',' || *ptr1 == ':'
+				   || *ptr1 == '@' || *ptr1 == '-' || *ptr1 == '$' || *ptr1 = '!')
 			*ptr2++ = *ptr1++;
 		else {
-			fprintf(stderr, "Error: invalid syscall list\n");
+			fprintf(stderr, "Error: invalid syscall list entry %s\n", str);
 			exit(1);
 		}
 	}

@@ -1780,7 +1780,8 @@ system call groups are defined: @clock, @cpu-emulation, @debug,
 @default, @default-nodebuggers, @default-keep, @module, @obsolete,
 @privileged, @raw-io, @reboot, @resources and @swap. In addition, a
 system call can be specified by its number instead of name with prefix
-$, so for example $165 would be equal to mount on i386.
+$, so for example $165 would be equal to mount on i386. Exceptions
+can be allowed with prefix !.
 
 .br
 System architecture is strictly imposed only if flag
@@ -1798,8 +1799,10 @@ Example:
 .br
 $ firejail \-\-seccomp
 .TP
-\fB\-\-seccomp=syscall,@group
-Enable seccomp filter, blacklist the default list (@default) and the syscalls or syscall groups specified by the command.
+\fB\-\-seccomp=syscall,@group,!syscall2
+Enable seccomp filter, whitelist "syscall2", but blacklist the default
+list (@default) and the syscalls or syscall groups specified by the
+command.
 .br
 
 .br
@@ -1863,8 +1866,9 @@ domain with personality(2) system call.
 .br
 
 .TP
-\fB\-\-seccomp.drop=syscall,@group
-Enable seccomp filter, and blacklist the syscalls or the syscall groups specified by the command.
+\fB\-\-seccomp.drop=syscall,@group,!syscall2
+Enable seccomp filter, whitelist "syscall2" but blacklist the
+syscalls or the syscall groups specified by the command.
 .br
 
 .br
@@ -1899,10 +1903,11 @@ rm: cannot remove `testfile': Operation not permitted
 
 
 .TP
-\fB\-\-seccomp.keep=syscall,syscall,syscall
-Enable seccomp filter, and whitelist the syscalls specified by the
-command. The system calls needed by Firejail (group @default-keep:
-prctl, execve) are handled with the preload library.
+\fB\-\-seccomp.keep=syscall,@group,!syscall2
+Enable seccomp filter, blacklist "syscall2" but whitelist the
+syscalls or the syscall groups specified by the command. The system
+calls needed by Firejail (group @default-keep: prctl, execve) are
+handled with the preload library.
 .br
 
 .br

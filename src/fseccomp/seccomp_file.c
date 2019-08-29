@@ -60,24 +60,56 @@ void filter_init(int fd) {
 	write_to_file(fd, filter, sizeof(filter));
 }
 
-void filter_add_whitelist(int fd, int syscall, int arg, void *ptrarg) {
-	(void) arg;
-	(void) ptrarg;
-
+static void write_whitelist(int fd, int syscall) {
 	struct sock_filter filter[] = {
 		WHITELIST(syscall)
 	};
 	write_to_file(fd, filter, sizeof(filter));
 }
 
-void filter_add_blacklist(int fd, int syscall, int arg, void *ptrarg) {
-	(void) arg;
-	(void) ptrarg;
-
+static void write_blacklist(int fd, int syscall) {
 	struct sock_filter filter[] = {
 		BLACKLIST(syscall)
 	};
 	write_to_file(fd, filter, sizeof(filter));
+}
+
+void filter_add_whitelist(int fd, int syscall, int arg, void *ptrarg) {
+	(void) arg;
+	(void) ptrarg;
+
+	if (syscall >= 0) {
+		write_whitelist(fd, syscall);
+	}
+}
+
+// handle seccomp list exceptions (seccomp x,y,!z)
+void filter_add_whitelist_for_excluded(int fd, int syscall, int arg, void *ptrarg) {
+	(void) arg;
+	(void) ptrarg;
+
+	if (syscall < 0) {
+		write_whitelist(fd, -syscall);
+	}
+}
+
+void filter_add_blacklist(int fd, int syscall, int arg, void *ptrarg) {
+	(void) arg;
+	(void) ptrarg;
+
+	if (syscall >= 0) {
+		write_blacklist(fd, syscall);
+	}
+}
+
+// handle seccomp list exceptions (seccomp x,y,!z)
+void filter_add_blacklist_for_excluded(int fd, int syscall, int arg, void *ptrarg) {
+	(void) arg;
+	(void) ptrarg;
+
+	if (syscall < 0) {
+		write_blacklist(fd, -syscall);
+	}
 }
 
 void filter_add_errno(int fd, int syscall, int arg, void *ptrarg) {

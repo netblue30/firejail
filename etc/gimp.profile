@@ -8,7 +8,7 @@ include globals.local
 
 # gimp plugins are installed by the user in ${HOME}/.gimp-2.8/plug-ins/ directory
 # if you are not using external plugins, you can comment 'ignore noexec' statement below
-# or put 'ignore ignore noexec ${HOME}' in your gimp.local
+# or put 'noexec ${HOME}' in your gimp.local
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.config/GIMP

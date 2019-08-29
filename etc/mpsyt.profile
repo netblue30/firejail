@@ -48,16 +48,22 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
+nodbus
+nodvd
 # Seems to cause issues with Nvidia drivers sometimes
 nogroups
 nonewprivs
 noroot
+notv
+nou2f
+novideo
 protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
 
 private-bin env,ffmpeg,mplayer,mpsyt,mpv,python*,youtube-dl
+#private-cache
 private-dev
 private-tmp
 

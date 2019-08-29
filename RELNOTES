@@ -1,7 +1,7 @@
 firejail (0.9.61) baseline; urgency=low
   * work in progress
   * added file-copy-limit in /etc/firejail/firejail.config
-  * profile templates
+  * profile templates (/usr/share/doc/firejail)
   * allow-debuggers support in profiles
   * new scripts in conrib: gdb-firejail.sh and sort.py
   * new profiles: qgis, klatexformula, klatexformula_cmdl, links, xlinks
@@ -13,7 +13,8 @@ firejail (0.9.61) baseline; urgency=low
   * new profiles: mpg123-portaudio, mpg123-pulse, mpg123-strip, pavucontrol-qt
   * new profiles: gnome-characters, gnome-character-map, rsync, Whalebird,
   * new profiles: tor-browser (AUR), Zulip, tb-starter-wrapper, bzcat,
-  * new profiles: kiwix-desktop
+  * new profiles: kiwix-desktop, bzcat, zstd, pzstd, zstdcat, zstdgrep, zstdless
+  * new profiles: zstdmt, unzstd, i2p
  -- netblue30 <netblue30@yahoo.com>  Sat, 1 Jun 2019 08:00:00 -0500
 
 firejail (0.9.60) baseline; urgency=low

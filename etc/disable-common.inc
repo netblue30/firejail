@@ -299,11 +299,14 @@ blacklist ${HOME}/*.kdbx
 blacklist ${HOME}/*.key
 blacklist ${HOME}/.Private
 blacklist ${HOME}/.caff
+blacklist ${HOME}/.cargo/credentials
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/keybase
 blacklist ${HOME}/.davfs2/secrets
 blacklist ${HOME}/.ecryptfs
 blacklist ${HOME}/.fetchmailrc
+blacklist ${HOME}/.git-credential-cache
+blacklist ${HOME}/.git-credentials
 blacklist ${HOME}/.gnome2/keyrings
 blacklist ${HOME}/.gnupg
 blacklist ${HOME}/.config/hub

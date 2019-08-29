@@ -1,4 +1,5 @@
 # Firejail profile for etr
+# Description: High speed arctic racing game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include etr.local
@@ -29,6 +30,7 @@ nonewprivs
 noroot
 notv
 nou2f
+novideo
 protocol unix,netlink
 seccomp
 shell none

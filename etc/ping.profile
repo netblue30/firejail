@@ -1,4 +1,5 @@
 # Firejail profile for ping
+# Description: send ICMP ECHO_REQUEST to network hosts
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

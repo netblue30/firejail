@@ -110,6 +110,9 @@ echo "TESTING: seccomp chmod profile - seccomp lists (test/filters/seccomp-chmod
 echo "TESTING: seccomp empty (test/filters/seccomp-empty.exp)"
 ./seccomp-empty.exp
 
+echo "TESTING: seccomp numeric (test/filters/seccomp-numeric.exp)"
+./seccomp-numeric.exp
+
 if [ "$(uname -m)" = "x86_64" ]; then
         echo "TESTING: seccomp dual filter (test/filters/seccomp-dualfilter.exp)"
         ./seccomp-dualfilter.exp

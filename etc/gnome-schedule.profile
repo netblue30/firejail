@@ -35,14 +35,6 @@ include disable-xdg.inc
 
 mkfile ${HOME}/.gnome/gnome-schedule
 whitelist ${HOME}/.gnome/gnome-schedule
-whitelist /etc/at.allow
-whitelist /etc/at.deny
-whitelist /etc/cron.allow
-whitelist /etc/cron.deny
-whitelist /etc/fonts
-whitelist /etc/pam.d
-whitelist /etc/ld.so.preload
-whitelist /etc/shadow
 whitelist /var/spool/atd
 whitelist /var/spool/cron
 include whitelist-common.inc
@@ -66,5 +58,6 @@ tracelog
 disable-mnt
 private-cache
 private-dev
+private-etc at.allow,at.deny,cron.allow,cron.deny,fonts,ld.so.preload,pam.d,shadow
 writable-var
 

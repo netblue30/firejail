@@ -41,5 +41,3 @@ private-dev
 private-etc alternatives,dconf,fonts,gtk-3.0,machine-id
 private-lib
 private-tmp
-
-# memory-deny-write-execute

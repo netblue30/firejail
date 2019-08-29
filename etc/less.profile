@@ -8,8 +8,6 @@ include less.local
 include globals.local
 
 noblacklist ${HOME}/.lesshst
-read-only ${HOME}
-read-write ${HOME}/.lesshst
 
 include disable-devel.inc
 include disable-exec.inc
@@ -45,3 +43,5 @@ private-dev
 writable-var-log
 
 memory-deny-write-execute
+read-only ${HOME}
+read-write ${HOME}/.lesshst

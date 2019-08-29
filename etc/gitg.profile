@@ -22,6 +22,7 @@ include disable-programs.inc
 include whitelist-var-common.inc
 
 caps.drop all
+netfilter
 no3d
 nodvd
 nogroups
@@ -39,6 +40,3 @@ private-bin git,gitg,ssh
 private-cache
 private-dev
 private-tmp
-
-# mdwe breaks diff in older versions
-#memory-deny-write-execute

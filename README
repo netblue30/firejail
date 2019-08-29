@@ -99,6 +99,8 @@ announ (https://github.com/announ)
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start
+aoand (https://github.com/aoand)
+	- seccomp fix: allow numeric syscalls
 Austin Morton (https://github.com/apmorton)
 	- deterministic-exit-code option
 	- private-cwd options

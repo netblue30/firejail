@@ -34,6 +34,7 @@ nonewprivs
 noroot
 notv
 nou2f
+novideo
 # comment the protocol line when using the ubuntu 18.04/debian 10 apparmor profile
 protocol unix,inet,inet6
 # comment seccomp when using the ubuntu 18.04/debian 10 apparmor profile

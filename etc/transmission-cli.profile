@@ -5,8 +5,7 @@ quiet
 # Persistent local customizations
 include transmission-cli.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 private-bin transmission-cli
 private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl

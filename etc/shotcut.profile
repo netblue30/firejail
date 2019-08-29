@@ -1,4 +1,5 @@
 # Firejail profile for shotcut
+# Description: A free, open source, cross-platform video editor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include shotcut.local

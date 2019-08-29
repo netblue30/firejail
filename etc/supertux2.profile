@@ -1,4 +1,5 @@
 # Firejail profile for supertux2
+# Description: Jump'n run like game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include supertux2.local
@@ -27,6 +28,7 @@ nonewprivs
 noroot
 notv
 nou2f
+novideo
 protocol unix,netlink
 seccomp
 shell none

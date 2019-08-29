@@ -169,6 +169,7 @@ Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
 corecontingency (https://https://github.com/corecontingency)
 	- tighten private-bin and etc for torbrowser-launcher.profile
+	- added i2prouter profile
 crass (https://github.com/crass)
 	- extract_command_name fixes
 	- update appimage size calculation to newest code from libappimage
@@ -236,6 +237,8 @@ floxo (https://github.com/floxo)
 	- fixed qml disk cache issue
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template/--private-home
+František Polášek (https://github.com/fandaa)
+	- fix QOwnNotes profile
 fuelflo (https://github.com/fuelflo)
     - added rambox profile
 Fred-Barclay (https://github.com/Fred-Barclay)
@@ -371,11 +374,14 @@ Jean Lucas (https://github.com/flacks)
 	- add AnyDesk profile
 	- add WebStorm profile
 	- add XMind profile
+	- add Whalebird profile
+	- add zulip profile
 	- add nvm to list of disabled interpreters
 	- fixes for tor-browser-* profiles
 	- alias for riot-desktop
 	- add gnome-mpv profile
 	- fix wire profile
+	- fix itch profile
 	- add Beaker profile
 	- fixes for gnome-music
 	- allow reading of system-wide Flatpak locale in gajim profile
@@ -503,6 +509,8 @@ Lorenzo "Palinuro" Faletra (https://github.com/PalinuroSec)
 	- fixes to keepassxc, thunderbird and pluma
 Panzerfather (https://github.com/Panzerfather)
 	- allow eog to access user's trash
+Patrick Schleizer (https://github.com/adrelanos)
+	- fix tb-starter-wrapper profile
 Patrick Toomey (https://sourceforge.net/u/ptoomey/profile/)
 	- user namespace implementation
 Paul Moore <pmoore@redhat.com>

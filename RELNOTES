@@ -3,6 +3,8 @@ firejail (0.9.61) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config
   * profile templates (/usr/share/doc/firejail)
   * allow-debuggers support in profiles
+  * several seccomp enhancements
+  * compiler flags autodetection
   * new scripts in conrib: gdb-firejail.sh and sort.py
   * new profiles: qgis, klatexformula, klatexformula_cmdl, links, xlinks
   * new profiles: pandoc, teams-for-linux, OpenArena, gnome-sound-recorder

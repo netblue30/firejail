@@ -110,7 +110,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 
 	if (arg_debug) {
 		for (i = 0; i < len; i++)
-			printf("\t%s\n", cmd[i]);
+			printf("%s%s\n", (i)?"\t":"", cmd[i]);
 	}
 
 	// fork and execute
@@ -130,7 +130,8 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		errExit("waitpid");
 
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
-		printf("\n\n\n");
+		if (fp == stdout)
+			printf("--- Built profile beings after this line ---\n");
 		fprintf(fp, "############################################\n");
 		fprintf(fp, "# %s profile\n", argv[index]);
 		fprintf(fp, "############################################\n");
@@ -177,9 +178,10 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "### environment\n");
 		fprintf(fp, "shell none\n");
 
-		unlink(trace_output);
-		unlink(strace_output);
-
+		if (!arg_debug) {
+			unlink(trace_output);
+			unlink(strace_output);
+		}
 	}
 	else {
 		fprintf(stderr, "Error: cannot run the sandbox\n");

@@ -61,7 +61,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 
 	char *output;
 	char *stroutput;
-	if(asprintf(&output,"--output=%s",trace_output) == -1)
+	if(asprintf(&output,"--trace=%s",trace_output) == -1)
 		errExit("asprintf");
 	if(asprintf(&stroutput,"-o%s",strace_output) == -1)
 		errExit("asprintf");
@@ -69,11 +69,10 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	char *cmdlist[] = {
 	  BINDIR "/firejail",
 	  "--quiet",
-	  output,
 	  "--noprofile",
 	  "--caps.drop=all",
 	  "--nonewprivs",
-	  "--trace",
+	  output,
 	  "--shell=none",
 	  "/usr/bin/strace", // also used as a marker in build_profile()
 	  "-c",

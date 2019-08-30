@@ -80,6 +80,7 @@ int arg_caps_keep = 0;			// keep list
 char *arg_caps_list = NULL;			// optional caps list
 
 int arg_trace = 0;				// syscall tracing support
+char *arg_tracefile = NULL;			// syscall tracing file
 int arg_tracelog = 0;				// blacklist tracing support
 int arg_rlimit_cpu = 0;				// rlimit max cpu time
 int arg_rlimit_nofile = 0;			// rlimit nofile
@@ -1296,6 +1297,10 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--trace") == 0)
 			arg_trace = 1;
+		else if (strncmp(argv[i], "--trace=", 8) == 0) {
+			arg_trace = 1;
+			arg_tracefile = argv[i] + 8;
+		}
 		else if (strcmp(argv[i], "--tracelog") == 0)
 			arg_tracelog = 1;
 		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {

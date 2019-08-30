@@ -260,6 +260,7 @@ extern int arg_caps_keep;		// keep list
 extern char *arg_caps_list;		// optional caps list
 
 extern int arg_trace;		// syscall tracing support
+extern char *arg_tracefile;	// syscall tracing file
 extern int arg_tracelog;	// blacklist tracing support
 extern int arg_rlimit_cpu;	// rlimit cpu
 extern int arg_rlimit_nofile;	// rlimit nofile

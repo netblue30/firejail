@@ -63,7 +63,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	char *stroutput;
 	if(asprintf(&output,"--output=%s",trace_output) == -1)
 		errExit("asprintf");
-	if(asprintf(&stroutput,"-o %s",strace_output) == -1)
+	if(asprintf(&stroutput,"-o%s",strace_output) == -1)
 		errExit("asprintf");
 
 	char *cmdlist[] = {

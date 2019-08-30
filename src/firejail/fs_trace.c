@@ -45,14 +45,16 @@ void fs_trace_preload(void) {
 		if (arg_debug)
 			printf("Creating an empty trace log file: %s\n", arg_tracefile);
 		// create a bind mounted trace logfile that the sandbox can see
+		EUID_USER();
 		FILE *fp = fopen(arg_tracefile, "w");
 		if (!fp)
 			errExit("fopen");
 		SET_PERMS_STREAM(fp, firejail_uid, firejail_gid, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 		fclose(fp);
+		EUID_ROOT();
 		fp = fopen(RUN_TRACE_FILE, "w");
 		if (!fp)
-			errExit("fopen");
+			errExit("fopen " RUN_TRACE_FILE);
 		fclose(fp);
 		fs_logger2("touch ", arg_tracefile);
 		if (mount(arg_tracefile, RUN_TRACE_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)

@@ -51,7 +51,7 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 # we need to allow chroot, io_getevents, ioprio_set, io_setup, io_submit system calls
-seccomp !chroot,!io_getevents,!io_submit,!io_submit,!ioprio_set
+seccomp !chroot,!io_getevents,!io_setup,!io_submit,!ioprio_set
 # tracelog
 
 private-dev

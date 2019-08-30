@@ -67,7 +67,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		errExit("asprintf");
 
 	char *cmdlist[] = {
-	  "/usr/bin/firejail",
+	  BINDIR "/firejail",
 	  "--quiet",
 	  output,
 	  "--noprofile",

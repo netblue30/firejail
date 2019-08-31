@@ -33,7 +33,7 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6,netlink
-seccomp !chroot
+seccomp !chroot,!sched_setscheduler
 shell none
 
 disable-mnt

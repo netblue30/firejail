@@ -39,7 +39,7 @@ notv
 nou2f
 novideo
 protocol unix
-seccomp
+seccomp !sched_setscheduler
 shell none
 tracelog
 

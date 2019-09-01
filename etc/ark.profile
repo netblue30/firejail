@@ -31,7 +31,7 @@ notv
 nou2f
 novideo
 protocol unix
-seccomp
+seccomp !sched_setscheduler
 shell none
 
 private-bin 7z,ark,bash,lrzip,lsar,lz4,lzop,p7zip,rar,sh,tclsh,unar,unrar,unzip,zip,zipinfo

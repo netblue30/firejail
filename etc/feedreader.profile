@@ -36,7 +36,7 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
-seccomp
+seccomp !sched_setscheduler,!sched_setaffinity
 shell none
 
 disable-mnt

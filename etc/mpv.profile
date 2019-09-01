@@ -39,7 +39,7 @@ nonewprivs
 noroot
 nou2f
 protocol unix,inet,inet6
-seccomp
+seccomp !sched_setscheduler,!sched_setaffinity
 shell none
 tracelog
 

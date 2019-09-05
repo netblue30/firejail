@@ -138,6 +138,7 @@ include globals.local
 #  - packet almost never
 #protocol unix,inet,inet6,netlink,packet
 #seccomp
+##seccomp !chroot
 ##seccomp.drop SYSCALLS (see syscalls.txt)
 #shell none
 #tracelog

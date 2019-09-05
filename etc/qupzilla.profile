@@ -21,7 +21,5 @@ mkdir ${HOME}/.config/qupzilla
 whitelist ${HOME}/.cache/qupzilla
 whitelist ${HOME}/.config/qupzilla
 
-# private-tmp - interferes with the opening of downloaded files
-
 # Redirect
 include falkon.profile

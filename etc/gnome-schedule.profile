@@ -58,6 +58,5 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc at.allow,at.deny,cron.allow,cron.deny,fonts,ld.so.preload,pam.d,shadow
 writable-var
 

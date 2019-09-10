@@ -50,10 +50,7 @@ static orig_fopen64_t orig_fopen64 = NULL;
 //
 // library constructor/destructor
 //
-// Replacing printf with fprintf to /dev/tty in order to fix #561
-// If you really want to turn it off, comment the following line, but its a
-// really bad idea.
-#define PRINTF_DEVTTY
+// Using fprintf to /dev/tty instead of printf in order to fix #561
 static FILE *ftty = NULL;
 static pid_t mypid = 0;
 #define MAXNAME 16
@@ -67,11 +64,7 @@ void init(void) {
 	orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
 
 	// tty
-#ifdef PRINTF_DEVTTY
 	ftty = orig_fopen("/dev/tty", "w");
-#else
-	ftty = stderr;
-#endif
 	tprintf(ftty, "=== tracelib init() === \n");
 
 	// pid

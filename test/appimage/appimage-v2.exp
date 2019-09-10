@@ -82,7 +82,7 @@ spawn $env(SHELL)
 send -- "firejail --shutdown=appimage-test\r"
 set spawn_id $appimage_id
 expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
+	timeout {puts "shutdown\n"}
 	"AppImage unmounted"
 }
 

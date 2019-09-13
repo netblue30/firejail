@@ -16,16 +16,13 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
-caps.drop all
+caps.keep sys_admin,sys_chroot
 netfilter
 nodvd
 nogroups
-nonewprivs
-noroot
 notv
-protocol unix,inet,inet6,netlink
-seccomp !chroot
 shell none
 
 disable-mnt

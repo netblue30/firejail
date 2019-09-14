@@ -68,21 +68,19 @@ Inheritance of groups
 +----------------+  +---------+  +--------+  +--------------+
 | @cpu-emulation |  | @clock  |  | @chown |  | @aio         |
 | @debug         |  | @module |  +--------+  | @basic-io    |
-| @obsolete      |  | @raw-io |     :  :     | @default     |
-+----------------+  | @reboot |     :  :     | @file-system |
-   :                | @swap   |     :  :     | @io-event    |
-   :                +---------+     :  :     | @ipc         |
-   :                  :  :          :  :     | @keyring     |
-   :    ..............:  :          :  :     | @memlock     |
-   :    :                :  ........:  :     | @network-io  |
-   :    :                :  :          :     | @process     |
-+----------+    +-------------+        :     | @resources   |
-| @default |    | @privileged |        :     | @setuid      |
-+----------+    +-------------+        :     | @signal      |
-   :    :                              :     | @sync        |
+| @obsolete      |  | @raw-io |     :  :     | @file-system |
++----------------+  | @reboot |     :  :     | @io-event    |
+   :                | @swap   |     :  :     | @ipc         |
+   :                +---------+     :  :     | @keyring     |
+   :                  :  :          :  :     | @memlock     |
+   :    ..............:  :          :  :     | @network-io  |
+   :    :                :  ........:  :     | @process     |
+   :    :                :  :          :     | @resources   |
++----------+    +-------------+        :     | @setuid      |
+| @default |    | @privileged |        :     | @signal      |
++----------+    +-------------+        :     | @sync        |
    :    :                              :     | @timer       |
    :    :...........................   :     +--------------+
-   :                               :   :        :
    :                               :   :        :
 +----------------------+        +-----------------+
 | @default-nodebuggers |        | @system-service |

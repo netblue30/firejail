@@ -1,73 +1,107 @@
-Hints for writing seccomp.drop lines
-====================================
+Hints to write own seccomp filters
+==================================
+
+
+The different seccomp commands
+------------------------------
+
+Always have a look at 'man 1 firejail'.
+
+ - seccomp
+    Blocks all syscalls in the default-group.
+     - The default-group is @default-nodebuggers, unless allow-debuggers is
+       specified, then @default is used.
+     - Listed syscalls and groups are also blocked.
+     - Exceptions are possible by putting a ! in before the name of a syscall.
+ - seccomp.block-secondary
+    Allows only native syscalls, all syscalls for other architectures are blocked.
+ - seccomp.drop
+    Blocks all listed syscalls.
+     - Exceptions are possible by putting a ! in before the name of a syscall.
+ - seccomp.keep
+    Allows only listed syscalls.
+     To write your own seccomp.keep line, see:
+     - https://firejail.wordpress.com/documentation-2/seccomp-guide/
+     - https://github.com/netblue30/firejail/blob/master/contrib/syscalls.sh
 
 Definition of groups
 --------------------
 
+@aio=io_cancel,io_destroy,io_getevents,io_pgetevents,io_setup,io_submit
+@basic-io=_llseek,close,dup,dup2,dup3,lseek,pread64,preadv,preadv2,pwrite64,pwritev,pwritev2,read,readv,write,writev
+@chown=chown,chown32,fchown,fchown32,fchownat,lchown,lchown32
 @clock=adjtimex,clock_adjtime,clock_settime,settimeofday,stime
-@module=delete_module,finit_module,init_module
-@raw-io=ioperm,iopl,pciconfig_iobase,pciconfig_read,pciconfig_write,s390_mmio_read,s390_mmio_write
-@reboot=kexec_file_load,kexec_load,reboot
-@swap=swapoff,swapon
-
-@privileged=@clock,@module,@raw-io,@reboot,@swap,acct,bpf,chroot,mount,nfsservctl,pivot_root,setdomainname,sethostname,umount2,vhangup
-
 @cpu-emulation=modify_ldt,subpage_prot,switch_endian,vm86,vm86old
 @debug=lookup_dcookie,perf_event_open,process_vm_writev,rtas,s390_runtime_instr,sys_debug_setcontext
-@obsolete=_sysctl,afs_syscall,bdflush,break,create_module,ftime,get_kernel_syms,getpmsg,gtty,lock,mpx,prof,profil,putpmsg,query_module,security,sgetmask,ssetmask,stty,sysfs,tuxcall,ulimit,uselib,ustat,vserver
-@resources=mbind,migrate_pages,move_pages,set_mempolicy
-
-@default=@cpu-emulation,@debug,@obsolete,@privileged,@resources,add_key,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,kcmp,keyctl,name_to_handle_at,ni_syscall,open_by_handle_at,remap_file_pages,request_key,syslog,umount,userfaultfd,vmsplice
-
-@default-nodebuggers=@default,personality,process_vm_readv,ptrace
-
+@default=@clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@swap,open_by_handle_at,name_to_handle_at,ioprio_set,ni_syscall,syslog,fanotify_init,kcmp,add_key,request_key,mbind,migrate_pages,move_pages,keyctl,io_setup,io_destroy,io_getevents,io_submit,io_cancel,remap_file_pages,set_mempolicyvmsplice,umount,userfaultfd,acct,bpf,chroot,mount,nfsservctl,pivot_root,setdomainname,sethostname,umount2,vhangup
+@default-nodebuggers=@default,ptrace,personality,process_vm_readv
 @default-keep=execve,prctl
+@file-system=access,chdir,chmod,close,creat,faccessat,fallocate,fchdir,fchmod,fchmodat,fcntl,fcntl64,fgetxattr,flistxattr,fremovexattr,fsetxattr,fstat,fstat64,fstatat64,fstatfs,fstatfs64,ftruncate,ftruncate64,futimesat,getcwd,getdents,getdents64,getxattr,inotify_add_watch,inotify_init,inotify_init1,inotify_rm_watch,lgetxattr,link,linkat,listxattr,llistxattr,lremovexattr,lsetxattr,lstat,lstat64,mkdir,mkdirat,mknod,mknodat,mmap,mmap2,munmap,newfstatat,oldfstat,oldlstat,oldstat,open,openat,readlink,readlinkat,removexattr,rename,renameat,renameat2,rmdir,setxattr,stat,stat64,statfs,statfs64,statx,symlink,symlinkat,truncate,truncate64,unlink,unlinkat,utime,utimensat,utimes
+@io-event=_newselect,epoll_create,epoll_create1,epoll_ctl,epoll_ctl_old,epoll_pwait,epoll_wait,epoll_wait_old,eventfd,eventfd2,poll,ppoll,pselect6,select
+@ipc=ipc,memfd_create,mq_getsetattr,mq_notify,mq_open,mq_timedreceive,mq_timedsend,mq_unlink,msgctl,msgget,msgrcv,msgsnd,pipe,pipe2,process_vm_readv,process_vm_writev,semctl,semget,semop,semtimedop,shmat,shmctl,shmdt,shmget
+@keyring=add_key,keyctl,request_key
+@memlock=mlock,mlock2,mlockall,munlock,munlockall
+@module=delete_module,finit_module,init_module
+@mount=chroot,mount,pivot_root,umount,umount2
+@network-io=accept,accept4,bind,connect,getpeername,getsockname,getsockopt,listen,recv,recvfrom,recvmmsg,recvmsg,send,sendmmsg,sendmsg,sendto,setsockopt,shutdown,socket,socketcall,socketpair
+@obsolete=_sysctl,afs_syscall,bdflush,break,create_module,ftime,get_kernel_syms,getpmsg,gtty,idle,lock,mpx,prof,profil,putpmsg,query_module,security,sgetmask,ssetmask,stty,sysfs,tuxcall,ulimit,uselib,ustat,vserver
+@privileged=@chown,@clock,@module,@raw-io,@reboot,@swap,_sysctl,acct,bpf,capset,chroot,fanotify_init,mount,nfsservctl,open_by_handle_at,pivot_root,quotactl,setdomainname,setfsuid,setfsuid32,setgroups,setgroups32,sethostname,setresuid,setresuid32,setreuid,setreuid32,setuid,setuid32,umount2,vhangup
+@process=arch_prctl,capget,clone,execveat,fork,getrusage,kill,pidfd_send_signal,prctl,rt_sigqueueinfo,rt_tgsigqueueinfo,setns,swapcontext,tgkill,times,tkill,unshare,vfork,wait4,waitid,waitpid
+@raw-io=ioperm,iopl,pciconfig_iobase,pciconfig_read,pciconfig_write,s390_mmio_read,s390_mmio_write
+@reboot=kexec_load,kexec_file_load,reboot
+@resources=ioprio_set,mbind,migrate_pages,move_pages,nice,sched_setaffinity,sched_setattr,sched_setparam,sched_setscheduler,set_mempolicy
+@setuid=setgid,setgid32,setgroups,setgroups32,setregid,setregid32,setresgid,setresgid32,setresuid,setresuid32,setreuid,setreuid32,setuid,setuid32
+@signal=rt_sigaction,rt_sigpending,rt_sigprocmask,rt_sigsuspend,rt_sigtimedwait,sigaction,sigaltstack,signal,signalfd,signalfd4,sigpending,sigprocmask,sigsuspend
+@swap=swapon,swapoff
+@sync=fdatasync,fsync,msync,sync,sync_file_range,sync_file_range2,syncfs
+@system-service=@aio,@basic-io,@chown,@default,@file-system,@io-event,@ipc,@keyring,@memlock,@network-io,@process,@resources,@setuid,@signal,@sync,@timer,brk,capget,capset,copy_file_range,fadvise64,fadvise64_64,flock,get_mempolicy,getcpu,getpriority,getrandom,ioctl,ioprio_get,kcmp,madvise,mprotect,mremap,name_to_handle_at,oldolduname,olduname,personality,readahead,readdir,remap_file_pages,sched_get_priority_max,sched_get_priority_min,sched_getaffinity,sched_getattr,sched_getparam,sched_getscheduler,sched_rr_get_interval,sched_yield,sendfile,sendfile64,setfsgid,setfsgid32,setfsuid,setfsuid32,setpgid,setsid,splice,sysinfo,tee,umask,uname,userfaultfd,vmsplice
+@timer=alarm,getitimer,setitimer,timer_create,timer_delete,timer_getoverrun,timer_gettime,timer_settime,timerfd_create,timerfd_gettime,timerfd_settime,times
 
 Inheritance of groups
 ---------------------
 
-+---------+----------------+---------------+
-| @clock  | @cpu-emulation | @default-keep |
-| @module | @debug         |               |
-| @raw-io | @obsolete      |               |
-| @reboot | @resources     |               |
-| @swap   |                |               |
-+---------+----------------+---------------+
-     :              :
-+-------------+     :
-| @privileged |     :
-+-------------+     :
-     :              :
-+----------+        :
-| @default |........:
-+----------+
-    :
-+----------------------+
-| @default-nodebuggers |
-+----------------------+
++---------------+
+| @default-keep |
+| @mount        |
++---------------+
 
-common used seccomp.drop lines
-------------------------------
++----------------+  +---------+  +--------+  +--------------+
+| @cpu-emulation |  | @clock  |  | @chown |  | @aio         |
+| @debug         |  | @module |  +--------+  | @basic-io    |
+| @obsolete      |  | @raw-io |     :  :     | @file-system |
++----------------+  | @reboot |     :  :     | @io-event    |
+   :                | @swap   |     :  :     | @ipc         |
+   :                +---------+     :  :     | @keyring     |
+   :                  :  :          :  :     | @memlock     |
+   :    ..............:  :          :  :     | @network-io  |
+   :    :                :  ........:  :     | @process     |
+   :    :                :  :          :     | @resources   |
++----------+    +-------------+        :     | @setuid      |
+| @default |    | @privileged |        :     | @signal      |
++----------+    +-------------+        :     | @sync        |
+   :    :                              :     | @timer       |
+   :    :...........................   :     +--------------+
+   :                               :   :        :
++----------------------+        +-----------------+
+| @default-nodebuggers |        | @system-service |
++----------------------+        +-----------------+
 
-@default without chroot: @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@resources,@swap,acct,add_key,bpf,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,kcmp,keyctl,mount,name_to_handle_at,nfsservctl,ni_syscall,open_by_handle_at,pivot_root,remap_file_pages,request_key,setdomainname,sethostname,syslog,umount,umount2,userfaultfd,vhangup,vmsplice
 
-@default-nodebuggers without chroot: @clock,@cpu-emulation,@debug,@module,@obsolete,@raw-io,@reboot,@resources,@swap,acct,add_key,bpf,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,kcmp,keyctl,mount,name_to_handle_at,nfsservctl,ni_syscall,open_by_handle_at,personality,pivot_root,process_vm_readv,ptrace,remap_file_pages,request_key,setdomainname,sethostname,syslog,umount,umount2,userfaultfd,vhangup,vmsplice
-
-Building a seccomp.drop line if seccomp breaks a programm
----------------------------------------------------------
+What to do if seccomp breaks a program
+--------------------------------------
 
 ```
 $ journalctl --grep=syscall --follow
 <...> audit[…]: SECCOMP <...> syscall=161 <...>
 $ firejail --debug-syscalls | grep 161
-161	- chroot
+161 - chroot
 ```
+Profile: `seccomp -> seccomp !chroot`
 
-TODO: write a short explanation
-TODO: suggest to use `allow-debuggers` instead of `seccomp.drop` if possible
+Start `journalctl --grep=syscall --follow` in a terminal, then start the broken
+program. Now you see one or more long lines containing `syscall=NUMBER` somewhere.
+Stop journalctl (^C) and execute `firejail --debug-syscalls | grep NUMBER`. You
+will see something like `NUMBER  - NAME`, because you now know the name of the
+syscall, you can add an exception to seccomp by putting `!NAME` to seccomp.
 
-see also
---------
-
- - contrib/syscalls.sh
- - https://firejail.wordpress.com/documentation-2/seccomp-guide/
+If the blocked syscall is ptrace, consider to add allow-debuggers to the profile.

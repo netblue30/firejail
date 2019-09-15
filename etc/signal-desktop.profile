@@ -22,16 +22,12 @@ whitelist ${HOME}/.config/Signal
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-caps.drop all
+caps.keep sys_admin,sys_chroot
 netfilter
 nodvd
 nogroups
-nonewprivs
-noroot
 notv
 nou2f
-protocol unix,inet,inet6,netlink
-seccomp
 shell none
 
 disable-mnt

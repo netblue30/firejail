@@ -22,7 +22,8 @@ include whitelist-var-common.inc
 
 caps.drop all
 machine-id
-nodbus
+# needs D-Bus when started from a file manager
+#nodbus
 nodvd
 nogroups
 nonewprivs

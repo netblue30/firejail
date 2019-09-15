@@ -201,11 +201,14 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@default", .list =
+	  "@clock,"
 	  "@cpu-emulation,"
 	  "@debug,"
+	  "@module,"
 	  "@obsolete,"
-	  "@privileged,"
-	  "@resources,"
+	  "@raw-io,"
+	  "@reboot,"
+	  "@swap,"
 #ifdef SYS_open_by_handle_at
 	  "open_by_handle_at,"
 #endif
@@ -233,6 +236,15 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_request_key
 	  "request_key,"
 #endif
+#ifdef SYS_mbind
+	  "mbind,"
+#endif
+#ifdef SYS_migrate_pages
+	  "migrate_pages,"
+#endif
+#ifdef SYS_move_pages
+	  "move_pages,"
+#endif
 #ifdef SYS_keyctl
 	  "keyctl,"
 #endif
@@ -254,6 +266,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_remap_file_pages
 	  "remap_file_pages,"
 #endif
+#ifdef SYS_set_mempolicy
+	  "set_mempolicy"
+#endif
 #ifdef SYS_vmsplice
 	  "vmsplice,"
 #endif
@@ -262,6 +277,36 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_userfaultfd
 	  "userfaultfd,"
+#endif
+#ifdef SYS_acct
+	  "acct,"
+#endif
+#ifdef SYS_bpf
+	  "bpf,"
+#endif
+#ifdef SYS_chroot
+	  "chroot,"
+#endif
+#ifdef SYS_mount
+	  "mount,"
+#endif
+#ifdef SYS_nfsservctl
+	  "nfsservctl,"
+#endif
+#ifdef SYS_pivot_root
+	  "pivot_root,"
+#endif
+#ifdef SYS_setdomainname
+	  "setdomainname,"
+#endif
+#ifdef SYS_sethostname
+	  "sethostname,"
+#endif
+#ifdef SYS_umount2
+	  "umount2,"
+#endif
+#ifdef SYS_vhangup
+	  "vhangup"
 #endif
 //#ifdef SYS_mincore	// 0.9.57 - problem fixed in Linux kernel 5.0; on 4.x it will break kodi, mpv, totem
 //	  "mincore"

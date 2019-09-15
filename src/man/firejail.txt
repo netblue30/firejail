@@ -1762,25 +1762,22 @@ Example:
 $ firejail \-\-net=eth0 \-\-scan
 .TP
 \fB\-\-seccomp
-Enable seccomp filter and blacklist the syscalls in the default list (@default). The default list is as follows:
-_sysctl, acct, add_key, adjtimex, afs_syscall, bdflush, bpf, break, chroot, clock_adjtime, clock_settime,
-create_module, delete_module, fanotify_init, finit_module, ftime, get_kernel_syms, getpmsg, gtty, init_module,
-io_cancel, io_destroy, io_getevents, io_setup, io_submit, ioperm, iopl, ioprio_set, kcmp, kexec_file_load,
-kexec_load, keyctl, lock, lookup_dcookie, mbind, migrate_pages, modify_ldt, mount, move_pages, mpx,
-name_to_handle_at, nfsservctl, ni_syscall, open_by_handle_at, pciconfig_iobase, pciconfig_read, pciconfig_write, perf_event_open,
-personality, pivot_root, process_vm_readv, process_vm_writev, prof, profil, ptrace, putpmsg,
-query_module, reboot, remap_file_pages, request_key, rtas, s390_mmio_read, s390_mmio_write, s390_runtime_instr,
-security, set_mempolicy, setdomainname, sethostname, settimeofday, sgetmask, ssetmask, stime, stty, subpage_prot,
-swapoff, swapon, switch_endian, sys_debug_setcontext, sysfs, syslog, tuxcall, ulimit, umount, umount2, uselib, userfaultfd, ustat, vhangup,
-vm86, vm86old, vmsplice and vserver.
+Enable seccomp filter and blacklist the syscalls in the default list,
+which is  @default-nodebuggers unless allow-debuggers is specified,
+then it is @default.
 
 .br
 To help creating useful seccomp filters more easily, the following
-system call groups are defined: @clock, @cpu-emulation, @debug,
-@default, @default-nodebuggers, @default-keep, @module, @obsolete,
-@privileged, @raw-io, @reboot, @resources and @swap. In addition, a
-system call can be specified by its number instead of name with prefix
-$, so for example $165 would be equal to mount on i386.
+system call groups are defined: @aio, @basic-io, @chown, @clock,
+@cpu-emulation, @debug, @default, @default-nodebuggers, @default-keep,
+@file-system, @io-event, @ipc, @keyring, @memlock, @module, @mount,
+@network-io, @obsolete, @privileged, @process, @raw-io, @reboot,
+@resources, @setuid, @swap, @sync, @system-service and @timer.
+More informations about groups can be found in /usr/share/doc/firejail/syscalls.txt
+
+In addition, a system call can be specified by its number instead of
+name with prefix $, so for example $165 would be equal to mount on i386.
+Exceptions can be allowed with prefix !.
 
 .br
 System architecture is strictly imposed only if flag
@@ -1798,8 +1795,10 @@ Example:
 .br
 $ firejail \-\-seccomp
 .TP
-\fB\-\-seccomp=syscall,@group
-Enable seccomp filter, blacklist the default list (@default) and the syscalls or syscall groups specified by the command.
+\fB\-\-seccomp=syscall,@group,!syscall2
+Enable seccomp filter, whitelist "syscall2", but blacklist the default
+list and the syscalls or syscall groups specified by the
+command.
 .br
 
 .br
@@ -1899,10 +1898,10 @@ rm: cannot remove `testfile': Operation not permitted
 
 
 .TP
-\fB\-\-seccomp.keep=syscall,syscall,syscall
-Enable seccomp filter, and whitelist the syscalls specified by the
-command. The system calls needed by Firejail (group @default-keep:
-prctl, execve) are handled with the preload library.
+\fB\-\-seccomp.keep=syscall,@group,!syscall2
+Enable seccomp filter, blacklist all syscall not listed and "syscall2".
+The system calls needed by Firejail (group @default-keep: prctl, execve)
+are handled with the preload library.
 .br
 
 .br

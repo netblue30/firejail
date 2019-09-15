@@ -52,10 +52,7 @@ static orig_access_t orig_access = NULL;
 //
 // library constructor/destructor
 //
-// Replacing printf with fprintf to /dev/tty in order to fix #561
-// If you really want to turn it off, comment the following line, but its a
-// really bad idea.
-#define PRINTF_DEVTTY
+// Using fprintf to /dev/tty instead of printf in order to fix #561
 static FILE *ftty = NULL;
 static pid_t mypid = 0;
 #define MAXNAME 16
@@ -75,12 +72,8 @@ void init(void) {
 		// if exists, log to trace file
 		logfile = RUN_TRACE_FILE;
 		if (orig_access(logfile, F_OK))
-#ifdef PRINTF_DEVTTY
 			// else log to associated tty
 			logfile = "/dev/tty";
-#else
-			logfile = "/proc/self/fd/2";
-#endif
 	}
 	
 	// logfile

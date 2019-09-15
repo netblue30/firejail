@@ -29,7 +29,9 @@ machine-id
 net none
 no3d
 nodvd
-nodbus
+# Breaks 'Lock database when session is locked or lid is closed' (#2899),
+# you can safely uncomment it or add to keepassxc.local if you don't need this feature.
+#nodbus
 nogroups
 nonewprivs
 noroot
@@ -45,9 +47,6 @@ private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 private-dev
 private-etc alternatives,fonts,ld.so.cache,machine-id
 private-tmp
-
-# 2.2.4 crashes on database open
-# memory-deny-write-execute
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp
 join-or-start keepassxc

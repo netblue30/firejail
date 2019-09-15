@@ -17,3 +17,6 @@ echo "TESTING: AppImage file name (test/appimage/filename.exp)";
 
 echo "TESTING: AppImage argsv1 (test/appimage/appimage-args.exp)"
 ./appimage-args.exp
+
+echo "TESTING: AppImage trace (test/appimage/appimage-trace.exp)"
+./appimage-args.exp

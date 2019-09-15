@@ -28,11 +28,10 @@ int arg_quiet = 0;
 int arg_debug = 0;
 static int arg_follow_link = 0;
 
-static int copy_limit = 500 * 1024 *1024; // 500 MB
-#define COPY_LIMIT (
+static unsigned long long copy_limit = 500 * 1024 * 1024; // 500 MB
+static unsigned long long size_cnt = 0;
 static int size_limit_reached = 0;
 static unsigned file_cnt = 0;
-static unsigned size_cnt = 0;
 
 static char *outpath = NULL;
 static char *inpath = NULL;
@@ -187,7 +186,7 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 
 	// recalculate size
 	if ((s.st_size + size_cnt) > copy_limit) {
-		fprintf(stderr, "Error fcopy: size limit of %dMB reached\n", (copy_limit / 1024) / 1024);
+		fprintf(stderr, "Error fcopy: size limit of %lluMB reached\n", (copy_limit / 1024) / 1024);
 		size_limit_reached = 1;
 		free(outfname);
 		return 0;
@@ -392,9 +391,9 @@ int main(int argc, char **argv) {
 	// extract copy limit size from env variable, if any
 	char *cl = getenv("FIREJAIL_FILE_COPY_LIMIT");
 	if (cl) {
-		copy_limit = atoi(cl) * 1024 * 1024;
+		copy_limit = strtoul(cl, NULL, 10) * 1024 * 1024;
 		if (arg_debug)
-			printf("file copy limit %d bytes\n", copy_limit);
+			printf("file copy limit %llu bytes\n", copy_limit);
 	}
 
 	// copy files

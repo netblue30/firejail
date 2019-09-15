@@ -32,7 +32,7 @@
 #include <sys/stat.h>
 #include <syslog.h>
 #include <dirent.h>
-#include <limits.h>
+#include "../include/rundefs.h"
 
 #define tprintf(fp, args...) \
     do { \
@@ -46,6 +46,8 @@ typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
 static orig_fopen_t orig_fopen = NULL;
 typedef FILE *(*orig_fopen64_t)(const char *pathname, const char *mode);
 static orig_fopen64_t orig_fopen64 = NULL;
+typedef int (*orig_access_t)(const char *pathname, int mode);
+static orig_access_t orig_access = NULL;
 
 //
 // library constructor/destructor
@@ -62,10 +64,20 @@ void init(void) {
 		return;
 
 	orig_fopen = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen");
+	orig_access = (orig_access_t)dlsym(RTLD_NEXT, "access");
 
-	// tty
-	ftty = orig_fopen("/dev/tty", "w");
-	tprintf(ftty, "=== tracelib init() === \n");
+	// allow environment variable to override defaults
+	char *logfile = getenv("FIREJAIL_TRACEFILE");
+	if (!logfile) {
+		// if exists, log to trace file
+		logfile = RUN_TRACE_FILE;
+		if (orig_access(logfile, F_OK))
+			// else log to associated tty
+			logfile = "/dev/tty";
+	}
+	
+	// logfile
+	ftty = orig_fopen(logfile, "a");
 
 	// pid
 	mypid = getpid();
@@ -85,6 +97,7 @@ void init(void) {
 	if (ptr)
 		*ptr = '\0';
 
+	tprintf(ftty, "=== tracelib init() [%d:%s] === \n", mypid, myname);
 	fclose(fp);
 	free(fname);
 }
@@ -476,8 +489,6 @@ DIR *opendir(const char *pathname) {
 }
 
 // access
-typedef int (*orig_access_t)(const char *pathname, int mode);
-static orig_access_t orig_access = NULL;
 int access(const char *pathname, int mode) {
 	if (!orig_access)
 		orig_access = (orig_access_t)dlsym(RTLD_NEXT, "access");

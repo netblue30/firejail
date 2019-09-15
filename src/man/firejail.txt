@@ -71,10 +71,10 @@ If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option
 to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.
 .PP
-If a program argument is not specified, Firejail starts the default shell from the current user.
+If a program argument is not specified, Firejail starts /bin/bash shell.
 Examples:
 .PP
-$ firejail [OPTIONS]                # starting the user default shell (normally /bin/bash)
+$ firejail [OPTIONS]                # starting a /bin/bash shell
 .PP
 $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 .PP
@@ -1862,9 +1862,8 @@ domain with personality(2) system call.
 .br
 
 .TP
-\fB\-\-seccomp.drop=syscall,@group,!syscall2
-Enable seccomp filter, whitelist "syscall2" but blacklist the
-syscalls or the syscall groups specified by the command.
+\fB\-\-seccomp.drop=syscall,@group
+Enable seccomp filter, and blacklist the syscalls or the syscall groups specified by the command.
 .br
 
 .br
@@ -2142,8 +2141,9 @@ Example:
 .br
 $ firejail \-\-top
 .TP
-\fB\-\-trace
-Trace open, access and connect system calls.
+\fB\-\-trace[=filename]
+Trace open, access and connect system calls. If filename is specified, log
+trace output to filename, otherwise log to console.
 .br
 
 .br

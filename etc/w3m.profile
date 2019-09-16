@@ -10,6 +10,8 @@ noblacklist ${HOME}/.w3m
 
 blacklist /tmp/.X11-unix
 
+include allow-perl.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc

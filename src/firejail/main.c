@@ -952,6 +952,12 @@ int main(int argc, char **argv) {
 	// sanitize the umask
 	orig_umask = umask(022);
 
+	// argument count should be larger than 0
+	if (argc == 0) {
+		fprintf(stderr, "Error: argv[0] is NULL\n");
+		exit(1);
+	}
+
 	// check if the user is allowed to use firejail
 	init_cfg(argc, argv);
 

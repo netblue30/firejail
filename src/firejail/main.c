@@ -1300,6 +1300,22 @@ int main(int argc, char **argv) {
 		else if (strncmp(argv[i], "--trace=", 8) == 0) {
 			arg_trace = 1;
 			arg_tracefile = argv[i] + 8;
+			if (*arg_tracefile == '\0') {
+				fprintf(stderr, "Error: invalid trace option\n");
+				exit(1);
+			}
+			invalid_filename(arg_tracefile, 0); // no globbing
+			if (strstr(arg_tracefile, "..")) {
+				fprintf(stderr, "Error: invalid file name %s\n", arg_tracefile);
+				exit(1);
+			}
+			// if the filename starts with ~, expand the home directory
+			if (*arg_tracefile == '~') {
+				char *tmp;
+				if (asprintf(&tmp, "%s%s", cfg.homedir, arg_tracefile + 1) == -1)
+					errExit("asprintf");
+				arg_tracefile = tmp;
+			}
 		}
 		else if (strcmp(argv[i], "--tracelog") == 0)
 			arg_tracelog = 1;

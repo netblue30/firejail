@@ -44,6 +44,7 @@ ptrace (read,readby) peer=firejail-default,
 ##########
 # Whitelist writable paths under /run, /proc and /sys.
 ##########
+owner /{,run/firejail/mnt/oroot/}{,var/}run/firejail/mnt/trace w,
 owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/** w,
 owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/*.slave-socket w,
 owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/orcexec.* w,

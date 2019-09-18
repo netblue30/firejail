@@ -41,44 +41,46 @@ void fs_trace_preload(void) {
 		fclose(fp);
 		fs_logger("touch /etc/ld.so.preload");
 	}
-	if (arg_tracefile) {
-		if (arg_debug)
-			printf("Creating an empty trace log file: %s\n", arg_tracefile);
-		// create a bind mounted trace logfile that the sandbox can see
-		EUID_USER();
-		int fd = open(arg_tracefile, O_CREAT|O_RDWR, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
-		if (fd == -1) {
-			perror("open");
-			fprintf(stderr, "Error: cannot open trace log file %s\n", arg_tracefile);
-			exit(1);
-		}
-		if (fstat(fd, &s) == -1)
-			errExit("fstat");
-		if (!S_ISREG(s.st_mode)) {
-			fprintf(stderr, "Error: cannot write trace log: %s is no regular file\n", arg_tracefile);
-			exit(1);
-		}
-		if (ftruncate(fd, 0) == -1)
-			errExit("ftruncate");
-		EUID_ROOT();
-		FILE *fp = fopen(RUN_TRACE_FILE, "w");
-		if (!fp)
-			errExit("fopen " RUN_TRACE_FILE);
-		fclose(fp);
-		fs_logger2("touch ", arg_tracefile);
-		// mount using the symbolic link in /proc/self/fd
-		if (arg_debug)
-			printf("Bind mount %s to %s\n", arg_tracefile, RUN_TRACE_FILE);
-		char *proc;
-		if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-			errExit("asprintf");
-		if (mount(proc, RUN_TRACE_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mount bind " RUN_TRACE_FILE);
-		free(proc);
-		close(fd);
-		// now that RUN_TRACE_FILE is user-writable, mount it noexec
-		fs_remount(RUN_TRACE_FILE, MOUNT_NOEXEC, 0);
+}
+
+void fs_tracefile(void) {
+	// create a bind mounted trace logfile that the sandbox can see
+	if (arg_debug)
+		printf("Creating an empty trace log file: %s\n", arg_tracefile);
+	EUID_USER();
+	int fd = open(arg_tracefile, O_CREAT|O_WRONLY|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	if (fd == -1) {
+		perror("open");
+		fprintf(stderr, "Error: cannot open trace log file %s for writing\n", arg_tracefile);
+		exit(1);
 	}
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode)) {
+		fprintf(stderr, "Error: cannot write trace log: %s is no regular file\n", arg_tracefile);
+		exit(1);
+	}
+	if (ftruncate(fd, 0) == -1)
+		errExit("ftruncate");
+	EUID_ROOT();
+	FILE *fp = fopen(RUN_TRACE_FILE, "w");
+	if (!fp)
+		errExit("fopen " RUN_TRACE_FILE);
+	fclose(fp);
+	fs_logger2("touch ", arg_tracefile);
+	// mount using the symbolic link in /proc/self/fd
+	if (arg_debug)
+		printf("Bind mount %s to %s\n", arg_tracefile, RUN_TRACE_FILE);
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(proc, RUN_TRACE_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind " RUN_TRACE_FILE);
+	free(proc);
+	close(fd);
+	// now that RUN_TRACE_FILE is user-writable, mount it noexec
+	fs_remount(RUN_TRACE_FILE, MOUNT_NOEXEC, 0);
 }
 
 void fs_trace(void) {

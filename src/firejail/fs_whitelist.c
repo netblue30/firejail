@@ -290,7 +290,8 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	fs_logger2("whitelist", path);
 
-	// mount via the link in /proc/self/fd
+	// in order to make this mount resilient against symlink attacks, use
+	// a magic link in /proc/self/fd instead of mounting on path directly
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd3) == -1)
 		errExit("asprintf");
@@ -315,7 +316,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	//  - there should be more than one '/' char in dest string
 	if (mptr->dir == strrchr(mptr->dir, '/'))
 		errLogExit("invalid whitelist mount");
-	// confirm the right file was mounted
+	// confirm the right file was mounted by comparing device and inode numbers
 	int fd4 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd4 == -1)
 		errExit("safe_fd");

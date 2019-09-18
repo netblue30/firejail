@@ -800,8 +800,11 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	// trace pre-install
-	if (need_preload)
+	if (need_preload) {
 		fs_trace_preload();
+		if (arg_tracefile && !cfg.chrootdir)
+			fs_tracefile();
+	}
 
 	// store hosts file
 	if (cfg.hosts_file)
@@ -817,8 +820,11 @@ int sandbox(void* sandbox_arg) {
 		//****************************
 		// trace pre-install, this time inside chroot
 		//****************************
-		if (need_preload)
+		if (need_preload) {
 			fs_trace_preload();
+			if (arg_tracefile)
+				fs_tracefile();
+		}
 	}
 	else
 #endif

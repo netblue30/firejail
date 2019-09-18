@@ -560,6 +560,7 @@ void caps_drop_dac_override(void);
 
 // fs_trace.c
 void fs_trace_preload(void);
+void fs_tracefile(void);
 void fs_trace(void);
 
 // fs_hostname.c

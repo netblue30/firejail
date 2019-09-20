@@ -183,6 +183,7 @@ blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/git
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gnome-builder
+blacklist ${HOME}/.config/gnome-latex
 blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv
 blacklist ${HOME}/.config/gnome-pie
@@ -502,6 +503,7 @@ blacklist ${HOME}/.local/share/gitg
 blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-builder
+blacklist ${HOME}/.local/share/gnome-latex
 blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/gnome-recipes

@@ -20,6 +20,10 @@ whitelist ${HOME}/.local/share/icons
 whitelist ${HOME}/.local/share/mime
 whitelist ${HOME}/.mime.types
 
+# dconf
+mkdir ${HOME}/.config/dconf
+whitelist ${HOME}/.config/dconf
+
 # fonts
 whitelist ${HOME}/.cache/fontconfig
 whitelist ${HOME}/.config/fontconfig

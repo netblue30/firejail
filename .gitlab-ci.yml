@@ -17,7 +17,7 @@ ci_code_tests:
     image: ubuntu:rolling
     before_script:
         - apt-get update -qq
-        - apt-get -y install expect csh xzdec lintian fakeroot
+        - apt-get -y -qq install build-essential expect csh xzdec lintian fakeroot
         - ./configure --enable-fatal-warnings --prefix=/usr && make && make install
     script:
         - make test-travis

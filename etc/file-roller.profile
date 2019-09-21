@@ -13,6 +13,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/Modules
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -1,10 +1,27 @@
-# Basic notes: builds firejail on 5 different systems for 2 package systems:
-# 1. Debian-based systems. Use debian:jessie to ensure reasonable backwards
-# compat and ubuntu:rolling for new setups
-# 2. Redhat-based systems. Use centos:latest for reasonable backwards compat
-# and fedora:latest for new setups
-# 3. Alpine for installing directly from source
-# Also builds apparmor package for Ubuntu LTS
+# Runs the following tests
+# A. Basic CI tests (identical to what is run on Travis CI but newer distro
+#   base)
+#
+# B. Builds/installs firejail on 5 different distros for 2 package systems:
+#   1. Debian-based systems. Use debian:jessie to ensure reasonable backwards
+#   compat and ubuntu:rolling for new setups
+#   Also builds apparmor package for Ubuntu LTS
+#   2. Redhat-based systems. Use centos:latest for reasonable backwards compat
+#   and fedora:latest for new setups
+#   3. Alpine for installing directly from source
+#
+# C. Runs Cppcheck over source
+#
+# D. Runs Debian CI scripts
+ci_code_tests:
+    image: ubuntu:rolling
+    before_script:
+        - apt-get update -qq
+        - apt-get -y install expect csh xzdec lintian fakeroot
+        - ./configure --enable-fatal-warnings --prefix=/usr && make && make install
+    script:
+        - make test-travis
+
 build_ubuntu_package:
     image: ubuntu:rolling
     script:

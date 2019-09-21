@@ -42,7 +42,7 @@ build_src_package:
         - apk upgrade
         - apk add build-base linux-headers python3
         - ./configure --prefix=/usr && make && make install-strip
-        - python3 contrib/sort.py etc/*.{profile,inc}
+        # - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_apparmor:
     image: ubuntu:latest

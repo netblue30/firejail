@@ -23,10 +23,12 @@ Exit-Codes:
 #  python >= 3.6
 from sys import argv
 
+
 def sort_alphabetical(raw_items):
     items = raw_items.split(",")
     items.sort(key=lambda s: s.casefold())
     return ",".join(items)
+
 
 def sort_protocol(protocols):
     """sort the given protocole into this scheme: unix,inet,inet6,netlink,packet"""
@@ -64,6 +66,7 @@ def sort_protocol(protocols):
         fixed_protocols += "packet,"
     return fixed_protocols[:-1]
 
+
 def fix_profile(filename):
     with open(filename, "r+") as profile:
         lines = profile.read().split("\n")
@@ -94,6 +97,7 @@ def fix_profile(filename):
             return 101
         return 0
 
+
 def main(args):
     exit_code = 0
     for filename in args:
@@ -103,15 +107,16 @@ def main(args):
             else:
                 fix_profile(filename)
         except FileNotFoundError:
-            print(f"[ Error ] Can't find {filename}")
+            print(f"[ Error ] Can't find `{filename}'")
             exit_code = 1
         except PermissionError:
-            print(f"[ Error ] Can't read/write {filename}")
+            print(f"[ Error ] Can't read/write `{filename}'")
             exit_code = 1
         except:
-            print(f"[ Error ] An error occurred while processing {filename}")
+            print(f"[ Error ] An error occurred while processing `{filename}'")
             exit_code = 1
     return exit_code
+
 
 if __name__ == "__main__":
     exit(main(argv[1:]))

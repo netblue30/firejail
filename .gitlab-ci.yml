@@ -9,8 +9,9 @@ build_ubuntu_package:
     image: ubuntu:rolling
     script:
         - apt-get update -qq
-        - apt-get install -y -qq build-essential lintian pkg-config
+        - apt-get install -y -qq build-essential lintian pkg-config python3
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
+        - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_debian_package:
     image: debian:jessie
@@ -32,14 +33,16 @@ build_fedora_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
+        - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_src_package:
     image: alpine:latest
     script:
         - apk update
         - apk upgrade
-        - apk add build-base linux-headers
+        - apk add build-base linux-headers python3
         - ./configure --prefix=/usr && make && make install-strip
+        # - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_apparmor:
     image: ubuntu:latest

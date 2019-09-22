@@ -11,6 +11,10 @@ noblacklist ${HOME}/.config/inkscape
 noblacklist ${HOME}/.inkscape
 noblacklist ${DOCUMENTS}
 noblacklist ${PICTURES}
+# Allow exporting .xcf files
+noblacklist ${HOME}/.config/GIMP
+noblacklist ${HOME}/.gimp*
+
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

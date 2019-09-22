@@ -38,6 +38,8 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
+# allow-debuggers needed for running some games with proton
+allow-debuggers
 caps.drop all
 #ipc-namespace
 netfilter

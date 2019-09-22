@@ -118,4 +118,4 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ## New profiles:
 
-gnome-sound-recorder, godot, jerry, keepassxc-cli, keepassxc-proxy, klatexformula, klatexformula_cmdl, links, newsbeuter, OpenArena, pandoc, qgis, rhythmbox-client, tcpdump, teams-for-linux, tshark, xlinks, zeal, mpg123, conplay, mpg123.bin, mpg123-alsa, mpg123-id3dump, mpg123-jack, mpg123-nas, mpg123-openal, mpg123-oss, mpg123-portaudio, mpg123-pulse, mpg123-strip, out123, pavucontrol-qt, gnome-characters, gnome-character-map, rsync, Whalebird, tor-browser (AUR), Zulip, tb-starter-wrapper, bzcat, kiwix-desktop
+gnome-sound-recorder, godot, jerry, keepassxc-cli, keepassxc-proxy, klatexformula, klatexformula_cmdl, links, newsbeuter, OpenArena, pandoc, qgis, rhythmbox-client, tcpdump, teams-for-linux, tshark, xlinks, zeal, mpg123, conplay, mpg123.bin, mpg123-alsa, mpg123-id3dump, mpg123-jack, mpg123-nas, mpg123-openal, mpg123-oss, mpg123-portaudio, mpg123-pulse, mpg123-strip, out123, pavucontrol-qt, gnome-characters, gnome-character-map, rsync, Whalebird, tor-browser (AUR), Zulip, tb-starter-wrapper, bzcat, kiwix-desktop, ar, gnome-latex, pngquant

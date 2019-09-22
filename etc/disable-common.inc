@@ -258,6 +258,7 @@ read-only ${HOME}/.exrc
 read-only ${HOME}/.gvimrc
 read-only ${HOME}/.homesick
 read-only ${HOME}/.iscreenrc
+read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc
@@ -288,6 +289,7 @@ read-only ${HOME}/.cargo/env
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus
+read-only ${HOME}/.gnome/apps
 read-only ${HOME}/.local/share/applications
 
 # Write-protection for thumbnailer dir

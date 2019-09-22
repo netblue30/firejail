@@ -1163,7 +1163,7 @@ int safe_fd(const char *path, int flags) {
 		return parentfd;
 	}
 
-	while (tok) {
+	while(1) {
 		// open the element, assuming it is a directory; this fails with ENOTDIR if it is a symbolic link
 		// if token is a single dot, the previous directory is reopened
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
@@ -1181,10 +1181,10 @@ int safe_fd(const char *path, int flags) {
 		// move on to next path segment
 		last_tok = tok;
 		tok = strtok(NULL, "/");
-		if (tok) {
-			close(parentfd);
-			parentfd = fd;
-		}
+		if (!tok)
+			break;
+		close(parentfd);
+		parentfd = fd;
 	}
 
 	// we are here because the last path element exists and is of file type directory

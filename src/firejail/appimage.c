@@ -137,7 +137,7 @@ void appimage_set(const char *appimage) {
 		errExit("setenv");
 	if (size != 0 && setenv("ARGV0", appimage, 1) < 0)
 		errExit("setenv");
-	if (setenv("OWD", cfg.cwd, 1) < 0)
+	if (cfg.cwd && setenv("OWD", cfg.cwd, 1) < 0)
 		errExit("setenv");
 
 	// build new command line

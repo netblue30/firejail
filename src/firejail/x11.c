@@ -1321,12 +1321,18 @@ void x11_block(void) {
 	}
 
 	// blacklist sockets
-	profile_check_line("blacklist /tmp/.X11-unix", 0, NULL);
-	profile_add(strdup("blacklist /tmp/.X11-unix"));
+	char *cmd = strdup("blacklist /tmp/.X11-unix");
+	if (!cmd)
+		errExit("strdup");
+	profile_check_line(cmd, 0, NULL);
+	profile_add(cmd);
 
 	// blacklist .Xauthority
-	profile_check_line("blacklist ${HOME}/.Xauthority", 0, NULL);
-	profile_add(strdup("blacklist ${HOME}/.Xauthority"));
+	cmd = strdup("blacklist ${HOME}/.Xauthority");
+	if (!cmd)
+		errExit("strdup");
+	profile_check_line(cmd, 0, NULL);
+	profile_add(cmd);
 	char *xauthority = getenv("XAUTHORITY");
 	if (xauthority) {
 		char *line;

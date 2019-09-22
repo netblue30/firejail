@@ -229,7 +229,7 @@ uint32_t network_get_defaultgw(void) {
 			continue;
 
 		char *ptr = buf;
-		while (*ptr != ' ' && *ptr != '\t')
+		while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
 			ptr++;
 		while (*ptr == ' ' || *ptr == '\t')
 			ptr++;

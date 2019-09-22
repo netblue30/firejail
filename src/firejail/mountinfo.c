@@ -225,9 +225,9 @@ char **build_mount_array(const int mount_id, const char *path) {
 		exit(1);
 	}
 	do {
+		parse_line(buf, &mntp);
 		// find mount point with mount id
 		if (!found) {
-			parse_line(buf, &mntp);
 			if (mntp.mountid == mount_id) {
 				// give up if mount id has been reassigned,
 				// don't remount blacklisted path
@@ -236,19 +236,17 @@ char **build_mount_array(const int mount_id, const char *path) {
 				    strstr(mntp.fsname, "firejail.ro.file"))
 					    break;
 
-				rv[0] = strdup(path);
-				if (rv[0] == NULL)
+				rv[cnt] = strdup(path);
+				if (rv[cnt] == NULL)
 					errExit("strdup");
 				cnt++;
 				found = 1;
 				continue;
 			}
-			else
-				continue;
+			continue;
 		}
 		// from here on add all mount points below path,
 		// don't remount blacklisted paths
-		parse_line(buf, &mntp);
 		if (strncmp(mntp.dir, path, pathlen) == 0 &&
 		    mntp.dir[pathlen] == '/' &&
 		    strstr(mntp.fsname, "firejail.ro.dir") == NULL &&

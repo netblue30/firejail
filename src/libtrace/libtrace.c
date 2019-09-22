@@ -56,7 +56,7 @@ static orig_access_t orig_access = NULL;
 static FILE *ftty = NULL;
 static pid_t mypid = 0;
 #define MAXNAME 16
-static char myname[MAXNAME] = {'\0', };
+static char myname[MAXNAME] = "unknown";
 
 static void init(void) __attribute__((constructor));
 void init(void) {
@@ -84,13 +84,15 @@ void init(void) {
 
 	// process name
 	char *fname;
-	if (asprintf(&fname, "/proc/%u/comm", mypid) == -1)
-		strncpy(myname, "unknown", MAXNAME-1);
-
-	// read file
-	FILE *fp = orig_fopen(fname, "r");
-	if (!fp || fgets(myname, MAXNAME, fp) == NULL)
-		strncpy(myname, "unknown", MAXNAME-1);
+	if (asprintf(&fname, "/proc/%u/comm", mypid) != -1) {
+		FILE *fp = orig_fopen(fname, "r");
+		free(fname);
+		if (fp) {
+			if (fgets(myname, MAXNAME, fp) == NULL)
+				strncpy(myname, "unknown", MAXNAME-1);
+			fclose(fp);
+		}
+	}
 
 	// clean '\n'
 	char *ptr = strchr(myname, '\n');
@@ -98,8 +100,6 @@ void init(void) {
 		*ptr = '\0';
 
 	tprintf(ftty, "=== tracelib init() [%d:%s] === \n", mypid, myname);
-	fclose(fp);
-	free(fname);
 }
 
 static void fini(void) __attribute__((destructor));

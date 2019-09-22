@@ -154,13 +154,15 @@ int sbox_run(unsigned filtermask, int num, ...) {
 				fprintf(stderr,"Error: cannot open %s\n", SBOX_STDIN_FILE);
 				exit(1);
 			}
-			dup2(fd,STDIN_FILENO);
+			if (dup2(fd, STDIN_FILENO) == -1)
+				errExit("dup2");
 			close(fd);
 		}
 		else if ((filtermask & SBOX_ALLOW_STDIN) == 0) {
 			int fd = open("/dev/null",O_RDWR, 0);
 			if (fd != -1) {
-				dup2(fd, STDIN_FILENO);
+				if (dup2(fd, STDIN_FILENO) == -1)
+					errExit("dup2");
 				close(fd);
 			}
 			else // the user could run the sandbox without /dev/null

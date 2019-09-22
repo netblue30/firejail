@@ -85,6 +85,10 @@ void preproc_mount_mnt_dir(void) {
 		tmpfs_mounted = 1;
 		fs_logger2("tmpfs", RUN_MNT_DIR);
 
+		// open and mount trace file while there are no user-writable files in RUN_MNT_DIR
+		if (arg_tracefile)
+			fs_tracefile();
+
 #ifdef HAVE_SECCOMP
 		create_empty_dir_as_root(RUN_SECCOMP_DIR, 0755);
 

@@ -1,0 +1,53 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+if {[file exists ~/.cache]} {
+	puts "found .cache directory\n"
+} else {
+	send -- "mkdir --mode=755 ~/.cache\r"
+}
+after 100
+
+send -- "touch ~/.cache/abcdefg\r"
+after 100
+
+send -- "firejail --noprofile --private-cache\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls ~/.cache | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"\n0"
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+send -- "rm -v ~/.cache/abcdefg\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"removed"
+}
+after 100
+
+# redo the test with --private
+
+send -- "firejail --noprofile --private --private-cache\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"tmpfs not mounted"
+}
+sleep 1
+
+send -- "exit\r"
+sleep 1
+
+puts "\nall done\n"

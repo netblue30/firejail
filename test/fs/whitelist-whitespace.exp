@@ -1,0 +1,41 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "touch ~/filewith\\\ \\\ many\\\ whitespaces\\\ \r"
+after 100
+
+send -- "firejail --noprofile --whitelist=~/filewith\\\ \\\ many\\\ whitespaces\\\ \r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls ~ | wc -l\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"\n1"
+}
+after 100
+
+send -- "ls ~\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"filewith  many whitespaces "
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+send -- "rm -v ~/filewith\\\ \\\ many\\\ whitespaces\\\ \r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"removed"
+}
+after 100
+
+puts "\nall done\n"

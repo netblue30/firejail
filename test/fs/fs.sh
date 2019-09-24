@@ -5,6 +5,7 @@
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
+export LC_ALL=C
 
 # These directories are required by some tests:
 mkdir -p ~/Desktop ~/Documents ~/Downloads ~/Music ~/Pictures ~/Videos
@@ -102,6 +103,9 @@ echo "TESTING: recursive mkdir (test/fs/mkdir.exp)"
 echo "TESTING: double whitelist (test/fs/whitelist-double.exp)"
 ./whitelist-double.exp
 
+echo "TESTING: whitelist file with whitespaces (test/fs/whitelist-whitespace.exp)"
+./whitelist-whitespace.exp
+
 echo "TESTING: whitelist (test/fs/whitelist.exp)"
 ./whitelist.exp
 
@@ -116,6 +120,9 @@ echo "TESTING: fscheck --tmpfs non root (test/fs/fscheck-tmpfs.exp)"
 
 echo "TESTING: fscheck --private= (test/fs/fscheck-private.exp)"
 ./fscheck-private.exp
+
+echo "TESTING: fscheck --private-cache (test/fs/fscheck-private-cache.exp)"
+./fscheck-private-cache.exp
 
 echo "TESTING: fscheck --read-only= (test/fs/fscheck-readonly.exp)"
 ./fscheck-readonly.exp

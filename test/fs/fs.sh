@@ -21,6 +21,8 @@ mkdir ~/_firejail_test_dir/test1
 touch ~/_firejail_test_dir/test1/b
 echo "TESTING: read/write (test/fs/read-write.exp)"
 ./read-write.exp
+echo "TESTING: readonly whitelist (test/fs/readonly-whitelist.exp)"
+./readonly-whitelist.exp
 rm -fr ~/_firejail_test_*
 
 echo "TESTING: /sys/fs access (test/fs/sys_fs.exp)"

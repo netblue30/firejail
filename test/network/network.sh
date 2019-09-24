@@ -5,6 +5,7 @@
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
+export LC_ALL=C
 
 sudo ./configure
 

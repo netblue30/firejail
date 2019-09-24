@@ -5,6 +5,7 @@
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
+export LC_ALL=C
 
 echo "TESTING: no x11 (test/apps-x11/x11-none.exp)"
 ./x11-none.exp

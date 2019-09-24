@@ -1,4 +1,5 @@
 #!/bin/bash
+export LC_ALL=C
 OVERLAY="overlay"
 CHROOT="chroot"
 NETWORK="network"

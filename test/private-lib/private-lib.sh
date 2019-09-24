@@ -5,6 +5,8 @@
 
 export MALLOC_CHECK_=3g
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
+export LC_ALL=C
+
 LIST="gnome-logs gnome-system-log gnome-nettool pavucontrol dig evince whois galculator gnome-calculator gedit leafpad mousepad pluma transmission-gtk xcalc atril gpicview eom eog"
 
 

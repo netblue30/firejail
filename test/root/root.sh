@@ -3,6 +3,7 @@
 # set a new firejail config file
 #cp firejail.config /etc/firejail/firejail.config
 
+export LC_ALL=C
 
 #********************************
 # firecfg

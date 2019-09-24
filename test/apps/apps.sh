@@ -5,6 +5,7 @@
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
+export LC_ALL=C
 
 LIST="firefox midori chromium opera transmission-qt qbittorrent uget-gtk filezilla gthumb thunderbird "
 LIST+="vlc fbreader deluge gnome-mplayer xchat wine kcalc ktorrent hexchat"

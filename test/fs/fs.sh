@@ -70,6 +70,9 @@ echo "TESTING: empty private-etc (test/fs/private-etc-empty.exp)"
 echo "TESTING: private-bin (test/fs/private-bin.exp)"
 ./private-bin.exp
 
+echo "TESTING: private-cache (test/fs/private-cache.exp)"
+./private-cache.exp
+
 echo "TESTING: private-cwd (test/fs/private-cwd.exp)"
 ./private-cwd.exp
 
@@ -120,9 +123,6 @@ echo "TESTING: fscheck --tmpfs non root (test/fs/fscheck-tmpfs.exp)"
 
 echo "TESTING: fscheck --private= (test/fs/fscheck-private.exp)"
 ./fscheck-private.exp
-
-echo "TESTING: fscheck --private-cache (test/fs/fscheck-private-cache.exp)"
-./fscheck-private-cache.exp
 
 echo "TESTING: fscheck --read-only= (test/fs/fscheck-readonly.exp)"
 ./fscheck-readonly.exp

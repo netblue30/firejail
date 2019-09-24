@@ -1,4 +1,5 @@
 #!/bin/bash
+export LC_ALL=C
 
 if [ -f /etc/debian_version ]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep faudit)")

@@ -17,7 +17,11 @@ whitelist /usr/share/Kvantum
 whitelist /usr/share/locale
 whitelist /usr/share/mime
 whitelist /usr/share/Modules
+whitelist /usr/share/p11-kit
 whitelist /usr/share/pixmaps
+whitelist /usr/share/pki
 whitelist /usr/share/qt5
+whitelist /usr/share/tcl8.6
+whitelist /usr/share/terminfo
 whitelist /usr/share/themes
 whitelist /usr/share/X11

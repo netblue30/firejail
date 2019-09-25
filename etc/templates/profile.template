@@ -107,6 +107,7 @@ include globals.local
 ##mkfile PATH
 #whitelist PATH
 #include whitelist-common.inc
+#include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
 
 ##allusers

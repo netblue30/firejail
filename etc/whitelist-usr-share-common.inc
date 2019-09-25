@@ -9,6 +9,7 @@ whitelist /usr/share/drirc.d
 whitelist /usr/share/fontconfig
 whitelist /usr/share/fonts
 whitelist /usr/share/glib-2.0
+whitelist /usr/share/glvnd
 whitelist /usr/share/gtk-3.0
 whitelist /usr/share/hwdata
 whitelist /usr/share/icons

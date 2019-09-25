@@ -21,8 +21,8 @@ mkdir ~/_firejail_test_dir/test1
 touch ~/_firejail_test_dir/test1/b
 echo "TESTING: read/write (test/fs/read-write.exp)"
 ./read-write.exp
-echo "TESTING: readonly whitelist (test/fs/readonly-whitelist.exp)"
-./readonly-whitelist.exp
+echo "TESTING: whitelist readonly (test/fs/whitelist-readonly.exp)"
+./whitelist-readonly.exp
 rm -fr ~/_firejail_test_*
 
 echo "TESTING: /sys/fs access (test/fs/sys_fs.exp)"
@@ -108,14 +108,14 @@ echo "TESTING: recursive mkdir (test/fs/mkdir.exp)"
 echo "TESTING: double whitelist (test/fs/whitelist-double.exp)"
 ./whitelist-double.exp
 
-echo "TESTING: whitelist file with whitespaces (test/fs/whitelist-whitespace.exp)"
-./whitelist-whitespace.exp
-
 echo "TESTING: whitelist (test/fs/whitelist.exp)"
 ./whitelist.exp
 
 echo "TESTING: whitelist dev, var(test/fs/whitelist-dev.exp)"
 ./whitelist-dev.exp
+
+echo "TESTING: whitelist with whitespaces (test/fs/whitelist-whitespace.exp)"
+./whitelist-whitespace.exp
 
 echo "TESTING: fscheck --bind non root (test/fs/fscheck-bindnoroot.exp)"
 ./fscheck-bindnoroot.exp

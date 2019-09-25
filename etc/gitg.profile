@@ -19,6 +19,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/gitg
+whitelist /usr/share/gtksourceview-3.0
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

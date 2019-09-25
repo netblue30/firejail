@@ -14,6 +14,17 @@ mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
 
+# FIXME: does fontconf exists, or is this a bug in --build
+whitelist /usr/share/fontconf
+whitelist /usr/share/mozilla
+whitelist /usr/share/myspell
+whitelist /usr/share/p11-kit
+whitelist /usr/share/pki
+whitelist /usr/share/sounds
+whitelist /usr/share/terminfo
+whitelist /usr/share/tcl8.6
+include whitelist-usr-share-common.inc
+
 # firefox requires a shell to launch on Arch.
 #private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which
 # Fedora use shell scripts to launch firefox, at least this is required

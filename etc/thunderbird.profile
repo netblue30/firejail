@@ -34,6 +34,8 @@ whitelist ${HOME}/.gnupg
 # whitelist ${HOME}/.icedove
 whitelist ${HOME}/.thunderbird
 
+#include whitelist-usr-share-common.inc
+
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 ignore private-tmp
 # machine-id breaks audio in browsers; enable it when sound is not required

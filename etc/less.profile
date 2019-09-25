@@ -14,6 +14,9 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 
+whitelist /usr/share/misc
+include whitelist-usr-share-common.inc
+
 apparmor
 caps.drop all
 ipc-namespace

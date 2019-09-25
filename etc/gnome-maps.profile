@@ -26,7 +26,10 @@ whitelist ${HOME}/.cache/champlain
 whitelist ${HOME}/.local/share/maps-places.json
 whitelist ${DOWNLOADS}
 whitelist ${PICTURES}
+whitelist /usr/share/gnome-maps
+whitelist /usr/share/gjs-1.0
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -29,8 +29,9 @@ machine-id
 net none
 no3d
 nodvd
-# Breaks 'Lock database when session is locked or lid is closed' (#2899),
-# you can safely uncomment it or add to keepassxc.local if you don't need this feature.
+# Breaks 'Lock database when session is locked or lid is closed' (#2899).
+# Also breaks (Plasma) tray icon,
+# you can safely uncomment it or add to keepassxc.local if you don't need these features.
 #nodbus
 nogroups
 nonewprivs

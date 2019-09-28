@@ -11,6 +11,7 @@ include globals.local
 # or put 'noexec ${HOME}' in your gimp.local
 ignore noexec ${HOME}
 
+noblacklist ${HOME}/.cache/gimp
 noblacklist ${HOME}/.config/GIMP
 noblacklist ${HOME}/.gimp*
 noblacklist ${DOCUMENTS}

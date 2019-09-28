@@ -43,7 +43,6 @@ private-bin evince,evince-previewer,evince-thumbnailer
 private-cache
 private-dev
 private-etc alternatives,fonts,group,machine-id,passwd
-private-lib evince,gconv,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*,libspectre.so.*
+# private-lib might break two-page-view on some systems
+private-lib evince,gconv,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libgraphite2.so.*,libpoppler-glib.so.*,librsvg-2.so.*,libspectre.so.*
 private-tmp
-
-# memory-deny-write-execute - might break application (https://github.com/netblue30/firejail/issues/1803)

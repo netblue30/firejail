@@ -7,6 +7,7 @@ include ghostwriter.local
 include globals.local
 
 noblacklist ${HOME}/.config/ghostwriter
+noblacklist ${HOME}/.local/share/ghostwriter
 noblacklist ${DOCUMENTS}
 noblacklist ${PICTURES}
 

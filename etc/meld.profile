@@ -13,6 +13,7 @@ include globals.local
 # Calling by its absolute path (example for git-mergetool):
 #  git config --global mergetool.meld.cmd /usr/bin/meld
 
+noblacklist ${HOME}/.config/meld
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials

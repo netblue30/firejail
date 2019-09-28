@@ -233,6 +233,7 @@ blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
+blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/midori
@@ -499,6 +500,7 @@ blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.local/share/geary
 blacklist ${HOME}/.local/share/geeqie
+blacklist ${HOME}/.local/share/ghostwriter
 blacklist ${HOME}/.local/share/gitg
 blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
@@ -714,6 +716,7 @@ blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/geeqie
+blacklist ${HOME}/.cache/gimp
 blacklist ${HOME}/.cache/godot
 blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
@@ -787,3 +790,4 @@ blacklist ${HOME}/.cache/xmms2
 blacklist ${HOME}/.cache/xreader
 blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
+blacklist ${HOME}/.cache/youtube-dl

@@ -15,9 +15,6 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /usr/share/publicsuffix
-whitelist /usr/share/pki
-whitelist /usr/share/p11-kit
 include whitelist-var-common.inc
 
 caps.drop all

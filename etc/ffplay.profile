@@ -8,7 +8,7 @@ include ffplay.local
 # added by included profile
 #include globals.local
 
-protocol inet,inet6,unix
+protocol unix,inet,inet6
 ignore ipc-namespace
 ignore nogroups
 ignore nosound

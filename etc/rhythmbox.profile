@@ -21,9 +21,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-#whitelist /usr/share/lua
-#whitelist /usr/share/libquvi-scripts
-#include whitelist-usr-share-common.inc
+# FIXME: plugins?
+whitelist /usr/share/rhythmbox
+whitelist /usr/share/lua
+whitelist /usr/share/libquvi-scripts
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 # apparmor - makes settings immutable

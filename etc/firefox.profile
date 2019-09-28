@@ -14,8 +14,6 @@ mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
 
-# FIXME: does fontconf exists, or is this a bug in --build
-whitelist /usr/share/fontconf
 whitelist /usr/share/mozilla
 include whitelist-usr-share-common.inc
 

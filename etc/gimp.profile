@@ -23,10 +23,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/mypaint-data
 whitelist /usr/share/gimp
-whitelist /usr/share/xml
-whitelist /usr/share/gtk-2.0
+whitelist /usr/share/mypaint-data
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

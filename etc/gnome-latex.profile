@@ -19,15 +19,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/gnome-latex
 whitelist /usr/share/perl5
 whitelist /usr/share/texlive
-whitelist /usr/share/hunspell
-whitelist /usr/share/myspell
-whitelist /usr/share/xml
-whitelist /usr/share/enchant
-whitelist /usr/share/enchant-2
-whitelist /usr/share/gtksourceview-4
-whitelist /usr/share/gnome-latex
 include whitelist-usr-share-common.inc
 # May cause issues.
 #include whitelist-var-common.inc

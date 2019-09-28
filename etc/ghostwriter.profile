@@ -20,9 +20,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 whitelist /usr/share/ghostwriter
-whitelist /usr/share/hunspell
 whitelist /usr/share/mozilla-dicts
-whitelist /usr/share/myspell
 include whitelist-usr-share-common.inc
 
 apparmor

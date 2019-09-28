@@ -17,8 +17,6 @@ whitelist ${HOME}/.mozilla
 # FIXME: does fontconf exists, or is this a bug in --build
 whitelist /usr/share/fontconf
 whitelist /usr/share/mozilla
-whitelist /usr/share/myspell
-whitelist /usr/share/sounds
 include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch.

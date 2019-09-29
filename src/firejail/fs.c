@@ -27,6 +27,7 @@
 #include <glob.h>
 #include <dirent.h>
 #include <errno.h>
+#include <sys/sendfile.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -1228,122 +1229,150 @@ void fs_check_chroot_dir(const char *rootdir) {
 	close(parentfd);
 }
 
+// copy /etc/resolv.conf in chroot directory
+static void copy_resolvconf(int parentfd) {
+	int in = open("/etc/resolv.conf", O_RDONLY|O_CLOEXEC);
+	if (in == -1) {
+		fwarning("/etc/resolv.conf not initialized\n");
+		return;
+	}
+	struct stat instat;
+	if (fstat(in, &instat) == -1)
+		errExit("fstat");
+	// try to detect if resolv.conf has been bind mounted into the chroot
+	// do nothing in this case in order to not truncate the real file
+	struct stat outstat;
+	if (fstatat(parentfd, "etc/resolv.conf", &outstat, 0) == 0) {
+		if (instat.st_dev == outstat.st_dev && instat.st_ino == outstat.st_ino) {
+			close(in);
+			return;
+		}
+	}
+	if (arg_debug)
+		printf("Updating /etc/resolv.conf in chroot\n");
+	int out = openat(parentfd, "etc/resolv.conf", O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	if (out == -1)
+		errExit("open");
+	if (sendfile(out, in, NULL, instat.st_size) == -1)
+		errExit("sendfile");
+	close(in);
+	close(out);
+}
+
 // chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir) {
 	assert(rootdir);
 
-	// mount-bind a /dev in rootdir
-	char *newdev;
-	if (asprintf(&newdev, "%s/dev", rootdir) == -1)
-		errExit("asprintf");
-	if (arg_debug)
-		printf("Mounting /dev on %s\n", newdev);
-	if (mount("/dev", newdev, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mounting /dev");
-	free(newdev);
+	int parentfd = safe_fd(rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (parentfd == -1)
+		errExit("safe_fd");
 
-	// mount a new proc filesystem
-	char *newproc;
-	if (asprintf(&newproc, "%s/proc", rootdir) == -1)
-		errExit("asprintf");
+	// mount-bind a /dev in rootdir
 	if (arg_debug)
-		printf("Mounting /proc filesystem on %s\n", newproc);
-	if (mount("proc", newproc, "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
+		printf("Mounting /dev on chroot /dev\n");
+	int fd = openat(parentfd, "dev", O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (fd == -1)
+		errExit("open");
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount("/dev", proc, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting /dev");
+	free(proc);
+	close(fd);
+
+	// mount a brand new proc filesystem
+	if (arg_debug)
+		printf("Mounting /proc filesystem on chroot /proc\n");
+	fd = openat(parentfd, "proc", O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (fd == -1)
+		errExit("open");
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount("proc", proc, "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mounting /proc");
-	free(newproc);
+	free(proc);
+	close(fd);
 
 	// x11
 	if (getenv("FIREJAIL_X11")) {
-		char *newx11;
-		if (asprintf(&newx11, "%s/tmp/.X11-unix", rootdir) == -1)
-			errExit("asprintf");
 		if (arg_debug)
-			printf("Mounting /tmp/.X11-unix on %s\n", newx11);
-		if (mount("/tmp/.X11-unix", newx11, NULL, MS_BIND|MS_REC, NULL) < 0)
+			printf("Mounting /tmp/.X11-unix on chroot /tmp/.X11-unix\n");
+		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_DIRECTORY|O_CLOEXEC);
+		if (fd == -1)
+			errExit("open");
+		if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+			errExit("asprintf");
+		if (mount("/tmp/.X11-unix", proc, NULL, MS_BIND|MS_REC, NULL) < 0)
 			errExit("mounting /tmp/.X11-unix");
-		free(newx11);
+		free(proc);
+		close(fd);
 	}
 
-	// some older distros don't have a /run directory
-	// create one by default
-	char *rundir;
-	if (asprintf(&rundir, "%s/run", rootdir) == -1)
-		errExit("asprintf");
+	// update chroot resolv.conf
+	copy_resolvconf(parentfd);
+
+	// some older distros don't have a /run directory, create one by default
 	struct stat s;
-	if (lstat(rundir, &s) == 0) {
+	if (fstatat(parentfd, "run", &s, AT_SYMLINK_NOFOLLOW) == 0) {
 		if (S_ISLNK(s.st_mode)) {
 			fprintf(stderr, "Error: chroot /run is a symbolic link\n");
 			exit(1);
 		}
-		if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
-			fprintf(stderr, "Error: chroot /run should be a directory owned by root\n");
-			exit(1);
-		}
-		if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
-			fprintf(stderr, "Error: only root user should be given write permission on chroot /run\n");
-			exit(1);
-		}
 	}
-	else {
-		// several sandboxes could race to create /run
-		if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
-			errExit("mkdir");
-		ASSERT_PERMS(rundir, 0, 0, 0755);
-	}
-	free(rundir);
+	else if (mkdirat(parentfd, "run", 0755) == -1 && errno != EEXIST)
+		errExit("mkdir");
+	fs_check_chroot_subdir("run", parentfd, 1);
 
 	// create /run/firejail directory in chroot
-	if (asprintf(&rundir, "%s/run/firejail", rootdir) == -1)
-		errExit("asprintf");
-	if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+	if (mkdirat(parentfd, RUN_FIREJAIL_DIR+1, 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
-	ASSERT_PERMS(rundir, 0, 0, 0755);
-	free(rundir);
 
-	// create /run/firejail/lib directory in chroot and mount it
-	if (asprintf(&rundir, "%s%s", rootdir, RUN_FIREJAIL_LIB_DIR) == -1)
-		errExit("asprintf");
-	if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+	// create /run/firejail/lib directory in chroot
+	if (mkdirat(parentfd, RUN_FIREJAIL_LIB_DIR+1, 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
-	ASSERT_PERMS(rundir, 0, 0, 0755);
-	if (mount(RUN_FIREJAIL_LIB_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
+	// mount lib directory into the chroot
+	fd = openat(parentfd, RUN_FIREJAIL_LIB_DIR+1, O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (fd == -1)
+		errExit("open");
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(RUN_FIREJAIL_LIB_DIR, proc, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
-	free(rundir);
+	free(proc);
+	close(fd);
 
-	// create /run/firejail/mnt directory in chroot and mount the current one
-	if (asprintf(&rundir, "%s%s", rootdir, RUN_MNT_DIR) == -1)
-		errExit("asprintf");
-	if (mkdir(rundir, 0755) == -1 && errno != EEXIST)
+	// create /run/firejail/mnt directory in chroot
+	if (mkdirat(parentfd, RUN_MNT_DIR+1, 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
-	ASSERT_PERMS(rundir, 0, 0, 0755);
-	if (mount(RUN_MNT_DIR, rundir, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-	free(rundir);
-
-	// copy /etc/resolv.conf in chroot directory
-	char *fname;
-	if (asprintf(&fname, "%s/etc/resolv.conf", rootdir) == -1)
+	// mount the current mnt directory into the chroot
+	fd = openat(parentfd, RUN_MNT_DIR+1, O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (fd == -1)
+		errExit("open");
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 		errExit("asprintf");
-	if (arg_debug)
-		printf("Updating /etc/resolv.conf in %s\n", fname);
-	unlink(fname);
-	if (copy_file("/etc/resolv.conf", fname, 0, 0, 0644) == -1) // root needed
-		fwarning("/etc/resolv.conf not initialized\n");
-	free(fname);
+	if (mount(RUN_MNT_DIR, proc, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind");
+	free(proc);
+	close(fd);
 
-	// chroot into the new directory
 #ifdef HAVE_GCOV
 	__gcov_flush();
 #endif
-	// mount the chroot dir on top of /run/firejail/mnt/oroot in order to reuse the apparmor rules for overlay
-	// and chroot into this new directory
-	if (arg_debug)
-		printf("Chrooting into %s\n", rootdir);
+	// create /run/firejail/mnt/oroot
 	char *oroot = RUN_OVERLAY_ROOT;
 	if (mkdir(oroot, 0755) == -1)
 		errExit("mkdir");
-	if (mount(rootdir, oroot, NULL, MS_BIND|MS_REC, NULL) < 0)
+	// mount the chroot dir on top of /run/firejail/mnt/oroot in order to reuse the apparmor rules for overlay
+	if (asprintf(&proc, "/proc/self/fd/%d", parentfd) == -1)
+		errExit("asprintf");
+	if (mount(proc, oroot, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mounting rootdir oroot");
+	free(proc);
+	close(parentfd);
+	// chroot into the new directory
+	if (arg_debug)
+		printf("Chrooting into %s\n", rootdir);
 	if (chroot(oroot) < 0)
 		errExit("chroot");
 

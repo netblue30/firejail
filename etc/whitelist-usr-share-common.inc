@@ -3,8 +3,10 @@ include whitelist-usr-share-common.local
 
 # common /usr/share whitelist for all profiles
 
+whitelist /usr/share/alsa
 whitelist /usr/share/applications
 whitelist /usr/share/cursors
+whitelist /usr/share/crypto-policies
 whitelist /usr/share/drirc.d
 whitelist /usr/share/enchant
 whitelist /usr/share/enchant-2
@@ -36,3 +38,4 @@ whitelist /usr/share/terminfo
 whitelist /usr/share/themes
 whitelist /usr/share/X11
 whitelist /usr/share/xml
+whitelist /usr/share/zoneinfo

@@ -26,6 +26,7 @@
 #include <sys/stat.h>
 
 pid_t skip_process = 0;
+int arg_debug = 0;
 static int arg_route = 0;
 static int arg_arp = 0;
 static int arg_tree = 0;
@@ -142,7 +143,8 @@ int main(int argc, char **argv) {
 			printf("firemon version %s\n\n", VERSION);
 			return 0;
 		}
-
+		else if (strcmp(argv[i], "--debug") == 0)
+			arg_debug = 1;
 		// options without a pid argument
 		else if (strcmp(argv[i], "--top") == 0)
 			arg_top = 1;

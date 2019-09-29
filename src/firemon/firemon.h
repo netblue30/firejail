@@ -29,6 +29,9 @@
 #include "../include/pid.h"
 #include "../include/common.h"
 
+// main.c
+extern int arg_debug;
+
 // clear screen
 static inline void firemon_clrscr(void) {
 	printf("\033[2J\033[1;1H");

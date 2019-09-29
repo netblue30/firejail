@@ -31,6 +31,7 @@ static char *help_str =
 	"\t--caps - print capabilities configuration for each sandbox.\n\n"
 	"\t--cgroup - print control group information for each sandbox.\n\n"
 	"\t--cpu - print CPU affinity for each sandbox.\n\n"
+	"\t--debug - print debug messages.\n\n"
 	"\t--help, -? - this help screen.\n\n"
 	"\t--interface - print network interface information for each sandbox.\n\n"
 	"\t--list - list all sandboxes.\n\n"

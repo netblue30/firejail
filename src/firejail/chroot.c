@@ -141,14 +141,14 @@ static void copy_resolvconf(int parentfd) {
 		fwarning("/etc/resolv.conf not initialized\n");
 		return;
 	}
-	struct stat instat;
-	if (fstat(in, &instat) == -1)
+	struct stat src;
+	if (fstat(in, &src) == -1)
 		errExit("fstat");
 	// try to detect if resolv.conf has been bind mounted into the chroot
 	// do nothing in this case in order to not truncate the real file
-	struct stat outstat;
-	if (fstatat(parentfd, "etc/resolv.conf", &outstat, 0) == 0) {
-		if (instat.st_dev == outstat.st_dev && instat.st_ino == outstat.st_ino) {
+	struct stat dst;
+	if (fstatat(parentfd, "etc/resolv.conf", &dst, 0) == 0) {
+		if (src.st_dev == dst.st_dev && src.st_ino == dst.st_ino) {
 			close(in);
 			return;
 		}
@@ -158,7 +158,7 @@ static void copy_resolvconf(int parentfd) {
 	int out = openat(parentfd, "etc/resolv.conf", O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	if (out == -1)
 		errExit("open");
-	if (sendfile(out, in, NULL, instat.st_size) == -1)
+	if (sendfile(out, in, NULL, src.st_size) == -1)
 		errExit("sendfile");
 	close(in);
 	close(out);

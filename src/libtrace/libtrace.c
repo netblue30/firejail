@@ -75,7 +75,7 @@ void init(void) {
 			// else log to associated tty
 			logfile = "/dev/tty";
 	}
-	
+
 	// logfile
 	ftty = orig_fopen(logfile, "a");
 
@@ -99,7 +99,7 @@ void init(void) {
 	if (ptr)
 		*ptr = '\0';
 
-	tprintf(ftty, "=== tracelib init() [%d:%s] === \n", mypid, myname);
+//	tprintf(ftty, "=== tracelib init() [%d:%s] === \n", mypid, myname);
 }
 
 static void fini(void) __attribute__((destructor));

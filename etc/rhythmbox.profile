@@ -21,7 +21,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-# FIXME: plugins?
 whitelist /usr/share/rhythmbox
 whitelist /usr/share/lua
 whitelist /usr/share/libquvi-scripts

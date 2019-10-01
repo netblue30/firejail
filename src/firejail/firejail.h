@@ -398,9 +398,8 @@ void fs_private_cache(void);
 void fs_mnt(const int enforce);
 
 // chroot.c
-// returns resolved chroot directory path
-char *fs_check_chroot_dir(const char *rootdir);
 // chroot into an existing directory; mount existing /dev and update /etc/resolv.conf
+void fs_check_chroot_dir(void);
 void fs_chroot(const char *rootdir);
 
 // profile.c

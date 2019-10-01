@@ -30,17 +30,17 @@
 #endif
 
 
-// exit if error, return resolved chroot path
-char *fs_check_chroot_dir(const char *rootdir) {
+// exit if error
+void fs_check_chroot_dir(void) {
 	EUID_ASSERT();
-	assert(rootdir);
-	if (strstr(rootdir, "..") ||
-        is_link(rootdir) ||
-        !is_dir(rootdir))
+	assert(cfg.chrootdir);
+	if (strstr(cfg.chrootdir, "..") ||
+        is_link(cfg.chrootdir) ||
+        !is_dir(cfg.chrootdir))
 		goto errout;
 
 	// check chroot dirname exists, chrooting into the root directory is not allowed
-	char *rpath = realpath(rootdir, NULL);
+	char *rpath = realpath(cfg.chrootdir, NULL);
 	if (rpath == NULL || strcmp(rpath, "/") == 0)
 		goto errout;
 
@@ -52,10 +52,11 @@ char *fs_check_chroot_dir(const char *rootdir) {
 		exit(1);
 	}
 	free(overlay);
-	return rpath;
+	cfg.chrootdir = rpath;
+	return;
 
 errout:
-	fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
+	fprintf(stderr, "Error: invalid chroot directory %s\n", cfg.chrootdir);
 	exit(1);
 }
 

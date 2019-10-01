@@ -1659,21 +1659,23 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: --chroot option is not available on Grsecurity systems\n");
 					exit(1);
 				}
-				if (*(argv[i] + 9) == '\0') {
+				// extract chroot dirname
+				cfg.chrootdir = argv[i] + 9;
+				if (*cfg.chrootdir == '\0') {
 					fprintf(stderr, "Error: invalid chroot option\n");
 					exit(1);
 				}
-				invalid_filename(argv[i] + 9, 0); // no globbing
+				invalid_filename(cfg.chrootdir, 0); // no globbing
 
-				// extract chroot dirname
-				char *tmp = argv[i] + 9;
 				// if the directory starts with ~, expand the home directory
-				if (*(argv[i] + 9) == '~') {
-					if (asprintf(&tmp, "%s%s", cfg.homedir, argv[i] + 10) == -1)
+				if (*cfg.chrootdir == '~') {
+					char *tmp;
+					if (asprintf(&tmp, "%s%s", cfg.homedir, cfg.chrootdir + 1) == -1)
 						errExit("asprintf");
+					cfg.chrootdir = tmp;
 				}
 				// check chroot directory
-				cfg.chrootdir = fs_check_chroot_dir(tmp);
+				fs_check_chroot_dir();
 			}
 			else
 				exit_err_feature("chroot");

@@ -40,6 +40,7 @@ seccomp.drop _sysctl,acct,add_key,adjtimex,clock_adjtime,delete_module,fanotify_
 disable-mnt
 private
 private-dev
+private-tmp
 writable-var
 
 # mdwe can break modules/plugins

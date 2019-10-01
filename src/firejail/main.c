@@ -1659,35 +1659,21 @@ int main(int argc, char **argv) {
 					fprintf(stderr, "Error: --chroot option is not available on Grsecurity systems\n");
 					exit(1);
 				}
-
-
+				if (*(argv[i] + 9) == '\0') {
+					fprintf(stderr, "Error: invalid chroot option\n");
+					exit(1);
+				}
 				invalid_filename(argv[i] + 9, 0); // no globbing
 
 				// extract chroot dirname
-				cfg.chrootdir = argv[i] + 9;
+				char *tmp = argv[i] + 9;
 				// if the directory starts with ~, expand the home directory
-				if (*cfg.chrootdir == '~') {
-					char *tmp;
-					if (asprintf(&tmp, "%s%s", cfg.homedir, cfg.chrootdir + 1) == -1)
+				if (*(argv[i] + 9) == '~') {
+					if (asprintf(&tmp, "%s%s", cfg.homedir, argv[i] + 10) == -1)
 						errExit("asprintf");
-					cfg.chrootdir = tmp;
 				}
-
-				if (strstr(cfg.chrootdir, "..") || is_link(cfg.chrootdir)) {
-					fprintf(stderr, "Error: invalid chroot directory %s\n", cfg.chrootdir);
-					return 1;
-				}
-
-				// check chroot dirname exists, don't allow "--chroot=/"
-				char *rpath = realpath(cfg.chrootdir, NULL);
-				if (rpath == NULL || strcmp(rpath, "/") == 0) {
-					fprintf(stderr, "Error: invalid chroot directory\n");
-					exit(1);
-				}
-				cfg.chrootdir = rpath;
-
-				// check chroot directory structure
-				fs_check_chroot_dir(cfg.chrootdir);
+				// check chroot directory
+				cfg.chrootdir = fs_check_chroot_dir(tmp);
 			}
 			else
 				exit_err_feature("chroot");

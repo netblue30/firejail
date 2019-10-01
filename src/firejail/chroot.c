@@ -21,7 +21,6 @@
 #ifdef HAVE_CHROOT
 #include "firejail.h"
 #include <sys/mount.h>
-#include <sys/stat.h>
 #include <sys/sendfile.h>
 #include <errno.h>
 
@@ -31,107 +30,33 @@
 #endif
 
 
-// exit if error
-static void fs_check_chroot_subdir(const char *subdir, int parentfd, int check_writable) {
-	assert(subdir);
-	int fd = openat(parentfd, subdir, O_PATH|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOENT)
-			fprintf(stderr, "Error: cannot find /%s in chroot directory\n", subdir);
-		else {
-			perror("open");
-			fprintf(stderr, "Error: cannot open /%s in chroot directory\n", subdir);
-		}
-		exit(1);
-	}
-	struct stat s;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	close(fd);
-	if (!S_ISDIR(s.st_mode) || s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /%s should be a directory owned by root\n", subdir);
-		exit(1);
-	}
-	if (check_writable && ((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
-		fprintf(stderr, "Error: only root user should be given write permission on chroot /%s\n", subdir);
-		exit(1);
-	}
-}
-
-// exit if error
-void fs_check_chroot_dir(const char *rootdir) {
+// exit if error, return resolved chroot path
+char *fs_check_chroot_dir(const char *rootdir) {
 	EUID_ASSERT();
 	assert(rootdir);
+	if (strstr(rootdir, "..") ||
+        is_link(rootdir) ||
+        !is_dir(rootdir))
+		goto errout;
+
+	// check chroot dirname exists, chrooting into the root directory is not allowed
+	char *rpath = realpath(rootdir, NULL);
+	if (rpath == NULL || strcmp(rpath, "/") == 0)
+		goto errout;
 
 	char *overlay;
 	if (asprintf(&overlay, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (strncmp(rootdir, overlay, strlen(overlay)) == 0) {
+	if (strncmp(rpath, overlay, strlen(overlay)) == 0) {
 		fprintf(stderr, "Error: invalid chroot directory: no directories in %s are allowed\n", overlay);
 		exit(1);
 	}
 	free(overlay);
+	return rpath;
 
-	// fails if there is any symlink or if rootdir is not a directory
-	int parentfd = safe_fd(rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (parentfd == -1) {
-		fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
-		exit(1);
-	}
-	// rootdir has to be owned by root and is not allowed to be generally writable,
-	// this also excludes /tmp, /var/tmp and such
-	struct stat s;
-	if (fstat(parentfd, &s) == -1)
-		errExit("fstat");
-	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot directory should be owned by root\n");
-		exit(1);
-	}
-	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
-		fprintf(stderr, "Error: only root user should be given write permission on chroot directory\n");
-		exit(1);
-	}
-
-	// check subdirectories in rootdir
-	fs_check_chroot_subdir("dev", parentfd, 0);
-	fs_check_chroot_subdir("etc", parentfd, 1);
-	fs_check_chroot_subdir("proc", parentfd, 0);
-	fs_check_chroot_subdir("tmp", parentfd, 0);
-	fs_check_chroot_subdir("var/tmp", parentfd, 0);
-
-	// there should be no checking on <chrootdir>/etc/resolv.conf
-	// the file is replaced with the real /etc/resolv.conf anyway
-#if 0
-	if (asprintf(&name, "%s/etc/resolv.conf", rootdir) == -1)
-		errExit("asprintf");
-	if (stat(name, &s) == 0) {
-		if (s.st_uid != 0) {
-			fprintf(stderr, "Error: chroot /etc/resolv.conf should be owned by root\n");
-			exit(1);
-		}
-	}
-	else {
-		fprintf(stderr, "Error: chroot /etc/resolv.conf not found\n");
-		exit(1);
-	}
-	// on Arch /etc/resolv.conf could be a symlink to /run/systemd/resolve/resolv.conf
-	// on Ubuntu 17.04 /etc/resolv.conf could be a symlink to /run/resolveconf/resolv.conf
-	if (is_link(name)) {
-		// check the link points in chroot
-		char *rname = realpath(name, NULL);
-		if (!rname || strncmp(rname, rootdir, strlen(rootdir)) != 0) {
-			fprintf(stderr, "Error: chroot /etc/resolv.conf is pointing outside chroot\n");
-			exit(1);
-		}
-	}
-	free(name);
-#endif
-
-	// check x11 socket directory
-	if (getenv("FIREJAIL_X11"))
-		fs_check_chroot_subdir("tmp/.X11-unix", parentfd, 0);
-
-	close(parentfd);
+errout:
+	fprintf(stderr, "Error: invalid chroot directory %s\n", rootdir);
+	exit(1);
 }
 
 // copy /etc/resolv.conf in chroot directory
@@ -145,7 +70,7 @@ static void copy_resolvconf(int parentfd) {
 	if (fstat(in, &src) == -1)
 		errExit("fstat");
 	// try to detect if resolv.conf has been bind mounted into the chroot
-	// do nothing in this case in order to not truncate the real file
+	// do nothing in this case in order to not unlink the real file
 	struct stat dst;
 	if (fstatat(parentfd, "etc/resolv.conf", &dst, 0) == 0) {
 		if (src.st_dev == dst.st_dev && src.st_ino == dst.st_ino) {
@@ -155,7 +80,8 @@ static void copy_resolvconf(int parentfd) {
 	}
 	if (arg_debug)
 		printf("Updating /etc/resolv.conf in chroot\n");
-	int out = openat(parentfd, "etc/resolv.conf", O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	unlinkat(parentfd, "etc/resolv.conf", 0);
+	int out = openat(parentfd, "etc/resolv.conf", O_CREAT|O_WRONLY|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	if (out == -1)
 		errExit("open");
 	if (sendfile(out, in, NULL, src.st_size) == -1)
@@ -164,18 +90,65 @@ static void copy_resolvconf(int parentfd) {
 	close(out);
 }
 
+// exit if error
+static void check_subdir(int parentfd, const char *subdir, int check_writable) {
+	assert(subdir);
+	struct stat s;
+	if (fstatat(parentfd, subdir, &s, AT_SYMLINK_NOFOLLOW) != 0) {
+		fprintf(stderr, "Error: cannot find /%s in chroot directory\n", subdir);
+		exit(1);
+	}
+	if (!S_ISDIR(s.st_mode)) {
+		if (S_ISLNK(s.st_mode))
+			fprintf(stderr, "Error: chroot /%s is a symbolic link\n", subdir);
+		else
+			fprintf(stderr, "Error: chroot /%s is not a directory\n", subdir);
+		exit(1);
+	}
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot /%s should owned by root\n", subdir);
+		exit(1);
+	}
+	if (check_writable && ((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+		fprintf(stderr, "Error: only root user should be given write permission on chroot /%s\n", subdir);
+		exit(1);
+	}
+}
+
 // chroot into an existing directory; mount existing /dev and update /etc/resolv.conf
 void fs_chroot(const char *rootdir) {
 	assert(rootdir);
 
+	// fails if there is any symlink or if rootdir is not a directory
 	int parentfd = safe_fd(rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (parentfd == -1)
 		errExit("safe_fd");
+	// rootdir has to be owned by root and is not allowed to be generally writable,
+	// this also excludes /tmp and friends
+	struct stat s;
+	if (fstat(parentfd, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != 0) {
+		fprintf(stderr, "Error: chroot directory should be owned by root\n");
+		exit(1);
+	}
+	if (((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {
+		fprintf(stderr, "Error: only root user should be given write permission on chroot directory\n");
+		exit(1);
+	}
+	// check chroot subdirectories; /tmp/.X11-unix and /run are treated separately
+	check_subdir(parentfd, "dev", 0);
+	check_subdir(parentfd, "etc", 1);
+	check_subdir(parentfd, "proc", 0);
+	check_subdir(parentfd, "tmp", 0);
+	check_subdir(parentfd, "var/tmp", 0);
 
 	// mount-bind a /dev in rootdir
 	if (arg_debug)
 		printf("Mounting /dev on chroot /dev\n");
-	int fd = openat(parentfd, "dev", O_PATH|O_DIRECTORY|O_CLOEXEC);
+	// open chroot /dev to get a file descriptor,
+	// then use this descriptor as a mount target
+	int fd = openat(parentfd, "dev", O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("open");
 	char *proc;
@@ -189,7 +162,7 @@ void fs_chroot(const char *rootdir) {
 	// mount a brand new proc filesystem
 	if (arg_debug)
 		printf("Mounting /proc filesystem on chroot /proc\n");
-	fd = openat(parentfd, "proc", O_PATH|O_DIRECTORY|O_CLOEXEC);
+	fd = openat(parentfd, "proc", O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("open");
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
@@ -203,7 +176,8 @@ void fs_chroot(const char *rootdir) {
 	if (getenv("FIREJAIL_X11")) {
 		if (arg_debug)
 			printf("Mounting /tmp/.X11-unix on chroot /tmp/.X11-unix\n");
-		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_DIRECTORY|O_CLOEXEC);
+		check_subdir(parentfd, "tmp/.X11-unix", 0);
+		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1)
 			errExit("open");
 		if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
@@ -214,30 +188,22 @@ void fs_chroot(const char *rootdir) {
 		close(fd);
 	}
 
-	// update chroot resolv.conf
-	copy_resolvconf(parentfd);
-
 	// some older distros don't have a /run directory, create one by default
-	struct stat s;
-	if (fstatat(parentfd, "run", &s, AT_SYMLINK_NOFOLLOW) == 0) {
-		if (S_ISLNK(s.st_mode)) {
-			fprintf(stderr, "Error: chroot /run is a symbolic link\n");
-			exit(1);
-		}
-	}
-	else if (mkdirat(parentfd, "run", 0755) == -1 && errno != EEXIST)
+	if (mkdirat(parentfd, "run", 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
-	fs_check_chroot_subdir("run", parentfd, 1);
+	check_subdir(parentfd, "run", 1);
 
 	// create /run/firejail directory in chroot
 	if (mkdirat(parentfd, RUN_FIREJAIL_DIR+1, 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
+	check_subdir(parentfd, RUN_FIREJAIL_DIR+1, 1);
 
 	// create /run/firejail/lib directory in chroot
 	if (mkdirat(parentfd, RUN_FIREJAIL_LIB_DIR+1, 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
+	check_subdir(parentfd, RUN_FIREJAIL_LIB_DIR+1, 1);
 	// mount lib directory into the chroot
-	fd = openat(parentfd, RUN_FIREJAIL_LIB_DIR+1, O_PATH|O_DIRECTORY|O_CLOEXEC);
+	fd = openat(parentfd, RUN_FIREJAIL_LIB_DIR+1, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("open");
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
@@ -250,8 +216,9 @@ void fs_chroot(const char *rootdir) {
 	// create /run/firejail/mnt directory in chroot
 	if (mkdirat(parentfd, RUN_MNT_DIR+1, 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
+	check_subdir(parentfd, RUN_MNT_DIR+1, 1);
 	// mount the current mnt directory into the chroot
-	fd = openat(parentfd, RUN_MNT_DIR+1, O_PATH|O_DIRECTORY|O_CLOEXEC);
+	fd = openat(parentfd, RUN_MNT_DIR+1, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("open");
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
@@ -260,6 +227,9 @@ void fs_chroot(const char *rootdir) {
 		errExit("mount bind");
 	free(proc);
 	close(fd);
+
+	// update chroot resolv.conf
+	copy_resolvconf(parentfd);
 
 #ifdef HAVE_GCOV
 	__gcov_flush();

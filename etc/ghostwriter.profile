@@ -22,7 +22,8 @@ include disable-xdg.inc
 whitelist /usr/share/ghostwriter
 whitelist /usr/share/mozilla-dicts
 whitelist /usr/share/texlive
-whitelist /usr/share/pandoc-2.2.1
+whitelist /usr/share/pandoc
+whitelist /usr/share/pandoc-*
 include whitelist-usr-share-common.inc
 
 apparmor

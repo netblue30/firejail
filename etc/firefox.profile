@@ -14,6 +14,7 @@ mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
 
+whitelist /usr/share/libthai
 whitelist /usr/share/mozilla
 include whitelist-usr-share-common.inc
 

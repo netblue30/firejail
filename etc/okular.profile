@@ -26,6 +26,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/knotifications5
+whitelist /usr/share/poppler
+whitelist /usr/share/thumbnail.so
+whitelist /usr/share/okular
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

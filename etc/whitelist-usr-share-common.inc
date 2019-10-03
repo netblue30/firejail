@@ -7,6 +7,8 @@ whitelist /usr/share/alsa
 whitelist /usr/share/applications
 whitelist /usr/share/cursors
 whitelist /usr/share/crypto-policies
+whitelist /usr/share/dconf
+whitelist /usr/share/distro-info
 whitelist /usr/share/drirc.d
 whitelist /usr/share/enchant
 whitelist /usr/share/enchant-2
@@ -23,6 +25,8 @@ whitelist /usr/share/hunspell
 whitelist /usr/share/hwdata
 whitelist /usr/share/icons
 whitelist /usr/share/Kvantum
+whitelist /usr/share/kservices5
+whitelist /usr/share/kxmlgui5
 whitelist /usr/share/locale
 whitelist /usr/share/mime
 whitelist /usr/share/misc
@@ -31,6 +35,7 @@ whitelist /usr/share/myspell
 whitelist /usr/share/p11-kit
 whitelist /usr/share/pixmaps
 whitelist /usr/share/pki
+whitelist /usr/share/plasma
 whitelist /usr/share/qt5
 whitelist /usr/share/sounds
 whitelist /usr/share/tcl8.6

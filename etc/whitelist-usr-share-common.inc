@@ -5,8 +5,8 @@ include whitelist-usr-share-common.local
 
 whitelist /usr/share/alsa
 whitelist /usr/share/applications
-whitelist /usr/share/cursors
 whitelist /usr/share/crypto-policies
+whitelist /usr/share/cursors
 whitelist /usr/share/dconf
 whitelist /usr/share/distro-info
 whitelist /usr/share/drirc.d
@@ -24,9 +24,11 @@ whitelist /usr/share/gtksourceview-4
 whitelist /usr/share/hunspell
 whitelist /usr/share/hwdata
 whitelist /usr/share/icons
-whitelist /usr/share/Kvantum
+whitelist /usr/share/knotifications5
 whitelist /usr/share/kservices5
+whitelist /usr/share/Kvantum
 whitelist /usr/share/kxmlgui5
+whitelist /usr/share/libthai
 whitelist /usr/share/locale
 whitelist /usr/share/mime
 whitelist /usr/share/misc
@@ -41,6 +43,7 @@ whitelist /usr/share/sounds
 whitelist /usr/share/tcl8.6
 whitelist /usr/share/terminfo
 whitelist /usr/share/themes
+whitelist /usr/share/thumbnail.so
 whitelist /usr/share/X11
 whitelist /usr/share/xml
 whitelist /usr/share/zoneinfo

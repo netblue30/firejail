@@ -55,7 +55,7 @@ static orig_access_t orig_access = NULL;
 // Using fprintf to /dev/tty instead of printf in order to fix #561
 static FILE *ftty = NULL;
 static pid_t mypid = 0;
-#define MAXNAME 16
+#define MAXNAME 16 // 8 or larger
 static char myname[MAXNAME] = "unknown";
 
 static void init(void) __attribute__((constructor));
@@ -85,6 +85,8 @@ void init(void) {
 		}
 		sleep(1);
 	}
+	// unbuffered stream
+	setvbuf(ftty, NULL, _IONBF, 0);
 
 	// pid
 	mypid = getpid();
@@ -96,7 +98,7 @@ void init(void) {
 		free(fname);
 		if (fp) {
 			if (fgets(myname, MAXNAME, fp) == NULL)
-				strncpy(myname, "unknown", MAXNAME-1);
+				strcpy(myname, "unknown");
 			fclose(fp);
 		}
 	}

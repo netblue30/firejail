@@ -386,17 +386,21 @@ void fs_remount(const char *dir, OPERATION op, unsigned check_mnt);
 void fs_remount_rec(const char *dir, OPERATION op, unsigned check_mnt);
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void);
+// blacklist firejail configuration and runtime directories
+void disable_config(void);
 // build a basic read-only filesystem
 void fs_basic_fs(void);
 // mount overlayfs on top of / directory
 char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
 void fs_overlayfs(void);
-// chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
-void fs_chroot(const char *rootdir);
-void fs_check_chroot_dir(const char *rootdir);
 void fs_private_tmp(void);
 void fs_private_cache(void);
 void fs_mnt(const int enforce);
+
+// chroot.c
+// chroot into an existing directory; mount existing /dev and update /etc/resolv.conf
+void fs_check_chroot_dir(void);
+void fs_chroot(const char *rootdir);
 
 // profile.c
 // find and read the profile specified by name from dir directory

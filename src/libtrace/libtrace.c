@@ -77,7 +77,14 @@ void init(void) {
 	}
 
 	// logfile
-	ftty = orig_fopen(logfile, "a");
+	unsigned cnt = 0;
+	while ((ftty = orig_fopen(logfile, "a")) == NULL) {
+		if (++cnt > 10) { // 10 sec
+			perror("Cannot open trace log file");
+			exit(1);
+		}
+		sleep(1);
+	}
 
 	// pid
 	mypid = getpid();

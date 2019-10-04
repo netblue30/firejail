@@ -202,6 +202,9 @@ Mount-bind file1 on top of file2. This option is only available when running as 
 \fBdisable-mnt
 Disable /mnt, /media, /run/mount and /run/media access.
 .TP
+\fBkeep-dev-shm
+/dev/shm directory is untouched (even with private-dev).
+.TP
 \fBkeep-var-tmp
 /var/tmp directory is untouched.
 .TP
@@ -253,32 +256,36 @@ closed.
 \fBprivate directory
 Use directory as user home.
 .TP
-\fBprivate-home file,directory
-Build a new user home in a temporary
-filesystem, and copy the files and directories in the list in the
-new home. All modifications are discarded when the sandbox is
-closed.
+\fBprivate-bin file,file
+Build a new /bin in a temporary filesystem, and copy the programs in the list.
+The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
 .TP
 \fBprivate-cache
 Mount an empty temporary filesystem on top of the .cache directory in user home. All
 modifications are discarded when the sandbox is closed.
 .TP
-\fBprivate-bin file,file
-Build a new /bin in a temporary filesystem, and copy the programs in the list.
-The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
+\fBprivate-cwd
+Set working directory inside jail to the home directory, and failing that, the root directory.
+.TP
+\fBprivate-cwd directory
+Set working directory inside the jail.
 .TP
 \fBprivate-dev
 Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx,
 random, snd, urandom, video, log, shm and usb devices are available.
 Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional restrictions.
-.TP
-\fBkeep-dev-shm
-/dev/shm directory is untouched (even with private-dev).
+
 .TP
 \fBprivate-etc file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
 All modifications are discarded when the sandbox is closed.
+.TP
+\fBprivate-home file,directory
+Build a new user home in a temporary
+filesystem, and copy the files and directories in the list in the
+new home. All modifications are discarded when the sandbox is
+closed.
 .TP
 \fBprivate-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.
@@ -296,12 +303,6 @@ All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-tmp
 Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
-.TP
-\fBprivate-cwd
-Set working directory inside jail to the home directory, and failing that, the root directory.
-.TP
-\fBprivate-cwd directory
-Set working directory inside the jail.
 .TP
 \fBread-only file_or_directory
 Make directory or file read-only.
@@ -352,14 +353,29 @@ Enable AppArmor confinement.
 \fBcaps
 Enable default Linux capabilities filter.
 .TP
-\fBcaps.drop all
-Blacklist all Linux capabilities.
-.TP
 \fBcaps.drop capability,capability,capability
 Blacklist given Linux capabilities.
 .TP
+\fBcaps.drop all
+Blacklist all Linux capabilities.
+.TP
 \fBcaps.keep capability,capability,capability
 Whitelist given Linux capabilities.
+.TP
+\fBmemory-deny-write-execute
+Install a seccomp filter to block attempts to create memory mappings
+that are both writable and executable, to change mappings to be
+executable or to create executable shared memory.
+.TP
+\fBnonewprivs
+Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
+cannot acquire new privileges using execve(2);  in particular,
+this means that calling a suid binary (or one with file capabilities)
+does not result in an increase of privilege.
+.TP
+\fBnoroot
+Use this command  to enable an user namespace. The namespace has only one user, the current user.
+There is no root account (uid 0) defined in the namespace.
 .TP
 \fBprotocol protocol1,protocol2,protocol3
 Enable protocol filter. The filter is based on seccomp and  checks the
@@ -381,21 +397,6 @@ Enable seccomp filter and blacklist  the system calls in the list.
 .TP
 \fBseccomp.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list.
-.TP
-\fBmemory-deny-write-execute
-Install a seccomp filter to block attempts to create memory mappings
-that are both writable and executable, to change mappings to be
-executable or to create executable shared memory.
-.TP
-\fBnonewprivs
-Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
-cannot acquire new privileges using execve(2);  in particular,
-this means that calling a suid binary (or one with file capabilities)
-does not result in an increase of privilege.
-.TP
-\fBnoroot
-Use this command  to enable an user namespace. The namespace has only one user, the current user.
-There is no root account (uid 0) defined in the namespace.
 .TP
 \fBx11
 Enable X11 sandboxing.
@@ -441,6 +442,15 @@ place the sandbox in an existing control group.
 Examples:
 
 .TP
+\fBcgroup /sys/fs/cgroup/g1/tasks
+The sandbox is placed in g1 control group.
+.TP
+\fBcpu 0,1,2
+Use only CPU cores 0, 1 and 2.
+.TP
+\fBnice -5
+Set a nice value of -5 to all processes running inside the sandbox.
+.TP
 \fBrlimit-as 123456789012
 Set the maximum size of the process's virtual memory to 123456789012 bytes.
 .TP
@@ -459,15 +469,6 @@ Set the maximum number of files that can be opened by a process to 500.
 \fBrlimit-sigpending 200
 Set the maximum number of processes that can be created for the real user ID of the calling process to 200.
 .TP
-\fBcpu 0,1,2
-Use only CPU cores 0, 1 and 2.
-.TP
-\fBnice -5
-Set a nice value of -5 to all processes running inside the sandbox.
-.TP
-\fBcgroup /sys/fs/cgroup/g1/tasks
-The sandbox is placed in g1 control group.
-.TP
 \fBtimeout hh:mm:ss
 Kill the sandbox automatically after the time has elapsed. The time is specified in hours/minutes/seconds format.
 
@@ -475,14 +476,6 @@ Kill the sandbox automatically after the time has elapsed. The time is specified
 .TP
 \fBallusers
 All user home directories are visible inside the sandbox. By default, only current user home directory is visible.
-
-.TP
-\fBname sandboxname
-Set sandbox name. Example:
-.br
-
-.br
-name browser
 
 .TP
 \fBenv name=value
@@ -495,17 +488,23 @@ env LD_LIBRARY_PATH=/opt/test/lib
 env CFLAGS="-W -Wall -Werror"
 
 .TP
-\fBnodvd
-Disable DVD and audio CD devices.
-.TP
-\fBnogroups
-Disable supplementary user groups
-.TP
-\fBshell none
-Run the program directly, without a shell.
-.TP
 \fBipc-namespace
 Enable IPC namespace.
+.TP
+\fBname sandboxname
+Set sandbox name. Example:
+.br
+
+.br
+name browser
+
+.TP
+\fBno3d
+Disable 3D hardware acceleration.
+.TP
+\fBnoautopulse
+Disable automatic ~/.config/pulse init, for complex setups such as remote
+pulse servers or non-standard socket paths.
 .TP
 \fBnodbus
 Disable D-Bus access. Only the regular UNIX socket is handled by
@@ -513,12 +512,14 @@ this command. To disable the abstract socket, you would need to
 request a new network namespace using the net command. Another
 option is to remove unix from protocol set.
 .TP
+\fBnodvd
+Disable DVD and audio CD devices.
+.TP
+\fBnogroups
+Disable supplementary user groups
+.TP
 \fBnosound
 Disable sound system.
-.TP
-\fBnoautopulse
-Disable automatic ~/.config/pulse init, for complex setups such as remote
-pulse servers or non-standard socket paths.
 .TP
 \fBnotv
 Disable DVB (Digital Video Broadcasting) TV devices.
@@ -529,8 +530,9 @@ Disable U2F devices.
 \fBnovideo
 Disable video devices.
 .TP
-\fBno3d
-Disable 3D hardware acceleration.
+\fBshell none
+Run the program directly, without a shell.
+
 
 .SH Networking
 Networking features available in profile files.
@@ -618,16 +620,6 @@ Spoof id number in /etc/machine-id file - a new random id is generated inside th
 \fBmtu number
 Assign a MTU value to the last network interface defined by a net command.
 
-
-
-.TP
-\fBnetfilter
-If a new network namespace is created, enabled default network filter.
-
-.TP
-\fBnetfilter filename
-If a new network namespace is created, enabled the network filter in filename.
-
 .TP
 \fBnet bridge_interface
 Enable a new network namespace and connect it to this bridge interface.
@@ -648,6 +640,13 @@ default gateway of the host. Up to four \-\-net devices can
 be defined. Mixing bridge and macvlan devices is allowed.
 
 .TP
+\fBnet none
+Enable a new, unconnected network namespace. The only interface
+available in the new namespace is a new loopback interface (lo).
+Use this option to deny network access to programs that don't
+really need network access.
+
+.TP
 \fBnet tap_interface
 Enable a new network namespace and connect it
 to this ethernet tap interface using the standard Linux macvlan
@@ -656,11 +655,13 @@ will not try to configure the interface inside the sandbox.
 Please use ip, netmask and defaultgw to specify the configuration.
 
 .TP
-\fBnet none
-Enable a new, unconnected network namespace. The only interface
-available in the new namespace is a new loopback interface (lo).
-Use this option to deny network access to programs that don't
-really need network access.
+\fBnetfilter
+If a new network namespace is created, enabled default network filter.
+
+.TP
+\fBnetfilter filename
+If a new network namespace is created, enabled the network filter in filename.
+
 
 .TP
 \fBnetmask address
@@ -675,13 +676,13 @@ instead of the default one.
 
 .SH Other
 .TP
+\fBdeterministic-exit-code
+Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
+
+.TP
 \fBjoin-or-start sandboxname
 Join the sandbox identified by name or start a new one.
 Same as "firejail --join=sandboxname" command if sandbox with specified name exists, otherwise same as "name sandboxname".
-
-.TP
-\fBdeterministic-exit-code
-Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
 
 .SH FILES
 /etc/firejail/filename.profile, $HOME/.config/firejail/filename.profile

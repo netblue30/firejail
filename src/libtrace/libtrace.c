@@ -85,8 +85,8 @@ void init(void) {
 		}
 		sleep(1);
 	}
-	// unbuffered stream
-	setvbuf(ftty, NULL, _IONBF, 0);
+	// line buffered stream
+	setvbuf(ftty, NULL, _IOLBF, BUFSIZ);
 
 	// pid
 	mypid = getpid();

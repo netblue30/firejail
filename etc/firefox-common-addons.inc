@@ -60,6 +60,9 @@ whitelist ${HOME}/.local/share/gnome-shell
 ignore nodbus
 include allow-python3.inc
 
+# KeePassXC Browser Integration
+#private-bin keepassxc-proxy
+
 # Flash plugin
 # private-etc must first be enabled in firefox-common.profile and in profiles including it.
 #private-etc adobe

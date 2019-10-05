@@ -361,8 +361,8 @@ blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gitconfig
 blacklist ${HOME}/.gnome/gnome-schedule
-blacklist ${HOME}/.googleearth/Cache/
-blacklist ${HOME}/.googleearth/Temp/
+blacklist ${HOME}/.googleearth/Cache
+blacklist ${HOME}/.googleearth/Temp
 blacklist ${HOME}/.googleearth/myplaces.backup.kml
 blacklist ${HOME}/.googleearth/myplaces.kml
 blacklist ${HOME}/.gradle

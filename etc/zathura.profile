@@ -39,5 +39,5 @@ private-dev
 private-etc alternatives,fonts,machine-id
 private-tmp
 
-read-only ${HOME}/
-read-write ${HOME}/.local/share/zathura/
+read-only ${HOME}
+read-write ${HOME}/.local/share/zathura

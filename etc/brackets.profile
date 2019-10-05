@@ -6,8 +6,8 @@ include brackets.local
 include globals.local
 
 noblacklist ${HOME}/.config/Brackets
-#noblacklist /opt/brackets/
-#noblacklist /opt/google/
+#noblacklist /opt/brackets
+#noblacklist /opt/google
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

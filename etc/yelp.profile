@@ -18,7 +18,11 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
+whitelist /usr/share/help
+whitelist /usr/share/yelp
+whitelist /usr/share/yelp-xsl
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

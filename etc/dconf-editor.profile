@@ -16,6 +16,7 @@ include disable-xdg.inc
 
 whitelist ${HOME}/.local/share/glib-2.0
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 
 apparmor
 caps.drop all

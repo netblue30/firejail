@@ -25,7 +25,10 @@ mkdir ${HOME}/.local/share/bibletime
 whitelist ${HOME}/.bibletime
 whitelist ${HOME}/.sword
 whitelist ${HOME}/.local/share/bibletime
+whitelist /usr/share/bibletime
+whitelist /usr/share/sword
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -37,6 +37,10 @@ include disable-passwdmgr.inc
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in /var.
 #include whitelist-var-common.inc
 
+# Uncomment the next lines (or put it into your meld.local) if you don't need to compare files in /usr/share.
+#whitelist /usr/share/meld
+#include whitelist-usr-share-common.inc
+
 apparmor
 caps.drop all
 ipc-namespace

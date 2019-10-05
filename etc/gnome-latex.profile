@@ -19,6 +19,10 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/gnome-latex
+whitelist /usr/share/perl5
+whitelist /usr/share/texlive
+include whitelist-usr-share-common.inc
 # May cause issues.
 #include whitelist-var-common.inc
 

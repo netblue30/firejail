@@ -7,6 +7,7 @@ include rhythmbox.local
 include globals.local
 
 noblacklist ${MUSIC}
+noblacklist ${HOME}/.cache/rhythmbox
 noblacklist ${HOME}/.local/share/rhythmbox
 
 # Allow python (blacklisted by disable-interpreters.inc)

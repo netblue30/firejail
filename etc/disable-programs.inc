@@ -691,6 +691,7 @@ blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/atril
@@ -763,6 +764,7 @@ blacklist ${HOME}/.cache/okular
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta
 blacklist ${HOME}/.cache/org.gnome.Books
+blacklist ${HOME}/.cache/org.gnome.Maps
 blacklist ${HOME}/.cache/pdfmod
 blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/plasmashell
@@ -770,6 +772,7 @@ blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser
+blacklist ${HOME}/.cache/rhythmbox
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
 blacklist ${HOME}/.cache/snox

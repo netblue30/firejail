@@ -6,6 +6,7 @@ include utox.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/Tox
 noblacklist ${HOME}/.config/tox
 
 include disable-common.inc

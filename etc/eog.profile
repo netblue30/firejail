@@ -9,7 +9,6 @@ include globals.local
 noblacklist ${HOME}/.config/eog
 
 whitelist /usr/share/eog
-include whitelist-usr-share-common.inc
 
 # private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'
 # comment those if you need that functionality

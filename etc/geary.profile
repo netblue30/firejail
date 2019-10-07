@@ -25,6 +25,8 @@ whitelist ${HOME}/.local/share/geary
 
 read-only ${HOME}/.config/mimeapps.list
 
-# allow browsers
+whitelist /usr/share/geary
+
+# allow Mozilla browsers
 # Redirect
 include firefox.profile

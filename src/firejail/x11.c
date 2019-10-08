@@ -1238,6 +1238,20 @@ void x11_xorg(void) {
 		errLogExit("invalid .Xauthority mount");
 
 	ASSERT_PERMS(dest, getuid(), getgid(), 0600);
+	
+	// blacklist .Xauthority file if it is not masked already
+	char *envar = getenv("XAUTHORITY");
+	if (envar) {
+		char *rp = realpath(envar, NULL);
+		if (rp) {
+			if (strcmp(rp, dest) != 0)
+				disable_file_or_dir(rp);
+			free(rp);
+		}
+		// update environment variable, so our new .Xauthority file is used
+		if (setenv("XAUTHORITY", dest, 1) < 0)
+			errExit("setenv");
+	}
 	free(dest);
 #endif
 }

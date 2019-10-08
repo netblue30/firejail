@@ -62,6 +62,10 @@ blacklist /etc/X11/Xsession.d
 blacklist /etc/xdg/autostart
 read-only ${HOME}/.Xauthority
 
+# Session manager
+?HAS_X11: blacklist ${HOME}/.ICEauthority
+?HAS_X11: blacklist /tmp/.ICE-unix
+
 # KDE config
 blacklist ${HOME}/.config/khotkeysrc
 blacklist ${HOME}/.config/krunnerrc

@@ -35,8 +35,8 @@ void fs_check_chroot_dir(void) {
 	EUID_ASSERT();
 	assert(cfg.chrootdir);
 	if (strstr(cfg.chrootdir, "..") ||
-        is_link(cfg.chrootdir) ||
-        !is_dir(cfg.chrootdir))
+	    is_link(cfg.chrootdir) ||
+	    !is_dir(cfg.chrootdir))
 		goto errout;
 
 	// check chroot dirname exists, chrooting into the root directory is not allowed
@@ -82,7 +82,7 @@ static void copy_resolvconf(int parentfd) {
 	if (arg_debug)
 		printf("Updating /etc/resolv.conf in chroot\n");
 	unlinkat(parentfd, "etc/resolv.conf", 0);
-	int out = openat(parentfd, "etc/resolv.conf", O_CREAT|O_WRONLY|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	int out = openat(parentfd, "etc/resolv.conf", O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	if (out == -1)
 		errExit("open");
 	if (sendfile(out, in, NULL, src.st_size) == -1)

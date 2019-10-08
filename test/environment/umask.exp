@@ -1,0 +1,41 @@
+#!/usr/bin/expect -f
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --noprofile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "umask\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"0123"
+}
+after 100
+
+send -- "firejail\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Warning: an existing sandbox was detected"
+}
+after 100
+
+send -- "umask\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"0123"
+}
+after 100
+
+send -- "exit\r"
+after 100
+
+send -- "exit\r"
+sleep 1
+
+puts "\nall done\n"

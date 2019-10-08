@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.config/mate/eom
 
+whitelist /usr/share/eom
+
 # private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'
 # comment those if you need that functionality
 # or put 'ignore private-bin', 'ignore private-etc' and 'ignore private-lib' in your eom.local

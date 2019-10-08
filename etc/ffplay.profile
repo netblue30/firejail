@@ -8,7 +8,13 @@ include ffplay.local
 # added by included profile
 #include globals.local
 
+protocol unix,inet,inet6
+ignore ipc-namespace
+ignore nogroups
+ignore nosound
+
 private-bin ffplay
+private-etc alsa,asound.conf,group
 
 # Redirect
 include ffmpeg.profile

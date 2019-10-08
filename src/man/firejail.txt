@@ -828,24 +828,6 @@ $ sudo ifconfig br1 10.10.30.1/24
 $ firejail \-\-net=br0 \-\-net=br1
 
 .TP
-\fB\-\-net=none
-Enable a new, unconnected network namespace. The only interface
-available in the new namespace is a new loopback interface (lo).
-Use this option to deny
-network access to programs that don't really need network access.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-net=none vlc
-.br
-
-.br
-Note: \-\-net=none can crash the application on some platforms.
-In these cases, it can be replaced with \-\-protocol=unix.
-
-.TP
 \fB\-\-net=ethernet_interface|wireless_interface
 Enable a new network namespace and connect it
 to this ethernet interface using the standard Linux macvlan|ipvaln
@@ -863,6 +845,24 @@ Example:
 $ firejail \-\-net=eth0 \-\-ip=192.168.1.80 \-\-dns=8.8.8.8 firefox
 .br
 $ firejail \-\-net=wlan0 firefox
+
+.TP
+\fB\-\-net=none
+Enable a new, unconnected network namespace. The only interface
+available in the new namespace is a new loopback interface (lo).
+Use this option to deny
+network access to programs that don't really need network access.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=none vlc
+.br
+
+.br
+Note: \-\-net=none can crash the application on some platforms.
+In these cases, it can be replaced with \-\-protocol=unix.
 
 .TP
 \fB\-\-net=tap_interface
@@ -1434,6 +1434,48 @@ Example:
 $ firejail \-\-private-cache openbox
 
 .TP
+\fB\-\-private-cwd
+Set working directory inside jail to the home directory, and failing that, the root directory.
+.br
+Does not impact working directory of profile include paths.
+.br
+
+.br
+Example:
+.br
+$ pwd
+.br
+/tmp
+.br
+$ firejail \-\-private-cwd
+.br
+$ pwd
+.br
+/home/user
+.br
+
+.TP
+\fB\-\-private-cwd=directory
+Set working directory inside the jail.
+.br
+Does not impact working directory of profile include paths.
+.br
+
+.br
+Example:
+.br
+$ pwd
+.br
+/tmp
+.br
+$ firejail \-\-private-cwd=/opt
+.br
+$ pwd
+.br
+/opt
+.br
+
+.TP
 \fB\-\-private-dev
 Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log, shm and usb devices are available.
 Use the options --no3d, --nodvd, --nosound, --notv, --nou2f and --novideo for additional restrictions.
@@ -1577,49 +1619,6 @@ drwx------  2 nobody nogroup 4096 Apr 30 10:52 pulse-PKdhtXMmr18n
 .br
 drwxrwxrwt  2 nobody nogroup 4096 Apr 30 10:52 .X11-unix
 .br
-
-.TP
-\fB\-\-private-cwd
-Set working directory inside jail to the home directory, and failing that, the root directory.
-.br
-Does not impact working directory of profile include paths.
-.br
-
-.br
-Example:
-.br
-$ pwd
-.br
-/tmp
-.br
-$ firejail \-\-private-cwd
-.br
-$ pwd
-.br
-/home/user
-.br
-
-.TP
-\fB\-\-private-cwd=directory
-Set working directory inside the jail.
-.br
-Does not impact working directory of profile include paths.
-.br
-
-.br
-Example:
-.br
-$ pwd
-.br
-/tmp
-.br
-$ firejail \-\-private-cwd=/opt
-.br
-$ pwd
-.br
-/opt
-.br
-
 
 .TP
 \fB\-\-profile=filename_or_profilename

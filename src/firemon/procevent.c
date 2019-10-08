@@ -173,6 +173,20 @@ static int procevent_netlink_setup(void) {
 	if (bind(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 		goto errexit;
 
+	// set a large socket rx buffer
+	// the regular default value as set in /proc/sys/net/core/rmem_default will fill the
+	//            buffer much quicker than we can process it
+	int bsize = 1024 * 1024; // 1MB
+	socklen_t blen = sizeof(int);
+	if (setsockopt(sock, SOL_SOCKET, SO_RCVBUFFORCE, &bsize, blen) == -1)
+		fprintf(stderr, "Warning: cannot set rx buffer size, using default system value\n");
+	else if (arg_debug) {
+		if (getsockopt(sock, SOL_SOCKET, SO_RCVBUF, &bsize, &blen) == -1)
+			fprintf(stderr, "Error: cannot read rx buffer size\n");
+		else
+			printf("rx buffer size %d\n", bsize / 2); // the value returned is duble the real one, see man 7 socket
+	}
+
 	// send monitoring message
 	struct nlmsghdr nlmsghdr;
 	memset(&nlmsghdr, 0, sizeof(nlmsghdr));
@@ -244,14 +258,19 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 		}
 
 
-		if ((len = recv(sock, buf, sizeof(buf), 0)) == 0) {
+		if ((len = recv(sock, buf, sizeof(buf), 0)) == 0)
 			return 0;
-		}
 		if (len == -1) {
-			if (errno == EINTR) {
-				return 0;
-			} else {
-				fprintf(stderr,"recv: %s\n", strerror(errno));
+			if (errno == EINTR)
+				continue;
+			else if (errno == ENOBUFS) {
+				// rx buffer is full, the kernel started dropping messages
+				printf("*** Waning *** - message burst received, not all events are printed\n");
+//return -1;
+				continue;
+			}
+			else {
+				fprintf(stderr,"Error: rx socket recv call, errno %d, %s\n", errno, strerror(errno));
 				return -1;
 			}
 		}

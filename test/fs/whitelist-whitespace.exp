@@ -14,13 +14,6 @@ expect {
 }
 sleep 1
 
-send -- "ls ~ | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"\n1"
-}
-after 100
-
 send -- "ls ~\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}

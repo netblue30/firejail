@@ -25,7 +25,7 @@ mkdir ${HOME}/.local/share/data/QuiteRss
 mkdir ${HOME}/.local/share/QuiteRss
 mkfile ${HOME}/quiterssfeeds.opml
 whitelist ${HOME}/.cache/QuiteRss
-whitelist ${HOME}/.config/QuiteRss/
+whitelist ${HOME}/.config/QuiteRss
 whitelist ${HOME}/.config/QuiteRssrc
 whitelist ${HOME}/.local/share/data/QuiteRss
 whitelist ${HOME}/.local/share/QuiteRss

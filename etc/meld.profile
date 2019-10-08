@@ -13,6 +13,7 @@ include globals.local
 # Calling by its absolute path (example for git-mergetool):
 #  git config --global mergetool.meld.cmd /usr/bin/meld
 
+noblacklist ${HOME}/.config/meld
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
@@ -32,6 +33,10 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-programs.inc.
 #include disable-programs.inc
+
+# Uncomment the next lines (or put it into your meld.local) if you don't need to compare files in /usr/share.
+#whitelist /usr/share/meld
+#include whitelist-usr-share-common.inc
 
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in /var.
 #include whitelist-var-common.inc

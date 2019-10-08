@@ -19,6 +19,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/gitg
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

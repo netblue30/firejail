@@ -1,0 +1,36 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2019 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+set PWD $env(PWD)
+
+
+send -- "firejail --noprofile --whitelist=$PWD --noexec=$PWD\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+send -- "ls $PWD\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"whitelist-noexec.exp"
+}
+after 100
+
+send -- "$PWD/whitelist-noexec.exp\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Permission denied"
+}
+after 100
+
+send -- "exit\r"
+sleep 1
+
+puts "\nall done\n"

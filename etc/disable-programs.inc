@@ -233,6 +233,7 @@ blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
+blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/midori
@@ -360,8 +361,8 @@ blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gitconfig
 blacklist ${HOME}/.gnome/gnome-schedule
-blacklist ${HOME}/.googleearth/Cache/
-blacklist ${HOME}/.googleearth/Temp/
+blacklist ${HOME}/.googleearth/Cache
+blacklist ${HOME}/.googleearth/Temp
 blacklist ${HOME}/.googleearth/myplaces.backup.kml
 blacklist ${HOME}/.googleearth/myplaces.kml
 blacklist ${HOME}/.gradle
@@ -499,6 +500,7 @@ blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.local/share/geary
 blacklist ${HOME}/.local/share/geeqie
+blacklist ${HOME}/.local/share/ghostwriter
 blacklist ${HOME}/.local/share/gitg
 blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
@@ -689,6 +691,7 @@ blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/atril
@@ -714,6 +717,7 @@ blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/geeqie
+blacklist ${HOME}/.cache/gimp
 blacklist ${HOME}/.cache/godot
 blacklist ${HOME}/.cache/google-chrome
 blacklist ${HOME}/.cache/google-chrome-beta
@@ -760,6 +764,7 @@ blacklist ${HOME}/.cache/okular
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta
 blacklist ${HOME}/.cache/org.gnome.Books
+blacklist ${HOME}/.cache/org.gnome.Maps
 blacklist ${HOME}/.cache/pdfmod
 blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/plasmashell
@@ -767,6 +772,7 @@ blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser
+blacklist ${HOME}/.cache/rhythmbox
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
 blacklist ${HOME}/.cache/snox
@@ -787,3 +793,4 @@ blacklist ${HOME}/.cache/xmms2
 blacklist ${HOME}/.cache/xreader
 blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
+blacklist ${HOME}/.cache/youtube-dl

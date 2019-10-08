@@ -7,6 +7,7 @@ include rhythmbox.local
 include globals.local
 
 noblacklist ${MUSIC}
+noblacklist ${HOME}/.cache/rhythmbox
 noblacklist ${HOME}/.local/share/rhythmbox
 
 # Allow python (blacklisted by disable-interpreters.inc)
@@ -21,6 +22,10 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/rhythmbox
+whitelist /usr/share/lua
+whitelist /usr/share/libquvi-scripts
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 # apparmor - makes settings immutable

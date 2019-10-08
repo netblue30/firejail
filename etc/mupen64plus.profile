@@ -18,8 +18,8 @@ include disable-programs.inc
 # you'll need to manually whitelist ROM files
 mkdir ${HOME}/.config/mupen64plus
 mkdir ${HOME}/.local/share/mupen64plus
-whitelist ${HOME}/.config/mupen64plus/
-whitelist ${HOME}/.local/share/mupen64plus/
+whitelist ${HOME}/.config/mupen64plus
+whitelist ${HOME}/.local/share/mupen64plus
 include whitelist-common.inc
 
 caps.drop all

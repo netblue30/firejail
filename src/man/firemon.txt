@@ -25,6 +25,9 @@ Print control group information for each sandbox.
 \fB\-\-cpu
 Print CPU affinity for each sandbox.
 .TP
+\fB\-\-debug
+Print debug messages
+.TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.
 .TP

@@ -9,6 +9,7 @@ include globals.local
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
 noblacklist ${HOME}/.cache/champlain
+noblacklist ${HOME}/.cache/org.gnome.Maps
 noblacklist ${HOME}/.local/share/flatpak
 noblacklist ${HOME}/.local/share/maps-places.json
 
@@ -26,7 +27,9 @@ whitelist ${HOME}/.cache/champlain
 whitelist ${HOME}/.local/share/maps-places.json
 whitelist ${DOWNLOADS}
 whitelist ${PICTURES}
+whitelist /usr/share/gnome-maps
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

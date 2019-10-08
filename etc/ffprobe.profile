@@ -8,7 +8,7 @@ include ffprobe.local
 # added by included profile
 #include globals.local
 
-private-bin ffprobe
+ignore private-bin
 
 # Redirect
 include ffmpeg.profile

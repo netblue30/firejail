@@ -120,3 +120,6 @@ echo "TESTING: rlimit errors profile (test/environment/rlimit-bad-profile.exp)"
 
 echo "TESTING: deterministic exit code (test/environment/deterministic-exit-code.exp"
 ./deterministic-exit-code.exp
+
+echo "TESTING: retain umask (test/environment/umask.exp"
+(umask 123 && ./umask.exp)

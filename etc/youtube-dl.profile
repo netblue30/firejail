@@ -10,6 +10,7 @@ include globals.local
 # breaks when installed under ${HOME} via `pip install --user` (see #2833)
 ignore noexec ${HOME}
 
+noblacklist ${HOME}/.cache/youtube-dl
 noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.netrc
 noblacklist ${MUSIC}
@@ -29,6 +30,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

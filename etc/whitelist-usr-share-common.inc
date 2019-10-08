@@ -1,0 +1,49 @@
+# Local customizations come here
+include whitelist-usr-share-common.local
+
+# common /usr/share whitelist for all profiles
+
+whitelist /usr/share/alsa
+whitelist /usr/share/applications
+whitelist /usr/share/crypto-policies
+whitelist /usr/share/cursors
+whitelist /usr/share/dconf
+whitelist /usr/share/distro-info
+whitelist /usr/share/drirc.d
+whitelist /usr/share/enchant
+whitelist /usr/share/enchant-2
+whitelist /usr/share/fontconfig
+whitelist /usr/share/fonts
+whitelist /usr/share/gjs-1.0
+whitelist /usr/share/glib-2.0
+whitelist /usr/share/glvnd
+whitelist /usr/share/gtk-2.0
+whitelist /usr/share/gtk-3.0
+whitelist /usr/share/gtksourceview-3.0
+whitelist /usr/share/gtksourceview-4
+whitelist /usr/share/hunspell
+whitelist /usr/share/hwdata
+whitelist /usr/share/icons
+whitelist /usr/share/knotifications5
+whitelist /usr/share/kservices5
+whitelist /usr/share/Kvantum
+whitelist /usr/share/kxmlgui5
+whitelist /usr/share/libthai
+whitelist /usr/share/locale
+whitelist /usr/share/mime
+whitelist /usr/share/misc
+whitelist /usr/share/Modules
+whitelist /usr/share/myspell
+whitelist /usr/share/p11-kit
+whitelist /usr/share/pixmaps
+whitelist /usr/share/pki
+whitelist /usr/share/plasma
+whitelist /usr/share/qt5
+whitelist /usr/share/sounds
+whitelist /usr/share/tcl8.6
+whitelist /usr/share/terminfo
+whitelist /usr/share/themes
+whitelist /usr/share/thumbnail.so
+whitelist /usr/share/X11
+whitelist /usr/share/xml
+whitelist /usr/share/zoneinfo

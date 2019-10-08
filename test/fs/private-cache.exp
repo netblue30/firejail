@@ -21,10 +21,10 @@ expect {
 }
 sleep 1
 
-send -- "ls ~/.cache | wc -l\r"
+send -- "ls -l ~/.cache\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"\n0"
+	"total 0"
 }
 after 100
 
@@ -43,7 +43,7 @@ after 100
 send -- "firejail --noprofile --private --private-cache\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"tmpfs not mounted"
+	"Warning"
 }
 sleep 1
 

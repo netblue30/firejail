@@ -11,6 +11,7 @@ include globals.local
 # or put 'noexec ${HOME}' in your gimp.local
 ignore noexec ${HOME}
 
+noblacklist ${HOME}/.cache/gimp
 noblacklist ${HOME}/.config/GIMP
 noblacklist ${HOME}/.gimp*
 noblacklist ${DOCUMENTS}
@@ -22,6 +23,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/gimp
+whitelist /usr/share/mypaint-data
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -55,7 +55,7 @@ static orig_access_t orig_access = NULL;
 // Using fprintf to /dev/tty instead of printf in order to fix #561
 static FILE *ftty = NULL;
 static pid_t mypid = 0;
-#define MAXNAME 16
+#define MAXNAME 16 // 8 or larger
 static char myname[MAXNAME] = "unknown";
 
 static void init(void) __attribute__((constructor));
@@ -75,9 +75,18 @@ void init(void) {
 			// else log to associated tty
 			logfile = "/dev/tty";
 	}
-	
+
 	// logfile
-	ftty = orig_fopen(logfile, "a");
+	unsigned cnt = 0;
+	while ((ftty = orig_fopen(logfile, "a")) == NULL) {
+		if (++cnt > 10) { // 10 sec
+			perror("Cannot open trace log file");
+			exit(1);
+		}
+		sleep(1);
+	}
+	// line buffered stream
+	setvbuf(ftty, NULL, _IOLBF, BUFSIZ);
 
 	// pid
 	mypid = getpid();
@@ -89,7 +98,7 @@ void init(void) {
 		free(fname);
 		if (fp) {
 			if (fgets(myname, MAXNAME, fp) == NULL)
-				strncpy(myname, "unknown", MAXNAME-1);
+				strcpy(myname, "unknown");
 			fclose(fp);
 		}
 	}
@@ -99,7 +108,7 @@ void init(void) {
 	if (ptr)
 		*ptr = '\0';
 
-	tprintf(ftty, "=== tracelib init() [%d:%s] === \n", mypid, myname);
+//	tprintf(ftty, "=== tracelib init() [%d:%s] === \n", mypid, myname);
 }
 
 static void fini(void) __attribute__((destructor));

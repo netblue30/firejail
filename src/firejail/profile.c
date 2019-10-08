@@ -148,7 +148,7 @@ static int check_nodbus(void) {
 }
 
 static int check_x11(void) {
-	return (arg_x11_block || getenv("FIREJAIL_X11"));
+	return (arg_x11_block || arg_x11_xorg || getenv("FIREJAIL_X11"));
 }
 
 static int check_disable_u2f(void) {

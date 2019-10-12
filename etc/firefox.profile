@@ -21,7 +21,7 @@ include whitelist-usr-share-common.inc
 # firefox requires a shell to launch on Arch.
 #private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which
 # Fedora use shell scripts to launch firefox, at least this is required
-#private-bin awk,basename,bash,cat,dbus-launch,dbus-send,dirname,env,expr,false,firefox,firefox-wayland,ln,mkdir,pidof,rm,rmdir,sed,sh,tclsh,true,uname,which
+#private-bin basename,bash,cat,dirname,expr,false,firefox,firefox-wayland,ln,mkdir,pidof,rm,rmdir,sed,sh,tclsh,true,uname
 # private-etc must first be enabled in firefox-common.profile
 #private-etc firefox
 

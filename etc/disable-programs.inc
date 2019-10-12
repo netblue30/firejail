@@ -203,6 +203,7 @@ blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/k3brc
 blacklist ${HOME}/.config/kaffeinerc
+blacklist ${HOME}/.config/kalgebrarc
 blacklist ${HOME}/.config/katemetainfos
 blacklist ${HOME}/.config/katepartrc
 blacklist ${HOME}/.config/katerc
@@ -516,6 +517,7 @@ blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/i2p
 blacklist ${HOME}/.local/share/kaffeine
+blacklist ${HOME}/.local/share/kalgebra
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kdenlive
 blacklist ${HOME}/.local/share/kget

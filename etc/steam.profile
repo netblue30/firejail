@@ -54,6 +54,8 @@ nou2f
 # novideo should be commented for VR
 novideo
 protocol unix,inet,inet6,netlink
+# seccomp cause sometimes issues (see #2860, #2951),
+# comment it or add 'ignore seccomp' to steam.local if so.
 seccomp
 shell none
 # tracelog disabled as it breaks integrated browser

@@ -21,6 +21,7 @@ include whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace
+machine-id
 net none
 no3d
 nodbus
@@ -35,8 +36,10 @@ novideo
 protocol unix
 seccomp
 shell none
+tracelog
 x11 none
 
+private-cache
 private-dev
 private-tmp
 

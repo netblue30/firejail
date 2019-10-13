@@ -45,6 +45,7 @@ disable-mnt
 private-bin context,latex,mktexfmt,pandoc,pdflatex,pdfroff,prince,weasyprint,wkhtmltopdf
 private-cache
 private-dev
+rivate-etc alternatives,texlive
 private-tmp
 
 memory-deny-write-execute

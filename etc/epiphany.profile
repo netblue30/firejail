@@ -6,6 +6,8 @@ include epiphany.local
 # Persistent global definitions
 include globals.local
 
+# NOTE: This profile is not for the browser epiphany (aka GNOME Web).
+
 noblacklist ${HOME}/.cache/epiphany
 noblacklist ${HOME}/.config/epiphany
 noblacklist ${HOME}/.local/share/epiphany

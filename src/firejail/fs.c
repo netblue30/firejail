@@ -725,6 +725,12 @@ void disable_config(void) {
 void fs_basic_fs(void) {
 	uid_t uid = getuid();
 
+	// mount a new proc filesystem
+	if (arg_debug)
+		printf("Mounting /proc filesystem representing the PID namespace\n");
+	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
+		errExit("mounting /proc");
+
 	if (arg_debug)
 		printf("Basic read-only filesystem:\n");
 	if (!arg_writable_etc) {
@@ -1077,21 +1083,18 @@ void fs_overlayfs(void) {
 		errExit("mounting /tmp");
 	fs_logger("whitelist /tmp");
 
-	// mount a new proc filesystem
-	if (arg_debug)
-		printf("Mounting /proc\n");
-	char *proc;
-	if (asprintf(&proc, "%s/proc", oroot) == -1)
-		errExit("asprintf");
-	if (mount("proc", proc, "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
-		errExit("mounting /proc");
-
 	// chroot in the new filesystem
 #ifdef HAVE_GCOV
 	__gcov_flush();
 #endif
 	if (chroot(oroot) == -1)
 		errExit("chroot");
+
+	// mount a new proc filesystem
+	if (arg_debug)
+		printf("Mounting /proc filesystem representing the PID namespace\n");
+	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
+		errExit("mounting /proc");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 //	if (!arg_private_dev)
@@ -1120,7 +1123,6 @@ void fs_overlayfs(void) {
 	free(dev);
 	free(run);
 	free(tmp);
-	free(proc);
 }
 #endif
 

@@ -627,16 +627,6 @@ int sandbox(void* sandbox_arg) {
 		errExit("mounting " RUN_FIREJAIL_LIB_DIR);
 
 	//****************************
-	// mount new proc filesystem
-	// representing the pid namespace
-	//****************************
-
-	if (arg_debug)
-		printf("Remounting /proc filesystem\n");
-	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
-		errExit("mounting /proc");
-
-	//****************************
 	// log sandbox data
 	//****************************
 	if (cfg.name)

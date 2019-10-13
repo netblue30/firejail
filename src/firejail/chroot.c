@@ -164,19 +164,6 @@ void fs_chroot(const char *rootdir) {
 	free(proc);
 	close(fd);
 
-	// mount a brand new proc filesystem
-	if (arg_debug)
-		printf("Mounting /proc filesystem on chroot /proc\n");
-	fd = openat(parentfd, "proc", O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
-		errExit("open");
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount("proc", proc, "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
-		errExit("mounting /proc");
-	free(proc);
-	close(fd);
-
 	// x11
 	if (getenv("FIREJAIL_X11")) {
 		if (arg_debug)
@@ -258,6 +245,12 @@ void fs_chroot(const char *rootdir) {
 
 	// create all other /run/firejail files and directories
 	preproc_build_firejail_dir();
+
+	// mount a new proc filesystem
+	if (arg_debug)
+		printf("Mounting /proc filesystem representing the PID namespace\n");
+	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
+		errExit("mounting /proc");
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	//	if (!arg_private_dev)

@@ -156,6 +156,10 @@ blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/VirtualBox VMs
 
+# GNOME Boxes
+blacklist ${HOME}/.config/gnome-boxes
+blacklist ${HOME}/.local/share/gnome-boxes
+
 # VeraCrypt
 blacklist ${HOME}/.VeraCrypt
 blacklist ${PATH}/veracrypt

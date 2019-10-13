@@ -63,10 +63,8 @@ errout:
 // copy /etc/resolv.conf in chroot directory
 static void copy_resolvconf(int parentfd) {
 	int in = open("/etc/resolv.conf", O_RDONLY|O_CLOEXEC);
-	if (in == -1) {
-		fwarning("/etc/resolv.conf not initialized\n");
-		return;
-	}
+	if (in == -1)
+		goto errout;
 	struct stat src;
 	if (fstat(in, &src) == -1)
 		errExit("fstat");
@@ -83,12 +81,18 @@ static void copy_resolvconf(int parentfd) {
 		printf("Updating /etc/resolv.conf in chroot\n");
 	unlinkat(parentfd, "etc/resolv.conf", 0);
 	int out = openat(parentfd, "etc/resolv.conf", O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
-	if (out == -1)
-		errExit("open");
+	if (out == -1) {
+		close(in);
+		goto errout;
+	}
 	if (sendfile(out, in, NULL, src.st_size) == -1)
 		errExit("sendfile");
 	close(in);
 	close(out);
+	return;
+
+errout:
+	fwarning("/etc/resolv.conf not initialized\n");
 }
 
 // exit if error

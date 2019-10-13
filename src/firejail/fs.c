@@ -1134,6 +1134,7 @@ void fs_private_tmp(void) {
 			char *cmd;
 			if (asprintf(&cmd, "whitelist %s", rp) == -1)
 				errExit("asprintf");
+			profile_check_line(cmd, 0, NULL);
 			profile_add(cmd); // profile_add does not duplicate the string
 		}
 		if (rp)
@@ -1162,6 +1163,7 @@ void fs_private_tmp(void) {
 			char *cmd;
 			if (asprintf(&cmd, "whitelist /tmp/%s", entry->d_name) == -1)
 				errExit("asprintf");
+			profile_check_line(cmd, 0, NULL);
 			profile_add(cmd); // profile_add does not duplicate the string
 		}
 	}

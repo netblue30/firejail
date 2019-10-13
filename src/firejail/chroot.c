@@ -111,7 +111,7 @@ static void check_subdir(int parentfd, const char *subdir, int check_writable) {
 		exit(1);
 	}
 	if (s.st_uid != 0) {
-		fprintf(stderr, "Error: chroot /%s should owned by root\n", subdir);
+		fprintf(stderr, "Error: chroot /%s should be owned by root\n", subdir);
 		exit(1);
 	}
 	if (check_writable && ((S_IWGRP|S_IWOTH) & s.st_mode) != 0) {

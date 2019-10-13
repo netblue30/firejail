@@ -38,6 +38,7 @@ novideo
 protocol unix
 seccomp
 shell none
+tracelog
 
 disable-mnt
 private-bin gnome-logs

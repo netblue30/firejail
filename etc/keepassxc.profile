@@ -45,6 +45,7 @@ novideo
 protocol unix,netlink
 seccomp
 shell none
+tracelog
 
 private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 private-dev

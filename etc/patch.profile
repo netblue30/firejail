@@ -34,6 +34,7 @@ novideo
 protocol unix
 seccomp
 shell none
+tracelog
 x11 none
 
 private-bin patch,red

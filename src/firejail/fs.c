@@ -715,6 +715,8 @@ void disable_config(void) {
 		disable_file(BLACKLIST_FILE, RUN_FIREJAIL_BANDWIDTH_DIR);
 	if (stat(RUN_FIREJAIL_NAME_DIR, &s) == 0)
 		disable_file(BLACKLIST_FILE, RUN_FIREJAIL_NAME_DIR);
+	if (stat(RUN_FIREJAIL_PROFILE_DIR, &s) == 0)
+		disable_file(BLACKLIST_FILE, RUN_FIREJAIL_PROFILE_DIR);
 	if (stat(RUN_FIREJAIL_X11_DIR, &s) == 0)
 		disable_file(BLACKLIST_FILE, RUN_FIREJAIL_X11_DIR);
 }

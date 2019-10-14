@@ -1,5 +1,5 @@
 # Firejail profile for epiphany
-# Description: Clone of Boulder Dash game
+# Description: The GNOME Web browser
 # This file is overwritten after every install/update
 # Persistent local customizations
 include epiphany.local

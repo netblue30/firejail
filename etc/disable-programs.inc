@@ -559,6 +559,7 @@ blacklist ${HOME}/.local/share/qutebrowser
 blacklist ${HOME}/.local/share/remmina
 blacklist ${HOME}/.local/share/rhythmbox
 blacklist ${HOME}/.local/share/scribus
+blacklist ${HOME}/.local/share/signal-cli
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/supertux2

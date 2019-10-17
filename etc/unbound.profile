@@ -19,6 +19,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/ca-certificates
+include whitelist-usr-share-common.inc
+
 whitelist /var/lib/unbound
 whitelist /var/run
 

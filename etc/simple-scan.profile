@@ -16,6 +16,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/simple-scan
+include whitelist-usr-share-common.inc
+
 caps.drop all
 netfilter
 nodvd

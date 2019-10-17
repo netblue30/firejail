@@ -25,6 +25,12 @@ mkdir ${HOME}/.ssh
 whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.ssh
 whitelist /tmp/ssh-*
+whitelist /usr/share/ca-certificates
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
+whitelist /usr/share/seahorse
+whitelist /usr/share/seahorse-nautilus
+include whitelist-usr-share-common.inc
 include whitelist-common.inc
 include whitelist-var-common.inc
 

@@ -17,6 +17,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/nano
+include whitelist-usr-share-common.inc
+
 apparmor
 caps.drop all
 ipc-namespace

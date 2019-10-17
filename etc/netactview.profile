@@ -18,7 +18,9 @@ include disable-xdg.inc
 
 mkfile ${HOME}/.netactview
 whitelist ${HOME}/.netactview
+whitelist /usr/share/netactview
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

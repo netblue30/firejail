@@ -18,7 +18,10 @@ include disable-xdg.inc
 
 mkfile ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
 whitelist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
+whitelist /usr/share/xfce4
+whitelist /usr/share/xfce4-mixer
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

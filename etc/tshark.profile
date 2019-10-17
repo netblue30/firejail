@@ -16,6 +16,10 @@ include disable-xdg.inc
 
 include whitelist-common.inc
 
+whitelist /usr/share/ca-certificates
+whitelist /usr/share/wireshark
+include whitelist-usr-share-common.inc
+
 #caps.keep net_raw
 caps.keep dac_override,net_admin,net_raw
 ipc-namespace

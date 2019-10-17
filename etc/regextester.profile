@@ -14,6 +14,9 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/com.github.artemanufrij.regextester
+include whitelist-usr-share-common.inc
+
 include whitelist-common.inc
 include whitelist-var-common.inc
 

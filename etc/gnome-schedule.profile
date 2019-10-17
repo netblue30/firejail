@@ -35,9 +35,11 @@ include disable-xdg.inc
 
 mkfile ${HOME}/.gnome/gnome-schedule
 whitelist ${HOME}/.gnome/gnome-schedule
+whitelist /usr/share/gnome-schedule
 whitelist /var/spool/atd
 whitelist /var/spool/cron
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

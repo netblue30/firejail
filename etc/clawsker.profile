@@ -21,6 +21,7 @@ include disable-programs.inc
 mkdir ${HOME}/.claws-mail
 whitelist ${HOME}/.claws-mail
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 
 apparmor
 caps.drop all

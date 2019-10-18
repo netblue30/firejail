@@ -27,6 +27,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.quodlibet
 whitelist ${HOME}/.quodlibet
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

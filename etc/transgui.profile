@@ -20,6 +20,7 @@ mkdir ${HOME}/.config/transgui
 whitelist ${HOME}/.config/transgui
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

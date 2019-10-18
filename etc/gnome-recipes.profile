@@ -21,7 +21,9 @@ mkdir ${HOME}/.cache/gnome-recipes
 mkdir ${HOME}/.local/share/gnome-recipes
 whitelist ${HOME}/.cache/gnome-recipes
 whitelist ${HOME}/.local/share/gnome-recipes
+whitelist /usr/share/gnome-recipes
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

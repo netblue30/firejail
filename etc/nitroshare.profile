@@ -20,6 +20,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+include whitelist-usr-share-common.inc
+
 caps.drop all
 netfilter
 no3d

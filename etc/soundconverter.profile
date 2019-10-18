@@ -22,7 +22,9 @@ include disable-xdg.inc
 
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
+whitelist /usr/share/soundconverter
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

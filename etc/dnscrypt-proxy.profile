@@ -18,6 +18,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/dnscrypt-proxy
+include whitelist-usr-share-common.inc
+
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
 ipc-namespace
 machine-id

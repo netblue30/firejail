@@ -11,6 +11,8 @@ noblacklist ${HOME}/.weechat
 include disable-common.inc
 include disable-programs.inc
 
+include whitelist-usr-share-common.inc
+
 caps.drop all
 netfilter
 nodvd

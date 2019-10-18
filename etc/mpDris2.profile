@@ -26,6 +26,7 @@ whitelist ${MUSIC}
 
 mkdir ${HOME}/.config/mpDris2
 whitelist ${HOME}/.config/mpDris2
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

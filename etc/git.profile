@@ -26,6 +26,12 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/git
+whitelist /usr/share/git-core
+whitelist /usr/share/gitgui
+whitelist /usr/share/gitweb
+include whitelist-usr-share-common.inc
+
 apparmor
 caps.drop all
 ipc-namespace

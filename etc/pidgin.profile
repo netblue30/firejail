@@ -22,6 +22,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.purple
 whitelist ${HOME}/.purple
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

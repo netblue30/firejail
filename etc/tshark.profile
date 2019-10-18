@@ -14,7 +14,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/wireshark
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 
 #caps.keep net_raw
 caps.keep dac_override,net_admin,net_raw

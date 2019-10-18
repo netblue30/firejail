@@ -20,7 +20,10 @@ mkdir ${HOME}/.config/artha.conf
 mkdir ${HOME}/.config/enchant
 whitelist ${HOME}/.config/artha.conf
 whitelist ${HOME}/.config/enchant
+whitelist /usr/share/artha
+whitelist /usr/share/wordnet
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

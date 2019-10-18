@@ -25,7 +25,9 @@ mkdir ${HOME}/.cache/font-manager
 mkdir ${HOME}/.config/font-manager
 whitelist ${HOME}/.cache/font-manager
 whitelist ${HOME}/.config/font-manager
+whitelist /usr/share/font-manager
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 
 apparmor
 caps.drop all

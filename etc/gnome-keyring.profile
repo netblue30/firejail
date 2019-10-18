@@ -17,7 +17,6 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/ca-certificates
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 #include whitelist-common.inc

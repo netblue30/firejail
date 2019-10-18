@@ -15,7 +15,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/devhelp
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 
 apparmor
 caps.drop all

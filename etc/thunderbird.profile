@@ -34,7 +34,6 @@ whitelist ${HOME}/.gnupg
 # whitelist ${HOME}/.icedove
 whitelist ${HOME}/.thunderbird
 
-#whitelist /usr/share/ca-certificates
 #whitelist /usr/share/mozilla
 #include whitelist-usr-share-common.inc
 

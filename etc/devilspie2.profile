@@ -22,6 +22,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/devilspie2
 whitelist ${HOME}/.config/devilspie2
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

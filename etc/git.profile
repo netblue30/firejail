@@ -26,7 +26,6 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /usr/share/ca-certificates
 whitelist /usr/share/git
 whitelist /usr/share/git-core
 whitelist /usr/share/gitgui

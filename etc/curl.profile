@@ -14,6 +14,9 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/ca-certificates
+include whitelist-usr-share-common.inc
+
 caps.drop all
 ipc-namespace
 machine-id

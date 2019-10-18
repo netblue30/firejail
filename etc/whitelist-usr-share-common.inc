@@ -5,6 +5,7 @@ include whitelist-usr-share-common.local
 
 whitelist /usr/share/alsa
 whitelist /usr/share/applications
+whitelist /usr/share/ca-certs
 whitelist /usr/share/crypto-policies
 whitelist /usr/share/cursors
 whitelist /usr/share/dconf

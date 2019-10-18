@@ -18,7 +18,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/ca-certificates
 whitelist /usr/share/dnscrypt-proxy
 include whitelist-usr-share-common.inc
 

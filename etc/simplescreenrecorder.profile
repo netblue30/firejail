@@ -16,7 +16,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/ca-certificates
 whitelist /usr/share/simplescreenrecorder
 include whitelist-usr-share-common.inc
 

@@ -27,7 +27,10 @@ mkdir ${HOME}/.local/share/liferea
 whitelist ${HOME}/.cache/liferea
 whitelist ${HOME}/.config/liferea
 whitelist ${HOME}/.local/share/liferea
+whitelist /usr/share/ca-certificates
+whitelist /usr/share/liferea
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

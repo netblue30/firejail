@@ -16,7 +16,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /usr/share/ca-certificates
 whitelist /usr/share/doc
 include whitelist-usr-share-common.inc
 

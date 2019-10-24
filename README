@@ -125,6 +125,8 @@ Bader Zaidan (https://github.com/BaderSZ)
 	- Telegram profile
 Bandie (https://github.com/Bandie)
 	- fixed riot-desktop
+Barış Ekin Yıldırım (https://github.com/circuitshaker)
+	- removing net none from code.profile
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
 bitfreak25 (https://github.com/bitfreak25)
@@ -207,6 +209,8 @@ David Thole (https://github.com/TheDarkTrumpet)
 	- added profile for teams-for-linux
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
+Denys Havrysh (https://github.com/vutny)
+	- update SkypeForLinux profile for latest version
 dewbasaur (https://github.com/dewbasaur)
 	- block access to history files
 	- Firefox PDF.js exploit (CVE-2015-4495) fixes
@@ -228,6 +232,8 @@ emacsomancer (https://github.com/emacsomancer)
 	- added profile for Conkeror browser
 eventyrer (https://github.com/eventyrer)
 	- update gnome-mplayer.profile
+Ethan R (https://github.com/AN3223)
+	- add allow-perl.inc to w3m.profile
 Fabian Würfl (https://github.com/BafDyce)
 	- fixed race condition when creating a new directory
 	- Liferea profile
@@ -737,6 +743,9 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- added lstat() / lstat64() support to libtrace
 	- include mkuid.sh in make dist
 	- cppcheck bugfixes
+Timo Hardebusch (https://github.com/tihadot)
+	- add signal-cli profile
+	- KeePassXC: added a warning regarding tray icon
 tinmanx (https://github.com/tinmanx)
 	- remove network access from cherrytree.profile
 Tom Mellor (https://github.com/kalegrill)

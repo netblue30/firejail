@@ -55,7 +55,7 @@ uid_t firejail_uid = 0;
 gid_t firejail_gid = 0;
 
 #define STACK_SIZE (1024 * 1024)
-static char child_stack[STACK_SIZE];		// space for child's stack
+static char child_stack[STACK_SIZE] __attribute__((aligned(8)));		// space for child's stack
 Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_private_cache = 0;		// mount private home/.cache

@@ -35,7 +35,7 @@ caps.drop all
 #machine-id
 netfilter
 # nodbus breaks various desktop integration features
-# among other things global menus, Gnome connector, KDE connect and power management on KDE Plasma
+# among other things global menus, native notifications, Gnome connector, KDE connect and power management on KDE Plasma
 nodbus
 nodvd
 nogroups

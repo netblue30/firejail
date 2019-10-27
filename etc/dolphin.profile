@@ -25,6 +25,7 @@ netfilter
 nodvd
 nogroups
 nonewprivs
+# Comment the next line (or put 'ignore noroot' in your dolphin.local) if you use MPV+Vulkan (see issue #3012)
 noroot
 notv
 novideo

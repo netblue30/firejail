@@ -4,7 +4,8 @@
 # Persistent local customizations
 include amule.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 private-bin amuled
 

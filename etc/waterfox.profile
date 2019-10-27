@@ -5,22 +5,21 @@ include waterfox.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.cache/waterfox
-noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.waterfox
 
-mkdir ${HOME}/.cache/mozilla/firefox
-mkdir ${HOME}/.mozilla
 mkdir ${HOME}/.cache/waterfox
 mkdir ${HOME}/.waterfox
-whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.cache/waterfox
-whitelist ${HOME}/.mozilla
 whitelist ${HOME}/.waterfox
 
+# Uncomment (or add to watefox.local) the following lines if you want to
+# use the migration wizard.
+#noblacklist ${HOME}/.mozilla
+#whitelist ${HOME}/.mozilla
+
 # waterfox requires a shell to launch on Arch. We can possibly remove sh though.
-#private-bin bash,dbus-launch,dbus-send,env,sh,waterfox,which
+#private-bin bash,dbus-launch,dbus-send,env,sh,waterfox,waterfox-classic,waterfox-current,which
 # private-etc must first be enabled in firefox-common.profile
 #private-etc waterfox
 

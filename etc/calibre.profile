@@ -21,7 +21,6 @@ include whitelist-var-common.inc
 
 caps.drop all
 netfilter
-no3d
 nodvd
 nogroups
 nonewprivs
@@ -30,10 +29,9 @@ nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
-seccomp
+protocol unix,inet,inet6,netlink
+seccomp !chroot
 shell none
-tracelog
 
 private-dev
 private-tmp

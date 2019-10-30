@@ -29,6 +29,7 @@ whitelist /usr/share/knotifications5
 whitelist /usr/share/kservices5
 whitelist /usr/share/Kvantum
 whitelist /usr/share/kxmlgui5
+whitelist /usr/share/libdrm
 whitelist /usr/share/libthai
 whitelist /usr/share/locale
 whitelist /usr/share/mime

@@ -33,6 +33,7 @@ shell none
 
 disable-mnt
 private-bin locale,slack
+private-cache
 private-dev
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,debian_version,fedora-release,fonts,group,ld.so.cache,ld.so.conf,localtime,machine-id,os-release,passwd,pki,pulse,redhat-release,resolv.conf,ssl,system-release,system-release-cpe
 private-tmp

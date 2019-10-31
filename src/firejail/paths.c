@@ -24,6 +24,7 @@ static char **paths = 0;
 static unsigned int path_cnt = 0;
 static unsigned int longest_path_elt = 0;
 
+static char *elt = NULL; // moved from inside init_paths in order to get rid of scan-build warning
 static void init_paths(void) {
 	char *path = getenv("PATH");
 	char *p;
@@ -46,10 +47,9 @@ static void init_paths(void) {
 		errExit("calloc");
 
 	// fill in 'paths' with pointers to elements of 'path'
-	char *elt;
 	unsigned int i = 0, j;
 	unsigned int len;
-	while ((elt = strsep(&path, ":")) != 0) {
+	while ((elt = strsep(&path, ":")) != NULL) {
 		// skip any entry that is not absolute
 		if (elt[0] != '/')
 			goto skip;
@@ -73,7 +73,7 @@ static void init_paths(void) {
 		skip:;
 	}
 
-	assert(paths[i] == 0);
+	assert(paths[i] == NULL);
 	// path_cnt may be too big now, if entries were skipped above
 	path_cnt = i+1;
 }

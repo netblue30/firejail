@@ -7,123 +7,71 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --noprofile --noroot --caps.drop=all --seccomp\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"cannot create a new user namespace" {puts "TESTING SKIP: user namespace not available\n"; exit}
-	"noroot option is not available" {puts "TESTING SKIP: user namespace not available\n"; exit}
-	"Child process initialized"
-}
-sleep 1
-
-send -- "cat /proc/self/status\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"CapBnd:	0000000000000000"
-}
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"Seccomp:"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"2"
-}
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Cpus_allowed:"
-}
-puts "\n"
-
-send -- "ping 0\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"Operation not permitted"
-}
-send -- "whoami\r"
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	$env(USER)
-}
-send -- "sudo -s\r"
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"effective uid is not 0, is sudo installed setuid root?" { puts "OK\n";}
-	"sudo must be owned by uid 0 and have the setuid bit set" { puts "OK\n";}
-	"Bad system call" { puts "OK\n";}
-}
-send -- "cat /proc/self/uid_map | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
-	"1"
-}
-send -- "cat /proc/self/gid_map | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 9\n";exit}
-	"5"
-}
-
-puts "\n"
-send -- "exit\r"
-sleep 2
-
-
-
 send -- "firejail --name=test --noroot --noprofile\r"
 expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
+	timeout {puts "TESTING ERROR 1\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
+# check seccomp disabled and all caps enabled
 send -- "cat /proc/self/status\r"
 expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"CapBnd:"
 }
 expect {
-	timeout {puts "TESTING ERROR 12\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"ffffffff"
 }
 expect {
-	timeout {puts "TESTING ERROR 13\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"Seccomp:"
 }
 expect {
-	timeout {puts "TESTING ERROR 14\n";exit}
-	"2" {puts "seccomp already active\n";}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"0"
 }
 expect {
-	timeout {puts "TESTING ERROR 15\n";exit}
+	timeout {puts "TESTING ERROR 6\n";exit}
 	"Cpus_allowed:"
 }
 puts "\n"
 
 send -- "whoami\r"
 expect {
-	timeout {puts "TESTING ERROR 16\n";exit}
+	timeout {puts "TESTING ERROR 7\n";exit}
 	$env(USER)
 }
 send -- "sudo -s\r"
 expect {
-	timeout {puts "TESTING ERROR 17\n";exit}
+	timeout {puts "TESTING ERROR 8\n";exit}
 	"effective uid is not 0, is sudo installed setuid root?" { puts "OK\n";}
 	"sudo must be owned by uid 0 and have the setuid bit set" { puts "OK\n";}
 }
-send -- "ping 0\r"
+
+send -- "sudo su -\r"
 expect {
-	timeout {puts "TESTING ERROR 18\n";exit}
-	"Operation not permitted"
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"effective uid is not 0" {puts "OK\n"}
+	"sudo must be owned by uid 0 and have the setuid bit set" { puts "OK\n";}
 }
+
+send -- "sudo ls\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"effective uid is not 0" {puts "OK\n"}
+	"sudo must be owned by uid 0 and have the setuid bit set" { puts "OK\n";}
+}
+
 send -- "cat /proc/self/uid_map | wc -l\r"
 expect {
-	timeout {puts "TESTING ERROR 19\n";exit}
+	timeout {puts "TESTING ERROR 11\n";exit}
 	"1"
 }
 send -- "cat /proc/self/gid_map | wc -l\r"
 expect {
-	timeout {puts "TESTING ERROR 20\n";exit}
+	timeout {puts "TESTING ERROR 12\n";exit}
 	"5"
 }
 
@@ -132,31 +80,57 @@ expect {
 spawn $env(SHELL)
 send -- "firejail --debug --join=test\r"
 expect {
-	timeout {puts "TESTING ERROR 21\n";exit}
+	timeout {puts "TESTING ERROR 13\n";exit}
 	"User namespace detected"
 }
 expect {
-	timeout {puts "TESTING ERROR 22\n";exit}
+	timeout {puts "TESTING ERROR 14\n";exit}
 	"Joining user namespace"
 }
 sleep 1
 
 send -- "sudo -s\r"
 expect {
-	timeout {puts "TESTING ERROR 23\n";exit}
+	timeout {puts "TESTING ERROR 15\n";exit}
 	"effective uid is not 0, is sudo installed setuid root?" { puts "OK\n";}
 	"sudo must be owned by uid 0 and have the setuid bit set" { puts "OK\n";}
 	"Permission denied" { puts "OK\n";}
 }
 send -- "cat /proc/self/uid_map | wc -l\r"
 expect {
-	timeout {puts "TESTING ERROR 24\n";exit}
+	timeout {puts "TESTING ERROR 16\n";exit}
 	"1"
 }
 send -- "cat /proc/self/gid_map | wc -l\r"
 expect {
-	timeout {puts "TESTING ERROR 25\n";exit}
+	timeout {puts "TESTING ERROR 17\n";exit}
 	"5"
 }
+
+# check seccomp disabled and all caps enabled
+send -- "cat /proc/self/status\r"
+expect {
+	timeout {puts "TESTING ERROR 18\n";exit}
+	"CapBnd:"
+}
+expect {
+	timeout {puts "TESTING ERROR 19\n";exit}
+	"ffffffff"
+}
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	"Seccomp:"
+}
+expect {
+	timeout {puts "TESTING ERROR 21\n";exit}
+	"0"
+}
+expect {
+	timeout {puts "TESTING ERROR 22\n";exit}
+	"Cpus_allowed:"
+}
+puts "\n"
+
+
 after 100
 puts "\nall done\n"

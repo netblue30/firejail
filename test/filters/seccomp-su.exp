@@ -28,13 +28,6 @@ expect {
 	"Bad system call" {puts "OK\n"}
 }
 
-send -- "ping google.com\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"Operation not permitted" {puts "OK\n"}
-	"unknown host" {puts "OK\n"}
-}
-
 send -- "exit\r"
 after 100
 puts "all done\n"

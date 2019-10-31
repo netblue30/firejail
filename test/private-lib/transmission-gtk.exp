@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail transmission-gtk\r"
+send -- "firejail --ignore=quiet transmission-gtk\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/transmission-gtk.profile"
@@ -50,7 +50,7 @@ send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
-	":firejail transmission-gtk"
+	":firejail --ignore=quiet transmission-gtk"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -64,7 +64,7 @@ after 100
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail transmission-gtk"
+	":firejail --ignore=quiet transmission-gtk"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

@@ -21,6 +21,7 @@ echo "TESTING: build (test/utils/build.exp)"
 rm -f ~/firejail-test-file-7699
 rm -f /tmp/firejail-test-file-7699
 rm -f /var/tmp/firejail-test-file-7699
+rm -f firejail-test-file-4388
 
 if [ $(readlink /proc/self) -lt 100 ]; then
 	echo "TESTING SKIP: already running in pid namespace (test/utils/audit.exp)"

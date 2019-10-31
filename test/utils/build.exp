@@ -61,24 +61,40 @@ expect {
 }
 after 100
 
-send -- "firejail --build cat /var/tmp/firejail-test-file-7699\r"
+send -- "rm firejail-test-file-4388\r"
+after 100
+send -- "firejail --build=firejail-test-file-4388 cat /etc/passwd\r"
+after 100
+send -- "cat firejail-test-file-4388\r"
 expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	"whitelist /var/tmp/firejail-test-file-7699"
+	timeout {puts "TESTING ERROR 10.1\n";exit}
+	"private-etc passwd,"
 }
 after 100
 
-send -- "firejail --build man firejail\r"
-expect {
-	timeout {puts "TESTING ERROR 12\n";exit}
-	"whitelist /usr/share/man"
-}
-after 100
 
-send -- "firejail --build wget blablabla\r"
+#send -- "firejail --build cat /var/tmp/firejail-test-file-7699\r"
+#expect {
+#	timeout {puts "TESTING ERROR 11\n";exit}
+#	"whitelist /var/tmp/firejail-test-file-7699"
+#}
+#after 100
+
+#send -- "firejail --build man firejail\r"
+#expect {
+#	timeout {puts "TESTING ERROR 12\n";exit}
+#	"whitelist /usr/share/man"
+#}
+#after 100
+
+send -- "firejail --build wget --output-document=~ debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"protocol inet"
+	"protocol"
+}
+expect {
+	timeout {puts "TESTING ERROR 13.1\n";exit}
+	"inet"
 }
 after 100
 

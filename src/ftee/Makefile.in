@@ -8,7 +8,7 @@ include ../common.mk
 ftee: $(OBJS)
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
 
-clean:; rm -f *.o ftee *.gcov *.gcda *.gcno
+clean:; rm -fr *.o ftee *.gcov *.gcda *.gcno *.plist
 
 distclean: clean
 	rm -fr Makefile

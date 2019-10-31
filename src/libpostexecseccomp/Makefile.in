@@ -19,7 +19,7 @@ all: libpostexecseccomp.so
 libpostexecseccomp.so: $(OBJS)
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
 
-clean:; rm -f $(OBJS) libpostexecseccomp.so
+clean:; rm -fr $(OBJS) libpostexecseccomp.so *.plist
 
 distclean: clean
 	rm -fr Makefile

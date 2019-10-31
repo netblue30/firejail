@@ -8,7 +8,7 @@ include ../common.mk
 firejail: $(OBJS) ../lib/libnetlink.o ../lib/common.o ../lib/ldd_utils.o ../lib/firejail_user.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/ldd_utils.o ../lib/firejail_user.o $(LIBS) $(EXTRA_LDFLAGS)
 
-clean:; rm -f *.o firejail *.gcov *.gcda *.gcno
+clean:; rm -fr *.o firejail *.gcov *.gcda *.gcno *.plist
 
 distclean: clean
 	rm -fr Makefile

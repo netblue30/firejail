@@ -20,7 +20,7 @@ libtrace.so: $(OBJS)
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
 
 
-clean:; rm -f $(OBJS) libtrace.so
+clean:; rm -fr $(OBJS) libtrace.so *.plist
 
 distclean: clean
 	rm -fr Makefile

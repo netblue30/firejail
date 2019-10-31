@@ -8,7 +8,7 @@ include ../common.mk
 firecfg: $(OBJS) ../lib/common.o ../lib/firejail_user.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/firejail_user.o $(LIBS) $(EXTRA_LDFLAGS)
 
-clean:; rm -f *.o firecfg *.gcov *.gcda *.gcno
+clean:; rm -fr *.o firecfg *.gcov *.gcda *.gcno *.plist
 
 distclean: clean
 	rm -fr Makefile

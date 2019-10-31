@@ -8,7 +8,7 @@ include ../common.mk
 firemon: $(OBJS) ../lib/common.o ../lib/pid.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/pid.o $(LIBS) $(EXTRA_LDFLAGS)
 
-clean:; rm -f *.o firemon *.gcov *.gcda *.gcno
+clean:; rm -fr *.o firemon *.gcov *.gcda *.gcno *.plist
 
 distclean: clean
 	rm -fr Makefile

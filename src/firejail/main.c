@@ -2209,9 +2209,8 @@ int main(int argc, char **argv) {
 			else if (cfg.dns4 == NULL)
 				cfg.dns4 = dns;
 			else {
-				fprintf(stderr, "Error: up to 4 DNS servers can be specified\n");
+				fwarning("Warning: up to 4 DNS servers can be specified, %s ignored\n", dns);
 				free(dns);
-				return 1;
 			}
 		}
 

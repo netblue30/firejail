@@ -1,31 +1,77 @@
 #!/usr/bin/expect -f
 
-set timeout 30
+set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+send -- "firejail --dns=8.8.4.4 --dns=8.8.8.8 --dns=4.2.2.1 --dns=::2 --dns=1.2.3.4 sleep 1\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Warning: up to 4 DNS servers can be specified, 1.2.3.4 ignored"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"DNS server 8.8.4.4"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"DNS server 8.8.8.8"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.3\n";exit}
+	"DNS server 4.2.2.1"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.4\n";exit}
+	"DNS server ::2"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.5\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.6\n";exit}
+	"Parent is shutting down, bye..."
+}
+after 100
+
+
+send -- "firejail --quiet --dns=8.8.4.4 --dns=8.8.8.8 --dns=4.2.2.1 --dns=::2 --dns=1.2.3.4  cat /etc/passwd\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Warning: up to 4 DNS servers can be specified, 1.2.3.4 ignored" {puts "TESTING ERROR 2.1\n";exit}
+	"DNS server 8.8.4.4" {puts "TESTING ERROR 2.2\n";exit}
+	"DNS server 8.8.8.8" {puts "TESTING ERROR 2.3\n";exit}
+	"DNS server 4.2.2.1" {puts "TESTING ERROR 2.4\n";exit}
+	"DNS server ::2" {puts "TESTING ERROR 2.5\n";exit}
+	"Child process initialized" {puts "TESTING ERROR 2.6\n";exit}
+	"Parent is shutting down, bye..." {puts "TESTING ERROR 2.7\n";exit}
+	"root"
+}
+after 100
+
 send -- "firejail --dns=8.8.4.4 --dns=8.8.8.8 --dns=4.2.2.1 --dns=::2\r"
 expect {
-	timeout {puts "TESTING ERROR 2.1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
 send -- "cat /etc/resolv.conf\r"
 expect {
-	timeout {puts "TESTING ERROR 2.2\n";exit}
+	timeout {puts "TESTING ERROR 4.1\n";exit}
 	"nameserver 8.8.4.4"
 }
 expect {
-	timeout {puts "TESTING ERROR 2.3\n";exit}
+	timeout {puts "TESTING ERROR 4.2\n";exit}
 	"nameserver 8.8.8.8"
 }
 expect {
-	timeout {puts "TESTING ERROR 2.4\n";exit}
+	timeout {puts "TESTING ERROR 4.3\n";exit}
 	"nameserver 4.2.2.1"
 }
 expect {
-	timeout {puts "TESTING ERROR 2.5\n";exit}
+	timeout {puts "TESTING ERROR 4.4\n";exit}
 	"nameserver ::2"
 }
 after 100
@@ -35,27 +81,27 @@ sleep 1
 
 send -- "firejail --profile=dns.profile\r"
 expect {
-	timeout {puts "TESTING ERROR 12.1\n";exit}
+	timeout {puts "TESTING ERROR 5.1\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
 send -- "cat /etc/resolv.conf\r"
 expect {
-	timeout {puts "TESTING ERROR 12.2\n";exit}
+	timeout {puts "TESTING ERROR 5.2\n";exit}
 	"nameserver 8.8.4.4"
 }
 expect {
-	timeout {puts "TESTING ERROR 12.3\n";exit}
+	timeout {puts "TESTING ERROR 5.3\n";exit}
 	"nameserver 8.8.8.8"
 }
 expect {
-	timeout {puts "TESTING ERROR 12.4\n";exit}
+	timeout {puts "TESTING ERROR 5.4\n";exit}
 	"nameserver 4.2.2.1"
 }
 after 100
 expect {
-	timeout {puts "TESTING ERROR 12.5\n";exit}
+	timeout {puts "TESTING ERROR 5.5\n";exit}
 	"nameserver ::2"
 }
 send -- "exit\r"
@@ -63,15 +109,15 @@ sleep 1
 
 send -- "firejail --trace --dns=208.67.222.222 wget -q debian.org\r"
 expect {
-	timeout {puts "TESTING ERROR 1.2\n";exit}
+	timeout {puts "TESTING ERROR 6.1\n";exit}
 	"connect"
 }
 expect {
-	timeout {puts "TESTING ERROR 1.2\n";exit}
+	timeout {puts "TESTING ERROR 6.2\n";exit}
 	"208.67.222.222"
 }
 expect {
-	timeout {puts "TESTING ERROR 1.2\n";exit}
+	timeout {puts "TESTING ERROR 6.3\n";exit}
 	"53"
 }
 after 100

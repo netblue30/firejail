@@ -49,6 +49,6 @@ tracelog
 disable-mnt
 private-bin gio,QOwnNotes
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hosts,ld.so.cache,nsswitch.conf,pki,pulse,resolv.conf,ssl,machine-id
+private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hosts,ld.so.cache,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
 private-tmp
 

@@ -5,6 +5,13 @@ include vivaldi.local
 # Persistent global definitions
 include globals.local
 
+# Allow HTML5 Proprietary Media & DRM/EME (Widevine)
+ignore apparmor
+ignore noexec /var
+noblacklist /var/opt
+whitelist /var/opt/vivaldi
+writable-var
+
 noblacklist ${HOME}/.cache/vivaldi
 noblacklist ${HOME}/.config/vivaldi
 noblacklist ${HOME}/.local/lib/vivaldi

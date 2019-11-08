@@ -889,6 +889,13 @@ void fs_overlayfs(void) {
 	if (major == 3 && minor < 18)
 		oldkernel = 1;
 
+	// mounting an overlayfs on top of / seems to be broken for kernels > 4.19
+	// we disable overlayfs for now, pending fixing
+	if (major >= 4 &&minor >= 19) {
+		fprintf(stderr, "Error: OverlayFS disabled for Linux kernels 4.19 and newer, pending fixing.\n");
+		exit(1);
+	}
+
 	char *oroot = RUN_OVERLAY_ROOT;
 	mkdir_attr(oroot, 0755, 0, 0);
 
@@ -982,8 +989,10 @@ void fs_overlayfs(void) {
 	else { // kernel 3.18 or newer
 		if (asprintf(&option, "lowerdir=/,upperdir=%s,workdir=%s", odiff, owork) == -1)
 			errExit("asprintf");
-		if (mount("overlay", oroot, "overlay", MS_MGC_VAL, option) < 0)
+		if (mount("overlay", oroot, "overlay", MS_MGC_VAL, option) < 0) {
+			fprintf(stderr, "Debug: running on kernel version %d.%d\n", major, minor);
 			errExit("mounting overlayfs");
+		}
 
 		//***************************
 		// issue #263 start code

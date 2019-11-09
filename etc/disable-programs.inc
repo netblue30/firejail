@@ -212,6 +212,7 @@ blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/kdenliverc
+blacklist ${HOME}/.config/kfindrc
 blacklist ${HOME}/.config/kgetrc
 blacklist ${HOME}/.config/kid3rc
 blacklist ${HOME}/.config/klavaro
@@ -402,6 +403,7 @@ blacklist ${HOME}/.kde/share/config/gwenviewrc
 blacklist ${HOME}/.kde/share/config/k3brc
 blacklist ${HOME}/.kde/share/config/kaffeinerc
 blacklist ${HOME}/.kde/share/config/kcookiejarrc
+blacklist ${HOME}/.kde/share/config/kfindrc
 blacklist ${HOME}/.kde/share/config/kgetrc
 blacklist ${HOME}/.kde/share/config/khtmlrc
 blacklist ${HOME}/.kde/share/config/klipperrc
@@ -431,6 +433,7 @@ blacklist ${HOME}/.kde4/share/config/gwenviewrc
 blacklist ${HOME}/.kde4/share/config/k3brc
 blacklist ${HOME}/.kde4/share/config/kaffeinerc
 blacklist ${HOME}/.kde4/share/config/kcookiejarrc
+blacklist ${HOME}/.kde4/share/config/kfindrc
 blacklist ${HOME}/.kde4/share/config/kgetrc
 blacklist ${HOME}/.kde4/share/config/khtmlrc
 blacklist ${HOME}/.kde4/share/config/klipperrc
@@ -736,6 +739,7 @@ blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
 blacklist ${HOME}/.cache/kcmshell5
 blacklist ${HOME}/.cache/kdenlive
+blacklist ${HOME}/.cache/kfind
 blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/kmail2
 blacklist ${HOME}/.cache/krunner

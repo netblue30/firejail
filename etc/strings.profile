@@ -7,12 +7,16 @@ include strings.local
 # Persistent global definitions
 include globals.local
 
-include disable-common.inc
+#include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-include disable-programs.inc
+#include disable-programs.inc
+#include disable-xdg.inc
+
+#include whitelist-usr-share-common.inc
+#include whitelist-var-common.inc
 
 apparmor
 caps.drop all
@@ -36,11 +40,11 @@ tracelog
 x11 none
 
 #private
-private-bin strings
+#private-bin strings
 private-cache
 private-dev
-private-etc alternatives
-private-lib libfakeroot
+#private-etc alternatives
+#private-lib libfakeroot
 private-tmp
 
 memory-deny-write-execute

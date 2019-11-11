@@ -46,7 +46,8 @@ private
 private-bin bash,dig,sh
 private-cache
 private-dev
-private-lib
+# Uncomment the next line (or put 'private-lib' in your dig.local) on non Debian/Ubuntu OS (see issue #3038)
+#private-lib
 private-tmp
 
 memory-deny-write-execute

@@ -20,17 +20,18 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
-caps.drop all
+caps.keep ipc_lock,sys_nice,sys_rawio,sys_resource
+# net none
 netfilter
 no3d
-nonewprivs
-noroot
+# nonewprivs - breaks privileged helpers
+# noroot - breaks privileged helpers
 nosound
 notv
 novideo
-protocol unix
-seccomp
+# protocol unix - breaks privileged helpers
+# seccomp - breaks privileged helpers
 shell none
-tracelog
 
+private-dev
 # private-tmp

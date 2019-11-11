@@ -143,6 +143,10 @@ static int check_appimage(void) {
 	return arg_appimage != 0;
 }
 
+static int check_netoptions(void) {
+	return (arg_nonetwork || any_bridge_configured());
+}
+
 static int check_nodbus(void) {
 	return arg_nodbus != 0;
 }
@@ -161,6 +165,7 @@ static int check_allow_drm(void) {
 
 Cond conditionals[] = {
 	{"HAS_APPIMAGE", check_appimage},
+	{"HAS_NET", check_netoptions},
 	{"HAS_NODBUS", check_nodbus},
 	{"HAS_X11", check_x11},
 	{"BROWSER_DISABLE_U2F", check_disable_u2f},

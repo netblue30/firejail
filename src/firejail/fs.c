@@ -1191,15 +1191,15 @@ void fs_private_cache(void) {
 	// check if ~/.cache is a valid destination
 	struct stat s;
 	if (lstat(cache, &s) == -1) {
-		fwarning("cannot find %s, tmpfs not mounted\n", cache);
+		fwarning("skipping private-cache: cannot find %s\n", cache);
 		free(cache);
 		return;
 	}
 	if (!S_ISDIR(s.st_mode)) {
 		if (S_ISLNK(s.st_mode))
-			fwarning("%s is a symbolic link, tmpfs not mounted\n", cache);
+			fwarning("skipping private-cache: %s is a symbolic link\n", cache);
 		else
-			fwarning("%s is not a directory; cannot mount a tmpfs on top of it\n", cache);
+			fwarning("skipping private-cache: %s is not a directory\n", cache);
 		free(cache);
 		return;
 	}

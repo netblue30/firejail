@@ -315,6 +315,7 @@ blacklist ${HOME}/.config/keybase
 blacklist ${HOME}/.davfs2/secrets
 blacklist ${HOME}/.ecryptfs
 blacklist ${HOME}/.fetchmailrc
+blacklist ${HOME}/.fscrypt
 blacklist ${HOME}/.git-credential-cache
 blacklist ${HOME}/.git-credentials
 blacklist ${HOME}/.gnome2/keyrings
@@ -335,6 +336,7 @@ blacklist ${HOME}/.local/share/pki
 blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/.ssh
 blacklist ${HOME}/.vaults
+blacklist /.fscrypt
 blacklist /etc/davfs2/secrets
 blacklist /etc/group+
 blacklist /etc/group-
@@ -348,6 +350,7 @@ blacklist /etc/shadow+
 blacklist /etc/shadow-
 blacklist /etc/ssh
 blacklist /home/.ecryptfs
+blacklist /home/.fscrypt
 blacklist /var/backup
 
 # cloud provider configuration

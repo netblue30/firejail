@@ -97,6 +97,9 @@ deny /proc/@{PID}/oom_score_adj w,
 # Common backup directory
 deny /**/.snapshots/ rwx,
 
+# fscrypt
+deny /**/.fscrypt/ rwx,
+
 ##########
 # Allow all networking functionality, and control it from Firejail.
 ##########

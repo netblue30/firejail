@@ -22,12 +22,11 @@ dbus,
 
 ##########
 # With ptrace it is possible to inspect and hijack running programs.
-# Some browsers are also using ptrace for their sandboxing.
 ##########
 # Uncomment this line to allow all ptrace access
 #ptrace,
 # Allow obtaining some process information, but not ptrace(2)
-ptrace (read,readby) peer=firejail-default,
+ptrace (read,readby) peer=@{profile_name},
 
 ##########
 # Allow read access to whole filesystem and control it from firejail.
@@ -46,9 +45,6 @@ ptrace (read,readby) peer=firejail-default,
 ##########
 owner /{,run/firejail/mnt/oroot/}{,var/}run/firejail/mnt/trace w,
 owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/** w,
-owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/*.slave-socket w,
-owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/orcexec.* w,
-
 owner /{,run/firejail/mnt/oroot/}{run,dev}/shm/** w,
 
 # Allow writing to removable media
@@ -57,9 +53,6 @@ owner /{,var/}run/media/** w,
 # Allow logging Firejail blacklist violations to journal
 /{,var/}run/systemd/journal/socket w,
 /{,var/}run/systemd/journal/dev-log w,
-
-# Needed for wine
-/{,var/}run/firejail/profile/@{PID} w,
 
 # Allow access to cups printing socket.
 /{,var/}run/cups/cups.sock w,
@@ -94,11 +87,10 @@ deny /proc/@{PID}/oom_score_adj w,
 ##########
 # Blacklist specific sensitive paths.
 ##########
-# Common backup directory
-deny /**/.snapshots/ rwx,
-
-# fscrypt
-deny /**/.fscrypt/ rwx,
+deny /**/.fscrypt/ rw,
+deny /**/.fscrypt/** rwklmx,
+deny /**/.snapshots/ rw,
+deny /**/.snapshots/** rwklmx,
 
 ##########
 # Allow all networking functionality, and control it from Firejail.

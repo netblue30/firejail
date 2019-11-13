@@ -18,6 +18,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+# uncomment next line if seccomp breaks a program
+# allow-debuggers
 caps.drop all
 # net none
 netfilter
@@ -27,7 +29,6 @@ nonewprivs
 noroot
 notv
 # novideo
-# if seccomp breaks your program, add !ptrace to the next line
 seccomp
 
 private-dev

@@ -211,6 +211,7 @@ Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
 Denys Havrysh (https://github.com/vutny)
 	- update SkypeForLinux profile for latest version
+	- removed outdated Skype profile
 dewbasaur (https://github.com/dewbasaur)
 	- block access to history files
 	- Firefox PDF.js exploit (CVE-2015-4495) fixes

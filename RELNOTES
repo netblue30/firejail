@@ -9,7 +9,8 @@ firejail (0.9.61) baseline; urgency=low
   * whitelisting /usr/share in a large number of profiles
   * new scripts in conrib: gdb-firejail.sh and sort.py
   * enhancement: whitelist /usr/share in some profiles
-  * new condition: HAS_X11
+  * added signal mediation ot apparmor profile
+  * new conditions: HAS_X11, HAS_NET
   * new profiles: qgis, klatexformula, klatexformula_cmdl, links, xlinks
   * new profiles: pandoc, teams-for-linux, OpenArena, gnome-sound-recorder
   * new profiles: godot, tcpdump, tshark, newsbeuter, keepassxc-cli

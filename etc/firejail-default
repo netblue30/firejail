@@ -106,7 +106,8 @@ network packet,
 ##########
 # There is no equivalent in Firejail for filtering signals.
 ##########
-signal,
+signal (send) peer=@{profile_name},
+signal (receive),
 
 ##########
 # We let Firejail deal with capabilities, but ensure that

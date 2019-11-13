@@ -15,13 +15,19 @@ noblacklist ${HOME}/.wine
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
+include disable-passwdmgr.inc
 include disable-programs.inc
 
 caps.drop all
+# net none
 netfilter
 nodvd
 nogroups
 nonewprivs
 noroot
 notv
+# novideo
+# if seccomp breaks your program, add !ptrace to the next line
 seccomp
+
+private-dev

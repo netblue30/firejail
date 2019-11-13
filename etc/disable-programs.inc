@@ -24,7 +24,6 @@ blacklist ${HOME}/.Natron
 blacklist ${HOME}/.PlayOnLinux
 blacklist ${HOME}/.PyCharm*
 blacklist ${HOME}/.Sayonara
-blacklist ${HOME}/.Skype
 blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
 blacklist ${HOME}/.Steampid

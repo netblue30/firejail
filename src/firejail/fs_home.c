@@ -250,9 +250,6 @@ void fs_private_homedir(void) {
 	int xflag = store_xauthority();
 	int aflag = store_asoundrc();
 
-	// home directory outside /home?
-	int oflag = (strncmp(homedir, "/home/", 6) != 0);
-
 	uid_t u = getuid();
 	gid_t g = getgid();
 
@@ -266,28 +263,22 @@ void fs_private_homedir(void) {
 	int dst = safe_fd(homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (dst == -1)
 		errExit("opening home directory");
-	if (u != 0) {
-		struct stat s;
-		// sometimes system users are assigned home directories like /, /proc, ...
-		// require that a home directory outside /home is owned by the user
-		if (oflag) {
-			if (fstat(dst, &s) == -1)
-				errExit("fstat");
-			if (s.st_uid != u) {
-				fprintf(stderr, "Error: cannot mount private directory:\n"
-					"Home directory is not owned by the current user\n");
-				exit(1);
-			}
-		}
-		// check if new home directory is owned by the user
-		if (fstat(src, &s) == -1)
-			errExit("fstat");
-		if (s.st_uid != u) {
-			fprintf(stderr, "Error: private directory is not owned by the current user\n");
-			exit(1);
-		}
-		if ((S_IRWXU & s.st_mode) != S_IRWXU)
-			fwarning("no full permissions on private directory\n");
+	// both mount source and target should be owned by the user
+	struct stat s;
+	if (fstat(src, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != u) {
+		fprintf(stderr, "Error: private directory is not owned by the current user\n");
+		exit(1);
+	}
+	if ((S_IRWXU & s.st_mode) != S_IRWXU)
+		fwarning("no full permissions on private directory\n");
+	if (fstat(dst, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != u) {
+		fprintf(stderr, "Error: cannot mount private directory:\n"
+			"Home directory is not owned by the current user\n");
+		exit(1);
 	}
 	// mount via the links in /proc/self/fd
 	char *proc_src, *proc_dst;
@@ -324,7 +315,7 @@ void fs_private_homedir(void) {
 			errExit("mounting home directory");
 		fs_logger("tmpfs /root");
 	}
-	if (oflag) {
+	if (u == 0 || strncmp(homedir, "/home/", 6) != 0) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
@@ -546,9 +537,6 @@ void fs_private_home_list(void) {
 	int xflag = store_xauthority();
 	int aflag = store_asoundrc();
 
-	// home directory outside /home?
-	int oflag = (strncmp(homedir, "/home/", 6) != 0);
-
 	uid_t uid = getuid();
 	gid_t gid = getgid();
 
@@ -582,16 +570,14 @@ void fs_private_home_list(void) {
 	int fd = safe_fd(homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("opening home directory");
-	if (uid != 0 && oflag) {
-		// home directory outside /home should be owned by the user
-		struct stat s;
-		if (fstat(fd, &s) == -1)
-			errExit("fstat");
-		if (s.st_uid != uid) {
-			fprintf(stderr, "Error: cannot mount private directory:\n"
-				"Home directory is not owned by the current user\n");
-			exit(1);
-		}
+	// home directory should be owned by the user
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != uid) {
+		fprintf(stderr, "Error: cannot mount private directory:\n"
+			"Home directory is not owned by the current user\n");
+		exit(1);
 	}
 	// mount using the file descriptor
 	char *proc;
@@ -614,7 +600,7 @@ void fs_private_home_list(void) {
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 			errExit("mounting home directory");
 	}
-	if (oflag) {
+	if (uid == 0 || strncmp(homedir, "/home/", 6) != 0) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");

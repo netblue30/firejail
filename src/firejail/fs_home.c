@@ -312,7 +312,7 @@ void fs_private_homedir(void) {
 		if (arg_debug)
 			printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
-			errExit("mounting home directory");
+			errExit("mounting /root directory");
 		fs_logger("tmpfs /root");
 	}
 	if (u == 0 || strncmp(homedir, "/home/", 6) != 0) {
@@ -320,7 +320,7 @@ void fs_private_homedir(void) {
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
-			errExit("mounting home directory");
+			errExit("mounting /home directory");
 		fs_logger("tmpfs /home");
 	}
 
@@ -354,7 +354,7 @@ void fs_private(void) {
 		if (arg_allusers)
 			fwarning("allusers option disabled by private or whitelist option\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
-			errExit("mounting home directory");
+			errExit("mounting /home directory");
 		fs_logger("tmpfs /home");
 	}
 
@@ -362,7 +362,7 @@ void fs_private(void) {
 	if (arg_debug)
 		printf("Mounting a new /root directory\n");
 	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
-		errExit("mounting root directory");
+		errExit("mounting /root directory");
 	fs_logger("tmpfs /root");
 
 	if (u != 0) {
@@ -593,19 +593,26 @@ void fs_private_home_list(void) {
 		errLogExit("invalid private-home mount");
 	fs_logger2("tmpfs", homedir);
 
+	// blacklist RUN_HOME_DIR, it is writable and not noexec
+	if (mount(RUN_RO_DIR, RUN_HOME_DIR, NULL, MS_BIND, NULL) < 0)
+		errExit("blacklisting " RUN_HOME_DIR);
+	fs_logger2("tmpfs", RUN_HOME_DIR);
+
 	if (uid != 0) {
 		// mask /root
 		if (arg_debug)
 			printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=700,gid=0") < 0)
-			errExit("mounting home directory");
+			errExit("mounting /root directory");
+		fs_logger("tmpfs /root");
 	}
 	if (uid == 0 || strncmp(homedir, "/home/", 6) != 0) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
-			errExit("mounting home directory");
+			errExit("mounting /home directory");
+		fs_logger("tmpfs /home");
 	}
 
 	skel(homedir, uid, gid);

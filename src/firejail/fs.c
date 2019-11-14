@@ -447,7 +447,7 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 	// get a file descriptor for dir, fails if there is any symlink
 	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
-		errExit("safe_fd");
+		errExit("while opening directory");
 	struct stat s;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");

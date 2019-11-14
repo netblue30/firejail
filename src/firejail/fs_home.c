@@ -593,9 +593,9 @@ void fs_private_home_list(void) {
 		errLogExit("invalid private-home mount");
 	fs_logger2("tmpfs", homedir);
 
-	// blacklist RUN_HOME_DIR, it is writable and not noexec
-	if (mount(RUN_RO_DIR, RUN_HOME_DIR, NULL, MS_BIND, NULL) < 0)
-		errExit("blacklisting " RUN_HOME_DIR);
+	// mask RUN_HOME_DIR, it is writable and not noexec
+	if (mount("tmpfs", RUN_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+		errExit("mounting tmpfs");
 	fs_logger2("tmpfs", RUN_HOME_DIR);
 
 	if (uid != 0) {

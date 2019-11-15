@@ -451,6 +451,7 @@ int main(int argc, char **argv) {
 		firejail_user_add(user);
 		umask(orig_umask);
 
+#ifdef HAVE_APPARMOR
 		// enable firejail apparmor profile
 		struct stat s;
 		if (stat("/sbin/apparmor_parser", &s) == 0) {
@@ -464,6 +465,7 @@ int main(int argc, char **argv) {
 			(void) rv;
 			free(cmd);
 		}
+#endif
 	}
 
 

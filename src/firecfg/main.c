@@ -443,14 +443,30 @@ int main(int argc, char **argv) {
 	// set new symlinks based on /usr/lib/firejail/firecfg.cfg
 	set_links_firecfg();
 
-	// add user to firejail access database - only for root
 	if (getuid() == 0) {
+		// add user to firejail access database - only for root
 		printf("\nAdding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
 		// temporarily set the umask, access database must be world-readable
 		mode_t orig_umask = umask(022);
 		firejail_user_add(user);
 		umask(orig_umask);
+
+		// enable firejail apparmor profile
+		struct stat s;
+		if (stat("/sbin/apparmor_parser", &s) == 0) {
+			char *cmd;
+
+			// SYSCONFDIR points to /etc/firejail, we have to go on level up (..)
+			printf("\nLoading AppArmor profile\n");
+			if (asprintf(&cmd, "/sbin/apparmor_parser -r /etc/apparmor.d/firejail-default %s/../apparmor.d/firejail-default", SYSCONFDIR) == -1)
+				errExit("asprintf");
+			int rv = system(cmd);
+			(void) rv;
+			free(cmd);
+		}
 	}
+
+
 
 	// set new symlinks based on ~/.config/firejail directory
 	set_links_homedir(home);

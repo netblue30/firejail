@@ -535,6 +535,14 @@ void fs_remount(const char *dir, OPERATION op, unsigned check_mnt) {
 
 void fs_remount_rec(const char *dir, OPERATION op, unsigned check_mnt) {
 	assert(dir);
+	struct stat s;
+	if (stat(dir, &s) != 0)
+		return;
+	if (!S_ISDIR(s.st_mode)) {
+		// no need to search in /proc/self/mountinfo for submounts if not a directory
+		fs_remount(dir, op, check_mnt);
+		return;
+	}
 	// get mount point of the directory
 	int mountid = get_mount_id(dir);
 	if (mountid == -1)

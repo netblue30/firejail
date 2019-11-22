@@ -701,6 +701,7 @@ blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic
+blacklist ${HOME}/.cache/babl
 blacklist ${HOME}/.cache/bnox
 blacklist ${HOME}/.cache/borg
 blacklist ${HOME}/.cache/calibre
@@ -721,6 +722,7 @@ blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
+blacklist ${HOME}/.cache/gegl-0.4
 blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/gimp
 blacklist ${HOME}/.cache/godot

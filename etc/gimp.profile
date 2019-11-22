@@ -28,6 +28,7 @@ include disable-xdg.inc
 whitelist /usr/share/gegl-0.4
 whitelist /usr/share/gimp
 whitelist /usr/share/mypaint-data
+whitelist /usr/share/lensfun
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

@@ -159,6 +159,7 @@ blacklist ${HOME}/.config/dnox
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/d-feet
+blacklist ${HOME}/.config/electron-mail
 blacklist ${HOME}/.config/emaildefaults
 blacklist ${HOME}/.config/emailidentities
 blacklist ${HOME}/.config/enchant

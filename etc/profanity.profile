@@ -1,33 +1,36 @@
 # Firejail profile for profanity
-# Description: profanity is an XMPP-OTR chat client for the terminal
+# Description: profanity is an XMPP chat client for the terminal
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include unzip.local
+include profanity.local
 # Persistent global definitions
 include globals.local
 
-ignore net none
-
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
-mkdir ${HOME}/.config/profanity
-mkdir ${HOME}/.local/share/profanity
 noblacklist ${HOME}/.config/profanity
 noblacklist ${HOME}/.local/share/profanity
 
 caps.drop all
 netfilter
+no3d
+nodbus
 nodvd
 nogroups
 nonewprivs
 noroot
+nosound
 notv
 nou2f
+novideo
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -35,10 +38,7 @@ shell none
 private-bin profanity
 private-cache
 private-dev
-private-tmp
 private-etc alternatives,localtime,mime.types,resolv.conf,ssl
+private-tmp
 
 memory-deny-write-execute
-noexec ${HOME}
-noexec /tmp
-

@@ -272,6 +272,7 @@ blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/ppsspp
 blacklist ${HOME}/.config/pragha
+blacklist ${HOME}/.config/profanity
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
@@ -558,6 +559,7 @@ blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/plasma_notes
+blacklist ${HOME}/.local/share/profanity
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/qutebrowser

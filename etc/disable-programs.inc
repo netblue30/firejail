@@ -158,6 +158,7 @@ blacklist ${HOME}/.config/dkl
 blacklist ${HOME}/.config/dnox
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
+blacklist ${HOME}/.config/draw.io
 blacklist ${HOME}/.config/d-feet
 blacklist ${HOME}/.config/electron-mail
 blacklist ${HOME}/.config/emaildefaults

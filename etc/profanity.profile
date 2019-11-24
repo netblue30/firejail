@@ -7,6 +7,14 @@ include profanity.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/profanity
+noblacklist ${HOME}/.local/share/profanity
+
+# Allow Python
+include allow-python3.inc
+include allow-python2.inc
+
+include disable-interpreters.inc
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -16,9 +24,6 @@ include disable-xdg.inc
 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
-
-noblacklist ${HOME}/.config/profanity
-noblacklist ${HOME}/.local/share/profanity
 
 caps.drop all
 netfilter

@@ -151,14 +151,6 @@ capability setfcap,
 #capability mac_override,
 #capability mac_admin,
 
-##########
-# We let Firejail deal with mount/umount functionality.
-##########
-mount,
-remount,
-umount,
-pivot_root,
-
 # Site-specific additions and overrides. See local/README for details.
 #include <local/firejail-local>
 }

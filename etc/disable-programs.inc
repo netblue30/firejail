@@ -183,6 +183,7 @@ blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/git
 blacklist ${HOME}/.config/globaltime
+blacklist ${HOME}/.config/gmpc
 blacklist ${HOME}/.config/gnome-builder
 blacklist ${HOME}/.config/gnome-latex
 blacklist ${HOME}/.config/gnome-mplayer

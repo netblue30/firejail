@@ -11,8 +11,8 @@ noblacklist ${HOME}/.config/profanity
 noblacklist ${HOME}/.local/share/profanity
 
 # Allow Python
-include allow-python3.inc
 include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc

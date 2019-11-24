@@ -14,10 +14,10 @@ noblacklist ${HOME}/.local/share/profanity
 include allow-python3.inc
 include allow-python2.inc
 
-include disable-interpreters.inc
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
+include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc

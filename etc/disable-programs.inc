@@ -364,6 +364,7 @@ blacklist ${HOME}/.freecol
 blacklist ${HOME}/.freemind
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
+blacklist ${HOME}/.gist
 blacklist ${HOME}/.gitconfig
 blacklist ${HOME}/.gnome/gnome-schedule
 blacklist ${HOME}/.googleearth/Cache

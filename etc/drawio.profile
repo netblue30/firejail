@@ -8,8 +8,6 @@ include globals.local
 
 noblacklist ${HOME}/.config/draw.io
 
-whitelist ${DOWNLOADS}
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -20,7 +18,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/draw.io
 whitelist ${HOME}/.config/draw.io
-
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

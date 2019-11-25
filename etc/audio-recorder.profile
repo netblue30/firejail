@@ -8,7 +8,6 @@ include audio-recorder.local
 include globals.local
 
 noblacklist ${MUSIC}
-whitelist ${DOWNLOADS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,6 +17,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist ${MUSIC}
+whitelist ${DOWNLOADS}
 whitelist /usr/share/audio-recorder
 include whitelist-common.inc
 include whitelist-usr-share-common.inc

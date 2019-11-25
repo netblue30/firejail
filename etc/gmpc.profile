@@ -7,7 +7,6 @@ include gmpc.local
 include globals.local
 
 noblacklist ${HOME}/.config/gmpc
-
 noblacklist ${MUSIC}
 
 include disable-common.inc
@@ -20,7 +19,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/gmpc
 whitelist ${HOME}/.config/gmpc
-
+whitelist ${MUSIC}
 whitelist /usr/share/gmpc
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
@@ -49,6 +48,6 @@ disable-mnt
 private-cache
 private-etc alternatives,fonts
 private-tmp
+writable-run-user
 
 # memory-deny-write-execute - breaks on Arch
-writable-run-user

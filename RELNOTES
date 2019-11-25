@@ -23,6 +23,8 @@ firejail (0.9.61) baseline; urgency=low
   * new profiles: kiwix-desktop, bzcat, zstd, pzstd, zstdcat, zstdgrep, zstdless
   * new profiles: zstdmt, unzstd, i2p, ar, gnome-latex, pngquant, kalgebra
   * new profiles: kalgebramobile, signal-cli, amuled, kfind, profanity
+  * new profiles: audio-recorder, cameramonitor, ddgtk, drawio, unf, gmpc
+  * new profiles: electron-mail
  -- netblue30 <netblue30@yahoo.com>  Sat, 1 Jun 2019 08:00:00 -0500
 
 firejail (0.9.60) baseline; urgency=low

@@ -44,7 +44,7 @@ shell none
 private-bin profanity
 private-cache
 private-dev
-private-etc alternatives,localtime,mime.types,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,localtime,mime.types,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
 memory-deny-write-execute

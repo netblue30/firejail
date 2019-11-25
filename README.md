@@ -122,4 +122,4 @@ gnome-sound-recorder, godot, jerry, keepassxc-cli, keepassxc-proxy, klatexformul
 pandoc, qgis, rhythmbox-client, tcpdump, teams-for-linux, tshark, xlinks, zeal, mpg123, conplay, mpg123.bin, mpg123-alsa, mpg123-id3dump,
 mpg123-jack, mpg123-nas, mpg123-openal, mpg123-oss, mpg123-portaudio, mpg123-pulse, mpg123-strip, out123, pavucontrol-qt,
 gnome-characters, gnome-character-map, rsync, Whalebird, tor-browser (AUR), Zulip, tb-starter-wrapper, bzcat, kiwix-desktop, ar,
-gnome-latex, pngquant, kalgebra, kalgebramobile, signal-cli, amuled, kfind, profanity
+gnome-latex, pngquant, kalgebra, kalgebramobile, signal-cli, amuled, kfind, profanity, audio-recorder, cameramonitor, ddgtk, drawio, electron-mail, gmpc, unf

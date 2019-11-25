@@ -7,6 +7,8 @@ include gist.local
 # Persistent global definitions
 include globals.local
 
+blacklist /tmp/.X11-unix
+
 noblacklist ${HOME}/.gist
 
 # Allow ruby (blacklisted by disable-interpreters.inc)

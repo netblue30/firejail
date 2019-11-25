@@ -376,7 +376,10 @@ blacklist ${PATH}/crontab
 blacklist ${PATH}/evtest
 blacklist ${PATH}/expiry
 blacklist ${PATH}/fusermount
+blacklist ${PATH}/gksu
+blacklist ${PATH}/gksudo
 blacklist ${PATH}/gpasswd
+blacklist ${PATH}/kdesudo
 blacklist ${PATH}/ksu
 blacklist ${PATH}/mount
 blacklist ${PATH}/mount.ecryptfs_private

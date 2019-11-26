@@ -38,7 +38,8 @@ notv
 nou2f
 novideo
 protocol inet,inet6
-seccomp
+# allow set_mempolicy, which is required to encode using libx265
+seccomp !set_mempolicy
 shell none
 tracelog
 

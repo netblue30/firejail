@@ -315,7 +315,7 @@ void fs_private_homedir(void) {
 			errExit("mounting /root directory");
 		fs_logger("tmpfs /root");
 	}
-	if (u == 0 || strncmp(homedir, "/home/", 6) != 0) {
+	if (u == 0 && !arg_allusers) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
@@ -606,7 +606,7 @@ void fs_private_home_list(void) {
 			errExit("mounting /root directory");
 		fs_logger("tmpfs /root");
 	}
-	if (uid == 0 || strncmp(homedir, "/home/", 6) != 0) {
+	if (uid == 0 && !arg_allusers) {
 		// mask /home
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");

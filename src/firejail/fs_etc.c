@@ -189,5 +189,10 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);
 
+	// mask private_run_dir (who knows if there are writable paths, and it is mounted exec)
+	if (mount("tmpfs", private_run_dir, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+		errExit("mounting tmpfs");
+	fs_logger2("tmpfs", private_run_dir);
+
 	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }

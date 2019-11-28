@@ -1147,6 +1147,9 @@ void fs_overlayfs(void) {
 
 // this function is called from sandbox.c before blacklist/whitelist functions
 void fs_private_tmp(void) {
+	if (arg_debug)
+		printf("Generate private-tmp whitelist commands\n");
+
 	// check XAUTHORITY file, KDE keeps it under /tmp
 	char *xauth = getenv("XAUTHORITY");
 	if (xauth) {

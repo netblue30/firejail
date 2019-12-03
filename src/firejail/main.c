@@ -55,11 +55,7 @@ uid_t firejail_uid = 0;
 gid_t firejail_gid = 0;
 
 #define STACK_SIZE (1024 * 1024)
-#ifdef __arm__
-#define STACK_ALIGNMENT 8 // see #3010
-#else
 #define STACK_ALIGNMENT 16
-#endif
 static char child_stack[STACK_SIZE] __attribute__((aligned(STACK_ALIGNMENT)));		// space for child's stack
 
 Config cfg;					// configuration

@@ -32,5 +32,3 @@ tracelog
 private-cache
 # private-dev
 # private-tmp
-
-memory-deny-write-execute

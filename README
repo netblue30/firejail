@@ -737,6 +737,9 @@ startx2017 (https://github.com/startx2017)
 	- kwrite and geary profiles
 StelFux (https://github.com/StelFux)
 	- Fix youtube video in totem
+the-antz (https://github.com/the-antz)
+	- Fix libx265 encoding in ffmpeg profile
+	- Profile tweaks
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

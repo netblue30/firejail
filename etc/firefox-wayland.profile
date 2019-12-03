@@ -1,4 +1,4 @@
-# Firejail profile for firefox-wayland
+# Firejail profile alias for firefox-wayland
 # This file is overwritten after every install/update
 # Persistent local customizations
 include firefox-wayland.local

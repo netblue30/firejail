@@ -18,8 +18,41 @@ The sandbox is lightweight, the overhead is low. There are no complicated config
 no socket connections open, no daemons running in the background. All security features are
 implemented directly in Linux kernel and available on any Linux computer.
 
-[![Firejail Firefox Demo](video.png)](https://www.youtube.com/watch?v=kCnAxD144nU)
+<table><tr>
 
+<td>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=7RMz7tePA98
+" target="_blank"><img src="http://img.youtube.com/vi/7RMz7tePA98/0.jpg"
+alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Firejail Intro</a>
+</td>
+
+<td>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=J1ZsXrpAgBU
+" target="_blank"><img src="http://img.youtube.com/vi/J1ZsXrpAgBU/0.jpg"
+alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Firejail Demo</a>
+</td>
+
+<td>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=EyEz65RYfw4
+" target="_blank"><img src="http://img.youtube.com/vi/EyEz65RYfw4/0.jpg"
+alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Debian Install</a>
+</td>
+
+
+</tr><tr>
+<td>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Uy2ZTHc4s0w
+" target="_blank"><img src="http://img.youtube.com/vi/Uy2ZTHc4s0w/0.jpg"
+alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Arch Linux Install</a>
+
+</td>
+<td>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=xuMxRx0zSfQ
+" target="_blank"><img src="http://img.youtube.com/vi/xuMxRx0zSfQ/0.jpg"
+alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Disable Network Access</a>
+
+</td>
+</tr></table>
 
 Project webpage: https://firejail.wordpress.com/
 
@@ -112,14 +145,9 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 
 `````
-## Latest released version: 0.9.60
+## Latest released version: 0.9.60 - release 0.9.62 pending
 
-## Current development version: 0.9.61
+The development for 0.9.62 is handled on release-0.9.62 branch. Please put only fixes there. Thanks!
 
-## New profiles:
 
-gnome-sound-recorder, godot, jerry, keepassxc-cli, keepassxc-proxy, klatexformula, klatexformula_cmdl, links, newsbeuter, OpenArena,
-pandoc, qgis, rhythmbox-client, tcpdump, teams-for-linux, tshark, xlinks, zeal, mpg123, conplay, mpg123.bin, mpg123-alsa, mpg123-id3dump,
-mpg123-jack, mpg123-nas, mpg123-openal, mpg123-oss, mpg123-portaudio, mpg123-pulse, mpg123-strip, out123, pavucontrol-qt,
-gnome-characters, gnome-character-map, rsync, Whalebird, tor-browser (AUR), Zulip, tb-starter-wrapper, bzcat, kiwix-desktop, ar,
-gnome-latex, pngquant, kalgebra, kalgebramobile, signal-cli, amuled, kfind, profanity, audio-recorder, cameramonitor, ddgtk, drawio, electron-mail, gmpc, unf, gist, gist-paste
+## Current development version: 0.9.63

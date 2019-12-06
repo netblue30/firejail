@@ -18,6 +18,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/devedeng
 whitelist /usr/share/ffmpeg
 whitelist /usr/share/qtchooser
 include whitelist-usr-share-common.inc

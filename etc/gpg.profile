@@ -1,6 +1,7 @@
 # Firejail profile for gpg
 # Description: GNU Privacy Guard -- minimalist public key operations
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include gpg.local
 # Persistent global definitions

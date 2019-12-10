@@ -1,6 +1,7 @@
 # Firejail profile for gpg-agent
 # Description: GNU privacy guard - cryptographic agent
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include gpg-agent.local
 # Persistent global definitions

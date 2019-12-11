@@ -18,8 +18,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-# uncomment next line if seccomp breaks a program
-# allow-debuggers
+# some applications don't need allow-debuggers, comment the next line
+# if it is not necessary (or put 'ignore allow-debuggers' in your wine.local)
+allow-debuggers
 caps.drop all
 # net none
 netfilter

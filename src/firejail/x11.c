@@ -1248,10 +1248,10 @@ void x11_xorg(void) {
 				disable_file_or_dir(rp);
 			free(rp);
 		}
-		// update environment variable, so our new .Xauthority file is used
-		if (setenv("XAUTHORITY", dest, 1) < 0)
-			errExit("setenv");
 	}
+	// set environment variable
+	if (setenv("XAUTHORITY", dest, 1) < 0)
+		errExit("setenv");
 	free(dest);
 #endif
 }

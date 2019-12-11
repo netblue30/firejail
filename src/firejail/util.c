@@ -1111,10 +1111,10 @@ unsigned extract_timeout(const char *str) {
 }
 
 void disable_file_or_dir(const char *fname) {
-	if (arg_debug)
-		printf("blacklist %s\n", fname);
 	struct stat s;
 	if (stat(fname, &s) != -1) {
+		if (arg_debug)
+			printf("blacklist %s\n", fname);
 		if (is_dir(fname)) {
 			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 				errExit("disable directory");
@@ -1123,8 +1123,8 @@ void disable_file_or_dir(const char *fname) {
 			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 				errExit("disable file");
 		}
+		fs_logger2("blacklist", fname);
 	}
-	fs_logger2("blacklist", fname);
 }
 
 void disable_file_path(const char *path, const char *file) {

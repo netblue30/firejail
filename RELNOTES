@@ -1,4 +1,4 @@
-firejail (0.9.61) baseline; urgency=low
+firejail (0.9.62) baseline; urgency=low
   * work in progress
   * added file-copy-limit in /etc/firejail/firejail.config
   * profile templates (/usr/share/doc/firejail)
@@ -25,7 +25,7 @@ firejail (0.9.61) baseline; urgency=low
   * new profiles: kalgebramobile, signal-cli, amuled, kfind, profanity
   * new profiles: audio-recorder, cameramonitor, ddgtk, drawio, unf, gmpc
   * new profiles: electron-mail, gist, gist-paste
- -- netblue30 <netblue30@yahoo.com>  Sat, 1 Jun 2019 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sat, 14 Dec 2019 08:00:00 -0500
 
 firejail (0.9.60) baseline; urgency=low
   * security bug reported by Austin Morton:

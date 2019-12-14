@@ -151,7 +151,7 @@ The development for 0.9.62 is handled on release-0.9.62 branch.
 
 I had to cut the release branch again as of this commit - big fixes from @smitsohu and @glitsj16.
 Also problems with the configure script as reported by @matu3ba. I am reusing the same
-name for the release branch, release-0.9.62, so if you have an old release-0.9.62 branch arround,
+name for the release branch, release-0.9.62, so if you have an old release-0.9.62 branch around,
 get rid of it and load the new one.
 
 

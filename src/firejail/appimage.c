@@ -113,12 +113,12 @@ void appimage_set(const char *appimage) {
 	EUID_ROOT();
 	if (size == 0) {
 		fmessage("Mounting appimage type 1\n");
-		if (mount(devloop, mntdir, "iso9660", flags,  mode) < 0)
+		if (mount(devloop, mntdir, "iso9660", flags, mode) < 0)
 			errExit("mounting appimage");
 	}
 	else {
 		fmessage("Mounting appimage type 2\n");
-		if (mount(devloop, mntdir, "squashfs", flags,  mode) < 0)
+		if (mount(devloop, mntdir, "squashfs", flags, NULL) < 0)
 			errExit("mounting appimage");
 	}
 

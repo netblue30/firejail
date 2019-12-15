@@ -2768,6 +2768,15 @@ Sandbox running time in hours:minutes:seconds format.
 USER
 The owner of the sandbox.
 
+.SH RESTRICTED SHELL
+To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
+/etc/passwd file for each user that needs to be restricted. Alternatively,
+you can specify /usr/bin/firejail  in adduser command:
+
+adduser \-\-shell /usr/bin/firejail username
+
+Additional arguments passed to firejail executable upon login are declared in /etc/firejail/login.users file.
+
 .SH SECURITY PROFILES
 Several command line options can be passed to the program using
 profile files. Firejail chooses the profile file as follows:
@@ -2835,15 +2844,6 @@ Child process initialized
 .RE
 
 See \fBman 5 firejail-profile\fR for profile file syntax information.
-
-.SH RESTRICTED SHELL
-To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
-/etc/passwd file for each user that needs to be restricted. Alternatively,
-you can specify /usr/bin/firejail  in adduser command:
-
-adduser \-\-shell /usr/bin/firejail username
-
-Additional arguments passed to firejail executable upon login are declared in /etc/firejail/login.users file.
 
 .SH TRAFFIC SHAPING
 Network bandwidth is an expensive resource shared among all sandboxes running on a system.

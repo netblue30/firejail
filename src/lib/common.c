@@ -53,7 +53,7 @@ int join_namespace(pid_t pid, char *type) {
 
 errout:
 	free(path);
-	fprintf(stderr, "Error: cannot join namespace %s\\n", type);
+	fprintf(stderr, "Error: cannot join namespace %s\n", type);
 	return -1;
 
 }

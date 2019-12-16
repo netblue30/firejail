@@ -1,6 +1,6 @@
 # Firejail profile for brave
-# This file is overwritten after every install/update
 # Description: Web browser that blocks ads and trackers by default.
+# This file is overwritten after every install/update
 # Persistent local customizations
 include brave.local
 # Persistent global definitions

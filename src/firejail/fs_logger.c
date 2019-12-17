@@ -97,7 +97,7 @@ void fs_logger_print(void) {
 		perror("fopen");
 		return;
 	}
-	SET_PERMS_STREAM_NOERR(fp, getuid(), getgid(), 0644);
+	SET_PERMS_STREAM_NOERR(fp, getuid(), getgid(), 0600);
 
 	FsMsg *ptr = head;
 	while (ptr) {

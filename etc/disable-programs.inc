@@ -132,6 +132,7 @@ blacklist ${HOME}/.config/bnox
 blacklist ${HOME}/.config/borg
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
+blacklist ${HOME}/.config/brave-flags.conf
 blacklist ${HOME}/.config/caja
 blacklist ${HOME}/.config/calibre
 blacklist ${HOME}/.config/cantata
@@ -695,6 +696,7 @@ blacklist /var/lib/games/Maelstrom-Scores
 blacklist ${HOME}/.cache/0ad
 blacklist ${HOME}/.cache/8pecxstudios
 blacklist ${HOME}/.cache/Authenticator
+blacklist ${HOME}/.cache/BraveSoftware
 blacklist ${HOME}/.cache/Clementine
 blacklist ${HOME}/.cache/Enox
 blacklist ${HOME}/.cache/Enpass

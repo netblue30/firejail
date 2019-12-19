@@ -20,17 +20,19 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.gnupg
-mkdir ${HOME}/.ssh
-whitelist ${HOME}/.gnupg
-whitelist ${HOME}/.ssh
+# whitelisting in ${HOME} breaks file encryption feature of nautilus.
+# once #2882 is fixed this can be uncommented and nowhitelisted in seahorse-tool.profile
+#mkdir ${HOME}/.gnupg
+#mkdir ${HOME}/.ssh
+#whitelist ${HOME}/.gnupg
+#whitelist ${HOME}/.ssh
 whitelist /tmp/ssh-*
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /usr/share/seahorse
 whitelist /usr/share/seahorse-nautilus
+#include whitelist-common.inc
 include whitelist-usr-share-common.inc
-include whitelist-common.inc
 include whitelist-var-common.inc
 
 apparmor

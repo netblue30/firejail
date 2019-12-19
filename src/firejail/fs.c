@@ -642,7 +642,8 @@ void fs_proc_sys_dev_boot(void) {
 	// various /proc files
 	disable_file(BLACKLIST_FILE, "/proc/irq");
 	disable_file(BLACKLIST_FILE, "/proc/bus");
-	disable_file(BLACKLIST_FILE, "/proc/config.gz");
+	// move /proc/config.gz to disable-common.inc
+	//disable_file(BLACKLIST_FILE, "/proc/config.gz");
 	disable_file(BLACKLIST_FILE, "/proc/sched_debug");
 	disable_file(BLACKLIST_FILE, "/proc/timer_list");
 	disable_file(BLACKLIST_FILE, "/proc/timer_stats");

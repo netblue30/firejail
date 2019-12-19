@@ -452,3 +452,6 @@ blacklist ${HOME}/Mail
 blacklist ${HOME}/mail
 blacklist ${HOME}/postponed
 blacklist ${HOME}/sent
+
+# kernel configuration
+blacklist /proc/config.gz

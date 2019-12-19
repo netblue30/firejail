@@ -25,5 +25,8 @@ whitelist ${HOME}/.config/brave
 whitelist ${HOME}/.config/brave-flags.conf
 whitelist ${HOME}/.gnupg
 
+# Brave sandbox needs read access to /proc/config.gz
+noblacklist /proc/config.gz
+
 # Redirect
 include chromium-common.profile

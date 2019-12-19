@@ -9,15 +9,20 @@ include globals.local
 # noexec /tmp is included in chromium-common.profile and breaks Brave
 ignore noexec /tmp
 
-noblacklist ${HOME}/.config/brave
+noblacklist ${HOME}/.cache/BraveSoftware
 noblacklist ${HOME}/.config/BraveSoftware
+noblacklist ${HOME}/.config/brave
+noblacklist ${HOME}/.config/brave-flags.conf
 # brave uses gpg for built-in password manager
 noblacklist ${HOME}/.gnupg
 
-mkdir ${HOME}/.config/brave
+mkdir ${HOME}/.cache/BraveSoftware
 mkdir ${HOME}/.config/BraveSoftware
-whitelist ${HOME}/.config/brave
+mkdir ${HOME}/.config/brave
+whitelist ${HOME}/.cache/BraveSoftware
 whitelist ${HOME}/.config/BraveSoftware
+whitelist ${HOME}/.config/brave
+whitelist ${HOME}/.config/brave-flags.conf
 whitelist ${HOME}/.gnupg
 
 # Redirect

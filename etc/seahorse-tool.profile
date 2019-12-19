@@ -7,9 +7,9 @@ include seahorse-tool.local
 # added by included profile
 #include globals.local
 
+# private-etc workaround for: #2877
+private-etc firejail,login.defs,passwd
 private-tmp
-
-memory-deny-write-execute
 
 # Redirect
 include seahorse.profile

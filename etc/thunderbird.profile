@@ -14,7 +14,7 @@ noblacklist ${HOME}/.gnupg
 # noblacklist ${HOME}/.icedove
 noblacklist ${HOME}/.thunderbird
 
-# Uncomment the next 4 lines or put they in your thunderbird.local to
+# Uncomment the next 4 lines or put them in your thunderbird.local to
 # allow Firefox to load your profile when clicking a link in an email
 #noblacklist ${HOME}/.cache/mozilla
 #noblacklist ${HOME}/.mozilla
@@ -39,7 +39,7 @@ whitelist ${HOME}/.thunderbird
 
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 ignore private-tmp
-# machine-id breaks audio in browsers; enable it when sound is not required
+# machine-id breaks audio in browsers; enable or put it in your thunderbird.local when sound is not required
 # machine-id
 read-only ${HOME}/.config/mimeapps.list
 # writable-run-user and dbus are needed by enigmail

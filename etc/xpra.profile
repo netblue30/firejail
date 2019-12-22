@@ -50,5 +50,5 @@ disable-mnt
 # older Xpra versions also use Xvfb
 # private-bin bash,cat,dbus-launch,ldconfig,ls,pactl,python*,sh,strace,which,xauth,xkbcomp,Xorg,xpra,Xvfb
 private-dev
-# private-etc alternatives,gai.conf,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,machine-id,nsswitch.conf,resolv.conf,X11,xpra
+#private-etc alternatives,bumblebee,dbus-1,default,drirc,glvnd,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,passwd,xdg,xpra
 private-tmp

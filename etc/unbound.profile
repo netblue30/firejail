@@ -42,6 +42,7 @@ seccomp.drop _sysctl,acct,add_key,adjtimex,clock_adjtime,delete_module,fanotify_
 disable-mnt
 private
 private-dev
+#private-etc alternatives,ca-certificates,crypto-policies,group,hosts,host.conf,hostname,insserv.conf.d,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,resolvconf,rpc,services,ssl,unbound,xdg
 private-tmp
 writable-var
 

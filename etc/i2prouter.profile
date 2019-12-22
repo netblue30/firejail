@@ -12,6 +12,7 @@ include globals.local
 # use the distro-independent official java installer instead
 
 # Only needed if i2prouter binary is in home directory, java installer does this
+private-etc Trolltech.conf,X11,alternatives,ca-certificates,crypto-policies,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,java.conf,java-10-openjdk,java-9-openjdk,java-8-openjdk,java-7-openjdk,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.config/i2p
@@ -67,5 +68,4 @@ shell none
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,i2p,java-8-openjdk,pki,ssl
 private-tmp

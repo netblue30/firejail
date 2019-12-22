@@ -6,6 +6,7 @@ include firefox-common.local
 # added by caller profile
 #include globals.local
 
+#private-etc Trolltech.conf,X11,alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,pulse,resolv.conf,rpc,services,ssl,xdg
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
@@ -53,6 +54,4 @@ shell none
 
 disable-mnt
 private-dev
-# private-etc below works fine on most distributions. There are some problems on CentOS.
-#private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
 private-tmp

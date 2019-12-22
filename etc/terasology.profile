@@ -5,6 +5,7 @@ include terasology.local
 # Persistent global definitions
 include globals.local
 
+private-etc Trolltech.conf,X11,alsa,alternatives,asound.conf,bumblebee,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,java.conf,java-10-openjdk,java-9-openjdk,java-8-openjdk,java-7-openjdk,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,lsb-release,machine-id,mime.types,pango,passwd,pulse,xdg
 ignore noexec /tmp
 
 noblacklist ${HOME}/.local/share/terasology
@@ -43,5 +44,4 @@ shell none
 
 disable-mnt
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,java-7-openjdk,java-8-openjdk,ld.so.cache,ld.so.preload,localtime,lsb-release,machine-id,mime.types,passwd,pki,pulse,resolv.conf,ssl
 private-tmp

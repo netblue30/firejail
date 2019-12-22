@@ -40,6 +40,7 @@ x11 none
 # private-lib
 private-cache
 private-dev
+#private-etc alternatives,group,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,sysless,xdg
 writable-var-log
 
 memory-deny-write-execute

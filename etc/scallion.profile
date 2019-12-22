@@ -39,4 +39,5 @@ shell none
 disable-mnt
 private
 private-dev
+#private-etc alternatives,bumblebee,drirc,glvnd,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 private-tmp

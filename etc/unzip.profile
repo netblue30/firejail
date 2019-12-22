@@ -40,4 +40,4 @@ x11 none
 
 private-bin unzip
 private-dev
-private-etc alternatives,group,localtime,passwd
+private-etc alternatives,group,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg

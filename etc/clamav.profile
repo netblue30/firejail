@@ -29,6 +29,7 @@ tracelog
 x11 none
 
 private-dev
+#private-etc alternatives,clamav,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 read-only ${HOME}
 
 memory-deny-write-execute

@@ -34,3 +34,4 @@ shell none
 private-bin apktool,basename,bash,dirname,expr,java,sh
 private-cache
 private-dev
+private-etc alternatives,java.conf,java-10-openjdk,java-9-openjdk,java-8-openjdk,java-7-openjdk,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg

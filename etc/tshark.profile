@@ -40,4 +40,5 @@ disable-mnt
 private-cache
 #private-bin tshark
 private-dev
+#private-etc alternatives,ca-certificates,crypto-policies,dbus-1,group,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 private-tmp

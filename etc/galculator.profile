@@ -43,7 +43,7 @@ tracelog
 private-bin galculator
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc Trolltech.conf,X11,alternatives,bumblebee,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,pango,passwd,tor,xdg
 private-lib
 private-tmp
 

@@ -42,6 +42,7 @@ x11 none
 # private-bin img2txt
 private-cache
 private-dev
+#private-etc alternatives,bumblebee,drirc,glvnd,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 private-tmp
 
 memory-deny-write-execute

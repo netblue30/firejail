@@ -42,6 +42,7 @@ tracelog
 
 # private-bin gedit
 private-dev
+private-etc X11,alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,xdg
 private-lib aspell,gconv,gedit,libgspell-1.so.*,libreadline.so.*,libtinfo.so.*
 private-tmp
 

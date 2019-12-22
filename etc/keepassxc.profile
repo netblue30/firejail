@@ -49,7 +49,7 @@ tracelog
 
 private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 private-dev
-private-etc alternatives,fonts,ld.so.cache,machine-id
+private-etc Trolltech.conf,X11,alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,tor,xdg
 private-tmp
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp

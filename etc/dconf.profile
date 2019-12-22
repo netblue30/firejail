@@ -43,7 +43,7 @@ disable-mnt
 private-bin dconf,gsettings
 private-cache
 private-dev
-private-etc alternatives,dconf
+private-etc alternatives,dbus-1,dconf,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,passwd,xdg
 private-lib
 private-tmp
 

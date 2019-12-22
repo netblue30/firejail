@@ -45,7 +45,7 @@ x11 none
 disable-mnt
 # private-bin audio-recorder
 private-cache
-private-etc alternatives,fonts
+private-etc alsa,alternatives,asound.conf,dbus-1,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,passwd,pulse,xdg
 private-tmp
 
 # memory-deny-write-execute - breaks on Arch

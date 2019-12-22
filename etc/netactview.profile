@@ -45,7 +45,7 @@ disable-mnt
 private-bin netactview,netactview_polkit
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc Trolltech.conf,X11,alternatives,ca-certificates,crypto-policies,dconf,fonts,gconf,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pango,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 private-lib
 private-tmp
 

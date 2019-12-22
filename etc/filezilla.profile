@@ -35,4 +35,5 @@ shell none
 # private-bin breaks --join if the user has zsh set as $SHELL - adding zsh on private-bin
 private-bin bash,filezilla,fzputtygen,fzsftp,lsb_release,python*,sh,uname,zsh
 private-dev
+#private-etc Trolltech.conf,X11,alternatives,bumblebee,ca-certificates,crypto-policies,dbus-1,dconf,drirc,fonts,gconf,glvnd,group,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 private-tmp

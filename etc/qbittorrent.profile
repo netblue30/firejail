@@ -53,7 +53,7 @@ shell none
 
 private-bin python*,qbittorrent
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,resolv.conf,ssl,X11,xdg
+#private-etc Trolltech.conf,X11,alternatives,bumblebee,ca-certificates,crypto-policies,drirc,fonts,glvnd,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pango,passwd,pki,protocols,resolv.conf,rpc,services,ssl,tor,xdg
 private-tmp
 
 # memory-deny-write-execute - problems on Arch, see #1690 on GitHub repo

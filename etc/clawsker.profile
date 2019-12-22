@@ -45,7 +45,7 @@ disable-mnt
 private-bin bash,clawsker,perl,sh,which
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc Trolltech.conf,X11,alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,pango,passwd,tor,xdg
 private-lib girepository-1.*,libdbus-glib-1.so.*,libetpan.so.*,libgirepository-1.*,libgtk-x11-2.0.so.*,libstartup-notification-1.so.*,perl*
 private-tmp
 

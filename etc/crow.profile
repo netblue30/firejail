@@ -38,7 +38,7 @@ shell none
 disable-mnt
 private-bin crow
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
+private-etc Trolltech.conf,X11,alsa,alternatives,asound.conf,ca-certificates,crypto-policies,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,pulse,resolv.conf,rpc,services,ssl,xdg
 private-opt none
 private-tmp
 private-srv none

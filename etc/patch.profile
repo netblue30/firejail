@@ -40,6 +40,7 @@ x11 none
 
 private-bin patch,red
 private-dev
+#private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 private-lib libfakeroot
 
 memory-deny-write-execute

@@ -40,3 +40,4 @@ tracelog
 # private-bin gpg-agent,gpg
 private-cache
 private-dev
+#private-etc X11,alternatives,ca-certificates,crypto-policies,dbus-1,gnupg,gnupg2,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,logcheck,machine-id,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg

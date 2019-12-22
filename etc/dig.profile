@@ -46,6 +46,7 @@ private
 private-bin bash,dig,sh
 private-cache
 private-dev
+#private-etc alternatives,ca-certificates,crypto-policies,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,trusted-key.key,xdg
 # Uncomment the next line (or put 'private-lib' in your dig.local) on non Debian/Ubuntu OS (see issue #3038)
 #private-lib
 private-tmp

@@ -38,4 +38,5 @@ shell none
 private-bin bash,dex2jar,dirname,expr,grep,java,ls,sh,uname
 private-cache
 private-dev
+private-etc alternatives,java.conf,java-10-openjdk,java-9-openjdk,java-8-openjdk,java-7-openjdk,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 

@@ -33,3 +33,5 @@ shell none
 tracelog
 
 writable-run-user
+
+#private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,group,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,passwd,pki,protocols,pulse,resolv.conf,rpc,services,ssl,xdg

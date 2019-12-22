@@ -45,7 +45,7 @@ x11 none
 private-bin nano,rnano
 private-cache
 private-dev
+private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,nano,nanorc,passwd,xdg
 # Comment the next line if you want to edit files in /etc directly
-private-etc alternatives,nanorc
 
 memory-deny-write-execute

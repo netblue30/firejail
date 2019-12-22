@@ -42,8 +42,7 @@ disable-mnt
 private
 #private-bin has mammoth problems with execvp: "No such file or directory"
 private-dev
-# /etc/hosts is required in private-etc; however, just adding it to the list doesn't solve the problem!
-#private-etc ca-certificates,crypto-policies,hosts,pki,resolv.conf,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,dbus-1,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,tor,xdg
 private-tmp
 
 # memory-deny-write-execute is built using seccomp; nonewprivs will kill it

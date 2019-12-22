@@ -38,5 +38,5 @@ private
 # private-bin sh,Xephyr,xkbcomp
 # private-bin bash,cat,ls,sh,strace,Xephyr,xkbcomp
 private-dev
-# private-etc alternatives,gai.conf,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,nsswitch.conf,resolv.conf
+#private-etc alternatives,bumblebee,dbus-1,drirc,glvnd,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,passwd,xdg
 #private-tmp

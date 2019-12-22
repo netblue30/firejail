@@ -39,4 +39,4 @@ x11 none
 private-bin uudeview
 private-cache
 private-dev
-private-etc alternatives,ld.so.preload
+private-etc alternatives,bumblebee,drirc,glvnd,group,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg

@@ -46,8 +46,8 @@ disable-mnt
 private-bin unf
 private-cache
 ?HAS_APPIMAGE: ignore private-dev
+private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 private-dev
-private-etc alternatives
 private-lib libgcc_s.so.*
 private-tmp
 

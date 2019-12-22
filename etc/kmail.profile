@@ -55,6 +55,7 @@ seccomp !chroot,!io_getevents,!io_setup,!io_submit,!ioprio_set
 # tracelog
 
 private-dev
+#private-etc Trolltech.conf,X11,alternatives,bumblebee,ca-certificates,crypto-policies,dbus-1,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 # private-tmp - interrupts connection to akonadi, breaks opening of email attachments
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user

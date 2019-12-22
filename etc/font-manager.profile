@@ -50,6 +50,7 @@ tracelog
 disable-mnt
 private-bin font-manager,python*,yelp
 private-dev
+#private-etc X11,alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,xdg
 private-tmp
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

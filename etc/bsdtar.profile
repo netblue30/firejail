@@ -39,6 +39,6 @@ x11 none
 private-bin bash,bsdcat,bsdcpio,bsdtar,bzip2,compress,gtar,gzip,lbzip2,libarchive,lz4,lzip,lzma,lzop,sh,xz
 private-cache
 private-dev
-private-etc alternatives,group,localtime,passwd
+private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 
 memory-deny-write-execute

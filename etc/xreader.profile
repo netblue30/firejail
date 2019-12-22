@@ -39,7 +39,7 @@ tracelog
 
 private-bin xreader,xreader-previewer,xreader-thumbnailer
 private-dev
-private-etc alternatives,fonts,ld.so.cache
+private-etc Trolltech.conf,X11,alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,xdg
 private-tmp
 
 memory-deny-write-execute

@@ -255,6 +255,68 @@ static void extract_umask(pid_t pid) {
 	fclose(fp);
 }
 
+// return 1 if the sandbox identified by pid is not fully set up yet or if
+// it is no firejail sandbox at all, return 0 if the sandbox is complete
+int invalid_sandbox(const pid_t pid) {
+	// check if a file "ready-for-join" exists
+	char *fname;
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_READY_FOR_JOIN) == -1)
+		errExit("asprintf");
+	EUID_ROOT();
+	FILE *fp = fopen(fname, "re");
+	EUID_USER();
+	free(fname);
+	if (!fp)
+		return 1;
+	// regular file owned by root
+	int fd = fileno(fp);
+	if (fd == -1)
+		errExit("fileno");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode) || s.st_uid != 0) {
+		fclose(fp);
+		return 1;
+	}
+	// check if it is non-empty
+	char buf[BUFLEN];
+	if (fgets(buf, BUFLEN, fp) == NULL) {
+		fclose(fp);
+		return 1;
+	}
+	fclose(fp);
+	// confirm "ready" string was written
+	if (strncmp(buf, "ready\n", 6) != 0)
+		return 1;
+
+	// walk down the process tree a few nodes, there should be no firejail leaf
+#define MAXNODES 5
+	pid_t current = pid, next;
+	int i;
+	for (i = 0; i < MAXNODES; i++) {
+		if (find_child(current, &next) == 1) {
+			// found a leaf
+			EUID_ROOT();
+			char *comm = pid_proc_comm(current);
+			EUID_USER();
+			if (!comm) {
+				fprintf(stderr, "Error: cannot read /proc file\n");
+				exit(1);
+			}
+			if (strcmp(comm, "firejail") == 0) {
+				free(comm);
+				return 1;
+			}
+			free(comm);
+			break;
+		}
+		current = next;
+	}
+
+	return 0;
+}
+
 pid_t switch_to_child(pid_t pid) {
 	EUID_ROOT();
 	errno = 0;

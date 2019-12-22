@@ -21,8 +21,6 @@ writable-run-user
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.cache/mozilla/firefox
 #whitelist ${HOME}/.mozilla
-#seccomp !chroot
-#ignore tracelog
 
 # TODO: allow chromium
 

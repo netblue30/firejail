@@ -16,12 +16,13 @@ writable-run-user
 # TODO: we have whitelist-var-common.inc sure that here is no whitelsit requiered
 # writable-var
 
-# Uncomment the next 4 lines or put them in your thunderbird.local to
-# allow Firefox to load your profile when clicking a link in an email
+# Allow Firefox
 #noblacklist ${HOME}/.cache/mozilla
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.cache/mozilla/firefox
 #whitelist ${HOME}/.mozilla
+#seccomp !chroot
+#ignore tracelog
 
 # TODO: allow chromium
 
@@ -36,6 +37,7 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
+include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
@@ -60,6 +62,7 @@ include whitelist-common.inc
 
 include whitelist-var-common.inc
 
+whitelist /usr/share/gnupg
 whitelist /usr/share/mozilla
 include whitelist-usr-share-common.inc
 
@@ -75,16 +78,15 @@ nonewprivs
 noroot
 notv
 ?BROWSER_DISABLE_U2F: nou2f
-# TODO: netlink?
-protocol unix,inet,inet6,netlink
-# TODO: !chroot?
-seccomp !chroot
+protocol unix,inet,inet6
+seccomp
 shell none
-#TODO: enbaled? tracelog
+tracelog
 
 disable-mnt
-private-dev
 # private-bin
+private-cache
+private-dev
 # private-etc
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 #private-tmp

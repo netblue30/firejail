@@ -43,8 +43,8 @@ x11 none
 # private-bin atool,perl
 private-cache
 private-dev
+private-etc alternatives,atool.conf,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 # without login.defs atool complains and uses UID/GID 1000 by default
-private-etc alternatives,group,login.defs,passwd
 private-tmp
 
 memory-deny-write-execute

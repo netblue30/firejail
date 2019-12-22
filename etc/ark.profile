@@ -37,7 +37,7 @@ seccomp
 shell none
 
 private-bin 7z,ark,bash,lrzip,lsar,lz4,lzop,p7zip,rar,sh,tclsh,unar,unrar,unzip,zip,zipinfo
-#private-etc alternatives,drirc,fonts,group,kde5rc,mtab,passwd,samba,smb.conf,xdg
+#private-etc Trolltech.conf,X11,alternatives,bumblebee,dbus-1,drirc,fonts,glvnd,kde4rc,kde5rc,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,samba,smb.conf,xdg
 
 private-dev
 private-tmp

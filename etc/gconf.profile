@@ -51,7 +51,7 @@ disable-mnt
 private-bin gconf-editor,gconf-merge-*,gconfpkg,gconftool-2,gsettings-*-convert,python2*
 private-cache
 private-dev
-private-etc alternatives,fonts,gconf
+private-etc alternatives,dbus-1,gconf,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,passwd,tor,xdg
 private-lib libpython*,python2*
 private-tmp
 

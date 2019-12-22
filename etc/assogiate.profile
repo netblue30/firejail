@@ -44,6 +44,7 @@ disable-mnt
 private-bin assogiate,gtk-update-icon-cache,update-mime-database
 private-cache
 private-dev
+#private-etc X11,alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,pango,passwd,xdg
 private-lib gnome-vfs-2.0,libacl.so.*,libattr.so.*,libfam.so.*
 private-tmp
 

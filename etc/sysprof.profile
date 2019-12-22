@@ -40,7 +40,7 @@ disable-mnt
 #private-bin sysprof - breaks GUI help menu
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,machine-id,ssl
+private-etc Trolltech.conf,X11,alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,xdg
 # private-lib breaks GUI help menu
 #private-lib gdk-pixbuf-2.*,gio,gtk3,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*,libsysprof-2.so,libsysprof-ui-2.so
 private-tmp

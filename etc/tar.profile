@@ -7,6 +7,7 @@ include tar.local
 # Persistent global definitions
 include globals.local
 
+private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,rmt,xdg
 # Arch Linux (based distributions) need access to /var/lib/pacman. As we drop all capabilities this is automatically read-only.
 noblacklist /var/lib/pacman
 
@@ -43,7 +44,6 @@ x11 none
 private-bin bash,bzip2,compress,firejail,gtar,gzip,lbzip2,lzip,lzma,lzop,sh,tar,xz
 private-cache
 private-dev
-private-etc alternatives,group,localtime,passwd
 private-lib libfakeroot
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var

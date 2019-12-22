@@ -34,6 +34,7 @@ disable-mnt
 private
 private-bin python*,sa-solver,silentarmy
 private-dev
+#private-etc alternatives,bumblebee,ca-certificates,crypto-policies,dbus-1,drirc,glvnd,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 private-opt none
 private-tmp
 

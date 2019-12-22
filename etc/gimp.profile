@@ -7,6 +7,7 @@ include gimp.local
 include globals.local
 
 # gimp plugins are installed by the user in ${HOME}/.gimp-2.8/plug-ins/ directory
+private-etc Trolltech.conf,X11,alternatives,bumblebee,dconf,drirc,fonts,gconf,gimp,glvnd,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,pango,passwd,xdg
 # if you are not using external plugins, you can comment 'ignore noexec' statement below
 # or put 'noexec ${HOME}' in your gimp.local
 ignore noexec ${HOME}

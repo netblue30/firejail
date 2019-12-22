@@ -42,8 +42,8 @@ tracelog
 
 private-bin bitcoin-qt
 private-dev
+#private-etc Trolltech.conf,X11,alternatives,ca-certificates,crypto-policies,dbus-1,fonts,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 # Causes problem with loading of libGL.so
-#private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
 private-tmp
 
 memory-deny-write-execute

@@ -15,6 +15,7 @@ include globals.local
 
 # Enable severely restricted access to ${HOME}/.gnupg
 noblacklist ${HOME}/.gnupg
+#private-etc alternatives,ca-certificates,crypto-policies,dbus-1,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 read-only ${HOME}/.gnupg/gpg.conf
 read-only ${HOME}/.gnupg/trustdb.gpg
 read-only ${HOME}/.gnupg/pubring.kbx

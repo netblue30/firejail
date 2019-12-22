@@ -36,5 +36,6 @@ shell none
 
 private-bin awk,basename,bash,cut,free,grep,hostname,imagej,ln,ls,mkdir,rm,sort,tail,touch,tr,uname,update-java-alternatives,whoami,xprop
 private-dev
+#private-etc Trolltech.conf,X11,alternatives,bumblebee,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,java.conf,java-10-openjdk,java-9-openjdk,java-8-openjdk,java-7-openjdk,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,pango,passwd,xdg
 private-tmp
 

@@ -40,5 +40,5 @@ disable-mnt
 private-bin fairymax,gnome-chess,gnuchess,hoichess
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gnome-chess,gtk-3.0
+private-etc X11,alternatives,dbus-1,dconf,fonts,gconf,gnome-chess,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,xdg
 private-tmp

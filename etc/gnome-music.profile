@@ -39,6 +39,6 @@ tracelog
 
 private-bin env,gio-launch-desktop,gnome-music,python*,yelp
 private-dev
-private-etc alternatives,asound.conf,fonts,machine-id,pulse
+private-etc X11,alsa,alternatives,asound.conf,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,pulse,xdg
 private-tmp
 

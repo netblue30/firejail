@@ -33,4 +33,5 @@ tracelog
 
 # private-bin tracker
 # private-dev
+#private-etc alternatives,dbus-1,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,passwd,xdg
 # private-tmp

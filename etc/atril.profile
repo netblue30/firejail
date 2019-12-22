@@ -42,7 +42,7 @@ tracelog
 
 private-bin atril,atril-previewer,atril-thumbnailer
 private-dev
-private-etc alternatives,fonts,ld.so.cache
+private-etc Trolltech.conf,X11,alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,xdg
 # atril uses webkit gtk to display epub files
 # waiting for globbing support in private-lib; for now hardcoding it to webkit2gtk-4.0
 #private-lib webkit2gtk-4.0 - problems on Arch with the new version of WebKit

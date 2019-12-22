@@ -58,5 +58,6 @@ tracelog
 
 # private-bin gimp*,gs,scribus
 private-dev
+private-etc Trolltech.conf,X11,alternatives,bumblebee,drirc,fonts,gimp,glvnd,kde4rc,kde5rc,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,pango,passwd,xdg
 private-tmp
 

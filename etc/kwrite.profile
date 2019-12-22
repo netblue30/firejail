@@ -45,7 +45,7 @@ tracelog
 
 private-bin kbuildsycoca4,kdeinit4,kwrite
 private-dev
-private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,pulse,xdg
+private-etc Trolltech.conf,X11,alsa,alternatives,asound.conf,bumblebee,dbus-1,drirc,fonts,glvnd,kde4rc,kde5rc,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,pulse,xdg
 private-tmp
 
 

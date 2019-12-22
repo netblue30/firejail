@@ -39,5 +39,6 @@ shell none
 private-bin archlinux-java,awk,bash,dirname,expr,find,grep,java,java-config,ls,pdfsam,readlink,sh,sort,uname,which
 private-cache
 private-dev
+#private-etc Trolltech.conf,X11,alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,java.conf,java-10-openjdk,java-9-openjdk,java-8-openjdk,java-7-openjdk,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,pango,passwd,xdg
 private-tmp
 

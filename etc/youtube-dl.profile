@@ -8,6 +8,7 @@ include youtube-dl.local
 include globals.local
 
 # breaks when installed under ${HOME} via `pip install --user` (see #2833)
+private-etc alternatives,ca-certificates,crypto-policies,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg,youtube-dl,youtube-dl.conf
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.cache/youtube-dl
@@ -56,7 +57,6 @@ tracelog
 private-bin env,ffmpeg,python*,youtube-dl
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,hostname,hosts,mime.types,pki,resolv.conf,ssl,youtube-dl.conf
 private-tmp
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

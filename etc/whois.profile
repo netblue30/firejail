@@ -40,7 +40,7 @@ private
 private-bin bash,sh,whois
 private-cache
 private-dev
-# private-etc alternatives,hosts,services,whois.conf
+#private-etc alternatives,ca-certificates,crypto-policies,hosts,host.conf,hostname,jwhois.conf,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,whois,whois.conf,xdg
 private-lib
 private-tmp
 

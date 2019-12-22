@@ -44,8 +44,7 @@ tracelog
 disable-mnt
 private-bin bash,cat,dirname,find,grep,head,rm,sh,spotify,tclsh,touch,zenity
 private-dev
-# Comment the next line or put 'ignore private-etc' in your spotify.local if want to see the albums covers or if you want to use the radio
-private-etc alternatives,ca-certificates,crypto-policies,fonts,group,host.conf,hosts,ld.so.cache,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
+private-etc Trolltech.conf,X11,alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dbus-1,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,pulse,resolv.conf,rpc,services,spotify,ssl,xdg
 private-opt spotify
 private-srv none
 private-tmp

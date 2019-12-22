@@ -55,10 +55,9 @@ disable-mnt
 private-bin links,sh
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,dbus-1,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 # Uncomment the following line (or put it in your links.local) allow external
 # media players
-# private-etc alsa,asound.conf,machine-id,openal,pulse
 private-tmp
 
 memory-deny-write-execute

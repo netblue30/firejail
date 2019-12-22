@@ -41,5 +41,5 @@ tracelog
 disable-mnt
 private-bin cheese
 private-cache
-private-etc alternatives,clutter-1.0,dconf,drirc,fonts,gtk-3.0
+private-etc Trolltech.conf,X11,alsa,alternatives,asound.conf,bumblebee,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,pulse,xdg
 private-tmp

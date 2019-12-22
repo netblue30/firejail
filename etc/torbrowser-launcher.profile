@@ -6,6 +6,7 @@ include torbrowser-launcher.local
 # Persistent global definitions
 include globals.local
 
+private-etc Trolltech.conf,X11,alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,pulse,resolv.conf,rpc,services,ssl,tor,xdg
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.config/torbrowser
@@ -50,5 +51,4 @@ shell none
 disable-mnt
 private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,kdialog,ln,mkdir,mv,python*,rm,sed,sh,tail,tar,tclsh,test,tor-browser,tor-browser-en,torbrowser-launcher,update-desktop-database,xmessage,xz,zenity
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,ld.so.cache,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp

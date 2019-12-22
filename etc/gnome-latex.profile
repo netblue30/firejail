@@ -46,5 +46,5 @@ tracelog
 
 private-cache
 private-dev
+private-etc X11,alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,xdg
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed
-private-etc alternatives,dconf,fonts,gtk-3.0,latexmk.conf,login.defs,passwd,texlive

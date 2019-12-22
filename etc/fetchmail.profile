@@ -32,3 +32,4 @@ shell none
 
 #private-bin bash,chmod,fetchmail,procmail
 private-dev
+#private-etc Trolltech.conf,X11,alternatives,ca-certificates,crypto-policies,dbus-1,dconf,default,fonts,gconf,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,logcheck,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,ppp,protocols,resolv.conf,resolvconf,rpc,services,ssl,xdg

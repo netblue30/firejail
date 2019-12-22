@@ -48,3 +48,4 @@ private-bin env,mpv,python*,youtube-dl
 # Causes slow OSD, see #2838
 #private-cache
 private-dev
+#private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,drirc,glvnd,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,mpv,nsswitch.conf,passwd,pki,protocols,pulse,resolv.conf,rpc,services,ssl,xdg

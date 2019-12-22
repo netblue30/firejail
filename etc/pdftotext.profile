@@ -42,5 +42,5 @@ x11 none
 
 private-bin pdftotext
 private-dev
-private-etc alternatives
+private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 private-tmp

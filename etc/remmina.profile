@@ -35,5 +35,6 @@ shell none
 
 private-cache
 private-dev
+private-etc SuSE-release,UnitedLinux-release,X11,alsa,alternatives,annvix-release,arch-release,arklinux-release,asound.conf,aurox-release,blackcat-release,bumblebee,ca-certificates,cobalt-release,conectiva-release,crypto-policies,dbus-1,dconf,debian_release,debian_version,drirc,e-smith-release,fedora-release,fonts,gconf,gentoo-release,glvnd,gtk-2.0,gtk-3.0,hosts,host.conf,hostname,immunix-release,knoppix_version,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,lfs-release,linuxppc-release,locale,locale.alias,locale.conf,localtime,lsb-release,machine-id,mandrake-release,mandrakelinux-release,mandriva-release,mime.types,mklinux-release,nld-release,novell-release,nsswitch.conf,os-release,pango,passwd,pki,pld-release,protocols,pulse,redhat-release,redhat_version,release,resolv.conf,rpc,services,slackware-release,slackware-version,sles-release,solus-release,ssl,sun-release,tinysofa-release,turbolinux-release,ultrapenguin-release,va-release,xdg,yellowdog-release
 private-tmp
 

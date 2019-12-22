@@ -5,6 +5,7 @@ include baloo_file.local
 # Persistent global definitions
 include globals.local
 
+#private-etc Trolltech.conf,X11,alternatives,dbus-1,fonts,kde4rc,kde5rc,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,tor,xdg
 # Make home directory read-only and allow writing only to ${HOME}/.local/share
 # Note: Baloo will not be able to update the "first run" key in its configuration files.
 # read-only ${HOME}

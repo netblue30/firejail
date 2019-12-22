@@ -43,7 +43,7 @@ disable-mnt
 private-bin flacsplt,mp3splt,mp3wrap,oggsplt
 private-cache
 private-dev
-private-etc alternatives
+private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 private-tmp
 
 memory-deny-write-execute

@@ -36,7 +36,7 @@ x11 none
 #private-bin bzip2,file,gzip,lrzip,lz4,lzip,xz,zstd
 private-cache
 private-dev
-private-etc alternatives,localtime,magic,magic.mgc
+private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,magic,mime.types,passwd,xdg
 private-lib file,libarchive.so.*,libfakeroot,libmagic.so.*
 
 memory-deny-write-execute

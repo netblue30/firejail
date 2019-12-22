@@ -37,6 +37,6 @@ shell none
 #private-bin ardour4,ardour5,ardour5-copy-mixer,ardour5-export,ardour5-fix_bbtppq,grep,ldd,nm,sed,sh
 private-cache
 private-dev
-#private-etc alternatives,ardour4,ardour5,asound.conf,fonts,machine-id,pulse,X11
+#private-etc Trolltech.conf,X11,alsa,alternatives,ardour4,ardour5,asound.conf,bumblebee,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,pulse,xdg
 private-tmp
 

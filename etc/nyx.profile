@@ -45,7 +45,7 @@ disable-mnt
 private-bin nyx,python*
 private-cache
 private-dev
-private-etc alternatives,fonts,passwd,tor
+private-etc alternatives,ca-certificates,crypto-policies,hosts,host.conf,hostname,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,tor,xdg
 private-opt none
 private-srv none
 private-tmp

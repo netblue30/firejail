@@ -39,4 +39,5 @@ shell none
 private-bin env,python*,sdat2img
 private-cache
 private-dev
+private-etc alternatives,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,mime.types,passwd,xdg
 

@@ -41,7 +41,7 @@ disable-mnt
 #private-bin bash,easystroke,sh
 private-cache
 private-dev
-private-etc alternatives,fonts,group,passwd
+private-etc Trolltech.conf,X11,alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,ld.so.conf,ld.so.conf.d,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,xdg
 # breaks custom shell command functionality
 #private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp

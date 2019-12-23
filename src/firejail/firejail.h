@@ -426,7 +426,8 @@ void usage(void);
 
 // join.c
 void join(pid_t pid, int argc, char **argv, int index);
-int invalid_sandbox(const pid_t pid);
+int is_ready_for_join(const pid_t pid);
+void check_join_permission(pid_t pid);
 pid_t switch_to_child(pid_t pid);
 
 // shutdown.c

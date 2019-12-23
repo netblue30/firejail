@@ -255,9 +255,10 @@ static void extract_umask(pid_t pid) {
 	fclose(fp);
 }
 
-// return 1 if the sandbox identified by pid is not fully set up yet or if
-// it is no firejail sandbox at all, return 0 if the sandbox is complete
-int invalid_sandbox(const pid_t pid) {
+// return 0 if the sandbox identified by pid is not fully set up yet or if
+// it is no firejail sandbox at all, return 1 if the sandbox is complete
+int is_ready_for_join(const pid_t pid) {
+	EUID_ASSERT();
 	// check if a file "ready-for-join" exists
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_READY_FOR_JOIN) == -1)
@@ -267,7 +268,7 @@ int invalid_sandbox(const pid_t pid) {
 	EUID_USER();
 	free(fname);
 	if (!fp)
-		return 1;
+		return 0;
 	// regular file owned by root
 	int fd = fileno(fp);
 	if (fd == -1)
@@ -277,18 +278,18 @@ int invalid_sandbox(const pid_t pid) {
 		errExit("fstat");
 	if (!S_ISREG(s.st_mode) || s.st_uid != 0) {
 		fclose(fp);
-		return 1;
+		return 0;
 	}
 	// check if it is non-empty
 	char buf[BUFLEN];
 	if (fgets(buf, BUFLEN, fp) == NULL) {
 		fclose(fp);
-		return 1;
+		return 0;
 	}
 	fclose(fp);
 	// confirm "ready" string was written
-	if (strncmp(buf, "ready\n", 6) != 0)
-		return 1;
+	if (strcmp(buf, "ready\n") != 0)
+		return 0;
 
 	// walk down the process tree a few nodes, there should be no firejail leaf
 #define MAXNODES 5
@@ -306,7 +307,7 @@ int invalid_sandbox(const pid_t pid) {
 			}
 			if (strcmp(comm, "firejail") == 0) {
 				free(comm);
-				return 1;
+				return 0;
 			}
 			free(comm);
 			break;
@@ -314,35 +315,53 @@ int invalid_sandbox(const pid_t pid) {
 		current = next;
 	}
 
-	return 0;
+	return 1;
 }
 
-pid_t switch_to_child(pid_t pid) {
-	EUID_ROOT();
-	errno = 0;
-	char *comm = pid_proc_comm(pid);
-	if (!comm) {
-		if (errno == ENOENT) {
-			fprintf(stderr, "Error: cannot find process with pid %d\n", pid);
-			exit(1);
-		}
-		else {
-			fprintf(stderr, "Error: cannot read /proc file\n");
-			exit(1);
-		}
-	}
-	EUID_USER();
-	if (strcmp(comm, "firejail") == 0) {
-		pid_t child;
-		if (find_child(pid, &child) == 1) {
+void check_join_permission(pid_t pid) {
+	// check if pid belongs to a fully set up firejail sandbox
+	unsigned i;
+	for (i = 0; is_ready_for_join(pid) == 0; i++) { // give sandbox some time to start up
+		if (i >= 50) {
 			fprintf(stderr, "Error: no valid sandbox\n");
 			exit(1);
 		}
-		fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) child);
-		pid = child;
+		usleep(100000); // 0.1 sec
+	}
+	// check privileges for non-root users
+	uid_t uid = getuid();
+	if (uid != 0) {
+		uid_t sandbox_uid = pid_get_uid(pid);
+		if (uid != sandbox_uid) {
+			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
+			exit(1);
+		}
+	}
+}
+
+pid_t switch_to_child(pid_t pid) {
+	EUID_ASSERT();
+	EUID_ROOT();
+	pid_t rv = pid;
+	errno = 0;
+	char *comm = pid_proc_comm(pid);
+	if (!comm) {
+		if (errno == ENOENT)
+			fprintf(stderr, "Error: cannot find process with pid %d\n", pid);
+		else
+			fprintf(stderr, "Error: cannot read /proc file\n");
+		exit(1);
+	}
+	EUID_USER();
+	if (strcmp(comm, "firejail") == 0) {
+		if (find_child(pid, &rv) == 1) {
+			fprintf(stderr, "Error: no valid sandbox\n");
+			exit(1);
+		}
+		fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) rv);
 	}
 	free(comm);
-	return pid;
+	return rv;
 }
 
 
@@ -354,21 +373,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	// in case the pid is that of a firejail process, use the pid of the first child process
 	pid = switch_to_child(pid);
 
-	// now check if the pid belongs to a firejail sandbox
-	if (invalid_sandbox(pid)) {
-		fprintf(stderr, "Error: no valid sandbox\n");
-		exit(1);
-	}
-
-	// check privileges for non-root users
-	uid_t uid = getuid();
-	if (uid != 0) {
-		uid_t sandbox_uid = pid_get_uid(pid);
-		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
-			exit(1);
-		}
-	}
+	// exit if no permission to join the sandbox
+	check_join_permission(pid);
 
 	extract_x11_display(parent);
 

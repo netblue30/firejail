@@ -1234,21 +1234,8 @@ void enter_network_namespace(pid_t pid) {
 	// in case the pid is that of a firejail process, use the pid of the first child process
 	pid_t child = switch_to_child(pid);
 
-	// now check if the pid belongs to a firejail sandbox
-	if (invalid_sandbox(child)) {
-		fprintf(stderr, "Error: no valid sandbox\n");
-		exit(1);
-	}
-
-	// check privileges for non-root users
-	uid_t uid = getuid();
-	if (uid != 0) {
-		uid_t sandbox_uid = pid_get_uid(pid);
-		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
-			exit(1);
-		}
-	}
+	// exit if no permission to join the sandbox
+	check_join_permission(child);
 
 	// check network namespace
 	char *name;

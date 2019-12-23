@@ -723,6 +723,7 @@ blacklist ${HOME}/.cache/darktable
 blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/dnox
 blacklist ${HOME}/.cache/dolphin
+blacklist ${HOME}/.cache/ephemeral
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon

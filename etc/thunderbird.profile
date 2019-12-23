@@ -6,23 +6,23 @@ include thunderbird.local
 # Persistent global definitions
 include globals.local
 
-# Allow enigmail by default
+# writable-run-user and dbus are needed by enigmail
 ignore nodbus
 writable-run-user
 
 # If you want to read local mail stored in /var/mail, add the following to thunderbird.local:
-# noblacklist /var/mail
-# noblacklist /var/spool/mail
-# TODO: we have whitelist-var-common.inc sure that here is no whitelsit requiered
-# writable-var
+#noblacklist /var/mail
+#noblacklist /var/spool/mail
+#whitelist /var/mail
+#whitelist /var/spool/mail
+#writable-var
 
-# Allow Firefox
+# Uncomment the next 4 lines or put them in your thunderbird.local to
+# allow Firefox to load your profile when clicking a link in an email
 #noblacklist ${HOME}/.cache/mozilla
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.cache/mozilla/firefox
 #whitelist ${HOME}/.mozilla
-
-# TODO: allow chromium
 
 noblacklist ${HOME}/.cache/thunderbird
 noblacklist ${HOME}/.gnupg
@@ -45,17 +45,14 @@ whitelist ${HOME}/.gnupg
 # whitelist ${HOME}/.icedove
 whitelist ${HOME}/.thunderbird
 
-# TODO: move wusc to firefox-common??
 whitelist /usr/share/gnupg
 whitelist /usr/share/mozilla
 include whitelist-usr-share-common.inc
 
 # machine-id breaks audio in browsers; enable or put it in your thunderbird.local when sound is not required
 #machine-id
-#TODO: novideo???
+novideo
 
-# private-bin
-# private-etc
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 ignore private-tmp
 

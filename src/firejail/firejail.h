@@ -738,6 +738,7 @@ extern char *xpra_extra_params;
 extern char *xvfb_screen;
 extern char *xvfb_extra_params;
 extern char *netfilter_default;
+extern unsigned join_timeout;
 int checkcfg(int val);
 void print_compiletime_support(void);
 

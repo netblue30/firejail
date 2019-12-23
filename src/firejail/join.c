@@ -318,15 +318,16 @@ int is_ready_for_join(const pid_t pid) {
 	return 1;
 }
 
+#define SNOOZE 100000 // sleep interval in microseconds
 void check_join_permission(pid_t pid) {
 	// check if pid belongs to a fully set up firejail sandbox
-	unsigned i;
-	for (i = 0; is_ready_for_join(pid) == 0; i++) { // give sandbox some time to start up
+	unsigned long i;
+	for (i = 0; is_ready_for_join(pid) == 0; i += SNOOZE) { // give sandbox some time to start up
 		if (i >= join_timeout) {
 			fprintf(stderr, "Error: no valid sandbox\n");
 			exit(1);
 		}
-		usleep(100000); // 0.1 sec
+		usleep(SNOOZE);
 	}
 	// check privileges for non-root users
 	uid_t uid = getuid();

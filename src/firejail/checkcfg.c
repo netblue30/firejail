@@ -31,7 +31,7 @@ char *xpra_extra_params = "";
 char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
-unsigned join_timeout = 50; // 5 sec (unit is 0.1 sec)
+unsigned long join_timeout = 5000000; // microseconds
 
 int checkcfg(int val) {
 	assert(val < CFG_MAX);
@@ -217,7 +217,7 @@ int checkcfg(int val) {
 
 			// timeout for join option
 			else if (strncmp(ptr, "join-timeout ", 13) == 0)
-				join_timeout = strtoul(ptr + 13, NULL, 10) * 10;
+				join_timeout = strtoul(ptr + 13, NULL, 10) * 1000000; // seconds to microseconds
 
 			else
 				goto errout;

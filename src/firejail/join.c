@@ -255,9 +255,9 @@ static void extract_umask(pid_t pid) {
 	fclose(fp);
 }
 
-// return 0 if the sandbox identified by pid is not fully set up yet or if
-// it is no firejail sandbox at all, return 1 if the sandbox is complete
-int is_ready_for_join(const pid_t pid) {
+// return false if the sandbox identified by pid is not fully set up yet or if
+// it is no firejail sandbox at all, return true if the sandbox is complete
+bool is_ready_for_join(const pid_t pid) {
 	EUID_ASSERT();
 	// check if a file "ready-for-join" exists
 	char *fname;
@@ -268,7 +268,7 @@ int is_ready_for_join(const pid_t pid) {
 	EUID_USER();
 	free(fname);
 	if (!fp)
-		return 0;
+		return false;
 	// regular file owned by root
 	int fd = fileno(fp);
 	if (fd == -1)
@@ -278,18 +278,18 @@ int is_ready_for_join(const pid_t pid) {
 		errExit("fstat");
 	if (!S_ISREG(s.st_mode) || s.st_uid != 0) {
 		fclose(fp);
-		return 0;
+		return false;
 	}
 	// check if it is non-empty
 	char buf[BUFLEN];
 	if (fgets(buf, BUFLEN, fp) == NULL) {
 		fclose(fp);
-		return 0;
+		return false;
 	}
 	fclose(fp);
 	// confirm "ready" string was written
 	if (strcmp(buf, "ready\n") != 0)
-		return 0;
+		return false;
 
 	// walk down the process tree a few nodes, there should be no firejail leaf
 #define MAXNODES 5
@@ -307,7 +307,7 @@ int is_ready_for_join(const pid_t pid) {
 			}
 			if (strcmp(comm, "firejail") == 0) {
 				free(comm);
-				return 0;
+				return false;
 			}
 			free(comm);
 			break;
@@ -315,14 +315,14 @@ int is_ready_for_join(const pid_t pid) {
 		current = next;
 	}
 
-	return 1;
+	return true;
 }
 
 #define SNOOZE 100000 // sleep interval in microseconds
 void check_join_permission(pid_t pid) {
 	// check if pid belongs to a fully set up firejail sandbox
 	unsigned long i;
-	for (i = 0; is_ready_for_join(pid) == 0; i += SNOOZE) { // give sandbox some time to start up
+	for (i = 0; is_ready_for_join(pid) == false; i += SNOOZE) { // give sandbox some time to start up
 		if (i >= join_timeout) {
 			fprintf(stderr, "Error: no valid sandbox\n");
 			exit(1);

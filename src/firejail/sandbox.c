@@ -444,7 +444,7 @@ void start_application(int no_sandbox, FILE *fp) {
 	}
 	// restore original umask
 	umask(orig_umask);
-	//sleep(10);
+
 	if (arg_debug) {
 		printf("starting application\n");
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));

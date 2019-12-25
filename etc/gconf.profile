@@ -52,7 +52,7 @@ private-bin gconf-editor,gconf-merge-*,gconfpkg,gconftool-2,gsettings-*-convert,
 private-cache
 private-dev
 private-etc alternatives,fonts,gconf
-private-lib libpython*,python2*
+private-lib GConf,libpython*,python2*
 private-tmp
 
 memory-deny-write-execute

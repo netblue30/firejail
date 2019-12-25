@@ -1200,69 +1200,6 @@ errexit:
 	exit(1);
 }
 
-
-// return 1 if the sandbox identified by pid is not fully set up yet or if
-// it is no firejail sandbox at all, return 0 if the sandbox is complete
-int invalid_sandbox(const pid_t pid) {
-	// check if a file "ready-for-join" exists
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_READY_FOR_JOIN) == -1)
-		errExit("asprintf");
-	EUID_ROOT();
-	FILE *fp = fopen(fname, "re");
-	EUID_USER();
-	free(fname);
-	if (!fp)
-		return 1;
-	// regular file owned by root
-	int fd = fileno(fp);
-	if (fd == -1)
-		errExit("fileno");
-	struct stat s;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (!S_ISREG(s.st_mode) || s.st_uid != 0) {
-		fclose(fp);
-		return 1;
-	}
-	// check if it is non-empty
-	char buf[BUFLEN];
-	if (fgets(buf, BUFLEN, fp) == NULL) {
-		fclose(fp);
-		return 1;
-	}
-	fclose(fp);
-	// confirm "ready" string was written
-	if (strncmp(buf, "ready\n", 6) != 0)
-		return 1;
-
-	// walk down the process tree a few nodes, there should be no firejail leaf
-#define MAXNODES 5
-	pid_t current = pid, next;
-	int i;
-	for (i = 0; i < MAXNODES; i++) {
-		if (find_child(current, &next) == 1) {
-			// found a leaf
-			EUID_ROOT();
-			char *comm = pid_proc_comm(current);
-			EUID_USER();
-			if (!comm) {
-				fprintf(stderr, "Error: cannot read /proc file\n");
-				exit(1);
-			}
-			if (strcmp(comm, "firejail") == 0) {
-				free(comm);
-				return 1;
-			}
-			free(comm);
-			break;
-		}
-		current = next;
-	}
-
-	return 0;
-}
-
 int has_handler(pid_t pid, int signal) {
 	if (signal > 0 && signal <= SIGRTMAX) {
 		char *fname;
@@ -1297,21 +1234,8 @@ void enter_network_namespace(pid_t pid) {
 	// in case the pid is that of a firejail process, use the pid of the first child process
 	pid_t child = switch_to_child(pid);
 
-	// now check if the pid belongs to a firejail sandbox
-	if (invalid_sandbox(child)) {
-		fprintf(stderr, "Error: no valid sandbox\n");
-		exit(1);
-	}
-
-	// check privileges for non-root users
-	uid_t uid = getuid();
-	if (uid != 0) {
-		uid_t sandbox_uid = pid_get_uid(pid);
-		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
-			exit(1);
-		}
-	}
+	// exit if no permission to join the sandbox
+	check_join_permission(child);
 
 	// check network namespace
 	char *name;

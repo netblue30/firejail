@@ -426,6 +426,8 @@ void usage(void);
 
 // join.c
 void join(pid_t pid, int argc, char **argv, int index);
+bool is_ready_for_join(const pid_t pid);
+void check_join_permission(pid_t pid);
 pid_t switch_to_child(pid_t pid);
 
 // shutdown.c
@@ -491,7 +493,6 @@ unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 int safe_fd(const char *path, int flags);
-int invalid_sandbox(const pid_t pid);
 int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 
@@ -737,6 +738,7 @@ extern char *xpra_extra_params;
 extern char *xvfb_screen;
 extern char *xvfb_extra_params;
 extern char *netfilter_default;
+extern unsigned long join_timeout;
 int checkcfg(int val);
 void print_compiletime_support(void);
 

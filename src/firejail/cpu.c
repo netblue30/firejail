@@ -170,12 +170,10 @@ void cpu_print_filter(pid_t pid) {
 	pid = switch_to_child(pid);
 
 	// now check if the pid belongs to a firejail sandbox
-	if (invalid_sandbox(pid)) {
+	if (is_ready_for_join(pid) == false) {
 		fprintf(stderr, "Error: no valid sandbox\n");
 		exit(1);
 	}
-
-
 
 	print_cpu(pid);
 	exit(0);

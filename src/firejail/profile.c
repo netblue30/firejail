@@ -672,7 +672,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			// configure this IP address for the last bridge defined
 			if (strcmp(ptr + 3, "none") == 0)
 				br->arg_ip_none = 1;
-			else {
+			else if (strcmp(ptr + 3, "dhcp") == 0) {
+				br->arg_ip_none = 1;
+				br->arg_ip_dhcp = 1;
+			} else {
 				if (atoip(ptr + 3, &br->ipsandbox)) {
 					fprintf(stderr, "Error: invalid IP address\n");
 					exit(1);
@@ -693,21 +696,24 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: no network device configured\n");
 				exit(1);
 			}
-			if (br->ip6sandbox) {
+			if (br->arg_ip6_dhcp || br->ip6sandbox) {
 				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
 				exit(1);
 			}
 
-			// configure this IP address for the last bridge defined
-			if (check_ip46_address(ptr + 4) == 0) {
-				fprintf(stderr, "Error: invalid IPv6 address\n");
-				exit(1);
-			}
+      // configure this IP address for the last bridge defined
+      if (strcmp(ptr + 4, "dhcp") == 0)
+        br->arg_ip6_dhcp = 1;
+      else {
+        if (check_ip46_address(ptr + 4) == 0) {
+          fprintf(stderr, "Error: invalid IPv6 address\n");
+          exit(1);
+        }
 
-			br->ip6sandbox = strdup(ptr + 4);
-			if (br->ip6sandbox == NULL)
-				errExit("strdup");
-
+        br->ip6sandbox = strdup(ptr + 4);
+        if (br->ip6sandbox == NULL)
+          errExit("strdup");
+      }
 		}
 		else
 			warning_feature_disabled("networking");

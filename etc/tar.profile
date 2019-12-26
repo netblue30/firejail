@@ -43,7 +43,7 @@ x11 none
 private-bin bash,bzip2,compress,firejail,gtar,gzip,lbzip2,lzip,lzma,lzop,sh,tar,xz
 private-cache
 private-dev
-private-etc alternatives,group,localtime,passwd
+private-etc alternatives,group,localtime,login.defs,passwd
 private-lib libfakeroot
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var

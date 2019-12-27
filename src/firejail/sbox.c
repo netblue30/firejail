@@ -105,23 +105,34 @@ static struct sock_fprog prog = {
 };
 
 int sbox_run(unsigned filtermask, int num, ...) {
-	EUID_ROOT();
-
-	int i;
 	va_list valist;
 	va_start(valist, num);
 
 	// build argument list
-	char *arg[num + 1];
+  char **arg = malloc((num + 1) * sizeof(char *));
+  int i;
 	for (i = 0; i < num; i++)
 		arg[i] = va_arg(valist, char*);
 	arg[i] = NULL;
 	va_end(valist);
 
+  int status = sbox_run_v(filtermask, arg); 
+
+  free(arg);
+
+  return status;
+}
+
+int sbox_run_v(unsigned filtermask, char * const arg[]) {
+	EUID_ROOT();
+
 	if (arg_debug) {
 		printf("sbox run: ");
-		for (i = 0; i <= num; i++)
+    int i = 0;
+    while (arg[i]) {
 			printf("%s ", arg[i]);
+      i++;
+    }
 		printf("\n");
 	}
 
@@ -171,7 +182,7 @@ int sbox_run(unsigned filtermask, int num, ...) {
 
 		// close all other file descriptors
 		int max = 20; // getdtablesize() is overkill for a firejail process
-		for (i = 3; i < max; i++)
+		for (int i = 3; i < max; i++)
 			close(i); // close open files
 
 		umask(027);

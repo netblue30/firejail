@@ -815,6 +815,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
+int sbox_run_v(unsigned filter, char * const arg[]);
 
 // run_files.c
 void delete_run_files(pid_t pid);

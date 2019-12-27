@@ -239,6 +239,24 @@ static inline int any_interface_configured(void) {
 		return 0;
 }
 
+static inline int any_ip_dhcp(void) {
+	if (cfg.bridge0.arg_ip_dhcp || cfg.bridge1.arg_ip_dhcp || cfg.bridge2.arg_ip_dhcp || cfg.bridge3.arg_ip_dhcp)
+		return 1;
+	else
+		return 0;
+}
+
+static inline int any_ip6_dhcp(void) {
+	if (cfg.bridge0.arg_ip6_dhcp || cfg.bridge1.arg_ip6_dhcp || cfg.bridge2.arg_ip6_dhcp || cfg.bridge3.arg_ip6_dhcp)
+		return 1;
+	else
+		return 0;
+}
+
+static inline int any_dhcp(void) {
+  return any_ip_dhcp() || any_ip6_dhcp();
+}
+
 extern int arg_private;		// mount private /home
 extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages

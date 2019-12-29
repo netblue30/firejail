@@ -190,23 +190,34 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 		// apply filters
 		if (filtermask & SBOX_CAPS_NONE) {
 			caps_drop_all();
-		}
-		else if (filtermask & SBOX_CAPS_NETWORK) {
+		} else {
+      uint64_t set = 0;
+      if (filtermask & SBOX_CAPS_NETWORK) {
 #ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
-			uint64_t set = ((uint64_t) 1) << CAP_NET_ADMIN;
-			set |=  ((uint64_t) 1) << CAP_NET_RAW;
-			caps_set(set);
+        set |= ((uint64_t) 1) << CAP_NET_ADMIN;
+        set |= ((uint64_t) 1) << CAP_NET_RAW;
 #endif
-		}
-		else if (filtermask & SBOX_CAPS_HIDEPID) {
+      }
+      if (filtermask & SBOX_CAPS_HIDEPID) {
 #ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
-			uint64_t set = ((uint64_t) 1) << CAP_SYS_PTRACE;
-			set |=  ((uint64_t) 1) << CAP_SYS_PACCT;
-			caps_set(set);
+        set |= ((uint64_t) 1) << CAP_SYS_PTRACE;
+        set |= ((uint64_t) 1) << CAP_SYS_PACCT;
 #endif
-		}
+      }
+      if (filtermask & SBOX_CAPS_NET_SERVICE) {
+#ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
+        set |= ((uint64_t) 1) << CAP_NET_BIND_SERVICE;
+        set |= ((uint64_t) 1) << CAP_NET_BROADCAST;
+#endif
+      }
+      if (set != 0) { // some SBOX_CAPS_ flag was specified, drop all other capabilities
+#ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
+        caps_set(set);
+#endif
+      }
+    }
 
-		if (filtermask & SBOX_SECCOMP) {
+    if (filtermask & SBOX_SECCOMP) {
 			if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
 				perror("prctl(NO_NEW_PRIVS)");
 			}

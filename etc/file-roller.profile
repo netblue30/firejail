@@ -36,6 +36,8 @@ seccomp
 shell none
 tracelog
 
-# private-bin file-roller
+private-bin 7z,7za,7zr,ar,arj,brotli,bzip2,compress,cpio,dpkg-deb,file-roller,gtar,gzip,isoinfo,lha,lrzip,lsar,lz4,lzip,lzma,lzop,rar,rzip,tar,unace,unalz,unar,uncompress,unrar,unsquashfs,unstuff,unzip,xz,zip,zoo
+private-cache
 private-dev
+private-etc dconf,fonts,gtk-3.0,xdg
 # private-tmp

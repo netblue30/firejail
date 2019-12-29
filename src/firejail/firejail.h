@@ -812,6 +812,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define SBOX_ALLOW_STDIN (1 << 5)		// don't close stdin
 #define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
 #define SBOX_CAPS_HIDEPID (1 << 7)	// hidepid caps filter for running firemon
+#define SBOX_CAPS_NET_SERVICE (1 << 8) // caps filter for programs running network services
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
@@ -826,5 +827,10 @@ void set_profile_run_file(pid_t pid, const char *fname);
 
 // dbus.c
 void dbus_disable(void);
+
+// dhcp.c
+extern pid_t dhclient4_pid;
+extern pid_t dhclient6_pid;
+void dhcp_start(void);
 
 #endif

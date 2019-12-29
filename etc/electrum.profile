@@ -45,6 +45,7 @@ shell none
 disable-mnt
 private-bin electrum,python*
 private-cache
+?HAS_APPIMAGE: ignore private-dev
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,machine-id,pki,resolv.conf,ssl
 private-tmp

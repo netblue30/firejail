@@ -230,6 +230,7 @@ read-only ${HOME}/.bash_login
 read-only ${HOME}/.bash_logout
 read-only ${HOME}/.bash_profile
 read-only ${HOME}/.bashrc
+read-only ${HOME}/.config/environment.d
 read-only ${HOME}/.config/fish
 read-only ${HOME}/.csh_files
 read-only ${HOME}/.cshrc

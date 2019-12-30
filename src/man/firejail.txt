@@ -1772,7 +1772,7 @@ system call groups are defined: @aio, @basic-io, @chown, @clock,
 @file-system, @io-event, @ipc, @keyring, @memlock, @module, @mount,
 @network-io, @obsolete, @privileged, @process, @raw-io, @reboot,
 @resources, @setuid, @swap, @sync, @system-service and @timer.
-More informations about groups can be found in /usr/share/doc/firejail/syscalls.txt
+More information about groups can be found in /usr/share/doc/firejail/syscalls.txt
 
 In addition, a system call can be specified by its number instead of
 name with prefix $, so for example $165 would be equal to mount on i386.

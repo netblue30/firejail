@@ -47,6 +47,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]);
 void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
 int net_if_mac(const char *ifname, const unsigned char mac[6]);
 void net_if_ip6(const char *ifname, const char *addr6);
+void net_if_waitll(const char *ifname);
 
 
 // arp.c

@@ -117,6 +117,21 @@ static void dhcp_start_dhclient(const Dhclient *client) {
   *(client->pid) = dhcp_read_pidfile(client);
 }
 
+static void dhcp_waitll(const char *ifname) {
+  sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, PATH_FNET, "waitll", ifname);
+}
+
+static void dhcp_waitll_all() {
+  if (cfg.bridge0.arg_ip6_dhcp)
+    dhcp_waitll(cfg.bridge0.devsandbox);
+  if (cfg.bridge1.arg_ip6_dhcp)
+    dhcp_waitll(cfg.bridge1.devsandbox);
+  if (cfg.bridge2.arg_ip6_dhcp)
+    dhcp_waitll(cfg.bridge2.devsandbox);
+  if (cfg.bridge3.arg_ip6_dhcp)
+    dhcp_waitll(cfg.bridge3.devsandbox);
+}
+
 void dhcp_start(void) {
   if (!any_dhcp())
     return;
@@ -131,6 +146,7 @@ void dhcp_start(void) {
       printf("Running dhclient -4 in the background as pid %ld\n", (long) dhclient4_pid);
   }
   if (any_ip6_dhcp()) {
+    dhcp_waitll_all();
     dhcp_start_dhclient(&dhclient6);
     if (arg_debug)
       printf("Running dhclient -6 in the background as pid %ld\n", (long) dhclient6_pid);

@@ -28,6 +28,8 @@
 #include <net/if_arp.h>
 #include <net/route.h>
 #include <linux/if_bridge.h>
+#include <linux/netlink.h>
+#include <linux/rtnetlink.h>
 
 static void check_if_name(const char *ifname) {
 	if (strlen(ifname) > IFNAMSIZ) {
@@ -369,4 +371,124 @@ void net_if_ip6(const char *ifname, const char *addr6) {
 	}
 
 	close(sock);
+}
+
+static int net_netlink_address_tentative(struct nlmsghdr *current_header) {
+  struct ifaddrmsg *msg = NLMSG_DATA(current_header);
+  struct rtattr *rta = IFA_RTA(msg);
+  size_t msg_len = IFA_PAYLOAD(current_header);
+  int has_flags = 0;
+  while (RTA_OK(rta, msg_len)) {
+    if (rta->rta_type == IFA_FLAGS) {
+      has_flags = 1;
+      uint32_t *flags = RTA_DATA(rta);
+      if (*flags & IFA_F_TENTATIVE)
+        return 1;
+    }
+    rta = RTA_NEXT(rta, msg_len);
+  }
+  // According to <linux/if_addr.h>, if an IFA_FLAGS attribute is present,
+  // the field ifa_flags should be ignored.
+  return !has_flags && (msg->ifa_flags & IFA_F_TENTATIVE);
+}
+
+static int net_netlink_if_has_ll(int sock, int index) {
+  struct {
+    struct nlmsghdr header;
+    struct ifaddrmsg message;
+  } req;
+  memset(&req, 0, sizeof(req));
+  req.header.nlmsg_len = NLMSG_LENGTH(sizeof(req.message));
+  req.header.nlmsg_flags = NLM_F_REQUEST | NLM_F_DUMP;
+  req.header.nlmsg_type = RTM_GETADDR;
+  req.message.ifa_family = AF_INET6;
+  if (send(sock, &req, req.header.nlmsg_len, 0) != req.header.nlmsg_len)
+    errExit("send");
+
+  int found = 0;
+  int all_parts_processed = 0;
+  while (!all_parts_processed) {
+    char buf[16384];
+    ssize_t len = recv(sock, buf, sizeof(buf), 0);
+    if (len < 0)
+      errExit("recv");
+    if (len < sizeof(struct nlmsghdr)) {
+      fprintf(stderr, "Received incomplete netlink message\n");
+      exit(1);
+    }
+
+    struct nlmsghdr *current_header = (struct nlmsghdr *) buf;
+    while (NLMSG_OK(current_header, len)) {
+      switch (current_header->nlmsg_type) {
+      case RTM_NEWADDR: {
+        struct ifaddrmsg *msg = NLMSG_DATA(current_header);
+        if (!found && msg->ifa_index == index && msg->ifa_scope == RT_SCOPE_LINK &&
+            !net_netlink_address_tentative(current_header))
+          found = 1;
+      }
+        break;
+      case NLMSG_NOOP:
+        break;
+      case NLMSG_DONE:
+        all_parts_processed = 1;
+        break;
+      case NLMSG_ERROR: {
+        struct nlmsgerr *err = NLMSG_DATA(current_header);
+        fprintf(stderr, "Netlink error: %d\n", err->error);
+        exit(1);
+      }
+        break;
+      default:
+        fprintf(stderr, "Unknown netlink message type: %u\n", current_header->nlmsg_type);
+        exit(1);
+        break;
+      }
+
+      current_header = NLMSG_NEXT(current_header, len);
+    }
+  }
+
+  return found;
+}
+
+// wait for a link-local IPv6 address for DHCPv6
+// ex: firejail --net=br0 --ip6=dhcp
+void net_if_waitll(const char *ifname) {
+	// find interface index
+	int inet6_sock = socket(PF_INET6, SOCK_DGRAM, IPPROTO_IP);
+	if (inet6_sock < 0) {
+		fprintf(stderr, "Error fnet: IPv6 is not supported on this system\n");
+		exit(1);
+	}
+	struct ifreq ifr;
+	memset(&ifr, 0, sizeof(ifr));
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
+	ifr.ifr_addr.sa_family = AF_INET;
+	if (ioctl(inet6_sock, SIOGIFINDEX, &ifr) < 0) {
+		perror("ioctl SIOGIFINDEX");
+		exit(1);
+	}
+  close(inet6_sock);
+  int index = ifr.ifr_ifindex;
+
+	// poll for link-local address
+  int netlink_sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
+  if (netlink_sock < 0)
+    errExit("socket");
+  int tries = 0;
+  int found = 0;
+  while (tries < 60 && !found) {
+    if (tries >= 1)
+      usleep(500000);
+
+    found = net_netlink_if_has_ll(netlink_sock, index);
+
+    tries++;
+  }
+  close(netlink_sock);
+
+  if (!found) {
+    fprintf(stderr, "Waiting for link-local IPv6 address of %s timed out\n", ifname);
+    exit(1);
+  }
 }

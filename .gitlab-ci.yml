@@ -27,13 +27,13 @@ build_redhat_package:
         - yum install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && yum install -y firejail*.rpm
 
-build_fedora_package:
-    image: fedora:latest
-    script:
-        - dnf update -y
-        - dnf install -y rpm-build gcc make
-        - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
-        - python3 contrib/sort.py etc/*.{profile,inc}
+#build_fedora_package:
+#    image: fedora:latest
+#    script:
+#        - dnf update -y
+#        - dnf install -y rpm-build gcc make
+#        - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
+#        - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_src_package:
     image: alpine:latest

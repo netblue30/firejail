@@ -42,6 +42,6 @@ tracelog
 
 # private-bin gedit
 private-dev
-private-lib aspell,gconv,gedit,libgspell-1.so.*,libreadline.so.*,libtinfo.so.*
+private-lib aspell,gconv,gedit,libgspell-1.so.*,libgtksourceview-3.0.so.*,libpeas-gtk-1.0.so.*,libreadline.so.*,libtinfo.so.*
 private-tmp
 

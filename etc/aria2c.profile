@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.aria2
 
+blacklist /tmp/.X11-unix
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -39,7 +41,7 @@ private-bin aria2c,gzip
 # Uncomment the next line (or put 'private-cache' in your aria2c.local) if you don't use Lutris/winetricks (see issue #2772)
 #private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,groups,login.defs,machine-id,nsswitch.conf,passwd,pki,resolv.conf,ssl
 private-lib libreadline.so.*
 private-tmp
 

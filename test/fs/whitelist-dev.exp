@@ -23,17 +23,17 @@ after 100
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --whitelist=/dev/null --whitelist=/dev/shm --whitelist=/dev/random\r"
+send -- "firejail --whitelist=/dev/null --whitelist=/dev/random\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "find /dev | wc -l\r"
+send -- "ls /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"1"
+	"2"
 }
 after 100
 send -- "exit\r"

@@ -9,14 +9,17 @@ include globals.local
 noblacklist ${HOME}/.config/artha.conf
 noblacklist ${HOME}/.config/enchant
 
+blacklist /tmp/.X11-unix
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
-mkdir ${HOME}/.config/artha.conf
+mkfile ${HOME}/.config/artha.conf
 mkdir ${HOME}/.config/enchant
 whitelist ${HOME}/.config/artha.conf
 whitelist ${HOME}/.config/enchant

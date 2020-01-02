@@ -41,7 +41,7 @@ expect {
 }
 after 100
 
-send --  "firejail --shutdown=10\r"
+send --  "firejail --shutdown=1\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"this is not a firejail sandbox"

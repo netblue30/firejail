@@ -28,6 +28,7 @@ whitelist ${HOME}/.local/share/maps-places.json
 whitelist ${DOWNLOADS}
 whitelist ${PICTURES}
 whitelist /usr/share/gnome-maps
+whitelist /usr/share/libgweather
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -55,4 +56,3 @@ private-bin gjs,gnome-maps
 private-dev
 private-etc alternatives,ca-certificates,clutter-1.0,crypto-policies,dconf,drirc,fonts,gconf,gcrypt,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pango,pkcs11,pki,protocols,resolv.conf,rpc,services,ssl,X11,xdg
 private-tmp
-

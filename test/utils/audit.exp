@@ -32,6 +32,10 @@ expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"dev directory seems to be fully populated"
 }
+expect {
+	timeout {puts "TESTING ERROR 5.1\n";exit}
+	"Parent is shutting down, bye..."
+}
 after 100
 
 
@@ -59,6 +63,10 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
 	"dev directory seems to be fully populated"
+}
+expect {
+	timeout {puts "TESTING ERROR 11.1\n";exit}
+	"Parent is shutting down, bye..."
 }
 after 100
 

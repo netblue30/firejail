@@ -119,6 +119,7 @@ blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/arkrc
 blacklist ${HOME}/.config/artha.conf
+blacklist ${HOME}/.config/artha.log
 blacklist ${HOME}/.config/asunder
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious

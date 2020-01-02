@@ -7,19 +7,23 @@ include whois.local
 # Persistent global definitions
 include globals.local
 
+blacklist /tmp/.X11-unix
+
 include disable-common.inc
-# include disable-devel.inc
+include disable-devel.inc
 include disable-exec.inc
-# include disable-interpreters.inc
+include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-#include disable-xdg.inc
+include disable-xdg.inc
 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-# ipc-namespace
+hostname whois
+ipc-namespace
+machine-id
 netfilter
 no3d
 nodbus
@@ -41,7 +45,7 @@ private
 private-bin bash,sh,whois
 private-cache
 private-dev
-# private-etc alternatives,hosts,services,whois.conf
+private-etc alternatives,hosts,jwhois.conf,services,whois.conf
 private-lib
 private-tmp
 

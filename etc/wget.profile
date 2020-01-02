@@ -19,6 +19,8 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
+ipc-namespace
+machine-id
 netfilter
 no3d
 nodvd
@@ -32,9 +34,11 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 # private-bin wget
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policie,pki,resolv.conf,ssl
 # private-tmp
 
+memory-deny-write-execute

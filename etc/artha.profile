@@ -7,6 +7,7 @@ include artha.local
 include globals.local
 
 noblacklist ${HOME}/.config/artha.conf
+noblacklist ${HOME}/.config/artha.log
 noblacklist ${HOME}/.config/enchant
 
 blacklist /tmp/.X11-unix
@@ -19,9 +20,13 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+# this 'whitelist' profile could make settings immutable
+# either turn it into a 'blacklist' profile by commenting the lines below
+# or set your preferences by running artha without firejail once
 mkfile ${HOME}/.config/artha.conf
 mkdir ${HOME}/.config/enchant
 whitelist ${HOME}/.config/artha.conf
+whitelist ${HOME}/.config/artha.log
 whitelist ${HOME}/.config/enchant
 whitelist /usr/share/artha
 whitelist /usr/share/wordnet
@@ -46,6 +51,7 @@ novideo
 protocol unix
 seccomp
 shell none
+tracelog
 
 disable-mnt
 private-bin artha,enchant,notify-send

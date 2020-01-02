@@ -20,20 +20,20 @@ build_debian_package:
         - apt-get install -y -qq build-essential lintian pkg-config
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
 
-build_redhat_package:
-    image: centos:latest
-    script:
-        - yum update -y
-        - yum install -y rpm-build gcc make
-        - ./configure --prefix=/usr && make rpms && yum install -y firejail*.rpm
-
-#build_fedora_package:
-#    image: fedora:latest
+#build_redhat_package:
+#    image: centos:latest
 #    script:
-#        - dnf update -y
-#        - dnf install -y rpm-build gcc make
-#        - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
-#        - python3 contrib/sort.py etc/*.{profile,inc}
+#        - yum update -y
+#        - yum install -y rpm-build gcc make
+#        - ./configure --prefix=/usr && make rpms && yum install -y firejail*.rpm
+
+build_fedora_package:
+    image: fedora:latest
+    script:
+        - dnf update -y
+        - dnf install -y rpm-build gcc make
+        - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
+        - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_src_package:
     image: alpine:latest

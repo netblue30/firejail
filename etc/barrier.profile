@@ -1,16 +1,13 @@
 # Firejail profile for barrier
 # Description: Keyboard and mouse sharing application
 # This file is overwritten after every install/update
-
 # Persistent local customizations
 include barrier.local
-
 # Persistent global definitions
 include globals.local 
 
 noblacklist ${HOME}/.config/Debauchee/Barrier.conf
-noblacklist ${HOME}/.local/share/barrier/SSL/Barrier.pem
-noblacklist /etc/xdg/Debauchee/Barrier.conf
+noblacklist ${HOME}/.local/share/barrier
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,7 +17,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-var-common.inc
+
+
 caps.drop all
+machine-id
 netfilter
 no3d
 nodvd
@@ -34,6 +35,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
+tracelog
 
 disable-mnt
 private-dev

@@ -71,6 +71,7 @@ blacklist ${HOME}/.config/Code
 blacklist ${HOME}/.config/Code - OSS
 blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
+blacklist ${HOME}/.config/Debauchee/Barrier.conf
 blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
@@ -488,6 +489,7 @@ blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/autokey
 blacklist ${HOME}/.local/share/baloo
+blacklist ${HOME}/.local/share/barrier
 blacklist ${HOME}/.local/share/bibletime
 blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cantata

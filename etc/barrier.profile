@@ -1,5 +1,5 @@
 # Firejail profile for barrier
-# Keyboard and mouse sharing application
+# Description: Keyboard and mouse sharing application
 # This file is overwritten after every install/update
 
 # Persistent local customizations

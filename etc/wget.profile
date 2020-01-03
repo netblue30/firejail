@@ -20,7 +20,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 # depending on workflow you can uncomment the below or put 'include disable-xdg.inc' in your wget.local
-include disable-xdg.inc
+#include disable-xdg.inc
 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -47,10 +47,8 @@ tracelog
 private-bin wget
 private-cache
 private-dev
-
-
 # depending on workflow you can uncomment the below or put this private-etc in your wget.local
 #private-etc alternatives,ca-certificates,crypto-policie,pki,resolv.conf,ssl,wgetrc
-# private-tmp
+#private-tmp
 
 memory-deny-write-execute

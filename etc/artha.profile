@@ -20,17 +20,15 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-# this 'whitelist' profile could make settings immutable
-# either turn it into a 'blacklist' profile by commenting the lines below
-# or set your preferences by running artha without firejail once
-mkfile ${HOME}/.config/artha.conf
-mkdir ${HOME}/.config/enchant
-whitelist ${HOME}/.config/artha.conf
-whitelist ${HOME}/.config/artha.log
-whitelist ${HOME}/.config/enchant
+# whitelisting in ${HOME} makes settings immutable, see #3112
+#mkfile ${HOME}/.config/artha.conf
+#mkdir ${HOME}/.config/enchant
+#whitelist ${HOME}/.config/artha.conf
+#whitelist ${HOME}/.config/artha.log
+#whitelist ${HOME}/.config/enchant
 whitelist /usr/share/artha
 whitelist /usr/share/wordnet
-include whitelist-common.inc
+#include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

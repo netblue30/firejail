@@ -38,4 +38,5 @@ shell none
 private-dev
 private-cache
 private-tmp
+
 memory-deny-write-execute

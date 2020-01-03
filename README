@@ -53,7 +53,7 @@ Committers
 
 Firejail Authors (alphabetical order)
 
-7twin (https://github.com/7twin_
+7twin (https://github.com/7twin_)
 	- fix typos
 	- fix flameshot raw screenshots
 1dnrr (https://github.com/1dnrr)
@@ -565,6 +565,8 @@ PizzaDude (https://github.com/pizzadude)
 	- added profile for torbrowser-launcher
 	- added profile for sayonara and qmmp
 	- remove tracelog from Firefox profile
+polyzen (https://github.com/polyzen)
+	- fixed wusc issue with mpv/Vulkan
 probonopd (https://github.com/probonopd)
 	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)

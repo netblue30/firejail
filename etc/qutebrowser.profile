@@ -36,5 +36,5 @@ noroot
 notv
 protocol unix,inet,inet6,netlink
 # blacklisting of chroot system calls breaks qt webengine
-seccomp !chroot
+seccomp !chroot,!name_to_handle_at
 # tracelog

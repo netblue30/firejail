@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/Debauchee/Barrier.conf
 noblacklist ${HOME}/.local/share/barrier
+noblacklist ${PATH}/openssl
 
 include disable-common.inc
 include disable-devel.inc

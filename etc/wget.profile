@@ -48,7 +48,7 @@ private-bin wget
 private-cache
 private-dev
 # depending on workflow you can uncomment the below or put this private-etc in your wget.local
-#private-etc alternatives,ca-certificates,crypto-policie,pki,resolv.conf,ssl,wgetrc
+#private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl,wgetrc
 #private-tmp
 
 memory-deny-write-execute

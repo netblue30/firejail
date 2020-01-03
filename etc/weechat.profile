@@ -11,6 +11,7 @@ noblacklist ${HOME}/.weechat
 include disable-common.inc
 include disable-programs.inc
 
+whitelist /usr/share/perl5
 include whitelist-usr-share-common.inc
 
 caps.drop all

@@ -7,6 +7,7 @@ include sylpheed.local
 include globals.local
 
 noblacklist ${HOME}/.sylpheed-2.0
+noblacklist ${HOME}/Mail
 
 include disable-common.inc
 include disable-devel.inc

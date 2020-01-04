@@ -4,30 +4,16 @@
 # Persistent local customizations
 include sylpheed.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 noblacklist ${HOME}/.sylpheed-2.0
 noblacklist ${HOME}/Mail
 
-include disable-common.inc
-include disable-devel.inc
-include disable-interpreters.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
+blacklist ${HOME}/.claws-mail
 
-caps.drop all
-netfilter
-nodvd
-nogroups
-nonewprivs
-noroot
-nosound
-notv
-nou2f
-novideo
-protocol unix,inet,inet6
-seccomp
-shell none
+ignore whitelist /usr/share/doc/claws-mail
+whitelist /usr/share/sylpheed
 
-private-dev
-private-tmp
+# Redirect
+include claws-mail.profile

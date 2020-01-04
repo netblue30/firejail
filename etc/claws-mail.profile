@@ -16,7 +16,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /usr/share/doc
+whitelist /usr/share/doc/claws-mail
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 include whitelist-usr-share-common.inc

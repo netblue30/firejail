@@ -12,7 +12,7 @@ noblacklist ${HOME}/Mail
 
 blacklist ${HOME}/.claws-mail
 
-ignore whitelist /usr/share/doc/claws-mail
+nowhitelist /usr/share/doc/claws-mail
 whitelist /usr/share/sylpheed
 
 # Redirect

@@ -9,6 +9,9 @@ include globals.local
 noblacklist ${HOME}/.claws-mail
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.signature
+# when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your claws-mail.local
+# and 'blacklist' it in your disable-common.local too so it is  kept hidden from other applications
+noblacklist ${HOME}/Mail
 
 include disable-common.inc
 include disable-devel.inc

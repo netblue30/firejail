@@ -8,7 +8,8 @@ include sylpheed.local
 #include globals.local
 
 noblacklist ${HOME}/.sylpheed-2.0
-noblacklist ${HOME}/Mail
+# when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your sylpheed.local
+# and 'blacklist' it in your disable-common.local too so it is  kept hidden from other applications
 
 blacklist ${HOME}/.claws-mail
 

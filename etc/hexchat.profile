@@ -19,6 +19,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.config/hexchat
 whitelist ${HOME}/.config/hexchat
@@ -26,7 +27,7 @@ include whitelist-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-machine-id
+#machine-id -- breaks sound
 netfilter
 no3d
 nodvd

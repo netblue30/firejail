@@ -89,7 +89,7 @@ errexit:
 }
 
 void fs_resolvconf(void) {
-	if (cfg.dns1 == NULL)
+	if (cfg.dns1 == NULL && !any_dhcp())
 		return;
 
 	if (arg_debug)
@@ -108,7 +108,8 @@ void fs_resolvconf(void) {
 		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
 			continue;
 		// for resolv.conf we create a brand new file
-		if (strcmp(entry->d_name, "resolv.conf") == 0)
+		if (strcmp(entry->d_name, "resolv.conf") == 0 ||
+        strcmp(entry->d_name, "resolv.conf.dhclient-new") == 0)
 			continue;
 //		printf("linking %s\n", entry->d_name);
 
@@ -169,8 +170,11 @@ void fs_resolvconf(void) {
 		exit(1);
 	}
 
-	if (cfg.dns1)
+	if (cfg.dns1) {
+    if (any_dhcp())
+      fwarning("network setup uses DHCP, nameservers will likely be overwritten\n");
 		fprintf(fp, "nameserver %s\n", cfg.dns1);
+  }
 	if (cfg.dns2)
 		fprintf(fp, "nameserver %s\n", cfg.dns2);
 	if (cfg.dns3)

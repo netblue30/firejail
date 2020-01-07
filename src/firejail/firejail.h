@@ -103,6 +103,8 @@ typedef struct bridge_t {
 
 	// flags
 	uint8_t arg_ip_none;	// --ip=none
+  uint8_t arg_ip_dhcp;
+  uint8_t arg_ip6_dhcp;
 	uint8_t macvlan;	// set by --net=eth0 (or eth1, ...); reset by --net=br0 (or br1, ...)
 	uint8_t configured;
 	uint8_t scan;		// set by --scan
@@ -235,6 +237,24 @@ static inline int any_interface_configured(void) {
 		return 1;
 	else
 		return 0;
+}
+
+static inline int any_ip_dhcp(void) {
+	if (cfg.bridge0.arg_ip_dhcp || cfg.bridge1.arg_ip_dhcp || cfg.bridge2.arg_ip_dhcp || cfg.bridge3.arg_ip_dhcp)
+		return 1;
+	else
+		return 0;
+}
+
+static inline int any_ip6_dhcp(void) {
+	if (cfg.bridge0.arg_ip6_dhcp || cfg.bridge1.arg_ip6_dhcp || cfg.bridge2.arg_ip6_dhcp || cfg.bridge3.arg_ip6_dhcp)
+		return 1;
+	else
+		return 0;
+}
+
+static inline int any_dhcp(void) {
+  return any_ip_dhcp() || any_ip6_dhcp();
 }
 
 extern int arg_private;		// mount private /home
@@ -792,9 +812,11 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define SBOX_ALLOW_STDIN (1 << 5)		// don't close stdin
 #define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
 #define SBOX_CAPS_HIDEPID (1 << 7)	// hidepid caps filter for running firemon
+#define SBOX_CAPS_NET_SERVICE (1 << 8) // caps filter for programs running network services
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
+int sbox_run_v(unsigned filter, char * const arg[]);
 
 // run_files.c
 void delete_run_files(pid_t pid);
@@ -805,5 +827,10 @@ void set_profile_run_file(pid_t pid, const char *fname);
 
 // dbus.c
 void dbus_disable(void);
+
+// dhcp.c
+extern pid_t dhclient4_pid;
+extern pid_t dhclient6_pid;
+void dhcp_start(void);
 
 #endif

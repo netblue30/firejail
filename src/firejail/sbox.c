@@ -105,23 +105,34 @@ static struct sock_fprog prog = {
 };
 
 int sbox_run(unsigned filtermask, int num, ...) {
-	EUID_ROOT();
-
-	int i;
 	va_list valist;
 	va_start(valist, num);
 
 	// build argument list
-	char *arg[num + 1];
+  char **arg = malloc((num + 1) * sizeof(char *));
+  int i;
 	for (i = 0; i < num; i++)
 		arg[i] = va_arg(valist, char*);
 	arg[i] = NULL;
 	va_end(valist);
 
+  int status = sbox_run_v(filtermask, arg); 
+
+  free(arg);
+
+  return status;
+}
+
+int sbox_run_v(unsigned filtermask, char * const arg[]) {
+	EUID_ROOT();
+
 	if (arg_debug) {
 		printf("sbox run: ");
-		for (i = 0; i <= num; i++)
+    int i = 0;
+    while (arg[i]) {
 			printf("%s ", arg[i]);
+      i++;
+    }
 		printf("\n");
 	}
 
@@ -171,7 +182,7 @@ int sbox_run(unsigned filtermask, int num, ...) {
 
 		// close all other file descriptors
 		int max = 20; // getdtablesize() is overkill for a firejail process
-		for (i = 3; i < max; i++)
+		for (int i = 3; i < max; i++)
 			close(i); // close open files
 
 		umask(027);
@@ -179,23 +190,34 @@ int sbox_run(unsigned filtermask, int num, ...) {
 		// apply filters
 		if (filtermask & SBOX_CAPS_NONE) {
 			caps_drop_all();
-		}
-		else if (filtermask & SBOX_CAPS_NETWORK) {
+		} else {
+      uint64_t set = 0;
+      if (filtermask & SBOX_CAPS_NETWORK) {
 #ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
-			uint64_t set = ((uint64_t) 1) << CAP_NET_ADMIN;
-			set |=  ((uint64_t) 1) << CAP_NET_RAW;
-			caps_set(set);
+        set |= ((uint64_t) 1) << CAP_NET_ADMIN;
+        set |= ((uint64_t) 1) << CAP_NET_RAW;
 #endif
-		}
-		else if (filtermask & SBOX_CAPS_HIDEPID) {
+      }
+      if (filtermask & SBOX_CAPS_HIDEPID) {
 #ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
-			uint64_t set = ((uint64_t) 1) << CAP_SYS_PTRACE;
-			set |=  ((uint64_t) 1) << CAP_SYS_PACCT;
-			caps_set(set);
+        set |= ((uint64_t) 1) << CAP_SYS_PTRACE;
+        set |= ((uint64_t) 1) << CAP_SYS_PACCT;
 #endif
-		}
+      }
+      if (filtermask & SBOX_CAPS_NET_SERVICE) {
+#ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
+        set |= ((uint64_t) 1) << CAP_NET_BIND_SERVICE;
+        set |= ((uint64_t) 1) << CAP_NET_BROADCAST;
+#endif
+      }
+      if (set != 0) { // some SBOX_CAPS_ flag was specified, drop all other capabilities
+#ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
+        caps_set(set);
+#endif
+      }
+    }
 
-		if (filtermask & SBOX_SECCOMP) {
+    if (filtermask & SBOX_SECCOMP) {
 			if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) {
 				perror("prctl(NO_NEW_PRIVS)");
 			}

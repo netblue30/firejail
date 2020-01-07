@@ -337,6 +337,8 @@ static int monitor_application(pid_t app_pid) {
 				continue;
 			if (pid == 1)
 				continue;
+      if (pid == dhclient4_pid || pid == dhclient6_pid)
+        continue;
 
 			// todo: make this generic
 			// Dillo browser leaves a dpid process running, we need to shut it down
@@ -1014,6 +1016,11 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	fs_logger_print();
 	fs_logger_change_owner();
+
+	//****************************
+	// start dhcp client
+	//****************************
+  dhcp_start();
 
 	//****************************
 	// set application environment

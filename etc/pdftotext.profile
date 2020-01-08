@@ -22,6 +22,7 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
+ipc-namespace
 machine-id
 net none
 no3d
@@ -41,6 +42,7 @@ tracelog
 x11 none
 
 private-bin pdftotext
+private-cache
 private-dev
 private-etc alternatives
 private-tmp

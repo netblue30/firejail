@@ -9,6 +9,7 @@ include globals.local
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
+noblacklist ${HOME}/.cache/midori
 noblacklist ${HOME}/.config/midori
 noblacklist ${HOME}/.local/share/midori
 # noblacklist ${HOME}/.local/share/webkit
@@ -16,11 +17,17 @@ noblacklist ${HOME}/.local/share/midori
 noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
 
+noblacklist ${HOME}/.cache/gnome-mplayer
+noblacklist ${HOME}/.config/gnome-mplayer
+noblacklist ${HOME}/.lastpass
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
+#include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.cache/midori
 mkdir ${HOME}/.config/midori

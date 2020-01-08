@@ -42,7 +42,8 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
-seccomp
+# QtWebengine needs chroot to set up its own sandbox
+seccomp !chroot
 shell none
 tracelog
 

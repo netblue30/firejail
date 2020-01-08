@@ -19,7 +19,8 @@ nonewprivs
 noroot
 notv
 protocol unix,inet,inet6
-seccomp
+# QtWebengine needs chroot to set up its own sandbox
+seccomp !chroot
 
 private-cache
 private-tmp

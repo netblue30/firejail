@@ -27,4 +27,4 @@ seccomp
 shell none
 
 private-bin cmus
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,group,machine-id,pki,pulse,ssl
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,group,machine-id,pki,pulse,resolv.conf,ssl

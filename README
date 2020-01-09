@@ -39,6 +39,7 @@ Committers
 - crass (https://github.com/crass)
 - glitsj16 (https://github.com/glitsj16)
 - Fred-Barclay (https://github.com/Fred-Barclay)
+- Kristóf Marussy (https://github.com/kris7t)
 - Reiner Herrmann (https://github.com/reinerh - Debian/Ubuntu maintainer)
 - rusty-snake (https://github.com/rusty-snake)
 - smithsohu (https://github.com/smitsohu)
@@ -160,6 +161,7 @@ Cat (https://github.com/ecat3)
 	- prevent tmux connecting to an existing session
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
+	- tor browser profile fix
 chiraag-nataraj (https://github.com/chiraag-nataraj)
 	- support for newer Xpra versions (2.1+)
 	- added Viber, amule, ardour5, brackets, calligra, cin, fetchmail profiles
@@ -343,6 +345,8 @@ grizzlyuser (https://github.com/grizzlyuser)
 	- added support for youtube-dl in smplayer profile
 GSI (https://github.com/GSI)
 	- added Uzbl browser profile
+haarp (https://github.com/haarp)
+	- Allow sound for hexchat
 hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path
 hawkey116477 (https://github.com/hawkeye116477)
@@ -444,6 +448,8 @@ Kishore96in (https://github.com/Kishore96in)
 	- added falkon profile
 KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
+Kristóf Marussy (https://github.com/kris7t)
+	- dns support
 Kunal Mehta (https://github.com/legoktm)
 	- converted all links to https in manpages
 laniakea64 (https://github.com/laniakea64)
@@ -503,6 +509,8 @@ mustaqimM (https://github.com/mustaqimM)
     - added profile for Nylas Mail
 n1trux (https://github.com/n1trux)
 	- fix flashpeak-slimjet profile typos
+nblock (https://github.com/nblock)
+	- cmus: allow access to resolv.conf
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory

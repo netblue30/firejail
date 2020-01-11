@@ -14,7 +14,7 @@ build_ubuntu_package:
         - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_debian_package:
-    image: debian:jessie
+    image: debian:stretch
     script:
         - apt-get update -qq
         - apt-get install -y -qq build-essential lintian pkg-config

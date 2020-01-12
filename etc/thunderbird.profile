@@ -47,6 +47,7 @@ whitelist ${HOME}/.thunderbird
 
 whitelist /usr/share/gnupg
 whitelist /usr/share/mozilla
+whitelist /usr/share/webext
 include whitelist-usr-share-common.inc
 
 # machine-id breaks audio in browsers; enable or put it in your thunderbird.local when sound is not required

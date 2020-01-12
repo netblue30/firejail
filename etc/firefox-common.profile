@@ -26,6 +26,7 @@ mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
+whitelist /usr/share/webext
 include whitelist-common.inc
 include whitelist-var-common.inc
 

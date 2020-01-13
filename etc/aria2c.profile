@@ -7,6 +7,8 @@ include aria2c.local
 include globals.local
 
 noblacklist ${HOME}/.aria2
+noblacklist ${HOME}/.config/aria2
+noblacklist ${HOME}/.netrc
 
 blacklist /tmp/.X11-unix
 
@@ -37,6 +39,7 @@ seccomp
 shell none
 
 # disable-mnt
+# Add your custom event hook commands to 'private-bin' in your aria2c.local
 private-bin aria2c,gzip
 # Uncomment the next line (or put 'private-cache' in your aria2c.local) if you don't use Lutris/winetricks (see issue #2772)
 #private-cache

@@ -118,6 +118,7 @@ blacklist ${HOME}/.config/akonadi*
 blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
+blacklist ${HOME}/.config/aria2
 blacklist ${HOME}/.config/arkrc
 blacklist ${HOME}/.config/artha.conf
 blacklist ${HOME}/.config/artha.log

@@ -1,5 +1,9 @@
-firejail (0.9.61) baseline; urgency=low
+firejail (0.9.63) baseline; urgency=low
   * work in progress
+  * DHCP client support
+  * new profiles: firefox-x11
+
+firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config
   * profile templates (/usr/share/doc/firejail)
   * allow-debuggers support in profiles

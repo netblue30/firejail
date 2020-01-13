@@ -145,14 +145,10 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 
 `````
-## Latest released version: 0.9.60 - release 0.9.62 pending
-
-The development for 0.9.62 is handled on release-0.9.62 branch.
-
-I had to cut the release branch again as of this commit - big fixes from @smitsohu and @glitsj16.
-Also problems with the configure script as reported by @matu3ba. I am reusing the same
-name for the release branch, release-0.9.62, so if you have an old release-0.9.62 branch around,
-get rid of it and load the new one.
-
+## Latest released version: 0.9.62
 
 ## Current development version: 0.9.63
+
+### New profiles:
+
+firefox-x11

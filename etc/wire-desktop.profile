@@ -18,16 +18,12 @@ whitelist ${HOME}/.config/Wire
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
 
-caps.drop all
+caps.keep sys_admin,sys_chroot
 netfilter
 nodvd
 nogroups
-nonewprivs
-noroot
 notv
 nou2f
-protocol unix,inet,inet6,netlink
-seccomp
 shell none
 
 # Note: The current version of Wire is located in /opt/wire-desktop/wire-desktop, and therefore

@@ -48,6 +48,7 @@ private-bin ffmpeg
 private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,nsswitch.conf,pkcs11,pki,resolv.conf,ssl
+private-lib /opt/intel/mediasdk/lib/libmfx.so.1
 private-tmp
 
 # memory-deny-write-execute - it breaks old versions of ffmpeg

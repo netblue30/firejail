@@ -39,5 +39,5 @@ seccomp !chroot
 disable-mnt
 private-dev
 private-tmp
-private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,pki,resolv.conf,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,pki,resolv.conf,ssl,xdg
 

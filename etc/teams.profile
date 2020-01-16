@@ -18,6 +18,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.config/teams
+mkdir ${HOME}/.config/Microsoft
+
 whitelist ${HOME}/.config/teams
 whitelist ${HOME}/.config/Microsoft
 whitelist ${DOWNLOADS}

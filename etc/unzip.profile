@@ -7,6 +7,8 @@ include unzip.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 # GNOME Shell integration (chrome-gnome-shell)
 noblacklist ${HOME}/.local/share/gnome-shell
 

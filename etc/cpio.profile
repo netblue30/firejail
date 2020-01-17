@@ -7,6 +7,8 @@ include cpio.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 noblacklist /sbin
 noblacklist /usr/sbin
 

@@ -6,6 +6,8 @@ include devilspie.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 noblacklist ${HOME}/.devilspie
 
 include disable-common.inc

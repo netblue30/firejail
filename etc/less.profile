@@ -7,6 +7,8 @@ include less.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 noblacklist ${HOME}/.lesshst
 
 include disable-devel.inc

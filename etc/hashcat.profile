@@ -7,6 +7,8 @@ include hashcat.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 noblacklist ${HOME}/.hashcat
 noblacklist /usr/include
 noblacklist ${DOCUMENTS}

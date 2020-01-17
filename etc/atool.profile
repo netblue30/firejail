@@ -7,6 +7,8 @@ include atool.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
 

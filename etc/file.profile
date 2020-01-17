@@ -7,6 +7,8 @@ include file.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 include disable-common.inc
 include disable-exec.inc
 include disable-passwdmgr.inc

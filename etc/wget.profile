@@ -43,7 +43,6 @@ protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
-x11 none
 
 private-bin wget
 private-cache

@@ -275,19 +275,15 @@ void invalid_filename(const char *fname, int globbing) {
 			return;
 	}
 
-	int len = strlen(ptr);
+	char *reject;
+	if (globbing)
+		reject = "\\&!\"'<>%^(){};,"; // file globbing ('*?[]') is allowed
+	else
+		reject = "\\&!?\"'<>%^(){};,*[]";
 
-	if (globbing) {
-		// file globbing ('*?[]') is allowed
-		if (strcspn(ptr, "\\&!\"'<>%^(){};,") != (size_t)len) {
-			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
-			exit(1);
-		}
-	}
-	else {
-		if (strcspn(ptr, "\\&!?\"'<>%^(){};,*[]") != (size_t)len) {
-			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
-			exit(1);
-		}
+	char *c = strpbrk(ptr, reject);
+	if (c) {
+		fprintf(stderr, "Error: \"%s\" is an invalid filename: rejected character: \"%c\"\n", ptr, *c);
+		exit(1);
 	}
 }

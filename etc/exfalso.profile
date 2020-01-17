@@ -31,6 +31,7 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
+ipc-namespace
 machine-id
 netfilter
 no3d

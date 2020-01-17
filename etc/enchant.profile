@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.config/enchant
 
+blacklist /tmp/.X11-unix
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -16,7 +18,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/enchant
+whitelist ${HOME}/.config/enchant
+include whitelist-common.inc
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

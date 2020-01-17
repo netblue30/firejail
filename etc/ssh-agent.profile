@@ -11,6 +11,7 @@ noblacklist /tmp/ssh-*
 noblacklist ${HOME}/.ssh
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-passwdmgr.inc

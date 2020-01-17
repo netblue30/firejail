@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.w3m
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include allow-perl.inc
 

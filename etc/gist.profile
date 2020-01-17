@@ -8,6 +8,7 @@ include gist.local
 include globals.local
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 noblacklist ${HOME}/.gist
 

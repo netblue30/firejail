@@ -8,6 +8,7 @@ include whois.local
 include globals.local
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

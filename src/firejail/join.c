@@ -322,8 +322,8 @@ bool is_ready_for_join(const pid_t pid) {
 void check_join_permission(pid_t pid) {
 	// check if pid belongs to a fully set up firejail sandbox
 	unsigned long i;
-	for (i = 0; is_ready_for_join(pid) == false; i += SNOOZE) { // give sandbox some time to start up
-		if (i >= join_timeout) {
+	for (i = SNOOZE; is_ready_for_join(pid) == false; i += SNOOZE) { // give sandbox some time to start up
+		if (i > join_timeout) {
 			fprintf(stderr, "Error: no valid sandbox\n");
 			exit(1);
 		}

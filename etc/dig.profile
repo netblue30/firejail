@@ -9,6 +9,8 @@ include globals.local
 
 noblacklist ${HOME}/.digrc
 
+blacklist /tmp/.X11-unix
+
 include disable-common.inc
 # include disable-devel.inc
 include disable-exec.inc
@@ -24,7 +26,7 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-# ipc-namespace
+ipc-namespace
 machine-id
 netfilter
 no3d
@@ -40,6 +42,8 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
+x11 none
 
 disable-mnt
 private

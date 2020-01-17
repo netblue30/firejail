@@ -275,12 +275,19 @@ void invalid_filename(const char *fname, int globbing) {
 			return;
 	}
 
+	size_t i;
+	for (i = 0; ptr[i]; i++) {
+		if (iscntrl((unsigned char) ptr[i])) {
+			fprintf(stderr, "Error: invalid filename: contains a control character\n");
+			exit(1);
+		}
+	}
+	
 	char *reject;
 	if (globbing)
 		reject = "\\&!\"'<>%^(){};,"; // file globbing ('*?[]') is allowed
 	else
 		reject = "\\&!?\"'<>%^(){};,*[]";
-
 	char *c = strpbrk(ptr, reject);
 	if (c) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename: rejected character: \"%c\"\n", ptr, *c);

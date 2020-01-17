@@ -22,7 +22,9 @@ include disable-xdg.inc
 
 whitelist /usr/share/dnscrypt-proxy
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
+apparmor
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
 ipc-namespace
 machine-id

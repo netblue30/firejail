@@ -26,6 +26,7 @@ include whitelist-usr-share-common.inc
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
 ipc-namespace
 machine-id
+netfilter
 no3d
 nodbus
 nodvd

@@ -531,6 +531,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		// it will never get here!!!
 	}
+	EUID_USER();
 
 	int status = 0;
 	//*****************************

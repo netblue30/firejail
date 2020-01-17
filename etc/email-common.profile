@@ -13,12 +13,15 @@ noblacklist ${HOME}/.signature
 # and 'blacklist' it in your disable-common.local too so it is  kept hidden from other applications
 noblacklist ${HOME}/Mail
 
+noblacklist ${DOCUMENTS}
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 mkfile ${HOME}/.config/mimeapps.list
 mkdir ${HOME}/.gnupg

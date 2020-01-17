@@ -738,6 +738,7 @@ blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/gegl-0.4
 blacklist ${HOME}/.cache/geeqie
+blacklist ${HOME}/.cache/gfeeds
 blacklist ${HOME}/.cache/gimp
 blacklist ${HOME}/.cache/godot
 blacklist ${HOME}/.cache/google-chrome

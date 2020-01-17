@@ -6,6 +6,7 @@ include gfeeds.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/gfeeds
 noblacklist ${HOME}/.cache/org.gabmus.gfeeds
 noblacklist ${HOME}/.config/org.gabmus.gfeeds.json
 
@@ -20,8 +21,10 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/gfeeds
 mkdir ${HOME}/.cache/org.gabmus.gfeeds
 mkfile ${HOME}/.config/org.gabmus.gfeeds.json
+whitelist ${HOME}/.cache/gfeeds
 whitelist ${HOME}/.cache/org.gabmus.gfeeds
 whitelist ${HOME}/.config/org.gabmus.gfeeds.json
 whitelist /usr/share/gfeeds

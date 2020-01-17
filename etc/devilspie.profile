@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.devilspie
 
+blacklist /tmp/.X11-unix
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -41,6 +43,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 disable-mnt
 private-bin devilspie

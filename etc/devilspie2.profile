@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.config/devilspie2
 
+blacklist /tmp/.X11-unix
+
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
@@ -44,6 +46,7 @@ protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 disable-mnt
 private-bin devilspie2

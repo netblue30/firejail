@@ -4,8 +4,8 @@
 
 | Version | Supported by us    | EOL  | Supported by distribution |
 | ------- | ------------------ | ---- | ---------------------------
-| 0.0.62  | :heavy_check_mark: |      | 
-| 0.9.60  | :x:                |      | :white_check_mark: Debian 11 (testing/unstable), 10 **backports**; Ubuntu 19.10
+| 0.9.62  | :heavy_check_mark: |      | :white_check_mark: Debian 11 (testing/unstable), 10 **backports**; Ubuntu 20.04
+| 0.9.60  | :x:                |      | :white_check_mark: Ubuntu 19.10
 | 0.9.58  | :x:                |      | :white_check_mark: Ubuntu 19.04; Debian 9 **backports**, 10
 | 0.9.56  | :x:                | 27 Jan 2019 |
 | 0.9.54  | :x:                |      | :white_check_mark: Ubuntu 18.10

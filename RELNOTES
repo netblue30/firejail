@@ -1,7 +1,7 @@
 firejail (0.9.63) baseline; urgency=low
   * work in progress
   * DHCP client support
-  * new profiles: firefox-x11
+  * new profiles: firefox-x11, tvbrowser
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

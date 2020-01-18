@@ -312,6 +312,7 @@ blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.config/transgui
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/truecraft
+blacklist ${HOME}/.config/tvbrowser
 blacklist ${HOME}/.config/uGet
 blacklist ${HOME}/.config/uzbl
 blacklist ${HOME}/.config/viewnior
@@ -663,6 +664,7 @@ blacklist ${HOME}/.torcs
 blacklist ${HOME}/.tremulous
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.tuxguitar*
+blacklist ${HOME}/.tvbrowser
 blacklist ${HOME}/.unknown-horizons
 blacklist ${HOME}/.viking
 blacklist ${HOME}/.viking-maps

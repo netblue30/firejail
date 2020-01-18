@@ -22,7 +22,6 @@ noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.subversion
 
 # Allow python (blacklisted by disable-interpreters.inc)
-include allow-python2.inc
 include allow-python3.inc
 
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-common.inc.

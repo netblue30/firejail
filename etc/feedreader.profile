@@ -40,8 +40,10 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 disable-mnt
+private-cache
 private-dev
 private-tmp
 

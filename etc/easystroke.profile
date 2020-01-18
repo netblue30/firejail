@@ -16,7 +16,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.easystroke
+whitelist ${HOME}/.easystroke
+include whitelist-common.inc
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
@@ -35,6 +39,7 @@ novideo
 protocol unix
 seccomp
 shell none
+tracelog
 
 disable-mnt
 # breaks custom shell command functionality

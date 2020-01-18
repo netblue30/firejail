@@ -9,10 +9,14 @@ include globals.local
 
 noblacklist ${HOME}/.curlrc
 
+blacklist /tmp/.X11-unix
+
 include disable-common.inc
 include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+# depending on workflow you can uncomment the below or put 'include disable-xdg.inc' in your curl.local
+#include disable-xdg.inc
 
 include whitelist-usr-share-common.inc
 

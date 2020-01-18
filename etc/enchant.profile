@@ -8,8 +8,6 @@ include globals.local
 
 noblacklist ${HOME}/.config/enchant
 
-blacklist /tmp/.X11-unix
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

@@ -6,6 +6,8 @@ include gconf.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 noblacklist ${HOME}/.config/gconf
 
 # Allow python (blacklisted by disable-interpreters.inc)

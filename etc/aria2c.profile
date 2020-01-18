@@ -11,6 +11,7 @@ noblacklist ${HOME}/.config/aria2
 noblacklist ${HOME}/.netrc
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

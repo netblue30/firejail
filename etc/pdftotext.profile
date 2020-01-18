@@ -6,6 +6,8 @@ include pdftotext.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 noblacklist ${DOCUMENTS}
 
 include disable-common.inc

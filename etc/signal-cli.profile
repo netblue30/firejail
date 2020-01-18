@@ -7,6 +7,7 @@ include signal-cli.local
 include globals.local
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 noblacklist ${HOME}/.local/share/signal-cli
 

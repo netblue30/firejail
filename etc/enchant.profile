@@ -6,6 +6,8 @@ include enchant.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 noblacklist ${HOME}/.config/enchant
 
 include disable-common.inc

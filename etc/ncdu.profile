@@ -6,6 +6,8 @@ include ncdu.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 include disable-exec.inc
 
 caps.drop all

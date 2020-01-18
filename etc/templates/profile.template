@@ -42,6 +42,7 @@
 #  ${HOME} (user's home)
 #  ${PATH} (contents of PATH envvar)
 #  ${MUSIC}
+#  ${RUNUSER} (/run/user/UID)
 #  ${VIDEOS}
 #
 # Check contents of ~/.config/user-dirs.dirs to see how they translate to actual paths.
@@ -59,6 +60,8 @@ include globals.local
 ##blacklist PATH
 # Disable X11 (CLI only), see also 'x11 none' below
 #blacklist /tmp/.X11-unix
+# Disable Wayland
+#blacklist ${RUNUSER}/wayland-*
 
 # It is common practice to add files/dirs containing program-specific configuration
 # (often ${HOME}/PROGRAMNAME or ${HOME}/.config/PROGRAMNAME) into disable-programs.inc

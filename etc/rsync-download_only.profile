@@ -13,6 +13,7 @@ include globals.local
 # Usage: firejail --profile=rsync-download_only rsync
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

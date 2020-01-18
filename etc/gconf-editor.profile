@@ -8,6 +8,7 @@ include gconf-editor.local
 #include globals.local
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 ignore net none
 ignore x11 none

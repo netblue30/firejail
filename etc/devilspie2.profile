@@ -6,6 +6,8 @@ include devilspie2.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 noblacklist ${HOME}/.config/devilspie2
 
 # Allow lua (blacklisted by disable-interpreters.inc)

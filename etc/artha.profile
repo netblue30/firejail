@@ -11,6 +11,7 @@ noblacklist ${HOME}/.config/artha.log
 noblacklist ${HOME}/.config/enchant
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

@@ -12,6 +12,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 # include disable-programs.inc
+# include disable-xdg.inc
 
 caps.drop all
 net none
@@ -32,3 +33,5 @@ shell none
 private-bin baobab
 private-dev
 private-tmp
+
+read-only ${HOME}

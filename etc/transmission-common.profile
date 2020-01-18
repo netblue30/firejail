@@ -40,6 +40,7 @@ seccomp
 shell none
 tracelog
 
+private-cache
 private-dev
 private-lib
 private-tmp

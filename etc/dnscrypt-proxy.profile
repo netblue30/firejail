@@ -8,6 +8,7 @@ include dnscrypt-proxy.local
 include globals.local
 
 blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 noblacklist /sbin
 noblacklist /usr/sbin

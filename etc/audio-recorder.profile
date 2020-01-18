@@ -7,8 +7,6 @@ include audio-recorder.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
-
 noblacklist ${MUSIC}
 
 include disable-common.inc
@@ -42,7 +40,6 @@ protocol unix
 seccomp
 shell none
 tracelog
-x11 none
 
 disable-mnt
 # private-bin audio-recorder

@@ -7,7 +7,6 @@ include seahorse.local
 include globals.local
 
 blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
 
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.ssh

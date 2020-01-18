@@ -4,17 +4,14 @@
 # Persistent local customizations
 include sylpheed.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 noblacklist ${HOME}/.sylpheed-2.0
-# when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your sylpheed.local
-# and 'blacklist' it in your disable-common.local too so it is  kept hidden from other applications
 
-blacklist ${HOME}/.claws-mail
+mkdir ${HOME}/.sylpheed-2.0
+whitelist ${HOME}/.sylpheed-2.0
 
-nowhitelist /usr/share/doc/claws-mail
 whitelist /usr/share/sylpheed
 
 # Redirect
-include claws-mail.profile
+include email-common.profile

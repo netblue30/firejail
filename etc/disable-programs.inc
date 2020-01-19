@@ -291,6 +291,7 @@ blacklist ${HOME}/.config/redshift
 blacklist ${HOME}/.config/redshift.conf
 blacklist ${HOME}/.config/remmina
 blacklist ${HOME}/.config/ristretto
+blacklist ${HOME}/.config/rtv
 blacklist ${HOME}/.config/scribus
 blacklist ${HOME}/.config/scribusrc
 blacklist ${HOME}/.config/sinew.in
@@ -575,6 +576,7 @@ blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/qutebrowser
 blacklist ${HOME}/.local/share/remmina
 blacklist ${HOME}/.local/share/rhythmbox
+blacklist ${HOME}/.local/share/rtv
 blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/signal-cli
 blacklist ${HOME}/.local/share/spotify

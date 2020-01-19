@@ -151,4 +151,4 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ### New profiles:
 
-firefox-x11, tvbrowser
+firefox-x11, tvbrowser, rtv

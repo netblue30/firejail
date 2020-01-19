@@ -24,6 +24,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -45,3 +46,5 @@ private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gtk-3
 private-dev
 private-tmp
 
+read-only ${HOME}
+read-write ${HOME}/.config/celluloid

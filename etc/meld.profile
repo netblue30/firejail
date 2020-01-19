@@ -23,7 +23,7 @@ noblacklist ${HOME}/.subversion
 
 # Allow python (blacklisted by disable-interpreters.inc)
 # Python 2 is EOL (see #3164). Uncomment the next line (or put it into your meld.local) if you understand the risks but want python 2 support for older meld versions.
-include allow-python3.inc
+#include allow-python3.inc
 
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-common.inc.
 #include disable-common.inc

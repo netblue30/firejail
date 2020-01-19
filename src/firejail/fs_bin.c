@@ -185,12 +185,12 @@ static void duplicate(char *fname) {
 	// add to private-lib list
 	if (cfg.bin_private_lib == NULL) {
 		if (asprintf(&cfg.bin_private_lib, "%s,%s",fname, full_path) == -1)
-			errExit("asprinf");
+			errExit("asprintf");
 	}
 	else {
 		char *tmp;
 		if (asprintf(&tmp, "%s,%s,%s", cfg.bin_private_lib, fname, full_path) == -1)
-			errExit("asprinf");
+			errExit("asprintf");
 		free(cfg.bin_private_lib);
 		cfg.bin_private_lib = tmp;
 	}

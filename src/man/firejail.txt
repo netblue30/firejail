@@ -2235,7 +2235,7 @@ $ firejail --tunnel firefox
 .br
 .TP
 \fB\-\-version
-Print program version and exit.
+Print program version/compile time support and exit.
 .br
 
 .br
@@ -2245,6 +2245,20 @@ $ firejail \-\-version
 .br
 firejail version 0.9.27
 
+Compile time support:
+    - AppArmor support is enabled
+    - AppImage support is enabled
+    - chroot support is enabled
+    - file and directory whitelisting support is enabled
+    - file transfer support is enabled
+    - firetunnel support is enabled
+    - networking support is enabled
+    - overlayfs support is enabled
+    - private-home support is enabled
+    - seccomp-bpf support is enabled
+    - user namespace support is enabled
+    - X11 sandboxing support is enabled
+.br
 .TP
 \fB\-\-veth-name=name
 Use this name for the interface connected to the bridge for --net=bridge_interface commands,

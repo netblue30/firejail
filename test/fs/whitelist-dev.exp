@@ -49,6 +49,8 @@ sleep 1
 send -- "ls /dev | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
+	"10" {puts "OK\n"}
+	"11" {puts "OK\n"}
 	"12" {puts "OK\n"}
 	"13" {puts "OK\n"}
 	"14" {puts "OK\n"}

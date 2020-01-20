@@ -27,6 +27,7 @@ whitelist /usr/share/hunspell
 whitelist /usr/share/hwdata
 whitelist /usr/share/icons
 whitelist /usr/share/knotifications5
+whitelist /usr/share/icu
 whitelist /usr/share/kservices5
 whitelist /usr/share/Kvantum
 whitelist /usr/share/kxmlgui5

@@ -6,13 +6,16 @@ include thunderbird.local
 # Persistent global definitions
 include globals.local
 
-# Users have thunderbird set to open a browser by clicking a link in an email
-# We are not allowed to blacklist browser-specific directories
+# writable-run-user and dbus are needed by enigmail
+ignore nodbus
+writable-run-user
 
-noblacklist ${HOME}/.cache/thunderbird
-noblacklist ${HOME}/.gnupg
-# noblacklist ${HOME}/.icedove
-noblacklist ${HOME}/.thunderbird
+# If you want to read local mail stored in /var/mail, add the following to thunderbird.local:
+#noblacklist /var/mail
+#noblacklist /var/spool/mail
+#whitelist /var/mail
+#whitelist /var/spool/mail
+#writable-var
 
 # Uncomment the next 4 lines or put them in your thunderbird.local to
 # allow Firefox to load your profile when clicking a link in an email
@@ -20,6 +23,14 @@ noblacklist ${HOME}/.thunderbird
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.cache/mozilla/firefox
 #whitelist ${HOME}/.mozilla
+
+noblacklist ${HOME}/.cache/thunderbird
+noblacklist ${HOME}/.gnupg
+# noblacklist ${HOME}/.icedove
+noblacklist ${HOME}/.thunderbird
+
+include disable-passwdmgr.inc
+include disable-xdg.inc
 
 # If you have setup Thunderbird to archive emails to a local folder,
 # make sure you add the path to that folder to the mkdir and whitelist
@@ -34,23 +45,19 @@ whitelist ${HOME}/.gnupg
 # whitelist ${HOME}/.icedove
 whitelist ${HOME}/.thunderbird
 
-#whitelist /usr/share/mozilla
-#include whitelist-usr-share-common.inc
+whitelist /usr/share/gnupg
+whitelist /usr/share/mozilla
+whitelist /usr/share/webext
+include whitelist-usr-share-common.inc
+
+# machine-id breaks audio in browsers; enable or put it in your thunderbird.local when sound is not required
+#machine-id
+novideo
 
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 ignore private-tmp
-# machine-id breaks audio in browsers; enable or put it in your thunderbird.local when sound is not required
-# machine-id
+
 read-only ${HOME}/.config/mimeapps.list
-# writable-run-user and dbus are needed by enigmail
-writable-run-user
-ignore nodbus
 
-# If you want to read local mail stored in /var/mail, add the following to thunderbird.local:
-# noblacklist /var/mail
-# noblacklist /var/spool/mail
-# writable-var
-
-# allow browsers
 # Redirect
 include firefox-common.profile

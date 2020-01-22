@@ -14,10 +14,6 @@ mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
 
-whitelist /usr/share/mozilla
-whitelist /usr/share/webext
-include whitelist-usr-share-common.inc
-
 # firefox requires a shell to launch on Arch.
 #private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which
 # Fedora use shell scripts to launch firefox, at least this is required

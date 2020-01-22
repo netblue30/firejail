@@ -6,6 +6,7 @@ include firefox-common.local
 # added by caller profile
 #include globals.local
 
+
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
@@ -21,6 +22,9 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
+whitelist /usr/share/mozilla
+whitelist /usr/share/webext
+
 mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
@@ -28,6 +32,7 @@ whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
 include whitelist-var-common.inc
+include whitelist-usr-share-common.inc
 
 apparmor
 caps.drop all

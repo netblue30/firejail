@@ -4,4 +4,4 @@
 # License GPL v2
 
 ./catchsignal.sh &
-./catchsignal.sh &
+./catchsignal2.sh &

@@ -1,3 +1,6 @@
+// This file is part of Firejail project
+// Copyright (C) 2014-2020 Firejail Authors
+// License GPL v2
 #define _XOPEN_SOURCE 600
 #include <stdlib.h>
 #include <stdio.h>

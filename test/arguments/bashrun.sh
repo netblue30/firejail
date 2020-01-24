@@ -1,4 +1,7 @@
 #!/bin/bash
+# This file is part of Firejail project
+# Copyright (C) 2014-2020 Firejail Authors
+# License GPL v2
 
 echo "TESTING: 1.1 - simple args"
 firejail --env=FIREJAIL_TEST_ARGUMENTS=yes --quiet faudit arg1 arg2

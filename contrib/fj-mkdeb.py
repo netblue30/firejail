@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
+# This file is part of Firejail project
+# Copyright (C) 2014-2020 Firejail Authors
+# License GPL v2
 
-# This script is automate the workaround for https://github.com/netblue30/firejail/issues/772
+# This script automates the workaround for https://github.com/netblue30/firejail/issues/772
 
 import os, re, shlex, subprocess, sys
 

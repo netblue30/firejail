@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# This file is part of Firejail project
+# Copyright (C) 2014-2020 Firejail Authors
+# License GPL v2
 """
 Sort the items of multi-item options in profiles, the following options are supported:
   private-bin, private-etc, private-lib, caps.drop, caps.keep, seccomp.drop, seccomp.drop, protocol

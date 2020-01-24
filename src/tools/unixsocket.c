@@ -1,3 +1,6 @@
+// This file is part of Firejail project
+// Copyright (C) 2014-2020 Firejail Authors
+// License GPL v2
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>

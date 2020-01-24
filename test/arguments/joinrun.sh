@@ -1,4 +1,7 @@
 #!/bin/bash
+# This file is part of Firejail project
+# Copyright (C) 2014-2020 Firejail Authors
+# License GPL v2
 
 echo "TESTING: 3.1 - simple args"
 firejail --env=FIREJAIL_TEST_ARGUMENTS=yes --join=joinrun faudit arg1 arg2

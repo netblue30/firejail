@@ -1,4 +1,8 @@
 #!/bin/sh
+# This file is part of Firejail project
+# Copyright (C) 2014-2020 Firejail Authors
+# License GPL v2
+
 # based on http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
 # a code archive should already be available
 

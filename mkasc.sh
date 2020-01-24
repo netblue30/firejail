@@ -1,4 +1,7 @@
 #!/bin/sh
+# This file is part of Firejail project
+# Copyright (C) 2014-2020 Firejail Authors
+# License GPL v2
 
 echo "Calculationg SHA256 for all files in /transfer - firejail version $1"
 

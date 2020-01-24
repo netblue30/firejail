@@ -1,4 +1,7 @@
 #!/bin/sh
+# This file is part of Firejail project
+# Copyright (C) 2014-2020 Firejail Authors
+# License GPL v2
 
 echo "extracting UID_MIN and GID_MIN"
 echo "#ifndef FIREJAIL_UIDS_H" > uids.h

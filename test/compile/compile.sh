@@ -1,4 +1,7 @@
 #!/bin/bash
+# This file is part of Firejail project
+# Copyright (C) 2014-2020 Firejail Authors
+# License GPL v2
 
 arr[1]="TEST 1: standard compilation"
 arr[2]="TEST 2: compile seccomp disabled"

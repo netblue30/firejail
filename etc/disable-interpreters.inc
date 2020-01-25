@@ -7,6 +7,8 @@ blacklist ${PATH}/gjs
 blacklist ${PATH}/gjs-console
 blacklist /usr/lib/gjs
 blacklist /usr/lib64/gjs
+blacklist /usr/lib/libgjs*
+blacklist /usr/lib64/libgjs*
 
 # Lua
 blacklist ${PATH}/lua*

@@ -97,6 +97,7 @@ blacklist ${HOME}/.config/MusicBrainz
 blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/PBE
+blacklist ${HOME}/.config/Philipp Schmieder
 blacklist ${HOME}/.config/QGIS
 blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/Qlipper

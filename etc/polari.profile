@@ -6,6 +6,8 @@ include polari.local
 # Persistent global definitions
 include globals.local
 
+# Allow gjs (blacklisted by disable-interpreters.inc)
+include allow-gjs.inc
 
 include disable-common.inc
 include disable-devel.inc

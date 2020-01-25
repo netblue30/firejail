@@ -93,6 +93,9 @@ include globals.local
 # Allow ruby (blacklisted by disable-interpreters.inc)
 #include allow-ruby.inc
 
+# Allow gjs (blacklisted by disable-interpreters.inc)
+#include allow-gjs.inc
+
 # Allows files commonly used by IDEs
 #include allow-common-devel.inc
 

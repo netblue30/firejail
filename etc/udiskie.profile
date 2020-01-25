@@ -31,7 +31,7 @@ notv
 nou2f
 novideo
 protocol unix
-seccomp
+seccomp !request_key
 shell none
 tracelog
 

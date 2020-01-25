@@ -45,7 +45,7 @@ nosound
 notv
 nou2f
 protocol unix
-seccomp
+seccomp !mbind
 shell none
 tracelog
 

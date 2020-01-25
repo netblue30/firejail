@@ -13,6 +13,9 @@ noblacklist ${HOME}/.cache/org.gnome.Books
 noblacklist ${HOME}/.config/libreoffice
 noblacklist ${HOME}/.local/share/gnome-photos
 
+# Allow gjs (blacklisted by disable-interpreters.inc)
+include allow-gjs.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc

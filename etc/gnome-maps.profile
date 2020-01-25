@@ -13,6 +13,9 @@ noblacklist ${HOME}/.cache/org.gnome.Maps
 noblacklist ${HOME}/.local/share/flatpak
 noblacklist ${HOME}/.local/share/maps-places.json
 
+# Allow gjs (blacklisted by disable-interpreters.inc)
+include allow-gjs.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

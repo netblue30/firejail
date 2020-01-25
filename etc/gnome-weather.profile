@@ -10,6 +10,9 @@ include globals.local
 
 noblacklist ${HOME}/.cache/libgweather
 
+# Allow gjs (blacklisted by disable-interpreters.inc)
+include allow-gjs.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

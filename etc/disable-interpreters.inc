@@ -2,6 +2,12 @@
 # Persistent customizations should go in a .local file.
 include disable-interpreters.local
 
+# gjs
+blacklist ${PATH}/gjs
+blacklist ${PATH}/gjs-console
+blacklist /usr/lib/gjs
+blacklist /usr/lib64/gjs
+
 # Lua
 blacklist ${PATH}/lua*
 blacklist /usr/include/lua*

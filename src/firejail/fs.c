@@ -521,12 +521,16 @@ void fs_remount(const char *dir, OPERATION op, unsigned check_mnt) {
 		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
 		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT, NULL) < 0)
 			errExit("remounting");
+		// run a sanity check on /proc/self/mountinfo
 		if (check_mnt) {
-			// run a sanity check on /proc/self/mountinfo
+			// confirm target of the last mount operation was dir; if there are other
+			// mount points contained inside dir, one of those will show up as target
+			// of the last mount operation instead
 			MountData *mptr = get_last_mount();
 			size_t len = strlen(dir);
-			if (strncmp(mptr->dir, dir, len) != 0 ||
+			if ((strncmp(mptr->dir, dir, len) != 0 ||
 			   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
+			   && strcmp(dir, "/") != 0) // support read-only=/
 				errLogExit("invalid %s mount", opstr[op]);
 		}
 		fs_logger2(opstr[op], dir);

@@ -13,7 +13,6 @@ include disable-interpreters.inc
 
 mkdir ${HOME}/.config/Beaker Browser
 whitelist ${HOME}/.config/Beaker Browser
-whitelist ${DOWNLOADS}
 include whitelist-common.inc
 
 # Redirect

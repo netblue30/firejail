@@ -103,8 +103,8 @@ typedef struct bridge_t {
 
 	// flags
 	uint8_t arg_ip_none;	// --ip=none
-  uint8_t arg_ip_dhcp;
-  uint8_t arg_ip6_dhcp;
+	uint8_t arg_ip_dhcp;
+	uint8_t arg_ip6_dhcp;
 	uint8_t macvlan;	// set by --net=eth0 (or eth1, ...); reset by --net=br0 (or br1, ...)
 	uint8_t configured;
 	uint8_t scan;		// set by --scan

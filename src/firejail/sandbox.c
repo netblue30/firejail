@@ -337,8 +337,8 @@ static int monitor_application(pid_t app_pid) {
 				continue;
 			if (pid == 1)
 				continue;
-      if (pid == dhclient4_pid || pid == dhclient6_pid)
-        continue;
+			if (pid == dhclient4_pid || pid == dhclient6_pid)
+				continue;
 
 			// todo: make this generic
 			// Dillo browser leaves a dpid process running, we need to shut it down
@@ -995,7 +995,7 @@ int sandbox(void* sandbox_arg) {
 		fs_dev_disable_dvd();
 
 	if (arg_nou2f)
-	        fs_dev_disable_u2f();
+		fs_dev_disable_u2f();
 
 	if (arg_novideo)
 		fs_dev_disable_video();
@@ -1020,7 +1020,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// start dhcp client
 	//****************************
-  dhcp_start();
+	dhcp_start();
 
 	//****************************
 	// set application environment

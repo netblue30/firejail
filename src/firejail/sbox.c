@@ -182,7 +182,8 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 
 		// close all other file descriptors
 		int max = 20; // getdtablesize() is overkill for a firejail process
-		for (int i = 3; i < max; i++)
+		int i = 3;
+		for (i = 3; i < max; i++)
 			close(i); // close open files
 
 		umask(027);

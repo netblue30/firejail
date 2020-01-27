@@ -151,6 +151,11 @@ blacklist /var/lib/systemd
 # blacklist /var/run/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 
+# openrc
+blacklist /etc/runlevels/
+blacklist /etc/init.d/
+blacklist /etc/rc.conf
+
 # VirtualBox
 blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.config/VirtualBox

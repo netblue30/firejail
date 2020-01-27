@@ -337,7 +337,7 @@ static int monitor_application(pid_t app_pid) {
 				continue;
 			if (pid == 1)
 				continue;
-			if (pid == dhclient4_pid || pid == dhclient6_pid)
+			if ((pid_t) pid == dhclient4_pid || (pid_t) pid == dhclient6_pid)
 				continue;
 
 			// todo: make this generic

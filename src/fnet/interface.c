@@ -375,9 +375,10 @@ void net_if_ip6(const char *ifname, const char *addr6) {
 
 static int net_netlink_address_tentative(struct nlmsghdr *current_header) {
 	struct ifaddrmsg *msg = NLMSG_DATA(current_header);
+	int has_flags = 0;
+#ifdef IFA_FLAGS
 	struct rtattr *rta = IFA_RTA(msg);
 	size_t msg_len = IFA_PAYLOAD(current_header);
-	int has_flags = 0;
 	while (RTA_OK(rta, msg_len)) {
 		if (rta->rta_type == IFA_FLAGS) {
 			has_flags = 1;
@@ -387,12 +388,13 @@ static int net_netlink_address_tentative(struct nlmsghdr *current_header) {
 		}
 		rta = RTA_NEXT(rta, msg_len);
 	}
+#endif
 	// According to <linux/if_addr.h>, if an IFA_FLAGS attribute is present,
 	// the field ifa_flags should be ignored.
 	return !has_flags && (msg->ifa_flags & IFA_F_TENTATIVE);
 }
 
-static int net_netlink_if_has_ll(int sock, int index) {
+static int net_netlink_if_has_ll(int sock, uint32_t index) {
 	struct {
 		struct nlmsghdr header;
 		struct ifaddrmsg message;
@@ -412,7 +414,7 @@ static int net_netlink_if_has_ll(int sock, int index) {
 		ssize_t len = recv(sock, buf, sizeof(buf), 0);
 		if (len < 0)
 			errExit("recv");
-		if (len < sizeof(struct nlmsghdr)) {
+		if (len < (ssize_t) sizeof(struct nlmsghdr)) {
 			fprintf(stderr, "Received incomplete netlink message\n");
 			exit(1);
 		}
@@ -469,7 +471,11 @@ void net_if_waitll(const char *ifname) {
 		exit(1);
 	}
 	close(inet6_sock);
-	int index = ifr.ifr_ifindex;
+	if (ifr.ifr_ifindex < 0) {
+		fprintf(stderr, "Error fnet: interface index is negative\n");
+		exit(1);
+	}
+	uint32_t index = (uint32_t) ifr.ifr_ifindex;
 
 	// poll for link-local address
 	int netlink_sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);

@@ -334,6 +334,8 @@ glitsj16 (https://github.com/glitsj16)
 	- new profiles: masterpdfeditor
 gm10 (https://github.com/gm10)
 	- get_user() do not use the unreliable getlogin()
+GovanifY (https://github.com/GovanifY)
+	- Blacklisting openrc paths by defaults
 graywolf (https://github.com/graywolf)
 	- spelling fix
 greigdp (https://github.com/greigdp)

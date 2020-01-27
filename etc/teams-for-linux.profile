@@ -7,6 +7,8 @@ include teams-for-linux.local
 # added by included profile
 #include globals.local
 
+ignore nodbus
+
 noblacklist ${HOME}/.config/teams-for-linux
 
 include disable-devel.inc
@@ -18,7 +20,6 @@ whitelist ${HOME}/.config/teams-for-linux
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-ignore nodbus
 nou2f
 novideo
 shell none

@@ -7,6 +7,8 @@ include whalebird.local
 # added by included profile
 #include globals.local
 
+ignore nodbus
+
 noblacklist ${HOME}/.config/Whalebird
 
 include disable-devel.inc
@@ -19,10 +21,10 @@ whitelist ${HOME}/.config/Whalebird
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-ignore nodbus
 no3d
 nou2f
 novideo
+protocol unix,inet,inet6
 shell none
 
 disable-mnt

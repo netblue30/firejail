@@ -9,6 +9,9 @@ include wire-desktop.local
 
 # Debian/Ubuntu use /opt/Wire. As that is not in PATH by default, run `firejail /opt/Wire/wire-desktop` to start it.
 
+ignore caps.drop all
+ignore nodbus
+
 noblacklist ${HOME}/.config/Wire
 
 include disable-devel.inc
@@ -19,7 +22,6 @@ whitelist ${HOME}/.config/Wire
 include whitelist-common.inc
 
 caps.keep sys_admin,sys_chroot
-ignore nodbus
 nou2f
 shell none
 

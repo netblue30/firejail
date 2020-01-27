@@ -567,6 +567,31 @@ If the corresponding interface doesn't have an IP address configured, this
 option is enabled by default.
 
 .TP
+\fB\-\-ip=dhcp
+Acquire an IP address and default gateway for the last interface defined by a
+\-\-net option, as well as set the DNS servers according to the DHCP response.
+This option requires the ISC dhclient DHCP client to be installed and will start
+it automatically inside the sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=br0 \-\-ip=dhcp
+.br
+
+.br
+This option should not be used in conjunction with the \-\-dns option if the
+DHCP server is set to configure DNS servers for the clients, because the
+manually specified DNS servers will be overwritten.
+
+.br
+The DHCP client will NOT release the DHCP lease when the sandbox terminates.
+If your DHCP server requires leases to be explicitly released, consider running
+a DHCP client and releasing the lease manually in conjunction with the
+\-\-net=none option.
+
+.TP
 \fB\-\-ip6=address
 Assign IPv6 addresses to the last network interface defined by a \-\-net option.
 .br
@@ -577,6 +602,30 @@ Example:
 $ firejail \-\-net=eth0 \-\-ip6=2001:0db8:0:f101::1/64 firefox
 
 Note: you don't need this option if you obtain your ip6 address from router via SLAAC (your ip6 address and default route will be configured by kernel automatically).
+
+.TP
+\fB\-\-ip6=dhcp
+Acquire an IPv6 address and default gateway for the last interface defined by a
+\-\-net option, as well as set the DNS servers according to the DHCP response.
+This option requires the ISC dhclient DHCP client to be installed and will start
+it automatically inside the sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=br0 \-\-ip6=dhcp
+.br
+
+.br
+This option should not be used in conjunction with the \-\-dns option if the
+DHCP server is set to configure DNS servers for the clients, because the
+manually specified DNS servers will be overwritten.
+
+.br
+The DHCP client will NOT release the DHCP lease when the sandbox terminates.
+If your DHCP server requires leases to be explicitly released, consider running
+a DHCP client and releasing the lease manually.
 
 .TP
 \fB\-\-iprange=address,address

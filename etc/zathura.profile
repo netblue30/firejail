@@ -20,6 +20,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/zathura
 mkdir ${HOME}/.local/share/zathura
+whitelist /usr/share/doc
 whitelist /usr/share/zathura
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -16,6 +16,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 whitelist /usr/share/devhelp
+whitelist /usr/share/doc
+whitelist /usr/share/gtk-doc/html
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 

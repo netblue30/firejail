@@ -18,6 +18,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/zathura
+mkdir ${HOME}/.local/share/zathura
+
 caps.drop all
 machine-id
 # net none
@@ -41,8 +44,6 @@ private-dev
 private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id
 private-tmp
 
-mkdir ${HOME}/.config/zathura
-mkdir ${HOME}/.local/share/zathura
 read-only ${HOME}
 read-write ${HOME}/.config/zathura
 read-write ${HOME}/.local/share/zathura

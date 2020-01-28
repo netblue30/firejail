@@ -374,81 +374,83 @@ void net_if_ip6(const char *ifname, const char *addr6) {
 }
 
 static int net_netlink_address_tentative(struct nlmsghdr *current_header) {
-  struct ifaddrmsg *msg = NLMSG_DATA(current_header);
-  struct rtattr *rta = IFA_RTA(msg);
-  size_t msg_len = IFA_PAYLOAD(current_header);
-  int has_flags = 0;
-  while (RTA_OK(rta, msg_len)) {
-    if (rta->rta_type == IFA_FLAGS) {
-      has_flags = 1;
-      uint32_t *flags = RTA_DATA(rta);
-      if (*flags & IFA_F_TENTATIVE)
-        return 1;
-    }
-    rta = RTA_NEXT(rta, msg_len);
-  }
-  // According to <linux/if_addr.h>, if an IFA_FLAGS attribute is present,
-  // the field ifa_flags should be ignored.
-  return !has_flags && (msg->ifa_flags & IFA_F_TENTATIVE);
+	struct ifaddrmsg *msg = NLMSG_DATA(current_header);
+	int has_flags = 0;
+#ifdef IFA_FLAGS
+	struct rtattr *rta = IFA_RTA(msg);
+	size_t msg_len = IFA_PAYLOAD(current_header);
+	while (RTA_OK(rta, msg_len)) {
+		if (rta->rta_type == IFA_FLAGS) {
+			has_flags = 1;
+			uint32_t *flags = RTA_DATA(rta);
+			if (*flags & IFA_F_TENTATIVE)
+				return 1;
+		}
+		rta = RTA_NEXT(rta, msg_len);
+	}
+#endif
+	// According to <linux/if_addr.h>, if an IFA_FLAGS attribute is present,
+	// the field ifa_flags should be ignored.
+	return !has_flags && (msg->ifa_flags & IFA_F_TENTATIVE);
 }
 
-static int net_netlink_if_has_ll(int sock, int index) {
-  struct {
-    struct nlmsghdr header;
-    struct ifaddrmsg message;
-  } req;
-  memset(&req, 0, sizeof(req));
-  req.header.nlmsg_len = NLMSG_LENGTH(sizeof(req.message));
-  req.header.nlmsg_flags = NLM_F_REQUEST | NLM_F_DUMP;
-  req.header.nlmsg_type = RTM_GETADDR;
-  req.message.ifa_family = AF_INET6;
-  if (send(sock, &req, req.header.nlmsg_len, 0) != req.header.nlmsg_len)
-    errExit("send");
+static int net_netlink_if_has_ll(int sock, uint32_t index) {
+	struct {
+		struct nlmsghdr header;
+		struct ifaddrmsg message;
+	} req;
+	memset(&req, 0, sizeof(req));
+	req.header.nlmsg_len = NLMSG_LENGTH(sizeof(req.message));
+	req.header.nlmsg_flags = NLM_F_REQUEST | NLM_F_DUMP;
+	req.header.nlmsg_type = RTM_GETADDR;
+	req.message.ifa_family = AF_INET6;
+	if (send(sock, &req, req.header.nlmsg_len, 0) != req.header.nlmsg_len)
+		errExit("send");
 
-  int found = 0;
-  int all_parts_processed = 0;
-  while (!all_parts_processed) {
-    char buf[16384];
-    ssize_t len = recv(sock, buf, sizeof(buf), 0);
-    if (len < 0)
-      errExit("recv");
-    if (len < sizeof(struct nlmsghdr)) {
-      fprintf(stderr, "Received incomplete netlink message\n");
-      exit(1);
-    }
+	int found = 0;
+	int all_parts_processed = 0;
+	while (!all_parts_processed) {
+		char buf[16384];
+		ssize_t len = recv(sock, buf, sizeof(buf), 0);
+		if (len < 0)
+			errExit("recv");
+		if (len < (ssize_t) sizeof(struct nlmsghdr)) {
+			fprintf(stderr, "Received incomplete netlink message\n");
+			exit(1);
+		}
 
-    struct nlmsghdr *current_header = (struct nlmsghdr *) buf;
-    while (NLMSG_OK(current_header, len)) {
-      switch (current_header->nlmsg_type) {
-      case RTM_NEWADDR: {
-        struct ifaddrmsg *msg = NLMSG_DATA(current_header);
-        if (!found && msg->ifa_index == index && msg->ifa_scope == RT_SCOPE_LINK &&
-            !net_netlink_address_tentative(current_header))
-          found = 1;
-      }
-        break;
-      case NLMSG_NOOP:
-        break;
-      case NLMSG_DONE:
-        all_parts_processed = 1;
-        break;
-      case NLMSG_ERROR: {
-        struct nlmsgerr *err = NLMSG_DATA(current_header);
-        fprintf(stderr, "Netlink error: %d\n", err->error);
-        exit(1);
-      }
-        break;
-      default:
-        fprintf(stderr, "Unknown netlink message type: %u\n", current_header->nlmsg_type);
-        exit(1);
-        break;
-      }
+		struct nlmsghdr *current_header = (struct nlmsghdr *) buf;
+		while (NLMSG_OK(current_header, len)) {
+			switch (current_header->nlmsg_type) {
+			case RTM_NEWADDR: {
+				struct ifaddrmsg *msg = NLMSG_DATA(current_header);
+				if (!found && msg->ifa_index == index && msg->ifa_scope == RT_SCOPE_LINK &&
+						!net_netlink_address_tentative(current_header))
+					found = 1;
+			}
+				break;
+			case NLMSG_NOOP:
+				break;
+			case NLMSG_DONE:
+				all_parts_processed = 1;
+				break;
+			case NLMSG_ERROR: {
+				struct nlmsgerr *err = NLMSG_DATA(current_header);
+				fprintf(stderr, "Netlink error: %d\n", err->error);
+				exit(1);
+			}
+				break;
+			default:
+				fprintf(stderr, "Unknown netlink message type: %u\n", current_header->nlmsg_type);
+				exit(1);
+				break;
+			}
 
-      current_header = NLMSG_NEXT(current_header, len);
-    }
-  }
+			current_header = NLMSG_NEXT(current_header, len);
+		}
+	}
 
-  return found;
+	return found;
 }
 
 // wait for a link-local IPv6 address for DHCPv6
@@ -468,27 +470,31 @@ void net_if_waitll(const char *ifname) {
 		perror("ioctl SIOGIFINDEX");
 		exit(1);
 	}
-  close(inet6_sock);
-  int index = ifr.ifr_ifindex;
+	close(inet6_sock);
+	if (ifr.ifr_ifindex < 0) {
+		fprintf(stderr, "Error fnet: interface index is negative\n");
+		exit(1);
+	}
+	uint32_t index = (uint32_t) ifr.ifr_ifindex;
 
 	// poll for link-local address
-  int netlink_sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
-  if (netlink_sock < 0)
-    errExit("socket");
-  int tries = 0;
-  int found = 0;
-  while (tries < 60 && !found) {
-    if (tries >= 1)
-      usleep(500000);
+	int netlink_sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
+	if (netlink_sock < 0)
+		errExit("socket");
+	int tries = 0;
+	int found = 0;
+	while (tries < 60 && !found) {
+		if (tries >= 1)
+			usleep(500000);
 
-    found = net_netlink_if_has_ll(netlink_sock, index);
+		found = net_netlink_if_has_ll(netlink_sock, index);
 
-    tries++;
-  }
-  close(netlink_sock);
+		tries++;
+	}
+	close(netlink_sock);
 
-  if (!found) {
-    fprintf(stderr, "Waiting for link-local IPv6 address of %s timed out\n", ifname);
-    exit(1);
-  }
+	if (!found) {
+		fprintf(stderr, "Waiting for link-local IPv6 address of %s timed out\n", ifname);
+		exit(1);
+	}
 }

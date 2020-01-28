@@ -701,19 +701,19 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				exit(1);
 			}
 
-      // configure this IP address for the last bridge defined
-      if (strcmp(ptr + 4, "dhcp") == 0)
-        br->arg_ip6_dhcp = 1;
-      else {
-        if (check_ip46_address(ptr + 4) == 0) {
-          fprintf(stderr, "Error: invalid IPv6 address\n");
-          exit(1);
-        }
+			// configure this IP address for the last bridge defined
+			if (strcmp(ptr + 4, "dhcp") == 0)
+				br->arg_ip6_dhcp = 1;
+			else {
+				if (check_ip46_address(ptr + 4) == 0) {
+					fprintf(stderr, "Error: invalid IPv6 address\n");
+					exit(1);
+				}
 
-        br->ip6sandbox = strdup(ptr + 4);
-        if (br->ip6sandbox == NULL)
-          errExit("strdup");
-      }
+				br->ip6sandbox = strdup(ptr + 4);
+				if (br->ip6sandbox == NULL)
+					errExit("strdup");
+			}
 		}
 		else
 			warning_feature_disabled("networking");

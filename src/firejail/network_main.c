@@ -246,10 +246,10 @@ void net_check_cfg(void) {
 	if (cfg.defaultgw)
 		check_default_gw(cfg.defaultgw);
 	else {
-    // if the first network has no assigned address,
-    // do not try to set up a gateway, because it will fail
-    if (cfg.bridge0.arg_ip_none)
-      return;
+		// if the first network has no assigned address,
+		// do not try to set up a gateway, because it will fail
+		if (cfg.bridge0.arg_ip_none)
+			return;
 		// first network is a regular bridge
 		if (cfg.bridge0.macvlan == 0)
 			cfg.defaultgw = cfg.bridge0.ip;

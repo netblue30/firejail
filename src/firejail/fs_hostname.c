@@ -171,10 +171,10 @@ void fs_resolvconf(void) {
 	}
 
 	if (cfg.dns1) {
-    if (any_dhcp())
-      fwarning("network setup uses DHCP, nameservers will likely be overwritten\n");
+		if (any_dhcp())
+			fwarning("network setup uses DHCP, nameservers will likely be overwritten\n");
 		fprintf(fp, "nameserver %s\n", cfg.dns1);
-  }
+	}
 	if (cfg.dns2)
 		fprintf(fp, "nameserver %s\n", cfg.dns2);
 	if (cfg.dns3)

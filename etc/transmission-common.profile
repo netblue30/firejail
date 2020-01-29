@@ -3,6 +3,9 @@
 # This file is overwritten after every install/update
 # Persistent local customizations
 include transmission-common.local
+# Persistent global definitions
+# added by caller profile
+#include globals.local
 
 noblacklist ${HOME}/.cache/transmission
 noblacklist ${HOME}/.config/transmission

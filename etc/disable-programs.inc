@@ -85,6 +85,7 @@ blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/InSilmaril
 blacklist ${HOME}/.config/Kid3
+blacklist ${HOME}/.config/Kingsoft
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mendeley Ltd.
@@ -459,6 +460,7 @@ blacklist ${HOME}/.kde4/share/config/ktorrentrc
 blacklist ${HOME}/.kde4/share/config/okularpartrc
 blacklist ${HOME}/.kde4/share/config/okularrc
 blacklist ${HOME}/.killingfloor
+blacklist ${HOME}/.kingsoft
 blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc
 blacklist ${HOME}/.klatexformula
@@ -475,6 +477,7 @@ blacklist ${HOME}/.local/share/Anki2
 blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/Enpass
 blacklist ${HOME}/.local/share/JetBrains
+blacklist ${HOME}/.local/share/Kingsoft
 blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/PBE

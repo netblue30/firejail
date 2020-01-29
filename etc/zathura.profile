@@ -18,10 +18,17 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/zathura
+mkdir ${HOME}/.local/share/zathura
+whitelist /usr/share/zathura
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
+
 caps.drop all
+ipc-namespace
 machine-id
-# net none
-# nodbus
+net none
+nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,10 +46,9 @@ private-bin zathura
 private-cache
 private-dev
 private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id
+private-lib libarchive.so.*,libdjvulibre.so.*,libgirara-gtk*,libpoppler-glib.so.*,libspectre.so.*,libstdc++.so.*,zathura
 private-tmp
 
-mkdir ${HOME}/.config/zathura
-mkdir ${HOME}/.local/share/zathura
 read-only ${HOME}
 read-write ${HOME}/.config/zathura
 read-write ${HOME}/.local/share/zathura

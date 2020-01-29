@@ -50,7 +50,7 @@ private-cache
 ?HAS_APPIMAGE: ignore private-dev
 private-dev
 private-etc alternatives
-private-lib libgcc_s.so.*
+private-lib gcc/*/*/libgcc_s.so.*
 private-tmp
 
 memory-deny-write-execute

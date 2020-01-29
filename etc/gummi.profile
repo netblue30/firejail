@@ -5,6 +5,7 @@ include gummi.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/gummi
 noblacklist ${HOME}/.config/gummi
 
 include allow-lua.inc

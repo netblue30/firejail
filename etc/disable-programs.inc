@@ -200,6 +200,7 @@ blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
 blacklist ${HOME}/.config/gpicview
 blacklist ${HOME}/.config/gthumb
+blacklist ${HOME}/.config/gummi
 blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/hexchat
 blacklist ${HOME}/.config/i2p

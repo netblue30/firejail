@@ -43,7 +43,7 @@ private-bin bash,geekbenc*,sh
 private-cache
 private-dev
 private-etc alternatives,group,lsb-release,passwd
-private-lib libstdc++.so.*
+private-lib gcc/*/*/libstdc++.so.*
 private-opt none
 private-tmp
 

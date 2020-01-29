@@ -2,7 +2,8 @@ firejail (0.9.63) baseline; urgency=low
   * work in progress
   * DHCP client support
   * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab
-  * new profiles: gnome-passwordsafe
+  * new profiles: gnome-passwordsafe, bibtex, gummi, latex
+  * new profiles: pdflatex, tex
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

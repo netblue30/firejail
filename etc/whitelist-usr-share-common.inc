@@ -13,6 +13,7 @@ whitelist /usr/share/distro-info
 whitelist /usr/share/drirc.d
 whitelist /usr/share/enchant
 whitelist /usr/share/enchant-2
+whitelist /usr/share/file
 whitelist /usr/share/fontconfig
 whitelist /usr/share/fonts
 whitelist /usr/share/gir-1.0

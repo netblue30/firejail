@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 __author__ = "KOLANICH"
 __copyright__ = """This is free and unencumbered software released into the public domain.
 
@@ -27,122 +26,149 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <https://unlicense.org/>"""
 __license__ = "Unlicense"
 
-import sys, os, glob, re
+import typing
+import sys, os, re
+from collections import OrderedDict
+from pathlib import Path
+from shutil import which
 
-privRx = re.compile("^(?:#\s*)?private-bin")
+privRx = re.compile(r"^(#\s*)?(private-bin)(\s+)(.+)$")
 
 
-def fixSymlinkedBins(files, replMap):
+def fixSymlinkedBins(files: typing.List[Path], replMap: typing.Dict[str, str]) -> None:
     """
-	Used to add filenames to private-bin directives of files if the ones present are mentioned in replMap
-	replMap is a dict where key is the marker filename and value is the filename to add
-	"""
-
-    rxs = dict()
-    for (old, new) in replMap.items():
-        rxs[old] = re.compile("\\b" + old + "\\b")
-        rxs[new] = re.compile("\\b" + new + "\\b")
-    #print(rxs)
+    Used to add filenames to private-bin directives of files if the ones present are mentioned in replMap
+    replMap is a dict where key is the marker filename and value is the filename to add
+    """
 
     for filename in files:
-        lines = None
-        with open(filename, "r") as file:
-            lines = file.readlines()
+        lines = filename.read_text(encoding="utf-8").split("\n")
 
         shouldUpdate = False
         for (i, line) in enumerate(lines):
-            if privRx.search(line):
+            m = privRx.match(line)
+            if m:
+                lineUpdated = False
+                mBins = OrderedDict((sb, sb) for sb in (b.strip() for b in m.group(4).split(",")))
+
                 for (old, new) in replMap.items():
-                    if rxs[old].search(line) and not rxs[new].search(line):
-                        lines[i] = rxs[old].sub(old + "," + new, line)
-                        shouldUpdate = True
-                        print(lines[i])
+                    if old in mBins:
+                        #print(old, "->", new)
+                        if new not in mBins:
+                            mBins[old] = old + "," + new
+                            lineUpdated = True
+
+                if lineUpdated:
+                    comment = m.group(1)
+                    if comment is None:
+                        comment = ""
+                    lines[i] = comment + m.group(2) + m.group(3) + ",".join(mBins.values())
+                    shouldUpdate = True
 
         if shouldUpdate:
-            with open(filename, "w") as file:
-                file.writelines(lines)
+            filename.write_text("\n".join(lines), encoding="utf-8")
 
 
-def createSetOfBinaries(files):
+def createSetOfBinaries(files: typing.List[Path]) -> typing.Set[str]:
     """
-	Creates a set of binaries mentioned in private-bin directives of files.
-	"""
+    Creates a set of binaries mentioned in private-bin directives of files.
+    """
     s = set()
     for filename in files:
         with open(filename, "r") as file:
             for line in file:
-                if privRx.search(line):
-                    bins = line.split(",")
-                    bins[0] = bins[0].split(" ")[-1]
+                m = privRx.match(line)
+                if m:
+                    bins = m.group(4).split(",")
                     bins = [n.strip() for n in bins]
                     s = s | set(bins)
     return s
 
+def getExecutableNameFromLink(p: Path) -> str:
+    return os.readlink(str(p)).split(" ")[0]
 
-def createSymlinkTable(binDirs, binariesSet):
+
+forbiddenExecutables= ["firejail"]
+
+def populateForbiddenExecutables():
+    forbiddenSymlinks = []
+    for e in forbiddenExecutables:
+        r = which(e)
+        if r is not None:
+            yield r
+
+forbiddenSymlinks = set(populateForbiddenExecutables())
+
+
+def createSymlinkTable(binDirs: typing.Iterable[Path], binariesSet: typing.Set[str]) -> typing.Mapping[str, str]:
     """
-	creates a dict of symlinked binaries in the system where a key is a symlink name and value is a symlinked binary.
-	binDirs are folders to look into for binaries symlinks
-	binariesSet is a set of binaries to be checked if they are actually a symlinks
-	"""
+    creates a dict of symlinked binaries in the system where a key is a symlink name and value is a symlinked binary.
+    binDirs are folders to look into for binaries symlinks
+    binariesSet is a set of binaries to be checked if they are actually a symlinks
+    """
     m = dict()
     toProcess = binariesSet
     while len(toProcess) != 0:
         additional = set()
-        for sh in toProcess:
-            for bD in binDirs:
-                p = bD + os.path.sep + sh
-                if os.path.exists(p):
-                    if os.path.islink(p):
-                        m[sh] = os.readlink(p)
-                        additional.add(m[sh].split(" ")[0])
-                    else:
-                        pass
+        for binName in toProcess:
+            for binaryDir in binDirs:
+                p = binaryDir / binName
+                if p.is_symlink():
+                    res = []
+                    nm = getExecutableNameFromLink(p)
+                    if nm in forbiddenSymlinks:
+                        continue
+                    m[binName] = nm
+                    additional.add(nm)
                     break
+
         toProcess = additional
     return m
 
 
-def doTheFixes(profilesPath, binDirs):
+def doTheFixes(profilesPath: Path, binDirs: typing.Iterable[Path]) -> None:
     """
-	Fixes private-bin in .profiles for firejail. The pipeline is as follows:
-	discover files -> discover mentioned binaries ->
-	discover the ones which are symlinks ->
-	make a look-up table for fix ->
-	filter the ones can be fixed (we cannot fix the ones which are not in directories for binaries) ->
-	apply fix
-	"""
-    files = glob.glob(profilesPath + os.path.sep + "*.profile")
+    Fixes private-bin in .profiles for firejail. The pipeline is as follows:
+    discover files -> discover mentioned binaries ->
+    discover the ones which are symlinks ->
+    make a look-up table for fix ->
+    filter the ones can be fixed (we cannot fix the ones which are not in directories for binaries) ->
+    apply fix
+    """
+    files = list(profilesPath.glob("**/*.profile"))
     bins = createSetOfBinaries(files)
     #print("The binaries used are:")
     #print(bins)
     stbl = createSymlinkTable(binDirs, bins)
     print("The replacement table is:")
     print(stbl)
-    stbl = {
-        a[0]: a[1]
-        for a in stbl.items()
-        if a[0].find(os.path.sep) < 0 and a[1].find(os.path.sep) < 0
-    }
+    for k, v in tuple(stbl.items()):
+        if k.find(os.path.sep) < 0 and v.find(os.path.sep) < 0:
+            pass
+        else:
+            del stbl[k]
+
     print("Filtered replacement table is:")
     print(stbl)
     fixSymlinkedBins(files, stbl)
 
 
+thisDir = Path(__file__).absolute().parent
+defaultProfilesPath = (thisDir.parent / "etc")
+
+
 def printHelp():
-    print("python3 " + os.path.basename(__file__) +
+    print("python3 " + str(thisDir) +
           " <dir with .profile files>\nThe default dir is " +
-          defaultProfilesPath + "\n" + doTheFixes.__doc__)
+          str(defaultProfilesPath) + "\n" + doTheFixes.__doc__)
 
 
-def main():
+def main() -> None:
     """The main function. Parses the commandline args, shows messages and calles the function actually doing the work."""
-    print(repr(sys.argv))
-    defaultProfilesPath = "../etc"
     if len(sys.argv) > 2 or (len(sys.argv) == 2 and
-                             (sys.argv[1] == '-h' or sys.argv[1] == '--help')):
+                             (sys.argv[1] == "-h" or sys.argv[1] == "--help")):
         printHelp()
-        exit(1)
+        sys.exit(1)
 
     profilesPath = None
     if len(sys.argv) == 2:
@@ -154,14 +180,14 @@ def main():
             else:
                 print(sys.argv[1] + " does not exist")
             printHelp()
-            exit(1)
+            sys.exit(1)
     else:
-        print("Using default profiles dir: " + defaultProfilesPath)
+        print("Using default profiles dir: ", defaultProfilesPath)
         profilesPath = defaultProfilesPath
 
-    binDirs = [
-        "/bin", "/usr/bin", "/usr/sbin", "/usr/local/bin", "/usr/local/sbin"
-    ]
+    binDirs = ("/bin", "/usr/bin", "/usr/bin", "/usr/sbin", "/usr/local/bin", "/usr/local/sbin")
+    binDirs = type(binDirs)(Path(p) for p in binDirs)
+
     print("Binaries dirs are:")
     print(binDirs)
     doTheFixes(profilesPath, binDirs)

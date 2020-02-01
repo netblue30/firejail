@@ -116,7 +116,7 @@ int sbox_run(unsigned filtermask, int num, ...) {
 	arg[i] = NULL;
 	va_end(valist);
 
-  int status = sbox_run_v(filtermask, arg); 
+  int status = sbox_run_v(filtermask, arg);
 
   free(arg);
 

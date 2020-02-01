@@ -10,7 +10,7 @@ if [ $# -eq 0 ]
 then
 echo
 echo "   *** No program specified!!! ***"
-echo    
+echo
 echo -e "Make this file executable and execute it as:\\n"
 echo -e "\\e[96m   syscalls.sh /full/path/to/program\\n"
 echo -e "\\e[39mif you saved this script in a directory in your PATH (e.g., in ${HOME}/bin), otherwise as:\\n"

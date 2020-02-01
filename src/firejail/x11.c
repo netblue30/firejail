@@ -1238,7 +1238,7 @@ void x11_xorg(void) {
 		errLogExit("invalid .Xauthority mount");
 
 	ASSERT_PERMS(dest, getuid(), getgid(), 0600);
-	
+
 	// blacklist .Xauthority file if it is not masked already
 	char *envar = getenv("XAUTHORITY");
 	if (envar) {

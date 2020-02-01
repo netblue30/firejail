@@ -306,7 +306,7 @@ void invalid_filename(const char *fname, int globbing) {
 		}
 		i++;
 	}
-	
+
 	char *reject;
 	if (globbing)
 		reject = "\\&!\"'<>%^{};,"; // file globbing ('*?[]') is allowed

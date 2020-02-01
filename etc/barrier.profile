@@ -4,7 +4,7 @@
 # Persistent local customizations
 include barrier.local
 # Persistent global definitions
-include globals.local 
+include globals.local
 
 noblacklist ${HOME}/.config/Debauchee/Barrier.conf
 noblacklist ${HOME}/.local/share/barrier

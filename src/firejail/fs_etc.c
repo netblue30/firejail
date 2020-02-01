@@ -141,7 +141,7 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	assert(private_dir);
 	assert(private_run_dir);
 	assert(private_list);
-	
+
 	// nothing to do if directory does not exist
 	struct stat s;
 	if (stat(private_dir, &s) == -1) {

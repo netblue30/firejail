@@ -14,18 +14,18 @@ netfilter
 # tracelog
 noroot
 whitelist ${DOWNLOADS}
-whitelist ~/.mozilla
-whitelist ~/.cache/mozilla/firefox
-whitelist ~/dwhelper
-whitelist ~/.zotero
-whitelist ~/.lastpass
-whitelist ~/.vimperatorrc
-whitelist ~/.vimperator
-whitelist ~/.pentadactylrc
-whitelist ~/.pentadactyl
-whitelist ~/.keysnail.js
-whitelist ~/.config/gnome-mplayer
-whitelist ~/.cache/gnome-mplayer/plugin
+whitelist ${HOME}/.mozilla
+whitelist ${HOME}/.cache/mozilla/firefox
+whitelist ${HOME}/dwhelper
+whitelist ${HOME}/.zotero
+whitelist ${HOME}/.lastpass
+whitelist ${HOME}/.vimperatorrc
+whitelist ${HOME}/.vimperator
+whitelist ${HOME}/.pentadactylrc
+whitelist ${HOME}/.pentadactyl
+whitelist ${HOME}/.keysnail.js
+whitelist ${HOME}/.config/gnome-mplayer
+whitelist ${HOME}/.cache/gnome-mplayer/plugin
 include /etc/firejail/whitelist-common.inc
 
 # experimental features

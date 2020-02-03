@@ -151,4 +151,4 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ### New profiles:
 
-gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, gnome-passwordsafe, bibtex, gummi, latex, pdflatex, tex, wpp, wpspdf, wps, et
+gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, gnome-passwordsafe, bibtex, gummi, latex, pdflatex, tex, wpp, wpspdf, wps, et, multimc, gnome-hexgl

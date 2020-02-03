@@ -22,7 +22,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 whitelist ${RUNUSER}/bus
-whitelist ${RUNUSER}/wayland-?
+# If you have a second wayland compositor, whitelist its socket here.
+whitelist ${RUNUSER}/wayland-0
 whitelist ${RUNUSER}/gdm/Xauthority
 
 whitelist /usr/share/cracklib

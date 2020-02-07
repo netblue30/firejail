@@ -22,10 +22,14 @@ include disable-programs.inc
 include disable-xdg.inc
 
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+ipc-namespace
+machine-id
 netfilter
+no3d
 nodbus
 nodvd
 nogroups
@@ -33,10 +37,10 @@ nonewprivs
 noroot
 notv
 nou2f
-novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 private-cache
 private-dev

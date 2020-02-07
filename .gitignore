@@ -42,4 +42,6 @@ seccomp.block_secondary
 seccomp.mdwx
 src/common.mk
 aclocal.m4
-
+__pycache__
+*.pyc
+*.pyo

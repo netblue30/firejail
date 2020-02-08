@@ -15,8 +15,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-include whitelist-usr-share-common.inc
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 caps.keep net_raw
 ipc-namespace

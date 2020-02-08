@@ -13,6 +13,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+ipc-namespace
+machine-id
 net none
 no3d
 nodbus
@@ -22,8 +24,12 @@ nou2f
 protocol unix
 seccomp
 shell none
+tracelog
+x11 none
 
 private-bin mencoder
+
+memory-deny-write-execute
 
 # Redirect
 include mplayer.profile

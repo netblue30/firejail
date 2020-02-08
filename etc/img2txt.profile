@@ -20,6 +20,7 @@ include disable-xdg.inc
 
 whitelist /usr/share/imlib2
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

@@ -20,6 +20,7 @@ whitelist ${HOME}/.local/share/glib-2.0
 # dconf paths are whitelisted by the following
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

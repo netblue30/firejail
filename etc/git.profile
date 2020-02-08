@@ -33,6 +33,7 @@ whitelist /usr/share/gitgui
 whitelist /usr/share/gitweb
 whitelist /usr/share/nano
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

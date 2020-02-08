@@ -6,6 +6,9 @@ include makepkg.local
 # Persistent global definitions
 include globals.local
 
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
+
 # Note: see this Arch forum discussion https://bbs.archlinux.org/viewtopic.php?pid=1743138
 # for potential issues and their solutions when Firejailing makepkg
 
@@ -33,6 +36,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 caps.drop all
+machine-id
 ipc-namespace
 netfilter
 no3d
@@ -42,13 +46,16 @@ nonewprivs
 # noroot is only disabled to allow the creation of kernel headers from an official PKGBUILD.
 #noroot
 nosound
+nou2f
 notv
 novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 disable-mnt
+private-cache
 private-tmp
 
 memory-deny-write-execute

@@ -22,6 +22,7 @@ whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /usr/share/pacman/keyrings
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter

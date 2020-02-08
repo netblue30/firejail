@@ -42,12 +42,12 @@ noroot
 # nosound
 notv
 nou2f
-novideo
+# novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 disable-mnt
 private-dev
 private-tmp
-

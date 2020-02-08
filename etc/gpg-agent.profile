@@ -17,12 +17,18 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
+mkdir ${HOME}/.gnupg
+whitelist ${HOME}/.gnupg
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
+include whitelist-common.inc
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
+machine-id
 netfilter
 no3d
 nodvd

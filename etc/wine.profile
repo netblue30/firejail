@@ -11,12 +11,15 @@ noblacklist ${HOME}/.local/share/Steam
 noblacklist ${HOME}/.local/share/steam
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.wine
+noblacklist /tmp/.wine-*
 
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+
+include whitelist-var-common.inc
 
 # some applications don't need allow-debuggers, comment the next line
 # if it is not necessary (or put 'ignore allow-debuggers' in your wine.local)
@@ -28,6 +31,7 @@ nodvd
 nogroups
 nonewprivs
 noroot
+# nosound
 notv
 # novideo
 seccomp

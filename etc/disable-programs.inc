@@ -701,6 +701,7 @@ blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom
 blacklist /tmp/akonadi-*
 blacklist /tmp/ssh-*
+blacklist /tmp/.wine-*
 blacklist /var/games/nethack
 blacklist /var/games/slashem
 blacklist /var/games/vulturesclaw

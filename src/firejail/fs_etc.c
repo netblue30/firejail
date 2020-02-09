@@ -145,7 +145,8 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	// nothing to do if directory does not exist
 	struct stat s;
 	if (stat(private_dir, &s) == -1) {
-		fmessage("Cannot find %s\n", private_dir);
+		if (arg_debug)
+			printf("Cannot find %s\n", private_dir);
 		return;
 	}
 

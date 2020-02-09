@@ -42,6 +42,7 @@
 #define RUN_NONEWPRIVS_CFG		RUN_MNT_DIR "/nonewprivs"
 #define RUN_HOME_DIR			RUN_MNT_DIR "/home"
 #define RUN_ETC_DIR			RUN_MNT_DIR "/etc"
+#define RUN_USR_ETC_DIR		RUN_MNT_DIR "/usretc"
 #define RUN_OPT_DIR			RUN_MNT_DIR "/opt"
 #define RUN_SRV_DIR			RUN_MNT_DIR "/srv"
 #define RUN_BIN_DIR			RUN_MNT_DIR "/bin"

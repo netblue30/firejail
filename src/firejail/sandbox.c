@@ -855,6 +855,7 @@ int sandbox(void* sandbox_arg) {
 			fwarning("private-etc feature is disabled in overlay\n");
 		else {
 			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
+			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep); // openSUSE
 			// create /etc/ld.so.preload file again
 			if (need_preload)
 				fs_trace_preload();

@@ -7,6 +7,7 @@ include simplescreenrecorder.local
 include globals.local
 
 noblacklist ${VIDEOS}
+noblacklist ${HOME}/.ssr
 
 include disable-common.inc
 include disable-devel.inc
@@ -36,5 +37,3 @@ tracelog
 private-cache
 private-dev
 private-tmp
-
-memory-deny-write-execute

@@ -650,6 +650,7 @@ blacklist ${HOME}/.scribus
 blacklist ${HOME}/.scribusrc
 blacklist ${HOME}/.simutrans
 blacklist ${HOME}/.smartgit/*/passwords
+blacklist ${HOME}/.ssr
 blacklist ${HOME}/.steam
 blacklist ${HOME}/.steampath
 blacklist ${HOME}/.steampid

@@ -43,8 +43,11 @@ static void init_uid_gid_min(void) {
 
 	// read the real values from login.def
 	FILE *fp = fopen("/etc/login.defs", "r");
-	if (!fp)
-		goto errexit;
+	if (!fp) {
+		fp = fopen("/usr/etc/login.defs", "r"); // openSUSE
+		if (!fp)
+			goto errexit;
+	}
 
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {

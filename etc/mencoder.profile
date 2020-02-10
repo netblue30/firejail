@@ -21,10 +21,7 @@ no3d
 nodbus
 nosound
 notv
-nou2f
 protocol unix
-seccomp
-shell none
 tracelog
 x11 none
 

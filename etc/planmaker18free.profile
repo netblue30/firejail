@@ -1,8 +1,8 @@
-# Firejail profile alias for freeoffice-presentations
-# Description: SoftMaker FreeOffice - presentations software
+# Firejail profile for planmaker18free
+# Description: SoftMaker FreeOffice - spreadsheet program
 # This file is overwritten after every install/update
 # Persistent local customizations
-include freeoffice-presentations.local
+include planmaker18free.local
 # Persistent global definitions
 include globals.local
 

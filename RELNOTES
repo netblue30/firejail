@@ -1,10 +1,12 @@
 firejail (0.9.63) baseline; urgency=low
   * work in progress
   * DHCP client support
-  * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab
-  * new profiles: gnome-passwordsafe, bibtex, gummi, latex
-  * new profiles: pdflatex, tex, wpp, wpspdf, wps, et, multimc
-  * new profiles: gnome-hexgl
+  * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, muraster
+  * new profiles: gnome-passwordsafe, bibtex, gummi, latex, mupdf-x11-curl
+  * new profiles: pdflatex, tex, wpp, wpspdf, wps, et, multimc, mupdf-x11
+  * new profiles: gnome-hexgl, com.github.johnfactotum.Foliate, mupdf-gl, mutool
+  * new profiles: desktopeditors, impressive, planmaker18, planmaker18free
+  * new profiles: presentations18, presentations18free, textmaker18, textmaker18free
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

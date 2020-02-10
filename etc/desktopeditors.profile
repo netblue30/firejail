@@ -1,12 +1,14 @@
-# Firejail profile for mupdf
-# Description: Lightweight PDF viewer
+# Firejail profile for desktopeditors
+# Description: ONLYOFFICE DesktopEditors
 # This file is overwritten after every install/update
 # Persistent local customizations
-include mupdf.local
+include desktopeditors.local
 # Persistent global definitions
-#include globals.local
+include globals.local
 
-noblacklist ${DOCUMENTS}
+noblacklist ${HOME}/.config/onlyoffice
+noblacklist ${HOME}/.local/share/onlyoffice
+noblacklist ${HOME}/.pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -14,27 +16,28 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
 
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
-machine-id
-net none
+ipc-namespace
+netfilter
 nodbus
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
 
+private-bin desktopeditors,sh
+private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 private-tmp

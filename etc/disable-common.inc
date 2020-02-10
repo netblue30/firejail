@@ -18,6 +18,7 @@ blacklist-nolog ${HOME}/.kde4/share/apps/klipper
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/klipper
 blacklist-nolog ${HOME}/.macromedia
+blacklist-nolog ${HOME}/.mupdf.history
 blacklist-nolog ${HOME}/.python-history
 blacklist-nolog ${HOME}/.python_history
 blacklist-nolog ${HOME}/.pythonhist

@@ -267,6 +267,7 @@ blacklist ${HOME}/.config/obs-studio
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/onionshare
+blacklist ${HOME}/.config/onlyoffice
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
@@ -503,6 +504,7 @@ blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cantata
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit
+blacklist ${HOME}/.local/share/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.local/share/contacts
 blacklist ${HOME}/.local/share/data/Mendeley Ltd.
 blacklist ${HOME}/.local/share/data/Mumble
@@ -571,6 +573,7 @@ blacklist ${HOME}/.local/share/nomacs
 blacklist ${HOME}/.local/share/notes
 blacklist ${HOME}/.local/share/ocenaudio
 blacklist ${HOME}/.local/share/okular
+blacklist ${HOME}/.local/share/onlyoffice
 blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
@@ -734,6 +737,7 @@ blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/chromium-dev
 blacklist ${HOME}/.cache/cliqz
+blacklist ${HOME}/.cache/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.cache/darktable
 blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/dnox

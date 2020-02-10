@@ -1,12 +1,18 @@
-# Firejail profile for mupdf
-# Description: Lightweight PDF viewer
+# Firejail profile for impressive
+# Description: presentation tool with eye candy
 # This file is overwritten after every install/update
 # Persistent local customizations
-include mupdf.local
+include impressive.local
 # Persistent global definitions
 #include globals.local
 
 noblacklist ${DOCUMENTS}
+noblacklist /sbin
+noblacklist /usr/sbin
+
+# Allow python (blacklisted by disable-interpreters.inc)
+#include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,9 +22,15 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/mesa_shader_cache
+whitelist /usr/share/opengl-games-utils
+whitelist /usr/share/zenity
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
+ipc-namespace
 machine-id
 net none
 nodbus
@@ -35,6 +47,9 @@ seccomp
 shell none
 tracelog
 
+private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 private-tmp
+
+read-only ${HOME}
+read-write ${HOME}/.cache/mesa_shader_cache

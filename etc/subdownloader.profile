@@ -35,6 +35,7 @@ nodvd
 nogroups
 nonewprivs
 noroot
+nosound
 notv
 nou2f
 protocol unix,inet,inet6

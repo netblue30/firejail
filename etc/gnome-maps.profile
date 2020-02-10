@@ -6,6 +6,9 @@ include gnome-maps.local
 # Persistent global definitions
 include globals.local
 
+# Some distro use gapplications to start gnome-maps over dbus, firecfg can handel that, to manualy fix the run the following command.
+# sed -e "s/Exec=gapplication launch org.gnome.Maps %U/Exec=gnome-maps %U/" -e "s/DBusActivatable=true/DBusActivatable=false/" "/usr/share/applications/org.gnome.Maps.desktop" > "~/.local/share/applications/org.gnome.Maps.desktop"
+
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
 noblacklist ${HOME}/.cache/champlain

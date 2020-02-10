@@ -6,6 +6,10 @@ include softmaker-common.local
 # added by caller profile
 #include globals.local
 
+# The offical packages install the desktop file under /usr/local/share/applications
+# with an absolute Exec line. These files are NOT handelt by firecfg,
+# therefore you must manualy copy them in you home and remove '/usr/bin/'.
+
 noblacklist ${HOME}/SoftMaker
 
 include disable-common.inc

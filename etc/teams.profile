@@ -19,7 +19,6 @@ mkdir ${HOME}/.config/teams
 mkdir ${HOME}/.config/Microsoft
 whitelist ${HOME}/.config/teams
 whitelist ${HOME}/.config/Microsoft
-whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 # TODO Check if can we enable wusc - if so, do we need to whitelist something in /usr/share/?

@@ -4,6 +4,8 @@
 # Persistent local customizations
 include teams.local
 # Persistent global definitions
+# added by included profile
+#include globals.local
 
 # TODO add these 2 paths as blacklist to disable-programs.inc
 noblacklist ${HOME}/.config/teams

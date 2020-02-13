@@ -24,7 +24,8 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-net none
+#net none
+netfilter
 nodbus
 nodvd
 nogroups
@@ -32,7 +33,7 @@ nonewprivs
 noroot
 notv
 nou2f
-protocol unix,netlink
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog

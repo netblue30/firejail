@@ -7,7 +7,6 @@ include teams.local
 # added by included profile
 #include globals.local
 
-# TODO add these 2 paths as blacklist to disable-programs.inc
 noblacklist ${HOME}/.config/teams
 noblacklist ${HOME}/.config/Microsoft
 
@@ -21,13 +20,10 @@ whitelist ${HOME}/.config/teams
 whitelist ${HOME}/.config/Microsoft
 include whitelist-common.inc
 include whitelist-var-common.inc
-# TODO Check if can we enable wusc - if so, do we need to whitelist something in /usr/share/?
-#include whitelist-usr-share-common.inc
 
 nou2f
 shell none
-# TODO Check if can we enable tracelog?
-#tracelog
+tracelog
 
 disable-mnt
 private-cache

@@ -60,18 +60,15 @@ owner /{,var/}run/media/** w,
 # Allow access to pcscd socket (smartcards)
 /{,var/}run/pcscd/pcscd.comm w,
 
-# Needed for firefox sandbox
-/proc/@{PID}/{uid_map,gid_map,setgroups} w,
+# Needed for browser self-sandboxing
+owner /proc/@{PID}/{uid_map,gid_map,setgroups} w,
 
 # Needed for electron apps
 /proc/@{PID}/comm w,
 
-# Silence noise
-deny /proc/@{PID}/oom_adj w,
-deny /proc/@{PID}/oom_score_adj w,
-
-# Uncomment to silence all denied write warnings
-#deny /sys/** w,
+# Used by chromium
+owner /proc/@{PID}/oom_score_adj w,
+owner /proc/@{PID}/clear_refs w,
 
 ##########
 # Allow running programs only from well-known system directories. If you need

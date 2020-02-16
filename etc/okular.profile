@@ -26,8 +26,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/poppler
+whitelist /usr/share/config.kcfg
 whitelist /usr/share/okular
+whitelist /usr/share/poppler
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

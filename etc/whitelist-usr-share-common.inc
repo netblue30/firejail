@@ -50,6 +50,8 @@ whitelist /usr/share/qt5
 whitelist /usr/share/sounds
 whitelist /usr/share/tcl8.6
 whitelist /usr/share/terminfo
+whitelist /usr/share/texlive
+whitelist /usr/share/texmf
 whitelist /usr/share/themes
 whitelist /usr/share/thumbnail.so
 whitelist /usr/share/X11

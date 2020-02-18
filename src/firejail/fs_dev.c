@@ -167,6 +167,7 @@ static void create_link(const char *oldpath, const char *newpath) {
 static void empty_dev_shm(void) {
 	// create an empty /dev/shm directory
 	mkdir_attr("/dev/shm", 01777, 0, 0);
+	selinux_relabel_path("/dev/shm", "/dev/shm");
 	fs_logger("mkdir /dev/shm");
 	fs_logger("create /dev/shm");
 }
@@ -276,10 +277,13 @@ void fs_private_dev(void){
 	// pseudo-terminal
 	mkdir_attr("/dev/pts", 0755, 0, 0);
 	fs_logger("mkdir /dev/pts");
+	selinux_relabel_path("/dev/pts", "/dev/pts");
 	fs_logger("create /dev/pts");
 	create_char_dev("/dev/pts/ptmx", 0666, 5, 2); //"mknod -m 666 /dev/pts/ptmx c 5 2");
+	selinux_relabel_path("/dev/pts/ptmx", "/dev/pts/ptmx");
 	fs_logger("mknod /dev/pts/ptmx");
 	create_link("/dev/pts/ptmx", "/dev/ptmx");
+	selinux_relabel_path("/dev/ptmx", "/dev/ptmx");
 
 // code before github issue #351
 	// mount -vt devpts -o newinstance -o ptmxmode=0666 devpts //dev/pts

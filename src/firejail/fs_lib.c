@@ -326,6 +326,7 @@ void fs_private_lib(void) {
 
 	// create /run/firejail/mnt/lib directory
 	mkdir_attr(RUN_LIB_DIR, 0755, 0, 0);
+	selinux_relabel_path(RUN_LIB_DIR, "/usr/lib");
 
 	// install standard C libraries
 	if (arg_debug || arg_debug_private_lib)

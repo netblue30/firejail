@@ -309,5 +309,6 @@ void fs_private_bin_list(void) {
 		}
 		i++;
 	}
+	selinux_relabel_path(RUN_BIN_DIR, "/bin");
 	fmessage("%d %s installed in %0.2f ms\n", prog_cnt, (prog_cnt == 1)? "program": "programs", timetrace_end());
 }

@@ -848,20 +848,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_dev)
 		fs_private_dev();
 
-	if (arg_private_etc) {
-		if (cfg.chrootdir)
-			fwarning("private-etc feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-etc feature is disabled in overlay\n");
-		else {
-			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
-			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep); // openSUSE
-			// create /etc/ld.so.preload file again
-			if (need_preload)
-				fs_trace_preload();
-		}
-	}
-
 	if (arg_private_opt) {
 		if (cfg.chrootdir)
 			fwarning("private-opt feature is disabled in chroot\n");
@@ -963,6 +949,21 @@ int sandbox(void* sandbox_arg) {
 		fs_mnt(1);
 	else if (arg_disable_mnt)
 		fs_mnt(0);
+
+	// Install new /etc last, so we can use it as long as possible
+	if (arg_private_etc) {
+		if (cfg.chrootdir)
+			fwarning("private-etc feature is disabled in chroot\n");
+		else if (arg_overlay)
+			fwarning("private-etc feature is disabled in overlay\n");
+		else {
+			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
+			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep); // openSUSE
+			// create /etc/ld.so.preload file again
+			if (need_preload)
+				fs_trace_preload();
+		}
+	}
 
 	//****************************
 	// apply the profile file

@@ -59,6 +59,7 @@ void fs_machineid(void) {
 	if (set_perms(RUN_MACHINEID, 0, 0, 0444))
 		errExit("set_perms");
 
+	selinux_relabel_path(RUN_MACHINEID, "/etc/machine-id");
 
 	struct stat s;
 	if (stat("/etc/machine-id", &s) == 0) {
@@ -154,6 +155,7 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 
 	// create /run/firejail/mnt/etc directory
 	mkdir_attr(private_run_dir, 0755, 0, 0);
+	selinux_relabel_path(private_run_dir, private_dir);
 	fs_logger2("tmpfs", private_dir);
 
 	fs_logger_print();	// save the current log

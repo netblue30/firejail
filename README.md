@@ -87,7 +87,7 @@ development libraries and pkg-config are required when using --apparmor
 `````
 $ sudo apt-get install git build-essential libapparmor-dev pkg-config
 `````
-
+For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 
 ## Running the sandbox
 

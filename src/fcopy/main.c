@@ -24,6 +24,15 @@
 #include <errno.h>
 #include <pwd.h>
 
+#if HAVE_SELINUX
+#include <sys/stat.h>
+#include <sys/types.h>
+
+#include <selinux/context.h>
+#include <selinux/label.h>
+#include <selinux/selinux.h>
+#endif
+
 int arg_quiet = 0;
 int arg_debug = 0;
 static int arg_follow_link = 0;
@@ -35,6 +44,52 @@ static unsigned file_cnt = 0;
 
 static char *outpath = NULL;
 static char *inpath = NULL;
+
+#if HAVE_SELINUX
+static struct selabel_handle *label_hnd = NULL;
+static int selinux_enabled = -1;
+#endif
+
+// copy from firejail/selinux.c
+static void selinux_relabel_path(const char *path, const char *inside_path)
+{
+#if HAVE_SELINUX
+        char procfs_path[64];
+	char *fcon = NULL;
+	int fd;
+	struct stat st;
+
+	if (selinux_enabled == -1)
+		selinux_enabled = is_selinux_enabled();
+
+	if (!selinux_enabled)
+		return;
+
+	if (!label_hnd)
+		label_hnd = selabel_open(SELABEL_CTX_FILE, NULL, 0);
+
+	/* Open the file as O_PATH, to pin it while we determine and adjust the label */
+        fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
+	if (fd < 0)
+		return;
+	if (fstat(fd, &st) < 0)
+		goto close;
+
+        if (selabel_lookup_raw(label_hnd, &fcon, inside_path, st.st_mode)  == 0) {
+		sprintf(procfs_path, "/proc/self/fd/%i", fd);
+		if (arg_debug)
+			printf("Relabeling %s as %s (%s)\n", path, inside_path, fcon);
+
+		setfilecon_raw(procfs_path, fcon);
+        }
+	freecon(fcon);
+ close:
+	close(fd);
+#else
+	(void) path;
+	(void) inside_path;
+#endif
+}
 
 // modified version of the function from util.c
 static void copy_file(const char *srcname, const char *destname, mode_t mode, uid_t uid, gid_t gid) {
@@ -86,6 +141,8 @@ static void copy_file(const char *srcname, const char *destname, mode_t mode, ui
 
 	close(src);
 	close(dst);
+
+	selinux_relabel_path(destname, srcname);
 
 	return;
 

@@ -109,6 +109,7 @@ void fslib_install_stdc(void) {
 
 	if (stat("/lib/x86_64-linux-gnu", &s) == 0) {	// Debian & friends
 		mkdir_attr(RUN_LIB_DIR "/x86_64-linux-gnu", 0755, 0, 0);
+		selinux_relabel_path(RUN_LIB_DIR "/x86_64-linux-gnu", "/lib/x86_64-linux-gnu");
 		stdclib = "/lib/x86_64-linux-gnu";
 	}
 

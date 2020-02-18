@@ -96,6 +96,7 @@ void fs_resolvconf(void) {
 		printf("mirroring /etc directory\n");
 	if (mkdir(RUN_DNS_ETC, 0755))
 		errExit("mkdir");
+	selinux_relabel_path(RUN_DNS_ETC, "/etc");
 	fs_logger("tmpfs /etc");
 
 	DIR *dir = opendir("/etc");

@@ -184,6 +184,15 @@ AS_IF([test "x$enable_contrib_install" = "xno"],
 )
 AC_SUBST(HAVE_CONTRIB_INSTALL)
 
+HAVE_SELINUX=""
+AC_ARG_ENABLE([selinux],
+    AS_HELP_STRING([--enable-selinux], [SELinux labeling support]))
+AS_IF([test "x$enable_selinux" = "xyes"], [
+	HAVE_SELINUX="-DHAVE_SELINUX"
+	EXTRA_LDFLAGS+=" -lselinux "
+	AC_SUBST(HAVE_SELINUX)
+])
+
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
 AC_CHECK_HEADER(pthread.h,,AC_MSG_ERROR([*** POSIX thread support not installed ***]))
@@ -223,5 +232,6 @@ echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
+echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   Install as a SUID executable: $HAVE_SUID"
 echo

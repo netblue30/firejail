@@ -87,6 +87,7 @@ void pulseaudio_init(void) {
 	// create the new user pulseaudio directory
 	if (mkdir(RUN_PULSE_DIR, 0700) == -1)
 		errExit("mkdir");
+	selinux_relabel_path(RUN_PULSE_DIR, RUN_PULSE_DIR);
 	// mount it nosuid, noexec, nodev
 	fs_remount(RUN_PULSE_DIR, MOUNT_NOEXEC, 0);
 

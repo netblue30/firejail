@@ -734,6 +734,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /tmp directory\n");
 			if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
 				errExit("mounting tmpfs on /tmp");
+			selinux_relabel_path("/tmp", "/tmp");
 			fs_logger("tmpfs /tmp");
 
 			// pam-tmpdir - issue #2685
@@ -745,8 +746,10 @@ void fs_whitelist(void) {
 				if (strcmp(env, pamtmpdir) == 0) {
 					// create empty user-owned /tmp/user/$uid directory
 					mkdir_attr("/tmp/user", 0711, 0, 0);
+					selinux_relabel_path("/tmp/user", "/tmp/user");
 					fs_logger("mkdir /tmp/user");
 					mkdir_attr(pamtmpdir, 0700, getuid(), 0);
+					selinux_relabel_path(pamtmpdir, pamtmpdir);
 					fs_logger2("mkdir", pamtmpdir);
 				}
 				free(pamtmpdir);
@@ -774,6 +777,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /media directory\n");
 			if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /media");
+			selinux_relabel_path("/media", "/media");
 			fs_logger("tmpfs /media");
 
 			// autowhitelist home directory if it is masked by the tmpfs
@@ -798,6 +802,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /mnt directory\n");
 			if (mount("tmpfs", "/mnt", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /mnt");
+			selinux_relabel_path("/mnt", "/mnt");
 			fs_logger("tmpfs /mnt");
 
 			// autowhitelist home directory if it is masked by the tmpfs
@@ -822,6 +827,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /var directory\n");
 			if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /var");
+			selinux_relabel_path("/var", "/var");
 			fs_logger("tmpfs /var");
 
 			// autowhitelist home directory if it is masked by the tmpfs
@@ -846,6 +852,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /dev directory\n");
 			if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /dev");
+			selinux_relabel_path("/dev", "/dev");
 			fs_logger("tmpfs /dev");
 
 			// autowhitelist home directory if it is masked by the tmpfs
@@ -870,6 +877,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /opt directory\n");
 			if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /opt");
+			selinux_relabel_path("/opt", "/opt");
 			fs_logger("tmpfs /opt");
 
 			// autowhitelist home directory if it is masked by the tmpfs
@@ -894,6 +902,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /srv directory\n");
 			if (mount("tmpfs", "/srv", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /srv");
+			selinux_relabel_path("/srv", "/srv");
 			fs_logger("tmpfs /srv");
 
 			// autowhitelist home directory if it is masked by the tmpfs
@@ -918,6 +927,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /etc directory\n");
 			if (mount("tmpfs", "/etc", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /etc");
+			selinux_relabel_path("/etc", "/etc");
 			fs_logger("tmpfs /etc");
 
 			// autowhitelist home directory if it is masked by the tmpfs
@@ -942,6 +952,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /usr/share directory\n");
 			if (mount("tmpfs", "/usr/share", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /usr/share");
+			selinux_relabel_path("/usr/share", "/usr/share");
 			fs_logger("tmpfs /usr/share");
 
 			// autowhitelist home directory if it is masked by the tmpfs
@@ -966,6 +977,7 @@ void fs_whitelist(void) {
 				printf("Mounting tmpfs on /sys/module directory\n");
 			if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /sys/module");
+			selinux_relabel_path("/sys/module", "/sys/module");
 			fs_logger("tmpfs /sys/module");
 		}
 		else
@@ -989,6 +1001,7 @@ void fs_whitelist(void) {
 				errExit("asprintf");
 			if (mount("tmpfs", runuser, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME, options) < 0)
 				errExit("mounting tmpfs on /run/user/<uid>");
+			selinux_relabel_path(runuser, runuser);
 			free(options);
 			fs_logger2("tmpfs", runuser);
 

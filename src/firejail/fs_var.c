@@ -223,9 +223,11 @@ void fs_var_cache(void) {
 		}
 
 		mkdir_attr("/var/cache/lighttpd/compress", 0755, uid, gid);
+		selinux_relabel_path("/var/cache/lighttpd/compress", "/var/cache/lighttpd/compress");
 		fs_logger("mkdir /var/cache/lighttpd/compress");
 
 		mkdir_attr("/var/cache/lighttpd/uploads", 0755, uid, gid);
+		selinux_relabel_path("/var/cache/lighttpd/uploads", "/var/cache/lighttpd/uploads");
 		fs_logger("/var/cache/lighttpd/uploads");
 	}
 }

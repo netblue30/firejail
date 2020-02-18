@@ -97,6 +97,7 @@ static void sanitize_home(void) {
 	// mount tmpfs in the new home
 	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
+	selinux_relabel_path("/home", "/home");
 	fs_logger("tmpfs /home");
 
 	// create user home directory
@@ -105,6 +106,7 @@ static void sanitize_home(void) {
 			errExit("mkpath");
 		if (mkdir(cfg.homedir, 0755) == -1)
 			errExit("mkdir");
+		selinux_relabel_path(cfg.homedir, cfg.homedir);
 	}
 	fs_logger2("mkdir", cfg.homedir);
 
@@ -152,11 +154,13 @@ static void sanitize_run(void) {
 	// mount tmpfs on /run/user
 	if (mount("tmpfs", "/run/user", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
+	selinux_relabel_path("/run/user", "/run/user");
 	fs_logger("tmpfs /run/user");
 
 	// create new user directory
 	if (mkdir(runuser, 0700) == -1)
 		errExit("mkdir");
+	selinux_relabel_path(runuser, runuser);
 	fs_logger2("mkdir", runuser);
 
 	// set mode and ownership

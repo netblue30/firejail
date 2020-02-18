@@ -628,6 +628,7 @@ HAVE_SECCOMP_H
 EGREP
 GREP
 CPP
+HAVE_SELINUX
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
@@ -721,6 +722,7 @@ enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
 enable_contrib_install
+enable_selinux
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1365,6 +1367,7 @@ Optional Features:
   --enable-gcov           Gcov instrumentation
   --enable-contrib-install
                           install contrib scripts
+  --enable-selinux        SELinux labeling support
 
 Some influential environment variables:
   CC          C compiler command
@@ -3695,6 +3698,20 @@ else
 fi
 
 
+HAVE_SELINUX=""
+# Check whether --enable-selinux was given.
+if test "${enable_selinux+set}" = set; then :
+  enableval=$enable_selinux;
+fi
+
+if test "x$enable_selinux" = "xyes"; then :
+
+	HAVE_SELINUX="-DHAVE_SELINUX"
+	EXTRA_LDFLAGS+=" -lselinux "
+
+
+fi
+
 # checking pthread library
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
 $as_echo_n "checking for main in -lpthread... " >&6; }
@@ -5364,5 +5381,6 @@ echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
+echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   Install as a SUID executable: $HAVE_SUID"
 echo

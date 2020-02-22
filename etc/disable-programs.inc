@@ -247,6 +247,7 @@ blacklist ${HOME}/.config/mate/mate-dictionary
 blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/mfusion
+blacklist ${HOME}/.config/Microsoft
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mono
 blacklist ${HOME}/.config/mpDris2
@@ -310,6 +311,7 @@ blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/supertuxkart
 blacklist ${HOME}/.config/synfig
+blacklist ${HOME}/.config/teams
 blacklist ${HOME}/.config/telepathy-account-widgets
 blacklist ${HOME}/.config/torbrowser
 blacklist ${HOME}/.config/totem

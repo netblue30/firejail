@@ -10,7 +10,6 @@ noblacklist ${HOME}/.openshot
 noblacklist ${HOME}/.openshot_qt
 
 # Allow python (blacklisted by disable-interpreters.inc)
-include allow-python2.inc
 include allow-python3.inc
 
 include disable-common.inc

@@ -1442,6 +1442,7 @@ $ firejail \-\-private firefox
 .TP
 \fB\-\-private=directory
 Use directory as user home.
+--private and --private=directory cannot be used together.
 .br
 
 .br

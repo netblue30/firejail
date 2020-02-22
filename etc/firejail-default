@@ -77,7 +77,7 @@ owner /proc/@{PID}/clear_refs w,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}bin/** ix,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}sbin/** ix,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}games/** ix,
-/{,run/firejail/mnt/oroot/}{,usr/,usr/local/}lib{,32,64}/** ix,
+/{,run/firejail/mnt/oroot/}{,usr/,usr/local/}lib{,32,64,exec}/** ix,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}opt/** ix,
 #/{,run/firejail/mnt/oroot/}home/** ix,
 

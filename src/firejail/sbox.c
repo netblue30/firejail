@@ -26,6 +26,11 @@
  #include <sys/wait.h>
 #include "../include/seccomp.h"
 
+#include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH 010000000
+#endif
+
 static struct sock_filter filter[] = {
 	VALIDATE_ARCHITECTURE,
 	EXAMINE_SYSCALL,
@@ -140,24 +145,19 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
+		int env_index = 0;
+		char *new_environment[256] = { NULL };
 		// preserve firejail-specific env vars
 		char *cl = getenv("FIREJAIL_FILE_COPY_LIMIT");
 		if (cl) {
-			// duplicate the value, who knows what's going to happen with it in clearenv!
-			cl = strdup(cl);
-			if (!cl)
-				errExit("strdup");
+			if (asprintf(&new_environment[env_index++], "FIREJAIL_FILE_COPY_LIMIT=%s", cl) == -1)
+				errExit("asprintf");
 		}
 		clearenv();
-		if (cl) {
-			if (setenv("FIREJAIL_FILE_COPY_LIMIT", cl, 1) == -1)
-				errExit("setenv");
-			free(cl);
-		}
 		if (arg_quiet) // --quiet is passed as an environment variable
-			setenv("FIREJAIL_QUIET", "yes", 1);
+			new_environment[env_index++] = "FIREJAIL_QUIET=yes";
 		if (arg_debug) // --debug is passed as an environment variable
-			setenv("FIREJAIL_DEBUG", "yes", 1);
+			new_environment[env_index++] = "FIREJAIL_DEBUG=yes";
 
 		if (filtermask & SBOX_STDIN_FROM_FILE) {
 			int fd;
@@ -237,11 +237,32 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 		else if (filtermask & SBOX_USER)
 			drop_privs(1);
 
-		if (arg[0])	// get rid of scan-build warning
-			execvp(arg[0], arg);
-		else
+		if (arg[0]) { // get rid of scan-build warning
+			int fd = open(arg[0], O_PATH | O_CLOEXEC);
+			if (fd == -1) {
+				if (errno == ENOENT) {
+					fprintf(stderr, "Error: %s does not exist\n", arg[0]);
+					exit(1);
+				} else {
+					errExit("open");
+				}
+			}
+			struct stat s;
+			if (fstat(fd, &s) == -1)
+				errExit("fstat");
+			if (s.st_uid != 0 && s.st_gid != 0) {
+				fprintf(stderr, "Error: %s is not owned by root, refusing to execute\n", arg[0]);
+				exit(1);
+			}
+			if (s.st_mode & 00002) {
+				fprintf(stderr, "Error: %s is world writable, refusing to execute\n", arg[0]);
+				exit(1);
+			}
+			fexecve(fd, arg, new_environment);
+		} else {
 			assert(0);
-		perror("execvp");
+		}
+		perror("fexecve");
 		_exit(1);
 	}
 

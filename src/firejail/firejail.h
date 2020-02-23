@@ -340,8 +340,15 @@ extern int arg_memory_deny_write_execute;	// block writable and executable memor
 extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
 extern int arg_nou2f;   // --nou2f
-extern int arg_nodbus; // -nodbus
 extern int arg_deterministic_exit_code;	// always exit with first child's exit status
+
+typedef enum {
+	DBUS_POLICY_ALLOW,	// Allow unrestricted access to the bus
+	DBUS_POLICY_FILTER, // Filter with xdg-dbus-proxy
+	DBUS_POLICY_BLOCK   // Block access
+} DbusPolicy;
+extern DbusPolicy arg_dbus_user; // --dbus-user
+extern DbusPolicy arg_dbus_system; // --dbus-system
 
 extern int login_shell;
 extern int parent_to_child_fds[2];
@@ -836,7 +843,7 @@ void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
 
 // dbus.c
-void dbus_disable(void);
+void dbus_apply_policy(void);
 
 // dhcp.c
 extern pid_t dhclient4_pid;

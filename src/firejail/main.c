@@ -144,9 +144,10 @@ int arg_noprofile = 0; // use default.profile if none other found/specified
 int arg_memory_deny_write_execute = 0;		// block writable and executable memory
 int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
-int arg_nodbus = 0; // -nodbus
 int arg_nou2f = 0; // --nou2f
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
+DbusPolicy arg_dbus_user = DBUS_POLICY_ALLOW;	// --dbus-user
+DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
 int login_shell = 0;
 
 //**********************************************************************************
@@ -2053,8 +2054,34 @@ int main(int argc, char **argv, char **envp) {
 			arg_nodvd = 1;
 		else if (strcmp(argv[i], "--nou2f") == 0)
 			arg_nou2f = 1;
-		else if (strcmp(argv[i], "--nodbus") == 0)
-			arg_nodbus = 1;
+		else if (strcmp(argv[i], "--nodbus") == 0) {
+			arg_dbus_user = DBUS_POLICY_BLOCK;
+			arg_dbus_system = DBUS_POLICY_BLOCK;
+		}
+		else if (strncmp("--dbus-user=", argv[i], 12) == 0) {
+			if (strcmp("allow", argv[i] + 12) == 0) {
+				arg_dbus_user = DBUS_POLICY_ALLOW;
+			} else if (strcmp("filter", argv[i] + 12) == 0) {
+				arg_dbus_user = DBUS_POLICY_FILTER;
+			} else if (strcmp("none", argv[i] + 12) == 0) {
+				arg_dbus_user = DBUS_POLICY_BLOCK;
+			} else {
+				fprintf(stderr, "Unknown dbus-user policy: %s\n", argv[i] + 12);
+				exit(1);
+			}
+		}
+		else if (strncmp("--dbus-system=", argv[i], 14) == 0) {
+			if (strcmp("allow", argv[i] + 14) == 0) {
+				arg_dbus_system = DBUS_POLICY_ALLOW;
+			} else if (strcmp("filter", argv[i] + 14) == 0) {
+				arg_dbus_system = DBUS_POLICY_FILTER;
+			} else if (strcmp("none", argv[i] + 14) == 0) {
+				arg_dbus_system = DBUS_POLICY_BLOCK;
+			} else {
+				fprintf(stderr, "Unknown dbus-system policy: %s\n", argv[i] + 14);
+				exit(1);
+			}
+		}
 
 		//*************************************
 		// network

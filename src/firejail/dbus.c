@@ -19,12 +19,7 @@
 */
 #include "firejail.h"
 
-void dbus_disable(void) {
-	if (!checkcfg(CFG_DBUS)) {
-		fwarning("D-Bus handling is disabled in Firejail configuration file\n");
-		return;
-	}
-
+static void dbus_block_user(void) {
 	char *path;
 	if (asprintf(&path, "/run/user/%d/bus", getuid()) == -1)
 		errExit("asprintf");
@@ -43,16 +38,32 @@ void dbus_disable(void) {
 	free(path);
 	free(env_var);
 
-
 	// blacklist the dbus-launch user directory
 	if (asprintf(&path, "%s/.dbus", cfg.homedir) == -1)
 		errExit("asprintf");
 	disable_file_or_dir(path);
 	free(path);
+}
 
+static void dbus_block_system() {
 	// blacklist also system D-Bus socket
 	disable_file_or_dir("/run/dbus/system_bus_socket");
+}
 
+void dbus_apply_policy(void) {
+	if (arg_dbus_user == DBUS_POLICY_ALLOW && arg_dbus_system == DBUS_POLICY_ALLOW)
+		return;
+
+	if (!checkcfg(CFG_DBUS)) {
+		fwarning("D-Bus handling is disabled in Firejail configuration file\n");
+		return;
+	}
+
+	if (arg_dbus_user != DBUS_POLICY_ALLOW)
+		dbus_block_user();
+
+	if (arg_dbus_system != DBUS_POLICY_ALLOW)
+		dbus_block_system();
 
 	// look for a possible abstract unix socket
 

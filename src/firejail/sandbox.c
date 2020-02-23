@@ -574,6 +574,21 @@ void start_application(int no_sandbox, FILE *fp) {
 	exit(1); // it should never get here!!!
 }
 
+void set_apparmor(void) {
+#ifdef HAVE_APPARMOR
+	EUID_ASSERT();
+	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
+		if (aa_change_onexec("firejail-default")) {
+			fwarning("Cannot confine the application using AppArmor.\n"
+				"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
+				"As root, run \"aa-enforce firejail-default\" to load it.\n");
+		}
+		else if (arg_debug)
+			printf("AppArmor enabled\n");
+	}
+#endif
+}
+
 static void enforce_filters(void) {
 	// enforce NO_NEW_PRIVS
 	arg_nonewprivs = 1;
@@ -1202,18 +1217,9 @@ int sandbox(void* sandbox_arg) {
 		errExit("fork");
 
 	if (app_pid == 0) {
-#ifdef HAVE_APPARMOR
-		if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
-			errno = 0;
-			if (aa_change_onexec("firejail-default")) {
-				fwarning("Cannot confine the application using AppArmor.\n"
-					"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
-					"As root, run \"aa-enforce firejail-default\" to load it.\n");
-			}
-			else if (arg_debug)
-				printf("AppArmor enabled\n");
-		}
-#endif
+		// add apparmor confinement after the execve
+		set_apparmor();
+
 		// set nice and rlimits
 		if (arg_nice)
 			set_nice(cfg.nice);

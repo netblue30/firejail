@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 #include "firejail.h"
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <errno.h>
@@ -56,9 +57,9 @@ static const Dhclient dhclient6 = {
 	.arg_offset = offsetof(Bridge, arg_ip6_dhcp)
 };
 
-static void dhcp_run_dhclient(const Dhclient *client) {
+static void dhcp_run_dhclient(char *dhclient_path, const Dhclient *client) {
 	char *argv[256] = {
-		"dhclient",
+		dhclient_path,
 		client->version_arg,
 		"-pf", client->pid_file,
 		"-lf", client->leases_file,
@@ -115,8 +116,8 @@ static pid_t dhcp_read_pidfile(const Dhclient *client) {
 	return found;
 }
 
-static void dhcp_start_dhclient(const Dhclient *client) {
-	dhcp_run_dhclient(client);
+static void dhcp_start_dhclient(char *dhclient_path, const Dhclient *client) {
+	dhcp_run_dhclient(dhclient_path, client);
 	*(client->pid) = dhcp_read_pidfile(client);
 }
 
@@ -139,18 +140,32 @@ void dhcp_start(void) {
 	if (!any_dhcp())
 		return;
 
+	char *dhclient_path = "/sbin/dhclient";
+	struct stat s;
+	if (stat(dhclient_path, &s) == -1) {
+		dhclient_path = "/usr/sbin/dhclient";
+		if (stat(dhclient_path, &s) == -1) {
+			fprintf(stderr, "Error: dhclient was not found.\n");
+			exit(1);
+		}
+	}
+	if (s.st_uid != 0 && s.st_gid != 0) {
+		fprintf(stderr, "Error: invalid dhclient executable\n");
+		exit(1);
+	}
+
 	EUID_ROOT();
 	if (mkdir(RUN_DHCLIENT_DIR, 0700))
 		errExit("mkdir");
 
 	if (any_ip_dhcp()) {
-		dhcp_start_dhclient(&dhclient4);
+		dhcp_start_dhclient(dhclient_path, &dhclient4);
 		if (arg_debug)
 			printf("Running dhclient -4 in the background as pid %ld\n", (long) dhclient4_pid);
 	}
 	if (any_ip6_dhcp()) {
 		dhcp_waitll_all();
-		dhcp_start_dhclient(&dhclient6);
+		dhcp_start_dhclient(dhclient_path, &dhclient6);
 		if (arg_debug)
 			printf("Running dhclient -6 in the background as pid %ld\n", (long) dhclient6_pid);
 		if (dhclient4_pid == dhclient6_pid) {

@@ -143,10 +143,6 @@ void dhcp_start(void) {
 			exit(1);
 		}
 	}
-	if (s.st_uid != 0 && s.st_gid != 0) {
-		fprintf(stderr, "Error: invalid dhclient executable\n");
-		exit(1);
-	}
 
 	EUID_ROOT();
 	if (mkdir(RUN_DHCLIENT_DIR, 0700))

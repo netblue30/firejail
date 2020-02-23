@@ -88,9 +88,6 @@ static void dhcp_run_dhclient(char *dhclient_path, const Dhclient *client) {
 static pid_t dhcp_read_pidfile(const Dhclient *client) {
 	// We have to run dhclient as a forking daemon (not pass the -d option),
 	// because we want to be notified of a successful DHCP lease by the parent process exit.
-	// However, try to be extra paranoid with race conditions,
-	// because dhclient only writes the daemon pid into the pidfile
-	// after its parent process has exited.
 	int tries = 0;
 	pid_t found = 0;
 	while (found == 0 && tries < 10) {
@@ -99,11 +96,8 @@ static pid_t dhcp_read_pidfile(const Dhclient *client) {
 		FILE *pidfile = fopen(client->pid_file, "r");
 		if (pidfile) {
 			long pid;
-			if (fscanf(pidfile, "%ld", &pid) == 1) {
-				char *pidname = pid_proc_comm((pid_t) pid);
-				if (pidname && strcmp(pidname, "dhclient") == 0)
-					found = (pid_t) pid;
-			}
+			if (fscanf(pidfile, "%ld", &pid) == 1)
+				found = (pid_t) pid;
 			fclose(pidfile);
 		}
 		++tries;

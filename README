@@ -90,6 +90,8 @@ Alexander Gerasiov (https://github.com/gerasiov)
 	- profile updates
 Alexander Stein (https://github.com/ajstein)
 	- added profile for qutebrowser
+Andreas Hunkeler (https://github.com/Karneades)
+	- Add profile for offical Linux Teams application
 Andrey Alekseenko (https://github.com/al42and)
 	- fixing lintian warnings
 	- fixed Skype profile
@@ -102,6 +104,7 @@ announ (https://github.com/announ)
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start
+	- wusc fixes
 aoand (https://github.com/aoand)
 	- seccomp fix: allow numeric syscalls
 Austin Morton (https://github.com/apmorton)
@@ -245,7 +248,7 @@ Fabian Würfl (https://github.com/BafDyce)
 Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
 Florian Begusch (https://github.com/florianbegusch)
-        - (la)tex profiles
+	- (la)tex profiles
 	- fixed transmission-common.profile
 floxo (https://github.com/floxo)
 	- fixed qml disk cache issue
@@ -453,6 +456,8 @@ Kishore96in (https://github.com/Kishore96in)
 	- added falkon profile
 KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
+	- update fix_private-bin.py
+	- fix meld
 Kristóf Marussy (https://github.com/kris7t)
 	- dns support
 Kunal Mehta (https://github.com/legoktm)
@@ -594,6 +599,7 @@ Quentin Minster (https://github.com/laomaiweng)
 	- propagate --quiet to children Firejail'ed processes
 	- nodbus enhancements/bugfixes
 	- added vim syntax and ftdetect files
+	- Allow exec from /usr/libexec & co. with AppArmor
 Rafael Cavalcanti (https://github.com/rccavalcanti)
 	- chromium profile fixes for Arch Linux
 Rahiel Kasim (https://github.com/rahiel)

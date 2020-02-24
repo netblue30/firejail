@@ -12,7 +12,6 @@ blacklist /usr/lib64/libgjs*
 
 # Lua
 blacklist ${PATH}/lua*
-blacklist /usr/include/lauxlib.h
 blacklist /usr/include/lua*
 blacklist /usr/lib/liblua*
 blacklist /usr/lib/lua

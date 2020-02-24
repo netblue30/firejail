@@ -4,5 +4,6 @@ include allow-lua.local
 
 noblacklist ${PATH}/lua*
 noblacklist /usr/include/lua*
+noblacklist /usr/lib/liblua*
 noblacklist /usr/lib/lua
 noblacklist /usr/share/lua

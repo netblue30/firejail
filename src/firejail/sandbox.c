@@ -29,6 +29,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <syscall.h>
 
 #include <sched.h>
 #ifndef CLONE_NEWUSER
@@ -37,16 +38,15 @@
 
 #include <sys/prctl.h>
 #ifndef PR_SET_NO_NEW_PRIVS
-# define PR_SET_NO_NEW_PRIVS 38
+#define PR_SET_NO_NEW_PRIVS 38
 #endif
 #ifndef PR_GET_NO_NEW_PRIVS
-# define PR_GET_NO_NEW_PRIVS 39
+#define PR_GET_NO_NEW_PRIVS 39
 #endif
 
 #ifdef HAVE_APPARMOR
 #include <sys/apparmor.h>
 #endif
-#include <syscall.h>
 
 
 static int force_nonewprivs = 0;
@@ -124,6 +124,21 @@ static void set_caps(void) {
 	if (!arg_caps_keep)
 		caps_drop_dac_override();
 }
+
+#ifdef HAVE_APPARMOR
+void set_apparmor(void) {
+	EUID_ASSERT();
+	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
+		if (aa_change_onexec("firejail-default")) {
+			fwarning("Cannot confine the application using AppArmor.\n"
+				"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
+				"As root, run \"aa-enforce firejail-default\" to load it.\n");
+		}
+		else if (arg_debug)
+			printf("AppArmor enabled\n");
+	}
+}
+#endif
 
 static void save_nogroups(void) {
 	if (arg_nogroups == 0)
@@ -572,21 +587,6 @@ void start_application(int no_sandbox, FILE *fp) {
 
 	perror("execvp");
 	exit(1); // it should never get here!!!
-}
-
-void set_apparmor(void) {
-#ifdef HAVE_APPARMOR
-	EUID_ASSERT();
-	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
-		if (aa_change_onexec("firejail-default")) {
-			fwarning("Cannot confine the application using AppArmor.\n"
-				"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
-				"As root, run \"aa-enforce firejail-default\" to load it.\n");
-		}
-		else if (arg_debug)
-			printf("AppArmor enabled\n");
-	}
-#endif
 }
 
 static void enforce_filters(void) {
@@ -1217,8 +1217,10 @@ int sandbox(void* sandbox_arg) {
 		errExit("fork");
 
 	if (app_pid == 0) {
+#ifdef HAVE_APPARMOR
 		// add apparmor confinement after the execve
 		set_apparmor();
+#endif
 
 		// set nice and rlimits
 		if (arg_nice)

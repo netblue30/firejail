@@ -54,8 +54,8 @@ static void install_handler(void) {
 	sigaction(SIGTERM, &sga, NULL);
 }
 
-static void extract_apparmor(pid_t pid) {
 #ifdef HAVE_APPARMOR
+static void extract_apparmor(pid_t pid) {
 	if (checkcfg(CFG_APPARMOR)) {
 		EUID_USER();
 		if (aa_is_enabled() == 1) {
@@ -91,8 +91,8 @@ static void extract_apparmor(pid_t pid) {
 errexit:
 	fprintf(stderr, "Error: cannot read /proc file\n");
 	exit(1);
-#endif
 }
+#endif // HAVE_APPARMOR
 
 static void extract_x11_display(pid_t pid) {
 	char *fname;
@@ -432,6 +432,9 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		extract_cgroup(pid);
 		extract_nogroups(pid);
 		extract_user_namespace(pid);
+#ifdef HAVE_APPARMOR
+		extract_apparmor(pid);
+#endif
 	}
 
 	// set cgroup
@@ -545,8 +548,10 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		// kill the child in case the parent died
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 
+#ifdef HAVE_APPARMOR
 		// add apparmor confinement after the execve
 		set_apparmor();
+#endif
 
 		extract_command(argc, argv, index);
 		if (cfg.command_line == NULL) {

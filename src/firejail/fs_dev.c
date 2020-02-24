@@ -157,9 +157,6 @@ static void create_link(const char *oldpath, const char *newpath) {
 		fprintf(stderr, "Error: cannot create %s device\n", newpath);
 		exit(1);
 	}
-
-	if (chown(newpath, 0, 0) < 0) {;}
-
 	fs_logger2("create", newpath);
 	return;
 }
@@ -302,12 +299,10 @@ void fs_private_dev(void){
 	fs_logger("clone /dev/pts");
 
 	// stdin, stdout, stderr
-#if 0
 	create_link("/proc/self/fd", "/dev/fd");
 	create_link("/proc/self/fd/0", "/dev/stdin");
 	create_link("/proc/self/fd/1", "/dev/stdout");
 	create_link("/proc/self/fd/2", "/dev/stderr");
-#endif
 
 	// symlinks for DVD/CD players
 	if (stat("/dev/sr0", &s) == 0) {

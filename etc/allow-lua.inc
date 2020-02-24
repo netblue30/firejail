@@ -3,8 +3,7 @@
 include allow-lua.local
 
 noblacklist ${PATH}/lua*
-noblacklist /usr/include/lauxlib.h
-noblacklist /usr/include/lua*
+noblacklist /usr/include
 noblacklist /usr/lib/liblua*
 noblacklist /usr/lib/lua
 noblacklist /usr/share/lua

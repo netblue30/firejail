@@ -53,11 +53,17 @@ static struct sock_filter filter[] = {
 #ifdef SYS_ptrace
 	BLACKLIST(SYS_ptrace), // trace processes
 #endif
+#ifdef SYS_process_vm_readv
+	BLACKLIST(SYS_process_vm_readv),
+#endif
+#ifdef SYS_process_vm_writev
+	BLACKLIST(SYS_process_vm_writev),
+#endif
 #ifdef SYS_kexec_file_load
-	BLACKLIST(SYS_kexec_file_load),
+	BLACKLIST(SYS_kexec_file_load), // loading a different kernel
 #endif
 #ifdef SYS_kexec_load
-	BLACKLIST(SYS_kexec_load), // loading a different kernel
+	BLACKLIST(SYS_kexec_load),
 #endif
 #ifdef SYS_name_to_handle_at
 	BLACKLIST(SYS_name_to_handle_at),
@@ -82,9 +88,6 @@ static struct sock_filter filter[] = {
 #endif
 #ifdef 	SYS_ioperm
 	BLACKLIST(SYS_ioperm),
-#endif
-#ifdef SYS_iopl
-	BLACKLIST(SYS_iopl), // io permissions
 #endif
 #ifdef 	SYS_ioprio_set
 	BLACKLIST(SYS_ioprio_set),

@@ -2767,6 +2767,13 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_USER();
 
+	if (checkcfg(CFG_DBUS) &&
+		(arg_dbus_user == DBUS_POLICY_FILTER || arg_dbus_system == DBUS_POLICY_FILTER)) {
+		EUID_ROOT();
+		dbus_proxy_start();
+		EUID_USER();
+	}
+
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;
 
@@ -2976,6 +2983,9 @@ printf("**********************************\n");
 
 	// end of signal-safe code
 	//*****************************
+
+	// stop dbus proxy (if any)
+	dbus_proxy_stop();
 
 	// free globals
 	if (cfg.profile) {

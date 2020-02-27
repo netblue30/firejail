@@ -30,6 +30,7 @@
 #define RUN_FIREJAIL_NETWORK_DIR	RUN_FIREJAIL_DIR "/network"
 #define RUN_FIREJAIL_BANDWIDTH_DIR	RUN_FIREJAIL_DIR "/bandwidth"
 #define RUN_FIREJAIL_PROFILE_DIR	RUN_FIREJAIL_DIR "/profile"
+#define RUN_FIREJAIL_DBUS_DIR RUN_FIREJAIL_DIR "/dbus"
 #define RUN_NETWORK_LOCK_FILE		RUN_FIREJAIL_DIR "/firejail-network.lock"
 #define RUN_DIRECTORY_LOCK_FILE		RUN_FIREJAIL_DIR "/firejail-run.lock"
 #define RUN_RO_DIR			RUN_FIREJAIL_DIR "/firejail.ro.dir"

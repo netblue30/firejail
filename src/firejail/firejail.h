@@ -830,10 +830,13 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
 #define SBOX_CAPS_HIDEPID (1 << 7)	// hidepid caps filter for running firemon
 #define SBOX_CAPS_NET_SERVICE (1 << 8) // caps filter for programs running network services
+#define SBOX_KEEP_FDS (1 << 9) // keep file descriptors open
+#define FIREJAIL_MAX_FD 20 // getdtablesize() is overkill for a firejail process
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 int sbox_run_v(unsigned filter, char * const arg[]);
+void sbox_exec_v(unsigned filter, char * const arg[]);
 
 // run_files.c
 void delete_run_files(pid_t pid);

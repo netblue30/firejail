@@ -12,8 +12,11 @@ noblacklist ${HOME}/.local/share/steam
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.PlayOnLinux
 
-# nc is needed to run playonlinux
+# netcat is needed to run playonlinux
 noblacklist ${PATH}/nc
+noblacklist ${PATH}/nc.openbsd
+noblacklist ${PATH}/nc.traditional
+noblacklist ${PATH}/ncat
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

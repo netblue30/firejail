@@ -391,6 +391,8 @@ blacklist ${PATH}/ksu
 blacklist ${PATH}/mount
 blacklist ${PATH}/mount.ecryptfs_private
 blacklist ${PATH}/nc
+blacklist ${PATH}/nc.openbsd
+blacklist ${PATH}/nc.traditional
 blacklist ${PATH}/ncat
 blacklist ${PATH}/newgidmap
 blacklist ${PATH}/newgrp

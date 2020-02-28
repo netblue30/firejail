@@ -3,7 +3,7 @@
 # Persistent local customizations
 include /etc/firejail/vim.local
 # Persistent global definitions
-include /etc/firejail/globals.local
+include globals.local
 
 noblacklist ${HOME}/.config/nvim
 noblacklist ${HOME}/.local/share/nvim

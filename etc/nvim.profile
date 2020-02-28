@@ -8,9 +8,9 @@ include globals.local
 noblacklist ${HOME}/.config/nvim
 noblacklist ${HOME}/.local/share/nvim
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
 
 caps.drop all
 netfilter

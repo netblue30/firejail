@@ -24,6 +24,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <string.h>
 
 #define DBUS_SOCKET_PATH_PREFIX "unix:path="
 #define DBUS_USER_SOCKET_FORMAT "/run/user/%d/bus"
@@ -33,11 +34,81 @@
 #define DBUS_SESSION_BUS_ADDRESS_ENV "DBUS_SESSION_BUS_ADDRESS"
 #define DBUS_USER_PROXY_SOCKET_FORMAT RUN_FIREJAIL_DBUS_DIR "/%d-user"
 #define DBUS_SYSTEM_PROXY_SOCKET_FORMAT RUN_FIREJAIL_DBUS_DIR "/%d-system"
+#define DBUS_MAX_NAME_LENGTH 255
 
 static pid_t dbus_proxy_pid = 0;
 static int dbus_proxy_status_fd = -1;
 static char *dbus_user_proxy_socket = NULL;
 static char *dbus_system_proxy_socket = NULL;
+
+int dbus_check_name(const char *name) {
+	unsigned long length = strlen(name);
+	if (length == 0 || length > DBUS_MAX_NAME_LENGTH)
+		return 0;
+	const char *p = name;
+	int segments = 1;
+	int in_segment = 0;
+	while (*p) {
+		int alpha = (*p >= 'a' && *p <= 'z') || (*p >= 'A' && *p <= 'Z');
+		int digit = *p >= '0' && *p <= '9';
+		if (in_segment) {
+			if (*p == '.') {
+				++segments;
+				in_segment = 0;
+			} else if (!alpha && !digit && *p != '_' && *p != '-') {
+				return 0;
+			}
+		}
+		else {
+			if (*p == '*') {
+				return *(p + 1) == '\0';
+			} else if (!alpha && *p != '_' && *p != '-') {
+				return 0;
+			}
+			in_segment = 1;
+		}
+		++p;
+	}
+	return in_segment && segments >= 2;
+}
+
+static void dbus_check_bus_profile(char const *prefix, DbusPolicy policy) {
+	size_t prefix_length = strlen(prefix);
+	ProfileEntry *it = cfg.profile;
+	while (it) {
+		char *data = it->data;
+		it = it->next;
+		if (strncmp(prefix, data, prefix_length) == 0) {
+			switch (policy) {
+			case DBUS_POLICY_ALLOW:
+				// We should never get here, because profile parsing will fail earlier.
+				fprintf(stderr,
+						"Error: %s filter rule configured, but the bus is not "
+						"set to filter.\n",
+						prefix);
+				exit(1);
+				break;
+			case DBUS_POLICY_FILTER:
+				// All good.
+				break;
+			case DBUS_POLICY_BLOCK:
+				fwarning("%s filter rule configured, but the bus is blocked.\n", prefix);
+				fwarning("Ignoring \"%s\" and any other %s filter rules.\n", data, prefix);
+				break;
+			default:
+				fprintf(stderr, "Error: Unknown %s policy.\n", prefix);
+				exit(1);
+				break;
+			}
+			break;
+		}
+	}
+}
+
+void dbus_check_profile(void) {
+	dbus_check_bus_profile("dbus-user", arg_dbus_user);
+	dbus_check_bus_profile("dbus-system", arg_dbus_system);
+}
 
 static void write_arg(int fd, char const *format, ...) {
 	va_list ap;
@@ -53,6 +124,24 @@ static void write_arg(int fd, char const *format, ...) {
 	if (write(fd, arg, (size_t) length) != (ssize_t) length)
 		errExit("write");
 	free(arg);
+}
+
+static void write_profile(int fd, char const *prefix) {
+	size_t prefix_length = strlen(prefix);
+	ProfileEntry *it = cfg.profile;
+	while (it) {
+		char *data = it->data;
+		it = it->next;
+		if (strncmp(prefix, data, prefix_length) != 0)
+			continue;
+		data += prefix_length;
+		int arg_length = 0;
+		while (data[arg_length] != '\0' && data[arg_length] != ' ')
+			arg_length++;
+		if (data[arg_length] != ' ')
+			continue;
+		write_arg(fd, "--%.*s=%s", arg_length, data, &data[arg_length + 1]);
+	}
 }
 
 void dbus_proxy_start(void) {
@@ -96,7 +185,7 @@ void dbus_proxy_start(void) {
 				errExit("asprintf");
 			write_arg(args_pipe[1], dbus_user_proxy_socket);
 			write_arg(args_pipe[1], "--filter");
-			// TODO Write filter rules to pipe
+			write_profile(args_pipe[1], "dbus-user.");
 		}
 
 		if (arg_dbus_system == DBUS_POLICY_FILTER) {
@@ -105,7 +194,7 @@ void dbus_proxy_start(void) {
 				errExit("asprintf");
 			write_arg(args_pipe[1], dbus_system_proxy_socket);
 			write_arg(args_pipe[1], "--filter");
-			// TODO Write filter rules to pipe
+			write_profile(args_pipe[1], "dbus-system.");
 		}
 
 		if (close(args_pipe[1]) == -1)

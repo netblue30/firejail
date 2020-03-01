@@ -10,7 +10,6 @@ noblacklist ${HOME}/.config/discordcanary
 mkdir ${HOME}/.config/discordcanary
 whitelist ${HOME}/.config/discordcanary
 
-private-bin DiscordCanary
 private-opt DiscordCanary
 
 # Redirect

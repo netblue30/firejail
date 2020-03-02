@@ -326,6 +326,112 @@ $ firejail \-\-list
 $ firejail \-\-cpu.print=3272
 
 .TP
+\fB\-\-dbus-system=filter|none
+Set system DBus sandboxing policy. 
+.br
+
+.br
+The \fBfilter\fR policy enables the system DBus filter. This option requires
+installing the xdg-dbus-proxy utility. Permissions for well-known can be
+specified with the --dbus-system.talk and --dbus-system.own options.
+.br
+
+.br
+The \fBnone\fR policy disables access to the system DBus.
+.br
+
+.br
+Only the regular system DBus UNIX socket is handled by this option. To disable
+the abstract sockets (and force applications to use the filtered UNIX socket)
+you would need to request a new network namespace using \-\-net command. Another
+option is to remove unix from the \-\-protocol set.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-dbus-system=none
+
+.TP
+\fB\-\-dbus-system.own=name
+Allows the application to own the specified well-known name on the system DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.own=org.gnome.ghex.*
+
+.TP
+\fB\-\-dbus-system.talk=name
+Allows the application to talk to the specified well-known name on the system DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.talk=org.freedesktop.Notifications
+
+.TP
+\fB\-\-dbus-user=filter|none
+Set session DBus sandboxing policy.
+.br
+
+.br
+The \fBfilter\fR policy enables the session DBus filter. This option requires
+installing the xdg-dbus-proxy utility. Permissions for well-known names can be
+added with the --dbus-user.talk and --dbus-user.own options.
+.br
+
+.br
+The \fBnone\fR policy disables access to the session DBus.
+.br
+
+.br
+Only the regular session DBus UNIX socket is handled by this option. To disable
+the abstract sockets (and force applications to use the filtered UNIX socket)
+you would need to request a new network namespace using \-\-net command. Another
+option is to remove unix from the \-\-protocol set.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-dbus-user=none
+
+.TP
+\fB\-\-dbus-user.own=name
+Allows the application to own the specified well-known name on the session DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.own=org.gnome.ghex.*
+
+.TP
+\fB\-\-dbus-user.talk=name
+Allows the application to talk to the specified well-known name on the session DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.talk=org.freedesktop.Notifications
+
+.TP
 \fB\-\-debug\fR
 Print debug messages.
 .br
@@ -1171,11 +1277,7 @@ $ nc dict.org 2628
 .br
 .TP
 \fB\-\-nodbus
-Disable D-Bus access (both system and session buses). Only the regular
-UNIX sockets are handled by this command. To disable the abstract
-sockets you would need to request a new network namespace using
-\-\-net command. Another option is to remove unix from \-\-protocol
-set.
+Disable D-Bus access (both system and session buses). Equivalent to --dbus-system=none --dbus-user=none.
 .br
 
 .br

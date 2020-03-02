@@ -359,6 +359,7 @@ char *guess_shell(void);
 // sandbox.c
 int sandbox(void* sandbox_arg);
 void start_application(int no_sandbox, FILE *fp);
+void set_apparmor(void);
 
 // network_main.c
 void net_configure_sandbox_ip(Bridge *br);

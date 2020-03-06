@@ -394,6 +394,7 @@ typedef enum {
 	MOUNT_TMPFS,
 	MOUNT_NOEXEC,
 	MOUNT_RDWR,
+	MOUNT_RDWR_NOCHECK, // no check of ownership
 	OPERATION_MAX
 } OPERATION;
 
@@ -402,8 +403,7 @@ void fs_blacklist(void);
 // mount a writable tmpfs
 void fs_tmpfs(const char *dir, unsigned check_owner);
 // remount noexec/nodev/nosuid or read-only or read-write
-void fs_remount(const char *dir, OPERATION op, unsigned check_mnt);
-void fs_remount_rec(const char *dir, OPERATION op, unsigned check_mnt);
+void fs_remount(const char *dir, OPERATION op, int rec);
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void);
 // blacklist firejail configuration and runtime directories

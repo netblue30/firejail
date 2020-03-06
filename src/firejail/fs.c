@@ -28,10 +28,9 @@
 #include <dirent.h>
 #include <errno.h>
 
-
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 #define MAX_BUF 4096
@@ -43,6 +42,8 @@
 //***********************************************
 // process profile file
 //***********************************************
+static void fs_remount_rec(const char *dir, OPERATION op);
+
 static char *opstr[] = {
 	[BLACKLIST_FILE] = "blacklist",
 	[BLACKLIST_NOLOG] = "blacklist-nolog",
@@ -50,6 +51,7 @@ static char *opstr[] = {
 	[MOUNT_TMPFS] = "tmpfs",
 	[MOUNT_NOEXEC] = "noexec",
 	[MOUNT_RDWR] = "read-write",
+	[MOUNT_RDWR_NOCHECK] = "read-write",
 };
 
 typedef enum {
@@ -148,7 +150,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		}
 	}
 	else if (op == MOUNT_READONLY || op == MOUNT_RDWR || op == MOUNT_NOEXEC) {
-		fs_remount_rec(fname, op, 1);
+		fs_remount_rec(fname, op);
 		// todo: last_disable = SUCCESSFUL;
 	}
 	else if (op == MOUNT_TMPFS) {
@@ -425,21 +427,11 @@ void fs_blacklist(void) {
 	free(noblacklist);
 }
 
-static int get_mount_flags(const char *path, unsigned long *flags) {
-	struct statvfs buf;
-
-	if (statvfs(path, &buf) < 0)
-		return -errno;
-	*flags = buf.f_flag;
-	return 0;
-}
-
 //***********************************************
 // mount namespace
-//		- functions need fully resolved paths
 //***********************************************
 
-// mount a writable tmpfs on directory
+// mount a writable tmpfs on directory; requires a resolved path
 void fs_tmpfs(const char *dir, unsigned check_owner) {
 	assert(dir);
 	if (arg_debug)
@@ -480,71 +472,106 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 	close(fd);
 }
 
-void fs_remount(const char *dir, OPERATION op, unsigned check_mnt) {
-	assert(dir);
-	// check directory exists
+// remount path, but preserve existing mount flags; requires a resolved path
+static void fs_remount_simple(const char *path, OPERATION op) {
+	assert(path);
+
+	// open path without following symbolic links
+	int fd = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1) {
+		fwarning("cannot open %s, skipping the remount...\n", path);
+		return;
+	}
+	// identify file owner
 	struct stat s;
-	int rv = stat(dir, &s);
-	if (rv == 0) {
-		unsigned long flags = 0;
-		if (get_mount_flags(dir, &flags) != 0) {
-			fwarning("cannot remount %s\n", dir);
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	// get mount flags
+	struct statvfs buf;
+	if (fstatvfs(fd, &buf) == -1)
+		errExit("fstatvfs");
+	unsigned long flags = buf.f_flag;
+
+	// read-write option
+	if (op == MOUNT_RDWR || op == MOUNT_RDWR_NOCHECK) {
+		// nothing to do if there is no read-only flag
+		if ((flags & MS_RDONLY) == 0) {
+			close(fd);
 			return;
 		}
-		if (op == MOUNT_RDWR) {
-			// allow only user owned directories, except the user is root
-			if (getuid() != 0 && s.st_uid != getuid()) {
-				fwarning("you are not allowed to change %s to read-write\n", dir);
-				return;
-			}
-			if ((flags & MS_RDONLY) == 0)
-				return;
-			flags &= ~MS_RDONLY;
+		// allow only user owned directories, except the user is root
+		if (op == MOUNT_RDWR && getuid() != 0 && s.st_uid != getuid()) {
+			fwarning("you are not allowed to change %s to read-write\n", path);
+			close(fd);
+			return;
 		}
-		else if (op == MOUNT_NOEXEC) {
-			if ((flags & (MS_NOEXEC|MS_NODEV|MS_NOSUID)) == (MS_NOEXEC|MS_NODEV|MS_NOSUID))
-				return;
-			flags |= MS_NOEXEC|MS_NODEV|MS_NOSUID;
-		}
-		else if (op == MOUNT_READONLY) {
-			if ((flags & MS_RDONLY) == MS_RDONLY)
-				return;
-			flags |= MS_RDONLY;
-		}
-		else
-			assert(0);
-
-		if (arg_debug)
-			printf("Mounting %s %s\n", opstr[op], dir);
-		// mount --bind /bin /bin
-		// mount --bind -o remount,rw /bin
-		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT, NULL) < 0)
-			errExit("remounting");
-		// run a sanity check on /proc/self/mountinfo
-		if (check_mnt) {
-			// confirm target of the last mount operation was dir; if there are other
-			// mount points contained inside dir, one of those will show up as target
-			// of the last mount operation instead
-			MountData *mptr = get_last_mount();
-			size_t len = strlen(dir);
-			if ((strncmp(mptr->dir, dir, len) != 0 ||
-			   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
-			   && strcmp(dir, "/") != 0) // support read-only=/
-				errLogExit("invalid %s mount", opstr[op]);
-		}
-		fs_logger2(opstr[op], dir);
+		flags &= ~MS_RDONLY;
 	}
+	// noexec option
+	else if (op == MOUNT_NOEXEC) {
+		// nothing to do if path is mounted noexec already
+		if ((flags & (MS_NOEXEC|MS_NODEV|MS_NOSUID)) == (MS_NOEXEC|MS_NODEV|MS_NOSUID)) {
+			close(fd);
+			return;
+		}
+		flags |= MS_NOEXEC|MS_NODEV|MS_NOSUID;
+	}
+	// read-only option
+	else if (op == MOUNT_READONLY) {
+		// nothing to do if path is mounted read-only already
+		if ((flags & MS_RDONLY) == MS_RDONLY) {
+			close(fd);
+			return;
+		}
+		flags |= MS_RDONLY;
+	}
+	else
+		assert(0);
+
+	if (arg_debug)
+		printf("Mounting %s %s\n", opstr[op], path);
+	// mount --bind /bin /bin
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(proc, proc, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount");
+	free(proc);
+	close(fd);
+
+	// mount --bind -o remount,ro /bin
+	// we need to open path again
+	fd = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1)
+		errExit("open");
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(NULL, proc, NULL, flags|MS_BIND|MS_REMOUNT, NULL) < 0)
+		errExit("mount");
+
+	// run a sanity check on /proc/self/mountinfo and confirm that target of the last
+	// mount operation was path; if there are other mount points contained inside path,
+	// one of those will show up as target of the last mount operation instead
+	MountData *mptr = get_last_mount();
+	size_t len = strlen(path);
+	if ((strncmp(mptr->dir, path, len) != 0 ||
+	   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
+	   && strcmp(path, "/") != 0) // support read-only=/
+		errLogExit("invalid %s mount", opstr[op]);
+	fs_logger2(opstr[op], path);
+	free(proc);
+	close(fd);
 }
 
-void fs_remount_rec(const char *dir, OPERATION op, unsigned check_mnt) {
+// remount recursively; requires a resolved path
+static void fs_remount_rec(const char *dir, OPERATION op) {
 	assert(dir);
 	struct stat s;
 	if (stat(dir, &s) != 0)
 		return;
 	if (!S_ISDIR(s.st_mode)) {
 		// no need to search in /proc/self/mountinfo for submounts if not a directory
-		fs_remount(dir, op, check_mnt);
+		fs_remount_simple(dir, op);
 		return;
 	}
 	// get mount point of the directory
@@ -558,7 +585,7 @@ void fs_remount_rec(const char *dir, OPERATION op, unsigned check_mnt) {
 			fwarning("read-only, read-write and noexec options are not applied recursively\n");
 			mount_warning = 1;
 		}
-		fs_remount(dir, op, check_mnt);
+		fs_remount_simple(dir, op);
 		return;
 	}
 	// build array with all mount points that need to get remounted
@@ -567,10 +594,23 @@ void fs_remount_rec(const char *dir, OPERATION op, unsigned check_mnt) {
 	// remount
 	char **tmp = arr;
 	while (*tmp) {
-		fs_remount(*tmp, op, check_mnt);
+		fs_remount_simple(*tmp, op);
 		free(*tmp++);
 	}
 	free(arr);
+}
+
+// resolve a path and remount it
+void fs_remount(const char *path, OPERATION op, int rec) {
+	assert(path);
+	char *rpath = realpath(path, NULL);
+	if (rpath) {
+		if (rec)
+			fs_remount_rec(rpath, op);
+		else
+			fs_remount_simple(rpath, op);
+		free(rpath);
+	}
 }
 
 // Disable /mnt, /media, /run/mount and /run/media access
@@ -749,22 +789,22 @@ void fs_basic_fs(void) {
 	if (arg_debug)
 		printf("Basic read-only filesystem:\n");
 	if (!arg_writable_etc) {
-		fs_remount("/etc", MOUNT_READONLY, 0);
+		fs_remount("/etc", MOUNT_READONLY, 1);
 		if (uid)
-			fs_remount("/etc", MOUNT_NOEXEC, 0);
+			fs_remount("/etc", MOUNT_NOEXEC, 1);
 	}
 	if (!arg_writable_var) {
-		fs_remount("/var", MOUNT_READONLY, 0);
+		fs_remount("/var", MOUNT_READONLY, 1);
 		if (uid)
-			fs_remount("/var", MOUNT_NOEXEC, 0);
+			fs_remount("/var", MOUNT_NOEXEC, 1);
 	}
-	fs_remount("/bin", MOUNT_READONLY, 0);
-	fs_remount("/sbin", MOUNT_READONLY, 0);
-	fs_remount("/lib", MOUNT_READONLY, 0);
-	fs_remount("/lib64", MOUNT_READONLY, 0);
-	fs_remount("/lib32", MOUNT_READONLY, 0);
-	fs_remount("/libx32", MOUNT_READONLY, 0);
-	fs_remount("/usr", MOUNT_READONLY, 0);
+	fs_remount("/usr", MOUNT_READONLY, 1);
+	fs_remount("/bin", MOUNT_READONLY, 1);
+	fs_remount("/sbin", MOUNT_READONLY, 1);
+	fs_remount("/lib", MOUNT_READONLY, 1);
+	fs_remount("/lib64", MOUNT_READONLY, 1);
+	fs_remount("/lib32", MOUNT_READONLY, 1);
+	fs_remount("/libx32", MOUNT_READONLY, 1);
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	fs_var_lock();
@@ -773,7 +813,7 @@ void fs_basic_fs(void) {
 	if (!arg_writable_var_log)
 		fs_var_log();
 	else
-		fs_remount("/var/log", MOUNT_RDWR, 0);
+		fs_remount("/var/log", MOUNT_RDWR_NOCHECK, 0);
 
 	fs_var_lib();
 	fs_var_cache();

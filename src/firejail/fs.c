@@ -478,10 +478,8 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 
 	// open path without following symbolic links
 	int fd = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1) {
-		fwarning("cannot open %s, skipping the remount...\n", path);
-		return;
-	}
+	if (fd == -1)
+		errExit("open");
 	// identify file owner
 	struct stat s;
 	if (fstat(fd, &s) == -1)

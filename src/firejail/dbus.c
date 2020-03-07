@@ -22,9 +22,14 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+
+#ifndef O_PATH
+#define O_PATH 010000000
+#endif
 
 #define DBUS_SOCKET_PATH_PREFIX "unix:path="
 #define DBUS_USER_SOCKET_FORMAT "/run/user/%d/bus"
@@ -32,8 +37,9 @@
 #define DBUS_SYSTEM_SOCKET "/run/dbus/system_bus_socket"
 #define DBUS_SYSTEM_SOCKET_PATH DBUS_SOCKET_PATH_PREFIX DBUS_SYSTEM_SOCKET
 #define DBUS_SESSION_BUS_ADDRESS_ENV "DBUS_SESSION_BUS_ADDRESS"
-#define DBUS_USER_PROXY_SOCKET_FORMAT RUN_FIREJAIL_DBUS_DIR "/%d-user"
-#define DBUS_SYSTEM_PROXY_SOCKET_FORMAT RUN_FIREJAIL_DBUS_DIR "/%d-system"
+#define DBUS_USER_DIR_FORMAT RUN_FIREJAIL_DBUS_DIR "/%d"
+#define DBUS_USER_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-user"
+#define DBUS_SYSTEM_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-system"
 #define DBUS_MAX_NAME_LENGTH 255
 
 static pid_t dbus_proxy_pid = 0;
@@ -144,7 +150,29 @@ static void write_profile(int fd, char const *prefix) {
 	}
 }
 
+static void dbus_create_user_dir(void) {
+	char *path;
+	if (asprintf(&path, DBUS_USER_DIR_FORMAT, (int) getuid()) == -1)
+		errExit("asprintf");
+	struct stat s;
+	mode_t mode = 0700;
+	uid_t uid = getuid();
+	gid_t gid = getgid();
+	if (stat(path, &s)) {
+		if (arg_debug)
+			printf("Creating %s directory for DBus proxy sockets\n", path);
+		if (mkdir(path, mode) == -1 && errno != EEXIST)
+			errExit("mkdir");
+		if (set_perms(path, uid, gid, mode))
+			errExit("set_perms");
+		ASSERT_PERMS(path, uid, gid, mode);
+	}
+	free(path);
+}
+
 void dbus_proxy_start(void) {
+	dbus_create_user_dir();
+
 	int status_pipe[2];
 	if (pipe(status_pipe) == -1)
 		errExit("pipe");
@@ -181,7 +209,8 @@ void dbus_proxy_start(void) {
 			} else {
 				write_arg(args_pipe[1], dbus_user_path_env);
 			}
-			if (asprintf(&dbus_user_proxy_socket, DBUS_USER_PROXY_SOCKET_FORMAT, (int) getpid()) == -1)
+			if (asprintf(&dbus_user_proxy_socket, DBUS_USER_PROXY_SOCKET_FORMAT,
+						 (int) getuid(), (int) getpid()) == -1)
 				errExit("asprintf");
 			write_arg(args_pipe[1], dbus_user_proxy_socket);
 			write_arg(args_pipe[1], "--filter");
@@ -190,7 +219,8 @@ void dbus_proxy_start(void) {
 
 		if (arg_dbus_system == DBUS_POLICY_FILTER) {
 			write_arg(args_pipe[1], DBUS_SYSTEM_SOCKET_PATH);
-			if (asprintf(&dbus_system_proxy_socket, DBUS_SYSTEM_PROXY_SOCKET_FORMAT, (int) getpid()) == -1)
+			if (asprintf(&dbus_system_proxy_socket, DBUS_SYSTEM_PROXY_SOCKET_FORMAT,
+						 (int) getuid(), (int) getpid()) == -1)
 				errExit("asprintf");
 			write_arg(args_pipe[1], dbus_system_proxy_socket);
 			write_arg(args_pipe[1], "--filter");
@@ -245,8 +275,23 @@ void dbus_proxy_stop(void) {
 }
 
 static void socket_overlay(char *socket_path, char *proxy_path) {
-	if (mount(proxy_path, socket_path, NULL, MS_BIND, NULL) == -1)
-		errExit("mount");
+	int fd = safe_fd(proxy_path, O_PATH | O_NOFOLLOW | O_CLOEXEC);
+	if (fd == -1)
+		errExit("opening DBus proxy socket");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISSOCK(s.st_mode)) {
+		errno = ENOTSOCK;
+		errExit("mounting DBus proxy socket");
+	}
+	char *proxy_fd_path;
+	if (asprintf(&proxy_fd_path, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(proxy_path, socket_path, NULL, MS_BIND | MS_REC, NULL) == -1)
+		errExit("mount bind");
+	free(proxy_fd_path);
+	close(fd);
 }
 
 static void disable_socket_dir(void) {
@@ -281,7 +326,7 @@ void dbus_apply_policy(void) {
 	} else {
 		dbus_orig_user_socket_path = dbus_new_user_socket_path;
 	}
-	char *dbus_orig_user_socket = dbus_user_path_env + strlen(DBUS_SOCKET_PATH_PREFIX);
+	char *dbus_orig_user_socket = dbus_orig_user_socket_path + strlen(DBUS_SOCKET_PATH_PREFIX);
 
 	if (arg_dbus_user != DBUS_POLICY_ALLOW) {
 		if (arg_dbus_user == DBUS_POLICY_FILTER) {

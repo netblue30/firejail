@@ -181,6 +181,7 @@ static void myexit(int rv) {
 
 
 	// delete sandbox files in shared memory
+	dbus_proxy_stop();
 	EUID_ROOT();
 	delete_run_files(sandbox_pid);
 	appimage_clear();
@@ -3022,9 +3023,6 @@ printf("**********************************\n");
 
 	// end of signal-safe code
 	//*****************************
-
-	// stop dbus proxy (if any)
-	dbus_proxy_stop();
 
 	// free globals
 	if (cfg.profile) {

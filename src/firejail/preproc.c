@@ -59,7 +59,17 @@ void preproc_build_firejail_dir(void) {
 	}
 
 	if (stat(RUN_FIREJAIL_DBUS_DIR, &s)) {
-		create_empty_dir_as_root(RUN_FIREJAIL_DBUS_DIR, 01777);
+		create_empty_dir_as_root(RUN_FIREJAIL_DBUS_DIR, 0755);
+		if (arg_debug)
+			printf("Remounting the " RUN_FIREJAIL_DBUS_DIR
+				   " directory as noexec\n");
+		if (mount(RUN_FIREJAIL_DBUS_DIR, RUN_FIREJAIL_DBUS_DIR, NULL,
+				  MS_BIND, NULL) == -1)
+			errExit("mounting " RUN_FIREJAIL_DBUS_DIR);
+		if (mount(NULL, RUN_FIREJAIL_DBUS_DIR, NULL,
+				  MS_REMOUNT | MS_BIND | MS_NOSUID | MS_NOEXEC | MS_NODEV,
+				  "mode=755,gid=0") == -1)
+			errExit("remounting " RUN_FIREJAIL_DBUS_DIR);
 	}
 
 	if (stat(RUN_FIREJAIL_APPIMAGE_DIR, &s)) {

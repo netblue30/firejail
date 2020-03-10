@@ -27,7 +27,7 @@ nodvd
 nonewprivs
 noroot
 notv
-protocol unix,inet,inet6
-seccomp
+protocol unix,inet,inet6,netlink
+seccomp !chroot
 
 private-tmp

@@ -21,12 +21,10 @@
 #define FSEC_PRINT_H
 #include "../include/common.h"
 #include "../include/seccomp.h"
+#include "../include/syscall.h"
 #include <sys/mman.h>
 
 // print.c
 void print(struct sock_filter *filter, int entries);
-
-// syscall_list.c
-const char *syscall_find_nr(int nr);
 
 #endif

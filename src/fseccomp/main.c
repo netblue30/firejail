@@ -23,6 +23,7 @@ int arg_quiet = 0;
 static void usage(void) {
 	printf("Usage:\n");
 	printf("\tfseccomp debug-syscalls\n");
+	printf("\tfseccomp debug-syscalls32\n");
 	printf("\tfseccomp debug-errnos\n");
 	printf("\tfseccomp debug-protocols\n");
 	printf("\tfseccomp protocol build list file\n");
@@ -31,12 +32,20 @@ static void usage(void) {
 	printf("\tfseccomp secondary block file\n");
 	printf("\tfseccomp default file\n");
 	printf("\tfseccomp default file allow-debuggers\n");
+	printf("\tfseccomp default32 file\n");
+	printf("\tfseccomp default32 file allow-debuggers\n");
 	printf("\tfseccomp drop file1 file2 list\n");
 	printf("\tfseccomp drop file1 file2 list allow-debuggers\n");
+	printf("\tfseccomp drop32 file1 file2 list\n");
+	printf("\tfseccomp drop32 file1 file2 list allow-debuggers\n");
 	printf("\tfseccomp default drop file1 file2 list\n");
 	printf("\tfseccomp default drop file1 file2 list allow-debuggers\n");
+	printf("\tfseccomp default32 drop file1 file2 list\n");
+	printf("\tfseccomp default32 drop file1 file2 list allow-debuggers\n");
 	printf("\tfseccomp keep file1 file2 list\n");
+	printf("\tfseccomp keep32 file1 file2 list\n");
 	printf("\tfseccomp memory-deny-write-execute file\n");
+	printf("\tfseccomp memory-deny-write-execute.32 file\n");
 }
 
 int main(int argc, char **argv) {
@@ -64,6 +73,8 @@ printf("\n");
 	}
 	else if (argc == 2 && strcmp(argv[1], "debug-syscalls") == 0)
 		syscall_print();
+	else if (argc == 2 && strcmp(argv[1], "debug-syscalls32") == 0)
+		syscall_print_32();
 	else if (argc == 2 && strcmp(argv[1], "debug-errnos") == 0)
 		errno_print();
 	else if (argc == 2 && strcmp(argv[1], "debug-protocols") == 0)
@@ -75,21 +86,37 @@ printf("\n");
 	else if (argc == 4 && strcmp(argv[1], "secondary") == 0 && strcmp(argv[2], "block") == 0)
 		seccomp_secondary_block(argv[3]);
 	else if (argc == 3 && strcmp(argv[1], "default") == 0)
-		seccomp_default(argv[2], 0);
+		seccomp_default(argv[2], 0, true);
 	else if (argc == 4 && strcmp(argv[1], "default") == 0 && strcmp(argv[3], "allow-debuggers") == 0)
-		seccomp_default(argv[2], 1);
+		seccomp_default(argv[2], 1, true);
+	else if (argc == 3 && strcmp(argv[1], "default32") == 0)
+		seccomp_default(argv[2], 0, false);
+	else if (argc == 4 && strcmp(argv[1], "default32") == 0 && strcmp(argv[3], "allow-debuggers") == 0)
+		seccomp_default(argv[2], 1, false);
 	else if (argc == 5 && strcmp(argv[1], "drop") == 0)
-		seccomp_drop(argv[2], argv[3], argv[4], 0);
+		seccomp_drop(argv[2], argv[3], argv[4], 0, true);
 	else if (argc == 6 && strcmp(argv[1], "drop") == 0 && strcmp(argv[5], "allow-debuggers") == 0)
-		seccomp_drop(argv[2], argv[3], argv[4], 1);
+		seccomp_drop(argv[2], argv[3], argv[4], 1, true);
+	else if (argc == 5 && strcmp(argv[1], "drop32") == 0)
+		seccomp_drop(argv[2], argv[3], argv[4], 0, false);
+	else if (argc == 6 && strcmp(argv[1], "drop32") == 0 && strcmp(argv[5], "allow-debuggers") == 0)
+		seccomp_drop(argv[2], argv[3], argv[4], 1, false);
 	else if (argc == 6 && strcmp(argv[1], "default") == 0 && strcmp(argv[2], "drop") == 0)
-		seccomp_default_drop(argv[3], argv[4], argv[5], 0);
+		seccomp_default_drop(argv[3], argv[4], argv[5], 0, true);
 	else if (argc == 7 && strcmp(argv[1], "default") == 0 && strcmp(argv[2], "drop") == 0 && strcmp(argv[6], "allow-debuggers") == 0)
-		seccomp_default_drop(argv[3], argv[4], argv[5], 1);
+		seccomp_default_drop(argv[3], argv[4], argv[5], 1, true);
+	else if (argc == 6 && strcmp(argv[1], "default32") == 0 && strcmp(argv[2], "drop") == 0)
+		seccomp_default_drop(argv[3], argv[4], argv[5], 0, false);
+	else if (argc == 7 && strcmp(argv[1], "default32") == 0 && strcmp(argv[2], "drop") == 0 && strcmp(argv[6], "allow-debuggers") == 0)
+		seccomp_default_drop(argv[3], argv[4], argv[5], 1, false);
 	else if (argc == 5 && strcmp(argv[1], "keep") == 0)
-		seccomp_keep(argv[2], argv[3], argv[4]);
+		seccomp_keep(argv[2], argv[3], argv[4], true);
+	else if (argc == 5 && strcmp(argv[1], "keep32") == 0)
+		seccomp_keep(argv[2], argv[3], argv[4], false);
 	else if (argc == 3 && strcmp(argv[1], "memory-deny-write-execute") == 0)
 		memory_deny_write_execute(argv[2]);
+	else if (argc == 3 && strcmp(argv[1], "memory-deny-write-execute.32") == 0)
+		memory_deny_write_execute_32(argv[2]);
 	else {
 		fprintf(stderr, "Error fseccomp: invalid arguments\n");
 		return 1;

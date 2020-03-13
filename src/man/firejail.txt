@@ -35,7 +35,7 @@ firejail {\-\-list | \-\-netstats | \-\-top | \-\-tree}
 Miscellaneous:
 .PP
 .RS
-firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-debug-protocols | \-\-help | \-\-version}
+firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-debug-syscalls32 | \-\-debug-protocols | \-\-help | \-\-version}
 .RE
 .SH DESCRIPTION
 Firejail is a SUID sandbox program that reduces the risk of security breaches by
@@ -385,6 +385,10 @@ Print all recognized system calls in the current Firejail software build and exi
 Example:
 .br
 $ firejail \-\-debug-syscalls
+.TP
+\fB\-\-debug-syscalls32
+Print all recognized 32 bit system calls in the current Firejail software build and exit.
+.br
 .TP
 \fB\-\-debug-whitelists\fR
 Debug whitelisting.
@@ -1832,7 +1836,9 @@ Exceptions can be allowed with prefix !.
 System architecture is strictly imposed only if flag
 \-\-seccomp.block-secondary is used. The filter is applied at run time
 only if the correct architecture was detected. For the case of I386
-and AMD64 both 32-bit and 64-bit filters are installed.
+and AMD64 both 32-bit and 64-bit filters are installed. On a 64 bit
+architecture, an additional filter for 32 bit system calls can be
+installed with \-\-seccomp.32.
 .br
 
 .br
@@ -1881,7 +1887,8 @@ rm: cannot remove `testfile': Operation not permitted
 .br
 If the blocked system calls would also block Firejail from operating,
 they are handled by adding a preloaded library which performs seccomp
-system calls later.
+system calls later. However, this is incompatible with 32 bit seccomp
+filters.
 .br
 
 .br
@@ -1912,7 +1919,10 @@ domain with personality(2) system call.
 
 .TP
 \fB\-\-seccomp.drop=syscall,@group
-Enable seccomp filter, and blacklist the syscalls or the syscall groups specified by the command.
+Enable seccomp filter, and blacklist the syscalls or the syscall
+groups specified by the command. On a 64 bit architecture, an
+additional filter for 32 bit system calls can be installed with
+\-\-seccomp.32.drop.
 .br
 
 .br
@@ -1950,7 +1960,9 @@ rm: cannot remove `testfile': Operation not permitted
 \fB\-\-seccomp.keep=syscall,@group,!syscall2
 Enable seccomp filter, blacklist all syscall not listed and "syscall2".
 The system calls needed by Firejail (group @default-keep: prctl, execve)
-are handled with the preload library.
+are handled with the preload library. On a 64 bit architecture, an
+additional filter for 32 bit system calls can be installed with
+\-\-seccomp.32.keep.
 .br
 
 .br

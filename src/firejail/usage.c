@@ -60,6 +60,7 @@ static char *usage_str =
 	"    --debug-private-lib - debug for --private-lib option.\n"
 	"    --debug-protocols - print all recognized protocols.\n"
 	"    --debug-syscalls - print all recognized system calls.\n"
+	"    --debug-syscalls32 - print all recognized 32 bit system calls.\n"
 #ifdef HAVE_WHITELIST
 	"    --debug-whitelists - debug whitelisting.\n"
 #endif

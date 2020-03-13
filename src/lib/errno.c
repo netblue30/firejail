@@ -17,9 +17,11 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "fseccomp.h"
+#include "../include/syscall.h"
 
 #include <errno.h>
+#include <stdio.h>
+#include <string.h>
 //#include <attr/xattr.h>
 
 typedef struct {

@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include "../include/pid.h"
 #include "../include/firejail_user.h"
+#include "../include/syscall.h"
 #define _GNU_SOURCE
 #include <sys/utsname.h>
 #include <sched.h>
@@ -72,6 +73,7 @@ int arg_overlay_keep = 0;			// place overlay diff in a known directory
 int arg_overlay_reuse = 0;			// allow the reuse of overlays
 
 int arg_seccomp = 0;				// enable default seccomp filter
+int arg_seccomp32 = 0;				// enable default seccomp filter for 32 bit arch
 int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
 int arg_seccomp_block_secondary = 0;		// block any secondary architectures
 
@@ -548,6 +550,14 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature("seccomp");
 	}
+	else if (strcmp(argv[i], "--debug-syscalls32") == 0) {
+		if (checkcfg(CFG_SECCOMP)) {
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls32");
+			exit(rv);
+		}
+		else
+			exit_err_feature("seccomp");
+	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-errnos");
@@ -956,6 +966,18 @@ static void run_builder(int argc, char **argv) {
 	exit(1);
 }
 
+void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {}
+
+static int check_postexec(const char *list) {
+	char *prelist, *postlist;
+
+	if (list) {
+		syscalls_in_list(list, "@default-keep", -1, &prelist, &postlist, true);
+		if (postlist)
+			return 1;
+	}
+	return 0;
+}
 
 //*******************************************
 // Main program
@@ -1263,6 +1285,18 @@ int main(int argc, char **argv) {
 			else
 				exit_err_feature("seccomp");
 		}
+		else if (strncmp(argv[i], "--seccomp.32=", 13) == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp32) {
+					fprintf(stderr, "Error: seccomp.32 already enabled\n");
+					exit(1);
+				}
+				arg_seccomp32 = 1;
+				cfg.seccomp_list32 = seccomp_check_list(argv[i] + 13);
+			}
+			else
+				exit_err_feature("seccomp");
+		}
 		else if (strncmp(argv[i], "--seccomp.drop=", 15) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp) {
@@ -1271,6 +1305,18 @@ int main(int argc, char **argv) {
 				}
 				arg_seccomp = 1;
 				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
+			}
+			else
+				exit_err_feature("seccomp");
+		}
+		else if (strncmp(argv[i], "--seccomp.32.drop=", 18) == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp32) {
+					fprintf(stderr, "Error: seccomp.32 already enabled\n");
+					exit(1);
+				}
+				arg_seccomp32 = 1;
+				cfg.seccomp_list_drop32 = seccomp_check_list(argv[i] + 18);
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1287,8 +1333,24 @@ int main(int argc, char **argv) {
 			else
 				exit_err_feature("seccomp");
 		}
+		else if (strncmp(argv[i], "--seccomp.32.keep=", 18) == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp32) {
+					fprintf(stderr, "Error: seccomp.32 already enabled\n");
+					exit(1);
+				}
+				arg_seccomp32 = 1;
+				cfg.seccomp_list_keep32 = seccomp_check_list(argv[i] + 18);
+			}
+			else
+				exit_err_feature("seccomp");
+		}
 		else if (strcmp(argv[i], "--seccomp.block-secondary") == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
+				if (arg_seccomp32) {
+					fprintf(stderr, "Error: seccomp.32 conflicts with block-secondary\n");
+					exit(1);
+				}
 				arg_seccomp_block_secondary = 1;
 			}
 			else
@@ -2541,6 +2603,14 @@ int main(int argc, char **argv) {
 
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
+
+#ifdef HAVE_SECCOMP
+	if (arg_seccomp)
+		arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);
+#endif
+	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
+	if (need_preload && (cfg.seccomp_list32 || cfg.seccomp_list_drop32 || cfg.seccomp_list_keep32))
+		fwarning("preload libraries (trace, tracelog, postexecseccomp due to seccomp.drop=execve etc.) are incompatible with 32 bit filters\n");
 
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {

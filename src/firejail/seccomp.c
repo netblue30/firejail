@@ -191,7 +191,17 @@ static void seccomp_filter_block_secondary(void) {
 }
 
 // drop filter for seccomp option
-int seccomp_filter_drop(void) {
+int seccomp_filter_drop(bool native) {
+	const char *filter, *postexec_filter;
+
+	if (native) {
+		filter = RUN_SECCOMP_CFG;
+		postexec_filter = RUN_SECCOMP_POSTEXEC;
+	} else {
+		filter = RUN_SECCOMP_32;
+		postexec_filter = RUN_SECCOMP_POSTEXEC_32;
+	}
+
 	// if we have multiple seccomp commands, only one of them is executed
 	// in the following order:
 	//	- seccomp.drop list
@@ -224,19 +234,28 @@ int seccomp_filter_drop(void) {
 			if (arg_debug)
 				printf("Build default+drop seccomp filter\n");
 
+			const char *command, *list;
+			if (native) {
+				command = "default";
+				list = cfg.seccomp_list;
+			} else {
+				command = "default32";
+				list = cfg.seccomp_list32;
+			}
+
 			// build the seccomp filter as a regular user
 			int rv;
 			if (arg_allow_debuggers)
 				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 7,
-					      PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list, "allow-debuggers");
+					      PATH_FSECCOMP, command, "drop", filter, postexec_filter, list, "allow-debuggers");
 			else
 				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
-					      PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list);
+					      PATH_FSECCOMP, command, "drop", filter, postexec_filter, list);
 			if (rv)
 				exit(rv);
 
 			// optimize the new filter
-			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSEC_OPTIMIZE, RUN_SECCOMP_CFG);
+			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSEC_OPTIMIZE, filter);
 			if (rv)
 				exit(rv);
 		}
@@ -250,36 +269,45 @@ int seccomp_filter_drop(void) {
 		if (arg_debug)
 			printf("Build drop seccomp filter\n");
 
+		const char *command, *list;
+		if (native) {
+			command = "drop";
+			list = cfg.seccomp_list_drop;
+		} else {
+			command = "drop32";
+			list = cfg.seccomp_list_drop32;
+		}
+
 		// build the seccomp filter as a regular user
 		int rv;
 		if (arg_allow_debuggers)
 			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
-				      PATH_FSECCOMP, "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list_drop,  "allow-debuggers");
+				      PATH_FSECCOMP, command, filter, postexec_filter, list,  "allow-debuggers");
 		else
 			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
-				PATH_FSECCOMP, "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list_drop);
+				      PATH_FSECCOMP, command, filter, postexec_filter, list);
 
 		if (rv)
 			exit(rv);
 
 		// optimize the drop filter
-		rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSEC_OPTIMIZE, RUN_SECCOMP_CFG);
+		rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSEC_OPTIMIZE, filter);
 		if (rv)
 			exit(rv);
 	}
 
 	// load the filter
-	if (seccomp_load(RUN_SECCOMP_CFG) == 0) {
+	if (seccomp_load(filter) == 0) {
 		if (arg_debug)
 			printf("seccomp filter configured\n");
 	}
 
 	if (arg_debug && access(PATH_FSEC_PRINT, X_OK) == 0) {
 		struct stat st;
-		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0) {
-			printf("configuring postexec seccomp filter in %s\n", RUN_SECCOMP_POSTEXEC);
+		if (stat(postexec_filter, &st) != -1 && st.st_size != 0) {
+			printf("configuring postexec seccomp filter in %s\n", postexec_filter);
 			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
-				  PATH_FSEC_PRINT, RUN_SECCOMP_POSTEXEC);
+				  PATH_FSEC_PRINT, postexec_filter);
 		}
 	}
 
@@ -287,7 +315,7 @@ int seccomp_filter_drop(void) {
 }
 
 // keep filter for seccomp option
-int seccomp_filter_keep(void) {
+int seccomp_filter_keep(bool native) {
 	// secondary filters are not installed except when secondary
 	// architectures are explicitly blocked
 	if (arg_seccomp_block_secondary)
@@ -296,9 +324,22 @@ int seccomp_filter_keep(void) {
 	if (arg_debug)
 		printf("Build keep seccomp filter\n");
 
+	const char *command, *filter, *postexec_filter, *list;
+	if (native) {
+		command = "keep";
+		filter = RUN_SECCOMP_CFG;
+		postexec_filter = RUN_SECCOMP_POSTEXEC;
+		list = cfg.seccomp_list_keep;
+	} else {
+		command = "keep32";
+		filter = RUN_SECCOMP_32;
+		postexec_filter = RUN_SECCOMP_POSTEXEC_32;
+		list = cfg.seccomp_list_keep32;
+	}
+
 	// build the seccomp filter as a regular user
 	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
-		 PATH_FSECCOMP, "keep", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list_keep);
+		 PATH_FSECCOMP, "keep", filter, postexec_filter, list);
 
 	if (rv) {
 		fprintf(stderr, "Error: cannot configure seccomp filter\n");
@@ -309,17 +350,17 @@ int seccomp_filter_keep(void) {
 		printf("seccomp filter configured\n");
 
 	// load the filter
-	if (seccomp_load(RUN_SECCOMP_CFG) == 0) {
+	if (seccomp_load(filter) == 0) {
 		if (arg_debug)
 			printf("seccomp filter configured\n");
 	}
 
 	if (arg_debug && access(PATH_FSEC_PRINT, X_OK) == 0) {
 		struct stat st;
-		if (stat(RUN_SECCOMP_POSTEXEC, &st) != -1 && st.st_size != 0) {
-			printf("configuring postexec seccomp filter in %s\n", RUN_SECCOMP_POSTEXEC);
+		if (stat(postexec_filter, &st) != -1 && st.st_size != 0) {
+			printf("configuring postexec seccomp filter in %s\n", postexec_filter);
 			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2,
-				  PATH_FSEC_PRINT, RUN_SECCOMP_POSTEXEC);
+				  PATH_FSEC_PRINT, postexec_filter);
 		}
 	}
 

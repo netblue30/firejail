@@ -98,7 +98,7 @@ static int pid_is_firejail(pid_t pid) {
 			"apparmor.print", "caps.print", "cpu.print", "dns.print", "fs.print", "netfilter.print",
 			"netfilter6.print", "profile.print", "protocol.print", "seccomp.print",
 			// debug
-			"debug-caps", "debug-errnos", "debug-protocols", "debug-syscalls",
+			"debug-caps", "debug-errnos", "debug-protocols", "debug-syscalls", "debug-syscalls32",
 			// file transfer
 			"ls", "get", "put",
 			// stats

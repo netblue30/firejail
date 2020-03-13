@@ -62,13 +62,17 @@
 #define RUN_SECCOMP_PROTOCOL		RUN_SECCOMP_DIR "/seccomp.protocol"		// protocol filter
 #define RUN_SECCOMP_CFG			RUN_SECCOMP_DIR "/seccomp"			// configured filter
 #define RUN_SECCOMP_32			RUN_SECCOMP_DIR "/seccomp.32"			// 32bit arch filter installed on 64bit architectures
-#define RUN_SECCOMP_MDWX		RUN_SECCOMP_DIR "/seccomp.mdwx"		// filter for memory-deny-write-execute
+#define RUN_SECCOMP_MDWX		RUN_SECCOMP_DIR "/seccomp.mdwx"			// filter for memory-deny-write-execute
+#define RUN_SECCOMP_MDWX_32		RUN_SECCOMP_DIR "/seccomp.mdwx.32"
 #define RUN_SECCOMP_BLOCK_SECONDARY	RUN_SECCOMP_DIR "/seccomp.block_secondary"	// secondary arch blocking filter
 #define RUN_SECCOMP_POSTEXEC		RUN_SECCOMP_DIR "/seccomp.postexec"		// filter for post-exec library
+#define RUN_SECCOMP_POSTEXEC_32		RUN_SECCOMP_DIR "/seccomp.postexec32"		// filter for post-exec library
 #define PATH_SECCOMP_DEFAULT 		LIBDIR "/firejail/seccomp"			// default filter built during make
-#define PATH_SECCOMP_DEFAULT_DEBUG 	LIBDIR "/firejail/seccomp.debug"		// default filter built during make
+#define PATH_SECCOMP_DEFAULT_DEBUG 	LIBDIR "/firejail/seccomp.debug"		// debug filter built during make
 #define PATH_SECCOMP_32 		LIBDIR "/firejail/seccomp.32"			// 32bit arch filter built during make
-#define PATH_SECCOMP_MDWX 		LIBDIR "/firejail/seccomp.mdwx"		// filter for memory-deny-write-execute built during make
+#define PATH_SECCOMP_DEBUG_32 		LIBDIR "/firejail/seccomp.debug32"		// 32bit arch debug filter built during make
+#define PATH_SECCOMP_MDWX 		LIBDIR "/firejail/seccomp.mdwx"			// filter for memory-deny-write-execute built during make
+#define PATH_SECCOMP_MDWX_32 		LIBDIR "/firejail/seccomp.mdwx.32"
 #define PATH_SECCOMP_BLOCK_SECONDARY 	LIBDIR "/firejail/seccomp.block_secondary"	// secondary arch blocking filter built during make
 
 

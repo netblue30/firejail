@@ -98,19 +98,25 @@ void preproc_mount_mnt_dir(void) {
 			//copy default seccomp files
 			copy_file(PATH_SECCOMP_32, RUN_SECCOMP_32, getuid(), getgid(), 0644); // root needed
 		}
-		if (arg_allow_debuggers)
+		if (arg_allow_debuggers) {
 			copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
-		else
+			copy_file(PATH_SECCOMP_DEBUG_32, RUN_SECCOMP_32, getuid(), getgid(), 0644); // root needed
+		} else
 			copy_file(PATH_SECCOMP_DEFAULT, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
 
-		if (arg_memory_deny_write_execute)
+		if (arg_memory_deny_write_execute) {
 			copy_file(PATH_SECCOMP_MDWX, RUN_SECCOMP_MDWX, getuid(), getgid(), 0644); // root needed
+			copy_file(PATH_SECCOMP_MDWX_32, RUN_SECCOMP_MDWX_32, getuid(), getgid(), 0644); // root needed
+		}
 		// as root, create empty RUN_SECCOMP_PROTOCOL and RUN_SECCOMP_POSTEXEC files
 		create_empty_file_as_root(RUN_SECCOMP_PROTOCOL, 0644);
 		if (set_perms(RUN_SECCOMP_PROTOCOL, getuid(), getgid(), 0644))
 			errExit("set_perms");
 		create_empty_file_as_root(RUN_SECCOMP_POSTEXEC, 0644);
 		if (set_perms(RUN_SECCOMP_POSTEXEC, getuid(), getgid(), 0644))
+			errExit("set_perms");
+		create_empty_file_as_root(RUN_SECCOMP_POSTEXEC_32, 0644);
+		if (set_perms(RUN_SECCOMP_POSTEXEC_32, getuid(), getgid(), 0644))
 			errExit("set_perms");
 #endif
 	}

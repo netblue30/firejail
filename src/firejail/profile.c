@@ -788,6 +788,18 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 		return 0;
 	}
+	if (strncmp(ptr, "seccomp.32 ", 11) == 0) {
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP)) {
+			arg_seccomp32 = 1;
+			cfg.seccomp_list32 = seccomp_check_list(ptr + 11);
+		}
+		else if (!arg_quiet)
+			warning_feature_disabled("seccomp");
+#endif
+
+		return 0;
+	}
 
 	if (strcmp(ptr, "seccomp.block-secondary") == 0) {
 #ifdef HAVE_SECCOMP
@@ -811,6 +823,17 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
+	if (strncmp(ptr, "seccomp.32.drop ", 13) == 0) {
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP)) {
+			arg_seccomp32 = 1;
+			cfg.seccomp_list_drop32 = seccomp_check_list(ptr + 13);
+		}
+		else
+			warning_feature_disabled("seccomp");
+#endif
+		return 0;
+	}
 
 	// seccomp keep list
 	if (strncmp(ptr, "seccomp.keep ", 13) == 0) {
@@ -818,6 +841,17 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
 			cfg.seccomp_list_keep= seccomp_check_list(ptr + 13);
+		}
+		else
+			warning_feature_disabled("seccomp");
+#endif
+		return 0;
+	}
+	if (strncmp(ptr, "seccomp.32.keep ", 13) == 0) {
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP)) {
+			arg_seccomp32 = 1;
+			cfg.seccomp_list_keep32 = seccomp_check_list(ptr + 13);
 		}
 		else
 			warning_feature_disabled("seccomp");

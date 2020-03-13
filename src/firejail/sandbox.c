@@ -793,8 +793,6 @@ int sandbox(void* sandbox_arg) {
 		if (rv)
 			exit(rv);
 	}
-	if (arg_seccomp && (cfg.seccomp_list || cfg.seccomp_list_drop || cfg.seccomp_list_keep))
-		arg_seccomp_postexec = 1;
 #endif
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
@@ -1113,9 +1111,15 @@ int sandbox(void* sandbox_arg) {
 	// if a keep list is available, disregard the drop list
 	if (arg_seccomp == 1) {
 		if (cfg.seccomp_list_keep)
-			seccomp_filter_keep();
+			seccomp_filter_keep(true);
 		else
-			seccomp_filter_drop();
+			seccomp_filter_drop(true);
+	}
+	if (arg_seccomp32 == 1) {
+		if (cfg.seccomp_list_keep32)
+			seccomp_filter_keep(false);
+		else
+			seccomp_filter_drop(false);
 
 	}
 	else { // clean seccomp files under /run/firejail/mnt
@@ -1128,9 +1132,11 @@ int sandbox(void* sandbox_arg) {
 		if (arg_debug)
 			printf("Install memory write&execute filter\n");
 		seccomp_load(RUN_SECCOMP_MDWX);	// install filter
+		seccomp_load(RUN_SECCOMP_MDWX_32);
 	}
 	else {
 		int rv = unlink(RUN_SECCOMP_MDWX);
+		rv |= unlink(RUN_SECCOMP_MDWX_32);
 		(void) rv;
 	}
 	// make seccomp filters read-only

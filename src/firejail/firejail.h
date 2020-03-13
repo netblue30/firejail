@@ -182,9 +182,9 @@ typedef struct config_t {
 	char *dns4;
 
 	// seccomp
-	char *seccomp_list;//  optional seccomp list on top of default filter
-	char *seccomp_list_drop;	// seccomp drop list
-	char *seccomp_list_keep;	// seccomp keep list
+	char *seccomp_list, *seccomp_list32;		// optional seccomp list on top of default filter
+	char *seccomp_list_drop, *seccomp_list_drop32;	// seccomp drop list
+	char *seccomp_list_keep, *seccomp_list_keep32;	// seccomp keep list
 	char *protocol;			// protocol list
 
 	// rlimits
@@ -270,6 +270,7 @@ extern int arg_overlay_keep;	// place overlay diff in a known directory
 extern int arg_overlay_reuse;	// allow the reuse of overlays
 
 extern int arg_seccomp;	// enable default seccomp filter
+extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
 extern int arg_seccomp_postexec;	// need postexec ld.preload library?
 extern int arg_seccomp_block_secondary;	// block any secondary architectures
 
@@ -568,8 +569,8 @@ void fs_private_home_list(void);
 char *seccomp_check_list(const char *str);
 int seccomp_install_filters(void);
 int seccomp_load(const char *fname);
-int seccomp_filter_drop(void);
-int seccomp_filter_keep(void);
+int seccomp_filter_drop(bool native);
+int seccomp_filter_keep(bool native);
 void seccomp_print_filter(pid_t pid);
 
 // caps.c

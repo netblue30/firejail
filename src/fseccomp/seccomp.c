@@ -24,12 +24,12 @@
 #include <sys/syscall.h>
 #include <sys/types.h>
 
-static void add_default_list(int fd, int allow_debuggers) {
+static void add_default_list(int fd, int allow_debuggers, bool native) {
 	int r;
 	if (!allow_debuggers)
-		r = syscall_check_list("@default-nodebuggers", filter_add_blacklist, fd, 0, NULL);
+		r = syscall_check_list("@default-nodebuggers", filter_add_blacklist, fd, 0, NULL, native);
 	else
-		r = syscall_check_list("@default", filter_add_blacklist, fd, 0, NULL);
+		r = syscall_check_list("@default", filter_add_blacklist, fd, 0, NULL, native);
 
 	assert(r == 0);
 //#ifdef SYS_mknod - emoved in 0.9.29 - it breaks Zotero extension
@@ -46,7 +46,7 @@ static void add_default_list(int fd, int allow_debuggers) {
 }
 
 // default list
-void seccomp_default(const char *fname, int allow_debuggers) {
+void seccomp_default(const char *fname, int allow_debuggers, bool native) {
 	assert(fname);
 
 	// open file
@@ -57,8 +57,8 @@ void seccomp_default(const char *fname, int allow_debuggers) {
 	}
 
 	// build filter (no post-exec filter needed because default list is fine for us)
-	filter_init(fd);
-	add_default_list(fd, allow_debuggers);
+	filter_init(fd, native);
+	add_default_list(fd, allow_debuggers, native);
 	filter_end_blacklist(fd);
 
 	// close file
@@ -66,7 +66,7 @@ void seccomp_default(const char *fname, int allow_debuggers) {
 }
 
 // drop list
-void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_debuggers) {
+void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_debuggers, bool native) {
 	assert(fname1);
 	assert(fname2);
 	(void) allow_debuggers; // todo: to implemnet it
@@ -79,15 +79,15 @@ void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_
 	}
 
 	// build pre-exec filter: don't blacklist any syscalls in @default-keep
-	filter_init(fd);
+	filter_init(fd, native);
 
 	// allow exceptions in form of !syscall
-	syscall_check_list(list, filter_add_whitelist_for_excluded, fd, 0, NULL);
+	syscall_check_list(list, filter_add_whitelist_for_excluded, fd, 0, NULL, native);
 
 	char *prelist, *postlist;
-	syscalls_in_list(list, "@default-keep", fd, &prelist, &postlist);
+	syscalls_in_list(list, "@default-keep", fd, &prelist, &postlist, native);
 	if (prelist)
-		if (syscall_check_list(prelist, filter_add_blacklist, fd, 0, NULL)) {
+		if (syscall_check_list(prelist, filter_add_blacklist, fd, 0, NULL, native)) {
 			fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 			exit(1);
 		}
@@ -106,8 +106,8 @@ void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_
 	}
 
 	// build post-exec filter: blacklist remaining syscalls
-	filter_init(fd);
-	if (syscall_check_list(postlist, filter_add_blacklist, fd, 0, NULL)) {
+	filter_init(fd, native);
+	if (syscall_check_list(postlist, filter_add_blacklist, fd, 0, NULL, native)) {
 		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 		exit(1);
 	}
@@ -118,7 +118,7 @@ void seccomp_drop(const char *fname1, const char *fname2, char *list, int allow_
 }
 
 // default+drop
-void seccomp_default_drop(const char *fname1, const char *fname2, char *list, int allow_debuggers) {
+void seccomp_default_drop(const char *fname1, const char *fname2, char *list, int allow_debuggers, bool native) {
 	assert(fname1);
 	assert(fname2);
 
@@ -131,16 +131,16 @@ void seccomp_default_drop(const char *fname1, const char *fname2, char *list, in
 
 	// build pre-exec filter: blacklist @default, don't blacklist
 	// any listed syscalls in @default-keep
-	filter_init(fd);
+	filter_init(fd, native);
 
 	// allow exceptions in form of !syscall
-	syscall_check_list(list, filter_add_whitelist_for_excluded, fd, 0, NULL);
+	syscall_check_list(list, filter_add_whitelist_for_excluded, fd, 0, NULL, native);
 
-	add_default_list(fd, allow_debuggers);
+	add_default_list(fd, allow_debuggers, native);
 	char *prelist, *postlist;
-	syscalls_in_list(list, "@default-keep", fd, &prelist, &postlist);
+	syscalls_in_list(list, "@default-keep", fd, &prelist, &postlist, native);
 	if (prelist)
-		if (syscall_check_list(prelist, filter_add_blacklist, fd, 0, NULL)) {
+		if (syscall_check_list(prelist, filter_add_blacklist, fd, 0, NULL, native)) {
 			fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 			exit(1);
 		}
@@ -160,8 +160,8 @@ void seccomp_default_drop(const char *fname1, const char *fname2, char *list, in
 	}
 
 	// build post-exec filter: blacklist remaining syscalls
-	filter_init(fd);
-	if (syscall_check_list(postlist, filter_add_blacklist, fd, 0, NULL)) {
+	filter_init(fd, native);
+	if (syscall_check_list(postlist, filter_add_blacklist, fd, 0, NULL, native)) {
 		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 		exit(1);
 	}
@@ -171,7 +171,7 @@ void seccomp_default_drop(const char *fname1, const char *fname2, char *list, in
 	close(fd);
 }
 
-void seccomp_keep(const char *fname1, const char *fname2, char *list) {
+void seccomp_keep(const char *fname1, const char *fname2, char *list, bool native) {
 	(void) fname2;
 
 	// open file for pre-exec filter
@@ -182,17 +182,17 @@ void seccomp_keep(const char *fname1, const char *fname2, char *list) {
 	}
 
 	// build pre-exec filter: whitelist also @default-keep
-	filter_init(fd);
+	filter_init(fd, native);
 
 	// allow exceptions in form of !syscall
-	syscall_check_list(list, filter_add_blacklist_for_excluded, fd, 0, NULL);
+	syscall_check_list(list, filter_add_blacklist_for_excluded, fd, 0, NULL, native);
 
 	// these syscalls are used by firejail after the seccomp filter is initialized
 	int r;
-	r = syscall_check_list("@default-keep", filter_add_whitelist, fd, 0, NULL);
+	r = syscall_check_list("@default-keep", filter_add_whitelist, fd, 0, NULL, native);
 	assert(r == 0);
 
-	if (syscall_check_list(list, filter_add_whitelist, fd, 0, NULL)) {
+	if (syscall_check_list(list, filter_add_whitelist, fd, 0, NULL, native)) {
 		fprintf(stderr, "Error fseccomp: cannot build seccomp filter\n");
 		exit(1);
 	}
@@ -206,6 +206,15 @@ void seccomp_keep(const char *fname1, const char *fname2, char *list) {
 #if defined(__x86_64__) || defined(__aarch64__) || defined(__powerpc64__)
 # define filter_syscall SYS_mmap
 # undef block_syscall
+#if defined(__x86_64__)
+// i386 syscalls
+# define filter_syscall_32 192
+# define block_syscall_32 90
+# define mprotect_32 125
+# define pkey_mprotect_32 380
+# define shmat_32 397
+# define memfd_create_32 356
+#endif
 #elif defined(__i386__)
 # define filter_syscall SYS_mmap2
 # define block_syscall SYS_mmap
@@ -216,6 +225,12 @@ void seccomp_keep(const char *fname1, const char *fname2, char *list) {
 # warning "Platform does not support seccomp memory-deny-write-execute filter yet"
 # undef filter_syscall
 # undef block_syscall
+# undef filter_syscall_32
+# undef block_syscall_32
+# undef mprotect_32
+# undef pkey_mprotect_32
+# undef shmat_32
+# undef memfd_create_32
 #endif
 
 void memory_deny_write_execute(const char *fname) {
@@ -226,10 +241,10 @@ void memory_deny_write_execute(const char *fname) {
 		exit(1);
 	}
 
-	filter_init(fd);
+	filter_init(fd, true);
 
 	// build filter
-	static const struct sock_filter filter[] = {
+	struct sock_filter filter[] = {
 #ifdef block_syscall
 		// block old multiplexing mmap syscall for i386
 		BLACKLIST(block_syscall),
@@ -280,6 +295,78 @@ void memory_deny_write_execute(const char *fname) {
 		KILL_PROCESS,
 		RETURN_ALLOW
 #endif
+	};
+	write_to_file(fd, filter, sizeof(filter));
+
+	filter_end_blacklist(fd);
+
+	// close file
+	close(fd);
+}
+
+void memory_deny_write_execute_32(const char *fname) {
+	// open file
+	int fd = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (fd < 0) {
+		fprintf(stderr, "Error fseccomp: cannot open %s file\n", fname);
+		exit(1);
+	}
+
+	filter_init(fd, false);
+
+	// build filter
+	struct sock_filter filter[] = {
+#if defined(__x86_64__)
+#ifdef block_syscall_32
+		// block old multiplexing mmap syscall for i386
+		BLACKLIST(block_syscall_32),
+#endif
+#ifdef filter_syscall_32
+		// block mmap(,,x|PROT_WRITE|PROT_EXEC) so W&X memory can't be created
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, filter_syscall_32, 0, 5),
+		EXAMINE_ARGUMENT(2),
+		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_WRITE|PROT_EXEC),
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_WRITE|PROT_EXEC, 0, 1),
+		KILL_PROCESS,
+		RETURN_ALLOW,
+#endif
+#ifdef mprotect_32
+		// block mprotect(,,PROT_EXEC) so writable memory can't be turned into executable
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, mprotect_32, 0, 5),
+		EXAMINE_ARGUMENT(2),
+		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_EXEC),
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
+		KILL_PROCESS,
+		RETURN_ALLOW,
+#endif
+#ifdef pkey_mprotect_32
+		// same for pkey_mprotect(,,PROT_EXEC), where available
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, pkey_mprotect_32, 0, 5),
+		EXAMINE_ARGUMENT(2),
+		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_EXEC),
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
+		KILL_PROCESS,
+		RETURN_ALLOW,
+#endif
+
+#ifdef shmat_32
+		// block shmat(,,x|SHM_EXEC) so W&X shared memory can't be created
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, shmat_32, 0, 5),
+		EXAMINE_ARGUMENT(2),
+		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, SHM_EXEC),
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SHM_EXEC, 0, 1),
+		KILL_PROCESS,
+		RETURN_ALLOW,
+#endif
+#ifdef memfd_create_32
+		// block memfd_create as it can be used to create
+		// arbitrary memory contents which can be later mapped
+		// as executable
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, memfd_create_32, 0, 1),
+		KILL_PROCESS,
+#endif
+#endif
+		RETURN_ALLOW
 	};
 	write_to_file(fd, filter, sizeof(filter));
 

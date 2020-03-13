@@ -18,9 +18,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #define _GNU_SOURCE
-#include "fseccomp.h"
+#include "../include/syscall.h"
+#include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 #include <sys/syscall.h>
+#include "../include/common.h"
 
 typedef struct {
 	const char * const name;
@@ -39,15 +43,29 @@ typedef struct {
 	int syscall;
 } SyscallCheckList;
 
+// Native syscalls (64 bit versions for 64 bit arch etc)
 static const SyscallEntry syslist[] = {
-//
-// code generated using tools/extract-syscall
-//
-#include "../include/syscall.h"
-//
-// end of generated code
-//
-}; // end of syslist
+#if defined(__x86_64__)
+// code generated using
+// awk '/__NR_/ { print "{ \"" gensub("__NR_", "", "g", $2) "\", " $3 " },"; }' < /usr/include/x86_64-linux-gnu/asm/unistd_64.h
+#include "../include/syscall_x86_64.h"
+#elif defined(__i386__)
+// awk '/__NR_/ { print "{ \"" gensub("__NR_", "", "g", $2) "\", " $3 " },"; }' < /usr/include/x86_64-linux-gnu/asm/unistd_32.h
+#include "../include/syscall_i386.h"
+#else
+#warning "Please submit a syscall table for your architecture"
+#endif
+};
+
+// 32 bit syscalls for 64 bit arch
+static const SyscallEntry syslist32[] = {
+#if defined(__x86_64__)
+#include "../include/syscall_i386.h"
+// TODO for other 64 bit archs
+#elif defined(__i386__) || defined(__arm__) || defined(__powerpc__)
+// no secondary arch for 32 bit archs
+#endif
+};
 
 static const SyscallGroupList sysgroups[] = {
 	{ .name = "@aio", .list =
@@ -1424,6 +1442,17 @@ static int syscall_find_name(const char *name) {
 	return -1;
 }
 
+static int syscall_find_name_32(const char *name) {
+	int i;
+	int elems = sizeof(syslist32) / sizeof(syslist32[0]);
+	for (i = 0; i < elems; i++) {
+		if (strcmp(name, syslist32[i].name) == 0)
+			return syslist32[i].nr;
+	}
+
+	return -1;
+}
+
 const char *syscall_find_nr(int nr) {
 	int i;
 	int elems = sizeof(syslist) / sizeof(syslist[0]);
@@ -1435,11 +1464,31 @@ const char *syscall_find_nr(int nr) {
 	return "unknown";
 }
 
+const char *syscall_find_nr_32(int nr) {
+	int i;
+	int elems = sizeof(syslist32) / sizeof(syslist32[0]);
+	for (i = 0; i < elems; i++) {
+		if (nr == syslist32[i].nr)
+			return syslist32[i].name;
+	}
+
+	return "unknown";
+}
+
 void syscall_print(void) {
 	int i;
 	int elems = sizeof(syslist) / sizeof(syslist[0]);
 	for (i = 0; i < elems; i++) {
 		printf("%d\t- %s\n", syslist[i].nr, syslist[i].name);
+	}
+	printf("\n");
+}
+
+void syscall_print_32(void) {
+	int i;
+	int elems = sizeof(syslist32) / sizeof(syslist32[0]);
+	for (i = 0; i < elems; i++) {
+		printf("%d\t- %s\n", syslist32[i].nr, syslist32[i].name);
 	}
 	printf("\n");
 }
@@ -1458,7 +1507,7 @@ static const char *syscall_find_group(const char *name) {
 // allowed input:
 // - syscall
 // - syscall(error)
-static void syscall_process_name(const char *name, int *syscall_nr, int *error_nr) {
+static void syscall_process_name(const char *name, int *syscall_nr, int *error_nr, bool native) {
 	assert(name);
 	if (strlen(name) == 0)
 		goto error;
@@ -1482,8 +1531,12 @@ static void syscall_process_name(const char *name, int *syscall_nr, int *error_n
 
 	if (*syscall_name == '$')
 		*syscall_nr = strtol(syscall_name + 1, NULL, 0);
-	else
-		*syscall_nr = syscall_find_name(syscall_name);
+	else {
+		if (native)
+			*syscall_nr = syscall_find_name(syscall_name);
+		else
+			*syscall_nr = syscall_find_name_32(syscall_name);
+	}
 	if (error_name) {
 		*error_nr = errno_find_name(error_name);
 		if (*error_nr == -1)
@@ -1499,7 +1552,7 @@ error:
 }
 
 // return 1 if error, 0 if OK
-int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, int arg, void *ptrarg), int fd, int arg, void *ptrarg) {
+int syscall_check_list(const char *slist, filter_fn *callback, int fd, int arg, void *ptrarg, bool native) {
 	// don't allow empty lists
 	if (slist == NULL || *slist == '\0') {
 		fprintf(stderr, "Error fseccomp: empty syscall lists are not allowed\n");
@@ -1527,7 +1580,7 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 				fprintf(stderr, "Error fseccomp: unknown syscall group %s\n", ptr);
 				exit(1);
 			}
-			syscall_check_list(new_list, callback, fd, arg, ptrarg);
+			syscall_check_list(new_list, callback, fd, arg, ptrarg, native);
 		}
 		else {
 			bool negate = false;
@@ -1535,20 +1588,20 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 				negate = true;
 				ptr++;
 			}
-			syscall_process_name(ptr, &syscall_nr, &error_nr);
+			syscall_process_name(ptr, &syscall_nr, &error_nr, native);
 			if (syscall_nr == -1) {;}
 			else if (callback != NULL) {
 				if (negate) {
 					syscall_nr = -syscall_nr;
 				}
-				if (error_nr != -1 && fd != 0) {
-					filter_add_errno(fd, syscall_nr, error_nr, ptrarg);
+				if (error_nr != -1 && fd > 0) {
+					filter_add_errno(fd, syscall_nr, error_nr, ptrarg, native);
 				}
 				else if (error_nr != -1 && fd == 0) {
-					callback(fd, syscall_nr, error_nr, ptrarg);
+					callback(fd, syscall_nr, error_nr, ptrarg, native);
 				}
 				else {
-					callback(fd, syscall_nr, arg, ptrarg);
+					callback(fd, syscall_nr, arg, ptrarg, native);
 				}
 			}
 		}
@@ -1559,41 +1612,50 @@ int syscall_check_list(const char *slist, void (*callback)(int fd, int syscall, 
 	return 0;
 }
 
-static void find_syscall(int fd, int syscall, int arg, void *ptrarg) {
+static void find_syscall(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void)fd;
 	(void) arg;
+	(void)native;
 	SyscallCheckList *ptr = ptrarg;
 	if (abs(syscall) == ptr->syscall)
 		ptr->found = true;
 }
 
 // go through list2 and find matches for problem syscall
-static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg) {
+static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) fd;
 	(void)arg;
 	SyscallCheckList *ptr = ptrarg;
 	SyscallCheckList sl;
+	const char *name;
+
 	sl.found = false;
 	sl.syscall = syscall;
-	syscall_check_list(ptr->slist, find_syscall, fd, 0, &sl);
+	syscall_check_list(ptr->slist, find_syscall, fd, 0, &sl, native);
+
+	if (native)
+		name = syscall_find_nr(syscall);
+	else
+		name = syscall_find_nr_32(syscall);
+
 	// if found in the problem list, add to post-exec list
 	if (sl.found) {
 		if (ptr->postlist) {
-			if (asprintf(&ptr->postlist, "%s,%s", ptr->postlist, syscall_find_nr(syscall)) == -1)
+			if (asprintf(&ptr->postlist, "%s,%s", ptr->postlist, name) == -1)
 				errExit("asprintf");
 		}
 		else
-			ptr->postlist = strdup(syscall_find_nr(syscall));
+			ptr->postlist = strdup(name);
 	}
 	else { // no problem, add to pre-exec list
 		// build syscall:error_no
 		char *newcall = NULL;
 		if (arg != 0) {
-			if (asprintf(&newcall, "%s:%s", syscall_find_nr(syscall), errno_find_nr(arg)) == -1)
+			if (asprintf(&newcall, "%s:%s", name, errno_find_nr(arg)) == -1)
 				errExit("asprintf");
 		}
 		else {
-			newcall = strdup(syscall_find_nr(syscall));
+			newcall = strdup(name);
 			if (!newcall)
 				errExit("strdup");
 		}
@@ -1609,14 +1671,14 @@ static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg) {
 }
 
 // go through list and find matches for syscalls in list @default-keep
-void syscalls_in_list(const char *list, const char *slist, int fd, char **prelist, char **postlist) {
+void syscalls_in_list(const char *list, const char *slist, int fd, char **prelist, char **postlist, bool native) {
 	(void) fd;
 	SyscallCheckList sl;
 	// these syscalls are used by firejail after the seccomp filter is initialized
 	sl.slist = slist;
 	sl.prelist = NULL;
 	sl.postlist = NULL;
-	syscall_check_list(list, syscall_in_list, 0, 0, &sl);
+	syscall_check_list(list, syscall_in_list, 0, 0, &sl, native);
 	if (!arg_quiet) {
 		printf("Seccomp list in: %s,", list);
 		if (sl.slist)

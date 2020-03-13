@@ -386,18 +386,30 @@ first argument to socket system call. Recognized values: \fBunix\fR,
 \fBseccomp
 Enable seccomp filter and blacklist the syscalls in the default list. See man 1 firejail for more details.
 .TP
+\fBseccomp.32
+Enable seccomp filter and blacklist the syscalls in the default list for 32 bit system calls on a 64 bit architecture system.
+.TP
 \fBseccomp syscall,syscall,syscall
 Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter.
+.TP
+\fBseccomp.32 syscall,syscall,syscall
+Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter for 32 bit system calls on a 64 bit architecture system.
 .TP
 \fBseccomp.block-secondary
 Enable seccomp filter and filter system call architectures
 so that only the native architecture is allowed.
 .TP
 \fBseccomp.drop syscall,syscall,syscall
-Enable seccomp filter and blacklist  the system calls in the list.
+Enable seccomp filter and blacklist the system calls in the list.
+.TP
+\fBseccomp.32.drop syscall,syscall,syscall
+Enable seccomp filter and blacklist the system calls in the list for 32 bit system calls on a 64 bit architecture system.
 .TP
 \fBseccomp.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list.
+.TP
+\fBseccomp.32.keep syscall,syscall,syscall
+Enable seccomp filter and whitelist the system calls in the list for 32 bit system calls on a 64 bit architecture system.
 .TP
 \fBx11
 Enable X11 sandboxing.

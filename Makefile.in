@@ -3,7 +3,7 @@ MYLIBS = src/lib
 APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee \
 src/faudit src/fnet src/fseccomp src/fbuilder src/fcopy src/fldd src/libpostexecseccomp src/profstats
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
-SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx
+SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -48,6 +48,7 @@ ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	src/fsec-optimize/fsec-optimize seccomp.32
 	src/fseccomp/fseccomp secondary block seccomp.block_secondary
 	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
+	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
 endif
 
 clean:
@@ -109,6 +110,7 @@ ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	install -c -m 0644 seccomp.32 $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.block_secondary $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0644 seccomp.mdwx $(DESTDIR)/$(libdir)/firejail/.
+	install -c -m 0644 seccomp.mdwx.32 $(DESTDIR)/$(libdir)/firejail/.
 endif
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.

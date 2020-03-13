@@ -16,7 +16,7 @@ _firejail()
     _init_completion -s || return
 
     case $prev in
-        --help|--version|-debug-caps|--debug-syscalls|--list|--tree|--top|--join|--shutdown)
+        --help|--version|-debug-caps|--debug-syscalls|--debug-syscalls32|--list|--tree|--top|--join|--shutdown)
             return 0
             ;;
         --profile)

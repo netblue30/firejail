@@ -122,10 +122,23 @@ void protocol_build_filter(const char *prlist, const char *fname) {
 
 	// header
 	struct sock_filter filter_start[] = {
-		VALIDATE_ARCHITECTURE,
-		EXAMINE_SYSCALL,
-		ONLY(SYS_socket),
-		EXAMINE_ARGUMENT(0)
+#if defined __x86_64__
+		/* check for native arch */
+		BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))),
+		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1 + 2 + 1, 0),
+		/* i386 filter */
+		EXAMINE_SYSCALL, // 1
+		// checking SYS_socket only: filtering SYS_socketcall not possible with seccomp
+		ONLY(359), // 1 + 2
+		BPF_JUMP(BPF_JMP+BPF_JA+BPF_K, (3 + 1 + 2), 0, 0), // 1 + 2 + 1
+#else
+#warning 32 bit protocol filter not implemented yet for your architecture
+#endif
+		VALIDATE_ARCHITECTURE, // 3
+		EXAMINE_SYSCALL, // 3 + 1
+		ONLY(SYS_socket), // 3 + 1 + 2
+
+		EXAMINE_ARGUMENT(0) // 3 + 1 + 2 + 1
 	};
 	memcpy(ptr, &filter_start[0], sizeof(filter_start));
 	ptr += sizeof(filter_start);

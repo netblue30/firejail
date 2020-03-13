@@ -24,6 +24,9 @@ static void usage(void) {
 	printf("\tfsec-print file - disassemble seccomp filter\n");
 }
 
+int arg_quiet = 0;
+void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {}
+
 int main(int argc, char **argv) {
 #if 0
 {

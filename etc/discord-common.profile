@@ -6,8 +6,11 @@ include discord-common.local
 # added by caller profile
 #include globals.local
 
+ignore noexec ${HOME}
+
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
@@ -27,9 +30,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
 
-private-bin bash,cut,Discord,discord,discord-canary,DiscordCanary,echo,egrep,grep,head,sed,sh,tclsh,tr,xdg-mime,xdg-open,zsh
+private-bin bash,cut,echo,egrep,grep,head,sed,sh,tclsh,tr,xdg-mime,xdg-open,zsh
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,localtime,login.defs,machine-id,password,pki,resolv.conf,ssl
 private-tmp
-
-noexec /tmp

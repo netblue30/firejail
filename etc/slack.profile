@@ -28,7 +28,7 @@ noroot
 notv
 nou2f
 protocol unix,inet,inet6,netlink
-seccomp
+seccomp !chroot
 shell none
 
 disable-mnt

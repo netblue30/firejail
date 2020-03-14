@@ -482,8 +482,15 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 		errExit("open");
 	// identify file owner
 	struct stat s;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
+	if (fstat(fd, &s) == -1) {
+		// fstat can fail with EACCES if path is a FUSE mount,
+		// mounted without 'allow_root' or 'allow_other'
+		if (errno != EACCES)
+			errExit("fstat");
+		fwarning("not remounting %s\n", path);
+		close(fd);
+		return;
+	}
 	// get mount flags
 	struct statvfs buf;
 	if (fstatvfs(fd, &buf) == -1)
@@ -592,9 +599,7 @@ static void fs_remount_rec(const char *dir, OPERATION op) {
 	// remount
 	char **tmp = arr;
 	while (*tmp) {
-		// FUSE submounts mounted without allow_root/allow_other break
-		// fs_remount_simple, sort them out by calling realpath first
-		fs_remount(*tmp, op, 0);
+		fs_remount_simple(*tmp, op);
 		free(*tmp++);
 	}
 	free(arr);

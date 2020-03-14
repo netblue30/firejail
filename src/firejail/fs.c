@@ -592,7 +592,9 @@ static void fs_remount_rec(const char *dir, OPERATION op) {
 	// remount
 	char **tmp = arr;
 	while (*tmp) {
-		fs_remount_simple(*tmp, op);
+		// FUSE submounts mounted without allow_root/allow_other break
+		// fs_remount_simple, sort them out by calling realpath first
+		fs_remount(*tmp, op, 0);
 		free(*tmp++);
 	}
 	free(arr);

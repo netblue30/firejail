@@ -15,10 +15,9 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/mesa_shader_cache
-whitelist ${RUNUSER}/pulse
-whitelist ${RUNUSER}/wayland-0
 whitelist /usr/share/gnome-hexgl
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

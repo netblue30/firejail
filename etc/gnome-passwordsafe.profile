@@ -21,14 +21,12 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist ${RUNUSER}/bus
-# If you have a second wayland compositor, whitelist its socket here.
-whitelist ${RUNUSER}/wayland-0
-whitelist ${RUNUSER}/gdm/Xauthority
+nowhitelist ${RUNUSER}/pulse
 
 whitelist /usr/share/cracklib
 whitelist /usr/share/passwordsafe
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

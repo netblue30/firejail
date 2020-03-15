@@ -17,11 +17,15 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+nowhitelist ${RUNUSER}/bus
+nowhitelist ${RUNUSER}/pulse
+
 whitelist /usr/share/doc
 whitelist /usr/share/evince
 whitelist /usr/share/poppler
 whitelist /usr/share/tracker
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

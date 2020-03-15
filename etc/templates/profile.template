@@ -27,6 +27,7 @@
 #   ALLOW INCLUDES
 #   BLACKLISTS
 #   DISABLE INCLUDES
+#   NOWHITELISTS
 #   MKDIRS
 #   WHITELISTS
 #   WHITELIST INCLUDES
@@ -107,6 +108,8 @@ include globals.local
 #include disable-programs.inc
 #include disable-xdg.inc
 
+#HAS_NOSOUND: nowhitelist ${RUNUSER}/pulse
+
 # This section often mirrors noblacklist section above. The idea is
 # that if a user feels too restricted (he's unable to save files into
 # home directory for instance) he/she may disable whitelist (nowhitelist)
@@ -117,6 +120,7 @@ include globals.local
 #whitelist PATH
 #include whitelist-common.inc
 #include whitelist-usr-share-common.inc
+#include whitelist-runuser-common.inc
 #include whitelist-var-common.inc
 
 ##allusers

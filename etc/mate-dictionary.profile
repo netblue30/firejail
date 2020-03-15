@@ -18,6 +18,7 @@ mkdir ${HOME}/.config/mate/mate-dictionary
 whitelist ${HOME}/.config/mate/mate-dictionary
 include whitelist-common.inc
 
+apparmor
 caps.drop all
 netfilter
 no3d

@@ -18,6 +18,7 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 machine-id
 net none

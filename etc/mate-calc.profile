@@ -23,6 +23,7 @@ whitelist ${HOME}/.config/caja
 whitelist ${HOME}/.config/mate-menu
 include whitelist-common.inc
 
+apparmor
 caps.drop all
 net none
 no3d

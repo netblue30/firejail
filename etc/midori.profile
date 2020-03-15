@@ -49,6 +49,7 @@ whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
 
+apparmor
 caps.drop all
 netfilter
 nodvd
@@ -60,3 +61,4 @@ seccomp
 tracelog
 
 disable-mnt
+private-tmp

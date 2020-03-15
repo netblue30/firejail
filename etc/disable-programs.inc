@@ -759,6 +759,7 @@ blacklist ${HOME}/.cache/gfeeds
 blacklist ${HOME}/.cache/gimp
 blacklist ${HOME}/.cache/gnome-builder
 blacklist ${HOME}/.cache/gnome-recipes
+blacklist ${HOME}/.cache/gnome-screenshot
 blacklist ${HOME}/.cache/gnome-twitch
 blacklist ${HOME}/.cache/godot
 blacklist ${HOME}/.cache/google-chrome

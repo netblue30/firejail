@@ -13,7 +13,6 @@ include globals.local
 
 noblacklist ${HOME}/.cache/champlain
 noblacklist ${HOME}/.cache/org.gnome.Maps
-noblacklist ${HOME}/.local/share/flatpak
 noblacklist ${HOME}/.local/share/maps-places.json
 
 # Allow gjs (blacklisted by disable-interpreters.inc)

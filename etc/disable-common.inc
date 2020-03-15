@@ -444,7 +444,14 @@ blacklist /.snapshots
 
 # flatpak
 blacklist ${HOME}/.config/flatpak
-blacklist ${HOME}/.local/share/flatpak
+blacklist ${HOME}/.local/share/flatpak/app
+blacklist ${HOME}/.local/share/flatpak/appstream
+blacklist ${HOME}/.local/share/flatpak/db
+read-only ${HOME}/.local/share/flatpak/exports
+blacklist ${HOME}/.local/share/flatpak/oci
+blacklist ${HOME}/.local/share/flatpak/overrides
+blacklist ${HOME}/.local/share/flatpak/repo
+blacklist ${HOME}/.local/share/flatpak/runtime
 blacklist ${HOME}/.var
 blacklist /usr/share/flatpak
 blacklist /var/lib/flatpak

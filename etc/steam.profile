@@ -38,14 +38,13 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
-# allow-debuggers needed for running some games with proton
-allow-debuggers
 caps.drop all
 #ipc-namespace
 netfilter
 # nodbus disabled as it breaks appindicator support
 #nodbus
 nodvd
+# nVidia user may need to comment / ignore nogroups and noroot
 nogroups
 nonewprivs
 noroot
@@ -54,9 +53,9 @@ nou2f
 # novideo should be commented for VR
 novideo
 protocol unix,inet,inet6,netlink
-# seccomp cause sometimes issues (see #2860, #2951),
+# seccomp cause sometimes issues (see #2951, #3267),
 # comment it or add 'ignore seccomp' to steam.local if so.
-seccomp
+seccomp !kcmp,!ptrace
 shell none
 # tracelog disabled as it breaks integrated browser
 #tracelog

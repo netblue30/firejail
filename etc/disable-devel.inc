@@ -26,7 +26,6 @@ blacklist ${PATH}/*-gcc*
 blacklist ${PATH}/*-g++*
 blacklist ${PATH}/*-gcc*
 blacklist ${PATH}/*-g++*
-blacklist /usr/include
 # seems to create problems on Gentoo
 #blacklist /usr/lib/gcc
 

@@ -641,6 +641,10 @@ static char * get_title_arg_str() {
 	if ((cfg.name != NULL) && (strlen(cfg.name) > 0)) {
 
 		title_arg_str = malloc(strlen(title_start) + strlen(title_sep) + strlen(cfg.name) + 1);
+		if (title_arg_str == NULL) {
+			fprintf(stderr, "Error: malloc() failed to allocate memory\n");
+			exit(1);
+		}
 
 		strcpy(title_arg_str, title_start);
 		strcat(title_arg_str, title_sep);
@@ -650,10 +654,13 @@ static char * get_title_arg_str() {
 	// use the "--private" argument if it was explicitly specified
 	else if ((cfg.home_private != NULL) && (strlen(cfg.home_private) > 0)) {
 
-		char * tmp_in = strdupa(cfg.home_private);
-		char * base_out = strdupa(basename(tmp_in));
+		const char * base_out = gnu_basename(cfg.home_private);
 
 		title_arg_str = malloc(strlen(title_start) + strlen(title_sep) + strlen(base_out) + 1);
+		if (title_arg_str == NULL) {
+			fprintf(stderr, "Error: malloc() failed to allocate memory\n");
+			exit(1);
+		}
 
 		strcpy(title_arg_str, title_start);
 		strcat(title_arg_str, title_sep);
@@ -663,6 +670,10 @@ static char * get_title_arg_str() {
 	// default
 	else {
 		title_arg_str = malloc(strlen(title_start) + 1);
+		if (title_arg_str == NULL) {
+			fprintf(stderr, "Error: malloc() failed to allocate memory\n");
+			exit(1);
+		}
 
 		strcpy(title_arg_str, title_start);
 	}

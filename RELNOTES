@@ -2,6 +2,7 @@ firejail (0.9.63) baseline; urgency=low
   * work in progress
   * DHCP client support
   * SELinux labeling support
+  * new condition: HAS_NOSOUND
   * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, muraster
   * new profiles: gnome-passwordsafe, bibtex, gummi, latex, mupdf-x11-curl
   * new profiles: pdflatex, tex, wpp, wpspdf, wps, et, multimc, mupdf-x11

@@ -48,6 +48,7 @@ whitelist ${HOME}/.local/share/webkitgtk
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

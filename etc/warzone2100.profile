@@ -22,6 +22,7 @@ whitelist ${HOME}/.warzone2100-3.2
 include whitelist-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 nodvd

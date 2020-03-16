@@ -22,6 +22,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+net none
 netfilter
 nodbus
 nogroups

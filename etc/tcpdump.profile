@@ -19,6 +19,7 @@ include disable-xdg.inc
 
 include whitelist-common.inc
 
+apparmor
 caps.keep net_raw
 ipc-namespace
 #net tun0

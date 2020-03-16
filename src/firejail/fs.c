@@ -479,7 +479,7 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	// open path without following symbolic links
 	int fd = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
-		errExit("open");
+		goto out;
 	// identify file owner
 	struct stat s;
 	if (fstat(fd, &s) == -1) {
@@ -487,9 +487,8 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 		// mounted without 'allow_root' or 'allow_other'
 		if (errno != EACCES)
 			errExit("fstat");
-		fwarning("not remounting %s\n", path);
 		close(fd);
-		return;
+		goto out;
 	}
 	// get mount flags
 	struct statvfs buf;
@@ -566,6 +565,10 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	fs_logger2(opstr[op], path);
 	free(proc);
 	close(fd);
+	return;
+
+out:
+	fwarning("not remounting %s\n", path);
 }
 
 // remount recursively; requires a resolved path

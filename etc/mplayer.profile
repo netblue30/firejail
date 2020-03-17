@@ -23,7 +23,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-net none
+# net none - mplayer can be used for streaming.
 netfilter
 # nogroups
 nonewprivs

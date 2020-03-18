@@ -25,6 +25,7 @@ include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
 machine-id

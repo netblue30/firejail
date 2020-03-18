@@ -21,9 +21,10 @@ whitelist ${HOME}/.clonk
 include whitelist-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
-net none
+# net none - networked game
 nodbus
 nodvd
 nogroups

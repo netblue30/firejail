@@ -19,6 +19,7 @@ include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.keep net_raw
 ipc-namespace
 #net tun0

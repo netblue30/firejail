@@ -14,6 +14,7 @@ include allow-python3.inc
 
 include disable-common.inc
 # include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
@@ -24,6 +25,7 @@ whitelist ${HOME}/.config/deluge
 include whitelist-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 machine-id
 netfilter

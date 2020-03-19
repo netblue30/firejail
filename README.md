@@ -151,7 +151,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ### Profile Statistics
 
-A small tool to print profile statistics. Compile as usual (the executable is placed in etc directory( and run:
+A small tool to print profile statistics. Compile as usual and run:
 `````
 $ make
 $ cd etc

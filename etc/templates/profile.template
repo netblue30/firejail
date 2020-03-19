@@ -108,8 +108,6 @@ include globals.local
 #include disable-programs.inc
 #include disable-xdg.inc
 
-#HAS_NOSOUND: nowhitelist ${RUNUSER}/pulse
-
 # This section often mirrors noblacklist section above. The idea is
 # that if a user feels too restricted (he's unable to save files into
 # home directory for instance) he/she may disable whitelist (nowhitelist)

@@ -21,8 +21,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-nowhitelist ${RUNUSER}/pulse
-
 whitelist /usr/share/cracklib
 whitelist /usr/share/passwordsafe
 include whitelist-usr-share-common.inc

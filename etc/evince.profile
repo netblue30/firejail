@@ -17,9 +17,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-nowhitelist ${RUNUSER}/bus
-nowhitelist ${RUNUSER}/pulse
-
 whitelist /usr/share/doc
 whitelist /usr/share/evince
 whitelist /usr/share/poppler

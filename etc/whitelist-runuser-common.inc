@@ -7,3 +7,5 @@ whitelist ${RUNUSER}/bus
 whitelist ${RUNUSER}/gdm/Xauthority
 whitelist ${RUNUSER}/pulse
 whitelist ${RUNUSER}/wayland-0
+
+# TODOs: dconf, gnupg, gvfs, keyring, pipewire-0

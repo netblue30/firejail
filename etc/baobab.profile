@@ -29,6 +29,7 @@ novideo
 protocol unix
 seccomp
 shell none
+tracelog
 
 private-bin baobab
 private-dev

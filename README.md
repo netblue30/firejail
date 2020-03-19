@@ -149,6 +149,29 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ## Current development version: 0.9.63
 
+### Profile Statistics
+
+A small tool to print profile statistics. Compile as usual (the executable is placed in etc directory( and run:
+`````
+$ make
+$ cd etc
+$ ./profstats *.profile
+Stats:
+    profiles			925
+    include local profile	925   (include profile-name.local)
+    include globals		925   (include globals.local)
+    blacklist ~/.ssh		910   (include disable-common.inc)
+    seccomp			868
+    capabilities		924
+    noexec			785   (include disable-exec.inc)
+    apparmor			426
+    private-dev			788
+    private-tmp			687
+    whitelist var directory	595   (include whitelist-var-common.inc)
+    net none			274
+
+Run ./profstats -h for help.
+
 ### New profiles:
 
 gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, gnome-passwordsafe, bibtex, gummi, latex, pdflatex, tex, wpp, wpspdf, wps, et, multimc, gnome-hexgl, com.github.johnfactotum.Foliate, desktopeditors, impressive, mupdf-gl, mupdf-x11, mupdf-x11-curl, muraster, mutool, planmaker18, planmaker18free, presentations18, presentations18free, textmaker18, textmaker18free, teams, xournal, gnome-screenshot

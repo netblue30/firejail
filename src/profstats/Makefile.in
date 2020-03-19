@@ -1,0 +1,14 @@
+all: ../../etc/profstats
+
+include ../common.mk
+
+%.o : %.c $(H_FILE_LIST)
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+
+../../etc/profstats: $(OBJS)
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
+
+clean:; rm -fr *.o ../../etc/profstats *.gcov *.gcda *.gcno *.plist
+
+distclean: clean
+	rm -fr Makefile

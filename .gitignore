@@ -33,6 +33,7 @@ src/fsec-optimize/fsec-optimize
 src/fcopy/fcopy
 src/fldd/fldd
 src/fbuilder/fbuilder
+etc/profstats
 uids.h
 seccomp
 seccomp.debug

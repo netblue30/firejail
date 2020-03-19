@@ -1,4 +1,4 @@
-# Firejail profile for dig
+# Firejail profile for host
 # Description: DNS lookup utility
 # This file is overwritten after every install/update
 quiet

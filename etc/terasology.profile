@@ -28,7 +28,6 @@ include whitelist-common.inc
 caps.drop all
 ipc-namespace
 net none
-netfilter
 nodbus
 nodvd
 nogroups

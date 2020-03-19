@@ -19,7 +19,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 net none
-netfilter
 no3d
 nodvd
 nogroups

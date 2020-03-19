@@ -481,6 +481,4 @@ blacklist ${PATH}/dnswalk
 blacklist ${PATH}/dns2tcp
 blacklist ${PATH}/iodine
 blacklist ${PATH}/knsupdate
-
-
-
+blacklist ${PATH}/resolvectl

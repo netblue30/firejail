@@ -8,7 +8,6 @@ include globals.local
 caps.drop all
 ipc-namespace
 net none
-netfilter
 nodbus
 nogroups
 noroot

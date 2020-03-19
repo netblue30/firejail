@@ -17,7 +17,6 @@ include whitelist-var-common.inc
 
 caps.drop all
 net none
-netfilter
 no3d
 nodbus
 nodvd

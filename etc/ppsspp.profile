@@ -21,7 +21,6 @@ include whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace
-netfilter
 net none
 nodbus
 nodvd

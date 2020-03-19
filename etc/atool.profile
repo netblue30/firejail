@@ -25,7 +25,6 @@ hostname atool
 ipc-namespace
 machine-id
 net none
-netfilter
 no3d
 nodvd
 nodbus

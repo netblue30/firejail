@@ -6,6 +6,7 @@ include Viber.local
 include globals.local
 
 noblacklist ${HOME}/.ViberPC
+noblacklist ${PATH}/dig
 
 include disable-common.inc
 include disable-devel.inc

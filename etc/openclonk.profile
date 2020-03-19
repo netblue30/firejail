@@ -25,6 +25,7 @@ apparmor
 caps.drop all
 ipc-namespace
 # net none - networked game
+netfilter
 nodbus
 nodvd
 nogroups

@@ -16,6 +16,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 # include disable-xdg.inc
 
+# include whitelist-common.inc
+# include whitelist-usr-share-common.inc
+# include whitelist-runuser-common.inc
+# include whitelist-var-common.inc
+
 # apparmor
 caps.drop all
 # ipc-namespace
@@ -42,8 +47,11 @@ seccomp
 # private-bin program
 # private-cache
 # private-dev
-# private-etc alternatives
+# see /usr/share/doc/firejail/profile.template for more common private-etc paths.
+# private-etc alternatives,fonts,machine-id
 # private-lib
+# private-opt none
 # private-tmp
 
 # memory-deny-write-execute
+# read-only ${HOME}

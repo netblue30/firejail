@@ -19,6 +19,14 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+#whitelist ${HOME}/YOUR_GIT_PROJECTS_DIRECTORY
+#whitelist ${HOME}/.config/git
+#whitelist ${HOME}/.gitconfig
+#whitelist ${HOME}/.git-credentials
+#whitelist ${HOME}/.local/share/gitg
+#whitelist ${HOME}/.ssh
+#include whitelist-common.inc
+
 whitelist /usr/share/gitg
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

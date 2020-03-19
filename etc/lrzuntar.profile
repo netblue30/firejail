@@ -7,6 +7,7 @@ include lrzuntar.local
 # Persistent global definitions
 # added by included profile
 #include globals.local
+quiet
 
 # Redirect
 include cpio.profile

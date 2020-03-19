@@ -25,6 +25,7 @@ whitelist /usr/share/zathura
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
 machine-id
@@ -47,7 +48,8 @@ private-bin zathura
 private-cache
 private-dev
 private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id
-private-lib gcc/*/*/libgcc_s.so.*,gcc/*/*/libstdc++.so.*,libarchive.so.*,libdjvulibre.so.*,libgirara-gtk*,libpoppler-glib.so.*,libspectre.so.*,zathura
+# private-lib has problems on Debian 10
+#private-lib gcc/*/*/libgcc_s.so.*,gcc/*/*/libstdc++.so.*,libarchive.so.*,libdjvulibre.so.*,libgirara-gtk*,libpoppler-glib.so.*,libspectre.so.*,zathura
 private-tmp
 
 read-only ${HOME}

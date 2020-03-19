@@ -15,6 +15,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+include whitelist-var-common.inc
+
+apparmor
 caps.drop all
 netfilter
 no3d

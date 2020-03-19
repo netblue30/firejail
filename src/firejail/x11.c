@@ -625,6 +625,63 @@ void x11_start_xephyr(int argc, char **argv) {
 }
 
 
+// this function returns the string that will appear in the window title when xpra is being used
+// this string may include one of these items:
+// *  the "--name" argument, if specified
+// *  the basename portion of the "--private" directory, if specified
+// note: the malloc() is leaking, but this is a small string allocated one time only during startup, so don't care
+static char * get_title_arg_str() {
+
+	char * title_arg_str = NULL;
+
+	const char * title_start = "--title=firejail x11 sandbox";
+	const char * title_sep = " ";
+
+	// use the "--name" argument if it was explicitly specified
+	if ((cfg.name != NULL) && (strlen(cfg.name) > 0)) {
+
+		title_arg_str = malloc(strlen(title_start) + strlen(title_sep) + strlen(cfg.name) + 1);
+		if (title_arg_str == NULL) {
+			fprintf(stderr, "Error: malloc() failed to allocate memory\n");
+			exit(1);
+		}
+
+		strcpy(title_arg_str, title_start);
+		strcat(title_arg_str, title_sep);
+		strcat(title_arg_str, cfg.name);
+	}
+
+	// use the "--private" argument if it was explicitly specified
+	else if ((cfg.home_private != NULL) && (strlen(cfg.home_private) > 0)) {
+
+		const char * base_out = gnu_basename(cfg.home_private);
+
+		title_arg_str = malloc(strlen(title_start) + strlen(title_sep) + strlen(base_out) + 1);
+		if (title_arg_str == NULL) {
+			fprintf(stderr, "Error: malloc() failed to allocate memory\n");
+			exit(1);
+		}
+
+		strcpy(title_arg_str, title_start);
+		strcat(title_arg_str, title_sep);
+		strcat(title_arg_str, base_out);
+	}
+
+	// default
+	else {
+		title_arg_str = malloc(strlen(title_start) + 1);
+		if (title_arg_str == NULL) {
+			fprintf(stderr, "Error: malloc() failed to allocate memory\n");
+			exit(1);
+		}
+
+		strcpy(title_arg_str, title_start);
+	}
+
+	return title_arg_str;
+}
+
+
 void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	EUID_ASSERT();
 	int i;
@@ -752,7 +809,10 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	free(fname);
 
 	// build attach command
-	char *attach_argv[] = { "xpra", "--title=\"firejail x11 sandbox\"", "attach", display_str, NULL };
+
+	char * title_arg_str = get_title_arg_str();
+
+	char *attach_argv[] = { "xpra", title_arg_str, "attach", display_str, NULL };
 
 	// run attach command
 	client = fork();

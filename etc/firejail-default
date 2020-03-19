@@ -65,6 +65,8 @@ owner /proc/@{PID}/{uid_map,gid_map,setgroups} w,
 
 # Needed for electron apps
 /proc/@{PID}/comm w,
+# Needed for nslookup, dig, host
+/proc/@{PID}/task/@{PID}/comm w,
 
 # Used by chromium
 owner /proc/@{PID}/oom_score_adj w,

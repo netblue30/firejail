@@ -1,15 +1,12 @@
-# Firejail profile for asounder
+# Firejail profile for mpv
 # Description: Graphical audio CD ripper and encoder
 # This file is overwritten after every install/update
 # Persistent local customizations
-include asunder.local
+include ripperx.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/asunder
-noblacklist ${HOME}/.asunder_album_genre
-noblacklist ${HOME}/.asunder_album_title
-noblacklist ${HOME}/.asunder_album_artist
+noblacklist ${HOME}/.ripperXrc
 noblacklist ${MUSIC}
 
 include disable-common.inc
@@ -28,7 +25,7 @@ caps.drop all
 netfilter
 no3d
 nodbus
-# nogroups
+nogroups
 nonewprivs
 noroot
 nou2f
@@ -37,10 +34,8 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 private-cache
 private-dev
 private-tmp
-
-# mdwe is disabled due to breaking hardware accelerated decoding
-# memory-deny-write-execute

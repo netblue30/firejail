@@ -469,3 +469,18 @@ blacklist ${HOME}/sent
 
 # kernel configuration
 blacklist /proc/config.gz
+
+# prevent DNS malware attempting to communicate with the server
+# using regular DNS tools
+blacklist ${PATH}/dig
+blacklist ${PATH}/kdig
+blacklist ${PATH}/nslookup
+blacklist ${PATH}/host
+blacklist ${PATH}/dlint
+blacklist ${PATH}/dnswalk
+blacklist ${PATH}/dns2tcp
+blacklist ${PATH}/iodine
+blacklist ${PATH}/knsupdate
+
+
+

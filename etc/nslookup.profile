@@ -3,26 +3,20 @@
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include dig.local
+include nslookup.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.digrc
-noblacklist ${PATH}/dig
-
-blacklist /tmp/.X11-unix
+noblacklist ${PATH}/nslookup
 
 include disable-common.inc
-# include disable-devel.inc
+include disable-devel.inc
 include disable-exec.inc
-# include disable-interpreters.inc
+include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-#mkfile ${HOME}/.digrc -- see #903
-whitelist ${HOME}/.digrc
-include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -48,10 +42,8 @@ tracelog
 
 disable-mnt
 private
-private-bin bash,dig,sh
+private-bin bash,nslookup,sh
 private-dev
-# Uncomment the next line (or put 'private-lib' in your dig.local) on non Debian/Ubuntu OS (see issue #3038)
-#private-lib
 private-tmp
 
 memory-deny-write-execute

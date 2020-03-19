@@ -169,6 +169,7 @@ Stats:
     private-tmp			687
     whitelist var directory	595   (include whitelist-var-common.inc)
     net none			274
+`````
 
 Run ./profstats -h for help.
 

@@ -31,7 +31,7 @@ include disable-xdg.inc
 
 whitelist /usr/share/vulkan
 include whitelist-usr-share-common.inc
-include whitelist-runuser-common.inc
+#X11: include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

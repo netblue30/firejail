@@ -48,7 +48,7 @@ whitelist ${HOME}/.local/share/webkitgtk
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
-include whitelist-runuser-common.inc
+#X11: include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

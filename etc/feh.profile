@@ -13,7 +13,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-include whitelist-runuser-common.inc
+#X11: include whitelist-runuser-common.inc
 
 # This profile disables network access
 # In order to enable network access,

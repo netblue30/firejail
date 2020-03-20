@@ -20,7 +20,7 @@ mkdir ${HOME}/.config/Signal
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/Signal
 include whitelist-common.inc
-include whitelist-runuser-common.inc
+# include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.keep sys_admin,sys_chroot

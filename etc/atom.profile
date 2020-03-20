@@ -17,7 +17,7 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-include whitelist-runuser-common.inc
+#include whitelist-runuser-common.inc
 
 caps.drop all
 # net none

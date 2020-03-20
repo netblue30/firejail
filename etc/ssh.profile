@@ -18,6 +18,7 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist ${RUNUSER}/keyring/ssh
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 

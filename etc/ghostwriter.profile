@@ -24,7 +24,7 @@ include disable-xdg.inc
 #whitelist /usr/share/texlive
 #whitelist /usr/share/pandoc*
 #include whitelist-usr-share-common.inc
-include whitelist-runuser-common.inc
+#X11: include whitelist-runuser-common.inc
 
 apparmor
 caps.drop all

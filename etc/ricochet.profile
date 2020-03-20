@@ -18,7 +18,7 @@ mkdir ${HOME}/.local/share/Ricochet
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.local/share/Ricochet
 include whitelist-common.inc
-include whitelist-runuser-common.inc
+#X11: include whitelist-runuser-common.inc
 
 caps.drop all
 ipc-namespace

@@ -8,4 +8,4 @@ whitelist ${RUNUSER}/gdm/Xauthority
 whitelist ${RUNUSER}/pulse
 whitelist ${RUNUSER}/wayland-0
 
-# TODOs: dconf, gnupg, gvfs, keyring, pipewire-0
+# TODOs: dconf, gnupg, gvfs, pipewire-0

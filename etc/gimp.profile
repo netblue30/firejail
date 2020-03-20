@@ -31,6 +31,7 @@ whitelist /usr/share/gimp
 whitelist /usr/share/mypaint-data
 whitelist /usr/share/lensfun
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

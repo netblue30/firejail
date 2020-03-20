@@ -20,6 +20,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 #apparmor - on Ubuntu 18.04 it refuses to start without dbus access

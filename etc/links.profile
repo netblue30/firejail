@@ -24,6 +24,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.links
 whitelist ${HOME}/.links
 whitelist ${DOWNLOADS}
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

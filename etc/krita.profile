@@ -26,6 +26,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-runuser-common.inc
+
 apparmor
 caps.drop all
 ipc-namespace

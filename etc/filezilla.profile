@@ -17,6 +17,8 @@ include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-programs.inc
+
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

@@ -25,6 +25,7 @@ include disable-xdg.inc
 
 # Uncomment or add to rsync.local to enable extra hardening
 #whitelist ${DOWNLOADS}
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

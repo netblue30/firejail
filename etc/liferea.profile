@@ -30,6 +30,7 @@ whitelist ${HOME}/.local/share/liferea
 whitelist /usr/share/liferea
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

@@ -23,6 +23,7 @@ whitelist /usr/share/gnome-latex
 whitelist /usr/share/perl5
 whitelist /usr/share/texlive
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 # May cause issues.
 #include whitelist-var-common.inc
 

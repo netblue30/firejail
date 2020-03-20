@@ -33,6 +33,7 @@ whitelist /usr/share/seahorse
 whitelist /usr/share/seahorse-nautilus
 #include whitelist-common.inc
 include whitelist-usr-share-common.inc
+#include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

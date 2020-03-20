@@ -29,6 +29,7 @@ include disable-programs.inc
 
 whitelist /usr/share/gitg
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

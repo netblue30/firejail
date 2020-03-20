@@ -22,6 +22,7 @@ include disable-programs.inc
 whitelist /usr/share/office2018
 whitelist /usr/share/freeoffice2018
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -22,6 +22,7 @@ whitelist /usr/share/devedeng
 whitelist /usr/share/ffmpeg
 whitelist /usr/share/qtchooser
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

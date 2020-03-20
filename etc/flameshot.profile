@@ -17,6 +17,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-runuser-common.inc
+
 caps.drop all
 ipc-namespace
 netfilter

@@ -19,6 +19,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-runuser-common.inc
 # breaks pdf output
 #include whitelist-var-common.inc
 

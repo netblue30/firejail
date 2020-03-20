@@ -116,6 +116,7 @@ blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/Zeal
+blacklist ${HOME}/.config/agenda
 blacklist ${HOME}/.config/akonadi*
 blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/ardour4
@@ -497,6 +498,7 @@ blacklist ${HOME}/.local/share/TpLogger
 blacklist ${HOME}/.local/share/Zeal
 blacklist ${HOME}/.local/share/akonadi*
 blacklist ${HOME}/.local/share/akregator
+blacklist ${HOME}/.local/share/agenda
 blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/autokey
@@ -534,6 +536,7 @@ blacklist ${HOME}/.local/share/gnome-builder
 blacklist ${HOME}/.local/share/gnome-latex
 blacklist ${HOME}/.local/share/gnome-music
 blacklist ${HOME}/.local/share/gnome-photos
+blacklist ${HOME}/.local/share/gnome-pomodoro
 blacklist ${HOME}/.local/share/gnome-recipes
 blacklist ${HOME}/.local/share/gnome-ring
 blacklist ${HOME}/.local/share/gnome-twitch
@@ -729,6 +732,7 @@ blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
+blacklist ${HOME}/.cache/agenda
 blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic

@@ -5,7 +5,7 @@ include whitelist-runuser-common.local
 
 whitelist ${RUNUSER}/bus
 whitelist ${RUNUSER}/gdm/Xauthority
-whitelist ${RUNUSER}/pulse
+whitelist ${RUNUSER}/pulse/native
 whitelist ${RUNUSER}/wayland-0
 
 # TODOs: dconf, gnupg, gvfs, pipewire-0

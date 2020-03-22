@@ -48,6 +48,9 @@ static int arg_privatetmp = 0;
 static int arg_whitelistvar = 0;
 static int arg_ssh = 0;
 
+static char *profile = NULL;
+
+
 static void usage(void) {
 	printf("proftool - print profile statistics\n");
 	printf("Usage: proftool [options] file[s]\n");
@@ -74,8 +77,9 @@ void process_file(const char *fname) {
 
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s\n", fname);
-		exit(1);
+		fprintf(stderr, "Warning: cannot open %s, while processing %s\n", fname, profile);
+		level--;
+		return;
 	}
 
 	char buf[MAXBUF];
@@ -187,6 +191,7 @@ int main(int argc, char **argv) {
 		int ssh = cnt_ssh;
 
 		// process file
+		profile = argv[i];
 		process_file(argv[i]);
 
 		// warnings

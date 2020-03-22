@@ -8,6 +8,7 @@ include strings.local
 include globals.local
 
 blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 #include disable-common.inc
 include disable-devel.inc
@@ -18,7 +19,6 @@ include disable-passwdmgr.inc
 #include disable-xdg.inc
 
 #include whitelist-usr-share-common.inc
-include whitelist-runuser-common.inc
 #include whitelist-var-common.inc
 
 apparmor

@@ -8,6 +8,7 @@ include patch.local
 include globals.local
 
 blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 noblacklist ${DOCUMENTS}
 
@@ -19,7 +20,6 @@ include disable-passwdmgr.inc
 include disable-xdg.inc
 
 include whitelist-usr-share-common.inc
-include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

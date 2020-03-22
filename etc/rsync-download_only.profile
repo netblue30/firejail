@@ -14,6 +14,7 @@ include globals.local
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc
@@ -25,7 +26,6 @@ include disable-xdg.inc
 
 # Uncomment or add to rsync.local to enable extra hardening
 #whitelist ${DOWNLOADS}
-include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

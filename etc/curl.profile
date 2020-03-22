@@ -11,6 +11,7 @@ noblacklist ${HOME}/.curlrc
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-exec.inc
@@ -20,7 +21,6 @@ include disable-programs.inc
 #include disable-xdg.inc
 
 include whitelist-usr-share-common.inc
-include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

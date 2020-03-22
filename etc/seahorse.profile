@@ -31,6 +31,7 @@ whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /usr/share/seahorse
 whitelist /usr/share/seahorse-nautilus
+whitelist ${RUNUSER}/gnupg
 whitelist ${RUNUSER}/keyring
 #include whitelist-common.inc
 include whitelist-usr-share-common.inc

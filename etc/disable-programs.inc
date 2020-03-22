@@ -229,6 +229,7 @@ blacklist ${HOME}/.config/klavaro
 blacklist ${HOME}/.config/klipperrc
 blacklist ${HOME}/.config/kmail2rc
 blacklist ${HOME}/.config/kmailsearchindexingrc
+blacklist ${HOME}/.config/kmplayerrc
 blacklist ${HOME}/.config/knotesrc
 blacklist ${HOME}/.config/konversationrc
 blacklist ${HOME}/.config/kritarc
@@ -426,6 +427,7 @@ blacklist ${HOME}/.kde/share/config/kfindrc
 blacklist ${HOME}/.kde/share/config/kgetrc
 blacklist ${HOME}/.kde/share/config/khtmlrc
 blacklist ${HOME}/.kde/share/config/klipperrc
+blacklist ${HOME}/.kde/share/config/kmplayerrc
 blacklist ${HOME}/.kde/share/config/konq_history
 blacklist ${HOME}/.kde/share/config/konqsidebartngrc
 blacklist ${HOME}/.kde/share/config/konquerorrc
@@ -553,6 +555,7 @@ blacklist ${HOME}/.local/share/kiwix
 blacklist ${HOME}/.local/share/kiwix-desktop
 blacklist ${HOME}/.local/share/klavaro
 blacklist ${HOME}/.local/share/kmail2
+blacklist ${HOME}/.local/share/kmplayer
 blacklist ${HOME}/.local/share/knotes
 blacklist ${HOME}/.local/share/krita
 blacklist ${HOME}/.local/share/ktorrent

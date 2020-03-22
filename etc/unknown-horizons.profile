@@ -9,13 +9,16 @@ include globals.local
 noblacklist ${HOME}/.unknown-horizons
 
 include disable-common.inc
+include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.unknown-horizons
 whitelist ${HOME}/.unknown-horizons
 include whitelist-common.inc
+include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 nodvd
 nogroups
@@ -28,6 +31,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
+disable-mnt
 # private-bin unknown-horizons
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,pki,ssl

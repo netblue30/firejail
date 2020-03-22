@@ -21,6 +21,7 @@ mkdir ${HOME}/.local/share/gnome-2048
 whitelist ${HOME}/.local/share/gnome-2048
 include whitelist-common.inc
 
+apparmor
 caps.drop all
 netfilter
 nodvd

@@ -13,8 +13,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-private
-
 apparmor
 caps.drop all
 net none
@@ -31,6 +29,7 @@ seccomp
 shell none
 
 disable-mnt
+private
 private-bin iagno
 private-dev
 private-tmp

@@ -16,8 +16,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-#X11: include whitelist-runuser-common.inc
-
 caps.drop all
 nodvd
 nogroups

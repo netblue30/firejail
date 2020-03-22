@@ -12,7 +12,6 @@ noblacklist ${HOME}/.config/Riot
 mkdir ${HOME}/.config/Riot
 whitelist ${HOME}/.config/Riot
 include whitelist-common.inc
-#X11: include whitelist-runuser-common.inc
 
 # Redirect
 include electron.profile

@@ -23,7 +23,6 @@ mkdir ${HOME}/.purple
 whitelist ${HOME}/.purple
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
-#X11: include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

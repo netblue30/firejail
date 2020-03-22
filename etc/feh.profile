@@ -13,8 +13,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-#X11: include whitelist-runuser-common.inc
-
 # This profile disables network access
 # In order to enable network access,
 # uncomment the following or put it in your feh.local:

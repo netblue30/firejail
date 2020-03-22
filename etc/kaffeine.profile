@@ -23,7 +23,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-#X11: include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

@@ -20,7 +20,6 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-#X11: include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 # ubuntu 18.04 comes with its own apparmor profile, but it is not in enforce mode.

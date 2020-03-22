@@ -24,8 +24,6 @@ noblacklist /sys/module
 whitelist /sys/module/amdgpu
 read-only /sys/module/amdgpu
 
-#X11: include whitelist-runuser-common.inc
-
 caps.drop all
 netfilter
 nodvd

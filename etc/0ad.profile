@@ -26,7 +26,6 @@ whitelist ${HOME}/.local/share/0ad
 whitelist /usr/share/0ad
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
-#X11: include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

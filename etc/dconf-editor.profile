@@ -16,8 +16,8 @@ include disable-xdg.inc
 
 whitelist ${HOME}/.local/share/glib-2.0
 include whitelist-common.inc
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

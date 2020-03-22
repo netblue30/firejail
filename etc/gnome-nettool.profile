@@ -16,8 +16,8 @@ include disable-xdg.inc
 
 whitelist /usr/share/gnome-nettool
 #include whitelist-common.inc -- see #903
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.keep net_raw

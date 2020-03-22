@@ -23,8 +23,8 @@ whitelist ${HOME}/.cache/feedreader
 whitelist ${HOME}/.local/share/feedreader
 whitelist /usr/share/feedreader
 include whitelist-common.inc
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

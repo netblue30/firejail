@@ -23,8 +23,8 @@ whitelist /usr/share/help
 whitelist /usr/share/yelp
 whitelist /usr/share/yelp-xsl
 include whitelist-common.inc
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

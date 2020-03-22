@@ -15,8 +15,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 whitelist /var/log/journal
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

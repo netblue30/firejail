@@ -21,8 +21,8 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/enchant
 whitelist ${HOME}/.config/enchant
 include whitelist-common.inc
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -16,8 +16,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/mesa_shader_cache
 whitelist /usr/share/gnome-hexgl
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

@@ -21,8 +21,8 @@ include disable-programs.inc
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /usr/share/pacman/keyrings
-include whitelist-usr-share-common.inc
 #FIXME: include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

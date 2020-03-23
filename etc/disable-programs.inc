@@ -645,6 +645,7 @@ blacklist ${HOME}/.openttd
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
 blacklist ${HOME}/.ostrichriders
+blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer
 blacklist ${HOME}/.purple

@@ -6,7 +6,7 @@ include open-invaders.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.openinvaders
+noblacklist ${HOME}/.penguin-command
 
 include disable-common.inc
 include disable-devel.inc
@@ -35,6 +35,6 @@ protocol unix,netlink
 seccomp
 shell none
 
-private-bin open-invaders
+private-bin penguin-command
 private-dev
 private-tmp

@@ -26,7 +26,6 @@ apparmor
 caps.drop all
 ipc-namespace
 net none
-netfilter
 nodvd
 nogroups
 nonewprivs

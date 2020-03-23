@@ -2,7 +2,7 @@
 # Description: Space Invaders clone
 # This file is overwritten after every install/update
 # Persistent local customizations
-include open-invaders.local
+include penguin-command.local
 # Persistent global definitions
 include globals.local
 
@@ -15,8 +15,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-mkdir ${HOME}/.openinvaders
-whitelist ${HOME}/.openinvaders
+whitelist ${HOME}/.penguin-command
 include whitelist-common.inc
 include whitelist-var-common.inc
 

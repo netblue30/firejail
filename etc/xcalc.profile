@@ -15,6 +15,7 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 net none
 no3d

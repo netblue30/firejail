@@ -1,17 +1,16 @@
-# Firejail profile for gnome-books
+# Firejail profile for mplayer
+# Description: mplayer KDE GUI (movie player)
 # This file is overwritten after every install/update
 # Persistent local customizations
-include gnome-books.local
+include kmplayer.local
 # Persistent global definitions
 include globals.local
 
-# when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
-
-noblacklist ${HOME}/.cache/org.gnome.Books
-noblacklist ${DOCUMENTS}
-
-# Allow gjs (blacklisted by disable-interpreters.inc)
-include allow-gjs.inc
+noblacklist ${HOME}/.config/kmplayerrc
+noblacklist ${HOME}/.kde/share/config/kmplayerrc
+noblacklist ${HOME}/.local/share/kmplayer
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,27 +20,22 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-net none
 netfilter
-no3d
-nodvd
 nogroups
 nonewprivs
 noroot
-nosound
-notv
 nou2f
-novideo
-protocol unix
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
-tracelog
 
-# private-bin gjs,gnome-books
+# private-bin kmplayer,mplayer
+private-cache
 private-dev
 private-tmp
 

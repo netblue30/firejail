@@ -22,8 +22,10 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
+net none
 netfilter
 nodvd
 nogroups

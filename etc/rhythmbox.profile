@@ -28,7 +28,7 @@ whitelist /usr/share/libquvi-scripts
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+apparmor
 caps.drop all
 netfilter
 # nodbus - makes settings immutable
@@ -38,7 +38,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog

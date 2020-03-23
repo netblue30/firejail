@@ -8,8 +8,8 @@ include transmission-remote-cli.local
 include globals.local
 
 # Allow python (blacklisted by disable-interpreters.inc)
-include	allow-python2.inc
-include	allow-python3.inc
+include allow-python2.inc
+include allow-python3.inc
 
 private-bin python*,transmission-remote-cli
 

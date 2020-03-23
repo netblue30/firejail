@@ -27,8 +27,8 @@ noblacklist /usr/sbin
 include allow-java.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)
-include	allow-python2.inc
-include	allow-python3.inc
+include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc

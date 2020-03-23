@@ -11,7 +11,7 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: presentations18, presentations18free, textmaker18, teams
   * new profiles: textmaker18free, xournal, gnome-screenshot, ripperX
   * new profiles: sound-juicer, com.github.dahenson.agenda, gnome-pomodoro
-  * new profiles: gnome-todo
+  * new profiles: gnome-todo, x2goclient
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

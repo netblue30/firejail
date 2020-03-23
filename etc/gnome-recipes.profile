@@ -27,7 +27,7 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
-aps.drop all
+caps.drop all
 ipc-namespace
 machine-id
 netfilter

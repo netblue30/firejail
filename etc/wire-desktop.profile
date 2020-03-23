@@ -26,7 +26,7 @@ nou2f
 shell none
 
 disable-mnt
-private-bin bash,electron,electron4,env,sh,wire-desktop
+private-bin bash,electron,electron4,electron6,env,sh,wire-desktop
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,machine-id,pki,resolv.conf,ssl
 private-tmp

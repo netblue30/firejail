@@ -250,7 +250,7 @@ static void bpf_decode_args(const struct sock_filter *bpf, unsigned int line) {
 		break;
 	case BPF_JMP:
 		if (BPF_OP(bpf->code) == BPF_JA) {
-			printf("%.4u", (line + 1) + bpf->k);
+			printf("%.4x", (line + 1) + bpf->k);
 		}
 		else {
 			const char *name = NULL;

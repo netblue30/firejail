@@ -33,10 +33,10 @@
 
 #define DBUS_SOCKET_PATH_PREFIX "unix:path="
 #define DBUS_USER_SOCKET_FORMAT "/run/user/%d/bus"
-#define DBUS_USER_SOCKET_PATH_FORMAT DBUS_SOCKET_PATH_PREFIX DBUS_USER_SOCKET_FORMAT
+#define DBUS_USER_SOCKET_FORMAT2 "/run/user/%d/dbus/user_bus_socket"
 #define DBUS_SYSTEM_SOCKET "/run/dbus/system_bus_socket"
-#define DBUS_SYSTEM_SOCKET_PATH DBUS_SOCKET_PATH_PREFIX DBUS_SYSTEM_SOCKET
 #define DBUS_SESSION_BUS_ADDRESS_ENV "DBUS_SESSION_BUS_ADDRESS"
+#define DBUS_SYSTEM_BUS_ADDRESS_ENV "DBUS_SYSTEM_BUS_ADDRESS"
 #define DBUS_USER_DIR_FORMAT RUN_FIREJAIL_DBUS_DIR "/%d"
 #define DBUS_USER_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-user"
 #define DBUS_SYSTEM_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-system"
@@ -170,6 +170,36 @@ static void dbus_create_user_dir(void) {
 	free(path);
 }
 
+static char *find_user_socket_by_format(char *format) {
+	char *dbus_user_socket;
+	if (asprintf(&dbus_user_socket, format, (int) getuid()) == -1)
+		errExit("asprintf");
+	struct stat s;
+	if (stat(dbus_user_socket, &s) == -1) {
+		if (errno == ENOENT)
+			goto fail;
+		return NULL;
+		errExit("stat");
+	}
+	if (!S_ISSOCK(s.st_mode))
+		goto fail;
+	return dbus_user_socket;
+ fail:
+	free(dbus_user_socket);
+	return NULL;
+}
+
+static char *find_user_socket(void) {
+	char *socket1 = find_user_socket_by_format(DBUS_USER_SOCKET_FORMAT);
+	if (socket1 != NULL)
+		return socket1;
+	char *socket2 = find_user_socket_by_format(DBUS_USER_SOCKET_FORMAT2);
+	if (socket2 != NULL)
+		return socket2;
+	fprintf(stderr, "DBus user socket was not found.\n");
+	exit(1);
+}
+
 void dbus_proxy_start(void) {
 	dbus_create_user_dir();
 
@@ -203,26 +233,35 @@ void dbus_proxy_start(void) {
 			errExit("close");
 
 		if (arg_dbus_user == DBUS_POLICY_FILTER) {
-			char *dbus_user_path_env = getenv(DBUS_SESSION_BUS_ADDRESS_ENV);
-			if (dbus_user_path_env == NULL) {
-				write_arg(args_pipe[1], DBUS_USER_SOCKET_PATH_FORMAT, getuid());
+			char *user_env = getenv(DBUS_SESSION_BUS_ADDRESS_ENV);
+			if (user_env == NULL) {
+				char *dbus_user_socket = find_user_socket();
+				write_arg(args_pipe[1], DBUS_SOCKET_PATH_PREFIX "%s",
+						  dbus_user_socket);
+				free(dbus_user_socket);
 			} else {
-				write_arg(args_pipe[1], dbus_user_path_env);
+				write_arg(args_pipe[1], "%s", user_env);
 			}
 			if (asprintf(&dbus_user_proxy_socket, DBUS_USER_PROXY_SOCKET_FORMAT,
 						 (int) getuid(), (int) getpid()) == -1)
 				errExit("asprintf");
-			write_arg(args_pipe[1], dbus_user_proxy_socket);
+			write_arg(args_pipe[1], "%s", dbus_user_proxy_socket);
 			write_arg(args_pipe[1], "--filter");
 			write_profile(args_pipe[1], "dbus-user.");
 		}
 
 		if (arg_dbus_system == DBUS_POLICY_FILTER) {
-			write_arg(args_pipe[1], DBUS_SYSTEM_SOCKET_PATH);
+			char *system_env = getenv(DBUS_SYSTEM_BUS_ADDRESS_ENV);
+			if (system_env == NULL) {
+				write_arg(args_pipe[1],
+						  DBUS_SOCKET_PATH_PREFIX DBUS_SYSTEM_SOCKET);
+			} else {
+				write_arg(args_pipe[1], "%s", system_env);
+			}
 			if (asprintf(&dbus_system_proxy_socket, DBUS_SYSTEM_PROXY_SOCKET_FORMAT,
 						 (int) getuid(), (int) getpid()) == -1)
 				errExit("asprintf");
-			write_arg(args_pipe[1], dbus_system_proxy_socket);
+			write_arg(args_pipe[1], "%s", dbus_system_proxy_socket);
 			write_arg(args_pipe[1], "--filter");
 			write_profile(args_pipe[1], "dbus-system.");
 		}
@@ -294,6 +333,16 @@ static void socket_overlay(char *socket_path, char *proxy_path) {
 	close(fd);
 }
 
+static char *get_socket_env(const char *name) {
+	char *value = getenv(name);
+	if (value == NULL)
+		return NULL;
+	if (strncmp(value, DBUS_SOCKET_PATH_PREFIX,
+				strlen(DBUS_SOCKET_PATH_PREFIX)) == 0)
+		return value + strlen(DBUS_SOCKET_PATH_PREFIX);
+	return NULL;
+}
+
 static void disable_socket_dir(void) {
 	struct stat s;
 	if (stat(RUN_FIREJAIL_DBUS_DIR, &s) == 0)
@@ -314,36 +363,41 @@ void dbus_apply_policy(void) {
 		return;
 	}
 
-	char *dbus_new_user_socket_path;
-	if (asprintf(&dbus_new_user_socket_path, DBUS_USER_SOCKET_PATH_FORMAT, getuid()) == -1)
-		errExit("asprintf");
-	char *dbus_new_user_socket = dbus_new_user_socket_path + strlen(DBUS_SOCKET_PATH_PREFIX);
-	char *dbus_user_path_env = getenv(DBUS_SESSION_BUS_ADDRESS_ENV);
-	char *dbus_orig_user_socket_path;
-	if (dbus_user_path_env != NULL
-		&& strncmp(DBUS_SOCKET_PATH_PREFIX, dbus_user_path_env, strlen(DBUS_SOCKET_PATH_PREFIX)) == 0) {
-		dbus_orig_user_socket_path = dbus_user_path_env;
-	} else {
-		dbus_orig_user_socket_path = dbus_new_user_socket_path;
-	}
-	char *dbus_orig_user_socket = dbus_orig_user_socket_path + strlen(DBUS_SOCKET_PATH_PREFIX);
+	create_empty_dir_as_root(RUN_DBUS_DIR, 0755);
+	create_empty_file_as_root(RUN_DBUS_USER_SOCKET, 0700);
+	create_empty_file_as_root(RUN_DBUS_SYSTEM_SOCKET, 0700);
 
 	if (arg_dbus_user != DBUS_POLICY_ALLOW) {
 		if (arg_dbus_user == DBUS_POLICY_FILTER) {
 			assert(dbus_user_proxy_socket != NULL);
-			socket_overlay(dbus_new_user_socket, dbus_user_proxy_socket);
+			socket_overlay(RUN_DBUS_USER_SOCKET, dbus_user_proxy_socket);
 			free(dbus_user_proxy_socket);
-		} else { // arg_dbus_user == DBUS_POLICY_BLOCK
-			disable_file_or_dir(dbus_new_user_socket);
 		}
 
-		if (strcmp(dbus_orig_user_socket, dbus_new_user_socket) != 0)
-			disable_file_or_dir(dbus_orig_user_socket);
+		char *dbus_user_socket;
+		if (asprintf(&dbus_user_socket, DBUS_USER_SOCKET_FORMAT,
+					 (int) getuid()) == -1)
+			errExit("asprintf");
+		disable_file_or_dir(dbus_user_socket);
 
-		// set a new environment variable:
-		// DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/<UID>/bus
-		if (setenv(DBUS_SESSION_BUS_ADDRESS_ENV, dbus_new_user_socket_path, 1) == -1) {
-			fprintf(stderr, "Error: cannot modify " DBUS_SESSION_BUS_ADDRESS_ENV " required by --dbus-user\n");
+		char *dbus_user_socket2;
+		if (asprintf(&dbus_user_socket2, DBUS_USER_SOCKET_FORMAT2,
+					 (int) getuid()) == -1)
+			errExit("asprintf");
+		disable_file_or_dir(dbus_user_socket2);
+
+		char *user_env = get_socket_env(DBUS_SESSION_BUS_ADDRESS_ENV);
+		if (user_env != NULL && strcmp(user_env, dbus_user_socket) != 0 &&
+			strcmp(user_env, dbus_user_socket2) != 0)
+			disable_file_or_dir(user_env);
+
+		free(dbus_user_socket);
+		free(dbus_user_socket2);
+
+		if (setenv(DBUS_SESSION_BUS_ADDRESS_ENV,
+				   DBUS_SOCKET_PATH_PREFIX RUN_DBUS_USER_SOCKET, 1) == -1) {
+			fprintf(stderr, "Error: cannot modify " DBUS_SESSION_BUS_ADDRESS_ENV
+							" required by --dbus-user\n");
 			exit(1);
 		}
 
@@ -355,14 +409,25 @@ void dbus_apply_policy(void) {
 		free(path);
 	}
 
-	free(dbus_new_user_socket_path);
+	if (arg_dbus_system != DBUS_POLICY_ALLOW) {
+		if (arg_dbus_system == DBUS_POLICY_FILTER) {
+			assert(dbus_system_proxy_socket != NULL);
+			socket_overlay(RUN_DBUS_SYSTEM_SOCKET, dbus_system_proxy_socket);
+			free(dbus_system_proxy_socket);
+		}
 
-	if (arg_dbus_system == DBUS_POLICY_FILTER) {
-		assert(dbus_system_proxy_socket != NULL);
-		socket_overlay(DBUS_SYSTEM_SOCKET, dbus_system_proxy_socket);
-		free(dbus_system_proxy_socket);
-	} else if (arg_dbus_system == DBUS_POLICY_BLOCK) {
 		disable_file_or_dir(DBUS_SYSTEM_SOCKET);
+
+		char *system_env = get_socket_env(DBUS_SYSTEM_BUS_ADDRESS_ENV);
+		if (system_env != NULL && strcmp(system_env, DBUS_SYSTEM_SOCKET) != 0)
+			disable_file_or_dir(system_env);
+
+		if (setenv(DBUS_SYSTEM_BUS_ADDRESS_ENV,
+				   DBUS_SOCKET_PATH_PREFIX RUN_DBUS_SYSTEM_SOCKET, 1) == -1) {
+			fprintf(stderr, "Error: cannot modify " DBUS_SYSTEM_BUS_ADDRESS_ENV
+							" required by --dbus-system\n");
+			exit(1);
+		}
 	}
 
 	// Only disable access to /run/firejail/dbus here, when the sockets have been bind-mounted.

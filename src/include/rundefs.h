@@ -57,6 +57,9 @@
 #define RUN_DHCLIENT_4_LEASES_FILE		RUN_DHCLIENT_DIR "/dhclient.leases"
 #define RUN_DHCLIENT_4_PID_FILE			RUN_DHCLIENT_DIR "/dhclient.pid"
 #define RUN_DHCLIENT_6_PID_FILE			RUN_DHCLIENT_DIR "/dhclient6.pid"
+#define RUN_DBUS_DIR        RUN_MNT_DIR "/dbus"
+#define RUN_DBUS_USER_SOCKET        RUN_DBUS_DIR "/user"
+#define RUN_DBUS_SYSTEM_SOCKET      RUN_DBUS_DIR "/system"
 
 #define RUN_SECCOMP_DIR			RUN_MNT_DIR "/seccomp"
 #define RUN_SECCOMP_LIST		RUN_SECCOMP_DIR "/seccomp.list"		// list of seccomp files installed

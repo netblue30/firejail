@@ -15,6 +15,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 whitelist ${DOWNLOADS}
+whitelist ${HOME}/.config/BetterDiscord
+whitelist ${HOME}/.local/share/betterdiscordctl
 include whitelist-common.inc
 include whitelist-var-common.inc
 

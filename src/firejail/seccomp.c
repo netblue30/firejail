@@ -208,8 +208,8 @@ int seccomp_filter_drop(bool native) {
 	//	- seccomp list
 	//	- seccomp
 	if (cfg.seccomp_list_drop == NULL) {
-		// default seccomp
-		if (cfg.seccomp_list == NULL) {
+		// default seccomp if error action is not changed
+		if (cfg.seccomp_list == NULL && cfg.seccomp_error_action) {
 			if (arg_seccomp_block_secondary)
 				seccomp_filter_block_secondary();
 			else {
@@ -243,6 +243,8 @@ int seccomp_filter_drop(bool native) {
 				list = cfg.seccomp_list32;
 			}
 
+			if (list == NULL)
+				list = "";
 			// build the seccomp filter as a regular user
 			int rv;
 			if (arg_allow_debuggers)
@@ -361,6 +363,35 @@ int seccomp_filter_keep(bool native) {
 				  PATH_FSEC_PRINT, postexec_filter);
 		}
 	}
+
+	return 0;
+}
+
+// create mdwx filter for non-default error action
+int seccomp_filter_mdwx(bool native) {
+	if (arg_debug)
+		printf("Build memory-deny-write-execute filter\n");
+
+	const char *command, *filter, *postexec_filter, *list;
+	if (native) {
+		command = "memory-deny-write-execute";
+		filter = RUN_SECCOMP_MDWX;
+	} else {
+		command = "memory-deny-write-execute.32";
+		filter = RUN_SECCOMP_MDWX_32;
+	}
+
+	// build the seccomp filter as a regular user
+	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
+		 PATH_FSECCOMP, command, filter);
+
+	if (rv) {
+		fprintf(stderr, "Error: cannot build memory-deny-write-execute filter\n");
+		exit(rv);
+	}
+
+	if (arg_debug)
+		printf("Memory-deny-write-execute filter configured\n");
 
 	return 0;
 }

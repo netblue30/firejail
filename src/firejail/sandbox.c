@@ -19,6 +19,7 @@
 */
 
 #include "firejail.h"
+#include "../include/seccomp.h"
 #include <sys/mount.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -1124,6 +1125,10 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	if (arg_memory_deny_write_execute) {
+		if (arg_seccomp_error_action != EPERM) {
+			seccomp_filter_mdwx(true);
+			seccomp_filter_mdwx(false);
+		}
 		if (arg_debug)
 			printf("Install memory write&execute filter\n");
 		seccomp_load(RUN_SECCOMP_MDWX);	// install filter

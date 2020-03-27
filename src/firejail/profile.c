@@ -18,6 +18,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include "../include/seccomp.h"
+#include "../include/syscall.h"
 #include <dirent.h>
 #include <sys/stat.h>
 extern char *xephyr_screen;
@@ -865,6 +867,33 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_SECCOMP))
 			arg_memory_deny_write_execute = 1;
 		else
+			warning_feature_disabled("seccomp");
+#endif
+		return 0;
+	}
+
+	// seccomp error action
+	if (strncmp(ptr, "seccomp-error-action ", 21) == 0) {
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP)) {
+			int config_seccomp_error_action = checkcfg(CFG_SECCOMP_ERROR_ACTION);
+			if (config_seccomp_error_action == -1) {
+				if (strcmp(ptr + 21, "kill") == 0)
+					arg_seccomp_error_action = SECCOMP_RET_KILL;
+				else {
+					arg_seccomp_error_action = errno_find_name(ptr + 21);
+					if (arg_seccomp_error_action == -1)
+						errExit("seccomp-error-action: unknown errno");
+				}
+				cfg.seccomp_error_action = strdup(ptr + 21);
+				if (!cfg.seccomp_error_action)
+					errExit("strdup");
+			} else {
+				arg_seccomp_error_action = config_seccomp_error_action;
+				cfg.seccomp_error_action = config_seccomp_error_action_str;
+				warning_feature_disabled("seccomp-error-action");
+			}
+		} else
 			warning_feature_disabled("seccomp");
 #endif
 		return 0;

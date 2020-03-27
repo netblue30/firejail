@@ -1,5 +1,10 @@
 firejail (0.9.63) baseline; urgency=low
   * work in progress
+  * The blocking action of seccomp filters has been changed from
+    killing the process to returning EPERM to the caller. To get the
+    previous behaviour, use --seccomp-error-action=kill or
+    syscall:kill syntax when constructing filters, or override in
+    /etc/firejail/firejail.config file.
   * DHCP client support
   * SELinux labeling support
   * 32-bit seccomp filter

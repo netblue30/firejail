@@ -186,6 +186,7 @@ typedef struct config_t {
 	char *seccomp_list_drop, *seccomp_list_drop32;	// seccomp drop list
 	char *seccomp_list_keep, *seccomp_list_keep32;	// seccomp keep list
 	char *protocol;			// protocol list
+	char *seccomp_error_action;			// error action: kill or errno
 
 	// rlimits
 	long long unsigned rlimit_cpu;
@@ -572,6 +573,7 @@ int seccomp_install_filters(void);
 int seccomp_load(const char *fname);
 int seccomp_filter_drop(bool native);
 int seccomp_filter_keep(bool native);
+int seccomp_filter_mdwx(bool native);
 void seccomp_print_filter(pid_t pid);
 
 // caps.c
@@ -754,6 +756,7 @@ enum {
 	CFG_PRIVATE_CACHE,
 	CFG_CGROUP,
 	CFG_NAME_CHANGE,
+	CFG_SECCOMP_ERROR_ACTION,
 	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
 	CFG_MAX // this should always be the last entry
 };
@@ -764,6 +767,8 @@ extern char *xvfb_screen;
 extern char *xvfb_extra_params;
 extern char *netfilter_default;
 extern unsigned long join_timeout;
+extern char *config_seccomp_error_action_str;
+
 int checkcfg(int val);
 void print_compiletime_support(void);
 

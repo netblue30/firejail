@@ -21,6 +21,7 @@
 #include "../include/pid.h"
 #include "../include/firejail_user.h"
 #include "../include/syscall.h"
+#include "../include/seccomp.h"
 #define _GNU_SOURCE
 #include <sys/utsname.h>
 #include <sched.h>
@@ -76,6 +77,7 @@ int arg_seccomp = 0;				// enable default seccomp filter
 int arg_seccomp32 = 0;				// enable default seccomp filter for 32 bit arch
 int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
 int arg_seccomp_block_secondary = 0;		// block any secondary architectures
+int arg_seccomp_error_action = 0;
 
 int arg_caps_default_filter = 0;			// enable default capabilities filter
 int arg_caps_drop = 0;				// drop list
@@ -349,6 +351,9 @@ static void init_cfg(int argc, char **argv) {
 	sandbox_pid = getpid();
 	time_t t = time(NULL);
 	srand(t ^ sandbox_pid);
+
+	arg_seccomp_error_action = EPERM;
+	cfg.seccomp_error_action = "EPERM";
 }
 
 static void check_network(Bridge *br) {
@@ -973,6 +978,13 @@ void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) ptrarg;
 	(void) native;
 }
+void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, bool native) {
+	(void) fd;
+	(void) syscall;
+	(void) arg;
+	(void) ptrarg;
+	(void) native;
+}
 
 #ifdef HAVE_SECCOMP
 static int check_postexec(const char *list) {
@@ -1396,6 +1408,26 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_SECCOMP))
 				arg_memory_deny_write_execute = 1;
 			else
+				exit_err_feature("seccomp");
+		}
+		else if (strncmp(argv[i], "--seccomp-error-action=", 23) == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				int config_seccomp_error_action = checkcfg(CFG_SECCOMP_ERROR_ACTION);
+				if (config_seccomp_error_action == -1) {
+					if (strcmp(argv[i] + 23, "kill") == 0)
+						arg_seccomp_error_action = SECCOMP_RET_KILL;
+					else {
+						arg_seccomp_error_action = errno_find_name(argv[i] + 23);
+						if (arg_seccomp_error_action == -1)
+							errExit("seccomp-error-action: unknown errno");
+					}
+					cfg.seccomp_error_action = strdup(argv[i] + 23);
+					if (!cfg.seccomp_error_action)
+						errExit("strdup");
+				} else
+					exit_err_feature("seccomp-error-action");
+
+			} else
 				exit_err_feature("seccomp");
 		}
 #endif

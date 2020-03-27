@@ -20,11 +20,16 @@
 #define _GNU_SOURCE
 #include "../include/syscall.h"
 #include <assert.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/syscall.h>
 #include "../include/common.h"
+#include "../include/seccomp.h"
+
+#define SYSCALL_ERROR INT_MAX
+#define ERRNO_KILL -2
 
 typedef struct {
 	const char * const name;
@@ -1430,7 +1435,7 @@ static const SyscallGroupList sysgroups[] = {
 	}
 };
 
-// return -1 if error, or syscall number
+// return SYSCALL_ERROR if error, or syscall number
 static int syscall_find_name(const char *name) {
 	int i;
 	int elems = sizeof(syslist) / sizeof(syslist[0]);
@@ -1439,7 +1444,7 @@ static int syscall_find_name(const char *name) {
 			return syslist[i].nr;
 	}
 
-	return -1;
+	return SYSCALL_ERROR;
 }
 
 static int syscall_find_name_32(const char *name) {
@@ -1450,7 +1455,7 @@ static int syscall_find_name_32(const char *name) {
 			return syslist32[i].nr;
 	}
 
-	return -1;
+	return SYSCALL_ERROR;
 }
 
 const char *syscall_find_nr(int nr) {
@@ -1538,9 +1543,13 @@ static void syscall_process_name(const char *name, int *syscall_nr, int *error_n
 			*syscall_nr = syscall_find_name_32(syscall_name);
 	}
 	if (error_name) {
-		*error_nr = errno_find_name(error_name);
-		if (*error_nr == -1)
-			*syscall_nr = -1;
+		if (strcmp(error_name, "kill") == 0)
+			*error_nr = ERRNO_KILL;
+		else {
+			*error_nr = errno_find_name(error_name);
+			if (*error_nr == -1)
+				*syscall_nr = SYSCALL_ERROR;
+		}
 	}
 
 	free(str);
@@ -1589,15 +1598,15 @@ int syscall_check_list(const char *slist, filter_fn *callback, int fd, int arg, 
 				ptr++;
 			}
 			syscall_process_name(ptr, &syscall_nr, &error_nr, native);
-			if (syscall_nr == -1) {;}
-			else if (callback != NULL) {
+			if (syscall_nr != SYSCALL_ERROR && callback != NULL) {
 				if (negate) {
 					syscall_nr = -syscall_nr;
 				}
-				if (error_nr != -1 && fd > 0) {
+				if (error_nr >= 0 && fd > 0)
 					filter_add_errno(fd, syscall_nr, error_nr, ptrarg, native);
-				}
-				else if (error_nr != -1 && fd == 0) {
+				else if (error_nr == ERRNO_KILL && fd > 0)
+					filter_add_blacklist_override(fd, syscall_nr, 0, ptrarg, native);
+				else if (error_nr >= 0 && fd == 0) {
 					callback(fd, syscall_nr, error_nr, ptrarg, native);
 				}
 				else {

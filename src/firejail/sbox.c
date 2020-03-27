@@ -31,7 +31,27 @@
 #define O_PATH 010000000
 #endif
 
-static struct sock_filter filter[] = {
+int sbox_run(unsigned filtermask, int num, ...) {
+	va_list valist;
+	va_start(valist, num);
+
+	// build argument list
+	char **arg = malloc((num + 1) * sizeof(char *));
+	int i;
+	for (i = 0; i < num; i++)
+		arg[i] = va_arg(valist, char*);
+	arg[i] = NULL;
+	va_end(valist);
+
+	int status = sbox_run_v(filtermask, arg);
+
+	free(arg);
+
+	return status;
+}
+
+int sbox_run_v(unsigned filtermask, char * const arg[]) {
+	struct sock_filter filter[] = {
 	VALIDATE_ARCHITECTURE,
 	EXAMINE_SYSCALL,
 
@@ -105,33 +125,13 @@ static struct sock_filter filter[] = {
 	BLACKLIST(SYS_syslog), // kernel printk control
 #endif
 	RETURN_ALLOW
-};
+	};
 
-static struct sock_fprog prog = {
-	.len = (unsigned short)(sizeof(filter) / sizeof(filter[0])),
-	.filter = filter,
-};
+	struct sock_fprog prog = {
+		.len = (unsigned short)(sizeof(filter) / sizeof(filter[0])),
+		.filter = filter,
+	};
 
-int sbox_run(unsigned filtermask, int num, ...) {
-	va_list valist;
-	va_start(valist, num);
-
-	// build argument list
-  char **arg = malloc((num + 1) * sizeof(char *));
-  int i;
-	for (i = 0; i < num; i++)
-		arg[i] = va_arg(valist, char*);
-	arg[i] = NULL;
-	va_end(valist);
-
-  int status = sbox_run_v(filtermask, arg);
-
-  free(arg);
-
-  return status;
-}
-
-int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	EUID_ROOT();
 
 	if (arg_debug) {
@@ -161,6 +161,9 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 			new_environment[env_index++] = "FIREJAIL_QUIET=yes";
 		if (arg_debug) // --debug is passed as an environment variable
 			new_environment[env_index++] = "FIREJAIL_DEBUG=yes";
+		if (cfg.seccomp_error_action)
+			if (asprintf(&new_environment[env_index++], "FIREJAIL_SECCOMP_ERROR_ACTION=%s", cfg.seccomp_error_action) == -1)
+				errExit("asprintf");
 
 		if (filtermask & SBOX_STDIN_FROM_FILE) {
 			int fd;

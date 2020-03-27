@@ -255,7 +255,7 @@ void memory_deny_write_execute(const char *fname) {
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_WRITE|PROT_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_WRITE|PROT_EXEC, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW,
 #endif
 
@@ -264,7 +264,7 @@ void memory_deny_write_execute(const char *fname) {
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW,
 
 		// same for pkey_mprotect(,,PROT_EXEC), where available
@@ -273,7 +273,7 @@ void memory_deny_write_execute(const char *fname) {
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW,
 #endif
 
@@ -284,7 +284,7 @@ void memory_deny_write_execute(const char *fname) {
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, SHM_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SHM_EXEC, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW,
 #endif
 #ifdef SYS_memfd_create
@@ -292,7 +292,7 @@ void memory_deny_write_execute(const char *fname) {
 		// arbitrary memory contents which can be later mapped
 		// as executable
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SYS_memfd_create, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW
 #endif
 	};
@@ -327,7 +327,7 @@ void memory_deny_write_execute_32(const char *fname) {
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_WRITE|PROT_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_WRITE|PROT_EXEC, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW,
 #endif
 #ifdef mprotect_32
@@ -336,7 +336,7 @@ void memory_deny_write_execute_32(const char *fname) {
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW,
 #endif
 #ifdef pkey_mprotect_32
@@ -345,7 +345,7 @@ void memory_deny_write_execute_32(const char *fname) {
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, PROT_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, PROT_EXEC, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW,
 #endif
 
@@ -355,7 +355,7 @@ void memory_deny_write_execute_32(const char *fname) {
 		EXAMINE_ARGUMENT(2),
 		BPF_STMT(BPF_ALU+BPF_AND+BPF_K, SHM_EXEC),
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, SHM_EXEC, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		RETURN_ALLOW,
 #endif
 #ifdef memfd_create_32
@@ -363,7 +363,7 @@ void memory_deny_write_execute_32(const char *fname) {
 		// arbitrary memory contents which can be later mapped
 		// as executable
 		BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, memfd_create_32, 0, 1),
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 #endif
 #endif
 		RETURN_ALLOW

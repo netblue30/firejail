@@ -22,6 +22,7 @@ whitelist /usr/share/glib-2.0
 whitelist /usr/share/glvnd
 whitelist /usr/share/gtk-2.0
 whitelist /usr/share/gtk-3.0
+whitelist /usr/share/gtk-engines
 whitelist /usr/share/gtksourceview-3.0
 whitelist /usr/share/gtksourceview-4
 whitelist /usr/share/hunspell

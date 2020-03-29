@@ -208,6 +208,7 @@ static char *usage_str =
 	"\twhitelist the syscalls specified by the command.\n"
 	"    --seccomp.print=name|pid - print the seccomp filter for the sandbox\n"
 	"\tidentified by name or PID.\n"
+	"    --seccomp.32[.drop,.keep][=syscall] - like above but for 32 bit architecture.\n"
 #endif
 	"    --shell=none - run the program directly without a user shell.\n"
 	"    --shell=program - set default user shell.\n"

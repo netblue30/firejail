@@ -166,6 +166,14 @@ blacklist ${HOME}/VirtualBox VMs
 blacklist ${HOME}/.config/gnome-boxes
 blacklist ${HOME}/.local/share/gnome-boxes
 
+# libvirt
+blacklist ${HOME}/.cache/libvirt
+blacklist ${HOME}/.config/libvirt
+blacklist ${RUNUSER}/libvirt
+blacklist /var/cache/libvirt
+blacklist /var/lib/libvirt
+blacklist /var/log/libvirt
+
 # VeraCrypt
 blacklist ${HOME}/.VeraCrypt
 blacklist ${PATH}/veracrypt
@@ -453,6 +461,11 @@ blacklist ${HOME}/.local/share/flatpak/overrides
 blacklist ${HOME}/.local/share/flatpak/repo
 blacklist ${HOME}/.local/share/flatpak/runtime
 blacklist ${HOME}/.var
+blacklist ${RUNUSER}/app
+blacklist ${RUNUSER}/doc
+blacklist ${RUNUSER}/.dbus-proxy
+blacklist ${RUNUSER}/.flatpak
+blacklist ${RUNUSER}/.flatpak-helper
 blacklist /usr/share/flatpak
 blacklist /var/lib/flatpak
 # most of the time bwrap is SUID binary

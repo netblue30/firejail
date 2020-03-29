@@ -2,6 +2,7 @@ firejail (0.9.63) baseline; urgency=low
   * work in progress
   * DHCP client support
   * SELinux labeling support
+  * 32-bit seccomp filter
   * new condition: HAS_NOSOUND
   * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, muraster
   * new profiles: gnome-passwordsafe, bibtex, gummi, latex, mupdf-x11-curl
@@ -11,7 +12,9 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: presentations18, presentations18free, textmaker18, teams
   * new profiles: textmaker18free, xournal, gnome-screenshot, ripperX
   * new profiles: sound-juicer, com.github.dahenson.agenda, gnome-pomodoro
-  * new profiles: gnome-todo, x2goclient
+  * new profiles: gnome-todo, x2goclient, iagno, kmplayer, penguin-command
+  * new profiles: frogatto, gnome-mines, gnome-nibbles, lightsoff, warmux
+  * new profiles: ts3client_runscript.sh
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

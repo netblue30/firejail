@@ -8,6 +8,8 @@ blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud/Notes
 blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
+blacklist ${HOME}/TeamSpeak3-Client-linux_x86
+blacklist ${HOME}/TeamSpeak3-Client-linux_amd64
 blacklist ${HOME}/mps
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/.*coin
@@ -330,6 +332,7 @@ blacklist ${HOME}/.config/vivaldi
 blacklist ${HOME}/.config/vivaldi-snapshot
 blacklist ${HOME}/.config/vlc
 blacklist ${HOME}/.config/wesnoth
+blacklist ${HOME}/.config/wormux
 blacklist ${HOME}/.config/Whalebird
 blacklist ${HOME}/.config/wireshark
 blacklist ${HOME}/.config/xchat
@@ -378,6 +381,7 @@ blacklist ${HOME}/.fossamail
 blacklist ${HOME}/.freeciv
 blacklist ${HOME}/.freecol
 blacklist ${HOME}/.freemind
+blacklist ${HOME}/.frogatto
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
@@ -536,7 +540,9 @@ blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-builder
 blacklist ${HOME}/.local/share/gnome-latex
+blacklist ${HOME}/.local/share/gnome-mines
 blacklist ${HOME}/.local/share/gnome-music
+blacklist ${HOME}/.local/share/gnome-nibbles
 blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/gnome-pomodoro
 blacklist ${HOME}/.local/share/gnome-recipes
@@ -610,6 +616,7 @@ blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan
 blacklist ${HOME}/.local/share/warsow-2.1
 blacklist ${HOME}/.local/share/wesnoth
+blacklist ${HOME}/.local/share/wormux
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
@@ -706,6 +713,7 @@ blacklist ${HOME}/.widelands
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.wireshark
+blacklist ${HOME}/.wormux
 blacklist ${HOME}/.xiphos
 blacklist ${HOME}/.xmind
 blacklist ${HOME}/.xmms

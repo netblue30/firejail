@@ -26,7 +26,6 @@ whitelist ${HOME}/.cache/epiphany
 whitelist ${HOME}/.config/epiphany
 whitelist ${HOME}/.local/share/epiphany
 include whitelist-common.inc
-#include whitelist-runuser-common.inc
 
 caps.drop all
 netfilter

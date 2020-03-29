@@ -19,7 +19,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 whitelist ${RUNUSER}/keyring/ssh
-#FIXME: whitelist ${RUNUSER}/gnupg/?????
+whitelist ${RUNUSER}/gnupg/S.gpg-agent.ssh
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 

@@ -18,10 +18,12 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist ${RUNUSER}/gnupg
+whitelist ${RUNUSER}/keyring
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /usr/share/pacman/keyrings
-#FIXME: include whitelist-runuser-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

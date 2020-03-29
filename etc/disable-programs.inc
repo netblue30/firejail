@@ -73,6 +73,7 @@ blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Debauchee/Barrier.conf
 blacklist ${HOME}/.config/Enox
+blacklist ${HOME}/.config/Ferdi
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
 blacklist ${HOME}/.config/Fritzing
@@ -730,6 +731,7 @@ blacklist ${HOME}/.cache/BraveSoftware
 blacklist ${HOME}/.cache/Clementine
 blacklist ${HOME}/.cache/Enox
 blacklist ${HOME}/.cache/Enpass
+blacklist ${HOME}/.cache/Ferdi
 blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz

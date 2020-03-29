@@ -9,7 +9,7 @@ whitelist ${RUNUSER}/gdm/Xauthority
 whitelist ${RUNUSER}/pulse/native
 whitelist ${RUNUSER}/wayland-0
 
-#TODO: read-only
+read-only ${RUNUSER}
 
 # TODOs: gvfs
-# TODOs: akonadi, kdeinit5__0, klauncherHSKkaO.1.slave_socket, KSMserver__0
+# TODOs: akonadi, KSMserver__0

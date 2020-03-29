@@ -14,7 +14,9 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: sound-juicer, com.github.dahenson.agenda, gnome-pomodoro
   * new profiles: gnome-todo, x2goclient, iagno, kmplayer, penguin-command
   * new profiles: frogatto, gnome-mines, gnome-nibbles, lightsoff, warmux
-  * new profiles: ts3client_runscript.sh
+  * new profiles: ts3client_runscript.sh, ferdi, abiword, four-in-a-row
+  * new profiles: gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin
+  * new profiles: gnome-tetravex
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

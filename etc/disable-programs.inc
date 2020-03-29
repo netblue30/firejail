@@ -119,6 +119,7 @@ blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/Zeal
+blacklist ${HOME}/.config/abiword
 blacklist ${HOME}/.config/agenda
 blacklist ${HOME}/.config/akonadi*
 blacklist ${HOME}/.config/akregatorrc
@@ -548,6 +549,7 @@ blacklist ${HOME}/.local/share/gnome-photos
 blacklist ${HOME}/.local/share/gnome-pomodoro
 blacklist ${HOME}/.local/share/gnome-recipes
 blacklist ${HOME}/.local/share/gnome-ring
+blacklist ${HOME}/.local/share/gnome-sudoku
 blacklist ${HOME}/.local/share/gnome-twitch
 blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio

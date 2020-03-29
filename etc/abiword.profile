@@ -1,12 +1,12 @@
-# Firejail profile for gnome-chess
-# Description: Simple chess game
+# Firejail profile for abiword
+# Description: flexible cross-platform word processor
 # This file is overwritten after every install/update
 # Persistent local customizations
-include gnome-chess.local
+include abiword.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/gnome-chess
+noblacklist ${HOME}/.config/abiword
 
 include disable-common.inc
 include disable-devel.inc
@@ -14,12 +14,10 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
 
-whitelist /usr/share/gnuchess
-whitelist /usr/share/gnome-chess
-include whitelist-runuser-common.inc
+whitelist /usr/share/abiword-3.0
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -27,6 +25,7 @@ caps.drop all
 machine-id
 net none
 no3d
+#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -40,9 +39,8 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
-private-bin fairymax,gnome-chess,gnuchess,hoichess
+private-bin abiword
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gnome-chess,gtk-3.0
+private-etc fonts,gtk-3.0,passwd
 private-tmp

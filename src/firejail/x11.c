@@ -1175,16 +1175,15 @@ void x11_xorg(void) {
 
 	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
 	// automatically when the sandbox is closed (rename doesn't work)
-						  // root needed
-	if (copy_file(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600)) {
-		fprintf(stderr, "Error: cannot create the new .Xauthority file\n");
-		exit(1);
-	}
+	if (arg_debug)
+		printf("Copying the new .Xauthority file\n");
+	copy_file_from_user_to_root(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600);
+	
 	/* coverity[toctou] */
 	unlink(tmpfname);
 	umount("/tmp");
 
-	// remount RUN_XAUTHORITY_SEC_FILE noexec, nodev, nosuid
+	// mount RUN_XAUTHORITY_SEC_FILE noexec, nodev, nosuid
 	fs_remount(RUN_XAUTHORITY_SEC_FILE, MOUNT_NOEXEC, 0);
 
 	// Ensure there is already a file in the usual location, so that bind-mount below will work.
@@ -1294,19 +1293,17 @@ void fs_x11(void) {
 	if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, 0, MS_BIND|MS_REC, 0) < 0)
 		errExit("mount bind");
 
-	// This directory must be mode 1777, or Xlib will barf.
+	// This directory must be mode 1777
 	if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs",
 		MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,
 		"mode=1777,uid=0,gid=0") < 0)
 		errExit("mounting tmpfs on /tmp/.X11-unix");
 	fs_logger("tmpfs /tmp/.X11-unix");
 
-	// create an empty file which will have the desired socket bind-mounted over it
-	int fd = open(x11file, O_RDWR|O_CREAT|O_EXCL, x11stat.st_mode & ~S_IFMT);
+	// create an empty root-owned file which will have the desired socket bind-mounted over it
+	int fd = open(x11file, O_RDONLY|O_CREAT|O_EXCL, S_IRUSR | S_IWUSR);
 	if (fd < 0)
 		errExit(x11file);
-	if (fchown(fd, x11stat.st_uid, x11stat.st_gid))
-		errExit("fchown");
 	close(fd);
 
 	// the mount source is under control of the user, so be careful and

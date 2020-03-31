@@ -41,6 +41,7 @@
 #define DBUS_USER_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-user"
 #define DBUS_SYSTEM_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-system"
 #define DBUS_MAX_NAME_LENGTH 255
+#define XDG_DBUS_PROXY_PATH "/usr/bin/xdg-dbus-proxy"
 
 static pid_t dbus_proxy_pid = 0;
 static int dbus_proxy_status_fd = -1;
@@ -78,42 +79,57 @@ int dbus_check_name(const char *name) {
 	return in_segment && segments >= 2;
 }
 
-static void dbus_check_bus_profile(char const *prefix, DbusPolicy policy) {
+static void dbus_check_bus_profile(char const *prefix, DbusPolicy *policy) {
+	if (*policy == DBUS_POLICY_FILTER) {
+		struct stat s;
+		if (stat(XDG_DBUS_PROXY_PATH, &s) == -1) {
+			if (errno == ENOENT) {
+				fprintf(stderr,
+						"Warning: " XDG_DBUS_PROXY_PATH
+						" was not found, downgrading %s policy to allow.\n"
+						"To enable DBus filtering, install the xdg-dbus-proxy "
+						"program.\n", prefix);
+				*policy = DBUS_POLICY_ALLOW;
+			} else {
+				errExit("stat");
+			}
+		} else {
+			// No need to warn on profile entries.
+			return;
+		}
+	}
+
 	size_t prefix_length = strlen(prefix);
 	ProfileEntry *it = cfg.profile;
+	int num_matches = 0;
+	const char *first_match = NULL;
 	while (it) {
 		char *data = it->data;
 		it = it->next;
 		if (strncmp(prefix, data, prefix_length) == 0) {
-			switch (policy) {
-			case DBUS_POLICY_ALLOW:
-				// We should never get here, because profile parsing will fail earlier.
-				fprintf(stderr,
-						"Error: %s filter rule configured, but the bus is not "
-						"set to filter.\n",
-						prefix);
-				exit(1);
-				break;
-			case DBUS_POLICY_FILTER:
-				// All good.
-				break;
-			case DBUS_POLICY_BLOCK:
-				fwarning("%s filter rule configured, but the bus is blocked.\n", prefix);
-				fwarning("Ignoring \"%s\" and any other %s filter rules.\n", data, prefix);
-				break;
-			default:
-				fprintf(stderr, "Error: Unknown %s policy.\n", prefix);
-				exit(1);
-				break;
-			}
-			break;
+			++num_matches;
+			if (first_match == NULL)
+				first_match = data;
+		}
+	}
+
+	if (num_matches > 0) {
+		assert(first_match != NULL);
+		if (num_matches == 1) {
+			fprintf(stderr, "Ignoring \"%s\".\n", first_match);
+		} else if (num_matches == 2) {
+			fprintf(stderr, "Ignoring \"%s\" and 1 other %s filter rule.\n",
+					first_match, prefix);
+		} else {
+			fprintf(stderr, "Ignoring \"%s\" and %d other %s filter rules.\n",
+					first_match, num_matches - 1, prefix);
 		}
 	}
 }
 
 void dbus_check_profile(void) {
-	dbus_check_bus_profile("dbus-user", arg_dbus_user);
-	dbus_check_bus_profile("dbus-system", arg_dbus_system);
+	dbus_check_bus_profile("dbus-user", &arg_dbus_user);
+	dbus_check_bus_profile("dbus-system", &arg_dbus_system);
 }
 
 static void write_arg(int fd, char const *format, ...) {
@@ -221,7 +237,7 @@ void dbus_proxy_start(void) {
 			if (i != status_pipe[1] && i != args_pipe[0])
 				close(i); // close open files
 		}
-		char *args[4] = {"/usr/bin/xdg-dbus-proxy", NULL, NULL, NULL};
+		char *args[4] = {XDG_DBUS_PROXY_PATH, NULL, NULL, NULL};
 		if (asprintf(&args[1], "--fd=%d", status_pipe[1]) == -1
 			|| asprintf(&args[2], "--args=%d", args_pipe[0]) == -1)
 			errExit("asprintf");

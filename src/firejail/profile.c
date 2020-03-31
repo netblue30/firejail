@@ -453,12 +453,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strncmp(ptr, "dbus-user.talk ", 15) == 0) {
-		if (arg_dbus_user == DBUS_POLICY_ALLOW) {
-			fprintf(stderr, "Session DBus filtering (dbus-user filter) is "
-							"required for dbus-user.talk rules\n");
-			exit(1);
-		}
-
 		if (!dbus_check_name(ptr + 15)) {
 			printf("Invalid dbus-user.talk name: %s\n", ptr + 15);
 			exit(1);
@@ -466,12 +460,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.own ", 14) == 0) {
-		if (arg_dbus_user == DBUS_POLICY_ALLOW) {
-			fprintf(stderr, "Session DBus filtering (dbus-user filter) is "
-							"required for dbus-user.own rules\n");
-			exit(1);
-		}
-
 		if (!dbus_check_name(ptr + 14)) {
 			fprintf(stderr, "Invalid dbus-user.own name: %s\n", ptr + 14);
 			exit(1);
@@ -495,12 +483,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strncmp(ptr, "dbus-system.talk ", 17) == 0) {
-		if (arg_dbus_system == DBUS_POLICY_ALLOW) {
-			fprintf(stderr, "System DBus filtering (dbus-system filter) is "
-							"required for dbus-system.talk rules\n");
-			exit(1);
-		}
-
 		if (!dbus_check_name(ptr + 17)) {
 			fprintf(stderr, "Invalid dbus-system.talk name: %s\n", ptr + 17);
 			exit(1);
@@ -508,12 +490,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.own ", 16) == 0) {
-		if (arg_dbus_system == DBUS_POLICY_ALLOW) {
-			fprintf(stderr, "System DBus filtering (dbus-system filter) is "
-							"required for dbus-system.own rules\n");
-			exit(1);
-		}
-
 		if (!dbus_check_name(ptr + 16)) {
 			fprintf(stderr, "Invalid dbus-system.own name: %s\n", ptr + 16);
 			exit(1);

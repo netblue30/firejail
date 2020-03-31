@@ -21,6 +21,7 @@ whitelist /usr/share/doc
 whitelist /usr/share/evince
 whitelist /usr/share/poppler
 whitelist /usr/share/tracker
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

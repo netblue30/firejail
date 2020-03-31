@@ -27,6 +27,7 @@
 #   ALLOW INCLUDES
 #   BLACKLISTS
 #   DISABLE INCLUDES
+#   NOWHITELISTS
 #   MKDIRS
 #   WHITELISTS
 #   WHITELIST INCLUDES
@@ -62,6 +63,8 @@ include globals.local
 #blacklist /tmp/.X11-unix
 # Disable Wayland
 #blacklist ${RUNUSER}/wayland-*
+# Disable RUNUSER (cli only)
+#blacklist ${RUNUSER}
 
 # It is common practice to add files/dirs containing program-specific configuration
 # (often ${HOME}/PROGRAMNAME or ${HOME}/.config/PROGRAMNAME) into disable-programs.inc
@@ -116,6 +119,7 @@ include globals.local
 ##mkfile PATH
 #whitelist PATH
 #include whitelist-common.inc
+#GTK3 only: include whitelist-runuser-common.inc
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
 

@@ -28,6 +28,7 @@ whitelist ${HOME}/.local/share/TpLogger
 whitelist ${HOME}/.local/share/telepathy
 whitelist ${HOME}/.purple
 include whitelist-common.inc
+include whitelist-runuser-common.inc
 
 caps.drop all
 netfilter

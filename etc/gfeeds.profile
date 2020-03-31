@@ -29,6 +29,7 @@ whitelist ${HOME}/.cache/org.gabmus.gfeeds
 whitelist ${HOME}/.config/org.gabmus.gfeeds.json
 whitelist /usr/share/gfeeds
 include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

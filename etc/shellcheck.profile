@@ -8,6 +8,7 @@ include shellcheck.local
 include globals.local
 
 blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 noblacklist ${DOCUMENTS}
 

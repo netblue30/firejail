@@ -25,6 +25,7 @@ include disable-xdg.inc
 whitelist /usr/share/rhythmbox
 whitelist /usr/share/lua
 whitelist /usr/share/libquvi-scripts
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

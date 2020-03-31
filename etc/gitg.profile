@@ -28,6 +28,7 @@ include disable-programs.inc
 #include whitelist-common.inc
 
 whitelist /usr/share/gitg
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

@@ -14,6 +14,7 @@ include globals.local
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

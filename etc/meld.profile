@@ -36,6 +36,8 @@ include disable-passwdmgr.inc
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-programs.inc.
 #include disable-programs.inc
 
+include whitelist-runuser-common.inc
+
 # Uncomment the next lines (or put it into your meld.local) if you don't need to compare files in /usr/share.
 #whitelist /usr/share/meld
 #include whitelist-usr-share-common.inc

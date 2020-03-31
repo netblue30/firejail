@@ -17,11 +17,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist ${RUNUSER}/bus
-whitelist ${RUNUSER}/pulse
-whitelist ${RUNUSER}/gdm/Xauthority
-whitelist ${RUNUSER}/wayland-0
 include whitelist-usr-share-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor

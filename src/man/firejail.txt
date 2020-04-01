@@ -2346,6 +2346,10 @@ the same top directory. For user home, both the link and the real file should be
 .br
 
 .br
+File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
+.br
+
+.br
 Example:
 .br
 $ firejail \-\-noprofile \-\-whitelist=~/.mozilla
@@ -2353,6 +2357,8 @@ $ firejail \-\-noprofile \-\-whitelist=~/.mozilla
 $ firejail \-\-whitelist=/tmp/.X11-unix --whitelist=/dev/null
 .br
 $ firejail "\-\-whitelist=/home/username/My Virtual Machines"
+.br
+$ firejail \-\-whitelist=~/work* \-\-whitelist=/var/backups*
 
 .TP
 \fB\-\-writable-etc
@@ -2722,7 +2728,7 @@ The globbing feature is implemented using glibc glob command. For more informati
 
 .br
 .TP
-The following command line options are supported: \-\-blacklist, \-\-private-bin, \-\-noexec, \-\-read-only, \-\-read-write, and \-\-tmpfs.
+The following command line options are supported: \-\-blacklist, \-\-private-bin, \-\-noexec, \-\-read-only, \-\-read-write, \-\-tmpfs, and \-\-whitelist.
 .br
 
 .br

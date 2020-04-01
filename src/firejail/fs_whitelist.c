@@ -346,6 +346,39 @@ static void whitelist_home(int topdir) {
 }
 
 
+static void globbing(const char *pattern) {
+	assert(pattern);
+
+	// globbing
+	glob_t globbuf;
+	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT | GLOB_PERIOD, NULL, &globbuf);
+	if (globerr) {
+		fprintf(stderr, "Error: failed to glob private-bin pattern %s\n", pattern);
+		exit(1);
+	}
+
+	size_t i;
+	for (i = 0; i < globbuf.gl_pathc; i++) {
+		assert(globbuf.gl_pathv[i]);
+		// testing for GLOB_NOCHECK - no pattern matched returns the original pattern
+		if (strcmp(globbuf.gl_pathv[i], pattern) == 0)
+			continue;
+
+		// build the new profile command
+		char *newcmd;
+		if (asprintf(&newcmd, "whitelist %s", globbuf.gl_pathv[i]) == -1)
+			errExit("asprintf");
+
+		// add the new profile command at the end of the list
+		if (arg_debug || arg_debug_whitelists)
+			printf("Adding new profile command: %s\n", newcmd);
+		profile_add(newcmd);
+	}
+
+	globfree(&globbuf);
+}
+
+
 void fs_whitelist(void) {
 	ProfileEntry *entry = cfg.profile;
 	if (!entry)
@@ -443,6 +476,13 @@ void fs_whitelist(void) {
 			fname = strdup("/proc/self/fd/2");
 		else
 			fname = realpath(new_name, NULL);
+
+		// if this is not a real path, let's try globbing
+		// mark this entry as EMPTY_STRING and push the new paths at the end of profile entry list
+		// the new profile entries will be processed in this loop
+		// currently there is no globbing support for nowhitelist
+		if (!fname && !nowhitelist_flag)
+			globbing(new_name);
 
 		if (!fname) {
 			// file not found, blank the entry in the list and continue

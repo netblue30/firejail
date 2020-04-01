@@ -35,6 +35,8 @@ static int cnt_noexec = 0;	// include disable-exec.inc
 static int cnt_privatedev = 0;
 static int cnt_privatetmp = 0;
 static int cnt_whitelistvar = 0;	// include whitelist-var-common.inc
+static int cnt_whitelistrunuser = 0;	// include whitelist-runuser-common.inc
+static int cnt_whitelistusrshare = 0;	// include whitelist-usr-share-common.inc
 static int cnt_ssh = 0;
 
 static int level = 0;
@@ -46,6 +48,8 @@ static int arg_noexec = 0;
 static int arg_privatedev = 0;
 static int arg_privatetmp = 0;
 static int arg_whitelistvar = 0;
+static int arg_whitelistrunuser = 0;
+static int arg_whitelistusrshare = 0;
 static int arg_ssh = 0;
 
 static char *profile = NULL;
@@ -63,6 +67,8 @@ static void usage(void) {
 	printf("   --private-tmp - print profiles without private-tmp\n");
 	printf("   --seccomp - print profiles without seccomp\n");
 	printf("   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n");
+	printf("   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\"\n");
+	printf("   --whitelist-usrshare - print profiles without \"include whitelist-usr-share-common.inc\"\n");
 	printf("   --debug\n");
 	printf("\n");
 }
@@ -102,6 +108,10 @@ void process_file(const char *fname) {
 			cnt_noexec++;
 		else if (strncmp(ptr, "include whitelist-var-common.inc", 32) == 0)
 			cnt_whitelistvar++;
+		else if (strncmp(ptr, "include whitelist-runuser-common.inc", 32) == 0)
+			cnt_whitelistrunuser++;
+		else if (strncmp(ptr, "include whitelist-usr-share-common.inc", 32) == 0)
+			cnt_whitelistusrshare++;
 		else if (strncmp(ptr, "include disable-common.inc", 26) == 0)
 			cnt_ssh++;
 		else if (strncmp(ptr, "net none", 8) == 0)
@@ -159,6 +169,10 @@ int main(int argc, char **argv) {
 			arg_privatetmp = 1;
 		else if (strcmp(argv[i], "--whitelist-var") == 0)
 			arg_whitelistvar = 1;
+		else if (strcmp(argv[i], "--whitelist-runuser") == 0)
+			arg_whitelistrunuser = 1;
+		else if (strcmp(argv[i], "--whitelist-usrshare") == 0)
+			arg_whitelistusrshare = 1;
 		else if (strcmp(argv[i], "--ssh") == 0)
 			arg_ssh = 1;
 		else if (*argv[i] == '-') {
@@ -188,6 +202,8 @@ int main(int argc, char **argv) {
 		int dotlocal = cnt_dotlocal;
 		int globalsdotlocal = cnt_globalsdotlocal;
 		int whitelistvar = cnt_whitelistvar;
+		int whitelistrunuser = cnt_whitelistrunuser;
+		int whitelistusrshare = cnt_whitelistusrshare;
 		int ssh = cnt_ssh;
 
 		// process file
@@ -220,6 +236,10 @@ int main(int argc, char **argv) {
 			printf("No private-tmp found in %s\n", argv[i]);
 		if (arg_whitelistvar && whitelistvar == cnt_whitelistvar)
 			printf("No include whitelist-var-common.inc found in %s\n", argv[i]);
+		if (arg_whitelistrunuser && whitelistrunuser == cnt_whitelistrunuser)
+			printf("No include whitelist-runuser-common.inc found in %s\n", argv[i]);
+		if (arg_whitelistusrshare && whitelistusrshare == cnt_whitelistusrshare)
+			printf("No include whitelist-usr-share-common.inc found in %s\n", argv[i]);
 		if (arg_ssh && ssh == cnt_ssh)
 			printf("No include disable-common.inc found in %s\n", argv[i]);
 
@@ -238,7 +258,9 @@ int main(int argc, char **argv) {
 	printf("    apparmor\t\t\t%d\n", cnt_apparmor);
 	printf("    private-dev\t\t\t%d\n", cnt_privatedev);
 	printf("    private-tmp\t\t\t%d\n", cnt_privatetmp);
-	printf("    whitelist var directory\t%d   (include whitelist-var-common.inc)\n", cnt_whitelistvar);
+	printf("    whitelist var\t\t%d   (include whitelist-var-common.inc)\n", cnt_whitelistvar);
+	printf("    whitelist run/user\t\t%d   (include whitelist-runuser-common.inc)\n", cnt_whitelistrunuser);
+	printf("    whitelist usr/share\t\t%d   (include whitelist-usr-share-common.inc)\n", cnt_whitelistusrshare);
 	printf("    net none\t\t\t%d\n", cnt_netnone);
 	printf("\n");
 	return 0;

@@ -43,6 +43,10 @@ The following actions are implemented by default by running sudo firecfg:
 
 .br
 - fix desktop files in $HOME/.local/share/applications/ (firecfg --fix).
+.br
+
+.br
+- automatically loads and forces the AppArmor profile "firejail-default".
 .RE
 
 .SH OPTIONS

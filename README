@@ -64,6 +64,7 @@ Firejail Authors (alphabetical order)
 	- add pybitmessage profile
 Adrian L. Shaw (https://github.com/adrianlshaw)
 	- add profanity profile
+	- add barrirer profile
 Aidan Gauland (https://github.com/aidalgol)
 	- added electron and riot-web profiles
 Akhil Hans Maulloo (https://github.com/kouul)
@@ -110,6 +111,7 @@ Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start
 	- wusc fixes
+	- okular profile fixes
 aoand (https://github.com/aoand)
 	- seccomp fix: allow numeric syscalls
 Atrate (https://github.com/Atrate)
@@ -169,6 +171,7 @@ caoliver (https://github.com/caoliver)
 	- network system fixes
 Carlo Abelli (https://github.com/carloabelli)
 	- fixed udiskie profile
+	- Allow mbind syscall for GIMP
 Cat (https://github.com/ecat3)
 	- prevent tmux connecting to an existing session
 creideiki (https://github.com/creideiki)
@@ -192,7 +195,8 @@ crass (https://github.com/crass)
 	- extract_command_name fixes
 	- update appimage size calculation to newest code from libappimage
 	- firejail should look for processes with names exactly named
-curiosity-seeker (https://github.com/curiosity-seeker)
+curiosity-seeker (https://github.com/curiosity-seeker - old)
+curiosityseeker (https://github.com/curiosityseeker - new)
 	- tightening unbound and dnscrypt-proxy profiles
 	- correct and tighten QuiteRss profile
 	- dnsmasq profile
@@ -210,6 +214,7 @@ curiosity-seeker (https://github.com/curiosity-seeker)
 	- updated keypassxc profile
 	- added syscalls.sh, which determine the necessary syscalls for a program
 	- fixed conky profile
+	- thunderbird.profile: harden and enable the rules necessary to make Firefox open links
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
@@ -224,6 +229,8 @@ Dara Adib (https://github.com/daradib)
 	- evince profile fix
 David Thole (https://github.com/TheDarkTrumpet)
 	- added profile for teams-for-linux
+Davide Beatrici (https://github.com/davidebeatrici)
+	- steam.profile: correctly blacklist unneeded directories in user's home
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
 Denys Havrysh (https://github.com/vutny)
@@ -239,6 +246,7 @@ Disconnect3d (https://github.com/disconnect3d)
 	- code cleanup
 dmfreemon (https://github.com/dmfreemon)
 	- add sandbox name or name of private directory to the window title when xpra is used
+	- handle malloc() failures; use gnu_basename() instead of basenaem()
 dshmgh (https://github.com/dshmgh)
 	- overlayfs fix for systems with /home mounted on a separate partition
 Duncan Overbruck (https://github.com/Duncaen)
@@ -487,6 +495,8 @@ LaurentGH (https://github.com/LaurentGH)
 	- allow private-bin parameters to be absolute paths
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
+Liorst4 (https://github.com/Liorst4)
+	- Preserve CFLAGS given to configure in common.mk.in
 Lockdis (https://github.com/Lockdis)
 	- Added crow, nyx, and google-earth-pro profiles
 Lukáš Krejčí (https://github.com/lskrejci)

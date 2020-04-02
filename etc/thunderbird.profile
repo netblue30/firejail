@@ -17,12 +17,12 @@ writable-run-user
 #whitelist /var/spool/mail
 #writable-var
 
-# Uncomment the next 4 lines or put them in your thunderbird.local to
-# allow Firefox to load your profile when clicking a link in an email
-#noblacklist ${HOME}/.cache/mozilla
-#noblacklist ${HOME}/.mozilla
-#whitelist ${HOME}/.cache/mozilla/firefox
-#whitelist ${HOME}/.mozilla
+# These lines are needed to allow Firefox to load your profile when clicking a link in an email
+noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.mozilla
+whitelist ${HOME}/.cache/mozilla/firefox
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
+read-only ${HOME}/.mozilla/firefox/profiles.ini
 
 noblacklist ${HOME}/.cache/thunderbird
 noblacklist ${HOME}/.gnupg

@@ -9,6 +9,8 @@ include teams.local
 # added by included profile
 #include globals.local
 
+ignore nodbus
+
 noblacklist ${HOME}/.config/teams
 noblacklist ${HOME}/.config/Microsoft
 
@@ -30,7 +32,6 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-tmp
 
 # Redirect
 include electron.profile

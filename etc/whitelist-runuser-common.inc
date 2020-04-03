@@ -6,5 +6,6 @@ include whitelist-runuser-common.local
 whitelist ${RUNUSER}/bus
 whitelist ${RUNUSER}/dconf
 whitelist ${RUNUSER}/gdm/Xauthority
+whitelist ${RUNUSER}/.mutter-Xwaylandauth.*
 whitelist ${RUNUSER}/pulse/native
 whitelist ${RUNUSER}/wayland-0

@@ -10,6 +10,7 @@ blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/TeamSpeak3-Client-linux_x86
 blacklist ${HOME}/TeamSpeak3-Client-linux_amd64
+blacklist ${HOME}/hyperrogue.ini
 blacklist ${HOME}/mps
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/.*coin
@@ -410,6 +411,7 @@ blacklist ${HOME}/.jak
 blacklist ${HOME}/.java
 blacklist ${HOME}/.jd
 blacklist ${HOME}/.jitsi
+blacklist ${HOME}/.jumpnbump
 blacklist ${HOME}/.kde/share/apps/digikam
 blacklist ${HOME}/.kde/share/apps/gwenview
 blacklist ${HOME}/.kde/share/apps/kaffeine
@@ -574,6 +576,7 @@ blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
+blacklist ${HOME}/.local/share/love
 blacklist ${HOME}/.local/share/lugaru
 blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
@@ -624,12 +627,14 @@ blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.lv2
+blacklist ${HOME}/.magicor
 blacklist ${HOME}/.masterpdfeditor
 blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.megaglest
 blacklist ${HOME}/.minetest
+blacklist ${HOME}/.mirrormagic
 blacklist ${HOME}/.moonchild productions/basilisk
 blacklist ${HOME}/.moonchild productions/pale moon
 blacklist ${HOME}/.mozilla
@@ -655,6 +660,7 @@ blacklist ${HOME}/.openttd
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
 blacklist ${HOME}/.ostrichriders
+blacklist ${HOME}/.parallelrealities/blobwars
 blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer
@@ -681,6 +687,7 @@ blacklist ${HOME}/.steampid
 blacklist ${HOME}/.stellarium
 blacklist ${HOME}/.subversion
 blacklist ${HOME}/.surf
+blacklist ${HOME}/.swb.ini
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
@@ -716,6 +723,7 @@ blacklist ${HOME}/.widelands
 blacklist ${HOME}/.wine
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.wireshark
+blacklist ${HOME}/.wordwarvi
 blacklist ${HOME}/.wormux
 blacklist ${HOME}/.xiphos
 blacklist ${HOME}/.xmind

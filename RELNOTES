@@ -18,7 +18,10 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: frogatto, gnome-mines, gnome-nibbles, lightsoff, warmux
   * new profiles: ts3client_runscript.sh, ferdi, abiword, four-in-a-row
   * new profiles: gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin
-  * new profiles: gnome-tetravex
+  * new profiles: gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars
+  * new profiles: hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless
+  * new profiles: mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers
+  * new profiles: seahorse-adventures, wordwarvi, xbill
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

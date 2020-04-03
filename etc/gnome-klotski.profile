@@ -13,5 +13,7 @@ whitelist ${HOME}/.local/share/gnome-klotski
 
 private-bin gnome-klotski
 
+dbus-user.own org.gnome.Klotski
+
 # Redirect
 include gnome_games-common.profile

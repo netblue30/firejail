@@ -8,5 +8,7 @@ include globals.local
 
 private-bin gnome-tetravex
 
+dbus-user.own org.gnome.Tetravex
+
 # Redirect
 include gnome_games-common.profile

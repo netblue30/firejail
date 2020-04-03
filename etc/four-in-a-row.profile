@@ -13,5 +13,7 @@ whitelist /usr/share/four-in-a-row
 
 private-bin four-in-a-row
 
+dbus-user.own org.gnome.Four-in-a-row
+
 # Redirect
 include gnome_games-common.profile

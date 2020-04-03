@@ -13,5 +13,7 @@ whitelist /usr/share/gnome-robots
 
 private-bin gnome-robots
 
+dbus-user.own org.gnome.Robots
+
 # Redirect
 include gnome_games-common.profile

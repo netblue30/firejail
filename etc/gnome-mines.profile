@@ -14,5 +14,7 @@ whitelist /usr/share/gnome-mines
 
 private-bin gnome-mines
 
+dbus-user.own org.gnome.Mines
+
 # Redirect
 include gnome_games-common.profile

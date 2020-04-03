@@ -13,5 +13,7 @@ whitelist /usr/share/gnome-taquin
 
 private-bin gnome-taquin
 
+dbus-user.own org.gnome.Taquin
+
 # Redirect
 include gnome_games-common.profile

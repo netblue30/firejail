@@ -13,5 +13,7 @@ whitelist ${HOME}/.local/share/gnome-2048
 
 private-bin gnome-2048
 
+dbus-user.own org.gnome.TwentyFortyEight
+
 # Redirect
 include gnome_games-common.profile

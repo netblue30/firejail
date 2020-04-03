@@ -17,5 +17,7 @@ whitelist /usr/share/gnome-nibbles
 
 private-bin gnome-nibbles
 
+dbus-user.own org.gnome.Nibbles
+
 # Redirect
 include gnome_games-common.profile

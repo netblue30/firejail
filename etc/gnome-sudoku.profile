@@ -13,5 +13,7 @@ whitelist ${HOME}/.local/share/gnome-sudoku
 
 private-bin gnome-sudoku
 
+dbus-user.own org.gnome.Sudoku
+
 # Redirect
 include gnome_games-common.profile

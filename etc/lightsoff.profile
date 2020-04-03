@@ -10,5 +10,7 @@ whitelist /usr/share/lightsoff
 
 private-bin lightsoff
 
+dbus-user.own org.gnome.LightsOff
+
 # Redirect
 include gnome_games-common.profile

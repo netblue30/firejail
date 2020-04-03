@@ -10,5 +10,7 @@ whitelist /usr/share/gnome-mahjongg
 
 private-bin gnome-mahjongg
 
+dbus-user.own org.gnome.Mahjongg
+
 # Redirect
 include gnome_games-common.profile

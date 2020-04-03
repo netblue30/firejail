@@ -15,5 +15,7 @@ whitelist /usr/share/swell-foop
 
 private-bin swell-foop
 
+dbus-user.own org.gnome.SwellFoop
+
 # Redirect
 include gnome_games-common.profile

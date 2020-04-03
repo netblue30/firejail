@@ -15,5 +15,7 @@ whitelist /usr/share/five-or-more
 
 private-bin five-or-more
 
+dbus-user.own org.gnome.five-or-more
+
 # Redirect
 include gnome_games-common.profile

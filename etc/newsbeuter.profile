@@ -1,4 +1,4 @@
-# Firejail profile for Newsboat
+# Firejail profile for Newsbeuter
 # Description: Text based Atom/RSS feed reader
 # This file is overwritten after every install/update
 # Persistent local customizations

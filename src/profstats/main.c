@@ -185,7 +185,7 @@ int main(int argc, char **argv) {
 
 	start = i;
 	if (i == argc) {
-		fprintf(stderr, "Error: no porfile file specified\n");
+		fprintf(stderr, "Error: no profile file specified\n");
 		return 1;
 	}
 

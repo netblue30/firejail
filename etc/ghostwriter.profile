@@ -19,11 +19,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-#whitelist /usr/share/ghostwriter
-#whitelist /usr/share/mozilla-dicts
-#whitelist /usr/share/texlive
-#whitelist /usr/share/pandoc*
-#include whitelist-usr-share-common.inc
+whitelist /usr/share/ghostwriter
+whitelist /usr/share/mozilla-dicts
+whitelist /usr/share/texlive
+whitelist /usr/share/pandoc*
+include whitelist-usr-share-common.inc
 
 apparmor
 caps.drop all

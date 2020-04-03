@@ -45,6 +45,7 @@ tracelog
 
 disable-mnt
 private-bin 0ad,pyrogenesis,sh,which
+private-cache
 private-dev
 private-tmp
 

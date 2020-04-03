@@ -1,5 +1,5 @@
 # Firejail profile for lightsoff
-# Description: Sliding tile puzzle game
+# Description: GNOME Lightsoff game
 # This file is overwritten after every install/update
 # Persistent local customizations
 include lightsoff.local

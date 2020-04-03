@@ -1,5 +1,5 @@
 # Firejail profile for gnome-mines
-# Description: Sliding tile puzzle game
+# Description: The popular logic puzzle minesweeper
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gnome-mines.local

@@ -1,5 +1,5 @@
 # Firejail profile for gnome-nibbles
-# Description: Sliding tile puzzle game
+# Description: A worm game for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gnome-nibbles.local

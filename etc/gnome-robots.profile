@@ -1,5 +1,5 @@
 # Firejail profile for gnome-robots
-# Description: Sliding tile puzzle game
+# Description: Based on classic BSD Robots
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gnome-robots.local

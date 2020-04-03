@@ -1,5 +1,5 @@
 # Firejail profile for gnome-tetravex
-# Description: Sliding tile puzzle game
+# Description: A simple puzzle game for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gnome-tetravex.local

@@ -1,5 +1,5 @@
 # Firejail profile for four-in-a-row
-# Description: Sliding tile puzzle game
+# Description: four-in-a-row game for GNOME
 # This file is overwritten after every install/update
 # Persistent local customizations
 include four-in-a-row.local

@@ -1,5 +1,5 @@
 # Firejail profile for gnome-mahjongg
-# Description: Sliding tile puzzle game
+# Description: A matching game played with Mahjongg tiles
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gnome-mahjongg.local

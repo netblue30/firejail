@@ -1,5 +1,5 @@
 # Firejail profile for gnome-sudoku
-# Description: Sliding tile puzzle game
+# Description: puzzle game for the popular Japanese sudoku logic puzzle
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gnome-sudoku.local

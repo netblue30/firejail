@@ -534,6 +534,7 @@ blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
 blacklist ${HOME}/.local/share/feedreader
 blacklist ${HOME}/.local/share/feral-interactive
+blacklist ${HOME}/.local/share/five-or-more
 blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.local/share/geary
@@ -543,6 +544,7 @@ blacklist ${HOME}/.local/share/gitg
 blacklist ${HOME}/.local/share/gnome-2048
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-builder
+blacklist ${HOME}/.local/share/gnome-klotski
 blacklist ${HOME}/.local/share/gnome-latex
 blacklist ${HOME}/.local/share/gnome-mines
 blacklist ${HOME}/.local/share/gnome-music
@@ -612,6 +614,7 @@ blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/supertux2
 blacklist ${HOME}/.local/share/supertuxkart
+blacklist ${HOME}/.local/share/swell-foop
 blacklist ${HOME}/.local/share/telepathy
 blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser

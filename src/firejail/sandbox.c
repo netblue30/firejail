@@ -1122,11 +1122,6 @@ int sandbox(void* sandbox_arg) {
 			seccomp_filter_drop(false);
 
 	}
-	else { // clean seccomp files under /run/firejail/mnt
-		int rv = unlink(RUN_SECCOMP_CFG);
-		rv |= unlink(RUN_SECCOMP_32);
-		(void) rv;
-	}
 
 	if (arg_memory_deny_write_execute) {
 		if (arg_debug)
@@ -1134,13 +1129,17 @@ int sandbox(void* sandbox_arg) {
 		seccomp_load(RUN_SECCOMP_MDWX);	// install filter
 		seccomp_load(RUN_SECCOMP_MDWX_32);
 	}
-	else {
-		int rv = unlink(RUN_SECCOMP_MDWX);
-		rv |= unlink(RUN_SECCOMP_MDWX_32);
-		(void) rv;
-	}
+
 	// make seccomp filters read-only
 	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);
+	if (arg_debug) {
+		printf("Seccomp directory:\n");
+		int rv = system("ls -l "  RUN_SECCOMP_DIR);
+		(void) rv;
+		printf("Active seccomp files:\n");
+		rv = system("cat " RUN_SECCOMP_LIST);
+		(void) rv;
+	}
 #endif
 
 	// set capabilities

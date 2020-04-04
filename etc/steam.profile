@@ -36,29 +36,37 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.config/unity3d
 mkdir ${HOME}/.killingfloor
 mkdir ${HOME}/.local/share/3909/PapersPlease
 mkdir ${HOME}/.local/share/aspyr-media
 mkdir ${HOME}/.local/share/cdprojektred
 mkdir ${HOME}/.local/share/feral-interactive
+mkdir ${HOME}/.local/share/Paradox Interactive
 mkdir ${HOME}/.local/share/Steam
 mkdir ${HOME}/.local/share/SuperHexagon
 mkdir ${HOME}/.local/share/Terraria
 mkdir ${HOME}/.local/share/vpltd
 mkdir ${HOME}/.local/share/vulkan
+mkdir ${HOME}/.mbwarband
+mkdir ${HOME}/.paradoxinteractive
 mkdir ${HOME}/.steam
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
+whitelist ${HOME}/.config/unity3d
 whitelist ${HOME}/.killingfloor
 whitelist ${HOME}/.local/share/3909/PapersPlease
 whitelist ${HOME}/.local/share/aspyr-media
 whitelist ${HOME}/.local/share/cdprojektred
 whitelist ${HOME}/.local/share/feral-interactive
+whitelist ${HOME}/.local/share/Paradox Interactive
 whitelist ${HOME}/.local/share/Steam
 whitelist ${HOME}/.local/share/SuperHexagon
 whitelist ${HOME}/.local/share/Terraria
 whitelist ${HOME}/.local/share/vpltd
 whitelist ${HOME}/.local/share/vulkan
+whitelist ${HOME}/.mbwarband
+whitelist ${HOME}/.paradoxinteractive
 whitelist ${HOME}/.steam
 whitelist ${HOME}/.steampath
 whitelist ${HOME}/.steampid

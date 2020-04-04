@@ -9,6 +9,11 @@ ignore noexec /tmp
 
 noblacklist ${HOME}/.config/Signal
 
+# These lines are needed to allow Firefox to open links
+noblacklist ${HOME}/.mozilla
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
+read-only ${HOME}/.mozilla/firefox/profiles.ini
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -22,8 +27,10 @@ whitelist ${HOME}/.config/Signal
 include whitelist-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.keep sys_admin,sys_chroot
 netfilter
+nodbus
 nodvd
 nogroups
 notv

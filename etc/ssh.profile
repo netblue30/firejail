@@ -12,6 +12,7 @@ noblacklist /tmp/ssh-*
 noblacklist ${HOME}/.ssh
 # nc can be used as ProxyCommand, e.g. when using tor
 noblacklist ${PATH}/nc
+noblacklist ${PATH}/ncat
 
 include disable-common.inc
 include disable-exec.inc

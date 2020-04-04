@@ -18,9 +18,7 @@ writable-run-user
 #writable-var
 
 # These lines are needed to allow Firefox to load your profile when clicking a link in an email
-noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
-whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.mozilla/firefox/profiles.ini
 

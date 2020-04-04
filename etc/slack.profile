@@ -19,16 +19,12 @@ whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-caps.drop all
+caps.keep sys_chroot,sys_admin
 netfilter
 nodvd
 nogroups
-nonewprivs
-noroot
 notv
 nou2f
-protocol unix,inet,inet6,netlink
-seccomp !chroot
 shell none
 
 disable-mnt
@@ -36,4 +32,3 @@ private-bin locale,slack
 private-cache
 private-dev
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,debian_version,fedora-release,fonts,group,ld.so.cache,ld.so.conf,localtime,machine-id,os-release,passwd,pki,pulse,redhat-release,resolv.conf,ssl,system-release,system-release-cpe
-private-tmp

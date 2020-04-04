@@ -1,0 +1,2 @@
+[Service]
+ExecStart=/usr/bin/firejail --socket-activation

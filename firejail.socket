@@ -1,0 +1,11 @@
+[Unit]
+Description=Socket for Firejail
+
+[Socket]
+ListenStream=/run/firejail/firejail.socket
+Accept=yes
+PassCredentials=yes
+PassSecurity=yes
+
+[Install]
+WantedBy=multi-user.target

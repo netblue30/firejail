@@ -128,13 +128,12 @@ endif
 	install -c -m 0644 RELNOTES $(DESTDIR)/$(DOCDIR)/.
 	install -c -m 0644 etc/templates/* $(DESTDIR)/$(DOCDIR)/.
 	# etc files
-	./mketc.sh $(sysconfdir) $(BUSYBOX_WORKAROUND)
+ifeq ($(BUSYBOX_WORKAROUND),yes)
+	./mketc.sh
+endif
 	install -m 0755 -d $(DESTDIR)/$(sysconfdir)/firejail
-	for file in .etc/* etc/firejail.config; do \
-		install -c -m 0644 $$file $(DESTDIR)/$(sysconfdir)/firejail; \
-	done
+	install -m 0644 -t $(DESTDIR)/$(sysconfdir)/firejail etc/{*.profile,*.inc,*.net,firejail.config}
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
-	rm -fr .etc
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
 	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"

@@ -982,7 +982,7 @@ static int check_postexec(const char *list) {
 //*******************************************
 // Main program
 //*******************************************
-int main(int argc, char **argv) {
+int main(int argc, char **argv, char **envp) {
 	int i;
 	int prog_index = -1;			  // index in argv where the program command starts
 	int lockfd_network = -1;
@@ -990,6 +990,7 @@ int main(int argc, char **argv) {
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
+	char **ptr;
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -999,8 +1000,35 @@ int main(int argc, char **argv) {
 	orig_umask = umask(022);
 
 	// argument count should be larger than 0
-	if (argc == 0) {
+	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv[0] is NULL\n");
+		exit(1);
+	} else if (argc >= MAX_ARGS) {
+		fprintf(stderr, "Error: too many arguments\n");
+		exit(1);
+	}
+
+	// sanity check for arguments
+	for (i = 0; i < argc; i++) {
+		if (*argv[i] == 0) {
+			fprintf(stderr, "Error: too short arguments\n");
+			exit(1);
+		}
+		if (strlen(argv[i]) >= MAX_ARG_LEN) {
+			fprintf(stderr, "Error: too long arguments\n");
+			exit(1);
+		}
+	}
+
+	// sanity check for environment variables
+	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++) {
+		if (strlen(*ptr) >= MAX_ENV_LEN) {
+			fprintf(stderr, "Error: too long environment variables\n");
+			exit(1);
+		}
+	}
+	if (i >= MAX_ENVS) {
+		fprintf(stderr, "Error: too many environment variables\n");
 		exit(1);
 	}
 

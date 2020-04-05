@@ -350,6 +350,7 @@ extern mode_t orig_umask;
 extern unsigned long long start_timestamp;
 
 #define MAX_ARGS 128		// maximum number of command arguments (argc)
+#define MAX_ARG_LEN (PATH_MAX + 32) // --foobar=PATH
 extern char *fullargv[MAX_ARGS];
 extern int fullargc;
 
@@ -639,6 +640,8 @@ int check_namespace_virt(void);
 int check_kernel_procs(void);
 void run_no_sandbox(int argc, char **argv);
 
+#define MAX_ENVS 100			// some sane maximum number of environment variables
+#define MAX_ENV_LEN (PATH_MAX + 32)	// FOOBAR=SOME_PATH
 // env.c
 typedef enum {
 	SETENV = 0,

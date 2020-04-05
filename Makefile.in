@@ -132,9 +132,10 @@ ifeq ($(BUSYBOX_WORKAROUND),yes)
 	./mketc.sh
 endif
 	install -m 0755 -d $(DESTDIR)/$(sysconfdir)/firejail
-	for file in etc/*.profile etc/*.inc etc/*.net etc/firejail.config; do \
-		install -c -m 0644 $$file $(DESTDIR)/$(sysconfdir)/firejail; \
-	done
+	install -m 0644 -t $(DESTDIR)/$(sysconfdir)/firejail etc/*.profile etc/*.inc etc/*.net etc/firejail.config
+#	for file in etc/*.profile etc/*.inc etc/*.net etc/firejail.config; do \
+#		install -c -m 0644 $$file $(DESTDIR)/$(sysconfdir)/firejail; \
+#	done
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile

@@ -68,9 +68,9 @@ static void usage(void) {
 	printf("   --private-dev - print profiles without private-dev\n");
 	printf("   --private-tmp - print profiles without private-tmp\n");
 	printf("   --seccomp - print profiles without seccomp\n");
-	printf("   --memory-deny-write-execute - profile without it\n");
+	printf("   --memory-deny-write-execute - profile without \"memory-deny-write-execute\"\n");
 	printf("   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n");
-	printf("   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\"\n");
+	printf("   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\" or \"blacklist ${RUNUSER}\"\n");
 	printf("   --whitelist-usrshare - print profiles without \"include whitelist-usr-share-common.inc\"\n");
 	printf("   --debug\n");
 	printf("\n");
@@ -111,9 +111,10 @@ void process_file(const char *fname) {
 			cnt_noexec++;
 		else if (strncmp(ptr, "include whitelist-var-common.inc", 32) == 0)
 			cnt_whitelistvar++;
-		else if (strncmp(ptr, "include whitelist-runuser-common.inc", 32) == 0)
+		else if (strncmp(ptr, "include whitelist-runuser-common.inc", 36) == 0 ||
+		        strncmp(ptr, "blacklist ${RUNUSER}", 20) == 0)
 			cnt_whitelistrunuser++;
-		else if (strncmp(ptr, "include whitelist-usr-share-common.inc", 32) == 0)
+		else if (strncmp(ptr, "include whitelist-usr-share-common.inc", 38) == 0)
 			cnt_whitelistusrshare++;
 		else if (strncmp(ptr, "include disable-common.inc", 26) == 0)
 			cnt_ssh++;
@@ -271,7 +272,8 @@ int main(int argc, char **argv) {
 	printf("    private-tmp\t\t\t%d\n", cnt_privatetmp);
 	printf("    whitelist var\t\t%d   (include whitelist-var-common.inc)\n", cnt_whitelistvar);
 	printf("    whitelist run/user\t\t%d   (include whitelist-runuser-common.inc)\n", cnt_whitelistrunuser);
-	printf("    whitelist usr/share\t\t%d   (include whitelist-usr-share-common.inc)\n", cnt_whitelistusrshare);
+	printf("    whitelist usr/share\t\t%d   (include whitelist-usr-share-common.inc\n", cnt_whitelistusrshare);
+	printf("\t\t\t\t\tor blacklist ${RUNUSER})\n");
 	printf("    net none\t\t\t%d\n", cnt_netnone);
 	printf("\n");
 	return 0;

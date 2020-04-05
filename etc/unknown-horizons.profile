@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# memory-deny-write-execute - doesn't work
 nodvd
 nogroups
 nonewprivs
@@ -40,3 +39,6 @@ disable-mnt
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
 private-tmp
+
+# doesn't work - maybe all Tcl/Tk programs have this problem
+# memory-deny-write-execute

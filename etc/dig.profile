@@ -25,6 +25,7 @@ include disable-xdg.inc
 #mkfile ${HOME}/.digrc -- see #903
 whitelist ${HOME}/.digrc
 include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -32,6 +33,7 @@ apparmor
 caps.drop all
 ipc-namespace
 machine-id
+memory-deny-write-execute
 netfilter
 no3d
 nodbus
@@ -49,7 +51,6 @@ shell none
 tracelog
 
 disable-mnt
-private
 private-bin bash,dig,sh
 private-dev
 # Uncomment the next line (or put 'private-lib' in your dig.local) on non Debian/Ubuntu OS (see issue #3038)

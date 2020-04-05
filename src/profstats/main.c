@@ -38,6 +38,7 @@ static int cnt_whitelistvar = 0;	// include whitelist-var-common.inc
 static int cnt_whitelistrunuser = 0;	// include whitelist-runuser-common.inc
 static int cnt_whitelistusrshare = 0;	// include whitelist-usr-share-common.inc
 static int cnt_ssh = 0;
+static int cnt_mdwx = 0;
 
 static int level = 0;
 static int arg_debug = 0;
@@ -51,6 +52,7 @@ static int arg_whitelistvar = 0;
 static int arg_whitelistrunuser = 0;
 static int arg_whitelistusrshare = 0;
 static int arg_ssh = 0;
+static int arg_mdwx = 0;
 
 static char *profile = NULL;
 
@@ -66,6 +68,7 @@ static void usage(void) {
 	printf("   --private-dev - print profiles without private-dev\n");
 	printf("   --private-tmp - print profiles without private-tmp\n");
 	printf("   --seccomp - print profiles without seccomp\n");
+	printf("   --memory-deny-write-execute - profile without it\n");
 	printf("   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n");
 	printf("   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\"\n");
 	printf("   --whitelist-usrshare - print profiles without \"include whitelist-usr-share-common.inc\"\n");
@@ -114,6 +117,8 @@ void process_file(const char *fname) {
 			cnt_whitelistusrshare++;
 		else if (strncmp(ptr, "include disable-common.inc", 26) == 0)
 			cnt_ssh++;
+		else if (strncmp(ptr, "memory-deny-write-execute", 25) == 0)
+			cnt_mdwx++;
 		else if (strncmp(ptr, "net none", 8) == 0)
 			cnt_netnone++;
 		else if (strncmp(ptr, "apparmor", 8) == 0)
@@ -161,6 +166,8 @@ int main(int argc, char **argv) {
 			arg_caps = 1;
 		else if (strcmp(argv[i], "--seccomp") == 0)
 			arg_seccomp = 1;
+		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0)
+			arg_mdwx = 1;
 		else if (strcmp(argv[i], "--noexec") == 0)
 			arg_noexec = 1;
 		else if (strcmp(argv[i], "--private-dev") == 0)
@@ -205,6 +212,7 @@ int main(int argc, char **argv) {
 		int whitelistrunuser = cnt_whitelistrunuser;
 		int whitelistusrshare = cnt_whitelistusrshare;
 		int ssh = cnt_ssh;
+		int mdwx = cnt_mdwx;
 
 		// process file
 		profile = argv[i];
@@ -242,6 +250,8 @@ int main(int argc, char **argv) {
 			printf("No include whitelist-usr-share-common.inc found in %s\n", argv[i]);
 		if (arg_ssh && ssh == cnt_ssh)
 			printf("No include disable-common.inc found in %s\n", argv[i]);
+		if (arg_mdwx && mdwx == cnt_mdwx)
+			printf("No memory-deny-write-execute found in %s\n", argv[i]);
 
 		assert(level == 0);
 	}
@@ -255,6 +265,7 @@ int main(int argc, char **argv) {
 	printf("    seccomp\t\t\t%d\n", cnt_seccomp);
 	printf("    capabilities\t\t%d\n", cnt_caps);
 	printf("    noexec\t\t\t%d   (include disable-exec.inc)\n", cnt_noexec);
+	printf("    memory-deny-write-execute\t%d\n", cnt_mdwx);
 	printf("    apparmor\t\t\t%d\n", cnt_apparmor);
 	printf("    private-dev\t\t\t%d\n", cnt_privatedev);
 	printf("    private-tmp\t\t\t%d\n", cnt_privatetmp);

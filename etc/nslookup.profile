@@ -21,6 +21,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist ${HOME}/.nslookuprc
+include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -28,6 +31,7 @@ apparmor
 caps.drop all
 ipc-namespace
 machine-id
+memory-deny-write-execute
 netfilter
 no3d
 nodbus
@@ -45,7 +49,6 @@ shell none
 tracelog
 
 disable-mnt
-private
 private-bin bash,nslookup,sh
 private-dev
 private-tmp

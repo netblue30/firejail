@@ -16,10 +16,14 @@ include disable-programs.inc
 mkdir ${HOME}/.unknown-horizons
 whitelist ${HOME}/.unknown-horizons
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+whitelist /usr/share/unknown-horizons
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+# memory-deny-write-execute - doesn't work
 nodvd
 nogroups
 nonewprivs

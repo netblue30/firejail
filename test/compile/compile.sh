@@ -10,7 +10,7 @@ arr[4]="TEST 4: compile firetunnel disabled"
 arr[5]="TEST 5: compile user namespace disabled"
 arr[6]="TEST 6: compile network disabled"
 arr[7]="TEST 7: compile X11 disabled"
-arr[8]="deprecated: TEST 8: compile network restricted"
+arr[8]="TEST 8: compile selinux"
 arr[9]="TEST 9: compile file transfer disabled"
 arr[10]="TEST 10: compile disable whitelist"
 arr[11]="TEST 11: compile disable global config"
@@ -183,6 +183,23 @@ cp output-configure oc7
 cp output-make om7
 rm output-configure output-make
 
+#*****************************************************************
+# TEST 8
+#*****************************************************************
+# - enable selinux
+#*****************************************************************
+print_title "${arr[8]}"
+# seccomp
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-selinux --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test8
+grep Error output-configure output-make >> ./report-test8
+cp output-configure oc8
+cp output-make om8
+rm output-configure output-make
 
 #*****************************************************************
 # TEST 9

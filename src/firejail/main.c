@@ -966,8 +966,15 @@ static void run_builder(int argc, char **argv) {
 	exit(1);
 }
 
-void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {}
+void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
+	(void) fd;
+	(void) syscall;
+	(void) arg;
+	(void) ptrarg;
+	(void) native;
+}
 
+#ifdef HAVE_SECCOMP
 static int check_postexec(const char *list) {
 	char *prelist, *postlist;
 
@@ -978,6 +985,7 @@ static int check_postexec(const char *list) {
 	}
 	return 0;
 }
+#endif
 
 //*******************************************
 // Main program

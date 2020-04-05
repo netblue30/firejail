@@ -324,14 +324,12 @@ int seccomp_filter_keep(bool native) {
 	if (arg_debug)
 		printf("Build keep seccomp filter\n");
 
-	const char *command, *filter, *postexec_filter, *list;
+	const char *filter, *postexec_filter, *list;
 	if (native) {
-		command = "keep";
 		filter = RUN_SECCOMP_CFG;
 		postexec_filter = RUN_SECCOMP_POSTEXEC;
 		list = cfg.seccomp_list_keep;
 	} else {
-		command = "keep32";
 		filter = RUN_SECCOMP_32;
 		postexec_filter = RUN_SECCOMP_POSTEXEC_32;
 		list = cfg.seccomp_list_keep32;

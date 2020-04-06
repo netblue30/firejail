@@ -197,6 +197,7 @@ blacklist ${HOME}/.config/git
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gmpc
 blacklist ${HOME}/.config/gnome-builder
+blacklist ${HOME}/.config/gnome-chess
 blacklist ${HOME}/.config/gnome-latex
 blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv

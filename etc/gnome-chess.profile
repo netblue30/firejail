@@ -6,6 +6,7 @@ include gnome-chess.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/gnome-chess
 noblacklist ${HOME}/.local/share/gnome-chess
 
 include disable-common.inc

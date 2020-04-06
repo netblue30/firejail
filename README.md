@@ -156,21 +156,24 @@ A small tool to print profile statistics. Compile as usual and run:
 $ make
 $ cd etc
 $ ./profstats *.profile
-Stats:
-    profiles			949
-    include local profile	949   (include profile-name.local)
-    include globals		949   (include globals.local)
-    blacklist ~/.ssh		934   (include disable-common.inc)
-    seccomp			892
-    capabilities		948
-    noexec			813   (include disable-exec.inc)
-    apparmor			471
-    private-dev			812
-    private-tmp			711
-    whitelist var		621   (include whitelist-var-common.inc)
-    whitelist run/user		105   (include whitelist-runuser-common.inc)
-    whitelist usr/share		257   (include whitelist-usr-share-common.inc)
-    net none			297
+    profiles			966
+    include local profile	966   (include profile-name.local)
+    include globals		966   (include globals.local)
+    blacklist ~/.ssh		951   (include disable-common.inc)
+    seccomp			908
+    capabilities		965
+    noexec			830   (include disable-exec.inc)
+    memory-deny-write-execute	214
+    apparmor			488
+    private-bin			483
+    private-dev			829
+    private-etc			366
+    private-tmp			726
+    whitelist var		638   (include whitelist-var-common.inc)
+    whitelist run/user		282   (include whitelist-runuser-common.inc
+					or blacklist ${RUNUSER})
+    whitelist usr/share		275   (include whitelist-usr-share-common.inc
+    net none			313
 `````
 
 Run ./profstats -h for help.

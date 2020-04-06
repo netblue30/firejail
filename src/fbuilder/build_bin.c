@@ -71,7 +71,7 @@ static void process_bin(const char *fname) {
 		else if (strncmp(ptr, "/usr/local/sbin/", 16) == 0)
 			ptr += 16;
 		else if (strncmp(ptr, "/usr/games/", 11) == 0)
-			ptr += 12;
+			ptr += 11;
 		else if (strncmp(ptr, "/usr/local/games/", 17) == 0)
 			ptr += 17;
 		else

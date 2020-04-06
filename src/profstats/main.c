@@ -32,8 +32,10 @@ static int cnt_dotlocal = 0;
 static int cnt_globalsdotlocal = 0;
 static int cnt_netnone = 0;
 static int cnt_noexec = 0;	// include disable-exec.inc
+static int cnt_privatebin = 0;
 static int cnt_privatedev = 0;
 static int cnt_privatetmp = 0;
+static int cnt_privateetc = 0;
 static int cnt_whitelistvar = 0;	// include whitelist-var-common.inc
 static int cnt_whitelistrunuser = 0;	// include whitelist-runuser-common.inc
 static int cnt_whitelistusrshare = 0;	// include whitelist-usr-share-common.inc
@@ -46,8 +48,10 @@ static int arg_apparmor = 0;
 static int arg_caps = 0;
 static int arg_seccomp = 0;
 static int arg_noexec = 0;
+static int arg_privatebin = 0;
 static int arg_privatedev = 0;
 static int arg_privatetmp = 0;
+static int arg_privateetc = 0;
 static int arg_whitelistvar = 0;
 static int arg_whitelistrunuser = 0;
 static int arg_whitelistusrshare = 0;
@@ -65,7 +69,9 @@ static void usage(void) {
 	printf("   --caps - print profiles without caps\n");
 	printf("   --ssh - print profiles without \"include disable-common.inc\"\n");
 	printf("   --noexec - print profiles without \"include disable-exec.inc\"\n");
+	printf("   --private-bin - print profiles without private-bin\n");
 	printf("   --private-dev - print profiles without private-dev\n");
+	printf("   --private-etc - print profiles without private-etc\n");
 	printf("   --private-tmp - print profiles without private-tmp\n");
 	printf("   --seccomp - print profiles without seccomp\n");
 	printf("   --memory-deny-write-execute - profile without \"memory-deny-write-execute\"\n");
@@ -124,10 +130,14 @@ void process_file(const char *fname) {
 			cnt_netnone++;
 		else if (strncmp(ptr, "apparmor", 8) == 0)
 			cnt_apparmor++;
+		else if (strncmp(ptr, "private-bin", 11) == 0)
+			cnt_privatebin++;
 		else if (strncmp(ptr, "private-dev", 11) == 0)
 			cnt_privatedev++;
 		else if (strncmp(ptr, "private-tmp", 11) == 0)
 			cnt_privatetmp++;
+		else if (strncmp(ptr, "private-etc", 11) == 0)
+			cnt_privateetc++;
 		else if (strncmp(ptr, "include ", 8) == 0) {
 			// not processing .local files
 			if (strstr(ptr, ".local")) {
@@ -171,10 +181,14 @@ int main(int argc, char **argv) {
 			arg_mdwx = 1;
 		else if (strcmp(argv[i], "--noexec") == 0)
 			arg_noexec = 1;
+		else if (strcmp(argv[i], "--private-bin") == 0)
+			arg_privatebin = 1;
 		else if (strcmp(argv[i], "--private-dev") == 0)
 			arg_privatedev = 1;
 		else if (strcmp(argv[i], "--private-tmp") == 0)
 			arg_privatetmp = 1;
+		else if (strcmp(argv[i], "--private-etc") == 0)
+			arg_privateetc = 1;
 		else if (strcmp(argv[i], "--whitelist-var") == 0)
 			arg_whitelistvar = 1;
 		else if (strcmp(argv[i], "--whitelist-runuser") == 0)
@@ -205,8 +219,10 @@ int main(int argc, char **argv) {
 		int caps = cnt_caps;
 		int apparmor = cnt_apparmor;
 		int noexec = cnt_noexec;
+		int privatebin = cnt_privatebin;
 		int privatetmp = cnt_privatetmp;
 		int privatedev = cnt_privatedev;
+		int privateetc = cnt_privateetc;
 		int dotlocal = cnt_dotlocal;
 		int globalsdotlocal = cnt_globalsdotlocal;
 		int whitelistvar = cnt_whitelistvar;
@@ -241,8 +257,12 @@ int main(int argc, char **argv) {
 			printf("No include disable-exec.inc found in %s\n", argv[i]);
 		if (arg_privatedev && privatedev == cnt_privatedev)
 			printf("No private-dev found in %s\n", argv[i]);
+		if (arg_privatebin && privatebin == cnt_privatebin)
+			printf("No private-bin found in %s\n", argv[i]);
 		if (arg_privatetmp && privatetmp == cnt_privatetmp)
 			printf("No private-tmp found in %s\n", argv[i]);
+		if (arg_privateetc && privateetc == cnt_privateetc)
+			printf("No private-etc found in %s\n", argv[i]);
 		if (arg_whitelistvar && whitelistvar == cnt_whitelistvar)
 			printf("No include whitelist-var-common.inc found in %s\n", argv[i]);
 		if (arg_whitelistrunuser && whitelistrunuser == cnt_whitelistrunuser)
@@ -268,12 +288,14 @@ int main(int argc, char **argv) {
 	printf("    noexec\t\t\t%d   (include disable-exec.inc)\n", cnt_noexec);
 	printf("    memory-deny-write-execute\t%d\n", cnt_mdwx);
 	printf("    apparmor\t\t\t%d\n", cnt_apparmor);
+	printf("    private-bin\t\t\t%d\n", cnt_privatebin);
 	printf("    private-dev\t\t\t%d\n", cnt_privatedev);
+	printf("    private-etc\t\t\t%d\n", cnt_privateetc);
 	printf("    private-tmp\t\t\t%d\n", cnt_privatetmp);
 	printf("    whitelist var\t\t%d   (include whitelist-var-common.inc)\n", cnt_whitelistvar);
-	printf("    whitelist run/user\t\t%d   (include whitelist-runuser-common.inc)\n", cnt_whitelistrunuser);
-	printf("    whitelist usr/share\t\t%d   (include whitelist-usr-share-common.inc\n", cnt_whitelistusrshare);
+	printf("    whitelist run/user\t\t%d   (include whitelist-runuser-common.inc\n", cnt_whitelistrunuser);
 	printf("\t\t\t\t\tor blacklist ${RUNUSER})\n");
+	printf("    whitelist usr/share\t\t%d   (include whitelist-usr-share-common.inc\n", cnt_whitelistusrshare);
 	printf("    net none\t\t\t%d\n", cnt_netnone);
 	printf("\n");
 	return 0;

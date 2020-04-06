@@ -73,7 +73,7 @@ distclean: clean
 	for dir in $(APPS) $(MYLIBS); do \
 		$(MAKE) -C $$dir distclean; \
 	done
-	rm -fr Makefile autom4te.cache config.log config.status config.h dummy.o src/common.mk
+	rm -fr Makefile autom4te.cache config.log config.status config.h src/common.mk
 
 realinstall:
 	# firejail executable
@@ -200,7 +200,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)/$(sysconfdir)/firejail', see #2038."
 
-DISTFILES = "src etc m4 platform contrib configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkdeb-apparmor.sh COPYING README RELNOTES"
+DISTFILES = "src etc m4 platform contrib configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkdeb-apparmor.sh COPYING README RELNOTES"
 DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
 
 dist:

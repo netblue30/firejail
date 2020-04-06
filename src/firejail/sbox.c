@@ -36,7 +36,7 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 	int env_index = 0;
 	char *new_environment[256] = { NULL };
 	// preserve firejail-specific env vars
-	char *cl = getenv("FIREJAIL_FILE_COPY_LIMIT");
+	const char *cl = env_get("FIREJAIL_FILE_COPY_LIMIT");
 	if (cl) {
 		if (asprintf(&new_environment[env_index++], "FIREJAIL_FILE_COPY_LIMIT=%s", cl) == -1)
 			errExit("asprintf");

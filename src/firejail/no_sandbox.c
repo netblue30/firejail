@@ -41,7 +41,7 @@ int check_namespace_virt(void) {
 	EUID_ASSERT();
 
 	// check container environment variable
-	char *str = getenv("container");
+	const char *str = env_get("container");
 	if (str && is_container(str))
 		return 1;
 

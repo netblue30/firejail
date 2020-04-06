@@ -778,7 +778,7 @@ void fs_whitelist(void) {
 			fs_logger("tmpfs /tmp");
 
 			// pam-tmpdir - issue #2685
-			char *env = getenv("TMP");
+			const char *env = env_get("TMP");
 			if (env) {
 				char *pamtmpdir;
 				if (asprintf(&pamtmpdir, "/tmp/user/%u", getuid()) == -1)

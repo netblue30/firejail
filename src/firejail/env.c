@@ -25,8 +25,8 @@
 
 typedef struct env_t {
 	struct env_t *next;
-	char *name;
-	char *value;
+	const char *name;
+	const char *value;
 	ENV_OP op;
 } Env;
 static Env *envlist = NULL;
@@ -117,45 +117,35 @@ void env_ibus_load(void) {
 // default sandbox env variables
 void env_defaults(void) {
 	// Qt fixes
-	if (setenv("QT_X11_NO_MITSHM", "1", 1) < 0)
-		errExit("setenv");
-	if (setenv("QML_DISABLE_DISK_CACHE", "1", 1) < 0)
-		errExit("setenv");
-//	if (setenv("QTWEBENGINE_DISABLE_SANDBOX", "1", 1) < 0)
-//		errExit("setenv");
-//	if (setenv("MOZ_NO_REMOTE, "1", 1) < 0)
-//		errExit("setenv");
-	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
-		errExit("setenv");
+	env_store_name_val("QT_X11_NO_MITSHM", "1", SETENV);
+	env_store_name_val("QML_DISABLE_DISK_CACHE", "1", SETENV);
+//	env_store_name_val("QTWEBENGINE_DISABLE_SANDBOX", "1", SETENV);
+//	env_store_name_val("MOZ_NO_REMOTE, "1", SETENV);
+	env_store_name_val("container", "firejail", SETENV); // LXC sets container=lxc,
 	if (!cfg.shell)
 		cfg.shell = guess_shell();
-	if (cfg.shell && setenv("SHELL", cfg.shell, 1) < 0)
-		errExit("setenv");
+	if (cfg.shell)
+		env_store_name_val("SHELL", cfg.shell, SETENV);
 
 	// spawn KIO slaves inside the sandbox
-	if (setenv("KDE_FORK_SLAVES", "1", 1) < 0)
-		errExit("setenv");
+	env_store_name_val("KDE_FORK_SLAVES", "1", SETENV);
 
 	// set prompt color to green
 	int set_prompt = 0;
 	if (checkcfg(CFG_FIREJAIL_PROMPT))
 		set_prompt = 1;
 	else { // check FIREJAIL_PROMPT="yes" environment variable
-		char *prompt = getenv("FIREJAIL_PROMPT");
+		const char *prompt = env_get("FIREJAIL_PROMPT");
 		if (prompt && strcmp(prompt, "yes") == 0)
 			set_prompt = 1;
 	}
 
-	if (set_prompt) {
+	if (set_prompt)
 		//export PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
-		if (setenv("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", 1) < 0)
-			errExit("setenv");
-	}
-	else {
+		env_store_name_val("PROMPT_COMMAND", "export PS1=\"\\[\\e[1;32m\\][\\u@\\h \\W]\\$\\[\\e[0m\\] \"", SETENV);
+	else
 		// remove PROMPT_COMMAND
-		if (setenv("PROMPT_COMMAND", ":", 1) < 0) // unsetenv() will not work here, bash still picks it up from somewhere
-			errExit("setenv");
-	}
+		env_store_name_val("PROMPT_COMMAND", ":", SETENV); // unsetenv() will not work here, bash still picks it up from somewhere
 
 	// set the window title
 	if (!arg_quiet && isatty(STDOUT_FILENO))
@@ -163,26 +153,26 @@ void env_defaults(void) {
 
 	// pass --quiet as an environment variable, in case the command calls further firejailed commands
 	if (arg_quiet)
-		setenv("FIREJAIL_QUIET", "yes", 1);
+		env_store_name_val("FIREJAIL_QUIET", "yes", SETENV);
 
 	fflush(0);
 }
 
 // parse and store the environment setting
 void env_store(const char *str, ENV_OP op) {
-	EUID_ASSERT();
 	assert(str);
 
 	// some basic checking
 	if (*str == '\0')
 		goto errexit;
 	char *ptr = strchr(str, '=');
-	if (op == SETENV) {
+	if (op == SETENV || op == SETENV_ALLOW_EMPTY) {
 		if (!ptr)
 			goto errexit;
 		ptr++;
-		if (*ptr == '\0')
+		if (*ptr == '\0' && op != SETENV_ALLOW_EMPTY)
 			goto errexit;
+		op = SETENV;
 	}
 
 	// build list entry
@@ -210,8 +200,45 @@ errexit:
 	exit(1);
 }
 
+void env_store_name_val(const char *name, const char *val, ENV_OP op) {
+	assert(name);
+
+	// some basic checking
+	if (*name == '\0')
+		goto errexit;
+	if (*val == '\0' && op != SETENV_ALLOW_EMPTY)
+		goto errexit;
+
+	if (op == SETENV_ALLOW_EMPTY)
+		op = SETENV;
+
+	// build list entry
+	Env *env = calloc(1, sizeof(Env));
+	if (!env)
+		errExit("calloc");
+
+	env->name = strdup(name);
+	if (env->name == NULL)
+		errExit("strdup");
+
+	if (op == SETENV) {
+		env->value = strdup(val);
+		if (env->value == NULL)
+			errExit("strdup");
+	}
+	env->op = op;
+
+	// add entry to the list
+	env_add(env);
+	return;
+
+errexit:
+	fprintf(stderr, "Error: invalid --env setting\n");
+	exit(1);
+}
+
 // set env variables in the new sandbox process
-void env_apply(void) {
+void env_apply_all(void) {
 	Env *env = envlist;
 
 	while (env) {
@@ -224,4 +251,81 @@ void env_apply(void) {
 		}
 		env = env->next;
 	}
+}
+
+// get env variable
+const char *env_get(const char *name) {
+	Env *env = envlist;
+	const char *r = NULL;
+
+	while (env) {
+		if (strcmp(env->name, name) == 0) {
+			if (env->op == SETENV)
+				r = env->value;
+			else if (env->op == RMENV)
+				r = NULL;
+		}
+		env = env->next;
+	}
+	return r;
+}
+
+static const char * const env_whitelist[] = {
+	"LANG",
+	"LANGUAGE",
+	"LC_MESSAGES",
+	"PATH"
+};
+
+static const char * const env_whitelist_sbox[] = {
+	"FIREJAIL_DEBUG",
+	"FIREJAIL_FILE_COPY_LIMIT",
+	"FIREJAIL_PLUGIN",
+	"FIREJAIL_QUIET",
+	"FIREJAIL_SECCOMP_ERROR_ACTION",
+	"FIREJAIL_TEST_ARGUMENTS",
+	"FIREJAIL_TRACEFILE"
+};
+
+static void env_apply_list(const char * const *list, unsigned int num_items) {
+	Env *env = envlist;
+
+	while (env) {
+		if (env->op == SETENV) {
+			for (unsigned int i = 0; i < num_items; i++)
+				if (strcmp(env->name, list[i]) == 0) {
+					// sanity check for whitelisted environment variables
+					if (strlen(env->name) + strlen(env->value) >= MAX_ENV_LEN) {
+						fprintf(stderr, "Error: too long environment variable %s, please use --rmenv\n", env->name);
+						exit(1);
+					}
+
+					//fprintf(stderr, "whitelisted env var %s=%s\n", env->name, env->value);
+					if (setenv(env->name, env->value, 1) < 0)
+						errExit("setenv");
+					break;
+				}
+		} else if (env->op == RMENV)
+			unsetenv(env->name);
+
+		env = env->next;
+	}
+}
+
+// Filter env variables in main firejail process. All variables will
+// be reapplied for the sandboxed app by env_apply_all().
+void env_apply_whitelist(void) {
+	int r;
+
+	r = clearenv();
+	if (r != 0)
+		errExit("clearenv");
+
+	env_apply_list(env_whitelist, ARRAY_SIZE(env_whitelist));
+}
+
+// Filter env variables for a sbox app
+void env_apply_whitelist_sbox(void) {
+	env_apply_whitelist();
+	env_apply_list(env_whitelist_sbox, ARRAY_SIZE(env_whitelist_sbox));
 }

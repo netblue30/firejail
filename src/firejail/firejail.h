@@ -81,6 +81,8 @@
 		(void) rv;\
 	} while (0)
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+
 // main.c
 typedef struct bridge_t {
 	// on the host
@@ -655,16 +657,21 @@ int check_kernel_procs(void);
 void run_no_sandbox(int argc, char **argv) __attribute__((noreturn));
 
 #define MAX_ENVS 256			// some sane maximum number of environment variables
-#define MAX_ENV_LEN (PATH_MAX + 32)	// FOOBAR=SOME_PATH
+#define MAX_ENV_LEN (PATH_MAX + 32)	// FOOBAR=SOME_PATH, only applied to Firejail's own sandboxed apps
 // env.c
 typedef enum {
 	SETENV = 0,
+	SETENV_ALLOW_EMPTY,
 	RMENV
 } ENV_OP;
 
 void env_store(const char *str, ENV_OP op);
-void env_apply(void);
+void env_store_name_val(const char *name, const char *val, ENV_OP op);
+void env_apply_all(void);
+void env_apply_whitelist(void);
+void env_apply_whitelist_sbox(void);
 void env_defaults(void);
+const char *env_get(const char *name);
 void env_ibus_load(void);
 
 // fs_whitelist.c

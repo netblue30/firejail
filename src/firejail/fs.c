@@ -1221,7 +1221,7 @@ void fs_private_tmp(void) {
 		printf("Generate private-tmp whitelist commands\n");
 
 	// check XAUTHORITY file, KDE keeps it under /tmp
-	char *xauth = getenv("XAUTHORITY");
+	const char *xauth = env_get("XAUTHORITY");
 	if (xauth) {
 		char *rp = realpath(xauth, NULL);
 		if (rp && strncmp(rp, "/tmp/", 5) == 0) {

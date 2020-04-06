@@ -26,13 +26,13 @@ static unsigned int longest_path_elt = 0;
 
 static char *elt = NULL; // moved from inside init_paths in order to get rid of scan-build warning
 static void init_paths(void) {
-	char *path = getenv("PATH");
+	const char *env_path = env_get("PATH");
 	char *p;
-	if (!path) {
-		path = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin";
-		setenv("PATH", path, 1);
+	if (!env_path) {
+		env_path = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin";
+		env_store_name_val("PATH", env_path, SETENV);
 	}
-	path = strdup(path);
+	char *path = strdup(env_path);
 	if (!path)
 		errExit("strdup");
 

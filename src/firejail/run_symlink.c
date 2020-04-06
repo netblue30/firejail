@@ -42,7 +42,8 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 		errExit("setresuid");
 
 	// find the real program by looking in PATH
-	if (!getenv("PATH")) {
+	const char *path = env_get("PATH");
+	if (!path) {
 		fprintf(stderr, "Error: PATH environment variable not set\n");
 		exit(1);
 	}
@@ -56,6 +57,9 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 
 	// restore original umask
 	umask(orig_umask);
+
+	// restore original environment variables
+	env_apply_all();
 
 	// desktop integration is not supported for root user; instead, the original program is started
 	if (getuid() == 0 || run_as_is) {
@@ -73,6 +77,7 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 		a[i + 2] = argv[i + 1];
 	}
 	a[i + 2] = NULL;
+	assert(env_get("LD_PRELOAD") == NULL);
 	assert(getenv("LD_PRELOAD") == NULL);
 	execvp(a[0], a);
 

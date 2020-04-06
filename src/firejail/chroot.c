@@ -173,7 +173,7 @@ void fs_chroot(const char *rootdir) {
 
 	// x11
 	// if users want this mount, they should set FIREJAIL_CHROOT_X11
-	if (getenv("FIREJAIL_X11") || getenv("FIREJAIL_CHROOT_X11")) {
+	if (env_get("FIREJAIL_X11") || env_get("FIREJAIL_CHROOT_X11")) {
 		if (arg_debug)
 			printf("Mounting /tmp/.X11-unix on chroot /tmp/.X11-unix\n");
 		check_subdir(parentfd, "tmp/.X11-unix", 0);
@@ -194,7 +194,7 @@ void fs_chroot(const char *rootdir) {
 	check_subdir(parentfd, "run", 1);
 
 	// pulseaudio; only support for default directory /run/user/$UID/pulse
-	if (getenv("FIREJAIL_CHROOT_PULSE")) {
+	if (env_get("FIREJAIL_CHROOT_PULSE")) {
 		char *pulse;
 		if (asprintf(&pulse, "%s/run/user/%d/pulse", cfg.chrootdir, getuid()) == -1)
 			errExit("asprintf");

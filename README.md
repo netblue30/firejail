@@ -180,5 +180,11 @@ Run ./profstats -h for help.
 
 ### New profiles:
 
-gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, gnome-passwordsafe, bibtex, gummi, latex, pdflatex, tex, wpp, wpspdf, wps, et, multimc, gnome-hexgl, com.github.johnfactotum.Foliate, desktopeditors, impressive, mupdf-gl, mupdf-x11, mupdf-x11-curl, muraster, mutool, planmaker18, planmaker18free, presentations18, presentations18free, textmaker18, textmaker18free, teams, xournal,
-gnome-screenshot, ripperX, sound-juicer, iagno, com.github.dahenson.agenda, gnome-pomodoro, gnome-todo, kmplayer, penguin-command, x2goclient, frogatto, gnome-mines, gnome-nibbles, lightsoff, ts3client_runscript.sh, warmux, ferdi, abiword, four-in-a-row, gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin, gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars, hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless, mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers, seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop
+gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, gnome-passwordsafe, bibtex, gummi, latex, pdflatex, tex, wpp, wpspdf, wps, et,
+multimc, gnome-hexgl, com.github.johnfactotum.Foliate, desktopeditors, impressive, mupdf-gl, mupdf-x11, mupdf-x11-curl,
+muraster, mutool, planmaker18, planmaker18free, presentations18, presentations18free, textmaker18, textmaker18free, teams, xournal,
+gnome-screenshot, ripperX, sound-juicer, iagno, com.github.dahenson.agenda, gnome-pomodoro, gnome-todo, kmplayer,
+penguin-command, x2goclient, frogatto, gnome-mines, gnome-nibbles, lightsoff, ts3client_runscript.sh, warmux, ferdi, abiword,
+four-in-a-row, gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin, gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars,
+hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless, mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers,
+seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop,,fdns

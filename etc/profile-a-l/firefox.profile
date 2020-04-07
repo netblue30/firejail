@@ -28,5 +28,11 @@ include whitelist-usr-share-common.inc
 # private-etc must first be enabled in firefox-common.profile
 #private-etc firefox
 
+dbus-user filter
+dbus-user.own org.mozilla.firefox.*
+dbus-user.talk org.freedesktop.Notifications
+dbus-system none
+ignore nodbus
+
 # Redirect
 include firefox-common.profile

@@ -459,7 +459,7 @@ filtered UNIX socket) you would need to request a new network namespace using
 Filtering requires installing the xdg-dbus-proxy utility. Filter rules can be
 specified for well-known DBus names, but they are also propagated to the owning
 unique name, too. The permissions are "sticky" and are kept even if the
-corresponding well-know name is released (however, applications rarely release
+corresponding well-known name is released (however, applications rarely release
 well-known names in practice). Names may have a .* suffix to match all names
 underneath them, including themselves (e.g. "foo.bar.*" matches "foo.bar",
 "foo.bar.baz" and "foo.bar.baz.quux", but not "foobar"). For more information,

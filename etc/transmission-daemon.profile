@@ -7,6 +7,8 @@ include transmission-daemon.local
 # Persistent global definitions
 include globals.local
 
+ignore caps.drop all
+
 mkdir ${HOME}/.config/transmission-daemon
 whitelist ${HOME}/.config/transmission-daemon
 whitelist /var/lib/transmission

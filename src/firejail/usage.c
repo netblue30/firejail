@@ -53,6 +53,12 @@ static char *usage_str =
 #endif
 	"    --cpu=cpu-number,cpu-number - set cpu affinity.\n"
 	"    --cpu.print=name|pid - print the cpus in use.\n"
+	"    --dbus-system=filter|none - set system DBus access policy.\n"
+	"    --dbus-system.own=name - allow ownership of name on the system DBus.\n"
+	"    --dbus-system.talk-name - allow talking to name on the system DBus.\n"
+	"    --dbus-user=filter|none - set session DBus access policy.\n"
+	"    --dbus-user.own=name - allow ownership of name on the session DBus.\n"
+	"    --dbus-user.talk-name - allow talking to name on the session DBus.\n"
 	"    --debug - print sandbox debug messages.\n"
 	"    --debug-blacklists - debug blacklisting.\n"
 	"    --debug-caps - print all recognized capabilities.\n"

@@ -340,8 +340,15 @@ extern int arg_memory_deny_write_execute;	// block writable and executable memor
 extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
 extern int arg_nou2f;   // --nou2f
-extern int arg_nodbus; // -nodbus
 extern int arg_deterministic_exit_code;	// always exit with first child's exit status
+
+typedef enum {
+	DBUS_POLICY_ALLOW,	// Allow unrestricted access to the bus
+	DBUS_POLICY_FILTER, // Filter with xdg-dbus-proxy
+	DBUS_POLICY_BLOCK   // Block access
+} DbusPolicy;
+extern DbusPolicy arg_dbus_user; // --dbus-user
+extern DbusPolicy arg_dbus_system; // --dbus-system
 
 extern int login_shell;
 extern int parent_to_child_fds[2];
@@ -823,10 +830,13 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
 #define SBOX_CAPS_HIDEPID (1 << 7)	// hidepid caps filter for running firemon
 #define SBOX_CAPS_NET_SERVICE (1 << 8) // caps filter for programs running network services
+#define SBOX_KEEP_FDS (1 << 9) // keep file descriptors open
+#define FIREJAIL_MAX_FD 20 // getdtablesize() is overkill for a firejail process
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 int sbox_run_v(unsigned filter, char * const arg[]);
+void sbox_exec_v(unsigned filter, char * const arg[]);
 
 // run_files.c
 void delete_run_files(pid_t pid);
@@ -836,7 +846,11 @@ void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
 
 // dbus.c
-void dbus_disable(void);
+int dbus_check_name(const char *name);
+void dbus_check_profile(void);
+void dbus_proxy_start(void);
+void dbus_proxy_stop(void);
+void dbus_apply_policy(void);
 
 // dhcp.c
 extern pid_t dhclient4_pid;

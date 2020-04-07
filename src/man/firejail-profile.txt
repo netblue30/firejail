@@ -447,7 +447,55 @@ xephyr-screen 640x480
 .br
 x11 xephyr
 
+.SH DBus filtering
 
+Access to the session and system DBus UNIX sockets can be allowed, filtered or
+disabled. To disable the abstract sockets (and force applications to use the
+filtered UNIX socket) you would need to request a new network namespace using
+\-\-net command. Another option is to remove unix from the \-\-protocol set.
+.br
+
+.br
+Filtering requires installing the xdg-dbus-proxy utility. Filter rules can be
+specified for well-known DBus names, but they are also propagated to the owning
+unique name, too. The permissions are "sticky" and are kept even if the
+corresponding well-know name is released (however, applications rarely release
+well-known names in practice). Names may have a .* suffix to match all names
+underneath them, including themselves (e.g. "foo.bar.*" matches "foo.bar",
+"foo.bar.baz" and "foo.bar.baz.quux", but not "foobar"). For more information,
+see xdg-dbus-proxy(1).
+.br
+
+.br
+Examples:
+
+.TP
+\fBdbus-system filter
+Enable filtered access to the system DBus. Filters can be specified with the dbus-system.talk and dbus-system.own commands.
+.TP
+\fBdbus-system none
+Disable access to the system DBus. Once access is disabled, it cannot be relaxed to filtering.
+.TP
+\fBdbus-system.own org.gnome.ghex.*
+Allow the application to own the name org.gnome.ghex and all names underneath in on the system DBus.
+.TP
+\fBdbus-system.talk org.freedesktop.Notifications
+Allow the application to talk to the name org.freedesktop.Notifications on the system DBus.
+.TP
+\fBdbus-user filter
+Enable filtered access to the session DBus. Filters can be specified with the dbus-user.talk and dbus-user.own commands.
+.TP
+\fBdbus-user none
+Disable access to the session DBus. Once access is disabled, it cannot be relaxed to filtering.
+.TP
+\fBdbus-user.own org.gnome.ghex.*
+Allow the application to own the name org.gnome.ghex and all names underneath in on the session DBus.
+.TP
+\fBdbus-user.talk org.freedesktop.Notifications
+Allow the application to talk to the name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBnodbus \fR(deprecated)
+Disable D-Bus access (both system and session buses). Equivalent to dbus-system none and dbus-user none.
 
 .SH Resource limits, CPU affinity, Control Groups
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
@@ -521,12 +569,6 @@ Disable 3D hardware acceleration.
 \fBnoautopulse
 Disable automatic ~/.config/pulse init, for complex setups such as remote
 pulse servers or non-standard socket paths.
-.TP
-\fBnodbus
-Disable D-Bus access. Only the regular UNIX socket is handled by
-this command. To disable the abstract socket, you would need to
-request a new network namespace using the net command. Another
-option is to remove unix from protocol set.
 .TP
 \fBnodvd
 Disable DVD and audio CD devices.

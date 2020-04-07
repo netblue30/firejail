@@ -28,7 +28,6 @@ include whitelist-var-common.inc
 # apparmor
 caps.drop all
 # net none
-# nodbus
 netfilter
 nodvd
 nogroups
@@ -47,5 +46,8 @@ tracelog
 private-dev
 # private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
 private-tmp
+
+# dbus-user none
+# dbus-system none
 
 join-or-start kate

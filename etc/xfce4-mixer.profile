@@ -29,7 +29,6 @@ caps.drop all
 ipc-namespace
 netfilter
 no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -47,5 +46,8 @@ private-cache
 private-dev
 private-etc alternatives,asound.conf,fonts,machine-id,pulse
 private-tmp
+
+# dbus-user none
+# dbus-system none
 
 memory-deny-write-execute

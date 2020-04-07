@@ -32,7 +32,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# nodbus - makes settings immutable
 nogroups
 nonewprivs
 noroot
@@ -47,3 +46,7 @@ tracelog
 private-bin rhythmbox,rhythmbox-client
 private-dev
 private-tmp
+
+# makes settings immutable
+# dbus-user none
+# dbus-system none

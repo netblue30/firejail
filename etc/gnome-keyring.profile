@@ -31,7 +31,6 @@ ipc-namespace
 machine-id
 netfilter
 no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -51,5 +50,8 @@ private-cache
 private-dev
 #private-lib alternatives,gnome-keyring,libsecret-1.so.*,pkcs11,security
 private-tmp
+
+# dbus-user none
+# dbus-system none
 
 memory-deny-write-execute

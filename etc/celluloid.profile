@@ -31,7 +31,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# nodbus -- uses dconf, MPRIS
 nogroups
 nonewprivs
 noroot
@@ -46,6 +45,10 @@ private-cache
 private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gtk-3.0,hosts,ld.so.cache,libva.conf,localtime,machine-id,pkcs11,pki,resolv.conf,selinux,ssl,xdg
 private-dev
 private-tmp
+
+# uses dconf, MPRIS
+# dbus-user none
+# dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.config/celluloid

@@ -29,7 +29,6 @@ caps.drop all
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -50,3 +49,6 @@ private-etc alternatives,fonts
 private-tmp
 private-opt none
 private-srv none
+
+dbus-user none
+dbus-system none

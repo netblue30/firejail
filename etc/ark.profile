@@ -23,7 +23,6 @@ apparmor
 caps.drop all
 # net none
 netfilter
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -42,3 +41,5 @@ private-bin 7z,ark,bash,lrzip,lsar,lz4,lzop,p7zip,rar,sh,tclsh,unar,unrar,unzip,
 private-dev
 private-tmp
 
+# dbus-user none
+# dbus-system none

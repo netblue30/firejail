@@ -28,7 +28,6 @@ caps.drop all
 ipc-namespace
 machine-id
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -48,5 +47,8 @@ private-dev
 private-etc alternatives,fonts
 private-lib libgdk_pixbuf-2.0.so.*,libGeoIP.so*,libgthread-2.0.so.*,libgtk-x11-2.0.so.*,libX11.so.*
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

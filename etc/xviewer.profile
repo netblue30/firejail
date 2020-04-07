@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 caps.drop all
 # net none - makes settings immutable
 no3d
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -41,5 +40,9 @@ private-bin xviewer
 private-dev
 private-lib
 private-tmp
+
+# makes settings immutable
+# dbus-user none
+# dbus-system none
 
 memory-deny-write-execute

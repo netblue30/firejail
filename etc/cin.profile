@@ -17,7 +17,6 @@ include disable-programs.inc
 caps.drop all
 ipc-namespace
 net none
-nodbus
 nodvd
 #nogroups
 nonewprivs
@@ -34,3 +33,5 @@ shell none
 private-cache
 private-dev
 
+dbus-user none
+dbus-system none

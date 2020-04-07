@@ -25,7 +25,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,3 +38,6 @@ shell none
 # private-dev - prevents libdc1394 loading; this lib is used to connect to a camera device
 # private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
 private-tmp
+
+# dbus-user none
+# dbus-system none

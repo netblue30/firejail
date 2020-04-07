@@ -28,7 +28,6 @@ apparmor
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -47,5 +46,8 @@ private-etc alternatives,dconf,fonts,gtk-3.0
 private-dev
 private-opt none
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

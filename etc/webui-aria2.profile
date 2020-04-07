@@ -18,7 +18,6 @@ include disable-xdg.inc
 
 caps.drop all
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -35,3 +34,5 @@ private-cache
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

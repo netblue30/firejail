@@ -20,7 +20,6 @@ include disable-xdg.inc
 
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -38,3 +37,5 @@ private-cache
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

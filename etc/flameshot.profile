@@ -23,7 +23,6 @@ caps.drop all
 ipc-namespace
 netfilter
 no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +42,5 @@ private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.conf,pki,re
 private-dev
 private-tmp
 
+# dbus-user none
+# dbus-system none

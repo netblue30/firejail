@@ -10,7 +10,8 @@ include geary.local
 # Users have Geary set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories
 
-ignore nodbus
+ignore dbus-user none
+ignore dbus-system none
 ignore private-tmp
 
 noblacklist ${HOME}/.gnupg

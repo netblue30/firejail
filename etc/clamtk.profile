@@ -11,7 +11,6 @@ caps.drop all
 ipc-namespace
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -25,3 +24,6 @@ seccomp
 shell none
 
 private-dev
+
+dbus-user none
+dbus-system none

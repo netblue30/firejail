@@ -26,7 +26,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -49,3 +48,6 @@ private-etc alternatives
 private-tmp
 
 memory-deny-write-execute
+
+dbus-user none
+dbus-system none

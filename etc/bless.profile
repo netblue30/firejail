@@ -20,7 +20,6 @@ include whitelist-var-common.inc
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,3 +38,5 @@ private-dev
 private-etc alternatives,fonts,mono
 private-tmp
 
+dbus-user none
+dbus-system none

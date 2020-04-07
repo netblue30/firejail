@@ -28,7 +28,6 @@ include whitelist-common.inc
 caps.drop all
 ipc-namespace
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -44,3 +43,6 @@ disable-mnt
 private-dev
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,java-7-openjdk,java-8-openjdk,ld.so.cache,ld.so.preload,localtime,lsb-release,machine-id,mime.types,passwd,pki,pulse,resolv.conf,ssl
 private-tmp
+
+dbus-user none
+dbus-system none

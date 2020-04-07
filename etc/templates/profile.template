@@ -136,7 +136,6 @@ include globals.local
 #net none
 #netfilter
 #no3d
-#nodbus
 #nodvd
 #nogroups
 #nonewprivs
@@ -185,6 +184,9 @@ include globals.local
 ##writable-run-user
 ##writable-var
 ##writable-var-log
+
+#dbus-user none
+#dbus-system none
 
 ##env VAR=VALUE
 #memory-deny-write-execute

@@ -29,7 +29,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -52,5 +51,8 @@ private-dev
 private-etc alternatives
 private-lib gcc/*/*/libgcc_s.so.*
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

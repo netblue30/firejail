@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -40,3 +39,5 @@ private-bin env,python*,sdat2img
 private-cache
 private-dev
 
+dbus-user none
+dbus-system none

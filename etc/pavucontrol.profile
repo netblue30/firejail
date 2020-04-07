@@ -29,7 +29,6 @@ apparmor
 caps.drop all
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -49,6 +48,9 @@ private-dev
 private-etc alternatives,asound.conf,avahi,fonts,machine-id,pulse
 private-lib
 private-tmp
+
+dbus-user none
+dbus-system none
 
 # mdwe is broken under Wayland, but works under Xorg.
 #memory-deny-write-execute

@@ -30,7 +30,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -52,6 +51,9 @@ private-dev
 private-etc alternatives
 private-lib gconv
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute
 

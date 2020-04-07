@@ -34,7 +34,6 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 # no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -52,5 +51,8 @@ private-bin mplayer,mpv,QMediathekView,smplayer,totem,vlc,xplayer
 private-cache
 private-dev
 private-tmp
+
+# dbus-user none
+# dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,3 +38,6 @@ disable-mnt
 # private-bin supertux2
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

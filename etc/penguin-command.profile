@@ -22,7 +22,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -37,3 +36,6 @@ shell none
 private-bin penguin-command
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

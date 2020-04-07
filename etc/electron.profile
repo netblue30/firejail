@@ -15,7 +15,6 @@ whitelist ${DOWNLOADS}
 apparmor
 caps.drop all
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -23,3 +22,6 @@ noroot
 notv
 protocol unix,inet,inet6,netlink
 seccomp
+
+dbus-user none
+dbus-system none

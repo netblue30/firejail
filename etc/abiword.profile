@@ -25,7 +25,6 @@ caps.drop all
 machine-id
 net none
 no3d
-#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -44,3 +43,6 @@ private-cache
 private-dev
 private-etc fonts,gtk-3.0,passwd
 private-tmp
+
+# dbus-user none
+# dbus-system none

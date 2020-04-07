@@ -7,7 +7,8 @@ include teams-for-linux.local
 # added by included profile
 #include globals.local
 
-ignore nodbus
+ignore dbus-user none
+ignore dbus-system none
 
 noblacklist ${HOME}/.config/teams-for-linux
 

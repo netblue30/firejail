@@ -26,7 +26,6 @@ apparmor
 caps.drop all
 machine-id
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +42,6 @@ private-bin cheese
 private-cache
 private-etc alternatives,clutter-1.0,dconf,drirc,fonts,gtk-3.0
 private-tmp
+
+dbus-user none
+dbus-system none

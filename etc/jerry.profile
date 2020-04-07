@@ -20,7 +20,6 @@ caps.drop all
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -37,5 +36,8 @@ private-bin bash,jerry,sh,stockfish
 private-dev
 private-etc fonts,gtk-2.0,gtk-3.0
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

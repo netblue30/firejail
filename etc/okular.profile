@@ -37,7 +37,6 @@ caps.drop all
 machine-id
 # net none
 netfilter
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -55,6 +54,9 @@ private-bin kbuildsycoca4,kdeinit4,lpr,okular
 private-dev
 private-etc alternatives,cups,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,passwd,xdg
 # private-tmp - on KDE we need access to the real /tmp for data exchange with email clients
+
+# dbus-user none
+# dbus-system none
 
 # memory-deny-write-execute
 

@@ -27,7 +27,6 @@ include whitelist-var-common.inc
 # apparmor - makes settings immutable
 caps.drop all
 netfilter
-# nodbus - makes settings immutable
 nogroups
 nonewprivs
 noroot
@@ -43,3 +42,6 @@ private-dev
 # private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,machine-id,pki,pulse,ssl
 private-tmp
 
+# makes settings immutable
+# dbus-user none
+# dbus-system none

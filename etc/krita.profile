@@ -31,7 +31,6 @@ caps.drop all
 ipc-namespace
 # net none
 netfilter
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -47,3 +46,6 @@ shell none
 private-cache
 private-dev
 private-tmp
+
+# dbus-user none
+# dbus-system none

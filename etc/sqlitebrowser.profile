@@ -24,7 +24,6 @@ apparmor
 caps.drop all
 ipc-namespace
 netfilter
-# nodbus - breaks proxy creation
 nodvd
 nogroups
 nonewprivs
@@ -42,5 +41,9 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,group,machine-id,passwd,pki,ssl
 private-tmp
+
+# breaks proxy creation
+# dbus-user none
+# dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

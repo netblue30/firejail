@@ -4,7 +4,8 @@
 include ebook-viewer.local
 
 net none
-nodbus
+dbus-user none
+dbus-system none
 
 # Redirect
 include calibre.profile

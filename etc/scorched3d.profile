@@ -24,7 +24,6 @@ include whitelist-var-common.inc
 caps.drop all
 ipc-namespace
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -42,3 +41,6 @@ private-bin scorched3d,scorched3d-wrapper,scorched3dc,scorched3ds
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

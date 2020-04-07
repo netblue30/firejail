@@ -7,7 +7,8 @@ include thunderbird.local
 include globals.local
 
 # writable-run-user and dbus are needed by enigmail
-ignore nodbus
+ignore dbus-user none
+ignore dbus-system none
 writable-run-user
 
 # If you want to read local mail stored in /var/mail, add the following to thunderbird.local:

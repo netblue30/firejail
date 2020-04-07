@@ -32,7 +32,6 @@ caps.drop all
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -53,3 +52,6 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,fonts,gtk-2.0,hostname,hosts,machine-id,pki,resolv.conf,ssl,Trolltech.conf
 private-tmp
+
+dbus-user none
+dbus-system none

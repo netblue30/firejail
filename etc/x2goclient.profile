@@ -22,7 +22,6 @@ caps.drop all
 ipc-namespace
 netfilter
 #no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,5 +42,8 @@ private-dev
 private-opt none
 private-srv none
 private-tmp
+
+dbus-user none
+dbus-system none
 
 #memory-deny-write-execute

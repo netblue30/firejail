@@ -18,7 +18,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
 nosound
 notv
 protocol unix
@@ -26,6 +25,9 @@ tracelog
 x11 none
 
 private-bin mencoder
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute
 

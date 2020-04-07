@@ -27,7 +27,6 @@ apparmor
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -46,3 +45,5 @@ private-dev
 # private-lib - problems on Arch
 private-tmp
 
+dbus-user none
+dbus-system none

@@ -27,7 +27,6 @@ machine-id
 #net none
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -45,3 +44,6 @@ tracelog
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

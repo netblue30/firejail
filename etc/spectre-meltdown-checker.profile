@@ -31,7 +31,6 @@ caps.keep sys_rawio
 ipc-namespace
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -48,5 +47,8 @@ private
 private-bin awk,bzip2,cat,coreos-install,cpucontrol,cut,dd,dirname,dmesg,dnf,echo,grep,gunzip,gz,gzip,head,id,kldload,kldstat,liblz4-tool,lzop,mktemp,modinfo,modprobe,mount,nm,objdump,od,perl,printf,readelf,rm,sed,seq,sh,sort,spectre-meltdown-checker,spectre-meltdown-checker.sh,stat,strings,sysctl,tail,test,toolbox,tr,uname,which,xz-utils
 private-cache
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

@@ -29,7 +29,6 @@ apparmor
 caps.drop all
 # net none
 netfilter
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -48,5 +47,7 @@ private-dev
 private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,pulse,xdg
 private-tmp
 
+# dbus-user none
+# dbus-system none
 
 join-or-start kwrite

@@ -27,7 +27,6 @@ machine-id
 # net none
 netfilter
 no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +42,6 @@ shell none
 # private-bin kbuildsycoca4,kdeinit4,kfind
 private-dev
 private-tmp
+
+# dbus-user none
+# dbus-system none

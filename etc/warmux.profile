@@ -32,7 +32,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -51,3 +50,6 @@ private-cache
 private-dev
 private-etc ca-certificates,crypto-policies,host.conf,hostname,hosts,machine-id,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
 private-tmp
+
+dbus-user none
+dbus-system none

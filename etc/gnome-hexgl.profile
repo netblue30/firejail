@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,6 +42,9 @@ private-cache
 private-dev
 private-etc machine-id
 private-tmp
+
+dbus-user none
+dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.cache/mesa_shader_cache

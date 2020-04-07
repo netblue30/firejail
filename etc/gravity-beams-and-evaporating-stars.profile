@@ -22,7 +22,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -42,3 +41,6 @@ private-cache
 private-dev
 private-etc fonts,machine-id
 private-tmp
+
+dbus-user none
+dbus-system none

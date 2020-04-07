@@ -30,7 +30,6 @@ caps.drop all
 ipc-namespace
 netfilter
 no3d
-#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -49,5 +48,8 @@ private-cache
 private-etc alternatives,fonts
 private-tmp
 writable-run-user
+
+# dbus-user none
+# dbus-system none
 
 # memory-deny-write-execute - breaks on Arch

@@ -27,7 +27,6 @@ caps.drop all
 ipc-namespace
 machine-id
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -46,5 +45,8 @@ x11 none
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

@@ -22,7 +22,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -41,6 +40,9 @@ private-cache
 private-dev
 #private-etc alternatives,localtime,magic,magic.mgc
 #private-lib file,libarchive.so.*,libfakeroot,libmagic.so.*,libseccomp.so.*
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute
 read-only ${HOME}

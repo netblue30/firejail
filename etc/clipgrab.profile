@@ -25,8 +25,6 @@ apparmor
 caps.drop all
 machine-id
 netfilter
-# Breaks tray-icon, uncommend or add to clipgrab.local if you don't need it.
-#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +41,7 @@ disable-mnt
 private-cache
 private-dev
 private-tmp
+
+# Breaks tray icon, uncomment or add to clipgrab.local if you don't need it
+# dbus-user none
+# dbus-system none

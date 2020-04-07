@@ -22,7 +22,6 @@ include whitelist-var-common.inc
 caps.drop all
 ipc-namespace
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,3 +38,5 @@ private-etc alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts
 private-opt ppsspp
 private-tmp
 
+dbus-user none
+dbus-system none

@@ -19,7 +19,6 @@ apparmor
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -36,5 +35,8 @@ tracelog
 # private-bin engrampa
 private-dev
 # private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

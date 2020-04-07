@@ -28,7 +28,6 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -50,3 +49,5 @@ private-opt none
 private-srv none
 private-tmp
 
+dbus-user none
+dbus-system none

@@ -30,7 +30,6 @@ caps.drop all
 ipc-namespace
 machine-id
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -51,6 +50,9 @@ private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 # private-lib has problems on Debian 10
 #private-lib gcc/*/*/libgcc_s.so.*,gcc/*/*/libstdc++.so.*,libarchive.so.*,libdjvulibre.so.*,libgirara-gtk*,libpoppler-glib.so.*,libspectre.so.*,zathura
 private-tmp
+
+dbus-user none
+dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.config/zathura

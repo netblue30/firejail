@@ -24,7 +24,6 @@ apparmor
 caps.drop all
 net none
 no3d
-# nodbus - problems on Fedora 27
 nodvd
 nogroups
 nonewprivs
@@ -40,3 +39,7 @@ tracelog
 private-bin audacity
 private-dev
 private-tmp
+
+# problems on Fedora 27
+# dbus-user none
+# dbus-system none

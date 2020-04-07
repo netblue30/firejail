@@ -27,7 +27,6 @@ caps.drop all
 machine-id
 # net none - makes settings immutable
 no3d
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -47,3 +46,6 @@ private-dev
 #private-lib aspell,gconv,gedit,libgspell-1.so.*,libgtksourceview-*,libpeas-gtk-1.0.so.*,libreadline.so.*,libtinfo.so.*
 private-tmp
 
+# makes settings immutable
+# dbus-user none
+# dbus-system none

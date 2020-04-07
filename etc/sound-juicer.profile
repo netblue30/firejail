@@ -23,7 +23,6 @@ apparmor
 caps.drop all
 netfilter
 no3d
-#nodbus
 nogroups
 nonewprivs
 noroot
@@ -39,3 +38,6 @@ tracelog
 private-cache
 private-dev
 private-tmp
+
+# dbus-user none
+# dbus-system none

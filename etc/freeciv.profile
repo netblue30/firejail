@@ -25,7 +25,6 @@ apparmor
 caps.drop all
 ipc-namespace
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +42,6 @@ private-bin freeciv-gtk3,freeciv-manual,freeciv-mp-gtk3,freeciv-server
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

@@ -24,7 +24,6 @@ include disable-programs.inc
 caps.drop all
 netfilter
 no3d
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -42,5 +41,9 @@ disable-mnt
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,pki,resolv.conf,ssl
 private-tmp
+
+# makes settings immutable
+# dbus-user none
+# dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

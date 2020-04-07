@@ -28,7 +28,6 @@ caps.drop all
 ipc-namespace
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -46,5 +45,8 @@ private-cache
 private-dev
 # private-tmp # Breaks when exiting
 writable-run-user
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

@@ -27,7 +27,6 @@ apparmor
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -47,3 +46,6 @@ private-cache
 private-dev
 private-etc alsa,asound.conf,machine-id,pulse
 private-tmp
+
+dbus-user none
+dbus-system none

@@ -48,7 +48,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-nodbus
 nodvd
 # Seems to cause issues with Nvidia drivers sometimes
 nogroups
@@ -67,3 +66,5 @@ private-bin env,ffmpeg,mplayer,mpsyt,mpv,python*,youtube-dl
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

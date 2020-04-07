@@ -26,7 +26,6 @@ caps.drop all
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -44,5 +43,8 @@ private-bin keepassx,keepassx2
 private-dev
 private-etc alternatives,fonts,machine-id
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

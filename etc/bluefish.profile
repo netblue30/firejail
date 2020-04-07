@@ -19,7 +19,6 @@ apparmor
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -37,3 +36,5 @@ private-bin bluefish
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

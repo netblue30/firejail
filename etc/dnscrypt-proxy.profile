@@ -31,7 +31,6 @@ ipc-namespace
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nonewprivs
 nosound
@@ -47,6 +46,9 @@ disable-mnt
 private
 private-cache
 private-dev
+
+dbus-user none
+dbus-system none
 
 # mdwe can break modules/plugins
 memory-deny-write-execute

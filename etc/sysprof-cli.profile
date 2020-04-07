@@ -7,11 +7,12 @@ include sysprof-cli.local
 # added by included profile
 #include globals.local
 
-nodbus
-
 # There is no GUI help menu to break in the CLI version
 private-bin sysprof-cli
 private-lib
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute
 

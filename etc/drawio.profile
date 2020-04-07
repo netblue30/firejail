@@ -28,7 +28,6 @@ caps.drop all
 ipc-namespace
 machine-id
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -47,5 +46,8 @@ private-cache
 private-dev
 private-etc alternatives,fonts
 private-tmp
+
+dbus-user none
+dbus-system none
 
 # memory-deny-write-execute - breaks on Arch

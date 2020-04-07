@@ -57,7 +57,8 @@ whitelist ${HOME}/dwhelper
 # GNOME Shell integration (chrome-gnome-shell) needs dbus and python 3 (blacklisted by disable-interpreters.inc)
 noblacklist ${HOME}/.local/share/gnome-shell
 whitelist ${HOME}/.local/share/gnome-shell
-ignore nodbus
+ignore dbus-user none
+ignore dbus-system none
 include allow-python3.inc
 
 # KeePassXC Browser Integration

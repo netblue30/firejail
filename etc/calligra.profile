@@ -16,7 +16,6 @@ caps.drop all
 ipc-namespace
 # net none
 netfilter
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -30,6 +29,9 @@ shell none
 
 private-bin calligra,calligraauthor,calligraconverter,calligraflow,calligraplan,calligraplanwork,calligrasheets,calligrastage,calligrawords,dbus-launch,kbuildsycoca4,kdeinit4
 private-dev
+
+# dbus-user none
+# dbus-system none
 
 # noexec ${HOME}
 noexec /tmp

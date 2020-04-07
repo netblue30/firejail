@@ -28,9 +28,6 @@ caps.drop all
 machine-id
 net none
 no3d
-# Uncomment the next line (or add it to your gnome-characters.local)
-# if you don't need recently used chars
-#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -53,5 +50,10 @@ private-cache
 private-dev
 private-etc alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,pango,X11,xdg
 private-tmp
+
+# Uncomment the next lines (or add it to your gnome-characters.local)
+# if you don't need recently used chars
+# dbus-user none
+# dbus-system none
 
 read-only ${HOME}

@@ -20,7 +20,6 @@ allusers
 caps.drop all
 # net none - see issue #1467, computer:/// location broken
 no3d
-# nodbus
 nodvd
 nonewprivs
 noroot
@@ -31,3 +30,6 @@ protocol unix
 seccomp
 shell none
 tracelog
+
+# dbus-user none
+# dbus-system none

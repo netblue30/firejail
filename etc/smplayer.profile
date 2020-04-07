@@ -32,7 +32,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# nodbus - problems with KDE
 # nogroups
 nonewprivs
 noroot
@@ -45,3 +44,6 @@ private-bin env,mplayer,mpv,python*,smplayer,smtube,youtube-dl
 private-dev
 private-tmp
 
+# problems with KDE
+# dbus-user none
+# dbus-system none

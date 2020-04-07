@@ -26,7 +26,6 @@ caps.drop all
 ipc-namespace
 # net none - networked game
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -44,3 +43,6 @@ private-bin c4group,openclonk
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

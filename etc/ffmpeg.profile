@@ -29,7 +29,6 @@ caps.drop all
 ipc-namespace
 machine-id
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -49,5 +48,8 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,nsswitch.conf,pkcs11,pki,resolv.conf,ssl
 private-tmp
+
+dbus-user none
+dbus-system none
 
 # memory-deny-write-execute - it breaks old versions of ffmpeg

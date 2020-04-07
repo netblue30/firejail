@@ -38,7 +38,6 @@ caps.drop all
 ipc-namespace
 # net none - breaks on Ubuntu
 no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -59,5 +58,8 @@ private-dev
 private-etc alternatives,fonts,machine-id
 private-lib libnotify.so.*
 private-tmp
+
+# dbus-user none
+# dbus-system none
 
 memory-deny-write-execute

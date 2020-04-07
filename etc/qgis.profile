@@ -35,7 +35,6 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 machine-id
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -55,3 +54,6 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,machine-id,pki,QGIS,QGIS.conf,resolv.conf,ssl,Trolltech.conf
 private-tmp
+
+dbus-user none
+dbus-system none

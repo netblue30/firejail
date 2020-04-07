@@ -25,7 +25,6 @@ apparmor
 caps.drop all
 machine-id
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -41,3 +40,5 @@ private-dev
 private-tmp
 private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,pki,resolv.conf,ssl,xdg
 
+dbus-user none
+dbus-system none

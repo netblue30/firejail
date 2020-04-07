@@ -18,7 +18,6 @@ include whitelist-var-common.inc
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -34,3 +33,6 @@ shell none
 private-bin apktool,basename,bash,dirname,expr,java,sh
 private-cache
 private-dev
+
+dbus-user none
+dbus-system none

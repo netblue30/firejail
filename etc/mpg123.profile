@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-nodbus
 nogroups
 nonewprivs
 noroot
@@ -37,3 +36,6 @@ private-dev
 private-tmp
 
 memory-deny-write-execute
+
+dbus-user none
+dbus-system none

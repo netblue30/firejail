@@ -27,7 +27,6 @@ apparmor
 caps.drop all
 ipc-namespace
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -45,5 +44,8 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,localtime,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp
+
+dbus-user none
+dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

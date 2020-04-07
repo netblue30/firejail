@@ -26,7 +26,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -49,5 +48,8 @@ private-etc alternatives,group,localtime,login.defs,passwd
 private-lib libfakeroot
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

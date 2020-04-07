@@ -24,7 +24,6 @@ apparmor
 caps.drop all
 machine-id
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -41,3 +40,6 @@ tracelog
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

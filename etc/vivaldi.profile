@@ -23,8 +23,9 @@ whitelist ${HOME}/.cache/vivaldi
 whitelist ${HOME}/.config/vivaldi
 whitelist ${HOME}/.local/lib/vivaldi
 
-# nodbus breaks vivaldi sync
-ignore nodbus
+# breaks vivaldi sync
+ignore dbus-user none
+ignore dbus-system none
 
 # Redirect
 include chromium-common.profile

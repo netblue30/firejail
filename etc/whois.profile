@@ -29,7 +29,6 @@ ipc-namespace
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -51,5 +50,8 @@ private-dev
 private-etc alternatives,hosts,jwhois.conf,resolv.conf,services,whois.conf
 private-lib gconv
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

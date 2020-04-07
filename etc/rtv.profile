@@ -35,7 +35,6 @@ caps.drop all
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -54,3 +53,6 @@ private-bin python*,rtv,sh,xdg-settings
 private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl,terminfo,xdg
+
+dbus-user none
+dbus-system none

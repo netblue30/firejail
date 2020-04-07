@@ -19,7 +19,6 @@ apparmor
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,3 +38,5 @@ private-dev
 private-lib
 private-tmp
 
+dbus-user none
+dbus-system none

@@ -20,7 +20,6 @@ include disable-xdg.inc
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -37,5 +36,8 @@ shell none
 # private-bin convert,ffmpeg,peek
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

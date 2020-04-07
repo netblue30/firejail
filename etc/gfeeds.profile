@@ -38,7 +38,6 @@ caps.drop all
 machine-id
 netfilter
 no3d
-#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -58,3 +57,6 @@ private-bin gfeeds,python3*
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,dbus-1,dconf,fonts,gconf,group,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,resolv.conf,rpc,services,ssl,X11,xdg
 private-tmp
+
+# dbus-user none
+# dbus-system none

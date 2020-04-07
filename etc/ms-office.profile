@@ -21,7 +21,6 @@ include disable-programs.inc
 
 caps.drop all
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -40,3 +39,5 @@ private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

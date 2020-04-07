@@ -25,7 +25,6 @@ ipc-namespace
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 # ping needs to elevate privileges, noroot and nonewprivs will kill it
@@ -45,3 +44,5 @@ private-dev
 private-lib libbind9.so.*,libcrypto.so.*,libdns.so.*,libgtk-3.so.*,libgtop*,libirs.so.*,liblua.so.*,libssh2.so.*,libssl.so.*
 private-tmp
 
+dbus-user none
+dbus-system none

@@ -28,7 +28,6 @@ apparmor
 caps.drop all
 ipc-namespace
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -46,3 +45,6 @@ private-cache
 private-dev
 private-etc ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,SoftMaker,ssl
 private-tmp
+
+dbus-user none
+dbus-system none

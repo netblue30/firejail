@@ -21,7 +21,6 @@ apparmor
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,3 +38,6 @@ private-cache
 private-dev
 private-etc alsa,alternatives,asound.conf,dconf,fonts,gtk-3.0,machine-id,openal,pulse
 private-tmp
+
+dbus-user none
+dbus-system none

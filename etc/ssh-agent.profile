@@ -22,7 +22,6 @@ include whitelist-usr-share-common.inc
 caps.drop all
 netfilter
 no3d
-nodbus
 nodvd
 nonewprivs
 noroot
@@ -34,3 +33,6 @@ shell none
 tracelog
 
 writable-run-user
+
+dbus-user none
+dbus-system none

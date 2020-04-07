@@ -17,7 +17,6 @@ include disable-xdg.inc
 
 caps.drop all
 netfilter
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -33,3 +32,6 @@ shell none
 # private-bin kbuildsycoca4,kdeinit4,skanlite
 # private-dev
 # private-tmp
+
+# dbus-user none
+# dbus-system none

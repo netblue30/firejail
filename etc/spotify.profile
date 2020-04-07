@@ -29,7 +29,6 @@ include whitelist-var-common.inc
 
 caps.drop all
 netfilter
-#nodbus - dbus needed for MPRIS
 nodvd
 nogroups
 nonewprivs
@@ -50,3 +49,6 @@ private-opt spotify
 private-srv none
 private-tmp
 
+# dbus needed for MPRIS
+# dbus-user none
+# dbus-system none

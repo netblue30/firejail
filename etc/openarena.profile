@@ -22,7 +22,6 @@ apparmor
 caps.drop all
 # ipc-namespace
 # netfilter
-# nodbus
 # nodvd
 # nogroups
 nonewprivs
@@ -41,3 +40,6 @@ private-cache
 private-dev
 # private-etc drirc,machine-id,openal,passwd,selinux,udev,xdg
 private-tmp
+
+# dbus-user none
+# dbus-system none

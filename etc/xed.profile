@@ -28,7 +28,6 @@ caps.drop all
 machine-id
 # net none - makes settings immutable
 no3d
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -45,6 +44,10 @@ tracelog
 private-bin xed
 private-dev
 private-tmp
+
+# makes settings immutable
+# dbus-user none
+# dbus-system none
 
 # xed uses python plugins, memory-deny-write-execute breaks python
 # memory-deny-write-execute

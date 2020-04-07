@@ -27,7 +27,6 @@ caps.drop all
 ipc-namespace
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -49,5 +48,8 @@ private-dev
 private-etc alternatives,ca-certificates,crypto-policies,groups,login.defs,machine-id,nsswitch.conf,passwd,pki,resolv.conf,ssl
 private-lib libreadline.so.*
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

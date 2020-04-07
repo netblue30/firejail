@@ -34,7 +34,6 @@ ipc-namespace
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -54,5 +53,8 @@ private-dev
 # Uncomment the next line (or put 'private-lib' in your dig.local) on non Debian/Ubuntu OS (see issue #3038)
 #private-lib
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

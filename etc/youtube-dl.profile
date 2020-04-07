@@ -41,7 +41,6 @@ ipc-namespace
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -60,5 +59,8 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,hostname,hosts,ld.so.cache,mime.types,pki,resolv.conf,ssl,youtube-dl.conf
 private-tmp
+
+dbus-user none
+dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

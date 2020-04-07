@@ -21,7 +21,6 @@ apparmor
 caps.drop all
 machine-id
 netfilter
-nodbus
 nodvd
 # required for sudo-free docker
 #nogroups
@@ -38,3 +37,6 @@ disable-mnt
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,hosts,ld.so.cache,localtime,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
+
+dbus-user none
+dbus-system none

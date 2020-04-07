@@ -34,7 +34,7 @@ nodvd
 # Breaks 'Lock database when session is locked or lid is closed' (#2899).
 # Also breaks (Plasma) tray icon,
 # you can safely uncomment it or add to keepassxc.local if you don't need these features.
-#nodbus
+#
 nogroups
 nonewprivs
 noroot
@@ -51,6 +51,12 @@ private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 private-dev
 private-etc alternatives,fonts,ld.so.cache,machine-id
 private-tmp
+
+# Breaks 'Lock database when session is locked or lid is closed' (#2899).
+# Also breaks (Plasma) tray icon,
+# you can safely uncomment it or add to keepassxc.local if you don't need these features.
+# dbus-user none
+# dbus-system none
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp
 join-or-start keepassxc

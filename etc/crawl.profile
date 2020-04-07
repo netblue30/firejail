@@ -25,7 +25,6 @@ caps.drop all
 ipc-namespace
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +42,6 @@ private-bin crawl,crawl-tiles
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

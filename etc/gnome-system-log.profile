@@ -24,7 +24,6 @@ caps.drop all
 ipc-namespace
 # net none - breaks dbus
 no3d
-# nodbus
 nodvd
 # When using 'volatile' storage (https://www.freedesktop.org/software/systemd/man/journald.conf.html),
 # comment both 'nogroups' and 'noroot'
@@ -48,6 +47,9 @@ private-etc alternatives,fonts,localtime,machine-id
 private-lib
 private-tmp
 writable-var-log
+
+# dbus-user none
+# dbus-system none
 
 memory-deny-write-execute
 

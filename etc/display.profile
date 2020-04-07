@@ -24,7 +24,6 @@ include whitelist-var-common.inc
 
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -42,3 +41,6 @@ private-dev
 # On Debian-based systems, display is a symlink in /etc/alternatives
 private-etc alternatives
 private-tmp
+
+dbus-user none
+dbus-system none

@@ -22,7 +22,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -41,5 +40,8 @@ private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gtk-3
 private-tmp
 private-opt none
 private-srv none
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

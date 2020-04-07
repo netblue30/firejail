@@ -30,7 +30,6 @@ apparmor
 caps.drop all
 machine-id
 netfilter
-nodbus
 nodvd
 nonewprivs
 noroot
@@ -47,5 +46,8 @@ private-cache
 private-dev
 private-lib
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

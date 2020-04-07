@@ -25,7 +25,6 @@ caps.drop all
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -46,6 +45,9 @@ private-cache
 private-dev
 private-etc none
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute
 read-only ${HOME}

@@ -26,7 +26,6 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -46,5 +45,8 @@ private-dev
 private-etc alternatives,ca-certificates,dconf,fonts,hostname,hosts,ld.so.cache,machine-id,nsswitch.conf,ssl
 # private-lib libnitroshare.so.*,libqhttpengine.so.*,libqmdnsengine.so.*,nitroshare
 private-tmp
+
+# dbus-user none
+# dbus-system none
 
 # memory-deny-write-execute

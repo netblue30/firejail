@@ -29,7 +29,6 @@ caps.drop all
 machine-id
 netfilter
 no3d
-#nodbus - breaks appindicator (tray) functionality
 nodvd
 nogroups
 nonewprivs
@@ -50,5 +49,9 @@ private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,hosts,nsswitch.conf,pki,resolv.conf,ssl
 private-opt Bitwarden
 private-tmp
+
+# breaks appindicator (tray) functionality
+# dbus-user none
+# dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

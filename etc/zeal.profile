@@ -32,7 +32,6 @@ caps.drop all
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -52,5 +51,8 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pango,pki,protocols,resolv.conf,rpc,services,ssl,Trolltech.conf,X11,xdg
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

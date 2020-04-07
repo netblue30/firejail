@@ -24,7 +24,6 @@ include whitelist-var-common.inc
 caps.drop all
 ipc-namespace
 net none
-nodbus
 nodvd
 nogroups
 #nonewprivs
@@ -41,3 +40,6 @@ private-cache
 private-dev
 private-tmp
 writable-var
+
+dbus-user none
+dbus-system none

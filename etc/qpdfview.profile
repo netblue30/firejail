@@ -23,8 +23,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-# needs D-Bus when started from a file manager
-#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -41,3 +39,7 @@ tracelog
 private-bin qpdfview
 private-dev
 private-tmp
+
+# needs D-Bus when started from a file manager
+# dbus-user none
+# dbus-system none

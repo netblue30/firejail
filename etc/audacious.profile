@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-#nodbus - dbus needed for MPRIS
 nogroups
 nonewprivs
 noroot
@@ -39,3 +38,7 @@ tracelog
 private-cache
 private-dev
 private-tmp
+
+# dbus needed for MPRIS
+# dbus-user none
+# dbus-system none

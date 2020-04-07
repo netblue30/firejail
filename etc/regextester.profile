@@ -26,7 +26,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -47,6 +46,10 @@ private-dev
 private-etc alternatives,fonts
 private-lib libgranite.so.*
 private-tmp
+
+# makes settings immutable
+# dbus-user none
+# dbus-system none
 
 memory-deny-write-execute
 

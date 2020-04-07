@@ -27,7 +27,6 @@ machine-id
 # net none
 netfilter
 no3d
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -46,5 +45,9 @@ private-cache
 private-dev
 #private-lib gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*,libgnutls.so.*,libproxy.so.*,librsvg-2.so.*,libxml2.so.*
 private-tmp
+
+# makes settings immutable
+# dbus-user none
+# dbus-system none
 
 # memory-deny-write-execute

@@ -23,7 +23,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 net none
-nodbus
 nogroups
 nonewprivs
 noroot
@@ -36,3 +35,5 @@ shell none
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

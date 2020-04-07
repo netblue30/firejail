@@ -26,7 +26,6 @@ caps.drop all
 ipc-namespace
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -44,5 +43,8 @@ x11 none
 private-bin patch,red
 private-dev
 private-lib libfakeroot
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

@@ -27,7 +27,6 @@ machine-id
 net none
 no3d
 nodvd
-nodbus
 nogroups
 nonewprivs
 noroot
@@ -47,5 +46,8 @@ private-dev
 # without login.defs atool complains and uses UID/GID 1000 by default
 private-etc alternatives,group,login.defs,passwd
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

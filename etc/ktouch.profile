@@ -28,7 +28,6 @@ apparmor
 caps.drop all
 machine-id
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -48,3 +47,6 @@ private-cache
 private-dev
 private-etc alternatives,fonts,kde5rc,machine-id
 private-tmp
+
+dbus-user none
+dbus-system none

@@ -38,7 +38,6 @@ apparmor
 caps.drop all
 machine-id
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -55,5 +54,8 @@ private-bin python*,qbittorrent
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,resolv.conf,ssl,X11,xdg
 private-tmp
+
+dbus-user none
+dbus-system none
 
 # memory-deny-write-execute - problems on Arch, see #1690 on GitHub repo

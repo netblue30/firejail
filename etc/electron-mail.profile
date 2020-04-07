@@ -29,7 +29,6 @@ apparmor
 caps.drop all
 netfilter
 no3d
-# nodbus - breaks tray functionality
 nodvd
 nogroups
 nonewprivs
@@ -48,5 +47,9 @@ private-dev
 private-etc alternatives,fonts
 private-opt ElectronMail
 private-tmp
+
+# breaks tray functionality
+# dbus-user none
+# dbus-system none
 
 # memory-deny-write-execute - breaks on Arch

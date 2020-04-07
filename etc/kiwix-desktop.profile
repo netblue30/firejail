@@ -29,7 +29,6 @@ caps.drop all
 ipc-namespace
 netfilter
 # no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -47,3 +46,6 @@ private-cache
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,hostname,hosts,ld.so.cache,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp
+
+dbus-user none
+dbus-system none

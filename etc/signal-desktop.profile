@@ -30,7 +30,6 @@ include whitelist-var-common.inc
 apparmor
 caps.keep sys_admin,sys_chroot
 netfilter
-nodbus
 nodvd
 nogroups
 notv
@@ -40,3 +39,6 @@ shell none
 disable-mnt
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

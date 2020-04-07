@@ -21,7 +21,6 @@ include disable-programs.inc
 caps.drop all
 ipc-namespace
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -38,3 +37,5 @@ private-bin awk,basename,bash,cut,free,grep,hostname,imagej,ln,ls,mkdir,rm,sort,
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

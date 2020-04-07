@@ -27,7 +27,6 @@ apparmor
 caps.drop all
 netfilter
 no3d
-nodbus
 # nogroups
 nonewprivs
 noroot
@@ -41,6 +40,9 @@ shell none
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none
 
 # mdwe is disabled due to breaking hardware accelerated decoding
 # memory-deny-write-execute

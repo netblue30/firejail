@@ -23,7 +23,6 @@ include disable-xdg.inc
 caps.drop all
 ipc-namespace
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -40,3 +39,5 @@ private-dev
 #private-etc alternatives,ardour4,ardour5,asound.conf,fonts,machine-id,pulse,X11
 private-tmp
 
+dbus-user none
+dbus-system none

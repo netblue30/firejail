@@ -28,7 +28,6 @@ caps.drop all
 # net none
 netfilter
 # no3d
-# nodbus
 # nodvd
 # nogroups
 nonewprivs
@@ -52,6 +51,9 @@ seccomp
 # private-lib
 # private-opt none
 # private-tmp
+
+# dbus-user none
+# dbus-system none
 
 # memory-deny-write-execute
 # read-only ${HOME}

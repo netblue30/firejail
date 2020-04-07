@@ -24,7 +24,6 @@ include whitelist-usr-share-common.inc
 apparmor
 caps.drop all
 # net none - makes settings immutable
-# nodbus - makes settings immutable
 nodvd
 nogroups
 nonewprivs
@@ -44,6 +43,10 @@ private-cache
 private-dev
 private-etc alternatives,dconf,fonts,ld.so.cache,machine-id,ssl
 private-tmp
+
+# makes settings immutable
+# dbus-user none
+# dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
 

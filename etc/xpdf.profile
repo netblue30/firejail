@@ -24,7 +24,6 @@ caps.drop all
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,4 +38,8 @@ shell none
 
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none
+
 memory-deny-write-execute

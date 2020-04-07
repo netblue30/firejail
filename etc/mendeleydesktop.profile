@@ -29,7 +29,6 @@ include whitelist-var-common.inc
 
 caps.drop all
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -47,3 +46,5 @@ private-bin cat,env,gconftool-2,ln,mendeleydesktop,python*,sh,update-desktop-dat
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

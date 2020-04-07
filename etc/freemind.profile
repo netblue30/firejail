@@ -27,7 +27,6 @@ caps.drop all
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -49,3 +48,6 @@ private-dev
 private-tmp
 private-opt none
 private-srv none
+
+dbus-user none
+dbus-system none

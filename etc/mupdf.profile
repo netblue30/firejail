@@ -22,7 +22,6 @@ apparmor
 caps.drop all
 machine-id
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,3 +38,6 @@ tracelog
 private-dev
 private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 private-tmp
+
+dbus-user none
+dbus-system none

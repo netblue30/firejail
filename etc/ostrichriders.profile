@@ -24,7 +24,6 @@ include whitelist-var-common.inc
 caps.drop all
 ipc-namespace
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +42,6 @@ private-cache
 # private-dev should be commented for controllers
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

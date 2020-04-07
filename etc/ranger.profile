@@ -26,7 +26,6 @@ include disable-programs.inc
 allusers
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -40,3 +39,6 @@ seccomp
 #x11 none
 
 private-dev
+
+dbus-user none
+dbus-system none

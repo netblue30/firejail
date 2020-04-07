@@ -22,7 +22,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -42,5 +41,8 @@ private-bin bash,bsdcat,bsdcpio,bsdtar,bzip2,compress,gtar,gzip,lbzip2,libarchiv
 private-cache
 private-dev
 private-etc alternatives,group,localtime,passwd
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

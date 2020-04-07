@@ -25,7 +25,6 @@ ipc-namespace
 machine-id
 netfilter
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -47,6 +46,9 @@ private-etc alternatives,group,lsb-release,passwd
 private-lib gcc/*/*/libstdc++.so.*
 private-opt none
 private-tmp
+
+dbus-user none
+dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
 

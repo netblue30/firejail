@@ -24,10 +24,12 @@ include whitelist-common.inc
 
 caps.drop all
 net none
-nodbus
 nodvd
 nonewprivs
 noroot
 notv
 novideo
 seccomp
+
+dbus-user none
+dbus-system none

@@ -23,7 +23,6 @@ hostname uudeview
 ipc-namespace
 machine-id
 net none
-nodbus
 nodvd
 #nogroups
 nonewprivs
@@ -42,3 +41,6 @@ private-bin uudeview
 private-cache
 private-dev
 private-etc alternatives,ld.so.preload
+
+dbus-user none
+dbus-system none

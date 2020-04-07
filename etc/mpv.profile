@@ -36,7 +36,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-nodbus
+
 # Seems to cause issues with Nvidia drivers sometimes
 nogroups
 nonewprivs
@@ -51,3 +51,6 @@ private-bin env,mpv,python*,youtube-dl
 # Causes slow OSD, see #2838
 #private-cache
 private-dev
+
+dbus-user none
+dbus-system none

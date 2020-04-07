@@ -25,7 +25,6 @@ apparmor
 caps.drop all
 ipc-namespace
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +42,6 @@ private-bin widelands
 private-cache
 private-dev
 private-tmp
+
+dbus-user none
+dbus-system none

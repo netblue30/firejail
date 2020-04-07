@@ -22,7 +22,6 @@ ipc-namespace
 machine-id
 net none
 no3d
-nodbus
 nodvd
 #nogroups
 nonewprivs
@@ -41,3 +40,6 @@ private-bin unrar
 private-dev
 private-etc alternatives,group,localtime,passwd
 private-tmp
+
+dbus-user none
+dbus-system none

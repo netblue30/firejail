@@ -22,7 +22,6 @@ include disable-programs.inc
 
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -34,3 +33,6 @@ seccomp
 shell none
 
 private-bin natron,Natron,NatronRenderer
+
+dbus-user none
+dbus-system none

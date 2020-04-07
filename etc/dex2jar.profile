@@ -22,7 +22,6 @@ include whitelist-var-common.inc
 caps.drop all
 net none
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -39,3 +38,5 @@ private-bin bash,dex2jar,dirname,expr,grep,java,ls,sh,uname
 private-cache
 private-dev
 
+dbus-user none
+dbus-system none

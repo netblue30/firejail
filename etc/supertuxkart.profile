@@ -32,7 +32,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -54,3 +53,5 @@ private-tmp
 private-opt none
 private-srv none
 
+dbus-user none
+dbus-system none

@@ -39,8 +39,6 @@ caps.drop all
 # machine-id breaks pulse audio; it should work fine in setups where sound is not required.
 #machine-id
 netfilter
-# nodbus breaks preferences
-#nodbus
 nodvd
 nogroups
 nonewprivs
@@ -59,3 +57,7 @@ private-cache
 # private-etc below works fine on most distributions. There are some problems on CentOS.
 #private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,localtime,login.defs,machine-id,mailcap,mime.types,nsswitch.conf,os-release,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
 private-tmp
+
+# breaks preferences
+# dbus-user none
+# dbus-system none

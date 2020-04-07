@@ -43,7 +43,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 net none
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -61,3 +60,5 @@ tracelog
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none

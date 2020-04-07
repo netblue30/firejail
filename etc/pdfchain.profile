@@ -21,7 +21,6 @@ caps.drop all
 ipc-namespace
 net none
 no3d
-nodbus
 nogroups
 nonewprivs
 noroot
@@ -37,5 +36,8 @@ private-bin pdfchain,pdftk,sh
 private-dev
 private-etc alternatives,dconf,fonts,gtk-3.0,xdg
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

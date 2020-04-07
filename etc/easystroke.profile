@@ -27,7 +27,6 @@ caps.drop all
 machine-id
 net none
 no3d
-# nodbus
 nodvd
 nogroups
 nonewprivs
@@ -50,5 +49,8 @@ private-etc alternatives,fonts,group,passwd
 # breaks custom shell command functionality
 #private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
+
+# dbus-user none
+# dbus-system none
 
 memory-deny-write-execute

@@ -494,7 +494,7 @@ Allow the application to own the name org.gnome.ghex and all names underneath in
 \fBdbus-user.talk org.freedesktop.Notifications
 Allow the application to talk to the name org.freedesktop.Notifications on the session DBus.
 .TP
-\fBnodbus
+\fBnodbus \fR(deprecated)
 Disable D-Bus access (both system and session buses). Equivalent to dbus-system none and dbus-user none.
 
 .SH Resource limits, CPU affinity, Control Groups

@@ -1276,7 +1276,7 @@ $ nc dict.org 2628
 220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
 .br
 .TP
-\fB\-\-nodbus
+\fB\-\-nodbus \fR(deprecated)
 Disable D-Bus access (both system and session buses). Equivalent to --dbus-system=none --dbus-user=none.
 .br
 

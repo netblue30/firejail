@@ -62,3 +62,15 @@ private-bin gjs,gnome-maps
 private-dev
 private-etc alternatives,ca-certificates,clutter-1.0,crypto-policies,dconf,drirc,fonts,gconf,gcrypt,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pango,pkcs11,pki,protocols,resolv.conf,rpc,services,ssl,X11,xdg
 private-tmp
+
+dbus-user filter
+dbus-user.own org.gnome.Maps
+dbus-user.talk org.gnome.evolution.dataserver.Sources5
+dbus-user.talk org.gnome.evolution.dataserver.AddressBook10
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.OnlineAccounts
+dbus-user.talk org.gnome.evolution.dataserver.Calendar7
+dbus-user.talk org.gnome.evolution.dataserver.Subprocess.Backend.*
+dbus-system filter
+dbus-system.talk org.freedesktop.NetworkManager
+dbus-system.talk org.freedesktop.GeoClue2

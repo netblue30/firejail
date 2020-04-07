@@ -48,3 +48,12 @@ private-cache
 private-dev
 private-tmp
 
+dbus-user filter
+dbus-user.own org.gnome.FeedReader
+dbus-user.own org.gnome.FeedReader.ArticleView
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.gtk.vfs.*
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.OnlineAccounts
+dbus-user.talk org.gtk.vfs
+dbus-system none

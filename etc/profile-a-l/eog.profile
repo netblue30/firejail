@@ -15,5 +15,10 @@ whitelist /usr/share/eog
 # or put 'ignore private-bin', 'ignore private-etc' and 'ignore private-lib' in your eog.local
 private-bin eog
 
+dbus-user filter
+dbus-user.own org.gnome.Eog
+dbus-user.talk ca.desrt.dconf
+dbus-system none
+
 # Redirect
 include eo-common.profile

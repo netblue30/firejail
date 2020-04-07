@@ -33,6 +33,7 @@
 #   WHITELIST INCLUDES
 #   OPTIONS (caps*, net*, no*, protocol, seccomp*, shell none, tracelog)
 #   PRIVATE OPTIONS (disable-mnt, private-*, writable-*)
+#   DBUS FILTER
 #   SPECIAL OPTIONS (mdwx, noexec, read-only, join-or-start)
 #   REDIRECT INCLUDES
 #
@@ -136,6 +137,10 @@ include globals.local
 #net none
 #netfilter
 #no3d
+<<<<<<< HEAD
+=======
+##nodbus (deprecated, use 'dbus-user none' and 'dbus-system none')
+>>>>>>> dbus filter (1)
 #nodvd
 #nogroups
 #nonewprivs
@@ -185,7 +190,18 @@ include globals.local
 ##writable-var
 ##writable-var-log
 
-#dbus-user none
+# Since 0.9.63 also a more granular regulation of dbus is supported.
+# To get the dbus-addresses to which an application needs access to you can look
+# at flatpak if the application is also distriputed with flatpak:
+#    flatpak remote-info --show-metadata flathub <APP-ID>
+# Notes:
+#  - flatpak implicitly allows an app to own <APP-ID> on the session bus
+#  - In order to make dconf work (if it is used by the app) you need to allow
+#    'ca.desrt.dconf' even if it is not allowed by flatpak.
+#dbus-user filter
+#dbus-user.own com.github.netblue30.firejail
+#dbus-user.talk ca.desrt.dconf
+#dbus-user.talk org.freedesktop.Notifications
 #dbus-system none
 
 ##env VAR=VALUE

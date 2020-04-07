@@ -48,3 +48,8 @@ private-dev
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed
 private-etc alternatives,ca-certificates,crypto-policies,dbus-1,dconf,firejail,fonts,gconf,groups,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,login.defs,machine-id,mime.types,nsswitch.conf,pango,passwd,pki,protocols,resolv.conf,rpc,services,ssl,texlive,Trolltech.conf,X11,xdg
 private-tmp
+
+dbus-user filter
+dbus-user.own io.github.wereturtle.ghostwriter
+dbus-user.talk com.canonical.AppMenu.Registrar
+dbus-system none

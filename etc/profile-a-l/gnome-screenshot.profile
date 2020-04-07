@@ -42,3 +42,8 @@ private-bin gnome-screenshot
 private-dev
 private-etc dconf,fonts,gtk-3.0,localtime,machine-id
 private-tmp
+
+dbus-user filter
+dbus-user.own org.gnome.Screenshot
+dbus-user.talk org.gnome.Shell.Screenshot
+dbus-system none

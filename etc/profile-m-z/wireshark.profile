@@ -50,5 +50,4 @@ private-tmp
 
 dbus-user filter
 dbus-user.own org.wireshark.Wireshark
-dbus-user.talk com.canonical.AppMenu.Registrar
 dbus-system none

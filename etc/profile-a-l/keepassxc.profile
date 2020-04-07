@@ -58,7 +58,6 @@ private-tmp
 dbus-user filter
 dbus-user.own org.keepassxc.KeePassXC
 dbus-user.talk org.freedesktop.ScreenSaver
-dbus-user.talk com.canonical.AppMenu.Registrar
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.login1.Manager
 dbus-user.talk org.gnome.ScreenSaver

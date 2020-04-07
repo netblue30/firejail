@@ -51,5 +51,4 @@ private-tmp
 
 dbus-user filter
 dbus-user.own io.github.wereturtle.ghostwriter
-dbus-user.talk com.canonical.AppMenu.Registrar
 dbus-system none

@@ -49,8 +49,6 @@ private-tmp
 dbus-user filter
 dbus-user.own io.github.celluloid_player.Celluloid
 dbus-user.talk org.gnome.SettingsDaemon.MediaKeys
-dbus-user.talk org.gtk.vfs.*
-dbus-user.talk org.gtk.vfs
 dbus-system none
 
 read-only ${HOME}

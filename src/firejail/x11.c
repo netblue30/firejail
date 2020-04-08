@@ -810,9 +810,7 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 
 	// build attach command
 
-	char * title_arg_str = get_title_arg_str();
-
-	char *attach_argv[] = { "xpra", title_arg_str, "attach", display_str, NULL };
+	char *attach_argv[] = { "xpra", "attach", display_str, NULL };
 
 	// run attach command
 	client = fork();

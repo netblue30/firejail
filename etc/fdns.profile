@@ -41,7 +41,7 @@ novideo
 
 disable-mnt
 private
-private-bin fdns,bash,sh
+private-bin bash,fdns,sh
 # private-cache
 private-dev
 # private-etc alternatives

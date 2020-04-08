@@ -496,21 +496,32 @@ Allow the application to talk to the name org.freedesktop.Notifications on the s
 .TP
 \fBnodbus \fR(deprecated)
 Disable D-Bus access (both system and session buses). Equivalent to dbus-system none and dbus-user none.
+.TP
 .br
 
 .br
 Individual filters can be overridden via the \-\-ignore command. Supposing a profile has
-
+.br
 [...]
+.br
 dbus-user filter
+.br
 dbus-user.own org.mozilla.firefox.*
+.br
 dbus-user.talk org.freedesktop.Notifications
+.br
 dbus-system none
+.br
 [...]
+.br
 
+.br
 and the user wants to disable notifications, this can be achieved by putting the below in a local override file:
+.br
 [...]
+.br
 ignore dbus-user.talk org.freedesktop.Notifications
+.br
 [...]
 
 .SH Resource limits, CPU affinity, Control Groups

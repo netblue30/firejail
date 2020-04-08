@@ -23,7 +23,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-caps.keep chown,kill,setgid,setuid,net_bind_service,net_admin,sys_chroot,sys_admin,syslog
+caps.keep chown,kill,net_admin,net_bind_service,setgid,setuid,sys_admin,sys_chroot,syslog
 
 ipc-namespace
 # netfilter /etc/firejail/webserver.net

@@ -10,6 +10,9 @@ assignees: ''
 **Describe the bug**
 A clear and concise description of what the bug is.
 
+**Behavior change on disabling firejail**
+Describe clear and concise what changed calling `firejail --noprofile PROGRAM` in a shell.
+
 **To Reproduce**
 Steps to reproduce the behavior:
 1. Go to '...'

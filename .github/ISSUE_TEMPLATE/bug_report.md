@@ -25,8 +25,8 @@ A clear and concise description of what you expected to happen.
 
 
 **Desktop (please complete the following information):**
- - Linux distribution and version
- - Firejail version (output of `firejail --version`)
+ - Linux distribution and version(ie outpuf of `usb_release -a`)
+ - Firejail version (output of `firejail --version`) exclusive or used git commit (`git rev-parse HEAD`)
 
 **Additional context**
 Add any other context about the problem here.

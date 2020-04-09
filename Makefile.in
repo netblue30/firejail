@@ -1,9 +1,14 @@
-all: apps man filters
-MYLIBS = src/lib
-APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/libtrace src/libtracelog src/ftee \
-src/faudit src/fnet src/fseccomp src/fbuilder src/fcopy src/fldd src/libpostexecseccomp src/profstats
+all: all_items man filters
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon
+SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/ftee/ftee
+MYDIRS = src/lib src/profstats
+MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
+ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
+SBOX_APPS += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
+endif
+ALL_ITEMS = $(APPS) $(SBOX_APPS) $(MYLIBS)
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -23,14 +28,14 @@ HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
 
-.PHONY: mylibs $(MYLIBS)
-mylibs: $(MYLIBS)
-$(MYLIBS):
-	$(MAKE) -C $@
+.PHONY: apps filters man mylibs
+all_items: $(ALL_ITEMS)
+$(ALL_ITEMS):
+	$(MAKE) -C $(dir $@)
 
-.PHONY: apps $(APPS)
-apps: $(APPS)
-$(APPS): $(MYLIBS)
+.PHONY: mydirs
+mydirs: $(MYDIRS)
+$(MYDIRS):
 	$(MAKE) -C $@
 
 $(MANPAGES): $(wildcard src/man/*.txt)
@@ -38,8 +43,9 @@ $(MANPAGES): $(wildcard src/man/*.txt)
 
 man: $(MANPAGES)
 
-filters: src/fseccomp
+filters: $(SECCOMP_FILTERS) $(SBOX_APPS)
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
+$(SECCOMP_FILTERS): $(SBOX_APPS)
 	src/fseccomp/fseccomp default seccomp
 	src/fsec-optimize/fsec-optimize seccomp
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
@@ -52,7 +58,7 @@ ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 endif
 
 clean:
-	for dir in $(APPS) $(MYLIBS); do \
+	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir clean; \
 	done
 	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
@@ -70,7 +76,7 @@ clean:
 	cd test/compile; ./compile.sh --clean; cd ../..
 
 distclean: clean
-	for dir in $(APPS) $(MYLIBS); do \
+	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir distclean; \
 	done
 	rm -fr Makefile autom4te.cache config.log config.status config.h src/common.mk
@@ -88,30 +94,12 @@ endif
 	install -c -m 0755 src/firecfg/firecfg $(DESTDIR)/$(bindir)/.
 	# libraries and plugins
 	install -m 0755 -d $(DESTDIR)/$(libdir)/firejail
-	install -c -m 0644 src/libtrace/libtrace.so $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 src/libtracelog/libtracelog.so $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 src/libpostexecseccomp/libpostexecseccomp.so $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/ftee/ftee $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fshaper/fshaper.sh $(DESTDIR)/$(libdir)/firejail/.
-
-	install -c -m 0644 src/firecfg/firecfg.config $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/faudit/faudit $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fnet/fnet $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fnetfilter/fnetfilter $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fcopy/fcopy $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fldd/fldd $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fbuilder/fbuilder $(DESTDIR)/$(libdir)/firejail/.
-ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
-	install -c -m 0755 src/fsec-print/fsec-print $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fsec-optimize/fsec-optimize $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0755 src/fseccomp/fseccomp $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp.debug $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp.32 $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp.block_secondary $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp.mdwx $(DESTDIR)/$(libdir)/firejail/.
-	install -c -m 0644 seccomp.mdwx.32 $(DESTDIR)/$(libdir)/firejail/.
-endif
+	for file in $(MYLIBS) $(SECCOMP_FILTERS); do \
+		install -c -m 0644 $$file $(DESTDIR)/$(libdir)/firejail/; \
+	done
+	for app in $(SBOX_APPS); do \
+		install -c -m 0755 $$app $(DESTDIR)/$(libdir)/firejail/; \
+	done
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjclip.py $(DESTDIR)/$(libdir)/firejail/.
@@ -167,22 +155,7 @@ install: all
 	$(MAKE) realinstall
 
 install-strip: all
-	strip src/firejail/firejail
-	strip src/firemon/firemon
-	strip src/firecfg/firecfg
-	strip src/libtrace/libtrace.so
-	strip src/libtracelog/libtracelog.so
-	strip src/libpostexecseccomp/libpostexecseccomp.so
-	strip src/ftee/ftee
-	strip src/faudit/faudit
-	strip src/fnet/fnet
-	strip src/fnetfilter/fnetfilter
-	strip src/fseccomp/fseccomp
-	strip src/fsec-print/fsec-print
-	strip src/fsec-optimize/fsec-optimize
-	strip src/fcopy/fcopy
-	strip src/fldd/fldd
-	strip src/fbuilder/fbuilder
+	strip $(APPS)
 	$(MAKE) realinstall
 
 uninstall:

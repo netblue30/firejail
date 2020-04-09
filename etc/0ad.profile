@@ -24,6 +24,7 @@ whitelist ${HOME}/.cache/0ad
 whitelist ${HOME}/.config/0ad
 whitelist ${HOME}/.local/share/0ad
 whitelist /usr/share/0ad
+whitelist /usr/share/games
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -17,6 +17,9 @@ blacklist /usr/lib/liblua*
 blacklist /usr/lib/lua
 blacklist /usr/share/lua*
 
+# mozjs
+blacklist /usr/lib64/libmozjs-*
+
 # Node.js
 blacklist ${PATH}/node
 blacklist /usr/include/node

@@ -1,4 +1,5 @@
 # Firejail profile for rambox
+# Description: Free and Open Source messaging and emailing app that combines common web applications into one
 # This file is overwritten after every install/update
 # Persistent local customizations
 include rambox.local

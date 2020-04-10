@@ -372,7 +372,7 @@ int seccomp_filter_mdwx(bool native) {
 	if (arg_debug)
 		printf("Build memory-deny-write-execute filter\n");
 
-	const char *command, *filter, *postexec_filter, *list;
+	const char *command, *filter;
 	if (native) {
 		command = "memory-deny-write-execute";
 		filter = RUN_SECCOMP_MDWX;

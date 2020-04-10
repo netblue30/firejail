@@ -1,5 +1,5 @@
 # Firejail profile for rambox
-# Description: Free and Open Source messaging and emailing app that combines common web applications into one
+# Description: Free and Open Source messaging and emailing app that combines common web applications into one (Electron-based)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include rambox.local
@@ -32,5 +32,7 @@ nonewprivs
 noroot
 notv
 protocol unix,inet,inet6,netlink
-seccomp
+# electron-based application, needing chroot
+#seccomp
+seccomp !chroot
 # tracelog

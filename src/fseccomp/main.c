@@ -70,7 +70,7 @@ printf("\n");
 		arg_quiet = 1;
 
 	char *error_action = getenv("FIREJAIL_SECCOMP_ERROR_ACTION");
-	if (error_action)
+	if (error_action) {
 		if (strcmp(error_action, "kill") == 0)
 			arg_seccomp_error_action = SECCOMP_RET_KILL;
 		else {
@@ -79,6 +79,7 @@ printf("\n");
 				errExit("seccomp-error-action: unknown errno");
 			arg_seccomp_error_action |= SECCOMP_RET_ERRNO;
 		}
+	}
 
 	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
 		usage();

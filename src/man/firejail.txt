@@ -2835,7 +2835,11 @@ List all sandboxed processes.
 
 .SH FILE GLOBBING
 .TP
-Globbing is the operation that expands a wildcard pattern into the list of pathnames matching the pattern. Matching is defined by:
+Globbing is the operation that expands a wildcard pattern into the
+list of pathnames matching the pattern.  This pattern is matched at
+firejail \fBstart\fR, and is NOT UPDATED at runtime.  \fBFiles matching
+a blacklist, but created after firejail start will be accessible within
+the jail.\fR Matching is defined by:
 .br
 
 .br
@@ -2846,12 +2850,15 @@ Globbing is the operation that expands a wildcard pattern into the list of pathn
 - '[' denotes a range of characters
 .br
 .TP
-The globbing feature is implemented using glibc glob command. For more information on the wildcard syntax see man 7 glob.
+The globbing feature is implemented using glibc glob command. For
+more information on the wildcard syntax see man 7 glob.
 .br
 
 .br
 .TP
-The following command line options are supported: \-\-blacklist, \-\-private-bin, \-\-noexec, \-\-read-only, \-\-read-write, \-\-tmpfs, and \-\-whitelist.
+The following command line options are supported: \-\-blacklist,
+\-\-private-bin, \-\-noexec, \-\-read-only, \-\-read-write,
+\-\-tmpfs, and \-\-whitelist.
 .br
 
 .br

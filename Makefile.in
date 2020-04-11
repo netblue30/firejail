@@ -1,15 +1,3 @@
-all: all_items man filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon
-SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/ftee/ftee
-MYDIRS = src/lib src/profstats
-MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
-ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
-SBOX_APPS += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
-SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
-endif
-ALL_ITEMS = $(APPS) $(SBOX_APPS) $(MYLIBS)
-
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 bindir=@bindir@
@@ -27,6 +15,18 @@ HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
+
+all: all_items man filters
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon
+SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/ftee/ftee
+MYDIRS = src/lib src/profstats
+MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
+ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
+SBOX_APPS += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
+SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
+endif
+ALL_ITEMS = $(APPS) $(SBOX_APPS) $(MYLIBS)
 
 .PHONY: apps filters man mylibs
 all_items: $(ALL_ITEMS)

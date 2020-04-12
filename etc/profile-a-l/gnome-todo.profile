@@ -51,13 +51,14 @@ private-tmp
 dbus-user filter
 dbus-user.own org.gnome.Todo
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.gnome.evolution.dataserver.AddressBook9
-dbus-user.talk org.gnome.evolution.dataserver.Calendar8
-dbus-user.talk org.gnome.evolution.dataserver.Sources5
-dbus-user.talk org.gnome.evolution.dataserver.Subprocess.Backend.*
-dbus-user.talk org.gnome.OnlineAccounts
-dbus-user.talk org.gnome.SettingsDaemon.Color
-dbus-system filter
-dbus-system.talk org.freedesktop.login1
+#dbus-user.talk org.gnome.evolution.dataserver.AddressBook9
+#dbus-user.talk org.gnome.evolution.dataserver.Calendar8
+#dbus-user.talk org.gnome.evolution.dataserver.Sources5
+#dbus-user.talk org.gnome.evolution.dataserver.Subprocess.Backend.*
+#dbus-user.talk org.gnome.OnlineAccounts
+#dbus-user.talk org.gnome.SettingsDaemon.Color
+#dbus-system filter
+#dbus-system.talk org.freedesktop.login1
+dbus-system none
 
 read-only ${HOME}

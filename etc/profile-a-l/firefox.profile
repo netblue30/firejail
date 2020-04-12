@@ -30,9 +30,10 @@ include whitelist-usr-share-common.inc
 
 dbus-user filter
 dbus-user.own org.mozilla.firefox.*
-dbus-user.talk org.freedesktop.Notifications
-dbus-system none
-ignore nodbus
+dbus-user.own org.mpris.MediaPlayer2.firefox.*
+# Uncomment or put in your firefox.local to enable native notifications.
+#dbus-user.talk org.freedesktop.Notifications
+ignore dbus-user none
 
 # Redirect
 include firefox-common.profile

@@ -52,7 +52,6 @@ dbus-user.own org.gnome.Rhythmbox3
 dbus-user.own org.mpris.MediaPlayer2.rhythmbox
 dbus-user.own org.gnome.UPnP.MediaServer2.Rhythmbox
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.gnome.SettingsDaemon.MediaKeys
 dbus-user.talk org.freedesktop.Notifications
 dbus-system filter
 dbus-system.talk org.freedesktop.Avahi

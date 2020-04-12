@@ -46,9 +46,7 @@ tracelog
 private-dev
 private-tmp
 
-dbus-user filter
-dbus-user.own org.libreoffice.LibreOffice
-dbus-user.own org.libreoffice.LibreOfficeIpc0
+dbus-user none
 dbus-system none
 
 join-or-start libreoffice

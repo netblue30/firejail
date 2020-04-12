@@ -137,10 +137,7 @@ include globals.local
 #net none
 #netfilter
 #no3d
-<<<<<<< HEAD
-=======
-##nodbus (deprecated, use 'dbus-user none' and 'dbus-system none')
->>>>>>> dbus filter (1)
+##nodbus (deprecated, use 'dbus-user none' and 'dbus-system none', see below)
 #nodvd
 #nogroups
 #nonewprivs

@@ -65,12 +65,8 @@ private-tmp
 
 dbus-user filter
 dbus-user.own org.gnome.Maps
-dbus-user.talk org.gnome.evolution.dataserver.Sources5
-dbus-user.talk org.gnome.evolution.dataserver.AddressBook10
-dbus-user.talk org.freedesktop.secrets
-dbus-user.talk org.gnome.OnlineAccounts
-dbus-user.talk org.gnome.evolution.dataserver.Calendar7
-dbus-user.talk org.gnome.evolution.dataserver.Subprocess.Backend.*
+#dbus-user.talk org.freedesktop.secrets
+#dbus-user.talk org.gnome.OnlineAccounts
 dbus-system filter
-dbus-system.talk org.freedesktop.NetworkManager
+#dbus-system.talk org.freedesktop.NetworkManager
 dbus-system.talk org.freedesktop.GeoClue2

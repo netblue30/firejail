@@ -31,13 +31,6 @@ machine-id
 net none
 no3d
 nodvd
-<<<<<<< HEAD
-# Breaks 'Lock database when session is locked or lid is closed' (#2899).
-# Also breaks (Plasma) tray icon,
-# you can safely uncomment it or add to keepassxc.local if you don't need these features.
-#
-=======
->>>>>>> dbus filter (1)
 nogroups
 nonewprivs
 noroot
@@ -56,16 +49,16 @@ private-etc alternatives,fonts,ld.so.cache,machine-id
 private-tmp
 
 dbus-user filter
-dbus-user.own org.keepassxc.KeePassXC
+#dbus-user.own org.keepassxc.KeePassXC
 dbus-user.talk org.freedesktop.ScreenSaver
-dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.freedesktop.login1.Manager
 dbus-user.talk org.gnome.ScreenSaver
-dbus-user.talk org.kde.StatusNotifierWatcher
-dbus-user.talk org.gnome.SessionManager.Presence
-dbus-user.talk org.gnome.SessionManager
-dbus-user.talk com.canonical.Unity.Session
-dbus-user.talk org.freedesktop.login1.Session
+#dbus-user.talk org.freedesktop.Notifications
+# dbus-user.talk org.freedesktop.login1.Manager
+#dbus-user.talk org.kde.StatusNotifierWatcher
+#dbus-user.talk org.gnome.SessionManager.Presence
+#dbus-user.talk org.gnome.SessionManager
+#dbus-user.talk com.canonical.Unity.Session
+#dbus-user.talk org.freedesktop.login1.Session
 dbus-system none
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp

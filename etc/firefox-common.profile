@@ -44,7 +44,8 @@ notv
 protocol unix,inet,inet6,netlink
 # The below seccomp configuration still permits chroot syscall. See https://github.com/netblue30/firejail/issues/2506 for possible workarounds.
 seccomp !chroot
-shell none
+# Uncomment the next line (or put it into your firefox-common.local) if your firefox doesn't require a shell to lauch.
+#shell none
 # Disable tracelog, it breaks or causes major issues with many firefox based browsers, see https://github.com/netblue30/firejail/issues/1930.
 #tracelog
 

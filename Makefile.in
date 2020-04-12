@@ -94,12 +94,8 @@ endif
 	install -c -m 0755 src/firecfg/firecfg $(DESTDIR)/$(bindir)/.
 	# libraries and plugins
 	install -m 0755 -d $(DESTDIR)/$(libdir)/firejail
-	for file in $(MYLIBS) $(SECCOMP_FILTERS); do \
-		install -c -m 0644 $$file $(DESTDIR)/$(libdir)/firejail/; \
-	done
-	for app in $(SBOX_APPS); do \
-		install -c -m 0755 $$app $(DESTDIR)/$(libdir)/firejail/; \
-	done
+	install -m 0644 -t $(DESTDIR)/$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS) src/firecfg/firecfg.config
+	install -m 0755 -t $(DESTDIR)/$(libdir)/firejail $(SBOX_APPS)
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -c -m 0755 contrib/fix_private-bin.py $(DESTDIR)/$(libdir)/firejail/.
 	install -c -m 0755 contrib/fjclip.py $(DESTDIR)/$(libdir)/firejail/.
@@ -121,9 +117,6 @@ ifeq ($(BUSYBOX_WORKAROUND),yes)
 endif
 	install -m 0755 -d $(DESTDIR)/$(sysconfdir)/firejail
 	install -m 0644 -t $(DESTDIR)/$(sysconfdir)/firejail etc/*.profile etc/*.inc etc/*.net etc/firejail.config
-#	for file in etc/*.profile etc/*.inc etc/*.net etc/firejail.config; do \
-#		install -c -m 0644 $$file $(DESTDIR)/$(sysconfdir)/firejail; \
-#	done
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile

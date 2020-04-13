@@ -7,9 +7,10 @@ firejail (0.9.63) baseline; urgency=low
     /etc/firejail/firejail.config file.
   * DHCP client support
   * SELinux labeling support
-  * 32-bit seccomp filter
+  * custom 32-bit seccomp filter support
   * restrict ${RUNUSER} in serveral profiles
   * whitelist globbing
+  * mkdir and mkfile support for /run/user directory
   * new condition: HAS_NOSOUND
   * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, muraster
   * new profiles: gnome-passwordsafe, bibtex, gummi, latex, mupdf-x11-curl

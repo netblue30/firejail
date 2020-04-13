@@ -211,7 +211,7 @@ Disable /mnt, /media, /run/mount and /run/media access.
 /var/tmp directory is untouched.
 .TP
 \fBmkdir directory
-Create a directory in user home or under /tmp before the sandbox is started.
+Create a directory in user home, under /tmp, or under /run/user/<UID> before the sandbox is started.
 The directory is created if it doesn't already exist.
 .br
 
@@ -230,10 +230,18 @@ whitelist ~/.mozilla
 mkdir ~/.cache/mozilla/firefox
 .br
 whitelist ~/.cache/mozilla/firefox
+.br
+
+.br
+For files in /run/user/<PID> use ${RUNUSER} macro:
+.br
+
+.br
+mkdir ${RUNUSER}/firejail-testing
 .TP
 \fBmkfile file
-Similar to mkdir, this command creates a file in user home or under /tmp before the sandbox is started.
-The file is created if it doesn't already exist.
+Similar to mkdir, this command creates an empty file in user home, or /tmp, or under /run/user/<UID>
+before the sandbox is started. The file is created if it doesn't already exist.
 .TP
 \fBnoexec file_or_directory
 Remount the file or the directory noexec, nodev and nosuid.

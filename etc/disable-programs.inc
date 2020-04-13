@@ -501,6 +501,7 @@ blacklist ${HOME}/.local/share/QGIS
 blacklist ${HOME}/.local/share/QMediathekView
 blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet
+blacklist ${HOME}/.local/share/Shortwave
 blacklist ${HOME}/.local/share/Steam
 blacklist ${HOME}/.local/share/SuperHexagon
 blacklist ${HOME}/.local/share/TelegramDesktop
@@ -758,6 +759,7 @@ blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/agenda

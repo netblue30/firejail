@@ -30,5 +30,6 @@ protocol unix,inet,inet6,netlink
 seccomp !chroot
 
 disable-mnt
+private-bin jitsi-meet-desktop,bash
 private-dev
 private-tmp

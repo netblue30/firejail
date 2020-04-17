@@ -1,5 +1,5 @@
 # Firejail profile for jitsi-meet-desktop
-# Description: Build cross platform desktop apps with web technologies
+# Description: Jitsi Meet desktop application powered by Electron
 # This file is overwritten after every install/update
 # Persistent local customizations
 include jitsi-meet-desktop.local

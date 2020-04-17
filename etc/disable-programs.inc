@@ -88,6 +88,7 @@ blacklist ${HOME}/.config/Google Play Music Desktop Player
 blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/InSilmaril
+blacklist ${HOME}/.config/Jitsi Meet
 blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Kingsoft
 blacklist ${HOME}/.config/Luminance

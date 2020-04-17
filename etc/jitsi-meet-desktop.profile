@@ -30,4 +30,6 @@ notv
 protocol unix,inet,inet6,netlink
 seccomp !chroot
 
+disable-mnt
+private-dev
 private-tmp

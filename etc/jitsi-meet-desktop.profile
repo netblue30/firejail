@@ -15,7 +15,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist ${DOWNLOADS}
 mkdir ${HOME}/.config/Jitsi Meet
 whitelist ${HOME}/.config/Jitsi Meet
 

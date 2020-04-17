@@ -4,7 +4,7 @@
 # Persistent local customizations
 include jitsi-meet-desktop.local
 # Persistent global definitions
-include jitsi-meet-desktop.local
+include globals.local
 
 noblacklist ${HOME}/.config/Jitsi Meet
 

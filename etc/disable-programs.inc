@@ -654,6 +654,7 @@ blacklist ${HOME}/.netactview
 blacklist ${HOME}/.neverball
 blacklist ${HOME}/.newsbeuter
 blacklist ${HOME}/.newsboat
+blacklist ${HOME}/.nicotine
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail
 blacklist ${HOME}/.openarena

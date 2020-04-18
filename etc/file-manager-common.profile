@@ -42,3 +42,6 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
+
+#dbus-user none
+#dbus-system none

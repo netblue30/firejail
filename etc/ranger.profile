@@ -6,39 +6,9 @@ include ranger.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/nano
-noblacklist ${HOME}/.config/ranger
-noblacklist ${HOME}/.nanorc
+# Put 'ignore noroot' in your ranger.local if you use MPV+Vulkan (see issue #3012)
 
-# Allow python (blacklisted by disable-interpreters.inc)
-include allow-python2.inc
-include allow-python3.inc
+# Redirect
+include file-manager-common.profile
 
-# Allow perl
-include allow-perl.inc
-
-include disable-common.inc
-include disable-devel.inc
-include disable-interpreters.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
-
-allusers
-caps.drop all
-net none
-nodvd
-nogroups
-nonewprivs
-noroot
-nosound
-notv
-nou2f
-novideo
-protocol unix
-seccomp
-#x11 none
-
-private-dev
-
-dbus-user none
-dbus-system none
+join-or-start ranger

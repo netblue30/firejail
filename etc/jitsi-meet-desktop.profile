@@ -35,5 +35,6 @@ seccomp !chroot
 
 disable-mnt
 private-bin jitsi-meet-desktop,bash
+private-cache
 private-dev
 private-tmp

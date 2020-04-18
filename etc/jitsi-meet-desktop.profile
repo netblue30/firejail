@@ -10,12 +10,9 @@ ignore noexec /tmp
 
 noblacklist ${HOME}/.config/Jitsi Meet
 
-include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/Jitsi Meet
@@ -25,15 +22,6 @@ include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
-apparmor
-caps.drop all
-netfilter
-nodvd
-nogroups
-nonewprivs
-noroot
-notv
-protocol unix,inet,inet6,netlink
 seccomp !chroot
 
 disable-mnt
@@ -41,3 +29,6 @@ private-bin jitsi-meet-desktop,bash
 private-cache
 private-dev
 private-tmp
+
+# Redirect
+include electron.profile

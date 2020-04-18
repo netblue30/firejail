@@ -11,6 +11,9 @@ noblacklist ${HOME}/.local/share/Trash
 # noblacklist ${HOME}/.config/dolphinrc
 # noblacklist ${HOME}/.local/share/dolphin
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc

@@ -28,6 +28,7 @@ disable-mnt
 private-bin jitsi-meet-desktop,bash
 private-cache
 private-dev
+private-etc alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg,passwd,group,ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,protocols,services,rpc,alsa,asound.conf,pulse,machine-id,fonts,pango,X11,drirc,glvnd,bumblebee,nvidia
 private-tmp
 
 # Redirect

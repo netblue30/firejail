@@ -15,6 +15,8 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-xdg.inc
 
+nowhitelist ${DOWNLOADS}
+
 mkdir ${HOME}/.config/Jitsi Meet
 whitelist ${HOME}/.config/Jitsi Meet
 include whitelist-common.inc
@@ -22,7 +24,6 @@ include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
-nowhitelist ${DOWNLOADS}
 seccomp !chroot
 
 disable-mnt

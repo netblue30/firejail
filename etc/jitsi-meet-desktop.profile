@@ -18,7 +18,9 @@ include disable-xdg.inc
 nowhitelist ${DOWNLOADS}
 
 mkdir ${HOME}/.config/Jitsi Meet
+
 whitelist ${HOME}/.config/Jitsi Meet
+
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc

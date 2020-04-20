@@ -518,7 +518,7 @@ static void duplicate(char *name) {
 		ptr++;
 		if (asprintf(&path, "%s/%s", RUN_HOME_DIR, ptr) == -1)
 			errExit("asprintf");
-		mkdir_attr(path, 0755, getuid(), getgid());
+		create_empty_dir_as_user(path, 0755);
 		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FCOPY, fname, path);
 		free(path);
 	}

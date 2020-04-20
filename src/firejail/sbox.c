@@ -123,6 +123,9 @@ static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
 #ifdef SYS_mount
 			BLACKLIST(SYS_mount), // mount/unmount filesystems
 #endif
+#ifdef SYS_umount
+			BLACKLIST(SYS_umount),
+#endif
 #ifdef SYS_umount2
 			BLACKLIST(SYS_umount2),
 #endif

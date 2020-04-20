@@ -23,10 +23,20 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-
 **Desktop (please complete the following information):**
  - Linux distribution and version (ie output of `lsb_release -a`)
  - Firejail version (output of `firejail --version`) exclusive or used git commit (`git rev-parse HEAD`)
 
 **Additional context**
 Add any other context about the problem here.
+
+**Checklist**
+ - [ ] The upstream profile (and redirect profile if exists) have no changes fixing it.
+
+<details><summary> debug output </summary>
+
+```
+OUTPUT OF `firejail --debug PROGRAM`
+```
+
+</details>

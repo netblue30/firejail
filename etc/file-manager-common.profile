@@ -25,7 +25,7 @@ include allow-python3.inc
 #include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
-#include disable-passwdmgr.inc
+include disable-passwdmgr.inc
 # include disable-programs.inc
 
 allusers
@@ -42,6 +42,8 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
+
+private-dev
 
 #dbus-user none
 #dbus-system none

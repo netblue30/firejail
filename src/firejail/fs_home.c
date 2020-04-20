@@ -352,20 +352,6 @@ void fs_private(void) {
 	int xflag = store_xauthority();
 	int aflag = store_asoundrc();
 
-	// mask /home
-	if (u == 0 && arg_allusers) // allow --allusers when starting the sandbox as root
-		;
-	else {
-		if (arg_debug)
-			printf("Mounting a new /home directory\n");
-		if (arg_allusers)
-			fwarning("allusers option disabled by private or whitelist option\n");
-		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
-			errExit("mounting /home directory");
-		selinux_relabel_path("/home", "/home");
-		fs_logger("tmpfs /home");
-	}
-
 	// mask /root
 	if (arg_debug)
 		printf("Mounting a new /root directory\n");
@@ -373,28 +359,39 @@ void fs_private(void) {
 		errExit("mounting /root directory");
 	fs_logger("tmpfs /root");
 
-	if (u != 0) {
-		if (strncmp(homedir, "/home/", 6) == 0) {
-			// create /home/user
-			if (arg_debug)
-				printf("Create a new user directory\n");
-			if (mkdir(homedir, S_IRWXU) == -1) {
-				if (mkpath_as_root(homedir) == -1)
-					errExit("mkpath");
-				if (mkdir(homedir, S_IRWXU) == -1 && errno != EEXIST)
-					errExit("mkdir");
-			}
-			if (chown(homedir, u, g) < 0)
-				errExit("chown");
-			selinux_relabel_path(homedir, homedir);
+	if (arg_allusers) {
+		if (u != 0)
+			fs_tmpfs(homedir, 1); // check if directory is owned by the current user
+	}
+	else { // mask /home
+		if (arg_debug)
+			printf("Mounting a new /home directory\n");
+		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+			errExit("mounting /home directory");
+		selinux_relabel_path("/home", "/home");
+		fs_logger("tmpfs /home");
 
-			fs_logger2("mkdir", homedir);
-			fs_logger2("tmpfs", homedir);
+		if (u != 0) {
+			if (strncmp(homedir, "/home/", 6) == 0) {
+				// create /home/user
+				if (arg_debug)
+					printf("Create a new user directory\n");
+				if (mkdir(homedir, S_IRWXU) == -1) {
+					if (mkpath_as_root(homedir) == -1)
+						errExit("mkpath");
+					if (mkdir(homedir, S_IRWXU) == -1 && errno != EEXIST)
+						errExit("mkdir");
+				}
+				if (chown(homedir, u, g) < 0)
+					errExit("chown");
+
+				selinux_relabel_path(homedir, homedir);
+				fs_logger2("mkdir", homedir);
+				fs_logger2("tmpfs", homedir);
+			}
+			else
+				fs_tmpfs(homedir, 1); // check if directory is owned by the current user
 		}
-		else
-			// user directory is outside /home, mask it as well
-			// check if directory is owned by the current user
-			fs_tmpfs(homedir, 1);
 	}
 
 	skel(homedir, u, g);

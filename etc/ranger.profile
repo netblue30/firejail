@@ -10,5 +10,3 @@ include globals.local
 
 # Redirect
 include file-manager-common.profile
-
-join-or-start ranger

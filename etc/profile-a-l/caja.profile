@@ -9,35 +9,7 @@ include globals.local
 # Caja is started by systemd on most systems. Therefore it is not firejailed by default. Since there
 # is already a caja process running on MATE desktops firejail will have no effect.
 
-noblacklist ${HOME}/.local/share/Trash
-# noblacklist ${HOME}/.config/caja - disable-programs.inc is disabled, see below
-# noblacklist ${HOME}/.local/share/caja-python
+# Put 'ignore noroot' in your caja.local if you use MPV+Vulkan (see issue #3012)
 
-# Allow python (blacklisted by disable-interpreters.inc)
-include allow-python2.inc
-include allow-python3.inc
-
-include disable-common.inc
-include disable-devel.inc
-include disable-interpreters.inc
-include disable-passwdmgr.inc
-# include disable-programs.inc
-
-allusers
-caps.drop all
-netfilter
-nodvd
-nogroups
-nonewprivs
-noroot
-notv
-novideo
-protocol unix
-seccomp
-shell none
-tracelog
-
-# caja needs to be able to start arbitrary applications so we cannot blacklist their files
-# private-bin caja
-# private-dev
-# private-tmp
+# Redirect
+include file-manager-common.profile

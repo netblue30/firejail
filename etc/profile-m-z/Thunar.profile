@@ -6,28 +6,7 @@ include Thunar.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/Trash
-noblacklist ${HOME}/.config/Thunar
-noblacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
+# Put 'ignore noroot' in your pcmanfm.local if you use MPV+Vulkan (see issue #3012)
 
-include disable-common.inc
-include disable-devel.inc
-include disable-interpreters.inc
-include disable-passwdmgr.inc
-# include disable-programs.inc
-
-allusers
-caps.drop all
-netfilter
-no3d
-nodvd
-nogroups
-nonewprivs
-noroot
-nosound
-notv
-novideo
-protocol unix
-seccomp
-shell none
-tracelog
+# Redirect
+include file-manager-common.profile

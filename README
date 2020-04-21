@@ -104,6 +104,8 @@ Andrey Alekseenko (https://github.com/al42and)
 	- fixed Skype profile
 andrew160 (https://github.com/andrew160)
 	- profile and man pages fixes
+Andrew Branson (https://github.com/abranson)
+	- 32bit ARM syscall table
 announ (https://github.com/announ)
 	- mpv and youtube-dl profile fixes
 	- git profile fix
@@ -113,6 +115,7 @@ Antonio Russo (https://github.com/aerusso)
 	- fix join-or-start
 	- wusc fixes
 	- okular profile fixes
+	- manpage fixes
 aoand (https://github.com/aoand)
 	- seccomp fix: allow numeric syscalls
 Atrate (https://github.com/Atrate)
@@ -122,6 +125,8 @@ Austin Morton (https://github.com/apmorton)
 	- private-cwd options
 Austin S. Hemmelgarn (https://github.com/Ferroin)
 	- unbound profile update
+Avi Lumelsky (https://github.com/avilum)
+	- syscall.sh improvements
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix
@@ -175,6 +180,8 @@ Carlo Abelli (https://github.com/carloabelli)
 	- Allow mbind syscall for GIMP
 Cat (https://github.com/ecat3)
 	- prevent tmux connecting to an existing session
+Christian Pinedo (https://github.com/chrpinedo)
+	- added nicotine profile
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
 	- tor browser profile fix
@@ -528,6 +535,7 @@ Matthew Gyurgyik (https://github.com/pyther)
 matu3ba (https://github.com/matu3ba)
 	- evince hardening, dbus removed
 	- fix dia profile
+	- several template fixes
 maxice8 (https://github.com/maxice8)
 	- fixed missing header
 Melvin Vermeeren (https://github.com/melvinvermeeren)

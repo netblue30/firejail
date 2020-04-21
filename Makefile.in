@@ -124,7 +124,7 @@ ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	install -c -m 0644 etc/apparmor/firejail-default $(DESTDIR)/$(sysconfdir)/apparmor.d/.
 	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/local ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/local; fi;"
 	# install apparmor profile customization file
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-local ]; then install -c -m 0644 etc/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/.; fi;"
+	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-local ]; then install -c -m 0644 etc/apparmor/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/.; fi;"
 endif
 	# man pages
 	install -m 0755 -d $(DESTDIR)/$(mandir)/man1

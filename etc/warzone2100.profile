@@ -19,7 +19,10 @@ include disable-programs.inc
 # mkdir ${HOME}/.warzone2100-3.2
 whitelist ${HOME}/.warzone2100-3.1
 whitelist ${HOME}/.warzone2100-3.2
+whitelist /usr/share/games
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

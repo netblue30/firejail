@@ -131,18 +131,21 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
 		if (fp == stdout)
 			printf("--- Built profile beings after this line ---\n");
-		fprintf(fp, "############################################\n");
-		fprintf(fp, "# %s profile\n", argv[index]);
-		fprintf(fp, "############################################\n");
+		fprintf(fp, "# Firejail profile for %s\n", argv[index]);
+		fprintf(fp, "# Persistent local customizations\n");
+		fprintf(fp, "#include %s.local\n", argv[index]);
 		fprintf(fp, "# Persistent global definitions\n");
-		fprintf(fp, "# include /etc/firejail/globals.local\n");
+		fprintf(fp, "#include globals.local\n");
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### basic blacklisting\n");
-		fprintf(fp, "include /etc/firejail/disable-common.inc\n");
-		fprintf(fp, "# include /etc/firejail/disable-devel.inc\n");
-		fprintf(fp, "include /etc/firejail/disable-passwdmgr.inc\n");
-		fprintf(fp, "# include /etc/firejail/disable-programs.inc\n");
+		fprintf(fp, "include disable-common.inc\n");
+		fprintf(fp, "# include disable-devel.inc\n");
+		fprintf(fp, "# include disable-exec.inc\n");
+		fprintf(fp, "# include disable-interpreters.inc\n");
+		fprintf(fp, "include disable-passwdmgr.inc\n");
+		fprintf(fp, "# include disable-programs.inc\n");
+		fprintf(fp, "# include disable-xdg.inc\n");
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### home directory whitelisting\n");
@@ -150,12 +153,19 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### filesystem\n");
-		build_tmp(trace_output, fp);
-		build_dev(trace_output, fp);
-		build_etc(trace_output, fp);
-		build_var(trace_output, fp);
-		build_bin(trace_output, fp);
+		fprintf(fp, "# /usr/share:\n");
 		build_share(trace_output, fp);
+		fprintf(fp, "# /var:\n");
+		build_var(trace_output, fp);
+		fprintf(fp, "\n");
+		fprintf(fp, "# $PATH:\n");
+		build_bin(trace_output, fp);
+		fprintf(fp, "# /dev:\n");
+		build_dev(trace_output, fp);
+		fprintf(fp, "# /etc:\n");
+		build_etc(trace_output, fp);
+		fprintf(fp, "# /tmp:\n");
+		build_tmp(trace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### security filters\n");

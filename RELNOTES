@@ -8,7 +8,7 @@ firejail (0.9.63) baseline; urgency=low
   * DHCP client support
   * SELinux labeling support
   * custom 32-bit seccomp filter support
-  * restrict ${RUNUSER} in serveral profiles
+  * restrict ${RUNUSER} in several profiles
   * whitelist globbing
   * mkdir and mkfile support for /run/user directory
   * new condition: HAS_NOSOUND
@@ -27,8 +27,9 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars
   * new profiles: hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless
   * new profiles: mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers
-  * new profiles: seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more
-  * new profiles: swell-foop, fdns
+  * new profiles: seahorse-adventures, wordwarvi, xbill, gnome-klotski
+  * new profiles: swell-foop, fdns, five-or-more
+ -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config
@@ -56,7 +57,7 @@ firejail (0.9.62) baseline; urgency=low
   * new profiles: kalgebramobile, signal-cli, amuled, kfind, profanity
   * new profiles: audio-recorder, cameramonitor, ddgtk, drawio, unf, gmpc
   * new profiles: electron-mail, gist, gist-paste
- -- netblue30 <netblue30@yahoo.com>  Sat, 1 Jun 2019 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sat, 28 Dec 2019 08:00:00 -0500
 
 firejail (0.9.60) baseline; urgency=low
   * security bug reported by Austin Morton:

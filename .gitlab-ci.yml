@@ -11,7 +11,7 @@ build_ubuntu_package:
         - apt-get update -qq
         - apt-get install -y -qq build-essential lintian pkg-config python3
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
-        - python3 contrib/sort.py etc/*.{profile,inc}
+        - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*,inc
 
 build_debian_package:
     image: debian:stretch
@@ -33,7 +33,7 @@ build_fedora_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
-        - python3 contrib/sort.py etc/*.{profile,inc}
+        - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*,inc
 
 build_src_package:
     image: alpine:latest

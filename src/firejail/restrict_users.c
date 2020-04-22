@@ -72,10 +72,6 @@ static void sanitize_home(void) {
 
 	if (arg_debug)
 		printf("Cleaning /home directory\n");
-
-	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
-		errExit("mkdir");
-
 	// keep a copy of the user home directory
 	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1) {
@@ -90,6 +86,8 @@ static void sanitize_home(void) {
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 		errExit("asprintf");
+	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
+		errExit("mkdir");
 	if (mount(proc, RUN_WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	free(proc);

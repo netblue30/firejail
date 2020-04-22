@@ -357,11 +357,14 @@ void fs_private(void) {
 		printf("Mounting a new /root directory\n");
 	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 		errExit("mounting /root directory");
+	selinux_relabel_path("/root", "/root");
 	fs_logger("tmpfs /root");
 
 	if (arg_allusers) {
 		if (u != 0)
-			fs_tmpfs(homedir, 1); // check if directory is owned by the current user
+			// mask user home directory
+			// the directory should be owned by the current user
+			fs_tmpfs(homedir, 1);
 	}
 	else { // mask /home
 		if (arg_debug)
@@ -390,7 +393,9 @@ void fs_private(void) {
 				fs_logger2("tmpfs", homedir);
 			}
 			else
-				fs_tmpfs(homedir, 1); // check if directory is owned by the current user
+				// mask user home directory
+				// the directory should be owned by the current user
+				fs_tmpfs(homedir, 1);
 		}
 	}
 

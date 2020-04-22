@@ -89,7 +89,7 @@ int check_kernel_procs(void) {
 	// only user processes are available in /proc when running grsecurity
 	// EUID_ASSERT();
 
-	char *kern_proc[] = {
+	static char *kern_proc[] = {
 		"kthreadd",
 		"ksoftirqd",
 		"kworker",

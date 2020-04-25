@@ -370,6 +370,7 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else if (strcmp(argv[i], "--fix") == 0) {
+			// fix .desktop files in ~/.local/share/applications directory
 			fix_desktop_files(home);
 			return 0;
 		}
@@ -485,9 +486,6 @@ int main(int argc, char **argv) {
 
 	if (arg_debug)
 		printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
-
-	// fix .desktop files in ~/.local/share/applications directory
-	fix_desktop_files(home);
 
 	return 0;
 }

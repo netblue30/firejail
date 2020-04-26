@@ -22,7 +22,7 @@ include whitelist-var-common.inc
 
 caps.drop all
 netfilter
-no3d
+#no3d - breaks on Arch
 nodvd
 nonewprivs
 noroot

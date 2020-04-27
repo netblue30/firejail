@@ -352,6 +352,14 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- SELinux support is %s\n",
+#ifdef HAVE_SELINUX
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- user namespace support is %s\n",
 #ifdef HAVE_USERNS
 		"enabled"

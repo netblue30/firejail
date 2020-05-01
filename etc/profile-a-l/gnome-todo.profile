@@ -56,9 +56,8 @@ dbus-user.talk ca.desrt.dconf
 #dbus-user.talk org.gnome.evolution.dataserver.Sources5
 #dbus-user.talk org.gnome.evolution.dataserver.Subprocess.Backend.*
 #dbus-user.talk org.gnome.OnlineAccounts
-#dbus-user.talk org.gnome.SettingsDaemon.Color
+dbus-system none
 #dbus-system filter
 #dbus-system.talk org.freedesktop.login1
-dbus-system none
 
 read-only ${HOME}

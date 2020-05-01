@@ -50,15 +50,16 @@ private-tmp
 
 dbus-user filter
 #dbus-user.own org.keepassxc.KeePassXC
+dbus-user.talk com.canonical.Unity.Session
 dbus-user.talk org.freedesktop.ScreenSaver
+dbus-user.talk org.freedesktop.login1.Manager
+dbus-user.talk org.freedesktop.login1.Session
 dbus-user.talk org.gnome.ScreenSaver
+dbus-user.talk org.gnome.SessionManager
+dbus-user.talk org.gnome.SessionManager.Presence
+# Uncomment or add to your keepassxc.local to allow Notifications.
 #dbus-user.talk org.freedesktop.Notifications
-# dbus-user.talk org.freedesktop.login1.Manager
 #dbus-user.talk org.kde.StatusNotifierWatcher
-#dbus-user.talk org.gnome.SessionManager.Presence
-#dbus-user.talk org.gnome.SessionManager
-#dbus-user.talk com.canonical.Unity.Session
-#dbus-user.talk org.freedesktop.login1.Session
 dbus-system none
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp

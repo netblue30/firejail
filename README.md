@@ -187,4 +187,4 @@ gnome-screenshot, ripperX, sound-juicer, iagno, com.github.dahenson.agenda, gnom
 penguin-command, x2goclient, frogatto, gnome-mines, gnome-nibbles, lightsoff, ts3client_runscript.sh, warmux, ferdi, abiword,
 four-in-a-row, gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin, gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars,
 hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless, mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers,
-seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop, fdns
+seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop, fdns, jitsi-meet-desktop, nicontine, steam-runtime

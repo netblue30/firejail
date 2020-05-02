@@ -5,6 +5,10 @@ firejail (0.9.63) baseline; urgency=low
     previous behaviour, use --seccomp-error-action=kill or
     syscall:kill syntax when constructing filters, or override in
     /etc/firejail/firejail.config file.
+  * Fine-grained D-Bus sandboxing with xdg-dbus-proxy.
+    xdg-dbus-proxy must be installed, if not D-Bus access will be allowed.
+    With this version Nodbus is deprecated, in favor of dbus-user none and
+    dbus-system none and will be removed in a future version.
   * DHCP client support
   * SELinux labeling support
   * custom 32-bit seccomp filter support
@@ -28,7 +32,8 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless
   * new profiles: mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers
   * new profiles: seahorse-adventures, wordwarvi, xbill, gnome-klotski
-  * new profiles: swell-foop, fdns, five-or-more
+  * new profiles: swell-foop, fdns, five-or-more, steam-runtime, jitsi-meet-desktop
+  * new profiles: nicontine
  -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low

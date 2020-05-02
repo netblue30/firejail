@@ -17,6 +17,10 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+#mkdir ${HOME}/.local/share/gnome-chess
+#whitelist ${HOME}/.local/share/gnome-chess
+#include whitelist-common.inc
+
 whitelist /usr/share/gnuchess
 whitelist /usr/share/gnome-chess
 include whitelist-runuser-common.inc

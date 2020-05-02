@@ -14,10 +14,14 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.pingus
 whitelist ${HOME}/.pingus
+whitelist /usr/share/pingus
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -33,9 +37,13 @@ novideo
 protocol unix,netlink
 seccomp
 shell none
+tracelog
 
-# private-bin pingus
+disbale-mnt
+private-bin pingus,pingus.bin,sh
+private-cache
 private-dev
+private-etc machine-id
 private-tmp
 
 dbus-user none

@@ -10,6 +10,7 @@ include globals.local
 include whitelist-runuser-common.inc
 
 private-bin transmission-gtk
+private-cache
 
 ignore memory-deny-write-execute
 

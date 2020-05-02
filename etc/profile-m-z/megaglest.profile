@@ -18,9 +18,13 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.megaglest
 whitelist ${HOME}/.megaglest
+whitelist /usr/share/megaglest
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
 netfilter

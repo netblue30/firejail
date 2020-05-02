@@ -149,8 +149,9 @@ read-only ${HOME}/.config/dconf
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
 blacklist /var/lib/systemd
-# blacklist /var/run/systemd
+blacklist ${PATH}/systemd-run
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
+#blacklist /var/run/systemd
 
 # openrc
 blacklist /etc/runlevels/
@@ -308,12 +309,16 @@ read-only ${HOME}/bin
 read-only ${HOME}/.bin
 read-only ${HOME}/.local/bin
 read-only ${HOME}/.cargo/bin
-read-only ${HOME}/.cargo/env
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus
 read-only ${HOME}/.gnome/apps
 read-only ${HOME}/.local/share/applications
+
+read-only ${HOME}/.config/mimeapps.list
+read-only ${HOME}/.config/user-dirs.dirs
+read-only ${HOME}/.config/user-dirs.locale
+read-only ${HOME}/.local/share/mime
 
 # Write-protection for thumbnailer dir
 read-only ${HOME}/.local/share/thumbnailers
@@ -451,6 +456,7 @@ blacklist /vmlinuz*
 blacklist /.snapshots
 
 # flatpak
+blacklist ${HOME}/.cache/flatpak
 blacklist ${HOME}/.config/flatpak
 blacklist ${HOME}/.local/share/flatpak/app
 blacklist ${HOME}/.local/share/flatpak/appstream

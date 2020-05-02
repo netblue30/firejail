@@ -18,7 +18,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.torcs
 whitelist ${HOME}/.torcs
+whitelist /usr/share/games/torcs
+whitelist /var/games/torcs
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
@@ -37,6 +40,7 @@ shell none
 tracelog
 
 disable-mnt
+private-bin bash,chmod,cp,mkdir,rm,torcs
 private-cache
 private-dev
 private-tmp

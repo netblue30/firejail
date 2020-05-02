@@ -38,6 +38,7 @@ whitelist ${HOME}/.pangorc
 # gtk
 whitelist ${HOME}/.config/gtk-2.0
 whitelist ${HOME}/.config/gtk-3.0
+whitelist ${HOME}/.config/gtk-4.0
 whitelist ${HOME}/.config/gtkrc
 whitelist ${HOME}/.config/gtkrc-2.0
 whitelist ${HOME}/.gnome2

@@ -54,8 +54,13 @@ blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.bogofilter
 blacklist ${HOME}/.bzf
-blacklist ${HOME}/.cargo/registry
+blacklist ${HOME}/.cargo/advisory-db
 blacklist ${HOME}/.cargo/config
+blacklist ${HOME}/.cargo/git
+blacklist ${HOME}/.cargo/registry
+blacklist ${HOME}/.cargo/.crates.toml
+blacklist ${HOME}/.cargo/.crates2.json
+blacklist ${HOME}/.cargo/.package-cache
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.clonk
@@ -75,6 +80,7 @@ blacklist ${HOME}/.config/Code - OSS
 blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Debauchee/Barrier.conf
+blacklist ${HOME}/.config/Dharkael
 blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Ferdi
 blacklist ${HOME}/.config/Franz
@@ -118,6 +124,7 @@ blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Standard Notes
 blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
+blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/Zeal
@@ -125,6 +132,7 @@ blacklist ${HOME}/.config/abiword
 blacklist ${HOME}/.config/agenda
 blacklist ${HOME}/.config/akonadi*
 blacklist ${HOME}/.config/akregatorrc
+blacklist ${HOME}/.config/alacritty
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/aria2
@@ -136,6 +144,7 @@ blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
 blacklist ${HOME}/.config/autokey
 blacklist ${HOME}/.config/aweather
+blacklist ${HOME}/.config/backintime
 blacklist ${HOME}/.config/baloofilerc
 blacklist ${HOME}/.config/baloorc
 blacklist ${HOME}/.config/blender
@@ -195,14 +204,18 @@ blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/git
+blacklist ${HOME}/.config/glade.conf
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gmpc
 blacklist ${HOME}/.config/gnome-builder
 blacklist ${HOME}/.config/gnome-chess
+blacklist ${HOME}/.config/gnome-control-center
+blacklist ${HOME}/.config/gnome-initial-setup-done
 blacklist ${HOME}/.config/gnome-latex
 blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv
 blacklist ${HOME}/.config/gnome-pie
+blacklist ${HOME}/.config/gnome-session
 blacklist ${HOME}/.config/godot
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
@@ -255,6 +268,7 @@ blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
 blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/meteo-qt
+blacklist ${HOME}/.config/menulibre.cfg
 blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/Microsoft
 blacklist ${HOME}/.config/midori
@@ -264,6 +278,7 @@ blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
+blacklist ${HOME}/.config/mutter
 blacklist ${HOME}/.config/mypaint
 blacklist ${HOME}/.config/nano
 blacklist ${HOME}/.config/nautilus
@@ -362,6 +377,7 @@ blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.config/Zulip
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.crawl
+blacklist ${HOME}/.cups
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dashcore
 blacklist ${HOME}/.devilspie
@@ -400,6 +416,7 @@ blacklist ${HOME}/.gradle
 blacklist ${HOME}/.gramps
 blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hashcat
+blacklist ${HOME}/.hex-a-hop
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.hugin
 blacklist ${HOME}/.i2p
@@ -515,6 +532,7 @@ blacklist ${HOME}/.local/share/agenda
 blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/autokey
+blacklist ${HOME}/.local/share/backintime
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/barrier
 blacklist ${HOME}/.local/share/bibletime
@@ -545,8 +563,9 @@ blacklist ${HOME}/.local/share/geeqie
 blacklist ${HOME}/.local/share/ghostwriter
 blacklist ${HOME}/.local/share/gitg
 blacklist ${HOME}/.local/share/gnome-2048
-blacklist ${HOME}/.local/share/gnome-chess
+blacklist ${HOME}/.local/share/gnome-boxes
 blacklist ${HOME}/.local/share/gnome-builder
+blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-klotski
 blacklist ${HOME}/.local/share/gnome-latex
 blacklist ${HOME}/.local/share/gnome-mines
@@ -672,6 +691,7 @@ blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer
 blacklist ${HOME}/.purple
+blacklist ${HOME}/.pylint.d
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.qgis2
 blacklist ${HOME}/.qmmp
@@ -702,6 +722,7 @@ blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.tb
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.teeworlds
+blacklist ${HOME}/.texlive2018
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling
@@ -779,6 +800,7 @@ blacklist ${HOME}/.cache/chromium-dev
 blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.cache/darktable
+blacklist ${HOME}/.cache/deja-dup
 blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/dnox
 blacklist ${HOME}/.cache/dolphin
@@ -795,9 +817,12 @@ blacklist ${HOME}/.cache/gegl-0.4
 blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/gfeeds
 blacklist ${HOME}/.cache/gimp
+blacklist ${HOME}/.cache/gnome-boxes
 blacklist ${HOME}/.cache/gnome-builder
+blacklist ${HOME}/.cache/gnome-control-center
 blacklist ${HOME}/.cache/gnome-recipes
 blacklist ${HOME}/.cache/gnome-screenshot
+blacklist ${HOME}/.cache/gnome-software
 blacklist ${HOME}/.cache/gnome-twitch
 blacklist ${HOME}/.cache/godot
 blacklist ${HOME}/.cache/google-chrome
@@ -848,6 +873,7 @@ blacklist ${HOME}/.cache/org.gnome.Books
 blacklist ${HOME}/.cache/org.gnome.Maps
 blacklist ${HOME}/.cache/pdfmod
 blacklist ${HOME}/.cache/peek
+blacklist ${HOME}/.cache/pip
 blacklist ${HOME}/.cache/plasmashell
 blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/qBittorrent

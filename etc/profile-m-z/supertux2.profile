@@ -14,10 +14,14 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/supertux2
 whitelist ${HOME}/.local/share/supertux2
+whitelist /usr/share/supertux2
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -33,6 +37,7 @@ novideo
 protocol unix,netlink
 seccomp
 shell none
+tracelog
 
 disable-mnt
 # private-bin supertux2

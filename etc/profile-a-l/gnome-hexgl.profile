@@ -40,7 +40,7 @@ private
 private-bin gnome-hexgl
 private-cache
 private-dev
-private-etc machine-id
+private-etc alsa,asound.conf,machine-id,pulse
 private-tmp
 
 dbus-user none

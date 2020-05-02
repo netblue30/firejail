@@ -46,9 +46,10 @@ private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gtk-3
 private-dev
 private-tmp
 
-# uses dconf, MPRIS
-# dbus-user none
-# dbus-system none
+dbus-user filter
+dbus-user.own io.github.celluloid_player.Celluloid
+dbus-user.talk org.gnome.SettingsDaemon.MediaKeys
+dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.config/celluloid

@@ -47,5 +47,11 @@ private-dev
 private-etc dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id
 private-tmp
 
+dbus-user filter
+dbus-user.own org.gnome.Pomodoro
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.gnome.Shell
+dbus-system none
+
 read-only ${HOME}
 read-write ${HOME}/.local/share/gnome-pomodoro

@@ -47,6 +47,12 @@ private-bin rhythmbox,rhythmbox-client
 private-dev
 private-tmp
 
-# makes settings immutable
-# dbus-user none
-# dbus-system none
+dbus-user filter
+dbus-user.own org.gnome.Rhythmbox3
+dbus-user.own org.mpris.MediaPlayer2.rhythmbox
+dbus-user.own org.gnome.UPnP.MediaServer2.Rhythmbox
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.Notifications
+dbus-system none
+dbus-system filter
+dbus-system.talk org.freedesktop.Avahi

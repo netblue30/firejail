@@ -847,6 +847,7 @@ void set_profile_run_file(pid_t pid, const char *fname);
 
 // dbus.c
 int dbus_check_name(const char *name);
+int dbus_check_call_rule(const char *name);
 void dbus_check_profile(void);
 void dbus_proxy_start(void);
 void dbus_proxy_stop(void);

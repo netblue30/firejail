@@ -2097,6 +2097,22 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL); // will exit if something wrong
 			profile_add(line);
 		}
+		else if (strncmp(argv[i], "--dbus-user.call=", 17) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.call %s", argv[i] + 17) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-user.broadcast=", 22) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.broadcast %s", argv[i] + 22) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
 		else if (strncmp("--dbus-system=", argv[i], 14) == 0) {
 			if (strcmp("filter", argv[i] + 14) == 0) {
 				if (arg_dbus_system == DBUS_POLICY_BLOCK) {
@@ -2130,6 +2146,22 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--dbus-system.own=", 18) == 0) {
 			char *line;
 			if (asprintf(&line, "dbus-system.own %s", argv[i] + 18) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-system.call=", 19) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.call %s", argv[i] + 19) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-system.broadcast=", 24) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.broadcast %s", argv[i] + 24) == -1)
 				errExit("asprintf");
 
 			profile_check_line(line, 0, NULL); // will exit if something wrong

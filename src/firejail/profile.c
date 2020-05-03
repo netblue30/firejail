@@ -473,6 +473,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		return 1;
 	}
+	else if (strncmp(ptr, "dbus-user.call ", 15) == 0) {
+		if (!dbus_check_call_rule(ptr + 15)) {
+			fprintf(stderr, "Invalid dbus-user.call rule: %s\n", ptr + 15);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-user.broadcast ", 20) == 0) {
+		if (!dbus_check_call_rule(ptr + 20)) {
+			fprintf(stderr, "Invalid dbus-user.broadcast rule: %s\n", ptr + 20);
+			exit(1);
+		}
+		return 1;
+	}
 	else if (strncmp("dbus-system ", ptr, 12) == 0) {
 		ptr += 12;
 		if (strcmp("filter", ptr) == 0) {
@@ -506,6 +520,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "dbus-system.own ", 16) == 0) {
 		if (!dbus_check_name(ptr + 16)) {
 			fprintf(stderr, "Invalid dbus-system.own name: %s\n", ptr + 16);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-system.call ", 17) == 0) {
+		if (!dbus_check_call_rule(ptr + 17)) {
+			fprintf(stderr, "Invalid dbus-system.call rule: %s\n", ptr + 17);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-system.broadcast ", 22) == 0) {
+		if (!dbus_check_call_rule(ptr + 22)) {
+			fprintf(stderr, "Invalid dbus-system.broadcast rule: %s\n", ptr + 22);
 			exit(1);
 		}
 		return 1;

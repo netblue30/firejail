@@ -452,6 +452,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		return 0;
 	}
+	else if (strncmp(ptr, "dbus-user.see ", 14) == 0) {
+		if (!dbus_check_name(ptr + 14)) {
+			printf("Invalid dbus-user.see name: %s\n", ptr + 15);
+			exit(1);
+		}
+		return 1;
+	}
 	else if (strncmp(ptr, "dbus-user.talk ", 15) == 0) {
 		if (!dbus_check_name(ptr + 15)) {
 			printf("Invalid dbus-user.talk name: %s\n", ptr + 15);
@@ -481,6 +488,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			exit(1);
 		}
 		return 0;
+	}
+	else if (strncmp(ptr, "dbus-system.see ", 16) == 0) {
+		if (!dbus_check_name(ptr + 16)) {
+			fprintf(stderr, "Invalid dbus-system.see name: %s\n", ptr + 17);
+			exit(1);
+		}
+		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.talk ", 17) == 0) {
 		if (!dbus_check_name(ptr + 17)) {

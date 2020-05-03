@@ -2073,6 +2073,14 @@ int main(int argc, char **argv, char **envp) {
 				exit(1);
 			}
 		}
+		else if (strncmp(argv[i], "--dbus-user.see=", 16) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.see %s", argv[i] + 16) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
 		else if (strncmp(argv[i], "--dbus-user.talk=", 17) == 0) {
 			char *line;
 			if (asprintf(&line, "dbus-user.talk %s", argv[i] + 17) == -1)
@@ -2102,6 +2110,14 @@ int main(int argc, char **argv, char **envp) {
 				fprintf(stderr, "Unknown dbus-system policy: %s\n", argv[i] + 14);
 				exit(1);
 			}
+		}
+		else if (strncmp(argv[i], "--dbus-system.see=", 18) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.see %s", argv[i] + 18) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
 		}
 		else if (strncmp(argv[i], "--dbus-system.talk=", 19) == 0) {
 			char *line;

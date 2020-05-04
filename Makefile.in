@@ -28,12 +28,12 @@ SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary secco
 endif
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(MYLIBS)
 
-.PHONY: all_items $(ALL_ITEMS)
+.PHONY: all_items man filters
 all_items: $(ALL_ITEMS)
 $(ALL_ITEMS): $(MYDIRS)
 	$(MAKE) -C $(dir $@)
 
-.PHONY: mydirs $(MYDIRS)
+.PHONY: mydirs
 mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
@@ -45,15 +45,25 @@ man: $(MANPAGES)
 
 filters: $(SECCOMP_FILTERS) $(SBOX_APPS)
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
-$(SECCOMP_FILTERS): $(SBOX_APPS)
+seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp default seccomp
 	src/fsec-optimize/fsec-optimize seccomp
+
+seccomp.debug: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
 	src/fsec-optimize/fsec-optimize seccomp.debug
+
+seccomp.32: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp secondary 32 seccomp.32
 	src/fsec-optimize/fsec-optimize seccomp.32
+
+seccomp.block_secondary: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp secondary block seccomp.block_secondary
+
+seccomp.mdwx: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
+
+seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
 endif
 

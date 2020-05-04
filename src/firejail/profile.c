@@ -445,6 +445,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			arg_dbus_user = DBUS_POLICY_FILTER;
 		} else if (strcmp("none", ptr) == 0) {
+			if (arg_dbus_log_user) {
+				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+				exit(1);
+			}
 			arg_dbus_user = DBUS_POLICY_BLOCK;
 		} else {
 			fprintf(stderr, "Unknown dbus-user policy: %s\n", ptr);
@@ -496,6 +500,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			arg_dbus_system = DBUS_POLICY_FILTER;
 		} else if (strcmp("none", ptr) == 0) {
+			if (arg_dbus_log_system) {
+				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+				exit(1);
+			}
 			arg_dbus_system = DBUS_POLICY_BLOCK;
 		} else {
 			fprintf(stderr, "Unknown dbus-system policy: %s\n", ptr);

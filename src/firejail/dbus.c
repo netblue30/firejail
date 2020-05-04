@@ -285,6 +285,8 @@ static char *find_user_socket(void) {
 void dbus_proxy_start(void) {
 	dbus_create_user_dir();
 
+	EUID_USER();
+
 	int status_pipe[2];
 	if (pipe(status_pipe) == -1)
 		errExit("pipe");
@@ -299,10 +301,21 @@ void dbus_proxy_start(void) {
 		errExit("fork");
 	if (dbus_proxy_pid == 0) {
 		int i;
-		for (i = 3; i < FIREJAIL_MAX_FD; i++) {
+		for (i = STDERR_FILENO + 1; i < FIREJAIL_MAX_FD; i++) {
 			if (i != status_pipe[1] && i != args_pipe[0])
 				close(i); // close open files
 		}
+		if (arg_dbus_log_file != NULL) {
+			int output_fd = creat(arg_dbus_log_file, 0666);
+			if (output_fd < 0)
+				errExit("creat");
+			if (output_fd != STDOUT_FILENO) {
+				if (dup2(output_fd, STDOUT_FILENO) != STDOUT_FILENO)
+					errExit("dup2");
+				close(output_fd);
+			}
+		}
+		close(STDIN_FILENO);
 		char *args[4] = {XDG_DBUS_PROXY_PATH, NULL, NULL, NULL};
 		if (asprintf(&args[1], "--fd=%d", status_pipe[1]) == -1
 			|| asprintf(&args[2], "--args=%d", args_pipe[0]) == -1)
@@ -328,6 +341,9 @@ void dbus_proxy_start(void) {
 						 (int) getuid(), (int) getpid()) == -1)
 				errExit("asprintf");
 			write_arg(args_pipe[1], "%s", dbus_user_proxy_socket);
+			if (arg_dbus_log_user) {
+				write_arg(args_pipe[1], "--log");
+			}
 			write_arg(args_pipe[1], "--filter");
 			write_profile(args_pipe[1], "dbus-user.");
 		}
@@ -344,6 +360,9 @@ void dbus_proxy_start(void) {
 						 (int) getuid(), (int) getpid()) == -1)
 				errExit("asprintf");
 			write_arg(args_pipe[1], "%s", dbus_system_proxy_socket);
+			if (arg_dbus_log_system) {
+				write_arg(args_pipe[1], "--log");
+			}
 			write_arg(args_pipe[1], "--filter");
 			write_profile(args_pipe[1], "dbus-system.");
 		}

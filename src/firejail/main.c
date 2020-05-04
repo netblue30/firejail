@@ -148,6 +148,9 @@ int arg_nou2f = 0; // --nou2f
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
 DbusPolicy arg_dbus_user = DBUS_POLICY_ALLOW;	// --dbus-user
 DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
+const char *arg_dbus_log_file = NULL;
+int arg_dbus_log_user = 0;
+int arg_dbus_log_system = 0;
 int login_shell = 0;
 
 //**********************************************************************************
@@ -2067,6 +2070,10 @@ int main(int argc, char **argv, char **envp) {
 				}
 				arg_dbus_user = DBUS_POLICY_FILTER;
 			} else if (strcmp("none", argv[i] + 12) == 0) {
+				if (arg_dbus_log_user) {
+					fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+					exit(1);
+				}
 				arg_dbus_user = DBUS_POLICY_BLOCK;
 			} else {
 				fprintf(stderr, "Unknown dbus-user policy: %s\n", argv[i] + 12);
@@ -2121,6 +2128,10 @@ int main(int argc, char **argv, char **envp) {
 				}
 				arg_dbus_system = DBUS_POLICY_FILTER;
 			} else if (strcmp("none", argv[i] + 14) == 0) {
+				if (arg_dbus_log_system) {
+					fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+					exit(1);
+				}
 				arg_dbus_system = DBUS_POLICY_BLOCK;
 			} else {
 				fprintf(stderr, "Unknown dbus-system policy: %s\n", argv[i] + 14);
@@ -2166,6 +2177,27 @@ int main(int argc, char **argv, char **envp) {
 
 			profile_check_line(line, 0, NULL); // will exit if something wrong
 			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-log=", 11) == 0) {
+			if (arg_dbus_log_file != NULL) {
+				fprintf(stderr, "Error: --dbus-log option already specified\n");
+				exit(1);
+			}
+			arg_dbus_log_file = argv[i] + 11;
+		}
+		else if (strcmp(argv[i], "--dbus-user.log") == 0) {
+			if (arg_dbus_user != DBUS_POLICY_FILTER) {
+				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+				exit(1);
+			}
+			arg_dbus_log_user = 1;
+		}
+		else if (strcmp(argv[i], "--dbus-system.log") == 0) {
+			if (arg_dbus_system != DBUS_POLICY_FILTER) {
+				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+				exit(1);
+			}
+			arg_dbus_log_system = 1;
 		}
 
 		//*************************************

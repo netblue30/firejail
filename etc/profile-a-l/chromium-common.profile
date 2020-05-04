@@ -41,7 +41,7 @@ disable-mnt
 
 # prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector
 # dbus-user none
-# dbus-system none
+dbus-system none
 
 # the file dialog needs to work without d-bus
 ?HAS_NODBUS: env NO_CHROME_KDE_FILE_DIALOG=1

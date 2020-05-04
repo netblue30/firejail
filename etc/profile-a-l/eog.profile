@@ -16,7 +16,7 @@ whitelist /usr/share/eog
 private-bin eog
 
 dbus-user filter
-dbus-user.own org.gnome.Eog
+dbus-user.own org.gnome.eog
 dbus-user.talk ca.desrt.dconf
 dbus-system none
 

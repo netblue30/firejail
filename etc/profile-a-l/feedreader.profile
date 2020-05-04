@@ -15,6 +15,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/feedreader
@@ -51,8 +52,8 @@ private-tmp
 dbus-user filter
 dbus-user.own org.gnome.FeedReader
 dbus-user.own org.gnome.FeedReader.ArticleView
+dbus-user.talk org.freedesktop.secrets
 # Enable as you need.
 #dbus-user.talk org.freedesktop.Notifications
-#dbus-user.talk org.freedesktop.secrets
 #dbus-user.talk org.gnome.OnlineAccounts
 dbus-system none

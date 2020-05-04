@@ -46,7 +46,6 @@ tracelog
 private-dev
 private-tmp
 
-dbus-user none
 dbus-system none
 
 join-or-start libreoffice

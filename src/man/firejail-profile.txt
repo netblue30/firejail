@@ -491,6 +491,15 @@ Allow the application to own the name org.gnome.ghex and all names underneath in
 \fBdbus-system.talk org.freedesktop.Notifications
 Allow the application to talk to the name org.freedesktop.Notifications on the system DBus.
 .TP
+\fBdbus-system.see org.freedesktop.Notifications
+Allow the application to see but not talk to the name org.freedesktop.Notifications on the system DBus.
+.TP
+\fBdbus-system.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
+.TP
+\fBdbus-system.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to recieve broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
+.TP
 \fBdbus-user filter
 Enable filtered access to the session DBus. Filters can be specified with the dbus-user.talk and dbus-user.own commands.
 .TP
@@ -502,6 +511,15 @@ Allow the application to own the name org.gnome.ghex and all names underneath in
 .TP
 \fBdbus-user.talk org.freedesktop.Notifications
 Allow the application to talk to the name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBdbus-user.see org.freedesktop.Notifications
+Allow the application to see but not talk to the name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBdbus-user.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBdbus-user.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to recieve broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
 .TP
 \fBnodbus \fR(deprecated)
 Disable D-Bus access (both system and session buses). Equivalent to dbus-system none and dbus-user none.

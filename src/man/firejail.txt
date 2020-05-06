@@ -326,6 +326,22 @@ $ firejail \-\-list
 $ firejail \-\-cpu.print=3272
 
 .TP
+\fB\-\-dbus-log=file
+Specify the location for the DBus log file.
+.br
+
+.br
+The log file contains events for both the system and session buses if both of
+the --dbus-sysem.log and --dbus-user.log options are specified. If no log file
+path is given, logs are written to the standard output instead.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.log --dbus-log=dbus.txt
+
+.TP
 \fB\-\-dbus-system=filter|none
 Set system DBus sandboxing policy. 
 .br
@@ -353,6 +369,52 @@ Example:
 $ firejail \-\-dbus-system=none
 
 .TP
+\fB\-\-dbus-system.broadcast=name=[member][@path]
+Allows the application to receive broadcast signals from theindicated interface
+member at the indicated object path exposed by the indicated bus name on the
+system DBus.
+The name may have a .* suffix to match all names underneath it, including
+itself.
+The interface member may have a .* to match all members of an interface, or be * to match all interfaces.
+The path may have a /* suffix to indicate all objects underneath it, including
+itself.
+Omitting the interface member or the object path will match all members and
+object paths, respectively.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.broadcast=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+
+.TP
+\fB\-\-dbus-system.call=name=[member][@path]
+Allows the application to call the indicated interface member at the indicated
+object path exposed by the indicated bus name on the system DBus.
+The name may have a .* suffix to match all names underneath it, including
+itself.
+The interface member may have a .* to match all members of an interface, or be * to match all interfaces.
+The path may have a /* suffix to indicate all objects underneath it, including
+itself.
+Omitting the interface member or the object path will match all members and
+object paths, respectively.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.call=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+
+.TP
+\fB\-\-dbus-system.log
+Turn on DBus logging for the system DBus. This option requires --dbus-system=log.
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.log
+
+.TP
 \fB\-\-dbus-system.own=name
 Allows the application to own the specified well-known name on the system DBus.
 The name may have a .* suffix to match all names underneath it, including itself
@@ -364,6 +426,20 @@ not "foobar").
 Example:
 .br
 $ firejail --dbus-system=filter --dbus-system.own=org.gnome.ghex.*
+
+.TP
+\fB\-\-dbus-system.see=name
+Allows the application to see, but not talk to the specified well-known name on
+the system DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.see=org.freedesktop.Notifications
 
 .TP
 \fB\-\-dbus-system.talk=name
@@ -406,6 +482,52 @@ Example:
 $ firejail \-\-dbus-user=none
 
 .TP
+\fB\-\-dbus-user.broadcast=name=[member][@path]
+Allows the application to receive broadcast signals from theindicated interface
+member at the indicated object path exposed by the indicated bus name on the
+session DBus.
+The name may have a .* suffix to match all names underneath it, including
+itself.
+The interface member may have a .* to match all members of an interface, or be * to match all interfaces.
+The path may have a /* suffix to indicate all objects underneath it, including
+itself.
+Omitting the interface member or the object path will match all members and
+object paths, respectively.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.broadcast=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+
+.TP
+\fB\-\-dbus-user.call=name=[member][@path]
+Allows the application to call the indicated interface member at the indicated
+object path exposed by the indicated bus name on the session DBus.
+The name may have a .* suffix to match all names underneath it, including
+itself.
+The interface member may have a .* to match all members of an interface, or be * to match all interfaces.
+The path may have a /* suffix to indicate all objects underneath it, including
+itself.
+Omitting the interface member or the object path will match all members and
+object paths, respectively.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.call=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+
+.TP
+\fB\-\-dbus-user.log
+Turn on DBus logging for the session DBus. This option requires --dbus-user=log.
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.log
+
+.TP
 \fB\-\-dbus-user.own=name
 Allows the application to own the specified well-known name on the session DBus.
 The name may have a .* suffix to match all names underneath it, including itself
@@ -430,6 +552,20 @@ not "foobar").
 Example:
 .br
 $ firejail --dbus-user=filter --dbus-user.talk=org.freedesktop.Notifications
+
+.TP
+\fB\-\-dbus-user.see=name
+Allows the application to see, but not talk to the specified well-known name on
+the session DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.see=org.freedesktop.Notifications
 
 .TP
 \fB\-\-debug\fR

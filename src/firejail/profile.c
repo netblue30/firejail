@@ -441,9 +441,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (strcmp("filter", ptr) == 0) {
 			if (arg_dbus_user == DBUS_POLICY_BLOCK) {
 				fprintf(stderr, "Error: Cannot relax dbus-user policy, it is already set to block\n");
-				exit(1);
+			} else {
+				arg_dbus_user = DBUS_POLICY_FILTER;
 			}
-			arg_dbus_user = DBUS_POLICY_FILTER;
 		} else if (strcmp("none", ptr) == 0) {
 			if (arg_dbus_log_user) {
 				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
@@ -496,9 +496,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (strcmp("filter", ptr) == 0) {
 			if (arg_dbus_system == DBUS_POLICY_BLOCK) {
 				fprintf(stderr, "Error: Cannot relax dbus-system policy, it is already set to block\n");
-				exit(1);
+			} else {
+				arg_dbus_system = DBUS_POLICY_FILTER;
 			}
-			arg_dbus_system = DBUS_POLICY_FILTER;
 		} else if (strcmp("none", ptr) == 0) {
 			if (arg_dbus_log_system) {
 				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");

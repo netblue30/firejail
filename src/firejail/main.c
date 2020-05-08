@@ -2065,10 +2065,10 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp("--dbus-user=", argv[i], 12) == 0) {
 			if (strcmp("filter", argv[i] + 12) == 0) {
 				if (arg_dbus_user == DBUS_POLICY_BLOCK) {
-					fprintf(stderr, "Error: Cannot relax --dbus-user policy, it is already set to block\n");
-					exit(1);
+					fprintf(stderr, "Warning: Cannot relax --dbus-user policy, it is already set to block\n");
+				} else {
+					arg_dbus_user = DBUS_POLICY_FILTER;
 				}
-				arg_dbus_user = DBUS_POLICY_FILTER;
 			} else if (strcmp("none", argv[i] + 12) == 0) {
 				if (arg_dbus_log_user) {
 					fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
@@ -2123,10 +2123,10 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp("--dbus-system=", argv[i], 14) == 0) {
 			if (strcmp("filter", argv[i] + 14) == 0) {
 				if (arg_dbus_system == DBUS_POLICY_BLOCK) {
-					fprintf(stderr, "Error: Cannot relax --dbus-system policy, it is already set to block\n");
-					exit(1);
+					fprintf(stderr, "Warning: Cannot relax --dbus-system policy, it is already set to block\n");
+				} else {
+					arg_dbus_system = DBUS_POLICY_FILTER;
 				}
-				arg_dbus_system = DBUS_POLICY_FILTER;
 			} else if (strcmp("none", argv[i] + 14) == 0) {
 				if (arg_dbus_log_system) {
 					fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");

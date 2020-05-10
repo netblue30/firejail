@@ -553,6 +553,7 @@ blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/emailidentities
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
+blacklist ${HOME}/.local/share/FasterThanLight
 blacklist ${HOME}/.local/share/feedreader
 blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/five-or-more
@@ -581,6 +582,7 @@ blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/i2p
+blacklist ${HOME}/.local/share/IntoTheBreach
 blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kalgebra
 blacklist ${HOME}/.local/share/kate
@@ -621,6 +623,7 @@ blacklist ${HOME}/.local/share/okular
 blacklist ${HOME}/.local/share/onlyoffice
 blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
+blacklist ${HOME}/.local/share/Paradox Interactive
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/plasma_notes
 blacklist ${HOME}/.local/share/profanity
@@ -654,6 +657,7 @@ blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.magicor
 blacklist ${HOME}/.masterpdfeditor
+blacklist ${HOME}/.mbwarband
 blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
@@ -686,6 +690,7 @@ blacklist ${HOME}/.openttd
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
 blacklist ${HOME}/.ostrichriders
+blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.parallelrealities/blobwars
 blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pingus

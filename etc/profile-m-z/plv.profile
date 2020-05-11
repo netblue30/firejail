@@ -56,3 +56,4 @@ dbus-system none
 
 #memory-deny-write-execute - breaks opening file-chooser
 read-only ${HOME}
+read-write ${HOME}/.config/PacmanLogViewer

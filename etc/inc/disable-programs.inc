@@ -108,6 +108,7 @@ blacklist ${HOME}/.config/MuseScore
 blacklist ${HOME}/.config/MusicBrainz
 blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nylas Mail
+blacklist ${HOME}/.config/PacmanLogViewer
 blacklist ${HOME}/.config/PBE
 blacklist ${HOME}/.config/Philipp Schmieder
 blacklist ${HOME}/.config/QGIS

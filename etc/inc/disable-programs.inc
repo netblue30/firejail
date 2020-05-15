@@ -161,6 +161,12 @@ blacklist ${HOME}/.config/cantata
 blacklist ${HOME}/.config/catfish
 blacklist ${HOME}/.config/celluloid
 blacklist ${HOME}/.config/cherrytree
+blacklist ${HOME}/.config/chrome-flags.conf
+blacklist ${HOME}/.config/chrome-flags.config
+blacklist ${HOME}/.config/chrome-beta-flags.conf
+blacklist ${HOME}/.config/chrome-beta-flags.config
+blacklist ${HOME}/.config/chrome-unstable-flags.conf
+blacklist ${HOME}/.config/chrome-unstable-flags.config
 blacklist ${HOME}/.config/chromium
 blacklist ${HOME}/.config/chromium-dev
 blacklist ${HOME}/.config/chromium-flags.conf

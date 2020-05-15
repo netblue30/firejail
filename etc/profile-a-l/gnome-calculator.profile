@@ -13,6 +13,7 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
 include whitelist-common.inc

@@ -21,6 +21,7 @@ whitelist ${HOME}/.config/yelp
 whitelist /usr/share/doc
 whitelist /usr/share/help
 whitelist /usr/share/yelp
+whitelist /usr/share/yelp-tools
 whitelist /usr/share/yelp-xsl
 include whitelist-common.inc
 include whitelist-runuser-common.inc

@@ -8,6 +8,9 @@ include globals.local
 noblacklist ${HOME}/.cache/google-chrome
 noblacklist ${HOME}/.config/google-chrome
 
+noblacklist ${HOME}/.config/chrome-flags.conf
+noblacklist ${HOME}/.config/chrome-flags.config
+
 mkdir ${HOME}/.cache/google-chrome
 mkdir ${HOME}/.config/google-chrome
 whitelist ${HOME}/.cache/google-chrome

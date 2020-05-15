@@ -17,6 +17,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
+include disable-shell.inc
 include disable-xdg.inc
 
 include whitelist-usr-share-common.inc

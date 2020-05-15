@@ -21,6 +21,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 # depending on workflow you can uncomment the below or put 'include disable-xdg.inc' in your wget.local
 #include disable-xdg.inc
 

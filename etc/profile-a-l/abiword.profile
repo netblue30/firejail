@@ -14,6 +14,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 
 whitelist /usr/share/abiword-3.0
 include whitelist-usr-share-common.inc

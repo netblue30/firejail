@@ -16,6 +16,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 
 mkdir ${HOME}/.config/Mumble
 mkdir ${HOME}/.local/share/data/Mumble

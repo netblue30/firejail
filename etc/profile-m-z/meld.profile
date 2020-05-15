@@ -35,6 +35,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-programs.inc.
 #include disable-programs.inc
+include disable-shell.inc
 
 include whitelist-runuser-common.inc
 

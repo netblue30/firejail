@@ -15,6 +15,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 
 mkfile ${HOME}/.config/akregatorrc
 mkdir ${HOME}/.local/share/akregator

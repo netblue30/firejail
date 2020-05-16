@@ -388,6 +388,7 @@ blacklist /usr/local/sbin
 blacklist /usr/sbin
 
 # system management
+blacklist ${PATH}/busybox
 blacklist ${PATH}/at
 blacklist ${PATH}/chage
 blacklist ${PATH}/chfn

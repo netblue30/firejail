@@ -511,6 +511,8 @@ Lukáš Krejčí (https://github.com/lskrejci)
         - fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
 	- code spelling fixes
+Mace Muilman (https://github.com/mace015)
+	- google-chrome{,beta,unstable} flags
 maces (https://github.com/maces)
 	- Franz messenger profile
 Madura A (https://github.com/manushanga)

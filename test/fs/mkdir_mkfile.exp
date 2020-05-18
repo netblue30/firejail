@@ -22,23 +22,23 @@ expect {
 	"_firejail_test_dir"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"_firejail_test_dir/dir1"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"_firejail_test_dir/dir1/dir2"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"_firejail_test_dir/dir1/dir2/dir3"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"_firejail_test_dir/dir1/dir2/dir3/file1"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 6\n";exit}
 	"_firejail_test_file"
 }
 after 100
@@ -47,8 +47,8 @@ after 100
 
 send -- "firejail --profile=mkfile.profile\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"only files in user home or /tmp"
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"only files or directories in user home, /tmp"
 }
 after 100
 

@@ -28,13 +28,13 @@ SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary secco
 endif
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(MYLIBS)
 
-.PHONY: all_items man filters
+.PHONY: all_items $(ALL_ITEMS)
 all_items: $(ALL_ITEMS)
 $(ALL_ITEMS): $(MYDIRS)
 	$(MAKE) -C $(dir $@)
 
 .PHONY: mydirs
-mydirs: $(MYDIRS)
+mydirs: mydirs $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 

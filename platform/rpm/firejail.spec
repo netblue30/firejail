@@ -19,7 +19,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %setup -q
 
 %build
-%configure --disable-userns --disable-contrib-install
+%configure __CONFIG_OPT__
 make %{?_smp_mflags}
 
 %install

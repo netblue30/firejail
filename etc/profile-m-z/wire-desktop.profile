@@ -24,6 +24,8 @@ include whitelist-common.inc
 
 caps.keep sys_admin,sys_chroot
 nou2f
+ignore seccomp
+seccomp !chroot
 shell none
 
 disable-mnt

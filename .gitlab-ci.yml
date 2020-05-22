@@ -49,7 +49,7 @@ build_apparmor:
     script:
         - apt-get update -qq
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
-        - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail-apparmor*.deb
+        - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail*.deb
 
 cppcheck:
     image: debian:latest

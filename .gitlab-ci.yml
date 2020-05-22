@@ -9,7 +9,7 @@ build_ubuntu_package:
     image: ubuntu:rolling
     script:
         - apt-get update -qq
-        - apt-get install -y -qq build-essential lintian pkg-config python3
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config python3
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
         - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 

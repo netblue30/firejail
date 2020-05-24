@@ -4,6 +4,7 @@
 # Persistent local customizations
 include dino-im.local
 # Persistent global definitions
+# added by included profile
 #include globals.local
 
 # Add Ubuntu specific binary name

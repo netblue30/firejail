@@ -4,11 +4,11 @@
 #
 #
 TARGET_REPO=$1
+REPO_HOST=$2
 SSH_OPT="-o UserKnownHostsFile=/dev/null -o PasswordAuthentication=no -o StrictHostKeyChecking=no"
-REPO_HOST=repo-ha-write.int.snowflakecomputing.com
 
-if [ ! -z "$2" ]; then
-  RPMS=($2)
+if [ ! -z "$3" ]; then
+  RPMS=($3)
 else
   # list current directory to get rpm
   RPMS=$(ls -1 -- *.rpm)

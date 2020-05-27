@@ -144,12 +144,16 @@ blacklist ${RUNUSER}/kdesud_*
 blacklist ${HOME}/.local/share/gnome-shell
 # no direct modification of dconf database
 read-only ${HOME}/.config/dconf
+blacklist ${RUNUSER}/gnome-session-leader-fifo
+blacklist ${RUNUSER}/gnome-shell
+blacklist ${RUNUSER}/gsconnect
 
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
 blacklist /var/lib/systemd
 blacklist ${PATH}/systemd-run
+blacklist ${RUNUSER}/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd
 
@@ -174,6 +178,13 @@ blacklist ${RUNUSER}/libvirt
 blacklist /var/cache/libvirt
 blacklist /var/lib/libvirt
 blacklist /var/log/libvirt
+
+# OCI-Containers / Podman
+blacklist ${RUNUSER}/containers
+blacklist ${RUNUSER}/crun
+blacklist ${RUNUSER}/libpod
+blacklist ${RUNUSER}/runc
+blacklist ${RUNUSER}/toolbox
 
 # VeraCrypt
 blacklist ${HOME}/.VeraCrypt
@@ -478,6 +489,9 @@ blacklist /var/lib/flatpak
 # most of the time bwrap is SUID binary
 blacklist ${PATH}/bwrap
 
+# snap
+blacklist ${RUNUSER}/snapd-session-agent.socket
+
 # mail directories used by mutt
 blacklist ${HOME}/.Mail
 blacklist ${HOME}/.mail
@@ -502,3 +516,9 @@ blacklist ${PATH}/dns2tcp
 blacklist ${PATH}/iodine
 blacklist ${PATH}/knsupdate
 blacklist ${PATH}/resolvectl
+
+# rest of ${RUNUSER}
+blacklist ${RUNUSER}/*.lock
+blacklist ${RUNUSER}/inaccessible
+blacklist ${RUNUSER}/update-notifier.pid
+blacklist ${RUNUSER}/pk-debconf-socket

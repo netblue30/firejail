@@ -1,7 +1,7 @@
 Name: __NAME__
 Version: __VERSION__
 Release: 1
-Summary: Linux namepaces sandbox program
+Summary: Linux namespaces sandbox program
 
 License: GPLv2+
 Group: Development/Tools

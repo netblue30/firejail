@@ -671,6 +671,7 @@ blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.megaglest
 blacklist ${HOME}/.minetest
 blacklist ${HOME}/.mirrormagic
+blacklist ${HOME}/.moc
 blacklist ${HOME}/.moonchild productions/basilisk
 blacklist ${HOME}/.moonchild productions/pale moon
 blacklist ${HOME}/.mozilla

@@ -148,6 +148,9 @@ int arg_nou2f = 0; // --nou2f
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
 DbusPolicy arg_dbus_user = DBUS_POLICY_ALLOW;	// --dbus-user
 DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
+const char *arg_dbus_log_file = NULL;
+int arg_dbus_log_user = 0;
+int arg_dbus_log_system = 0;
 int login_shell = 0;
 
 //**********************************************************************************
@@ -2062,16 +2065,28 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp("--dbus-user=", argv[i], 12) == 0) {
 			if (strcmp("filter", argv[i] + 12) == 0) {
 				if (arg_dbus_user == DBUS_POLICY_BLOCK) {
-					fprintf(stderr, "Error: Cannot relax --dbus-user policy, it is already set to block\n");
+					fprintf(stderr, "Warning: Cannot relax --dbus-user policy, it is already set to block\n");
+				} else {
+					arg_dbus_user = DBUS_POLICY_FILTER;
+				}
+			} else if (strcmp("none", argv[i] + 12) == 0) {
+				if (arg_dbus_log_user) {
+					fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
 					exit(1);
 				}
-				arg_dbus_user = DBUS_POLICY_FILTER;
-			} else if (strcmp("none", argv[i] + 12) == 0) {
 				arg_dbus_user = DBUS_POLICY_BLOCK;
 			} else {
 				fprintf(stderr, "Unknown dbus-user policy: %s\n", argv[i] + 12);
 				exit(1);
 			}
+		}
+		else if (strncmp(argv[i], "--dbus-user.see=", 16) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.see %s", argv[i] + 16) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
 		}
 		else if (strncmp(argv[i], "--dbus-user.talk=", 17) == 0) {
 			char *line;
@@ -2089,19 +2104,47 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL); // will exit if something wrong
 			profile_add(line);
 		}
+		else if (strncmp(argv[i], "--dbus-user.call=", 17) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.call %s", argv[i] + 17) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-user.broadcast=", 22) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.broadcast %s", argv[i] + 22) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
 		else if (strncmp("--dbus-system=", argv[i], 14) == 0) {
 			if (strcmp("filter", argv[i] + 14) == 0) {
 				if (arg_dbus_system == DBUS_POLICY_BLOCK) {
-					fprintf(stderr, "Error: Cannot relax --dbus-system policy, it is already set to block\n");
+					fprintf(stderr, "Warning: Cannot relax --dbus-system policy, it is already set to block\n");
+				} else {
+					arg_dbus_system = DBUS_POLICY_FILTER;
+				}
+			} else if (strcmp("none", argv[i] + 14) == 0) {
+				if (arg_dbus_log_system) {
+					fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
 					exit(1);
 				}
-				arg_dbus_system = DBUS_POLICY_FILTER;
-			} else if (strcmp("none", argv[i] + 14) == 0) {
 				arg_dbus_system = DBUS_POLICY_BLOCK;
 			} else {
 				fprintf(stderr, "Unknown dbus-system policy: %s\n", argv[i] + 14);
 				exit(1);
 			}
+		}
+		else if (strncmp(argv[i], "--dbus-system.see=", 18) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.see %s", argv[i] + 18) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
 		}
 		else if (strncmp(argv[i], "--dbus-system.talk=", 19) == 0) {
 			char *line;
@@ -2118,6 +2161,43 @@ int main(int argc, char **argv, char **envp) {
 
 			profile_check_line(line, 0, NULL); // will exit if something wrong
 			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-system.call=", 19) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.call %s", argv[i] + 19) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-system.broadcast=", 24) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.broadcast %s", argv[i] + 24) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-log=", 11) == 0) {
+			if (arg_dbus_log_file != NULL) {
+				fprintf(stderr, "Error: --dbus-log option already specified\n");
+				exit(1);
+			}
+			arg_dbus_log_file = argv[i] + 11;
+		}
+		else if (strcmp(argv[i], "--dbus-user.log") == 0) {
+			if (arg_dbus_user != DBUS_POLICY_FILTER) {
+				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+				exit(1);
+			}
+			arg_dbus_log_user = 1;
+		}
+		else if (strcmp(argv[i], "--dbus-system.log") == 0) {
+			if (arg_dbus_system != DBUS_POLICY_FILTER) {
+				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+				exit(1);
+			}
+			arg_dbus_log_system = 1;
 		}
 
 		//*************************************

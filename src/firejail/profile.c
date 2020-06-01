@@ -441,16 +441,27 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (strcmp("filter", ptr) == 0) {
 			if (arg_dbus_user == DBUS_POLICY_BLOCK) {
 				fprintf(stderr, "Error: Cannot relax dbus-user policy, it is already set to block\n");
+			} else {
+				arg_dbus_user = DBUS_POLICY_FILTER;
+			}
+		} else if (strcmp("none", ptr) == 0) {
+			if (arg_dbus_log_user) {
+				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
 				exit(1);
 			}
-			arg_dbus_user = DBUS_POLICY_FILTER;
-		} else if (strcmp("none", ptr) == 0) {
 			arg_dbus_user = DBUS_POLICY_BLOCK;
 		} else {
 			fprintf(stderr, "Unknown dbus-user policy: %s\n", ptr);
 			exit(1);
 		}
 		return 0;
+	}
+	else if (strncmp(ptr, "dbus-user.see ", 14) == 0) {
+		if (!dbus_check_name(ptr + 14)) {
+			printf("Invalid dbus-user.see name: %s\n", ptr + 15);
+			exit(1);
+		}
+		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.talk ", 15) == 0) {
 		if (!dbus_check_name(ptr + 15)) {
@@ -466,21 +477,46 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		return 1;
 	}
+	else if (strncmp(ptr, "dbus-user.call ", 15) == 0) {
+		if (!dbus_check_call_rule(ptr + 15)) {
+			fprintf(stderr, "Invalid dbus-user.call rule: %s\n", ptr + 15);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-user.broadcast ", 20) == 0) {
+		if (!dbus_check_call_rule(ptr + 20)) {
+			fprintf(stderr, "Invalid dbus-user.broadcast rule: %s\n", ptr + 20);
+			exit(1);
+		}
+		return 1;
+	}
 	else if (strncmp("dbus-system ", ptr, 12) == 0) {
 		ptr += 12;
 		if (strcmp("filter", ptr) == 0) {
 			if (arg_dbus_system == DBUS_POLICY_BLOCK) {
 				fprintf(stderr, "Error: Cannot relax dbus-system policy, it is already set to block\n");
+			} else {
+				arg_dbus_system = DBUS_POLICY_FILTER;
+			}
+		} else if (strcmp("none", ptr) == 0) {
+			if (arg_dbus_log_system) {
+				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
 				exit(1);
 			}
-			arg_dbus_system = DBUS_POLICY_FILTER;
-		} else if (strcmp("none", ptr) == 0) {
 			arg_dbus_system = DBUS_POLICY_BLOCK;
 		} else {
 			fprintf(stderr, "Unknown dbus-system policy: %s\n", ptr);
 			exit(1);
 		}
 		return 0;
+	}
+	else if (strncmp(ptr, "dbus-system.see ", 16) == 0) {
+		if (!dbus_check_name(ptr + 16)) {
+			fprintf(stderr, "Invalid dbus-system.see name: %s\n", ptr + 17);
+			exit(1);
+		}
+		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.talk ", 17) == 0) {
 		if (!dbus_check_name(ptr + 17)) {
@@ -492,6 +528,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "dbus-system.own ", 16) == 0) {
 		if (!dbus_check_name(ptr + 16)) {
 			fprintf(stderr, "Invalid dbus-system.own name: %s\n", ptr + 16);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-system.call ", 17) == 0) {
+		if (!dbus_check_call_rule(ptr + 17)) {
+			fprintf(stderr, "Invalid dbus-system.call rule: %s\n", ptr + 17);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-system.broadcast ", 22) == 0) {
+		if (!dbus_check_call_rule(ptr + 22)) {
+			fprintf(stderr, "Invalid dbus-system.broadcast rule: %s\n", ptr + 22);
 			exit(1);
 		}
 		return 1;

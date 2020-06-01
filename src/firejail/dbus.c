@@ -48,7 +48,7 @@ static int dbus_proxy_status_fd = -1;
 static char *dbus_user_proxy_socket = NULL;
 static char *dbus_system_proxy_socket = NULL;
 
-int dbus_check_name(const char *name) {
+static int check_bus_or_interface_name(const char *name, int hyphens_allowed) {
 	unsigned long length = strlen(name);
 	if (length == 0 || length > DBUS_MAX_NAME_LENGTH)
 		return 0;
@@ -62,14 +62,14 @@ int dbus_check_name(const char *name) {
 			if (*p == '.') {
 				++segments;
 				in_segment = 0;
-			} else if (!alpha && !digit && *p != '_' && *p != '-') {
+			} else if (!alpha && !digit && *p != '_' && (!hyphens_allowed || *p != '-')) {
 				return 0;
 			}
 		}
 		else {
 			if (*p == '*') {
 				return *(p + 1) == '\0';
-			} else if (!alpha && *p != '_' && *p != '-') {
+			} else if (!alpha && *p != '_' && (!hyphens_allowed || *p != '-')) {
 				return 0;
 			}
 			in_segment = 1;
@@ -77,6 +77,72 @@ int dbus_check_name(const char *name) {
 		++p;
 	}
 	return in_segment && segments >= 2;
+}
+
+static int check_object_path(const char *path) {
+	unsigned long length = strlen(path);
+	if (length == 0 || path[0] != '/')
+		return 0;
+	// The root path "/" is the only path allowed to have a trailing slash.
+	if (length == 1)
+		return 1;
+	const char *p = path + 1;
+	int segments = 1;
+	int in_segment = 0;
+	while (*p) {
+		int alpha = (*p >= 'a' && *p <= 'z') || (*p >= 'A' && *p <= 'Z');
+		int digit = *p >= '0' && *p <= '9';
+		if (in_segment) {
+			if (*p == '/') {
+				++segments;
+				in_segment = 0;
+			} else if (!alpha && !digit && *p != '_') {
+				return 0;
+			}
+		}
+		else {
+			if (*p == '*') {
+				return *(p + 1) == '\0';
+			} else if (!alpha && *p != '_') {
+				return 0;
+			}
+			in_segment = 1;
+		}
+		++p;
+	}
+	return in_segment && segments >= 2;
+}
+
+int dbus_check_name(const char *name) {
+	return check_bus_or_interface_name(name, 1);
+}
+
+int dbus_check_call_rule(const char *rule) {
+	char buf[DBUS_MAX_NAME_LENGTH + 1];
+	char *name_end = strchr(rule, '=');
+	if (name_end == NULL)
+		return 0;
+	size_t name_length = (size_t) (name_end - rule);
+	if (name_length > DBUS_MAX_NAME_LENGTH)
+		return 0;
+	strncpy(buf, rule, (size_t) name_length);
+	buf[name_length] = '\0';
+	if (!dbus_check_name(buf))
+		return 0;
+	++name_end;
+	char *interface_end = strchr(name_end, '@');
+	if (interface_end == NULL)
+		return check_bus_or_interface_name(name_end, 0);
+	size_t interface_length = (size_t) (interface_end - name_end);
+	if (interface_length > DBUS_MAX_NAME_LENGTH)
+		return 0;
+	if (interface_length > 0) {
+		strncpy(buf, name_end, interface_length);
+		buf[interface_length] = '\0';
+		if (!check_bus_or_interface_name(buf, 0))
+			return 0;
+	}
+	return check_object_path(interface_end + 1);
 }
 
 static void dbus_check_bus_profile(char const *prefix, DbusPolicy *policy) {
@@ -219,6 +285,8 @@ static char *find_user_socket(void) {
 void dbus_proxy_start(void) {
 	dbus_create_user_dir();
 
+	EUID_USER();
+
 	int status_pipe[2];
 	if (pipe(status_pipe) == -1)
 		errExit("pipe");
@@ -233,10 +301,21 @@ void dbus_proxy_start(void) {
 		errExit("fork");
 	if (dbus_proxy_pid == 0) {
 		int i;
-		for (i = 3; i < FIREJAIL_MAX_FD; i++) {
+		for (i = STDERR_FILENO + 1; i < FIREJAIL_MAX_FD; i++) {
 			if (i != status_pipe[1] && i != args_pipe[0])
 				close(i); // close open files
 		}
+		if (arg_dbus_log_file != NULL) {
+			int output_fd = creat(arg_dbus_log_file, 0666);
+			if (output_fd < 0)
+				errExit("creat");
+			if (output_fd != STDOUT_FILENO) {
+				if (dup2(output_fd, STDOUT_FILENO) != STDOUT_FILENO)
+					errExit("dup2");
+				close(output_fd);
+			}
+		}
+		close(STDIN_FILENO);
 		char *args[4] = {XDG_DBUS_PROXY_PATH, NULL, NULL, NULL};
 		if (asprintf(&args[1], "--fd=%d", status_pipe[1]) == -1
 			|| asprintf(&args[2], "--args=%d", args_pipe[0]) == -1)
@@ -262,6 +341,9 @@ void dbus_proxy_start(void) {
 						 (int) getuid(), (int) getpid()) == -1)
 				errExit("asprintf");
 			write_arg(args_pipe[1], "%s", dbus_user_proxy_socket);
+			if (arg_dbus_log_user) {
+				write_arg(args_pipe[1], "--log");
+			}
 			write_arg(args_pipe[1], "--filter");
 			write_profile(args_pipe[1], "dbus-user.");
 		}
@@ -278,6 +360,9 @@ void dbus_proxy_start(void) {
 						 (int) getuid(), (int) getpid()) == -1)
 				errExit("asprintf");
 			write_arg(args_pipe[1], "%s", dbus_system_proxy_socket);
+			if (arg_dbus_log_system) {
+				write_arg(args_pipe[1], "--log");
+			}
 			write_arg(args_pipe[1], "--filter");
 			write_profile(args_pipe[1], "dbus-system.");
 		}

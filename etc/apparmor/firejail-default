@@ -19,6 +19,8 @@ profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 #include <abstractions/dbus-strict>
 #include <abstractions/dbus-session-strict>
 dbus,
+# Add rule in order to avoid dbus-*=filter breakage (#3432)
+owner /{,var/}run/firejail/dbus/[0-9]*/[0-9]*-user w,
 
 ##########
 # With ptrace it is possible to inspect and hijack running programs.

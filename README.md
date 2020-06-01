@@ -75,7 +75,12 @@ GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
 We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@yahoo.com
 
-## Compile and install
+## Installing
+
+Try installing Firejail from your system packages first. Firejail is included in Alpine, ALT Linux, Arch, Chakra, Debian, Deepin, Devuan, Fedora, Gentoo, Manjaro, Mint, NixOS, Parabola, Parrot, PCLinuxOS, ROSA, Solus, Slackware/SlackBuilds, Trisquel, Ubuntu, Void and possibly others.
+
+You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail’s source code from our Git repository and compile manually:
+
 `````
 $ git clone https://github.com/netblue30/firejail.git
 $ cd firejail

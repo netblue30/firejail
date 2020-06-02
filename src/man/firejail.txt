@@ -66,8 +66,8 @@ command line options. The default Firejail filesystem is based on the host files
 system directories mounted read-only. These directories are /etc, /var, /usr, /bin, /sbin, /lib, /lib32,
 /libx32 and /lib64. Only /home and /tmp are writable.
 .PP
-Upon execution Firejail first looks in ~/.config/firejail/ for a profile and if it doesn't find one, it looks in /etc/firejail/ .
-For profile resolution detail see https://github.com/netblue30/firejail/wiki/Creating-Profiles#locations-and-types .
+Upon execution Firejail first looks in ~/.config/firejail/ for a profile and if it doesn't find one, it looks in /etc/firejail/.
+For profile resolution detail see https://github.com/netblue30/firejail/wiki/Creating-Profiles#locations-and-types.
 If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option
 to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.

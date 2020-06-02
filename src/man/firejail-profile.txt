@@ -268,6 +268,8 @@ Use directory as user home.
 .TP
 \fBprivate-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
+The files in the list must be expressed as relative to the /bin,
+/sbin, /usr/bin, /usr/sbin, or /usr/local/bin directories.
 The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
 .TP
 \fBprivate-cache
@@ -289,26 +291,37 @@ Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional res
 \fBprivate-etc file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /etc directory.
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-home file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
-new home. All modifications are discarded when the sandbox is
+new home.
+The files and directories in the list must be expressed as relative to
+the current user's home directory.
+All modifications are discarded when the sandbox is
 closed.
 .TP
 \fBprivate-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.
+The files and directories in the list must be expressed as relative to
+the /lib directory.
 This feature is still under development, see \fBman 1 firejail\fR for some examples.
 .TP
 \fBprivate-opt file,directory
 Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /opt directory.
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-srv file,directory
 Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /srv directory.
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-tmp

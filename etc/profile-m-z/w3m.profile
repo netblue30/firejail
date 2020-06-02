@@ -1,6 +1,7 @@
 # Firejail profile for w3m
 # Description: WWW browsable pager with excellent tables/frames support
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include w3m.local
 # Persistent global definitions

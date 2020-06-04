@@ -1696,7 +1696,9 @@ $ firejail \-\-private=/home/netblue/firefox-home firefox
 .TP
 \fB\-\-private-bin=file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
-If no listed file is found, /bin directory will be empty.
+The files in the list must be expressed as relative to the /bin,
+/sbin, /usr/bin, /usr/sbin, or /usr/local/bin directories.
+If no listed files are found, /bin directory will be empty.
 The same directory is also bind-mounted over /sbin, /usr/bin, /usr/sbin and /usr/local/bin.
 All modifications are discarded when the sandbox is closed. File globbing is supported,
 see \fBFILE GLOBBING\fR section for more details.
@@ -1792,6 +1794,8 @@ $
 \fB\-\-private-etc=file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /etc directory.
 If no listed file is found, /etc directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -1801,13 +1805,16 @@ Example:
 .br
 $ firejail --private-etc=group,hostname,localtime, \\
 .br
-nsswitch.conf,passwd,resolv.conf
+nsswitch.conf,passwd,resolv.conf,default/motd-news
 
 .TP
 \fB\-\-private-home=file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
-new home. All modifications are discarded when the sandbox is
+new home.
+The files and directories in the list must be expressed as relative to
+the current user's home directory.
+All modifications are discarded when the sandbox is
 closed.
 .br
 
@@ -1819,6 +1826,8 @@ $ firejail \-\-private-home=.mozilla firefox
 .TP
 \fB\-\-private-lib=file,directory
 This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
+The files and directories in the list must be expressed as relative to
+the /lib directory.
 The idea is to build a new /lib in a temporary filesystem,
 with only the library files necessary to run the application.
 It could be as simple as:
@@ -1870,6 +1879,8 @@ $
 \fB\-\-private-opt=file,directory
 Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /opt directory.
 If no listed file is found, /opt directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -1883,6 +1894,8 @@ $ firejail --private-opt=firefox /opt/firefox/firefox
 \fB\-\-private-srv=file,directory
 Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /srv directory.
 If no listed file is found, /srv directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br

@@ -8,7 +8,7 @@
 set -e
 git clone --depth=1 https://github.com/netblue30/firejail.git
 cd firejail
-./configure --prefix=/usr
+./configure --enable-apparmor --prefix=/usr
 make deb
 sudo dpkg -i firejail*.deb
 echo "Firejail was updated!"

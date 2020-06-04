@@ -122,22 +122,14 @@ ifeq ($(BUSYBOX_WORKAROUND),yes)
 endif
 	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
-	if [ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ]; then \
-		install -m 0644 etc/login.users $(DESTDIR)$(sysconfdir)/firejail \
-	fi
+	[ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ] && install -m 0644 etc/login.users $(DESTDIR)$(sysconfdir)/firejail
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
-	if [ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d ]; then \
-		install -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d \
-	fi
+	[ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d ] && install -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d
 	install -m 0644 etc/apparmor/firejail-default $(DESTDIR)$(sysconfdir)/apparmor.d
-	if [ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d/local ]; then \
-		install -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/local \
-	fi
+	[ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d/local ] && install -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/local
 	# install apparmor profile customization file
-	if [ ! -f $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-local ]; then \
-		install -m 0644 etc/apparmor/firejail-local $(DESTDIR)$(sysconfdir)/apparmor.d/local \
-	fi
+	[ ! -f $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-local ] && install -m 0644 etc/apparmor/firejail-local $(DESTDIR)$(sysconfdir)/apparmor.d/local
 endif
 	# man pages
 	install -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
@@ -152,10 +144,9 @@ endif
 	rm -f $(MANPAGES) $(MANPAGES:%=%.gz)
 	# bash completion
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/bash-completion/completions
-	install -m 0644 -t $(DESTDIR)$(datarootdir)/bash-completions \
-		src/bash_completion/firejail.bash_completion \
-		src/bash_completion/firemon.bash_completion \
-		src/bash_completion/firecfg.bash_completion
+	install -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firejail
+	install -m 0644 src/bash_completion/firemon.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firemon
+	install -m 0644 src/bash_completion/firecfg.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firecfg
 
 install: all
 	$(MAKE) realinstall

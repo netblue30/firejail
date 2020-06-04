@@ -19,6 +19,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
 # whitelisting in ${HOME} makes settings immutable, see #3112

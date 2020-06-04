@@ -13,6 +13,7 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 
 mkdir ${HOME}/.config/aweather
 whitelist ${HOME}/.config/aweather

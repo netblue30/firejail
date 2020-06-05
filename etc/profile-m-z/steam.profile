@@ -86,7 +86,7 @@ caps.drop all
 #ipc-namespace
 netfilter
 nodvd
-# nVidia user may need to comment / ignore nogroups and noroot
+# nVidia users may need to comment / ignore nogroups and noroot
 nogroups
 nonewprivs
 noroot
@@ -95,11 +95,11 @@ nou2f
 # novideo should be commented for VR
 novideo
 protocol unix,inet,inet6,netlink
-# seccomp cause sometimes issues (see #2951, #3267),
+# seccomp sometimes causes issues (see #2951, #3267),
 # comment it or add 'ignore seccomp' to steam.local if so.
-seccomp !kcmp,!ptrace
+seccomp !ptrace
 shell none
-# tracelog disabled as it breaks integrated browser
+# tracelog breaks integrated browser
 #tracelog
 
 # private-bin is disabled while in testing, but has been tested working with multiple games

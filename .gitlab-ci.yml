@@ -58,6 +58,16 @@ cppcheck:
         - apt-get -qq --no-install-recommends install cppcheck
     script:
         - cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
+
+clang:
+    image: ubuntu:latest
+    script:
+        - apt-get update -qq
+        - apt-get --purge autoremove -y -qq gcc
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq clang pkg-config make
+        - ./configure --prefix=/usr CC=/usr/bin/clang && make && make install-strip
+
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

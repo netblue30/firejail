@@ -505,6 +505,7 @@ Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 Liorst4 (https://github.com/Liorst4)
 	- Preserve CFLAGS given to configure in common.mk.in
+	- fix emacs config to load as read-write
 Lockdis (https://github.com/Lockdis)
 	- Added crow, nyx, and google-earth-pro profiles
 Lukáš Krejčí (https://github.com/lskrejci)

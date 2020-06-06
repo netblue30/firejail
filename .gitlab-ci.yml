@@ -58,7 +58,6 @@ cppcheck:
         - apt-get -qq --no-install-recommends install cppcheck
     script:
         - cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
-        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
 
 clang:
     image: ubuntu:latest

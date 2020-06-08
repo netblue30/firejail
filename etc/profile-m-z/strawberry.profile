@@ -26,7 +26,7 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
-# blacklisting of ioprio_set system calls breaks Clementine, maybe not strawberry(?)
+# blacklisting of ioprio_set system calls breaks strawberry
 seccomp !ioprio_set
 
 private-dev

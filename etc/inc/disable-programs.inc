@@ -645,6 +645,7 @@ blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/signal-cli
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
+blacklist ${HOME}/.local/share/strawberry
 blacklist ${HOME}/.local/share/supertux2
 blacklist ${HOME}/.local/share/supertuxkart
 blacklist ${HOME}/.local/share/swell-foop

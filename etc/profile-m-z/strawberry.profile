@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.cache/strawberry
 noblacklist ${HOME}/.config/strawberry
+noblacklist ${HOME}/.local/share/strawberry
 noblacklist ${MUSIC}
 
 include disable-common.inc

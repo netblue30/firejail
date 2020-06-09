@@ -13,14 +13,19 @@ noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+include whitelist-usr-share-common.inc
 
-include whitelist-var-common.inc
-
+apparmor
 caps.drop all
+netfilter
+nodbus
+nodvd
+nogroups
 nonewprivs
 noroot
 notv
@@ -29,6 +34,12 @@ novideo
 protocol unix,inet,inet6
 # blacklisting of ioprio_set system calls breaks strawberry
 seccomp !ioprio_set
+shell none
+tracelog
 
+private-bin strawberry,strawberry-tagreader
+private-cache
 private-dev
+private-etc ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,fonts
+disable-mnt
 private-tmp

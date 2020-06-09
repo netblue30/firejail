@@ -18,7 +18,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc 
 
 apparmor
 caps.drop all
@@ -39,7 +41,7 @@ tracelog
 private-bin strawberry,strawberry-tagreader
 private-cache
 private-dev
-private-etc ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,fonts
+private-etc ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,nsswitch.conf,pki,resolv.conf,ssl
 disable-mnt
 private-tmp
 

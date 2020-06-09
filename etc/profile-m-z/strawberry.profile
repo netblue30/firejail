@@ -43,4 +43,5 @@ private-etc ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,ho
 disable-mnt
 private-tmp
 
+dbus-user none
 dbus-system none

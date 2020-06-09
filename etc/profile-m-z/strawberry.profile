@@ -46,5 +46,4 @@ private-dev
 private-etc ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
-dbus-user none
 dbus-system none

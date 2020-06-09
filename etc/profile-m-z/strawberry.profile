@@ -19,6 +19,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc 
 
@@ -32,17 +33,17 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 # blacklisting of ioprio_set system calls breaks strawberry
 seccomp !ioprio_set
 shell none
 tracelog
 
+disable-mnt
 private-bin strawberry,strawberry-tagreader
 private-cache
 private-dev
 private-etc ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,nsswitch.conf,pki,resolv.conf,ssl
-disable-mnt
 private-tmp
 
 dbus-user none

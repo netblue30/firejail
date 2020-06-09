@@ -23,7 +23,6 @@ include whitelist-usr-share-common.inc
 apparmor
 caps.drop all
 netfilter
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -43,3 +42,5 @@ private-dev
 private-etc ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,fonts
 disable-mnt
 private-tmp
+
+dbus-system none

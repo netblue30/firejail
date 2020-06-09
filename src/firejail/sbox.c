@@ -32,6 +32,7 @@
 #endif
 
 static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
+	// build a new, clean environment
 	int env_index = 0;
 	char *new_environment[256] = { NULL };
 	// preserve firejail-specific env vars
@@ -40,7 +41,6 @@ static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
 		if (asprintf(&new_environment[env_index++], "FIREJAIL_FILE_COPY_LIMIT=%s", cl) == -1)
 			errExit("asprintf");
 	}
-	clearenv();
 	if (arg_quiet) // --quiet is passed as an environment variable
 		new_environment[env_index++] = "FIREJAIL_QUIET=yes";
 	if (arg_debug) // --debug is passed as an environment variable
@@ -122,6 +122,9 @@ static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
 		// syscall list
 #ifdef SYS_mount
 			BLACKLIST(SYS_mount), // mount/unmount filesystems
+#endif
+#ifdef SYS_umount
+			BLACKLIST(SYS_umount),
 #endif
 #ifdef SYS_umount2
 			BLACKLIST(SYS_umount2),

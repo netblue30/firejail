@@ -486,8 +486,9 @@ int main(int argc, char **argv) {
 	if (arg_debug)
 		printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
 
-	// fix .desktop files in ~/.local/share/applications directory
-	fix_desktop_files(home);
+	// if runs as regular user, fix .desktop files in ~/.local/share/applications directory
+	if (getuid() != 0)
+		fix_desktop_files(home);
 
 	return 0;
 }

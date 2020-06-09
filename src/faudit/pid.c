@@ -20,7 +20,7 @@
 #include "faudit.h"
 
 void pid_test(void) {
-	char *kern_proc[] = {
+	static char *kern_proc[] = {
 		"kthreadd",
 		"ksoftirqd",
 		"kworker",

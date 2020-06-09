@@ -57,6 +57,8 @@ static const SyscallEntry syslist[] = {
 #elif defined(__i386__)
 // awk '/__NR_/ { print "{ \"" gensub("__NR_", "", "g", $2) "\", " $3 " },"; }' < /usr/include/x86_64-linux-gnu/asm/unistd_32.h
 #include "../include/syscall_i386.h"
+#elif defined(__arm__)
+#include "../include/syscall_armeabi.h"
 #else
 #warning "Please submit a syscall table for your architecture"
 #endif

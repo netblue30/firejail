@@ -55,6 +55,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
 		cfg_val[CFG_XPRA_ATTACH] = 0;
 		cfg_val[CFG_SECCOMP_ERROR_ACTION] = -1;
+		cfg_val[CFG_BROWSER_ALLOW_DRM] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -346,6 +347,14 @@ void print_compiletime_support(void) {
 
 	printf("\t- seccomp-bpf support is %s\n",
 #ifdef HAVE_SECCOMP
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- SELinux support is %s\n",
+#ifdef HAVE_SELINUX
 		"enabled"
 #else
 		"disabled"

@@ -23,7 +23,6 @@
 #include <sys/mount.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <sys/prctl.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/types.h>
@@ -197,6 +196,32 @@ static FILE *create_ready_for_join_file(void) {
 		exit(1);
 	}
 }
+
+#ifdef HAVE_SECCOMP
+static void seccomp_debug(void) {
+	if (arg_debug == 0)
+		return;
+
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// dropping privs before calling system(3)
+		drop_privs(1);
+		printf("Seccomp directory:\n");
+		int rv = system("ls -l "  RUN_SECCOMP_DIR);
+		(void) rv;
+		printf("Active seccomp files:\n");
+		rv = system("cat " RUN_SECCOMP_LIST);
+		(void) rv;
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
+		_exit(0);
+	}
+	waitpid(child, NULL, 0);
+}
+#endif
 
 static void sandbox_if_up(Bridge *br) {
 	assert(br);
@@ -1136,14 +1161,7 @@ int sandbox(void* sandbox_arg) {
 
 	// make seccomp filters read-only
 	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);
-	if (arg_debug) {
-		printf("Seccomp directory:\n");
-		int rv = system("ls -l "  RUN_SECCOMP_DIR);
-		(void) rv;
-		printf("Active seccomp files:\n");
-		rv = system("cat " RUN_SECCOMP_LIST);
-		(void) rv;
-	}
+	seccomp_debug();
 #endif
 
 	// set capabilities

@@ -165,10 +165,12 @@ void build_var(const char *fname, FILE *fp) {
 
 	process_files(fname, "/var", var_callback);
 
-	if (var_out == NULL)
+	if (var_out == NULL) {
 		fprintf(fp, "blacklist /var\n");
-	else
+	} else {
 		filedb_print(var_out, "whitelist ", fp);
+		fprintf(fp, "include whitelist-var-common.inc\n");
+	}
 }
 
 
@@ -202,10 +204,12 @@ void build_share(const char *fname, FILE *fp) {
 
 	process_files(fname, "/usr/share", share_callback);
 
-	if (share_out == NULL)
+	if (share_out == NULL) {
 		fprintf(fp, "blacklist /usr/share\n");
-	else
+	} else {
 		filedb_print(share_out, "whitelist ", fp);
+		fprintf(fp, "include whitelist-usr-share-common.inc\n");
+	}
 }
 
 //*******************************************

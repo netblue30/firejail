@@ -246,6 +246,8 @@ int main(int argc, char **argv) {
 			cnt_dotlocal = dotlocal + 1;
 		if (cnt_globalsdotlocal > (globalsdotlocal + 1))
 			cnt_globalsdotlocal = globalsdotlocal + 1;
+		if (cnt_whitelistrunuser > (whitelistrunuser + 1))
+			cnt_whitelistrunuser = whitelistrunuser + 1;
 
 		if (arg_apparmor && apparmor == cnt_apparmor)
 			printf("No apparmor found in %s\n", argv[i]);

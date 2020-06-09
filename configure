@@ -4186,6 +4186,8 @@ if test "$prefix" = /usr; then
 	test "$sysconfdir" = '${prefix}/etc' && sysconfdir="/etc"
 fi
 
+ac_config_files="$ac_config_files mkdeb.sh"
+
 ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile"
 
 cat >confcache <<\_ACEOF
@@ -4895,6 +4897,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
+    "mkdeb.sh") CONFIG_FILES="$CONFIG_FILES mkdeb.sh" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/common.mk") CONFIG_FILES="$CONFIG_FILES src/common.mk" ;;
     "src/lib/Makefile") CONFIG_FILES="$CONFIG_FILES src/lib/Makefile" ;;
@@ -5333,6 +5336,11 @@ which seems to be undefined.  Please make sure it is defined" >&2;}
 
   esac
 
+
+  case $ac_file$ac_mode in
+    "mkdeb.sh":F) chmod +x mkdeb.sh ;;
+
+  esac
 done # for ac_tag
 
 

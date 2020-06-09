@@ -5,11 +5,16 @@ firejail (0.9.63) baseline; urgency=low
     previous behaviour, use --seccomp-error-action=kill or
     syscall:kill syntax when constructing filters, or override in
     /etc/firejail/firejail.config file.
+  * Fine-grained D-Bus sandboxing with xdg-dbus-proxy.
+    xdg-dbus-proxy must be installed, if not D-Bus access will be allowed.
+    With this version Nodbus is deprecated, in favor of dbus-user none and
+    dbus-system none and will be removed in a future version.
   * DHCP client support
   * SELinux labeling support
-  * 32-bit seccomp filter
-  * restrict ${RUNUSER} in serveral profiles
+  * custom 32-bit seccomp filter support
+  * restrict ${RUNUSER} in several profiles
   * whitelist globbing
+  * mkdir and mkfile support for /run/user directory
   * new condition: HAS_NOSOUND
   * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, muraster
   * new profiles: gnome-passwordsafe, bibtex, gummi, latex, mupdf-x11-curl
@@ -26,8 +31,10 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars
   * new profiles: hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless
   * new profiles: mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers
-  * new profiles: seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more
-  * new profiles: swell-foop, fdns
+  * new profiles: seahorse-adventures, wordwarvi, xbill, gnome-klotski
+  * new profiles: swell-foop, fdns, five-or-more, steam-runtime, jitsi-meet-desktop
+  * new profiles: nicotine, plv, mocp
+ -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config
@@ -55,7 +62,7 @@ firejail (0.9.62) baseline; urgency=low
   * new profiles: kalgebramobile, signal-cli, amuled, kfind, profanity
   * new profiles: audio-recorder, cameramonitor, ddgtk, drawio, unf, gmpc
   * new profiles: electron-mail, gist, gist-paste
- -- netblue30 <netblue30@yahoo.com>  Sat, 1 Jun 2019 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sat, 28 Dec 2019 08:00:00 -0500
 
 firejail (0.9.60) baseline; urgency=low
   * security bug reported by Austin Morton:

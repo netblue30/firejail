@@ -33,6 +33,7 @@
 #   WHITELIST INCLUDES
 #   OPTIONS (caps*, net*, no*, protocol, seccomp*, shell none, tracelog)
 #   PRIVATE OPTIONS (disable-mnt, private-*, writable-*)
+#   DBUS FILTER
 #   SPECIAL OPTIONS (mdwx, noexec, read-only, join-or-start)
 #   REDIRECT INCLUDES
 #
@@ -108,6 +109,7 @@ include globals.local
 #include disable-interpreters.inc
 #include disable-passwdmgr.inc
 #include disable-programs.inc
+#include disable-shell.inc
 #include disable-xdg.inc
 
 # This section often mirrors noblacklist section above. The idea is
@@ -119,7 +121,7 @@ include globals.local
 ##mkfile PATH
 #whitelist PATH
 #include whitelist-common.inc
-#GTK3 only: include whitelist-runuser-common.inc
+#include whitelist-runuser-common.inc
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
 
@@ -136,6 +138,7 @@ include globals.local
 #net none
 #netfilter
 #no3d
+##nodbus (deprecated, use 'dbus-user none' and 'dbus-system none', see below)
 #nodvd
 #nogroups
 #nonewprivs
@@ -185,7 +188,20 @@ include globals.local
 ##writable-var
 ##writable-var-log
 
-#dbus-user none
+# Since 0.9.63 also a more granular regulation of dbus is supported.
+# To get the dbus-addresses to which an application needs access to.
+# You can look at flatpak if the application is also distriputed via flatpak:
+#    flatpak remote-info --show-metadata flathub <APP-ID>
+# Notes:
+#  - flatpak implicitly allows an app to own <APP-ID> on the session bus
+#  - In order to make dconf work (if it is used by the app) you need to allow
+#    'ca.desrt.dconf' even if it is not allowed by flatpak.
+# Notes and Policiy about addresses can be found at
+# <https://github.com/netblue30/firejail/wiki/Restrict-D-Bus>
+#dbus-user filter
+#dbus-user.own com.github.netblue30.firejail
+#dbus-user.talk ca.desrt.dconf
+#dbus-user.talk org.freedesktop.Notifications
 #dbus-system none
 
 ##env VAR=VALUE

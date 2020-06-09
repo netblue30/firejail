@@ -75,7 +75,14 @@ GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
 We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@yahoo.com
 
-## Compile and install
+## Installing
+
+Try installing Firejail from your system packages first. Firejail is included in Alpine, ALT Linux, Arch, Chakra, Debian, Deepin, Devuan, Fedora, Gentoo, Manjaro, Mint, NixOS, Parabola, Parrot, PCLinuxOS, ROSA, Solus, Slackware/SlackBuilds, Trisquel, Ubuntu, Void and possibly others.
+
+The firejail 0.9.52-LTS version is deprecated. On Ubuntu 18.04 LTS users are advised to use the [PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail). On Debian buster we recommend to use the [backports](https://packages.debian.org/buster-backports/firejail) package.
+
+You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail’s source code from our Git repository and compile manually:
+
 `````
 $ git clone https://github.com/netblue30/firejail.git
 $ cd firejail
@@ -88,6 +95,8 @@ development libraries and pkg-config are required when using --apparmor
 $ sudo apt-get install git build-essential libapparmor-dev pkg-config
 `````
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
+
+Detailed information on using firejail from git is available on the [wiki](https://github.com/netblue30/firejail/wiki/Using-firejail-from-git).
 
 ## Running the sandbox
 
@@ -187,4 +196,4 @@ gnome-screenshot, ripperX, sound-juicer, iagno, com.github.dahenson.agenda, gnom
 penguin-command, x2goclient, frogatto, gnome-mines, gnome-nibbles, lightsoff, ts3client_runscript.sh, warmux, ferdi, abiword,
 four-in-a-row, gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin, gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars,
 hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless, mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers,
-seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop,,fdns
+seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop, fdns, jitsi-meet-desktop, nicontine, steam-runtime

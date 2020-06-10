@@ -19,10 +19,6 @@ include disable-common.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-# Comment out if you want an immutable configuration
-read-write ${HOME}/.emacs
-read-write ${HOME}/.emacs.d
-
 caps.drop all
 netfilter
 nodvd
@@ -33,3 +29,6 @@ notv
 novideo
 protocol unix,inet,inet6
 seccomp
+
+read-write ${HOME}/.emacs
+read-write ${HOME}/.emacs.d

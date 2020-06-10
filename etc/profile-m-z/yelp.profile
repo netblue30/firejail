@@ -51,6 +51,8 @@ private-dev
 private-etc alsa,alternatives,asound.conf,crypto-policies,cups,dconf,drirc,fonts,gcrypt,gtk-3.0,machine-id,openal,os-release,pulse,sgml,xml
 private-tmp
 
+dbus-system none
+
 # read-only ${HOME} breaks some not necesarry featrues, comment it if
 # you need them or put 'ignore read-only ${HOME}' into your yelp.local.
 # broken features:

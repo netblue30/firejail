@@ -341,6 +341,7 @@ blacklist ${HOME}/.config/specialmailcollectionsrc
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium
+blacklist ${HOME}/.config/strawberry
 blacklist ${HOME}/.config/supertuxkart
 blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.config/teams
@@ -644,6 +645,7 @@ blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/signal-cli
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
+blacklist ${HOME}/.local/share/strawberry
 blacklist ${HOME}/.local/share/supertux2
 blacklist ${HOME}/.local/share/supertuxkart
 blacklist ${HOME}/.local/share/swell-foop
@@ -897,6 +899,7 @@ blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
 blacklist ${HOME}/.cache/snox
 blacklist ${HOME}/.cache/spotify
+blacklist ${HOME}/.cache/strawberry
 blacklist ${HOME}/.cache/supertuxkart
 blacklist ${HOME}/.cache/systemsettings
 blacklist ${HOME}/.cache/telepathy

@@ -122,14 +122,14 @@ ifeq ($(BUSYBOX_WORKAROUND),yes)
 endif
 	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
-	[ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ] && install -m 0644 etc/login.users $(DESTDIR)$(sysconfdir)/firejail
+	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
-	[ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d ] && install -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d
+	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"
 	install -m 0644 etc/apparmor/firejail-default $(DESTDIR)$(sysconfdir)/apparmor.d
-	[ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d/local ] && install -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/local
+	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/local ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/local; fi;"
 	# install apparmor profile customization file
-	[ ! -f $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-local ] && install -m 0644 etc/apparmor/firejail-local $(DESTDIR)$(sysconfdir)/apparmor.d/local
+	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-local ]; then install -c -m 0644 etc/apparmor/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/.; fi;"
 endif
 	# man pages
 	install -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5

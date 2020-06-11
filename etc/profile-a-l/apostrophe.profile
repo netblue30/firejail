@@ -49,18 +49,6 @@ private-bin apostrophe,python3*
 private-cache
 private-dev
 private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,X11
-# private-etc templates (see also #1734, #2093)
-#  Common: alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
-#    Extra: magic,magic.mgc,passwd,group
-#  Networking: ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,protocols,services,rpc
-#    Extra: proxychains.conf,gai.conf
-#  Sound: alsa,asound.conf,pulse,machine-id
-#  GUI: fonts,pango,X11
-#  GTK: dconf,gconf,gtk-2.0,gtk-3.0
-#  Qt: Trolltech.conf
-#  KDE: kde4rc,kde5rc
-#  3D: drirc,glvnd,bumblebee,nvidia
-#  D-Bus: dbus-1,machine-id
 private-tmp
 
 dbus-user filter

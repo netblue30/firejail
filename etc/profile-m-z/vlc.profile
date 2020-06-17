@@ -20,6 +20,14 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/vlc
+mkdir ${HOME}/.config/vlc
+mkdir ${HOME}/.local/share/vlc
+whitelist ${HOME}/.cache/vlc
+whitelist ${HOME}/.config/vlc
+whitelist ${HOME}/.local/share/vlc
+whitelist ${MUSIC}
+whitelist ${VIDEOS}
 include whitelist-var-common.inc
 
 #apparmor - on Ubuntu 18.04 it refuses to start without dbus access

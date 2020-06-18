@@ -8,6 +8,8 @@ include globals.local
 
 # Allow lua (required for youtube video)
 include allow-lua.inc
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python3.inc
 
 noblacklist ${HOME}/.config/totem
 noblacklist ${HOME}/.local/share/totem

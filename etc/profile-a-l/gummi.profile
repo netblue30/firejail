@@ -12,8 +12,7 @@ include allow-lua.inc
 include allow-perl.inc
 include allow-python3.inc
 
-private-bin dvipdf,dvips,env,gummi,latex,latexmk,lua*,lualatex,luatex,pdflatex,pdftex,perl,ps2pdf,python3*,rubber,synctex,tex,xelatex,xetex
+private-bin dvipdf,dvips,env,gummi,latex,latexmk,lua*,pdflatex,pdftex,perl,ps2pdf,python3*,rubber,synctex,tex,xelatex,xetex
 
 # Redirect
 include latex-common.profile
-

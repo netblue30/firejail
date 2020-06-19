@@ -11,6 +11,8 @@ whitelist ${HOME}/.config/pkcs11
 read-only ${HOME}/.config/pkcs11
 whitelist ${HOME}/.config/user-dirs.dirs
 read-only ${HOME}/.config/user-dirs.dirs
+whitelist ${HOME}/.config/user-dirs.locale
+read-only ${HOME}/.config/user-dirs.locale
 whitelist ${HOME}/.drirc
 whitelist ${HOME}/.icons
 ?HAS_APPIMAGE: whitelist ${HOME}/.local/share/appimagekit

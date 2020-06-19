@@ -17,10 +17,6 @@ include allow-lua.inc
 include allow-python2.inc
 include allow-python3.inc
 
-noblacklist ${MUSIC}
-noblacklist ${PICTURES}
-noblacklist ${VIDEOS}
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -28,8 +24,20 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-xdg.inc
 
+mkdir ${HOME}/.config/mpv
+mkdir ${HOME}/.config/youtube-dl
+mkdir ${HOME}/.netrc
+whitelist ${HOME}/.config/mpv
+whitelist ${HOME}/.config/youtube-dl
+whitelist ${HOME}/.netrc
+whitelist ${DESKTOP}
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
+whitelist ${MUSIC}
+whitelist ${PICTURES}
+whitelist ${VIDEOS}
+include whitelist-common.inc
 whitelist /usr/share/vulkan
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

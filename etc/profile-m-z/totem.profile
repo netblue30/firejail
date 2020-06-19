@@ -14,9 +14,6 @@ include allow-python3.inc
 
 noblacklist ${HOME}/.config/totem
 noblacklist ${HOME}/.local/share/totem
-noblacklist ${MUSIC}
-noblacklist ${PICTURES}
-noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -25,8 +22,18 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-xdg.inc
 
+mkdir ${HOME}/.config/totem
+mkdir ${HOME}/.local/share/totem
+whitelist ${HOME}/.config/totem
+whitelist ${HOME}/.local/share/totem
+whitelist ${DESKTOP}
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
+whitelist ${MUSIC}
+whitelist ${PICTURES}
+whitelist ${VIDEOS}
+include whitelist-common.inc
 include whitelist-var-common.inc
 
 # apparmor - makes settings immutable

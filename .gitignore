@@ -6,6 +6,7 @@
 *.rpm
 *.gcda
 *.gcno
+*.DS_Store
 .directory
 Makefile
 autom4te.cache/

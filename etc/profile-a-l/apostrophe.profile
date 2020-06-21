@@ -22,6 +22,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 whitelist /usr/share/apostrophe
+whitelist /usr/share/pandoc-*
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -45,7 +46,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin apostrophe,python3*
+private-bin apostrophe,pandoc,python3*
 private-cache
 private-dev
 private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,X11

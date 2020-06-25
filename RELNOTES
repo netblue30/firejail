@@ -36,6 +36,7 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: seahorse-adventures, wordwarvi, xbill, gnome-klotski
   * new profiles: swell-foop, fdns, five-or-more, steam-runtime, jitsi-meet-desktop
   * new profiles: nicotine, plv, mocp, apostrophe, quadrapassel, dino-im, strawberry
+  * new profiles: hitori, bijiben, gnote, gnubik, ZeGrapher
  -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low

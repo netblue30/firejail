@@ -129,6 +129,7 @@ blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/Zeal
+blacklist ${HOME}/.config/ZeGrapher Project
 blacklist ${HOME}/.config/abiword
 blacklist ${HOME}/.config/agenda
 blacklist ${HOME}/.config/akonadi*
@@ -223,6 +224,7 @@ blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv
 blacklist ${HOME}/.config/gnome-pie
 blacklist ${HOME}/.config/gnome-session
+blacklist ${HOME}/.config/gnote
 blacklist ${HOME}/.config/godot
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
@@ -345,6 +347,7 @@ blacklist ${HOME}/.config/strawberry
 blacklist ${HOME}/.config/supertuxkart
 blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.config/teams
+blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.config/telepathy-account-widgets
 blacklist ${HOME}/.config/torbrowser
 blacklist ${HOME}/.config/totem
@@ -544,6 +547,7 @@ blacklist ${HOME}/.local/share/backintime
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/barrier
 blacklist ${HOME}/.local/share/bibletime
+blacklist ${HOME}/.local/share/bijiben
 blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cantata
 blacklist ${HOME}/.local/share/cdprojektred
@@ -586,6 +590,7 @@ blacklist ${HOME}/.local/share/gnome-recipes
 blacklist ${HOME}/.local/share/gnome-ring
 blacklist ${HOME}/.local/share/gnome-sudoku
 blacklist ${HOME}/.local/share/gnome-twitch
+blacklist ${HOME}/.local/share/gnote
 blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
@@ -734,7 +739,6 @@ blacklist ${HOME}/.swb.ini
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
-blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.tb
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.teeworlds

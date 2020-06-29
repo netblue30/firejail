@@ -17,9 +17,9 @@ BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
 
 all: all_items man filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats
 SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/ftee/ftee
-MYDIRS = src/lib src/profstats
+MYDIRS = src/lib
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)

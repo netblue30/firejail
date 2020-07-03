@@ -59,3 +59,4 @@ shell none
 
 private-dev
 writable-run-user
+writable-var

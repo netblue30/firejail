@@ -45,6 +45,9 @@ static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
 		new_environment[env_index++] = "FIREJAIL_QUIET=yes";
 	if (arg_debug) // --debug is passed as an environment variable
 		new_environment[env_index++] = "FIREJAIL_DEBUG=yes";
+	if (cfg.seccomp_error_action)
+		if (asprintf(&new_environment[env_index++], "FIREJAIL_SECCOMP_ERROR_ACTION=%s", cfg.seccomp_error_action) == -1)
+			errExit("asprintf");
 
 	if (filtermask & SBOX_STDIN_FROM_FILE) {
 		int fd;

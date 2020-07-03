@@ -63,6 +63,8 @@ read-only ${HOME}/.config/mimeapps.list
 writable-run-user
 
 # If you want to read local mail stored in /var/mail, add the following to email-common.local:
-# whitelist /var/mail
-# whitelist /var/spool/mail
-# writable-var
+#noblacklist /var/mail
+#noblacklist /var/spool/mail
+#whitelist /var/mail
+#whitelist /var/spool/mail
+#writable-var

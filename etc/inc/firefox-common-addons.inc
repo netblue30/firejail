@@ -18,6 +18,7 @@ noblacklist ${HOME}/.kde4/share/config/okularpartrc
 noblacklist ${HOME}/.kde4/share/config/okularrc
 noblacklist ${HOME}/.local/share/kget
 noblacklist ${HOME}/.local/share/okular
+noblacklist ${HOME}/.local/share/kxmlgui5/okular
 noblacklist ${HOME}/.local/share/qpdfview
 
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
@@ -42,6 +43,7 @@ whitelist ${HOME}/.keysnail.js
 whitelist ${HOME}/.lastpass
 whitelist ${HOME}/.local/share/kget
 whitelist ${HOME}/.local/share/okular
+whitelist ${HOME}/.local/share/kxmlgui5/okular
 whitelist ${HOME}/.local/share/qpdfview
 whitelist ${HOME}/.local/share/tridactyl
 whitelist ${HOME}/.pentadactyl

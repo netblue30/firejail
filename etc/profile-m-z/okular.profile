@@ -16,6 +16,7 @@ noblacklist ${HOME}/.kde4/share/apps/okular
 noblacklist ${HOME}/.kde4/share/config/okularpartrc
 noblacklist ${HOME}/.kde4/share/config/okularrc
 noblacklist ${HOME}/.local/share/okular
+noblacklist ${HOME}/.local/share/kxmlgui5/okular
 noblacklist ${DOCUMENTS}
 
 include disable-common.inc
@@ -30,6 +31,7 @@ include disable-xdg.inc
 whitelist /usr/share/config.kcfg
 whitelist /usr/share/okular
 whitelist /usr/share/poppler
+whitelist /usr/share/kxmlgui5/okular
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

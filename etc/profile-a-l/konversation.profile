@@ -7,6 +7,7 @@ include konversation.local
 include globals.local
 
 noblacklist ${HOME}/.config/konversationrc
+noblacklist ${HOME}/.config/konversation.notifyrc
 noblacklist ${HOME}/.kde/share/config/konversationrc
 noblacklist ${HOME}/.kde4/share/config/konversationrc
 

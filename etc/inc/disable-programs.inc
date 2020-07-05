@@ -613,7 +613,7 @@ blacklist ${HOME}/.local/share/ktorrent
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/ktouch
 blacklist ${HOME}/.local/share/kwrite
-blacklist ${HOME}/.local/share/kxmlgui5
+blacklist ${HOME}/.local/share/kxmlgui5/*
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop

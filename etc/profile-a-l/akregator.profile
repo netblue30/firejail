@@ -20,7 +20,7 @@ include disable-shell.inc
 
 mkfile ${HOME}/.config/akregatorrc
 mkdir ${HOME}/.local/share/akregator
-mkfile ${HOME}/.local/share/kxmlgui5/akregator
+mkdir ${HOME}/.local/share/kxmlgui5/akregator
 whitelist ${HOME}/.config/akregatorrc
 whitelist ${HOME}/.local/share/akregator
 whitelist ${HOME}/.local/share/kssl

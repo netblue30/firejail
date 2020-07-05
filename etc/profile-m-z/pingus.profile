@@ -39,7 +39,7 @@ seccomp
 shell none
 tracelog
 
-disbale-mnt
+disable-mnt
 private-bin pingus,pingus.bin,sh
 private-cache
 private-dev

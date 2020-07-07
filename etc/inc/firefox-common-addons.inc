@@ -41,6 +41,7 @@ whitelist ${HOME}/.kde4/share/config/okularrc
 whitelist ${HOME}/.keysnail.js
 whitelist ${HOME}/.lastpass
 whitelist ${HOME}/.local/share/kget
+whitelist ${HOME}/.local/share/kxmlgui5/okular
 whitelist ${HOME}/.local/share/okular
 whitelist ${HOME}/.local/share/qpdfview
 whitelist ${HOME}/.local/share/tridactyl

@@ -28,6 +28,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 whitelist /usr/share/config.kcfg
+whitelist /usr/share/kxmlgui5/okular
 whitelist /usr/share/okular
 whitelist /usr/share/poppler
 include whitelist-usr-share-common.inc

@@ -64,8 +64,9 @@ blacklist /etc/xdg/autostart
 read-only ${HOME}/.Xauthority
 
 # Session manager
-?HAS_X11: blacklist ${HOME}/.ICEauthority
-?HAS_X11: blacklist /tmp/.ICE-unix
+# see #3358
+#\HAS_X11: blacklist ${HOME}/.ICEauthority
+#?HAS_X11: blacklist /tmp/.ICE-unix
 
 # KDE config
 blacklist ${HOME}/.config/khotkeysrc
@@ -136,8 +137,9 @@ read-only ${HOME}/.local/share/kssl
 blacklist ${RUNUSER}/*.slave-socket
 blacklist ${RUNUSER}/kdeinit5__*
 blacklist ${RUNUSER}/kdesud_*
-?HAS_NODBUS: blacklist ${RUNUSER}/ksocket-*
-?HAS_NODBUS: blacklist /tmp/ksocket-*
+# see #3358
+#?HAS_NODBUS: blacklist ${RUNUSER}/ksocket-*
+#?HAS_NODBUS: blacklist /tmp/ksocket-*
 
 # gnome
 # contains extensions, last used times of applications, and notifications

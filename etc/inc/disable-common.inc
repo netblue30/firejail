@@ -65,7 +65,7 @@ read-only ${HOME}/.Xauthority
 
 # Session manager
 # see #3358
-#\HAS_X11: blacklist ${HOME}/.ICEauthority
+#?HAS_X11: blacklist ${HOME}/.ICEauthority
 #?HAS_X11: blacklist /tmp/.ICE-unix
 
 # KDE config

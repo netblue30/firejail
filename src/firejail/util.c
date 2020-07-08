@@ -957,16 +957,27 @@ int remove_overlay_directory(void) {
 	return 0;
 }
 
+// flush stdin if it is connected to a tty and has input
 void flush_stdin(void) {
-	if (isatty(STDIN_FILENO)) {
-		int cnt = 0;
-		int rv = ioctl(STDIN_FILENO, FIONREAD, &cnt);
-		if (rv == 0 && cnt) {
-			fwarning("removing %d bytes from stdin\n", cnt);
-			rv = ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
-			(void) rv;
-		}
-	}
+	if (!isatty(STDIN_FILENO))
+		return;
+
+	int cnt = 0;
+	int rv = ioctl(STDIN_FILENO, FIONREAD, &cnt);
+	if (rv != 0 || cnt == 0)
+		return;
+
+	fwarning("removing %d bytes from stdin\n", cnt);
+
+	// If this process is backgrounded, below ioctl() will trigger
+	// SIGTTOU and stop us. We avoid this by ignoring SIGTTOU for
+	// the duration of the ioctl.
+	sighandler_t hdlr = signal(SIGTTOU, SIG_IGN);
+	rv = ioctl(STDIN_FILENO, TCFLSH, TCIFLUSH);
+	signal(SIGTTOU, hdlr);
+
+	if (rv)
+		fwarning("Flushing stdin failed: %s\n", strerror(errno));
 }
 
 // return 1 if new directory was created, else return 0

@@ -23,6 +23,17 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+# You can enable whitelisting for keepassxc by uncommenting (or adding to you keepassxc.local) the following lines.
+# If you do so, you MUST store your database under ${HOME}/Documents/KeePassXC/foo.kdbx
+#mkdir ${HOME}/Documents/KeePassXC
+#whitelist ${HOME}/Documents/KeePassXC
+# Needed for KeePassXC-Browser
+#mkfile ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.config/keepassxc
+#whitelist ${HOME}/.config/keepassxc
+#include whitelist-common.inc
+
 whitelist /usr/share/keepassxc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

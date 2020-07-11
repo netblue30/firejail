@@ -12,6 +12,7 @@ include knotes.local
 
 noblacklist ${HOME}/.config/knotesrc
 noblacklist ${HOME}/.local/share/knotes
+noblacklist ${HOME}/.local/share/kxmlgui5/knotes
 
 # Redirect
 include kmail.profile

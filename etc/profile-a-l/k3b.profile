@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.config/k3brc
 noblacklist ${HOME}/.kde/share/config/k3brc
 noblacklist ${HOME}/.kde4/share/config/k3brc
+noblacklist ${HOME}/.local/share/kxmlgui5/k3b
 noblacklist ${MUSIC}
 
 include disable-common.inc

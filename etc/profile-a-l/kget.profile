@@ -12,6 +12,7 @@ noblacklist ${HOME}/.kde/share/config/kgetrc
 noblacklist ${HOME}/.kde4/share/apps/kget
 noblacklist ${HOME}/.kde4/share/config/kgetrc
 noblacklist ${HOME}/.local/share/kget
+noblacklist ${HOME}/.local/share/kxmlgui5/kget
 
 include disable-common.inc
 include disable-devel.inc

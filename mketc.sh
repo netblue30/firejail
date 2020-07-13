@@ -7,10 +7,11 @@ sed -i -e '
 1i# Workaround for systems where common UNIX utilities are symlinks to busybox.\
 # If this is not your case you can remove --enable-busybox-workaround from\
 # ./configure options, for added security.\
+noblacklist \${PATH}/busybox\
+noblacklist \${PATH}/crontab\
 noblacklist \${PATH}/mount\
-noblacklist \${PATH}/umount\
+noblacklist \${PATH}/nc\
 noblacklist \${PATH}/su\
 noblacklist \${PATH}/sudo\
-noblacklist \${PATH}/nc\
-noblacklist \${PATH}/crontab\
+noblacklist \${PATH}/umount\
 ' etc/disable-common.inc

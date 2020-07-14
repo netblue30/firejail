@@ -858,6 +858,7 @@ blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
 blacklist ${HOME}/.cache/kcmshell5
 blacklist ${HOME}/.cache/kdenlive
+blacklist ${HOME}/.cache/keepassxc
 blacklist ${HOME}/.cache/kfind
 blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/kmail2

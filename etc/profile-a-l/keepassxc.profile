@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/*.kdb
 noblacklist ${HOME}/*.kdbx
+noblacklist ${HOME}/.cache/keepassxc
 noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.keepassxc
 # 2.2.4 needs this path when compiled with "Native messaging browser extension"
@@ -30,7 +31,9 @@ include disable-xdg.inc
 # Needed for KeePassXC-Browser
 #mkfile ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.cache/keepassxc
 #mkdir ${HOME}/.config/keepassxc
+#whitelist ${HOME}/.cache/keepassxc
 #whitelist ${HOME}/.config/keepassxc
 #include whitelist-common.inc
 

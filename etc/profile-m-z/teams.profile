@@ -9,6 +9,8 @@ include teams.local
 # added by included profile
 #include globals.local
 
+# see #3404
+ignore apparmor
 ignore dbus-user none
 ignore dbus-system none
 

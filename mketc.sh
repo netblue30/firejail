@@ -14,4 +14,4 @@ noblacklist \${PATH}/nc\
 noblacklist \${PATH}/su\
 noblacklist \${PATH}/sudo\
 noblacklist \${PATH}/umount\
-' etc/disable-common.inc
+' "$1"

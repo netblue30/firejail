@@ -81,6 +81,8 @@ blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Debauchee/Barrier.conf
 blacklist ${HOME}/.config/Dharkael
+blacklist ${HOME}/.config/Element
+blacklist ${HOME}/.config/Element (Riot)
 blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Ferdi
 blacklist ${HOME}/.config/Franz

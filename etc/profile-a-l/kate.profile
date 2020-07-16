@@ -15,6 +15,13 @@ noblacklist ${HOME}/.config/kateschemarc
 noblacklist ${HOME}/.config/katesyntaxhighlightingrc
 noblacklist ${HOME}/.config/katevirc
 noblacklist ${HOME}/.local/share/kate
+noblacklist ${HOME}/.local/share/kxmlgui5/kate
+noblacklist ${HOME}/.local/share/kxmlgui5/katefiletree
+noblacklist ${HOME}/.local/share/kxmlgui5/katekonsole
+noblacklist ${HOME}/.local/share/kxmlgui5/kateopenheaderplugin
+noblacklist ${HOME}/.local/share/kxmlgui5/katepart
+noblacklist ${HOME}/.local/share/kxmlgui5/kateproject
+noblacklist ${HOME}/.local/share/kxmlgui5/katesearch
 
 include disable-common.inc
 # include disable-devel.inc

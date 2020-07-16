@@ -15,6 +15,7 @@ noblacklist ${HOME}/.kde/share/config/okularrc
 noblacklist ${HOME}/.kde4/share/apps/okular
 noblacklist ${HOME}/.kde4/share/config/okularpartrc
 noblacklist ${HOME}/.kde4/share/config/okularrc
+noblacklist ${HOME}/.local/share/kxmlgui5/okular
 noblacklist ${HOME}/.local/share/okular
 noblacklist ${DOCUMENTS}
 

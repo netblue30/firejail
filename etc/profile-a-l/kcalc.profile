@@ -6,6 +6,7 @@ include kcalc.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.local/share/kxmlgui5/kcalc
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,12 +16,14 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
+mkdir ${HOME}/.local/share/kxmlgui5/kcalc
 mkfile ${HOME}/.config/kcalcrc
 mkfile ${HOME}/.kde/share/config/kcalcrc
 mkfile ${HOME}/.kde4/share/config/kcalcrc
 whitelist ${HOME}/.config/kcalcrc
 whitelist ${HOME}/.kde/share/config/kcalcrc
 whitelist ${HOME}/.kde4/share/config/kcalcrc
+whitelist ${HOME}/.local/share/kxmlgui5/kcalc
 include whitelist-common.inc
 include whitelist-var-common.inc
 

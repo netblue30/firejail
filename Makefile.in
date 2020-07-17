@@ -269,7 +269,7 @@ test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sy
 
 ##########################################
 # Individual tests, some of them require root access
-# The tests are very intrussive, by the time you are done
+# The tests are very intrusive, by the time you are done
 # with them you will need to restart your computer.
 ##########################################
 
@@ -294,7 +294,7 @@ test-network:
 test-stress:
 	cd test/stress; ./stress.sh | grep TESTING
 
-# Tesets running a root user
+# Tests running a root user
 test-root:
 	cd test/root; su -c ./root.sh | grep TESTING
 

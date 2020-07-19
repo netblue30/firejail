@@ -29,7 +29,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
 machine-id
 # net none
 netfilter
@@ -58,6 +57,5 @@ private-tmp
 dbus-system none
 
 memory-deny-write-execute
-
 
 

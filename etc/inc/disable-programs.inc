@@ -761,6 +761,7 @@ blacklist ${HOME}/.viking
 blacklist ${HOME}/.viking-maps
 blacklist ${HOME}/.vim
 blacklist ${HOME}/.vimrc
+blacklist ${HOME}/.vmware
 blacklist ${HOME}/.vscode
 blacklist ${HOME}/.vscode-oss
 blacklist ${HOME}/.vst
@@ -919,6 +920,7 @@ blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc
+blacklist ${HOME}/.cache/vmware
 blacklist ${HOME}/.cache/warsow-2.1
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth

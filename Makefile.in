@@ -176,7 +176,9 @@ DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcop
 
 dist:
 	mv config.status config.status.old
+	mv mkdeb.sh mkdeb.sh.old
 	make distclean
+	mv mkdeb.sh.old mkdeb.sh
 	mv config.status.old config.status
 	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz
 	mkdir -p $(NAME)-$(VERSION)/test

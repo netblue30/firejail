@@ -35,4 +35,5 @@ shell none
 #disable-mnt
 private-etc private-etc alsa,asound.conf,ca-certificates,conf.d,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,localtime,machine-id,pulse,resolv.conf,ssl,vmware,vmware-installer,vmware-vix,X11
 
-dbus-* none
+dbus-user none
+dbus-system none

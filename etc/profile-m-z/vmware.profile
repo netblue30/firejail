@@ -3,6 +3,9 @@
 # Description: The industry standard for running multiple operating systems as virtual machines on a single Linux PC.
 include vmware.local
 
+noblacklist ${HOME}/.vmware
+noblacklist ${HOME}/.cache/vmware
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

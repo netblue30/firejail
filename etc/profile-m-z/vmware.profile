@@ -21,7 +21,6 @@ mkdir ${HOME}/.vmware
 mkdir ${HOME}/.cache/vmware
 whitelist ${HOME}/.vmware
 whitelist ${HOME}/.cache/vmware
-
 include whitelist-common.inc
 
 caps.keep sys_nice

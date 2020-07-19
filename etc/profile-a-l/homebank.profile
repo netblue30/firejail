@@ -35,7 +35,6 @@ machine-id
 netfilter
 nodvd
 no3d
-nodbus
 nodvd
 nogroups
 nonewprivs
@@ -59,7 +58,6 @@ private-tmp
 dbus-system none
 
 memory-deny-write-execute
-
 
 
 

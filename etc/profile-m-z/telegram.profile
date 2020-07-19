@@ -25,5 +25,5 @@ seccomp
 
 disable-mnt
 private-cache
-private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,crypto-policies,pulse
+private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,machine-id,pulse
 private-tmp

@@ -94,6 +94,7 @@ blacklist ${HOME}/.config/Gitter
 blacklist ${HOME}/.config/Google
 blacklist ${HOME}/.config/Google Play Music Desktop Player
 blacklist ${HOME}/.config/Gpredict
+blacklist ${HOME}/.config/homebank
 blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/InSilmaril
 blacklist ${HOME}/.config/Jitsi Meet

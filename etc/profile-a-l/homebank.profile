@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/homebank
 
 include disable-common.inc
 include disable-devel.inc
+include disable-shell.inc
 include disable-exec.inc 
 include disable-interpreters.inc
 include disable-programs.inc
@@ -20,8 +21,6 @@ mkdir ${HOME}/.config/homebank
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/homebank
 whitelist /usr/share/homebank
-whitelist /usr/share/doc/homebank-data
-whitelist /usr/share/doc/homebank
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -27,7 +27,6 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.keep sys_nice
-ipc-namespace
 netfilter
 nogroups
 notv

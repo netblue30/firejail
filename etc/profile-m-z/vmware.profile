@@ -26,8 +26,8 @@ include whitelist-common.inc
 caps.keep sys_nice
 ipc-namespace
 netfilter
-# dbus-user none
-# dbus-system none
+
+
 nogroups
 notv
 shell none

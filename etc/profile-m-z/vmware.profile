@@ -28,8 +28,6 @@ include whitelist-var-common.inc
 caps.keep sys_nice
 ipc-namespace
 netfilter
-
-
 nogroups
 notv
 shell none

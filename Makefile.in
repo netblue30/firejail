@@ -89,7 +89,7 @@ distclean: clean
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir distclean; \
 	done
-	rm -fr Makefile autom4te.cache config.log config.status config.h src/common.mk
+	rm -fr Makefile autom4te.cache config.log config.status config.h src/common.mk mkdeb.sh
 
 realinstall:
 	# firejail executable

@@ -1,7 +1,10 @@
 # Firejail profile for vmware
-# This file is overwritten after every install/update
 # Description: The industry standard for running multiple operating systems as virtual machines on a single Linux PC.
+# This file is overwritten after every install/update
+# Persistent local customizations
 include vmware.local
+# Persistent global definitions
+include globals.local
 
 noblacklist ${HOME}/.vmware
 noblacklist ${HOME}/.cache/vmware

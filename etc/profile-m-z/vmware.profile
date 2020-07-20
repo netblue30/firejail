@@ -25,7 +25,7 @@ mkdir ${HOME}/.cache/vmware
 whitelist ${HOME}/.vmware
 whitelist ${HOME}/.cache/vmware
 include whitelist-common.inc
-whitelist-runuser-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

@@ -1,14 +1,14 @@
 # Firejail profile for teams
 # Description: Official Microsoft Teams client for Linux using Electron.
 # This file is overwritten after every install/update
-# Known issues:
-#  * if Teams crashes on startup try using "ignore apparmor" in your local config
 # Persistent local customizations
 include teams.local
 # Persistent global definitions
 # added by included profile
 #include globals.local
 
+# see #3404
+ignore apparmor
 ignore dbus-user none
 ignore dbus-system none
 

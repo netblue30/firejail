@@ -163,6 +163,7 @@ blacklist ${HOME}/.config/caja
 blacklist ${HOME}/.config/calibre
 blacklist ${HOME}/.config/cantata
 blacklist ${HOME}/.config/catfish
+blacklist ${HOME}/.config/cawbird
 blacklist ${HOME}/.config/celluloid
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.config/chrome-beta-flags.conf

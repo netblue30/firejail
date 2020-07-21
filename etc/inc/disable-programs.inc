@@ -236,6 +236,7 @@ blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gummi
 blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/hexchat
+blacklist ${HOME}/.config/homebank
 blacklist ${HOME}/.config/i2p
 blacklist ${HOME}/.config/inkscape
 blacklist ${HOME}/.config/inox

@@ -40,7 +40,6 @@ shell none
 tracelog
 
 #disable-mnt
-
 private-cache
 private-etc alsa,asound.conf,ca-certificates,dconf,fonts,hostname,hosts,ld.so.cache,pulse,localtime,machine-id,conf.d,resolv.conf,ssl,X11
 

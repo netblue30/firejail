@@ -11,14 +11,13 @@ noblacklist ${HOME}/.config/FreeTube
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-# include disable-shell.inc -Creates problems with --appimage
+include disable-shell.inc 
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/FreeTube
 whitelist ${HOME}/.config/FreeTube
 
 shell none
-ignore seccomp
 seccomp !chroot
 
 disable-mnt

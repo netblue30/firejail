@@ -43,7 +43,7 @@ tracelog
 
 #disable-mnt
 private-cache
-private-etc alsa,asound.conf,ca-certificates,conf.d,crypto-policies,dconf,fonts,hostname,hosts,ld.so.cache,localtime,machine-id,pki,pulse,resolv.conf,ssl,X11
+private-etc alsa,asound.conf,ca-certificates,conf.d,crypto-policies,dconf,fonts,hostname,hosts,ld.so.cache,localtime,machine-id,pki,pulse,resolv.conf,ssl
 
 dbus-user none
 dbus-system none

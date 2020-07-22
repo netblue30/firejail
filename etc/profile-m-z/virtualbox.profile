@@ -31,6 +31,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+# caps.keep net_raw,sys_nice works for the default NAT networks.But,for host-only network sys_admin is needed. See https://github.com/netblue30/firejail/issues/2868#issuecomment-518647630
+
 caps.keep net_raw,sys_nice
 netfilter
 nodvd

@@ -87,6 +87,7 @@ blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Ferdi
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
+blacklist ${HOME}/.config/FreeTube
 blacklist ${HOME}/.config/Fritzing
 blacklist ${HOME}/.config/GIMP
 blacklist ${HOME}/.config/GitHub Desktop

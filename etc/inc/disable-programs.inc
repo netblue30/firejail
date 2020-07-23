@@ -683,6 +683,7 @@ blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.megaglest
+blacklist ${HOME}/.minecraft
 blacklist ${HOME}/.minetest
 blacklist ${HOME}/.mirrormagic
 blacklist ${HOME}/.moc

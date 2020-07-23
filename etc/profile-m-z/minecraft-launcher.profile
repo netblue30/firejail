@@ -11,6 +11,7 @@ ignore noexec ${HOME}
 noblacklist ${HOME}/.minecraft
 
 include allow-java.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -30,6 +31,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
+nodvd
 nogroups
 nonewprivs
 noroot
@@ -39,6 +41,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
+tracelog
 
 disable-mnt
 private-bin minecraft-launcher,java,java-config

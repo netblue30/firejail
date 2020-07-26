@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 whitelist /usr/share/xfce4
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -40,7 +40,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin xfconf-query,xfce4-screenshooter
+private-bin xfce4-screenshooter,xfconf-query
 private-dev
 private-etc ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,pki,resolv.conf,ssl
 private-tmp

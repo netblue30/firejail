@@ -28,7 +28,6 @@ private-cache
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 private-etc ca-certificates,crypto-policies,fonts,ld.so.cache,localtime,machine-id,pki,pulse,resolv.conf,ssl
 =======
 private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,pulse
@@ -38,8 +37,5 @@ private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,puls
 >>>>>>> Revert "Delete telegram.profile"
 =======
 private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,pulse
->>>>>>> Revert "Delete telegram.profile"
-=======
-private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,machine-id,pulse
 >>>>>>> Revert "Delete telegram.profile"
 private-tmp

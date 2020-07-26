@@ -23,10 +23,8 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
 machine-id
 net none
-netfilter
 nodvd
 no3d
 nogroups

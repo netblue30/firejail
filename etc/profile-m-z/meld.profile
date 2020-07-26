@@ -70,6 +70,7 @@ private-cache
 private-dev
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare in /etc.
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,pki,resolv.conf,ssl,subversion
+# Comment the next line (or add 'ignore private-tmp to your meld.local') if you want to use it as a difftool (#3551)
 private-tmp
 
 read-only ${HOME}/.ssh

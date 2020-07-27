@@ -38,13 +38,13 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-no3d
 nodvd
 nogroups
 nonewprivs
 noroot
 notv
 nou2f
+novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none

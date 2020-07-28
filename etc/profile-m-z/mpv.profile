@@ -30,6 +30,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+whitelist /usr/share/lua
+whitelist /usr/share/lua*
 whitelist /usr/share/vulkan
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -37,8 +39,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-
-# Seems to cause issues with Nvidia drivers sometimes
+# nogroups seems to cause issues with Nvidia drivers sometimes
 nogroups
 nonewprivs
 noroot
@@ -49,7 +50,7 @@ shell none
 tracelog
 
 private-bin env,mpv,python*,youtube-dl
-# Causes slow OSD, see #2838
+# private-cache causes slow OSD, see #2838
 #private-cache
 private-dev
 

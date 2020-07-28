@@ -186,6 +186,7 @@ typedef struct config_t {
 	char *seccomp_list_drop, *seccomp_list_drop32;	// seccomp drop list
 	char *seccomp_list_keep, *seccomp_list_keep32;	// seccomp keep list
 	char *protocol;			// protocol list
+	char *seccomp_error_action;			// error action: kill or errno
 
 	// rlimits
 	long long unsigned rlimit_cpu;
@@ -339,8 +340,18 @@ extern int arg_memory_deny_write_execute;	// block writable and executable memor
 extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
 extern int arg_nou2f;   // --nou2f
-extern int arg_nodbus; // -nodbus
 extern int arg_deterministic_exit_code;	// always exit with first child's exit status
+
+typedef enum {
+	DBUS_POLICY_ALLOW,	// Allow unrestricted access to the bus
+	DBUS_POLICY_FILTER, // Filter with xdg-dbus-proxy
+	DBUS_POLICY_BLOCK   // Block access
+} DbusPolicy;
+extern DbusPolicy arg_dbus_user; // --dbus-user
+extern DbusPolicy arg_dbus_system; // --dbus-system
+extern int arg_dbus_log_user;
+extern int arg_dbus_log_system;
+extern const char *arg_dbus_log_file;
 
 extern int login_shell;
 extern int parent_to_child_fds[2];
@@ -350,6 +361,7 @@ extern mode_t orig_umask;
 extern unsigned long long start_timestamp;
 
 #define MAX_ARGS 128		// maximum number of command arguments (argc)
+#define MAX_ARG_LEN (PATH_MAX + 32) // --foobar=PATH
 extern char *fullargv[MAX_ARGS];
 extern int fullargc;
 
@@ -571,6 +583,7 @@ int seccomp_install_filters(void);
 int seccomp_load(const char *fname);
 int seccomp_filter_drop(bool native);
 int seccomp_filter_keep(bool native);
+int seccomp_filter_mdwx(bool native);
 void seccomp_print_filter(pid_t pid);
 
 // caps.c
@@ -639,6 +652,8 @@ int check_namespace_virt(void);
 int check_kernel_procs(void);
 void run_no_sandbox(int argc, char **argv);
 
+#define MAX_ENVS 256			// some sane maximum number of environment variables
+#define MAX_ENV_LEN (PATH_MAX + 32)	// FOOBAR=SOME_PATH
 // env.c
 typedef enum {
 	SETENV = 0,
@@ -751,6 +766,7 @@ enum {
 	CFG_PRIVATE_CACHE,
 	CFG_CGROUP,
 	CFG_NAME_CHANGE,
+	CFG_SECCOMP_ERROR_ACTION,
 	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
 	CFG_MAX // this should always be the last entry
 };
@@ -761,6 +777,8 @@ extern char *xvfb_screen;
 extern char *xvfb_extra_params;
 extern char *netfilter_default;
 extern unsigned long join_timeout;
+extern char *config_seccomp_error_action_str;
+
 int checkcfg(int val);
 void print_compiletime_support(void);
 
@@ -815,10 +833,13 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
 #define SBOX_CAPS_HIDEPID (1 << 7)	// hidepid caps filter for running firemon
 #define SBOX_CAPS_NET_SERVICE (1 << 8) // caps filter for programs running network services
+#define SBOX_KEEP_FDS (1 << 9) // keep file descriptors open
+#define FIREJAIL_MAX_FD 20 // getdtablesize() is overkill for a firejail process
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 int sbox_run_v(unsigned filter, char * const arg[]);
+void sbox_exec_v(unsigned filter, char * const arg[]);
 
 // run_files.c
 void delete_run_files(pid_t pid);
@@ -828,7 +849,12 @@ void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
 
 // dbus.c
-void dbus_disable(void);
+int dbus_check_name(const char *name);
+int dbus_check_call_rule(const char *name);
+void dbus_check_profile(void);
+void dbus_proxy_start(void);
+void dbus_proxy_stop(void);
+void dbus_apply_policy(void);
 
 // dhcp.c
 extern pid_t dhclient4_pid;

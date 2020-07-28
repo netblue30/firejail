@@ -1,7 +1,7 @@
 Name: __NAME__
 Version: __VERSION__
 Release: 1
-Summary: Linux namepaces sandbox program
+Summary: Linux namespaces sandbox program
 
 License: GPLv2+
 Group: Development/Tools
@@ -19,7 +19,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %setup -q
 
 %build
-%configure --disable-userns --disable-contrib-install
+%configure __CONFIG_OPT__
 make %{?_smp_mflags}
 
 %install

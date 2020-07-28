@@ -75,7 +75,14 @@ GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
 We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@yahoo.com
 
-## Compile and install
+## Installing
+
+Try installing Firejail from your system packages first. Firejail is included in Alpine, ALT Linux, Arch, Chakra, Debian, Deepin, Devuan, Fedora, Gentoo, Manjaro, Mint, NixOS, Parabola, Parrot, PCLinuxOS, ROSA, Solus, Slackware/SlackBuilds, Trisquel, Ubuntu, Void and possibly others.
+
+The firejail 0.9.52-LTS version is deprecated. On Ubuntu 18.04 LTS users are advised to use the [PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail). On Debian buster we recommend to use the [backports](https://packages.debian.org/buster-backports/firejail) package.
+
+You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail’s source code from our Git repository and compile manually:
+
 `````
 $ git clone https://github.com/netblue30/firejail.git
 $ cd firejail
@@ -88,6 +95,8 @@ development libraries and pkg-config are required when using --apparmor
 $ sudo apt-get install git build-essential libapparmor-dev pkg-config
 `````
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
+
+Detailed information on using firejail from git is available on the [wiki](https://github.com/netblue30/firejail/wiki/Using-firejail-from-git).
 
 ## Running the sandbox
 
@@ -156,26 +165,35 @@ A small tool to print profile statistics. Compile as usual and run:
 $ make
 $ cd etc
 $ ./profstats *.profile
-Stats:
-    profiles			949
-    include local profile	949   (include profile-name.local)
-    include globals		949   (include globals.local)
-    blacklist ~/.ssh		934   (include disable-common.inc)
-    seccomp			892
-    capabilities		948
-    noexec			813   (include disable-exec.inc)
-    apparmor			471
-    private-dev			812
-    private-tmp			711
-    whitelist var		621   (include whitelist-var-common.inc)
-    whitelist run/user		105   (include whitelist-runuser-common.inc)
-    whitelist usr/share		257   (include whitelist-usr-share-common.inc)
-    net none			297
+    profiles			966
+    include local profile	966   (include profile-name.local)
+    include globals		966   (include globals.local)
+    blacklist ~/.ssh		951   (include disable-common.inc)
+    seccomp			908
+    capabilities		965
+    noexec			830   (include disable-exec.inc)
+    memory-deny-write-execute	214
+    apparmor			488
+    private-bin			483
+    private-dev			829
+    private-etc			366
+    private-tmp			726
+    whitelist var		638   (include whitelist-var-common.inc)
+    whitelist run/user		282   (include whitelist-runuser-common.inc
+					or blacklist ${RUNUSER})
+    whitelist usr/share		275   (include whitelist-usr-share-common.inc
+    net none			313
 `````
 
 Run ./profstats -h for help.
 
 ### New profiles:
 
-gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, gnome-passwordsafe, bibtex, gummi, latex, pdflatex, tex, wpp, wpspdf, wps, et, multimc, gnome-hexgl, com.github.johnfactotum.Foliate, desktopeditors, impressive, mupdf-gl, mupdf-x11, mupdf-x11-curl, muraster, mutool, planmaker18, planmaker18free, presentations18, presentations18free, textmaker18, textmaker18free, teams, xournal,
-gnome-screenshot, ripperX, sound-juicer, iagno, com.github.dahenson.agenda, gnome-pomodoro, gnome-todo, kmplayer, penguin-command, x2goclient, frogatto, gnome-mines, gnome-nibbles, lightsoff, ts3client_runscript.sh, warmux, ferdi, abiword, four-in-a-row, gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin, gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars, hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless, mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers, seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop
+gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, gnome-passwordsafe, bibtex, gummi, latex, pdflatex, tex, wpp, wpspdf, wps, et,
+multimc, gnome-hexgl, com.github.johnfactotum.Foliate, desktopeditors, impressive, mupdf-gl, mupdf-x11, mupdf-x11-curl,
+muraster, mutool, planmaker18, planmaker18free, presentations18, presentations18free, textmaker18, textmaker18free, teams, xournal,
+gnome-screenshot, ripperX, sound-juicer, iagno, com.github.dahenson.agenda, gnome-pomodoro, gnome-todo, kmplayer,
+penguin-command, x2goclient, frogatto, gnome-mines, gnome-nibbles, lightsoff, ts3client_runscript.sh, warmux, ferdi, abiword,
+four-in-a-row, gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin, gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars,
+hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless, mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers,
+seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop, fdns, jitsi-meet-desktop, nicontine, steam-runtime, apostrophe, quadrapassel, dino-im, strawberry, hitori, bijiben, gnote, gnubik, ZeGrapher, gapplication, xonotic-sdl-wrapper, openarena_ded, cawbird, freetube, homebank, mattermost-desktop, newsflash, com.gitlab.newsflash, element-desktop

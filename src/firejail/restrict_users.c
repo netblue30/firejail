@@ -29,7 +29,7 @@
 
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 #define MAXBUF 1024
@@ -68,27 +68,26 @@ static USER_LIST *ulist_find(const char *user) {
 
 static void sanitize_home(void) {
 	assert(getuid() != 0);	// this code works only for regular users
+	struct stat s;
 
 	if (arg_debug)
 		printf("Cleaning /home directory\n");
-
-	struct stat s;
-	if (stat(cfg.homedir, &s) == -1) {
-		// cannot find home directory, just return
-		fwarning("cannot find home directory\n");
-		return;
-	}
-
-	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
-		errExit("mkdir");
-
 	// keep a copy of the user home directory
 	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
-		errExit("safe_fd");
+	if (fd == -1) {
+		if (errno == ENOENT)
+			fwarning("cannot find user home directory\n");
+		else
+			fwarning("cannot clean /home directory\n");
+		return;
+	}
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 		errExit("asprintf");
+	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
+		errExit("mkdir");
 	if (mount(proc, RUN_WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	free(proc);
@@ -167,7 +166,7 @@ static void sanitize_run(void) {
 	if (set_perms(runuser, getuid(), getgid(), 0700))
 		errExit("set_perms");
 
-	// mount user home directory
+	// mount /run/user/$UID directory
 	if (mount(RUN_WHITELIST_RUN_DIR, runuser, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 

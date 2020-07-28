@@ -18,6 +18,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include "../include/seccomp.h"
+#include "../include/syscall.h"
 #include <sys/stat.h>
 #include <linux/loop.h>
 
@@ -32,6 +34,7 @@ char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 unsigned long join_timeout = 5000000; // microseconds
+char *config_seccomp_error_action_str = "EPERM";
 
 int checkcfg(int val) {
 	assert(val < CFG_MAX);
@@ -51,6 +54,8 @@ int checkcfg(int val) {
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
 		cfg_val[CFG_XPRA_ATTACH] = 0;
+		cfg_val[CFG_SECCOMP_ERROR_ACTION] = -1;
+		cfg_val[CFG_BROWSER_ALLOW_DRM] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -219,6 +224,24 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "join-timeout ", 13) == 0)
 				join_timeout = strtoul(ptr + 13, NULL, 10) * 1000000; // seconds to microseconds
 
+			// seccomp error action
+			else if (strncmp(ptr, "seccomp-error-action ", 21) == 0) {
+#ifdef HAVE_SECCOMP
+				if (strcmp(ptr + 21, "kill") == 0)
+					cfg_val[CFG_SECCOMP_ERROR_ACTION] = SECCOMP_RET_KILL;
+				else {
+					cfg_val[CFG_SECCOMP_ERROR_ACTION] = errno_find_name(ptr + 21);
+					if (cfg_val[CFG_SECCOMP_ERROR_ACTION] == -1)
+						errExit("seccomp-error-action: unknown errno");
+				}
+				config_seccomp_error_action_str = strdup(ptr + 21);
+				if (!config_seccomp_error_action_str)
+					errExit("strdup");
+#else
+				warning_feature_disabled("seccomp");
+#endif
+			}
+
 			else
 				goto errout;
 
@@ -324,6 +347,14 @@ void print_compiletime_support(void) {
 
 	printf("\t- seccomp-bpf support is %s\n",
 #ifdef HAVE_SECCOMP
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
+	printf("\t- SELinux support is %s\n",
+#ifdef HAVE_SELINUX
 		"enabled"
 #else
 		"disabled"

@@ -27,6 +27,7 @@ extern int arg_quiet;
 
 // seccomp_file.c or dummy versions in firejail/main.c and fsec-print/main.c
 void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native);
+void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, bool native);
 
 // errno.c
 void errno_print(void);

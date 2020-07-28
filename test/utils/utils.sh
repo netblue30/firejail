@@ -13,14 +13,9 @@ if [ -f /etc/debian_version ]; then
 fi
 export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
-echo "testing" > ~/firejail-test-file-7699
-echo "testing" > /tmp/firejail-test-file-7699
-echo "testing" > /var/tmp/firejail-test-file-7699
 echo "TESTING: build (test/utils/build.exp)"
 ./build.exp
 rm -f ~/firejail-test-file-7699
-rm -f /tmp/firejail-test-file-7699
-rm -f /var/tmp/firejail-test-file-7699
 rm -f firejail-test-file-4388
 
 if [ $(readlink /proc/self) -lt 100 ]; then

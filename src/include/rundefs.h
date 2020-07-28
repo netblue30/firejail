@@ -30,6 +30,7 @@
 #define RUN_FIREJAIL_NETWORK_DIR	RUN_FIREJAIL_DIR "/network"
 #define RUN_FIREJAIL_BANDWIDTH_DIR	RUN_FIREJAIL_DIR "/bandwidth"
 #define RUN_FIREJAIL_PROFILE_DIR	RUN_FIREJAIL_DIR "/profile"
+#define RUN_FIREJAIL_DBUS_DIR RUN_FIREJAIL_DIR "/dbus"
 #define RUN_NETWORK_LOCK_FILE		RUN_FIREJAIL_DIR "/firejail-network.lock"
 #define RUN_DIRECTORY_LOCK_FILE		RUN_FIREJAIL_DIR "/firejail-run.lock"
 #define RUN_RO_DIR			RUN_FIREJAIL_DIR "/firejail.ro.dir"
@@ -56,6 +57,9 @@
 #define RUN_DHCLIENT_4_LEASES_FILE		RUN_DHCLIENT_DIR "/dhclient.leases"
 #define RUN_DHCLIENT_4_PID_FILE			RUN_DHCLIENT_DIR "/dhclient.pid"
 #define RUN_DHCLIENT_6_PID_FILE			RUN_DHCLIENT_DIR "/dhclient6.pid"
+#define RUN_DBUS_DIR        RUN_MNT_DIR "/dbus"
+#define RUN_DBUS_USER_SOCKET        RUN_DBUS_DIR "/user"
+#define RUN_DBUS_SYSTEM_SOCKET      RUN_DBUS_DIR "/system"
 
 #define RUN_SECCOMP_DIR			RUN_MNT_DIR "/seccomp"
 #define RUN_SECCOMP_LIST		RUN_SECCOMP_DIR "/seccomp.list"		// list of seccomp files installed

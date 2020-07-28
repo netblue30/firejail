@@ -9,9 +9,9 @@ build_ubuntu_package:
     image: ubuntu:rolling
     script:
         - apt-get update -qq
-        - apt-get install -y -qq build-essential lintian pkg-config python3
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config python3
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
-        - python3 contrib/sort.py etc/*.{profile,inc}
+        - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_debian_package:
     image: debian:stretch
@@ -20,12 +20,12 @@ build_debian_package:
         - apt-get install -y -qq build-essential lintian pkg-config
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
 
-#build_redhat_package:
-#    image: centos:latest
-#    script:
-#        - yum update -y
-#        - yum install -y rpm-build gcc make
-#        - ./configure --prefix=/usr && make rpms && yum install -y firejail*.rpm
+build_redhat_package:
+    image: centos:latest
+    script:
+        - dnf update -y
+        - dnf install -y rpm-build gcc make
+        - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
 
 build_fedora_package:
     image: fedora:latest
@@ -33,7 +33,7 @@ build_fedora_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
-        - python3 contrib/sort.py etc/*.{profile,inc}
+        - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_src_package:
     image: alpine:latest
@@ -48,8 +48,8 @@ build_apparmor:
     image: ubuntu:latest
     script:
         - apt-get update -qq
-        - apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
-        - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail-apparmor*.deb
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
+        - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail*.deb
 
 cppcheck:
     image: debian:latest
@@ -58,6 +58,15 @@ cppcheck:
         - apt-get -qq --no-install-recommends install cppcheck
     script:
         - cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+
+clang:
+    image: ubuntu:latest
+    script:
+        - apt-get update -qq
+        - apt-get --purge autoremove -y -qq gcc
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq clang pkg-config make
+        - ./configure --prefix=/usr CC=/usr/bin/clang && make && make install-strip
+
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

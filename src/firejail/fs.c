@@ -111,6 +111,13 @@ static void disable_file(OPERATION op, const char *filename) {
 		return;
 	}
 
+	// check for firejail executable
+	// we migth have a file found in ${PATH} pointing to /usr/bin/firejail
+	// blacklisting it here will end up breaking situations like user clicks on a link in Thunderbird
+	//     and expects Firefox to open in the same sandbox
+	if (strcmp(BINDIR "/firejail", fname) == 0)
+		return;
+
 	// modify the file
 	if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
 		// some distros put all executables under /usr/bin and make /bin a symbolic link
@@ -256,6 +263,7 @@ void fs_blacklist(void) {
 		// whitelist commands handled by fs_whitelist()
 		if (strncmp(entry->data, "whitelist ", 10) == 0 ||
 		    strncmp(entry->data, "nowhitelist ", 12) == 0 ||
+		    strncmp(entry->data, "dbus-", 5) == 0 ||
 		   *entry->data == '\0') {
 			entry = entry->next;
 			continue;

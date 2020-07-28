@@ -25,6 +25,22 @@
 #include <sys/wait.h>
 #include <string.h>
 
+
+static void check(const char *fname) {
+	// manufacture /run/user directory
+	char *runuser;
+	if (asprintf(&runuser, "/run/user/%d/", getuid()) == -1)
+		errExit("asprintf");
+
+	if (strncmp(fname, cfg.homedir, strlen(cfg.homedir)) != 0 &&
+	    strncmp(fname, "/tmp", 4) != 0 &&
+	    strncmp(fname, runuser, strlen(runuser)) != 0) {
+		fprintf(stderr, "Error: only files or directories in user home, /tmp, or /run/user/<UID> are supported by mkdir\n");
+		exit(1);
+	}
+	free(runuser);
+}
+
 static void mkdir_recursive(char *path) {
 	char *subdir = NULL;
 	struct stat s;
@@ -61,11 +77,7 @@ void fs_mkdir(const char *name) {
 	// check directory name
 	invalid_filename(name, 0); // no globbing
 	char *expanded = expand_macros(name);
-	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0 &&
-	    strncmp(expanded, "/tmp", 4) != 0) {
-		fprintf(stderr, "Error: only directories in user home or /tmp are supported by mkdir\n");
-		exit(1);
-	}
+	check(expanded); // will exit if wrong path
 
 	struct stat s;
 	if (stat(expanded, &s) == 0) {
@@ -101,11 +113,7 @@ void fs_mkfile(const char *name) {
 	// check file name
 	invalid_filename(name, 0); // no globbing
 	char *expanded = expand_macros(name);
-	if (strncmp(expanded, cfg.homedir, strlen(cfg.homedir)) != 0 &&
-	    strncmp(expanded, "/tmp", 4) != 0) {
-		fprintf(stderr, "Error: only files in user home or /tmp are supported by mkfile\n");
-		exit(1);
-	}
+	check(expanded); // will exit if wrong path
 
 	struct stat s;
 	if (stat(expanded, &s) == 0) {

@@ -1070,7 +1070,7 @@ void fs_whitelist(void) {
 			free(proc);
 			close(fd);
 
-			// mount a tmpfs and initialize home directory, overrides --allusers
+			// mount a tmpfs and initialize home directory
 			fs_private();
 		}
 		else

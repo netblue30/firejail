@@ -7,22 +7,21 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+send -- "echo testing > ~/firejail-test-file-7699\r"
+after 100
+
 send -- "firejail --build cat ~/firejail-test-file-7699\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"whitelist ~/firejail-test-file-7699"
-}
-expect {
-	timeout {puts "TESTING ERROR 0.1\n";exit}
-	"include /etc/firejail/whitelist-common.inc"
+	"whitelist $\{HOME\}/firejail-test-file-7699"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"private-tmp"
+	"include whitelist-common.inc"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"private-dev"
+	"blacklist /usr/share"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -34,25 +33,39 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"caps.drop all"
+	"private-dev"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"nonewprivs"
+	"private-etc"
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"seccomp"
+	"private-tmp"
 }
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
-	"net none"
+	"caps.drop all"
 }
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
+	"nonewprivs"
+}
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"seccomp"
+}
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"net none"
+}
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
 	"shell none"
 }
 after 100
+
+
 
 send -- "firejail --build cat /etc/passwd\r"
 expect {
@@ -72,21 +85,6 @@ expect {
 }
 after 100
 
-
-#send -- "firejail --build cat /var/tmp/firejail-test-file-7699\r"
-#expect {
-#	timeout {puts "TESTING ERROR 11\n";exit}
-#	"whitelist /var/tmp/firejail-test-file-7699"
-#}
-#after 100
-
-#send -- "firejail --build man firejail\r"
-#expect {
-#	timeout {puts "TESTING ERROR 12\n";exit}
-#	"whitelist /usr/share/man"
-#}
-#after 100
-
 send -- "firejail --build wget --output-document=~ debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
@@ -97,11 +95,5 @@ expect {
 	"inet"
 }
 after 100
-
-
-send -- "firejail --build cat /tmp/firejail-test-file-7699\r"
-#todo - bug: it comes back with private-tmp
-sleep 1
-
 
 puts "all done\n"

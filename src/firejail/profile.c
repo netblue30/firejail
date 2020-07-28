@@ -18,6 +18,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include "../include/seccomp.h"
+#include "../include/syscall.h"
 #include <dirent.h>
 #include <sys/stat.h>
 extern char *xephyr_screen;
@@ -148,7 +150,7 @@ static int check_netoptions(void) {
 }
 
 static int check_nodbus(void) {
-	return arg_nodbus != 0;
+	return arg_dbus_user != DBUS_POLICY_ALLOW || arg_dbus_system != DBUS_POLICY_ALLOW;
 }
 
 static int check_nosound(void) {
@@ -430,11 +432,122 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "nodbus") == 0) {
-		arg_nodbus = 1;
+		arg_dbus_user = DBUS_POLICY_BLOCK;
+		arg_dbus_system = DBUS_POLICY_BLOCK;
 		return 0;
 	}
+	else if (strncmp("dbus-user ", ptr, 10) == 0) {
+		ptr += 10;
+		if (strcmp("filter", ptr) == 0) {
+			if (arg_dbus_user == DBUS_POLICY_BLOCK) {
+				fprintf(stderr, "Error: Cannot relax dbus-user policy, it is already set to block\n");
+			} else {
+				arg_dbus_user = DBUS_POLICY_FILTER;
+			}
+		} else if (strcmp("none", ptr) == 0) {
+			if (arg_dbus_log_user) {
+				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+				exit(1);
+			}
+			arg_dbus_user = DBUS_POLICY_BLOCK;
+		} else {
+			fprintf(stderr, "Unknown dbus-user policy: %s\n", ptr);
+			exit(1);
+		}
+		return 0;
+	}
+	else if (strncmp(ptr, "dbus-user.see ", 14) == 0) {
+		if (!dbus_check_name(ptr + 14)) {
+			printf("Invalid dbus-user.see name: %s\n", ptr + 15);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-user.talk ", 15) == 0) {
+		if (!dbus_check_name(ptr + 15)) {
+			printf("Invalid dbus-user.talk name: %s\n", ptr + 15);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-user.own ", 14) == 0) {
+		if (!dbus_check_name(ptr + 14)) {
+			fprintf(stderr, "Invalid dbus-user.own name: %s\n", ptr + 14);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-user.call ", 15) == 0) {
+		if (!dbus_check_call_rule(ptr + 15)) {
+			fprintf(stderr, "Invalid dbus-user.call rule: %s\n", ptr + 15);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-user.broadcast ", 20) == 0) {
+		if (!dbus_check_call_rule(ptr + 20)) {
+			fprintf(stderr, "Invalid dbus-user.broadcast rule: %s\n", ptr + 20);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp("dbus-system ", ptr, 12) == 0) {
+		ptr += 12;
+		if (strcmp("filter", ptr) == 0) {
+			if (arg_dbus_system == DBUS_POLICY_BLOCK) {
+				fprintf(stderr, "Error: Cannot relax dbus-system policy, it is already set to block\n");
+			} else {
+				arg_dbus_system = DBUS_POLICY_FILTER;
+			}
+		} else if (strcmp("none", ptr) == 0) {
+			if (arg_dbus_log_system) {
+				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+				exit(1);
+			}
+			arg_dbus_system = DBUS_POLICY_BLOCK;
+		} else {
+			fprintf(stderr, "Unknown dbus-system policy: %s\n", ptr);
+			exit(1);
+		}
+		return 0;
+	}
+	else if (strncmp(ptr, "dbus-system.see ", 16) == 0) {
+		if (!dbus_check_name(ptr + 16)) {
+			fprintf(stderr, "Invalid dbus-system.see name: %s\n", ptr + 17);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-system.talk ", 17) == 0) {
+		if (!dbus_check_name(ptr + 17)) {
+			fprintf(stderr, "Invalid dbus-system.talk name: %s\n", ptr + 17);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-system.own ", 16) == 0) {
+		if (!dbus_check_name(ptr + 16)) {
+			fprintf(stderr, "Invalid dbus-system.own name: %s\n", ptr + 16);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-system.call ", 17) == 0) {
+		if (!dbus_check_call_rule(ptr + 17)) {
+			fprintf(stderr, "Invalid dbus-system.call rule: %s\n", ptr + 17);
+			exit(1);
+		}
+		return 1;
+	}
+	else if (strncmp(ptr, "dbus-system.broadcast ", 22) == 0) {
+		if (!dbus_check_call_rule(ptr + 22)) {
+			fprintf(stderr, "Invalid dbus-system.broadcast rule: %s\n", ptr + 22);
+			exit(1);
+		}
+		return 1;
+	}
 	else if (strcmp(ptr, "nou2f") == 0) {
-	        arg_nou2f = 1;
+		arg_nou2f = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "netfilter") == 0) {
@@ -865,6 +978,33 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_SECCOMP))
 			arg_memory_deny_write_execute = 1;
 		else
+			warning_feature_disabled("seccomp");
+#endif
+		return 0;
+	}
+
+	// seccomp error action
+	if (strncmp(ptr, "seccomp-error-action ", 21) == 0) {
+#ifdef HAVE_SECCOMP
+		if (checkcfg(CFG_SECCOMP)) {
+			int config_seccomp_error_action = checkcfg(CFG_SECCOMP_ERROR_ACTION);
+			if (config_seccomp_error_action == -1) {
+				if (strcmp(ptr + 21, "kill") == 0)
+					arg_seccomp_error_action = SECCOMP_RET_KILL;
+				else {
+					arg_seccomp_error_action = errno_find_name(ptr + 21);
+					if (arg_seccomp_error_action == -1)
+						errExit("seccomp-error-action: unknown errno");
+				}
+				cfg.seccomp_error_action = strdup(ptr + 21);
+				if (!cfg.seccomp_error_action)
+					errExit("strdup");
+			} else {
+				arg_seccomp_error_action = config_seccomp_error_action;
+				cfg.seccomp_error_action = config_seccomp_error_action_str;
+				warning_feature_disabled("seccomp-error-action");
+			}
+		} else
 			warning_feature_disabled("seccomp");
 #endif
 		return 0;

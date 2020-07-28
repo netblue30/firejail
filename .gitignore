@@ -6,6 +6,7 @@
 *.rpm
 *.gcda
 *.gcno
+*.DS_Store
 .directory
 Makefile
 autom4te.cache/
@@ -19,6 +20,7 @@ firejail-users.5
 firejail.1
 firemon.1
 firecfg.1
+mkdeb.sh
 src/firejail/firejail
 src/firemon/firemon
 src/firecfg/firecfg

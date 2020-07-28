@@ -25,7 +25,21 @@ static void usage(void) {
 }
 
 int arg_quiet = 0;
-void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {}
+void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
+	(void) fd;
+	(void) syscall;
+	(void) arg;
+	(void) ptrarg;
+	(void) native;
+}
+
+void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, bool native) {
+	(void) fd;
+	(void) syscall;
+	(void) arg;
+	(void) ptrarg;
+	(void) native;
+}
 
 int main(int argc, char **argv) {
 #if 0

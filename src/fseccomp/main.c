@@ -18,7 +18,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fseccomp.h"
+#include "../include/seccomp.h"
 int arg_quiet = 0;
+int arg_seccomp_error_action = EPERM; // error action: errno or kill
 
 static void usage(void) {
 	printf("Usage:\n");
@@ -66,6 +68,18 @@ printf("\n");
 	char *quiet = getenv("FIREJAIL_QUIET");
 	if (quiet && strcmp(quiet, "yes") == 0)
 		arg_quiet = 1;
+
+	char *error_action = getenv("FIREJAIL_SECCOMP_ERROR_ACTION");
+	if (error_action) {
+		if (strcmp(error_action, "kill") == 0)
+			arg_seccomp_error_action = SECCOMP_RET_KILL;
+		else {
+			arg_seccomp_error_action = errno_find_name(error_action);
+			if (arg_seccomp_error_action == -1)
+				errExit("seccomp-error-action: unknown errno");
+			arg_seccomp_error_action |= SECCOMP_RET_ERRNO;
+		}
+	}
 
 	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
 		usage();

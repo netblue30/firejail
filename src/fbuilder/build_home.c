@@ -32,9 +32,9 @@ static void load_whitelist_common(void) {
 
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
-		if (strncmp(buf, "whitelist ~/", 12) != 0)
+		if (strncmp(buf, "whitelist ${HOME}/", 18) != 0)
 			continue;
-		char *fn = buf + 12;
+		char *fn = buf + 18;
 		char *ptr = strchr(buf, '\n');
 		if (!ptr)
 			continue;
@@ -190,8 +190,8 @@ void build_home(const char *fname, FILE *fp) {
 
 	// print the out list if any
 	if (db_out) {
-		filedb_print(db_out, "whitelist ~/", fp);
-		fprintf(fp, "include /etc/firejail/whitelist-common.inc\n");
+		filedb_print(db_out, "whitelist ${HOME}/", fp);
+		fprintf(fp, "include whitelist-common.inc\n");
 	}
 	else
 		fprintf(fp, "private\n");

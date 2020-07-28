@@ -18,6 +18,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "faudit.h"
+#include "../include/rundefs.h"
+#include <stdarg.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 
@@ -46,9 +48,10 @@ int check_unix(const char *sockfile) {
 	return rv;
 }
 
-void dbus_test(void) {
+static char *test_dbus_env(char *env_var_name) {
 	// check the session bus
-	char *str = getenv("DBUS_SESSION_BUS_ADDRESS");
+	char *str = getenv(env_var_name);
+	char *found = NULL;
 	if (str) {
 		int rv = 0;
 		char *bus = strdup(str);
@@ -74,19 +77,55 @@ void dbus_test(void) {
 			if (ptr)
 				*ptr = '\0';
 			rv = check_unix(sockfile);
-			if (rv == 0)
-				printf("MAYBE: D-Bus socket %s is available\n", sockfile);
+			if (rv == 0) {
+				if (strcmp(RUN_DBUS_USER_SOCKET, sockfile) == 0 ||
+					strcmp(RUN_DBUS_SYSTEM_SOCKET, sockfile) == 0) {
+					printf("GOOD: D-Bus filtering is active on %s\n", sockfile);
+				} else {
+					printf("MAYBE: D-Bus socket %s is available\n", sockfile);
+				}
+			}
 			else if (rv == -1)
 				printf("GOOD: cannot connect to D-Bus socket %s\n", sockfile);
+			found = strdup(sockfile);
+			if (!found)
+				errExit("strdup");
 		}
 		else if ((sockfile = strstr(bus, "tcp:host=")) != NULL)
-			printf("UGLY: session bus configured for TCP communication.\n");
+			printf("UGLY: %s bus configured for TCP communication.\n", env_var_name);
 		else
-			printf("GOOD: cannot find a D-Bus socket\n");
-
-
+			printf("GOOD: cannot find a %s D-Bus socket\n", env_var_name);
 		free(bus);
 	}
 	else
-		printf("GOOD: DBUS_SESSION_BUS_ADDRESS environment variable not configured.");
+		printf("MAYBE: %s environment variable not configured.\n", env_var_name);
+	return found;
+}
+
+static void test_default_socket(const char *found, const char *format, ...) {
+	va_list ap;
+	va_start(ap, format);
+	char *sockfile;
+	if (vasprintf(&sockfile, format, ap) == -1)
+		errExit("vasprintf");
+	va_end(ap);
+	if (found != NULL && strcmp(found, sockfile) == 0)
+		goto end;
+	int rv = check_unix(sockfile);
+	if (rv == 0)
+		printf("MAYBE: D-Bus socket %s is available\n", sockfile);
+end:
+	free(sockfile);
+}
+
+void dbus_test(void) {
+	char *found_user = test_dbus_env("DBUS_SESSION_BUS_ADDRESS");
+	test_default_socket(found_user, "/run/user/%d/bus", (int) getuid());
+	test_default_socket(found_user, "/run/user/%d/dbus/user_bus_socket", (int) getuid());
+	if (found_user != NULL)
+		free(found_user);
+	char *found_system = test_dbus_env("DBUS_SYSTEM_BUS_ADDRESS");
+	test_default_socket(found_system, "/run/dbus/system_bus_socket");
+	if (found_system != NULL)
+		free(found_system);
 }

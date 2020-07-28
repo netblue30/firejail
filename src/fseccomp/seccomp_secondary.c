@@ -142,7 +142,7 @@ void seccomp_secondary_block(const char *fname) {
 		// 5: if MSW(arg0) == 0, goto 7 (allow) else continue to 6 (kill)
 		BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, 0, jmp_from_to(5, 7), 0),
 		// 6:
-		KILL_PROCESS,
+		KILL_OR_RETURN_ERRNO,
 		// 7:
 		RETURN_ALLOW
 	};

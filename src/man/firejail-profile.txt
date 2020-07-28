@@ -165,8 +165,9 @@ host filesystem. Each line describes a file/directory that is inaccessible
 (\fBblacklist\fR), a read-only file or directory (\fBread-only\fR),
 a tmpfs mounted on top of an existing directory (\fBtmpfs\fR),
 or mount-bind a directory or file on top of another directory or file (\fBbind\fR).
-Use \fBprivate\fR to set private mode.
-File globbing is supported, and PATH and HOME directories are searched.
+Use \fBprivate\fR to set private mode.  File globbing is supported, and PATH and
+HOME directories are searched, see the \fBfirejail\f(1) \fBFILE GLOBBING\fR section
+for more details.
 Examples:
 .TP
 \fBblacklist file_or_directory
@@ -210,7 +211,7 @@ Disable /mnt, /media, /run/mount and /run/media access.
 /var/tmp directory is untouched.
 .TP
 \fBmkdir directory
-Create a directory in user home or under /tmp before the sandbox is started.
+Create a directory in user home, under /tmp, or under /run/user/<UID> before the sandbox is started.
 The directory is created if it doesn't already exist.
 .br
 
@@ -229,10 +230,18 @@ whitelist ~/.mozilla
 mkdir ~/.cache/mozilla/firefox
 .br
 whitelist ~/.cache/mozilla/firefox
+.br
+
+.br
+For files in /run/user/<PID> use ${RUNUSER} macro:
+.br
+
+.br
+mkdir ${RUNUSER}/firejail-testing
 .TP
 \fBmkfile file
-Similar to mkdir, this command creates a file in user home or under /tmp before the sandbox is started.
-The file is created if it doesn't already exist.
+Similar to mkdir, this command creates an empty file in user home, or /tmp, or under /run/user/<UID>
+before the sandbox is started. The file is created if it doesn't already exist.
 .TP
 \fBnoexec file_or_directory
 Remount the file or the directory noexec, nodev and nosuid.
@@ -259,6 +268,8 @@ Use directory as user home.
 .TP
 \fBprivate-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
+The files in the list must be expressed as relative to the /bin,
+/sbin, /usr/bin, /usr/sbin, or /usr/local/bin directories.
 The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
 .TP
 \fBprivate-cache
@@ -280,26 +291,37 @@ Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional res
 \fBprivate-etc file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /etc directory.
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-home file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
-new home. All modifications are discarded when the sandbox is
+new home.
+The files and directories in the list must be expressed as relative to
+the current user's home directory.
+All modifications are discarded when the sandbox is
 closed.
 .TP
 \fBprivate-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.
+The files and directories in the list must be expressed as relative to
+the /lib directory.
 This feature is still under development, see \fBman 1 firejail\fR for some examples.
 .TP
 \fBprivate-opt file,directory
 Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /opt directory.
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-srv file,directory
 Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /srv directory.
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-tmp
@@ -411,6 +433,9 @@ Enable seccomp filter and whitelist the system calls in the list.
 \fBseccomp.32.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list for 32 bit system calls on a 64 bit architecture system.
 .TP
+\fBseccomp-error-action kill | ERRNO
+Return a different error instead of EPERM to the process or kill it when an attempt is made to call a blocked system call.
+.TP
 \fBx11
 Enable X11 sandboxing.
 .TP
@@ -444,7 +469,100 @@ xephyr-screen 640x480
 .br
 x11 xephyr
 
+.SH DBus filtering
 
+Access to the session and system DBus UNIX sockets can be allowed, filtered or
+disabled. To disable the abstract sockets (and force applications to use the
+filtered UNIX socket) you would need to request a new network namespace using
+\-\-net command. Another option is to remove unix from the \-\-protocol set.
+.br
+
+.br
+Filtering requires installing the xdg-dbus-proxy utility. Filter rules can be
+specified for well-known DBus names, but they are also propagated to the owning
+unique name, too. The permissions are "sticky" and are kept even if the
+corresponding well-known name is released (however, applications rarely release
+well-known names in practice). Names may have a .* suffix to match all names
+underneath them, including themselves (e.g. "foo.bar.*" matches "foo.bar",
+"foo.bar.baz" and "foo.bar.baz.quux", but not "foobar"). For more information,
+see xdg-dbus-proxy(1).
+.br
+
+.br
+Examples:
+
+.TP
+\fBdbus-system filter
+Enable filtered access to the system DBus. Filters can be specified with the dbus-system.talk and dbus-system.own commands.
+.TP
+\fBdbus-system none
+Disable access to the system DBus. Once access is disabled, it cannot be relaxed to filtering.
+.TP
+\fBdbus-system.own org.gnome.ghex.*
+Allow the application to own the name org.gnome.ghex and all names underneath in on the system DBus.
+.TP
+\fBdbus-system.talk org.freedesktop.Notifications
+Allow the application to talk to the name org.freedesktop.Notifications on the system DBus.
+.TP
+\fBdbus-system.see org.freedesktop.Notifications
+Allow the application to see but not talk to the name org.freedesktop.Notifications on the system DBus.
+.TP
+\fBdbus-system.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
+.TP
+\fBdbus-system.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to recieve broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
+.TP
+\fBdbus-user filter
+Enable filtered access to the session DBus. Filters can be specified with the dbus-user.talk and dbus-user.own commands.
+.TP
+\fBdbus-user none
+Disable access to the session DBus. Once access is disabled, it cannot be relaxed to filtering.
+.TP
+\fBdbus-user.own org.gnome.ghex.*
+Allow the application to own the name org.gnome.ghex and all names underneath in on the session DBus.
+.TP
+\fBdbus-user.talk org.freedesktop.Notifications
+Allow the application to talk to the name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBdbus-user.see org.freedesktop.Notifications
+Allow the application to see but not talk to the name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBdbus-user.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBdbus-user.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to recieve broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBnodbus \fR(deprecated)
+Disable D-Bus access (both system and session buses). Equivalent to dbus-system none and dbus-user none.
+.TP
+.br
+
+.br
+Individual filters can be overridden via the \-\-ignore command. Supposing a profile has
+.br
+[...]
+.br
+dbus-user filter
+.br
+dbus-user.own org.mozilla.firefox.*
+.br
+dbus-user.talk org.freedesktop.Notifications
+.br
+dbus-system none
+.br
+[...]
+.br
+
+.br
+and the user wants to disable notifications, this can be achieved by putting the below in a local override file:
+.br
+[...]
+.br
+ignore dbus-user.talk org.freedesktop.Notifications
+.br
+[...]
 
 .SH Resource limits, CPU affinity, Control Groups
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
@@ -518,12 +636,6 @@ Disable 3D hardware acceleration.
 \fBnoautopulse
 Disable automatic ~/.config/pulse init, for complex setups such as remote
 pulse servers or non-standard socket paths.
-.TP
-\fBnodbus
-Disable D-Bus access. Only the regular UNIX socket is handled by
-this command. To disable the abstract socket, you would need to
-request a new network namespace using the net command. Another
-option is to remove unix from protocol set.
 .TP
 \fBnodvd
 Disable DVD and audio CD devices.
@@ -761,5 +873,7 @@ Homepage: https://firejail.wordpress.com
 \&\flfirejail\fR\|(1),
 \&\flfiremon\fR\|(1),
 \&\flfirecfg\fR\|(1),
-\&\flfirejail-login\fR\|(5)
-\&\flfirejail-users\fR\|(5)
+\&\flfirejail-login\fR\|(5),
+\&\flfirejail-users\fR\|(5),
+.UR https://github.com/netblue30/firejail/wiki/Creating-Profiles 
+.UE 

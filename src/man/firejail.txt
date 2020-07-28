@@ -66,7 +66,8 @@ command line options. The default Firejail filesystem is based on the host files
 system directories mounted read-only. These directories are /etc, /var, /usr, /bin, /sbin, /lib, /lib32,
 /libx32 and /lib64. Only /home and /tmp are writable.
 .PP
-As it starts up, Firejail tries to find a security profile based on the name of the application.
+Upon execution Firejail first looks in ~/.config/firejail/ for a profile and if it doesn't find one, it looks in /etc/firejail/.
+For profile resolution detail see https://github.com/netblue30/firejail/wiki/Creating-Profiles#locations-and-types.
 If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option
 to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.
@@ -324,6 +325,248 @@ $ firejail \-\-list
 3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-cpu.print=3272
+
+.TP
+\fB\-\-dbus-log=file
+Specify the location for the DBus log file.
+.br
+
+.br
+The log file contains events for both the system and session buses if both of
+the --dbus-sysem.log and --dbus-user.log options are specified. If no log file
+path is given, logs are written to the standard output instead.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.log --dbus-log=dbus.txt
+
+.TP
+\fB\-\-dbus-system=filter|none
+Set system DBus sandboxing policy. 
+.br
+
+.br
+The \fBfilter\fR policy enables the system DBus filter. This option requires
+installing the xdg-dbus-proxy utility. Permissions for well-known can be
+specified with the --dbus-system.talk and --dbus-system.own options.
+.br
+
+.br
+The \fBnone\fR policy disables access to the system DBus.
+.br
+
+.br
+Only the regular system DBus UNIX socket is handled by this option. To disable
+the abstract sockets (and force applications to use the filtered UNIX socket)
+you would need to request a new network namespace using \-\-net command. Another
+option is to remove unix from the \-\-protocol set.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-dbus-system=none
+
+.TP
+\fB\-\-dbus-system.broadcast=name=[member][@path]
+Allows the application to receive broadcast signals from theindicated interface
+member at the indicated object path exposed by the indicated bus name on the
+system DBus.
+The name may have a .* suffix to match all names underneath it, including
+itself.
+The interface member may have a .* to match all members of an interface, or be * to match all interfaces.
+The path may have a /* suffix to indicate all objects underneath it, including
+itself.
+Omitting the interface member or the object path will match all members and
+object paths, respectively.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.broadcast=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+
+.TP
+\fB\-\-dbus-system.call=name=[member][@path]
+Allows the application to call the indicated interface member at the indicated
+object path exposed by the indicated bus name on the system DBus.
+The name may have a .* suffix to match all names underneath it, including
+itself.
+The interface member may have a .* to match all members of an interface, or be * to match all interfaces.
+The path may have a /* suffix to indicate all objects underneath it, including
+itself.
+Omitting the interface member or the object path will match all members and
+object paths, respectively.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.call=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+
+.TP
+\fB\-\-dbus-system.log
+Turn on DBus logging for the system DBus. This option requires --dbus-system=log.
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.log
+
+.TP
+\fB\-\-dbus-system.own=name
+Allows the application to own the specified well-known name on the system DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.own=org.gnome.ghex.*
+
+.TP
+\fB\-\-dbus-system.see=name
+Allows the application to see, but not talk to the specified well-known name on
+the system DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.see=org.freedesktop.Notifications
+
+.TP
+\fB\-\-dbus-system.talk=name
+Allows the application to talk to the specified well-known name on the system DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-system=filter --dbus-system.talk=org.freedesktop.Notifications
+
+.TP
+\fB\-\-dbus-user=filter|none
+Set session DBus sandboxing policy.
+.br
+
+.br
+The \fBfilter\fR policy enables the session DBus filter. This option requires
+installing the xdg-dbus-proxy utility. Permissions for well-known names can be
+added with the --dbus-user.talk and --dbus-user.own options.
+.br
+
+.br
+The \fBnone\fR policy disables access to the session DBus.
+.br
+
+.br
+Only the regular session DBus UNIX socket is handled by this option. To disable
+the abstract sockets (and force applications to use the filtered UNIX socket)
+you would need to request a new network namespace using \-\-net command. Another
+option is to remove unix from the \-\-protocol set.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-dbus-user=none
+
+.TP
+\fB\-\-dbus-user.broadcast=name=[member][@path]
+Allows the application to receive broadcast signals from theindicated interface
+member at the indicated object path exposed by the indicated bus name on the
+session DBus.
+The name may have a .* suffix to match all names underneath it, including
+itself.
+The interface member may have a .* to match all members of an interface, or be * to match all interfaces.
+The path may have a /* suffix to indicate all objects underneath it, including
+itself.
+Omitting the interface member or the object path will match all members and
+object paths, respectively.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.broadcast=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+
+.TP
+\fB\-\-dbus-user.call=name=[member][@path]
+Allows the application to call the indicated interface member at the indicated
+object path exposed by the indicated bus name on the session DBus.
+The name may have a .* suffix to match all names underneath it, including
+itself.
+The interface member may have a .* to match all members of an interface, or be * to match all interfaces.
+The path may have a /* suffix to indicate all objects underneath it, including
+itself.
+Omitting the interface member or the object path will match all members and
+object paths, respectively.
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.call=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+
+.TP
+\fB\-\-dbus-user.log
+Turn on DBus logging for the session DBus. This option requires --dbus-user=log.
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.log
+
+.TP
+\fB\-\-dbus-user.own=name
+Allows the application to own the specified well-known name on the session DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.own=org.gnome.ghex.*
+
+.TP
+\fB\-\-dbus-user.talk=name
+Allows the application to talk to the specified well-known name on the session DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.talk=org.freedesktop.Notifications
+
+.TP
+\fB\-\-dbus-user.see=name
+Allows the application to see, but not talk to the specified well-known name on
+the session DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.see=org.freedesktop.Notifications
 
 .TP
 \fB\-\-debug\fR
@@ -814,8 +1057,9 @@ $ firejail \-\-machine-id
 Install a seccomp filter to block attempts to create memory mappings
 that are both writable and executable, to change mappings to be
 executable, or to create executable shared memory. The filter examines
-the arguments of mmap, mmap2, mprotect, pkey_mprotect, memfd_create and
-shmat system calls and kills the process if necessary.
+the arguments of mmap, mmap2, mprotect, pkey_mprotect, memfd_create
+and shmat system calls and returns error EPERM to the process (or
+kills it, see \-\-seccomp-error-action below) if necessary.
 .br
 
 .br
@@ -1169,12 +1413,8 @@ $ nc dict.org 2628
 220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
 .br
 .TP
-\fB\-\-nodbus
-Disable D-Bus access (both system and session buses). Only the regular
-UNIX sockets are handled by this command. To disable the abstract
-sockets you would need to request a new network namespace using
-\-\-net command. Another option is to remove unix from \-\-protocol
-set.
+\fB\-\-nodbus \fR(deprecated)
+Disable D-Bus access (both system and session buses). Equivalent to --dbus-system=none --dbus-user=none.
 .br
 
 .br
@@ -1457,7 +1697,9 @@ $ firejail \-\-private=/home/netblue/firefox-home firefox
 .TP
 \fB\-\-private-bin=file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
-If no listed file is found, /bin directory will be empty.
+The files in the list must be expressed as relative to the /bin,
+/sbin, /usr/bin, /usr/sbin, or /usr/local/bin directories.
+If no listed files are found, /bin directory will be empty.
 The same directory is also bind-mounted over /sbin, /usr/bin, /usr/sbin and /usr/local/bin.
 All modifications are discarded when the sandbox is closed. File globbing is supported,
 see \fBFILE GLOBBING\fR section for more details.
@@ -1553,6 +1795,8 @@ $
 \fB\-\-private-etc=file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /etc directory.
 If no listed file is found, /etc directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -1562,13 +1806,16 @@ Example:
 .br
 $ firejail --private-etc=group,hostname,localtime, \\
 .br
-nsswitch.conf,passwd,resolv.conf
+nsswitch.conf,passwd,resolv.conf,default/motd-news
 
 .TP
 \fB\-\-private-home=file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
-new home. All modifications are discarded when the sandbox is
+new home.
+The files and directories in the list must be expressed as relative to
+the current user's home directory.
+All modifications are discarded when the sandbox is
 closed.
 .br
 
@@ -1580,6 +1827,8 @@ $ firejail \-\-private-home=.mozilla firefox
 .TP
 \fB\-\-private-lib=file,directory
 This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
+The files and directories in the list must be expressed as relative to
+the /lib directory.
 The idea is to build a new /lib in a temporary filesystem,
 with only the library files necessary to run the application.
 It could be as simple as:
@@ -1631,6 +1880,8 @@ $
 \fB\-\-private-opt=file,directory
 Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /opt directory.
 If no listed file is found, /opt directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -1644,6 +1895,8 @@ $ firejail --private-opt=firefox /opt/firefox/firefox
 \fB\-\-private-srv=file,directory
 Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
+The files and directories in the list must be expressed as relative to
+the /srv directory.
 If no listed file is found, /srv directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -1865,8 +2118,12 @@ $ firejail \-\-seccomp=@clock,mkdir,unlinkat transmission-gtk
 .br
 
 .br
-Instead of dropping the syscall, a specific error number can be returned
-using \fBsyscall:errorno\fR syntax.
+Instead of dropping the syscall by returning EPERM, another error
+number can be returned using \fBsyscall:errno\fR syntax. This can be
+also changed globally with \-\-seccomp-error-action or
+in /etc/firejail/firejail.config file.  The process can also be killed
+by using \fBsyscall:kill\fR syntax.
+
 .br
 
 .br
@@ -1932,8 +2189,11 @@ $ firejail \-\-seccomp.drop=utime,utimensat,utimes,@clock
 .br
 
 .br
-Instead of dropping the syscall, a specific error number can be returned
-using \fBsyscall:errorno\fR syntax.
+Instead of dropping the syscall by returning EPERM, another error
+number can be returned using \fBsyscall:errno\fR syntax. This can be
+also changed globally with \-\-seccomp-error-action or
+in /etc/firejail/firejail.config file.  The process can also be killed
+by using \fBsyscall:kill\fR syntax.
 .br
 
 .br
@@ -2135,6 +2395,19 @@ $ firejail --seccomp.print=browser
  0049: 06 00 01 00000000   ret KILL
 .br
 $
+
+.TP
+\fB\-\-seccomp-error-action= kill | ERRNO
+By default, if a seccomp filter blocks a system call, the process gets
+EPERM as the error. With \-\-seccomp-error-action=error, another error
+number can be returned, for example ENOSYS or EACCES. The process can
+also be killed (like in versions <0.9.63 of Firejail) by using
+\-\-seccomp-error-action=kill syntax. Not killing the process weakens
+Firejail slightly when trying to contain intrusion, but it may also
+allow tighter filters if the only alternative is to allow a system
+call.
+.br
+
 .TP
 \fB\-\-shell=none
 Run the program directly, without a user shell.
@@ -2712,7 +2985,11 @@ List all sandboxed processes.
 
 .SH FILE GLOBBING
 .TP
-Globbing is the operation that expands a wildcard pattern into the list of pathnames matching the pattern. Matching is defined by:
+Globbing is the operation that expands a wildcard pattern into the
+list of pathnames matching the pattern.  This pattern is matched at
+firejail \fBstart\fR, and is NOT UPDATED at runtime.  \fBFiles matching
+a blacklist, but created after firejail start will be accessible within
+the jail.\fR Matching is defined by:
 .br
 
 .br
@@ -2723,12 +3000,15 @@ Globbing is the operation that expands a wildcard pattern into the list of pathn
 - '[' denotes a range of characters
 .br
 .TP
-The globbing feature is implemented using glibc glob command. For more information on the wildcard syntax see man 7 glob.
+The globbing feature is implemented using glibc glob command. For
+more information on the wildcard syntax see man 7 glob.
 .br
 
 .br
 .TP
-The following command line options are supported: \-\-blacklist, \-\-private-bin, \-\-noexec, \-\-read-only, \-\-read-write, \-\-tmpfs, and \-\-whitelist.
+The following command line options are supported: \-\-blacklist,
+\-\-private-bin, \-\-noexec, \-\-read-only, \-\-read-write,
+\-\-tmpfs, and \-\-whitelist.
 .br
 
 .br
@@ -2977,5 +3257,9 @@ Homepage: https://firejail.wordpress.com
 \&\flfiremon\fR\|(1),
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-profile\fR\|(5),
-\&\flfirejail-login\fR\|(5)
-\&\flfirejail-users\fR\|(5)
+\&\flfirejail-login\fR\|(5),
+\&\flfirejail-users\fR\|(5),
+.UR https://github.com/netblue30/firejail/wiki 
+.UE ,
+.UR https://github.com/netblue30/firejail 
+.UE

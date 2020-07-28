@@ -21,6 +21,7 @@
 #include "../include/pid.h"
 #include "../include/firejail_user.h"
 #include "../include/syscall.h"
+#include "../include/seccomp.h"
 #define _GNU_SOURCE
 #include <sys/utsname.h>
 #include <sched.h>
@@ -76,6 +77,7 @@ int arg_seccomp = 0;				// enable default seccomp filter
 int arg_seccomp32 = 0;				// enable default seccomp filter for 32 bit arch
 int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
 int arg_seccomp_block_secondary = 0;		// block any secondary architectures
+int arg_seccomp_error_action = 0;
 
 int arg_caps_default_filter = 0;			// enable default capabilities filter
 int arg_caps_drop = 0;				// drop list
@@ -142,9 +144,13 @@ int arg_noprofile = 0; // use default.profile if none other found/specified
 int arg_memory_deny_write_execute = 0;		// block writable and executable memory
 int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
-int arg_nodbus = 0; // -nodbus
 int arg_nou2f = 0; // --nou2f
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
+DbusPolicy arg_dbus_user = DBUS_POLICY_ALLOW;	// --dbus-user
+DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
+const char *arg_dbus_log_file = NULL;
+int arg_dbus_log_user = 0;
+int arg_dbus_log_system = 0;
 int login_shell = 0;
 
 //**********************************************************************************
@@ -178,6 +184,7 @@ static void myexit(int rv) {
 
 
 	// delete sandbox files in shared memory
+	dbus_proxy_stop();
 	EUID_ROOT();
 	delete_run_files(sandbox_pid);
 	appimage_clear();
@@ -349,6 +356,9 @@ static void init_cfg(int argc, char **argv) {
 	sandbox_pid = getpid();
 	time_t t = time(NULL);
 	srand(t ^ sandbox_pid);
+
+	arg_seccomp_error_action = EPERM;
+	cfg.seccomp_error_action = "EPERM";
 }
 
 static void check_network(Bridge *br) {
@@ -966,8 +976,22 @@ static void run_builder(int argc, char **argv) {
 	exit(1);
 }
 
-void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {}
+void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
+	(void) fd;
+	(void) syscall;
+	(void) arg;
+	(void) ptrarg;
+	(void) native;
+}
+void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, bool native) {
+	(void) fd;
+	(void) syscall;
+	(void) arg;
+	(void) ptrarg;
+	(void) native;
+}
 
+#ifdef HAVE_SECCOMP
 static int check_postexec(const char *list) {
 	char *prelist, *postlist;
 
@@ -978,11 +1002,12 @@ static int check_postexec(const char *list) {
 	}
 	return 0;
 }
+#endif
 
 //*******************************************
 // Main program
 //*******************************************
-int main(int argc, char **argv) {
+int main(int argc, char **argv, char **envp) {
 	int i;
 	int prog_index = -1;			  // index in argv where the program command starts
 	int lockfd_network = -1;
@@ -990,6 +1015,7 @@ int main(int argc, char **argv) {
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
+	char **ptr;
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
@@ -999,8 +1025,35 @@ int main(int argc, char **argv) {
 	orig_umask = umask(022);
 
 	// argument count should be larger than 0
-	if (argc == 0) {
+	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv[0] is NULL\n");
+		exit(1);
+	} else if (argc >= MAX_ARGS) {
+		fprintf(stderr, "Error: too many arguments\n");
+		exit(1);
+	}
+
+	// sanity check for arguments
+	for (i = 0; i < argc; i++) {
+		if (*argv[i] == 0) {
+			fprintf(stderr, "Error: too short arguments\n");
+			exit(1);
+		}
+		if (strlen(argv[i]) >= MAX_ARG_LEN) {
+			fprintf(stderr, "Error: too long arguments\n");
+			exit(1);
+		}
+	}
+
+	// sanity check for environment variables
+	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++) {
+		if (strlen(*ptr) >= MAX_ENV_LEN) {
+			fprintf(stderr, "Error: too long environment variables\n");
+			exit(1);
+		}
+	}
+	if (i >= MAX_ENVS) {
+		fprintf(stderr, "Error: too many environment variables\n");
 		exit(1);
 	}
 
@@ -1360,6 +1413,26 @@ int main(int argc, char **argv) {
 			if (checkcfg(CFG_SECCOMP))
 				arg_memory_deny_write_execute = 1;
 			else
+				exit_err_feature("seccomp");
+		}
+		else if (strncmp(argv[i], "--seccomp-error-action=", 23) == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				int config_seccomp_error_action = checkcfg(CFG_SECCOMP_ERROR_ACTION);
+				if (config_seccomp_error_action == -1) {
+					if (strcmp(argv[i] + 23, "kill") == 0)
+						arg_seccomp_error_action = SECCOMP_RET_KILL;
+					else {
+						arg_seccomp_error_action = errno_find_name(argv[i] + 23);
+						if (arg_seccomp_error_action == -1)
+							errExit("seccomp-error-action: unknown errno");
+					}
+					cfg.seccomp_error_action = strdup(argv[i] + 23);
+					if (!cfg.seccomp_error_action)
+						errExit("strdup");
+				} else
+					exit_err_feature("seccomp-error-action");
+
+			} else
 				exit_err_feature("seccomp");
 		}
 #endif
@@ -1985,8 +2058,147 @@ int main(int argc, char **argv) {
 			arg_nodvd = 1;
 		else if (strcmp(argv[i], "--nou2f") == 0)
 			arg_nou2f = 1;
-		else if (strcmp(argv[i], "--nodbus") == 0)
-			arg_nodbus = 1;
+		else if (strcmp(argv[i], "--nodbus") == 0) {
+			arg_dbus_user = DBUS_POLICY_BLOCK;
+			arg_dbus_system = DBUS_POLICY_BLOCK;
+		}
+		else if (strncmp("--dbus-user=", argv[i], 12) == 0) {
+			if (strcmp("filter", argv[i] + 12) == 0) {
+				if (arg_dbus_user == DBUS_POLICY_BLOCK) {
+					fprintf(stderr, "Warning: Cannot relax --dbus-user policy, it is already set to block\n");
+				} else {
+					arg_dbus_user = DBUS_POLICY_FILTER;
+				}
+			} else if (strcmp("none", argv[i] + 12) == 0) {
+				if (arg_dbus_log_user) {
+					fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+					exit(1);
+				}
+				arg_dbus_user = DBUS_POLICY_BLOCK;
+			} else {
+				fprintf(stderr, "Unknown dbus-user policy: %s\n", argv[i] + 12);
+				exit(1);
+			}
+		}
+		else if (strncmp(argv[i], "--dbus-user.see=", 16) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.see %s", argv[i] + 16) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-user.talk=", 17) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.talk %s", argv[i] + 17) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-user.own=", 16) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.own %s", argv[i] + 16) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-user.call=", 17) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.call %s", argv[i] + 17) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-user.broadcast=", 22) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-user.broadcast %s", argv[i] + 22) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp("--dbus-system=", argv[i], 14) == 0) {
+			if (strcmp("filter", argv[i] + 14) == 0) {
+				if (arg_dbus_system == DBUS_POLICY_BLOCK) {
+					fprintf(stderr, "Warning: Cannot relax --dbus-system policy, it is already set to block\n");
+				} else {
+					arg_dbus_system = DBUS_POLICY_FILTER;
+				}
+			} else if (strcmp("none", argv[i] + 14) == 0) {
+				if (arg_dbus_log_system) {
+					fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+					exit(1);
+				}
+				arg_dbus_system = DBUS_POLICY_BLOCK;
+			} else {
+				fprintf(stderr, "Unknown dbus-system policy: %s\n", argv[i] + 14);
+				exit(1);
+			}
+		}
+		else if (strncmp(argv[i], "--dbus-system.see=", 18) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.see %s", argv[i] + 18) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-system.talk=", 19) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.talk %s", argv[i] + 19) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-system.own=", 18) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.own %s", argv[i] + 18) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-system.call=", 19) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.call %s", argv[i] + 19) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-system.broadcast=", 24) == 0) {
+			char *line;
+			if (asprintf(&line, "dbus-system.broadcast %s", argv[i] + 24) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL); // will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--dbus-log=", 11) == 0) {
+			if (arg_dbus_log_file != NULL) {
+				fprintf(stderr, "Error: --dbus-log option already specified\n");
+				exit(1);
+			}
+			arg_dbus_log_file = argv[i] + 11;
+		}
+		else if (strcmp(argv[i], "--dbus-user.log") == 0) {
+			if (arg_dbus_user != DBUS_POLICY_FILTER) {
+				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+				exit(1);
+			}
+			arg_dbus_log_user = 1;
+		}
+		else if (strcmp(argv[i], "--dbus-system.log") == 0) {
+			if (arg_dbus_system != DBUS_POLICY_FILTER) {
+				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+				exit(1);
+			}
+			arg_dbus_log_system = 1;
+		}
 
 		//*************************************
 		// network
@@ -2671,6 +2883,16 @@ int main(int argc, char **argv) {
 		close(lockfd_directory);
 	}
 	EUID_USER();
+
+	if (checkcfg(CFG_DBUS)) {
+		dbus_check_profile();
+		if (arg_dbus_user == DBUS_POLICY_FILTER ||
+			arg_dbus_system == DBUS_POLICY_FILTER) {
+			EUID_ROOT();
+			dbus_proxy_start();
+			EUID_USER();
+		}
+	}
 
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;

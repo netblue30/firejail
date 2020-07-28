@@ -9,9 +9,12 @@ include globals.local
 noblacklist ${HOME}/.vmware
 noblacklist ${HOME}/.cache/vmware
 
+<<<<<<< HEAD
 noblacklist ${HOME}/.vmware
 noblacklist ${HOME}/.cache/vmware
 
+=======
+>>>>>>> 54f999867cc4af62e6e64b5ee085b91a79c080bf
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

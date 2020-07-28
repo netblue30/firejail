@@ -49,6 +49,10 @@ owner /{,run/firejail/mnt/oroot/}{,var/}run/firejail/mnt/trace w,
 owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/** w,
 owner /{,run/firejail/mnt/oroot/}{run,dev}/shm/** w,
 
+# Allow writing to /var/mail and /var/spool/mail (for mail clients)
+# Uncomment to enable
+#owner /var/{mail,spool/mail}/** w,
+
 # Allow writing to removable media
 owner /{,var/}run/media/** w,
 

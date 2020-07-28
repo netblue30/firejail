@@ -20,6 +20,7 @@ mkdir ${HOME}/.frogatto
 whitelist ${HOME}/.frogatto
 whitelist /usr/share/frogatto
 include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

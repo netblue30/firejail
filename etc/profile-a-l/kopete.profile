@@ -10,6 +10,7 @@ noblacklist ${HOME}/.kde/share/apps/kopete
 noblacklist ${HOME}/.kde/share/config/kopeterc
 noblacklist ${HOME}/.kde4/share/apps/kopete
 noblacklist ${HOME}/.kde4/share/config/kopeterc
+noblacklist ${HOME}/.local/share/kxmlgui5/kopete
 
 include disable-common.inc
 include disable-devel.inc

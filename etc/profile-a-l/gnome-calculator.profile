@@ -25,7 +25,7 @@ apparmor
 caps.drop all
 ipc-namespace
 machine-id
-# net none
+#net none -- breaks currency conversion
 netfilter
 no3d
 nodvd
@@ -39,6 +39,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 disable-mnt
 private-bin gnome-calculator
@@ -47,8 +48,7 @@ private-dev
 #private-lib gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*,libgnutls.so.*,libproxy.so.*,librsvg-2.so.*,libxml2.so.*
 private-tmp
 
-# makes settings immutable
-# dbus-user none
-# dbus-system none
-
-# memory-deny-write-execute
+dbus-user filter
+dbus-user.own org.gnome.Calculator
+dbus-user.talk ca.desrt.dconf
+dbus-system none

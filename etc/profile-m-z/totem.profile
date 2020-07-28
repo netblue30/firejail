@@ -9,9 +9,13 @@ include globals.local
 # Allow lua (required for youtube video)
 include allow-lua.inc
 
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python3.inc
+
 noblacklist ${HOME}/.config/totem
 noblacklist ${HOME}/.local/share/totem
 noblacklist ${MUSIC}
+noblacklist ${PICTURES}
 noblacklist ${VIDEOS}
 
 include disable-common.inc
@@ -35,6 +39,7 @@ nou2f
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 private-bin totem
 # totem needs access to ~/.cache/tracker or it exits

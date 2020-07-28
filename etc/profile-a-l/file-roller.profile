@@ -42,3 +42,5 @@ private-cache
 private-dev
 private-etc dconf,fonts,gtk-3.0,xdg
 # private-tmp
+
+dbus-system none

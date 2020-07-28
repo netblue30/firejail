@@ -25,5 +25,17 @@ seccomp
 
 disable-mnt
 private-cache
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+private-etc ca-certificates,crypto-policies,fonts,ld.so.cache,localtime,machine-id,pki,pulse,resolv.conf,ssl
+=======
+private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,pulse
+>>>>>>> Create telegram.profile
+=======
+private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,pulse
+>>>>>>> Revert "Delete telegram.profile"
+=======
+private-etc fonts,resolv.conf,ld.so.cache,localtime,ca-certificates,ssl,pki,pulse
+>>>>>>> Revert "Delete telegram.profile"
 private-tmp
-

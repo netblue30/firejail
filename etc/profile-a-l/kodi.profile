@@ -33,6 +33,7 @@ caps.drop all
 netfilter
 nogroups
 nonewprivs
+# Seems to cause issues with Nvidia drivers sometimes (#3501)
 noroot
 nou2f
 protocol unix,inet,inet6,netlink

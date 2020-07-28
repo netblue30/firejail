@@ -25,6 +25,8 @@ noblacklist ${HOME}/.local/share/apps/korganizer
 noblacklist ${HOME}/.local/share/contacts
 noblacklist ${HOME}/.local/share/emailidentities
 noblacklist ${HOME}/.local/share/kmail2
+noblacklist ${HOME}/.local/share/kxmlgui5/kmail
+noblacklist ${HOME}/.local/share/kxmlgui5/kmail2
 noblacklist ${HOME}/.local/share/local-mail
 noblacklist ${HOME}/.local/share/notes
 noblacklist /tmp/akonadi-*

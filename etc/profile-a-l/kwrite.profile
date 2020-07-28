@@ -13,6 +13,7 @@ noblacklist ${HOME}/.config/katesyntaxhighlightingrc
 noblacklist ${HOME}/.config/katevirc
 noblacklist ${HOME}/.config/kwriterc
 noblacklist ${HOME}/.local/share/kwrite
+noblacklist ${HOME}/.local/share/kxmlgui5/kwrite
 noblacklist ${DOCUMENTS}
 
 include disable-common.inc

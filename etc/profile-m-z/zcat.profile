@@ -7,5 +7,8 @@ include zcat.local
 # added by included profile
 #include globals.local
 
+# Allow running kernel config check
+noblacklist /proc/config.gz
+
 # Redirect
 include gzip.profile

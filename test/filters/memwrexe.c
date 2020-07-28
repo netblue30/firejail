@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
 		}
 
 		void *p = mmap (0, size, PROT_READ, MAP_SHARED, fd, 0);
-		if (!p) {
+		if (p == MAP_FAILED) {
 			fprintf(stderr, "TESTING ERROR: cannot map file for mprotect test\n");
 			return 1;
 		}

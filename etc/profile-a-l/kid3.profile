@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${MUSIC}
 noblacklist ${HOME}/.config/kid3rc
+noblacklist ${HOME}/.local/share/kxmlgui5/kid3
 
 include disable-common.inc
 include disable-devel.inc

@@ -30,7 +30,7 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6,netlink
-seccomp
+seccomp !chroot
 
 # Note: On debian-based distributions the binary might be located in
 # /opt/GitHub Desktop/github-desktop, and therefore not be in PATH.

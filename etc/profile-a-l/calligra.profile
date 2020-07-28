@@ -6,6 +6,8 @@ include calligra.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.local/share/kxmlgui5/calligra
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc

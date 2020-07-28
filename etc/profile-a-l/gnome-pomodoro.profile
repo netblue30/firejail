@@ -50,7 +50,9 @@ private-tmp
 dbus-user filter
 dbus-user.own org.gnome.Pomodoro
 dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.gnome.Mutter.IdleMonitor
 dbus-user.talk org.gnome.Shell
+dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
 read-only ${HOME}

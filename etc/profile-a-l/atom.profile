@@ -17,19 +17,15 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-caps.drop all
+caps.keep sys_admin,sys_chroot
 # net none
 netfilter
 nodvd
 nogroups
-nonewprivs
-noroot
 nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6,netlink
-seccomp
 shell none
 
 private-cache

@@ -30,6 +30,12 @@ void check_output(int argc, char **argv) {
 	int enable_stderr = 0;
 
 	for (i = 1; i < argc; i++) {
+		if (strncmp(argv[i], "--", 2) != 0) {
+			return;
+		}
+		if (strcmp(argv[i], "--") == 0) {
+			return;
+		}
 		if (strncmp(argv[i], "--output=", 9) == 0) {
 			outindex = i;
 			break;

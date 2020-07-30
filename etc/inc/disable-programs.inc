@@ -305,6 +305,7 @@ blacklist ${HOME}/.config/newsflash
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/NitroShare
 blacklist ${HOME}/.config/nomacs
+blacklist ${HOME}/.config/nuclear
 blacklist ${HOME}/.config/obs-studio
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc

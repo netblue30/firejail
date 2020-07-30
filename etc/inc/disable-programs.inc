@@ -217,6 +217,7 @@ blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/git
+blacklist ${HOME}/.config/git-cola
 blacklist ${HOME}/.config/glade.conf
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gmpc

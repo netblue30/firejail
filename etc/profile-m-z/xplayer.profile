@@ -19,12 +19,11 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+read-only ${DESKTOP}
 mkdir ${HOME}/.config/xplayer
 mkdir ${HOME}/.local/share/xplayer
 whitelist ${HOME}/.config/xplayer
 whitelist ${HOME}/.local/share/xplayer
-whitelist ${DESKTOP}
-whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

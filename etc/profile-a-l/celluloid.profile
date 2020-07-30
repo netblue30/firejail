@@ -21,14 +21,13 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+read-only ${DESKTOP}
 mkdir ${HOME}/.config/celluloid
 mkdir ${HOME}/.config/gnome-mpv
 mkdir ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.config/celluloid
 whitelist ${HOME}/.config/gnome-mpv
 whitelist ${HOME}/.config/youtube-dl
-whitelist ${DESKTOP}
-whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

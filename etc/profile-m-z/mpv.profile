@@ -25,14 +25,13 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
+read-only ${DESKTOP}
 mkdir ${HOME}/.config/mpv
 mkdir ${HOME}/.config/youtube-dl
 mkdir ${HOME}/.netrc
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.netrc
-whitelist ${DESKTOP}
-whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

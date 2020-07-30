@@ -23,12 +23,11 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
+read-only ${DESKTOP}
 mkdir ${HOME}/.config/totem
 mkdir ${HOME}/.local/share/totem
 whitelist ${HOME}/.config/totem
 whitelist ${HOME}/.local/share/totem
-whitelist ${DESKTOP}
-whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

@@ -17,14 +17,13 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+read-only ${DESKTOP}
 mkdir ${HOME}/.cache/vlc
 mkdir ${HOME}/.config/vlc
 mkdir ${HOME}/.local/share/vlc
 whitelist ${HOME}/.cache/vlc
 whitelist ${HOME}/.config/vlc
 whitelist ${HOME}/.local/share/vlc
-whitelist ${DESKTOP}
-whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

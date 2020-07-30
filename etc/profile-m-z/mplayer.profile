@@ -15,10 +15,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+read-only ${DESKTOP}
 mkdir ${HOME}/.mplayer
 whitelist ${HOME}/.mplayer
-whitelist ${DESKTOP}
-whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

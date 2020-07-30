@@ -52,7 +52,7 @@ tracelog
 private-cache
 private-dev
 # Comment if you sign commits with GPG
-private-etc ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,localtime,login.defs,machine-id,mime.types,nsswitch.conf,passwd,resolv.conf,selinux,ssl,X11,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,localtime,login.defs,machine-id,mime.types,nsswitch.conf,passwd,pki,resolv.conf,selinux,ssl,X11,xdg
 private-tmp
 
 dbus-user filter

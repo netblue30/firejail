@@ -854,6 +854,8 @@ int dbus_check_call_rule(const char *name);
 void dbus_check_profile(void);
 void dbus_proxy_start(void);
 void dbus_proxy_stop(void);
+void dbus_set_session_bus_env(void);
+void dbus_set_system_bus_env(void);
 void dbus_apply_policy(void);
 
 // dhcp.c

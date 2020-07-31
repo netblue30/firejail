@@ -85,6 +85,7 @@ blacklist ${HOME}/.config/Element
 blacklist ${HOME}/.config/Element (Riot)
 blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Ferdi
+blacklist ${HOME}/.config/Flavio Tordini
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
 blacklist ${HOME}/.config/FreeTube
@@ -101,6 +102,7 @@ blacklist ${HOME}/.config/Jitsi Meet
 blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Kingsoft
 blacklist ${HOME}/.config/Luminance
+blacklist ${HOME}/.config/LyX
 blacklist ${HOME}/.config/Mattermost
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mendeley Ltd.
@@ -217,6 +219,7 @@ blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/git
+blacklist ${HOME}/.config/git-cola
 blacklist ${HOME}/.config/glade.conf
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gmpc
@@ -305,6 +308,7 @@ blacklist ${HOME}/.config/newsflash
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/NitroShare
 blacklist ${HOME}/.config/nomacs
+blacklist ${HOME}/.config/nuclear
 blacklist ${HOME}/.config/obs-studio
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
@@ -529,6 +533,7 @@ blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Anki2
 blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/Enpass
+blacklist ${HOME}/.local/share/Flavio Tordini
 blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Kingsoft
 blacklist ${HOME}/.local/share/Mendeley Ltd.
@@ -680,6 +685,7 @@ blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.lv2
+blacklist ${HOME}/.lyx
 blacklist ${HOME}/.magicor
 blacklist ${HOME}/.masterpdfeditor
 blacklist ${HOME}/.mbwarband
@@ -768,6 +774,7 @@ blacklist ${HOME}/.viking
 blacklist ${HOME}/.viking-maps
 blacklist ${HOME}/.vim
 blacklist ${HOME}/.vimrc
+blacklist ${HOME}/.vmware
 blacklist ${HOME}/.vscode
 blacklist ${HOME}/.vscode-oss
 blacklist ${HOME}/.vst
@@ -809,6 +816,7 @@ blacklist ${HOME}/.cache/Clementine
 blacklist ${HOME}/.cache/Enox
 blacklist ${HOME}/.cache/Enpass
 blacklist ${HOME}/.cache/Ferdi
+blacklist ${HOME}/.cache/Flavio Tordini
 blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
@@ -927,6 +935,7 @@ blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc
+blacklist ${HOME}/.cache/vmware
 blacklist ${HOME}/.cache/warsow-2.1
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth

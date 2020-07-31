@@ -39,6 +39,8 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: hitori, bijiben, gnote, gnubik, ZeGrapher, xonotic-sdl-wrapper
   * new profiles: gapplication, openarena_ded, element-desktop, cawbird, freetube
   * new profiles: homebank, mattermost-desktop, newsflash, com.gitlab.newsflash
+  * new profiles: sushi, xfce4-screenshooter, org.gnome.NautilusPreviewer, lyx
+  * new profiles: minitube, nuclear, mtpaint, minecraft-launcher, gnome-calendar
  -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low

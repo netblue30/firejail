@@ -6,11 +6,6 @@ include menulibre.local
 # Persistent global definitions
 include globals.local
 
-ignore read-only ${HOME}/.local/share/applications
-ignore read-only ${HOME}/.config/menus
-
-noblacklist ${HOME}/.gnome/apps
-
 include allow-python2.inc
 include allow-python3.inc
 
@@ -22,7 +17,19 @@ include disable-programs.inc
 include disable-passwdmgr.inc
 include disable-xdg.inc
 
+# Whitelist your system icon directory,varies by distro
+whitelist /usr/share/app-info
+whitelist /usr/share/desktop-directories
+whitelist /usr/share/icons
+whitelist /usr/share/menulibre
+whitelist /var/lib/app-info/icons
+# Flatpak desktop directory
+whitelist /var/lib/flatpak/exports/share/applications
+whitelist /var/lib/flatpak/exports/share/icons
+# Snap desktop directory
+
 include whitelist-runuser-common.inc 
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -51,3 +58,8 @@ private-tmp
 
 dbus-user none
 dbus-system none
+
+read-write ${HOME}/.config/menus
+read-write ${HOME}/.gnome/apps
+read-write ${HOME}/.local/share/applications
+read-write ${HOME}/.local/share/flatpak/exports

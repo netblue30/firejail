@@ -24,16 +24,17 @@ include disable-passwdmgr.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+whitelist /usr/share/kazam
 include whitelist-runuser-common.inc 
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
 caps.drop all
 net none
 nodvd
-no3d
-nonewprivs
 nogroups
+nonewprivs
 noroot
 notv
 nou2f

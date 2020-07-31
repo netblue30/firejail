@@ -34,8 +34,8 @@ machine-id
 net none
 nodvd
 no3d
-nonewprivs
 nogroups
+nonewprivs
 noroot
 notv
 nou2f

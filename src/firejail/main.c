@@ -242,7 +242,7 @@ static int extract_pid(const char *name, pid_t *pid) {
 	int retval = 0;
 	EUID_ASSERT();
 	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
+		fprintf(stderr, "[firejail] Error: invalid sandbox name\n");
 		exit(1);
 	}
 
@@ -274,7 +274,7 @@ static int read_pid(const char *name, pid_t *pid) {
 static pid_t require_pid(const char *name) {
 	pid_t pid;
 	if (read_pid(name,&pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
+		fprintf(stderr, "[firejail] Error: cannot find sandbox %s\n", name);
 		exit(1);
 	}
 	return pid;
@@ -296,7 +296,7 @@ static int has_link(const char *dir) {
 static void check_homedir(void) {
 	assert(cfg.homedir);
 	if (cfg.homedir[0] != '/') {
-		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
+		fprintf(stderr, "[firejail] Error: invalid user directory \"%s\"\n", cfg.homedir);
 		exit(1);
 	}
 	// symlinks are rejected in many places
@@ -346,7 +346,7 @@ static void init_cfg(int argc, char **argv) {
 
 	// build home directory name
 	if (pw->pw_dir == NULL) {
-		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
+		fprintf(stderr, "[firejail] Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
 	cfg.homedir = clean_pathname(pw->pw_dir);
@@ -430,7 +430,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strcmp(argv[i], "--overlay-clean") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
 			if (remove_overlay_directory()) {
-				fprintf(stderr, "Error: cannot remove overlay directory\n");
+				fprintf(stderr, "[firejail] Error: cannot remove overlay directory\n");
 				exit(1);
 			}
 		}
@@ -480,12 +480,12 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 
 			// extract the command
 			if ((i + 1) == argc) {
-				fprintf(stderr, "Error: command expected after --bandwidth option\n");
+				fprintf(stderr, "[firejail] Error: command expected after --bandwidth option\n");
 				exit(1);
 			}
 			char *cmd = argv[i + 1];
 			if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
-				fprintf(stderr, "Error: invalid --bandwidth command.\nValid commands: set, clear, status.\n");
+				fprintf(stderr, "[firejail] Error: invalid --bandwidth command.\nValid commands: set, clear, status.\n");
 				exit(1);
 			}
 
@@ -496,32 +496,32 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			if (strcmp(cmd, "set") == 0 || strcmp(cmd, "clear") == 0) {
 				// extract device name
 				if ((i + 2) == argc) {
-					fprintf(stderr, "Error: network name expected after --bandwidth %s option\n", cmd);
+					fprintf(stderr, "[firejail] Error: network name expected after --bandwidth %s option\n", cmd);
 					exit(1);
 				}
 				dev = argv[i + 2];
 
 				// check device name
 				if (if_nametoindex(dev) == 0) {
-					fprintf(stderr, "Error: network device %s not found\n", dev);
+					fprintf(stderr, "[firejail] Error: network device %s not found\n", dev);
 					exit(1);
 				}
 
 				// extract bandwidth
 				if (strcmp(cmd, "set") == 0) {
 					if ((i + 4) >= argc) {
-						fprintf(stderr, "Error: invalid --bandwidth set command\n");
+						fprintf(stderr, "[firejail] Error: invalid --bandwidth set command\n");
 						exit(1);
 					}
 
 					down = atoi(argv[i + 3]);
 					if (down < 0) {
-						fprintf(stderr, "Error: invalid download speed\n");
+						fprintf(stderr, "[firejail] Error: invalid download speed\n");
 						exit(1);
 					}
 					up = atoi(argv[i + 4]);
 					if (up < 0) {
-						fprintf(stderr, "Error: invalid upload speed\n");
+						fprintf(stderr, "[firejail] Error: invalid upload speed\n");
 						exit(1);
 					}
 				}
@@ -611,7 +611,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			errExit("asprintf");
 		FILE *fp = fopen(fname, "r");
 		if (!fp) {
-			fprintf(stderr, "Error: sandbox %s not found\n", argv[i] + 16);
+			fprintf(stderr, "[firejail] Error: sandbox %s not found\n", argv[i] + 16);
 			exit(1);
 		}
 #define MAXBUF 4096
@@ -714,19 +714,19 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
 			logargs(argc, argv);
 			if (arg_private_cwd) {
-				fprintf(stderr, "Error: --get and --private-cwd options are mutually exclusive\n");
+				fprintf(stderr, "[firejail] Error: --get and --private-cwd options are mutually exclusive\n");
 				exit(1);
 			}
 
 			// verify path
 			if ((i + 2) != argc) {
-				fprintf(stderr, "Error: invalid --get option, path expected\n");
+				fprintf(stderr, "[firejail] Error: invalid --get option, path expected\n");
 				exit(1);
 			}
 			char *path = argv[i + 1];
 			 invalid_filename(path, 0); // no globbing
 			 if (strstr(path, "..")) {
-			 	fprintf(stderr, "Error: invalid file name %s\n", path);
+			 	fprintf(stderr, "[firejail] Error: invalid file name %s\n", path);
 			 	exit(1);
 			 }
 
@@ -742,25 +742,25 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
 			logargs(argc, argv);
 			if (arg_private_cwd) {
-				fprintf(stderr, "Error: --put and --private-cwd options are mutually exclusive\n");
+				fprintf(stderr, "[firejail] Error: --put and --private-cwd options are mutually exclusive\n");
 				exit(1);
 			}
 
 			// verify path
 			if ((i + 3) != argc) {
-				fprintf(stderr, "Error: invalid --put option, 2 paths expected\n");
+				fprintf(stderr, "[firejail] Error: invalid --put option, 2 paths expected\n");
 				exit(1);
 			}
 			char *path1 = argv[i + 1];
 			 invalid_filename(path1, 0); // no globbing
 			 if (strstr(path1, "..")) {
-			 	fprintf(stderr, "Error: invalid file name %s\n", path1);
+			 	fprintf(stderr, "[firejail] Error: invalid file name %s\n", path1);
 			 	exit(1);
 			 }
 			char *path2 = argv[i + 2];
 			 invalid_filename(path2, 0); // no globbing
 			 if (strstr(path2, "..")) {
-			 	fprintf(stderr, "Error: invalid file name %s\n", path2);
+			 	fprintf(stderr, "[firejail] Error: invalid file name %s\n", path2);
 			 	exit(1);
 			 }
 
@@ -776,19 +776,19 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
 			logargs(argc, argv);
 			if (arg_private_cwd) {
-				fprintf(stderr, "Error: --ls and --private-cwd options are mutually exclusive\n");
+				fprintf(stderr, "[firejail] Error: --ls and --private-cwd options are mutually exclusive\n");
 				exit(1);
 			}
 
 			// verify path
 			if ((i + 2) != argc) {
-				fprintf(stderr, "Error: invalid --ls option, path expected\n");
+				fprintf(stderr, "[firejail] Error: invalid --ls option, path expected\n");
 				exit(1);
 			}
 			char *path = argv[i + 1];
 			 invalid_filename(path, 0); // no globbing
 			 if (strstr(path, "..")) {
-			 	fprintf(stderr, "Error: invalid file name %s\n", path);
+			 	fprintf(stderr, "[firejail] Error: invalid file name %s\n", path);
 			 	exit(1);
 			 }
 
@@ -807,7 +807,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 
 			if (arg_shell_none) {
 				if (argc <= (i+1)) {
-					fprintf(stderr, "Error: --shell=none set, but no command specified\n");
+					fprintf(stderr, "[firejail] Error: --shell=none set, but no command specified\n");
 					exit(1);
 				}
 				cfg.original_program_index = i + 1;
@@ -833,7 +833,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 
 			if (arg_shell_none) {
 				if (argc <= (i+1)) {
-					fprintf(stderr, "Error: --shell=none set, but no command specified\n");
+					fprintf(stderr, "[firejail] Error: --shell=none set, but no command specified\n");
 					exit(1);
 				}
 				cfg.original_program_index = i + 1;
@@ -859,7 +859,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			logargs(argc, argv);
 			arg_join_network = 1;
 			if (getuid() != 0) {
-				fprintf(stderr, "Error: --join-network is only available to root user\n");
+				fprintf(stderr, "[firejail] Error: --join-network is only available to root user\n");
 				exit(1);
 			}
 
@@ -879,7 +879,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		logargs(argc, argv);
 		arg_join_filesystem = 1;
 		if (getuid() != 0) {
-			fprintf(stderr, "Error: --join-filesystem is only available to root user\n");
+			fprintf(stderr, "[firejail] Error: --join-filesystem is only available to root user\n");
 			exit(1);
 		}
 
@@ -1026,21 +1026,21 @@ int main(int argc, char **argv, char **envp) {
 
 	// argument count should be larger than 0
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
-		fprintf(stderr, "Error: argv[0] is NULL\n");
+		fprintf(stderr, "[firejail] Error: argv[0] is NULL\n");
 		exit(1);
 	} else if (argc >= MAX_ARGS) {
-		fprintf(stderr, "Error: too many arguments\n");
+		fprintf(stderr, "[firejail] Error: too many arguments\n");
 		exit(1);
 	}
 
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
 		if (*argv[i] == 0) {
-			fprintf(stderr, "Error: too short arguments\n");
+			fprintf(stderr, "[firejail] Error: too short arguments\n");
 			exit(1);
 		}
 		if (strlen(argv[i]) >= MAX_ARG_LEN) {
-			fprintf(stderr, "Error: too long arguments\n");
+			fprintf(stderr, "[firejail] Error: too long arguments\n");
 			exit(1);
 		}
 	}
@@ -1048,12 +1048,12 @@ int main(int argc, char **argv, char **envp) {
 	// sanity check for environment variables
 	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++) {
 		if (strlen(*ptr) >= MAX_ENV_LEN) {
-			fprintf(stderr, "Error: too long environment variables\n");
+			fprintf(stderr, "[firejail] Error: too long environment variables\n");
 			exit(1);
 		}
 	}
 	if (i >= MAX_ENVS) {
-		fprintf(stderr, "Error: too many environment variables\n");
+		fprintf(stderr, "[firejail] Error: too many environment variables\n");
 		exit(1);
 	}
 
@@ -1097,11 +1097,11 @@ int main(int argc, char **argv, char **envp) {
 		int major;
 		int minor;
 		if (2 != sscanf(u.release, "%d.%d", &major, &minor)) {
-			fprintf(stderr, "Error: cannot extract Linux kernel version: %s\n", u.version);
+			fprintf(stderr, "[firejail] Error: cannot extract Linux kernel version: %s\n", u.version);
 			exit(1);
 		}
 		if (major < 4 || (major == 4 && minor < 8)) {
-			fprintf(stderr, "Error: --allow-debuggers is disabled on Linux kernels prior to 4.8. "
+			fprintf(stderr, "[firejail] Error: --allow-debuggers is disabled on Linux kernels prior to 4.8. "
 				"A bug in ptrace call allows a full bypass of the seccomp filter. "
 				"Your current kernel version is %d.%d.\n", major, minor);
 			exit(1);
@@ -1318,7 +1318,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--seccomp") == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
+					fprintf(stderr, "[firejail] Error: seccomp already enabled\n");
 					exit(1);
 				}
 				arg_seccomp = 1;
@@ -1329,7 +1329,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--seccomp=", 10) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
+					fprintf(stderr, "[firejail] Error: seccomp already enabled\n");
 					exit(1);
 				}
 				arg_seccomp = 1;
@@ -1341,7 +1341,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--seccomp.32=", 13) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp32) {
-					fprintf(stderr, "Error: seccomp.32 already enabled\n");
+					fprintf(stderr, "[firejail] Error: seccomp.32 already enabled\n");
 					exit(1);
 				}
 				arg_seccomp32 = 1;
@@ -1353,7 +1353,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--seccomp.drop=", 15) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
+					fprintf(stderr, "[firejail] Error: seccomp already enabled\n");
 					exit(1);
 				}
 				arg_seccomp = 1;
@@ -1365,7 +1365,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--seccomp.32.drop=", 18) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp32) {
-					fprintf(stderr, "Error: seccomp.32 already enabled\n");
+					fprintf(stderr, "[firejail] Error: seccomp.32 already enabled\n");
 					exit(1);
 				}
 				arg_seccomp32 = 1;
@@ -1377,7 +1377,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--seccomp.keep=", 15) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
+					fprintf(stderr, "[firejail] Error: seccomp already enabled\n");
 					exit(1);
 				}
 				arg_seccomp = 1;
@@ -1389,7 +1389,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--seccomp.32.keep=", 18) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp32) {
-					fprintf(stderr, "Error: seccomp.32 already enabled\n");
+					fprintf(stderr, "[firejail] Error: seccomp.32 already enabled\n");
 					exit(1);
 				}
 				arg_seccomp32 = 1;
@@ -1401,7 +1401,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--seccomp.block-secondary") == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp32) {
-					fprintf(stderr, "Error: seccomp.32 conflicts with block-secondary\n");
+					fprintf(stderr, "[firejail] Error: seccomp.32 conflicts with block-secondary\n");
 					exit(1);
 				}
 				arg_seccomp_block_secondary = 1;
@@ -1466,12 +1466,12 @@ int main(int argc, char **argv, char **envp) {
 			arg_trace = 1;
 			arg_tracefile = argv[i] + 8;
 			if (*arg_tracefile == '\0') {
-				fprintf(stderr, "Error: invalid trace option\n");
+				fprintf(stderr, "[firejail] Error: invalid trace option\n");
 				exit(1);
 			}
 			invalid_filename(arg_tracefile, 0); // no globbing
 			if (strstr(arg_tracefile, "..")) {
-				fprintf(stderr, "Error: invalid file name %s\n", arg_tracefile);
+				fprintf(stderr, "[firejail] Error: invalid file name %s\n", arg_tracefile);
 				exit(1);
 			}
 			// if the filename starts with ~, expand the home directory
@@ -1527,7 +1527,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
 			if (checkcfg(CFG_CGROUP)) {
 				if (option_cgroup) {
-					fprintf(stderr, "Error: only a cgroup can be defined\n");
+					fprintf(stderr, "[firejail] Error: only a cgroup can be defined\n");
 					exit(1);
 				}
 
@@ -1636,17 +1636,17 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--overlay") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
 				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
+					fprintf(stderr, "[firejail] Error: only one overlay command is allowed\n");
 					exit(1);
 				}
 
 				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					fprintf(stderr, "[firejail] Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);
 				}
 				struct stat s;
 				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+					fprintf(stderr, "[firejail] Error: --overlay option is not available on Grsecurity systems\n");
 					exit(1);
 				}
 				arg_overlay = 1;
@@ -1665,16 +1665,16 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
 				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
+					fprintf(stderr, "[firejail] Error: only one overlay command is allowed\n");
 					exit(1);
 				}
 				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					fprintf(stderr, "[firejail] Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);
 				}
 				struct stat s;
 				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+					fprintf(stderr, "[firejail] Error: --overlay option is not available on Grsecurity systems\n");
 					exit(1);
 				}
 				arg_overlay = 1;
@@ -1683,14 +1683,14 @@ int main(int argc, char **argv, char **envp) {
 
 				char *subdirname = argv[i] + 16;
 				if (*subdirname == '\0') {
-					fprintf(stderr, "Error: invalid overlay option\n");
+					fprintf(stderr, "[firejail] Error: invalid overlay option\n");
 					exit(1);
 				}
 
 				// check name
 				invalid_filename(subdirname, 0); // no globbing
 				if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
-					fprintf(stderr, "Error: invalid overlay name\n");
+					fprintf(stderr, "[firejail] Error: invalid overlay name\n");
 					exit(1);
 				}
 				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
@@ -1701,16 +1701,16 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
 			if (checkcfg(CFG_OVERLAYFS)) {
 				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
+					fprintf(stderr, "[firejail] Error: only one overlay command is allowed\n");
 					exit(1);
 				}
 				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					fprintf(stderr, "[firejail] Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);
 				}
 				struct stat s;
 				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+					fprintf(stderr, "[firejail] Error: --overlay option is not available on Grsecurity systems\n");
 					exit(1);
 				}
 				arg_overlay = 1;
@@ -1728,7 +1728,7 @@ int main(int argc, char **argv, char **envp) {
 			else if (access("/run/firetunnel/fts", R_OK) == 0)
 				profile_read("/run/firetunnel/fts");
 			else {
-				fprintf(stderr, "Error: no default firetunnel found, please specify it using --tunnel=devname option\n");
+				fprintf(stderr, "[firejail] Error: no default firetunnel found, please specify it using --tunnel=devname option\n");
 				exit(1);
 			}
 		}
@@ -1741,7 +1741,7 @@ int main(int argc, char **argv, char **envp) {
 			if (access(fname, R_OK) == 0)
 				profile_read(fname);
 			else {
-				fprintf(stderr, "Error: tunnel not found\n");
+				fprintf(stderr, "[firejail] Error: tunnel not found\n");
 				exit(1);
 			}
 		}
@@ -1750,7 +1750,7 @@ int main(int argc, char **argv, char **envp) {
 			// multiple profile files are allowed!
 
 			if (arg_noprofile) {
-				fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");
+				fprintf(stderr, "[firejail] Error: --noprofile and --profile options are mutually exclusive\n");
 				exit(1);
 			}
 
@@ -1769,7 +1769,7 @@ int main(int argc, char **argv, char **envp) {
 				// profile path contains no / or . chars,
 				// assume its a profile name
 				if (*ptr != '\0') {
-					fprintf(stderr, "Error: inaccessible profile file: %s\n", ppath);
+					fprintf(stderr, "[firejail] Error: inaccessible profile file: %s\n", ppath);
 					exit(1);
 				}
 
@@ -1779,7 +1779,7 @@ int main(int argc, char **argv, char **envp) {
 					// do not fall through to default profile,
 					// because the user should be notified that
 					// given profile arg could not be used.
-					fprintf(stderr, "Error: no profile with name \"%s\" found.\n", ppath);
+					fprintf(stderr, "[firejail] Error: no profile with name \"%s\" found.\n", ppath);
 					exit(1);
 				}
 				else
@@ -1793,14 +1793,14 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strcmp(argv[i], "--noprofile") == 0) {
 			if (custom_profile) {
-				fprintf(stderr, "Error: --profile and --noprofile options are mutually exclusive\n");
+				fprintf(stderr, "[firejail] Error: --profile and --noprofile options are mutually exclusive\n");
 				exit(1);
 			}
 			arg_noprofile = 1;
 		}
 		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
 			if (custom_profile) {
-				fprintf(stderr, "Error: please use --profile after --ignore\n");
+				fprintf(stderr, "[firejail] Error: please use --profile after --ignore\n");
 				exit(1);
 			}
 			profile_add_ignore(argv[i] + 9);
@@ -1809,19 +1809,19 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
 			if (checkcfg(CFG_CHROOT)) {
 				if (arg_overlay) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+					fprintf(stderr, "[firejail] Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);
 				}
 
 				struct stat s;
 				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --chroot option is not available on Grsecurity systems\n");
+					fprintf(stderr, "[firejail] Error: --chroot option is not available on Grsecurity systems\n");
 					exit(1);
 				}
 				// extract chroot dirname
 				cfg.chrootdir = argv[i] + 9;
 				if (*cfg.chrootdir == '\0') {
-					fprintf(stderr, "Error: invalid chroot option\n");
+					fprintf(stderr, "[firejail] Error: invalid chroot option\n");
 					exit(1);
 				}
 				invalid_filename(cfg.chrootdir, 0); // no globbing
@@ -1842,7 +1842,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		else if (strcmp(argv[i], "--writable-etc") == 0) {
 			if (cfg.etc_private_keep) {
-				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+				fprintf(stderr, "[firejail] Error: --private-etc and --writable-etc are mutually exclusive\n");
 				exit(1);
 			}
 			arg_writable_etc = 1;
@@ -1867,14 +1867,14 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strncmp(argv[i], "--private=", 10) == 0) {
 			if (cfg.home_private_keep) {
-				fprintf(stderr, "Error: a private list of files was already defined with --private-home option.\n");
+				fprintf(stderr, "[firejail] Error: a private list of files was already defined with --private-home option.\n");
 				exit(1);
 			}
 
 			// extract private home dirname
 			cfg.home_private = argv[i] + 10;
 			if (*cfg.home_private == '\0') {
-				fprintf(stderr, "Error: invalid private option\n");
+				fprintf(stderr, "[firejail] Error: invalid private option\n");
 				exit(1);
 			}
 			fs_check_private_dir();
@@ -1890,13 +1890,13 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--private-home=", 15) == 0) {
 			if (checkcfg(CFG_PRIVATE_HOME)) {
 				if (cfg.home_private) {
-					fprintf(stderr, "Error: a private home directory was already defined with --private option.\n");
+					fprintf(stderr, "[firejail] Error: a private home directory was already defined with --private option.\n");
 					exit(1);
 				}
 
 				// extract private home dirname
 				if (*(argv[i] + 15) == '\0') {
-					fprintf(stderr, "Error: invalid private-home option\n");
+					fprintf(stderr, "[firejail] Error: invalid private-home option\n");
 					exit(1);
 				}
 				if (cfg.home_private_keep) {
@@ -1918,13 +1918,13 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
 			if (arg_writable_etc) {
-				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+				fprintf(stderr, "[firejail] Error: --private-etc and --writable-etc are mutually exclusive\n");
 				exit(1);
 			}
 
 			// extract private etc list
 			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-etc option\n");
+				fprintf(stderr, "[firejail] Error: invalid private-etc option\n");
 				exit(1);
 			}
 			if (cfg.etc_private_keep) {
@@ -1937,7 +1937,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
 			// extract private opt list
 			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-opt option\n");
+				fprintf(stderr, "[firejail] Error: invalid private-opt option\n");
 				exit(1);
 			}
 			if (cfg.opt_private_keep) {
@@ -1950,7 +1950,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
 			// extract private srv list
 			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-srv option\n");
+				fprintf(stderr, "[firejail] Error: invalid private-srv option\n");
 				exit(1);
 			}
 			if (cfg.srv_private_keep) {
@@ -1963,7 +1963,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			// extract private bin list
 			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-bin option\n");
+				fprintf(stderr, "[firejail] Error: invalid private-bin option\n");
 				exit(1);
 			}
 			if (cfg.bin_private_keep) {
@@ -2003,7 +2003,7 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strncmp(argv[i], "--private-cwd=", 14) == 0) {
 			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-cwd option\n");
+				fprintf(stderr, "[firejail] Error: invalid private-cwd option\n");
 				exit(1);
 			}
 
@@ -2017,14 +2017,14 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--name=", 7) == 0) {
 			cfg.name = argv[i] + 7;
 			if (strlen(cfg.name) == 0) {
-				fprintf(stderr, "Error: please provide a name for sandbox\n");
+				fprintf(stderr, "[firejail] Error: please provide a name for sandbox\n");
 				return 1;
 			}
 		}
 		else if (strncmp(argv[i], "--hostname=", 11) == 0) {
 			cfg.hostname = argv[i] + 11;
 			if (strlen(cfg.hostname) == 0) {
-				fprintf(stderr, "Error: please provide a hostname for sandbox\n");
+				fprintf(stderr, "[firejail] Error: please provide a hostname for sandbox\n");
 				return 1;
 			}
 		}
@@ -2220,16 +2220,16 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				// checks
 				if (arg_nonetwork) {
-					fprintf(stderr, "Error: --network=none and --interface are incompatible\n");
+					fprintf(stderr, "[firejail] Error: --network=none and --interface are incompatible\n");
 					exit(1);
 				}
 				if (strcmp(argv[i] + 12, "lo") == 0) {
-					fprintf(stderr, "Error: cannot use lo device in --interface command\n");
+					fprintf(stderr, "[firejail] Error: cannot use lo device in --interface command\n");
 					exit(1);
 				}
 				int ifindex = if_nametoindex(argv[i] + 12);
 				if (ifindex <= 0) {
-					fprintf(stderr, "Error: cannot find interface %s\n", argv[i] + 12);
+					fprintf(stderr, "[firejail] Error: cannot find interface %s\n", argv[i] + 12);
 					exit(1);
 				}
 
@@ -2243,7 +2243,7 @@ int main(int argc, char **argv, char **envp) {
 				else if (cfg.interface3.configured == 0)
 					intf = &cfg.interface3;
 				else {
-					fprintf(stderr, "Error: maximum 4 interfaces are allowed\n");
+					fprintf(stderr, "[firejail] Error: maximum 4 interfaces are allowed\n");
 					return 1;
 				}
 
@@ -2276,7 +2276,7 @@ int main(int argc, char **argv, char **envp) {
 				}
 
 				if (strcmp(argv[i] + 6, "lo") == 0) {
-					fprintf(stderr, "Error: cannot attach to lo device\n");
+					fprintf(stderr, "[firejail] Error: cannot attach to lo device\n");
 					exit(1);
 				}
 
@@ -2290,7 +2290,7 @@ int main(int argc, char **argv, char **envp) {
 				else if (cfg.bridge3.configured == 0)
 					br = &cfg.bridge3;
 				else {
-					fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
+					fprintf(stderr, "[firejail] Error: maximum 4 network devices are allowed\n");
 					return 1;
 				}
 				br->dev = argv[i] + 6;
@@ -2304,14 +2304,14 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
+					fprintf(stderr, "[firejail] Error: no network device configured\n");
 					exit(1);
 				}
 				br->veth_name = strdup(argv[i] + 12);
 				if (br->veth_name == NULL)
 					errExit("strdup");
 				if (*br->veth_name == '\0') {
-					fprintf(stderr, "Error: no veth-name configured\n");
+					fprintf(stderr, "[firejail] Error: no veth-name configured\n");
 					exit(1);
 				}
 			}
@@ -2330,11 +2330,11 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
+					fprintf(stderr, "[firejail] Error: no network device configured\n");
 					return 1;
 				}
 				if (br->iprange_start || br->iprange_end) {
-					fprintf(stderr, "Error: cannot configure the IP range twice for the same interface\n");
+					fprintf(stderr, "[firejail] Error: cannot configure the IP range twice for the same interface\n");
 					return 1;
 				}
 
@@ -2347,7 +2347,7 @@ int main(int argc, char **argv, char **envp) {
 					secondip++;
 				}
 				if (*secondip == '\0') {
-					fprintf(stderr, "Error: invalid IP range\n");
+					fprintf(stderr, "[firejail] Error: invalid IP range\n");
 					return 1;
 				}
 				*secondip = '\0';
@@ -2356,7 +2356,7 @@ int main(int argc, char **argv, char **envp) {
 				// check addresses
 				if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
 				    br->iprange_start >= br->iprange_end) {
-					fprintf(stderr, "Error: invalid IP range\n");
+					fprintf(stderr, "[firejail] Error: invalid IP range\n");
 					return 1;
 				}
 			}
@@ -2368,17 +2368,17 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
+					fprintf(stderr, "[firejail] Error: no network device configured\n");
 					exit(1);
 				}
 				if (mac_not_zero(br->macsandbox)) {
-					fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
+					fprintf(stderr, "[firejail] Error: cannot configure the MAC address twice for the same interface\n");
 					exit(1);
 				}
 
 				// read the address
 				if (atomac(argv[i] + 6, br->macsandbox)) {
-					fprintf(stderr, "Error: invalid MAC address\n");
+					fprintf(stderr, "[firejail] Error: invalid MAC address\n");
 					exit(1);
 				}
 			}
@@ -2390,12 +2390,12 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
+					fprintf(stderr, "[firejail] Error: no network device configured\n");
 					exit(1);
 				}
 
 				if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
-					fprintf(stderr, "Error: invalid mtu value\n");
+					fprintf(stderr, "[firejail] Error: invalid mtu value\n");
 					exit(1);
 				}
 			}
@@ -2407,11 +2407,11 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
+					fprintf(stderr, "[firejail] Error: no network device configured\n");
 					exit(1);
 				}
 				if (br->arg_ip_none || br->ipsandbox) {
-					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+					fprintf(stderr, "[firejail] Error: cannot configure the IP address twice for the same interface\n");
 					exit(1);
 				}
 
@@ -2423,7 +2423,7 @@ int main(int argc, char **argv, char **envp) {
 					br->arg_ip_dhcp = 1;
 				} else {
 					if (atoip(argv[i] + 5, &br->ipsandbox)) {
-						fprintf(stderr, "Error: invalid IP address\n");
+						fprintf(stderr, "[firejail] Error: invalid IP address\n");
 						exit(1);
 					}
 				}
@@ -2436,17 +2436,17 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
+					fprintf(stderr, "[firejail] Error: no network device configured\n");
 					exit(1);
 				}
 				if (br->arg_ip_none || br->mask) {
-					fprintf(stderr, "Error: cannot configure the network mask twice for the same interface\n");
+					fprintf(stderr, "[firejail] Error: cannot configure the network mask twice for the same interface\n");
 					exit(1);
 				}
 
 				// configure this network mask for the last bridge defined
 				if (atoip(argv[i] + 10, &br->mask)) {
-					fprintf(stderr, "Error: invalid  network mask\n");
+					fprintf(stderr, "[firejail] Error: invalid  network mask\n");
 					exit(1);
 				}
 			}
@@ -2458,11 +2458,11 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				Bridge *br = last_bridge_configured();
 				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
+					fprintf(stderr, "[firejail] Error: no network device configured\n");
 					exit(1);
 				}
 				if (br->arg_ip6_dhcp || br->ip6sandbox) {
-					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+					fprintf(stderr, "[firejail] Error: cannot configure the IP address twice for the same interface\n");
 					exit(1);
 				}
 
@@ -2471,7 +2471,7 @@ int main(int argc, char **argv, char **envp) {
 					br->arg_ip6_dhcp = 1;
 				else {
 					if (check_ip46_address(argv[i] + 6) == 0) {
-						fprintf(stderr, "Error: invalid IPv6 address\n");
+						fprintf(stderr, "[firejail] Error: invalid IPv6 address\n");
 						exit(1);
 					}
 
@@ -2488,7 +2488,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--defaultgw=", 12) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
 				if (atoip(argv[i] + 12, &cfg.defaultgw)) {
-					fprintf(stderr, "Error: invalid IP address\n");
+					fprintf(stderr, "[firejail] Error: invalid IP address\n");
 					exit(1);
 				}
 			}
@@ -2498,7 +2498,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		else if (strncmp(argv[i], "--dns=", 6) == 0) {
 			if (check_ip46_address(argv[i] + 6) == 0) {
-				fprintf(stderr, "Error: invalid DNS server IPv4 or IPv6 address\n");
+				fprintf(stderr, "[firejail] Error: invalid DNS server IPv4 or IPv6 address\n");
 				exit(1);
 			}
 			char *dns = strdup(argv[i] + 6);
@@ -2571,7 +2571,7 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strncmp(argv[i], "--audit=", 8) == 0) {
 			if (strlen(argv[i] + 8) == 0) {
-				fprintf(stderr, "Error: invalid audit program\n");
+				fprintf(stderr, "[firejail] Error: invalid audit program\n");
 				exit(1);
 			}
 			arg_audit_prog = strdup(argv[i] + 8);
@@ -2580,7 +2580,7 @@ int main(int argc, char **argv, char **envp) {
 
 			struct stat s;
 			if (stat(arg_audit_prog, &s) != 0) {
-				fprintf(stderr, "Error: cannot find the audit program %s\n", arg_audit_prog);
+				fprintf(stderr, "[firejail] Error: cannot find the audit program %s\n", arg_audit_prog);
 				exit(1);
 			}
 			arg_audit = 1;
@@ -2590,25 +2590,25 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--shell=none") == 0) {
 			arg_shell_none = 1;
 			if (cfg.shell) {
-				fprintf(stderr, "Error: a shell was already specified\n");
+				fprintf(stderr, "[firejail] Error: a shell was already specified\n");
 				return 1;
 			}
 		}
 		else if (strncmp(argv[i], "--shell=", 8) == 0) {
 			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
+				fprintf(stderr, "[firejail] Error: --shell=none was already specified.\n");
 				return 1;
 			}
 			invalid_filename(argv[i] + 8, 0); // no globbing
 
 			if (cfg.shell) {
-				fprintf(stderr, "Error: only one user shell can be specified\n");
+				fprintf(stderr, "[firejail] Error: only one user shell can be specified\n");
 				return 1;
 			}
 			cfg.shell = argv[i] + 8;
 
 			if (is_dir(cfg.shell) || strstr(cfg.shell, "..")) {
-				fprintf(stderr, "Error: invalid shell\n");
+				fprintf(stderr, "[firejail] Error: invalid shell\n");
 				exit(1);
 			}
 
@@ -2618,19 +2618,19 @@ int main(int argc, char **argv, char **envp) {
 				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
 					errExit("asprintf");
 				if (access(shellpath, X_OK)) {
-					fprintf(stderr, "Error: cannot access shell file in chroot\n");
+					fprintf(stderr, "[firejail] Error: cannot access shell file in chroot\n");
 					exit(1);
 				}
 				free(shellpath);
 			} else if (access(cfg.shell, X_OK)) {
-				fprintf(stderr, "Error: cannot access shell file\n");
+				fprintf(stderr, "[firejail] Error: cannot access shell file\n");
 				exit(1);
 			}
 		}
 		else if (strcmp(argv[i], "-c") == 0) {
 			arg_command = 1;
 			if (i == (argc -  1)) {
-				fprintf(stderr, "Error: option -c requires an argument\n");
+				fprintf(stderr, "[firejail] Error: option -c requires an argument\n");
 				return 1;
 			}
 		}
@@ -2654,7 +2654,7 @@ int main(int argc, char **argv, char **envp) {
 			// set sandbox name and start normally
 			cfg.name = argv[i] + 16;
 			if (strlen(cfg.name) == 0) {
-				fprintf(stderr, "Error: please provide a name for sandbox\n");
+				fprintf(stderr, "[firejail] Error: please provide a name for sandbox\n");
 				return 1;
 			}
 		}
@@ -2667,13 +2667,13 @@ int main(int argc, char **argv, char **envp) {
 				arg_doubledash = 1;
 				i++;
 				if (i  >= argc) {
-					fprintf(stderr, "Error: program name not found\n");
+					fprintf(stderr, "[firejail] Error: program name not found\n");
 					exit(1);
 				}
 			}
 			// is this an invalid option?
 			else if (*argv[i] == '-') {
-				fprintf(stderr, "Error: invalid %s command line option\n", argv[i]);
+				fprintf(stderr, "[firejail] Error: invalid %s command line option\n", argv[i]);
 				return 1;
 			}
 
@@ -2705,7 +2705,7 @@ int main(int argc, char **argv, char **envp) {
 			opt = "chroot";
 
 		if (opt) {
-			fprintf(stderr, "Error: all capabilities are dropped for %s by default.\n"
+			fprintf(stderr, "[firejail] Error: all capabilities are dropped for %s by default.\n"
 				"Please remove --caps options from the command line.\n", opt);
 			exit(1);
 		}
@@ -2713,7 +2713,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// prog_index could still be -1 if no program was specified
 	if (prog_index == -1 && arg_shell_none) {
-		fprintf(stderr, "Error: shell=none configured, but no program specified\n");
+		fprintf(stderr, "[firejail] Error: shell=none configured, but no program specified\n");
 		exit(1);
 	}
 
@@ -2752,7 +2752,7 @@ int main(int argc, char **argv, char **envp) {
 	if (!arg_shell_none && !cfg.shell) {
 		cfg.shell = guess_shell();
 		if (!cfg.shell) {
-			fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
+			fprintf(stderr, "[firejail] Error: unable to guess your shell, please set explicitly by using --shell option.\n");
 			exit(1);
 		}
 		if (arg_debug)
@@ -2775,7 +2775,7 @@ int main(int argc, char **argv, char **envp) {
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
 	}
 /*	else {
-		fprintf(stderr, "Error: command must be specified when --shell=none used.\n");
+		fprintf(stderr, "[firejail] Error: command must be specified when --shell=none used.\n");
 		exit(1);
 	}*/
 
@@ -2800,7 +2800,7 @@ int main(int argc, char **argv, char **envp) {
 		custom_profile = profile_find_firejail(profile_name, 1);
 
 		if (!custom_profile) {
-			fprintf(stderr, "Error: no default.profile installed\n");
+			fprintf(stderr, "[firejail] Error: no default.profile installed\n");
 			exit(1);
 		}
 
@@ -3061,7 +3061,7 @@ int main(int argc, char **argv, char **envp) {
 		rv |= setuid(0);
 		rv |= setgid(0);
 		if (rv) {
-			fprintf(stderr, "Error: cannot start POSTMORTEM process\n");
+			fprintf(stderr, "[firejail] Error: cannot start POSTMORTEM process\n");
 			exit(1);
 		}
 

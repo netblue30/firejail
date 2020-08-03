@@ -83,6 +83,7 @@ blacklist ${HOME}/.config/Debauchee/Barrier.conf
 blacklist ${HOME}/.config/Dharkael
 blacklist ${HOME}/.config/Element
 blacklist ${HOME}/.config/Element (Riot)
+blacklist ${HOME}/.config/ENCOM
 blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Ferdi
 blacklist ${HOME}/.config/Flavio Tordini
@@ -122,6 +123,7 @@ blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
+blacklist ${HOME}/.config/Quotient
 blacklist ${HOME}/.config/Rambox
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
@@ -291,6 +293,7 @@ blacklist ${HOME}/.config/menulibre.cfg
 blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/Microsoft
 blacklist ${HOME}/.config/midori
+blacklist ${HOME}/.config/mirage
 blacklist ${HOME}/.config/mono
 blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpd
@@ -635,6 +638,7 @@ blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
+blacklist ${HOME}/.local/share/mirage
 blacklist ${HOME}/.local/share/multimc
 blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
@@ -813,6 +817,7 @@ blacklist ${HOME}/.cache/8pecxstudios
 blacklist ${HOME}/.cache/Authenticator
 blacklist ${HOME}/.cache/BraveSoftware
 blacklist ${HOME}/.cache/Clementine
+blacklist ${HOME}/.cache/ENCOM/Spectral
 blacklist ${HOME}/.cache/Enox
 blacklist ${HOME}/.cache/Enpass
 blacklist ${HOME}/.cache/Ferdi
@@ -822,6 +827,7 @@ blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/NewsFlashGTK
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/Quotient/quaternion
 blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
@@ -892,6 +898,7 @@ blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/Mendeley Ltd.
 blacklist ${HOME}/.cache/midori
 blacklist ${HOME}/.cache/minetest
+blacklist ${HOME}/.cache/mirage
 blacklist ${HOME}/.cache/moonchild productions/basilisk
 blacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla

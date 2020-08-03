@@ -361,6 +361,24 @@ static void init_cfg(int argc, char **argv) {
 	cfg.seccomp_error_action = "EPERM";
 }
 
+static void fix_single_std_fd(int fd, const char *file, int flags) {
+	struct stat s;
+	if (fstat(fd, &s) == -1 && errno == EBADF) {
+		// something is wrong with fd, probably it is not opened
+		int nfd = open(file, flags);
+		if (nfd != fd || fstat(fd, &s) != 0)
+			_exit(1); // no further attempts to fix the situation
+	}
+}
+
+// glibc does this automatically if Firejail was started by a regular user
+// run this for root user and as a fallback
+static void fix_std_streams(void) {
+	fix_single_std_fd(0, "/dev/full", O_RDONLY|O_NOFOLLOW);
+	fix_single_std_fd(1, "/dev/null", O_WRONLY|O_NOFOLLOW);
+	fix_single_std_fd(2, "/dev/null", O_WRONLY|O_NOFOLLOW);
+}
+
 static void check_network(Bridge *br) {
 	assert(br);
 	if (br->macvlan == 0) // for bridge devices check network range or arp-scan and assign address
@@ -1017,16 +1035,19 @@ int main(int argc, char **argv, char **envp) {
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 	char **ptr;
 
+	// sanitize the umask
+	orig_umask = umask(022);
+
+	// check standard streams before printing anything
+	fix_std_streams();
+
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
 
-	// sanitize the umask
-	orig_umask = umask(022);
-
 	// argument count should be larger than 0
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
-		fprintf(stderr, "Error: argv[0] is NULL\n");
+		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
 	} else if (argc >= MAX_ARGS) {
 		fprintf(stderr, "Error: too many arguments\n");

@@ -1685,7 +1685,7 @@ void profile_read(const char *fname) {
 		}
 
 		// process include
-		if (strncmp(ptr, "include ", 8) == 0) {
+		if (strncmp(ptr, "include ", 8) == 0 && !is_in_ignore_list(ptr)) {
 			include_level++;
 
 			// expand macros in front of the include profile file

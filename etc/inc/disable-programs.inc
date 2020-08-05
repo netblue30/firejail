@@ -319,6 +319,7 @@ blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.gabmus.gfeeds.json
 blacklist ${HOME}/.config/org.kde.gwenviewrc
+blacklist ${HOME}/.config/otter
 blacklist ${HOME}/.config/pavucontrol-qt
 blacklist ${HOME}/.config/pavucontrol.ini
 blacklist ${HOME}/.config/pcmanfm
@@ -821,6 +822,7 @@ blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/NewsFlashGTK
+blacklist ${HOME}/.cache/Otter
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox

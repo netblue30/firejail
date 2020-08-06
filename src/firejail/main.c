@@ -1767,6 +1767,29 @@ int main(int argc, char **argv, char **envp) {
 			}
 		}
 #endif
+		else if (strncmp(argv[i], "--include=", 10) == 0) {
+			char *ppath = expand_macros(argv[i] + 10);
+			if (!ppath)
+				errExit("strdup");
+
+			char *ptr = ppath;
+			while (*ptr != '/' && *ptr != '\0')
+				ptr++;
+			if (*ptr == '\0') {
+				// ppath contains no '/', assume it's a name
+				int rv = profile_find_firejail(ppath, 0);
+				if (rv == 0) {
+					// It's not a valid name, but maybe it's a file in the working director
+					profile_read(ppath);
+				}
+			}
+			else {
+				// ppath contains a '/', assume it's a path
+				profile_read(ppath);
+			}
+
+			free(ppath);
+		}
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
 			// multiple profile files are allowed!
 

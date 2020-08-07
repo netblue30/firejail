@@ -1,3 +1,9 @@
+firejail (0.9.62.2) baseline; urgency=low
+  * work in progress
+  * patches from Debian (firejail 0.9.62-3, sid):
+         profile-fixes.patch, apparmor-include.patch
+ -- netblue30 <netblue30@yahoo.com>  Fri, 7 Aug 2020 08:00:00 -0500
+
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config
   * profile templates (/usr/share/doc/firejail)

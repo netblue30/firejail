@@ -90,7 +90,7 @@ void protocol_print_filter(pid_t pid) {
 	exit(0);
 #else
 	fwarning("--protocol not supported on this platform\n");
-	return;
+	exit(1);
 #endif
 }
 

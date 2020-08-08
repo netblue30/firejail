@@ -588,7 +588,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		start_application(0, NULL);
 
-		// it will never get here!!!
+		__builtin_unreachable();
 	}
 	EUID_USER();
 

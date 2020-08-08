@@ -623,7 +623,8 @@ int sandbox(void* sandbox_arg) {
 	// ... and mount a tmpfs on top of /run/firejail/mnt directory
 	preproc_mount_mnt_dir();
 	// bind-mount firejail binaries and helper programs
-	if (mount(LIBDIR "/firejail", RUN_FIREJAIL_LIB_DIR, "none", MS_BIND, NULL) < 0)
+	if (mount(LIBDIR "/firejail", RUN_FIREJAIL_LIB_DIR, NULL, MS_BIND, NULL) < 0 ||
+	    mount(NULL, RUN_FIREJAIL_LIB_DIR, NULL, MS_RDONLY|MS_NOSUID|MS_NODEV|MS_BIND|MS_REMOUNT, NULL) < 0)
 		errExit("mounting " RUN_FIREJAIL_LIB_DIR);
 
 	//****************************

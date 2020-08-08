@@ -17,6 +17,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/doc
 whitelist /usr/share/evince
 whitelist /usr/share/poppler
 whitelist /usr/share/tracker

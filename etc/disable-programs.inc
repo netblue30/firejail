@@ -71,6 +71,8 @@ blacklist ${HOME}/.config/Code
 blacklist ${HOME}/.config/Code - OSS
 blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
+blacklist ${HOME}/.config/Element
+blacklist ${HOME}/.config/Element (Riot)
 blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD

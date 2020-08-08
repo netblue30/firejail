@@ -14,6 +14,9 @@ mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
 
+whitelist /usr/share/doc
+whitelist /usr/share/firefox
+whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 include whitelist-usr-share-common.inc

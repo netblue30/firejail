@@ -18,6 +18,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
+whitelist /usr/share/doc
 whitelist /usr/share/help
 whitelist /usr/share/yelp
 whitelist /usr/share/yelp-xsl

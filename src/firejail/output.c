@@ -122,7 +122,8 @@ void check_output(int argc, char **argv) {
 	}
 	bool found_separator = false;
 	/* copy argv into args, but drop --output(-stderr) arguments */
-	for (int i = 0, j = 0; i < argc; i++) {
+	int j;
+	for (i = 0, j = 0; i < argc; i++) {
 		if (!found_separator && i > 0) {
 			if (strncmp(argv[i], "--output=", 9) == 0) {
 				continue;

@@ -29,7 +29,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-nodbus
+# nodbus -- uses dconf
 nogroups
 nonewprivs
 noroot

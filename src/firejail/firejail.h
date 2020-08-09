@@ -374,6 +374,7 @@ typedef enum {
 	MOUNT_TMPFS,
 	MOUNT_NOEXEC,
 	MOUNT_RDWR,
+	MOUNT_RDWR_NOCHECK, // no check of ownership
 	OPERATION_MAX
 } OPERATION;
 

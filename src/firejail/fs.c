@@ -50,6 +50,7 @@ static char *opstr[] = {
 	[MOUNT_TMPFS] = "tmpfs",
 	[MOUNT_NOEXEC] = "noexec",
 	[MOUNT_RDWR] = "read-write",
+	[MOUNT_RDWR_NOCHECK] = "read-write",
 };
 
 typedef enum {
@@ -491,9 +492,9 @@ void fs_remount(const char *dir, OPERATION op, unsigned check_mnt) {
 			fwarning("cannot remount %s\n", dir);
 			return;
 		}
-		if (op == MOUNT_RDWR) {
+		if (op == MOUNT_RDWR || op == MOUNT_RDWR_NOCHECK) {
 			// allow only user owned directories, except the user is root
-			if (getuid() != 0 && s.st_uid != getuid()) {
+			if (op != MOUNT_RDWR_NOCHECK && getuid() != 0 && s.st_uid != getuid()) {
 				fwarning("you are not allowed to change %s to read-write\n", dir);
 				return;
 			}
@@ -773,7 +774,7 @@ void fs_basic_fs(void) {
 	if (!arg_writable_var_log)
 		fs_var_log();
 	else
-		fs_remount("/var/log", MOUNT_RDWR, 0);
+		fs_remount("/var/log", MOUNT_RDWR_NOCHECK, 0);
 
 	fs_var_lib();
 	fs_var_cache();

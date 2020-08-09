@@ -62,5 +62,5 @@ dbus-user filter
 dbus-system none
 
 read-only ${HOME}/.ssh
-read-only ${HOME}/.gnupg
+# read-only ${HOME}/.gnupg
 read-only ${HOME}/.git-credentials

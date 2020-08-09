@@ -131,9 +131,11 @@ blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Standard Notes
 blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
+blacklist ${HOME}/.config/Twitch
 blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
+blacklist ${HOME}/.config/Youtube
 blacklist ${HOME}/.config/Zeal
 blacklist ${HOME}/.config/ZeGrapher Project
 blacklist ${HOME}/.config/abiword

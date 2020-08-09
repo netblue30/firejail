@@ -42,6 +42,7 @@ whitelist /usr/share/p11-kit
 whitelist /usr/share/pixmaps
 whitelist /usr/share/pki
 whitelist /usr/share/plasma
+whitelist /usr/share/publicsuffix
 whitelist /usr/share/qt
 whitelist /usr/share/qt4
 whitelist /usr/share/qt5

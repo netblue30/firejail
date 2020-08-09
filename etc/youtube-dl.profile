@@ -56,7 +56,7 @@ tracelog
 private-bin env,ffmpeg,python*,youtube-dl
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,hostname,hosts,mime.types,pki,resolv.conf,ssl,youtube-dl.conf
+private-etc alternatives,ca-certificates,crypto-policies,hostname,hosts,ld.so.cache,mime.types,pki,resolv.conf,ssl,youtube-dl.conf
 private-tmp
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

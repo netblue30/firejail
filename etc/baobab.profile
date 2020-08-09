@@ -16,7 +16,7 @@ include disable-passwdmgr.inc
 caps.drop all
 net none
 no3d
-nodbus
+#nodbus
 nodvd
 nogroups
 nonewprivs

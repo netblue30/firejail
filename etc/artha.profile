@@ -16,7 +16,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-mkdir ${HOME}/.config/artha.conf
+mkfile ${HOME}/.config/artha.conf
 mkdir ${HOME}/.config/enchant
 whitelist ${HOME}/.config/artha.conf
 whitelist ${HOME}/.config/enchant

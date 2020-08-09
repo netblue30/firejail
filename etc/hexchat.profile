@@ -26,14 +26,12 @@ include whitelist-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-machine-id
 netfilter
 no3d
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
 nou2f
 novideo

@@ -32,14 +32,13 @@ nou2f
 novideo
 protocol unix
 seccomp
-# seccomp.keep access,arch_prctl,brk,clone,close,connect,execve,exit_group,fchmod,fchown,fcntl,fstat,futex,getcwd,getpeername,getrlimit,getsockname,getsockopt,lseek,lstat,mlock,mmap,mprotect,mremap,munmap,nanosleep,open,poll,prctl,read,recvfrom,recvmsg,restart_syscall,rt_sigaction,rt_sigprocmask,select,sendmsg,set_robust_list,set_tid_address,setresgid,setresuid,shmat,shmctl,shmget,shutdown,socket,stat,sysinfo,uname,unshare,wait4,write,writev
 shell none
 tracelog
 
 # private-bin mupdf,rm,sh,tempfile
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 private-tmp
 
-memory-deny-write-execute
+# memory-deny-write-execute
 read-only ${HOME}

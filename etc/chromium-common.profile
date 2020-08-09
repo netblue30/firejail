@@ -37,7 +37,7 @@ notv
 shell none
 
 disable-mnt
-private-dev
+?BROWSER_DISABLE_U2F: private-dev
 # private-tmp - problems with multiple browser sessions
 
 # the file dialog needs to work without d-bus

@@ -5,5 +5,7 @@ include neverputt.local
 # added by included profile
 #include globals.local
 
+private-bin neverputt
+
 # Redirect
 include neverball.profile

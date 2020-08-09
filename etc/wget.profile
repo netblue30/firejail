@@ -35,6 +35,6 @@ shell none
 
 # private-bin wget
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policie,pki,resolv.conf,ssl
+# private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
 # private-tmp
 

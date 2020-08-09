@@ -6,7 +6,7 @@ include baobab.local
 # Persistent global definitions
 include globals.local
 
-include disable-common.inc
+# include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
@@ -16,7 +16,7 @@ include disable-passwdmgr.inc
 caps.drop all
 net none
 no3d
-nodbus
+#nodbus
 nodvd
 nogroups
 nonewprivs

@@ -9,6 +9,10 @@ include globals.local
 noblacklist ${HOME}/.config/FreeCAD
 noblacklist ${DOCUMENTS}
 
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -33,7 +37,7 @@ protocol unix
 seccomp
 shell none
 
-private-bin freecad,freecadcmd
+private-bin freecad,freecadcmd,python*
 private-cache
 private-dev
 private-tmp

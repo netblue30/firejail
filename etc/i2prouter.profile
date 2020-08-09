@@ -6,19 +6,19 @@ include i2prouter.local
 # Persistent global definitions
 include globals.local
 
-# Notice: default browser will not be able to automatically open, due to sandbox.
+# Notice: default browser will most likely not be able to automatically open, due to sandbox.
 # Auto-opening default browser can be disabled in the I2P router console.
-# This profile will not currently work with any Arch User Repository i2p packages,
-# use the distro-independent official java installer instead
+# This profile will not currently work with any Arch User Repository I2P packages,
+# use the distro-independent official I2P java installer instead
 
-# Only needed if i2prouter binary is in home directory, java installer does this
+# Only needed if i2prouter binary is in home directory, official I2P java installer does this
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.config/i2p
 noblacklist ${HOME}/.i2p
 noblacklist ${HOME}/.local/share/i2p
 noblacklist ${HOME}/i2p
-# Only needed if wrapper is placed in /usr/sbin/, ubuntu official ppa package does this
+# Only needed if wrapper is placed in /usr/sbin/, ubuntu official I2P ppa package does this
 noblacklist /usr/sbin
 
 # Allow java (blacklisted by disable-devel.inc)
@@ -40,13 +40,13 @@ whitelist ${HOME}/.config/i2p
 whitelist ${HOME}/.i2p
 whitelist ${HOME}/.local/share/i2p
 whitelist ${HOME}/i2p
-# Only needed if wrapper is placed in /usr/sbin/, ubuntu official ppa package does this
+# Only needed if wrapper is placed in /usr/sbin/, ubuntu official I2P ppa package does this
 whitelist /usr/sbin/wrapper*
 
 include whitelist-common.inc
 
-# May break I2P if wrapper is placed in the home directory
-# If using ubuntu official ppa, this should be fine to uncomment, as it puts wrapper in /usr/sbin/
+# May break I2P if wrapper is placed in the home directory; official I2P java installer does this
+# If using ubuntu official I2P ppa, this should be fine to uncomment, as it puts wrapper in /usr/sbin/
 #apparmor
 caps.drop all
 ipc-namespace
@@ -67,5 +67,5 @@ shell none
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,i2p,java-8-openjdk,pki,ssl
+private-etc alternatives,ca-certificates,crypto-policies,dconf,group,hostname,hosts,i2p,java-8-openjdk,java-9-openjdk,java-10-openjdk,java-11-openjdk,java-12-openjdk,java-13-openjdk,java-openjdk,ld.so.cache,localtime,machine-id,nsswitch.conf,passwd,pki,resolv.conf,ssl
 private-tmp

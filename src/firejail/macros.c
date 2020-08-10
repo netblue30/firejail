@@ -300,13 +300,14 @@ void invalid_filename(const char *fname, int globbing) {
 	size_t i = 0;
 	while (ptr[i] != '\0') {
 		if (iscntrl((unsigned char) ptr[i])) {
-			fprintf(stderr, "Error: \"%s\" is an invalid filename: no control characters allowed\n",
-				fix_control_chars(fname));
+			char *msg = fix_control_chars(fname);
+			fprintf(stderr, "Error: \"%s\" is an invalid filename: no control characters allowed\n", msg);
+			free(msg);
 			exit(1);
 		}
 		i++;
 	}
-	
+
 	char *reject;
 	if (globbing)
 		reject = "\\&!\"'<>%^{};,"; // file globbing ('*?[]') is allowed

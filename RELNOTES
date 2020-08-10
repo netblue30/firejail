@@ -8,7 +8,7 @@ firejail (0.9.62.2) baseline; urgency=low
          element-profile.patch,  usrsharedoc.patch,
          pathnames.patch, usr-share-firefox.patch
   * additional hardening and bug fixes
- -- netblue30 <netblue30@yahoo.com>  Fri, 10 Aug 2020 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Mon, 10 Aug 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

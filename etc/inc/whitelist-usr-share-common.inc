@@ -41,6 +41,8 @@ whitelist /usr/share/misc
 whitelist /usr/share/Modules
 whitelist /usr/share/myspell
 whitelist /usr/share/p11-kit
+whitelist /usr/share/perl
+whitelist /usr/share/perl5
 whitelist /usr/share/pixmaps
 whitelist /usr/share/pki
 whitelist /usr/share/plasma

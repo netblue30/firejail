@@ -30,6 +30,12 @@ void check_output(int argc, char **argv) {
 	int enable_stderr = 0;
 
 	for (i = 1; i < argc; i++) {
+		if (strncmp(argv[i], "--", 2) != 0) {
+			return;
+		}
+		if (strcmp(argv[i], "--") == 0) {
+			return;
+		}
 		if (strncmp(argv[i], "--output=", 9) == 0) {
 			outindex = i;
 			break;
@@ -71,38 +77,67 @@ void check_output(int argc, char **argv) {
 		}
 	}
 
-	// build the new command line
-	int len = 0;
-	for (i = 0; i < argc; i++) {
-		len += strlen(argv[i]) + 1; // + ' '
-	}
-	len += 100 + strlen(LIBDIR) + strlen(outfile); // tee command
-
-	char *cmd = malloc(len + 1); // + '\0'
-	if (!cmd)
-		errExit("malloc");
-
-	char *ptr = cmd;
-	for (i = 0; i < argc; i++) {
-		if (strncmp(argv[i], "--output=", 9) == 0)
-			continue;
-		if (strncmp(argv[i], "--output-stderr=", 16) == 0)
-			continue;
-		ptr += sprintf(ptr, "%s ", argv[i]);
+	int pipefd[2];
+	if (pipe(pipefd) == -1) {
+		errExit("pipe");
 	}
 
-	if (enable_stderr)
-		sprintf(ptr, "2>&1 | %s/firejail/ftee %s", LIBDIR, outfile);
-	else
-		sprintf(ptr, " | %s/firejail/ftee %s", LIBDIR, outfile);
+	pid_t pid = fork();
+	if (pid == -1) {
+		errExit("fork");
+	} else if (pid == 0) {
+		/* child */
+		if (dup2(pipefd[0], STDIN_FILENO) == -1) {
+			errExit("dup2");
+		}
+		close(pipefd[1]);
+		if (pipefd[0] != STDIN_FILENO) {
+			close(pipefd[0]);
+		}
 
-	// run command
-	char *a[4];
-	a[0] = "/bin/bash";
-	a[1] = "-c";
-	a[2] = cmd;
-	a[3] = NULL;
-	execvp(a[0], a);
+		char *args[3];
+		args[0] = LIBDIR "/firejail/ftee";
+		args[1] = outfile;
+		args[2] = NULL;
+		execv(args[0], args);
+		perror("execvp");
+		exit(1);
+	}
+
+	/* parent */
+	if (dup2(pipefd[1], STDOUT_FILENO) == -1) {
+		errExit("dup2");
+	}
+	if (enable_stderr && dup2(STDOUT_FILENO, STDERR_FILENO) == -1) {
+		errExit("dup2");
+	}
+	close(pipefd[0]);
+	if (pipefd[1] != STDOUT_FILENO) {
+		close(pipefd[1]);
+	}
+
+	char **args = calloc(argc + 1, sizeof(char *));
+	if (!args) {
+		errExit("calloc");
+	}
+	bool found_separator = false;
+	/* copy argv into args, but drop --output(-stderr) arguments */
+	int j;
+	for (i = 0, j = 0; i < argc; i++) {
+		if (!found_separator && i > 0) {
+			if (strncmp(argv[i], "--output=", 9) == 0) {
+				continue;
+			}
+			if (strncmp(argv[i], "--output-stderr=", 16) == 0) {
+				continue;
+			}
+			if (strncmp(argv[i], "--", 2) != 0 || strcmp(argv[i], "--") == 0) {
+				found_separator = true;
+			}
+		}
+		args[j++] = argv[i];
+	}
+	execvp(args[0], args);
 
 	perror("execvp");
 	exit(1);

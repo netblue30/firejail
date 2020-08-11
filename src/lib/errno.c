@@ -183,7 +183,7 @@ int errno_find_name(const char *name) {
 	return -1;
 }
 
-char *errno_find_nr(int nr) {
+const char *errno_find_nr(int nr) {
 	int i;
 	int elems = sizeof(errnolist) / sizeof(errnolist[0]);
 	for (i = 0; i < elems; i++) {

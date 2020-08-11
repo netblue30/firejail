@@ -1159,8 +1159,7 @@ int main(int argc, char **argv, char **envp) {
 
 			// start the program directly without sandboxing
 			run_no_sandbox(argc, argv);
-			// it will never get here!
-			assert(0);
+			__builtin_unreachable();
 		}
 	}
 	EUID_ASSERT();

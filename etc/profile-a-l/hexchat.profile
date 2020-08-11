@@ -7,11 +7,13 @@ include hexchat.local
 include globals.local
 
 noblacklist ${HOME}/.config/hexchat
-noblacklist /usr/share/perl*
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
+
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
 
 include disable-common.inc
 include disable-devel.inc

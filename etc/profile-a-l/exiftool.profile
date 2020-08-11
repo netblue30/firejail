@@ -18,7 +18,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /usr/share/perl5
 whitelist /usr/share/perl-image-exiftool
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

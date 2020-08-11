@@ -20,7 +20,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 whitelist /usr/share/gnome-latex
-whitelist /usr/share/perl5
 whitelist /usr/share/texlive
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

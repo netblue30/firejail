@@ -186,7 +186,7 @@ typedef struct config_t {
 	char *seccomp_list_drop, *seccomp_list_drop32;	// seccomp drop list
 	char *seccomp_list_keep, *seccomp_list_keep32;	// seccomp keep list
 	char *protocol;			// protocol list
-	char *seccomp_error_action;			// error action: kill or errno
+	char *seccomp_error_action;			// error action: kill, log or errno
 
 	// rlimits
 	long long unsigned rlimit_cpu;

@@ -1441,6 +1441,8 @@ int main(int argc, char **argv, char **envp) {
 				if (config_seccomp_error_action == -1) {
 					if (strcmp(argv[i] + 23, "kill") == 0)
 						arg_seccomp_error_action = SECCOMP_RET_KILL;
+					else if (strcmp(argv[i] + 23, "log") == 0)
+						arg_seccomp_error_action = SECCOMP_RET_LOG;
 					else {
 						arg_seccomp_error_action = errno_find_name(argv[i] + 23);
 						if (arg_seccomp_error_action == -1)

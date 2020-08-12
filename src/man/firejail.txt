@@ -1059,7 +1059,7 @@ that are both writable and executable, to change mappings to be
 executable, or to create executable shared memory. The filter examines
 the arguments of mmap, mmap2, mprotect, pkey_mprotect, memfd_create
 and shmat system calls and returns error EPERM to the process (or
-kills it, see \-\-seccomp-error-action below) if necessary.
+kills it or log the attempt, see \-\-seccomp-error-action below) if necessary.
 .br
 
 .br
@@ -2122,8 +2122,8 @@ Instead of dropping the syscall by returning EPERM, another error
 number can be returned using \fBsyscall:errno\fR syntax. This can be
 also changed globally with \-\-seccomp-error-action or
 in /etc/firejail/firejail.config file.  The process can also be killed
-by using \fBsyscall:kill\fR syntax.
-
+by using \fBsyscall:kill\fR syntax, or the attempt may be logged with
+\fBsyscall:log\fR.
 .br
 
 .br
@@ -2193,7 +2193,8 @@ Instead of dropping the syscall by returning EPERM, another error
 number can be returned using \fBsyscall:errno\fR syntax. This can be
 also changed globally with \-\-seccomp-error-action or
 in /etc/firejail/firejail.config file.  The process can also be killed
-by using \fBsyscall:kill\fR syntax.
+by using \fBsyscall:kill\fR syntax, or the attempt may be logged with
+\fBsyscall:log\fR.
 .br
 
 .br
@@ -2402,7 +2403,8 @@ By default, if a seccomp filter blocks a system call, the process gets
 EPERM as the error. With \-\-seccomp-error-action=error, another error
 number can be returned, for example ENOSYS or EACCES. The process can
 also be killed (like in versions <0.9.63 of Firejail) by using
-\-\-seccomp-error-action=kill syntax. Not killing the process weakens
+\-\-seccomp-error-action=kill syntax, or the attempt may be logged
+with \-\-seccomp-error-action=log. Not killing the process weakens
 Firejail slightly when trying to contain intrusion, but it may also
 allow tighter filters if the only alternative is to allow a system
 call.

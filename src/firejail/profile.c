@@ -991,6 +991,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (config_seccomp_error_action == -1) {
 				if (strcmp(ptr + 21, "kill") == 0)
 					arg_seccomp_error_action = SECCOMP_RET_KILL;
+				else if (strcmp(ptr + 21, "log") == 0)
+					arg_seccomp_error_action = SECCOMP_RET_LOG;
 				else {
 					arg_seccomp_error_action = errno_find_name(ptr + 21);
 					if (arg_seccomp_error_action == -1)

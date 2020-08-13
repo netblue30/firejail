@@ -24,6 +24,7 @@ mkdir ${HOME}/.local/share/vlc
 whitelist ${HOME}/.cache/vlc
 whitelist ${HOME}/.config/vlc
 whitelist ${HOME}/.local/share/vlc
+whitelist ${DESKTOP}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

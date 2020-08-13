@@ -7,6 +7,10 @@ include mpv.local
 # Persistent global definitions
 include globals.local
 
+# In order to save screenshots to a persistent location,
+# edit ~/.config/mpv/foobar.conf:
+#    screenshot-directory=~/Pictures
+
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.netrc
@@ -32,6 +36,7 @@ mkdir ${HOME}/.netrc
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.netrc
+whitelist ${DESKTOP}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

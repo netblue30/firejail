@@ -28,6 +28,7 @@ mkdir ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.config/celluloid
 whitelist ${HOME}/.config/gnome-mpv
 whitelist ${HOME}/.config/youtube-dl
+whitelist ${DESKTOP}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

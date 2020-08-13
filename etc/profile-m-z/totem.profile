@@ -28,6 +28,7 @@ mkdir ${HOME}/.config/totem
 mkdir ${HOME}/.local/share/totem
 whitelist ${HOME}/.config/totem
 whitelist ${HOME}/.local/share/totem
+whitelist ${DESKTOP}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

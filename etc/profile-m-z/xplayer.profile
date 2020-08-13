@@ -24,6 +24,7 @@ mkdir ${HOME}/.config/xplayer
 mkdir ${HOME}/.local/share/xplayer
 whitelist ${HOME}/.config/xplayer
 whitelist ${HOME}/.local/share/xplayer
+whitelist ${DESKTOP}
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}

@@ -244,6 +244,7 @@ blacklist ${HOME}/.config/mate/mate-dictionary
 blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/mfusion
+blacklist ${HOME}/.config/Microsoft
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mono
 blacklist ${HOME}/.config/mpDris2
@@ -649,6 +650,7 @@ blacklist ${HOME}/.surf
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
+blacklist ${HOME}/.config/teams
 blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.tb
 blacklist ${HOME}/.tconn

@@ -30,8 +30,8 @@ after 100
 send -- "cd /lib; find .\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"modules" {puts "TESTING ERROR 6\n";exit}
-	"firmware" {puts "TESTING ERROR 7\n";exit}
+	"./modules" {puts "TESTING ERROR 6\n";exit}
+	"./firmware" {puts "TESTING ERROR 7\n";exit}
 	"libc.so"
 }
 after 100

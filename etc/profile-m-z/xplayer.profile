@@ -7,8 +7,6 @@ include globals.local
 
 noblacklist ${HOME}/.config/xplayer
 noblacklist ${HOME}/.local/share/xplayer
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -20,8 +18,18 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
 
+read-only ${DESKTOP}
+mkdir ${HOME}/.config/xplayer
+mkdir ${HOME}/.local/share/xplayer
+whitelist ${HOME}/.config/xplayer
+whitelist ${HOME}/.local/share/xplayer
+whitelist ${DESKTOP}
+whitelist ${DOWNLOADS}
+whitelist ${MUSIC}
+whitelist ${PICTURES}
+whitelist ${VIDEOS}
+include whitelist-common.inc
 include whitelist-var-common.inc
 
 # apparmor - makes settings immutable

@@ -331,6 +331,7 @@ blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/ppsspp
 blacklist ${HOME}/.config/pragha
 blacklist ${HOME}/.config/profanity
+blacklist ${HOME}/.config/psi
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
@@ -541,6 +542,7 @@ blacklist ${HOME}/.local/share/Kingsoft
 blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/PBE
+blacklist ${HOME}/.local/share/Psi
 blacklist ${HOME}/.local/share/QGIS
 blacklist ${HOME}/.local/share/QMediathekView
 blacklist ${HOME}/.local/share/QuiteRss
@@ -657,6 +659,7 @@ blacklist ${HOME}/.local/share/Paradox Interactive
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/plasma_notes
 blacklist ${HOME}/.local/share/profanity
+blacklist ${HOME}/.local/share/psi
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/quadrapassel
 blacklist ${HOME}/.local/share/qpdfview
@@ -824,6 +827,7 @@ blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/NewsFlashGTK
 blacklist ${HOME}/.cache/Otter
+blacklist ${HOME}/.cache/Psi
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox
@@ -920,6 +924,7 @@ blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/pip
 blacklist ${HOME}/.cache/plasmashell
 blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
+blacklist ${HOME}/.cache/psi
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser

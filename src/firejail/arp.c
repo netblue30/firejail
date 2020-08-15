@@ -239,9 +239,7 @@ int arp_check(const char *dev, uint32_t destaddr) {
 		}
 	}
 
-	// it will never get here!
-	close(sock);
-	return -1;
+	__builtin_unreachable();
 }
 
 // assign a random IP address and check it

@@ -1,5 +1,6 @@
 firejail (0.9.63) baseline; urgency=low
   * work in progress
+  * security: fixes for CVE-2020-17367 & CVE-2020-17368, reported by Tim Starling
   * The blocking action of seccomp filters has been changed from
     killing the process to returning EPERM to the caller. To get the
     previous behaviour, use --seccomp-error-action=kill or
@@ -7,7 +8,7 @@ firejail (0.9.63) baseline; urgency=low
     /etc/firejail/firejail.config file.
   * Fine-grained D-Bus sandboxing with xdg-dbus-proxy.
     xdg-dbus-proxy must be installed, if not D-Bus access will be allowed.
-    With this version Nodbus is deprecated, in favor of dbus-user none and
+    With this version nodbus is deprecated, in favor of dbus-user none and
     dbus-system none and will be removed in a future version.
   * DHCP client support
   * firecfg only fix dektop-files if started with sudo
@@ -17,6 +18,7 @@ firejail (0.9.63) baseline; urgency=low
   * blacklist shells such as bash in several profiles
   * whitelist globbing
   * mkdir and mkfile support for /run/user directory
+  * support ignore for include
   * new condition: HAS_NOSOUND
   * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, muraster
   * new profiles: gnome-passwordsafe, bibtex, gummi, latex, mupdf-x11-curl
@@ -36,6 +38,12 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: seahorse-adventures, wordwarvi, xbill, gnome-klotski
   * new profiles: swell-foop, fdns, five-or-more, steam-runtime, jitsi-meet-desktop
   * new profiles: nicotine, plv, mocp, apostrophe, quadrapassel, dino-im, strawberry
+  * new profiles: hitori, bijiben, gnote, gnubik, ZeGrapher, xonotic-sdl-wrapper
+  * new profiles: gapplication, openarena_ded, element-desktop, cawbird, freetube
+  * new profiles: homebank, mattermost-desktop, newsflash, com.gitlab.newsflash
+  * new profiles: sushi, xfce4-screenshooter, org.gnome.NautilusPreviewer, lyx
+  * new profiles: minitube, nuclear, mtpaint, minecraft-launcher, gnome-calendar
+  * new profiles: vmware, git-cola, otter-browser
  -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low

@@ -433,8 +433,10 @@ Enable seccomp filter and whitelist the system calls in the list.
 \fBseccomp.32.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list for 32 bit system calls on a 64 bit architecture system.
 .TP
-\fBseccomp-error-action kill | ERRNO
-Return a different error instead of EPERM to the process or kill it when an attempt is made to call a blocked system call.
+\fBseccomp-error-action kill | log | ERRNO
+Return a different error instead of EPERM to the process, kill it when
+an attempt is made to call a blocked system call, or allow but log the
+attempt.
 .TP
 \fBx11
 Enable X11 sandboxing.

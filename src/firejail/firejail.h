@@ -186,7 +186,7 @@ typedef struct config_t {
 	char *seccomp_list_drop, *seccomp_list_drop32;	// seccomp drop list
 	char *seccomp_list_keep, *seccomp_list_keep32;	// seccomp keep list
 	char *protocol;			// protocol list
-	char *seccomp_error_action;			// error action: kill or errno
+	char *seccomp_error_action;			// error action: kill, log or errno
 
 	// rlimits
 	long long unsigned rlimit_cpu;
@@ -371,14 +371,14 @@ char *guess_shell(void);
 
 // sandbox.c
 int sandbox(void* sandbox_arg);
-void start_application(int no_sandbox, FILE *fp);
+void start_application(int no_sandbox, FILE *fp) __attribute__((noreturn));
 void set_apparmor(void);
 
 // network_main.c
 void net_configure_sandbox_ip(Bridge *br);
 void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
 void net_check_cfg(void);
-void net_dns_print(pid_t pid);
+void net_dns_print(pid_t pid) __attribute__((noreturn));
 void network_main(pid_t child);
 void net_print(pid_t pid);
 
@@ -453,13 +453,12 @@ void profile_add_ignore(const char *str);
 void list(void);
 void tree(void);
 void top(void);
-void netstats(void);
 
 // usage.c
 void usage(void);
 
 // join.c
-void join(pid_t pid, int argc, char **argv, int index);
+void join(pid_t pid, int argc, char **argv, int index) __attribute__((noreturn));
 bool is_ready_for_join(const pid_t pid);
 void check_join_permission(pid_t pid);
 pid_t switch_to_child(pid_t pid);
@@ -486,7 +485,7 @@ int macro_id(const char *name);
 
 
 // util.c
-void errLogExit(char* fmt, ...);
+void errLogExit(char* fmt, ...) __attribute__((noreturn));
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);
 void drop_privs(int nogroups);
@@ -584,7 +583,7 @@ int seccomp_load(const char *fname);
 int seccomp_filter_drop(bool native);
 int seccomp_filter_keep(bool native);
 int seccomp_filter_mdwx(bool native);
-void seccomp_print_filter(pid_t pid);
+void seccomp_print_filter(pid_t pid) __attribute__((noreturn));
 
 // caps.c
 void seccomp_load_file_list(void);
@@ -595,7 +594,7 @@ void caps_set(uint64_t caps);
 void caps_check_list(const char *clist, void (*callback)(int));
 void caps_drop_list(const char *clist);
 void caps_keep_list(const char *clist);
-void caps_print_filter(pid_t pid);
+void caps_print_filter(pid_t pid) __attribute__((noreturn));
 void caps_drop_dac_override(void);
 
 // fs_trace.c
@@ -618,7 +617,7 @@ void read_cpu_list(const char *str);
 void set_cpu_affinity(void);
 void load_cpu(const char *fname);
 void save_cpu(void);
-void cpu_print_filter(pid_t pid);
+void cpu_print_filter(pid_t pid) __attribute__((noreturn));
 
 // cgroup.c
 void save_cgroup(void);
@@ -640,7 +639,7 @@ void netns(const char *nsname);
 void netns_mounts(const char *nsname);
 
 // bandwidth.c
-void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up);
+void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) __attribute__((noreturn));
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
@@ -650,7 +649,7 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 // no_sandbox.c
 int check_namespace_virt(void);
 int check_kernel_procs(void);
-void run_no_sandbox(int argc, char **argv);
+void run_no_sandbox(int argc, char **argv) __attribute__((noreturn));
 
 #define MAX_ENVS 256			// some sane maximum number of environment variables
 #define MAX_ENV_LEN (PATH_MAX + 32)	// FOOBAR=SOME_PATH
@@ -681,7 +680,7 @@ void fs_private_lib(void);
 // protocol.c
 void protocol_filter_save(void);
 void protocol_filter_load(const char *fname);
-void protocol_print_filter(pid_t pid);
+void protocol_print_filter(pid_t pid) __attribute__((noreturn));
 
 // restrict_users.c
 void restrict_users(void);
@@ -693,7 +692,7 @@ void fs_logger2int(const char *msg1, int d);
 void fs_logger3(const char *msg1, const char *msg2, const char *msg3);
 void fs_logger_print(void);
 void fs_logger_change_owner(void);
-void fs_logger_print_log(pid_t pid);
+void fs_logger_print_log(pid_t pid) __attribute__((noreturn));
 
 // run_symlink.c
 void run_symlink(int argc, char **argv, int run_as_is);
@@ -719,11 +718,11 @@ void fs_mkfile(const char *name);
 
 void fs_x11(void);
 int x11_display(void);
-void x11_start(int argc, char **argv);
-void x11_start_xpra(int argc, char **argv);
-void x11_start_xephyr(int argc, char **argv);
+void x11_start(int argc, char **argv) __attribute__((noreturn));
+void x11_start_xpra(int argc, char **argv) __attribute__((noreturn));
+void x11_start_xephyr(int argc, char **argv) __attribute__((noreturn));
 void x11_block(void);
-void x11_start_xvfb(int argc, char **argv);
+void x11_start_xvfb(int argc, char **argv) __attribute__((noreturn));
 void x11_xorg(void);
 
 // ls.c
@@ -733,7 +732,7 @@ enum {
 	SANDBOX_FS_PUT,
 	SANDBOX_FS_MAX // this should always be the last entry
 };
-void sandboxfs(int op, pid_t pid, const char *path1, const char *path2);
+void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) __attribute__((noreturn));
 
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2
@@ -839,7 +838,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
 int sbox_run_v(unsigned filter, char * const arg[]);
-void sbox_exec_v(unsigned filter, char * const arg[]);
+void sbox_exec_v(unsigned filter, char * const arg[]) __attribute__((noreturn));
 
 // run_files.c
 void delete_run_files(pid_t pid);
@@ -854,6 +853,8 @@ int dbus_check_call_rule(const char *name);
 void dbus_check_profile(void);
 void dbus_proxy_start(void);
 void dbus_proxy_stop(void);
+void dbus_set_session_bus_env(void);
+void dbus_set_system_bus_env(void);
 void dbus_apply_policy(void);
 
 // dhcp.c

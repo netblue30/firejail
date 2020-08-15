@@ -81,10 +81,14 @@ blacklist ${HOME}/.config/Code Industry
 blacklist ${HOME}/.config/Cryptocat
 blacklist ${HOME}/.config/Debauchee/Barrier.conf
 blacklist ${HOME}/.config/Dharkael
+blacklist ${HOME}/.config/Element
+blacklist ${HOME}/.config/Element (Riot)
 blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Ferdi
+blacklist ${HOME}/.config/Flavio Tordini
 blacklist ${HOME}/.config/Franz
 blacklist ${HOME}/.config/FreeCAD
+blacklist ${HOME}/.config/FreeTube
 blacklist ${HOME}/.config/Fritzing
 blacklist ${HOME}/.config/GIMP
 blacklist ${HOME}/.config/GitHub Desktop
@@ -98,6 +102,8 @@ blacklist ${HOME}/.config/Jitsi Meet
 blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Kingsoft
 blacklist ${HOME}/.config/Luminance
+blacklist ${HOME}/.config/LyX
+blacklist ${HOME}/.config/Mattermost
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mendeley Ltd.
 blacklist ${HOME}/.config/Min
@@ -129,6 +135,7 @@ blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/Zeal
+blacklist ${HOME}/.config/ZeGrapher Project
 blacklist ${HOME}/.config/abiword
 blacklist ${HOME}/.config/agenda
 blacklist ${HOME}/.config/akonadi*
@@ -159,6 +166,7 @@ blacklist ${HOME}/.config/caja
 blacklist ${HOME}/.config/calibre
 blacklist ${HOME}/.config/cantata
 blacklist ${HOME}/.config/catfish
+blacklist ${HOME}/.config/cawbird
 blacklist ${HOME}/.config/celluloid
 blacklist ${HOME}/.config/cherrytree
 blacklist ${HOME}/.config/chrome-beta-flags.conf
@@ -211,6 +219,7 @@ blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/git
+blacklist ${HOME}/.config/git-cola
 blacklist ${HOME}/.config/glade.conf
 blacklist ${HOME}/.config/globaltime
 blacklist ${HOME}/.config/gmpc
@@ -223,6 +232,7 @@ blacklist ${HOME}/.config/gnome-mplayer
 blacklist ${HOME}/.config/gnome-mpv
 blacklist ${HOME}/.config/gnome-pie
 blacklist ${HOME}/.config/gnome-session
+blacklist ${HOME}/.config/gnote
 blacklist ${HOME}/.config/godot
 blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
@@ -232,6 +242,7 @@ blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gummi
 blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/hexchat
+blacklist ${HOME}/.config/homebank
 blacklist ${HOME}/.config/i2p
 blacklist ${HOME}/.config/inkscape
 blacklist ${HOME}/.config/inox
@@ -259,6 +270,7 @@ blacklist ${HOME}/.config/kmailsearchindexingrc
 blacklist ${HOME}/.config/kmplayerrc
 blacklist ${HOME}/.config/knotesrc
 blacklist ${HOME}/.config/konversationrc
+blacklist ${HOME}/.config/konversation.notifyrc
 blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/ktouch2rc
@@ -292,9 +304,11 @@ blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/newsbeuter
+blacklist ${HOME}/.config/newsflash
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/NitroShare
 blacklist ${HOME}/.config/nomacs
+blacklist ${HOME}/.config/nuclear
 blacklist ${HOME}/.config/obs-studio
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
@@ -305,6 +319,7 @@ blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.gabmus.gfeeds.json
 blacklist ${HOME}/.config/org.kde.gwenviewrc
+blacklist ${HOME}/.config/otter
 blacklist ${HOME}/.config/pavucontrol-qt
 blacklist ${HOME}/.config/pavucontrol.ini
 blacklist ${HOME}/.config/pcmanfm
@@ -345,6 +360,7 @@ blacklist ${HOME}/.config/strawberry
 blacklist ${HOME}/.config/supertuxkart
 blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.config/teams
+blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.config/telepathy-account-widgets
 blacklist ${HOME}/.config/torbrowser
 blacklist ${HOME}/.config/totem
@@ -380,6 +396,7 @@ blacklist ${HOME}/.config/yandex-browser
 blacklist ${HOME}/.config/yandex-browser-beta
 blacklist ${HOME}/.config/yelp
 blacklist ${HOME}/.config/youtube-dl
+blacklist ${HOME}/.config/youtube-viewer
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.config/Zulip
@@ -518,6 +535,7 @@ blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Anki2
 blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/Enpass
+blacklist ${HOME}/.local/share/Flavio Tordini
 blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Kingsoft
 blacklist ${HOME}/.local/share/Mendeley Ltd.
@@ -544,6 +562,7 @@ blacklist ${HOME}/.local/share/backintime
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/barrier
 blacklist ${HOME}/.local/share/bibletime
+blacklist ${HOME}/.local/share/bijiben
 blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/cantata
 blacklist ${HOME}/.local/share/cdprojektred
@@ -586,6 +605,7 @@ blacklist ${HOME}/.local/share/gnome-recipes
 blacklist ${HOME}/.local/share/gnome-ring
 blacklist ${HOME}/.local/share/gnome-sudoku
 blacklist ${HOME}/.local/share/gnome-twitch
+blacklist ${HOME}/.local/share/gnote
 blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
@@ -607,6 +627,7 @@ blacklist ${HOME}/.local/share/ktorrent
 blacklist ${HOME}/.local/share/ktorrentrc
 blacklist ${HOME}/.local/share/ktouch
 blacklist ${HOME}/.local/share/kwrite
+blacklist ${HOME}/.local/share/kxmlgui5/*
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
@@ -624,6 +645,7 @@ blacklist ${HOME}/.local/share/nautilus
 blacklist ${HOME}/.local/share/nautilus-python
 blacklist ${HOME}/.local/share/nemo
 blacklist ${HOME}/.local/share/nemo-python
+blacklist ${HOME}/.local/share/news-flash
 blacklist ${HOME}/.local/share/nomacs
 blacklist ${HOME}/.local/share/notes
 blacklist ${HOME}/.local/share/ocenaudio
@@ -665,6 +687,7 @@ blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.lv2
+blacklist ${HOME}/.lyx
 blacklist ${HOME}/.magicor
 blacklist ${HOME}/.masterpdfeditor
 blacklist ${HOME}/.mbwarband
@@ -672,6 +695,7 @@ blacklist ${HOME}/.mcabber
 blacklist ${HOME}/.mcabberrc
 blacklist ${HOME}/.mediathek3
 blacklist ${HOME}/.megaglest
+blacklist ${HOME}/.minecraft
 blacklist ${HOME}/.minetest
 blacklist ${HOME}/.mirrormagic
 blacklist ${HOME}/.moc
@@ -734,7 +758,6 @@ blacklist ${HOME}/.swb.ini
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0
 blacklist ${HOME}/.synfig
-blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.tb
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.teeworlds
@@ -753,6 +776,7 @@ blacklist ${HOME}/.viking
 blacklist ${HOME}/.viking-maps
 blacklist ${HOME}/.vim
 blacklist ${HOME}/.vimrc
+blacklist ${HOME}/.vmware
 blacklist ${HOME}/.vscode
 blacklist ${HOME}/.vscode-oss
 blacklist ${HOME}/.vst
@@ -794,9 +818,12 @@ blacklist ${HOME}/.cache/Clementine
 blacklist ${HOME}/.cache/Enox
 blacklist ${HOME}/.cache/Enpass
 blacklist ${HOME}/.cache/Ferdi
+blacklist ${HOME}/.cache/Flavio Tordini
 blacklist ${HOME}/.cache/Franz
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
+blacklist ${HOME}/.cache/NewsFlashGTK
+blacklist ${HOME}/.cache/Otter
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox
@@ -853,6 +880,7 @@ blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
 blacklist ${HOME}/.cache/kcmshell5
 blacklist ${HOME}/.cache/kdenlive
+blacklist ${HOME}/.cache/keepassxc
 blacklist ${HOME}/.cache/kfind
 blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/kmail2
@@ -910,6 +938,7 @@ blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc
+blacklist ${HOME}/.cache/vmware
 blacklist ${HOME}/.cache/warsow-2.1
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth

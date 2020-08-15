@@ -17,9 +17,9 @@ BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
 
 all: all_items man filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats
 SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/ftee/ftee
-MYDIRS = src/lib src/profstats
+MYDIRS = src/lib
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
@@ -89,7 +89,7 @@ distclean: clean
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir distclean; \
 	done
-	rm -fr Makefile autom4te.cache config.log config.status config.h src/common.mk
+	rm -fr Makefile autom4te.cache config.log config.status config.h src/common.mk mkdeb.sh
 
 realinstall:
 	# firejail executable
@@ -117,12 +117,13 @@ endif
 	# documents
 	install -m 0755 -d $(DESTDIR)$(DOCDIR)
 	install -m 0644 -t $(DESTDIR)$(DOCDIR) COPYING README RELNOTES etc/templates/*
-ifeq ($(BUSYBOX_WORKAROUND),yes)
-	./mketc.sh
-endif
+	# profiles and settings
 	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
+ifeq ($(BUSYBOX_WORKAROUND),yes)
+	./mketc.sh $(DESTDIR)$(sysconfdir)/firejail/disable-common.inc
+endif
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
 	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"
@@ -175,7 +176,9 @@ DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcop
 
 dist:
 	mv config.status config.status.old
+	mv mkdeb.sh mkdeb.sh.old
 	make distclean
+	mv mkdeb.sh.old mkdeb.sh
 	mv config.status.old config.status
 	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz
 	mkdir -p $(NAME)-$(VERSION)/test
@@ -268,7 +271,7 @@ test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sy
 
 ##########################################
 # Individual tests, some of them require root access
-# The tests are very intrussive, by the time you are done
+# The tests are very intrusive, by the time you are done
 # with them you will need to restart your computer.
 ##########################################
 
@@ -293,7 +296,7 @@ test-network:
 test-stress:
 	cd test/stress; ./stress.sh | grep TESTING
 
-# Tesets running a root user
+# Tests running a root user
 test-root:
 	cd test/root; su -c ./root.sh | grep TESTING
 

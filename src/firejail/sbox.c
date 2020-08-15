@@ -31,7 +31,7 @@
 #define O_PATH 010000000
 #endif
 
-static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
+static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
 	// build a new, clean environment
 	int env_index = 0;
 	char *new_environment[256] = { NULL };
@@ -45,6 +45,9 @@ static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
 		new_environment[env_index++] = "FIREJAIL_QUIET=yes";
 	if (arg_debug) // --debug is passed as an environment variable
 		new_environment[env_index++] = "FIREJAIL_DEBUG=yes";
+	if (cfg.seccomp_error_action)
+		if (asprintf(&new_environment[env_index++], "FIREJAIL_SECCOMP_ERROR_ACTION=%s", cfg.seccomp_error_action) == -1)
+			errExit("asprintf");
 
 	if (filtermask & SBOX_STDIN_FROM_FILE) {
 		int fd;

@@ -19,7 +19,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.tremulous
 whitelist ${HOME}/.tremulous
+whitelist /usr/share/tremulous
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

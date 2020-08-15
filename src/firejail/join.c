@@ -579,9 +579,16 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			free(display_str);
 		}
 
+		// set D-Bus environment variables
+		struct stat s;
+		if (stat(RUN_DBUS_USER_SOCKET, &s) == 0)
+			dbus_set_session_bus_env();
+		if (stat(RUN_DBUS_SYSTEM_SOCKET, &s) == 0)
+			dbus_set_system_bus_env();
+
 		start_application(0, NULL);
 
-		// it will never get here!!!
+		__builtin_unreachable();
 	}
 	EUID_USER();
 

@@ -25,6 +25,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <pwd.h>
+#include <errno.h>
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE
 #endif
@@ -148,7 +149,7 @@ static void create_char_dev(const char *path, mode_t mode, int major, int minor)
 	return;
 
 errexit:
-	fprintf(stderr, "Error: cannot create %s device\n", path);
+	fprintf(stderr, "Error: cannot create %s device: %s\n", path, strerror(errno));
 	exit(1);
 }
 

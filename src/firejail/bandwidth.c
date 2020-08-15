@@ -327,6 +327,15 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 				devname = strdup(buf + len + 1);
 				if (!devname)
 					errExit("strdup");
+				// double-check device name
+				size_t i;
+				for (i = 0; devname[i]; i++) {
+					if (isalnum((unsigned char) devname[i]) == 0 &&
+					    devname[i] != '-') {
+						fprintf(stderr, "Error: name of network device is invalid\n");
+						exit(1);
+					}
+				}
 				// check device in namespace
 				if (if_nametoindex(devname) == 0) {
 					fprintf(stderr, "Error: cannot find network device %s\n", devname);
@@ -354,6 +363,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		}
 		bandwidth_remove(pid, devname);
 	}
+	else assert(strcmp(command, "status") == 0);
 
 	// build fshaper.sh command
 	char *cmd = NULL;
@@ -375,26 +385,16 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 	}
 	assert(cmd);
 
-	// wipe out environment variables
-	environ = NULL;
-
 	//************************
 	// build command
 	//************************
-	// elevate privileges
-	if (setreuid(0, 0))
-		errExit("setreuid");
-	if (setregid(0, 0))
-		errExit("setregid");
-
 	char *arg[4];
 	arg[0] = "/bin/sh";
 	arg[1] = "-c";
 	arg[2] = cmd;
 	arg[3] = NULL;
 	clearenv();
-	execvp(arg[0], arg);
+	sbox_exec_v(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, arg);
 
-	// it will never get here
-	errExit("execvp");
+	// it will never get here!!
 }

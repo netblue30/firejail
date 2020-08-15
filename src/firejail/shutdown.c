@@ -63,7 +63,9 @@ void shut(pid_t pid) {
 		sleep(1);
 		monsec--;
 
+		EUID_ROOT();
 		FILE *fp = fopen(monfile, "r");
+		EUID_USER();
 		if (!fp) {
 			killdone = 1;
 			break;

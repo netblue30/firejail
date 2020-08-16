@@ -281,6 +281,7 @@ blacklist ${HOME}/.config/liferea
 blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mailtransports
+blacklist ${HOME}/.local/share/man
 blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom

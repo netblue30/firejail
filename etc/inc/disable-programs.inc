@@ -352,6 +352,7 @@ blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/smtube
+blacklist ${HOME}/.config/smuxi
 blacklist ${HOME}/.config/snox
 blacklist ${HOME}/.config/sound-juicer
 blacklist ${HOME}/.config/specialmailcollectionsrc
@@ -670,6 +671,7 @@ blacklist ${HOME}/.local/share/rhythmbox
 blacklist ${HOME}/.local/share/rtv
 blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/signal-cli
+blacklist ${HOME}/.local/share/smuxi
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/strawberry
@@ -932,6 +934,7 @@ blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/rhythmbox
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
+blacklist ${HOME}/.cache/smuxi
 blacklist ${HOME}/.cache/snox
 blacklist ${HOME}/.cache/spotify
 blacklist ${HOME}/.cache/strawberry

@@ -34,7 +34,6 @@ nodvd
 nogroups
 notv
 nou2f
-novideo
 shell none
 
 disable-mnt

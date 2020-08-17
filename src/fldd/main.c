@@ -304,7 +304,7 @@ printf("\n");
 	}
 
 #ifdef WARN_DUMPABLE
-	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid() && getenv("FIREJAIL_PLUGIN"))
+	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid())
 		fprintf(stderr, "Error fldd: I am dumpable\n");
 #endif
 

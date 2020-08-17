@@ -1,3 +1,8 @@
+firejail (0.9.62.4) baseline; urgency=low
+  * fix AppArmor broken in the previous release
+  * miscellaneous fixes
+ -- netblue30 <netblue30@yahoo.com>  Mon, 17 Aug 2020 08:00:00 -0500
+
 firejail (0.9.62.2) baseline; urgency=low
   * patches from Debian (firejail 0.9.62-3, sid):
          profile-fixes.patch, apparmor-include.patch

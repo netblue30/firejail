@@ -64,6 +64,15 @@ printf("\n");
 		usage();
 		return 1;
 	}
+	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
+		usage();
+		return 0;
+	}
+
+#ifdef WARN_DUMPABLE
+	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid() && getenv("FIREJAIL_PLUGIN"))
+		fprintf(stderr, "Error fseccomp: I am dumpable\n");
+#endif
 
 	char *quiet = getenv("FIREJAIL_QUIET");
 	if (quiet && strcmp(quiet, "yes") == 0)
@@ -81,11 +90,7 @@ printf("\n");
 		}
 	}
 
-	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
-		usage();
-		return 0;
-	}
-	else if (argc == 2 && strcmp(argv[1], "debug-syscalls") == 0)
+	if (argc == 2 && strcmp(argv[1], "debug-syscalls") == 0)
 		syscall_print();
 	else if (argc == 2 && strcmp(argv[1], "debug-syscalls32") == 0)
 		syscall_print_32();

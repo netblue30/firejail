@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "../include/common.h"
+#include <sys/prctl.h>
 
 #define MAXBUF 4098
 #define MAXARGS 16
@@ -180,7 +181,10 @@ printf("\n");
 		usage();
 		return 1;
 	}
-
+#ifdef WARN_DUMPABLE
+	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid() && getenv("FIREJAIL_PLUGIN"))
+		fprintf(stderr, "Error fnetfilter: I am dumpable\n");
+#endif
 	char *destfile = (argc == 3)? argv[2]: argv[1];
 	char *command = (argc == 3)? argv[1]: NULL;
 //printf("command %s\n", command);

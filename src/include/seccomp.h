@@ -274,7 +274,7 @@ struct seccomp_data {
 #define RETURN_ERRNO(nr) \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ERRNO | nr)
 
-extern int arg_seccomp_error_action;	// error action: errno or kill
+extern int arg_seccomp_error_action;	// error action: errno, log or kill
 #define KILL_OR_RETURN_ERRNO \
 	BPF_STMT(BPF_RET+BPF_K, arg_seccomp_error_action)
 

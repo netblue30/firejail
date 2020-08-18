@@ -32,7 +32,7 @@ void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, b
 // errno.c
 void errno_print(void);
 int errno_find_name(const char *name);
-char *errno_find_nr(int nr);
+const char *errno_find_nr(int nr);
 
 // syscall.c
 void syscall_print(void);

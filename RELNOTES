@@ -1,5 +1,6 @@
 firejail (0.9.63) baseline; urgency=low
   * work in progress
+  * security: fixes for CVE-2020-17367 & CVE-2020-17368, reported by Tim Starling
   * The blocking action of seccomp filters has been changed from
     killing the process to returning EPERM to the caller. To get the
     previous behaviour, use --seccomp-error-action=kill or

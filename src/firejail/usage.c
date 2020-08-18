@@ -227,7 +227,8 @@ static char *usage_str =
 	"    --seccomp.print=name|pid - print the seccomp filter for the sandbox\n"
 	"\tidentified by name or PID.\n"
 	"    --seccomp.32[.drop,.keep][=syscall] - like above but for 32 bit architecture.\n"
-	"    --seccomp-error-action=errno|kill - change error code or kill process.\n"
+	"    --seccomp-error-action=errno|kill|log - change error code, kill process\n"
+	"\tor log the attempt.\n"
 #endif
 	"    --shell=none - run the program directly without a user shell.\n"
 	"    --shell=program - set default user shell.\n"

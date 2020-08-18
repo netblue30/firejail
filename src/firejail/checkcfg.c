@@ -229,6 +229,8 @@ int checkcfg(int val) {
 #ifdef HAVE_SECCOMP
 				if (strcmp(ptr + 21, "kill") == 0)
 					cfg_val[CFG_SECCOMP_ERROR_ACTION] = SECCOMP_RET_KILL;
+				else if (strcmp(ptr + 21, "log") == 0)
+					cfg_val[CFG_SECCOMP_ERROR_ACTION] = SECCOMP_RET_LOG;
 				else {
 					cfg_val[CFG_SECCOMP_ERROR_ACTION] = errno_find_name(ptr + 21);
 					if (cfg_val[CFG_SECCOMP_ERROR_ACTION] == -1)

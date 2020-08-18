@@ -682,7 +682,7 @@ static char * get_title_arg_str() {
 }
 
 
-void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
+static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	EUID_ASSERT();
 	int i;
 	struct stat s;
@@ -921,7 +921,7 @@ void x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 }
 
 
-void x11_start_xpra_new(int argc, char **argv, char *display_str) {
+static void __attribute__((noreturn)) x11_start_xpra_new(int argc, char **argv, char *display_str) {
 	EUID_ASSERT();
 	int i;
 	pid_t server = 0;

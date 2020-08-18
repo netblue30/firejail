@@ -165,7 +165,8 @@ void fs_chroot(const char *rootdir) {
 	close(fd);
 
 	// x11
-	if (getenv("FIREJAIL_X11")) {
+	// if users want this mount, they should set FIREJAIL_CHROOT_X11
+	if (getenv("FIREJAIL_X11") || getenv("FIREJAIL_CHROOT_X11")) {
 		if (arg_debug)
 			printf("Mounting /tmp/.X11-unix on chroot /tmp/.X11-unix\n");
 		check_subdir(parentfd, "tmp/.X11-unix", 0);

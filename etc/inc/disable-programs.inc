@@ -214,6 +214,7 @@ blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/gconf
 blacklist ${HOME}/.config/geany
+blacklist ${HOME}/.config/geary
 blacklist ${HOME}/.config/gedit
 blacklist ${HOME}/.config/geeqie
 blacklist ${HOME}/.config/ghb
@@ -856,6 +857,7 @@ blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
+blacklist ${HOME}/.cache/geary
 blacklist ${HOME}/.cache/gegl-0.4
 blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/gfeeds

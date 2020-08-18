@@ -14,19 +14,19 @@ ignore dbus-user filter
 ignore dbus-system none
 ignore private-tmp
 
-noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.cache/geary
+noblacklist ${HOME}/.config/geary
 noblacklist ${HOME}/.local/share/geary
 
-mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.cache/geary
 mkdir ${HOME}/.config/geary
 mkdir ${HOME}/.local/share/geary
-whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.cache/geary
 whitelist ${HOME}/.config/geary
 whitelist ${HOME}/.local/share/geary
+whitelist /usr/share/geary
 
 read-only ${HOME}/.config/mimeapps.list
-
-whitelist /usr/share/geary
 
 # allow Mozilla browsers
 # Redirect

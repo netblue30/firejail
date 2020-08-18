@@ -140,6 +140,20 @@ void set_apparmor(void) {
 }
 #endif
 
+#ifdef HAVE_SECCOMP
+void seccomp_debug(void) {
+	if (arg_debug == 0)
+		return;
+
+	EUID_USER();
+	printf("Seccomp directory:\n");
+	ls(RUN_SECCOMP_DIR);
+	printf("Active seccomp files:\n");
+	cat(RUN_SECCOMP_LIST);
+	EUID_ROOT();
+}
+#endif
+
 static void save_nogroups(void) {
 	if (arg_nogroups == 0)
 		return;
@@ -196,32 +210,6 @@ static FILE *create_ready_for_join_file(void) {
 		exit(1);
 	}
 }
-
-#ifdef HAVE_SECCOMP
-static void seccomp_debug(void) {
-	if (arg_debug == 0)
-		return;
-
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// dropping privs before calling system(3)
-		drop_privs(1);
-		printf("Seccomp directory:\n");
-		int rv = system("ls -l "  RUN_SECCOMP_DIR);
-		(void) rv;
-		printf("Active seccomp files:\n");
-		rv = system("cat " RUN_SECCOMP_LIST);
-		(void) rv;
-#ifdef HAVE_GCOV
-		__gcov_flush();
-#endif
-		_exit(0);
-	}
-	waitpid(child, NULL, 0);
-}
-#endif
 
 static void sandbox_if_up(Bridge *br) {
 	assert(br);

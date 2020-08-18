@@ -729,10 +729,13 @@ void x11_xorg(void);
 // ls.c
 enum {
 	SANDBOX_FS_LS = 0,
+	SANDBOX_FS_CAT,
 	SANDBOX_FS_GET,
 	SANDBOX_FS_PUT,
 	SANDBOX_FS_MAX // this should always be the last entry
 };
+void ls(const char *path);
+void cat(const char *path);
 void sandboxfs(int op, pid_t pid, const char *path1, const char *path2);
 
 // checkcfg.c

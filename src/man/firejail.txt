@@ -3036,7 +3036,9 @@ and transfer files between the container and the host filesystem.
 
 .TP
 \fB\-\-cat=name|pid filename
-Write content of a container file to standard out.
+Write content of a container file to standard out. The container is specified by name or PID.
+If standard out is a terminal, all ASCII control characters except new line and horizontal tab
+are replaced.
 
 .TP
 \fB\-\-get=name|pid filename

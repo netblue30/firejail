@@ -233,10 +233,16 @@ void cat(const char *path) {
 		fprintf(stderr, "Error: %s is not a regular file\n", path);
 		exit(1);
 	}
+	bool tty = isatty(STDOUT_FILENO);
 
 	int c;
-	while ((c = fgetc(fp)) != EOF)
+	while ((c = fgetc(fp)) != EOF) {
+		// file is untrusted
+		// replace control characters when printing to a terminal
+		if (tty && c != '\t' && c != '\n' && iscntrl((unsigned char) c))
+			c = '?';
 		fputc(c, stdout);
+	}
 	fflush(stdout);
 	fclose(fp);
 }

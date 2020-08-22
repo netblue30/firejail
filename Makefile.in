@@ -18,15 +18,16 @@ HAVE_SUID=@HAVE_SUID@
 
 all: all_items man filters
 APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats
-SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/ftee/ftee
+SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/ftee/ftee
+SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
 MYDIRS = src/lib
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
-SBOX_APPS += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
+SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
 endif
-ALL_ITEMS = $(APPS) $(SBOX_APPS) $(MYLIBS)
+ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all_items $(ALL_ITEMS)
 all_items: $(ALL_ITEMS)
@@ -43,7 +44,7 @@ $(MANPAGES): $(wildcard src/man/*.txt)
 
 man: $(MANPAGES)
 
-filters: $(SECCOMP_FILTERS) $(SBOX_APPS)
+filters: $(SECCOMP_FILTERS) $(SBOX_APPS_NON_DUMPABLE)
 ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp default seccomp
@@ -106,7 +107,10 @@ endif
 	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS) src/firecfg/firecfg.config
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
+	# non-dumpable plugins
+	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
+	# contrib scripts
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail contrib/*.py contrib/*.sh
 	# vim syntax
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect

@@ -1305,6 +1305,10 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
+#ifdef WARN_DUMPABLE
+	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid())
+		fprintf(stderr, "Error: Firejail is dumpable\n");
+#endif
 
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))

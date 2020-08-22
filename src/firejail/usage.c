@@ -47,6 +47,9 @@ static char *usage_str =
 	"    --caps.drop=capability,capability - blacklist capabilities filter.\n"
 	"    --caps.keep=capability,capability - whitelist capabilities filter.\n"
 	"    --caps.print=name|pid - print the caps filter.\n"
+#ifdef HAVE_FILE_TRANSFER
+	"    --cat=name|pid filename - print content of file from sandbox container.\n"
+#endif
 	"    --cgroup=tasks-file - place the sandbox in the specified control group.\n"
 #ifdef HAVE_CHROOT
 	"    --chroot=dirname - chroot into directory.\n"

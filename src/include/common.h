@@ -32,6 +32,10 @@
 #include <ctype.h>
 #include <assert.h>
 
+// dbus proxy path used by firejail and firemon
+#define XDG_DBUS_PROXY_PATH "/usr/bin/xdg-dbus-proxy"
+
+
 #define errExit(msg)    do { char msgout[500]; snprintf(msgout, 500, "Error %s: %s:%d %s", msg, __FILE__, __LINE__, __FUNCTION__); perror(msgout); exit(1);} while (0)
 
 // check if processes run with dumpable flag set

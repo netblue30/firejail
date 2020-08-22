@@ -41,7 +41,7 @@
 #define DBUS_USER_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-user"
 #define DBUS_SYSTEM_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-system"
 #define DBUS_MAX_NAME_LENGTH 255
-#define XDG_DBUS_PROXY_PATH "/usr/bin/xdg-dbus-proxy"
+// moved to include/common.h - #define XDG_DBUS_PROXY_PATH "/usr/bin/xdg-dbus-proxy"
 
 static pid_t dbus_proxy_pid = 0;
 static int dbus_proxy_status_fd = -1;

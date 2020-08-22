@@ -70,6 +70,11 @@ int find_child(int id) {
 	// find the first child
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 2 && pids[i].parent == id) {
+			// skip /usr/bin/xdg-dbus-proxy (started by firejail for dbus filtering)
+			char *cmdline = pid_proc_cmdline(i);
+			if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) == 0)
+				continue;
+
 			first_child = i;
 			break;
 		}
@@ -78,7 +83,7 @@ int find_child(int id) {
 	if (first_child == -1)
 		return -1;
 
-	// find the second child
+	// find the second-level child
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 3 && pids[i].parent == first_child)
 			return i;

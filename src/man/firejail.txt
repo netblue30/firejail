@@ -273,6 +273,10 @@ $ firejail \-\-list
 $ firejail \-\-caps.print=3272
 
 .TP
+\fB\-\-cat=name|pid filename
+Print content of file from sandbox container, see FILE TRANSFER section for more details.
+
+.TP
 \fB\-\-cgroup=tasks-file
 Place the sandbox in the specified control group. tasks-file is the full path of cgroup tasks file.
 .br
@@ -344,7 +348,7 @@ $ firejail --dbus-system=filter --dbus-system.log --dbus-log=dbus.txt
 
 .TP
 \fB\-\-dbus-system=filter|none
-Set system DBus sandboxing policy. 
+Set system DBus sandboxing policy.
 .br
 
 .br
@@ -3031,6 +3035,12 @@ These features allow the user to inspect the filesystem container of an existing
 and transfer files between the container and the host filesystem.
 
 .TP
+\fB\-\-cat=name|pid filename
+Write content of a container file to standard out. The container is specified by name or PID.
+If standard out is a terminal, all ASCII control characters except new line and horizontal tab
+are replaced.
+
+.TP
 \fB\-\-get=name|pid filename
 Retrieve the container file and store it on the host in the current working directory.
 The container is specified by name or PID.
@@ -3072,6 +3082,10 @@ $ firejail \-\-get=mybrowser ~/Downloads/xpra-clipboard.png
 
 .br
 $ firejail \-\-put=mybrowser xpra-clipboard.png ~/Downloads/xpra-clipboard.png
+.br
+
+.br
+$ firejail \-\-cat=mybrowser ~/.bashrc
 .br
 
 .SH MONITORING
@@ -3261,7 +3275,7 @@ Homepage: https://firejail.wordpress.com
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5),
 \&\flfirejail-users\fR\|(5),
-.UR https://github.com/netblue30/firejail/wiki 
+.UR https://github.com/netblue30/firejail/wiki
 .UE ,
-.UR https://github.com/netblue30/firejail 
+.UR https://github.com/netblue30/firejail
 .UE

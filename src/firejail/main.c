@@ -789,8 +789,39 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 
 			// list directory contents
+			if (!arg_debug)
+				 arg_quiet = 1;
 			pid_t pid = require_pid(argv[i] + 5);
 			sandboxfs(SANDBOX_FS_LS, pid, path, NULL);
+			exit(0);
+		}
+		else
+			exit_err_feature("file transfer");
+	}
+	else if (strncmp(argv[i], "--cat=", 6) == 0) {
+		if (checkcfg(CFG_FILE_TRANSFER)) {
+			logargs(argc, argv);
+			if (arg_private_cwd) {
+				fprintf(stderr, "Error: --cat and --private-cwd options are mutually exclusive\n");
+				exit(1);
+			}
+
+			if ((i + 2) != argc) {
+				fprintf(stderr, "Error: invalid --cat option, path expected\n");
+				exit(1);
+			}
+			char *path = argv[i + 1];
+			invalid_filename(path, 0); // no globbing
+			if (strstr(path, "..")) {
+				fprintf(stderr, "Error: invalid file name %s\n", path);
+				exit(1);
+			}
+
+			// write file contents to stdout
+			if (!arg_debug)
+				 arg_quiet = 1;
+			pid_t pid = require_pid(argv[i] + 6);
+			sandboxfs(SANDBOX_FS_CAT, pid, path, NULL);
 			exit(0);
 		}
 		else
@@ -1252,6 +1283,10 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
+#ifdef WARN_DUMPABLE
+	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid())
+		fprintf(stderr, "Error: Firejail is dumpable\n");
+#endif
 
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))

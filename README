@@ -63,6 +63,8 @@ Firejail Authors (alphabetical order)
 	- fix flameshot raw screenshots
 1dnrr (https://github.com/1dnrr)
 	- add pybitmessage profile
+Ádler Jonas Gross (https://github.com/adgross)
+	- AppArmor fix
 Adrian L. Shaw (https://github.com/adrianlshaw)
 	- add profanity profile
 	- add barrirer profile

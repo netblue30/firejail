@@ -153,15 +153,6 @@ int arg_dbus_log_user = 0;
 int arg_dbus_log_system = 0;
 int login_shell = 0;
 
-//**********************************************************************************
-// work in progress!!!
-//**********************************************************************************
-//#define POSTMORTEM
-#ifdef POSTMORTEM
-#include <grp.h>
-pid_t pm_child = 0;
-#endif
-
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
 
@@ -195,19 +186,6 @@ static void myexit(int rv) {
 static void my_handler(int s) {
 	fmessage("\nParent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
-
-#ifdef POSTMORTEM
-printf("attempt to kill %d\n", pm_child);
-	if (pm_child) {
-		if (waitpid(pm_child, NULL, WNOHANG) == 0) {
-			if (has_handler(pm_child, s)) // signals are not delivered if there is no handler yet
-				kill(pm_child, s);
-			else
-				kill(pm_child, SIGKILL);
-			waitpid(pm_child, NULL, 0);
-		}
-	}
-#endif
 
 	if (waitpid(child, NULL, WNOHANG) == 0) {
 		if (has_handler(child, s)) // signals are not delivered if there is no handler yet
@@ -3070,44 +3048,6 @@ int main(int argc, char **argv, char **envp) {
 		close(lockfd_network);
 	}
 	EUID_USER();
-
-
-#ifdef POSTMORTEM
-	pm_child = fork();
-	if (pm_child == -1)
-		fprintf(stderr, "Error: cannot start POSTMORTEM process\n");
-	else if (pm_child == 0) {
-		// running --join as root
-		EUID_ROOT();
-		int rv = setgroups(0, NULL);
-		rv |= setuid(0);
-		rv |= setgid(0);
-		if (rv) {
-			fprintf(stderr, "Error: cannot start POSTMORTEM process\n");
-			exit(1);
-		}
-
-		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
-/*problem???*/	sleep(1); // we need to give the sandbox some time to start the namespaces
-		char *joincmd;
-		if (asprintf(&joincmd, "--join-network=%d", child) == -1)
-			errExit("asprintf");
-
-		// we join only the network ns, the filesystem is intact so we can find tcpdump
-		char *arg[] =  {
-			"/usr/bin/firejail",
-			joincmd,
-			"/usr/sbin/tcpdump",
-			"-n",
-			"-q",
-			NULL
-		};
-		execvp(arg[0], arg);
-		assert(0);
-printf("**********************************\n");
-		exit(1);
-	}
-#endif
 
 	int status = 0;
 	//*****************************

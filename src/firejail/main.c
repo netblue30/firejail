@@ -31,7 +31,7 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <errno.h>
-#include <limits.h>
+//#include <limits.h>
 #include <sys/file.h>
 #include <sys/prctl.h>
 #include <signal.h>
@@ -215,74 +215,6 @@ static void install_handler(void) {
 	sigaction(SIGTERM, &sga, NULL);
 }
 
-// return 1 if error, 0 if a valid pid was found
-static int extract_pid(const char *name, pid_t *pid) {
-	int retval = 0;
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-
-	EUID_ROOT();
-	if (name2pid(name, pid)) {
-		retval = 1;
-	}
-	EUID_USER();
-	return retval;
-}
-
-// return 1 if error, 0 if a valid pid was found
-static int read_pid(const char *name, pid_t *pid) {
-	char *endptr;
-	errno = 0;
-	long int pidtmp = strtol(name, &endptr, 10);
-	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
-		|| (errno != 0 && pidtmp == 0)) {
-		return extract_pid(name,pid);
-	}
-	// endptr points to '\0' char in name if the entire string is valid
-	if (endptr == NULL || endptr[0]!='\0') {
-		return extract_pid(name,pid);
-	}
-	*pid =(pid_t)pidtmp;
-	return 0;
-}
-
-static pid_t require_pid(const char *name) {
-	pid_t pid;
-	if (read_pid(name,&pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-	return pid;
-}
-
-// return 1 if there is a link somewhere in path of directory
-static int has_link(const char *dir) {
-	assert(dir);
-	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOTDIR && is_dir(dir))
-			return 1;
-	}
-	else
-		close(fd);
-	return 0;
-}
-
-static void check_homedir(void) {
-	assert(cfg.homedir);
-	if (cfg.homedir[0] != '/') {
-		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
-		exit(1);
-	}
-	// symlinks are rejected in many places
-	if (has_link(cfg.homedir)) {
-		fprintf(stderr, "No full support for symbolic links in path of user directory.\n"
-			"Please provide resolved path in password database (/etc/passwd).\n\n");
-	}
-}
 
 // init configuration
 static void init_cfg(int argc, char **argv) {

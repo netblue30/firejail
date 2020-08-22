@@ -528,6 +528,9 @@ void disable_file_path(const char *path, const char *file);
 int safe_fd(const char *path, int flags);
 int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
+int read_pid(const char *name, pid_t *pid);
+pid_t require_pid(const char *name);
+void check_homedir(void);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.

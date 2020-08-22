@@ -398,6 +398,7 @@ pid_t switch_to_child(pid_t pid) {
 		exit(1);
 	}
 	EUID_USER();
+
 	if (strcmp(comm, "firejail") == 0) {
 		if (find_child(pid, &rv) == 1) {
 			fprintf(stderr, "Error: no valid sandbox\n");

@@ -523,7 +523,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		if (checkcfg(CFG_SECCOMP)) {
 			// print seccomp filter for a sandbox specified by pid or by name
 			pid_t pid = require_pid(argv[i] + 17);
-printf("pid %d\n", pid);
 			protocol_print_filter(pid);
 		}
 		else

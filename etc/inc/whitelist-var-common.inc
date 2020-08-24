@@ -5,6 +5,7 @@ include whitelist-var-common.local
 
 whitelist /var/lib/dbus
 whitelist /var/lib/menu-xdg
+whitelist /var/lib/uim
 whitelist /var/cache/fontconfig
 whitelist /var/tmp
 whitelist /var/run

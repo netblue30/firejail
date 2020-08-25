@@ -148,8 +148,13 @@ void seccomp_debug(void) {
 	EUID_USER();
 	printf("Seccomp directory:\n");
 	ls(RUN_SECCOMP_DIR);
-	printf("Active seccomp files:\n");
-	cat(RUN_SECCOMP_LIST);
+	struct stat s;
+	if (stat(RUN_SECCOMP_LIST, &s) == 0) {
+		printf("Active seccomp files:\n");
+		cat(RUN_SECCOMP_LIST);
+	}
+	else
+		printf("No active seccomp files\n");
 	EUID_ROOT();
 }
 #endif

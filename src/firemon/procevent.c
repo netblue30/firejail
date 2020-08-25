@@ -100,7 +100,7 @@ static int pid_is_firejail(pid_t pid) {
 			// debug
 			"debug-caps", "debug-errnos", "debug-protocols", "debug-syscalls", "debug-syscalls32",
 			// file transfer
-			"ls", "get", "put",
+			"ls", "get", "put", "cat",
 			// stats
 			"tree", "list", "top",
 			// network

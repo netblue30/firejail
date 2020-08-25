@@ -21,7 +21,6 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-nou2f
 novideo
 seccomp !chroot
 shell none

@@ -857,6 +857,7 @@ blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
 blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
+blacklist ${HOME}/.cache/fractal
 blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
 blacklist ${HOME}/.cache/gegl-0.4

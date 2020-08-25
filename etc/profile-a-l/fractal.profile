@@ -46,4 +46,9 @@ private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,mime.types,nsswitch.conf,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
 private-tmp
 
+dbus-user filter
+dbus-user.own org.gnome.Fractal
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.freedesktop.Notifications
 dbus-system none

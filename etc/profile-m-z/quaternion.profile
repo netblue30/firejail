@@ -23,7 +23,6 @@ mkdir ${HOME}/.config/Quotient
 whitelist ${HOME}/.cache/Quotient/quaternion
 whitelist ${HOME}/.config/Quotient
 whitelist ${DOWNLOADS}
-whitelist /usr/share/qt
 whitelist /usr/share/Quotient/quaternion
 include whitelist-common.inc
 include whitelist-runuser-common.inc 

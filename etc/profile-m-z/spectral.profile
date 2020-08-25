@@ -23,7 +23,6 @@ mkdir ${HOME}/.config/ENCOM
 whitelist ${HOME}/.cache/ENCOM/Spectral
 whitelist ${HOME}/.config/ENCOM
 whitelist ${DOWNLOADS}
-whitelist /usr/share/qt
 include whitelist-common.inc
 include whitelist-runuser-common.inc 
 include whitelist-usr-share-common.inc

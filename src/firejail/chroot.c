@@ -26,7 +26,7 @@
 
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 
@@ -35,13 +35,12 @@ void fs_check_chroot_dir(void) {
 	EUID_ASSERT();
 	assert(cfg.chrootdir);
 	if (strstr(cfg.chrootdir, "..") ||
-	    is_link(cfg.chrootdir) ||
-	    !is_dir(cfg.chrootdir))
+	    is_link(cfg.chrootdir))
 		goto errout;
 
 	// check chroot dirname exists, chrooting into the root directory is not allowed
 	char *rpath = realpath(cfg.chrootdir, NULL);
-	if (rpath == NULL || strcmp(rpath, "/") == 0)
+	if (rpath == NULL || !is_dir(rpath) || strcmp(rpath, "/") == 0)
 		goto errout;
 
 	char *overlay;
@@ -52,6 +51,7 @@ void fs_check_chroot_dir(void) {
 		exit(1);
 	}
 	free(overlay);
+
 	cfg.chrootdir = rpath;
 	return;
 
@@ -146,6 +146,7 @@ void fs_chroot(const char *rootdir) {
 	check_subdir(parentfd, "etc", 1);
 	check_subdir(parentfd, "proc", 0);
 	check_subdir(parentfd, "tmp", 0);
+	check_subdir(parentfd, "var", 1);
 	check_subdir(parentfd, "var/tmp", 0);
 
 	// mount-bind a /dev in rootdir
@@ -244,14 +245,14 @@ void fs_chroot(const char *rootdir) {
 	if (chroot(oroot) < 0)
 		errExit("chroot");
 
-	// create all other /run/firejail files and directories
-	preproc_build_firejail_dir();
-
 	// mount a new proc filesystem
 	if (arg_debug)
 		printf("Mounting /proc filesystem representing the PID namespace\n");
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mounting /proc");
+
+	// create all other /run/firejail files and directories
+	preproc_build_firejail_dir();
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	//	if (!arg_private_dev)

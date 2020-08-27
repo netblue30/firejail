@@ -6,8 +6,8 @@ include kube.local
 # Persistent global definitions
 include globals.local
 
-# Comment to use GPG
-noblacklist ${HOME}/.gnupg
+# Uncomment to use GPG
+# noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.cache/kube
 noblacklist ${HOME}/.config/kube
 noblacklist ${HOME}/.config/sink
@@ -23,11 +23,26 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+# Uncomment to use GPG
+# mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.cache/kube
+mkdir ${HOME}/.config/kube
+mkdir ${HOME}/.config/sink
+mkdir ${HOME}/.local/share/kube
+mkdir ${HOME}/.local/share/sink
+# Uncomment to use GPG
+# whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.cache/kube
+whitelist ${HOME}/.config/kube
+whitelist ${HOME}/.config/sink
+whitelist ${HOME}/.local/share/kube
+whitelist ${HOME}/.local/share/sink
 # Uncomment to allow gpg
 # whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/kube
 # Uncomment to allow gpg
 # whitelist /usr/share/gnupg
+include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -56,6 +71,7 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,gcrypt,gtk-2.0,gtk-3.0,hostname,hosts,pki,resolv.conf,selinux,ssl,xdg
 private-tmp
+writable-run-user
 
 dbus-user none
 dbus-system none

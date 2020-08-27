@@ -7,9 +7,10 @@ include balsa.local
 include globals.local
 
 noblacklist ${HOME}/.balsa
-# Comment to use GPG
-noblacklist ${HOME}/.gnupg
+# Uncomment to use GPG
+# noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/mail
+noblacklist /var/mail
 noblacklist /var/spool/mail
 
 include disable-common.inc
@@ -21,11 +22,22 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.balsa
+# Uncomment to use GPG
+# mkdir ${HOME}/.gnupg
+mkdir ${HOME}/mail
+whitelist ${HOME}/.balsa
+# Uncomment to use GPG
+# whitelist ${HOME}/.gnupg
+whitelist ${HOME}/mail
 # Uncomment to allow gpg
 # whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/balsa
 # Uncomment to allow gpg
 # whitelist /usr/share/gnupg
+whitelist /var/mail
+whitelist /var/spool/mail
+include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -54,6 +66,7 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gtk-2.0,gtk-3.0,groups,hostname,hosts,mailname,passwd,pki,resolv.conf,selinux,ssl,xdg
 private-tmp
+writable-run-user
 writable-var
 
 dbus-user filter

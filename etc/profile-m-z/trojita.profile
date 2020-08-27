@@ -19,6 +19,13 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.abook
+mkdir ${HOME}/.cache/flaska.net/trojita
+mkdir ${HOME}/.config/flaska.net
+whitelist ${HOME}/.abook
+whitelist ${HOME}/.cache/flaska.net/trojita
+whitelist ${HOME}/.config/flaska.net
+include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -60,27 +60,29 @@ errout:
 	exit(1);
 }
 
-// copy /etc/resolv.conf in chroot directory
-static void copy_resolvconf(int parentfd) {
-	int in = open("/etc/resolv.conf", O_RDONLY|O_CLOEXEC);
+// copy /etc/resolv.conf or /etc/machine-id in chroot directory
+static void update_file(int parentfd, const char *fname) {
+	assert(fname);
+	assert(fname[0] == '/');
+
+	int in = open(fname, O_RDONLY|O_CLOEXEC);
 	if (in == -1)
 		goto errout;
 	struct stat src;
 	if (fstat(in, &src) == -1)
 		errExit("fstat");
-	// try to detect if resolv.conf has been bind mounted into the chroot
-	// do nothing in this case in order to not unlink the real file
+	// try to detect if file has been bind mounted into the chroot
 	struct stat dst;
-	if (fstatat(parentfd, "etc/resolv.conf", &dst, 0) == 0) {
+	if (fstatat(parentfd, fname+1, &dst, 0) == 0) {
 		if (src.st_dev == dst.st_dev && src.st_ino == dst.st_ino) {
 			close(in);
 			return;
 		}
 	}
 	if (arg_debug)
-		printf("Updating /etc/resolv.conf in chroot\n");
-	unlinkat(parentfd, "etc/resolv.conf", 0);
-	int out = openat(parentfd, "etc/resolv.conf", O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+		printf("Updating %s in chroot\n", fname);
+	unlinkat(parentfd, fname+1, 0);
+	int out = openat(parentfd, fname+1, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	if (out == -1) {
 		close(in);
 		goto errout;
@@ -92,7 +94,7 @@ static void copy_resolvconf(int parentfd) {
 	return;
 
 errout:
-	fwarning("/etc/resolv.conf not initialized\n");
+	fwarning("%s not initialized\n", fname);
 }
 
 // exit if error
@@ -187,6 +189,43 @@ void fs_chroot(const char *rootdir) {
 		errExit("mkdir");
 	check_subdir(parentfd, "run", 1);
 
+	// pulseaudio; only support for default directory /run/user/$UID/pulse
+	if (getenv("FIREJAIL_CHROOT_PULSE")) {
+		char *pulse;
+		if (asprintf(&pulse, "%s/run/user/%d/pulse", cfg.chrootdir, getuid()) == -1)
+			errExit("asprintf");
+		char *orig_pulse = pulse + strlen(cfg.chrootdir);
+
+		if (arg_debug)
+			printf("Mounting %s on chroot %s\n", orig_pulse, orig_pulse);
+		int src = safe_fd(orig_pulse, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (src == -1) {
+			fprintf(stderr, "Error: cannot open %s\n", orig_pulse);
+			exit(1);
+		}
+		int dst = safe_fd(pulse, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		if (dst == -1) {
+			fprintf(stderr, "Error: cannot open %s\n", pulse);
+			exit(1);
+		}
+		free(pulse);
+
+		char *proc_src, *proc_dst;
+		if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1)
+			errExit("asprintf");
+		if (asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
+			errExit("asprintf");
+		if (mount(proc_src, proc_dst, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mount bind");
+		free(proc_src);
+		free(proc_dst);
+		close(src);
+		close(dst);
+
+		// update /etc/machine-id in chroot
+		update_file(parentfd, "/etc/machine-id");
+	}
+
 	// create /run/firejail directory in chroot
 	if (mkdirat(parentfd, RUN_FIREJAIL_DIR+1, 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
@@ -223,7 +262,7 @@ void fs_chroot(const char *rootdir) {
 	close(fd);
 
 	// update chroot resolv.conf
-	copy_resolvconf(parentfd);
+	update_file(parentfd, "/etc/resolv.conf");
 
 #ifdef HAVE_GCOV
 	__gcov_flush();

@@ -67,7 +67,7 @@ shell none
 # tracelog
 
 disable-mnt
-# Add "gpg,gpg2,gpg-agent,pinentry-curses pinentry-emacs pinentry-fltk pinentry-gnome3 pinentry-gtk pinentry-gtk2 or pinentry-gtk-2 pinentry-qt pinentry-qt4 pinentry-tty pinentry-x2go pinentry-kwallet for GPG
+# Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for GPG
 private-bin getopt,psi
 private-cache
 private-dev

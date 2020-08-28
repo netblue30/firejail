@@ -7,8 +7,7 @@ include evolution.local
 include globals.local
 
 noblacklist ${HOME}/.bogofilter
-# Uncomment for gpg
-# noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.cache/evolution
 noblacklist ${HOME}/.config/evolution
@@ -27,28 +26,24 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.bogofilter
-# Uncomment for gpg
-# mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.pki
 mkdir ${HOME}/.cache/evolution
 mkdir ${HOME}/.config/evolution
 mkdir ${HOME}/.local/share/evolution
 mkdir ${HOME}/.local/share/pki
 whitelist ${HOME}/.bogofilter
-# Uncomment for gpg
-# whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.cache/evolution
 whitelist ${HOME}/.config/evolution
 whitelist ${HOME}/.local/share/evolution
 whitelist ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
-# Uncomment for gpg
-# whitelist ${RUNUSER}/gnupg
+whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/evolution
-# Uncomment for gpg
-# whitelist /usr/share/gnupg
-# whitelist /usr/share/gnupg2
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 whitelist /var/mail
 whitelist /var/spool/mail
 include whitelist-common.inc
@@ -74,9 +69,8 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
-# Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg
-private-bin evolution
+# disable-mnt
+# private-bin evolution
 private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gtk-2.0,gtk-3.0,groups,hostname,hosts,mailname,passwd,pki,resolv.conf,selinux,ssl,xdg
@@ -89,8 +83,7 @@ dbus-user.own org.gnome.Evolution
 dbus-user.talk ca.desrt.dconf
 # Uncomment to have keyring access
 # dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.keyring.SystemPrompter
+dbus-user.talk org.gnome.OnlineAccounts
 dbus-user.talk org.freedesktop.Notifications
 dbus-system none
-
-# Comment to use gpg
-read-only ${HOME}/.gnupg

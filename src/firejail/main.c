@@ -1776,11 +1776,16 @@ int main(int argc, char **argv, char **envp) {
 			while (*ptr != '/' && *ptr != '\0')
 				ptr++;
 			if (*ptr == '\0') {
-				// ppath contains no '/', assume it's a name
-				int rv = profile_find_firejail(ppath, 0);
-				if (rv == 0) {
-					// It's not a valid name, but maybe it's a file in the working director
+				if (access(ppath, R_OK)) {
 					profile_read(ppath);
+				}
+				else {
+					// ppath contains no '/' and is not a local file, assume it's a name
+					int rv = profile_find_firejail(ppath, 0);
+					if (!rv) {
+						fprintf(stderr, "Error: no profile with name \"%s\" found.\n", ppath);
+						exit(1);
+					}
 				}
 			}
 			else {

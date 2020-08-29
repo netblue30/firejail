@@ -6,8 +6,8 @@ include kube.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment to use GPG
-# noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.cache/kube
 noblacklist ${HOME}/.config/kube
 noblacklist ${HOME}/.config/sink
@@ -23,25 +23,23 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-# Uncomment to use GPG
-# mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.cache/kube
 mkdir ${HOME}/.config/kube
 mkdir ${HOME}/.config/sink
 mkdir ${HOME}/.local/share/kube
 mkdir ${HOME}/.local/share/sink
-# Uncomment to use GPG
-# whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.cache/kube
 whitelist ${HOME}/.config/kube
 whitelist ${HOME}/.config/sink
 whitelist ${HOME}/.local/share/kube
 whitelist ${HOME}/.local/share/sink
-# Uncomment to allow gpg
-# whitelist ${RUNUSER}/gnupg
+whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/kube
-# Uncomment to allow gpg
-# whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -64,8 +62,9 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
-# Add gpg,gpg2,pinentry,qgpgme to allow gpg
+# disable-mnt
+# Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg 
+# # Add "sh,bash,which,firefox" for hyperlinks 
 private-bin kube,sink_synchronizer
 private-cache
 private-dev
@@ -73,8 +72,10 @@ private-etc alternatives,ca-certificates,crypto-policies,fonts,gcrypt,gtk-2.0,gt
 private-tmp
 writable-run-user
 
-dbus-user none
+dbus-user filter
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
-# Comment to use GPG
-read-only ${HOME}/.gnupg
+read-only ${HOME}/.mozilla/firefox/profiles.ini

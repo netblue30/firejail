@@ -7,8 +7,8 @@ include balsa.local
 include globals.local
 
 noblacklist ${HOME}/.balsa
-# Uncomment to use GPG
-# noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/mail
 noblacklist /var/mail
 noblacklist /var/spool/mail
@@ -23,18 +23,16 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.balsa
-# Uncomment to use GPG
-# mkdir ${HOME}/.gnupg
+mkdir ${HOME}/.gnupg
 mkdir ${HOME}/mail
 whitelist ${HOME}/.balsa
-# Uncomment to use GPG
-# whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/mail
-# Uncomment to allow gpg
-# whitelist ${RUNUSER}/gnupg
+whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/balsa
-# Uncomment to allow gpg
-# whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 whitelist /var/mail
 whitelist /var/spool/mail
 include whitelist-common.inc
@@ -59,8 +57,9 @@ seccomp
 shell none
 tracelog
 
-disable-mnt
-# Add gpg,gpg2,gpgsm,gpgconf,pinentry to allow gpg
+# disable-mnt
+# Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg 
+# # Add "sh,bash,which,firefox" for hyperlinks 
 private-bin balsa,balsa-ab
 private-cache
 private-dev
@@ -76,5 +75,4 @@ dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
-# Comment to use gpg
-read-only ${HOME}/.gnupg
+read-only ${HOME}/.mozilla/firefox/profiles.ini

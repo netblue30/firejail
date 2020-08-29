@@ -12,6 +12,7 @@ include globals.local
 noblacklist ${HOME}/.gnupg
 # noblacklist ${HOME}/.kde/
 # noblacklist ${HOME}/.kde4/
+noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.cache/akonadi*
 noblacklist ${HOME}/.cache/kmail2
 noblacklist ${HOME}/.config/akonadi*
@@ -69,6 +70,7 @@ mkdir /tmp/akonadi-*
 whitelist ${HOME}/.gnupg
 # whitelist ${HOME}/.kde/
 # whitelist ${HOME}/.kde4/
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.cache/akonadi*
 whitelist ${HOME}/.cache/kmail2
 whitelist ${HOME}/.config/akonadi*
@@ -131,3 +133,5 @@ writable-var
 
 # dbus-user none
 dbus-system none
+
+read-only ${HOME}/.mozilla/firefox/profiles.ini

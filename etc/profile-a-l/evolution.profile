@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.cache/evolution
 noblacklist ${HOME}/.config/evolution
@@ -34,6 +35,7 @@ mkdir ${HOME}/.local/share/evolution
 mkdir ${HOME}/.local/share/pki
 whitelist ${HOME}/.bogofilter
 whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.cache/evolution
 whitelist ${HOME}/.config/evolution
@@ -71,7 +73,8 @@ shell none
 tracelog
 
 # disable-mnt
-# Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg 
+# Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg
+# Add "sh,bash,which,firefox" for hyperlinks 
 # private-bin evolution
 private-cache
 private-dev
@@ -89,3 +92,5 @@ dbus-user.talk org.gnome.keyring.SystemPrompter
 dbus-user.talk org.gnome.OnlineAccounts
 dbus-user.talk org.freedesktop.Notifications
 dbus-system none
+
+read-only ${HOME}/.mozilla/firefox/profiles.ini

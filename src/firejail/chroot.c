@@ -61,28 +61,32 @@ errout:
 }
 
 // copy /etc/resolv.conf or /etc/machine-id in chroot directory
-static void update_file(int parentfd, const char *fname) {
-	assert(fname);
-	assert(fname[0] == '/');
+static void update_file(int parentfd, const char *relpath) {
+	assert(relpath && relpath[0] && relpath[0] != '/');
 
-	int in = open(fname, O_RDONLY|O_CLOEXEC);
+	char *abspath;
+	if (asprintf(&abspath, "/%s", relpath) == -1)
+		errExit("asprintf");
+	int in = open(abspath, O_RDONLY|O_CLOEXEC);
+	free(abspath);
 	if (in == -1)
 		goto errout;
+
 	struct stat src;
 	if (fstat(in, &src) == -1)
 		errExit("fstat");
 	// try to detect if file has been bind mounted into the chroot
 	struct stat dst;
-	if (fstatat(parentfd, fname+1, &dst, 0) == 0) {
+	if (fstatat(parentfd, relpath, &dst, 0) == 0) {
 		if (src.st_dev == dst.st_dev && src.st_ino == dst.st_ino) {
 			close(in);
 			return;
 		}
 	}
 	if (arg_debug)
-		printf("Updating %s in chroot\n", fname);
-	unlinkat(parentfd, fname+1, 0);
-	int out = openat(parentfd, fname+1, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+		printf("Updating chroot /%s\n", relpath);
+	unlinkat(parentfd, relpath, 0);
+	int out = openat(parentfd, relpath, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	if (out == -1) {
 		close(in);
 		goto errout;
@@ -94,12 +98,12 @@ static void update_file(int parentfd, const char *fname) {
 	return;
 
 errout:
-	fwarning("%s not initialized\n", fname);
+	fwarning("chroot /%s not initialized\n", relpath);
 }
 
 // exit if error
 static void check_subdir(int parentfd, const char *subdir, int check_writable) {
-	assert(subdir);
+	assert(subdir && subdir[0] && subdir[0] != '/');
 	struct stat s;
 	if (fstatat(parentfd, subdir, &s, AT_SYMLINK_NOFOLLOW) != 0) {
 		fprintf(stderr, "Error: cannot find /%s in chroot directory\n", subdir);
@@ -223,7 +227,7 @@ void fs_chroot(const char *rootdir) {
 		close(dst);
 
 		// update /etc/machine-id in chroot
-		update_file(parentfd, "/etc/machine-id");
+		update_file(parentfd, "etc/machine-id");
 	}
 
 	// create /run/firejail directory in chroot
@@ -262,7 +266,7 @@ void fs_chroot(const char *rootdir) {
 	close(fd);
 
 	// update chroot resolv.conf
-	update_file(parentfd, "/etc/resolv.conf");
+	update_file(parentfd, "etc/resolv.conf");
 
 #ifdef HAVE_GCOV
 	__gcov_flush();

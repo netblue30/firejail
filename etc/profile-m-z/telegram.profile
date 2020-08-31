@@ -20,7 +20,7 @@ nodvd
 nonewprivs
 noroot
 notv
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 
 disable-mnt

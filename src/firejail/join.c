@@ -292,7 +292,7 @@ static void extract_umask(pid_t pid) {
 		fprintf(stderr, "Error: cannot open umask file\n");
 		exit(1);
 	}
-	if (fscanf(fp, "%3o", &orig_umask) < 1) {
+	if (fscanf(fp, "%o", &orig_umask) != 1) {
 		fprintf(stderr, "Error: cannot read umask\n");
 		exit(1);
 	}
@@ -303,66 +303,33 @@ static void extract_umask(pid_t pid) {
 // it is no firejail sandbox at all, return true if the sandbox is complete
 bool is_ready_for_join(const pid_t pid) {
 	EUID_ASSERT();
-	// check if a file "ready-for-join" exists
+	// check if a file /run/firejail/mnt/join exists
 	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_READY_FOR_JOIN) == -1)
+	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_JOIN_FILE) == -1)
 		errExit("asprintf");
 	EUID_ROOT();
-	FILE *fp = fopen(fname, "re");
+	int fd = open(fname, O_RDONLY|O_CLOEXEC);
 	EUID_USER();
 	free(fname);
-	if (!fp)
-		return false;
-	// regular file owned by root
-	int fd = fileno(fp);
 	if (fd == -1)
-		errExit("fileno");
+		return false;
 	struct stat s;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
 	if (!S_ISREG(s.st_mode) || s.st_uid != 0) {
-		fclose(fp);
+		close(fd);
 		return false;
 	}
-	// check if it is non-empty
-	char buf[BUFLEN];
-	if (fgets(buf, BUFLEN, fp) == NULL) {
-		fclose(fp);
-		return false;
+	char status;
+	if (read(fd, &status, 1) == 1 && status == SANDBOX_DONE) {
+		close(fd);
+		return true;
 	}
-	fclose(fp);
-	// confirm "ready" string was written
-	if (strcmp(buf, "ready\n") != 0)
-		return false;
-
-	// walk down the process tree a few nodes, there should be no firejail leaf
-#define MAXNODES 5
-	pid_t current = pid, next;
-	int i;
-	for (i = 0; i < MAXNODES; i++) {
-		if (find_child(current, &next) == 1) {
-			// found a leaf
-			EUID_ROOT();
-			char *comm = pid_proc_comm(current);
-			EUID_USER();
-			if (!comm) {
-				fprintf(stderr, "Error: cannot read /proc file\n");
-				exit(1);
-			}
-			if (strcmp(comm, "firejail") == 0) {
-				free(comm);
-				return false;
-			}
-			free(comm);
-			break;
-		}
-		current = next;
-	}
-
-	return true;
+	close(fd);
+	return false;
 }
 
-#define SNOOZE 100000 // sleep interval in microseconds
+#define SNOOZE 10000 // sleep interval in microseconds
 void check_join_permission(pid_t pid) {
 	// check if pid belongs to a fully set up firejail sandbox
 	unsigned long i;

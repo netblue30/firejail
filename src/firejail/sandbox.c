@@ -20,6 +20,7 @@
 
 #include "firejail.h"
 #include "../include/seccomp.h"
+#include <sys/mman.h>
 #include <sys/mount.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -204,16 +205,17 @@ static void save_umask(void) {
 	}
 }
 
-static FILE *create_ready_for_join_file(void) {
-	FILE *fp = fopen(RUN_READY_FOR_JOIN, "wxe");
-	if (fp) {
-		ASSERT_PERMS_STREAM(fp, 0, 0, 0644);
-		return fp;
-	}
-	else {
-		fprintf(stderr, "Error: cannot create %s\n", RUN_READY_FOR_JOIN);
-		exit(1);
-	}
+static char *create_join_file(void) {
+	int fd = open(RUN_JOIN_FILE, O_RDWR|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	if (fd == -1)
+		errExit("open");
+	if (ftruncate(fd, 1) == -1)
+		errExit("ftruncate");
+	char *rv = mmap(NULL, 1, PROT_WRITE, MAP_SHARED, fd, 0);
+	if (rv == MAP_FAILED)
+		errExit("mmap");
+	close(fd);
+	return rv;
 }
 
 static void sandbox_if_up(Bridge *br) {
@@ -472,7 +474,7 @@ static int ok_to_run(const char *program) {
 	return 0;
 }
 
-void start_application(int no_sandbox, FILE *fp) {
+void start_application(int no_sandbox, char *set_sandbox_status) {
 	// set environment
 	if (no_sandbox == 0) {
 		env_defaults();
@@ -492,16 +494,14 @@ void start_application(int no_sandbox, FILE *fp) {
 	if (arg_audit) {
 		assert(arg_audit_prog);
 
-		if (fp) {
-			fprintf(fp, "ready\n");
-			fclose(fp);
-		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
 #ifdef HAVE_SECCOMP
 		seccomp_install_filters();
 #endif
+		if (set_sandbox_status)
+			*set_sandbox_status = SANDBOX_DONE;
 		execl(arg_audit_prog, arg_audit_prog, NULL);
 
 		perror("execl");
@@ -530,16 +530,14 @@ void start_application(int no_sandbox, FILE *fp) {
 
 		int rv = ok_to_run(cfg.original_argv[cfg.original_program_index]);
 
-		if (fp) {
-			fprintf(fp, "ready\n");
-			fclose(fp);
-		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
 #ifdef HAVE_SECCOMP
 		seccomp_install_filters();
 #endif
+		if (set_sandbox_status)
+			*set_sandbox_status = SANDBOX_DONE;
 		if (rv)
 			execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 		else
@@ -591,16 +589,14 @@ void start_application(int no_sandbox, FILE *fp) {
 		if (!arg_command && !arg_quiet)
 			print_time();
 
-		if (fp) {
-			fprintf(fp, "ready\n");
-			fclose(fp);
-		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
 #ifdef HAVE_SECCOMP
 		seccomp_install_filters();
 #endif
+		if (set_sandbox_status)
+			*set_sandbox_status = SANDBOX_DONE;
 		execvp(arg[0], arg);
 	}
 
@@ -1162,11 +1158,10 @@ int sandbox(void* sandbox_arg) {
 	set_caps();
 
 	//****************************************
-	// communicate progress of sandbox set up
-	// to --join
+	// relay status information to join option
 	//****************************************
 
-	FILE *rj = create_ready_for_join_file();
+	char *set_sandbox_status = create_join_file();
 
 	//****************************************
 	// create a new user namespace
@@ -1248,10 +1243,10 @@ int sandbox(void* sandbox_arg) {
 			set_nice(cfg.nice);
 		set_rlimits();
 
-		start_application(0, rj);
+		start_application(0, set_sandbox_status);
 	}
 
-	fclose(rj);
+	munmap(set_sandbox_status, 1);
 
 	int status = monitor_application(app_pid);	// monitor application
 	flush_stdin();

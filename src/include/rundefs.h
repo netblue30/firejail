@@ -113,7 +113,7 @@
 #define RUN_FSLOGGER_FILE		RUN_MNT_DIR "/fslogger"
 #define RUN_TRACE_FILE			RUN_MNT_DIR "/trace"
 #define RUN_UMASK_FILE			RUN_MNT_DIR "/umask"
+#define RUN_JOIN_FILE	 		RUN_MNT_DIR "/join"
 #define RUN_OVERLAY_ROOT		RUN_MNT_DIR "/oroot"
-#define RUN_READY_FOR_JOIN 		RUN_MNT_DIR "/ready-for-join"
 
 #endif

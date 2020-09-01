@@ -24,6 +24,8 @@ cleanup() {
 	rm -f report*
 	rm -fr firejail
 	rm -f oc* om*
+	rm -f output-configure
+	rm -f output-make
 }
 
 print_title() {

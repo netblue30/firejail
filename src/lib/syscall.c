@@ -230,6 +230,7 @@ static const SyscallGroupList sysgroups[] = {
 	  "@cpu-emulation,"
 	  "@debug,"
 	  "@module,"
+	  "@mount,"
 	  "@obsolete,"
 	  "@raw-io,"
 	  "@reboot,"
@@ -297,9 +298,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_vmsplice
 	  "vmsplice,"
 #endif
-#ifdef SYS_umount
-	  "umount,"
-#endif
 #ifdef SYS_userfaultfd
 	  "userfaultfd,"
 #endif
@@ -309,26 +307,14 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_bpf
 	  "bpf,"
 #endif
-#ifdef SYS_chroot
-	  "chroot,"
-#endif
-#ifdef SYS_mount
-	  "mount,"
-#endif
 #ifdef SYS_nfsservctl
 	  "nfsservctl,"
-#endif
-#ifdef SYS_pivot_root
-	  "pivot_root,"
 #endif
 #ifdef SYS_setdomainname
 	  "setdomainname,"
 #endif
 #ifdef SYS_sethostname
 	  "sethostname,"
-#endif
-#ifdef SYS_umount2
-	  "umount2,"
 #endif
 #ifdef SYS_vhangup
 	  "vhangup"

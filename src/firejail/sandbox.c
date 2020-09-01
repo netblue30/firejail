@@ -528,7 +528,10 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 		if (!arg_command && !arg_quiet)
 			print_time();
 
-		int rv = ok_to_run(cfg.original_argv[cfg.original_program_index]);
+		if (ok_to_run(cfg.original_argv[cfg.original_program_index]) == 0) {
+			fprintf(stderr, "Error: no suitable %s executable found\n", cfg.original_argv[cfg.original_program_index]);
+			exit(1);
+		}
 
 #ifdef HAVE_GCOV
 		__gcov_dump();
@@ -538,11 +541,7 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 #endif
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
-		if (rv)
-			execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
-		else
-			fprintf(stderr, "Error: no suitable %s executable found\n", cfg.original_argv[cfg.original_program_index]);
-		exit(1);
+		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 	}
 	//****************************************
 	// start the program using a shell

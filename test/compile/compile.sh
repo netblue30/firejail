@@ -4,7 +4,7 @@
 # License GPL v2
 
 arr[1]="TEST 1: standard compilation"
-arr[2]="TEST 2: compile seccomp disabled"
+arr[2]="deprecated"
 arr[3]="TEST 3: compile chroot disabled"
 arr[4]="TEST 4: compile firetunnel disabled"
 arr[5]="TEST 5: compile user namespace disabled"
@@ -74,23 +74,23 @@ cp output-make om1
 rm output-configure output-make
 
 
-#*****************************************************************
-# TEST 2
-#*****************************************************************
-# - disable seccomp configuration
-#*****************************************************************
-print_title "${arr[2]}"
-# seccomp
-cd firejail
-make distclean
-./configure --prefix=/usr --disable-seccomp  --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
-cd ..
-grep Warning output-configure output-make > ./report-test2
-grep Error output-configure output-make >> ./report-test2
-cp output-configure oc2
-cp output-make om2
-rm output-configure output-make
+##*****************************************************************
+## TEST 2
+##*****************************************************************
+## - disable seccomp configuration
+##*****************************************************************
+#print_title "${arr[2]}"
+## seccomp
+#cd firejail
+#make distclean
+#./configure --prefix=/usr --disable-seccomp  --enable-fatal-warnings 2>&1 | tee ../output-configure
+#make -j4 2>&1 | tee ../output-make
+#cd ..
+#grep Warning output-configure output-make > ./report-test2
+#grep Error output-configure output-make >> ./report-test2
+#cp output-configure oc2
+#cp output-make om2
+#rm output-configure output-make
 
 #*****************************************************************
 # TEST 3
@@ -342,7 +342,7 @@ wc -l report-test*
 echo
 echo  "Legend:"
 echo ${arr[1]}
-echo ${arr[2]}
+#echo ${arr[2]}
 echo ${arr[3]}
 echo ${arr[4]}
 echo ${arr[5]}

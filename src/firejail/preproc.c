@@ -103,7 +103,6 @@ void preproc_mount_mnt_dir(void) {
 		if (arg_tracefile)
 			fs_tracefile();
 
-#ifdef HAVE_SECCOMP
 		create_empty_dir_as_root(RUN_SECCOMP_DIR, 0755);
 
 		if (arg_seccomp_block_secondary)
@@ -132,7 +131,6 @@ void preproc_mount_mnt_dir(void) {
 		create_empty_file_as_root(RUN_SECCOMP_POSTEXEC_32, 0644);
 		if (set_perms(RUN_SECCOMP_POSTEXEC_32, getuid(), getgid(), 0644))
 			errExit("set_perms");
-#endif
 	}
 }
 

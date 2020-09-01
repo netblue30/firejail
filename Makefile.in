@@ -10,7 +10,6 @@ VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
-HAVE_SECCOMP=@HAVE_SECCOMP@
 HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
@@ -23,10 +22,8 @@ SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfil
 MYDIRS = src/lib
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
-ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
-endif
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all_items $(ALL_ITEMS)
@@ -45,7 +42,6 @@ $(MANPAGES): $(wildcard src/man/*.txt)
 man: $(MANPAGES)
 
 filters: $(SECCOMP_FILTERS) $(SBOX_APPS_NON_DUMPABLE)
-ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp default seccomp
 	src/fsec-optimize/fsec-optimize seccomp
@@ -66,7 +62,6 @@ seccomp.mdwx: src/fseccomp/fseccomp
 
 seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
-endif
 
 clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
@@ -248,9 +243,7 @@ test-environment:
 	cd test/environment; ./environment.sh | grep TESTING
 
 test-filters:
-ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	cd test/filters; ./filters.sh | grep TESTING
-endif
 
 test-arguments:
 	cd test/arguments; ./arguments.sh | grep TESTING

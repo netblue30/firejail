@@ -226,7 +226,6 @@ int checkcfg(int val) {
 
 			// seccomp error action
 			else if (strncmp(ptr, "seccomp-error-action ", 21) == 0) {
-#ifdef HAVE_SECCOMP
 				if (strcmp(ptr + 21, "kill") == 0)
 					cfg_val[CFG_SECCOMP_ERROR_ACTION] = SECCOMP_RET_KILL;
 				else if (strcmp(ptr + 21, "log") == 0)
@@ -239,9 +238,6 @@ int checkcfg(int val) {
 				config_seccomp_error_action_str = strdup(ptr + 21);
 				if (!config_seccomp_error_action_str)
 					errExit("strdup");
-#else
-				warning_feature_disabled("seccomp");
-#endif
 			}
 
 			else
@@ -341,14 +337,6 @@ void print_compiletime_support(void) {
 
 	printf("\t- private-home support is %s\n",
 #ifdef HAVE_PRIVATE_HOME
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
-	printf("\t- seccomp-bpf support is %s\n",
-#ifdef HAVE_SECCOMP
 		"enabled"
 #else
 		"disabled"

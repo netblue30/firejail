@@ -465,10 +465,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		EUID_ROOT();
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
-#ifdef HAVE_SECCOMP
 		if (getuid() != 0)
 			seccomp_load_file_list();
-#endif
 
 		// mount user namespace or drop privileges
 		if (arg_noroot) {	// not available for uid 0

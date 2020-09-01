@@ -479,7 +479,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	//*************************************
 	// independent commands - the program will exit!
 	//*************************************
-#ifdef HAVE_SECCOMP
 	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls");
@@ -529,7 +528,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("seccomp");
 		exit(0);
 	}
-#endif
 	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
 		pid_t pid = require_pid(argv[i] + 16);
 
@@ -950,7 +948,6 @@ void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, b
 	(void) native;
 }
 
-#ifdef HAVE_SECCOMP
 static int check_postexec(const char *list) {
 	char *prelist, *postlist;
 
@@ -961,7 +958,6 @@ static int check_postexec(const char *list) {
 	}
 	return 0;
 }
-#endif
 
 //*******************************************
 // Main program
@@ -1264,7 +1260,6 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--apparmor") == 0)
 			arg_apparmor = 1;
 #endif
-#ifdef HAVE_SECCOMP
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (cfg.protocol) {
@@ -1402,7 +1397,6 @@ int main(int argc, char **argv, char **envp) {
 			} else
 				exit_err_feature("seccomp");
 		}
-#endif
 		else if (strcmp(argv[i], "--caps") == 0) {
 			arg_caps_default_filter = 1;
 			arg_caps_cmdline = 1;
@@ -2783,10 +2777,9 @@ int main(int argc, char **argv, char **envp) {
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
 
-#ifdef HAVE_SECCOMP
 	if (arg_seccomp)
 		arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);
-#endif
+
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
 	if (need_preload && (cfg.seccomp_list32 || cfg.seccomp_list_drop32 || cfg.seccomp_list_keep32))
 		fwarning("preload libraries (trace, tracelog, postexecseccomp due to seccomp.drop=execve etc.) are incompatible with 32 bit filters\n");

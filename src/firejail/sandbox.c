@@ -141,7 +141,6 @@ void set_apparmor(void) {
 }
 #endif
 
-#ifdef HAVE_SECCOMP
 void seccomp_debug(void) {
 	if (arg_debug == 0)
 		return;
@@ -158,7 +157,6 @@ void seccomp_debug(void) {
 		printf("No active seccomp files\n");
 	EUID_ROOT();
 }
-#endif
 
 static void save_nogroups(void) {
 	if (arg_nogroups == 0)
@@ -497,9 +495,7 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-#ifdef HAVE_SECCOMP
 		seccomp_install_filters();
-#endif
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
 		execl(arg_audit_prog, arg_audit_prog, NULL);
@@ -536,9 +532,8 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-#ifdef HAVE_SECCOMP
 		seccomp_install_filters();
-#endif
+
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
@@ -591,9 +586,8 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-#ifdef HAVE_SECCOMP
 		seccomp_install_filters();
-#endif
+
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
 		execvp(arg[0], arg);
@@ -797,7 +791,6 @@ int sandbox(void* sandbox_arg) {
 	//  - build seccomp filters
 	//  - create an empty /etc/ld.so.preload
 	//****************************
-#ifdef HAVE_SECCOMP
 	if (cfg.protocol) {
 		if (arg_debug)
 			printf("Build protocol filter: %s\n", cfg.protocol);
@@ -808,7 +801,6 @@ int sandbox(void* sandbox_arg) {
 		if (rv)
 			exit(rv);
 	}
-#endif
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
@@ -1107,7 +1099,6 @@ int sandbox(void* sandbox_arg) {
 	save_cgroup();
 
 	// set seccomp
-#ifdef HAVE_SECCOMP
 	// install protocol filter
 #ifdef SYS_socket
 	if (cfg.protocol) {
@@ -1151,7 +1142,6 @@ int sandbox(void* sandbox_arg) {
 	// make seccomp filters read-only
 	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);
 	seccomp_debug();
-#endif
 
 	// set capabilities
 	set_caps();

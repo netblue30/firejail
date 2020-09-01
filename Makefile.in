@@ -16,7 +16,7 @@ BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
 
 all: all_items man filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/man/preproc
 SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/ftee/ftee
 SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
 MYDIRS = src/lib
@@ -36,8 +36,9 @@ mydirs: mydirs $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
-$(MANPAGES): $(wildcard src/man/*.txt)
-	./mkman.sh $(VERSION) src/man/$(basename $@).txt $@
+
+$(MANPAGES): $(wildcard src/man/*.man)
+	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
 
 man: $(MANPAGES)
 

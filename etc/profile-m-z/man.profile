@@ -53,8 +53,7 @@ tracelog
 x11 none
 
 disable-mnt
-private-bin apropos,bash,cat,catman,col,gpreconv,groff,grotty,gunzip,gzip,less,man,most,nroff,preconv,sed,sh,tbl,tr,troff,whatis,which,xtotroff,
-zcat,zsoelim
+private-bin apropos,bash,cat,catman,col,gpreconv,groff,grotty,gunzip,gzip,less,man,most,nroff,preconv,sed,sh,tbl,tr,troff,whatis,which,xtotroff,zcat,zsoelim
 private-cache
 private-dev
 private-etc alternatives,fonts,locale,locale.alias,locale.conf,man_db.conf,manpath.config,selinux,sysless,xdg

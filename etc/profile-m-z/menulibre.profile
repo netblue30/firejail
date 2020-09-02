@@ -23,11 +23,8 @@ whitelist /usr/share/desktop-directories
 whitelist /usr/share/icons
 whitelist /usr/share/menulibre
 whitelist /var/lib/app-info/icons
-# Flatpak desktop directory
 whitelist /var/lib/flatpak/exports/share/applications
 whitelist /var/lib/flatpak/exports/share/icons
-# Snap desktop directory
-
 include whitelist-runuser-common.inc 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

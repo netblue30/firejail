@@ -7,5 +7,4 @@ include cola.local
 include globals.local
 
 # Redirect
-
 include git-cola.profile

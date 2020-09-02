@@ -258,6 +258,7 @@ blacklist ${HOME}/.config/katerc
 blacklist ${HOME}/.config/kateschemarc
 blacklist ${HOME}/.config/katesyntaxhighlightingrc
 blacklist ${HOME}/.config/katevirc
+blacklist ${HOME}/.config/kazam
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/kdenliverc
 blacklist ${HOME}/.config/kfindrc
@@ -312,6 +313,7 @@ blacklist ${HOME}/.config/nuclear
 blacklist ${HOME}/.config/obs-studio
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
+blacklist ${HOME}/.config/onboard
 blacklist ${HOME}/.config/onionshare
 blacklist ${HOME}/.config/onlyoffice
 blacklist ${HOME}/.config/opera

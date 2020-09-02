@@ -684,11 +684,8 @@ blacklist ${HOME}/.local/share/rhythmbox
 blacklist ${HOME}/.local/share/rtv
 blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/signal-cli
-<<<<<<< HEAD
 blacklist ${HOME}/.local/share/sink
-=======
 blacklist ${HOME}/.local/share/smuxi
->>>>>>> 8d77d988d73a2404dca4db81b99eec51b84698e1
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/strawberry

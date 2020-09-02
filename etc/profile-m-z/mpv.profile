@@ -61,7 +61,7 @@ seccomp
 shell none
 tracelog
 
-private-bin env,mpv,python*,youtube-dl
+private-bin env,mpv,python*,youtube-dl,waf
 # private-cache causes slow OSD, see #2838
 #private-cache
 private-dev

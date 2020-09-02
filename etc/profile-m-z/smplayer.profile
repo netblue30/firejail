@@ -43,7 +43,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin env,mplayer,mpv,python*,smplayer,smtube,youtube-dl,waf
+private-bin env,mplayer,mpv,python*,smplayer,smtube,waf,youtube-dl
 private-dev
 private-tmp
 

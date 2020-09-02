@@ -64,7 +64,7 @@ tracelog
 
 # disable-mnt
 # Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg 
-# # Add "sh,bash,which,firefox" for hyperlinks 
+# Add "ignore private-bin" for hyperlinks or have a look at the private-bins in firefox.profile and firefox-common.profile.
 private-bin kube,sink_synchronizer
 private-cache
 private-dev

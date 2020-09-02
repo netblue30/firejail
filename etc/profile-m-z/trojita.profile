@@ -50,7 +50,7 @@ shell none
 tracelog
 
 # disable-mnt
-# Add "sh,bash,which,firefox" for hyperlinks 
+# Add "ignore private-bin" for hyperlinks or have a look at the private-bins in firefox.profile and firefox-common.profile.
 private-bin trojita
 private-cache
 private-dev

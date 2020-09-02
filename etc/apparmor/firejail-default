@@ -157,5 +157,5 @@ capability setfcap,
 #capability mac_admin,
 
 # Site-specific additions and overrides. See local/README for details.
-#include <local/firejail-local>
+#include <local/firejail-default>
 }

@@ -18,7 +18,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifdef HAVE_SECCOMP
 #include "firejail.h"
 #include "../include/seccomp.h"
 #include <sys/mman.h>
@@ -445,5 +444,3 @@ errexit:
 	printf("Cannot access seccomp filter.\n");
 	exit(1);
 }
-
-#endif // HAVE_SECCOMP

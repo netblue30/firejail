@@ -20,6 +20,7 @@
 
 #include "firejail.h"
 #include "../include/seccomp.h"
+#include <sys/mman.h>
 #include <sys/mount.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -140,6 +141,23 @@ void set_apparmor(void) {
 }
 #endif
 
+void seccomp_debug(void) {
+	if (arg_debug == 0)
+		return;
+
+	EUID_USER();
+	printf("Seccomp directory:\n");
+	ls(RUN_SECCOMP_DIR);
+	struct stat s;
+	if (stat(RUN_SECCOMP_LIST, &s) == 0) {
+		printf("Active seccomp files:\n");
+		cat(RUN_SECCOMP_LIST);
+	}
+	else
+		printf("No active seccomp files\n");
+	EUID_ROOT();
+}
+
 static void save_nogroups(void) {
 	if (arg_nogroups == 0)
 		return;
@@ -185,43 +203,18 @@ static void save_umask(void) {
 	}
 }
 
-static FILE *create_ready_for_join_file(void) {
-	FILE *fp = fopen(RUN_READY_FOR_JOIN, "wxe");
-	if (fp) {
-		ASSERT_PERMS_STREAM(fp, 0, 0, 0644);
-		return fp;
-	}
-	else {
-		fprintf(stderr, "Error: cannot create %s\n", RUN_READY_FOR_JOIN);
-		exit(1);
-	}
+static char *create_join_file(void) {
+	int fd = open(RUN_JOIN_FILE, O_RDWR|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	if (fd == -1)
+		errExit("open");
+	if (ftruncate(fd, 1) == -1)
+		errExit("ftruncate");
+	char *rv = mmap(NULL, 1, PROT_WRITE, MAP_SHARED, fd, 0);
+	if (rv == MAP_FAILED)
+		errExit("mmap");
+	close(fd);
+	return rv;
 }
-
-#ifdef HAVE_SECCOMP
-static void seccomp_debug(void) {
-	if (arg_debug == 0)
-		return;
-
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		// dropping privs before calling system(3)
-		drop_privs(1);
-		printf("Seccomp directory:\n");
-		int rv = system("ls -l "  RUN_SECCOMP_DIR);
-		(void) rv;
-		printf("Active seccomp files:\n");
-		rv = system("cat " RUN_SECCOMP_LIST);
-		(void) rv;
-#ifdef HAVE_GCOV
-		__gcov_flush();
-#endif
-		_exit(0);
-	}
-	waitpid(child, NULL, 0);
-}
-#endif
 
 static void sandbox_if_up(Bridge *br) {
 	assert(br);
@@ -479,7 +472,7 @@ static int ok_to_run(const char *program) {
 	return 0;
 }
 
-void start_application(int no_sandbox, FILE *fp) {
+void start_application(int no_sandbox, char *set_sandbox_status) {
 	// set environment
 	if (no_sandbox == 0) {
 		env_defaults();
@@ -499,16 +492,12 @@ void start_application(int no_sandbox, FILE *fp) {
 	if (arg_audit) {
 		assert(arg_audit_prog);
 
-		if (fp) {
-			fprintf(fp, "ready\n");
-			fclose(fp);
-		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-#ifdef HAVE_SECCOMP
 		seccomp_install_filters();
-#endif
+		if (set_sandbox_status)
+			*set_sandbox_status = SANDBOX_DONE;
 		execl(arg_audit_prog, arg_audit_prog, NULL);
 
 		perror("execl");
@@ -535,23 +524,19 @@ void start_application(int no_sandbox, FILE *fp) {
 		if (!arg_command && !arg_quiet)
 			print_time();
 
-		int rv = ok_to_run(cfg.original_argv[cfg.original_program_index]);
-
-		if (fp) {
-			fprintf(fp, "ready\n");
-			fclose(fp);
+		if (ok_to_run(cfg.original_argv[cfg.original_program_index]) == 0) {
+			fprintf(stderr, "Error: no suitable %s executable found\n", cfg.original_argv[cfg.original_program_index]);
+			exit(1);
 		}
+
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-#ifdef HAVE_SECCOMP
 		seccomp_install_filters();
-#endif
-		if (rv)
-			execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
-		else
-			fprintf(stderr, "Error: no suitable %s executable found\n", cfg.original_argv[cfg.original_program_index]);
-		exit(1);
+
+		if (set_sandbox_status)
+			*set_sandbox_status = SANDBOX_DONE;
+		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 	}
 	//****************************************
 	// start the program using a shell
@@ -598,16 +583,13 @@ void start_application(int no_sandbox, FILE *fp) {
 		if (!arg_command && !arg_quiet)
 			print_time();
 
-		if (fp) {
-			fprintf(fp, "ready\n");
-			fclose(fp);
-		}
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-#ifdef HAVE_SECCOMP
 		seccomp_install_filters();
-#endif
+
+		if (set_sandbox_status)
+			*set_sandbox_status = SANDBOX_DONE;
 		execvp(arg[0], arg);
 	}
 
@@ -809,7 +791,6 @@ int sandbox(void* sandbox_arg) {
 	//  - build seccomp filters
 	//  - create an empty /etc/ld.so.preload
 	//****************************
-#ifdef HAVE_SECCOMP
 	if (cfg.protocol) {
 		if (arg_debug)
 			printf("Build protocol filter: %s\n", cfg.protocol);
@@ -820,7 +801,6 @@ int sandbox(void* sandbox_arg) {
 		if (rv)
 			exit(rv);
 	}
-#endif
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
@@ -1119,7 +1099,6 @@ int sandbox(void* sandbox_arg) {
 	save_cgroup();
 
 	// set seccomp
-#ifdef HAVE_SECCOMP
 	// install protocol filter
 #ifdef SYS_socket
 	if (cfg.protocol) {
@@ -1163,17 +1142,15 @@ int sandbox(void* sandbox_arg) {
 	// make seccomp filters read-only
 	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);
 	seccomp_debug();
-#endif
 
 	// set capabilities
 	set_caps();
 
 	//****************************************
-	// communicate progress of sandbox set up
-	// to --join
+	// relay status information to join option
 	//****************************************
 
-	FILE *rj = create_ready_for_join_file();
+	char *set_sandbox_status = create_join_file();
 
 	//****************************************
 	// create a new user namespace
@@ -1255,10 +1232,10 @@ int sandbox(void* sandbox_arg) {
 			set_nice(cfg.nice);
 		set_rlimits();
 
-		start_application(0, rj);
+		start_application(0, set_sandbox_status);
 	}
 
-	fclose(rj);
+	munmap(set_sandbox_status, 1);
 
 	int status = monitor_application(app_pid);	// monitor application
 	flush_stdin();

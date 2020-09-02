@@ -10,23 +10,21 @@ VERSION=@PACKAGE_VERSION@
 NAME=@PACKAGE_NAME@
 PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
-HAVE_SECCOMP=@HAVE_SECCOMP@
 HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
 
 all: all_items man filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats
-SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/ftee/ftee
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/man/preproc
+SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/ftee/ftee
+SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
 MYDIRS = src/lib
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
-ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
-SBOX_APPS += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
+SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
-endif
-ALL_ITEMS = $(APPS) $(SBOX_APPS) $(MYLIBS)
+ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all_items $(ALL_ITEMS)
 all_items: $(ALL_ITEMS)
@@ -38,13 +36,13 @@ mydirs: mydirs $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
-$(MANPAGES): $(wildcard src/man/*.txt)
-	./mkman.sh $(VERSION) src/man/$(basename $@).txt $@
+
+$(MANPAGES): $(wildcard src/man/*.man)
+	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
 
 man: $(MANPAGES)
 
-filters: $(SECCOMP_FILTERS) $(SBOX_APPS)
-ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
+filters: $(SECCOMP_FILTERS) $(SBOX_APPS_NON_DUMPABLE)
 seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp default seccomp
 	src/fsec-optimize/fsec-optimize seccomp
@@ -65,7 +63,6 @@ seccomp.mdwx: src/fseccomp/fseccomp
 
 seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
-endif
 
 clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
@@ -106,7 +103,11 @@ endif
 	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS) src/firecfg/firecfg.config
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
+	# non-dumpable plugins
+	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
+	install -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
+	# contrib scripts
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail contrib/*.py contrib/*.sh
 	# vim syntax
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
@@ -130,7 +131,7 @@ ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	install -m 0644 etc/apparmor/firejail-default $(DESTDIR)$(sysconfdir)/apparmor.d
 	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/local ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/local; fi;"
 	# install apparmor profile customization file
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-local ]; then install -c -m 0644 etc/apparmor/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/.; fi;"
+	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default ]; then install -c -m 0644 etc/apparmor/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default; fi;"
 endif
 	# man pages
 	install -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
@@ -244,9 +245,7 @@ test-environment:
 	cd test/environment; ./environment.sh | grep TESTING
 
 test-filters:
-ifeq ($(HAVE_SECCOMP),-DHAVE_SECCOMP)
 	cd test/filters; ./filters.sh | grep TESTING
-endif
 
 test-arguments:
 	cd test/arguments; ./arguments.sh | grep TESTING

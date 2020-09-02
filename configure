@@ -624,7 +624,6 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
-HAVE_SECCOMP_H
 EGREP
 GREP
 CPP
@@ -641,7 +640,6 @@ HAVE_USERNS
 HAVE_NETWORK
 HAVE_GLOBALCFG
 HAVE_CHROOT
-HAVE_SECCOMP
 HAVE_PRIVATE_HOME
 HAVE_FIRETUNNEL
 HAVE_OVERLAYFS
@@ -710,7 +708,6 @@ enable_apparmor
 enable_overlayfs
 enable_firetunnel
 enable_private_home
-enable_seccomp
 enable_chroot
 enable_globalcfg
 enable_network
@@ -1363,7 +1360,6 @@ Optional Features:
   --disable-overlayfs     disable overlayfs
   --disable-firetunnel    disable firetunnel
   --disable-private-home  disable private home feature
-  --disable-seccomp       disable seccomp
   --disable-chroot        disable chroot
   --disable-globalcfg     if the global config file firejail.cfg is not
                           present, continue the program using defaults
@@ -3537,19 +3533,6 @@ if test "x$enable_private_home" != "xno"; then :
 
 fi
 
-HAVE_SECCOMP=""
-# Check whether --enable-seccomp was given.
-if test "${enable_seccomp+set}" = set; then :
-  enableval=$enable_seccomp;
-fi
-
-if test "x$enable_seccomp" != "xno"; then :
-
-	HAVE_SECCOMP="-DHAVE_SECCOMP"
-
-
-fi
-
 HAVE_CHROOT=""
 # Check whether --enable-chroot was given.
 if test "${enable_chroot+set}" = set; then :
@@ -4173,11 +4156,10 @@ fi
 
 ac_fn_c_check_header_mongrel "$LINENO" "linux/seccomp.h" "ac_cv_header_linux_seccomp_h" "$ac_includes_default"
 if test "x$ac_cv_header_linux_seccomp_h" = xyes; then :
-  HAVE_SECCOMP_H="-DHAVE_SECCOMP_H"
-else
-  HAVE_SECCOMP_H=""
-fi
 
+else
+  as_fn_error $? "*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***" "$LINENO" 5
+fi
 
 
 
@@ -4188,7 +4170,7 @@ fi
 
 ac_config_files="$ac_config_files mkdeb.sh"
 
-ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile"
+ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile src/man/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4918,6 +4900,7 @@ do
     "src/libpostexecseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/libpostexecseccomp/Makefile" ;;
     "src/fsec-optimize/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-optimize/Makefile" ;;
     "src/profstats/Makefile") CONFIG_FILES="$CONFIG_FILES src/profstats/Makefile" ;;
+    "src/man/Makefile") CONFIG_FILES="$CONFIG_FILES src/man/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
@@ -5382,8 +5365,6 @@ echo
 echo "Configuration options:"
 echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
-echo "   seccomp: $HAVE_SECCOMP"
-echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"

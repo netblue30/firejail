@@ -8,7 +8,7 @@ cd /home
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --rlimit-fsize=1024 --rlimit-nproc=1000 --rlimit-nofile=500 --rlimit-sigpending=200 --rlimit-as=123456789012\r"
+send -- "firejail --rlimit-fsize=1024 --rlimit-nproc=1000 --rlimit-nofile=500 --rlimit-sigpending=200 --rlimit-as=1234567890\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -30,7 +30,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.4\n";exit}
-	"Max address space         123456789012         123456789012"
+	"Max address space         1234567890           1234567890"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.5\n";exit}

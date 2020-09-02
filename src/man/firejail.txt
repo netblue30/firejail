@@ -106,6 +106,7 @@ All directories under /home are visible inside the sandbox. By default, only cur
 Example:
 .br
 $ firejail --allusers
+#ifdef HAVE_APPARMOR
 .TP
 \fB\-\-apparmor
 Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
@@ -122,7 +123,7 @@ $ firejail \-\-apparmor.print=browser
 5074:netblue:/usr/bin/firejail /usr/bin/firefox-esr
 .br
   AppArmor: firejail-default enforce
-
+#endif
 .TP
 \fB\-\-appimage
 Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started
@@ -273,6 +274,10 @@ $ firejail \-\-list
 $ firejail \-\-caps.print=3272
 
 .TP
+\fB\-\-cat=name|pid filename
+Print content of file from sandbox container, see FILE TRANSFER section for more details.
+
+.TP
 \fB\-\-cgroup=tasks-file
 Place the sandbox in the specified control group. tasks-file is the full path of cgroup tasks file.
 .br
@@ -344,7 +349,7 @@ $ firejail --dbus-system=filter --dbus-system.log --dbus-log=dbus.txt
 
 .TP
 \fB\-\-dbus-system=filter|none
-Set system DBus sandboxing policy. 
+Set system DBus sandboxing policy.
 .br
 
 .br
@@ -1059,7 +1064,7 @@ that are both writable and executable, to change mappings to be
 executable, or to create executable shared memory. The filter examines
 the arguments of mmap, mmap2, mprotect, pkey_mprotect, memfd_create
 and shmat system calls and returns error EPERM to the process (or
-kills it, see \-\-seccomp-error-action below) if necessary.
+kills it or log the attempt, see \-\-seccomp-error-action below) if necessary.
 .br
 
 .br
@@ -1604,6 +1609,7 @@ $ ls -l sandboxlog*
 \fB\-\-output-stderr=logfile
 Similar to \-\-output, but stderr is also stored.
 
+#ifdef HAVE_OVERLAYFS
 .TP
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
@@ -1670,7 +1676,7 @@ This option is not available on Grsecurity systems.
 Example:
 .br
 $ firejail \-\-overlay-tmpfs firefox
-
+#endif
 .TP
 \fB\-\-private
 Mount new /root and /home/user directories in temporary
@@ -2122,8 +2128,8 @@ Instead of dropping the syscall by returning EPERM, another error
 number can be returned using \fBsyscall:errno\fR syntax. This can be
 also changed globally with \-\-seccomp-error-action or
 in /etc/firejail/firejail.config file.  The process can also be killed
-by using \fBsyscall:kill\fR syntax.
-
+by using \fBsyscall:kill\fR syntax, or the attempt may be logged with
+\fBsyscall:log\fR.
 .br
 
 .br
@@ -2193,7 +2199,8 @@ Instead of dropping the syscall by returning EPERM, another error
 number can be returned using \fBsyscall:errno\fR syntax. This can be
 also changed globally with \-\-seccomp-error-action or
 in /etc/firejail/firejail.config file.  The process can also be killed
-by using \fBsyscall:kill\fR syntax.
+by using \fBsyscall:kill\fR syntax, or the attempt may be logged with
+\fBsyscall:log\fR.
 .br
 
 .br
@@ -2402,7 +2409,8 @@ By default, if a seccomp filter blocks a system call, the process gets
 EPERM as the error. With \-\-seccomp-error-action=error, another error
 number can be returned, for example ENOSYS or EACCES. The process can
 also be killed (like in versions <0.9.63 of Firejail) by using
-\-\-seccomp-error-action=kill syntax. Not killing the process weakens
+\-\-seccomp-error-action=kill syntax, or the attempt may be logged
+with \-\-seccomp-error-action=log. Not killing the process weakens
 Firejail slightly when trying to contain intrusion, but it may also
 allow tighter filters if the only alternative is to allow a system
 call.
@@ -2836,6 +2844,7 @@ Example:
 $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
 .br
 
+#ifdef HAVE_APPARMOR
 .SH APPARMOR
 .TP
 AppArmor support is disabled by default at compile time. Use --enable-apparmor configuration option to enable it:
@@ -2878,6 +2887,7 @@ To enable AppArmor confinement on top of your current Firejail security features
 
 .br
 $ firejail --apparmor firefox
+#endif
 
 .SH AUDIT
 Audit feature allows the user to point out gaps in security profiles. The
@@ -3029,6 +3039,12 @@ These features allow the user to inspect the filesystem container of an existing
 and transfer files between the container and the host filesystem.
 
 .TP
+\fB\-\-cat=name|pid filename
+Write content of a container file to standard out. The container is specified by name or PID.
+If standard out is a terminal, all ASCII control characters except new line and horizontal tab
+are replaced.
+
+.TP
 \fB\-\-get=name|pid filename
 Retrieve the container file and store it on the host in the current working directory.
 The container is specified by name or PID.
@@ -3070,6 +3086,10 @@ $ firejail \-\-get=mybrowser ~/Downloads/xpra-clipboard.png
 
 .br
 $ firejail \-\-put=mybrowser xpra-clipboard.png ~/Downloads/xpra-clipboard.png
+.br
+
+.br
+$ firejail \-\-cat=mybrowser ~/.bashrc
 .br
 
 .SH MONITORING
@@ -3259,7 +3279,7 @@ Homepage: https://firejail.wordpress.com
 \&\flfirejail-profile\fR\|(5),
 \&\flfirejail-login\fR\|(5),
 \&\flfirejail-users\fR\|(5),
-.UR https://github.com/netblue30/firejail/wiki 
+.UR https://github.com/netblue30/firejail/wiki
 .UE ,
-.UR https://github.com/netblue30/firejail 
+.UR https://github.com/netblue30/firejail
 .UE

@@ -186,7 +186,7 @@ typedef struct config_t {
 	char *seccomp_list_drop, *seccomp_list_drop32;	// seccomp drop list
 	char *seccomp_list_keep, *seccomp_list_keep32;	// seccomp keep list
 	char *protocol;			// protocol list
-	char *seccomp_error_action;			// error action: kill or errno
+	char *seccomp_error_action;			// error action: kill, log or errno
 
 	// rlimits
 	long long unsigned rlimit_cpu;
@@ -370,8 +370,9 @@ void check_user_namespace(void);
 char *guess_shell(void);
 
 // sandbox.c
+#define SANDBOX_DONE '1'
 int sandbox(void* sandbox_arg);
-void start_application(int no_sandbox, FILE *fp) __attribute__((noreturn));
+void start_application(int no_sandbox, char *set_sandbox_status) __attribute__((noreturn));
 void set_apparmor(void);
 
 // network_main.c
@@ -528,6 +529,9 @@ void disable_file_path(const char *path, const char *file);
 int safe_fd(const char *path, int flags);
 int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
+int read_pid(const char *name, pid_t *pid);
+pid_t require_pid(const char *name);
+void check_homedir(void);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.
@@ -728,10 +732,13 @@ void x11_xorg(void);
 // ls.c
 enum {
 	SANDBOX_FS_LS = 0,
+	SANDBOX_FS_CAT,
 	SANDBOX_FS_GET,
 	SANDBOX_FS_PUT,
 	SANDBOX_FS_MAX // this should always be the last entry
 };
+void ls(const char *path);
+void cat(const char *path);
 void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) __attribute__((noreturn));
 
 // checkcfg.c

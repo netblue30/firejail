@@ -8,6 +8,7 @@
 *.gcno
 *.DS_Store
 .directory
+*.man
 Makefile
 autom4te.cache/
 config.log
@@ -35,7 +36,8 @@ src/fsec-optimize/fsec-optimize
 src/fcopy/fcopy
 src/fldd/fldd
 src/fbuilder/fbuilder
-etc/profstats
+src/profstats/profstats
+src/man/preproc
 uids.h
 seccomp
 seccomp.debug

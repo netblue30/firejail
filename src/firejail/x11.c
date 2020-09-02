@@ -34,7 +34,7 @@
 
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 
@@ -1129,27 +1129,16 @@ void x11_start(int argc, char **argv) {
 }
 #endif
 
-// Porting notes:
-//
-// 1. merge #1100 from zackw:
-//     Attempting to run xauth -f directly on a file in /run/firejail/mnt/ directory fails on Debian 8
-//     with this message:
-//            xauth:  timeout in locking authority file /run/firejail/mnt/sec.Xauthority-Qt5Mu4
-//            Failed to create untrusted X cookie: xauth: exit 1
-//     For this reason we run xauth on a file in a tmpfs filesystem mounted on /tmp. This was
-//     a partial merge.
-//
-// 2. Since we cannot deal with the TOCTOU condition when mounting .Xauthority in user home
-// directory, we need to make sure /usr/bin/xauth executable is the real thing, and not
-// something picked up on $PATH.
-//
-// 3. If for any reason xauth command fails, we exit the sandbox. On Debian 8 this happens
-// when using a network namespace. Somehow, xauth tries to connect to the abstract socket,
-// and it fails because of the network namespace - it should try to connect to the regular
-// Unix socket! If we ignore the fail condition, the program will be started on X server without
-// the security extension loaded.
+
 void x11_xorg(void) {
 #ifdef HAVE_X11
+
+	// get DISPLAY env
+	char *display = getenv("DISPLAY");
+	if (!display) {
+		fputs("Error: --x11=xorg requires an 'outer' X11 server to use.\n", stderr);
+		exit(1);
+	}
 
 	// check xauth utility is present in the system
 	struct stat s;
@@ -1160,26 +1149,27 @@ void x11_xorg(void) {
 		fprintf(stderr, "   Fedora: sudo dnf install xorg-x11-xauth\n");
 		exit(1);
 	}
-	if (s.st_uid != 0 && s.st_gid != 0) {
+	if ((s.st_uid != 0 && s.st_gid != 0) || (s.st_mode & S_IWOTH)) {
 		fprintf(stderr, "Error: invalid /usr/bin/xauth executable\n");
 		exit(1);
 	}
-
-	// get DISPLAY env
-	char *display = getenv("DISPLAY");
-	if (!display) {
-		fputs("Error: --x11=xorg requires an 'outer' X11 server to use.\n", stderr);
+	if (s.st_size > 1024 * 1024) {
+		fprintf(stderr, "Error: /usr/bin/xauth executable is too large\n");
+		exit(1);
+	}
+	// copy /usr/bin/xauth in the sandbox and set mode to 0711
+	// users are not able to trace the running xauth this way
+	if (arg_debug)
+		printf("Copying /usr/bin/xauth to %s\n", RUN_XAUTH_FILE);
+	if (copy_file("/usr/bin/xauth", RUN_XAUTH_FILE, 0, 0, 0711)) {
+		fprintf(stderr, "Error: cannot copy /usr/bin/xauth executable\n");
 		exit(1);
 	}
 
-	// temporarily mount a tempfs on top of /tmp directory
-	if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
-		errExit("mounting /tmp");
-
-	// create the temporary .Xauthority file
-	if (arg_debug)
-		printf("Generating a new .Xauthority file\n");
-	char tmpfname[] = "/tmp/.tmpXauth-XXXXXX";
+	fmessage("Generating a new .Xauthority file\n");
+	mkdir_attr(RUN_XAUTHORITY_SEC_DIR, 0700, getuid(), getgid());
+	// create new Xauthority file in RUN_XAUTHORITY_SEC_DIR
+	char tmpfname[] = RUN_XAUTHORITY_SEC_DIR "/.Xauth-XXXXXX";
 	int fd = mkstemp(tmpfname);
 	if (fd == -1) {
 		fprintf(stderr, "Error: cannot create .Xauthority file\n");
@@ -1189,64 +1179,17 @@ void x11_xorg(void) {
 		errExit("chown");
 	close(fd);
 
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		drop_privs(1);
-		clearenv();
-#ifdef HAVE_GCOV
-		__gcov_flush();
-#endif
-		if (arg_debug) {
-			execlp("/usr/bin/xauth", "/usr/bin/xauth", "-v", "-f", tmpfname,
-			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);
-		}
-		else {
-                        execlp("/usr/bin/xauth", "/usr/bin/xauth", "-f", tmpfname,
-                        "generate", display, "MIT-MAGIC-COOKIE-1", "untrusted", NULL);
-		}
-
-		_exit(127);
-	}
-
-	// wait for the xauth process to finish
-	int status;
-	if (waitpid(child, &status, 0) != child)
-		errExit("waitpid");
-	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
-		/* success */
-	}
-	else if (WIFEXITED(status)) {
-		fprintf(stderr, "Failed to create untrusted X cookie: xauth: exit %d\n",
-			WEXITSTATUS(status));
-		exit(1);
-	}
-	else if (WIFSIGNALED(status)) {
-		fprintf(stderr, "Failed to create untrusted X cookie: xauth: %s\n",
-			strsignal(WTERMSIG(status)));
-		exit(1);
-	}
-	else {
-		fprintf(stderr, "Failed to create untrusted X cookie: "
-			"xauth: un-decodable exit status %04x\n", status);
-		exit(1);
-	}
-
-	// move the temporary file in RUN_XAUTHORITY_SEC_FILE in order to have it deleted
-	// automatically when the sandbox is closed (rename doesn't work)
+	// run xauth
 	if (arg_debug)
-		printf("Copying the new .Xauthority file\n");
-	copy_file_from_user_to_root(tmpfname, RUN_XAUTHORITY_SEC_FILE, getuid(), getgid(), 0600);
-	
-	/* coverity[toctou] */
-	unlink(tmpfname);
-	umount("/tmp");
+		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 8, RUN_XAUTH_FILE, "-v", "-f", tmpfname,
+			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted");
+	else
+		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 7, RUN_XAUTH_FILE, "-f", tmpfname,
+			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted");
+	// remove xauth copy
+	unlink(RUN_XAUTH_FILE);
 
-	// mount RUN_XAUTHORITY_SEC_FILE noexec, nodev, nosuid
-	fs_remount(RUN_XAUTHORITY_SEC_FILE, MOUNT_NOEXEC, 0);
-
-	// Ensure there is already a file in the usual location, so that bind-mount below will work.
+	// ensure there is already a file ~/.Xauthority, so that bind-mount below will work.
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
@@ -1257,13 +1200,12 @@ void x11_xorg(void) {
 			exit(1);
 		}
 	}
-
-	// get a file descriptor for .Xauthority
-	fd = safe_fd(dest, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
+	// get a file descriptor for ~/.Xauthority
+	int dst = safe_fd(dest, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (dst == -1)
 		errExit("safe_fd");
 	// check if the actual mount destination is a user owned regular file
-	if (fstat(fd, &s) == -1)
+	if (fstat(dst, &s) == -1)
 		errExit("fstat");
 	if (!S_ISREG(s.st_mode) || s.st_uid != getuid()) {
 		if (S_ISLNK(s.st_mode))
@@ -1274,31 +1216,49 @@ void x11_xorg(void) {
 	}
 	// preserve a read-only mount
 	struct statvfs vfs;
-	if (fstatvfs(fd, &vfs) == -1)
+	if (fstatvfs(dst, &vfs) == -1)
 		errExit("fstatvfs");
 	if ((vfs.f_flag & MS_RDONLY) == MS_RDONLY)
-		fs_remount(RUN_XAUTHORITY_SEC_FILE, MOUNT_READONLY, 0);
+		fs_remount(RUN_XAUTHORITY_SEC_DIR, MOUNT_READONLY, 0);
+
+	// always mounting the new Xauthority file noexec,nodev,nosuid
+	fs_remount(RUN_XAUTHORITY_SEC_DIR, MOUNT_NOEXEC, 0);
+
+	// get a file descriptor for the new Xauthority file
+	int src = safe_fd(tmpfname, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (src == -1)
+		errExit("safe_fd");
+	if (fstat(src, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode)) {
+		errno = EPERM;
+		errExit("mounting Xauthority file");
+	}
 
 	// mount via the link in /proc/self/fd
 	if (arg_debug)
-		printf("Mounting %s on %s\n", RUN_XAUTHORITY_SEC_FILE, dest);
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		printf("Mounting %s on %s\n", tmpfname, dest);
+	char *proc_src, *proc_dst;
+	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1)
 		errExit("asprintf");
-	if (mount(RUN_XAUTHORITY_SEC_FILE, proc, "none", MS_BIND, "mode=0600") == -1) {
+	if (asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
+		errExit("asprintf");
+	if (mount(proc_src, proc_dst, NULL, MS_BIND, NULL) == -1) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
-	free(proc);
-	close(fd);
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, dest) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
 		errLogExit("invalid .Xauthority mount");
+	free(proc_src);
+	free(proc_dst);
+	close(src);
+	close(dst);
 
 	ASSERT_PERMS(dest, getuid(), getgid(), 0600);
 
-	// blacklist .Xauthority file if it is not masked already
+	// blacklist user .Xauthority file if it is not masked already
 	char *envar = getenv("XAUTHORITY");
 	if (envar) {
 		char *rp = realpath(envar, NULL);
@@ -1312,6 +1272,11 @@ void x11_xorg(void) {
 	if (setenv("XAUTHORITY", dest, 1) < 0)
 		errExit("setenv");
 	free(dest);
+
+	// mask RUN_XAUTHORITY_SEC_DIR
+	if (mount("tmpfs", RUN_XAUTHORITY_SEC_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+		errExit("mounting tmpfs");
+	fs_logger2("tmpfs", RUN_XAUTHORITY_SEC_DIR);
 #endif
 }
 

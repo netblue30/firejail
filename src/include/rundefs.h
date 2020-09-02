@@ -99,8 +99,9 @@
 #define RUN_WHITELIST_SHARE_DIR		RUN_MNT_DIR "/orig-share"
 #define RUN_WHITELIST_MODULE_DIR	RUN_MNT_DIR "/orig-module"
 
-#define RUN_XAUTHORITY_FILE		RUN_MNT_DIR "/.Xauthority"
-#define RUN_XAUTHORITY_SEC_FILE		RUN_MNT_DIR "/sec.Xauthority"
+#define RUN_XAUTHORITY_FILE		RUN_MNT_DIR "/.Xauthority"		// private options
+#define RUN_XAUTH_FILE			RUN_MNT_DIR "/xauth"			// x11=xorg
+#define RUN_XAUTHORITY_SEC_DIR		RUN_MNT_DIR "/.sec.Xauthority"		// x11=xorg
 #define RUN_ASOUNDRC_FILE		RUN_MNT_DIR "/.asoundrc"
 #define RUN_HOSTNAME_FILE		RUN_MNT_DIR "/hostname"
 #define RUN_HOSTS_FILE			RUN_MNT_DIR "/hosts"
@@ -112,7 +113,7 @@
 #define RUN_FSLOGGER_FILE		RUN_MNT_DIR "/fslogger"
 #define RUN_TRACE_FILE			RUN_MNT_DIR "/trace"
 #define RUN_UMASK_FILE			RUN_MNT_DIR "/umask"
+#define RUN_JOIN_FILE	 		RUN_MNT_DIR "/join"
 #define RUN_OVERLAY_ROOT		RUN_MNT_DIR "/oroot"
-#define RUN_READY_FOR_JOIN 		RUN_MNT_DIR "/ready-for-join"
 
 #endif

@@ -31,7 +31,7 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <errno.h>
-#include <limits.h>
+//#include <limits.h>
 #include <sys/file.h>
 #include <sys/prctl.h>
 #include <signal.h>
@@ -153,15 +153,6 @@ int arg_dbus_log_user = 0;
 int arg_dbus_log_system = 0;
 int login_shell = 0;
 
-//**********************************************************************************
-// work in progress!!!
-//**********************************************************************************
-//#define POSTMORTEM
-#ifdef POSTMORTEM
-#include <grp.h>
-pid_t pm_child = 0;
-#endif
-
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
 
@@ -196,19 +187,6 @@ static void my_handler(int s) {
 	fmessage("\nParent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
 
-#ifdef POSTMORTEM
-printf("attempt to kill %d\n", pm_child);
-	if (pm_child) {
-		if (waitpid(pm_child, NULL, WNOHANG) == 0) {
-			if (has_handler(pm_child, s)) // signals are not delivered if there is no handler yet
-				kill(pm_child, s);
-			else
-				kill(pm_child, SIGKILL);
-			waitpid(pm_child, NULL, 0);
-		}
-	}
-#endif
-
 	if (waitpid(child, NULL, WNOHANG) == 0) {
 		if (has_handler(child, s)) // signals are not delivered if there is no handler yet
 			kill(child, s);
@@ -237,74 +215,6 @@ static void install_handler(void) {
 	sigaction(SIGTERM, &sga, NULL);
 }
 
-// return 1 if error, 0 if a valid pid was found
-static int extract_pid(const char *name, pid_t *pid) {
-	int retval = 0;
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-
-	EUID_ROOT();
-	if (name2pid(name, pid)) {
-		retval = 1;
-	}
-	EUID_USER();
-	return retval;
-}
-
-// return 1 if error, 0 if a valid pid was found
-static int read_pid(const char *name, pid_t *pid) {
-	char *endptr;
-	errno = 0;
-	long int pidtmp = strtol(name, &endptr, 10);
-	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
-		|| (errno != 0 && pidtmp == 0)) {
-		return extract_pid(name,pid);
-	}
-	// endptr points to '\0' char in name if the entire string is valid
-	if (endptr == NULL || endptr[0]!='\0') {
-		return extract_pid(name,pid);
-	}
-	*pid =(pid_t)pidtmp;
-	return 0;
-}
-
-static pid_t require_pid(const char *name) {
-	pid_t pid;
-	if (read_pid(name,&pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-	return pid;
-}
-
-// return 1 if there is a link somewhere in path of directory
-static int has_link(const char *dir) {
-	assert(dir);
-	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOTDIR && is_dir(dir))
-			return 1;
-	}
-	else
-		close(fd);
-	return 0;
-}
-
-static void check_homedir(void) {
-	assert(cfg.homedir);
-	if (cfg.homedir[0] != '/') {
-		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
-		exit(1);
-	}
-	// symlinks are rejected in many places
-	if (has_link(cfg.homedir)) {
-		fprintf(stderr, "No full support for symbolic links in path of user directory.\n"
-			"Please provide resolved path in password database (/etc/passwd).\n\n");
-	}
-}
 
 // init configuration
 static void init_cfg(int argc, char **argv) {
@@ -569,7 +479,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	//*************************************
 	// independent commands - the program will exit!
 	//*************************************
-#ifdef HAVE_SECCOMP
 	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls");
@@ -619,7 +528,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("seccomp");
 		exit(0);
 	}
-#endif
 	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
 		pid_t pid = require_pid(argv[i] + 16);
 
@@ -811,8 +719,39 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 
 			// list directory contents
+			if (!arg_debug)
+				 arg_quiet = 1;
 			pid_t pid = require_pid(argv[i] + 5);
 			sandboxfs(SANDBOX_FS_LS, pid, path, NULL);
+			exit(0);
+		}
+		else
+			exit_err_feature("file transfer");
+	}
+	else if (strncmp(argv[i], "--cat=", 6) == 0) {
+		if (checkcfg(CFG_FILE_TRANSFER)) {
+			logargs(argc, argv);
+			if (arg_private_cwd) {
+				fprintf(stderr, "Error: --cat and --private-cwd options are mutually exclusive\n");
+				exit(1);
+			}
+
+			if ((i + 2) != argc) {
+				fprintf(stderr, "Error: invalid --cat option, path expected\n");
+				exit(1);
+			}
+			char *path = argv[i + 1];
+			invalid_filename(path, 0); // no globbing
+			if (strstr(path, "..")) {
+				fprintf(stderr, "Error: invalid file name %s\n", path);
+				exit(1);
+			}
+
+			// write file contents to stdout
+			if (!arg_debug)
+				 arg_quiet = 1;
+			pid_t pid = require_pid(argv[i] + 6);
+			sandboxfs(SANDBOX_FS_CAT, pid, path, NULL);
 			exit(0);
 		}
 		else
@@ -1009,7 +948,6 @@ void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, b
 	(void) native;
 }
 
-#ifdef HAVE_SECCOMP
 static int check_postexec(const char *list) {
 	char *prelist, *postlist;
 
@@ -1020,7 +958,6 @@ static int check_postexec(const char *list) {
 	}
 	return 0;
 }
-#endif
 
 //*******************************************
 // Main program
@@ -1274,6 +1211,10 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
+#ifdef WARN_DUMPABLE
+	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid())
+		fprintf(stderr, "Error: Firejail is dumpable\n");
+#endif
 
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))
@@ -1319,7 +1260,6 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--apparmor") == 0)
 			arg_apparmor = 1;
 #endif
-#ifdef HAVE_SECCOMP
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (cfg.protocol) {
@@ -1441,6 +1381,8 @@ int main(int argc, char **argv, char **envp) {
 				if (config_seccomp_error_action == -1) {
 					if (strcmp(argv[i] + 23, "kill") == 0)
 						arg_seccomp_error_action = SECCOMP_RET_KILL;
+					else if (strcmp(argv[i] + 23, "log") == 0)
+						arg_seccomp_error_action = SECCOMP_RET_LOG;
 					else {
 						arg_seccomp_error_action = errno_find_name(argv[i] + 23);
 						if (arg_seccomp_error_action == -1)
@@ -1455,7 +1397,6 @@ int main(int argc, char **argv, char **envp) {
 			} else
 				exit_err_feature("seccomp");
 		}
-#endif
 		else if (strcmp(argv[i], "--caps") == 0) {
 			arg_caps_default_filter = 1;
 			arg_caps_cmdline = 1;
@@ -2836,10 +2777,9 @@ int main(int argc, char **argv, char **envp) {
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
 
-#ifdef HAVE_SECCOMP
 	if (arg_seccomp)
 		arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);
-#endif
+
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
 	if (need_preload && (cfg.seccomp_list32 || cfg.seccomp_list_drop32 || cfg.seccomp_list_keep32))
 		fwarning("preload libraries (trace, tracelog, postexecseccomp due to seccomp.drop=execve etc.) are incompatible with 32 bit filters\n");
@@ -3068,44 +3008,6 @@ int main(int argc, char **argv, char **envp) {
 		close(lockfd_network);
 	}
 	EUID_USER();
-
-
-#ifdef POSTMORTEM
-	pm_child = fork();
-	if (pm_child == -1)
-		fprintf(stderr, "Error: cannot start POSTMORTEM process\n");
-	else if (pm_child == 0) {
-		// running --join as root
-		EUID_ROOT();
-		int rv = setgroups(0, NULL);
-		rv |= setuid(0);
-		rv |= setgid(0);
-		if (rv) {
-			fprintf(stderr, "Error: cannot start POSTMORTEM process\n");
-			exit(1);
-		}
-
-		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
-/*problem???*/	sleep(1); // we need to give the sandbox some time to start the namespaces
-		char *joincmd;
-		if (asprintf(&joincmd, "--join-network=%d", child) == -1)
-			errExit("asprintf");
-
-		// we join only the network ns, the filesystem is intact so we can find tcpdump
-		char *arg[] =  {
-			"/usr/bin/firejail",
-			joincmd,
-			"/usr/sbin/tcpdump",
-			"-n",
-			"-q",
-			NULL
-		};
-		execvp(arg[0], arg);
-		assert(0);
-printf("**********************************\n");
-		exit(1);
-	}
-#endif
 
 	int status = 0;
 	//*****************************

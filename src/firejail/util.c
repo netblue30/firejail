@@ -29,10 +29,11 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <sys/wait.h>
+#include <limits.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 #define MAX_GROUPS 1024
@@ -280,8 +281,9 @@ static int copy_file_by_fd(int src, int dst) {
 			done += rv;
 		}
 	}
-//	fflush(0);
-	return 0;
+	if (len == 0)
+		return 0;
+	return -1;
 }
 
 // return -1 if error, 0 if no error; if destname already exists, return error
@@ -646,8 +648,13 @@ int find_child(pid_t parent, pid_t *child) {
 					fprintf(stderr, "Error: cannot read /proc file\n");
 					exit(1);
 				}
-				if (parent == atoi(ptr))
-					*child = pid;
+				if (parent == atoi(ptr)) {
+					// we don't want /usr/bin/xdg-dbus-proxy!
+					char *cmdline = pid_proc_cmdline(pid);
+					if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) != 0)
+						*child = pid;
+					free(cmdline);
+				}
 				break;		  // stop reading the file
 			}
 		}
@@ -1263,5 +1270,74 @@ void enter_network_namespace(pid_t pid) {
 	if (join_namespace(child, "net")) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");
 		exit(1);
+	}
+}
+
+// return 1 if error, 0 if a valid pid was found
+static int extract_pid(const char *name, pid_t *pid) {
+	int retval = 0;
+	EUID_ASSERT();
+	if (!name || strlen(name) == 0) {
+		fprintf(stderr, "Error: invalid sandbox name\n");
+		exit(1);
+	}
+
+	EUID_ROOT();
+	if (name2pid(name, pid)) {
+		retval = 1;
+	}
+	EUID_USER();
+	return retval;
+}
+
+// return 1 if error, 0 if a valid pid was found
+int read_pid(const char *name, pid_t *pid) {
+	char *endptr;
+	errno = 0;
+	long int pidtmp = strtol(name, &endptr, 10);
+	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
+		|| (errno != 0 && pidtmp == 0)) {
+		return extract_pid(name,pid);
+	}
+	// endptr points to '\0' char in name if the entire string is valid
+	if (endptr == NULL || endptr[0]!='\0') {
+		return extract_pid(name,pid);
+	}
+	*pid =(pid_t)pidtmp;
+	return 0;
+}
+
+pid_t require_pid(const char *name) {
+	pid_t pid;
+	if (read_pid(name,&pid)) {
+		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
+		exit(1);
+	}
+	return pid;
+}
+
+// return 1 if there is a link somewhere in path of directory
+static int has_link(const char *dir) {
+	assert(dir);
+	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1) {
+		if (errno == ENOTDIR && is_dir(dir))
+			return 1;
+	}
+	else
+		close(fd);
+	return 0;
+}
+
+void check_homedir(void) {
+	assert(cfg.homedir);
+	if (cfg.homedir[0] != '/') {
+		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
+		exit(1);
+	}
+	// symlinks are rejected in many places
+	if (has_link(cfg.homedir)) {
+		fprintf(stderr, "No full support for symbolic links in path of user directory.\n"
+			"Please provide resolved path in password database (/etc/passwd).\n\n");
 	}
 }

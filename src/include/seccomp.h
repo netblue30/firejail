@@ -96,24 +96,7 @@
 # define PR_SET_NO_NEW_PRIVS 38
 #endif
 
-#if HAVE_SECCOMP_H
 #include <linux/seccomp.h>
-#else
-#define SECCOMP_MODE_FILTER	2
-#define SECCOMP_RET_KILL	0x00000000U
-#define SECCOMP_RET_TRAP	0x00030000U
-#define SECCOMP_RET_ALLOW	0x7fff0000U
-#define SECCOMP_RET_ERRNO	0x00050000U
-#define SECCOMP_RET_DATA        0x0000ffffU
-
-struct seccomp_data {
-    int nr;
-    __u32 arch;
-    __u64 instruction_pointer;
-    __u64 args[6];
-};
-#endif
-
 #ifndef SECCOMP_RET_LOG
 #define SECCOMP_RET_LOG		0x7ffc0000U
 #endif
@@ -274,7 +257,7 @@ struct seccomp_data {
 #define RETURN_ERRNO(nr) \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ERRNO | nr)
 
-extern int arg_seccomp_error_action;	// error action: errno or kill
+extern int arg_seccomp_error_action;	// error action: errno, log or kill
 #define KILL_OR_RETURN_ERRNO \
 	BPF_STMT(BPF_RET+BPF_K, arg_seccomp_error_action)
 

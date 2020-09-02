@@ -555,10 +555,8 @@ void dbus_apply_policy(void) {
 		return;
 
 	// --protocol=unix
-#ifdef HAVE_SECCOMP
 	if (cfg.protocol && !strstr(cfg.protocol, "unix"))
 		return;
-#endif
 
 	fwarning("An abstract unix socket for session D-BUS might still be available. Use --net or remove unix from --protocol set.\n");
 }

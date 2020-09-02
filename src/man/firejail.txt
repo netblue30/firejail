@@ -106,6 +106,7 @@ All directories under /home are visible inside the sandbox. By default, only cur
 Example:
 .br
 $ firejail --allusers
+#ifdef HAVE_APPARMOR
 .TP
 \fB\-\-apparmor
 Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
@@ -122,7 +123,7 @@ $ firejail \-\-apparmor.print=browser
 5074:netblue:/usr/bin/firejail /usr/bin/firefox-esr
 .br
   AppArmor: firejail-default enforce
-
+#endif
 .TP
 \fB\-\-appimage
 Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started
@@ -1608,6 +1609,7 @@ $ ls -l sandboxlog*
 \fB\-\-output-stderr=logfile
 Similar to \-\-output, but stderr is also stored.
 
+#ifdef HAVE_OVERLAYFS
 .TP
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
@@ -1674,7 +1676,7 @@ This option is not available on Grsecurity systems.
 Example:
 .br
 $ firejail \-\-overlay-tmpfs firefox
-
+#endif
 .TP
 \fB\-\-private
 Mount new /root and /home/user directories in temporary
@@ -2842,6 +2844,7 @@ Example:
 $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
 .br
 
+#ifdef HAVE_APPARMOR
 .SH APPARMOR
 .TP
 AppArmor support is disabled by default at compile time. Use --enable-apparmor configuration option to enable it:
@@ -2884,6 +2887,7 @@ To enable AppArmor confinement on top of your current Firejail security features
 
 .br
 $ firejail --apparmor firefox
+#endif
 
 .SH AUDIT
 Audit feature allows the user to point out gaps in security profiles. The

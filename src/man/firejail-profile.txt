@@ -245,6 +245,7 @@ before the sandbox is started. The file is created if it doesn't already exist.
 .TP
 \fBnoexec file_or_directory
 Remount the file or the directory noexec, nodev and nosuid.
+#ifdef HAVE_OVERLAYFS
 .TP
 \fBoverlay
 Mount  a  filesystem  overlay  on top of the current filesystem.
@@ -257,6 +258,7 @@ The overlay is stored in $HOME/.firejail/name  directory.
 \fBoverlay-tmpfs
 Mount  a  filesystem  overlay  on top of the current filesystem.
 All filesystem  modifications are discarded when the sandbox is closed.
+#endif
 .TP
 \fBprivate
 Mount new /root and /home/user directories in temporary
@@ -369,9 +371,11 @@ The following security filters are currently implemented:
 .TP
 \fBallow-debuggers
 Allow tools such as strace and gdb inside the sandbox by whitelisting system calls ptrace and process_vm_readv.
+#ifdef HAVE_APPARMOR
 .TP
 \fBapparmor
 Enable AppArmor confinement.
+#endif
 .TP
 \fBcaps
 Enable default Linux capabilities filter.
@@ -877,5 +881,5 @@ Homepage: https://firejail.wordpress.com
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-login\fR\|(5),
 \&\flfirejail-users\fR\|(5),
-.UR https://github.com/netblue30/firejail/wiki/Creating-Profiles 
-.UE 
+.UR https://github.com/netblue30/firejail/wiki/Creating-Profiles
+.UE

@@ -492,6 +492,8 @@ KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
 	- update fix_private-bin.py
 	- fix meld
+kortewegdevries (https://github.com/kortewegdevries)
+	- a whole bunch of new profiles and fixes
 Kristóf Marussy (https://github.com/kris7t)
 	- dns support
 Kunal Mehta (https://github.com/legoktm)

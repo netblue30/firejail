@@ -33,7 +33,7 @@
 
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 #define MAX_GROUPS 1024
@@ -281,8 +281,9 @@ static int copy_file_by_fd(int src, int dst) {
 			done += rv;
 		}
 	}
-//	fflush(0);
-	return 0;
+	if (len == 0)
+		return 0;
+	return -1;
 }
 
 // return -1 if error, 0 if no error; if destname already exists, return error

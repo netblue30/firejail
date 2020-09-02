@@ -76,14 +76,6 @@ AS_IF([test "x$enable_private_home" != "xno"], [
 	AC_SUBST(HAVE_PRIVATE_HOME)
 ])
 
-HAVE_SECCOMP=""
-AC_ARG_ENABLE([seccomp],
-    AS_HELP_STRING([--disable-seccomp], [disable seccomp]))
-AS_IF([test "x$enable_seccomp" != "xno"], [
-	HAVE_SECCOMP="-DHAVE_SECCOMP"
-	AC_SUBST(HAVE_SECCOMP)
-])
-
 HAVE_CHROOT=""
 AC_ARG_ENABLE([chroot],
     AS_HELP_STRING([--disable-chroot], [disable chroot]))
@@ -196,8 +188,7 @@ AS_IF([test "x$enable_selinux" = "xyes"], [
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
 AC_CHECK_HEADER(pthread.h,,AC_MSG_ERROR([*** POSIX thread support not installed ***]))
-AC_CHECK_HEADER([linux/seccomp.h], HAVE_SECCOMP_H="-DHAVE_SECCOMP_H", HAVE_SECCOMP_H="")
-AC_SUBST(HAVE_SECCOMP_H)
+AC_CHECK_HEADER([linux/seccomp.h],,AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***]))
 
 # set sysconfdir
 if test "$prefix" = /usr; then
@@ -208,14 +199,12 @@ AC_CONFIG_FILES([mkdeb.sh], [chmod +x mkdeb.sh])
 AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
 src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
-src/profstats/Makefile)
+src/profstats/Makefile src/man/Makefile)
 
 echo
 echo "Configuration options:"
 echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
-echo "   seccomp: $HAVE_SECCOMP"
-echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"

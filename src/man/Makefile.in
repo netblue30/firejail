@@ -1,0 +1,17 @@
+all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man
+
+include ../common.mk
+
+%.o : %.c $(H_FILE_LIST)
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+
+preproc: $(OBJS)
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
+
+%.man: %.txt preproc
+	./preproc $(MANFLAGS) $<
+
+clean:; rm -fr *.o preproc *.gcov *.gcda *.gcno *.plist *.man
+
+distclean: clean
+	rm -fr Makefile

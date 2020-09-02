@@ -1609,6 +1609,7 @@ $ ls -l sandboxlog*
 \fB\-\-output-stderr=logfile
 Similar to \-\-output, but stderr is also stored.
 
+#ifdef HAVE_OVERLAYFS
 .TP
 \fB\-\-overlay
 Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
@@ -1675,7 +1676,7 @@ This option is not available on Grsecurity systems.
 Example:
 .br
 $ firejail \-\-overlay-tmpfs firefox
-
+#endif
 .TP
 \fB\-\-private
 Mount new /root and /home/user directories in temporary

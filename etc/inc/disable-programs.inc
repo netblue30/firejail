@@ -285,6 +285,7 @@ blacklist ${HOME}/.config/liferea
 blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mailtransports
+blacklist ${HOME}/.local/share/man
 blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
@@ -337,6 +338,7 @@ blacklist ${HOME}/.config/pluma
 blacklist ${HOME}/.config/ppsspp
 blacklist ${HOME}/.config/pragha
 blacklist ${HOME}/.config/profanity
+blacklist ${HOME}/.config/psi
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
@@ -356,6 +358,7 @@ blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/smtube
+blacklist ${HOME}/.config/smuxi
 blacklist ${HOME}/.config/snox
 blacklist ${HOME}/.config/sound-juicer
 blacklist ${HOME}/.config/specialmailcollectionsrc
@@ -547,6 +550,7 @@ blacklist ${HOME}/.local/share/Kingsoft
 blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/PBE
+blacklist ${HOME}/.local/share/Psi
 blacklist ${HOME}/.local/share/QGIS
 blacklist ${HOME}/.local/share/QMediathekView
 blacklist ${HOME}/.local/share/QuiteRss
@@ -664,6 +668,7 @@ blacklist ${HOME}/.local/share/Paradox Interactive
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/plasma_notes
 blacklist ${HOME}/.local/share/profanity
+blacklist ${HOME}/.local/share/psi
 blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/quadrapassel
 blacklist ${HOME}/.local/share/qpdfview
@@ -673,6 +678,7 @@ blacklist ${HOME}/.local/share/rhythmbox
 blacklist ${HOME}/.local/share/rtv
 blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/signal-cli
+blacklist ${HOME}/.local/share/smuxi
 blacklist ${HOME}/.local/share/spotify
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/strawberry
@@ -832,6 +838,7 @@ blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/NewsFlashGTK
 blacklist ${HOME}/.cache/Otter
+blacklist ${HOME}/.cache/Psi
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/Quotient/quaternion
 blacklist ${HOME}/.cache/Shortwave
@@ -932,12 +939,14 @@ blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/pip
 blacklist ${HOME}/.cache/plasmashell
 blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
+blacklist ${HOME}/.cache/psi
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/rhythmbox
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
+blacklist ${HOME}/.cache/smuxi
 blacklist ${HOME}/.cache/snox
 blacklist ${HOME}/.cache/spotify
 blacklist ${HOME}/.cache/strawberry

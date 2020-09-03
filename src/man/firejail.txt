@@ -137,8 +137,9 @@ $ firejail --appimage krita-3.0-x86_64.appimage
 .br
 $ firejail --appimage --private krita-3.0-x86_64.appimage
 .br
+#ifdef HAVE_X11
 $ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
-
+#endif
 .TP
 \fB\-\-audit
 Audit the sandbox, see \fBAUDIT\fR section for more details.
@@ -1029,8 +1030,10 @@ $ firejail \-\-list
 .br
 7056:netblue:torrent:firejail \-\-net=eth0 transmission-gtk
 .br
+#ifdef HAVE_USERNS
 7064:netblue::firejail \-\-noroot xterm
 .br
+#endif
 .TP
 \fB\-\-ls=name|pid dir_or_filename
 List files in sandbox container, see \fBFILE TRANSFER\fR section for more details.
@@ -1514,7 +1517,7 @@ Parent pid 8553, child pid 8554
 Child process initialized
 .br
 [...]
-
+#if HAVE_USERNS
 .TP
 \fB\-\-noroot
 Install a user namespace with a single user - the current user.
@@ -1538,7 +1541,7 @@ $ ping google.com
 ping: icmp open socket: Operation not permitted
 .br
 $
-
+#endif
 .TP
 \fB\-\-nosound
 Disable sound system.
@@ -2684,7 +2687,7 @@ Example:
 .br
 $ sudo firejail --writable-var-log
 
-
+#ifdef HAVE_X11
 .TP
 \fB\-\-x11
 Sandbox the application using Xpra, Xephyr, Xvfb or Xorg security extension.
@@ -2845,7 +2848,7 @@ Example:
 .br
 $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
 .br
-
+#endif
 #ifdef HAVE_APPARMOR
 .SH APPARMOR
 .TP

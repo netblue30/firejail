@@ -401,10 +401,12 @@ Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
 cannot acquire new privileges using execve(2);  in particular,
 this means that calling a suid binary (or one with file capabilities)
 does not result in an increase of privilege.
+#ifdef HAVE_USERNS
 .TP
 \fBnoroot
 Use this command  to enable an user namespace. The namespace has only one user, the current user.
 There is no root account (uid 0) defined in the namespace.
+#endif
 .TP
 \fBprotocol protocol1,protocol2,protocol3
 Enable protocol filter. The filter is based on seccomp and  checks the
@@ -443,6 +445,7 @@ Enable seccomp filter and whitelist the system calls in the list for 32 bit syst
 Return a different error instead of EPERM to the process, kill it when
 an attempt is made to call a blocked system call, or allow but log the
 attempt.
+#ifdef HAVE_X11
 .TP
 \fBx11
 Enable X11 sandboxing.
@@ -476,7 +479,7 @@ Example:
 xephyr-screen 640x480
 .br
 x11 xephyr
-
+#endif
 .SH DBus filtering
 
 Access to the session and system DBus UNIX sockets can be allowed, filtered or

@@ -154,7 +154,7 @@ install: all
 	$(MAKE) realinstall
 
 install-strip: all
-	strip $(ALL_ITEMS)
+	-strip $(ALL_ITEMS)
 	$(MAKE) realinstall
 
 uninstall:

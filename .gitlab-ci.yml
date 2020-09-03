@@ -88,6 +88,6 @@ debian_ci:
         - git add debian && git commit -m "add debian/"
         - export CI_COMMIT_SHA=$(git rev-parse HEAD)
     script:
-        - apt-get --no-install-recommends install gawk
+        - apt-get --no-install-recommends install -y -qq gawk
         - gitlab-ci-git-buildpackage
         - gitlab-ci-lintian

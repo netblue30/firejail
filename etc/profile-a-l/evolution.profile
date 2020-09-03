@@ -74,11 +74,11 @@ tracelog
 
 # disable-mnt
 # Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg
-# Add "sh,bash,which,firefox" for hyperlinks 
+# To use private-bin add all evolution,gpg,pinentry binaries and follow firefox.profile for hyperlink support
 # private-bin evolution
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gtk-2.0,gtk-3.0,groups,hostname,hosts,mailname,passwd,pki,resolv.conf,selinux,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,groups,gtk-2.0,gtk-3.0,hostname,hosts,mailname,passwd,pki,resolv.conf,selinux,ssl,xdg
 private-tmp
 writable-run-user
 writable-var

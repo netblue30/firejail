@@ -126,7 +126,7 @@ seccomp !chroot,!io_getevents,!io_setup,!io_submit,!ioprio_set
 
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gcrypt,gtk-2.0,gtk-3.0,groups,hostname,hosts,ld.so.preload,ld.so.cache,mailname,nsswitch.conf,passwd,pki,resolv.conf,selinux,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gcrypt,groups,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,mailname,nsswitch.conf,passwd,pki,resolv.conf,selinux,ssl,xdg
 # private-tmp - interrupts connection to akonadi, breaks opening of email attachments
 writable-run-user
 writable-var

@@ -135,9 +135,11 @@ blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Standard Notes
 blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
+blacklist ${HOME}/.config/Twitch
 blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Wire
+blacklist ${HOME}/.config/Youtube
 blacklist ${HOME}/.config/Zeal
 blacklist ${HOME}/.config/ZeGrapher Project
 blacklist ${HOME}/.config/abiword
@@ -410,6 +412,8 @@ blacklist ${HOME}/.config/yandex-browser
 blacklist ${HOME}/.config/yandex-browser-beta
 blacklist ${HOME}/.config/yelp
 blacklist ${HOME}/.config/youtube-dl
+blacklist ${HOME}/.config/youtubemusic-nativefier-040164
+blacklist ${HOME}/.config/youtube-music-desktop-app
 blacklist ${HOME}/.config/youtube-viewer
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zoomus.conf

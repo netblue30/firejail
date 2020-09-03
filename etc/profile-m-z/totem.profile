@@ -33,7 +33,10 @@ whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}
 whitelist ${VIDEOS}
+whitelist /usr/share/totem
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 # apparmor - makes settings immutable
@@ -57,4 +60,4 @@ private-tmp
 
 # makes settings immutable
 # dbus-user none
-# dbus-system none
+dbus-system none

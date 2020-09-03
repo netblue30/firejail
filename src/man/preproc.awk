@@ -20,20 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-function errexit(msg) {
-	print msg > "/dev/stderr"
-	exit 1
-}
-
 BEGIN {
 	macros[0] = 0
 	for (arg in ARGV) {
 		if (ARGV[arg] ~ /^-D[A-Z_]+$/) {
 			macros[length(macros) + 1] = substr(ARGV[arg], 3)
-		} else {
-			if (ARGV[arg] == "gawk" || ARGV[arg] == "awk")
-				continue
-#			errexit("Invalid commandline argument" ARGV[arg])
 		}
 		ARGV[arg] = ""
 	}

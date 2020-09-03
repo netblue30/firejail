@@ -286,7 +286,7 @@ Place the sandbox in the specified control group. tasks-file is the full path of
 Example:
 .br
 # firejail \-\-cgroup=/sys/fs/cgroup/g1/tasks
-
+#ifdef HAVE_CHROOT
 .TP
 \fB\-\-chroot=dirname
 Chroot the sandbox into a root filesystem. Unlike the regular filesystem container,
@@ -298,7 +298,7 @@ regular user, nonewprivs and a default capabilities filter are enabled.
 Example:
 .br
 $ firejail \-\-chroot=/media/ubuntu warzone2100
-
+#endif
 .TP
 \fB\-\-cpu=cpu-number,cpu-number,cpu-number
 Set CPU affinity.
@@ -1813,7 +1813,7 @@ Example:
 $ firejail --private-etc=group,hostname,localtime, \\
 .br
 nsswitch.conf,passwd,resolv.conf,default/motd-news
-
+#ifdef HAVE_PRIVATE_HOME
 .TP
 \fB\-\-private-home=file,directory
 Build a new user home in a temporary
@@ -1829,7 +1829,7 @@ closed.
 Example:
 .br
 $ firejail \-\-private-home=.mozilla firefox
-
+#endif
 .TP
 \fB\-\-private-lib=file,directory
 This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
@@ -2556,6 +2556,7 @@ $ firejail \-\-tree
 .br
   11970:netblue:transmission-gtk
 
+#ifdef HAVE_FIRETUNNEL
 .TP
 \fB\-\-tunnel[=devname]
 Connect the sandbox to a network overlay/VPN tunnel created by firetunnel utility. This options
@@ -2576,6 +2577,7 @@ Example:
 .br
 $ firejail --tunnel firefox
 .br
+#endif
 .TP
 \fB\-\-version
 Print program version/compile time support and exit.

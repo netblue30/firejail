@@ -296,6 +296,7 @@ filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
 the /etc directory.
 All modifications are discarded when the sandbox is closed.
+#ifdef HAVE_PRIVATE_HOME
 .TP
 \fBprivate-home file,directory
 Build a new user home in a temporary
@@ -305,6 +306,7 @@ The files and directories in the list must be expressed as relative to
 the current user's home directory.
 All modifications are discarded when the sandbox is
 closed.
+#endif
 .TP
 \fBprivate-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.

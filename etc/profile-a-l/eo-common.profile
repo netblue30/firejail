@@ -17,6 +17,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-write-mnt.inc
 
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

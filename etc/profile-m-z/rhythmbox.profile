@@ -14,6 +14,9 @@ noblacklist ${HOME}/.local/share/rhythmbox
 include allow-python2.inc
 include allow-python3.inc
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -55,6 +58,6 @@ dbus-user.own org.mpris.MediaPlayer2.rhythmbox
 dbus-user.own org.gnome.UPnP.MediaServer2.Rhythmbox
 dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Notifications
-dbus-system none
+dbus-user.talk org.gnome.SettingsDaemon.MediaKeys
 dbus-system filter
 dbus-system.talk org.freedesktop.Avahi

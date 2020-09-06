@@ -37,7 +37,6 @@ src/fcopy/fcopy
 src/fldd/fldd
 src/fbuilder/fbuilder
 src/profstats/profstats
-src/man/preproc
 uids.h
 seccomp
 seccomp.debug

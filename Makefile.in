@@ -15,11 +15,11 @@ HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
 
-all: all_items man filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/man/preproc
+all: all_items mydirs man filters
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats
 SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/ftee/ftee
 SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
-MYDIRS = src/lib
+MYDIRS = src/lib src/man
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
@@ -31,8 +31,8 @@ all_items: $(ALL_ITEMS)
 $(ALL_ITEMS): $(MYDIRS)
 	$(MAKE) -C $(dir $@)
 
-.PHONY: mydirs
-mydirs: mydirs $(MYDIRS)
+.PHONY: mydirs $(MYDIRS)
+mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
@@ -154,7 +154,7 @@ install: all
 	$(MAKE) realinstall
 
 install-strip: all
-	-strip $(ALL_ITEMS)
+	strip $(ALL_ITEMS)
 	$(MAKE) realinstall
 
 uninstall:

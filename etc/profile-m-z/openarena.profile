@@ -21,7 +21,7 @@ whitelist ${HOME}/.openarena
 whitelist /usr/share/openarena
 include whitelist-common.inc
 include whitelist-runuser-common.inc
-include whitelist-usr-share-common.in
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

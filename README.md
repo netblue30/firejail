@@ -160,32 +160,32 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ### Profile Statistics
 
-A small tool to print profile statistics. Compile as usual and run:
+A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
 `````
-$ make
-$ cd etc
 $ ./profstats *.profile
-    profiles			966
-    include local profile	966   (include profile-name.local)
-    include globals		966   (include globals.local)
-    blacklist ~/.ssh		951   (include disable-common.inc)
-    seccomp			908
-    capabilities		965
-    noexec			830   (include disable-exec.inc)
-    memory-deny-write-execute	214
-    apparmor			488
-    private-bin			483
-    private-dev			829
-    private-etc			366
-    private-tmp			726
-    whitelist var		638   (include whitelist-var-common.inc)
-    whitelist run/user		282   (include whitelist-runuser-common.inc
-					or blacklist ${RUNUSER})
-    whitelist usr/share		275   (include whitelist-usr-share-common.inc
-    net none			313
-`````
+Warning: multiple caps in transmission-daemon.profile
 
-Run ./profstats -h for help.
+Stats:
+    profiles			1025
+    include local profile	1025   (include profile-name.local)
+    include globals		1025   (include globals.local)
+    blacklist ~/.ssh		1001   (include disable-common.inc)
+    seccomp			971
+    capabilities		1024
+    noexec			895   (include disable-exec.inc)
+    memory-deny-write-execute	217
+    apparmor			546
+    private-bin			537
+    private-dev			893
+    private-etc			426
+    private-tmp			780
+    whitelist var		691   (include whitelist-var-common.inc)
+    whitelist run/user		329   (include whitelist-runuser-common.inc
+					or blacklist ${RUNUSER})
+    whitelist usr/share		349   (include whitelist-usr-share-common.inc
+    net none			329
+    dbus-system none 		624
+`````
 
 ### New profiles:
 

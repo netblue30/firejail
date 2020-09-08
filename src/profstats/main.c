@@ -28,6 +28,7 @@ static int cnt_profiles = 0;
 static int cnt_apparmor = 0;
 static int cnt_seccomp = 0;
 static int cnt_caps = 0;
+static int cnt_dbus_system_none = 0;
 static int cnt_dotlocal = 0;
 static int cnt_globalsdotlocal = 0;
 static int cnt_netnone = 0;
@@ -57,6 +58,8 @@ static int arg_whitelistrunuser = 0;
 static int arg_whitelistusrshare = 0;
 static int arg_ssh = 0;
 static int arg_mdwx = 0;
+static int arg_dbus_system_none = 0;
+
 
 static char *profile = NULL;
 
@@ -67,6 +70,7 @@ static void usage(void) {
 	printf("Options:\n");
 	printf("   --apparmor - print profiles without apparmor\n");
 	printf("   --caps - print profiles without caps\n");
+	printf("   --dbus-system-none - profiles without  \"dbus-system none\"\n");
 	printf("   --ssh - print profiles without \"include disable-common.inc\"\n");
 	printf("   --noexec - print profiles without \"include disable-exec.inc\"\n");
 	printf("   --private-bin - print profiles without private-bin\n");
@@ -138,6 +142,8 @@ void process_file(const char *fname) {
 			cnt_privatetmp++;
 		else if (strncmp(ptr, "private-etc", 11) == 0)
 			cnt_privateetc++;
+		else if (strncmp(ptr, "dbus-system none", 16) == 0)
+			cnt_dbus_system_none++;
 		else if (strncmp(ptr, "include ", 8) == 0) {
 			// not processing .local files
 			if (strstr(ptr, ".local")) {
@@ -148,6 +154,11 @@ void process_file(const char *fname) {
 					cnt_dotlocal++;
 				continue;
 			}
+			// clean blanks
+			char *ptr = buf + 8;
+			while (*ptr != '\0' && *ptr != ' ' && *ptr != '\t')
+				ptr++;
+			*ptr = '\0';
 			process_file(buf + 8);
 		}
 	}
@@ -197,6 +208,8 @@ int main(int argc, char **argv) {
 			arg_whitelistusrshare = 1;
 		else if (strcmp(argv[i], "--ssh") == 0)
 			arg_ssh = 1;
+		else if (strcmp(argv[i], "--dbus-system-none") == 0)
+			arg_dbus_system_none = 1;
 		else if (*argv[i] == '-') {
 			fprintf(stderr, "Error: invalid option %s\n", argv[i]);
 		 	return 1;
@@ -228,6 +241,7 @@ int main(int argc, char **argv) {
 		int whitelistvar = cnt_whitelistvar;
 		int whitelistrunuser = cnt_whitelistrunuser;
 		int whitelistusrshare = cnt_whitelistusrshare;
+		int dbussystemnone = cnt_dbus_system_none;
 		int ssh = cnt_ssh;
 		int mdwx = cnt_mdwx;
 
@@ -249,6 +263,8 @@ int main(int argc, char **argv) {
 		if (cnt_whitelistrunuser > (whitelistrunuser + 1))
 			cnt_whitelistrunuser = whitelistrunuser + 1;
 
+		if (arg_dbus_system_none && dbussystemnone == cnt_dbus_system_none)
+			printf("No dbus-system none found in %s\n", argv[i]);
 		if (arg_apparmor && apparmor == cnt_apparmor)
 			printf("No apparmor found in %s\n", argv[i]);
 		if (arg_caps && caps == cnt_caps)
@@ -299,6 +315,7 @@ int main(int argc, char **argv) {
 	printf("\t\t\t\t\tor blacklist ${RUNUSER})\n");
 	printf("    whitelist usr/share\t\t%d   (include whitelist-usr-share-common.inc\n", cnt_whitelistusrshare);
 	printf("    net none\t\t\t%d\n", cnt_netnone);
+	printf("    dbus-system none \t\t%d\n", cnt_dbus_system_none);
 	printf("\n");
 	return 0;
 }

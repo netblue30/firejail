@@ -295,6 +295,14 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- D-BUS proxy support is %s\n",
+#ifdef HAVE_DBUSPROXY
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- file and directory whitelisting support is %s\n",
 #ifdef HAVE_WHITELIST
 		"enabled"

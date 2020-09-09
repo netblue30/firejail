@@ -17,6 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#ifdef HAVE_DBUSPROXY
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
@@ -560,3 +561,4 @@ void dbus_apply_policy(void) {
 
 	fwarning("An abstract unix socket for session D-BUS might still be available. Use --net or remove unix from --protocol set.\n");
 }
+#endif // HAVE_DBUSPROXY

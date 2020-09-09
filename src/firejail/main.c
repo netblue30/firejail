@@ -175,7 +175,9 @@ static void myexit(int rv) {
 
 
 	// delete sandbox files in shared memory
+#ifdef HAVE_DBUSPROXY
 	dbus_proxy_stop();
+#endif
 	EUID_ROOT();
 	delete_run_files(sandbox_pid);
 	appimage_clear();
@@ -2023,6 +2025,11 @@ int main(int argc, char **argv, char **envp) {
 			arg_dbus_user = DBUS_POLICY_BLOCK;
 			arg_dbus_system = DBUS_POLICY_BLOCK;
 		}
+
+		//*************************************
+		// D-BUS proxy
+		//*************************************
+#ifdef HAVE_DBUSPROXY
 		else if (strncmp("--dbus-user=", argv[i], 12) == 0) {
 			if (strcmp("filter", argv[i] + 12) == 0) {
 				if (arg_dbus_user == DBUS_POLICY_BLOCK) {
@@ -2160,6 +2167,7 @@ int main(int argc, char **argv, char **envp) {
 			}
 			arg_dbus_log_system = 1;
 		}
+#endif
 
 		//*************************************
 		// network
@@ -2844,6 +2852,7 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_USER();
 
+#ifdef HAVE_DBUSPROXY
 	if (checkcfg(CFG_DBUS)) {
 		dbus_check_profile();
 		if (arg_dbus_user == DBUS_POLICY_FILTER ||
@@ -2853,6 +2862,7 @@ int main(int argc, char **argv, char **envp) {
 			EUID_USER();
 		}
 	}
+#endif
 
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;

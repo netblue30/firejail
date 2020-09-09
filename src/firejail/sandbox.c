@@ -938,8 +938,9 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// Session D-BUS
 	//****************************
+#ifdef HAVE_DBUSPROXY
 	dbus_apply_policy();
-
+#endif
 
 	//****************************
 	// hosts and hostname

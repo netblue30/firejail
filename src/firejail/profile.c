@@ -430,11 +430,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "nodbus") == 0) {
+#ifdef HAVE_DBUSPROXY
 		arg_dbus_user = DBUS_POLICY_BLOCK;
 		arg_dbus_system = DBUS_POLICY_BLOCK;
+#endif
 		return 0;
 	}
 	else if (strncmp("dbus-user ", ptr, 10) == 0) {
+#ifdef HAVE_DBUSPROXY
 		ptr += 10;
 		if (strcmp("filter", ptr) == 0) {
 			if (arg_dbus_user == DBUS_POLICY_BLOCK) {
@@ -452,44 +455,56 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Unknown dbus-user policy: %s\n", ptr);
 			exit(1);
 		}
+#endif
 		return 0;
 	}
 	else if (strncmp(ptr, "dbus-user.see ", 14) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 14)) {
 			printf("Invalid dbus-user.see name: %s\n", ptr + 15);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.talk ", 15) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 15)) {
 			printf("Invalid dbus-user.talk name: %s\n", ptr + 15);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.own ", 14) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 14)) {
 			fprintf(stderr, "Invalid dbus-user.own name: %s\n", ptr + 14);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.call ", 15) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_call_rule(ptr + 15)) {
 			fprintf(stderr, "Invalid dbus-user.call rule: %s\n", ptr + 15);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.broadcast ", 20) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_call_rule(ptr + 20)) {
 			fprintf(stderr, "Invalid dbus-user.broadcast rule: %s\n", ptr + 20);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp("dbus-system ", ptr, 12) == 0) {
+#ifdef HAVE_DBUSPROXY
 		ptr += 12;
 		if (strcmp("filter", ptr) == 0) {
 			if (arg_dbus_system == DBUS_POLICY_BLOCK) {
@@ -507,41 +522,52 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Unknown dbus-system policy: %s\n", ptr);
 			exit(1);
 		}
+#endif
 		return 0;
 	}
 	else if (strncmp(ptr, "dbus-system.see ", 16) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 16)) {
 			fprintf(stderr, "Invalid dbus-system.see name: %s\n", ptr + 17);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.talk ", 17) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 17)) {
 			fprintf(stderr, "Invalid dbus-system.talk name: %s\n", ptr + 17);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.own ", 16) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 16)) {
 			fprintf(stderr, "Invalid dbus-system.own name: %s\n", ptr + 16);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.call ", 17) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_call_rule(ptr + 17)) {
 			fprintf(stderr, "Invalid dbus-system.call rule: %s\n", ptr + 17);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.broadcast ", 22) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_call_rule(ptr + 22)) {
 			fprintf(stderr, "Invalid dbus-system.broadcast rule: %s\n", ptr + 22);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strcmp(ptr, "nou2f") == 0) {

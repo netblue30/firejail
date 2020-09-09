@@ -52,6 +52,14 @@ AC_SUBST([EXTRA_CFLAGS])
 AC_SUBST([EXTRA_LDFLAGS])
 
 
+HAVE_DBUSPROXY=""
+AC_ARG_ENABLE([dbusproxy],
+    AS_HELP_STRING([--disable-dbusproxy], [disable dbus proxy]))
+AS_IF([test "x$enable_dbusproxy" != "xno"], [
+	HAVE_DBUSPROXY="-DHAVE_DBUSPROXY"
+	AC_SUBST(HAVE_DBUSPROXY)
+])
+
 HAVE_OVERLAYFS=""
 AC_ARG_ENABLE([overlayfs],
     AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
@@ -215,6 +223,7 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   DBUS proxy support: $HAVE_DBUSPROXY"
 echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"

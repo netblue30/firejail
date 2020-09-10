@@ -5,11 +5,15 @@
 
 # This script automates the workaround for https://github.com/netblue30/firejail/issues/772
 
-import os, re, shlex, subprocess, sys
+import os, shlex, subprocess, sys
 
 
 def run(srcdir, args):
     if srcdir: os.chdir(srcdir)
+
+    if not (os.path.isfile('./mkdeb.sh.in')):
+        print('Error: Not a firejail source tree?  Exiting.')
+        return 1
 
     dry_run = False
     escaped_args = []
@@ -25,23 +29,21 @@ def run(srcdir, args):
         else:
             escaped_args.append(shlex.quote(a))
 
-    # Fix up mkdeb.sh to include custom configure options.
+    # Run configure to generate mkdeb.sh.
+    first_config = subprocess.call(['./configure', '--prefix=/usr'] + args)
+    if first_config != 0:
+        return first_config
+
+    # Fix up dynamically-generated mkdeb.sh to include custom configure options.
     with open('mkdeb.sh', 'rb') as f:
         sh = str(f.read(), 'utf_8')
-    rx = re.compile(r'^\./configure\s.*$', re.M)
     with open('mkdeb.sh', 'wb') as f:
-        f.write(
-            bytes(
-                rx.sub('./configure --prefix=/usr ' + (' '.join(escaped_args)),
-                       sh), 'utf_8'))
+        f.write(bytes(sh.replace('./configure $CONFIG_ARGS',
+                                 './configure $CONFIG_ARGS ' + (' '.join(escaped_args))), 'utf_8'))
 
     if dry_run: return 0
 
-    # now run configure && make
-    if subprocess.call(['./configure', '--prefix=/usr'] + args) == 0:
-        subprocess.call(['make', 'deb'])
-
-    return 0
+    return subprocess.call(['make', 'deb'])
 
 
 if __name__ == '__main__':
@@ -71,9 +73,9 @@ usage:
         if not (srcdir):
             # srcdir not manually specified, try to auto-detect
             srcdir = os.path.dirname(os.path.abspath(sys.argv[0] + '/..'))
-            if not (os.path.isfile(srcdir + '/mkdeb.sh')):
+            if not (os.path.isfile(srcdir + '/mkdeb.sh.in')):
                 # Script is probably installed.  Check the cwd.
-                if os.path.isfile('./mkdeb.sh'):
+                if os.path.isfile('./mkdeb.sh.in'):
                     srcdir = None
                 else:
                     print(

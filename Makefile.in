@@ -202,7 +202,7 @@ test-compile: dist
 	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
 
 .PHONY: rpms
-rpms: man
+rpms: src/man
 	./platform/rpm/mkrpm.sh $(NAME) $(VERSION)
 
 extras: all

@@ -1,15 +1,14 @@
-# Firejail profile for warsow
-# Description: Fast paced 3D first person shooter
+# Firejail profile for qrencode
+# Description: Encode input data in a QR Code and save as a PNG or EPS image.
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
-include warsow.local
+include qrencode.local
 # Persistent global definitions
 include globals.local
 
-ignore noexec ${HOME}
-
-noblacklist ${HOME}/.cache/warsow-2.1
-noblacklist ${HOME}/.local/share/warsow-2.1
+blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,38 +17,42 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-write-mnt.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.cache/warsow-2.1
-mkdir ${HOME}/.local/share/warsow-2.1
-whitelist ${HOME}/.cache/warsow-2.1
-whitelist ${HOME}/.local/share/warsow-2.1
-whitelist /usr/share/warsow
-include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
-netfilter
+machine-id
+net none
+no3d
 nodvd
 nogroups
 nonewprivs
 noroot
+nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 disable-mnt
-private-bin warsow
+private-bin qrencode
 private-cache
 private-dev
+private-etc none
+private-lib libpcre2-8.so.0
 private-tmp
 
 dbus-user none
 dbus-system none
+
+memory-deny-write-execute

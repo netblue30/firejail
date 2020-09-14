@@ -19,6 +19,7 @@ firejail (0.9.63) baseline; urgency=low
   * whitelist globbing
   * mkdir and mkfile support for /run/user directory
   * support ignore for include
+  * --include on the command line
   * new condition: HAS_NOSOUND
   * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, muraster
   * new profiles: gnome-passwordsafe, bibtex, gummi, latex, mupdf-x11-curl
@@ -46,7 +47,7 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: vmware, git-cola, otter-browser, kazam, menulibre, musictube
   * new profiles: onboard, fractal, mirage, quaternion, spectral, man, psi, twitch
   * new profiles: smuxi-frontend-gnome, balsa, kube, trojita, youtube, ytmdesktop
-  * new profiles: youtubemusic-nativefier, cola
+  * new profiles: youtubemusic-nativefier, cola, dbus-send, notify-send, qrencode
  -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low

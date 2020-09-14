@@ -1,15 +1,13 @@
-# Firejail profile for warsow
-# Description: Fast paced 3D first person shooter
+# Firejail profile for notify-send
+# Description: a program to send desktop notifications
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
-include warsow.local
+include notify-send.local
 # Persistent global definitions
 include globals.local
 
-ignore noexec ${HOME}
-
-noblacklist ${HOME}/.cache/warsow-2.1
-noblacklist ${HOME}/.local/share/warsow-2.1
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,38 +16,45 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-write-mnt.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.cache/warsow-2.1
-mkdir ${HOME}/.local/share/warsow-2.1
-whitelist ${HOME}/.cache/warsow-2.1
-whitelist ${HOME}/.local/share/warsow-2.1
-whitelist /usr/share/warsow
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
-netfilter
+machine-id
+net none
+no3d
 nodvd
 nogroups
 nonewprivs
 noroot
+nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix
 seccomp
 shell none
 tracelog
+x11 none
 
 disable-mnt
-private-bin warsow
+private
+private-bin notify-send
 private-cache
 private-dev
+private-etc none
 private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
 dbus-system none
+
+memory-deny-write-execute
+read-only ${HOME}

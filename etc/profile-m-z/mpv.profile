@@ -11,6 +11,19 @@ include globals.local
 # edit ~/.config/mpv/foobar.conf:
 #    screenshot-directory=~/Pictures
 
+# Mpv has a powerfull lua-API, some off these lua-scripts interact
+# with external resources which are blocked by firejail. In such cases
+# you need to allow these resources by
+#  - adding additional binaries to private-bin
+#  - whitelisting additional paths
+#  - noblacklisting paths
+#  - weaking the dbus-policy
+#  - ...
+#
+# Often these scripts require a shell:
+#noblacklist ${PATH}/sh
+#private-bin sh
+
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.netrc

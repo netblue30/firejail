@@ -48,6 +48,7 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: onboard, fractal, mirage, quaternion, spectral, man, psi, twitch
   * new profiles: smuxi-frontend-gnome, balsa, kube, trojita, youtube, ytmdesktop
   * new profiles: youtubemusic-nativefier, cola, dbus-send, notify-send, qrencode
+  * new profiles: xournalpp
  -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low

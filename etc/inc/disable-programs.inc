@@ -822,6 +822,7 @@ blacklist ${HOME}/.xmind
 blacklist ${HOME}/.xmms
 blacklist ${HOME}/.xmr-stak
 blacklist ${HOME}/.xonotic
+blacklist ${HOME}/.xournalpp
 blacklist ${HOME}/.xpdfrc
 blacklist ${HOME}/.zoom
 blacklist /tmp/akonadi-*

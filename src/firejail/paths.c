@@ -45,6 +45,7 @@ static void init_paths(void) {
 	paths = calloc(path_cnt, sizeof(char *));
 	if (!paths)
 		errExit("calloc");
+	memset(paths, 0, path_cnt * sizeof(char *)); // get rid of false positive error from GCC static analyzer
 
 	// fill in 'paths' with pointers to elements of 'path'
 	unsigned int i = 0, j;

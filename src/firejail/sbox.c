@@ -263,6 +263,7 @@ int sbox_run(unsigned filtermask, int num, ...) {
 
 int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	EUID_ROOT();
+	assert(arg);
 
 	if (arg_debug) {
 		printf("sbox run: ");
@@ -288,7 +289,7 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	if (waitpid(child, &status, 0) == -1 ) {
 		errExit("waitpid");
 	}
-	if (WIFEXITED(status) && status != 0) {
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
 		fprintf(stderr, "Error: failed to run %s\n", arg[0]);
 		exit(1);
 	}

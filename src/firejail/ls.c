@@ -48,6 +48,7 @@ static void print_file_or_dir(const char *path, const char *fname) {
 			return;
 		}
 	}
+	free(name);
 
 	// permissions
 	if (S_ISLNK(s.st_mode))
@@ -171,10 +172,11 @@ static void print_directory(const char *path) {
 	if (n < 0)
         		errExit("scandir");
 	else {
-		for (i = 0; i < n; i++) {
+		for (i = 0; i < n; i++)
 			print_file_or_dir(path, namelist[i]->d_name);
+		// get rid of false psitive reported by GCC -fanalyze
+		for (i = 0; i < n; i++)
 			free(namelist[i]);
-		}
 	}
 	free(namelist);
 }

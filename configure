@@ -705,6 +705,7 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
+enable_analyzer
 enable_apparmor
 enable_dbusproxy
 enable_overlayfs
@@ -1358,6 +1359,7 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-analyzer       enable GCC 10 static analyzer
   --enable-apparmor       enable apparmor
   --disable-dbusproxy     disable dbus proxy
   --disable-overlayfs     disable overlayfs
@@ -3268,6 +3270,17 @@ else
   :
 fi
 
+
+# Check whether --enable-analyzer was given.
+if test "${enable_analyzer+set}" = set; then :
+  enableval=$enable_analyzer;
+fi
+
+if test "x$enable_analyzer" = "xyes"; then :
+
+	EXTRA_CFLAGS+=" -fanalyzer"
+
+fi
 
 HAVE_APPARMOR=""
 # Check whether --enable-apparmor was given.

@@ -39,6 +39,12 @@ AX_CHECK_COMPILE_FLAG(
     [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-protector-strong"]
 )
 
+AC_ARG_ENABLE([analyzer],
+    AS_HELP_STRING([--enable-analyzer], [enable GCC 10 static analyzer]))
+AS_IF([test "x$enable_analyzer" = "xyes"], [
+	EXTRA_CFLAGS+=" -fanalyzer"
+])
+
 HAVE_APPARMOR=""
 AC_ARG_ENABLE([apparmor],
     AS_HELP_STRING([--enable-apparmor], [enable apparmor]))

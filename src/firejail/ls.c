@@ -299,35 +299,23 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		errExit("asprintf");
 
 	if (op == SANDBOX_FS_LS || op == SANDBOX_FS_CAT) {
-		pid_t child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			EUID_ROOT();
-			// chroot
-			if (chroot(rootdir) < 0)
-				errExit("chroot");
-			if (chdir("/") < 0)
-				errExit("chdir");
+		EUID_ROOT();
+		// chroot
+		if (chroot(rootdir) < 0)
+			errExit("chroot");
+		if (chdir("/") < 0)
+			errExit("chdir");
 
-			// drop privileges
-			drop_privs(0);
+		// drop privileges
+		drop_privs(0);
 
-			if (op == SANDBOX_FS_LS)
-				ls(fname1);
-			else
-				cat(fname1);
-#ifdef HAVE_GCOV
-			__gcov_flush();
-#endif
-			_exit(0);
-		}
-		// wait for the child to finish
-		int status = 0;
-		waitpid(child, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
+		if (op == SANDBOX_FS_LS)
+			ls(fname1);
 		else
-			exit(1);
+			cat(fname1);
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
 	}
 
 	// get file from sandbox and store it in the current directory

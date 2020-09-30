@@ -14,12 +14,14 @@ Start an AppImage program:
 firejail [OPTIONS] --appimage [appimage-file and arguments]
 .RE
 .PP
+#ifdef HAVE_FILE_TRANSFER
 File transfer from an existing sandbox
 .PP
 .RS
-firejail {\-\-ls | \-\-get | \-\-put} dir_or_filename
+firejail {\-\-ls | \-\-get | \-\-put | \-\-cat} dir_or_filename
 .RE
 .PP
+#endif
 #ifdef HAVE_NETWORK
 Network traffic shaping for an existing sandbox:
 .PP
@@ -276,10 +278,11 @@ $ firejail \-\-list
 .br
 $ firejail \-\-caps.print=3272
 
+#ifdef HAVE_FILE_TRANSFER
 .TP
 \fB\-\-cat=name|pid filename
 Print content of file from sandbox container, see FILE TRANSFER section for more details.
-
+#endif
 .TP
 \fB\-\-cgroup=tasks-file
 Place the sandbox in the specified control group. tasks-file is the full path of cgroup tasks file.
@@ -742,10 +745,11 @@ $ firejail \-\-list
 .br
 $ firejail \-\-fs.print=3272
 
+#ifdef HAVE_FILE_TRANSFER
 .TP
 \fB\-\-get=name|pid filename
 Get a file from sandbox container, see \fBFILE TRANSFER\fR section for more details.
-
+#endif
 .TP
 \fB\-?\fR, \fB\-\-help\fR
 Print options end exit.
@@ -1043,9 +1047,11 @@ $ firejail \-\-list
 7064:netblue::firejail \-\-noroot xterm
 .br
 #endif
+#ifdef HAVE_FILE_TRANSFER
 .TP
 \fB\-\-ls=name|pid dir_or_filename
 List files in sandbox container, see \fBFILE TRANSFER\fR section for more details.
+#endif
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-mac=address
@@ -2000,9 +2006,11 @@ $ firejail \-\-list
 $ firejail \-\-protocol.print=3272
 .br
 unix,inet,inet6,netlink
+#ifdef HAVE_FILE_TRANSFER
 .TP
 \fB\-\-put=name|pid src-filename dest-filename
 Put a file in sandbox container, see \fBFILE TRANSFER\fR section for more details.
+#endif
 .TP
 \fB\-\-quiet
 Turn off Firejail's output.
@@ -3051,6 +3059,7 @@ $ firejail --blacklist=~/dir[1234]
 $ firejail --read-only=~/dir[1-4]
 .br
 
+#ifdef HAVE_FILE_TRANSFER
 .SH FILE TRANSFER
 These features allow the user to inspect the filesystem container of an existing sandbox
 and transfer files between the container and the host filesystem.
@@ -3108,7 +3117,7 @@ $ firejail \-\-put=mybrowser xpra-clipboard.png ~/Downloads/xpra-clipboard.png
 .br
 $ firejail \-\-cat=mybrowser ~/.bashrc
 .br
-
+#endif
 .SH MONITORING
 Option \-\-list prints a list of all sandboxes. The format
 for each process entry is as follows:

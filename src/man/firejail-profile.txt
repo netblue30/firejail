@@ -480,6 +480,7 @@ xephyr-screen 640x480
 .br
 x11 xephyr
 #endif
+#ifdef HAVE_DBUSPROXY
 .SH DBus filtering
 
 Access to the session and system DBus UNIX sockets can be allowed, filtered or
@@ -574,7 +575,7 @@ and the user wants to disable notifications, this can be achieved by putting the
 ignore dbus-user.talk org.freedesktop.Notifications
 .br
 [...]
-
+#endif
 .SH Resource limits, CPU affinity, Control Groups
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
 The limits can be modified inside the sandbox using the regular \fBulimit\fR command. \fBcpu\fR command

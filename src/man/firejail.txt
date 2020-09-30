@@ -331,7 +331,7 @@ $ firejail \-\-list
 3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-cpu.print=3272
-
+#ifdef HAVE_DBUSPROXY
 .TP
 \fB\-\-dbus-log=file
 Specify the location for the DBus log file.
@@ -573,7 +573,7 @@ not "foobar").
 Example:
 .br
 $ firejail --dbus-user=filter --dbus-user.see=org.freedesktop.Notifications
-
+#endif
 .TP
 \fB\-\-debug\fR
 Print debug messages.
@@ -1422,6 +1422,7 @@ $ nc dict.org 2628
 .br
 .TP
 \fB\-\-nodbus \fR(deprecated)
+#ifdef HAVE_DBUSPROXY
 Disable D-Bus access (both system and session buses). Equivalent to --dbus-system=none --dbus-user=none.
 .br
 
@@ -1429,6 +1430,7 @@ Disable D-Bus access (both system and session buses). Equivalent to --dbus-syste
 Example:
 .br
 $ firejail \-\-nodbus \-\-net=none
+#endif
 .TP
 \fB\-\-nodvd
 Disable DVD and audio CD devices.

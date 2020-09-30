@@ -150,9 +150,10 @@ Example: "nowhitelist ~/.config"
 Ignore command.
 
 Example: "ignore seccomp"
+#ifdef HAVE_NETWORK
 .br
 Example: "ignore net eth0"
-
+#endif
 .TP
 \fBquiet
 Disable Firejail's output. This should be the first uncommented command in the profile file.
@@ -671,6 +672,7 @@ Disable video devices.
 Run the program directly, without a shell.
 
 
+#ifdef HAVE_NETWORK
 .SH Networking
 Networking features available in profile files.
 
@@ -863,7 +865,7 @@ a default gateway address also have to be added.
 \fBveth-name name
 Use this name for the interface connected to the bridge for --net=bridge_interface commands,
 instead of the default one.
-
+#endif
 .SH Other
 .TP
 \fBdeterministic-exit-code

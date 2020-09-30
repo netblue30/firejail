@@ -159,6 +159,7 @@ int main(int argc, char **argv) {
 			arg_list = 1;
 		else if (strcmp(argv[i], "--tree") == 0)
 			arg_tree = 1;
+#ifdef HAVE_NETWORK
 		else if (strcmp(argv[i], "--netstats") == 0) {
 			struct stat s;
 			if (getuid() != 0 && stat("/proc/sys/kernel/grsecurity", &s) == 0) {
@@ -167,7 +168,7 @@ int main(int argc, char **argv) {
 			}
 			arg_netstats = 1;
 		}
-
+#endif
 
 		// cumulative options with or without a pid argument
 		else if (strcmp(argv[i], "--x11") == 0)
@@ -187,10 +188,12 @@ int main(int argc, char **argv) {
 			}
 			arg_interface = 1;
 		}
+#ifdef HAVE_NETWORK
 		else if (strcmp(argv[i], "--route") == 0)
 			arg_route = 1;
 		else if (strcmp(argv[i], "--arp") == 0)
 			arg_arp = 1;
+#endif
 		else if (strcmp(argv[i], "--apparmor") == 0)
 			arg_apparmor = 1;
 

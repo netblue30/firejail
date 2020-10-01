@@ -17,3 +17,20 @@ jobs:
       run: CC=gcc-10 ./configure --enable-analyzer
     - name: make
       run: make
+  build-clang:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make scan-build
+  cppcheck:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install cppcheck
+      run: sudo apt-get install cppcheck
+    - name: cppcheck
+      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+    

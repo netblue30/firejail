@@ -40,7 +40,7 @@ static int arg_top = 0;
 static int arg_list = 0;
 static int arg_netstats = 0;
 static int arg_apparmor = 0;
-int arg_nowrap = 0;
+int arg_wrap = 0;
 
 static struct termios tlocal;	// startup terminal setting
 static struct termios twait;	// no wait on key press
@@ -206,8 +206,8 @@ int main(int argc, char **argv) {
 		}
 
 		// etc
-		else if (strcmp(argv[i], "--nowrap") == 0)
-			arg_nowrap = 1;
+		else if (strcmp(argv[i], "--wrap") == 0)
+			arg_wrap = 1;
 
 		// invalid option
 		else if (*argv[i] == '-') {

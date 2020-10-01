@@ -46,9 +46,6 @@ Print information only about named sandbox.
 \fB\-\-netstats
 Monitor network statistics for sandboxes creating a new network namespace.
 #endif
-.TP
-\fB\-\-nowrap
-Enable line wrapping in terminals. By default the lines are trimmed.
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-route
@@ -67,7 +64,9 @@ Print a tree of all sandboxed processes.
 .TP
 \fB\-\-version
 Print program version and exit.
-
+.TP
+\fB\-\-wrap
+Enable line wrapping in terminals. By default the lines are trimmed.
 .TP
 \fB\-\-x11
 Print X11 display number.

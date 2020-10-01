@@ -40,7 +40,7 @@ static inline void firemon_clrscr(void) {
 
 // firemon.c
 extern pid_t skip_process;
-extern int arg_nowrap;
+extern int arg_wrap;
 int find_child(int id);
 void firemon_sleep(int st);
 

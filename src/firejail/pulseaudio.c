@@ -48,7 +48,7 @@ void pulseaudio_disable(void) {
 	char *path;
 	if (asprintf(&path, "/run/user/%d", getuid()) == -1)
 		errExit("asprintf");
-	disable_file_path(path, "pulse/native");
+	disable_file_path(path, "pulse");
 	free(path);
 
 

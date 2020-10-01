@@ -51,21 +51,6 @@ build_apparmor:
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
         - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail*.deb
 
-gcc_analyzer:
-    image: debian:latest
-    script:
-        - apt-get update -qq
-        - apt-get install -y -qq build-essential pkg-config gawk
-        - ./configure --enable-analyzer && make
-
-cppcheck:
-    image: debian:latest
-    before_script:
-        - apt-get -qq update
-        - apt-get -qq --no-install-recommends install cppcheck
-    script:
-        - cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
-
 clang:
     image: ubuntu:latest
     script:

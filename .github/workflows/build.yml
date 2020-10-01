@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
-    - name: install GCC 10
-      run: sudo apt-get install gcc-10
+    - name: install dependencies
+      run: sudo apt-get install gcc-10 libapparmor-dev libselinux1-dev
     - name: configure
-      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer
+      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux
     - name: make
       run: make
   build-clang:

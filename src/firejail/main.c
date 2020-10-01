@@ -2564,6 +2564,7 @@ int main(int argc, char **argv, char **envp) {
 			cfg.timeout = extract_timeout(argv[i] + 10);
 		else if (strcmp(argv[i], "--audit") == 0) {
 			arg_audit_prog = LIBDIR "/firejail/faudit";
+			profile_add_ignore("shell none");
 			arg_audit = 1;
 		}
 		else if (strncmp(argv[i], "--audit=", 8) == 0) {
@@ -2580,6 +2581,7 @@ int main(int argc, char **argv, char **envp) {
 				fprintf(stderr, "Error: cannot find the audit program %s\n", arg_audit_prog);
 				exit(1);
 			}
+			profile_add_ignore("shell none");
 			arg_audit = 1;
 		}
 		else if (strcmp(argv[i], "--appimage") == 0)

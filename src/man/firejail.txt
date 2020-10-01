@@ -2930,6 +2930,10 @@ In the examples above, the sandbox configures transmission-gtk profile and
 starts the test program. The real program, transmission-gtk, will not be
 started.
 
+You can also audit a specific profile without specifying a program.
+.br
+	$ firejail --audit --profile=/etc/firejail/zoom.profile
+
 Limitations: audit feature is not implemented for --x11 commands.
 
 .SH DESKTOP INTEGRATION

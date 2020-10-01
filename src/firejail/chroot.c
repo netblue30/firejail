@@ -231,16 +231,16 @@ void fs_chroot(const char *rootdir) {
 	}
 
 	// create /run/firejail directory in chroot
-	if (mkdirat(parentfd, RUN_FIREJAIL_DIR+1, 0755) == -1 && errno != EEXIST)
+	if (mkdirat(parentfd, &RUN_FIREJAIL_DIR[1], 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
-	check_subdir(parentfd, RUN_FIREJAIL_DIR+1, 1);
+	check_subdir(parentfd, &RUN_FIREJAIL_DIR[1], 1);
 
 	// create /run/firejail/lib directory in chroot
-	if (mkdirat(parentfd, RUN_FIREJAIL_LIB_DIR+1, 0755) == -1 && errno != EEXIST)
+	if (mkdirat(parentfd, &RUN_FIREJAIL_LIB_DIR[1], 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
-	check_subdir(parentfd, RUN_FIREJAIL_LIB_DIR+1, 1);
+	check_subdir(parentfd, &RUN_FIREJAIL_LIB_DIR[1], 1);
 	// mount lib directory into the chroot
-	fd = openat(parentfd, RUN_FIREJAIL_LIB_DIR+1, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	fd = openat(parentfd, &RUN_FIREJAIL_LIB_DIR[1], O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("open");
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
@@ -251,11 +251,11 @@ void fs_chroot(const char *rootdir) {
 	close(fd);
 
 	// create /run/firejail/mnt directory in chroot
-	if (mkdirat(parentfd, RUN_MNT_DIR+1, 0755) == -1 && errno != EEXIST)
+	if (mkdirat(parentfd, &RUN_MNT_DIR[1], 0755) == -1 && errno != EEXIST)
 		errExit("mkdir");
-	check_subdir(parentfd, RUN_MNT_DIR+1, 1);
+	check_subdir(parentfd, &RUN_MNT_DIR[1], 1);
 	// mount the current mnt directory into the chroot
-	fd = openat(parentfd, RUN_MNT_DIR+1, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	fd = openat(parentfd, &RUN_MNT_DIR[1], O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("open");
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)

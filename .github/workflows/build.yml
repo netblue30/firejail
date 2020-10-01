@@ -1,0 +1,39 @@
+name: Build CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install GCC 10
+      run: sudo apt-get install gcc-10
+    - name: configure
+      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer
+    - name: make
+      run: make
+  # Disabled for now because of broken clang-10 support: https://github.com/actions/virtual-environments/issues/1536
+  #build-clang:
+  #  runs-on: ubuntu-20.04
+  #  steps:
+  #  - uses: actions/checkout@v2
+  #  - name: install clang tools 10
+  #    run: sudo apt-get install clang-tools-10
+  #  - name: configure
+  #    run: CC=clang-10 ./configure --enable-fatal-warnings
+  #  - name: make
+  #    run: NO_EXTRA_CFLAGS="yes" scan-build-10 make
+  cppcheck:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install cppcheck
+      run: sudo apt-get install cppcheck
+    - name: cppcheck
+      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+    

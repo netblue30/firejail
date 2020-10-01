@@ -14,7 +14,7 @@ jobs:
     - name: install GCC 10
       run: sudo apt-get install gcc-10
     - name: configure
-      run: CC=gcc-10 ./configure --enable-analyzer
+      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer
     - name: make
       run: make
   # Disabled for now because of broken clang-10 support: https://github.com/actions/virtual-environments/issues/1536
@@ -25,7 +25,7 @@ jobs:
   #  - name: install clang tools 10
   #    run: sudo apt-get install clang-tools-10
   #  - name: configure
-  #    run: CC=clang-10 ./configure
+  #    run: CC=clang-10 ./configure --enable-fatal-warnings
   #  - name: make
   #    run: NO_EXTRA_CFLAGS="yes" scan-build-10 make
   cppcheck:

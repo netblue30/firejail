@@ -132,6 +132,7 @@ $ firejail \-\-apparmor.print=browser
 \fB\-\-appimage
 Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started
 as a regular user, nonewprivs and a default capabilities filter are enabled.
+private-bin and private-lib are disabled by default when running appimages.
 .br
 
 .br

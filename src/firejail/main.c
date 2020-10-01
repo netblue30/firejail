@@ -1047,6 +1047,11 @@ int main(int argc, char **argv, char **envp) {
 	EUID_USER();
 
 
+	// for appimages we need to remove "include disable-shell.inc from the profile
+	// a --profile command can show up before --appimage
+	if (check_arg(argc, argv, "--appimage", 1))
+		arg_appimage = 1;
+
 	// process allow-debuggers
 	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
 		// check kernel version

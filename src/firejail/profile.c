@@ -1611,7 +1611,6 @@ void profile_add(char *str) {
 // read a profile file
 static int include_level = 0;
 void profile_read(const char *fname) {
-printf("fname #%s#\n", fname);
 	EUID_ASSERT();
 
 	// exit program if maximum include level was reached
@@ -1648,7 +1647,6 @@ printf("fname #%s#\n", fname);
 	}
 	// --appimage - skip disable-shell.inc file
 	if (arg_appimage) {
-printf("here %d\n", __LINE__);
 		char *tmp = strrchr(fname, '/');
 		if (tmp && *(tmp + 1) != '\0') {
 			tmp++;
@@ -1656,7 +1654,6 @@ printf("here %d\n", __LINE__);
 				return;
 		}
 	}
-printf("here %d\n", __LINE__);
 
 	// open profile file:
 	FILE *fp = fopen(fname, "r");

@@ -20,6 +20,7 @@ firejail (0.9.63) baseline; urgency=low
   * mkdir and mkfile support for /run/user directory
   * support ignore for include
   * --include on the command line
+  * splitting up media players whitelists in whitelist-players.inc
   * new condition: HAS_NOSOUND
   * new profiles: gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, muraster
   * new profiles: gnome-passwordsafe, bibtex, gummi, latex, mupdf-x11-curl

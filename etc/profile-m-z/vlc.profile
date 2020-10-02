@@ -24,12 +24,8 @@ mkdir ${HOME}/.local/share/vlc
 whitelist ${HOME}/.cache/vlc
 whitelist ${HOME}/.config/vlc
 whitelist ${HOME}/.local/share/vlc
-whitelist ${DESKTOP}
-whitelist ${DOWNLOADS}
-whitelist ${MUSIC}
-whitelist ${PICTURES}
-whitelist ${VIDEOS}
 include whitelist-common.inc
+include whitelist-players.inc
 include whitelist-var-common.inc
 
 #apparmor - on Ubuntu 18.04 it refuses to start without dbus access

@@ -24,12 +24,8 @@ mkdir ${HOME}/.config/xplayer
 mkdir ${HOME}/.local/share/xplayer
 whitelist ${HOME}/.config/xplayer
 whitelist ${HOME}/.local/share/xplayer
-whitelist ${DESKTOP}
-whitelist ${DOWNLOADS}
-whitelist ${MUSIC}
-whitelist ${PICTURES}
-whitelist ${VIDEOS}
 include whitelist-common.inc
+include whitelist-players.inc
 include whitelist-var-common.inc
 
 # apparmor - makes settings immutable

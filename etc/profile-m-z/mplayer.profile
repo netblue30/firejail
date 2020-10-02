@@ -18,12 +18,8 @@ include disable-programs.inc
 read-only ${DESKTOP}
 mkdir ${HOME}/.mplayer
 whitelist ${HOME}/.mplayer
-whitelist ${DESKTOP}
-whitelist ${DOWNLOADS}
-whitelist ${MUSIC}
-whitelist ${PICTURES}
-whitelist ${VIDEOS}
 include whitelist-common.inc
+include whitelist-players.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

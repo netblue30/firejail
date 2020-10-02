@@ -28,13 +28,9 @@ mkdir ${HOME}/.config/totem
 mkdir ${HOME}/.local/share/totem
 whitelist ${HOME}/.config/totem
 whitelist ${HOME}/.local/share/totem
-whitelist ${DESKTOP}
-whitelist ${DOWNLOADS}
-whitelist ${MUSIC}
-whitelist ${PICTURES}
-whitelist ${VIDEOS}
 whitelist /usr/share/totem
 include whitelist-common.inc
+include whitelist-players.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

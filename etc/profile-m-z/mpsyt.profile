@@ -40,10 +40,8 @@ whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.mplayer
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/mps
-whitelist ${DOWNLOADS}
-whitelist ${MUSIC}
-whitelist ${VIDEOS}
 include whitelist-common.inc
+include whitelist-players.inc
 include whitelist-var-common.inc
 
 apparmor

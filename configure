@@ -630,6 +630,7 @@ CPP
 HAVE_SELINUX
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
+NEED_MAN
 BUSYBOX_WORKAROUND
 HAVE_FATAL_WARNINGS
 HAVE_SUID
@@ -721,6 +722,7 @@ enable_whitelist
 enable_suid
 enable_fatal_warnings
 enable_busybox_workaround
+enable_man
 enable_gcov
 enable_contrib_install
 enable_selinux
@@ -1377,6 +1379,7 @@ Optional Features:
   --enable-fatal-warnings -W -Wall -Werror
   --enable-busybox-workaround
                           enable busybox workaround
+  --enable-man            generate and install man pages
   --enable-gcov           Gcov instrumentation
   --enable-contrib-install
                           install contrib scripts
@@ -3693,6 +3696,18 @@ if test "x$enable_busybox_workaround" = "xyes"; then :
 
 fi
 
+NEED_MAN="yes"
+# Check whether --enable-man was given.
+if test "${enable_man+set}" = set; then :
+  enableval=$enable_man;
+fi
+
+if test "x$enable_man" = "xno"; then :
+
+	NEED_MAN="no"
+
+
+fi
 
 HAVE_GCOV=""
 # Check whether --enable-gcov was given.
@@ -5412,6 +5427,7 @@ echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
 echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
+echo "   Generate and install man pages: $NEED_MAN"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
 echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   Install as a SUID executable: $HAVE_SUID"

@@ -166,25 +166,27 @@ $ ./profstats *.profile
 Warning: multiple caps in transmission-daemon.profile
 
 Stats:
-    profiles			1025
-    include local profile	1025   (include profile-name.local)
-    include globals		1025   (include globals.local)
-    blacklist ~/.ssh		1001   (include disable-common.inc)
-    seccomp			971
-    capabilities		1024
-    noexec			895   (include disable-exec.inc)
-    memory-deny-write-execute	217
-    apparmor			546
-    private-bin			537
-    private-dev			893
-    private-etc			426
-    private-tmp			780
-    whitelist var		691   (include whitelist-var-common.inc)
-    whitelist run/user		329   (include whitelist-runuser-common.inc
+    profiles			1029
+    include local profile	1029   (include profile-name.local)
+    include globals		1029   (include globals.local)
+    blacklist ~/.ssh		1005   (include disable-common.inc)
+    seccomp			975
+    capabilities		1028
+    noexec			899   (include disable-exec.inc)
+    memory-deny-write-execute	220
+    apparmor			549
+    private-bin			542
+    private-dev			897
+    private-etc			431
+    private-tmp			784
+    whitelist home directory	469
+    whitelist var		695   (include whitelist-var-common.inc)
+    whitelist run/user		334   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		349   (include whitelist-usr-share-common.inc
-    net none			329
-    dbus-system none 		624
+    whitelist usr/share		354   (include whitelist-usr-share-common.inc
+    net none			332
+    dbus-user none 		523
+    dbus-system none 		627
 `````
 
 ### New profiles:

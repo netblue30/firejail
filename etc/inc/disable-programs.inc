@@ -209,6 +209,7 @@ blacklist ${HOME}/.config/emailidentities
 blacklist ${HOME}/.config/enchant
 blacklist ${HOME}/.config/eog
 blacklist ${HOME}/.config/epiphany
+blacklist ${HOME}/.config/equalx
 blacklist ${HOME}/.config/evince
 blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/falkon
@@ -436,6 +437,7 @@ blacklist ${HOME}/.electrum*
 blacklist ${HOME}/.elinks
 blacklist ${HOME}/.emacs
 blacklist ${HOME}/.emacs.d
+blacklist ${HOME}/.equalx
 blacklist ${HOME}/.ethereum
 blacklist ${HOME}/.etr
 blacklist ${HOME}/.filezilla

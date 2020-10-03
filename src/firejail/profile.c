@@ -403,7 +403,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	else if (strcmp(ptr, "nogroups") == 0) {
 		// nvidia cards require video group; disable nogroups
-		if (access("/dev/nvidiactl", R_OK) == 0) {
+		if (access("/dev/nvidiactl", R_OK) == 0 && arg_no3d == 0) {
 			fwarning("Warning: NVIDIA card detected, nogroups command disabled\n");
 			arg_nogroups = 0;
 		}

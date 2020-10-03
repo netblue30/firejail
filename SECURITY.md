@@ -21,4 +21,4 @@
 
 ## Security vulnerabilities
 
-We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@yahoo.com
+We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@@protonmail.com

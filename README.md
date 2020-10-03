@@ -92,7 +92,7 @@ On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
 development libraries and pkg-config are required when using --apparmor
 ./configure option:
 `````
-$ sudo apt-get install git build-essential libapparmor-dev pkg-config
+$ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 `````
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 

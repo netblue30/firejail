@@ -17,7 +17,8 @@ arr[11]="TEST 11: compile disable global config"
 arr[12]="TEST 12: compile apparmor"
 arr[13]="TEST 13: compile busybox"
 arr[14]="TEST 14: compile overlayfs disabled"
-arr[14]="TEST 15: compile private-home disabled"
+arr[15]="TEST 15: compile private-home disabled"
+arr[15]="TEST 16: compile disable manpages"
 
 # remove previous reports and output file
 cleanup() {
@@ -316,6 +317,23 @@ cp output-make om15
 rm output-configure output-make
 
 #*****************************************************************
+# TEST 16
+#*****************************************************************
+# - disable manpages
+#*****************************************************************
+print_title "${arr[16]}"
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-man --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test16
+grep Error output-configure output-make >> ./report-test16
+cp output-configure oc16
+cp output-make om16
+rm output-configure output-make
+
+#*****************************************************************
 # PRINT REPORTS
 #*****************************************************************
 echo
@@ -344,3 +362,4 @@ echo ${arr[12]}
 echo ${arr[13]}
 echo ${arr[14]}
 echo ${arr[15]}
+echo ${arr[16]}

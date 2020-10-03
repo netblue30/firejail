@@ -15,7 +15,7 @@ Documentation and support: https://firejail.wordpress.com/
 Development: https://github.com/netblue30/firejail
 License: GPL v2
 
-
+Please report all security vulnerabilities at netblue30@protonmail.com
 
 Compile and install mainline version from GitHub:
 
@@ -32,7 +32,7 @@ $ sudo apt-get install git build-essential libapparmor-dev pkg-config
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 
 Maintainer:
-- netblue30 (netblue30@yahoo.com)
+- netblue30 (netblue30@protonmail.com)
 
 Committers
 - chiraag-nataraj (https://github.com/chiraag-nataraj)
@@ -49,7 +49,7 @@ Committers
 - Topi Miettinen (https://github.com/topimiettinen)
 - veloute (https://github.com/veloute)
 - Vincent43 (https://github.com/Vincent43)
-- netblue30 (netblue30@yahoo.com)
+- netblue30 (netblue30@protonmail.com)
 
 
 
@@ -742,6 +742,8 @@ Senemu (https://github.com/Senemu)
 Sergey Alirzaev (https://github.com/l29ah)
 	- firejail.h enum fix
 	- firefox-common-addons.inc: + tridactyl
+Slava Monich (https://github.com/monich)
+	- added configure option to disable man pages
 Tobias Schmidl (https://github.com/schtobia)
 	- added profile for webui-aria2
 Simon Peter (https://github.com/probonopd)

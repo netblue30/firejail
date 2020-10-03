@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT(firejail, 0.9.63, netblue30@yahoo.com, , https://firejail.wordpress.com)
+AC_INIT(firejail, 0.9.64.rc1, netblue30@protonmail.com, , https://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -72,6 +72,14 @@ AC_ARG_ENABLE([overlayfs],
 AS_IF([test "x$enable_overlayfs" != "xno"], [
 	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
 	AC_SUBST(HAVE_OVERLAYFS)
+])
+
+HAVE_MAN="no"
+AC_ARG_ENABLE([man],
+    AS_HELP_STRING([--disable-man], [disable man pages]))
+AS_IF([test "x$enable_man" != "xno"], [
+	HAVE_MAN="-DHAVE_MAN"
+	AC_SUBST(HAVE_MAN)
 ])
 
 HAVE_FIRETUNNEL=""
@@ -230,6 +238,7 @@ echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   DBUS proxy support: $HAVE_DBUSPROXY"
+echo "   Manpage support: $HAVE_MAN"
 echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"

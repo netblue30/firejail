@@ -14,9 +14,9 @@ HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
 HAVE_SUID=@HAVE_SUID@
-NEED_MAN=@NEED_MAN@
+HAVE_MAN=@HAVE_MAN@
 
-ifneq ($(NEED_MAN),no)
+ifneq ($(HAVE_MAN),no)
 MAN_TARGET = man
 MAN_SRC = src/man
 endif
@@ -139,7 +139,7 @@ ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile customization file
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default ]; then install -c -m 0644 etc/apparmor/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default; fi;"
 endif
-ifneq ($(NEED_MAN),no)
+ifneq ($(HAVE_MAN),no)
 	# man pages
 	install -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
 	for man in $(MANPAGES); do \

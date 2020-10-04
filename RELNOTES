@@ -1,5 +1,4 @@
 firejail (0.9.63) baseline; urgency=low
-  * work in progress
   * replaced --nowrap option with --wrap in firemon
   * The blocking action of seccomp filters has been changed from
     killing the process to returning EPERM to the caller. To get the
@@ -38,19 +37,21 @@ firejail (0.9.63) baseline; urgency=low
   * new profiles: hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless
   * new profiles: mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers
   * new profiles: seahorse-adventures, wordwarvi, xbill, gnome-klotski
-  * new profiles: swell-foop, fdns, five-or-more, steam-runtime, jitsi-meet-desktop
-  * new profiles: nicotine, plv, mocp, apostrophe, quadrapassel, dino-im, strawberry
+  * new profiles: swell-foop, fdns, five-or-more, steam-runtime
+  * new profiles: nicotine, plv, mocp, apostrophe, quadrapassel, dino-im
   * new profiles: hitori, bijiben, gnote, gnubik, ZeGrapher, xonotic-sdl-wrapper
-  * new profiles: gapplication, openarena_ded, element-desktop, cawbird, freetube
+  * new profiles: gapplication, openarena_ded, element-desktop, cawbird
+  * new profiles: freetube, strawberry, jitsi-meet-desktop
   * new profiles: homebank, mattermost-desktop, newsflash, com.gitlab.newsflash
   * new profiles: sushi, xfce4-screenshooter, org.gnome.NautilusPreviewer, lyx
   * new profiles: minitube, nuclear, mtpaint, minecraft-launcher, gnome-calendar
   * new profiles: vmware, git-cola, otter-browser, kazam, menulibre, musictube
-  * new profiles: onboard, fractal, mirage, quaternion, spectral, man, psi, twitch
-  * new profiles: smuxi-frontend-gnome, balsa, kube, trojita, youtube, ytmdesktop
-  * new profiles: youtubemusic-nativefier, cola, dbus-send, notify-send, qrencode
+  * new profiles: onboard, fractal, mirage, quaternion, spectral, man, psi
+  * new profiles: smuxi-frontend-gnome, balsa, kube, trojita, youtube
+  * new profiles: youtubemusic-nativefier, cola, dbus-send, notify-send
+  * new profiles: qrencode, ytmdesktop, twitch
   * new profiles: xournalpp, chromium-freeworld, equalx
- -- netblue30 <netblue30@yahoo.com>  Tue, 21 Apr 2020 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 4 Oct 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

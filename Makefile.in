@@ -110,8 +110,8 @@ endif
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS) src/firecfg/firecfg.config
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
 	# non-dumpable plugins
-	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
-	install -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh
+	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
+	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	# contrib scripts
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail contrib/*.py contrib/*.sh

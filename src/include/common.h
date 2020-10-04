@@ -39,7 +39,9 @@
 #define errExit(msg)    do { char msgout[500]; snprintf(msgout, 500, "Error %s: %s:%d %s", msg, __FILE__, __LINE__, __FUNCTION__); perror(msgout); exit(1);} while (0)
 
 // check if processes run with dumpable flag set
-#define WARN_DUMPABLE
+// currently we get "Error fseccomp: I am dumpable" every time we run a firejail build on Debian 8,
+// regardless what Debian version we run the build on
+//#define WARN_DUMPABLE
 
 // macro to print ip addresses in a printf statement
 #define PRINT_IP(A) \

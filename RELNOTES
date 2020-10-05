@@ -1,4 +1,4 @@
-firejail (0.9.63) baseline; urgency=low
+firejail (0.9.64rc1) baseline; urgency=low
   * replaced --nowrap option with --wrap in firemon
   * The blocking action of seccomp filters has been changed from
     killing the process to returning EPERM to the caller. To get the

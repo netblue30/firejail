@@ -114,7 +114,10 @@ def run_firejail(program, allArgs):
     print('Attempting to run %s in Firejail' % program)
     for arg in allArgs:
         print('Running with', arg)
-        subprocess.call(goodArgs)
+        #We are adding the argument in a copy of the actual list to avoid modify it now.
+        myargs=goodArgs.copy()
+        myargs.insert(-1,arg)
+        subprocess.call(myargs)
         ans = input('Did %s run correctly? [y]/n ' % program)
         if ans in ['n', 'N']:
             badArgs.append(arg)

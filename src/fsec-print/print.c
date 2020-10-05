@@ -19,7 +19,7 @@
  *
  *
  *
- * Parts of this code was lifted from libseccomp project, license LGPV 2.1.
+ * Parts of this code was lifted from libseccomp project, license LGPL 2.1.
  * This is the original copyright notice in libseccomp code:
  *
  *

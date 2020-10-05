@@ -25,6 +25,15 @@ else
 	echo "TESTING SKIP: transmission-gtk not found"
 fi
 
+which transmission-qt 2>/dev/null
+if [ "$?" -eq 0 ];
+then
+	echo "TESTING: transmission-qt x11 xorg"
+	./transmission-qt.exp
+else
+	echo "TESTING SKIP: transmission-qt not found"
+fi
+
 which thunderbird 2>/dev/null
 if [ "$?" -eq 0 ];
 then

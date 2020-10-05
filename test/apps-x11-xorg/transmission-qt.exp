@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --x11=xorg --ignore=net --ignore=netfilter --ignore=iprange thunderbird\r"
+send -- "firejail --name=test --x11=xorg --ignore=net --ignore=netfilter --ignore=iprange transmission-qt\r"
 sleep 10
 
 spawn $env(SHELL)
@@ -18,7 +18,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"thunderbird"
+	"transmission-qt"
 }
 sleep 1
 
@@ -46,7 +46,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"thunderbird"
+	"transmission-qt"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -56,7 +56,7 @@ expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
 	"name=blablabla"
 }
-sleep 2
+sleep 1
 send -- "firemon --caps --wrap\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
@@ -64,7 +64,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6.0\n";exit}
-	"thunderbird"
+	"transmission-qt"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

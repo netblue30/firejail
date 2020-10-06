@@ -43,7 +43,7 @@ $(MYDIRS):
 	$(MAKE) -C $@
 
 
-$(MANPAGES): $(wildcard src/man/*.man)
+$(MANPAGES): src/man
 	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
 
 man: $(MANPAGES)

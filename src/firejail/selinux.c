@@ -49,6 +49,9 @@ void selinux_relabel_path(const char *path, const char *inside_path)
 	if (!label_hnd)
 		label_hnd = selabel_open(SELABEL_CTX_FILE, NULL, 0);
 
+	if (!label_hnd)
+		errExit("selabel_open");
+
 	/* Open the file as O_PATH, to pin it while we determine and adjust the label */
 	fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
 	if (fd < 0)

@@ -43,7 +43,7 @@ void selinux_relabel_path(const char *path, const char *inside_path)
 	if (selinux_enabled == -1)
 		selinux_enabled = is_selinux_enabled();
 
-	if (!selinux_enabled && arg_debug)
+	if (!selinux_enabled)
 		return;
 
 	if (!label_hnd)

@@ -34,6 +34,6 @@ shell none
 tracelog
 
 #disable-mnt
-private-etc alsa,asound.conf,ca-certificates,conf.d,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,localtime,machine-id,pki,pulse,resolv.conf,ssl,vmware,vmware-installer,vmware-vix
+#private-etc alsa,asound.conf,ca-certificates,conf.d,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,localtime,machine-id,pki,pulse,resolv.conf,ssl,vmware,vmware-installer,vmware-vix
 dbus-user none
 dbus-system none

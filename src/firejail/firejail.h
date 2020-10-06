@@ -867,6 +867,7 @@ void dbus_apply_policy(void);
 // dhcp.c
 extern pid_t dhclient4_pid;
 extern pid_t dhclient6_pid;
+void dhcp_store_exec(void);
 void dhcp_start(void);
 
 // selinux.c

@@ -888,19 +888,20 @@ char *guess_shell(void) {
 	return shell;
 }
 
+// return argument index
 static int check_arg(int argc, char **argv, const char *argument, int strict) {
 	int i;
 	int found = 0;
 	for (i = 1; i < argc; i++) {
 		if (strict) {
 			if (strcmp(argv[i], argument) == 0) {
-				found = 1;
+				found = i;
 				break;
 			}
 		}
 		else {
 			if (strncmp(argv[i], argument, strlen(argument)) == 0) {
-				found = 1;
+				found = i;
 				break;
 			}
 		}
@@ -1046,6 +1047,14 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_USER();
 
+	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
+	// these paths are disabled in disable-common.inc
+	if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
+		if (strncmp(argv[i] + 4, "=dhcp", 5) == 0) {
+			profile_add("noblacklist /sbin");
+			profile_add("noblacklist /usr/sbin");
+		}
+	}
 
 	// for appimages we need to remove "include disable-shell.inc from the profile
 	// a --profile command can show up before --appimage

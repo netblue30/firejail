@@ -651,6 +651,8 @@ int sandbox(void* sandbox_arg) {
 	if (mount(LIBDIR "/firejail", RUN_FIREJAIL_LIB_DIR, NULL, MS_BIND, NULL) < 0 ||
 	    mount(NULL, RUN_FIREJAIL_LIB_DIR, NULL, MS_RDONLY|MS_NOSUID|MS_NODEV|MS_BIND|MS_REMOUNT, NULL) < 0)
 		errExit("mounting " RUN_FIREJAIL_LIB_DIR);
+	// keep a copy of dhclient executable before the filesystem is modified
+	dhcp_store_exec();
 
 	//****************************
 	// log sandbox data

@@ -35,7 +35,7 @@ static int selinux_enabled = -1;
 void selinux_relabel_path(const char *path, const char *inside_path)
 {
 #if HAVE_SELINUX
-        char procfs_path[64];
+	char procfs_path[64];
 	char *fcon = NULL;
 	int fd;
 	struct stat st;
@@ -50,19 +50,19 @@ void selinux_relabel_path(const char *path, const char *inside_path)
 		label_hnd = selabel_open(SELABEL_CTX_FILE, NULL, 0);
 
 	/* Open the file as O_PATH, to pin it while we determine and adjust the label */
-        fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
+	fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
 	if (fd < 0)
 		return;
 	if (fstat(fd, &st) < 0)
 		goto close;
 
-        if (selabel_lookup_raw(label_hnd, &fcon, inside_path, st.st_mode)  == 0) {
+	if (selabel_lookup_raw(label_hnd, &fcon, inside_path, st.st_mode)  == 0) {
 		sprintf(procfs_path, "/proc/self/fd/%i", fd);
 		if (arg_debug)
 			printf("Relabeling %s as %s (%s)\n", path, inside_path, fcon);
 
 		setfilecon_raw(procfs_path, fcon);
-        }
+	}
 	freecon(fcon);
  close:
 	close(fd);

@@ -36,7 +36,7 @@ CFLAGS += -DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/firejail"' -DLIBDI
 MANFLAGS = $(HAVE_X11) $(HAVE_PRIVATE_HOME) $(HAVE_APPARMOR) $(HAVE_OVERLAYFS) $(HAVE_DBUSPROXY) $(HAVE_FIRETUNNEL) $(HAVE_GLOBALCFG) $(HAVE_CHROOT) $(HAVE_NETWORK) $(HAVE_USERNS) $(HAVE_FILE_TRANSFER) $(HAVE_WHITELIST) $(HAVE_SELINUX)
 CFLAGS += $(MANFLAGS)
 CFLAGS += -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -Wformat -Wformat-security
-LDFLAGS += -pie -Wl,-z,relro -Wl,-z,now -lpthread
+LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now -lpthread
 EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
 
 ifdef NO_EXTRA_CFLAGS

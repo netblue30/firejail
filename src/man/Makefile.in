@@ -2,7 +2,7 @@ all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-pro
 include ../common.mk
 
 %.man: %.txt
-	./preproc.awk $(MANFLAGS) < $< > $@
+	gawk -f ./preproc.awk -- $(MANFLAGS) < $< > $@
 
 clean:; rm -fr *.man
 

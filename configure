@@ -642,6 +642,7 @@ HAVE_GLOBALCFG
 HAVE_CHROOT
 HAVE_PRIVATE_HOME
 HAVE_FIRETUNNEL
+HAVE_GAWK
 HAVE_MAN
 HAVE_OVERLAYFS
 HAVE_DBUSPROXY
@@ -3416,8 +3417,8 @@ if test "x$enable_apparmor" = "xyes"; then :
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for AA" >&5
-$as_echo_n "checking for AA... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libapparmor" >&5
+$as_echo_n "checking for libapparmor... " >&6; }
 
 if test -n "$AA_CFLAGS"; then
     pkg_cv_AA_CFLAGS="$AA_CFLAGS"
@@ -3457,7 +3458,7 @@ fi
 
 
 if test $pkg_failed = yes; then
-   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 
 if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
@@ -3484,7 +3485,7 @@ Alternatively, you may set the environment variables AA_CFLAGS
 and AA_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
 elif test $pkg_failed = untried; then
-     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
@@ -3549,6 +3550,47 @@ if test "x$enable_man" != "xno"; then :
 
 	HAVE_MAN="-DHAVE_MAN"
 
+	# Extract the first word of "gawk", so it can be a program name with args.
+set dummy gawk; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_HAVE_GAWK+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$HAVE_GAWK"; then
+  ac_cv_prog_HAVE_GAWK="$HAVE_GAWK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_HAVE_GAWK="yes"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  test -z "$ac_cv_prog_HAVE_GAWK" && ac_cv_prog_HAVE_GAWK="no"
+fi
+fi
+HAVE_GAWK=$ac_cv_prog_HAVE_GAWK
+if test -n "$HAVE_GAWK"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $HAVE_GAWK" >&5
+$as_echo "$HAVE_GAWK" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+	if test "x$HAVE_GAWK" != "xyes"; then :
+  as_fn_error $? "\"*** gawk not found ***\"" "$LINENO" 5
+fi
 
 fi
 

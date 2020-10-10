@@ -111,14 +111,22 @@ def run_firejail(program, allArgs):
     """
     goodArgs = ['firejail', '--noprofile', program]
     badArgs = []
+    allArgs.insert(0,"")
     print('Attempting to run %s in Firejail' % program)
     for arg in allArgs:
-        print('Running with', arg)
-        subprocess.call(goodArgs)
+        if arg:
+            print('Running with', arg)
+        else:
+            print('Running without profile')
+        #We are adding the argument in a copy of the actual list to avoid modify it now.
+        myargs=goodArgs.copy()
+        if arg:
+            myargs.insert(-1,arg)
+        subprocess.call(myargs)
         ans = input('Did %s run correctly? [y]/n ' % program)
         if ans in ['n', 'N']:
             badArgs.append(arg)
-        else:
+        elif arg:
             goodArgs.insert(-1, arg)
         print('\n')
     # Don't include 'firejail', '--noprofile', or program name in arguments

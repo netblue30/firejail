@@ -2,6 +2,10 @@
 # Generic Firejail AppArmor profile
 #########################################
 
+# AppArmor 3.0 uses the @{run} variable in <abstractions/dbus-strict>
+# and <abstractions/dbus-session-strict>.
+#include <tunables/global>
+
 ##########
 # A simple PID declaration based on Ubuntu's @{pid}
 # Ubuntu keeps it under tunables/kernelvars and include it via tunables/global.

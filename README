@@ -176,6 +176,8 @@ BogDan Vatra (https://github.com/bog-dan-ro)
 	- zoom profile
 Brad Ackerman
 	- blacklist Bitwarden config in disable-passwdmgr.inc
+briaeros (https://github.com/briaeros)
+	- fix command test in jail_prober.py
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix
@@ -585,7 +587,7 @@ mirabellette (https://github.com/mirabellette)
 mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
 mustaqimM (https://github.com/mustaqimM)
-    - added profile for Nylas Mail
+	- added profile for Nylas Mail
 n1trux (https://github.com/n1trux)
 	- fix flashpeak-slimjet profile typos
 nblock (https://github.com/nblock)

@@ -3080,17 +3080,27 @@ int main(int argc, char **argv, char **envp) {
 	// end of signal-safe code
 	//*****************************
 
+#if 0
+// at this point the sandbox was closed and we are on our way out
+// it would make sense to move this before waitpid above to free some memory
+// crash for now as of issue #3662 from dhcp code
 	// free globals
 	if (cfg.profile) {
 		ProfileEntry *prf = cfg.profile;
 		while (prf != NULL) {
 			ProfileEntry *next = prf->next;
-			free(prf->data);
-			free(prf->link);
+printf("data #%s#\n", prf->data);
+			if (prf->data)
+				free(prf->data);
+printf("link #%s#\n", prf->link);
+			if (prf->link)
+				free(prf->link);
 			free(prf);
 			prf = next;
 		}
 	}
+#endif
+
 
 	if (WIFEXITED(status)){
 		myexit(WEXITSTATUS(status));

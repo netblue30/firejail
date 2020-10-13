@@ -29,20 +29,20 @@ no3d
 nodvd
 nogroups
 nonewprivs
-# noroot
+noroot
 nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 #seccomp
 #shell none
 
 disable-mnt
 private
 private-bin bash,fdns,sh
-# private-cache
-private-dev
+private-cache
+#private-dev
 private-etc ca-certificates,crypto-policies,fdns,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pki,ssl
 # private-lib
 private-tmp

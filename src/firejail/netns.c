@@ -60,7 +60,7 @@ void check_netns(const char *nsname) {
 			nsname, control_file, strerror(errno));
 		exit(1);
 	}
-	if (!S_ISREG(st.st_mode)) {
+	if (!S_ISREG(st.st_mode) && !S_ISLNK(st.st_mode)) {
 		fprintf(stderr, "Error: invalid netns '%s' (%s: not a regular file)\n",
 			nsname, control_file);
 		exit(1);

@@ -149,10 +149,8 @@ void arp_scan(const char *dev, uint32_t ifip, uint32_t ifmask) {
 			memcpy (frame + 14, &hdr, sizeof(hdr));
 
 			// send packet
-			int len;
-			if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
+			if (sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr)) <= 0)
 				errExit("send");
-//printf("send %d bytes to %d.%d.%d.%d\n", len, PRINT_IP(dest));
 			fflush(0);
 			dest++;
 		}

@@ -25,11 +25,16 @@ jobs:
       run: CC=clang-10 ./configure --enable-fatal-warnings
     - name: make
       run: make
-  # Disabled for now because of broken clang-10 support: https://github.com/actions/virtual-environments/issues/1536
-  #  - name: install clang tools 10
-  #    run: sudo apt-get install clang-tools-10
-  #  - name: scan-build
-  #    run: make clean && NO_EXTRA_CFLAGS="yes" scan-build-10 make
+  scan-build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install clang-tools-10
+      run: sudo apt-get install clang-tools-10
+    - name: configure
+      run: CC=clang-10 ./configure --enable-fatal-warnings
+    - name: scan-build
+      run: NO_EXTRA_CFLAGS="yes" scan-build-10 --status-bugs make
   cppcheck:
     runs-on: ubuntu-20.04
     steps:

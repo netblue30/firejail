@@ -91,7 +91,7 @@ static char *test_dbus_env(char *env_var_name) {
 			if (!found)
 				errExit("strdup");
 		}
-		else if ((sockfile = strstr(bus, "tcp:host=")) != NULL)
+		else if (strstr(bus, "tcp:host=") != NULL)
 			printf("UGLY: %s bus configured for TCP communication.\n", env_var_name);
 		else
 			printf("GOOD: cannot find a %s D-Bus socket\n", env_var_name);

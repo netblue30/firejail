@@ -183,7 +183,6 @@ int net_add_route(uint32_t ip, uint32_t mask, uint32_t gw) {
 	int sock;
 	struct rtentry route;
 	struct sockaddr_in *addr;
-	int err = 0;
 
 	// create the socket
 	if((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
@@ -205,7 +204,7 @@ int net_add_route(uint32_t ip, uint32_t mask, uint32_t gw) {
 
 	route.rt_flags = RTF_UP | RTF_GATEWAY;
 	route.rt_metric = 0;
-	if ((err = ioctl(sock, SIOCADDRT, &route)) != 0) {
+	if (ioctl(sock, SIOCADDRT, &route) != 0) {
 		close(sock);
 		return -1;
 	}

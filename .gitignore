@@ -9,6 +9,7 @@
 *.DS_Store
 .directory
 *.man
+.vscode
 Makefile
 autom4te.cache/
 config.log

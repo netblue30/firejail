@@ -29,29 +29,38 @@ import os
 import subprocess
 
 
-def check_params(profilePath):
+def check_params(profile_path):
     """
     Ensure the path to the profile is valid and that an actual profile has been
     passed (as opposed to a config or .local file).
 
-    :params profilePath: The absolute path to the problematic profile.
+    Args:
+        profile_path:       The absolute path to the problematic profile
+
+    Raises:
+        FileNotFoundError:  If the provided path isn't real
+
+        ValueError:         If the provided path is real but doesn't point to
+                            a Firejail profile
     """
-    if not os.path.isfile(profilePath):
-        raise FileNotFoundError(
-            'The path %s is not a valid system path.' % profilePath)
-    if not profilePath.endswith('.profile'):
-        raise ValueError('%s is not a valid Firejail profile.' % profilePath)
+    if not os.path.isfile(profile_path):
+        raise FileNotFoundError('The path %s is not a valid system path.' %
+                                profile_path)
+    if not profile_path.endswith('.profile'):
+        raise ValueError('%s is not a valid Firejail profile.' % profile_path)
 
 
-def get_args(profilePath):
+def get_args(profile_path):
     """
     Read the profile, stripping out comments and newlines
 
-    :params profilePath: The absolute path to the problematic profile.
+    Args:
+        profile_path:   The absolute path to the problematic profile.
 
-    :returns profile: A list containing all active profile arguments
+    Returns:
+        A list containing all active profile arguments
     """
-    with open(profilePath, 'r') as f:
+    with open(profile_path, 'r') as f:
         profile = f.readlines()
         profile = [
             arg.strip() for arg in profile
@@ -61,92 +70,95 @@ def get_args(profilePath):
     return profile
 
 
-def arg_converter(argList, style):
+def arg_converter(arg_list, style):
     """
     Convert between firejail command-line arguments (--example=something) and
     profile arguments (example something)
 
-    :params argList: A list of firejail arguments
+    Args:
+        arg_list:   A list of firejail arguments
 
-    :params style: Whether to convert arguments to command-line form or profile
-    form
+        style:      String, one of {'to_profile', 'to_commandline'}. Whether to
+                    convert arguments to command-line form or profile form
     """
     if style == 'to_profile':
-        oldSep = '='
-        newSep = ' '
+        old_sep = '='
+        new_sep = ' '
         prefix = ''
     elif style == 'to_commandline':
-        oldSep = ' '
-        newSep = '='
+        old_sep = ' '
+        new_sep = '='
         prefix = '--'
-    newArgs = [prefix + word.replace(oldSep, newSep) for word in argList]
+    new_args = [prefix + word.replace(old_sep, new_sep) for word in arg_list]
     # Additional strip of '--' if converting to profile form
     if style == 'to_profile':
-        newArgs = [word[2:] for word in newArgs]
+        new_args = [word[2:] for word in new_args]
 
     # Remove invalid '--include' args if converting to command-line form
     elif style == 'to_commandline':
-        newArgs = [word for word in newArgs if 'include' not in word]
+        new_args = [word for word in new_args if 'include' not in word]
 
-    return newArgs
+    return new_args
 
 
-def run_firejail(program, allArgs):
+def run_firejail(program, all_args):
     """
     Attempt to run the program in firejail, incrementally adding to the number
     of firejail arguments. Initial run has no additional params besides
     noprofile.
 
-    :params program: The program name. If it doesn't exist in the user's path
-    then the full path should be provided.
+    Args:
+        program:    String, the program name. If it doesn't exist in $PATH then
+                    the full path to the program should be provided
 
-    :params allArgs: A list of all Firejail arguments to try, in command-line
-    format.
+        all_args:   List, all Firejail arguments to try, in command-line format
+                    (i.e. prefixed by '--')
 
-    :returns goodArgs: A list of arguments that the user has reported to not
-    affect the program
+    Returns:
+        good_args:  List, all Firejail arguments that the user has reported to
+                    not adversely affect the program
 
-    :returns badArgs: A list of arguments that the user has reported to break
-    the program when sandboxing with Firejail
+        bad_args:   List, all Firejail arguments that the user has reported to
+                    break the program
     """
-    goodArgs = ['firejail', '--noprofile', program]
-    badArgs = []
-    allArgs.insert(0,"")
+    good_args = ['firejail', '--noprofile', program]
+    bad_args = []
+    all_args.insert(0, "")
     print('Attempting to run %s in Firejail' % program)
-    for arg in allArgs:
+    for arg in all_args:
         if arg:
             print('Running with', arg)
         else:
             print('Running without profile')
         #We are adding the argument in a copy of the actual list to avoid modify it now.
-        myargs=goodArgs.copy()
+        myargs = good_args.copy()
         if arg:
-            myargs.insert(-1,arg)
+            myargs.insert(-1, arg)
         subprocess.call(myargs)
         ans = input('Did %s run correctly? [y]/n ' % program)
         if ans in ['n', 'N']:
-            badArgs.append(arg)
+            bad_args.append(arg)
         elif arg:
-            goodArgs.insert(-1, arg)
+            good_args.insert(-1, arg)
         print('\n')
     # Don't include 'firejail', '--noprofile', or program name in arguments
-    goodArgs = goodArgs[2:-1]
+    good_args = good_args[2:-1]
 
-    return goodArgs, badArgs
+    return good_args, bad_args
 
 
 def main():
-    profilePath = sys.argv[1]
+    profile_path = sys.argv[1]
     program = sys.argv[2]
     # Quick error check and extract arguments
-    check_params(profilePath)
-    profile = get_args(profilePath)
-    allArgs = arg_converter(profile, 'to_commandline')
+    check_params(profile_path)
+    profile = get_args(profile_path)
+    all_args = arg_converter(profile, 'to_commandline')
     # Find out which profile options break the program when running in firejail
-    goodArgs, badArgs = run_firejail(program, allArgs)
+    good_args, bad_args = run_firejail(program, all_args)
 
-    goodArgs = arg_converter(goodArgs, 'to_profile')
-    badArgs = arg_converter(badArgs, 'to_profile')
+    good_args = arg_converter(good_args, 'to_profile')
+    bad_args = arg_converter(bad_args, 'to_profile')
 
     print('\n###########################')
     print('Debugging completed.')
@@ -159,13 +171,13 @@ def main():
 
     print('These profile options break the program.')
     print('```')
-    for item in badArgs:
+    for item in bad_args:
         print(item)
     print('```\n\n\n')
 
     print('This is a minimal working profile:')
     print('```')
-    for item in goodArgs:
+    for item in good_args:
         print(item)
     print('```')
 

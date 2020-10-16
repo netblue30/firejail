@@ -214,6 +214,7 @@ blacklist ${HOME}/.config/evince
 blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/falkon
 blacklist ${HOME}/.config/filezilla
+blacklist ${HOME}/.config/flameshot
 blacklist ${HOME}/.config/flaska.net
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/font-manager

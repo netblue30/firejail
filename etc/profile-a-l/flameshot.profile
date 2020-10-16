@@ -9,6 +9,7 @@ include globals.local
 
 noblacklist ${PICTURES}
 noblacklist ${HOME}/.config/Dharkael
+noblacklist ${HOME}/.config/flameshot
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +20,11 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+#mkdir ${HOME}/.config/Dharkael
+#mkdir ${HOME}/.config/flameshot
 #whitelist ${PICTURES}
 #whitelist ${HOME}/.config/Dharkael
+#whitelist ${HOME}/.config/flameshot
 whitelist /usr/share/flameshot
 #include whitelist-common.inc
 include whitelist-runuser-common.inc
@@ -53,4 +57,5 @@ private-tmp
 
 dbus-user filter
 dbus-user.own org.dharkael.Flameshot
+dbus-user.own org.flameshot.Flameshot
 dbus-system none

@@ -415,6 +415,8 @@ hawkey116477 (https://github.com/hawkeye116477)
 	- updated Waterfox profile
 Helmut Grohne (https://github.com/helmutg)
 	-  compiler support in the build system - Debian bug #869707
+hlein (https://github.com/hlein)
+	- strip out \r's from jail prober
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Haowei Yu (https://github.com/sfc-gh-hyu)

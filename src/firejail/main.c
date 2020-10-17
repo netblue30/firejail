@@ -1004,17 +1004,21 @@ int main(int argc, char **argv, char **envp) {
 			fprintf(stderr, "Error: too long arguments\n");
 			exit(1);
 		}
+		// Also remove requested environment variables
+		// entirely to avoid tripping the length check below
+		if (strncmp(argv[i], "--rmenv=", 8) == 0)
+			unsetenv(argv[i] + 8);
 	}
 
 	// sanity check for environment variables
 	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++) {
 		if (strlen(*ptr) >= MAX_ENV_LEN) {
-			fprintf(stderr, "Error: too long environment variables\n");
+			fprintf(stderr, "Error: too long environment variables, please use --rmenv\n");
 			exit(1);
 		}
 	}
 	if (i >= MAX_ENVS) {
-		fprintf(stderr, "Error: too many environment variables\n");
+		fprintf(stderr, "Error: too many environment variables, please use --rmenv\n");
 		exit(1);
 	}
 

@@ -1633,10 +1633,11 @@ void profile_read(const char *fname) {
 		exit(1);
 	}
 	if (access(fname, R_OK)) {
+		int errsv = errno;
 		// if the file ends in ".local", do not exit
 		const char *base = gnu_basename(fname);
 		char *ptr = strstr(base, ".local");
-		if (ptr && strlen(ptr) == 6)
+		if (ptr && strlen(ptr) == 6 && errsv != EACCES)
 			return;
 
 		fprintf(stderr, "Error: cannot access profile file: %s\n", fname);

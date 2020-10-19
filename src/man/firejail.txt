@@ -352,7 +352,9 @@ path is given, logs are written to the standard output instead.
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.log --dbus-log=dbus.txt
+$ firejail --dbus-system=filter --dbus-system.log \\
+.br
+--dbus-log=dbus.txt
 
 .TP
 \fB\-\-dbus-system=filter|none
@@ -398,7 +400,11 @@ object paths, respectively.
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.broadcast=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+$ firejail --dbus-system=filter --dbus-system.broadcast=\\
+.br
+org.freedesktop.Notifications=\\
+.br
+org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
 \fB\-\-dbus-system.call=name=[member][@path]
@@ -416,7 +422,11 @@ object paths, respectively.
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.call=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+$ firejail --dbus-system=filter --dbus-system.call=\\
+.br
+org.freedesktop.Notifications=\\
+.br
+org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
 \fB\-\-dbus-system.log
@@ -438,7 +448,9 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.own=org.gnome.ghex.*
+$ firejail --dbus-system=filter --dbus-system.own=\\
+.br
+org.gnome.ghex.*
 
 .TP
 \fB\-\-dbus-system.see=name
@@ -452,7 +464,9 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.see=org.freedesktop.Notifications
+$ firejail --dbus-system=filter --dbus-system.see=\\
+.br
+org.freedesktop.Notifications
 
 .TP
 \fB\-\-dbus-system.talk=name
@@ -465,7 +479,9 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.talk=org.freedesktop.Notifications
+$ firejail --dbus-system=filter --dbus-system.talk=\\
+.br
+org.freedesktop.Notifications
 
 .TP
 \fB\-\-dbus-user=filter|none
@@ -511,7 +527,11 @@ object paths, respectively.
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.broadcast=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+$ firejail --dbus-user=filter --dbus-user.broadcast=\\
+.br
+org.freedesktop.Notifications=\\
+.br
+org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
 \fB\-\-dbus-user.call=name=[member][@path]
@@ -529,7 +549,11 @@ object paths, respectively.
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.call=org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+$ firejail --dbus-user=filter --dbus-user.call=\\
+.br
+org.freedesktop.Notifications=\\
+.br
+org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
 \fB\-\-dbus-user.log
@@ -564,7 +588,9 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.talk=org.freedesktop.Notifications
+$ firejail --dbus-user=filter --dbus-user.talk=\\
+.br
+org.freedesktop.Notifications
 
 .TP
 \fB\-\-dbus-user.see=name
@@ -578,7 +604,9 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.see=org.freedesktop.Notifications
+$ firejail --dbus-user=filter --dbus-user.see=\\
+.br
+org.freedesktop.Notifications
 #endif
 .TP
 \fB\-\-debug\fR

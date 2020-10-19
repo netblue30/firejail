@@ -26,6 +26,7 @@ mkdir ${HOME}/VirtualBox VMs
 whitelist ${HOME}/.config/VirtualBox
 whitelist ${HOME}/VirtualBox VMs
 whitelist ${DOWNLOADS}
+whitelist /usr/share/virtualbox
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

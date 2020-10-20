@@ -32,7 +32,7 @@ Other context about the problem like related errors to understand the problem.
 
 **Checklist**
  - [ ] The upstream profile (and redirect profile if exists) have no changes fixing it.
- - [ ] The program has a profile. (If not, request one in [# 1139](https://github.com/netblue30/firejail/issues/1139))
+ - [ ] The program has a profile. (If not, request one in `https://github.com/netblue30/firejail/issues/1139`)
  - [ ] Programs needed for interaction are listed in the profile.
  - [ ] A short search for duplicates was performed.
  - [ ] If it is a AppImage, `--profile=PROFILENAME` is used to set the right profile.

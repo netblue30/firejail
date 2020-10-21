@@ -1,4 +1,4 @@
-firejail (0.9.64rc1) baseline; urgency=low
+firejail (0.9.64) baseline; urgency=low
   * replaced --nowrap option with --wrap in firemon
   * The blocking action of seccomp filters has been changed from
     killing the process to returning EPERM to the caller. To get the
@@ -51,7 +51,7 @@ firejail (0.9.64rc1) baseline; urgency=low
   * new profiles: youtubemusic-nativefier, cola, dbus-send, notify-send
   * new profiles: qrencode, ytmdesktop, twitch
   * new profiles: xournalpp, chromium-freeworld, equalx
- -- netblue30 <netblue30@yahoo.com>  Sun, 4 Oct 2020 08:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Wed,21 Oct 2020 08:00:00 -0500
 
 firejail (0.9.62) baseline; urgency=low
   * added file-copy-limit in /etc/firejail/firejail.config

@@ -8,6 +8,9 @@ include globals.local
 
 # noexec /tmp is included in chromium-common.profile and breaks Brave
 ignore noexec /tmp
+# Disable for now, see ___
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
 
 noblacklist ${HOME}/.cache/BraveSoftware
 noblacklist ${HOME}/.config/BraveSoftware

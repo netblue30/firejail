@@ -5,6 +5,10 @@ include flashpeak-slimjet.local
 # Persistent global definitions
 include globals.local
 
+# Disable for now, see ___
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+
 noblacklist ${HOME}/.cache/slimjet
 noblacklist ${HOME}/.config/slimjet
 

@@ -389,6 +389,7 @@ blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/truecraft
 blacklist ${HOME}/.config/tvbrowser
 blacklist ${HOME}/.config/uGet
+blacklist ${HOME}/.config/ungoogled-chromium
 blacklist ${HOME}/.config/uzbl
 blacklist ${HOME}/.config/viewnior
 blacklist ${HOME}/.config/vivaldi
@@ -974,6 +975,7 @@ blacklist ${HOME}/.cache/telepathy
 blacklist ${HOME}/.cache/thunderbird
 blacklist ${HOME}/.cache/torbrowser
 blacklist ${HOME}/.cache/transmission
+blacklist ${HOME}/.cache/ungoogled-chromium
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc

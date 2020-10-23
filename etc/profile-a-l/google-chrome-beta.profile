@@ -5,6 +5,10 @@ include google-chrome-beta.local
 # Persistent global definitions
 include globals.local
 
+# Disable for now, see ___
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+
 noblacklist ${HOME}/.cache/google-chrome-beta
 noblacklist ${HOME}/.config/google-chrome-beta
 

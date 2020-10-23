@@ -5,6 +5,10 @@ include yandex-browser.local
 # Persistent global definitions
 include globals.local
 
+# Disable for now, see ___
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+
 noblacklist ${HOME}/.cache/yandex-browser
 noblacklist ${HOME}/.cache/yandex-browser-beta
 noblacklist ${HOME}/.config/yandex-browser

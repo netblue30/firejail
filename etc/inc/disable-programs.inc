@@ -68,7 +68,6 @@ blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.clonk
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/2048-qt
-blacklist ${HOME}/.config/aacs
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Authenticator
@@ -143,6 +142,7 @@ blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/Youtube
 blacklist ${HOME}/.config/Zeal
 blacklist ${HOME}/.config/ZeGrapher Project
+blacklist ${HOME}/.config/aacs
 blacklist ${HOME}/.config/abiword
 blacklist ${HOME}/.config/agenda
 blacklist ${HOME}/.config/akonadi*

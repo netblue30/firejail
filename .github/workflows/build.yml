@@ -43,3 +43,9 @@ jobs:
       run: sudo apt-get install cppcheck
     - name: cppcheck
       run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+  profile-sort:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: check profiles
+      run: ./contrib/sort.py etc/*/{*.inc,*.net,*.profile}

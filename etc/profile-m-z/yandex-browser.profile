@@ -6,6 +6,7 @@ include yandex-browser.local
 include globals.local
 
 # Disable for now, see ___
+ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 

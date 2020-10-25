@@ -6,11 +6,11 @@ include vivaldi.local
 include globals.local
 
 # Allow HTML5 Proprietary Media & DRM/EME (Widevine)
-?BROWSER_ALLOW_DRM: ignore apparmor
-?BROWSER_ALLOW_DRM: ignore noexec /var
-?BROWSER_ALLOW_DRM: noblacklist /var/opt
-?BROWSER_ALLOW_DRM: whitelist /var/opt/vivaldi
-?BROWSER_ALLOW_DRM: writable-var
+ignore apparmor
+ignore noexec /var
+noblacklist /var/opt
+whitelist /var/opt/vivaldi
+writable-var
 
 noblacklist ${HOME}/.cache/vivaldi
 noblacklist ${HOME}/.cache/vivaldi-snapshot

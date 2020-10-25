@@ -7,16 +7,20 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies
-      run: sudo apt-get install gcc-10 libapparmor-dev libselinux1-dev
+      run: sudo apt-get install gcc-10 libapparmor-dev libselinux1-dev expect xzdec
     - name: configure
-      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux
+      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
     - name: make
       run: make
+    - name: make install
+      run: sudo make install
+    - name: run tests
+      run: SHELL=/bin/bash make test-github
   build-clang:
     runs-on: ubuntu-20.04
     steps:

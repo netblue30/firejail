@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.config/celluloid
 noblacklist ${HOME}/.config/gnome-mpv
 noblacklist ${HOME}/.config/youtube-dl
+noblacklist /usr/lib/liblua*
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

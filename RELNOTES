@@ -1,3 +1,6 @@
+firejail (0.9.65) baseline; urgency=low
+  * allow --tmpfs inside $HOME for unprivileged users
+
 firejail (0.9.64) baseline; urgency=low
   * replaced --nowrap option with --wrap in firemon
   * The blocking action of seccomp filters has been changed from

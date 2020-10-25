@@ -167,7 +167,7 @@ Release discussion: https://github.com/netblue30/firejail/issues/3696
 
 A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
 `````
-$ sudo cp src/prfostats/profstats /etc/firejail/.
+$ sudo cp src/profstats/profstats /etc/firejail/.
 $ cd /etc/firejail
 $ ./profstats *.profile
 Warning: multiple caps in transmission-daemon.profile

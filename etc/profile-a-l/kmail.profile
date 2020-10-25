@@ -104,7 +104,7 @@ whitelist /usr/share/qlogging-categories5
 whitelist /var/mail
 whitelist /var/spool/mail
 include whitelist-common.inc
-include whitelist-runnuser-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

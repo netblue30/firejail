@@ -158,36 +158,42 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ## Current development version: 0.9.65
 
+Milestone page: https://github.com/netblue30/firejail/milestone/1
+Release discussion: https://github.com/netblue30/firejail/issues/3696
+
+
+
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
 `````
+$ sudo cp src/prfostats/profstats /etc/firejail/.
+$ cd /etc/firejail
 $ ./profstats *.profile
 Warning: multiple caps in transmission-daemon.profile
 
 Stats:
-    profiles			1029
-    include local profile	1029   (include profile-name.local)
-    include globals		1029   (include globals.local)
-    blacklist ~/.ssh		1005   (include disable-common.inc)
-    seccomp			975
-    capabilities		1028
-    noexec			899   (include disable-exec.inc)
-    memory-deny-write-execute	220
-    apparmor			549
-    private-bin			542
+    profiles			1031
+    include local profile	1031   (include profile-name.local)
+    include globals		1031   (include globals.local)
+    blacklist ~/.ssh		1007   (include disable-common.inc)
+    seccomp			976
+    capabilities		1030
+    noexec			901   (include disable-exec.inc)
+    memory-deny-write-execute	221
+    apparmor			555
+    private-bin			544
     private-dev			897
-    private-etc			431
-    private-tmp			784
-    whitelist home directory	469
-    whitelist var		695   (include whitelist-var-common.inc)
-    whitelist run/user		334   (include whitelist-runuser-common.inc
+    private-etc			435
+    private-tmp			785
+    whitelist home directory	474
+    whitelist var		699   (include whitelist-var-common.inc)
+    whitelist run/user		336   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		354   (include whitelist-usr-share-common.inc
-    net none			332
+    whitelist usr/share		359   (include whitelist-usr-share-common.inc
+    net none			333
     dbus-user none 		523
-    dbus-system none 		627
-`````
+    dbus-system none 		632
 
 ### New profiles:
 

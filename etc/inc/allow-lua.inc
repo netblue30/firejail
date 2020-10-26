@@ -6,5 +6,7 @@ noblacklist ${PATH}/lua*
 noblacklist /usr/include
 noblacklist /usr/lib/liblua*
 noblacklist /usr/lib/lua
+noblacklist /usr/lib64/liblua*
+noblacklist /usr/lib64/lua
 noblacklist /usr/share/lua
 noblacklist /usr/share/lua*

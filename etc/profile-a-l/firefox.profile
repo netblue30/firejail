@@ -33,6 +33,8 @@ dbus-user.own org.mozilla.firefox.*
 dbus-user.own org.mpris.MediaPlayer2.firefox.*
 # Uncomment or put in your firefox.local to enable native notifications.
 #dbus-user.talk org.freedesktop.Notifications
+# Uncomment or put in your firefox.local to allow to inhibit screensavers
+#dbus-user.talk org.freedesktop.ScreenSaver
 ignore dbus-user none
 
 # Redirect

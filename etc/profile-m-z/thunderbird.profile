@@ -58,7 +58,5 @@ novideo
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 ignore private-tmp
 
-read-only ${HOME}/.config/mimeapps.list
-
 # Redirect
 include firefox-common.profile

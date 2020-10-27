@@ -7,6 +7,7 @@ include assogiate.local
 include globals.local
 
 noblacklist ${PICTURES}
+ignore read-only ${HOME}/.local/share/mime
 
 include disable-common.inc
 include disable-devel.inc

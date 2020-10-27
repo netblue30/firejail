@@ -1415,6 +1415,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strncmp(ptr, "bind ", 5) == 0) {
 		if (checkcfg(CFG_BIND)) {
 			// extract two directories
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --bind option is available only if running as root\n");
+				exit(1);
+			}
+
 			char *dname1 = ptr + 5;
 			char *dname2 = split_comma(dname1); // this inserts a '0 to separate the two dierctories
 			if (dname2 == NULL) {
@@ -1428,18 +1433,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (strstr(dname1, "..") || strstr(dname2, "..")) {
 				fprintf(stderr, "Error: invalid file name.\n");
 				exit(1);
-			}
-			if (getuid() != 0) {
-				char *resolved_path1 = realpath(dname1, NULL);
-				char *resolved_path2 = realpath(dname2, NULL);
-				assert(resolved_path1 && resolved_path2);
-					if (strncmp(cfg.homedir, resolved_path1, strlen(cfg.homedir)) != 0
-					|| strncmp(cfg.homedir, resolved_path2, strlen(cfg.homedir)) != 0) {
-						fprintf(stderr, "Error: bind outside $HOME is only available for root\n");
-						exit(1);
-					}
-				free(resolved_path1);
-				free(resolved_path2);
 			}
 			if (is_link(dname1) || is_link(dname2)) {
 				fprintf(stderr, "Symbolic links are not allowed for bind command\n");

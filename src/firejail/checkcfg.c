@@ -351,6 +351,14 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- private-cache and tmpfs as user %s\n",
+#ifdef HAVE_USERTMPFS
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- SELinux support is %s\n",
 #ifdef HAVE_SELINUX
 		"enabled"

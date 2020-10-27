@@ -383,10 +383,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "private-cache") == 0) {
+#ifdef HAVE_USERTMPFS
 		if (checkcfg(CFG_PRIVATE_CACHE))
 			arg_private_cache = 1;
 		else
 			warning_feature_disabled("private-cache");
+#endif
 		return 0;
 	}
 	else if (strcmp(ptr, "private-dev") == 0) {
@@ -1570,6 +1572,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "noexec ", 7) == 0)
 		ptr += 7;
 	else if (strncmp(ptr, "tmpfs ", 6) == 0) {
+#ifndef HAVE_USERTMPFS
+		if (getuid() != 0) {
+			fprintf(stderr, "Error: tmpfs available only when running the sandbox as root\n");
+			exit(1);
+		}
+#endif
 		ptr += 6;
 	}
 	else {

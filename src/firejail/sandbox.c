@@ -921,6 +921,7 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
+#ifdef HAVE_USERTMPFS
 	if (arg_private_cache) {
 		if (cfg.chrootdir)
 			fwarning("private-cache feature is disabled in chroot\n");
@@ -929,6 +930,7 @@ int sandbox(void* sandbox_arg) {
 		else
 			fs_private_cache();
 	}
+#endif
 
 	if (arg_private_tmp) {
 		// private-tmp is implemented as a whitelist

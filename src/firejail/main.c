@@ -2000,12 +2000,14 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}
+#ifdef HAVE_USERTMPFS
 		else if (strcmp(argv[i], "--private-cache") == 0) {
 			if (checkcfg(CFG_PRIVATE_CACHE))
 				arg_private_cache = 1;
 			else
 				exit_err_feature("private-cache");
 		}
+#endif
 		else if (strcmp(argv[i], "--private-cwd") == 0) {
 			cfg.cwd = NULL;
 			arg_private_cwd = 1;

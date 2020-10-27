@@ -162,7 +162,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	}
 	else if (op == MOUNT_TMPFS) {
 		if (S_ISDIR(s.st_mode)) {
-			fs_tmpfs(fname, 0);
+			fs_tmpfs(fname, getuid());
 			last_disable = SUCCESSFUL;
 		}
 		else
@@ -451,7 +451,7 @@ void fs_blacklist(void) {
 void fs_tmpfs(const char *dir, unsigned check_owner) {
 	assert(dir);
 	if (arg_debug)
-		printf("Mounting tmpfs on %s\n", dir);
+		printf("Mounting tmpfs on %s, check owner: %s\n", dir, (check_owner)? "yes": "no");
 	// get a file descriptor for dir, fails if there is any symlink
 	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)

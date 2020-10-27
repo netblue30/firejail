@@ -74,6 +74,14 @@ AS_IF([test "x$enable_overlayfs" != "xno"], [
 	AC_SUBST(HAVE_OVERLAYFS)
 ])
 
+HAVE_USERTMPS=""
+AC_ARG_ENABLE([usertmpfs],
+    AS_HELP_STRING([--disable-usertmpfs], [disable tmpfs as regular user]))
+AS_IF([test "x$enable_usertmpfs" != "xno"], [
+	HAVE_USERTMPFS="-DHAVE_USERTMPFS"
+	AC_SUBST(HAVE_USERTMPFS)
+])
+
 HAVE_MAN="no"
 AC_ARG_ENABLE([man],
     AS_HELP_STRING([--disable-man], [disable man pages]))
@@ -240,6 +248,7 @@ echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   DBUS proxy support: $HAVE_DBUSPROXY"
+echo "   allow tmpfs as regular user: $HAVE_USERTMPFS"
 echo "   Manpage support: $HAVE_MAN"
 echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"

@@ -54,3 +54,6 @@ private-tmp
 
 # memory-deny-write-execute is built using seccomp; nonewprivs will kill it
 #memory-deny-write-execute
+
+dbus-user none
+dbus-system none

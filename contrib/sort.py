@@ -34,7 +34,7 @@ def sort_alphabetical(raw_items):
 
 
 def sort_protocol(protocols):
-    """sort the given protocole into this scheme: unix,inet,inet6,netlink,packet"""
+    """sort the given protocole into this scheme: unix,inet,inet6,netlink,packet,bluetooth"""
     # shortcut for common protocol lines
     if protocols in ("unix", "unix,inet,inet6"):
         return protocols
@@ -45,6 +45,7 @@ def sort_protocol(protocols):
         "inet6": False,
         "netlink": False,
         "packet": False,
+        "bluetooth": False,
     }
     for protocol in protocols.split(","):
         if protocol == "unix":
@@ -57,6 +58,8 @@ def sort_protocol(protocols):
             present_protocols["netlink"] = True
         elif protocol == "packet":
             present_protocols["packet"] = True
+        elif protocol == "bluetooth":
+            present_protocols["bluetooth"] = True
     if present_protocols["unix"]:
         fixed_protocols += "unix,"
     if present_protocols["inet"]:
@@ -67,6 +70,8 @@ def sort_protocol(protocols):
         fixed_protocols += "netlink,"
     if present_protocols["packet"]:
         fixed_protocols += "packet,"
+    if present_protocols["bluetooth"]:
+        fixed_protocols += "bluetooth,"
     return fixed_protocols[:-1]
 
 

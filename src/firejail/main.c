@@ -1283,7 +1283,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (cfg.protocol) {
-					fwarning("two protocol lists are present, \"%s\" will be installed\n", cfg.protocol);
+					fwarning("more than one protocol list is present, \"%s\" will be installed\n", cfg.protocol);
 				}
 				else {
 					// store list

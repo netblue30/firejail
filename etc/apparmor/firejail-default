@@ -112,7 +112,8 @@ network inet6,
 network unix,
 network netlink,
 network raw,
-# needed for wireshark
+# needed for wireshark, tcpdump etc
+network bluetooth,
 network packet,
 
 ##########

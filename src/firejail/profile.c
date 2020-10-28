@@ -895,7 +895,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			if (cfg.protocol) {
-				fwarning("two protocol lists are present, \"%s\" will be installed\n", cfg.protocol);
+				fwarning("more than one protocol list is present, \"%s\" will be installed\n", cfg.protocol);
 				return 0;
 			}
 

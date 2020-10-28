@@ -57,6 +57,7 @@ static char *protocol[] = {
 	"inet6",
 	"netlink",
 	"packet",
+	"bluetooth",
 	NULL
 };
 
@@ -66,7 +67,8 @@ static struct sock_filter protocol_filter_command[] = {
 	WHITELIST(AF_INET),
 	WHITELIST(AF_INET6),
 	WHITELIST(AF_NETLINK),
-	WHITELIST(AF_PACKET)
+	WHITELIST(AF_PACKET),
+	WHITELIST(AF_BLUETOOTH)
 };
 #endif
 // Note: protocol[] and protocol_filter_command are synchronized
@@ -143,22 +145,6 @@ void protocol_build_filter(const char *prlist, const char *fname) {
 	memcpy(ptr, &filter_start[0], sizeof(filter_start));
 	ptr += sizeof(filter_start);
 
-#if 0
-printf("entries %u\n", (unsigned) (sizeof(filter_start) / sizeof(struct sock_filter)));
-{
-	unsigned j;
-	unsigned char *ptr2 = (unsigned char *) &filter[0];
-	for (j = 0; j < sizeof(filter); j++, ptr2++) {
-		if ((j % (sizeof(struct sock_filter))) == 0)
-			printf("\n%u: ", 1 + (unsigned) (j / (sizeof(struct sock_filter))));
-		printf("%02x, ", (*ptr2) & 0xff);
-	}
-	printf("\n");
-}
-printf("whitelist_len %u, struct sock_filter len %u\n", whitelist_len, (unsigned) sizeof(struct sock_filter));
-#endif
-
-
 	// parse list and add commands
 	char *tmplist = strdup(prlist);
 	if (!tmplist)
@@ -176,22 +162,6 @@ printf("whitelist_len %u, struct sock_filter len %u\n", whitelist_len, (unsigned
 		memcpy(ptr, domain, whitelist_len * sizeof(struct sock_filter));
 		ptr += whitelist_len * sizeof(struct sock_filter);
 		token = strtok(NULL, ",");
-
-#if 0
-printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (unsigned) sizeof(struct sock_filter));
-{
-	unsigned j;
-	unsigned char *ptr2 = (unsigned char *) &filter[0];
-	for (j = 0; j < sizeof(filter); j++, ptr2++) {
-		if ((j % (sizeof(struct sock_filter))) == 0)
-			printf("\n%u: ", 1 + (unsigned) (j / (sizeof(struct sock_filter))));
-		printf("%02x, ", (*ptr2) & 0xff);
-	}
-	printf("\n");
-}
-#endif
-
-
 	}
 	free(tmplist);
 
@@ -202,19 +172,6 @@ printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (uns
 	memcpy(ptr, &filter_end[0], sizeof(filter_end));
 	ptr += sizeof(filter_end);
 
-#if 0
-printf("entries %u\n",  (unsigned) ((uint64_t) ptr - (uint64_t) (filter)) / (unsigned) sizeof(struct sock_filter));
-{
-	unsigned j;
-	unsigned char *ptr2 = (unsigned char *) &filter[0];
-	for (j = 0; j < sizeof(filter); j++, ptr2++) {
-		if ((j % (sizeof(struct sock_filter))) == 0)
-			printf("\n%u: ", 1 + (unsigned) (j / (sizeof(struct sock_filter))));
-		printf("%02x, ", (*ptr2) & 0xff);
-	}
-	printf("\n");
-}
-#endif
 	// save filter to file
 	int dst = open(fname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {

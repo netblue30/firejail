@@ -35,6 +35,10 @@ dbus-user.own org.mpris.MediaPlayer2.firefox.*
 #dbus-user.talk org.freedesktop.Notifications
 # Uncomment or put in your firefox.local to allow to inhibit screensavers
 #dbus-user.talk org.freedesktop.ScreenSaver
+# Uncomment or put in your firefox.local for plasma browser integration
+#dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
+#dbus-user.talk org.kde.JobViewServer
+#dbus-user.talk org.kde.kuiserver
 ignore dbus-user none
 
 # Redirect

@@ -9,6 +9,8 @@ include xournalpp.local
 
 noblacklist ${HOME}/.xournalpp
 
+include allow-lua.inc
+
 whitelist /usr/share/texlive
 whitelist /usr/share/xournalpp
 whitelist /var/lib/texmf

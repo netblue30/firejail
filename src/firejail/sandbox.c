@@ -537,6 +537,7 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
+		fprintf(stderr, "Error: exec failed: %s\n", strerror(errno));
 	}
 	//****************************************
 	// start the program using a shell
@@ -591,6 +592,7 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
 		execvp(arg[0], arg);
+		fprintf(stderr, "Error: exec failed: %s\n", strerror(errno));
 	}
 
 	perror("execvp");

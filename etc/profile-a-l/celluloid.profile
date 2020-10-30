@@ -9,8 +9,6 @@ include globals.local
 noblacklist ${HOME}/.config/celluloid
 noblacklist ${HOME}/.config/gnome-mpv
 noblacklist ${HOME}/.config/youtube-dl
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -22,8 +20,16 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
 
+read-only ${DESKTOP}
+mkdir ${HOME}/.config/celluloid
+mkdir ${HOME}/.config/gnome-mpv
+mkdir ${HOME}/.config/youtube-dl
+whitelist ${HOME}/.config/celluloid
+whitelist ${HOME}/.config/gnome-mpv
+whitelist ${HOME}/.config/youtube-dl
+include whitelist-common.inc
+include whitelist-players.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

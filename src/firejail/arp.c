@@ -105,8 +105,7 @@ void arp_announce(const char *dev, Bridge *br) {
 	if ((sock = socket(PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 0)
 		errExit("socket");
 
-	int len;
-	if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
+	if (sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr)) <= 0)
 		errExit("send");
 	fflush(0);
 	close(sock);
@@ -177,8 +176,7 @@ int arp_check(const char *dev, uint32_t destaddr) {
 	if ((sock = socket(PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 0)
 		errExit("socket");
 
-	int len;
-	if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
+	if (sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr)) <= 0)
 		errExit("send");
 	fflush(0);
 
@@ -201,7 +199,7 @@ int arp_check(const char *dev, uint32_t destaddr) {
 				close(sock);
 				return 0;
 			}
-			if ((len = sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr))) <= 0)
+			if (sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr)) <= 0)
 				errExit("send");
 			ts.tv_sec = 0; // 0.5 seconds wait time
 			ts.tv_usec = 500000;
@@ -239,9 +237,7 @@ int arp_check(const char *dev, uint32_t destaddr) {
 		}
 	}
 
-	// it will never get here!
-	close(sock);
-	return -1;
+	__builtin_unreachable();
 }
 
 // assign a random IP address and check it

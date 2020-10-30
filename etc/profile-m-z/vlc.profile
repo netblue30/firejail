@@ -9,8 +9,6 @@ include globals.local
 noblacklist ${HOME}/.cache/vlc
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.local/share/vlc
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +16,16 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
 
+read-only ${DESKTOP}
+mkdir ${HOME}/.cache/vlc
+mkdir ${HOME}/.config/vlc
+mkdir ${HOME}/.local/share/vlc
+whitelist ${HOME}/.cache/vlc
+whitelist ${HOME}/.config/vlc
+whitelist ${HOME}/.local/share/vlc
+include whitelist-common.inc
+include whitelist-players.inc
 include whitelist-var-common.inc
 
 #apparmor - on Ubuntu 18.04 it refuses to start without dbus access

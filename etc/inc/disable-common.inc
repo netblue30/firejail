@@ -64,8 +64,9 @@ blacklist /etc/xdg/autostart
 read-only ${HOME}/.Xauthority
 
 # Session manager
-?HAS_X11: blacklist ${HOME}/.ICEauthority
-?HAS_X11: blacklist /tmp/.ICE-unix
+# see #3358
+#?HAS_X11: blacklist ${HOME}/.ICEauthority
+#?HAS_X11: blacklist /tmp/.ICE-unix
 
 # KDE config
 blacklist ${HOME}/.config/khotkeysrc
@@ -136,8 +137,9 @@ read-only ${HOME}/.local/share/kssl
 blacklist ${RUNUSER}/*.slave-socket
 blacklist ${RUNUSER}/kdeinit5__*
 blacklist ${RUNUSER}/kdesud_*
-?HAS_NODBUS: blacklist ${RUNUSER}/ksocket-*
-?HAS_NODBUS: blacklist /tmp/ksocket-*
+# see #3358
+#?HAS_NODBUS: blacklist ${RUNUSER}/ksocket-*
+#?HAS_NODBUS: blacklist /tmp/ksocket-*
 
 # gnome
 # contains extensions, last used times of applications, and notifications
@@ -470,14 +472,9 @@ blacklist /.snapshots
 # flatpak
 blacklist ${HOME}/.cache/flatpak
 blacklist ${HOME}/.config/flatpak
-blacklist ${HOME}/.local/share/flatpak/app
-blacklist ${HOME}/.local/share/flatpak/appstream
-blacklist ${HOME}/.local/share/flatpak/db
+noblacklist ${HOME}/.local/share/flatpak/exports
 read-only ${HOME}/.local/share/flatpak/exports
-blacklist ${HOME}/.local/share/flatpak/oci
-blacklist ${HOME}/.local/share/flatpak/overrides
-blacklist ${HOME}/.local/share/flatpak/repo
-blacklist ${HOME}/.local/share/flatpak/runtime
+blacklist ${HOME}/.local/share/flatpak/*
 blacklist ${HOME}/.var
 blacklist ${RUNUSER}/app
 blacklist ${RUNUSER}/doc
@@ -485,7 +482,8 @@ blacklist ${RUNUSER}/.dbus-proxy
 blacklist ${RUNUSER}/.flatpak
 blacklist ${RUNUSER}/.flatpak-helper
 blacklist /usr/share/flatpak
-blacklist /var/lib/flatpak
+noblacklist /var/lib/flatpak/exports
+blacklist /var/lib/flatpak/*
 # most of the time bwrap is SUID binary
 blacklist ${PATH}/bwrap
 

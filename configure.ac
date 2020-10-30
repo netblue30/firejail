@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT(firejail, 0.9.63, netblue30@yahoo.com, , https://firejail.wordpress.com)
+AC_INIT(firejail, 0.9.64rc2, netblue30@protonmail.com, , https://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -39,6 +39,12 @@ AX_CHECK_COMPILE_FLAG(
     [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-protector-strong"]
 )
 
+AC_ARG_ENABLE([analyzer],
+    AS_HELP_STRING([--enable-analyzer], [enable GCC 10 static analyzer]))
+AS_IF([test "x$enable_analyzer" = "xyes"], [
+	EXTRA_CFLAGS+=" -fanalyzer"
+])
+
 HAVE_APPARMOR=""
 AC_ARG_ENABLE([apparmor],
     AS_HELP_STRING([--enable-apparmor], [enable apparmor]))
@@ -52,12 +58,30 @@ AC_SUBST([EXTRA_CFLAGS])
 AC_SUBST([EXTRA_LDFLAGS])
 
 
+HAVE_DBUSPROXY=""
+AC_ARG_ENABLE([dbusproxy],
+    AS_HELP_STRING([--disable-dbusproxy], [disable dbus proxy]))
+AS_IF([test "x$enable_dbusproxy" != "xno"], [
+	HAVE_DBUSPROXY="-DHAVE_DBUSPROXY"
+	AC_SUBST(HAVE_DBUSPROXY)
+])
+
 HAVE_OVERLAYFS=""
 AC_ARG_ENABLE([overlayfs],
     AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
 AS_IF([test "x$enable_overlayfs" != "xno"], [
 	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
 	AC_SUBST(HAVE_OVERLAYFS)
+])
+
+HAVE_MAN="no"
+AC_ARG_ENABLE([man],
+    AS_HELP_STRING([--disable-man], [disable man pages]))
+AS_IF([test "x$enable_man" != "xno"], [
+	HAVE_MAN="-DHAVE_MAN"
+	AC_SUBST(HAVE_MAN)
+	AC_CHECK_PROG([HAVE_GAWK], [gawk], [yes], [no])
+	AS_IF([test "x$HAVE_GAWK" != "xyes"], [AC_MSG_ERROR("*** gawk not found ***")])
 ])
 
 HAVE_FIRETUNNEL=""
@@ -74,14 +98,6 @@ AC_ARG_ENABLE([private-home],
 AS_IF([test "x$enable_private_home" != "xno"], [
 	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
 	AC_SUBST(HAVE_PRIVATE_HOME)
-])
-
-HAVE_SECCOMP=""
-AC_ARG_ENABLE([seccomp],
-    AS_HELP_STRING([--disable-seccomp], [disable seccomp]))
-AS_IF([test "x$enable_seccomp" != "xno"], [
-	HAVE_SECCOMP="-DHAVE_SECCOMP"
-	AC_SUBST(HAVE_SECCOMP)
 ])
 
 HAVE_CHROOT=""
@@ -196,8 +212,7 @@ AS_IF([test "x$enable_selinux" = "xyes"], [
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
 AC_CHECK_HEADER(pthread.h,,AC_MSG_ERROR([*** POSIX thread support not installed ***]))
-AC_CHECK_HEADER([linux/seccomp.h], HAVE_SECCOMP_H="-DHAVE_SECCOMP_H", HAVE_SECCOMP_H="")
-AC_SUBST(HAVE_SECCOMP_H)
+AC_CHECK_HEADER([linux/seccomp.h],,AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***]))
 
 # set sysconfdir
 if test "$prefix" = /usr; then
@@ -208,14 +223,12 @@ AC_CONFIG_FILES([mkdeb.sh], [chmod +x mkdeb.sh])
 AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
 src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
-src/profstats/Makefile)
+src/profstats/Makefile src/man/Makefile)
 
 echo
 echo "Configuration options:"
 echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
-echo "   seccomp: $HAVE_SECCOMP"
-echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
@@ -226,6 +239,8 @@ echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
+echo "   DBUS proxy support: $HAVE_DBUSPROXY"
+echo "   Manpage support: $HAVE_MAN"
 echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"

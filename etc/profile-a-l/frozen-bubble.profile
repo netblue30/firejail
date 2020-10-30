@@ -21,7 +21,6 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.frozen-bubble
 whitelist ${HOME}/.frozen-bubble
-whitelist /usr/share/perl5
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

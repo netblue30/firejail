@@ -20,7 +20,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 whitelist /usr/share/gnome-latex
-whitelist /usr/share/perl5
 whitelist /usr/share/texlive
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -49,3 +48,5 @@ private-cache
 private-dev
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed
 private-etc alternatives,dconf,fonts,gtk-3.0,latexmk.conf,login.defs,passwd,texlive
+
+dbus-system none

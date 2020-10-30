@@ -73,7 +73,7 @@ GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
 ## Security vulnerabilities
 
-We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@yahoo.com
+We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@protonmail.com
 
 ## Installing
 
@@ -92,7 +92,7 @@ On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
 development libraries and pkg-config are required when using --apparmor
 ./configure option:
 `````
-$ sudo apt-get install git build-essential libapparmor-dev pkg-config
+$ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 `````
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 
@@ -160,32 +160,34 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ### Profile Statistics
 
-A small tool to print profile statistics. Compile as usual and run:
+A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
 `````
-$ make
-$ cd etc
 $ ./profstats *.profile
-    profiles			966
-    include local profile	966   (include profile-name.local)
-    include globals		966   (include globals.local)
-    blacklist ~/.ssh		951   (include disable-common.inc)
-    seccomp			908
-    capabilities		965
-    noexec			830   (include disable-exec.inc)
-    memory-deny-write-execute	214
-    apparmor			488
-    private-bin			483
-    private-dev			829
-    private-etc			366
-    private-tmp			726
-    whitelist var		638   (include whitelist-var-common.inc)
-    whitelist run/user		282   (include whitelist-runuser-common.inc
-					or blacklist ${RUNUSER})
-    whitelist usr/share		275   (include whitelist-usr-share-common.inc
-    net none			313
-`````
+Warning: multiple caps in transmission-daemon.profile
 
-Run ./profstats -h for help.
+Stats:
+    profiles			1029
+    include local profile	1029   (include profile-name.local)
+    include globals		1029   (include globals.local)
+    blacklist ~/.ssh		1005   (include disable-common.inc)
+    seccomp			975
+    capabilities		1028
+    noexec			899   (include disable-exec.inc)
+    memory-deny-write-execute	220
+    apparmor			549
+    private-bin			542
+    private-dev			897
+    private-etc			431
+    private-tmp			784
+    whitelist home directory	469
+    whitelist var		695   (include whitelist-var-common.inc)
+    whitelist run/user		334   (include whitelist-runuser-common.inc
+					or blacklist ${RUNUSER})
+    whitelist usr/share		354   (include whitelist-usr-share-common.inc
+    net none			332
+    dbus-user none 		523
+    dbus-system none 		627
+`````
 
 ### New profiles:
 
@@ -196,4 +198,5 @@ gnome-screenshot, ripperX, sound-juicer, iagno, com.github.dahenson.agenda, gnom
 penguin-command, x2goclient, frogatto, gnome-mines, gnome-nibbles, lightsoff, ts3client_runscript.sh, warmux, ferdi, abiword,
 four-in-a-row, gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin, gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars,
 hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless, mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers,
-seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop, fdns, jitsi-meet-desktop, nicontine, steam-runtime, apostrophe, quadrapassel, dino-im, strawberry, hitori, bijiben, gnote, gnubik, ZeGrapher, gapplication
+seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop, fdns, jitsi-meet-desktop, nicontine, steam-runtime, apostrophe, quadrapassel, dino-im, strawberry, hitori, bijiben, gnote, gnubik, ZeGrapher, gapplication, xonotic-sdl-wrapper, openarena_ded, cawbird, freetube, homebank, mattermost-desktop, newsflash, com.gitlab.newsflash, element-desktop, sushi, xfce4-screenshooter, org.gnome.NautilusPreviewer, lyx, minitube, nuclear, mtpaint, minecraft-launcher, gnome-calendar, vmware, git-cola, otter-browser, kazam, menulibre, musictube, onboard, fractal, mirage, quaternion, spectral, man, psi, smuxi-frontend-gnome, balsa, kube, trojita, cola, twitch, youtube, youtubemusic-nativefier, ytmdesktop, dbus-send, notify-send, qrencode,
+xournalpp, chromium-freeworld, equalx

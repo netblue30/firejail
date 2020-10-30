@@ -2,6 +2,10 @@
 # Generic Firejail AppArmor profile
 #########################################
 
+# AppArmor 3.0 uses the @{run} variable in <abstractions/dbus-strict>
+# and <abstractions/dbus-session-strict>.
+#include <tunables/global>
+
 ##########
 # A simple PID declaration based on Ubuntu's @{pid}
 # Ubuntu keeps it under tunables/kernelvars and include it via tunables/global.
@@ -48,6 +52,10 @@ ptrace (read,readby) peer=@{profile_name},
 owner /{,run/firejail/mnt/oroot/}{,var/}run/firejail/mnt/trace w,
 owner /{,run/firejail/mnt/oroot/}{,var/}run/user/[0-9]*/** w,
 owner /{,run/firejail/mnt/oroot/}{run,dev}/shm/** w,
+
+# Allow writing to /var/mail and /var/spool/mail (for mail clients)
+# Uncomment to enable
+#owner /var/{mail,spool/mail}/** w,
 
 # Allow writing to removable media
 owner /{,var/}run/media/** w,
@@ -153,5 +161,5 @@ capability setfcap,
 #capability mac_admin,
 
 # Site-specific additions and overrides. See local/README for details.
-#include <local/firejail-local>
+#include <local/firejail-default>
 }

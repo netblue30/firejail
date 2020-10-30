@@ -20,7 +20,7 @@
 #include "fseccomp.h"
 #include "../include/seccomp.h"
 int arg_quiet = 0;
-int arg_seccomp_error_action = EPERM; // error action: errno or kill
+int arg_seccomp_error_action = EPERM; // error action: errno, log or kill
 
 static void usage(void) {
 	printf("Usage:\n");
@@ -64,6 +64,16 @@ printf("\n");
 		usage();
 		return 1;
 	}
+	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
+		usage();
+		return 0;
+	}
+
+#ifdef WARN_DUMPABLE
+	// check FIREJAIL_PLUGIN in order to not print a warning during make
+	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid() && getenv("FIREJAIL_PLUGIN"))
+		fprintf(stderr, "Error fseccomp: I am dumpable\n");
+#endif
 
 	char *quiet = getenv("FIREJAIL_QUIET");
 	if (quiet && strcmp(quiet, "yes") == 0)
@@ -73,6 +83,8 @@ printf("\n");
 	if (error_action) {
 		if (strcmp(error_action, "kill") == 0)
 			arg_seccomp_error_action = SECCOMP_RET_KILL;
+		else if (strcmp(error_action, "log") == 0)
+			arg_seccomp_error_action = SECCOMP_RET_LOG;
 		else {
 			arg_seccomp_error_action = errno_find_name(error_action);
 			if (arg_seccomp_error_action == -1)
@@ -81,11 +93,7 @@ printf("\n");
 		}
 	}
 
-	if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-?") ==0) {
-		usage();
-		return 0;
-	}
-	else if (argc == 2 && strcmp(argv[1], "debug-syscalls") == 0)
+	if (argc == 2 && strcmp(argv[1], "debug-syscalls") == 0)
 		syscall_print();
 	else if (argc == 2 && strcmp(argv[1], "debug-syscalls32") == 0)
 		syscall_print_32();

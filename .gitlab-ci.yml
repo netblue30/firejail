@@ -9,7 +9,7 @@ build_ubuntu_package:
     image: ubuntu:rolling
     script:
         - apt-get update -qq
-        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config python3
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config python3 gawk
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
         - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
@@ -17,7 +17,7 @@ build_debian_package:
     image: debian:stretch
     script:
         - apt-get update -qq
-        - apt-get install -y -qq build-essential lintian pkg-config
+        - apt-get install -y -qq build-essential lintian pkg-config gawk
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
 
 build_redhat_package:
@@ -40,7 +40,7 @@ build_src_package:
     script:
         - apk update
         - apk upgrade
-        - apk add build-base linux-headers python3
+        - apk add build-base linux-headers python3 gawk
         - ./configure --prefix=/usr && make && make install-strip
         # - python3 contrib/sort.py etc/*.{profile,inc}
 
@@ -48,25 +48,8 @@ build_apparmor:
     image: ubuntu:latest
     script:
         - apt-get update -qq
-        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
         - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail*.deb
-
-cppcheck:
-    image: debian:latest
-    before_script:
-        - apt-get -qq update
-        - apt-get -qq --no-install-recommends install cppcheck
-    script:
-        - cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
-
-clang:
-    image: ubuntu:latest
-    script:
-        - apt-get update -qq
-        - apt-get --purge autoremove -y -qq gcc
-        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq clang pkg-config make
-        - ./configure --prefix=/usr CC=/usr/bin/clang && make && make install-strip
-
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest
@@ -88,6 +71,6 @@ debian_ci:
         - git add debian && git commit -m "add debian/"
         - export CI_COMMIT_SHA=$(git rev-parse HEAD)
     script:
-        - apt-get --no-install-recommends install pkg-config
+        - apt-get --no-install-recommends install -y -qq gawk
         - gitlab-ci-git-buildpackage
         - gitlab-ci-lintian

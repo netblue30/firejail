@@ -30,7 +30,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.4\n";exit}
-	"Max address space         123456789012         123456789012"
+	"Max address space         1234567890           1234567890"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.5\n";exit}

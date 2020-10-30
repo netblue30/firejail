@@ -12,9 +12,9 @@ Write clear, concise and in textual form.
 - Describe the bug.
 - What did you expect to happen?
 
-**No profile or disabling firejail**
-- What changed calling `firejail --noprofile PROGRAM` in a shell?
-- What changed calling the program *by path*=without firejail (check `whereis PROGRAM`, `firejail --list`, `stat $programpath`)?
+**No profile and disabling firejail**
+- What changed calling `firejail --noprofile /path/to/program` in a terminal?
+- What changed calling the program by path (check `which <program>` or `firejail --list` while the sandbox is running)?
 
 **Reproduce**
 Steps to reproduce the behavior:
@@ -24,19 +24,18 @@ Steps to reproduce the behavior:
 4. Scroll down to '....'
 
 **Environment**
- - Linux distribution and version (ie output of `lsb_release -a`)
- - Firejail version (output of `firejail --version`) exclusive or used git commit (`git rev-parse HEAD`)
- - What other programs interact with the affected program for the functionality?
- - Are these listed in the profile? 
+ - Linux distribution and version (ie output of `lsb_release -a`, `screenfetch` or `cat /etc/os-release`)
+ - Firejail version (output of `firejail --version`) exclusive or used git commit (`git rev-parse HEAD`) 
 
 **Additional context**
 Other context about the problem like related errors to understand the problem.
 
 **Checklist**
  - [ ] The upstream profile (and redirect profile if exists) have no changes fixing it.
- - [ ] The upstream profile exists (`find / -name 'firejail' 2>/dev/null`/`fd firejail` to locate profiles ie in `/usr/local/etc/firejail/PROGRAM.profile`)
- - [ ] Programs needed for interaction are listed.
- - [ ] Error was checked in search engine and on issue list without success.
+ - [ ] The program has a profile. (If not, request one in [# 1139](https://github.com/netblue30/firejail/issues/1139))
+ - [ ] Programs needed for interaction are listed in the profile.
+ - [ ] A short search for duplicates was performed.
+ - [ ] If it is a AppImage, `--profile=PROFILENAME` is used to set the right profile.
 
 
 <details><summary> debug output </summary>

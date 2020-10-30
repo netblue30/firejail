@@ -56,8 +56,8 @@ private-etc dconf,fonts,gtk-3.0
 private-tmp
 
 dbus-user filter
-dbus.own com.github.dahenson.agenda
-dbus.talk ca.desrt.dconf
+dbus-user.own com.github.dahenson.agenda
+dbus-user.talk ca.desrt.dconf
 dbus-system none
 
 read-only ${HOME}

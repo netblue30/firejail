@@ -1,0 +1,10 @@
+all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man
+include ../common.mk
+
+%.man: %.txt
+	gawk -f ./preproc.awk -- $(MANFLAGS) < $< > $@
+
+clean:; rm -fr *.man
+
+distclean: clean
+	rm -fr Makefile

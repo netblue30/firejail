@@ -41,7 +41,7 @@ expect {
 send -- "chmod +x testfile; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Bad system call"
+	"Operation not permitted"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}

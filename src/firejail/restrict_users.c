@@ -74,15 +74,14 @@ static void sanitize_home(void) {
 		printf("Cleaning /home directory\n");
 	// keep a copy of the user home directory
 	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOENT)
-			fwarning("cannot find user home directory\n");
-		else
-			fwarning("cannot clean /home directory\n");
-		return;
+	if (fd == -1)
+		goto errout;
+	if (fstat(fd, &s) == -1) { // FUSE
+		if (errno != EACCES)
+			errExit("fstat");
+		close(fd);
+		goto errout;
 	}
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 		errExit("asprintf");
@@ -124,6 +123,10 @@ static void sanitize_home(void) {
 	if (!arg_private)
 		fs_logger2("whitelist", cfg.homedir);
 
+	return;
+
+errout:
+	fwarning("cannot clean /home directory\n");
 }
 
 static void sanitize_run(void) {

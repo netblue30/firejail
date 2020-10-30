@@ -25,6 +25,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <pwd.h>
+#include <errno.h>
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE
 #endif
@@ -148,7 +149,7 @@ static void create_char_dev(const char *path, mode_t mode, int major, int minor)
 	return;
 
 errexit:
-	fprintf(stderr, "Error: cannot create %s device\n", path);
+	fprintf(stderr, "Error: cannot create %s device: %s\n", path, strerror(errno));
 	exit(1);
 }
 
@@ -243,6 +244,8 @@ void fs_private_dev(void){
 				errExit("mounting /dev/log");
 			fs_logger("clone /dev/log");
 		}
+		if (mount(RUN_RO_FILE, RUN_DEVLOG_FILE, "none", MS_BIND, "mode=400,gid=0") < 0)
+			errExit("blacklisting " RUN_DEVLOG_FILE);
 	}
 
 	// bring forward the current /dev/shm directory if necessary

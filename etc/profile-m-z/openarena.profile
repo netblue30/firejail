@@ -16,30 +16,35 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.openarena
+whitelist ${HOME}/.openarena
+whitelist /usr/share/openarena
+include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# ipc-namespace
-# netfilter
-# nodvd
-# nogroups
+netfilter
+nodvd
+nogroups
 nonewprivs
 noroot
 notv
-# nou2f
+nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
 shell none
-# tracelog
+tracelog
 
-# disable-mnt
-# private-bin openarena
+disable-mnt
+private-bin bash,cut,glxinfo,grep,head,openarena,openarena_ded,quake3,zenity
 private-cache
 private-dev
-# private-etc drirc,machine-id,openal,passwd,selinux,udev,xdg
+private-etc drirc,machine-id,openal,passwd,selinux,udev,xdg
 private-tmp
 
-# dbus-user none
-# dbus-system none
+dbus-user none
+dbus-system none

@@ -34,18 +34,12 @@
 static uid_t c_uid = 0;
 static char *c_uid_name = NULL;
 
-static void print_file_or_dir(const char *path, const char *fname, int separator) {
+static void print_file_or_dir(const char *path, const char *fname) {
 	assert(fname);
 
 	char *name;
-	if (separator) {
-		if (asprintf(&name, "%s/%s", path, fname) == -1)
-			errExit("asprintf");
-	}
-	else {
-		if (asprintf(&name, "%s%s", path, fname) == -1)
-			errExit("asprintf");
-	}
+	if (asprintf(&name, "%s/%s", path, fname) == -1)
+		errExit("asprintf");
 
 	struct stat s;
 	if (stat(name, &s) == -1) {
@@ -54,6 +48,7 @@ static void print_file_or_dir(const char *path, const char *fname, int separator
 			return;
 		}
 	}
+	free(name);
 
 	// permissions
 	if (S_ISLNK(s.st_mode))
@@ -177,12 +172,81 @@ static void print_directory(const char *path) {
 	if (n < 0)
         		errExit("scandir");
 	else {
-		for (i = 0; i < n; i++) {
-			print_file_or_dir(path, namelist[i]->d_name, 0);
+		for (i = 0; i < n; i++)
+			print_file_or_dir(path, namelist[i]->d_name);
+		// get rid of false psitive reported by GCC -fanalyze
+		for (i = 0; i < n; i++)
 			free(namelist[i]);
-		}
 	}
 	free(namelist);
+}
+
+void ls(const char *path) {
+	EUID_ASSERT();
+	assert(path);
+
+	char *rp = realpath(path, NULL);
+	if (!rp || access(rp, R_OK) == -1) {
+		fprintf(stderr, "Error: cannot access %s\n", path);
+		exit(1);
+	}
+	if (arg_debug)
+		printf("ls %s\n", rp);
+
+	// list directory contents
+	struct stat s;
+	if (stat(rp, &s) == -1) {
+		fprintf(stderr, "Error: cannot access %s\n", rp);
+		exit(1);
+	}
+	if (S_ISDIR(s.st_mode))
+		print_directory(rp);
+	else {
+		char *split = strrchr(rp, '/');
+		if (split) {
+			*split = '\0';
+			char *rp2 = split + 1;
+			if (arg_debug)
+				printf("path %s, file %s\n", rp, rp2);
+			print_file_or_dir(rp, rp2);
+		}
+	}
+	free(rp);
+}
+
+void cat(const char *path) {
+	EUID_ASSERT();
+	assert(path);
+
+	if (arg_debug)
+		printf("cat %s\n", path);
+	FILE *fp = fopen(path, "r");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot read %s\n", path);
+		exit(1);
+	}
+	int fd = fileno(fp);
+	if (fd == -1)
+		errExit("fileno");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode)) {
+		fprintf(stderr, "Error: %s is not a regular file\n", path);
+		exit(1);
+	}
+	bool tty = isatty(STDOUT_FILENO);
+
+	int c;
+	while ((c = fgetc(fp)) != EOF) {
+		// file is untrusted
+		// replace control characters when printing to a terminal
+		if (tty && c != '\t' && c != '\n' && iscntrl((unsigned char) c))
+			c = '?';
+		fputc(c, stdout);
+	}
+	fflush(stdout);
+	fclose(fp);
 }
 
 char *expand_path(const char *path) {
@@ -219,14 +283,14 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 	check_join_permission(pid);
 
 	// expand paths
-	char *fname1 = expand_path(path1);;
+	char *fname1 = expand_path(path1);
 	char *fname2 = NULL;
 	if (path2 != NULL) {
 		fname2 = expand_path(path2);
 	}
 	if (arg_debug) {
 		printf("file1 %s\n", fname1);
-		printf("file2 %s\n", fname2);
+		printf("file2 %s\n", fname2 ? fname2 : "(null)");
 	}
 
 	// sandbox root directory
@@ -234,7 +298,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 	if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)
 		errExit("asprintf");
 
-	if (op == SANDBOX_FS_LS) {
+	if (op == SANDBOX_FS_LS || op == SANDBOX_FS_CAT) {
 		EUID_ROOT();
 		// chroot
 		if (chroot(rootdir) < 0)
@@ -245,46 +309,13 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		// drop privileges
 		drop_privs(0);
 
-		// check access
-		if (access(fname1, R_OK) == -1) {
-			fprintf(stderr, "Error: Cannot access %s\n", fname1);
-			exit(1);
-		}
-		/* coverity[toctou] */
-		char *rp = realpath(fname1, NULL);
-		if (!rp) {
-			fprintf(stderr, "Error: Cannot access %s\n", fname1);
-			exit(1);
-		}
-		if (arg_debug)
-			printf("realpath %s\n", rp);
-
-
-		// list directory contents
-		struct stat s;
-		if (stat(rp, &s) == -1) {
-			fprintf(stderr, "Error: Cannot access %s\n", rp);
-			exit(1);
-		}
-		if (S_ISDIR(s.st_mode)) {
-			char *dir;
-			if (asprintf(&dir, "%s/", rp) == -1)
-				errExit("asprintf");
-
-			print_directory(dir);
-			free(dir);
-		}
-		else {
-			char *split = strrchr(rp, '/');
-			if (split) {
-				*split = '\0';
-				char *rp2 = split + 1;
-				if (arg_debug)
-					printf("path %s, file %s\n", rp, rp2);
-				print_file_or_dir(rp, rp2, 1);
-			}
-		}
-		free(rp);
+		if (op == SANDBOX_FS_LS)
+			ls(fname1);
+		else
+			cat(fname1);
+#ifdef HAVE_GCOV
+		__gcov_flush();
+#endif
 	}
 
 	// get file from sandbox and store it in the current directory
@@ -303,10 +334,12 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		// create a user-owned temporary file in /run/firejail directory
 		char tmp_fname[] = "/run/firejail/tmpget-XXXXXX";
 		int fd = mkstemp(tmp_fname);
-		if (fd != -1) {
-			SET_PERMS_FD(fd, getuid(), getgid(), 0600);
-			close(fd);
+		if (fd == -1) {
+			fprintf(stderr, "Error: cannot create temporary file %s\n", tmp_fname);
+			exit(1);
 		}
+		SET_PERMS_FD(fd, getuid(), getgid(), 0600);
+		close(fd);
 
 		// copy the source file into the temporary file - we need to chroot
 		pid_t child = fork();

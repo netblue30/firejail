@@ -33,9 +33,8 @@ noroot
 notv
 nou2f
 protocol unix,inet,inet6,netlink
-seccomp
+# numpy, used by many add-ons, requires the mbind syscall
+seccomp !mbind
 shell none
 
 private-dev
-private-tmp
-

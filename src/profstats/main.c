@@ -28,6 +28,8 @@ static int cnt_profiles = 0;
 static int cnt_apparmor = 0;
 static int cnt_seccomp = 0;
 static int cnt_caps = 0;
+static int cnt_dbus_system_none = 0;
+static int cnt_dbus_user_none = 0;
 static int cnt_dotlocal = 0;
 static int cnt_globalsdotlocal = 0;
 static int cnt_netnone = 0;
@@ -41,6 +43,7 @@ static int cnt_whitelistrunuser = 0;	// include whitelist-runuser-common.inc
 static int cnt_whitelistusrshare = 0;	// include whitelist-usr-share-common.inc
 static int cnt_ssh = 0;
 static int cnt_mdwx = 0;
+static int cnt_whitelisthome = 0;
 
 static int level = 0;
 static int arg_debug = 0;
@@ -57,6 +60,10 @@ static int arg_whitelistrunuser = 0;
 static int arg_whitelistusrshare = 0;
 static int arg_ssh = 0;
 static int arg_mdwx = 0;
+static int arg_dbus_system_none = 0;
+static int arg_dbus_user_none = 0;
+static int arg_whitelisthome = 0;
+
 
 static char *profile = NULL;
 
@@ -67,6 +74,8 @@ static void usage(void) {
 	printf("Options:\n");
 	printf("   --apparmor - print profiles without apparmor\n");
 	printf("   --caps - print profiles without caps\n");
+	printf("   --dbus-system-none - profiles without  \"dbus-system none\"\n");
+	printf("   --dbus-user-none - profiles without  \"dbus-user none\"\n");
 	printf("   --ssh - print profiles without \"include disable-common.inc\"\n");
 	printf("   --noexec - print profiles without \"include disable-exec.inc\"\n");
 	printf("   --private-bin - print profiles without private-bin\n");
@@ -75,6 +84,7 @@ static void usage(void) {
 	printf("   --private-tmp - print profiles without private-tmp\n");
 	printf("   --seccomp - print profiles without seccomp\n");
 	printf("   --memory-deny-write-execute - profile without \"memory-deny-write-execute\"\n");
+	printf("   --whitelist-home - print profiles whitelisting home directory\n");
 	printf("   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n");
 	printf("   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\" or \"blacklist ${RUNUSER}\"\n");
 	printf("   --whitelist-usrshare - print profiles without \"include whitelist-usr-share-common.inc\"\n");
@@ -120,6 +130,8 @@ void process_file(const char *fname) {
 		else if (strncmp(ptr, "include whitelist-runuser-common.inc", 36) == 0 ||
 		        strncmp(ptr, "blacklist ${RUNUSER}", 20) == 0)
 			cnt_whitelistrunuser++;
+		else if (strncmp(ptr, "include whitelist-common.inc", 28) == 0)
+			cnt_whitelisthome++;
 		else if (strncmp(ptr, "include whitelist-usr-share-common.inc", 38) == 0)
 			cnt_whitelistusrshare++;
 		else if (strncmp(ptr, "include disable-common.inc", 26) == 0)
@@ -138,6 +150,10 @@ void process_file(const char *fname) {
 			cnt_privatetmp++;
 		else if (strncmp(ptr, "private-etc", 11) == 0)
 			cnt_privateetc++;
+		else if (strncmp(ptr, "dbus-system none", 16) == 0)
+			cnt_dbus_system_none++;
+		else if (strncmp(ptr, "dbus-user none", 14) == 0)
+			cnt_dbus_user_none++;
 		else if (strncmp(ptr, "include ", 8) == 0) {
 			// not processing .local files
 			if (strstr(ptr, ".local")) {
@@ -148,6 +164,11 @@ void process_file(const char *fname) {
 					cnt_dotlocal++;
 				continue;
 			}
+			// clean blanks
+			char *ptr = buf + 8;
+			while (*ptr != '\0' && *ptr != ' ' && *ptr != '\t')
+				ptr++;
+			*ptr = '\0';
 			process_file(buf + 8);
 		}
 	}
@@ -189,6 +210,8 @@ int main(int argc, char **argv) {
 			arg_privatetmp = 1;
 		else if (strcmp(argv[i], "--private-etc") == 0)
 			arg_privateetc = 1;
+		else if (strcmp(argv[i], "--whitelist-home") == 0)
+			arg_whitelisthome = 1;
 		else if (strcmp(argv[i], "--whitelist-var") == 0)
 			arg_whitelistvar = 1;
 		else if (strcmp(argv[i], "--whitelist-runuser") == 0)
@@ -197,6 +220,10 @@ int main(int argc, char **argv) {
 			arg_whitelistusrshare = 1;
 		else if (strcmp(argv[i], "--ssh") == 0)
 			arg_ssh = 1;
+		else if (strcmp(argv[i], "--dbus-system-none") == 0)
+			arg_dbus_system_none = 1;
+		else if (strcmp(argv[i], "--dbus-user-none") == 0)
+			arg_dbus_user_none = 1;
 		else if (*argv[i] == '-') {
 			fprintf(stderr, "Error: invalid option %s\n", argv[i]);
 		 	return 1;
@@ -225,9 +252,12 @@ int main(int argc, char **argv) {
 		int privateetc = cnt_privateetc;
 		int dotlocal = cnt_dotlocal;
 		int globalsdotlocal = cnt_globalsdotlocal;
+		int whitelisthome = cnt_whitelisthome;
 		int whitelistvar = cnt_whitelistvar;
 		int whitelistrunuser = cnt_whitelistrunuser;
 		int whitelistusrshare = cnt_whitelistusrshare;
+		int dbussystemnone = cnt_dbus_system_none;
+		int dbususernone = cnt_dbus_user_none;
 		int ssh = cnt_ssh;
 		int mdwx = cnt_mdwx;
 
@@ -249,6 +279,10 @@ int main(int argc, char **argv) {
 		if (cnt_whitelistrunuser > (whitelistrunuser + 1))
 			cnt_whitelistrunuser = whitelistrunuser + 1;
 
+		if (arg_dbus_system_none && dbussystemnone == cnt_dbus_system_none)
+			printf("No dbus-system none found in %s\n", argv[i]);
+		if (arg_dbus_user_none && dbususernone == cnt_dbus_user_none)
+			printf("No dbus-user none found in %s\n", argv[i]);
 		if (arg_apparmor && apparmor == cnt_apparmor)
 			printf("No apparmor found in %s\n", argv[i]);
 		if (arg_caps && caps == cnt_caps)
@@ -265,6 +299,8 @@ int main(int argc, char **argv) {
 			printf("No private-tmp found in %s\n", argv[i]);
 		if (arg_privateetc && privateetc == cnt_privateetc)
 			printf("No private-etc found in %s\n", argv[i]);
+		if (arg_whitelisthome && whitelisthome == cnt_whitelisthome)
+			printf("Home directory not whitelisted in %s\n", argv[i]);
 		if (arg_whitelistvar && whitelistvar == cnt_whitelistvar)
 			printf("No include whitelist-var-common.inc found in %s\n", argv[i]);
 		if (arg_whitelistrunuser && whitelistrunuser == cnt_whitelistrunuser)
@@ -294,11 +330,14 @@ int main(int argc, char **argv) {
 	printf("    private-dev\t\t\t%d\n", cnt_privatedev);
 	printf("    private-etc\t\t\t%d\n", cnt_privateetc);
 	printf("    private-tmp\t\t\t%d\n", cnt_privatetmp);
+	printf("    whitelist home directory\t%d\n", cnt_whitelisthome);
 	printf("    whitelist var\t\t%d   (include whitelist-var-common.inc)\n", cnt_whitelistvar);
 	printf("    whitelist run/user\t\t%d   (include whitelist-runuser-common.inc\n", cnt_whitelistrunuser);
 	printf("\t\t\t\t\tor blacklist ${RUNUSER})\n");
 	printf("    whitelist usr/share\t\t%d   (include whitelist-usr-share-common.inc\n", cnt_whitelistusrshare);
 	printf("    net none\t\t\t%d\n", cnt_netnone);
+	printf("    dbus-user none \t\t%d\n", cnt_dbus_user_none);
+	printf("    dbus-system none \t\t%d\n", cnt_dbus_system_none);
 	printf("\n");
 	return 0;
 }

@@ -158,7 +158,7 @@ void env_defaults(void) {
 	}
 
 	// set the window title
-	if (!arg_quiet)
+	if (!arg_quiet && isatty(STDOUT_FILENO))
 		printf("\033]0;firejail %s\007", cfg.window_title);
 
 	// pass --quiet as an environment variable, in case the command calls further firejailed commands

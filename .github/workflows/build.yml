@@ -1,0 +1,45 @@
+name: Build CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install dependencies
+      run: sudo apt-get install gcc-10 libapparmor-dev libselinux1-dev
+    - name: configure
+      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux
+    - name: make
+      run: make
+  build-clang:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: configure
+      run: CC=clang-10 ./configure --enable-fatal-warnings
+    - name: make
+      run: make
+  scan-build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install clang-tools-10
+      run: sudo apt-get install clang-tools-10
+    - name: configure
+      run: CC=clang-10 ./configure --enable-fatal-warnings
+    - name: scan-build
+      run: NO_EXTRA_CFLAGS="yes" scan-build-10 --status-bugs make
+  cppcheck:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install cppcheck
+      run: sudo apt-get install cppcheck
+    - name: cppcheck
+      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .

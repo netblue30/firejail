@@ -327,12 +327,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "seccomp") == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))
 			arg_seccomp = 1;
 		else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 	else if (strcmp(ptr, "caps") == 0) {
@@ -404,7 +402,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "nogroups") == 0) {
-		arg_nogroups = 1;
+		// nvidia cards require video group; disable nogroups
+		if (access("/dev/nvidiactl", R_OK) == 0 && arg_no3d == 0) {
+			fwarning("Warning: NVIDIA card detected, nogroups command disabled\n");
+			arg_nogroups = 0;
+		}
+		else
+			arg_nogroups = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "nosound") == 0) {
@@ -432,11 +436,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "nodbus") == 0) {
+#ifdef HAVE_DBUSPROXY
 		arg_dbus_user = DBUS_POLICY_BLOCK;
 		arg_dbus_system = DBUS_POLICY_BLOCK;
+#endif
 		return 0;
 	}
 	else if (strncmp("dbus-user ", ptr, 10) == 0) {
+#ifdef HAVE_DBUSPROXY
 		ptr += 10;
 		if (strcmp("filter", ptr) == 0) {
 			if (arg_dbus_user == DBUS_POLICY_BLOCK) {
@@ -454,44 +461,56 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Unknown dbus-user policy: %s\n", ptr);
 			exit(1);
 		}
+#endif
 		return 0;
 	}
 	else if (strncmp(ptr, "dbus-user.see ", 14) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 14)) {
-			printf("Invalid dbus-user.see name: %s\n", ptr + 15);
+			fprintf(stderr, "Invalid dbus-user.see name: %s\n", ptr + 15);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.talk ", 15) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 15)) {
-			printf("Invalid dbus-user.talk name: %s\n", ptr + 15);
+			fprintf(stderr, "Error: Invalid dbus-user.talk name: %s\n", ptr + 15);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.own ", 14) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 14)) {
-			fprintf(stderr, "Invalid dbus-user.own name: %s\n", ptr + 14);
+			fprintf(stderr, "Error: Invalid dbus-user.own name: %s\n", ptr + 14);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.call ", 15) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_call_rule(ptr + 15)) {
-			fprintf(stderr, "Invalid dbus-user.call rule: %s\n", ptr + 15);
+			fprintf(stderr, "Error: Invalid dbus-user.call rule: %s\n", ptr + 15);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.broadcast ", 20) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_call_rule(ptr + 20)) {
-			fprintf(stderr, "Invalid dbus-user.broadcast rule: %s\n", ptr + 20);
+			fprintf(stderr, "Error: Invalid dbus-user.broadcast rule: %s\n", ptr + 20);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp("dbus-system ", ptr, 12) == 0) {
+#ifdef HAVE_DBUSPROXY
 		ptr += 12;
 		if (strcmp("filter", ptr) == 0) {
 			if (arg_dbus_system == DBUS_POLICY_BLOCK) {
@@ -506,44 +525,55 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			arg_dbus_system = DBUS_POLICY_BLOCK;
 		} else {
-			fprintf(stderr, "Unknown dbus-system policy: %s\n", ptr);
+			fprintf(stderr, "Error: Unknown dbus-system policy: %s\n", ptr);
 			exit(1);
 		}
+#endif
 		return 0;
 	}
 	else if (strncmp(ptr, "dbus-system.see ", 16) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 16)) {
-			fprintf(stderr, "Invalid dbus-system.see name: %s\n", ptr + 17);
+			fprintf(stderr, "Error: Invalid dbus-system.see name: %s\n", ptr + 17);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.talk ", 17) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 17)) {
-			fprintf(stderr, "Invalid dbus-system.talk name: %s\n", ptr + 17);
+			fprintf(stderr, "Error: Invalid dbus-system.talk name: %s\n", ptr + 17);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.own ", 16) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_name(ptr + 16)) {
-			fprintf(stderr, "Invalid dbus-system.own name: %s\n", ptr + 16);
+			fprintf(stderr, "Error: Invalid dbus-system.own name: %s\n", ptr + 16);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.call ", 17) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_call_rule(ptr + 17)) {
-			fprintf(stderr, "Invalid dbus-system.call rule: %s\n", ptr + 17);
+			fprintf(stderr, "Error: Invalid dbus-system.call rule: %s\n", ptr + 17);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.broadcast ", 22) == 0) {
+#ifdef HAVE_DBUSPROXY
 		if (!dbus_check_call_rule(ptr + 22)) {
-			fprintf(stderr, "Invalid dbus-system.broadcast rule: %s\n", ptr + 22);
+			fprintf(stderr, "Error: Invalid dbus-system.broadcast rule: %s\n", ptr + 22);
 			exit(1);
 		}
+#endif
 		return 1;
 	}
 	else if (strcmp(ptr, "nou2f") == 0) {
@@ -861,7 +891,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	if (strncmp(ptr, "protocol ", 9) == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			if (cfg.protocol) {
 				fwarning("two protocol lists are present, \"%s\" will be installed\n", cfg.protocol);
@@ -875,7 +904,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 
@@ -890,107 +918,92 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// seccomp drop list on top of default list
 	if (strncmp(ptr, "seccomp ", 8) == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
 			cfg.seccomp_list = seccomp_check_list(ptr + 8);
 		}
 		else if (!arg_quiet)
 			warning_feature_disabled("seccomp");
-#endif
 
 		return 0;
 	}
 	if (strncmp(ptr, "seccomp.32 ", 11) == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp32 = 1;
 			cfg.seccomp_list32 = seccomp_check_list(ptr + 11);
 		}
 		else if (!arg_quiet)
 			warning_feature_disabled("seccomp");
-#endif
 
 		return 0;
 	}
 
 	if (strcmp(ptr, "seccomp.block-secondary") == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp_block_secondary = 1;
 		}
 		else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 	// seccomp drop list without default list
 	if (strncmp(ptr, "seccomp.drop ", 13) == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
 			cfg.seccomp_list_drop = seccomp_check_list(ptr + 13);
 		}
 		else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 	if (strncmp(ptr, "seccomp.32.drop ", 13) == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp32 = 1;
 			cfg.seccomp_list_drop32 = seccomp_check_list(ptr + 13);
 		}
 		else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 
 	// seccomp keep list
 	if (strncmp(ptr, "seccomp.keep ", 13) == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp = 1;
 			cfg.seccomp_list_keep= seccomp_check_list(ptr + 13);
 		}
 		else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 	if (strncmp(ptr, "seccomp.32.keep ", 13) == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp32 = 1;
 			cfg.seccomp_list_keep32 = seccomp_check_list(ptr + 13);
 		}
 		else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 
 	// memory deny write&execute
 	if (strcmp(ptr, "memory-deny-write-execute") == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP))
 			arg_memory_deny_write_execute = 1;
 		else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 
 	// seccomp error action
 	if (strncmp(ptr, "seccomp-error-action ", 21) == 0) {
-#ifdef HAVE_SECCOMP
 		if (checkcfg(CFG_SECCOMP)) {
 			int config_seccomp_error_action = checkcfg(CFG_SECCOMP_ERROR_ACTION);
 			if (config_seccomp_error_action == -1) {
 				if (strcmp(ptr + 21, "kill") == 0)
 					arg_seccomp_error_action = SECCOMP_RET_KILL;
+				else if (strcmp(ptr + 21, "log") == 0)
+					arg_seccomp_error_action = SECCOMP_RET_LOG;
 				else {
 					arg_seccomp_error_action = errno_find_name(ptr + 21);
 					if (arg_seccomp_error_action == -1)
@@ -1006,7 +1019,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		} else
 			warning_feature_disabled("seccomp");
-#endif
 		return 0;
 	}
 
@@ -1466,7 +1478,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_rlimit_as = 1;
 		}
 		else {
-			fprintf(stderr, "Invalid rlimit option on line %d\n", lineno);
+			fprintf(stderr, "Error: Invalid rlimit option on line %d\n", lineno);
 			exit(1);
 		}
 
@@ -1630,12 +1642,21 @@ void profile_read(const char *fname) {
 		exit(1);
 	}
 
-	// allow debuggers
+	// --allow-debuggers - skip disable-devel.inc file
 	if (arg_allow_debuggers) {
 		char *tmp = strrchr(fname, '/');
 		if (tmp && *(tmp + 1) != '\0') {
 			tmp++;
 			if (strcmp(tmp, "disable-devel.inc") == 0)
+				return;
+		}
+	}
+	// --appimage - skip disable-shell.inc file
+	if (arg_appimage) {
+		char *tmp = strrchr(fname, '/');
+		if (tmp && *(tmp + 1) != '\0') {
+			tmp++;
+			if (strcmp(tmp, "disable-shell.inc") == 0)
 				return;
 		}
 	}
@@ -1685,7 +1706,7 @@ void profile_read(const char *fname) {
 		}
 
 		// process include
-		if (strncmp(ptr, "include ", 8) == 0) {
+		if (strncmp(ptr, "include ", 8) == 0 && !is_in_ignore_list(ptr)) {
 			include_level++;
 
 			// expand macros in front of the include profile file

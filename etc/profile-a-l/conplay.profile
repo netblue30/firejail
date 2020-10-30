@@ -12,7 +12,5 @@ include conplay.local
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
 
-whitelist /usr/share/perl5
-
 # Redirect
 include mpg123.profile

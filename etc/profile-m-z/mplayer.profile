@@ -7,8 +7,6 @@ include mplayer.local
 include globals.local
 
 noblacklist ${HOME}/.mplayer
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,8 +14,12 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-xdg.inc
 
+read-only ${DESKTOP}
+mkdir ${HOME}/.mplayer
+whitelist ${HOME}/.mplayer
+include whitelist-common.inc
+include whitelist-players.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -36,4 +38,3 @@ shell none
 private-bin mplayer
 private-dev
 private-tmp
-

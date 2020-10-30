@@ -7,6 +7,7 @@ include ark.local
 include globals.local
 
 noblacklist ${HOME}/.config/arkrc
+noblacklist ${HOME}/.local/share/kxmlgui5/ark
 
 include disable-common.inc
 include disable-devel.inc

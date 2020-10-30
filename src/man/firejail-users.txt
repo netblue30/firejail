@@ -38,7 +38,7 @@ See \fBman 1 firecfg\fR for details.
 An alternative way of restricting user access to firejail executable is to create a special firejail user group and
 allow only users in this group to run the sandbox:
 
-	# addgroup firejail
+	# addgroup --system firejail
 .br
 	# chown root:firejail /usr/bin/firejail
 .br

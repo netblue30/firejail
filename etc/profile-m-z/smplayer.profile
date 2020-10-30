@@ -10,7 +10,7 @@ noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.mplayer
 
-# Allow python (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
 include allow-python2.inc
 include allow-python3.inc
 
@@ -26,7 +26,9 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+whitelist /usr/share/lua*
 whitelist /usr/share/smplayer
+whitelist /usr/share/vulkan
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -41,7 +43,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-private-bin env,mplayer,mpv,python*,smplayer,smtube,youtube-dl
+private-bin env,mplayer,mpv,python*,smplayer,smtube,waf,youtube-dl
 private-dev
 private-tmp
 

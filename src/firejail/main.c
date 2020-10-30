@@ -31,7 +31,7 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <errno.h>
-#include <limits.h>
+//#include <limits.h>
 #include <sys/file.h>
 #include <sys/prctl.h>
 #include <signal.h>
@@ -153,15 +153,6 @@ int arg_dbus_log_user = 0;
 int arg_dbus_log_system = 0;
 int login_shell = 0;
 
-//**********************************************************************************
-// work in progress!!!
-//**********************************************************************************
-//#define POSTMORTEM
-#ifdef POSTMORTEM
-#include <grp.h>
-pid_t pm_child = 0;
-#endif
-
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
 
@@ -184,7 +175,9 @@ static void myexit(int rv) {
 
 
 	// delete sandbox files in shared memory
+#ifdef HAVE_DBUSPROXY
 	dbus_proxy_stop();
+#endif
 	EUID_ROOT();
 	delete_run_files(sandbox_pid);
 	appimage_clear();
@@ -195,19 +188,6 @@ static void myexit(int rv) {
 static void my_handler(int s) {
 	fmessage("\nParent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
-
-#ifdef POSTMORTEM
-printf("attempt to kill %d\n", pm_child);
-	if (pm_child) {
-		if (waitpid(pm_child, NULL, WNOHANG) == 0) {
-			if (has_handler(pm_child, s)) // signals are not delivered if there is no handler yet
-				kill(pm_child, s);
-			else
-				kill(pm_child, SIGKILL);
-			waitpid(pm_child, NULL, 0);
-		}
-	}
-#endif
 
 	if (waitpid(child, NULL, WNOHANG) == 0) {
 		if (has_handler(child, s)) // signals are not delivered if there is no handler yet
@@ -237,74 +217,6 @@ static void install_handler(void) {
 	sigaction(SIGTERM, &sga, NULL);
 }
 
-// return 1 if error, 0 if a valid pid was found
-static int extract_pid(const char *name, pid_t *pid) {
-	int retval = 0;
-	EUID_ASSERT();
-	if (!name || strlen(name) == 0) {
-		fprintf(stderr, "Error: invalid sandbox name\n");
-		exit(1);
-	}
-
-	EUID_ROOT();
-	if (name2pid(name, pid)) {
-		retval = 1;
-	}
-	EUID_USER();
-	return retval;
-}
-
-// return 1 if error, 0 if a valid pid was found
-static int read_pid(const char *name, pid_t *pid) {
-	char *endptr;
-	errno = 0;
-	long int pidtmp = strtol(name, &endptr, 10);
-	if ((errno == ERANGE && (pidtmp == LONG_MAX || pidtmp == LONG_MIN))
-		|| (errno != 0 && pidtmp == 0)) {
-		return extract_pid(name,pid);
-	}
-	// endptr points to '\0' char in name if the entire string is valid
-	if (endptr == NULL || endptr[0]!='\0') {
-		return extract_pid(name,pid);
-	}
-	*pid =(pid_t)pidtmp;
-	return 0;
-}
-
-static pid_t require_pid(const char *name) {
-	pid_t pid;
-	if (read_pid(name,&pid)) {
-		fprintf(stderr, "Error: cannot find sandbox %s\n", name);
-		exit(1);
-	}
-	return pid;
-}
-
-// return 1 if there is a link somewhere in path of directory
-static int has_link(const char *dir) {
-	assert(dir);
-	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1) {
-		if (errno == ENOTDIR && is_dir(dir))
-			return 1;
-	}
-	else
-		close(fd);
-	return 0;
-}
-
-static void check_homedir(void) {
-	assert(cfg.homedir);
-	if (cfg.homedir[0] != '/') {
-		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
-		exit(1);
-	}
-	// symlinks are rejected in many places
-	if (has_link(cfg.homedir)) {
-		fprintf(stderr, "No full support for symbolic links in path of user directory.\n"
-			"Please provide resolved path in password database (/etc/passwd).\n\n");
-	}
-}
 
 // init configuration
 static void init_cfg(int argc, char **argv) {
@@ -359,6 +271,24 @@ static void init_cfg(int argc, char **argv) {
 
 	arg_seccomp_error_action = EPERM;
 	cfg.seccomp_error_action = "EPERM";
+}
+
+static void fix_single_std_fd(int fd, const char *file, int flags) {
+	struct stat s;
+	if (fstat(fd, &s) == -1 && errno == EBADF) {
+		// something is wrong with fd, probably it is not opened
+		int nfd = open(file, flags);
+		if (nfd != fd || fstat(fd, &s) != 0)
+			_exit(1); // no further attempts to fix the situation
+	}
+}
+
+// glibc does this automatically if Firejail was started by a regular user
+// run this for root user and as a fallback
+static void fix_std_streams(void) {
+	fix_single_std_fd(0, "/dev/full", O_RDONLY|O_NOFOLLOW);
+	fix_single_std_fd(1, "/dev/null", O_WRONLY|O_NOFOLLOW);
+	fix_single_std_fd(2, "/dev/null", O_WRONLY|O_NOFOLLOW);
 }
 
 static void check_network(Bridge *br) {
@@ -551,7 +481,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	//*************************************
 	// independent commands - the program will exit!
 	//*************************************
-#ifdef HAVE_SECCOMP
 	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls");
@@ -601,7 +530,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("seccomp");
 		exit(0);
 	}
-#endif
 	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
 		pid_t pid = require_pid(argv[i] + 16);
 
@@ -793,8 +721,39 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			 }
 
 			// list directory contents
+			if (!arg_debug)
+				 arg_quiet = 1;
 			pid_t pid = require_pid(argv[i] + 5);
 			sandboxfs(SANDBOX_FS_LS, pid, path, NULL);
+			exit(0);
+		}
+		else
+			exit_err_feature("file transfer");
+	}
+	else if (strncmp(argv[i], "--cat=", 6) == 0) {
+		if (checkcfg(CFG_FILE_TRANSFER)) {
+			logargs(argc, argv);
+			if (arg_private_cwd) {
+				fprintf(stderr, "Error: --cat and --private-cwd options are mutually exclusive\n");
+				exit(1);
+			}
+
+			if ((i + 2) != argc) {
+				fprintf(stderr, "Error: invalid --cat option, path expected\n");
+				exit(1);
+			}
+			char *path = argv[i + 1];
+			invalid_filename(path, 0); // no globbing
+			if (strstr(path, "..")) {
+				fprintf(stderr, "Error: invalid file name %s\n", path);
+				exit(1);
+			}
+
+			// write file contents to stdout
+			if (!arg_debug)
+				 arg_quiet = 1;
+			pid_t pid = require_pid(argv[i] + 6);
+			sandboxfs(SANDBOX_FS_CAT, pid, path, NULL);
 			exit(0);
 		}
 		else
@@ -929,19 +888,20 @@ char *guess_shell(void) {
 	return shell;
 }
 
+// return argument index
 static int check_arg(int argc, char **argv, const char *argument, int strict) {
 	int i;
 	int found = 0;
 	for (i = 1; i < argc; i++) {
 		if (strict) {
 			if (strcmp(argv[i], argument) == 0) {
-				found = 1;
+				found = i;
 				break;
 			}
 		}
 		else {
 			if (strncmp(argv[i], argument, strlen(argument)) == 0) {
-				found = 1;
+				found = i;
 				break;
 			}
 		}
@@ -991,7 +951,6 @@ void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, b
 	(void) native;
 }
 
-#ifdef HAVE_SECCOMP
 static int check_postexec(const char *list) {
 	char *prelist, *postlist;
 
@@ -1002,7 +961,6 @@ static int check_postexec(const char *list) {
 	}
 	return 0;
 }
-#endif
 
 //*******************************************
 // Main program
@@ -1017,16 +975,19 @@ int main(int argc, char **argv, char **envp) {
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 	char **ptr;
 
+	// sanitize the umask
+	orig_umask = umask(022);
+
+	// check standard streams before printing anything
+	fix_std_streams();
+
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
 
-	// sanitize the umask
-	orig_umask = umask(022);
-
 	// argument count should be larger than 0
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
-		fprintf(stderr, "Error: argv[0] is NULL\n");
+		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
 	} else if (argc >= MAX_ARGS) {
 		fprintf(stderr, "Error: too many arguments\n");
@@ -1043,17 +1004,21 @@ int main(int argc, char **argv, char **envp) {
 			fprintf(stderr, "Error: too long arguments\n");
 			exit(1);
 		}
+		// Also remove requested environment variables
+		// entirely to avoid tripping the length check below
+		if (strncmp(argv[i], "--rmenv=", 8) == 0)
+			unsetenv(argv[i] + 8);
 	}
 
 	// sanity check for environment variables
 	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++) {
 		if (strlen(*ptr) >= MAX_ENV_LEN) {
-			fprintf(stderr, "Error: too long environment variables\n");
+			fprintf(stderr, "Error: too long environment variables, please use --rmenv\n");
 			exit(1);
 		}
 	}
 	if (i >= MAX_ENVS) {
-		fprintf(stderr, "Error: too many environment variables\n");
+		fprintf(stderr, "Error: too many environment variables, please use --rmenv\n");
 		exit(1);
 	}
 
@@ -1086,6 +1051,19 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_USER();
 
+	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
+	// these paths are disabled in disable-common.inc
+	if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
+		if (strncmp(argv[i] + 4, "=dhcp", 5) == 0) {
+			profile_add("noblacklist /sbin");
+			profile_add("noblacklist /usr/sbin");
+		}
+	}
+
+	// for appimages we need to remove "include disable-shell.inc from the profile
+	// a --profile command can show up before --appimage
+	if (check_arg(argc, argv, "--appimage", 1))
+		arg_appimage = 1;
 
 	// process allow-debuggers
 	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
@@ -1138,8 +1116,7 @@ int main(int argc, char **argv, char **envp) {
 
 			// start the program directly without sandboxing
 			run_no_sandbox(argc, argv);
-			// it will never get here!
-			assert(0);
+			__builtin_unreachable();
 		}
 	}
 	EUID_ASSERT();
@@ -1254,6 +1231,10 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
+#ifdef WARN_DUMPABLE
+	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid())
+		fprintf(stderr, "Error: Firejail is dumpable\n");
+#endif
 
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))
@@ -1299,11 +1280,10 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--apparmor") == 0)
 			arg_apparmor = 1;
 #endif
-#ifdef HAVE_SECCOMP
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (cfg.protocol) {
-					fwarning("two protocol lists are present, \"%s\" will be installed\n", cfg.protocol);
+					fwarning("more than one protocol list is present, \"%s\" will be installed\n", cfg.protocol);
 				}
 				else {
 					// store list
@@ -1421,6 +1401,8 @@ int main(int argc, char **argv, char **envp) {
 				if (config_seccomp_error_action == -1) {
 					if (strcmp(argv[i] + 23, "kill") == 0)
 						arg_seccomp_error_action = SECCOMP_RET_KILL;
+					else if (strcmp(argv[i] + 23, "log") == 0)
+						arg_seccomp_error_action = SECCOMP_RET_LOG;
 					else {
 						arg_seccomp_error_action = errno_find_name(argv[i] + 23);
 						if (arg_seccomp_error_action == -1)
@@ -1435,7 +1417,6 @@ int main(int argc, char **argv, char **envp) {
 			} else
 				exit_err_feature("seccomp");
 		}
-#endif
 		else if (strcmp(argv[i], "--caps") == 0) {
 			arg_caps_default_filter = 1;
 			arg_caps_cmdline = 1;
@@ -1746,6 +1727,34 @@ int main(int argc, char **argv, char **envp) {
 			}
 		}
 #endif
+		else if (strncmp(argv[i], "--include=", 10) == 0) {
+			char *ppath = expand_macros(argv[i] + 10);
+			if (!ppath)
+				errExit("strdup");
+
+			char *ptr = ppath;
+			while (*ptr != '/' && *ptr != '\0')
+				ptr++;
+			if (*ptr == '\0') {
+				if (access(ppath, R_OK)) {
+					profile_read(ppath);
+				}
+				else {
+					// ppath contains no '/' and is not a local file, assume it's a name
+					int rv = profile_find_firejail(ppath, 0);
+					if (!rv) {
+						fprintf(stderr, "Error: no profile with name \"%s\" found.\n", ppath);
+						exit(1);
+					}
+				}
+			}
+			else {
+				// ppath contains a '/', assume it's a path
+				profile_read(ppath);
+			}
+
+			free(ppath);
+		}
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
 			// multiple profile files are allowed!
 
@@ -1991,12 +2000,14 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}
+#ifdef HAVE_USERTMPFS
 		else if (strcmp(argv[i], "--private-cache") == 0) {
 			if (checkcfg(CFG_PRIVATE_CACHE))
 				arg_private_cache = 1;
 			else
 				exit_err_feature("private-cache");
 		}
+#endif
 		else if (strcmp(argv[i], "--private-cwd") == 0) {
 			cfg.cwd = NULL;
 			arg_private_cwd = 1;
@@ -2062,6 +2073,11 @@ int main(int argc, char **argv, char **envp) {
 			arg_dbus_user = DBUS_POLICY_BLOCK;
 			arg_dbus_system = DBUS_POLICY_BLOCK;
 		}
+
+		//*************************************
+		// D-BUS proxy
+		//*************************************
+#ifdef HAVE_DBUSPROXY
 		else if (strncmp("--dbus-user=", argv[i], 12) == 0) {
 			if (strcmp("filter", argv[i] + 12) == 0) {
 				if (arg_dbus_user == DBUS_POLICY_BLOCK) {
@@ -2199,6 +2215,7 @@ int main(int argc, char **argv, char **envp) {
 			}
 			arg_dbus_log_system = 1;
 		}
+#endif
 
 		//*************************************
 		// network
@@ -2567,6 +2584,7 @@ int main(int argc, char **argv, char **envp) {
 			cfg.timeout = extract_timeout(argv[i] + 10);
 		else if (strcmp(argv[i], "--audit") == 0) {
 			arg_audit_prog = LIBDIR "/firejail/faudit";
+			profile_add_ignore("shell none");
 			arg_audit = 1;
 		}
 		else if (strncmp(argv[i], "--audit=", 8) == 0) {
@@ -2583,6 +2601,7 @@ int main(int argc, char **argv, char **envp) {
 				fprintf(stderr, "Error: cannot find the audit program %s\n", arg_audit_prog);
 				exit(1);
 			}
+			profile_add_ignore("shell none");
 			arg_audit = 1;
 		}
 		else if (strcmp(argv[i], "--appimage") == 0)
@@ -2816,10 +2835,9 @@ int main(int argc, char **argv, char **envp) {
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
 
-#ifdef HAVE_SECCOMP
 	if (arg_seccomp)
 		arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);
-#endif
+
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
 	if (need_preload && (cfg.seccomp_list32 || cfg.seccomp_list_drop32 || cfg.seccomp_list_keep32))
 		fwarning("preload libraries (trace, tracelog, postexecseccomp due to seccomp.drop=execve etc.) are incompatible with 32 bit filters\n");
@@ -2884,6 +2902,7 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_USER();
 
+#ifdef HAVE_DBUSPROXY
 	if (checkcfg(CFG_DBUS)) {
 		dbus_check_profile();
 		if (arg_dbus_user == DBUS_POLICY_FILTER ||
@@ -2893,6 +2912,7 @@ int main(int argc, char **argv, char **envp) {
 			EUID_USER();
 		}
 	}
+#endif
 
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;
@@ -3049,44 +3069,6 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_USER();
 
-
-#ifdef POSTMORTEM
-	pm_child = fork();
-	if (pm_child == -1)
-		fprintf(stderr, "Error: cannot start POSTMORTEM process\n");
-	else if (pm_child == 0) {
-		// running --join as root
-		EUID_ROOT();
-		int rv = setgroups(0, NULL);
-		rv |= setuid(0);
-		rv |= setgid(0);
-		if (rv) {
-			fprintf(stderr, "Error: cannot start POSTMORTEM process\n");
-			exit(1);
-		}
-
-		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
-/*problem???*/	sleep(1); // we need to give the sandbox some time to start the namespaces
-		char *joincmd;
-		if (asprintf(&joincmd, "--join-network=%d", child) == -1)
-			errExit("asprintf");
-
-		// we join only the network ns, the filesystem is intact so we can find tcpdump
-		char *arg[] =  {
-			"/usr/bin/firejail",
-			joincmd,
-			"/usr/sbin/tcpdump",
-			"-n",
-			"-q",
-			NULL
-		};
-		execvp(arg[0], arg);
-		assert(0);
-printf("**********************************\n");
-		exit(1);
-	}
-#endif
-
 	int status = 0;
 	//*****************************
 	// following code is signal-safe
@@ -3104,17 +3086,27 @@ printf("**********************************\n");
 	// end of signal-safe code
 	//*****************************
 
+#if 0
+// at this point the sandbox was closed and we are on our way out
+// it would make sense to move this before waitpid above to free some memory
+// crash for now as of issue #3662 from dhcp code
 	// free globals
 	if (cfg.profile) {
 		ProfileEntry *prf = cfg.profile;
 		while (prf != NULL) {
 			ProfileEntry *next = prf->next;
-			free(prf->data);
-			free(prf->link);
+printf("data #%s#\n", prf->data);
+			if (prf->data)
+				free(prf->data);
+printf("link #%s#\n", prf->link);
+			if (prf->link)
+				free(prf->link);
 			free(prf);
 			prf = next;
 		}
 	}
+#endif
+
 
 	if (WIFEXITED(status)){
 		myexit(WEXITSTATUS(status));

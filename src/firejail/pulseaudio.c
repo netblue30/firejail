@@ -23,6 +23,7 @@
 #include <sys/statvfs.h>
 #include <sys/mount.h>
 #include <dirent.h>
+#include <errno.h>
 #include <sys/wait.h>
 
 #include <fcntl.h>
@@ -47,7 +48,7 @@ void pulseaudio_disable(void) {
 	char *path;
 	if (asprintf(&path, "/run/user/%d", getuid()) == -1)
 		errExit("asprintf");
-	disable_file_path(path, "pulse/native");
+	disable_file_path(path, "pulse");
 	free(path);
 
 
@@ -133,8 +134,13 @@ void pulseaudio_init(void) {
 		goto out;
 	}
 	// confirm the actual mount destination is owned by the user
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
+	if (fstat(fd, &s) == -1) { // FUSE
+		if (errno != EACCES)
+			errExit("fstat");
+		close(fd);
+		pulseaudio_set_environment(pulsecfg);
+		goto out;
+	}
 	if (s.st_uid != getuid()) {
 		close(fd);
 		pulseaudio_set_environment(pulsecfg);
@@ -168,6 +174,11 @@ void pulseaudio_init(void) {
 	fs_logger2("create", p);
 	pulseaudio_set_environment(p);
 	free(p);
+
+	// RUN_PULSE_DIR not needed anymore, mask it
+	if (mount("tmpfs", RUN_PULSE_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+		errExit("mount pulseaudio");
+	fs_logger2("tmpfs", RUN_PULSE_DIR);
 
 out:
 	free(pulsecfg);

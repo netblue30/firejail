@@ -11,7 +11,8 @@ ignore dbus-user none
 ignore dbus-system none
 writable-run-user
 
-# If you want to read local mail stored in /var/mail, add the following to thunderbird.local:
+# If you want to read local mail stored in /var/mail edit /etc/apparmor.d/firejail-default accordingly
+# and add the following to thunderbird.local:
 #noblacklist /var/mail
 #noblacklist /var/spool/mail
 #whitelist /var/mail
@@ -56,8 +57,6 @@ novideo
 
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 ignore private-tmp
-
-read-only ${HOME}/.config/mimeapps.list
 
 # Redirect
 include firefox-common.profile

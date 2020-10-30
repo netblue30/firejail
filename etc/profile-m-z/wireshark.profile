@@ -38,8 +38,8 @@ nosound
 notv
 nou2f
 novideo
-# protocol unix,inet,inet6,netlink
-# seccomp - breaks network traffic capture for unprivileged users
+# protocol unix,inet,inet6,netlink,packet,bluetooth - commented out in case they bring in new protocols
+seccomp
 shell none
 tracelog
 

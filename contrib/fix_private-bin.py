@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 __author__ = "KOLANICH"
 __copyright__ = """This is free and unencumbered software released into the public domain.
 

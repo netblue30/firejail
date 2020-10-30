@@ -4,7 +4,7 @@
 # License GPL v2
 
 arr[1]="TEST 1: standard compilation"
-arr[2]="TEST 2: compile seccomp disabled"
+arr[2]="TEST 2: compile dbus proxy disabled"
 arr[3]="TEST 3: compile chroot disabled"
 arr[4]="TEST 4: compile firetunnel disabled"
 arr[5]="TEST 5: compile user namespace disabled"
@@ -17,13 +17,16 @@ arr[11]="TEST 11: compile disable global config"
 arr[12]="TEST 12: compile apparmor"
 arr[13]="TEST 13: compile busybox"
 arr[14]="TEST 14: compile overlayfs disabled"
-arr[14]="TEST 15: compile private-home disabled"
+arr[15]="TEST 15: compile private-home disabled"
+arr[15]="TEST 16: compile disable manpages"
 
 # remove previous reports and output file
 cleanup() {
 	rm -f report*
 	rm -fr firejail
 	rm -f oc* om*
+	rm -f output-configure
+	rm -f output-make
 }
 
 print_title() {
@@ -77,13 +80,12 @@ rm output-configure output-make
 #*****************************************************************
 # TEST 2
 #*****************************************************************
-# - disable seccomp configuration
+# - disable dbus proxy configuration
 #*****************************************************************
 print_title "${arr[2]}"
-# seccomp
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-seccomp  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-dbusproxy  --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test2
@@ -98,7 +100,6 @@ rm output-configure output-make
 # - disable chroot configuration
 #*****************************************************************
 print_title "${arr[3]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-chroot  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -116,7 +117,6 @@ rm output-configure output-make
 # - disable firetunnel configuration
 #*****************************************************************
 print_title "${arr[4]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-firetunnel  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -134,7 +134,6 @@ rm output-configure output-make
 # - disable user namespace configuration
 #*****************************************************************
 print_title "${arr[5]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-userns  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -153,7 +152,6 @@ rm output-configure output-make
 # - check compilation
 #*****************************************************************
 print_title "${arr[6]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-network  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -171,7 +169,6 @@ rm output-configure output-make
 # - disable X11 support
 #*****************************************************************
 print_title "${arr[7]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-x11  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -189,7 +186,6 @@ rm output-configure output-make
 # - enable selinux
 #*****************************************************************
 print_title "${arr[8]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --enable-selinux --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -207,7 +203,6 @@ rm output-configure output-make
 # - disable file transfer
 #*****************************************************************
 print_title "${arr[9]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-file-transfer  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -225,7 +220,6 @@ rm output-configure output-make
 # - disable whitelist
 #*****************************************************************
 print_title "${arr[10]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-whitelist  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -243,7 +237,6 @@ rm output-configure output-make
 # - disable global config
 #*****************************************************************
 print_title "${arr[11]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-globalcfg  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -261,7 +254,6 @@ rm output-configure output-make
 # - enable apparmor
 #*****************************************************************
 print_title "${arr[12]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --enable-apparmor  --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -279,7 +271,6 @@ rm output-configure output-make
 # - enable busybox workaround
 #*****************************************************************
 print_title "${arr[13]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --enable-busybox-workaround --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -297,7 +288,6 @@ rm output-configure output-make
 # - disable overlayfs
 #*****************************************************************
 print_title "${arr[14]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-overlayfs --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -315,7 +305,6 @@ rm output-configure output-make
 # - disable private home
 #*****************************************************************
 print_title "${arr[15]}"
-# seccomp
 cd firejail
 make distclean
 ./configure --prefix=/usr --disable-private-home --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -325,6 +314,23 @@ grep Warning output-configure output-make > ./report-test15
 grep Error output-configure output-make >> ./report-test15
 cp output-configure oc15
 cp output-make om15
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 16
+#*****************************************************************
+# - disable manpages
+#*****************************************************************
+print_title "${arr[16]}"
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-man --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test16
+grep Error output-configure output-make >> ./report-test16
+cp output-configure oc16
+cp output-make om16
 rm output-configure output-make
 
 #*****************************************************************
@@ -356,3 +362,4 @@ echo ${arr[12]}
 echo ${arr[13]}
 echo ${arr[14]}
 echo ${arr[15]}
+echo ${arr[16]}

@@ -15,6 +15,7 @@ noblacklist ${HOME}/.kde/share/config/okularrc
 noblacklist ${HOME}/.kde4/share/apps/okular
 noblacklist ${HOME}/.kde4/share/config/okularpartrc
 noblacklist ${HOME}/.kde4/share/config/okularrc
+noblacklist ${HOME}/.local/share/kxmlgui5/okular
 noblacklist ${HOME}/.local/share/okular
 noblacklist ${DOCUMENTS}
 
@@ -28,6 +29,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 whitelist /usr/share/config.kcfg
+whitelist /usr/share/kxmlgui5/okular
 whitelist /usr/share/okular
 whitelist /usr/share/poppler
 include whitelist-usr-share-common.inc
@@ -51,7 +53,7 @@ seccomp
 shell none
 tracelog
 
-private-bin kbuildsycoca4,kdeinit4,lpr,okular
+private-bin kbuildsycoca4,kdeinit4,lpr,okular,unar,unrar
 private-dev
 private-etc alternatives,cups,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,passwd,xdg
 # private-tmp - on KDE we need access to the real /tmp for data exchange with email clients

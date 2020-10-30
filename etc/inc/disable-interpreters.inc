@@ -15,6 +15,8 @@ blacklist ${PATH}/lua*
 blacklist /usr/include/lua*
 blacklist /usr/lib/liblua*
 blacklist /usr/lib/lua
+blacklist /usr/lib64/liblua*
+blacklist /usr/lib64/lua
 blacklist /usr/share/lua*
 
 # mozjs
@@ -34,6 +36,7 @@ blacklist ${PATH}/perl
 blacklist ${PATH}/site_perl
 blacklist ${PATH}/vendor_perl
 blacklist /usr/lib/perl*
+blacklist /usr/lib64/perl*
 blacklist /usr/share/perl*
 
 # PHP

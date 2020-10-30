@@ -49,6 +49,7 @@ blacklist ${PATH}/openssl-1.0
 blacklist ${PATH}/rust-gdb
 blacklist ${PATH}/rust-lldb
 blacklist ${PATH}/rustc
+blacklist ${HOME}/.rustup
 
 # tcc - Tiny C Compiler
 blacklist ${PATH}/tcc

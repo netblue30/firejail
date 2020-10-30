@@ -17,6 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#ifdef HAVE_DBUSPROXY
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
@@ -41,7 +42,7 @@
 #define DBUS_USER_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-user"
 #define DBUS_SYSTEM_PROXY_SOCKET_FORMAT DBUS_USER_DIR_FORMAT "/%d-system"
 #define DBUS_MAX_NAME_LENGTH 255
-#define XDG_DBUS_PROXY_PATH "/usr/bin/xdg-dbus-proxy"
+// moved to include/common.h - #define XDG_DBUS_PROXY_PATH "/usr/bin/xdg-dbus-proxy"
 
 static pid_t dbus_proxy_pid = 0;
 static int dbus_proxy_status_fd = -1;
@@ -444,6 +445,24 @@ static char *get_socket_env(const char *name) {
 	return NULL;
 }
 
+void dbus_set_session_bus_env(void) {
+	if (setenv(DBUS_SESSION_BUS_ADDRESS_ENV,
+			DBUS_SOCKET_PATH_PREFIX RUN_DBUS_USER_SOCKET, 1) == -1) {
+		fprintf(stderr, "Error: cannot modify " DBUS_SESSION_BUS_ADDRESS_ENV
+						" required by --dbus-user\n");
+		exit(1);
+	}
+}
+
+void dbus_set_system_bus_env(void) {
+	if (setenv(DBUS_SYSTEM_BUS_ADDRESS_ENV,
+			DBUS_SOCKET_PATH_PREFIX RUN_DBUS_SYSTEM_SOCKET, 1) == -1) {
+		fprintf(stderr, "Error: cannot modify " DBUS_SYSTEM_BUS_ADDRESS_ENV
+						" required by --dbus-system\n");
+		exit(1);
+	}
+}
+
 static void disable_socket_dir(void) {
 	struct stat s;
 	if (stat(RUN_FIREJAIL_DBUS_DIR, &s) == 0)
@@ -465,10 +484,10 @@ void dbus_apply_policy(void) {
 	}
 
 	create_empty_dir_as_root(RUN_DBUS_DIR, 0755);
-	create_empty_file_as_root(RUN_DBUS_USER_SOCKET, 0700);
-	create_empty_file_as_root(RUN_DBUS_SYSTEM_SOCKET, 0700);
 
 	if (arg_dbus_user != DBUS_POLICY_ALLOW) {
+		create_empty_file_as_root(RUN_DBUS_USER_SOCKET, 0700);
+
 		if (arg_dbus_user == DBUS_POLICY_FILTER) {
 			assert(dbus_user_proxy_socket != NULL);
 			socket_overlay(RUN_DBUS_USER_SOCKET, dbus_user_proxy_socket);
@@ -495,12 +514,7 @@ void dbus_apply_policy(void) {
 		free(dbus_user_socket);
 		free(dbus_user_socket2);
 
-		if (setenv(DBUS_SESSION_BUS_ADDRESS_ENV,
-				   DBUS_SOCKET_PATH_PREFIX RUN_DBUS_USER_SOCKET, 1) == -1) {
-			fprintf(stderr, "Error: cannot modify " DBUS_SESSION_BUS_ADDRESS_ENV
-							" required by --dbus-user\n");
-			exit(1);
-		}
+		dbus_set_session_bus_env();
 
 		// blacklist the dbus-launch user directory
 		char *path;
@@ -511,6 +525,8 @@ void dbus_apply_policy(void) {
 	}
 
 	if (arg_dbus_system != DBUS_POLICY_ALLOW) {
+		create_empty_file_as_root(RUN_DBUS_SYSTEM_SOCKET, 0700);
+
 		if (arg_dbus_system == DBUS_POLICY_FILTER) {
 			assert(dbus_system_proxy_socket != NULL);
 			socket_overlay(RUN_DBUS_SYSTEM_SOCKET, dbus_system_proxy_socket);
@@ -523,12 +539,7 @@ void dbus_apply_policy(void) {
 		if (system_env != NULL && strcmp(system_env, DBUS_SYSTEM_SOCKET) != 0)
 			disable_file_or_dir(system_env);
 
-		if (setenv(DBUS_SYSTEM_BUS_ADDRESS_ENV,
-				   DBUS_SOCKET_PATH_PREFIX RUN_DBUS_SYSTEM_SOCKET, 1) == -1) {
-			fprintf(stderr, "Error: cannot modify " DBUS_SYSTEM_BUS_ADDRESS_ENV
-							" required by --dbus-system\n");
-			exit(1);
-		}
+		dbus_set_system_bus_env();
 	}
 
 	// Only disable access to /run/firejail/dbus here, when the sockets have been bind-mounted.
@@ -545,10 +556,9 @@ void dbus_apply_policy(void) {
 		return;
 
 	// --protocol=unix
-#ifdef HAVE_SECCOMP
 	if (cfg.protocol && !strstr(cfg.protocol, "unix"))
 		return;
-#endif
 
 	fwarning("An abstract unix socket for session D-BUS might still be available. Use --net or remove unix from --protocol set.\n");
 }
+#endif // HAVE_DBUSPROXY

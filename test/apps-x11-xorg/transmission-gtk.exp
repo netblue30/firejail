@@ -38,7 +38,7 @@ expect {
 sleep 2
 
 spawn $env(SHELL)
-send -- "firemon --seccomp --nowrap\r"
+send -- "firemon --seccomp --wrap\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
@@ -57,7 +57,7 @@ expect {
 	"name=blablabla"
 }
 sleep 1
-send -- "firemon --caps --nowrap\r"
+send -- "firemon --caps --wrap\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	":firejail"

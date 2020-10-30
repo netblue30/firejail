@@ -38,6 +38,7 @@ shell none
 
 disable-mnt
 private-dev
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user none

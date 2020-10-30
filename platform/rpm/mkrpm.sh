@@ -44,7 +44,7 @@ sed -e "s/__NAME__/${name}/g" \
 # FIXME: We could parse RELNOTES and create a %changelog section here
 
 # Copy the source to build into a tarball
-tar --exclude='./.git*' --exclude='./test' --transform "s/^./${name}-${version}/" -czf ${tmpdir}/SOURCES/${name}-${version}.tar.gz .
+tar --exclude='./.git*' --transform "s/^./${name}-${version}/" -czf ${tmpdir}/SOURCES/${name}-${version}.tar.gz .
 
 # Build the files (rpm, debug rpm and source rpm)
 rpmbuild --quiet --define "_topdir ${tmpdir}" -ba ${tmp_spec_file}

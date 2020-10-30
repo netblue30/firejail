@@ -10,6 +10,7 @@ match_max 100000
 send -- "firejail less sysutils.sh\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
+	"(press RETURN)" {puts "TESTING SKIP 1.1\n";exit}
 	"MALLOC_CHECK"
 }
 expect {

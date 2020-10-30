@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/*.kdb
 noblacklist ${HOME}/*.kdbx
+noblacklist ${HOME}/.cache/keepassxc
 noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.keepassxc
 # 2.2.4 needs this path when compiled with "Native messaging browser extension"
@@ -22,6 +23,19 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
+
+# You can enable whitelisting for keepassxc by uncommenting (or adding to you keepassxc.local) the following lines.
+# If you do so, you MUST store your database under ${HOME}/Documents/KeePassXC/foo.kdbx
+#mkdir ${HOME}/Documents/KeePassXC
+#whitelist ${HOME}/Documents/KeePassXC
+# Needed for KeePassXC-Browser
+#mkfile ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.cache/keepassxc
+#mkdir ${HOME}/.config/keepassxc
+#whitelist ${HOME}/.cache/keepassxc
+#whitelist ${HOME}/.config/keepassxc
+#include whitelist-common.inc
 
 whitelist /usr/share/keepassxc
 include whitelist-usr-share-common.inc

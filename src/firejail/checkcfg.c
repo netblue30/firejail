@@ -226,9 +226,10 @@ int checkcfg(int val) {
 
 			// seccomp error action
 			else if (strncmp(ptr, "seccomp-error-action ", 21) == 0) {
-#ifdef HAVE_SECCOMP
 				if (strcmp(ptr + 21, "kill") == 0)
 					cfg_val[CFG_SECCOMP_ERROR_ACTION] = SECCOMP_RET_KILL;
+				else if (strcmp(ptr + 21, "log") == 0)
+					cfg_val[CFG_SECCOMP_ERROR_ACTION] = SECCOMP_RET_LOG;
 				else {
 					cfg_val[CFG_SECCOMP_ERROR_ACTION] = errno_find_name(ptr + 21);
 					if (cfg_val[CFG_SECCOMP_ERROR_ACTION] == -1)
@@ -237,9 +238,6 @@ int checkcfg(int val) {
 				config_seccomp_error_action_str = strdup(ptr + 21);
 				if (!config_seccomp_error_action_str)
 					errExit("strdup");
-#else
-				warning_feature_disabled("seccomp");
-#endif
 			}
 
 			else
@@ -297,6 +295,14 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- D-BUS proxy support is %s\n",
+#ifdef HAVE_DBUSPROXY
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- file and directory whitelisting support is %s\n",
 #ifdef HAVE_WHITELIST
 		"enabled"
@@ -345,8 +351,8 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- seccomp-bpf support is %s\n",
-#ifdef HAVE_SECCOMP
+	printf("\t- private-cache and tmpfs as user %s\n",
+#ifdef HAVE_USERTMPFS
 		"enabled"
 #else
 		"disabled"

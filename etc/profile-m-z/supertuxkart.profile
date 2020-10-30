@@ -27,6 +27,7 @@ whitelist ${HOME}/.cache/supertuxkart
 whitelist ${HOME}/.local/share/supertuxkart
 whitelist /usr/share/supertuxkart
 include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

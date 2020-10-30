@@ -52,3 +52,8 @@ private-cache
 private-dev
 private-etc dconf,fonts,gtk-3.0,passwd
 private-tmp
+
+dbus-user filter
+dbus-user.own org.gnome.PasswordSafe
+dbus-user.talk ca.desrt.dconf
+dbus-system none

@@ -73,7 +73,7 @@ GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
 ## Security vulnerabilities
 
-We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@yahoo.com
+We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@protonmail.com
 
 ## Installing
 
@@ -92,7 +92,7 @@ On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
 development libraries and pkg-config are required when using --apparmor
 ./configure option:
 `````
-$ sudo apt-get install git build-essential libapparmor-dev pkg-config
+$ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 `````
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 
@@ -154,46 +154,46 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 `````
 
 `````
-## Latest released version: 0.9.62
+## Latest released version: 0.9.64
 
-## Current development version: 0.9.63
+## Current development version: 0.9.65
+
+Milestone page: https://github.com/netblue30/firejail/milestone/1
+Release discussion: https://github.com/netblue30/firejail/issues/3696
+
+
 
 ### Profile Statistics
 
-A small tool to print profile statistics. Compile as usual and run:
+A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
 `````
-$ make
-$ cd etc
+$ sudo cp src/profstats/profstats /etc/firejail/.
+$ cd /etc/firejail
 $ ./profstats *.profile
-    profiles			966
-    include local profile	966   (include profile-name.local)
-    include globals		966   (include globals.local)
-    blacklist ~/.ssh		951   (include disable-common.inc)
-    seccomp			908
-    capabilities		965
-    noexec			830   (include disable-exec.inc)
-    memory-deny-write-execute	214
-    apparmor			488
-    private-bin			483
-    private-dev			829
-    private-etc			366
-    private-tmp			726
-    whitelist var		638   (include whitelist-var-common.inc)
-    whitelist run/user		282   (include whitelist-runuser-common.inc
-					or blacklist ${RUNUSER})
-    whitelist usr/share		275   (include whitelist-usr-share-common.inc
-    net none			313
-`````
+Warning: multiple caps in transmission-daemon.profile
 
-Run ./profstats -h for help.
+Stats:
+    profiles			1031
+    include local profile	1031   (include profile-name.local)
+    include globals		1031   (include globals.local)
+    blacklist ~/.ssh		1007   (include disable-common.inc)
+    seccomp			976
+    capabilities		1030
+    noexec			901   (include disable-exec.inc)
+    memory-deny-write-execute	221
+    apparmor			555
+    private-bin			544
+    private-dev			897
+    private-etc			435
+    private-tmp			785
+    whitelist home directory	474
+    whitelist var		699   (include whitelist-var-common.inc)
+    whitelist run/user		336   (include whitelist-runuser-common.inc
+					or blacklist ${RUNUSER})
+    whitelist usr/share		359   (include whitelist-usr-share-common.inc
+    net none			333
+    dbus-user none 		523
+    dbus-system none 		632
 
 ### New profiles:
 
-gfeeds, firefox-x11, tvbrowser, rtv, clipgrab, gnome-passwordsafe, bibtex, gummi, latex, pdflatex, tex, wpp, wpspdf, wps, et,
-multimc, gnome-hexgl, com.github.johnfactotum.Foliate, desktopeditors, impressive, mupdf-gl, mupdf-x11, mupdf-x11-curl,
-muraster, mutool, planmaker18, planmaker18free, presentations18, presentations18free, textmaker18, textmaker18free, teams, xournal,
-gnome-screenshot, ripperX, sound-juicer, iagno, com.github.dahenson.agenda, gnome-pomodoro, gnome-todo, kmplayer,
-penguin-command, x2goclient, frogatto, gnome-mines, gnome-nibbles, lightsoff, ts3client_runscript.sh, warmux, ferdi, abiword,
-four-in-a-row, gnome-mahjongg, gnome-robots, gnome-sudoku, gnome-taquin, gnome-tetravex, blobwars, gravity-beams-and-evaporating-stars,
-hyperrogue, jumpnbump-menu, jumpnbump, magicor, mindless, mirrormagic, mrrescue, scorched3d-wrapper, scorchwentbonkers,
-seahorse-adventures, wordwarvi, xbill, gnome-klotski, five-or-more, swell-foop, fdns, jitsi-meet-desktop, nicontine, steam-runtime, apostrophe, quadrapassel, dino-im, strawberry, hitori, bijiben, gnote, gnubik, ZeGrapher, gapplication

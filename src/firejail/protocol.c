@@ -18,7 +18,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifdef HAVE_SECCOMP
 #include "firejail.h"
 #include "../include/seccomp.h"
 
@@ -90,9 +89,6 @@ void protocol_print_filter(pid_t pid) {
 	exit(0);
 #else
 	fwarning("--protocol not supported on this platform\n");
-	return;
+	exit(1);
 #endif
 }
-
-
-#endif // HAVE_SECCOMP

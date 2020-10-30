@@ -20,7 +20,6 @@ include disable-programs.inc
 
 mkdir ${HOME}/.claws-mail
 whitelist ${HOME}/.claws-mail
-whitelist /usr/share/perl5
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -47,6 +47,9 @@ static char *usage_str =
 	"    --caps.drop=capability,capability - blacklist capabilities filter.\n"
 	"    --caps.keep=capability,capability - whitelist capabilities filter.\n"
 	"    --caps.print=name|pid - print the caps filter.\n"
+#ifdef HAVE_FILE_TRANSFER
+	"    --cat=name|pid filename - print content of file from sandbox container.\n"
+#endif
 	"    --cgroup=tasks-file - place the sandbox in the specified control group.\n"
 #ifdef HAVE_CHROOT
 	"    --chroot=dirname - chroot into directory.\n"
@@ -120,10 +123,8 @@ static char *usage_str =
 	"    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n"
 #endif
 	"    --machine-id - preserve /etc/machine-id\n"
-#ifdef HAVE_SECCOMP
 	"    --memory-deny-write-execute - seccomp filter to block attempts to create\n"
 	"\tmemory mappings that are both writable and executable.\n"
-#endif
 #ifdef HAVE_NETWORK
 	"    --mtu=number - set interface MTU.\n"
 #endif
@@ -212,7 +213,6 @@ static char *usage_str =
 #ifdef HAVE_NETWORK
 	"    --scan - ARP-scan all the networks from inside a network namespace.\n"
 #endif
-#ifdef HAVE_SECCOMP
 	"    --seccomp - enable seccomp filter and apply the default blacklist.\n"
 	"    --seccomp=syscall,syscall,syscall - enable seccomp filter, blacklist the\n"
 	"\tdefault syscall list and the syscalls specified by the command.\n"
@@ -224,8 +224,8 @@ static char *usage_str =
 	"    --seccomp.print=name|pid - print the seccomp filter for the sandbox\n"
 	"\tidentified by name or PID.\n"
 	"    --seccomp.32[.drop,.keep][=syscall] - like above but for 32 bit architecture.\n"
-	"    --seccomp-error-action=errno|kill - change error code or kill process.\n"
-#endif
+	"    --seccomp-error-action=errno|kill|log - change error code, kill process\n"
+	"\tor log the attempt.\n"
 	"    --shell=none - run the program directly without a user shell.\n"
 	"    --shell=program - set default user shell.\n"
 	"    --shutdown=name|pid - shutdown the sandbox identified by name or PID.\n"

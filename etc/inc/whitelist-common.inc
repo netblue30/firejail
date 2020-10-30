@@ -21,6 +21,7 @@ read-only ${HOME}/.local/share/applications
 whitelist ${HOME}/.local/share/icons
 whitelist ${HOME}/.local/share/mime
 whitelist ${HOME}/.mime.types
+whitelist ${HOME}/.uim.d
 
 # dconf
 mkdir ${HOME}/.config/dconf

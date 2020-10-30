@@ -31,7 +31,7 @@
 #define O_PATH 010000000
 #endif
 
-static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
+static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
 	// build a new, clean environment
 	int env_index = 0;
 	char *new_environment[256] = { NULL };
@@ -48,6 +48,7 @@ static int sbox_do_exec_v(unsigned filtermask, char * const arg[]) {
 	if (cfg.seccomp_error_action)
 		if (asprintf(&new_environment[env_index++], "FIREJAIL_SECCOMP_ERROR_ACTION=%s", cfg.seccomp_error_action) == -1)
 			errExit("asprintf");
+	new_environment[env_index++] = "FIREJAIL_PLUGIN="; // always set
 
 	if (filtermask & SBOX_STDIN_FROM_FILE) {
 		int fd;
@@ -262,6 +263,7 @@ int sbox_run(unsigned filtermask, int num, ...) {
 
 int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	EUID_ROOT();
+	assert(arg);
 
 	if (arg_debug) {
 		printf("sbox run: ");
@@ -287,7 +289,7 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	if (waitpid(child, &status, 0) == -1 ) {
 		errExit("waitpid");
 	}
-	if (WIFEXITED(status) && status != 0) {
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
 		fprintf(stderr, "Error: failed to run %s\n", arg[0]);
 		exit(1);
 	}

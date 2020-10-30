@@ -40,19 +40,19 @@ static inline void firemon_clrscr(void) {
 
 // firemon.c
 extern pid_t skip_process;
-extern int arg_nowrap;
+extern int arg_wrap;
 int find_child(int id);
 void firemon_sleep(int st);
 
 
 // procevent.c
-void procevent(pid_t pid);
+void procevent(pid_t pid) __attribute__((noreturn));
 
 // usage.c
 void usage(void);
 
 // top.c
-void top(void);
+void top(void) __attribute__((noreturn));
 
 // list.c
 void list(void);
@@ -82,7 +82,7 @@ void cgroup(pid_t pid, int print_procs);
 void tree(pid_t pid);
 
 // netstats.c
-void netstats(void);
+void netstats(void) __attribute__((noreturn));
 
 // x11.c
 void x11(pid_t pid, int print_procs);

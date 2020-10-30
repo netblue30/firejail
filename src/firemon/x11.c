@@ -30,7 +30,7 @@ void x11(pid_t pid, int print_procs) {
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 1) {
 			if (print_procs || pid == 0)
-				pid_print_list(i, arg_nowrap);
+				pid_print_list(i, arg_wrap);
 
 			char *x11file;
 			// todo: use macro from src/firejail/firejail.h for /run/firejail/x11 directory

@@ -28,6 +28,6 @@ void list(void) {
 		if (i == skip_process)
 			continue;
 		if (pids[i].level == 1)
-			pid_print_list(i, arg_nowrap);
+			pid_print_list(i, arg_wrap);
 	}
 }

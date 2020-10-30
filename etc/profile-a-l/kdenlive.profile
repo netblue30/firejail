@@ -11,6 +11,7 @@ ignore noexec ${HOME}
 noblacklist ${HOME}/.cache/kdenlive
 noblacklist ${HOME}/.config/kdenliverc
 noblacklist ${HOME}/.local/share/kdenlive
+noblacklist ${HOME}/.local/share/kxmlgui5/kdenlive
 
 include disable-common.inc
 include disable-devel.inc

@@ -8,4 +8,5 @@ noblacklist ${PATH}/perl
 noblacklist ${PATH}/site_perl
 noblacklist ${PATH}/vendor_perl
 noblacklist /usr/lib/perl*
+noblacklist /usr/lib64/perl*
 noblacklist /usr/share/perl*

@@ -208,7 +208,11 @@ char *expand_macros(const char *path) {
 
 	// Replace home macro
 	char *new_name = NULL;
-	if (strncmp(path, "${HOME}", 7) == 0) {
+	if (strncmp(path, "$HOME", 5) == 0) {
+		fprintf(stderr, "Error: $HOME is not allowed in profile files, please replace it with ${HOME}\n");
+		exit(1);
+	}
+	else if (strncmp(path, "${HOME}", 7) == 0) {
 		if (asprintf(&new_name, "%s%s", cfg.homedir, path + 7) == -1)
 			errExit("asprintf");
 		if(called_as_root)

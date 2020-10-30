@@ -12,9 +12,11 @@ can run this program.
 .TP
 \fB\-\-apparmor
 Print AppArmor confinement status for each sandbox.
+#ifdef HAVE_NETWORK
 .TP
 \fB\-\-arp
 Print ARP table for each sandbox.
+#endif
 .TP
 \fB\-\-caps
 Print capabilities configuration for each sandbox.
@@ -39,15 +41,16 @@ List all sandboxes.
 .TP
 \fB\-\-name=name
 Print information only about named sandbox.
+#ifdef HAVE_NETWORK
 .TP
 \fB\-\-netstats
 Monitor network statistics for sandboxes creating a new network namespace.
-.TP
-\fB\-\-nowrap
-Enable line wrapping in terminals. By default the lines are trimmed.
+#endif
+#ifdef HAVE_NETWORK
 .TP
 \fB\-\-route
 Print route table for each sandbox.
+#endif
 .TP
 \fB\-\-seccomp
 Print seccomp configuration for each sandbox.
@@ -61,7 +64,9 @@ Print a tree of all sandboxed processes.
 .TP
 \fB\-\-version
 Print program version and exit.
-
+.TP
+\fB\-\-wrap
+Enable line wrapping in terminals. By default the lines are trimmed.
 .TP
 \fB\-\-x11
 Print X11 display number.

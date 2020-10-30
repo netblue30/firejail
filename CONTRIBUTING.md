@@ -25,7 +25,7 @@ ensure that **both** of the following were installed:
 firejail-profiles was not installed when installing firejail.
 
 We take security bugs very seriously. If you believe you have found one, please report it by
-emailing us at netblue30@yahoo.com
+emailing us at netblue30@protonmail.com
 
 # Opening an pull request:
 Pull requests with enhancements, bugfixes or new profiles are very welcome.

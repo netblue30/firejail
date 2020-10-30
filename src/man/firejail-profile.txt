@@ -150,9 +150,10 @@ Example: "nowhitelist ~/.config"
 Ignore command.
 
 Example: "ignore seccomp"
+#ifdef HAVE_NETWORK
 .br
 Example: "ignore net eth0"
-
+#endif
 .TP
 \fBquiet
 Disable Firejail's output. This should be the first uncommented command in the profile file.
@@ -245,6 +246,7 @@ before the sandbox is started. The file is created if it doesn't already exist.
 .TP
 \fBnoexec file_or_directory
 Remount the file or the directory noexec, nodev and nosuid.
+#ifdef HAVE_OVERLAYFS
 .TP
 \fBoverlay
 Mount  a  filesystem  overlay  on top of the current filesystem.
@@ -257,6 +259,7 @@ The overlay is stored in $HOME/.firejail/name  directory.
 \fBoverlay-tmpfs
 Mount  a  filesystem  overlay  on top of the current filesystem.
 All filesystem  modifications are discarded when the sandbox is closed.
+#endif
 .TP
 \fBprivate
 Mount new /root and /home/user directories in temporary
@@ -294,6 +297,7 @@ filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
 the /etc directory.
 All modifications are discarded when the sandbox is closed.
+#ifdef HAVE_PRIVATE_HOME
 .TP
 \fBprivate-home file,directory
 Build a new user home in a temporary
@@ -303,6 +307,7 @@ The files and directories in the list must be expressed as relative to
 the current user's home directory.
 All modifications are discarded when the sandbox is
 closed.
+#endif
 .TP
 \fBprivate-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.
@@ -369,9 +374,11 @@ The following security filters are currently implemented:
 .TP
 \fBallow-debuggers
 Allow tools such as strace and gdb inside the sandbox by whitelisting system calls ptrace and process_vm_readv.
+#ifdef HAVE_APPARMOR
 .TP
 \fBapparmor
 Enable AppArmor confinement.
+#endif
 .TP
 \fBcaps
 Enable default Linux capabilities filter.
@@ -395,10 +402,12 @@ Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
 cannot acquire new privileges using execve(2);  in particular,
 this means that calling a suid binary (or one with file capabilities)
 does not result in an increase of privilege.
+#ifdef HAVE_USERNS
 .TP
 \fBnoroot
 Use this command  to enable an user namespace. The namespace has only one user, the current user.
 There is no root account (uid 0) defined in the namespace.
+#endif
 .TP
 \fBprotocol protocol1,protocol2,protocol3
 Enable protocol filter. The filter is based on seccomp and  checks the
@@ -433,8 +442,11 @@ Enable seccomp filter and whitelist the system calls in the list.
 \fBseccomp.32.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list for 32 bit system calls on a 64 bit architecture system.
 .TP
-\fBseccomp-error-action kill | ERRNO
-Return a different error instead of EPERM to the process or kill it when an attempt is made to call a blocked system call.
+\fBseccomp-error-action kill | log | ERRNO
+Return a different error instead of EPERM to the process, kill it when
+an attempt is made to call a blocked system call, or allow but log the
+attempt.
+#ifdef HAVE_X11
 .TP
 \fBx11
 Enable X11 sandboxing.
@@ -468,7 +480,8 @@ Example:
 xephyr-screen 640x480
 .br
 x11 xephyr
-
+#endif
+#ifdef HAVE_DBUSPROXY
 .SH DBus filtering
 
 Access to the session and system DBus UNIX sockets can be allowed, filtered or
@@ -511,7 +524,7 @@ Allow the application to see but not talk to the name org.freedesktop.Notificati
 Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
 .TP
 \fBdbus-system.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
-Allow the application to recieve broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
+Allow the application to receive broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
 .TP
 \fBdbus-user filter
 Enable filtered access to the session DBus. Filters can be specified with the dbus-user.talk and dbus-user.own commands.
@@ -532,7 +545,7 @@ Allow the application to see but not talk to the name org.freedesktop.Notificati
 Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
 .TP
 \fBdbus-user.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
-Allow the application to recieve broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
+Allow the application to receive broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
 .TP
 \fBnodbus \fR(deprecated)
 Disable D-Bus access (both system and session buses). Equivalent to dbus-system none and dbus-user none.
@@ -563,7 +576,7 @@ and the user wants to disable notifications, this can be achieved by putting the
 ignore dbus-user.talk org.freedesktop.Notifications
 .br
 [...]
-
+#endif
 .SH Resource limits, CPU affinity, Control Groups
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
 The limits can be modified inside the sandbox using the regular \fBulimit\fR command. \fBcpu\fR command
@@ -659,6 +672,7 @@ Disable video devices.
 Run the program directly, without a shell.
 
 
+#ifdef HAVE_NETWORK
 .SH Networking
 Networking features available in profile files.
 
@@ -851,7 +865,7 @@ a default gateway address also have to be added.
 \fBveth-name name
 Use this name for the interface connected to the bridge for --net=bridge_interface commands,
 instead of the default one.
-
+#endif
 .SH Other
 .TP
 \fBdeterministic-exit-code
@@ -875,5 +889,5 @@ Homepage: https://firejail.wordpress.com
 \&\flfirecfg\fR\|(1),
 \&\flfirejail-login\fR\|(5),
 \&\flfirejail-users\fR\|(5),
-.UR https://github.com/netblue30/firejail/wiki/Creating-Profiles 
-.UE 
+.UR https://github.com/netblue30/firejail/wiki/Creating-Profiles
+.UE

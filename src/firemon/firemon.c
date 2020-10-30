@@ -40,7 +40,7 @@ static int arg_top = 0;
 static int arg_list = 0;
 static int arg_netstats = 0;
 static int arg_apparmor = 0;
-int arg_nowrap = 0;
+int arg_wrap = 0;
 
 static struct termios tlocal;	// startup terminal setting
 static struct termios twait;	// no wait on key press
@@ -70,6 +70,13 @@ int find_child(int id) {
 	// find the first child
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 2 && pids[i].parent == id) {
+			// skip /usr/bin/xdg-dbus-proxy (started by firejail for dbus filtering)
+			char *cmdline = pid_proc_cmdline(i);
+			if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) == 0) {
+				free(cmdline);
+				continue;
+			}
+			free(cmdline);
 			first_child = i;
 			break;
 		}
@@ -78,7 +85,7 @@ int find_child(int id) {
 	if (first_child == -1)
 		return -1;
 
-	// find the second child
+	// find the second-level child
 	for (i = 0; i < max_pids; i++) {
 		if (pids[i].level == 3 && pids[i].parent == first_child)
 			return i;
@@ -152,6 +159,7 @@ int main(int argc, char **argv) {
 			arg_list = 1;
 		else if (strcmp(argv[i], "--tree") == 0)
 			arg_tree = 1;
+#ifdef HAVE_NETWORK
 		else if (strcmp(argv[i], "--netstats") == 0) {
 			struct stat s;
 			if (getuid() != 0 && stat("/proc/sys/kernel/grsecurity", &s) == 0) {
@@ -160,7 +168,7 @@ int main(int argc, char **argv) {
 			}
 			arg_netstats = 1;
 		}
-
+#endif
 
 		// cumulative options with or without a pid argument
 		else if (strcmp(argv[i], "--x11") == 0)
@@ -180,10 +188,12 @@ int main(int argc, char **argv) {
 			}
 			arg_interface = 1;
 		}
+#ifdef HAVE_NETWORK
 		else if (strcmp(argv[i], "--route") == 0)
 			arg_route = 1;
 		else if (strcmp(argv[i], "--arp") == 0)
 			arg_arp = 1;
+#endif
 		else if (strcmp(argv[i], "--apparmor") == 0)
 			arg_apparmor = 1;
 
@@ -196,8 +206,8 @@ int main(int argc, char **argv) {
 		}
 
 		// etc
-		else if (strcmp(argv[i], "--nowrap") == 0)
-			arg_nowrap = 1;
+		else if (strcmp(argv[i], "--wrap") == 0)
+			arg_wrap = 1;
 
 		// invalid option
 		else if (*argv[i] == '-') {

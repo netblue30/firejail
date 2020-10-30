@@ -100,7 +100,7 @@ static int pid_is_firejail(pid_t pid) {
 			// debug
 			"debug-caps", "debug-errnos", "debug-protocols", "debug-syscalls", "debug-syscalls32",
 			// file transfer
-			"ls", "get", "put",
+			"ls", "get", "put", "cat",
 			// stats
 			"tree", "list", "top",
 			// network
@@ -220,7 +220,7 @@ errexit:
 }
 
 
-static int procevent_monitor(const int sock, pid_t mypid) {
+static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t mypid) {
 	ssize_t len;
 	struct nlmsghdr *nlmsghdr;
 
@@ -246,8 +246,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 
 		int rv = select(max, &readfds, NULL, NULL, &tv);
 		if (rv == -1) {
-			fprintf(stderr, "recv: %s\n", strerror(errno));
-			return -1;
+			errExit("recv");
 		}
 
 		// timeout
@@ -259,7 +258,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 
 
 		if ((len = recv(sock, buf, sizeof(buf), 0)) == 0)
-			return 0;
+			exit(0);
 		if (len == -1) {
 			if (errno == EINTR)
 				continue;
@@ -271,7 +270,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 			}
 			else {
 				fprintf(stderr,"Error: rx socket recv call, errno %d, %s\n", errno, strerror(errno));
-				return -1;
+				exit(1);
 			}
 		}
 
@@ -497,7 +496,7 @@ static int procevent_monitor(const int sock, pid_t mypid) {
 				exit(0);
 		}
 	}
-	return 0;
+	__builtin_unreachable();
 }
 
 void procevent(pid_t pid) {
@@ -515,6 +514,4 @@ void procevent(pid_t pid) {
 	}
 
 	procevent_monitor(sock, pid); // it will never return from here
-	assert(0);
-	close(sock); // quiet static analyzers
 }

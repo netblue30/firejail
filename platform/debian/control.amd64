@@ -1,7 +1,7 @@
 Package: firejail
 Version: FIREJAILVER-1
 Architecture: amd64
-Maintainer: netblue30 <netblue30@yahoo.com>
+Maintainer: netblue30 <netblue30@protonmail.com>
 Installed-Size: 2024
 Depends: libc6
 Suggests: python, python3

@@ -32,7 +32,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
 
-private-bin bash,cut,echo,egrep,grep,head,sed,sh,tclsh,tr,xdg-mime,xdg-open,zsh
+private-bin bash,cut,echo,egrep,fish,grep,head,sed,sh,tclsh,tr,xdg-mime,xdg-open,zsh
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,localtime,login.defs,machine-id,password,pki,resolv.conf,ssl
 private-tmp

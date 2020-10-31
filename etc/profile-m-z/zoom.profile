@@ -1,4 +1,5 @@
 # Firejail profile for zoom
+# Description: Video Conferencing and Web Conferencing Service
 # This file is overwritten after every install/update
 # Persistent local customizations
 include zoom.local
@@ -30,7 +31,7 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 nodvd
-nogroups
+#nogroups - breaks webcam access (see #3711)
 nonewprivs
 noroot
 notv
@@ -43,5 +44,5 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp

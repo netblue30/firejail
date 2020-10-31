@@ -72,9 +72,12 @@ dbus-user.talk org.freedesktop.login1.Session
 dbus-user.talk org.gnome.ScreenSaver
 dbus-user.talk org.gnome.SessionManager
 dbus-user.talk org.gnome.SessionManager.Presence
-# Uncomment or add to your keepassxc.local to allow Notifications.
+# Uncomment or add to your keepassxc.local to allow Notifications/Tray.
 #dbus-user.talk org.freedesktop.Notifications
 #dbus-user.talk org.kde.StatusNotifierWatcher
+# These numbers seems to be not stable, see #3713. Play around with them.
+#dbus-user.own org.kde.StatusNotifierItem-2-2
+#dbus-user.own org.kde.StatusNotifierItem-10-2
 dbus-system none
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp

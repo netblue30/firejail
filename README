@@ -258,6 +258,8 @@ David Thole (https://github.com/TheDarkTrumpet)
 	- added profile for teams-for-linux
 Davide Beatrici (https://github.com/davidebeatrici)
 	- steam.profile: correctly blacklist unneeded directories in user's home
+David Hyrule (https://github.com/Svaag)
+	- remove nou2f in ssh profile
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
 Denys Havrysh (https://github.com/vutny)

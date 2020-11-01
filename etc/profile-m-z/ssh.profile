@@ -34,7 +34,7 @@ nonewprivs
 # noroot - see issue #1543
 nosound
 notv
-nou2f
+# nou2f - OpenSSH >= 8.2 supports U2F 
 novideo
 protocol unix,inet,inet6
 seccomp

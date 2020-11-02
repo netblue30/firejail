@@ -372,6 +372,7 @@ blacklist ${HOME}/.config/smuxi
 blacklist ${HOME}/.config/snox
 blacklist ${HOME}/.config/sound-juicer
 blacklist ${HOME}/.config/specialmailcollectionsrc
+blacklist ${HOME}/.config/spectaclerc
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium

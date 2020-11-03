@@ -8,6 +8,8 @@ include globals.local
 
 # noexec /tmp is included in chromium-common.profile and breaks Brave
 ignore noexec /tmp
+# TOR is installed in ${HOME}
+ignore noexec ${HOME}
 # Disable for now, see https://github.com/netblue30/firejail/pull/3688#issuecomment-718711565
 ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc

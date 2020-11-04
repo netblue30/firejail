@@ -1,5 +1,4 @@
 # Firejail
-[![Test Status](https://travis-ci.org/netblue30/firejail.svg?branch=master)](https://travis-ci.org/netblue30/firejail)
 [![Build Status](https://gitlab.com/Firejail/firejail_ci/badges/master/pipeline.svg)](https://gitlab.com/Firejail/firejail_ci/pipelines/)
 [![Packaging status](https://repology.org/badge/tiny-repos/firejail.svg)](https://repology.org/project/firejail/versions)
 
@@ -65,8 +64,6 @@ Documentation: https://firejail.wordpress.com/documentation-2/
 FAQ: https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions
 
 Wiki: https://github.com/netblue30/firejail/wiki
-
-Travis-CI status: https://travis-ci.org/netblue30/firejail
 
 GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 

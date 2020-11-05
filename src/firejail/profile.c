@@ -1773,3 +1773,143 @@ void profile_read(const char *fname) {
 	}
 	fclose(fp);
 }
+
+char *profile_list_normalize(char *list)
+{
+	/* Remove redundant commas.
+	 *
+	 * As result is always shorter than original,
+	 * in-place copying can be used.
+	 */
+	size_t i = 0;
+	size_t j = 0;
+	int c;
+	while (list[i] == ',')
+		++i;
+	while ((c = list[i++])) {
+		if (c == ',') {
+			while (list[i] == ',')
+				++i;
+			if (list[i] == 0)
+				break;
+		}
+		list[j++] = c;
+	}
+	list[j] = 0;
+	return list;
+}
+
+char *profile_list_compress(char *list)
+{
+	size_t i;
+
+	/* Comma separated list is processed so that:
+	 * "item"  -> adds item to list
+	 * "-item" -> removes item from list
+	 * "+item" -> adds item to list
+	 * "=item" -> clear list, add item
+	 *
+	 * For example:
+	 * ,a,,,b,,,c, -> a,b,c
+	 * a,,b,,,c,a  -> a,b,c
+	 * a,b,c,-a    -> b,c
+	 * a,b,c,-a,a  -> b,c,a
+	 * a,+b,c      -> a,b,c
+	 * a,b,=c,d    -> c,d
+	 * a,b,c,=     ->
+	 */
+	profile_list_normalize(list);
+
+	/* Count items: comma count + 1 */
+	size_t count = 1;
+	for (i = 0; list[i]; ++i) {
+		if (list[i] == ',')
+			++count;
+	}
+
+	/* Collect items in an array */
+	char *in[count];
+	count = 0;
+	in[count++] = list;
+	for (i = 0; list[i]; ++i) {
+		if (list[i] != ',')
+			continue;
+		list[i] = 0;
+		in[count++] = list + i + 1;
+	}
+
+	/* Filter array: add, remove, reset, filter out duplicates */
+	for (i = 0; i < count; ++i) {
+		char *item = in[i];
+		assert(item);
+
+		size_t k;
+		switch (*item) {
+		case '-':
+			++item;
+			/* Do not include this item */
+			in[i] = 0;
+			/* Remove if already included */
+			for (k = 0; k < i; ++k) {
+				if (in[k] && !strcmp(in[k], item)) {
+					in[k] = 0;
+					break;
+				}
+			}
+			break;
+		case '+':
+			/* Allow +/- symmetry */
+			in[i] = ++item;
+			/* FALLTHRU */
+		default:
+			/* Adding empty item is a NOP */
+			if (!*item) {
+				in[i] = 0;
+				break;
+			}
+			/* Include item unless it is already included */
+			for (k = 0; k < i; ++k) {
+				if (in[k] && !strcmp(in[k], item)) {
+					in[i] = 0;
+					break;
+				}
+			}
+			break;
+		case '=':
+			in[i] = ++item;
+			/* Include non-empty item */
+			if (!*item)
+				in[i] = 0;
+			/* Remove all allready included items */
+			for (k = 0; k < i; ++k)
+				in[k] = 0;
+			break;
+		}
+	}
+
+	/* Copying back using in-place data works because the
+	 * original order is retained and no item gets longer
+	 * than what it used to be.
+	 */
+	char *pos = list;
+	for (i = 0; i < count; ++i) {
+		char *item = in[i];
+		if (!item)
+			continue;
+		if (pos > list)
+			*pos++ = ',';
+		while (*item)
+			*pos++ = *item++;
+	}
+	*pos = 0;
+	return list;
+}
+
+void profile_list_augment(char **list, const char *items)
+{
+	char *tmp = 0;
+	if (asprintf(&tmp, "%s,%s", *list ?: "", items ?: "") < 0)
+		errExit("asprintf");
+	free(*list);
+	*list = profile_list_compress(tmp);
+}

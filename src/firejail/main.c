@@ -1285,15 +1285,10 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
-				if (cfg.protocol) {
-					fwarning("more than one protocol list is present, \"%s\" will be installed\n", cfg.protocol);
-				}
-				else {
-					// store list
-					cfg.protocol = strdup(argv[i] + 11);
-					if (!cfg.protocol)
-						errExit("strdup");
-				}
+				const char *add = argv[i] + 11;
+				profile_list_augment(&cfg.protocol, add);
+				if (arg_debug)
+					fprintf(stderr, "[option] combined protocol list: \"%s\"\n", cfg.protocol);
 			}
 			else
 				exit_err_feature("seccomp");

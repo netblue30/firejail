@@ -911,15 +911,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
-			if (cfg.protocol) {
-				fwarning("more than one protocol list is present, \"%s\" will be installed\n", cfg.protocol);
-				return 0;
-			}
-
-			// store list
-			cfg.protocol = strdup(ptr + 9);
-			if (!cfg.protocol)
-				errExit("strdup");
+			const char *add = ptr + 9;
+			profile_list_augment(&cfg.protocol, add);
+			if (arg_debug)
+				fprintf(stderr, "[profile] combined protocol list: \"%s\"\n", cfg.protocol);
 		}
 		else
 			warning_feature_disabled("seccomp");

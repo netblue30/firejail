@@ -60,6 +60,7 @@ whitelist ${HOME}/.themes
 whitelist ${HOME}/.cache/kioexec/krun
 whitelist ${HOME}/.config/Kvantum
 whitelist ${HOME}/.config/Trolltech.conf
+whitelist ${HOME}/.config/QtProject.conf
 whitelist ${HOME}/.config/kdeglobals
 whitelist ${HOME}/.config/kio_httprc
 whitelist ${HOME}/.config/kioslaverc

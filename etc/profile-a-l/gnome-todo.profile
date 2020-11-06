@@ -53,8 +53,8 @@ dbus-user filter
 dbus-user.own org.gnome.Todo
 dbus-user.talk ca.desrt.dconf
 #dbus-user.talk org.gnome.evolution.dataserver.AddressBook9
-#dbus-user.talk org.gnome.evolution.dataserver.Calendar8
-#dbus-user.talk org.gnome.evolution.dataserver.Sources5
+dbus-user.talk org.gnome.evolution.dataserver.Calendar8
+dbus-user.talk org.gnome.evolution.dataserver.Sources5
 #dbus-user.talk org.gnome.evolution.dataserver.Subprocess.Backend.*
 #dbus-user.talk org.gnome.OnlineAccounts
 dbus-system none

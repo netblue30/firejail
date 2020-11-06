@@ -194,3 +194,4 @@ Stats:
 
 ### New profiles:
 
+spectacle

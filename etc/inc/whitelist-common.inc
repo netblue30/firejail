@@ -65,6 +65,7 @@ whitelist ${HOME}/.config/kio_httprc
 whitelist ${HOME}/.config/kioslaverc
 whitelist ${HOME}/.config/ksslcablacklist
 whitelist ${HOME}/.config/qt5ct
+whitelist ${HOME}/.config/qtcurve
 whitelist ${HOME}/.kde/share/config/kdeglobals
 whitelist ${HOME}/.kde/share/config/kio_httprc
 whitelist ${HOME}/.kde/share/config/kioslaverc

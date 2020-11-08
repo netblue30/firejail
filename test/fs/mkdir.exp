@@ -7,18 +7,6 @@ set timeout 3
 spawn $env(SHELL)
 match_max 100000
 
-
-# debugging github-ci - do we have a /run/user/1001 directory?
-send "echo %%%%%%%%%%%%%%%%%%%%%%%%%%\r"
-after 100
-send "ls -l /run/user\r"
-after 100
-send "find /run/user\r"
-after 100
-send "echo %%%%%%%%%%%%%%%%%%%%%%%%%%\r"
-after 100
-
-
 send -- "rm -fr ~/.firejail_test\r"
 after 100
 
@@ -39,20 +27,23 @@ send -- "rm -rf /tmp/.firejail_test\r"
 after 100
 
 set UID [exec id -u]
-send -- "firejail --profile=mkdir.profile find /run/user/$UID/.firejail_test\r"
-expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"/run/user/$UID/.firejail_test/a/b/c/d.txt"
-}
-send -- "rm -rf /run/user/$UID/.firejail_test\r"
-after 100
+set fexist [file exist /run/user/$UID]
+if { $fexist } {
+	send -- "firejail --profile=mkdir.profile find /run/user/$UID/.firejail_test\r"
+	expect {
+		timeout {puts "TESTING ERROR 3.1\n";exit}
+		"/run/user/$UID/.firejail_test/a/b/c/d.txt"
+	}
+	send -- "rm -rf /run/user/$UID/.firejail_test\r"
+	after 100
 
 
-send -- "firejail --profile=mkdir2.profile\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"only files or directories in user home, /tmp, or /run/user/<UID>"
+	send -- "firejail --profile=mkdir2.profile\r"
+	expect {
+		timeout {puts "TESTING ERROR 4\n";exit}
+		"only files or directories in user home, /tmp, or /run/user/<UID>"
+	}
+	after 100
 }
-after 100
 
 puts "\nall done\n"

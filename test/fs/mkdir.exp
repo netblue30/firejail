@@ -7,6 +7,12 @@ set timeout 3
 spawn $env(SHELL)
 match_max 100000
 
+
+# debugging github-ci - do we have a /run/user/1001 directory?
+send "ls -l /run/user\r"
+after 100
+
+
 send -- "rm -fr ~/.firejail_test\r"
 after 100
 

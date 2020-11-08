@@ -9,7 +9,13 @@ match_max 100000
 
 
 # debugging github-ci - do we have a /run/user/1001 directory?
+send "echo %%%%%%%%%%%%%%%%%%%%%%%%%%\r"
+after 100
 send "ls -l /run/user\r"
+after 100
+send "find /run/user\r"
+after 100
+send "echo %%%%%%%%%%%%%%%%%%%%%%%%%%\r"
 after 100
 
 

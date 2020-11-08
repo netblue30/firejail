@@ -40,7 +40,7 @@ if [ -d "/run/user/$UID" ]; then
 	PROFILES=`ls /etc/firejail/*.profile`
 	echo "TESTING: default profiles installed in /etc"
 else
-	PROFILES=`ls /etc/firejail/f*.profile`
+	PROFILES=`ls /etc/firejail/fi*.profile /etc/firejail/fl*.profile /etc/firejail/free*.profile`
 	echo "TESTING: small number of default profiles installed in /etc"
 fi
 

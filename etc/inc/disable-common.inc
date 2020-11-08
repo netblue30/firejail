@@ -480,6 +480,7 @@ blacklist ${RUNUSER}/app
 blacklist ${RUNUSER}/doc
 blacklist ${RUNUSER}/.dbus-proxy
 blacklist ${RUNUSER}/.flatpak
+blacklist ${RUNUSER}/.flatpak-cache
 blacklist ${RUNUSER}/.flatpak-helper
 blacklist /usr/share/flatpak
 noblacklist /var/lib/flatpak/exports

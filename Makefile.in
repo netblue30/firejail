@@ -240,10 +240,8 @@ test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-uti
 test-noprofiles: test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
 	echo "TEST COMPLETE"
 
-test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-filters test-arguments
-	echo "TEST COMPLETE"
-
-test-github: test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-arguments
+#test-github: test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-arguments
+test-github: test-fs
 	echo "TEST COMPLETE"
 
 ##########################################

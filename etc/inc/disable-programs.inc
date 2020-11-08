@@ -291,6 +291,7 @@ blacklist ${HOME}/.config/kwriterc
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
+blacklist ${HOME}/.config/linphone
 blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mailtransports
@@ -372,6 +373,7 @@ blacklist ${HOME}/.config/smuxi
 blacklist ${HOME}/.config/snox
 blacklist ${HOME}/.config/sound-juicer
 blacklist ${HOME}/.config/specialmailcollectionsrc
+blacklist ${HOME}/.config/spectaclerc
 blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium
@@ -653,6 +655,7 @@ blacklist ${HOME}/.local/share/kube
 blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/kxmlgui5/*
 blacklist ${HOME}/.local/share/liferea
+blacklist ${HOME}/.local/share/linphone
 blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/love

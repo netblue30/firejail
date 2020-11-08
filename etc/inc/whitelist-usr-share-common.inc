@@ -16,6 +16,7 @@ whitelist /usr/share/enchant-2
 whitelist /usr/share/file
 whitelist /usr/share/fontconfig
 whitelist /usr/share/fonts
+whitelist /usr/share/fonts-config
 whitelist /usr/share/gir-1.0
 whitelist /usr/share/gjs-1.0
 whitelist /usr/share/glib-2.0

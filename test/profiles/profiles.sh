@@ -34,11 +34,16 @@ echo "TESTING: profile read-only links (test/profiles/profile_readonly.exp)"
 echo "TESTING: profile no permissions (test/profiles/profile_noperm.exp)"
 ./profile_noperm.exp
 
+# GitHub CI doesn't have a /run/user/$UID directory. Using it to test a small number of profiles.
+UID=`id -u`
+if [ -d "/run/user/$UID" ]; then
+	PROFILES=`ls /etc/firejail/*.profile`
+	echo "TESTING: default profiles installed in /etc"
+else
+	PROFILES=`ls /etc/firejail/f*.profile`
+	echo "TESTING: small number of default profiles installed in /etc"
+fi
 
-
-
-echo "TESTING: default profiles installed in /etc"
-PROFILES=`ls /etc/firejail/*.profile`
 for PROFILE in $PROFILES
 do
 	echo "TESTING: $PROFILE"

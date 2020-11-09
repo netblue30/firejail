@@ -6,8 +6,7 @@ include min.local
 # Persistent global definitions
 include globals.local
 
-# Disable for now, see https://github.com/netblue30/firejail/pull/3688#issuecomment-718711565
-ignore whitelist /usr/share/chromium
+nowhitelist /usr/share/chromium
 
 noblacklist ${HOME}/.config/Min
 

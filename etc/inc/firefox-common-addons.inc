@@ -69,3 +69,20 @@ include allow-python3.inc
 # Flash plugin
 # private-etc must first be enabled in firefox-common.profile and in profiles including it.
 #private-etc adobe
+
+# ff2mpv
+#ignore noexec ${HOME}
+#noblacklist ${HOME}/.config/mpv
+#noblacklist ${HOME}/.config/youtube-dl
+#noblacklist ${HOME}/.netrc
+#include allow-lua.inc
+#include allow-python3.inc
+#mkdir ${HOME}/.config/mpv
+#mkdir ${HOME}/.config/youtube-dl
+#whitelist ${HOME}/.config/mpv
+#whitelist ${HOME}/.config/youtube-dl
+#whitelist ${HOME}/.netrc
+#whitelist /usr/share/lua
+#whitelist /usr/share/lua*
+#whitelist /usr/share/vulkan
+#private-bin env,mpv,python3*,waf,youtube-dl

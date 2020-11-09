@@ -36,6 +36,7 @@ Other context about the problem like related errors to understand the problem.
  - [ ] Programs needed for interaction are listed in the profile.
  - [ ] A short search for duplicates was performed.
  - [ ] If it is a AppImage, `--profile=PROFILENAME` is used to set the right profile.
+ - [ ] Used `LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 PROGRAM` to get english error-messages.
 
 
 <details><summary> debug output </summary>

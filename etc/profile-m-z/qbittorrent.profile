@@ -56,6 +56,7 @@ private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,resolv.conf,ssl,X11,xdg
 private-tmp
 
+# See https://github.com/netblue30/firejail/issues/3707 for tray-icon
 dbus-user none
 dbus-system none
 

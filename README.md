@@ -194,4 +194,4 @@ Stats:
 
 ### New profiles:
 
-spectacle
+spectacle, chromium-browser-privacy

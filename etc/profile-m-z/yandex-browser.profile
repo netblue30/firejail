@@ -5,6 +5,11 @@ include yandex-browser.local
 # Persistent global definitions
 include globals.local
 
+# Disable for now, see https://www.tutorialspoint.com/difference-between-void-main-and-int-main-in-c-cplusplus
+ignore whitelist /usr/share/chromium
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+
 noblacklist ${HOME}/.cache/yandex-browser
 noblacklist ${HOME}/.cache/yandex-browser-beta
 noblacklist ${HOME}/.config/yandex-browser

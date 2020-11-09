@@ -16,15 +16,24 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
+# include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
+whitelist /usr/share/chromium
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
+
+# Uncomment the next line (or add it to your chromium-common.local)
+# if your kernel allows unprivileged userns clone.
+#include chromium-common-hardened.inc
 
 apparmor
 caps.keep sys_admin,sys_chroot
@@ -36,8 +45,10 @@ notv
 shell none
 
 disable-mnt
+private-cache
 ?BROWSER_DISABLE_U2F: private-dev
-# private-tmp - problems with multiple browser sessions
+# problems with multiple browser sessions
+#private-tmp
 
 # prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector
 # dbus-user none

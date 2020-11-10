@@ -4,6 +4,7 @@ include whitelist-common.local
 # common whitelist for all profiles
 
 whitelist ${HOME}/.XCompose
+whitelist ${HOME}/.alsaequal.bin
 whitelist ${HOME}/.asoundrc
 whitelist ${HOME}/.config/ibus
 whitelist ${HOME}/.config/mimeapps.list

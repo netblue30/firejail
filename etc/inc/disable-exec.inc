@@ -4,6 +4,7 @@ include disable-exec.local
 
 noexec ${HOME}
 noexec ${RUNUSER}
+noexec /dev/mqueue
 noexec /dev/shm
 noexec /tmp
 # /var is noexec by default for unprivileged users

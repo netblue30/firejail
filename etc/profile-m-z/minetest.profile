@@ -28,6 +28,7 @@ mkdir ${HOME}/.cache/minetest
 mkdir ${HOME}/.minetest
 whitelist ${HOME}/.cache/minetest
 whitelist ${HOME}/.minetest
+whitelist /usr/share/games/minetest
 whitelist /usr/share/minetest
 include whitelist-common.inc
 include whitelist-runuser-common.inc

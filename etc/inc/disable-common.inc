@@ -69,6 +69,7 @@ read-only ${HOME}/.Xauthority
 #?HAS_X11: blacklist /tmp/.ICE-unix
 
 # KDE config
+blacklist ${HOME}/.cache/konsole
 blacklist ${HOME}/.config/khotkeysrc
 blacklist ${HOME}/.config/krunnerrc
 blacklist ${HOME}/.config/kscreenlockerrc
@@ -76,6 +77,7 @@ blacklist ${HOME}/.config/ksslcertificatemanager
 blacklist ${HOME}/.config/kwalletrc
 blacklist ${HOME}/.config/kwinrc
 blacklist ${HOME}/.config/kwinrulesrc
+blacklist ${HOME}/.config/plasma-locale-settings.sh
 blacklist ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
 blacklist ${HOME}/.config/plasmashellrc
 blacklist ${HOME}/.config/plasmavaultrc
@@ -106,6 +108,7 @@ blacklist ${HOME}/.local/share/kwin
 blacklist ${HOME}/.local/share/plasma
 blacklist ${HOME}/.local/share/plasmashell
 blacklist ${HOME}/.local/share/solid
+blacklist /tmp/konsole-*.history
 read-only ${HOME}/.cache/ksycoca5_*
 read-only ${HOME}/.config/*notifyrc
 read-only ${HOME}/.config/kdeglobals

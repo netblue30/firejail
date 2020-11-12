@@ -297,7 +297,7 @@ static void check_network(Bridge *br) {
 	else if (br->ipsandbox) { // for macvlan check network range
 		char *rv = in_netrange(br->ipsandbox, br->ip, br->mask);
 		if (rv) {
-			fprintf(stderr, "%s", rv);
+			fprintf(stderr, "%s\n", rv);
 			exit(1);
 		}
 	}

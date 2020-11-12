@@ -378,6 +378,9 @@ void fs_private_lib(void) {
 	// bring in firejail executable libraries in case we are redirected here by a firejail symlink from /usr/local/bin/firejail
 	fslib_install_list("/usr/bin/firejail,firejail"); // todo: use the installed path for the executable
 
+	// install libraries needed by fcopy
+	fslib_install_list(PATH_FCOPY);
+
 	fmessage("Installed %d %s and %d %s\n", lib_cnt, (lib_cnt == 1)? "library": "libraries",
 		dir_cnt, (dir_cnt == 1)? "directory": "directories");
 

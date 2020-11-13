@@ -52,7 +52,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin minetest
+private-bin minetest,rm
 private-cache
 private-dev
 # private-etc needs to be updated, see #1702

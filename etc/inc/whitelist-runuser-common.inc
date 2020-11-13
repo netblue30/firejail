@@ -10,3 +10,4 @@ whitelist ${RUNUSER}/ICEauthority
 whitelist ${RUNUSER}/.mutter-Xwaylandauth.*
 whitelist ${RUNUSER}/pulse/native
 whitelist ${RUNUSER}/wayland-0
+whitelist ${RUNUSER}/xauth_*

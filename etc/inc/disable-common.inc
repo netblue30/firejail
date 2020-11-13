@@ -147,6 +147,8 @@ blacklist ${RUNUSER}/kdesud_*
 # gnome
 # contains extensions, last used times of applications, and notifications
 blacklist ${HOME}/.local/share/gnome-shell
+# contains recently used files and serials of static/removable storage
+blacklist ${HOME}/.local/share/gvfs-metadata
 # no direct modification of dconf database
 read-only ${HOME}/.config/dconf
 blacklist ${RUNUSER}/gnome-session-leader-fifo

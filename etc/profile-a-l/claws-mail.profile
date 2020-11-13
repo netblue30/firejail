@@ -18,5 +18,10 @@ whitelist ${HOME}/.claws-mail
 
 whitelist /usr/share/doc/claws-mail
 
+# if you use the notification plugin you need to uncomment the below (or put them in your claws-mail.local)
+#ignore dbus-user none
+#dbus-user filter
+#dbus-user.talk org.freedesktop.Notifications
+
 # Redirect
 include email-common.profile

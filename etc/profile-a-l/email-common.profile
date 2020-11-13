@@ -58,6 +58,9 @@ private-cache
 private-dev
 private-tmp
 
+dbus-user none
+dbus-system none
+
 # encrypting and signing email
 writable-run-user
 

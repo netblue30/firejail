@@ -6,6 +6,10 @@ include evince.local
 # Persistent global definitions
 include globals.local
 
+# Uncomment this line and the bottom ones to use bookmarks
+# NOTE: This possibly exposes information, including file history from other programs.
+#noblacklist ${HOME}/.local/share/gvfs-metadata
+
 noblacklist ${HOME}/.config/evince
 noblacklist ${DOCUMENTS}
 
@@ -53,5 +57,8 @@ private-lib evince,gcc/*/*/libgcc_s.so.*,gcc/*/*/libstdc++.so.*,gconv,gdk-pixbuf
 private-tmp
 
 # might break two-page-view on some systems
-dbus-user none
+dbus-user filter
+# Also uncomment these two lines if you want to use bookmarks
+#dbus-user.talk org.gtk.vfs.Daemon
+#dbus-user.talk org.gtk.vfs.Metadata
 dbus-system none

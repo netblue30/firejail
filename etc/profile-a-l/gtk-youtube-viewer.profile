@@ -1,8 +1,8 @@
-# Firejail profile for gtk-straw-viewer
-# Description: Gtk front-end to straw-viewer
+# Firejail profile for gtk-youtube-viewer
+# Description: Gtk front-end to youtube-viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
-include gtk-straw-viewer.local
+include gtk-youtube-viewer.local
 # added by included profile
 #include globals.local
 
@@ -11,4 +11,4 @@ ignore quiet
 include whitelist-runuser-common.inc
 
 # Redirect
-include straw-viewer.profile
+include youtube-viewer.profile

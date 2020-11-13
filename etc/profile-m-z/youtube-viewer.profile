@@ -7,10 +7,6 @@ include youtube-viewer.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
-blacklist ${RUNUSER}
-
 noblacklist ${HOME}/.config/youtube-viewer
 
 include allow-perl.inc
@@ -47,7 +43,7 @@ shell none
 tracelog
 
 disable-mnt
-# private-bin ffmpeg,ffprobe,firefox,gtk-youtube-viewer,gtk2-youtube-viewer,gtk3-youtube-viewer,mpv,python*,smplayer,sh,which,vlc,youtube-dl,youtube-viewer
+private-bin ffmpeg,ffprobe,firefox,gtk-youtube-viewer,gtk2-youtube-viewer,gtk3-youtube-viewer,mpv,python*,sh,smplayer,stty,vlc,which,youtube-dl,youtube-viewer
 private-cache
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,machine-id,mime.types,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl,X11,xdg

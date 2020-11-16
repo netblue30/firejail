@@ -2,6 +2,8 @@
 # Persistent customizations should go in a .local file.
 include firefox-common-addons.local
 
+ignore include whitelist-runuser-common.inc
+
 noblacklist ${HOME}/.config/kgetrc
 noblacklist ${HOME}/.config/okularpartrc
 noblacklist ${HOME}/.config/okularrc

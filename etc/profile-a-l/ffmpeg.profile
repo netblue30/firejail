@@ -41,6 +41,7 @@ novideo
 protocol inet,inet6
 # allow set_mempolicy, which is required to encode using libx265
 seccomp !set_mempolicy
+seccomp.block-secondary
 shell none
 tracelog
 

@@ -39,6 +39,7 @@ nou2f
 novideo
 protocol inet,inet6
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 

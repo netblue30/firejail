@@ -45,10 +45,12 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 
 private-bin rhythmbox,rhythmbox-client
+private-cache
 private-dev
 private-tmp
 

@@ -6,6 +6,8 @@ include thunderbird.local
 # Persistent global definitions
 include globals.local
 
+ignore whitelist-runuser-common.inc
+
 # writable-run-user and dbus are needed by enigmail
 ignore dbus-user none
 ignore dbus-system none

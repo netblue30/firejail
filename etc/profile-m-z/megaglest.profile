@@ -14,6 +14,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.megaglest
@@ -37,6 +38,7 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 

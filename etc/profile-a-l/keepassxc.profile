@@ -55,6 +55,7 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 

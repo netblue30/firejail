@@ -27,6 +27,7 @@ apparmor
 caps.drop all
 ipc-namespace
 machine-id
+net none
 no3d
 nodvd
 nogroups
@@ -38,6 +39,7 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 

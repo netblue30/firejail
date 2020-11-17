@@ -18,6 +18,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -35,6 +36,7 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
+seccomp.block-secondary
 shell none
 
 private-bin sqlitebrowser

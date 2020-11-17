@@ -9,8 +9,6 @@ include globals.local
 
 noblacklist ${HOME}/.gnupg
 
-whitelist ${HOME}/.gnupg
-whitelist ${DOWNLOADS}
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -19,9 +17,15 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.gnupg
+whitelist ${HOME}/.gnupg
+whitelist ${DOWNLOADS}
+whitelist ${RUNUSER}/gnupg
+whitelist ${RUNUSER}/keyring
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -41,6 +45,7 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 
@@ -52,6 +57,6 @@ private-dev
 private-tmp
 
 # dbus-user none
-# dbus-system none
+dbus-system none
 
 memory-deny-write-execute

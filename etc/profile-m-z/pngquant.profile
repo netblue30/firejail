@@ -7,6 +7,8 @@ include pngquant.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${PICTURES}
+
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
@@ -16,6 +18,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-xdg.inc
 
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

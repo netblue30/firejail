@@ -29,6 +29,8 @@ whitelist ${HOME}/.config/vivaldi
 whitelist ${HOME}/.config/vivaldi-snapshot
 whitelist ${HOME}/.local/lib/vivaldi
 
+#private-bin bash,cat,dirname,readlink,rm,vivaldi,vivaldi-stable,vivaldi-snapshot
+
 # breaks vivaldi sync
 ignore dbus-user none
 ignore dbus-system none

@@ -378,6 +378,7 @@ blacklist ${HOME}/.config/spotify
 blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/strawberry
+blacklist ${HOME}/.config/straw-viewer
 blacklist ${HOME}/.config/supertuxkart
 blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.config/teams
@@ -972,6 +973,7 @@ blacklist ${HOME}/.cache/smuxi
 blacklist ${HOME}/.cache/snox
 blacklist ${HOME}/.cache/spotify
 blacklist ${HOME}/.cache/strawberry
+blacklist ${HOME}/.cache/straw-viewer
 blacklist ${HOME}/.cache/supertuxkart
 blacklist ${HOME}/.cache/systemsettings
 blacklist ${HOME}/.cache/telepathy

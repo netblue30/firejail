@@ -3,8 +3,8 @@
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gtk2-youtube-viewer.local
-# Persistent global definitions
-# include globals.local
+# added by included profile
+#include globals.local
 
 ignore quiet
 

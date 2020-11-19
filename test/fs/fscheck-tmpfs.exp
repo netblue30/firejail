@@ -7,12 +7,49 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-# ..
-send -- "firejail --tmpfs=fscheck-dir\r"
+send -- "mkdir -p ~/fjtest-dir/fjtest-dir\r"
+after 100
+send -- "mkdir -p /tmp/fjtest-dir/fjtest-dir\r"
+after 100
+
+if { ! [file exists ~/fjtest-dir/fjtest-dir] } {
+	puts "TESTING ERROR 1\n"
+	exit
+}
+if { ! [file exists /tmp/fjtest-dir/fjtest-dir] } {
+	puts "TESTING ERROR 2\n"
+	exit
+}
+
+send -- "firejail --noprofile --tmpfs=~/fjtest-dir\r"
 expect {
-	timeout {puts "TESTING ERROR 0.1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+after 500
+
+send -- "ls -l ~/fjtest-dir\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"total 0"
+}
+after 500
+
+send -- "exit\r"
+after 500
+
+send -- "firejail --noprofile --tmpfs=/tmp/fjtest-dir\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"Error"
 }
+after 500
+
+# cleanup
+send -- "rm -fr ~/fjtest-dir\r"
 after 100
+send -- "rm -fr /tmp/fjtest-dir\r"
+after 100
+
 
 puts "\nall done\n"

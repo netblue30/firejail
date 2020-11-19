@@ -9,14 +9,14 @@ match_max 100000
 
 send -- "mkdir -p ~/fjtest-dir/fjtest-dir\r"
 after 100
-send -- "mkdir -p /tmp/fjtest-dir/fjtest-dir\r"
+send -- "mkdir /tmp/fjtest-dir\r"
 after 100
 
 if { ! [file exists ~/fjtest-dir/fjtest-dir] } {
 	puts "TESTING ERROR 1\n"
 	exit
 }
-if { ! [file exists /tmp/fjtest-dir/fjtest-dir] } {
+if { ! [file exists /tmp/fjtest-dir] } {
 	puts "TESTING ERROR 2\n"
 	exit
 }
@@ -28,10 +28,10 @@ expect {
 }
 after 500
 
-send -- "ls -l ~/fjtest-dir\r"
+send -- "ls ~/fjtest-dir/fjtest-dir\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"total 0"
+	"No such file or directory"
 }
 after 500
 

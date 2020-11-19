@@ -162,6 +162,12 @@ static void disable_file(OPERATION op, const char *filename) {
 	}
 	else if (op == MOUNT_TMPFS) {
 		if (S_ISDIR(s.st_mode)) {
+			if (getuid() &&
+			   (strncmp(cfg.homedir, fname, strlen(cfg.homedir)) != 0 ||
+			    fname[strlen(cfg.homedir)] != '/')) {
+				fprintf(stderr, "Error: tmpfs outside $HOME is only available for root\n");
+				exit(1);
+			}
 			fs_tmpfs(fname, getuid());
 			last_disable = SUCCESSFUL;
 		}
@@ -366,14 +372,6 @@ void fs_blacklist(void) {
 		else if (strncmp(entry->data, "tmpfs ", 6) == 0) {
 			ptr = entry->data + 6;
 			op = MOUNT_TMPFS;
-			char *resolved_path = realpath(ptr, NULL);
-			if (!resolved_path || strncmp(cfg.homedir, resolved_path, strlen(cfg.homedir)) != 0) {
-				if (getuid() != 0) {
-					fprintf(stderr, "Error: tmpfs outside $HOME is only available for root\n");
-					exit(1);
-				}
-			}
-			free(resolved_path);
 		}
 		else if (strncmp(entry->data, "mkdir ", 6) == 0) {
 			EUID_USER();

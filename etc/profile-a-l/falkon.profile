@@ -36,7 +36,7 @@ nogroups
 nonewprivs
 noroot
 notv
-?BROWSER_DISABLE_U2F: nou2f
+nou2f
 protocol unix,inet,inet6,netlink
 # blacklisting of chroot system calls breaks falkon
 seccomp !chroot
@@ -44,10 +44,10 @@ seccomp !chroot
 
 disable-mnt
 private-cache
-?BROWSER_DISABLE_U2F: private-dev
+private-dev
 private-etc adobe,alternatives,asound.conf,ati,ca-certificates,crypto-policies,dconf,drirc,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
 # private-tmp - interferes with the opening of downloaded files
 
-dbus-user filter
-dbus-user.own org.kde.Falkon
+# dbus-user filter
+# dbus-user.own org.kde.Falkon
 dbus-system none

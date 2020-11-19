@@ -69,8 +69,8 @@ writable-run-user
 writable-var
 
 dbus-user filter
-dbus-user.talk ca.desrt.dconf
 dbus-user.own org.desktop.Balsa
+dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.gnome.Keyring.SystemPrompter

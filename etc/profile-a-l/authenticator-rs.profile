@@ -51,5 +51,5 @@ private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk
 private-tmp
 
 dbus-user filter
-dbus-user.own uk.co.grumlimited.authenticator-rs
+dbus-user.talk ca.desrt.dconf
 dbus-system none

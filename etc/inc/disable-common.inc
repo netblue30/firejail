@@ -280,6 +280,7 @@ read-only ${HOME}/.plan
 read-only ${HOME}/.profile
 read-only ${HOME}/.project
 read-only ${HOME}/.tcshrc
+read-only ${HOME}/.zfunc
 read-only ${HOME}/.zlogin
 read-only ${HOME}/.zlogout
 read-only ${HOME}/.zprofile

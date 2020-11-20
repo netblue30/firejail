@@ -20,7 +20,9 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
 whitelist /usr/share/doc
+whitelist /usr/share/groff
 whitelist /usr/share/help
+whitelist /usr/share/man
 whitelist /usr/share/yelp
 whitelist /usr/share/yelp-tools
 whitelist /usr/share/yelp-xsl
@@ -46,10 +48,10 @@ shell none
 tracelog
 
 disable-mnt
-private-bin yelp
+private-bin groff,man,tbl,troff,yelp
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,crypto-policies,cups,dconf,drirc,fonts,gcrypt,gtk-3.0,machine-id,openal,os-release,pulse,sgml,xml
+private-etc alsa,alternatives,asound.conf,crypto-policies,cups,dconf,drirc,fonts,gcrypt,groff,gtk-3.0,machine-id,man_db.conf,openal,os-release,pulse,sgml,xml
 private-tmp
 
 dbus-system none
@@ -60,3 +62,4 @@ dbus-system none
 #  1. yelp --editor-mode
 #  2. saving the window geometry
 read-only ${HOME}
+read-write ${HOME}/.cache

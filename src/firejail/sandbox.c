@@ -923,12 +923,9 @@ int sandbox(void* sandbox_arg) {
 
 #ifdef HAVE_USERTMPFS
 	if (arg_private_cache) {
-		if (cfg.chrootdir)
-			fwarning("private-cache feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-cache feature is disabled in overlay\n");
-		else
-			fs_private_cache();
+		EUID_USER();
+		profile_add("tmpfs ${HOME}/.cache");
+		EUID_ROOT();
 	}
 #endif
 

@@ -16,8 +16,7 @@ whitelist ${HOME}/.mozilla
 
 whitelist /usr/share/doc
 whitelist /usr/share/firefox
-# Uncomment or put in your firefox.local to enable gnome-shell search provider support
-#whitelist /usr/share/gnome-shell/search-providers
+whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
 whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext

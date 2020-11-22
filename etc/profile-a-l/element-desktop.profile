@@ -8,12 +8,9 @@ include element-desktop.local
 #include globals.local
 
 noblacklist ${HOME}/.config/Element
-noblacklist ${HOME}/.config/Element (Riot)
 
 mkdir ${HOME}/.config/Element
-mkdir ${HOME}/.config/Element (Riot)
 whitelist ${HOME}/.config/Element
-whitelist ${HOME}/.config/Element (Riot)
 whitelist /opt/Element
 
 private-opt Element

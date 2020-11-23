@@ -5,7 +5,7 @@ include default.local
 # Persistent global definitions
 include globals.local
 
-# generic gui profile
+# generic GUI profile
 # depending on your usage, you can enable some of the commands below:
 
 include disable-common.inc
@@ -14,6 +14,7 @@ include disable-common.inc
 # include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+# include disable-shell.inc
 # include disable-write-mnt.inc
 # include disable-xdg.inc
 

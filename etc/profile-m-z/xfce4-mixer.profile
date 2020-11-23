@@ -19,6 +19,7 @@ include disable-xdg.inc
 
 mkfile ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
 whitelist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
+whitelist /usr/share/gstreamer
 whitelist /usr/share/xfce4
 whitelist /usr/share/xfce4-mixer
 include whitelist-common.inc
@@ -48,7 +49,9 @@ private-dev
 private-etc alternatives,asound.conf,fonts,machine-id,pulse
 private-tmp
 
-# dbus-user none
-# dbus-system none
+dbus-user filter
+dbus-user.own org.xfce.xfce4-mixer
+dbus-user.talk org.xfce.Xfconf
+dbus-system none
 
 memory-deny-write-execute

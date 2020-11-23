@@ -293,6 +293,7 @@ blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
 blacklist ${HOME}/.config/linphone
 blacklist ${HOME}/.config/lugaru
+blacklist ${HOME}/.config/lutris
 blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mailtransports
 blacklist ${HOME}/.local/share/man
@@ -662,6 +663,7 @@ blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/love
 blacklist ${HOME}/.local/share/lugaru
+blacklist ${HOME}/.local/share/lutris
 blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
 blacklist ${HOME}/.local/share/meld
@@ -933,6 +935,7 @@ blacklist ${HOME}/.cache/kube
 blacklist ${HOME}/.cache/kwin
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/liferea
+blacklist ${HOME}/.cache/lutris
 blacklist ${HOME}/.cache/Mendeley Ltd.
 blacklist ${HOME}/.cache/midori
 blacklist ${HOME}/.cache/minetest
@@ -988,6 +991,7 @@ blacklist ${HOME}/.cache/vmware
 blacklist ${HOME}/.cache/warsow-2.1
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth
+blacklist ${HOME}/.cache/winetricks
 blacklist ${HOME}/.cache/xmms2
 blacklist ${HOME}/.cache/xreader
 blacklist ${HOME}/.cache/yandex-browser

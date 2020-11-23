@@ -6,6 +6,7 @@ include wine.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/winetricks
 noblacklist ${HOME}/.Steam
 noblacklist ${HOME}/.local/share/Steam
 noblacklist ${HOME}/.local/share/steam
@@ -19,6 +20,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+# whitelist /usr/share/wine
+# include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 # some applications don't need allow-debuggers, comment the next line

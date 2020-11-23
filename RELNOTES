@@ -4,7 +4,7 @@ firejail (0.9.65) baseline; urgency=low
   * allow AF_BLUETOOTH via --protocol=bluetooth
   * new profiles: spectacle, chromium-browser-privacy, gtk-straw-viewer
   * new profiles: gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer
-  * new profiles: straw-viewer
+  * new profiles: straw-viewer, lutris
 
  -- netblue30 <netblue30@yahoo.com>  Wed, 21 Oct 2020 09:00:00 -0500
 

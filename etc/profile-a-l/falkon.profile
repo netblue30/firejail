@@ -43,10 +43,11 @@ seccomp !chroot
 # tracelog
 
 disable-mnt
+# private-bin falkon
 private-cache
 private-dev
 private-etc adobe,alternatives,asound.conf,ati,ca-certificates,crypto-policies,dconf,drirc,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
-# private-tmp - interferes with the opening of downloaded files
+private-tmp
 
 # dbus-user filter
 # dbus-user.own org.kde.Falkon

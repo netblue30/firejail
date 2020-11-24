@@ -16,6 +16,7 @@ whitelist ${HOME}/.mozilla
 
 whitelist /usr/share/doc
 whitelist /usr/share/firefox
+whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
 whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
@@ -29,6 +30,7 @@ include whitelist-usr-share-common.inc
 #private-etc firefox
 
 dbus-user filter
+dbus-user.own org.mozilla.Firefox.*
 dbus-user.own org.mozilla.firefox.*
 dbus-user.own org.mpris.MediaPlayer2.firefox.*
 # Uncomment or put in your firefox.local to enable native notifications.

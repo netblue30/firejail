@@ -277,7 +277,7 @@ int pid_hidepid(void) {
 		if (strstr(buf, "proc /proc proc")) {
 			fclose(fp);
 			// check hidepid
-			if (strstr(buf, "hidepid=2") || strstr(buf, "hidepid=1"))
+			if (strstr(buf, "hidepid="))
 				return 1;
 			return 0;
 		}

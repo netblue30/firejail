@@ -303,6 +303,7 @@ read-only ${HOME}/.exrc
 read-only ${HOME}/.gvimrc
 read-only ${HOME}/.homesick
 read-only ${HOME}/.iscreenrc
+read-only ${HOME}/.local/lib
 read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.msmtprc

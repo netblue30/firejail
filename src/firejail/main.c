@@ -1589,7 +1589,26 @@ int main(int argc, char **argv, char **envp) {
 			profile_add(line);
 		}
 #endif
-
+		else if (strncmp(argv[i], "--mkdir=", 8) == 0) {
+			char *line;
+			if (asprintf(&line, "mkdir %s", argv[i] + 8) == -1)
+				errExit("asprintf");
+			/* Note: Applied both immediately in profile_check_line()
+			 *       and later on via fs_blacklist().
+			 */
+			profile_check_line(line, 0, NULL);
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--mkfile=", 9) == 0) {
+			char *line;
+			if (asprintf(&line, "mkfile %s", argv[i] + 9) == -1)
+				errExit("asprintf");
+			/* Note: Applied both immediately in profile_check_line()
+			 *       and later on via fs_blacklist().
+			 */
+			profile_check_line(line, 0, NULL);
+			profile_add(line);
+		}
 		else if (strncmp(argv[i], "--read-only=", 12) == 0) {
 			char *line;
 			if (asprintf(&line, "read-only %s", argv[i] + 12) == -1)

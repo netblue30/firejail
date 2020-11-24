@@ -246,6 +246,8 @@ static char *usage_str =
 #ifdef HAVE_WHITELIST
 	"    --whitelist=filename - whitelist directory or file.\n"
 #endif
+	"    --mkdir=dirname - create a directory.\n"
+	"    --mkfile=filename - create a file.\n"
 	"    --writable-etc - /etc directory is mounted read-write.\n"
 	"    --writable-run-user - allow access to /run/user/$UID/systemd and\n"
 	"\t/run/user/$UID/gnupg.\n"

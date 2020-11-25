@@ -1497,7 +1497,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_JOIN) || getuid() == 0) {
 			// try to join by name only
 			pid_t pid;
-			if (!read_pid(ptr + 14, &pid)) {
+			EUID_ROOT();
+			int r = name2pid(ptr + 14, &pid);
+			EUID_USER();
+			if (!r) {
 				if (!cfg.shell && !arg_shell_none)
 					cfg.shell = guess_shell();
 

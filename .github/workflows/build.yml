@@ -3,11 +3,24 @@ name: Build CI
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - CONTRIBUTING.md
+      - README
+      - README.md
+      - RELNOTES
+      - SECURITY.md
   pull_request:
     branches: [ master ]
+    paths-ignore:
+      - CONTRIBUTING.md
+      - README
+      - README.md
+      - RELNOTES
+      - SECURITY.md
 
 jobs:
   build_and_test:
+    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -22,6 +35,7 @@ jobs:
     - name: run tests
       run: SHELL=/bin/bash make test-github
   build-clang:
+    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -30,6 +44,7 @@ jobs:
     - name: make
       run: make
   scan-build:
+    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -40,6 +55,7 @@ jobs:
     - name: scan-build
       run: NO_EXTRA_CFLAGS="yes" scan-build-10 --status-bugs make
   cppcheck:
+    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -48,6 +64,7 @@ jobs:
     - name: cppcheck
       run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
   profile-sort:
+    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2

@@ -11,7 +11,7 @@ on:
       - 'etc/**'
 
 jobs:
-    profile-sort:
+  profile-sort:
     if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:

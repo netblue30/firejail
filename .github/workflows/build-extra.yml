@@ -49,4 +49,4 @@ jobs:
     - name: install cppcheck
       run: sudo apt-get install cppcheck
     - name: cppcheck
-      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .name: Build CI
+      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .

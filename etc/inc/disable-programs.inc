@@ -200,6 +200,7 @@ blacklist ${HOME}/.config/discord
 blacklist ${HOME}/.config/discordcanary
 blacklist ${HOME}/.config/dkl
 blacklist ${HOME}/.config/dnox
+blacklist ${HOME}/.config/dolphin-emu
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/draw.io
@@ -605,6 +606,7 @@ blacklist ${HOME}/.local/share/data/nomacs
 blacklist ${HOME}/.local/share/data/qBittorrent
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
+blacklist ${HOME}/.local/share/dolphin-emu
 blacklist ${HOME}/.local/share/emailidentities
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
@@ -886,6 +888,7 @@ blacklist ${HOME}/.cache/deja-dup
 blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/dnox
 blacklist ${HOME}/.cache/dolphin
+blacklist ${HOME}/.cache/dolphin-emu
 blacklist ${HOME}/.cache/ephemeral
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution

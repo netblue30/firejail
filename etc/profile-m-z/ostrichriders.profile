@@ -42,7 +42,7 @@ tracelog
 disable-mnt
 private-bin ostrichriders
 private-cache
-# private-dev should be commented for controllers
+# comment the following line if you need controller support
 private-dev
 private-tmp
 

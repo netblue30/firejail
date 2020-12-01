@@ -161,7 +161,6 @@ int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
 mode_t orig_umask = 022;
-unsigned long long start_timestamp;
 
 static void clear_atexit(void) {
 	EUID_ROOT();
@@ -1026,7 +1025,7 @@ int main(int argc, char **argv, char **envp) {
 	init_cfg(argc, argv);
 
 	// get starting timestamp, process --quiet
-	start_timestamp = getticks();
+	timetrace_start();
 	char *env_quiet = getenv("FIREJAIL_QUIET");
 	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
 		arg_quiet = 1;

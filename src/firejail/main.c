@@ -2397,6 +2397,13 @@ int main(int argc, char **argv, char **envp) {
 					fprintf(stderr, "Error: invalid MAC address\n");
 					exit(1);
 				}
+
+				// check multicast address
+				if (br->macsandbox[0] & 1) {
+					fprintf(stderr, "Error: invalid MAC address (multicast)\n");
+					exit(1);
+				}
+
 			}
 			else
 				exit_err_feature("networking");

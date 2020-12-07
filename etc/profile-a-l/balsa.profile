@@ -71,9 +71,8 @@ writable-var
 dbus-user filter
 dbus-user.own org.desktop.Balsa
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
-dbus-user.talk org.gnome.Keyring.SystemPrompter
+dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini

@@ -194,4 +194,4 @@ Stats:
 
 ### New profiles:
 
-spectacle, chromium-browser-privacy, gtk-straw-viewer, gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer, straw-viewer, lutris, dolphin-emu
+spectacle, chromium-browser-privacy, gtk-straw-viewer, gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer, straw-viewer, lutris, dolphin-emu, authenticator-rs

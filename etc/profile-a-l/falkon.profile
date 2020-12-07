@@ -15,15 +15,20 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.cache/falkon
 mkdir ${HOME}/.config/falkon
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/falkon
 whitelist ${HOME}/.config/falkon
+whitelist /usr/share/falkon
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 nodvd
@@ -37,7 +42,13 @@ protocol unix,inet,inet6,netlink
 seccomp !chroot
 # tracelog
 
+disable-mnt
+# private-bin falkon
+private-cache
 private-dev
-# private-etc alternatives,passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,adobe,mime.types,mailcap,asound.conf,pulse,machine-id,ca-certificates,ssl,pki,crypto-policies
-# private-tmp - interferes with the opening of downloaded files
+private-etc adobe,alternatives,asound.conf,ati,ca-certificates,crypto-policies,dconf,drirc,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
+private-tmp
 
+# dbus-user filter
+# dbus-user.own org.kde.Falkon
+dbus-system none

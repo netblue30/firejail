@@ -20,7 +20,6 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-# Comment the following line if you need to whitelist other folders than ~/Downloads
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/gajim
@@ -31,8 +30,11 @@ whitelist ${HOME}/.config/gajim
 whitelist ${HOME}/.local/share/gajim
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 nodvd
@@ -47,9 +49,17 @@ shell none
 tracelog
 
 disable-mnt
-private-bin bash,gajim,gajim-history-manager,gpg,gpg2,paplay,python,python3,sh,zsh
+private-bin bash,gajim,gajim-history-manager,paplay,python,python3,sh,zsh
+private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
 private-tmp
+
+dbus-user filter
+dbus-user.own org.gajim.Gajim
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-system none
 
 join-or-start gajim

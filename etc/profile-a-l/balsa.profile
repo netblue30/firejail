@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.balsa
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.mozilla
+noblacklist ${HOME}/.signature
 noblacklist ${HOME}/mail
 noblacklist /var/mail
 noblacklist /var/spool/mail
@@ -24,10 +25,12 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.balsa
 mkdir ${HOME}/.gnupg
+mkfile ${HOME}/.signature
 mkdir ${HOME}/mail
 whitelist ${HOME}/.balsa
 whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
+whitelist ${HOME}/.signature
 whitelist ${HOME}/mail
 whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/balsa
@@ -58,9 +61,9 @@ shell none
 tracelog
 
 # disable-mnt
-# Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg 
+# Add "pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg 
 # Add "ignore private-bin" for hyperlinks or have a look at the private-bins in firefox.profile and firefox-common.profile.
-private-bin balsa,balsa-ab
+private-bin balsa,balsa-ab,gpg,gpg2,gpg-agent,gpgsm
 private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,groups,gtk-2.0,gtk-3.0,hostname,hosts,mailname,passwd,pki,resolv.conf,selinux,ssl,xdg
@@ -71,8 +74,9 @@ writable-var
 dbus-user filter
 dbus-user.own org.desktop.Balsa
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.keyring.SystemPrompter
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini

@@ -57,7 +57,10 @@ private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,pki,resolv.conf,selinux,ssl,xdg
 private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
+# Uncomment to use system keyring
+# dbus-user.talk org.freedesktop.secrets
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini

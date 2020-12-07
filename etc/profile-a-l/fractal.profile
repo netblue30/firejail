@@ -1,5 +1,5 @@
 # Firejail profile for fractal
-# Description: Desktop client for Matrix 
+# Description: Desktop client for Matrix
 # This file is overwritten after every install/update
 # Persistent local customizations
 include fractal.local
@@ -7,6 +7,9 @@ include fractal.local
 include globals.local
 
 noblacklist ${HOME}/.cache/fractal
+
+include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,7 +24,7 @@ mkdir ${HOME}/.cache/fractal
 whitelist ${HOME}/.cache/fractal
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
-include whitelist-runuser-common.inc 
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -49,6 +52,6 @@ private-tmp
 dbus-user filter
 dbus-user.own org.gnome.Fractal
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
 dbus-system none

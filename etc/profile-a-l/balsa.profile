@@ -63,7 +63,7 @@ tracelog
 # disable-mnt
 # Add "pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg 
 # Add "ignore private-bin" for hyperlinks or have a look at the private-bins in firefox.profile and firefox-common.profile.
-private-bin balsa,balsa-ab,gpg,gpg2,gpg-agent,gpgsm
+private-bin balsa,balsa-ab,gpg,gpg-agent,gpg2,gpgsm
 private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,groups,gtk-2.0,gtk-3.0,hostname,hosts,mailname,passwd,pki,resolv.conf,selinux,ssl,xdg

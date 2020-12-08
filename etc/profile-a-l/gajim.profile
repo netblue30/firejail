@@ -6,6 +6,7 @@ include gajim.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.cache/gajim
 noblacklist ${HOME}/.config/gajim
 noblacklist ${HOME}/.local/share/gajim
@@ -20,15 +21,21 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+# Comment the following line if you need to whitelist folders other than ~/Downloads 
 include disable-xdg.inc
 
+mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.config/gajim
 mkdir ${HOME}/.local/share/gajim
+whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.cache/gajim
 whitelist ${HOME}/.config/gajim
 whitelist ${HOME}/.local/share/gajim
 whitelist ${DOWNLOADS}
+whitelist ${RUNUSER}/gnupg
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -43,17 +50,18 @@ nonewprivs
 noroot
 notv
 nou2f
-protocol unix,inet,inet6,netlink
+protocol unix,inet,inet6
 seccomp
 shell none
 tracelog
 
 disable-mnt
-private-bin bash,gajim,gajim-history-manager,paplay,python,python3,sh,zsh
+private-bin bash,gajim,gajim-history-manager,gpg,gpg2,paplay,python,python3,sh,zsh
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl,xdg
 private-tmp
+writable-run-user
 
 dbus-user filter
 dbus-user.own org.gajim.Gajim

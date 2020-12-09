@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/yelp
 
+noblacklist ${DOCUMENTS}
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -19,6 +20,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
+whitelist ${DOCUMENTS}
 whitelist /usr/share/doc
 whitelist /usr/share/groff
 whitelist /usr/share/help
@@ -54,12 +56,14 @@ private-dev
 private-etc alsa,alternatives,asound.conf,crypto-policies,cups,dconf,drirc,fonts,gcrypt,groff,gtk-3.0,machine-id,man_db.conf,openal,os-release,pulse,sgml,xml
 private-tmp
 
+dbus-user filter
+dbus-user.own org.gnome.Yelp
+dbus-user.talk ca.desrt.dconf
 dbus-system none
 
-# read-only ${HOME} breaks some not necesarry featrues, comment it if
-# you need them or put 'ignore read-only ${HOME}' into your yelp.local.
-# broken features:
+# read-only ${HOME} breaks some unnecesarry features:
 #  1. yelp --editor-mode
 #  2. saving the window geometry
+# comment the line below or put 'ignore read-only ${HOME}' into your yelp.local if you need it
 read-only ${HOME}
 read-write ${HOME}/.cache

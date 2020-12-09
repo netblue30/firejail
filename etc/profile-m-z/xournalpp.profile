@@ -18,7 +18,7 @@ include whitelist-runuser-common.inc
 
 #mkdir ${HOME}/.xournalpp
 #whitelist ${HOME}/.xournalpp
-#whitelist ${HOME}/.texlive2019
+#whitelist ${HOME}/.texlive20*
 #whitelist ${DOCUMENTS}
 #include whitelist-common.inc
 

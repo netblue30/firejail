@@ -799,7 +799,7 @@ blacklist ${HOME}/.synfig
 blacklist ${HOME}/.tb
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.teeworlds
-blacklist ${HOME}/.texlive2018
+blacklist ${HOME}/.texlive20*
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling

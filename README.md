@@ -163,7 +163,7 @@ Release discussion: https://github.com/netblue30/firejail/issues/3696
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
-`````
+```
 $ sudo cp src/profstats/profstats /etc/firejail/.
 $ cd /etc/firejail
 $ ./profstats *.profile
@@ -191,6 +191,7 @@ Stats:
     net none			333
     dbus-user none 		523
     dbus-system none 		632
+```
 
 ### New profiles:
 

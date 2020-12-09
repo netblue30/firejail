@@ -29,7 +29,6 @@ include whitelist-var-common.inc
 nou2f
 seccomp !chroot
 shell none
-tracelog
 
 disable-mnt
 private-cache

@@ -8,21 +8,13 @@ include globals.local
 
 noblacklist ${HOME}/.config/youtubemusic-nativefier-040164
 
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
 include disable-shell.inc 
-include disable-xdg.inc
 
 mkdir ${HOME}/.config/youtubemusic-nativefier-040164
 whitelist ${HOME}/.config/youtubemusic-nativefier-040164
 include whitelist-runuser-common.inc 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
-
-nou2f
-novideo
-shell none
 
 disable-mnt
 private-bin youtubemusic-nativefier

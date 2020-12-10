@@ -4,24 +4,22 @@
 # Persistent local customizations
 include wire-desktop.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 # Debian/Ubuntu use /opt/Wire. As that is not in PATH by default, run `firejail /opt/Wire/wire-desktop` to start it.
+
+# See ABC.XYZ.ADD.A.NOTE
+ignore include disable-exec.inc
+ignore include disable-xdg.inc
+ingore novideo
 
 ignore dbus-user none
 ignore dbus-system none
 
 noblacklist ${HOME}/.config/Wire
 
-include disable-devel.inc
-include disable-interpreters.inc
-
 mkdir ${HOME}/.config/Wire
 whitelist ${HOME}/.config/Wire
-
-nou2f
-shell none
 
 disable-mnt
 private-bin bash,electron,electron[0-9],electron[0-9][0-9],env,sh,wire-desktop

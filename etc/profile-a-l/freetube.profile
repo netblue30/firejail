@@ -6,18 +6,16 @@ include freetube.local
 # Persistent global definitions
 include globals.local
 
+# See ABC.XYZ.ADD.A.NOTE
+ingore nou2f
+ingore novideo
+
 noblacklist ${HOME}/.config/FreeTube
 
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
 include disable-shell.inc 
-include disable-xdg.inc
 
 mkdir ${HOME}/.config/FreeTube
 whitelist ${HOME}/.config/FreeTube
-
-shell none
 
 disable-mnt
 private-bin freetube

@@ -4,8 +4,16 @@
 # Persistent local customizations
 include riot-web.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
+
+# See ABC.XYZ.ADD.A.NOTE
+ingore include disable-devel.inc
+ignore include disable-exec.inc
+ignore include disable-interpreters.inc
+ignore include disable-xdg.inc
+ingore nou2f
+ingore novideo
+ignore shell none
 
 noblacklist ${HOME}/.config/Riot
 

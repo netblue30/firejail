@@ -4,25 +4,19 @@
 # Persistent local customizations
 include teams-for-linux.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
+
+# See ABC.XYZ.ADD.A.NOTE
+ignore include disable-xdg.inc
 
 ignore dbus-user none
 ignore dbus-system none
 
 noblacklist ${HOME}/.config/teams-for-linux
 
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-
 mkdir ${HOME}/.config/teams-for-linux
 whitelist ${HOME}/.config/teams-for-linux
 include whitelist-var-common.inc
-
-nou2f
-novideo
-shell none
 
 disable-mnt
 private-bin bash,cut,echo,egrep,grep,head,sed,sh,teams-for-linux,tr,xdg-mime,xdg-open,zsh

@@ -4,27 +4,18 @@
 # Persistent local customizations
 include whalebird.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
 ignore dbus-user none
 ignore dbus-system none
 
 noblacklist ${HOME}/.config/Whalebird
 
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-include disable-xdg.inc
-
 mkdir ${HOME}/.config/Whalebird
 whitelist ${HOME}/.config/Whalebird
 include whitelist-var-common.inc
 
 no3d
-nou2f
-novideo
-shell none
 
 disable-mnt
 private-bin whalebird

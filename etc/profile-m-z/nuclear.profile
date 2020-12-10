@@ -10,11 +10,7 @@ ignore dbus-user
 
 noblacklist ${HOME}/.config/nuclear
 
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
 include disable-shell.inc 
-include disable-xdg.inc
 
 mkdir ${HOME}/.config/nuclear
 whitelist ${HOME}/.config/nuclear
@@ -23,9 +19,6 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 no3d
-nou2f
-novideo
-shell none
 
 disable-mnt
 # private-bin nuclear

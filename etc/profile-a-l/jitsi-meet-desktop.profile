@@ -6,14 +6,14 @@ include jitsi-meet-desktop.local
 # Persistent global definitions
 include globals.local
 
+# See ABC.XYZ.ADD.A.NOTE
+ingore nou2f
+ingore novideo
+ignore shell none
+
 ignore noexec /tmp
 
 noblacklist ${HOME}/.config/Jitsi Meet
-
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-include disable-xdg.inc
 
 nowhitelist ${DOWNLOADS}
 

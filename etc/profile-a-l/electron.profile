@@ -5,8 +5,12 @@
 include electron.local
 
 include disable-common.inc
+include disable-devel.inc
+include disable-exec.inc
+include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-xdg.inc
 
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
@@ -21,6 +25,9 @@ netfilter
 nodvd
 nogroups
 notv
+nou2f
+novideo
+shell none
 
 dbus-user none
 dbus-system none

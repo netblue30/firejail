@@ -5,10 +5,14 @@ include beaker.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Beaker Browser
+# See ABC.XYZ.ADD.A.NOTE
+ignore include disable-exec.inc
+ignore include disable-xdg.inc
+ingore nou2f
+ingore novideo
+ignore shell none
 
-include disable-devel.inc
-include disable-interpreters.inc
+noblacklist ${HOME}/.config/Beaker Browser
 
 mkdir ${HOME}/.config/Beaker Browser
 whitelist ${HOME}/.config/Beaker Browser

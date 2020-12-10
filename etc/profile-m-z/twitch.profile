@@ -6,21 +6,19 @@ include twitch.local
 # Persistent global definitions
 include globals.local
 
+# See ABC.XYZ.ADD.A.NOTE
+ingore nou2f
+ingore novideo
+
 noblacklist ${HOME}/.config/Twitch
 
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
 include disable-shell.inc 
-include disable-xdg.inc
 
 mkdir ${HOME}/.config/Twitch
 whitelist ${HOME}/.config/Twitch
 include whitelist-runuser-common.inc 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
-
-shell none
 
 disable-mnt
 private-bin twitch

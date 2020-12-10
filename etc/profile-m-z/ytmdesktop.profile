@@ -10,20 +10,11 @@ ignore dbus-user none
 
 noblacklist ${HOME}/.config/youtube-music-desktop-app
 
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-include disable-xdg.inc
-
 mkdir ${HOME}/.config/youtube-music-desktop-app
 whitelist ${HOME}/.config/youtube-music-desktop-app
 include whitelist-runuser-common.inc 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
-
-nou2f
-novideo
-shell none
 
 disable-mnt
 # private-bin env,ytmdesktop

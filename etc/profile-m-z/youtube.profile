@@ -6,22 +6,18 @@ include youtube.local
 # Persistent global definitions
 include globals.local
 
+# See ABC.XYZ.ADD.A.NOTE
+ingore nou2f
+
 noblacklist ${HOME}/.config/Youtube
 
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
 include disable-shell.inc 
-include disable-xdg.inc
 
 mkdir ${HOME}/.config/Youtube
 whitelist ${HOME}/.config/Youtube
 include whitelist-runuser-common.inc 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
-
-novideo
-shell none
 
 disable-mnt
 private-bin youtube

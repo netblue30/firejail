@@ -518,10 +518,13 @@ blacklist ${PATH}/dig
 blacklist ${PATH}/dlint
 blacklist ${PATH}/dns2tcp
 blacklist ${PATH}/dnswalk
+blacklist ${PATH}/drill
 blacklist ${PATH}/host
 blacklist ${PATH}/iodine
 blacklist ${PATH}/kdig
 blacklist ${PATH}/knsupdate
+blacklist ${PATH}/ldns-*
+blacklist ${PATH}/ldnsd
 blacklist ${PATH}/nslookup
 blacklist ${PATH}/resolvectl
 

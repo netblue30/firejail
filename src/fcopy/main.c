@@ -268,16 +268,14 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 			first = 0;
 		else if (!arg_quiet)
 			fprintf(stderr, "Warning fcopy: skipping %s, file already present\n", infname);
-		free(outfname);
-		return 0;
+		goto out;
 	}
 
 	// extract mode and ownership
 	if (stat(infname, &s) != 0) {
 		if (!arg_quiet)
 			fprintf(stderr, "Warning fcopy: skipping %s, cannot find inode\n", infname);
-		free(outfname);
-		return 0;
+		goto out;
 	}
 	uid_t uid = s.st_uid;
 	gid_t gid = s.st_gid;
@@ -287,8 +285,7 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	if ((s.st_size + size_cnt) > copy_limit) {
 		fprintf(stderr, "Error fcopy: size limit of %lu MB reached\n", (copy_limit / 1024) / 1024);
 		size_limit_reached = 1;
-		free(outfname);
-		return 0;
+		goto out;
 	}
 
 	file_cnt++;
@@ -303,7 +300,8 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	else if (ftype == FTW_SL) {
 		copy_link(infname, outfname, mode, uid, gid);
 	}
-
+out:
+	free(outfname);
 	return(0);
 }
 
@@ -336,6 +334,7 @@ static char *check(const char *src) {
 		return rsrc;			  // normal exit from the function
 
 errexit:
+	free(rsrc);
 	fprintf(stderr, "Error fcopy: invalid file %s\n", src);
 	exit(1);
 }

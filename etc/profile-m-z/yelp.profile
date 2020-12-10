@@ -8,7 +8,6 @@ include globals.local
 
 noblacklist ${HOME}/.config/yelp
 
-noblacklist ${DOCUMENTS}
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -20,7 +19,6 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
-whitelist ${DOCUMENTS}
 whitelist /usr/share/doc
 whitelist /usr/share/groff
 whitelist /usr/share/help
@@ -35,11 +33,13 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+machine-id
 net none
 nodvd
 nogroups
 nonewprivs
 noroot
+nosound
 notv
 nou2f
 novideo
@@ -61,9 +61,14 @@ dbus-user.own org.gnome.Yelp
 dbus-user.talk ca.desrt.dconf
 dbus-system none
 
-# read-only ${HOME} breaks some unnecesarry features:
+# read-only ${HOME} breaks some features:
 #  1. yelp --editor-mode
 #  2. saving the window geometry
-# comment the line below or put 'ignore read-only ${HOME}' into your yelp.local if you need it
+# comment the line below or put 'ignore read-only ${HOME}' into your yelp.local if you need these features
 read-only ${HOME}
 read-write ${HOME}/.cache
+#  3. printing to PDF in ${DOCUMENTS}
+# additionally uncomment the lines below or put 'noblacklist ${DOCUMENTS}' and
+# 'whitelist ${DOCUMENTS}' into your yelp.local if you need printing to PDF support
+#noblacklist ${DOCUMENTS}
+#whitelist ${DOCUMENTS}

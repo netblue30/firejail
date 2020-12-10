@@ -33,13 +33,15 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-machine-id
+# machine-id breaks sound - uncomment here or put it in your yelp.local if you don't need it
+#machine-id
 net none
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
+# nosound - uncomment here or put it in your yelp.local if you don't need it
+#nosound
 notv
 nou2f
 novideo

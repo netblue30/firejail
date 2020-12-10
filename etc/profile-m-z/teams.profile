@@ -8,7 +8,7 @@ include globals.local
 
 # See ABC.XYZ.ADD.A.NOTE
 ignore include disable-xdg.inc
-ingore novideo
+ignore novideo
 
 # see #3404
 ignore apparmor

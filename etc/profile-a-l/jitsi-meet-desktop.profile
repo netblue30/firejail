@@ -7,8 +7,8 @@ include jitsi-meet-desktop.local
 include globals.local
 
 # See ABC.XYZ.ADD.A.NOTE
-ingore nou2f
-ingore novideo
+ignore nou2f
+ignore novideo
 ignore shell none
 
 ignore noexec /tmp

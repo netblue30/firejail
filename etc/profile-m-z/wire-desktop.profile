@@ -11,7 +11,7 @@ include globals.local
 # See ABC.XYZ.ADD.A.NOTE
 ignore include disable-exec.inc
 ignore include disable-xdg.inc
-ingore novideo
+ignore novideo
 
 ignore dbus-user none
 ignore dbus-system none

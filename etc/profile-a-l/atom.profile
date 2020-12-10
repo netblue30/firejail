@@ -6,6 +6,14 @@ include atom.local
 # Persistent global definitions
 include globals.local
 
+# ADD.A.NOTE.ABC.XYZ
+ignore include disable-devel.inc
+ignore include disable-interpreters.inc
+ignore include disable-xdg.inc
+ignore whitelist ${DOWNLOADS}
+ignore include whitelist-common.inc
+ignore apparmor
+
 noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
 
@@ -17,20 +25,13 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-caps.keep sys_admin,sys_chroot
 # net none
 netfilter
-nodvd
-nogroups
 nosound
-notv
-nou2f
-novideo
-shell none
 
 private-cache
 private-dev
 private-tmp
 
-dbus-user none
-dbus-system none
+# Redirect
+include electron.profile

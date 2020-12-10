@@ -7,8 +7,8 @@ include twitch.local
 include globals.local
 
 # See ABC.XYZ.ADD.A.NOTE
-ingore nou2f
-ingore novideo
+ignore nou2f
+ignore novideo
 
 noblacklist ${HOME}/.config/Twitch
 

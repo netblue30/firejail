@@ -8,8 +8,8 @@ include globals.local
 # See ABC.XYZ.ADD.A.NOTE
 ignore include disable-exec.inc
 ignore include disable-xdg.inc
-ingore nou2f
-ingore novideo
+ignore nou2f
+ignore novideo
 ignore shell none
 
 noblacklist ${HOME}/.config/Beaker Browser

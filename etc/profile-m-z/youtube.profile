@@ -7,7 +7,7 @@ include youtube.local
 include globals.local
 
 # See ABC.XYZ.ADD.A.NOTE
-ingore nou2f
+ignore nou2f
 
 noblacklist ${HOME}/.config/Youtube
 

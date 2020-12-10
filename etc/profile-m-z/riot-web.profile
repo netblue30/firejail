@@ -7,12 +7,12 @@ include riot-web.local
 include globals.local
 
 # See ABC.XYZ.ADD.A.NOTE
-ingore include disable-devel.inc
+ignore include disable-devel.inc
 ignore include disable-exec.inc
 ignore include disable-interpreters.inc
 ignore include disable-xdg.inc
-ingore nou2f
-ingore novideo
+ignore nou2f
+ignore novideo
 ignore shell none
 
 noblacklist ${HOME}/.config/Riot

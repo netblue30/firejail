@@ -19,13 +19,11 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/Whalebird
 whitelist ${HOME}/.config/Whalebird
-include whitelist-common.inc
 include whitelist-var-common.inc
 
 no3d
 nou2f
 novideo
-protocol unix,inet,inet6
 shell none
 
 disable-mnt

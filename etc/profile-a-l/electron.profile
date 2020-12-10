@@ -3,25 +3,24 @@
 # This file is overwritten after every install/update
 # Persistent local customizations
 include electron.local
-# Persistent global definitions
-include globals.local
 
 include disable-common.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
 whitelist ${DOWNLOADS}
+include whitelist-common.inc
+
+# Uncomment the next line (or add it to your chromium-common.local)
+# if your kernel allows unprivileged userns clone.
+#include chromium-common-hardened.inc
 
 apparmor
-caps.drop all
+caps.keep sys_admin,sys_chroot
 netfilter
 nodvd
 nogroups
-nonewprivs
-noroot
 notv
-protocol unix,inet,inet6,netlink
-seccomp
 
 dbus-user none
 dbus-system none

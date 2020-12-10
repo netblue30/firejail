@@ -17,14 +17,12 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/youtube-music-desktop-app
 whitelist ${HOME}/.config/youtube-music-desktop-app
-include whitelist-common.inc 
 include whitelist-runuser-common.inc 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 nou2f
 novideo
-seccomp !chroot
 shell none
 
 disable-mnt

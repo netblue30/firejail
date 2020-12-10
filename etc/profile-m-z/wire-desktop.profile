@@ -19,11 +19,8 @@ include disable-interpreters.inc
 
 mkdir ${HOME}/.config/Wire
 whitelist ${HOME}/.config/Wire
-include whitelist-common.inc
 
 nou2f
-ignore seccomp
-seccomp !chroot
 shell none
 
 disable-mnt

@@ -17,7 +17,6 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/FreeTube
 whitelist ${HOME}/.config/FreeTube
 
-seccomp !chroot
 shell none
 
 disable-mnt

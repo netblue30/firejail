@@ -23,11 +23,9 @@ mkdir ${HOME}/.config/teams
 mkdir ${HOME}/.config/Microsoft
 whitelist ${HOME}/.config/teams
 whitelist ${HOME}/.config/Microsoft
-include whitelist-common.inc
 include whitelist-var-common.inc
 
 nou2f
-seccomp !chroot
 shell none
 
 disable-mnt

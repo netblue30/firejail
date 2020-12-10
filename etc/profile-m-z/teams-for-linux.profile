@@ -18,7 +18,6 @@ include disable-interpreters.inc
 
 mkdir ${HOME}/.config/teams-for-linux
 whitelist ${HOME}/.config/teams-for-linux
-include whitelist-common.inc
 include whitelist-var-common.inc
 
 nou2f

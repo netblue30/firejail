@@ -6,6 +6,10 @@ include whalebird.local
 # Persistent global definitions
 include globals.local
 
+# See ABC.XYZ.ADD.A.NOTE
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+
 ignore dbus-user none
 ignore dbus-system none
 
@@ -13,16 +17,11 @@ noblacklist ${HOME}/.config/Whalebird
 
 mkdir ${HOME}/.config/Whalebird
 whitelist ${HOME}/.config/Whalebird
-include whitelist-var-common.inc
 
 no3d
 
-disable-mnt
 private-bin whalebird
-private-cache
-private-dev
 private-etc fonts,machine-id
-private-tmp
 
 # Redirect
 include electron.profile

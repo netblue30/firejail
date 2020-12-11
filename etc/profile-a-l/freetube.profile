@@ -7,6 +7,9 @@ include freetube.local
 include globals.local
 
 # See ABC.XYZ.ADD.A.NOTE
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+ignore include whitelist-var-common.inc
 ignore nou2f
 ignore novideo
 
@@ -17,12 +20,8 @@ include disable-shell.inc
 mkdir ${HOME}/.config/FreeTube
 whitelist ${HOME}/.config/FreeTube
 
-disable-mnt
 private-bin freetube
-private-cache
-private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,mime.types,nsswitch.conf,pki,pulse,resolv.conf,ssl,X11,xdg
-private-tmp
 
 # Redirect
 include electron.profile

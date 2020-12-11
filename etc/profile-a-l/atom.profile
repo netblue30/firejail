@@ -12,7 +12,11 @@ ignore include disable-interpreters.inc
 ignore include disable-xdg.inc
 ignore whitelist ${DOWNLOADS}
 ignore include whitelist-common.inc
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+ignore include whitelist-var-common.inc
 ignore apparmor
+ignore disable-mnt
 
 noblacklist ${HOME}/.atom
 noblacklist ${HOME}/.config/Atom
@@ -20,18 +24,9 @@ noblacklist ${HOME}/.config/Atom
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
 
-include disable-common.inc
-include disable-exec.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
-
 # net none
 netfilter
 nosound
-
-private-cache
-private-dev
-private-tmp
 
 # Redirect
 include electron.profile

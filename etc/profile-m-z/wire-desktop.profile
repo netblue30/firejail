@@ -11,7 +11,11 @@ include globals.local
 # See ABC.XYZ.ADD.A.NOTE
 ignore include disable-exec.inc
 ignore include disable-xdg.inc
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+ignore include whitelist-var-common.inc
 ignore novideo
+ignore private-cache
 
 ignore dbus-user none
 ignore dbus-system none
@@ -21,11 +25,8 @@ noblacklist ${HOME}/.config/Wire
 mkdir ${HOME}/.config/Wire
 whitelist ${HOME}/.config/Wire
 
-disable-mnt
 private-bin bash,electron,electron[0-9],electron[0-9][0-9],env,sh,wire-desktop
-private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,machine-id,pki,resolv.conf,ssl
-private-tmp
 
 # Redirect
 include electron.profile

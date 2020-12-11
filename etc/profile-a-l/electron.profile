@@ -14,6 +14,9 @@ include disable-xdg.inc
 
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 # Uncomment the next line (or add it to your chromium-common.local)
 # if your kernel allows unprivileged userns clone.
@@ -28,6 +31,11 @@ notv
 nou2f
 novideo
 shell none
+
+disable-mnt
+private-cache
+private-dev
+private-tmp
 
 dbus-user none
 dbus-system none

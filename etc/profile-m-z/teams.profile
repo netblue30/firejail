@@ -8,7 +8,10 @@ include globals.local
 
 # See ABC.XYZ.ADD.A.NOTE
 ignore include disable-xdg.inc
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
 ignore novideo
+ignore private-tmp
 
 # see #3404
 ignore apparmor
@@ -22,11 +25,6 @@ mkdir ${HOME}/.config/teams
 mkdir ${HOME}/.config/Microsoft
 whitelist ${HOME}/.config/teams
 whitelist ${HOME}/.config/Microsoft
-include whitelist-var-common.inc
-
-disable-mnt
-private-cache
-private-dev
 
 # Redirect
 include electron.profile

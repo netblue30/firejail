@@ -6,13 +6,6 @@ include freetube.local
 # Persistent global definitions
 include globals.local
 
-# Disabled until someone reported positive feedback
-ignore include whitelist-runuser-common.inc
-ignore include whitelist-usr-share-common.inc
-ignore include whitelist-var-common.inc
-ignore nou2f
-ignore novideo
-
 noblacklist ${HOME}/.config/FreeTube
 
 include disable-shell.inc 

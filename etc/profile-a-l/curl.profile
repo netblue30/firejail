@@ -7,6 +7,12 @@ include curl.local
 # Persistent global definitions
 include globals.local
 
+# curl 7.74.0 introduces experimental support for HSTS cache
+# https://daniel.haxx.se/blog/2020/11/03/hsts-your-curl/
+# technically this file can be anywhere but let's assume users have it in ${HOME}/.curl-hsts
+# if your setup diverts, add 'blacklist /path/to/curl/hsts/file' to your disable-programs.local
+# and 'noblacklist /path/to/curl/hsts/file' to curl.local to keep the sandbox logic intact
+noblacklist ${HOME}/.curl-hsts
 noblacklist ${HOME}/.curlrc
 
 blacklist /tmp/.X11-unix

@@ -82,9 +82,9 @@ private-dev
 private-tmp
 
 dbus-user none
-dbus-system none
+# dbus-system none
 
-memory-deny-write-execute
+# memory-deny-write-execute
 # read-only ${HOME}
 # writable-run-user
 # writable-var

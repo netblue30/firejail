@@ -6,7 +6,7 @@ include zoom.local
 # Persistent global definitions
 include globals.local
 
-# ADD.A.NOTE.ABY.XYZ
+# Disabled until someone reported positive feedback
 ignore apparmor
 ignore nogroups
 ignore novideo

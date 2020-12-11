@@ -6,7 +6,7 @@ include teams-for-linux.local
 # Persistent global definitions
 include globals.local
 
-# See ABC.XYZ.ADD.A.NOTE
+# Disabled until someone reported positive feedback
 ignore include disable-xdg.inc
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc

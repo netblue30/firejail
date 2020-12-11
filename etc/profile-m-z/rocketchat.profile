@@ -5,7 +5,7 @@ include rocketchat.local
 # Persistent global definitions
 include globals.local
 
-# See ABC.XYZ.ADD.A.NOTE
+# Disabled until someone reported positive feedback
 ignore include disable-devel.inc
 ignore include disable-exec.inc
 ignore include disable-interpreters.inc

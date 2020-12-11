@@ -8,7 +8,7 @@ include globals.local
 
 # Debian/Ubuntu use /opt/Wire. As that is not in PATH by default, run `firejail /opt/Wire/wire-desktop` to start it.
 
-# See ABC.XYZ.ADD.A.NOTE
+# Disabled until someone reported positive feedback
 ignore include disable-exec.inc
 ignore include disable-xdg.inc
 ignore include whitelist-runuser-common.inc

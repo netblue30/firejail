@@ -6,7 +6,7 @@ include atom.local
 # Persistent global definitions
 include globals.local
 
-# ADD.A.NOTE.ABC.XYZ
+# Disabled until someone reported positive feedback
 ignore include disable-devel.inc
 ignore include disable-interpreters.inc
 ignore include disable-xdg.inc

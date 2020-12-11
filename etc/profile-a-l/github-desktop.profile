@@ -11,7 +11,7 @@ include globals.local
 # If that's the case you can start GitHub Desktop with firejail via
 # `firejail "/opt/GitHub Desktop/github-desktop"`.
 
-# ADD.A.NOTE.ABY.XYZ
+# Disabled until someone reported positive feedback
 ignore include disable-xdg.inc
 ignore whitelist ${DOWNLOADS}
 ignore include whitelist-common.inc

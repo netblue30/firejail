@@ -5,7 +5,7 @@ include skypeforlinux.local
 # Persistent global definitions
 include globals.local
 
-# ADD.A.NOTE.ABY.XYZ
+# Disabled until someone reported positive feedback
 ignore whitelist ${DOWNLOADS}
 ignore include whitelist-common.inc
 ignore include whitelist-runuser-common.inc

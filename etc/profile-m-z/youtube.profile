@@ -6,7 +6,7 @@ include youtube.local
 # Persistent global definitions
 include globals.local
 
-# See ABC.XYZ.ADD.A.NOTE
+# Disabled until someone reported positive feedback
 ignore nou2f
 
 noblacklist ${HOME}/.config/Youtube

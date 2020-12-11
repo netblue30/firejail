@@ -5,7 +5,7 @@ include slack.local
 # Persistent global definitions
 include globals.local
 
-# ADD.A.NOTE.ABY.XYZ
+# Disabled until someone reported positive feedback
 ignore include disable-exec.inc
 ignore include disable-xdg.inc
 ignore include whitelist-runuser-common.inc

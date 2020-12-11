@@ -6,43 +6,35 @@ include github-desktop.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/GitHub Desktop
-noblacklist ${HOME}/.config/git
-noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.git-credentials
-
-include disable-common.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-
-caps.drop all
-netfilter
-# no3d
-nodvd
-nogroups
-nonewprivs
-noroot
-nosound
-notv
-nou2f
-novideo
-protocol unix,inet,inet6,netlink
-seccomp !chroot
-
 # Note: On debian-based distributions the binary might be located in
 # /opt/GitHub Desktop/github-desktop, and therefore not be in PATH.
 # If that's the case you can start GitHub Desktop with firejail via
 # `firejail "/opt/GitHub Desktop/github-desktop"`.
 
-disable-mnt
+# ADD.A.NOTE.ABY.XYZ
+ignore include disable-xdg.inc
+ignore whitelist ${DOWNLOADS}
+ignore include whitelist-common.inc
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+ignore include whitelist-var-common.inc
+ignore apparmor
+ignore dbus-user none
+ignore dbus-system none
+
+noblacklist ${HOME}/.config/GitHub Desktop
+noblacklist ${HOME}/.config/git
+noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
+
+# no3d
+nosound
+
 # private-bin github-desktop
-private-cache
 ?HAS_APPIMAGE: ignore private-dev
-private-dev
 # private-lib
-private-tmp
 
 # memory-deny-write-execute
+
+# Redirect
+include electron.profile

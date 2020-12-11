@@ -5,27 +5,24 @@ include skypeforlinux.local
 # Persistent global definitions
 include globals.local
 
+# ADD.A.NOTE.ABY.XYZ
+ignore whitelist ${DOWNLOADS}
+ignore include whitelist-common.inc
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+ignore include whitelist-var-common.inc
+ignore nou2f
+ignore novideo
+ignore private-dev
+ignore dbus-user none
+ignore dbus-system none
+
 # breaks Skype
 ignore noexec /tmp
 
 noblacklist ${HOME}/.config/skypeforlinux
 
-include disable-common.inc
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
-include disable-xdg.inc
-
-caps.keep sys_admin,sys_chroot
-netfilter
-nodvd
-nogroups
-notv
-shell none
-
-disable-mnt
-private-cache
 # private-dev - needs /dev/disk
-private-tmp
+
+# Redirect
+include electron.profile

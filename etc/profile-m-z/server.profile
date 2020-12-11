@@ -45,10 +45,17 @@ include disable-common.inc
 # include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-# include disable-xdg.inc
+include disable-write-mnt.inc
+include disable-xdg.inc
 
+# include whitelist-runuser-common.inc
+# include whitelist-usr-share-common.inc
+# include whitelist-var-common.inc
+
+apparmor
 caps
 # ipc-namespace
+machine-id
 # netfilter /etc/firejail/webserver.net
 no3d
 nodvd
@@ -59,19 +66,26 @@ nosound
 notv
 nou2f
 novideo
+# protocol unix,inet,inet6,netlink
 seccomp
 # shell none
 
-# disable-mnt
+disable-mnt
 private
 # private-bin program
 # private-cache
 private-dev
+# see /usr/share/doc/firejail/profile.template for more common private-etc paths.
 # private-etc alternatives
 # private-lib
+# private-opt none
 private-tmp
 
-# dbus-user none
-# dbus-system none
+dbus-user none
+dbus-system none
 
-# memory-deny-write-execute
+memory-deny-write-execute
+# read-only ${HOME}
+# writable-run-user
+# writable-var
+# writable-var-log

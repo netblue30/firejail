@@ -252,12 +252,14 @@ Danil Semelenov (https://github.com/sgtpep)
 Dara Adib (https://github.com/daradib)
 	- ssh profile fix
 	- evince profile fix
+	- linphone profile fix
 Dario Pellegrini (https://github.com/dpellegr)
 	- allowing links in netns
 David Thole (https://github.com/TheDarkTrumpet)
 	- added profile for teams-for-linux
 Davide Beatrici (https://github.com/davidebeatrici)
 	- steam.profile: correctly blacklist unneeded directories in user's home
+	- minetest fixes
 David Hyrule (https://github.com/Svaag)
 	- remove nou2f in ssh profile
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
@@ -515,6 +517,8 @@ KellerFuchs (https://github.com/KellerFuchs)
 	- added support for .local profile files in /etc/firejail
 	- fixed Cryptocat profile
 	- make ~/.local read-only
+Kelvin (https://github.com/kmk3)
+	- disable ldns utilities
 Kishore96in (https://github.com/Kishore96in)
 	- added falkon profile
 	- kxmlgui fixes
@@ -546,6 +550,7 @@ Liorst4 (https://github.com/Liorst4)
 	- Preserve CFLAGS given to configure in common.mk.in
 	- fix emacs config to load as read-write
 	- disable browser drm by default
+	- minetest fixes
 Lockdis (https://github.com/Lockdis)
 	- Added crow, nyx, and google-earth-pro profiles
 Lukáš Krejčí (https://github.com/lskrejci)
@@ -604,6 +609,7 @@ Neo00001 (https://github.com/Neo00001)
 	- add vmware profile
 	- update virtualbox profile
 	- update telegram profile
+	- add spectacle profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -701,6 +707,8 @@ Rahiel Kasim (https://github.com/rahiel)
 	- added telegram-desktop profile
 Rahul Golam (https://github.com/technoLord)
 	- strings profile
+RandomVoid (https://github.com/RandomVoid)
+	- fix building C# projects in Godot
 Raphaël Droz (https://github.com/drzraf)
 	- zoom profile fixes
 Reiner Herrmann (https://github.com/reinerh)
@@ -953,6 +961,8 @@ Vladimir Schowalter (https://github.com/VladimirSchowalter20)
 	read-only kde5 services directory
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
+Ypnose (https://github.com/Ypnose)
+	- disable-shell.inc: add mksh shell
 yumkam (https://github.com/yumkam)
 	- add compile-time option to restrict --net= to root only
 	- man page fixes

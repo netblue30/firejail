@@ -14,6 +14,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
+apparmor
 caps.drop all
 hostname archiver
 ipc-namespace

@@ -1,4 +1,5 @@
-# Local customizations come here
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
 include whitelist-var-common.local
 
 # common /var whitelist for all profiles

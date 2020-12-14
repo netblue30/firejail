@@ -25,7 +25,7 @@ mkdir ${HOME}/.local/share/xplayer
 whitelist ${HOME}/.config/xplayer
 whitelist ${HOME}/.local/share/xplayer
 include whitelist-common.inc
-include whitelist-players.inc
+include whitelist-player-common.inc
 include whitelist-var-common.inc
 
 # apparmor - makes settings immutable

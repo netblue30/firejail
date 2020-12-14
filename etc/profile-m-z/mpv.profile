@@ -50,7 +50,7 @@ whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.netrc
 include whitelist-common.inc
-include whitelist-players.inc
+include whitelist-player-common.inc
 whitelist /usr/share/lua
 whitelist /usr/share/lua*
 whitelist /usr/share/vulkan

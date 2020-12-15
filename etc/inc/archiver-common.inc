@@ -4,7 +4,6 @@ include archiver-common.local
 
 # common profile for archiver/compression tools
 
-blacklist ${RUNUSER}/wayland-*
 blacklist ${RUNUSER}
 
 include disable-common.inc

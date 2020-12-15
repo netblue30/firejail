@@ -7,5 +7,4 @@ include zstd.local
 # Persistent global definitions
 include globals.local
 
-ignore include disable-shell.inc
 include archiver-common.inc

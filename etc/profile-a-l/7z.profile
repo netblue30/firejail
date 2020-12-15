@@ -7,8 +7,8 @@ include 7z.local
 # Persistent global definitions
 include globals.local
 
-ignore include disable-shell.inc
-ignore nogroups
+noblacklist ${PATH}/bash
+noblacklist ${PATH}/sh
 include archiver-common.inc
 
-#private-bin 7z,7z*,p7zip
+private-bin 7z,7z*,bash,p7zip,sh

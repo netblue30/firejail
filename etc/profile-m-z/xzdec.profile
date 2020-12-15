@@ -7,6 +7,4 @@ include xzdec.local
 # Persistent global definitions
 include globals.local
 
-ignore include disable-shell.inc
-ignore nogroups
 include archiver-common.inc

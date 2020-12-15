@@ -6,8 +6,6 @@ include bsdtar.local
 # Persistent global definitions
 include globals.local
 
-ignore include disable-devel.inc
-ignore include disable-shell.inc
 include archiver-common.inc
 
 # support compressed archives

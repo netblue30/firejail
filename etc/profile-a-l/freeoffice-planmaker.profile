@@ -7,4 +7,4 @@ include freeoffice-planmaker.local
 include globals.local
 
 # Redirect
-include softmaker-common.inc
+include softmaker-common.profile

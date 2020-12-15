@@ -7,4 +7,4 @@ include freeoffice-presentations.local
 include globals.local
 
 # Redirect
-include softmaker-common.inc
+include softmaker-common.profile

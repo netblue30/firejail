@@ -2,7 +2,7 @@
 # Persistent customizations should go in a .local file.
 include archiver-common.local
 
-# common settings for all archiver/compression tool profiles
+# common profile for archiver/compression tools
 
 blacklist ${RUNUSER}/wayland-*
 

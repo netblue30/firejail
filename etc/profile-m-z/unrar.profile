@@ -7,8 +7,6 @@ include unrar.local
 # Persistent global definitions
 include globals.local
 
-ignore nogroups
-ignore private-cache
 include archiver-common.inc
 
 private-bin unrar

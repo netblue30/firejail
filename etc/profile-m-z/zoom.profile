@@ -31,7 +31,9 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 nodvd
-#nogroups - breaks webcam access (see #3711)
+# nogroups breaks webcam access on non-systemd systems (see #3711).
+# If you use such a system comment the line below or put 'ignore nogroups' in your zoom.local
+nogroups
 nonewprivs
 noroot
 notv

@@ -9,7 +9,6 @@ include gtk2-youtube-viewer.local
 ignore quiet
 
 noblacklist /tmp/.X11-unix
-noblacklist ${RUNUSER}/wayland-*
 noblacklist ${RUNUSER}
 
 include whitelist-runuser-common.inc

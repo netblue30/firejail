@@ -44,7 +44,7 @@ whitelist ${HOME}/.mplayer
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/mps
 include whitelist-common.inc
-include whitelist-players.inc
+include whitelist-player-common.inc
 include whitelist-var-common.inc
 
 apparmor

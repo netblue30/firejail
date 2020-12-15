@@ -10,7 +10,4 @@ include globals.local
 noblacklist /sbin
 noblacklist /usr/sbin
 
-ignore include disable-devel.inc
-ignore include disable-interpreters.inc
-ignore include disable-shell.inc
 include archiver-common.inc

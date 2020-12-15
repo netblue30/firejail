@@ -51,5 +51,5 @@ private-tmp
 # Settings are immutable
 # dbus-user filter
 # dbus-user.own com.github.bleakgrey.tootle
-# dbus-user.own ca.desert.dconf
+# dbus-user.talk ca.desrt.dconf
 dbus-system none

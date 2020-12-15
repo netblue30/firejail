@@ -11,7 +11,6 @@ noblacklist ${HOME}/.digrc
 noblacklist ${PATH}/dig
 
 blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
 blacklist ${RUNUSER}
 
 include disable-common.inc

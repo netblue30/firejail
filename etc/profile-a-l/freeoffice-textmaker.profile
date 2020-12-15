@@ -6,4 +6,4 @@ include freeoffice-textmaker.local
 include globals.local
 
 # Redirect
-include softmaker-common.inc
+include softmaker-common.profile

@@ -14,6 +14,6 @@ ignore include disable-shell.inc
 include archiver-common.inc
 
 private-etc alternatives,group,localtime,login.defs,passwd
-private-lib libfakeroot,liblzma.so.*,libreadline.so.*
+#private-lib libfakeroot,liblzma.so.*,libreadline.so.*
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var

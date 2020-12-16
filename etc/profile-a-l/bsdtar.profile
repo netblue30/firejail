@@ -8,6 +8,4 @@ include globals.local
 
 include archiver-common.inc
 
-# support compressed archives
-private-bin bash,bsdcat,bsdcpio,bsdtar,bzip2,compress,gtar,gzip,lbzip2,libarchive,lz4,lzip,lzma,lzop,sh,xz
 private-etc alternatives,group,localtime,passwd

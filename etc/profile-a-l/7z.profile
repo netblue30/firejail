@@ -10,5 +10,3 @@ include globals.local
 noblacklist ${PATH}/bash
 noblacklist ${PATH}/sh
 include archiver-common.inc
-
-private-bin 7z,7z*,bash,p7zip,sh

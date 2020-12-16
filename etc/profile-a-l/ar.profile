@@ -8,5 +8,3 @@ include ar.local
 include globals.local
 
 include archiver-common.inc
-
-private-bin ar

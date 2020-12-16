@@ -19,7 +19,7 @@ read-only ${DESKTOP}
 mkdir ${HOME}/.mplayer
 whitelist ${HOME}/.mplayer
 include whitelist-common.inc
-include whitelist-players.inc
+include whitelist-player-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

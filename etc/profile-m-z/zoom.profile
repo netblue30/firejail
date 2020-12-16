@@ -8,10 +8,13 @@ include globals.local
 
 # Disabled until someone reported positive feedback
 ignore apparmor
-ignore nogroups
 ignore novideo
 ignore dbus-user none
 ignore dbus-system none
+
+# nogroups breaks webcam access on non-systemd systems (see #3711).
+# If you use such a system uncomment the line below or put 'ignore nogroups' in your zoom.local
+#ignore nogroups
 
 noblacklist ${HOME}/.config/zoomus.conf
 noblacklist ${HOME}/.zoom
@@ -24,8 +27,6 @@ mkdir ${HOME}/.zoom
 whitelist ${HOME}/.cache/zoom
 whitelist ${HOME}/.config/zoomus.conf
 whitelist ${HOME}/.zoom
-
-#nogroups - breaks webcam access (see #3711)
 
 # Disable for now, see https://github.com/netblue30/firejail/issues/3726
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl

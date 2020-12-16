@@ -1,26 +1,25 @@
-# Firejail profile for nslookup
+# Firejail profile for drill
 # Description: DNS lookup utility
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include nslookup.local
+include drill.local
 # Persistent global definitions
 include globals.local
+
+noblacklist ${PATH}/drill
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
-noblacklist ${PATH}/nslookup
-
 include disable-common.inc
-include disable-devel.inc
+# include disable-devel.inc
 include disable-exec.inc
-include disable-interpreters.inc
+# include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist ${HOME}/.nslookuprc
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -45,7 +44,8 @@ shell none
 tracelog
 
 disable-mnt
-private-bin bash,nslookup,sh
+private
+private-bin bash,drill,sh
 private-dev
 private-tmp
 

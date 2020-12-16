@@ -188,6 +188,7 @@ blacklist ${HOME}/.config/chromium-flags.conf
 blacklist ${HOME}/.config/clipit
 blacklist ${HOME}/.config/cliqz
 blacklist ${HOME}/.config/cmus
+blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/cower
 blacklist ${HOME}/.config/darktable
@@ -430,6 +431,7 @@ blacklist ${HOME}/.config/Zulip
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.crawl
 blacklist ${HOME}/.cups
+blacklist ${HOME}/.curl-hsts
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dashcore
 blacklist ${HOME}/.devilspie

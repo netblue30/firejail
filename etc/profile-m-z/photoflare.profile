@@ -1,37 +1,32 @@
-# Firejail profile for nslookup
-# Description: DNS lookup utility
+# Firejail profile for photoflare
+# Description: Simple painting and editing program
 # This file is overwritten after every install/update
-quiet
 # Persistent local customizations
-include nslookup.local
+include photoflare.local
 # Persistent global definitions
-include globals.local
+include photoflare.local
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
-
-noblacklist ${PATH}/nslookup
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
-include disable-exec.inc
+include disable-exec.inc 
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
-whitelist ${HOME}/.nslookuprc
-include whitelist-common.inc
+include whitelist-runuser-common.inc 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
 machine-id
-netfilter
-no3d
+net none
 nodvd
+no3d
 nogroups
 nonewprivs
 noroot
@@ -39,17 +34,17 @@ nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix
 seccomp
 shell none
 tracelog
 
 disable-mnt
-private-bin bash,nslookup,sh
+private-bin photoflare
+private-cache
 private-dev
+private-etc alternatives,fonts,locale,locale.alias,locale.conf,mime.types,X11
 private-tmp
 
 dbus-user none
 dbus-system none
-
-memory-deny-write-execute

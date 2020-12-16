@@ -515,18 +515,21 @@ blacklist /proc/config.gz
 # prevent DNS malware attempting to communicate with the server
 # using regular DNS tools
 blacklist ${PATH}/dig
-blacklist ${PATH}/kdig
-blacklist ${PATH}/nslookup
-blacklist ${PATH}/host
 blacklist ${PATH}/dlint
-blacklist ${PATH}/dnswalk
 blacklist ${PATH}/dns2tcp
+blacklist ${PATH}/dnswalk
+blacklist ${PATH}/drill
+blacklist ${PATH}/host
 blacklist ${PATH}/iodine
+blacklist ${PATH}/kdig
 blacklist ${PATH}/knsupdate
+blacklist ${PATH}/ldns-*
+blacklist ${PATH}/ldnsd
+blacklist ${PATH}/nslookup
 blacklist ${PATH}/resolvectl
 
 # rest of ${RUNUSER}
 blacklist ${RUNUSER}/*.lock
 blacklist ${RUNUSER}/inaccessible
-blacklist ${RUNUSER}/update-notifier.pid
 blacklist ${RUNUSER}/pk-debconf-socket
+blacklist ${RUNUSER}/update-notifier.pid

@@ -517,16 +517,19 @@ blacklist /proc/config.gz
 blacklist ${PATH}/dig
 blacklist ${PATH}/dlint
 blacklist ${PATH}/dns2tcp
+blacklist ${PATH}/dnssec-*
 blacklist ${PATH}/dnswalk
 blacklist ${PATH}/drill
 blacklist ${PATH}/host
 blacklist ${PATH}/iodine
 blacklist ${PATH}/kdig
+blacklist ${PATH}/khost
 blacklist ${PATH}/knsupdate
 blacklist ${PATH}/ldns-*
 blacklist ${PATH}/ldnsd
 blacklist ${PATH}/nslookup
 blacklist ${PATH}/resolvectl
+blacklist ${PATH}/unbound-host
 
 # rest of ${RUNUSER}
 blacklist ${RUNUSER}/*.lock

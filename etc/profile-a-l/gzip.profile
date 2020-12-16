@@ -11,5 +11,3 @@ include globals.local
 noblacklist /var/lib/pacman
 
 include archiver-common.inc
-
-private-bin gunzip,gzexe,gzip,uncompress,zcat,zcmp,zdiff,zegrep,zfgrep,zforce,zgrep,zless,zmore,znew

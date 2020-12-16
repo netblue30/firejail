@@ -13,9 +13,7 @@ noblacklist /var/lib/pacman
 ignore include disable-shell.inc
 include archiver-common.inc
 
-# support compressed archives
-private-bin awk,bash,bzip2,compress,firejail,grep,gtar,gzip,lbzip2,lzip,lzma,lzop,sh,tar,xz
 private-etc alternatives,group,localtime,login.defs,passwd
-private-lib libfakeroot,liblzma.so.*,libreadline.so.*
+#private-lib libfakeroot,liblzma.so.*,libreadline.so.*
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var

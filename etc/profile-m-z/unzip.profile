@@ -10,8 +10,6 @@ include globals.local
 # GNOME Shell integration (chrome-gnome-shell)
 noblacklist ${HOME}/.local/share/gnome-shell
 
-noroot
 include archiver-common.inc
 
-private-bin unzip
 private-etc alternatives,group,localtime,passwd

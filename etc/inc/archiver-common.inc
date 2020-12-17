@@ -6,10 +6,12 @@ include archiver-common.local
 
 blacklist ${RUNUSER}
 
-# NOTE: limiting file system access
-# Depending on your workflow you can loosen/tighten file access for **all** archivers by commenting/uncommenting
-# the needed include file here or put it into your archiver-common.local.
+# WARNING:
+# Users can (un)restrict file access for **all** archivers by commenting/uncommenting the needed
+# include file(s) here or by putting those into archiver-common.local.
 # Another option is to do this **per archiver** in the relevant <archiver>.local.
+# Just beware that things tend to break when overtightening profiles. For example, because you only
+# need to (un)compress files in ${DOWNLOADS}, other applications may need access to ${HOME}/.local/share.
 
 # Uncomment the next line (or put it into your archiver-common.local) if you don't need to compress files in disable-common.inc.
 #include disable-common.inc

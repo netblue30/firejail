@@ -6,12 +6,19 @@ include archiver-common.local
 
 blacklist ${RUNUSER}
 
-include disable-common.inc
+# NOTE: limiting file system access
+# Depending on your workflow you can loosen/tighten file access for **all** archivers by commenting/uncommenting
+# the needed include file here or put it into your archiver-common.local.
+# Another option is to do this per archiver in the relevant <archiver>.local.
+
+# Uncomment the next line (or put it into your archiver-common.local) if you don't need to compress files in disable-common.inc.
+#include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-include disable-programs.inc
+# Uncomment the next line (or put it into your archiver-common.local) if you don't need to compress files in disable-programs.inc.
+#include disable-programs.inc
 include disable-shell.inc
 
 apparmor

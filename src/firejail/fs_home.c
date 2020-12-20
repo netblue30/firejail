@@ -360,43 +360,38 @@ void fs_private(void) {
 	selinux_relabel_path("/root", "/root");
 	fs_logger("tmpfs /root");
 
-	if (arg_allusers) {
-		if (u != 0)
-			// mask user home directory
-			// the directory should be owned by the current user
-			fs_tmpfs(homedir, 1);
-	}
-	else { // mask /home
+	// mask /home
+	if (!arg_allusers) {
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /home directory");
 		selinux_relabel_path("/home", "/home");
 		fs_logger("tmpfs /home");
+	}
 
-		if (u != 0) {
-			if (strncmp(homedir, "/home/", 6) == 0) {
-				// create /home/user
-				if (arg_debug)
-					printf("Create a new user directory\n");
-				if (mkdir(homedir, S_IRWXU) == -1) {
-					if (mkpath_as_root(homedir) == -1)
-						errExit("mkpath");
-					if (mkdir(homedir, S_IRWXU) == -1 && errno != EEXIST)
-						errExit("mkdir");
-				}
-				if (chown(homedir, u, g) < 0)
-					errExit("chown");
-
-				selinux_relabel_path(homedir, homedir);
-				fs_logger2("mkdir", homedir);
-				fs_logger2("tmpfs", homedir);
+	if (u != 0) {
+		if (!arg_allusers && strncmp(homedir, "/home/", 6) == 0) {
+			// create new empty /home/user directory
+			if (arg_debug)
+				printf("Create a new user directory\n");
+			if (mkdir(homedir, S_IRWXU) == -1) {
+				if (mkpath_as_root(homedir) == -1)
+					errExit("mkpath");
+				if (mkdir(homedir, S_IRWXU) == -1)
+					errExit("mkdir");
 			}
-			else
-				// mask user home directory
-				// the directory should be owned by the current user
-				fs_tmpfs(homedir, 1);
+			if (chown(homedir, u, g) < 0)
+				errExit("chown");
+
+			selinux_relabel_path(homedir, homedir);
+			fs_logger2("mkdir", homedir);
+			fs_logger2("tmpfs", homedir);
 		}
+		else
+			// mask user home directory
+			// the directory should be owned by the current user
+			fs_tmpfs(homedir, 1);
 	}
 
 	skel(homedir, u, g);

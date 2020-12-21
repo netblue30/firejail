@@ -12,7 +12,6 @@ noblacklist ${HOME}/.config/Riot
 
 mkdir ${HOME}/.config/Riot
 whitelist ${HOME}/.config/Riot
-whitelist /usr/share/chromium
 whitelist /usr/share/webapps/element
 
 # Redirect

@@ -29,7 +29,6 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <sys/wait.h>
-#include <sys/syscall.h>
 #include <limits.h>
 
 #include <fcntl.h>
@@ -37,6 +36,7 @@
 #define O_PATH 010000000
 #endif
 
+#include <sys/syscall.h>
 #ifdef __NR_openat2
 #include <linux/openat2.h>
 #endif
@@ -1013,12 +1013,8 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 				if (chmod(dir, mode) == -1)
 					{;} // do nothing
 			}
-			else if (arg_debug) {
-				char *str;
-				if (asprintf(&str, "Directory %s not created", dir) == -1)
-					errExit("asprintf");
-				perror(str);
-			}
+			else if (arg_debug)
+				printf("Directory %s not created: %s\n", dir, strerror(errno));
 #ifdef HAVE_GCOV
 			__gcov_flush();
 #endif
@@ -1165,12 +1161,12 @@ void disable_file_path(const char *path, const char *file) {
 
 // open an existing file without following any symbolic link
 int safe_fd(const char *path, int flags) {
+	flags |= O_NOFOLLOW;
 	assert(path);
 	if (*path != '/' || strstr(path, "..")) {
 		fprintf(stderr, "Error: invalid path %s\n", path);
 		exit(1);
 	}
-	flags |= O_NOFOLLOW;
 	int fd = -1;
 
 #ifdef __NR_openat2 // kernel 5.6 or better

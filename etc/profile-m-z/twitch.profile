@@ -12,7 +12,7 @@ ignore novideo
 
 noblacklist ${HOME}/.config/Twitch
 
-include disable-shell.inc 
+include disable-shell.inc
 
 mkdir ${HOME}/.config/Twitch
 whitelist ${HOME}/.config/Twitch

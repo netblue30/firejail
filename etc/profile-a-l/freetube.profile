@@ -8,7 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/FreeTube
 
-include disable-shell.inc 
+include disable-shell.inc
 
 mkdir ${HOME}/.config/FreeTube
 whitelist ${HOME}/.config/FreeTube

@@ -8,7 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/youtubemusic-nativefier-040164
 
-include disable-shell.inc 
+include disable-shell.inc
 
 mkdir ${HOME}/.config/youtubemusic-nativefier-040164
 whitelist ${HOME}/.config/youtubemusic-nativefier-040164

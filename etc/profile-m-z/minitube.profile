@@ -19,7 +19,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-shell.inc 
+include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/Flavio Tordini
@@ -30,8 +30,8 @@ whitelist ${HOME}/.cache/Flavio Tordini
 whitelist ${HOME}/.config/Flavio Tordini
 whitelist ${HOME}/.local/share/Flavio Tordini
 whitelist /usr/share/minitube
-include whitelist-common.inc 
-include whitelist-runuser-common.inc 
+include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

@@ -1,5 +1,5 @@
 # Firejail profile for otter-browser
-# Description: Lightweight web browser based on Qt5 
+# Description: Lightweight web browser based on Qt5
 # This file is overwritten after every install/update
 # Persistent local customizations
 include otter-browser.local
@@ -32,7 +32,7 @@ whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
 whitelist /usr/share/otter-browser
 include whitelist-common.inc
-include whitelist-runuser-common.inc 
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -54,6 +54,6 @@ private-bin bash,otter-browser,sh,which
 private-cache
 ?BROWSER_DISABLE_U2F: private-dev
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
-private-tmp 
+private-tmp
 
 dbus-system none

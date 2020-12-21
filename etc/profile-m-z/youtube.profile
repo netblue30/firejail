@@ -11,7 +11,7 @@ ignore nou2f
 
 noblacklist ${HOME}/.config/Youtube
 
-include disable-shell.inc 
+include disable-shell.inc
 
 mkdir ${HOME}/.config/Youtube
 whitelist ${HOME}/.config/Youtube

@@ -589,7 +589,7 @@ blacklist ${HOME}/.local/share/agenda
 blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/autokey
-blacklist ${HOME}/.local/share/authenticator-rs 
+blacklist ${HOME}/.local/share/authenticator-rs
 blacklist ${HOME}/.local/share/backintime
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/barrier

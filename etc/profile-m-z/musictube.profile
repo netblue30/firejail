@@ -1,5 +1,5 @@
 # Firejail profile for musictube
-# Description: Stream music 
+# Description: Stream music
 # This file is overwritten after every install/update
 # Persistent local customizations
 include musictube.local
@@ -16,7 +16,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-shell.inc 
+include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/Flavio Tordini
@@ -26,8 +26,8 @@ whitelist ${HOME}/.cache/Flavio Tordini
 whitelist ${HOME}/.config/Flavio Tordini
 whitelist ${HOME}/.local/share/Flavio Tordini
 whitelist /usr/share/musictube
-include whitelist-common.inc 
-include whitelist-runuser-common.inc 
+include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

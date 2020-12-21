@@ -75,10 +75,11 @@ static void clean_supplementary_groups(gid_t gid) {
 		goto clean_all;
 
 	// clean supplementary group list
-	// allow only tty, audio, video, games
+	// allow only firejail, tty, audio, video, games
 	gid_t new_groups[MAX_GROUPS];
 	int new_ngroups = 0;
 	char *allowed[] = {
+		"firejail",
 		"tty",
 		"audio",
 		"video",

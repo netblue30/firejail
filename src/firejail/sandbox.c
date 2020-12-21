@@ -141,7 +141,7 @@ void set_apparmor(void) {
 }
 #endif
 
-void seccomp_debug(void) {
+static void seccomp_debug(void) {
 	if (arg_debug == 0)
 		return;
 

@@ -745,6 +745,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: invalid MAC address\n");
 				exit(1);
 			}
+
+			// check multicast address
+			if (br->macsandbox[0] & 1) {
+				fprintf(stderr, "Error: invalid MAC address (multicast)\n");
+				exit(1);
+			}
 		}
 		else
 			warning_feature_disabled("networking");

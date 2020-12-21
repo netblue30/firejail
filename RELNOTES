@@ -5,7 +5,7 @@ firejail (0.9.65) baseline; urgency=low
   * Setup guide for new users: contrib/firejail-welcome.sh
   * new profiles: spectacle, chromium-browser-privacy, gtk-straw-viewer
   * new profiles: gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer
-  * new profiles: straw-viewer, lutris, dolphin-emu, authenticator-rs
+  * new profiles: straw-viewer, lutris, dolphin-emu, authenticator-rs, servo
 
  -- netblue30 <netblue30@yahoo.com>  Wed, 21 Oct 2020 09:00:00 -0500
 

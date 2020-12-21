@@ -3031,8 +3031,15 @@ int main(int argc, char **argv, char **envp) {
 	 	ptr += strlen(ptr);
 
 	 	if (!arg_nogroups) {
+		 	//  add firejail group
+		 	gid_t g = get_group_id("firejail");
+		 	if (g) {
+		 		sprintf(ptr, "%d %d 1\n", g, g);
+		 		ptr += strlen(ptr);
+		 	}
+
 		 	//  add tty group
-		 	gid_t g = get_group_id("tty");
+		 	g = get_group_id("tty");
 		 	if (g) {
 		 		sprintf(ptr, "%d %d 1\n", g, g);
 		 		ptr += strlen(ptr);

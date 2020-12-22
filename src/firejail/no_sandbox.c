@@ -178,7 +178,6 @@ void run_no_sandbox(int argc, char **argv) {
 
 	// use $SHELL to get shell used in sandbox, guess shell otherwise
 	assert(login_shell == 0);
-	cfg.shell = guess_shell();
 	if (!cfg.shell) {
 		fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
 		exit(1);

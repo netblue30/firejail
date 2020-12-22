@@ -864,13 +864,12 @@ char *guess_shell(void) {
 	char *shell = NULL;
 	struct stat s;
 
-	if (!login_shell) { // if firejail is the login shell, SHELL is set to path of firejail executable
-		shell = getenv("SHELL");
-		if (shell) {
-			invalid_filename(shell, 0); // no globbing
-			if (!is_dir(shell) && strstr(shell, "..") == NULL && stat(shell, &s) == 0 && access(shell, X_OK) == 0)
-				return shell;
-		}
+	shell = getenv("SHELL");
+	if (shell) {
+		invalid_filename(shell, 0); // no globbing
+		if (!is_dir(shell) && strstr(shell, "..") == NULL && stat(shell, &s) == 0 && access(shell, X_OK) == 0 &&
+		    strcmp(shell, PATH_FIREJAIL) != 0)
+			return shell;
 	}
 
 	// shells in order of preference

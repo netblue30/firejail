@@ -372,7 +372,7 @@ char *guess_shell(void);
 // sandbox.c
 #define SANDBOX_DONE '1'
 int sandbox(void* sandbox_arg);
-void start_application(int no_sandbox, char *set_sandbox_status) __attribute__((noreturn));
+void start_application(int no_sandbox, int fd, char *set_sandbox_status) __attribute__((noreturn));
 void set_apparmor(void);
 
 // network_main.c

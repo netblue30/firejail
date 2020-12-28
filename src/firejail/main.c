@@ -2786,7 +2786,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// build the sandbox command
 	if (prog_index == -1 && cfg.shell) {
-		cfg.command_line = cfg.shell;
+		assert(cfg.command_line == NULL); // runs cfg.shell
 		cfg.window_title = cfg.shell;
 		cfg.command_name = cfg.shell;
 	}

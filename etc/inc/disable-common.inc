@@ -27,7 +27,6 @@ blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
 blacklist-nolog ${HOME}/.mutthistory
 blacklist-nolog ${HOME}/.python-history
-blacklist-nolog ${HOME}/.python_history
 blacklist-nolog ${HOME}/.pythonhist
 blacklist-nolog ${HOME}/.lesshst
 blacklist-nolog ${HOME}/.viminfo

@@ -1,9 +1,9 @@
-# Firejail profile for mutt
-# Description: Text-based mailreader supporting MIME, GPG, PGP and threading
+# Firejail profile for neomutt
+# Description: Mutt fork with advanced features and better documentation
 quiet
 # This file is overwritten after every install/update
 # Persistent local customizations
-include mutt.local
+include neomutt.local
 # Persistent global definitions
 include globals.local
 
@@ -13,6 +13,7 @@ noblacklist ${HOME}/.Mail
 noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.config/mutt
 noblacklist ${HOME}/.config/nano
+noblacklist ${HOME}/.config/neomutt
 noblacklist ${HOME}/.elinks
 noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
@@ -23,6 +24,8 @@ noblacklist ${HOME}/.msmtprc
 noblacklist ${HOME}/.mutt
 noblacklist ${HOME}/.muttrc
 noblacklist ${HOME}/.nanorc
+noblacklist ${HOME}/.neomutt
+noblacklist ${HOME}/.neomuttrc
 noblacklist ${HOME}/.signature
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo
@@ -36,8 +39,7 @@ noblacklist ${HOME}/sent
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
-include allow-perl.inc
-include allow-python.inc
+include allow-lua.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -53,6 +55,7 @@ mkfile ${HOME}/.mailcap
 mkfile ${HOME}/.msmtprc
 mkfile ${HOME}/.muttrc
 mkfile ${HOME}/.nanorc
+mkfile ${HOME}/.neomuttrc
 mkfile ${HOME}/.signature
 mkfile ${HOME}/.vimrc
 mkfile ${HOME}/.viminfo
@@ -62,10 +65,12 @@ mkdir ${HOME}/.Mail
 mkdir ${HOME}/.bogofilter
 mkdir ${HOME}/.config/mutt
 mkdir ${HOME}/.config/nano
+mkdir ${HOME}/.config/neomutt
 mkdir ${HOME}/.emacs.d
 mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.mail
 mkdir ${HOME}/.mutt
+mkdir ${HOME}/.neomutt
 mkdir ${HOME}/.vim
 mkdir ${HOME}/Mail
 mkdir ${HOME}/mail
@@ -75,6 +80,7 @@ whitelist ${HOME}/.Mail
 whitelist ${HOME}/.bogofilter
 whitelist ${HOME}/.config/mutt
 whitelist ${HOME}/.config/nano
+whitelist ${HOME}/.config/neomutt
 whitelist ${HOME}/.elinks
 whitelist ${HOME}/.emacs
 whitelist ${HOME}/.emacs.d
@@ -85,6 +91,8 @@ whitelist ${HOME}/.msmtprc
 whitelist ${HOME}/.mutt
 whitelist ${HOME}/.muttrc
 whitelist ${HOME}/.nanorc
+whitelist ${HOME}/.neomutt
+whitelist ${HOME}/.neomuttrc
 whitelist ${HOME}/.signature
 whitelist ${HOME}/.vim
 whitelist ${HOME}/.viminfo
@@ -98,7 +106,7 @@ whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
-whitelist /usr/share/mutt
+whitelist /usr/share/neomutt
 whitelist /var/mail
 whitelist /var/spool/mail
 include whitelist-common.inc
@@ -126,7 +134,7 @@ tracelog
 # disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,gai.conf,gcrypt,gnupg,gnutls,hostname,hosts,hosts.conf,mail,mailname,Mutt,Muttrc,Muttrc.d,nntpserver,nsswitch.conf,passwd,pki,resolv.conf,ssl,terminfo,xdg
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gnupg,hostname,hosts,hosts.conf,mail,mailname,Mutt,Muttrc,Muttrc.d,neomuttrc,neomuttrc.d,nntpserver,nsswitch.conf,passwd,pki,resolv.conf,ssl,xdg
 private-tmp
 writable-run-user
 writable-var

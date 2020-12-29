@@ -303,6 +303,7 @@ blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
+blacklist ${HOME}/.config/matrix-mirage
 blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/menulibre.cfg
@@ -671,6 +672,7 @@ blacklist ${HOME}/.local/share/lugaru
 blacklist ${HOME}/.local/share/lutris
 blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
+blacklist ${HOME}/.local/share/matrix-mirage
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
 blacklist ${HOME}/.local/share/mirage
@@ -943,6 +945,7 @@ blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/lutris
 blacklist ${HOME}/.cache/Mendeley Ltd.
+blacklist ${HOME}/.cache/matrix-mirage
 blacklist ${HOME}/.cache/midori
 blacklist ${HOME}/.cache/minetest
 blacklist ${HOME}/.cache/mirage

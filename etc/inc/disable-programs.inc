@@ -961,7 +961,7 @@ blacklist ${HOME}/.cache/ms-skype-online
 blacklist ${HOME}/.cache/ms-word-online
 blacklist ${HOME}/.cache/mutt
 blacklist ${HOME}/.cache/mypaint
-blacklist ${HOME}/.cache/nheko/nheko
+blacklist ${HOME}/.cache/nheko
 blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/okular
 blacklist ${HOME}/.cache/opera

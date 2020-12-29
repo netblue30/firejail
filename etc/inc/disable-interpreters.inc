@@ -20,6 +20,7 @@ blacklist /usr/lib64/lua
 blacklist /usr/share/lua*
 
 # mozjs
+blacklist /usr/lib/libmozjs-*
 blacklist /usr/lib64/libmozjs-*
 
 # Node.js

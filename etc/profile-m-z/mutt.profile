@@ -1,7 +1,7 @@
 # Firejail profile for mutt
 # Description: Text-based mailreader supporting MIME, GPG, PGP and threading
-quiet
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include mutt.local
 # Persistent global definitions
@@ -9,8 +9,10 @@ include globals.local
 
 noblacklist /var/mail
 noblacklist /var/spool/mail
+noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.Mail
 noblacklist ${HOME}/.bogofilter
+noblacklist ${HOME}/.cache/mutt
 noblacklist ${HOME}/.config/mutt
 noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.elinks
@@ -37,7 +39,8 @@ blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include allow-perl.inc
-include allow-python.inc
+include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -60,6 +63,7 @@ mkfile ${HOME}/.vimrc
 mkfile ${HOME}/.w3m
 mkdir ${HOME}/.Mail
 mkdir ${HOME}/.bogofilter
+mkdir ${HOME}/.cache/mutt
 mkdir ${HOME}/.config/mutt
 mkdir ${HOME}/.config/nano
 mkdir ${HOME}/.emacs.d
@@ -73,6 +77,7 @@ mkdir ${HOME}/postponed
 mkdir ${HOME}/sent
 whitelist ${HOME}/.Mail
 whitelist ${HOME}/.bogofilter
+whitelist ${HOME}/.cache/mutt
 whitelist ${HOME}/.config/mutt
 whitelist ${HOME}/.config/nano
 whitelist ${HOME}/.elinks
@@ -133,3 +138,15 @@ writable-var
 
 dbus-user none
 dbus-system none
+
+read-only ${HOME}/.elinks
+read-only ${HOME}/.emacs
+read-only ${HOME}/.mailcap
+read-only ${HOME}/.msmtprc
+read-only ${HOME}/.muttrc
+read-only ${HOME}/.nanorc
+read-only ${HOME}/.signature
+read-only ${HOME}/.vimrc
+read-only ${HOME}/.viminfo
+read-only ${HOME}/.vimrc
+read-only ${HOME}/.w3m

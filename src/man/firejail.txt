@@ -76,10 +76,10 @@ If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option
 to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.
 .PP
-If a program argument is not specified, Firejail starts /bin/bash shell.
+If a program argument is not specified, Firejail starts the user's preferred shell.
 Examples:
 .PP
-$ firejail [OPTIONS]                # starting a /bin/bash shell
+$ firejail [OPTIONS]                # starting the program specified in $SHELL, usually /bin/bash
 .PP
 $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 .PP
@@ -2476,7 +2476,7 @@ $ firejail \-\-shell=none script.sh
 \fB\-\-shell=program
 Set default user shell. Use this shell to run the application using \-c shell option.
 For example "firejail \-\-shell=/bin/dash firefox" will start Mozilla Firefox as "/bin/dash \-c firefox".
-By default Bash shell (/bin/bash) is used.
+By default the user's preferred shell is used.
 .br
 
 .br
@@ -3023,7 +3023,7 @@ We provide a tool that automates all this integration, please see \&\flfirecfg\f
 .SH EXAMPLES
 .TP
 \f\firejail
-Sandbox a regular /bin/bash session.
+Sandbox a regular shell session.
 .TP
 \f\firejail firefox
 Start Mozilla Firefox.
@@ -3043,7 +3043,7 @@ Start Firefox in a new network namespace. An IP address is
 assigned automatically.
 .TP
 \f\firejail \-\-net=br0 \-\-ip=10.10.20.5 \-\-net=br1 \-\-net=br2
-Start a /bin/bash session in a new network namespace and connect it
+Start a shell session in a new network namespace and connect it
 to br0, br1, and br2 host bridge devices. IP addresses are assigned
 automatically for the interfaces connected to br1 and b2
 #endif

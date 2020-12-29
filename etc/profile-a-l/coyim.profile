@@ -39,3 +39,8 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ssl
 private-tmp
+
+dbus-user none
+dbus-system none
+
+memory-deny-write-execute

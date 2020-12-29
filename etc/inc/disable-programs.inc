@@ -191,6 +191,7 @@ blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/cower
+blacklist ${HOME}/.config/coyim
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge

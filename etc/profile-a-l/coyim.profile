@@ -15,11 +15,11 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-write-mnt.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/coyim
 whitelist ${HOME}/.config/coyim
+include whitelist-common.inc
 
 caps.drop all
 netfilter
@@ -37,10 +37,10 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,machine-id,pki,ssl
 private-tmp
 
 dbus-user none
 dbus-system none
 
-memory-deny-write-execute
+#memory-deny-write-execute

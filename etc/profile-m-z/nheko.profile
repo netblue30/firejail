@@ -7,7 +7,7 @@ include nheko.local
 include globals.local
 
 noblacklist ${HOME}/.config/nheko
-noblacklist ${HOME}/.cache/nheko/nheko
+noblacklist ${HOME}/.cache/nheko
 
 include disable-common.inc
 include disable-devel.inc
@@ -48,7 +48,9 @@ private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,mime.types,nsswitch.conf,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
 private-tmp
 
-dbus-user filter
-dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.kde.StatusNotifierWatcher
+dbus-user none
+# Comment the above line and uncomment below lines for notification popups
+# dbus-user filter
+# dbus-user.talk org.freedesktop.Notifications
+# dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none

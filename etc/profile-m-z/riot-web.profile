@@ -4,14 +4,15 @@
 # Persistent local customizations
 include riot-web.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
+
+ignore noexec /tmp
 
 noblacklist ${HOME}/.config/Riot
 
 mkdir ${HOME}/.config/Riot
 whitelist ${HOME}/.config/Riot
-include whitelist-common.inc
+whitelist /usr/share/webapps/element
 
 # Redirect
 include electron.profile

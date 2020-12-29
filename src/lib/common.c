@@ -30,6 +30,7 @@
 #include <signal.h>
 #include <dirent.h>
 #include <string.h>
+#include <time.h>
 #include "../include/common.h"
 #define BUFLEN 4096
 
@@ -277,7 +278,7 @@ int pid_hidepid(void) {
 		if (strstr(buf, "proc /proc proc")) {
 			fclose(fp);
 			// check hidepid
-			if (strstr(buf, "hidepid=2") || strstr(buf, "hidepid=1"))
+			if (strstr(buf, "hidepid="))
 				return 1;
 			return 0;
 		}
@@ -290,38 +291,42 @@ int pid_hidepid(void) {
 //**************************
 // time trace based on getticks function
 //**************************
-static int tt_not_implemented = 0; // not implemented for the current architecture
-static unsigned long long tt_1ms = 0;
-static unsigned long long tt = 0;	// start time
+typedef struct list_entry_t {
+	struct list_entry_t *next;
+	struct timespec ts;
+} ListEntry;
+
+static ListEntry *ts_list = NULL;
+
+static inline float msdelta(struct timespec *start, struct timespec *end) {
+	unsigned sec = end->tv_sec - start->tv_sec;
+	long nsec = end->tv_nsec - start->tv_nsec;
+	return (float) sec * 1000 + (float) nsec / 1000000;
+}
 
 void timetrace_start(void) {
-	if (tt_not_implemented)
-		return;
-	unsigned long long t1 = getticks();
-	if (t1 == 0) {
-		tt_not_implemented = 1;
-		return;
-	}
+	ListEntry *t = malloc(sizeof(ListEntry));
+	if (!t)
+		errExit("malloc");
+	memset(t, 0, sizeof(ListEntry));
+	clock_gettime(CLOCK_MONOTONIC, &t->ts);
 
-	if (tt_1ms == 0) {
-		usleep(1000);	// sleep 1 ms
-		unsigned long long t2 = getticks();
-		tt_1ms = t2 - t1;
-		if (tt_1ms == 0) {
-			tt_not_implemented = 1;
-			return;
-		}
-	}
-
-	tt = getticks();
+	// add it to the list
+	t->next = ts_list;
+	ts_list = t;
 }
 
 float timetrace_end(void) {
-	if (tt_not_implemented)
+	if (!ts_list)
 		return 0;
 
-	unsigned long long delta = getticks() - tt;
-	assert(tt_1ms);
+	// remove start time  from the list
+	ListEntry *t = ts_list;
+	ts_list = t->next;
 
-	return (float) delta / (float) tt_1ms;
+	struct timespec end;
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	float rv = msdelta(&t->ts, &end);
+	free(t);
+	return rv;
 }

@@ -66,7 +66,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 shell none
 
-# comment the following line if you don't need controller support
+# uncomment the following line if you do not need controller support
 # private-dev
 private-tmp
 

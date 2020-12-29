@@ -1368,7 +1368,7 @@ void fs_x11(void) {
 void x11_block(void) {
 #ifdef HAVE_X11
 	// check abstract socket presence and network namespace options
-	if ((!arg_nonetwork && !cfg.bridge0.configured && !cfg.interface0.configured)
+	if ((!arg_nonetwork && !arg_netns && !cfg.bridge0.configured && !cfg.interface0.configured)
 	&& x11_abstract_sockets_present()) {
 		fprintf(stderr, "ERROR: --x11=none specified, but abstract X11 socket still accessible.\n"
 			"Additional setup required. To block abstract X11 socket you can either:\n"

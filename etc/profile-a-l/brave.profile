@@ -10,10 +10,6 @@ include globals.local
 ignore noexec /tmp
 # TOR is installed in ${HOME}
 ignore noexec ${HOME}
-# Disable for now, see https://github.com/netblue30/firejail/pull/3688#issuecomment-718711565
-ignore whitelist /usr/share/chromium
-ignore include whitelist-runuser-common.inc
-ignore include whitelist-usr-share-common.inc
 
 noblacklist ${HOME}/.cache/BraveSoftware
 noblacklist ${HOME}/.config/BraveSoftware

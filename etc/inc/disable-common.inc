@@ -303,6 +303,7 @@ read-only ${HOME}/.exrc
 read-only ${HOME}/.gvimrc
 read-only ${HOME}/.homesick
 read-only ${HOME}/.iscreenrc
+read-only ${HOME}/.local/lib
 read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.msmtprc
@@ -514,18 +515,24 @@ blacklist /proc/config.gz
 # prevent DNS malware attempting to communicate with the server
 # using regular DNS tools
 blacklist ${PATH}/dig
-blacklist ${PATH}/kdig
-blacklist ${PATH}/nslookup
-blacklist ${PATH}/host
 blacklist ${PATH}/dlint
-blacklist ${PATH}/dnswalk
 blacklist ${PATH}/dns2tcp
+blacklist ${PATH}/dnssec-*
+blacklist ${PATH}/dnswalk
+blacklist ${PATH}/drill
+blacklist ${PATH}/host
 blacklist ${PATH}/iodine
+blacklist ${PATH}/kdig
+blacklist ${PATH}/khost
 blacklist ${PATH}/knsupdate
+blacklist ${PATH}/ldns-*
+blacklist ${PATH}/ldnsd
+blacklist ${PATH}/nslookup
 blacklist ${PATH}/resolvectl
+blacklist ${PATH}/unbound-host
 
 # rest of ${RUNUSER}
 blacklist ${RUNUSER}/*.lock
 blacklist ${RUNUSER}/inaccessible
-blacklist ${RUNUSER}/update-notifier.pid
 blacklist ${RUNUSER}/pk-debconf-socket
+blacklist ${RUNUSER}/update-notifier.pid

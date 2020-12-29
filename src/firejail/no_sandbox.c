@@ -204,11 +204,12 @@ void run_no_sandbox(int argc, char **argv) {
 			break;
 		}
 	}
-	// if shell is /usr/bin/firejail, replace it with /bin/bash
-	if (strcmp(cfg.shell, PATH_FIREJAIL) == 0) {
-		cfg.shell = "/bin/bash";
-		prog_index = 0;
-	}
+
+// if shell is /usr/bin/firejail, replace it with /bin/bash
+//	if (strcmp(cfg.shell, PATH_FIREJAIL) == 0) {
+//		cfg.shell = "/bin/bash";
+//		prog_index = 0;
+//	}
 
 	if (prog_index == 0) {
 		cfg.command_line = cfg.shell;

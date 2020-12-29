@@ -48,4 +48,4 @@ private-tmp
 dbus-user none
 dbus-system none
 
-memory-deny-write-execute
+# memory-deny-write-execute -- see #3790

@@ -15,6 +15,7 @@ mkdir ${HOME}/.config/chromium
 whitelist ${HOME}/.cache/chromium
 whitelist ${HOME}/.config/chromium
 whitelist ${HOME}/.config/chromium-flags.conf
+whitelist /usr/share/chromium
 
 # private-bin chromium,chromium-browser,chromedriver
 

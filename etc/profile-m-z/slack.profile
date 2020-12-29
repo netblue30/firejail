@@ -5,31 +5,26 @@ include slack.local
 # Persistent global definitions
 include globals.local
 
+# Disabled until someone reported positive feedback
+ignore include disable-exec.inc
+ignore include disable-xdg.inc
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+ignore apparmor
+ignore novideo
+ignore private-tmp
+ignore dbus-user none
+ignore dbus-system none
+
 noblacklist ${HOME}/.config/Slack
 
-include disable-common.inc
-include disable-devel.inc
-include disable-interpreters.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.config/Slack
 whitelist ${HOME}/.config/Slack
-whitelist ${DOWNLOADS}
-include whitelist-common.inc
-include whitelist-var-common.inc
 
-caps.keep sys_admin,sys_chroot
-netfilter
-nodvd
-nogroups
-notv
-nou2f
-shell none
-
-disable-mnt
 private-bin locale,slack
-private-cache
-private-dev
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,debian_version,fedora-release,fonts,group,ld.so.cache,ld.so.conf,localtime,machine-id,os-release,passwd,pki,pulse,redhat-release,resolv.conf,ssl,system-release,system-release-cpe
+
+# Redirect
+include electron.profile

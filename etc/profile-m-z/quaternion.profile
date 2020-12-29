@@ -1,5 +1,5 @@
 # Firejail profile for quaternion
-# Description: Desktop client for Matrix 
+# Description: Desktop client for Matrix
 # This file is overwritten after every install/update
 # Persistent local customizations
 include quaternion.local
@@ -25,7 +25,7 @@ whitelist ${HOME}/.config/Quotient
 whitelist ${DOWNLOADS}
 whitelist /usr/share/Quotient/quaternion
 include whitelist-common.inc
-include whitelist-runuser-common.inc 
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

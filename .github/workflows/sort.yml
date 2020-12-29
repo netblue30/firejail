@@ -1,0 +1,21 @@
+name: sort.py
+
+on:    
+  push: 
+    branches: [ master ]
+    paths:
+      - 'etc/**'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'etc/**'
+
+jobs:
+  profile-sort:
+    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: check profiles
+      run: ./contrib/sort.py etc/*/{*.inc,*.profile}
+

@@ -3,14 +3,28 @@
 # Persistent local customizations
 include rocketchat.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
+
+# Disabled until someone reported positive feedback
+ignore include disable-devel.inc
+ignore include disable-exec.inc
+ignore include disable-interpreters.inc
+ignore include disable-xdg.inc
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+ignore include whitelist-var-common.inc
+ignore nou2f
+ignore novideo
+ignore shell none
+ignore disable-mnt
+ignore private-cache
+ignore private-dev
+ignore private-tmp
 
 noblacklist ${HOME}/.config/Rocket.Chat
 
 mkdir ${HOME}/.config/Rocket.Chat
 whitelist ${HOME}/.config/Rocket.Chat
-include whitelist-common.inc
 
 # Redirect
 include electron.profile

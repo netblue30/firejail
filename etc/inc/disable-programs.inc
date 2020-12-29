@@ -900,6 +900,7 @@ blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
 blacklist ${HOME}/.cache/flaska.net/trojita
+blacklist ${HOME}/.cache/folks
 blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/fractal

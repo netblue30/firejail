@@ -309,6 +309,7 @@ blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/menulibre.cfg
 blacklist ${HOME}/.config/mfusion
 blacklist ${HOME}/.config/Microsoft
+blacklist ${HOME}/.config/microsoft-edge-dev
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mirage
 blacklist ${HOME}/.config/mono
@@ -555,6 +556,7 @@ blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc
 blacklist ${HOME}/.klatexformula
 blacklist ${HOME}/.kodi
+blacklist ${HOME}/.librewolf
 blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.links
 blacklist ${HOME}/.linphone-history.db
@@ -942,10 +944,12 @@ blacklist ${HOME}/.cache/ksplashqml
 blacklist ${HOME}/.cache/kube
 blacklist ${HOME}/.cache/kwin
 blacklist ${HOME}/.cache/libgweather
+blacklist ${HOME}/.cache/librewolf
 blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/lutris
 blacklist ${HOME}/.cache/Mendeley Ltd.
 blacklist ${HOME}/.cache/matrix-mirage
+blacklist ${HOME}/.cache/microsoft-edge-dev
 blacklist ${HOME}/.cache/midori
 blacklist ${HOME}/.cache/minetest
 blacklist ${HOME}/.cache/mirage

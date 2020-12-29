@@ -1,6 +1,7 @@
 # Firejail profile for feh
 # Description: imlib2 based image viewer
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include feh.local
 # Persistent global definitions

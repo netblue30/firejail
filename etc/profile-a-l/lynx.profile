@@ -1,6 +1,7 @@
 # Firejail profile for lynx
 # Description: Classic non-graphical (text-mode) web browser
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include lynx.local
 # Persistent global definitions

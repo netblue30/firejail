@@ -1,6 +1,7 @@
 # Firejail profile for links
 # Description: Text WWW browser
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include links.local
 # Persistent global definitions

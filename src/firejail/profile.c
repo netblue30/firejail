@@ -619,6 +619,17 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
+	else if (strncmp(ptr, "netns  ", 6) == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			arg_netns = ptr + 6;
+			check_netns(arg_netns);
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
 	else if (strcmp(ptr, "net none") == 0) {
 		arg_nonetwork  = 1;
 		cfg.bridge0.configured = 0;

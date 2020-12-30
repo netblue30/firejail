@@ -212,7 +212,7 @@ void run_no_sandbox(int argc, char **argv) {
 //	}
 
 	if (prog_index == 0) {
-		cfg.command_line = cfg.shell;
+		assert(cfg.command_line == NULL); // runs cfg.shell
 		cfg.window_title = cfg.shell;
 	} else {
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
@@ -231,5 +231,5 @@ void run_no_sandbox(int argc, char **argv) {
 
 	arg_quiet = 1;
 
-	start_application(1, NULL);
+	start_application(1, -1, NULL);
 }

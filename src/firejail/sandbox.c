@@ -461,7 +461,7 @@ static int ok_to_run(const char *program) {
 	return 0;
 }
 
-void start_application(int no_sandbox, char *set_sandbox_status) {
+void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	// set environment
 	if (no_sandbox == 0) {
 		env_defaults();
@@ -471,7 +471,7 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 	umask(orig_umask);
 
 	if (arg_debug) {
-		printf("starting application\n");
+		printf("Starting application\n");
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
 	}
 
@@ -488,9 +488,6 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
 		execl(arg_audit_prog, arg_audit_prog, NULL);
-
-		perror("execl");
-		exit(1);
 	}
 	//****************************************
 	// start the program without using a shell
@@ -532,35 +529,37 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 	//****************************************
 	else {
 		assert(cfg.shell);
-		assert(cfg.command_line);
 
 		char *arg[5];
 		int index = 0;
 		arg[index++] = cfg.shell;
-		if (login_shell) {
-			arg[index++] = "-l";
-			if (arg_debug)
-				printf("Starting %s login shell\n", cfg.shell);
-		} else {
-			arg[index++] = "-c";
+		if (cfg.command_line) {
 			if (arg_debug)
 				printf("Running %s command through %s\n", cfg.command_line, cfg.shell);
+			arg[index++] = "-c";
 			if (arg_doubledash)
 				arg[index++] = "--";
 			arg[index++] = cfg.command_line;
 		}
-		arg[index] = NULL;
+		else if (login_shell) {
+			if (arg_debug)
+				printf("Starting %s login shell\n", cfg.shell);
+			arg[index++] = "-l";
+		}
+		else if (arg_debug)
+			printf("Starting %s shell\n", cfg.shell);
+
 		assert(index < 5);
+		arg[index] = NULL;
 
 		if (arg_debug) {
 			char *msg;
-			if (asprintf(&msg, "sandbox %d, execvp into %s", sandbox_pid, cfg.command_line) == -1)
+			if (asprintf(&msg, "sandbox %d, execvp into %s",
+				sandbox_pid, cfg.command_line ? cfg.command_line : cfg.shell) == -1)
 				errExit("asprintf");
 			logmsg(msg);
 			free(msg);
-		}
 
-		if (arg_debug) {
 			int i;
 			for (i = 0; i < 5; i++) {
 				if (arg[i] == NULL)
@@ -580,10 +579,14 @@ void start_application(int no_sandbox, char *set_sandbox_status) {
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
 		execvp(arg[0], arg);
+
+		// join sandbox without shell in the mount namespace
+		if (fd > -1)
+			fexecve(fd, arg, environ);
 	}
 
-	perror("execvp");
-	exit(1); // it should never get here!!!
+	perror("Cannot start application");
+	exit(1);
 }
 
 static void enforce_filters(void) {
@@ -1223,7 +1226,7 @@ int sandbox(void* sandbox_arg) {
 			set_nice(cfg.nice);
 		set_rlimits();
 
-		start_application(0, set_sandbox_status);
+		start_application(0, -1, set_sandbox_status);
 	}
 
 	munmap(set_sandbox_status, 1);

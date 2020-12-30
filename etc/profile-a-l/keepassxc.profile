@@ -54,7 +54,7 @@ notv
 nou2f
 novideo
 protocol unix,netlink
-seccomp
+seccomp !name_to_handle_at
 seccomp.block-secondary
 shell none
 tracelog

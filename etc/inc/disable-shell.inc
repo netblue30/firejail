@@ -8,6 +8,7 @@ blacklist ${PATH}/dash
 blacklist ${PATH}/fish
 blacklist ${PATH}/ksh
 blacklist ${PATH}/mksh
+blacklist ${PATH}/oksh
 blacklist ${PATH}/sh
 blacklist ${PATH}/tclsh
 blacklist ${PATH}/tcsh

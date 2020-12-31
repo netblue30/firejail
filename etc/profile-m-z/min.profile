@@ -6,8 +6,6 @@ include min.local
 # Persistent global definitions
 include globals.local
 
-nowhitelist /usr/share/chromium
-
 noblacklist ${HOME}/.config/Min
 
 mkdir ${HOME}/.config/Min

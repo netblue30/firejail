@@ -3,17 +3,26 @@
 # Persistent local customizations
 include beaker.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
+
+# Disabled until someone reported positive feedback
+ignore include disable-exec.inc
+ignore include disable-xdg.inc
+ignore include whitelist-runuser-common.inc
+ignore include whitelist-usr-share-common.inc
+ignore include whitelist-var-common.inc
+ignore nou2f
+ignore novideo
+ignore shell none
+ignore disable-mnt
+ignore private-cache
+ignore private-dev
+ignore private-tmp
 
 noblacklist ${HOME}/.config/Beaker Browser
 
-include disable-devel.inc
-include disable-interpreters.inc
-
 mkdir ${HOME}/.config/Beaker Browser
 whitelist ${HOME}/.config/Beaker Browser
-include whitelist-common.inc
 
 # Redirect
 include electron.profile

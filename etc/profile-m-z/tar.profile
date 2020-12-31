@@ -7,49 +7,13 @@ include tar.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
-
 # Arch Linux (based distributions) need access to /var/lib/pacman. As we drop all capabilities this is automatically read-only.
 noblacklist /var/lib/pacman
 
-include disable-common.inc
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-include disable-passwdmgr.inc
-include disable-programs.inc
+ignore include disable-shell.inc
+include archiver-common.inc
 
-apparmor
-caps.drop all
-hostname tar
-ipc-namespace
-machine-id
-net none
-no3d
-nodvd
-nogroups
-nonewprivs
-#noroot
-nosound
-notv
-nou2f
-novideo
-protocol unix
-seccomp
-shell none
-tracelog
-x11 none
-
-# support compressed archives
-private-bin awk,bash,bzip2,compress,firejail,grep,gtar,gzip,lbzip2,lzip,lzma,lzop,sh,tar,xz
-private-cache
-private-dev
 private-etc alternatives,group,localtime,login.defs,passwd
-private-lib libfakeroot
+#private-lib libfakeroot,liblzma.so.*,libreadline.so.*
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var
-
-dbus-user none
-dbus-system none
-
-memory-deny-write-execute

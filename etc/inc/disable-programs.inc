@@ -188,6 +188,7 @@ blacklist ${HOME}/.config/chromium-flags.conf
 blacklist ${HOME}/.config/clipit
 blacklist ${HOME}/.config/cliqz
 blacklist ${HOME}/.config/cmus
+blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/cower
 blacklist ${HOME}/.config/darktable
@@ -200,6 +201,7 @@ blacklist ${HOME}/.config/discord
 blacklist ${HOME}/.config/discordcanary
 blacklist ${HOME}/.config/dkl
 blacklist ${HOME}/.config/dnox
+blacklist ${HOME}/.config/dolphin-emu
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/draw.io
@@ -429,6 +431,7 @@ blacklist ${HOME}/.config/Zulip
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.crawl
 blacklist ${HOME}/.cups
+blacklist ${HOME}/.curl-hsts
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dashcore
 blacklist ${HOME}/.devilspie
@@ -586,6 +589,7 @@ blacklist ${HOME}/.local/share/agenda
 blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/autokey
+blacklist ${HOME}/.local/share/authenticator-rs
 blacklist ${HOME}/.local/share/backintime
 blacklist ${HOME}/.local/share/baloo
 blacklist ${HOME}/.local/share/barrier
@@ -605,6 +609,7 @@ blacklist ${HOME}/.local/share/data/nomacs
 blacklist ${HOME}/.local/share/data/qBittorrent
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
+blacklist ${HOME}/.local/share/dolphin-emu
 blacklist ${HOME}/.local/share/emailidentities
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
@@ -796,7 +801,7 @@ blacklist ${HOME}/.synfig
 blacklist ${HOME}/.tb
 blacklist ${HOME}/.tconn
 blacklist ${HOME}/.teeworlds
-blacklist ${HOME}/.texlive2018
+blacklist ${HOME}/.texlive20*
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
 blacklist ${HOME}/.tooling
@@ -886,6 +891,7 @@ blacklist ${HOME}/.cache/deja-dup
 blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/dnox
 blacklist ${HOME}/.cache/dolphin
+blacklist ${HOME}/.cache/dolphin-emu
 blacklist ${HOME}/.cache/ephemeral
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution

@@ -6,7 +6,6 @@ include highlight.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
 blacklist ${RUNUSER}
 
 include disable-common.inc

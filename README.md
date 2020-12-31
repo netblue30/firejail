@@ -163,7 +163,7 @@ Release discussion: https://github.com/netblue30/firejail/issues/3696
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
-`````
+```
 $ sudo cp src/profstats/profstats /etc/firejail/.
 $ cd /etc/firejail
 $ ./profstats *.profile
@@ -191,7 +191,8 @@ Stats:
     net none			333
     dbus-user none 		523
     dbus-system none 		632
+```
 
 ### New profiles:
 
-spectacle, chromium-browser-privacy, gtk-straw-viewer, gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer, straw-viewer, lutris
+spectacle, chromium-browser-privacy, gtk-straw-viewer, gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer, straw-viewer, lutris, dolphin-emu, authenticator-rs, servo

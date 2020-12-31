@@ -25,7 +25,6 @@ mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
-whitelist /usr/share/chromium
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

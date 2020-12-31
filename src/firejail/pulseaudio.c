@@ -31,6 +31,8 @@
 #define O_PATH 010000000
 #endif
 
+#define PULSE_CLIENT_SYSCONF "/etc/pulse/client.conf"
+
 // disable pulseaudio socket
 void pulseaudio_disable(void) {
 	if (arg_debug)
@@ -73,8 +75,8 @@ void pulseaudio_disable(void) {
 	closedir(dir);
 }
 
-static void pulseaudio_set_environment(const char *path) {
-	assert(path);
+static void pulseaudio_fallback(const char *path) {
+	fmessage("Cannot mount tmpfs on %s/.config/pulse\n", cfg.homedir);
 	if (setenv("PULSE_CLIENTCONFIG", path, 1) < 0)
 		errExit("setenv");
 }
@@ -84,9 +86,9 @@ void pulseaudio_init(void) {
 	struct stat s;
 
 	// do we have pulseaudio in the system?
-	if (stat("/etc/pulse/client.conf", &s) == -1) {
+	if (stat(PULSE_CLIENT_SYSCONF, &s) == -1) {
 		if (arg_debug)
-			printf("/etc/pulse/client.conf not found\n");
+			printf("%s not found\n", PULSE_CLIENT_SYSCONF);
 		return;
 	}
 
@@ -101,7 +103,7 @@ void pulseaudio_init(void) {
 	char *pulsecfg = NULL;
 	if (asprintf(&pulsecfg, "%s/client.conf", RUN_PULSE_DIR) == -1)
 		errExit("asprintf");
-	if (copy_file("/etc/pulse/client.conf", pulsecfg, -1, -1, 0644)) // root needed
+	if (copy_file(PULSE_CLIENT_SYSCONF, pulsecfg, -1, -1, 0644)) // root needed
 		errExit("copy_file");
 	FILE *fp = fopen(pulsecfg, "a");
 	if (!fp)
@@ -126,11 +128,11 @@ void pulseaudio_init(void) {
 	if (create_empty_dir_as_user(homeusercfg, 0700))
 		fs_logger2("create", homeusercfg);
 
-	// if ~/.config/pulse now exists and there are no symbolic links, mount the new directory
+	// if ~/.config/pulse exists and there are no symbolic links, mount the new directory
 	// else set environment variable
 	int fd = safe_fd(homeusercfg, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1) {
-		pulseaudio_set_environment(pulsecfg);
+		pulseaudio_fallback(pulsecfg);
 		goto out;
 	}
 	// confirm the actual mount destination is owned by the user
@@ -138,12 +140,12 @@ void pulseaudio_init(void) {
 		if (errno != EACCES)
 			errExit("fstat");
 		close(fd);
-		pulseaudio_set_environment(pulsecfg);
+		pulseaudio_fallback(pulsecfg);
 		goto out;
 	}
 	if (s.st_uid != getuid()) {
 		close(fd);
-		pulseaudio_set_environment(pulsecfg);
+		pulseaudio_fallback(pulsecfg);
 		goto out;
 	}
 	// preserve a read-only mount
@@ -171,8 +173,9 @@ void pulseaudio_init(void) {
 	char *p;
 	if (asprintf(&p, "%s/client.conf", homeusercfg) == -1)
 		errExit("asprintf");
+	if (setenv("PULSE_CLIENTCONFIG", p, 1) < 0)
+		errExit("setenv");
 	fs_logger2("create", p);
-	pulseaudio_set_environment(p);
 	free(p);
 
 	// RUN_PULSE_DIR not needed anymore, mask it

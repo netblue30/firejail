@@ -27,7 +27,7 @@ whitelist ${HOME}/.config/vlc
 whitelist ${HOME}/.config/aacs
 whitelist ${HOME}/.local/share/vlc
 include whitelist-common.inc
-include whitelist-players.inc
+include whitelist-player-common.inc
 include whitelist-var-common.inc
 
 #apparmor - on Ubuntu 18.04 it refuses to start without dbus access

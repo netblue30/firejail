@@ -23,7 +23,7 @@
 BEGIN {
 	macros[0] = 0
 	for (arg in ARGV) {
-		if (ARGV[arg] ~ /^-D[A-Z_]+$/) {
+		if (ARGV[arg] ~ /^-D[A-Z0-9_]+$/) {
 			macros[length(macros) + 1] = substr(ARGV[arg], 3)
 		}
 		ARGV[arg] = ""
@@ -31,7 +31,7 @@ BEGIN {
 
 	include = 1
 }
-/^#ifdef [A-Z_]+$/ {
+/^#ifdef [A-Z0-9_]+$/ {
 	macro = substr($0, 8)
 	for (i in macros) {
 		if (macros[i] == macro) {

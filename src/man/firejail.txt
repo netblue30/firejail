@@ -1558,7 +1558,7 @@ Parent pid 8553, child pid 8554
 Child process initialized
 .br
 [...]
-#if HAVE_USERNS
+#ifdef HAVE_USERNS
 .TP
 \fB\-\-noroot
 Install a user namespace with a single user - the current user.

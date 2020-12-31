@@ -35,5 +35,7 @@ whitelist ${HOME}/.local/lib/vivaldi
 ignore dbus-user none
 ignore dbus-system none
 
+read-write ${HOME}/.local/lib/vivaldi
+
 # Redirect
 include chromium-common.profile

@@ -8,6 +8,8 @@ include zcat.local
 #include globals.local
 
 # Allow running kernel config check
+noblacklist ${PATH}/bash
+noblacklist ${PATH}/sh
 noblacklist /proc/config.gz
 
 # Redirect

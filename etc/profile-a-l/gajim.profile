@@ -21,7 +21,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-# Comment the following line if you need to whitelist folders other than ~/Downloads 
+# Comment the following line if you need to whitelist folders other than ~/Downloads
 include disable-xdg.inc
 
 mkdir ${HOME}/.gnupg
@@ -50,7 +50,7 @@ nonewprivs
 noroot
 notv
 nou2f
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
@@ -65,9 +65,17 @@ writable-run-user
 
 dbus-user filter
 dbus-user.own org.gajim.Gajim
+dbus-user.talk org.gnome.Mutter.IdleMonitor
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.freedesktop.Notifications
+# Uncomment for notifcation support
+# dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.portal.Fcitx
 dbus-user.talk org.freedesktop.secrets
-dbus-system none
+dbus-user.talk org.kde.kwalletd5
+dbus-user.talk org.mpris.MediaPlayer2.*
+dbus-system filter
+dbus-system.talk org.freedesktop.login1
+# Uncomment for location plugin support
+#dbus-system.talk org.freedesktop.GeoClue2
 
 join-or-start gajim

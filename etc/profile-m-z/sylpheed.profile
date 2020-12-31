@@ -17,8 +17,8 @@ whitelist /usr/share/sylpheed
 
 dbus-user filter
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.gnome.keyring.SystemPrompter
 dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.keyring.SystemPrompter
 # Uncomment below for notifications (or put them in your sylpheed.local)
 # dbus-user.talk org.freedesktop.Notifications
 dbus-system none

@@ -7,8 +7,6 @@ include neomutt.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /var/mail
-noblacklist /var/spool/mail
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.Mail
 noblacklist ${HOME}/.bogofilter
@@ -36,6 +34,8 @@ noblacklist ${HOME}/Mail
 noblacklist ${HOME}/mail
 noblacklist ${HOME}/postponed
 noblacklist ${HOME}/sent
+noblacklist /var/mail
+noblacklist /var/spool/mail
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
@@ -73,10 +73,11 @@ mkfile ${HOME}/.muttrc
 mkfile ${HOME}/.nanorc
 mkfile ${HOME}/.neomuttrc
 mkfile ${HOME}/.signature
-mkfile ${HOME}/.vimrc
 mkfile ${HOME}/.viminfo
 mkfile ${HOME}/.vimrc
 mkfile ${HOME}/.w3m
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
 whitelist ${HOME}/.Mail
 whitelist ${HOME}/.bogofilter
 whitelist ${HOME}/.config/mutt
@@ -103,8 +104,6 @@ whitelist ${HOME}/Mail
 whitelist ${HOME}/mail
 whitelist ${HOME}/postponed
 whitelist ${HOME}/sent
-whitelist ${DOCUMENTS}
-whitelist ${DOWNLOADS}
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /usr/share/neomutt

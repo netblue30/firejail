@@ -71,10 +71,11 @@ mkfile ${HOME}/.msmtprc
 mkfile ${HOME}/.muttrc
 mkfile ${HOME}/.nanorc
 mkfile ${HOME}/.signature
-mkfile ${HOME}/.vimrc
 mkfile ${HOME}/.viminfo
 mkfile ${HOME}/.vimrc
 mkfile ${HOME}/.w3m
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
 whitelist ${HOME}/.Mail
 whitelist ${HOME}/.bogofilter
 whitelist ${HOME}/.cache/mutt
@@ -99,8 +100,6 @@ whitelist ${HOME}/Mail
 whitelist ${HOME}/mail
 whitelist ${HOME}/postponed
 whitelist ${HOME}/sent
-whitelist ${DOCUMENTS}
-whitelist ${DOWNLOADS}
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /usr/share/mutt

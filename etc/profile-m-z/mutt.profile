@@ -50,17 +50,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkfile ${HOME}/.elinks
-mkfile ${HOME}/.emacs
-mkfile ${HOME}/.mailcap
-mkfile ${HOME}/.msmtprc
-mkfile ${HOME}/.muttrc
-mkfile ${HOME}/.nanorc
-mkfile ${HOME}/.signature
-mkfile ${HOME}/.vimrc
-mkfile ${HOME}/.viminfo
-mkfile ${HOME}/.vimrc
-mkfile ${HOME}/.w3m
 mkdir ${HOME}/.Mail
 mkdir ${HOME}/.bogofilter
 mkdir ${HOME}/.cache/mutt
@@ -75,6 +64,17 @@ mkdir ${HOME}/Mail
 mkdir ${HOME}/mail
 mkdir ${HOME}/postponed
 mkdir ${HOME}/sent
+mkfile ${HOME}/.elinks
+mkfile ${HOME}/.emacs
+mkfile ${HOME}/.mailcap
+mkfile ${HOME}/.msmtprc
+mkfile ${HOME}/.muttrc
+mkfile ${HOME}/.nanorc
+mkfile ${HOME}/.signature
+mkfile ${HOME}/.vimrc
+mkfile ${HOME}/.viminfo
+mkfile ${HOME}/.vimrc
+mkfile ${HOME}/.w3m
 whitelist ${HOME}/.Mail
 whitelist ${HOME}/.bogofilter
 whitelist ${HOME}/.cache/mutt
@@ -140,13 +140,6 @@ dbus-user none
 dbus-system none
 
 read-only ${HOME}/.elinks
-read-only ${HOME}/.emacs
-read-only ${HOME}/.mailcap
-read-only ${HOME}/.msmtprc
-read-only ${HOME}/.muttrc
 read-only ${HOME}/.nanorc
 read-only ${HOME}/.signature
-read-only ${HOME}/.vimrc
-read-only ${HOME}/.viminfo
-read-only ${HOME}/.vimrc
 read-only ${HOME}/.w3m

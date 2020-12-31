@@ -1,7 +1,7 @@
 # Firejail profile for neomutt
 # Description: Mutt fork with advanced features and better documentation
-quiet
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include neomutt.local
 # Persistent global definitions
@@ -9,6 +9,7 @@ include globals.local
 
 noblacklist /var/mail
 noblacklist /var/spool/mail
+noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.Mail
 noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.config/mutt
@@ -49,18 +50,6 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkfile ${HOME}/.elinks
-mkfile ${HOME}/.emacs
-mkfile ${HOME}/.mailcap
-mkfile ${HOME}/.msmtprc
-mkfile ${HOME}/.muttrc
-mkfile ${HOME}/.nanorc
-mkfile ${HOME}/.neomuttrc
-mkfile ${HOME}/.signature
-mkfile ${HOME}/.vimrc
-mkfile ${HOME}/.viminfo
-mkfile ${HOME}/.vimrc
-mkfile ${HOME}/.w3m
 mkdir ${HOME}/.Mail
 mkdir ${HOME}/.bogofilter
 mkdir ${HOME}/.config/mutt
@@ -76,6 +65,18 @@ mkdir ${HOME}/Mail
 mkdir ${HOME}/mail
 mkdir ${HOME}/postponed
 mkdir ${HOME}/sent
+mkfile ${HOME}/.elinks
+mkfile ${HOME}/.emacs
+mkfile ${HOME}/.mailcap
+mkfile ${HOME}/.msmtprc
+mkfile ${HOME}/.muttrc
+mkfile ${HOME}/.nanorc
+mkfile ${HOME}/.neomuttrc
+mkfile ${HOME}/.signature
+mkfile ${HOME}/.vimrc
+mkfile ${HOME}/.viminfo
+mkfile ${HOME}/.vimrc
+mkfile ${HOME}/.w3m
 whitelist ${HOME}/.Mail
 whitelist ${HOME}/.bogofilter
 whitelist ${HOME}/.config/mutt
@@ -141,3 +142,8 @@ writable-var
 
 dbus-user none
 dbus-system none
+
+read-only ${HOME}/.elinks
+read-only ${HOME}/.nanorc
+read-only ${HOME}/.signature
+read-only ${HOME}/.w3m

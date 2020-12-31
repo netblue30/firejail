@@ -25,7 +25,6 @@ dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.gnome.keyring.SystemPrompter
 # if you use the notification plugin you need to uncomment the below (or put them in your claws-mail.local)
 # dbus-user.talk org.freedesktop.Notifications
-dbus-system none
 
 # Redirect
 include email-common.profile

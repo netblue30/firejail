@@ -71,6 +71,8 @@ private-tmp
 # encrypting and signing email
 writable-run-user
 
+dbus-system none
+
 # If you want to read local mail stored in /var/mail, add the following to email-common.local:
 #noblacklist /var/mail
 #noblacklist /var/spool/mail

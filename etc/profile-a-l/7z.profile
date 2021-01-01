@@ -7,6 +7,5 @@ include 7z.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${PATH}/bash
-noblacklist ${PATH}/sh
+ignore include disable-shell.inc
 include archiver-common.inc

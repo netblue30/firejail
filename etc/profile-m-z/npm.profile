@@ -12,7 +12,6 @@ blacklist ${RUNUSER}
 noblacklist ${HOME}/.npm
 noblacklist ${HOME}/.npmrc
 
-
 noblacklist ${PATH}/bash
 noblacklist ${PATH}/dash
 noblacklist ${PATH}/sh

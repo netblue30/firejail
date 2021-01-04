@@ -8,26 +8,21 @@ include npm.local
 include globals.local
 
 blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
 blacklist ${RUNUSER}
 
 noblacklist ${HOME}/.npm
 noblacklist ${HOME}/.npmrc
 
-#include allow-nodejs.inc
-noblacklist ${PATH}/node
-noblacklist /usr/include/node
 
 noblacklist ${PATH}/bash
 noblacklist ${PATH}/dash
 noblacklist ${PATH}/sh
 
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-passwdmgr.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-shell.inc
-include /etc/firejail/disable-write-mnt.inc
-include /etc/firejail/disable-xdg.inc
+include disable-common.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+include disable-shell.inc
+include disable-xdg.inc
 
 caps.drop all
 ipc-namespace
@@ -52,8 +47,5 @@ private-dev
 private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 private-tmp
 
-dbus-user filter
-dbus-user.own com.github.netblue30.firejail
-dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.freedesktop.Notifications
+dbus-user none
 dbus-system none

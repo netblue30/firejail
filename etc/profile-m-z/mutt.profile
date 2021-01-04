@@ -55,16 +55,17 @@ mkdir ${HOME}/.bogofilter
 mkdir ${HOME}/.cache/mutt
 mkdir ${HOME}/.config/mutt
 mkdir ${HOME}/.config/nano
+mkdir ${HOME}/.elinks
 mkdir ${HOME}/.emacs.d
 mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.mail
 mkdir ${HOME}/.mutt
 mkdir ${HOME}/.vim
+mkdir ${HOME}/.w3m
 mkdir ${HOME}/Mail
 mkdir ${HOME}/mail
 mkdir ${HOME}/postponed
 mkdir ${HOME}/sent
-mkfile ${HOME}/.elinks
 mkfile ${HOME}/.emacs
 mkfile ${HOME}/.mailcap
 mkfile ${HOME}/.msmtprc
@@ -73,7 +74,6 @@ mkfile ${HOME}/.nanorc
 mkfile ${HOME}/.signature
 mkfile ${HOME}/.viminfo
 mkfile ${HOME}/.vimrc
-mkfile ${HOME}/.w3m
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.Mail
@@ -126,6 +126,7 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 
@@ -139,6 +140,8 @@ writable-var
 
 dbus-user none
 dbus-system none
+
+memory-deny-write-execute
 
 read-only ${HOME}/.elinks
 read-only ${HOME}/.nanorc

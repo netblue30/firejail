@@ -24,9 +24,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.gnupg
 mkfile ${HOME}/.config/mimeapps.list
 mkfile ${HOME}/.signature
-mkdir ${HOME}/.gnupg
 whitelist ${HOME}/.config/mimeapps.list
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.gnupg
@@ -59,6 +59,7 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 

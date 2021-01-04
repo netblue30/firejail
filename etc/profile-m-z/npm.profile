@@ -1,7 +1,6 @@
 # Firejail profile for npm
 # Description: The Node.js Package Manager
 # This file is overwritten after every install/update
-
 # Persistent local customizations
 include npm.local
 # Persistent global definitions

@@ -23,7 +23,6 @@
 #include "../include/seccomp.h"
 #include "../include/syscall.h"
 #include <sys/mman.h>
-#include <sys/prctl.h>
 
 // print.c
 void print(struct sock_filter *filter, int entries);

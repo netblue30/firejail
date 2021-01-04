@@ -23,7 +23,6 @@
 #include <ftw.h>
 #include <errno.h>
 #include <pwd.h>
-#include <sys/prctl.h>
 
 #if HAVE_SELINUX
 #include <sys/stat.h>
@@ -412,10 +411,7 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 
-#ifdef WARN_DUMPABLE
-	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid())
-		fprintf(stderr, "Error fcopy: I am dumpable\n");
-#endif
+	warn_dumpable();
 
 	// trim trailing chars
 	if (src[strlen(src) - 1] == '/')

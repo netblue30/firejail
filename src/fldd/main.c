@@ -24,7 +24,6 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/mount.h>
-#include <sys/prctl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -303,10 +302,7 @@ printf("\n");
 		return 0;
 	}
 
-#ifdef WARN_DUMPABLE
-	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid())
-		fprintf(stderr, "Error fldd: I am dumpable\n");
-#endif
+	warn_dumpable();
 
 	// check program access
 	if (access(argv[1], R_OK)) {

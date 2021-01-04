@@ -22,7 +22,6 @@
 #include "../include/common.h"
 #include "../include/seccomp.h"
 #include <sys/mman.h>
-#include <sys/prctl.h>
 
 // optimize.c
 struct sock_filter *duplicate(struct sock_filter *filter, int entries);

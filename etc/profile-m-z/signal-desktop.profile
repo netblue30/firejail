@@ -21,8 +21,6 @@ noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.mozilla/firefox/profiles.ini
 
-include disable-exec.inc
-
 mkdir ${HOME}/.config/Signal
 whitelist ${HOME}/.config/Signal
 

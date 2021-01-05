@@ -395,6 +395,8 @@ blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.config/transgui
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/truecraft
+blacklist ${HOME}/.config/tuta_integration
+blacklist ${HOME}/.config/tutanota-desktop
 blacklist ${HOME}/.config/tvbrowser
 blacklist ${HOME}/.config/uGet
 blacklist ${HOME}/.config/ungoogled-chromium

@@ -9,6 +9,9 @@ include globals.local
 noblacklist ${DOCUMENTS}
 noblacklist ${PICTURES}
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 

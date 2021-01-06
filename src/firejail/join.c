@@ -296,7 +296,7 @@ static void extract_umask(pid_t pid) {
 		fprintf(stderr, "Error: cannot open umask file\n");
 		exit(1);
 	}
-	if (fscanf(fp, "%o", &orig_umask) != 1) {
+	if (fscanf(fp, "%3o", &orig_umask) != 1) {
 		fprintf(stderr, "Error: cannot read umask\n");
 		exit(1);
 	}
@@ -335,7 +335,7 @@ bool is_ready_for_join(const pid_t pid) {
 	struct stat s;
 	if (fstat(fd, &s) == -1)
 		errExit("fstat");
-	if (!S_ISREG(s.st_mode) || s.st_uid != 0) {
+	if (!S_ISREG(s.st_mode) || s.st_uid != 0 || s.st_size != 1) {
 		close(fd);
 		return false;
 	}
@@ -411,7 +411,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	extract_x11_display(parent);
 
 	int shfd = -1;
-	if (!arg_shell_none)
+	if (!arg_shell_none && !arg_audit)
 		shfd = open_shell();
 
 	EUID_ROOT();
@@ -423,6 +423,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		extract_cgroup(pid);
 		extract_nogroups(pid);
 		extract_user_namespace(pid);
+		extract_umask(pid);
 #ifdef HAVE_APPARMOR
 		extract_apparmor(pid);
 #endif
@@ -431,9 +432,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	// set cgroup
 	if (cfg.cgroup)	// not available for uid 0
 		set_cgroup(cfg.cgroup);
-
-	// set umask, also uid 0
-	extract_umask(pid);
 
 	// join namespaces
 	if (arg_join_network) {

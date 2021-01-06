@@ -336,6 +336,7 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@default-keep", .list =
+	  "execveat," // commonly used by fexecve
 	  "execve,"
 	  "prctl"
 	},

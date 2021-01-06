@@ -42,7 +42,7 @@ noroot
 # nosound
 notv
 nou2f
-# novideo
+novideo
 protocol unix,inet,inet6
 seccomp
 shell none
@@ -51,3 +51,11 @@ tracelog
 disable-mnt
 private-dev
 private-tmp
+
+dbus-user filter
+dbus-user.own net.sourceforge.liferea
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.Shell.Notifications
+dbus-system none

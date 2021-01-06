@@ -27,8 +27,8 @@ include disable-xdg.inc
 
 # If you want whitelisting, change the line below to your npm projects directory
 # and uncomment the lines below.
-#include ${HOME}/Projects
-#whitelist whitelist-common.inc
+#whitelist ${HOME}/Projects
+#include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

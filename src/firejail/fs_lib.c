@@ -165,7 +165,7 @@ void fslib_copy_dir(const char *full_path) {
 	mkdir_attr(dest, 0755, 0, 0);
 
 	if (mount(full_path, dest, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		mount(NULL, dest, NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
+		mount(NULL, dest, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger2("clone", full_path);
 	fs_logger2("mount", full_path);

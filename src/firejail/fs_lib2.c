@@ -30,6 +30,7 @@ extern void fslib_copy_dir(const char *full_path);
 //***************************************************************
 // standard libc libraries based on Debian's libc6 package
 // selinux seems to be linked in most command line utilities
+// libpcre2 is a dependency of selinux
 // locale (/usr/lib/locale) - without it, the program will default to "C" locale
 typedef struct liblist_t {
 	const char *name;
@@ -38,6 +39,7 @@ typedef struct liblist_t {
 
 static LibList libc_list[] = {
 	{ "libselinux.so.", 0 },
+	{ "libpcre2-8.so.", 0 },
 	{ "libapparmor.so.", 0},
 	{ "ld-linux-x86-64.so.", 0 },
 	{ "libanl.so.", 0 },
@@ -104,16 +106,19 @@ static void stdc(const char *dirname) {
 
 void fslib_install_stdc(void) {
 	// install standard C libraries
+	timetrace_start();
 	struct stat s;
 	char *stdclib = "/lib64";		  // CentOS, Fedora, Arch
 
 	if (stat("/lib/x86_64-linux-gnu", &s) == 0) {	// Debian & friends
+		// PT_INTERP
+		fslib_duplicate("/lib64/ld-linux-x86-64.so.2");
+
 		mkdir_attr(RUN_LIB_DIR "/x86_64-linux-gnu", 0755, 0, 0);
 		selinux_relabel_path(RUN_LIB_DIR "/x86_64-linux-gnu", "/lib/x86_64-linux-gnu");
 		stdclib = "/lib/x86_64-linux-gnu";
 	}
 
-	timetrace_start();
 	stdc(stdclib);
 
 	// install locale

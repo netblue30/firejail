@@ -336,6 +336,12 @@ void fs_private_lib(void) {
 	// start timetrace
 	timetrace_start();
 
+	// bring in firejail executable libraries in case we are redirected here by a firejail symlink from /usr/local/bin/firejail
+	fslib_install_list(PATH_FIREJAIL);
+
+	// bring in firejail directory
+	fslib_install_list("firejail");
+
 	// copy the libs in the new lib directory for the main exe
 	if (cfg.original_program_index > 0) {
 		if (arg_debug || arg_debug_private_lib)
@@ -373,13 +379,6 @@ void fs_private_lib(void) {
 	if (arg_debug || arg_debug_private_lib)
 		printf("Installing system libraries\n");
 	fslib_install_system();
-
-	// bring in firejail directory for --trace and seccomp post exec
-	// bring in firejail executable libraries in case we are redirected here by a firejail symlink from /usr/local/bin/firejail
-	fslib_install_list("/usr/bin/firejail,firejail"); // todo: use the installed path for the executable
-
-	// install libraries needed by fcopy
-	fslib_install_list(PATH_FCOPY);
 
 	fmessage("Installed %d %s and %d %s\n", lib_cnt, (lib_cnt == 1)? "library": "libraries",
 		dir_cnt, (dir_cnt == 1)? "directory": "directories");

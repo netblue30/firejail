@@ -25,7 +25,6 @@ noblacklist ${HOME}/.config/Atom
 include allow-common-devel.inc
 
 # net none
-netfilter
 nosound
 
 # Redirect

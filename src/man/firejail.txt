@@ -2273,7 +2273,7 @@ rm: cannot remove `testfile': Operation not permitted
 .TP
 \fB\-\-seccomp.keep=syscall,@group,!syscall2
 Enable seccomp filter, blacklist all syscall not listed and "syscall2".
-The system calls needed by Firejail (group @default-keep: prctl, execve)
+The system calls needed by Firejail (group @default-keep: prctl, execve, execveat)
 are handled with the preload library. On a 64 bit architecture, an
 additional filter for 32 bit system calls can be installed with
 \-\-seccomp.32.keep.

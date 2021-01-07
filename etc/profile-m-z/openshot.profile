@@ -19,6 +19,10 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/share/blender
+whitelist /usr/share/inkscape
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -32,11 +36,14 @@ notv
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 
+private-bin blender,inkscape,openshot,openshot-qt,python3*
+private-cache
 private-dev
 private-tmp
 
-dbus-user none
+dbus-user filter
 dbus-system none

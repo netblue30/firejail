@@ -565,27 +565,18 @@ char *clean_pathname(const char *path) {
 	if (!rv)
 		errExit("malloc");
 
-	if (len > 0) {
-		size_t i = 0, j = 0, cnt = 0;
-		for (; i < len; i++) {
-			if (path[i] == '/')
-				cnt++;
-			else
-				cnt = 0;
-
-			if (cnt < 2) {
-				rv[j] = path[i];
-				j++;
-			}
-		}
-		rv[j] = '\0';
-
-		// remove a trailing slash
-		if (j > 1 && rv[j - 1] == '/')
-			rv[j - 1] = '\0';
+	size_t i = 0;
+	size_t j = 0;
+	while (path[i]) {
+		while (path[i] == '/' && path[i+1] == '/')
+			i++;
+		rv[j++] = path[i++];
 	}
-	else
-		*rv = '\0';
+	rv[j] = '\0';
+
+	// remove a trailing slash
+	if (j > 1 && rv[j - 1] == '/')
+		rv[j - 1] = '\0';
 
 	return rv;
 }

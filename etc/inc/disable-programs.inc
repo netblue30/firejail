@@ -952,6 +952,7 @@ blacklist ${HOME}/.cache/librewolf
 blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/lutris
 blacklist ${HOME}/.cache/Mendeley Ltd.
+blacklist ${HOME}/.cache/marker
 blacklist ${HOME}/.cache/matrix-mirage
 blacklist ${HOME}/.cache/microsoft-edge-dev
 blacklist ${HOME}/.cache/midori

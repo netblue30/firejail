@@ -24,7 +24,7 @@ static FileDB *db_skip = NULL;
 static FileDB *db_out = NULL;
 
 static void load_whitelist_common(void) {
-	FILE *fp = fopen("/etc/firejail/whitelist-common.inc", "r");
+	FILE *fp = fopen(SYSCONFDIR "/whitelist-common.inc", "r");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot open whitelist-common.inc\n");
 		exit(1);

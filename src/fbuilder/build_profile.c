@@ -80,10 +80,19 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	  stroutput,
 	};
 
-	// detect strace
+	// detect strace and check if Yama LSM allows us to use it
 	int have_strace = 0;
-	if (access("/usr/bin/strace", X_OK) == 0)
+	int have_yama_permission = 1;
+	if (access("/usr/bin/strace", X_OK) == 0) {
 		have_strace = 1;
+		FILE *fp = fopen("/proc/sys/kernel/yama/ptrace_scope", "r");
+		if (fp) {
+			unsigned val;
+			if (fscanf(fp, "%u", &val) == 1)
+				have_yama_permission = (val < 2);
+			fclose(fp);
+		}
+	}
 
 	// calculate command length
 	unsigned len = (int) sizeof(cmdlist) / sizeof(char*) + argc - index + 1;
@@ -93,10 +102,11 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	cmd[0] = cmdlist[0];	// explicit assignment to clean scan-build error
 
 	// build command
+	int skip_strace = !(have_strace && have_yama_permission);
 	unsigned i = 0;
 	for (i = 0; i < (int) sizeof(cmdlist) / sizeof(char*); i++) {
-		// skip strace if not installed
-		if (have_strace == 0 && strcmp(cmdlist[i], "/usr/bin/strace") == 0)
+		// skip strace if not installed, or no permission to use it
+		if (skip_strace && strcmp(cmdlist[i], "/usr/bin/strace") == 0)
 			break;
 		cmd[i] = cmdlist[i];
 	}
@@ -172,12 +182,14 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "caps.drop all\n");
 		fprintf(fp, "nonewprivs\n");
 		fprintf(fp, "seccomp\n");
-		if (have_strace)
-			build_seccomp(strace_output, fp);
-		else {
+		if (!have_strace) {
 			fprintf(fp, "# If you install strace on your system, Firejail will also create a\n");
 			fprintf(fp, "# whitelisted seccomp filter.\n");
 		}
+		else if (!have_yama_permission)
+			fprintf(fp, "# Yama security module prevents creation of a whitelisted seccomp filter\n");
+		else
+			build_seccomp(strace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### network\n");

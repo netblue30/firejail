@@ -25,3 +25,7 @@ noblacklist ${HOME}/.cargo/registry
 noblacklist ${HOME}/.cargo/.crates.toml
 noblacklist ${HOME}/.cargo/.crates2.json
 noblacklist ${HOME}/.cargo/.package-cache
+
+# npm
+noblacklist ${HOME}/.npm
+noblacklist ${HOME}/.npmrc

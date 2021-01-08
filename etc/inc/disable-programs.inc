@@ -760,6 +760,8 @@ blacklist ${HOME}/.neverball
 blacklist ${HOME}/.newsbeuter
 blacklist ${HOME}/.newsboat
 blacklist ${HOME}/.nicotine
+blacklist ${HOME}/.npm
+blacklist ${HOME}/.npmrc
 blacklist ${HOME}/.nv
 blacklist ${HOME}/.nylas-mail
 blacklist ${HOME}/.openarena

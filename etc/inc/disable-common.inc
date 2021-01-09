@@ -310,6 +310,7 @@ read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc
 read-only ${HOME}/.muttrc
 read-only ${HOME}/.nano
+read-only ${HOME}/.npmrc
 read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.reportbugrc
 read-only ${HOME}/.tmux.conf
@@ -318,6 +319,7 @@ read-only ${HOME}/.viminfo
 read-only ${HOME}/.vimrc
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
+read-only ${HOME}/.yarnrc
 read-only ${HOME}/_exrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc

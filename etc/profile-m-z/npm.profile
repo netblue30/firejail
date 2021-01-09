@@ -9,6 +9,8 @@ include globals.local
 noblacklist ${HOME}/.node-gyp
 noblacklist ${HOME}/.npm
 noblacklist ${HOME}/.npmrc
+ignore read-only ${HOME}/.npm-packages
+ignore read-only ${HOME}/.npmrc
 
 # If you want whitelisting, change ${HOME}/Projects below to your npm projects directory
 # and uncomment the lines below.

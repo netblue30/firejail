@@ -291,7 +291,15 @@ read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
 
 # Remote access
-read-only ${HOME}/.ssh/authorized_keys
+blacklist ${HOME}/.rhosts
+blacklist ${HOME}/.shosts
+blacklist ${HOME}/.ssh/authorized_keys
+blacklist ${HOME}/.ssh/authorized_keys2
+blacklist ${HOME}/.ssh/environment
+blacklist ${HOME}/.ssh/rc
+blacklist /etc/hosts.equiv
+read-only ${HOME}/.ssh/config
+read-only ${HOME}/.ssh/config.d
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc

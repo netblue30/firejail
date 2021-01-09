@@ -35,7 +35,6 @@ whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 # when storing mail outside the default ${HOME}/Mail path, 'whitelist' the custom path in your email-common.local
 whitelist ${HOME}/Mail
-
 whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
@@ -68,7 +67,6 @@ private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gnupg,groups,gtk-2.0,gtk-3.0,hostname,hosts,hosts.conf,mailname,nsswitch.conf,passwd,pki,resolv.conf,selinux,ssl,xdg
 private-tmp
-
 # encrypting and signing email
 writable-run-user
 

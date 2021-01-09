@@ -146,7 +146,6 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
-
 read-only ${HOME}/.elinks
 read-only ${HOME}/.nanorc
 read-only ${HOME}/.signature

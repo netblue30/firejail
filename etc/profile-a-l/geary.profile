@@ -66,11 +66,11 @@ shell none
 tracelog
 
 # disable-mnt
-# Add ignore private-bin to geary.local for hyperlink support
+# Add 'ignore private-bin' to geary.local for hyperlink support
 private-bin geary
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,pki,resolv.conf,selinux,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,pki,resolv.conf,ssl,xdg
 private-tmp
 
 dbus-user filter

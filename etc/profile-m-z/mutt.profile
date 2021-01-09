@@ -38,9 +38,11 @@ noblacklist ${HOME}/sent
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
-include allow-perl.inc
-include allow-python2.inc
-include allow-python3.inc
+# Uncomment or put them in mutt.local for oauth.py,S/MIME
+
+#include allow-perl.inc
+#include allow-python2.inc
+#include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -142,7 +144,6 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
-
 read-only ${HOME}/.elinks
 read-only ${HOME}/.nanorc
 read-only ${HOME}/.signature

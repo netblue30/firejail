@@ -56,7 +56,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin bash,gajim,gajim-history-manager,gpg,gpg2,paplay,python,python3,sh,zsh
+private-bin bash,gajim,gajim-history-manager,gpg,gpg2,paplay,python*,sh,zsh
 private-cache
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl,xdg
@@ -67,9 +67,7 @@ dbus-user filter
 dbus-user.own org.gajim.Gajim
 dbus-user.talk org.gnome.Mutter.IdleMonitor
 dbus-user.talk ca.desrt.dconf
-# Uncomment for notifcation support
-# dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.freedesktop.portal.Fcitx
+dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.kde.kwalletd5
 dbus-user.talk org.mpris.MediaPlayer2.*

@@ -1,6 +1,5 @@
 # Firejail profile for Node.js
 # Description: Common profile for npm/yarn
-quiet
 # This file is overwritten after every install/update
 # Persistent local customizations
 include nodejs-common.local

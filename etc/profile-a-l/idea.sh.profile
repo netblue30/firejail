@@ -10,11 +10,13 @@ noblacklist ${HOME}/.android
 noblacklist ${HOME}/.jack-server
 noblacklist ${HOME}/.jack-settings
 noblacklist ${HOME}/.local/share/JetBrains
-noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
+
+# Allow ssh (blacklisted by disable-common.inc)
+include allow-ssh.inc
 
 include disable-common.inc
 include disable-passwdmgr.inc

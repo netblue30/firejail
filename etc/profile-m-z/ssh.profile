@@ -9,10 +9,12 @@ include globals.local
 
 noblacklist /etc/ssh
 noblacklist /tmp/ssh-*
-noblacklist ${HOME}/.ssh
 # nc can be used as ProxyCommand, e.g. when using tor
 noblacklist ${PATH}/nc
 noblacklist ${PATH}/ncat
+
+# Allow ssh (blacklisted by disable-common.inc)
+include allow-ssh.inc
 
 include disable-common.inc
 include disable-exec.inc

@@ -11,8 +11,10 @@ noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
-noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
+
+# Allow ssh (blacklisted by disable-common.inc)
+include allow-ssh.inc
 
 include disable-common.inc
 include disable-passwdmgr.inc

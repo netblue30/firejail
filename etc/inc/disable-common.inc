@@ -396,6 +396,7 @@ blacklist /etc/shadow
 blacklist /etc/shadow+
 blacklist /etc/shadow-
 blacklist /etc/ssh
+blacklist /etc/ssh/*
 blacklist /home/.ecryptfs
 blacklist /home/.fscrypt
 blacklist /var/backup

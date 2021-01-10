@@ -7,7 +7,7 @@ include ssh.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /etc/ssh
+noblacklist /etc/ssh/*
 noblacklist /tmp/ssh-*
 # nc can be used as ProxyCommand, e.g. when using tor
 noblacklist ${PATH}/nc

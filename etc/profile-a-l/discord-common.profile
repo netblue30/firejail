@@ -23,7 +23,7 @@ whitelist ${HOME}/.config/BetterDiscord
 whitelist ${HOME}/.local/share/betterdiscordctl
 
 private-bin bash,cut,echo,egrep,fish,grep,head,sed,sh,tclsh,tr,xdg-mime,xdg-open,zsh
-private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,localtime,login.defs,machine-id,password,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,localtime,login.defs,machine-id,password,pki,pulse,resolv.conf,ssl
 
 # Redirect
 include electron.profile

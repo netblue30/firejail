@@ -761,6 +761,7 @@ blacklist ${HOME}/.neverball
 blacklist ${HOME}/.newsbeuter
 blacklist ${HOME}/.newsboat
 blacklist ${HOME}/.nicotine
+blacklist ${HOME}/.node-gyp
 blacklist ${HOME}/.npm
 blacklist ${HOME}/.npmrc
 blacklist ${HOME}/.nv
@@ -849,6 +850,10 @@ blacklist ${HOME}/.xmr-stak
 blacklist ${HOME}/.xonotic
 blacklist ${HOME}/.xournalpp
 blacklist ${HOME}/.xpdfrc
+blacklist ${HOME}/.yarn
+blacklist ${HOME}/.yarn-config
+blacklist ${HOME}/.yarncache
+blacklist ${HOME}/.yarnrc
 blacklist ${HOME}/.zoom
 blacklist /tmp/akonadi-*
 blacklist /tmp/ssh-*

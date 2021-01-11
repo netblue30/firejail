@@ -11,6 +11,15 @@ noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.gradle
 noblacklist ${HOME}/.java
 
+# Node.js
+noblacklist ${HOME}/.node-gyp
+noblacklist ${HOME}/.npm
+noblacklist ${HOME}/.npmrc
+noblacklist ${HOME}/.yarn
+noblacklist ${HOME}/.yarn-config
+noblacklist ${HOME}/.yarncache
+noblacklist ${HOME}/.yarnrc
+
 # Python
 noblacklist ${HOME}/.pylint.d
 noblacklist ${HOME}/.python-history
@@ -25,7 +34,3 @@ noblacklist ${HOME}/.cargo/registry
 noblacklist ${HOME}/.cargo/.crates.toml
 noblacklist ${HOME}/.cargo/.crates2.json
 noblacklist ${HOME}/.cargo/.package-cache
-
-# npm
-noblacklist ${HOME}/.npm
-noblacklist ${HOME}/.npmrc

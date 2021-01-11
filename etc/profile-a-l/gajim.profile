@@ -6,6 +6,7 @@ include gajim.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.cache/gajim
 noblacklist ${HOME}/.config/gajim
 noblacklist ${HOME}/.local/share/gajim
@@ -20,19 +21,27 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-# Comment the following line if you need to whitelist other folders than ~/Downloads
+# Comment the following line if you need to whitelist folders other than ~/Downloads
 include disable-xdg.inc
 
+mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.config/gajim
 mkdir ${HOME}/.local/share/gajim
+whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.cache/gajim
 whitelist ${HOME}/.config/gajim
 whitelist ${HOME}/.local/share/gajim
 whitelist ${DOWNLOADS}
+whitelist ${RUNUSER}/gnupg
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 nodvd
@@ -47,9 +56,24 @@ shell none
 tracelog
 
 disable-mnt
-private-bin bash,gajim,gajim-history-manager,gpg,gpg2,paplay,python,python3,sh,zsh
+private-bin bash,gajim,gajim-history-manager,gpg,gpg2,paplay,python*,sh,zsh
+private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl,xdg
 private-tmp
+writable-run-user
+
+dbus-user filter
+dbus-user.own org.gajim.Gajim
+dbus-user.talk org.gnome.Mutter.IdleMonitor
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.kde.kwalletd5
+dbus-user.talk org.mpris.MediaPlayer2.*
+dbus-system filter
+dbus-system.talk org.freedesktop.login1
+# Uncomment for location plugin support
+#dbus-system.talk org.freedesktop.GeoClue2
 
 join-or-start gajim

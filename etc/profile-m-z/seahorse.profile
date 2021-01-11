@@ -9,7 +9,6 @@ include globals.local
 blacklist /tmp/.X11-unix
 
 noblacklist ${HOME}/.gnupg
-noblacklist /tmp/ssh-*
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc

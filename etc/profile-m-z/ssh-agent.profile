@@ -6,8 +6,6 @@ include ssh-agent.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /tmp/ssh-*
-
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
 

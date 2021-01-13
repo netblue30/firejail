@@ -5,6 +5,8 @@ include mdr.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

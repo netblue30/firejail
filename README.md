@@ -195,4 +195,4 @@ Stats:
 
 ### New profiles:
 
-spectacle, chromium-browser-privacy, gtk-straw-viewer, gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer, straw-viewer, lutris, dolphin-emu, authenticator-rs, servo, tutanota-desktop, npm, marker, yarn
+spectacle, chromium-browser-privacy, gtk-straw-viewer, gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer, straw-viewer, lutris, dolphin-emu, authenticator-rs, servo, tutanota-desktop, npm, marker, yarn, lsarn unar

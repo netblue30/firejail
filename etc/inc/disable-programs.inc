@@ -357,6 +357,7 @@ blacklist ${HOME}/.config/psi
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
+blacklist ${HOME}/.config/qnapi.ini
 blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/qutebrowser

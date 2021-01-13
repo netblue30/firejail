@@ -710,6 +710,7 @@ blacklist ${HOME}/.local/share/remmina
 blacklist ${HOME}/.local/share/rhythmbox
 blacklist ${HOME}/.local/share/rtv
 blacklist ${HOME}/.local/share/scribus
+blacklist ${HOME}/.local/share/shotwell
 blacklist ${HOME}/.local/share/signal-cli
 blacklist ${HOME}/.local/share/sink
 blacklist ${HOME}/.local/share/smuxi
@@ -994,6 +995,7 @@ blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/rhythmbox
+blacklist ${HOME}/.cache/shotwell
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
 blacklist ${HOME}/.cache/smuxi

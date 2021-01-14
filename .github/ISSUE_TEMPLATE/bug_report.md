@@ -31,9 +31,9 @@ Steps to reproduce the behavior:
 Other context about the problem like related errors to understand the problem.
 
 **Checklist**
- - [ ] The upstream profile (and redirect profile if exists) have no changes fixing it.
+ - [ ] The profile (and redirect profile if exists) hasn't already been fixed [upstream](https://github.com/netblue30/firejail/tree/master/etc).
  - [ ] The program has a profile. (If not, request one in `https://github.com/netblue30/firejail/issues/1139`)
- - [ ] A short search for duplicates was performed.
+ - [ ] I have performed a short search for similar issues (to avoid opening a duplicate).
  - [ ] If it is a AppImage, `--profile=PROFILENAME` is used to set the right profile.
  - [ ] Used `LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 PROGRAM` to get english error-messages.
  - [ ] I'm aware of `browser-allow-drm yes`/`browser-disable-u2f no` in `firejail.config` to allow DRM/U2F in browsers.

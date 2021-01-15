@@ -513,7 +513,6 @@ void check_private_dir(void);
 void update_map(char *mapping, char *map_file);
 void wait_for_other(int fd);
 void notify_other(int fd);
-const char *gnu_basename(const char *path);
 uid_t pid_get_uid(pid_t pid);
 uid_t get_group_id(const char *group);
 int remove_overlay_directory(void);

@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <sys/prctl.h>
 #include "../include/common.h"
 #include "../include/syscall.h"
 

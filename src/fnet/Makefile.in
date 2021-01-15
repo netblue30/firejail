@@ -5,8 +5,8 @@ include ../common.mk
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/libnetlink.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-fnet: $(OBJS) ../lib/libnetlink.o
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/libnetlink.o $(LIBS) $(EXTRA_LDFLAGS)
+fnet: $(OBJS) ../lib/common.o ../lib/libnetlink.o
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/libnetlink.o $(LIBS) $(EXTRA_LDFLAGS)
 
 clean:; rm -fr *.o fnet *.gcov *.gcda *.gcno *.plist
 

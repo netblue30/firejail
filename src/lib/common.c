@@ -267,7 +267,6 @@ int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid) {
 }
 
 // return 1 if /proc is mounted hidepid, or if /proc/mouns access is denied
-#define BUFLEN 4096
 int pid_hidepid(void) {
 	FILE *fp = fopen("/proc/mounts", "r");
 	if (!fp)
@@ -286,6 +285,39 @@ int pid_hidepid(void) {
 
 	fclose(fp);
 	return 0;
+}
+
+// print error if unprivileged users can trace the process
+void warn_dumpable(void) {
+	if (getuid() != 0 && prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getenv("FIREJAIL_PLUGIN")) {
+		fprintf(stderr, "Error: dumpable process\n");
+
+		// best effort to provide detailed debug information
+		// cannot use process name, it is just a file descriptor number
+		char path[BUFLEN];
+		ssize_t len = readlink("/proc/self/exe", path, BUFLEN - 1);
+		if (len < 0)
+			return;
+		path[len] = '\0';
+		// path can refer to a sandbox mount namespace, use basename only
+		const char *base = gnu_basename(path);
+
+		struct stat s;
+		if (stat("/proc/self/exe", &s) == 0 && s.st_uid != 0)
+			fprintf(stderr, "Change owner of %s executable to root\n", base);
+		else if (access("/proc/self/exe", R_OK) == 0)
+			fprintf(stderr, "Remove read permission on %s executable\n", base);
+	}
+}
+
+// Equivalent to the GNU version of basename, which is incompatible with
+// the POSIX basename. A few lines of code saves any portability pain.
+// https://www.gnu.org/software/libc/manual/html_node/Finding-Tokens-in-a-String.html#index-basename
+const char *gnu_basename(const char *path) {
+	const char *last_slash = strrchr(path, '/');
+	if (!last_slash)
+		return path;
+	return last_slash+1;
 }
 
 //**************************

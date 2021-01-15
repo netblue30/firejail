@@ -44,11 +44,7 @@ printf("\n");
 		return 0;
 	}
 
-#ifdef WARN_DUMPABLE
-	// check FIREJAIL_PLUGIN in order to not print a warning during make
-	if (prctl(PR_GET_DUMPABLE, 0, 0, 0, 0) == 1 && getuid() && getenv("FIREJAIL_PLUGIN"))
-		fprintf(stderr, "Error fsec-optimize: I am dumpable\n");
-#endif
+	warn_dumpable();
 
 	char *fname = argv[1];
 

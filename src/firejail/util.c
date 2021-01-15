@@ -811,20 +811,6 @@ void notify_other(int fd) {
 	fclose(stream);
 }
 
-
-
-
-// Equivalent to the GNU version of basename, which is incompatible with
-// the POSIX basename. A few lines of code saves any portability pain.
-// https://www.gnu.org/software/libc/manual/html_node/Finding-Tokens-in-a-String.html#index-basename
-const char *gnu_basename(const char *path) {
-	const char *last_slash = strrchr(path, '/');
-	if (!last_slash)
-		return path;
-	return last_slash+1;
-}
-
-
 uid_t pid_get_uid(pid_t pid) {
 	EUID_ASSERT();
 	uid_t rv = 0;

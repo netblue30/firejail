@@ -342,6 +342,10 @@ void fs_private_lib(void) {
 	// bring in firejail directory
 	fslib_install_list("firejail");
 
+	// for dhclient
+	if (any_dhcp())
+		fslib_install_list(RUN_MNT_DIR "/dhclient");
+
 	// copy the libs in the new lib directory for the main exe
 	if (cfg.original_program_index > 0) {
 		if (arg_debug || arg_debug_private_lib)

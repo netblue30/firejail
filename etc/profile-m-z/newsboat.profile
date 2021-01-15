@@ -38,10 +38,10 @@ seccomp
 shell none
 
 disable-mnt
-private-bin newsboat
+private-bin gzip,lynx,newsboat,sh
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl,terminfo
+private-etc alternatives,ca-certificates,crypto-policies,lynx.cfg,lynx.lss,pki,resolv.conf,ssl,terminfo
 private-tmp
 
 dbus-user none

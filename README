@@ -711,6 +711,8 @@ RandomVoid (https://github.com/RandomVoid)
 	- fix building C# projects in Godot
 Raphaël Droz (https://github.com/drzraf)
 	- zoom profile fixes
+realaltffour (https://github.com/realaltffour)
+	- add lynx support to newsboat profile
 Reiner Herrmann (https://github.com/reinerh)
 	- a number of build patches
 	- man page fixes

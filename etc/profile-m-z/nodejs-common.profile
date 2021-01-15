@@ -12,9 +12,7 @@ blacklist ${RUNUSER}
 
 ignore noexec ${HOME}
 
-noblacklist ${PATH}/bash
-noblacklist ${PATH}/dash
-noblacklist ${PATH}/sh
+include allow-bin-sh.inc
 
 include disable-common.inc
 include disable-exec.inc

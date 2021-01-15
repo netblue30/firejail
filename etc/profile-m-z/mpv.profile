@@ -21,7 +21,7 @@ include globals.local
 #  - ...
 #
 # Often these scripts require a shell:
-#noblacklist ${PATH}/sh
+#include allow-bin-sh.inc
 #private-bin sh
 
 noblacklist ${HOME}/.config/mpv

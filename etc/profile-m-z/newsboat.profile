@@ -9,8 +9,8 @@ include globals.local
 noblacklist ${HOME}/.newsboat
 
 # Lynx Support
-private-bin sh,gzip,lynx
-private-etc lynx,sh,gzip,lynx.cfg,lynx.lss
+private-bin gzip,lynx,sh
+private-etc gzip,lynx,lynx.cfg,lynx.lss,sh
 
 include disable-common.inc
 include disable-devel.inc

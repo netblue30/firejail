@@ -14,6 +14,13 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.TelegramDesktop
+mkdir ${HOME}/.local/share/TelegramDesktop
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.TelegramDesktop
+whitelist ${HOME}/.local/share/TelegramDesktop
+include /etc/firejail/whitelist-common.inc
+
 caps.drop all
 netfilter
 nodvd

@@ -18,7 +18,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/PacmanLogViewer
 whitelist ${HOME}/.config/PacmanLogViewer
-whitelist /var/log/pacman*
+whitelist /var/log/pacman.log
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
@@ -57,3 +57,4 @@ dbus-system none
 #memory-deny-write-execute - breaks opening file-chooser
 read-only ${HOME}
 read-write ${HOME}/.config/PacmanLogViewer
+read-only /var/log/pacman.log

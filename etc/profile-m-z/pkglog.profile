@@ -6,10 +6,6 @@ include pkglog.local
 # Persistent global definitions
 include globals.local
 
-whitelist /var/log/apt/history.log
-whitelist  /var/log/dnf.rpm.log
-whitelist /var/log/pacman.log
-
 # Allow python3 (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
@@ -20,6 +16,10 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
+
+whitelist /var/log/apt/history.log
+whitelist  /var/log/dnf.rpm.log
+whitelist /var/log/pacman.log
 
 apparmor
 caps.drop all

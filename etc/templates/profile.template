@@ -158,6 +158,7 @@ include globals.local
 ##seccomp !chroot
 ##seccomp.drop SYSCALLS (see syscalls.txt)
 #seccomp.block-secondary
+##seccomp-error-action log (Only for debugging seccomp issues)
 #shell none
 #tracelog
 # Prefer 'x11 none' instead of 'blacklist /tmp/.X11-unix' if 'net none' is set

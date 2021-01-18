@@ -18,7 +18,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 whitelist /var/log/apt/history.log
-whitelist  /var/log/dnf.rpm.log
+whitelist /var/log/dnf.rpm.log
 whitelist /var/log/pacman.log
 
 apparmor

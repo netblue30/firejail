@@ -108,18 +108,13 @@ void fslib_install_stdc(void) {
 	// install standard C libraries
 	timetrace_start();
 	struct stat s;
-	char *stdclib = "/lib64";		  // CentOS, Fedora, Arch
-
 	if (stat("/lib/x86_64-linux-gnu", &s) == 0) {	// Debian & friends
-		// PT_INTERP
-		fslib_duplicate("/lib64/ld-linux-x86-64.so.2");
-
 		mkdir_attr(RUN_LIB_DIR "/x86_64-linux-gnu", 0755, 0, 0);
 		selinux_relabel_path(RUN_LIB_DIR "/x86_64-linux-gnu", "/lib/x86_64-linux-gnu");
-		stdclib = "/lib/x86_64-linux-gnu";
+		stdc("/lib/x86_64-linux-gnu");
 	}
 
-	stdc(stdclib);
+	stdc("/lib64"); // CentOS, Fedora, Arch, ld-linux.so in Debian & friends
 
 	// install locale
 	if (stat("/usr/lib/locale", &s) == 0)

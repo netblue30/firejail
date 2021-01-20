@@ -33,6 +33,52 @@ extern void fslib_install_system(void);
 static int lib_cnt = 0;
 static int dir_cnt = 0;
 
+static char *find_in_path(const char *program) {
+	EUID_ASSERT();
+	if (arg_debug)
+		printf("Searching $PATH for %s\n", program);
+
+	char self[MAXBUF];
+	ssize_t len = readlink("/proc/self/exe", self, MAXBUF - 1);
+	if (len < 0)
+		errExit("readlink");
+	self[len] = '\0';
+
+	char *path = getenv("PATH");
+	if (!path)
+		return NULL;
+	char *dup = strdup(path);
+	if (!dup)
+		errExit("strdup");
+	char *tok = strtok(dup, ":");
+	while (tok) {
+		char *fname;
+		if (asprintf(&fname, "%s/%s", tok, program) == -1)
+			errExit("asprintf");
+
+		if (arg_debug)
+			printf("trying #%s#\n", fname);
+		struct stat s;
+		if (stat(fname, &s) == 0) {
+			// but skip links created by firecfg
+			char *rp = realpath(fname, NULL);
+			if (!rp)
+				errExit("realpath");
+			if (strcmp(self, rp) != 0) {
+				free(rp);
+				free(dup);
+				return fname;
+			}
+			free(rp);
+		}
+		free(fname);
+		tok = strtok(NULL, ":");
+	}
+
+	free(dup);
+	return NULL;
+}
+
 static void report_duplication(const char *full_path) {
 	char *fname = strrchr(full_path, '/');
 	if (fname && *(++fname) != '\0') {
@@ -350,7 +396,18 @@ void fs_private_lib(void) {
 	if (cfg.original_program_index > 0) {
 		if (arg_debug || arg_debug_private_lib)
 			printf("Installing sandboxed program libraries\n");
-		fslib_install_list(cfg.original_argv[cfg.original_program_index]);
+
+		if (strchr(cfg.original_argv[cfg.original_program_index], '/'))
+			fslib_install_list(cfg.original_argv[cfg.original_program_index]);
+		else { // search executable in $PATH
+			EUID_USER();
+			char *fname = find_in_path(cfg.original_argv[cfg.original_program_index]);
+			EUID_ROOT();
+			if (fname) {
+				fslib_install_list(fname);
+				free(fname);
+			}
+		}
 	}
 
 	// for the shell

@@ -111,7 +111,7 @@ static void copy_file(const char *srcname, const char *destname, mode_t mode, ui
 	}
 
 	// open destination
-	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, 0755);
+	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR);
 	if (dst < 0) {
 		if (!arg_quiet)
 			fprintf(stderr, "Warning fcopy: cannot open %s, file not copied\n", destname);
@@ -132,7 +132,8 @@ static void copy_file(const char *srcname, const char *destname, mode_t mode, ui
 			done += rv;
 		}
 	}
-	fflush(0);
+	if (len < 0)
+		goto errexit;
 
 	if (fchown(dst, uid, gid) == -1)
 		goto errexit;
@@ -179,7 +180,7 @@ void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid,
 
 	// if the link is already there, don't create it
 	struct stat s;
-	if (stat(linkpath, &s) == 0)
+	if (lstat(linkpath, &s) == 0)
 	       return;
 
 	char *rp = realpath(target, NULL);
@@ -413,25 +414,19 @@ int main(int argc, char **argv) {
 
 	warn_dumpable();
 
-	// trim trailing chars
-	if (src[strlen(src) - 1] == '/')
-		src[strlen(src) - 1] = '\0';
-	if (dest[strlen(dest) - 1] == '/')
-		dest[strlen(dest) - 1] = '\0';
-
 	// check the two files; remove ending /
-	int len = strlen(src);
-	if (src[len - 1] == '/')
-		src[len - 1] = '\0';
-	if (strcspn(src, "\\*&!?\"'<>%^(){}[];,") != (size_t)len) {
+	size_t len = strlen(src);
+	while (len > 1 && src[len - 1] == '/')
+		src[--len] = '\0';
+	if (strcspn(src, "\\*&!?\"'<>%^(){}[];,") != len) {
 		fprintf(stderr, "Error fcopy: invalid source file name %s\n", src);
 		exit(1);
 	}
 
 	len = strlen(dest);
-	if (dest[len - 1] == '/')
-		dest[len - 1] = '\0';
-	if (strcspn(dest, "\\*&!?\"'<>%^(){}[];,~") != (size_t)len) {
+	while (len > 1 && dest[len - 1] == '/')
+		dest[--len] = '\0';
+	if (strcspn(dest, "\\*&!?\"'<>%^(){}[];,~") != len) {
 		fprintf(stderr, "Error fcopy: invalid dest file name %s\n", dest);
 		exit(1);
 	}

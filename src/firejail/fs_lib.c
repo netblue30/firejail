@@ -33,7 +33,7 @@ extern void fslib_install_system(void);
 static int lib_cnt = 0;
 static int dir_cnt = 0;
 
-static char *find_in_path(const char *program) {
+char *find_in_path(const char *program) {
 	EUID_ASSERT();
 	if (arg_debug)
 		printf("Searching $PATH for %s\n", program);

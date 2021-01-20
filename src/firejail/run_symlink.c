@@ -22,6 +22,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+extern char *find_in_path(const char *program);
+
 void run_symlink(int argc, char **argv, int run_as_is) {
 	EUID_ASSERT();
 
@@ -40,54 +42,17 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 		errExit("setresuid");
 
 	// find the real program by looking in PATH
-	char *p = getenv("PATH");
-	if (!p) {
+	if (!getenv("PATH")) {
 		fprintf(stderr, "Error: PATH environment variable not set\n");
 		exit(1);
 	}
 
-	char *path = strdup(p);
-	if (!path)
-		errExit("strdup");
-
-	char *selfpath = realpath("/proc/self/exe", NULL);
-	if (!selfpath)
-		errExit("realpath");
-
-	// look in path for our program
-	char *tok = strtok(path, ":");
-	int found = 0;
-	while (tok) {
-		char *name;
-		if (asprintf(&name, "%s/%s", tok, program) == -1)
-			errExit("asprintf");
-
-		struct stat s;
-		if (stat(name, &s) == 0) {
-			/* coverity[toctou] */
-			char* rp = realpath(name, NULL);
-			if (!rp)
-				errExit("realpath");
-
-			if (strcmp(selfpath, rp) != 0) {
-				program = strdup(name);
-				found = 1;
-				free(rp);
-				break;
-			}
-
-			free(rp);
-		}
-
-		free(name);
-		tok = strtok(NULL, ":");
-	}
-	if (!found) {
+	char *p = find_in_path(program);
+	if (!p) {
 		fprintf(stderr, "Error: cannot find the program in the path\n");
 		exit(1);
 	}
-
-	free(selfpath);
+	program = p;
 
 	// restore original umask
 	umask(orig_umask);

@@ -337,14 +337,22 @@ void fs_private_lib(void) {
 	timetrace_start();
 
 	// bring in firejail executable libraries in case we are redirected here by a firejail symlink from /usr/local/bin/firejail
+	if (arg_debug || arg_debug_private_lib)
+		printf("Installing Firejail libraries\n");
 	fslib_install_list(PATH_FIREJAIL);
 
 	// bring in firejail directory
-	fslib_install_list("firejail");
+	fslib_install_list(LIBDIR "/firejail");
 
-	// for dhclient
-	if (any_dhcp())
+	// bring in dhclient libraries
+	if (any_dhcp()) {
+		if (arg_debug || arg_debug_private_lib)
+			printf("Installing dhclient libraries\n");
 		fslib_install_list(RUN_MNT_DIR "/dhclient");
+	}
+	fmessage("Firejail libraries installed in %0.2f ms\n", timetrace_end());
+
+	timetrace_start();
 
 	// copy the libs in the new lib directory for the main exe
 	if (cfg.original_program_index > 0) {
@@ -379,7 +387,7 @@ void fs_private_lib(void) {
 	}
 	fmessage("Program libraries installed in %0.2f ms\n", timetrace_end());
 
-	// install the reset of the system libraries
+	// install the rest of the system libraries
 	if (arg_debug || arg_debug_private_lib)
 		printf("Installing system libraries\n");
 	fslib_install_system();

@@ -856,7 +856,6 @@ blacklist ${HOME}/.yarncache
 blacklist ${HOME}/.yarnrc
 blacklist ${HOME}/.zoom
 blacklist /tmp/akonadi-*
-blacklist /tmp/ssh-*
 blacklist /tmp/.wine-*
 blacklist /var/games/nethack
 blacklist /var/games/slashem

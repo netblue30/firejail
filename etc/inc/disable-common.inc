@@ -347,6 +347,9 @@ read-only ${HOME}/.local/share/mime
 # Write-protection for thumbnailer dir
 read-only ${HOME}/.local/share/thumbnailers
 
+# prevent access to ssh-agent
+blacklist /tmp/ssh-*
+
 # top secret
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.kdbx

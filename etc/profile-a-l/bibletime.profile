@@ -26,6 +26,7 @@ whitelist ${HOME}/.bibletime
 whitelist ${HOME}/.sword
 whitelist ${HOME}/.local/share/bibletime
 whitelist /usr/share/bibletime
+whitelist /usr/share/doc/bibletime
 whitelist /usr/share/sword
 include whitelist-common.inc
 include whitelist-usr-share-common.inc

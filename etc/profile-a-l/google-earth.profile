@@ -6,10 +6,7 @@ include google-earth.local
 include globals.local
 
 noblacklist ${HOME}/.config/Google
-noblacklist ${HOME}/.googleearth/Cache
-noblacklist ${HOME}/.googleearth/Temp
-noblacklist ${HOME}/.googleearth/myplaces.backup.kml
-noblacklist ${HOME}/.googleearth/myplaces.kml
+noblacklist ${HOME}/.googleearth
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,15 +16,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.config/Google
-mkdir ${HOME}/.googleearth/Cache
-mkdir ${HOME}/.googleearth/Temp
-mkfile ${HOME}/.googleearth/myplaces.backup.kml
-mkfile ${HOME}/.googleearth/myplaces.kml
+mkdir ${HOME}/.googleearth
 whitelist ${HOME}/.config/Google
-whitelist ${HOME}/.googleearth/Cache
-whitelist ${HOME}/.googleearth/Temp
-whitelist ${HOME}/.googleearth/myplaces.backup.kml
-whitelist ${HOME}/.googleearth/myplaces.kml
+whitelist ${HOME}/.googleearth
 include whitelist-common.inc
 
 caps.drop all

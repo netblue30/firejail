@@ -469,10 +469,7 @@ blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
 blacklist ${HOME}/.gitconfig
 blacklist ${HOME}/.gnome/gnome-schedule
-blacklist ${HOME}/.googleearth/Cache
-blacklist ${HOME}/.googleearth/Temp
-blacklist ${HOME}/.googleearth/myplaces.backup.kml
-blacklist ${HOME}/.googleearth/myplaces.kml
+blacklist ${HOME}/.googleearth
 blacklist ${HOME}/.gradle
 blacklist ${HOME}/.gramps
 blacklist ${HOME}/.guayadeque

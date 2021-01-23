@@ -26,7 +26,7 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-caps.keep chown,net_raw,sys_nice,sys_rawio
+caps.keep chown,net_raw,sys_nice
 netfilter
 nogroups
 notv

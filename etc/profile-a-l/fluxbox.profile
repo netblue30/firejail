@@ -6,7 +6,7 @@ include fluxbox.local
 # Persistent global definitions
 include globals.local
 
-# all applications started in awesome will run in this profile
+# all applications started in fluxbox will run in this profile
 noblacklist ${HOME}/.fluxbox
 include disable-common.inc
 

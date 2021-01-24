@@ -6,7 +6,7 @@ include openbox.local
 # Persistent global definitions
 include globals.local
 
-# all applications started in OpenBox will run in this profile
+# all applications started in openbox will run in this profile
 noblacklist ${HOME}/.config/openbox
 include disable-common.inc
 

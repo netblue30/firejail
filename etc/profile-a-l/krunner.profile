@@ -6,9 +6,9 @@ include krunner.local
 # Persistent global definitions
 include globals.local
 
-# - programs started in krunner run with this generic profile.
+# - programs started in krunner run with this generic profile
 # - when a file is opened in krunner, the file viewer runs in its own sandbox
-#   with its own profile, if it is sandboxed automatically.
+#   with its own profile, if it is sandboxed automatically
 
 # noblacklist ${HOME}/.cache/krunner
 # noblacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite*

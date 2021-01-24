@@ -6,7 +6,7 @@ include i3.local
 # Persistent global definitions
 include globals.local
 
-# all applications started in awesome will run in this profile
+# all applications started in i3 will run in this profile
 noblacklist ${HOME}/.config/i3
 include disable-common.inc
 

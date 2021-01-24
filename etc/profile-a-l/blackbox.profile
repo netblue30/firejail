@@ -6,7 +6,7 @@ include blackbox.local
 # Persistent global definitions
 include globals.local
 
-# all applications started in awesome will run in this profile
+# all applications started in blackbox will run in this profile
 noblacklist ${HOME}/.blackbox
 include disable-common.inc
 

@@ -29,6 +29,7 @@ whitelist ${HOME}/.config/liferea
 whitelist ${HOME}/.local/share/liferea
 whitelist /usr/share/liferea
 include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -49,7 +50,10 @@ shell none
 tracelog
 
 disable-mnt
+#private-bin liferea
+private-cache
 private-dev
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,mime.types,nsswitch.conf,pki,pulse,resolv.conf,ssl,X11,xdg
 private-tmp
 
 dbus-user filter

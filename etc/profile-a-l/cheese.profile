@@ -9,6 +9,9 @@ include globals.local
 noblacklist ${VIDEOS}
 noblacklist ${PICTURES}
 
+include allow-python2.inc
+include allow-python3.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -47,5 +50,6 @@ private-etc alternatives,clutter-1.0,dconf,drirc,fonts,gtk-3.0
 private-tmp
 
 dbus-user filter
+dbus-user.own org.gnome.Cheese
 dbus-user.talk ca.desrt.dconf
 dbus-system none

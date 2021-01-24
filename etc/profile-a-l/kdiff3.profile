@@ -9,18 +9,22 @@ include globals.local
 noblacklist ${HOME}/.config/kdiff3fileitemactionrc
 noblacklist ${HOME}/.config/kdiff3rc
 
-include disable-common.inc
+# Uncomment the next line (or put it into your kdiff3.local) if you don't need to compare files in disable-common.inc.
+#include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-include disable-programs.inc
+# Uncomment the next line (or put it into your kdiff3.local) if you don't need to compare files in disable-programs.inc.
+#include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
-
+           
 include whitelist-runuser-common.inc
-include whitelist-usr-share-common.inc
-include whitelist-var-common.inc
+# Uncomment the next lines (or put it into your kdiff3.local) if you don't need to compare files in /usr/share.
+#include whitelist-usr-share-common.inc
+# Uncomment the next line (or put it into your kdiff3.local) if you don't need to compare files in /var.
+#include whitelist-var-common.inc
 
 apparmor
 caps.drop all
@@ -35,9 +39,14 @@ notv
 nou2f
 novideo
 seccomp
+seccomp.block-secondary
 shell none
+tracelog
 
 disable-mnt
 private-bin  kdiff3
 private-cache
 private-dev
+
+dbus-user none
+dbus-system none

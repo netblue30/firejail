@@ -275,6 +275,8 @@ blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kazam
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/kdenliverc
+blacklist ${HOME}/.config/kdiff3fileitemactionrc
+blacklist ${HOME}/.config/kdiff3rc
 blacklist ${HOME}/.config/kfindrc
 blacklist ${HOME}/.config/kgetrc
 blacklist ${HOME}/.config/kid3rc

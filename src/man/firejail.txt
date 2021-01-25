@@ -1317,7 +1317,7 @@ $ firejail --netfilter=/etc/firejail/webserver.net --net=eth0 \\
 .br
 
 .br
-.B nolocal.net
+.B nolocal.net/nolocal6.net
 is a desktop client firewall that disable access to local network. Example:
 .br
 

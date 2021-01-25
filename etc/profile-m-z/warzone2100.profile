@@ -16,8 +16,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
-# mkdir ${HOME}/.warzone2100-3.1
-# mkdir ${HOME}/.warzone2100-3.2
+mkdir ${HOME}/.warzone2100-3.1
+mkdir ${HOME}/.warzone2100-3.2
 whitelist ${HOME}/.warzone2100-3.1
 whitelist ${HOME}/.warzone2100-3.2
 whitelist /usr/share/games

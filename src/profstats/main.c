@@ -109,6 +109,7 @@ void process_file(const char *fname) {
 		return;
 	}
 
+	int have_include_local = 0;
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		char *ptr = strchr(buf, '\n');
@@ -163,6 +164,7 @@ void process_file(const char *fname) {
 		else if (strncmp(ptr, "include ", 8) == 0) {
 			// not processing .local files
 			if (strstr(ptr, ".local")) {
+				have_include_local = 1;
 //printf("dotlocal %d, level %d - #%s#, redirect #%s#\n", cnt_dotlocal, level, fname, buf + 8);
 				if (strstr(ptr, "globals.local"))
 					cnt_globalsdotlocal++;
@@ -180,6 +182,8 @@ void process_file(const char *fname) {
 	}
 
 	fclose(fp);
+	if (!have_include_local)
+		printf("No include .local found in %s\n", fname);
 	level--;
 }
 

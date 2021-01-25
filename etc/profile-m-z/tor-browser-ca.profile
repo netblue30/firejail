@@ -1,6 +1,9 @@
 # Firejail profile alias for torbrowser-launcher
 # This file is overwritten after every install/update
 
+# Persistent global definitions
+include tor-browser-ca.local
+
 noblacklist ${HOME}/.tor-browser-ca
 
 mkdir ${HOME}/.tor-browser-ca

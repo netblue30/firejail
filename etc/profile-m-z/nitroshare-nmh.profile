@@ -2,5 +2,8 @@
 # Description: Network File Transfer Application
 # This file is overwritten after every install/update
 
+# Persistent local customizations
+include nitroshare-nmh.local
+
 # Redirect
 include nitroshare.profile

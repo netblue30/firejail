@@ -3,5 +3,8 @@
 # This file is overwritten after every install/update
 quiet
 
+# Persistent local customizations
+include lzless.local
+
 # Redirect
 include cpio.profile

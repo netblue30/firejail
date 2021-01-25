@@ -19,7 +19,18 @@ mkdir ${HOME}/.local/share/TelegramDesktop
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.TelegramDesktop
 whitelist ${HOME}/.local/share/TelegramDesktop
+
 include whitelist-common.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
+include whitelist-runuser-common.inc
+include disable-shell.inc
+include disable-passwdmgr.inc
+include disable-xdg.inc
+
+apparmor
+shell none
+private-dev
 
 caps.drop all
 netfilter
